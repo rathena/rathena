@@ -1,0 +1,73 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Player versus Player mode.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Prevents PvP mode on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//============================================================
+
+// Instances ===================
+1@mist	mapflag	pvp	off
+1@cash	mapflag	pvp	off
+1@pump	mapflag	pvp	off
+2@pump	mapflag	pvp	off
+1@lhz	mapflag	pvp	off
+1@ma_h	mapflag	pvp	off
+1@ma_c	mapflag	pvp	off
+1@ma_b	mapflag	pvp	off
+1@ecl	mapflag	pvp	off
+1@gl_k	mapflag	pvp	off
+2@gl_k	mapflag	pvp	off
+1@def01	mapflag	pvp	off
+1@def02	mapflag	pvp	off
+1@def03	mapflag	pvp	off
+1@gef	mapflag	pvp	off
+1@face	mapflag	pvp	off
+1@sara	mapflag	pvp	off
+1@gef_in	mapflag	pvp	off
+
+// Cities ========================
+moc_para01	mapflag	pvp	off
+brasilis	mapflag	pvp	off
+bra_in01	mapflag	pvp	off
+dicastes01	mapflag	pvp	off
+dicastes02	mapflag	pvp	off
+dic_in01	mapflag	pvp	off
+s_atelier	mapflag	pvp	off
+mora	mapflag	pvp	off
+dewata	mapflag	pvp	off
+dew_in01	mapflag	pvp	off
+izlude_a	mapflag	pvp	off
+izlude_b	mapflag	pvp	off
+izlude_c	mapflag	pvp	off
+izlude_d	mapflag	pvp	off
+malangdo	mapflag	pvp	off
+mal_in01	mapflag	pvp	off
+mal_in02	mapflag	pvp	off
+malaya	mapflag	pvp	off
+ma_scene01	mapflag	pvp	off
+ma_in01	mapflag	pvp	off
+ma_zif01	mapflag	pvp	off
+ma_zif02	mapflag	pvp	off
+ma_zif03	mapflag	pvp	off
+ma_zif04	mapflag	pvp	off
+ma_zif05	mapflag	pvp	off
+ma_zif06	mapflag	pvp	off
+ma_zif07	mapflag	pvp	off
+ma_zif08	mapflag	pvp	off
+ma_zif09	mapflag	pvp	off
+eclage	mapflag	pvp	off
+ecl_in01	mapflag	pvp	off
+ecl_in02	mapflag	pvp	off
+ecl_in03	mapflag	pvp	off
+ecl_in04	mapflag	pvp	off
+ecl_hub01	mapflag	pvp	off
+que_avan01	mapflag	pvp	off
+dali	mapflag	pvp	off

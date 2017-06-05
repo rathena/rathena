@@ -1,0 +1,75 @@
+//===== rAthena Script =======================================
+//= Spirit Liquor trader.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Trade Broken Liquor Jars and alcohol for wanderer
+//= pet food, 'Spirit Liquor'
+//===== Additional Comments: =================================
+//= 1.0 First version 
+//============================================================
+
+prontera,218,218,3	script	Pet Enthusiast	96,{
+	mes "[Pet Enthusiast Jenny]";
+	mes "Oh, Hi there!";
+	mes "Are you a lover of animals like I am?";
+	next;
+	mes "[Pet Enthusiast Jenny]";
+	mes "I know that it's really hard to keep your cute pets happy.";
+	mes "All it takes is the right kind of food.";
+	next;
+	mes "[Pet Enthusiast Jenny]";
+	mes "I know that sometimes it is really hard to get the right food for your pet.";
+	next;
+	mes "[Pet Enthusiast Jenny]";
+	mes "Do you have any food that you are looking for?";
+	next;
+	switch(select("Yes:No")) {
+	case 1:
+		if ((countitem(7158) > 19) && (countitem(970) > 0)) {
+			mes "[Pet Enthusiast Jenny]";
+			mes "Oh, you have ^ff000020 Broken Liquor Jar^000000s and ^ff00001 Alcohol^000000!";
+			mes "Do you want to exchange them for";
+			mes "^ff000020 Spirit Liquor^000000 for your Wanderer pet?";
+			next;
+			switch(select("Yes, please!:No thank you.")) {
+			case 1:
+				mes "[Pet Enthusiast Jenny]";
+				mes "Ok here you go then.";
+				mes "I hope it keeps your";
+				mes "cute pet happy.";
+				delitem 7158,20; //Broken_Wine_Vessel
+				delitem 970,1; //Alchol
+				getitem 7824,20; //Spirit_Liquor
+				close;
+			case 2:
+				mes "[Pet Enthusiast Jenny]";
+				mes "Hehe, well just let me know if you change your mind.";
+				close;
+			}
+		}
+		else {
+			mes "[Pet Enthusiast Jenny]";
+			mes "Actually, right now I can help you get Spirit Liquor for Wanderer pets.";
+			next;
+			mes "[Pet Enthusiast Jenny]";
+			mes "All you have to do is bring me ^FF0000 20 Broken Liquor Jars^000000 and ^FF0000 1 Alcohol^000000.";
+			mes "I can give you ^FF0000 20 Spirit Liquor^000000 for that.";
+			next;
+			mes "You can get the Broken Liquor Jars from Tengu monsters in Amatsu dungeon.";
+			close;
+		}
+	case 2:
+		close;
+	}
+}
+
+prontera,220,218,3	script	Berry Toe	955,{
+	specialeffect EF_CHANGEDARK;
+	end;
+}

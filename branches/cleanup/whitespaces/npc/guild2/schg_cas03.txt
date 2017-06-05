@@ -1,0 +1,74 @@
+//===== rAthena Script =======================================
+//= War of Emperium SE - Vidblainn
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Merged to template file.
+//============================================================
+
+-	duplicate(Manager#template)	Manager#schg_cas03	-1
+-	duplicate(gard#template)	gard1#schg_cas03	-1
+-	duplicate(gard#template)	gard2#schg_cas03	-1
+-	duplicate(df#template)	df1#schg_cas03	-1
+-	duplicate(df#template)	df2#schg_cas03	-1
+-	duplicate(RL#template)	RL0#schg_cas03	-1
+-	duplicate(RL#template)	RL1#schg_cas03	-1
+-	duplicate(RL#template)	RL2#schg_cas03	-1
+-	duplicate(RL#template)	RL3#schg_cas03	-1
+
+schg_cas03,88,90,3	duplicate(Steward#template)	Steward#sc03	55
+schg_cas03,287,226,5	duplicate(Guardian#template)	Elzee#sc03	868
+schg_cas03,50,50,3	duplicate(Kafra#template)	Kafra Employee#sc03	117
+schg_cas03,242,309,0	duplicate(Guardian Stone#template)	1st Guardian Stone#sc03	844
+schg_cas03,376,250,0	duplicate(Guardian Stone#template)	2nd Guardian Stone#sc03	844
+schg_cas03,335,298,0	duplicate(Control#template)	Control Device01#sc03	111
+schg_cas03,200,227,0	duplicate(Control#template)	Control Device02#sc03	111
+schg_cas03,273,205,0	duplicate(Control#template)	Control Device03#sc03	111
+schg_cas03,199,25,0	duplicate(Switch#template)	#sch03_switch	111
+schg_cas03,25,22,3	duplicate(Sunflower#template)	Mysterious Sunflower#03	976
+
+schg_cas03,346,211,0	script	LF-01#schg_cas03	111,{ callfunc "LinkFlag","First Gate House",262,323,"Second Gate House",378,263; }
+schg_cas03,346,207,0	script	LF-02#schg_cas03	111,{ callfunc "LinkFlag","Center 1 Area",306,320; }
+schg_cas03,346,203,0	script	LF-03#schg_cas03	111,{ callfunc "LinkFlag","Defense Area 2-1",309,292,"Defense Area 2-2",348,292; }
+schg_cas03,346,199,0	script	LF-04#schg_cas03	111,{ callfunc "LinkFlag","Center 2 Area",266,263; }
+schg_cas03,346,195,0	script	LF-05#schg_cas03	111,{ callfunc "LinkFlag","Defense Area 3-1",226,220,"Defense Area 3-2",185,249; }
+schg_cas03,346,191,0	script	LF-06#schg_cas03	111,{ callfunc "LinkFlag","Center 3 Area",271,226; }
+schg_cas03,301,213,0	script	LF-07#schg_cas03	111,{ callfunc "LinkFlag","Area 1-2",262,323,"Area 2-2",378,263,"Area 3-2",306,320; }
+schg_cas03,301,209,0	script	LF-08#schg_cas03	111,{ callfunc "LinkFlag","Area 2-1",309,292,"Area 2-2",348,292,"Center 2 Area",326,263; }
+schg_cas03,301,194,0	script	LF-09#schg_cas03	111,{ callfunc "LinkFlag","Area 3-1",226,220,"Area 3-2",185,249,"Center 3 Area",271,226; }
+schg_cas03,301,190,0	script	LF-10#schg_cas03	111,{ callfunc "LinkFlag","Convenience Facility",57,13; }
+schg_cas03,335,305,0	script	Vidblainn#LF_sc03_1::LF_sc03_1	111,{ callfunc "LinkFlag","Emperium Center",308,202; }
+schg_cas03,322,305,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_2	111
+schg_cas03,352,248,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_3	111
+schg_cas03,320,283,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_4	111
+schg_cas03,337,283,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_5	111
+schg_cas03,233,320,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_6	111
+schg_cas03,207,239,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_7	111
+schg_cas03,207,228,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_8	111
+schg_cas03,266,206,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_9	111
+schg_cas03,266,197,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_10	111
+schg_cas03,283,206,2	script	Vidblainn#LF_sc03_11::LF_sc03_2	722,{
+	callfunc "LinkFlag","Emperium Center",308,202;
+	end;
+OnAgitInit2:
+OnRecvCastlesc03:
+	FlagEmblem GetCastleData("schg_cas03",1);
+	end;
+}
+schg_cas03,283,197,2	duplicate(LF_sc03_2)	Vidblainn#LF_sc03_12	722
+schg_cas03,332,323,6	duplicate(LF_sc03_2)	Vidblainn#LF_sc03_13	722
+schg_cas03,343,323,2	duplicate(LF_sc03_2)	Vidblainn#LF_sc03_14	722
+
+sch_gld,91,191,0	script	Vidblainn#flag_sc03_1::Sc03_Flag	722,{
+	callfunc "ReturnFlag","schg_cas03",1;
+	end;
+OnAgitInit2:
+OnRecvCastlesc03:
+	FlagEmblem GetCastleData("schg_cas03",1);
+	end;
+}
+sch_gld,104,191,0	duplicate(Sc03_Flag)	Bidblind#flag_sc03_2	722

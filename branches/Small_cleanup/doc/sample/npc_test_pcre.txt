@@ -1,0 +1,402 @@
+//===== rAthena Script =======================================
+//= Sample: PCRE
+//===== By: ==================================================
+//= MouseJstr
+//===== Last Updated: ========================================
+//= 20100108
+//===== Description: ========================================= 
+//= Demonstrates PCRE commands.
+//============================================================
+
+prontera,152,181,5	script	MouseJstr	763,{
+
+// hello
+Lquote0:
+        npctalk "How do you do.  Please state your problem.";
+        end;
+
+// computer
+Lquote1:
+        switch(rand(4)) {
+		case 0: npctalk "Do computers worry you?"; break;
+		case 1: npctalk "What do you think about machines?"; break;
+		case 2: npctalk "Why do you mention computers?"; break;
+		case 3: npctalk "What do you think machines have to do with your problem?"; break;
+	}
+        end;
+
+// name
+Lquote2:
+        npctalk "I am not interested in names";
+        end;
+
+// sorry
+Lquote3:
+	switch(rand(3)) {
+		case 0: npctalk "Please don't apologize"; break;
+		case 1: npctalk "Apologies are not necessary"; break;
+		case 2: npctalk "What feelings do you have when you apologize"; break;
+	}
+        end;
+
+// I remember $@p2$
+Lquote4:
+	switch(rand(6)) {
+		case 0: npctalk "Do you often think of "+$@p2$+"?"; break;
+		case 1: npctalk "Does thinking of "+$@p2$+" bring anything else to mind?"; break;
+		case 2: npctalk "What else do you remember?"; break;
+		case 3: npctalk "Why do you recall "+$@p2$+" right now?"; break;
+		case 4: npctalk "What in the present situation reminds you of "+$@p2$+"?"; break;
+		case 5: npctalk "What is the connection between me and "+$@p2$+"?"; break;
+	}
+        end;
+
+//    do you remember
+Lquote5:
+	switch (rand(4)) {
+		case 0: npctalk "Did you think I would forget "+$@p2$+" ?"; break;
+		case 1: npctalk "Why do you think I should recall "+$@p2$+" now"; break;
+		case 2: npctalk "What about "+$@p2$+""; break;
+		case 3: npctalk "You mentioned "+$@p2$+""; break;
+	}
+        end;
+
+// if
+Lquote6:
+	switch(rand(4)) {
+		case 0: npctalk "Do you really think its likely that "+$@p2$+""; break;
+		case 1: npctalk "Do you wish that "+$@p2$+"?"; break;
+		case 2: npctalk "What do you think about "+$@p2$+"?"; break;
+		case 3: npctalk "Really-- if "+$@p2$+"?"; break;
+	}
+        end;
+
+//  i dreamt
+Lquote7:
+	switch(rand(3)) {
+		case 0: npctalk "Really-- "+$@p2$+""; break;
+		case 1: npctalk "Have you ever fantasized "+$@p2$+" while you were awake?"; break;
+		case 2: npctalk "Have you dreamt "+$@p2$+" before?"; break;
+	}
+        end;
+
+//   dream about
+Lquote8:
+        npctalk "How do you feel about "+$@p2$+" in reality?";
+        end;
+
+//  dream
+Lquote9:
+	switch(rand(4)) {
+		case 0: npctalk "What does this dream suggest to you?"; break;
+		case 1: npctalk "Do you dream often?"; break;
+		case 2: npctalk "What persons appear in your dreams?"; break;
+		case 3: npctalk "Don't you believe that dream has to do with your problem?"; break;
+	}
+        end;
+
+//   my mother
+Lquote10:
+	switch(rand(2)) {
+		case 0: npctalk "Who else in your family "+$@p2$+""; break;
+		case 1: npctalk "Tell me more about your family"; break;
+	}
+        end;
+
+//   my father
+Lquote11:
+	switch(rand(3)) {
+		case 0: npctalk "Your father"; break;
+		case 1: npctalk "Does he influence you strongly?"; break;
+		case 2: npctalk "What else comes to mind when you think of your father?"; break;
+	}
+        end;
+
+//   I want
+Lquote12:
+	switch(rand(3)) {
+		case 0: npctalk "What would it mean if you got "+$@p2$+""; break;
+		case 1: npctalk "Why do you want "+$@p2$+""; break;
+		case 2: npctalk "Suppose you got "+$@p2$+" soon"; break;
+	}
+        end;
+
+//    I am glad 
+Lquote13:
+	switch(rand(3)) {
+		case 0: npctalk "How have I helped you to be "+$@p2$+""; break;
+		case 1: npctalk "What makes you happy just now"; break;
+		case 2: npctalk "Can you explain why you are suddenly "+$@p2$+""; break;
+	}
+        end;
+
+//    I am sad 
+Lquote14:
+	switch(rand(2)) {
+		case 0: npctalk "I am sorry to hear you are depressed"; break;
+		case 1: npctalk "I'm sure its not pleasant to be sad"; break;
+	}
+        end;
+
+//   $@p2 are like "+$@p3$+"
+Lquote15:
+        npctalk "What resemblance do you see between "+$@p2$+" and "+$@p3$+"";
+        end;
+
+//   "+$@p2$+" is like "+$@p3$+"
+Lquote16:
+	switch(rand(4)) {
+		case 0: npctalk "In what way is it that "+$@p2$+" is like "+$@p3$+""; break;
+		case 1: npctalk "What resemblance do you see?"; break;
+		case 2: npctalk "Could there really be some connection?"; break;
+		case 3: npctalk "How?"; break;
+	}
+        end;
+
+//   alike
+Lquote17:
+	switch(rand(2)) {
+		case 0: npctalk "In what way?"; break;
+		case 1: npctalk "What similarities are there?"; break;
+	}
+        end;
+
+//    same 
+Lquote18:
+        npctalk "What other connections do you see?";
+        end;
+
+//   I was "+$@p2$+"
+Lquote19:
+	switch(rand(3)) {
+		case 0: npctalk "Were you really?"; break;
+		case 1: npctalk "Perhaps I already knew you were "+$@p2$+""; break;
+		case 2: npctalk "Why do you tell me you were "+$@p2$+" now?"; break;
+	}
+        end;
+
+//    was I
+Lquote20:
+	switch(rand(3)) {
+		case 0: npctalk "What if you were "+$@p2$+" ?"; break;
+		case 1: npctalk "Do you thin you were "+$@p2$+""; break;
+		case 2: npctalk "What would it mean if you were "+$@p2$+""; break;
+	}
+        end;
+
+//    I am
+Lquote21:
+	switch(rand(2)) {
+		case 0: npctalk "In what way are you "+$@p2$+""; break;
+		case 1: npctalk "Do you want to be "+$@p2$+" ?"; break;
+	}
+        end;
+
+//   am I
+Lquote22:
+	switch(rand(4)) {
+		case 0: npctalk "Do you believe you are "+$@p2$+""; break;
+		case 1: npctalk "Would you want to be "+$@p2$+""; break;
+		case 2: npctalk "You wish I would tell you you are "+$@p2$+""; break;
+		case 3: npctalk "What would it mean if you were "+$@p2$+""; break;
+	}
+        end;
+
+//   am
+Lquote23:
+	switch(rand(2)) {
+		case 0: npctalk "Why do you say AM?"; break;
+		case 1: npctalk "I don't understand that"; break;
+	}
+        end;
+
+//    are you
+Lquote24:
+	switch(rand(3)) {
+		case 0: npctalk "Why are you interested in whether I am "+$@p2$+" or not?"; break;
+		case 1: npctalk "Would you prefer if I weren't "+$@p2$+""; break;
+		case 2: npctalk "Perhaps I am "+$@p2$+" in your fantasies"; break;
+	}
+        end;
+
+//   you are 
+Lquote25:
+        npctalk "What makes you think I am "+$@p2$+" ?";
+        end;
+
+//   because
+Lquote26:
+	switch(rand(3)) {
+		case 0: npctalk "Is that the real reason?"; break;
+		case 1: npctalk "What other reasons might there be?"; break;
+		case 2: npctalk "Does that reason seem to explain anything else?"; break;
+	}
+        end;
+
+//    were you 
+Lquote27:
+	switch(rand(3)) {
+		case 0: npctalk "Perhaps I was "+$@p2$+""; break;
+		case 1: npctalk "What do you think?"; break;
+		case 2: npctalk "What if I had been "+$@p2$+""; break;
+	}
+        end;
+
+//   I can't 
+Lquote28:
+	switch(rand(2)) {
+		case 0: npctalk "Maybe you could "+$@p3$+" now"; break;
+		case 1: npctalk "What if you could "+$@p3$+" ?"; break;
+	}
+        end;
+
+//    I feel 
+Lquote29:
+        npctalk "Do you often feel "+$@p2$+" ?";
+        end;
+
+//    I felt
+Lquote30:
+        npctalk "What other feelings do you have?";
+        end;
+
+//   $@p1$ I $@p2$ you $@p3$
+Lquote31:
+        npctalk "Perhaps in your fantasy we "+$@p3$+" each other?";
+        end;
+
+//   why don't you 
+Lquote32:
+	switch(rand(3)) {
+		case 0: npctalk "Should you "+$@p3$+" yourself?"; break;
+		case 1: npctalk "Do you believe I don't "+$@p3$+""; break;
+		case 2: npctalk "Perhaps I will "+$@p3$+" in good time"; break;
+	}
+        end;
+
+//   yes 
+Lquote33:
+	switch(rand(3)) {
+		case 0: npctalk "You seem quite positive"; break;
+		case 1: npctalk "You are sure?"; break;
+		case 2: npctalk "I understand"; break;
+	}
+        end;
+
+//    no
+Lquote34:
+	switch(rand(3)) {
+		case 0: npctalk "Why not?"; break;
+		case 1: npctalk "You are being a bit negative"; break;
+		case 2: npctalk "Are you saying NO just to be negative?"; break;
+	}
+        end;
+
+//    someone
+Lquote35:
+        npctalk "Can you be more specific?";
+        end;
+
+//    everyone 
+Lquote36:
+	switch(rand(4)) {
+		case 0: npctalk "surely not everyone"; break;
+		case 1: npctalk "Can you think of anyone in particular?"; break;
+		case 2: npctalk "Who for example?"; break;
+		case 3: npctalk "You are thinking of a special person?"; break;
+	}
+        end;
+
+//  always 
+Lquote37:
+	switch(rand(4)) {
+		case 0: npctalk "Can you think of a specific example?"; break;
+		case 1: npctalk "When?"; break;
+		case 2: npctalk "What incident are you thinking of?"; break;
+		case 3: npctalk "Really-- always?"; break;
+	}
+        end;
+
+//   what
+Lquote38:
+	switch(rand(5)) {
+		case 0: npctalk "Why do you ask?"; break;
+		case 1: npctalk "Does that question interest you?"; break;
+		case 2: npctalk "What is it you really want to know?"; break;
+		case 3: npctalk "What do you think?"; break;
+		case 4: npctalk "What comes to your mind when you ask that?"; break;
+	}
+        end;
+
+//   perhaps 
+Lquote39:
+        npctalk "You do not seem quite certain";
+        end;
+
+//   are
+Lquote40:
+	switch(rand(2)) {
+		case 0: npctalk "Did you think they might not be "+$@p2$+""; break;
+		case 1: npctalk "Possibly they are "+$@p2$; break;
+	}
+        end;
+
+//   default
+Lquote41:
+	switch(rand(6)) {
+		case 0: npctalk "Very interesting"; break;
+		case 1: npctalk "I am not sure I understand you fully"; break;
+		case 2: npctalk "What does that suggest to you?"; break;
+		case 3: npctalk "Please continue"; break;
+		case 4: npctalk "Go on"; break;
+		case 5: npctalk "Do you feel strongly about discussing such things?"; break;
+	}
+        end;
+
+OnInit:
+        defpattern 1, "([^:]+):.*\\shello.*", "Lquote0";
+        defpattern 1, "([^:]+):.*\\scomputer.*", "Lquote1";
+        defpattern 1, "([^:]+):.*\\sname.*", "Lquote2";
+        defpattern 1, "([^:]+):.*\\ssorry.*", "Lquote3";
+        defpattern 1, "([^:]+):.*\\si\\s+remember\\s+(.*)", "Lquote4";
+        defpattern 1, "([^:]+):.*\\sdo\\s+you\\s+remember\\s+(.*)", "Lquote5";
+        defpattern 1, "([^:]+):.*\\sif\\s+(.*)", "Lquote6";
+        defpattern 1, "([^:]+):.*\\si\\s+dreamt\\s+(.*)", "Lquote7";
+        defpattern 1, "([^:]+):.*\\sdream\\s+about\\s+(.*)", "Lquote8";
+        defpattern 1, "([^:]+):.*\\sdream\\s+(.*)", "Lquote9";
+        defpattern 1, "([^:]+):.*\\smy\\s+mother\\s+(.*)", "Lquote10";
+        defpattern 1, "([^:]+):.*\\smy\\s+father\\s+(.*)", "Lquote11";
+        defpattern 1, "([^:]+):.*\\si\\s+want\\s+(.*)", "Lquote12";
+        defpattern 1, "([^:]+):.*\\si\\s+am\\s+glad\\s+(.*)", "Lquote13";
+        defpattern 1, "([^:]+):\\s+(.*)\\s+i\\s+am\\s+sad\\s+(.*)", "Lquote14";
+        defpattern 1, "([^:]+):\\s+(.*)\\s+are\\s+like\\s+(.*)", "Lquote15";
+        defpattern 1, "([^:]+):\\s+(.*)\\s+is\\s+like\\s+(.*)", "Lquote16";
+        defpattern 1, "([^:]+):.*\\salike\\s+(.*)", "Lquote17";
+        defpattern 1, "([^:]+):.*\\ssame\\s+(.*)", "Lquote18";
+        defpattern 1, "([^:]+):.*\\si\\s+was\\s+(.*)", "Lquote19";
+        defpattern 1, "([^:]+):.*\\swas\\s+i\\s+(.*)", "Lquote20";
+        defpattern 1, "([^:]+):.*\\si\\s+am\\s+(.*)", "Lquote21";
+        defpattern 1, "([^:]+):.*\\sam\\s+i\\s+(.*)", "Lquote22";
+        defpattern 1, "([^:]+):.*\\sam\\s+(.*)", "Lquote23";
+        defpattern 1, "([^:]+):.*\\sare\\s+you\\s+(.*)", "Lquote24";
+        defpattern 1, "([^:]+):.*\\syou\\s+are\\s+(.*)", "Lquote25";
+        defpattern 1, "([^:]+):.*\\sbecause\\s+(.*)", "Lquote26";
+        defpattern 1, "([^:]+):.*\\swere\\s+you\\s+(.*)", "Lquote27";
+        defpattern 1, "([^:]+):.*\\si\\s+(cant|can't|cannot)\\s+(.*)", "Lquote28";
+        defpattern 1, "([^:]+):.*\\si\\s+feel\\s+(.*)", "Lquote29";
+        defpattern 1, "([^:]+):.*\\si\\s+felt\\s+(.*)", "Lquote30";
+        defpattern 1, "([^:]+):.*\\si\\s+(.*)\\s+you\\s+(.*)", "Lquote31";
+        defpattern 1, "([^:]+):.*\\swhy\\s+(don't|dont)\\s+you\\s+(.*)", "Lquote32";
+        defpattern 1, "([^:]+):.*\\syes\\s+(.*)", "Lquote33";
+        defpattern 1, "([^:]+):.*\\sno\\s+(.*)", "Lquote34";
+        defpattern 1, "([^:]+):.*\\ssomeone\\s+(.*)", "Lquote35";
+        defpattern 1, "([^:]+):.*\\severyone\\s+(.*)", "Lquote36";
+        defpattern 1, "([^:]+):.*\\salways\\s+(.*)", "Lquote37";
+        defpattern 1, "([^:]+):.*\\swhat\\s+(.*)", "Lquote38";
+        defpattern 1, "([^:]+):.*\\sperhaps\\s+(.*)", "Lquote39";
+        defpattern 1, "([^:]+):.*\\sare\\s+(.*)", "Lquote40";
+        defpattern 1, "([^:]+):(.*)", "Lquote41";
+
+        activatepset 1;
+        end;
+}

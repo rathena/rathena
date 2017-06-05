@@ -1,0 +1,355 @@
+//===== rAthena Script ======================================= 
+//= Niflheim Script 
+//===== By: ================================================== 
+//= Fyrien, Dizzy, PKGINGO
+//= Official NPCs translated and re-edited by Celest
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Official NPC's for Niflheim
+//= 1.01 Splitted file(guides, shops). Fixed rand() bugs,
+//=      missing labels bugs, optimization [Lupus]
+//= 1.03 fixed end; -> close;
+//= 1.04-1.05 fixed several bugs with missing CLOSE button, wrong var name
+//=     in Piano Keys quest
+//=     fixed zeny/item, exploit in Sairin, some optimizations [Lupus]
+//= 1.06 some typos in some variables fixed (thx 2 Dr.Evil) [Lupus]
+//= 1.07 Fixed typos [Nexon]
+//= 1.08 Commented "Traveler" out as it is not official & we have correct Bungee quest in. 
+//=     Also removed TODO, as they are already done. [Vicious_Pucca]
+//= 1.1 Replaced nif_q_done with MISC_QUEST & 32. nif_t -> @nif_t [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Moved Book of Devil and Piano quest to quests/quests_niflheim.txt [Evera]
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Removed Cursed Spirits as they were custom.
+//= 1.5 Added dummy "OnMyMobDead" event to Cursed Spirit. [L0ne_W0lf]
+//============================================================ 
+
+niflheim,52,147,3	script	Keedz#nif	796,{
+	mes "[Keedz]";
+	mes "I don't allow any living person";
+	mes "to come in this place!";
+	close;
+}
+
+niflheim,195,211,6	script	Gigantia#nif	796,3,3,{
+	if (isequipped(5038) || isequipped(2257) || isequipped(2256)) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "What's up?";
+		next;
+		mes "[Gigantia]";
+		mes "Just...";
+		mes "Come over here.";
+		mes "I have something";
+		mes "I must do for you.";
+		next;
+		mes "[Gigantia]";
+		mes "Your horn is crooked.";
+		mes "Always make sure your horn";
+		mes "is worn straight and neat.";
+		mes "The Lord of Death is always";
+		mes "looking at you.";
+		close;
+	}
+	mes "[Gigantia]";
+	mes "The Lord of Death knows";
+	mes "and sees all. It's useless";
+	mes "to hide, and escape from";
+	mes "Death's sweet embrace.";
+	close;
+
+OnTouch:
+	if (isequipped(5038) || isequipped(2257) || isequipped(2256)) {
+		mes "[Gigantia]";
+		mes "Hey, wait!";
+		close;
+	}
+	end;
+}
+
+nif_in,16,27,1	script	Undead Chicken#nif	800,{
+	percentheal -5,0;
+	mes "[Undead Chicken]";
+	mes "I lived a peaceful life as a normal chicken. But then came the day I was tragically killed and eaten by humans. Well... Heh heh~! Now it's my turn! *Cackles*";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "Ouch...!";
+	mes "A chicken...";
+	mes "It bit me!";
+	next;
+	mes "[Undead Chicken]";
+	mes "Ho ho~!";
+	mes "I can talk AND feast";
+	mes "on living humans!";
+	mes "Being a zombie is great!";
+	mes "*Cackles*";
+	close;
+}
+
+nif_in,16,30,4	script	Undead Familiar#nif	799,{
+	percentheal -5,0;
+	mes "[Vatoman]";
+	mes "Oooh, how handy, a living";
+	mes "human~! Fresh blood is";
+	mes "always tasty...! I think I'll just";
+	mes "take a liiittle sip.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Ow! My vein!";
+	mes "Did you just";
+	mes "suck my blood?!";
+	next;
+	mes "[Vatoman]";
+	mes "Mwahahaha~";
+	mes "Foolish mortal!";
+	mes "Beware my powers!";
+	close;
+}
+
+nif_in,156,93,5	script	Child#niflheim	793,{
+	mes "[Alakina Ann]";
+	mes "Where...where am I...?";
+	mes "I remember I was sleeping";
+	mes "and when I woke up, I was here...";
+	mes "Mommy, have you seen my mommy?";
+	mes "I wanna go home...*Sob*";
+	next;
+	switch(select("About the witch:About the curse:Cancel.")) {
+	case 1:
+		mes "[Alakina Ann]";
+		mes "Witch...? I've never seen a witch, but I've read about them in books. I'm not sure if they exist or not, but it would be so horrifying if they did...";
+		next;
+		mes "[Alakina Ann]";
+		mes "Why is it so cold in here...?";
+		mes "A-aren't you cold, or even scared? I wanna go home... It's warm over there. Could you help me get back... Please...? H-help me...";
+		close;
+	case 2:
+		mes "[Alakina Ann]";
+		mes "A c-curse...?";
+		mes "My grandma says that there are lots of curses in the world. Some of them, you can tell it's a curse. But there are other curses that follow you throughout life...";
+		next;
+		mes "[Alakina Ann]";
+		mes "Grandma says curses can take other forms... Like if someone's always mad at you, and won't forgive you, you can see that as a curse too.";
+		next;
+		mes "[Alakina Ann]";
+		mes "My grandma told me there's only one spell that can break a strong curse that you can't lift with Blessings...";
+		next;
+		mes "[Alakina Ann]";
+		mes "Klaatu...";
+		mes "Verata.....";
+		mes "Ne...ni...umm...?";
+		mes "What was the last part?";
+		mes "I-I can't remember";
+		mes "the last part of the spell!";
+		next;
+		mes "[Alakina Ann]";
+		mes "If you repeat the spell in that order, it will release you from someone's anger and hate. And if you do it near a bad spirit, they might get the curse instead.";
+		next;
+		mes "[Alakina Ann]";
+		mes "Why are you asking me about these scary kind of things...? I just wanna go home...";
+		close;
+	case 3:
+		mes "[Alakina Ann]";
+		mes "It's so cold in here...";
+		mes "I'm freezing...";
+		mes "And I wanna go home and";
+		mes "get away from this scary place...";
+		next;
+		mes "[Alakina Ann]";
+		mes "Please... help me.";
+		mes "Could you take me with you...?";
+		close;
+	}
+}
+
+niflheim,350,258,1	script	Cursed Spirit#nif	802,{
+	killmonster "niflheim","Cursed Spirit#nif::OnMyMobDead";
+	mes "[Ashe Bruce]";
+	mes "I sense you're cursed";
+	mes "by a powerful spell...";
+	mes "Hmm... It's clear what";
+	mes "you must be up to....";
+	next;
+	mes "[Ashe Bruce]";
+	mes "You wish to get";
+	mes "rid of your curse....";
+	mes "By giving it to me!!";
+	next;
+	mes "[Ashe Bruce]";
+	mes "Just because I'm a cursed spirit, you adventurers think you can just dump your curses on me?!";
+	emotion e_an;
+	next;
+	mes "[Ashe Bruce]";
+	mes "I refuse to let";
+	mes "you remain here.....";
+	mes "Leave now, or I will";
+	mes "remove you by force....";
+	next;
+	mes "[Ashe Bruce]";
+	mes "....And...";
+	mes "....Whatever you do...";
+	mes "....Do NOT touch my books...";
+	next;
+	switch(select("Touch the first book.:Touch the second book.:Touch the third book.:Okay, I am leaving.")) {
+	case 1:
+		monster "niflheim",349,259,"Rideword",1478,1,"Cursed Spirit#nif::OnMyMobDead";
+		mes "[Ashe Bruce]";
+		mes "...!...";
+		mes "How dare you touch my books";
+		mes "when I specifically said";
+		mes "'Don't touch my books!'";
+		next;
+		mes "[Ashe Bruce]";
+		mes "....!...Grrrrr!";
+		mes "I shall tear you apart...!";
+		mes "Be bound by an eternal curse...!";
+		close;
+	case 2:
+		mes "[Ashe Bruce]";
+		mes "...!...";
+		mes "You dare touch my books?!";
+		mes "Right after I said not";
+		mes "to touch them...?!";
+		mes "Foolish mortal!";
+		mes "...BEGONE!";
+		close2;
+		warp "niflheim",34,162;
+		end;
+	case 3:
+		mes "[Ashe Bruce]";
+		mes "Muhahahaha....";
+		mes "Stubborn mortal~!";
+		mes "Fine! I will give you";
+		mes "a fighting chance and let";
+		mes "you cast a spell.";
+		next;
+		mes "[Ashe Bruce]";
+		mes "But Blessings won't";
+		mes "work with the curse";
+		mes "that you have...";
+		mes "And the spell to lift";
+		mes "your curse has been";
+		mes "lost to the ages~!";
+		emotion e_gg;
+		next;
+		if (select("Clover:Klaatu:Klaytos") == 2)
+			set .@spell,.@spell+1;
+		if (select("Verit:Veritas:Verata") == 3)
+			set .@spell,.@spell+1;
+		if (select("Necktie:Necklace:Nero:^FFFFFFNictu!!!^000000") == 4)
+			set .@spell,.@spell+1;
+		if (.@spell == 3) {
+			switch(rand(1,5)) {
+			case 1:
+				if (morison_meat < 15) {
+					set morrison_meat,15;
+					mes "[Ashe Bruce]";
+					mes "You... You broke the curse!";
+					mes "How did you know that spell?!";
+					next;
+					mes "[Ashe Bruce]";
+					mes "I suppose you expect for me to";
+					mes "melt in agony about now, don't";
+					mes "you? Well... Sorry to disappoint";
+					mes "you, mortal, but I can never die!";
+					close;
+				}
+				mes "[Ashe Bruce]";
+				mes "...! You cast the correct spell?!";
+				mes "...!...";
+				mes "But...You're still cursed...";
+				mes "Umhaaaaaaaaaaaaaaaaa.....!";
+				close;
+			case 2:
+				if (thai_head == 1) {
+					set thai_head,2;
+					mes "[Ashe Bruce]";
+					mes "What's...";
+					mes "this feeling?";
+					next;
+					mes "[Ashe Bruce]";
+					mes "No...!";
+					mes "NOOOOOOOOOOOOOOOO!";
+					next;
+					mes "[Ashe Bruce]";
+					mes "Why did your spell have to work?!";
+					close;
+				}
+				mes "[Ashe Bruce]";
+				mes "You...";
+				mes "cast the correct spell?!";
+				next;
+				mes "[Ashe Bruce]";
+				mes "Hoho~";
+				mes "But you're still cursed...";
+				close;
+			case 3:
+				if (thai_head == 8) {
+					set thai_head,7;
+					mes "[Ashe Bruce]";
+					mes "You... You broke the curse!";
+					mes "Who taught you that spell?!";
+					next;
+					mes "[Ashe Bruce]";
+					mes "I suppose you expect for me to";
+					mes "melt in agony about now, don't";
+					mes "you? Well... Sorry to disappoint";
+					mes "you, mortal, but I can never die!";
+					next;
+					mes "[Ashe Bruce]";
+					mes "So long as I'm...";
+					mes "still...";
+					mes "cursed.";
+					next;
+					mes "[Ashe Bruce]";
+					mes "NOOOOOOOOOO!";
+					close;
+				}
+				mes "[Ashe Bruce]";
+				mes "...! You cast the correct spell?!";
+				mes "...!...";
+				mes "But...You're still cursed...";
+				mes "Umhaaaaaaaaaaaaaaaaa.....!";
+				close;
+			case 4:
+				mes "[Ashe Bruce]";
+				mes "...! You cast the correct spell?!";
+				mes "...!...";
+				mes "But...You're still cursed...";
+				mes "Mwahahahaaaa.....!";
+				close;
+			}
+		}
+		monster "niflheim",345,259,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",347,261,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",344,253,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",346,251,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",349,249,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",350,260,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",353,256,"Orc Skeleton",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		mes "[Ashe Bruce]";
+		mes "Muhahahahahaha!";
+		mes "That's not the right spell!";
+		mes "Now, death awaits you!";
+		mes "You're eternally bound";
+		mes "to the curse...!";
+		close;
+	case 4:
+		mes "[Ashe Bruce]";
+		mes "...";
+		mes ".....";
+		next;
+		mes "[Ashe Bruce]";
+		mes "Well then.";
+		mes "Try not to trip on";
+		mes "your feet in your";
+		mes "rush to leave.";
+		close;
+	}
+
+OnMyMobDead:
+	end;
+}

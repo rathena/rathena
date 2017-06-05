@@ -1,0 +1,37 @@
+// --------------------------------------------------------------
+// -                     Renewal Job Scripts                    -
+// --------------------------------------------------------------
+
+// ------------------------- Job Quests -------------------------
+// - 1-1
+npc: npc/re/jobs/1-1/acolyte.txt
+npc: npc/re/jobs/1-1/archer.txt
+npc: npc/re/jobs/1-1/mage.txt
+npc: npc/re/jobs/1-1/merchant.txt
+npc: npc/re/jobs/1-1/swordman.txt
+npc: npc/re/jobs/1-1/thief.txt
+// - 2e
+npc: npc/re/jobs/2e/kagerou_oboro.txt
+// - 3-1
+npc: npc/re/jobs/3-1/archbishop.txt
+npc: npc/re/jobs/3-1/mechanic.txt
+npc: npc/re/jobs/3-1/ranger.txt
+npc: npc/re/jobs/3-1/rune_knight.txt
+npc: npc/re/jobs/3-1/warlock.txt
+npc: npc/re/jobs/3-1/guillotine_cross.txt
+// - 3-2
+npc: npc/re/jobs/3-2/genetic.txt
+npc: npc/re/jobs/3-2/minstrel.txt
+npc: npc/re/jobs/3-2/royal_guard.txt
+npc: npc/re/jobs/3-2/shadow_chaser.txt
+npc: npc/re/jobs/3-2/sorcerer.txt
+npc: npc/re/jobs/3-2/sura.txt
+npc: npc/re/jobs/3-2/wanderer.txt
+// - Novice
+npc: npc/re/jobs/novice/novice.txt
+npc: npc/re/jobs/novice/supernovice_ex.txt
+// - Job Repairs
+npc: npc/re/jobs/repair.txt
+
+// ------------------------ Skill Quests ------------------------
+npc: npc/re/quests/skills/swordman_skills.txt

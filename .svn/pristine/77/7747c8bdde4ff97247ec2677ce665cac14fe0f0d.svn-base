@@ -1,0 +1,229 @@
+//===== rAthena Documentation ================================
+//= Item Database
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20130819
+//===== Description: =========================================
+//= Explanation of the item_db.txt file and structure.
+//============================================================
+
+---------------------------------------
+
+ID: Item id
+
+---------------------------------------
+
+AegisName: Server name to reference the item in scripts and lookups,
+           should use no spaces.
+
+---------------------------------------
+
+Name: Name in English for displaying as output for @ and script commands.
+
+---------------------------------------
+
+Type: 
+	0	Healing item.
+	2	Usable item.
+	3	Etc item
+	4	Armor/Garment/Boots/Headgear/Accessory
+	5	Weapon
+	6	Card
+	7	Pet egg
+	8	Pet equipment
+	10	Ammo (Arrows/Bullets/etc)
+	11	Usable with delayed consumption (intended for 'itemskill')
+		Items using the 'itemskill' script command are consumed after
+		selecting a target. Any other command will NOT consume the item.
+	12	Shadow Equipment
+	18	Another delayed consume that requires user confirmation before
+		using item.
+
+---------------------------------------
+
+Buy: Default buying price. When not specified, becomes double the sell price.
+
+---------------------------------------
+
+Sell: Default selling price. When not specified, becomes half the buy price.
+
+---------------------------------------
+
+Weight: Item's weight. Each 10 is 1 weight.
+
+---------------------------------------
+
+ATK: Weapon's attack
+
+MATK: Weapon's magic attack (Renewal only)
+
+---------------------------------------
+
+DEF: Armor's defense
+
+---------------------------------------
+
+Range: Weapon's attack range
+
+---------------------------------------
+
+Slots: Amount of slots the item possesses.
+
+---------------------------------------
+
+Job: Equippable jobs. Uses the following bitmask table:
+	(S.) Novice    (2^00): 0x00000001
+	Swordman       (2^01): 0x00000002
+	Magician       (2^02): 0x00000004
+	Archer         (2^03): 0x00000008
+	Acolyte        (2^04): 0x00000010
+	Merchant       (2^05): 0x00000020
+	Thief          (2^06): 0x00000040
+	Knight         (2^07): 0x00000080
+	Priest         (2^08): 0x00000100
+	Wizard         (2^09): 0x00000200
+	Blacksmith     (2^10): 0x00000400
+	Hunter         (2^11): 0x00000800
+	Assassin       (2^12): 0x00001000
+	Unused         (2^13): 0x00002000
+	Crusader       (2^14): 0x00004000
+	Monk           (2^15): 0x00008000
+	Sage           (2^16): 0x00010000
+	Rogue          (2^17): 0x00020000
+	Alchemist      (2^18): 0x00040000
+	Bard/Dancer    (2^19): 0x00080000
+	Unused         (2^20): 0x00100000
+	Taekwon        (2^21): 0x00200000
+	Star Gladiator (2^22): 0x00400000
+	Soul Linker    (2^23): 0x00800000
+	Gunslinger     (2^24): 0x01000000
+	Ninja          (2^25): 0x02000000
+	Gangsi         (2^26): 0x04000000
+	Death Knight   (2^27): 0x08000000
+	Dark Collector (2^28): 0x10000000
+	Kagerou/Oboro  (2^29): 0x20000000
+	Rebellion      (2^30): 0x40000000
+
+	Novice + Swordman + Magician + Archer = 0x0000000F, why?
+	Because: 10 = A, 11 = B, 12 = C, 13 = D, 14 = E, and 15 = F
+	It's using hexadecimal.
+
+---------------------------------------
+
+Class: Equippable upper-types. Uses the following bitmasks:
+	 1: Normal classes (no Baby/Transcendent/Third classes)
+	 2: Transcedent classes (no Transcedent-Third classes)
+	 4: Baby classes (no Third-Baby classes)
+	 8: Third classes (no Transcedent-Third or Third-Baby classes)
+	16: Transcedent-Third classes
+	32: Third-Baby classes
+
+---------------------------------------
+
+Gender: Gender restriction. 0 is female, 1 is male, 2 for both.
+
+---------------------------------------
+
+Loc: Equipment's placement. Values are:
+	2^8      256 = Upper Headgear
+	2^9      512 = Middle Headgear
+	2^0      001 = Lower Headgear
+	2^4      016 = Armor
+	2^1      002 = Weapon
+	2^5      032 = Shield
+	2^2      004 = Garment
+	2^6      064 = Footgear
+	2^3      008 = Accessory Right
+	2^7      128 = Accessory Left
+	2^10    1024 = Costume Top Headgear
+	2^11    2048 = Costume Mid Headgear
+	2^12    4096 = Costume Low Headgear
+	2^13    8192 = Costume Garment/Robe
+	2^15   32768 = Ammo
+	2^16   65536 = Shadow Armor
+	2^17  131072 = Shadow Weapon
+	2^18  262144 = Shadow Shield
+	2^19  524288 = Shadow Shoes
+	2^20 1048576 = Shadow Accessory Right (Earring)
+	2^21 2097152 = Shadow Accessory Left (Pendant)
+
+---------------------------------------
+
+wLV: Weapon level.
+
+---------------------------------------
+
+eLV: Base level required to be able to equip.
+
+maxLevel: Only able to equip if base level is lower than this.
+
+---------------------------------------
+
+Refineable: 1 if the item can be refined, 0 otherwise.
+
+---------------------------------------
+
+View: For normal items, defines a replacement view-sprite for the item (eg:
+      Making apples look like apple juice). The special case are weapons
+      and ammo where this value indicates the weapon-class of the item.
+
+	For weapons, the types are:
+		0: bare fist
+		1: Daggers
+		2: One-handed swords
+		3: Two-handed swords
+		4: One-handed spears
+		5: Two-handed spears
+		6: One-handed axes
+		7: Two-handed axes
+		8: Maces
+		9: Unused
+		10: Staves
+		11: Bows
+		12: Knuckles
+		13: Musical Instruments
+		14: Whips
+		15: Books
+		16: Katars
+		17: Revolvers
+		18: Rifles
+		19: Gatling guns
+		20: Shotguns
+		21: Grenade launchers
+		22: Fuuma Shurikens
+		23: Two-handed staves
+		24: Max Type
+		25: Dual-wield Daggers
+		26: Dual-wield Swords
+		27: Dual-wield Axes
+		28: Dagger + Sword
+		29: Dagger + Axe
+		30: Sword + Axe
+
+	For ammo, the types are:
+		1: Arrows
+		2: Throwable daggers
+		3: Bullets
+		4: Shells
+		5: Grenades
+		6: Shuriken
+		7: Kunai
+		8: Cannonballs
+		9: Throwable Items (Sling Item)
+
+---------------------------------------
+
+Script: Script to execute when the item is used/equipped.
+
+---------------------------------------
+
+OnEquip_Script: Script to execute when the item is equipped.
+                Warning, not all item bonuses will work here as expected.
+
+---------------------------------------
+
+OnUnequip_Script: Script to execute when the item is unequipped.
+                  Warning, not all item bonuses will work here as expected.
+
+---------------------------------------

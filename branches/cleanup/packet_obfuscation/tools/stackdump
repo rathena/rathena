@@ -1,0 +1,63 @@
+#!/bin/bash
+# !TODO upd me
+
+case "$1" in
+	map|char|login)
+		# Check for SQL postfix
+		if [ "$2" = "sql" ]; then
+			SERVER="$1-server_sql"
+		else
+			SERVER="$1-server"
+		fi
+		;;
+
+	*|""|help)
+		echo "Usage 1: ${0##*/} [server-type] [txt/sql]"
+		echo Server type can be map, login, or char. Examples:
+		echo "$ ./${0##*/} map"
+		echo "$ ./${0##*/} login sql"
+		echo
+		echo "Usage 2: ${0##*/} [server-type] [txt/sql] [number]"
+		echo Server type can be map, login, or char. Examples:
+		echo "$ ./${0##*/} map txt 0001"
+		echo "$ ./${0##*/} login sql 0002"
+		echo
+		echo Note: Dump files inside /log will also be scanned.
+		exit
+		;;
+esac
+
+# Check if server file needs .exe (Windows/Cygwin)
+if [ -e $SERVER.exe ]; then
+	SERVER="$SERVER.exe"
+elif [ ! -e $SERVER ]; then
+	echo Error: $SERVER not found!
+	exit
+fi
+
+# Assemble stackdump filename
+if [ $# -gt 2 ]; then
+	STACK="$SERVER$3.stackdump"
+else
+	STACK="$SERVER.stackdump"
+fi
+
+# Check if file exists.
+# Try looking under '/log' if it isn't
+
+if [ ! -e $STACK ]; then
+	if [ -e log/$STACK ]; then
+		STACK=log/$STACK
+	else
+		echo Error: $STACK not found!
+		exit
+	fi
+fi
+
+# Finally dump the backtrace
+# If number is given, Sig-plugin format. otherwise, standard stackdump format
+if [ $# -gt 2 ]; then
+	awk '$2 ~ /[0-9a-eA-E]\]$/{print $2}' $STACK | tr -d \[\] | addr2line -f -e $SERVER 
+else
+	awk '/^[0-9]/{print $2}' $STACK | addr2line -f -e $SERVER
+fi

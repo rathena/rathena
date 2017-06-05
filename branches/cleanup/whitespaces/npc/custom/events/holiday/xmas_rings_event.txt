@@ -1,0 +1,194 @@
+//===== rAthena Script =======================================
+//= Karachun Event (Xmas Rings Quest)
+//===== By: ==================================================
+//= Lupus (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project; SVN r4880+
+//===== Description: =========================================
+//= Custom event: Karachun (from 8 Dec till 8 Jan), X-Mas, HNY
+//===== Additional Comments: =================================
+//= 1.0 Tested, fully working. 1.0a a few typos fix
+//= 1.1 Readded Mdef +1 and  Luk +1 to Santa's Hat [Lupus]
+//= 1.2 Fixed double quotes not being escaped [brianluau]
+//============================================================
+
+prontera,156,174,4	script	Snower	713,{
+	mes "[Snower]";
+	if (Q_XMSRINGS == 2) {
+		mes "Oh... is it true? You've helped my sis Sneewy? Thank you.";
+	} else if (Q_XMSRINGS == 3) {
+		mes "Snoowy's sent me a bird with a message. She told me about your help...";
+		mes "I'll tell you a secret of the magic rings.";
+		emotion e_no1;
+		next;
+		mes "[Snower]";
+		mes "They have magic power only from 8 December till 8 January.";
+		next;
+		mes "[Snower]";
+		mes "By the way, just put on Santa's Hat to discover their true power.";
+		next;
+		mes "[Snower]";
+		mes "If you put on both rings their power would be doubled.";
+		mes "Have a nice day!";
+		close;
+	} else {
+		mes "Hi! Two my sisters and I are preparing gifts for the whole 3 holidays!";
+	}
+	emotion e_sob;
+	next;
+	menu "Where are your sisters?",-, "What holidays?",M_PR,"What gifts?",M_WRAP,"May I help you?",M_QUEST;
+
+	mes "[Snower]";
+	mes "My younger sis Sneewy's left to some faraway land to prepare gifts for their poor children... I don't know where. You should ask my elder sis and her birdies.";
+	next;
+	mes "[Snower]";
+	mes "My elder sis? Her name's Snoowy. She's sailed to some green island... She's talking about some gifts for dolphins or something...";
+	close;
+
+M_PR:
+	mes "[Snower]";
+	mes "The whole three holidays? Well they come one after another!";
+	mes "^000080The Christmas^000000, ^FF0000Karachun^000000 and ^008000New Year Eve^000000!";
+	next;
+	mes "[Snower]";
+	mes "^FF0000Karachun^000000? Heh... This is an old pagans festival. They used to celebrate it before the appearance of HNY and XMas, you know.";
+	next;
+	goto M_QUEST;
+
+M_WRAP:
+	mes "[Snower]";
+	mes "My sisters say that all the gifts should look the same way. Or else some children might fight for fancy ones!";
+	next;
+	mes "[Snower]";
+	mes "Would you like me to wrap your fancy gift boxes with a gray paper?";
+	next;
+	menu "Wrap them, please!",-, "No, thanks.",M_QUEST;
+
+	set @prizes, countitem(664)+countitem(665)+countitem(666)+countitem(667);
+	if (@prizes == 0) {
+		mes "[Snower]";
+		mes "I don't see any gifts in fancy boxes on you...";
+		if(countitem(644))mes "You've got only gray boxes.";
+		close;
+	}
+	delitem 664,countitem(664);
+	delitem 665,countitem(665);
+	delitem 666,countitem(666);
+	delitem 667,countitem(667);
+	getitem 644,@prizes;
+
+	mes "[Snower]";
+	mes "*shuffle* Here you go.";
+	next;
+
+M_QUEST:
+	mes "[Snower]";
+	mes "I wish you find my sisters ASAP... They need help.";
+	if (Q_XMSRINGS == 0) set Q_XMSRINGS,1;
+	close;
+
+OnInit:
+//Santa's Hat
+	setitemscript 2236,"{ bonus bMdef,1; bonus bLuk,1; if(isequipped(2636,2637)){if(@xmr == gettime(2))end; set @xmr,gettime(2); misceffect 410; end;} if(isequipped(2636)){if(@xmr == gettime(2))end; set @xmr,gettime(2); misceffect 72;} if(isequipped(2637)){if(@xmr == gettime(2))end; set @xmr,gettime(2); misceffect 338;}}";
+//Gold Xmas Ring
+	setitemscript 2636,"{ bonus bLoseSPWhenUnequip,30; if(isequipped(2236)==0)end; if(getskilllv(\"AL_HEAL\")){skill \"TF_HIDING\",4+isequipped(2637);}else{skill \"AL_HEAL\",1+4*isequipped(2637);} }";
+//Silver Xmas Ring
+	setitemscript 2637,"{ bonus bDamageWhenUnequip,40; if(isequipped(2236)==0)end; if(getskilllv(\"AL_TELEPORT\")){skill \"MC_IDENTIFY\",1;}else{skill \"AL_TELEPORT\",1+isequipped(2636);} }";
+	end;
+}
+
+louyang,224,249,4	script	Sneewy	717,{
+	mes "[Sneewy]";
+	if (Q_XMSRINGS == 0) {
+		mes "Hi! I'm waithing for my sister's birdy with mail...";
+		emotion e_sob;
+		close;
+	}
+	if (Q_XMSRINGS == 1) {
+		mes "I wish I had 4 more gray Gift Boxes for native children...";
+		emotion e_sob;
+		next;
+		mes "[Sneewy]";
+		mes "Oh, hello. Has my brother Snower told you everything?";
+		next;
+		menu "Here are your 4 Gift Boxes",-, "I don't know any Snowhatevers...",M_END;
+
+		mes "[Sneewy]";
+		if (countitem(644) < 4) {
+			mes "Gimme 4 gifts for poor kids... Wait, you haven't got 4 of them!";
+			emotion e_sry;
+			close;
+		}
+		set Q_XMSRINGS,2;
+		delitem 644,4;
+		getnameditem 2637,strcharinfo(0);
+		emotion e_kis2;
+		mes "Thank you! Here's my li'l something for you!";
+		next;
+		mes "[Sneewy]";
+		mes "By the way, if you put on 2 different rings then your holidays leveling would be easier!";
+		close;
+	}
+	emotion e_thx;
+	mes "Thanks again! No children will meet the holidays without the gifts!";
+	close;
+
+M_END:
+	mes "[Sneewy]";
+	mes "Pity... I've got a magic Santa's ring... I'd exchange it for 4 Gift Boxes...";
+	emotion e_swt;
+	close;
+}
+
+izlu2dun,133,160,2	script	Snoowy	714,{
+	mes "[Snoowy]";
+	if (Q_XMSRINGS == 0) {
+		mes "Helloooou! Do you know my bro and sis? How so? My brother Snower's well known in Prontera!! Just ask any child there.";
+		emotion e_hmm;
+		close;
+	}
+	if (Q_XMSRINGS == 1) {
+		mes "Darn... How could poor children be more important than the marine folks.. Am I wrong?";
+		next;
+		mes "[Snoowy]";
+		mes "Errr. Helloou there. My sister Sneewy's sent me a birdie message. The letter was wet and I couldn't read anything but some ending letters of her address...";
+		next;
+		mes "[Snoowy]";
+		mes "Look, it's something like 'yang' in the very end... Hmm... She must be misspelled 'Al Doo Boryang'...";
+		close;
+	}
+	if (Q_XMSRINGS == 2) {
+		mes "You've helped my sis? It's just great!";
+		next;
+		mes "[Snoowy]";
+		mes "But I too need 3 more gifts for my marine folk friends...";
+		next;
+		menu "Have these gifts!",-, "I need a li'l something in return",M_END;
+
+		mes "[Snoowy]";
+		if (countitem(644) < 3) {
+			mes "Oops!! You haven't got 3 gray gift boxes on you.";
+			emotion e_sry;
+			close;
+		}
+		set Q_XMSRINGS,3;
+		delitem 644,3;
+		getnameditem 2636,strcharinfo(0);
+		emotion e_kis;
+		mes "Thaank yoouu! Have this magic ring!";
+		close;
+	}
+	emotion e_thx;
+	mes "Oh... the whole marine folk send you their thanks! They love presents so much!!!";
+	if (rand(2))
+		mes "Didn't you know that Santa's Hat reveals the real power of the rings?";
+	close;
+
+M_END:
+	mes "[Snoowy]";
+	mes "I'd exchange a GOLD magic ring for 3 gift boxes...";
+	emotion e_swt;
+	close;
+}

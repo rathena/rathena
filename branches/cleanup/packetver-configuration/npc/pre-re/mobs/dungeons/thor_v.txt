@@ -1,0 +1,68 @@
+//===== rAthena Script =======================================
+//= Thor Volcano Monster Spawn Script
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official monster spawn in Thor Volcano Dungeon.
+//===== Additional Comments: =================================
+//= 1.0 Spawns according to RO Monthly and Doddler [Playtester]
+//= 1.1 Added Byorgue and Ifrit [Playtester]
+//= 1.2 Updated spawns according to RODE [Playtester]
+//= 1.3 More official spawns [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+// ================= [Thor Volcano - 01] =====================
+thor_v01,0,0,0,0	monster	Magmaring	1836,10,0,0,0
+thor_v01,0,0,0,0	monster	Fire Imp	1837,5,0,0,0
+thor_v01,0,0,0,0	monster	Fire Imp	1837,12,1800000,0,0
+thor_v01,80,255,65,35	monster	Fire Imp	1837,2,0,0,0
+thor_v01,240,250,50,30	monster	Fire Imp	1837,2,0,0,0
+thor_v01,90,100,50,50	monster	Fire Imp	1837,2,0,0,0
+thor_v01,210,110,50,30	monster	Fire Imp	1837,2,0,0,0
+thor_v01,0,0,0,0	monster	Kasa	1833,25,0,0,0
+thor_v01,80,255,65,35	monster	Kasa	1833,5,0,0,0
+thor_v01,240,250,50,30	monster	Kasa	1833,5,0,0,0
+thor_v01,90,100,50,50	monster	Kasa	1833,5,0,0,0
+thor_v01,210,110,50,30	monster	Kasa	1833,5,0,0,0
+thor_v01,0,0,0,0	monster	Sword Master	1829,5,420000,0,0
+thor_v01,0,0,0,0	monster	Bow Master	1830,5,420000,0,0
+thor_v01,0,0,0,0	monster	Salamander	1831,5,3600000,0,0
+thor_v01,0,0,0,0	monster	Byorgue	1839,1,3600000,0,0
+
+// ================= [Thor Volcano - 02] =====================
+thor_v02,0,0,0,0	monster	Magmaring	1836,10,0,0,0
+thor_v02,0,0,0,0	monster	Fire Imp	1837,5,0,0,0
+thor_v02,75,125,50,85	monster	Fire Imp	1837,3,0,0,0
+thor_v02,168,162,50,50	monster	Fire Imp	1837,2,0,0,0
+thor_v02,0,0,0,0	monster	Kaho	1072,5,0,0,0
+thor_v02,75,125,50,85	monster	Kaho	1072,3,0,0,0
+thor_v02,168,162,50,50	monster	Kaho	1072,2,0,0,0
+thor_v02,0,0,0,0	monster	Knocker	1838,20,0,0,0
+thor_v02,75,125,50,85	monster	Knocker	1838,20,0,0,0
+thor_v02,168,162,50,50	monster	Knocker	1838,15,0,0,0
+thor_v02,0,0,0,0	monster	Salamander	1831,1,18000000,0,0
+thor_v02,0,0,0,0	monster	Sword Master	1829,1,7200000,0,0
+thor_v02,0,0,0,0	monster	Bow Master	1830,1,7200000,0,0
+
+// ================= [Thor Volcano - 03] =====================
+thor_v03,0,0,0,0	monster	Kasa	1833,16,0,0,0
+thor_v03,95,220,64,55	monster	Kasa	1833,6,0,0,0
+thor_v03,223,224,65,60	monster	Kasa	1833,6,0,0,0
+thor_v03,80,90,60,60	monster	Kasa	1833,6,0,0,0
+thor_v03,218,81,60,60	monster	Kasa	1833,6,0,0,0
+thor_v03,0,0,0,0	monster	Salamander	1831,20,0,0,0
+thor_v03,95,220,64,55	monster	Salamander	1831,10,0,0,0
+thor_v03,223,224,65,60	monster	Salamander	1831,10,0,0,0
+thor_v03,80,90,60,60	monster	Salamander	1831,10,0,0,0
+thor_v03,218,81,60,60	monster	Salamander	1831,10,0,0,0
+thor_v03,0,0,0,0	monster	Sword Master	1829,5,0,0,0
+thor_v03,0,0,0,0	monster	Sword Master	1829,5,1800000,0,0
+thor_v03,0,0,0,0	monster	Bow Master	1830,5,0,0,0
+thor_v03,0,0,0,0	monster	Bow Master	1830,5,1800000,0,0
+thor_v03,0,0,0,0	monster	Byorgue	1839,5,1800000,0,0
+thor_v03,0,0,0,0	boss_monster	Ifrit	1832,1,39600000,600000,0

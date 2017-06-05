@@ -1,0 +1,56 @@
+//===== rAthena Script =======================================
+//= Lou Yang Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 6.0+
+//===== Description: =========================================
+//= [Official Conversion]
+//= Warp Points for Louyang
+//===== Additional Comments: =================================
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+louyang,218,19,0	warp	lou_fild1-1	1,1,lou_fild01,233,353
+lou_fild01,233,356,0	warp	lou_fild1-2	1,1,louyang,218,22
+louyang,218,255,0	warp	lou_palace1-1	1,1,lou_in01,101,122
+lou_in01,101,119,0	warp	lou_palace1-2	1,1,louyang,218,252
+lou_in01,153,141,0	warp	lou_palace2-1	1,1,lou_in01,122,141
+lou_in01,125,141,0	warp	lou_palace2-2	1,1,lou_in01,156,141
+louyang,280,167,0	warp	lou_pub1-1	1,1,lou_in02,58,173
+lou_in02,58,170,0	warp	lou_pub1-2	1,1,louyang,280,164
+lou_in02,35,190,0	warp	lou_pub2-1	1,1,lou_in02,41,138
+lou_in02,44,138,0	warp	lou_pub2-2	1,1,lou_in02,37,190
+lou_in02,80,190,0	warp	lou_pub3-1	1,1,lou_in02,73,140
+lou_in02,71,140,0	warp	lou_pub3-2	1,1,lou_in02,77,190
+louyang,145,174,0	warp	lou_weapon1-1	1,1,lou_in02,126,168
+lou_in02,126,165,0	warp	lou_weapon1-2	1,1,louyang,145,171
+louyang,136,97,0	warp	lou_tool1-1	1,1,lou_in02,247,171
+lou_in02,249,173,0	warp	lou_tool1-2	1,1,louyang,136,99
+louyang,263,93,0	warp	lou_hospital1-1	1,1,lou_in02,245,59
+lou_in02,242,59,0	warp	lou_hospital1-2	1,1,louyang,260,93
+louyang,309,80,0	warp	lou_office1-1	1,1,lou_in02,189,77
+lou_in02,189,74,0	warp	lou_office1-2	1,1,louyang,309,77
+lou_in02,201,94,0	warp	lou_office2-1	1,1,lou_in02,173,46
+lou_in02,176,46,0	warp	lou_office2-2	1,1,lou_in02,203,94
+louyang,130,63,0	warp	lou_house11-1	1,1,lou_in02,72,31
+lou_in02,72,28,0	warp	lou_house11-2	1,1,louyang,130,60
+louyang,317,176,0	warp	lou_house21-1	1,1,lou_in02,121,31
+lou_in02,121,28,0	warp	lou_house21-2	1,1,louyang,317,173
+louyang,133,245,0	warp	lou_tower1-1	1,1,lou_in01,25,19
+lou_in01,28,19,0	warp	lou_tower1-2	1,1,louyang,136,245
+
+lou_in01,14,18,0	warp	lou_Towerexit	1,1,louyang,90,254
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Added 2 escapes from 2 mountains 018,019 [Lupus]
+//=     Some players used to stuck there after warps
+//= 1.2 Added a few missing warps [MasterOfMuppets]
+//= 1.3 Fixed a few warp-back [erKURITA]
+//= 1.4 Moved some quest-related warps to proper file. [SinSloth]
+//= 1.4a Corrected some broken warp points. (bugreport:497) [Samuray22]
+//============================================================

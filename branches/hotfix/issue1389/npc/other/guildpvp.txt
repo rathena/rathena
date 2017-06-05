@@ -1,0 +1,56 @@
+//===== rAthena Script ======================================= 
+//= Guild Battle NPC
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guild Battle with PVP mechanics.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Optimized. [Euphy]
+//============================================================ 
+
+pvp_y_room,77,85,4	script	Guild Battle Guide	105,{
+
+	setarray .@map1X[1],7,9,16,8,20;
+	setarray .@map2X[1],91,90,83,91,79;
+	setarray .@mapY[1],49,49,50,49,50;
+
+	mes "[Guild Battle Guide]";
+	mes "How are you doing?";
+	mes "I'm the Guild Battle Guide";
+	mes "for the new PvP maps.";
+	mes "Let me know to which map";
+	mes "you want me to move you.";
+	next;
+	set .@i, select("Map 1:Map 2:Map 3:Map 4:Map 5");
+	mes "[Guild Battle Guide]";
+	mes "You've chosen Map "+.@i+".";
+	mes "Now, which team are";
+	mes "you on? You can choose";
+	mes "either Team 1 or Team 2.";
+	next;
+	set .@j, select("Team 1:Team 2");
+	mes "[Guild Battle Guide]";
+	mes "Alright, I'll move you";
+	mes "to Map "+.@i+" as a member";
+	mes "of Team "+.@j+". Are you ready";
+	mes "to be transported there now?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[Guild Battle Guide]";
+		mes "Alright, I hope to";
+		mes "see you again on";
+		mes "the PvP fields!";
+		close;
+	}
+	mes "[Guild Battle Guide]";
+	mes "Great! Have a good time~";
+	close2;
+	warp "guild_vs"+.@i,getd(".@map"+.@j+"X["+.@i+"]"),.@mapY[.@i];
+	end;
+}

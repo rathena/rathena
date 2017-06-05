@@ -1,0 +1,184 @@
+//===== rAthena Documentation ================================
+//= Item Database
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20131223
+//===== Description: =========================================
+//= Explanation of the item_group.txt file and structure.
+//============================================================
+
+Items within an item group can be retrieved through the 'groupranditem',
+'getrandgroupitem', and 'getgroupitem' script commands.
+The table below explains which fields are accessed in each.
+
++===============+=================+====================+================+
+| Field         | 'groupranditem' | 'getrandgroupitem' | 'getgroupitem' |
++===============+=================+====================+================+
+| GroupID       |       YES       |        YES         |      YES       |
++===============+=================+====================+================+
+| ItemID        |       YES       |        YES         |      YES       |
++===============+=================+====================+================+
+| Rate          |       YES       |        YES         |      YES       |
++===============+=================+====================+================+
+| Amount        |       no        |     OPTIONAL       |      YES       |
++===============+=================+====================+================+
+| Random        |    OPTIONAL     |     OPTIONAL       |      YES       |
++===============+=================+====================+================+
+| isAnnounced   |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| Duration      |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| GUID          |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| isBound       |       no        |        no          |      YES       |
++===============+=================+====================+================+
+| isNamed       |       no        |        no          |      YES       |
++===============+=================+====================+================+
+
+---------------------------------------
+
+GroupID: See the "Item Group ID" section in 'db/const.txt'.
+         Supports IG_* constants.
+
+---------------------------------------
+
+ItemID: Available item_id that will be obtained from this item group.
+        Supports AegisName of the item.
+
+---------------------------------------
+
+Rate: Probability to get the item. Not a percentage value!
+
+Examples:
+	IG_MyItemGroup,Knife,5
+	IG_MyItemGroup,Dagger,1
+
+	- Knife has chance 5/6 (83.3%) to be obtained
+	- Dagger has chance 1/6 (16.7%) to be obtained
+
+---------------------------------------
+
+Amount: Amount of item that will be obtained.
+
+---------------------------------------
+
+Random: Set this to '0' and the item will always be obtained ("must" item).
+		Random value will allocates where the item will be stored at random group.
+		(max. random group is 4, defined as MAX_ITEMGROUP_RANDGROUP in 'src/map/itemdb.c'.)
+
+	Item Group:
+		IG_MyItemGroup,Knife,0,1,0		//a "must" item
+		IG_MyItemGroup,Dagger,0,1,0		//a "must" item
+		IG_MyItemGroup,Stiletto,5,1,1	//random at group 1
+		IG_MyItemGroup,Stiletto_,2,1,1	//random at group 1
+		IG_MyItemGroup,Stiletto,5,1,2	//random at group 2
+		IG_MyItemGroup,Dagger_,4,1,2	//random at group 2
+
+	Usages:
+	getgroupitem(<group_id>)
+	------------
+	-> 'getgroupitem(IG_MyItemGroup);'
+		- Player always gets 1x Knife and 1x Dagger
+		- Player has chance to get 1x Stiletto by chance 5/7 from group 1
+		- Player has chance to get 1x Stiletto_ by chance 2/7 from group 1
+		- Player has chance to get 1x Stiletto by chance 5/9 from group 2
+		- Player has chance to get 1x Dagger_ by chance 4/9 from group 2
+
+	getrandgroupitem(<group_id>{,<quantity>{,<sub_group>}})
+	------------
+	-> 'getrandgroupitem(IG_MyItemGroup);'
+		- Random Group: 1, Amount: [Based on list]
+		- Equals to: getrandgroupitem(IG_MyItemGroup,0) and getrandgroupitem(IG_MyItemGroup,0,1)
+		- Player has chance to get 1x Stiletto by chance 5/7 from group 1
+		- Player has chance to get 1x Stiletto_ by chance 2/7 from group 1
+		- 'must' and 'group 2' are ignored
+
+	-> 'getrandgroupitem(IG_MyItemGroup,1);'
+		- Random Group: 1, Amount: 2, ignore 'amount' on the list
+		- Equals to: getrandgroupitem(IG_MyItemGroup,1,1)
+		- Player has chance to get 2x Stiletto by chance 5/7 from group 1
+		- Player has chance to get 2x Stiletto_ by chance 2/7 from group 1
+		- 'must' and 'group 2' are ignored
+
+	-> 'getrandgroupitem(IG_MyItemGroup,3,0);'
+		- Random Group: 'must', Amount: 2, ignore 'amount' on the list
+		- Player has chance to get 3x Knife by chance 1/2 from 'must' group
+		- Player has chance to get 3x Dagger by chance 1/2 from 'must' group
+		- 'group 1' and 'group 2' are ignored
+
+	groupranditem(<group id>{,<sub_group>})
+	------------
+	This command only returns an Item ID from random group. Combine with 'getitem'
+	to retrieve the items.
+	-> 'groupranditem(IG_MyItemGroup);'
+		- Random Group: 1
+		- Returns Item ID of Stiletto by chance 5/7 from group 1
+		- Returns Item ID of Stiletto_ by chance 2/7 from group 1
+		- 'must' and 'group 2' are ignored
+	-> 'groupranditem(IG_MyItemGroup,0);'
+		- Random Group: 0
+		- Returns Item ID of Knife by chance 5/7 from 'must' group
+		- Returns Item ID of Dagger by chance 2/7 from 'must' group
+		- 'group 1' and 'group 2' are ignored
+
+	-----------------------------------------
+
+		If the 'Rate' for random '0' is not 0 (more than 0), that means this item
+		also can be obtained as random item.
+		If you want the "must" item only can be obtained without random chance,
+		change the 'Rate' for this item to 0.
+
+	Example:
+		IG_MyItemGroup2,Knife,0,1,0
+		IG_MyItemGroup2,Dagger,5,1,0
+		IG_MyItemGroup2,Stiletto,2,1,1
+
+	-> usage: 'getgroupitem(IG_MyItemGroup2);'
+		- 1x Knife always be obtained
+		- 1x Dagger always be obtained and also has chance to get 1 more by
+		  chance 5/7
+		- 1x Stiletto can be obtained by chance 2/7
+		result -> player will get 1x Knife, 1x Dagger, and 1x Dagger or 1x Stiletto
+
+	-> usage: 'getrandgroupitem(IG_MyItemGroup2,1);' (Ignores 'Amount' field)
+		- 1x Knife never be obtained!
+		- 1x Dagger can be obtained by chance 5/7
+		- 1x Stiletto can be obtained by chance 2/7
+		result -> player will get only 1x Dagger or 1x Stiletto
+
+---------------------------------------
+
+isAnnounced: If player obtained this item, it will be broadcast to the server.
+             "[Player] has won [Item] from 'Box'"
+
+---------------------------------------
+
+Duration: Makes the item a rental item, which will be expire in the given amount
+          of minutes. Not intended for use with stackable items.
+
+---------------------------------------
+
+GUID: Makes the given item(s) with Unique ID. Item will be stacked ONLY each group
+      when it obtained. Cannot be stacked with same item, even it's stackable item.
+	  Example, there is Box (just call it Apple_Box) that contains 3x Apples with
+	  GUID = 1. When Apples appear it will stack for each 3 even another 3x Apples
+	  are appeared by same box. So it will be filled in inventory as:
+	          3x Apples | 3x Apples | so on... | nx Apples (normal)
+
+---------------------------------------
+
+isBound: Binds the obtained item.
+         See 'getitembound' in 'doc/script_commands.txt' for valid bound types.
+
+---------------------------------------
+
+isNamed: Inscribes the item with the obtainer's name.
+
+---------------------------------------
+
+Supports to import other file, usage:
+import: db/path/filename.txt
+
+Example:
+import: db/re/item_bluebox.txt

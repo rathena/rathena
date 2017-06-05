@@ -1,0 +1,37 @@
+//===== rAthena Script =======================================
+//= Sample: Chat Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20121003
+//===== Description: ========================================= 
+//= Demonstrates waitingroom commands.
+//============================================================
+
+prontera,158,182,0	script	Chat Test::test0001	116,{
+	mes "Trigger Number: " + getwaitingroomstate(2);
+	mes "Trigger State: " + getwaitingroomstate(3);
+	switch(select("Enable:Disable:Delete:Create")) {
+	case 1:
+		enablewaitingroomevent;
+		close;
+	case 2:
+		disablewaitingroomevent;
+		close;
+	case 3:
+		delwaitingroom;
+		close;
+	case 4:
+		waitingroom "Test",15,"test0001::OnChatEvent",1;
+		close;
+	}
+
+OnInit:
+	waitingroom "Test",15,"test0001::OnChatEvent",1;
+	end;
+
+OnChatEvent:
+	disablewaitingroomevent;
+	warpwaitingpc "prontera",160,180;
+	end;
+}

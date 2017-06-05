@@ -1,0 +1,167 @@
+//===== rAthena Script =======================================
+//= War of Emperium Treasure Rooms for NGuild Guild Castles
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.3b
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 4+
+//===== Description: =========================================
+//=
+//===== Additional Comments: =================================
+//= Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
+//= 1.2 Official treasure spawn [Lupus]
+//= 1.3 Added F_GldTreas function. (bugreport:1788) [L0ne_W0lf]
+//= 1.3b Added F_GldTreasSw function. (bugreport:3292) [brianluau]
+//============================================================
+
+
+//================================================
+// Treasure Spawning Function
+//================================================
+function	script	F_GldTreas	{
+	if(getarg(10) !=  1) {
+		setcastledata getarg(0),4,0;
+		setcastledata getarg(0),5,0;
+
+		// Why on earth are we killing old treasure chest spawns?
+		//killmonster getarg(0),"Treasure_"+getarg(1)+"::OnDied";
+
+		// Don't spawn treasures if Castle is empty, or Eco is greater than 100
+		if(GetCastleData(getarg(0),2) > 100 || GetCastleData(getarg(0),1) == 0) return;
+
+		// Only spawn one treasure chest for novice castles.
+		if (compare(getarg(0),"nguild"))
+			set getarg(2),1;
+		else
+			set getarg(2),GetCastleData(getarg(0),2)/5+4;
+
+		if (getarg(2) <= 0) return;
+
+		//sets the counter variable = to the box number amount
+		set getarg(3), getarg(2);
+	}
+	for (set .@i,1; .@i <= getarg(3) ; set .@i,.@i+1) {
+		// set treasure box ID
+		set getarg(4), getarg(5) + (.@i+1) % 2;
+		areamonster getarg(0),getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
+	}
+	return;
+}
+
+//==============================================================
+//  Treasure Room Switch 
+//===============================================================
+function	script	F_GldTreasSw	{
+	mes " ";
+	mes "There's a small lever. Will you pull it?";
+	next;
+
+	if (select("Pull.:Do not.") == 1) {
+		warp getarg(0),getarg(1),getarg(2);
+		return;
+	}
+	close;
+}
+
+//<=============================== Castle 1 =================================>\\
+
+// Treasure Spawn -----------------------
+nguild_alde,1,1,1	script	Treasure_N01	-1,{
+
+OnRecvCastleN01:
+	end;
+OnInit:
+	if($boxNumN01 == 0) end;
+	set $@bxN01, $boxNumN01;
+	callfunc "F_GldTreas","nguild_alde","N01",$boxNumN01,$@bxN01,$@boxIdN01,1324+rand(10),114,218,123,227,1;
+	end;
+
+OnDied:
+	mapannounce "nguild_alde","Treasure Chest Broken Open",17;
+	set $boxNumN01, $boxNumN01 -1;
+	if($boxNumN01 == 0) mapannounce "nguild_alde", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	end;
+}
+
+// Treasure Room Switch --------------------
+nguild_alde,123,223,0	script	Switch#TresN01	111,{
+	callfunc "F_GldTreasSw", "nguild_alde",218,176;
+	end;
+}
+
+//<================================ Castle 2 ================================>\\
+
+// Treasure Spawn ----------------------------
+nguild_gef,1,1,1	script	Treasure_N02	-1,{
+
+OnRecvCastleN02:
+	end;
+OnInit:
+	if($boxNumN02 == 0) end;
+	set $@bxN02, $boxNumN02;
+	callfunc "F_GldTreas","nguild_gef","N02",$boxNumN02,$@bxN02,$@boxIdN02,1334+rand(10),150,108,158,114,1;
+	end;
+
+OnDied:
+	mapannounce "nguild_gef","Treasure Chest Broken Open",17;
+	set $boxNumN02, $boxNumN02 -1;
+	if($boxNumN02 == 0) mapannounce "nguild_gef", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	end;
+}
+
+// Room Switch ---------------------------------------------------------
+nguild_gef,152,117,0	script	Switch#TresN02	111,{
+	callfunc "F_GldTreasSw","nguild_gef",40,49;
+	end;
+}
+
+//<================================ Castle 3 ================================>\\
+
+// Treasure Spawn ---------------------------
+nguild_pay,1,1,0	script	Treasure_N03	-1,{
+OnRecvCastleN03:
+	end;
+OnInit:
+	if($boxNumN03 == 0) end;
+	set $@bxN03, $boxNumN03;
+	callfunc "F_GldTreas","nguild_pay","N03",$boxNumN03,$@bxN03,$@boxIdN03,1344+rand(10),286,4,295,13,1;
+	end;
+
+OnDied:
+	mapannounce "nguild_pay","Treasure Chest Broken Open",17;
+	set $boxNumN03, $boxNumN03 -1;
+	if($boxNumN03 == 0) mapannounce "nguild_pay", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	end;
+}
+
+// Treasure Room Switch ---------------------------------------------------
+nguild_pay,295,8,0	script	Switch#TresN03	111,{
+	callfunc "F_GldTreasSw", "nguild_pay",120,59;
+	end;
+}
+
+//<================================ Castle 4 ================================>\\
+
+// Treasure Spawn -------------------------------
+nguild_prt,1,1,0	script	Treasure_N04	-1,{
+OnRecvCastleN04:
+	end;
+OnInit:
+	if($boxNumN04 == 0) end;
+	set $@bxN04, $boxNumN04;
+	callfunc "F_GldTreas","nguild_prt","N04",$boxNumN04,$@bxN04,$@boxIdN04,1354+rand(10),6,204,15,213,1;
+	end;
+
+OnDied:
+	mapannounce "nguild_prt","Treasure Chest Broken Open",17;
+	set $boxNumN04, $boxNumN04 -1;
+	if($boxNumN04 == 0) mapannounce "nguild_prt", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	end;
+}
+
+// Treasure Room Switch ----------------------------------------------------
+nguild_prt,15,209,0	script	Switch#TresN04	111,{
+	callfunc "F_GldTreasSw", "nguild_prt",109,179;
+	end;
+}

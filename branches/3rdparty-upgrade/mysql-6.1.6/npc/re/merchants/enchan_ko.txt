@@ -1,0 +1,528 @@
+//===== rAthena Script =======================================
+//= Kagerou/Oboro Gear Enchants
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Adds enchantments to Kagerou/Oboro gear.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Main NPC :: job_ko
+//============================================================
+que_ng,75,20,3	script	Artisan Tene#ko	762,{
+	disable_items;
+	mes "[Artisan Tene]";
+	mes "Hello? I'm Artisan Tene, the most respectful blacksmith of them all.";
+	next;
+	mes "[Artisan Tene]";
+	mes "How may I help you?";
+	next;
+	switch(select("Which blacksmith?:I want to add option.:I want to remove option.")) {
+	case 1:
+		mes "[Artisan Tene]";
+		mes "Oh! Sorry, I didn't introduce myself.";
+		next;
+		mes "[Artisan Tene]";
+		mes "I can add or remove options from some weapons and armor at a small price.";
+		next;
+		mes "[Artisan Tene]";
+		mes "Oh! Do you want to know the list of weapons and armor I work on?";
+		next;
+		switch(select("Take a look at the weapon list.:Take a look at the armor list.")) {
+		case 1:
+			mes "[Artisan Tene]";
+			mes "Are you interested in the weapon list?";
+			next;
+			mes "[Artisan Tene]";
+			mes "The weapons I work on are ";
+			mes "^ff0000Raksasa Dagger [1]^000000";
+			mes "^ff0000Mikatsuki[1]^000000";
+			mes "^ff0000Huuma Swirling Petal [2]^000000";
+			mes "^ff0000Huuma Fluttering Snow^000000";
+			mes "^ff0000Huuma Thunderstorm^000000";
+			next;
+			break;
+		case 2:
+			mes "[Artisan Tene]";
+			mes "Are you interested in the armor list?";
+			next;
+			mes "[Artisan Tene]";
+			mes "The armor I work on is";
+			mes "^ff0000Wolf Armguard [1]^000000";
+			mes "^ff0000Crescent Armguard [1]^000000";
+			mes "^ff0000Ninja Scale Armor [1]^000000";
+			mes "^ff0000Tenebris Latitantes [1]^000000";
+			mes "^ff0000Special Ninja Suit [1]^000000";
+			next;
+			break;
+		}
+		mes "[Artisan Tene]";
+		mes "This is it. I'm still in practice to learn and handle more battlegear.";
+		next;
+		mes "[Artisan Tene]";
+		mes "If you'd like, I can add options to your 4th and 3rd Slots at a small cost.";
+		close;
+	case 2:
+		mes "[Artisan Tene]";
+		mes "Oh! You need to add an option.";
+		mes "I use the method of adding options to your 4th and 3rd slots of battlegear equipped.";
+		next;
+		mes "[Artisan Tene]";
+		mes "Since I use a stable and unique way of adding options, there are no risks of ^ff0000'Reset Refine'^000000 or ^ff0000'Losing Cards'^000000 equipped.";
+		next;
+		mes "[Artisan Tene]";
+		mes "But since the costs of materials are high, I only ask for a ^5565AA small cost^000000 for my services with the exception of the material expenses.";
+		next;
+		mes "[Artisan Tene]";
+		mes "Ha ha. I must have talked too much. Which class of equipment do you want to add an option to?";
+		next;
+		switch(select("Weapon...:Armor...")) {
+		case 1:
+			mes "[Artisan Tene]";
+			mes "So you want to add an option to your weapon. That will be ^ff0000100,000 Zeny for a 1 time service.^000000";
+			next;
+			mes "[Artisan Tene]";
+			mes "^FF0000Ah! I can add an additional option if you equip a one-handed weapon on your right hand because it is easier for me to work on.^000000";
+			next;
+			mes "[Artisan Tene]";
+			mes "Which weapon do you want to add an option to?";
+			next;
+			switch(select("Later...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm")) {
+			case 1:
+				mes "[Artisan Tene]";
+				mes "Changed your mind? Very well. Hope to see you later.";
+				close;
+			case 2:
+				set .@equip_id,13076; //Raksasa_Dagger
+				break;
+			case 3:
+				set .@equip_id,13078; //Mikatsuki
+				break;
+			case 4:
+				set .@equip_id,13313; //Huuma_Swirling_Petal
+				break;
+			case 5:
+				set .@equip_id,13314; //Huuma_Fluttering_Snow
+				break;
+			case 6:
+				set .@equip_id,13315; //Huuma_Thunderstorm
+				break;
+			}
+			set .@part, EQI_HAND_R;
+			break;
+		case 2:
+			mes "[Artisan Tene]";
+			mes "So you want to add an option to your armor. That will be ^ff0000100,000 Zeny for a 1 time service.^000000";
+			next;
+			mes "[Artisan Tene]";
+			mes "Which armor do you want to add an option to?";
+			next;
+			switch(select("Later...:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
+			case 1:
+				mes "[Artisan Tene]";
+				mes "Changed your mind? Very well. Hope to see you later.";
+				close;
+			case 2:
+				set .@part, EQI_HAND_L;
+				set .@equip_id,2172; //Wolf_Armguard
+				break;
+			case 3:
+				set .@part, EQI_HAND_L;
+				set .@equip_id,2173; //Crescent_Armguard
+				break;
+			case 4:
+				set .@part, EQI_ARMOR;
+				set .@equip_id,15054; //Ninja_Scale_Armor
+				break;
+			case 5:
+				set .@part, EQI_ARMOR;
+				set .@equip_id,15055; //Tenebris_Latitantes
+				break;
+			case 6:
+				set .@part, EQI_ARMOR;
+				set .@equip_id,15056; //Special_Ninja_Suit_
+				break;
+			}
+			break;
+		}
+		set .@select,1;
+		break;
+	case 3:
+		mes "[Artisan Tene]";
+		mes "You want to remove an option from your item. You didn't like the option?";
+		next;
+		mes "[Artisan Tene]";
+		mes "Sorry but I'm not experienced enough. You've paid me for nothing.";
+		next;
+		mes "[Artisan Tene]";
+		mes "^ff0000Removing an option will be 100,000 Zeny.^000000 Which option from the list of items do you want to remove?";
+		next;
+		switch(select("Later...:Raksasa Dagger [1]:Mikatsuki [1]:Huuma Swirling Petal [2]:Huuma Fluttering Snow:Huuma Thunderstorm:Wolf Armguard [1]:Crescent Armguard [1]:Ninja Scale Armor [1]:Tenebris Latitantes [1]:Special Ninja Suit [1]")) {
+		case 1:
+			mes "[Artisan Tene]";
+			mes "Removing options is expensive, isn't it? Sorry. I will work harder in developing my skills and bring down costs as well.";
+			close;
+		case 2:
+			set .@part, EQI_HAND_R;
+			set .@equip_id,13076; //Raksasa_Dagger
+			break;
+		case 3:
+			set .@part, EQI_HAND_R;
+			set .@equip_id,13078; //Mikatsuki
+			break;
+		case 4:
+			set .@part, EQI_HAND_R;
+			set .@equip_id,13313; //Huuma_Swirling_Petal
+			break;
+		case 5:
+			set .@part, EQI_HAND_R;
+			set .@equip_id,13314; //Huuma_Fluttering_Snow
+			break;
+		case 6:
+			set .@part, EQI_HAND_R;
+			set .@equip_id,13315; //Huuma_Thunderstorm
+			break;
+		case 7:
+			set .@part, EQI_HAND_L;
+			set .@equip_id,2172; //Wolf_Armguard
+			break;
+		case 8:
+			set .@part, EQI_HAND_L;
+			set .@equip_id,2173; //Crescent_Armguard
+			break;
+		case 9:
+			set .@part, EQI_ARMOR;
+			set .@equip_id,15054; //Ninja_Scale_Armor
+			break;
+		case 10:
+			set .@part, EQI_ARMOR;
+			set .@equip_id,15055; //Tenebris_Latitantes
+			break;
+		case 11:
+			set .@part, EQI_ARMOR;
+			set .@equip_id,15056; //Special_Ninja_Suit_
+			break;
+		}
+		mes "[Artisan Tene]";
+		mes "You want to reset ^44B7BC" + getitemname(.@equip_id) + "^000000?";
+		next;
+		mes "[Artisan Tene]";
+		mes "The cost is the same but I do provide a service to remove only the option on the 3rd slot and leave the 4th slot as is. Are you interested?";
+		next;
+		switch(select("Reset only the 3rd Slot.:Reset all.")) {
+		case 1:
+			mes "[Artisan Tene]";
+			mes "Very well. I will reset only your 3rd slot.";
+			next;
+			set .@sot03_ck,1;
+			break;
+		case 2:
+			mes "[Artisan Tene]";
+			mes "Very well. I will reset all slots.";
+			next;
+			break;
+		}
+		set .@select,2;
+		break;
+	}
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Artisan Tene]";
+		mes "You will have to equip all items before ^44B7BC" + getitemname(.@equip_id) + "^000000.";
+		close;
+	}
+	if (Zeny < 100000) {  //custom translation
+		mes "[Artisan Tene]";
+		mes "I'm sorry, but you don't have enough Zeny!";
+		next;
+		mes "[Artisan Tene]";
+		mes "Our charge is very low, so please bear with me.";
+		close;
+	}
+	if (getequipid(.@part) != .@equip_id) {
+		mes "[Artisan Tene]";
+		mes "I don't think this is the equipment you requested.";
+		next;
+		mes "[Artisan Tene]";
+		mes "I cannot work on equipment other than those from my list.";
+		close;
+	}
+
+	set .@equip_refine, getequiprefinerycnt(.@part);
+	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+
+	// Initialization
+	if (.@select == 2) {
+		if (.@sot03_ck) {
+			if (.@equip_card[2] < 4700) { // Armor Enchant System
+				mes "[Artisan Tene]";
+				mes "The third slot is is not enchanted. Please check again."; //custom translation
+				close;
+			}
+			set .@equip_card[2],0;
+		} else {
+			if (.@equip_card[3] < 4700) { // Armor Enchant System
+				mes "[Artisan Tene]";
+				mes "This equipment is is not enchanted. Please check again."; //custom translation
+				close;
+			}
+			set .@equip_card[2],0;
+			set .@equip_card[3],0;
+		}
+		progressbar "ffff00",2;
+		set Zeny, Zeny - 100000;
+		delequip .@part;
+
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		mes "[Artisan Tene]";
+		mes "Initialization complete.";
+		close;
+	}
+
+	// Enchantment
+	     if (.@equip_refine <= 4)  set .@ko_type01,1;
+	else if (.@equip_refine <= 7)  set .@ko_type01,2;
+	else if (.@equip_refine <= 9)  set .@ko_type01,3;
+	else if (.@equip_refine <= 12) set .@ko_type01,4;
+	else                           set .@ko_type01,5;
+
+	//custom translations
+	if (.@equip_card[3] >= 4700) { // Armor Enchant System
+		if (.@equip_card[2] >= 4700) {
+			mes "[Artisan Tene]";
+			mes "This equipment cannot be further enchanted.";
+			next;
+			mes "[Artisan Tene]";
+			mes "If you are not satisfied with the enchantments, I suggest that you initialize.";
+			close;
+		} else {
+			mes "[Artisan Tene]";
+			mes "The fourth slot has already been enchanted. Shall I enchant the third slot as well?";
+			next;
+			if(select("Do it later:Do it now") == 1) {
+				mes "[Artisan Tene]";
+				mes "Very well. Hope to see you later.";
+				close;
+			}
+			mes "[Artisan Tene]";
+			mes "Starting to enchant the third slot.";
+			next;
+			set .@ko_type02,2;
+		}
+	} else {
+		mes "[Artisan Tene]";
+		mes "This equipment is not currently enchanted. Shall I enchant the fourth slot?";
+		next;
+		if(select("Do it later:Do it now") == 1) {
+			mes "[Artisan Tene]";
+			mes "Very well. Hope to see you later.";
+			close;
+		}
+		mes "[Artisan Tene]";
+		mes "Starting to enchant the fourth slot.";
+		next;
+		set .@ko_type02,1;
+	}
+	if (.@ko_type02 == 1) {  // slot 4
+		set .@r, rand(1,1000);
+		switch (.@ko_type01) {
+		case 1:
+			     if (.@r <= 200) set .@e_socket04,4786; //Mdef2
+			else if (.@r <= 350) set .@e_socket04,4787; //Mdef4
+			else if (.@r <= 450) set .@e_socket04,4788; //Mdef6
+			else if (.@r <= 500) set .@e_socket04,4789; //Mdef8
+			else if (.@r <= 700) set .@e_socket04,4791; //Def3
+			else if (.@r <= 850) set .@e_socket04,4792; //Def6
+			else if (.@r <= 950) set .@e_socket04,4793; //Def9
+			else                 set .@e_socket04,4794; //Def12
+			set .@enchant, .@e_socket04;
+			break;
+		case 2:
+			     if (.@r <= 90)  set .@d_socket04,4786; //Mdef2
+			else if (.@r <= 170) set .@d_socket04,4787; //Mdef4
+			else if (.@r <= 240) set .@d_socket04,4788; //Mdef6
+			else if (.@r <= 300) set .@d_socket04,4789; //Mdef8
+			else if (.@r <= 390) set .@d_socket04,4791; //Def3
+			else if (.@r <= 470) set .@d_socket04,4792; //Def6
+			else if (.@r <= 540) set .@d_socket04,4793; //Def9
+			else if (.@r <= 600) set .@d_socket04,4794; //Def12
+			else if (.@r <= 660) set .@d_socket04,4700; //Strength1
+			else if (.@r <= 720) set .@d_socket04,4710; //Inteligence1
+			else if (.@r <= 780) set .@d_socket04,4740; //Vitality1
+			else if (.@r <= 840) set .@d_socket04,4720; //Dexterity1
+			else if (.@r <= 900) set .@d_socket04,4730; //Agility1
+			else                 set .@d_socket04,4750; //Luck1
+			set .@enchant, .@d_socket04;
+			break;
+		case 3:
+			     if (.@r <= 90)  set .@c_socket04,4700; //Strength1
+			else if (.@r <= 180) set .@c_socket04,4710; //Inteligence1
+			else if (.@r <= 270) set .@c_socket04,4740; //Vitality1
+			else if (.@r <= 360) set .@c_socket04,4720; //Dexterity1
+			else if (.@r <= 450) set .@c_socket04,4730; //Agility1
+			else if (.@r <= 600) set .@c_socket04,4750; //Luck1
+			else if (.@r <= 660) set .@c_socket04,4701; //Strength2
+			else if (.@r <= 720) set .@c_socket04,4711; //Inteligence2
+			else if (.@r <= 780) set .@c_socket04,4741; //Vitality2
+			else if (.@r <= 840) set .@c_socket04,4721; //Dexterity2
+			else if (.@r <= 900) set .@c_socket04,4731; //Agility2
+			else                 set .@c_socket04,4751; //Luck2
+			set .@enchant, .@c_socket04;
+			break;
+		case 4:
+			     if (.@r <= 70)  set .@b_socket04,4700; //Strength1
+			else if (.@r <= 140) set .@b_socket04,4710; //Inteligence1
+			else if (.@r <= 210) set .@b_socket04,4740; //Vitality1
+			else if (.@r <= 280) set .@b_socket04,4720; //Dexterity1
+			else if (.@r <= 350) set .@b_socket04,4730; //Agility1
+			else if (.@r <= 440) set .@b_socket04,4750; //Luck1
+			else if (.@r <= 495) set .@b_socket04,4701; //Strength2
+			else if (.@r <= 550) set .@b_socket04,4711; //Inteligence2
+			else if (.@r <= 605) set .@b_socket04,4741; //Vitality2
+			else if (.@r <= 660) set .@b_socket04,4721; //Dexterity2
+			else if (.@r <= 715) set .@b_socket04,4731; //Agility2
+			else if (.@r <= 800) set .@b_socket04,4751; //Luck2
+			else if (.@r <= 860) set .@b_socket04,4795; //HP100
+			else if (.@r <= 910) set .@b_socket04,4796; //HP200
+			else if (.@r <= 950) set .@b_socket04,4797; //HP300
+			else if (.@r <= 980) set .@b_socket04,4800; //SP50
+			else                 set .@b_socket04,4801; //SP100
+			set .@enchant, .@b_socket04;
+			break;
+		case 5:
+		         if (.@r <= 59)  set .@a_socket04,4701; //Strength2
+			else if (.@r <= 118) set .@a_socket04,4711; //Inteligence2
+			else if (.@r <= 177) set .@a_socket04,4741; //Vitality2
+			else if (.@r <= 236) set .@a_socket04,4721; //Dexterity2
+			else if (.@r <= 295) set .@a_socket04,4731; //Agility2
+			else if (.@r <= 354) set .@a_socket04,4751; //Luck2
+			else if (.@r <= 413) set .@a_socket04,4795; //HP100
+			else if (.@r <= 472) set .@a_socket04,4796; //HP200
+			else if (.@r <= 530) set .@a_socket04,4797; //HP300
+			else if (.@r <= 589) set .@a_socket04,4800; //SP50
+			else if (.@r <= 648) set .@a_socket04,4801; //SP100
+			else if (.@r <= 707) set .@a_socket04,4702; //Strength3
+			else if (.@r <= 765) set .@a_socket04,4712; //Inteligence3
+			else if (.@r <= 824) set .@a_socket04,4742; //Vitality3
+			else if (.@r <= 883) set .@a_socket04,4722; //Dexterity3
+			else if (.@r <= 942) set .@a_socket04,4732; //Agility3
+			else                 set .@a_socket04,4752; //Luck3
+			set .@enchant, .@a_socket04;
+			break;
+		}
+	} else if (.@ko_type02 == 2) {  // slot 3
+		set .@r, rand(1,1000);
+		switch (.@ko_type01) {
+		case 1:
+			     if (.@r <= 125) set .@e_socket03,4786; //Mdef2
+			else if (.@r <= 250) set .@e_socket03,4787; //Mdef4
+			else if (.@r <= 375) set .@e_socket03,4788; //Mdef6
+			else if (.@r <= 500) set .@e_socket03,4789; //Mdef8
+			else if (.@r <= 625) set .@e_socket03,4791; //Def3
+			else if (.@r <= 750) set .@e_socket03,4792; //Def6
+			else if (.@r <= 875) set .@e_socket03,4793; //Def9
+			else                 set .@e_socket03,4794; //Def12
+			set .@enchant, .@e_socket03;
+			break;
+		case 2:
+			      if (.@r <= 100) set .@d_socket03,4786; //Mdef2
+			else if (.@r <= 190) set .@d_socket03,4787; //Mdef4
+			else if (.@r <= 270) set .@d_socket03,4788; //Mdef6
+			else if (.@r <= 340) set .@d_socket03,4789; //Mdef8
+			else if (.@r <= 440) set .@d_socket03,4791; //Def3
+			else if (.@r <= 530) set .@d_socket03,4792; //Def6
+			else if (.@r <= 610) set .@d_socket03,4793; //Def9
+			else if (.@r <= 680) set .@d_socket03,4794; //Def12
+			else if (.@r <= 720) set .@d_socket03,4700; //Strength1
+			else if (.@r <= 760) set .@d_socket03,4710; //Inteligence1
+			else if (.@r <= 800) set .@d_socket03,4740; //Vitality1
+			else if (.@r <= 850) set .@d_socket03,4720; //Dexterity1
+			else if (.@r <= 880) set .@d_socket03,4730; //Agility1
+			else                 set .@d_socket03,4750; //Luck1
+			set .@enchant, .@d_socket03;
+			break;
+		case 3:
+			     if (.@r <= 100) set .@c_socket03,4700; //Strength1
+			else if (.@r <= 200) set .@c_socket03,4710; //Inteligence1
+			else if (.@r <= 305) set .@c_socket03,4740; //Vitality1
+			else if (.@r <= 410) set .@c_socket03,4720; //Dexterity1
+			else if (.@r <= 500) set .@c_socket03,4730; //Agility1
+			else if (.@r <= 700) set .@c_socket03,4750; //Luck1
+			else if (.@r <= 750) set .@c_socket03,4701; //Strength2
+			else if (.@r <= 780) set .@c_socket03,4711; //Inteligence2
+			else if (.@r <= 830) set .@c_socket03,4741; //Vitality2
+			else if (.@r <= 880) set .@c_socket03,4721; //Dexterity2
+			else if (.@r <= 900) set .@c_socket03,4731; //Agility2
+			else                 set .@c_socket03,4751; //Luck2
+			set .@enchant, .@c_socket03;
+			break;
+		case 4:
+			     if (.@r <= 70)  set .@b_socket03,4700; //Strength1
+			else if (.@r <= 160) set .@b_socket03,4710; //Inteligence1
+			else if (.@r <= 250) set .@b_socket03,4740; //Vitality1
+			else if (.@r <= 340) set .@b_socket03,4720; //Dexterity1
+			else if (.@r <= 400) set .@b_socket03,4730; //Agility1
+			else if (.@r <= 500) set .@b_socket03,4750; //Luck1
+			else if (.@r <= 540) set .@b_socket03,4701; //Strength2
+			else if (.@r <= 580) set .@b_socket03,4711; //Inteligence2
+			else if (.@r <= 625) set .@b_socket03,4741; //Vitality2
+			else if (.@r <= 670) set .@b_socket03,4721; //Dexterity2
+			else if (.@r <= 700) set .@b_socket03,4731; //Agility2
+			else if (.@r <= 800) set .@b_socket03,4751; //Luck2
+			else if (.@r <= 860) set .@b_socket03,4795; //HP100
+			else if (.@r <= 900) set .@b_socket03,4796; //HP200
+			else if (.@r <= 920) set .@b_socket03,4797; //HP300
+			else if (.@r <= 965) set .@b_socket03,4800; //SP50
+			else                 set .@b_socket03,4801; //SP100
+			set .@enchant, .@b_socket03;
+			break;
+		case 5:
+			     if (.@r <= 59)  set .@a_socket03,4701; //Strength2
+			else if (.@r <= 118) set .@a_socket03,4711; //Inteligence2
+			else if (.@r <= 177) set .@a_socket03,4741; //Vitality2
+			else if (.@r <= 236) set .@a_socket03,4721; //Dexterity2
+			else if (.@r <= 295) set .@a_socket03,4731; //Agility2
+			else if (.@r <= 354) set .@a_socket03,4751; //Luck2
+			else if (.@r <= 413) set .@a_socket03,4795; //HP100
+			else if (.@r <= 472) set .@a_socket03,4796; //HP200
+			else if (.@r <= 530) set .@a_socket03,4797; //HP300
+			else if (.@r <= 589) set .@a_socket03,4800; //SP50
+			else if (.@r <= 648) set .@a_socket03,4801; //SP100
+			else if (.@r <= 707) set .@a_socket03,4702; //Strength3
+			else if (.@r <= 765) set .@a_socket03,4712; //Inteligence3
+			else if (.@r <= 824) set .@a_socket03,4742; //Vitality3
+			else if (.@r <= 883) set .@a_socket03,4722; //Dexterity3
+			else if (.@r <= 942) set .@a_socket03,4732; //Agility3
+			else                 set .@a_socket03,4752; //Luck3
+			set .@enchant, .@a_socket03;
+			break;
+		}
+	} else {
+		mes "[Artisan Tene]";
+		mes "An unknown error has occurred. Please contact customer service. *^_^*";
+		close;
+	}
+	if (.@ko_type02 == 1) {
+		set .@equip_card[2], .@equip_card[3];
+		set .@equip_card[3], .@enchant;
+	} else
+		set .@equip_card[2], .@enchant;
+	progressbar "ffff00",2;
+	set Zeny, Zeny - 100000;
+	delequip .@part;
+
+//	GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+	mes "[Artisan Tene]";
+	mes "^44B7BC" + getitemname(.@equip_id) + "^000000";
+	mes "The equipment has been enchanted."; //custom translation
+	close;
+}

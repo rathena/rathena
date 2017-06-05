@@ -1,0 +1,732 @@
+//===== rAthena Script ======================================= 
+//= Juno Monster Museum
+//===== By: ================================================== 
+//= Muad_Dib (The Prometheus Project)
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Juno Monster Museum - Non Player Character Locations
+//= - Information about various monsters
+//===== Additional Comments: ================================= 
+// 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Adapted to rAthena Scripting Language by [Lance] 
+//= 1.1a Fixed typos [Haplo]
+//= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.3 Added a Missing "case 1:". [Samuray22]
+//	-Thanks to Dr.Evil
+//= 1.4 Corrected a few typos. (bugreport:1077) [L0ne_W0lf]
+//= 1.4a "S_BonusREward" -> "S_BonusReward" [Paradox924X]
+//============================================================ 
+
+yuno_in03,32,15,3	script	Museum Guide	67,{
+	mes "[Cenia]";
+	mes "Welcome to the Monster Museum.";
+	next;
+	switch(select("Monster Museum?:Tips")) {
+	case 1:
+		mes "[Cenia]";
+		mes "The Monster Museum was founded by";
+		mes "the Sages of the Schweicherbil";
+		mes "Magic Academy after researching";
+		mes "every creature dwelling in the";
+		mes "Rune-Midgard continent.";
+		next;
+		mes "[Cenia]";
+		mes "In this museum, you can see every";
+		mes "single monster in Rune-Midgard,";
+		mes "even the ones you hardly ever encounter.";
+		next;
+		mes "[Cenia]";
+		mes "The glass tubes holding monsters";
+		mes "was developed with the latest";
+		mes "technology as a part of the";
+		mes "Schwartz Project. Rest assured,";
+		mes "you'll be well protected.";
+		next;
+		break;
+	case 2:
+		mes "[Cenia]";
+		mes "Please check on the Opaque option";
+		mes "on your option windows by";
+		mes "pressing ALT + O, if you want to";
+		mes "see the monsters better.";
+		next;
+		break;
+	}
+	mes "[Cenia]";
+	mes "Feel free to talk to me anytime.";
+	close;
+}
+	
+yuno_in03,36,21,3	script	Deviace#yuno	1108,{
+	end;
+}
+yuno_in03,33,21,1	script	#DEVIACE	111,{
+	mes " ";
+	mes "Scientific name : Deviace";
+	mes "Size : Medium";
+	mes "Attribute : Water";
+	next;
+	mes "Explanation :";
+	mes "This monster dwells under the deep";
+	mes "sea and has a round body with a";
+	mes "acetabulum on its dorsal side.";
+	mes "Although its sharp teeth are";
+	mes "intimidating, it has a very mellow";
+	mes "character.";
+	next;
+	mes "Therefore, it never initiates";
+	mes "attack on an undersea traveler";
+	mes "unless it's attacked first.";
+	mes "However, once it becomes upset, it";
+	mes "uses high level magic skills. So";
+	mes "it's better to be careful with this monster.";
+	close;
+}
+	
+yuno_in03,36,27,3	script	Seal#yuno	1317,{
+	end;
+}
+yuno_in03,33,27,1	script	#FUR_SEAL	111,{
+	mes " ";
+	mes "Scientific name : Seal";
+	mes "Size : Medium";
+	mes "Attribute : Water";
+	next;
+	mes "Explanation :";
+	mes "When you take a look at this";
+	mes "monster carefully, you will find";
+	mes "that it's not actually a seal but";
+	mes "an unidentified monster hiding";
+	mes "inside the seal-like leather";
+	mes "clothing.";
+	next;
+	mes "It is rumored that the monster";
+	mes "wears this clothing in order";
+	mes "to protect its sensitive skin";
+	mes "from the weather. The Seal's";
+	mes "clothing is a very good material";
+	mes "for people to produce winter coats.";
+	close;
+}
+	
+yuno_in03,36,33,3	script	Sage Worm#yuno	1281,{
+	end;
+}
+yuno_in03,33,33,1	script	#SAGEWORM	111,{
+	mes " ";
+	mes "Scientific name : Sage Worm";
+	mes "Size : Small";
+	mes "Attribute : Neutral";
+	next;
+	mes "Explanation :";
+	mes "A strange beast with the head of";
+	mes "an old scholar and the tail of a";
+	mes "worm. Although it is physically";
+	mes "weak, it has the intelligence";
+	mes "to support its comrades with";
+	mes "magic skills.";
+	next;
+	mes "As its scholarly appearance";
+	mes "indicates, it's usually seen near books or book shelves.";
+	close;
+}
+	
+yuno_in03,39,39,3	script	Penomena#yuno	1216,{
+	end;
+}
+yuno_in03,38,39,1	script	#PENOMANA	111,{
+	mes " ";
+	mes "Scientific name : Penomena";
+	mes "Size : Medium";
+	mes "Attribute : Poison";
+	next;
+	mes "Explanation :";
+	mes "This monster dwells inside the";
+	mes "deepest part of caves where there";
+	mes "is enough moisture to keep it from";
+	mes "getting dried up.";
+	next;
+	mes "Unlike Hydra, a similar looking";
+	mes "creature, it can move itself";
+	mes "towards its enemy using many";
+	mes "small appendixes on its acetabulum.";
+	next;
+	mes "The long, thin tentacles on the";
+	mes "body shoot deadly poison which is";
+	mes "enough to kill its enemy at once.";
+	close;
+}
+	
+yuno_in03,39,44,3	script	Galapago#yuno	1391,{
+	end;
+}
+yuno_in03,37,44,3	script	#GALAPAGO	111,{
+	mes " ";
+	mes "Scientific name : Galapago";
+	mes "Size : Small";
+	mes "Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "It's a kind of bird, but sadly, its body is too heavy to fly.";
+	mes "It's very sensitive to sunlight so it carries a water bottle and wears sunglasses all the time.";
+	next;
+	mes "Although gluttonous, it will";
+	mes "always cooperate to attack";
+	mes "prey, as well as predators.";
+	mes "Otherwise, Galapago is a";
+	mes "generally laid back monster.";
+	close;
+}
+	
+yuno_in03,15,21,5	script	Raydric#yuno	1163,{
+	end;
+}
+yuno_in03,19,21,1	script	#RAYDRIC	111,{
+	mes " ";
+	mes "Scientific name : Raydric";
+	mes "Size : Large";
+	mes "Attribute : Shadow";
+	next;
+	mes "Explanation :";
+	mes "A suit of armor animated by the";
+	mes "spirit of a castle guard. The";
+	mes "spirit is bound to this armor by";
+	mes "a powerful curse.";
+	next;
+	mes "Since Raydric used to be a castle";
+	mes "guard, it possesses fast movements";
+	mes "and powerful attack strength.";
+	close;
+}
+	
+yuno_in03,15,27,5	script	Chepet#yuno	1250,{
+	end;
+}
+yuno_in03,19,27,1	script	#CHEPET	111,{
+	mes " ";
+	mes " Scientific name : Chepet";
+	mes " Size : Medium";
+	mes " Attribute : Fire";
+	next;
+	mes "Explanation :";
+	mes "An evil creature hiding in a";
+	mes "pretty doll. It attacks passersby";
+	mes "by striking matchsticks held in";
+	mes "the doll's hand. A very rare";
+	mes "monster since it dwells in";
+	mes "only a few places.";
+	close;
+}
+	
+yuno_in03,15,33,5	script	Violy#yuno	1390,{
+	end;
+}
+yuno_in03,19,33,1	script	#VIOLY	111,{
+	mes " ";
+	mes " Scientific name : Violy";
+	mes " Size : Medium";
+	mes " Attribute : Neutral";
+	next;
+	mes "Explanation :";
+	mes "A pretty doll looking creature with beautiful golden hair.";
+	mes "Since It plays violin all the time with a peaceful look on its face, people don't realize at first that it's a monster.";
+	next;
+	mes "Exercise extreme caution upon encountering a Violy. Otherwise, it will snatch your soul in no time with its charming song.";
+	close;
+}
+	
+yuno_in03,10,39,5	script	Alice#yuno	1275,{
+	end;
+}
+yuno_in03,12,39,1	script	#ALICE	111,{
+	mes " ";
+	mes " Scientific name : Alice ";
+	mes " Size : Medium";
+	mes " Attribute : Neutral";
+	next;
+	mes "Explanation :";
+	mes "Alice is a robot made to assist as";
+	mes "a castle housemaid. They've been";
+	mes "known to remain and automatically";
+	mes "do their tasks long after the";
+	mes "castle has been abandoned.";
+	next;
+	mes "Without any discernable power";
+	mes "source, how it moves and operates";
+	mes "is still a scientific mystery.";
+	close;
+}
+	
+yuno_in03,10,45,5	script	Assulter#yuno	1315,{
+	end;
+}
+yuno_in03,12,45,1	script	#ASSULTER	111,{
+	mes " ";
+	mes " Scientific name : Assulter";
+	mes " Size : Medium";
+	mes " Attribute : Wind";
+	next;
+	mes "Explanation :";
+	mes "Unlike other turtles on Turtle";
+	mes "Island, this turtle stands on two";
+	mes "legs and attacks passersby with";
+	mes "the other two legs, wielding a";
+	mes "big shuriken from its back.";
+	next;
+	mes "Interestingly, it creates a clone";
+	mes "to do more damage when it";
+	mes "encounters dangerous enemies.";
+	mes "It does very powerful damage using";
+	mes "its shuriken, but its nail attack";
+	mes "is more threatening.";
+	close;
+}
+	
+yuno_in03,38,50,3	script	PecoPeco Egg#yuno	1047,{
+	end;
+}
+yuno_in03,34,54,3	script	Thief Bug Egg#yuno	1048,{
+	end;
+}
+yuno_in03,12,50,3	script	Ant Egg#yuno	1097,{
+	end;
+}
+
+yuno_in03,18,96,5	script	Wanderer#yuno	1208,{
+	end;
+}
+yuno_in03,20,96,1	script	#WANDER_MAN	111,{
+	mes " ";
+	mes " Scientific name : Wanderer";
+	mes " Size : Medium";
+	mes " Attribute : Wind";
+	next;
+	mes "Explanation :";
+	mes "Undead warrior who came back to";
+	mes "life through a curse. Considering";
+	mes "its technical fencing skill, he";
+	mes "must have been a very honorable";
+	mes "warrior as a living human.";
+	next;
+	mes "Wanderer can move amazingly fast";
+	mes "and can slay enemies with a single";
+	mes "stroke of its sword.";
+	close;
+}
+	
+yuno_in03,16,100,5	script	Caterpillar#yuno	1300,{
+	end;
+}
+yuno_in03,18,100,1	script	#CATERPILLAR	111,{
+	mes " ";
+	mes " Scientific name : Caterpillar";
+	mes " Size : Small";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "Although the eyes of this creature";
+	mes "have atrophied due to living under";
+	mes "the earth, it uses a feeler and";
+	mes "appendices on its body to sense";
+	mes "objects in its dark surroundings.";
+	next;
+	mes "Caterpillar is rumored to be the";
+	mes "larva of Creamy Fear, the advanced";
+	mes "Creamy.";
+	close;
+}
+	
+yuno_in03,16,104,5	script	Male Thiefbug#yuno	1054,{
+	end;
+}
+yuno_in03,18,104,1	script	#THIEF_BUG__	111,{
+	mes " ";
+	mes " Scientific name : Thief Bug";
+	mes " ^FFFFFFScientific name :^000000 (Male)";
+	mes " Size : Medium";
+	mes " Attribute : Shadow";
+	next;
+	mes "Explanation :";
+	mes "Although it has a big blue body,";
+	mes "it's also fast and voracious, just like other Thief Bugs.";
+	next;
+	mes "However, it is stronger than other Thief Bugs because it's designated to protect the females and babies from danger.";
+	close;
+}
+	
+yuno_in03,16,108,5	script	Tri Joint#yuno	1279,{
+	end;
+}
+yuno_in03,18,108,1	script	#TRI_JOINT	111,{
+	mes " ";
+	mes " Scientific name : Tri Joint";
+	mes " Size : Small";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "Tri Joint is a prehistoric";
+	mes "monster that is covered with";
+	mes "a hard shell, and uses a feeler";
+	mes "instead of eyes so that it can";
+	mes "live in dark places.";
+	next;
+	mes "Recently, since many Tri Joints have been discovered inside many caves, Sages are very excited to study them to learn more about the evolution of monsters in Rune-Midgard.";
+	close;
+}
+	
+yuno_in03,16,111,5	script	Arclouz#yuno	1194,{
+	end;
+}
+yuno_in03,18,111,1	script	#ARCLOUSE	111,{
+	mes " ";
+	mes " Scientific name : Arclouz";
+	mes " Size : Medium";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "Hard shelled monster that coils";
+	mes "its body to attack its enemy.";
+	mes "Arclouz tend to stay in groups";
+	mes "and are very aggressive";
+	mes "creatures.";
+	next;
+	mes "They have incredibly fast";
+	mes "movement speed, contrary to";
+	mes "their looks, and are often";
+	mes "compared to PecoPecos.";
+	close;
+}
+	
+yuno_in03,16,117,5	script	Dragon Tail#yuno	1321,{
+	end;
+}
+yuno_in03,18,116,1	script	#DRAGON_TAIL	111,{
+	mes " ";
+	mes " Scientific name : Dragon Tail";
+	mes " Size : Medium";
+	mes " Attribute : Wind";
+	next;
+	mes "Explanation :";
+	mes "An insect which is considered as";
+	mes "a Libelluidae, or Dragon Fly. It";
+	mes "uses its strong tail to suck the";
+	mes "blood out of an enemy, or to put";
+	mes "the enemy to sleep by shooting";
+	mes "a sleeping poison.";
+	close;
+}
+	
+yuno_in03,46,96,3	script	Owl Duke#yuno	1320,{
+	end;
+}
+yuno_in03,44,96,1	script	#OWL_DUKE	111,{
+	mes " ";
+	mes " Scientific name : Owl Duke";
+	mes " Size : Large";
+	mes " Attribute : Neutral ";
+	next;
+	mes "Explanation:";
+	mes "An owl that wears a count costume.";
+	mes "It's very intimidating looking";
+	mes "with its dark, yet suave look.";
+	mes "Owl Duke is not actually an owl,";
+	mes "but a devil with very sharp claws";
+	mes "on its big feet.";
+	next;
+	mes "It's skillful at using many";
+	mes "lightning magic spells. When";
+	mes "you see it attacking an enemy,";
+	mes "you can sense the Owl Duke's";
+	mes "aristocratic pompousness.";
+	close;
+}
+	
+yuno_in03,48,100,3	script	Marine Sphere#yuno	1142,{
+	end;
+}
+yuno_in03,46,101,1	script	#MARINE_SPHERE	111,{
+	mes " ";
+	mes " Scientific name : Marine Sphere";
+	mes " Size : Small";
+	mes " Attribute : Water";
+	next;
+	mes "Explanation :";
+	mes "A strange creature that wanders";
+	mes "in the deep oceans. It explodes";
+	mes "with great power when it's";
+	mes "touched, earning it the name";
+	mes "'The Sea Bomb.'";
+	next;
+	mes "If there is a Marine Sphere";
+	mes "caught in the explosion of";
+	mes "another, a trigger explosion";
+	mes "will result, and can lead to";
+	mes "a dangerous chain reaction.";
+	close;
+}
+	
+yuno_in03,48,104,3	script	Mandragora#yuno	1020,{
+	end;
+}
+yuno_in03,46,105,1	script	#MANDRAGORA	111,{
+	mes " ";
+	mes " Scientific name : Mandragora";
+	mes " Size : Medium";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "An insectivore that swallows";
+	mes "anything alive. When it finds";
+	mes "its prey, it strikes it first";
+	mes "with a long tentacle to";
+	mes "to paralyze it.";
+	next;
+	mes "Once paralyzed, its prey is";
+	mes "put in a large tube attached";
+	mes "to its body where it is slowly";
+	mes "digested. Although this tube";
+	mes "has a skull mark, Mandragora";
+	mes "does not actually contain any";
+	mes "poison.";
+	next;
+	mes "This digestive tube";
+	mes "apparatus also has a very unique,";
+	mes "but disgusting smell that is far";
+	mes "from useful in attracting prey.";
+	close;
+}
+	
+yuno_in03,48,108,3	script	Geographer#yuno	1368,{
+	end;
+}
+yuno_in03,46,108,1	script	#GEOGRAPHER	111,{
+	mes " ";
+	mes " Scientific name : Geographer";
+	mes " Size : Medium";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "An insectivore that looks like";
+	mes "a sunflower. It uses the petal";
+	mes "like tentacles around its";
+	mes "mouth to attract and snare";
+	mes "its prey.";
+	next;
+	mes "Unlike Mandragora, Geographer";
+	mes "does not have a tube to";
+	mes "store its prey. So it slowly";
+	mes "eats it's prey, little by little.";
+	next;
+	mes "Although Geographer has small";
+	mes "and short roots, the roots are";
+	mes "tough and strong enough to";
+	mes "bear the weight of the upper body.";
+	next;
+	mes "The namesake of this monster, a";
+	mes "human geographer that was";
+	mes "promptly eaten upon discovering";
+	mes "this species of beast, will";
+	mes "never be forgotten...";
+	close;
+}
+	
+yuno_in03,48,112,3	script	Rafflesia#yuno	1162,{
+	end;
+}
+yuno_in03,46,112,1	script	#RAFFLESIA	111,{
+	mes " ";
+	mes " Scientific name : Rafflesia";
+	mes " Size : Small";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "A puffy, leafy monster";
+	mes "threatened with extinction.";
+	mes "Rafflesia is the rarest";
+	mes "monster in Rune-Midgard and";
+	mes "is thus protected by law.";
+	next;
+	mes "Due to this situation, most Sages";
+	mes "are having a hard time to";
+	mes "research this monster.";
+	mes "However, a few Sages are";
+	mes "currently seeking methods to";
+	mes "cultivate and save the Rafflesias.";
+	close;
+}
+	
+yuno_in03,48,116,3	script	Stem Worm#yuno	1215,{
+	end;
+}
+yuno_in03,45,116,1	script	#STEM_WORM	111,{
+	mes " ";
+	mes " Scientific name : Stem Worm";
+	mes " Size : Medium";
+	mes " Attribute : Wind";
+	next;
+	mes "Explanation :";
+	mes "A mutated Worm Tail that has a";
+	mes "round, brownish grey body with";
+	mes "a small head. It is covered";
+	mes "with scales and has a long";
+	mes "stem-like tail which is used";
+	mes "as a whip in attacks.";
+	close;
+}
+
+yuno_in03,24,124,3	script	Blazzer#yuno	1367,{
+	end;
+}
+yuno_in03,24,122,1	script	#BLAZZER	111,{
+	mes " ";
+	mes " Scientific name : Blazzer";
+	mes " Size : Medium";
+	mes " Attribute : Fire";
+	next;
+	mes "Explanation :";
+	mes "This is a fire ball that has been";
+	mes "seen near volcanic zones.";
+	mes "Because of this monster's sudden";
+	mes "appearance, Sages believe that";
+	mes "volcanic activity may occur";
+	mes "sooner or later near Juno.";
+	next;
+	mes "Blazzer blows out noxious gas";
+	mes "which harm passersby. It is";
+	mes "unknown whether or not these";
+	mes "are attacks or the Blazzer's";
+	mes "form of communication.";
+	close;
+}
+	
+yuno_in03,28,124,5	script	Ride Word#yuno	1195,{
+	end;
+}
+yuno_in03,28,122,1	script	#RIDEWORD	111,{
+	mes " ";
+	mes " Scientific name : Ride Word";
+	mes " Size : Small";
+	mes " Attribute : Neutral";
+	next;
+	mes "Explanation :";
+	mes "It's a cursed magic book with";
+	mes "sharp teeth. It exists to attack any living thing nearby.";
+	close;
+}
+	
+yuno_in03,31,124,3	script	Megalodon#yuno	1064,{
+	end;
+}
+yuno_in03,31,122,1	script	#MEGALODON	111,{
+	mes " ";
+	mes " Scientific name : Megalodon";
+	mes " Size : Medium";
+	mes " Attribute : Undead";
+	next;
+	mes "Explanation :";
+	mes "A skeleton fish that was brought";
+	mes "back to life by a curse. Although";
+	mes "It looks very threatening, it's";
+	mes "benign and will not attack";
+	mes "undersea travellers outright.";
+	close;
+}
+	
+yuno_in03,35,124,3	script	Sleeper#yuno	1386,{
+	end;
+}
+yuno_in03,35,122,1	script	#SLEEPER	111,{
+	mes " ";
+	mes " Scientific name : Sleeper";
+	mes " Size : Medium";
+	mes " Attribute : Earth";
+	next;
+	mes "Explanation :";
+	mes "Unidentified sand creature.";
+	mes "Usually it stays under the earth,";
+	mes "but when travellers step on the";
+	mes "sand, it may abruptly";
+	mes "appear to attack them.";
+	next;
+	mes "It's smaller than Sandman and can";
+	mes "cause indirect attacks by causing a sand storm.";
+	close;
+}
+	
+yuno_in03,39,124,3	script	Ancient Mummy#yuno	1297,{
+	end;
+}
+yuno_in03,39,122,1	script	#ANCIENT_MUMMY	111,{
+	mes " ";
+	mes " Scientific name : Ancient Mummy";
+	mes " Size : Medium";
+	mes " Attribute : Undead";
+	next;
+	mes "Explanation :";
+	mes "A mummy cursed with eternal life.";
+	mes "Although wrapped in decaying";
+	mes "bandages, Ancient Mummy also";
+	mes "wears a splendid hair ornament";
+	mes "adorned with a snake.";
+	next;
+	mes "This kind of head ornament";
+	mes "indicates that the Ancient";
+	mes "Mummy was a person of high rank";
+	mes "while he was still alive.";
+	next;
+	mes "Since Ancient Mummy has";
+	mes "been wandering the underworld";
+	mes "for a long time, it does not have";
+	mes "any consciousness and will";
+	mes "attack any living thing nearby.";
+	close;
+}
+	
+yuno_in03,18,122,5	script	Incubus#yuno	1374,{
+	end;
+}
+yuno_in03,19,120,1	script	#INCUBUS	111,{
+	mes " ";
+	mes " Scientific name : Incubus";
+	mes " Size : Medium";
+	mes " Attribute : Shadow";
+	next;
+	mes "Explanation :";
+	mes "This demon attracts humans";
+	mes "with its stunningly beautiful";
+	mes "appearance. When it poses as a";
+	mes "male human, we call it Incubus.";
+	mes "As a female, we call it Succubus.";
+	next;
+	mes "This devil targets people with";
+	mes "mental vulnerabilities so that";
+	mes "it can eventually take them to hell.";
+	close;
+}
+	
+yuno_in03,44,120,3	script	Succubus#yuno	1370,{
+	end;
+}
+yuno_in03,42,120,1	script	#SUCCUBUS	111,{
+	mes " ";
+	mes " Scientific name : Succubus";
+	mes " Size : Medium";
+	mes " Attribute : Shadow";
+	next;
+	mes "Explanation :";
+	mes "This demon attracts humans";
+	mes "with its stunningly beautiful";
+	mes "appearance. When it poses as a";
+	mes "female human, we call it Succubus.";
+	mes "As a male, we call it Incubus.";
+	next;
+	mes "This devil targets people with";
+	mes "mental vulnerabilities so that";
+	mes "it can eventually take them to hell.";
+	close;
+}

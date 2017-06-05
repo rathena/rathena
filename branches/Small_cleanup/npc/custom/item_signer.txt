@@ -1,0 +1,135 @@
+//===== rAthena Script =======================================
+//= Sign Your Items
+//===== By: ==================================================
+//= Lupus
+//===== Current Version: =====================================
+//= 1.1a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Write you name on your rare equipment or weapon ^_-
+//===== Additional Comments: =================================
+//= 1.1 Cleaned and edited for general use. [Euphy]
+//= 1.1a Added 'disable_items' command. [Euphy]
+//============================================================
+
+prt_in,24,61,7	script	Perchik	47,{
+	
+	setarray .@Item[0],644,3;	// Item requirements: <ID>,<Count>{,...} (0 to disable)
+	setarray .@Cost[0],0,5000;	// Zeny requirements: <base price>,<price per refine>
+
+	disable_items;
+	mes "[Perchik]";
+	mes "I can ^0055FFsign your name^000000 on almost any rare item you hold.";
+	next;
+	if(select("Tell me more...:Sign my items, please!") == 1) {
+		mes "[Perchik]";
+		mes "I can put your name on any slotless equipment or weapon.";
+		emotion e_ic;
+		next;
+		mes "[Perchik]";
+		if (getarraysize(.@Item) || getarraysize(.@Cost)) {
+			mes "For my work I accept:";
+			if (getarraysize(.@Item)) for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2)
+				mes " ~ "+.@Item[.@i+1]+"x "+getitemname(.@Item[.@i]);
+			if (.@Cost[0]) mes " ~ "+callfunc("F_InsertComma",.@Cost[0])+" Zeny";
+			if (.@Cost[1]) mes " ~ "+callfunc("F_InsertComma",.@Cost[1])+" Zeny per refine";
+		}
+		else mes "I work for free, but...";
+		next;
+		emotion e_cry;
+		mes "[Perchik]";
+		mes "Alas, I have 12 hungry children";
+		mes "and a very angry wife.";
+		next;
+		mes "[Perchik]";
+		mes "Or it was 12 angry children";
+		mes "and a very hungry wife...";
+		emotion e_hmm;
+		close;
+	}
+	mes "[Perchik]";
+	mes "Show me your items to sign...";
+	next;
+	setarray .@pos$[1],"Upper Headgear","Armor","Left hand","Right hand","Garment","Footgear","Left Accessory","Right Accessory","Mid Headgear","Lower Headgear";
+	set .@menu$,"";
+	for (set .@i,1; .@i<=10; set .@i,.@i+1) {
+		if (getequipisequiped(.@i))
+			set .@menu$, .@menu$+.@pos$[.@i]+" [^0055FF"+getequipname(.@i)+"^000000]";
+		set .@menu$, .@menu$+":";
+	}
+	set .@part, select(.@menu$);
+	set .@id, getequipid(.@part);
+	set .@ref, getequiprefinerycnt(.@part);
+	mes "[Perchik]";
+	if (!getequipisequiped(.@part)) {
+		mes "Nothing is equipped there!";
+		emotion e_wah;
+		close;
+	}
+	for(set .@i,0; .@i<4; set .@i,.@i+1)
+		set .@slot[.@i], getequipcardid(.@part,.@i);
+	if (.@slot[0]==255 || .@slot[0]==254 || .@slot[0]<0) {
+		mes "Alas, this item's already signed.";
+		mes "I would never touch a master's work.";
+		emotion e_hmm;
+		close;
+	}
+	if (.@slot[0]>4000 && .@slot[0]<5000) {
+		mes "A card? Here?!";
+		mes "As I said before, I don't sign items with cards.";
+		emotion e_hmm;
+		close;
+	}
+	if (getiteminfo(.@id,10)) {
+		mes "Sorry, I don't sign slotted items.";
+		emotion e_sry;
+		close;
+	}
+	getinventorylist;
+	for(set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1)
+		if (@inventorylist_expire[.@i] != 0) {
+			mes "Sorry, I don't sign rental items!";
+			emotion e_hmm;
+			close;
+		}
+	set .@price, .@Cost[0]+(.@Cost[1]*.@ref);
+	if (getarraysize(.@Item) || .@price) {
+		mes "I will need:";
+		if (getarraysize(.@Item)) for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2) {
+			mes " ~ "+.@Item[.@i+1]+"x "+getitemname(.@Item[.@i]);
+			if (countitem(.@Item[.@i]) < .@Item[.@i+1]) set .@nr,1;
+		}
+		if (.@price) mes " ~ "+.@price+" Zeny";
+	}
+	mes "Shall I sign your ^0055FF"+getitemname(.@id)+"^000000?";
+	next;
+	if(select("Ok!:Leave")==2) {
+		mes "[Perchik]";
+		mes "See you...";
+		emotion e_yawn;
+		close;
+	}
+	mes "[Perchik]";
+	if (Zeny < .@price || .@nr) {
+		mes "I don't work for 'thanks'.";
+		emotion e_sry;
+		close;
+	}
+	if (!countitem2(.@id,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3])) {
+		mes "Where is "+getitemname(@id)+"...?";
+		npctalk "You're a snoozy cheater!";
+		logmes "Hack: Tried to sign an item not having it: "+getitemname(@id);
+		emotion e_wah;
+		close;
+	}
+	if (.@price) set Zeny, Zeny-.@price;
+	if (getarraysize(.@Item))  for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2)
+		delitem .@Item[.@i], .@Item[.@i+1];
+	delitem2 .@id,1,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3];
+	mes "Done!";
+	emotion e_proud;
+	getitem2 .@id,1,1,.@ref,0,254,0,getcharid(0)&0xffff,(getcharid(0)>>16)&0xffff;
+	equip .@id;
+	close;
+}

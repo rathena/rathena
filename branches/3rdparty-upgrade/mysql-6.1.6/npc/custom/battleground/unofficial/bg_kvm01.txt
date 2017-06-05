@@ -1,0 +1,378 @@
+// ==============================================================================
+// BattleGround System - KvM 80~99
+// ==============================================================================
+
+// Registration NPC's
+// *********************************************************************
+
+bat_room,253,227,4	script	Registration::KvM01R_Guillaume	418,{ // KvM Guillaume
+	end;
+
+OnInit:
+	waitingroom "Battle Station 5 Players",5,"KvM01_BG::OnGuillaumeJoin",1;
+	end;
+	
+OnEnterBG:
+	set $@KvM01BG_id1, waitingroom2bg("bat_c01",53,128,"KvM01_BG::OnGuillaumeQuit","KvM01_BG::OnGuillaumeDie");
+	end;
+}
+
+bat_room,253,204,0	script	Registration::KvM01R_Croix	414,{ // KvM Croix
+	end;
+
+OnInit:
+	waitingroom "Battle Station 5 Players",5,"KvM01_BG::OnCroixJoin",1;
+	end;
+
+OnEnterBG:
+	set $@KvM01BG_id2, waitingroom2bg("bat_c01",146,55,"KvM01_BG::OnCroixQuit","KvM01_BG::OnCroixDie");
+	end;
+}
+
+// Light Effects
+// *********************************************************************
+
+bat_c01,54,123,0	script	#bat_c01a	111,{
+	end;
+
+OnKvM01LightA: specialeffect EF_BEGINSPELL2; end;
+OnKvM01LightB: specialeffect EF_BEGINSPELL3; end;
+OnKvM01LightC: specialeffect EF_BEGINSPELL4; end;
+}
+
+bat_c01,56,125,0	duplicate(#bat_c01a)	#bat_c01b	111
+bat_c01,58,127,0	duplicate(#bat_c01a)	#bat_c01c	111
+bat_c01,141,56,0	duplicate(#bat_c01a)	#bat_c01d	111
+bat_c01,143,58,0	duplicate(#bat_c01a)	#bat_c01e	111
+bat_c01,145,60,0	duplicate(#bat_c01a)	#bat_c01f	111
+
+// Battleground Engine
+// *********************************************************************
+
+-	script	KvM01_BG	-1,{
+	end;
+
+OnInit:
+	setwall "bat_c01",54,122,6,7,0,"batc01wall_a";
+	setwall "bat_c01",55,122,5,7,0,"batc01wall_b";
+	setwall "bat_c01",140,56,6,7,0,"batc01wall_c";
+	setwall "bat_c01",140,57,5,7,0,"batc01wall_d";
+	disablenpc "TherapistKvM01a";
+	disablenpc "TherapistKvM01b";
+	disablenpc "VintenarKvM01a";
+	disablenpc "VintenarKvM01b";
+	end;
+
+OnGuillaumeJoin:
+OnCroixJoin:
+	donpcevent "KvM01_BG::OnReadyCheck";
+	end;
+
+OnGuillaumeQuit:
+	set BG_Delay_Tick, gettimetick(2) + 1200;
+OnGuillaumeDie:
+	if( $@KvM01BG == 2 )
+	{
+		set .Guillaume_Count, .Guillaume_Count - 1;
+		set .Croix_Score, .Croix_Score + 1;
+		bg_updatescore "bat_c01",.Guillaume_Score,.Croix_Score;
+		if( .Guillaume_Count < 1 ) donpcevent "KvM01_BG::OnCroixWin";
+	}
+	end;
+
+OnCroixQuit:
+	set BG_Delay_Tick, gettimetick(2) + 1200;
+OnCroixDie:
+	if( $@KvM01BG == 2 )
+	{
+		set .Croix_Count, .Croix_Count - 1;
+		set .Guillaume_Score, .Guillaume_Score + 1;
+		bg_updatescore "bat_c01",.Guillaume_Score,.Croix_Score;
+		if( .Croix_Count < 1 ) donpcevent "KvM01_BG::OnGuillaumeWin";
+	}
+	end;
+
+OnReadyCheck:
+	if( $@KvM01BG )
+		end;
+	set .@Guillaume, getwaitingroomstate(0,"KvM01R_Guillaume");
+	set .@Croix, getwaitingroomstate(0,"KvM01R_Croix");
+
+	if( .@Guillaume < 5 || .@Croix < 5 )
+	{
+		if( .@Guillaume > 3 && .@Croix > 3 && !agitcheck() && !agitcheck2() && $@KvM_Flood < gettimetick(2) )
+		{
+			announce "Battleground -- Kreiger Von Midgard [80-99] G: " + .@Guillaume + "/5, C: " + .@Croix + "/5",0,0x696969;
+			set $@KvM_Flood, gettimetick(2) + 15;
+		}
+		else
+			mapannounce "bat_room","Battleground -- Kreiger Von Midgard [80-99] G: " + .@Guillaume + "/5, C: " + .@Croix + "/5",1,0x696969;
+		end;
+	}
+
+	set $@KvM01BG, 1; // Starting
+	donpcevent "KvM01R_Croix::OnEnterBG";
+	donpcevent "KvM01R_Guillaume::OnEnterBG";
+	donpcevent "KvM01_BG::OnStart";
+	end;
+
+OnStart:
+	announce "Battleground -- Kreiger Von Midgard [80-99] has started!",0,0x696969;
+	enablenpc "TherapistKvM01a";
+	enablenpc "TherapistKvM01b";
+	disablenpc "VintenarKvM01a";
+	disablenpc "VintenarKvM01b";
+	set $@KvM01BG_Victory, 0;
+	sleep 2000;
+	// Warp Teams
+	bg_warp $@KvM01BG_id1,"bat_c01",53,128;
+	bg_warp $@KvM01BG_id2,"bat_c01",146,55;
+	// ScoreBoard
+	set .Guillaume_Score, 0;
+	set .Croix_Score, 0;
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	areapercentheal "bat_c01",50,123,58,131,100,100;
+	areapercentheal "bat_c01",141,52,149,60,100,100;
+	mapannounce "bat_c01","The Battle will start in 25 seconds!!",1,0x696969;
+	end;
+
+OnTimer26000:
+	mapannounce "bat_c01","The Battle will start in 4 seconds!!",1,0x696969;
+	end;
+
+OnTimer27000:
+	donpcevent "::OnKvM01LightA";
+	end;
+
+OnTimer28000:
+	donpcevent "::OnKvM01LightB";
+	end;
+	
+OnTimer29000:
+	donpcevent "::OnKvM01LightC";
+	end;
+
+OnTimer30000:
+	// Team Members
+	set .Guillaume_Count, bg_get_data($@KvM01BG_id1, 0);
+	set .Croix_Count, bg_get_data($@KvM01BG_id2, 0);
+	if( .Guillaume_Count < 5 || .Croix_Count < 5 )
+	{
+		set $@KvM01BG_Victory, 3;
+		set $@KvM01BG, 3;
+		mapannounce "bat_c01","There are not enough players to start the battle",1,0x696969;
+		stopnpctimer;
+		sleep 2000;
+		donpcevent "KvM01_BG::OnStop";
+		end;
+	}
+
+	set $@KvM01BG, 2; // Playing
+	areapercentheal "bat_c01",50,123,58,131,100,100;
+	bg_warp $@KvM01BG_id1,"bat_c01",62,119;
+	areapercentheal "bat_c01",141,52,149,60,100,100;
+	bg_warp $@KvM01BG_id2,"bat_c01",137,64;
+	end;
+
+OnTimer32000:
+	mapannounce "bat_c01","The Battle of Kreiger Von Midgard has begun!!",1,0x696969;
+	end;
+
+OnTimer300000:
+	mapannounce "bat_c01","The Battle will ends in 30 seconds!!",1,0x696969;
+	end;
+
+OnTimer330000:
+	if( .Croix_Count > .Guillaume_Count )
+		donpcevent "KvM01_BG::OnCroixWin";
+	else if( .Croix_Count < .Guillaume_Count )
+		donpcevent "KvM01_BG::OnGuillaumeWin";
+	else
+	{ // Draw Game
+		set $@KvM01BG, 3;
+		set $@KvM01BG_Victory, 3;
+
+		stopnpctimer;
+		sleep 2000;
+		mapannounce "bat_c01","The time is out! This is a Tie...",1,0x696969;
+		donpcevent "KvM01_BG::OnStop";
+	}
+	end;
+
+OnGuillaumeWin:
+	set $@KvM01BG, 3;
+	set $@KvM01BG_Victory, 1;
+	
+	stopnpctimer;
+	sleep 2000;
+	mapannounce "bat_c01","The Guillaume Army has won the Battle of Kreiger Von Midgard",1,0x0000FF;
+	donpcevent "KvM01_BG::OnStop";
+	end;
+
+OnCroixWin:
+	set $@KvM01BG, 3;
+	set $@KvM01BG_Victory, 2;
+
+	stopnpctimer;
+	sleep 2000;
+	mapannounce "bat_c01","The Croix Army has won the Battle of Kreiger Von Midgard",1,0xFF0000;
+	donpcevent "KvM01_BG::OnStop";
+	end;
+
+OnStop:
+	disablenpc "TherapistKvM01a";
+	disablenpc "TherapistKvM01b";
+	enablenpc "VintenarKvM01a";
+	enablenpc "VintenarKvM01b";
+	// Warp Teams
+	bg_warp $@KvM01BG_id1,"bat_c01",53,128;
+	bg_warp $@KvM01BG_id2,"bat_c01",146,55;
+	donpcevent "KvM01_BG_Out::OnBegin";
+	end;
+
+OnReset:
+	stopnpctimer;
+	stopnpctimer "KvM01_BG_Out";
+	set .Croix_Count, 0;
+	set .Guillaume_Count, 0;
+	set .Croix_Score, 0;
+	set .Guillaume_Score, 0;
+	set $@KvM01BG_Victory, 0;
+	if( $@KvM01BG_id1 ) { bg_destroy $@KvM01BG_id1; set $@KvM01BG_id1, 0; }
+	if( $@KvM01BG_id2 ) { bg_destroy $@KvM01BG_id2; set $@KvM01BG_id2, 0; }
+	disablenpc "TherapistKvM01a";
+	disablenpc "TherapistKvM01b";
+	disablenpc "VintenarKvM01a";
+	disablenpc "VintenarKvM01b";
+	sleep 1000;
+	mapwarp "bat_c01","bat_room",155,150;
+	sleep 2000;
+	maprespawnguildid "bat_c01",0,3; // Just in case someone else
+	bg_updatescore "bat_c01",0,0;
+	sleep 2000;
+	set $@KvM01BG, 0;
+	donpcevent "KvM01_BG::OnReadyCheck"; // Maybe a game is ready to start
+	end;
+}
+
+-	script	KvM01_BG_Out	-1,{
+	end;
+
+OnBegin:
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	mapannounce "bat_c01","Battle of Kreiger Von Midgard will close in 1 minute!",1,0x696969;
+	end;
+OnTimer30000:
+	mapannounce "bat_c01","Battle of Kreiger Von Midgard will close in 30 seconds!",1,0x696969;
+	end;
+OnTimer50000:
+	mapannounce "bat_c01","Battle of Kreiger Von Midgard will close in 10 seconds!",1,0x696969;
+	end;
+OnTimer60000:
+	donpcevent "KvM01_BG::OnReset";
+	end;
+}
+
+// Battleground Therapist
+// *********************************************************************
+
+bat_c01,51,130,5	script	Therapist in battle::TherapistKvM01a	95,{
+	mes "[Therapist in battle]";
+	mes "Just close your eyes, and take a deep breathe.";
+	mes "You can be free from pain.";
+	specialeffect2 312;
+	close;
+}
+
+bat_c01,148,53,1	script	Therapist in battle::TherapistKvM01b	95,{
+	mes "[Therapist in battle]";
+	mes "Just close your eyes, and take a deep breathe.";
+	mes "You can be free from pain.";
+	specialeffect2 312;
+	close;
+}
+
+// Battleground rewards
+// *********************************************************************
+
+bat_c01,51,130,5	script	Guillaume Vintenar::VintenarKvM01a	419,{
+	if( $@KvM01BG_Victory )
+	{
+		if( $@KvM01BG_Victory == 3 )
+		{
+			setquest 6025;
+			bg_leave;
+			warp "bat_room",155,150;
+			end;
+		}
+		else if( $@KvM01BG_Victory == Bat_Team )
+		{ // Victory
+			set .@Reward, 5;
+			mes "[Swandery]";
+			mes "Blessed Guillaume!!";
+			mes "Let's enjoy our glorious victory!";
+			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			close2;
+		}
+		else
+		{ // 
+			set .@Reward, 1;
+			mes "[Swandery]";
+			mes "You lost, but you're dedicated to this battle.";
+			mes "This is a reward for your great dedication by Guillaume Marollo!";
+			mes "Just take this defeat a lesson, and later you would definitely learn.";
+			close2;
+		}
+
+		setquest 6025;
+		getitem 7773, .@Reward;
+		bg_leave;
+		warp "bat_room",155,150;
+		end;
+	}
+	end;
+}
+
+bat_c01,148,53,1	script	Croix Vintenar::VintenarKvM01b	415,{
+	if( $@KvM01BG_Victory )
+	{
+		if( $@KvM01BG_Victory == 3 )
+		{
+			setquest 6025;
+			bg_leave;
+			warp "bat_room",155,150;
+			end;
+		}
+		else if( $@KvM01BG_Victory == Bat_Team )
+		{ // Victory
+			set .@Reward, 5;
+			mes "[Swandery]";
+			mes "Blessed Croax!!";
+			mes "Let's enjoy our glorious victory!";
+			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			close2;
+		}
+		else
+		{ // 
+			set .@Reward, 1;
+			mes "[Swandery]";
+			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";
+			mes "Even though we didn't win, we did our best.";
+			mes "This is a Royal gift from Croix, and please don't forget this battle. We can win the next.";
+			close2;
+		}
+
+		setquest 6025;
+		getitem 7773, .@Reward;
+		bg_leave;
+		warp "bat_room",155,150;
+		end;
+	}
+	end;
+}

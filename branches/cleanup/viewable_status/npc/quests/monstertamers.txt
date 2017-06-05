@@ -1,0 +1,763 @@
+//===== rAthena Script =======================================
+//= Monster Tamers
+//===== By: ==================================================
+//= kobra_k88, Darkchild, x[tsk]
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Cute pet quest items
+//===== Additional Comments: =================================
+//= May not have all of the Monster Tamers, but the ones here are fully working.
+//= 1.1 Fixed exploits [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Added Bongun's taming item quest. Credits to Lone_Wolf. [SinSloth]
+//= 1.4 Updated Monster taming item quests. [L0ne_W0lf]
+//= 1.4a FIXED item requirement for stellar hairpin. [L0ne_W0lf]
+//= 1.4b Fixed the delitem assosiated with the last uptate. [L0ne_W0lf]
+//= 1.5 Moved Izlude NPC to pre-re/re paths.
+//============================================================
+
+alberta_in,173,76,4	script	Monster Tamer#alb	125,{
+	mes "[Iwado]";
+	mes "This is the height of the era of Monster Taming! Don't you feel the need to gather monster items to be able to connect and to communicate with the Cute Monsters!?";
+	next;
+	switch(select("^3355FF' Monster Taming '^000000 ?:Order ^3355FF' Monster Juice '^000000:Order ^3355FF' Singing Flower '^000000:Order ^3355FF' Wild Flower '^000000:Cancel")) {
+	case 1:
+		mes "[Iwado]";
+		mes "These monster items, necessary to communicate with monsters, are a must have! We, the members of the Monster Tamer Guild, have a very reasonable offer.";
+		next;
+		mes "[Iwado]";
+		mes "We have a system that allows you";
+		mes "to get your hands on these";
+		mes "cool items without burden!";
+		mes "Monster Juice !";
+		mes "Singing Flower !";
+		mes "Aaand....Wild Flower !";
+		next;
+		mes "[Iwado]";
+		mes "To make";
+		mes "Monster Juice, you need";
+		mes "^3355FF1 Animal Gore^000000 and";
+		mes "^3355FF2 Apple^000000.";
+		next;
+		mes "[Iwado]";
+		mes "For 1 Singing Flower,";
+		mes "you will need";
+		mes "^3355FF1 Singing Plant^000000.";
+		next;
+		mes "[Iwado]";
+		mes "If you want me to make";
+		mes "1 Wild Flower,";
+		mes "just give me";
+		mes "^3355FF1 Fancy Flower^000000 and";
+		mes "^3355FF1 Clover^000000.";
+		close;
+	case 2:
+		mes "[Iwado]";
+		mes "This is an item that is far beyond";
+		mes "anything we humans can drink!";
+		mes "Its name? ^3355FFMonster Juice^000000 !!";
+		mes "The extremely sour taste";
+		mes "is perfect for monsters. . .";
+		next;
+		if ((countitem(702) > 0) && (countitem(512) > 1)) {
+			mes "[Iwado]";
+			mes "Oh ! You have all the items to make 1 Monster Juice! Good, good! With all my pride as a monster tamer, I will make one for you right now.";
+			next;
+			mes "[Iwado]";
+			mes "Got to twist these apples...";
+			mes "Just right...";
+			next;
+			mes "^3355FF*Splash splash swoosh swhoosh splash splash*^000000";
+			next;
+			mes "[Iwado]";
+			mes "Okay. All done!";
+			mes "Please take it for the";
+			mes "cute monster you";
+			mes "are raising.";
+			mes "Monster Juice!";
+			delitem 512,2;  //Apple
+			delitem 702,1;  //Animal_Blood
+			getitem 626,1; // Monster_Juice
+			close;
+		}
+		else {
+			mes "[Iwado]";
+			mes "For the monster owner";
+			mes "that loves to use monster juice...";
+			mes "I have mastered the recipe for Monster Juice!";
+			next;
+			mes "[Iwado]";
+			mes "If you bring me";
+			mes "^3355FF1 Animal Gore^000000 and";
+			mes "^3355FF2 Apple^000000";
+			mes "With all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 3:
+		mes "[Iwado]";
+		mes "A flower with a song that is";
+		mes "far beyond human comprehension!";
+		mes "Its name? ^3355FFSinging Flower^000000!!";
+		mes "A scent that makes you dizzy with pleasure. A perfect item for monsters...";
+		next;
+		if (countitem(707) > 0) {
+			mes "[Iwado]";
+			mes "Oh! You have all the items necessary to make 1 Singing Flower!! Good, good! With all my pride as a monster tamer, I will make it for you right away.";
+			next;
+			mes "[Iwado]";
+			mes "Got to...";
+			mes "Twist this...";
+			mes "Just right...";
+			next;
+			mes "^3355FF*Crumble crumble scratch scratch*^000000";
+			next;
+			mes "[Iwado]";
+			mes "Okay. All done!";
+			mes "Please take it for the";
+			mes "cute monster you";
+			mes "are raising.";
+			mes "Singing Flower!";
+			delitem 707,1;  //Singing_Plant
+			getitem 629,1; // Singing_Flower
+			close;
+		}
+		else {
+			mes "[Iwado]";
+			mes "For the monster owner";
+			mes "that loves to use Singing Flower...";
+			mes "I provide a way to make";
+			mes "1 Singing Flower!";
+			next;
+			mes "[Iwado]";
+			mes "If you bring me";
+			mes "^3355FF1 Singing Plant ^000000,";
+			mes "With all my pride as a monster tamer, I will make one for you right away!";
+			close;
+		}
+	case 4:
+		mes "[Iwado]";
+		mes "This is a flower that is far beyond what humans can gaze at! Its name? ^3355FFWild Flower^000000 !! A troublesome design, but perfect for monsters!";
+		next;
+		if ((countitem(2207) > 0) && (countitem(705) > 0)) {
+			mes "[Iwado]";
+			mes "Oh! You have all the items necessary to make 1 Wild Flower! Good! Good! With all my pride as a monster tamer, I will make one for you right away.";
+			next;
+			mes "[IWado]";
+			mes "Got to twist this...";
+			mes "Just right...";
+			next;
+			mes "^3355FF*Crumble crumble rip rip*^000000";
+			next;
+			mes "[Iwado]";
+			mes "Okay. All done!";
+			mes "Please take it for the";
+			mes "cute monsters you";
+			mes "are raising.";
+			mes "Wild Flower!";
+			delitem 2207,1;  //Fancy_Flower
+			delitem 705,1;  //Clover
+			getitem 10009,1; // Wild_Flower
+			close;
+		}
+		else {
+			mes "[Iwado]";
+			mes "For the monster owner";
+			mes "that loves to use Wild Flower...";
+			mes "I provide a way to make";
+			mes "1 Wild Flower!";
+			next;
+			mes "[Iwado]";
+			mes "^3355FF1 Fancy Flower^000000 and";
+			mes "^3355FF1 Clover^000000";
+			mes "is all I need! If you bring those to me, I will make one for you with all my pride as a monster tamer!";
+			close;
+		}
+	case 5:
+		mes "[Iwado]";
+		mes "Ah...!";
+		mes "You must have not decided which Monster you want to raise.";
+		next;
+		mes "[Iwado]";
+		mes "Definitely not a decision to be made carelessly! Your pet monster will accompany you throughout your life. Please take your time and return when you have decided.";
+		close;
+	}
+}
+
+
+aldeba_in,168,175,4	script	Monster Tamer#alde	125,{
+	mes "[YuU]";
+	mes "You must be looking for monster items! In making monster items, there is no monster tamer in Rune Midgard that's better than me.";
+	next;
+	mes "[YuU]";
+	mes "I can make all sorts of neat things for your Cute Pet monster.";
+	mes "Just ask~";
+	next;
+	switch(select("^3355FF' Monster Taming '^000000?:Order ^3355FF' Skull Helm '^000000:Order ^3355FF' Monster Oxygen Mask '^000000:Order ^3355FF' Silk Ribbon '^000000:Order ^3355FF' Stellar Hairpin '^000000:Order ^3355FF' Tiny Egg Shell '^000000:Order ^3355FF' Rocker Glasses '^000000:Cancel")) {
+	case 1:
+		mes "[YuU]";
+		mes "The monster items that are";
+		mes "necessary to communicate";
+		mes "with monsters...";
+		mes "These are a must have!";
+		mes "We Monster Tamer guild members'";
+		mes "have a very reasonable offer.";
+		next;
+		mes "[YuU]";
+		mes "We provide a system that allows you to get your hands on these cool items with less of the hassle!";
+		mes "Silk Ribbon !";
+		mes "Monster Oxygen Mask !";
+		mes "Skull Helm !";
+		next;
+		mes "[YuU]";
+		mes "Stellar Hairpin !";
+		mes "Tiny Egg Shell !!";
+		mes "Rocker Glasses !!!";
+		next;
+		mes "[YuU]";
+		mes "1 Skull Helm requires";
+		mes "1 ^3355FFBone Helm^000000";
+		next;
+		mes "[YuU]";
+		mes "1 Monster Oxygen Mask requires";
+		mes "1 ^3355FFOxygen Mask^000000.";
+		next;
+		mes "[YuU]";
+		mes "1 Silk Ribbon requires";
+		mes "1 ^3355FFRibbon^000000.";
+		next;
+		mes "[YuU]";
+		mes "1 Stellar Hairpin requires";
+		mes "1 ^3355FFStellar^000000.";
+		next;
+		mes "[YuU]";
+		mes "1 Tiny Egg Shell requires";
+		mes "1 ^3355FFEgg Shell^000000.";
+		next;
+		mes "[YuU]";
+		mes "1 Rocker Glassess requires";
+		mes "^3355FF400 Zeny^000000,";
+		mes "2 ^3355FFZargon^000000 and";
+		mes "1 ^3355FFRibbon^000000. ";
+		next;
+		mes "[YuU]";
+		mes "Try your best to find these items so that you can raise a Cute Monster! Good luck!";
+		close;
+	case 2:
+		mes "[YuU]";
+		mes "This is an item far beyond what humans can wear! Its name? ^3355FFSkull Helm^000000! Disgusting on humans, but cute on monsters.";
+		next;
+		if (countitem(5017) > 0) {
+			mes "[YuU]";
+			mes "Oh! You have all the items necessary to make Skull Helm! Good, good! With all my pride as a monster tamer, I will make it for you right away.";
+			next;
+			mes "[YuU]";
+			mes "Got to rub";
+			mes "this Bone Helm";
+			mes "just right...";
+			next;
+			mes "[YuU]";
+			mes "Okay. All done!";
+			mes "Please take this for";
+			mes "the cute monster you";
+			mes "are raising.";
+			mes "Skull Helm!";
+			delitem 5017,1;  //Bone_Helm
+			getitem 10001,1; // Skull_Helm
+			close;
+		}
+		else {
+			mes "[YuU]";
+			mes "For the monster owner that loves to spoil his or her monster, we provide one way to make a Skull Helm.";
+			next;
+			mes "[YuU]";
+			mes "Just bring me...";
+			mes "^3355FF1 Bone Helm^000000!";
+			mes "With all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 3:
+		mes "[YuU]";
+		mes "This item is far beyond what humans can wear. Its name? ^3355FFMonster Oxygen Mask^000000! Show your monster that you care with this special gift.";
+		next;
+		if (countitem(5004) > 0) {
+			mes "[YuU]";
+			mes "Oh! You have all the items necessary to make 1 Monster Oxygen Mask! Good, Good! With all my pride as a monster tamer, I will make it for you right away.";
+			next;
+			mes "[YuU]";
+			mes "Got to pull apart";
+			mes "this Oxygen Mask";
+			mes "just right...";
+			next;
+			mes "^3355FF*Flip flop... Zowie!*^000000";
+			next;
+			mes "[YuU]";
+			mes "Okay. All done.";
+			mes "Please take it for";
+			mes "the cute monster you";
+			mes "are raising...";
+			mes "Monster Oxygen Mask!";
+			delitem 5004,1;  //Oxygen_Mask
+			getitem 10002,1; // Monster_Oxygen_Mask
+			close;
+		}
+		else {
+			mes "[YuU]";
+			mes "For the monster owner that wants to pamper his or her monster with its very own breathing apparatus, we provide a way to create 1 Monster Oxygen Mask!";
+			next;
+			mes "[YuU]";
+			mes "Bring me...";
+			mes "^3355FF1 Oxygen Mask^000000.";
+			mes "With all my pride as a monster tamer, I will make it for you right away!";
+			close;
+		}
+	case 4:
+		mes "[YuU]";
+		mes "This is not an item that a normal human would dare to wear! Its name? ^3355FFSilk Ribbon^000000! Its perfect for monsters!";
+		next;
+		if (countitem(2208) > 0) {
+			mes "[YuU]";
+			mes "Oh! You have all the items necessary to make 1 Silk Ribbon! Good, good! With all my pride as a monster tamer, I will make it for you right away!";
+			next;
+			mes "[YuU]";
+			mes "Got to unravel";
+			mes "this ribbon";
+			mes "just right...";
+			next;
+			mes "[YuU]";
+			mes "Okay. All done.";
+			mes "Please take it for";
+			mes "the cute monster you";
+			mes "are raising.";
+			mes "Silk Ribbon!";
+			delitem 2208,1;  //Ribbon
+			getitem 10007,1; // Silk_Ribbon
+			close;
+		}
+		else {
+			mes "[YuU]";
+			mes "For the monster owner that is fond of elegantly dressing their pets, we provide a way to create 1 Silk Ribbon!";
+			next;
+			mes "[YuU]";
+			mes "Just bring me...";
+			mes "^3355FF1 Ribbon^000000!";
+			mes "with all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 5:
+		mes "[YuU]";
+		mes "This is an item far beyond the fashion sense of humans! Its name? ^3355FFStellar Hairpin^000000! It's dangerous for humans to wear, but fashionable of monsters.";
+		next;
+		if (countitem(2294) > 0) {
+			mes "[YuU]";
+			mes "Oh! You have all the items necessary to make 1 Stellar! Good, good! With all my pride as a monster tamer, I will make it for you right away.";
+			next;
+			mes "[YuU]";
+			mes "Now, if I can";
+			mes "only peel this";
+			mes "without breaking it...";
+			next;
+			mes "^3355FF*Shine shine*^000000";
+			next;
+			mes "[YuU]";
+			mes "Okay. All done.";
+			mes "Please take it for";
+			mes "the cute monster you";
+			mes "are raising";
+			mes "Stellar Hairpin!";
+			delitem 2294,1;  // Stellar
+			getitem 10011,1; // Stellar_Hairpin
+			close;
+		}
+		else {
+			mes "[YuU]";
+			mes "For the monster owner that want the best for their cute pet, we provide a wait to create 1 Stellar Hairpin!";
+			next;
+			mes "[YuU]";
+			mes "Just bring me...";
+			mes "^3355FF 1 Stellar !^000000";
+			mes "with all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 6:
+		mes "[YuU]";
+		mes "This is far beyond what the headwear that humans can don. Its name? ^3355FFTiny Egg Shell^000000! It has the shine of marble and the glow of youth!";
+		next;
+		if (countitem(5015) > 0) {
+			mes "[YuU]";
+			mes "Oh! You have all the items necessary to make 1 Tiny Egg Shell! Good, good! With all my pride as a monster tamer, I will make it for you right away!";
+			next;
+			mes "[YuU]";
+			mes "Got to";
+			mes "shatter this";
+			mes "just right...";
+			next;
+			mes "^3355FF*Scrub scrub squeeze squeeze*^000000";
+			next;
+			mes "[YuU]";
+			mes "Okay. All done.";
+			mes "Please take it for";
+			mes "the cute monster you";
+			mes "are raising";
+			mes "Tiny Egg Shell!";
+			delitem 5015,1;  //Egg_Shell
+			getitem 10012,1; // Tiny_Egg_Shell
+			close;
+		}
+		else {
+			mes "[YuU]";
+			mes "For the monster owner that is fond of eggs and fonder of egg shells, we provide a way to create 1 Tiny Egg Shell!";
+			next;
+			mes "[YuU]";
+			mes "Just bring me...";
+			mes "^3355FF1 Tiny Egg Shell^000000!";
+			mes "with all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 7:
+		mes "[YuU]";
+		mes "Ah yes, this is eyewear far beyond the glasses of normal humans. Its name? ^3355FFRocker Glasses^000000! Suave eyewear for suave monsters~";
+		next;
+		if ((countitem(912) > 1) && (countitem(2208) > 0) && (Zeny > 399)) {
+			mes "[YuU]";
+			mes "Oh! You have all the items necessary to make 1 Rocker Glasses! Good, good! With all my pride as a monster tamer, I will make it for you right away!";
+			next;
+			mes "[YuU]";
+			mes "Okay, now all I gotta do is take this Zargon and, um, make glasses lenses out of them. Somehow.";
+			next;
+			mes "^3355FF*Squeak squeak crush snap*^000000";
+			next;
+			mes "[YuU]";
+			mes "Whew! Lucky!";
+			mes "Somehow I did it.";
+			mes "Please take this for";
+			mes "the cute monster you";
+			mes "are raising.";
+			mes "Rocker Glasses!";
+			delitem 912,2;  //Zargon
+			delitem 2208,1;  //Ribbon
+			set Zeny,Zeny-400;
+			getitem 10014,1; // Rocker_Glasses
+			close;
+		}
+		else {
+			mes "[YuU]";
+			mes "For the monster owner that likes monster glasses, we provide a way to make Rocker Glasses!";
+			next;
+			mes "[YuU]";
+			mes "Just bring me...";
+			mes "^3355FF2 Zargon^000000";
+			mes "^3355FF1 Ribbon^000000 and";
+			mes "^3355FF400 zeny^000000. ";
+			mes "I will make it for you, with all my pride as a monster tamer!";
+			close;
+		}
+	case 8:
+		mes "[YuU]";
+		mes "Ah...!";
+		mes "You must have not decided which Monster you want to raise.";
+		next;
+		mes "[YuU]";
+		mes "Definitely not a decision to be made carelessly! Your pet monster will accompany you throughout your life. Please take your time and return when you have decided.";
+		close;
+	}
+}
+
+-	script	::MonsterTamer_izlude	-1,{
+	mes "[Shogo]";
+	mes "Are you pre-occupied with";
+	mes "gathering items for monsters";
+	mes "and want a break? ";
+	mes "We will gather items";
+	mes "for your Cute Pets.";
+	next;
+	switch(select("^3355FF' Monster Taming '^000000?:Order ^3355FF' Book of Devil '^000000:Order ^3355FF' No Recipient '^000000:Order ^3355FF' Orc Trophy '^000000:Cancel")) {
+	case 1:
+		mes "[Shogo]";
+		mes "The monster taming items are necessary to communicate with the monster of your choice! We Monster Tamer guild members have a very reasonable offer...";
+		next;
+		mes "[Shogo]";
+		mes "We provide a system that allows you to get your hands on these cool items with less of the hassle!";
+		mes "Book of Devil!";
+		mes "No Recipient!";
+		mes "Orc Trophy!";
+		next;
+		mes "[Shogo]";
+		mes "For 1 Book of Devil, you can exchange:";
+		mes "^3355FF1 Old Magic Book^000000";
+		mes "^3355FF2 Horrendous Mouth^000000.";
+		next;
+		mes "[Shogo]";
+		mes "For 1 No Recipient, you can exchange ^3355FF1 Old Portrait^000000.";
+		next;
+		mes "[Shogo]";
+		mes "Lastly, you can exchange";
+		mes "^3355FF1 Chivalry Emblem^000000 and";
+		mes "^3355FF1 Scorpion Tail^000000";
+		mes "for 1 Orc Trophy.";
+		mes "Try these fantastic items!";
+		close;
+	case 2:
+		mes "[Shogo]";
+		mes "This is an item far beyond what humans can read! Its name? ^3355FFBook of Devil^000000! A very mysterious item that can supposedly summon demons...";
+		next;
+		if ((countitem(1006) > 0) && (countitem(958) > 1)) {
+			mes "[Shogo]";
+			mes "Oh! You have all the items necessary to make 1 Book of Devil! Good, good! With all my pride as a monster tamer, I will make one for you right away.";
+			next;
+			mes "[Shogo]";
+			mes "Let's see...";
+			mes "Hmm, this is going to be hard.";
+			next;
+			mes "^3355FF*Knock knock scrape scrape*^000000";
+			next;
+			mes "[Shogo]";
+			mes "Okay. All done.";
+			mes "Please take it for";
+			mes "the cute monster you";
+			mes "are raising.";
+			mes "Book of Devil!";
+			delitem 958,2;  //Horrendous_Mouth
+			delitem 1006,1;  //Old_Magic_Book
+			getitem 642,1; // Book_Of_Devil
+			close;
+		}
+		else {
+			mes "[Shogo]";
+			mes "For the owner that wishes to raise a monster that can be summoned using the Book of Devil, we provide a way to create 1 Book of Devil!";
+			next;
+			mes "[Shogo]";
+			mes "Just bring me...";
+			mes "^3355FF1 Old Magicbook^000000 and";
+			mes "^3355FF2 Horrendous Mouth^000000!";
+			mes "If you bring me these items, with all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 3:
+		mes "[Shogo]";
+		mes "This is an item which expresses feelings beyond what a human can feel. Its name? ^3355FFNo Recipient^000000! Who sent this letter, and who was supposed to receive it?";
+		next;
+		if (countitem(7014) > 0) {
+			mes "[Shogo]";
+			mes "Oh! You have all the items necessary to make No Recipient! Good, good! With all my pride as a monster tamer, I will make one for you right away.";
+			next;
+			mes "[Shogo]";
+			mes "Got to fold this Old Portrait just right...";
+			next;
+			mes "^3355FF*Scrape scrape brush brush*^000000";
+			next;
+			mes "[Shogo]";
+			mes "Okay. All done.";
+			mes "Please take this item";
+			mes "for the cute monster";
+			mes "you are raising.";
+			mes "No Recipient!";
+			delitem 7014,1;  //Old_Portrait
+			getitem 636,1; // No_Recipient
+			close;
+		}
+		else {
+			mes "[Shogo]";
+			mes "For the monster owner that is fond of No Recipient, we provide a way to create to special item!";
+			next;
+			mes "[Shogo]";
+			mes "Just bring me...";
+			mes "^3355FF1 Old Portrait^000000!";
+			mes "If you bring this to me, with all my pride as a monster tamer, I will make it for you!";
+			close;
+		}
+	case 4:
+		mes "[Shogo]";
+		mes "This is an item far beyond the pride of humans!";
+		mes "Its name?";
+		mes "^3355FFOrc Trophy^000000!";
+		next;
+		if ((countitem(1004) > 0) && (countitem(904) > 0)) {
+			mes "[Shogo]";
+			mes "Oh! You have all the items necessary to make an Orc Trophy! Good, good! With all my pride as a monster tamer, let me make one for you right away!";
+			next;
+			mes "[Shogo]";
+			mes "Got to...";
+			mes "Fit this Scorpion Tail...";
+			mes "Just right...";
+			next;
+			mes "^3355FF*Clang clang Boong*^000000";
+			next;
+			mes "[Shogo]";
+			mes "Okay. All done.";
+			mes "Please take this for";
+			mes "the cute monster";
+			mes "you are raising...";
+			mes "Orc Trophy!";
+			delitem 904,1;  //Scorpion's_Tail
+			delitem 1004,1;  //Patriotism_Marks
+			getitem 635,1; // Horror_Of_Tribe
+			close;
+		}
+		else {
+			mes "[Shogo]";
+			mes "For the monster owner";
+			mes "who is fond of Horror of Tribe...";
+			mes "One way to make Horror of Tribe !";
+			mes "^3355FF 1 Chivalry Emblem^000000!";
+			mes "^3355FF 1 Scorpion Tail^000000!";
+			next;
+			mes "[Shogo]";
+			mes "If you bring these items to me,";
+			mes "with all my pride as a monster";
+			mes "tamer, I will make it for you!";
+			close;
+		}
+	case 5:
+		mes "[Shogo]";
+		mes "Ah...!";
+		mes "You must have not decided which Monster you want to raise.";
+		next;
+		mes "[Shogo]";
+		mes "Definitely not a decision to be made carelessly! Your pet monster will accompany you throughout your life. Please take your time and return when you have decided.";
+		close;
+	}
+}
+
+comodo,112,182,0	script	Munak's Grandma	103,{
+	if (countitem(1558) > 0) {
+		mes "[Munak's grandma]";
+		mes "Oh my...";
+		mes "Have you seen my granddaughter,";
+		if (Sex == SEX_MALE) {
+			mes "boy? My poor granddaughter";
+		}
+		else {
+			mes "young lady? My poor granddaughter";
+		}
+		mes "has been missing...";
+		next;
+		mes "[Munak's Grandma]";
+		mes "I can't remember exactly when it";
+		mes "was, but when I lived in Payon, I";
+		mes "had a cute granddaughter. She";
+		mes "was really happy when I made her";
+		mes "hair like ^000077Danggie^000000...";
+		next;
+		mes "[Munak's Grandma]";
+		mes "She was alwaying working with the";
+		mes "village chief... She was such a sweet";
+		mes "girl, and always got along with";
+		mes "chief's son...";
+		next;
+		mes "[Munak's Grandma]";
+		mes "But one day our deity became angry";
+		mes "and cursed the chief's son with a";
+		mes "sickness! The village had to offer";
+		mes "my granddaughter to him as a";
+		mes "companion to lift the curse...";
+		next;
+		mes "[Munak's Grandma]";
+		mes "The chief's son regained his";
+		mes "health, but I lost my";
+		mes "granddaughter! I can't look at him";
+		mes "and not think of her, so I tried to";
+		mes "leave my misery behind and came";
+		mes "here to Comodo...";
+		next;
+		switch(select("Oh come on! Cheer up!:Um, is this diary...?")) {
+		case 1:
+			mes "[Munak's Grandma]";
+			mes "It seems my granddaughter haunts my";
+			mes "dreams every night. I believe I've";
+			mes "been trying to cheer up for years";
+			mes "now...";
+			close;
+		case 2:
+			if (countitem(901) > 0) {
+				mes "[Munak's Grandma]";
+				mes "Oh god!";
+				mes "It's my granddaughter's diary!";
+				mes "Th-This is her writing! Oh my...!";
+				next;
+				mes "[Munak's Grandma]";
+				if (Sex == SEX_MALE) {
+					mes "Young man... I'll read this to you if";
+				}
+				else {
+					mes "Young lady... I'll read this to you if";
+				}
+				mes "you give it to me with a Danggie,";
+				mes "please. I no longer have anything";
+				mes "that belonged to her now...";
+				next;
+				switch(select("No way.:Ok, I will.")) {
+				case 1:
+					mes "[Munak's Grandma]";
+					mes "Oh...?";
+					if (Sex == SEX_MALE) {
+						mes "Alright, young man.";
+						mes "Thank you anyway.";
+					}
+					else {
+						mes "Thank you anyway,";
+						mes "young lady";
+					}
+					next;
+					mes "[Munak's Grandma]";
+					mes "It's alright...";
+					mes "I can only hope that the deity is";
+					mes "taking good care of her!";
+					close;
+				case 2:
+					delitem 1558,1;
+					delitem 901,1;
+					mes "[Munak's Grandma]";
+					if (Sex == SEX_MALE) {
+						mes "Oh!";
+						mes "Thank you,";
+						mes "young man~!";
+					}
+					else {
+						mes "Goodness!";
+						mes "Thank you,";
+						mes "young lady...";
+					}
+					next;
+					mes "[Munak's Grandma]";
+					mes "Alright...";
+					mes "I'll read this.";
+					mes "Let me see...";
+					next;
+					mes "[Munak's Grandma]";
+					mes "It seems that my granddaughter was";
+					mes "treated by the chief like his own";
+					mes "child! There are so many happy";
+					mes "memories in this book!";
+					next;
+					getitem 659,1;
+					mes "[Munak's Grandma]";
+					mes "Oh, thank you. I now have a good";
+					mes "keepsake of my granddaughter. Thank";
+					mes "you so much! May God-Poing bless";
+					mes "you!";
+					close;
+				}
+			}
+			else {
+				mes "[Munak's Grandma]";
+				mes "What? A diary? What's that diary...?";
+				mes "I don't... I can't remember, oh my...";
+				next;
+				mes "[Munak's Grandma]";
+				mes "I really wish I could make her hair";
+				mes "into a ^000077Danggie^000000 again. I really";
+				mes "wish... Oh, oh my granddaughter...";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Munak's Grandma]";
+		mes "My own granddaughter...";
+		mes "Why did she have to leave...?";
+		close;
+	}
+}

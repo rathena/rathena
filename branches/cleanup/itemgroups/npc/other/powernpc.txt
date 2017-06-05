@@ -1,0 +1,293 @@
+//===== rAthena Script =======================================
+//= Official Gonryun Power Arena
+//===== By: ==================================================
+//= KarLaeda
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project; SVN r9000+
+//===== Additional Comments: =================================
+//= [Official Conversion]
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.2 Cleaning. [Euphy]
+//============================================================
+
+gonryun,180,118,4	script	Iron man#gnp	85,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	if (BaseJob == Job_Novice) {
+		mes "[Songmoodoo]";
+		mes "Children are not allowed in here.";
+		close;
+	}
+	if (in_battle == 3) set in_battle,1;
+	if (in_battle < 1) {
+		mes "[Songmoodoo]";
+		mes "Hey hey~ This is not something";
+		mes "you can see everyday.";
+		mes "Oh~ you look strong!";
+		mes "Wanna try?";
+		next;
+		switch(select("Why not?:?????:No thanks.")){
+		case 1:
+			mes "[Songmoodoo]";
+			mes "Haha~ I knew you would try.";
+			mes "If you could lift this up,";
+			mes "I'll tell you something interesting.";
+			mes "Ready?";
+			next;
+			mes "^0000FFSongmoodoo points to a rock";
+			mes "and asks you to lift it.";
+			if (BaseJob < Job_Knight) callsub L_Lifting,690;
+			else if (BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Merchant || BaseJob == Job_Monk) callsub L_Lifting,1100;
+			else callsub L_Lifting,730;
+			break;
+		case 2:
+			mes "[Songmoodoo]";
+			mes "That's not a big deal.";
+			mes "If you believe you're strong,";
+			mes "this might be a good chance to experience";
+			mes "something new. Wanna try??";
+			break;
+		case 3:
+			mes "[Songmoodoo]";
+			mes "I guess not...";
+			emotion e_pif;
+			break;
+		}
+	} else if (in_battle == 1) {
+		mes "[Songmoodoo]";
+		mes "Good to see you again!";
+		mes "Wanna go??";
+		next;
+		if (select("Sure:Maybe next time") == 1) {
+			mes "[Songmoodoo]";
+			mes "Good! Haha.";
+			mes "I like your confidence.";
+			mes "Good luck to you~";
+			close2;
+			warp "gon_test",53,6;
+			end;
+		} else {
+			mes "[Songmoodoo]";
+			mes "Well... alright.";
+			mes "I'll see you next time then.";
+		}
+	} else {
+		mes "[Songmoodoo]";
+		mes "You ran away from there?";
+		mes "Guess you're not strong enough!";
+		mes "I'll give you another chance.";
+		mes "See you again.";
+		emotion e_pif;
+		set in_battle,1;
+	}
+	close;
+
+L_Lifting:
+	if (checkweight(7049,getarg(0))) {
+		mes "You lifted the Stone lightly.^000000";
+		set in_battle,1;
+		getitem 7049, getarg(0); // Stone
+		next;
+		emotion e_no1;
+		mes "[Songmoodoo]";
+		mes "Wow~ Excellent~";
+		mes "I'll take you to someplace nice";
+		mes "next time I see you.";
+		mes "See ya~";
+	} else {
+		mes "Looks too heavy for you.^000000";
+		next;
+		mes "[Songmoodoo]";
+		mes "You lack training.";
+		mes "Come back after more practice.";
+	}
+	return;
+}
+
+gon_test,50,14,4	script	Administrator#gnp	780,{
+	mes "[Administrator]";
+	if (BaseJob == Job_Novice) {
+		mes "Children are not allowed in here.";
+		close;
+	}
+	if ($@in_battle) {
+		mes "Sorry, the field of fight";
+		mes "is occupied right now.";
+		mes "Try again later.";
+		close;
+	}
+	mes "Are you ready?";
+	mes " ";
+	mes "Remember, you have to pay";
+	mes "500z to fight.";
+	next;
+	if (select("Yes, let me fight!:One moment, please.") == 2) {
+		mes "[Administrator]";
+		mes "Ok, see you later.";
+		close;
+	}
+	if (Zeny < 500) {
+		mes "[Administrator]";
+		mes "I'm sorry but you don't have enough zeny.";
+		close;
+	}
+	set Zeny,Zeny - 500;
+	set in_battle,1;
+	warp "gon_test",42,86;
+	set $@in_battle,1;
+	setnpctimer 0,"Summoner#gnp";
+	startnpctimer "Summoner#gnp";
+	end;
+}
+
+gon_test,42,89,4	script	Summoner#gnp	774,{
+	mes "[SongYeunWoo]";
+	if (in_battle == 3) {
+		mes "Please come back after registration.";
+		close;
+	} else if (in_battle == 2) {
+		mes "You had a single match already.";
+		mes "You can have a match once at a time.";
+		mes "Please re-enter if you want a match";
+		mes "with other monsters.";
+		close;
+	}
+	mes "Welcome.";
+	mes "Which monster will you recall?";
+	next;
+	set .@gnpGroup, select("Group 1:Group 2:Group 3:Group 4:Group 5:Group 6:Group 7:Group 8:Group 9:Group 10:Group 11");
+	set .@gnpGroupMob$,.gnpMobsName$[(.@gnpGroup-1)*6];
+	for (set .@i,1; .@i < 6; set .@i, .@i+1)
+		set .@gnpGroupMob$, .@gnpGroupMob$ + ":" + .gnpMobsName$[(.@gnpGroup-1)*6 + .@i];
+	set .@gnpMob, select(.@gnpGroupMob$);
+	mes "[SongYeunWoo]";
+	mes "Let the fight begin!";
+	close2;
+	set in_battle,2;
+	if (getnpctimer(0) < 180000) monster "gon_test",56,86,.gnpMobsName$[(.@gnpGroup-1)*6 + .@gnpMob - 1],.gnpMobsId[(.@gnpGroup-1)*6 + .@gnpMob - 1],1,"Summoner#gnp::OnGnpMobDead";
+	end;
+OnInit:
+	initnpctimer;
+	stopnpctimer;
+	setarray .gnpMobsName$[0],"Leather ribbon","Sitotoxism","Certificate of blood donation","Tarantulla","DangRangKwon","Molar of Desert";
+	setarray .gnpMobsId[0],1419,1428,1434,1430,1457,1432;
+	setarray .gnpMobsName$[6],"Hog Skeleton","Cannibal Bear","Miner","Fighting Dog","Mermaid Princess","Only Son";
+	setarray .gnpMobsId[6],1462,1442,1469,1460,1425,1472;
+	setarray .gnpMobsName$[12],"SamYeupchoom","Hunting Dog","Nutcracker","Sea Horse","JAKK","Corpse";
+	setarray .gnpMobsId[12],1454,1455,1443,1426,1436,1423;
+	setarray .gnpMobsName$[18],"Marduk","Onion Stem","Worm","Autodoll","Girl with Matches","Red Evil";
+	setarray .gnpMobsId[18],1458,1440,1429,1459,1444,1422;
+	setarray .gnpMobsName$[24],"Naga","Mold","Tracing Missiles","Aryong","Abiryong","Bacterium";
+	setarray .gnpMobsId[24],1421,1481,1424,1465,1466,1433;
+	setarray .gnpMobsName$[30],"Winning System","Fat Archer","Little black goat","Perverted","Treasure Box","Greenhorn";
+	setarray .gnpMobsId[30],1427,1473,1431,1446,1474,1471;
+	setarray .gnpMobsName$[36],"Hurricane","External Hog","Landlord of Maze","Knight of grudge","Archer of grudge","Papillon";
+	setarray .gnpMobsId[36],1450,1439,1461,1467,1453,1479;
+	setarray .gnpMobsName$[42],"Lip","Wendigo","E Card","Tentacle Monster","Muscular Alarm","Devil Cross";
+	setarray .gnpMobsId[42],1451,1475,1437,1441,1476,1435;
+	setarray .gnpMobsName$[48],"Maggot","Large Frame","Season of reading","Shining Fingers","Handbag","Major knight of grudge";
+	setarray .gnpMobsId[48],1477,1448,1478,1489,1488,1438;
+	setarray .gnpMobsName$[54],"Queen","Man of Fire","Sword of Executor","Mutant Dragon","Mixed Soup","Great Sword";
+	setarray .gnpMobsId[54],1482,1464,1487,1449,1456,1486;
+	setarray .gnpMobsName$[60],"Monster Bird","Torturer","Warrior","Vice-Torturer","Huge Sword";
+	setarray .gnpMobsId[60],1447,1483,1490,1484,1485;
+	end;
+
+OnTimer120000:
+	areaannounce "gon_test",41,81,74,92,"1 min. left",0;
+	end;
+
+OnTimer180000:
+	killmonster "gon_test","Summoner#gnp::OnGnpMobDead";
+	end;
+
+OnTimer182000:
+	areaannounce "gon_test",41,81,74,92,"Time Over.",0;
+	end;
+
+OnGnpMobDead:
+	setnpctimer 0;
+	set in_battle,1;
+	areaannounce "gon_test",41,81,74,92,"Thank you. Please come again.",0;
+	sleep 4000;
+OnTimer184000:
+	stopnpctimer;
+	areawarp "gon_test",41,81,74,92,"gon_test",44,4;
+	set $@in_battle,0;
+	end;
+}
+
+gon_test,46,14,3	script	Guide of field of fight	770,{
+	mes "[SongHeeYeon]";
+	mes ".....";
+	mes "Hi, there~";
+	mes "This is a field of fight.";
+	mes "Got any questions?";
+	next;
+	switch(select("A field of fight?:You got a minute lady?:Get in.:Out.:Nope.")){
+	case 1:
+		mes "[SongHeeYeon]";
+		mes "Just like the name of this place,";
+		mes "it is a field for matches.";
+		mes "We have various monsters";
+		mes "in different levels.";
+		next;
+		mes "[SongHeeYeon]";
+		mes "1st Class Boss Monsters are in middle of preparation yet.";
+		mes "We charge you a small fee to enter here.";
+		break;
+	case 2:
+		mes "[SongHeeYeon]";
+		mes "Eh.... excuse me?";
+		mes "Ah, I'm afraid I have to work right now...";
+		mes "Sorry...";
+		break;
+	case 3:
+		mes "[SongHeeYeon]";
+		mes "Yes, thank you.";
+		mes "Have a good time.";
+		close2;
+		set in_battle,3;
+		warp "gon_test",25,98;
+		end;
+	case 4:
+		mes "[SongHeeYeon]";
+		mes "Thank you.";
+		mes "Please come again.";
+		close2;
+		warp "gonryun",177,112;
+		end;
+	case 5:
+		mes "[SongHeeYeon]";
+		mes "........";
+		mes "Goodbye...";
+		break;
+	}
+	close;
+}
+
+gon_test,70,103,3	script	ChowAnAn#gnp	773,{
+	mes "[ChowAnAn]";
+	mes "Want to go back?";
+	next;
+	if (select("Yes.:No.") == 1) {
+		mes "[ChowAnAn]";
+		mes "Thank you.";
+		mes "Please come again.";
+		close2;
+		set in_battle,1;
+		warp "gon_test",44,4;
+		end;
+	}
+	mes "[ChowAnAn]";
+	mes "Thank you.";
+	close;
+}

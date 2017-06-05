@@ -1,0 +1,33 @@
+// Homunculus Database
+//
+// Structure of Database:
+// Class,EvoClass,Name,FoodID,HungryDelay,BaseSize,EvoSize,Race,Element,bASPD,bHP,bSP,bSTR,bAGI,bVIT,bINT,bDEX,bLUK,gnHP,gxHP,gnSP,gxSP,gnSTR,gxSTR,gnAGI,gxAGI,gnVIT,gxVIT,gnINT,gxINT,gnDEX,gxDEX,gnLUK,gxLUK,enHP,exHP,enSP,exSP,enSTR,exSTR,enAGI,exAGI,enVIT,exVIT,enINT,exINT,enDEX,exDEX,enLUK,exLUK
+//
+// 01. Class        Homunculus ID.
+// 02. EvoClass     Homunculus ID of the evolved version.
+// 03. Name         Name of the homunculus.
+// 04. FoodID       Item ID of the homunuclus food.
+// 05. HungryDelay  Time interval in milliseconds after which the homunculus' hunger value is altered.
+// 06. BaseSize     Size of the base homunculus class (0 = small, 1 = normal, 2 = large).
+// 07. EvoSize      Size of the evolved homunculus class (0 = small, 1 = normal, 2 = large).
+// 08. Race         Race of the homunculus (0 = formless, 1 = undead, 2 = brute, 3 = plant, 4 = insect, 5 = fish, 6 = demon, 7 = demi-human, 8 = angel, 9 = dragon).
+// 09. Element      Element of the homunculus (0 = neutral, 1 = water, 2 = earth, 3 = fire, 4 = wind, 5 = poison, 6 = holy, 7 = dark, 8 = ghost, 9 = undead).
+//                  The element level is always 1.
+// ...
+//
+// Legend: b: base, gn: growth min, gx: growth max, en: evolution min, ex: evolution max
+// NOTE: Only the growth values are in a 1/10 scale, the other stats are 1/1 (eg: 5 gmAGI means 0.5 agi)
+
+6001,6009,Lif,537,60000,0,1,7,0,700,150,40,17,20,15,35,24,12,60,100,4,9,5,19,5,19,5,19,4,20,6,20,6,20,800,2400,220,480,10,30,10,30,20,40,30,50,20,50,10,30
+6002,6010,Amistr,912,60000,0,1,2,0,700,320,10,20,17,35,11,24,12,80,130,1,4,8,20,4,20,4,20,1,10,3,19,3,19,1600,3600,120,360,20,50,10,30,20,50,20,50,10,30,10,30
+6003,6011,Filir,910,60000,0,1,2,0,700,90,25,29,35,9,8,30,9,45,75,3,6,4,20,8,20,1,10,3,19,4,20,3,19,1200,3200,200,400,20,50,10,30,20,50,20,50,10,30,10,30
+6004,6012,Vanilmirth,911,60000,0,1,0,0,700,80,11,11,11,11,11,11,11,30,150,0,7,1,30,1,30,1,30,1,30,1,30,1,30,1200,4800,480,640,10,30,10,30,10,30,20,50,10,50,10,100
+6005,6013,Lif,537,60000,0,1,7,0,700,150,40,17,20,15,35,24,12,60,100,4,9,5,19,5,19,5,19,4,20,6,20,6,20,800,2400,220,480,10,30,10,30,20,40,30,50,20,50,10,30
+6006,6014,Amistr,912,60000,0,1,2,0,700,320,10,20,17,35,11,24,12,80,130,1,4,8,20,4,20,4,20,1,10,3,19,3,19,1600,3600,120,360,20,50,10,30,20,50,20,50,10,30,10,30
+6007,6015,Filir,910,60000,0,1,2,0,700,90,25,29,35,9,8,30,9,45,75,3,6,4,20,8,20,1,10,3,19,4,20,3,19,1200,3200,200,400,20,50,10,30,20,50,20,50,10,30,10,30
+6008,6016,Vanilmirth,911,60000,0,1,0,0,700,80,11,11,11,11,11,11,11,30,150,0,7,1,30,1,30,1,30,1,30,1,30,1,30,1200,4800,480,640,10,30,10,30,10,30,20,50,10,50,10,100
+6048,6048,Eira,6098,60000,1,1,8,4,700,150,40,17,20,15,35,24,12,40,160,20,42,13,39,28,42,15,25,14,48,16,36,9,18,1000,2000,10,200,1,10,1,10,1,10,1,10,1,10,1,10
+6049,6049,Bayeri,6112,60000,1,1,2,6,700,320,10,20,17,35,11,24,12,90,360,48,52,18,36,8,36,16,32,22,44,12,24,20,36,1000,2000,10,200,1,10,1,10,1,10,1,10,1,10,1,10
+6050,6050,Sera,6108,60000,1,1,4,2,700,90,25,29,35,9,8,30,9,60,240,36,64,10,25,16,32,5,25,7,35,28,40,20,40,1000,2000,10,200,1,10,1,10,1,10,1,10,1,10,1,10
+6051,6051,Dieter,6104,60000,1,1,0,3,700,80,11,11,11,11,11,11,11,240,480,40,120,20,40,13,26,18,36,15,40,16,32,4,16,1000,2000,10,200,1,10,1,10,1,10,1,10,1,10,1,10
+6052,6052,Eleanor,6115,60000,1,1,7,5,700,320,10,20,17,35,11,24,12,60,300,10,20,20,40,10,50,24,48,5,15,12,36,2,10,1000,2000,10,200,1,10,1,10,1,10,1,10,1,10,1,10

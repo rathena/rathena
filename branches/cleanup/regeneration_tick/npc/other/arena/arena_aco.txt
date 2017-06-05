@@ -1,0 +1,1789 @@
+//===== rAthena Script =======================================
+//= Izlude Arena Script
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Izlude Acolyte Battle Arena
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//= 1.1 Corrected variable typos. (bugreport:4374) [L0ne_w0lf]
+//= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.3 Label standardization. [Euphy]
+//= 1.4 Script updates, and removed two level restrictions. [Euphy]
+//= 1.5 Added GM management function. [Euphy]
+//============================================================
+
+arena_room,114,102,0	script	onlyaco#arena	45,1,1,{
+OnTouch:
+	if (BaseClass == Job_Acolyte) {
+		warp "arena_room",135,129;
+		end;
+	}
+	else {
+		mes "Only Acolyte class are applicable to join this mode.";
+		close;
+	}
+}
+
+arena_room,136,138,3	script	Acolyte Waiting Room	124,{
+	end;
+
+OnInit:
+	waitingroom "Personal Force, Acolyte Class",50,"Acolyte Waiting Room::OnStartArena",1,1000,10;
+	enablewaitingroomevent;
+	end;
+
+OnStartArena:
+	warpwaitingpc "force_5-1",99,12;
+	enablenpc "arena#aco";
+	disablewaitingroomevent;
+	end;
+
+OnStart:
+	enablewaitingroomevent;
+	end;
+}
+
+force_5-1,100,12,0	script	arena#aco	-1,5,5,{
+OnTouch:
+	donpcevent "allkill#aco::OnEnable";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "arena_aco1::OnStart";
+	}
+	else {
+		donpcevent "arena_aco2::OnStart";
+	}
+	disablenpc "arena#aco";
+	end;
+}
+
+-	script	arena_aco1	-1,{
+OnStart:
+	donpcevent "Trocco#aco1::OnEnable";
+	end;
+
+OnReset_01:
+	enablenpc "force_01_02#aco";
+	enablenpc "force_02start#aco";
+	end;
+
+OnReset_02:
+	donpcevent "force_02mob#aco::OnReset";
+	enablenpc "force_02_03#aco";
+	enablenpc "force_03start#aco";
+	end;
+
+OnReset_03:
+	enablenpc "force_03_04#aco";
+	enablenpc "force_04start#aco";
+	end;
+
+OnReset_04:
+	enablenpc "force_04_05#aco";
+	enablenpc "force_05start#aco";
+	end;
+
+OnReset_05:
+	enablenpc "force_05_06#aco";
+	enablenpc "force_06start#aco";
+	end;
+
+OnReset_06:
+	enablenpc "force_06_07#aco";
+	enablenpc "force_07start#aco";
+	end;
+
+OnReset_07:
+	enablenpc "force_07_08#aco";
+	enablenpc "force_08start#aco";
+	end;
+
+OnReset_08:
+	enablenpc "force_08_09#aco";
+	enablenpc "force_09start#aco";
+	end;
+
+OnReset_09:
+	enablenpc "force_exit#aco";
+	end;
+}
+
+-	script	Trocco#aco1	-1,{
+OnEnable:
+	initnpctimer;
+	set $@arn_1,gettimetick(2);
+	end;
+
+OnTimer2000:
+	mapannounce "force_5-1","Good day! I am Trocco, your host for the Acolyte Class Time Force Battle!",bc_map|bc_npc;
+	end;
+
+OnTimer3000:
+	mapannounce "force_5-1","Make your decisions carefully. Here, the right choices make the difference between victory and defeat!",bc_map|bc_npc;
+	end;
+
+OnTimer4000:
+	mapannounce "force_5-1","You now have 8 minutes to complete this challenge. Enter the Left Entrance now to begin. Remember that you will be traveling clockwise as you clear the stages.",bc_map|bc_npc;
+	end;
+
+OnTimer60000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 7 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer120000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 6 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer180000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 5 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer240000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 4 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer300000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 3 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer360000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 2 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer420000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco1::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 1 Minute",bc_map|bc_npc;
+	end;
+
+OnTimer480000:
+	mapannounce "force_5-1","Time's up! I hope you had fun!",bc_map|bc_npc;
+	end;
+
+OnTimer485000:
+OnTimer486000:
+OnTimer487000:
+OnTimer488000:
+OnTimer489000:
+OnTimer490000:
+OnTimer491000:
+OnTimer492000:
+OnTimer493000:
+OnTimer494000:
+	mapwarp "force_5-1","prt_are_in",177,86;
+	end;
+
+OnTimer495000:
+	mapwarp "force_5-1","prt_are_in",177,86;
+	donpcevent "Trocco#aco1::OnFailClearStage";
+	end;
+
+OnTimerOff:
+	stopnpctimer;
+	end;
+
+OnFailClearStage:
+	mapwarp "force_5-1","prt_are_in",177,86;
+	donpcevent "Trocco#aco1::OnTimerOff";
+	//donpcevent "arena_aco1::OnReset";
+	donpcevent "Acolyte Waiting Room::OnStart";
+	end;
+
+On01_Start:
+	mapannounce "force_5-1","Objective: Destroy all Red Plants!",bc_map|bc_npc;
+	end;
+
+On01_End:
+	mapannounce "force_5-1","The North Exit has opened!",bc_map|bc_npc;
+	end;
+
+On02_Start:
+	mapannounce "force_5-1","Objective: Kill at least 10 Drops!",bc_map|bc_npc;
+	end;
+
+On02_End:
+	mapannounce "force_5-1","The North Exit has opened!",bc_map|bc_npc;
+	end;
+
+On03_Start:
+	mapannounce "force_5-1","Objective: Terminate all Zombies!",bc_map|bc_npc;
+	end;
+
+On03_End:
+	mapannounce "force_5-1","The East Exit has opened!",bc_map|bc_npc;
+	end;
+
+On04_Start:
+	mapannounce "force_5-1","As a courtesy, we'll restore some of your HP and SP. Now, head to the next room! Go go go!!",bc_map|bc_npc;
+	end;
+
+On05_Start:
+	mapannounce "force_5-1","Objective: Obliterate all Orc Zombies!",bc_map|bc_npc;
+	end;
+
+On05_End:
+	mapannounce "force_5-1","The South Exit has opened!",bc_map|bc_npc;
+	end;
+
+On06_Start:
+	mapannounce "force_5-1","Objective: Reach the South Exit while dodging Hydras!",bc_map|bc_npc;
+	end;
+
+On07_Start:
+	mapannounce "force_5-1","Objective: Kill all Archer Skeletons and Firelock Soldiers!",bc_map|bc_npc;
+	end;
+
+On07_End:
+	mapannounce "force_5-1","The West Exit has opened!",bc_map|bc_npc;
+	end;
+
+On08_Start:
+	mapannounce "force_5-1","Objective: Boss Battle. Please proceed to the room to the north!",bc_map|bc_npc;
+	end;
+
+On09_Start:
+	mapannounce "force_5-1","Objective: Kill Zombie Prisoners, Skel Prisoners and Zombie Troops!",bc_map|bc_npc;
+	end;
+
+On09_End:
+	mapannounce "force_5-1","Boss Defeated! The North Exit has opened. Thank you.",bc_map|bc_npc;
+	end;
+}
+
+force_5-1,40,26,0	script	force_01start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "force_01mob#aco::OnEnable";
+	disablenpc "force_01start#aco";
+	end;
+}
+
+-	script	force_01mob#aco	-1,{
+OnEnable:
+	donpcevent "Trocco#aco1::On01_Start";
+	monster "force_5-1",22,29,"Red Plant",1078,1,"force_01mob#aco::OnMyMobDead";
+	monster "force_5-1",29,29,"Red Plant",1078,1,"force_01mob#aco::OnMyMobDead";
+	monster "force_5-1",29,22,"Red Plant",1078,1,"force_01mob#aco::OnMyMobDead";
+	monster "force_5-1",22,22,"Red Plant",1078,1,"force_01mob#aco::OnMyMobDead";
+	monster "force_5-1",25,25,"Red Plant",1078,1,"force_01mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_01mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_01mob#aco::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco1::On01_End";
+		donpcevent "arena_aco1::OnReset_01";
+	}
+	end;
+}
+
+force_5-1,25,69,0	script	force_02start#aco	-1,1,1,{
+OnTouch:
+	set $@drop_gate,0;
+	donpcevent "force_02mob#aco::OnEnable";
+	disablenpc "force_02start#aco";
+	end;
+}
+
+-	script	force_02mob#aco	-1,{
+OnEnable:
+	donpcevent "Trocco#aco1::On02_Start";
+	areamonster "force_5-1",22,69,29,130,"Drops",1572,20,"force_02mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_02mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if ((mobcount("force_5-1","force_02mob#aco::OnMyMobDead") < 11) && ($@drop_gate == 0)) {
+		set $@drop_gate,1;
+		donpcevent "Trocco#aco1::On02_End";
+		donpcevent "arena_aco1::OnReset_02";
+	}
+	end;
+}
+
+force_5-1,25,159,0	script	force_03start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "force_03mob#aco::OnEnable";
+	disablenpc "force_03start#aco";
+}
+
+-	script	force_03mob#aco	-1,{
+OnEnable:
+	donpcevent "Trocco#aco1::On03_Start";
+	areamonster "force_5-1",9,157,41,190,"Zombie",1394,10,"force_03mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_03mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_03mob#aco::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco1::On03_End";
+		donpcevent "arena_aco1::OnReset_03";
+	}
+	end;
+}
+
+force_5-1,69,174,0	script	force_04start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "Trocco#aco1::On04_Start";
+	donpcevent "arena_aco1::OnReset_04";
+	percentheal 50,50;
+	disablenpc "force_04start#aco";
+	end;
+}
+
+force_5-1,159,174,0	script	force_05start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "force_05mob#aco::OnEnable";
+	disablenpc "force_05start#aco";
+	end;
+}
+
+-	script	force_05mob#aco	-1,{
+OnEnable:
+	donpcevent "Trocco#aco1::On05_Start";
+	areamonster "force_5-1",159,157,187,190,"Orc Zombie",1463,8,"force_05mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_05mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_05mob#aco::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco1::On05_End";
+		donpcevent "arena_aco1::OnReset_05";
+	}
+	end;
+}
+
+force_5-1,174,130,0	script	force_06start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "force_06mob#aco::OnEnable";
+	donpcevent "arena_aco1::OnReset_06";
+	disablenpc "force_06start#aco";
+	end;
+}
+
+-	script	force_06mob#aco	-1,{
+OnEnable:
+	donpcevent "Trocco#aco1::On06_Start";
+	monster "force_5-1",170,124,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",170,121,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",173,116,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",175,113,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",175,110,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",170,106,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",173,106,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",176,106,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",179,106,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",174,100,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",174,96,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",174,92,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",174,88,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",170,80,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",173,80,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",176,80,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	monster "force_5-1",179,80,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_06mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+force_5-1,174,40,0	script	force_07start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "force_07mob#aco::OnEnable";
+	disablenpc "force_07start#aco";
+}
+
+-	script	force_07mob#aco	-1,{
+OnEnable:
+	donpcevent "Trocco#aco1::On07_Start";
+	monster "force_5-1",170,32,"Archer Skeleton",1420,1,"force_07mob#aco::OnMyMobDead";
+	monster "force_5-1",184,23,"Archer Skeleton",1420,1,"force_07mob#aco::OnMyMobDead";
+	monster "force_5-1",165,9,"Archer Skeleton",1420,1,"force_07mob#aco::OnMyMobDead";
+	monster "force_5-1",184,15,"Firelock Soldier",1523,1,"force_07mob#aco::OnMyMobDead";
+	monster "force_5-1",189,23,"Firelock Soldier",1523,1,"force_07mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_07mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_07mob#aco::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco1::On07_End";
+		donpcevent "arena_aco1::OnReset_07";
+	}
+	end;
+}
+
+force_5-1,132,26,0	script	force_08start#aco	-1,1,1,{
+OnTouch:
+	percentheal 50,50;
+	donpcevent "Trocco#aco1::On08_Start";
+	donpcevent "arena_aco1::OnReset_08";
+	disablenpc "force_08start#aco";
+	end;
+}
+
+force_5-1,99,82,0	script	force_09start#aco	-1,1,1,{
+OnTouch:
+	donpcevent "Trocco#aco1::On09_Start";
+	donpcevent "force_09mob#aco::OnEnable";
+	disablenpc "force_09start#aco";
+	end;
+}
+
+-	script	force_09mob#aco	-1,{
+OnEnable:
+	monster "force_5-1",rand(88,111),rand(89,110),"Zombie Prisoner",1480,1,"force_09mob#aco::OnMyMobDead";
+	monster "force_5-1",rand(88,111),rand(89,110),"Skel Prisoner",1479,1,"force_09mob#aco::OnMyMobDead";
+	areamonster "force_5-1",88,89,111,110,"Zombie",1394,4,"force_09mob#aco::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_09mob#aco::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_09mob#aco::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco1::On09_End";
+		set $@arn_2,gettimetick(2);
+		donpcevent "arena_aco1::OnReset_09";
+	}
+	end;
+}
+
+-	script	arena_aco2	-1,{
+OnStart:
+	donpcevent "Trocco#aco2::OnEnable";
+	end;
+
+OnReset_01:
+	enablenpc "force_01_02#aco";
+	enablenpc "force_02start#pri";
+	end;
+
+OnReset_02:
+	donpcevent "force_02mob#pri::OnReset";
+	enablenpc "force_02_03#aco";
+	enablenpc "force_03start#pri";
+	end;
+
+OnReset_03:
+	enablenpc "force_03_04#aco";
+	enablenpc "force_04start#pri";
+	end;
+
+OnReset_04:
+	enablenpc "force_04_05#aco";
+	enablenpc "force_05start#pri";
+	end;
+
+OnReset_05:
+	enablenpc "force_05_06#aco";
+	enablenpc "force_06start#pri";
+	end;
+
+OnReset_06:
+	enablenpc "force_06_07#aco";
+	enablenpc "force_07start#pri";
+	end;
+
+OnReset_07:
+	enablenpc "force_07_08#aco";
+	enablenpc "force_08start#pri";
+	end;
+
+OnReset_08:
+	enablenpc "force_08_09#aco";
+	enablenpc "force_09start#pri";
+	end;
+
+OnReset_09:
+	enablenpc "force_exit#aco";
+}
+
+-	script	Trocco#aco2	-1,{
+OnEnable:
+	initnpctimer;
+	set $@arn_1,gettimetick(2);
+	end;
+
+OnTimer2000:
+	mapannounce "force_5-1","Good day! I am Trocco, your host for the Acolyte Class Time Force Battle!",bc_map|bc_npc;
+	end;
+
+OnTimer3000:
+	mapannounce "force_5-1","Make your decisions carefully. Here, the right choices make the difference between victory and defeat!",bc_map|bc_npc;
+	end;
+
+OnTimer4000:
+	mapannounce "force_5-1","You now have 8 minutes to complete this challenge. Enter the Left Entrance now to begin. Remember that you will be traveling clockwise as you clear the stages.",bc_map|bc_npc;
+	end;
+
+OnTimer60000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 7 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer120000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 6 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer180000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 5 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer240000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 4 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer300000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 3 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer360000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 2 Minutes",bc_map|bc_npc;
+	end;
+
+OnTimer420000:
+	if (getmapusers("force_5-1") == 0) {
+		donpcevent "Trocco#aco2::OnFailClearStage";
+	}
+	mapannounce "force_5-1","Time left: 1 Minute",bc_map|bc_npc;
+	end;
+
+OnTimer480000:
+	mapannounce "force_5-1","Time's up! I hope you had fun!",bc_map|bc_npc;
+	end;
+
+OnTimer485000:
+OnTimer486000:
+OnTimer487000:
+OnTimer488000:
+OnTimer489000:
+OnTimer490000:
+OnTimer491000:
+OnTimer492000:
+OnTimer493000:
+OnTimer494000:
+	mapwarp "force_5-1","prt_are_in",177,86;
+	end;
+
+OnTimer495000:
+	mapwarp "force_5-1","prt_are_in",177,86;
+	donpcevent "Trocco#aco2::OnFailClearStage";
+	end;
+
+OnTimerOff:
+	stopnpctimer;
+	end;
+
+OnFailClearStage:
+	mapwarp "force_5-1","prt_are_in",177,86;
+	donpcevent "Trocco#aco2::OnTimerOff";
+	//donpcevent "arena_aco2::OnReset";
+	donpcevent "Acolyte Waiting Room::OnStart";
+	end;
+
+On01_Start:
+	mapannounce "force_5-1","Objective: Kill all Zombies!",bc_map|bc_npc;
+	end;
+
+On01_End:
+	mapannounce "force_5-1","The North Exit has opened!",bc_map|bc_npc;
+	end;
+
+On02_Start:
+	mapannounce "force_5-1","Objective: Defeat all monsters!",bc_map|bc_npc;
+	end;
+
+On02_End:
+	mapannounce "force_5-1","The North Exit has opened!",bc_map|bc_npc;
+	end;
+
+On03_Start:
+	mapannounce "force_5-1","Objective: Destroy all Red Plants!",bc_map|bc_npc;
+	end;
+
+On03_End:
+	mapannounce "force_5-1","The East Exit has opened!",bc_map|bc_npc;
+	end;
+
+On04_Start:
+	mapannounce "force_5-1","Objective: Obliterate every monster!",bc_map|bc_npc;
+	end;
+
+On04_End:
+	mapannounce "force_5-1","The East Exit has opened!",bc_map|bc_npc;
+	end;
+
+On05_Start:
+	mapannounce "force_5-1","Objective: Defeat Gargoyle!",bc_map|bc_npc;
+	end;
+
+On05_End:
+	mapannounce "force_5-1","The South Exit has opened!",bc_map|bc_npc;
+	end;
+
+On06_Start:
+	mapannounce "force_5-1","Objective: Kill all Khalitzburgs!",bc_map|bc_npc;
+	end;
+
+On06_End:
+	mapannounce "force_5-1","The South Exit has opened!",bc_map|bc_npc;
+	end;
+
+On07_Start:
+	mapannounce "force_5-1","Objective: Kill 1 Ancient Mummy!",bc_map|bc_npc;
+	end;
+
+On07_End:
+	mapannounce "force_5-1","The West Exit has opened!",bc_map|bc_npc;
+	end;
+
+On08_Start:
+	mapannounce "force_5-1","The time has come for the Boss Battle. Please move north into the next room...",bc_map|bc_npc;
+	end;
+
+On09_Start:
+	mapannounce "force_5-1","Objective: Defeat the Boss Monster!",bc_map|bc_npc;
+	end;
+
+On09_End:
+	mapannounce "force_5-1","Boss Cleared! The North Exit has opened! Thank you.",bc_map|bc_npc;
+	end;
+}
+
+force_5-1,40,26,0	script	force_01start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "force_01mob#pri::OnEnable";
+	disablenpc "force_01start#pri";
+	end;
+}
+
+-	script	force_01mob#pri	-1,{
+OnEnable:
+	donpcevent "Trocco#aco2::On01_Start";
+	areamonster "force_5-1",13,9,38,41,"Zombie",1394,10,"force_01mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_01mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_01mob#pri::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco2::On01_End";
+		donpcevent "arena_aco2::OnReset_01";
+	}
+	end;
+}
+
+force_5-1,25,69,0	script	force_02start#pri	-1,1,1,{
+OnTouch:
+	if (BaseLevel < 70) {
+		donpcevent "force_02mob#pri::OnOn1";
+	}
+	else {
+		donpcevent "force_02mob#pri::OnOn2";
+	}
+	disablenpc "force_02start#pri";
+	end;
+}
+
+-	script	force_02mob#pri	-1,{
+OnOn1:
+	donpcevent "Trocco#aco2::On02_Start";
+	areamonster "force_5-1",22,69,29,130,"Orc Skeleton",1462,5,"force_02mob#pri::OnMyMobDead";
+	end;
+
+OnOn2:
+	donpcevent "Trocco#aco2::On02_Start";
+	areamonster "force_5-1",22,69,29,130,"Ghoul",1423,5,"force_02mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_02mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_02mob#pri::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco2::On02_End";
+		donpcevent "arena_aco2::OnReset_02";
+	}
+	end;
+}
+
+force_5-1,25,159,0	script	force_03start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "force_03mob#pri::OnEnable";
+	disablenpc "force_03start#pri";
+	end;
+}
+
+-	script	force_03mob#pri	-1,{
+OnEnable:
+	donpcevent "Trocco#aco2::On03_Start";
+	areamonster "force_5-1",14,163,37,185,"Red Plant",1078,5,"force_03mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_03mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_03mob#pri::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco2::On03_End";
+		donpcevent "arena_aco2::OnReset_03";
+	}
+	end;
+}
+
+force_5-1,69,174,0	script	force_04start#pri	-1,1,1,{
+OnTouch:
+	if (BaseLevel < 90) {
+		donpcevent "force_04mob#pri::OnOn1";
+	}
+	else {
+		donpcevent "force_04mob#pri::OnOn2";
+	}
+	disablenpc "force_04start#pri";
+	end;
+}
+
+-	script	force_04mob#pri	-1,{
+OnOn1:
+	donpcevent "Trocco#aco2::On04_Start";
+	monster "force_5-1",rand(71,130),rand(170,178),"Evil Druid",1435,1,"force_04mob#pri::OnMyMobDead";
+	monster "force_5-1",rand(71,130),rand(170,178),"Wrath",1475,1,"force_04mob#pri::OnMyMobDead";
+	monster "force_5-1",rand(71,130),rand(170,178),"Zombie Prisoner",1480,1,"force_04mob#pri::OnMyMobDead";
+	monster "force_5-1",rand(71,130),rand(170,178),"Skel Prisoner",1479,1,"force_04mob#pri::OnMyMobDead";
+	end;
+
+OnOn2:
+	donpcevent "Trocco#aco2::On04_Start";
+	areamonster "force_5-1",71,170,130,178,"Evil Druid",1435,2,"force_04mob#pri::OnMyMobDead";
+	areamonster "force_5-1",71,170,130,178,"Wrath",1475,2,"force_04mob#pri::OnMyMobDead";
+	areamonster "force_5-1",71,170,130,178,"Zombie Prisoner",1480,2,"force_04mob#pri::OnMyMobDead";
+	monster "force_5-1",rand(71,130),rand(170,178),"Skel Prisoner",1479,1,"force_04mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_04mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_04mob#pri::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco2::On04_End";
+		donpcevent "arena_aco2::OnReset_04";
+	}
+	end;
+}
+
+force_5-1,159,174,0	script	force_05start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "force_05mob#pri::OnEnable";
+	if (BaseLevel < 70) {
+		donpcevent "force_05ex#pri::OnOn1";
+	}
+	else {
+		donpcevent "force_05ex#pri::OnOn2";
+	}
+	disablenpc "force_05start#pri";
+	end;
+}
+
+-	script	force_05ex#pri	-1,{
+OnOn1:
+	areamonster "force_5-1",161,159,187,190,"Hydra",1579,10,"force_05ex#pri::OnMyMobDead";
+	end;
+
+OnOn2:
+	areamonster "force_5-1",161,159,187,190,"Penomena",1441,10,"force_05ex#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_05ex#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+-	script	force_05mob#pri	-1,{
+OnEnable:
+	donpcevent "Trocco#aco2::On05_Start";
+	areamonster "force_5-1",161,159,187,190,"Gargoyle",1597,4,"force_05mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_05mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_05mob#pri::OnMyMobDead") < 1) {
+		donpcevent "force_05ex#pri::OnReset";
+		donpcevent "Trocco#aco2::On05_End";
+		donpcevent "arena_aco2::OnReset_05";
+	}
+	end;
+}
+
+force_5-1,174,130,0	script	force_06start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "force_06ex#pri::OnEnable";
+	if (BaseLevel < 70) {
+		donpcevent "force_06mob#pri::OnOn1";
+	}
+	else if (BaseLevel < 80) {
+		donpcevent "force_06mob#pri::OnOn2";
+	}
+	else {
+		donpcevent "force_06mob#pri::OnOn3";
+	}
+	disablenpc "force_06start#pri";
+	end;
+}
+
+-	script	force_06ex#pri	-1,{
+OnEnable:
+	areamonster "force_5-1",170,67,178,131,"Permeter",1314,5,"force_06ex#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_06ex#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+-	script	force_06mob#pri	-1,{
+OnOn1:
+	donpcevent "Trocco#aco2::On06_Start";
+	monster "force_5-1",rand(170,178),rand(67,131),"Khalitzburg",1438,1,"force_06mob#pri::OnMyMobDead";
+	end;
+
+OnOn2:
+	donpcevent "Trocco#aco2::On06_Start";
+	areamonster "force_5-1",170,67,178,131,"Khalitzburg",1438,2,"force_06mob#pri::OnMyMobDead";
+	end;
+
+OnOn3:
+	donpcevent "Trocco#aco2::On06_Start";
+	areamonster "force_5-1",170,67,178,131,"Khalitzburg",1438,4,"force_06mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_06mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_06mob#pri::OnMyMobDead") < 1) {
+		donpcevent "force_06ex#pri::OnReset";
+		donpcevent "Trocco#aco2::On06_End";
+		donpcevent "arena_aco2::OnReset_06";
+	}
+	end;
+}
+
+force_5-1,174,40,0	script	force_07start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "force_07mob#pri::OnEnable";
+	disablenpc "force_07start#pri";
+	end;
+}
+
+-	script	force_07mob#pri	-1,{
+OnEnable:
+	donpcevent "Trocco#aco2::On07_Start";
+	monster "force_5-1",rand(160,188),rand(9,42),"Ancient Mummy",1522,1,"force_07mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_07mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_07mob#pri::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco2::On07_End";
+		donpcevent "arena_aco2::OnReset_07";
+	}
+	end;
+}
+
+force_5-1,132,26,0	script	force_08start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "Trocco#aco2::On08_Start";
+	donpcevent "arena_aco2::OnReset_08";
+	disablenpc "force_08start#pri";
+	end;
+}
+
+force_5-1,99,82,0	script	force_09start#pri	-1,1,1,{
+OnTouch:
+	donpcevent "Trocco#aco2::On09_Start";
+	if (BaseLevel < 70) {
+		donpcevent "force_09mob#pri::OnOn4";
+	}
+	else if (BaseLevel < 80) {
+		donpcevent "force_09mob#pri::OnOn1";
+	}
+	else if (BaseLevel < 90) {
+		donpcevent "force_09mob#pri::OnOn2";
+	}
+	else {
+		donpcevent "force_09mob#pri::OnOn3";
+	}
+	disablenpc "force_09start#pri";
+	end;
+}
+
+-	script	force_09mob#pri	-1,{
+OnOn1:
+	monster "force_5-1",rand(88,111),rand(89,110),"Mimic",1474,1,"force_09mob#pri::OnMyMobDead";
+	end;
+
+OnOn2:
+	monster "force_5-1",rand(88,111),rand(89,110),"Wrath Dead",1566,1,"force_09mob#pri::OnMyMobDead";
+	end;
+
+OnOn3:
+	monster "force_5-1",rand(88,111),rand(89,110),"Dark Illusion",1605,1,"force_09mob#pri::OnMyMobDead";
+	end;
+
+OnOn4:
+	monster "force_5-1",rand(88,111),rand(89,110),"Zombie Prisoner",1480,1,"force_09mob#pri::OnMyMobDead";
+	monster "force_5-1",rand(88,111),rand(89,110),"Skel Prisoner",1479,1,"force_09mob#pri::OnMyMobDead";
+	areamonster "force_5-1",88,89,111,110,"Zombie",1394,4,"force_09mob#pri::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster "force_5-1","force_09mob#pri::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("force_5-1","force_09mob#pri::OnMyMobDead") < 1) {
+		donpcevent "Trocco#aco2::On09_End";
+		set $@arn_2,gettimetick(2);
+		donpcevent "arena_aco2::OnReset_09";
+	}
+	end;
+}
+
+force_5-1,62,26,0	script	force_08_01#aco	45,1,1,{
+OnTouch:
+	warp "force_5-1",40,26;
+	if (BaseJob == Job_Acolyte) {
+		enablenpc "force_01start#aco";
+	}
+	else {
+		enablenpc "force_01start#pri";
+	}
+	end;
+}
+
+force_5-1,99,124,0	script	force_exit#aco	45,1,1,{
+OnTouch:
+	donpcevent "Trocco#aco1::OnTimerOff";
+	donpcevent "#arn_timer_aco::OnEnable";
+	mapwarp "force_5-1","prt_are_in",21,35;
+	end;
+}
+
+prt_are_in,181,83,3	script	Staff#aco-1	67,{
+	mes "[Staff]";
+	mes "Nice work!";
+	mes "You might have failed";
+	mes "the Time Attack battle,";
+	mes "but you still earned a";
+	mes "small Arena Point reward~";
+	next;
+	if (arena_point == 30000) {
+		mes "[Staff]";
+		mes "Wait, I'm sorry, but you";
+		mes "have too many Arena Points.";
+		mes "Since you've reached the point";
+		mes "limitation, I can't give you any point rewards until you spend";
+		mes "some of your Arena Points.";
+		next;
+	}
+	else {
+		set arena_point,arena_point+1;
+	}
+	mes "[Staff]";
+	mes "Well, let me guide";
+	mes "you back outside.";
+	mes "I hope you enjoyed";
+	mes "your battle in the area~";
+	close2;
+	specialeffect2 EF_EXIT;
+	warp "arena_room",100,75;
+	end;
+}
+
+prt_are_in,25,31,3	script	Staff#aco-2	67,{
+	set .@start_timeaco, $@arn_1;
+	set .@hour_startaco, .@start_timeaco / 10000;
+	set .@min_startaco, ((.@start_timeaco % 10000) / 100);
+	set .@sec_startaco, .@start_timeaco % 100;
+	set .@end_timeaco, $@arn_2;
+	set .@hour_endaco, .@end_timeaco / 10000;
+	set .@min_endaco, ((.@end_timeaco % 10000) / 100);
+	set .@sec_endaco, .@end_timeaco % 100;
+	if ((.@hour_startaco == 23) & (.@hour_endaco == 0)) {
+		set .@hour_endaco,24;
+	}
+	set .@st_to_secaco, ((.@hour_startaco * 3600) + (.@min_startaco * 60) + (.@sec_startaco));
+	set .@et_to_secaco, ((.@hour_endaco * 3600) + (.@min_endaco * 60) + (.@sec_endaco));
+	set .@record_timeaco, (.@et_to_secaco - .@st_to_secaco);
+	set .@record_houraco, .@record_timeaco / 3600;
+	set .@record_minaco, ((.@record_timeaco % 3600) / 60);
+	set .@record_secaco, .@record_timeaco % 60;
+	if ((.@record_timeaco < 0 ) || (.@record_houraco < 0) || (.@record_minaco < 0 ) || (.@record_secaco < 0)) {
+		emotion e_omg;
+		mes "[Staff]";
+		mes "How did you...?";
+		mes "According to these re-";
+		mes "Uh oh. These records";
+		mes "got messed up somehow.";
+		mes "Th-This isn't good at all!";
+		mes "Now what am I gonna do?";
+		next;
+		mes "[Staff]";
+		mes "Well, I'll give you the";
+		mes "benefit of the doubt and";
+		mes "assume you completed the";
+		mes "arena battle under the time";
+		mes "limit. So, let me give you the";
+		mes "standard Arena Point reward.";
+		next;
+		mes "[Staff]";
+		mes "I'm really sorry about";
+		mes "this, especially if you";
+		mes "broke some record, but";
+		mes "all I can do is restore your";
+		mes "HP and SP for you, "+strcharinfo(0)+".";
+		percentheal 100,100;
+		next;
+		mes "[Staff]";
+		emotion e_korea;
+		mes "Thank you.";
+		mes "I hope you enjoy";
+		mes "your time in the Arena~";
+		close2;
+		if (arena_point < 29981) {
+			set arena_point,arena_point+20;
+			warp "arena_room",100,75;
+			donpcevent "#arn_timer_aco::OnStop";
+			donpcevent "Acolyte Waiting Room::OnStart";
+		}
+		else {
+			warp "arena_room",100,75;
+			donpcevent "#arn_timer_aco::OnStop";
+			donpcevent "Acolyte Waiting Room::OnStart";
+		}
+		end;
+	}
+	else {
+		if (BaseJob == Job_Acolyte) {
+			set .@acotop_t,$arn_acotop;
+			set .@acotop_n$,$arn_acotopn$;
+		}
+		else {
+			if (BaseLevel < 70) {
+				set .@acotop_t,$arn_pritop60;
+				set .@acotop_n$,$arn_pritopn60$;
+			}
+			else if (BaseLevel < 80) {
+				set .@acotop_t,$arn_pritop70;
+				set .@acotop_n$,$arn_pritopn70$;
+			}
+			else if (BaseLevel < 90) {
+				set .@acotop_t,$arn_pritop80;
+				set .@acotop_n$,$arn_pritopn80$;
+			}
+			else {
+				set .@acotop_t,$arn_pritop90;
+				set .@acotop_n$,$arn_pritopn90$;
+			}
+		}
+		set .@topbunaco, ((.@acotop_t % 3600) / 60);
+		set .@topchoaco, .@acotop_t % 60;
+		set .@gapaco, .@acotop_t - .@record_timeaco;
+		mes "[Staff]";
+		mes "^3131FF"+strcharinfo(0)+"^000000, right?";
+		mes "Hey, you did great! You";
+		mes "completed this Arena Battle";
+		mes "in "+.@record_minaco+" min and "+.@record_secaco+" seconds!";
+		next;
+		mes "[Staff]";
+		mes "Currently, ^3131FF"+.@acotop_n$+"^000000";
+		mes "is the top player, with a record";
+		mes "of ^3131FF"+.@topbunaco+"^000000 minutes, ^3131FF"+.@topchoaco+"^000000 seconds, of the Acolyte Class Time Force Battle.";
+		next;
+		if ((.@acotop_t < 0) || (.@topbunaco < 0 ) || (.@topchoaco < 0)) {
+			emotion e_omg;
+			mes "[Staff]";
+			mes "Wait a second...";
+			mes "Your time is better";
+			mes "than that. Well now.";
+			mes "It's time I made a little";
+			mes "correction to the records.";
+			next;
+			emotion e_no1;
+			mes "[Staff]";
+			mes "Wow! A new record!";
+			mes "Excellent!";
+			next;
+			mes "[Staff]";
+			mes "^333333*Ahem*^000000 Oh wow!";
+			mes "A new record! Your";
+			mes "name will now be listed";
+			mes "under the Time Force Battle";
+			mes "Arena - Acolyte Class Record!";
+			if (BaseJob == Job_Acolyte) {
+				set $arn_acotop,.@record_timeaco;
+				set $arn_acotopn$, strcharinfo(0);
+				donpcevent "Vendigos::OnLineRec_aco";
+			}
+			else {
+				if (BaseLevel < 70) {
+					set $arn_pritop60,.@record_timeaco;
+					set $arn_pritopn60$, strcharinfo(0);
+				}
+				else if (BaseLevel < 80) {
+					set $arn_pritop70,.@record_timeaco;
+					set $arn_pritopn70$, strcharinfo(0);
+				}
+				else if (BaseLevel < 90) {
+					set $arn_pritop80,.@record_timeaco;
+					set $arn_pritopn80$, strcharinfo(0);
+				}
+				else {
+					set $arn_pritop90,.@record_timeaco;
+					set $arn_pritopn90$, strcharinfo(0);
+				}
+				donpcevent "Vendigos::OnLineRec_pri";
+			}
+			next;
+			if (arena_point == 30000) {
+				mes "[Staff]";
+				mes "Alright, let me reward you";
+				mes "with some Arena Poi--Wait.";
+				mes "I can't. Your Arena Points are";
+				mes "already maxed out. I'm sorry,";
+				mes "but you'll have to spend some before you can receive more points.";
+				next;
+				mes "[Staff]";
+				mes "Anyway, you can check";
+				mes "your current Arena Point";
+				mes "total in the Arena Lobby";
+				mes "with Vendigos. Well, I hope";
+				mes "you enjoyed your battle. Now, let me guide you back outside...";
+				close2;
+			}
+			else if (arena_point > 29950) {
+				mes "[Staff]";
+				mes "Let me reward you with some";
+				mes "Arena Points. This time, you'll";
+				mes "be getting more points since";
+				mes "you set a new record. Please";
+				mes "talk with ^3131FFVendigos^000000 in the lobby";
+				mes "to check your new point total.";
+				next;
+				mes "[Staff]";
+				mes "Well, I hope you";
+				mes "enjoyed your battle.";
+				mes "Now let me guide you";
+				mes "back to the Arena Lobby...";
+				close2;
+				set arena_point,30000;
+			}
+			else {
+				mes "[Staff]";
+				mes "Let me reward you with some";
+				mes "Arena Points. This time, you'll";
+				mes "be getting more points since";
+				mes "you set a new record. Please";
+				mes "talk with ^3131FFVendigos^000000 in the lobby";
+				mes "to check your new point total.";
+				next;
+				mes "[Staff]";
+				mes "Well, I hope you";
+				mes "enjoyed your battle.";
+				mes "Now let me guide you";
+				mes "back to the Arena Lobby...";
+				close2;
+				set arena_point,arena_point+50;
+			}
+			specialeffect2 EF_EXIT;
+			warp "arena_room",100,75;
+			donpcevent "#arn_timer_aco::OnStop";
+			donpcevent "allkill#aco::OnEnable";
+			donpcevent "Acolyte Waiting Room::OnStart";
+			end;
+		}
+		if (gapaco < 0) {
+			mes "[Staff]";
+			mes "You didn't break the";
+			mes "current record this time,";
+			mes "but you still gave an awesome";
+			mes "performance. Excellent work!";
+			next;
+			if (arena_point == 30000) {
+				mes "[Staff]";
+				mes "Alright, let me reward you";
+				mes "with some Arena Poi--Wait.";
+				mes "I can't. Your Arena Points are";
+				mes "already maxed out. I'm sorry,";
+				mes "but you'll have to spend some before you can receive more points.";
+				next;
+				mes "[Staff]";
+				mes "Anyway, you can check";
+				mes "your current Arena Point";
+				mes "total in the Arena Lobby";
+				mes "with Vendigos. Well, I hope";
+				mes "you enjoyed your battle. Now, let me guide you back outside...";
+				close2;
+			}
+			else if (arena_point > 29980) {
+				mes "[Staff]";
+				mes "Let me reward you";
+				mes "with some Arena Points.";
+				mes "Please check your new";
+				mes "Arena Point total in the";
+				mes "Arena Lobby by speaking";
+				mes "to the friendly ^3131FFVendigos.^000000";
+				next;
+				mes "[Staff]";
+				mes "Well, I hope you";
+				mes "enjoyed your battle.";
+				mes "Now let me guide you";
+				mes "back to the Arena Lobby...";
+				close2;
+				set arena_point,30000;
+			}
+			else {
+				mes "[Staff]";
+				mes "Let me reward you";
+				mes "with some Arena Points.";
+				mes "Please check your new";
+				mes "Arena Point total in the";
+				mes "Arena Lobby by speaking";
+				mes "to the friendly ^3131FFVendigos.^000000";
+				next;
+				mes "[Staff]";
+				mes "Well, I hope you";
+				mes "enjoyed your battle.";
+				mes "Now let me guide you";
+				mes "back to the Arena Lobby...";
+				close2;
+				set arena_point,arena_point+20;
+			}
+			specialeffect2 EF_EXIT;
+			warp "arena_room",100,75;
+			donpcevent "#arn_timer_aco::OnStop";
+			donpcevent "allkill#aco::OnEnable";
+			donpcevent "Acolyte Waiting Room::OnStart";
+			end;
+		}
+		else {
+			emotion e_omg;
+			mes "[Staff]";
+			mes "Wow! A new record!";
+			mes "This is awsome!";
+			next;
+			mes "[Staff]";
+			mes "Oooh... A brand new";
+			mes "record. ^3131FF"+ strcharinfo(0)+"^000000, your";
+			mes "name will now be listed in";
+			mes "the Time Force Battle Arena";
+			mes "Acolyte Class Records.";
+			mes "Congratulations~";
+			if (BaseJob == Job_Acolyte) {
+				set $arn_acotop,.@record_timeaco;
+				set $arn_acotopn$, strcharinfo(0);
+				donpcevent "#Vendigos::OnLineRec_aco";
+			}
+			else {
+				if (BaseLevel < 70) {
+					set $arn_pritop60,.@record_timeaco;
+					set $arn_pritopn60$, strcharinfo(0);
+					donpcevent "#Vendigos::OnLineRec_pri60";
+				}
+				else if (BaseLevel < 80) {
+					set $arn_pritop70,.@record_timeaco;
+					set $arn_pritopn70$, strcharinfo(0);
+					donpcevent "#Vendigos::OnLineRec_pri70";
+				}
+				else if (BaseLevel < 90) {
+					set $arn_pritop80,.@record_timeaco;
+					set $arn_pritopn80$, strcharinfo(0);
+					donpcevent "#Vendigos::OnLineRec_pri80";
+				}
+				else {
+					set $arn_pritop90,.@record_timeaco;
+					set $arn_pritopn90$, strcharinfo(0);
+					donpcevent "#Vendigos::OnLineRec_pri90";
+				}
+			}
+			next;
+			if (arena_point == 30000) {
+				mes "[Staff]";
+				mes "Alright, let me reward you";
+				mes "with some Arena Poi--Wait.";
+				mes "I can't. Your Arena Points are";
+				mes "already maxed out. I'm sorry,";
+				mes "but you'll have to spend some before you can receive more points.";
+				next;
+				mes "[Staff]";
+				mes "Anyway, you can check";
+				mes "your current Arena Point";
+				mes "total in the Arena Lobby";
+				mes "with Vendigos. Well, I hope";
+				mes "you enjoyed your battle. Now, let me guide you back outside...";
+				close2;
+			}
+			else if (arena_point > 29980) {
+				mes "[Staff]";
+				mes "Let me reward you with some";
+				mes "Arena Points. This time, you'll";
+				mes "be getting more points since";
+				mes "you set a new record. Please";
+				mes "talk with ^3131FFVendigos^000000 in the lobby";
+				mes "to check your new point total.";
+				next;
+				mes "[Staff]";
+				mes "Well, I hope you";
+				mes "enjoyed your battle.";
+				mes "Now let me guide you";
+				mes "back to the Arena Lobby...";
+				close2;
+				set arena_point,30000;
+			}
+			else {
+				mes "[Staff]";
+				mes "Let me reward you with some";
+				mes "Arena Points. This time, you'll";
+				mes "be getting more points since";
+				mes "you set a new record. Please";
+				mes "talk with ^3131FFVendigos^000000 in the lobby";
+				mes "to check your new point total.";
+				next;
+				mes "[Staff]";
+				mes "Well, I hope you";
+				mes "enjoyed your battle.";
+				mes "Now let me guide you";
+				mes "back to the Arena Lobby...";
+				close2;
+				set arena_point,arena_point+20;
+			}
+			specialeffect2 EF_EXIT;
+			warp "arena_room",100,75;
+			donpcevent "#arn_timer_aco::OnStop";
+			donpcevent "allkill#aco::OnEnable";
+			donpcevent "Acolyte Waiting Room::OnStart";
+		}
+		end;
+	}
+}
+
+-	script	#arn_timer_aco	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "prt_are_in","This broadcast is to inform you about the Acolyte Class Arena.",bc_map,"0xFFCE00";
+	end;
+
+OnTimer3000:
+	mapannounce "prt_are_in","For smoother game play, the Warp Portal in the Final Waiting Room will activate in 1 minute.",bc_map,"0xFFCE00";
+	end;
+
+OnTimer4000:
+	mapannounce "prt_are_in","Thank you.",bc_map,"0xFFCE00";
+	end;
+
+OnTimer60000:
+	donpcevent "arn_warp_aco::OnOut";
+	donpcevent "#arn_timer_aco::OnStop";
+	//donpcevent "alloff#aco::OnEnable";
+	donpcevent "Acolyte Waiting Room::OnStart";
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+prt_are_in,22,29,0	script	arn_warp_aco	-1,20,20,{
+OnInit:
+	disablenpc "arn_warp_aco";
+	end;
+
+OnOut:
+	enablenpc "arn_warp_aco";
+	end;
+
+OnHide:
+	disablenpc "arn_warp_aco";
+	end;
+
+OnTouch:
+	warp "arena_room",100,75;
+	donpcevent "arn_warp_aco::OnHide";
+	end;
+}
+
+-	script	timer_aco2	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+-	script	allkill#aco	-1,{
+OnEnable:
+	donpcevent "force_01mob#aco::OnReset";
+	donpcevent "force_02mob#aco::OnReset";
+	donpcevent "force_03mob#aco::OnReset";
+	donpcevent "force_05mob#aco::OnReset";
+	donpcevent "force_06mob#aco::OnReset";
+	donpcevent "force_07mob#aco::OnReset";
+	donpcevent "force_09mob#aco::OnReset";
+	donpcevent "force_01mob#pri::OnReset";
+	donpcevent "force_02mob#pri::OnReset";
+	donpcevent "force_03mob#pri::OnReset";
+	donpcevent "force_04mob#pri::OnReset";
+	donpcevent "force_05mob#pri::OnReset";
+	donpcevent "force_06mob#pri::OnReset";
+	donpcevent "force_07mob#pri::OnReset";
+	donpcevent "force_09mob#pri::OnReset";
+	donpcevent "force_05ex#pri::OnReset";
+	disablenpc "force_01start#aco";
+	disablenpc "force_02start#aco";
+	disablenpc "force_03start#aco";
+	disablenpc "force_04start#aco";
+	disablenpc "force_05start#aco";
+	disablenpc "force_06start#aco";
+	disablenpc "force_07start#aco";
+	disablenpc "force_08start#aco";
+	disablenpc "force_09start#aco";
+	disablenpc "force_01start#pri";
+	disablenpc "force_02start#pri";
+	disablenpc "force_03start#pri";
+	disablenpc "force_04start#pri";
+	disablenpc "force_05start#pri";
+	disablenpc "force_06start#pri";
+	disablenpc "force_07start#pri";
+	disablenpc "force_08start#pri";
+	disablenpc "force_09start#pri";
+	disablenpc "force_01_02#aco";
+	disablenpc "force_02_03#aco";
+	disablenpc "force_03_04#aco";
+	disablenpc "force_04_05#aco";
+	disablenpc "force_05_06#aco";
+	disablenpc "force_06_07#aco";
+	disablenpc "force_07_08#aco";
+	disablenpc "force_08_09#aco";
+	disablenpc "force_exit#aco";
+	disablenpc "arn_warp_aco"; //050630
+	donpcevent "Trocco#aco1::OnTimerOff";
+	donpcevent "Trocco#aco2::OnTimerOff";
+	donpcevent "#arn_timer_aco::OnStop";
+	end;
+}
+
+arena_room,94,82,7	script	Arena Record Staff#aco	79,{
+	mes "[Mathea]";
+	mes "Hello, I'm in charge of";
+	mes "the Acolyte Class Records";
+	mes "in the Arena. If you'd like to";
+	mes "view the other records, please";
+	mes "talk to the Arena Record Staff,";
+	mes "Owen Kheuv, and he'll help you.";
+	next;
+	mes "[Mathea]";
+	mes "Would you like to";
+	mes "see who are the top";
+	mes "players in the Acolyte";
+	mes "Class Arena Challenges?";
+	mes "Please choose from the menu.";
+	next;
+	switch(select("Acolyte Mode:Priest - Level 70 or lower:Priest - Level 80 or lower:Priest - Level 90 or lower:Priest - Level 91 ~ "+(checkre(0)?"160":"99"))) {
+	case 1:
+		set .@acotop_t,$arn_acotop;
+		set .@acotop_n$,$arn_acotopn$;
+		set .@acotopbun, ((.@acotop_t % 3600) / 60 );
+		set .@acotopcho, (.@acotop_t % 60);
+		mes "[Mathea]";
+		mes "^3131FF"+.@acotop_n$+"^000000";
+		mes "is the top player of the";
+		mes "Acolyte Mode, finishing";
+		mes "with a time of ^3131FF"+.@acotopbun+"^000000 minutes";
+		mes "and ^3131FF"+.@acotopcho+"^000000 seconds. Thank you";
+		mes "for participating in the Arena.";
+		close;
+	case 2:
+		set .@pritop_t,$arn_pritop60;
+		set .@pritop_n$,$arn_pritopn60$;
+		break;
+	case 3:
+		set .@pritop_t,$arn_pritop70;
+		set .@pritop_n$,$arn_pritopn70$;
+		break;
+	case 4:
+		set .@pritop_t,$arn_pritop80;
+		set .@pritop_n$,$arn_pritopn80$;
+		break;
+	case 5:
+		set .@pritop_t,$arn_pritop90;
+		set .@pritop_n$,$arn_pritopn90$;
+		break;
+	}
+	set .@pritopbun, ((.@pritop_t % 3600) / 60 );
+	set .@pritopcho, (.@pritop_t % 60);
+	mes "[Mathea]";
+	mes "^3131FF"+.@pritop_n$+"^000000";
+	mes "is the top player of this";
+	mes "Priest Mode, finishing ";
+	mes "with a time of ^3131FF"+.@pritopbun+" minutes";
+	mes "and ^3131FF"+.@pritopcho+" seconds. Thank you";
+	mes "for participating in the Arena.";
+	close;
+
+OnInit:
+	if ($arn_acotopn$ == "") {
+		set $arn_pritop60, 480;
+		set $arn_pritop70, 480;
+		set $arn_pritop80, 480;
+		set $arn_pritop90, 480;
+		set $arn_acotop, 480;
+		set $arn_pritopn60$, "Default";
+		set $arn_pritopn70$, "Default";
+		set $arn_pritopn80$, "Default";
+		set $arn_pritopn90$, "Default";
+		set $arn_acotopn$, "Default";
+	}
+	end;
+}
+
+-	script	#Vendigos	-1,{
+OnLineRec_aco:
+	mapannounce "arena_room","Vendigos: "+$arn_acotopn$+" has made a new record in the Arena Time Force Battle - Acolyte Mode. Congratulations!",bc_map,"0xFFFF00";
+	end;
+
+OnLineRec_pri60:
+	mapannounce "arena_room","Vendigos: "+$arn_pritopn60$+" has made a new record in the Arena Time Force Battle - Priest: Level 70 or lower. Congratulations!",bc_map,"0xFFFF00";
+	end;
+
+OnLineRec_pri70:
+	mapannounce "arena_room","Vendigos: "+$arn_pritopn70$+" has made a new record in the Arena Time Force Battle - Priest: Level 80 or lower. Congratulations!",bc_map,"0xFFFF00";
+	end;
+
+OnLineRec_pri80:
+	mapannounce "arena_room","Vendigos: "+$arn_pritopn80$+" has made a new record in the Arena Time Force Battle - Priest: Level 90 or lower. Congratulations!",bc_map,"0xFFFF00";
+	end;
+
+OnLineRec_pri90:
+	mapannounce "arena_room","Vendigos: "+$arn_pritopn90$+" has made a new record in the Arena Time Force Battle - Priest: Level 91~"+(checkre(0)?"160":"99")+". Congratulations!",bc_map,"0xFFFF00";
+	end;
+}
+
+arena_room,140,136,3	script	Guide Alias	729,{
+	mes "[Alias]";
+	mes "Hello there, I'm here";
+	mes "to inform you about";
+	mes "the Izlude Arena's";
+	mes "Acolyte Class Mode.";
+	mes "My name is Alias,";
+	mes "your Arena Guide.";
+	next;
+	mes "[Alias]";
+	mes "Now, there are two modes";
+	mes "under Acolyte Class Mode.";
+	mes "These are ^3131FFAcolyte Mode^000000 and";
+	mes "^3131FFPriest Mode^000000. For both modes,";
+	mes "you will need to wait inside the ^3131FFAcolyte Class Waiting Room^000000.";
+	next;
+	mes "[Alias]";
+	mes "Once it's your turn,";
+	mes "you'll be sent out of the";
+	mes "waiting room and guided to";
+	mes "the arena grounds. Oh, and";
+	mes "the entrance fee is 1,000 zeny.";
+	next;
+	mes "[Alias]";
+	mes "It'll be handy to know";
+	mes "that the Red Plants and";
+	mes "Permeters in the Acolyte";
+	mes "Class Mode will drop items";
+	mes "and give experience. Other";
+	mes "monsters, however, won't.";
+	next;
+	mes "[Alias]";
+	mes "Once you've been guided";
+	mes "to the actual arena grounds,";
+	mes "listen to ^3131FFTrocco^000000 for the mission objectives that you will have to";
+	mes "complete within the time limit";
+	mes "of ^3131FF8 minutes^000000. Don't forget~";
+	next;
+	mes "[Alias]";
+	mes "Upon completing the";
+	mes "entire stage, you will be";
+	mes "warped to the ^3131DDFinale Waiting";
+	mes "Room^000000 where you'll be rewarded";
+	mes "with Arena Points. But you must get your points within 1 minute.";
+	next;
+	mes "[Alias]";
+	mes "Once you're automatically";
+	mes "sent outside of the Finale";
+	mes "Waiting Room, you won't have";
+	mes "the chance to get your Arena";
+	mes "Points if you didn't get them";
+	mes "there, so be careful~";
+	next;
+	mes "[Alias]";
+	mes "Well, I hope you enjoy";
+	mes "the Acolyte Mode Arena!";
+	mes "Good luck and good fighting!";
+	close;
+}
+
+arena_room,195,5,3	script	log-on-aco#arena	802,{
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
+		mes "^3355FFIncorrect Password.^000000";
+		close;
+	} else if (.@i == 0) {
+		end;
+	} else {
+		mes "[!!CAUTION!!]";
+		mes "^3355FFThe following menu";
+		mes "the record for that";
+		mes "particular mode in the";
+		mes "Arena Acolyte Class Mode.^000000";
+		next;
+		switch(select("Cancel:Acolyte:~level 70:~level 80:~level 90:~level "+(checkre(0)?"160":"99"))) {
+		case 1:
+			mes "^3355FFCommand has";
+			mes "been canceled.^000000";
+			close;
+		case 2:
+			set $arn_acotop, 480;
+			set $arn_acotopn$, "Default";
+			break;
+		case 3:
+			set $arn_pritop60, 480;
+			set $arn_pritopn60$, "Default";
+			break;
+		case 4:
+			set $arn_pritop70, 480;
+			set $arn_pritopn70$, "Default";
+			break;
+		case 5:
+			set $arn_pritop80, 480;
+			set $arn_pritopn80$, "Default";
+			break;
+		case 6:
+			set $arn_pritop90, 480;
+			set $arn_pritopn90$, "Default";
+			break;
+		}
+		close;
+	}
+}
+
+arena_room,195,10,3	script	acolink#arena	802,{
+	set .@i, callfunc("F_GM_NPC",1357,0);
+	if (.@i == -1) {
+		mes "Command has";
+		mes "been canceled.";
+		close;
+	} else if (.@i == 0) {
+		end;
+	} else {
+		mes "This NPC opens and";
+		mes "closes the Warp Portal";
+		mes "to the Arena's Acolyte";
+		mes "Class Mode. Choose";
+		mes "an option from the menu.";
+		next;
+		switch(select("Cancel:Warp ON:Warp OFF")) {
+		case 1:
+			mes "Command has";
+			mes "been canceled.";
+			close;
+		case 2:
+			enablenpc "onlyaco#arena";
+			mes "The Warp Portal";
+			mes "will be opened shortly.";
+			close;
+		case 3:
+			disablenpc "onlyaco#arena";
+			mes "The Warp Portal";
+			mes "will be closed shortly.";
+			close;
+		}
+	}
+}

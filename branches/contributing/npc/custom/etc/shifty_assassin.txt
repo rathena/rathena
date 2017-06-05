@@ -1,0 +1,187 @@
+//===== rAthena Script =======================================
+//= Shifty Assassin
+//===== By: ==================================================
+//= acky
+//===== Current Version: =====================================
+//= 1.1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Players buy ninjas to assassinate other players
+//===== Additional Comments: =================================
+//= 1.1.1 Changed all gmcommand to atcommand as Poki#3 suggested. [Vicious]
+//= 1.1.2 Updated WoE Check. [Paradox924X]
+//============================================================
+
+morocc,148,86,5	script	Shifty Assassin	725,{
+	set .@ninja_price,250000;
+
+	// STARTS THE MENU //
+M_Start:
+	mes "[Shifty Assassin]";
+	mes "What do you want?";
+	next;
+	menu "Buy Ninjas",M_Buy,"Assassinate somebody",M_Kill,"Check your Ninjas",M_Check, ( getgmlevel() > 90 ? "Add Ninjas" : "" ),-,"Cancel",M_Exit;
+
+	// GM MENU TO ADD NINJAS //
+	mes "[Shifty Assassin]";
+	mes "How many ninjas do you want to make available?";
+	next;
+	input .@add;
+	set $ninja_avail, $ninja_avail+.@add;
+	mes .@add +" ninjas added.";
+	close;
+
+	// BUY NINJAS //
+M_Buy:
+	mes "[Shifty Assassin]";
+	mes "How many ninjas do you want buy?";
+	mes "There are ^0000FF" + $ninja_avail + "^000000 ninjas available.";
+	mes "They cost ^0000FF" + .@ninja_price + " zeny ^000000each.";
+
+	input .@buy;
+	next;
+	if ($ninja_avail < 1) goto NoNinjas;
+	if ($ninja_avail < .@buy) goto NotEnoughNinjas;
+	set .@price, .@buy*.@ninja_price;
+	if (Zeny < .@price) goto NoZeny;
+
+	mes "[Shifty Assassin]";
+	mes "That will cost you ^0000FF"+ .@price +" zeny^000000.";
+	next;
+	menu "Continue",-,"Cancel",M_Exit;
+
+	set Zeny, Zeny - .@price;
+	set #ninjas, #ninjas + .@buy;
+	set $ninja_avail, $ninja_avail - .@buy;
+
+	mes "[Shifty Assassin]";
+	mes "Thank you.";
+	close;
+
+	// ASSASSINATE SOMEBODY //
+M_Kill:
+	if (agitcheck()) goto M_Busy;
+	mes "[Shifty Assassin]";
+	mes "Enter the name of the target.";
+	mes "^FF0000Type the name exactly, otherwise I won't be able to find the victim.^000000";
+	next;
+	menu "Continue",-,"Cancel",M_Exit;
+	input .@name$;
+	if ( !getcharid( 3,.@name$ ) ) {
+		mes "[Shifty Assassin]";
+		mes .@name$ +" is not online.";
+		close;
+	}
+	next;
+	mes "[Shifty Assassin]";
+	mes "Active Ninjas: "+#ninjas;
+	mes "Resting Ninjas: "+#ninjasr;
+	mes "How many do you want to send?";
+	input .@number;
+	if (.@number < 1) goto NoNinjasSent;
+	if (.@number > #ninjas) goto NotEnoughNinjas1;
+	if (.@number > 10) goto TooManyNinjas;
+	set .@chance, rand(1,12);
+	set #ninjas,#ninjas-.@number;
+	set #ninjas,#ninjas+#ninjasr;
+	set #ninjasr,0;
+	if (.@number < .@chance) goto M_Failure;
+
+	// SUCCESSFUL ATTACK //
+	mes "Sending ninjas now.";
+	next;
+	mes "[Shifty Assassin]";
+	set .@ninjasurvived, rand(1,.@number);
+	set #ninjasr,.@number-.@ninjasurvived;
+	mes "Your attack succeeded but only ^FF0000" + #ninjasr + "^000000 Ninjas survived.";
+	set .@acc_id, getcharid( 3,.@name$ );
+	if ( .@acc_id )
+		unitkill .@acc_id;
+	announce .@name$ +" has been assassinated by " + strcharinfo(0) +"'s Ninjas.",bc_npc;
+	close;
+
+	// FAILED ATTACK //
+M_Failure:
+	mes "Sending ninjas now.";
+	next;
+	mes "[Shifty Assassin]";
+	set .@ninjasurvived, rand(1,.@number);
+	set #ninjasr, .@number-.@ninjasurvived;
+	mes "Your attack failed and only ^FF0000" + #ninjasr + "^000000 Ninjas survived.";
+
+	announce .@name$+" has survived " + strcharinfo(0) +"'s Ninja attack.",8;
+	close;
+
+	// NINJAS BUSY FOR WOE //
+M_Busy:
+	mes "[Shifty Assassin]";
+	mes "Sorry, all my ninjas are busy doing War of Emperium.";
+	close;
+
+	// CHECK YOUR NINJAS //
+M_Check:
+	mes "[Shifty Assassin]";
+	mes "You have:";
+	mes "^FF0000" + #ninjas + "^000000 Active Ninjas.";
+	mes "^0000FF" + #ninjasr + "^000000 Resting Ninjas.";
+	next;
+	goto M_Start;
+
+
+	// LIMIT //
+NoNinjasSent:
+	mes "[Shifty Assassin]";
+	mes "You can't kill anyone without ninjas.";
+	next;
+	goto M_Start;
+
+TooManyNinjas:
+	mes "[Shifty Assassin]";
+	mes "You can only send 10 ninjas max.";
+	next;
+	goto M_Start;
+
+NoZeny:
+	mes "[Shifty Assassin]";
+	mes "You do not have enough zeny.";
+	close;
+
+NotEnoughNinjas:
+	mes "[Shifty Assassin]";
+	mes "There aren't that many ninjas to buy.";
+	next;
+	goto M_Start;
+
+NoNinjas:
+	mes "[Shifty Assassin]";
+	mes "There are no ninjas left to buy.";
+	close;
+
+NotEnoughNinjas1:
+	mes "[Shifty Assassin]";
+	mes "You do not have that many ninjas.";
+	next;
+	goto M_Start;
+
+M_Exit:
+	mes "[Shifty Assassin]";
+	mes "Goodbye.";
+	close;
+
+// TIMER DELAY NINJA ADDER //
+OnClock0600:
+OnClock1200:
+OnClock1500:
+OnClock1900:
+OnClock2000:
+OnClock0000:
+	set $ninja_avail,$ninja_avail+2;
+	end;
+OnClock1800:
+	set $ninja_avail,$ninja_avail+3;
+	end;
+OnInit:
+	set $ninja_avail,$ninja_avail+1;
+	end;
+}

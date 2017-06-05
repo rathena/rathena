@@ -1,0 +1,106 @@
+//===== rAthena Script ======================================= 
+//= General Eclage NPC.
+//===== By: ================================================== 
+//= Dastgir
+//===== Current Version: ===================================== 
+//= 2.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Eclage Town NPC
+//===== Additional Comments: ================================= 
+//= 1.0 Generic NPC place holders. [Euphy]
+//= 2.0 Converted from the official Aegis script. [Dastgir]
+//============================================================ 
+
+ecl_in02,96,22,3	script	sign#prison_inn	545,{
+	mes "[North] Prison";
+	mes "[West] Clinic";
+	close;
+}
+
+ecl_in01,8,71,5	script	Eclage Guard#pri_inn	447,{
+	mes "[Eclage Guard]";
+	mes "This path will take you to the lower parts of Eclage. You'll find a prison and a clinic there.";
+	close;
+}
+
+ecl_in02,164,56,3	script	Receptionist#Laphine	835,{
+	mes "[Receptionist]";
+	mes "Welcome to Eclage Clinic.";
+	next;
+	switch (select("Save Location:Rest:Finish the conversation")) {
+	case 1:
+		mes "[Receptionist}";
+		mes "Clinic has been set as your save point. Be careful though~";
+		savepoint "ecl_in02",162,50;
+		close;
+	case 2:
+		mes "[Receptionist}";
+		mes "Restore your mind and body at our clinic. It's filled with Eclage's clean energy.";
+		mes "We charge 1 Splendide Coin normally, but we offer a special discount for travelers. Your total is 5,000 zeny. ";
+		next;
+		switch (select("Pay with Splendide Coin:Pay with Zeny:Forget it")) {
+		case 1:
+			if (!countitem(6081)) {
+				mes "[Receptionist}";
+				mes "It seems like you don't have enough coins. Would you check your account again, please?";
+				close;
+			}
+			mes "[Receptionist}";
+			mes "Make yourself at home~";
+			close2;
+			delitem 6081,1; //6081
+			percentheal 100,100;
+			warp "ecl_in02",167,49;
+			end;
+		case 2:
+			if (Zeny < 5000) {
+				mes "[Receptionist]";
+				mes "Looks like you don't have enough resources to proceed. Do you mind checking your account again?";
+				close;
+			}
+			mes "[Receptionist}";
+			mes "Make yourself at home~";
+			close2;
+			Zeny = Zeny - 5000;
+			percentheal 100,100;
+			warp "ecl_in02",167,49;
+			end;
+		case 3:
+			close;
+		}
+	case 3:
+		close;
+	}
+}
+
+ecl_in02,135,45,5	script	Injured Laphine	442,{
+	mes "[Injured Laphine]";
+	mes "Ooww...";
+	mes "Where...am...I?";
+	next;
+	mes "[Doctor]";
+	mes "You're at a clinic. Don't worry.";
+	mes "We stopped the bleeding and cast emergency spells.";
+	mes "You were bleeding a lot. That was close, you know.";
+	next;
+	mes "[Injured Laphine]";
+	mes "......";
+	mes "What, no, I...I don't feel anything...what's going on?";
+	next;
+	mes "[Doctor]";
+	mes "Umm...the arrow damaged your wing pretty badly...";
+	next;
+	mes "[Injured Laphine]";
+	mes "...what do you mean?";
+	next;
+	mes "[Doctor]";
+	mes "Well...I was going to tell you after you recover, but you should know. You can't decorate the Yai anymore. ";
+	mes "In other words, you injured your wing. The arrow went through the most critical part in the wing.";
+	next;
+	mes "[Injured Laphine]";
+	mes "What? No way...please...doctor!! No!!";
+	close;
+}
+ecl_in02,137,44,3	duplicate(Injured Laphine)	Doctor Laphine#doctor	441

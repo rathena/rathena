@@ -1,0 +1,635 @@
+//===== rAthena Script =======================================
+//= iRO Valentine's Day Event (2009)
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= iRO Valentine's Day Event. (2009)
+//= Make Chocolate/Chocolate Boxes/Home-Made Chocolate.
+//= Make Valentine's Rings/Boxes.
+//= Trade rings to those of opposite gender.
+//= Register rings you have gotten for votes.
+//=
+//= The male and female with the most votes at the end of
+//= the event will receive item (14466) from GM team.
+//=
+//= Must enable the event items in item_db2 and item_trade!
+//===== Additional Comments: =================================
+//= 1.0 First version. [Kisuka]
+//= 1.1-1.2 Fixed exploits with unlimited rings and non deleting choco [Lupus]
+//= 1.3 Some Changes. [Kisuka]
+//============================================================
+
+// Marco Bassinio (Chocolate/Chocolate Box maker)
+//============================================================
+prontera,164,174,4	script	Trader#Val09	58,{
+	mes "[Marco Bassinio]";
+	mes "Hey, folks! Here's something you don't see everyday!";
+	mes "Something you can never find in Rune-Midgarts!";
+	mes "Something that makes you happy with just one bite!";
+	next;
+	mes "[Marco Bassinio]";
+	mes "It's the perfect dessert and the perfect gift for loved ones.";
+	mes "High-quality, traditional homemade chocolate only 5000z each!";
+	next;
+	switch(select("I'll take it, please!:I want to wrap the chocolate!:End trading.")) {
+		case 1:
+			mes "[Marco Bassinio]";
+			mes "Ahaha, my dear.";
+			mes "This chocolate is nothing like others.";
+			mes "Every piece bears the devotion of the person who made it!";
+			next;
+			mes "[Marco Bassinio]";
+			mes "So, that's why I can't sell more than 5 of them at a time.";
+			mes "If you really really want more, then talk to me again.";
+			mes "How many do you want anyway?";
+			next;
+			while(.@input <= 0 || .@input > 5) {
+				input .@input;
+				if (.@input < 1) {
+					mes "[Marco Bassinio]";
+					mes "Oh, it's such a shame!";
+					mes "I'm sure you'll miss this opportunity and regret you didn't buy it.";
+					next;
+					mes "[Marco Bassinio]";
+					mes "Remember, you can never find this anywhere else!";
+					mes "Come back anytime, when you change your mind.";
+					close;
+				}
+				if (.@input > 5) {
+					mes "[Marco Bassinio]";
+					mes "Ugh.. Didn't I tell you?";
+					mes "5 is the maximum!";
+					mes "I can't sell more than that to the same person.";
+					next;
+					mes "[Marco Bassinio]";
+					mes "And you know it's not like an everyday meal.";
+					mes "Eating too much is not really good for you.";
+					next;
+				}
+			}
+			if (!checkweight(558, .@input)) {
+				mes "[Marco Bassinio]";
+				mes "You're carrying too many items.";
+				mes "Please use the Kafra Services.";
+				close;
+			}
+			set .@price, .@input * 5000;
+			if (Zeny < .@price) {
+				mes "[Marco Bassinio]";
+				mes "Looks like you don't have enough zeny with ya.";
+				mes "Maybe you should borrow some zeny from a friend.";
+				mes "Cuz, I'm not gonna be here everyday.";
+				close;
+			} else {
+				mes "[Marco Bassinio]";
+				mes "Good for you!";
+				mes "It's also perfect as a gift!";
+				mes "You know you can't get this kind of chocolate normally.";
+				next;
+				mes "[Marco Bassinio]";
+				mes "If you want more, you should come back.";
+				mes "Might be a good idea to buy some more while you have a chance...!";
+				set Zeny,Zeny - .@price;
+				getitem 558,.@input;
+				close;
+			}
+		case 2:
+			mes "[Marco Bassinio]";
+			mes "If you want to gift-wrap the chocolate, of course, you need chocolate, plus, wrapping paper, wrapping strap and a box.";
+			next;
+			mes "[Marco Bassinio]";
+			mes "You also need to pay 500 zeny to carve your name on the box.";
+			mes "Are you all prepared...?";
+			next;
+			if (countitem(7175) < 1 || countitem(7174) < 1 || countitem(7948) < 1 || Zeny < 500) {
+				mes "[Marco Bassinio]";
+				mes "Hmm.. Looks like you don't have enough materials to decorate the gift box..";
+				mes "You can't just put your gift into some plain looking box..";
+				mes "Don't you think?";
+				next;
+				mes "[Marco Bassinio]";
+				mes "You need to bring some wrapping paper, wrapping strap, and a box.";
+				mes "Oh, also bring 500 zeny, and don't forget to bring your true loving heart with you!!";
+				close;
+			}
+			if (countitem(558) < 1) {
+				mes "[Marco Bassinio]";
+				mes "Hey, look, adventurer!";
+				mes "I can't create something right away!";
+				mes "You know I'm not an alchemist or anything.";
+				next;
+				mes "[Marco Bassinio]";
+				mes "You're not saying that you want an empty chocolate box without any chocolate in it, am I right?";
+				close;
+			}
+			if (!checkweight(12744,1)) {
+				mes "[Marco Bassinio]";
+				mes "You're carrying too many items.";
+				mes "Please use the Kafra Services.";
+				close;
+			}
+			mes "[Marco Bassinio]";
+			mes "Here, look!";
+			mes "It's your chocolate box with your name on it.";
+			mes "Isn't it fabulous?";
+			mes "See, your name looks great on the box!";
+			next;
+			delitem 558,1;
+			delitem 7175,1;
+			delitem 7174,1;
+			delitem 7948,1;
+			set Zeny,Zeny-500;
+			getnameditem 12744,strcharinfo(0);
+			mes "[Marco Bassinio]";
+			mes "Happy Valentine's Day!";
+			mes "Valentine's the reason I came back.";
+			close;
+		case 3:
+			mes "[Marco Bassinio]";
+			mes "Oh, it's such a shame!";
+			mes "I'm sure you'll miss this opportunity and regret you didn't buy it.";
+			next;
+			mes "[Marco Bassinio]";
+			mes "Remember, you can never find this anywhere else!";
+			mes "Come back anytime, when you change your mind.";
+			close;
+	}
+}
+
+// Packs Trader (Sells Wrapping Paper, Lace, and Box)
+//============================================================
+prontera,147,171,5	script	Packs Trader#Val09	58,{
+	mes "[Packs Trader]";
+	mes "Hello.";
+	mes "I am a Packs Trader, I sell paper boxes and supplies for packing presents.";
+	next;
+	while(1) {
+		mes "[Packs Trader]";
+		mes "Do you have something to buy?";
+		next;
+		switch(select("Packing Paper:Packing Ribbon:Box:Cancel.")) {
+			case 1:
+				mes "[Packs Trader]";
+				mes "It's 200 zeny for 1 Packing Paper.";
+				mes "How many do you want?";
+				mes "You can't buy more than 10 items at once.";
+				next;
+				input .@input;
+				if (.@input <= 0) {
+					mes "[Packs Trader]";
+					mes "Nothing to buy.";
+					mes "Come back when you need something.";
+					close;
+				}
+				if (.@input > 10) {
+					mes "[Packs Trader]";
+					mes "I told you not to buy more than 10...";
+					next;
+					break;
+				}
+				if (!checkweight(7175,.@input)) {
+					mes "[Packs Trader]";
+					mes "You're carrying too many items.";
+					mes "Please use the Kafra Services.";
+					close;
+				}
+				set .@price, .@input * 200;
+				if (Zeny < .@price) {
+					mes "[Packs Trader]";
+					mes "You don't have enough money.";
+					mes "Please check your wallet.";
+					next;
+					break;
+				} else {
+					mes "[Packs Trader]";
+					mes "Here they are.";
+					mes "Hope it makes your Valentine's Day more pleasing!";
+					set Zeny,Zeny-.@price;
+					getitem 7175,.@input;
+					next;
+					break;
+				}
+			case 2:
+				mes "[Packs Trader]";
+				mes "It's 200 zeny for 1 Packing Ribbon.";
+				mes "How many do you want?";
+				mes "You can't buy more than 10 items at once.";
+				next;
+				input .@input;
+				if (.@input <= 0) {
+					mes "[Packs Trader]";
+					mes "Nothing to buy.";
+					mes "Come back when you need something.";
+					close;
+				}
+				if (.@input > 10) {
+					mes "[Packs Trader]";
+					mes "I told you not to buy more than 10...";
+					next;
+					break;
+				}
+				if (!checkweight(7174,.@input)) {
+					mes "[Packs Trader]";
+					mes "You're carrying too many items.";
+					mes "Please use the Kafra Services.";
+					close;
+				}
+				set .@price, .@input * 200;
+				if (Zeny < .@price) {
+					mes "[Packs Trader]";
+					mes "You don't have enough money.";
+					mes "Please check your wallet.";
+					next;
+					break;
+				} else {
+					mes "[Packs Trader]";
+					mes "Here they are.";
+					mes "Hope it makes your Valentine's Day more pleasing!";
+					set Zeny,Zeny-.@price;
+					getitem 7174,.@input;
+					next;
+					break;
+				}
+			case 3:
+				mes "[Packs Trader]";
+				mes "It's 600 zeny for 1 Box.";
+				mes "How many do you want?";
+				mes "You can't buy more than 10 items at once.";
+				next;
+				input .@input;
+				if (.@input <= 0) {
+					mes "[Packs Trader]";
+					mes "Nothing to buy.";
+					mes "Come back when you need something.";
+					close;
+				}
+				if (.@input > 10) {
+					mes "[Packs Trader]";
+					mes "I told you not to buy more than 10...";
+					next;
+					break;
+				}
+				if (!checkweight(7948,.@input)) {
+					mes "[Packs Trader]";
+					mes "You're carrying too many items.";
+					mes "Please use the Kafra Services.";
+					close;
+				}
+				set .@price, .@input * 600;
+				if (Zeny < .@price) {
+					mes "[Packs Trader]";
+					mes "You don't have enough money.";
+					mes "Please check your wallet.";
+					next;
+					break;
+				} else {
+					mes "[Packs Trader]";
+					mes "Here they are.";
+					mes "Hope it makes your Valentine's Day more pleasing!";
+					set Zeny,Zeny-.@price;
+					getitem 7948,.@input;
+					next;
+					break;
+				}
+			case 4:
+				mes "[Packs Trader]";
+				mes "Goodbye!";
+				mes "And enjoy your Valentine's Day.";
+				close;
+		}
+	}
+}
+
+// Event Ring Maker (Makes ring for players)
+//============================================================
+prontera,154,185,5	script	Event Ring Maker#Val09	721,{
+	if (BaseLevel < 75) {
+		mes "[Event Ring Maker]";
+		mes "Hello, I only make the Valentine rings to those experienced adventurer Level 75 or above.";
+		next;
+		mes "[Event Ring Maker]";
+		mes "You're not fully experienced yet.";
+		mes "Come back when you're experienced enough to handle the quests.";
+		close;
+	}
+	
+	if (iROval09ring >= 1) {
+		mes "[Event Ring Maker]";
+		mes "The box with the ring, carved with your name, is for the one you love.";
+		next;
+		mes "[Event Ring Maker]";
+		mes "As for the rings that you receive from others, they should all be registered with the Vote Manager.";
+		mes "She is standing near the Prontera Fountain.";
+		next;
+		mes "[Event Ring Maker]";
+		mes "Only the most popular male and female are subjected to getting rewards.";
+		mes "Be aware, and always try to stay popular!";
+		close;
+	}
+	
+	mes "[Event Ring Maker]";
+	mes "Hi, there, how are ya?";
+	mes "Come to me if you're interested in the event, 'Who's Valentine's Hottest?'";
+	next;
+	mes "[Event Ring Maker]";
+	mes "I make the most precious rings that you can give to your sweethearts.";
+	mes "Those rings are very special because I carve your names on them!";
+	next;
+	mes "[Event Ring Maker]";
+	mes "Isn't it exciting?";
+	mes "Isn't it such a brilliant idea?";
+	mes "Give these special rings to your sweethearts!";
+	next;
+	mes "[Event Ring Maker]";
+	mes "You should hurry 'cuz this event will only last for two weeks.";
+	mes "Give that special someone a gift of a Valentine's ring.";
+	next;
+	mes "[Event Ring Maker]";
+	mes "Remember, you can only generate the ring once.";
+	mes "You also need Wrapping Paper, Wrapping Strap and a Box to make the ring.";
+	next;
+	mes "[Event Ring Maker]";
+	mes "So you better be sure of who you give this to.";
+	mes "By the way, It costs 1,000 zeny.";
+	mes "Would you like to make one?";
+	next;
+	if(select("Hmm.. I gotta give it a second thought...:Sure.") == 1) {
+		mes "[Event Ring Maker]";
+		mes "Alrighty!";
+		mes "You can't put a rush on such a thing like this.";
+		mes "Think about what you truly want.";
+		mes "Just follow your heart!";
+		close;
+	}
+	if (countitem(7175) < 1 || countitem(7174) < 1 || countitem(7948) < 1 || Zeny < 1000) {
+		mes "[Event Ring Maker]";
+		mes "Well, you don't have enough materials to make a gift box.";
+		mes "Check what you have, and come back later with all the materials.";
+		close;
+	}
+	mes "[Event Ring Maker]";
+	mes "Okie Dokie!";
+	mes "I'll make it right away.";
+	next;
+	delitem 7175,1;
+	delitem 7174,1;
+	delitem 7948,1;
+	set Zeny,Zeny-1000;
+	set iROval09ring,1;
+	if (Sex == SEX_MALE) {
+		getnameditem 12742,strcharinfo(0);
+	} else {
+		getnameditem 12743,strcharinfo(0);
+	}
+	mes "[Event Ring Maker]";
+	mes "Here, the most precious ring in the world!";
+	mes "Don't forget, you can never make this ring again.";
+	next;
+	mes "[Event Ring Maker]";
+	mes "You must pick out the one that you really really love, and give this ring to that person.";
+	next;
+	mes "[Event Ring Maker]";
+	mes "Of course, you've got to get rings from others, that's the way you can participate in the voting, right?";
+	mes "Challenge yourself to become Valentine's Hottest!";
+	close;
+}
+
+// Valentine Vote Manager (Registers votes)
+//============================================================
+prontera,157,185,4	script	Valentine Vote Manager#v	113,{
+	mes "[Valentine Vote Manager]";
+	mes "Hello, I'm the Valentine's Vote Manager.";
+	mes "I'm in charge of collecting rings for this event!";
+	next;
+	mes "[Valentine Vote Manager]";
+	mes "I register the rings you get from others and I calculate the total number of rings.";
+	next;
+	mes "[Valentine Vote Manager]";
+	mes "You know what I do besides just counting those rings?";
+	mes "I can tell you the adventurer's name who's got the most number of votes.";
+	next;
+	mes "[Valentine Vote Manager]";
+	mes "Plus, you can also find out how many votes he/she got.";
+	next;
+	while (1) {
+		mes "[Valentine Vote Manager]";
+		mes "So, what do you want?";
+		next;
+		switch(select("Please register my rings.:Please count my votes.:Nothing, for now.")) {
+			case 1:
+				mes "[Valentine Vote Manager]";
+				mes "Please tell me how many rings you want to register.";
+				next;
+				mes "[Valentine Vote Manager]";
+				mes "When you write the number of the rings, the number shouldn't be larger than the number of rings you actually have.";
+				mes "'0', cancels everything.";
+				next;
+				input .@input;
+
+				if (.@input <= 0) {
+					mes "[Valentine Vote Manager]";
+					mes "You have entered 0.";
+					mes "Registration is cancelled.";
+					next;
+					break;
+				}
+				
+				if (Sex == SEX_MALE) {
+					if (countitem(7947) > .@input) {
+						mes "[Valentine Vote Manager]";
+						mes "Seems like the value you entered is too small.";
+						mes "I know you've got more. Be honest, dear.";
+						next;
+						break;
+					}
+					
+					if (countitem(7947) < .@input) {
+						mes "[Valentine Vote Manager]";
+						mes "Seems like the value you entered is too large.";
+						mes "I know you've got less. Be honest, dear.";
+						next;
+						break;
+					}
+					
+					mes "[Valentine Vote Manager]";
+					mes "I'll take those silver rings, and count the votes for you.";
+					mes "Thank you for participating.";
+					delitem 7947,.@input;
+					set Val09Rings,Val09Rings+.@input;
+					if (Val09Rings > $Val09votes_M) {
+						set $Val09votes_M,Val09Rings;
+						set $Val09name_M$,strcharinfo(0);
+					}
+					next;
+					break;
+				} else {
+					if (countitem(7946) > .@input) {
+						mes "[Valentine Vote Manager]";
+						mes "Seems like the value you entered is too small.";
+						mes "I know you've got more. Be honest, dear.";
+						next;
+						break;
+					}
+					
+					if (countitem(7946) < .@input) {
+						mes "[Valentine Vote Manager]";
+						mes "Seems like the value you entered is too large.";
+						mes "I know you've got less. Be honest, dear.";
+						next;
+						break;
+					}
+					
+					mes "[Valentine Vote Manager]";
+					mes "I'll take those gold rings, and count the votes for you.";
+					mes "Thank you for participating.";
+					delitem 7946,.@input;
+					set Val09Rings,Val09Rings+.@input;
+					if (Val09Rings > $Val09votes_F) {
+						set $Val09votes_F,Val09Rings;
+						set $Val09name_F$,strcharinfo(0);
+					}
+					next;
+					break;
+				}
+			case 2:
+				mes "[Valentine Vote Manager]";
+				mes "Let's see...";
+				mes "You have registered...."+Val09Rings+" rings so far.";
+				mes "and...";
+				next;
+				mes "[Valentine Vote Manager]";
+				mes "The current record shows... "+$Val09name_M$+" is the male vote leader who's registered the total of "+$Val09votes_M+" rings.";
+				next;
+				mes "[Valentine Vote Manager]";
+				mes "The current record shows... "+$Val09name_F$+" is the female vote leader who's registered the total of "+$Val09votes_F+" rings.";
+				next;
+				break;
+
+			case 3:
+				mes "[Valentine Vote Manager]";
+				mes "Hey, you can be popular too!";
+				mes "Anyone can... really!";
+				mes "Though you have to try a lot harder, but still~ Hahaha!";
+				close;
+		}
+	}
+}
+
+// Charles Orleans (Makes Home-Made Chocolates)
+//============================================================
+prt_castle,42,35,3	script	Dessert Manager#Val09	47,{
+	if (Sex == SEX_MALE) {
+		mes "[Charles Orleans]";
+		mes "Monsieur~! What brings you to my beautiful atelier?";
+		mes "What is it that you want?";
+		mes "Well, my sparkling eyes get dried and lose their shine if not for the pretty little lady.";
+		next;
+		mes "[Charles Orleans]";
+		mes "Please leave me alone unless you have business with me.";
+		mes "Haaaa~ I'm a busy person.";
+		mes "Don't bother me....";
+		mes "Annoying, annoying, annoying~~!";
+		close;
+	}
+	
+	mes "[Charles Orleans]";
+	mes "Oh, Mademoiselle!";
+	mes "This little trifling space felt like heaven the minute you walked in!";
+	mes "Can I help you with anything, if it's alright?";
+	next;
+	if(select("Please, make me some chocolate.:Don't bother. I'm just passing by.") == 2) {
+		mes "[Charles Orleans]";
+		mes "Ahhh, this is so heartbreaking.";
+		mes "How could you say that?";
+		mes "You're just so mean.";
+		mes "Don't bother? Just passing by?";
+		next;
+		mes "[Charles Orleans]";
+		mes "What can I do to make you";
+		mes "pay a little attention to me?";
+		mes "Please.. I feel like my soul is lost..";
+		close;
+	}
+	if (countitem(558) < 3) {
+		mes "[Charles Orleans]";
+		mes "Ahhh, Mademoiselle.";
+		mes "I'm not an alchemist, or a magician.";
+		mes "I don't just make chocolate out of anything.";
+		next;
+		mes "[Charles Orleans]";
+		mes "I always think of making chocolate as artistic work.";
+		mes "You see, I'm no ordinary cook...";
+		mes "I make chocolate with feelings..";
+		mes "messages of loving hearts..";
+		next;
+		mes "[Charles Orleans]";
+		mes "I make masterpieces.";
+		mes "No one can imitate the looks and the taste.";
+		mes "Yes, it's nothing like ordinary chocolate!";
+		next;
+		mes "[Charles Orleans]";
+		mes "I'm afraid I can't make it and prove it to you now.";
+		mes "This is really a shame!";
+		next;
+		mes "[Charles Orleans]";
+		mes "I really want to thank you for visiting me and if you only bring ^3152ff3 Chocolates^000000, I'll make you chocolate like you've never seen...";
+		next;
+		mes "[Charles Orleans]";
+		mes "never tasted before...";
+		mes "Mademoiselle, with your spirit, I'm sure you can bring 3 pieces of chocolate.";
+		mes "I have no doubt at all.";
+		next;
+		mes "[Charles Orleans]";
+		mes "So... what do you think?";
+		mes "Can you bring ^3152ff3 Chocolates^000000?";
+		mes "I could get them myself, but I'm tied up with so much work as you see right now.";
+		next;
+		mes "[Charles Orleans]";
+		mes "Adios, Mademoiselle.....";
+		mes "I'll be waiting for you.";
+		close;
+	} else {
+		if (!checkweight(559,1)) {
+			mes "[Charles Orleans]";
+			mes "You're carrying too many items.";
+			mes "Please use the Kafra Services.";
+			close;
+		}
+		mes "[Charles Orleans]";
+		mes "Oh, Mademoiselle!";
+		mes "I'll make the best chocolate with the pieces you've brought.";
+		mes "I'm going to put the light of your eyes into this chocolate that no one can resist.";
+		next;
+		mes "[Charles Orleans]";
+		mes "It'll be stronger than a sweet sweet love potion.....";
+		next;
+		mes "[Charles Orleans]";
+		mes "Un, Deux, Trois, Quatre.....";
+		mes "Just like the ugly duckling that turned to a beautiful swan-";
+		mes "Ordinary chocolate pieces are becoming a piece of art!";
+		next;
+		mes "[Charles Orleans]";
+		mes "They're changing!";
+		mes "They're getting warm, softly changing the shape, getting stronger again!";
+		mes "Oh, is it a master piece or";
+		mes "what...!!";
+		next;
+		mes "[Charles Orleans]";
+		mes "Here you go, Mademoiselle!";
+		mes "Ahahahaha, just look at this!";
+		mes "I can't believe I made this.";
+		mes "Oh, I can't take my eyes off..!!";
+		delitem 558,3;
+		getitem 559,1;
+		next;
+		mes "[Charles Orleans]";
+		mes "Alright. Mademoiselle,";
+		mes "I hope this is just what you wanted, for it bears your beautiful heart inside.";
+		close;
+	}
+	
+}

@@ -1,0 +1,57 @@
+//===== rAthena Script ======================================= 
+//= Mage Solutions
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Traders for Morroc Solution and Payon Solution, used in
+//= the Sage skill quests and the Pre-Renewal Mage job quest.
+//===== Additional Comments: ================================= 
+//= 1.0 Split from Pre-Renewal Mage job quest. [Zopokx]
+//============================================================ 
+
+pay_arche,122,100,0	script	Dollshoi	88,{
+	mes "[Mage Guildsman]";
+	mes "You want a Solution? Hmm, give me 50 Zeny and at least 1 Empty Test Tube.";
+	next;
+	if (select("Alright, Deal.:Nah, forget it.") == 1) {
+		mes "[Mage Guildsman]";
+		if (Zeny < 50) {
+			mes "Hey! You don't have enough money to cover my 50 Zeny charge.";
+			close;
+		}
+		if (countitem(1092) == 0) {
+			mes "You can't carry solutions without a bottle! Bring me an Empty Test Tube.";
+			close;
+		}
+		delitem 1092,1; //Empty_Cylinder
+		set Zeny, Zeny-50;
+		getitem 1089,1; //Payon_Potion
+	}
+	close;
+}
+
+moc_ruins,91,150,0	script	Ponka-Hontas	93,{
+	mes "[Mage Guildsman]";
+	mes "Would you like a Solution? Then please give me 50 Zeny and at least 1 Empty Test Tube.";
+	next;
+	if (select("Alright, Deal.:Nah, forget it.") == 1) {
+		mes "[Mage Guildsman]";
+		if (Zeny < 50) {
+			mes "I'm sorry, but you don't have enough money to cover the 50 Zeny fee.";
+			close;
+		}
+		if (countitem(1092) == 0) {
+			mes "You can't carry liquids without using a bottle. Bring an Empty Test Tube the next time you see me.";
+			close;
+		}
+		delitem 1092,1; //Empty_Cylinder
+		set Zeny, Zeny-50;
+		getitem 1088,1; //Morocc_Potion
+	}
+	close;
+}

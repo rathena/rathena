@@ -1,0 +1,307 @@
+//===== rAthena Script ======================================= 
+//= HD Refiners
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Refiners that use HD ores to refine equipment. Upon
+//= failure, the equipment is not destroyed; rather, its
+//= refine level decreases by 1. The success rate is identical
+//= to that for Enriched ores.
+//= - "Blacksmith Mighty Hammer" only refines from +7~9.
+//= - "Basta" only refines from +10 and up.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Blacksmith Mighty Hammer (+7~9) :: cash_smelting79
+//============================================================
+-	script	::MightyHammer	-1,{
+	disable_items;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "Unlike others, I am a blacksmith who refines a very limited number of items.";
+	mes "I refine only items that are ^CC0000+7 to +9^000000.";
+	next;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "My specialty is that even if my refining fails, the refine level decreases by 1 without losing the gear. Isn't it great?";
+	next;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "So lets kick this into overdrive, what d' ya say? What item do you want to refine?";
+	next;
+	setarray .@position$[1],"Head","Body","Left Hand","Right Hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	set .@menu$,"";
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$+((getequipisequiped(.@i))?getequipname(.@i):.@position$[.@i]+"-[Not equipped]")+":";
+	set .@part, select(.@menu$);
+	if (!getequipisequiped(.@part)) {
+		mes "[Blacksmith Mighty Hammer]";
+		switch(.@part) {
+		case 1:
+			mes "I'm a blacksmith, not a hairstylist.";
+			break;
+		case 2:
+			mes "With my hammer, I will make you a star of the sky.";
+			break;
+		case 3:
+		case 4:
+			mes "Making artificial hands is not my specialty.";
+			break;
+		case 5:
+			mes "Bring out the item so I can refine it!";
+			break;
+		case 6:
+			mes "Where is this foot odor coming from?";
+			break;
+		case 7:
+		case 8:
+			mes "Where is the accessory?";
+			break;
+		case 9:
+			mes "What do you want me to refine?";
+			break;
+		case 10:
+			mes "Huh? What do you want me to do?";
+			break;
+		}
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "This item can't be refined.";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) < 7 || getequiprefinerycnt(.@part) > 9) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "I only handle items with refine levels from +7 to +9.";
+		close;
+	}
+	switch(getequipweaponlv(.@part)) {
+	default:
+	case 0:
+		set .@price,20000;
+		set .@material,6241; //HD_Elunium
+		break;
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		set .@price,20000;
+		set .@material,6240; //HD_Oridecon
+		break;
+	}
+	mes "[Blacksmith Mighty Hammer]";
+	mes "In order to refine the gear you selected you need ^ff9999"+getitemname(.@material)+"^000000 and 20,000 zeny as a fee.";
+	mes "Do you have them ready?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "I will wait until you are ready.";
+		close;
+	}
+	if (getequippercentrefinery(.@part) < 100) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "It looks like this item will likely fail to be refined.";
+		mes "Well, even if it fails, it only decreases by 1 refine level.";
+		mes "Would you like to continue refining?";
+		next;
+		if(select("Yes:No") == 2) {
+			mes "[Blacksmith Mighty Hammer]";
+			mes "Only those who overcome fear of failure will obtain a masterpiece.";
+			close;
+		}
+	}
+	if (countitem(.@material) == 0 || Zeny < .@price) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "Didn't you just say you had everything ready?";
+		close;
+	}
+	delitem .@material,1;
+	set Zeny, Zeny-.@price;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "Tac! Tac! Tac!";
+	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+		successrefitem .@part;
+		next;
+		emotion e_no1;
+		mes "[Blacksmith Mighty Hammer]";
+		mes "The sound refreshes my mind everytime I hear it.";
+		mes "Here, have it. Refine succeeded flawlessly!";
+		close;
+	}
+	downrefitem .@part;
+	next;
+	emotion e_omg;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "Oops!!";
+	next;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "I am sure a person like you would never blame me for a decrease in refine level by 1. Hmm.";
+	close;
+}
+prt_in,59,54,3	duplicate(MightyHammer)	Mighty Hammer#prt	826
+morocc_in,65,30,3	duplicate(MightyHammer)	Mighty Hammer#morocc	826
+payon,148,176,3	duplicate(MightyHammer)	Mighty Hammer#pay	826
+alberta_in,16,56,3	duplicate(MightyHammer)	Mighty Hammer#alb	826
+yuno_in01,171,18,3	duplicate(MightyHammer)	Mighty Hammer#yuno	826
+ein_in01,22,82,3	duplicate(MightyHammer)	Mighty Hammer#ein	826
+lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
+
+// iRO NPC locations:
+// payon,174,133,4	duplicate(MightyHammer)	Mighty Hammer#im	826
+
+// Basta (+10 and up) :: cash_smelting
+//============================================================
+-	script	::Basta	-1,{
+	disable_items;
+	mes "[Basta]";
+	mes "I'm the best Blacksmith in the whole world, Basta.";
+	mes "But I don't provide a normal refine service.";
+	mes "I only refine equipment ^CC0000over +10^000000.";
+	next;
+	mes "[Basta]";
+	mes "Which equipment do you want to refine?";
+	next;
+	setarray .@position$[1],"Head","Body","Left Hand","Right Hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	set .@menu$,"";
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$+((getequipisequiped(.@i))?getequipname(.@i):.@position$[.@i]+"-[Unequipped]")+":";
+	set .@part, select(.@menu$);
+	if (!getequipisequiped(.@part)) {
+		mes "[Basta]";
+		switch(.@part) {
+		case 1:
+			mes "Is your head an equipment?";
+			break;
+		case 2:
+			mes "What do you want me to do?";
+			break;
+		case 3:
+		case 4:
+			mes "Making artificial hands is not my specialty.";
+			break;
+		case 5:
+			mes "Do you even know what a robe is?";
+			break;
+		case 6:
+			mes "If you want to refine your feet, don't come to me, try running a marathon.";
+			break;
+		case 7:
+		case 8:
+			mes "Where is the accessory?";
+			break;
+		case 9:
+			mes "Well... I don't see any equipment worth refining.";
+			break;
+		case 10:
+			mes "I can't make you smart. Go see a school teacher for that.";
+			break;
+		}
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		mes "[Basta]";
+		mes "Even I cannot refine this item. There's no way.";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) < 10) {
+		mes "[Basta]";
+		mes "Haven't I told you? I only refine equipments that are +10 and above.";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) == 20) {
+		mes "[Basta]";
+		mes "This weapon is perfect, no need to refine it anymore~";
+		close;
+	}
+	switch(getequipweaponlv(.@part)) {
+	default:
+	case 0:
+		set .@price,100000;
+		set .@material,6225; //HD_Carnium
+		set .@type$,"armor";
+		break;
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		set .@price,100000;
+		set .@material,6226; //HD_Bradium
+		set .@type$,"weapon";
+		break;
+	}
+	mes "[Basta]";
+	mes "Hmm... is this the one you want to refine?";
+	mes "To refine this equipment, I need 1 ^ff9999"+getitemname(.@material)+"^000000 and 100,000 zeny as a fee.";
+	mes "Do you really want to refine this?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[Basta]";
+		mes "Okay. If that's what you want...";
+		close;
+	}
+	if (getequippercentrefinery(.@part) < 100) {
+		mes "[Basta]";
+		mes "This "+.@type$+" has already been refined pretty high.";
+		mes "If you try to refine it more, the refine level could decrease.";
+		next;
+		mes "[Basta]";
+		mes "I am different from the blacksmiths in others places.";
+		mes "It is impossible that the refine level will drop by, say, 3 or 4... that sounds scary.";
+		mes "Here it can only decrease by 1 level.";
+		next;
+		mes "[Basta]";
+		mes "Compared to other blacksmiths, the risk is smaller.";
+		mes "I've given all precautions. Do you want to try it?";
+		next;
+		if(select("Yes:No") == 2) {
+			mes "[Basta]";
+			mes "Well~";
+			mes "Not challenging at all could also be a kind of wisdom in life.";
+			close;
+		}
+	}
+	if (countitem(.@material) == 0 || Zeny < .@price) {
+		mes "[Basta]";
+		mes "Hmm... You didn't bring all the materials needed.";
+		mes "Come back when you have them all.";
+		close;
+	}
+	delitem .@material,1;
+	set Zeny, Zeny-.@price;
+	mes "Pow! Pow! Pow! Pow!";
+	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+		successrefitem .@part;
+		next;
+		emotion e_no1;
+		mes "[Basta]";
+		mes "Great! Nicely done!!";
+		mes "I really am the best blacksmith in the whole wide world!";
+		close;
+	}
+	downrefitem .@part;
+	next;
+	emotion (!rand(5))?e_cash:e_omg;
+	mes "[Basta]";
+	mes "Aaaaaaaaaaak!!!";
+	next;
+	mes "[Basta]";
+	mes "Damn it!";
+	mes "Refining failed and refine level has decreased!";
+	mes "Even the best blacksmith in the world doesn't guarantee 100% success!";
+	mes "Too bad.";
+	next;
+	mes "[Basta]";
+	mes "I'll do better next time! Don't worry!";
+	close;
+}
+prt_in,57,54,3	duplicate(Basta)	Basta#prt	826
+morocc_in,68,30,3	duplicate(Basta)	Basta#morocc	826
+payon,148,174,3	duplicate(Basta)	Basta#payon	826
+alberta_in,18,56,3	duplicate(Basta)	Basta#alberta	826
+yuno_in01,173,18,3	duplicate(Basta)	Basta#yuno	826
+ein_in01,24,82,3	duplicate(Basta)	Basta#einbroch	826
+lhz_in02,280,17,3	duplicate(Basta)	Basta#lighthalzen	826

@@ -1,0 +1,176 @@
+//===== rAthena Documentation ================================
+//= rAthena Monster Modes Reference
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20160402
+//===== Description: =========================================
+//= A reference description of rAthena's mob_db 'mode' field.
+//============================================================
+
+Bit Legend
+-------------------------------------------------------------------------------
+
+MD_CANMOVE            | 0x0000001 |         1
+MD_LOOTER             | 0x0000002 |         2
+MD_AGGRESSIVE         | 0x0000004 |         4
+MD_ASSIST             | 0x0000008 |         8
+MD_CASTSENSOR_IDLE    | 0x0000010 |        16
+MD_NORANDOM_WALK      | 0x0000020 |        32
+MD_NOCAST_SKILL       | 0x0000040 |        64
+MD_CANATTACK          | 0x0000080 |       128
+FREE                  | 0x0000100 |       256
+MD_CASTSENSOR_CHASE   | 0x0000200 |       512
+MD_CHANGECHASE        | 0x0000400 |      1024
+MD_ANGRY              | 0x0000800 |      2048
+MD_CHANGETARGET_MELEE | 0x0001000 |      4096
+MD_CHANGETARGET_CHASE | 0x0002000 |      8192
+MD_TARGETWEAK         | 0x0004000 |     16384
+MD_RANDOMTARGET       | 0x0008000 |     32768
+---------------------------------------------
+MD_IGNOREMELEE        | 0x0010000 |     65536
+MD_IGNOREMAGIC        | 0x0020000 |    131072
+MD_IGNORERANGED       | 0x0040000 |    262144
+MD_MVP                | 0x0080000 |    524288
+MD_IGNOREMISC         | 0x0100000 |   1048576
+MD_KNOCKBACK_IMMUNE   | 0x0200000 |   2097152
+MD_TELEPORT_BLOCK     | 0x0400000 |   4194304
+FREE                  | 0x0800000 |   8388608
+---------------------------------------------
+MD_FIXED_ITEMDROP     | 0x1000000 |  16777216
+MD_DETECTOR           | 0x2000000 |  33554432
+MD_STATUS_IMMUNE      | 0x4000000 |  67108864
+MD_SKILL_IMMUNE       | 0x8000000 | 134217728
+
+Explanation for modes
+-------------------------------------------------------------------------------
+
+Can Move: Enables the mob to move/chase characters.
+
+Looter: The mob will loot up nearby items on the ground when it's on idle state.
+
+Aggressive: normal aggressive mob, will look for a close-by player to attack.
+
+Assist: When a nearby mob of the same class attacks, assist types will join them.
+
+Cast Sensor Idle: Will go after characters who start casting on them if idle
+	or walking (without a target).
+
+No Random Walk: The mob will not randomly walk around while in the
+	idle state.
+
+No Cast Skill: The mob will be unable to cast skills.
+
+Can Attack: Enables the mob to attack/retaliate when you are within attack
+	range. Note that this only enables them to use normal attacks, skills are
+	always allowed.
+
+Cast Sensor Chase: Will go after characters who start casting on them if idle
+	or chasing other players (they switch chase targets)
+
+Change Chase: Allows chasing mobs to switch targets if another player happens
+	to be within attack range (handy on ranged attackers, for example)
+
+Angry: These mobs are "hyper-active". Apart from "chase"/"attack", they have
+	the states "follow"/"angry". Once hit, they stop using these states and use
+	the normal ones. The new states are used to determine a different skill-set
+	for their "before attacked" and "after attacked" states. Also, when
+	"following", they automatically switch to whoever character is closest.
+
+Change Target Melee: Enables a mob to switch targets when hit by a normal attack
+	while attacking someone else.
+
+Change Target Chase: Enables a mob to switch targets when hit by any attack
+	while chasing another character.
+
+Target Weak: Allows aggressive monsters to only be aggressive against 
+	characters that are five levels below it's own level.
+	For example, a monster of level 104 will not pick fights with a level 99.
+
+Random Target: Picks a new random target in range on each attack / skill.
+
+Ignore Melee: The mob will take 1 HP damage from physical attacks.
+
+Ignore Magic: The mob will take 1 HP damage from magic attacks.
+
+Ignore Range: The mob will take 1 HP damage from ranged attacks.
+
+MVP: Flagged as MVP which makes mobs resistant to Coma. Also displays the
+	MVP sign and gives players MVP EXP or MVP items.
+
+Ignore Misc: The mob will take 1 HP damage from "none" attack type.
+
+Knockback Immune: The mob will be unable to be knocked back.
+
+Teleport Block: Not implemented yet.
+
+Fixed Item Drop: The mob's drops are not affected by item drop modifiers.
+
+Detector: Enables mob to detect and attack characters who are in hiding/cloak.
+
+Status Immune: Immune to being affected by statuses.
+
+Skill Immune: Immune to being affected by skills.
+
+Aegis Mob Types
+-------------------------------------------------------------------------------
+
+What Aegis has are mob-types, where each type represents an AI behavior that
+is mimicked by a group of rA mode bits. This is the table to convert from one
+to another:
+
+Aegis/rA (description)
+01: 0x0081 (passive)
+02: 0x0083 (passive, looter)
+03: 0x1089 (passive, assist and change-target melee)
+04: 0x3885 (angry, change-target melee/chase)
+05: 0x2085 (aggressive, change-target chase)
+06: 0x0000 (passive, immobile, can't attack) [plants]
+07: 0x108B (passive, looter, assist, change-target melee)
+08: 0x7085 (aggressive, change-target melee/chase, target weak enemies)
+09: 0x3095 (aggressive, change-target melee/chase, cast sensor idle) [Guardian]
+10: 0x0084 (aggressive, immobile)
+11: 0x0084 (aggressive, immobile) [Guardian]
+12: 0x2085 (aggressive, change-target chase) [Guardian]
+13: 0x308D (aggressive, change-target melee/chase, assist)
+17: 0x0091 (passive, cast sensor idle)
+19: 0x3095 (aggressive, change-target melee/chase, cast sensor idle)
+20: 0x3295 (aggressive, change-target melee/chase, cast sensor idle/chase)
+21: 0x3695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target)
+24: 0x00A1 (passive, does not walk randomly) [Slave]
+25: 0x0001 (passive, can't attack) [Pet]
+26: 0xB695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
+27: 0x8084 (aggressive, immobile, random target)
+
+Aegis Class Types
+-------------------------------------------------------------------------------
+
+Aegis has different class types that can't be combined but can be reflected by
+a combination of rA mode bits.
+Add the mode listed here to the mode above.
+
+Aegis/rA
+00: 0x0000000 (normal monster)
+01: 0x6200000 (boss class, immune to status changes, immune to knockback, detector)
+02: 0x4000000 (guardian class, immune to status changes)
+04: 0xC000000 (battlefield class, immune to status changes, completely ignores all skills)
+05: 0x1000000 (event class, ignores all drop rate adjustments)
+
+- Note that the detector bit for Insect/Demon monsters need to be added
+  independently.
+
+Aegis Attr Types
+-------------------------------------------------------------------------------
+
+The Aegis attr types are a bitmask just like the rA mode bits and can be 
+directly converted. Plant mode is a combination of various of these modes.
+Add the mode listed here to the resulting mode above.
+
+Aegis/rA
+01: 0x010000 (takes 1 damage from melee attacks)
+02: 0x020000 (takes 1 damage from magic attacks)
+04: 0x040000 (takes 1 damage from ranged attacks)
+08: 0x080000 (MVP, gives MVP rewards, immune to instant death/coma effects)
+16: 0x100000 (takes 1 damage from misc attacks)
+32: 0x200000 (cannot be knocked back)
+64: 0x400000 (teleport block)

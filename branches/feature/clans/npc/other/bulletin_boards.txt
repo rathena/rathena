@@ -1,0 +1,418 @@
+//===== rAthena Script =======================================
+//= Bulletin Boards
+//===== Description: ========================================= 
+//= Bulletin Boards for beginners.
+//===== Changelogs: ==========================================
+//= 1.0 Added Alberta, Prontera, Izlude, Payon, Byalan Island,
+//=     Archer Village, Payon Cave and Coal Mine. [MasterOfMuppets]
+//= 1.1 Geffen, Orc Dungeon
+//= 1.2 Added 5 more Boards [MasterOfMuppets]
+//= 1.3 Fixed spelling mistakes. [Nexon]
+//= 1.3a Fixed a missing close; [Nexon]
+//= 1.4 Added more BBS MasterOfMuppets
+//= 1.5 Added the last of the bulletin boards, I think... [MasterOfMuppets]
+//= 1.5a Fixed a small screw up with the color codes in the Glastheim BB [MasterOfMuppets]
+//= 1.5b Fixed another small screw up with the color codes in the Glastheim BB [Kayla]
+//= 1.6 Removed Duplicates [Silent]
+//= 1.7 Updated Morroc NPCs to reflect episode 12.1 changes. [L0ne_W0lf]
+//= 1.8 Updated Payon Cave Bulletion Board Locations. [Masao]
+//= 1.9 Moved Izlude NPC to Pre-RE path. [Euphy]
+//= 2.0 Moved some NPC to Pre-re path. [Capuche]
+//============================================================
+
+alberta,111,59,5	script	Bulletin Board#1	837,{
+	mes "[Alberta: The Port City]";
+	mes "Welcome to Alberta, the Port City.";
+	next;
+	mes "[Alberta: The Port City]";
+	mes "In Alberta, you can find the Merchant guild where adventurers can change their job to merchant";
+	next;
+	mes "[Alberta: The Port City]";
+	mes "As a city that provides dependable sea travel, Alberta has provided the means for the foreign commerce that has brought prosperity to the Rune-Midgarts Kingdom.";
+	next;
+	mes "[Alberta: The Port City]";
+	mes "On the docks, you may find representatives from foreign lands that will guide tourists to their countries.";
+	next;
+	mes "[Alberta: The Port City]";
+	mes "Among seafarers, there is a rumor of a place known as ^338C60Turtle Island^000000. Intrepid adventurers may seek to investigate this rumor and learn the truth for themselves";
+	next;
+	mes "[Alberta: The Port City]";
+	mes "There is also a sunken ship that has been discovered near Alberta, and it has become a popular area for adventurers to explore";
+	next;
+	mes "[Alberta: The Port City]";
+	mes "From Alberta, ^1F3A11Payon^000000 is located to the Northwest. You can board passenger ships at the dock to travel to ^5E5C69Izlude^000000.";
+	mes "Enjoy your travels."; 
+	close;
+}
+
+geffen,124,65,5	script	Bulletin Board#2	837,{
+	mes "[Geffen: The City of Magic]";
+	mes "Welcome to Geffen, the City of Magic. Geffen is well known for its various legends related to magic.";
+	next;
+	mes "[Geffen: The City of Magic]";
+	mes "Points of interest in the city include the Forge, where people can change their jobs to Blacksmith, the Magic Academy for aspiring mages, and the Geffen Tower for the Wizard job change.";
+	next;
+	mes "[Geffen: The City of Magic]";
+	mes "Underneath the Geffen Tower lies a dungeon in which dreadful monsters are rumored to appear.";
+	next;
+	mes "[Geffen: The City of Magic]";
+	mes "It is said that the lost city of Gefenia, a place of elven lore and legend, is hidden within the depths of this dungeon.";
+	next;
+	mes "[Geffen: The City of Magic]";
+	mes "From Geffen, the ^828E28Orc Village^000000 is located to the South, ^4C6055Glast Heim^000000 to the West, ^6D6FE0Prontera^000000 to the far East, and ^744B2DMt. Mjolnir^000000 to the North. Enjoy your stay here in Geffen.";
+	close;
+}
+
+izlu2dun,104,92,5	script	Bulletin Board#4	837,{
+	mes "[Byalan Island]";
+	mes "^6B1312Caution!^000000";
+	mes "The Izlude dungeon is comprised of 5 levels. The first few levels are suited for newer adventurers.";
+	next;
+	mes "[Byalan Island]";
+	mes "As you venture deeper into the Byalan dungeon, you will encounter stronger, more powerful monsters.";
+	next;
+	mes "[Byalan Island]";
+	mes "With a few exceptions, most of the monsters in this dungeon are of the Water attribute. Therefore, a Wind attribute weapon will help you greatly";
+	close;
+}
+
+payon,178,108,5	script	Bulletin Board#06	837,{
+	mes "[Payon: The Mountain City]";
+	mes "Welcome to Payon, the mountain city. Payon has recently been renovated, so we hope you enjoy the clean, nice streets and buildings.";
+	next;
+	mes "[Payon: The Mountain City]";
+	mes "Payon is famous for being a city of archery. For a long time, its citizens have made their living by hunting with bows and arrows. Bow crafting and training have also been developed here in Payon";
+	next;
+	mes "[Payon: The Mountain City]";
+	mes "Payon has various armor and weapons, especially for the Archer class. If you wish to become an Archer, it would be best to become familiar with this city.";
+	next;
+	mes "[Payon: The Mountain City]";
+	mes "Payon Palace is located in the center of the city. The Archer Village is located in the Northern part of Payon. There, people can change their jobs to Archer.";
+	next;
+	mes "[Payon: The Mountain City]";
+	mes "Near the Archer Village, you can find the ^2F0400Payon Cave^000000 where Undead monsters reside.";
+	next;
+	mes "[Payon: The Mountain City]";
+	mes "From Payon, ^123972Alberta^000000 is located to the Southeast, and ^866C4BMorroc^000000 is to the West. ^5E5C69Izlude^000000 and ^6D6FE0Prontera^000000 are North of Payon.";
+	mes "Enjoy your travels."; 
+	close;
+}
+
+pay_arche,79,31,5	script	Bulletin Board#07	837,{
+	mes "[Archer Village]"; 
+	mes "Welcome to the Payon Archer Village where Novices can change their jobs to Archer.";
+	next;
+	mes "[Archer Village]";
+	mes "The Archer Village provides Bows and Tights that are available for purchase. These are necessities for new Archers and Hunters.";
+	next;
+	mes "[Archer Village]";
+	mes "If you wish to become an Archer, it is suggested to become familiar with this village. For aspiring Hunters, the Hunter Guild is located in a field that is East of Payon.";
+	close;
+}
+
+prontera,148,49,5	script	Bulletin Board#09	837,{
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "Welcome to Prontera, the capital city of Rune-Midgard.";
+	next;
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "Prontera is located in the center of the Rune-Midgard continent and is very well-known as a city of flourishing commerce.";
+	next;
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "In this city, you can fint the Sanctuary, where people can change their jobs to Acolyte and Priest.";
+	next;
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "You can also find the Castle, where people can change their jobs to Crusader.";
+	next;
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "Please feel free to explore the streets of Prontera, as there are various tourist attractions within the city.";
+	next;
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "When you need to upgrade your weapons and armors, please visit the building in the 5 o'clock direction from the fountain in the center of Prontera.";
+	next;
+	mes "[Prontera: Capital of the]";
+	mes "[Rune-Midgards Kingdom]";
+	mes "From Prontera, ^5E5C69Izlude^000000 is located to the Southeast, ^1F3A11Payon^000000 to the far South, ^683C1FGeffen^000000 to the far West and ^2D3832Al De Baran^000000 to the far North.";
+	mes "Enjoy your time in Prontera.";
+	close;
+}
+
+morocc,152,110,5	script	Bulletin Board#11	837,{
+	mes "[Morroc: The Frontier Town]";
+	mes "Welcome to Morroc, the City of the Desert. Morroc was built on an oasis, so this town can accomodate its many visitors and travelers.";
+	next;
+	mes "[Morroc: The Frontier Town]";
+	mes "Morroc Castle lies in the center of this city. Please feel free to explore this town, and enjoy its unique atmosphere. However, watch your pockets and beware of Rogues and Thieves.";
+	next;
+	mes "[Morroc: The Frontier Town]";
+	mes "From Morroc, the ^660000Pyramid Dungeon^000000 can be found to the Northwest, and the ^660000Sphinx Dungeon^000000 can be found to the West. To the Southeast, you may find ^660000Ant Hell^000000.";
+	next;
+	mes "[Morroc: The Frontier Town";
+	mes "The Assassin Guild is rumored to be located to the Southeast. When you head East from Morroc, and then North, you will arrive at ^3355FFProntera^000000.";
+	close;
+}
+
+comodo,210,148,5	script	Bulletin Board#12	837,{
+	mes "[Comodo: The Beach City]";
+	mes "Welcome! This town of Comodo is";
+	mes "surrounded by many ancient relics";
+	mes "from a forgotten era.";
+	next;
+	mes "[Comodo: The Beach City]";
+	mes "Only in Comodo can you find the";
+	mes "Dancer Guild and Bard Guild which";
+	mes "provide the opportunity for";
+	mes "adventurers to change their jobs to";
+	mes "Dancers and Bards.";
+	next;
+	mes "[Comodo: The Beach City]";
+	mes "You can also visit the Casino,";
+	mes "which is a popular as a tourist";
+	mes "attraction and place to lounge";
+	next;
+	mes "[Comodo: The Beach City]";
+	mes "You can buy Berserk Potions, a";
+	mes "special product of Comodo, from the";
+	mes "Tool Dealers in the area.";
+	next;
+	mes "[Comodo: The Beach City]";
+	mes "There are 3 caves around Comodo";
+	mes "that are inhabited by many";
+	mes "different monsters. If you enter";
+	mes "these areas, please be extremely";
+	mes "careful.";
+	next;
+	mes "[Comodo: The Beach City]";
+	mes "From Comodo, you can travel to";
+	mes "^866C4BMorroc^000000 through the East Cave";
+	mes "and to ^7D2272Umbala^000000 through the North";
+	mes "Cave.";
+	next;
+	mes "[Comodo: The Beach City]";
+	mes "To the East, you can find ^BF2B0DParos";
+	mes "^BF2B0DLighthouse^000000, where the Rogue Guild";
+	mes "is located. Enjoy the Comodo night";
+	mes "life~";
+	close;
+}
+
+umbala,137,94,5	script	Bulletin Board#13	837,{
+	mes "[Umbala: The Utan Village]";
+	mes "Welcome to Umbala,";
+	mes "the village of the Utan tribe.";
+	next;
+	mes "[Umbala: The Utan Village]";
+	mes "Umbala, as well as the Utan tribe";
+	mes "which speak their own unique";
+	mes "language, was recently discovered";
+	mes "by a few intrepid adventurers.";
+	next;
+	mes "[Umbala: The Utan Village]";
+	mes "Scholars believe that Umbala may be";
+	mes "the border between our world";
+	mes "and another realm. They believe the";
+	mes "junction between the worlds might";
+	mes "be the Yggdrasil tree to the North.";
+	next;
+	mes "[Umbala: The Utan Village]";
+	mes "Points of interest include the";
+	mes "Chief's House, the Shaman's House,";
+	mes "and the Bungee Jump Area. Thousands";
+	mes "of tourists visit the Bungee Jump";
+	mes "Area to test their courage.";
+	next;
+	mes "[Umbala: The Utan Village]";
+	mes "From Umbala, head South to go to";
+	mes "^D91B73Comodo^000000. Please enjoy your";
+	mes "stay here in Umbala.";
+	close;
+}
+
+gef_fild09,227,29,4	script	Bulletin Board::OrcsBoard	835,{
+	mes "[Orc Village]";
+	mes "^6B1312Caution!^000000";
+	mes "Beyond this point";
+	mes "lies the Orc Village.";
+	next;
+	mes "[Orc Village]";
+	mes "Be aware that this village is";
+	mes "teeming with dangerous Orcs, namely";
+	mes "Orc Warriors, Orc Ladies and High";
+	mes "Orcs. Two boss monsters, ^6B1312Orc Hero^000000";
+	mes "and ^6B1312Orc Lord^000000 will also appear at certain times.";
+	close;
+}
+
+gef_fild13,202,31,5	duplicate(OrcsBoard)	Bulletin Board#orc1	835
+
+gef_fild13,29,206,5	script	Bulletin Board::KoboldsBoard	836,{
+
+	mes "[Kobold Village]";
+	mes "^6B1312Caution!^000000";
+	mes "You're heading to the Kobold Village.";
+	mes "Please be aware this village is filled with many kobolds.";
+	close;
+}
+
+gef_fild08,211,24,5	duplicate(KoboldsBoard)	Bulletin Board#kb1	836
+
+gef_fild10,109,23,5	script	Bulletin Board#15	836,{
+
+	mes "[Goblin Village]";
+	mes "^6B1312Caution!^000000";
+	mes "You're heading to the Goblin Village.";
+	mes "Please be aware this village is filled with many goblins.";
+	close;
+}
+
+yuno,154,112,5	script	Bulletin Board#17	837,{
+	mes "[Juno: Capital of]";
+	mes "[The Schwarzwald Republic]";
+	mes "Welcome to Juno, the City of Sages.";
+	mes "Juno is kept aloft in the air by";
+	mes "the power of the Ymir Heart";
+	mes "Pieces";
+	next;
+	mes "[Juno: Capital of]";
+	mes "[The Schwarzwald Republic]";
+	mes "Those interested in becoming Sages";
+	mes "should visit the Sage Castle for";
+	mes "more information on the Sage job";
+	mes "and its requirements.";
+	next;
+	mes "[Juno: Capital of]";
+	mes "[The Schwarzwald Republic]";
+	mes "Other notable places include the";
+	mes "Monster Museum, Magic Academy";
+	mes "and the Juno Library.";
+	next;
+	mes "[Juno: Capital of]";
+	mes "[The Schwarzwald Republic]";
+	mes "Somewhere around Juno, there is";
+	mes "information regarding secret access";
+	mes "to the world where adventurers may";
+	mes "be reborn with newfound strength.";
+	next;
+	mes "[Juno: Capital of]";
+	mes "[The Schwarzwald Republic]";
+	mes "To the Southeast of Juno lies ^6B1312Nogg";
+	mes "^6B1312Road^000000, the Magma Dungeon. Nogg Road";
+	mes "is infamous for its aggressive";
+	mes "creatures, so be careful";
+	next;
+	mes "[Juno: Capital of]";
+	mes "[The Schwarzwald Republic]";
+	mes "From Juno, ^2D3832Al De Baran^000000, a city of";
+	mes "the Rune-Midgarts Kingdom, is";
+	mes "located to the South.";
+	close;
+}
+
+aldebaran,145,105,5	script	Bulletin Board#18	837,{
+	mes "[Al De Baran: The Border City]";
+	mes "Welcome to Al De Baran, the border";
+	mes "city of the Rune-Midgarts Kingdom.";
+	mes "Al De Baran's beautiful canals and";
+	mes "majestic Clock Tower are a source";
+	mes "of pride for its citizens.";
+	next;
+	mes "[Al De Baran: The Border City]";
+	mes "Adventurers can explore the Clock";
+	mes "Tower located in the city's center.";
+	mes "Other notable places are the Kafra";
+	mes "Corporation Headquarters, and the";
+	mes "Alchemist Guild which provides the";
+	mes "Alchemist job change.";
+	next;
+	mes "[Al De Baran: The Border City]";
+	mes "There is a fully trained Santa";
+	mes "Claus somewhere in Al De Baran who";
+	mes "can send you to the magical town of";
+	mes "^1D2585Lutie^000000. If you're interested in";
+	mes "seeing it for yourself, you must";
+	mes "seek Santa Claus.";
+	next;
+	mes "[Al De Baran: The Border City]";
+	mes "From this city, ^60D5FDJuno^000000 is located to";
+	mes "the North, and ^6D6FE0Prontera^000000 is located";
+	mes "to the South.";
+	close;
+}
+
+xmas_fild01,75,80,5	script	Bulletin Board#22	837,{
+	mes "[Winter Town, Lutie]";
+	mes "Welcome to Lutie, the town of snowfall.";
+	mes "Manufacturing toys in the toy factory is the main";
+	mes "business of this town.";
+	next;
+	mes "[Winter Town, Lutie]";
+	mes "You can access to the toy factory dungeon";
+	mes "at the north of Lutie.";
+	mes "Please remember to visit Lutie in Christmas season.";
+	mes "There are various event held with joy.";
+	mes "Please beware of ^6B1312Stormy Knight^000000 and ^6B1312Hatii^000000 the boss monsters of the toy factory dungeon.";
+	close;
+}
+
+niflheim,200,191,5	script	Bulletin Board#25	837,{
+	mes "[City of the Dead, Nifflheim]";
+	mes "Welcome to Nifflheim, the City of the Dead.";
+	mes "Nifflheim was known as the other world where";
+	mes "you come after the death.";
+	mes "However, recently people found out a secret path behind of a mysterious tree.";
+	mes "So, you will find many other people travelling around this area.";
+	next;
+	mes "[City of the Dead, Nifflheim]";
+	mes "As a tourist attraction, The Witch's castle is suggested.";
+	mes "Unlike normal towns, it is prohibited to save respawn point or";
+	mes "warp point inside Nifflheim. Also monsters spawn within the town as well.";
+	next;
+	mes "[City of the Dead, Nifflheim]";
+	mes "Especially, please be attentive with a boss monster";
+	mes "called ^6B1312Lord of the Death^000000.";
+	next;
+	mes "[City of the Dead, Nifflheim]";
+	mes "When you go ahead west, you will arrive at ^6B1312Valley of Gyoll^000000";
+	mes "where all the powerful and fearful monsters dwell upon.";
+	mes "It is suggested to leave the area immediately in case of a new solo adventurer.";
+	close;
+}
+
+/*
+moc_fild15,267,264,5	script	Bulletin Board#26	837,{
+	mes "[Ant Hell]";
+	mes "^6B1312Caution!^000000";
+	mes "Ant Hell is consisting of 2 levels.";
+	mes "As the name shows, this dungeon is filled with various ants";
+	mes "and good as the training grounds for new adventurers.";
+	next;
+	mes "[Ant Hell]";
+	mes "However, please be aware that ^6B1312Maya Purple^000000 appears in the 1st level";
+	mes "and ^6B1312Maya^000000 does in the 2nd level. They are the queens of ants.";
+	mes "Also, in the field where you're standing";
+	mes "a boss monster called ^6B1312Phreeoni^000000 will appear at certain time.";
+	close;
+}
+*/
+
+glast_01,369,308,5	script	Bulletin Board#28	837,{
+	mes "[Glast Heim]";
+	mes "Glast Heim is an enormous dungeon with countless levels.";
+	mes "This dungeon is definately not for new or experienced adventurers";
+	mes "but for dungeon experts.";
+	next;
+	mes "[Glast Heim]";
+	mes "There are many fearsome monsters such as ^6B1312Dark Lord^000000,";
+	mes "^6B1312Owl Baron^000000, ^6B1312Owl Duke^000000, ^6B1312Dark Illusion^000000, ^6B1312Bloody Knight^000000, ^6B1312Abysmal Knight^000000, ^6B1312Chimera^000000 and various types of doomed swords.";
+	next;
+	mes "[Glast Heim]";
+	mes "However, more difficult the expedition is, greater the reward is.";
+	mes "Therefore, this dungeon is pretty popular among dungeon experts.";
+	mes "Enjoy your dungeon expedition.";
+	close;
+}

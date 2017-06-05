@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Ice Wall.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Blocks usage of WZ_ICEWALL.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// Misty Forest Labyrinth ===========
+1@mist	mapflag	noicewall
+
+// Octopus Cave ===========
+1@cash	mapflag	noicewall
+
+// Drain ===========
+1@pump	mapflag	noicewall
+2@pump	mapflag	noicewall
+
+// Somatology Laboratory ===========
+1@lhz	mapflag	noicewall
+
+// Bangungot Hospital F2 ===========
+1@ma_h	mapflag	noicewall
+
+// Buwaya Cave ===========
+1@ma_c	mapflag	noicewall
+
+// Bakonawa Hideout ===========
+1@ma_b	mapflag	noicewall
+
+// Inside Eclage ===========
+1@ecl	mapflag	noicewall

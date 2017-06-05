@@ -1,0 +1,51 @@
+//===== rAthena Script ======================================= 
+//= Eclage Guides
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Guides for the city of Eclage.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Euphy]
+//============================================================ 
+
+ecl_in01,48,60,5	script	Eclage Guard#obb	447,{
+	mes "[Eclage Guard]";
+	mes "Welcome, Adventurer. This is the plaza of Eclage, a great and sacred tree. How can I help you?";
+	next;
+	switch(select("Palace:Orb:Store:Prison:Clinic:Residential Area:Finish the conversation")) {
+	case 1:
+		mes "[Eclage Guard]";
+		mes "Our great king, courageous generals, and scholars are all staying at the palace.";
+		mes "The palace is located at the top of Eclage. We usually fly there, but I see you don't have wings. Follow the path on your right then. It will lead you to the palace.";
+		close;
+	case 2:
+		mes "[Eclage Guard]";
+		mes "The Orb behind me is like a symbol of us Laphines.";
+		mes "It's filled with great and mysterious power. We always keep an eye on it and guard it carefully.";
+		close;
+	case 3:
+		mes "[Eclage Guard]";
+		mes "This is the plaza of Eclage. You'll find everything you need around here.";
+		close;
+	case 4:
+		mes "[Eclage Guard]";
+		mes "Prison is a place for criminals. Why would an adventurer like you go there?";
+		mes "Well, it's a little suspicious...but I'll tell you the location. Follow the path on your left. They don't let anyone in though.";
+		close;
+	case 5:
+		mes "[Eclage Guard]";
+		mes "All your pain and weariness melt away in the arms of nature. Restore your mind and body at Eclage Clinic.";
+		mes "Follow the path on your left.";
+		close;
+	case 6:
+		mes "[Eclage Guard]";
+		mes "Haven't you seen our decorations for Yai? Take a trip outside. You'll see our residential area.";
+		close;
+	case 7:
+		close;
+	}
+}

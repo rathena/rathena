@@ -1,0 +1,16 @@
+//===== rAthena Script ======================================= 
+//= Archer Class Tutorial and Job Specific Quest
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Archer training quest.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Euphy]
+//============================================================ 
+
+pay_fild08,40,83,5	duplicate(Acolyte_Tu)	Acolyte#tu	95

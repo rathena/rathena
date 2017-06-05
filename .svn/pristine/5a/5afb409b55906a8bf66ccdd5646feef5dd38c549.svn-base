@@ -1,0 +1,32 @@
+//--------------------------------------------------------------
+// rAthena Battle Configuration File
+// Originally Translated by Peter Kieser <pfak@telus.net>
+// Made in to plainer English by Ancyker
+//--------------------------------------------------------------
+// Note 1: Value is a config switch (on/off, yes/no or 1/0)
+// Note 2: Value is in percents (100 means 100%)
+// Note 3: Value is a bit field. If no description is given,
+//         assume unit types (1: Pc, 2: Mob, 4: Pet, 8: Homun)
+//--------------------------------------------------------------
+
+// Melee damage adjustments (non skills) for Battleground maps (Note 2)
+bg_short_attack_damage_rate: 80
+
+// Ranged damage adjustments (non skills) for Battleground maps (Note 2)
+bg_long_attack_damage_rate: 80
+
+// Weapon skills damage adjustments for Battleground maps (Note 2)
+bg_weapon_attack_damage_rate: 60
+
+// Magic skills damage adjustments for Battleground maps (Note 2)
+bg_magic_attack_damage_rate: 60
+
+// Misc skills damage adjustments for Battleground maps (Note 2)
+bg_misc_attack_damage_rate: 60
+
+// Flee penalty on BG grounds.
+// NOTE: It's %, not absolute, so 20 is -20% of your total flee
+bg_flee_penalty: 20
+
+// Interval before updating the bg-member map mini-dots (milliseconds)
+bg_update_interval: 1000

@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Sample: Getmonsterinfo
+//===== By: ==================================================
+//= Lupus
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Demonstrates the 'getmonsterinfo' command.
+//============================================================
+
+prontera,156,179,6	script	test_getmonsterinfo	117,{
+	mes "Please enter a monster ID.";
+	input .@value;
+	if (getmonsterinfo(.@value, MOB_LV) < 0 || getmonsterinfo (.@value, MOB_NAME) == "null") {
+		mes "Invalid monster ID.";
+		close;
+	}
+	mes "Monster ID: "+.@value+" '"+getmonsterinfo(.@value,MOB_NAME)+"'";
+	mes "Current Monster info:";
+	for (.@i = 0; .@i < 23; .@i++)
+		mes " getmonsterinfo("+.@value+","+.@i+") = "+getmonsterinfo(.@value,.@i);
+	close;
+}

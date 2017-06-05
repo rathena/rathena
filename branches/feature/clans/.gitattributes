@@ -1,0 +1,12 @@
+*        text=auto
+*.c      diff=cpp
+*.sln    merge=union
+*.vcproj merge=union
+*.vcxproj merge=union
+*.sln text eol=crlf
+*.bat text eol=crlf
+configure text eol=lf
+configure.in text eol=lf
+Makefile text eol=lf
+Makefile.in text eol=lf
+*.sh text eol=lf

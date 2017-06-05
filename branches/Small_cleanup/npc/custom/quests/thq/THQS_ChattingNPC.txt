@@ -1,0 +1,95 @@
+//===== rAthena Script =======================================
+//= Treasure Hunter Quests
+//===== By: ==================================================
+//= Fredzilla
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Start for Treasure hunter quests
+//===== Additional Comments: =================================
+//= Event_THQS - Used to check if you have already registered
+//= #Treasure_Token - used to keep track of tokens
+//============================================================
+
+//Entrance Flags
+yuno,48,101,6	script	Notice	722,{
+	mes "^FF0000[ Treasure Hunter Guild House ]^000000";
+	mes " ";
+	mes "Welcome to the Treasure Hunter's Guild House.";
+	mes "Feel free to drop in and look around";
+	mes "and feel free to become a memeber if you wish.";
+	mes " ";
+	mes "For membership applications please talk to Keegan";
+	mes "up the stairs and down the hall.";
+	close;
+}
+//Saver Girl;
+yuno_in01,32,178,3	script	Ahlma	94,{
+	mes "[Ahlma]";
+	if (Event_THQS == 0) goto N_Member;
+	mes "Welcome to The Treasure Hunter Guild.";
+	mes "How may I help you?";
+	next;
+	menu "Save",-,"Quit",N_Quit;
+	mes "[Ahlma]";
+	mes "Ok, saved. Thank you ~ See you soon~";
+	savepoint "yuno_in01",34,176;
+	close;
+N_Quit:
+	mes "[Ahlma]";
+	mes "Well if you think you are safe, good on you.";
+	close;
+N_Member:
+	mes "Sorry, members only.";
+	close;
+}
+//Retired Smile mask girl;
+yuno_in01,33,162,3	script	Smile Helper	92,{
+	mes "[Smile Gal]";
+	mes "Oh man...I am so sick of";
+	mes "trading Mr. Smile masks for crap.";
+	mes " ";
+	mes "You ask me for one and you'll find yourself 10 pounds lighter!";
+	close;
+}
+//Usless Female Assasin;
+yuno_in01,22,162,6	script	Female Assasin	725,{
+	mes "[Sharlet]";
+	if (Event_THQS > 0) goto N_Member;
+	mes "Umm sorry I'm not gona waste my time talking to you if you arn't even a member!";
+	close;
+N_Member:
+	set @TEMP,rand(1,2);
+	if (@TEMP == 1) goto N_Chat1;
+	if (@TEMP == 2) goto N_Chat2;
+	mes "How are you reading this???";
+	mes "Well unless you are reading the code :)";
+	close;
+N_Chat1:
+	mes "Ahh welcome fellow Treasure Hunter "+strcharinfo(0)+".";
+	mes "Did you hear about that brave man that went into Glast Heim alone?! He must be crazy.";
+	close;
+N_Chat2:
+	mes ""+strcharinfo(0)+" don't you have something better you could be doing? Like a quest.";
+	close;
+}
+//another usless member
+yuno_in01,25,162,6	script	Female Wizard	123,{
+	mes "[Sasha]";
+	if (Event_THQS > 0) goto N_Member;
+	mes "Umm sorry I'm not gona waste my time talking to you if you arn't even a member!";
+	close;
+N_Member:
+	set @TEMP,rand(2);
+	if (@TEMP == 1) goto N_Chat;
+	mes "Ahh welcome fellow Treasure Hunter "+strcharinfo(0)+".";
+	mes "Did you hear about that goat man running around in the trees?";
+	mes " ";
+	mes "Aperently his name is Baphomet and he has been runing around the Forest Maze out side of prontera for quite some time now.";
+	close;
+N_Chat:
+	mes ""+strcharinfo(0)+" don't you have something better you could be doing? Like a quest.";
+	close;
+}

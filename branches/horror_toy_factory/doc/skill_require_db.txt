@@ -1,0 +1,163 @@
+//===== rAthena Documentation ================================
+//= rAthena Skill Requirement Reference
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140831
+//===== Description: =========================================
+//= Explanation of the skill_require_db.txt file and structure.
+//============================================================
+
+Structure:
+SkillID,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,RequiredStatuses,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10,RequiredEquipment
+
+---------------------------------------
+
+SkillID: The ID of the skill.
+         See 'db\(pre-)re\skill_db.txt' for more details.
+
+---------------------------------------
+
+HPCost:	Amount of HP needed to use the skill.
+
+---------------------------------------
+
+MaxHPTrigger: Player's HP must be below this % of Max HP in order to use the skill.
+
+---------------------------------------
+
+SPCost: Amount of SP needed to use the skill.
+
+---------------------------------------
+
+HPRateCost: If more than 0, the percentage of the player's current HP.
+            If less than 0, the percentage of the player's Max HP.
+
+---------------------------------------
+
+SPRateCost: If more than 0, the percentage of the player's current SP.
+            If less than 0, the percentage of the player's Max SP.
+
+---------------------------------------
+
+ZenyCost: Amount of Zeny needed to use the skill.
+
+---------------------------------------
+
+RequiredWeapons: Weapon type needed to use the skill.
+	0: bare fist
+	1: Daggers
+	2: One-handed swords
+	3: Two-handed swords
+	4: One-handed spears
+	5: Two-handed spears
+	6: One-handed axes
+	7: Two-handed axes
+	8: Maces
+	9: Unused
+	10: Staves
+	11: Bows
+	12: Knuckles
+	13: Musical Instruments
+	14: Whips
+	15: Books
+	16: Katars
+	17: Revolvers
+	18: Rifles
+	19: Gatling guns
+	20: Shotguns
+	21: Grenade launchers
+	22: Fuuma Shurikens
+	23: Two-handed staves
+	24: Max Type
+	25: Dual-wield Daggers
+	26: Dual-wield Swords
+	27: Dual-wield Axes
+	28: Dagger + Sword
+	29: Dagger + Axe
+	30: Sword + Axe
+	
+Up to 30 ':'-separated values can be used, e.g.
+    type1:type2:type3
+
+---------------------------------------
+
+RequiredAmmoTypes: Ammo type needed to use the skill.
+	1: Arrows
+	2: Throwable daggers
+	3: Bullets
+	4: Shells
+	5: Grenades
+	6: Shuriken
+	7: Kunai
+	8: Cannonballs
+	9: Throwable Items (Sling Item)
+
+Up to 9 ':'-separated values can be used, e.g.
+    type1:type2:type3
+
+---------------------------------------
+
+RequiredAmmoAmount: Amount of ammo needed to use the skill.
+
+---------------------------------------
+
+RequiredState: The active 'State' needed to use the skill.
+
+none = Nothing special.
+hidden = Requires hidden status by using Hiding, Cloaking, or Chasewalk.
+riding = Requires the player to ride either a Peco or a Dragon.
+falcon = Requires a Falcon.
+cart = Requires a Pushcart.
+       For renewal, this state can be replaced by SC_PUSH_CART in 'RequiredStatuses' field.
+shield = Requires a shield equipped.
+recover_weight_rate = Requires to be less than 50% weight.
+move_enable = Requires to be able to move.
+water = Requires to be standing on a water cell.
+dragon = Requires to ride a Dragon.
+warg = Requires a Warg.
+ridingwarg = Requires to ride a Warg.
+mado = Requires to have an active Mado.
+elementalspirit = Requires to have an Elemental Spirit summoned.
+peco = Requires riding a Peco.
+
+---------------------------------------
+
+RequiredStatuses: The active statuses needed to use the skill.
+
+Up to 3 ':'-separated values can be used, e.g.
+    SC_STATUS1:SC_STATUS2:SC_STATUS3
+
+See MAX_SKILL_STATUS_REQUIRE in 'src/map/skill.h' to modify the max number
+of possible values, and 'db/const.txt' for a list of status constants.
+
+Use any number or SC_ALL to disable status requirements.
+
+---------------------------------------
+
+SpiritSphereCost: Amount of Spirit Sphere needed to use the skill.
+
+---------------------------------------
+
+RequiredItemID1..10: Items to be consumed when the skill is used (max 10).
+
+---------------------------------------
+
+RequiredItemAmount1..10: Amount of each item consumed when the skill is used.
+                         If 0, the item is required to be in the inventory but won't be consumed.
+
+---------------------------------------
+
+RequiredEquipment: Specific equipment IDs needed to use the skill.
+
+Up to 10 ':'-separated values can be used, e.g.
+    item1:item2:item3
+
+See MAX_SKILL_EQUIP_REQUIRE in 'src/map/skill.h' to modify the max number
+of possible values.
+
+---------------------------------------
+
+NOTE: On some fields, the ':' delimiter means for each skill level, but there
+      are some level dependent checks.  See 'skill_get_requirement()' in
+      'src/map/skill.c'.

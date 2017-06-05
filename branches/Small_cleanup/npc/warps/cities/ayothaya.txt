@@ -1,0 +1,62 @@
+//===== rAthena Script =======================================
+//= Ayothaya Town Warps Script
+//===== By: ==================================================
+//= Muad_Dib, L0ne_W0lf (1.0)
+//===== Current Version: =====================================
+//= 1.5a
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for Ayothaya
+//===== Additional Comments: =================================
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.5a Cleared up a few misnamed warps. [L0ne_W0lf]
+//============================================================
+
+ayothaya,130,97,0	warp	ayo_tool1-1	1,1,ayo_in01,43,183
+ayo_in01,46,183,0	warp	ayo_tool1-2	1,1,ayothaya,132,99
+ayothaya,129,86,0	warp	ayo_tool2-1	1,1,ayo_in01,21,178
+ayo_in01,23,176,0	warp	ayo_tool2-2	1,1,ayothaya,132,86
+ayothaya,130,75,0	warp	ayo_tool3-1	1,1,ayo_in01,17,156
+ayo_in01,17,153,0	warp	ayo_tool3-2	1,1,ayothaya,132,73
+ayothaya,165,90,0	warp	ayo_weapon1-1	1,1,ayo_in01,77,174
+ayo_in01,73,174,0	warp	ayo_weapon1-2	1,1,ayothaya,162,90
+ayothaya,177,90,0	warp	ayo_weapon2-1	1,1,ayo_in01,95,175
+ayo_in01,98,175,0	warp	ayo_weapon2-2	1,1,ayothaya,180,90
+ayothaya,173,77,0	warp	ayo_weapon3-1	1,1,ayo_in01,85,152
+ayo_in01,85,149,0	warp	ayo_weapon3-2	1,1,ayothaya,173,74
+ayothaya,229,69,0	warp	ayo_pub1-1	1,1,ayo_in01,137,192
+ayo_in01,137,195,0	warp	ayo_pub1-2	1,1,ayothaya,229,72
+ayothaya,202,161,0	warp	ayo_inn1-1	1,1,ayo_in01,31,108
+ayo_in01,31,111,0	warp	ayo_inn1-2	1,1,ayothaya,202,164
+ayothaya,211,150,0	warp	ayo_inn2-1	1,1,ayo_in01,47,94
+ayo_in01,50,94,0	warp	ayo_inn2-2	1,1,ayothaya,214,150
+ayothaya,202,140,0	warp	ayo_inn3-1	1,1,ayo_in01,31,81
+ayo_in01,31,78,0	warp	ayo_inn3-2	1,1,ayothaya,202,137
+ayothaya,192,150,0	warp	ayo_inn4-1	1,1,ayo_in01,13,94
+ayo_in01,10,94,0	warp	ayo_inn4-2	1,1,ayothaya,189,150
+ayo_in01,13,107,0	warp	ayo_stairNW1-1	1,1,ayo_in01,132,27
+ayo_in01,135,27,0	warp	ayo_roomNW1-2	1,1,ayo_in01,17,107
+ayo_in01,48,107,0	warp	ayo_stairNE1-1	1,1,ayo_in01,179,27
+ayo_in01,176,27,0	warp	ayo_roomNE2-2	1,1,ayo_in01,45,107
+ayo_in01,13,82,0	warp	ayo_stairSW1-1	1,1,ayo_in01,18,14
+ayo_in01,21,14,0	warp	ayo_roomSW1-2	1,1,ayo_in01,17,82
+ayo_in01,48,82,0	warp	ayo_stairSE1-1	1,1,ayo_in01,63,14
+ayo_in01,60,14,0	warp	ayo_roomSE1-2	1,1,ayo_in01,45,82
+ayothaya,111,109,0	warp	ayo_house1_1-1	1,1,ayo_in01,180,129
+ayo_in01,177,129,0	warp	ayo_house1_1-2	1,1,ayothaya,111,106
+ayothaya,62,104,0	warp	ayo_house2_1-1	1,1,ayo_in01,191,183
+ayo_in01,194,183,0	warp	ayo_house2_1-2	1,1,ayothaya,65,104
+ayothaya,208,283,0	warp	ayo_shrine1-1	1,1,ayo_in02,100,152
+ayo_in02,100,148,0	warp	ayo_shrine1-2	1,1,ayothaya,208,280
+ayothaya,276,176,0	warp	ayo_fild1-1	1,1,ayo_fild01,37,241
+ayo_fild01,32,240,0	warp	ayo_fild1-2	1,1,ayothaya,273,176
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Fixed Armory part by massdriller [Thanks to akusarujin]
+//= 1.2 Revised warps, due to official Ayothaya Town NPC [MasterOfMuppets]
+//= 1.3 Fixed swapped Inn Exits, thanks to Sir_Loon [Lupus]
+//= 1.4 Fixed a warp-back. [erKURITA]
+//============================================================

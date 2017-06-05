@@ -1,0 +1,282 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable auto-save.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Characters logging out on the specified map will be warped
+//= to the map specified in the last field, or "SavePoint".
+//===== Additional Comments: ================================= 
+//= 1.7 Updated. [Lupus]
+//= 1.8 Updated. [L0ne_W0lf]
+//= 1.9 Renewal split. [Euphy]
+//============================================================
+
+// Job Quests ====================
+job_sword1	mapflag	nosave	SavePoint
+//job_thief1	mapflag	nosave	SavePoint
+// 2-1
+job_knt	mapflag	nosave	SavePoint
+job_prist	mapflag	nosave	SavePoint
+job_wiz	mapflag	nosave	SavePoint
+in_moc_16	mapflag	nosave	SavePoint
+job_hunte	mapflag	nosave	SavePoint
+//in_hunter	mapflag	nosave	SavePoint
+// 2-2
+alde_alche	mapflag	nosave	SavePoint
+job_cru	mapflag	nosave	SavePoint
+job_duncer	mapflag	nosave	SavePoint
+job_monk	mapflag	nosave	SavePoint
+monk_test	mapflag	nosave	SavePoint
+in_rogue	mapflag	nosave	SavePoint
+job_sage	mapflag	nosave	SavePoint
+// Ext
+job_star	mapflag	nosave	SavePoint
+job_soul	mapflag	nosave	SavePoint
+
+// Special Quests Places =====
+ama_test	mapflag	nosave	SavePoint
+gef_dun03	mapflag	nosave	SavePoint
+que_god01	mapflag	nosave	SavePoint
+que_god02	mapflag	nosave	SavePoint
+que_sign01	mapflag	nosave	SavePoint
+que_sign02	mapflag	nosave	SavePoint
+que_thor	mapflag	nosave	SavePoint
+que_ng	mapflag	nosave	SavePoint
+gon_test	mapflag	nosave	SavePoint
+kh_kiehl01	mapflag	nosave	SavePoint
+kh_kiehl02	mapflag	nosave	SavePoint
+que_bingo	mapflag	nosave	SavePoint
+
+// GvG Arenas ==========================
+guild_vs1	mapflag	nosave	SavePoint
+guild_vs2	mapflag	nosave	SavePoint
+guild_vs3	mapflag	nosave	SavePoint
+guild_vs4	mapflag	nosave	SavePoint
+guild_vs5	mapflag	nosave	SavePoint
+
+// Izlude Arena ========================
+force_1-1	mapflag	nosave	SavePoint
+force_1-2	mapflag	nosave	SavePoint
+force_1-3	mapflag	nosave	SavePoint
+force_2-1	mapflag	nosave	SavePoint
+force_2-2	mapflag	nosave	SavePoint
+force_2-3	mapflag	nosave	SavePoint
+force_3-1	mapflag	nosave	SavePoint
+force_3-2	mapflag	nosave	SavePoint
+force_3-3	mapflag	nosave	SavePoint
+force_4-1	mapflag	nosave	SavePoint
+force_5-1	mapflag	nosave	SavePoint
+prt_are_in	mapflag	nosave	SavePoint
+
+// Juperos =============================
+jupe_area1	mapflag	nosave	SavePoint
+jupe_area2	mapflag	nosave	SavePoint
+jupe_ele	mapflag	nosave	SavePoint
+jupe_ele_r	mapflag	nosave	SavePoint
+jupe_gate	mapflag	nosave	SavePoint
+
+//PvP Arenas =================================
+pvp_y_room	mapflag	nosave	SavePoint
+pvp_y_1-1	mapflag	nosave	SavePoint
+pvp_y_1-2	mapflag	nosave	SavePoint
+pvp_y_1-3	mapflag	nosave	SavePoint
+pvp_y_1-4	mapflag	nosave	SavePoint
+pvp_y_1-5	mapflag	nosave	SavePoint
+pvp_y_2-1	mapflag	nosave	SavePoint
+pvp_y_2-2	mapflag	nosave	SavePoint
+pvp_y_2-3	mapflag	nosave	SavePoint
+pvp_y_2-4	mapflag	nosave	SavePoint
+pvp_y_2-5	mapflag	nosave	SavePoint
+pvp_y_3-1	mapflag	nosave	SavePoint
+pvp_y_3-2	mapflag	nosave	SavePoint
+pvp_y_3-3	mapflag	nosave	SavePoint
+pvp_y_3-4	mapflag	nosave	SavePoint
+pvp_y_3-5	mapflag	nosave	SavePoint
+pvp_y_4-1	mapflag	nosave	SavePoint
+pvp_y_4-2	mapflag	nosave	SavePoint
+pvp_y_4-3	mapflag	nosave	SavePoint
+pvp_y_4-4	mapflag	nosave	SavePoint
+pvp_y_4-5	mapflag	nosave	SavePoint
+pvp_y_5-1	mapflag	nosave	SavePoint
+pvp_y_5-2	mapflag	nosave	SavePoint
+pvp_y_5-3	mapflag	nosave	SavePoint
+pvp_y_5-4	mapflag	nosave	SavePoint
+pvp_y_5-5	mapflag	nosave	SavePoint
+pvp_y_6-1	mapflag	nosave	SavePoint
+pvp_y_6-2	mapflag	nosave	SavePoint
+pvp_y_6-3	mapflag	nosave	SavePoint
+pvp_y_6-4	mapflag	nosave	SavePoint
+pvp_y_6-5	mapflag	nosave	SavePoint
+pvp_y_7-1	mapflag	nosave	SavePoint
+pvp_y_7-2	mapflag	nosave	SavePoint
+pvp_y_7-3	mapflag	nosave	SavePoint
+pvp_y_7-4	mapflag	nosave	SavePoint
+pvp_y_7-5	mapflag	nosave	SavePoint
+pvp_y_8-1	mapflag	nosave	SavePoint
+pvp_y_8-2	mapflag	nosave	SavePoint
+pvp_y_8-3	mapflag	nosave	SavePoint
+pvp_y_8-4	mapflag	nosave	SavePoint
+pvp_y_8-5	mapflag	nosave	SavePoint
+pvp_n_room	mapflag	nosave	SavePoint
+pvp_n_1-1	mapflag	nosave	SavePoint
+pvp_n_1-2	mapflag	nosave	SavePoint
+pvp_n_1-3	mapflag	nosave	SavePoint
+pvp_n_1-4	mapflag	nosave	SavePoint
+pvp_n_1-5	mapflag	nosave	SavePoint
+pvp_n_2-1	mapflag	nosave	SavePoint
+pvp_n_2-2	mapflag	nosave	SavePoint
+pvp_n_2-3	mapflag	nosave	SavePoint
+pvp_n_2-4	mapflag	nosave	SavePoint
+pvp_n_2-5	mapflag	nosave	SavePoint
+pvp_n_3-1	mapflag	nosave	SavePoint
+pvp_n_3-2	mapflag	nosave	SavePoint
+pvp_n_3-3	mapflag	nosave	SavePoint
+pvp_n_3-4	mapflag	nosave	SavePoint
+pvp_n_3-5	mapflag	nosave	SavePoint
+pvp_n_4-1	mapflag	nosave	SavePoint
+pvp_n_4-2	mapflag	nosave	SavePoint
+pvp_n_4-3	mapflag	nosave	SavePoint
+pvp_n_4-4	mapflag	nosave	SavePoint
+pvp_n_4-5	mapflag	nosave	SavePoint
+pvp_n_5-1	mapflag	nosave	SavePoint
+pvp_n_5-2	mapflag	nosave	SavePoint
+pvp_n_5-3	mapflag	nosave	SavePoint
+pvp_n_5-4	mapflag	nosave	SavePoint
+pvp_n_5-5	mapflag	nosave	SavePoint
+pvp_n_6-1	mapflag	nosave	SavePoint
+pvp_n_6-2	mapflag	nosave	SavePoint
+pvp_n_6-3	mapflag	nosave	SavePoint
+pvp_n_6-4	mapflag	nosave	SavePoint
+pvp_n_6-5	mapflag	nosave	SavePoint
+pvp_n_7-1	mapflag	nosave	SavePoint
+pvp_n_7-2	mapflag	nosave	SavePoint
+pvp_n_7-3	mapflag	nosave	SavePoint
+pvp_n_7-4	mapflag	nosave	SavePoint
+pvp_n_7-5	mapflag	nosave	SavePoint
+pvp_n_8-1	mapflag	nosave	SavePoint
+pvp_n_8-2	mapflag	nosave	SavePoint
+pvp_n_8-3	mapflag	nosave	SavePoint
+pvp_n_8-4	mapflag	nosave	SavePoint
+pvp_n_8-5	mapflag	nosave	SavePoint
+pvp_2vs2	mapflag	nosave	SavePoint
+
+//WoE Castles =================================
+aldeg_cas01	mapflag	nosave	SavePoint
+aldeg_cas02	mapflag	nosave	SavePoint
+aldeg_cas03	mapflag	nosave	SavePoint
+aldeg_cas04	mapflag	nosave	SavePoint
+aldeg_cas05	mapflag	nosave	SavePoint
+gefg_cas01	mapflag	nosave	SavePoint
+gefg_cas02	mapflag	nosave	SavePoint
+gefg_cas03	mapflag	nosave	SavePoint
+gefg_cas04	mapflag	nosave	SavePoint
+gefg_cas05	mapflag	nosave	SavePoint
+payg_cas01	mapflag	nosave	SavePoint
+payg_cas02	mapflag	nosave	SavePoint
+payg_cas03	mapflag	nosave	SavePoint
+payg_cas04	mapflag	nosave	SavePoint
+payg_cas05	mapflag	nosave	SavePoint
+prtg_cas01	mapflag	nosave	SavePoint
+prtg_cas02	mapflag	nosave	SavePoint
+prtg_cas03	mapflag	nosave	SavePoint
+prtg_cas04	mapflag	nosave	SavePoint
+prtg_cas05	mapflag	nosave	SavePoint
+schg_cas01	mapflag	nosave	SavePoint
+schg_cas02	mapflag	nosave	SavePoint
+schg_cas03	mapflag	nosave	SavePoint
+schg_cas04	mapflag	nosave	SavePoint
+schg_cas05	mapflag	nosave	SavePoint
+arug_cas01	mapflag	nosave	SavePoint
+arug_cas02	mapflag	nosave	SavePoint
+arug_cas03	mapflag	nosave	SavePoint
+arug_cas04	mapflag	nosave	SavePoint
+arug_cas05	mapflag	nosave	SavePoint
+nguild_alde	mapflag	nosave	SavePoint
+nguild_gef	mapflag	nosave	SavePoint
+nguild_pay	mapflag	nosave	SavePoint
+nguild_prt	mapflag	nosave	SavePoint
+
+//Guild Dungeons ==============================
+gld_dun01	mapflag	nosave	SavePoint
+gld_dun02	mapflag	nosave	SavePoint
+gld_dun03	mapflag	nosave	SavePoint
+gld_dun04	mapflag	nosave	SavePoint
+
+//Normal Maps =================================
+yggdrasil01	mapflag	nosave	SavePoint
+thana_boss	mapflag	nosave	SavePoint
+
+//Aldebaran Turbo Track
+turbo_n_1	mapflag	nosave	SavePoint
+turbo_n_4	mapflag	nosave	SavePoint
+turbo_n_8	mapflag	nosave	SavePoint
+turbo_n_16	mapflag	nosave	SavePoint
+turbo_e_4	mapflag	nosave	SavePoint
+turbo_e_8	mapflag	nosave	SavePoint
+turbo_e_16	mapflag	nosave	SavePoint
+
+//Monster Races ================
+p_track01	mapflag	nosave	SavePoint
+p_track02	mapflag	nosave	SavePoint
+
+// Poring War ====================
+poring_w01	mapflag	nosave	SavePoint
+poring_w02	mapflag	nosave	SavePoint
+
+//Vision of Okolnir ===========================
+que_qsch01	mapflag	nosave	SavePoint
+que_qsch02	mapflag	nosave	SavePoint
+que_qsch03	mapflag	nosave	SavePoint
+que_qsch04	mapflag	nosave	SavePoint
+que_qsch05	mapflag	nosave	SavePoint
+que_qaru01	mapflag	nosave	SavePoint
+que_qaru02	mapflag	nosave	SavePoint
+que_qaru03	mapflag	nosave	SavePoint
+que_qaru04	mapflag	nosave	SavePoint
+que_qaru05	mapflag	nosave	SavePoint
+
+// Sealed Shrine ==================
+1@cata	mapflag	nosave	SavePoint
+2@cata	mapflag	nosave	SavePoint
+
+// Endless Tower ==================
+e_tower	mapflag	nosave	SavePoint
+1@tower	mapflag	nosave	SavePoint
+2@tower	mapflag	nosave	SavePoint
+3@tower	mapflag	nosave	SavePoint
+4@tower	mapflag	nosave	SavePoint
+5@tower	mapflag	nosave	SavePoint
+6@tower	mapflag	nosave	SavePoint
+
+// Battle Grounds =================
+bat_c01	mapflag	nosave	SavePoint
+bat_c02	mapflag	nosave	SavePoint
+bat_c03	mapflag	nosave	SavePoint
+bat_b01	mapflag	nosave	SavePoint
+bat_b02	mapflag	nosave	SavePoint
+bat_a01	mapflag	nosave	SavePoint
+bat_a02	mapflag	nosave	SavePoint
+
+// Episode 13 =====================
+moc_fild22b	mapflag	nosave	SavePoint
+que_dan01	mapflag	nosave	SavePoint
+que_dan02	mapflag	nosave	SavePoint
+schg_que01	mapflag	nosave	SavePoint
+schg_dun01	mapflag	nosave	SavePoint
+arug_que01	mapflag	nosave	SavePoint
+arug_dun01	mapflag	nosave	SavePoint
+
+// Orc's Memory ===================
+1@orcs	mapflag	nosave	SavePoint
+2@orcs	mapflag	nosave	SavePoint
+
+// Nidhoggr's Instance ============
+1@nyd	mapflag	nosave	SavePoint
+2@nyd	mapflag	nosave	SavePoint
+
+evt_bomb	mapflag	nosave	SavePoint
+//evt_zombie	mapflag	nosave	SavePoint

@@ -1,0 +1,63 @@
+//===== rAthena Script =======================================
+//= Izlude Dungeon Renewal Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//= Nana (1.1)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Bibilyn Island & Undersea Cave
+//===== Additional Comments: =================================
+//= 1.2 Moved common warps to base path. [Euphy]
+//= 1.3 Added Undersea Tunnel 6th floor warper.
+//============================================================
+
+// Undersea Tunnel Warper :: iz_dun05
+//============================================================
+iz_dun04,130,234,5	script	Gatekeeper#iz_dun	413,{
+	mes "[Gatekeeper]";
+	mes "Halt!";
+	mes "What brings you here, Adventurer?";
+	mes "We've discovered a new floor of this underwater city.";
+	next;
+	mes "[Gatekeeper]";
+	mes "Do you think you're up to the challenge?";
+	mes "The monsters here are between levels 110 and 124.";
+	mes "And you must beware of the Kraken!";
+	next;
+	switch(select("Release the Kraken!:I'll stay here.")) {
+	case 1:
+		mes "[Gatekeeper]";
+		mes "Be cautious and good luck.";
+		mes "If you see the Kraken be sure you have your friends to help or do what we do and run.";
+		close2;
+		warp "iz_dun05",141,187;
+		end;
+	case 2:
+		mes "[Gatekeeper]";
+		mes "It's always best to be prepared before exploring a new area.";
+		mes "Come back when you're ready to go.";
+		close;
+	}
+}
+
+iz_dun05,142,190,5	script	Guard#iz_dun	413,{
+	mes "[Gatekeeper]";
+	mes "So I guess you want to go back to the fifth floor?";
+	next;
+	switch(select("Yes!:No, I'll stay.")) {
+	case 1:
+		mes "[Gatekeeper]";
+		mes "Be safe, adventurer.";
+		close2;
+		warp "iz_dun04",129,232;
+		end;
+	case 2:
+		mes "[Gatekeeper]";
+		mes "You're not going?";
+		mes "You're braver than I thought.";
+		close;
+	}
+}

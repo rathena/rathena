@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Turbo Track
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Renewal duplicates.
+//===== Additional Comments: =================================
+//= 1.0 Split Mount Manager NPC.
+//============================================================
+
+alde_gld,181,199,5	duplicate(MountManager_turbo)	Mount Manager	845

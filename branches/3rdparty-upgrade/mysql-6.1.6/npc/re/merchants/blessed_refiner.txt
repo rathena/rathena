@@ -1,0 +1,175 @@
+//===== rAthena Script ======================================= 
+//= Blessed Refiner
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Refiners that use Blessed ores to refine equipment.
+//= Upon failure, the equipment is not destroyed. The success
+//= rate is identical to that for Enriched ores.
+//= - "Blacksmith Dister" only refines from +6~12.
+//= NOTE: This NPC is currently disabled on official servers.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Main NPC :: new_smelting612
+//============================================================
+-	script	::BlacksmithDister	-1,{
+	disable_items;
+	mes "[Blacksmith Dister]";
+	mes "In this highly competitive society, we must be different in order to survive!";
+	mes "I only refine equipment at the +6 ~ 12 levels.";
+	next;
+	mes "[Blacksmith Dister]";
+	mes "I will need ^ff9999Blessed Weapon Ore^000000 for weapons, and ^ff9999Blessed Armor Ore^000000 for armors.";
+	mes "Failed refines ^FF0000will not break or reduce the refine level^000000.";
+	next;
+	mes "[Blacksmith Dister]";
+	mes "How about it? Do you want to refine?";
+	next;
+	setarray .@position$[1],"Head","Body","Left Hand","Right Hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	set .@menu$,"";
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$+((getequipisequiped(.@i))?getequipname(.@i):.@position$[.@i]+"-[Unequipped]")+":";
+	set .@part, select(.@menu$);
+	if (!getequipisequiped(.@part)) {
+		mes "[Blacksmith Dister]";
+		switch(.@part) {
+		case 1:
+			mes "I'm a blacksmith, not a hairstylist.";
+			break;
+		case 2:
+			mes "With my hammer, I will make you a star of the sky.";
+			break;
+		case 3:
+		case 4:
+			mes "Making artificial hands is not my specialty.";
+			break;
+		case 5:
+			mes "Bring out the item so I can refine it!";
+			break;
+		case 6:
+			mes "Where is this weird smell coming from?";
+			break;
+		case 7:
+		case 8:
+			mes "Where is the accessory?";
+			break;
+		case 9:
+			mes "What do you want me to refine?";
+			break;
+		case 10:
+			mes "Huh? What do you want me to do?";
+			break;
+		}
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		mes "[Blacksmith Dister]";
+		mes "This item cannot be refined.";
+		close;
+	}
+	set .@equip_refine, getequiprefinerycnt(.@part);
+	if (.@equip_refine < 6 || .@equip_refine > 12) {
+		mes "[Blacksmith Dister]";
+		mes "This equipment has refined to "+.@equip_refine+". I only handle items with refine levels from +6 to +12!";
+		close;
+	}
+	set .@equip_lv, getequipweaponlv(.@part);
+	switch(.@equip_lv) {
+	default:
+	case 0:
+		set .@price,20000;
+		set .@material,6439; //Unbreakable_Def
+		set .@type$,"Armor";
+		break;
+	case 1:
+		set .@price,1000;
+		set .@material,6438; //Unbreakable_Weap
+		set .@type$,"Weapon";
+		break;
+	case 2:
+		set .@price,2000;
+		set .@material,6438; //Unbreakable_Weap
+		set .@type$,"Weapon";
+		break;
+	case 3:
+		set .@price,20000;
+		set .@material,6438; //Unbreakable_Weap
+		set .@type$,"Weapon";
+		break;
+	case 4:
+		set .@price,40000;
+		set .@material,6438; //Unbreakable_Weap
+		set .@type$,"Weapon";
+		break;
+	}
+	set .@ore$,"^ff9999Blessed "+.@type$+" Ore^000000";
+	mes "[Blacksmith Dister]";
+	mes "This "+.@type$+" has been refined to "+.@equip_refine+". To refine it, I need "+.@ore$+" and a "+callfunc("F_InsertComma",.@price)+" zeny refining fee.";
+	mes "Do you want to proceed?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[Blacksmith Dister]";
+		mes "I am busy, don't joke with me!";
+		close;
+	}
+	if (getequippercentrefinery(.@part) < 100) {
+		mes "[Blacksmith Dister]";
+		mes "This "+.@type$+" has been refined many times. Although it will not disappear upon failure, the "+.@ore$+" will disappear!";
+		next;
+		mes "[Blacksmith Dister]";
+		mes "Of course, the refining fee will not be returned! Do you want to continue?";
+		next;
+		if(select("Yes:No") == 2) {
+			mes "[Blacksmith Dister]";
+			mes "Good. I'd be sad if it failed, too.";
+			close;
+		}
+	}
+	if (countitem(.@material) == 0 || Zeny < .@price) {
+		mes "[Blacksmith Dister]";
+		mes "Materials insufficient.";
+		mes "To refine "+((.@equip_lv)?"a level "+.@equip_lv+" weapon":"armor")+", I need "+.@ore$+" and a "+callfunc("F_InsertComma",.@price)+" zeny refining fee.";
+		close;
+	}
+	delitem .@material,1;
+	set Zeny, Zeny-.@price;
+	mes "[Blacksmith Dister]";
+	mes "Tac! Tac! Tac!";
+	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+		specialeffect EF_BLESSING;
+		successrefitem .@part;
+		next;
+		mes "[Blacksmith Dister]";
+		mes "Hahahahahaha!!!";
+		next;
+		mes "[Blacksmith Dister]";
+		mes "Refine was a huge success~ Hahaha!";
+		close;
+	}
+	specialeffect EF_CURSEATTACK;
+	specialeffect2 EF_SUI_EXPLOSION;
+	next;
+	emotion (!rand(5))?e_ag:e_omg;
+	mes "[Blacksmith Dister]";
+	mes "Oh my goodness!!!!";
+	next;
+	mes "[Blacksmith Dister]";
+	mes "Oh! Although it was blessed by "+.@ore$+" to retain the equipment...";
+	next;
+	mes "[Blacksmith Dister]";
+	mes "My mood is worse when I fail!!";
+	close;
+}
+prt_in,52,56,3	duplicate(BlacksmithDister)	Blacksmith Dister#prt	826
+payon,148,172,3	duplicate(BlacksmithDister)	Blacksmith Dister#pay	826
+alberta_in,20,56,3	duplicate(BlacksmithDister)	Blacksmith Dister#alb	826
+yuno_in01,175,18,3	duplicate(BlacksmithDister)	Blacksmith Dister#yuno	826
+ein_in01,26,82,3	duplicate(BlacksmithDister)	Blacksmith Dister#ein	826
+lhz_in02,280,15,3	duplicate(BlacksmithDister)	Blacksmith Dister#lhz	826

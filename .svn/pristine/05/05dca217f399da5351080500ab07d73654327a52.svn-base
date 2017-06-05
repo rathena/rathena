@@ -1,0 +1,126 @@
+//===== rAthena Script ======================================= 
+//= Renewal Swordman Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Swordman Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+izlude_in,74,172,4	script	Swordman#swd	119,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin)) {
+			mes "[Swordman]";
+			mes "It...";
+			mes "Can't be...";
+			mes "You've been reborn, haven't you?";
+			next;
+			mes "[Swordman]";
+			mes "I see you're retreading the path of the Swordman! Once you've gotten used to brandishing a sword, you can never go back!!";
+			next;
+			if (getskilllv("NV_BASIC") < 9) {
+				mes "[Swordman]";
+				mes "Hmm? Ah, you must first master the Basic Skills before you are ready to become a Swordman.";
+				next;
+				mes "[Swordman]";
+				mes "Come back to me when you have finished learning the Basic Novice Skills.";
+				close;
+			}
+			mes "[Swordman]";
+			mes "Excellent! Let me promote you to a Swordman right away!";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Swordman_High;
+			skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+			skill "SM_FATALBLOW",1,SKILL_PERM;
+			skill "SM_AUTOBERSERK",1,SKILL_PERM;
+			mes "[Swordman]";
+			mes "Hmm... You look like a well-experienced Swordman. Still, I'm sure that you must train to improve your skills and gain strength!";
+			close;
+		}else{
+			mes "[Swordman]";
+			mes "Hm...?";
+			mes "You're a reborn";
+			mes "warrior, aren't you?";
+			next;
+			mes "[Swordman]";
+			mes "Hmmm...";
+			mes "It seems that being";
+			mes "a Swordman is not part";
+			mes "of your destiny. I'm sorry,";
+			mes "but it seems there is nothing";
+			mes "I can do for you.";
+			close;
+		}
+	}
+	mes "[Swordman Guildsman]";
+	mes "This is the Swordman Guild.";
+	mes "Why are you here?";
+	next;
+	switch(select("Tell me about being a Swordman.:I want to be a Swordman.:Nothing.")) {
+	case 1:
+		mes "[Swordman Guildsman]";
+		mes "So you wish to know more about the mighty Swordman? Okay!";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "The most distinctive feature of the Swordman is that the Swordman can show us his/her real abilities in close combat.";
+		mes "There are three reasons!";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "First, Swordman has higher HP than other jobs.";
+		mes "Second, except for Bows and Rods, Swordman can use all other weapons so they can fight at their optimal ability.";
+		mes "And third, most of the skills of the Swordman give powerful physical attacks.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "Though I gave you a simple explanation, I believe you understand the core meaning of what it is to be a Swordman.";
+		mes "In my opinion, Swordman is the best job ever!";
+		close;
+	case 2:
+		mes "[Swordman Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Swordman) {
+				mes "You are already an excellent Swordman, aren't you?";
+				mes "Just devote yourself to be a great Swordman.";
+			}else{
+				mes "You already have one of the other jobs, don't you?";
+				mes "You've gone too far with that joke.";
+			}
+			close;
+		}else{
+			if (getskilllv("NV_BASIC") < 9) {
+				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4A4AFFJob Level 10^000000.";
+				mes "and ^4A4AFFBasic Skill Level 9^000000.";
+				next;
+				mes "[Swordman Guildsman]";
+				mes "Want to be a Swordman without having the minimum requirement?";
+				mes "Do you think being a Swordman is that easy?";
+				close;
+			}
+			mes "Hmm, both your Job Level and Basic Skill Level check out.";
+			mes "Good. Do you want to be a Swordman right away?";
+			next;
+			if(select("Yes, I do.:I'll consider it again.") == 2) {
+				mes "[Swordman Guildsman]";
+				mes "Yeah. Prudent decision is needed for choosing a job.";
+				mes "But I feel sorry... that you consider it again after overcoming all the hardships....";
+				close;
+			}
+			mes "[Swordman Guildsman]";
+			mes "Congratulations! From now on, you are going to live a Swordman's life!";
+			mes "Let's do it right now!";
+			next;
+			mes "[Swordman Guildsman]";
+			mes "Congratulations again for being a Swordman and I hope that you participate in many activities for the revival of our guild.";
+			callfunc "Job_Change",Job_Swordman;
+			getitem 13415,1; // N_Falchion
+			close;
+		}
+	case 3:
+		close;
+	}
+}

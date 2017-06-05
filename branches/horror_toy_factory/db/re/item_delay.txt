@@ -1,0 +1,94 @@
+// Item Delay Database
+//
+// Structure of Database:
+// <ItemID>,<Delay>{,<SC_GroupID>}
+//
+// <ItemID>
+//     ID of item that will has reuse delay.
+// <Delay>
+//     Re-use delay in milliseconds.
+// <SC_GroupID>
+//     SC (status change) group for the item.
+//     Example for SC_REUSE_LIMIT_MTF
+//         12658,10000,SC_REUSE_LIMIT_MTF // Transformation Scroll(Deviruchi)
+//         12659,10000,SC_REUSE_LIMIT_MTF // Transformation Scroll(Raydric)
+//     -> 12658 has reuse delay for 10 seconds, and also,
+//        12659 cannot be used when this delay is active.
+//     Since this is optional, default is -1 will ignores the
+//     delay group and the delay will be stored in character's
+//     data that has limit set in src/map/itemdb.h as MAX_ITEMDELAYS.
+
+// SC_REUSE_REFRESH
+12725,120000,SC_REUSE_REFRESH	//Runstone_Nosiege
+
+// SC_REUSE_LIMIT_A
+14538,300000,SC_REUSE_LIMIT_A	//Glass_Of_Illusion
+
+// SC_REUSE_LIMIT_B
+12596,180000,SC_REUSE_LIMIT_B	//Magic_Candy
+14586,180000,SC_REUSE_LIMIT_B	//Spark_Candy
+
+// SC_REUSE_LIMIT_C
+12208,60000,SC_REUSE_LIMIT_C	//Battle_Manual
+
+// SC_REUSE_LIMIT_D
+12210,60000,SC_REUSE_LIMIT_D	//Bubble_Gum
+
+// SC_REUSE_LIMIT_E
+11522,1000,SC_REUSE_LIMIT_E	//Red_Raffle_Sap
+11523,2000,SC_REUSE_LIMIT_E	//Yellow_Raffle_Sap
+11524,3000,SC_REUSE_LIMIT_E	//White_Raffle_Sap
+
+// SC_REUSE_LIMIT_F
+607,5000,SC_REUSE_LIMIT_F	//Yggdrasil_Berry
+
+// SC_REUSE_LIMIT_G
+608,3000,SC_REUSE_LIMIT_G	//Yggdrasil_Seed
+22559,3000,SC_REUSE_LIMIT_G	//Mock_Strawberry
+
+// SC_REUSE_LIMIT_H
+11525,5000,SC_REUSE_LIMIT_H	//Mora_Hip_Tea
+
+// SC_REUSE_LIMIT_MTF
+12658,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Deviruchi)
+12659,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Raydric)
+12660,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Mavka)
+12661,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Marduk)
+12662,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Banshee)
+12663,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Poring)
+12664,10000,SC_REUSE_LIMIT_MTF	//Transformation Scroll(Golem)
+
+// SC_REUSE_LIMIT_ASPD_POTION
+12684,900000,SC_REUSE_LIMIT_ASPD_POTION	//ASPD_Potion
+
+// SC_REUSE_MILLENNIUMSHIELD
+12727,60000,SC_REUSE_MILLENNIUMSHIELD	//Runstone_Verkana
+
+// SC_REUSE_CRUSHSTRIKE
+12726,30000,SC_REUSE_CRUSHSTRIKE	//Runstone_Rhydo
+
+// SC_REUSE_STORMBLAST
+12732,1000,SC_REUSE_STORMBLAST	//Runstone_Pertz
+
+// SC_ALL_RIDING_REUSE_LIMIT
+12622,3000,SC_ALL_RIDING_REUSE_LIMIT	//Boarding_Halter
+
+// SC_REUSE_LIMIT_ECL
+12812,5000,SC_REUSE_LIMIT_ECL	//Snow_Flip
+12813,5000,SC_REUSE_LIMIT_ECL	//Peony_Mommy
+12814,5000,SC_REUSE_LIMIT_ECL	//Slapping_Herb
+12815,5000,SC_REUSE_LIMIT_ECL	//Yggdrasil_Dust
+
+// SC_REUSE_LIMIT_RECALL
+12968,300000,SC_REUSE_LIMIT_RECALL	//Emergency_Scroll1
+12969,300000,SC_REUSE_LIMIT_RECALL	//Emergency_Scroll2
+12970,300000,SC_REUSE_LIMIT_RECALL	//Emergency_Scroll3
+
+// Misc
+//12202,60000	//Str_Dish10_
+//12203,60000	//Agi_Dish10_
+//12204,60000	//Int_Dish10_
+//12205,60000	//Dex_Dish10_
+//12206,60000	//Luk_Dish10_
+//12207,60000	//Vit_Dish10_
+22508,1200000	//Para_Team_Mark_

@@ -1,0 +1,40 @@
+//===== rAthena Script =======================================
+//= Einbech Mine Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 spawn N and spawn delays aren't yet correct, so I set
+//=     respawn delays quite big for now [Lupus]
+//= 1.1 Fixed monsters spawn places
+//= 1.2 Update monster spawn numbers according to info on emperium.org [MasterOfMuppets]
+//= 1.3 Official kRO 10.1 spawns [Playtester]
+//= 1.4 More accurate spawns [Playtester]
+//= 1.5 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// ein_dun01 - Mine Dungeon F1
+//==================================================
+ein_dun01,0,0,0,0	monster	Pitman	1616,70,0,0,0
+ein_dun01,0,0,0,0	monster	Noxious	1620,30,300000,0,0
+ein_dun01,0,0,0,0	monster	Porcellio	1619,30,0,0,0
+ein_dun01,0,0,0,0	monster	Venomous	1621,10,300000,0,0
+ein_dun01,0,0,0,0	monster	Old Stove	1617,1,1800000,600000,0
+ein_dun01,0,0,0,0	monster	Ungoliant	1618,1,3600000,3000000,0
+
+//==================================================
+// ein_dun02 - Mine Dungeon F2
+//==================================================
+ein_dun02,0,0,0,0	monster	Obsidian	1615,10,0,0,0
+ein_dun02,0,0,0,0	monster	Mineral	1614,15,0,0,0
+ein_dun02,75,151,60,133	monster	Obsidian	1615,30,300000,0,0
+ein_dun02,230,155,63,140	monster	Mineral	1614,35,300000,0,0
+ein_dun02,0,0,0,0	monster	Teddy Bear	1622,10,0,0,0
+ein_dun02,155,230,140,55	monster	Teddy Bear	1622,20,480000,0,0
+ein_dun02,0,0,0,0	monster	Old Stove	1617,10,0,0,0
+ein_dun02,154,80,134,55	monster	Old Stove	1617,20,480000,0,0
+ein_dun02,0,0,0,0	boss_monster	RSX-0806	1623,1,7500000,600000,0

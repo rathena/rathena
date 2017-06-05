@@ -1,0 +1,106 @@
+//===== rAthena Script =======================================
+//= Imitation of Dumpling Festival
+//===== By ===================================================
+//= Massdriller
+//===== Version ==============================================
+//= 1.01
+//===== Compatible With ======================================
+//= rAthena Project; 0.52+
+//===== Description ==========================================
+//= A complete redering of the Dumpling Festival.
+//===== Comments =============================================
+//= Ver 1.0- Duplicate of MRO's Dumpling Event
+//= 1.01 fixed bugs [Lupus]
+//============================================================
+  
+payon,93,81,4	script	Exorcist Master Fahae	834,{
+
+	mes "[Exorcist Master Fahae]";
+	mes "Greetings young warrior, I'm the Exorcist Master Fahae.";
+	mes "I have been tracking the elusive Bacsojin for some time.";
+	next;
+	mes "[Exorcist Master Fahae]";
+	mes "I feel it is time I let another warrior try to complete";
+	mes "my quest. I have some items to assist you in my quest.";
+	next;
+	menu "I wish to buy",-, "No thanks",M_FIN;
+  
+	mes "[Exorcist Master Fahae]";
+	mes "I have 2 items which might become useful to you.";
+	next;
+	menu "Realgar Wine",-, "Exorcize Herb",M_HERB;
+  
+	mes "[Exorcist Master Fahae]";
+	mes "How many do you require?";
+	mes "You may only buy 5 at one time.";
+	mes "Each costs 20000z.";
+	mes "(Type in 0 to cancel)";
+	next;
+	input @input;
+	if(@input==0) close;
+	if(@input>5) goto L_SORRY;
+	if(Zeny< @input*20000) goto L_NOZENY;
+	set Zeny,Zeny-20000*@input;
+	getitem 682,@input;
+	mes "[Exorcist Master Fahae]";
+	mes "Here you go, I hope you may succeed in my quest.";
+	close;
+  
+L_SORRY:
+	mes "[Exorcist Master Fahae]";
+	mes "You must not be stingy, it is the path of God to be honest.";
+	close;
+  
+M_FIN:
+	mes "[Exorcist Master Fahae]";
+	mes "The path of fully venquishing evil is far, help me in the way of God.";
+	close;
+  
+M_HERB:
+	mes "[Exorcist Master Fahae]";
+	mes "How many do you require?";
+	mes "You may only buy 5 at one time.";
+	mes "Each costs 10000z.";
+	mes "(Type in 0 to cancel)";
+	next;
+	input @input;
+	if(@input==0) close;
+	if(@input>5) goto L_SORRY;
+	if(Zeny< @input*10000) goto L_NOZENY;
+	set Zeny,Zeny-10000*@input;
+	getitem 683,@input;
+	mes "[Exorcist Master Fahae]";
+	mes "Here you go, I hope you may succeed in my quest.";
+	close;
+
+L_NOZENY:
+	mes "[Exorcist Master Fahae]";
+	mes "Money doesn't bring joy to everyone, but we need it to support the temple and myself. Please, try to kill some monsters and take their drops.";
+	close;
+}
+  
+// Monsters
+//============================================================
+gef_fild00,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+gef_fild07,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+gef_fild04,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+gef_fild00,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+prt_fild06,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+prt_fild01,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+prt_fild05,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+prt_fild08,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild04,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+moc_fild02,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild01,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild07,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+moc_fild03,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild06,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild05,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild02,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+pay_fild09,0,0,0,0	monster	Dumpling	1520,20,60000,66000
+
+moc_fild03,0,0,0,0	monster	Bacsojin	1518,1,60000,66000
+
+moc_fild03,0,0,0,0	monster	Chung E	1519,1,60000,66000
+moc_fild13,0,0,0,0	monster	Chung E	1519,1,60000,66000
+pay_fild01,0,0,0,0	monster	Chung E	1519,1,60000,66000

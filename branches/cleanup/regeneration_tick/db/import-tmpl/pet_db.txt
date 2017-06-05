@@ -1,0 +1,60 @@
+// Pet Additional Database
+//
+// Structure of Database:
+// MobID,Name,JName,LureID,EggID,EquipID,FoodID,Fullness,HungryDelay,R_Hungry,R_Full,Intimate,Die,Capture,Speed,S_Performance,talk_convert_class,attack_rate,defence_attack_rate,change_target_rate,pet_script,loyal_script
+//
+// 01. MobID			Monster ID of the pet.
+// 02. Name			Name of the monster as defined in the database.
+// 03. JName			The display name of the monster when hatched.
+// 04. LureID			Pet Tame Item ID.
+// 05. EggID			Pet Egg ID.
+// 06. EquipID			Pet Accessory ID.
+// 07. FoodID			Pet Food ID.
+// 08. Fullness			The amount Hunger is decreased every [HungryDelay] seconds.
+// 09. HungryDelay		The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
+// 10. R_Hungry			Amount of Intimacy that is increased when fed.
+// 11. R_Full			Amount of Intimacy that is decreased when over-fed.
+// 12. Intimate			Amount of Intimacy the pet starts with.
+// 13. Die			Amount of Intimacy that is decreased when the pet owner dies.
+// 14. Capture			Capture succes rate (10000 = 100%)
+// 15. Speed			Pet's walk speed. (Defaul: 150)
+// 16. S_Performance		Special Performance. (Yes = 1, No = 0)
+// 17. talk_convert_class	Disables pet talk (instead of talking they emote  with /!.)
+// 18. attack_rate			Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
+// 19. defence_attack_rate	Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
+// 20. change_target_rate	Rate of which the pet will change its attack target.
+// 21. pet_script		Script to execute when the pet is hatched.
+// 22. loyal_script		Script to execute when the pet is hatched (requires at least pet_equip_min_friendly intimacy, independent of pet_script).
+//NOTE: The max value (100%) of attack_rate, defense_rate & change_target_rate is 10000.
+
+//In theory you can use any valid script, but it is run only once upon pet
+//loading, so it is recommended you use the specific pet scripts:
+
+//petskillattack skillid, skilllv, rate, bonusrate
+//Skill attack that triggers while the pet is attacking. Rate is the base
+//chance of execution per attack. Bonusrate is an additional success rate when
+//intimacy reaches max.
+
+//petskillattack2 skillid, damage, hits, rate, bonusrate
+//Same as petskillattack, but the damage and number of hits is fixed
+//the damage specified is total, not per hit.
+
+//petskillsupport skillid, skilllv, delay, hp%, sp%
+//Casts a support skill when the health levels are below the specified hp% and
+//sp%. Delay is the minimum time in seconds before the skill can be cast again
+
+//petheal amount, delay, hp%, sp%
+//Similar to petskillsupport, but the skill is fixed to heal (28) and the
+//heal-amount is fixed to the value given.
+
+//petrecovery type, delay: Cures the "type" status effect after "delay" seconds
+
+//petskillbonus type, value, duration, delay
+//Gives bonus stats. Type is the stat to increase (bStr, bLuk), value is the
+//amount by which it is increased, duration signals how long the bonus lasts
+//delay is the time elapsed after the bonus ends and before it starts again.
+
+//A single pet can have petloot, petskillbonus, petskillattack (or
+//petskillattack2) and petskillsupport (or petheal) at the same time,
+//but only one of each.
+

@@ -1,0 +1,875 @@
+//===== rAthena Script ======================================= 
+//= God Item Quest - Item Creation
+//===== By: ================================================== 
+//= SinSloth
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Craft god items after the four seals are broken.
+//===== Additional Comments: =================================
+//= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+//= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.2 Corrected several incorrect item IDs. [L0ne_W0lf]
+//= 1.3 Renewal script update. [Euphy]
+//=     Added GM management function.
+//============================================================
+
+gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
+	mes "[Dwarf Grunburti]";
+	mes "A human?!";
+	mes "This land is full";
+	mes "of your kind. What";
+	mes "brings you here?";
+	next;
+	mes "[Dwarf Grunburti]";
+	mes "Living in Midgard and away from";
+	mes "my home town is painful enough, let alone facing a whiny human. Leave me alone!";
+	next;
+	switch(select("Ask him about Dwarves.:Ask him what he is doing.:Request weapon creation.:Cancel.")) {
+	case 1:
+		mes "[Dwarf Grunburti]";
+		mes "What's to know about Dwarves?";
+		mes "We're the toughest race. After all, we can live anywhere, no matter";
+		mes "how harsh the environment may be.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "I doubt your feeble mind can comprehend the how unendurable";
+		mes "it must be for you to live in my homeland, but you can try.";
+		mes "Try to imagine.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Most of the knowledge and skills that you humans are so proud of were probably handed down from Dwarves.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "This is especially true in the";
+		mes "case of smithing. Even the tools and weapons of the gods were made by my ancestors. You know that?";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "We have the greatest knowlege and skills, but have accepted our fate to live in the cold, barren lands of the Giants.";
+		close;
+	case 2:
+		mes "[Dwarf Grunburti]";
+		mes "Did you just ask what I am doing here? Mwahahaha! Waiting for any humans stupid enough to come";
+		mes "here so I can kick their ass!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Oh don't worry. I'd only humiliate myself by fighting with a weakling like you. Humans are so fragile, but they stubbornly cling to their arrogance and fight amongst";
+		mes "each other.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "As a race, your people are just hopeless. I wouldn't even share the same continent with a human! But alas, I have no choice.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "The path to my hometown";
+		mes "disappeared after the war 1,000 years ago. Somehow, I can no longer find the way through the Yggdrasil Tree that will take me back...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "I'm stuck here in Rune-Midgard.";
+		mes "At least I was fortunate enough to find this cave. We Dwarves are most cozy living underground, after all.";
+		close;
+	case 3:
+		set .@GID,getcharid(2);
+		if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+			if (($God1 >= $@god_check1) && ($God2 >= $@god_check1) && ($God3 >= $@god_check1) && ($God4 >= $@god_check1) && (strcharinfo(0) == getguildmaster(.@GID))) {
+				mes "[Dwarf Grunburti]";
+				mes "Hmm...";
+				mes "I'll need some things to make a weapon for you. What exactly were you interested in having?";
+				next;
+				switch(select("Brisingamen:Megingjard:Sleipnir:Mjolnir")) {
+				case 1:
+					mes "[Dwarf Grunburti]";
+					mes "I will need...";
+					mes "^0000FF4 Freya's Jewel";
+					mes "4 Silver Ornament";
+					mes "3 Snow Crystal";
+					mes "3 Ripple";
+					mes "3 Drifting Air";
+					mes "2 Sapphire";
+					mes "3 Pearl";
+					mes "10 Opal";
+					mes "5 Cursed Ruby";
+					mes "20 Gold^000000";
+					mes "1 Necklace^000000...";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "However, the time for me to create this Brisingamen has not yet come. You'll have to wait until the seals are released. Mwahahaha!";
+					close;
+				case 2:
+					mes "[Dwarf Grunburti]";
+					mes "I will need...";
+					mes "^0000FF1 Gleipnir";
+					mes "20 Gold";
+					mes "10 Sapphire";
+					mes "10 Oridecon";
+					mes "1 Belt^000000";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "However, the seals on Megingjard have not yet been released. Until then, you'll have to wait! Bwahahaha!";
+					close;
+				case 3:
+					mes "[Dwarf Grunburti]";
+					mes "I will need...";
+					mes "^0000FF3 Wheel of the Unknown";
+					mes "5 Feather of Angel Wing";
+					mes "3 Sprit of Fish";
+					mes "4 Amblem of the Sun God";
+					mes "3 Breath of Spirit";
+					mes "20 Gold";
+					mes "10 Elunium";
+					mes "1 Slotted Boots^000000";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "But even so, I can't create Sleipnir until the seals have been broken. Otherwise, you're out of luck, human. Hahaha~!";
+					close;
+				case 4:
+					mes "[Dwarf Grunburti]";
+					mes "I will need...";
+					mes "^0000FF2 Thor's Gauntlets";
+					mes "4 Iron Maiden";
+					mes "5 Wrath of Valkyrie";
+					mes "5 Omen of Tempest";
+					mes "5 Billow";
+					mes "20 Oridecon";
+					mes "5 Elunium";
+					mes "40 Gold";
+					mes "1 Stunner^000000";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "But I can't even create a replica of Mjolnir if the seals are still in place. Until they're released, you'll just have to wait. Bwahaha!";
+					close;
+				}
+			} 
+			mes "[Dwarf Grunburti]";
+			mes "We Dwarves have too much pride to demonstrate our skills in front of a lowly human!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "Stop bothering me and get out of here! Go play with some monsters, you simple minded fool!";
+			close;
+		}
+		if (strcharinfo(0) != getguildmaster(.@GID)) {
+			mes "[Dwarf Grunburti]";
+			mes "I'll only present";
+			mes "my magnificent skills";
+			mes "to a human of incredibly";
+			mes "high standing!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "Although I hate";
+			mes "most humans, I have";
+			mes "no choice but to respect the ones chosen by destiny. Go and bring your ^0000FFguildmaster^000000!";
+			close;
+		}
+		mes "[Dwarf Grunburti]";
+		mes "Although it is very humiliating to present my valuable skills to a human being...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "All the seals have been released, and he who holds the Emperium is chosen by destiny. I have no choice but to respect you.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "First of all, I shall confirm whether or not you have brought all the necessary materials to forge a godly item! I hate it when humans come here without any purpose!";
+		next;
+		if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(969) > 19) && (countitem(2603) > 0)) {
+			mes "[Dwarf Grunburti]";
+			mes "Hmm...";
+			mes "I guess you";
+			mes "want to have";
+			mes "^0000FFBrisingamen^000000!";
+			next;
+		}
+		else if ((countitem(7058) > 0) && (countitem(969) > 19) && (countitem(726) > 9) && (countitem(984) > 9) && (countitem(2627) > 0)){ //Gullraifnir Gold Blue_Jewel Oridecon Belt 
+			mes "[Dwarf Grunburti]";
+			mes "Hmm...";
+			mes "I guess you";
+			mes "want to have";
+			mes "^0000FFMegingjard^000000!";
+			next;
+		}
+		else if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(969) > 19) && (countitem(985) > 9) && (countitem(2406) > 0)) {
+			mes "[Dwarf Grunburti]";
+			mes "Hmm...";
+			mes "I guess you";
+			mes "want to have";
+			mes "^0000FFSleipnir^000000!";
+			next;
+		}
+		else if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(984) > 19) && (countitem(985) > 4) && (countitem(969) > 39) && (countitem(1522) > 0)) {
+			mes "[Dwarf Grunburti]";
+			mes "Hmm...";
+			mes "I guess you";
+			mes "want to have";
+			mes "^0000FFMjolnir^000000!";
+			next;
+		}
+		else {
+			mes "[Dwarf Grunburti]";
+			mes "...";
+			mes "......";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			mes ".............";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "How dare you come here unprepared?! Did you forget what you needed to bring? Listen carefully this time!";
+			next;
+			switch(select("Brisingamen:Megingjard:Sleipnir:Mjolnir")) {
+			case 1:
+				mes "[Dwarf Grunburti]";
+				mes "I will need...";
+				mes "^0000FF4 Freya's Jewel";
+				mes "4 Silver Ornament";
+				mes "3 Snow Crystal";
+				mes "3 Ripple";
+				mes "3 Drifting Air";
+				mes "2 Sapphire";
+				mes "3 Pearl";
+				mes "10 Opal";
+				mes "5 Cursed Ruby";
+				mes "20 Gold^000000";
+				mes "1 Necklace^000000...";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hmmm, but now";
+				mes "that the seals have";
+				mes "been released, you must hurry before another human can claim";
+				mes "one of the godly items...";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hurry...!";
+				mes "Once I forge";
+				mes "Brisingamen,";
+				mes "the seals will";
+				mes "activate again!";
+				close;
+			case 2:
+				mes "[Dwarf Grunburti]";
+				mes "I will need...";
+				mes "^0000FF1 Gleipnir";
+				mes "20 Gold";
+				mes "10 Sapphire";
+				mes "10 Oridecon";
+				mes "1 Belt^000000";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hmmm, but now";
+				mes "that the seals have";
+				mes "been released, you must hurry before another human can claim";
+				mes "one of the godly items...";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hurry...!";
+				mes "Once I forge";
+				mes "Megingjard,";
+				mes "the seals will";
+				mes "activate again!";
+				close;
+			case 3:
+				mes "[Dwarf Grunburti]";
+				mes "I will need...";
+				mes "^0000FF3 Wheel of the Unknown";
+				mes "5 Feather of Angel Wing";
+				mes "3 Sprit of Fish";
+				mes "4 Amblem of the Sun God";
+				mes "3 Breath of Spirit";
+				mes "20 Gold";
+				mes "10 Elunium";
+				mes "1 Slotted Boots^000000";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hmmm, but now";
+				mes "that the seals have";
+				mes "been released, you must hurry before another human can claim";
+				mes "one of the godly items...";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hurry...!";
+				mes "Once I forge";
+				mes "Sleipnir,";
+				mes "the seals will";
+				mes "activate again!";
+				close;
+			case 4:
+				mes "[Dwarf Grunburti]";
+				mes "I will need...";
+				mes "^0000FF2 Thor's Gauntlets";
+				mes "4 Iron Maiden";
+				mes "5 Wrath of Valkyrie";
+				mes "5 Omen of Tempest";
+				mes "5 Billow";
+				mes "20 Oridecon";
+				mes "5 Elunium";
+				mes "40 Gold";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hmmm, but now";
+				mes "that the seals have";
+				mes "been released, you must hurry before another human can claim";
+				mes "one of the godly items...";
+				next;
+				mes "[Dwarf Grunburti]";
+				mes "Hurry...!";
+				mes "Once I forge";
+				mes "the Mjolnir,";
+				mes "the seals will";
+				mes "activate again!";
+				close;
+			}
+		}
+		mes "[Dwarf Grunburti]";
+		mes "Hmpf.";
+		mes "I can't get any work done in here. Come with me to the ^0000FFunderground laboratory^000000 as my guest, human.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Now hurry up! ^0000FFOnly one of each godly item^000000 will be given to the humans ^FF0000right after all the seals are released^000000!";
+		close2;
+		warp "que_god01",214,63;
+		end;
+	case 4:
+		mes "[Dwarf Grunburti]";
+		mes "Muhahahahahaha!";
+		mes "Out of my sight,";
+		mes "you dirty, filthy";
+		mes "human...!";
+		close;
+	}
+}
+gld_dun02,85,84,0	duplicate(GodDwarf)	Grunburti#2	826
+gld_dun03,92,105,0	duplicate(GodDwarf)	Grunburti#3	826
+gld_dun04,268,230,0	duplicate(GodDwarf)	Grunburti#4	826
+
+que_god01,215,127,0	script	#god_hopewarp1	111,{
+	end;
+
+OnInit:
+	waitingroom "Laboratory Entrance",2,"#god_hopewarp1::OnStartArena",1;
+	enablewaitingroomevent;
+	end;
+
+OnStartArena:
+	warpwaitingpc "que_god01",155,63;
+	donpcevent "Grunburti#god::OnEnable";
+	disablewaitingroomevent;
+	end;
+
+OnReset:
+	enablewaitingroomevent;
+	end;
+}
+
+que_god01,214,128,0	script	 #que_godnpc1::GodEntrance	111,{
+	mes "[Entrance Notice]";
+	mes "Only the most";
+	mes "worthy of humans";
+	mes "will possess the";
+	mes "power of the gods.";
+	close;
+}
+que_god01,215,128,0	duplicate(GodEntrance)	 #que_godnpc2	111
+que_god01,213,128,0	duplicate(GodEntrance)	 #que_godnpc3	111
+
+que_god01,154,112,4	script	Grunburti#god	826,{
+	if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+		mes "[Dwarf Grunburti]";
+		mes "One of the godly";
+		mes "items has been created,";
+		mes "and the seals have been";
+		mes "restored. You'll have to";
+		mes "wait until they're all";
+		mes "released again...!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Bwahahahahahahaa!";
+		mes "Even though you're";
+		mes "just a human, I feel";
+		mes "pity for you~";
+		close;
+	}
+	set .@GID,getcharid(2);
+	if (strcharinfo(0) != getguildmaster(.@GID)) {
+		mes "[Dwarf Grunburti]";
+		mes "How in the...";
+		mes "Get out of here!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "How did one of you";
+		mes "stupid humans get in";
+		mes "here?! Only those who";
+		mes "hold the Emperium can";
+		mes "even think of entering";
+		mes "this place...!";
+		close;
+	}
+	mes "[Dwarf Grunburti]";
+	mes "It's incredibly";
+	mes "humiliating to do work for a human. But since destiny has chosen you as the bearer of an Emperium, I have no choice but to oblige your requests.";
+	next;
+	mes "[Dwarf Grunburti]";
+	mes "We only have";
+	mes "^FF000010 minutes^000000 to recreate one godly treasure. After that, the seals will restore themselves and I won't be able to create anything until they're released again...";
+	next;
+	mes "[Dwarf Grunburti]";
+	mes "^FF0000Don't be too slow^000000,";
+	mes "otherwise ^FF0000I will give";
+	mes "the chance to another";
+	mes "human^000000 right away!";
+	next;
+	mes "[Dwarf Grunburti]";
+	mes "Now...!";
+	mes "Choose the item";
+	mes "you wish for me";
+	mes "to create!";
+	next;
+	switch(select("Brisingamen:Megingjard:Sleipnir:Mjolnir")) {
+	case 1:
+		mes "[Dwarf Grunburti]";
+		mes "B-Brisingamen?!";
+		mes "I've never expected";
+		mes "such insolence...!";
+		mes "This necklace will never have any meaning in my eyes unless it's worn by the goddess Freya.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "But who am I to judge your worthiness? These treasures";
+		mes "select their owners with their own will. Let's see if Brisingamen will find you worthy!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Once again, I need following materials in order to reproduce";
+		mes "this godly treasure...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "^0000FF4 Freya's Jewel";
+		mes "4 Silver Ornament";
+		mes "3 Snow Crystal";
+		mes "3 Ripple";
+		mes "3 Drifting Air";
+		mes "2 Sapphire";
+		mes "3 Pearl";
+		mes "10 Opal";
+		mes "5 Cursed Ruby";
+		mes "20 Gold";
+		mes "1 Necklace^000000";
+		next;
+		switch(select("Make Brisingamen.:Cancel.")) {
+		case 1:
+			if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(969) > 19) && (countitem(2603) > 0)){ //Jewel_Of_Prayer Silver_Fancy Crystal_Of_Snow Slilince_Wave Air_Stream Blue_Jewel Scarlet_Jewel White_Jewel Cardinal_Jewel_ Gold Necklace 
+				mes "[Dwarf Grunburti]";
+				mes "Never in my wildest";
+				mes "imaginings have I thought that I'd be crafting this masterpiece for a mere human. Give me a moment.";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[Dwarf Grunburti]";
+					mes "But...";
+					mes "The seals";
+					mes "have just been";
+					mes "restored. You'll have to";
+					mes "wait until they're all";
+					mes "released again...!";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "Bwahahahahahahaa!";
+					mes "Even though you're";
+					mes "just a human, I feel";
+					mes "pity for you~";
+					close;
+				}
+				delitem 7073,4;  //Jewel_Of_Prayer
+				delitem 7077,4;  //Silver_Fancy
+				delitem 7088,3;  //Crystal_Of_Snow
+				delitem 7090,3;  //Slilince_Wave
+				delitem 7092,3;  //Air_Stream
+				delitem 726,2;  //Blue_Jewel
+				delitem 722,3;  //Scarlet_Jewel
+				delitem 727,10;  //White_Jewel
+				delitem 724,5;  //Cardinal_Jewel_
+				delitem 969,20;  //Gold
+				delitem 2603,1;  //Necklace
+				getitem 2630,1; // Brysinggamen
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "[Brisingamen] has come into the hands of [" + strcharinfo(0) + "], master of the [" + getguildname(.@GID) + "] guild.",bc_all;
+				mes "[Dwarf Grunburti]";
+				mes "Ah, just look at this dazzling beauty. No other piece of jewelry complemented Freya as well as Brisingamen.";
+				close;
+			}
+			else {
+				mes "[Dwarf Grunburti]";
+				mes "Idiot human!";
+				mes "You didn't bring";
+				mes "everything I need to";
+				mes "recreate Brisingamen!";
+				mes "Hurry...!";
+				close;
+			}
+		case 2:
+			mes "[Dwarf Grunburti]";
+			mes "Muhahahaha~";
+			mes "Somehow, I figured";
+			mes "you'd back out, human!";
+			close;
+		}
+	case 2:
+		mes "[Dwarf Grunburti]";
+		mes "M- Megingjard?!";
+		mes "The girdle of might?!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "This belt was worn long ago by Thor, the mightest warrior ever. But since these treasures select their owners, we'll see whether or not it recognizes you as worthy!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Once again, I need following materials in order to reproduce";
+		mes "this godly treasure...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "^0000FF1 Gleipnir";
+		mes "20 Gold";
+		mes "10 Sapphire";
+		mes "10 Oridecon";
+		mes "1 Belt^000000...";
+		next;
+		switch(select("Make Megingjard.:Cancel.")) {
+		case 1:
+			if ((countitem(7058) > 0) && (countitem(969) > 19) && (countitem(726) > 9) && (countitem(984) > 9) && (countitem(2627) > 0)) {
+				mes "[Dwarf Grunburti]";
+				mes "Twenty years ago,";
+				mes "I'd never believe that";
+				mes "something so powerful and dangerous as Megingjard would end up in the hands of a human...";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[Dwarf Grunburti]";
+					mes "But...";
+					mes "The seals";
+					mes "have just been";
+					mes "restored. You'll have to";
+					mes "wait until they're all";
+					mes "released again...!";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "Bwahahahahahahaa!";
+					mes "Even though you're";
+					mes "just a human, I feel";
+					mes "pity for you~";
+					close;
+				}
+				delitem 7058,1;  //Gullraifnir
+				delitem 969,20;  //Gold
+				delitem 726,10;  //Blue_Jewel
+				delitem 984,10;  //Oridecon
+				delitem 2627,1;  //Belt
+				getitem 2629,1; // Magingiorde
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "[Megingjard] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(.@GID) + "].",bc_all;
+				mes "[Dwarf Grunburti]";
+				mes "Here...";
+				mes "Be careful with how";
+				mes "you use the strength";
+				mes "of a god. Just a fair";
+				mes "warning, human...";
+				close;
+			}
+			else {
+				mes "[Dwarf Grunburti]";
+				mes "Idiot human!";
+				mes "You didn't bring";
+				mes "everything I need to";
+				mes "recreate Megingjard!";
+				mes "Hurry...!";
+				close;
+			}
+		case 2:
+			mes "[Dwarf Grunburti]";
+			mes "Muhahahaha~";
+			mes "Somehow, I figured";
+			mes "you'd back out, human!";
+			close;
+		}
+	case 3:
+		mes "[Dwarf Grunburti]";
+		mes "Sleipnir...";
+		mes "Now, understand";
+		mes "that I can't create";
+		mes "the eight-legged stallion";
+		mes "of legend. However...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "I can create a pair";
+		mes "of shoes that will possess the power of Sleipnir. It's a strange, but feasible process...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Once again, I need following materials in order to reproduce";
+		mes "this godly treasure...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "^0000FF3 Wheel of the Unknown";
+		mes "5 Feather of Angel Wing";
+		mes "3 Sprit of Fish";
+		mes "4 Amblem of the Sun God";
+		mes "3 Breath of Spirit";
+		mes "20 Gold";
+		mes "10 Elunium";
+		mes "1 Slotted Boots^000000...";
+		next;
+		switch(select("Make Sleipnir.:Cancel.")) {
+		case 1:
+			if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(969) > 19) && (countitem(985) > 9) && (countitem(2406) > 0)) {
+				mes "[Dwarf Grunburti]";
+				mes "I never believed";
+				mes "that the speed of";
+				mes "Sleipnir would be";
+				mes "used by a human.";
+				mes "Give me a moment...";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[Dwarf Grunburti]";
+					mes "But...";
+					mes "The seals";
+					mes "have just been";
+					mes "restored. You'll have to";
+					mes "wait until they're all";
+					mes "released again...!";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "Bwahahahahahahaa!";
+					mes "Even though you're";
+					mes "just a human, I feel";
+					mes "pity for you~";
+					close;
+				}
+				delitem 7076,3;  //Mystery_Wheel
+				delitem 7079,5;  //Feather_Of_Angel
+				delitem 7083,3;  //Soul_Of_Fish
+				delitem 7086,4;  //Symbol_Of_Sun
+				delitem 7087,3;  //Breath_Of_Soul
+				delitem 969,20;  //Gold
+				delitem 985,10;  //Elunium
+				delitem 2406,1;  //Boots_
+				getitem 2410,1; // Sleipnir
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "[Sleipnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(.@GID) + "].",bc_all;
+				mes "[Dwarf Grunburti]";
+				mes "There...";
+				mes "Wear these, and";
+				mes "move with the speed of";
+				mes "the legendary Sleipnir...";
+				close;
+			}
+			else {
+				mes "[Dwarf Grunburti]";
+				mes "Idiot human!";
+				mes "You didn't bring";
+				mes "everything I need to";
+				mes "recreate Sleipnir!";
+				mes "Hurry...!";
+				close;
+			}
+		case 2:
+			mes "[Dwarf Grunburti]";
+			mes "Muhahahaha~";
+			mes "Somehow, I figured";
+			mes "you'd back out, human!";
+			close;
+		}
+	case 4:
+		mes "[Dwarf Grunburti]";
+		mes "M-M-Mjolnir!?";
+		mes "Even though the";
+		mes "moment is at hand,";
+		mes "I can scarcely believe...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "^333333*Sigh...*^000000";
+		mes "This is almost a disgrace to gods and the Dwarf race. But perhaps, wielding Mjolnir may be your destiny...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Once again, I need following materials in order to reproduce";
+		mes "this godly treasure...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "^0000FF2 Thor's Gauntlets";
+		mes "4 Iron Maiden";
+		mes "5 Wrath of Valkyrie";
+		mes "5 Omen of Tempest";
+		mes "5 Billow";
+		mes "20 Oridecon";
+		mes "5 Elunium";
+		mes "40 Gold";
+		mes "1 Stunner^000000...";
+		next;
+		switch(select("Make Mjolnir.:Cancel.")) {
+		case 1:
+			if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(984) > 19) && (countitem(985) > 4) && (countitem(969) > 39) && (countitem(1522) > 0)) {
+				mes "[Dwarf Grunburti]";
+				mes "Do not disgrace";
+				mes "Thor, lord of Thunder,";
+				mes "or you will regret it.";
+				mes "Mark my words...";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[Dwarf Grunburti]";
+					mes "But...";
+					mes "The seals";
+					mes "have just been";
+					mes "restored. You'll have to";
+					mes "wait until they're all";
+					mes "released again...!";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "Bwahahahahahahaa!";
+					mes "Even though you're";
+					mes "just a human, I feel";
+					mes "pity for you~";
+					close;
+				}
+				delitem 7074,2;  //Iron_Glove
+				delitem 7075,4;  //Iron_Maiden
+				delitem 7078,5;  //Anger_Of_Valkurye
+				delitem 7089,5;  //Indication_Of_Tempest
+				delitem 7091,5;  //Rough_Billows
+				delitem 984,20;  //Oridecon
+				delitem 985,5;  //Elunium
+				delitem 969,40;  //Gold
+				delitem 1522,1;  //Stunner
+				getitem 1530,1; // Mjolnir
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "[Mjolnir] has been bestowed to [" + strcharinfo(0) + "], the master of the [" + getguildname(.@GID) + "] guild.",bc_all;
+				mes "[Dwarf Grunburti]";
+				mes "It's done.";
+				mes "Take it. How does";
+				mes "it feel to hold the world's most powerful weapon in your grasp?";
+				close;
+			}
+			else {
+				mes "[Dwarf Grunburti]";
+				mes "Idiot human!";
+				mes "You didn't bring";
+				mes "everything I need";
+				mes "to recreate Mjolnir!";
+				mes "Hurry...!";
+				close;
+			}
+		case 2:
+			mes "[Dwarf Grunburti]";
+			mes "Muhahahaha~";
+			mes "Somehow, I figured";
+			mes "you'd back out, human!";
+			close;
+		}
+	}
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	mapannounce "que_god01","Remember that you only have 10 minutes for this! Hurry up!",bc_map;
+	end;
+
+OnTimer610000:
+	mapannounce "que_god01","You're too slow! I'm going to give another human a chance! Next!",bc_map;
+	end;
+
+OnTimer612000:
+	donpcevent "god_wep_warpmaster::OnEnable";
+	end;
+
+OnTimer615000:
+	donpcevent "god_wep_warpmaster::OnDisable";
+	donpcevent "#god_hopewarp1::OnReset";
+	stopnpctimer;
+	end;
+}
+
+que_god01,169,82,0	script	god_wep_warpmaster	-1,{
+OnEnable:
+	for(set .@i,1; .@i<=6; set .@i,.@i+1)
+		enablenpc "god_failwarp#"+.@i;
+	end;
+OnDisable:
+	for(set .@i,1; .@i<=6; set .@i,.@i+1)
+		disablenpc "god_failwarp#"+.@i;
+	end;
+}
+
+que_god01,154,67,0	script	god_failwarp#1	-1,4,7,{
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnTouch_:
+	warp "prontera",156,324;
+	end;
+}
+que_god01,154,82,0	duplicate(god_failwarp#1)	god_failwarp#2	-1,4,7
+que_god01,145,99,0	duplicate(god_failwarp#1)	god_failwarp#3	-1,9,9
+que_god01,164,99,0	duplicate(god_failwarp#1)	god_failwarp#4	-1,9,9
+que_god01,145,118,0	duplicate(god_failwarp#1)	god_failwarp#5	-1,9,9
+que_god01,164,118,0	duplicate(god_failwarp#1)	god_failwarp#6	-1,9,9
+
+// Original name: "Godly Item Quests Related#god"
+que_god01,293,3,0	script	Godly Item Quests#god	90,{
+	callfunc "F_GM_NPC";
+	mes "[Use in case of emergency]";
+	mes "Please enter password.";
+	mes "If you wish to cancel, please enter 0.";
+	next;
+	set .@i, callfunc("F_GM_NPC",1854,0,0,4000);
+	if (.@i == -2) {
+		mes "[Use in case of emergency]";
+		mes "Password is incorrect.";
+		close;
+	} else if (.@i == -1) {
+		mes "[Use in case of emergency]";
+		mes "You have canceled your request.";
+		close;
+	} else if (.@i == 0) {
+		close;
+	} else {
+		mes "[Use in case of emergency]";
+		mes "What services would you like to use?";
+		next;
+		switch(select("Turn off Warps.:Reset Timer.:Reset chat room.")) {
+		case 1:
+			mes "[Use in case of emergency]";
+			mes "Press the 'Next' button to turn off warps.";
+			next;
+			donpcevent "god_wep_warpmaster::OnDisable";
+			mes "[Use in case of emergency]";
+			mes "You have successfully turned off warps.";
+			close;
+		case 2:
+			mes "[Use in case of emergency]";
+			mes "Press the 'Next' button to reset timer.";
+			next;
+			donpcevent "Grunburti#god::OnEnable";
+			mes "[Use in case of emergency]";
+			mes "You have successfully reset timer.";
+			close;
+		case 3:
+			mes "[Use in case of emergency]";
+			mes "Please press the 'Next' button to reset the arena chat room in que_god01.";
+			next;
+			donpcevent "#god_hopewarp1::OnReset";
+			mes "[Use in case of emergency]";
+			mes "You have successfully reset the arena chat room (Laboratory Entrance 1/2).";
+			close;
+		}
+	}
+}

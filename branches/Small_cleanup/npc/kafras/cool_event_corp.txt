@@ -1,0 +1,195 @@
+//===== rAthena Script ======================================= 
+//= Cool Event Corp. Staff
+//===== By: ================================================== 
+//= Gepard
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Cool Event Corp. Staff (Save, Storage & Pushcart Service)
+//= in Arunafeltz Region.
+//===== Additional Comments: ================================= 
+//= 1.0 First version, iRO Sakray X.4 [Gepard]
+//= 1.1 Optimized, fixed a conditional bug [Lupus]
+//= 1.1a Redo back. It wasn't a bug [Lupus]
+//= 1.2 Added Rachel Cool Event Corp. Staff [Playtester]
+//= 1.3 Added cutins, closed Kafra Password exploit
+//=     until we got a client/packet based password support [Lupus]
+//= 1.4 Added Veins Cool Event Corp. Staff. [L0ne_W0lf]
+//= 1.5 Cool Event Corp staff is now more iRO like. [L0ne_W0lf]
+//= 1.6 Wrote a basic function and added VIP features. [Euphy]
+//============================================================ 
+
+//callfunc "F_CoolEventCorp","<menu>","<location>","<save map>",<x>,<y>,"<warp map>";
+function	script	F_CoolEventCorp	{
+	cutin "zonda_01",2;
+	mes "[Cool Event Corp. Staff]";
+	mes "Welcome to Cool Event Corp.";
+	mes "Our staff is always working";
+	mes "to surpass your expactations";
+	mes "for quality service. So how";
+	mes "may I assist you today?";
+	next;
+	switch(select(getarg(0))) {
+	case 1:
+		mes "[Cool Event Corp. Staff]";
+		mes "Your Respawn Point";
+		mes "has been saved here";
+		mes getarg(1)+".";
+		mes "Thank you for using the";
+		mes "Cool Event Corp. service~";
+		savepoint getarg(2),getarg(3),getarg(4);
+		close2;
+		break;
+	case 2:
+		mes "[Cool Event Corp. Staff]";
+		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			mes "I'm sorry, but you";
+			mes "need the Novice's";
+			mes "Basic Skill Level 6 to";
+			mes "use the Storage Service.";
+			close2;
+			break;
+		}
+		if(Zeny < 40){
+			mes "I'm sorry, but you don't";
+			mes "have enough Zeny to use";
+			mes "the Storage Service. Our";
+			mes "Storage access fee is 40 Zeny.";
+			close2;
+			break;
+		}
+		set Zeny, Zeny - 40;
+		mes "Let me open your personal";
+		mes "storage for you right away.";
+		mes "Thanks for supporting Cool";
+		mes "Event Corp. by using our";
+		mes "services. Have a good day~";
+		callfunc("F_CheckKafCode");	//check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "Please choose";
+		mes "your destination.";
+		next;
+		if (VIP_SCRIPT && !vip_status(1))
+			set .@cost,4400;
+		else
+			set .@cost,2200;
+		if (select(getarg(5)+" -> "+.@cost+" z:Cancel") == 1) {
+			if ((countitem(7060) != 0) || (Zeny >= .@cost)) {
+				if (countitem(7060) != 0) {
+					delitem 7060,1; //Warp_Free_Ticket
+				}
+				else {
+					set Zeny,Zeny-.@cost;
+				}
+				if (getarg(5) == "Veins") warp "veins",205,101;
+				else if (getarg(5) == "Rachel") warp "rachel",115,125;
+				cutin "",255;
+				end;
+			}
+			else {
+				mes "[Cool Event Corp. Staff]";
+				mes "I'm sorry, but you don't have";
+				mes "enough zeny for the Teleport";
+				mes "Service. The fee to teleport";
+				mes "to "+getarg(5)+" is "+.@cost+" zeny.";
+			}
+		}
+		close2;
+		break;
+	case 4:
+		mes "[Cool Event Corp. Staff]";
+		if(BaseClass != Job_Merchant){
+			mes "I'm sorry, but the";
+			mes "Pushcart rental service";
+			if (checkre(0))
+				mes "is only available to Merchant classes.";
+			else {
+				mes "is only available to Merchants,";
+				mes "Blacksmiths, White Smiths,";
+				mes "Alchemists and Creators.";
+			}
+			close2;
+			break;
+		}
+		if(getskilllv("MC_PUSHCART") == 0){
+			mes "You can only rent a cart after";
+			mes "learning the Pushcart Skill.";
+			close2;
+			break;
+		}
+		if(checkcart() == 1){
+			mes "You already have";
+			mes "a Pushcart equipped.";
+			mes "Unfortunately, we can't";
+			mes "rent more than one to";
+			mes "each customer at a time.";
+			close2;
+			break;
+		}
+		if(countitem(7061)){
+			delitem 7061,1; //Cart_Free_Ticket
+			setcart;
+			close2;
+			break;
+		}
+		mes "The Pushcart rental";
+		mes "fee is 800 Zeny. Would";
+		mes "you like to rent a Pushcart?";
+		next;
+		if(select("Rent a Pushcart:Cancel") == 1){
+			if(Zeny < 800){
+				mes "[Cool Event Corp. Staff]";
+				mes "I'm sorry, but you";
+				mes "don't have enough";
+				mes "Zeny to pay the Pushcart";
+				mes "rental fee of 800 Zeny.";
+			} else {
+				set Zeny, Zeny - 800;
+				setcart;
+			}
+		}
+		close2;
+		break;
+	case 5:
+		callfunc("F_SetKafCode","[Cool Event Corp. Staff]","Cool Event Corp.");
+		//the function closes msg and removes cutins
+	case 6:
+	default:
+		mes "[Cool Event Corp. Staff]";
+		mes "Cool Event Corp. is always";
+		mes "striving to provide the best";
+		mes "services for our customers.";
+		mes "Help us become the best by";
+		mes "providing us with your opinions";
+		mes "and honest feedback. Thank you.";
+		close2;
+	}
+	cutin "", 255;
+	end;
+}
+
+hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
+	callfunc "F_CoolEventCorp",
+		"Save:Use Storage::Rent a Pushcart:Storage Password Service:Cancel",
+		"in the village of Hugel","hugel",96,155;
+	end;
+}
+
+rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
+	callfunc "F_CoolEventCorp",
+		"Save:Use Storage:Teleport Service:Rent a Pushcart:Storage Password Service:Cancel",
+		"in the town of Rachel","rachel",113,137,"Veins";
+	end;
+}
+
+veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
+	callfunc "F_CoolEventCorp",
+		"Save:Use Storage:Teleport Service:Rent a Pushcart:Storage Password Service:Cancel",
+		"in the town of Veins","veins",204,103,"Rachel";
+	end;
+}

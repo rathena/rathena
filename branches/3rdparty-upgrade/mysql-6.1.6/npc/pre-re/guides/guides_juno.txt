@@ -1,0 +1,118 @@
+//===== rAthena Script =======================================
+//= Yuno Guides
+//===== By: ==================================================
+//= KitsuneStarwind, usul, kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Juno
+//===== Additional Comments: =================================
+//= Edited Miss Yoon text. Added town soldiers by usul. Edited town soldiers
+//= and added map location option for them. [kobra_k88]
+//= 1.1 Changed sprites and cutins to Schwarzwald Republic ones
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the mini map localization function. [Musashiden]
+//= 1.4 Juno Guides are now up to date according to iRO. [Musashiden]
+//= 1.5 Removed Duplicates [Silent].
+//= 1.6 Changed one of the Juno soldier's sprite. [Musashiden]
+//= 1.7 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+yuno,153,47,4	script	Juno Guide#yuno	700,{
+	mes "[Ms. Yoon]";
+	mes "A place that takes the vision of the future, and gives it form in the present. Welcome to";
+	mes "the city of Juno!";
+	next;
+	switch(select("Armory:Tool Shop:Sage Castle (Sage Job Change Place):Street of Book Stores:Juphero Plaza:Library of the Republic:Schweicherbil Magic Academy:Monster Museum:Forge:Airport:End Conversation")) {
+	case 1:
+		viewpoint 1,120,138,0,0xFF3355;
+		mes "[Ms. Yoon]";
+		mes "Please look";
+		mes "at the mini map.";
+		mes "^FF3355+^000000 -> Armory";
+		mes "Thank you,";
+		mes "have a good day.";
+		close;
+	case 2:
+		viewpoint 1,193,142,1,0x3355FF;
+		mes "[Ms. Yoon]";
+		mes "Please look";
+		mes "at the mini map.";
+		mes "^3355FF+^000000 -> Tool Shop";
+		mes "Thank you,";
+		mes "have a good day.";
+		close;
+	case 3:
+		viewpoint 1,90,318,2,0x33FF55;
+		mes "[Ms. Yoon]";
+		mes "Please look";
+		mes "at the mini map.";
+		mes "^33FF55+^000000 -> Sage Castle";
+		mes "( Sage Job Change Place )";
+		mes "Thank you, have a good day.";
+		close;
+	case 4:
+		viewpoint 1,257,102,3,0xFF3355;
+		mes "[Ms. Yoon]";
+		mes "Please look";
+		mes "at the mini map.";
+		mes "^FF3355+^000000 -> Street of Book Stores";
+		mes "Thank you, have a good day.";
+		close;
+	case 5:
+		viewpoint 1,157,170,4,0x3355FF;
+		mes "[Ms. Yoon]";
+		mes "Please look";
+		mes "at the mini map.";
+		mes "^3355FF+^000000 -> Juphero Plaza";
+		mes "Thank you,";
+		mes "have a good day.";
+		close;
+	case 6:
+		viewpoint 1,336,204,5,0x33FF55;
+		mes "[Ms. Yoon]";
+		mes "Please look";
+		mes "at the mini map.";
+		mes "^33FF55+^000000 -> Library of the Republic";
+		mes "Thank you, have a good day.";
+		close;
+	case 7:
+		viewpoint 1,323,281,6,0xFF3355;
+		mes "[Ms. Yoon]";
+		mes "Please look at the mini map.";
+		mes "^FF3355+^000000 -> Schweicherbil Magic Academy";
+		mes "Thank you, have a good day.";
+		close;
+	case 8:
+		viewpoint 1,278,288,7,0x3355FF;
+		mes "[Ms. Yoon]";
+		mes "Please look at the mini map.";
+		mes "^3355FF+^000000 -> Monster Museum";
+		mes "Thank you, have a good day.";
+		close;
+	case 9:
+		viewpoint 1,120,138,8,0xFF3355;
+		mes "[Ms. Yoon]";
+		mes "Please look at the mini map.";
+		mes "^FF3355+^000000 -> Forge";
+		mes "The forge is located underneath Armory.";
+		mes "Thank you, have a good day.";
+		close;
+	case 10:
+		viewpoint 1,53,214,9,0xFF3355;
+		mes "[Ms. Yoon]";
+		mes "Please look at the mini map.";
+		mes "^FF3355+^000000 -> Airport";
+		mes "Thank you, have a good day.";
+		close;
+	case 11:
+		mes "[Ms. Yoon]";
+		mes "A great city of wise men.";
+		mes "A city of Knowledge!";
+		mes "Welcome to Juno.";
+		close;
+	}
+}

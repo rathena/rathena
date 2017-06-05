@@ -1,0 +1,35 @@
+//===== rAthena Script =======================================
+//= Sample: Functions
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20120901
+//===== Description: ========================================= 
+//= Demonstrates use of functions.
+//============================================================
+
+// Define the function func001
+function	script	func001	{
+	mes "Hello there!";
+	next;
+	return;	// Return to script
+}
+
+// Define the function func002
+function	script	func002	{
+	return "I'm a function";
+}
+
+// Uses 3 different methods of displaying dialogue from both internal and external sources.
+prontera,168,189,1	script	Functions	112,{
+	callfunc "func001";		// Calls func001 and displays "Hello there!"
+	mes callfunc("func002");	// Calls func002 and displays "I'm a function"
+	next;
+	callsub L_SUB001;		// Calls the label L_SUB001 and displays "I'm a label"
+	close;
+	end;
+
+L_SUB001:
+	mes "I'm a label";
+	return;
+}

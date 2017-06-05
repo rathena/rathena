@@ -1,0 +1,398 @@
+//===== rAthena Documentation ================================
+//= Mapflag List
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20130830
+//===== Description: =========================================
+//= List of available mapflags and their functions.
+//============================================================
+
+This file describes the functions of mapflags, which determine the behavior of a
+map in various situations. For instructions on setting a mapflag, refer to the
+documentation in '/doc/script_commands.txt'.
+
+To search for a mapflag, write "*" before its name.
+The format of this file is as follows:
+	1. Restrictions
+	2. Battle-related
+	3. Map Effects
+	4. Miscellaneous
+
+===================
+| 1. Restrictions |
+===================
+---------------------------------------
+
+*noreturn
+
+Disables usage of map-warping items on a map:
+ - Butterfly Wing (ID 602)
+ - Yellow/Green/Red/Blue Butterfly Wing (IDs 14582-14585)
+ - Siege Teleport Scroll (ID 14591)
+ - Dungeon Teleport Scroll 1/2/3 (IDs 14527, 14581, 12352)
+
+The 'warpparty' and 'warpguild' script commands are also blocked for destinations outside the
+player's current map.
+
+---------------------------------------
+
+*noteleport
+
+Disables all means of teleportation within a map:
+ - Items Fly Wing (ID 601) and Giant Fly Wing (ID 12212) are disabled.
+ - Skills AL_TELEPORT, TK_HIGHJUMP, and SC_DIMENSIONDOOR are disabled.
+ - Skills RG_INTIMIDATE, NPC_EXPULSION, and CG_TAROTCARD will not teleport their intended targets.
+ - Script commands using "Random" as the destination will fail.
+ - Script command 'warpwaitingpc' will fail with "SavePoint" as the destination.
+ - Script command 'unitwarp' will fail for players.
+ - Atcommand @jump is disabled.
+
+---------------------------------------
+
+*nowarp
+
+Disables warping from a map:
+ - Script commands 'warpparty' and 'warpguild' will not warp players on 'nowarp' maps.
+ - Atcommands @warp, @go, @load, and @jump are disabled.
+ - Atcommands @partyrecall, @guildrecall, and @recallall will not warp players on 'nowarp' maps.
+ - Skill GD_EMERGENCYCALL will not warp players on 'nowarp' maps.
+ - Unit UNT_CALLFAMILY will not warp players on 'nowarp' maps.
+
+---------------------------------------
+
+*nowarpto
+
+Disables warping to a map:
+ - Atcommands @warp, @go, @load, and @jump are disabled to the 'nowarpto' map.
+ - Atcommands @partyrecall, @guildrecall, and @recallall are disabled.
+ - Command /memo is disabled.
+ - Skill GD_EMERGENCYCALL is disabled if flag 16 of 'emergency_call' is set in
+   '/conf/battle/skill.conf'. This will not work for 'gvg_castle' maps.
+
+---------------------------------------
+
+*nogo
+
+Disables usage of command @go on a map.
+
+---------------------------------------
+
+*nosave	<map name>
+
+Disables auto-saving on a map. Players who log off on the map will be warped to <map name> when
+they next log in. "SavePoint", without quotes, is also valid for this field.
+
+---------------------------------------
+
+*nomemo
+
+Disables the /memo command to save a warp point on a map, and also disables usage of marriage
+skills WE_CALLPARTNER, WE_CALLPARENT, and WE_CALLBABY.
+
+---------------------------------------
+
+*noitemconsumption
+
+Disables usage of items on a map.
+
+---------------------------------------
+
+*notrade
+
+Disables trading on a map.
+
+---------------------------------------
+
+*nodrop
+
+Disables dropping items on a map.
+
+Note that items may still be dropped if a player's inventory is full and 'item_flooritem_check'
+is disabled in '/conf/battle/items.conf'.
+
+---------------------------------------
+
+*noloot
+*nomobloot
+*nomvploot
+
+Disables normal monsters and MVPs from dropping items on a map. Looted items will always drop.
+'noloot' is the same as 'nomobloot' and 'nomvploot' combined.
+		
+---------------------------------------
+
+*noexp
+*nobaseexp
+*nojobexp
+
+Disables gaining base and job experience from monsters, including MVP bonuses, on a map.
+'noexp' is the same as 'nobaseexp' and 'nojobexp' combined.
+
+---------------------------------------
+
+*nopenalty
+*noexppenalty
+*nozenypenalty
+
+Disables the loss of experience and Zeny upon death on a map.
+'nopenalty' is the same as 'noexppenalty' and 'nozenypenalty' combined.
+
+Notes:
+'noexppenalty' also affects pets, and skills PR_REDEMPTIO and LG_INSPIRATION will not deduct EXP.
+'nozenypenalty' only applies if 'zeny_penalty' is enabled in '/conf/battle/exp.conf'.
+
+---------------------------------------
+
+*nochat
+*novending
+
+Disables chatroom and shop creation on a map.
+
+---------------------------------------
+
+*nousecart
+
+Disables cart usage on a map.
+[Not fully implemented.]
+
+---------------------------------------
+
+*noskill
+
+Disables skill usage on a map.
+
+---------------------------------------
+
+*restricted	<zone>
+
+Disables certain items and skills on a map through a specified zone number. The zone databases are
+located in 'db/(pre-)re/item_noequip.txt' and 'db/(pre-)re/skill_nocast_db.txt', both of which
+contain explanations and examples of how this mapflag is used.
+
+---------------------------------------
+
+*monster_noteleport
+
+Prevents monsters from teleporting on a map, including through the skill RG_INTIMIDATE.
+
+---------------------------------------
+
+*nobranch
+
+Disables usage of monster-spawning items on a map:
+ - Dead Branch (ID 604)
+ - Bloody Branch (ID 12103)
+ - Poring Box (ID 12109)
+ - Red Pouch (ID 12024)
+
+Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
+also prevent mobs from being warped onto the map (except slave mobs).
+
+---------------------------------------
+
+*noicewall
+
+Disables skill WZ_ICEWALL on a map.
+
+---------------------------------------
+
+*nosumstarmiracle
+
+Disables Star Gladiator's "Solar, Lunar, and Stellar Miracle" from occurring on a map.
+
+---------------------------------------
+
+*nomineeffect
+
+Disables mine effects on a map.
+[More information needed.]
+
+---------------------------------------
+
+*nolockon
+
+Disables locking on a map.
+[More information needed.]
+
+---------------------------------------
+
+*nocommand	<group level>
+
+Disables everyone to use command on a map. If group level is specified, only disables
+player who has group level below it.
+
+---------------------------------------
+
+=====================
+| 2. Battle-related |
+=====================
+---------------------------------------
+
+*pvp
+*pvp_noparty
+*pvp_noguild
+*pvp_nocalcrank
+
+Enables Player vs. Player mode on a map and applies the corresponding damage adjustments.
+'pvp_noparty' will ignore party alliances.
+'pvp_noguild' will ignore guild alliances.
+'pvp_nocalcrank' will disable calculation of PvP rankings.
+
+---------------------------------------
+
+*pvp_nightmaredrop	<id>,<type>,<rate>
+
+Causes players to drop items upon death. This is not grouped with the other PvP mapflags
+because it does not necessarily require PvP mode to be set.
+
+<id> determines what will drop. It can be either a specific item ID or "random".
+<type> specifies where items are dropped from. It can be "inventory", "equip", or "all".
+<rate> is the chance that an item will drop (10000 = 100%).
+
+---------------------------------------
+
+*gvg
+*gvg_noparty
+*gvg_castle
+*gvg_dungeon
+
+Enables Guild vs. Guild mode on a map and applies the corresponding damage adjustments.
+'gvg_noparty' will ignore party alliances.
+'gvg_castle' marks a guild castle. GvG mode will be active only during the War of Emperium.
+'gvg_dungeon' marks a guild dungeon. Players will be warped out after two deaths.
+
+---------------------------------------
+
+*battleground	{<type>}
+
+Enables Battlegrounds on a map and applies the corresponding damage adjustments.
+If <type> is 2, a scoreboard will be shown. The default is 1 (nothing).
+
+---------------------------------------
+
+*partylock
+*guildlock
+
+Prevents alteration of parties and guilds on a map. This includes creating, leaving,
+inviting, expelling, breaking, and changing leaders.
+
+Notes:
+'partylock' will still allow party options to be changed.
+'guildlock' will also block changes to guild alliances.
+
+---------------------------------------
+
+*skill_damage	{<skill_name>,<caster>,<damage1>,{<damage2>,{<damage3>,{<damage4>}}}}
+
+Enables skill damage adjustment on a map. All adjustments in 'db/skill_damage_db.txt'
+for 'Map' type 16 will be applied.
+
+This mapflag can also be used to adjust the damage of one skill by a percentage:
+ - skill_name:
+	Name of the skill in 'db/(pre-)re/skill_db.txt' (ex. SM_BASH).
+	To adjust all skill damage, write "all" (without quotes).
+ - caster: the groups for which the adjustment takes effect. (bitmask)
+	 1 = Player
+	 2 = Monster
+	 4 = Pet
+	 8 = Homunculus
+	16 = Mercenary
+	32 = Elemental
+ - damage: percent adjustment rate (between -100 and 100000).
+	1 = against player
+	2 = against normal monster
+	3 = against boss monster
+	4 = against other (homunculus, mercenary, pet, elemental)
+
+Notes:
+ - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.h' for this mapflag to take effect.
+ - Each map can contain up to 5 adjustments (MAX_MAP_SKILL_MODIFIER in 'src/map/map.h').
+
+---------------------------------------
+
+==================
+| 3. Map Effects |
+==================
+---------------------------------------
+
+*clouds
+*clouds2
+*fireworks
+*fog
+*leaves
+*sakura
+*snow
+
+Displays a weather effect on a map.
+
+---------------------------------------
+
+*nightenabled
+
+Displays night mode effects on a map. This is used on most outdoor maps.
+
+---------------------------------------
+
+====================
+| 4. Miscellaneous |
+====================
+---------------------------------------
+
+*town
+
+Marks a map as a town. This allows players to access their mail and disables kill stealing.
+
+---------------------------------------
+
+*reset
+
+Allows usage of item Neuralizer (ID 12213).
+
+---------------------------------------
+
+*bexp	<rate>
+*jexp	<rate>
+
+Changes the base and job experience rates on a map.
+<rate> is given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
+'base_exp_rate' and 'job_exp_rate' in '/conf/battle/exp.conf'.
+
+---------------------------------------
+
+*loadevent
+
+Triggers the label "OnPCLoadMapEvent" when players enter a map (this also includes
+teleporting within the map). More details can be found in '/doc/script_commands.txt'.
+
+---------------------------------------
+
+*allowks
+
+Allows kill stealing on a map (rendering the @noks command useless).
+
+---------------------------------------
+
+*autotrade
+
+Allows the @autotrade command on a map.
+
+This only applies if 'at_mapflag' is enabled in '/conf/battle/misc.conf'. Otherwise, the
+atcommand is enabled on all maps by default.
+
+---------------------------------------
+
+*nomapchannelautojoin
+
+Stops players from automatically joining the #map channel on a map.
+
+This only applies if map channels are enabled and 'map_local_channel_autojoin' is true
+in '/conf/channels.conf'.
+
+---------------------------------------
+
+*notomb
+
+Disables MVP tombs from appearing on a map.
+
+---------------------------------------

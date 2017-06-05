@@ -1,0 +1,85 @@
+//===== rAthena Script ======================================= 
+//= Lighthalzen Airport Staff
+//===== By: ================================================== 
+//= L0ne_W0lf, Muad_Dib
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Lighthalzen Airport Staff
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+lhz_airport,143,43,5	script	Airport Staff#lhz_air1a::lhz_airport1	90,{
+	mes "[Airport Staff]";
+	mes "Welcome to the";
+	mes "Lighthalzen Airport,";
+	mes "where we offer nonstop";
+	mes "flights to Einbroch, Juno and Hugel.";
+	next;
+	if (select("Board the Airship.:Cancel.") == 1) {
+		mes "[Airport Staff]";
+		mes "The boarding fee is";
+		mes "1,200 zeny, but you can";
+		mes "waive the fee if you redeem";
+		mes "a Free Ticket for Airship.";
+		next;
+		if (select("Yes:No") == 1) {
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
+				warp "lhz_airport",148,51;
+				end;
+			}
+			if (Zeny >= 1200) {
+				set Zeny, Zeny - 1200;
+				warp "lhz_airport",148,51;
+				end;
+			}
+			mes "[Airship Staff]";
+			mes "I'm sorry, but you don't";
+			mes "have 1,200 zeny to pay";
+			mes "for the boarding fee.";
+			close;
+		}
+	}
+	mes "[Airport Staff]";
+	mes "Thank you and";
+	mes "please come again.";
+	mes "Have a good day~";
+	close;
+}
+
+lhz_airport,158,43,5	duplicate(lhz_airport1)	Airship Staff#lhz_air1b	90
+lhz_airport,126,43,5	duplicate(lhz_airport1)	Airship Staff#lhz_air1c	90
+
+lhz_airport,143,49,3	script	Arrival Staff#lhz_air2a::lhz_airport2	90,{
+	mes "[Arrival Staff]";
+	mes "Welcome to Lighthalzen Airport.";
+	mes "Please let me guide you to the";
+	mes "main terminal if you are arriving from your flight. Otherwise, please";
+	mes "board the departing Airship to reach your intended destination.";
+	next;
+	if (select("Exit to main terminal.:Cancel.") == 1) {
+		mes "[Arrival Staff]";
+		mes "Once you're in the main terminal, you will need to pay the fee again";
+		mes "to board an Airship. You should";
+		mes "only exit if Lighthalzen is your intended destination. Shall we";
+		mes "proceed to the main terminal?";
+		next;
+		if (select("Yes:No") == 1) {
+			warp "lhz_airport",142,40;
+			end;
+		}
+	}
+	mes "[Arrival Staff]";
+	mes "Alright, thank you";
+	mes "for your patronage";
+	mes "and I hope you have";
+	mes "a pleasant flight~";
+	close;
+}
+
+lhz_airport,126,51,3	duplicate(lhz_airport2)	Arrival Staff#lhz_air2b	90
+lhz_airport,158,50,3	duplicate(lhz_airport2)	Arrival Staff#lhz_air2c	90

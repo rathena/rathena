@@ -1,0 +1,5 @@
+import: db/re/mob_branch.txt
+import: db/re/mob_poring.txt
+import: db/re/mob_boss.txt
+import: db/mob_pouch.txt
+import: db/mob_classchange.txt

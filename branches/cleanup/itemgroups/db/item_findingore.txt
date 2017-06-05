@@ -1,0 +1,25 @@
+// Ore Discovery Obtainable Items Database
+//
+// Structure of Database:
+// GroupID,ItemID,Rate
+
+IG_FindingOre,714,3		//Emperium
+IG_FindingOre,756,20	//Rough Oridecon
+IG_FindingOre,757,20	//Rough Elunium
+IG_FindingOre,969,2		//Gold
+IG_FindingOre,984,10	//Oridecon
+IG_FindingOre,985,10	//Elunium
+IG_FindingOre,990,30	//Red Blood
+IG_FindingOre,991,30	//Crystal Blue
+IG_FindingOre,992,30	//Wind of Verdure
+IG_FindingOre,993,30	//Green Live
+IG_FindingOre,994,15	//Flame Heart
+IG_FindingOre,995,15	//Mystic Frozen
+IG_FindingOre,996,15	//Rough Wind
+IG_FindingOre,997,15	//Great Nature
+IG_FindingOre,998,80	//Iron
+IG_FindingOre,999,50	//Steel
+IG_FindingOre,1002,100	//Iron Ore
+IG_FindingOre,1003,60	//Coal
+IG_FindingOre,1010,95	//Phracon
+IG_FindingOre,1011,55	//Emveretarcon

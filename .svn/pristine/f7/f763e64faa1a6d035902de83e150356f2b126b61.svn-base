@@ -1,0 +1,252 @@
+//===== rAthena Script =======================================
+//= Buying Shop Scripts
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.1b
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Buying Shop licenses.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Kisuka]
+//= 1.1 Added Catalog Magician. [Euphy]
+//= 1.1a Moved Catalog Magician to Renewal path. [Euphy]
+//= 1.1b Added missing weight checks. [Euphy]
+//============================================================ 
+
+// Black Marketeer (Buy Licenses - Non-Merchant Classes) :: qskill_buy_store
+//============================================================ 
+que_job01,68,84,1	script	Black Marketeer#Buying	881,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2400) {
+		mes "[Mr. Jass]";
+		mes "You're too greedy, even compared to someone like me!";
+		mes "Why don't you go lighten your bag first?";
+		close;
+	}
+	if (getskilllv("ALL_BUYING_STORE") == 1) {
+		mes "[Mr. Jass]";
+		mes "Hey, you already made a contract with Hugh.";
+		mes "I don't have any business with you.";
+		close;
+	}
+	mes "[Mr. Jass]";
+	mes "You must need something badly to come to find me.";
+	mes "What do you want?";
+	next;
+	switch(select("Bulk Buyer Shop License:Who are you?:Nothing, nothing!")) {
+	case 1:
+		mes "[Mr. Jass]";
+		mes "I knew it!";
+		mes "Sure, I can make it for you.";
+		mes "Mine looks just like the authentic one that Merchants get from that bastard Mr. Hugh!";
+		next;
+		mes "[Mr. Jass]";
+		mes "And my license is better 'cuz you don't need ta' learn any skills.";
+		mes "How many do you want?";
+		next;
+		mes "[Mr. Jass]";
+		mes "Just so you know, I can only make them in small quantities, up to 10 at a time.";
+		mes "It'll cost 500 zeny for each one.";
+		next;
+		while(1) {
+			input .@input;
+			mes "[Mr. Jass]";
+			if (.@input == 0) {
+				mes "Don't you need those licenses?";
+				close;
+			} else if (.@input > 10) {
+				mes "I can only make up to 10 at a time, you know.";
+				next;
+			} else {
+				mes "It'll cost "+(.@input*500)+" zeny.";
+				if (Zeny < (.@input*500)) {
+					mes "but you don't have enough money.";
+					next;
+					mes "[Mr. Jass]";
+					mes "Don't you know the basics of business? Everything has a price.";
+					mes "If you want something, you gotta pay for it.";
+				} else {
+					mes "Ha... Ha ha ha!";
+					mes "Mr. Hugh, I'll take over your license business. You'll see!";
+					mes "*Giggle Giggle*";
+					getitem 12548,.@input; //Buy_Market_Permit2
+					set Zeny,Zeny-(.@input*500);
+				}
+				close;
+			}
+		}
+	case 2:
+		mes "[Mr. Jass]";
+		mes "I left my hometown a long time ago.";
+		mes "It's meaningless to ask who I am because all I've got left now is my hatred.";
+		next;
+		mes "[Mr. Jass]";
+		mes "...";
+		mes "Hugh is a corrupt merchant with no sense of business ethics.";
+		mes "My sole purpose in life is to destroy Hugh.";
+		next;
+		mes "[Mr. Jass]";
+		mes "Aw, I drank too much... (*Hic*)";
+		mes "That's just the alohol talking.";
+		mes "Please forget anything I said.";
+		close;
+	case 3:
+		mes "[Mr. Jass]";
+		mes "Alright, alright! You don't have to yell.";
+		mes "Just leave me alone if you've got no business with me.";
+		close;
+	}
+}
+
+// Purchasing Team (Learn Skill - Merchant Classes)
+//============================================================ 
+alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2400) {
+		mes "- You cannot converse or perform the quest because you are carrying too many items. -";
+		close;
+	}
+	mes "[Mr. Hugh]";
+	if (BaseClass == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
+		if (getskilllv("ALL_BUYING_STORE") == 1) {
+			mes "I'm Hugh from the Purchasing Team.";
+			mes "How may I help you today?";
+			next;
+			if(select("Purchase Bulk Buyer Shop License:Quit") == 2) {
+				mes "[Mr. Hugh]";
+				mes "Please feel free to ask me if you need any Bulk Buyer Shop Licenses.";
+				mes "Come again~";
+				close;
+			}
+			mes "[Mr. Hugh]";
+			mes "It's 200 zeny for each Bulk Buyer Shop License, and you may purchase up to 50 at a time.";
+			mes "How many licenses do you need?";
+			next;
+			while(1) {
+				input .@input;
+				mes "[Mr. Hugh]";
+				if (.@input == 0) {
+					mes "You have cancelled the trade.";
+					mes "Have a good day.";
+					close;
+				} else if (.@input > 50) {
+					mes "Please enter a value of 50 or less.";
+					next;
+				} else {
+					mes "It'll cost "+(.@input*200)+" zeny for "+.@input+" licenses.";
+					if (Zeny < (.@input*200)) {
+						mes "but you don't seem to have enough money.";
+					} else {
+						mes "Thank you for your patronage.";
+						getitem 6377,.@input; //Buy_Market_Permit
+						set Zeny,Zeny-(.@input*200);
+					}
+					close;
+				}
+			}
+		} else {
+			mes "I'm Hugh from the Purchasing Team at the Alberta Merchant Guild.";
+			mes "You're...";
+			next;
+			mes "[Mr. Hugh]";
+			mes "Did you know? Our guild has issued a license to allow individuals to buy goods from others.";
+			next;
+			select("I've never had problems buying items...");
+			mes "[Mr. Hugh]";
+			mes "You're right, but think about it:";
+			mes "haven't you had a hard time buying in bulk?";
+			mes "You'd have to find and talk to everyone that has an item you want.";
+			mes "Pretty inconvenient, isn't it?";
+			next;
+			mes "[Mr. Hugh]";
+			mes "Since buying in bulk is an important issue to us Merchants,";
+			mes "I've proposed an innovative plan to our guild, based on my 10 years of experience in making purchases.";
+			next;
+			mes "[Mr. Hugh]";
+			mes "'Let Individuals Open";
+			mes "a Bulk Buyer Shop!'";
+			mes "That's the title of my proposal.";
+			mes "You'll see, when you read it...";
+			next;
+			mes "[Mr. Hugh]";
+			mes "...";
+			mes "...(Mr. Hugh yammers on and on with all the details.)";
+			next;
+			select("Alright, what's your point?");
+			mes "[Mr. Hugh]";
+			mes "Oh, yes. In summary,";
+			mes "you can buy certain items in bulk through Vending.";
+			next;
+			mes "[Mr. Hugh]";
+			mes "In order to open a Bulk Buyer Shop, you need a license issued from the Merchant Guild.";
+			next;
+			mes "[Mr. Hugh]";
+			mes "You need it every time you open the shop. We're expecting a significant increase in profits through this new kind of licensing.";
+			next;
+			mes "[Mr. Hugh]";
+			mes "That's the point of my proposal!";
+			mes "Our president was so happy to hear that we're going to make big bucks!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Please get to the point already!";
+			next;
+			mes "[Mr. Hugh]";
+			mes "Don't be so impatient, alright?";
+			mes "My point is, we can let you open the Bulk Buyer Shop if you've learned Vending.";
+			next;
+			mes "[Mr. Hugh]";
+			mes "Of course, we charge 10,000 zeny as a one-time registration fee.";
+			mes "You will need the ^4A4AFFBulk Buyer Shop License^000000 every time you open the shop.";
+			next;
+			mes "[Mr. Hugh]";
+			mes "Say, would you like to register now?";
+			mes "If you do, I'll teach you how to open the Bulk Buyer Shop.";
+			next;
+			if(select("Learn how to open Bulk Buyer Shop:Cancel") == 2) {
+				mes "[Mr. Hugh]";
+				mes "Man, that's disappointing!";
+				mes "Using this bulk buyer option can benefit your business in many ways, but it's your call.";
+				mes "I'm always open for consultation!";
+				close;
+			}
+			mes "[Mr. Hugh]";
+			if (Zeny < 10000) {
+				mes "The registration fee is 10,000 zeny.";
+				mes "Please have the fee ready first.";
+				close;
+			} else {
+				mes "You've made a good decision.";
+				mes "Please give me the registration fee, and sign right here....";
+				next;
+				input .@name$;
+				mes "[Mr. Hugh]";
+				mes .@name$+"....";
+				mes "I like your handwriting.";
+				mes "Okay, you're now approved to open the Bulk Buyer Shop.";
+				set Zeny,Zeny-10000;
+				getitem 6377,5; //Buy_Stall_Permit
+				skill "ALL_BUYING_STORE",1,SKILL_PERM_GRANT;
+				next;
+				mes "[Mr. Hugh]";
+				mes "Currently, only normal items ^8C2121EXCEPT^000000 equipment, certain potions, and hand-crafted items can be purchased in bulk, but this can still be very beneficial to you, depending on how you use it.";
+				next;
+				mes "[Mr. Hugh]";
+				mes "Oh, and you need at least one of the item that you want to buy in your inventory because you have to show it to other through your shop.";
+				next;
+				mes "[Mr. Hugh]";
+				mes "Your skill should now be registered in your skill window. If you can't see it you probably have to minimize your Skill List and check the 3rd Job Tab.";
+				next;
+				mes "[Mr. Hugh]";
+				mes "I've given you 5 Bulk Buyer Shop Licenses for your trial.";
+				mes "Enjoy shopping!";
+				close;
+			}
+		}
+	}
+	mes "I'm Hugh from the Purchasing Team at the Alberta Merchant Guild.";
+	mes "I'd love to chat, but I'm too busy at the moment.";
+	next;
+	mes "[Mr. Hugh]";
+	mes "My time is solely dedicated to our customers in the Merchant industry.";
+	close;
+}

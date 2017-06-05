@@ -1,0 +1,782 @@
+//===== rAthena Script ======================================= 
+//= Morroc Town
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 2.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Morroc Town NPCs
+//===== Additional Comments: ================================= 
+//= Fully working
+//= Fixed Lapidary sprite, Implemented ANTHELL trigger
+//= (in both NPC/Warps) [Lupus]. Removed it from NPC and put in Warp
+//= 1.3 Removed some NPC due to Assassin Job Quest [kobra_k88]
+//= 1.3b mobs name corrected [Lupus], 1.3c - Adv classes support
+//= 1.4 Fixed typos [Nexon]
+//= 1.5 Added a lvl 4 weapon quest related NPC [MasterOfMuppets]
+//= 1.6 Added Bartender NPC, made by Persian69 [Vicious_Pucca]
+//= 1.7 Removed Duplicates [Silent]
+//= 1.8 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.9 Removed duplicate NPC, changed temp char vars to temp npc. [L0ne_W0;f]
+//= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 2.0a Fixed outdated info about Milk [Lupus]
+//= 2.1 Updated/Added NPCs for episode 12.1. [L0ne_W0lf]
+//= 2.2 Removed duplicate bartender NPC. (bugreport:4555) [L0ne_W0lf]
+//============================================================
+
+// Morroc
+//============================================================
+morocc,150,120,5	script	Soldier - Morroc#01::MocSoldier	707,3,3,{
+	mes "[Morroc Soldier]";
+	mes "Hey, you! Stop there.";
+	next;
+	mes "[Morroc Soldier]";
+	mes "This is a restricted area. You can't come any further!";
+	close;
+
+OnTouch:
+	mes "[Morroc Soldier]";
+	mes "Hey, you! Stop there.";
+	next;
+	mes "[Morroc Soldier]";
+	mes "This is a restricted area. You can't come any further!";
+	close;
+}
+
+morocc,202,244,0	script	Volunteer - Morroc#01	745,{
+	mes "[Morroc Volunteer]";
+	mes "After that terrible incident wiped out the entire Morroc, Rune-Midgard Kingdom has gathered us valunteers to help restorations.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "As important as it seems, everyone's being careful but there are always some that really don't realize the situation, don't you think?";
+	close;
+}
+
+morocc,88,133,3	script	Volunteer - Morroc#02	748,{
+	mes "[Morroc Volunteer]";
+	mes "We're... We're flooded with work...";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "This work's like never-ending, no matter how hard we try!!!";
+	mes "People of Rune-Midgard!! Please lend us a helping hand!!";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "Haw.... Whew... Ugh...";
+	close;
+}
+
+morocc,202,110,0	script	Volunteer - Morroc#03	730,{
+	mes "[Morroc Volunteer]";
+	mes "We're still unable to estimate the overall damage.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "Adventurers' Union and Prontera Kingdom are putting their efforts on restorations as well as restraints of the original cause of the disaster.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "Unless we settle the original cause, the damage will even spread out of Morroc. The only thing left is to get worse.";
+	close;
+}
+
+morocc,268,287,3	script	Volunteer - Morroc#04	727,{
+	mes "[Morroc Volunteer]";
+	mes "As bad as it seems, we can't even ask for more support.";
+	mes "This sure must be the worst thing ever happened in Rune-Midgard's history.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "I wish I knew how bad the damage is, but we can't even estimate it. It's like shovelling sand against the tide..";
+	close;
+}
+
+morocc,37,287,0	script	Volunteer - Morroc#05	79,{
+	mes "[Morroc Volunteer]";
+	mes "The town's all shattered, but the real problem is the towners.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "It's a real pity to see those victims of the destroyed town, but the witnesses of the disaster are so much shocked. They're simply not normal now.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "People are scared to death, but those are fortunate at least.. cause.. many others got mentally ill and stuff..";
+	close;
+}
+
+morocc,223,102,0	script	Volunteer - Morroc#06::MocVolunteer	741,{
+	mes "[Morroc Volunteer]";
+	mes "Ugh.. It's kinda spooky, here.. Even this dry wind of the desert seems to have a dark nature.";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "Ooh!! Something... I can feel something! The dark and gloomy air flowing around this town is actually giving me a musical motiff!";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "Right, I think you should hear it! The title is.. 'The Rhapsody of Morroc Satan's Rebirth'!!";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "When finally wake up, it's just the same darkness";
+	mes "Failed to be reborn at the same place,";
+	mes "Gotta try harder and harder, never ever give up,";
+	mes "But even after hundreds and thousands of trying,";
+	mes "The great Satan of Morroc can't revive~";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "My stupid button men are useless,";
+	mes "Against those adventurers,";
+	mes "This time I must revive,";
+	mes "Cracking the time and the space,";
+	mes "Will be saved for the last~~~";
+	next;
+	mes "[Ringing Voice]";
+	mes "Be quiet! Can't you see what's going on?!";
+	specialeffect EF_HIT2,AREA,"Volunteer - Morroc#06";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "Heyyy, you're being too harsh, Senyorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
+	next;
+	mes "[Ringing Voice]";
+	mes "Anyways, isn't that a crib? I think I heard something like that before..";
+	next;
+	mes "[Morroc Volunteer]";
+	mes "No, No way!? It,, sure is not!";
+	close;
+}
+
+morocc,226,102,4	duplicate(MocVolunteer)	Volunteer - Morroc#07	726
+
+moc_ruins,123,154,0	script	Young Man#moc01	99,{
+	mes "[Young Man]";
+	mes "The town's completely destroyed, but that giant triangular structure hasn't been harmed at all. Maybe it's protected by some kinda special power.";
+	next;
+	mes "[Young Man]";
+	mes "You know...Those giant, triangular buildings at the NorthWest corner of Morroc known are known to us as Pyramids...";
+	next;
+	mes "[Young Man]";
+	mes "Those things have been around here for thousands and thousands of years. No one knows when and why they were built, or who built them.";
+	next;
+	mes "[Young Man]";
+	mes "All we know is that tons of monsters live inside those weird buildings. You might wanna stay away from those really dangerous places.";
+	next;
+	mes "[Young Man]";
+	mes "Those monsters in the Pyramid would be very, very sensitive to sweet flash smell of people....";
+	close;
+}
+
+moc_ruins,128,153,0	script	Grampa#moc	61,{
+	mes "[Old Scholar]";
+	mes "I've devoted my life to researching the mysterious pyramids near Morroc. I haven't been able to concretely confirm anything yet, but...";
+	next;
+	mes "[Old Scholar]";
+	mes "I'm sure that the largest pyramid contains the tomb of the ancient king, Osiris! I'm willing to stake my life on it!";
+	close;
+}
+
+moc_ruins,132,144,0	script	Wolf Young Man#moc	85,{
+	mes "[Young Man]";
+	mes "I remember I said the bandits of desert are the desert wolves.. Those bastards always roam around in a bunch and they would get so cruel and outrageous if one of them got attacked.";
+	next;
+	mes "[Young Man]";
+	mes "They are so vicious, and I'm telling ya, I'm no kidding. You can only find some bones and rotten milk in the backpack after these wolves sweep through.";
+	mes "Those things are so mean and vicious..";
+	next;
+	mes "[Young Man]";
+	mes "But the thing is that.. I even kinda feel those merciless cold-blooded monsters are nothing to be afraid of, compared to what has happened in Morroc. Morroc is already a hell.";
+	close;
+}
+
+moc_ruins,115,144,3	script	Muka Young Man#moc	83,{
+	mes "[Young Man]";
+	mes "I work in the trading business, so I always have to cross the hot, dry Morroc Desert on business.";
+	next;
+	mes "[Young Man]";
+	mes "But I can't do that anymore.";
+	next;
+	mes "[Young Man]";
+	mes "Now that I can't, I kind of miss the old days.";
+	next;
+	mes "[Young Man]";
+	mes "Like this one time, while I was in the middle of the desert, I got so thirsty that I caught a cactus.. but before I was able to cut it, it slapped me! Then it shot me in the arse with all these needles...";
+	next;
+	mes "[Young Man]";
+	mes "Later, I learned that it wasn't a normal cactus I found, but the monster we call 'Muka.'";
+	mes "Now I come to think of it, it was fun as much as dangerous.";
+	close;
+}
+
+moc_ruins,109,138,0	script	Diamond Young Man#moc	99,{
+	mes "[Young Man]";
+	mes "The undisputed queen of jewels has to be the Diamond. After looking at it just once, no one can deny its beauty.";
+	next;
+	mes "[Young Man]";
+	mes "Many factors determine its value, but the most important thing is its size.";
+	next;
+	mes "[Young Man]";
+	mes "It should also be a perfect crystal, not cracked or chipped, if you want to sell the Diamond for a lot of zeny.";
+	next;
+	mes "[Young Man]";
+	mes "But look! The hardest stone in the world got broken in two!";
+	next;
+	mes "[Young Man]";
+	mes "I know it's not the time to worry about some gemstones but.. this.. was my everything..";
+	close;
+}
+
+morocc,54,251,0	script	Young Man#moc02	89,{
+	mes "[Drunken Young Man]";
+	mes "Wait a second..! Are you perhaps an adventurer? Welcome! How's your trip?";
+	mes "Heh heh~ Let me tell you a story. You know I just got out of that Tavern, there, huh?";
+	next;
+	mes "[Drunken Young Man]";
+	mes "I heard the Satan Morroc has revived. It just got out of cracking the time and the space blar... hic~";
+	next;
+	mes "[Drunken Young Man]";
+	mes "Ah... I kinda wanna see that Satan with my own eyes, but! I really shouldn't. I shouldn't even dream of seeing that Satan in person.";
+	next;
+	mes "[Drunken Young Man]";
+	mes "But I think there'd be nothing to lose if you, a person of bravery, who came through the wile desert try to find it, don't you think? Teehee~ Don't forget to buy me a drink when you find it!";
+	mes "Hic!";
+	next;
+	mes "[Drunken Young Man]";
+	mes "Anyway, do you know where we are? I just had a little drink at a tavern, but all of a sudden, the whole town's disappeared when I got out.. or, some five hundred years have passed???!";
+	close;
+}
+
+moc_ruins,94,117,0	script	Pale Looking Young Man	48,{
+	mes "[Pale-looking Young Man]";
+	mes "... That day... I saw the bloody moon in the sky. It was too silent that it felt so spooky.";
+	next;
+	mes "[Pale-looking Young Man]";
+	mes "Not even a whistle of dry wind, and the air so heavy and stuffy, I could hardly breathe.";
+	next;
+	mes "[Pale-looking Young Man]";
+	mes "But then, Bang! It was right that time that I saw the enormous amount of smoke rising up at the Castle of Morroc with an earsplitting sound.";
+	next;
+	mes "[Pale-looking Young Man]";
+	mes "All happened so fast. The Oasis of the Castle was all dried up and the town was destroyed. And... and that voice... I heard a voice.";
+	next;
+	mes "[Pale-looking Young Man]";
+	mes "Blood... Blood is what it takes to pay for the soul... and that dark sound of laughter...";
+	mes "Aah!!! It's... It's still ringing in my ears!!! Aahhhhh!!!!";
+	next;
+	mes "- It'd be better not to disturb him anymore -";
+	close;
+}
+
+moc_ruins,115,82,0	script	Little Girl#moc	703,{
+	mes "[Little Girl]";
+	mes "-Crying-";
+	next;
+	mes "[Little Girl]";
+	mes "I'm so scared! Where's mom and dad...! hhooooo... Where's our house...";
+	next;
+	mes "[Little Boy]";
+	mes "Please stop crying, Eliese... You could even faint if you cry all day long, you know...";
+	next;
+	mes "[Little Girl]";
+	mes "No! No... Mommy... Daddy....";
+	close;
+}
+
+moc_ruins,118,82,1	script	Little Boy#moc	706,{
+	mes "[Little Boy]";
+	mes "............... Let's stop crying, Eliese...";
+	next;
+	mes "[Little Girl]";
+	mes "Nooooooo... Mommy... Daddy....!!";
+	next;
+	mes "[Little Boy]";
+	mes "Mom and Dad are now...";
+	next;
+	mes "[Little Girl]";
+	mes "No...... noooooo...";
+	next;
+	mes "[Little Boy]";
+	mes "Right, you love ice-cream, don't you? I.. I can get you an ice-cream if you stop crying. Don't cry, Eliese, please.. Ok? Don't...";
+	close;
+}
+
+moc_ruins,121,116,4	script	Picky Lady#moc	66,{
+	mes "[Syvia]";
+	mes "The fields of Rune-Midgard are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
+	mes "You know, like how Spore sticks out its tongue after you kill it..";
+	next;
+	mes "[Syvia]";
+	mes "Or, how little Picky wears that tiny egg shell sometimes?..";
+	next;
+	mes "[Syvia]";
+	mes "I can't believe what just has happened.. Our town used to be the one with those cute little monsters, not that kinda of visious dreadful Evil sleeping in! Whew...";
+	next;
+	mes "[Syvia]";
+	mes "I'm so scared... I just wanna ease my mind watching over those cute little Porings...";
+	next;
+	switch(select("What about Angeling?:How about Ghostring?:Quit Conversation")) {
+	case 1:
+		mes "[Syvia]";
+		mes "Ooh! Angeling is just like Poring, except it has angel wings! Of course, I don't know if they can actually fly..";
+		next;
+		mes "[Syvia]";
+		mes "Angelings are rarely seen, but can be found among large groups of Porings living in one of the fields south of Prontera.";
+		mes "Angeling is a high level monster with Holy property, so it's immune to most magic, aside from spells that have Neutral or Shadow attack properties.";
+		next;
+		mes "[Syvia]";
+		mes "Hehe~ Don't you think I know a lot about Porings? I love them soooo much";
+		next;
+		mes "[Syvia]";
+		mes "Hehe... Poring... Hee......";
+		close;
+	case 2:
+		mes "[Syvia]";
+		mes "Ghostring is an evil ghost Poring. It's rarely seen, but can be found among mass groups of Porings living in one of the fields south of Prontera.";
+		next;
+		mes "[Syvia]";
+		mes "Ghostring is a high-leveled monster with the Ghost property, so it can withstand all physical attacks.";
+		mes "Damage can only be caused to Ghostring through magic spells or weapons with an a specific property.";
+		next;
+		mes "[Syvia]";
+		mes "Hehe~ Don't you think I know a lot about Porings? I love them soooo much~";
+		next;
+		mes "[Syvia]";
+		mes "Hehe... Poring... Teehee......";
+		close;
+	case 3:
+		mes "[Syvia]";
+		mes "Hehe... Poring... Teehee......";
+		close;
+	}
+}
+
+moc_ruins,155,107,4	script	Ant Man#moc	47,{
+	mes "[Akira]";
+	mes "Hey, you. Did you cross the desert?";
+	next;
+	mes "[Akira]";
+	mes "When you walk through the desert about one map North and 3 maps East, you'll find the entrance to Ant Hell.";
+	next;
+	mes "[Akira]";
+	mes "There are two different entrances to the Ant Hell. When you get inside, the 1st and the 2nd underground levels of winding looking caves are connected to each other.";
+	next;
+	mes "[Akira]";
+	mes "I'm really wondered how those entrances are after the horrible destruction, but I can't go out.. If you ever hear anything about it, please get me informed.";
+	next;
+	switch(select("About 'Ant Hell':About Ants:End Conversation")) {
+	case 1:
+		mes "[Akira]";
+		mes "That cave is sure a dangerous hell, sticky and all... There are 2 underground levels.";
+		mes "Just head East till you see the bridge which connects to the Payon Forest.";
+		next;
+		mes "[Akira]";
+		mes "In the map right before that bridge, head north to find the entrance to Ant Hell, though I'm not sure if it's still there.";
+		close;
+	case 2:
+		mes "[Akira]";
+		mes "Ant Hell is swarming with Ant monsters. You'll notice that they all classed with different names...";
+		next;
+		mes "[Akira]";
+		mes "Andre is the weakest, Piere is comparatively average, and Deniro is the strongest Ant. Keep that in mind so you can fight the Ants suitable to your level.";
+		next;
+		mes "[Akira]";
+		mes "Andre is colored in Ivory, Yellowish Green is Piere, and the Red one is Deniro.";
+		mes "It's really easy to distinguish those from Bitata, the commen ants because they look very different.";
+		next;
+		mes "[Akira]";
+		mes "Oh, and those ants are greedy as Porings and will try to steal your items, so keep that in mind.";
+		next;
+		mes "[Akira]";
+		mes "If you ever, could cross the desert without any disturbances from the Satan...";
+		close;
+	case 3:
+		mes "[Akira]";
+		mes "There's also an old man called Guias, the spirit of the earth. He's pretty hard to deal with.";
+		next;
+		mes "[Akira]";
+		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shovelling skills of that old granpa is very strong that you should watch out.";
+		next;
+		mes "[Akira]";
+		mes "...Well, what am I talking about? What is left to be afraid when the Satan of Morroc is revived? Huh..huhhuh...";
+		close;
+	}
+}
+
+moc_ruins,143,43,4	script	Assassin Boy#moc	118,{
+	mes "[Slayer Kid]";
+	mes "Unbeatable in man-to-man fights, Assassins always overcome their enemies! Erm, always overcome their enemies without a trace.";
+	next;
+	mes "[Slayer Kid]";
+	mes "But what did they do when this destruction happened in Morroc!!!";
+	next;
+	switch(select("?????:Where I can find the Assassin clan?:End Conversation")) {
+	case 1:
+		mes "[Slayer Kid]";
+		mes "I hear Assassins practice killing people, quietly and stealthfully..";
+		next;
+		mes "[Slayer Kid]";
+		mes "I left home three years ago, and have been searching for their secret base ever since...";
+		mes "Are they really that invisible?!";
+		next;
+		mes "[Slayer Kid]";
+		mes "Well.. Maybe it'd too late now..";
+		mes "Now that the whole town's destroyed... I don't even care what happenes next...";
+		close;
+	case 2:
+		mes "[Slayer Kid]";
+		mes "You know what...";
+		mes "It seemed to be impossible to find.";
+		next;
+		mes "[Slayer Kid]";
+		mes "Well, I hear that if you leave this town and go 2 maps east, and then 2 maps South, you should be able to find it..";
+		next;
+		mes "[Slayer Kid]";
+		mes "The 'Mirage Tower,' the head building of Sograt Desert, is supposed to appear in this awesome sandstorm! But, I still haven't found it.";
+		next;
+		mes "[Slayer Kid]";
+		mes "If you find them, and the clan master thinks you're qualified, you can become an Assassin! Or, at least, I think..";
+		next;
+		mes "[Slayer Kid]";
+		mes "And I hear the coolest Assassin of them all is the Assassin Cross! But, that's even a bigger mystery~ You won't be able to see them unless you're a great thief!";
+		next;
+		mes "[Slayer Kid]";
+		mes "But then... What the hell were they doing when Morroc was destroyed?!!!";
+		close;
+	case 3:
+		mes "[Slayer Kid]";
+		mes "Assassin is one of the advanced jobs for Thief, and specializes in fighting with Neutral and Poison property attacks.";
+		next;
+		mes "[Slayer Kid]";
+		mes "They're also very sneaky! I hear that they're able to cloak so that no one can see them!";
+		next;
+		mes "[Slayer Kid]";
+		mes "But then... What the hell were they doing when Morroc was destroyed?!!!";
+		close;
+	}
+}
+
+moc_ruins,173,141,4	script	Dimitri#moc	49,{
+	mes "[Dimitri]";
+	mes "The desert of Morroc has the highest average temperature in Midgard. You might as well think twice before you sit on the sand in the middle of the desert, cause your ass will be toasted.";
+	next;
+	switch(select("About the desert sands:About the remedy for Fatigue:End Conversation")) {
+	case 1:
+		mes "[Dimitri]";
+		mes "......What I mean is that...";
+		mes "It seems like it should be all burnt, but it's not!";
+		next;
+		mes "[Dimitri]";
+		mes "You can sit down and take a rest whenever you need to and your ass won't burn. I guess the Morroc sand doesn't conduct heat as much as it should.";
+		next;
+		mes "[Dimitri]";
+		mes "That's why everyone could recover the HP and SP in the middle of desert.";
+		next;
+		mes "[Dimitri]";
+		mes "Now I come to think of it, maybe the reason why Morroc has exceptionally high average temperature is because that Satan is sealed within.";
+		close;
+	case 2:
+		mes "[Dimitri]";
+		mes "Recovery!";
+		mes "That's what the potions are for!";
+		mes "Red Potions have become steadily popular since they're so affordable, even though they only recover a little bit of HP.";
+		next;
+		mes "[Dimitri]";
+		mes "Try this bottle of ice-cold potion when you go into the Oasis around the Pyramid...";
+		mes "Yeah.. you want this bad.. but the situation's not good...";
+		close;
+	case 3:
+		mes "[Dimitri]";
+		mes "Sometimes 'Milk' comes out of 'PecoPeco's Egg.' Now..";
+		mes "I'm not sure how the cow's milk comes out of some bird's egg...";
+		next;
+		mes "[Dimitri]";
+		mes "I may not be a man of science, but how is that even possible?.";
+		mes "I mean, did the Milk come prepackaged with the egg, or did it get in there somehow?..";
+		mes "Oh, whatever.. It's just not the time for this.";
+		close;
+	}
+}
+
+moc_ruins,174,120,4	script	Fly Man#moc	54,{
+	mes "[Armani]";
+	mes "Ooh, Woooowwww.";
+	next;
+	mes "[Armani]";
+	mes "I... I really saw it.... The Fly Lord gets shattered in pieces in a blink of an eye...";
+	next;
+	mes "[Armani]";
+	mes "What is really going on? Would it be possible for us to survive??";
+	next;
+	switch(select("The Fly Lord?!")) {
+	case 1:
+		mes "[Armani]";
+		mes "Yes, yes! I'm talking about the Dragon Fly, master of all flies!!";
+		mes "The Dragon Fly is a special one that stays in the North-east of the town.";
+		next;
+		mes "[Armani]";
+		mes "It's so much stronger than the other flies.";
+		next;
+		mes "[Armani]";
+		mes "And when you kill it, there's even a chance that you might earn a ^880000Clip^000000 item!";
+		next;
+		mes "[Armani]";
+		mes "Anyways, don't you think the Satan Morroc is so cruel?";
+		mes "They may not be the same kind, but still isn't it cruel to take that monster's soul with a single blow?";
+		next;
+		mes "[Armani]";
+		mes "What should we do when this dreadful evil has come to life again!";
+		close;
+	}
+}
+
+moc_ruins,173,70,4	script	Uncle Morroc#moc	48,{
+	mes "[Phlanette]";
+	mes "Morroc is located in an extremely dry region, surrounded by desert.";
+	mes "No place in the world is as hot as Morroc.";
+	next;
+	mes "[Phlanette]";
+	mes "I have a hunch that this hot and dry climate in Morroc is because of that Satan sealed deeper underground for so long.";
+	next;
+	switch(select("Tell me about the desert.:Quit Conversation")) {
+	case 1:
+		mes "[Phlanette]";
+		mes "Um.. I'll briefly tell ya about the desert if you want to know.";
+		mes "Due to low annual rainfall, low humidity and high evaporation rate, little vegetation can be found in the desert.";
+		next;
+		mes "[Phlanette]";
+		mes "Nonetheless, there are a few hardy plants that can survive and grow in the desert.";
+		next;
+		mes "[Phlanette]";
+		mes "Unfortunately some of those plants growing around Morroc have been mutated into monsters.";
+		mes "One of those is Muka, the mutated cactus..";
+		next;
+		mes "[Phlanette]";
+		mes "However, now that the Satan has revived, no one's sure of what changes would be made in the life cycles of Morroc.";
+		close;
+	case 2:
+		mes "[Phlanette]";
+		mes "Here and there!";
+		mes "Sand everywhere...";
+		mes "Oh, I curse you, the desert of Morroc!!";
+		mes "Damn you!";
+		next;
+		mes "[Phlanette]";
+		mes "But our of all this hatred, I didn't want it to be completely destroyed...";
+		next;
+		mes "[Phlanette]";
+		mes "How come it's never possible to know its value while it's still around?";
+		close;
+	}
+}
+
+moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
+	mes "[Hashisid]";
+	mes "...Assassins are trained";
+	mes "to approach their enemies steathily,";
+	mes " as well as";
+	mes "to shroad their intent.";
+	mes "For this purpose,";
+	mes "we never";
+	mes "look our targets in the eye.";
+	next;
+	switch(select("Notion of Assassin:Quit Conversation")) {
+	case 1:
+		mes "[Hashisid]";
+		mes "Well, then..";
+		mes "I'll tell you what it is!";
+		mes "Assassins ..";
+		mes "may be commonly known as";
+		mes "infiltrators and murderers";
+		mes "who kill without remorse.";
+		next;
+		mes "[Hashisid]";
+		mes "In actuality,";
+		mes "the Assassin clan";
+		mes "is forbidden to harm innocent people,";
+		mes "or at least,";
+		mes "not without good reason";
+		next;
+		mes "[Hashisid]";
+		mes "Our true directive is to assassinate evil creatures,";
+		mes "and to use our stealth to gather intelligence";
+		mes "for the good of all Rune-Midgard.";
+		close;
+	case 2:
+		mes "[Hashisid]";
+		mes "Once upon a time,";
+		mes "our ancestors would";
+		mes "smoke tobacco called 'Hashish'";
+		mes "before performing their duties.";
+		mes "However, we no longer do so,";
+		mes "since insect or animal monsters are";
+		mes "very senstive to the smell.";
+		next;
+		mes "[Hashisid]";
+		mes "We strictly prohibit";
+		mes "smoking or eating";
+		mes "anything that has";
+		mes "strong smell...";
+		mes "If you ever,";
+		mes "try eating those";
+		mes "smelly garlic bread with spicies,";
+		next;
+		mes "[Hashisid]";
+		mes "and try hiding against";
+		mes "those wild boars or wolves,";
+		mes "believe me,";
+		mes "you'll be ripped in pieces.";
+		close;
+	}
+}
+
+moc_fild16,211,254,4	script	Assassin#07rhea_30	118,{
+	mes "[La Conte]";
+	mes "Once Thiefs are promoted";
+	mes "to Assassins, which is very professional";
+	mes "they will be able to vary their battle style.";
+	mes "their battle style.";
+	mes "There are 2 main battle styles available to Assassins.";
+	mes "They may either wield dual daggers,";
+	mes "or fight with a set of Katars!";
+	next;
+	switch(select("Specialty of Katar:Specialty of Dual Daggers:Quit Conversation")) {
+	case 1:
+		mes "[La Conte]";
+		mes "A set of Katars is";
+		mes "worn on both of the hands,";
+		mes "and allows Assassins";
+		mes "to quickly slash their enemies.";
+		mes "Anyone can buy a basic set of Katars";
+		mes "in Morroc somewhere.";
+		mes "Of course, only Assassins can use them.";
+		next;
+		mes "[La Conte]";
+		mes "The right Katar";
+		mes "usually does more damage,";
+		mes "while the left Katar";
+		mes "is used for the follow-through.";
+		mes "But since Katars are equipped on both hands,";
+		mes "you can't equip a shield or an extra weapon.";
+		next;
+		mes "[La Conte]";
+		mes "Compared to Dual Daggers,";
+		mes "Katars have faster attack speed.";
+		mes "Also, the ^663399Sonic Blow^000000 skill";
+		mes "can only be used with Katars.";
+		next;
+		mes "[La Conte]";
+		mes "You can learn the Sonic Blow skill";
+		mes "at ^663399Level 4 Katar Mastery^000000.";
+		mes "If you're an Assassin,";
+		mes "it's a handy skill to know.";
+		next;
+		mes "[La Conte]";
+		mes "Sonic Blow is the skill";
+		mes "that inflicts 8 contineous hits of";
+		mes "Neutral damage.";
+		close;
+	case 2:
+		mes "[La Conte]";
+		mes "Dual Daggers";
+		mes "enables you to equip";
+		mes "2 different kinds of Daggers";
+		mes "at the same time.";
+		mes "Of course,";
+		mes "there are other weapons you can equip";
+		mes "aside from daggers,";
+		next;
+		mes "[La Conte]";
+		mes "but they'll probably";
+		mes "be lacking in attack speed.";
+		mes "So I suggest daggers.";
+		mes "Also, without a dagger";
+		mes "in your right hand,";
+		mes " you won't be able to use";
+		mes "the ^663399Double Attack^000000 skill.";
+		next;
+		mes "[La Conte]";
+		mes "So with Dual Daggers,";
+		mes "you would have a double attack";
+		mes "with the right hand dagger,";
+		mes " and a single attack with your left hand weapon.";
+		next;
+		mes "[La Conte]";
+		mes "So that's three strikes";
+		mes "in one blow!";
+		mes "You can't argue";
+		mes "against that kind of damage!";
+		close;
+	case 3:
+		mes "[La Conte]";
+		mes "Hopefully";
+		mes "you will make good use of";
+		mes "the weapons at your disposal.";
+		mes "Remember";
+		mes "the importance of";
+		mes "strategy and";
+		mes "planning your attacks.";
+		close;
+	}
+}
+
+// Other NPCs
+//============================================================
+//Bartender
+/*
+morocc_in,166,76,3	script	Bartender#02	46,{
+	mes "[Bartender]";
+	mes "What are you going to order?";
+	next;
+	switch(select("Tropical Sograt:Vemillion the Beach:Nothing.")) {
+	case 1:
+		if (Zeny >= 1000 ) {
+			set Zeny, Zeny-1000;
+			getitem 12112,1;
+			mes "[Bartender]";
+			mes "Here you go.";
+			mes "Fruits are major ingredients,";
+			mes "but don't drink too much.";
+			close;
+		}
+		break;
+	case 2:
+		if (Zeny >= 1000 ) {
+			set Zeny, Zeny-1000;
+			getitem 12113,1;
+			mes "[Bartender]";
+			mes "Here you go.";
+			mes "but don't drink too much.";
+			close;
+		}
+		break;
+	case 3:
+		mes "[Bartender]";
+		mes "Hmm...";
+		close;
+	}
+	mes "[Bartender]";
+	mes "Are you asking me to give it for free?";
+	mes "You are one crazy person.";
+	mes "Don't even think about drinking if you don't have 1,000 zeny.";
+	close;
+}
+*/
+
+// Assassin Guild Guards
+//===================================================
+moc_fild16,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
+	mes "[Assassin Guardian]";
+	if(BaseJob == Job_Assassin) {
+		mes "Welcome.";
+		close;
+	}
+	set .@temp, rand(1,4);
+	if(.@temp == 1) mes "........";
+	if(.@temp == 2) mes "Hmmm..........";
+	if(.@temp == 3) mes "Hmmm... you shouldn't be here.....";
+	if(.@temp == 4) mes "You're trespassing on forbidden grounds.......";
+	close;
+}
+
+moc_fild16,204,281,4	duplicate(SinGuard)	Assassin Guardian#2	707
+moc_fild16,207,281,4	duplicate(SinGuard)	Assassin Guardian#3	707
+moc_fild16,216,281,4	duplicate(SinGuard)	Assassin Guardian#4	707
+moc_fild16,200,231,4	duplicate(SinGuard)	Assassin Guardian#5	707
+moc_fild16,211,231,4	duplicate(SinGuard)	Assassin Guardian#6	707
+moc_fild16,200,257,4	duplicate(SinGuard)	Assassin Guardian#7	707
+moc_fild16,211,257,4	duplicate(SinGuard)	Assassin Guardian#8	707
+

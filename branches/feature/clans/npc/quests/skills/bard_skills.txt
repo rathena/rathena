@@ -1,0 +1,1285 @@
+//===== rAthena Script ======================================= 
+//= Bard Skill Quest
+//===== By: ================================================== 
+//= Lupus, Reddozen; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Official quest for the Bard skill "Pang Voice"
+//= Prerequisite: Geffen Bard Quest
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//=     Somehow eA engine doesn't let you keep learn't skill
+//= 1.2 Added to correct locations, correct NPC's, fixed [Reddozen]
+//=     some of the items required and made them into real
+//=     quests.
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a Tixed an item ID typo. Thanks, 2Spiritual Kid
+//= 1.3b Split into different files [DracoRPG]
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4a Checks the proper variable now. (bard_q -> gef_bard_q) [L0ne_W0lf]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Added missing checkweights. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+prontera,174,328,3	script	Young Man#bard_q1	89,3,3,{
+	if (BaseJob == Job_Bard) {
+		emotion e_omg;
+		mes "[Timid Young Man]";
+		mes "Eh? Wwwaaaah--!";
+		mes "Y-you're--it's-it's--";
+		if (Upper != 1)
+			mes "It's a freakin' Bard!";
+		else
+			mes "It's a freakin' Minstrel!";
+		mes "D-don't come any closer!";
+		mes "I... I don't like you guys!";
+		next;
+		if (select("Wha--? Why the heck not?:Hey, take it easy, man.") == 1) {
+			mes "[Timid Young Man]";
+			mes "N-no! Don't look at me!";
+			mes "I know what you're trying";
+			mes "to do! Please, I haven't";
+			mes "done anything to you!";
+			mes "J-just s-stay away!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Um...";
+			mes "I'm not really trying";
+			mes "to do anything. Why";
+			mes "don't you relax, and--";
+			next;
+			mes "[Timid Young Man]";
+			mes "Relax?! Nobody believes me";
+			mes "when I tell them how dangerous";
+			mes "you guys are. You think you're";
+			mes "so smug with your funny jokes";
+			mes "and lovely songs, but I know";
+			mes "what kind of powers you have!";
+			close;
+		}
+		else {
+			mes "[Timid Young Man]";
+			mes "N-no! Don't look at me!";
+			mes "I know what you're trying";
+			mes "to do! Please, I haven't";
+			mes "done anything to you!";
+			mes "J-just s-stay away!";
+			next;
+			if (select("Offer him a drink.:Reassure him that you're safe.") == 1) {
+				mes "[" + strcharinfo(0) + "]";
+				mes "Look, I don't know what";
+				mes "you've got against me, but";
+				mes "you really need to relax.";
+				mes "Here, have a drink on me.";
+				next;
+				if (countitem(12112) > 0) {
+					mes "[Timid Young Man]";
+					mes "Oh~! Isn't that";
+					mes "a Tropical Sograt?";
+					mes "That's my favorite";
+					mes "drink in all the world!";
+					if (qskill_bard == 9) {
+						mes "Thanks so--waitaminute.";
+						next;
+						mes "[Timid Young Man]";
+						mes "This is some sort";
+						mes "of weird trick, isn't it?";
+						mes "And to think I almost";
+						mes "f-f-fell for it! P-please";
+						mes "j-just leave me alone!";
+						close;
+					}
+					else if (qskill_bard > 0) {
+						next;
+						mes "[Timid Young Man]";
+						mes "Wait, I've seen you before.";
+						mes "And you brought me a drink";
+						mes "just like this one. You...";
+						mes "You d-didn't learn th-that";
+						mes "w-w-weird skill, d-did you?";
+						mes "Wait, no. You couldn't have...";
+						next;
+						mes "[" + strcharinfo(0) + "]";
+						mes "Oh, please~";
+						mes "You know, I think";
+						mes "that maybe you";
+						mes "worry too much.";
+						close;
+					}
+					else {
+						next;
+						mes "[Timid Young Man]";
+						mes "^333333*Gulp Gulp*^000000";
+						mes "Ahhhh~ Oh, you don't";
+						mes "understand how long I've";
+						mes "been wanting this drink!";
+						mes "It tastes so good, and";
+						mes "now I feel sooo relaxed...";
+						next;
+						switch(select("See? I'm not dangerous at all~:So what makes someone like me so scary?")) {
+						case 1:
+							mes "[Timid Young Man]";
+							mes "Hmmm... Maybe.";
+							mes "Maybe all of you Bards";
+							mes "and Minstrels aren't that";
+							mes "bad. But I can never forget";
+							mes "what that Bard did to me...";
+							next;
+							mes "[Timid Young Man]";
+							mes "It all started when I was";
+							mes "traveling through Umbala and";
+							mes "met a strange Bard who was";
+							mes "studying under the tutelage";
+							mes "of Puchuchartan, the Utan";
+							mes "Shaman of the village.";
+							next;
+							mes "[Timid Young Man]";
+							mes "That Bard and I got along fairly well until he took me to Umbala's";
+							mes "Bungee Jump. He insisted that I jump at least once for the ''full";
+							mes "Umbala experience.'' I refused, seeing as they don't use bungees.";
+							next;
+							mes "[Timid Young Man]";
+							mes "The Bard seemed offended";
+							mes "and claimed it was perfectly";
+							mes "safe, and that only a few people";
+							mes "have died by jumping. Then, he";
+							mes "just... He gave me this intense look.";
+							next;
+							mes "[Timid Young Man]";
+							mes "His eyes seemed so full";
+							mes "of rage! I remember him";
+							mes "mumbling something, and";
+							mes "all of a sudden, I lost control";
+							mes "of my body! My arms and legs";
+							mes "were just moving on their own!";
+							next;
+							mes "[Timid Young Man]";
+							mes "Before long, I found myself";
+							mes "struggling to keep myself from";
+							mes "leaping off that Bungee Jump.";
+							mes "But the more I resisted, the";
+							mes "more violently I'd flail toward";
+							mes "the edge. It was horrible!";
+							next;
+							mes "[Timid Young Man]";
+							mes "That was the most terrifying";
+							mes "experience of my life! It was";
+							mes "bad enough that I risked my";
+							mes "life, but that feeling of not";
+							mes "having any control over your";
+							mes "body is so overwhelming!";
+							next;
+							mes "[" + strcharinfo(0) + "]";
+							mes "Wait, you're saying";
+							mes "a Bard did this to you?";
+							mes "I've never heard of a song";
+							mes "or skill with that sort of effect before. That's really strange...";
+							next;
+							mes "[Timid Young Man]";
+							mes "Well, I've never heard";
+							mes "of that sort of power up";
+							mes "until I had to experience";
+							mes "it for myself. Oh, I can still";
+							mes "see that evil smile of his";
+							mes "in my nightmares...";
+							next;
+							mes "[Timid Young Man]";
+							mes "Anyway, thanks for that";
+							mes "drink, it really helped me";
+							mes "settle my nerves. But I must";
+							mes "warn you not to look for that";
+							mes "strange Bard. I'm sure he's really some sort of demon or something...";
+							next;
+							if (JobLevel > 39) {
+								mes "[Timid Young Man]";
+								mes "But... If you really";
+								mes "want to attain that sort";
+								mes "of power, I can't really";
+								mes "stop you. Thankfully, nobody";
+								mes "has any idea of where he is~";
+								delitem 12112,1; //Tropical_Sograt
+								set qskill_bard,1;
+							}
+							else {
+								mes "[Timid Young Man]";
+								mes "Even if you could find that";
+								mes "Bard to get him to teach you";
+								mes "how he did that to me, I'm sure";
+								mes "he mentioned something about";
+								mes "being at least ^660000Job Level 40^000000 to";
+								mes "be able to handle that power...";
+								delitem 12112,1; //Tropical_Sograt
+							}
+							close;
+						case 2:
+							mes "[Timid Young Man]";
+							mes "^333333*Sigh*^000000 Well, maybe all Bards";
+							mes "and Minstrels aren't terrifying. But any Bard will remind me";
+							mes "of the one that I met during my";
+							mes "travels. Just thinking about";
+							mes "that time gives me goosebumps.";
+							next;
+							mes "[Timid Young Man]";
+							mes "It all started when I was";
+							mes "traveling through Umbala and";
+							mes "met a strange Bard who was";
+							mes "studying under the tutelage";
+							mes "of Puchuchartan, the Utan";
+							mes "Shaman of the village.";
+							next;
+							mes "[Timid Young Man]";
+							mes "That Bard and I got along fairly well until he took me to Umbala's";
+							mes "Bungee Jump. He insisted that I jump at least once for the ''full";
+							mes "Umbala experience.'' I refused, seeing as they don't use bungees.";
+							next;
+							mes "[Timid Young Man]";
+							mes "The Bard seemed offended";
+							mes "and claimed it was perfectly";
+							mes "that a few people have died";
+							mes "by jumping. Then, he just...";
+							mes "He gave me this intense look.";
+							next;
+							mes "[Timid Young Man]";
+							mes "His eyes seemed so full";
+							mes "of rage! I remember him";
+							mes "mumbling something, and";
+							mes "all of a sudden, I lost control";
+							mes "of my body! My arms and legs";
+							mes "were just moving on their own!";
+							next;
+							mes "[Timid Young Man]";
+							mes "Before long, I found myself";
+							mes "struggling to keep myself from";
+							mes "leaping off that Bungee Jump.";
+							mes "But the more I resisted, the";
+							mes "more violently I'd flail toward";
+							mes "the edge. It was horrible!";
+							next;
+							mes "[Timid Young Man]";
+							mes "That was the most terrifying";
+							mes "experience of my life! It was";
+							mes "bad enough that I risked my";
+							mes "life, but that feeling of not";
+							mes "having any control over your";
+							mes "body is so overwhelming!";
+							next;
+							mes "[" + strcharinfo(0) + "]";
+							mes "Wait, you're saying";
+							mes "a Bard did this to you?";
+							mes "I've never heard of a song";
+							mes "or skill with that sort of effect before. That's really strange...";
+							next;
+							mes "[Timid Young Man]";
+							mes "Well, I've never heard";
+							mes "of that sort of power up";
+							mes "until I had to experience";
+							mes "it for myself. Oh, I can still";
+							mes "see that evil smile of his";
+							mes "in my nightmares...";
+							next;
+							mes "[Timid Young Man]";
+							mes "Anyway, thanks for that";
+							mes "drink, it really helped me";
+							mes "settle my nerves. But I must";
+							mes "warn you not to look for that";
+							mes "strange Bard. I'm sure he's really some sort of demon or something...";
+							next;
+							if (JobLevel > 39) {
+								mes "[Timid Young Man]";
+								mes "But... If you really";
+								mes "want to attain that sort";
+								mes "of power, I can't really";
+								mes "stop you. Thankfully, nobody";
+								mes "has any idea of where he is~";
+								delitem 12112,1; //Tropical_Sograt
+								set qskill_bard,1;
+							}
+							else {
+								mes "[Timid Young Man]";
+								mes "Even if you could find that";
+								mes "Bard to get him to teach you";
+								mes "how he did that to me, I'm sure";
+								mes "he mentioned something about";
+								mes "being at least ^660000Job Level 40^000000 to";
+								mes "be able to handle that power...";
+								delitem 12112,1; //Tropical_Sograt
+							}
+							close;
+						}
+					}
+				}
+				else {
+					mes "[Timid Young Man]";
+					mes "Eh...?! Um, th-that's";
+					mes "nice of y-you to offer,";
+					mes "but I'm p-pretty picky";
+					mes "about what I d-drink.";
+					mes "P-plus, I don't k-know";
+					mes "if I can t-trust you.";
+					next;
+					mes "[Timid Young Man]";
+					mes "I don't think there's";
+					mes "much that could get m-me";
+					mes "to ch-change my m-mind!";
+					mes "Well... Maybe if you brought";
+					mes "my favorite drink, Tropical";
+					mes "Sograt, I would reconsider...";
+					close;
+				}
+			}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Don't worry,";
+			mes "I won't hurt you.";
+			next;
+			mes "[Timid Young Man]";
+			mes "Th-that's what th-they";
+			mes "all say, right before they";
+			mes "get into your mind and then";
+			mes "twist it as hard as they can!";
+			if (qskill_bard == 9) {
+				mes "J-just don't t-touch me!";
+				mes "...Ack! And stay away!";
+			}
+			else {
+				mes "E-even if you d-don't have";
+				mes "that p-power, l-leave me alone!";
+			}
+			close;
+		}
+	}
+	else {
+		mes "[Timid Young Man]";
+		mes "Oh... Oh goodness.";
+		mes "Was that a Bard just";
+		mes "over there? Oh, I'm so";
+		mes "afraid of those guys!";
+		mes "And those Minstrels";
+		mes "are even worse!";
+		next;
+		mes "[Timid Young Man]";
+		mes "Don't get me wrong, I love";
+		mes "songs and entertainment,";
+		mes "but you've got to understand!";
+		mes "Some of them have powers";
+		mes "that you wouldn't believe!";
+		mes "I... I've seen them myself!";
+		close;
+	}
+
+OnTouch:
+	if (BaseJob == Job_Bard) {
+		emotion e_omg;
+	}
+	end;
+}
+
+morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
+	if (BaseJob == Job_Bard) {
+		if (Class == Job_Clown && qskill_bard == 9) {
+			if (getskilllv("BA_PANGVOICE") != 0) {
+				mes "[Riott]";
+				mes "Geh heh heh~";
+				mes "Been making good use of";
+				mes "what I taught you? Just be";
+				mes "careful and don't use that skill recklessly. Otherwise, people";
+				mes "will hate you as they hate me.";
+				next;
+				mes "[Riott]";
+				mes "Your enemies, and the";
+				mes "occasional drunkard, on";
+				mes "the other hand, are different";
+				mes "matters entirely! Bwah hah hah!";
+				close;
+			}
+			else {
+				mes "[Riott]";
+				mes "Impossible! You forgot";
+				mes "everything I've taught you?";
+				mes "How can that be? Oh well, it's";
+				mes "no trouble for me to teach that";
+				mes "to you again if you'd like.";
+				next;
+				if (select("No, thanks.:Thanks, I'd appreciate that.") == 1) {
+					mes "[Riott]";
+					mes "What...?";
+					mes "You really don't";
+					mes "want to learn it?";
+					mes "I assure you there's";
+					mes "no strings attached.";
+					mes "If you change your mind...";
+					close;
+				}
+				mes "[Riott]";
+				mes "First, you must stare";
+				mes "fiercely into the eyes of";
+				mes "your target, and focus on";
+				mes "thoughts of dominance. This";
+				mes "is the basis for mesmerization. Now listen to this incantation...";
+				next;
+				mes "[Riott]";
+				mes "Uuuummm Baaalaaaa";
+				mes "Uuuummmm Baaalaaa~";
+				mes "Kkkkuuurrirrreeee";
+				mes "Kkkkuuurrirrreeee";
+				mes "Oooumm guandlejdl";
+				mes "Woooo Ei ei ei ei......";
+				specialeffect EF_TALK_FROSTJOKE;
+				next;
+				mes "[Riott]";
+				mes "Pang's Voice is used to";
+				mes "confuse people and disrupt";
+				mes "control of their bodies. It's not a fatal skill, but it is effective";
+				mes "in mentally upsetting your enemy. Make very wise use of this skill.";
+				skill "BA_PANGVOICE",1,SKILL_PERM;
+				close;
+			}
+		}
+		else if (qskill_bard > 8) {
+			mes "[Riott]";
+			mes "Geh heh heh~";
+			mes "Been making good use of";
+			mes "what I taught you? Just be";
+			mes "careful and don't use that skill recklessly. Otherwise, people";
+			mes "will hate you as they hate me.";
+			next;
+			mes "[Riott]";
+			mes "Your enemies, and the";
+			mes "occasional drunkard, on";
+			mes "the other hand, are different";
+			mes "matters entirely! Bwah hah hah!";
+			close;
+		}
+		else if (qskill_bard == 8) {
+			if (countitem(7277) > 0) {
+				mes "[Riott]";
+				mes "Ah, you've brought me";
+				mes "a Munak Doll made by";
+				mes "Yao Jun, just like you said";
+				mes "you would. Ah yes, this is her";
+				mes "craftsmanship, impeccable";
+				mes "as always. You've done well~";
+				next;
+				mes "[Riott]";
+				mes "To fulfill my part of this";
+				mes "bargain, I shall now teach";
+				mes "you my special skill. Now,";
+				mes "I developed this by listening";
+				mes "to incantations by the Utan";
+				mes "Shaman in Umbala.";
+				next;
+				mes "[Riott]";
+				mes "First, you must stare";
+				mes "fiercely into the eyes of";
+				mes "your target, and focus on";
+				mes "thoughts of dominance. This";
+				mes "is the basis for mesmerization. Now listen to this incantation...";
+				next;
+				mes "[Riott]";
+				mes "''Toad's leg, Verit's heart,";
+				mes "spinning stars, spilling zeny,";
+				mes "hands and feet tied. Is this";
+				mes "voices yours, is this voice";
+				mes "mine. Head spinning, head";
+				mes "spinning, head spinning...!''";
+				specialeffect2 EF_TALK_FROSTJOKE;
+				delitem 7277,1; //Munak_Doll
+				skill "BA_PANGVOICE",1,SKILL_PERM;
+				set qskill_bard,9;
+				next;
+				mes "[Riott]";
+				mes "Remember, it doesn't matter";
+				mes "what you say, but how you say";
+				mes "it. Hypnotically induce your";
+				mes "target with a forbiddenly";
+				mes "seductive rhythm and your";
+				mes "grasp will be inescapable!";
+				next;
+				mes "[Riott]";
+				mes "Ah, and use sleight of";
+				mes "hand to distract your target";
+				mes "from your true motive! I find";
+				mes "that casting Unbarring Octave";
+				mes "with this skill works best. This skill's name is ''Pang Voice!''";
+				next;
+				mes "[Riott]";
+				mes "''Pang Voice'' will mentally";
+				mes "shock your target and disrupt";
+				mes "control of his own body for";
+				mes "a while. You can't exert control";
+				mes "over victims with this skill, but they usually assume otherwise...";
+				next;
+				mes "[Riott]";
+				mes "You need to be judicious in";
+				mes "your use of this skill! Don't";
+				mes "use it recklessly, or people";
+				mes "will come to hate you as they";
+				mes "hate me. But ''Pang Voice'' can be welcome is certain situations.";
+				next;
+				mes "[Riott]";
+				mes "Subject your enemies to";
+				mes "Pang Voice as much as you";
+				mes "like, and no one will blame";
+				mes "you for it. And you can get away with casting Pang Voice on bullies";
+				mes "and drunkards occasionally...";
+				close;
+			}
+			mes "[Riott]";
+			mes "Hmpf. Weren't able";
+			mes "to find me a Munak Doll";
+			mes "yet? Well, don't worry, I'm";
+			mes "a patient man. Just try to get";
+			mes "one for me as soon as you can.";
+			close;
+		}
+		else if (qskill_bard == 7) {
+			if (countitem(574) > 4) {
+				mes "[Riott]";
+				mes "Ah, you've brought me";
+				mes "some fresh eggs laid by";
+				mes "Yhelle, just like I asked.";
+				mes "I'm sure it was dangerous";
+				mes "going to Nifflheim, but the flavor of these eggs is worth it.";
+				next;
+				next;
+				mes "[Riott]";
+				mes "To fulfill my part of this";
+				mes "bargain, I shall now teach";
+				mes "you my special skill. Now,";
+				mes "I developed this by listening";
+				mes "to incantations by the Utan";
+				mes "Shaman in Umbala.";
+				next;
+				mes "[Riott]";
+				mes "First, you must stare";
+				mes "fiercely into the eyes of";
+				mes "your target, and focus on";
+				mes "thoughts of dominance. This";
+				mes "is the basis for mesmerization. Now listen to this incantation...";
+				next;
+				mes "[Riott]";
+				mes "''Toad's leg, Verit's heart,";
+				mes "spinning stars, spilling zeny,";
+				mes "hands and feet tied. Is this";
+				mes "voices yours, is this voice";
+				mes "mine. Head spinning, head";
+				mes "spinning, head spinning...!''";
+				specialeffect2 EF_TALK_FROSTJOKE;
+				delitem 574,5; //Egg
+				skill "BA_PANGVOICE",1,SKILL_PERM;
+				set qskill_bard,9;
+				next;
+				mes "[Riott]";
+				mes "Remember, it doesn't matter";
+				mes "what you say, but how you say";
+				mes "it. Hypnotically induce your";
+				mes "target with a forbiddenly";
+				mes "seductive rhythm and your";
+				mes "grasp will be inescapable!";
+				next;
+				mes "[Riott]";
+				mes "Ah, and use sleight of";
+				mes "hand to distract your target";
+				mes "from your true motive! I find";
+				mes "that casting Unbarring Octave";
+				mes "with this skill works best. This skill's name is ''Pang Voice!''";
+				next;
+				mes "[Riott]";
+				mes "''Pang Voice'' will mentally";
+				mes "shock your target and disrupt";
+				mes "control of his own body for";
+				mes "a while. You can't exert control";
+				mes "over victims with this skill, but they usually assume otherwise...";
+				next;
+				mes "[Riott]";
+				mes "You need to be judicious in";
+				mes "your use of this skill! Don't";
+				mes "use it recklessly, or people";
+				mes "will come to hate you as they";
+				mes "hate me. But ''Pang Voice'' can be welcome is certain situations.";
+				next;
+				mes "[Riott]";
+				mes "Subject your enemies to";
+				mes "Pang Voice as much as you";
+				mes "like, and no one will blame";
+				mes "you for it. And you can get away with casting Pang Voice on bullies";
+				mes "and drunkards occasionally...";
+				close;
+			}
+			else {
+				mes "[Riott]";
+				mes "Hmm... You didn't";
+				mes "bring enough Eggs...";
+				mes "This will not do. It'll";
+				mes "be a while until Yhelle";
+				mes "will be able to lay more";
+				mes "eggs. Yes, this isn't enough...";
+				next;
+				mes "[Riott]";
+				mes "Well, to make up for the";
+				mes "missing eggs, go and get ";
+				mes "me ^4D4DFF1 Munak Doll^000000. I know that";
+				mes "Yao Jun's Munak Dolls are";
+				mes "masterpieces, and I am an";
+				mes "an avid collector of her work.";
+				next;
+				mes "[Riott]";
+				if (countitem(574) > 0) {
+					mes "In the meanwhile,";
+					mes "I'll enjoy the few";
+					mes "eggs that you do have!";
+					mes "Bweh heh heh heh heh!";
+					delitem 574,countitem(574); //Egg
+				}
+				set qskill_bard,8;
+				close;
+			}
+		}
+		else if (qskill_bard > 1 && qskill_bard < 7) {
+			mes "[Riott]";
+			mes "So have you been";
+			mes "having trouble gathering";
+			mes "eggs from Yhelle? I know";
+			mes "she can be one fast running";
+			mes "chicken. But to survive where";
+			mes "she roosts, she has to be.";
+			close;
+		}
+		else {
+			mes "[Riott]";
+			mes "Hmmrmpf!";
+			mes "Eh heh heh heh!";
+			emotion e_gg;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Um...";
+			mes "What's so funny?";
+			next;
+			if (gef_bard_q == 30 || gef_bard_q == 31) {
+				mes "[Riott]";
+				mes "Hm? Ah! That's one of the";
+				if (gef_bard_q == 30) {
+					mes "Black Seals that can only";
+					mes "be given by Kino Kitty. You";
+					mes "must be a person of great";
+					mes "emotional depth if he favors";
+					mes "you enough to give you that.";
+				}
+				else {
+					mes "Silver Seals that can only";
+					mes "be given by Errende. You";
+					mes "must be truly kind at heart";
+					mes "if he has offered to be your";
+					mes "friend. How about that?";
+				}
+				next;
+				mes "[Riott]";
+				mes "Geh heh heh~";
+				mes "Hey, take a look";
+				mes "at those two drunks";
+				mes "all the way over there.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Yeah, I can see them.";
+				mes "But what's so special";
+				mes "about those two guys?";
+				next;
+				mes "[Riott]";
+				mes "Just...";
+				mes "Keep watching.";
+				next;
+				mes "^3355FFRiott stared intensely";
+				mes "at one of the drunken men";
+				mes "and began to harshly murmur";
+				mes "some indistinct words in a";
+				mes "low, hoarse voice. One of the";
+				mes "men starts slightly convulsing.^000000";
+				next;
+				mes "[Little Bit Drunken Guy]";
+				mes "H-hey...! ^333333*Hiccup!*^000000";
+				mes "What are you doing?!";
+				mes "K-keep your hands to";
+				mes "yourself! Do I look";
+				mes "like a woman to you?";
+				next;
+				mes "[More Drunken Guy]";
+				mes "What are you talking";
+				mes "about? Wh-what?! Why";
+				mes "are my arms all wrapped";
+				mes "around you? S-sorry, I was";
+				mes "trying to just go that w--";
+				mes "I wasn't trying to hug you!";
+				next;
+				mes "[Little Bit Drunken Guy]";
+				mes "Bumping into me,";
+				mes "I understand. But a full";
+				mes "blown hug? Come on, now!";
+				mes "That was totally on purpose!";
+				mes "Wh-what? My h-hand! It's...";
+				mes "It's moving my itself?!";
+				next;
+				mes "[More Drunken Guy]";
+				mes "Ack! Wh-what are";
+				mes "you doing! S-stop";
+				mes "touching my butt!";
+				next;
+				mes "^3355FFThe two men continued";
+				mes "to gesticulate and move";
+				mes "wildly without direction.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Those two...";
+				mes "Those two probably";
+				mes "had way too much to drink.";
+				next;
+				mes "[Riott]";
+				mes "Nah, they just lost";
+				mes "control of their bodies";
+				mes "for a bit. It's the result";
+				mes "of my skill which sort of";
+				mes "scrambles their minds.";
+				next;
+				if (qskill_bard == 1) {
+					mes "[" + strcharinfo(0) + "]";
+					mes "Mind scrambling?";
+					mes "Wait, are you the same";
+					mes "Bard who made someone";
+					mes "jump off Umbala's Bungee";
+					mes "Jump against his will?";
+					next;
+					mes "[Riott]";
+					mes "Huh? How did you";
+					mes "learn about that?";
+					mes "I'm not proud of that,";
+					mes "(even though it was";
+					mes "hilarious at the time)";
+					mes "but yeah, that was me.";
+					next;
+					if (select("Please teach me that skill!:Oh, alright. Just checking.") == 1) {
+						mes "[Riott]";
+						mes "Hm? You want to learn";
+						mes "how to scramble minds";
+						mes "like I did just now? Well,";
+						mes "I invented this skill, though";
+						mes "I did have a lot of help from";
+						mes "the Utan Shaman. Let's see...";
+						next;
+						mes "[Riott]";
+						mes "Alright. If you want me";
+						mes "to teach you, then bring me";
+						mes "5 Eggs from a chicken named";
+						mes "Yhelle. Yhelle lays the highest";
+						mes "quality eggs: they're delicious";
+						mes "and great for a Bard's voice~";
+						next;
+						mes "[Riott]";
+						mes "However, this chicken roosts";
+						mes "in a strange, dangerous place.";
+						mes "You'll need to explore this huge, mysterious tree in Umbala in order";
+						mes "to get there. Last time I went,";
+						mes "I pretty much almost died.";
+						next;
+						mes "[Riott]";
+						mes "Alright...";
+						mes "So don't forget";
+						mes "to come back here";
+						mes "and bring me back";
+						mes "^4D4DFF5 Yhelle's Eggs^000000, alright?";
+						set qskill_bard,2;
+						close;
+					}
+					mes "[Riott]";
+					mes "Boy, you're a curious one.";
+					mes "But if you know about that";
+					mes "and you bumped into me, you";
+					mes "must certainly travel around";
+					mes "a lot. I can respect a good,";
+					mes "seasoned adventurer like you.";
+					close;
+				}
+				mes "[" + strcharinfo(0) + "]";
+				mes "Wha...?";
+				mes "I can't believe you.";
+				mes "Mind scrambling? That";
+				mes "doesn't make any sense!";
+				mes "They're just really drunk...";
+				next;
+				mes "[Riott]";
+				mes "How dare you question my";
+				mes "power? Oh well, I suppose";
+				mes "I really can't be too angry.";
+				mes "Most people who do believe";
+				mes "me usually claim that I'm";
+				mes "an axis of evil about now...";
+				close;
+			}
+			mes "[Riott]";
+			mes "Eh, nothing much. Say,";
+			mes "you don't have any Bard";
+			mes "Seals? That's a sure sign";
+			mes "that you haven't been really";
+			mes "connecting with the Bard";
+			mes "community. That's a shame...";
+			next;
+			mes "[Riott]";
+			mes "*Sigh* Alright, I know";
+			mes "how you can meet more Bards.";
+			mes "Why don't you try making friends with Errende? Look for a Bard";
+			mes "dressed in green in Geffen and";
+			mes "you should be able to find him.";
+			close;
+		}
+	}
+	else {
+		mes "[Riott]";
+		mes "Hmmrmpf!";
+		mes "Eh heh heh heh!";
+		emotion e_gg;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Um...";
+		mes "What's so funny?";
+		next;
+		if (gef_bard_q == 30 || gef_bard_q == 31) {
+			mes "[Riott]";
+			mes "Hm? Ah! That's one of the";
+			if (gef_bard_q == 30) {
+				mes "Black Seals that can only";
+				mes "be given by Kino Kitty. You";
+				mes "must be a person of great";
+				mes "emotional depth if he favors";
+				mes "you enough to give you that.";
+			}
+			else {
+				mes "Silver Seals that can only";
+				mes "be given by Errende. You";
+				mes "must be truly kind at heart";
+				mes "if he has offered to be your";
+				mes "friend. How about that?";
+			}
+			next;
+			mes "[Riott]";
+			mes "Geh heh heh~";
+			mes "Hey, take a look";
+			mes "at those two drunks";
+			mes "all the way over there.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Yeah, I can see";
+			mes "together. But what";
+			mes "about them?";
+			next;
+			mes "[Riott]";
+			mes "Just...";
+			mes "Keep watching.";
+			close;
+		}
+		mes "[Riott]";
+		mes "Eh, nothing much. Say,";
+		mes "I notice you don't have";
+		mes "any Bard seals. That tells";
+		mes "me that you don't really";
+		mes "meet that many Bards. You";
+		mes "should really change that.";
+		next;
+		mes "[Riott]";
+		mes "Bards and Minstrels can";
+		mes "make some pretty handy";
+		mes "friends if you give them";
+		mes "a chance. Here, why don't";
+		mes "you find Errende in Geffen?";
+		mes "He's a pretty popular guy...";
+		close;
+	}
+
+OnTouch:
+	emotion e_gg;
+	end;
+}
+
+// Yhelle the Chicken
+//============================================================ 
+niflheim,239,70,1	script	Yhelle#bard_chick1	800,3,3,{
+	emotion e_omg,1;
+	emotion e_omg;
+	mes "[Hen Yhelle]";
+	mes "Cluck-Cluuuck?";
+	mes "Cluck cluck cluck!";
+	next;
+	disablenpc "Yhelle#bard_chick1";
+	donpcevent "Yhelle#bard_chick2::OnEnable";
+	mes "^3355FFUpon sensing your";
+	mes "presense, the hen";
+	mes "quickly ran away.^000000";
+	close;
+
+OnInit:
+	disablenpc "Yhelle#bard_chick5";
+	disablenpc "Yhelle#bard_chick4";
+	disablenpc "Yhelle#bard_chick3";
+	disablenpc "Yhelle#bard_chick2";
+	end;
+
+OnEnable:
+	enablenpc "Yhelle#bard_chick1";
+	end;
+
+OnDisable:
+	disablenpc "Yhelle#bard_chick1";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",1,2; close;
+}
+
+niflheim,185,205,3	script	Yhelle#bard_chick2	800,3,3,{
+	emotion e_omg,1;
+	emotion e_omg;
+	mes "[Hen Yhelle]";
+	mes "Cluck-Cluuuck?";
+	mes "Cluck cluck cluck!";
+	next;
+	disablenpc "Yhelle#bard_chick2";
+	donpcevent "Yhelle#bard_chick3::OnEnable";
+	mes "^3355FFUpon sensing your";
+	mes "presense, the hen";
+	mes "quickly ran away.^000000";
+	close;
+
+OnEnable:
+	enablenpc "Yhelle#bard_chick2";
+	end;
+
+OnDisable:
+	disablenpc "Yhelle#bard_chick2";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",2,3; close;
+}
+
+niflheim,85,203,5	script	Yhelle#bard_chick3	800,3,3,{
+	emotion e_omg,1;
+	emotion e_omg;
+	mes "[Hen Yhelle]";
+	mes "Cluck-Cluuuck?";
+	mes "Cluck cluck cluck!";
+	next;
+	disablenpc "Yhelle#bard_chick3";
+	donpcevent "Yhelle#bard_chick4::OnEnable";
+	mes "^3355FFUpon sensing your";
+	mes "presense, the hen";
+	mes "quickly ran away.^000000";
+	close;
+
+OnEnable:
+	enablenpc "Yhelle#bard_chick3";
+	end;
+
+OnDisable:
+	disablenpc "Yhelle#bard_chick3";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",3,4; close;
+}
+
+niflheim,149,81,7	script	Yhelle#bard_chick4	800,3,3,{
+	emotion e_omg,1;
+	emotion e_omg;
+	mes "[Hen Yhelle]";
+	mes "Cluck-Cluuuck?";
+	mes "Cluck cluck cluck!";
+	next;
+	disablenpc "Yhelle#bard_chick4";
+	donpcevent "Yhelle#bard_chick5::OnEnable";
+	mes "^3355FFUpon sensing your";
+	mes "presense, the hen";
+	mes "quickly ran away.^000000";
+	close;
+
+OnEnable:
+	enablenpc "Yhelle#bard_chick4";
+	end;
+
+OnDisable:
+	disablenpc "Yhelle#bard_chick4";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",4,5; close;
+}
+
+niflheim,209,144,3	script	Yhelle#bard_chick5	800,3,3,{
+	emotion e_omg,1;
+	emotion e_omg;
+	mes "[Hen Yhelle]";
+	mes "Cluck-Cluuuck?";
+	mes "Cluck cluck cluck!";
+	next;
+	disablenpc "Yhelle#bard_chick5";
+	donpcevent "Yhelle#bard_chick1::OnEnable";
+	mes "^3355FFUpon sensing your";
+	mes "presense, the hen";
+	mes "quickly ran away.^000000";
+	close;
+
+OnEnable:
+	enablenpc "Yhelle#bard_chick5";
+	end;
+
+OnDisable:
+	disablenpc "Yhelle#bard_chick5";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",5,1; close;
+}
+
+// Drunken Men
+//============================================================ 
+morocc_in,178,73,3	script	Customer#bard_skill01	54,{
+	mes "[Little Bit Drunken Guy]";
+	mes "What do you think";
+	mes "is the best drink in";
+	mes "all the world? I think";
+	mes "the Tri-- Tristan? What";
+	mes "was it called again?";
+	next;
+	mes "[More Drunken Guy]";
+	mes "Oh! 13 Year Old Tristan?";
+	mes "That's a great drink, sure,";
+	mes "but it's way too expensive for";
+	mes "anything less than a special";
+	mes "occasion. ^333333*Hiccup*^000000 Personally,";
+	mes "I really like Ver... Uh, Ver...";
+	next;
+	mes "[Little Bit Drunken Guy]";
+	mes "Vermilion on the Beach?";
+	mes "Yeah, that's really good,";
+	mes "you'll pass out after just";
+	mes "having one shot! Yeah...";
+	mes "Tro... Tropical! People say";
+	mes "that's good too. Wait, what?";
+	next;
+	mes "[Little Bit Drunken Guy]";
+	mes "H-hey...! ^333333*Hiccup!*^000000";
+	mes "What are you doing?!";
+	mes "K-keep your hands to";
+	mes "yourself! Do I look";
+	mes "like a woman to you?";
+	next;
+	mes "[More Drunken Guy]";
+	mes "What are you talking";
+	mes "about? Wh-what?! Why";
+	mes "are my arms all wrapped";
+	mes "around you? S-sorry, I was";
+	mes "trying to just go that w--";
+	mes "I wasn't trying to hug you!";
+	next;
+	mes "[Little Bit Drunken Guy]";
+	mes "Bumping into me,";
+	mes "I understand. But a full";
+	mes "blown hug? Come on, now!";
+	mes "That was totally on purpose!";
+	mes "Wh-what? My h-hand! It's...";
+	mes "It's moving my itself?!";
+	next;
+	mes "[More Drunken Guy]";
+	mes "Ack! Wh-what are";
+	mes "you doing! S-stop";
+	mes "touching my butt!";
+	next;
+	mes "^3355FFA Bard in the room";
+	mes "watches the two drunk";
+	mes "men intently and giggles";
+	mes "at their stupor. Remember:";
+	mes "drinking too much isn't good!^000000";
+	close;
+}
+
+morocc_in,175,70,7	script	Customer#bard_skill02	50,{
+	mes "[Little Bit Drunken Guy]";
+	mes "What do you think";
+	mes "is the best drink in";
+	mes "all the world? I think";
+	mes "the Tri-- Tristan? What";
+	mes "was it called again?";
+	next;
+	mes "[More Drunken Guy]";
+	mes "Oh! 13 Year Old Tristan?";
+	mes "That's a great drink, sure,";
+	mes "but it's way too expensive for";
+	mes "anything less than a special";
+	mes "occasion. ^333333*Hiccup*^000000 Personally,";
+	mes "I really like Ver... Uh, Ver...";
+	next;
+	mes "[Little Bit Drunken Guy]";
+	mes "Vermilion on the Beach?";
+	mes "Yeah, that's really good,";
+	mes "you'll pass out after just";
+	mes "having one shot! Yeah...";
+	mes "Tro... Tropical! People say";
+	mes "that's good too. Wait, what?";
+	next;
+	mes "[Little Bit Drunken Guy]";
+	mes "H-hey...! ^333333*Hiccup!*^000000";
+	mes "What are you doing?!";
+	mes "K-keep your hands to";
+	mes "yourself! Do I look";
+	mes "like a woman to you?";
+	next;
+	mes "[More Drunken Guy]";
+	mes "What are you talking";
+	mes "about? Wh-what?! Why";
+	mes "are my arms all wrapped";
+	mes "around you? S-sorry, I was";
+	mes "trying to just go that w--";
+	mes "I wasn't trying to hug you!";
+	next;
+	mes "[Little Bit Drunken Guy]";
+	mes "Bumping into me,";
+	mes "I understand. But a full";
+	mes "blown hug? Come on, now!";
+	mes "That was totally on purpose!";
+	mes "Wh-what? My h-hand! It's...";
+	mes "It's moving my itself?!";
+	next;
+	mes "[More Drunken Guy]";
+	mes "Ack! Wh-what are";
+	mes "you doing! S-stop";
+	mes "touching my butt!";
+	next;
+	mes "^3355FFA Bard in the room";
+	mes "watches the two drunk";
+	mes "men intently and giggles";
+	mes "at their stupor. Remember:";
+	mes "drinking too much isn't good!^000000";
+	close;
+}
+
+// Bartender
+//============================================================ 
+morocc_in,166,76,7	script	Bartender#bard_qskill	46,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFHold it right there!";
+		mes "You're carrying too many items and don't have enough inventory space to receive any rewards. Please make more inventory space available and come back to take this challenge.";
+		close;
+	}
+	mes "[Bartender]";
+	mes "So what would";
+	mes "you like to order?";
+	next;
+	switch(select("Tropical Sograt:Vermilion on the Beach:Nothing, thanks.")) {
+	case 1:
+		if (MaxWeight - Weight < 2000) {
+			mes "[Bartender]";
+			mes "You sure you can carry";
+			mes "any more stuff with you?";
+			mes "Damn, it doesn't look that";
+			mes "way to me. Take a load off,";
+			mes "and put some stuff with in";
+			mes "your Kafra Storage, alright?";
+			close;
+		}
+		if (Zeny < 1000) {
+			mes "[Bartender]";
+			mes " You sure you can afford";
+			mes "this now? This drink's";
+			mes "1,000 zeny, so you better";
+			mes "check the cash you have";
+			mes "onhand. Eh, just come back";
+			mes "later when you have the money.";
+			close;
+		}
+		mes "[Bartender]";
+		mes "Here you are,";
+		mes "1 Tropical Sograt.";
+		mes "It tastes sweet and";
+		mes "mild, but if you're not";
+		mes "careful, you'll pass out";
+		mes "in no time flat. Take it easy.";
+		set Zeny, Zeny-1000;
+		getitem 12112,1; //Tropical_Sograt
+		close;
+
+	case 2:
+		if (MaxWeight - Weight < 2000) {
+			mes "[Bartender]";
+			mes "You sure you can carry";
+			mes "any more stuff with you?";
+			mes "Damn, it doesn't look that";
+			mes "way to me. Take a load off,";
+			mes "and put some stuff with in";
+			mes "your Kafra Storage, alright?";
+			close;
+		}
+		if (Zeny < 1000) {
+			mes "[Bartender]";
+			mes "You sure you can afford";
+			mes "this now? This drink's";
+			mes "1,000 zeny, so you better";
+			mes "check the cash you have";
+			mes "onhand. Eh, just come back";
+			mes "later when you have the money.";
+			close;
+		}
+		mes "[Bartender]";
+		mes "Here you go.";
+		mes "Be sure that you";
+		mes "enjoy your drinking";
+		mes "without going crazy.";
+		set Zeny, Zeny-1000;
+		getitem 12113,1; //Vermilion_The_Beach
+		close;
+
+	case 3:
+		mes "[Bartender]";
+		mes "Alright, then.";
+		mes "I'll see you around.";
+		close;
+	}
+}
+
+// Function
+//============================================================ 
+function	script	F_BardSkillYhelle	{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "^3355FFHold it right there!";
+		mes "You're carrying too many items and don't have enough inventory space to receive any rewards. Please make more inventory space available and come back to take this challenge.";
+		close;
+	}
+	emotion e_omg,1;
+	emotion e_omg;
+	mes "[Hen Yhelle]";
+	mes "Cluck-Cluuuck?";
+	mes "Cluck cluck cluck!";
+	next;
+	if (rand(1,3) == 2) {
+		disablenpc "Yhelle#bard_chick"+getarg(0);
+		donpcevent "Yhelle#bard_chick"+getarg(1)+"::OnEnable";
+		mes "^3355FFUpon sensing your";
+		mes "presense, the hen";
+		mes "quickly ran away.^000000";
+		if (qskill_bard > 1 && qskill_bard < 7) {
+			mes "^3355FFYou found ^3333331 Egg^3355FF in the";
+			mes "place where Yhelle the";
+			mes "Hen was roosting.^000000";
+			set qskill_bard,qskill_bard+1;
+			getitem 574,1; //Egg
+		}
+	}
+	else {
+		disablenpc "Yhelle#bard_chick"+getarg(0);
+		donpcevent "Yhelle#bard_chick"+getarg(1)+"::OnEnable";
+		mes "^3355FFUpon sensing your";
+		mes "presense, the hen";
+		mes "quickly ran away.^000000";
+	}
+	return;
+}

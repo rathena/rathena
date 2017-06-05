@@ -1,0 +1,126 @@
+//===== rAthena Script =======================================
+//= Rachel Warp Script
+//===== By: ==================================================
+//= erKURITA & RockmanEXE
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Rachel City, shops & other locations
+//===== Additional Comments: =================================
+//= 1.0 Added the official warps and commented out the 
+//= 	  "custom duplicates" for future checkout. Special thanks
+//= 	  to RockmanEXE who provided all the info. [erKURITA]
+//= 1.1 Added warp to Veins Field [Playtester]
+//= 1.2 Fully official rachel warps [Playtester]
+//= 1.2a Added missing warp (Pope's office entryway -> temple) [L0ne_W0lf]
+//= 1.3 Updated Rachel -> Veins Field warp. [L0ne_W0lf]
+//= 1.4 Disabled rachel33, moved to quest_rachel.txt [L0ne_W0lf] 
+//= 1.5 Renewal warp adjustments.
+//============================================================
+
+rachel,150,249,0	warp	rachel01	1,1,ra_temple,120,30
+
+rachel,81,33,0	warp	rachel02	1,1,ra_in01,237,198
+rachel,61,33,0	warp	rachel03	1,1,ra_in01,181,198
+rachel,217,55,0	warp	rachel04	1,1,ra_in01,250,34
+rachel,179,220,0	warp	rachel05	1,1,ra_in01,295,352
+rachel,103,240,0	warp	rachel06	1,1,ra_in01,343,193
+rachel,216,160,0	warp	rachel07	1,1,ra_in01,135,282
+rachel,42,87,0	warp	rachel08	1,1,ra_in01,171,359
+rachel,42,109,0	warp	rachel09	1,1,ra_in01,171,388
+rachel,83,78,0	warp	rachel10	1,1,ra_in01,249,266
+rachel,115,149,0	warp	rachel11	1,1,ra_in01,386,43
+rachel,90,189,0	warp	rachel12	1,1,ra_in01,192,148
+rachel,108,200,0	warp	rachel13	1,1,ra_in01,213,83
+
+ra_in01,188,189,0	warp	rachel14	1,1,ra_in01,263,144
+ra_in01,296,144,0	warp	rachel15	1,1,ra_in01,235,189
+ra_in01,175,189,0	warp	rachel16	1,1,ra_in01,132,189
+ra_in01,244,189,0	warp	rachel17	1,1,ra_in01,291,189
+ra_in01,235,21,0	warp	rachel18	1,1,ra_in01,187,31
+ra_in01,312,374,0	warp	rachel19	1,1,ra_in01,359,374
+ra_in01,291,371,0	warp	rachel20	1,1,ra_in01,225,380
+ra_in01,381,200,0	warp	rachel21	1,1,ra_in01,377,268
+ra_in01,367,255,0	warp	rachel22	1,1,ra_in01,326,296
+ra_in01,319,303,0	warp	rachel23	1,1,ra_in01,381,320
+ra_in01,178,370,0	warp	rachel24	1,1,ra_in01,113,385
+ra_in01,165,369,0	warp	rachel25	1,1,ra_in01,122,334
+ra_in01,241,299,0	warp	rachel26	1,1,ra_in01,193,312
+ra_in01,185,303,0	warp	rachel27	1,1,ra_in01,194,249
+ra_in01,357,61,0	warp	rachel28	1,1,ra_in01,310,62
+ra_in01,297,59,0	warp	rachel29	1,1,ra_in01,339,116
+
+ra_temin,130,93,0	warp	rachel30	1,1,ra_temin,239,258
+ra_temin,206,93,0	warp	rachel31	1,1,ra_temin,312,258
+ra_temin,275,332,0	warp	rachel32	1,1,ra_temin,27,305
+
+//ra_temin,275,226,0	warp	rachel33	1,1,ra_temsky,99,11
+
+ra_temsky,99,118,0	warp	rachel34	1,1,ra_temsky,99,140
+ra_temsky,112,143,0	warp	rachel35	1,1,ra_temsky,141,139
+ra_temsky,87,143,0	warp	rachel36	1,1,ra_temsky,58,139
+
+ra_temple,120,22,0	warp	rachel37	1,1,rachel,150,243
+
+ra_in01,237,202,0	warp	rachel38	1,1,rachel,81,38
+ra_in01,181,202,0	warp	rachel39	1,1,rachel,61,38
+ra_in01,250,38,0	warp	rachel40	1,1,rachel,217,60
+ra_in01,295,348,0	warp	rachel41	1,1,rachel,179,215
+ra_in01,339,193,0	warp	rachel42	1,1,rachel,98,238
+ra_in01,135,286,0	warp	rachel43	1,1,rachel,216,164
+ra_in01,171,355,0	warp	rachel44	1,1,rachel,42,82
+ra_in01,172,392,0	warp	rachel45	1,1,rachel,42,114
+ra_in01,249,262,0	warp	rachel46	1,1,rachel,83,73
+ra_in01,386,39,0	warp	rachel47	1,1,rachel,115,144
+ra_in01,192,152,0	warp	rachel48	1,1,rachel,90,193
+ra_in01,213,79,0	warp	rachel49	1,1,rachel,108,195
+
+ra_in01,259,144,0	warp	rachel50	1,1,ra_in01,184,189
+ra_in01,231,189,0	warp	rachel51	1,1,ra_in01,292,144
+ra_in01,136,189,0	warp	rachel52	1,1,ra_in01,179,189
+ra_in01,287,189,0	warp	rachel53	1,1,ra_in01,240,189
+ra_in01,183,31,0	warp	rachel54	1,1,ra_in01,239,21
+ra_in01,355,374,0	warp	rachel55	1,1,ra_in01,308,374
+ra_in01,221,380,0	warp	rachel56	1,1,ra_in01,287,371
+ra_in01,381,268,0	warp	rachel57	1,1,ra_in01,387,200
+ra_in01,330,296,0	warp	rachel58	1,1,ra_in01,371,255
+ra_in01,381,324,0	warp	rachel59	1,1,ra_in01,319,299
+ra_in01,109,385,0	warp	rachel60	1,1,ra_in01,174,370
+ra_in01,126,334,0	warp	rachel61	1,1,ra_in01,169,369
+ra_in01,197,312,0	warp	rachel62	1,1,ra_in01,245,299
+ra_in01,194,245,0	warp	rachel63	1,1,ra_in01,190,302
+ra_in01,314,62,0	warp	rachel64	1,1,ra_in01,361,61
+ra_in01,339,120,0	warp	rachel65	1,1,ra_in01,297,63
+
+ra_temin,169,18,0	warp	rachel66	1,1,ra_temple,119,175
+
+ra_temin,239,253,0	warp	rachel67	1,1,ra_temin,130,88
+ra_temin,312,253,0	warp	rachel68	1,1,ra_temin,206,88
+ra_temin,27,299,0	warp	rachel69	1,1,ra_temin,275,328
+
+ra_temsky,99,8,0	warp	rachel70	1,1,ra_temin,275,231
+
+ra_temsky,99,135,0	warp	rachel71	1,1,ra_temsky,99,113
+ra_temsky,137,139,0	warp	rachel72	1,1,ra_temsky,109,143
+ra_temsky,62,139,0	warp	rachel73	1,1,ra_temsky,91,143
+
+//rachel,25,125,0	warp	rachel74	1,1,ra_fild11,353,226
+rachel,275,125,0	warp	rachel75	1,1,ra_fild12,40,226
+rachel,130,21,0	warp	rachel76	1,1,ve_fild02,195,377
+
+que_rachel,130,93,0	warp	rachel77	1,1,que_rachel,239,258
+que_rachel,206,93,0	warp	rachel78	1,1,que_rachel,312,258
+que_rachel,275,332,0	warp	rachel79	1,1,que_rachel,27,305
+que_rachel,239,253,0	warp	rachel80	1,1,que_rachel,130,88
+que_rachel,312,253,0	warp	rachel81	1,1,que_rachel,206,88
+que_rachel,27,299,0	warp	rachel82	1,1,que_rachel,275,328
+
+ra_in01,309,70,0	warp	rachel83	1,1,rachel,108,175
+rachel,105,171,0	warp	rachel84	1,1,ra_in01,309,65
+ra_in01,375,109,0	warp	rachel85	1,1,rachel,116,154
+rachel,116,158,0	warp	rachel86	1,1,ra_in01,375,114
+
+//Additional Temple warp
+ra_temin,275,243,0	warp	rachel87	1,1,ra_temin,131,131

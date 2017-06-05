@@ -1,0 +1,167 @@
+//===== rAthena Script ======================================= 
+//= Alchemist Shop
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.8
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Merchants for Alchemist Materials and Manuals.
+//===== Additional Comments: ================================= 
+//= 1.1 fixed Medicine Bowl issue, thanx 2 MasterOfMuppets
+//= 1.2 Reddozen's fixes of typos. added optional Elemental
+//=     Potion Guide. [Lupus]
+//= 1.3 Deleted Elemental Potions Guide due to original quest [Lupus]
+//= 1.4 Alchemists can now purchase 2000 Medicine Bowls at once. [SinSloth]
+//= 1.5 Updated to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.6 Corrected canceling purchase. [L0ne_W0lf]
+//= 1.7 Updated to match AEGIS script. [Masao]
+//= 1.8 Moved Craft Book Merchant to Renewal path. [Euphy]
+//============================================================ 
+
+alde_alche,24,188,3	script	Guild Dealer	740,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you are carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back again -";
+		mes "- after you store some items into kafra storage. -";
+		close;
+	}
+	mes "[Gever Al Sharp]";
+	mes "Welcome to the";
+	mes "Alchemist Union.";
+	mes "How can I assist you today?";
+	next;
+	switch(select("Purchase materials.:Purchase a production manual.:Quit.")) {
+	case 1:
+		mes "[Gever Al Sharp]";
+		mes "What would you like?";
+		next;
+		if (select("Medicine Bowl - 8 Zeny:Cancel.") == 1) {
+			mes "[Gever Al Sharp]";
+			mes "How many do you want?";
+			mes "Enter '0' if you want to quit.";
+			next;
+			while(1) {
+				input .@input,0,2001;
+				if (.@input == 0) {
+					mes "[Gever Al Sharp]";
+					mes "The deal was cancelled.";
+					mes "Come again next time.";
+					close;
+				}
+				else if (.@input < 1 || .@input > 2000) {
+					mes "[Gever Al Sharp]";
+					mes "The number must";
+					mes "be less than 2000.";
+					next;
+				}
+				else {
+					break;
+				}
+			}
+			set .@sell,.@input * 8;
+			set .@item_weight,.@input * 10;
+			if (Zeny < .@sell) {
+				mes "[Gever Al Sharp]";
+				mes "You don't";
+				mes "have enough zeny.";
+				mes "Check how much zeny";
+				mes "you have first.";
+				close;
+			}
+			if ((MaxWeight - Weight) < .@item_weight) {
+				mes "[Gever Al Sharp]";
+				mes "It doesn't seem like";
+				mes "you can carry everything.";
+				mes "Please check the space";
+				mes "in your inventory.";
+				close;
+			}
+			set Zeny, Zeny-.@sell;
+			getitem 7134,.@input; //Medicine_Bowl
+			mes "[Gever Al Sharp]";
+			mes "Thank you.";
+			mes "Come again.";
+			close;
+		}
+		mes "[Gever Al Sharp]";
+		mes "Well then,";
+		mes "come again when";
+		mes "you need to purchase";
+		mes "materials related to";
+		mes "Alchemy, alright?";
+		close;
+	case 2:
+		mes "[Gever Al Sharp]";
+		mes "What do you need?";
+		mes "Manuals are generally 100,000 zeny. But there are a couple of special manuals that will cost more.";
+		next;
+		switch(select("Potion Creation Guide:Alcohol Creation Guide:Bottle Grenade Creation Guide:Acid Bottle Creation Guide:Plant Bottle Creation Guide:Marine Sphere Bottle Creation Guide:Glistening Coat Creation Guide:Condensed Potion Creation Guide:Cancel Deal.")) {
+		case 1:
+			callsub S_SellManual,7144,100000; //Normal_Potion_Book
+			break;
+		case 2:
+			callsub S_SellManual,7127,100000; //Alcol_Create_Book
+			break;
+		case 3:
+			callsub S_SellManual,7128,100000; //FireBottle_Create_Book
+			break;
+		case 4:
+			callsub S_SellManual,7129,100000; //Acid_Create_Book
+			break;
+		case 5:
+			callsub S_SellManual,7130,100000; //Plant_Create_Book
+			break;
+		case 6:
+			callsub S_SellManual,7131,100000; //Mine_Create_Book
+			break;
+		case 7:
+			callsub S_SellManual,7132,100000; //Coating_Create_Book
+			break;
+		case 8:
+			callsub S_SellManual,7133,240000; //Slim_Potion_Create_Book
+			break;
+		case 9:
+			mes "[Gever Al Sharp]";
+			mes "Well then...";
+			mes "Come back if you";
+			mes "ever need to buy";
+			mes "a production manual.";
+			close;
+		}
+	case 3:
+		mes "[Gever Al Sharp]";
+		mes "Alright then,";
+		mes "have a good day.";
+		close;
+	}
+
+S_SellManual:
+	if (Zeny < getarg(1)) {
+		mes "[Gever Al Sharp]";
+		mes "You don't";
+		mes "have enough zeny.";
+		mes "Check how much zeny";
+		mes "you have first.";
+		close;
+	}
+	mes "[Gever Al Sharp]";
+	mes ""+getitemname(getarg(0))+"?";
+	mes "That'll be "+getarg(1)+" zeny.";
+	next;
+	if (select("Purchase.:Quit.") == 1) {
+		set Zeny, Zeny-getarg(1);
+		getitem getarg(0),1;
+		mes "[Gever Al Sharp]";
+		mes "Thank you for";
+		mes "your patronage.";
+		close;
+	}
+	mes "[Gever Al Sharp]";
+	mes "Come again";
+	mes "next time.";
+	close;
+}

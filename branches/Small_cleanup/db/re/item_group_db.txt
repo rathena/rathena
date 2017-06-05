@@ -1,0 +1,7 @@
+import: db/re/item_bluebox.txt
+import: db/re/item_violetbox.txt
+import: db/re/item_cardalbum.txt
+import: db/item_findingore.txt
+import: db/re/item_giftbox.txt
+import: db/re/item_misc.txt
+import: db/re/item_package.txt

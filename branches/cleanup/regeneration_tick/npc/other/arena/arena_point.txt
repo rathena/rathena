@@ -1,0 +1,181 @@
+//===== rAthena Script =======================================
+//= Point Exchanger
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Point exchanger: Turbo track points -> Arena Points
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================
+
+prt_are_in,103,11,3	script	Arena Point Manager	732,{
+	mes "[Arena Point Manager]";
+	mes "I hope you're having a good";
+	mes "time in the Arena. If you've";
+	mes "earned Turbo Track Points at";
+	mes "Al De Baran's Turbo Track, I can,";
+	mes "convert them into Arena Points.";
+	next;
+	switch(select("Point Check:Convert Points:^660000Conversion Info^000000")) {
+	case 1:
+		mes "[Arena Point Manager]";
+		mes "" + strcharinfo(0) + ",";
+		mes "you currently have";
+		mes "" + arena_point + " Arena Points";
+		mes "and " + tt_point + " Turbo Track Points.";
+		close;
+	case 2:
+		mes "[Arena Point Manager]";
+		mes "" + strcharinfo(0) + ",";
+		mes "you currently have";
+		mes "" + arena_point + " Arena Points";
+		mes "and " + tt_point + " Turbo Track Points.";
+		next;
+		mes "[Arena Point Manager]";
+		mes "Please choose from among";
+		mes "the Track Point to Arena Point";
+		mes "conversions. Keep in mind that";
+		mes "when you convert more than 10";
+		mes "Track Points at one time, you can only convert in ^4D4DFFmultiples of 10^000000.";
+		next;
+		switch(select("2 TP -> 1 AP:4 TP -> 2 AP:6 TP -> 3 AP:8 TP -> 4 AP:10 TP and more:Cancel")) {
+		case 1:
+			callsub S_ExchangePoints,28999,2,1;
+		case 2:
+			callsub S_ExchangePoints,28998,4,2;
+		case 3:
+			callsub S_ExchangePoints,28997,6,2;
+		case 4:
+			callsub S_ExchangePoints,28996,8,4;
+		case 5:
+			mes "[Arena Point Manager]";
+			mes "Please enter the number";
+			mes "of times you wish to convert";
+			mes "10 Turbo Track Points into";
+			mes "Arena Points. The largest";
+			mes "value you may enter is 20.";
+			mes "To cancel, enter ''^3355FF0^000000.''";
+			next;
+			input .@input;
+			if (.@input == 0) {
+				mes "[Arena Point Manager]";
+				mes "You have";
+				mes "canceled";
+				mes "this service.";
+				close;
+			}
+			else if (.@input > 20) {
+				mes "[Arena Point Manager]";
+				mes "Your request exceeds";
+				mes "the maximum limit. Please";
+				mes "enter a value no greater than 20.";
+				close;
+			}
+			else {
+				set .@want_point1,10 * .@input;
+				set .@want_point,5 * .@input;
+				set .@my_arena_all,arena_point + .@want_point;
+				set .@my_turbo_all,tt_point - .@want_point1;
+				if (.@my_arena_all > 28999) {
+					mes "[Arena Point Manager]";
+					mes "You will exceed the";
+					mes "maximum amount of";
+					mes "Arena Points if we proceed";
+					mes "with this conversion of your";
+					mes "Turbo Track Points. You cannot";
+					mes "have more than 29,000 Arena Points.";
+					next;
+					mes "[Arena Point Manager]";
+					mes "Please spend some of";
+					mes "your Arena Points before";
+					mes "using this service again.";
+					mes "Thank you for your patronage.";
+					close;
+				}
+				if (.@my_turbo_all < 0) {
+					mes "[Arena Point Manager]";
+					mes "I'm sorry, but";
+					mes "you don't have enough";
+					mes "Turbo Track Points to";
+					mes "perform this Arena";
+					mes "Point conversion.";
+					close;
+				}
+				else {
+					mes "[Arena Point Manager]";
+					mes "You have converted";
+					mes "10 Turbo Track Points";
+					mes "into 5 Arena Points " + .@input + " times.";
+					mes "A total of " + .@want_point1 + " Turbo Track Points were converted into";
+					mes "" + .@want_point +" Arena Points.";
+					set tt_point,tt_point - .@want_point1;
+					set arena_point,arena_point+.@want_point;
+					next;
+					mes "[Arena Point Manager]";
+					mes "" + strcharinfo(0) + ",";
+					mes "you now have";
+					mes "^4682B4" + arena_point + "^000000 Arena Points";
+					mes "and ^00688B" + tt_point + "^000000 Turbo Track Points.";
+					mes "Thank you for your patronage.";
+					close;
+				}
+			}
+		case 6:
+			mes "[Arena Point Manager]";
+			mes "You have";
+			mes "canceled";
+			mes "this service.";
+			close;
+		}
+	case 3:
+		// Again. no dialog for this option.
+		close;
+	}
+	close;
+
+S_ExchangePoints:
+	if (arena_point > getarg(0) ) {
+		mes "[Arena Point Manager]";
+		mes "You will exceed the";
+		mes "maximum amount of";
+		mes "Arena Points if we proceed";
+		mes "with this conversion of your";
+		mes "Turbo Track Points. You cannot";
+		mes "have more than 29,000 Arena Points.";
+		next;
+		mes "[Arena Point Manager]";
+		mes "Please spend some of";
+		mes "your Arena Points before";
+		mes "using this service again.";
+		mes "Thank you for your patronage.";
+		close;
+	}
+	if (tt_point >= getarg(1)) {
+		mes "[Arena Point Manager]";
+		mes "" + strcharinfo(0) + ",";
+		mes "you've converted "+getarg(1)+" Track";
+		mes "Points into "+getarg(2)+" Arena Point.";
+		set tt_point,tt_point-getarg(1);
+		set arena_point,arena_point+getarg(2);
+		next;
+		mes "[Arena Point Manager]";
+		mes "" + strcharinfo(0) + ",";
+		mes "you now have";
+		mes "^4682B4" + arena_point + "^000000 Arena Points";
+		mes "and ^00688B" + tt_point + "^000000 Turbo Track Points.";
+		mes "Thank you for your patronage.";
+		close;
+	}
+	else {
+		mes "[Arena Point Manager]";
+		mes "I'm sorry, but you don't have";
+		mes "enough Turbo Track Points.";
+		mes "You need at least 2 Turbo Track Points for this conversion service.";
+		close;
+	}
+}

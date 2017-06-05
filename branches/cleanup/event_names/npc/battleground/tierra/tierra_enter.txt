@@ -1,0 +1,383 @@
+//===== rAthena Script ======================================= 
+//= BattleGround System - Tierra Gorge Entrance NPCs
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Tierra Gorge Battleground Entrance NPCs
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Fixed silly copy paste errors. (bugreport:4401)
+//============================================================
+
+// First Tierra Gorge Officers - Guillaume
+//============================================================
+bat_room,124,178,5	script	Tierra Gorge Officer#01a	418,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close;
+	}
+	mes "[Guillaume Army Officer]";
+	mes "Let's show the power of the Guillaume Army to those stinky Croixs!";
+	next;
+	switch(select("I want to join your army!:End Conversation")) {
+	case 1:
+		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+			mes "[Guillaume Army Officer]";
+			mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[Guillaume Army Officer]";
+				mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[Guillaume Army Officer]";
+					mes "You seem to have just returned from the battlefield.";
+					mes "It's too early for you to go back. Go rest, and leave the enemies to us!";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a01");
+					if (.@mapcount > 0) {
+						mes "[Guillaume Army Officer]";
+						mes "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Croixs already.";
+						mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+					}
+					else {
+						if ($@TierraBG1) {
+							mes "[Guillaume Army Officer]";
+							mes "An elite corps is already standing by to be dispatched to the battlefield.";
+							mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+						}
+						else {
+							mes "[Guillaume Army Officer]";
+							mes "You definitely seem to be ready for battle!";
+							mes "Go show the Croixs what fear truly means!";
+							mes "Today, our cry of victory shall echo all over the battlefield!";
+							close2;
+							warp "bat_room",57,223;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[Guillaume Army Officer]";
+		mes "Today, we shall be victorious!";
+		break;
+	}
+	close;
+}
+
+bat_room,140,178,5	script	Tierra Gorge Officer#02a	418,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close;
+	}
+	mes "[Guillaume Army Officer]";
+	mes "Let's show the power of the Guillaume Army to those stinky Croixs!";
+	next;
+	switch(select("I want to join your army!:End Conversation")) {
+	case 1:
+		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+			mes "[Guillaume Army Officer]";
+			mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[Guillaume Army Officer]";
+				mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if (.@chk_urtime == 1) {
+					mes "[Guillaume Army Officer]";
+					mes "You seem to have just returned from the battlefield.";
+					mes "It's too early for you to go back. Go rest, and leave the enemies to us!";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a02");
+					if (.@mapcount > 0) {
+						mes "[Guillaume Army Officer]";
+						mes "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Croixs already.";
+						mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+					}
+					else {
+						if ($@TierraBG2) {
+							mes "[Guillaume Army Officer]";
+							mes "An elite corps is already standing by to be dispatched to the battlefield.";
+							mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+						}
+						else {
+							mes "[Guillaume Army Officer]";
+							mes "You definitely seem to be ready for battle!";
+							mes "Go show the Croixs what fear truly means!";
+							mes "Today, our cry of victory shall echo all over the battlefield!";
+							close2;
+							warp "bat_room",114,223;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[Guillaume Army Officer]";
+		mes "Today, we shall be victorious!";
+		break;
+	}
+	close;
+}
+
+bat_room,127,178,5	script	Guillaume Knight#1	417,{
+	mes "[Guillaume Knight]";
+	mes "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle.";
+	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades.";
+	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
+	mes "You may check the duration by pressing the Alt+U keys.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Are you ready to battle? Then apply with the recruiter next to me!";
+	close;
+}
+
+bat_room,143,178,5	script	Guillaume Knight#2	417,{
+	mes "[Guillaume Knight]";
+	mes "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle.";
+	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades.";
+	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
+	mes "You may check the duration by pressing the Alt+U keys.";
+	next;
+	mes "[Guillaume Knight]";
+	mes "Are you ready to battle? Then apply with the recruiter next to me!";
+	close;
+}
+
+bat_room,127,121,1	script	Croix Knight#1	413,{
+	mes "[Croix Knight]";
+	mes "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions.";
+	next;
+	mes "[Croix Knight]";
+	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
+	next;
+	mes "[Croix Knight]";
+	mes "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle.";
+	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
+	next;
+	mes "[Croix Knight]";
+	mes "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades.";
+	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
+	next;
+	mes "[Croix Knight]";
+	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
+	mes "You may check the duration by pressing the Alt+U keys.";
+	next;
+	mes "[Croix Knight]";
+	mes "Are you ready to battle? Then apply with the recruiter next to me!";
+	close;
+}
+
+bat_room,143,121,1	script	Croix Knight#2	413,{
+	mes "[Croix Knight]";
+	mes "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions.";
+	next;
+	mes "[Croix Knight]";
+	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
+	next;
+	mes "[Croix Knight]";
+	mes "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle.";
+	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
+	next;
+	mes "[Croix Knight]";
+	mes "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades.";
+	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
+	next;
+	mes "[Croix Knight]";
+	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
+	mes "You may check the duration by pressing the Alt+U keys.";
+	next;
+	mes "[Croix Knight]";
+	mes "Are you ready to battle? Then apply with the recruiter next to me!";
+	close;
+}
+
+// Second Tierra Gorge Officers - Croix
+//============================================================
+bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close;
+	}
+	mes "[Croix Army Officer]";
+	mes "Let's show the power of the Croix Army to those stinky Guillaumes!";
+	next;
+	switch(select("I want to join your army!:End Conversation")) {
+	case 1:
+		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+			mes "[Croix Army Officer]";
+			mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[Croix Army Officer]";
+				mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[Croix Army Officer]";
+					mes "You seem to have just returned from the battlefield.";
+					mes "It's too early for you to go back. Go rest, and leave the enemies to us!";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a02");
+					if (.@mapcount > 0) {
+						mes "[Croix Army Officer]";
+						mes "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Guillaume already.";
+						mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+					}
+					else {
+						if ($@TierraBG1) {
+							mes "[Croix Army Officer]";
+							mes "An elite corps is already standing by to be dispatched to the battlefield.";
+							mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+						}
+						else {
+							mes "[Croix Army Officer]";
+							mes "You definitely seem to be ready for battle!";
+							mes "Go show the Guillaumes what fear truly means!";
+							mes "Today, our cry of victory shall echo all over the battlefield!";
+							close2;
+							warp "bat_room",57,207;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[Croix Army Officer]";
+		mes "Today, we shall be victorious!";
+		break;
+	}
+	close;
+}
+
+bat_room,140,121,1	script	Tierra Gorge Officer#02b	414,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close;
+	}
+	mes "[Croix Army Officer]";
+	mes "Let's show the power of the Croix Army to those stinky Guillaumes!";
+	next;
+	switch(select("I want to join your army!:End Conversation")) {
+	case 1:
+		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+			mes "[Croix Army Officer]";
+			mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[Croix Army Officer]";
+				mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if (.@chk_urtime == 1) {
+					mes "[Croix Army Officer]";
+					mes "You seem to have just returned from the battlefield.";
+					mes "It's too early for you to go back. Go rest, and leave the enemies to us!";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a02");
+					if (.@mapcount > 0) {
+						mes "[Croix Army Officer]";
+						mes "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Guillaume already.";
+						mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+					}
+					else {
+						if ($@TierraBG2) {
+							mes "[Croix Army Officer]";
+							mes "An elite corps is already standing by to be dispatched to the battlefield.";
+							mes "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then.";
+						}
+						else {
+							mes "[Croix Army Officer]";
+							mes "You definitely seem to be ready for battle!";
+							mes "Go show the Guillaumes what fear truly means!";
+							mes "Today, our cry of victory shall echo all over the battlefield!";
+							close2;
+							warp "bat_room",114,207;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[Croix Army Officer]";
+		mes "Today, we shall be victorious!";
+		break;
+	}
+	close;
+}

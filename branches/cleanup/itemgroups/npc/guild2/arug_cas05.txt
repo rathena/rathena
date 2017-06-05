@@ -1,0 +1,83 @@
+//===== rAthena Script =======================================
+//= War of Emperium SE - Banadis
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Merged to template file.
+//============================================================
+
+-	duplicate(Manager#template)	Manager#arug_cas05	-1
+-	duplicate(gard#template)	gard1#arug_cas05	-1
+-	duplicate(gard#template)	gard2#arug_cas05	-1
+-	duplicate(df#template)	df1#arug_cas05	-1
+-	duplicate(df#template)	df2#arug_cas05	-1
+-	duplicate(RL#template)	RL0#arug_cas05	-1
+-	duplicate(RL#template)	RL1#arug_cas05	-1
+-	duplicate(RL#template)	RL2#arug_cas05	-1
+-	duplicate(RL#template)	RL3#arug_cas05	-1
+
+arug_cas05,328,98,3	duplicate(Steward#template)	Steward#ar05	55
+arug_cas05,146,315,3	duplicate(Guardian#template)	Eeos#ar05	868
+arug_cas05,315,98,5	duplicate(Kafra#template)	Kafra Employee#ar05	117
+arug_cas05,65,171,0	duplicate(Guardian Stone#template)	1st Guardian Stone#ar05	844
+arug_cas05,212,149,0	duplicate(Guardian Stone#template)	2nd Guardian Stone#ar05	844
+arug_cas05,136,158,0	duplicate(Control#template)	Control Device01#ar05	111
+arug_cas05,135,212,0	duplicate(Control#template)	Control Device02#ar05	111
+arug_cas05,134,266,0	duplicate(Control#template)	Control Device03#ar05	111
+arug_cas05,299,277,0	duplicate(Switch#template)	#aru05_switch	111
+arug_cas05,312,154,3	duplicate(Sunflower#template)	Mysterious Sunflower#10	977
+
+arug_cas05,122,314,0	script	LF-01#arug_cas05	111,{ callfunc "LinkFlag","First Gate House",84,158,"Second Gate House",197,136; }
+arug_cas05,125,314,0	script	LF-02#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 1-1",65,94,"Defense Area 1-2",211,97; }
+arug_cas05,128,314,0	script	LF-03#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 1-3",112,73,"Defense Area 1-4",171,73; }
+arug_cas05,131,314,0	script	LF-04#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 2-1",112,152,"Defense Area 2-2",172,152; }
+arug_cas05,134,314,0	script	LF-05#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 2-3",120,186,"Defense Area 2-4",162,186; }
+arug_cas05,149,314,0	script	LF-06#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 3-1",116,235,"Defense Area 3-2",164,235; }
+arug_cas05,152,314,0	script	LF-07#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 1-1",65,94,"Defense Area 2-1",112,152,"Defense Area 3-1",116,235; }
+arug_cas05,155,314,0	script	LF-08#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 1-2",211,97,"Defense Area 2-2",172,152,"Defense Area 3-2",164,235; }
+arug_cas05,158,314,0	script	LF-09#arug_cas05	111,{ callfunc "LinkFlag","Defense Area 1-4",171,73,"Defense Area 2-4",162,186; }
+arug_cas05,161,314,0	script	LF-10#arug_cas05	111,{ callfunc "LinkFlag","Convenience Facility",321,57; }
+arug_cas05,45,158,0	script	Banadis#LF_ar05_01::LF_ar05_01	111,{ callfunc "LinkFlag","Emperium Center",121,318; }
+arug_cas05,226,156,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_01	111
+arug_cas05,134,62,4	duplicate(LF_ar05_01)	Banadis#LF_ar05_02	111
+arug_cas05,149,62,4	duplicate(LF_ar05_01)	Banadis#LF_ar05_03	111
+arug_cas05,123,154,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_04	111
+arug_cas05,160,154,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_05	111
+arug_cas05,135,205,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_06	111
+arug_cas05,148,205,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_07	111
+arug_cas05,134,260,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_08	111
+//arug_cas05,204,142,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_09	111
+arug_cas05,148,103,4	script	Banadis#LF_ar05_10::LF_ar05_02	722,{
+	callfunc "LinkFlag","Emperium Center",121,318;
+	end;
+OnAgitInit2:
+OnRecvCastlear05:
+	FlagEmblem GetCastleData("arug_cas05",1);
+	end;
+}
+arug_cas05,135,103,4	duplicate(LF_ar05_02)	Banadis#LF_ar05_11	722
+arug_cas05,63,51,7	duplicate(LF_ar05_02)	Banadis#LF_ar05_12	722
+arug_cas05,214,51,1	duplicate(LF_ar05_02)	Banadis#LF_ar05_13	722
+
+aru_gld,289,103,6	script	Banadis#flag_ar05_1::ar05_Flag	722,{
+	callfunc "ReturnFlag","arug_cas05",1;
+	end;
+OnAgitInit2:
+OnRecvCastlear05:
+	FlagEmblem GetCastleData("arug_cas05",1);
+	end;
+}
+aru_gld,289,112,6	duplicate(ar05_Flag)	Banadis#flag_ar05_2	722
+aru_gld,350,98,6	script	Banadis#flag_ar05_3::ar05_Flag2	722,{
+	callfunc "ReturnFlag","arug_cas05",0;
+	end;
+OnAgitInit2:
+OnRecvCastlear05:
+	FlagEmblem GetCastleData("arug_cas05",1);
+	end;
+}
+aru_gld,350,88,6	duplicate(ar05_Flag2)	Banadis#flag_ar05_4	722

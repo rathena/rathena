@@ -1,0 +1,41 @@
+// Refine Database [Pre-Renewal]
+//
+// Structure of Database:
+// Type,Stats per level,Random bonus start level,Random bonus value,Chance+1:Bonus+1,Chance+2:Bonus+2,Chance+3:Bonus+3,...
+//
+// For armors, values of 100 add 1 armor defense.
+// For weapons, values of 100 add 1 ATK.
+//
+// Type:
+//	0 - Armors
+//	1 - Level 1 weapons
+//	2 - Level 2 weapons
+//	3 - Level 3 weapons
+//	4 - Level 4 weapons
+//
+// Stats per level:
+// This value is applied for every upgrade level.
+//
+// Random bonus start level:
+// This value specifies the start point for those levels that give a random bonus value.
+//
+// Random bonus value:
+// A random number between 0 and (Random bonus start level - Upgrade level + 1) * this value is applied for all upgrades past
+// Random bonus start level (usually the first unsafe upgrade). This is only applied for weapons, and not displayed client-side.
+//
+// Chance:
+// 100 = 100%
+//
+// Notes:
+// Changing the number of upgrade levels requires modifying MAX_REFINE in src/map/status.h.
+
+// Armors
+0,70,0,0,100:0,100:0,100:0,100:0,60:0,40:0,40:0,20:0,20:0,10:0
+// Level 1 weapons
+1,200,8,300,100:0,100:0,100:0,100:0,100:0,100:0,100:0,60:0,40:0,20:0
+// Level 2 weapons
+2,300,7,500,100:0,100:0,100:0,100:0,100:0,100:0,60:0,40:0,20:0,20:0
+// Level 3 weapons
+3,500,6,800,100:0,100:0,100:0,100:0,100:0,60:0,50:0,20:0,20:0,20:0
+// Level 4 weapons
+4,700,5,1300,100:0,100:0,100:0,100:0,60:0,40:0,40:0,20:0,20:0,10:0

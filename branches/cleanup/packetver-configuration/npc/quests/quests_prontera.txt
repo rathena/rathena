@@ -1,0 +1,3694 @@
+//===== rAthena Script =======================================
+//= Quest NPCs related to Prontera
+//===== Description: =========================================
+//= Collection of Prontera-based quests.
+//= * Culvert Access
+//= * Ph.D Hat Quest
+//= * Gaebolg Family Curse
+//===== Comments: ============================================
+//= Culvert Access:
+//= - [Official Conversion]
+//= - Variable in use: MISC_QUEST (bit 8)
+//= Ph.D Hat Quest:
+//= - [Official Conversion]
+//= - n/a
+//= Gaebolg Family Curse:
+//= - [Official Conversion]
+//= - Variable in use: prt_curse (max 61)
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [kobra_k88] [L0ne_W0lf]
+//= Fixed flower name Dreamy -> Illusion
+//= 1.2 Fixed exploit [Lupus]
+//= 1.3 Removed Duplicates [Silent]
+//= 1.4 Moved Culvert from cities/prontera.txt [Evera]
+//= 1.5 Culvert has been rescripted from the ground up. [L0ne_W0lf]
+//= 1.6 Added Gaebolg Family Curse quest. [L0ne_W0lf]
+//= 1.6a Fixed a couple spelling mistakes. [L0ne_W0lf]
+//= 1.7 Updated "Ph.D Quest" Dialogs. [Samuray22]
+//= 1.7b Fixed some minor typos. [SinSloth]
+//= 1.7c replaced item "names" with item id. [Lupus]
+//= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.9 Fixed "him" -> "her" in Ph.D hat quest. THansk to yyCC. [L0ne_W0lf]
+//= 2.0 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.0a Corrected a Typo error ";;". [Samuray22]
+//= 2.0b Corrected a Typo error. (bugreport:950) [Samuray22]
+//= 2.1 Added missing checkweights. [L0ne_W0lf]
+//= 2.2 Added Nameless Island quest addition. [L0ne_W0lf]
+//= 2.3 Bamph will now talk to those who failed the Gaebolg quest. [L0ne_W0lf]
+//= 2.3a Touch up to Bamph fo other fail-points. [L0ne_W0lf]
+//= 2.3b Hopefully the last change needed for Nameless quest. [L0ne_W0lf]
+//= 2.4 Updated Headgear Quest. [L0ne_W0lf]
+//= 2.5 Fixed requirements for PH D. Hat. [L0ne_W0lf]
+//= 2.5a Fixed requirements for PH D. Hat agian lol. [L0ne_W0lf]
+//= 2.6 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.7 Corrected 'IProntera' typo. (bugreport:4522) [L0ne_W0lf]
+//= 2.8 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.9 Updated Nameless Island addition and added questlog support. [Euphy]
+//============================================================
+
+// Prontera Culvert :: prt_npc
+//============================================================
+prt_in,88,105,2	script	Recruiter	105,{
+	if (MISC_QUEST & 8) {
+		mes "[Recruiter]";
+		mes "Ah...";
+		mes "I know those eyes.";
+		mes "Full of compassion";
+		mes "...and courage.";
+		next;
+		mes "[Recruiter]";
+		mes "Of course you're a volunteer for campaign to reclaim the Prontera Culvert. Would you let me warp you there?";
+		next;
+		if (select("Warp to Culvert Entrance.:Quit.") == 1) {
+			warp "prt_fild05",274,208;
+			end;
+		}
+		close;
+	}
+	mes "[Recruiter]";
+	mes "Ah, let me inform you that the Capital Defense Headquarter of the Rune-Midgarts Kingdom has now decided to recruit a punitive force due to the Prontera Culvert's situation.";
+	next;
+	switch(select("Volunteer.:Situation...?:Quit.")) {
+	case 1:
+		callsub S_Volunteer;
+		mes "[Recruiter]";
+		mes "Are you ready, hero?";
+		mes "I will now warp you";
+		mes "to the Culvert.";
+		next;
+		warp "prt_fild05",274,208;
+		end;
+	case 2:
+		mes "[Recruiter]";
+		mes "Haven't you heard...?";
+		mes "The Prontera Culvert is infested with all kinds of filthy vermin!";
+		next;
+		mes "[Recruiter]";
+		mes "Due to the serious risk of water contamination, and the safety of Rune-Midgardians, the Culvert has been quarantined by royal decree.";
+		next;
+		mes "[Recruiter]";
+		mes "Needless to say, this has caused shortages in the water supply in our kingdom. Indeed, such a crisis in these dark times...";
+		next;
+		mes "[Recruiter]";
+		mes "Our people";
+		mes "thirst for water...";
+		mes "But they thirst";
+		mes "even more...";
+		mes "For a hero!";
+		next;
+		mes "[Recruiter]";
+		mes "Will you stand idly as the children of Rune-Midgarts suffer from parched throats and shed tears of dryness?! Would you bury our children?!";
+		next;
+		mes "[Recruiter]";
+		mes "Warriors! Rune-Midgarts is calling you! Cleanse this land's pestilence and cast out the vermin in the Culvert! Only you... Can make a difference.";
+		next;
+		if (select("Volunteer.:Quit.") == 1) {
+			callsub S_Volunteer;
+			mes "[Recruiter]";
+			mes "Adventurer...";
+			mes "I will now warp you";
+			mes "to the Prontera Culvert.";
+			next;
+			warp "prt_fild05",274,208;
+			end;
+		}
+		mes "[Recruiter]";
+		mes "Hmpf. Well. The next time you take a drink of water, just remember that an average of nine and a half children just died... ^990000Of thirst^000000.";
+		close;
+
+	case 3:
+		close;
+	}
+
+S_Volunteer:
+	set MISC_QUEST,MISC_QUEST | 8;
+	mes "[Recruiter]";
+	mes "Your registration...";
+	mes "is now complete.";
+	next;
+	mes "[Recruiter]";
+	mes "I would like to thank you for volunteering to do your part for our great kingdom. Here, take these provisions for your battles against the forces of darkness.";
+	next;
+	mes "[Recruiter]";
+	mes "3 Red Potions, 1 Milk,";
+	mes "and 1 Orange Potion";
+	mes "...to give you hope.";
+	getitem 501,3; //Red_Potion
+	getitem 519,1; //Milk
+	getitem 502,1; //Orange_Potion
+	next;
+	return;
+}
+
+prt_fild05,270,212,5	script	Culvert Guardian	105,{
+	if (MISC_QUEST & 8) {
+		mes "[Culvert Guardian]";
+		mes "Ah, you're one of our volunteers. This is the entrance of the Prontera Culvert.";
+		mes "Do you wish to";
+		mes "go inside?";
+		next;
+		if (select("Sure.:Quit.") == 1) {
+			warp "prt_sewb1",131,247;
+			end;
+		}
+		close;
+	}
+	mes "[Culvert Guardian]";
+	mes "I'm sorry, but we can only allow volunteers for the Culvert Campaign to enter.";
+	next;
+	mes "[Culvert Guardian]";
+	mes "If you'd like to volunteer, please visit the ^000077Culvert Registrar^000000 located in the 11 O'clock direction of Prontera.";
+	close;
+}
+
+// Ph.D Hat Quest :: npc_6cript
+//============================================================
+prt_in,38,108,4	script	Teacher	53,{
+	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(704) > 0) && (countitem(708) > 0)) {
+		mes "[Teacher]";
+		mes "Oh...";
+		mes "Those Flowers in your hand are...";
+		next;
+		switch(select("Show Flowers:Present Flowers:Cancel")) {
+		case 1:
+			mes "[Teacher]";
+			mes "Ah...";
+			mes "Those are definitely the 4 kinds of Flowers I was looking for! Would you give them to me?";
+			next;
+			mes "[Teacher]";
+			mes "If you would...";
+			mes "I'll give you my precious item.";
+			close;
+		case 2:
+			if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(704) > 0) && (countitem(708) > 0)) {
+				delitem 710,1;  //Illusion_Flower
+				delitem 703,1;  //Hinalle
+				delitem 704,1;  //Aloe
+				delitem 708,1;  //Ment
+				getitem 5012,1;	//Ph.D_Hat
+				mes "[Teacher]";
+				mes "I really really appreciate you what you've done for me. I'm truly grateful. I will give my precious item to you as promised.";
+				next;
+				mes "[Teacher]";
+				mes "This is the Hat I've worn on my Graduation from my University. It reminds me of my happy school days. Please take this...";
+				close;
+			}
+			else {
+				mes "[Teacher]";
+				mes "... Oh, I'm Sorry.";
+				mes "But that's not what I'm looking for. Maybe you need to study flowers a little bit?";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Teacher]";
+		mes "Don't you think...";
+		mes "Flowers are pretty?";
+		next;
+		switch(select("Talk:Quit")) {
+		case 1:
+			mes "[Teacher]";
+			mes "When I was young,";
+			mes "I had no friends and";
+			mes "studied all the time.";
+			next;
+			mes "[Teacher]";
+			mes "Sometimes I regret what I did when I was younger, but it's not a big deal now. Through hard study, I finished entire educational courses earlier than all the other students.";
+			next;
+			mes "[Teacher]";
+			mes "However...";
+			mes "I was sad and sometimes lonely. Whenever the studying got too hard, I needed someone who would listen to me. Finally, one day, I met my best friend.";
+			next;
+			mes "[Teacher]";
+			mes "When I saw a Pretty Flower blooming in the abandoned Garden, I realized It was my friend which shared my fate.";
+			next;
+			mes "[Teacher]";
+			mes "Although it is a Common and Normal Flower to others, she gave me the reason to study again. I could achieve my goals because of her.";
+			next;
+			mes "[Teacher]";
+			mes "So recently...";
+			mes "I am trying to pay her back. Now I am studying Flowers, and plan to over the whole world with them.";
+			next;
+			mes "[Teacher]";
+			mes "To accomplish my work...";
+			mes "I need bunches of flowers. But for someone who rarely goes outside, it is really hard to find all the flowers I need.";
+			next;
+			mes "[Teacher]";
+			mes "I need 1 ^3355FFIllusion Flower^000000 ,1 ^3355FFHinalle^000000,1 ^3355FFAloe^000000 and 1 ^3355FFMent^000000. If you can bring them to me, I'd give you my treasure...";
+			close;
+		case 2:
+			mes "[Teacher]";
+			mes "One of these days I will cover this whole world with Flowers.";
+			close;
+		}
+	}
+}
+
+// Gaebolg Family Curse :: prt_curse
+//============================================================
+prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
+	callsub S_CheckWeight; //Check Player's weight
+	if (BaseLevel > 59) {
+		if (prt_curse == 0) {
+			mes "[Busy-Looking Boy]";
+			mes "Aw nuts...";
+			mes "What am I gonna do?";
+			mes "I have to deliver these";
+			mes "books, but... I... Oh man,";
+			mes "I can't get scared now!";
+			close;
+		}
+		else if (prt_curse == 1) {
+			mes "[Busy-Looking Boy]";
+			mes "Aw nuts...";
+			mes "What am I gonna do?";
+			mes "I have to deliver these";
+			mes "books, but... I... Oh man,";
+			mes "I can't get scared now!";
+			next;
+			if (select("Speak with him:Ignore him") == 1) {
+				mes "["+strcharinfo(0)+"]";
+				mes "Say, what seems";
+				mes "to be the problem?";
+				next;
+				mes "[Busy-Looking Boy]";
+				mes ".........?";
+				next;
+				mes "[Busy-Looking Boy]";
+				if (Sex) {
+					mes "Ack! You're that clumsy";
+					mes "dude who made me drop";
+				}
+				else {
+					mes "Ack! You're that ditzy";
+					mes "chick who made me drop";
+				}
+				mes "all of those books earlier!";
+				mes "Wait, you ditched me before,";
+				mes "so why act all concerned now?";
+				emotion e_gasp;
+			}
+			else {
+				mes "[Busy-Looking Boy]";
+				mes "Okay, okay...";
+				mes "Don't even think";
+				mes "about floating in";
+				mes "the sky. You're like,";
+				mes "so stable. Don't think...";
+				mes "Just... Just board that ship...";
+				close;
+			}
+			next;
+			select("Well, I, um...");
+			mes "[Busy-Looking Boy]";
+			if (Sex) {
+				mes "Yeah... A real";
+				mes "man wouldn't have";
+				mes "ditched back then";
+				mes "without helping me.";
+				mes "You're a real creepo,";
+				mes "you know that?";
+			}
+			else {
+				mes "Yeah... If you were";
+				mes "a graceful and considerate";
+				mes "lady, you woulda helped me";
+				mes "out before. I'm right, huh?";
+			}
+			next;
+			mes "^3355FFYou instinctively";
+			mes "kick over one of the";
+			mes "piles of books next";
+			mes "to the young boy.";
+			mes "You couldn't help it:";
+			mes "it was a natural reflex!^000000";
+			next;
+			Specialeffect EF_HITDARK;
+			emotion e_omg;
+			mes "^3355FF*BAM!*^000000";
+			next;
+			emotion e_omg;
+			mes "[Busy-Looking Boy]";
+			mes "Ack! Those books...!";
+			mes "It took me so long to";
+			mes "stack all of those!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh no, what a mess!";
+			mes "Here, let me help you";
+			mes "arrange these nicely";
+			mes "out of the bottom of";
+			mes "my freakin' heart.";
+			emotion e_lv,1;
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			emotion e_dots;
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Huh...?";
+			mes "Oh, thanks for";
+			mes "helping me out here.";
+			mes "I really appreciate it.";
+			next;
+			select("Are these all yours?");
+			mes "[Busy-Looking Boy]";
+			mes "These? Oh, I'm supposed";
+			mes "to deliver these for my job.";
+			mes "I need to take these to Juno";
+			mes "from the Prontera Library";
+			mes "for a client. However, um...";
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Well...";
+			mes "I get motion sick really";
+			mes "easily, so it scares me to";
+			mes "death to ride the Airship";
+			mes "all the way to Juno.";
+			emotion e_dots;
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Now I'm in trouble!";
+			mes "I'm never late, but this";
+			mes "time I just can't help it.";
+			mes "There's nothing I can do!";
+			mes "Oh, I'm gonna lose this job!";
+			emotion e_sob;
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Wait... You adventurers";
+			mes "do a lot of traveling, right?";
+			mes "If you're traveling to Juno,";
+			mes "would you please deliver this";
+			mes "for me? I'll be in real trouble";
+			mes "if I don't send these books...";
+			next;
+			callsub S_GetBooks;
+			mes "[Busy-Looking Boy]";
+			mes "I-I understand.";
+			mes "It's none of your ";
+			mes "business, I know, but";
+			mes "I'm just so desperate...";
+			emotion e_sob;
+			set prt_curse,2;
+			close;
+		}
+		else if (prt_curse == 2) {
+			mes "[Busy-Looking Boy]";
+			mes "Oh, hello again.";
+			mes "Sorry, but I'm trying to";
+			mes "concentrate here. Gonna...";
+			mes "Summon all my courage...";
+			mes "and b-board that Airship!";
+			mes "Argh! No, I can't do it!";
+			emotion e_dots;
+			next;
+			callsub S_GetBooks;
+			mes "[Busy-Looking Boy]";
+			mes "^333333*Sob...*^000000";
+			mes "What am I gonna do?";
+			mes "That guy's been waiting";
+			mes "for me to deliver his books";
+			mes "for quite a while now...";
+			emotion e_sob;
+			close;
+		}
+		else if (prt_curse == 3) {
+			mes "[Busy-Looking Boy]";
+			mes "Oh, please deliver";
+			mes "those books I gave";
+			mes "you to ^FF0000Mr. Karlomoff^000000, who";
+			mes "should be waiting around";
+			mes "the Juno Library. Thanks";
+			mes "again for your help~";
+			close;
+		}
+		mes "[Busy-Looking Boy]";
+		mes "Ack! Would you leave";
+		mes "me alone and let me work?";
+		mes "I've got something important";
+		mes "to do! When I finish arranging";
+		mes "these books,  need to... I need to make some preparations!";
+		close;
+	}
+	mes "[Busy-Looking Boy]";
+	mes "Ack! Would you leave";
+	mes "me alone and let me work?";
+	mes "I've got something important";
+	mes "to do! When I finish arranging";
+	mes "these books, I need to... I need to make some preparations!";
+	close;
+
+OnTouch:
+	callsub S_CheckWeight; //Check Player's weight
+	if (BaseLevel > 59) {
+		if (prt_curse == 0) {
+			Specialeffect EF_HITDARK;
+			mes "^3355FF*BAM!*^000000";
+			next;
+			mes "[Busy Looking Boy]";
+			mes "Hey, look out!";
+			mes "Can't you be more";
+			mes "careful?! Geeeeez!";
+			emotion e_ag;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oops, I'm so sorry.";
+			mes "Are you alright?";
+			next;
+			mes "[Busy Looking Boy]";
+			mes "Yeah, no thanks to you!";
+			mes "Oh... Don't worry, I'm fine.";
+			next;
+			mes "^3355FFYou notice that the boy";
+			mes "dropped many hardcover";
+			mes "books that are probably about";
+			mes "ruins and their legends, based";
+			mes "on their titles. The boy dusted";
+			mes "himself off and began to";
+			mes "carefully pile the books.^000000";
+			next;
+			if (select("Leave:Help him pile the books") == 1) {
+				mes "[Busy-Looking Boy]";
+				mes "Next time, look";
+				mes "where you're going,";
+				mes "alright? I mean, you";
+				mes "might really break";
+				mes "something if you're";
+				mes "always that careless!";
+				set prt_curse,1;
+				close;
+			}
+			mes "[Busy-Looking Boy]";
+			mes "Huh...?";
+			mes "Oh, thanks for";
+			mes "helping me out here.";
+			mes "I really appreciate it.";
+			next;
+			select("Are these all yours?");
+			mes "[Busy-Looking Boy]";
+			mes "These? Oh, I'm supposed";
+			mes "to deliver these for my job.";
+			mes "I need to take these to Juno";
+			mes "from the Prontera Library";
+			mes "for a client. However, um...";
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Well...";
+			mes "I get motion sick really";
+			mes "easily, so it scares me to";
+			mes "death to ride the Airship";
+			mes "all the way to Juno.";
+			emotion e_dots;
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Now I'm in trouble!";
+			mes "I'm never late, but this";
+			mes "time I just can't help it.";
+			mes "There's nothing I can do!";
+			mes "Oh, I'm gonna lose this job!";
+			emotion e_sob;
+			next;
+			mes "[Busy-Looking Boy]";
+			mes "Wait... You adventurers";
+			mes "do a lot of traveling, right?";
+			mes "If you're traveling to Juno,";
+			mes "would you please deliver this";
+			mes "for me? I'll be in real trouble";
+			mes "if I don't send these books...";
+			next;
+			callsub S_GetBooks;
+			mes "[Busy-Looking Boy]";
+			mes "I-I understand.";
+			mes "It's none of your ";
+			mes "business, I know, but";
+			mes "I'm just so desperate...";
+			emotion e_sob;
+			set prt_curse,2;
+			close;
+		}
+		else if (prt_curse == 3) {
+			mes "[Busy-Looking Boy]";
+			mes "Oh, please deliver";
+			mes "those books I gave";
+			mes "you to ^FF0000Mr. Karlomoff^000000, who";
+			mes "should be waiting around";
+			mes "the Juno Library. Thanks";
+			mes "again for your help~";
+			close;
+		}
+	}
+	end;
+
+S_GetBooks:
+	if (select("Help him:Don't help him") == 1) {
+		mes "[Busy-Looking Boy]";
+		mes "Oh, thank you so much!";
+		mes "You don't understand how";
+		mes "much I dread those Airships.";
+		mes "Now, would you please deliver";
+		mes "these books to ^FF0000Mr. Karlomoff^000000";
+		mes "near the Juno Library?";
+		next;
+		mes "[Busy-Looking Boy]";
+		mes "I know these books are";
+		mes "pretty heavy, but be really";
+		mes "careful with them! Anyway,";
+		mes "thanks for doing this for me.";
+		mes "I was really at my wit's end...";
+		set prt_curse,3;
+		setquest 18030;// custom addition to make the script consistent
+		getitem 7431,1; //Books
+		close;
+	}
+	return;
+
+S_CheckWeight:
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	return;
+}
+
+yuno,311,195,3	script	Historian#prt01	754,{
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	if (prt_curse < 3) {
+		mes "[Historian]";
+		mes "Juno's mysterious past";
+		mes "holds some great secret.";
+		mes "I'm sure of it! It excites me";
+		mes "to know that my research";
+		mes "brings me that much closer";
+		mes "to finally unveiling it!";
+		next;
+		mes "[Historian]";
+		mes "But I'll admit that even I don't know how much digging I'll";
+		mes "have to do to learn what I want. It's our duty as historians to";
+		mes "find out the truth of the past, but it definitely won't be easy.";
+		next;
+		mes "[Historian]";
+		mes "To understand, to see the";
+		mes "truth of the past with my";
+		mes "own eyes... I'd even sell";
+		mes "my soul for the opportunity.";
+		close;
+	}
+	else if (prt_curse == 3) {
+		mes "^3355FFAs you approached, this";
+		mes "historian suddenly closed";
+		mes "the book that he was reading,";
+		mes "looked to the heavens and";
+		mes "let out a deep breath in a vain";
+		mes "attempt to relieve his tension.^000000";
+		next;
+		mes "[Historian]";
+		mes "GRRRRRRRRR!";
+		mes "Where are my books?!";
+		emotion e_ag;
+		next;
+		select("Are you alright?");
+		mes "[Historian]";
+		mes "Er? Oh. I'm sorry you";
+		mes "had to see that. I'm just";
+		mes "extremely upset. You see,";
+		mes "I'm expecting a delivery of";
+		mes "research books from Prontera,";
+		mes "but they haven't arrived yet.";
+		next;
+		mes "[Historian]";
+		mes "In fact, the delivery boy is";
+		mes "very late. This will delay my";
+		mes "research considerably since";
+		mes "I cannot proceed without more";
+		mes "new material to study.";
+		next;
+		if (countitem(7431) > 0) {
+			select("Excuse me, but what's your name?");
+			mes "[Historian]";
+			mes "Hm? I'm Karlomoff, the";
+			mes "1st scholar of the Rekenber";
+			mes "Historical Research Group.";
+			mes "Did you need something, or";
+			mes "were you looking around here";
+			mes "for somebody in particular?";
+			next;
+		}
+		else {
+			select("Oh, I'm delivering the books for him.");
+			emotion e_what;
+			mes "[Historian]";
+			mes "Ah, really?";
+			mes "Great, you're here!";
+			mes "So, where are the books?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I...";
+			mes "I don't have";
+			mes "them right now.";
+			next;
+			mes "[Historian]";
+			mes "What...?";
+			mes "Don't tell me that";
+			mes "you lost them! Those";
+			mes "books were priceless!";
+			mes "Did you come all this";
+			mes "way just to tell me that?";
+			next;
+			mes "[Historian]";
+			mes "Well, I suppose you'll";
+			mes "have to report the loss of";
+			mes "the books and get some new";
+			mes "copies of those books that";
+			mes "you were supposed to deliver.";
+			mes "Now hurry, I need to research!";
+			close;
+		}
+		select("Right, I brought your books.");
+		mes "[Historian]";
+		mes "What? But you're not the";
+		mes "delivery boy. Well, let me see";
+		mes "the books you've brought. Hm...";
+		mes "Just as I thought: the Rune-";
+		mes "Midgarts Kingdom has a great";
+		mes "wealth of ancient information.";
+		next;
+		mes "[Historian]";
+		mes "Ah, thank you so much for";
+		mes "bringing these. However, by";
+		mes "your mode of dress, I can tell";
+		mes "that you are an adventurer.";
+		mes "What happened to the delivery boy that was supposed to bring these?";
+		next;
+		mes "[Historian]";
+		mes "..........?";
+		mes "Afraid to ride the Airship?";
+		mes "Motion sickness? Well, that's";
+		mes "quite understandable. The poor";
+		mes "boy should have contacted me";
+		mes "about that beforehand.";
+		next;
+		mes "[Historian]";
+		mes "Goodness, it's been ";
+		mes "a while since I've had";
+		mes "a visitor. Would you like";
+		mes "to stay and chat for a bit?";
+		mes "Just give me a minute to get";
+		mes "a cool drink of water first~";
+		set prt_curse,4;
+		delitem 7431,1; //Books
+		close;
+	}
+	else if (prt_curse == 4) {
+		mes "[Historian]";
+		mes "Ah, that glass of";
+		mes "water was just what";
+		mes "I needed to refresh";
+		mes "myself. Let me tell you";
+		mes "a little bit about my work.";
+		next;
+		mes "[Historian]";
+		mes "I might have it mentioned before, but my name is Karlomoff and";
+		mes "I work in the Rekenber Historical Research as its 1st scholar. We";
+		mes "recently finished our project on the Schwaltzvalt Republic.";
+		next;
+		mes "[Historian]";
+		mes "Now, we're trying to learn";
+		mes "more about the Rune-Midgarts";
+		mes "Kingdom's history. We believe";
+		mes "it's linked to our Schwaltzvalt";
+		mes "Republic because they share the";
+		mes "continent. Makes sense, right?";
+		next;
+		mes "[Historian]";
+		mes "Ultimately, we hope that";
+		mes "new information from our";
+		mes "research of Rune-Midgarts will";
+		mes "shed some new light on our";
+		mes "current understanding of the";
+		mes "Schwaltzvalt Republic's past.";
+		next;
+		mes "[Historian]";
+		mes "Including myself, there are";
+		mes "^3131FF3 members of the Rekenber";
+		mes "Historical Research Group^000000";
+		mes "that are studying the Rune-";
+		mes "Midgarts Kingdom's history.";
+		next;
+		select("Rekenber Historical Research Group?");
+		mes "[Historian]";
+		mes "You adventurers from Rune-";
+		mes "Midgarts may not know it, but";
+		mes "the Rekenber Corporation has";
+		mes "unofficial control over our";
+		mes "Schwaltzvalt Republic. Some";
+		mes "hate it, others don't care.";
+		next;
+		mes "[Historian]";
+		mes "Anyway, Rekenber has its own";
+		mes "Historical Research Group since";
+		mes "rediscovering ancient technologies has been key to its success, well,";
+		mes "so far as I can tell. Personally, I enjoy the pursuit of knowledge.";
+		next;
+		mes "[Historian]";
+		mes "Oh, here's an interesting";
+		mes "fact! Did you know that the";
+		mes "title of ruler of Rune-Midgarts";
+		mes "isn't always passed down";
+		mes "through the same family?";
+		next;
+		mes "[Historian]";
+		mes "Actually, there are several";
+		mes "royal families that hold a";
+		mes "special competition to decide";
+		mes "which prince becomes the";
+		mes "next king. Fascinating...";
+		next;
+		select("Several royal families?");
+		mes "[Historian]";
+		mes "Yes, I'll try to explain it";
+		mes "briefly. There are a total";
+		mes "of 7 royal families. Each";
+		mes "family is descended from one";
+		mes "of the 7 warriors that founded";
+		mes "the Rune-Midgarts Kingdom.";
+		next;
+		mes "[Historian]";
+		mes "According to the records,";
+		mes "Jormungand, the snake of the";
+		mes "earth, appeared and brought";
+		mes "chaos to the entire continent.";
+		mes "7 warriors appeared and drove the serpent away, saving the world.";
+		next;
+		mes "[Historian]";
+		mes "With the return of peace,";
+		mes "the 7 warriors established";
+		mes "the Rune-Midgarts Kingdom,";
+		mes "choosing Tristram Gaebolg III";
+		mes "as the kingdom's first ruler. ";
+		next;
+		mes "[Historian]";
+		mes "Knowing that their descendents";
+		mes "may not always be deserving of";
+		mes "ruling the kingdom, the 7 warriors agreed to hold a contest amongst";
+		mes "their families each generation to prevent royal corruption.";
+		next;
+		emotion e_swt2;
+		mes "[Historian]";
+		mes "Oh... Not too excited";
+		mes "about history, huh? Well,";
+		mes "maybe if I sing the ancient";
+		mes "song of this myth, you'd be";
+		mes "better able to understand...";
+		next;
+		mes "[Historian]";
+		mes "^FF0000*The great serpent*^000000";
+		mes "^FF0000*swallowed the sea.*^000000";
+		mes "^FF0000*The eagle of the rainbow*^000000";
+		mes "^FF0000*swallowed the serpent.*^000000";
+		mes "^FF0000*Then the eagle built its nest.*^000000";
+		mes "^FF0000*A nest upon the swallowed sea.*^000000";
+		next;
+		mes "[Historian]";
+		mes "^333333*Ahem*^000000 As you see, I'm";
+		mes "quite tone deaf. But the";
+		mes "point is that people still";
+		mes "praise the 7 warriors' exploits";
+		mes "through this song. Isn't that";
+		mes "interesting to know about?";
+		set prt_curse,5;
+		close;
+	}
+	else if (prt_curse == 5) {
+		mes "[Historian]";
+		mes "I'm sorry that I let my";
+		mes "mouth run while talking at";
+		mes "great length about Rune-";
+		mes "Midgart's history. Still,";
+		mes "I hope you found that tale";
+		mes "at least a little enjoyable.";
+		next;
+		mes "[Historian]";
+		mes "Oh! Will you be returning to";
+		mes "the Rune-Midgarts Kingdom?";
+		mes "If so, then I have a favor to";
+		mes "ask you. Would you please";
+		mes "deliver this report I've written to my colleague in Morroc?";
+		next;
+		mes "[Historian]";
+		mes "It would be a great help";
+		mes "to me if you could get this";
+		mes "report to her right away.";
+		mes "Ah, her name is Rodafrian.";
+		mes "I'm certain you can find her";
+		mes "somewhere in that desert town.";
+		set prt_curse,6;
+		getitem 7342,1; //File01
+		changequest 18030,18031;// custom addition to make the script consistent
+		close;
+	}
+	else if (prt_curse == 6) {
+		mes "[Historian]";
+		mes "Please find my colleague,";
+		mes "Rodafrian, in Morroc and";
+		mes "deliver my report to her.";
+		mes "You should be able to find";
+		mes "her there doing research.";
+		next;
+		if (select("I will:Can I listen to that song again?") == 1) {
+			mes "[Historian]";
+			mes "Once again, thank";
+			mes "you for your help.";
+			mes "It will really speed the";
+			mes "progress of my research,";
+			mes "especially since those books";
+			mes "were delivered fairly late...";
+		}
+		else {
+			mes "[Historian]";
+			mes "Song? Oh, you mean the";
+			mes "one praising the 7 who";
+			mes "founded the Rune-Midgarts";
+			mes "Kingdom? Sure, let's see now...";
+			next;
+			mes "[Historian]";
+			mes "^FF0000*The great serpent*^000000";
+			mes "^FF0000*swallowed the sea.*^000000";
+			mes "^FF0000*The eagle of the rainbow*^000000";
+			mes "^FF0000*swallowed the serpent.*^000000";
+			mes "^FF0000*Then the eagle built its nest.*^000000";
+			mes "^FF0000*A nest upon the swallowed sea.*^000000";
+			next;
+			mes "[Historian]";
+			mes "You must be more interested";
+			mes "in history than I suspected.";
+			mes "If you'd like, I'll write you a";
+			mes "letter or recommendation";
+			mes "for the Rekenber Historical";
+			mes "Research Group. Ha ha ha~";
+		}
+		close;
+	}
+	else if (prt_curse > 55) {
+		mes "[Historian]";
+		mes "Ah, it's been a while";
+		mes "since the last time I saw";
+		mes "you. Rodafrian actually came";
+		mes "to visit me a few days ago.";
+		mes "I believe she came here";
+		mes "to gloat or threaten me...";
+		next;
+		mes "[Historian]";
+		mes "It was very surreal.";
+		mes "She kept raving about";
+		mes "some incredible revelation,";
+		mes "and about finally putting me";
+		mes "in my place. I didn't know she";
+		mes "could be so competitive!";
+		close;
+	}
+	else {
+		mes "[Historian]";
+		mes "ZzzzZZz....";
+		mes "ZzzzZZz....ZZZzzzz...";
+		close;
+	}
+}
+
+morocc_in,45,126,3	script	Historian#prt02	702,{
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	if (prt_curse == 6) {
+		if (countitem(7342) < 0) {
+			mes "^3355FFYou seem to have lost";
+			mes "Karlomoff's Report. You";
+			mes "needed to deliver here to";
+			mes "one of his colleagues...";
+			close;
+		}
+		mes "[Historian Rodafrian]";
+		mes "Oh, how does this place";
+		mes "have to be so hot? This";
+		mes "can't be good for my skin...";
+		mes "Ooh, I wish I were back home";
+		mes "in the Schwaltzvalt Republic~";
+		emotion e_sob;
+		next;
+		mes "[Historian Rodafrian]";
+		mes "Hello there.";
+		mes "E-excuse me, but,";
+		mes "um, may I help you?";
+		next;
+		select("Mr. Karlomoff has sent me.");
+		mes "[Historian Rodafrian]";
+		mes "Karlomoff...?";
+		mes "Him? Alright...";
+		mes "What did he send";
+		mes "you to me for?";
+		next;
+		mes "^3355FFYou hand Karlomoff's";
+		mes "report to Rodafrian.^000000";
+		next;
+		mes "[Historian Rodafrian]";
+		mes "A report? What does he";
+		mes "want to show off this time?";
+		mes "^333333*Sigh*^000000 Ah well, thanks for";
+		mes "the trouble. I'll look at it,";
+		mes "though I'm not expecting";
+		mes "much if Karlomoff wrote it.";
+		next;
+		if (select("Ask her about her research:End conversation") == 1) {
+			mes "[Historian Rodafrian]";
+			mes "Oh, you know about the";
+			mes "Rekenber Historical Research";
+			mes "Group? Ah, right. Karlomoff";
+			mes "must have told you already.";
+			mes "Currently we're researching";
+			mes "the Rune-Midgarts Kingdom.";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "Now, while I understand the";
+			mes "value of ancient books and";
+			mes "records, I think Karlomoff";
+			mes "relies on them too much.";
+			mes "I prefer more active research";
+			mes "in the vein of archaelogy.";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "Right now, I'm spending";
+			mes "time in Morroc to visit the";
+			mes "Sphinx and Pyramids and see";
+			mes "if I can excavage some relics.";
+			mes "Hopefully I can uncover some new historical evidence that way.";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "If you're interested in";
+			mes "learning more about Morroc's";
+			mes "history, please go ahead and";
+			mes "talk to my assistance. He's very passionate about studying this";
+			mes "town's culture and background.";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "Actually, the people of";
+			mes "Morroc also appreciate their";
+			mes "town's history, and pass down";
+			mes "songs about ancient times";
+			mes "through the generations. Let's";
+			mes "see, how did that one go?";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "^FF0000*The great serpent*^000000";
+			mes "^FF0000*swallowed the sea.*^000000";
+			mes "^FF0000*The eagle of the rainbow*^000000";
+			mes "^FF0000*swallowed the serpent, and*^000000";
+			mes "and... and... Um. Oh dear.";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "I can't remember the next";
+			mes "line! Actually, have you";
+			mes "heard this song before?";
+			next;
+			switch(select("Yes, I have.:Yes, but it is different.:No, sorry.")) {
+			case 1:
+				mes "[Historian Rodafrian]";
+				mes "Oh, that's great!";
+				mes "Would you provide";
+				mes "me with the line that";
+				mes "follows these lyrics?";
+				next;
+				mes "^FF0000*The great serpent*^000000";
+				mes "^FF0000*swallowed the sea.*^000000";
+				mes "^FF0000*The eagle of the rainbow*^000000";
+				mes "^FF0000*swallowed the serpent.*^000000";
+				mes "......................";
+				next;
+				input .@answer$;
+				if (.@answer$ == "Then the eagle built its nest.") {
+					mes "[Historian Rodafrian]";
+					mes "Really? That makes";
+					mes "sense, but those lyrics";
+					mes "sound different than the";
+					mes "ones I had heard. Hmmmm...";
+					mes "If you don't mind, would you";
+					mes "please tell me your name?";
+					callsub S_GiveName,1;
+				}
+				else {
+					mes "[Historian Rodafrian]";
+					mes "Huh...?";
+					mes "That doesn't sound";
+					mes "right at all. Are you sure";
+					mes "that's the lyric you heard?";
+					delitem 7342,1; //File01
+					set prt_curse,7;
+					close;
+				}
+
+			case 2:
+				mes "[Historian Rodafrian]";
+				mes "What was that?";
+				mes "The song is different?";
+				mes "Hmm. Then, would you";
+				mes "please sing the version";
+				mes "that you know to me?";
+				next;
+				mes "^3355FFYou clear your throat";
+				mes "and begin to sing the song";
+				mes "that you heard from Karlomoff.^000000";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				input .@line$;
+				if (.@line$ == "The great serpent swallowed the sea.") {
+					set .@total,.@total+1;
+					mes "*The great serpent*";
+					mes "*swallowed the sea.*";
+				}
+				else mes "* "+.@line$+"*";
+
+				input .@line$;
+				if (.@line$ == "The eagle of the rainbow swallowed the serpent.") {
+					set .@total,.@total+1;
+					mes "*The eagle of the rainbow*";
+					mes "*swallowed the serpent.*";
+				}
+				else mes "*"+.@line$+"*";
+
+				input .@line$;
+				if (.@line$ == "Then the eagle built its nest.") {
+					set .@total,.@total+1;
+					mes "*Then the eagle built its nest.*";
+				}
+				else mes "*"+.@line$+"*";
+
+				input .@line$;
+				if (.@line$ == "A nest upon the swallowed sea.") {
+					set .@total,.@total+1;
+					mes "*A nest upon the swallowed sea.*";
+				}
+				else mes "*"+.@line$+"*";
+				next;
+				if (.@total == 4) {
+					mes "[Historian Rodafrian]";
+					mes "Really? That makes";
+					mes "sense, but those lyrics";
+					mes "sound different than the";
+					mes "ones I had heard. Hmmmm...";
+					mes "If you don't mind, would you";
+					mes "please tell me your name?";
+					callsub S_GiveName,1;
+				}
+				else {
+					mes "[Historian Rodafrian]";
+					mes "Huh...?";
+					mes "That doesn't sound right";
+					mes "at all. Are you sure those";
+					mes "are the lyrics you heard?";
+					delitem 7342,1; //File01
+					set prt_curse,7;
+					close;
+				}
+
+			case 3:
+				mes "[Historian Rodafrian]";
+				mes "............";
+				mes "........................";
+				mes "Well then. Would you";
+				mes "mind if I ask you for";
+				mes "your name, adventurer?";
+				callsub S_GiveName,1;
+			}
+		}
+		mes "[Historian]";
+		mes "Although I love doing my";
+		mes "research and uncovering";
+		mes "new information regarding";
+		mes "history, I feel a little lonely";
+		mes "sometimes. Not many people";
+		mes "share my interests, you know...";
+		close;
+	}
+	else if (prt_curse == 7) {
+		mes "^3355FFArms folded, Rodafrian";
+		mes "seems to be deep in thought.";
+		mes "Then, as if making making";
+		mes "an important decision, she";
+		mes "looks directly into your eyes";
+		mes "and begins to speak.^000000";
+		next;
+		mes "[Historian Rodafrian]";
+		mes "Adventurer...";
+		mes "I want to know your name.";
+		callsub S_GiveName,0;
+	}
+	else if (prt_curse > 7 && prt_curse < 30) {
+		mes "[Historian Rodafrian]";
+		mes "As I recall, Mondo should";
+		mes "be at Mount Mjolnir, located";
+		mes "in the northern region of the";
+		mes "Rune-Midgarts Kingdom. Ask";
+		mes "him for the lyrics of the song that I can't seem to remember...";
+		close;
+	}
+	else if (prt_curse == 30 || prt_curse == 55) {
+		mes "[Historian Rodafrian]";
+		mes "Oh, you've returned.";
+		mes "Have you met with Mondo";
+		mes "and figured out the lyrics of";
+		mes "that song I was looking for?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "^FF0000*The great serpent*^000000";
+		mes "^FF0000*swallowed the sea.*^000000";
+		mes "^FF0000*The eagle of the rainbow*^000000";
+		mes "^FF0000*swallowed the serpent.*^000000";
+		mes "^FF0000*Then snake scales grew on*^000000";
+		mes "^FF0000*the eagle, and it slowly died.*^000000";
+		next;
+		mes "[Historian Rodafrian]";
+		mes "Oh, yes!";
+		mes "Yes, that was it! Now";
+		mes "I remember, thank you";
+		mes "so much! Ah, back to work...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "^333333(As a historian, Rodafrian";
+		mes "might be able to help me in";
+		mes "investigating the curse of the";
+		mes "Gaebolgs. The priests told me";
+		mes "not to tell anybody, though.";
+		mes "Should I take this risk?)^000000";
+		next;
+		if (select("Tell her about Jormungand's curse:Don't tell her") == 1) {
+			mes "^3355FFYou explain everything";
+			mes "that you have learned to";
+			mes "Rodafrian, choosing not";
+			mes "to withhold any secrets.^000000";
+			emotion e_ic;
+			next;
+			mes "[Historian Rodafrian]";
+			mes ".....................!";
+			emotion e_gasp;
+			next;
+			mes "[Historian Rodafrian]";
+			mes "Thank you for sharing that";
+			mes "with me. I hope you realize";
+			mes "how precious that information";
+			mes "is. I had no idea the royal";
+			mes "family was keeping that kind";
+			mes "of secret. Goodness, me...";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "You know, I don't really";
+			mes "know much about poison, but";
+			mes "I do know that, aside from our";
+			mes "own Assassins, there are poison";
+			mes "experts living in some strange";
+			mes "land located to the west.";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "Anyway, your report about";
+			mes "the Gaebolg family will be";
+			mes "greatly appreciated by the";
+			mes "Rekenber Historical Research";
+			mes "Group. But first, I need to";
+			mes "finish this Morroc project...";
+			next;
+			mes "[Historian Rodafrian]";
+			mes "Anyway, keep this information";
+			mes "a secret between me and you";
+			mes "for now. Then, when I reveal the secret curse of the Gaebolg royal";
+			mes "family, I'll finally outshine that Karlomoff! Bwahahahahaha!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "^333333(Drat, she didn't give me";
+			mes "any help... All I did was";
+			mes "reveal a huge secret to her";
+			mes "that she might spread around!";
+			mes "Oh well, I guess I better head";
+			mes "back to the priests...)^000000";
+			if (prt_curse == 30)  {
+				set prt_curse,31;
+				changequest 18042,18044;
+			} else {
+				set prt_curse,60;
+				changequest 18051,18052;
+			}
+			close;
+		}
+
+		mes "[Historian Rodafrian]";
+		mes "Oh, let me thank you";
+		mes "once again for going";
+		mes "through the trouble of";
+		mes "getting that lyric for me~";
+		mes "I put my assistant through";
+		mes "enough trouble already...";
+		next;
+		mes "[Historian Rodafrian]";
+		mes "I also better not forget";
+		mes "to go through Karlomoff's";
+		mes "report. I'll have to have a";
+		mes "debate with him sooner or";
+		mes "later, and I really want to";
+		mes "put that guy in his place!";
+		next;
+		mes "^3355FFRodafrian seemed very";
+		mes "happy and began to read";
+		mes "through Karlomoff's report.";
+		mes "For now, it would be best";
+		mes "to return to Father Bamph.^000000";
+		if (prt_curse == 30) {
+			set prt_curse,40;
+			changequest 18042,18045;
+		} else {
+			set prt_curse,56;
+			completequest 18051;
+		}
+		close;
+	}
+	else if (prt_curse == 31 || prt_curse == 40) {
+		mes "^3355FFRodafrian seemed very";
+		mes "happy and began to read";
+		mes "through Karlomoff's report.";
+		mes "For now, it would be best";
+		mes "to return to Father Bamph.^000000";
+		close;
+	}
+	else if (prt_curse == 56) {
+		emotion e_an;
+		mes "[Historian Rodafrian]";
+		mes "I just paid a visit to";
+		mes "Karlomoff and gave him";
+		mes "a piece of my mind! I think...";
+		mes "I think I put him in his place.";
+		mes "But I can never really tell";
+		mes "with that sneaky guy...";
+		close;
+	}
+	else if (prt_curse == 60) {
+		emotion e_an;
+		mes "[Historian Rodafrian]";
+		mes "I just aid a visit to";
+		mes "Karlomoff and gave him";
+		mes "a piece of my mind! I think...";
+		mes "I think I put him in his place.";
+		mes "But I can never really tell";
+		mes "with that sneaky guy...";
+		next;
+		mes "It doesn't look like";
+		mes "Rodafrian can offer you";
+		mes "any more information. For";
+		mes "now, it would be best to";
+		mes "go to ^3355FFProntera Church.^000000";
+		close;
+	}
+	else {
+		mes "[Historian Rodafrian]";
+		mes "I'm sorry, but I'm";
+		mes "really very busy with my";
+		mes "research at the moment.";
+		mes "Perhaps we can talk later";
+		mes "once I've completed this?";
+		close;
+	}
+
+S_GiveName:
+	next;
+	select("My name is "+strcharinfo(0)+".");
+	mes "[Historian Rodafrian]";
+	mes "Ah "+strcharinfo(0)+", eh?";
+	mes "Do you mind if I ask you a favor? I really need to verify the true";
+	mes "lyrics for this song. However,";
+	mes "I need to stay here in Morroc";
+	mes "to complete my research.";
+	next;
+	mes "[Historian Rodafrian]";
+	mes "Would you please find my";
+	mes "colleague Mondo and ask him";
+	mes "for this song's lyrics? You can";
+	mes "find him in the ancient ruins";
+	mes "in Mount Mjolnir, north in the";
+	mes "Rune-Midgarts Kingdom.";
+	next;
+	mes "[Historian Rodafrian]";
+	mes "I apologize for asking";
+	mes "you to do what sounds like";
+	mes "a silly errand, but I actually";
+	mes "need to know this song's lyrics";
+	mes "for the sake of my research...";
+	if (getarg(0) == 1) delitem 7342,1; //File01
+	set prt_curse,8;
+	changequest 18031,18032;
+	close;
+}
+
+mjolnir_01,135,168,3	script	Historian#prt03	754,{
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	if (prt_curse == 8) {
+		mes "[Historian Mondo]";
+		mes "Excuse me...";
+		mes "But if you don't have";
+		mes "anything important for";
+		mes "me, then would you";
+		mes "please leave? I have";
+		mes "research to attend to...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I'm sorry, but Ms. Rodafrian";
+		mes "wanted me to ask you for the";
+		mes "lyrics of some song describing";
+		mes "the Rune-Midgarts Kingdom's";
+		mes "founding. Would you tell";
+		mes "them to me for her?";
+		next;
+		mes "[Historian Mondo]";
+		mes "Rodafrian? Oh, she must";
+		mes "mean that old children's";
+		mes "song. How did it go now?";
+		mes "Ah, now I remember...";
+		next;
+		mes "[Historian Mondo]";
+		mes "^FF0000*The great serpent*^000000";
+		mes "^FF0000*swallowed the sea.*^000000";
+		mes "^FF0000*The eagle of the rainbow*^000000";
+		mes "^FF0000*swallowed the serpent.*^000000";
+		mes "^FF0000*Then snake scales grew on*^000000";
+		mes "^FF0000*the eagle, and it slowly died.*^000000";
+		next;
+		select("...........?");
+		mes "[Historian Mondo]";
+		mes "Yes, I know: the song";
+		mes "is rather morbid, despite";
+		mes "the fact that it's sung like";
+		mes "such a happy song. Sometimes";
+		mes "these little songs are supposed";
+		mes "to scare kids into doing good.";
+		next;
+		select("Excuse me...");
+		mes "[Historian Mondo]";
+		mes "Hm? You look confused.";
+		mes "Did you have a question";
+		mes "to ask me about the song?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, I heard";
+		mes "a different version";
+		mes "of this song, so I was";
+		mes "wondering why the lyrics";
+		mes "would be different...";
+		next;
+		mes "[Historian Mondo]";
+		mes "Really now?";
+		mes "Well then, let me";
+		mes "hear the version that";
+		mes "you've heard, starting";
+		mes "from the beginning.";
+		next;
+		callsub S_Song;
+	}
+	else if (prt_curse == 9) {
+		mes "[Historian Mondo]" ;
+		mes "Ah, would you tell me";
+		mes "the lyrics of the version of";
+		mes "the Rune-Midgarts Kingdom";
+		mes "founding myth song that";
+		mes "you happened to hear?";
+		next;
+		callsub S_Song;
+	}
+	else if (prt_curse == 10) {
+		mes "[Historian Mondo]";
+		mes "Interesting...";
+		mes "The version you heard";
+		mes "from Karlomoff is different";
+		mes "than the one I know. It's";
+		mes "possible that his version";
+		mes "is the most authentic.";
+		next;
+		mes "[Historian Mondo]";
+		mes "After all, I learned";
+		mes "the version I know";
+		mes "by listening to a";
+		mes "little kid sing it.";
+		next;
+		select("A kid?");
+		mes "[Historian Mondo]";
+		mes "Yeah. My guess? The version";
+		mes "that the kid sang might have";
+		mes "changed as it was transmitted";
+		mes "by mouth through the generations. If you want to learn more, you";
+		mes "should probably find that kid.";
+		next;
+		mes "[Historian Mondo]";
+		mes "Anyway, Karlomoff may have";
+		mes "the most accurate version of";
+		mes "the song since he's very good";
+		mes "at procuring and authenticating";
+		mes "historical written records and";
+		mes "documents. It's his specialty.";
+		next;
+		mes "[Historian Mondo]";
+		mes "Ah, if you want to learn more,";
+		mes "then you should try to find the";
+		mes "kid that was singing the song.";
+		mes "Hmm, he might be around ^3131DDthe";
+		mes "river near here^000000. Hopefully it";
+		mes "won't be too hard to find him.";
+		next;
+		mes "[Historian Mondo]";
+		mes "Once you're able to talk";
+		mes "to that kid, go ahead and";
+		mes "report back to Rodafrian.";
+		mes "She probably needs to know";
+		mes "soon, and I can talk to that";
+		mes "little kid at my leisure, so...";
+		next;
+		mes "[Historian Mondo]";
+		mes "Well then, I hope you";
+		mes "find what you're looking";
+		mes "for. Good luck in your";
+		mes "travels, adventurer.";
+		set prt_curse,11;
+		changequest 18032,18033;
+		close;
+	}
+	else {
+		mes "[Historian Mondo]";
+		mes "Isn't this such";
+		mes "a beautiful place?";
+		mes "It's no wonder that";
+		mes "ancient peoples chose";
+		mes "to live around here...";
+		close;
+	}
+
+
+S_Song:
+	mes "["+strcharinfo(0)+"]";
+	input .@line$;
+	if (.@line$ == "The great serpent swallowed the sea.") {
+		set .@total,.@total+1;
+		mes "*The great serpent*";
+		mes "*swallowed the sea.*";
+	}
+	else mes "*"+.@line$+"*";
+
+	input .@line$;
+	if (.@line$ == "The eagle of the rainbow swallowed the serpent.") {
+		set .@total,.@total+1;
+		mes "*The eagle of the rainbow*";
+		mes "*swallowed the serpent.*";
+	}
+	else mes "*"+.@line$+"*";
+
+	input .@line$;
+	if (.@line$ == "Then the eagle built its nest.") set .@total,.@total+1;
+	mes "*"+.@line$+"*";
+
+	input .@line$;
+	if (.@line$ == "A nest upon the swallowed sea.") set .@total,.@total+1;
+	mes "*"+.@line$+"*";
+
+	if (.@total == 4) set prt_curse,10;
+	else {
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait, wait...";
+		mes "I think I messed up!";
+		mes "(Those weren't the";
+		mes "correct lyrics...)";
+		set prt_curse,9;
+	}
+	close;
+}
+
+mjolnir_01,298,302,0	script	#prt_poem01	-1,2,2,{
+OnTouch:
+	if (prt_curse == 11) {
+		mes "^FF0000*The great serpent*^000000";
+		mes "^FF0000*swallowed the sea.*^000000";
+		close;
+	}
+	end;
+}
+
+mjolnir_01,300,297,0	script	#prt_poem02	-1,2,2,{
+OnTouch:
+	if (prt_curse == 11) {
+		mes "^FF0000*The great serpent*^000000";
+		mes "^FF0000*swallowed the sea.*^000000";
+		close;
+	}
+	end;
+}
+
+mjolnir_01,292,288,0	script	#prt_poem03	-1,2,2,{
+OnTouch:
+	if (prt_curse == 11) {
+		mes "^FF0000*The eagle of the rainbow*^000000";
+		mes "^FF0000*swallowed the serpent.*^000000";
+		close;
+	}
+	end;
+}
+
+mjolnir_01,302,286,0	script	#prt_poem04	-1,2,2,{
+OnTouch:
+	if (prt_curse == 11) {
+		mes "^FF0000*Then snake scales*^000000";
+		mes "^FF0000*grew on the eagle...*^000000";
+		close;
+	}
+	end;
+}
+
+mjolnir_01,313,279,0	script	#prt_poem05	-1,2,2,{
+OnTouch:
+	if (prt_curse == 11) {
+		mes "^FF0000*And it slowly died...*^000000";
+		close;
+	}
+	end;
+}
+
+mjolnir_01,312,269,5	script	Dog#prt	81,{
+	mes "[Dog]";
+	mes "Bow Wow!";
+	close;
+}
+
+mjolnir_01,313,269,5	script	Dazed Boy#prt	706,{
+	if (prt_curse == 11) {
+		mes "[Absent-Minded Boy]";
+		mes "The great serpent";
+		mes "swallowed the sea.";
+		mes "The eagle of the rainbow";
+		mes "swallowed the serpent.";
+		mes "Then snake scales grew on";
+		mes "the eagle, and it slowly died.";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "Goodness...!";
+		mes "Will you please stop";
+		mes "singing that song?";
+		next;
+		mes "[Absent-Minded Boy]";
+		mes "..................";
+		next;
+		mes "^3355FFThe little boy quietly";
+		mes "stared at the woman for a";
+		mes "little bit, and then crouched";
+		mes "down and began petting a";
+		mes "dog sitting next to him.^000000";
+		next;
+		if (select("What did you just sing?:Ignore them") == 1) {
+			mes "[Absent-Minded Boy]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			next;
+			mes "[Absent-Minded Boy]";
+			mes "Woof-woof, have you";
+			mes "heard this song? Mommy";
+			mes "taught me to sing it, you";
+			mes "know. She says it was sung";
+			mes "by people for a long time~";
+			next;
+			mes "^3355FFThe boy continued speaking";
+			mes "to the dog like an old friend,";
+			mes "ignoring your presence and";
+			mes "acting as if you didn't exist.^000000";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "Kaanu...";
+			mes "What did I tell";
+			mes "you about ignoring";
+			mes "people's questions!";
+			next;
+			mes "[Kaanu]";
+			mes ".........";
+			mes "..................";
+			mes "Uh oh, Woof-woof.";
+			mes "Mommy seems upset";
+			mes "for some reason.";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "I'm sorry, my kid is...";
+			mes "Look, did you want to know";
+			mes "more about that song? Try";
+			mes "not to worry about it: it's just an old children's tune.";
+			next;
+			if (select("Why are you here?:May I hear the song again?") == 1) {
+				mes "[Exhausted-Looking Woman]";
+				mes ".................";
+				next;
+				mes "^3355FFThe woman's lip tightens";
+				mes "with shame. It's obvious";
+				mes "that this topic makes her";
+				mes "feel very uncomfortable.^000000";
+				next;
+				mes "[Kaanu]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				next;
+				mes "[Kaanu]";
+				mes "Woof-woof, do you know";
+				mes "why Mommy is always";
+				mes "so sad? I wish I knew";
+				mes "why Mommy never smiles...";
+				next;
+				mes "[Exhausted-Looking Woman]";
+				mes "........";
+				set prt_curse,12;
+				close;
+			}
+			mes "[Exhausted-Looking Woman]";
+			mes "..................";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "Okay. I can do this";
+			mes "simple thing for you.";
+			mes "Let me recite this song...";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "The great serpent";
+			mes "swallowed the sea.";
+			mes "The eagle of the rainbow";
+			mes "swallowed the serpent.";
+			mes "Then snake scales grew on";
+			mes "the eagle, and it slowly died.";
+			set prt_curse,12;
+			close;
+		}
+		mes "[Absent-Minded Boy]";
+		mes "...";
+		mes "......";
+		mes ".........";
+		close;
+	}
+	else if (prt_curse == 36) {
+		mes "^3355FFThe little boy looked";
+		mes "very worn and weary of";
+		mes "life, a look that is very";
+		mes "unsettling on the face";
+		mes "of a young child.^000000";
+		close;
+	}
+	else if (prt_curse == 45) {
+		mes "^3355FFThe little boy still";
+		mes "won't talk to you, but";
+		mes "he acknowledges your";
+		mes "presense by making eye";
+		mes "contact and smiling.^000000";
+		close;
+	}
+	else if (prt_curse > 54) {
+		mes "^3355FFThe little boy still";
+		mes "won't talk to you, but he";
+		mes "make you feel welcome";
+		mes "by giving you a warm smile.^000000";
+		close;
+	}
+	else {
+		mes "[Absent-Minded Boy]";
+		mes "...";
+		mes "......";
+		mes ".........";
+		next;
+		mes "^3355FFYou find it difficult";
+		mes "to ignore the little boy's";
+		mes "probing, wary eyes directed";
+		mes "at you. It's very clear that";
+		mes "he doesn't trust you.^000000";
+		close;
+	}
+}
+
+mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	if (prt_curse == 11) {
+		mes "[Absent-Minded Boy]";
+		mes "The great serpent";
+		mes "swallowed the sea.";
+		mes "The eagle of the rainbow";
+		mes "swallowed the serpent.";
+		mes "Then snake scales grew on";
+		mes "the eagle, and it slowly died.";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "Goodness...!";
+		mes "Will you please stop";
+		mes "singing that song?";
+		next;
+		mes "[Absent-Minded Boy]";
+		mes "..................";
+		next;
+		mes "^3355FFThe little boy quietly";
+		mes "stared at the woman for a";
+		mes "little bit, and then crouched";
+		mes "down and began petting a";
+		mes "dog sitting next to him.^000000";
+		next;
+		if (select("What did you just sing?:Ignore them") == 1) {
+			mes "[Absent-Minded Boy]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			next;
+			mes "[Absent-Minded Boy]";
+			mes "Woof-woof, have you";
+			mes "heard this song? Mommy";
+			mes "taught me to sing it, you";
+			mes "know. She says it was sung";
+			mes "by people for a long time~";
+			next;
+			mes "^3355FFThe boy continued speaking";
+			mes "to the dog like an old friend,";
+			mes "ignoring your presence and";
+			mes "acting as if you didn't exist.^000000";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "Kaanu...";
+			mes "What did I tell";
+			mes "you about ignoring";
+			mes "people's questions!";
+			next;
+			mes "[Kaanu]";
+			mes ".........";
+			mes "..................";
+			mes "Uh oh, Woof-woof.";
+			mes "Mommy seems upset";
+			mes "for some reason.";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "I'm sorry, my kid is...";
+			mes "Look, did you want to know";
+			mes "more about that song? Try";
+			mes "not to worry about it: it's just an old children's tune.";
+			next;
+			if (select("Why are you here?:May I hear the song again?") == 1) {
+				mes "[Exhausted-Looking Woman]";
+				mes ".................";
+				next;
+				mes "^3355FFThe woman's lip tightens";
+				mes "with shame. It's obvious";
+				mes "that this topic makes her";
+				mes "feel very uncomfortable.^000000";
+				next;
+				mes "[Kaanu]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				next;
+				mes "[Kaanu]";
+				mes "Woof-woof, do you know";
+				mes "why Mommy is always";
+				mes "so sad? I wish I knew";
+				mes "why Mommy never smiles...";
+				next;
+				mes "[Exhausted-Looking Woman]";
+				mes "........";
+				set prt_curse,12;
+				close;
+			}
+			mes "[Exhausted-Looking Woman]";
+			mes "..................";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "Okay. I can do this";
+			mes "simple thing for you.";
+			mes "Let me recite this song...";
+			next;
+			mes "[Exhausted-Looking Woman]";
+			mes "The great serpent";
+			mes "swallowed the sea.";
+			mes "The eagle of the rainbow";
+			mes "swallowed the serpent.";
+			mes "Then snake scales grew on";
+			mes "the eagle, and it slowly died.";
+			set prt_curse,12;
+			close;
+		}
+		mes "[Exhausted-Looking Woman]";
+		mes "...........";
+		close;
+	}
+	else if (prt_curse == 12) {
+		mes "[Exhausted-Looking Woman]";
+		mes "Not too many people";
+		mes "come to this remote area.";
+		mes "What brings you all the";
+		mes "way over here, I wonder?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, I'm just";
+		mes "trying to learn the";
+		mes "real lyrics of that";
+		mes "song that little boy";
+		mes "has been singing.";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes ".........";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "That song's lyrics, and";
+		mes "its meaning, can change";
+		mes "from person to person as";
+		mes "time goes on. I suppose part";
+		mes "of the reason is because it's";
+		mes "been handed down orally...";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "It sounds like such a happy";
+		mes "song, but it's meaning had";
+		mes "changed for me ever since";
+		mes "the accident had happened...";
+		mes "It's been so long, but I don't";
+		mes "think the pain will ever heal.";
+		next;
+		select("Accident?");
+		mes "[Exhausted-Looking Woman]";
+		mes "I'm... I'm sorry.";
+		mes "I don't think I can talk";
+		mes "about it. If I try, I know I'll";
+		mes "relive the horror. Every day";
+		mes "is already a struggle to cope";
+		mes "with the sins I've committed.";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "I know it's selfish, but";
+		mes "I have a favor to ask of you.";
+		mes "I can't really leave this area,";
+		mes "and seldom do I receive visitors. Would you be so kind to deliver";
+		mes "something to Prontera for me?";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "I used to live in Prontera,";
+		mes "and ever since the accident,";
+		mes "Father Bamph has been so very";
+		mes "supportive of me. It's not enough to repay his kindness, but please";
+		mes "give these herbs to him for me.";
+		next;
+		mes "[Exhausted-Looking Woman]";
+		mes "You can find ^3131FFFather Bamph^000000";
+		mes "in ^3131FFProntera Church^000000. When you ";
+		mes "see him, please give him my";
+		mes "warmest regards. I would do it";
+		mes "myself, but because of what I did, I can't return to Prontera...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "^333333(Alright then. I guess";
+		mes "I should deliver these";
+		mes "herbs to Prontera Church";
+		mes "before I talk to Rodafrian.)^000000";
+		getitem 7432,1; //Leather_Pouch
+		set prt_curse,13;
+		changequest 18033,18034;
+		close;
+	}
+	else if (prt_curse > 12 && prt_curse < 16) {
+		mes "[Exhausted-Looking Woman]";
+		mes "Father Bamph has helped";
+		mes "me so much. Please bring";
+		mes "that herb pouch to him in";
+		mes "Prontera Church, and give";
+		mes "him my warmest regards.";
+		close;
+	}
+	else if (prt_curse == 16) {
+		mes "[Bonnie Imbullea]";
+		mes "Oh, you've come back?";
+		mes "Were you able to deliver";
+		mes "that pouch of herbs that";
+		mes "I gave you to Father Bamph?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Yes, I did. Actually,";
+		mes "Father Bamph sent me";
+		mes "here to ask you a few";
+		mes "things. You see, he told";
+		mes "me all about the royal secret";
+		mes "and, well, your exorcism.";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "Oh. I see.";
+		mes "You must think";
+		mes "me a monster...";
+		mes "Those poor children";
+		mes "are dead because of me...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "N-no! Not at all!";
+		mes "I just wanted to ask if there";
+		mes "was a connection between";
+		mes "the song that Kaanu has been";
+		mes "singing and Jormungand's curse.";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "...";
+		mes "......";
+		mes ".........";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "After the exorcism failed,";
+		mes "I should have been punished";
+		mes "with death. But the royal family and the Prontera Church took";
+		mes "mercy on me, and allowed";
+		mes "me to live here in exile.";
+		emotion e_dots;
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "I began to sing this song";
+		mes "to keep myself distracted,";
+		mes "even if it was related to";
+		mes "the Jormungand curse.";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "You know, now that I think";
+		mes "about it, I do remember hearing";
+		mes "that after the exorcism failed,";
+		mes "a maid found a fragment of a";
+		mes "Red Gemstone while cleaning";
+		mes "the secret ceremonial grounds.";
+		emotion e_gasp,1;
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "I always thought it";
+		mes "was a little strange.";
+		mes "I wanted to investigate";
+		mes "it, but then I was discharged";
+		mes "from the Prontera Church";
+		mes "after my failure...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "A fragment from";
+		mes "a Red Gemstone?";
+		mes "Maybe... maybe it's";
+		mes "evidence that someone";
+		mes "sabotaged the exorcism!";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "What happened was tragic,";
+		mes "but it would make me feel";
+		mes "so much better if that were";
+		mes "really the truth. Even if the";
+		mes "exorcism was sabotaged,";
+		mes "we can't turn back time...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "^333333(Hmm...";
+		mes "I better head back";
+		mes "to Prontera Church";
+		mes "and let Father Bamph";
+		mes "know about this information.)^000000";
+		set prt_curse,17;
+		changequest 18035,18036;
+		close;
+	}
+	else if (prt_curse == 17) {
+		mes "[Bonnie Imbullea]";
+		mes "It's really very";
+		mes "difficult to live";
+		mes "with this guilt.";
+		mes "I was trained to help";
+		mes "people, not kill them!";
+		next;
+		mes "^3355FFYou tried to comfort";
+		mes "Bonnie Imbullea for a";
+		mes "little while before you";
+		mes "return to Prontera Church.";
+		close;
+	}
+	else if (prt_curse == 35 || prt_curse == 44 || prt_curse == 54) {
+		mes "^3355FFYou tell Bonnie Imbullea";
+		mes "that the deaths of the princes";
+		mes "were not her fault and that the exorcism was probably sabotaged.";
+		mes "However, you keep specifics, like the use of poison, to yourself.^000000";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "Is that really true...?";
+		mes "Oh, I'm so happy! I really";
+		mes "thought I'd have to live the";
+		mes "rest of my in seclusion with";
+		mes "this horrible shame. Oh, thank";
+		mes "you so much for your help!";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "Kaanu will be able to";
+		mes "meet other kids his own";
+		mes "age... We can finally live";
+		mes "a normal life. How wonderful...";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "But wait...";
+		mes "How exactly did the";
+		mes "princes die, then?";
+		mes "There weren't any";
+		mes "wounds on the bodies";
+		mes "from what I remember...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Well, um, I wouldn't know";
+		mes "anything about that, but";
+		mes "Father Bamph and Father";
+		mes "Biscuss are handling the";
+		mes "investigation, and they're";
+		mes "doing their best to find out.";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "I see. Well, I believe in";
+		mes "them: they're great priests,";
+		mes "after all. Although I may be";
+		mes "forgiven for my failure, I still fear for the royal family...";
+		mes "All I can do for now is pray.";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "Anyway, I promise that";
+		mes "I won't reveal what I know";
+		mes "about this incident to the";
+		mes "public. And if you ever come";
+		mes "by the mountain again, I hope";
+		mes "you stop by to visit us.";
+		next;
+		mes "[Bonnie Imbullea]";
+		mes "You don't understand";
+		mes "how much the news you've";
+		mes "brought really means to me.";
+		mes "I can finally free myself from";
+		mes "this burdensome guilt...";
+		mes "Thank you, kind adventurer~";
+		if (prt_curse == 35) {
+			set prt_curse,36;
+			completequest 18050;
+		} else if (prt_curse == 44) {
+			set prt_curse,45;
+			completequest 18049;
+		} else {
+			next;
+			mes "^3355FFNow, you can return to";
+			mes "Rodafrian, the historian";
+			mes "stationed in Morroc.^000000";
+			set prt_curse,55;
+			changequest 18049,18051;
+		}
+
+		close;
+	}
+	else if (prt_curse == 36) {
+		mes "[Bonnie Imbullea]";
+		mes "By your grace and mercy,";
+		mes "please pity the poor souls";
+		mes "and protect the royal family...";
+		mes "Bless us with your light and";
+		mes "may your wisdom guide us...";
+		close;
+	}
+	else if (prt_curse == 45) {
+		mes "[Bonnie Imbullea]";
+		mes "I guess we've gotten";
+		mes "too used to the peace";
+		mes "and serenity of Mount";
+		mes "Mjolnir. It won't be easy";
+		mes "to leave, even if we're welcome to return to Prontera...";
+		close;
+	}
+	else if (prt_curse > 54) {
+		mes "[Bonnie Imbullea]";
+		mes "Thank you so much";
+		mes "for helping out in the";
+		mes "investigation of the";
+		mes "princes. I'd never know";
+		mes "happiness again if it";
+		mes "weren't for your efforts.";
+		close;
+	}
+	else {
+		mes "[Bonnie Imbullea]";
+		mes "^333333*Sigh...*^000000";
+		close;
+	}
+}
+
+
+prt_church,115,122,0	warp	#sazekan	1,1,prt_church,168,106
+prt_church,166,106,0	warp	#prtchhall	1,1,prt_church,112,122
+
+prt_church,185,106,3	script	Father Bamph	60,{
+	if (prt_curse == 13) {
+		mes "[Father Bamph]";
+		mes "Welcome to";
+		mes "Prontera Church.";
+		mes "Please relax, and";
+		mes "let your mind and";
+		mes "spirit find rest in";
+		mes "these hallowed halls.";
+		next;
+		select("Give him the herb pouch.");
+		if (countitem(7432) < 1) {
+			mes "["+strcharinfo(0)+"]";
+			mes "Ack!";
+			mes "Now, where did I put";
+			mes "that pouch with the herbs?";
+			close;
+		}
+		mes "[Father Bamph]";
+		mes "May I ask...";
+		mes "Why are you giving";
+		mes "me this pouch of herbs?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Well, there was this";
+		mes "lady living on Mount";
+		mes "Mjolnir who wanted me";
+		mes "to give this to you. Um, she";
+		mes "has a son named Kaanu?";
+		next;
+		mes "[Father Bamph]";
+		mes "Oh, you must have met";
+		mes "Bonnie Imbullea. It's";
+		mes "been a long time since";
+		mes "I've seen her. How is";
+		mes "she doing, may I ask?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh...";
+		mes "I guess she's fine.";
+		mes "But she seems really...";
+		mes "I dunno, tormented...";
+		next;
+		mes "[Father Biscuss]";
+		mes "Good! If she were happy";
+		mes "and relaxed after what she";
+		mes "did, not even God would forgive";
+		mes "her! She deserves to live the";
+		mes "rest of her life in agony!";
+		next;
+		mes "[Father Bamph]";
+		mes "Father Biscuss, how can";
+		mes "you say something like that?";
+		mes "She did her best to stop what";
+		mes "had happened! We should pity";
+		mes "her for the suffering she must be feeling. Where is your compassion?";
+		next;
+		mes "[Father Biscuss]";
+		mes "Bah! Don't speak to me";
+		mes "about compassion! Weren't";
+		mes "you the one who recommended";
+		mes "her to perform the exorcism in";
+		mes "the first place? You didn't";
+		mes "forget that, did you?";
+		next;
+		mes "[Father Bampf]";
+		mes "......";
+		mes ".........";
+		mes "............";
+		next;
+		mes "[Father Biscuss]";
+		mes "Hah!";
+		next;
+		select("About Bonnie Imbullea");
+		mes "[Father Bamph]";
+		mes "Well...";
+		mes "I don't...";
+		mes "I don't know if";
+		mes "I should be telling ";
+		mes "you about that incident...";
+		next;
+		mes "[Father Biscuss]";
+		mes "You know what? If Bonnie";
+		mes "sent this adventurer here";
+		mes "for a favor, it probably means";
+		mes "she trusts this person. Besides, we need somebody to carry out";
+		if (Sex)
+			mes "this task for us. Why not him?";
+		else
+			mes "this task for us. Why not her?";
+		next;
+		mes "[Father Bamph]";
+		mes "Your words have the ring";
+		mes "of truth, Father Biscuss.";
+		mes "Well then, adventurer, give";
+		mes "me the opportunity to tell you";
+		mes "something very important. But, you must not tell anyone else...";
+		set prt_curse,14;
+		delitem 7432,1; //Leather_Pouch
+		close;
+	}
+	else if (prt_curse == 14) {
+		mes "[Father Bamph]";
+		mes "What I am about to tell";
+		mes "you must be kept secret.";
+		mes "Now, do you know about";
+		mes "Jormungand, the great serpent";
+		mes "born from the god Loki and";
+		mes "the giantess, Angrboda?";
+		next;
+		mes "[Father Bamph]";
+		mes "Jormungand was an evil";
+		mes "beast that, after the thousand";
+		mes "year war between the gods and";
+		mes "demons, began to attack humans.";
+		mes "It brought great chaos and much";
+		mes "suffering around the world...";
+		next;
+		mes "[Father Bamph]";
+		mes "Finally, the first Tristram of";
+		mes "the Gaebolg family defeated";
+		mes "Jormungand together with 6";
+		mes "other warriors, but only after";
+		mes "it killed his beloved father.";
+		next;
+		mes "[Father Bamph]";
+		mes "Tristram would become the";
+		mes "first king of the Rune-Midgarts";
+		mes "Kingdom, but his family would";
+		mes "suffer from the curse placed";
+		mes "by Jormungand before its defeat. ";
+		next;
+		mes "[Father Bamph]";
+		mes "To this day...";
+		mes "^FF0000Every first prince of";
+		mes "the Gaebolg family dies";
+		mes "at a young age^000000. That is";
+		mes "Jormungand's curse and";
+		mes "the royal family's secret.";
+		emotion e_omg,1;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What...?!";
+		mes "Is this really true?!";
+		mes "Isn't there any way to";
+		mes "counter this horrible curse?!";
+		next;
+		mes "[Father Bamph]";
+		mes "Please lower your voice.";
+		mes "Yes, it's a shame that the";
+		mes "royal family must suffer like";
+		mes "this. But all the exorcisms";
+		mes "that have been attempted";
+		mes "over the years have failed...";
+		next;
+		mes "[Father Bamph]";
+		mes "Although the situation";
+		mes "appeared hopeless, King";
+		mes "Tristram III tried once again to exorcise the curse. Following";
+		mes "his orders, the greatest priests and exorcists were all summoned.";
+		next;
+		mes "[Father Bamph]";
+		mes "A series of tests was";
+		mes "performed to select the";
+		mes "best priests and exorcists";
+		mes "to remove this curse. In the end, ^3131FFBonnie Imbullea^000000 was chosen to";
+		mes "lead the exorcism ceremony.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait, but you mentioned";
+		mes "samething about an accident.";
+		mes "Does that mean that she failed";
+		mes "in performing the exorcism?";
+		next;
+		mes "[Father Bamph]";
+		mes "Yes, unfortunately.";
+		mes "After the priests and";
+		mes "exorcists gathered in the";
+		mes "secret ceremonial grounds,";
+		mes "three princes were killed";
+		mes "instead of just the first.";
+		next;
+		mes "[Father Biscuss]";
+		mes "Although we all swore to";
+		mes "keep that incident a secret,";
+		mes "Bonnie Imbullea took full";
+		mes "responsibility for the deaths.";
+		mes "That is why she is in self";
+		mes "imposed exile from the kingdom.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What...?";
+		mes "That's...";
+		mes "That's crazy!";
+		next;
+		mes "[Father Biscuss]";
+		mes "I know that this";
+		mes "is a very long story,";
+		mes "and that it's a little";
+		mes "complicated. Please";
+		mes "listen to what we have";
+		mes "to ask from here on...";
+		emotion e_dots;
+		set prt_curse,15;
+		close;
+	}
+	else if (prt_curse == 15) {
+		mes "[Father Bamph]";
+		mes "Now, you should know that";
+		mes "all of the princes that were";
+		mes "killed that day bore strange";
+		mes "looking marks on their bodies.";
+		mes "It almost looked as if they";
+		mes "were growing snake scales.";
+		emotion e_gasp,1;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait, they grew snake";
+		mes "scales? That sounds just";
+		mes "like one of the versions of";
+		mes "this song I'm investigating.";
+		mes "I think it was the song about the Rune-Midgarts Kingdom's origin.";
+		next;
+		mes "[Father Bamph]";
+		mes "Wait, that song?";
+		mes "Hm, I don't see how";
+		mes "it's related. Let's see";
+		mes "now, how did it go?";
+		mes "Rainbows... Eagles...";
+		mes "Ah! Now I remember!";
+		next;
+		mes "[Father Bamph]";
+		mes "The great serpent";
+		mes "swallowed the sea.";
+		mes "The eagle of the rainbow";
+		mes "swallowed the serpent.";
+		mes "Then the eagle built its nest.";
+		mes "A nest upon the swallowed sea.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hmm...";
+		mes "Well, I heard a";
+		mes "different version";
+		mes "of the same song.";
+		mes "It goes like...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "The great serpent";
+		mes "swallowed the sea.";
+		mes "The eagle of the rainbow";
+		mes "swallowed the serpent.";
+		mes "Then snake scales grew on";
+		mes "the eagle, and it slowly died.";
+		next;
+		mes "[Father Bamph]";
+		mes "Oh, my. I learned the song";
+		mes "when I was a young boy from";
+		mes "my father. However, your version seems to reveal the secret curse";
+		mes "of the Gaebolgs. Please tell me, where did you hear that song?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Well, I first heard this";
+		mes "version from a historian,";
+		mes "and then I found out that";
+		mes "Bonnie Imbullea knows it as";
+		mes "well. Um, is there a problem?";
+		next;
+		mes "[Father Bamph]";
+		mes "If those song lyrics are";
+		mes "spread, the secret of the";
+		mes "royal family curse could be";
+		mes "revealed to the public. Would";
+		mes "you please help us by speaking";
+		mes "to Bonnie Imbullea once again?";
+		next;
+		mes "[Father Bamph]";
+		mes "If you can, please try to";
+		mes "see if you can learn of any";
+		mes "connection between the curse";
+		mes "and the song, or if she can";
+		mes "remember anything that happened";
+		mes "after the exorcism failed...";
+		set prt_curse,16;
+		changequest 18034,18035;
+		close;
+	}
+	else if (prt_curse == 16) {
+		mes "[Father Bamph]";
+		mes "Please visit Bonnie";
+		mes "Imbullea in Mount Mjolnir";
+		mes "to see if you can learn more";
+		mes "about that song, or about what";
+		mes "happened after the attempted exorcism of the Jormungand curse.";
+		close;
+	}
+	else if (prt_curse == 17) {
+		mes "[Father Bamph]";
+		mes "Ah, have you spoken";
+		mes "to Bonnie Imbullea?";
+		mes "Please tell me if you";
+		mes "have learned anything new.";
+		next;
+		mes "^3355FFYou related everything";
+		mes "that Bonnie Imbullea spoke";
+		mes "about, including the discovery";
+		mes "of a fragment of Red Gemstone";
+		mes "in the secret ceremonial grounds. ";
+		next;
+		mes "[Father Bamph]";
+		mes "Red Gemstone? There's";
+		mes "no reason for that to be in";
+		mes "a holy place. Hmm. There's";
+		mes "more to this case than meets";
+		mes "the eye. We better investigate";
+		mes "the truth, starting now.";
+		next;
+		mes "[Father Bamph]";
+		mes "Come with me, adventurer,";
+		mes "to the secret ceremonial";
+		mes "grounds for the royal family.";
+		mes "Just use the switch hidden";
+		mes "within the bookshelf and";
+		mes "I will meet you there.";
+		set prt_curse,18;
+		changequest 18036,18037;
+		close;
+	}
+	else if (prt_curse > 17 && prt_curse < 22) {
+		mes "[Father Bamph]";
+		mes "Come with me to the";
+		mes "secret ceremonial grounds";
+		mes "so that we can investigate";
+		mes "the possibility of sabotage";
+		mes "with the exorcism that";
+		mes "Bonnie Imbullea performed.";
+		next;
+		mes "[Father Bamph]";
+		mes "There is a hidden switch";
+		mes "in the bookshelf that you";
+		mes "can use to transport yourself";
+		mes "there. Go, and I will meet";
+		mes "you in the ceremonial grounds.";
+		close;
+	}
+	else if (prt_curse == 22) {
+		mes "[Father Bamph]";
+		mes "This is a matter of grave";
+		mes "importance, but we can't";
+		mes "alert the royal family yet and";
+		mes "cause a panic. It would be";
+		mes "best to fully investigate this";
+		mes "first and collect proof.";
+		next;
+		mes "[Father Bamph]";
+		mes "Brave adventurer, would";
+		mes "you please visit the Assassin";
+		mes "Guild in Morroc and see if you";
+		mes "can learn anything about how";
+		mes "we can verify whether poison";
+		mes "was used to kill the princes?";
+		set prt_curse,23;
+		changequest 18039,18040;
+		close;
+	}
+	else if (prt_curse == 23) {
+		mes "[Father Bamph]";
+		mes "Please see if you can";
+		mes "learn anything about testing";
+		mes "for the use of poison from";
+		mes "a member of the Assassin";
+		mes "Guild in Morroc.";
+		close;
+	}
+	else if (prt_curse == 31) {
+		mes "[Father Bamph]";
+		mes "Ah, you've returned~";
+		mes "Have you managed to learn";
+		mes "anything about poison from";
+		mes "the Assassin Guild? I know";
+		mes "their members must be";
+		mes "very difficult to find...";
+		next;
+		mes "^3355FFYou relate all of the";
+		mes "information you learned";
+		mes "about poison to Father Bamph,";
+		mes "including the method to test";
+		mes "for the use of poison in murder. ";
+		next;
+		mes "[Father Bamph]";
+		mes "Ah, I see. Then, would";
+		mes "you please bring 1 Yellow";
+		mes "Gemstone and 1 Green Potion";
+		mes "to the secret ceremonial grounds as soon as you can? I will wait";
+		mes "over there for you once again.";
+		set prt_curse,32;
+		changequest 18044,18046;
+		close;
+	}
+	else if (prt_curse == 32 || prt_curse == 33 || prt_curse == 41 || prt_curse == 42 || prt_curse == 51 || prt_curse == 52) {
+		mes "[Father Bamph]";
+		mes "You can use the hidden";
+		mes "switch in the bookshelf to";
+		mes "enter the secret ceremonial";
+		mes "grounds. Don't forget that we";
+		mes "need^3131FF 1 Yellow Gemstone^000000 and ^3131FF1 Green Potion^000000 to test for poison.";
+		close;
+	}
+	else if (prt_curse == 34) {
+		mes "[Father Bamph]";
+		mes "I can't believe it!";
+		mes "If poison was used, then";
+		mes "the second and third princes";
+		mes "were murdered! Unbelievable...";
+		mes "How can anyone kill children?";
+		next;
+		mes "[Father Bamph]";
+		mes "At the very least, we now";
+		mes "know that their deaths were";
+		mes "not Bonnie Imbullea's fault.";
+		mes "Now I must discuss with Father";
+		mes "Biscuss and decide how to tell";
+		mes "the royal family about this...";
+		next;
+		mes "[Father Bamph]";
+		mes "Once again, let me remind";
+		mes "you that everything that has";
+		mes "transpired here must be kept";
+		mes "secret. The public cannot know";
+		mes "of Jormungand's curse! It would cause political turmoil and chaos!";
+		next;
+		mes "[Father Bamph]";
+		mes "Still, that does not mean";
+		mes "that I cannot personally thank";
+		mes "you for all of your help. I'm very grateful for what you have done,";
+		mes "adventurer. May safety accompany you on all of your journeys.";
+		set prt_curse,35;
+		changequest 18047,18050;
+		close;
+	}
+	else if (prt_curse > 34 && prt_curse < 40 && !aru_monas) {
+		mes "[Father Bamph]";
+		mes "I'm at a loss at what";
+		mes "to do. Sometimes, even";
+		mes "I have doubts and believe";
+		mes "that Odin has abandoned us...";
+		close;
+	}
+	else if (prt_curse == 40) {
+		mes "[Father Bamph]";
+		mes "Ah, you've returned~";
+		mes "Have you managed to learn";
+		mes "anything about poison from";
+		mes "the Assassin Guild? I know";
+		mes "their members must be";
+		mes "very difficult to find...";
+		next;
+		mes "^3355FFYou relate all of the";
+		mes "information you learned";
+		mes "about poison to Father Bamph,";
+		mes "including the method to test";
+		mes "for the use of poison in murder. ";
+		next;
+		mes "[Father Bamph]";
+		mes "Ah, I see. Then, would";
+		mes "you please bring^3131FF 1 Yellow";
+		mes "Gemstone^000000 and ^3131FF1 Green Potion^000000";
+		mes "to the secret ceremonial grounds as soon as you can? I will wait";
+		mes "over there for you once again.";
+		set prt_curse,41;
+		changequest 18045,18046;
+		close;
+	}
+	else if (prt_curse == 43 || prt_curse == 53) {
+		mes "[Father Bamph]";
+		mes "I can't believe it!";
+		mes "If poison was used, then";
+		mes "the second and third princes";
+		mes "were murdered! Unbelievable...";
+		mes "How can anyone kill children?";
+		next;
+		mes "[Father Bamph]";
+		mes "At the very least, we now";
+		mes "know that their deaths were";
+		mes "not Bonnie Imbullea's fault.";
+		mes "Now I must discuss with Father";
+		mes "Biscuss and decide how to tell";
+		mes "the royal family about this...";
+		next;
+		mes "[Father Bamph]";
+		mes "Oh, and would you please";
+		mes "inform ^3131FFBonnie Imbullea^000000 that";
+		mes "the deaths of the princes were";
+		mes "not her fault? I'm sure that news would bring her great relief";
+		mes "from her burden of guilt...";
+		next;
+		mes "[Father Bamph]";
+		mes "Once again, let me remind";
+		mes "you that everything that has";
+		mes "transpired here must be kept";
+		mes "secret. The public cannot know";
+		mes "of Jormungand's curse! It would cause political turmoil and chaos!";
+		next;
+		mes "[Father Bamph]";
+		mes "Still, that does not mean";
+		mes "that I cannot personally thank";
+		mes "you for all of your help. I'm very grateful for what you have done,";
+		mes "adventurer. May safety accompany you on all of your journeys.";
+		if (prt_curse == 43)
+			set prt_curse,44;
+		else
+			set prt_curse,54;
+		changequest 18047,18049;
+		getexp (checkre(3))?90000:1600000,0;
+		close;
+	}
+	else if (prt_curse > 43 && prt_curse < 50 && !aru_monas) {
+		mes "[Father Bamph]";
+		mes "Have you spoken to";
+		mes "Bonnie Imbullea yet?";
+		mes "Try not to worry about the";
+		mes "news about the princes'";
+		mes "murder. Father Biscuss";
+		mes "and I will handle it.";
+		close;
+	}
+	else if (prt_curse == 50) {
+		mes "[Father Bamph]";
+		mes "Ah, you've returned~";
+		mes "Have you managed to learn";
+		mes "anything about poison from";
+		mes "the Assassin Guild? I know";
+		mes "their members must be";
+		mes "very difficult to find...";
+		next;
+		mes "You relate all of the";
+		mes "information you learned";
+		mes "about poison to Father Bamph,";
+		mes "including the method to test";
+		mes "for the use of poison in murder. ";
+		next;
+		mes "[Father Bamph]";
+		mes "Ah, I see. Then, would";
+		mes "you please bring ^3131FF1 Yellow";
+		mes "Gemstone^000000 and ^3131FF1 Green Potion^000000";
+		mes "to the secret ceremonial grounds as soon as you can? I will wait";
+		mes "over there for you once again.";
+		set prt_curse,51;
+		changequest 18043,18046;
+		close;
+	}
+	else if (prt_curse == 60) {
+		mes "[Father Bamph]";
+		mes "Oh, "+strcharinfo(0)+"~";
+		mes "Long time, no see.";
+		mes "Have you spoken to";
+		mes "Bonnie yet? Ah, and";
+		mes "how may I help you today?";
+		next;
+		mes "^3355FFYou tell Father Bamph";
+		mes "that rare herbs grow in";
+		mes "a land to the west, although";
+		mes "you do not mention that you";
+		mes "told Rodafrian about the curse.^000000";
+		next;
+		mes "[Father Biscuss]";
+		mes "Land to the west?";
+		mes "That place is rumored to";
+		mes "be populated by fanatics.";
+		mes "Father Bamph, I think they";
+		mes "may be prime suspects for";
+		mes "the murder of the princes...";
+		next;
+		mes "[Father Bamph]";
+		mes "Well, I'll admit that it's";
+		mes "possible, but we haven't had";
+		mes "contact with anyone from the";
+		mes "land to the west for so long...";
+		mes "It's still far too early to make those kinds of assumptions.";
+		next;
+		select("Land to the west?");
+		mes "[Father Bamph]";
+		mes "Not much is known about";
+		mes "the land to the west. We";
+		mes "did send several priests";
+		mes "there once to spread our";
+		mes "faith. However, they failed...";
+		next;
+		mes "[Father Bamph]";
+		mes "From what I can tell,";
+		mes "almost everyone there";
+		mes "is a strong adherent of";
+		mes "that region's native religion.";
+		mes "Anyway, thank you for informing";
+		mes "us. We'll handle it from here.";
+		next;
+		mes "[Father Bamph]";
+		mes "Ah, to preserve the secrets";
+		mes "of the royal family, I ask that";
+		mes "you refrain from entering the";
+		mes "secret ceremonial grounds";
+		mes "from now on. Thanks again for your help, "+strcharinfo(0)+".";
+		set prt_curse,61;
+		completequest 18052;
+		close;
+	}
+	else {
+		if (prt_curse == 36 || prt_curse == 45 || prt_curse == 56 || prt_curse == 61) {
+// Begin Nameless Island Access Quest Addition
+			if (aru_monas == 0) {
+				mes "[Father Bamph]";
+				mes "I'm sorry, but would it";
+				mes "be alright if we talked";
+				mes "later? I have to handle";
+				mes "a very important task now...";
+				close;
+			} else if (aru_monas == 1) {
+				mes "[Father Bamph]";
+				mes "Oh, I've been waiting for";
+				mes "you, adventurer. I'm sorry";
+				mes "for giving you such short";
+				mes "notice, but it seems that";
+				mes "you've grown much stronger";
+				mes "since the last time we met.";
+				next;
+				mes "[Father Bamph]";
+				mes "The Church has received";
+				mes "a request from Prontera";
+				mes "Palace, but we don't have";
+				mes "the resources to handle it.";
+				mes "I believe you'd be well suited";
+				mes "to this task if you'll help us.";
+				next;
+				mes "[Father Bamph]";
+				mes "A man of high rank suddenly";
+				mes "disappeared a while ago.";
+				mes "Although Prontera Palace";
+				mes "asked us to find him, I can";
+				mes "only tell you who he is later.";
+				next;
+				mes "[Father Bamph]";
+				mes "All we know is that he was";
+				mes "last seen in Comodo. Please";
+				mes "speak to our informant, ^6B8E23Larjes^000000,";
+				mes "and he will assist you in your";
+				mes "search for the lost official.";
+				set aru_monas,2;
+				changequest 17000,17001;
+				close;
+			}
+			else if (aru_monas == 2 || aru_monas == 3) {
+				mes "[Father Bamph]";
+				mes "Please go to Comodo and";
+				mes "find our informant, ^6B8E23Larjes^000000,";
+				mes "in the Casino. He will help";
+				mes "you in your search for the";
+				mes "official who disappeared.";
+				close;
+			}
+			else if (aru_monas == 4) {
+				mes "[Father Bamph]";
+				mes "Ah, so you found Larjes?";
+				mes "How has your investigation of";
+				mes "that official's disappearance";
+				mes "progressing? I hope that he";
+				mes "is still safe and sound";
+				mes "when you find him.";
+				next;
+				select("Tell him what Larjes said.");
+				mes "[Father Bamph]";
+				mes "I see. We've detected some";
+				mes "disquieting activity from";
+				mes "Arunafeltz lately, but I didn't";
+				mes "think they would make";
+				mes "their move so soon. Hmm...";
+				mes "Give me a moment to think.";
+				set aru_monas,5;
+				close;
+			}
+			else if (aru_monas == 5) {
+				if (rand(1,5) == 4) {
+					mes "[Father Bamph]";
+					mes "Well, I've considered all";
+					mes "possible scenarios. I think";
+					mes "it would work best if you";
+					mes "continue your investigation";
+					mes "on our behalf. That is, if";
+					mes "you're willing to do it.";
+					next;
+					mes "[Father Bamph]";
+					mes "We don't want to provoke";
+					mes "an international conflict";
+					mes "with our official involvement,";
+					mes "but I also can't force you to";
+					mes "work for us. Whether you";
+					mes "can help is your choice.";
+					next;
+					if (select("Let me think about it.:Of course, I'll help.") == 1) {
+						mes "[Father Bamph]";
+						mes "I hope that you decide";
+						mes "to help us. The safety of";
+						mes "our nation depends on the";
+						mes "success of this investigation.";
+						mes "We could really use your help.";
+						close;
+					}
+					mes "[Father Bamph]";
+					mes "Thank you. I'm glad to hear";
+					mes "that you'll help us. You may";
+					mes "take the airship in Izlude to";
+					mes "travel to Arunafeltz, where you";
+					mes "must continue your investigation.";
+					next;
+					mes "[Father Bamph]";
+					mes "I believe that you should";
+					mes "be able to learn more if you";
+					mes "investigate the city of ^9370DBRachel^000000.";
+					mes "Please accept this money";
+					mes "to cover your Airship fee.";
+					mes "Thank you, and good luck.";
+					set aru_monas,6;
+					set Zeny, Zeny + (checkre(0)?5000:1500);
+					changequest 17002,17003;
+					close;
+				}
+				else {
+					mes "[Father Bamph]";
+					mes "Hmm... What's the best way";
+					mes "for us to handle this? Let";
+					mes "me think about our options.";
+					mes "We can--no. That wouldn't";
+					mes "work. This will be difficult.";
+					close;
+				}
+			}
+			else if (aru_monas == 6) {
+				// Anyone else see the irony in this?
+				mes "[Father Bamph]";
+				mes "You might have problems";
+				mes "in Rachel since the culture";
+				mes "there is much different than";
+				mes "our own. Their ways of doing";
+				mes "things, their government...";
+				mes "Everything is tied to religion.";
+				close;
+			}
+			else if (aru_monas > 6 && aru_monas < 25) {
+				mes "[Father Bamph]";
+				mes "Thank you so much for all";
+				mes "of your hard work. Our agents";
+				mes "will contact you whenever they";
+				mes "uncover any new information.";
+				mes "Remember that no one can";
+				mes "know what we've been doing.";
+				close;
+			}
+			else if (aru_monas == 25 || aru_monas == 26) {
+				mes "[Father Bamph]";
+				mes "Thank you for bring us such";
+				mes "important information. With";
+				mes "your help, we were able to";
+				mes "clear a few unsolved cases.";
+				mes "We expected something like";
+				mes "this, but not this soon.";
+				next;
+				mes "[Father Bamph]";
+				mes "I fear that the Royal Court";
+				mes "has been bickering over their";
+				mes "own selfish needs. I pray that";
+				mes "it does not grow worse, devolve";
+				mes "into chaos. ^666666*Sigh*^000000 We'll see...";
+				close;
+			}
+			else {
+				mes "[Father Bamph]";
+				mes "It's upsetting to me that";
+				mes "Arunafeltz has been so quiet";
+				mes "lately. You know the expression";
+				mes "about there being a quiet lull";
+				mes "before a raging storm, right?";
+				close;
+			}
+// End Nameless Island Access Quest Addition
+		}
+	}
+}
+
+prt_church,184,110,3	script	Father Biscuss	60,{
+	if (prt_curse == 54) {
+		mes "[Father Biscuss]";
+		mes "Hmm, I still suspect that";
+		mes "someone from the Assassin";
+		mes "Guild may have killed the";
+		mes "princes. Just in case, I'm";
+		mes "going to send a spy. Keep";
+		mes "that information secret.";
+		next;
+		mes "[Father Biscuss]";
+		mes "So yes. You didn't learn";
+		mes "or hear anything from us,";
+		mes "and you don't know anything";
+		mes "about the royal family's curse.";
+		mes "From here on, Father Bamph";
+		mes "and I will handle this issue.";
+		close;
+	}
+	else if (prt_curse == 35) {
+		mes "[Father Biscuss]";
+		mes "I've never seen Father";
+		mes "Bamph this way before, but";
+		mes "I can understand how he feels.";
+		mes "As one of the leaders of this";
+		mes "church, he feels responsible";
+		mes "for these princes' deaths.";
+		next;
+		mes "[Father Biscuss]";
+		mes "I'm sure he'll feel";
+		mes "better in a few days,";
+		mes "but right now, he's in no";
+		mes "condition to compile the";
+		mes "valuable info that you've";
+		mes "provided, so I'll do it.";
+		next;
+		mes "[Father Biscuss]";
+		mes "Personally, I feel that";
+		mes "what happened was tragic,";
+		mes "but it should be avenged.";
+		mes "Perhaps that why I've held";
+		mes "a grudge against Imbullea";
+		mes "for all this time. Anyway...";
+		next;
+		mes "[Father Biscuss]";
+		mes "Although we can't";
+		mes "acknowledge it publicly,";
+		mes "on behalf of the Prontera";
+		mes "Church, I want to thank";
+		mes "you for all of your help.";
+		set prt_curse,36;
+		completequest 18048;
+		getexp (checkre(3))?90000:1600000,0;
+		close;
+	}
+	else if (prt_curse == 36) {
+		mes "[Father Biscuss]";
+		mes "No one can know light";
+		mes "without experiencing";
+		mes "darkness. Peace has";
+		mes "no meaning until it is";
+		mes "contrasted with chaos.";
+		next;
+		mes "[Father Biscuss]";
+		mes "Religion becomes even";
+		mes "more important during times";
+		mes "of chaos, and times of need.";
+		mes "I must remain calm, especially";
+		mes "when Father Bamph feels so bad about this whole incident...";
+		close;
+	}
+	else {
+		mes "[Father Biscuss]";
+		mes "Please observe";
+		mes "silence within the";
+		mes "Priest Room. Thank";
+		mes "you for cooperating.";
+		close;
+	}
+}
+
+prt_church,177,113,3	script	#gototomb	111,{
+	if (prt_curse > 17 && prt_curse < 23 || prt_curse > 31 && prt_curse < 35 || prt_curse == 41 || prt_curse == 42 || prt_curse == 44 || prt_curse == 51 || prt_curse == 52) {
+		warp "prt_church",21,91;
+	}
+	end;
+}
+
+prt_church,23,89,3	script	Father Biscuss#tomb	60,{
+	mes "[Father Biscuss]";
+	mes "Hm...?";
+	mes "Are you ready to";
+	mes "head back upstairs?";
+	next;
+	if (select("Yes:No") == 1) {
+		mes "[Father Biscuss]";
+		mes "Please follow me.";
+		next;
+		warp "prt_church",178,111;
+		end;
+	}
+	mes "[Father Biscuss]";
+	mes "Please take your time";
+	mes "and investigate this as";
+	mes "thoroughly as you can.";
+	close;
+}
+
+prt_church,16,114,4	script	Father Bamph#tomb	60,{
+	if (prt_curse == 18) {
+		mes "[Father Bamph]";
+		mes "There are the bodies";
+		mes "of the Gaebolg princes";
+		mes "that were killed during";
+		mes "the exorcism. Please take";
+		mes "a look at the body to the left.";
+		set prt_curse,19;
+		close;
+	}
+	else if (prt_curse == 19) {
+		mes "[Father Bamph]";
+		mes "Please take a look";
+		mes "at the body to the";
+		mes "far left, the first prince.";
+		close;
+	}
+	else if (prt_curse == 20) {
+		mes "["+strcharinfo(0)+"]";
+		mes "That weird mark looked";
+		mes "just like snake scales.";
+		mes "Is... Is that the mark left";
+		mes "behind by Jormungand's curse?";
+		next;
+		mes "[Father Bamph]";
+		mes "That's right.";
+		mes "Now, let's examine the";
+		mes "body of the second prince,";
+		mes "located in the middle.";
+		close;
+	}
+	else if (prt_curse == 21) {
+		mes "[Father Bamph]";
+		mes "Now...";
+		mes "Now we should";
+		mes "examine the third prince.";
+		close;
+	}
+	else if (prt_curse == 22) {
+		mes "[Father Bamph]";
+		mes "Let's go upstairs where we";
+		mes "can continue this conversation.";
+		mes "Ah, you might want to ask";
+		mes "Father Biscuss to lead you.";
+		close;
+	}
+	else if (prt_curse == 32 || prt_curse == 41 || prt_curse == 51) {
+		mes "[Father Bamph]";
+		mes "Do you have a ^3131FFYellow";
+		mes "Gemstone^000000 and ^3131FFGreen Potion^000000";
+		mes "ready? If so, you should begin";
+		mes "testing on the body of the third prince before the others.";
+		close;
+	}
+	else if (prt_curse == 33 || prt_curse == 42 || prt_curse == 52) {
+		mes "[Father Bamph]";
+		mes "The mark disappeared?";
+		mes "Oh, this is just horrible!";
+		mes "That would mean that poison";
+		mes "was used to murder the other";
+		mes "princes! I almost... can't...";
+		next;
+		mes "[Father Bamph]";
+		mes "I... I need some time";
+		mes "to recover from the shock";
+		mes "and to think about all of";
+		mes "this carefully. For now,";
+		mes "let's go back upstairs.";
+		if (prt_curse == 33) set prt_curse,34;
+		else if (prt_curse == 42) set prt_curse,43;
+		else set prt_curse,53;
+		close;
+	}
+	else if (prt_curse == 43 || prt_curse == 53) {
+		mes "[Father Bamph]";
+		mes "We've disturbed the";
+		mes "bodies of these poor";
+		mes "souls enough. We should";
+		mes "go back upstairs now...";
+		close;
+	}
+	end;
+}
+
+prt_church,19,111,5	script	#prince1	887,{
+	if (prt_curse == 19) {
+		mes "[Father Bamph]";
+		mes "This is the body of";
+		mes "the king's first son, the";
+		mes "crown prince. Just as it has";
+		mes "happened for generations,";
+		mes "the curse took the life of";
+		mes "the first born prince...";
+		next;
+		mes "^3355FFBeneath one of the";
+		mes "prince's sleeves, you";
+		mes "notice a dark mark. Upon";
+		mes "pulling up the sleeve, you";
+		mes "note that the mark resembles";
+		mes "the scales of a serpent.^000000";
+		set prt_curse,20;
+		changequest 18037,18038;
+		close;
+	}
+	else if (prt_curse == 33 || prt_curse > 41 && prt_curse < 51 || prt_curse == 52) {
+		mes "^3355FFYou poured a little bit";
+		mes "of the solution made from";
+		mes "Yellow Gemstone and Green";
+		mes "Potion on the mark on the skin.";
+		mes "You waited a while, but there was no reaction from the solution.^000000";
+		close;
+	}
+	else {
+		mes "^3355FFIt's the body of a male";
+		mes "dressed in luxurious robes.";
+		mes "Although deceased, the color";
+		mes "of life has not yet left the body. ";
+		close;
+	}
+}
+
+prt_church,21,111,5	script	#prince2	887,{
+	if (prt_curse == 20) {
+		mes "[Father Bamph]";
+		mes "This is the body of the";
+		mes "second prince. The curse";
+		mes "is only supposed to kill";
+		mes "the firstborn prince, but";
+		mes "all three princes of this";
+		mes "generation were killed...";
+		next;
+		mes "[Father Bamph]";
+		mes "Despite our great efforts";
+		mes "to exorcise this powerful";
+		mes "curse, we all failed. Those";
+		mes "involved have begun to believe";
+		mes "that Odin may have abandoned us... ";
+		emotion e_omg,1;
+		next;
+		mes "^3355FFYou examine the body of";
+		mes "the second prince and notice";
+		mes "that the scale marks on his";
+		mes "skin are fainter, and slightly";
+		mes "different in color, than the";
+		mes "marks on the first prince.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Father Bamph...!";
+		mes "Look, these marks are";
+		mes "different on the second";
+		mes "prince than on the first";
+		mes "prince! See? They're different";
+		mes "in darkness and coloration.";
+		next;
+		mes "[Father Bamph]";
+		mes "Goodness, you're right!";
+		mes "How did we overlook this?";
+		mes "Hm, this supports the idea";
+		mes "that a conspiracy may be";
+		mes "involved. Let's go check";
+		mes "the body of the third prince.";
+		set prt_curse,21;
+		changequest 18038,18039;
+		close;
+	}
+	else if (prt_curse == 33 || prt_curse > 41 && prt_curse < 51 || prt_curse == 52) {
+		specialeffect EF_POISONATTACK;
+		specialeffect EF_POISONHIT;
+		specialeffect EF_BUBBLE;
+		mes "^3355FFYou poured a little of the";
+		mes "solution made from Green";
+		mes "Potion and Yellow Gemstone";
+		mes "on the body's scale marks. The";
+		mes "scale marks grow fainter and";
+		mes "the solution bubbles on contact. ";
+		close;
+	}
+	else {
+		mes "^3355FFIt's the body of a male";
+		mes "dressed in luxurious robes.";
+		mes "Although deceased, the color";
+		mes "of life has not yet left the body. ";
+		close;
+	}
+}
+
+prt_church,24,111,5	script	#prince3	887,{
+	if (prt_curse == 21) {
+		mes "^3355FFYou and Father Bamph";
+		mes "hurriedly inspect the third";
+		mes "prince's body and find that the";
+		mes "scale marks on his skin are";
+		mes "a little darker than the marks";
+		mes "on the second prince's skin.^000000";
+		next;
+		mes "[Father Bamph]";
+		mes "This is very suspicious...";
+		mes "The deaths of the second and";
+		mes "third princes might have been";
+		mes "caused by murder, rather than";
+		mes "the curse. However, what could";
+		mes "possibly be used to kill them?";
+		next;
+		while(1) {
+			if (select("A weapon!:Poison!") == 1) {
+				mes "[Father Bamph]";
+				mes "Hmm... But none of the";
+				mes "bodies had any wounds";
+				mes "or scarring. If that were the";
+				mes "case, I'm sure the king would";
+				mes "have declared war on someone.";
+				mes "It couldn't have been a weapon.";
+				next;
+			}
+			else  break;
+		}
+		mes "[Father Bamph]";
+		mes "Poison...?";
+		mes "Oh dear! No one in the";
+		mes "Prontera Church would know";
+		mes "the first thing about that. But";
+		mes "maybe poison was used.";
+		mes "How can we find out for sure?";
+		next;
+		mes "[Father Biscuss]";
+		mes "I say, you go straight to";
+		mes "the experts. Someone in the";
+		mes "^FF0000Assassin Guild in Morroc^000000";
+		mes "ought to know. I hear they";
+		mes "can make poison that can kill";
+		mes "a man with just one drop!";
+		next;
+		mes "[Father Bamph]";
+		mes "Ah, that's a good idea!";
+		mes "Hmm, but first, let's go";
+		mes "continue this conversation";
+		mes "outside, shall we? I'd prefer";
+		mes "not to disturb these bodies...";
+		set prt_curse,22;
+		close;
+	}
+	else if (prt_curse == 22) {
+		mes "[Father Bamph]";
+		mes "Let's go upstairs where we";
+		mes "can continue this conversation.";
+		mes "Ah, you might want to ask";
+		mes "Father Biscuss to lead you.";
+		close;
+	}
+	else if (prt_curse == 32 || prt_curse == 41 || prt_curse == 51) {
+		if (countitem(506) > 0 && countitem(715) > 0) {
+			mes "^3355FFYou open a bottle of";
+			mes "Green Potion and insert a";
+			mes "Yellow Gemstone. The gem";
+			mes "quickly dissolves, conveniently";
+			mes "forming a solution to test for the presense of poison. You pour";
+			mes "it on the prince's scale marks.^000000";
+			next;
+			specialeffect EF_POISONATTACK;
+			specialeffect EF_POISONHIT;
+			specialeffect EF_BUBBLE;
+			mes "^3355FF*Pssssssssh*^000000";
+			next;
+			mes "^3355FFThe solution bubbles";
+			mes "once it touches the skin,";
+			mes "and the serpent scale marks";
+			mes "on the prince's body slowly";
+			mes "fade until they disappear.^000000";
+			delitem 506,1; //Green_Potion
+			delitem 715,1; //Yellow_Gemstone
+			if (prt_curse == 32) set prt_curse,33;
+			else if (prt_curse == 41) set prt_curse,42;
+			else set prt_curse,52;
+			changequest 18046,18047;
+			close;
+		}
+		mes "^3355FFYou'll need to have";
+		mes "a Green Potion and";
+		mes "a Yellow Gemstone in";
+		mes "order to test and confirm";
+		mes "whether poison killed the";
+		mes "second and third princes.^000000";
+		close;
+	}
+	else if (prt_curse == 33 || prt_curse == 42 || prt_curse == 52) {
+		mes "^3355FFThe serpent scale marks";
+		mes "on this prince's body have";
+		mes "vanished after you applied";
+		mes "the Green Potion and Yellow";
+		mes "Gemstone solution to the skin.^000000";
+		close;
+	}
+	else {
+		mes "^3355FFIt's the body of a male";
+		mes "dressed in luxurious robes.";
+		mes "Although deceased, the color";
+		mes "of life has not yet left the body. ";
+		close;
+	}
+}
+
+moc_fild16,201,295,5	script	Assassin Guildsman#poiso	884,{
+	if (prt_curse == 23) {
+		mes "[Assassin Guildsman]";
+		mes "What business";
+		mes "brings you here?";
+		next;
+		if (select("Poison:Nothing") == 1) {
+			mes "["+strcharinfo(0)+"]";
+			mes "I need to talk to";
+			mes "a poison specialist.";
+			mes "I'm investigating";
+			mes "something for the";
+			mes "Prontera Church,";
+			mes "possibly a murder.";
+			next;
+			mes "[Assassin Guildsman]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			next;
+			mes "[Assassin Guildsman";
+			mes "Listen carefully.";
+			mes "I will only tell this";
+			mes "to you one time.";
+			next;
+			mes "[Assassin Guildsman]";
+			mes "There is an";
+			mes "Assassin's Private Pub";
+			mes "in the 7 o'clock direction";
+			mes "in Morroc. Go find someone";
+			mes "named ^3131FFMarjana^000000 inside.";
+			set prt_curse,24;
+			changequest 18040,18041;
+			close;
+		}
+		mes "[Assassin Guildsman]";
+		mes "No. That look in";
+		mes "your eyes. I'm sure";
+		mes "there is a reason that";
+		mes "you have come here...";
+		close;
+	}
+	else {
+		mes "[Assassin Guildsman]";
+		mes "It's very dry and";
+		mes "windy today. I like this";
+		mes "weather. It feels like it";
+		mes "perfectly matches the soul";
+		mes "of a true Assassin, the loner";
+		mes "that hides in the shadows.";
+		close;
+	}
+}
+
+que_job01,10,16,5	script	Marjana#poison	885,{
+	if (prt_curse == 24) {
+		mes "[Marjana]";
+		mes "What business brings";
+		mes "you here? I'm giving";
+		mes "you 4 minutes to speak";
+		mes "with me, so be direct.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I want to learn";
+		mes "more about poison";
+		mes "and confirm if it was";
+		mes "used to kill someone.";
+		next;
+		mes "[Marjana]";
+		mes "Poison? You've come";
+		mes "to just the right person.";
+		mes "If I don't know the answer,";
+		mes "I doubt you'll find anyone";
+		mes "else that would. Ask away.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Is it true that an";
+		mes "Assassin's poison";
+		mes "can be so powerful,";
+		mes "that just one drop";
+		mes "can kill a person?";
+		next;
+		mes "[Marjana]";
+		mes "It's true that such powerful";
+		mes "poison exists, but such deadly";
+		mes "poison is usually only used by";
+		mes "Assassin Crosses. Generally,";
+		mes "normal Assassins use poisons";
+		mes "that are much less potent.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Alright. Can you make";
+		mes "a poison that leaves a";
+		mes "specific mark on the body?";
+		next;
+		mes "[Marjana]";
+		mes "Sure. There's all kinds of";
+		mes "poisons that exist that I'm";
+		mes "sure you can't even imagine.";
+		mes "However, poisons that leave";
+		mes "specific marks are difficult to";
+		mes "use, and few can handle them.";
+		next;
+		mes "[Marjana]";
+		mes "The types of marks";
+		mes "that are left behind all";
+		mes "depend on the materials";
+		mes "used to create the poison.";
+		mes "Since some materials are";
+		mes "exclusive to certain areas...";
+		next;
+		mes "[Marjana]";
+		mes "Well, the type of mark";
+		mes "that was left behind could";
+		mes "actually serve as some kind";
+		mes "of clue. What was the mark";
+		mes "on the victim's body?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "We're not sure if";
+		mes "poison was used yet,";
+		mes "but there are marks that";
+		mes "look like snake scales";
+		mes "left on the bodies.";
+		next;
+		mes "[Marjana]";
+		mes "Hmm. You know, if I had";
+		mes "to guess, I would say that";
+		mes "poison was probably used.";
+		mes "But the poison would have";
+		mes "to originate from outside of";
+		mes "the Rune-Midgarts Kingdom...";
+		next;
+		mes "[Marjana]";
+		mes "Yeah...";
+		mes "The materials used to";
+		mes "make those snake scale";
+		mes "marks... Some of them can't";
+		mes "even be found here on the";
+		mes "Rune-Midgard continent.";
+		next;
+		mes "[Marjana]";
+		mes "We're running out of time.";
+		mes "Listen, you can confirm whether";
+		mes "poison was used to kill someone";
+		mes "by mixing a Yellow Gemstone with a Green Potion, and sprinkling";
+		mes "the solution on the body.";
+		next;
+		mes "[Marjana]";
+		mes "If poison was used, the";
+		mes "solution with react with";
+		mes "the body. But this method";
+		mes "won't work if too much time";
+		mes "has passed after the murder.";
+		mes "You better try this soon...";
+		set prt_curse,25;
+		close;
+	}
+
+OnInit:
+	disablenpc "Marjana#poison";
+	end;
+
+OnEnable:
+	enablenpc "Marjana#poison";
+	end;
+}
+
+morocc,45,103,0	script	#prtcurse	-1,2,2,{
+OnTouch:
+	if (prt_curse == 25) {
+		mes "["+strcharinfo(0)+"]";
+		mes "Hm. I'd better review";
+		mes "the facts I've learned so";
+		mes "that I can better focus on";
+		mes "this investigation. Let's see~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Long ago, the giant serpent";
+		mes "Jormungand threatened mankind.";
+		mes "7 warriors defeated Jormungand, led by Tristram III of the Gaebolg";
+		mes "family, but Jormungand cursed the Gaebolg bloodline in its defeat.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Ever since, the curse kills";
+		mes "the first born prince of the";
+		mes "Gaebolg family at an early age.";
+		mes "However, all of the princes of";
+		mes "this generation were killed.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "According to what I've";
+		mes "learned from that assassin,";
+		mes "the first prince died from the";
+		mes "curse, and the other two may";
+		mes "have died from poisoning.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "It's most likely that if";
+		mes "poison was used, then the";
+		mes "person who used it was an";
+		mes "assassin from outside of the";
+		mes "Rune-Midgarts Kingdom. Yes,";
+		mes "that's about everything I know.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Now, that historian Rodafrian";
+		mes "has been waiting for me to tell";
+		mes "her the lyrics of that song, but Father Bamph is also waiting";
+		mes "for the info I've learned from the Assassin Guild. What should I do?";
+		next;
+		if (select("Go to Rodafrian:Go to Father Bamph") == 1) {
+			mes "["+strcharinfo(0)+"]";
+			mes "Well, it's easier for me";
+			mes "to visit Rodafrian now.";
+			mes "She's much closer than";
+			mes "Father Bamph, so I guess";
+			mes "that I'll go talk to her first.";
+			set prt_curse,30;
+			changequest 18041,18042;
+			close;
+		}
+		mes "["+strcharinfo(0)+"]";
+		mes "Well, it's more important";
+		mes "that I go see Father Bamph";
+		mes "and investigate the princes'";
+		mes "bodies. I better head over";
+		mes "to Prontera right away.";
+		set prt_curse,50;
+		changequest 18041,18043;
+		close;
+	}
+}
+
+prt_in,162,99,4	script	Librarian#curse	67,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.";
+		close;
+	}
+	if (prt_curse == 3) {
+		if (countitem(7431) < 1) {
+			mes "[Librarian]";
+			mes "Please make sure to return";
+			mes "library books to the correct";
+			mes "place after you use them.";
+			mes "We don't have enough staff";
+			mes "to organize all these books...";
+			next;
+			if (select("Report the loss of the books:End Conversation") == 1) {
+				mes "[Librarian]";
+				mes "Oh, you lost some books?";
+				mes "Please write down the book";
+				mes "titles and pay the 700 zeny";
+				mes "penalty charge. Aftewards,";
+				mes "we will provide you with";
+				mes "replacement copies.";
+				next;
+				if (Zeny > 699) {
+					mes "[Librarian]";
+					mes "Ah, here you are.";
+					mes "Please take these";
+					mes "replacement copies,";
+					mes "and try not to lose";
+					mes "them again. Thank you.";
+					set Zeny, Zeny-700;
+					getitem 7431,1; //Books
+					close;
+				}
+				mes "[Librarian]";
+				mes "Hmm...";
+				mes "Come back as soon";
+				mes "as you can with the";
+				mes "700 zeny to pay the";
+				mes "lost book penalty charge.";
+				close;
+			}
+			mes "[Librarian]";
+			mes "Please keep silent";
+			mes "while inside the library.";
+			mes "Thank you for cooperating.";
+			close;
+		}
+		else {
+			mes "[Librarian]";
+			mes "Being a librarian can";
+			mes "be pretty rough. People";
+			mes "just leave the books all";
+			mes "scattered, but expect them";
+			mes "to be organized. Ooh, books";
+			mes "are always getting lost too...";
+			next;
+			mes "[Librarian]";
+			mes "When you have";
+			mes "to clean up their";
+			mes "messes, you get to";
+			mes "realize how sloppy";
+			mes "people can really be.";
+			close;
+		}
+	}
+	else {
+		mes "[Librarian]";
+		mes "Being a librarian can";
+		mes "be pretty rough. People";
+		mes "just leave the books all";
+		mes "scattered, but expect them";
+		mes "to be organized. Ooh, books";
+		mes "are always getting lost too...";
+		next;
+		mes "[Librarian]";
+		mes "When you have";
+		mes "to clean up their";
+		mes "messes, you get to";
+		mes "realize how sloppy";
+		mes "people can really be.";
+		close;
+	}
+}

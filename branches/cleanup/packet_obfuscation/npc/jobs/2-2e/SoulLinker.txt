@@ -1,0 +1,712 @@
+//===== rAthena Script ======================================= 
+//= Soul Linker Job Quest
+//===== By: ================================================== 
+//= Celestria & Samuray22
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Job quest for Soul Linker class.
+//= [Vars Used]
+//= SOUL_Q = Job Change Phase. (Max 4)
+//===== Additional Comments: ================================= 
+//= 1.2 Rescripted to Aegis 10.3 standards. [Samuray22]
+//= 1.3 Slight updates and fixes to the script. [L0ne_W0lf]
+//=     Removes the use of labels, and corrects other errors.
+//=     Removed the GM-use only NPC from the sec_in map. 
+//=     No longer used a global var, uses an NPC var instead.
+//= 1.3a Deleted Empty Color Tag. (bugreport:1572) [Samuray22]
+//= 1.4 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.5 Added Quest Log commands. [Kisuka]
+//= 1.6 Updated to match the latest official script. [Euphy]
+//============================================================ 
+
+morocc_in,174,30,6	script	Kid#link1	716,{
+	if (Class == Job_Soul_Linker) {
+		mes "[Maia]";
+		mes "Best of luck in your";
+		mes "journeys. As you master";
+		mes "more Soul Linker skills,";
+		mes "you will be able to draw";
+		mes "more of the spirits' power";
+		mes "to endow upon your allies...";
+		close;
+	}
+	if (Class == Job_Star_Gladiator) {
+		mes "[Kid]";
+		if (Sex == 1) {
+			mes "Aren't you a warrior";
+			mes "of the sun? I'm familiar";
+		}
+		else {
+			mes "Aren't you a warrior of";
+			mes "the moon? I'm familiar";
+		}
+		mes "with your ways. After all,";
+		mes "the basis of both of our";
+		mes "skills is grounded in the";
+		mes "Taekwon Do job, right?";
+		close;
+	}
+	if (Class != Job_Taekwon) {
+		mes "[Kid]";
+		mes "Mm? I've got nothing to";
+		mes "offer you. But if you know";
+		mes "any well experienced";
+		mes "practitioners of Taekwon";
+		mes "Do, they might benefit";
+		mes "from what I know.";
+		close;
+	}
+	if (JobLevel < 40) {
+		mes "[Kid]";
+		mes "So you're studying";
+		mes "Taekwon Do. That's good,";
+		mes "that's very good. Just keep";
+		mes "refining those skills and";
+		mes "stick to your training.";
+		close;
+	}
+	else if (JobLevel > 39) {
+		if (SOUL_Q == 0) {
+			mes "[Kid]";
+			mes "...";
+			mes "Hey you.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Did you call me?";
+			next;
+			mes "[Kid]";
+			mes "Yeah, I called you.";
+			mes "Now don't make me";
+			mes "raise my voice, and";
+			mes "just get over here.";
+			next;
+			if (select("You're awfully rude for a kid!:Ignore him.") == 1) {
+				mes "[Kid]";
+				mes "You're lucky I'm";
+				mes "taking an interest";
+				mes "in you! I might look";
+				mes "like a kid, but I'm over";
+				mes "three hundred years old!";
+				emotion e_pif;
+				next;
+				mes "[Kid]";
+				mes "Now listen...";
+				mes "I know that you're a";
+				mes "disciple of Taekwon Do.";
+				mes "It's a respectable art, but";
+				mes "I've got a proposition for";
+				mes "you if you want to hear it.";
+				emotion e_heh;
+				next;
+				mes "[Kid]";
+				mes "I'm looking at you, and I can";
+				mes "already tell that you're very";
+				mes "spiritually inclined. You've";
+				mes "got a lot of potential I don't";
+				mes "wanna see wasted. Why don't";
+				mes "you become a ''Soul-Linker?''";
+				next;
+				if (select("Ha! Silly little boy~:Soul Linker?") == 1) {
+					mes "[Kid]";
+					mes "You... You d-don't";
+					mes "believe me? I'm being";
+					mes "dead serious. Can you";
+					mes "forget the fact that I look";
+					mes "like a little kid for just one";
+					mes "minute? *Psh* ...Youngsters.";
+					close;
+				}
+				mes "[Kid]";
+				mes "Soul Linkers communicate";
+				mes "with spirits of fallen warriors";
+				mes "that still wish to fight in the";
+				mes "world of the living. Now, these";
+				mes "warrior spirits can't fight as";
+				mes "themselves in our world.";
+				next;
+				mes "[Kid]";
+				mes "However, since you're";
+				mes "spiritually inclined, these";
+				mes "spirits are attracted to you.";
+				mes "With enough training, you can";
+				mes "temporarily imbue the power of these spirits to your allies.";
+				next;
+				mes "[Kid]";
+				mes "Now, you can't imbue yourself";
+				mes "with the spirits' power. Also,";
+				mes "depending on your skills as";
+				mes "a Soul Linker, you can only";
+				mes "endow other characters of certain job classes with enchanced power.";
+				next;
+				mes "[Kid]";
+				mes "You'll have to enter";
+				mes "a wholly different world";
+				mes "to become a Soul Linker,";
+				mes "but I know it'll be possible";
+				mes "for you. So what do you say?";
+				next;
+				if (select("No. At least, not now...:Alright. What do I have to do?") == 1) {
+					mes "[Kid]";
+					mes "Ah, alright. Well,";
+					mes "if you ever decide to";
+					mes "become a Soul Linker,";
+					mes "then please come back";
+					mes "and talk to me at any time.";
+					close;
+				}
+				set SOUL_Q,1;
+				setquest 6005;
+				mes "[Kid]";
+				mes "So you want to become";
+				mes "a Soul Linker? Great!";
+				mes "Alright, first I need you";
+				mes "to bring back a few items.";
+				mes "Don't worry, I'll explain";
+				mes "why you need them later.";
+				next;
+				mes "[Kid]";
+				mes "Now bring me";
+				mes "^0000FF1 3 Carat Diamond^000000,";
+				mes "^0000FF1 Immortal Heart^000000 and";
+				mes "^0000FF1 Witherless Rose^000000.";
+				mes "And try not to make me";
+				mes "wait too long, alright?";
+				close;
+			}
+			mes "[Kid]";
+			mes "Huh...?";
+			mes "Wait, where are";
+			mes "you going? I'm...";
+			mes "I'm talking to you!";
+			close;
+		}
+		else if (SOUL_Q == 1) {
+			if (Class == Job_Taekwon) {
+				mes "[Kid]";
+				mes "You're back, eh?";
+				mes "So did you bring";
+				mes "^0000FF1 3 Carat Diamond^000000,";
+				mes "^0000FF1 Immortal Heart^000000 and";
+				mes "^0000FF1 Witherless Rose^000000.";
+				mes "like I asked you to?";
+				next;
+				if (select("There you are.:No, not yet...") == 1) {
+					if (countitem(732) > 0 && countitem(929) > 0 && countitem(748) > 0) {
+						delitem 732,1; //Crystal_Jewel__
+						delitem 929,1; //Immortal_Heart
+						delitem 748,1; //Witherless_Rose
+						set SOUL_Q,2;
+						changequest 6005,6006;
+						mes "[Kid]";
+						mes "Great, I see that you've";
+						mes "brought everything. But";
+						mes "before we begin, let me";
+						mes "introduce myself. My name";
+						mes "is Maia, and I've been alive for more than three hundred years.";
+						next;
+						mes "[Maia]";
+						mes "Without giving away too many";
+						mes "of the details, I've been divinely charged with the duty of finding";
+						mes "and recruiting more Soul Linkers. That's part of the reason why";
+						mes "I haven't, you know, passed on.";
+						next;
+						mes "[Maia]";
+						mes "Anyway, I still need to finish";
+						mes "preparations with the materials";
+						mes "that you just brought, so would";
+						mes "you come back in a little bit?";
+						mes "Then, we'll talk once again.";
+						close;
+					}
+					mes "[Kid]";
+					mes "Mm...?";
+					mes "Hey. You forgot";
+					mes "a few things. Now";
+					mes "go back and bring";
+					mes "everything that I ask";
+					mes "for this time, okay?";
+					emotion e_pif;
+					next;
+					mes "[Kid]";
+					mes "I know I just told you";
+					mes "what we need, but I'm";
+					mes "going to remind you again:";
+					mes "^0000FF1 3 Carat Diamond^000000,";
+					mes "^0000FF1 Immortal Heart^000000 and";
+					mes "^0000FF1 Witherless Rose^000000.";
+					close;
+				}
+				mes "[Kid]";
+				mes "Mm. That's fine.";
+				mes "Although I have all";
+				mes "the time to spare in";
+				mes "the world, I don't like";
+				mes "to wait for very long.";
+				close;
+			}
+			set SOUL_Q,0;
+			mes "[Kid]";
+			mes "You've become a warrior";
+			mes "of the Sun, the Moon and";
+			mes "the Stars instead? I had no";
+			mes "idea you had that potential.";
+			mes "I suppose I can't blame you...";
+			close;
+		}
+		else if (SOUL_Q == 2) {
+			if (SkillPoint) {
+				mes "[Maia]";
+				mes "You still have some";
+				mes "unallocated Skill Points.";
+				mes "Use them all to learn some";
+				mes "Taekwon Do skills, and then";
+				mes "return when you're ready.";
+				close;
+			}
+			if (.SoulLinkerTest == 1) {
+				mes "[Maia]";
+				mes "Right now, someone else";
+				mes "is completing the ceremony";
+				mes "to become a Soul Linker.";
+				mes "Would you please wait until";
+				mes "it's finished? Then, when I'm";
+				mes "available, I'll attend to you.";
+				close;
+			}
+			donpcevent "Timer#link3::OnEnable";
+			set .SoulLinkerTest,1;
+			mes "[Maia]";
+			mes "Great, I've finished";
+			mes "the preparations. Now";
+			mes "we'll proceed with the";
+			mes "ceremony to change";
+			mes "you into a Soul Linker.";
+			mes "Now close your eyes...";
+			close2;
+			warp "job_soul",30,30;
+			end;
+		}
+		else if (SOUL_Q > 2) {
+			mes "[Maia]";
+			mes "Are you ready to";
+			mes "enter the depths";
+			mes "of your mind again?";
+			next;
+			if (select("No:Yes") == 1) {
+				mes "[Maia]";
+				mes "Well then, come";
+				mes "back to me when you";
+				mes "think you are ready.";
+				mes "Until then, I'll be";
+				mes "waiting right here.";
+				close;
+			}
+			if (.SoulLinkerTest == 1) {
+				mes "[Maia]";
+				mes "Right now, someone else";
+				mes "is completing the ceremony";
+				mes "to become a Soul Linker.";
+				mes "Would you please wait until";
+				mes "it's finished? Then, when I'm";
+				mes "available, I'll attend to you.";
+				close;
+			}
+			donpcevent "Timer#link3::OnEnable";
+			set .SoulLinkerTest,1;
+			mes "[Maia]";
+			mes "Alright then, close";
+			mes "your eyes and relax.";
+			mes "We'll go back into the";
+			mes "depths of your mind.";
+			close2;
+			warp "job_soul",30,30;
+			end;
+		}
+	}
+
+OnInit:
+	set .SoulLinkerTest,0;
+	end;
+}
+
+job_soul,30,31,0	script	Maia#link2::SLTester	-1,3,3,{
+OnTouch:
+	if (Class == Job_Taekwon) {
+		if (JobLevel < 40) {
+			set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+			mes "[Maia]";
+			mes "Hm? How did you come";
+			mes "here? You're not qualified";
+			mes "for this ceremony yet. Come,I will bring you back to Morroc...";
+			close2;
+			warp "morocc",157,47;
+			end;
+		}
+		if (SOUL_Q == 2) {
+			mes "[Maia]";
+			mes "Do you recognize this";
+			mes "place? Right now, we're";
+			mes "inside your mind. The spirits";
+			mes "of warriors that have died";
+			mes "hover here, waiting for you";
+			mes "to call upon their power.";
+			next;
+			mes "[Maia]";
+			mes "Right now, there are only";
+			mes "a few of them here, but if";
+			mes "you continue to train, you";
+			mes "will be able to call upon";
+			mes "more spirits as a Soul Linker.";
+			next;
+			set SOUL_Q,3;
+			changequest 6006,6007;
+			mes "[Maia]";
+			mes "We can only remain in";
+			mes "your mind for 3 minutes.";
+			mes "I suggest that you speak";
+			mes "to the spirits while you";
+			mes "have the opportunity.";
+			close;
+		}
+		else if (SOUL_Q == 3) {
+			mes "[Maia]";
+			mes "Listen to what";
+			mes "spirits are tending to say.";
+			mes "There is a reason why";
+			mes "they cannot move on";
+			mes "to the next world.";
+			close;
+		}
+		else if (SOUL_Q == 4) {
+			mes "[Maia]";
+			mes "I believe that you are";
+			mes "now ready to become";
+			mes "a Soul Linker. However,";
+			mes "you may continue to";
+			mes "speak with the spirits";
+			mes "if that is what you wish.";
+			next;
+			if (select("Converse more with the spirits:Become a Soul Linker") == 1) {
+				mes "[Maia]";
+				mes "Alright. Try to hurry";
+				mes "since we can remain in";
+				mes "your mind for a limited";
+				mes "time. Although, we can";
+				mes "go back inside your mind";
+				mes "if you talk to me later...";
+				close;
+			}
+			if (ismounting()) {
+				mes "[Maia]";
+				mes "You are on a riding pet,";
+				mes "so you cannot change your job.";
+				mes "Please unequip your riding pet and try again!";
+				close;
+			}
+			mes "[Maia]";
+			mes "Then let us begin the";
+			mes "ceremony. These items will";
+			mes "be used to endow you with";
+			mes "the ability to borrow the power";
+			mes "of the fallen warriors and lend";
+			mes "it to your friends in battle.";
+			next;
+			mes "[Maia]";
+			mes "This Witherless Rose will";
+			mes "wither away instead of you...";
+			specialeffect EF_MAPPILLAR2,AREA,"Maia#link2";
+			next;
+			mes "[Maia]";
+			mes "This Witherless Rose will";
+			mes "wither away instead of you...";
+			mes "This Immortal Heart will cease";
+			mes "to pump blood, instead of yours. ";
+			next;
+			mes "[Maia]";
+			mes "This Witherless Rose will";
+			mes "wither away instead of you...";
+			mes "This Immortal Heart will cease";
+			mes "to pump blood, instead of yours. This Diamond will turn to dust,";
+			mes "in place of your mortal body.";
+			next;
+			mes "[Maia]";
+			mes "The dead who wish";
+			mes "to continue fighting...";
+			mes "Will fight for you! Use your";
+			mes "powers as a Soul Linker";
+			mes "wisely and for just purposes.";
+			next;
+			if (SkillPoint) {
+				mes "^0000ffYou still have unused skill points. Please use all remaining skill points and try again!^000000";
+				close;
+			}
+			completequest 6008;
+			callfunc "Job_Change",Job_Soul_Linker;
+			callfunc "F_ClearJobVar";	// clears all job variables for the current player
+			set SOUL_Q,0;
+			mes "[Maia]";
+			mes "I wish the best of luck";
+			mes "in your new life. Surround";
+			mes "yourself with allies, and the";
+			mes "spirits will be able to protect";
+			mes "you and help you fight in your battles. Farewell for now, friend.";
+			close2;
+			set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+			donpcevent "Timer#link3::OnDisable";
+			warp "morocc",157,47;
+			end;
+		}
+		set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+		mes "[Maia]";
+		mes "Hmm...?";
+		mes "The time for you";
+		mes "to be here has not";
+		mes "arrived. Let's go";
+		mes "back to Morroc...";
+		close2;
+		warp "morocc",157,47;
+		end;
+	}
+	set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+	if (Class == Job_Soul_Linker) {
+		mes "[Maia]";
+		mes "The time has come for";
+		mes "you to venture out into the";
+		mes "wide world! More Soul Linkers";
+		mes "will definitely be needed in the ongoing battle against evil...";
+	}
+	else {
+		mes "[Maia]";
+		mes "That's strange...";
+		mes "You're not supposed to";
+		mes "be here. Let me guide";
+		mes "you back to Morroc...";
+	}
+	close2;
+	warp "morocc",157,47;
+	end;
+}
+
+job_soul,35,30,6	duplicate(SLTester)	Maia#link6	716
+
+job_soul,30,35,6	script	Monk Spirit#link4	827,{
+	if (SOUL_Q == 2) {
+		mes "[Monk Spirit]";
+		mes "Who am I...?";
+		mes "I think... I think";
+		mes "it would be best if";
+		mes "you spoke to Maya first...";
+		mes "Who and what I am requires";
+		mes "a complicated explanation...";
+		close;
+	}
+	else if (SOUL_Q > 2) {
+		mes "[Monk Spirit]";
+		mes "In life, my peers did";
+		mes "their best to assure me";
+		mes "that I accomplish all that";
+		mes "I could as a Monk. Still...";
+		mes "Still I would never be fully";
+		mes "satisfied with my skills.";
+		next;
+		mes "[Monk Spirit]";
+		mes "In death, I had many regrets,";
+		mes "never having the chance to pass";
+		mes "my skills down to future Monks.";
+		mes "Lending my power to others ";
+		mes "is the only chance that I can";
+		mes "possibly have to do this.";
+		next;
+		set SOUL_Q,4;
+		if(checkquest(6008) == -1) {
+			changequest 6007,6008;
+		}
+		mes "[Monk Spirit]";
+		mes "I beg of you...";
+		mes "I need you to help";
+		mes "me fully realize the";
+		mes "true potential of the";
+		mes "Monks of today.";
+		close;
+	}
+	mes "[Monk Spirit]";
+	mes "...";
+	close;
+}
+
+job_soul,30,25,7	script	Sage Spirit#link5	754,{
+	if (SOUL_Q == 2) {
+		mes "[Sage Spirit]";
+		mes "Speak to Maia.";
+		mes "I'm afraid I may";
+		mes "confuse you if Maia";
+		mes "doesn't first explain";
+		mes "your present situation...";
+		close;
+	}
+	else if (SOUL_Q > 2) {
+		mes "[Sage Spirit]";
+		mes "My pursuit of knowledge";
+		mes "granted me incredible power:";
+		mes "in life, I could have destroyed";
+		mes "anything I wanted. Few Sages";
+		mes "could even reach my level...";
+		next;
+		mes "[Sage Spirit]";
+		mes "I died, but I was never able";
+		mes "to pass on to the next world.";
+		mes "I still want to use my abilities.I want to use my knowledge";
+		mes "to build what pleases me,";
+		mes "and to destroy as I please.";
+		next;
+		mes "[Sage Spirit]";
+		mes "It is enough if I can";
+		mes "lend my power to a Sage";
+		mes "that is worthy of receiving";
+		mes "it. But to do that, I shall";
+		mes "require your help. I beg you,";
+		mes "let me become your spirit ally.";
+		set SOUL_Q,4;
+		if(checkquest(6008) == -1) {
+			changequest 6007,6008;
+		}
+		next;
+		mes "[Sage Spirit]";
+		mes "I believe that you";
+		mes "are the only one who";
+		mes "has a chance of bringing";
+		mes "rest to my troubled soul...";
+		close;
+	}
+	mes "[Sage Spirit]";
+	mes "...";
+	close;
+}
+
+job_soul,25,30,5	script	Alchemist Spirit#link7	744,{
+	if (SOUL_Q == 2) {
+		mes "[Alchemist Spirit]";
+		mes "Oh! I really want to";
+		mes "speak to you, but what";
+		mes "I have to say won't make";
+		mes "much sense unless you";
+		mes "talk to Maia first. But yes,";
+		mes "I really need your help.";
+		close;
+	}
+	else if (SOUL_Q > 2) {
+		mes "[Alchemist Spirit]";
+		mes "Without exagerrating, I was";
+		mes "the fastest Alchemist in my";
+		mes "time. In fact, I may even be";
+		mes "the fastest Alchemist ever.";
+		mes "But then I grew arrogant, and";
+		mes "killed myself in an accident.";
+		next;
+		mes "[Alchemist Spirit]";
+		mes "But death would not stifle";
+		mes "my skill. In fact, I've even";
+		mes "improved my skill since I've";
+		mes "passed away. I cannot go";
+		mes "on to the next world until I've";
+		mes "passed on my techniques...";
+		set SOUL_Q,4;
+		if(checkquest(6008) == -1) {
+			changequest 6007,6008;
+		}
+		next;
+		mes "[Alchemist Spirit]";
+		mes "I'm powerless as a spirit,";
+		mes "but with your help, I can";
+		mes "influence the Alchemists of";
+		mes "today and help them refine";
+		mes "their skills. I beseech you,";
+		mes "please give me this chance...";
+		close;
+	}
+	mes "[Alchemist Spirit]";
+	mes "...";
+	close;
+}
+
+job_soul,1,5,0	script	Timer#link3	111,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+	end;
+
+OnTimer60000:
+OnTimer120000:
+	if (getmapusers("job_soul") == 0) {
+		stopnpctimer;
+		set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+	}
+	end;
+
+OnTimer180000:
+OnTimer181000:
+OnTimer182000:
+	mapwarp "job_soul","morocc",157,47;
+	end;
+
+OnTimer183000:
+	mapwarp "job_soul","morocc",157,47;
+	set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+	stopnpctimer;
+}
+
+sec_in02,35,153,0	script	Soul Linker Var	871,{
+	callfunc "F_GM_NPC";
+	mes "[Soul Linker Var]";
+	mes "I can reset the Soul Linker";
+	mes "NPCs if a Soul Linker candidate";
+	mes "encounters a problem during the";
+	mes "end of the job quest. Please do";
+	mes "not use this function if players are still in the Quest Map.";
+	next;
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "[Soul Linker Var]";
+		mes "Password";
+		mes "is incorrect.";
+		close;
+	} else {
+		mes "[Soul Linker Var]";
+		mes "Would you like to";
+		mes "reset the Soul Linker";
+		mes "Global Variable?";
+		next;
+		switch(select("Reset:Cancel")) {
+		case 1:
+			mes "[Soul Linker Var]";
+			mes "The Soul Linker";
+			mes "Job Quest NPCs";
+			mes "have been reset.";
+			set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
+			close;
+		case 2:
+			mes "[Soul Linker Var]";
+			mes "You have canceled";
+			mes "this command.";
+			close;
+		}
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= A temp Soul Linker Job Changer based on the kRO quest.
+//= Quest info from RagnaInfo. Sprites from kRO screenshots
+//= 1.0 Optimized and updated [Lupus]
+//= 1.1 Fixed NPC names according to iRO [Lupus]
+//============================================================ 

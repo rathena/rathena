@@ -1,0 +1,15 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs located in Veins
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Quests related to Veins.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+ve_fild02,337,314,4	duplicate(WincingOldMan_veins)	Wincing Old Man#ve	945

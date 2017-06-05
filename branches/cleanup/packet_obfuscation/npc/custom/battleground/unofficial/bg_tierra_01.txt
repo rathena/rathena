@@ -1,0 +1,475 @@
+// ==============================================================================
+// BattleGround System - Tierra Valley 1
+// ==============================================================================
+
+// Registration NPC's
+// *********************************************************************
+
+bat_room,58,227,4	script	Registration::TV1R_Guillaume	418,{
+	end;
+OnInit:
+	waitingroom "Battle Station 10 Players",10,"Tierra_BG1::OnGuillaumeJoin",1;
+	end;
+OnEnterBG:
+	set $@TierraBG1_id1, waitingroom2bg("bat_a01",50,374,"Tierra_BG1::OnGuillaumeQuit","");
+	end;
+}
+
+bat_room,58,204,0	script	Registration::TV1R_Croix	414,{
+	end;
+OnInit:
+	waitingroom "Battle Station 10 Players",10,"Tierra_BG1::OnCroixJoin",1;
+	end;
+OnEnterBG:
+	set $@TierraBG1_id2, waitingroom2bg("bat_a01",42,16,"Tierra_BG1::OnCroixQuit","");
+	end;
+}
+
+// Battleground Engine
+// *********************************************************************
+
+-	script	Tierra_BG1	-1,{
+	end;
+
+OnInit:
+	disablenpc "Croix Vintenar#tv1";
+	disablenpc "Guillaume Vintenar#tv1";
+	disablenpc "Therapist in battle#tv11";
+	disablenpc "Therapist in battle#tv12";
+	end;
+
+OnGuillaumeQuit:
+OnCroixQuit:
+	set BG_Delay_Tick, gettimetick(2) + 1200;
+	end;
+
+OnGuillaumeJoin:
+OnCroixJoin:
+	if( $@TierraBG1 == 0 )
+		donpcevent "Tierra_BG1::OnReadyCheck";
+	end;
+
+OnReadyCheck:
+	if( $@TierraBG1 )
+		end;
+	set .@Guillaume, getwaitingroomstate(0,"TV1R_Guillaume");
+	set .@Croix, getwaitingroomstate(0,"TV1R_Croix");
+
+	if( .@Guillaume < 10 || .@Croix < 10 )
+	{
+		mapannounce "bat_room","Battleground -- Tierra Valley [80-99] G: " + .@Guillaume + "/10, C: " + .@Croix + "/10",1,0xFFA500;
+		end;
+	}
+
+	set $@TierraBG1, 1;
+	donpcevent "TV1R_Croix::OnEnterBG";
+	donpcevent "TV1R_Guillaume::OnEnterBG";
+	donpcevent "Guillaume_TV1B::OnBuild";
+	donpcevent "Croix_TV1B::OnBuild";
+	bg_monster $@TierraBG1_id1,"bat_a01",176,345,"Food Depot",1909,"Tierra_BG1::OnGuillaumeBreak";
+	bg_monster $@TierraBG1_id2,"bat_a01",167,50,"Food Storage",1910,"Tierra_BG1::OnCroixBreak";
+	bg_monster 0,"bat_a01",273,204,"Neutrality Flag",1911,"Tierra_BG1::OnNeutralBreak";
+	
+	set .Neutral_Base, 0;
+	set $@TierraBG1_Victory, 0;
+
+	set .Guardian_1, 0;
+	set .Guardian_2, 0;
+	set .Guardian_3, 0;
+
+	enablenpc "Therapist in battle#tv11";
+	enablenpc "Therapist in battle#tv12";
+	disablenpc "Croix Vintenar#tv1";
+	disablenpc "Guillaume Vintenar#tv1";
+	// Respawner
+	donpcevent "#gtv1_respawn::OnBGStart";
+	donpcevent "#ctv1_respawn::OnBGStart";
+	donpcevent "#ntv1_respawn::OnBGStart";
+	// Warp Teams
+	announce "Battleground -- Tierra Valley [80-99] has started!",0,0xFFA500;
+	bg_warp $@TierraBG1_id1,"bat_a01",353,344;
+	bg_warp $@TierraBG1_id2,"bat_a01",353,52;
+	// Final Messages
+	sleep 6000;
+	mapannounce "bat_a01","Guillaume Vintenar Axl Rose : Let's attack to burn down Croix's food storage",1,0x0000FF;
+	sleep 2000;
+	mapannounce "bat_a01","Croix Vintenar Swandery : Master of Valhalla! Let us be gifted with unfailing faith and courage",1,0xFF0000;
+	
+	initnpctimer;
+	end;
+
+OnNeutralBreak:
+	if( getcharid(4) == $@TierraBG1_id1 )
+	{
+		mapannounce "bat_a01","Guillaume obtained a neurality banner, so they have an advantage.",1,0x0000FF;
+		bg_team_setxy $@TierraBG1_id2,42,16;
+		areawarp "bat_a01",52,208,61,217,"bat_a01",42,16;
+	}
+	else if( getcharid(4) == $@TierraBG1_id2 )
+	{
+		mapannounce "bat_a01","Croix obtained a neutrality banner, so they have an advantage.",1,0xFF0000;
+		bg_team_setxy $@TierraBG1_id1,50,374;
+		areawarp "bat_a01",52,208,61,217,"bat_a01",50,374;
+	}
+	else end;
+
+	set .Neutral_Base, getcharid(4);
+	bg_team_setxy .Neutral_Base,56,212;
+
+	if( .Guardian_1 == 0 )
+		set .Guardian_1, bg_monster(.Neutral_Base,"bat_a01",280,233,"Guardian",1949,"Tierra_BG1::OnGuardian1");
+	else
+		bg_monster_set_team .Guardian_1, .Neutral_Base;
+	
+	if( .Guardian_2 == 0 )
+		set .Guardian_2, bg_monster(.Neutral_Base,"bat_a01",287,203,"Guardian",1950,"Tierra_BG1::OnGuardian2");
+	else
+		bg_monster_set_team .Guardian_2, .Neutral_Base;
+
+	if( .Guardian_3 == 0 )
+		set .Guardian_3, bg_monster(.Neutral_Base,"bat_a01",268,204,"Guardian",1949,"Tierra_BG1::OnGuardian3");
+	else
+		bg_monster_set_team .Guardian_3, .Neutral_Base;
+
+	sleep 10000;
+	if( $@TierraBG1 != 1 ) end;
+
+	if( .Neutral_Base == $@TierraBG1_id1 )
+		bg_monster .Neutral_Base,"bat_a01",273,204,"Guillaume Flag",1912,"Tierra_BG1::OnNeutralBreak";
+	else if( .Neutral_Base == $@TierraBG1_id2 )
+		bg_monster .Neutral_Base,"bat_a01",273,204,"Croix Flag",1913,"Tierra_BG1::OnNeutralBreak";
+	end;
+
+OnGuardian1: set .Guardian_1, 0; end;
+OnGuardian2: set .Guardian_2, 0; end;
+OnGuardian3: set .Guardian_3, 0; end;
+
+OnGuillaumeBreak:
+	set $@TierraBG1_Victory, 2;
+	mapannounce "bat_a01","Croix Vintenar Swandery: We destroyed Guillaume's food storehouse. We won that! Wow!",1,0xFF0000;
+	donpcevent "Tierra_BG1::OnStop";
+	end;
+
+OnCroixBreak:
+	set $@TierraBG1_Victory, 1;
+	mapannounce "bat_a01","Guillaume Vintenar Axl Rose: We destroyed Croix's food storehouse. We won that! Wow!",1,0x0000FF;
+	donpcevent "Tierra_BG1::OnStop";
+	end;
+
+OnTimer2400000:
+	mapannounce "bat_a01","Battle of Tierra Gorge will ends in 5 minutes",1,0xFFA500;
+	end;
+OnTimer2640000:
+	mapannounce "bat_a01","Battle of Tierra Gorge will ends in 1 minute",1,0xFFA500;
+	end;
+
+OnTimer2700000:
+	set $@TierraBG1_Victory, 3; // Draw Game
+	mapannounce "bat_a01","Battle of Tierra Gorge is over. The time is out, this is a Tie",1,0xFFA500;
+	donpcevent "Tierra_BG1::OnStop";
+	end;
+
+OnStop:
+	set $@TierraBG1, 2;
+	disablenpc "Therapist in battle#tv11";
+	disablenpc "Therapist in battle#tv12";
+	donpcevent "#gtv1_respawn::OnBGStop";
+	donpcevent "#ctv1_respawn::OnBGStop";
+	donpcevent "#ntv1_respawn::OnBGStop";
+	enablenpc "Croix Vintenar#tv1";
+	enablenpc "Guillaume Vintenar#tv1";
+	killmonster "bat_a01","Tierra_BG1::OnGuillaumeBreak";
+	killmonster "bat_a01","Tierra_BG1::OnCroixBreak";
+	killmonster "bat_a01","Tierra_BG1::OnNeutralBreak";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian1";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian2";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian3";
+	stopnpctimer;
+	sleep 3000;
+	bg_warp $@TierraBG1_id1,"bat_a01",50,374;
+	bg_warp $@TierraBG1_id2,"bat_a01",42,16;
+	sleep 3000;
+	mapannounce "bat_a01","Battle of Tierra Gorge will close in 1 minute!",1,0xFFA500;
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	if( $@TierraBG1 == 2 )
+		mapannounce "bat_a01","Battle of Tierra Valley will close in 30 seconds!",1,0xFFA500;
+	end;
+OnTimer50000:
+	if( $@TierraBG1 == 2 )
+		mapannounce "bat_a01","Battle of Tierra Valley will close in 10 seconds!",1,0xFFA500;
+	end;
+
+OnTimer60000:
+	if( $@TierraBG1 != 2 )
+		end;
+OnReset:
+	stopnpctimer;
+	set .Neutral_Base, 0;
+	disablenpc "Croix Vintenar#tv1";
+	disablenpc "Guillaume Vintenar#tv1";
+	disablenpc "Therapist in battle#tv11";
+	disablenpc "Therapist in battle#tv12";
+	donpcevent "#gtv1_respawn::OnBGStop";
+	donpcevent "#ctv1_respawn::OnBGStop";
+	donpcevent "#ntv1_respawn::OnBGStop";
+
+	killmonster "bat_a01","Tierra_BG1::OnGuillaumeBreak";
+	killmonster "bat_a01","Tierra_BG1::OnCroixBreak";
+	killmonster "bat_a01","Tierra_BG1::OnNeutralBreak";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian1";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian2";
+	killmonster "bat_a01","Tierra_BG1::OnGuardian3";
+	donpcevent "Guillaume_TV1B::OnDestroy";
+	donpcevent "Croix_TV1B::OnDestroy";
+
+	set $@TierraBG1_Victory, 0;
+	if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; set $@TierraBG1_id1, 0; }
+	if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; set $@TierraBG1_id2, 0; }
+	sleep 1000;
+	mapwarp "bat_a01","bat_room",155,150;
+	sleep 2000;
+	maprespawnguildid "bat_a01",0,3; // Just in case someone else
+	sleep 2000;
+	set $@TierraBG1, 0;
+	donpcevent "Tierra_BG1::OnReadyCheck"; // Maybe a game is ready to start
+	end;
+}
+
+// Other Flags
+// *********************************************************************
+
+bat_a01,148,85,1	duplicate(Croix camp#bat)	Croix camp#bat10	974
+bat_a01,155,85,1	duplicate(Croix camp#bat)	Croix camp#bat11	974
+bat_a01,357,75,1	duplicate(Croix camp#bat)	Croix camp#bat12	974
+bat_a01,348,74,1	duplicate(Croix camp#bat)	Croix camp#bat13	974
+bat_a01,199,49,1	duplicate(Croix camp#bat)	Croix camp#bat14	974
+bat_a01,168,16,1	duplicate(Croix camp#bat)	Croix camp#bat15	974
+bat_a01,138,12,1	duplicate(Croix camp#bat)	Croix camp#bat16	974
+bat_a01,108,35,1	duplicate(Croix camp#bat)	Croix camp#bat17	974
+bat_a01,164,308,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat10	973
+bat_a01,157,308,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat11	973
+bat_a01,359,327,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat12	973
+bat_a01,350,326,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat13	973
+bat_a01,209,344,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat14	973
+bat_a01,173,380,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat15	973
+bat_a01,150,380,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat16	973
+bat_a01,118,357,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat17	973
+bat_a01,119,336,1	duplicate(Guillaume camp#bat)	Guillaume camp#bat18	973
+
+// Barricades
+// *********************************************************************
+
+-	script	Guillaume_TV1B	-1,{
+	end;
+
+OnBuild:
+	for( set .@i, 0; .@i < 16; set .@i, .@i + 1 )
+		bg_monster 0,"bat_a01",170+.@i,130,"Barricade",1906,"Guillaume_TV1B::OnWall";
+
+	setwall "bat_a01",170,130,16,6,1,"bat_a01_g1";
+	set .MyMobCount,16;
+	end;
+
+OnDestroy:
+	killmonster "bat_a01","Guillaume_TV1B::OnWall";
+	delwall "bat_a01_g1";
+	set .MyMobCount,0;
+	end;
+
+OnWall:
+	if( set(.MyMobCount,.MyMobCount - 1) < 1 )
+	{
+		delwall "bat_a01_g1";
+		mapannounce "bat_a01","South Gate : The Gate has been Destroy!!",1,0xFFA500;
+	}
+	end;
+}
+
+-	script	Croix_TV1B	-1,{
+	end;
+
+OnBuild:
+	for( set .@i, 0; .@i < 16; set .@i, .@i + 1 )
+		bg_monster 0,"bat_a01",186+.@i,266,"Barricade",1906,"Croix_TV1B::OnWall";
+	
+	setwall "bat_a01",186,266,16,6,1,"bat_a01_c1";
+	set .MyMobCount,16;
+	end;
+
+OnDestroy:
+	killmonster "bat_a01","Croix_TV1B::OnWall";
+	delwall "bat_a01_c1";
+	set .MyMobCount,0;
+	end;
+
+OnWall:
+	if( set(.MyMobCount,.MyMobCount - 1) < 1 )
+	{
+		delwall "bat_a01_c1";
+		mapannounce "bat_a01","North Gate : A Gate has been Destroy!!",1,0xFFA500;
+	}
+	end;
+}
+
+// Battleground rewards
+// *********************************************************************
+
+bat_a01,45,19,3	script	Croix Vintenar#tv1	415,{
+	if( $@TierraBG1_Victory )
+	{
+		if( $@TierraBG1_Victory == Bat_Team )
+		{ // Victory
+			set .@Reward, 3;
+			mes "[Swandery]";
+			mes "Blessed Croax!!";
+			mes "Let's enjoy our glorious victory!";
+			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			close2;
+		}
+		else
+		{ // 
+			set .@Reward, 1;
+			mes "[Swandery]";
+			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";
+			mes "Even though we didn't win, we did our best.";
+			mes "This is a Royal gift from Croix, and please don't forget this battle. We can win the next.";
+			close2;
+		}
+
+		setquest 2069;
+		getitem 7828, .@Reward;
+		bg_leave;
+		warp "bat_room",155,150;
+		end;
+	}
+	end;
+}
+
+bat_a01,53,377,3	script	Guillaume Vintenar#tv1	419,{
+	if( $@TierraBG1_Victory )
+	{
+		if( $@TierraBG1_Victory == Bat_Team )
+		{ // Victory
+			set .@Reward, 3;
+			mes "[Swandery]";
+			mes "Blessed Guillaume!!";
+			mes "Let's enjoy our glorious victory!";
+			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			close2;
+		}
+		else
+		{ // 
+			set .@Reward, 1;
+			mes "[Swandery]";
+			mes "You lost, but you're dedicated to this battle.";
+			mes "This is a reward for your great dedication by Guillaume Marollo!";
+			mes "Just take this defeat a lesson, and later you would definitely learn.";
+			close2;
+		}
+
+		setquest 2069;
+		getitem 7828, .@Reward;
+		bg_leave;
+		warp "bat_room",155,150;
+		end;
+	}
+	end;
+}
+
+// Battleground Therapist
+// *********************************************************************
+
+bat_a01,60,216,3	script	Ghost#tv13	950,{
+	mes "[Ghost in valley]";
+	mes "Boo...Boo...";
+	specialeffect2 EF_HEAL;
+	close;
+}
+
+bat_a01,53,377,3	script	Therapist in battle#tv12	95,{
+	mes "[Therapist in battle]";
+	mes "Just close your eyes, and take a deep breathe.";
+	mes "You can be free from pain.";
+	specialeffect2 EF_HEAL;
+	close;
+}
+
+bat_a01,45,18,3	script	Therapist in battle#tv11	95,{
+	mes "[Therapist in battle]";
+	mes "Just close your eyes, and take a deep breathe.";
+	mes "You can be free from pain.";
+	specialeffect2 EF_HEAL;
+	close;
+}
+
+// Battleground Respawn
+// *********************************************************************
+
+bat_a01,57,213,0	script	#ntv1_respawn	139,{
+	end;
+
+OnBGStart:
+	initnpctimer;
+	end;
+
+OnBGStop:
+	stopnpctimer;
+	end;
+
+OnTimer19000:
+	misceffect EF_SANCTUARY;
+	end;
+
+OnTimer20000:
+	areapercentheal "bat_a01",52,208,61,217,100,100;
+	areawarp "bat_a01",52,208,61,217,"bat_a01",301,208;
+	initnpctimer;
+	end;
+}
+
+bat_a01,50,374,0	script	#gtv1_respawn	139,{
+	end;
+
+OnBGStart:
+	initnpctimer;
+	end;
+
+OnBGStop:
+	stopnpctimer;
+	end;
+
+OnTimer24000:
+	misceffect EF_SANCTUARY;
+	end;
+
+OnTimer25000:
+	areapercentheal "bat_a01",46,370,54,378,100,100;
+	areawarp "bat_a01",46,370,54,378,"bat_a01",354,340;
+	initnpctimer;
+	end;
+}
+
+bat_a01,42,16,0	script	#ctv1_respawn	139,{
+	end;
+
+OnBGStart:
+	initnpctimer;
+	end;
+
+OnBGStop:
+	stopnpctimer;
+	end;
+
+OnTimer24000:
+	misceffect EF_SANCTUARY;
+	end;
+
+OnTimer25000:
+	areapercentheal "bat_a01",38,12,47,21,100,100;
+	areawarp "bat_a01",38,12,47,21,"bat_a01",354,57;
+	initnpctimer;
+	end;
+}

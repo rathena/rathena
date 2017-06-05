@@ -1,0 +1,18 @@
+//===== rAthena Script =======================================
+//= Lutie Field Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 2+
+//===== Description: =========================================
+//= [Official Conversion]
+//= Warp Points for Lutie Field
+//===== Additional Comments: =================================
+//= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+xmas_fild01,69,252,0	warp	xmas_fild1-1	10,2,xmas,149,44
+xmas_fild01,90,252,0	warp	xmax_fild1-2	10,2,xmas,149,44
+xmas_fild01,84,48,0	warp	xmas_fild2	10,2,aldebaran,140,234

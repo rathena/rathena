@@ -1,0 +1,67 @@
+//===== rAthena Script =======================================
+//= Hall of Abyss - NPC Duplicates
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Expansion for War of Emperium FE.
+//= Invest in each realm to unlock new maps:
+//= - Guild Dungeon F2, total 20,000,000z.
+//= - Hall of Abyss, total 70,000,000z.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Realms - Merchant Guilds, Gate Managers, Status Boards
+//============================================================
+alde_gld,186,157,3	duplicate(Cat Paw Merchant Guild)	Cat Paw Merchant Megrez	549
+alde_gld,191,164,3	duplicate(Gate Manager#realm)	Gate Manager#alde_f00	421
+alde_gld,188,158,3	duplicate(Investment Status Board)	Investment Status Board::InvestStatus_Alde	857
+
+gef_fild13,187,208,3	duplicate(Cat Paw Merchant Guild)	Cat Paw Merchant Meraq	549
+gef_fild13,189,206,3	duplicate(Gate Manager#realm)	Gate Manager#gef_f00	421
+gef_fild13,190,209,3	duplicate(Investment Status Board)	Investment Status Board::InvestStatus_Gef	857
+
+pay_gld,203,189,3	duplicate(Cat Paw Merchant Guild)	Cat Paw Merchant Phecda	549
+pay_gld,206,189,3	duplicate(Gate Manager#realm)	Gate Manager#pay_f00	421
+pay_gld,200,189,5	duplicate(Investment Status Board)	Investment Status Board::InvestStatus_Pay	857
+
+prt_gld,158,96,5	duplicate(Cat Paw Merchant Guild)	Cat Paw Merchant Dubae	549
+prt_gld,161,96,3	duplicate(Gate Manager#realm)	Gate Manager#prt_f00	421
+prt_gld,163,99,3	duplicate(Investment Status Board)	Investment Status Board::InvestStatus_Prt	857
+
+// Inside Castles - Gate Managers
+//============================================================
+aldeg_cas01,85,105,4	duplicate(Gate Manager#castle)	Gate Manager#alde_f01	421
+aldeg_cas02,124,49,3	duplicate(Gate Manager#castle)	Gate Manager#alde_f02	421
+aldeg_cas03,121,75,3	duplicate(Gate Manager#castle)	Gate Manager#alde_f03	421
+aldeg_cas04,25,67,7	duplicate(Gate Manager#castle)	Gate Manager#alde_f04	421
+aldeg_cas05,54,200,3	duplicate(Gate Manager#castle)	Gate Manager#alde_f05	421
+
+gefg_cas01,39,49,4	duplicate(Gate Manager#castle)	Gate Manager#gef_f01	421
+gefg_cas02,10,65,4	duplicate(Gate Manager#castle)	Gate Manager#gef_f02	421
+gefg_cas03,100,87,4	duplicate(Gate Manager#castle)	Gate Manager#gef_f03	421
+gefg_cas04,35,44,3	duplicate(Gate Manager#castle)	Gate Manager#gef_f04	421
+gefg_cas05,84,46,3	duplicate(Gate Manager#castle)	Gate Manager#gef_f05	421
+
+payg_cas01,129,59,3	duplicate(Gate Manager#castle)	Gate Manager#pay_f01	421
+payg_cas02,27,277,3	duplicate(Gate Manager#castle)	Gate Manager#pay_f02	421
+payg_cas03,51,266,3	duplicate(Gate Manager#castle)	Gate Manager#pay_f03	421
+payg_cas04,39,264,4	duplicate(Gate Manager#castle)	Gate Manager#pay_f04	421
+payg_cas05,272,252,4	duplicate(Gate Manager#castle)	Gate Manager#pay_f05	421
+
+prtg_cas01,114,178,3	duplicate(Gate Manager#castle)	Gate Manager#prt_f01	421
+prtg_cas02,89,63,5	duplicate(Gate Manager#castle)	Gate Manager#prt_f02	421
+prtg_cas03,72,109,3	duplicate(Gate Manager#castle)	Gate Manager#prt_f03	421
+prtg_cas04,29,263,4	duplicate(Gate Manager#castle)	Gate Manager#prt_f04	421
+prtg_cas05,24,23,4	duplicate(Gate Manager#castle)	Gate Manager#prt_f05	421
+
+// iRO NPC Locations
+//============================================================
+//prt_gld,148,253,4	duplicate(Cat Paw Merchants Notice)	Cat Paw Merchants Notice::CatPawNotice_iRO	857
+//prt_gld,145,255,6	duplicate(Namis#invest)	Namis::Namis_iRO	545,4,4
+//prt_gld,165,50,4	duplicate(Thanks Ticket Machine)	Thanks Ticket Machine::ThanksMachine_iRO	564

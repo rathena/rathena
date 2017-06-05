@@ -1,0 +1,1644 @@
+//===== rAthena Script =======================================
+//= Blacksmith Job Quest
+//===== By: ==================================================
+//= EREMES THE CANIVALIZER(Aegis)
+//= Translated by: yoshiki.
+//= Converted by: Komurka.
+//= Optimized and further edited by kobra_k88.
+//= Further bugfixed and tested by Lupus
+//===== Current Version: =====================================
+//= 2.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Job Change quest for Blacksmith class.
+//===== Additional Comments: =================================
+//= Changed some npc names to the iRO names. Changed some variable
+//= names and labels. Edited some text.[kobra_k88]
+//= Removed "if (JobLevel > 48) goto higher". It was a left over line.
+//= Thx to "Decker".[kobra_k88]
+//= Fixed some typos, thanks to Riotblade [celest]
+//= 1.3-1.5 Added Baby Class support [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
+//= 1.7 item quantity/ids typos fix
+//= 1.8 Moved the Quest to Einbroch [Poki#3]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
+//= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
+//= 2.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
+//= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
+//= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
+//= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
+//= 2.4e Touched up a few issues as pointed out by Ultramage. [L0ne_W0lf]
+//= 2.5 Krongast is in Lighthalzen. (DarkValmir) [L0ne_W0lf]
+//= 2.6 Fixed 4 bugs [Lupus]
+//= 2.6a Typo fix [Yommy]
+//= 2.7 Added Quest Log commands. [Kisuka]
+//= 2.8 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 2.9 Updated with some extra conditions. [Euphy]
+//==============================================================
+
+ein_in01,18,28,4	script	Guildsman#BLS	731,{
+	if (Upper == 1) {
+		mes "[Altiregen]";
+		mes "Hey hey. I don't have time for chit-chat, I'm a pretty busy guy. There's all these Merchants working hard to become Blacksmiths.";
+		next;
+		mes "[Altiregen]";
+		mes "Wait a minute, I think I've met you before.";
+		mes "Ummm.....";
+		next;
+		mes "[Altiregen]";
+		mes "Are you the one who broke my weapon and ran away? Or are you the one who tortured me so that I'd forge a weapon for you? Why can't I remember?";
+		next;
+		mes "[Altiregen]";
+		mes ".......";
+		mes "I can't remember who you are for the life of me. Is this deja vu?";
+		next;
+		mes "[Altiregen]";
+		mes "Argh!! This is really bugging me! But still, I can sense that there's something special about you. Oh well, whatever. Have a good day~";
+		close;
+	}
+	mes "[Altiregen]";
+	mes "Welcome!";
+	mes "We are Workers of Steel,";
+	mes "the Blacksmith Guild.";
+	next;
+	mes "[Altiregen]";
+	mes "We pour the fervor";
+	mes "and passion of our souls into";
+	mes "our craft. Our skills of melting metal into new weapons";
+	mes "and tools is truly a form of art!";
+	if (BaseClass >= Job_Thief) close;	// Custom expanded class check.
+	next;
+
+	// Third class check - precedes other BaseClass dialogue.
+	if (Class >= Job_Rune_Knight && Class <= Job_Baby_Mechanic2) {
+		mes "[Altiregen]";
+		mes "You... look like a stranger. But somehow it seems that you're related to our guild. Haha~";
+		mes "Am I right?";
+		close;
+	}
+
+	if (BaseClass == Job_Novice) {
+		mes "[Altiregen]";
+		if (Sex == 0) {
+			mes "Oh~";
+			mes "what a very";
+			mes "pretty lady!";
+		}
+		mes "Are you interested in";
+		mes "becoming a Blacksmith?";
+		next;
+		mes "[Altiregen]";
+		mes "First, you must become a Merchant before you can become a Blacksmith. Go to the city of Alberta to learn the Merchant trade.";
+		close;
+	}
+	else if (BaseClass == Job_Swordman) {
+		mes "[Altiregen]";
+		mes "Oh, are you interested in having a weapon forged? I'm sorry to disappoint you, but I actually have a lot of business to attend to.";
+		close;
+	}
+	else if (BaseClass == Job_Archer) {
+		mes "[Altiregen]";
+		mes "Oh...";
+		mes "There's not much we can offer you here. And you can't really help out around here unless you know how to make stuff...";
+		close;
+	}
+	else if (BaseClass == Job_Mage) {
+		mes "[Altiregen]";
+		mes "Oh? What's a magic user doing here? I'm surprised. Usually this kind of rough work is beneath you intellectual types.";
+		close;
+	}
+	else if (BaseClass == Job_Acolyte) {
+		mes "[Altiregen]";
+		mes "Oh! Am I correct in assuming you're a member of the Clergy? Would you please bless me before you leave!";
+		close;
+	}
+	else if (BaseClass == Job_Thief) {
+		mes "[Altiregen]";
+		mes "I'm sorry...";
+		mes "But there really isn't anything for you to steal here. Well, there are the Daggers we keep in the back, but...";
+		close;
+	}
+	else if (BaseJob == Job_Alchemist) {
+		mes "[Altiregen]";
+		mes "So how's the pharmacy business going on recently?";
+		mes "Well, my forging business does not seem to grow any longer.";
+		close;
+	}
+	else if (BaseJob == Job_Blacksmith) {
+		mes "[Altiregen]";
+		mes "Oh! Long time no see.";
+		mes "Have you come to purchase supplies from Christopher? These days I'm stuck behind this desk. My body's itching to strike the ol' anvil.";
+		close;
+	}
+	else if (BaseJob == Job_Merchant) {
+		if (SkillPoint) {
+			mes "[Altiregen]";
+			mes "You can't change to the Blacksmith Job Class without first using all your skill points. Please come back after wisely using your skill points.";
+			close;
+		}
+		if (BSMITH_Q == 0) {
+			mes "[Altiregen]";
+			mes "Why don't you stop struggling";
+			mes "to make zeny as a Merchant and";
+			mes "join the elite Blacksmith class?";
+			mes "If you're interested, fill out this application with your name";
+			mes "and Job Level.";
+			next;
+			switch(select("Fill out Application.:What are the requirements?:Um, I need to think about it.")) {
+			case 1:
+				if (SkillPoint) {
+					mes "[Altiregen]";
+					mes "You can't change to the Blacksmith Job Class without first using all your skill points. Please come back after wisely using your skill points.";
+					close;
+				}
+				else if (JobLevel > 39 && BSMITH_Q == 0) {
+					mes "[Altiregen]";
+					mes "Hmmm...";
+					mes "Looks like you";
+					mes "meet the Job Level";
+					mes "Requirement.";
+					next;
+					mes "[Altiregen]";
+					mes "You see, we don't accept just anybody into our guild. First, we only accept experienced Merchants with a true desire to become great Blacksmiths. Let's see...";
+					next;
+					mes "^3355FF*Shuffling of papers*^000000";
+					next;
+					mes "[Altiregen]";
+					mes "Hmmm...";
+					mes "One of our Blacksmiths in Einbech, ^8E6B23Geschupenschte^000000 has sent us word that he's short on help. Your first test of character will be to help him out.";
+					next;
+					set BSMITH_Q,1;
+					setquest 2000;
+					mes "[Altiregen]";
+					mes "Be careful";
+					mes "and good luck!";
+					close;
+				}
+				else if (JobLevel < 40) {
+					mes "[Altiregen]";
+					mes "Hmmm, it seems that you lack experience as a Merchant. We require that you are at least Job Level 40, you see.";
+					next;
+					mes "[Altiregen]";
+					mes "I feel bad turning you away after you've come so far, but rules are rules. Sorry to disappoint you, but we'll welcome you back once you're ready.";
+					close;
+				}
+			case 2:
+				mes "[Altiregen]";
+				mes "You want to know our requirements? First, you need to have Job Level 40 or higher as a Merchant. Second, you need to pass a test that will be given by the Blacksmith Guild.";
+				next;
+				mes "[Altiregen]";
+				mes "The test may consist of difficult tasks, but it's definitely not impossible. You will need to deliver certain items to different areas around the world";
+				mes "to complete the test.";
+				close;
+			case 3:
+				mes "[Altiregen]";
+				mes "Hmmm...";
+				mes "Well, I hope";
+				mes "to see you again.";
+				close;
+			}
+		}
+		else if (BSMITH_Q > 0  && BSMITH_Q < 8) {
+			mes "[Altiregen]";
+			mes "You haven't left yet?";
+			mes "Go to Einbech and find ^8E6B23Geschupenschte^000000. Finish helping him out, and when you're done, come back to me.";
+			close;
+		}
+		else if (BSMITH_Q > 8 && BSMITH_Q < 15) {
+			mes "[Altiregen]";
+			mes "Was the work you did for ^8E6B23Geschupenschte^000000 to your liking? He's known for being pretty exacting...";
+			close;
+		}
+		else if (BSMITH_Q == 15) {
+			mes "[Altiregen]";
+			mes "Great job!!";
+			mes "You have passed";
+			mes "the first test...";
+			next;
+			mes "[Altiregen]";
+			mes "Hm? You look surprised.";
+			mes "I guess you didn't know that there's more than one test. ";
+			mes "Haha, but don't worry, you are not going to travel that far.";
+			mes "Please go talk to the guildsman inside the building for more details about your next test.";
+			next;
+			if (select("I want to change my job quickly! But...oh well.:Grrr! Enough is enough!") == 1) {
+				set BSMITH_Q,16;
+				changequest 2013,2014;
+				mes "[Altiregen]";
+				mes "I'm sorry, but I'm sure you understand, right? We can't just casually accept anybody into";
+				mes "our guild!";
+				next;
+				mes "[Altiregen]";
+				mes "If we don't keep our standards,";
+				mes "we won't be able to maintain the respectability of the Blacksmith Guild!";
+				mes "We can't embarass our guild in this manner! *Ahem* Anyway, you talk to the guildsman inside the building now.";
+				close;
+			}
+			mes "[Altiregen]";
+			mes "Are you saying you're going";
+			mes "to quit the application process? That's an insult to our guild!";
+			mes "Get out of here! With that kind of attitude, you can forget becoming a member of the Blacksmith Guild!";
+			next;
+			mes "[Altiregen]";
+			mes "You have no spirit!";
+			mes "If you can't endure this, you'll never be a Blacksmith!";
+			close;
+		}
+		else if (BSMITH_Q == 16) {
+			mes "[Altiregen]";
+			mes "Um? Haven't you talk to the guildsman yet?";
+			mes "If you haven't, I suggest you to do so as soon as possible.";
+			close;
+		}
+		else if (BSMITH_Q == 17 && countitem(1005) > 0 && JobLevel > 39) {
+			mes "[Altiregen]";
+			if (ismounting()) {
+				mes "You are on a riding pet, so you cannot change your job.";
+				mes "Please unequip your riding pet and try again!";
+				close;
+			}
+			mes "Excellent, I can tell by the twinkle in your eye that you were successful. I can now bestow upon you the gift of the smithing, the art of the Blacksmith.";
+			if (checkquest(2015) != -1) {
+				changequest 2015,2016;
+			}
+			next;
+			set .@joblvl,JobLevel;
+			callfunc "Job_Change",Job_Blacksmith;
+			callfunc "F_ClearJobVar";		// clears all job variables for the current player
+			mes "[Altiregen]";
+			mes "Always remember that we are creators, and artists over metals. Be wary that you do not fall into the pitfalls of selfishness";
+			mes "and greed.";
+			next;
+			delitem 1005,1; //Hammer_Of_Blacksmith
+			completequest 2016;
+			mes "[Altiregen]";
+			mes "Here is a little";
+			mes "gift to mark the";
+			mes "beginning of your";
+			mes "life as a Blacksmith.";
+			mes "Congratulations!!!";
+			if (.@joblvl > 48)
+				getitem 999,30; //Steel
+			else 
+				getitem 999,5; //Steel
+			close;
+		}
+	}
+}
+
+ein_in01,201,27,3	script	Guildsman#alberta	63,{
+	mes "[Geschupenschte]";
+	mes "Hello there!";
+	mes "I'm ^8E6B23Geschupenschte^000000,";
+	mes "a Blacksmith by trade.";
+	mes "Nice to meet you!";
+	next;
+	if (BaseJob == Job_Merchant) {
+		mes "[Geschupenschte]";
+		mes "Oh ho ho!";
+		mes "You're a Merchant!";
+		mes "Excellent! I was";
+		mes "in need of some help!";
+		next;
+		if (BSMITH_Q == 0) {
+			mes "[Geschupenschte]";
+			mes "But, of course,";
+			mes "I wouldn't bother you";
+			mes "if you're busy. Go along";
+			mes "your way if you must~";
+			next;
+			mes "[Geschupenschte]";
+			mes "After all...";
+			mes "I should know";
+			mes "how it's like";
+			mes "to be busy~";
+			close;
+		}
+		else if ((BSMITH_Q == 1) || (BSMITH_Q == 2)) {
+			if (BSMITH_Q == 1) {
+				mes "[Geschupenschte]";
+				mes "Am I correct in assuming you are the help sent by the Blacksmith Guild? There aren't many trustyworthy people I can hire to help me, so I'm always";
+				mes "short on help.";
+				next;
+				mes "[Geschupenschte]";
+				mes "Hmm, in any case,";
+				mes "you are the help that was sent, right? Okay, I have some work for you that must be handled";
+				mes "right away!";
+				next;
+				mes "[Geschupenschte]";
+				mes "Some time ago, I had a boy working for me who had no experience and bought the wrong supplies! It was terrible...";
+				next;
+				mes "[Geschupenschte]";
+				mes "Anyone would hate to lose money through a foolish mistake like that. However, I have a slightly more difficult job for you.";
+				next;
+				mes "[Geschupenschte]";
+				mes "However, I want to make sure that you have some basic knowledge as a Merchant. I'd like to ask you some questions, if that's okay.";
+				next;
+				set .@selection,select("Yes.:Um, can I have some time to prepare?");
+			}
+			else if (BSMITH_Q == 2) {
+				mes "[Geschupenschte]";
+				mes "So, have you";
+				mes "studied a little";
+				mes "more this time?";
+				next;
+				mes "[Geschupenschte]";
+				mes "I admit that it's pretty unreasonable to expect anyone to get a perfect score the first time around, so I'll give you";
+				mes "a little break...";
+				next;
+				mes "[Geschupenschte]";
+				mes "You can miss";
+				mes "one problem!";
+				mes "Alright, let's start";
+				mes "with the questions~";
+				next;
+			}
+			if (.@selection != 2) {
+				if (rand(2)) {
+					mes "[Geschupenschte]";
+					mes "1. Which one of the following regions is matched incorrectly";
+					mes "with its specialty item?";
+					next;
+					if (select("Morroc - Thief Clothes:Alberta - Two Hand Axe:Comodo - Berserk Potion:Alberta - Swordmace") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "2. What status can";
+					mes "be inflicted with the";
+					mes "^8E6B23Hammer Fall^000000 skill?";
+					next;
+					if (select("Stun:Blind:Silence:Sleep") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "3. Which one of the following skills cannot be performed";
+					mes "by a Merchant?";
+					next;
+					if (select("Vending:Discount:Overcharge:Increase AGI") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "4. Where can you find a store";
+					mes "that sells Blue Gemstones?";
+					next;
+					if (select("Alberta:Morroc:Geffen:Prontera") == 3)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "5. Where is the";
+					mes "Tool Dealer";
+					mes "located in Geffen?";
+					next;
+					if (select("8 o'clock direction from the town square:11 o'clock direction from the town square:6 o'clock direction from the town square:5 o'clock direction from the town square") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "6. Which weapon";
+					mes "cannot be used";
+					mes "by a Merchant?";
+					next;
+					if (select("Stiletto:Ring Pommel Saber:Chain:Bible") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "7. Which one of the following";
+					mes "has the highest defense rate?";
+					next;
+					if (select("Panties:Mink Coat:Wooden Mail:Silk Robe") == 2)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "8. For Level 3 weapons,";
+					mes "what is the ^8E6B23Safe^000000 limit";
+					mes "for upgrading?";
+					next;
+					if (select("up to + 3:up to + 4:up to + 5:up to + 6") == 3)
+						set .@black_q,.@black_q+10;
+					mes "9. What item";
+					mes "can be made using";
+					mes "the ^8E6B23Trunks^000000 item?";
+					next;
+					if (select("Sakkat:Ghost Bandana:Majestic Goat:Antler") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "10. The most important";
+					mes "part of being a Merchant is...?";
+					next;
+					select("Credit:Integrity:Money:Rhetoric");
+					set .@black_q,.@black_q+10;
+				}
+				else {
+					mes "[Geschupenschte]";
+					mes "1. Among the following cities, which one is not correctly matched with its specialty?";
+					next;
+					if (select("Al De Baran - Yggdrasil Leaf:Alberta - Hammer:Comodo - Berserk Potion:Al De Baran - Hammer") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "2. How much Zeny";
+					mes "is one Jellopy worth?";
+					next;
+					if (select("1 Zeny:2 Zeny:3 Zeny:4 Zeny") == 3)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "3. What is required";
+					mes "for a Merchant to use";
+					mes "the ^8E6B23Vending^000000 Skill?";
+					next;
+					if (select("Must have a Cart.:Must have items to sell.:Must be wielding a weapon.:Must be wearing armor.") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "4. Where can you";
+					mes "change your Job to";
+					mes "become a Merchant?";
+					next;
+					if (select("Alberta:Morroc:Geffen:Prontera") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "5. Where is the";
+					mes "Weapons Dealer";
+					mes "located in Morroc?";
+					next;
+					if (select("7 o'clock from the town's center:11 o'clock from the town's center:6 o'clock from the town's center:5 o'clock from the town's center") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "6. What weapon";
+					mes "can a Merchant";
+					mes "not use?";
+					next;
+					if (select("Main Gauche:Claymore:Chain:Two handed Axe") == 2)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "7. Which one of the following";
+					mes "has the highest defense rate?";
+					next;
+					if (select("Panties:Mink Coat:Wooden Mail:Silk Robe") == 2)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "8. For Level 3 weapons,";
+					mes "what is the ^8E6B23Safe^000000 limit";
+					mes "for upgrading?";
+					next;
+					if (select("up to + 3:up to + 4:up to + 5:up to + 6") == 3)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "9. What monster does";
+					mes "NOT drop Iron Ore?";
+					next;
+					if (select("Chon Chon:Steel Chon Chon:Zerom:Anolian") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[Geschupenschte]";
+					mes "10. What is most";
+					mes "important to a Merchant?";
+					next;
+					select("Rhetoric:Credit:Money:Experience");
+					set .@black_q,.@black_q+10;
+				}
+				mes "[Geschupenschte]";
+				mes "Umm. You did a good job!";
+				next;
+				mes "[Geschupenschte]";
+				mes "Let's see...your score is..." + .@black_q + " points.";
+				if (.@black_q == 100) {
+					set BSMITH_Q,3;
+					if (checkquest(2001) != -1) {
+						changequest 2001,2002;
+					} else {
+						changequest 2000,2002;
+					}
+					mes "Oh ho ho~";
+					mes "You'll have";
+					mes "no problem";
+					mes "with this score!";
+					next;
+					mes "[Geschupenschte]";
+					mes "I will entrust you with a job!";
+					mes "Give me a little time to make the necessary arrangements.";
+					mes "When you get back, I'll be ready!";
+					close;
+				}
+				set BSMITH_Q,2;
+				if (checkquest(2001) == -1) {
+					changequest 2000,2001;
+				}
+				mes ".............";
+				next;
+				mes "[Geschupenschte]";
+				if (BSMITH_Q == 2) {
+					mes "How do I say this?";
+					mes "How did you fail again?!";
+					mes "If you plan to perform your duties in this manner, I can't trust you with any kind of job...";
+					close;
+				}
+				mes "Hmm...";
+				mes "It pains me to say this, but it seems you need to study a little more. You can never be";
+				mes "a Blacksmith with";
+				mes "this score!";
+				close;
+			}
+			mes "[Geschupenschte]";
+			mes "Ah, of course I don't mind if you came back a little later. Being prepared prevents disasters";
+			mes "later, after all. No harm in";
+			mes "being careful~";
+			close;
+		}
+		/*
+		else if (BSMITH_Q == 2) {
+			mes "[Geschupenschte]";
+			mes "So, have you";
+			mes "studied a little";
+			mes "more this time?";
+			next;
+			mes "[Geschupenschte]";
+			mes "I admit that it's pretty unreasonable to expect anyone to get a perfect score the first time around, so I'll give you";
+			mes "a little break...";
+			next;
+			mes "[Geschupenschte]";
+			mes "You can miss";
+			mes "one problem!";
+			mes "Alright, let's start";
+			mes "with the questions~";
+			next;
+			goto L_AskQuestions;
+		}
+		*/
+		else if (BSMITH_Q == 3) {
+			mes "[Geschupenschte]";
+			mes "Hmm...";
+			mes "Now, where were";
+			mes "those order request forms...";
+			next;
+			mes "^3355FF*Shuffling of Papers*";
+			mes "*Rustling of Papers*^000000";
+			next;
+			mes "[Geschupenschte]";
+			mes "Oh! Here it is!";
+			mes "This is order that";
+			mes "has been delayed";
+			mes "the most...";
+			mes "Heh heh~";
+			next;
+			mes "[Geschupenschte]";
+			mes "Well, to make";
+			mes "this you will need...";
+			next;
+			switch(rand(1,5)) {
+			//Steel, Rotten_Bandage, Blue_Gemstone, Arc_Wand
+			case 1: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 4; changequest 2002,2003; break;
+			//Sparkling_Dust, Skel_Bone, Zargon, Gladius
+			case 2: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 5; changequest 2002,2004; break;
+			//Coal, Shell, Boody_Red, Tsurugi
+			case 3: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 6; changequest 2002,2005; break;
+			//Iron_Ore, Eye_Bandage, Blue_Gemstone, Arbalest
+			case 4: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 7; changequest 2002,2006; break;
+			//Iron, Green_Herb, Animal's_Skin, Ring_Pommel_Saber
+			default: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 8; changequest 2002,2007; break;
+			}
+			set BSMITH_Q,.@items[8];
+			mes "[Geschupenschte]";
+			mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000,";
+			mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000,";
+			mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000, and";
+			mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000, the kind";
+			mes "you can buy from";
+			mes "an NPC shop.";
+			next;
+			mes "[Geschupenschte]";
+			mes "Collecting these items will be your test. Coincidentally, it's also a bit of a good way for me to save money. I'll repeat what you'll need to bring back to me...";
+			next;
+			mes "[Geschupenschte]";
+			mes "Okay~";
+			mes "Good luck";
+			mes "on your first job!";
+			close;
+		}
+		else if (BSMITH_Q > 3 && BSMITH_Q < 9) {
+			switch(BSMITH_Q) {
+			case 4: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 9; break;
+			case 5: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 10; break;
+			case 6: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 11; break;
+			case 7: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 12; break;
+			case 8: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 13; break;
+			}
+			mes "[Geschupenschte]";
+			mes "Ah, you're back!";
+			mes "Did you bring";
+			mes "everything that";
+			mes "I requested?";
+			next;
+			if (countitem(.@items[0]) >= .@items[1] && countitem(.@items[2]) >= .@items[3] && countitem(.@items[4]) >= .@items[5] && countitem(.@items[6]) >= .@items[7]) {
+				mes "[Geschupenschte]";
+				mes "Wait...";
+				mes "Didn't I tell you";
+				mes "to get 3 Steel?";
+				next;
+				mes "[Geschupenschte]";
+				mes "Oh, I guess it was";
+				mes "two after all. Let's see...";
+				mes "Yeah, you got everything!";
+				mes "Now, just give me a second.";
+				next;
+				mes "[Geschupenschte]";
+				mes "Oh, you should make sure that you are not carrying ^FF0000more than one "+getitemname(.@items[6])+"^000000, you should really only have an "+getitemname(.@items[6])+" that you bought from an NPC shop in your inventory.";
+				next;
+				if (select("Oh, could you give me a second?:Oh, I brought what you asked for.") == 1) {
+					mes "[Geschupenschte]";
+					mes "Hmmm, it would be";
+					mes "a good idea to put the";
+					mes "rest of your items";
+					mes "in Kafra Storage.";
+					close;
+				}
+				mes "[Geschupenschte]";
+				mes "Okay.";
+				mes "Great~!!";
+				next;
+				mes "[Geschupenschte]";
+				mes "^3355FF*Clang...!*^000000";
+				next;
+				mes "[Geschupenschte]";
+				mes "^3355FF*Crash Crash!*^000000";
+				next;
+				delitem .@items[0],.@items[1];
+				delitem .@items[2],.@items[3];
+				delitem .@items[4],.@items[5];
+				delitem .@items[6],.@items[7];
+				set BSMITH_Q,.@items[8];
+				mes "[Geschupenschte]";
+				mes "Wooooo~~~";
+				mes "All done...";
+				switch(BSMITH_Q) {
+				case 9:
+					mes "Okay, now take this to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
+					getitem 1610,1; //Arc_Wand
+					if (checkquest(2003) != -1) {
+						changequest 2003,2008;
+					}
+					next;
+					mes "[Geschupenschte]";
+					mes "Hmm...?";
+					mes "What's that look for?";
+					mes "This is not a normal";
+					mes "Arc Wand! Look closely";
+					mes "at the handle...";
+					next;
+					mes "^3355FFThe handle reads:";
+					mes "'Super Arc Wand";
+					mes "of Geschupenschte";
+					mes "Mark 2.' It does seem";
+					mes "to have a completely";
+					mes "different feel.^000000";
+					next;
+					mes "[Geschupenschte]";
+					mes "Anyway, take this";
+					mes "to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom,";
+					break;
+				case 10:
+					mes "Okay, now take this to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
+					getitem 1219,1; //Gladius
+					if (checkquest(2004) != -1) {
+						changequest 2004,2009;
+					}
+					next;
+					mes "[Geschupenschte]";
+					mes "Hmm...?";
+					mes "What's that look for?";
+					mes "This is not a normal";
+					mes "Gladius! Look closely";
+					mes "at the handle...";
+					next;
+					mes "^3355FFThe handle reads:";
+					mes "'Super Gladius";
+					mes "of Geschupenschte";
+					mes "Mark 2.' It does seem";
+					mes "to have a completely";
+					mes "different feel.^000000";
+					next;
+					mes "[Geschupenschte]";
+					mes "Anyway, take this";
+					mes "to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom,";
+					break;
+				case 11:
+					mes "Okay, now take this to ^8E6B23Krongast^000000 in Lighthalzen. Simply deliver it and bring me the receipt.";
+					getitem 1119,1; //Tsurugi
+					if (checkquest(2005) != -1) {
+						changequest 2005,2010;
+					}
+					next;
+					mes "[Geschupenschte]";
+					mes "Hmm...?";
+					mes "What's that look for?";
+					mes "This is not a normal";
+					mes "Tsurugi! Look closely";
+					mes "at the blade...";
+					next;
+					mes "^3355FFThe blade reads:";
+					mes "'Fine-edged";
+					mes "Geschupenschte";
+					mes "Tsurugi Special.'";
+					mes "It does seem to feel";
+					mes "completely different";
+					mes "than normal Tsurugis...^000000";
+					next;
+					mes "[Geschupenschte]";
+					mes "Anyway, take this";
+					mes "to ^8E6B23Krongast^000000 in Lighthalzen";
+					break;
+				case 12:
+					mes "Okay, now take this to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kingdom. Simply deliver this and bring me the receipt.";
+					getitem 1713,1; //Arbalest
+					if (checkquest(2006) != -1) {
+						changequest 2006,2011;
+					}
+					next;
+					mes "[Geschupenschte]";
+					mes "Hmm...?";
+					mes "What's that look for?";
+					mes "This is not a normal";
+					mes "Arbalest! Look closely";
+					mes "at the bow...";
+					next;
+					mes "^3355FFThe bow reads:";
+					mes "Geschupenschte";
+					mes "Arbalest Luxury Edition.";
+					mes "It does seem more luxurious";
+					mes "than regular Arbalests.^000000";
+					next;
+					mes "[Geschupenschte]";
+					mes "Anyway, take this";
+					mes "to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kindgom,";
+					break;
+				case 13:
+					mes "Okay, now take this to ^8E6B23Bismarc^000000 in Hugel. Simply deliver this and bring back the receipt.";
+					getitem 1122,1; //Ring_Pommel_Saber
+					if (checkquest(2007) != -1) {
+						changequest 2007,2012;
+					}
+					next;
+					mes "[Geschupenschte]";
+					mes "Hmm...?";
+					mes "What's that look for?";
+					mes "This is not a normal";
+					mes "Ring Pommel Saber!";
+					mes "Look closely at";
+					mes "the handle...";
+					next;
+					mes "^3355FFThe handle reads:";
+					mes "'Green Herbal";
+					mes "Ring Pommel Saber";
+					mes "of Geschupenschte";
+					mes "Mark 2.' It does seem";
+					mes "to have a completely";
+					mes "different feel.^000000";
+					next;
+					mes "[Geschupenschte]";
+					mes "The power of Green Herbs, which is imbued in this sword, can be very useful! You can save someone from slowly dying of poison by stabbing them quickly with this weapon!";
+					next;
+					mes "[Geschupenschte]";
+					mes "Anyway, take this";
+					mes "to ^8E6B23Bismarc^000000 in Hugel";
+				}
+				mes "and don't forget";
+				mes "the receipt!";
+				close;
+			}
+			else {
+				mes "[Geschupenschte]";
+				mes "You still haven't";
+				mes "brought all the items.";
+				mes "Do you need to be reminded";
+				mes "or something? Bring me...";
+				next;
+				mes "[Geschupenschte]";
+				mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000,";
+				mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000,";
+				mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000, and";
+				mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000, the kind";
+				mes "you can buy from";
+				mes "an NPC shop.";
+				next;
+				mes "[Geschupenschte]";
+				mes "Now, be sure to have";
+				mes "everything I need when";
+				mes "you come back. Remember,";
+				mes "this is a test! You can't";
+				mes "be a Blacksmith if you";
+				mes "slack off!";
+				close;
+			}
+		}
+		else if (BSMITH_Q > 8 && BSMITH_Q < 14) {
+			mes "[Geschupenschte]";
+			mes "What are you";
+			mes "still doing here?";
+			mes "Hurry and deliver";
+			mes "the package~!";
+			mes "Did you forget";
+			mes "where to go?";
+			next;
+			mes "[Geschupenschte]";
+			if (BSMITH_Q == 9) {
+				mes "In Geffen, at the";
+				mes "11 o'clock direction from the town center, you will find ^8E6B23Baisulist^000000. And don't forget the receipt.";
+			}
+			else if (BSMITH_Q == 10) {
+				mes "Find the Swordmace";
+				mes "dealer ^8E6B23Wickebine^000000 in Morroc. And don't forget the receipt.";
+			}
+			else if (BSMITH_Q == 11) {
+				mes "In Lighthalzen, 6 o'clock direction from the town center, you will find ^8E6B23Krongast^000000 near the weapon shop. And don't forget the receipt.";
+			}
+			else if (BSMITH_Q == 12) {
+				mes "In Payon, at the 5 o'clock direction from the town center, you will find ^8E6B23Talpiz^000000. And don't forget the receipt.";
+			}
+			else {
+				mes "In Hugel, at the 1 o'clock direction from the town center, you will find ^8E6B23Bismarc^000000 near the airship. And don't forget the receipt.";
+			}
+			close;
+		}
+		else if (BSMITH_Q == 14) {
+			mes "[Geschupenschte]";
+			mes "Hmmm...?";
+			mes "Have you";
+			mes "completed";
+			mes "the delivery?";
+			mes "Let's see that receipt~";
+			next;
+			if (select("Yes sir, here it is.:Receipt? I, uh, have it somewhere.") == 1) {
+				if (countitem(1073) > 0) {
+					set BSMITH_Q,15;
+					delitem 1073,1; //Merchant_Voucher_1
+					if (checkquest(2008) != -1) {
+						changequest 2008,2013;
+					}
+					else if (checkquest(2009) != -1) {
+						changequest 2009,2013;
+					}
+					else if (checkquest(2010) != -1) {
+						changequest 2010,2013;
+					}
+					else if (checkquest(2011) != -1) {
+						changequest 2011,2013;
+					}
+					else {
+						changequest 2012,2013;
+					}
+					mes "[Geschupenschte]";
+					mes "Oh ho ho~";
+					mes "Great!";
+					mes "You're truly";
+					mes "a great Merchant!";
+					next;
+					mes "[Geschupenschte]";
+					mes "Good job!";
+					mes "Return to ^8E6B23Altiregen^000000 in Einbroch, the guy you first met when you applied for the Blacksmith job.";
+					next;
+					mes "[Geschupenschte]";
+					mes "I have faith that you";
+					mes "will be a great Blacksmith!";
+					close;
+				}
+				set BSMITH_Q,3;
+				mes "[Geschupenschte]";
+				mes "You mean...";
+				mes "You didn't get";
+				mes "a receipt?";
+				mes "What...?";
+				next;
+				mes "[Geschupenschte]";
+				mes "A receipt is";
+				mes "a Merchant's best friend!";
+				mes "It's necessary to your job!";
+				mes "You'll have to start your";
+				mes "test all over again!";
+				close;
+			}
+			mes "[Geschupenschte]";
+			mes "Return when you";
+			mes "find the receipt~";
+			mes "You didn't forget";
+			mes "to receive a receipt.";
+			mes "Right...?";
+			close;
+		}
+		else if (BSMITH_Q == 15) {
+			mes "[Geschupenschte]";
+			mes "Thank you";
+			mes "very much";
+			mes "your help.";
+			mes "Return to Einbroch";
+			mes "and see ^8E6B23Altiregen^000000!";
+			close;
+		}
+		mes "[Geschupenschte]";
+		mes "Hmm...?";
+		mes "You already finished";
+		mes "your test here with me!";
+		mes "And surprisingly, I don't";
+		mes "need any more help, today.";
+		close;
+	}
+	else {
+		mes "[Geschupenschte]";
+		mes "Being";
+		mes "a Blacksmith";
+		mes "is truly great!";
+		mes "Don't you think so?";
+		mes "Mwahahahahah!!";
+		close;
+	}
+}
+
+geffen,46,164,1	script	Baisulist#BLS	69,{
+	if (BSMITH_Q == 9 && countitem(1610) > 0) {
+		mes "[Baisulist]";
+		mes "Oh, hello!";
+		mes "Have you come";
+		mes "to deliver my";
+		mes "Arc Wand?";
+		next;
+		mes "[Baisulist]";
+		mes "You sure this is what I ordered, right? I mean, if it's been used,";
+		mes "I don't want it.";
+		next;
+		if (select("Whoops, this is one of the items I use...:I'm sure! It's brand new!") == 1) {
+			mes "[Baisulist]";
+			mes "Well...";
+			mes "I guess I can";
+			mes "wait a little longer.";
+			mes "Please hurry with";
+			mes "my delivery~";
+			close;
+		}
+		mes "[Baisulist]";
+		mes "You're";
+		mes "absolutely sure?";
+		set BSMITH_Q,14;
+		delitem 1610,1; //Arc_Wand
+		next;
+		mes "[Baisulist]";
+		mes "Thank you so much for traveling all the way here. That Geschupenschte, please smack him for me when you meet him for being so late on this order...";
+		next;
+		mes "[Baisulist]";
+		mes "Please wait";
+		mes "a second, let";
+		mes "me give you a receipt~";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[Baisulist]";
+		mes "Here it is.";
+		mes "Thank you so much!";
+		mes "Oh, and good luck~";
+		mapannounce "geffen","Hey, " +strcharinfo(0)+ ", thank you so much for the delivery~",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[Baisulist]";
+		mes "Thank you";
+		mes "so much for";
+		mes "the delivery~";
+		close;
+	}
+	else {
+		mes "[Baisulist]";
+		mes "Oh...";
+		mes "It's been a while";
+		mes "since I've been";
+		mes "to Alberta.";
+		next;
+		mes "[Baisulist]";
+		mes "I ordered something";
+		mes "from there a while ago,";
+		mes "but I haven't received";
+		mes "my delivery...";
+		next;
+		mes "[Baisulist]";
+		mes "I wonder...";
+		mes "Could the Blacksmith Guild";
+		mes "be undermanned? I can't think of any other reason for them to be late...";
+		next;
+		mes "[Baisulist]";
+		mes "When will I get";
+		mes "my special Arc Wand?";
+		close;
+	}
+}
+
+morocc,27,112,4	script	Wickebine#BLS	725,{
+	if (BSMITH_Q == 10 && countitem(1219) > 0) {
+		cutin "Job_Black_hucke01",2;
+		mes "[Wickebine]";
+		mes "...!";
+		mes "It's here!";
+		next;
+		mes "[Wickebine]";
+		mes "This is what I ordered, right?";
+		mes "I don't want any used or old Gladius that you might have!";
+		next;
+		if (select("Whoops, not that one.:I guarantee you it is new.") == 1) {
+			cutin "Job_Black_hucke03",2;
+			mes "[Wickebine]";
+			mes "Oooh...!";
+			mes "Hurry up";
+			mes "with my Gladius~";
+			next;
+			mes "- She seems to be upset. -";
+			close2;
+			cutin "Job_Black_hucke03",255;
+			end;
+		}
+		cutin "Job_Black_hucke02",2;
+		mes "[Wickebine]";
+		mes "Hah hah hah!";
+		mes "Finally! Now...";
+		mes "Let me have";
+		mes "a look!";
+		next;
+		mes "- She looks very happy. -";
+		next;
+		set BSMITH_Q,14;
+		delitem 1219,1; //Gladius
+		cutin "Job_Black_hucke01",2;
+		mes "[Wickebine]";
+		mes "Are you with the";
+		mes "Einbroch Blacksmith Guild?";
+		mes "Give this message to Geschupenschte!";
+		next;
+		cutin "Job_Black_hucke03",2;
+		mes "[Wickebine]";
+		mes "'^660000You're late!";
+		mes "Do you know how long";
+		mes "I've been waiting?!^000000'";
+		next;
+		cutin "Job_Black_hucke02",2;
+		mes "[Wickebine]";
+		mes "But, this is also";
+		mes "a masterfully crafted item.";
+		mes "Tell him I'm satisfied with the quality of the workmanship.";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		emotion e_lv;
+		mes "[Wickebine]";
+		mes "Here's the receipt.";
+		mes "I think you did";
+		mes "a good job.";
+		mapannounce "morocc","Thanks for delivering, " + strcharinfo(0) + "~!",bc_map;
+		close2;
+		cutin "Job_Black_hucke02",255;
+		end;
+	}
+	else if (BSMITH_Q == 14) {
+		emotion e_lv;
+		cutin "Job_Black_hucke02",2;
+		mes "[Wickebine]";
+		mes "Thanks for the delivery.";
+		close2;
+		cutin "Job_Black_hucke02",255;
+		end;
+	}
+	else {
+		cutin "Job_Black_hucke03",2;
+		mes "[Wickebine]";
+		mes "...";
+		next;
+		mes "[Wickemine]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Wickmine]";
+		mes "They're late.";
+		mes "They're late,";
+		mes "they're late,";
+		mes "they're late~!";
+		next;
+		mes "[Wickebine]";
+		mes "How long does it take for something to ship from Geschupenschte? Usually, the Geffen Blacksmith Guild is pretty prompt...";
+		next;
+		emotion e_lv;
+		mes "[Wickebine]";
+		mes "Ooohh...";
+		mes "This is very";
+		mes "upsetting...";
+		close2;
+		cutin "Job_Black_hucke03",255;
+		end;
+	}
+}
+
+lighthalzen,209,80,4	script	Krongast#BLS	734,{
+	if (BSMITH_Q == 11 && countitem(1119) > 0) {
+		mes "[Krongast]";
+		mes "Ohhhhhh~";
+		mes "Is it here?";
+		mes "Very nice.";
+		mes "Let me take a look.";
+		next;
+		mes "[Krongast]";
+		mes "So you're sure this is the item";
+		mes "I ordered, right? I wouldn't want it if it's been used.";
+		next;
+		if (select("Whoops, this one is used!:It was just made, so it's new.") == 1) {
+			mes "[Krongast]";
+			mes "Hmmmmm!";
+			mes "Please deliver";
+			mes "the right sword!";
+			mes "I've been waiting";
+			mes "long enough already...";
+			close;
+		}
+		mes "[Krongast]";
+		mes "You double checked?";
+		mes "Alright then, I'll take it!";
+		next;
+		set BSMITH_Q,14;
+		delitem 1119,1; //Tsurugi
+		mes "[Krongast]";
+		mes "Oh ho...";
+		mes "This is good.";
+		mes "Much better than";
+		mes "what I expected.";
+		next;
+		mes "[Krongast]";
+		mes "With this sword...";
+		mes "My special moves will be even more powerful! I may even be able to perfect my fast attacking techniques! I love it!";
+		next;
+		mes "[Krongast]";
+		mes "Okay then.";
+		mes "Let me give";
+		mes "you a receipt.";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[Krongast]";
+		mes "Here is";
+		mes "your receipt.";
+		mes "Thank you for";
+		mes "your business!";
+		mapannounce "lighthalzen",strcharinfo(0)+"... Thank you for the delivery.",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[Krongast]";
+		mes "Thank you";
+		mes "for the delivery.";
+		close;
+	}
+	else {
+		mes "[Krongast]";
+		mes "...";
+		next;
+		mes "[Krongast]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Krongast]";
+		mes "When will the sword";
+		mes "I ordered finally arrive?";
+		mes "I need to try my ultimate skill, ^2F4F4FFine Edge^000000 with it.";
+		next;
+		mes "[Krongast]";
+		mes "Ahhhhhhh!";
+		mes "I need to";
+		mes "have that sword!";
+		close;
+	}
+}
+
+payon,214,79,4	script	Talpiz#BLS	59,{
+	if (BSMITH_Q == 12 && countitem(1713) > 0) {
+		mes "[Talpiz]";
+		mes "Oh~";
+		mes "Is it finally here?";
+		mes "The package I ordered?";
+		next;
+		mes "[Talpiz]";
+		mes "Um, this is what I ordered, right? I don't want an Arbalest that's been used before.";
+		next;
+		if (select("Whoops, this is a used one.:I'm sure it's new.") == 1) {
+			mes "[Talpiz]";
+			mes "Hmmmm.";
+			mes "Please hurry";
+			mes "and bring the";
+			mes "correct item.";
+			mes "I've waited too";
+			mes "long already...";
+			close;
+		}
+		mes "[Talpiz]";
+		mes "So, you're sure?";
+		mes "Let me take a look...";
+		next;
+		set BSMITH_Q,14;
+		delitem 1713,1; //Arbalest
+		mes "[Talpiz]";
+		mes "*wheet whoo*";
+		mes "Very nice!!";
+		next;
+		mes "[Talpiz]";
+		mes "This is truly a quality made custom item. I love how there is a case for an eye patch! I really reallly love this~";
+		next;
+		mes "[Talpiz]";
+		mes "Thank you!";
+		mes "For something of this quality,";
+		mes "I can even sell it for a high price even after I've used it!";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[Talpiz]";
+		mes "Here!";
+		mes "Please take";
+		mes "your receipt.";
+		mes "I really appreciate";
+		mes "your hard work.";
+		mapannounce "payon","Thanks, " +strcharinfo(0)+ ", you really delivered. Everytime I look at this, I love it even more~",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[Talpiz]";
+		mes "Really,";
+		mes "I can't say it";
+		mes "enough. This is";
+		mes "top quality work~!";
+		close;
+	}
+	else {
+		mes "[Talpiz]";
+		mes "Eh...";
+		mes "When will my";
+		mes "order arrive?";
+		next;
+		mes "[Talpiz]";
+		mes "A custom made Arbalest";
+		mes "with a quality case to hold your eye patches. Only one person can make something like that...";
+		next;
+		mes "[Talpiz]";
+		mes "Ahhhhhh...";
+		mes "The waiting";
+		mes "is unbearable!";
+		close;
+	}
+}
+
+hugel,168,183,1	script	Bismarc#BLS	118,{
+	if (BSMITH_Q == 13 && countitem(1122) > 0) {
+		mes "[Bismarc]";
+		mes "Sweet God...";
+		mes "Have you sent";
+		mes "an angel...?";
+		mes "Is that the Ring Pommel Saber";
+		mes "I ordered? It's my only hope...";
+		next;
+		mes "[Bismarc]";
+		mes "^666666*Huuuk*^000000 This is what I ordered, right? I needed one especially";
+		mes "made to stop this poison...";
+		next;
+		if (select("Whoops, this is my own Ring Pommel Saber.:I'm sure this is the one.") == 1) {
+			mes "[Bismarc]";
+			mes "N-Nooo...";
+			mes "Hurry...!";
+			mes "I need that";
+			mes "sword for its";
+			mes "an...ti...d-dote!";
+			next;
+			mes "^3355FFIt looks like";
+			mes "he's slowly dying...!";
+			mes "You'd better hurry.^000000";
+			close;
+		}
+		mes "[Bismarc]";
+		mes "^666666*Ghklk*^000000";
+		mes "Give it...!";
+		mes "Pleeeease!";
+		next;
+		set BSMITH_Q,14;
+		delitem 1122,1; //Ring_Pommel_Saber
+		mes "^3355FFBismarc stabs";
+		mes "himself, repeatedly,";
+		mes "with the Ring Pommel Saber";
+		mes "that has been imbued with";
+		mes "the power of Green Herbs.^000000";
+		next;
+		mes "[Bismarc]";
+		mes "^666666*Ghyklk*^000000";
+		mes "*Gasp gasp*";
+		next;
+		mes "[Bismarc]";
+		mes "Please...";
+		mes "Help me up.";
+		mes "The poison is";
+		mes "still coarsing";
+		mes "through my body...";
+		next;
+		mes "[Bismarc]";
+		mes "OwwwWWWW!!";
+		mes "IT'S BURNING!";
+		next;
+		mes "[Bismarc]";
+		mes "*Gasp Gasp*";
+		mes "*Whew* Okay,";
+		mes "I can feel the";
+		mes "antidote working now.";
+		mes "Just what I needed.";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[Bismarc]";
+		mes "Here is";
+		mes "your receipt.";
+		mes "T-take it...!";
+		mes "It's yours!";
+		mapannounce "hugel","Thanks, " +strcharinfo(0)+ ", for the delivery. You saved my life...",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[Bismarc]";
+		mes "Thank you.";
+		mes "You saved";
+		mes "my life...";
+		close;
+	}
+	else {
+		mes "[Bismarc]";
+		mes "^666666*Ghyklk*^000000";
+		mes "^666666*Huk Hukk*^000000";
+		mes "When will my";
+		mes "o-order arrive...?";
+		next;
+		mes "[Bismarc]";
+		mes "The poison in";
+		mes "my body... the pain...";
+		mes "excruciating... L-lord...";
+		next;
+		mes "[Bismarc]";
+		mes "When is the";
+		mes "antidote gonna";
+		mes "get here?!";
+		close;
+	}
+}
+
+ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
+	if (BSMITH_Q == 16) {
+		emotion e_hmm;
+		mes "[Mitehmaeeuh]";
+		mes "Oh...so you're the one who wants to be a blacksmith?";
+		mes "Nice, heh heh.";
+		mes "As you've realized from your past tests, you won't be promoted from Merchant to Blacksmtih immediately.";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "How much do you truly understand about smithing? Are you ready for me to ask you some questions?";
+		next;
+		if (select("Yes:No, not yet~") == 1) {
+			mes "[Mitehmaeeuh]";
+			mes "Alright...";
+			mes "My test is simple.";
+			mes "I'll ask five questions.";
+			mes "If you miss too many,";
+			mes "you fail. And I won't";
+			mes "tell you what you missed.";
+			next;
+			set .@blackss_te,0;
+			mes "[Mitehmaeeuh]";
+			mes "Please listen";
+			mes "and answer carefully...";
+			next;
+			switch(rand(1,3)) {
+			case 1:
+				mes "[Mitehmaeeuh]";
+				mes "1. What ability";
+				mes "is required to learn";
+				mes "the ^8E6B23Discount^000000 skill?";
+				next;
+				if (select("Level 3 Push Cart:Item Appraisal:Level 10 Mammonite:Level 3 Enlarge Weight") == 4)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "2. When you attack";
+				mes "with ^8E6B23Hammerfall^000000,";
+				mes "what status effect can";
+				mes "you inflict on enemies?";
+				next;
+				if (select("Stun:Blindness:Chaos:Silence") == 1)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "3. How much Zeny is spent";
+				mes "when attacking with the";
+				mes "mastered Mammonite skill?";
+				mes "(Level 10 Mammonite)";
+				next;
+				if (select("900 Zeny:1000 Zeny:2000 Zeny:100,000 Zeny") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "4. What is the";
+				mes "discount rate when";
+				mes "the ^8E6B23Discount^000000";
+				mes "skill is mastered?";
+				next;
+				if (select("21 % :22 % :23 % :24 % ") == 4)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "5. What is the maximum";
+				mes "percentage that you can";
+				mes "overcharge items sold to";
+				mes "NPCs after mastering the";
+				mes "^8E6B23Overcharge^000000 skill?";
+				next;
+				if (select("21 % :22 % :23 % :24 % ") == 3)
+					set .@blackss_te,.@blackss_te+20;
+				break;
+			case 2:
+				mes "[Mitehmaeeuh]";
+				mes "1. Which of the";
+				mes "following monsters";
+				mes "drops Steel?";
+				next;
+				if (select("Zerom:Chon Chon:Skel Worker:Requiem") == 3)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "2. Which of the following";
+				mes "stones can be made from";
+				mes "Red Bloods?";
+				next;
+				if (select("Flame Heart:Rough Wind:Great Nature:Mystic Frozen") == 1)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "3. Which of the following";
+				mes "stones do you have the most";
+				mes "of in your Kafra Storage?";
+				next;
+				select("Wind of Verdure:Red Blood:Green Live:Crystal Blue");
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "4. In general,";
+				mes "which of the following";
+				mes "properties receives the";
+				mes "most damage from a Wind";
+				mes "attribute weapon?";
+				next;
+				if (select("Fire Property:Water Property:Earth Property:Wind Property") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "5. How many Iron Ore";
+				mes "is required to make";
+				mes "1 Steel?";
+				next;
+				if (select("5 Iron Ore :4 Iron Ore:3 Iron Ore:6 Iron Ore") == 1)
+					set .@blackss_te,.@blackss_te+20;
+				break;
+			case 3:
+				mes "[Mitehmaeeuh]";
+				mes "1. What do you usually";
+				mes "do when you meet someone";
+				mes "randomly on the street?";
+				next;
+				switch(select("Ask them what they need.:Have a brief conversation.:Ignore them.:Give items and run away.")) {
+				case 1:
+				case 2:
+					set .@blackss_te,.@blackss_te+20;
+					break;
+				default:
+					break;
+				}
+				mes "[Mitehmaeeuh]";
+				mes "2. In what village";
+				mes "can you learn the";
+				mes "^8E6B23Crazy Uproar^000000 and";
+				mes "^8E6B23Change Cart^000000 skills?";
+				next;
+				if (select("Al De Baran:Alberta:Morroc:Izlude") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "3. From the center of Einbroch,";
+				mes "in which direction is the Blacksmith Guild?";
+				next;
+				if (select("11 o'clock:5 o'clock:7 o'clock:12 o'clock") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "4. In which town";
+				mes "can you find the";
+				mes "most Blacksmiths?";
+				next;
+				if (select("Prontera:Morroc:Alberta:Einbroch") == 4)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[Mitehmaeeuh]";
+				mes "5. Which of the";
+				mes "following statuses";
+				mes "affect your skill";
+				mes "as a Blacksmith?";
+				next;
+				if (select("STR :DEX:AGI :VIT ") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				break;
+			}
+			mes "[Mitehmaeeuh]";
+			mes "Ah...";
+			mes "You've completed";
+			mes "the quiz. Let's see...";
+			next;
+			mes "[Mitehmaeeuh]";
+			mes "You earned";
+			mes ""+ .@blackss_te +" points...";
+			if (.@blackss_te > 70) {
+				mes "Very nice!";
+				mes "Congratulations!";
+				mes "You just passed!";
+				next;
+				mes "[Mitehmaeeuh]";
+				mes "However, don't let your early success make you overconfident. A Blacksmith's life isn't a picnic. As proof that you have passed the test, I give you this Hammer of Blacksmith.";
+				set BSMITH_Q,17;
+				getitem 1005,1; //Hammer_Of_Blacksmith
+				changequest 2014,2015;
+				next;
+				mes "[Mitehmaeeuh]";
+				mes "Take this Hammer";
+				mes "of Blacksmith and go back to the Altiregen. Okay then? I wish you the best of luck!";
+				close;
+			}
+			mes "You failed! You better study up before coming back here.";
+			next;
+			mes "[Mitehmaeeuh]";
+			mes "With your knowledge, or lack thereof, you'll just end up hurting yourself holding a hammer!";
+			close;
+		}
+		mes "[Mitehmaeeuh]";
+		mes "Okay then.";
+		mes "Please prepare";
+		mes "yourself and return";
+		mes "when you are ready...";
+		close;
+	}
+	else if (BSMITH_Q == 17) {
+		emotion e_hmm;
+		mes "[Mitehmaeeuh]";
+		mes "Yeap, you just passed the Blacksmith job test~";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "Why don't you go back to Mr.Altiregen?";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "Don't forget to bring the Hammer of Blacksmith with you!";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "Oh, also make sure that you have no skill point left before you change your job~";
+		close;
+	}
+	else {
+		emotion e_hmm;
+		mes "[Mitehmaeeuh]";
+		mes "I had to deal with the heat when I was in Morroc,";
+		mes "and now I have to deal with the smog in this Einbroch!";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "But, I must admit that this is the perfect place for Blacksmiths because we have an abundance of crafting material supplies as well as highly developed equipment.";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "We, Blacksmiths are trying our best to forge the best of the best weapons.";
+		next;
+		mes "[Mitehmaeeuh]";
+		mes "We pledge our honor on that!";
+		close;
+	}
+}
+
+geffen_in,109,170,3	script	Blacksmith Guildsman#gef	726,{
+	mes "[Blacksmith Guildsman]";
+	mes "Good day, are you here to visit Blacksmith Guild?";
+	next;
+	mes "[Blacksmith Guildsman]";
+	mes "I thank you for coming this far to visit our guild. However, I regret to inform you that Blacksmith Guild has been";
+	mes "moved to ^3131FF'Einbroch' in the Schwaltzvalt Republic^000000.";
+	next;
+	mes "[Blacksmith Guildsman]";
+	mes "You can travel to Schwaltzvalt Republic by using the airship.";
+	mes "I can provide you a teleport service to Izlude, where you can use the airship.";
+	mes "Would you like to move to Izlude immediately?";
+	next;
+	switch(select("How to go to Einbroch:Yes!:No, thanks.")) {
+	case 1:
+		mes "[Blacksmith Guildsman]";
+		mes "Oops, haven't you used the airship yet?";
+		next;
+		mes "[Blacksmith Guildsman]";
+		mes "Unlike Rune-Midgarts Kingdom, Schwalitzvalt Republic has 'the airship' instead of teleport services to move between towns.";
+		next;
+		mes "[Blacksmith Guildsman]";
+		mes "In ^3131FF'Izlude'^000000, you can use ^3131FF'the international airship'^000000 which travels between ^3131FFIzlude and Juno in Schwaltzvalt Republic^000000.";
+		next;
+		mes "[Blacksmith Guildsman]";
+		mes "Take the airship, and go to Juno. Then from Juno, you need to take ^3131FFthe domestic airship^000000 to go to Einbroch.";
+		mes "Remember, you are ^3131FFnot going outside of the airport^000000 upon transit from the international to the domestic airship.";
+		next;
+		mes "[Blacksmith Guildsman]";
+		mes "It might sound complicated, but you will know once you are in the airport.";
+		mes "When you arrive in Blacksmith Guild, please send my regard to my coworkers!";
+		close;
+	case 2:
+		if (Zeny < 600) {
+			mes "[Blacksmith Guildsman]";
+			mes "Excuse me, but you do not have enough money.";
+			close;
+		}
+		set Zeny, Zeny-600;
+		warp "izlude",94,103;
+		end;
+	case 3:
+		mes "[Blacksmith Guildsman]";
+		mes "Please take care!";
+		close;
+	}
+}

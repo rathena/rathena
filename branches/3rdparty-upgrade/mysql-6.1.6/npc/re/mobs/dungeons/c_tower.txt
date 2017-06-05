@@ -1,0 +1,49 @@
+//===== rAthena Script =======================================
+//= Clock Tower Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Split from combined Alde and CT spawn file. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// c_tower1 - Clock Tower 1f
+//==================================================
+c_tower1,0,0,0,0	monster	Rideword	1195,70,5000,0,0
+c_tower1,0,0,0,0	monster	Punk	1199,70,5000,0,0
+c_tower1,0,0,0,0	monster	Bathory	1102,1,5000,0,0
+c_tower1,0,0,0,0	monster	Clock Tower Manager	1270,1,5000,0,0
+
+//==================================================
+// c_tower2 - Clock Tower 2f
+//==================================================
+c_tower2,0,0,0,0	monster	Clock	1269,40,5000,0,0
+c_tower2,0,0,0,0	monster	Punk	1199,40,5000,0,0
+c_tower2,0,0,0,0	monster	Rideword	1195,12,5000,0,0
+c_tower2,0,0,0,0	monster	Mimic	1191,3,5000,0,0
+c_tower2,0,0,0,0	monster	Elder	1377,2,5000,0,0
+c_tower2,0,0,0,0	monster	Clock Tower Manager	1270,1,5000,0,0
+
+//==================================================
+// c_tower3 - Clock Tower 3f
+//==================================================
+c_tower3,0,0,0,0	monster	Alarm	1193,80,5000,0,0
+c_tower3,0,0,0,0	monster	Mimic	1191,7,5000,0,0
+c_tower3,0,0,0,0	monster	Rideword	1195,6,5000,0,0
+c_tower3,0,0,0,0	monster	Clock Tower Manager	1270,3,5000,0,0
+
+//==================================================
+// c_tower4 - Clock Tower 4f
+//==================================================
+c_tower4,0,0,0,0	monster	Clock	1269,35,5000,0,0
+c_tower4,0,0,0,0	monster	Owl Duke	1320,30,5000,0,0
+c_tower4,0,0,0,0	monster	Alarm	1193,30,5000,0,0
+c_tower4,0,0,0,0	monster	Rideword	1195,15,5000,0,0
+c_tower4,0,0,0,0	monster	Mimic	1191,12,5000,0,0
+c_tower4,0,0,0,0	monster	Whisper	1179,5,5000,0,0
+c_tower4,0,0,0,0	monster	Clock Tower Manager	1270,3,5000,0,0
+c_tower4,0,0,0,0	monster	Elder	1377,2,5000,0,0

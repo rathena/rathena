@@ -1,0 +1,54 @@
+//===== rAthena Script =======================================
+//= Inn Npcs
+//===== By: ==================================================
+//= c, L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Inn Npcs, Save and Heal
+//===== Additional Comments: =================================
+//= 1.0 Added Brasilis inn receptionist. [c]
+//= 1.1 Updated dialog for Brasilis inn. [L0ne_W0lf]
+//============================================================
+
+// Brasilis
+//============================================================
+bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
+	mes "[Hotel Keeper]";
+	mes "Welcome to the beautiful Brasilis Hotel.";
+	next;
+	switch(select("Save:Rest -5000 zeny")) {
+	case 1:
+		mes "[Hotel Keeper]";
+		mes "Do you want to save here at the Brasilis Hotel?";
+		next;
+		switch(select("No thank you.:Absolutely.")) {
+		case 1:
+			mes "[Hotel Keeper]";
+			mes "Ok then, enjoy your stay.";
+			close;
+		case 2:
+			mes "[Hotel Keeper]";
+			mes "Your respawn has been saved here at the hotel. I hope that you enjoy your stay here in Brasilis.";
+			savepoint "bra_in01",144,69;
+			close;
+		}
+	case 2:
+		if (Zeny > 4999) {
+			mes "[Hotel Keeper]";
+			mes "I will show you a great room.";
+			close2;
+			set Zeny, Zeny-5000;
+			percentheal 100,100;
+			warp "bra_in01",144,69;
+			end;
+		}
+		else {
+			mes "[Hotel Keeper]";
+			mes "I'm sorry, but the service charge is 5,000 zeny per night.";
+			close;
+		}
+	}
+}

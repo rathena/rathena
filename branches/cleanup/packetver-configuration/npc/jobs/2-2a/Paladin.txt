@@ -1,0 +1,85 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,39,3	script	Paladin#Valkyrie	752,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[Paladin]";
+			mes "Congratulations.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		mes "[Paladin]";
+		mes "Do not forget";
+		mes "that the Holy War";
+		mes "is fast approaching!";
+		mes "We must ready ourselves!";
+		mes "May the light of justice";
+		mes "always brighten our path!";
+		close;
+	}
+	else if (ADVJOB == Job_Paladin && Class == Job_Swordman_High && JobLevel > 39) {
+		mes "[Paladin]";
+		mes "The Holy War will";
+		mes "be upon us before we";
+		mes "know it. More than ever,";
+		mes "we have need of strong men";
+		mes "and women to fight for what";
+		mes "is good and right.";
+		next;
+		mes "[Paladin]";
+		mes "Will you fight on";
+		mes "the side of righteousness";
+		mes "as a Paladin?";
+		next;
+		if (select("No.:Yes.") == 1) {
+			mes "[Paladin]";
+			mes "When you're ready,";
+			mes "feel free to come back.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[Paladin]";
+			mes "It is still possible for you to learn more skills. Please use";
+			mes "all of your remaining Skill Points before returning to me.";
+			close;
+		}
+		jobchange Job_Paladin;
+		set ADVJOB,0;
+		mes "[Paladin]";
+		mes "Congratulations.";
+		mes "As a Paladin, I hope";
+		mes "you will protect those";
+		mes "weaker than you, and bring";
+		mes "us victory in the upcoming";
+		mes "war between good and evil.";
+		close;
+	}
+	mes "[Paladin]";
+	mes "Welcome";
+	mes "to Valhalla,";
+	mes "the Hall of Honor.";
+	next;
+	mes "[Paladin]";
+	mes "Please make";
+	mes "yourself comfortable";
+	mes "while you are here.";
+	mes "Honor to the warriors!";
+	close;
+}

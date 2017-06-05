@@ -1,0 +1,214 @@
+//===== rAthena Script ======================================= 
+//= Alberta Guides
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guides for the city of Alberta
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal guides.
+//= 1.1 Navigation system update. [Euphy]
+//============================================================ 
+
+alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
+	cutin "prt_soldier",2;
+	mes "[Alberta Guide]";
+	mes "Welcome to ^8B4513Alberta^000000,";
+	mes "the Port City.";
+	mes "Do you need help navigating the city?";
+	F_Navi("[Alberta Guide]");
+	next;
+	set .@str$,"Would you like to check any other locations?";
+	while (1) {
+		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:[ Destination Ports ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Tool Shop ]:[ Forge ]:[ Weapon & Armor Shop ]:[ Inn ]:[ Beauty Salon ]:[ Merchant Guild ]:Previous Menu")) {
+				case 1:
+					mes "[Alberta Guide]";
+					mes "Let me mark the location of the";
+					mes "the "+F_Navi("Tool Shop","alberta,98,154","^0000FF");
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,98,154,0,0x0A82FF;
+					next;
+					break;
+				case 2:
+					mes "[Alberta Guide]";
+					mes "The "+F_Navi("Forge","alberta,35,41","^B9062F")+" is currently";
+					mes "located inside the Merchant Guild building.";
+					mes .@str$;
+					viewpoint 1,35,41,1,0xFF0000;
+					next;
+					break;
+				case 3:
+					mes "[Alberta Guide]";
+					mes "Let me mark the location of the";
+					mes "the "+F_Navi("Weapon & Armor Shop","alberta,117,37","^FF5400");
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,117,37,2,0xFFB400;
+					next;
+					break;
+				case 4:
+					mes "[Alberta Guide]";
+					mes "Let me mark the location of the";
+					mes "the "+F_Navi("Inn","alberta,65,233","^006400");
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,65,233,3,0xAAFF00;
+					next;
+					break;
+				case 5:
+					mes "[Alberta Guide]";
+					mes "Let me mark the location of the";
+					mes "the "+F_Navi("Beauty Salon","alberta,48,145","^7F3300");
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,48,145,4,0xD2691E;
+					next;
+					break;
+				case 6:
+					mes "[Alberta Guide]";
+					mes "The "+F_Navi("Merchant Guild","alberta,33,41")+" is where";
+					mes "you can change your job to ^800080Merchant^000000.";
+					mes "Let me mark its location";
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,33,41,5,0xDA70D6;
+					next;
+					break;
+				case 7:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Cool Event Employee ]:[ Bullet Merchant ]:[ Cooking Ingredient Merchant ]:Previous Menu")) {
+				case 1:
+					mes "[Alberta Guide]";
+					mes "^B9062FEden Teleport Officers^000000 are located in "+F_Navi("south Alberta","alberta,121,68");
+					mes "and inside the "+F_Navi("Merchant Guild","alberta,33,41")+" building.";
+					mes "Let me mark their locations on your mini-map.";
+					mes .@str$;
+					viewpoint 1,33,41,6,0xFF0000;
+					viewpoint 1,121,68,7,0xFF0000;
+					next;
+					break;
+				case 2:
+					mes "[Alberta Guide]";
+					mes "Let me mark the location of the";
+					mes "^0000FFKafra Employees^000000";
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,33,41,8,0x0A82FF;
+					viewpoint 1,113,60,9,0x0A82FF;
+					next;
+					break;
+				case 3:
+					mes "[Alberta Guide]";
+					mes "When you win event items,";
+					mes "you can claim them through the "+F_Navi("Cool Event Employee","alberta,148,57","^FF5400")+".";
+					mes .@str$;
+					viewpoint 1,148,57,10,0xFFB400;
+					next;
+					break;
+				case 4:
+					mes "[Alberta Guide]";
+					mes "The ^7F3300Bullet Merchants^000000 for ^7F3300Gunslingers^000000";
+					mes "are located";
+					mes "near the "+F_Navi("center of the city","alberta,117,158")+".";
+					mes .@str$;
+					viewpoint 1,117,158,11,0xD2691E;
+					next;
+					break;
+				case 5:
+					mes "[Alberta Guide]";
+					mes "The "+F_Navi("Chef Assistant","alberta,167,135","^006400")+" in Alberta";
+					mes "has many regular customers,";
+					mes "especially for his ^006400Delicious Fishes^000000.";
+					mes .@str$;
+					viewpoint 1,167,135,12,0xAAFF00;
+					next;
+					break;
+				case 6:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Port - Northern Dock ]:[ Port - Central Dock ]:[ Port - Southern Dock ]:Previous Menu")) {
+				case 1:
+					mes "[Alberta Guide]";
+					mes "You can use the "+F_Navi("Northern Dock","alberta,192,196");
+					mes "to go to ^0000FFPort Malaya^000000 or ^0000FFDewata^000000.";
+					mes .@str$;
+					viewpoint 1,192,196,13,0xFF0000;
+					next;
+					break;
+				case 2:
+					mes "[Alberta Guide]";
+					mes "You can use the "+F_Navi("Central Dock","alberta,192,151");
+					mes "to go to the ^B9062FSunken Ship^000000 or ^B9062FIzlude Marina^000000.";
+					mes .@str$;
+					viewpoint 1,192,151,14,0xFF0000;
+					next;
+					break;
+				case 3:
+					mes "[Alberta Guide]";
+					mes "You can use the "+F_Navi("Southern Dock","alberta,245,86");
+					mes "to go to ^0000FFTurtle Island^000000, ^0000FFBrasilis^000000, ^0000FFAmatsu^000000, ^0000FFKunlun^000000, ^0000FFMoscovia^000000, ^0000FFLouyang^000000, or ^0000FFAyothaya^000000.";
+					mes .@str$;
+					viewpoint 1,245,86,15,0xFF0000;
+					next;
+					break;
+				case 4:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 4:
+			mes "[Alberta Guide]";
+			mes "Sure, I'll remove all marks from your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 2,1,1,0,0xFFFF00;
+			viewpoint 2,1,1,1,0x000000;
+			viewpoint 2,1,1,2,0xFF0000;
+			viewpoint 2,1,1,3,0xFFFF00;
+			viewpoint 2,1,1,4,0xFFFF00;
+			viewpoint 2,1,1,5,0xFFFF00;
+			viewpoint 2,1,1,6,0xFFFF00;
+			viewpoint 2,1,1,7,0xFFFF00;
+			viewpoint 2,1,1,8,0xFFFF00;
+			viewpoint 2,1,1,9,0xFFFF00;
+			viewpoint 2,1,1,10,0xFFFF00;
+			viewpoint 2,1,1,11,0xFFFF00;
+			viewpoint 2,1,1,12,0x000000;
+			viewpoint 2,1,1,13,0xFFFF00;
+			viewpoint 2,1,1,14,0xFFFF00;
+			viewpoint 2,1,1,15,0xFFFF00;
+			next;
+			break;
+		case 5:
+			mes "[Alberta Guide]";
+			mes "Enjoy your stay.";
+			close2;
+			cutin "prt_soldier",255;
+			end;
+		}
+	}
+}
+alberta,120,60,3	duplicate(AlbertaGuide)	Guide#02alberta	105
+alberta,184,143,4	duplicate(AlbertaGuide)	Guide#03alberta	105

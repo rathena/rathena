@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Morroc Pyramid Nightmare Warp Script
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Morroc Pyramid Nightmare Mode
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//============================================================
+
+moc_prydn1,223,9,0	warp	PyramidsN1-2	2,2,moc_prydn2,192,8
+moc_prydn2,195,8,0	warp	PyramidsN2-1	2,3,moc_prydn1,220,9

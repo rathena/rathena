@@ -1,0 +1,47 @@
+//===== rAthena Script =======================================
+//= Hugel Field Warp Script
+//===== By: ==================================================
+//= Sara-chan (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 10+
+//===== Description: =========================================
+//= Warp Points for Hugel Field
+//===== Additional Comments: =================================
+//= Initial Release
+//= 1.1 Official warps [Playtester]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//============================================================
+
+//= Hugel Field ==============================================
+ein_fild04,343,293,0	warp	hugel001	1,1,ein_fild05,80,294
+ein_fild05,76,294,0	warp	hugel001a	1,1,ein_fild04,336,292
+ein_fild05,376,183,0	warp	hugel002	1,1,ein_fild06,47,166
+ein_fild06,42,171,0	warp	hugel002a	1,1,ein_fild05,371,183
+ein_fild02,357,251,0	warp	hugel003-1	1,1,yuno_fild04,38,280
+yuno_fild04,33,279,0	warp	hugel003a-1	1,1,ein_fild02,350,250
+ein_fild01,349,369,0	warp	hugel003	1,1,yuno_fild05,43,346
+yuno_fild05,41,350,0	warp	hugel003a	1,1,ein_fild01,345,367
+ein_fild01,106,34,0	warp	hugel004	1,1,ein_fild02,109,358
+ein_fild02,108,364,0	warp	hugel004a	1,1,ein_fild01,106,40
+ein_fild01,234,34,0	warp	hugel005	1,1,ein_fild02,258,343
+ein_fild02,257,350,0	warp	hugel005a	1,1,ein_fild01,231,40
+ein_fild02,170,29,0	warp	hugel006	1,1,ein_fild05,172,366
+ein_fild05,172,371,0	warp	hugel006a	1,1,ein_fild02,170,37
+hu_fild01,366,185,0	warp	hugel007	1,1,hu_fild02,22,168
+hu_fild02,17,168,0	warp	hugel007a	1,1,hu_fild01,361,189
+hu_fild04,47,372,0	warp	hugel008	1,1,hu_fild02,40,27
+hu_fild02,40,22,0	warp	hugel008a	1,1,hu_fild04,48,368
+hu_fild04,294,379,0	warp	hugel009	1,1,hu_fild02,280,31
+hu_fild02,283,28,0	warp	hugel009a	1,1,hu_fild04,289,376
+hu_fild05,284,356,0	warp	hugel010	1,1,hu_fild03,288,26
+hu_fild03,288,19,0	warp	hugel010a	1,1,hu_fild05,276,346
+hu_fild05,353,126,0	warp	hugel011	1,1,hu_fild06,34,119
+hu_fild06,28,119,0	warp	hugel011a	1,1,hu_fild05,347,130
+hu_fild02,374,339,0	warp	hugel012	1,1,hu_fild03,24,337
+hu_fild03,20,338,0	warp	hugel012a	1,1,hu_fild02,370,339
+hu_fild02,378,162,0	warp	hugel013	1,1,hu_fild03,30,163
+hu_fild03,25,163,0	warp	hugel013a	1,1,hu_fild02,373,160
+yuno_fild09,377,184,0	warp	hugel014	1,1,yuno_fild10,44,183
+yuno_fild10,39,183,0	warp	hugel014a	1,1,yuno_fild09,371,184

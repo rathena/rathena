@@ -1,0 +1,208 @@
+//===== rAthena Documentation ================================
+//= Permissions List
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20130613
+//===== Description: =========================================
+//= List of available permissions and their functions.
+//============================================================
+
+This file describes the functions of player group permissions,
+configured in '/conf/groups.conf' under the "permissions" bracket.
+
+To search for a permission, write "*" before its name.
+The format of this file is as follows:
+	1. Basic Permissions
+	2. Extended Permissions
+	3. Command-related
+
+========================
+| 1. Basic Permissions |
+========================
+---------------------------------------
+
+*can_trade
+
+Allows player to distribute items, such as through trades, dropping,
+vending, storage, mail, etc.
+
+---------------------------------------
+
+*can_party
+
+Allows player to create and join parties.
+
+---------------------------------------
+
+===========================
+| 2. Extended Permissions |
+===========================
+---------------------------------------
+
+*all_skill
+
+Grants player all available skills in the player's skill tree.
+
+---------------------------------------
+
+*all_equipment
+
+Allows player to equip any item, regardless of requirements (class, level,
+etc.). Note that this can cause client errors if a sprite does not exist.
+
+---------------------------------------
+
+*skill_unconditional
+
+Allows player to use any skill, regardless of required conditions (SP,
+items, etc.).
+
+---------------------------------------
+
+*join_chat
+
+Allows player to join password-protected chatrooms.
+
+---------------------------------------
+
+*kick_chat
+
+Prevents player from being kicked from a chatroom.
+
+---------------------------------------
+
+*view_hpmeter
+
+Allows player to see the HP bar of every player.
+
+---------------------------------------
+
+*view_equipment
+
+Allows player to view the equipment of every player, regardless of that
+player's setting.
+
+---------------------------------------
+
+*hack_info
+
+Allows player to receive all information about players who try to hack,
+spoof a name, etc.
+
+---------------------------------------
+
+*disable_pvm
+
+Prevents player from attacking monsters.
+
+---------------------------------------
+
+*disable_pvp
+
+Prevents player from attacking other players.
+
+---------------------------------------
+
+*can_trade_bounded
+
+Allows player to do normal item actions with bounded items (drop, sell,
+trade, etc.).
+
+---------------------------------------
+ 
+*item_unconditional
+
+Allows player to consume any consumable item regardless the requirements
+(bypass noitemconsumption mapflag, item's class, gender, status changes,
+item delay, etc).
+
+---------------------------------------
+
+======================
+| 3. Command-related |
+======================
+---------------------------------------
+
+*all_commands
+
+Allows usage of all atcommands and charcommands.
+
+---------------------------------------
+
+*disable_commands_when_dead
+
+Disables usage of atcommands when player is dead.
+
+---------------------------------------
+
+*hide_session
+
+Hides player session from being displayed by atcommands (@who, @whomap,
+etc.).
+
+---------------------------------------
+
+*who_display_aid
+
+Displays all GMs and character/account IDs in the @who command.
+
+---------------------------------------
+
+*any_warp
+
+Allows player to bypass 'nowarp', 'nowarpto', 'noteleport', and 'nomemo'
+mapflags in commands which modify a character's map or coordinates (@memo,
+@mapmove, @go, @jump, etc.).
+
+---------------------------------------
+
+*receive_requests
+
+Allows player to receive requests through the @requests command.
+
+---------------------------------------
+
+*show_bossmobs
+
+Displays boss mobs in the @showmobs command.
+
+---------------------------------------
+
+*channel_admin
+
+Allows player to modify #channel settings regardless of ownership and to
+join password-protected channels without a password.
+
+---------------------------------------
+
+*use_check
+
+Allows player to use the client command /check (displays character status).
+
+---------------------------------------
+
+*use_changemaptype
+
+Allows player to use the client command /changemaptype.
+
+---------------------------------------
+
+*command_enable
+
+Enable to use atcommand while talking with NPC.
+
+---------------------------------------
+
+*bypass_stat_onclone
+
+Bypass max parameter limit while using @clonestat
+
+---------------------------------------
+
+*bypass_max_stat
+
+Allow to bypass the maximum stat parameter (at conf/player.conf) to
+maximum value 32,767.
+
+---------------------------------------

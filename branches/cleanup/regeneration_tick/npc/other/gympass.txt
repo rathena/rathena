@@ -1,0 +1,150 @@
+//===== rAthena Script ======================================= 
+//= Gym Pass Cash Item NPC
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Exchange Gym Passes to learn "Enlarge Weight Limit"
+//= iRO NPC situated in Payon beside Kafra Shop.
+//===== Additional Comments: ================================= 
+//= 1.0 First version [L0ne_W0lf]
+//= 1.1 Fixed the NPC saying you "00" [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [Samuray22]
+//= 1.3 Updated script, and fixed potential errors. [L0ne_W0lf]
+//============================================================ 
+
+payon,173,141,4	script	Ripped Cabus#GymPass	899,{
+	mes "[Ripped]";
+	mes "Hey, there. People aren't";
+	mes "as physically active as they";
+	mes "used to be. Even if you fight";
+	mes "for a living, your body might";
+	mes "be weak and flabby in some";
+	mes "areas. Know what I mean?";
+	next;
+	mes "[Ripped]";
+	mes "Hey, train with me, and I can";
+	mes "guarantee that you'll be able";
+	mes "to lift and carry more of your";
+	mes "stuff. Just gimme your";
+	mes "^FF0000Gym Pass^000000 each time,";
+	mes "and we'll be good to go.";
+	next;
+	mes "[Ripped]";
+	mes "But don't get too excited:";
+	mes "no matter how much training";
+	mes "I take you through, you can";
+	mes "overdo it. You ever hear of";
+	mes "anyone that got too buff?";
+	mes "That's cuz they're dead. See?";
+	next;
+	mes "[Ripped]";
+	mes "I'd say that it'd be safe";
+	mes "for you to seriously train";
+	mes "with me and increase your";
+	mes "item carrying capacity ^FF000010 times^000000.";
+	mes "So... Are you ready to sweat?";
+	next;
+	switch(select("Yes:No:Um, my workouts wore off.")) {
+	case 1:
+		if (gympassmemory < 10) {
+			set .@add_carry,gympassmemory + 1;
+			set .@remain_carry,10 - .@add_carry;
+			if (countitem(7776) > 0) {
+				mes "[Ripped]";
+				mes "Oh, awesome, I see you";
+				mes "brought your Gym Pass.";
+				mes "Alright, just do what I do,";
+				mes "and try to feel the burn.";
+				mes "Ready? Let's do this.";
+				next;
+				specialeffect2 EF_EARTHSPIKE;
+				next;
+				specialeffect2 EF_DEVIL;
+				next;
+				specialeffect2 EF_COIN;
+				next;
+				specialeffect2 EF_SIGHTRASHER;
+				next;
+				mes "[Ripped]";
+				mes "There, you should be able";
+				mes "to carry more stuff with you.";
+				mes "Let's see, we can increase";
+				mes "your item carrying capacity";
+				mes "^FF00000" + .@remain_carry + "^000000 more times if we continue";
+				mes "training together like this.";
+				delitem 7776,1; //Max_Weight_Up_Scroll
+				set gympassmemory,.@add_carry;
+				skill "ALL_INCCARRY",.@add_carry,SKILL_PERM_GRANT;
+				close;
+			}
+			else {
+				mes "[Ripped]";
+				mes "Dude, what'd I tell you?";
+				mes "You gotta bring me your";
+				mes "^FF0000Gym Pass^000000 if you wanna";
+				mes "work out, and build up your";
+				mes "item carrying muscles.";
+				close;
+			}
+		}
+		else {
+			mes "[Ripped]";
+			mes "Dude, I don't think we can";
+			mes "build up your item carrying";
+			mes "muscles anymore than that.";
+			mes "It's too dangerous for your";
+			mes "body if we even tried! C'mon,";
+			mes "I told you about the limits.";
+			close;
+		}
+	case 2:
+		mes "[Ripped]";
+		mes "Aw, that's too bad.";
+		mes "Well, come back if you";
+		mes "change your mind. Tell";
+		mes "your friends about me:";
+		mes "if they're flabby, I'll help";
+		mes "get them in shape.";
+		close;
+	case 3:
+		if (gympassmemory > 0) {
+			mes "[Ripped]";
+			mes "What happened?";
+			mes "You let your item carrying";
+			mes "muscles just atrophy? Lucky";
+			mes "for you, there's such a thing";
+			mes "as muscle memory. It's won't take";
+			mes "as long to build 'em back up...";
+			next;
+			specialeffect2 EF_EARTHSPIKE;
+			next;
+			specialeffect2 EF_DEVIL;
+			next;
+			specialeffect2 EF_COIN;
+			next;
+			specialeffect2 EF_SIGHTRASHER;
+			next;
+			mes "[Ripped]";
+			mes "How about that?";
+			mes "Your item carrying";
+			mes "muscles grew back,";
+			mes "just like that! Try not to";
+			mes "wimp out again, okay?";
+			skill "ALL_INCCARRY",gympassmemory,SKILL_PERM_GRANT;
+			close;
+		}
+		else {
+			mes "[Ripped]";
+			mes "Uhh...";
+			mes "We didn't work out";
+			mes "together before.";
+			mes "I'm sure about that.";
+			close;
+		}
+	}
+}

@@ -1,0 +1,337 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Dead Branch use.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables the following items:
+//=   Dead Branch (604), Bloody Branch (12103),
+//=   Red Pouch (12024), Poring Box (12109)
+//===== Additional Comments: ================================= 
+//= 1.3 Updated. [massdriller]
+//= 1.6a Updated. [Lupus]
+//= 1.7 Added all novice maps. [L0ne_W0lf]
+//= 1.8 Removed restriction on PVP maps. [L0ne_W0lf]
+//= 1.9 Updated. [L0ne_W0lf]
+//= 2.0 Renewal split. [Euphy]
+//============================================================
+
+// Cities ======================
+ayo_in01	mapflag	nobranch
+ayo_in02	mapflag	nobranch
+alb_ship	mapflag	nobranch
+alberta_in	mapflag	nobranch
+aldeba_in	mapflag	nobranch
+ama_in01	mapflag	nobranch
+ama_in02	mapflag	nobranch
+ama_test	mapflag	nobranch
+cmd_in01	mapflag	nobranch
+cmd_in02	mapflag	nobranch
+gef_tower	mapflag	nobranch
+geffen_in	mapflag	nobranch
+gon_in	mapflag	nobranch
+gon_test	mapflag	nobranch
+in_orcs01	mapflag	nobranch
+izlude_in	mapflag	nobranch
+jawaii_in	mapflag	nobranch
+lou_in01	mapflag	nobranch
+lou_in02	mapflag	nobranch
+moc_castle	mapflag	nobranch
+morocc_in	mapflag	nobranch
+moscovia	mapflag	nobranch
+mosk_in	mapflag	nobranch
+new_zone01	mapflag	nobranch
+new_zone02	mapflag	nobranch
+new_zone03	mapflag	nobranch
+new_zone04	mapflag	nobranch
+new_1-1	mapflag	nobranch
+new_1-2	mapflag	nobranch
+new_1-3	mapflag	nobranch
+new_1-4	mapflag	nobranch
+new_2-1	mapflag	nobranch
+new_2-2	mapflag	nobranch
+new_2-3	mapflag	nobranch
+new_2-4	mapflag	nobranch
+new_3-1	mapflag	nobranch
+new_3-2	mapflag	nobranch
+new_3-3	mapflag	nobranch
+new_3-4	mapflag	nobranch
+new_4-1	mapflag	nobranch
+new_4-2	mapflag	nobranch
+new_4-3	mapflag	nobranch
+new_4-4	mapflag	nobranch
+new_5-1	mapflag	nobranch
+new_5-2	mapflag	nobranch
+new_5-3	mapflag	nobranch
+new_5-4	mapflag	nobranch
+nif_in	mapflag	nobranch
+payon_in01	mapflag	nobranch
+payon_in02	mapflag	nobranch
+payon_in03	mapflag	nobranch
+prt_castle	mapflag	nobranch
+prt_church	mapflag	nobranch
+prt_in	mapflag	nobranch
+um_in	mapflag	nobranch
+xmas_in	mapflag	nobranch
+yuno_in01	mapflag	nobranch
+yuno_in02	mapflag	nobranch
+yuno_in03	mapflag	nobranch
+yuno_in04	mapflag	nobranch
+yuno_in05	mapflag	nobranch
+que_ba	mapflag	nobranch
+que_sign01	mapflag	nobranch
+ein_in01	mapflag	nobranch
+airport	mapflag	nobranch
+airplane	mapflag	nobranch
+airplane_01	mapflag	nobranch
+yuno_pre	mapflag	nobranch
+y_airport	mapflag	nobranch
+lhz_airport	mapflag	nobranch
+lhz_in01	mapflag	nobranch
+lhz_in02	mapflag	nobranch
+lhz_in03	mapflag	nobranch
+lhz_que01	mapflag	nobranch
+lhz_cube	mapflag	nobranch
+hu_in01	mapflag	nobranch
+auction_01	mapflag	nobranch
+auction_02	mapflag	nobranch
+ra_in01	mapflag	nobranch
+ra_temin	mapflag	nobranch
+ra_temple	mapflag	nobranch
+ra_temsky	mapflag	nobranch
+ve_in	mapflag	nobranch
+ve_in02	mapflag	nobranch
+thor_camp	mapflag	nobranch
+cave	mapflag	nobranch
+
+// Job Quests ==================
+job_sword1	mapflag	nobranch
+job_thief1	mapflag	nobranch
+// 2-1
+job_knt	mapflag	nobranch
+job_prist	mapflag	nobranch
+job_wiz	mapflag	nobranch
+job_hunte	mapflag	nobranch
+in_hunter	mapflag	nobranch
+in_moc_16	mapflag	nobranch
+// 2-2
+alde_alche	mapflag	nobranch
+job_cru	mapflag	nobranch
+job_duncer	mapflag	nobranch
+job_monk	mapflag	nobranch
+monk_test	mapflag	nobranch
+monk_in	mapflag	nobranch
+in_rogue	mapflag	nobranch
+job_sage	mapflag	nobranch
+que_ng	mapflag	nobranch
+job_soul	mapflag	nobranch
+job_star	mapflag	nobranch
+
+// Special Quests Places =======
+que_god01	mapflag	nobranch
+que_god02	mapflag	nobranch
+que_bingo	mapflag	nobranch
+que_hugel	mapflag	nobranch
+poring_c01	mapflag	nobranch
+poring_c02	mapflag	nobranch
+kh_mansion	mapflag	nobranch
+kh_rossi	mapflag	nobranch
+kh_school	mapflag	nobranch
+kh_vila	mapflag	nobranch
+kh_kiehl01	mapflag	nobranch
+kh_kiehl02	mapflag	nobranch
+que_rachel	mapflag	nobranch
+que_san04	mapflag	nobranch
+que_thor	mapflag	nobranch
+
+// Guild Castles ===============
+//alde_gld	mapflag	nobranch
+aldeg_cas01	mapflag	nobranch
+aldeg_cas02	mapflag	nobranch
+aldeg_cas03	mapflag	nobranch
+aldeg_cas04	mapflag	nobranch
+aldeg_cas05	mapflag	nobranch
+gefg_cas01	mapflag	nobranch
+gefg_cas02	mapflag	nobranch
+gefg_cas03	mapflag	nobranch
+gefg_cas04	mapflag	nobranch
+gefg_cas05	mapflag	nobranch
+//pay_gld	mapflag	nobranch
+payg_cas01	mapflag	nobranch
+payg_cas02	mapflag	nobranch
+payg_cas03	mapflag	nobranch
+payg_cas04	mapflag	nobranch
+payg_cas05	mapflag	nobranch
+//prt_gld	mapflag	nobranch
+prtg_cas01	mapflag	nobranch
+prtg_cas02	mapflag	nobranch
+prtg_cas03	mapflag	nobranch
+prtg_cas04	mapflag	nobranch
+prtg_cas05	mapflag	nobranch
+//schg_gld
+schg_cas01	mapflag	nobranch
+schg_cas02	mapflag	nobranch
+schg_cas03	mapflag	nobranch
+schg_cas04	mapflag	nobranch
+schg_cas05	mapflag	nobranch
+//aru_gld
+arug_cas01	mapflag	nobranch
+arug_cas02	mapflag	nobranch
+arug_cas03	mapflag	nobranch
+arug_cas04	mapflag	nobranch
+arug_cas05	mapflag	nobranch
+
+//n_castle	mapflag	nobranch
+nguild_alde	mapflag	nobranch
+nguild_gef	mapflag	nobranch
+nguild_pay	mapflag	nobranch
+nguild_prt	mapflag	nobranch
+
+// GvG Arenas ==================
+guild_vs1	mapflag	nobranch
+guild_vs2	mapflag	nobranch
+guild_vs3	mapflag	nobranch
+guild_vs4	mapflag	nobranch
+guild_vs5	mapflag	nobranch
+
+// Arenas ======================
+arena_room	mapflag	nobranch
+force_1-1	mapflag	nobranch
+force_1-2	mapflag	nobranch
+force_1-3	mapflag	nobranch
+ordeal_1-1	mapflag	nobranch
+ordeal_1-2	mapflag	nobranch
+//ordeal_1-3	mapflag	nobranch
+ordeal_2-1	mapflag	nobranch
+ordeal_2-2	mapflag	nobranch
+//ordeal_2-3	mapflag	nobranch
+ordeal_3-1	mapflag	nobranch
+ordeal_3-2	mapflag	nobranch
+//ordeal_3-3	mapflag	nobranch
+pvp_2vs2	mapflag	nobranch
+pvp_c_room	mapflag	nobranch
+quiz_00	mapflag	nobranch
+quiz_01	mapflag	nobranch
+sec_in01	mapflag	nobranch
+//hunter_1-1	mapflag	nobranch
+//hunter_2-1	mapflag	nobranch
+//hunter_3-1	mapflag	nobranch
+//knight_1-1	mapflag	nobranch
+//knight_2-1	mapflag	nobranch
+//knight_3-1	mapflag	nobranch
+//priest_1-1	mapflag	nobranch
+//priest_2-1	mapflag	nobranch
+//priest_3-1	mapflag	nobranch
+prt_are_in	mapflag	nobranch
+prt_are01	mapflag	nobranch
+//wizard_1-1	mapflag	nobranch
+//wizard_2-1	mapflag	nobranch
+//wizard_3-1	mapflag	nobranch
+
+// PvP Arenas ==================
+pvp_y_room	mapflag	nobranch
+pvp_n_room	mapflag	nobranch
+
+// Main City maps ==============
+alberta	mapflag	nobranch
+aldebaran	mapflag	nobranch
+amatsu	mapflag	nobranch
+ayothaya	mapflag	nobranch
+comodo	mapflag	nobranch
+einbroch	mapflag	nobranch
+einbech	mapflag	nobranch
+geffen	mapflag	nobranch
+gonryun	mapflag	nobranch
+izlude	mapflag	nobranch
+jawaii	mapflag	nobranch
+hugel	mapflag	nobranch
+lighthalzen	mapflag	nobranch
+louyang	mapflag	nobranch
+morocc	mapflag	nobranch
+niflheim	mapflag	nobranch
+prontera	mapflag	nobranch
+payon	mapflag	nobranch
+pay_arche	mapflag	nobranch
+umbala	mapflag	nobranch
+xmas	mapflag	nobranch
+yuno	mapflag	nobranch
+rachel	mapflag	nobranch
+veins	mapflag	nobranch
+
+//Aldebaran Turbo Track ========
+turbo_room	mapflag	nobranch
+turbo_n_1	mapflag	nobranch
+turbo_n_4	mapflag	nobranch
+turbo_n_8	mapflag	nobranch
+turbo_n_16	mapflag	nobranch
+turbo_e_4	mapflag	nobranch
+turbo_e_8	mapflag	nobranch
+turbo_e_16	mapflag	nobranch
+
+// Poring War ==================
+poring_w01	mapflag	nobranch
+poring_w02	mapflag	nobranch
+
+// Monster Races ===============
+p_track01	mapflag	nobranch
+p_track02	mapflag	nobranch
+
+// Vision of Okolnir ===========
+que_qsch01	mapflag	nobranch
+que_qsch02	mapflag	nobranch
+que_qsch03	mapflag	nobranch
+que_qsch04	mapflag	nobranch
+que_qsch05	mapflag	nobranch
+que_qaru01	mapflag	nobranch
+que_qaru02	mapflag	nobranch
+que_qaru03	mapflag	nobranch
+que_qaru04	mapflag	nobranch
+que_qaru05	mapflag	nobranch
+
+// Episode 12 ==================
+1@cata	mapflag	nobranch
+2@cata	mapflag	nobranch
+e_tower	mapflag	nobranch
+1@tower	mapflag	nobranch
+2@tower	mapflag	nobranch
+3@tower	mapflag	nobranch
+4@tower	mapflag	nobranch
+5@tower	mapflag	nobranch
+6@tower	mapflag	nobranch
+
+// Episode 13.1 ================
+mid_camp	mapflag	nobranch
+mid_campin	mapflag	nobranch
+man_fild01	mapflag	nobranch
+moc_fild22b	mapflag	nobranch
+que_dan01	mapflag	nobranch
+que_dan02	mapflag	nobranch
+schg_que01	mapflag	nobranch
+arug_que01	mapflag	nobranch
+1@orcs	mapflag	nobranch
+2@orcs	mapflag	nobranch
+
+// Battle Grounds ==============
+bat_c01	mapflag	nobranch
+bat_c02	mapflag	nobranch
+bat_c03	mapflag	nobranch
+bat_room	mapflag	nobranch
+bat_b01	mapflag	nobranch
+bat_b02	mapflag	nobranch
+bat_a01	mapflag	nobranch
+bat_a02	mapflag	nobranch
+
+// Episode 13.2 ================
+1@nyd	mapflag	nobranch
+2@nyd	mapflag	nobranch
+manuk	mapflag	nobranch
+man_fild02	mapflag	nobranch
+man_in01	mapflag	nobranch
+splendide	mapflag	nobranch
+spl_in01	mapflag	nobranch
+spl_in02	mapflag	nobranch
+
+//evt_zombie	mapflag	nobranch

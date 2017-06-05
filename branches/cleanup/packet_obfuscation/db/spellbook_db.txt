@@ -1,0 +1,31 @@
+// Reading Spellbook Preserve Points Database
+//
+// Structure of Database:
+// SkillID,PreservePoints,Required Book
+//
+// NOTE:
+// - To add more entries, increase MAX_SKILL_SPELLBOOK_DB in skill.h.
+// - To remove entry by importing, put 0 for 'PreservePoints'
+
+//Mage
+14,7,6190	//Cold Bolt
+19,7,6189	//Fire Bolt
+20,7,6191	//Lightning Bolt
+21,9,6197	//Thunder Storm
+
+//Wizard
+83,10,6194	//Meteor Storm
+84,9,6198	//Jupitel Thunder
+85,10,6193	//Lord of Vermillion
+86,9,6199	//Water Ball
+89,10,6192	//Storm Gust
+90,8,6201	//Earth Spike
+91,9,6200	//Heaven's Drive
+
+//Warlock
+2210,8,6205	//Drain Life
+2211,12,6204	//Crimson Rock
+2213,22,6195	//Comet
+2214,12,6203	//Chain Lightning
+2216,12,6202	//Earth Strain
+2217,22,6196	//Tetra Vortex

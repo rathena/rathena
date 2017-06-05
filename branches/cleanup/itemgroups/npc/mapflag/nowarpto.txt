@@ -1,0 +1,163 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable warpto.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables warping to a map.
+//= Atcommands @warp, @go, @load, @jump, @partyrecall,
+//=   @guildrecall, and @recallall are disabled.
+//= Command /memo is disabled.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//= 1.4 Updated. [L0ne_W0lf]
+//= 1.5 Renewal split. [Euphy]
+//============================================================
+
+// Guild Castles ========================
+//alde_gld	mapflag	nowarpto
+aldeg_cas01	mapflag	nowarpto
+aldeg_cas02	mapflag	nowarpto
+aldeg_cas03	mapflag	nowarpto
+aldeg_cas04	mapflag	nowarpto
+aldeg_cas05	mapflag	nowarpto
+gefg_cas01	mapflag	nowarpto
+gefg_cas02	mapflag	nowarpto
+gefg_cas03	mapflag	nowarpto
+gefg_cas04	mapflag	nowarpto
+gefg_cas05	mapflag	nowarpto
+//pay_gld	mapflag	nowarpto
+payg_cas01	mapflag	nowarpto
+payg_cas02	mapflag	nowarpto
+payg_cas03	mapflag	nowarpto
+payg_cas04	mapflag	nowarpto
+payg_cas05	mapflag	nowarpto
+//prt_gld	mapflag	nowarpto
+prtg_cas01	mapflag	nowarpto
+prtg_cas02	mapflag	nowarpto
+prtg_cas03	mapflag	nowarpto
+prtg_cas04	mapflag	nowarpto
+prtg_cas05	mapflag	nowarpto
+schg_cas01	mapflag	nowarpto
+schg_cas02	mapflag	nowarpto
+schg_cas03	mapflag	nowarpto
+schg_cas04	mapflag	nowarpto
+schg_cas05	mapflag	nowarpto
+arug_cas01	mapflag	nowarpto
+arug_cas02	mapflag	nowarpto
+arug_cas03	mapflag	nowarpto
+arug_cas04	mapflag	nowarpto
+arug_cas05	mapflag	nowarpto
+//Novice Guild
+n_castle	mapflag	nowarpto
+nguild_alde	mapflag	nowarpto
+nguild_gef	mapflag	nowarpto
+nguild_pay	mapflag	nowarpto
+nguild_prt	mapflag	nowarpto
+//Lighthalzen Bio-Lab 3F
+lhz_dun03	mapflag	nowarpto
+// Special Quests Places =======
+ama_test	mapflag	nowarpto
+gon_test	mapflag	nowarpto
+que_rachel	mapflag	nowarpto
+que_san04	mapflag	nowarpto
+cave	mapflag	nowarpto
+//Aldebaran Turbo Track ========
+turbo_n_1	mapflag	nowarpto
+turbo_n_4	mapflag	nowarpto
+turbo_n_8	mapflag	nowarpto
+turbo_n_16	mapflag	nowarpto
+turbo_e_4	mapflag	nowarpto
+turbo_e_8	mapflag	nowarpto
+turbo_e_16	mapflag	nowarpto
+// Izlude Battle Arena =========
+force_1-1	mapflag	nowarpto
+force_2-1	mapflag	nowarpto
+force_3-1	mapflag	nowarpto
+force_4-1	mapflag	nowarpto
+force_5-1	mapflag	nowarpto
+force_1-2	mapflag	nowarpto
+force_1-3	mapflag	nowarpto
+prt_are_in	mapflag	nowarpto
+
+//Monster Races ================
+p_track01	mapflag	nowarpto
+p_track02	mapflag	nowarpto
+
+// Poring War ====================
+poring_w01	mapflag	nowarpto
+poring_w02	mapflag	nowarpto
+
+//Vision of Okolnir ============
+que_qsch01	mapflag	nowarpto
+que_qsch02	mapflag	nowarpto
+que_qsch03	mapflag	nowarpto
+que_qsch04	mapflag	nowarpto
+que_qsch05	mapflag	nowarpto
+que_qaru01	mapflag	nowarpto
+que_qaru02	mapflag	nowarpto
+que_qaru03	mapflag	nowarpto
+que_qaru04	mapflag	nowarpto
+que_qaru05	mapflag	nowarpto
+
+//Sealed Shrine ==================
+1@cata	mapflag	nowarpto
+2@cata	mapflag	nowarpto
+
+//Endless Tower ==================
+e_tower	mapflag	nowarpto
+1@tower	mapflag	nowarpto
+2@tower	mapflag	nowarpto
+3@tower	mapflag	nowarpto
+4@tower	mapflag	nowarpto
+5@tower	mapflag	nowarpto
+6@tower	mapflag	nowarpto
+
+// Battle Grounds ================
+bat_c01	mapflag	nowarpto
+bat_c02	mapflag	nowarpto
+bat_c03	mapflag	nowarpto
+bat_room	mapflag	nowarpto
+bat_b01	mapflag	nowarpto
+bat_b02	mapflag	nowarpto
+bat_a01	mapflag	nowarpto
+bat_a02	mapflag	nowarpto
+
+// Episode 13 ====================
+mid_campin	mapflag	nowarpto
+man_fild01	mapflag	nowarpto
+man_fild03	mapflag	nowarpto
+spl_fild02	mapflag	nowarpto
+spl_fild03	mapflag	nowarpto
+moc_fild22b	mapflag	nowarpto
+que_dan01	mapflag	nowarpto
+que_dan02	mapflag	nowarpto
+schg_que01	mapflag	nowarpto
+schg_dun01	mapflag	nowarpto
+arug_que01	mapflag	nowarpto
+arug_dun01	mapflag	nowarpto
+nyd_dun01	mapflag	nowarpto
+nyd_dun02	mapflag	nowarpto
+manuk	mapflag	nowarpto
+man_fild02	mapflag	nowarpto
+man_in01	mapflag	nowarpto
+splendide	mapflag	nowarpto
+spl_fild01	mapflag	nowarpto
+spl_in01	mapflag	nowarpto
+
+//Orc's Memory ===================
+1@orcs	mapflag	nowarpto
+2@orcs	mapflag	nowarpto
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	nowarpto
+2@nyd	mapflag	nowarpto
+
+// Bossnia (custom) ==============
+bossnia_01	mapflag	nowarpto
+bossnia_02	mapflag	nowarpto
+bossnia_03	mapflag	nowarpto
+bossnia_04	mapflag	nowarpto

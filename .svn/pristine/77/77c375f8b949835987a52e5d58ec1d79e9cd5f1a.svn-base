@@ -1,0 +1,796 @@
+//===== rAthena Script =======================================
+//= Thief Mage Quest Story Mode
+//===== By: ==================================================
+//= Fix up by Jukka
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Battle Traces from Thief and Magician training quests.
+//===== Additional Comments: =================================
+//= 1.0 Fully working
+//= 1.1 optimized [Lupus]
+//= 1.2 Changed "battle_trace" to "Trace of Battle". [L0ne_W0lf]
+//= 1.3 Misc. updates. [L0ne_W0lf]
+//= 2.0 Clean-up. [Capuche]
+//============================================================
+
+// Battle Traces 1
+//============================================================
+moc_fild12,166,369,0	script	Trace of Battle#1	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThere are signs that show";
+		mes "that some violent scuffle";
+		mes "might have occurred here,";
+		mes "but you can't tell what had";
+		mes "happened exactly...^000000";
+	} else if (tu_thief01 < 5 && .@class_thief || .@class_mage && tu_magician01 < 8) {
+		mes "^3355FFYou find traces of poison";
+		mes "used in a battle. You sense";
+		mes "its potency and decide not";
+		mes "to get too close to it.^000000";
+		if (.@class_mage)
+			specialeffect EF_VENOMDUST2;
+	} else if (tu_thief01 == 5 && .@class_thief) {
+		mes "^3355FFYou find traces of poison";
+		mes "used in a battle. A feeling";
+		mes "of acute dizziness overcomes";
+		mes "you after examining the scene.^000000";
+		tu_thief01 = 6;
+		sc_start SC_Poison,60000,0;
+		specialeffect EF_VENOMDUST2;
+	} else if (tu_thief01 == 6 && .@class_thief) {
+		mes "^3355FFYou find traces of poison";
+		mes "used in a battle. A feeling";
+		mes "of acute dizziness overcomes";
+		mes "you after examining the scene.^000000";
+		sc_start SC_Poison,60000,0;
+		specialeffect EF_VENOMDUST2;
+	} else if (tu_thief01 == 7 && .@class_thief) {
+		mes "^3355FFYou find traces of poison";
+		mes "used in a battle. You sense";
+		mes "its potency and decide not";
+		mes "to get too close to it.^000000";
+	} else if (.@class_thief && tu_thief01 == 8 || .@class_mage && tu_magician01 == 8) {
+		mes "^3355FFThere are traces of a battle";
+		mes "that seem to be leading in";
+		mes "different directions. From the";
+		mes "peculiar smell that permeates";
+		mes "the area, it seems that some";
+		mes "kind of lethal poison was used.^000000";
+		next;
+		mes "^3355FFStill...";
+		mes "The trail of this";
+		mes "battle decidedly";
+		mes "heads southward.^000000";
+		if (tu_magician01 == 8)
+			tu_magician01 = 9;
+		else
+			tu_thief01 = 9;
+	} else {
+		mes "^3355FFYou find signs of";
+		mes "a heated pursuit";
+		mes "that head south.";
+	}
+	close;
+}
+
+// Battle Traces 2
+//============================================================
+moc_fild12,173,215,0	script	Trace of Battle#2	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThere are signs that show";
+		mes "that some violent scuffle";
+		mes "might have occurred here,";
+		mes "but you can't tell what had";
+		mes "happened exactly...^000000";
+	} else if (tu_thief01 < 9 && .@class_thief || tu_magician01 < 9 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that many people";
+		mes "have traveled through";
+		mes "this particular area.^000000";
+	} else if (tu_thief01 == 9 && .@class_thief || tu_magician01 == 9 && .@class_mage) {
+		mes "^3355FFYou've found traces";
+		mes "of the pursuit which";
+		mes "continue eastward.^000000";
+		if (tu_magician01 == 9)
+			tu_magician01 = 10;
+		else
+			tu_thief01 = 10;
+	} else {
+		mes "^3355FFThese traces of";
+		mes "the pursuit lead";
+		mes "towards the east.^000000";
+	}
+	close;
+}
+
+// Battle Traces 3
+//============================================================
+moc_fild12,276,165,0	script	Trace of Battle#3	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 10 && .@class_thief || tu_magician01 < 10 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that many people";
+		mes "have traveled through";
+		mes "this particular area.^000000";
+	} else if (tu_thief01 == 10 && .@class_thief || tu_magician01 == 10 && .@class_mage) {
+		mes "^3355FFYou examine these traces";
+		mes "and notice that one set of";
+		mes "footprints looks almost too";
+		mes "pronounced, as if it had been";
+		mes "made for somebody to find.^000000";
+		if (tu_magician01 == 10)
+			tu_magician01 = 11;
+		else
+			tu_thief01 = 11;
+	} else {
+		mes "^3355FFIt's a very";
+		mes "strange looking";
+		mes "set of footprints.^000000";
+	}
+	close;
+}
+
+// Battle Traces 4
+//============================================================
+moc_fild11,39,163,0	script	Trace of Battle#4	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThere are signs that show";
+		mes "that some violent scuffle";
+		mes "might have occurred here,";
+		mes "but you can't tell what had";
+		mes "happened exactly...^000000";
+	} else if (tu_thief01 < 11 && .@class_thief || tu_magician01 < 11 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that many people";
+		mes "have traveled through";
+		mes "this particular area.^000000";
+	} else if (tu_thief01 == 11 && .@class_thief || tu_magician01 == 11 && .@class_mage) {
+		mes "^3355FFFrom these traces,";
+		mes "you see that another";
+		mes "set of footprints has";
+		mes "been added. It looks like";
+		mes "someone else got involved.";
+		mes "These prints are distinctly";
+		mes "clearer and much smaller.^000000";
+		if (tu_magician01 == 11)
+			tu_magician01 = 12;
+		else
+			tu_thief01 = 12;
+	} else {
+		mes "^3355FFFrom these traces,";
+		mes "you see that another";
+		mes "person has gotten involved";
+		mes "in this heated scuffle.^000000";
+	}
+	close;
+}
+
+// Battle Traces 5
+//============================================================
+moc_fild11,205,52,0	script	Trace of Battle#5	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 12 && .@class_thief || tu_magician01 < 12 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that many people";
+		mes "have traveled through";
+		mes "this particular area.^000000";
+	} else if (tu_thief01 == 12 && .@class_thief || tu_magician01 == 12 && .@class_mage) {
+		mes "^3355FFThe traces of the battle";
+		mes "now split and head towards";
+		mes "the north and south. However,^000000";
+		if (countitem(506) == 0) {// Green_Potion
+			mes "^3355FFthere is a puddle of strong poison that you must neutralize before you can investigate this scene.^000000";
+			close;
+		}
+		mes "^3355FFthere is a puddle of strong poison that you must neutralize before you can investigate this scene.^000000";
+		next;
+		mes "^3355FFFortunately, you can";
+		mes "temporarily nullify the";
+		mes "poison by using one";
+		mes "of your Green Potions.^000000";
+		next;
+		switch(select("Use Green Potion.:Don't use it.")) {
+		case 1:
+			mes "^3355FFThe poison weakens";
+			mes "and some of it evaporates,";
+			mes "revealing a piece of cloth that";
+			mes "was hidden in that puddle.^000000";
+			next;
+			switch(select("Don't investigate.:Investigate.")) {
+			case 1:
+				mes "["+strcharinfo(0)+"]";
+				mes "A piece of cloth";
+				mes "is nothing to be";
+				mes "concerned about.";
+				close;
+			case 2:
+				mes "["+strcharinfo(0)+"]";
+				mes "Hey... There's";
+				mes "blood on this cloth";
+				mes "and some writing on";
+				mes "it that I can't recognize.";
+				mes "Hopefully, this'll provide";
+				mes "some sort of clue to all this?";
+				if (tu_thief01 == 12)
+					tu_thief01 = 13;
+				else
+					tu_magician01 = 13;
+				next;
+				mes "^3355FFYou take the piece";
+				mes "of cloth from the puddle";
+				mes "of poison and keep it with you.^000000";
+				close;
+			}
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "Hmm...";
+			mes "It'll probably be";
+			mes "faster if I follow this";
+			mes "trail, rather than stop to";
+			mes "investigate this scene.";
+			close;
+		}
+	} else {
+		mes "^3355FFYou can't find";
+		mes "anything else here,";
+		mes "aside from the traces";
+		mes "that split and lead both";
+		mes "northward and southward.^000000";
+	}
+	close;
+}
+
+// Battle Traces 6
+//============================================================
+moc_fild11,226,235,0	script	Trace of Battle#6	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 13 && .@class_thief || tu_magician01 < 13 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that many people";
+		mes "have traveled through";
+		mes "this particular area.^000000";
+	} else {
+		mes "^3355FFThese footprints";
+		mes "look like they're";
+		mes "heading towards the";
+		mes "north from the south.";
+		mes "But you can't really";
+		mes "be sure just yet.^000000";
+	}
+	close;
+}
+
+// Battle Traces 7
+//============================================================
+moc_fild11,184,342,0	script	Trace of Battle#7	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 13 && .@class_thief || tu_magician01 < 13 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that many people";
+		mes "have traveled through";
+		mes "this particular area.^000000";
+	} else {
+		mes "^3355FFThe trail here looks pretty";
+		mes "muddled, since it looks like";
+		mes "they battled here for quite a";
+		mes "while. But the footprints are";
+		mes "definitely heading south.^000000";
+	}
+	close;
+}
+
+// Battle Traces 8
+//============================================================
+moc_fild17,213,358,0	script	Trace of Battle#8	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 13 && .@class_thief || tu_magician01 < 13 && .@class_mage) {
+		mes "^3355FFThere are two";
+		mes "distinct sets of";
+		mes "footprints in this";
+		mes "area, but they don't";
+		mes "hold any significance";
+		mes "right about now.^000000";
+	} else if (tu_thief01 == 13 && .@class_thief || tu_magician01 == 13 && .@class_mage) {
+		mes "^3355FFAround here, it";
+		mes "looks like there are";
+		mes "only two sets of footprints.";
+		mes "What happened to the other";
+		mes "set that you found earlier?^000000";
+		if (tu_magician01 == 13)
+			tu_magician01 = 14;
+		else
+			tu_thief01 = 14;
+	} else {
+		mes "^3355FFFrom the evidence";
+		mes "that you've found here,";
+		mes "it looks like the battle";
+		mes "involves only two people";
+		mes "from this point onward.^000000";
+	}
+	close;
+}
+
+// Battle Traces 9
+//============================================================
+moc_fild17,228,274,0	script	Trace of Battle#9	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 14 && .@class_thief || tu_magician01 < 14 && .@class_mage) {
+		mes "^3355FFTraces of some";
+		mes "sort of battle are";
+		mes "scattered all over";
+		mes "this particular area.^000000";
+	} else if (tu_thief01 == 14 && .@class_thief || tu_magician01 == 14 && .@class_mage) {
+		mes "^3355FFYou follow the trail";
+		mes "and although traces from";
+		mes "the north and southeast mix";
+		mes "together, it looks like the battle continues towards the east.";
+		mes "But you should check this";
+		mes "spot a little bit more...^000000";
+		if (tu_magician01 == 14)
+			tu_magician01 = 15;
+		else
+			tu_thief01 = 15;
+	} else if (tu_thief01 == 15 && .@class_thief || tu_magician01 == 15 && .@class_mage) {
+		if (rand(1,10) == 7) {
+			mes "^3355FFAfter investigating this";
+			mes "area more thoroughly,";
+			mes "you find another piece of";
+			mes "cloth stained with blood.";
+			mes "You decide to keep it with";
+			mes "you, hoping that it will";
+			mes "provide more clues.^000000";
+			if (tu_magician01 == 15)
+				tu_magician01 = 16;
+			else
+				tu_thief01 = 16;
+		} else {
+			mes "^3355FFYou don't find anything,";
+			mes "but you still can't shake";
+			mes "the feeling that there is";
+			mes "some important clue that";
+			mes "you have to find here. It won't hurt to keep investigating here.^000000";
+		}
+	} else {
+		mes "^3355FFYou better continue";
+		mes "following this trail";
+		mes "which leads westward.^000000";
+	}
+	close;
+}
+
+// Battle Traces 10
+//============================================================
+moc_fild17,34,292,0	script	Trace of Battle#10	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 16 && .@class_thief || tu_magician01 < 16 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "showing that a lot";
+		mes "of people were in";
+		mes "this area earlier.^000000";
+	} else if (tu_thief01 == 16 && .@class_thief || tu_magician01 == 16 && .@class_mage) {
+		mes "^3355FFThe lead set of footprints,";
+		mes "probably belonging to the one";
+		mes "who was being pursued, look";
+		mes "more erratic, as if exhaustion";
+		mes "and desperation were setting in. These traces lead to the west.^000000";
+		if (tu_magician01 == 16)
+			tu_magician01 = 17;
+		else
+			tu_thief01 = 17;
+	} else {
+		mes "^3355FFThe trail from";
+		mes "this point heads";
+		mes "towards the west.^000000";
+	}
+	close;
+}
+
+// Battle Traces 11
+//============================================================
+moc_fild18,346,296,0	script	Trace of Battle#11	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 17 && .@class_thief || tu_magician01 < 17 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "showing that a lot";
+		mes "of people were in";
+		mes "this area earlier.^000000";
+	} else if (tu_thief01 == 17 && .@class_thief || tu_magician01 == 17 && .@class_mage) {
+		mes "^3355FFFollowing the";
+		mes "trail, you see signs";
+		mes "that blood was spilled";
+		mes "in this area. It looks like";
+		mes "someone was injured";
+		mes "pretty badly around here.^000000";
+		if (tu_magician01 == 17)
+			tu_magician01 = 18;
+		else
+			tu_thief01 = 18;
+	} else {
+		mes "^3355FFSince someone involved";
+		mes "in this conflict was bleeding,";
+		mes "further traces of this pursuit";
+		mes "might be easier to find now.^000000";
+	}
+	close;
+}
+
+// Battle Traces 12
+//============================================================
+moc_fild18,309,257,0	script	Trace of Battle#12	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 18 && .@class_thief || tu_magician01 < 18 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "showing that a lot";
+		mes "of people were in";
+		mes "this area earlier.^000000";
+	} else if (tu_thief01 == 18 && .@class_thief || tu_magician01 == 18 && .@class_mage) {
+		mes "^3355FFThese traces lead";
+		mes "northward and it looks";
+		mes "like whoever is doing";
+		mes "the chasing is getting";
+		mes "much closer to his prey.^000000";
+		if (tu_magician01 == 18)
+			tu_magician01 = 19;
+		else
+			tu_thief01 = 19;
+	} else {
+		mes "^3355FFThe trail of this";
+		mes "pursuit now leads";
+		mes "towards the north.^000000";
+	}
+	close;
+}
+
+// Battle Traces 13
+//============================================================
+moc_fild18,177,333,0	script	Trace of Battle#13	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 19 && .@class_thief) {
+		mes "^3355FFThere are signs";
+		mes "showing that a lot";
+		mes "of people were in";
+		mes "this area earlier.^000000";
+	} else if (tu_magician01 < 19 && .@class_mage) {
+		mes "A large group of people seem to have gone by.";
+	} else if (tu_thief01 == 19 && .@class_thief || tu_magician01 == 19 && .@class_mage) {
+		mes "^3355FFJudging from these";
+		mes "traces, it looks like";
+		mes "even more people have";
+		mes "joined the battle which";
+		mes "now seems to be leading";
+		mes "in the southwest direction.^000000";
+		if (tu_magician01 == 19)
+			tu_magician01 = 20;
+		else
+			tu_thief01 = 20;
+	} else {
+		mes "^3355FFIt looks like";
+		mes "the battle heads";
+		mes "towards the southwest";
+		mes "from this particular point.^000000";
+	}
+	close;
+}
+
+// Battle Traces 14
+//============================================================
+moc_fild18,111,303,0	script	Trace of Battle#14	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 20 && .@class_thief || tu_magician01 < 20 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "showing that a lot";
+		mes "of people were in";
+		mes "this area earlier.^000000";
+	} else if (tu_thief01 == 20 && .@class_thief || tu_magician01 == 20 && .@class_mage) {
+		mes "^3355FFIn this area, it looks";
+		mes "like even more people";
+		mes "joined in this battle and";
+		mes "the pursuit clearly heads";
+		mes "towards the south.^000000";
+		if (tu_magician01 == 20)
+			tu_magician01 = 21;
+		else
+			tu_thief01 = 21;
+	} else {
+		mes "^3355FFThe trail of";
+		mes "this battle heads";
+		mes "towards the south.^000000";
+	}
+	close;
+}
+
+// Battle Traces 15
+//============================================================
+moc_fild18,109,197,0	script	Trace of Battle#15	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 21 && .@class_thief) {
+		mes "^3355FFThere are signs";
+		mes "showing that a lot";
+		mes "of people were in";
+		mes "this area earlier.^000000";
+	} else if (tu_magician01 < 21 && .@class_mage)
+		mes "A large group of people seem to have gone by.";
+	else if (tu_thief01 == 21 && .@class_thief || tu_magician01 == 21 && .@class_mage) {
+		mes "^3355FFThis area is clearly";
+		mes "marked with signs";
+		mes "of a violent battle, with";
+		mes "traces of poison strewn";
+		mes "all over the ground.^000000";
+		next;
+		switch(select("Continue following the traces.:Further investigate the area.")) {
+		case 1:
+			mes "^3355FFYou examine the";
+			mes "trail, but can't really";
+			mes "discern the direction";
+			mes "in which the battle";
+			mes "continues...^000000";
+			close;
+		case 2:
+			mes "^3355FFYou find a bunch of";
+			mes "traps that use different";
+			mes "kinds of poison. The ones";
+			mes "that have been set off are";
+			mes "mixed with the ones which";
+			mes "haven't been triggered.^000000";
+			if (tu_thief01 == 21)
+				tu_thief01 = 22;
+			else
+				tu_magician01 = 22;
+			close;
+		}
+	} else if (tu_thief01 == 22 && .@class_thief || tu_magician01 == 22 && .@class_mage) {
+		if (rand(1,3) == 3) {
+			mes "^3355FFOne trap in particular";
+			mes "stands out to you more";
+			mes "than the rest. Perhaps";
+			mes "you should pour some";
+			mes "Green Potion on it to";
+			mes "neutralize it first.^000000";
+			next;
+			switch(select("Pour Green Potion.:Don't use Green Potion.")) {
+			case 1:
+				if (countitem(506) < 1) {// Green_Potion
+					mes "^3355FFUnfortunately, you";
+					mes "don't have a Green";
+					mes "Potion that you can";
+					mes "use to pour on this trap...^000000";
+					close;
+				} else {
+					mes "^3355FFPouring that";
+					mes "Green Potion didn't";
+					mes "really make anything";
+					mes "happen. Perhaps you";
+					mes "should try something else.^000000";
+					delitem 506,1; //Green_Potion
+					if (tu_thief01 == 22)
+						tu_thief01 = 23;
+					else
+						tu_magician01 = 23;
+					close;
+				}
+			case 2:
+				mes "["+strcharinfo(0)+"]";
+				mes "I guess...";
+				mes "I'll try investigating";
+				mes "this area a little more?";
+				close;
+			}
+		} else {
+			mes "^3355FFBy sheer accident,";
+			mes "you set off one of";
+			mes "the traps in the area.^000000";
+			sc_start SC_Poison,60000,0;
+			specialeffect EF_VENOMDUST2;
+			percentheal -30,0;
+		}
+	} else if (tu_thief01 == 23 && .@class_thief || tu_magician01 == 23 && .@class_mage) {
+		if (countitem(511) > 0 && countitem(716) > 0) {
+			mes "^3355FFYou try grinding";
+			mes "a Green Herb and";
+			mes "sprinkling it on the";
+			mes "trap and then place";
+			mes "a Red Gemstone on it.";
+			mes "The gem glows and";
+			mes "slowly melts away...^000000";
+			next;
+			mes "^3355FFAlthough you don't";
+			mes "fully understand the";
+			mes "science of using poisons";
+			mes "or antidotes, you managed";
+			mes "to successfully dismantle";
+			mes "the trap. Now you can safely";
+			mes "check what might be inside.^000000";
+			delitem 511,1; //Green_Herb
+			delitem 716,1; //Red_Gemstone
+			if (tu_thief01 == 23)
+				tu_thief01 = 24;
+			else
+				tu_magician01 = 24;
+		} else if (countitem(511) > 0) {
+			mes "^3355FFYou should try to";
+			mes "dismantle this trap";
+			mes "by using other catalysts";
+			mes "related to the curing or";
+			mes "use of poison. You do have";
+			mes "a Green Herb on you, so you";
+			mes "try sprinkling it on the trap.^000000";
+			next;
+			mes "^3355FFHowever, nothing";
+			mes "happens. It seems that";
+			mes "you need another catalyst";
+			mes "in addition to the Green Herb";
+			mes "that you have in order to";
+			mes "dismantle this trap.^000000";
+		} else if (countitem(716) > 0) {
+			mes "^3355FFYou should try to";
+			mes "dismantle this trap";
+			mes "by using other catalysts";
+			mes "related to the curing or use";
+			mes "of poison. You do have a";
+			mes "Red Gemstone, so you grind";
+			mes "it and sprinkle it on the trap.^000000";
+			next;
+			mes "^3355FFHowever, nothing";
+			mes "happens. It seems that";
+			mes "you need another catalyst to";
+			mes "use with the Red Gemstone";
+			mes "that you have in order to";
+			mes "dismantle this trap.^000000";
+		} else {
+			mes "^3355FFYou should try to";
+			mes "dismantle this trap";
+			mes "by using other catalysts";
+			mes "related to the curing or";
+			mes "use of poison. But what";
+			mes "items should you bring?^000000";
+		}
+	} else if (tu_thief01 == 24 && .@class_thief || tu_magician01 == 24 && .@class_mage) {
+		mes "^3355FFInside the dismantled";
+		mes "trap, you find another";
+		mes "piece of strange cloth";
+		mes "that's stained with blood.";
+		mes "You take it with you in";
+		mes "hopes that it provides";
+		mes "some kind of evidence.^000000";
+		if (tu_thief01 == 24)
+			tu_thief01 = 25;
+		else
+			tu_magician01 = 25;
+	} else {
+		mes "^3355FFYou examine the area";
+		mes "a little further and guess";
+		mes "that the battle might head";
+		mes "towards the south.^000000";
+	}
+	close;
+}
+
+// Battle Traces 16
+//============================================================
+moc_fild18,156,96,0	script	Trace of Battle#16	CLEAR_NPC,{
+	.@class_thief = ( BaseClass == Job_Thief );
+	.@class_mage = ( BaseClass == Job_Mage );
+	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+		mes "^3355FFThese look like";
+		mes "traces of some kind";
+		mes "of pursuit or battle, but";
+		mes "you can't really tell for sure.^000000";
+	} else if (tu_thief01 < 25 && .@class_thief || tu_magician01 < 25 && .@class_mage) {
+		mes "^3355FFThere are signs";
+		mes "that a large group";
+		mes "of people have been in";
+		mes "this area for some reason.^000000";
+	} else if (tu_thief01 == 25 && .@class_thief || tu_magician01 == 25 && .@class_mage) {
+		mes "^3355FFThese traces lead";
+		mes "to the edge of the cliff.";
+		mes "marking the end of the trail.";
+		mes "Apparently, the one who was";
+		mes "being chased met his fate here.^000000";
+		next;
+		mes "^3355FFThere are many footprints";
+		mes "leading to the edge of the";
+		mes "cliff and all of them leave";
+		mes "this scene, save for the set";
+		mes "of footprints that distinctly";
+		mes "belong to the person who";
+		mes "was pursued all this time...^3355FF";
+		next;
+		mes "^3355FFIt looks like you've";
+		mes "learned all that you can";
+		mes "from this investigation. You";
+		mes "better return and report your";
+		mes "findings to Yierhan soon.^000000";
+		if (tu_magician01 == 25)
+			tu_magician01 = 26;
+		else
+			tu_thief01 = 26;
+	} else {
+		mes "^3355FFThis is the end";
+		mes "of the trail. There";
+		mes "aren't any more traces";
+		mes "of the battle left to find.^000000";
+	}
+	close;
+}

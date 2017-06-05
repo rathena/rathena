@@ -1,0 +1,31 @@
+//===== rAthena Script =======================================
+//= Shadow Workshop Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Shadow Workshop
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//= 1.1 Added warps for Shadow Chaser job quest. [Euphy]
+//============================================================
+
+rachel,180,115,0	warp	s_atelier0001	1,1,s_atelier,131,72
+s_atelier,131,75,0	warp	s_atelier0002	1,1,rachel,180,118
+s_atelier,117,71,0	warp	s_atelier0003	1,1,s_atelier,169,72
+s_atelier,166,72,0	warp	s_atelier0004	1,1,s_atelier,117,68
+prontera,272,108,0	warp	s_atelier0005	1,1,s_atelier,13,119
+s_atelier,9,119,0	warp	s_atelier0006	1,1,prontera,269,108
+s_atelier,31,128,0	warp	s_atelier0007	1,1,s_atelier,76,125
+s_atelier,76,128,0	warp	s_atelier0008	1,1,s_atelier,28,128
+s_atelier,19,79,0	warp	s_atelier0009	1,1,lighthalzen,41,58
+lighthalzen,41,52,0	warp	s_atelier0010	1,1,s_atelier,18,72
+s_atelier,32,65,0	warp	s_atelier0011	1,1,s_atelier,80,59
+s_atelier,80,66,0	warp	s_atelier0012	1,1,s_atelier,32,56
+s_atelier,109,129,0	warp	s_atelier0013	1,1,s_atelier,159,125
+s_atelier,160,130,0	warp	s_atelier0014	1,1,s_atelier,114,129
+yuno,278,66,0	warp	s_atelier0015	1,1,s_atelier,111,122
+s_atelier,107,122,0	warp	s_atelier0016	1,1,yuno,274,66

@@ -1,0 +1,32 @@
+//===== rAthena Script =======================================
+//= Sample: Duplicate Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20070915
+//===== Description: ========================================= 
+//= An example of how duplicate NPCs are handled:
+//=  NPC variables are shared between all duplicates.
+//=  Each duplicate knows its own map coordinates.
+//=  Duplicates always override the source NPC's trigger area (even 0x0).
+//=  'OnInit' loads the middle Poring last, for some reason.
+//============================================================
+
+-	script	Test Script	-1,1,1,{
+	mes "Hi.";
+	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
+	close;
+
+OnInit:
+	getmapxy(.map$, .x, .y, 1);
+	end;
+
+OnTouch:
+	getmapxy(.map$, .x, .y, 1);
+	emotion e_scissors;
+	end;
+}
+
+prontera,150,175,4	duplicate(Test Script)	Test1	909
+prontera,155,175,4	duplicate(Test Script)	Test2	909,2,2
+prontera,160,175,4	duplicate(Test Script)	Test3	909,3,3

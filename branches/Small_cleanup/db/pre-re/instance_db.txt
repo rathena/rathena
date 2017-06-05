@@ -1,0 +1,9 @@
+// Instance Database
+//
+// Structure of Database:
+// ID,Name,LimitTime,EnterMap,EnterX,EnterY,Map1,Map2,Map3,Map4,Map5,Map6,Map7,Map8
+
+1,Endless Tower,14400,1@tower,50,355,1@tower,2@tower,3@tower,4@tower,5@tower,6@tower
+2,Sealed Catacomb,7200,1@cata,100,224,1@cata,2@cata
+3,Orc's Memory,3600,1@orcs,179,15,1@orcs,2@orcs
+4,Nidhoggur's Nest,14400,1@nyd,32,36,1@nyd,2@nyd

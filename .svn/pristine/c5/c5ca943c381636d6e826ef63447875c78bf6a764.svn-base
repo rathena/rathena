@@ -1,0 +1,31 @@
+//===== rAthena Script =======================================
+//= Ayothaya Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Using EuRO data [Ishizu]
+//= 1.2 According the guide book, added a Choco [Lupus&VP]
+//= 1.3 Removed Choco [Lupus]
+//= 1.4 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// ayo_fild01 - Ayothaya Field
+//==================================================
+ayo_fild01,0,0,0,0	monster	Coco	1104,30,0,0,0
+ayo_fild01,0,0,0,0	monster	Yoyo	1057,30,0,0,0
+ayo_fild01,0,0,0,0	monster	Smokie	1056,30,0,0,0
+ayo_fild01,0,0,0,0	monster	Leaf Cat	1586,3,3600000,1800000,0
+ayo_fild01,0,0,0,0	monster	Green Plant	1080,10,0,0,0
+
+//==================================================
+// ayo_fild02 - Ayothaya Field
+//==================================================
+ayo_fild02,0,0,0,0	monster	Leaf Cat	1586,50,0,0,0
+ayo_fild02,0,0,0,0	monster	Wootan Fighter	1499,20,0,0,0
+ayo_fild02,0,0,0,0	monster	Beetle King	1494,30,0,0,0
+ayo_fild02,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0

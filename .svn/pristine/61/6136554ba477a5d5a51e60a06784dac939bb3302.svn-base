@@ -1,0 +1,145 @@
+//--------------------------------------------------------------
+// rAthena Battle Configuration File
+// Originally Translated by Peter Kieser <pfak@telus.net>
+// Made in to plainer English by Ancyker
+//--------------------------------------------------------------
+// Note 1: Value is a config switch (on/off, yes/no or 1/0)
+// Note 2: Value is in percents (100 means 100%)
+//--------------------------------------------------------------
+
+// If an item is dropped, does it go straight into the user's inventory? (Note 1)
+item_auto_get: no
+
+// How long does it take for an item to disappear from the floor after it is dropped? (in milliseconds)
+flooritem_lifetime: 60000
+
+// Grace time during which only the person who did the most damage to a monster can get the item? (in milliseconds)
+item_first_get_time: 3000
+
+// Grace time during which only the first and second person who did the most damage to a monster can get the item? (in milliseconds)
+// (Takes effect after item_first_get_time elapses)
+item_second_get_time: 1000
+
+// Grace time during which only the first, second and third person who did the most damage to a monster can get the item? (in milliseconds)
+// (Takes effect after the item_second_get_time elapses)
+item_third_get_time: 1000
+
+// Grace time to apply to MvP reward items when the Most Valuable Player can't get the prize item and it drops on the ground? (in milliseconds)
+mvp_item_first_get_time: 10000
+
+// Grace time for the first and second MvP so they can get the item? (in milliseconds)
+// (Takes effect after mvp_item_first_get_time elapses)
+mvp_item_second_get_time: 10000
+
+// Grace time for the first, second and third MvP so they can get the item? (in milliseconds)
+// (Takes effect after mvp_item_second_get_time elapses)
+mvp_item_third_get_time: 2000
+
+// Item drop rates (Note 2)
+
+// The rate the common items are dropped (Items that are in the ETC tab, besides card)
+item_rate_common: 100
+item_rate_common_boss: 100
+item_drop_common_min: 1
+item_drop_common_max: 10000
+
+// The rate healing items are dropped (items that restore HP or SP)
+item_rate_heal: 100
+item_rate_heal_boss: 100
+item_drop_heal_min: 1
+item_drop_heal_max: 10000
+
+// The rate at which usable items (in the item tab) other then healing items are dropped.
+item_rate_use: 100
+item_rate_use_boss: 100
+item_drop_use_min: 1
+item_drop_use_max: 10000
+
+// The rate at which equipment is dropped.
+item_rate_equip: 100
+item_rate_equip_boss: 100
+item_drop_equip_min: 1
+item_drop_equip_max: 10000
+
+// The rate at which cards are dropped
+item_rate_card: 100
+item_rate_card_boss: 100
+item_drop_card_min: 1
+item_drop_card_max: 10000
+
+// The rate adjustment for the MVP items that the MVP gets directly in their inventory
+// Mode: 0 - official order, 1 - random order, 2 - all items
+item_rate_mvp: 100
+item_drop_mvp_min: 1
+item_drop_mvp_max: 10000
+item_drop_mvp_mode: 0
+
+// The rate adjustment for card-granted item drops.
+item_rate_adddrop: 100
+item_drop_add_min: 1
+item_drop_add_max: 10000
+
+// Rate adjustment for Treasure Box drops (these override all other modifiers)
+item_rate_treasure: 100
+item_drop_treasure_min: 1
+item_drop_treasure_max: 10000
+
+// Use logarithmic drops? (Note 1)
+// Logarithmic drops scale drop rates in a non-linear fashion using the equation 
+// Droprate(x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5))
+// Where x is the original drop rate and y is the drop_rate modifier (the previously mentioned item_rate* variables)
+// Use the following table for an idea of how the rate will affect drop rates when logarithmic drops are used:
+// Y: Original Drop Rate
+// X: Rate drop modifier (eg: item_rate_equip)
+//  X\Y | 0.01 0.02  0.05  0.10  0.20  0.50  1.00  2.00  5.00 10.00 20.00
+// -----+---------------------------------------------------------------
+//   50 | 0.01 0.01  0.03  0.06  0.11  0.30  0.62  1.30  3.49  7.42 15.92
+//  100 | 0.01 0.02  0.05  0.10  0.20  0.50  1.00  2.00  5.00 10.00 20.00
+//  200 | 0.02 0.04  0.09  0.18  0.35  0.84  1.61  3.07  7.16 13.48 25.13
+//  500 | 0.05 0.09  0.22  0.40  0.74  1.65  3.00  5.40 11.51 20.00 33.98
+// 1000 | 0.10 0.18  0.40  0.73  1.30  2.76  4.82  8.28 16.47 26.96 42.69
+// 2000 | 0.20 0.36  0.76  1.32  2.28  4.62  7.73 12.70 23.58 36.33 53.64
+// 5000 | 0.50 0.86  1.73  2.91  4.81  9.11 14.45 22.34 37.90 53.91 72.53
+//10000 | 1.00 1.67  3.25  5.28  8.44 15.24 23.19 34.26 54.57 72.67 91.13
+//20000 | 2.00 3.26  6.09  9.59 14.83 25.49 37.21 52.55 77.70 97.95  100%
+//50000 | 5.00 7.87 13.98 21.12 31.23 50.31 69.56 92.48  100%  100%  100%
+item_logarithmic_drops: no
+
+// Can the monster's drop rate become 0? (Note 1)
+// Default: no (as in official servers).
+drop_rate0item: no
+
+// Increase item drop rate +0.01%? (Note 1)
+// On official servers it is possible to get 0.00% drop chance so all items are increased by 0.01%.
+// NOTE: This is viewed as a bug to rAthena.
+// Default: no
+drop_rateincrease: no
+
+// Makes your LUK value affect drop rates on an absolute basis.
+// Setting to 100 means each luk adds 0.01% chance to find items
+// (regardless of item's base drop rate).
+drops_by_luk: 0
+
+// Makes your LUK value affect drop rates on a relative basis.
+// Setting to 100 means each luk adds 1% chance to find items
+// (So at 100 luk, everything will have double chance of dropping).
+drops_by_luk2: 0
+
+// The rate of monsters dropping ores by the skill Ore Discovery (Default is 100)
+finding_ore_rate: 100
+
+// Whether or not Marine Spheres and Floras summoned by Alchemist drop items?
+// This setting has three available values:
+// 0: Nothing drops.
+// 1: Only marine spheres drop items.
+// 2: All alchemist summons drop items.
+alchemist_summon_reward: 1
+
+// Make broadcast ** Player1 won Pupa's Pupa Card (chance 0.01%) ***
+// This can be set to any value between 0~10000.
+// Note: It also announces STEAL skill usage with rare items
+// 0 = don't show announces at all
+// 1 = show announces for 0.01% drop chance items
+// 333 = show announces for 3.33% or lower drop chance items
+// 10000 = show announces for all items
+rare_drop_announce: 0

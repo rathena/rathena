@@ -1,0 +1,84 @@
+//===== rAthena Script ======================================= 
+//= Dewata Guide
+//===== By: ================================================== 
+//= Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guide for the city of Dewata.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Lemongrass]
+//= 1.1 Navigation system update. [Euphy]
+//============================================================ 
+
+dewata,202,106,4	script	Dewata Guide#dewata01	535,{
+	mes "[Dewata Guide]";
+	mes "Welcome to ^8B4513Dewata Island^000000,";
+	mes "a place with dazzling waves and charming views it's a great place to relax.";
+	mes "If you have any questions, please ask me.";
+	next;
+	mes "[Dewata Guide]";
+	mes "Where can I guide you?";
+	F_Navi("[Dewata Guide]");
+	while (1) {
+		next;
+		switch(select("[ Kafra Employee ]:[ Weapon Dealer ]:[ Armor Dealer ]:[ Tool Dealer ]:[ Restauranteur ]:[ Krakatau Gatekeeper ]:[ Alberta Sailor ]:Remove marks from Mini-Map:Cancel")) {
+		case 1:
+			callsub L_Mark, "^0000FFKafra Employee^000000";
+			viewpoint 1,202,184,0,0x000FFF;
+			break;
+		case 2:
+			callsub L_Mark, F_Navi("Weapon Dealer","dewata,218,164","^008080");
+			viewpoint 1,218,163,1,0x008080;
+			break;
+		case 3:
+			callsub L_Mark, F_Navi("Armor Dealer","dewata,158,182","^008080");
+			viewpoint 1,158,182,2,0x008080;
+			break;
+		case 4:
+			callsub L_Mark, F_Navi("Tool Dealer","dewata,182,164","^FF1493");
+			viewpoint 1,182,164,3,0xFF1493;
+			break;
+		case 5:
+			callsub L_Mark, F_Navi("Restauranteur","dewata,146,109","^FF1493");
+			viewpoint 1,146,109,4,0xFF1493;
+			break;
+		case 6:
+			callsub L_Mark, F_Navi("Krakau Gatekeeper","dewata,235,56","^8A2BE2");
+			viewpoint 1,235,56,5,0x8A2BE2;
+			break;
+		case 7:
+			callsub L_Mark, F_Navi("Alberta Sailor","dewata,229,49","^00BFFF");
+			viewpoint 1,229,49,6,0x00BFFF;
+			break;
+		case 8:
+			mes "[Dewata Guide]";
+			mes "I'll remove all marks from your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 2,202,184,0,0xFFFFFF;
+			viewpoint 2,218,163,1,0xFFFFFF;
+			viewpoint 2,158,182,2,0xFFFFFF;
+			viewpoint 2,182,164,3,0xFFFFFF;
+			viewpoint 2,232,59,4,0xFFFFFF;
+			viewpoint 2,195,235,5,0xFFFFFF;
+			viewpoint 2,230,52,6,0xFFFFFF;
+			break;
+		case 9:
+			mes "[Dewata Guide]";
+			mes "Enjoy your trip!!";
+			close;
+		}
+	}
+
+L_Mark:
+	mes "[Dewata Guide]";
+	mes "The "+getarg(0)+" is";
+	mes "marked on your mini-map.";
+	mes "Check your mini-map.";
+	mes "Is there anything else I can do for you?";
+	return;
+}
+dewata,197,184,4	duplicate(Dewata Guide#dewata01)	Dewata Guide#dewata02	535

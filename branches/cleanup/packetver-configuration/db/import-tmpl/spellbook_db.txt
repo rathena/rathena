@@ -1,0 +1,9 @@
+// Reading Spellbook Preserve Points Database
+//
+// Structure of Database:
+// SkillID,PreservePoints,Required Book
+//
+// NOTE:
+// - To add more entries, increase MAX_SKILL_SPELLBOOK_DB in skill.h.
+// - To remove entry by importing, put 0 for 'PreservePoints'
+

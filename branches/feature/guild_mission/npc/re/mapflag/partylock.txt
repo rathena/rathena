@@ -1,0 +1,54 @@
+//===== rAthena Script =======================================
+//= Mapflag: Party lock.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Blocks all party modifications on a map:
+//=   /organize, /leave, /invite, @changeleader
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// Misty Forest Labyrinth =========
+1@mist	mapflag	partylock
+
+// Octopus Cave ===================
+1@cash	mapflag	partylock
+
+// Drain ==========================
+1@pump	mapflag	partylock
+2@pump	mapflag	partylock
+
+// Somatology Laboratory ==========
+1@lhz	mapflag	partylock
+
+// Bangungot Hospital F2 ==========
+1@ma_h	mapflag	partylock
+
+// Buwaya Cave ====================
+1@ma_c	mapflag	partylock
+
+// Bakonawa Hideout ===============
+1@ma_b	mapflag	partylock
+
+// Inside Eclage ==================
+1@ecl	mapflag	partylock
+
+// Glast Heim Memorial Dungeon ====
+1@gl_k	mapflag	partylock
+2@gl_k	mapflag	partylock
+
+// Wave Mode Memorial Dungeon =====
+1@def01	mapflag	partylock
+1@def02	mapflag	partylock
+1@def03	mapflag	partylock
+
+// Heroes' Trails - Part 1 ========
+1@gef	mapflag	partylock
+1@face	mapflag	partylock
+1@sara	mapflag	partylock
+1@gef_in	mapflag	partylock

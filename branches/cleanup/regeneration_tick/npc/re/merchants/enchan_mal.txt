@@ -1,0 +1,656 @@
+//===== rAthena Script ======================================= 
+//= Malangdo Enchants
+//===== By: ================================================== 
+//= Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.0a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Adds enchantments to many high level weapons in exchange
+//= for Malangdo coins.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Euphy]
+//= 1.0a Added 'delequip' command. [Euphy]
+//============================================================ 
+
+// Enchanter NPC :: mal_yong
+//============================================================
+malangdo,213,167,4	script	Mayomayo#mal	555,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of objects. Let's try to continue after reducing those objects.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "Can't continue because you have too many heavy objects. Let's try to continue after reducing the weight.";
+		close;
+	}
+	mes "[Mayomayo]";
+	mes "Wow welcome. It is new Mayomayo refinement store~ I enchant some luxury weapons including level 4 weapons.";
+	next;
+	switch(select("Any store policy changes?:Enchant High Ranked Weapon:Initialize Enchant (Need Silvervine Fruit)")) {
+	case 1:
+		mes "[Mayomayo]";
+		mes "When I enchant weapons, the slotted cards or refined level are dissipated sometimes. I hated it. However, one day I found how to do it without any extinction.";
+		next;
+		mes "[Mayomayo]";
+		mes "Have you ever seen a building of person of reinforcement capacity association?";
+		next;
+		if(select("I've seen it before.:I haven't seen it before.") == 2) {
+			mes "[Mayomayo]";
+			mes "That builiding is located to the southeast of where I am. Why don't you go on a field trip there?";
+			close;
+		}
+		mes "[Mayomayo]";
+		mes "If you go to the place, there is someone who enchants the Archangel Wing. At that time that was amazing, because that was impossible ability by my own skill.";
+		next;
+		mes "[Mayomayo]";
+		mes "Every night I became his butler and did odd jobs. That is how I learned to enchant.";
+		next;
+		mes "[Mayomayo]";
+		mes "Several rules are changed. Well, you better have experience.";
+		close;
+	case 2:
+		set @mal_enchant_select,1;
+		break;
+	case 3:
+		set @mal_enchant_select,2;
+		break;
+	}
+
+	if (!getequipisequiped(EQI_HAND_R)) {
+		mes "[Mayomayo]";
+		mes "Did you take off your equipment?";
+		set @mal_enchant_select,0;
+		close;
+	}
+	set @mal_equip_id, getequipid(EQI_HAND_R);
+	set .@equip_type, getiteminfo(@mal_equip_id,11);
+
+	//callsub L_Socket,<cost multiplier>,<4-x enchants possible>;
+	switch(.@equip_type) { // Check weapon type first to speed up the checks.
+	case 1: // Daggers
+		switch(@mal_equip_id) {
+			case 1224: callsub L_Socket,1,2; //Sword_Breaker
+			case 1225: callsub L_Socket,1,2; //Mail_Breaker
+			case 1227: callsub L_Socket,1,2; //Weeder_Knife
+			case 1229: callsub L_Socket,1,2; //Mama's_Knife
+			case 1232: callsub L_Socket,1,2; //Assasin_Dagger
+			case 1233: callsub L_Socket,1,2; //Exercise
+			case 1235: callsub L_Socket,1,2; //Azoth
+			case 1236: callsub L_Socket,1,2; //Sucsamad
+			case 1237: callsub L_Socket,1,2; //Grimtooth_
+			case 1240: callsub L_Socket,1,2; //Princess_Knife
+			case 1241: callsub L_Socket,1,2; //Cursed_Dagger
+			case 1242: callsub L_Socket,1,2; //Counter_Dagger
+			case 1244: callsub L_Socket,1,2; //Holy_Dagger
+			case 13046: callsub L_Socket,1,3; //Krieg
+			case 13047: callsub L_Socket,1,2; //Weihna
+			case 13061: callsub L_Socket,1,2; //Black_Wing
+			case 1223: callsub L_Socket,2,2; //Forturn_Sword
+			case 1228: callsub L_Socket,2,2; //Combat_Knife
+			case 1234: callsub L_Socket,2,2; //Moonlight_Sword
+			case 1230: callsub L_Socket,4,2; //House_Auger
+			case 1231: callsub L_Socket,4,2; //Bazerald
+			case 13062: callsub L_Socket,4,2; //Ancient_Dagger
+		}
+		break;
+	case 16: // Katars
+		switch(@mal_equip_id) {
+			case 1271: callsub L_Socket,1,2; //Blood_Tears
+			case 1263: callsub L_Socket,1,2; //Unholy_Touch
+			case 1270: callsub L_Socket,1,2; //Drill_Katar
+			case 1284: callsub L_Socket,1,2; //Krishna
+			case 1285: callsub L_Socket,1,2; //Cakram
+			case 1268: callsub L_Socket,2,2; //Wild_Beast_Claw
+			case 1269: callsub L_Socket,2,2; //Inverse_Scale
+			case 1265: callsub L_Socket,2,2; //Bloody_Roar
+			case 1261: callsub L_Socket,4,2; //Infiltrator
+			case 1266: callsub L_Socket,4,2; //Infiltrator_
+		}
+		break;
+	case 6: // 1-H Axes
+		switch(@mal_equip_id) {
+			case 1305: callsub L_Socket,1,2; //Cleaver
+			case 1311: callsub L_Socket,1,2; //Vecer_Axe
+		}
+		break;
+	case 7: // 2-H Axes
+		switch(@mal_equip_id) {
+			case 1364: callsub L_Socket,1,2; //Great_Axe
+			case 1365: callsub L_Socket,1,2; //Sabbath
+			case 1385: callsub L_Socket,1,2; //Bradium_Stonehammer
+			case 1367: callsub L_Socket,1,2; //Slaughter
+			case 1368: callsub L_Socket,1,2; //Tomahawk
+			case 1387: callsub L_Socket,2,2; //Giant_Axe
+			case 1369: callsub L_Socket,2,2; //Guillotine
+			case 1363: callsub L_Socket,2,2; //Brood_Axe
+			case 1376: callsub L_Socket,4,2; //Heart_Breaker
+			case 1377: callsub L_Socket,4,2; //Hurricane_Fury
+			case 1366: callsub L_Socket,4,2; //Right_Epsilon
+			case 1370: callsub L_Socket,4,2; //Doom_Slayer
+			case 1371: callsub L_Socket,4,2; //Doom_Slayer_
+		}
+		break;
+	case 2: // 1-H Swords
+		switch(@mal_equip_id) {
+			case 1131: callsub L_Socket,1,2; //Ice_Falchon
+			case 1133: callsub L_Socket,1,2; //Fire_Brand
+			case 1134: callsub L_Socket,1,2; //Scissores_Sword
+			case 1135: callsub L_Socket,1,2; //Cutlas
+			case 1136: callsub L_Socket,1,2; //Solar_Sword
+			case 1138: callsub L_Socket,1,2; //Mysteltainn_
+			case 1139: callsub L_Socket,1,2; //Tale_Fing_
+			case 1140: callsub L_Socket,1,2; //Byeorrun_Gum
+			case 1141: callsub L_Socket,1,2; //Immaterial_Sword
+			case 1148: callsub L_Socket,1,2; //Star_Dust_Blade
+			case 13421: callsub L_Socket,1,2; //Ruber
+			case 13431: callsub L_Socket,2,2; //Chrome_Sword
+			case 1137: callsub L_Socket,2,2; //Excalibur
+			case 1130: callsub L_Socket,2,2; //Nagan
+			case 1132: callsub L_Socket,4,2; //Edge
+		}
+		break;
+	case 3: // 2-H Swords
+		switch(@mal_equip_id) {
+			case 1164: callsub L_Socket,1,2; //Muramasa
+			case 1166: callsub L_Socket,1,2; //Dragon_Slayer
+			case 1167: callsub L_Socket,1,2; //Schweizersabel
+			case 1168: callsub L_Socket,1,2; //Zweihander
+			case 1170: callsub L_Socket,1,2; //Katzbalger
+			case 1171: callsub L_Socket,1,2; //Zweihander_
+			case 1176: callsub L_Socket,1,2; //Muscle_Cutter
+			case 1178: callsub L_Socket,1,2; //Schweizersabel_
+			case 1180: callsub L_Socket,1,2; //Dragon_Slayer_
+			case 1181: callsub L_Socket,1,2; //Tae_Goo_Lyeon
+			case 1182: callsub L_Socket,1,2; //Bloody_Eater
+			case 1188: callsub L_Socket,1,2; //Veteran_Sword
+			case 1189: callsub L_Socket,1,3; //Krasnaya
+			case 1196: callsub L_Socket,2,2; //Chrome_Twohand_Sword
+			case 1165: callsub L_Socket,2,2; //Masamune
+			case 1169: callsub L_Socket,2,2; //Executioner_
+			case 1179: callsub L_Socket,2,2; //Executioner__
+			case 1175: callsub L_Socket,2,2; //Altas_Weapon
+			case 1185: callsub L_Socket,4,2; //Violet_Fear
+			case 1186: callsub L_Socket,4,2; //Death_Guidance
+		}
+		break;
+	case 4: // 1-H Spears
+		switch(@mal_equip_id) {
+			case 1420: callsub L_Socket,1,2; //Long_Horn
+			case 1413: callsub L_Socket,1,2; //Gungnir
+			case 1414: callsub L_Socket,1,2; //Gelerdria
+			case 1416: callsub L_Socket,1,2; //Tjungkuletti
+			case 1418: callsub L_Socket,1,2; //Gungnir_
+			case 1433: callsub L_Socket,2,2; //Imperial_Spear
+			case 1415: callsub L_Socket,2,2; //Skewer
+			case 1421: callsub L_Socket,2,2; //Battle_Hook
+			case 1422: callsub L_Socket,4,2; //Hunting_Spear
+		}
+		break;
+	case 5: // 2-H Spears
+		switch(@mal_equip_id) {
+			case 1466: callsub L_Socket,1,2; //Crescent_Scythe
+			case 1467: callsub L_Socket,1,2; //Bill_Guisarme
+			case 1468: callsub L_Socket,1,2; //Zephyrus
+			case 1469: callsub L_Socket,1,2; //Longinus's_Spear
+			case 1470: callsub L_Socket,1,2; //Brionac
+			case 1471: callsub L_Socket,1,2; //Hell_Fire
+			case 1474: callsub L_Socket,1,2; //Gae_Bolg
+			case 1477: callsub L_Socket,1,2; //Spectral_Spear
+			case 1478: callsub L_Socket,1,2; //Ahlspiess
+			case 1479: callsub L_Socket,1,2; //Spectral_Spear_
+			case 1480: callsub L_Socket,1,2; //Gae_Bolg_
+			case 1481: callsub L_Socket,1,3; //Zephyrus_
+			case 1484: callsub L_Socket,2,2; //Cardo
+		}
+		break;
+	case 10: // Staves
+		switch(@mal_equip_id) {
+			case 1616: callsub L_Socket,1,2; //Staff_Of_Wing
+			case 1629: callsub L_Socket,1,2; //Walking_Stick
+			case 1631: callsub L_Socket,1,2; //Holy_Stick
+			case 1643: callsub L_Socket,1,2; //Dead_Tree_Cane
+			case 1654: callsub L_Socket,1,2; //Mental_Stick
+			case 1636: callsub L_Socket,2,2; //Thorn_Staff
+			case 1637: callsub L_Socket,2,2; //Eraser
+			case 1473: callsub L_Socket,1,2; //Wizardy_Staff
+		}
+		break;
+	case 23: // New 2-H Staves
+		switch(@mal_equip_id) {
+			case 2004: callsub L_Socket,1,2; //Kronos
+			case 2005: callsub L_Socket,1,2; //Dea_Staff
+			case 2001: callsub L_Socket,2,2; //Divine_Cross
+			case 2000: callsub L_Socket,4,2; //Destruction_Rod
+		}
+		break;
+	case 8: // Maces
+		switch(@mal_equip_id) {
+			case 1524: callsub L_Socket,1,2; //Golden_Mace
+			case 1525: callsub L_Socket,1,2; //Long_Mace
+			case 1527: callsub L_Socket,1,2; //Quadrille
+			case 1539: callsub L_Socket,1,2; //Golden_Mace_
+			case 1541: callsub L_Socket,1,2; //Nemesis
+			case 16000: callsub L_Socket,1,2; //Erde
+			case 16001: callsub L_Socket,1,2; //Red_Square_Bag
+			case 16010: callsub L_Socket,1,2; //Red_Ether_Bag
+			case 1523: callsub L_Socket,2,2; //Spike
+			case 1538: callsub L_Socket,2,2; //Spike_
+			case 1526: callsub L_Socket,2,2; //Slash
+			case 1528: callsub L_Socket,4,2; //Grand_Cross
+			case 1540: callsub L_Socket,4,2; //Grand_Cross_
+		}
+		break;
+	case 15: // Books
+		switch(@mal_equip_id) {
+			case 1557: callsub L_Socket,1,2; //Book_Of_The_Apocalypse
+			case 1558: callsub L_Socket,1,2; //Girl's_Diary
+			case 1559: callsub L_Socket,1,2; //Legacy_Of_Dragon
+			case 1561: callsub L_Socket,1,2; //Hardback
+			case 1562: callsub L_Socket,1,2; //Bible_Of_Battlefield
+			case 1565: callsub L_Socket,4,2; //Death_Note
+		}
+		break;
+	case 12: // Knuckles
+		switch(@mal_equip_id) {
+			case 1813: callsub L_Socket,1,2; //Kaiser_Knuckle
+			case 1814: callsub L_Socket,1,2; //Berserk
+			case 1815: callsub L_Socket,1,2; //Claw_Of_Garm
+			case 1816: callsub L_Socket,1,2; //Berserk_
+			case 1830: callsub L_Socket,2,2; //Sura_Rampage
+		}
+		break;
+	case 11: // Bows
+		switch(@mal_equip_id) {
+			case 1719: callsub L_Socket,1,2; //Bow_Of_Roguemaster
+			case 1722: callsub L_Socket,1,2; //Balistar
+			case 1724: callsub L_Socket,1,2; //Dragon_Wing
+			case 1725: callsub L_Socket,1,2; //Bow_Of_Minstrel
+			case 1727: callsub L_Socket,1,2; //Balistar_
+			case 1737: callsub L_Socket,1,2; //Ixion_Wing
+			case 1740: callsub L_Socket,1,2; //Nepenthes_Bow
+			case 1741: callsub L_Socket,1,2; //Cursed_Lyre
+			case 1745: callsub L_Socket,1,2; //Falken_Blitz
+			case 18103: callsub L_Socket,1,2; //Mystic_Bow
+			case 1720: callsub L_Socket,2,2; //Bow_Of_Rudra
+		}
+		break;
+	case 13: // Musical Instruments
+		switch(@mal_equip_id) {
+			case 1913: callsub L_Socket,1,2; //Electronic_Guitar
+			case 1918: callsub L_Socket,1,2; //Oriental_Lute
+			case 1920: callsub L_Socket,1,2; //Berserk_Guitar
+			case 1922: callsub L_Socket,1,2; //Oriental_Lute_
+			case 1926: callsub L_Socket,1,2; //Harp_Of_Nepenthes
+			case 1930: callsub L_Socket,2,2; //Green_Whistle
+		}
+		break;
+	case 14: // Whips
+		switch(@mal_equip_id) {
+			case 1962: callsub L_Socket,1,2; //Lariat
+			case 1963: callsub L_Socket,1,2; //Rapture_Rose
+			case 1964: callsub L_Socket,1,2; //Chemeti
+			case 1969: callsub L_Socket,1,2; //Bladed_Whip
+			case 1970: callsub L_Socket,1,2; //Queen's_Whip
+			case 1972: callsub L_Socket,1,2; //Electric_Eel
+			case 1973: callsub L_Socket,1,2; //Sea_Witch_Foot
+			case 1974: callsub L_Socket,1,2; //Carrot_Whip
+			case 1976: callsub L_Socket,1,2; //Queen's_Whip_
+			case 1979: callsub L_Socket,1,2; //Stem_Of_Nepenthes
+			case 1984: callsub L_Socket,2,2; //Stem_Whip
+			case 1985: callsub L_Socket,4,2; //Rosebine
+		}
+		break;
+	}
+	mes "[Mayomayo]";
+	if (@mal_enchant_select == 1)
+		mes "This is not a suitable equipment for the enchant. Don't forget we only take care of high class weapons, including level 4 weapons~";
+	else
+		mes "This equipment can not be initialized. Don't forget we only handle some luxury weapons, including level 4 weapons~";
+	set @mal_equip_id,0;
+	set @mal_enchant_select,0;
+	close;
+
+L_Socket:
+	set .@select, @mal_enchant_select;
+	set .@equip_id, @mal_equip_id;
+	set .@equip_name$, getitemname(.@equip_id)+((getitemslots(.@equip_id))?"["+getitemslots(.@equip_id)+"]":"");
+	setarray .@equip_card[0], getequipcardid(EQI_HAND_R,0),getequipcardid(EQI_HAND_R,1),getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
+	set @mal_equip_id,0;
+	set @mal_enchant_select,0;
+
+	if (.@select == 1) {
+		mes "[Mayomayo]";
+		mes "^0000ff"+.@equip_name$+"^000000! Do you want to enchant this equipment? How will you pay for this?";
+		next;
+
+		setarray .@coin[0],6422,6421,6420,6419,6418,6423; // Payment ID
+		setarray .@cost[0],  15,  10,   6,   3,   2,   1; // Payment multiplier
+
+		set .@menu$, "Stop:";
+		for(set .@i,0; .@i<getarraysize(.@coin); set .@i,.@i+1) {
+			set .@count[.@i], countitem(.@coin[.@i]);
+			set .@total[.@i], getarg(0)*.@cost[.@i];
+			if (.@count[.@i] < .@total[.@i])
+				set .@menu$, .@menu$+"^999999"+getitemname(.@coin[.@i])+" (missing "+(.@total[.@i]-.@count[.@i])+")^000000:";
+			else
+				set .@menu$, .@menu$+getitemname(.@coin[.@i])+" (have "+.@count[.@i]+", need "+.@total[.@i]+"):";
+		}
+		set .@coin_select, select(.@menu$)-2;
+		if (.@coin_select == -1) {
+			mes "[Mayomayo]";
+			mes "Come back again if you change your mind.";
+			close;
+		} else if (.@count[.@coin_select] < .@total[.@coin_select]) {
+			mes "[Mayomayo]";
+			mes "You don't have enough coins. Do you want to check again?";
+			close;
+		}
+		switch(.@coin_select) {
+		case 0: //Egrade_Coin
+			set .@enchant_type,10;
+			break;
+		case 1: //Dgrade_Coin
+			set .@enchant_type,9;
+			break;
+		case 2: //Cgrade_Coin
+			set .@enchant_type,8;
+			break;
+		case 3: //Bgrade_Coin
+			set .@enchant_type,7;
+			break;
+		case 4: //Agrade_Coin
+		case 5: //Anger_Seagod
+			mes "[Mayomayo]";
+			mes "When you use the "+getitemname(.@coin[.@coin_select])+", you can choose the enchant type.";
+			next;
+			switch(select("Stop:Short Range Type:Long Range Type:Caster Type")) {
+			case 1:
+				mes "[Mayomayo]";
+				mes "Ok. If you change your mind, let me know.";
+				close;
+			case 2:
+				set .@enchant_type,((.@coin_select == 4)?4:1);
+				break;
+			case 3:
+				set .@enchant_type,((.@coin_select == 4)?5:2);
+				break;
+			case 4:
+				set .@enchant_type,((.@coin_select == 4)?6:3);
+				break;
+			}
+			break;
+		}
+		if (.@equip_card[3] == 0 && getarg(1) < 4) {
+			set .@socket,4;
+			set .@str$,"1st";
+		} else if (.@equip_card[2] == 0 && getarg(1) < 3) {
+			set .@socket,3;
+			set .@str$,"2nd";
+		} else {
+			mes "[Mayomayo]";
+			mes "This equipment is at the end of enchant. Please initialize the enchant and you will be able to enchant it again, or bring another weapon.";
+			close;
+		}
+		mes "[Mayomayo]";
+		mes "I'm trying for the "+.@str$+" enchant. ^ff0000It will not touch previous refinement and cards. Also, the equipment will not be destroyed.^000000 Can I continue?";
+		next;
+		if(select("I'll come back later.:Please, continue.") == 1) {
+			mes "[Mayomayo]";
+			mes "Ok. If you change your mind, come back again.";
+			close;
+		}
+		switch(.@enchant_type) {
+		case 10: //Egrade_Coin
+			set .@i, rand(1,531);
+			     if (.@i < 101) set .@enchant,4787; //Mdef4
+			else if (.@i < 201) set .@enchant,4792; //Def6
+			else if (.@i < 301) set .@enchant,4801; //SP100
+			else if (.@i < 351) set .@enchant,4795; //HP100
+			else if (.@i < 401) set .@enchant,4796; //HP200
+			else if (.@i < 451) set .@enchant,4819; //Atk1
+			else if (.@i < 476) set .@enchant,4720; //Dexterity1
+			else if (.@i < 501) set .@enchant,4740; //Vitality1
+			else if (.@i < 526) set .@enchant,4750; //Luck1
+			else if (.@i < 528) set .@enchant,4700; //Strength1
+			else if (.@i < 530) set .@enchant,4730; //Agility1
+			else if (.@i < 532) set .@enchant,4710; //Inteligence1
+			else set .@enchant,9;
+			break;
+		case 9: //Dgrade_Coin
+			set .@i, rand(1,531);
+			     if (.@i < 101) set .@enchant,4795; //HP100
+			else if (.@i < 201) set .@enchant,4796; //HP200
+			else if (.@i < 301) set .@enchant,4819; //Atk1
+			else if (.@i < 351) set .@enchant,4720; //Dexterity1
+			else if (.@i < 401) set .@enchant,4740; //Vitality1
+			else if (.@i < 451) set .@enchant,4750; //Luck1
+			else if (.@i < 476) set .@enchant,4700; //Strength1
+			else if (.@i < 501) set .@enchant,4730; //Agility1
+			else if (.@i < 526) set .@enchant,4710; //Inteligence1
+			else if (.@i < 528) set .@enchant,4701; //Strength2
+			else if (.@i < 530) set .@enchant,4731; //Agility2
+			else if (.@i < 532) set .@enchant,4711; //Inteligence2
+			else set .@enchant,9;
+			break;
+		case 8: //Cgrade_Coin
+			set .@i, rand(1,531);
+			     if (.@i < 101) set .@enchant,4720; //Dexterity1
+			else if (.@i < 201) set .@enchant,4740; //Vitality1
+			else if (.@i < 301) set .@enchant,4750; //Luck1
+			else if (.@i < 351) set .@enchant,4700; //Strength1
+			else if (.@i < 401) set .@enchant,4730; //Agility1
+			else if (.@i < 451) set .@enchant,4710; //Inteligence1
+			else if (.@i < 476) set .@enchant,4701; //Strength2
+			else if (.@i < 501) set .@enchant,4731; //Agility2
+			else if (.@i < 526) set .@enchant,4711; //Inteligence2
+			else if (.@i < 528) set .@enchant,4702; //Strength3
+			else if (.@i < 530) set .@enchant,4732; //Agility3
+			else if (.@i < 532) set .@enchant,4712; //Inteligence3
+			else set .@enchant,9;
+			break;
+		case 7: //Bgrade_Coin
+			set .@i, rand(1,531);
+			     if (.@i < 101) set .@enchant,4700; //Strength1
+			else if (.@i < 201) set .@enchant,4730; //Agility1
+			else if (.@i < 301) set .@enchant,4710; //Inteligence1
+			else if (.@i < 351) set .@enchant,4701; //Strength2
+			else if (.@i < 401) set .@enchant,4731; //Agility2
+			else if (.@i < 451) set .@enchant,4711; //Inteligence2
+			else if (.@i < 476) set .@enchant,4702; //Strength3
+			else if (.@i < 501) set .@enchant,4732; //Agility3
+			else if (.@i < 526) set .@enchant,4712; //Inteligence3
+			else if (.@i < 528) set .@enchant,4703; //Strength4
+			else if (.@i < 530) set .@enchant,4733; //Agility4
+			else if (.@i < 532) set .@enchant,4713; //Inteligence4
+			else set .@enchant,9;
+			break;
+		case 6: //Agrade_Coin - Caster
+			set .@i, rand(1,555);
+			     if (.@i < 81)  set .@enchant,4711; //Inteligence2
+			else if (.@i < 161) set .@enchant,4721; //Dexterity2
+			else if (.@i < 241) set .@enchant,4814; //Spell2
+			else if (.@i < 311) set .@enchant,4712; //Inteligence3
+			else if (.@i < 371) set .@enchant,4722; //Dexterity3
+			else if (.@i < 431) set .@enchant,4813; //Spell3
+			else if (.@i < 476) set .@enchant,4713; //Inteligence4
+			else if (.@i < 516) set .@enchant,4812; //Spell4
+			else if (.@i < 526) set .@enchant,4760; //Matk1
+			else if (.@i < 546) set .@enchant,4714; //Inteligence5
+			else if (.@i < 551) set .@enchant,4826; //Spell5
+			else if (.@i < 556) set .@enchant,4761; //Matk2
+			else set .@enchant,9;
+			break;
+		case 5: //Agrade_Coin - Long Range
+			set .@i, rand(1,555);
+			     if (.@i < 81)  set .@enchant,4731; //Agility2
+			else if (.@i < 161) set .@enchant,4833; //Expert_Archer2
+			else if (.@i < 241) set .@enchant,4817; //Sharp2
+			else if (.@i < 311) set .@enchant,4732; //Agility3
+			else if (.@i < 371) set .@enchant,4834; //Expert_Archer3
+			else if (.@i < 431) set .@enchant,4816; //Sharp3
+			else if (.@i < 476) set .@enchant,4733; //Agility4
+			else if (.@i < 516) set .@enchant,4835; //Expert_Archer4
+			else if (.@i < 526) set .@enchant,4807; //Atk_Speed1
+			else if (.@i < 546) set .@enchant,4734; //Agility5
+			else if (.@i < 551) set .@enchant,4836; //Expert_Archer5
+			else if (.@i < 556) set .@enchant,4807; //Atk_Speed1
+			else set .@enchant,9;
+			break;
+		case 4: //Agrade_Coin - Short Range
+			set .@i, rand(1,555);
+			     if (.@i < 81)  set .@enchant,4731; //Agility2
+			else if (.@i < 161) set .@enchant,4808; //Fighting_Spirit4
+			else if (.@i < 241) set .@enchant,4817; //Sharp2
+			else if (.@i < 311) set .@enchant,4732; //Agility3
+			else if (.@i < 371) set .@enchant,4820; //Fighting_Spirit5
+			else if (.@i < 431) set .@enchant,4816; //Sharp3
+			else if (.@i < 476) set .@enchant,4733; //Agility4
+			else if (.@i < 516) set .@enchant,4821; //Fighting_Spirit6
+			else if (.@i < 526) set .@enchant,4807; //Atk_Speed1
+			else if (.@i < 546) set .@enchant,4734; //Agility5
+			else if (.@i < 551) set .@enchant,4822; //Fighting_Spirit7
+			else if (.@i < 556) set .@enchant,4807; //Atk_Speed1
+			else set .@enchant,9;
+			break;
+		case 3: //Anger_Seagod - Caster
+			set .@i, rand(1,555);
+			     if (.@i < 81)  set .@enchant,4712; //Inteligence3
+			else if (.@i < 161) set .@enchant,4722; //Dexterity3
+			else if (.@i < 241) set .@enchant,4813; //Spell3
+			else if (.@i < 311) set .@enchant,4713; //Inteligence4
+			else if (.@i < 371) set .@enchant,4812; //Spell4
+			else if (.@i < 431) set .@enchant,4760; //Matk1
+			else if (.@i < 476) set .@enchant,4714; //Inteligence5
+			else if (.@i < 516) set .@enchant,4826; //Spell5
+			else if (.@i < 526) set .@enchant,4761; //Matk2
+			else if (.@i < 546) set .@enchant,4715; //Inteligence6
+			else if (.@i < 551) set .@enchant,4827; //Spell6
+			else if (.@i < 556) set .@enchant,4761; //Matk2
+			else set .@enchant,9;
+			break;
+		case 2: //Anger_Seagod - Long Range
+			set .@i, rand(1,555);
+			     if (.@i < 81)  set .@enchant,4732; //Agility3
+			else if (.@i < 161) set .@enchant,4834; //Expert_Archer3
+			else if (.@i < 241) set .@enchant,4843; //Sharp4
+			else if (.@i < 311) set .@enchant,4733; //Agility4
+			else if (.@i < 371) set .@enchant,4835; //Expert_Archer4
+			else if (.@i < 431) set .@enchant,4844; //Sharp5
+			else if (.@i < 476) set .@enchant,4734; //Agility5
+			else if (.@i < 516) set .@enchant,4836; //Expert_Archer5
+			else if (.@i < 526) set .@enchant,4807; //Atk_Speed1
+			else if (.@i < 546) set .@enchant,4735; //Agility6
+			else if (.@i < 551) set .@enchant,4837; //Expert_Archer6
+			else if (.@i < 556) set .@enchant,4807; //Atk_Speed1
+			else set .@enchant,9;
+			break;
+		case 1: //Anger_Seagod - Short Range
+			set .@i, rand(1,555);
+			     if (.@i < 81)  set .@enchant,4732; //Agility3
+			else if (.@i < 161) set .@enchant,4820; //Fighting_Spirit5
+			else if (.@i < 241) set .@enchant,4843; //Sharp4
+			else if (.@i < 311) set .@enchant,4733; //Agility4
+			else if (.@i < 371) set .@enchant,4821; //Fighting_Spirit6
+			else if (.@i < 431) set .@enchant,4844; //Sharp5
+			else if (.@i < 476) set .@enchant,4734; //Agility5
+			else if (.@i < 516) set .@enchant,4822; //Fighting_Spirit7
+			else if (.@i < 526) set .@enchant,4807; //Atk_Speed1
+			else if (.@i < 546) set .@enchant,4735; //Agility6
+			else if (.@i < 551) set .@enchant,4823; //Fighting_Spirit8
+			else if (.@i < 556) set .@enchant,4807; //Atk_Speed1
+			else set .@enchant,9;
+			break;
+		default:
+			mes "[Mayomayo]";
+			mes "There is something wrong. Please try again.";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) ||
+		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+			close;
+
+		     if (.@equip_card[3] == 0 && getarg(1) < 4) set .@equip_card[3],.@enchant;
+		else if (.@equip_card[2] == 0 && getarg(1) < 3) set .@equip_card[2],.@enchant;
+		else if (.@equip_card[1] == 0 && getarg(1) < 2) set .@equip_card[1],.@enchant;
+		else if (.@equip_card[0] == 0 && getarg(1) < 1) set .@equip_card[0],.@enchant;
+		else {
+			mes "[Mayomayo]";
+			mes "This equipment is at the end of enchant. I provide enchant for two times maximum.";
+			next;
+			mes "[Mayomayo]";
+			mes "Surely I don't enchant at card socket, therefore weapons that have 3 slots can be enchanted only 1 time. Don't forget this~";
+			close;
+		}
+		if (.@enchant == 9) { // Should never happen.
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "[Mayomayo]";
+			mes "Oh my god!";
+			mes "This equipment is destroyed because it could not endure powerful ability. I'm so sorry.";
+			delitem .@coin[.@coin_select],.@total[.@coin_select];
+			delequip EQI_HAND_R;
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Mayomayo]";
+		mes "I have enchanted ^990000slot "+.@socket+"^000000 of this equipment.";
+		delitem .@coin[.@coin_select],.@total[.@coin_select];
+		set .@equip_refine, getequiprefinerycnt(EQI_HAND_R);
+		delequip EQI_HAND_R;
+
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		close;
+	} else if (.@select == 2) {
+		mes "[Mayomayo]";
+		mes "I will only initialize the enchant effect without touching previous refined level and cards.";
+		next;
+		if(select("Stop:Continue") == 1) {
+			mes "[Mayomayo]";
+			mes "If you change your mind, come back anytime.";
+			close;
+		}
+		if (countitem(6417) == 0) {
+			mes "[Mayomayo]";
+			mes "I'm sorry. You don't have Silvervine Fruit. Please check your inventory again?";
+			close;
+		}
+		if (!getequipisequiped(EQI_HAND_R)) {
+			mes "[Mayomayo]";
+			mes "Did you take off the equipment?";
+			close;
+		}
+		if (.@equip_card[3] == 0) {
+			mes "[Mayomayo]";
+			mes "This equipment has nothing to initialize. Please check again.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Mayomayo]";
+		mes "Initialize the enchant effect from the equipment.";
+		delitem 6417,1; //Silvervine
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) ||
+		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+			close;
+
+		set .@equip_refine, getequiprefinerycnt(EQI_HAND_R);
+		delequip EQI_HAND_R;
+
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		for(set .@i,0; .@i<4; set .@i,.@i+1) {
+			if (.@equip_card[.@i] >= 4700) // Armor Enchant System
+				set .@equip_card[.@i],0;
+		}
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		close;
+	}
+}

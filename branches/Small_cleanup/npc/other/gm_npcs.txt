@@ -1,0 +1,161 @@
+//===== rAthena Script ======================================= 
+//= GM Management NPCs
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Controls the official GM management NPCs in certain scripts.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+// callfunc("F_GM_NPC"{,<password>,<0:int | 1:str>{,<min>,<max>}})
+function	script	F_GM_NPC	{
+
+	// To disable all GM NPCs, uncomment the line below.
+	//end;
+
+	// To set a minimum GM level to access the NPCs, edit the line below.
+	if (getgmlevel() < 99) {
+		// Log the event.
+		getmapxy(.@map$,.@x,.@y,1);
+		logmes strcharinfo(0)+" attempted to access GM NPC "+strnpcinfo(0)+" ("+.@map$+","+.@x+","+.@y+").";
+		end;
+	}
+
+	if (!getargcount()) return;
+
+	// To disable password inputs, uncomment the line below.
+	//return 1;
+
+	// Password return values:
+	//  1: correct input
+	//  0: incorrect input
+	// -1: zero/cancel (integer only)
+	// -2: out of bounds (integer only)
+	if (getarg(1) == 0) {
+		// Integer password
+		if (getarg(3,0)) {
+			.@error = input(.@input,getarg(2),getarg(3));
+			if (.@error)
+				return -2;
+		} else
+			input .@input;
+		if (.@input == 0)
+			return -1;
+		else
+			return (.@input == getarg(0))?1:0;
+	} else {
+		// String password
+		input .@inputstr$;
+		return (.@inputstr$ == getarg(0))?1:0;
+	}
+}
+
+/*
+List of GM Management NPCs (incomplete)
+--------------------------
+[ Battleground ]
+- Switch#batgnd
+- Release all#b01
+- Release all#b02
+- Release all#a01
+- Release all#a02
+
+[ Guild-related ]
+- Event controller#aru_gd
+- Event controller#sch_gd
+- Festival Manager#gq_fes0
+- Festival Manager#gq_fes2
+- Godly Item Quests#god
+- Golbal var
+- Investment_total#fund00 (RE)
+
+[ Instances ]
+------ Endless Tower -----
+- #102Administrator Mode
+- Purification Stone#et2
+- #Manager Mode1
+- #Manager Mode2
+- #Manager Mode3
+- #Manager Mode4
+- #Manager Mode5
+--------------------------
+- Nidhoggur Manager
+- Purification Admin#nyd2
+- Bakonawa's Rage (RE)
+- Bangungot Gate (RE)
+
+[ Job-related ]
+----- 3rd Class (RE) -----
+- control#arch
+- #GMhelper01_gc
+- #GMhelper02_gc
+- Worker#job_ranger
+- R.Knight Job Manager
+- #renshucheck
+- sorcereryal
+- Button Girl#wl
+- Button Girl#sura
+- Battle Test Control#ko
+- Guide#ko_helper
+--------------------------
+- Soul Linker Var
+- 1st Job Quest Reset
+- Job Repair (RE)
+
+[ Quest ]
+--------- Renewal --------
+- 13.3 Related Reset
+- Scaraba Dungeon Entrance
+- Assistant#para_suvquest
+- Guidance for quest#ml
+- Initializing Mora Sanjo
+- Theore Set Guid
+- Field Bush Switch
+- Bakonawa Intro Helper
+- Pintados Manager#pin
+- #pa0829Reactor11
+- New Oz Image#1
+- Professor Aide#worm
+--------------------------
+- Allied Manager#gm
+- #timer_alba01
+- Translator Preparation#1
+- ep13_nd2f_mng
+- Factory Quest Test
+- boss::lght_boss_admin
+- #LyozienSwitch
+- Juperos Manager
+- Extra Story Patch
+- boss::boss_aru_monas
+- Koshei GlobalVar#admin
+- Morroc GlobalVar Admin::MorrocAdmin_sec
+- Morroc GlobalVar Admin::MorrocAdmin_moc
+- Morroc Invasion Manager (disabled)
+
+[ Other ]
+-------- Marriage --------
+- The King of Midgart
+- Divorce Staff
+- Remarry Staff
+------ Izlude Arena ------
+- log-on-aco#arena
+- acolink#arena
+- Arena Manager#arena
+- Reward Manager#arena
+- Picture Manager#arena
+- Live Broadcast#arena
+- #arenacontrol
+--------------------------
+- Monster Race Manager
+- Vote Globalvar Girl#yuno (disabled)
+- 2013questreset2#xmas (event, disabled)
+--------------------------
+- Mercenary Switch#Spear
+- Mercenary Switch#Bow
+- Mercenary Switch#Sword
+*/

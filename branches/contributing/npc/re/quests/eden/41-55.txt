@@ -1,0 +1,91 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Mission [41 - 55]
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 41 - 55.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Some little optimization here and there. [Masao]
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.4 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+moc_para01,40,38,3	script	Mission [41 - 55]	857,{
+	if (!callfunc("F_HasEdenGroupMark")) {
+		mes "You are not an Eden group member. You are not qualified to access the bulletin board.";
+		close;
+	}
+	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "^008800Wait a sec!!";
+		mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
+		close;
+	}
+	if (checkquest(12088) == -1) {
+		if (BaseLevel < 41 || BaseLevel > 55) {
+			mes "Mission bulletin board for Lv41~55 adventurers.";
+			close;
+		}
+		mes "[Mission Board]";
+		mes "Mission bulletin board.";
+		next;
+		if(select("Check the Missions.:Cancel.") == 2) {
+			mes "^000077Ok. Let's check the missions next time.^000000.";
+			close;
+		}
+		switch(select("Thara Frog Hunting:Cruiser Hunting:Kukre Hunting:Orc Baby Hunting:Orc Warrior Hunting:Vadon Hunting:Megalodon Hunting:Marse Hunting:Cornutus Hunting:Myst Hunting:Shellfish Hunting:Marine Sphere Hunting")) {
+			case 1: callsub L_Quest,12072,"Have you seen a red frog? It is called Thara Frog and it's very rare. We are trying to verify where it inhabits. So please hunt 20 Thara Frogs.";
+			case 2: callsub L_Quest,12073,"I heard of some toys attacking people. It is ridiculous! Let's show them our power! We have to hunt 15 Cruisers!";
+			case 3: callsub L_Quest,12074,"Someone got robbed near the beach! The possible suspect is a criminal monster called Kukre. Please hunt 30 Kukre.";
+			case 4: callsub L_Quest,12075,"Orc Babies are getting more violent these days. Please hunt 15 Orc Babies.";
+			case 5: callsub L_Quest,12076,"Orc Warriors are increasing their aggression. Please hunt 20 Orc Warriors.";
+			case 6: callsub L_Quest,12077,"Have you seen crabs with thick shells? They are Vadons. Please hunt 15 Vadons.";
+			case 7: callsub L_Quest,12078,"Dead fish are all around the beach and it is getting worse. Please hunt 30 Megalodon.";
+			case 8: callsub L_Quest,12079,"Can you hunt Marse? I need 15 Marse for my study. Please help me.";
+			case 9: callsub L_Quest,12080,"An idiot Cornutus bit the Mayor's foot. The Mayor is upset so we need to hunt 20 Cornutus to make him happy!";
+			case 10: callsub L_Quest,12081,"People are freaking out because of Myst. It looks like a ghost so, it scares people. Please hunt 15 Myst.";
+			case 11: callsub L_Quest,12082,"Don't ask why, but please hunt 30 Shellfish. It is a secret mission!";
+			case 12: callsub L_Quest,12083,"Marine Sphere? Do you know what a Marine Sphere is? I got a mission for you to hunt 15 Marine Sphere, so please do so.";
+			case 13: callsub L_Quest,12084,"The mayor wants to eat a delicious fish dish. Phen will be the perfect ingredient for it. Please hunt 20 Phen!";
+			case 14: callsub L_Quest,12085,"Dead Orc monsters got back to our town and they've revived as Orc Skeletons. We are in chaos! Please hunt 15 Orc Skeleton.";
+			case 15: callsub L_Quest,12086,"Some weird monsters called Zenorc are attacking us. Please hunt 30 Zenorc.";
+			case 16: callsub L_Quest,12087,"Be prepared! It is a cruel mission! Hunt 15 Mummies!! I tried once, but I couldn't succeed. It is too scary!";
+		}
+		end;
+	}
+	setarray .@Exp[0],9600,7200,15750,7875,11100,8550,17100,9000,12300,9900,20250,10350,13800,11025,22500,11250;
+	for(set .@i,0; .@i<16; set .@i,.@i+1)
+		if (checkquest(12072+.@i,HUNTING) == 2) {
+			mes "[Mission Board]";
+			mes "You have completed the mission.";
+			mes "Here is your reward.";
+			erasequest 12088;
+			erasequest 12072+.@i;
+			specialeffect2 EF_STEAL;
+			getexp .@Exp[.@i],0;
+			close;
+		}
+	if ((checkquest(12072,HUNTING) == 0) && (checkquest(12073,HUNTING) == 0) && (checkquest(12074,HUNTING) == 0) && (checkquest(12075,HUNTING) == 0) && (checkquest(12076,HUNTING) == 0) && (checkquest(12077,HUNTING) == 0) && (checkquest(12078,HUNTING) == 0) && (checkquest(12079,HUNTING) == 0) && (checkquest(12080,HUNTING) == 0) && (checkquest(12081,HUNTING) == 0) && (checkquest(12082,HUNTING) == 0) && (checkquest(12083,HUNTING) == 0) && (checkquest(12084,HUNTING) == 0) && (checkquest(12085,HUNTING) == 0) && (checkquest(12086,HUNTING) == 0) && (checkquest(12087,HUNTING) == 0)) {
+		mes "You may now view the bulletin board.";
+		erasequest 12088;
+		close;
+	}
+	mes "There is nothing special to do.";
+	close;
+L_Quest:
+	mes "[Mission Board Memo]";
+	mes getarg(1);
+	next;
+	if(select("Accept the mission.:Cancel.") == 1) {
+		mes "[Mission Board]";
+		mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+		setquest 12088;
+		setquest getarg(0);
+	}
+	close;
+}

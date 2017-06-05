@@ -1,0 +1,3231 @@
+//===== rAthena Script ======================================= 
+//= Guild Relay Quest
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guild Relay Quest.
+//= Quest designed for multiple users at once.
+//= Variable in use: guildrelay_q (Max: ??)
+//= Variable in use: guildtime (Max: ??)
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Fixed errors reported by NoHealing (Bugreport:3934) [L0ne_W0lf]
+//= NPCs now duplicate from FLOATING npcs instead of Luina 1 npcs.
+//============================================================ 
+
+// Floating NPCs to duplicate from.
+//============================================================
+-	script	RelayDummy1::GuildRelay1	754,{
+	set .@name$,strnpcinfo(1);
+	if (.@name$ == "Buzz") {
+		set .@name2$,"Lenya";
+		set .@name3$,"Gealuve";
+		set .@name4$,"Pariz";
+		set .@GID, GetCastleData("aldeg_cas"+strnpcinfo(2),1);
+	}
+	else if (.@name$ == "Jody") {
+		set .@name2$,"Ron Haware";
+		set .@name3$,"Vers";
+		set .@name4$,"Gen Garish";
+		set .@GID, GetCastleData("gefg_cas"+strnpcinfo(2),1);
+	}
+	else if (.@name$ == "Chungye") {
+		set .@name2$,"Dosuhlji";
+		set .@name3$,"Yayula";
+		set .@name4$,"Ashin";
+		set .@GID, GetCastleData("payg_cas"+strnpcinfo(2),1);
+	}
+	else if (.@name$ == "Hermod") {
+		set .@name2$,"Atila";
+		set .@name3$,"Cecil";
+		set .@name4$,"Diligo";
+		set .@GID, GetCastleData("prtg_cas"+strnpcinfo(2),1);
+	}
+	if (checkweight(908,630) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (.@GID == 0) {
+		mes "^3355FFYou're not sure why, but";
+		mes "this guy seems to be pretty";
+		mes "depressed. He briefly makes";
+		mes "eye contact with you, but then";
+		mes "breaks it off. Apparently,";
+		mes "he wants to be left alone.^000000";
+		next;
+		mes "^3355FFThere's no reason for you";
+		mes "to stick around an ownerless";
+		mes "stronghold. You may as well";
+		mes "head on your way.^000000";
+		close;
+	}
+	if (getcharid(2) == .@GID) {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			if (guildrelay_q == 100) {
+				if (guildtime > 22) {
+					if ((gettime(3) > 1) && (gettime(3) < guildtime)) {
+						mes "[" + .@name$ + "]";
+						mes "Oh, you're back. So did you";
+						mes "rest up enough? I'm sure the";
+						mes "other guild members are";
+						mes "feeling refreshed by now.";
+						mes "From the looks of it, you're";
+						mes "ready for your next mission.";
+						next;
+						mes "[" + .@name$ + "]";
+						mes "The next step for";
+						mes "you is to take this, the";
+						mes "''Spirit of Trust.'' If this";
+						mes "guild is going to be solid,";
+						mes "you need to think how much";
+						mes "trust there is in the guild.";
+						set guildrelay_q,8;
+						getitem 7240,1; //Soul_Of_Confidence
+						next;
+						mes "[" + .@name$ + "]";
+						mes "Your second test will be";
+						mes "to give that ^4D4DFFSpirit of Trust^000000";
+						mes "to a sage that can manipulate";
+						mes "nature's attributes. In other";
+						mes "words, a Sage or Scholar";
+						mes "must carry out this task.";
+						next;
+						mes "[" + .@name$ + "]";
+						mes "The Spirit of Trust must";
+						mes "be delivered to ^4D4DFF" + .@name3$ + "^000000,";
+						mes "so don't forget to relay";
+						mes "that information to your";
+						mes "Sage or Scholar. Very well,";
+						mes "good luck on your journey.";
+						close;
+					}
+					else {
+						mes "[" + .@name$ + "]";
+						mes "Ah, did you rest we-- Oh.";
+						mes "Why do you look so pale?";
+						mes "You can't accomplish great";
+						mes "deeds when you're overworked!";
+						mes "Rest. Your guild must be able";
+						mes "to depend on your strength.";
+						emotion e_gasp;
+						next;
+						mes "[" + .@name$ + "]";
+						mes "Your determination and";
+						mes "spirit is commendable, but";
+						mes "have the patience to recollect";
+						mes "yourself when you must. I will";
+						mes "be waiting here, so please";
+						mes "come back to me later.";
+						close;
+					}
+				}
+				else if (guildtime > 22) {
+					if ((gettime(3) > 0) && (gettime(3) < guildtime)) {
+						mes "[" + .@name$ + "]";
+						mes "Oh, you're back. So did you";
+						mes "rest up enough? I'm sure the";
+						mes "other guild members are";
+						mes "feeling refreshed by now.";
+						mes "From the looks of it, you're";
+						mes "ready for your next mission.";
+						next;
+						mes "[" + .@name$ + "]";
+						mes "The next step for";
+						mes "you is to take this, the";
+						mes "''Spirit of Trust.'' If this";
+						mes "guild is going to be solid,";
+						mes "you need to think how much";
+						mes "trust there is in the guild.";
+						set guildrelay_q,8;
+						getitem 7240,1; //Soul_Of_Confidence
+						next;
+						mes "[" + .@name$ + "]";
+						mes "Your second test will be";
+						mes "to give that ^4D4DFFSpirit of Trust^000000";
+						mes "to a sage that can manipulate";
+						mes "nature's attributes. In other";
+						mes "words, a Sage or Scholar";
+						mes "must carry out this task.";
+						next;
+						mes "[" + .@name$ + "]";
+						mes "The Spirit of Trust must";
+						mes "be delivered to ^4D4DFF" + .@name3$ + "^000000,";
+						mes "so don't forget to relay";
+						mes "that information to your";
+						mes "Sage or Scholar. Very well,";
+						mes "good luck on your journey.";
+						close;
+					}
+					else {
+						mes "[" + .@name$ + "]";
+						mes "Ah, did you rest we-- Oh.";
+						mes "Why do you look so pale?";
+						mes "You can't accomplish great";
+						mes "deeds when you're overworked!";
+						mes "Rest. Your guild must be able";
+						mes "to depend on your strength.";
+						emotion e_gasp;
+						next;
+						mes "[" + .@name$ + "]";
+						mes "Your determination and";
+						mes "spirit is commendable, but";
+						mes "have the patience to recollect";
+						mes "yourself when you must. I will";
+						mes "be waiting here, so please";
+						mes "come back to me later.";
+						close;
+					}
+				}
+				else if ((gettime(3) - guildtime) > 2) {
+					mes "[" + .@name$ + "]";
+					mes "Oh, you're back. So did you";
+					mes "rest up enough? I'm sure the";
+					mes "other guild members are";
+					mes "feeling refreshed by now.";
+					mes "From the looks of it, you're";
+					mes "ready for your next mission.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "The next step for";
+					mes "you is to take this, the";
+					mes "''Spirit of Trust.'' If this";
+					mes "guild is going to be solid,";
+					mes "you need to think how much";
+					mes "trust there is in the guild.";
+					set guildrelay_q,8;
+					getitem 7240,1; //Soul_Of_Confidence
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Your second test will be";
+					mes "to give that ^4D4DFFSpirit of Trust^000000";
+					mes "to a sage that can manipulate";
+					mes "nature's attributes. In other";
+					mes "words, a Sage or Scholar";
+					mes "must carry out this task.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "The Spirit of Trust must";
+					mes "be delivered to ^4D4DFFY" + .@name3$ + "^000000,";
+					mes "so don't forget to relay";
+					mes "that information to your";
+					mes "Sage or Scholar. Very well,";
+					mes "good luck on your journey.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Ah, did you rest we-- Oh.";
+					mes "Why do you look so pale?";
+					mes "You can't accomplish great";
+					mes "deeds when you're overworked!";
+					mes "Rest. Your guild must be able";
+					mes "to depend on your strength.";
+					emotion e_gasp;
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Your determination and";
+					mes "spirit is commendable, but";
+					mes "have the patience to recollect";
+					mes "yourself when you must. I will";
+					mes "be waiting here, so please";
+					mes "come back to me later.";
+					close;
+				}
+			}
+			else if (guildrelay_q == 150) {
+				if (((guildtime > 22) && (gettime(3) > 1) && (gettime(3) < guildtime)) || ((guildtime > 21) && (gettime(3) > 0) && (gettime(3) < guildtime)) || ((gettime(3) - guildtime) > 2)) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, you look well rested,";
+					mes "master. It is now time for";
+					mes "you to proceed with the third";
+					mes "test. Let me remind you that";
+					mes "these spirits are incredibly";
+					mes "precious. Do not lose them.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Like all the other spirits,";
+					mes "please keep this one safely.";
+					mes "This is the ^4D4DFFSpirit of Peace^000000.";
+					mes "It seems contradictive that";
+					mes "strongholds and might can";
+					mes "bring peace, but it's true.";
+					set guildrelay_q,15;
+					getitem 7246,1; //Soul_Of_Peace
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If power isn't used to";
+					mes "protect the weak, then";
+					mes "some bully, in one form or";
+					mes "another, will always come";
+					mes "to exploit them. That is why";
+					mes "Tristan III built the strongholds.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Please dispatch a Rogue";
+					mes "or Stalker to bring this";
+					mes "Spirit of Peace to ^4D4DFF" + .@name4$ + "^000000.";
+					mes "If you don't know any Rogues";
+					mes "or Stalkers, then it would be";
+					mes "prudent for you to meet one.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Yes, there's no substitute";
+					mes "for the subterfuge and intel";
+					mes "gathering that a Rogue can";
+					mes "provide. Anyway, " + .@name4$ + " will";
+					mes "guide you on your third test.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Ah, did you rest we-- Oh.";
+					mes "Why do you look so pale?";
+					mes "You can't accomplish great";
+					mes "deeds when you're overworked!";
+					mes "Rest. Your guild must be able";
+					mes "to depend on your strength.";
+					emotion e_gasp;
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Your determination and";
+					mes "spirit is commendable, but";
+					mes "have the patience to recollect";
+					mes "yourself when you must. I will";
+					mes "be waiting here, so please";
+					mes "come back to me later.";
+					close;
+				}
+			}
+			else if (guildrelay_q == 25) {
+				if (((guildtime > 22) && ((gettime(3) > 4) && (gettime(3) < guildtime)))
+				|| ((guildtime > 21) && ((gettime(3) > 3) && (gettime(3) < guildtime)))
+				|| ((guildtime > 20) && ((gettime(3) > 2) && (gettime(3) < guildtime)))
+				|| ((guildtime > 19) && ((gettime(3) > 1) && (gettime(3) < guildtime)))
+				|| ((guildtime > 18) && ((gettime(3) > 0) && (gettime(3) < guildtime)))
+				|| ((gettime(3) - guildtime) > 5)) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, have you rested well,";
+					mes "master? Please excuse my";
+					mes "manners a while ago. I had";
+					mes "to report your trial results,";
+					mes "and lost my composure for a";
+					mes "moment. It won't happen again.";
+					set guildrelay_q,999;
+					close;
+				}
+				else {
+					mes "...............................";
+					mes "...............................";
+					next;
+					mes "...............................";
+					mes "...............................";
+					mes "...............................";
+					next;
+					mes "[" + .@name$ + "]";
+					emotion e_omg;
+					mes "Oh! M-master? Wh-when";
+					mes "did you...? I'm so sorry.";
+					mes "I was busy working.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "It's only been a few days";
+					mes "since you finished the trials.";
+					mes "For now, you should rest and";
+					mes "take care of your guild, okay?";
+					mes "Please come back later.";
+					mes "I've got much to attend to...";
+					close;
+				}
+			}
+			else if (guildrelay_q == 999) {
+				mes "[" + .@name$ + "]";
+				mes "Good day, master.";
+				mes "Is something wrong?";
+				mes "You look as though";
+				mes "something is on your mind.";
+				next;
+				switch(select("N-no, nothing.:I want to take a lesson.")) {
+				case 1:
+					mes "[" + .@name$ + "]";
+					mes "Hm? That's strange.";
+					emotion e_swt;
+					mes "You didn't want to take";
+					mes "the trials again, did you?";
+					close;
+				case 2:
+					mes "[" + .@name$ + "]";
+					mes "I see. You know it won't";
+					mes "be easy, but I suppose you";
+					mes "are prepared. Here, take";
+					mes "the ^4D4DFFSpirit of Guild^000000, and";
+					mes "give it to your most trusted";
+					mes "Knight or Lord Knight.";
+					set guildrelay_q,1;
+					getitem 7234,1; //Soul_Of_Guild
+					next;
+					mes "[" + .@name$ + "]";
+					mes "This Knight should take";
+					mes "the Spirit of Guild over";
+					mes "to ^4D4DFF" + .@name2$ + "^000000. Good luck, and";
+					mes "may the gods be with you.";
+					close;
+				}
+			}
+			else if (guildrelay_q == 1) {
+				if (countitem(7234) > 0) {
+					mes "[" + .@name$ + "]";
+					mes "You still have the Spirit of";
+					mes "Guild I gave you? I suppose";
+					mes "you haven't found a Knight or";
+					mes "Lord Knight to which it can";
+					mes "be entrusted. It is imperative";
+					mes "that you find someone soon.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "For the sake of the guild, it";
+					mes "will be advantageous to have";
+					mes "a Knight or Lord Knight on";
+					mes "your side: their combat skills";
+					mes "can turn the tide of battles.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "When you do find a Knight,";
+					mes "give him the Spirit of Guild";
+					mes "and ask him to find " + .@name2$ + "";
+					mes "since he will conducting";
+					mes "the trial. Good luck";
+					mes "to you, master.";
+					close;
+				}
+				else if (countitem(7239) > 0) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, is this the Spirit";
+					mes "of Advance? This must mean";
+					mes "that you completed the first";
+					mes "test. Keep up the good work.";
+					mes "Hand me the spirit, and allow";
+					mes "me to give you your guild's reward.";
+					delitem 7239,1; //Soul_Of_Proceeding
+					set guildtime,gettime(3);
+					set guildrelay_q,100;
+					set .@incen_item,rand(1,100);
+					if ((.@incen_item > 0) && (.@incen_item < 25)) {
+						getitem 608,20; //Seed_Of_Yggdrasil
+						getitem 678,2; //Poison_Bottle
+					}
+					else if ((.@incen_item > 24) && (.@incen_item < 50)) {
+						getitem 607,10; //Yggdrasilberry
+						getitem 678,2; //Poison_Bottle
+					}
+					else if ((.@incen_item > 50) && (.@incen_item < 75)) {
+						getitem 644,5; //Gift_Box
+						getitem 678,2; //Poison_Bottle
+					}
+					else if ((.@incen_item > 74) && (.@incen_item < 101)) {
+						getitem 603,3; //Old_Blue_Box
+						getitem 678,2; //Poison_Bottle
+					}
+					next;
+					mes "[" + .@name$ + "]";
+					mes "You've done well, but";
+					mes "there are more trials";
+					mes "ahead of you. For now,";
+					mes "you should rest before";
+					mes "undertaking the second test.";
+					mes "Please come when you are ready.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "If you're not busy, then";
+					mes "why don't you spend your";
+					mes "time increasing morale";
+					mes "among your guild members?";
+					mes "Perhaps some team building";
+					mes "exercise can be of help.";
+					close;
+				}
+			}
+			else if (guildrelay_q == 8) {
+				if (countitem(7240) > 0) {
+					mes "[" + .@name$ + "]";
+					mes "You must be having";
+					mes "trouble finding " + .@name3$ + ".";
+					mes "Make sure that you have";
+					mes "a Sage or Scholar friend";
+					mes "give that Spirit of Trust to";
+					mes "him once you locate him.";
+					close;
+				}
+				else if (countitem(7245) > 0) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, so you already completed";
+					mes "the test and earned the Spirit";
+					mes "of Friendship? Good work.";
+					mes "You must now recognize the";
+					mes "value of teamwork. Please give";
+					mes "the Spirit of Friendship to me.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Now, please take this";
+					mes "reward and share it with";
+					mes "your guild members. This";
+					mes "may come in handy in future";
+					mes "challenges that you will all";
+					mes "face together. Good work!";
+					delitem 7245,1; //Soul_Of_Friendship
+					set guildtime,gettime(3);
+					set guildrelay_q,150;
+					set .@incen_item,rand(1,100);
+					if ((.@incen_item > 0) && (.@incen_item < 16)) {
+						getitem 607,10; //Yggdrasilberry
+						getitem 644,5; //Gift_Box
+						getitem 678,3; //Poison_Bottle
+					}
+					else if ((.@incen_item > 14) && (.@incen_item < 31)) {
+						getitem 607,10; //Yggdrasilberry
+						getitem 603,3; //Old_Blue_Box
+						getitem 678,3; //Poison_Bottle
+					}
+					else if ((.@incen_item > 29) && (.@incen_item < 46)) {
+						getitem 607,10; //Yggdrasilberry
+						getitem 617,3; //Old_Violet_Box
+						getitem 678,3; //Poison_Bottle
+					}
+					else if ((.@incen_item > 44) && (.@incen_item < 61)) {
+						getitem 644,4; //Gift_Box
+						getitem 603,2; //Old_Blue_Box
+						getitem 678,3; //Poison_Bottle
+					}
+					else if ((.@incen_item > 59) && (.@incen_item < 76)) {
+						getitem 644,3; //Gift_Box
+						getitem 617,2; //Old_Violet_Box
+						getitem 678,3; //Poison_Bottle
+					}
+					else if ((.@incen_item > 74) && (.@incen_item < 91)) {
+						getitem 603,2; //Old_Blue_Box
+						getitem 617,2; //Old_Violet_Box
+						getitem 678,3; //Poison_Bottle
+					}
+					else if ((.@incen_item > 89) && (.@incen_item < 101)) {
+						getitem 607,10; //Yggdrasilberry
+						getitem 644,3; //Gift_Box
+						getitem 603,2; //Old_Blue_Box
+						getitem 617,1; //Old_Violet_Box
+					}
+					next;
+					mes "[" + .@name$ + "]";
+					mes "You should rest and";
+					mes "recuperate before you";
+					mes "undertake the third test.";
+					mes "I too would benefit from";
+					mes "a brief respite. Please come";
+					mes "back to me when you are ready.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "If you're not busy, then";
+					mes "why don't you spend your";
+					mes "time increasing morale";
+					mes "among your guild members?";
+					mes "Perhaps some team building";
+					mes "exercise can be of help.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If it suits your fancy,";
+					mes "you may simply come here";
+					mes "and join me for a cup of tea.";
+					close;
+				}
+			}
+			else if (guildrelay_q == 15) {
+				if (countitem(7246) > 0) {
+					mes "[" + .@name$ + "]";
+					mes "You still have the";
+					mes "Spirit of Peace? If you";
+					mes "don't have any Rogues or";
+					mes "Stalkers in your guild, now";
+					mes "would be the time to recruit";
+					mes "them. Heed my advice...";
+					close;
+				}
+				else if (countitem(7251) > 0) {
+					mes "[" + .@name$ + "]";
+					mes "I see that you've completed";
+					mes "the last test and received";
+					mes "the Spirit of Victory. Heh.";
+					mes "Victory is the natural result";
+					mes "when your guild works together";
+					mes "in harmony as a united team.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Congratulations on";
+					mes "completing all the trials.";
+					mes "Please accept this reward,";
+					mes "given on the behalf of King";
+					mes "Tristan III, and share it with";
+					mes "guild. Once again, good work.";
+					delitem 7251,1; //Soul_Of_Victory
+					set guildtime,gettime(3);
+					set guildrelay_q,25;
+					set .@incen_item,rand(1,100);
+					if ((.@incen_item > 0) && (.@incen_item < 26)) {
+						getitem 608,10; //Seed_Of_Yggdrasil
+						getitem 607,5; //Yggdrasilberry
+						getitem 644,4; //Gift_Box
+					}
+					else if ((.@incen_item > 25) && (.@incen_item < 51)) {
+						getitem 608,10; //Seed_Of_Yggdrasil
+						getitem 607,5; //Yggdrasilberry
+						getitem 603,3; //Old_Blue_Box
+					}
+					else if ((.@incen_item > 50) && (.@incen_item < 76)) {
+						getitem 608,10; //Seed_Of_Yggdrasil
+						getitem 617,2; //Old_Violet_Box
+						getitem 607,5; //Yggdrasilberry
+					}
+					else if ((.@incen_item > 75) && (.@incen_item < 91)) {
+						getitem 608,10; //Seed_Of_Yggdrasil
+						getitem 644,4; //Gift_Box
+						getitem 603,2; //Old_Blue_Box
+						getitem 617,1; //Old_Violet_Box
+					}
+					else if ((.@incen_item > 90) && (.@incen_item < 101)) {
+						getitem 5074,1; //Ear_Of_Angel's_Wing
+					}
+					next;
+					mes "[" + .@name$ + "]";
+					mes "You and your guild must be";
+					mes "quite tired now. Your rooms";
+					mes "are ready for you if you decide";
+					mes "to rest. Please visit me again";
+					mes "if you wish to take the trials";
+					mes "again. I'll see you later.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "If you aren't particularly";
+					mes "busy, then why don't you";
+					mes "spend some time with your";
+					mes "guild members? Building";
+					mes "strong camaraderie never";
+					mes "fails to pay off. Never.";
+					close;
+				}
+			}
+			else {
+				mes "[" + .@name$ + "]";
+				mes "Greetings, master.";
+				mes "I am " + .@name$ + ", one of the four";
+				mes "Great Sages, and I am here";
+				mes "to serve you under the orders";
+				mes "of wise and benevolent";
+				mes "King Tristan III.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "We test guilds that own";
+				mes "strongholds, and see if they";
+				mes "are qualified to be considered";
+				mes "elite guilds. Our goal is to";
+				mes "train guilds to strengthen";
+				mes "our military forces.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Although your guild has the";
+				mes "strength and courage to conquer";
+				mes "a stronghold, we want you to";
+				mes "prove that your guild has";
+				mes "a strong sense of justice,";
+				mes "honor, and compassion.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "It is up to you. Will";
+				mes "you take the test I have";
+				mes "for you? I will do my best to";
+				mes "help your guild grow stronger";
+				mes "so that you will be better";
+				mes "able to protect the weak.";
+				next;
+				switch(select("I want to take the test.:Let me think about it.")) {
+				case 1:
+					mes "[" + .@name$ + "]";
+					mes "Is that so? In this test,";
+					mes "you will be given orders";
+					mes "and special spirits. These";
+					mes "spirits will only be given";
+					mes "once: you must not lose them.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you lose the spirit,";
+					mes "you will be judged as";
+					mes "irresponsible, and will be";
+					mes "unable to complete the tests.";
+					mes "You must find any lost spirit to";
+					mes "proceed. There's no second chance.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "There are a few things you";
+					mes "should know. Firstly, you can";
+					mes "only take care of one spirit";
+					mes "at a time. Secondly, you need";
+					mes "to do the tests in order and";
+					mes "follow the guide's instructions.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Thirdly, the spirit should";
+					mes "be given to the type of person";
+					mes "specified in the test. Those";
+					mes "are the rules. Remember them.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Okay, this is the first";
+					mes "spirit that will be entrusted";
+					mes "to you. Make sure to give this";
+					mes "to a Knight or Lord Knight.";
+					mes "The test has now officially";
+					mes "begun. Good luck to you.";
+					set guildrelay_q,1;
+					getitem 7234,1; //Soul_Of_Guild
+					close;
+				case 2:
+					mes "[" + .@name$ + "]";
+					mes "I suppose it would be";
+					mes "a good idea to discuss";
+					mes "this with your guild before";
+					mes "you decide to commit to";
+					mes "taking the test. Feel free";
+					mes "free to visit me again later.";
+					close;
+				}
+			}
+		}
+		else {
+			if (countitem(7234) > 0) {
+				if (BaseJob == Job_Knight) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "So you were the one chosen";
+					mes "by your guild master? I see.";
+					mes "You should deliver that Spirit";
+					mes "of Guild over to " + .@name2$ + ".";
+					mes "He'll instruct you further.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "The Spirit of Guild is";
+					mes "useless unless it is in the";
+					mes "hands of a Knight or Lord";
+					mes "Knight. You should speak";
+					mes "to " + .@name2$ + " to learn more.";
+					close;
+				}
+			}
+			else if (countitem(7235) > 0) {
+				if ((guildrelay_q == 88) && (BaseJob == Job_Knight)) {
+					mes "[" + .@name$ + "]";
+					mes "Ah," + strcharinfo(0) + "";
+					mes "Congratulations. It looks";
+					mes "like you did a good job.";
+					mes "Please give the Spirit of";
+					mes "Charge to the next person";
+					mes "to continue the testing.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "" + .@name2$ + " should have";
+					mes "explained everything, but";
+					mes "if you forgot, then please";
+					mes "go and ask him again.";
+					close;
+				}
+				else if (BaseJob == Job_Blacksmith) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "Ah, I see that you have";
+					mes "the Spirit of Charge.";
+					mes "Heh heh, it's always exciting";
+					mes "to charge into battle, isn't";
+					mes "it? Well then, do your best.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name2$ + " knows more about the";
+					mes "Spirit of Charge, so you should";
+					mes "ask him more about that spirit.";
+					close;
+				}
+			}
+			else if (countitem(7237) > 0) {
+				if ((guildrelay_q == 87) && (BaseJob == Job_Blacksmith)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "" + .@name2$ + " should have";
+					mes "explained everything, but";
+					mes "if you forgot, then please";
+					mes "go and ask him again.";
+					close;
+				}
+				else if (BaseJob == Job_Alchemist) {
+					mes "[" + .@name$ + "]";
+					mes "Hello, " + strcharinfo(0) + ".";
+					mes "I see that you posess";
+					mes "the Spirit of Association.";
+					mes "Good luck with your test.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "Talk to " + .@name2$ + " if you want";
+					mes "to know more about the";
+					mes "Spirit of Association.";
+					close;
+				}
+			}
+			else if (countitem(7238) > 0) {
+				if ((guildrelay_q == 86) && (BaseJob == Job_Alchemist)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "" + .@name2$ + " should have";
+					mes "explained everything, but";
+					mes "if you forgot, then please";
+					mes "go and ask him again.";
+					close;
+				}
+				else if (BaseJob == Job_Hunter) {
+					mes "[" + .@name$ + "]";
+					mes "Hello, " + strcharinfo(0) + ".";
+					mes "I see that you posess";
+					mes "the Spirit of Coordination.";
+					mes "Good luck on your test.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name2$ + " will know more about";
+					mes "the Spirit of Coordination";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7239) > 0) {
+				if ((guildrelay_q == 85) && (BaseJob == Job_Hunter)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello, " + strcharinfo(0) + ".";
+					mes "Congratulations, it looks";
+					mes "like you finished the test.";
+					mes "You may now give the Spirit of";
+					mes "Advance to your guild master.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name2$ + " will know more about";
+					mes "the Spirit of Advance so";
+					mes "you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7240) > 0) {
+				if (BaseJob == Job_Sage) {
+					mes "[" + .@name$ + "]";
+					mes "Hello, " + strcharinfo(0) + ".";
+					mes "I see that you possess";
+					mes "the Spirit of Trust.";
+					mes "Good luck, and do not";
+					mes "fail the trust placed in";
+					mes "you by your guild.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name3$ + " will know more";
+					mes "about the Spirit of Trust";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7241) > 0) {
+				if ((guildrelay_q == 71) && (BaseJob == Job_Sage)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you don't remember";
+					mes "" + .@name3$ + "'s explanation,";
+					mes "then you might want to";
+					mes "go back to him and ask";
+					mes "him to tell you again.";
+					close;
+				}
+				else if ((BaseJob == Job_Bard) || (BaseJob == Job_Dancer)) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "I see that you have the";
+					mes "Spirit of Union. Always keep";
+					mes "in mind that the strength of";
+					mes "your guild is directly";
+					mes "related to its unity.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name3$ + " will know more";
+					mes "about the Spirit of Union";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7242) > 0) {
+				if ((guildrelay_q == 72) && ((BaseJob == Job_Bard) || (BaseJob == Job_Dancer))) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you don't remember";
+					mes "" + .@name3$ + "'s explanation,";
+					mes "then you might want to";
+					mes "go back to him and ask";
+					mes "him to tell you again.";
+					close;
+				}
+				else if (BaseJob == Job_Assassin) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "I see that you have the Spirit";
+					mes "of Combination. Remember that";
+					mes "working in tandem, combining";
+					mes "your guild's skills and talents,";
+					mes "will realize your true potential.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name3$ + " will know more about";
+					mes "the Spirit of Combination so";
+					mes "you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7244) > 0) {
+				if ((guildrelay_q == 74) && (BaseJob == Job_Assassin)) {
+					mes "[" + .@name$ + "]";
+					mes "Greetings, " + strcharinfo(0) + ",";
+					mes "did you rest well? Please";
+					mes "give that spirit to the next";
+					mes "person so that the testing";
+					mes "of your guild may continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you don't remember";
+					mes "" + .@name3$ + "'s explanation,";
+					mes "then you might want to";
+					mes "go back to him and ask";
+					mes "him to tell you again.";
+					close;
+				}
+				else if (BaseJob == Job_Wizard) {
+					mes "[" + .@name$ + "]";
+					mes "Hello, " + strcharinfo(0) + ",";
+					mes "I see that you've been";
+					mes "entrusted with the Spirit";
+					mes "of Solidarity. Do your best";
+					mes "on this test for the sake";
+					mes "of your guild, alright?";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name3$ + " will know more";
+					mes "about the Spirit of Solidarity";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7245) > 0) {
+				if ((guildrelay_q == 75) && (BaseJob == Job_Wizard)) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "congratulations on a job";
+					mes "well done. Please give the";
+					mes "Spirit of Friendship to your";
+					mes "guild master to continue";
+					mes "the guild testing.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name3$ + " will know more";
+					mes "about the Spirit of Friendship";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7246) > 0) {
+				if (BaseJob == Job_Rogue) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "I see that you have the";
+					mes "Spirit of Peace. Please";
+					mes "do your best for the sake";
+					mes "of the guild, though I do not";
+					mes "doubt you'll pass this test.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name4$ + " will know more";
+					mes "about the Spirit of Peace";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7247) > 0) {
+				if ((guildrelay_q == 95) && (BaseJob == Job_Priest)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you don't remember";
+					mes "" + .@name4$ + "'s explanation,";
+					mes "then you might want to";
+					mes "go back to him and ask";
+					mes "him to tell you again.";
+					close;
+				}
+				else if (BaseJob == Job_Priest) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "please take good care of";
+					mes "that Spirit of Determination.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name4$ + " will know more about";
+					mes "the Spirit of Determination";
+					mes "so you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7249) > 0) {
+				if ((guildrelay_q == 98) && (BaseJob == Job_Priest)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you don't remember";
+					mes "" + .@name4$ + "'s explanation,";
+					mes "then you might want to";
+					mes "go back to him and ask";
+					mes "him to tell you again.";
+					close;
+				}
+				else if (BaseJob == Job_Crusader) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "please take good care";
+					mes "of that Spirit of Service.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name4$ + " will know more about";
+					mes "the Spirit of Service so";
+					mes "you should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7250) > 0) {
+				if ((guildrelay_q == 96) && (BaseJob == Job_Crusader)) {
+					mes "[" + .@name$ + "]";
+					mes "Hello," + strcharinfo(0) + ".";
+					mes "I commend you on your work.";
+					mes "Please give that spirit to";
+					mes "the next person so that the";
+					mes "testing can continue.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "If you don't remember";
+					mes "" + .@name4$ + "'s explanation,";
+					mes "then you might want to";
+					mes "go back to him and ask";
+					mes "him to tell you again.";
+					close;
+				}
+				else if (BaseJob == Job_Monk) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "please take good care";
+					mes "of that Spirit of Glory.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name4$ + " will know more about";
+					mes "the Spirit of Glory so you";
+					mes "should consult him.";
+					close;
+				}
+			}
+			else if (countitem(7251) > 0) {
+				if ((guildrelay_q == 97) && (Class == Job_Monk)) {
+					mes "[" + .@name$ + "]";
+					mes "Ah, " + strcharinfo(0) + ",";
+					mes "congratulations on a job";
+					mes "well done. Please give";
+					mes "the Spirit of Victory to your";
+					mes "guild master. That's it for now.";
+					mes "Good luck to you in the future.";
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "That spirit won't be very";
+					mes "useful if it's not in the";
+					mes "hands of the right person.";
+					mes "" + .@name4$ + " will know more about";
+					mes "the Spirit of Victory so you";
+					mes "should consult him.";
+					close;
+				}
+			}
+			else {
+				mes "[" + .@name$ + "]";
+				mes "I'm sorry, but I'm too";
+				mes "busy with my work to offer";
+				mes "you any help right now.";
+				mes "You'll have to forgive me.";
+				close;
+			}
+		}
+	}
+	else {
+		if (getcharid(2) == 0) {
+			mes "[" + .@name$ + "]";
+			mes "You haven't joined";
+			mes "a guild yet? Why don't";
+			mes "you think about joining";
+			mes "one? Well, it's your decision,";
+			mes "but I don't think you'd regret";
+			mes "being part of a strong guild.";
+			close;
+		}
+		else {
+			mes "[" + .@name$ + "]";
+			mes "Ah, I see that you are";
+			mes "affiliated with a guild.";
+			mes "Have you come here";
+			mes "as an invited guest?";
+			next;
+			switch(select("No, not really...:I was invited by the guild master.")) {
+			case 1:
+				mes "[" + .@name$ + "]";
+				mes "Oh, really?";
+				mes "That's too bad...";
+				mes "My apologies, but";
+				mes "I can't allow strangers";
+				mes "to simply come and go";
+				mes "around here. Farewell, then.";
+				next;
+				warp "alde_gld",186,157;
+				close;
+			case 2:
+				mes "[" + .@name$ + "]";
+				mes "Oh, really? Ah, now";
+				mes "I recognize you, ^4d4dff" + strcharinfo(0) + "^000000.";
+				mes "Please come in, and make";
+				mes "yourself comfortable.";
+				close;
+			}
+		}
+	}
+}
+
+-	script	RelayDummy2::GuildRelay2	754,{
+	set .@name$,strnpcinfo(1);
+	getmapxy(.@m$,.@x,.@x,1);
+	set .@GID, GetCastleData(.@m$,1);
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (.@GID == 0) {
+		mes "^3355FFYou're not sure why, but";
+		mes "this guy seems to be pretty";
+		mes "depressed. He briefly makes";
+		mes "eye contact with you, but then";
+		mes "breaks it off. Apparently,";
+		mes "he wants to be left alone.^000000";
+		next;
+		mes "^3355FFThere's no reason for you";
+		mes "to stick around an ownerless";
+		mes "stronghold. You may as well";
+		mes "head on your way.^000000";
+		close;
+	}
+	if (getcharid(2) == .@GID) {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			if (countitem(7234) > 0) {
+				mes "[" + .@name$ + "]";
+				mes "Hm. You can't just keep";
+				mes "that spirit to yourself.";
+				mes "Give it to a ^FF0000Knight^000000 or";
+				mes "a ^FF0000Lord Knight^000000. Hurry it up!";
+				mes "You need to work fast to";
+				mes "expand your guild.";
+				close;
+			}
+			else {
+				mes "[" + .@name$ + "]";
+				mes "Hm. You seem awfully";
+				mes "busy. Why don't you just";
+				mes "take a break, and relax?";
+				mes "It's alright to have fun";
+				mes "if you're feeling a lot of";
+				mes "pressure. Heh heh heh~";
+				close;
+			}
+		}
+		else {
+			if ((BaseJob == Job_Knight) && (countitem(7234) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "For your first test,";
+				mes "I'll start you off with";
+				mes "something pretty simple.";
+				mes "Just collect some items,";
+				mes "and bring them to me. Ah, and";
+				mes "your guild can help you too.";
+				next;
+				switch(rand(1,3)) {
+				case 1:
+					mes "[" + .@name$ + "]";
+					mes "^FF000030 Tongues^000000,";
+					mes "^FF000030 Dark Masks^000000, and";
+					mes "^FF000030 Shoulder Protectors^000000.";
+					mes "That shouldn't be too";
+					mes "hard now, right?";
+					delitem 7234,1; //Soul_Of_Guild
+					set guildrelay_q,2;
+					close;
+				case 2:
+					mes "[" + .@name$ + "]";
+					mes "^FF000030 Worn Out Pages^000000,";
+					mes "^FF000030 Round Shells^000000, and";
+					mes "^FF000030 Mole Whiskers^000000.";
+					mes "That shouldn't be too";
+					mes "hard now, right?";
+					delitem 7234,1; //Soul_Of_Guild
+					set guildrelay_q,3;
+					close;
+				case 3:
+					mes "[" + .@name$ + "]";
+					mes "^FF000030 Frills^000000,";
+					mes "^FF000030 Sharp Papers^000000, and";
+					mes "^FF000030 Elder Pixie's Moustaches^000000.";
+					mes "That shouldn't be too";
+					mes "hard now, right?";
+					delitem 7234,1; //Soul_Of_Guild
+					set guildrelay_q,89;
+					close;
+				}
+			}
+			if ((countitem(1015) > 29) && (countitem(7196) > 29) && (countitem(7157) > 29) && (guildrelay_q == 2)) {
+				mes "[" + .@name$ + "]";
+				mes "Huh. I didn't actually";
+				mes "expect that you'd collect";
+				mes "all these items. Good job.";
+				mes "Now, take this and give it to";
+				mes "a Blacksmith or Mastersmith.";
+				mes "Your guild's pretty good...";
+				delitem 1015,30; //Thin_N'_Long_Tongue
+				delitem 7196,30; //Shoulder_Protection
+				delitem 7157,30; //Black_Mask
+				set guildrelay_q,88;
+				getitem 7235,1; //Soul_Of_Courage
+				close;
+			}
+			if ((BaseJob == Job_Knight) && (guildrelay_q == 2)) {
+				mes "[" + .@name$ + "]";
+				mes "Did you forget what";
+				mes "to bring me? I wanted";
+				mes "^FF000030 Tongues^000000,";
+				mes "^FF000030 Dark Masks^000000, and";
+				mes "^FF000030 Shoulder Protectors^000000.";
+				mes "Don't forget this time.";
+				close;
+			}
+			if ((countitem(1097) > 29) && (countitem(1017) > 29) && (countitem(1096) > 29) && (guildrelay_q == 3)) {
+				mes "[" + .@name$ + "]";
+				mes "Huh. I didn't actually";
+				mes "expect that you'd collect";
+				mes "all these items. Good job.";
+				mes "Now, take this and give it to";
+				mes "a Blacksmith or Mastersmith.";
+				mes "Your guild's pretty good...";
+				delitem 1097,30; //Worn_Out_Page
+				delitem 1017,30; //Moustache_Of_Mole
+				delitem 1096,30; //Round_Shell
+				set guildrelay_q,88;
+				getitem 7235,1; //Soul_Of_Courage
+				close;
+			}
+			if ((BaseJob == Job_Knight) && (guildrelay_q == 3)) {
+				mes "[" + .@name$ + "]";
+				mes "Did you forget what";
+				mes "to bring me? I wanted";
+				mes "^FF000030 Worn Out Pages^000000,";
+				mes "^FF000030 Round Shells^000000, and";
+				mes "^FF000030 Mole Whiskers^000000.";
+				mes "Don't forget this time.";
+				close;
+			}
+			if ((countitem(7112) > 29) && (countitem(1012) > 29) && (countitem(1040) > 29) && (guildrelay_q == 89)) {
+				mes "[" + .@name$ + "]";
+				mes "Huh. I didn't actually";
+				mes "expect that you'd collect";
+				mes "all these items. Good job.";
+				mes "Now, take this and give it to";
+				mes "a Blacksmith or Mastersmith.";
+				mes "Your guild's pretty good...";
+				delitem 7112,30; //Fright_Paper_Blade
+				delitem 1012,30; //Lizard_Scruff
+				delitem 1040,30; //Elder_Pixie's_Beard
+				set guildrelay_q,88;
+				getitem 7235,1; //Soul_Of_Courage
+				close;
+			}
+			if ((BaseJob == Job_Knight) && (guildrelay_q == 89)) {
+				mes "[" + .@name$ + "]";
+				mes "Did you forget what";
+				mes "to bring me? I wanted";
+				mes "^FF000030 Frills^000000,";
+				mes "^FF000030 Sharp Papers^000000, and";
+				mes "^FF000030 Elder Pixie's Moustaches^000000.";
+				mes "Don't forget this time.";
+				close;
+			}
+			if ((BaseJob == Job_Blacksmith) && (countitem(7235) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Wow, you brought the";
+				mes "items sooner than I had";
+				mes "expected. Great! Well then,";
+				mes "your next task for me will";
+				mes "be to... Wait. Wait and";
+				mes "kill some time. Easy, huh?";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "^FF0000just waiting.^000000";
+				mes "Justing wait and kill";
+				mes "some time. You can do";
+				mes "whatever you want to";
+				mes "do during that time.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Come back after you've";
+				mes "relaxed and enjoyed yourself.";
+				mes "We can continue the testing";
+				mes "when the time is right so";
+				mes "don't you worry about it.";
+				delitem 7235,1; //Soul_Of_Courage
+				set guildrelay_q,4;
+				set guildtime,gettime(3);
+				close;
+			}
+			if ((guildtime > 22) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+				if ((gettime(3) > 2) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "I guess enough time";
+					mes "has passed. You ready";
+					mes "to resume the testing?";
+					mes "Please give this to an";
+					mes "Alchemist or Biochemist.";
+					mes "Your work here is done.";
+					set guildrelay_q,87;
+					getitem 7237,1; //Soul_Of_Partnership
+					close;
+				}
+			}
+			if ((guildtime > 21) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+				if ((gettime(3) > 0101) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "I guess enough time";
+					mes "has passed. You ready";
+					mes "to resume the testing?";
+					mes "Please give this to an";
+					mes "Alchemist or Biochemist.";
+					mes "Your work here is done.";
+					set guildrelay_q,87;
+					getitem 7237,1; //Soul_Of_Partnership
+					close;
+				}
+			}
+			if ((guildtime > 20) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+				if ((gettime(3) > 0001) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "I guess enough time";
+					mes "has passed. You ready";
+					mes "to resume the testing?";
+					mes "Please give this to an";
+					mes "Alchemist or Biochemist.";
+					mes "Your work here is done.";
+					set guildrelay_q,87;
+					getitem 7237,1; //Soul_Of_Partnership
+					close;
+				}
+			}
+			if ((gettime(3) - guildtime > 0300) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+				mes "[" + .@name$ + "]";
+				mes "I guess enough time";
+				mes "has passed. You ready";
+				mes "to resume the testing?";
+				mes "Please give this to an";
+				mes "Alchemist or Biochemist.";
+				mes "Your work here is done.";
+				set guildrelay_q,87;
+				getitem 7237,1; //Soul_Of_Partnership
+				close;
+			}
+			if ((guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+				mes "[" + .@name$ + "]";
+				mes "You must be rarin'";
+				mes "to take on the next";
+				mes "test. Please be patient,";
+				mes "kill some time, and just";
+				mes "come back to me later.";
+				close;
+			}
+			if ((BaseJob == Job_Alchemist) && (countitem(7237) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Oh, you got it, eh?";
+				mes "You might not think this";
+				mes "will be so hard, but I'm";
+				mes "going to give you a much";
+				mes "different challenge now.";
+				mes "Are you ready for it?";
+				next;
+				if ((BaseLevel > 1) && (BaseLevel < 58)) {
+					mes "[" + .@name$ + "]";
+					mes "Your test will be to";
+					mes "grow a little stronger!";
+					mes "You'll pass once you";
+					mes "gain 3 more levels.";
+					mes "How about that, eh?";
+					delitem 7237,1; //Soul_Of_Partnership
+					set guildrelay_q,5;
+					close;
+				}
+				if ((BaseLevel > 57) && (BaseLevel < 76)) {
+					mes "[" + .@name$ + "]";
+					mes "Your test will be to";
+					mes "grow a little stronger!";
+					mes "You'll pass once you";
+					mes "gain 2 more levels.";
+					mes "How about that, eh?";
+					delitem 7237,1; //Soul_Of_Partnership
+					set guildrelay_q,6;
+					close;
+				}
+				if ((BaseLevel > 75) && (BaseLevel < 94)) {
+					mes "[" + .@name$ + "]";
+					mes "Your test will be to";
+					mes "grow a little stronger!";
+					mes "You'll pass once you";
+					mes "gain 1 more level.";
+					mes "How about that, eh?";
+					delitem 7237,1; //Soul_Of_Partnership
+					set guildrelay_q,7;
+					close;
+				}
+				if (BaseLevel > 93) {
+					mes "[" + .@name$ + "]";
+					mes "Wait a minute. Forget it!";
+					mes "I was going to ask you to";
+					mes "raise your Base Level, but";
+					mes "you're tough enough as it is.";
+					mes "Fine, fine. You pass! Give this";
+					mes "to a ^FF0000Hunter^000000 or ^FF0000Sniper^000000 now~";
+					delitem 7237,1; //Soul_Of_Partnership
+					set guildrelay_q,86;
+					getitem 7238,1; //Soul_Of_Correspondence
+					close;
+				}
+			}
+			if (((BaseLevel + 2) < (BaseLevel)) && (guildrelay_q == 5)) {
+				mes "[" + .@name$ + "]";
+				mes "You got a little stronger,";
+				mes "eh? Fine, fine. You pass.";
+				mes "Here, now take this and";
+				mes "give it to a ^FF0000Hunter^000000 or ^FF0000Sniper^000000";
+				mes "in your guild. Nice work,";
+				mes "and I'll see you around.";
+				set guildrelay_q,86;
+				getitem 7238,1; //Soul_Of_Correspondence
+				close;
+			}
+			if (((BaseLevel + 1) < (BaseLevel)) && (guildrelay_q == 6)) {
+				mes "[" + .@name$ + "]";
+				mes "You got a little stronger,";
+				mes "eh? Fine, fine. You pass.";
+				mes "Here, now take this and";
+				mes "give it to a ^FF0000Hunter^000000 or ^FF0000Sniper^000000";
+				mes "in your guild. Nice work,";
+				mes "and I'll see you around.";
+				set guildrelay_q,86;
+				getitem 7238,1; //Soul_Of_Correspondence
+				close;
+			}
+			if ((BaseLevel < (BaseLevel)) && (guildrelay_q == 7)) {
+				mes "[" + .@name$ + "]";
+				mes "You got a little stronger,";
+				mes "eh? Fine, fine. You pass.";
+				mes "Here, now take this and";
+				mes "give it to a ^FF0000Hunter^000000 or ^FF0000Sniper^000000";
+				mes "in your guild. Nice work,";
+				mes "and I'll see you around.";
+				set guildrelay_q,86;
+				getitem 7238,1; //Soul_Of_Correspondence
+				close;
+			}
+			if ((guildrelay_q == 5) || (guildrelay_q == 6) || (guildrelay_q == 7)) {
+				mes "[" + .@name$ + "]";
+				mes "You're still not strong";
+				mes "enough to pass this test.";
+				mes "Hurry up, kill some monsters,";
+				mes "and gain some ^FF0000Base Levels^000000.";
+				mes "You have to become stronger!";
+				close;
+			}
+			if ((BaseJob == Job_Hunter) && (countitem(7238) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Ah, good, you're here.";
+				mes "Now, my request for you";
+				mes "is this: please donate";
+				mes "your Falcon for the";
+				mes "sake of your guild.";
+				next;
+				switch(select("Donate Falcon:No way!")) {
+				case 1:
+					if (checkfalcon()) {
+						mes "[" + .@name$ + "]";
+						mes "Great! Don't worry,";
+						mes "your Falcon will be safe";
+						mes "under our care, and will";
+						mes "be use to scout areas and";
+						mes "deliver mail. That's why";
+						mes "I asked you for it.";
+						next;
+						mes "[" + .@name$ + "]";
+						mes "Now, please take this";
+						mes "spirit, and give it to";
+						mes "your guild master as";
+						mes "soon as you can, alright?";
+						setfalcon;
+						delitem 7238,1; //Soul_Of_Correspondence
+						set guildrelay_q,85;
+						getitem 7239,1; //Soul_Of_Proceeding
+						close;
+					}
+					else {
+						mes "[" + .@name$ + "]";
+						mes "I'm glad that you're";
+						mes "willing to part with your";
+						mes "Falcon, but it doesn't seem";
+						mes "to be with you right now.";
+						mes "Go get one, and come back.";
+						close;
+					}
+				case 2:
+					mes "[" + .@name$ + "]";
+					mes "Well, I can't help it if you";
+					mes "really want to keep your";
+					mes "Falcon, but please come";
+					mes "back if you change your mind.";
+					mes "I can't do anything for you";
+					mes "unless you cooperate.";
+					close;
+				}
+			}
+			if ((guildrelay_q == 88) && (countitem(7235) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Charge to";
+				mes "a ^FF0000Blacksmith^000000 or ^FF0000Mastersmith^000000.";
+				mes "It won't do any good in the";
+				mes "hands of anybody else.";
+				close;
+			}
+			if (guildrelay_q == 88) {
+				mes "[" + .@name$ + "]";
+				mes "You don't have";
+				mes "anything to do?";
+				mes "Why don't you help";
+				mes "your guild hunt monsters?";
+				mes "It'll be a good chance to";
+				mes "show them your skills~";
+				close;
+			}
+			if ((guildrelay_q == 87) && (countitem(7237) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Association to";
+				mes "an ^FF0000Alchemist^000000 or ^FF0000Biochemist^000000.";
+				mes "It won't do any good in the";
+				mes "hands of anybody else.";
+				close;
+			}
+			if (guildrelay_q == 87) {
+				mes "[" + .@name$ + "]";
+				mes "Hm. Don't you have";
+				mes "anything to do? I suppose";
+				mes "it's better to be bored";
+				mes "than to be overwhelmed.";
+				mes "Oh well, you'll figure";
+				mes "something out.";
+				close;
+			}
+			if ((guildrelay_q == 86) && (countitem(7238) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Coordination";
+				mes "to a ^FF0000Hunter^000000 or ^FF0000Sniper^000000.";
+				mes "It won't do any good in the";
+				mes "hands of anybody else.";
+				close;
+			}
+			if (guildrelay_q == 86) {
+				mes "[" + .@name$ + "]";
+				mes "Good work. Please";
+				mes "go ahead and take a rest,";
+				mes "and then come back to me";
+				mes "later. I'll have something";
+				mes "to give you by then.";
+				close;
+			}
+			if ((guildrelay_q == 85) && (countitem(7239) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Advance";
+				mes "to your ^FF0000guild master^000000.";
+				mes "It won't do any good in the";
+				mes "hands of anybody else.";
+				close;
+			}
+			if (guildrelay_q == 85) {
+				mes "[" + .@name$ + "]";
+				mes "Your falcon's been";
+				mes "a great help in the";
+				mes "guild. Hm? You already";
+				mes "miss it? Hahahaha!";
+				close;
+			}
+			mes "[" + .@name$ + "]";
+			mes "Hm? What brings you";
+			mes "here? I don't think we";
+			mes "have any business to";
+			mes "conduct. Am I mistaken?";
+			close;
+		}
+	}
+	else {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			mes "[" + .@name$ + "]";
+			mes "Hm? What brings you";
+			mes "here? Feel free to take";
+			mes "your time and look around";
+			mes "if that's what pleases you.";
+			close;
+		}
+		else {
+			mes "[" + .@name$ + "]";
+			mes "There isn't much to see";
+			mes "around here, but you're";
+			mes "welcome to stay and look";
+			mes "around here if you wish.";
+			close;
+		}
+	}
+}
+
+-	script	RelayDummy3::GuildRelay3	754,{
+	set .@name$,strnpcinfo(1);
+	getmapxy(.@m$,.@x,.@x,1);
+	set .@GID, GetCastleData(.@m$,1);
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (.@GID == 0) {
+		mes "^3355FFThis exhausted man";
+		mes "notices you staring at";
+		mes "him, but chooses to leave";
+		mes "you alone. There's no one";
+		mes "else in this stronghold so";
+		mes "there's no reason to be here.^000000";
+		close;
+	}
+	if (getcharid(2) == .@GID) {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			if (countitem(7240) > 0) {
+				mes "[" + .@name$ + "]";
+				mes "Hm? What are you doing?";
+				mes "You're not supposed to";
+				mes "be the one holding onto";
+				mes "this soul. A Sage or a";
+				mes "Professor was supposed";
+				mes "to come here with it.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Make sure you give";
+				mes "that soul you're holding";
+				mes "to a ^FF0000Sage^000000 or ^FF0000Professor^000000, and";
+				mes "then have him bring it to me.";
+				close;
+			}
+			else {
+				mes "[" + .@name$ + "]";
+				mes "Our business together";
+				mes "has concluded. If you're";
+				mes "not busy, why don't you try";
+				mes "helping out your guild? Yes,";
+				mes "I'm sure they'd appreciate it.";
+				close;
+			}
+		}
+		else {
+			if ((BaseJob == Job_Sage) && (countitem(7240) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "I see that you've brought";
+				mes "the ^42426FSpirit of Trust^000000. Now, the";
+				mes "first thing I want you to do is";
+				mes "to build the trust between you";
+				mes "and your guild members.";
+				mes "Spend time with them.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "I want you to build";
+				mes "up some friendly bonds";
+				mes "within your guild before";
+				mes "coming back to me. Your";
+				mes "guild must have solidarity";
+				mes "in order to be successful.";
+				delitem 7240,1; //Soul_Of_Confidence
+				set guildrelay_q,9;
+				set guildtime,gettime(3);
+				close;
+			}
+			if ((guildtime > 22) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+				if ((gettime(3) > 02) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "So did you spend some";
+					mes "quality time with your";
+					mes "guild members, and get";
+					mes "a chance to really learn";
+					mes "who they are? You must";
+					mes "love your comrades.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Now you know how";
+					mes "important bonding truly";
+					mes "is. Please give this spirit";
+					mes "to a ^42426FBard^000000, ^42426FMinstrel^000000, ^42426FDancer^000000,";
+					mes "or ^42426FGypsy^000000. Good luck to you.";
+					set guildrelay_q,81;
+					getitem 7241,1; //Soul_Of_Agreement
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Hm? Back so soon?";
+					mes "That hasn't been enough";
+					mes "time for you to really bond";
+					mes "with your guild members.";
+					mes "Go back, ask them about their";
+					mes "dreams, passions, and goals!";
+					close;
+				}
+			}
+			else if ((guildtime > 21) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+				if ((gettime(3) > 01) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "So did you spend some";
+					mes "quality time with your";
+					mes "guild members, and get";
+					mes "a chance to really learn";
+					mes "who they are? You must";
+					mes "love your comrades.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Now you know how";
+					mes "important bonding truly";
+					mes "is. Please give this spirit";
+					mes "to a ^42426FBard^000000, ^42426FMinstrel^000000, ^42426FDancer^000000,";
+					mes "or ^42426FGypsy^000000. Good luck to you.";
+					set guildrelay_q,71;
+					getitem 7241,1; //Soul_Of_Agreement
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Hm? Back so soon?";
+					mes "That hasn't been enough";
+					mes "time for you to really bond";
+					mes "with your guild members.";
+					mes "Go back, ask them about their";
+					mes "dreams, passions, and goals!";
+					close;
+				}
+			}
+			else if ((guildtime > 20) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+				if ((gettime(3) > 0) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "So did you spend some";
+					mes "quality time with your";
+					mes "guild members, and get";
+					mes "a chance to really learn";
+					mes "who they are? You must";
+					mes "love your comrades.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Now you know how";
+					mes "important bonding truly";
+					mes "is. Please give this spirit";
+					mes "to a ^42426FBard^000000, ^42426FMinstrel^000000, ^42426FDancer^000000,";
+					mes "or ^42426FGypsy^000000. Good luck to you.";
+					set guildrelay_q,71;
+					getitem 7241,1; //Soul_Of_Agreement
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Hm? Back so soon?";
+					mes "That hasn't been enough";
+					mes "time for you to really bond";
+					mes "with your guild members.";
+					mes "Go back, ask them about their";
+					mes "dreams, passions, and goals!";
+					close;
+				}
+			}
+			else if ((gettime(3) - guildtime > 3) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+				mes "[" + .@name$ + "]";
+				mes "So did you spend some";
+				mes "quality time with your";
+				mes "guild members, and get";
+				mes "a chance to really learn";
+				mes "who they are? You must";
+				mes "love your comrades.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "You have done";
+				mes "what you had to do for now.";
+				mes "Please give it to a ^42426FBard^000000 or ^42426FClown^000000";
+				mes "You can also give it to ^42426FDancer^000000 or ^42426FGypsy^000000";
+				mes "Good luck.";
+				set guildrelay_q,71;
+				getitem 7241,1; //Soul_Of_Agreement
+				close;
+			}
+			else if ((BaseJob == Job_Sage) && (guildrelay_q == 9)) {
+				mes "[" + .@name$ + "]";
+				mes "Hm? Back so soon?";
+				mes "That hasn't been enough";
+				mes "time for you to really bond";
+				mes "with your guild members.";
+				mes "Go back, ask them about their";
+				mes "dreams, passions, and goals!";
+				close;
+			}
+			if (((BaseJob == Job_Bard) || (BaseJob == Job_Dancer)) && (countitem(7241) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "For the sake of promoting";
+				mes "teamwork amongst your guild,";
+				mes "my test will be for you to";
+				mes "gather specific items for me.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "This is a difficult task";
+				mes "to complete alone, but it";
+				mes "will be much easier if you";
+				mes "and your guild cooperate to";
+				mes "get all the items. Now listen,";
+				mes "this is what I want you to get.";
+				next;
+				switch(rand(1,3)) {
+				case 1:
+					mes "[" + .@name$ + "]";
+					mes "^8C171730 Burning Hearts^000000,";
+					mes "^8C171730 Wolf Claws^000000, and";
+					mes "^8C171730 Leopard Claws^000000.";
+					mes "You might want to write";
+					mes "these down so you don't";
+					mes "forget. Good luck to you.";
+					delitem 7241,1; //Soul_Of_Agreement
+					set guildrelay_q,10;
+					break;
+				case 2:
+					mes "[" + .@name$ + "]";
+					mes "^8C171730 Soft Blades of Grass^000000,";
+					mes "^8C171730 Wooden Hearts^000000, and";
+					mes "^8C171730 Poisonous Toad Skins^000000.";
+					mes "You might want to write";
+					mes "these down so you don't";
+					mes "forget. Good luck to you.";
+					delitem 7241,1; //Soul_Of_Agreement
+					set guildrelay_q,11;
+					break;
+				case 3:
+					mes "[" + .@name$ + "]";
+					mes "^8C171730 Antelope Horns^000000,";
+					mes "^8C171730 Honey Pots^000000, and";
+					mes "^8C171730 Porcupine Quills^000000.";
+					mes "You might want to write";
+					mes "these down so you don't";
+					mes "forget. Good luck to you.";
+					delitem 7241,1; //Soul_Of_Agreement
+					set guildrelay_q,80;
+					break;
+				}
+				next;
+				mes "[" + .@name$ + "]";
+				mes "You should be bonding";
+				mes "with your guild while you";
+				mes "gather those items I asked";
+				mes "you to bring. I know enough";
+				mes "time hasn't passed for your";
+				mes "guild to work together on this.";
+				close;
+			}
+			if ((countitem(7097) > 29) && (countitem(7172) > 29) && (countitem(920) > 29) && (guildrelay_q == 10)) {
+				mes "[" + .@name$ + "]";
+				mes "Oh, perfect! You brought";
+				mes "all the items. Well then,";
+				mes "I guess you're ready to";
+				mes "take this spirit now. Please";
+				mes "give it to an ^42426FAssassin^000000 or an";
+				mes "^42426FAssassin Cross^000000. Thank you.";
+				delitem 7097,30; //Burning_Heart
+				delitem 7172,30; //Leopard_Talon
+				delitem 920,30; //Claw_Of_Wolves
+				if (BaseJob == Job_Dancer) {
+					set guildrelay_q,72;
+				}
+				else {
+					set guildrelay_q,72;
+				}
+				getitem 7242,1; //Soul_Of_Harmony
+				close;
+			}
+			else if ((countitem(7189) > 29) && (countitem(7194) > 29) && (countitem(7155) > 29) && (guildrelay_q == 11)) {
+				mes "[" + .@name$ + "]";
+				mes "Oh, perfect! You brought";
+				mes "all the items. Well then,";
+				mes "I guess you're ready to";
+				mes "take this spirit now. Please";
+				mes "give it to an ^42426FAssassin^000000 or an";
+				mes "^42426FAssassin Cross^000000. Thank you.";
+				delitem 7189,30; //Heart_Of_Tree
+				delitem 7194,30; //Soft_Leaf
+				delitem 7155,30; //Poison_Toad's_Skin
+				if (BaseJob == Job_Dancer) {
+					set guildrelay_q,72;
+				}
+				else {
+					set guildrelay_q,72;
+				}
+				getitem 7242,1; //Soul_Of_Harmony
+				close;
+			}
+			else if ((countitem(7106) > 29) && (countitem(7121) > 29) && (countitem(1027) > 29) && (guildrelay_q == 80)) {
+				mes "[" + .@name$ + "]";
+				mes "Oh, perfect! You brought";
+				mes "all the items. Well then,";
+				mes "I guess you're ready to";
+				mes "take this spirit now. Please";
+				mes "give it to an ^42426FAssassin^000000 or an";
+				mes "^42426FAssassin Cross^000000. Thank you.";
+				delitem 7106,30; //Goat's_Horn
+				delitem 7121,30; //Honey_Jar
+				delitem 1027,30; //Porcupine_Spike
+				if (BaseJob == Job_Dancer) {
+					set guildrelay_q,72;
+				}
+				else {
+					set guildrelay_q,72;
+				}
+				getitem 7242,1; //Soul_Of_Harmony
+				close;
+			}
+			else if (guildrelay_q == 10) {
+				mes "[" + .@name$ + "]";
+				mes "Hm? You still haven't";
+				mes "gathered all the items";
+				mes "with your guild yet?";
+				mes "Let me remind you what";
+				mes "you need to bring me.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "^8C171730 Burning Hearts^000000,";
+				mes "^8C171730 Wolf Claws^000000, and";
+				mes "^8C171730 Leopard Claws^000000.";
+				mes "You might want to write";
+				mes "these down so you don't";
+				mes "forget. Good luck to you.";
+				close;
+			}
+			else if (guildrelay_q == 11) {
+				mes "[" + .@name$ + "]";
+				mes "Hm? You still haven't";
+				mes "gathered all the items";
+				mes "with your guild yet?";
+				mes "Let me remind you what";
+				mes "you need to bring me.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "^8C171730 Soft Blades of Grass^000000,";
+				mes "^8C171730 Wooden Hearts^000000, and";
+				mes "^8C171730 Poisonous Toad Skins^000000.";
+				mes "You might want to write";
+				mes "these down so you don't";
+				mes "forget. Good luck to you.";
+				close;
+			}
+			else if (guildrelay_q == 80) {
+				mes "[" + .@name$ + "]";
+				mes "Hm? You still haven't";
+				mes "gathered all the items";
+				mes "with your guild yet?";
+				mes "Let me remind you what";
+				mes "you need to bring me.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "^8C171730 Antelope Horns^000000,";
+				mes "^8C171730 Honey Pots^000000, and";
+				mes "^8C171730 Porcupine Quills^000000.";
+				mes "You might want to write";
+				mes "these down so you don't";
+				mes "forget. Good luck to you.";
+				close;
+			}
+			if ((BaseJob == Job_Assassin) && (countitem(7242) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "You brought the";
+				mes "Spirit of Combination?";
+				mes "Make sure that you give";
+				mes "that to a ^2F4F2FWizard^000000 or";
+				mes "a ^2F4F2FHigh Wizard^000000.";
+				delitem 7242,1; //Soul_Of_Harmony
+				set guildrelay_q,74;
+				getitem 7244,1; //Soul_Of_Unity
+				close;
+			}
+			if ((BaseJob == Job_Wizard) && (countitem(7244) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "For the sake of your";
+				mes "guild, you must become";
+				mes "stronger. Sometimes";
+				mes "your spells will make the";
+				mes "difference between victory";
+				mes "and defeat. Remember that.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Hey," + strcharinfo(0) + ",";
+				mes "if you really want to become";
+				mes "strong enough to protect your";
+				mes "guild, then you must level up.";
+				mes "Come back to me once you've";
+				mes "raised your Base Level.";
+				next;
+				if ((BaseLevel > 0) && (BaseLevel < 61)) {
+					mes "[" + .@name$ + "]";
+					mes "You will be ready";
+					mes "for your task after you";
+					mes "gain ^FF00003 Base Levels^000000.";
+					mes "Don't despair: I know";
+					mes "you'll be able to reach";
+					mes "this goal. Good luck to you.";
+					delitem 7244,1; //Soul_Of_Unity
+					set guildrelay_q,12;
+					close;
+				}
+				else if ((BaseLevel > 60) && (BaseLevel < 76)) {
+					mes "[" + .@name$ + "]";
+					mes "You will be ready";
+					mes "for your task after you";
+					mes "gain ^FF00002 Base Levels^000000.";
+					mes "Don't despair: I know";
+					mes "you'll be able to reach";
+					mes "this goal. Good luck to you.";
+					delitem 7244,1; //Soul_Of_Unity
+					set guildrelay_q,13;
+					close;
+				}
+				else if ((BaseLevel > 75) && (BaseLevel < 97)) {
+					mes "[" + .@name$ + "]";
+					mes "You will be ready";
+					mes "for your task after you";
+					mes "gain ^FF00001 Base Level^000000.";
+					mes "Don't despair: I know";
+					mes "you'll be able to reach";
+					mes "this goal. Good luck to you.";
+					delitem 7244,1; //Soul_Of_Unity
+					set guildrelay_q,14;
+					close;
+				}
+				else if (BaseLevel > 96) {
+					mes "[" + .@name$ + "]";
+					mes "Hm. You're much stronger";
+					mes "that I expected. There's no";
+					mes "need for me to encourage";
+					mes "you to develop your strength.";
+					mes "I admit that you are strong.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Acknowledge the extent and";
+					mes "limits of your strength, but";
+					mes "never allow conceit to pollute";
+					mes "your heart. Pride will always";
+					mes "shackle your power if you";
+					mes "let it. Remember humility.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "You qualified enough";
+					mes "for me to trust you.";
+					mes "Please give this spirit";
+					mes "to your ^FF0000Guild Master^000000.";
+					mes "You're done for now.";
+					delitem 7244,1; //Soul_Of_Unity
+					set guildrelay_q,75;
+					getitem 7245,1; //Soul_Of_Friendship
+					close;
+				}
+			}
+			if ((BaseLevel + 2) < (BaseLevel) && (guildrelay_q == 12)) {
+				mes "[" + .@name$ + "]";
+				mes "I see that you've";
+				mes "completed the task";
+				mes "I have given you. It may";
+				mes "have been difficult, but";
+				mes "you'll see that I had your";
+				mes "guild's best interests in mind.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "You've earned my trust.";
+				mes "Please give this spirit";
+				mes "to your ^FF0000Guild Master^000000.";
+				mes "You've done well.";
+				set guildrelay_q,75;
+				getitem 7245,1; //Soul_Of_Friendship
+				close;
+			}
+			else if ((BaseLevel + 1) < (BaseLevel) && (guildrelay_q == 13)) {
+				mes "[" + .@name$ + "]";
+				mes "I see that you've";
+				mes "completed the task";
+				mes "I have given you. It may";
+				mes "have been difficult, but";
+				mes "you'll see that I had your";
+				mes "guild's best interests in mind.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "You've earned my trust.";
+				mes "Please give this spirit";
+				mes "to your ^FF0000Guild Master^000000.";
+				mes "You've done well.";
+				set guildrelay_q,75;
+				getitem 7245,1; //Soul_Of_Friendship
+				close;
+			}
+			else if ((BaseLevel < BaseLevel) && (guildrelay_q == 14)) {
+				mes "[" + .@name$ + "]";
+				mes "I see that you've";
+				mes "completed the task";
+				mes "I have given you. It may";
+				mes "have been difficult, but";
+				mes "you'll see that I had your";
+				mes "guild's best interests in mind.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "You've earned my trust.";
+				mes "Please give this spirit";
+				mes "to your ^FF0000Guild Master^000000.";
+				mes "You've done well.";
+				set guildrelay_q,75;
+				getitem 7245,1; //Soul_Of_Friendship
+				close;
+			}
+			if ((guildrelay_q == 12) && (BaseJob == Job_Wizard)) {
+				mes "[" + .@name$ + "]";
+				mes "You're not strong enough";
+				mes "yet for your guild to fully";
+				mes "rely on you in a crisis.";
+				mes "You must level up!";
+				close;
+			}
+			else if ((guildrelay_q == 13) && (BaseJob == Job_Wizard)) {
+				mes "[" + .@name$ + "]";
+				mes "You're not strong enough";
+				mes "yet for your guild to fully";
+				mes "rely on you in a crisis.";
+				mes "You must level up!";
+				close;
+			}
+			else if ((guildrelay_q == 14) && (BaseJob == Job_Wizard)) {
+				mes "[" + .@name$ + "]";
+				mes "Hmm... I don't think you've";
+				mes "spent enough time leveling";
+				mes "up yet. Keep working on it.";
+				close;
+			}
+		}
+	}
+	else {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			mes "[" + .@name$ + "]";
+			mes "Hm. You're the master";
+			mes "of another guild, aren't";
+			mes "you? I have no loyalty";
+			mes "towards you. Please...";
+			mes "Leave this place.";
+			close;
+		}
+		else {
+			mes "[" + .@name$ + "]";
+			mes "Hm? You have no reason";
+			mes "to linger in this stronghold.";
+			mes "Please leave this place now.";
+			close;
+		}
+	}
+	if ((guildrelay_q == 71) && (countitem(7241) > 0)) {
+		mes "[" + .@name$ + "]";
+		mes "There's no need for you";
+		mes "to hold onto that Spirit";
+		mes "of Union. Please give it to";
+		mes "a Bard, Minstrel, Dancer";
+		mes "or Gypsy in your guild.";
+		close;
+	}
+	else if (guildrelay_q == 71) {
+		mes "[" + .@name$ + "]";
+		mes "When you improve yourself,";
+		mes "you'll also be strengthening";
+		mes "your guild. Always devote some";
+		mes "time for yourself and for your";
+		mes "team. You cannot have one";
+		mes "without the other.";
+		next;
+		mes "[" + .@name$ + "]";
+		mes "I suppose you really";
+		mes "don't have much use";
+		mes "for me anymore... But I'll";
+		mes "always offer my support.";
+		close;
+	}
+	if ((guildrelay_q == 72) && (countitem(7242) > 0)) {
+		mes "[" + .@name$ + "]";
+		mes "There's no need for you";
+		mes "to hold onto that Spirit of";
+		mes "Combination. Please give";
+		mes "it to an Assassin or Assassin";
+		mes "Cross in your guild.";
+		close;
+	}
+	else if (guildrelay_q == 72) {
+		mes "[" + .@name$ + "]";
+		mes "Your songs bolster your";
+		mes "guild's morale, and will";
+		mes "help them stand and fight,";
+		mes "no matter how deseperate";
+		mes "the situation may seem.";
+		mes "Your voice can make miracles.";
+		next;
+		mes "[" + .@name$ + "]";
+		mes "I suppose you really";
+		mes "don't have much use";
+		mes "for me anymore... But I'll";
+		mes "always offer my support.";
+		close;
+	}
+	if ((guildrelay_q == 73) && (countitem(7242) > 0)) {
+		mes "[" + .@name$ + "]";
+		mes "There's no need for you";
+		mes "to hold onto that Spirit of";
+		mes "Combination. Please give";
+		mes "it to an Assassin or Assassin";
+		mes "Cross in your guild.";
+		close;
+	}
+	else if (guildrelay_q == 73) {
+		mes "[" + .@name$ + "]";
+		mes "Your dances bolster your";
+		mes "guild's morale, and will";
+		mes "help them stand and fight,";
+		mes "no matter how deseperate";
+		mes "the situation may seem.";
+		mes "Your voice can make miracles.";
+		next;
+		mes "[" + .@name$ + "]";
+		mes "I suppose you really";
+		mes "don't have much use";
+		mes "for me anymore... But I'll";
+		mes "always offer my support.";
+		close;
+	}
+	if ((guildrelay_q == 74) && (countitem(7244) > 0)) {
+		mes "[" + .@name$ + "]";
+		mes "There's no need for you";
+		mes "to hold onto that Spirit";
+		mes "of Solidarity. Please give";
+		mes "it to a Wizard or High";
+		mes "Wizard in your guild.";
+		close;
+	}
+	else if (guildrelay_q == 74) {
+		mes "[" + .@name$ + "]";
+		mes "I suppose you really";
+		mes "don't have much use";
+		mes "for me anymore... But I'll";
+		mes "always offer my support.";
+		next;
+		mes "[" + .@name$ + "]";
+		mes "Know who your enemies are.";
+		mes "If anybody opposes your guild,";
+		mes "you must crush them without";
+		mes "any hesitation. Your justice";
+		mes "must be meted swiftly!";
+		close;
+	}
+	if ((guildrelay_q == 75) && (countitem(7245) > 0)) {
+		mes "[" + .@name$ + "]";
+		mes "There's no need for you";
+		mes "to hold onto that Spirit of";
+		mes "Friendship. Please give";
+		mes "it to your Guild Master.";
+		close;
+	}
+	else if (guildrelay_q == 75) {
+		mes "[" + .@name$ + "]";
+		mes "I can tell that you're";
+		mes "always trying to help all";
+		mes "the members of your guild.";
+		mes "Your loyalty will bring them";
+		mes "to your side in times of";
+		mes "joy and of tribulation.";
+		next;
+		mes "[" + .@name$ + "]";
+		mes "I suppose you really";
+		mes "don't have much use";
+		mes "for me anymore... But I'll";
+		mes "always offer my support.";
+		close;
+	}
+	mes "[" + .@name$ + "]";
+	mes "We have nothing to";
+	mes "do with each other.";
+	mes "Leave me be, and";
+	mes "just go on your way.";
+	close;
+}
+
+-	script	GuildDummy4::GuildRelay4	754,{
+	set .@name$,strnpcinfo(1);
+	getmapxy(.@m$,.@x,.@x,1);
+	set .@GID, GetCastleData(.@m$,1);
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (.@GID == 0) {
+		mes "^3355FFThis exhausted man";
+		mes "notices you staring at";
+		mes "him, but chooses to leave";
+		mes "you alone. There's no one";
+		mes "else in this stronghold so";
+		mes "there's no reason to be here.^000000";
+		close;
+	}
+	if (getcharid(2) == .@GID) {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			if (countitem(7246) > 0) {
+				mes "[" + .@name$ + "]";
+				mes "Hm? That spirit that";
+				mes "you've brought with you...";
+				mes "I'm sorry, but it's useless";
+				mes "for you to carry it around.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Please give that to";
+				mes "a ^FF0000Rogue^000000 or ^FF0000Stalker^000000";
+				mes "in your guild, and then";
+				mes "ask him bring it to me.";
+				close;
+			}
+			else {
+				mes "[" + .@name$ + "]";
+				mes "Our business together";
+				mes "has concluded. If you're";
+				mes "not busy, why don't you try";
+				mes "helping out your guild? Yes,";
+				mes "I'm sure they'd appreciate it.";
+				close;
+			}
+		}
+		else {
+			if ((BaseJob == Job_Rogue) && (countitem(7246) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "So you're the one that's";
+				mes "been entrusted with the";
+				mes "Spirit of Peace? Well then...";
+				mes "My task for you is to ^FF0000form";
+				switch(rand(1,3)) {
+				case 1:
+					mes "a party with 6 members^000000.";
+					mes "No more and no less.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "This is a strange test,";
+					mes "but if you can do this, it";
+					mes "will clearly demonstrate";
+					mes "to me that your people";
+					mes "skills are up to par.";
+					delitem 7246,1; //Soul_Of_Peace
+					set guildrelay_q,91;
+					close;
+				case 2:
+					mes "a party with 8 members^000000.";
+					mes "No more and no less.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "This is a strange test,";
+					mes "but if you can do this, it";
+					mes "will clearly demonstrate";
+					mes "to me that your people";
+					mes "skills are up to par.";
+					delitem 7246,1; //Soul_Of_Peace
+					set guildrelay_q,92;
+					close;
+				case 3:
+					mes "a party with 10 members^000000.";
+					mes "No more and no less.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "This is a strange test,";
+					mes "but if you can do this, it";
+					mes "will clearly demonstrate";
+					mes "to me that your people";
+					mes "skills are up to par.";
+					delitem 7246,1; //Soul_Of_Peace
+					set guildrelay_q,93;
+					close;
+				}
+			}
+			getpartymember(getcharid(1));
+			set .@partymembercount,$@partymembercount;
+			set .@partyleader,getpartyleader(getcharid(1),2);
+			if (guildrelay_q == 91) {
+				if (.@partymembercount == 6) {
+					mes "[" + .@name$ + "]";
+					mes "I see that you've";
+					mes "formed a party with";
+					mes "the exact number of";
+					mes "people that I asked. Hmm.";
+					mes "I guess you can be trusted";
+					mes "to lead when you must.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Here. I want you to take";
+					mes "this spirit, and then give";
+					mes "it to a Priest or High";
+					mes "Priest in your guild.";
+					set guildrelay_q,95;
+					getitem 7247,1; //Soul_Of_Spirit
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "I thought I asked you to";
+					mes "^FF0000form a party of 6 members^000000?";
+					mes "No more and no less. Hmm.";
+					mes "Come back to me after you've";
+					mes "finished this simple task.";
+					close;
+				}
+			}
+			if (guildrelay_q == 92) {
+				if (.@partymembercount == 8) {
+					mes "[" + .@name$ + "]";
+					mes "I see that you've";
+					mes "formed a party with";
+					mes "the exact number of";
+					mes "people that I asked. Hmm.";
+					mes "I guess you can be trusted";
+					mes "to lead when you must.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Here. I want you to take";
+					mes "this spirit, and then give";
+					mes "it to a Priest or High";
+					mes "Priest in your guild.";
+					set guildrelay_q,95;
+					getitem 7247,1; //Soul_Of_Spirit
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "I thought I asked you to";
+					mes "^FF0000form a party of 8 members^000000?";
+					mes "No more and no less. Hmm.";
+					mes "Come back to me after you've";
+					mes "finished this simple task.";
+					close;				}
+			}
+			if (guildrelay_q == 93) {
+				if (.@partymembercount == 10) {
+					mes "[" + .@name$ + "]";
+					mes "I see that you've";
+					mes "formed a party with";
+					mes "the exact number of";
+					mes "people that I asked. Hmm.";
+					mes "I guess you can be trusted";
+					mes "to lead when you must.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Here. I want you to take";
+					mes "this spirit, and then give";
+					mes "it to a Priest or High";
+					mes "Priest in your guild.";
+					set guildrelay_q,95;
+					getitem 7247,1; //Soul_Of_Spirit
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "I thought I asked you to";
+					mes "^FF0000form a party of 10 members^000000?";
+					mes "No more and no less. Hmm.";
+					mes "Come back to me after you've";
+					mes "finished this simple task.";
+					close;
+				}
+			}
+			if ((BaseJob == Job_Priest) && (countitem(7247) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Good work getting the";
+				mes "Spirit of Determination,";
+				mes "but I want you to work on";
+				mes "getting stronger. If you";
+				mes "intend to protect others,";
+				mes "you can't afford to lose.";
+				next;
+				if ((BaseLevel > 1) && (BaseLevel < 61)) {
+					mes "[" + .@name$ + "]";
+					mes "I want you to gain";
+					mes "^FF00003 Base Levels^000000 for the";
+					mes "sake of strengthening";
+					mes "yourself and your guild.";
+					mes "This is my test for you.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Try not to worry";
+					mes "over this task so much.";
+					mes "I'm certain you can do";
+					mes "this. Come back to me";
+					mes "when you are ready.";
+					delitem 7247,1; //Soul_Of_Spirit
+					set guildrelay_q,18;
+					close;
+				}
+				if ((BaseLevel > 60) && (BaseLevel < 76)) {
+					mes "[" + .@name$ + "]";
+					mes "I want you to gain";
+					mes "^FF00002 Base Levels^000000 for the";
+					mes "sake of strengthening";
+					mes "yourself and your guild.";
+					mes "This is my test for you.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Try not to worry";
+					mes "over this task so much.";
+					mes "I'm certain you can do";
+					mes "this. Come back to me";
+					mes "when you are ready.";
+					delitem 7247,1; //Soul_Of_Spirit
+					set guildrelay_q,19;
+					close;
+				}
+				if ((BaseLevel > 75) && (BaseLevel < 97)) {
+					mes "[" + .@name$ + "]";
+					mes "I want you to gain";
+					mes "^FF00001 Base Level^000000 for the";
+					mes "sake of strengthening";
+					mes "yourself and your guild.";
+					mes "This is my test for you.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Try not to worry";
+					mes "over this task so much.";
+					mes "I'm certain you can do";
+					mes "this. Come back to me";
+					mes "when you are ready.";
+					delitem 7247,1; //Soul_Of_Spirit
+					set guildrelay_q,20;
+					close;
+				}
+				if (BaseLevel > 96) {
+					mes "[" + .@name$ + "]";
+					mes "Hum, You are stronger than";
+					mes "I was expected.";
+					mes "You don't need any more quests";
+					mes "for becoming stronger.";
+					mes "But, do not be so proud of yourself.";
+					next;
+					mes "[" + .@name$ + "]";
+					mes "Alright then...";
+					mes "I entrust you with";
+					mes "this spirit. Please be";
+					mes "sure to give it to a";
+					mes "^4D4DFFCrusader^000000 or ^4D4DFFPaladin^000000";
+					mes "in your guild.";
+					delitem 7247,1; //Soul_Of_Spirit
+					set guildrelay_q,98;
+					getitem 7249,1; //Soul_Of_Service
+					close;
+				}
+			}
+			if (((BaseLevel + 2) < (BaseLevel)) && (guildrelay_q == 18)) {
+				mes "[" + .@name$ + "]";
+				mes "Huh. I see that you've";
+				mes "become much stronger,";
+				mes "just as I asked. No wonder";
+				mes "your guild mates can rely";
+				mes "on you. Congratulations";
+				mes "on a job well done.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Alright then...";
+				mes "I entrust you with";
+				mes "this spirit. Please be";
+				mes "sure to give it to a";
+				mes "^4D4DFFCrusader^000000 or ^4D4DFFPaladin^000000";
+				mes "in your guild.";
+				set guildrelay_q,98;
+				getitem 7249,1; //Soul_Of_Service
+				close;
+			}
+			if (((BaseLevel + 1) < (BaseLevel)) && (guildrelay_q == 19)) {
+				mes "[" + .@name$ + "]";
+				mes "Huh. I see that you've";
+				mes "become much stronger,";
+				mes "just as I asked. No wonder";
+				mes "your guild mates can rely";
+				mes "on you. Congratulations";
+				mes "on a job well done.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Alright then...";
+				mes "I entrust you with";
+				mes "this spirit. Please be";
+				mes "sure to give it to a";
+				mes "^4D4DFFCrusader^000000 or ^4D4DFFPaladin^000000";
+				mes "in your guild.";
+				set guildrelay_q,98;
+				getitem 7249,1; //Soul_Of_Service
+				close;
+			}
+			if ((BaseLevel < BaseLevel) && (guildrelay_q == 20)) {
+				mes "[" + .@name$ + "]";
+				mes "Huh. I see that you've";
+				mes "become much stronger,";
+				mes "just as I asked. No wonder";
+				mes "your guild mates can rely";
+				mes "on you. Congratulations";
+				mes "on a job well done.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Ok, take this and give to";
+				mes "Crusader or Paladin";
+				mes "who is in our guild.";
+				mes "Good luck!";
+				set guildrelay_q,98;
+				getitem 7249,1; //Soul_Of_Service
+				close;
+			}
+			if ((BaseJob == Job_Crusader) && (countitem(7249) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "I see that you possess";
+				mes "the Spirit of Service. Hmm.";
+				mes "Good job. Now, your next";
+				mes "task will test your patience.";
+				mes "All you have to do is ^FF0000wait^000000.";
+				mes "Wait until the time is right.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "I want you to spend this";
+				mes "time to look into yourself,";
+				mes "and examine your relationship";
+				mes "with your guild members.";
+				mes "When you feel that the time";
+				mes "is right, come talk to me.";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "I'm not going to tell you";
+				mes "when you should come back.";
+				mes "I'll merely confirm whether";
+				mes "you've come early or on time.";
+				mes "You'll need to really listen";
+				mes "to your feelings this time...";
+				delitem 7249,1; //Soul_Of_Service
+				set guildrelay_q,21;
+				set guildtime,gettime(3);
+				close;
+			}
+			if ((guildtime > 22) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+				if ((gettime(3) > 2) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "Yes. You've come at just";
+					mes "the right time. Remember";
+					mes "that feeling in your heart,";
+					mes "and trust it when it comes";
+					mes "again. Now give this spirit to";
+					mes "a ^FF0000Monk^000000 or ^FF0000Champion^000000 for me...";
+					set guildrelay_q,96;
+					getitem 7250,1; //Soul_Of_Glory
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Too early.";
+					mes "Still too early.";
+					mes "Have you been listening";
+					mes "to your heart? Listen harder.";
+					close;
+				}
+			}
+			if ((guildtime > 21) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+				if ((gettime(3) > 1) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "Yes. You've come at just";
+					mes "the right time. Remember";
+					mes "that feeling in your heart,";
+					mes "and trust it when it comes";
+					mes "again. Now give this spirit to";
+					mes "a ^FF0000Monk^000000 or ^FF0000Champion^000000 for me...";
+					set guildrelay_q,96;
+					getitem 7250,1; //Soul_Of_Glory
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Too early.";
+					mes "Still too early.";
+					mes "Have you been listening";
+					mes "to your heart? Listen harder.";
+					close;
+				}
+			}
+			if ((guildtime > 20) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+				if ((gettime(3) > 0) && (gettime(3) < guildtime)) {
+					mes "[" + .@name$ + "]";
+					mes "Yes. You've come at just";
+					mes "the right time. Remember";
+					mes "that feeling in your heart,";
+					mes "and trust it when it comes";
+					mes "again. Now give this spirit to";
+					mes "a ^FF0000Monk^000000 or ^FF0000Champion^000000 for me...";
+					set guildrelay_q,96;
+					getitem 7250,1; //Soul_Of_Glory
+					close;
+				}
+				else {
+					mes "[" + .@name$ + "]";
+					mes "Too early.";
+					mes "Still too early.";
+					mes "Have you been listening";
+					mes "to your heart? Listen harder.";
+					close;
+				}
+			}
+			if ((gettime(3) - guildtime > 3) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+				mes "[" + .@name$ + "]";
+				mes "Yes. You've come at just";
+				mes "the right time. Remember";
+				mes "that feeling in your heart,";
+				mes "and trust it when it comes";
+				mes "again. Now give this spirit to";
+				mes "a ^FF0000Monk^000000 or ^FF0000Champion^000000 for me...";
+				set guildrelay_q,96;
+				getitem 7250,1; //Soul_Of_Glory
+				close;
+			}
+			if ((guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+				mes "[" + .@name$ + "]";
+				mes "Not yet. Just wait";
+				mes "a little longer. Relax,";
+				mes "and come back later.";
+				close;
+			}
+			if ((BaseJob == Job_Monk) && (countitem(7250) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Most of the souls have";
+				mes "been shared, and there is";
+				mes "but one thing I want to ask";
+				mes "you to do. Please bring me";
+				mes "some items. Having your friends";
+				mes "help you do this is acceptable.";
+				next;
+				switch(rand(1,3)) {
+				case 1:
+					mes "[" + .@name$ + "]";
+					mes "Please bring";
+					mes "^FF000030 Dokebi Horns^000000,";
+					mes "^FF000030 Fish Tails^000000, and";
+					mes "^FF000030 Celestial Robes^000000.";
+					mes "I shall be waiting";
+					mes "for you right here.";
+					delitem 7250,1; //Soul_Of_Glory
+					set guildrelay_q,23;
+					close;
+				case 2:
+					mes "[" + .@name$ + "]";
+					mes "Please bring";
+					mes "^FF000030 Rainbow Shells^000000,";
+					mes "^FF000030 Elastic Bands^000000, and";
+					mes "^FF000030 Horrendous Hairs^000000.";
+					mes "I shall be waiting";
+					mes "for you right here.";
+					delitem 7250,1; //Soul_Of_Glory
+					set guildrelay_q,24;
+					close;
+				case 3:
+					mes "[" + .@name$ + "]";
+					mes "Please bring";
+					mes "^FF000030 Worn-out Kimonos^000000,";
+					mes "^FF000030 Anolian Skins^000000, and";
+					mes "^FF000030 PecoPeco Feathers^000000.";
+					mes "I shall be waiting";
+					mes "for you right here.";
+					delitem 7250,1; //Soul_Of_Glory
+					set guildrelay_q,94;
+					close;
+				}
+			}
+			if ((countitem(7165) > 29) && (countitem(1021) > 29) && (countitem(1023) > 29) && (guildrelay_q == 23)) {
+				mes "[" + .@name$ + "]";
+				mes "Well, well. You've";
+				mes "gathered those items";
+				mes "more quickly that I thought";
+				mes "you would. Good job. Now,";
+				mes "please give this to your ^FF0000Guild";
+				mes "Master^000000 as soon as you can.";
+				delitem 7165,30; //Limpid_Celestial_Robe
+				delitem 1021,30; //Dokkaebi_Horn
+				delitem 1023,30; //Fish_Tail
+				set guildrelay_q,97;
+				getitem 7251,1; //Soul_Of_Victory
+				close;
+			}
+			if ((BaseJob == Job_Monk) && (guildrelay_q == 23)) {
+				mes "[" + .@name$ + "]";
+				mes "You have to give ^FF0000Transparent Celestial Robe ^00000030ea,";
+				mes "^FF0000Dokebi Horn ^00000030ea, ^FF0000Fish Tail ^00000030ea.";
+				mes "You know that, right?";
+				mes "Good luck~";
+				close;
+			}
+			if ((countitem(1048) > 29) && (countitem(1013) > 29) && (countitem(7200) > 29) && (guildrelay_q == 24)) {
+				mes "[" + .@name$ + "]";
+				mes "Well, well. You've";
+				mes "gathered those items";
+				mes "more quickly that I thought";
+				mes "you would. Good job. Now,";
+				mes "please give this to your ^FF0000Guild";
+				mes "Master^000000 as soon as you can.";
+				delitem 1048,30; //Slender_Snake
+				delitem 1013,30; //Colorful_Shell
+				delitem 7200,30; //Flexible_String
+				set guildrelay_q,97;
+				getitem 7251,1; //Soul_Of_Victory
+				close;
+			}
+			if ((BaseJob == Job_Monk) && (guildrelay_q == 24)) {
+				mes "[" + .@name$ + "]";
+				mes "Please bring";
+				mes "^FF000030 Rainbow Shells^000000,";
+				mes "^FF000030 Elastic Bands^000000, and";
+				mes "^FF000030 Horrendous Hairs^000000.";
+				mes "I shall be waiting";
+				mes "for you right here.";
+				close;
+			}
+			if ((countitem(7003) > 29) && (countitem(7101) > 29) && (countitem(7153) > 29) && (guildrelay_q == 94)) {
+				mes "[" + .@name$ + "]";
+				mes "Well, well. You've";
+				mes "gathered those items";
+				mes "more quickly that I thought";
+				mes "you would. Good job. Now,";
+				mes "please give this to your ^FF0000Guild";
+				mes "Master^000000 as soon as you can.";
+				delitem 7003,30; //Anolian_Skin
+				delitem 7101,30; //Peco_Wing_Feather
+				delitem 7153,30; //Old_Japaness_Clothes
+				set guildrelay_q,97;
+				getitem 7251,1; //Soul_Of_Victory
+				close;
+			}
+			if ((BaseJob == Job_Monk) && (guildrelay_q == 94)) {
+				mes "[" + .@name$ + "]";
+				mes "Please bring";
+				mes "^FF000030 Worn-out Kimonos^000000,";
+				mes "^FF000030 Anolian Skins^000000, and";
+				mes "^FF000030 PecoPeco Feathers^000000.";
+				mes "I shall be waiting";
+				mes "for you right here.";
+				close;
+			}
+			if ((guildrelay_q == 95) && (countitem(7247) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Determination";
+				mes "to a ^FF0000Priest^000000 or ^FF0000High Priest^000000.";
+				mes "You knew that already,";
+				mes "didn't you? Please hurry";
+				mes "and deliver it soon.";
+				close;
+			}
+			if (guildrelay_q == 95) {
+				mes "[" + .@name$ + "]";
+				mes "For now, it would be";
+				mes "best for you to rest and";
+				mes "recoup your strength. Your";
+				mes "chance to help your guild";
+				mes "will come soon enough so";
+				mes "there's no need to rush.";
+				close;
+			}
+			if ((guildrelay_q == 98) && (countitem(7249) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Service to";
+				mes "a ^FF0000Crusader^000000 or ^FF0000Paladin^000000.";
+				mes "You knew that already,";
+				mes "didn't you? Please hurry";
+				mes "and deliver it soon.";
+				close;
+			}
+			if (guildrelay_q == 98) {
+				mes "[" + .@name$ + "]";
+				mes "Hmm. You need to wait";
+				mes "for the right time to act.";
+				mes "Why don't you help out";
+				mes "your guild in the meantime?";
+				close;
+			}
+			if ((guildrelay_q == 96) && (countitem(7250) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "Please give the";
+				mes "Spirit of Glory to";
+				mes "a ^FF0000Monk^000000 or ^FF0000Champion^000000.";
+				mes "You knew that already,";
+				mes "didn't you? Please hurry";
+				mes "and deliver it soon.";
+				close;
+			}
+			if (guildrelay_q == 96) {
+				mes "[" + .@name$ + "]";
+				mes "I see that you have";
+				mes "the potential to become";
+				mes "a great leader. Be sure";
+				mes "not to waste it, and lead";
+				mes "your guild as well as you can.";
+				close;
+			}
+			if ((guildrelay_q == 97) && (countitem(7251) > 0)) {
+				mes "[" + .@name$ + "]";
+				mes "You need to give";
+				mes "the ^FF0000Spirit of Victory^000000";
+				mes "to your Guild Master.";
+				mes "Please make sure that";
+				mes "it gets delivered soon.";
+				close;
+			}
+			if (guildrelay_q == 97) {
+				mes "[" + .@name$ + "]";
+				mes "You're a nenown explorer,";
+				mes "and I see in you the potential";
+				mes "to accomplish even more";
+				mes "great things. However,";
+				mes "I doubt there is anything";
+				mes "more that you can do here.";
+				close;
+			}
+			mes "[" + .@name$ + "]";
+			mes "Hmm. You have no business";
+			mes "being here. Why don't you";
+			mes "find something productive";
+			mes "to do? There is nothing";
+			mes "for you here, I assure you.";
+			close;
+		}
+	}
+	else {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			mes "[" + .@name$ + "]";
+			mes "You might be the master";
+			mes "of a guild, but you and I";
+			mes "have nothing to do with";
+			mes "each other. I'm sorry.";
+			next;
+			mes "[" + .@name$ + "]";
+			mes "Then again, I suppose";
+			mes "you came here to see";
+			mes "how a real guild operates.";
+			mes "If that's the case, you're";
+			mes "welcome to stay and observe.";
+			close;
+		}
+		else {
+			mes "[" + .@name$ + "]";
+			mes ".........................";
+			next;
+			mes "[" + .@name$ + "]";
+			mes ".........................";
+			next;
+			mes "[" + .@name$ + "]";
+			mes "What brings you here?";
+			mes "I don't think I've seen";
+			mes "you around before. Hm.";
+			close;
+		}
+	}
+}
+
+// Luina 1
+//============================================================
+aldeg_cas01,51,102,5	duplicate(GuildRelay1)	Buzz#01	754,{
+aldeg_cas01,75,39,3	duplicate(GuildRelay2)	Lenya#01	754,{
+aldeg_cas01,200,175,3	duplicate(GuildRelay3)	Gealuve#01	754,{
+aldeg_cas01,59,224,3	duplicate(GuildRelay4)	Pariz#01	754,{
+
+// Luina 2
+//============================================================
+aldeg_cas02,120,51,5	duplicate(GuildRelay1)	Buzz#02	754
+aldeg_cas02,180,184,3	duplicate(GuildRelay2)	Lenya#02	754
+aldeg_cas02,62,65,3	duplicate(GuildRelay3)	Gealuve#02	754
+aldeg_cas02,62,201,3	duplicate(GuildRelay4)	Pariz#02	754
+
+// Luina 3
+//============================================================
+aldeg_cas03,70,252,5	duplicate(GuildRelay1)	Buzz#03	754
+aldeg_cas03,72,115,3	duplicate(GuildRelay2)	Lenya#03	754
+aldeg_cas03,114,119,3	duplicate(GuildRelay3)	Gealuve#03	754
+aldeg_cas03,188,181,3	duplicate(GuildRelay4)	Pariz#03	754
+
+// Luina 4
+//============================================================
+aldeg_cas04,31,116,5	duplicate(GuildRelay1)	Buzz#04	754
+aldeg_cas04,66,117,3	duplicate(GuildRelay2)	Lenya#04	754
+aldeg_cas04,24,80,3	duplicate(GuildRelay3)	Gealuve#04	754
+aldeg_cas04,181,97,3	duplicate(GuildRelay4)	Pariz#04	754
+
+// Luina 5
+//============================================================
+aldeg_cas05,31,191,5	duplicate(GuildRelay1)	Buzz#05	754
+aldeg_cas05,140,196,3	duplicate(GuildRelay2)	Lenya#05	754
+aldeg_cas05,148,224,3	duplicate(GuildRelay3)	Gealuve#05	754
+aldeg_cas05,165,51,3	duplicate(GuildRelay4)	Pariz#05	754
+
+// Britoniah 1
+//============================================================
+gefg_cas01,85,47,4	duplicate(GuildRelay1)	Jody#01	754
+gefg_cas01,67,83,3	duplicate(GuildRelay2)	Ron Haware#01	754
+gefg_cas01,184,40,3	duplicate(GuildRelay3)	Vers#01	754
+gefg_cas01,35,34,6	duplicate(GuildRelay4)	Gen Garish#01	754
+
+// Britoniah 2
+//============================================================
+gefg_cas02,15,69,4	duplicate(GuildRelay1)	Jody#02	754
+gefg_cas02,23,22,3	duplicate(GuildRelay2)	Ron Haware#02	754
+gefg_cas02,178,38,3	duplicate(GuildRelay3)	Vers#02	754
+gefg_cas02,18,159,5	duplicate(GuildRelay4)	Gen Garish#02	754
+
+// Britoniah 3
+//============================================================
+gefg_cas03,257,41,4	duplicate(GuildRelay1)	Jody#03	754
+gefg_cas03,110,91,3	duplicate(GuildRelay2)	Ron Haware#03	754
+gefg_cas03,158,57,3	duplicate(GuildRelay3)	Vers#03	754
+gefg_cas03,124,24,3	duplicate(GuildRelay4)	Gen Garish#03	754
+
+// Britoniah 4
+//============================================================
+gefg_cas04,26,73,4	duplicate(GuildRelay1)	Jody#04	754
+gefg_cas04,34,16,1	duplicate(GuildRelay2)	Ron Haware#04	754
+gefg_cas04,55,70,5	duplicate(GuildRelay3)	Vers#04	754
+gefg_cas04,73,38,6	duplicate(GuildRelay4)	Gen Garish#04	754
+
+// Britoniah 5
+//============================================================
+gefg_cas05,47,47,4	duplicate(GuildRelay1)	Jody#05	754
+gefg_cas05,65,28,3	duplicate(GuildRelay2)	Ron Haware#05	754
+gefg_cas05,87,31,3	duplicate(GuildRelay3)	Vers#05	754
+gefg_cas05,46,28,3	duplicate(GuildRelay4)	Gen Garish#05	754
+
+// Greenwood Lake 1
+//============================================================
+payg_cas01,87,35,3	duplicate(GuildRelay1)	Chungye#01	106
+payg_cas01,129,29,3	duplicate(GuildRelay2)	Dosuhlji#01	754
+payg_cas01,13,146,5	duplicate(GuildRelay3)	Yayula#01	741
+payg_cas01,91,49,3	duplicate(GuildRelay4)	Ashin#01	59
+
+// Greenwood Lake 2
+//============================================================
+payg_cas02,34,253,3	duplicate(GuildRelay1)	Chungye#02	106
+payg_cas02,77,229,3	duplicate(GuildRelay2)	Dosuhlji#02	754
+payg_cas02,252,287,3	duplicate(GuildRelay3)	Yayula#02	741
+payg_cas02,289,264,3	duplicate(GuildRelay4)	Ashin#02	59
+
+// Greenwood Lake 3
+//============================================================
+payg_cas03,48,265,3	duplicate(GuildRelay1)	Chungye#03	106
+payg_cas03,7,265,5	duplicate(GuildRelay2)	Dosuhlji#03	754
+payg_cas03,16,16,5	duplicate(GuildRelay3)	Yayula#03	741
+payg_cas03,10,266,3	duplicate(GuildRelay4)	Ashin#03	59
+
+// Greenwood Lake 4
+//============================================================
+payg_cas04,24,285,3	duplicate(GuildRelay1)	Chungye#04	106
+payg_cas04,21,16,3	duplicate(GuildRelay2)	Dosuhlji#04	754
+payg_cas04,69,270,3	duplicate(GuildRelay3)	Yayula#04	741
+payg_cas04,18,239,3	duplicate(GuildRelay4)	Ashin#04	59
+
+// Greenwood Lake 5
+//============================================================
+payg_cas05,277,271,3	duplicate(GuildRelay1)	Chungye#05	106
+payg_cas05,273,15,3	duplicate(GuildRelay2)	Dosuhlji#05	754
+payg_cas05,283,24,3	duplicate(GuildRelay3)	Yayula#05	741
+payg_cas05,276,287,3	duplicate(GuildRelay4)	Ashin#05	59
+
+// Valkyrie Realms 1
+//============================================================
+prtg_cas01,96,205,5	duplicate(GuildRelay1)	Hermod#01	754
+prtg_cas01,157,117,3	duplicate(GuildRelay2)	Atila#01	728
+prtg_cas01,149,78,3	duplicate(GuildRelay3)	Cecil#01	92
+prtg_cas01,125,191,3	duplicate(GuildRelay4)	Diligo#01	754
+
+// Valkyrie Realms 2
+//============================================================
+prtg_cas02,73,35,5	duplicate(GuildRelay1)	Hermod#02	754
+prtg_cas02,43,41,5	duplicate(GuildRelay2)	Atila#02	728
+prtg_cas02,52,63,3	duplicate(GuildRelay3)	Cecil#02	92
+prtg_cas02,100,62,3	duplicate(GuildRelay4)	Diligo#02	754
+
+// Valkyrie Realms 3
+//============================================================
+prtg_cas03,5,68,5	duplicate(GuildRelay1)	Hermod#03	754
+prtg_cas03,18,109,3	duplicate(GuildRelay2)	Atila#03	728
+prtg_cas03,71,81,5	duplicate(GuildRelay3)	Cecil#03	92
+prtg_cas03,183,215,3	duplicate(GuildRelay4)	Diligo#03	754
+
+// Valkyrie Realms 4
+//============================================================
+prtg_cas04,39,263,3	duplicate(GuildRelay1)	Hermod#04	754
+prtg_cas04,259,251,3	duplicate(GuildRelay2)	Atila#04	728
+prtg_cas04,6,281,5	duplicate(GuildRelay3)	Cecil#04	92
+prtg_cas04,59,282,5	duplicate(GuildRelay4)	Diligo#04	754
+
+// Valkyrie Realms 5
+//============================================================
+prtg_cas05,52,70,5	duplicate(GuildRelay1)	Hermod#05	754
+prtg_cas05,253,91,3	duplicate(GuildRelay2)	Atila#05	728
+prtg_cas05,276,93,3	duplicate(GuildRelay3)	Cecil#05	92
+prtg_cas05,211,36,3	duplicate(GuildRelay4)	Diligo#05	754

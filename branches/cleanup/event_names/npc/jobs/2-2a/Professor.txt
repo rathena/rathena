@@ -1,0 +1,93 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,47,3	script	Scholar#Valkyrie	743,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[Scholar]";
+			mes "Congratulations.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		mes "[Scholar]";
+		mes "It takes a lifetime...";
+		mes "Literally a lifetime";
+		mes "to amass the knowledge";
+		mes "necessary to become";
+		mes "a Scholar...";
+		next;
+		mes "[Scholar]";
+		mes "It's overwhelming.";
+		mes "The more you learn, the";
+		mes "more you discover what";
+		mes "else you don't know.";
+		mes "There's no end to the";
+		mes "process of learning...";
+		close;
+	}
+	else if (ADVJOB == Job_Professor && Class == Job_Mage_High && JobLevel > 39) {
+		mes "[Scholar]";
+		mes "Rune-Midgard doesn't";
+		mes "have enough Scholars to";
+		mes "help usher in a new age";
+		mes "of prosperity. The";
+		mes "world needs you...";
+		next;
+		mes "[Scholar]";
+		mes "Will you take this";
+		mes "awesome responsibility?";
+		mes "Will you serve Rune-Midgard";
+		mes "as a Scholar?";
+		next;
+		if (select("No.:Yes.") == 1) {
+			mes "[Scholar]";
+			mes "When you're ready,";
+			mes "feel free to come back.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[Scholar]";
+			mes "It is still possible for you to learn more skills. Please use";
+			mes "all of your remaining Skill Points before returning to me.";
+			close;
+		}
+		jobchange Job_Professor;
+		set ADVJOB,0;
+		mes "[Scholar]";
+		mes "Congratulations!";
+		mes "As a Professor, I hope";
+		mes "that you will take an";
+		mes "active part in bringing";
+		mes "the light of knowledge";
+		mes "where there is darkness.";
+		close;
+	}
+	mes "[Scholar]";
+	mes "Welcome";
+	mes "to Valhalla,";
+	mes "the Hall of Honor.";
+	next;
+	mes "[Scholar]";
+	mes "Please make";
+	mes "yourself comfortable";
+	mes "while you are here.";
+	mes "Honor to the warriors!";
+	close;
+}
+

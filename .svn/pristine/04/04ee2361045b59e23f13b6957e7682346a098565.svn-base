@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Sample: Attached NPC Timers
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20121003
+//===== Description: ========================================= 
+//= Demonstrates attached NPC timer commands.
+//============================================================
+
+prontera,156,183,0	script	NPCtimerTest::npctimerX0000	116,{
+	mes "What would you like to know?";
+	select("Tell me my level.");
+	mes "I need time to think...";
+	initnpctimer;
+	attachnpctimer;
+	close;
+
+OnTimer5000:
+	mes "Ah, your level is " + readparam(11) + "!";
+	detachnpctimer;
+	close;
+}

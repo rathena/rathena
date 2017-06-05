@@ -1,0 +1,45 @@
+//===== rAthena Script =======================================
+//= War of Emperium SE - Auto-Start
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 11.3
+//===== Description: =========================================
+//= Auto-start for War of Emperium SE.
+//= For instructions, see doc/woe_time_explanation.txt.
+//===== Additional Comments: =================================
+//= 1.0 Copy/Paste of the original setter.
+//============================================================
+
+-	script	Agit2_Event	-1,{
+	end;
+
+OnClock1800:	//start time for Tues(2), Thurs(4)
+OnClock2000:	//end time for Tues(2), Thurs(4)
+OnClock2100:	//start time for Sat(6)
+OnClock2300:	//end time for Sat(6)
+
+OnAgitInit2:
+	// starting time checks
+	if((gettime(4)==2) && (gettime(3)>=18 && gettime(3)<21) ||
+	   (gettime(4)==4) && (gettime(3)>=18 && gettime(3)<21) ||
+	   (gettime(4)==6) && (gettime(3)>=22 && gettime(3)<23)) {
+		if (!agitcheck2()) {
+			AgitStart2;
+		}
+		end;
+	}
+
+	// end time checks
+	if ((gettime(4)==2) && (gettime(3)==21) ||
+	    (gettime(4)==4) && (gettime(3)==21) ||
+	    (gettime(4)==6) && (gettime(3)==23)) { 
+		if (agitcheck2()) {
+			AgitEnd2;
+		}
+		end;
+	}
+	end;
+}

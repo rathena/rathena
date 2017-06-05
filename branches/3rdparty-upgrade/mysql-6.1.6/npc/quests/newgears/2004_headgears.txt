@@ -1,0 +1,3646 @@
+//===== rAthena Script ======================================= 
+//= 2004 Headgear Quests
+//===== By: ================================================== 
+//= Dj-Yhn
+//===== Current Version: ===================================== 
+//= 1.6b
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= 2004 New Headgears. Official Quests
+//= 1) Black Cat Ears (payon 115 131)
+//= 2) X Hairpin, Band Aid, Flower Hairpin (geffen 129 148)
+//= 3) Hot-blooded Headband (yuno 300 188)
+//= 4) Red Ribbon (prontera 165 232)
+//= 5) Indian Headband (comodo 237 217)
+//= 6) Mushroom Band (geffen 67 87)
+//= 7) Angel Wing Ears, Devil Wing Ears (yuno 241 52)
+//= 8) Sea-Otter Hat (xmas 183 267)
+//= 9) Teddybear Hat (xmas 175 156)
+//= 10) Model Training Hat (payon_in03 8 193)
+//= 11) Tulip Haipin (geffen 83 189)
+//= 12) Party Hat, Straw Hat, Cowboy Hat, (xmas_in 35 30)
+//=     Sombrero, Beanie 
+//= 13) Decorative Golden Bell, (yuno_in03 20 18)
+//=     Crown of Ancient Queen, Crown of Mistress
+//= 14) Alarm Mask (alde_alche 88 180)
+//= 15) Drooping Cat, Smokie Leaf, Lazy Smokie, (morocc 273 79)
+//=     Blue Fish
+//= 16) Kitsune Mask (pay_dun03 48 84)
+//= 17) Orc Hero Helm (in_orcs01 31 93 & 162 33)
+//===== Additional Comments: =================================
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.5 Vito'd function call for checkweight. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.6a Added 'disable_items' command. [Euphy]
+//= 1.6b Added more 'disable_items' commands. [Euphy]
+//============================================================
+
+// Black Cat Ears
+//============================================================
+payon,115,131,3	script	Neko Neko#1	725,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(2213) > 0 && countitem(983) > 0 && countitem(914) > 199 && Zeny > 9999) {
+		mes "[Neko Neko]";
+		mes "Heh? You brought all the items~";
+		mes "Okay, give me some time.";
+		next;
+		mes "[Neko Neko]";
+		mes "*Squish Squish Bang Bang Bang Tap Tap Scrape Scrape*";
+		mes "*Scratch Scratch Tap Tap Tap Tap*";
+		next;
+		mes "[Neko Neko]";
+		mes "*Squish Squish Bang Bang Bang Tap Tap Scrape Scrape*";
+		mes "*Scratch Scratch Tap Tap Tap Tap*";
+		next;
+		mes "[Neko Neko]";
+		mes "Phew! There you go.";
+		mes "Now you can wear";
+		mes "Black Cat Ears";
+		mes "of your very own~";
+		delitem 2213,1; //Cat_Hairband
+		delitem 983,1; //Black_Dyestuffs
+		delitem 914,200; //Fluff
+		set Zeny, Zeny-10000;
+		getitem 5057,1; //Ear_Of_Black_Cat
+		next;
+		mes "[Neko Neko]";
+		mes "Thank you for using my service~!";
+		close;
+	}
+	mes "[Neko Neko]";
+	mes "Umm...?";
+	mes "Excuse me?";
+	mes "Do I know you?...";
+	mes "Oh, I know why you";
+	mes "want to talk to me.";
+	mes "Heh heh~!";
+	next;
+	mes "[Neko Neko]";
+	mes "You want to know where I got these tiny little cute black cat ears on my head, don't you? I knew it! Hahaha~!";
+	next;
+	mes "[Neko Neko]";
+	mes "Well, I made these myself.";
+	mes "If you want, I can make one for you too for a small price.";
+	mes "Heh heh heh~";
+	next;
+	mes "[Neko Neko]";
+	mes "Just bring me";
+	mes "1 ^FF0000Kitty Band^000000,";
+	mes "1 ^FF0000Black Dyestuffs^000000,";
+	mes "200 ^FF0000Fluff^000000 and";
+	mes "^FF000010,000 zeny^000000!";
+	next;
+	mes "[Neko Neko]";
+	mes "^FF0000Just remember, if you bring me any item that has a card inserted, or has been upgraded, the additional abilities of the item will disappear after I have used them. So please keep that in mind.";
+	close;
+}
+
+// X Hairpin, Band Aid, Flower Hairpin
+//============================================================
+geffen,129,148,3	script	Argen#1	779,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "[Argen]";
+		mes "Hey~ why are you carrying so many items?";
+		mes "You mind sharing them with me?";
+		close;
+	}
+	emotion e_hmm;
+	mes "[Argen]";
+	mes "Man, oh man~";
+	mes "Am I bored~!";
+	mes "If I only knew more tricks with this yo-yo. Then I could really impress the ladies.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Impress the ladies...?";
+	next;
+	emotion e_gasp;
+	if (Sex) {
+		mes "[Argen]";
+		mes "Yeah dude. There are two things chicks dig. Small, adorable presents. And suave dudes.";
+		next;
+		mes "[Argen]";
+		mes "So, I got the cutesy present junk down. You know, instead of like, spending money on like a real gift, I make these little hairpin thingees.";
+		next;
+		mes "[Argen]";
+		mes "As for being suave? Well, I do have this yo-yo...";
+		next;
+		mes "[Argen]";
+		mes "Heh. You look like you don't like wasting cash on girls either. I'm down with that. If you like, I can make you a hairpin that you can give as gifts to the ^FF3333ladies^000000.";
+		next;
+		mes "[Argen]";
+		mes "All you gotta do is bring me the stuff to make it. And if that hairpin's for yourself, well, I'm down with that jive too.";
+	}
+	else {
+		mes "[Argen]";
+		mes "Whoa~! A lady...";
+		mes "Wow, you're really cute! Tell you what...";
+		next;
+		mes "[Argen]";
+		mes "Since you're such a cutie, I'll put together a nice little hairpin for you. All you gotta do is bring me the stuff to make it.";
+		next;
+		mes "[Argen]";
+		mes "So go ahead and tell me what kinda hairpin you're interested in.";
+	}
+	next;
+	emotion e_heh;
+	switch(select("^3131FFX Hairpin^000000:^3131FFBand Aid^000000:^3131FFFlower Hairpin^000000:No thanks.")) {
+	case 1:
+		if (countitem(2294) > 0 && countitem(7220) > 399) {
+			mes "[Argen]";
+			mes "X Hairpin!";
+			mes "Nice choice~!";
+			next;
+			emotion e_gasp;
+			mes "[Argen]";
+			mes "Ah... Right.";
+			mes "About the Stellar...";
+			mes "^CE3100If you use an upgraded Stellar to make this item, any upgrades will be lost. That okay with you?^000000";
+			next;
+			switch(select("I don't mind.:I will come back later.")) {
+			case 1:
+				mes "[Argen]";
+				mes "Alright, let's get to work.";
+				next;
+				mes "^3131FF * Scrape Scrape * ^000000";
+				mes "^3131FF * Scrape Scrape * ^000000";
+				next;
+				emotion e_no1;
+				mes "[Argen]";
+				mes "Alright, I'm done!";
+				mes "So what do you think?";
+				mes "Pretty cool, eh?";
+				delitem 2294,1; //Star_Dust
+				delitem 7220,400; //Ectoplasm
+				getitem 5079,1; //Crossed_Hair_Band
+				next;
+				break;
+			case 2:
+				mes "[Argen]";
+				mes "No problem, take your time.";
+				close;
+			}
+		}
+		else {
+			mes "[Argen]";
+			mes "Oh~";
+			mes "You want a ^3131FFX Hairpin?^000000";
+			mes "That's easy!";
+			next;
+			mes "[Argen]";
+			mes "I need ^FF00001 Stellar^000000";
+			mes "and ^FF0000400 Ectoplasm^000000.";
+			mes "Tell me when you're ready!";
+			close;
+		}
+		break;
+	case 2:
+		if (countitem(970) > 0 && countitem(930) > 499) {
+			mes "[Argen]";
+			mes "Band Aid, eh?";
+			mes "Got it! Hold on";
+			mes "a sec, I'll be";
+			mes "done in a bit.";
+			next;
+			mes "^3131FF * Scrape Scrape * ^000000";
+			mes "^3131FF * Scrape Scrape * ^000000";
+			next;
+			emotion e_no1;
+			mes "[Argen]";
+			mes "*Whew~!*";
+			mes "I'm finished!";
+			mes "Pretty cool, huh?";
+			delitem 970,1; //Alchol
+			delitem 930,500; //Rotten_Bandage
+			getitem 5063,1; //Plaster
+			next;
+		}
+		else {
+			mes "[Argen]";
+			mes "Ah, a ^3131FFBand Aid^000000!";
+			mes "That stuff is great for faking injuries, or hiding a bald spot. Handy to have when you wanna ditch school.";
+			next;
+			mes "[Argen]";
+			mes "Bring me ^FF00001 Alcohol^000000 and";
+			mes "^FF0000500 Rotten Bandage^000000!";
+			mes "Tell me when you're ready, yeah?";
+			close;
+		}
+		break;
+	case 3:
+		if (countitem(2269) > 0 && countitem(999) > 9 && Zeny > 19999) {
+			mes "[Argen]";
+			mes "You wanna a Flower Hairpin~?";
+			mes "Alright, gimmie a minute, yeah?";
+			next;
+			mes "^3131FF - Scrape Scrape - ^000000";
+			mes "^3131FF - Scrape Scrape - ^000000";
+			next;
+			emotion e_no1;
+			mes "[Argen]";
+			mes "Ah... It's done!";
+			mes "Hey, that looks pretty smooth! Oh, and uh, you can keep this leftover Stem.";
+			delitem 2269,1; //Centimental_Flower
+			delitem 999,10; //Steel
+			set Zeny, Zeny-20000;
+			getitem 5061,1; //Flower_Hairpin
+			getitem 905,1; //Stem
+			next;
+		}
+		else {
+			mes "[Argen]";
+			mes "You wanna a ^3131FFFlower Hairpin^000000!";
+			mes "Yeah, I've noticed cuties just love walking around with flowers in their mouths, and I was always like 'Whaaaat~?' But then I got this great idea!";
+			next;
+			mes "[Argen]";
+			mes "Wouldn't some kinda... ^3131FFFlower Hairpin^000000 be a hit with chicks? So I tried making one, and it seemed to be pretty popular among my lady friends.";
+			next;
+			mes "[Argen]";
+			mes "And it's a much better way to use a flower than to put it on Pet Orc Warriors. Man, those things just look gnarly~";
+			next;
+			mes "[Argen]";
+			mes "Well, if you want one, I'll make it. But I want you should pay me some royalties for my services. It's pretty hard to attach a flower to a hairpin, you know?";
+			next;
+			mes "[Argen]";
+			mes "It takes mad skill.";
+			next;
+			mes "[Argen]";
+			mes "So, I want you to bring...";
+			mes "^FF00001 Romantic Flower^000000,";
+			mes "^FF000010 Steel^000000";
+			mes "and ^3131FF20,000 zeny^000000!";
+			mes "Got it? Cool~";
+			close;
+		}
+		break;
+	case 4:
+		mes "[Argen]";
+		mes "I'm down with that.";
+		mes "If you want some kinda hairpin, just come back. I'll just be here, looking ^FF3333suaaave^000000 with this yo-yo.";
+		close;
+	}
+	emotion e_paper;
+	mes "[Argen]";
+	mes "Feel free to come ask me if you want more hairpins. Hey, I know I look lazy, but I do like to make things for the ladies. See ya later~!";
+	close;
+}
+
+// Hot-blooded Headband
+//============================================================
+yuno,300,188,5	script	Zhenbolt#1	753,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(7216) > 299 && countitem(7097) > 299 && countitem(2211) > 0 && countitem(982) > 0) {
+		mes "[Zhenbolt]";
+		mes "What's this?!";
+		mes "You've already brought everything I've asked! Good job, hero~! Let me get to work right away...";
+		next;
+		mes "[Zhenbolt]";
+		mes "...";
+		next;
+		mes "[Zhenbolt]";
+		mes "......";
+		next;
+		mes "[Zhenbolt]";
+		mes "......*Cling*";
+		next;
+		mes "[Zhenbolt]";
+		mes "Take this...";
+		mes "It's known as the ^FF0000Hot-blooded Headband^000000, my personal symbol of fighting spirit! With this on your head, nothing can stop you!";
+		delitem 7216,300; //Red_Scarf
+		delitem 7097,300; //Burning_Heart
+		delitem 2211,1; //Bandana
+		delitem 982,1; //White_Dyestuffs
+		getitem 5070,1; //Headband_Of_Power
+		next;
+		mes "[Zhenbolt]";
+		mes "Now, go!";
+		mes "Unleash your fighting spirit upon the villains of the world!";
+		close;
+	}
+	mes "[Zhenbolt]";
+	mes "I...";
+	mes "am called ^FF0000Zhenbolt^000000!!";
+	next;
+	if (select("THE Zhenbolt!?:Oh my gosh, it's Zhenbolt!") == 1) {
+		mes "[Zhenbolt]";
+		mes "Yes, it is I, the man who has pummelled over a trillion foes and rising. Raging Hurricane Hero of Justice: Zhenbolt!";
+		next;
+		mes "[Zhenbolt]";
+		mes "I see in your eyes that you also fight with a heart of purity, a heart of passion!";
+		next;
+		mes "[Zhenbolt]";
+		mes "It is decided! If you bring me the following items, I will give you the famous symbol of battle by which villains fear Zhenbolt.";
+		next;
+		mes "[Zhenbolt]";
+		mes "Bring me...";
+		mes "300 ^FF0000Red Muffler^000000,";
+		mes "300 ^FF0000Burning Heart^000000,";
+		mes "1 ^FF0000Bandana^000000 and 1 ^FF0000White Dyestuffs^000000.";
+		mes "That's all I need.";
+		next;
+		mes "[Zhenbolt]";
+		mes "Come back soon, adventurer!";
+		mes "I expect great things of you!";
+		close;
+	}
+	mes "[Zhenbolt]";
+	mes "Yes.";
+	mes "It is I, Zhenbolt.";
+	mes "Warrior of Might!";
+	mes "Whirling Tempest";
+	mes "of Raging Passion!";
+	next;
+	mes "[Zhenbolt]";
+	mes "I see in your eyes that you have seen many a skirmish. To have survived this long, you must know the secret to victory...";
+	next;
+	mes "[Zhenbolt]";
+	mes "Pure, unbridled rage!";
+	mes "Battles are won with vigor and passion!";
+	next;
+	mes "[Zhenbolt]";
+	mes "Seeing as you understand this fundamental, I recognize you as an ally in the eternal struggle for justice! I shall bestow upon you the very symbol with which I have struck fear into evil hearts...";
+	next;
+	mes "[Zhenbolt]";
+	mes "Bring me";
+	mes "300 ^FF0000Red Muffler^000000,";
+	mes "300 ^FF0000Burning Heart^000000,";
+	mes "1 ^FF0000Bandana^000000 and 1 ^FF0000White Dyestuffs^000000.";
+	mes "That's all I need.";
+	next;
+	mes "[Zhenbolt]";
+	mes "Bring me those items...";
+	mes "And you too can become a fighting legend...";
+	close;
+}
+
+// Red Ribbon
+//============================================================
+prontera,165,232,3	script	Nephia#1	744,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(2244) > 0 && countitem(2209) > 0 && countitem(10007) > 0) {
+		mes "[Nephia]";
+		mes "Oh...";
+		mes "You've brought all these ribbons! I can't wait to tie you a new ribbon to put on your ^FF66CCbeautiful hair!^000000";
+		next;
+		mes "[Nephia]";
+		mes "...";
+		next;
+		mes "[Nephia]";
+		mes "......";
+		next;
+		mes "[Nephia]";
+		mes ".......*Cling*";
+		next;
+		mes "[Nephia]";
+		mes "That's it~! We're done! Oh, I just know you're going to look precious wearing this.";
+		delitem 2244,1; //Big_Sis'_Ribbon
+		delitem 2209,1; //Ribbon_
+		delitem 10007,1; //Silk_Ribbon
+		getitem 5083,1; //Red_Tailed_Ribbon
+		next;
+		mes "[Nephia]";
+		mes "Hopefully, we can get together and do each other's hair sometime! Wouldn't that be soooo much fun?";
+		close;
+	}
+	mes "[Nephia]";
+	mes "Wow~";
+	mes "Such beautiful hair! I'm sorry, it's just that I love pretty hairstyles, and accessories!";
+	next;
+	mes "[Nephia]";
+	mes "Ooh~! You know what would make your hair so much cuter? I think if you tied it back with a big, red ribbon, you would look sooo ^FF66CCadorable^000000!";
+	next;
+	if (Sex) {
+		if (select("Um, lady, I'm a dude.:^FF66CCOoh~! You're right!^000000") == 1) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Woman, can't you that I'm a man?";
+			next;
+			mes "[Nephia]";
+			mes "Awww...";
+			mes "But you would look so ^FF66CCpretty~!^000000";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "That...";
+			mes "Was the worst";
+			mes "compliment anyone";
+			mes "has ever given me.";
+			close;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "Oooh~!";
+		mes "That sounds great!";
+		next;
+		mes "[Nephia]";
+		mes "Like, oh my God! That's what I was thinking! Oh hey~! I can go ahead and tie that ribbon for you if you want!";
+		next;
+		mes "[Nephia]";
+		mes "Ooh! Bring...";
+		mes "1 ^FF0000Big Ribbon^000000,";
+		mes "1 ^FF0000slotted Ribbon^000000 and";
+		mes "1 ^FF0000Silk Ribbon^000000!";
+		next;
+		mes "[Nephia]";
+		mes "Oh, I almost forgot!";
+		mes "^FF0000If you bring me any upgraded items, or items compounded with cards, those cards and upgrades will be lost once I create the new item for you. So please don't forget that!^000000";
+		next;
+		mes "[Nephia]";
+		mes "Ooh, hurry hurry! I can't wait to accessorize your hair!";
+		close;
+	}
+	else {
+		if (select("No thanks.:^FF66CCOoh~! You're right!^000000") == 1) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Er...";
+			mes "No thanks.";
+			next;
+			mes "[Nephia]";
+			mes "Awwww~";
+			mes "But you're just the cutest little thing. I just know you would look so preeeetty!";
+			close;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "Oooh~!";
+		mes "That sounds great!";
+		next;
+		mes "[Nephia]";
+		mes "Like, oh my God! That's what I was thinking! Oh hey~! I can go ahead and tie a ribbon for you if you want!";
+		next;
+		mes "[Nephia]";
+		mes "Ooh! To do that I need";
+		mes "1 ^FF0000Big Ribbon^000000,";
+		mes "1 ^FF0000slotted Ribbon^000000 and";
+		mes "1 ^FF0000Silk Ribbon^000000!";
+		next;
+		mes "[Nephia]";
+		mes "Oh, I almost forgot!";
+		mes "^FF0000If you bring me any upgraded items, or items compounded with cards, those cards and upgrades will be lost once I create the new item for you. So please don't forget that!^000000";
+		next;
+		mes "[Nephia]";
+		mes "Ooh, hurry hurry! I can't wait to accessorize your hair!";
+		close;
+	}
+}
+
+// Indian Headband
+//============================================================
+comodo,237,217,5	script	Meruntei#1	732,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(5010) > 0 && countitem(5049) > 0 && countitem(7101) > 9 && Zeny > 9999) {
+		mes "[Meruntei]";
+		mes "Oh! You brought all of them! Now I shall make you an Indian Headband of your very own.";
+		next;
+		mes "[Meruntei]";
+		mes "Take this! The items you have brought will be very useful for continuing my work in spreading headbands around Rune-Midgard.";
+		delitem 5010,1; //Indian_Hair_Piece
+		delitem 5049,1; //Stripe_Band
+		delitem 7101,10; //Peco_Wing_Feather
+		set Zeny, Zeny-10000;
+		getitem 5071,1; //Indian_Headband
+		next;
+		mes "[Meruntei]";
+		mes "iiiyiyiyiyiyiyiiiiii~~!";
+		close;
+	}
+	mes "[Meruntei]";
+	mes "iiiyiyiyiyiyiyiiiiii~~!";
+	mes " ";
+	mes "Indian spirit, forever~!";
+	mes "On behalf of the Comodo Indians, I give reverence to all Indian Tribes!";
+	next;
+	mes "[Meruntei]";
+	mes "Would you like to have an Indian Headband? You wouldn't become an official member of my tribe, but wearing it would show your respect if you happen to encounter tribal Indians in your adventures.";
+	next;
+	mes "[Meruntei]";
+	mes "You could just bring...";
+	mes "1 ^FF0000Indian Fillet^000000,";
+	mes "1 ^FF0000Striped Hairband^000000,";
+	mes "10 ^FF0000PecoPeco Feather^000000";
+	mes "and ^FF000010,000 zeny!";
+	next;
+	mes "[Meruntei]";
+	mes "I will be using the items you've given me so I can continue my work in spreading Indian Headbands, and paying homage to the tribes of Rune-Midgard.";
+	next;
+	mes "[Meruntei]";
+	mes "^FF0000For your information, if you bring me any item that has a card inserted, or has been upgraded, the additional abilities of the item will disappear after I have used them. So please keep that in mind.^000000";
+	next;
+	mes "[Meruntei]";
+	mes "iiiyiyiyiyiyiyiiiiii~~!";
+	close;
+}
+
+// Mushroom Band
+//============================================================
+geffen,67,87,3	script	Ipore#1	700,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(921) > 299) {
+		mes "[Ipore]";
+		mes "Wow! Did you really gather these 300 Mushroom Spores all by yoruself? Nice! Now it's time to use my magic~";
+		next;
+		mes "^3355FF*Sprinkle Sprinkle*";
+		mes "Ipore pours the Mushroom Spores onto your head.^000000";
+		next;
+		mes "[Ipore]";
+		mes "Hocus pocus!";
+		next;
+		mes "[Ipore]";
+		mes ".......................";
+		mes "Phew! Success! There's a mushroom growing out of your head!";
+		next;
+		mes "[Ipore]";
+		mes "But...";
+		mes "I don't like the way it's tilting. It should have grown in the ^FF3333other^000000 direction.";
+		next;
+		mes "[Ipore]";
+		mes "I guess...";
+		mes "I guess we should make that mushroom into a headband so that you can adjust it to your style.";
+		next;
+		mes "[Ipore]";
+		mes "I know, I know...";
+		mes "It's not as cool as having the mushroom actually attached to your skull, but it's all we can do. I'm sorry I let you down.";
+		next;
+		mes "[Ipore]";
+		mes "...There.";
+		mes "It's done. But are you okay? Luckily, I don't think I scalped you.";
+		next;
+		mes "[Ipore]";
+		mes "Anyway, now you can wear that mushroom at a rakish angle, the way it's supposed to be worn. Stay cool, you fashion rebel, you.";
+		delitem 921,300; //Mushroom_Spore
+		getitem 5082,1; //Mushroom_Band
+		close;
+	}
+	mes "[Ipore]";
+	mes "Finally...";
+	mes "I've created a magic spell that can make mushrooms grow anywhere! Anyplace you can imagine, I can make a mushroom grow there.";
+	next;
+	mes "[Ipore]";
+	mes "Even...";
+	mes "On top of the human head...";
+	next;
+	mes "[Ipore]";
+	mes "Some may think it grotesque, but wouldn't you agree that sporting a mushroom, grown from your head, would start an art revolution?";
+	next;
+	mes "[Ipore]";
+	mes "Just think! It's the perfect fusion of magic and art, fashion and living life...";
+	mes "Man and mushroom?";
+	mes "Ah...I've piqued your curiosity I see.";
+	next;
+	mes "[Ipore]";
+	mes "So...";
+	mes "But in order to cast this spell, I need the magical power in ^FF0000300 Mushroom Spores^000000. So, if you bring me all of those Mushroom Spores, you can see my magic for yourself!";
+	next;
+	mes "[Ipore]";
+	mes "Now now, you do understand that I have to make the mushroom grow out of your head. Anywhere else, you could suspect that there's some kind of trick or illusion involved.";
+	next;
+	mes "[Ipore]";
+	mes "Besides, nothing says 'rebel without a cause' like a mushroom growing out of your head! You would look soooo cool, independent and countercultured!";
+	next;
+	mes "[Ipore]";
+	mes "Remember, bring me...";
+	mes "^FF0000300 Mushroom Spore^000000,";
+	mes "so that I can let you experience my amazing magic for yourself~!";
+	close;
+}
+
+// Angel Wing Ears, Devil Wing Ears
+//============================================================
+yuno,241,52,3	script	Old Blacksmith#hgear	813,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	mes "[Skillful Looking Artisan]";
+	mes "Aha~";
+	mes "You must really like to travel! You're certainly not from around here.";
+	next;
+	mes "[Skillful Looking Artisan]";
+	mes "Allow me to introduce myself. My name is Hatbyr Mhore, a travelling Blacksmith.";
+	next;
+	if (countitem(2254) > 0 && countitem(2286) > 0) {
+		mes "[Hatbyr Mhore]";
+		mes "Oh? It seems that you're carrying some valuable stuff with you.";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "Hmm, if you like, I could make you something truly amazing with that ^4d4dffAngel Wing^000000 and ^4d4dffElven Ears^000000 that you have.";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "How does that sound?";
+		mes "Oh, and don't you worry about my skill! I'm pretty well known among Blacksmiths for my talent, and my knack of making great things out of junk.";
+		next;
+		switch(select("Umm, let me think.:Okay, make it for me then.:Can you make it with an Evil Wing..?")) {
+		case 1:
+			mes "[Hatbyr Mhore]";
+			mes "Huh. What's to think about?! I was gonna use all of my skill to create something special for you. Ah well...";
+			close;
+		case 2:
+			mes "[Hatbyr Mhore]";
+			mes "Aha~ Good good good.";
+			mes "Let's see let's see...";
+			mes "1 Angel Wing";
+			mes "1 Elven Ears...";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "Some other crap and";
+			mes "...20,000 zeny.";
+			mes "I must say this is a very cheap price to pay for such a great item. But before I start, I should tell you...";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "I don't care how many times you've upgraded the items you brought, but please ^4d4dff carry only items that you need to create this item.^000000 I can't mess up my artwork because of some mistake you might make.";
+			next;
+			if (select("I am ready.:Okay, let me go store my other items first.") == 1) {
+				if (MaxWeight - Weight < 2000) {
+					mes "[Hatbyr Mhore]";
+					mes "Ouch...!";
+					mes "Why are you carrying so many items with you? Leave all your extra baggage somewhere else and come back.";
+					close;
+				}
+				else {
+					if (countitem(2254) > 0 && countitem(2286) > 0 && Zeny > 19999) {
+						mes "[Hatbyr Mhore]";
+						mes "Alright...";
+						mes "Let's get a groove on!";
+						specialeffect EF_REPAIRWEAPON;
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "There you go, buddy.";
+						mes "I am proud to say this is my masterpiece. Please take this item. I call it...";
+						mes "'Angel Wing Ears!'";
+						delitem 2254,1; //Angelic_Chain
+						delitem 2286,1; //Elven_Ears
+						set Zeny, Zeny-20000;
+						getitem 5074,1; //Ear_Of_Angel's_Wing
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "There's no doubt that you'll be the talk of the town sporting these fashionable things.";
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "The glamour of an angel and the cuteness of Elven Ears is almost too much goodness for one headgear~!";
+						close;
+					}
+					mes "[Hatbyr Mhore]";
+					mes "I'm sorry buddy, but I can't make this item without having the things I need. Remember, I need 1 Angel Wing, 1 Elven Ears and 20,000 zeny.";
+					close;
+				}
+			}
+			mes "[Hatbyr Mhore]";
+			mes "No problem.";
+			mes "Come back anytime you want.";
+			mes "I'll just be here enjoying the view.";
+			close;
+		case 3:
+			mes "[Hatbyr Mhore]";
+			mes "Of course, I can make an item";
+			mes "out of an Evil Wing as well!";
+			mes "That sort of thing is simple for me!";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "Okay then, I will need...?";
+			mes "1 Evil Wing,";
+			mes "1 Elven Ears,";
+			mes "...and 20,000 zeny.";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "I must say this is a very cheap price considering the item I will make for you. But before I start, I should tell you...";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "I don't care how many times you've upgraded the items you brought, but please ^4d4dff carry only items that you need to create this item.^000000 I can't mess up my artwork because of some mistake you might make.";
+			next;
+			if (select("I am ready.:Okay, let me go store my other items first.") == 1) {
+				if (MaxWeight - Weight < 2000) {
+					mes "[Hatbyr Mhore]";
+					mes "Ouch...!";
+					mes "Why are you carrying so many items with you? Leave all your extra baggage somewhere else and come back.";
+					close;
+				}
+				else {
+					if (countitem(2255) > 0 && countitem(2286) > 0 && Zeny > 19999) {
+						mes "[Hatbyr Mhore]";
+						mes "Alright, it's time to roll!";
+						specialeffect EF_REPAIRWEAPON;
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "There you go, buddy. I am proud to say this is my masterpiece. I call it... 'Devil Wing Ears!'";
+						delitem 2255,1; //Satanic_Chain
+						delitem 2286,1; //Elven_Ears
+						set Zeny, Zeny-20000;
+						getitem 5068,1; //Ear_Of_Devil's_Wing
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "You'll be wowing everyone on the streets with your fashionable new look that says 'It feels so good to be so bad.' Glad to be of service~!";
+						close;
+					}
+					mes "[Hatbyr Mhore]";
+					mes "I'm sorry buddy, but I can't make this item without the stuff I need. Remember I need 1 Devil Wing, 1 Elven Ears and 20,000 zeny.";
+					close;
+				}
+			}
+			mes "[Hatbyr Mhore]";
+			mes "No problem.";
+			mes "Come back anytime you want.";
+			mes "I'll just be here enjoying the view.";
+			close;
+		}
+	}
+	else if (countitem(2255) > 0 && countitem(2286) > 0) {
+		mes "[Hatbyr Mhore]";
+		mes "Oh? It seems that you're carrying some valuable stuff with you.";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "Hmm, if you like, I could make you something truly amazing with that ^4d4dffEvil Wing^000000 and ^4d4dffElven Ears^000000 that you have.";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "How does that sound?";
+		mes "Oh, and don't you worry about my skill! I'm pretty well known among Blacksmiths for my talent, and my knack of making great things out of junk.";
+		next;
+		switch(select("Umm, let me think.:Okay, make it for me then.:Can you make it with an Angel Wing..?")) {
+		case 1:
+			mes "[Hatbyr Mhore]";
+			mes "Huh. What's to think about?! I was gonna use all of my skill to create something special for you. Ah well...";
+			close;
+		case 2:
+			mes "[Hatbyr Mhore]";
+			mes "Aha~ Good good good.";
+			mes "Let's see let's see...";
+			mes "1 Devil Wing";
+			mes "1 Elven Ears...";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "Some other crap and";
+			mes "...20,000 zeny.";
+			mes "I must say this is a very cheap price to pay for such a great item. But before I start, I should tell you...";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "I don't care how many times you've upgraded the items you brought, but please ^4d4dff carry only items that you need to create this item. I can't mess up my artwork because of some mistake you might make. ^000000";
+			next;
+			if (select("I am ready.:Okay, let me go store my other items first.") == 1) {
+				if (MaxWeight - Weight < 2000) {
+					mes "[Hatbyr Mhore]";
+					mes "Ouch, why are you carrying";
+					mes "so many items with you?";
+					mes "Leave all your extra baggage somewhere else and come back.";
+					close;
+				}
+				else {
+					if (countitem(2255) > 0 && countitem(2286) > 0 && Zeny > 19999) {
+						mes "[Hatbyr Mhore]";
+						mes "Alright...";
+						mes "Let's get a groove on!";
+						specialeffect EF_REPAIRWEAPON;
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "There you go, buddy.";
+						mes "I am proud to say this is my masterpiece. Please take this item. I call it... 'Devil Wing Ears!'";
+						delitem 2255,1; //Satanic_Chain
+						delitem 2286,1; //Elven_Ears
+						set Zeny, Zeny-20000;
+						getitem 5068,1; //Ear_Of_Devil's_Wing
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "You'll be wowing everyone on the streets with your fashionable new look that says 'It feels so good to be so bad.' Glad to be of service~!";
+						close;
+					}
+					mes "[Hatbyr Mhore]";
+					mes "I'm sorry buddy, but I can't make this item without having the things I need. Remember, I need 1 Devil Wing, 1 Elven Ears and 20,000 zeny.";
+					close;
+				}
+			}
+			mes "[Hatbyr Mhore]";
+			mes "No problem.";
+			mes "Come back anytime you want.";
+			mes "I'll just be here enjoying the view.";
+			close;
+		case 3:
+			mes "[Hatbyr Mhore]";
+			mes "Of course, I can make an item";
+			mes "out of an Angel Wing as well!";
+			mes "That sort of thing is simple for me!";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "Okay then, then I'll need...";
+			mes "1 Angel Wing,";
+			mes "1 Elven Ears,";
+			mes "...and 20,000 zeny.";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "I must say this is a very cheap price considering the item I will make for you. But before I start, I should tell you...";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "I don't care how many times you've upgraded the items you brought, but please ^4d4dff carry only items that you need to create this item.^000000 I can't mess up my artwork because of some mistake you might make.";
+			next;
+			if (select("I am ready.:Okay, let me go store my other items first.") == 1) {
+				if (MaxWeight - Weight < 2000) {
+					mes "[Hatbyr Mhore]";
+					mes "Ouch, why are you carrying";
+					mes "so many items with you?";
+					mes "Leave all your extra baggage somewhere else and come back.";
+					close;
+				}
+				else {
+					if (countitem(2254) > 0 && countitem(2286) > 0 && Zeny > 19999) {
+						mes "Alright...";
+						mes "Let's get a groove on!";
+						specialeffect EF_REPAIRWEAPON;
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "There you go, buddy.";
+						mes "I am proud to say this is my masterpiece. Please take this item. I call it... 'Angel Wing Ears!'";
+						delitem 2254,1; //Angelic_Chain
+						delitem 2286,1; //Elven_Ears
+						set Zeny, Zeny-20000;
+						getitem 5074,1; //Ear_Of_Angel's_Wing
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "There's no doubt that you'll be the talk of the town sporting these fashionable things.";
+						next;
+						mes "[Hatbyr Mhore]";
+						mes "The glamour of an angel and the cuteness of Elven Ears is almost too much goodness for one headgear~!";
+						close;
+					}
+					mes "[Hatbyr Mhore]";
+					mes "I'm sorry buddy, but I can't make this item without having the things I need. Remember, I need 1 Angel Wing, 1 Elven Ears and 20,000 zeny.";
+					close;
+				}
+			}
+			mes "[Hatbyr Mhore]";
+			mes "No problem.";
+			mes "Come back anytime you want.";
+			mes " ";
+			mes "I'll just be here enjoying the view.";
+			close;
+		}
+	}
+	else {
+		mes "[Hatbyr Mhore]";
+		mes "I happened to come to Juno while I was traveling around the world. Being someplace up in the clouds makes me a little nervous, but still, the scenery looks great from up here.";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "Although I really enjoy traveling more than staying in my shop, I'm still a Blacksmith at heart and I always gotta be making something. It's been a while since I've made my last creation...";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "Hmm...";
+		mes "If I had some materials, I think I could put together some pretty amazing stuff.";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "If by any chance, you have an Angel Wing or Evil Wing, and";
+		mes "Elven Ears, would you give me a chance to smith something?";
+		next;
+		mes "[Hatbyr Mhore]";
+		mes "I was thinking...";
+		mes "Elven Ears are great...";
+		mes "And everyone loves Angel Wing or Devil Wing. Wouldn't it be totally fab if I could combine the Elven Ears with one of the wings?!";
+		next;
+		if (select("Give me more information.:Yeah, I will think about it.") == 1) {
+			mes "[Hatbyr Mhore]";
+			mes "Oh, right.";
+			mes "Let me tell";
+			mes "you exactly I need.";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "For creating Angel Wing Ears, I need 1 ^4d4dffAngel Wing^000000,";
+			mes "1 ^4d4dffElven Ears^000000 and";
+			mes "^4d4dff20,000 zeny^000000.";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "For creating Devil Wing Ears,";
+			mes "I need 1 ^4d4dffDevil Wing^000000,";
+			mes "1 ^4d4dffElven Ears^000000 and";
+			mes "^4d4dff20,000 zeny^000000.";
+			next;
+			mes "[Hatbyr Mhore]";
+			mes "Come back anytime when you have those materials.";
+			mes "I will let you have either the elegance of an angel or the charisma of a demon with the wearables only I can craft.";
+			close;
+		}
+		mes "[Hatbyr Mhore]";
+		mes "No problem.";
+		mes "I'm always here at this scenic spot so I can enjoy the view. Just come back whenever you feel like it.";
+		close;
+	}
+}
+
+// Sea-Otter Hat
+//============================================================
+xmas,183,267,3	script	Pretty Lindsay#1	793,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (MaxWeight-Weight < 2000) {
+		mes "[Pretty Lindsay]";
+		mes "I know you brought everything you need for me to make you a hat, but you're carrying too much stuff. Why don't you put some of your things in Kafra Storage?";
+		close;
+	}
+	else if (countitem(5033) > 0 && countitem(5064) > 0) {
+		emotion e_gasp;
+		mes "[Pretty Lindsay]";
+		mes "Whoa~";
+		mes "You brought everything!";
+		mes "Okay, hold on a bit.";
+		mes "Let me make your hat.";
+		next;
+		mes "[Pretty Lindsay]";
+		mes "As my mom taught me,";
+		mes "put this down on the ground...";
+		mes "Okay, I am ready...";
+		next;
+		mes "^FF0000Lindsay put the Raccoon Hat on the ground, threw the Smokie Leaf onto the hat and mumbled some words while hugging herself.^000000";
+		next;
+		mes "^FF0000Then, suddenly with a dazzling light, the Raccoon Hat turned blue and slowly transformed into a Sea-Otter Hat.^000000";
+		specialeffect EF_FLASHER;
+		next;
+		mes "[Pretty Lindsay]";
+		mes "Phew! It's done!";
+		mes "Gosh! I think I";
+		mes "spent all my energy.";
+		mes "Okay, take this~";
+		delitem 5033,1; //Smokie_Hat
+		delitem 5064,1; //Leaf_Headgear
+		getitem 5078,1; //Sea_Otter_Cap
+		next;
+		mes "[Pretty Lindsay]";
+		mes "I made this hat with all my heart, so you gotta promise me you will take care of this, okay?";
+		close;
+	}
+	if (Sex == 1) {
+		mes "[Pretty Lindsay]";
+		mes "Hello, there?";
+		mes "Mister...?";
+		next;
+		emotion e_heh;
+		mes "[Pretty Lindsay]";
+		mes "You look like you're freezing...";
+		mes "Um, I know! How about I make you a cute, warm and fuzzy Sea-Otter hat?";
+		next;
+		mes "[Pretty Lindsay]";
+		mes "It's really really cute! Also, it's the only hat I know how to make, because I love playing with Sea Otters so much!";
+		next;
+		mes "[Pretty Lindsay]";
+		mes "I have to put together ^0000FF1 Raccoon Hat^000000 and ^0000FF1 Smokie Leaf^000000 to make a ^4D4DFFSea-Otter Hat^000000 for you, though.";
+		next;
+		if (select("Okay, I will come back with the stuff.:Um... How come you need a Raccoon Hat?") == 1) {
+			emotion e_heh;
+			mes "[Pretty Lindsay]";
+			mes "Cool~! Come back soon as you can~!";
+			close;
+		}
+		mes "[Pretty Lindsay]";
+		mes "Well, it's supposed to be a seeeecret, but my mommy taught me some magic to make Sea-Otter hats with Raccoon hats.";
+		next;
+		mes "[Pretty Lindsay]";
+		mes "It's the bestest magic ever because it comes from my heart!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That...";
+		mes "That still doesn't explain anything!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Alright...";
+		mes "Yeah...";
+		mes "I'll come back later, kid.";
+		close;
+	}
+	mes "[Pretty Lindsay]";
+	mes "Hello, hello~!";
+	mes "You're such a pretty lady!";
+	next;
+	emotion e_heh;
+	mes "[Pretty Lindsay]";
+	mes "Hey hey! Can I make you a Sea-Otter hat! It's really really really really cute!";
+	next;
+	mes "[Pretty Lindsay]";
+	mes "I need ^0000FF1 Raccoon Hat^000000 and ^0000FF1 Smokie Leaf^000000 so I can make a ^4D4DFFSea-Otter Hat^000000 for you.";
+	next;
+	if (select("Okay, I will come back with the stuff.:Um, why do you want to make hats so much?") == 1) {
+		emotion e_heh;
+		mes "[Pretty Lindsay]";
+		mes "Cool~!";
+		mes "Come back as";
+		mes "soon as you can~!";
+		close;
+	}
+	mes "[Pretty Lindsay]";
+	mes "Because...!";
+	mes "If everyone in Lutie was wearing a fuzzy Sea-Otter cap, it would look so so cute!";
+	next;
+	mes "[Pretty Lindsay]";
+	mes "We could play games in the snow, and play with real Sea Otters and have them give us rides and...";
+	mes ".....";
+	close;
+}
+
+// Teddybear Hat
+//============================================================
+xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(5030) > 0 && countitem(7213) > 99  && countitem(7217) > 99 && countitem(7161) > 299) {
+		if ((MaxWeight-Weight) < 2000) {
+			mes "[Fuzzy Fuzz]";
+			mes "You brought every material I need, but unfortunately you don't have enough space in your inventory. Try and place some of your items into Kafra Storage first.";
+			close;
+		}
+		mes "[Fuzzy Fuzz]";
+		mes "Excellent! You brought everything! Please make yourself comfortable while I make you your Teddybear Hat.";
+		next;
+		emotion e_ho;
+		mes "[Fuzzy Fuzz]";
+		mes "Hmm Hm Hmm...";
+		mes "Tear this off...";
+		mes "Knit this on....";
+		mes "Okay, it's almost done...";
+		next;
+		mes "[Fuzzy Fuzz]";
+		emotion e_an;
+		mes "There is an old saying, 'Everything comes to those who wait.' Oh, are you freezing? Why don't you rub your hands together?";
+		next;
+		mes "[Fuzzy Fuzz]";
+		emotion e_ic;
+		mes "It's complete! There you go. I think this one will look really good on you! Please take good care of this hat.";
+		delitem 5030,1; //Panda_Cap
+		delitem 7213,100; //Needle_Pouch
+		delitem 7217,100; //Spool
+		delitem 7161,300; //Black_Bear's_Skin
+		getitem 5059,1; //Brown_Bear_Cap
+		close;
+	}
+	emotion e_gasp;
+	mes "[Fuzzy Fuzz]";
+	mes "Hello there, young man.";
+	mes "What brings you to Lutie, town of goodwill and year round Christmas cheer?";
+	next;
+	mes "[Fuzzy Fuzz]";
+	mes "I'm a master of creating stuffed animals, which make great presents. As we all know, everyone loves to hug cute and cuddly stuffed animals.";
+	next;
+	mes "[Fuzzy Fuzz]";
+	mes "My specialty is the 'Teddybear Hat.' When it's worn, it makes you as cute as a teddy bear, and your hugs twice as warm and cuddly.";
+	next;
+	mes "[Fuzzy Fuzz]";
+	if (Sex) {
+		mes "The 'Teddybear Hat' can't be worn by just anyone, since it's cuddling powers are easily abused.";
+		next;
+		mes "[Fuzzy Fuzz]";
+		mes "But I sense that you are an adventurer with a pure heart and would not use the Teddybear Hat for selfish gain.";
+		next;
+		mes "[Fuzzy Fuzz]";
+		mes "You can learn a lot about telling good people from the naughty after working for Santa for a loooong time...";
+	}
+	else {
+		mes "I sense that you are an adventurer with a good heart, and that a sweet girl like you deserves a nice gift.";
+		next;
+		mes "[Fuzzy Fuzz]";
+		mes "You know more about such things after working for Santa for so long.";
+	}
+	next;
+	mes "[Fuzzy Fuzz]";
+	mes "Unfortunately, I don't have any material to make the headgear right now. But if you bring the materials, I will make you a 'Teddybear Hat' for free.";
+	next;
+	mes "[Fuzzy Fuzz]";
+	mes "Let's see...";
+	mes "I'll need...";
+	mes "^0000FF1 Panda Hat^000000,";
+	mes "^0000FF100 Needle Packet^000000,";
+	mes "^0000FF100 Spool^000000 and";
+	mes "^0000FF300 Black Bear Skin^000000.";
+	next;
+	mes "[Fuzzy Fuzz]";
+	mes "So, do you think you can get all of them? I will be here waiting for you.";
+	emotion e_heh;
+	close;
+}
+
+// Model Training Hat
+//============================================================
+payon_in03,8,193,4	script	Nanhyang#1	77,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if ((MaxWeight-Weight) < 2430) {
+		mes "[Nanhyang]";
+		mes "Hmmm...";
+		mes "You look like you're having trouble carrying all of your things. Why don't you place some of your extra items into the Kafra Storage?";
+		close;
+	}
+	if (countitem(5073) > 0 && countitem(1750) > 0) {
+		mes "[Nanhyang]";
+		mes "Hello, there.";
+		mes "Ah, I can tell that you already have a ^8C1717'Model Training Hat'^000000. I see that using it has corrected your posture.";
+		next;
+		mes "[Nanhyang]";
+		mes "Oh...";
+		mes "I forgot to tell you that I can not only put together a 'Model Training Hat,' I can disassemble it into its original parts.";
+		next;
+		mes "[Nanhyang]";
+		mes "If you give me ^0000FF1 'Model Training Hat'^000000 and ^0000FF1 'Arrow'^000000, I give you ^8C17171 'Apple of Archer'^000000 and ^8C17171 'Book'^000000. So, would you like to disassemble the items?";
+		next;
+		if (select("Disassemble:Cancel") == 1) {
+			mes "[Nanhyang]";
+			mes "Thank you.";
+			mes "It will not take that much time to make this hat, so please wait a moment.";
+			next;
+			mes "[Nanhyang]";
+			mes " . . . . . . . . . . . . . .";
+			mes " . . . . . . . . . . . . . ";
+			mes " . . . . . . . . . . . . . .";
+			mes " . . . . . . . . . . . . . ";
+			next;
+			mes "[Nanhyang]";
+			delitem 5073,1; //Cap_Of_Concentration
+			delitem 1750,1; //Arrow
+			getitem 2285,1; //Apple_Of_Archer
+			getitem 1550,1; //Book
+			mes "There you go.";
+			next;
+			mes "[Nanhyang]";
+			mes "If you want to make a";
+			mes "'Model Training Hat' again,";
+			mes "feel free to come back.";
+			close;
+		}
+		mes "[Nanhyang]";
+		mes "I see.";
+		mes "I hope you will";
+		mes "continue to use that hat";
+		mes "to improve your posture";
+		mes "and glamorous poise.";
+		close;
+	}
+	if (countitem(2285) > 0 && countitem(1550) > 0) {
+		mes "[Nanhyang]";
+		emotion e_heh;
+		mes "You brought the materials~";
+		next;
+		mes "[Nanhyang]";
+		mes "Before I start to create the item, I'm obligated to warn you...";
+		next;
+		mes "[Nanhyang]";
+		mes "If the ^FF0000'Book' and 'Apple of Archer' items you have brought to make a 'Model Training Hat' was ^FF0000upgraded^000000, after I create the hat out of the book, ^FF0000these upgrades, including compounded cards, will be lost.^000000";
+		next;
+		mes "[Hanhyang]";
+		mes "So would you like to create the Model Training Hat right now?";
+		next;
+		if (select("Create:Cancel") == 1) {
+			mes "[Nanhyang]";
+			emotion e_ok;
+			mes "Thank you.";
+			mes "Let me create one for you right away. Please have a seat and make yourself comfortable.";
+			next;
+			mes "[Nanhyang]";
+			mes "Usually we have a zeny service charge, but since you've got ^3355FFthe look^000000, I'll waive it.";
+			next;
+			mes "[Nanhyang]";
+			mes "Please wait a moment while I put this together.";
+			next;
+			mes " . . . . . . . . . . . . . .";
+			mes " . . . . . . . . . . . . . ";
+			mes " . . . . . . . . . . . . . .";
+			mes " . . . . . . . . . . . . . ";
+			next;
+			mes "[Nanhyang]";
+			emotion e_ic;
+			mes "That wasn't too difficult. I hope you wear this hat everyday to improve your posture.";
+			next;
+			mes "[Nanhyang]";
+			mes "You may have trouble at first, keeping your balance and trying not to drop the apple. You may even feel incredible neck pain. But for the sake of beauty, it'll all be worth it.";
+			next;
+			mes "[Nanhyang]";
+			mes "Here it is.";
+			mes "Oh, right, this arrow from the Apple of Archer is left over, so you can go ahead and take that.";
+			delitem 2285,1; //Apple_Of_Archer
+			delitem 1550,1; //Book
+			getitem 5073,1; //Cap_Of_Concentration
+			next;
+			mes "[Nanhyang]";
+			mes "Also, I can disassemble the Model Training Hat into its original materials. So if you want the original items back, bring the Model Training Hat and the arrow I gave you.";
+			getitem 1750,1; //Arrow
+			next;
+			mes "[Nanhyang]";
+			mes "I hope you";
+			mes "will have a";
+			mes "good day.";
+			mes "Farewell.";
+			close;
+		}
+		mes "[Nanhyang]";
+		emotion e_dots;
+		mes "I see. You must have brought items with cards or upgrades that you didn't want to lose. Feel free to come back anytime when you are ready.";
+		close;
+	}
+	mes "[Nanhyang]";
+	emotion e_gasp;
+	mes "Hello~";
+	mes "Welcome to the Handsome Charm Modeling School. May I help you?";
+	next;
+	if (select("I want to be a model~!:Cancel") == 1) {
+		mes "[Nanhyang]";
+		mes "I see~";
+		mes "Although it's clear that you've got '^3355FFthe look^000000,' we can't accept any students at the moment.";
+		next;
+		mes "[Nanhyang]";
+		mes "Lately, our director has been gone, and we aren't sure when he'll come back. ^333333*Sigh* I can't even remember the last time we got paid.^000000";
+		next;
+		mes "[Nanhyang]";
+		mes "Hmm... Wait a minute!";
+		mes "At the very least, we could train you to improve your posture so that you can walk with regal poise.";
+		next;
+		mes "[Nanhyang]";
+		mes "Although we can't offer any classes at this time, I can create a special 'Model Training Hat' for you. That way, you can practice the glamourous way of walking down the catwalk on your own.";
+		next;
+		mes "[Nanhyang]";
+		emotion e_what;
+		mes "But since our director is gone, we can't really use our budget to give you a hat. If you want, please bring me the following items...";
+		next;
+		mes "[Nanhyang]";
+		mes "Please bring...";
+		mes "^0000FF1 Apple of Archer^000000 and";
+		mes "^0000FF1 Book^000000.";
+		mes "Then I can fashion a 'Model Training Hat' for you right away.";
+		close;
+	}
+	mes "[Nanhyang]";
+	mes "I understand.";
+	mes "Well, have a good day.";
+	mes "Thank you~";
+	close;
+}
+
+// Tulip Hairpin
+//============================================================
+geffen,83,189,5	script	Seth#1	716,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes " [Seth]";
+		mes "Whoa, why are you carrying so many items with you?";
+		mes "You look so heavy...! Maybe you can walk more easily if you put some of your stuff away?";
+		close;
+	}
+	mes " [Seth]";
+	mes "Hello, my name is Seth!";
+	mes "I like folding paper and making origami. I made my mommy a big paper boat, and she gave me a big smile and patted my head!";
+	emotion e_heh;
+	next;
+	mes "[Seth]";
+	mes "Today at school, I learned how to make a paper flower! The flower was sort of hard, but now I can do it! Then I made a tiny tiny flower and put in on my head~";
+	emotion e_lv;
+	next;
+	if (countitem(2278) > 0 && countitem(975) > 0) {
+		mes "[Seth]";
+		mes "Hey~!";
+		mes "You have a Mr. Smile and Scarlet Dyestuffs! Yaaay~! I could use those and make you a paper flower. C'mon, lemme show you!";
+		emotion e_swt2;
+		next;
+		mes "[Seth]";
+		mes "Lemme make";
+		mes "one for you,";
+		mes "pwease pwease?";
+		emotion e_swt2;
+		next;
+		switch(select("Alright!:No thanks kid.:Boys aren't supposed to make flowers.")) {
+		case 1:
+			emotion e_heh;
+			mes "[Seth]";
+			mes "Yay~";
+			mes "You're the best!";
+			next;
+			mes "[Seth]";
+			mes "Let's see...";
+			mes "I cut Mr. Smile this way~.";
+			mes "*Snip Snip Snip~~*";
+			mes "*Snip...Snip...*";
+			mes "Yyyyyaaaeeep...";
+			emotion e_ho;
+			next;
+			mes "[Seth]";
+			mes "Tah dah~!";
+			next;
+			delitem 2278,1; //Mr_Smile
+			delitem 975,1; //Scarlet_Dyestuffs
+			getitem 5077,1; //Tulip_Hairpin
+			mes "[Seth]";
+			mes "Heheheh~!";
+			mes "I'm done!";
+			mes "I did a good job, didn't I?";
+			next;
+			if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice) {
+				mes "[Seth]";
+				mes "Oh, here's the leftovers. Mommy says that we should always save things. Heh heh~";
+				getitem 935,1; //Shell
+				next;
+			}
+			mes "[Seth]";
+			mes "I'm a good boy!";
+			mes "I'm gonna make one for my little sister~! And everybody I love!";
+			next;
+			mes "[Seth]";
+			mes "If you want to see me make another one, just bring more Scarlet Dyestuffs and Mr.Smile, okay? Bye bye~!";
+			close;
+		case 2:
+			mes "[Seth]";
+			mes "*Sniff sniff*";
+			mes "O-okay...";
+			mes "But I just wanted to show you how good I am...";
+			emotion e_sob;
+			close;
+		case 3:
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hey.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Boys aren't supposed to make flowers.";
+			next;
+			mes "[Seth]";
+			mes "Waaaaaaah~!";
+			mes "But flowers are so nice and pweety!!!";
+			emotion e_sob;
+			close;
+		}
+	}
+	else {
+		mes "[Seth]";
+		mes "You want me to show you? Huh?";
+		mes "I can do it you want!";
+		next;
+		mes "[Seth]";
+		mes "Uh oh...";
+		mes "But I don't have anything to make paper flowers out of.";
+		next;
+		if (select("I'll get what you need.:Too bad!") == 1) {
+			mes "[Seth]";
+			mes "Okay okay...";
+			mes "I neeeeed...";
+			mes "^3131FF1 Mr. Smile^000000 and";
+			mes "^3131FF1 Scarlet Dyestuffs^000000.";
+			mes "Then I can make you a tiiiiny little flower.";
+			next;
+			mes "[Seth]";
+			mes "Seth will wait for you here. Promise me you'll come back?";
+			close;
+		}
+		emotion e_sob;
+		mes "[Seth]";
+		mes "Wah~~~~~!";
+		close;
+	}
+}
+	
+// Party Hat, Straw Hat, Cowboy Hat, Sombrero, Beanie
+//============================================================
+xmas_in,35,30,3	script	Hat Merchant#zero	797,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	mes "[Mad Hatter]";
+	mes "Hey there. Um...";
+	mes "I'm the 'Mad Hatter.' Well, at least that's what I call myself.";
+	next;
+	mes "[Mad Hatter]";
+	mes "If you give me some stuff, I can renovate some of your old hats so that they really show your personality. Whether you're laid back or a party animal, I'll be able to make a hat just for you!";
+	next;
+	mes "[Mad Hatter]";
+	mes "You wanna take a look at the trendy, stylish hats I can make for you?";
+	next;
+	switch(select("Party Hat:Straw Hat:Cowboy Hat:Sombrero:Beanie")) {
+	case 1:
+		if (countitem(2236) > 0 && countitem(7151) > 99 && countitem(7111) > 99) {
+			mes "[Mad Hatter]";
+			mes "Party Hat! It's a Santa Hat I've remade by adding colorful paper for a festive look. Celebrate good times with a Party Hat! Come on!";
+			next;
+			mes "[Mad Hatter]";
+			mes "Oh wait! Please check one thing before we start.";
+			next;
+			mes "[Mad Hatter]";
+			mes "If the Santa Hat you use to create this hat was upgraded or compounded with a card, all those upgrades will be lost. So, to be safe, I suggest you put everything in your inventory, other than the things to make the Party Hat, into Kafra Storage.";
+			next;
+			mes "[Mad Hatter]";
+			mes "It seems to me that you have everything. Alright! Shall I make you a Party Hat?";
+			next;
+			if (select("No thanks.:Yes.") == 1) {
+				mes "[Mad Hatter]";
+				mes "Umm, okay...";
+				mes "I guess being the life of the party is a bit too much for you, eh? Hmpf. Well, I know a good library in Juno where you can hang out...";
+				close;
+			}
+			mes "^3355FF*Rustle Rustle Splat Splat*^000000";
+			mes "^3355FF*Squick Squick Grind Grind*^000000";
+			mes "^3355FF*Swish Swish Rustle Rustle*^000000";
+			next;
+			delitem 2236,1; //Santa's_Hat
+			delitem 7151,100; //Oil_Paper
+			delitem 7111,100; //Smooth_Paper
+			mes "[Mad Hatter]";
+			mes "It's done! Your new life, as the life of the party, has officially begun. All you need to do is wear this Party Hat. Though, knowing a couple jokes would probably help too.";
+			getitem 5060,1; //Party_Hat
+			next;
+			mes "[Mad Hatter]";
+			mes "Oh by the way, there's some stuff left over. I guess you should hold onto it. You know, in case you need it later.";
+			getitem 914,10; //Fluff
+			close;
+		}
+		else {
+			mes "[Mad Hatter]";
+			mes "Oh... man. Everyone needs a Party Hat! Even boring types get jazzed with pizazz wearing one of these!";
+			next;
+			mes "[Mad Hatter]";
+			mes "You can wear them for birthday parties, Christmas parties. Um, slumber parties. P-political parties.";
+			mes "......";
+			mes "And hunting parties?";
+			next;
+			mes "[Mad Hatter]";
+			mes "Anyway, this is what I need to make a Party Hat...";
+			mes "1 ^3355FFSanta Hat^000000,";
+			mes "100 ^3355FFOil Paper^000000 and";
+			mes "100 ^3355FFSlick Paper^000000.";
+			next;
+			mes "[Mad Hatter]";
+			mes "I'll be right here when you decide to crank your life up a notch with a Party Hat.";
+			close;
+		}
+	case 2:
+		if (countitem(2280) > 0 && countitem(7197) > 299 && countitem(7150) > 299) {
+			mes "[Mad Hatter]";
+			mes "A Straw Hat! Made out of a Sakkat with bamboo and tough vines, it gives you a relaxed, rustic feeling when you wear it.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Oh wait! Please check one thing before we start.";
+			mes "If the Sakkat you use to create this hat was upgraded, any cards, slots or upgrades will disappear once I make a new hat out of it.";
+			next;
+			mes "[Mad Hatter]";
+			mes "To be safe, I suggest you put everything else, other than the required hat items, into Kafra Storage.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Ah! I see you brought everything. Alright! Do you want me to make you a Straw Hat now?";
+			next;
+			if (select("No thanks.:Yes.") == 1) {
+				mes "[Mad Hatter]";
+				mes "Man...";
+				mes "I think you need this hat more than I thought. You have got to learn to just chill and relax~!";
+				close;
+			}
+			mes "^3355FF*Crunch Chew Chew Chew*^000000";
+			mes "^3355FF*Squish Squish Fwsht Fwsht*^000000";
+			mes "^3355FF*Crunch Crunch Tap Tap*^000000";
+			next;
+			delitem 2280,1; //Sahkkat
+			delitem 7197,300; //Tough_Vines
+			delitem 7150,300; //Bamboo_Cut
+			mes "[Mad Hatter]";
+			mes "It's done!";
+			mes "Now you can wear this hat, feel cool, and relax with style.";
+			mes "Please come again~";
+			getitem 5062,1; //Straw_Hat
+			close;
+		}
+		else {
+			mes "[Mad Hatter]";
+			mes "A Straw Hat! It shades you from the heat of the sun and keeps farmers cool when they're working on the fields. It's a hat for cool, relaxed types and the hat of choice for some famous heroes!";
+			next;
+			mes "[Mad Hatter]";
+			mes "Anyways, I need all these to make you a Straw Hat...";
+			mes "1 ^3355FFSakkat^000000,";
+			mes "300 ^3355FFTough Vines^000000 and";
+			mes "300 ^3355FFPiece of Bamboo^000000.";
+			next;
+			mes "[Mad Hatter]";
+			mes "I'll be right here when you decide that you want the perfect hat for laid back, kick back moods. Be cool~";
+			close;
+		}
+	case 3:
+		if (countitem(2248) > 0 && countitem(7030) > 107 && countitem(7194) > 107 && countitem(7120) > 3) {
+			mes "[Mad Hatter]";
+			mes "I take a Western Grace, add some manliness, um, do some finangling, and Voila~! A Cowboy Hat!";
+			next;
+			mes "[Mad Hatter]";
+			mes "It's a hat for adventure and exploration. Although it's a manly hat like no other, with a manly factor of 9, it also looks great on girls.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Oh wait! Please check one thing before we start.";
+			mes "If the Western Grace you use to create this hat was upgraded, any cards or upgrades will be lost once I make a new hat out of it.";
+			next;
+			mes "[Mad Hatter]";
+			mes "To be safe, I suggest you put everything, other than the required materials, into Kafra Storage.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Ah! You brought everything already. Excellent. Do you want me to make a Cowboy Hat now?";
+			next;
+			if (select("No thanks.:Yes.") == 1) {
+				mes "[Mad Hatter]";
+				mes "Well, I see.";
+				mes "I guess you just don't appreciate the value of cowboy heroes, do you?";
+				close;
+			}
+			mes "^3355FF*Clik-clak Clik-clak Pam Pam Pam Pam*^000000";
+			mes "^3355FF*Bang Bang Ping Ping*^000000";
+			mes "^3355FF*Uk Uk Uk Uk Uhoh Uhoh*^000000";
+			next;
+			delitem 2248,1; //Western_Grace
+			delitem 7030,108; //Claw_Of_Desert_Wolf
+			delitem 7194,108; //Soft_Leaf
+			delitem 7120,4; //Burning_Horse_Shoe
+			mes "[Mad Hatter]";
+			mes "Yeeeeehaw! With this hat on, you can tame broncos, rob stagecoaches, and look really stylish in duels!";
+			getitem 5075,1; //Cowboy_Hat
+			close;
+		}
+		else {
+			mes "[Mad Hatter]";
+			mes "A Cowboy Hat! This is a very popular that brings up images of frontier life and gunplay.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Wearing a Cowboy Hat will make guys look tougher and more heroic, and will add untamed cuteness to the ladies.";
+			next;
+			mes "[Mad Hatter]";
+			mes "I need these items to make a Cowboy Hat...";
+			mes "1 ^3355FFWestern Grace^000000,";
+			mes "108 ^3355FFClaw of Desert Wolf^000000,";
+			mes "108 ^3355FFSoft Blade of Grass^000000 and";
+			mes "4 ^3355FFBurning Horseshoe^000000.";
+			next;
+			mes "[Mad Hatter]";
+			mes "So when you decide to give your life a boost with rustic style, come back to me with those items so I can make you a Cowboy Hat.";
+			close;
+		}
+	case 4:
+		if (countitem(5062) > 0 && countitem(952) > 49 && countitem(1907) > 0) {
+			mes "[Mad Hatter]";
+			mes "Ah yes. Now here's a classy hat for mariachi heroes and Latin lovers. You can't deny the sex appeal that just pours from someone wearing a Sombrero.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Oh wait! Please check one thing before we start.";
+			mes "If the Straw Hat you use to creating this hat was upgraded, any cards or upgrades in this hat will be lost once I make the Sombrero.";
+			next;
+			mes "[Mad Hatter]";
+			mes "To be safe, I suggest you put everything you don't need to make this hat into Kafra Storage.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Ah! You brought everything already. Alright! Do you want me to make you a Sombrero right away?";
+			next;
+			if (select("No thanks.:Yes.") == 1) {
+				mes "[Mad Hatter]";
+				mes "Fine, fine.";
+				mes "But think of all the sex appeal you're missing out on. Come on, you know you need a Sombrero.";
+				close;
+			}
+			mes "^3355FFZinga Zinga Zang Zang^000000";
+			mes "^3355FFDing Ding Ding Dan Dan Dan^000000";
+			mes "^3355FFAdios Amigo^000000";
+			next;
+			delitem 5062,1; //Straw_Hat
+			delitem 952,50; //Cactus_Needle
+			delitem 1907,1; //Guitar
+			mes "[Mad Hatter]";
+			mes "With this Sombrero, you'll look like you have all kinds of style. Adios, cool guy~";
+			getitem 5067,1; //Sombrero
+			close;
+		}
+		else {
+			mes "[Mad Hatter]";
+			mes "Now, everyone needs a Sombrero. They're one of the most versatile hats in existence. You can wear them to formal events, you can wear them while napping, you can wear them just to hang out...";
+			next;
+			mes "[Mad Hatter]";
+			mes "Look, you don't need me to explain how cool a Sombrero is. It's just one of those things that everyone naturally knows. So I know you want one.";
+			next;
+			mes "[Mad Hatter]";
+			mes "So this is what I need to make a Sombrero...";
+			mes "1 ^3355FFStraw Hat^000000,";
+			mes "50 ^3355FFCactus Needle^000000 and";
+			mes "1 ^3355FFGuitar^000000.";
+			next;
+			mes "[Mad Hatter]";
+			mes "That's all you need to have the coolest hat ever.";
+			mes "(Woohoo~!)";
+			close;
+		}
+	case 5:
+		if (countitem(2226) > 0 && countitem(7038) > 499) {
+			mes "[Mad Hatter]";
+			mes "A Beanie...!";
+			mes "Whaddup, broham. This hat keeps your head toasty, but let's you play things cool with your homeys. And, um, fly girls.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Oh wait! Please check one thing before we start.";
+			mes "If the Cap you use to make this Beanie was upgraded, any cards or upgrades will be lost once I make this hat!";
+			next;
+			mes "[Mad Hatter]";
+			mes "To be safe, I suggest you put everything not needed to make this hat into Kafra Storage.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Ah! You brought everything already. Alright! How about I make you that Beanie right now?";
+			next;
+			if (select("No thanks.:Yes.") == 1) {
+				mes "[Mad Hatter]";
+				mes "Okay...";
+				mes "Dork. Come back When you decide to join the cool guys, word?";
+				close;
+			}
+			mes "^3355FF*Crunch Chew Chew Chew*^000000";
+			mes "^3355FF*Squish Squish Fwsht Fwsht*^000000";
+			mes "^3355FF*Crunch Crunch Tap Tap*^000000";
+			next;
+			delitem 2226,1; //Cap
+			delitem 7038,500; //Yarn
+			mes "[Mad Hatter]";
+			mes "There you go! Your very own Beanie! Cute, but still 'dope!'";
+			next;
+			mes "[Mad Hatter]";
+			mes "Uh! Uh!";
+			mes "I'm in da house!";
+			getitem 5076,1; //Fur_Hat
+			close;
+		}
+		else {
+			mes "[Mad Hatter]";
+			mes "A Beanie!";
+			mes "Whether you plan to go to a house party, get your groove back, or be as fresh as a prince, you'll be chillin' with this fly style.";
+			next;
+			mes "[Mad Hatter]";
+			mes "But well...";
+			mes "Although it can be a street fashion, Beanies also look really cute on some people.";
+			next;
+			mes "[Mad Hatter]";
+			mes "Anyway, this is what I need to make a Beanie...";
+			mes "1 ^3355FFCap^000000 and";
+			mes "500 ^3355FFYarn^000000.";
+			next;
+			mes "[Mad Hatter]";
+			mes "When you decide to represent yo' hood, come to me with the stuff. I'll hook you up.";
+			close;
+		}
+	}
+}
+
+// Decorative Golden Bell, Crown of Ancient Queen, Crown of Mistress
+//============================================================
+yuno_in03,20,18,6	script	Nehris#1	726,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	mes "[Nehris]";
+	mes "The Monster Museum has prepared a special event for your support~!";
+	next;
+	mes "[Nehris]";
+	mes "Accessories typically worn by monsters are now available for adventurers to wear!";
+	next;
+	mes "[Nehris]";
+	mes "Of course, since we're on a trial period, we can only provide 3 monster accessories to our fans. However, according to your response, we may add more monster accessories in the future.";
+	next;
+	mes "[Nehris]";
+	mes "Simply bring the required materials, and pay a small fee, and we will provide you with the monsters accessory of your choice.";
+	next;
+	mes "[Nehris]";
+	mes "Please choose the";
+	mes "accessory you are";
+	mes "interested in.";
+	next;
+	switch(select("Decorative Golden Bell:Crown of Ancient Queen:Crown of Mistress")) {
+	case 1:
+		mes "[Nehris]";
+		mes "This Golden Bell is fashioned after the one worn by the 'Sohee' monster. It's a cute accessory I personally recommend for us ladies. A little oversized, but I believe you'll like it a lot.";
+		next;
+		if (countitem(10016) > 0 && countitem(714) > 0 && countitem(969) > 2 && Zeny > 19999) {
+			mes "[Nehris]";
+			mes "Thank you for";
+			mes "bringing everything.";
+			mes "Please wait one moment.";
+			next;
+			mes "^3355FF* Clang Clang! Scrape Scrape! Jingle Jingle! *^000000";
+			next;
+			delitem 10016,1; //Golden_Bell
+			delitem 714,1; //Emperium
+			delitem 969,3; //Gold
+			set Zeny, Zeny-20000;
+			getitem 5091,1; //Big_Golden_Bell
+			mes "[Nehris]";
+			mes "Yoohoo~";
+			mes "There you go. Here's your beautiful Golden Bell. I doubt it will jingle if you shake your head, though.";
+			next;
+			mes "[Nehris]";
+			mes "Oh, one more thing, don't confuse yourself with Sohee and commit suicide!";
+			next;
+			mes "[Nehris]";
+			mes "If you'd like me to make another one, please come again. Thank you for visiting the Monster Museum.";
+			close;
+		}
+		mes "[Nehris]";
+		mes "The required materials for the Decorative Golden Bell are...";
+		mes "^3355FF1 Golden Bell, 1 Emperium, 3 Gold^000000 and";
+		mes "20,000 zeny.";
+		next;
+		mes "[Nehris]";
+		mes "Just come ask me";
+		mes "when you're ready.";
+		mes "Thank you.";
+		close;
+	case 2:
+		mes "[Nehris]";
+		mes "This crown is inspired by the the one worn by the 'Isis' monster. It has a elegant look fitting for ancient royalty.";
+		next;
+		if (countitem(10006) > 0 && countitem(714) > 0 && countitem(969) > 2 && Zeny > 19999) {
+			mes "[Nehris]";
+			mes "Thank you for";
+			mes "bringing everything.";
+			mes "Please wait one moment.";
+			next;
+			mes "^3355FF* Clang Clang! Scrape Scrape! Jingle Jingle! *^000000";
+			next;
+			delitem 10006,1; //Queen's_Hair_Ornament
+			delitem 714,1; //Emperium
+			delitem 969,3; //Gold
+			set Zeny, Zeny-20000;
+			getitem 5080,1; //Headgear_Of_Queen
+			mes "[Nehris]";
+			mes "Tah dah!";
+			mes "Here's your Crown of Ancient Queen! I don't know if you can get anyone to bow before you while wearing this, but at least you'll look elegant.";
+			next;
+			mes "[Nehris]";
+			mes "If you'd like me to make another one, please come again. Thank you for visiting the Monster Museum.";
+			close;
+		}
+		mes "[Nehris]";
+		mes "The required materials for the Crown of Ancient Queen are...";
+		mes "^3355FF1 Queen's Hair Ornament, 1 Emperium, 3 Gold^000000 and";
+		mes "20,000 zeny.";
+		next;
+		mes "[Nehris]";
+		mes "Just come ask me";
+		mes "when you're ready.";
+		mes "Thank you.";
+		close;
+	case 3:
+		mes "[Nehris]";
+		mes "This crown is an imitation of the one worn by the 'Mistress' monster. Wearing this will give you a look of brusque authority.";
+		next;
+		if (countitem(2249) > 0 && countitem(714) > 0 && countitem(969) > 2 && Zeny > 39999) {
+			mes "[Nehris]";
+			mes "Thank you for";
+			mes "bringing everything.";
+			next;
+			mes "[Nehris]";
+			mes "^FF0000By the way, if you use an upgraded";
+			mes "Coronet for making this item,";
+			mes "the item you create out of the Coronet";
+			mes "will not have its upgraded status.^000000";
+			next;
+			mes "[Nehris]";
+			mes "^FF0000Also, please only have one Coronet in your inventory to make the Crown of Mistress. We are not responsible for any loss.";
+			next;
+			mes "[Nehris]";
+			mes "Are you sure you want to create the Crown of Mistress?";
+			next;
+			if (select("Yes:Wait a minute...!") == 1) {
+				mes "[Nehris]";
+				mes "Please wait one moment.";
+				next;
+				mes "^3355FF* Clang Clang! Scrape Scrape! Jingle Jingle! *^000000";
+				next;
+				delitem 2249,1; //Coronet
+				delitem 714,1; //Emperium
+				delitem 969,3; //Gold
+				set Zeny, Zeny-40000;
+				getitem 5081,1; //Mistress_Crown
+				mes "[Nehris]";
+				mes "Yay! You've got a great looking crown!";
+				next;
+				mes "[Nehris]";
+				mes "I don't know if everyone will obey your commands while wearing this, but at least you can feel beautifully regal.";
+				next;
+				mes "[Nehris]";
+				mes "Why don't you go take a picture with Mistress? That would be funny to see if she wasn't too busy trying to maul you.";
+				next;
+				mes "[Nehris]";
+				mes "If you'd like me to make you another one, please come again. Thank you for visiting the Monster Museum.";
+				close;
+			}
+			mes "[Nehris]";
+			mes "No problem, just be sure to understand our precautions well, okay?";
+			close;
+		}
+		mes "[Nehris]";
+		mes "The required materials for the Crown of Mistress are...";
+		mes "^3355FF1 Coronet, 1 Emperium, 3 Gold^000000 and";
+		mes "40,000 zeny.";
+		next;
+		mes "[Nehris]";
+		mes "Just come ask me";
+		mes "when you're ready.";
+		mes "Thank you.";
+		close;
+	}
+}
+
+// Alarm Mask
+//============================================================
+alde_alche,88,180,0	script	Muscle Man#Alarm Mask	748,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Muscle Man]";
+		mes "Hmmm...";
+		mes "It's seems you're carrying too much stuff for me to give anything to you.";
+		next;
+		mes "[Muscle Man]";
+		mes "Talk to me again after you've freed up some of your inventory space by putting some of your things into the Kafra Storage.";
+		close;
+	}
+	mes "[Muscle Man]";
+	mes "Oooh yeah!";
+	mes "Sometimes, even I can't believe how much this body of mine ripples with sexy love muscles~! I can barely hold them all in...";
+	next;
+	mes "[Muscle Man]";
+	mes "It's...";
+	mes "It's sexy time!";
+	next;
+	specialeffect EF_FLASHER;
+	setnpcdisplay "Muscle Man#Alarm Mask", 1193;
+	enablenpc " #Alarm Mask Man1";
+	enablenpc " #Alarm Mask Man2";
+	enablenpc " #Alarm Mask Man3";
+	enablenpc " #Alarm Mask Man4";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man1";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man2";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man3";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man4";
+	initnpctimer;
+	if (countitem(1095) > 2999 && countitem(2288) > 0) {
+		if (select("Give him items:Cancel") == 1) {
+			mes "[Muscle Man]";
+			mes "Ooh... Finally!";
+			mes "You brought them!";
+			mes "Excellent, excellent!";
+			next;
+			mes "[Muscle Man]";
+			mes "Alright...";
+			mes "Now I can use this Mr.Scream and all these clock hands to continue my testing.";
+			next;
+			delitem 1095,3000; //Needle_Of_Alarm
+			delitem 2288,1; //Mr_Scream
+			getitem 5086,1; //Alarm_Mask
+			mes "[Muscle Man]";
+			mes "And, this is yours. All yours.";
+			next;
+			mes "[Muscle Man]";
+			mes "Well then... Farewell!";
+			mes "Don't forget to bring me more Mr.Screams and clock hands if you find more of them!";
+			close;
+		}
+		mes "[Muscle Man]";
+		mes "Hmmm...?";
+		mes "That's funny, I thought you would have that Mr. Scream mask and all those clock hands by now...";
+		close;
+	}
+	mes "[Muscle Man]";
+	mes "But...";
+	mes "Not everyone is fortunate to have a magnificent, flawless physique. There are people in this world that have tragically lost appendages in accidents.";
+	next;
+	mes "[Muscle Man]";
+	mes "When I realized this, I decided to help these people and began to research technology for artificial limbs. My studies have lead me to Alarms and their own mechanical limbs known as 'Ruimento.'";
+	next;
+	mes "[Muscle Man]";
+	mes "The Alarms, and their 'Ruimento,' are made from an ancient mysterious technology. You can only find these in the Clock Tower.";
+	next;
+	mes "[Muscle Man]";
+	mes "So I am trying to research a method to reproduce Ruimetto, except in a smaller form for the human body. If I'm successful, it would be a medical miracle!";
+	next;
+	mes "[Muscle Man]";
+	mes "However, I need help in completing my research. Hence, the reason I've told you my story, adventurer.";
+	next;
+	mes "[Muscle Man]";
+	mes "I desperately need materials to continuing testing so that I can develop a prototype. I'll need ^0000FFClock Hand^000000 from Alarms and ^0000FFMr. Scream^000000 in order to continue my research.";
+	next;
+	mes "[Muscle Man]";
+	mes "I would collect these things myself but everytime I go up to the Clock Tower, I can't bear to break the Alarms, and just stare in awe at their mechanical, masculine physiques.";
+	next;
+	mes "[Muscle Man]";
+	mes "So...";
+	mes "If you help me out, I promise to give you, um...";
+	next;
+	mes "[Muscle Man]";
+	mes "...this Alarm Mask!";
+	mes ".....";
+	next;
+	mes "[Muscle Man]";
+	mes "I'd wear it myself, if it weren't for the fact that people never look at my face anyway. Everyone I meet seems to be fixated on my chiseled form. But trust me, this mask is pretty cool.";
+	next;
+	mes "[Muscle Man]";
+	mes "Please adventurer...";
+	mes "Help me give muscles to the world.";
+	next;
+	if (select("Alright.:.........") == 1) {
+		mes "[Muscle Man]";
+		mes "Oh~~! You know how I feel about Alarm's beautiful mechanic muscle! I am glad to have met someone who shares my good sense of taste.";
+		next;
+		mes "[Muscle Man]";
+		mes "Okay, here's the deal.";
+		mes "Bring me...";
+		mes "^0000FF3000 Clock Hand^000000 and";
+		mes "^0000FF1 Mr. Scream^000000.";
+		next;
+		mes "[Muscle Man]";
+		mes "With those, I will be able to continue my research, at least for a while. As I told you, I will give you this awesome ^0000FFAlarm Mask^000000 for those items!";
+		next;
+		mes "[Muscle Man]";
+		mes "Now! Go for it!";
+		mes "Let's spread our love for muscle around the globe!";
+		close;
+	}
+	mes "[Muscle Man]";
+	mes "Oh~! I'm sorry!!";
+	mes "I guess I must have pumped one of these glorious biceps on accident.";
+	next;
+	mes "[Muscle Man]";
+	mes "I forget how breathtaking the sheer majesty of my body can be. It's alright, take your time, savor the visual pleasure...";
+	next;
+	mes "[Muscle Man]";
+	mes "But listen, I'll need:";
+	mes "^0000FF3000 Clock Hand^000000 and";
+	mes "^0000FF1 Mr. Scream^000000";
+	mes "in order to continue my research.";
+	next;
+	mes "[Muscle Man]";
+	mes "As I told you, I will give you this really nifty ^0000FFAlarm Mask^000000 for those items, as well as do any sort of pose for you.";
+	next;
+	mes "[Muscle Man]";
+	mes "Now! Go for it!";
+	mes "Let's spread our love for muscle around the globe!";
+	close;
+
+OnTimer4000:
+	specialeffect EF_FLASHER;
+	setnpcdisplay "Muscle Man#Alarm Mask", 748;
+	disablenpc " #Alarm Mask Man1";
+	disablenpc " #Alarm Mask Man2";
+	disablenpc " #Alarm Mask Man3";
+	disablenpc " #Alarm Mask Man4";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man1";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man2";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man3";
+	specialeffect EF_CLAYMORE,AREA," #Alarm Mask Man4";
+	stopnpctimer;
+	end;
+}
+
+alde_alche,86,184,0	script	 #Alarm Mask Man1	1193,{
+OnInit:
+	disablenpc " #Alarm Mask Man1";
+	end;
+}
+
+alde_alche,89,184,0	script	 #Alarm Mask Man2	1193,{
+OnInit:
+	disablenpc " #Alarm Mask Man2";
+	end;
+}
+
+alde_alche,92,184,0	script	 #Alarm Mask Man3	1193,{
+OnInit:
+	disablenpc " #Alarm Mask Man3";
+	end;
+}
+
+alde_alche,95,184,0	script	 #Alarm Mask Man4	1193,{
+OnInit:
+	disablenpc " #Alarm Mask Man4";
+	end;
+}
+
+// Drooping Cat, Smokie Leaf, Lazy Smokie, Blue Fish
+//============================================================
+morocc,273,79,4	script	Educated Traveller	99,{
+	disable_items;
+	if ((MaxWeight-Weight) < 5000 || checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're over weight -";
+		mes "- to receive more items from this NPC. -";
+		mes "- Please try again after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(7030) > 0) {
+		mes "[Lee Hester]";
+		mes "Hm...?";
+		mes "What's that";
+		mes "you have on you?";
+		mes "Ah, a Claw of Desert Wolf~!";
+		next;
+		mes "[Lee Hester]";
+		mes "You can only get one of those if you've been traveling for a long time in the desert. I guess someone like you also appreciates the beauty of my homeland.";
+		next;
+		mes "[Lee Hester]";
+		mes "Ahahaha~";
+		mes "If you've spent enough time in the Morocc desert, I'm sure you also appreciate the value of a high quality hat to beat the heat.";
+		next;
+		mes "[Lee Hester]";
+		mes "Tell you what. I've learned a lot studying about animals, so if you give me the right materials, I'll make you a ^3355FFtruly great hat^000000.";
+		next;
+		mes "[Lee Hester]";
+		mes "Just remember...";
+		mes "If you give me any equipment compounded with cards or with upgrades, ^ff0000any upgraded abilities and cards in those items will be lost after I make something out of them.^000000 So, please keep that in mind.";
+		next;
+		switch(select("Drooping Cat:Smokie Leaf:Lazy Smokie:Blue Fish:That's... okay.")) {
+		case 1:
+			if (countitem(2233) > 0 && countitem(983) > 0 && countitem(7206) > 299) {
+				mes "[Lee Hester]";
+				mes "Ah...";
+				mes "You brought everything.";
+				mes "Excellent! Okay, give me some time to create the 'Drooping Cat.'";
+				next;
+				mes "*Scratch scratch...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				mes "*Scratch scratch...*";
+				next;
+				mes "^3355FFHmm...";
+				mes "Those don't sound like hat-making noises...^000000";
+				next;
+				mes "[Lee Hester]";
+				mes "Oh, don't worry. It's almost done.";
+				next;
+				mes "*Swish swish...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				mes "*Chikachikachoom*";
+				next;
+				mes "[Lee Hester]";
+				mes "There you go. *Phew~*";
+				mes "Your own 'Drooping Cat' hat, powered by a scientific principle! Also, would you mind if I keep that Desert Wolf Claw? Heh heh, thanks~";
+				delitem 2233,1; //Circlet_
+				delitem 983,1; //Black_Dyestuffs
+				delitem 7206,300; //Black_Kitty_Doll
+				delitem 7030,1; //Claw_Of_Desert_Wolf
+				getitem 5058,1; //Drooping_Kitty
+				emotion e_ho;
+				close;
+			}
+			else {
+				mes "[Lee Hester]";
+				mes "Why don't I make you...";
+				mes "a 'Drooping Cat?'";
+				mes "Having a cat for a hat makes a certain sort of sense if you'll just hear me out...";
+				next;
+				mes "[Lee Hester]";
+				mes "At the Juno Library, I read in this issue of 'Funtime Kid Science' that all cats, whether they're wild or domesticated, are hunters that have mastered the art of saving their energy.";
+				next;
+				mes "[Lee Hester]";
+				mes "After investing many hours napping in the sun, they've developed the perfect position to nap in any place and in any condition: the lazy feline droop.";
+				next;
+				mes "[Lee Hester]";
+				mes "It's impossible for humans to even imitate this special feline skill without the inspiration from this hat!";
+				next;
+				mes "[Lee Hester]";
+				mes "And even if you don't manage to copy the napping cat droop, at least this'll keep the sun off the top of your head, if not out of your eyes.";
+				next;
+				mes "[Lee Hester]";
+				mes "The items I need are...";
+				mes "1 ^ff0000slotted Circlet^000000,";
+				mes "1 ^ff0000Black Dyestuffs^000000";
+				mes "and 300 ^ff0000Black Cat Doll^000000.";
+				next;
+				mes "[Lee Hester]";
+				mes "I will make a Drooping Cat right away when you bring all of those items.";
+				close;
+			}
+		case 2:
+			if (countitem(945) > 599) {
+				mes "[Lee Hester]";
+				mes "Ah...";
+				mes "You brought everything.";
+				mes "Excellent! Okay, give me some time to put this 'Smokie Leaf' together.";
+				next;
+				mes "*Scratch scratch...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				mes "*Scratch scratch...*";
+				next;
+				mes "^3355FFHmm...";
+				mes "Those don't sound like hat-making noises...^000000";
+				next;
+				mes "[Lee Hester]";
+				mes "Oh, don't worry. It's almost done.";
+				next;
+				mes ".........";
+				next;
+				mes "*Swish swish...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				mes "*P-peeeeeeeeep*";
+				next;
+				mes "[Lee Hester]";
+				mes "There you go. *Phew~*";
+				mes "Your own 'Smokie Leaf' hat, powered by a scientific principle! Also, would you mind if I keep that Desert Wolf Claw? Heh heh, thanks~";
+				delitem 945,600; //Raccoon_Leaf
+				delitem 7030,1; //Claw_Of_Desert_Wolf
+				getitem 5064,1; //Leaf_Headgear
+				emotion e_gasp;
+				close;
+			}
+			else {
+				mes "[Lee Hester]";
+				mes "How about...";
+				mes "a 'Smokie Leaf?'";
+				next;
+				mes "[Lee Hester]";
+				mes "I know, I know, wearing a big ol' Leaf on top of your head sounds impractical. But, it makes a certain sort of sense if you'll just hear me out.";
+				next;
+				mes "[Lee Hester]";
+				mes "Do you ever notice how on a hot day, you feel a lot cooler when you wear white, but you're a lot warmer when you wear black?";
+				next;
+				mes "[Lee Hester]";
+				mes "After some intense thinking, and reading some 'Funtime Kid Science' magazines in Juno, I realized that the color black absorbs sunlight and heat, and that the color white reflects it.";
+				next;
+				mes "[Lee Hester]";
+				mes "So...";
+				mes "What happens if you're wearing no colors? If my ^333333*ahem*^000000 hypothesis is correct, you wouldn't feel any heat if you were invisible!";
+				next;
+				mes "[Lee Hester]";
+				mes "That's why I've created this Racoon Leaf, in an attempt to imitate Smokie's uncanny invisibility powers.";
+				next;
+				mes "[Lee Hester]";
+				mes "It...";
+				mes "I haven't gotten it to work the way I want to yet. But it's a big leaf! It'll offer some shade.";
+				next;
+				mes "[Lee Hester]";
+				mes "All I need to make this is...";
+				mes "600 ^ff0000Raccoon Leaf^000000.";
+				mes "It's weird, but I need a whole lot of little leaves to make a big one.";
+				close;
+			}
+		case 3:
+			if (countitem(1026) > 999 && countitem(7065) > 99 && countitem(945) > 9) {
+				mes "[Lee Hester]";
+				mes "Ah....";
+				mes "You brought everything.";
+				mes "Excellent! Okay, give me some time to create the 'Lazy Smokie' hat.";
+				mes "....";
+				next;
+				mes "*Scratch scratch...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				mes "*Scratch scratch...*";
+				next;
+				mes "^3355FFHmm...";
+				mes "Those don't sound like hat-making noises...^000000";
+				next;
+				next;
+				mes "[Lee Hester]";
+				mes "Oh, don't worry. It's almost done.";
+				next;
+				mes ".........";
+				next;
+				mes "*Swish swish...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				mes "*Glunk.*";
+				next;
+				mes "[Lee Hester]";
+				mes "There you go. *Phew~*";
+				mes "Your own 'Lazy Smokie' hat, powered by a scientific principle! Also, would you mind if I keep that Desert Wolf Claw? Heh heh, thanks~";
+				delitem 1026,1000; //Acorn
+				delitem 7065,100; //Sea_Otter_Leather
+				delitem 945,10; //Raccoon_Leaf
+				delitem 7030,1; //Claw_Of_Desert_Wolf
+				getitem 5084,1; //Lazy_Raccoon
+				emotion e_heh;
+				close;
+			}
+			else {
+				mes "[Lee Hester]";
+				mes "Why don't I make...";
+				mes "a 'Lazy Smokie?'";
+				next;
+				mes "[Lee Hester]";
+				mes "I know, I know, having a Racoon on your head sounds ridiculous, but it makes a certain sort of sense if you'll just hear me out.";
+				next;
+				mes "[Lee Hester]";
+				mes "So I learned from an issue of 'Funtime Kid Science' at Juno Library that different colors absorb or reflect sunlight.";
+				next;
+				mes "[Lee Hester]";
+				mes "Wearing one color makes you feel warmer, and another makes you feel cooler on a hot day.";
+				next;
+				mes "[Lee Hester]";
+				mes "So I was thinking...";
+				mes "What if I had no colors?";
+				next;
+				mes "[Lee Hester]";
+				mes "And, as we all know, you wear no colors if you're invisible, or when you're completely nude. I've already conducted my nudity experiment with sad and pitiable results...";
+				next;
+				mes "[Lee Hester]";
+				mes "So now I'm experimenting with invisibility. I've tried using a human sized Smokie Leaf to become invisible, but it didn't really work yet. So I got to thinking...";
+				next;
+				mes "[Lee Hester]";
+				mes "If I somehow connected a Smokie to me, would I become invisible when he becomes invisible?";
+				next;
+				mes "[Lee Hester]";
+				mes "I haven't been able to try it yet, because Smokies are pretty heavy and I've got to build up my neck muscles before I can strap a Smokie to my head.";
+				next;
+				mes "[Lee Hester]";
+				mes "So of course I need a practice Smokie to wear on my head before I'm ready for the real thing.";
+				next;
+				mes "[Lee Hester]";
+				mes "And that was how I invented the 'Lazy Smokie' hat.";
+				next;
+				mes "[Lee Hester]";
+				mes "The items I need are...";
+				mes "1000 ^ff0000Acorn^000000,";
+				mes "100 ^ff0000Sea-Otter Fur^000000 and";
+				mes "10 ^ff0000Raccoon Leaf^000000.";
+				close;
+			}
+		case 4:
+			if (countitem(624) > 0 && countitem(959) > 299 && countitem(551) > 49 && countitem(1023) > 0 && countitem(938) > 99) {
+				mes "[Lee Hester]";
+				mes "Ah...";
+				mes "You brought everything.";
+				mes "Excellent! Okay, give me some time to create the 'Blue Fish' hat out of all this fish.";
+				next;
+				mes "*Scratch scratch...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				next;
+				mes "*Scratch scratch...*";
+				mes "*Tap tap...*";
+				mes "*Scratch scratch...*";
+				next;
+				mes "^3355FFHmm...";
+				mes "Those don't sound like hat-making noises...^000000";
+				next;
+				mes "[Lee Hester]";
+				mes "Oh, don't worry. It's almost done.";
+				next;
+				mes "*Swish swish...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				next;
+				mes "*Swish swish...*";
+				mes "*Chomp chomp...*";
+				mes "*Wataaaaa~!*";
+				next;
+				mes "[Lee Hester]";
+				mes "There you go. *Phew~*";
+				mes "Your own 'Blue Fish' hat, powered by a scientific principle! Also, would you mind if I keep that Desert Wolf Claw? Heh heh, thanks~";
+				delitem 624,1; //Rotten_Fish
+				delitem 959,300; //Rotten_Scale
+				delitem 551,50; //Shusi
+				delitem 1023,1; //Fish_Tail
+				delitem 938,100; //Sticky_Mucus
+				delitem 7030,1; //Claw_Of_Desert_Wolf
+				getitem 5065,1; //Fish_On_Head
+				emotion e_ic;
+				close;
+			}
+			else {
+				mes "[Lee Hester]";
+				mes "Ah! I got it!";
+				mes "How about I make you...";
+				mes "a 'Blue Fish' hat?";
+				next;
+				mes "[Lee Hester]";
+				mes "I know putting a Fish on top of your head doesn't sound like the best idea, but it makes a certain sort of sense if you'll just hear me out.";
+				next;
+				mes "[Lee Hester]";
+				mes "So I was reading some issues of 'Funtime Kid Science' at the Juno Library, and read about animals that take naps under the sun when they feel really hot.";
+				next;
+				mes "[Lee Hester]";
+				mes " So then I thought...";
+				mes "Animals that don't take naps under the sun must never feel hot?";
+				next;
+				mes "[Lee Hester]";
+				mes "I decided to make a hat of that one perfect beast that was immune to the sun, never having to succumb its power.";
+				next;
+				mes "[Lee Hester]";
+				mes "I set to work immediately, listing all the animals I know that don't take naps in the sun. Then, I removed any animals from the list that I didn't like, especially the ones with really long names.";
+				next;
+				mes "[Lee Hester]";
+				mes "Finally, I had only three creatures on my list: the Emu, the Giraffe and the Fish.";
+				next;
+				mes "[Lee Hester]";
+				mes "First, I removed Emu, because everyone kept telling me I was spelling it wrong. And as everyone knows, a Giraffe hat would just look ridiculous. So, of course, I chose the Fish.";
+				next;
+				mes "[Lee Hester]";
+				mes "And that, my friend, was how I invented the 'Blue Fish' hat.";
+				next;
+				mes "[Lee Hester]";
+				mes "The items I need are...";
+				mes "^ff00001 Rotten Fish,";
+				mes "300 Stinky Scale,";
+				mes "50 Sushi,";
+				mes "1 Fish Tail^000000 and";
+				mes "^ff0000100 Sticky Mucus^000000.";
+				close;
+			}
+		case 5:
+			mes "[Lee Hester]";
+			mes "Oh... I see.";
+			mes "I'm a little disappointed, but you probably already have a nice hat to keep the sun out of your eyes. Well, if you change your mind, I'll be here.";
+			close;
+		}
+	}
+	else {
+		mes "[Lee Hester]";
+		mes "Isn't it such";
+		mes "a beautiful day";
+		mes "today?";
+		next;
+		mes "[Lee Hester]";
+		mes "Beautiful...";
+		mes "But insanely hot.";
+		mes "I live here, I should know. Still, nothing can beat the Morroc sunset.";
+		next;
+		mes "[Lee Hester]";
+		mes "It's amazing how so many different animals can live in the desert. I've been spending some time researching the ways of animals, reading books in the Juno Library...";
+		next;
+		mes "[Lee Hester]";
+		mes "Trying to figure out the Animal Kingdom's secrets of dealing with the heat.";
+		next;
+		mes "[Lee Hester]";
+		mes "I hope you're having a good time here in Morroc. If you ever question the special abilities of animals, just think of the majestic Desert Wolf that's able to thrive in the harsh Morroc deserts.";
+		emotion e_paper;
+		close;
+	}
+}
+
+// Kitsune Mask
+//============================================================
+pay_dun03,48,84,4	script	Nine Tails#Kitsune Mask	1180,1,1,{
+	end;
+
+OnInit:
+	disablenpc "Nine Tails#Kitsune Mask";
+	end;
+
+OnTouch:
+	mes "[Nine Tails]";
+	mes "Yelp! Yelp yelp!";
+	mes "Yelp! Yelp yelp!";
+	next;
+	if (select("Shake head:Nod head") == 1) {
+		mes "[Nine Tails]";
+		mes "Yelp! Yelp yelp!";
+		close2;
+		set getvariableofnpc(.MyMobs1,"SpawnManager#Kitsune"),1;
+		switch(rand(1,25)) {
+		case 1: set .@x,118;	set .@y,66;	break;
+		case 2: set .@x,103;	set .@y,194;	break;
+		case 3: set .@x,116;	set .@y,50;	break;
+		case 4: set .@x,49;	set .@y,94;	break;
+		case 5: set .@x,232;	set .@y,232;	break;
+		case 6: set .@x,245;	set .@y,86;	break;
+		case 7: set .@x,217;	set .@y,133;	break;
+		case 8: set .@x,50;	set .@y,157;	break;
+		case 9: set .@x,245;	set .@y,60;	break;
+		case 10: set .@x,220;	set .@y,77;	break;
+		case 11: set .@x,198;	set .@y,62;	break;
+		case 12: set .@x,158;	set .@y,41;	break;
+		case 13: set .@x,57;	set .@y,210;	break;
+		case 14: set .@x,251;	set .@y,207;	break;
+		case 15: set .@x,86;	set .@y,130;	break;
+		case 16: set .@x,216;	set .@y,233;	break;
+		case 17: set .@x,192;	set .@y,245;	break;
+		case 18: set .@x,117;	set .@y,234;	break;
+		case 19: set .@x,144;	set .@y,255;	break;
+		case 20: set .@x,190;	set .@y,216;	break;
+		case 21: set .@x,63;	set .@y,66;	break;
+		case 22: set .@x,247;	set .@y,183;	break;
+		case 23: set .@x,37;	set .@y,225;	break;
+		case 24: set .@x,247;	set .@y,118;	break;
+		case 25: set .@x,154;	set .@y,130;	break;
+		}
+		monster "pay_dun03",.@x,.@y,"Nine Tail",1180,1,"SpawnManager#Kitsune::OnMyMobDead";
+		specialeffect EF_FLASHER;
+		disablenpc "Nine Tails#Kitsune Mask";
+		end;
+	}
+	close2;
+	specialeffect EF_FLASHER;
+	disablenpc "Nine Tails#Kitsune Mask";
+	enablenpc "Nine Tails#Kitsune Man";
+	end;
+}
+
+pay_dun03,48,84,4	script	Nine Tails#Kitsune Man	762,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you are carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if (countitem(1022) > 998) {
+		mes "[Nine Tails]";
+		mes "Oh! You finally brought what I've asked, human. Okay, now I can bring her back to life!";
+		next;
+		if (select("Give items:Cancel") == 1) {
+			delitem 1022,999; //Fox_Tail
+			getitem 5069,1; //Mask_Of_Fox
+			mes "[Nine Tails]";
+			mes "Now...";
+			mes "Take this";
+			mes "and get out";
+			mes "of my sight~!";
+			close;
+		}
+		close2;
+	}
+	else {
+		mes "[Nine Tails]";
+		mes "......Errr?";
+		mes "Now why am I in human form again?";
+		next;
+		mes "[Nine Tails]";
+		mes "I guess... I need to practice transformation more often. *Sigh*";
+		next;
+		mes "[Nine Tails]";
+		mes "Anyway, I've got a bone to pick with you humans. You're an aggressive and greedy race, always killing things and taking stuff. And despite all the hunting, you never seem to be satisfied.";
+		next;
+		mes "[Nine Tails]";
+		mes "You always intrude our territory to slay us foxes for our nice, soft fur. But it's not only us you harass. The Sohees always complain that you barbaric humans keep stealing their clothing!";
+		next;
+		mes "[Nine Tails]";
+		mes "My wife was killed as a victim of human greed, probably skinned for her fabulous pelt...";
+		next;
+		mes "[Nine Tails]";
+		mes "All I want is to bring her back to life, no matter what the cost. That's why I'm swallowing my pride and asking you for help.";
+		next;
+		mes "[Nine Tails]";
+		mes "I need...";
+		mes "^0000FF999^000000 ^FF0000Nine Tail^000000";
+		mes "in order to cast the Fox Resurrection spell.";
+		next;
+		mes "[Nine Tails]";
+		mes "I know how you humans think...";
+		mes "You want some sort of reward for whatever mayhem you cause. Alright then...";
+		next;
+		mes "[Nine Tails]";
+		mes "I will give you this ^0000FFKitsune Mask^000000 if you bring me what I asked. How does that sound? Remember, ^0000FF999 ^FF0000Nine Tail^000000.";
+		close;
+	}
+	set getvariableofnpc(.MyMobs2,"SpawnManager#Kitsune"),1;
+	switch(rand(1,25)) {
+	case 1: set .@x,118;	set .@y,66;	break;
+	case 2: set .@x,103;	set .@y,194;	break;
+	case 3: set .@x,116;	set .@y,50;	break;
+	case 4: set .@x,49;	set .@y,94;	break;
+	case 5: set .@x,232;	set .@y,232;	break;
+	case 6: set .@x,245;	set .@y,86;	break;
+	case 7: set .@x,217;	set .@y,133;	break;
+	case 8: set .@x,50;	set .@y,157;	break;
+	case 9: set .@x,245;	set .@y,60;	break;
+	case 10: set .@x,220;	set .@y,77;	break;
+	case 11: set .@x,198;	set .@y,62;	break;
+	case 12: set .@x,158;	set .@y,41;	break;
+	case 13: set .@x,57;	set .@y,210;	break;
+	case 14: set .@x,251;	set .@y,207;	break;
+	case 15: set .@x,86;	set .@y,130;	break;
+	case 16: set .@x,216;	set .@y,233;	break;
+	case 17: set .@x,192;	set .@y,245;	break;
+	case 18: set .@x,117;	set .@y,234;	break;
+	case 19: set .@x,144;	set .@y,255;	break;
+	case 20: set .@x,190;	set .@y,216;	break;
+	case 21: set .@x,63;	set .@y,66;	break;
+	case 22: set .@x,247;	set .@y,183;	break;
+	case 23: set .@x,37;	set .@y,225;	break;
+	case 24: set .@x,247;	set .@y,118;	break;
+	case 25: set .@x,154;	set .@y,130;	break;
+	}
+	monster "pay_dun03",.@x,.@y,"Nine Tail",1180,1,"SpawnManager#Kitsune::OnMyMobDead2";
+	specialeffect EF_BLASTMINEBOMB;
+	disablenpc "Nine Tails#Kitsune Man";
+	end;
+
+OnInit:
+	set getvariableofnpc(.MyMobs2,"SpawnManager#Kitsune"),1;
+	monster "pay_dun03",48,83,"Nine Tail",1180,1,"SpawnManager#Kitsune::OnMyMobDead2";
+	disablenpc "Nine Tails#Kitsune Man";
+	end;
+}
+
+pay_dun03,48,84,4	script	SpawnManager#Kitsune	-1,{
+OnInit:
+	set .MyMobs1,1;
+	set .MyMobs2,1;
+	end;
+
+OnMyMobDead:
+	set .MyMobs1,.MyMobs1-1;
+	if (.MyMobs1 < 1)
+		enablenpc "Nine Tails#Kitsune Man";
+	end;
+
+OnMyMobDead2:
+	set .MyMobs2,.MyMobs2-1;
+	if (.MyMobs2 < 1)
+		enablenpc "Nine Tails#Kitsune Mask";
+	end;
+
+}
+
+// Orc Hero Helmet
+//============================================================
+in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2,{
+OnTouch:
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	if (orcs_hero_hat < 1) {
+		mes "[Orc Warrior]";
+		mes ".......";
+		mes ".........";
+		mes "Human, what are you doing in my home?!";
+		next;
+		mes "[Orc Warrior]";
+		mes "Hurrumph.";
+		mes "I guess you decided to come inside, thinking no one was around, to rest after killing others of my kind.";
+		next;
+		mes "[Orc Warrior]";
+		mes "Well! We Orcs are a proud race!";
+		mes "So don't expect me to talk to you.";
+		mes "Though, I must admit that you have courage to enter an Orc's home.";
+		next;
+		mes "[Orc Warrior]";
+		mes "I'm too tired to kill you today, but keep silent! If you're wounded, you can bleed quietly on the floor and die with some honor I suppose.";
+		if (rand(1,5) == 5 && BaseLevel >= 55) {
+			next;
+			if (select(".....:Come on, let's talk.") == 1) {
+				close;
+			}
+			mes "[Orc Warrior]";
+			mes "You dare invite an Orc to conversation?! We Orcs are a savage race! Born out suffering, we only live to fight and do battle!";
+			next;
+			mes "[Orc Warrior]";
+			mes "Talk with humans?!";
+			mes "Hah! The only way I will suffer such humiliation would be if you too, lost your dignity.";
+			next;
+			mes "[Orc Warrior]";
+			mes "You can bleed in my house, but I will only talk with you if...";
+			mes "You bring ^FF00001000 Jellopy^000000!";
+			next;
+			if (select("I challenge you to a duel, Orc!:1000 Jellopies it is.") == 1) {
+				mes "[Orc Warrior]";
+				mes "Humans... such annoying bastards!";
+				mes "If you want to fight, go outside!";
+				mes "So get out of my house!";
+				close2;
+				warp "gef_fild10",100,100;
+				end;
+			}
+			set orcs_hero_hat,1;
+			mes "[Orc Warrior]";
+			mes "Hah! It's a promise then!";
+			mes "Bwahahahahhahahahahahaha!";
+			mes "That's 1000 Jellopies!";
+			mes "Are all you humans so foolish?!";
+			close;
+		}
+		close;
+	}
+	else if (orcs_hero_hat == 1) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "WHAT?!";
+			mes "That's so much Jellopy!!";
+			next;
+			mes "[Orc Warrior]";
+			mes "I do not like this joke you have played on me human. Still, I refuse to believe that you have really brought ^FF00001000 Jellopy^000000.";
+			next;
+			mes "[Orc Warrior]";
+			mes "We Orcs are a proud race and do not like to admit when we are wrong.";
+			next;
+			mes "[Orc Warrior]";
+			mes "One...";
+			next;
+			mes "[Orc Warrior]";
+			mes "One... T-two...";
+			next;
+			mes "[Orc Warrior]";
+			mes "One... T-two...";
+			mes "Three...";
+			next;
+			mes "[Orc Warrior]";
+			mes "One... T-two...";
+			mes "Three...";
+			mes "....F-f-fooooour...";
+			next;
+			mes "[Orc Warrior]";
+			mes ".......";
+			next;
+			mes "[Orc Warrior]";
+			mes ".......";
+			mes ".........";
+			next;
+			mes "[Orc Warrior]";
+			mes ".......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[Orc Warrior]";
+			mes "Nine hundred ninety-eight...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Nine hundred ninety-eight...";
+			mes "Nine hundred ninety-nine...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Nine hundred ninety-eight...";
+			mes "Nine hundred ninety-nine...";
+			mes "One...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Nine hundred ninety-eight...";
+			mes "Nine hundred ninety-nine...";
+			mes "One... One thousand.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Curse you, human.";
+			mes "You have shall your 'conversation.'";
+			next;
+			mes "[Orc Warrior]";
+			mes "I hate humans! In fact, all Orcs hate humans! Hate you hate you hate you with a passion!";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,2;
+			mes "[Orc Warrior]";
+			mes "So...";
+			mes "Still in the mood to talk?!";
+			next;
+			mes "[Orc Warrior]";
+			mes "Tough!";
+			mes "If you want to";
+			mes "hear more, bring...";
+			mes "^FF00001000 Jellopy^000000!";
+			next;
+			mes "[Orc Warrior]";
+			mes "Now get out of here, you horrible stinking, poor excuse for an animal!!";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?!";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		close;
+	}
+	else if (orcs_hero_hat == 2) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "No.... Not again!!";
+			mes "What are you doing with so much Jellopy?!";
+			next;
+			mes "[Orc Warrior]";
+			mes "Damn...!";
+			mes "I refuse to speak to you until I've finished counting all of this Jellopy.";
+			next;
+			mes "[Orc Warrior]";
+			mes "...";
+			next;
+			mes "[Orc Warrior]";
+			mes "...";
+			mes ".....";
+			next;
+			mes "[Orc Warrior]";
+			mes "...";
+			mes ".....";
+			mes "ONE THOUSAND.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Once again, human, you've managed to infuriate me. But we Orcs are a proud race. I shall fulfill my part of this pathetic deal.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Now, where was I?";
+			mes "Oh right.";
+			mes "How much I hate humans.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Humans are always invading our village, intruding on our land! They kill our warriors not out of honor, but for selfish human reasons!!";
+			next;
+			mes "[Orc Warrior]";
+			mes "Bah! Humans have built their own towns and cities. Do they keep their senseless killing amongst each other?! NO! Humans have to rampage and ravage everything!!";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,3;
+			mes "[Orc Warrior]";
+			mes "Now, if you want";
+			mes "to listen to more,";
+			mes "bring me...";
+			next;
+			mes "[Orc Warrior]";
+			mes "^FF00001000 Jellopy^000000 again!";
+			mes "I do not think that you can endure much more of this torture.";
+			mes "Bwahahahahahha~!";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget!?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		close;
+	}
+	else if (orcs_hero_hat == 3) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes ".....";
+			mes "Again, human, you confound me with your stubborness. I see that humans are masochists. Or just like to annoy Orcs by making them count a thousand Jellopies.";
+			next;
+			mes "[Orc Warrior]";
+			mes "*sigh* Let me count...";
+			next;
+			mes "[Orc Warrior]";
+			mes "...";
+			next;
+			mes "[Orc Warrior]";
+			mes "...";
+			mes ".......";
+			next;
+			mes "[Orc Warrior]";
+			mes "Nine hundred ninety-nine...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Nine hundred ninety-nine...";
+			mes "...A thousand.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Argh~!";
+			mes "Now where was I?";
+			mes "Oh right, why humans are scum.";
+			next;
+			mes "[Orc Warrior]";
+			mes "How dare humans think they're so great?! We Orcs have also made contributions to the world!";
+			next;
+			mes "[Orc Warrior]";
+			mes "Humans may have built cities and towns, but we Orcs have also created our own cave complexes and canals!";
+			next;
+			mes "[Orc Warrior]";
+			mes "We Orcs have invented many useful things! Of course, now we've had to keep these things to ourselves. Why? Because of the stupidity and greed of humans!!";
+			next;
+			mes "[Orc Warrior]";
+			mes "We Orcs have once constructed a tower for a human, but were then trapped and enslaved there. Needless to say, humans are deserving of our wrath and fury.";
+			next;
+			mes "[Orc Warrior]";
+			mes "*Sigh*";
+			mes "I don't understand why I am sharing this story about my tribe.";
+			mes "That's enough for today!";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,4;
+			mes "[Orc Warrior]";
+			mes "Grrr~! If you want to listen longer go bring me ^FF00001000 Jellopy^000000 again.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget!?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect if";
+		mes "you wish to talk!!";
+		mes "I don't take the 2,000 jellopies you have given to me seriously!!";
+		close;
+	}
+	else if (orcs_hero_hat == 4) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "Oh... it's you again.";
+			mes "I can see the Jellopy in your hands, and I'm pretty sure you've brought a thousand again, so let's get this over with.";
+			next;
+			mes "[Orc Warrior]";
+			mes "*Sigh* I suppose it's time for our conversation.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Once upon a time, Orcs and humans were allies. I... I miss those times. But it's no use to long for old comraderies. It's impossible to clear up such misunderstandings from ages ago...";
+			next;
+			mes "[Orc Warrior]";
+			mes "There are too many wicked humans that have pursued wealth and fame at any cost. They don't understand ideals like honor and loyalty, and use any means to get whatever they want.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Those hateful humans started to get rid of every obstacle that stood between them and what they wanted, not caring if friend or foe stood in their way.";
+			next;
+			mes "[Orc Warrior]";
+			mes "...I've talked too much already.";
+			mes "That's the end of the conversation for today.";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,5;
+			mes "[Orc Warrior]";
+			mes "Now, if you want to listen some more, go bring me";
+			mes "^FF00001000 Jellopy^000000 again tomorrow.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		mes "I don't take the 3,000 jellopies you have given to me seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 5) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "*Sigh...*";
+			mes "You're too tough to get rid of.";
+			mes "Do you really want to listen to me so much...?";
+			mes "Okay... I will tell you a little bit more then.";
+			next;
+			mes "[Orc Warrior]";
+			mes "For us Orcs, victory in battle is the greatest honor.";
+			mes "We fight boldly and fearlessly with our opponent, giving our all in hopes of a fair victory. We would die for victory in battle.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Even after death, we never lose the spirit of combat. It is said that some Orcs that have died unfairly will stand from their graves to seek even more battle.";
+			next;
+			mes "[Orc Warrior]";
+			mes "The difference between you humans and us is that we would never tolerate foul play in battle. But more importantly, Orcs never, ever retreat. An Orc will always fight till the last breath...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Orcs never restore health during battle using your silly medicines. Hmpf. Humans can be so weak, drinking bottles of Potion to keep up in a fight. Oh well, though, I'm not sure if you're the same.";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,6;
+			mes "[Orc Warrior]";
+			mes "Now, if you want";
+			mes "to listen to me";
+			mes "some more, go and";
+			mes "bring me ^FF00001000 Jellopy^000000";
+			mes "again tomorrow.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		mes "I don't take the 4,000 jellopies you have given to me seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 6) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "What the...! Don't you know when to stop? I do not believe a human would like to hear about Orcs so much. But...";
+			mes "We Orcs are a proud race, and I shall oblige.";
+			next;
+			mes "[Orc Warrior]";
+			mes "We only select the strongest of our tribe to become warriors. When Orcs reach adulthood, they are sent to the forest to survive alone in its environment.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Those Orcs that come back alive are recognized as true members of the tribe. The strongest males are chosen to become Orc Warriors, and the strongest females are chosen as Orc Ladies.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Orcs that have proven to have good sight and dexterity are given bows and arrows and become Orc Archers.";
+			next;
+			mes "[Orc Warrior]";
+			mes "We Orcs have a special training course called 'The Trial of Fire.' If any Orc Warrior passes this course, he will be protected by our fire god...";
+			next;
+			mes "[Orc Warrior]";
+			mes "That Orc will have stronger physical strength and abilities than normal Orc Warriors. These warriors are known as High Orcs.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Hm, well to you humans, we may all look the same, but we Orcs can tell each other apart. How about you, human? Do I look the same as every Warrior outside to you?";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,7;
+			mes "[Orc Warrior]";
+			mes "Now...";
+			mes "If you want to";
+			mes "listen longer,";
+			mes "go bring me";
+			mes "^FF00001000 Jellopy^000000";
+			mes "again tomorrow.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		mes "I don't take the 5,000 jellopies you have given to me seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 7) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "I expected you to quit by now. But I was wrong, because you're here once again. We made a deal and I will keep my promise.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Last time, we were";
+			mes "talking about our";
+			mes "warriors...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Sometimes, a few Orcs are born among us, possessing phenomenal strength and talent. It is rumored that they could compete with 10,000 warriors at a time...";
+			next;
+			mes "[Orc Warrior]";
+			mes "They are the best warriors of the Orc tribe, and are known to you as Orc Heroes. Not only are they the strongest ones among us, but they also our leaders in battle.";
+			next;
+			mes "[Orc Warrior]";
+			mes "As proof of their status, Orc Heroes are given Vouchers of Orcish Hero, as well as special swords that are only allowed to be used by our heroes.";
+			next;
+			mes "[Orc Warrior]";
+			mes "That sword can tear the sky, sever the earth and make a waterfall flow backwards.";
+			next;
+			mes "[Orc Warrior]";
+			mes "The special helmet that is only worn by Orc Heroes represents the power and honor of the Orc Warriors.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Well, humans rarely get the chance to see this helmet unless they're in battle with an Orc Hero themselves...";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,8;
+			mes "[Orc Warrior]";
+			mes "Now, if you want";
+			mes "to listen longer,";
+			mes "go and bring me";
+			mes "^FF00001000 Jellopy^000000";
+			mes "again tomorrow.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		next;
+		mes "[Orc Warrior]";
+		mes "I don't take the 6,000 jellopies you have given to me that seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 8) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "Oh, hello. You're back.";
+			mes "Go ahead and put the 1000 Jellopies over there on the table by the skulls.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Ah yes, we were talking about Orc Heroes. Now, unlike Orc Heroes who are blessed with might from the day they were born, there are older, seasoned warriors that have managed to survive many years of combat.";
+			next;
+			mes "[Orc Warrior]";
+			mes "To Orc Warriors, we do not see age as weakness. We look up to old warriors as our trainers due to their experience in battle and their fighting skills.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Those old warriors have shown outstanding fighting abilities, even without the use of weapons.";
+			next;
+			mes "[Orc Warrior]";
+			mes "They could endure in battle for at least few days without axes. When you get to a certain fighting skill level, weapons can actually become a burden...";
+			next;
+			mes "[Orc Warrior]";
+			mes "Among those well-experienced warriors, the greatest one of all is given the title of Orc Lord, and is given our respect as the leader of our tribe.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Every Orc can recognize him by his distinguished helm with the three horns.";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,9;
+			mes "[Orc Warrior]";
+			mes "Now...";
+			mes "If you want to";
+			mes "listen longer,";
+			mes "go bring me";
+			mes "^FF00001000 Jellopy^000000";
+			mes "again tomorrow.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		mes "I don't take the 7,000 jellopies you have given to me seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 9) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "It's been a while I've seen such a determined human such as yourself. Just leave the Jellopy near the bed.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Now...";
+			mes "Let me tell you";
+			mes "more about the";
+			mes "Orc Tribe.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Although I don't like to admit it, there are cowardly Orcs that run away from battle, or fight using dishonorable methods.";
+			mes "Needless to say, they have brought shame and disgrace to our tribe.";
+			next;
+			mes "[Orc Warrior]";
+			mes "A curse is placed on those dishonorable Orcs so that they can be singled out by the tribe and banished from the village.";
+			next;
+			mes "[Orc Warrior]";
+			mes "You may recognize those cursed Orcs by their shrunken bodies and long teeth.";
+			next;
+			mes "[Orc Warrior]";
+			mes "We call these cursed Orcs Zenorc. They are forced to live inside of caves or dungeons, away from from honorable Orcs. It's difficult to believe that Zenorcs were once one of us...";
+			next;
+			mes "[Orc Warrior]";
+			mes "I don't think there is a curse which transforms humans into a totally ugly creature depending on their deeds. So it is difficult to tell which humans are honorable...";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,10;
+			mes "[Orc Warrior]";
+			mes "Now...";
+			mes "If you want";
+			mes "to hear more,";
+			mes "go bring me";
+			mes "^FF00001000 Jellopy^000000";
+			mes "again tomorrow.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		mes "I don't take the 8,000 jellopies you have given to me seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 10) {
+		if (countitem(909) > 999) {
+			mes "[Orc Warrior]";
+			mes "With these...";
+			mes "You have brought me 10,000 Jellopies. I must say that I am impressed. Since you have shown me your respect, I will repay you with my honesty.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Considering the stories about my tribe, it's enough for me if you just listen. However, merely listening is totally different from having the experience as your own.";
+			next;
+			mes "[Orc Warrior]";
+			mes "I suggest you that you experience more battles with the many different Orcs out there. That's the best way of understanding and learning about the Orc tribe.";
+			next;
+			delitem 909,1000; //Jellopy
+			set orcs_hero_hat,11;
+			getitem 1304,1; //Orcish_Axe
+			mes "[Orc Warrior]";
+			mes "This is a small token of my gratitue. This axe used to aid me in many battles and is very precious to me. I hope you will take care of this.";
+			next;
+			mes "[Orc Warrior]";
+			mes "You have made a lot of effort to show me respect, despite being a human. Now, if you want to learn more about Orcs, feel free to come back anytime, my friend.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Did you already forget?";
+		mes "^FF00001000 Jellopy^000000!";
+		mes "Show me your respect";
+		mes "if you want to talk.";
+		mes "I don't take 9,000 jellopies you have given to me seriously.";
+		close;
+	}
+	else if (orcs_hero_hat == 11) {
+		if (countitem(1304) > 0) {
+			mes "[Orc Warrior]";
+			mes "You have made a lot of effort to show me your respect. Now, if you want to learn more about Orcs, feel free to come back anytime, my friend.";
+			close;
+		}
+		else if (countitem(931) > 99) {
+			if (rand(1,5) == 5) {
+				mes "[Orc Warrior]";
+				mes "Oh, I see you've taken my advice and have been meeting many other Orcs through battle.";
+				mes "You must have learned much about the Orc's spirit of battle by seeing it for yourself firsthand.";
+				next;
+				mes "[Orc Warrior]";
+				mes "These Orchish Vouchers you have been collecting are the true token of Orc warriors. We recognize an Orc who won over 1,000 battles as a true Orc Warrior.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Still...";
+				mes "You're a human, so I don't give we can give you that honor so easily...";
+				next;
+				mes "[Orc Warrior]";
+				mes "Alright...";
+				mes "Go win over 10,000 battles.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Then, I'm sure you can be granted status as a real Orc warrior. But, make sure you are fighting for honorable purposes, and that you have no other motive.";
+				next;
+				mes "[Orc Warrior]";
+				mes "You only achieve honor by winning battles. Even among Orcs, I'm sure you can prove your battle prowess by defeating 10,000 Orc Warriors.";
+				next;
+				if (select("I don't think that is necessary.:I will win 10,000 battles!") == 1) {
+					mes "[Orc Warrior]";
+					mes "I see. I will not force you to choose what I wish to see you do. I respect your decision.";
+					next;
+					mes "[Orc Warrior]";
+					mes "Although...";
+					mes "I wished for other Orcs to see and understand that not all humans are wicked and selfish.";
+					close;
+				}
+				mes "[Orc Warrior]";
+				mes "Ah, spoken like a true warrior. Alright then, go forth and do battle with others of my tribe, and bring me 10,000 Orcish Vouchers.";
+				next;
+				delitem 931,100; //Orcish_Voucher
+				set orcs_hero_hat,13;
+				set orcs_hero_hat2,100;
+				mes "[Orc Warrior]";
+				mes "I took 100 Orcish Voucher from you now. Now, fight and fight until you have defeated 10,000 more Orc Warriors so that the whole tribe will have to recognize you!";
+				close;
+			}
+			mes "[Orc Warrior]";
+			mes "Hm? You don't seem to understand our way of life completely. It's strange that you are so curious about other races, human.";
+			close;
+		}
+		else {
+			if (rand(1,5) == 5) {
+				mes "[Orc Warrior]";
+				mes "The best way of understanding the Orc tribe is to do battle with them. By competing in power and skills, eventually you will understand and respect your opponent.";
+				next;
+				mes "[Orc Warrior]";
+				mes "So, go outside and fight.";
+				mes "Although you may be learning theory by talking with me, you must experience our way of life for yourself.";
+				close;
+			}
+			mes "[Orc Warrior]";
+			mes "Hm? You don't seem to understand our way of life completely. It's strange that you are so curious about other races, human.";
+			close;
+		}
+	}
+	else if (orcs_hero_hat2 > 99 && orcs_hero_hat2 < 10000) {
+		if (countitem(931) > 0) {
+			if (orcs_hero_hat2 > 9999)
+				set orcs_hero_hat2,10000;
+			mes "[Orc Warrior]";
+			mes "You've come back...";
+			mes "It doesn't seem that you've accomplished your goal yet, but I do not expect you to defeat 10,000 Orc Warriors so easily.";
+			next;
+			mes "[Orc Warrrior]";
+			mes "If you wish, you may rest here. " + orcs_hero_hat2 + " victories over Orc Warriors are recognized by our tribe.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Do you wish to";
+			mes "record your current";
+			mes "victory with me?";
+			next;
+			if (select("Yes, I do.:I will do it later.") == 1) {
+				set .@total_vouchers,orcs_hero_hat2+countitem(931);
+				if (.@total_vouchers < 10000) {
+					delitem 931,countitem(931); //Orcish_Voucher
+					set orcs_hero_hat2,.@total_vouchers;
+					mes "[Orc Warrior]";
+					mes "I hope you will";
+					mes "continue your efforts";
+					mes "in understanding the Orc";
+					mes "way of life through battle.";
+					mes "Don't give up.";
+					next;
+					mes "[Orc Warrior]";
+					mes "There are " + (10000-.@total_vouchers) + " battles ahead of you before you reach your goal. I understand the difficulty of this challenge, but I hope you make it.";
+					close;
+				}
+				else {
+					mes "[Orc Warrior]";
+					mes "Now...";
+					mes "You won over";
+					mes "10,000 battles";
+					mes "with Orcs.";
+					next;
+					mes "[Orc Warrior";
+					mes "For a human, accomplishing such a feat is truly astonishing. Through all of that fighting, I'm sure that you have learned both good and bad things about my tribe.";
+					next;
+					mes "[Orc Warrior]";
+					mes "Although you're a";
+					mes "human, you have";
+					mes "demonstrated incredible";
+					mes "bravery and honor...";
+					mes "I shall grant you true";
+					mes "Orc Warrior status!!";
+					next;
+					mes "[Orc Warrior]";
+					mes "You are now...";
+					if (Sex)
+						mes "an Orc Warrior!!";
+					else
+						mes "an Orc Lady!!";
+					next;
+					delitem 931,countitem(931); //Orcish_Voucher
+					set orcs_hero_hat,14;
+					set orcs_hero_hat2,10000;
+					getitem 2299,1; //Viking_Helm
+					mes "[Orc Warrior]";
+					mes "This is a present for you. I am not sure if it will fit to your head or not, but try it. If your head is too big to wear this, I suggest that you carry this with you.";
+					next;
+					getitem 931,1; //Orcish_Voucher
+					mes "[Orc Warrior]";
+					mes "As an Orc Warrior,";
+					mes "I will now give you";
+					mes "an Orcish Voucher";
+					mes "of your very own.";
+					next;
+					mes "[Orc Warrior]";
+					mes "Although it doesn't look different from the others, please keep this with care. You can only be recognized as an Orc warrior with this.";
+					next;
+					mes "[Orc Warrior]";
+					mes "Now, you may go back to where you have come from. Come drop by whenever my tribe comes to your mind.";
+					next;
+					mes "[Orc Warrior]";
+					mes "As you are now one who feels the true intent of the opponent after endless battles, I will now return you to the battleground.";
+					close;
+				}
+			}
+			mes "[Orc Warrior]";
+			mes "I see, do as you wish.";
+			mes "I will be really disappointed in you if you quit in a challenge you have undertaken.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "Come take a rest here.";
+		mes "You have won " + orcs_hero_hat2 + " victories over Orc Warriors.";
+		close;
+	}
+	else if (orcs_hero_hat == 14) {
+		if (countitem(931) == 1 && (countitem(2299) > 0 || isequipped(2299))) {
+			mes "[Orc Warrior]";
+			mes "Hm? You don't think you cannot come back to where you originally came, just because now you're an Orc Warrior, do you? Hahahahaha!";
+			close;
+		}
+		else if (countitem(2299) > 0 || isequipped(2299)) {
+			mes "[Orc Warrior]";
+			mes "Warrior...";
+			mes "May a fresh";
+			mes "light be with";
+			mes "you in battle.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Show your opponents your indomitable spirit. Take pride in being a human that has been given the title of Orc Warrior!";
+			close;
+		}
+		else {
+			if (rand(1,10) == 1) {
+				mes "[Orc Warrior]";
+				mes "My my...";
+				mes "Are you still";
+				mes "hungry for blood...?";
+				next;
+				mes "[Orc Warrior]";
+				mes "You don't seem to be satisfied even after being recognized as a warrior. But... I suppose the path of the warrior is to seek new and more difficult challenges.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Okay, would you like to go through another test? It may reduce all your effort in coming here to nothing. Even seasoned Orc Warriors fear taking this test.";
+				next;
+				mes "[Orc Warrior]";
+				mes "But, since you're an exceptional case, it might be possible for you to accomplish...";
+				next;
+				if (select("I am already satisfied.:...I will take this challenge.") == 1) {
+					mes "[Orc Warrior]";
+					mes "Yes, that's a good";
+					mes "attitude. Sometimes,";
+					mes "you must accept your";
+					mes "limitations, or that";
+					mes "you cannot beat";
+					mes "certain opponents.";
+					close;
+				}
+				mes "[Orc Warrior]";
+				mes "Excellent, I admire your enthusiasm. This is a very rare chance to do battle with the strongest Orc Warriors.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Go fight with 100 Orc Heroes and bring me the tokens of the battles you have endured. Even if you're an excellent warrior, I assure you this test will be the hardest one you'll ever get.";
+				next;
+				set orcs_hero_hat,15;
+				mes "[Orc Warrior]";
+				mes "Now, go, warrior! I believe that you have a chance to succeed. Fight with 100 Orc Heroes, and I will grant you, a human, recognition as an Orc Hero!";
+				close;
+			}
+			mes "[Orc Warrior]";
+			mes "Warrior, may a fresh light be with you in battle. Show your opponents your indomitable spirit. Take pride in being a human that has been given the title of Orc Warrior!";
+			close;
+		}
+	}
+	else if (orcs_hero_hat == 15) {
+		if (countitem(968) > 99) {
+			mes "[Orc Warrior]";
+			mes "Ah...";
+			mes "I knew you would succeed!";
+			next;
+			mes "[Orc Warrior]";
+			mes "The Orc Heroes who were defeated by you also must have recognized your courage. Thank you, human, for showing us what is true strength.";
+			next;
+			mes "[Orc Warrior]";
+			mes "On behalf of";
+			mes "the Orc tribe,";
+			mes "let me pay";
+			mes "you homage.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Now, make one last choice. What would you do with those Heroic Emblems? They might not be valuable to you humans, but for Orcs, they are treasured by those who own them.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Since you are the victor of those battles, you have every right to keep them. But you could also return them to the Orc Heroes, meaning that you wish to meet them in battle once again.";
+			next;
+			mes "[Orc Warrior]";
+			mes "Now, what would";
+			mes "you want to do";
+			mes "with the vouchers?";
+			next;
+			switch(select("I want to keep them.:I shall return them to the Orc Heroes.")) {
+			case 1:
+				mes "[Orc Warrior]";
+				mes "Yes, that's";
+				mes "not bad...";
+				mes "Not bad at all.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Nobody has the right to tell you what you can or cannot do. Please keep them as a memory of your victory.";
+				close;
+			case 2:
+				mes "[Orc Warrior]";
+				mes "What a great attitude for a warrior...! It will be a model to other Orcs to show respect to opponents that you have defeated!";
+				next;
+				mes "[Orc Warrior]";
+				mes "You deserve to be an Orc Hero, the most powerful Orc warrior! As of today, you are now an Orc Hero!";
+				next;
+				delitem 968,100; //Voucher_Of_Orcish_Hero
+				set orcs_hero_hat,16;
+				getitem 1124,1; //Orcish_Sword
+				mes "[Orc Warrior]";
+				mes "This is a sword only given to our heroes. I am not sure if you can use this or not, but as an Orc Hero, you're obligated to carry this with you always.";
+				next;
+				getitem 968,1; //Voucher_Of_Orcish_Hero
+				mes "[Orc Warrior]";
+				mes "Now that you";
+				mes "are an Orc Hero,";
+				mes "let me give you";
+				mes "your own Heroic";
+				mes "Emblem.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Although it doesn't look different from the others, I hope you will keep it with care. You can only be recognized as an Orc Hero with this token.";
+				next;
+				mes "[Orc Warrior]";
+				mes "Then, you may leave now....";
+				mes "A human who has a better understanding than other humans. One who showed others power regardless of the race, I leave you to the future of Chaos.";
+				close;
+			}
+		}
+		mes "[Orc Warrior]";
+		mes "Hm...";
+		mes "Struggling, are you?";
+		next;
+		mes "[Orc Warrior]";
+		mes "Well, Orc Hero is held in high regard by other Orcs for their great power. As a human, you will probably have difficulty in dealing with him.";
+		next;
+		mes "[Orc Warrior]";
+		mes "However, you made the decision to go through with this test! Still, there's no need to rush it. Life is an endless series of battles, so the combat will come.";
+		close;
+	}
+	else if (orcs_hero_hat > 15) {
+		if (countitem(968) < 1) {
+			mes "[Orc Warrior]";
+			mes "Warrior, where did you leave your Heroic Emblem? Without the token, I cannot recognize you as an Orc Hero. Please find it and keep it with you anywhere you go.";
+			close;
+		}
+		else if (countitem(1124) < 1 && isequipped(1124) == 0) {
+			mes "[Orc Warrior]";
+			mes "Warrior, where did you leave your sword? Without the sword, I cannot recognize you as an Orc Hero. Please find it and keep it with you anywhere you go.";
+			close;
+		}
+		mes "[Orc Warrior]";
+		mes "The most";
+		mes "powerful warrior...";
+		mes "Orc Hero!";
+		mes "That's who you are!";
+		mes "May God be with you in battle!";
+		close;
+	}
+	else {
+		mes "[Orc Warrior]";
+		mes "....................";
+		close;
+	}
+}
+
+in_orcs01,162,33,1	script	Orc Hero#1	1087,2,2,{
+OnTouch:
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	if (orcs_hero_hat < 16) {
+		mes "[Orc Hero]";
+		mes "Stop bugging me";
+		mes "and get outta here!";
+		next;
+		mes "[Orc Hero]";
+		mes "If you wish to challenge me, wait inside the forest at the west. I'm not in the mood to deal with humans right now.";
+		next;
+		mes "[Orc Hero]";
+		mes "Now, hurry";
+		mes "up and scram!!";
+		close;
+	}
+	else if (orcs_hero_hat == 16) {
+		if (countitem(968) == 1 && (countitem(1124) > 0 || isequipped(1124) == 1)) {
+			if (rand(1,10) == 1) {
+				mes "[Orc Hero]";
+				mes "Hm, are you the human who was granted status as an Orc Hero?";
+				next;
+				mes "[Orc Hero]";
+				mes "I hope you know the meaning of returning my Emblem. I expect that we will meet again on the battlefield.";
+				if (countitem(2299) > 0) {
+					next;
+					mes "[Orc Hero]";
+					mes "Wait...";
+					mes "Isn't that an Orc Warrior's Helm...?";
+					next;
+					mes "[Orc Hero]";
+					mes "Wait a second...";
+					mes "It's not! Ha...!";
+					mes "Interesting!";
+					mes "That's very";
+					mes "interesting.";
+					next;
+					mes "[Orc Hero]";
+					mes "I guess you don't know what's so special about this particular helm...";
+					next;
+					mes "[Orc Hero]";
+					mes "It actually belonged to one of our Orc Lords who was defeated by a human. He was so furious about losing that he broke the middle horn and threw it away!";
+					next;
+					mes "[Orc Hero]";
+					mes "I was told that it somehow ended in the hands of a human, but I didn't know it was you, the human Orc Hero.";
+					next;
+					mes "[Orc Hero]";
+					mes "Alright, that belongs to the Orc Lord. I mean, even though it's now yours, it was given to you by mistake.";
+					next;
+					mes "[Orc Hero]";
+					mes "Would you mind giving the item back to its owner, my human Orc Hero?";
+					next;
+					if (select("Yes, I mind.:No, I don't mind.") == 1) {
+						mes "[Orc Hero]";
+						mes "Wow, you're so stubborn! Just treat the helm with care, and wear it with respect. Recognize that it has a long history...";
+						close;
+					}
+					mes "[Orc Hero]";
+					mes "Good, that's a good decision. I will give this back to him. Muhahahahaha... I didn't expect to see this thing again.";
+					next;
+					mes "[Orc Hero]";
+					mes "Okay...";
+					mes "Let me give you";
+					mes "something useful!";
+					next;
+					mes "[Orc Hero]";
+					mes "Although you're a human, you're an Orc Hero amongst us now, so you should have a helm suitable for your position...";
+					next;
+					delitem 2299,1; //Viking_Helm
+					set orcs_hero_hat,17;
+					getnameditem 5094,strcharinfo(0); //Orc_Hero_Helm
+					mes "[Orc Hero]";
+					mes "There you go. I marked a small indication on it. So wear this helm from now on. Do you understand? My human Orc Hero.";
+					close;
+				}
+				close;
+			}
+			mes "[Orc Hero]";
+			mes "Hm, are you the human who was granted status as an Orc Hero?";
+			next;
+			mes "[Orc Hero]";
+			mes " I hope you know the meaning of returning my Emblem. I expect that we will meet again on the battlefield.";
+			close;
+		}
+		mes "[Orc Hero]";
+		mes "Hm, are you the human that was granted status as an Orc Hero?";
+		next;
+		mes "[Orc Hero]";
+		mes "Hmpf, I'm not convinced. Are you really the one who gave us our Emblems back? I don't think I can trust you...";
+		next;
+		mes "[Orc Hero]";
+		mes "Yeh, you would think I'd remember getting whupped by an ugly human, but I tend not to remember faces when I'm too busy getting whomped on.";
+		next;
+		mes "[Orc Hero]";
+		mes "I refuse to";
+		mes "acknowledge someone";
+		mes "like you who forgets";
+		mes "our most basic customs!";
+		next;
+		mes "[Orc Hero]";
+		mes "Grrrr...";
+		mes "Come on!";
+		mes "Let's meet outside west of the forest, and I'll test your strength again!";
+		close;
+	}
+	else if (orcs_hero_hat == 17) {
+		mes "[Orc Hero]";
+		mes "Muhahahaha~";
+		mes "You're the";
+		mes "strangest human";
+		mes "I've ever met.";
+		mes "Hahahahaha...";
+		next;
+		mes "[Orc Hero]";
+		mes "I like you,";
+		mes "human, I like you.";
+		close;
+	}
+	mes "[Orc Hero]";
+	mes "....................";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.01 Fixed items names iRO->kRO, fixed some bugs [Qwadrat]
+//=     Fixed possible item exploits, fixed Straw Hat
+//=     Added missing checks [Lupus]
+//= 1.1 Fixed a bug in Giant-band-aid that didn't counting rotten bandages
+//=     Fixed a bug in Fur Hat that didn't count yarn [Evera]
+//= 1.2 Syntax fixes for parenthesis, reformatting [KarLaeda]
+//= 1.3 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//============================================================

@@ -1,0 +1,928 @@
+// Old Violet Box Obtainable Items Database
+//
+// Structure of Database:
+// GroupID,ItemID,Rate
+
+IG_VioletBox,501,14	// Red Potion
+IG_VioletBox,502,14	// Orange Potion
+IG_VioletBox,503,14	// Yellow Potion
+IG_VioletBox,504,14	// White Potion
+IG_VioletBox,505,14	// Blue Potion
+IG_VioletBox,506,14	// Green Potion
+IG_VioletBox,507,14	// Red Herb
+IG_VioletBox,508,14	// Yellow Herb
+IG_VioletBox,509,14	// White Herb
+IG_VioletBox,510,14	// Blue Herb
+IG_VioletBox,511,14	// Green Herb
+IG_VioletBox,512,14	// Apple
+IG_VioletBox,513,14	// Banana
+IG_VioletBox,514,14	// Grape
+IG_VioletBox,515,14	// Carrot
+IG_VioletBox,516,14	// Potato
+IG_VioletBox,517,14	// Meat
+IG_VioletBox,518,14	// Honey
+IG_VioletBox,519,14	// Milk
+IG_VioletBox,520,14	// Hinalle Leaflet
+IG_VioletBox,521,14	// Aloe Leaflet
+IG_VioletBox,522,14	// Mastela Fruit
+IG_VioletBox,523,14	// Holy Water
+IG_VioletBox,525,14	// Panacea
+IG_VioletBox,526,14	// Royal Jelly
+IG_VioletBox,528,14	// Monster Food
+IG_VioletBox,529,14	// Candy
+IG_VioletBox,530,14	// Candy Cane
+IG_VioletBox,531,14	// Apple Juice
+IG_VioletBox,532,14	// Banana Juice
+IG_VioletBox,533,14	// Grape Juice
+IG_VioletBox,534,14	// Carrot Juice
+IG_VioletBox,535,14	// Pumpkin
+IG_VioletBox,536,14	// Ice Cream
+IG_VioletBox,537,14	// Pet Food
+IG_VioletBox,538,14	// Well-baked Cookie
+IG_VioletBox,539,14	// Piece of Cake
+IG_VioletBox,544,14	// Raw Fish
+IG_VioletBox,545,14	// Condensed Red Potion
+IG_VioletBox,546,14	// Condensed Yellow Potion
+IG_VioletBox,547,14	// Condensed White Potion
+IG_VioletBox,548,14	// Cheese
+IG_VioletBox,549,14	// Yam
+IG_VioletBox,550,14	// Rice Cake
+IG_VioletBox,551,14	// Sushi
+IG_VioletBox,553,14	// Bao
+IG_VioletBox,555,14	// Traditional Rice Cake
+IG_VioletBox,558,14	// Chocolate
+IG_VioletBox,561,14	// White Chocolate
+IG_VioletBox,601,14	// Fly Wing
+IG_VioletBox,602,14	// Butterfly Wing
+IG_VioletBox,604,214	// Dead Branch
+IG_VioletBox,605,14	// Anodyne
+IG_VioletBox,606,14	// Aloevera
+IG_VioletBox,607,14	// Yggdrasil Berry
+IG_VioletBox,608,14	// Yggdrasil Seed
+IG_VioletBox,609,14	// Amulet
+IG_VioletBox,610,14	// Yggdrasil Leaf
+IG_VioletBox,611,14	// Magnifier
+IG_VioletBox,612,14	// Mini Furnace
+IG_VioletBox,613,14	// Iron Hammer
+IG_VioletBox,614,14	// Golden Hammer
+IG_VioletBox,615,14	// Oridecon Hammer
+IG_VioletBox,616,1		// Old Card Album
+IG_VioletBox,617,103	// Old Purple Box
+IG_VioletBox,618,14	// Worn Out Scroll
+IG_VioletBox,619,14	// Unripe Apple
+IG_VioletBox,620,14	// Orange Juice
+IG_VioletBox,621,14	// Bitter Herb
+IG_VioletBox,622,14	// Rainbow Carrot
+IG_VioletBox,623,14	// Earthworm the Dude
+IG_VioletBox,624,14	// Rotten Fish
+IG_VioletBox,625,14	// Rusty Iron
+IG_VioletBox,626,14	// Monster Juice
+IG_VioletBox,627,14	// Sweet Milk
+IG_VioletBox,628,14	// Well-Dried Bone
+IG_VioletBox,629,14	// Singing Flower
+IG_VioletBox,630,14	// Dew Laden Moss
+IG_VioletBox,631,14	// Deadly Noxious Herb
+IG_VioletBox,632,14	// Fatty Chubby Earthworm
+IG_VioletBox,633,14	// Sweet Potato
+IG_VioletBox,634,14	// Tropical Banana
+IG_VioletBox,635,14	// Orc Trophy
+IG_VioletBox,636,14	// No Recipient
+IG_VioletBox,637,14	// Old Broom
+IG_VioletBox,638,14	// Silver Knife of Chastity
+IG_VioletBox,639,14	// Armlet of Obedience
+IG_VioletBox,640,14	// Shining Stone
+IG_VioletBox,641,14	// Contracts in Shadow
+IG_VioletBox,642,14	// Book of the Devil
+IG_VioletBox,643,14	// Pet Incubator
+IG_VioletBox,644,114	// Gift Box
+IG_VioletBox,645,14	// Concentration Potion
+IG_VioletBox,656,14	// Awakening Potion
+IG_VioletBox,657,14	// Berserk Potion
+IG_VioletBox,659,14	// Her Heart
+IG_VioletBox,663,14	// Songpyun
+IG_VioletBox,664,14	// Gift Box
+IG_VioletBox,665,14	// Gift Box
+IG_VioletBox,666,14	// Gift Box
+IG_VioletBox,667,14	// Gift Box
+IG_VioletBox,668,14	// Red_Envelope
+IG_VioletBox,678,14	// Poison Bottle
+IG_VioletBox,679,14	// Pilule
+IG_VioletBox,701,14	// Ora Ora
+IG_VioletBox,702,14	// Animal Gore
+IG_VioletBox,703,14	// Hinalle
+IG_VioletBox,704,14	// Aloe
+IG_VioletBox,705,14	// Clover
+IG_VioletBox,706,14	// Four Leaf Clover
+IG_VioletBox,707,14	// Singing Plant
+IG_VioletBox,708,14	// Ment
+IG_VioletBox,710,14	// Illusion Flower
+IG_VioletBox,711,14	// Shoot
+IG_VioletBox,712,14	// Flower
+IG_VioletBox,713,14	// Empty Bottle
+IG_VioletBox,715,14	// Yellow Gemstone
+IG_VioletBox,716,14	// Red Gemstone
+IG_VioletBox,717,14	// Blue Gemstone
+IG_VioletBox,718,14	// Garnet
+IG_VioletBox,719,14	// Amethyst
+IG_VioletBox,720,14	// Aquamarine
+IG_VioletBox,721,14	// Emerald
+IG_VioletBox,722,14	// Pearl
+IG_VioletBox,723,14	// Ruby
+IG_VioletBox,724,14	// Cursed Ruby
+IG_VioletBox,725,14	// Sardonyx
+IG_VioletBox,726,14	// Sapphire
+IG_VioletBox,727,14	// Opal
+IG_VioletBox,728,14	// Topaz
+IG_VioletBox,729,14	// Zircon
+IG_VioletBox,730,14	// 1carat Diamond
+IG_VioletBox,731,14	// 2carat Diamond
+IG_VioletBox,732,14	// 3carat Diamond
+IG_VioletBox,733,14	// Cracked Diamond
+IG_VioletBox,734,14	// Red Frame
+IG_VioletBox,735,14	// Chung Jah
+IG_VioletBox,736,14	// China
+IG_VioletBox,737,14	// Black Ladle
+IG_VioletBox,738,14	// Pencil Case
+IG_VioletBox,739,14	// Rouge
+IG_VioletBox,740,14	// Puppet
+IG_VioletBox,741,14	// Poring Doll
+IG_VioletBox,742,14	// Chonchon Doll
+IG_VioletBox,743,14	// Spore Doll
+IG_VioletBox,744,14	// Bouquet
+IG_VioletBox,745,14	// Wedding Bouquet
+IG_VioletBox,746,14	// Glass Bead
+IG_VioletBox,747,14	// Crystal Mirror
+IG_VioletBox,748,14	// Witherless Rose
+IG_VioletBox,749,14	// Frozen Rose
+IG_VioletBox,750,14	// Baphomet Doll
+IG_VioletBox,751,14	// Osiris Doll
+IG_VioletBox,752,14	// Grasshopper Doll
+IG_VioletBox,753,14	// Yoyo Doll
+IG_VioletBox,754,14	// Raccoon Doll
+IG_VioletBox,901,14	// Danggie
+IG_VioletBox,902,14	// Tree Root
+IG_VioletBox,903,14	// Reptile Tongue
+IG_VioletBox,904,14	// Scorpion Tail
+IG_VioletBox,905,14	// Stem
+IG_VioletBox,906,14	// Pointed Scale
+IG_VioletBox,907,14	// Resin
+IG_VioletBox,908,14	// Spawn
+IG_VioletBox,909,14	// Jellopy
+IG_VioletBox,910,14	// Garlet
+IG_VioletBox,911,14	// Scell
+IG_VioletBox,912,14	// Zargon
+IG_VioletBox,913,14	// Tooth of Bat
+IG_VioletBox,914,14	// Fluff
+IG_VioletBox,915,14	// Chrysalis
+IG_VioletBox,916,14	// Feather of Birds
+IG_VioletBox,917,14	// Talon
+IG_VioletBox,918,14	// Sticky Webfoot
+IG_VioletBox,919,14	// Animal Skin
+IG_VioletBox,920,14	// Wolf Claw
+IG_VioletBox,921,14	// Mushroom Spore
+IG_VioletBox,922,14	// Orc's Fang
+IG_VioletBox,923,14	// Evil Horn
+IG_VioletBox,924,14	// Powder of Butterfly
+IG_VioletBox,925,14	// Bill of Birds
+IG_VioletBox,926,14	// Snake Scale
+IG_VioletBox,928,14	// Insect Feeler
+IG_VioletBox,929,14	// Immortal Heart
+IG_VioletBox,930,14	// Rotten Bandage
+IG_VioletBox,931,14	// Orcish Voucher
+IG_VioletBox,932,14	// Skel-Bone
+IG_VioletBox,934,14	// Memento
+IG_VioletBox,935,14	// Shell
+IG_VioletBox,936,14	// Scale Shell
+IG_VioletBox,937,14	// Venom Canine
+IG_VioletBox,938,14	// Sticky Mucus
+IG_VioletBox,939,14	// Bee Sting
+IG_VioletBox,940,14	// Grasshopper's Leg
+IG_VioletBox,941,14	// Nose Ring
+IG_VioletBox,942,14	// Yoyo Tail
+IG_VioletBox,943,14	// Solid Shell
+IG_VioletBox,944,14	// Horseshoe
+IG_VioletBox,945,14	// Raccoon Leaf
+IG_VioletBox,946,14	// Snail's Shell
+IG_VioletBox,947,14	// Horn
+IG_VioletBox,948,14	// Bear's Footskin
+IG_VioletBox,949,14	// Feather
+IG_VioletBox,950,14	// Heart of Mermaid
+IG_VioletBox,951,14	// Fin
+IG_VioletBox,952,14	// Cactus Needle
+IG_VioletBox,953,14	// Stone Heart
+IG_VioletBox,954,14	// Shining Scale
+IG_VioletBox,955,14	// Worm Peeling
+IG_VioletBox,956,14	// Gill
+IG_VioletBox,957,14	// Decayed Nail
+IG_VioletBox,958,14	// Horrendous Mouth
+IG_VioletBox,959,14	// Stinky Scale
+IG_VioletBox,960,14	// Nipper
+IG_VioletBox,961,14	// Conch
+IG_VioletBox,962,14	// Tentacle
+IG_VioletBox,963,14	// Sharp Scale
+IG_VioletBox,964,14	// Crab Shell
+IG_VioletBox,965,14	// Clam Shell
+IG_VioletBox,966,14	// Clam Flesh
+IG_VioletBox,967,14	// Turtle Shell
+IG_VioletBox,968,14	// Heroic Emblem
+IG_VioletBox,969,14	// Gold
+IG_VioletBox,971,14	// Detrimindexta
+IG_VioletBox,972,14	// Karvodailnirol
+IG_VioletBox,973,14	// Counteragent
+IG_VioletBox,974,14	// Mixture
+IG_VioletBox,975,14	// Scarlet Dyestuff
+IG_VioletBox,976,14	// Lemon Dyestuff
+IG_VioletBox,978,14	// Cobaltblue Dyestuff
+IG_VioletBox,979,14	// Darkgreen Dyestuff
+IG_VioletBox,980,14	// Orange Dyestuff
+IG_VioletBox,981,14	// Violet Dyestuff
+IG_VioletBox,982,14	// White Dyestuff
+IG_VioletBox,983,14	// Black Dyestuff
+IG_VioletBox,986,14	// Anvil
+IG_VioletBox,987,14	// Oridecon Anvil
+IG_VioletBox,988,14	// Golden Anvil
+IG_VioletBox,989,14	// Emperium Anvil
+IG_VioletBox,990,14	// Red Blood
+IG_VioletBox,991,14	// Crystal Blue
+IG_VioletBox,992,14	// Wind of Verdure
+IG_VioletBox,993,14	// Green Live
+IG_VioletBox,994,14	// Flame Heart
+IG_VioletBox,995,14	// Mystic Frozen
+IG_VioletBox,996,14	// Rough Wind
+IG_VioletBox,997,14	// Great Nature
+IG_VioletBox,998,14	// Iron
+IG_VioletBox,999,14	// Steel
+IG_VioletBox,1000,14	// Star Crumb
+IG_VioletBox,1001,14	// Star Dust
+IG_VioletBox,1002,14	// Iron Ore
+IG_VioletBox,1003,14	// Coal
+IG_VioletBox,1004,14	// Chivalry Emblem
+IG_VioletBox,1005,14	// Hammer of Blacksmith
+IG_VioletBox,1006,14	// Old Magicbook
+IG_VioletBox,1007,14	// Necklace of Wisdom
+IG_VioletBox,1008,14	// Necklace of Oblivion
+IG_VioletBox,1009,14	// Hand of God
+IG_VioletBox,1010,14	// Phracon
+IG_VioletBox,1011,14	// Emveretarcon
+IG_VioletBox,1012,14	// Frill
+IG_VioletBox,1013,14	// Rainbow Shell
+IG_VioletBox,1014,14	// Ant Jaw
+IG_VioletBox,1015,14	// Tongue
+IG_VioletBox,1016,14	// Rat Tail
+IG_VioletBox,1017,14	// Mole Whiskers
+IG_VioletBox,1018,14	// Mole Claw
+IG_VioletBox,1019,14	// Trunk
+IG_VioletBox,1020,14	// Black Hair
+IG_VioletBox,1021,14	// Dokebi Horn
+IG_VioletBox,1022,14	// Nine Tails
+IG_VioletBox,1023,14	// Fish Tail
+IG_VioletBox,1024,14	// Squid Ink
+IG_VioletBox,1025,14	// Cobweb
+IG_VioletBox,1026,14	// Acorn
+IG_VioletBox,1027,14	// Porcupine Quill
+IG_VioletBox,1028,14	// Mane
+IG_VioletBox,1029,14	// Tiger Skin
+IG_VioletBox,1031,14	// Mantis Scythe
+IG_VioletBox,1032,14	// Maneater Blossom
+IG_VioletBox,1033,14	// Maneater Root
+IG_VioletBox,1034,14	// Blue Hair
+IG_VioletBox,1035,14	// Dragon Canine
+IG_VioletBox,1036,14	// Dragon Scale
+IG_VioletBox,1037,14	// Dragon Tail
+IG_VioletBox,1038,14	// Little Evil Horn
+IG_VioletBox,1039,14	// Little Evil Wing
+IG_VioletBox,1040,14	// Elder Pixie's Moustache
+IG_VioletBox,1041,14	// Lantern
+IG_VioletBox,1042,14	// Bug Leg
+IG_VioletBox,1043,14	// Orc Claw
+IG_VioletBox,1044,14	// Zenorc's Fang
+IG_VioletBox,1045,14	// Cultish Masque
+IG_VioletBox,1046,14	// Scorpion Nipper
+IG_VioletBox,1047,14	// Dead Medusa
+IG_VioletBox,1048,14	// Horrendous Hair
+IG_VioletBox,1049,14	// Skirt of Virgin
+IG_VioletBox,1050,14	// Tendon
+IG_VioletBox,1051,14	// Detonator
+IG_VioletBox,1052,14	// Single Cell
+IG_VioletBox,1053,14	// Ancient Tooth
+IG_VioletBox,1054,14	// Ancient Lips
+IG_VioletBox,1055,14	// Earthworm Peeling
+IG_VioletBox,1056,14	// Grit
+IG_VioletBox,1057,14	// Moth Dust
+IG_VioletBox,1058,14	// Moth Wings
+IG_VioletBox,1059,14	// Fabric
+IG_VioletBox,1060,14	// Golden Hair
+IG_VioletBox,1061,14	// Witched Starsand
+IG_VioletBox,1062,14	// Jack o' Pumpkin
+IG_VioletBox,1063,14	// Fang
+IG_VioletBox,1064,14	// Reins
+IG_VioletBox,1065,14	// Trap
+IG_VioletBox,1066,14	// Fine-grained Trunk
+IG_VioletBox,1067,14	// Solid Trunk
+IG_VioletBox,1068,14	// Barren Trunk
+IG_VioletBox,1088,14	// Morocc Solution
+IG_VioletBox,1089,14	// Payon Solution
+IG_VioletBox,1092,14	// Empty Test Tube
+IG_VioletBox,1093,14	// Empty Potion Bottle
+IG_VioletBox,1094,14	// Short Daenggie
+IG_VioletBox,1095,14	// Clock Hand
+IG_VioletBox,1096,14	// Round Shell
+IG_VioletBox,1097,14	// Worn Out Page
+IG_VioletBox,1098,14	// Manacles
+IG_VioletBox,1099,14	// Worn-out Prison Uniform
+IG_VioletBox,1102,7		// Sword
+IG_VioletBox,1105,7		// Falchion
+IG_VioletBox,1108,7		// Blade
+IG_VioletBox,1111,7		// Rapier
+IG_VioletBox,1114,7		// Scimitar
+IG_VioletBox,1117,7		// Katana
+IG_VioletBox,1120,7		// Tsurugi
+IG_VioletBox,1124,7		// Orcish sword
+IG_VioletBox,1125,7		// Ring Pommel Saber
+IG_VioletBox,1127,7		// Saber
+IG_VioletBox,1128,7		// Haedonggum
+IG_VioletBox,1129,7		// Flamberge
+IG_VioletBox,1147,1		// Town Sword
+IG_VioletBox,1148,1		// Star Dust Blade
+IG_VioletBox,1152,7		// Slayer
+IG_VioletBox,1155,7		// Bastard Sword
+IG_VioletBox,1158,7		// Two-Handed Sword
+IG_VioletBox,1162,7		// Broad Sword
+IG_VioletBox,1163,7		// Claymore
+IG_VioletBox,1202,7		// Knife
+IG_VioletBox,1205,7		// Cutter
+IG_VioletBox,1208,7		// Main Gauche
+IG_VioletBox,1211,7		// Dirk
+IG_VioletBox,1214,7		// Dagger
+IG_VioletBox,1217,7		// Stiletto
+IG_VioletBox,1220,7		// Gladius
+IG_VioletBox,1226,7		// Damascus
+IG_VioletBox,1243,7		// Novice Main Gauche
+IG_VioletBox,1251,7		// Jur
+IG_VioletBox,1253,7		// Katar
+IG_VioletBox,1255,7		// Jamadhar
+IG_VioletBox,1256,7		// Katar of Frozen Icicle
+IG_VioletBox,1257,7		// Katar of Quaking
+IG_VioletBox,1258,7		// Katar of Raging Blaze
+IG_VioletBox,1259,7		// Katar of Piercing Wind
+IG_VioletBox,1262,1		// Loki's Nail
+IG_VioletBox,1263,1		// Unholy Touch
+IG_VioletBox,1264,2		// Specialty Jur
+IG_VioletBox,1265,1		// Bloody Roar
+IG_VioletBox,1269,1		// Inverse Scale
+IG_VioletBox,1271,1		// Blood Tears
+IG_VioletBox,1302,7		// Axe
+IG_VioletBox,1304,7		// Orcish Axe
+IG_VioletBox,1307,1		// Windhawk
+IG_VioletBox,1352,7		// Battle Axe
+IG_VioletBox,1355,7		// Hammer
+IG_VioletBox,1358,7		// Buster
+IG_VioletBox,1361,7		// Two-Handed Axe
+IG_VioletBox,1370,1		// Doom Slayer
+IG_VioletBox,1376,1		// Heart Breaker
+IG_VioletBox,1377,1		// Hurricane Fury
+IG_VioletBox,1402,7		// Javelin
+IG_VioletBox,1405,7		// Spear
+IG_VioletBox,1408,7		// Pike
+IG_VioletBox,1411,7		// Lance
+IG_VioletBox,1452,7		// Guisarme
+IG_VioletBox,1455,7		// Glaive
+IG_VioletBox,1458,7		// Partizan
+IG_VioletBox,1461,7		// Trident
+IG_VioletBox,1464,7		// Halberd
+IG_VioletBox,1472,7		// Soul Staff
+IG_VioletBox,1474,1		// Gae Bolg
+IG_VioletBox,1478,1		// Ahlspiess
+IG_VioletBox,1502,7		// Club
+IG_VioletBox,1505,7		// Mace
+IG_VioletBox,1508,7		// Smasher
+IG_VioletBox,1511,7		// Flail
+IG_VioletBox,1514,7		// Morning Star
+IG_VioletBox,1517,7		// Sword Mace
+IG_VioletBox,1520,7		// Chain
+IG_VioletBox,1522,7		// Stunner
+IG_VioletBox,1550,7		// Book
+IG_VioletBox,1551,7		// Bible
+IG_VioletBox,1552,7		// Tablet
+IG_VioletBox,1553,7		// Book of Billows
+IG_VioletBox,1554,7		// Book of Mother Earth
+IG_VioletBox,1555,7		// Book of the Blazing Sun
+IG_VioletBox,1556,7		// Book of Gust of Wind
+IG_VioletBox,1558,7		// Girl's Diary
+IG_VioletBox,1559,1		// Legacy of Dragon
+IG_VioletBox,1560,1		// Sage's Diary
+IG_VioletBox,1561,1		// Hardcover Book
+IG_VioletBox,1602,7		// Rod
+IG_VioletBox,1605,7		// Wand
+IG_VioletBox,1608,7		// Staff
+IG_VioletBox,1611,7		// Arc Wand
+IG_VioletBox,1613,7		// Mighty Staff
+IG_VioletBox,1614,7		// Wand of Occult
+IG_VioletBox,1615,7		// Evil Bone Wand
+IG_VioletBox,1616,1		// Wing Staff
+IG_VioletBox,1618,1		// Survivor's Rod
+IG_VioletBox,1620,1		// Survivor's Rod
+IG_VioletBox,1622,1		// Hypnotist's Staff
+IG_VioletBox,1702,7		// Bow
+IG_VioletBox,1705,7		// Composite Bow
+IG_VioletBox,1708,7		// Great Bow
+IG_VioletBox,1711,7		// Crossbow
+IG_VioletBox,1715,7		// Arbalest
+IG_VioletBox,1716,7		// Gakkung Bow
+IG_VioletBox,1718,7		// Hunter Bow
+IG_VioletBox,1723,1		// Luna Bow
+IG_VioletBox,1724,1		// Dragon Wing
+IG_VioletBox,1730,1		// Burning Bow
+IG_VioletBox,1731,1		// Frozen Bow
+IG_VioletBox,1732,1		// Earth Bow
+IG_VioletBox,1733,1		// Gust Bow
+IG_VioletBox,1750,14	// Arrow
+IG_VioletBox,1751,14	// Silver Arrow
+IG_VioletBox,1752,14	// Fire Arrow
+IG_VioletBox,1753,14	// Steel Arrow
+IG_VioletBox,1754,14	// Crystal Arrow
+IG_VioletBox,1755,14	// Arrow of Wind
+IG_VioletBox,1756,14	// Stone Arrow
+IG_VioletBox,1757,14	// Immaterial Arrow
+IG_VioletBox,1758,14	// Stun Arrow
+IG_VioletBox,1759,14	// Frozen Arrow
+IG_VioletBox,1760,14	// Flash Arrow
+IG_VioletBox,1761,14	// Cursed Arrow
+IG_VioletBox,1762,14	// Rusty Arrow
+IG_VioletBox,1763,14	// Poison Arrow
+IG_VioletBox,1764,14	// Sharp Arrow
+IG_VioletBox,1765,14	// Oridecon Arrow
+IG_VioletBox,1767,14	// Shadow Arrow
+IG_VioletBox,1768,14	// Sleep Arrow
+IG_VioletBox,1769,14	// Mute Arrow
+IG_VioletBox,1770,14	// Iron Arrow
+IG_VioletBox,1802,7		// Waghnak
+IG_VioletBox,1804,7		// Knuckle Duster
+IG_VioletBox,1806,7		// Studded Knuckles
+IG_VioletBox,1808,7		// Fist
+IG_VioletBox,1810,7		// Claw
+IG_VioletBox,1812,7		// Finger
+IG_VioletBox,1815,1		// Hatii Claw
+IG_VioletBox,1818,1		// Magma Fist
+IG_VioletBox,1819,1		// Icicle Fist
+IG_VioletBox,1820,1		// Electric Fist
+IG_VioletBox,1821,1		// Seismic Fist
+IG_VioletBox,1822,1		// Combo Battle Glove
+IG_VioletBox,1902,7		// Violin
+IG_VioletBox,1904,7		// Mandolin
+IG_VioletBox,1906,7		// Lute
+IG_VioletBox,1908,7		// Guitar
+IG_VioletBox,1910,7		// Harp
+IG_VioletBox,1912,7		// Gumoongoh
+IG_VioletBox,1914,1		// Burning Passion Guitar
+IG_VioletBox,1915,1		// Loner's Guitar
+IG_VioletBox,1916,1		// Green Acre Guitar
+IG_VioletBox,1917,1		// Gentle Breeze Guitar
+IG_VioletBox,1918,1		// Oriental Lute
+IG_VioletBox,1919,1		// Base Guitar
+IG_VioletBox,1951,7		// Rope
+IG_VioletBox,1953,7		// Whip
+IG_VioletBox,1955,7		// Wire Whip
+IG_VioletBox,1957,7		// Rante Whip
+IG_VioletBox,1959,7		// Tail Whip
+IG_VioletBox,1961,7		// Whip
+IG_VioletBox,1965,1		// Red Flame Whip
+IG_VioletBox,1966,1		// Icicle Whip
+IG_VioletBox,1967,1		// Gaia Whip
+IG_VioletBox,1968,1		// Skipping Rope
+IG_VioletBox,1969,1		// Blade Whip
+IG_VioletBox,1970,1		// Queen's Whip
+IG_VioletBox,1971,1		// Electric Wire
+IG_VioletBox,1972,1		// Electric Eel
+IG_VioletBox,1973,1		// Sea Witch's Foot
+IG_VioletBox,1974,1		// Carrot Whip
+IG_VioletBox,2102,7		// Guard
+IG_VioletBox,2104,7		// Buckler
+IG_VioletBox,2106,7		// Shield
+IG_VioletBox,2108,7		// Mirror Shield
+IG_VioletBox,2109,7		// Memory Book
+IG_VioletBox,2112,7		// Novice Guard
+IG_VioletBox,2201,7		// Sunglasses
+IG_VioletBox,2203,7		// Glasses
+IG_VioletBox,2205,7		// Diver Goggles
+IG_VioletBox,2206,7		// Wedding Veil
+IG_VioletBox,2207,7		// Fancy Flower
+IG_VioletBox,2208,7		// Ribbon
+IG_VioletBox,2209,7		// Ribbon
+IG_VioletBox,2210,7		// Hair Band
+IG_VioletBox,2211,7		// Bandana
+IG_VioletBox,2212,7		// Eye Patch
+IG_VioletBox,2213,7		// Kitty Band
+IG_VioletBox,2214,7		// Bunny Band
+IG_VioletBox,2215,7		// Flower Band
+IG_VioletBox,2216,7		// Biretta
+IG_VioletBox,2217,7		// Biretta
+IG_VioletBox,2218,7		// Flu Mask
+IG_VioletBox,2220,7		// Hat
+IG_VioletBox,2221,7		// Hat
+IG_VioletBox,2222,7		// Turban
+IG_VioletBox,2223,7		// Turban
+IG_VioletBox,2224,7		// Goggles
+IG_VioletBox,2225,7		// Goggles
+IG_VioletBox,2226,7		// Cap
+IG_VioletBox,2227,7		// Cap
+IG_VioletBox,2228,7		// Helm
+IG_VioletBox,2229,7		// Helm
+IG_VioletBox,2230,7		// Gemmed Sallet
+IG_VioletBox,2231,7		// Gemmed Sallet
+IG_VioletBox,2232,7		// Circlet
+IG_VioletBox,2233,7		// Circlet
+IG_VioletBox,2236,7		// Santa Hat
+IG_VioletBox,2239,7		// Monocle
+IG_VioletBox,2241,7		// Grandpa Beard
+IG_VioletBox,2242,7		// Purple Glasses
+IG_VioletBox,2243,7		// Geek Glasses
+IG_VioletBox,2244,7		// Big Ribbon
+IG_VioletBox,2245,7		// Sweet Gent
+IG_VioletBox,2246,7		// Golden Gear
+IG_VioletBox,2247,7		// Romantic Gent
+IG_VioletBox,2248,7		// Western Grace
+IG_VioletBox,2249,1		// Coronet
+IG_VioletBox,2250,7		// Cute Ribbon
+IG_VioletBox,2251,7		// Monk Hat
+IG_VioletBox,2252,7		// Wizard Hat
+IG_VioletBox,2253,7		// Sunflower
+IG_VioletBox,2254,1		// Angel Wing
+IG_VioletBox,2255,1		// Evil Wing
+IG_VioletBox,2257,7		// Unicorn Horn
+IG_VioletBox,2258,1		// Spiky Band
+IG_VioletBox,2259,7		// Mini Propeller
+IG_VioletBox,2260,7		// Mini Glasses
+IG_VioletBox,2261,7		// Army Cap
+IG_VioletBox,2262,7		// Clown Nose
+IG_VioletBox,2263,7		// Zorro Masque
+IG_VioletBox,2265,7		// Gangster Mask
+IG_VioletBox,2266,7		// Iron Cain
+IG_VioletBox,2267,7		// Cigarette
+IG_VioletBox,2268,7		// Pipe
+IG_VioletBox,2269,7		// Romantic Flower
+IG_VioletBox,2270,7		// Romantic Leaf
+IG_VioletBox,2271,7		// Jack be Dandy
+IG_VioletBox,2274,1		// Ghost Bandana
+IG_VioletBox,2275,7		// Red Bandana
+IG_VioletBox,2276,7		// Angled Glasses
+IG_VioletBox,2277,7		// Nurse Cap
+IG_VioletBox,2278,7		// Mr. Smile
+IG_VioletBox,2279,7		// Bomb Wick
+IG_VioletBox,2282,7		// Halo
+IG_VioletBox,2285,7		// Apple of Archer
+IG_VioletBox,2286,1		// Elven Ears
+IG_VioletBox,2287,7		// Pirate Bandana
+IG_VioletBox,2288,7		// Mr. Scream
+IG_VioletBox,2289,7		// Poo Poo Hat
+IG_VioletBox,2290,7		// Funeral Hat
+IG_VioletBox,2291,7		// Masquerade
+IG_VioletBox,2294,7		// Stellar
+IG_VioletBox,2295,7		// Blinker
+IG_VioletBox,2297,7		// Goblin Mask
+IG_VioletBox,2298,7		// Green Feeler
+IG_VioletBox,2299,7		// Orc Helm
+IG_VioletBox,2302,7		// Cotton Shirt
+IG_VioletBox,2304,7		// Jacket
+IG_VioletBox,2306,7		// Adventurer's Suit
+IG_VioletBox,2308,7		// Mantle
+IG_VioletBox,2310,7		// Coat
+IG_VioletBox,2311,7		// Mink Coat
+IG_VioletBox,2313,7		// Padded Armor
+IG_VioletBox,2315,7		// Chain Mail
+IG_VioletBox,2317,7		// Full Plate
+IG_VioletBox,2318,7		// Lord's Clothes
+IG_VioletBox,2320,7		// Formal Suit
+IG_VioletBox,2322,7		// Silk Robe
+IG_VioletBox,2324,7		// Scapulare
+IG_VioletBox,2326,7		// Saint's Robe
+IG_VioletBox,2327,1		// Holy Robe
+IG_VioletBox,2329,7		// Wooden Mail
+IG_VioletBox,2331,7		// Tights
+IG_VioletBox,2333,7		// Silver Robe
+IG_VioletBox,2334,1		// Mage Coat
+IG_VioletBox,2336,7		// Thief Clothes
+IG_VioletBox,2337,7		// Ninja Suit
+IG_VioletBox,2339,7		// Pantie
+IG_VioletBox,2340,7		// Novice Breastplate
+IG_VioletBox,2352,7		// Tattered Novice Ninja Suit
+IG_VioletBox,2402,7		// Sandals
+IG_VioletBox,2404,7		// Shoes
+IG_VioletBox,2406,7		// Boots
+IG_VioletBox,2407,7		// Crystal Pumps
+IG_VioletBox,2408,7		// Shackles
+IG_VioletBox,2409,7		// High Heels
+IG_VioletBox,2411,7		// Greaves
+IG_VioletBox,2414,7		// Novice Slippers
+IG_VioletBox,2502,7		// Hood
+IG_VioletBox,2504,7		// Muffler
+IG_VioletBox,2506,7		// Manteau
+IG_VioletBox,2507,7		// Ancient Cape
+IG_VioletBox,2508,7		// Ragamuffin Manteau
+IG_VioletBox,2510,7		// Somber Novice Hood
+IG_VioletBox,2513,1		// Heavenly Maiden Robe
+IG_VioletBox,2514,1		// Pauldron
+IG_VioletBox,2515,1		// Eagle Wing
+IG_VioletBox,2601,7		// Ring
+IG_VioletBox,2602,7		// Earring
+IG_VioletBox,2603,7		// Necklace
+IG_VioletBox,2604,7		// Glove
+IG_VioletBox,2605,7		// Brooch
+IG_VioletBox,2607,7		// Clip
+IG_VioletBox,2608,7		// Rosary
+IG_VioletBox,2609,7		// Skull Ring
+IG_VioletBox,2610,7		// Gold Ring
+IG_VioletBox,2611,7		// Silver Ring
+IG_VioletBox,2612,7		// Flower Ring
+IG_VioletBox,2613,7		// Diamond Ring
+IG_VioletBox,2614,1		// Eye of Dullahan
+IG_VioletBox,2615,1		// Safety Ring
+IG_VioletBox,2616,1		// Critical Ring
+IG_VioletBox,2617,7		// Celebrant's Mitten
+IG_VioletBox,2618,7		// Matyr's Leash
+IG_VioletBox,2621,1		// Ring
+IG_VioletBox,2622,1		// Earring
+IG_VioletBox,2623,1		// Necklace
+IG_VioletBox,2624,1		// Glove
+IG_VioletBox,2625,1		// Brooch
+IG_VioletBox,2626,1		// Rosary
+IG_VioletBox,2627,7		// Belt
+IG_VioletBox,2628,7		// Novice Armlet
+IG_VioletBox,2652,1		// Goddess of Fortune's Cursed Brooch
+IG_VioletBox,2654,1		// Shinobi Sash
+IG_VioletBox,2655,1		// Bloodied Shackle Ball
+IG_VioletBox,2656,1		// Armor Charm
+IG_VioletBox,5002,1		// Jewel Crown
+IG_VioletBox,5003,7		// Joker Jester
+IG_VioletBox,5005,7		// Gas Mask
+IG_VioletBox,5006,7		// Machoman's Glasses
+IG_VioletBox,5007,1		// Grand Circlet
+IG_VioletBox,5009,7		// Safety Helmet
+IG_VioletBox,5010,7		// Indian Fillet
+IG_VioletBox,5011,7		// Aerial
+IG_VioletBox,5014,7		// Fin Helm
+IG_VioletBox,5015,7		// Egg Shell
+IG_VioletBox,5017,1		// Bone Helm
+IG_VioletBox,5030,7		// Panda Hat
+IG_VioletBox,5035,7		// Poring Hat
+IG_VioletBox,5037,7		// Nutshell
+IG_VioletBox,5053,1		// Sphinx Hat
+IG_VioletBox,5055,7		// Novice False Eggshell
+IG_VioletBox,5066,1		// Succubus Horn
+IG_VioletBox,5072,1		// Incubus Horn
+IG_VioletBox,5085,1		// Small Ribbons
+IG_VioletBox,5088,7		// Surprised Mask
+IG_VioletBox,5089,7		// Annoyed Mask
+IG_VioletBox,5090,7		// Goblin Leader Mask
+IG_VioletBox,5111,1		// Galapago Cap
+IG_VioletBox,5113,1		// Angry Snarl
+IG_VioletBox,5116,1		// Banana Hat
+IG_VioletBox,5118,1		// Puppy Headband
+IG_VioletBox,5119,1		// Super Novice Hat
+IG_VioletBox,5120,1		// Bucket Hat
+IG_VioletBox,7001,14	// Mould Powder
+IG_VioletBox,7002,14	// Ogre Tooth
+IG_VioletBox,7003,14	// Anolian Skin
+IG_VioletBox,7004,14	// Mud Lump
+IG_VioletBox,7005,14	// Skull
+IG_VioletBox,7006,14	// Wing of Red Bat
+IG_VioletBox,7007,14	// Claw of Rat
+IG_VioletBox,7008,14	// Stiff Horn
+IG_VioletBox,7009,14	// Glitter Shell
+IG_VioletBox,7010,14	// Tail of Steel Scorpion
+IG_VioletBox,7011,14	// Claw of Monkey
+IG_VioletBox,7012,14	// Tough Scalelike Stem
+IG_VioletBox,7013,14	// Coral Reef
+IG_VioletBox,7014,14	// Old Portrait
+IG_VioletBox,7015,14	// Memory Bookmark
+IG_VioletBox,7016,14	// Bent Spoon
+IG_VioletBox,7026,14	// Key of the Clock Tower
+IG_VioletBox,7027,14	// Key of the Underground
+IG_VioletBox,7030,14	// Claw of Desert Wolf
+IG_VioletBox,7031,14	// Old Frying Pan
+IG_VioletBox,7032,14	// Piece of Egg Shell
+IG_VioletBox,7033,14	// Poison Spore
+IG_VioletBox,7034,14	// Red Stocking
+IG_VioletBox,7035,14	// Matchstick
+IG_VioletBox,7036,14	// Fang of Garm
+IG_VioletBox,7038,14	// Yarn
+IG_VioletBox,7041,14	// Fine Grit
+IG_VioletBox,7047,14	// Alice's Apron
+IG_VioletBox,7048,14	// Talon of Griffon
+IG_VioletBox,7049,14	// Stone
+IG_VioletBox,7053,14	// Cyfar
+IG_VioletBox,7054,14	// Brigan
+IG_VioletBox,7059,14	// Free Ticket for Kafra Storage
+IG_VioletBox,7060,14	// Free Ticket for Kafra Transportation
+IG_VioletBox,7061,14	// Free Ticket for the Cart Service
+IG_VioletBox,7063,14	// Soft Feather
+IG_VioletBox,7064,14	// Wing of Dragonfly
+IG_VioletBox,7065,14	// Sea-Otter Fur
+IG_VioletBox,7066,14	// Ice Cubic
+IG_VioletBox,7067,14	// Stone Fragment
+IG_VioletBox,7068,14	// Burnt Tree
+IG_VioletBox,7069,14	// Destroyed Armor
+IG_VioletBox,7070,14	// Broken Shell
+IG_VioletBox,7071,14	// Tattered Clothes
+IG_VioletBox,7072,14	// Old Shuriken
+IG_VioletBox,7093,14	// Cogwheel
+IG_VioletBox,7094,14	// Fragment
+IG_VioletBox,7095,14	// Metal Fragment
+IG_VioletBox,7096,14	// Lava
+IG_VioletBox,7097,14	// Burning Heart
+IG_VioletBox,7098,14	// Live Coal
+IG_VioletBox,7099,14	// Worn-out Magic Scroll
+IG_VioletBox,7100,14	// Sharp Leaf
+IG_VioletBox,7101,14	// Peco Peco Feather
+IG_VioletBox,7106,14	// Antelope Horn
+IG_VioletBox,7107,14	// Antelope Skin
+IG_VioletBox,7108,14	// Piece of Shield
+IG_VioletBox,7109,14	// Shining Spear Blade
+IG_VioletBox,7110,14	// Broken Sword
+IG_VioletBox,7111,14	// Slick Paper
+IG_VioletBox,7112,14	// Sharp Paper
+IG_VioletBox,7113,14	// Broken Pharaoh Emblem
+IG_VioletBox,7114,14	// Masque of Tutankhamen
+IG_VioletBox,7115,14	// Harpy Feather
+IG_VioletBox,7116,14	// Harpy Talon
+IG_VioletBox,7117,14	// Torn Magic Book
+IG_VioletBox,7118,14	// Torn Scroll
+IG_VioletBox,7119,14	// Bacillus
+IG_VioletBox,7120,14	// Burning Horseshoe
+IG_VioletBox,7121,14	// Honey Pot
+IG_VioletBox,7122,14	// Burning Hair
+IG_VioletBox,7123,14	// Dragon Skin
+IG_VioletBox,7124,14	// Sand Clump
+IG_VioletBox,7125,14	// Scorpion Claw
+IG_VioletBox,7126,14	// Large Jellopy
+IG_VioletBox,7134,14	// Medicine Bowl
+IG_VioletBox,7135,14	// Fire Bottle
+IG_VioletBox,7136,14	// Acid Bottle
+IG_VioletBox,7137,14	// Plant Bottle
+IG_VioletBox,7138,14	// Marine Sphere Bottle
+IG_VioletBox,7139,14	// Glistening Coat
+IG_VioletBox,7149,14	// Yellow Plate
+IG_VioletBox,7150,14	// Piece of Bamboo
+IG_VioletBox,7151,14	// Oil Paper
+IG_VioletBox,7152,14	// Glossy Hair
+IG_VioletBox,7153,14	// Worn-out Kimono
+IG_VioletBox,7154,14	// Poisonous Powder
+IG_VioletBox,7155,14	// Poisonous Toad Skin
+IG_VioletBox,7156,14	// Broken Shuriken
+IG_VioletBox,7157,14	// Dark Mask
+IG_VioletBox,7158,14	// Broken Liquor Jar
+IG_VioletBox,7159,14	// Tengu Nose
+IG_VioletBox,7161,14	// Black Bear Skin
+IG_VioletBox,7162,14	// Cloud Crumb
+IG_VioletBox,7163,14	// Hard Feeler
+IG_VioletBox,7164,14	// Solid_Peach
+IG_VioletBox,7165,14	// Transparent Celestial Robe
+IG_VioletBox,7166,14	// Soft Silk
+IG_VioletBox,7167,14	// Strange Steel Piece
+IG_VioletBox,7168,14	// Giant Butterfly Wing
+IG_VioletBox,7169,14	// Ba_Gua
+IG_VioletBox,7171,14	// Leopard Skin
+IG_VioletBox,7172,14	// Leopard Claw
+IG_VioletBox,7174,14	// Wrapping Lace
+IG_VioletBox,7175,14	// Wrapping Paper
+IG_VioletBox,7182,14	// Cacao
+IG_VioletBox,7186,14	// Thin Trunk
+IG_VioletBox,7187,14	// Festival Mask
+IG_VioletBox,7188,14	// Brown_Root
+IG_VioletBox,7189,14	// Wooden Heart
+IG_VioletBox,7190,14	// Solid Husk
+IG_VioletBox,7191,14	// Lamp
+IG_VioletBox,7192,14	// Vane
+IG_VioletBox,7193,14	// Sprout
+IG_VioletBox,7194,14	// Soft Blade of Grass
+IG_VioletBox,7195,14	// Slingshot
+IG_VioletBox,7196,14	// Shoulder Protector
+IG_VioletBox,7197,14	// Tough Vines
+IG_VioletBox,7198,14	// Huge Leaf
+IG_VioletBox,7200,14	// Elastic Band
+IG_VioletBox,7201,14	// Log
+IG_VioletBox,7202,14	// Pincher of Beetle
+IG_VioletBox,7203,14	// Strong Branch
+IG_VioletBox,7205,14	// Piece of Black Cloth
+IG_VioletBox,7206,14	// Black Cat Doll
+IG_VioletBox,7207,14	// Old Manteau
+IG_VioletBox,7208,14	// Rusty Kitchen Knife
+IG_VioletBox,7209,14	// Helm of Dullahan
+IG_VioletBox,7210,14	// Armor Piece of Dullahan
+IG_VioletBox,7211,14	// Fragment of Rossata Stone
+IG_VioletBox,7212,14	// Hung Doll
+IG_VioletBox,7213,14	// Needle Packet
+IG_VioletBox,7214,14	// Bat Cage
+IG_VioletBox,7215,14	// Broken Needle
+IG_VioletBox,7216,14	// Red Muffler
+IG_VioletBox,7217,14	// Spool
+IG_VioletBox,7218,14	// Decomposed Rope
+IG_VioletBox,7219,14	// Striped Sock
+IG_VioletBox,7220,14	// Ectoplasm
+IG_VioletBox,7221,14	// Tangled Chains
+IG_VioletBox,7222,14	// Wooden Gnarl
+IG_VioletBox,7223,14	// Contorted Self-Portrait
+IG_VioletBox,7225,14	// Pumpkin Lantern
+IG_VioletBox,7262,14	// Folding Fan of Cat Ghost
+IG_VioletBox,7263,14	// Cat's Eye
+IG_VioletBox,7264,14	// Dry Sand
+IG_VioletBox,7265,14	// Dragon Horn
+IG_VioletBox,7266,14	// Denture from Dragon Mask
+IG_VioletBox,7267,14	// Tiger Panty
+IG_VioletBox,7268,14	// Little Ghost Doll
+IG_VioletBox,7269,14	// Pinafore
+IG_VioletBox,7270,14	// Nursing_Bottle
+IG_VioletBox,7315,1		// Dark Crystal Fragment
+IG_VioletBox,7316,1		// Insect Leg
+IG_VioletBox,7317,1		// Rusty Screw
+IG_VioletBox,7318,1		// Old Pick
+IG_VioletBox,7319,1		// Used Iron Plate
+IG_VioletBox,7320,1		// Dust Pollutant
+IG_VioletBox,7321,1		// Crystal Fragment
+IG_VioletBox,7322,1		// Toxic Gas
+IG_VioletBox,7323,1		// Battered Kettle
+IG_VioletBox,7325,1		// Flexible Tube
+IG_VioletBox,7326,1		// Fluorescent Liquid
+IG_VioletBox,7327,1		// Flashlight
+IG_VioletBox,7436,1		// Fragment of Agony
+IG_VioletBox,7437,1		// Fragment of Misery
+IG_VioletBox,7438,1		// Fragment of Hatred
+IG_VioletBox,7439,1		// Fragment of Despair
+IG_VioletBox,7440,1		// Red Feather
+IG_VioletBox,7441,1		// Blue Feather
+IG_VioletBox,7442,1		// Cursed Seal
+IG_VioletBox,7443,1		// Three-Headed Dragon's Head
+IG_VioletBox,7444,1		// Treasure Box
+IG_VioletBox,7445,1		// Green Bijou
+IG_VioletBox,7446,1		// Blue Bijou
+IG_VioletBox,7447,1		// Red Bijou
+IG_VioletBox,7448,1		// Yellow Bijou
+IG_VioletBox,7449,1		// Bloody Page
+IG_VioletBox,7450,1		// Skeletal Armor Piece
+IG_VioletBox,7451,1		// Fire Dragon Scale
+IG_VioletBox,7452,1		// Yellow Spice
+IG_VioletBox,7453,1		// Sweet Sauce
+IG_VioletBox,7454,1		// Savory Sauce
+IG_VioletBox,7455,1		// Spicy Sauce
+IG_VioletBox,7456,1		// Red Spice
+IG_VioletBox,7457,1		// Cooking Oil
+IG_VioletBox,7472,1		// Level 1 Cookbook
+IG_VioletBox,7473,1		// Level 2 Cookbook
+IG_VioletBox,7474,1		// Level 3 Cookbook
+IG_VioletBox,7475,1		// Level 4 Cookbook
+IG_VioletBox,7476,1		// Level 5 Cookbook
+IG_VioletBox,7477,1		// Level 6 Cookbook
+IG_VioletBox,7478,1		// Level 7 Cookbook
+IG_VioletBox,7479,1		// Level 8 Cookbook
+IG_VioletBox,7480,1		// Level 9 Cookbook
+IG_VioletBox,7481,1		// Level 10 Cookbook
+IG_VioletBox,7482,1		// Pot
+IG_VioletBox,7512,1		// Burnt Part
+IG_VioletBox,7513,1		// Pocket Watch
+IG_VioletBox,7561,1		// Glacial Heart
+IG_VioletBox,7562,1		// Ice Scale
+IG_VioletBox,7563,1		// Bloody Rune
+IG_VioletBox,7564,1		// Rotten Meat
+IG_VioletBox,7565,1		// Sticky Poison
+IG_VioletBox,7567,1		// Suspicious Hat
+IG_VioletBox,7568,1		// White Mask
+IG_VioletBox,7751,17	// Old White Cloth
+IG_VioletBox,7752,16	// Clattering Skull
+IG_VioletBox,7753,17	// Broken Farming Utensil
+IG_VioletBox,10001,7	// Skull Helm
+IG_VioletBox,10002,7	// Monster Oxygen Mask
+IG_VioletBox,10003,7	// Transparent Headgear
+IG_VioletBox,10004,7	// Pacifier
+IG_VioletBox,10005,7	// Wig
+IG_VioletBox,10006,7	// Queen's Hair Ornament
+IG_VioletBox,10007,7	// Silk Ribbon
+IG_VioletBox,10008,7	// Punisher
+IG_VioletBox,10009,7	// Wild Flower
+IG_VioletBox,10010,7	// Battered Pot
+IG_VioletBox,10011,7	// Stellar Hairpin
+IG_VioletBox,10012,7	// Tiny Egg Shell
+IG_VioletBox,10013,7	// Backpack
+IG_VioletBox,10014,7	// Rocker Glasses
+IG_VioletBox,10015,7	// Green Lace
+IG_VioletBox,10016,7	// Golden Bell
+IG_VioletBox,10017,7	// Bark Shorts
+IG_VioletBox,10018,7	// Monkey Circlet
+IG_VioletBox,10019,7	// Red Scarf
+IG_VioletBox,10020,7	// Grave Keeper's Sword
+IG_VioletBox,13001,1	// Dragon Killer
+IG_VioletBox,13002,1	// Ginnungagap
+IG_VioletBox,13004,1	// Cowardice Blade
+IG_VioletBox,13163,1	// Long Barrel
+IG_VioletBox,13164,1	// Long Barrel
+IG_VioletBox,13167,1	// Gate Keeper-DD
+IG_VioletBox,13168,1	// Thunder P
+IG_VioletBox,13170,2	// Lever Action Rifle
+IG_VioletBox,13200,1	// Bullet
+IG_VioletBox,13201,1	// Silver Bullet
+IG_VioletBox,13202,1	// Bloody Shell
+IG_VioletBox,13203,1	// Flare Sphere
+IG_VioletBox,13204,1	// Lightning Sphere
+IG_VioletBox,13205,1	// Poison Sphere
+IG_VioletBox,13206,1	// Blind Sphere
+IG_VioletBox,13207,1	// Freezing Sphere
+IG_VioletBox,13304,1	// Huuma Calm Mind

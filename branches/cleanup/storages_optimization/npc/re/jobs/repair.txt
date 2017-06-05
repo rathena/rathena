@@ -1,0 +1,320 @@
+//===== rAthena Script ======================================= 
+//= Job Repairs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Removes potentially conflicting job data.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Added GM management function. [Euphy]
+//============================================================ 
+
+// Job Variables
+//============================================================
+/*
+rAthena -> official job variable conversion
+-------------------------------------------
+
+Knight: KNIGHT_Q -> job_knight_q
+Priest: PRIEST_Q -> job_priest_q
+Wizard: WIZ_Q -> job_wizard_q
+Blacksmith: BSMITH_Q -> job_black
+Assassin: ASSIN_Q -> job_assasin
+Hunter: HNTR_Q -> job_hunter
+Crusader: CRUS_Q -> job_crusader_q
+Monk: MONK_Q -> job_monk
+Sage: SAGE_Q -> job_sage_q
+Alchemist: ALCH_Q -> job_alchemist_q
+Rogue: ROGUE_Q -> job_rogue
+Bard: BARD_Q -> job_bard_q
+Dancer: DANC_Q -> job_dancer
+
+Rebirth: ADVJOB -> job_karma
+
+Rune Knight: job_rune_edq
+Arch Bishop: job_arch
+Warlock: job_wl
+Mechanic: job__mechanic -> job_mechanic
+Guillotine Cross: job_3rd_gc
+Ranger: job_ranger01
+Royal Guard: job_royal -> job_roy
+Sura: job_shu
+Sorcerer: job_soc
+Geneticist: job_gen
+Shadow Chaser: job_sha -> job_3rd_sc
+Minstrel: job_min
+Wanderer: job_wan
+
+Gunslinger: GUNS_Q -> hg_gun
+Ninja: NINJ_Q -> hg_nin
+Kagerou/Oboro: job_kagero
+Taekwon: TK_Q -> job_taekwon
+Star Gladiator: STGL_Q -> job_star
+Soul Linker: SOUL_Q -> job_linker
+Super Novice: SUPNOV_Q -> job_super
+Expanded Super Novice: EXSUPNOV_Q -> job_super2
+*/
+
+// Main NPCs :: job_repair
+//============================================================
+prt_in,38,104,4	script	Valerie	811,{
+	if (checkweight(1201,1) == 0) {
+		mes "I think you have too many items. Let's try it again after you take some out.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You're overweight with items so I don't think we can proceed any further. Challenge me after you've taken some items off.";
+		close;
+	}
+	mes "[Valerie]";
+	mes "I am Valerie; I help those with abnormalities. I am friends with Valkyrie.";
+	next;
+	mes "[Valerie]";
+	mes "If both abnormalities disappear then we must start the test over from scratch. What would you like to do?";
+	next;
+	switch(select("I don't have any abnormalities:I think my body has some abnormalities")) {
+	case 1:
+		mes "[Valerie]";
+		mes "That's a relief. Then please take care.";
+		close;
+	case 2:
+		mes "[Valerie]";
+		mes "Are you sure you want to intialize it and start over?";
+		next;
+		if(select("Nope:Yes, I want to start completely over") == 1) {
+			mes "[Valerie]";
+			mes "I understand. I'll see you next time";
+			close;
+		}
+		mes "[Valerie]";
+		mes "All items related to the existing conditions will disappear. Are you okay with this?";
+		next;
+		if(select("Nope:Yes, I want to start completely over.") == 1) {
+			mes "[Valerie]";
+			mes "I understand. I'll see you next time.";
+			close;
+		}
+		mes "[Valerie]";
+		mes "It seems that there are a sea of people who seemed to be cursed of not being able to get a significant other after going through with this. Are you still okay with this? ";
+		next;
+		if(select("Nope:I still want to intialize.") == 1) {
+			mes "[Valerie]";
+			mes "I understand. I will see you next time.";
+			close;
+		}
+		mes "[Valerie]";
+		mes "In extreme cases, some become crippled and can get ulcers. Do you still want to intilize former processes?";
+		next;
+		if(select("Nope:Please intilize the former processes") == 1) {
+			mes "[Valerie]";
+			mes "I understand. I will see you next time";
+			close;
+		}
+		specialeffect2 EF_INVENOM;
+		progressbar "0xffff00",3;
+
+		// Warlock - quest items
+		if (isequipped(2796) || isequipped(2797)) {
+			mes "[Valerie]";
+			mes "Please unequip the Magical Stone or Magical Stone Ring and try again.";
+			close;
+		}
+		if (countitem(2796) || countitem(2797)) {
+			if (isequipped(2796) || isequipped(2797)) {
+				mes "[Valerie]";
+				mes "Please talk to me after your replace all Magical Stones.";
+				close;
+			}
+			setarray .@items[0], 2796, 2797, 6152, 6151; //Magical_Stone,Magical_Stone_,Glittering_Crystal,Peice_Of_Great_Bradium
+			for(set .@i,0; .@i<4; set .@i,.@i+1) {
+				if (countitem(.@items[.@i]))
+					delitem .@items[.@i], countitem(.@items[.@i]);
+			}
+			mes "[Valerie]";
+			mes "You're carrying something that is unnecessary. I will sort it out for you.";
+			close;
+		}
+
+		// Baby and third job characters meet no further conditions.
+		if (eaclass()&(EAJL_BABY|EAJL_THIRD)) {
+			mes "[Valerie]";
+			mes "I don't think you should have any further business with me.";
+			close;
+		}
+
+		// Rebirth - variable
+		if ((Class >= Job_Swordman && Class <= Job_Crusader2) && ADVJOB != 0) {
+			set ADVJOB,0;
+			mes "[Valerie]";
+			mes "You're carrying big karma- You should erase it.";
+			next;
+			mes "[Valerie]";
+			mes "Please talk to me again as there could be additional problems.";
+			close;
+		}
+
+		// Second job - variable and quests
+		// callsub L_Second, "<variable>", <quest>;
+		if (Class == Job_Swordman) {
+			callsub L_Second, "KNIGHT_Q", 9012;
+			callsub L_Second, "CRUS_Q", 3015;
+		} else if (Class == Job_Archer) {
+			callsub L_Second, "HNTR_Q", 4013;
+			callsub L_Second, "BARD_Q", 3004;
+			callsub L_Second, "DANC_Q", 7006;
+		} else if (Class == Job_Mage) {
+			callsub L_Second, "WIZ_Q", 9018;
+			callsub L_Second, "SAGE_Q", 2052;
+		} else if (Class == Job_Merchant) {
+			callsub L_Second, "BSMITH_Q", 2016;
+			callsub L_Second, "ALCH_Q", 2040;
+		} else if (Class == Job_Thief) {
+			callsub L_Second, "ASSIN_Q", 8008;
+			callsub L_Second, "ROGUE_Q", 2027;
+		} else if (Class == Job_Acolyte) {
+			callsub L_Second, "PRIEST_Q", 8016;
+			callsub L_Second, "MONK_Q", 3032;
+		}
+
+		// Third job - variable and quests
+		// callsub L_Third, "<variable>", <main quest>, <first quest>, <last quest>{, <additional quest>};
+		if (BaseJob == Job_Assassin)
+			callsub L_Third, "job_3rd_gc", 7100, 7091, 7116;
+		else if (BaseJob == Job_Blacksmith)
+			callsub L_Third, "job__mechanic", 10101, 10090, 10101;
+		else if (BaseJob == Job_Hunter)
+			callsub L_Third, "job_ranger01", 8262, 8254, 8262;
+		else if (BaseJob == Job_Knight)
+			callsub L_Third, "job_rune_edq", 3219, 3200, 3220;
+		else if (BaseJob == Job_Priest)
+			callsub L_Third, "job_arch", 2191, 2187, 2191;
+		else if (BaseJob == Job_Wizard)
+			callsub L_Third, "job_wl", 11112, 11106, 11112;
+		else if (BaseJob == Job_Alchemist)
+			callsub L_Third, "job_gen", 2223, 2209, 2217, 2223;
+		else if (BaseJob == Job_Bard)
+			callsub L_Third, "job_min", 11154, 11135, 11154;
+		else if (BaseJob == Job_Crusader)
+			callsub L_Third, "job_royal", 0, 12090, 12094;
+		else if (BaseJob == Job_Dancer)
+			callsub L_Third, "job_wan", 2222, 2218, 2222;
+		else if (BaseJob == Job_Monk)
+			callsub L_Third, "job_shu", 11158, 11155, 11158;
+		else if (BaseJob == Job_Rogue)
+			callsub L_Third, "job_sha", 7180, 7160, 7180;
+		else if (BaseJob == Job_Sage)
+			callsub L_Third, "job_soc", 12098, 12096, 12098;
+
+		mes "[Valerie]";
+		mes "I don't think you should have any further business with me.";
+		close;
+	}
+
+L_Second:
+	if (getd(getarg(0)) != 0) {
+		setd getarg(0),0;
+		if (checkquest(getarg(1)) == 2)
+			erasequest getarg(1);
+		mes "[Valerie]";
+		mes "I will help clear your problems for you that came from your former attempts.";
+		next;
+		mes "[Valerie]";
+		mes "Please talk to me again as there could be additional problems.";
+		close;
+	} else
+		return;
+
+L_Third:
+	if (getd(getarg(0)) != 0) {
+		setd getarg(0),0;
+		if (getarg(1)) {
+			if (checkquest(getarg(1)) == 2)
+				erasequest getarg(1);
+		}
+		for(set .@i,getarg(2); .@i<=getarg(3); set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		if (getarg(4,0)) {
+			if (checkquest(getarg(4)) > -1)
+				erasequest getarg(4);
+		}
+		mes "[Valerie]";
+		mes "I will help clear your problems for you that came from your former attempts.";
+		next;
+		mes "[Valerie]";
+		mes "Please talk to me again as there could be additional problems.";
+		close;
+	} else
+		return;
+}
+
+-	script	Valerie#sign	-1,{
+	mes "^ff00ffI couldn't pay the office rent so I am temporarily relocating to the building across from the Prontera Refinery.^000000";
+	mes " ";
+	mes "^ff00ffValerie^000000";
+	close;
+}
+in_moc_16,17,33,4	duplicate(Valerie#sign)	Valerie#asn	837
+ein_in01,13,28,4	duplicate(Valerie#sign)	Valerie#bls	837
+hu_in01,386,377,4	duplicate(Valerie#sign)	Valerie#hnt	837
+prt_in,88,108,4	duplicate(Valerie#sign)	Valerie#knt	837
+prt_church,19,36,4	duplicate(Valerie#sign)	Valerie#prst	837
+gef_tower,110,30,4	duplicate(Valerie#sign)	Valerie#wiz	837
+comodo,215,155,4	duplicate(Valerie#sign)	Valerie#danc	837
+prt_castle,45,167,4	duplicate(Valerie#sign)	Valerie#cru	837
+prt_monk,59,253,4	duplicate(Valerie#sign)	Valerie#mnk	837
+moc_ruins,90,104,4	duplicate(Valerie#sign)	Valerie#rg	837
+yuno_in02,43,62,4	duplicate(Valerie#sign)	Valerie#sag	837
+prt_church,103,86,4	duplicate(Valerie#sign)	Valerie#arch	837
+que_job01,75,92,4	duplicate(Valerie#sign)	Valerie#gc	837
+yuno,129,150,4	duplicate(Valerie#sign)	Valerie#mech	837
+tur_dun01,159,40,4	duplicate(Valerie#sign)	Valerie#ran	837
+prt_in,167,24,4	duplicate(Valerie#sign)	Valerie#rk	837
+spl_in02,81,102,4	duplicate(Valerie#sign)	Valerie#wl	837
+alde_alche,38,181,4	duplicate(Valerie#sign)	Valerie#alche	837
+alberta,198,129,4	duplicate(Valerie#sign)	Valerie#min	837
+in_rogue,376,104,4	duplicate(Valerie#sign)	Valerie#sc	837
+ve_in,244,122,4	duplicate(Valerie#sign)	Valerie#shu	837
+xmas,166,209,4	duplicate(Valerie#sign)	Valerie#wan	837
+
+sec_in02,12,40,5	script	Job Repair	57,1,1,{
+	callfunc "F_GM_NPC";
+	mes "Please input your password.";
+	next;
+	if (callfunc("F_GM_NPC","1854",1) == 1) {
+		set job_arch,100;
+		set job_3rd_gc,100;
+		set job__mechanic,100;
+		set job_ranger01,100;
+		set job_rune_edq,100;
+		set job_wl,100;
+		set job_gen,100;
+		set job_min,100;
+		set job_royal,100;
+		set job_sha,100;
+		set job_soc,100;
+		set job_shu,100;
+		set job_wan,100;
+		set KNIGHT_Q,100;
+		set PRIEST_Q,100;
+		set WIZ_Q,100;
+		set BSMITH_Q,100;
+		set ASSIN_Q,100;
+		set HNTR_Q,100;
+		set CRUS_Q,100;
+		set MONK_Q,100;
+		set SAGE_Q,100;
+		set ALCH_Q,100;
+		set ROGUE_Q,100;
+		set BARD_Q,100;
+		set DANC_Q,100;
+		set ADVJOB,15;
+	}
+	close;
+}

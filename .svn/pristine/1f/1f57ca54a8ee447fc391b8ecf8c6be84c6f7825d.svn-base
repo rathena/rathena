@@ -1,0 +1,119 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Dead Branch use.
+//===== Description: ========================================= 
+//= Disables the following items:
+//=   Dead Branch (604), Bloody Branch (12103),
+//=   Red Pouch (12024), Poring Box (12109)
+//===== Changelogs: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Nightmare Clock Tower [Lemongrass]
+//= 1.3 Added dali02 [Nova]
+//= 1.4 Added Nightmare Glastheim [Ridley8819]
+//= 1.5 Added WOE:TE maps [Cydh]
+//============================================================
+
+// 3rd Class Job Maps & Paradise
+moc_para01	mapflag	nobranch
+job3_arch01	mapflag	nobranch
+job3_arch02	mapflag	nobranch
+job3_arch03	mapflag	nobranch
+job3_gen01	mapflag	nobranch
+job3_guil01	mapflag	nobranch
+job3_guil02	mapflag	nobranch
+job3_guil03	mapflag	nobranch
+job_ko	mapflag	nobranch
+job3_rang01	mapflag	nobranch
+job3_rang02	mapflag	nobranch
+job3_rune01	mapflag	nobranch
+job3_rune02	mapflag	nobranch
+job3_rune03	mapflag	nobranch
+job3_sha01	mapflag	nobranch
+job3_war01	mapflag	nobranch
+job3_war02	mapflag	nobranch
+jupe_core2	mapflag	nobranch
+
+// Brasilis ====================
+brasilis	mapflag	nobranch
+bra_in01	mapflag	nobranch
+
+// Episode 13.3 ================
+dicastes01	mapflag	nobranch
+dicastes02	mapflag	nobranch
+dic_in01	mapflag	nobranch
+s_atelier	mapflag	nobranch
+
+// Episode 14.1 & Dewata =======
+mora	mapflag	nobranch
+1@mist	mapflag	nobranch
+dewata	mapflag	nobranch
+dew_in01	mapflag	nobranch
+
+// Episode Zero & Malaya Port ==
+malangdo	mapflag	nobranch
+mal_in01	mapflag	nobranch
+mal_in02	mapflag	nobranch
+1@cash	mapflag	nobranch
+1@pump	mapflag	nobranch
+2@pump	mapflag	nobranch
+1@lhz	mapflag	nobranch
+que_lhz	mapflag	nobranch
+malaya	mapflag	nobranch
+ma_scene01	mapflag	nobranch
+ma_in01	mapflag	nobranch
+ma_zif01	mapflag	nobranch
+ma_zif02	mapflag	nobranch
+ma_zif03	mapflag	nobranch
+ma_zif04	mapflag	nobranch
+ma_zif05	mapflag	nobranch
+ma_zif06	mapflag	nobranch
+ma_zif07	mapflag	nobranch
+ma_zif08	mapflag	nobranch
+ma_zif09	mapflag	nobranch
+1@ma_h	mapflag	nobranch
+1@ma_c	mapflag	nobranch
+1@ma_b	mapflag	nobranch
+c_tower2_	mapflag	nobranch
+c_tower3_	mapflag	nobranch
+gl_chyard_	mapflag	nobranch
+gl_cas02_	mapflag	nobranch
+
+// Episode 14.2 ================
+eclage	mapflag	nobranch
+ecl_in01	mapflag	nobranch
+ecl_in02	mapflag	nobranch
+ecl_in03	mapflag	nobranch
+ecl_in04	mapflag	nobranch
+1@ecl	mapflag	nobranch
+ecl_hub01	mapflag	nobranch
+que_avan01	mapflag	nobranch
+1@xm_d	mapflag	nobranch
+
+// Izlude duplicates ===========
+izlude_a	mapflag	nobranch
+izlude_b	mapflag	nobranch
+izlude_c	mapflag	nobranch
+izlude_d	mapflag	nobranch
+
+// Heroes' Trail Part 1 ========
+1@sara	mapflag	nobranch
+1@face	mapflag	nobranch
+1@gef	mapflag	nobranch
+1@gef_in	mapflag	nobranch
+1@ge_st	mapflag	nobranch
+dali	mapflag	nobranch
+dali02	mapflag	nobranch
+
+// WOE:TE Maps ===================
+te_alde_gld	mapflag	nobranch
+te_prt_gld	mapflag	nobranch
+te_prtcas01	mapflag	nobranch
+te_prtcas02	mapflag	nobranch
+te_prtcas03	mapflag	nobranch
+te_prtcas04	mapflag	nobranch
+te_prtcas05	mapflag	nobranch
+te_aldecas1	mapflag	nobranch
+te_aldecas2	mapflag	nobranch
+te_aldecas3	mapflag	nobranch
+te_aldecas4	mapflag	nobranch
+te_aldecas5	mapflag	nobranch

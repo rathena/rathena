@@ -1,0 +1,1268 @@
+//------------------------- Normal Maps ---------------------------
+map: alb_ship
+map: alb2trea
+map: alberta
+map: alberta_in
+map: alde_dun01
+map: alde_dun02
+map: alde_dun03
+map: alde_dun04
+map: aldeba_in
+map: aldebaran
+map: anthell01
+map: anthell02
+map: arena_room
+map: c_tower1
+map: c_tower2
+map: c_tower3
+map: c_tower4
+//map: force_map1
+//map: force_map2
+//map: force_map3
+map: force_1-1
+map: force_2-1
+map: force_3-1
+map: force_4-1
+map: force_5-1
+map: force_1-2
+map: force_2-2
+map: force_3-2
+map: force_1-3
+map: force_2-3
+map: force_3-3
+map: gef_dun00
+map: gef_dun01
+map: gef_dun02
+map: gef_dun03
+map: gef_fild00
+map: gef_fild01
+map: gef_fild02
+map: gef_fild03
+map: gef_fild04
+map: gef_fild05
+map: gef_fild06
+map: gef_fild07
+map: gef_fild08
+map: gef_fild09
+map: gef_fild10
+map: gef_fild11
+map: gef_fild12
+map: gef_fild13
+map: gef_fild14
+map: gef_tower
+map: geffen
+map: geffen_in
+map: gl_cas01
+map: gl_cas02
+map: gl_church
+map: gl_chyard
+map: gl_dun01
+map: gl_dun02
+map: gl_in01
+map: gl_knt01
+map: gl_knt02
+map: gl_prison
+map: gl_prison1
+map: gl_sew01
+map: gl_sew02
+map: gl_sew03
+map: gl_sew04
+map: gl_step
+map: glast_01
+//map: hunter_1-1
+//map: hunter_2-1
+//map: hunter_3-1
+map: in_hunter
+map: in_moc_16
+map: in_orcs01
+map: in_sphinx1
+map: in_sphinx2
+map: in_sphinx3
+map: in_sphinx4
+map: in_sphinx5
+map: iz_dun00
+map: iz_dun01
+map: iz_dun02
+map: iz_dun03
+map: iz_dun04
+map: izlu2dun
+map: izlude
+map: izlude_in
+map: job_thief1
+//map: knight_1-1
+//map: knight_2-1
+//map: knight_3-1
+map: mjo_dun01
+map: mjo_dun02
+map: mjo_dun03
+map: mjolnir_01
+map: mjolnir_02
+map: mjolnir_03
+map: mjolnir_04
+map: mjolnir_05
+map: mjolnir_06
+map: mjolnir_07
+map: mjolnir_08
+map: mjolnir_09
+map: mjolnir_10
+map: mjolnir_11
+map: mjolnir_12
+map: moc_castle
+map: moc_fild01
+map: moc_fild02
+map: moc_fild03
+//map: moc_fild04
+//map: moc_fild05
+//map: moc_fild06
+map: moc_fild07
+//map: moc_fild08
+//map: moc_fild09
+//map: moc_fild10
+map: moc_fild11
+map: moc_fild12
+map: moc_fild13
+//map: moc_fild14
+//map: moc_fild15
+map: moc_fild16
+map: moc_fild17
+map: moc_fild18
+map: moc_fild19
+map: moc_pryd01
+map: moc_pryd02
+map: moc_pryd03
+map: moc_pryd04
+map: moc_pryd05
+map: moc_pryd06
+map: moc_prydb1
+map: moc_ruins
+map: monk_in
+map: morocc
+map: morocc_in
+map: new_zone01
+map: new_zone02
+map: new_zone03
+map: new_zone04
+map: new_1-1
+map: new_1-2
+map: new_1-3
+map: new_1-4
+map: new_2-1
+map: new_2-2
+map: new_2-3
+map: new_2-4
+map: new_3-1
+map: new_3-2
+map: new_3-3
+map: new_3-4
+map: new_4-1
+map: new_4-2
+map: new_4-3
+map: new_4-4
+map: new_5-1
+map: new_5-2
+map: new_5-3
+map: new_5-4
+map: orcsdun01
+map: orcsdun02
+//map: ordeal_a00
+//map: ordeal_a02
+map: ordeal_1-1
+map: ordeal_1-2
+//map: ordeal_1-3
+//map: ordeal_1-4
+map: ordeal_2-1
+map: ordeal_2-2
+//map: ordeal_2-3
+//map: ordeal_2-4
+map: ordeal_3-1
+map: ordeal_3-2
+//map: ordeal_3-3
+//map: ordeal_3-4
+map: pay_arche
+map: pay_dun00
+map: pay_dun01
+map: pay_dun02
+map: pay_dun03
+map: pay_dun04
+map: pay_fild01
+map: pay_fild02
+map: pay_fild03
+map: pay_fild04
+map: pay_fild05
+map: pay_fild06
+map: pay_fild07
+map: pay_fild08
+map: pay_fild09
+map: pay_fild10
+map: pay_fild11
+//map: priest_1-1
+//map: priest_2-1
+//map: priest_3-1
+map: prontera
+map: prt_are_in
+map: prt_are01
+map: prt_castle
+map: prt_church
+map: prt_fild00
+map: prt_fild01
+map: prt_fild02
+map: prt_fild03
+map: prt_fild04
+map: prt_fild05
+map: prt_fild06
+map: prt_fild07
+map: prt_fild08
+map: prt_fild09
+map: prt_fild10
+map: prt_fild11
+map: prt_in
+map: prt_maze01
+map: prt_maze02
+map: prt_maze03
+map: prt_monk
+map: prt_sewb1
+map: prt_sewb2
+map: prt_sewb3
+map: prt_sewb4
+map: pvp_room
+map: pvp_2vs2
+map: pvp_c_room
+map: pvp_n_1-1
+map: pvp_n_1-2
+map: pvp_n_1-3
+map: pvp_n_1-4
+map: pvp_n_1-5
+map: pvp_n_2-1
+map: pvp_n_2-2
+map: pvp_n_2-3
+map: pvp_n_2-4
+map: pvp_n_2-5
+map: pvp_n_3-1
+map: pvp_n_3-2
+map: pvp_n_3-3
+map: pvp_n_3-4
+map: pvp_n_3-5
+map: pvp_n_4-1
+map: pvp_n_4-2
+map: pvp_n_4-3
+map: pvp_n_4-4
+map: pvp_n_4-5
+map: pvp_n_5-1
+map: pvp_n_5-2
+map: pvp_n_5-3
+map: pvp_n_5-4
+map: pvp_n_5-5
+map: pvp_n_6-1
+map: pvp_n_6-2
+map: pvp_n_6-3
+map: pvp_n_6-4
+map: pvp_n_6-5
+map: pvp_n_7-1
+map: pvp_n_7-2
+map: pvp_n_7-3
+map: pvp_n_7-4
+map: pvp_n_7-5
+map: pvp_n_8-1
+map: pvp_n_8-2
+map: pvp_n_8-3
+map: pvp_n_8-4
+map: pvp_n_8-5
+map: pvp_n_room
+map: pvp_y_1-1
+map: pvp_y_1-2
+map: pvp_y_1-3
+map: pvp_y_1-4
+map: pvp_y_1-5
+map: pvp_y_2-1
+map: pvp_y_2-2
+map: pvp_y_2-3
+map: pvp_y_2-4
+map: pvp_y_2-5
+map: pvp_y_3-1
+map: pvp_y_3-2
+map: pvp_y_3-3
+map: pvp_y_3-4
+map: pvp_y_3-5
+map: pvp_y_4-1
+map: pvp_y_4-2
+map: pvp_y_4-3
+map: pvp_y_4-4
+map: pvp_y_4-5
+map: pvp_y_5-1
+map: pvp_y_5-2
+map: pvp_y_5-3
+map: pvp_y_5-4
+map: pvp_y_5-5
+map: pvp_y_6-1
+map: pvp_y_6-2
+map: pvp_y_6-3
+map: pvp_y_6-4
+map: pvp_y_6-5
+map: pvp_y_7-1
+map: pvp_y_7-2
+map: pvp_y_7-3
+map: pvp_y_7-4
+map: pvp_y_7-5
+map: pvp_y_8-1
+map: pvp_y_8-2
+map: pvp_y_8-3
+map: pvp_y_8-4
+map: pvp_y_8-5
+map: pvp_y_room
+map: sword_1-1
+map: sword_2-1
+map: sword_3-1
+map: treasure01
+map: treasure02
+//map: wizard_1-1
+//map: wizard_2-1
+//map: wizard_3-1
+map: xmas
+map: xmas_dun01
+map: xmas_dun02
+map: xmas_fild01
+map: xmas_in
+
+//---Ep3.0 Comodo ---
+
+map: beach_dun
+map: beach_dun2
+map: beach_dun3
+map: cmd_fild01
+map: cmd_fild02
+map: cmd_fild03
+map: cmd_fild04
+map: cmd_fild05
+map: cmd_fild06
+map: cmd_fild07
+map: cmd_fild08
+map: cmd_fild09
+map: cmd_in01
+map: cmd_in02
+map: comodo
+
+//---EP3.1 Quiz Revolution ---
+
+map: quiz_00
+map: quiz_01
+map: g_room1-1
+map: g_room1-2
+map: g_room1-3
+map: g_room2
+
+//--- Ep4.0 Turtle Island ---
+
+map: tur_dun01
+map: tur_dun02
+map: tur_dun03
+map: tur_dun04
+map: tur_dun05
+map: tur_dun06
+
+//--- Ep4.1 The War of Emperium ---
+
+map: alde_gld
+map: aldeg_cas01
+map: aldeg_cas02
+map: aldeg_cas03
+map: aldeg_cas04
+map: aldeg_cas05
+map: gefg_cas01
+map: gefg_cas02
+map: gefg_cas03
+map: gefg_cas04
+map: gefg_cas05
+map: gld_dun01
+map: gld_dun02
+map: gld_dun03
+map: gld_dun04
+map: guild_room
+map: guild_vs1
+map: guild_vs2
+map: guild_vs3
+map: guild_vs4
+map: guild_vs5
+map: guild_vs1-1
+map: guild_vs1-2
+map: guild_vs1-3
+map: guild_vs1-4
+map: guild_vs2-1
+map: guild_vs2-2
+//map: job_hunter
+map: job_hunte
+//map: job_knight
+map: job_knt
+//map: job_priest
+map: job_prist
+map: job_sword1
+//map: job_wizard
+map: job_wiz
+map: pay_gld
+map: payg_cas01
+map: payg_cas02
+map: payg_cas03
+map: payg_cas04
+map: payg_cas05
+map: prt_gld
+map: prtg_cas01
+map: prtg_cas02
+map: prtg_cas03
+map: prtg_cas04
+map: prtg_cas05
+
+
+//--- Ep5.0 Yuno ---
+
+map: alde_alche
+map: in_rogue
+map: job_cru
+map: job_duncer
+map: job_monk
+map: job_sage
+map: mag_dun01
+map: mag_dun02
+map: monk_test
+map: quiz_test
+map: yuno
+map: yuno_fild01
+map: yuno_fild02
+map: yuno_fild03
+map: yuno_fild04
+map: yuno_in01
+map: yuno_in02
+map: yuno_in03
+map: yuno_in04
+map: yuno_in05
+
+//--- Ep6.0 - Amatsu  ---
+// Requires: kRO 08-10-03 or newer
+// or kRO Sakray 09-09-03 or newer
+
+map: ama_dun01
+map: ama_dun02
+map: ama_dun03
+map: ama_fild01
+map: ama_in01
+map: ama_in02
+map: ama_test
+map: amatsu
+
+//--- Ep6.1 - Gon Ryun ---
+
+map: gon_dun01
+map: gon_dun02
+map: gon_dun03
+map: gon_fild01
+map: gon_in
+map: gon_test
+map: gonryun
+map: sec_in01
+map: sec_in02
+map: sec_pri
+
+//--- Ep6.2 - Umbala ---
+// Requires: kRO 01-27-04 or newer
+// or kRO Sakray 12-02-03 or newer
+// or Akaru's SuperGRF 1.22 or newer
+map: umbala
+map: um_dun01
+map: um_dun02
+map: um_fild01
+map: um_fild02
+map: um_fild03
+map: um_fild04
+map: um_in
+
+//--- Ep6.3 - Niflheim ---
+// Requires: kRO 02-23-04 or newer
+// or kRO Sakray 01-09-04 or newer
+// or Akaru's SuperGRF 1.32 or newer
+map: niflheim
+map: nif_fild01
+map: nif_fild02
+map: nif_in
+map: yggdrasil01
+
+//--- Ep6.4 - Valkyrie ---
+// Requires: kRO ??-??-04 or newer
+// or kRO Sakray 02-03-04 or newer
+// or Akaru's SuperGRF 1.34 or newer
+map: valkyrie
+map: himinn
+
+//--- Ep6.5 - Castle of Dragon (LouYang) ---
+// Requires kRO Sakray 03-30 or newer
+//(Akaru's SuperGRF required version: 1.52)
+map: lou_in01
+map: lou_in02
+map: lou_dun03
+map: lou_dun02
+map: lou_dun01
+map: lou_fild01
+map: louyang
+
+//--- Ep6.6 - Novice Guild Siege ---
+//Requires kRO Sakray 04-07 or newer
+//(Akaru's SuperGRF required version: 1.53)
+//map: siege_test
+map: n_castle
+map: nguild_gef
+map: nguild_prt
+map: nguild_pay
+map: nguild_alde
+
+//--- Ep6.7 - Jawaii ---
+//Requires kRO Sakray 06-22 or newer
+//(Akaru's SuperGRF required version: 1.63)
+map: jawaii
+map: jawaii_in
+
+// --- Ep6.8 - Geffenia ---
+// Requires kRO Sakray 07-13 or newer
+// (Akaru's SuperGRF required version: 1.64)
+map: gefenia01
+map: gefenia02
+map: gefenia03
+map: gefenia04
+
+// --- Ep6.9 - New Payon ---
+// Requires kRO Sakray 09-03
+// -- dunno --
+map: payon
+map: payon_in01
+map: payon_in02
+map: payon_in03
+//same names as old maps except that payon_in03 got added
+
+// --- Ep? - Ayothaya ---
+// Requires kRO Sakray 09-21
+// -- 2004-10-19sdata_k.gpf --
+map: ayothaya
+map: ayo_in01
+map: ayo_in02
+map: ayo_fild01
+map: ayo_fild02
+map: ayo_dun01
+map: ayo_dun02
+
+// --- God item quests maps ---
+// -- 2004-10-12sdata_k3.gpf --
+map: que_god01
+map: que_god02
+
+// --- Ep? - Schwarzwald Republic ---
+// -- 2004-12-28sdata_k.gpf --
+map: yuno_fild05
+map: yuno_fild07
+map: yuno_fild08
+map: yuno_fild09
+map: yuno_fild11
+map: yuno_fild12
+
+// --- Turbo Track Arena ---
+// -- 2005-03-08sdata_k.gpf --
+map: alde_tt02
+map: turbo_n_1
+map: turbo_n_4
+map: turbo_n_8
+map: turbo_n_16
+map: turbo_e_4
+map: turbo_e_8
+map: turbo_e_16
+map: turbo_room
+
+// --- Einbroch/Einbech ---
+// -- 2005-03-15sdata_k.gpf --
+map: airplane
+map: airport
+map: einbech
+map: einbroch
+map: ein_dun01
+map: ein_dun02
+map: ein_fild06
+map: ein_fild07
+map: ein_fild08
+map: ein_fild09
+map: ein_fild10
+map: ein_in01
+map: que_sign01
+map: que_sign02
+
+// --- Einbroch and Lightalzen ---
+// -- 2005-05-10sdata_k.gpf --
+map: ein_fild03
+map: ein_fild04
+map: lhz_fild02
+map: lhz_fild03
+
+// --- Lighthalzen and Juperos Dungeon ---
+// -- 2005-06-14sdata_k.gpf --
+map: yuno_pre
+map: lhz_fild01
+map: lighthalzen
+map: lhz_in01
+map: lhz_in02
+map: lhz_in03
+map: lhz_que01
+map: lhz_dun01
+map: lhz_dun02
+map: lhz_dun03
+map: lhz_cube
+map: juperos_01
+map: juperos_02
+map: jupe_area1
+map: jupe_area2
+map: jupe_core
+map: jupe_ele
+map: jupe_ele_r
+map: jupe_gate
+
+// --- Lighthalzen & Juno Airport ---
+// -- resnametable clones of airport and airplane --
+map: y_airport
+map: lhz_airport
+map: airplane_01
+
+// --- Juperos Dungeon ---
+// -- 2005-06-28sdata_k.gpf --
+map: jupe_cave
+
+// --- Quiz Revolution ---
+// -- 2005-08-02sdata_k.gpf --
+map: quiz_02
+
+// --- Hugel Field ---
+// -- 2005-08-23sdata_k.gpf --
+map: hu_fild07
+map: hu_fild05
+map: hu_fild04
+map: hu_fild01
+map: yuno_fild06
+
+// --- Star Knight And Soul Linker Job Change Maps ---
+// -- 2005-08-23sdata_k.gpf --
+map: job_soul
+map: job_star
+
+// --- Abyss Lake, Thanatos Tower --
+// -- 2005-09-13sdata_k.gpf - 2005-09-13sdata_k6.gpf --
+map: que_job01
+map: que_job02
+map: que_job03
+map: abyss_01
+map: abyss_02
+map: abyss_03
+map: thana_step
+map: thana_boss
+map: tha_scene01
+map: tha_t01
+map: tha_t02
+map: tha_t03
+map: tha_t04
+map: tha_t07
+map: tha_t05
+map: tha_t06
+map: tha_t08
+
+// --- Thanatos Tower ---
+// -- 2005-09-21sdata_k.gpf -- 
+map: tha_t09
+map: tha_t10
+map: tha_t11
+map: tha_t12
+
+// --- Auction Market ---
+// -- 2005-11-29sdata_k.gpf -- 
+map: auction_01
+map: auction_02
+
+// ???
+// -- 2005-12-06gdata_k.gpf
+map: alde_tt03
+
+// --- Garden City Hugel / Kiehl ---
+// -- 2005-12-20sdata_k.gpf -- 
+map: hugel
+map: hu_in01
+map: que_bingo
+map: que_hugel
+map: p_track01
+map: p_track02
+map: odin_tem01
+map: odin_tem02
+map: odin_tem03
+map: hu_fild02
+map: hu_fild03
+map: hu_fild06
+map: ein_fild01
+map: ein_fild02
+map: ein_fild05
+map: yuno_fild10
+map: kh_kiehl02
+map: kh_kiehl01
+map: kh_dun02
+map: kh_dun01
+map: kh_mansion
+map: kh_rossi
+map: kh_school
+map: kh_vila
+
+// --- Poring Arena (?) & Gunslinger/Ninja Job Map ---
+// -- 2006-03-28sdata_k.gpf --
+//map: poring_c01
+//map: poring_c02
+map: que_ng
+
+// --- Arunafeltz & Ice Dungeon ---
+// -- 2006-05-30sdata_k.gpf --
+map: rachel
+map: ra_in01
+map: ra_fild01
+map: ra_fild02
+map: ra_fild03
+map: ra_fild04
+map: ra_fild05
+map: ra_fild06
+map: ra_fild07
+map: ra_fild08
+map: ra_fild09
+map: ra_fild10
+map: ra_fild11
+map: ra_fild12
+map: ra_fild13
+map: ra_san01
+map: ra_san02
+map: ra_san03
+map: ra_san04
+map: ra_san05
+map: ra_temin
+map: ra_temple
+map: ra_temsky
+map: que_rachel
+map: que_san04
+map: ice_dun01
+map: ice_dun02
+map: ice_dun03
+map: ice_dun04
+
+// --- Veins & Thor Dungeon ---
+// -- 2006-12-19sdata_k.gpf --
+map: que_thor
+map: thor_camp
+map: thor_v01
+map: thor_v02
+map: thor_v03
+map: veins
+map: ve_in
+map: ve_in02
+map: ve_fild01
+map: ve_fild02
+map: ve_fild03
+map: ve_fild04
+map: ve_fild05
+map: ve_fild06
+map: ve_fild07
+
+// --- Nameless Island & Abbey Dungeon ---
+// -- 2007-04-03sdata_k.gpf
+map: nameless_i
+map: nameless_n
+map: nameless_in
+map: abbey01
+map: abbey02
+map: abbey03
+map: poring_w01
+map: poring_w02
+
+// --- ??? ---
+// -- 2007-??-??
+map: 06guild_r
+map: 06guild_01
+map: 06guild_02
+map: 06guild_03
+map: 06guild_04
+map: 06guild_05
+map: 06guild_06
+map: 06guild_07
+map: 06guild_08
+map: z_agit
+map: que_temsky
+map: itemmall
+map: bossnia_01
+map: bossnia_02
+map: bossnia_03
+map: bossnia_04
+
+// --- Moscovia ---
+// -- 2007-06-???
+map: moscovia
+map: mosk_in
+map: mosk_ship
+map: mosk_fild01
+map: mosk_fild02
+map: mosk_dun01
+map: mosk_dun02
+map: mosk_dun03
+map: mosk_que
+
+// --- Episode 12: Satan Morroc & Schwaltzvalt Seige ---
+// -- 2007-09-19sdata_k.gpf
+map: schg_cas01
+map: schg_cas02
+map: schg_cas03
+map: schg_cas04
+map: schg_cas05
+map: sch_gld
+map: cave
+map: moc_fild20
+map: moc_fild21
+map: moc_fild22
+map: que_ba
+map: que_moc_16
+map: que_moon
+
+// Arunafeltz Seige
+// -- 2007-10-24sdata_k.gpf
+map: arug_cas01
+map: arug_cas02
+map: arug_cas03
+map: arug_cas04
+map: arug_cas05
+map: aru_gld
+
+// PVP Battle Fields: Tierra Valley, and Frebeus
+// -- 2007-11-14sdata_k.gpf
+map: bat_room
+map: bat_a01
+map: bat_a02
+map: bat_b01
+map: bat_b02
+map: que_qsch01
+map: que_qsch02
+map: que_qsch03
+map: que_qsch04
+map: que_qsch05
+map: que_qaru01
+map: que_qaru02
+map: que_qaru03
+map: que_qaru04
+map: que_qaru05
+
+// Memorial Dungeon
+// -- 2007-11-28sdata_k.gpf
+map: 1@cata
+map: 2@cata
+map: e_tower
+map: 1@tower
+map: 2@tower
+map: 3@tower
+map: 4@tower
+map: 5@tower
+map: 6@tower
+
+// 13.1 Another World
+// -- 2008-05-28sdata_k.gpf
+map: mid_camp
+map: mid_campin
+map: man_fild01
+map: man_fild03
+map: spl_fild02
+map: spl_fild03
+map: moc_fild22b
+map: que_dan01
+map: que_dan02
+map: schg_que01
+map: schg_dun01
+map: arug_que01
+map: arug_dun01
+map: 1@orcs
+map: 2@orcs
+
+// Additional Battleground.
+// -- 2008-??-???
+map: bat_c01
+map: bat_c02
+map: bat_c03
+
+// 13.2 Another World
+// -- 2008-11-26
+map: 1@nyd
+map: 2@nyd
+map: nyd_dun01
+map: nyd_dun02
+map: manuk
+map: man_fild02
+map: man_in01
+map: splendide
+map: spl_fild01
+map: spl_in01
+map: spl_in02
+
+// 3rd Job Maps
+// -- 2009-01-29rdata_k2.gpf
+map: job3_arch01
+map: job3_arch02
+map: job3_arch03
+map: job3_guil01
+map: job3_guil02
+map: job3_guil03
+map: job3_rang01
+map: job3_rang02
+map: job3_rune01
+map: job3_rune02
+map: job3_rune03
+map: job3_war01
+map: job3_war02
+map: jupe_core2
+
+// ???
+// -- 2009-05-27rdata_k.gpf
+map: moc_para01
+
+// Brasilis Maps
+// -- 2009-08-05rdata_k.gpf
+map: brasilis
+map: bra_in01
+map: bra_fild01
+map: bra_dun01
+map: bra_dun02
+
+// ???
+// -- 2009-09-30rdata_k.gpf
+map: s_atelier
+
+// 13.3 El Discastes
+// -- 2009-12-09rdata_k.gpf
+map: dicastes01
+map: dicastes02
+map: dic_in01
+map: dic_fild01
+map: dic_fild02
+map: dic_dun01
+map: dic_dun02
+map: job3_gen01
+map: job3_sha01
+
+// Localized Event Maps
+//map: evt_zombie
+//map: evt_coke
+
+// Unknown Maps
+//ac_sl_area
+//ac_cl_hall
+//ac_cl_room
+//jp_s_dun11
+
+// 14.1 Bifrost
+// -- 2010-06-09rdata_x.gpf
+map: mora
+map: bif_fild01
+map: bif_fild02
+map: 1@mist
+
+// Dewata Maps
+// -- 2010-09-15rdata_x.gpf
+map: dewata
+map: dew_in01
+map: dew_fild01
+map: dew_dun01
+map: dew_dun02
+
+// ???
+// -- 2010-10-06rdata_x.gpf
+map: que_house_s
+
+// Malangdo Maps
+// -- 2010-11-03rdata_x.gpf
+map: malangdo
+map: mal_in01
+map: mal_in02
+map: mal_dun01
+map: 1@pump
+map: 2@pump
+map: 1@cash
+
+// Undersea Tunnel Expansion
+// -- 2010-11-10rdata_x.gpf
+map: iz_dun05
+
+// ???
+// -- 2010-12-01data_x.gpf
+map: evt_mobroom
+
+// ???
+map: dic_dun03
+//map: mjolnir_04_1
+map: evt_swar_b
+map: evt_swar_r
+map: evt_swar_s
+map: evt_swar_t
+
+// Lighthalzen Dungeon F4, Wolfchev's Laboratory
+// -- 2011-03-16rdata_x.gpf
+map: 1@lhz
+map: lhz_dun04
+map: que_lhz
+
+// Hall Of Abyss
+// -- 2011-06-15rdata_x.gpf
+map: gld2_ald
+map: gld2_gef
+map: gld2_pay
+map: gld2_prt
+map: gld_dun01_2
+map: gld_dun02_2
+map: gld_dun03_2
+map: gld_dun04_2
+
+// Port Malaya
+// -- 2011-08-30rdata_j.gpf
+map: malaya
+map: job_ko
+map: ma_scene01
+map: 1@ma_b
+map: 1@ma_c
+map: 1@ma_h
+map: ma_in01
+map: ma_dun01
+map: ma_fild01
+map: ma_fild02
+map: ma_zif01
+map: ma_zif02
+map: ma_zif03
+map: ma_zif04
+map: ma_zif05
+map: ma_zif06
+map: ma_zif07
+map: ma_zif08
+map: ma_zif09
+
+// -- 2011-11-30data_j3.gpf
+map: new_event
+
+// 14.2 Eclage
+// -- 2011-11-30rdata_j.gpf
+map: eclage
+map: ecl_fild01
+map: ecl_tdun01
+map: ecl_tdun02
+map: ecl_tdun03
+map: ecl_tdun04
+map: que_avan01
+map: 1@ecl
+map: ecl_in01
+map: ecl_in02
+map: ecl_in03
+map: ecl_in04
+map: ecl_hub01
+
+// Pyramids Basement Nightmare Mode
+// -- 2011-11-30rdata_j2.gpf
+map: moc_prydn1
+map: moc_prydn2
+
+// Izlude Novice Tutorials
+// -- 2012-03-07aDataSak_sc.gpf
+map: iz_ac01
+map: iz_ac02
+map: treasure_n1
+map: treasure_n2
+map: iz_int
+map: iz_ng01
+map: iz_int01
+map: iz_int02
+map: iz_int03
+map: iz_int04
+
+// War of Emperium TE
+// -- 2012-04-18aData_sc.gpf
+map: iz_ac01_a
+map: iz_ac02_a
+map: iz_ac01_b
+map: iz_ac02_b
+map: iz_ac01_c
+map: iz_ac02_c
+map: iz_ac01_d
+map: iz_ac02_d
+map: te_prtcas01
+map: te_prtcas02
+map: te_prtcas03
+map: te_prtcas04
+map: te_prtcas05
+map: te_aldecas1
+map: te_aldecas2
+map: te_aldecas3
+map: te_aldecas4
+map: te_aldecas5
+map: prt_fild08a
+map: prt_fild08b
+map: prt_fild08c
+map: prt_fild08d
+map: izlude_a
+map: izlude_b
+map: izlude_c
+map: izlude_d
+map: te_prt_gld
+map: te_alde_gld
+map: teg_dun01
+map: teg_dun02
+
+// Glast Heim Memorial Dungeon / Nightmare Mode
+// -- 2012-05-16rData_sc.gpf
+map: 1@gl_k
+map: 2@gl_k
+map: gl_chyard_
+map: gl_cas02_
+
+// -- 2012-06-13rData_sc.gpf
+map: evt_bomb
+
+// Wave Mode Memorial Dungeon
+// -- 2012-07-25rData_sc.gpf
+map: 1@def01
+map: 1@def02
+map: 1@def03
+
+// Heroes' Trails - Part 1
+// -- 2012-08-08rData_sc.gpf
+map: 1@gef
+map: 1@face
+map: 1@sara
+map: 1@gef_in
+map: dali
+map: dali02
+
+// Heroes' Trails - Part 2
+map: 1@ge_st
+map: 1@spa
+map: 1@tnm1
+map: 1@tnm2
+map: 1@tnm3
+
+// EP 14.3
+map: 1@dth1
+map: 1@dth2
+map: 1@dth3
+map: 1@eom
+map: 1@jtb
+map: 1@rev
+map: 1@xm_d
+map: moro_cav
+map: moro_vol
+
+// ???
+map: silk_lair
+
+// Clock Nightmare Mode
+map: c_tower2_
+map: c_tower3_
+
+// EP 15.1 Fantasmagorica
+map: 1@mcd
+map: ver_eju
+map: ver_tunn
+map: verus03
+map: verus04
+
+// Rebellion Job Change Map
+map: job_gun
+
+// Heroes' Trails Part III - Airship Assault
+map: 1@air1
+map: 1@air2
+map: 1@glast
+
+// Biochemical Laboratory Nightmare
+map: lhz_dun_n
+
+// ???
+map: 1@gl_kh
+map: 2@gl_kh
+
+// EP 15.2 Memory Record
+map: 1@lab
+map: 1@uns
+map: un_bk_q
+map: un_bunker
+map: un_myst
+map: verus01
+map: verus02
+
+// Paradise Group Market
+map: paramk
+
+//------------------------- Clone Maps ---------------------------
+//------------------------- Extra Maps ---------------------------
+
+// Ragnarok World Championship 2004
+// Requires: RWC 2004 Client
+// or Akaru's SuperGRF 1.64 or newer
+//map: rwc01
+//map: rwc02
+//map: rwc03
+
+// Ragnarok World Championship 2009
+// Requires: RWC 2009 Map files
+//map: 2009rwc_f01
+//map: 2009rwc_01
+//map: 2009rwc_02
+//map: 2009rwc_03
+//map: 2009rwc_04
+
+// Ragnarok World Championship 2008?
+// Requires: RWC 2008 Map files?
+//map: 2008rwc_04
+
+//Christmas & Sakura Special
+//Requires Akaru's SuperGRF 1.1 or newer
+//map: prontera_x
+//map: alberta_x
+//map: aldebaran_x
+//map: geffen_x
+//map: izlude_x
+//map: prt_church_x
+//map: prontera_s
+//map: pay_arche_s
+
+//Fenced Lutie
+//Requires Akaru's SuperGRF 1.23 or newer
+//map: xmas_old
+
+//Alpha Maps
+//Requires adata.grf containing alpha maps and data
+//map: fay_vilg00
+//map: fay_vilg01
+//map: gef_vilg00
+//map: gef_vilg01
+//map: moc_dugn01
+//map: moc_dugn02
+//map: moc_fild01
+//map: moc_fild02
+//map: moc_fild03
+//map: moc_fild04
+//map: moc_intr00
+//map: moc_intr01
+//map: moc_intr02
+//map: moc_intr04
+//map: moc_vilg00
+//map: moc_vilg01
+//map: moc_vilg02
+//map: probemap
+//map: probemap02
+//map: prt_cstl01
+//map: prt_dugn00
+//map: prt_dugn01
+//map: prt_fild00
+//map: prt_fild01
+//map: prt_fild03
+//map: prt_fild04
+//map: prt_fild05
+//map: prt_intr01
+//map: prt_intr01_a
+//map: prt_intr02
+//map: prt_vilg00
+//map: prt_vilg01
+//map: prt_vilg02
+//map: tank_test
+//map: tank_test2
+//map: test

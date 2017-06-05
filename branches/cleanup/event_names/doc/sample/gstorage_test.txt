@@ -1,0 +1,36 @@
+//===== rAthena Script =======================================
+//= Sample: Guild Storage Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Contains commands needed for a guild warehouse NPC.
+//============================================================
+
+prontera,165,188,4	script	Guild Warehouse	112,{
+	cutin "kafra_06",2;
+
+	mes "[Guild Warehouse Coupler]";
+	mes "This is the guild warehouse coupler service."; 
+	mes "You will not receive zeny for this is a test.";
+	next;
+	if (select("Access Guild Warehouse","Exit") != 1) {
+		mes "[Guild Warehouser]";
+		mes "Come back whenever you want.";
+		cutin "kafra_06", 255;
+		close;
+	}
+
+	.@flag = guildopenstorage;
+	if (.@flag == 1) {
+		mes "[Guild Warehouse]";
+		mes "The guild warehouse is being used right now.";
+		mes "Please wait a while, then come back.";
+	} else if (.@flag == 2) {
+		mes "[Guild Warehouse]";
+		mes "You can't use this service if you're not in a guild!";
+	}
+	cutin "kafra_06",255;
+	close;
+}

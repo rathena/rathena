@@ -1,0 +1,165 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Mission [11 - 25]
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 11 - 25.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Some little optimization here and there. [Masao]
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Bug fixes. [Capuche]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+moc_para01,36,38,3	script	Mission [11 - 25]#Tuto	4_BOARD3,{
+	if (!callfunc("F_HasEdenGroupMark")) {
+		mes "- You need to have an -";
+		mes "- ^4d4dff'Eden Group Mark'^000000 -";
+		mes "- to receive these missions. -";
+		close;
+	}
+	for ( .@i = 11124; .@i < 11134; .@i++ )
+		if (checkquest(.@i,PLAYTIME) == 2) erasequest .@i;
+	for( .@i = 11114; .@i < 11124; .@i++ ) {
+		.@j = checkquest(.@i,HUNTING);
+		if (.@j == 2) {
+			mes " - You must collect your - ";
+			mes " - reward before starting - ";
+			mes " - a new mission. - ";
+			mes " ";
+			mes " - Manager : Spike - ";
+			close;
+		}
+		else if (.@j >= 0) {
+			mes " - You can only request - ";
+			mes " - one mission at a time. - ";
+			mes " ";
+			mes " - Manager : Spike - ";
+			close;
+		}
+	}
+	if (BaseLevel < 11) {
+		mes " - There are no tasks - ";
+		mes " - open for you right now. - ";
+		close;
+	}
+	if (BaseLevel > 25) {
+		mes " - These missions are too - ";
+		mes " - easy for your caliber - ";
+		mes " - search for a more level - ";
+		mes " - appropriate mission. - ";
+		close;
+	}
+	mes " - Mission bulletin board -";
+	mes " - for beginners. -";
+	mes " ";
+	mes " - Manager : Spike -";
+	next;
+	switch(select("Hornet Hunting:Condor Hunting:Grasshopper's Leg:Worm Tail Hunting:Spore Hunting:Pest Control:Muka Hunting:Familiar Hunting:Collect Feathers:Collect Poison Spores:Cancel")) {
+		case 1: callsub L_Quest,11114,"Hornet Hunting"," - Hunt 10 ^4d4dff'Hornets'^000000 - "," - northwest of Prontera. - ";
+		case 2: callsub L_Quest,11115,"Condor Hunting"," - Hunt 20 ^4d4dff'Condors'^000000 - "," - south of Morroc. - ";
+		case 3: callsub L_Quest,11116,"Grasshopper's Leg"," - Hunt 10 ^4d4dff'Rockers'^000000 - "," - southwest of Prontera and - "," - bring 10 ^4d4dffGrasshopper's Legs^000000. - ";
+		case 4: callsub L_Quest,11117,"Worm Tail Hunting"," - Hunt 20 ^4d4dff'Worm Tails'^000000 - "," - southeast of Payon.- ";
+		case 5: callsub L_Quest,11118,"Spore Hunting"," - Hunt 30 ^4d4dff'Spores'^000000 - "," - around Payon. - ";
+		case 6: callsub L_Quest,11119,"Pest Control"," - Hunt 20 ^4d4dffThief Bug Eggs^000000 - "," - in the Prontera Culvert - "," - and bring 10 ^4d4dffChrysalis^000000. - ";
+		case 7: callsub L_Quest,11120,"Muka Hunting"," - Hunt 20 ^4d4dff'Muka'^000000 - "," - south of Prontera. - ";
+		case 8: callsub L_Quest,11121,"Familiar Hunting"," - Hunt 20 ^4d4dffFamiliar^000000 - "," - in the Culvert Sewers - "," - west of Prontera. - ";
+		case 9: callsub L_Quest,11122,"Collect Feathers"," - Hunt 30 ^4d4dff'Peco Pecos'^000000 - "," - south of Prontera. - ";
+		case 10: callsub L_Quest,11123,"Collect Poison Spores"," - Hunt 30 ^4d4dffPoison Spores^000000 - "," - inside the Geffen Tower and - "," - bring 5 ^4d4dffPoison Spores^000000. - ";
+		case 11:
+			mes " - Stop reading the bulletin board. - ";
+			close;
+	}
+
+L_Quest:
+	if (checkquest(getarg(0)+10,PLAYTIME) == 1) {
+		mes " - Mission ^4d4dff"+ getarg(1) +"^000000 - ";
+		mes " - is already finished for today. - ";
+		mes " ";
+		mes " - Manager : Spike - ";
+		close;
+	}
+	mes " - Mission '"+ getarg(1) +"' - ";
+	for ( .@i = 2; .@i < getargcount(); .@i++ )
+		mes getarg(.@i);
+	mes " ";
+	mes " - Manager : Spike - ";
+	next;
+	if (select("I will do this mission.:Look for other missions.") == 2) {
+		mes " - Let's search for -";
+		mes " - other missions. - ";
+		close;
+	}
+	for ( .@i = 2; .@i < getargcount(); .@i++ )
+		mes getarg(.@i);
+	setquest getarg(0);
+	close;
+}
+
+moc_para01,32,30,6	script	Spike	4_F_CHILD,{
+	for( .@i = 11114; .@i < 11124; .@i++ ) {
+		.@j = checkquest(.@i,HUNTING);
+		if (.@j == 2) {
+			switch(.@i) {
+				case 11114: callsub L_Quest,.@i,"Hornet Hunting",900;
+				case 11115: callsub L_Quest,.@i,"Condor Hunting",1800;
+				case 11116: callsub L_Quest,.@i,"Grasshopper's Leg",1400,940,10;
+				case 11117: callsub L_Quest,.@i,"Worm Tail Hunting",2600;
+				case 11118: callsub L_Quest,.@i,"Spore Hunting",3900;
+				case 11119: callsub L_Quest,.@i,"Extirpate Insects",2900,915,10;
+				case 11120: callsub L_Quest,.@i,"Muka Hunting",3200;
+				case 11121: callsub L_Quest,.@i,"Familiar Hunting",3200;
+				case 11122: callsub L_Quest,.@i,"Collect Feathers",5400;
+				case 11123: callsub L_Quest,.@i,"Collect Poison Spores",6000,7033,5;
+			}
+		}
+		else if (.@j >= 0) {
+			mes "[Spike]";
+			mes "You haven't finished your mission yet.";
+			mes "Keep up the good work. You are almost done.";
+			close;
+		}
+	}
+	mes "[Spike]";
+	mes "Are you looking for a job?";
+	mes "We always have lots of work to do.";
+	next;
+	mes "[Spike]";
+	mes "Why don't you look around and find some interesting tasks?";
+	close;
+
+L_Quest:
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id,HUNTING) == 2) {
+		.@item_req = getarg(3,0);
+		.@req_amount = getarg(4,0);
+		if (.@item_req) {
+			if (countitem(.@item_req) < .@req_amount) {
+				mes "[Spike]";
+				mes "You don't have enough "+ getitemname(.@item_req) +".";
+				mes "You need to bring "+ .@req_amount +" "+ getitemname(.@item_req) +".";
+				close;
+			}
+		}
+		mes "[Spike]";
+		mes "Hmm... let me see~";
+		mes "You have completed the '"+ getarg(1) +"' mission.";
+		next;
+		mes "[Spike]";
+		mes "Good work~!!";
+		mes "Our client is so happy with your work. He will appreciate what you have done.";
+		mes "Please help us again. Thanks!";
+		if (.@item_req)
+			delitem .@item_req,.@req_amount;
+		erasequest .@quest_id;
+		setquest .@quest_id+10;
+		getexp getarg(2),0;
+		close;
+	}
+}

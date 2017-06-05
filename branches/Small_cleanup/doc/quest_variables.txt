@@ -1,0 +1,108 @@
+//===== rAthena Documentation ================================
+//= Permanent Quest Variables
+//===== By: ==================================================
+//= Lupus
+//===== Last Updated: ========================================
+//= 20120826
+//===== Description: =========================================
+//= This file should help to understand and manage bit-wise 
+//= quest variables. You can store up to 31 boolean value into 
+//= a single variable.
+//============================================================
+
+Variable: MISC_QUEST
+--------------------------------------------------------------
+
+Quest:		Juice Maker Quest
+Info:		How to make juices. This bit keeps final state of the quest.
+How to set:	set MISC_QUEST, MISC_QUEST | 1;
+How to check:	if (MISC_QUEST & 1) {}
+
+Quest:		Tempestra Quest
+Info:		Determines if player has given a potion to Tempestra.
+How to set:	set MISC_QUEST, MISC_QUEST | 2;
+How to check:	if (MISC_QUEST & 2) {}
+
+Quest:		Morgenstein Quest
+Info:		How to make Mixture & Counteragent. This bit keeps final state of the quest.
+How to set:	set MISC_QUEST, MISC_QUEST | 4;
+How to check:	if (MISC_QUEST & 4) {}
+
+Quest:		Prontera Culvert Quest
+Info:		Determines if player can enter Prontera Culverts.
+How to set:	set MISC_QUEST, MISC_QUEST | 8;
+How to check:	if (MISC_QUEST & 8) {}
+
+Quest:		Edgar's Offer
+Info:		Cheap ticket from Izlude to Alberta. This bit keeps final state of the quest.
+How to set:	set MISC_QUEST, MISC_QUEST | 16;
+How to check:	if (MISC_QUEST & 16) {}
+
+Quest:		Piano Quest
+Info:		The only way from Niflheim to Umbala.
+How to set:	set MISC_QUEST, MISC_QUEST | 32;
+How to check:	if (MISC_QUEST & 32) {}
+
+Quest:		Bio Ethics Quest
+Info:		Quest for homunculus skill for alchemists. This bit keeps final state of the quest.
+How to set:	set MISC_QUEST, MISC_QUEST|64;
+How to check:	if (MISC_QUEST & 64) {}
+
+Quest:		DTS Warper
+Info:		Determines if player has already voted.
+How to set:	set MISC_QUEST, MISC_QUEST|128;
+How to check:	if (MISC_QUEST & 128) {}
+
+Quest:		-
+Info:		-
+How to set:	set MISC_QUEST, MISC_QUEST | 256;
+How to check:	if (MISC_QUEST & 256) {}
+
+Quest:		Cube Room
+Info:		Lighthalzen Cube Room quest (to enter Bio-Lab)
+How to set:	set MISC_QUEST, MISC_QUEST | 512;
+How to check:	if (MISC_QUEST & 512) {}
+
+Quest:		Reset Skills Event
+Info:		Yuno, Hypnotist Teacher
+How to set:	set MISC_QUEST, MISC_QUEST | 1024;
+How to check:	if (MISC_QUEST & 1024) {}
+
+Quest:		Slotted Arm Guard Quest
+Info:		Ninja Job Room, Boshuu
+How to set:	set MISC_QUEST, MISC_QUEST | 2048;
+How to check:	if (MISC_QUEST & 2048) {}
+
+Quest:		Improved Arm Guard Quest
+Info:		Ninja Job Room, Basshu
+How to set:	set MISC_QUEST, MISC_QUEST | 4096;
+How to check:	if (MISC_QUEST & 4096) {}
+
+Quest:		Rachel Sanctuary Quest
+Info:		Determines if player can access Rachel Santuary.
+How to set:	set MISC_QUEST, MISC_QUEST | 8192;
+How to check:	if (MISC_QUEST & 8192) {}
+
+Quest:		Message Delivery Quest
+Info:		Send a message to Elly, in Niflheim from Erious.
+How to set:	set MISC_QUEST, MISC_QUEST | 16384;
+How to check:	if (MISC_QUEST & 16384) {}
+
+Quest:		Umbala Domestic Dispute?
+Info:		Reward: 1 Yggdrasil Leaf.
+How to set:	set MISC_QUEST, MISC_QUEST | 32768;
+How to check:	if (MISC_QUEST & 32768) {}
+
+Quest:		Access to the Turtle Island
+Info:		Reward: ~1 OCA, OVB, GB.
+How to set:	set MISC_QUEST, MISC_QUEST | 65536;
+How to check:	if (MISC_QUEST & 65536) {}
+
+
+Variable: MISC_QUEST2
+--------------------------------------------------------------
+
+Quest:		-
+Info:		-
+How to set:	set MISC_QUEST2, MISC_QUEST2 | ?;
+How to check:	if (MISC_QUEST2 & ?) {}

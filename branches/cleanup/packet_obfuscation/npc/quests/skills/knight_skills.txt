@@ -1,0 +1,530 @@
+//===== rAthena Script ======================================= 
+//= Knight Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen, Samuray22
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Charge Attack
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+prt_in,85,99,3	script	Knight#kabuto	734,{
+	if (BaseJob == Job_Knight) {
+		if (KNGT_SK == 10) {
+			mes "[Essofeit]";
+			mes "Ah, it must be grand to";
+			mes "be an adventuring Knight";
+			mes "in this world. You must have";
+			mes "encountered all sorts of";
+			mes "dangerous monsters and";
+			mes "fearsome enemies, right?";
+			next;
+			mes "[Essofeit]";
+			mes "I'm almost jealous of";
+			mes "all the great experiences";
+			mes "that you must be having.";
+			mes "Someday, you'll have to tell";
+			mes "me your own stories of bravery.";
+			close;
+		}
+		if (KNGT_SK == 9 && getskilllv("KN_CHARGEATK") == 0) {
+			mes "[Essofeit]";
+			mes "Ah, I see that you've";
+			mes "made tremendous progress";
+			mes "in your pursuit of strength.";
+			mes "Transcendance is no small";
+			mes "feat, and it is a great honor";
+			mes "to achieve Lord Knight rank.";
+			next;
+			mes "[Essofeit]";
+			mes "However, I'm aware of the";
+			mes "drawback of memory erasure.";
+			mes "Therefore, I assume you're";
+			mes "here to learn the Charge Attack";
+			mes "skill once more. It will be my";
+			mes "pleasure to instruct you again.";
+			next;
+			mes "[Essofeit]";
+			mes "Charge Attack is an active skill that consumes 40 SP to damage";
+			mes "one target. If you're further from the target, you'll increase the";
+			mes "skill's damage and the delay";
+			mes "before damage is inflicted.";
+			next;
+			mes "[Essofeit]";
+			mes "During this delay, you will";
+			mes "be immobilized. Therefore,";
+			mes "the cost of increased damage";
+			mes "is greater risk to yourself.";
+			mes "For now, it would be best to practice this skill on your own.";
+			set KNGT_SK,10;
+			skill "KN_CHARGEATK",1,SKILL_PERM;
+			next;
+			mes "[Essofeit]";
+			mes "Good luck on your";
+			mes "adventures, Lord Knight.";
+			mes "I'm sure you'll make good";
+			mes "use of the Charge Attack";
+			mes "and bring pride to the";
+			mes "Prontera Chivalry.";
+			close;
+		}
+		if (KNGT_SK == 9) {
+			mes "[Essofeit]";
+			mes "Ah, it must be grand to";
+			mes "be an adventuring Knight";
+			mes "in this world. You must have";
+			mes "encountered all sorts of";
+			mes "dangerous monsters and";
+			mes "fearsome enemies, right?";
+			next;
+			mes "[Essofeit]";
+			mes "I'm almost jealous of";
+			mes "all the great experiences";
+			mes "that you must be having.";
+			mes "Someday, you'll have to tell";
+			mes "me your own stories of bravery.";
+			close;
+		}
+		if (KNGT_SK == 8) {
+			mes "[Essofeit]";
+			mes "I've named this skill,";
+			mes "''Charge Attack.'' It's not";
+			mes "a fancy name, but it's simple";
+			mes "and direct enough for you to";
+			mes "understand how it works.";
+			mes "Now let me teach it to you...";
+			next;
+			mes "[Essofeit]";
+			mes "Charge Attack is an active skill that consumes 40 SP to damage";
+			mes "one target. If you're further from the target, you'll increase the";
+			mes "skill's damage and the delay";
+			mes "before damage is inflicted.";
+			next;
+			mes "[Essofeit]";
+			mes "During this delay, you will";
+			mes "be immobilized. Therefore,";
+			mes "the cost of increased damage";
+			mes "is greater risk to yourself.";
+			mes "For now, it would be best to practice this skill on your own.";
+			set KNGT_SK,9;
+			skill "KN_CHARGEATK",1,SKILL_PERM;
+			next;
+			mes "[Essofeit]";
+			mes "I hope you make good";
+			mes "use of the Charge Attack";
+			mes "skill. Just like you, I will be";
+			mes "doing my best to bring honor";
+			mes "to the Knighthood with my";
+			mes "strength and courage!";
+			close;
+		}
+		if (KNGT_SK == 7 && countitem(530) > 4 && countitem(748) > 2) {
+			mes "[Essofeit]";
+			mes "The concept of honor";
+			mes "seems to be lost on today's";
+			mes "Knights. No longer do they";
+			mes "appreciate the meaning of";
+			mes "the word ''chivalry'' or the";
+			mes "noble pursuit for strength...";
+			next;
+			mes "[Essofeit]";
+			mes "Back in my day, Knights";
+			mes "were strong enough to get";
+			mes "at least 5 Candy Canes and";
+			mes "3 Witherless Roses through";
+			mes "hunting alone! But Knights";
+			mes "these days have grown soft...";
+			next;
+			if (select("Give him Candy Canes and Witherless Roses:Cancel") == 1) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "There are still Knights";
+				mes "out there who believe in";
+				mes "honorably risking our lives";
+				mes "to achieve true strength...";
+				next;
+				mes "[Essofeit]";
+				mes "You...";
+				mes "You really understand.";
+				mes "You truly know the value";
+				mes "of hardship. It makes me";
+				mes "glad to see that a true";
+				mes "Knight like you still exists.";
+				next;
+				mes "[Essofeit]";
+				mes "Hahaha, finally, I've";
+				mes "found someone I can call";
+				mes "a true comrade. We're the";
+				mes "last of a dying breed if you";
+				mes "hadn't noticed, my friend. But";
+				mes "there is hope for Knights...";
+				next;
+				mes "[Essofeit]";
+				mes "It's decided, then.";
+				mes "As long as we live,";
+				mes "chivalry will never die!";
+				mes "Thanks to you, my faith";
+				mes "in the Knighthood has";
+				mes "been rekindled.";
+				next;
+				mes "[Essofeit]";
+				mes "In my recognition of you";
+				mes "as a true Knight, I will teach";
+				mes "you a special skill that I've";
+				mes "been researching recently. Why";
+				mes "don't you come back after I've";
+				mes "completed the preparations?";
+				delitem 530,5; //Candy_Striper
+				delitem 748,3; //Witherless_Rose
+				set KNGT_SK,8;
+				close;
+			}
+			mes "[Essofeit]";
+			mes "It's shameful...";
+			mes "Most new recruits into";
+			mes "the Prontera Chivalry are";
+			mes "more concerned about their";
+			mes "pensions than their honor!";
+			close;
+		}
+		if (KNGT_SK == 7) {
+			mes "[Essofeit]";
+			mes "Maybe I'm romanticizing";
+			mes "the past, but I don't agree";
+			mes "with all the bureaucracy";
+			mes "that is present today in";
+			mes "the Prontera Chivalry.";
+			next;
+			mes "[Essofeit]";
+			mes "Although, I admit";
+			mes "that I was a lot happier";
+			mes "back when honor was all";
+			mes "you needed. Nowadays, it ";
+			mes "seems like anyone can be";
+			mes "a Knight. Er, no offense~";
+			close;
+		}
+		if (KNGT_SK == 6) {
+			mes "[Essofeit]";
+			mes "So you've seen the Knights";
+			mes "of the 7th Division for what";
+			mes "they really are, eh? As a fellow Knight, you may understand my";
+			mes "feelings of disappointment.";
+			next;
+			mes "[Essofeit]";
+			mes "It's so disheartening...";
+			mes "I don't why we're Knights";
+			mes "or what we're training for.";
+			mes "When I was your age, well,";
+			mes "I wanted to risk my life and";
+			mes "achieve true strength.";
+			next;
+			mes "[Essofeit]";
+			mes "But... I'm sure that you";
+			mes "don't want to hear an old";
+			mes "man's tall tales. All those";
+			mes "wonderful battles, that glorious camaraderie forged between";
+			mes "rivals... It's all in the past.";
+			next;
+			set KNGT_SK,7;
+			mes "[Essofeit]";
+			mes "Maybe it's better that";
+			mes "I forget all about my old";
+			mes "fashioned ideals. I guess";
+			mes "times have changed, and that";
+			mes "my idea of chivalry may be dead.";
+			close;
+		}
+		if (KNGT_SK == 1) {
+			mes "[Essofeit]";
+			mes "Hm, why don't take a";
+			mes "tour of the 7th Division";
+			mes "and see the attitude of my";
+			mes "comrades for yourself? You'll";
+			mes "see Grand Master Maroujje";
+			mes "training the recruits outside.";
+			close;
+		}
+		if (KNGT_SK == 0) {
+			mes "[Essofeit]";
+			mes "Greetings. I am Essofeit";
+			mes "Lageiya of the 7th Division";
+			mes "of the Prontera Chivalry.";
+			mes "As a proud Knight upholding";
+			mes "the principles of honor and";
+			mes "chivalry, I am at your service.";
+			next;
+			mes "[Essofeit]";
+			mes "May I ask which division";
+			mes "you are from? Ah, you're";
+			mes "a Knight that's been granted";
+			mes "royal permisson to journey";
+			mes "as you please. That must be";
+			mes "great, the freedom you have.";
+			next;
+			mes "[Essofeit]";
+			mes "Sadly, the Division of";
+			mes "which I am member is too";
+			mes "bureaucratic. I believe that my";
+			mes "comrades are more concerned";
+			mes "with their pensions than with chivalry, or defending the weak.";
+			next;
+			mes "[Essofeit]";
+			mes "Even if we wanted to be";
+			mes "more active, there are too";
+			mes "many regulations that hamper";
+			mes "the good we can do. Over time,";
+			mes "the situation has grown much worse. But don't take my word...";
+			next;
+			mes "[Essofeit]";
+			mes "Perhaps it will be better";
+			mes "if you visited the 7th Division";
+			mes "for yourself and speak to the";
+			mes "other Knights that are training. Hopefully, you will see what";
+			mes "I have seen for a long time...";
+			set KNGT_SK,1;
+			close;
+		}
+	}
+	mes "[Essofeit]";
+	mes "Greetings. I am Essofeit";
+	mes "Lageiya of the 7th Division";
+	mes "of the Prontera Chivalry.";
+	mes "As a proud Knight upholding";
+	mes "the principles of honor and";
+	mes "chivalry, I am at your service.";
+	next;
+	mes "[Essofeit]";
+	mes "I only wish the others in";
+	mes "my division would appreciate";
+	mes "my values, and the true value";
+	mes "of spilled blood. They may be";
+	mes "my comrades, but I find it";
+	mes "difficult to trust them.";
+	close;
+}
+
+prontera,69,351,0	script	#tour	111,5,5,{
+//OnTouch2:
+OnTouch:
+	if (KNGT_SK > 2)
+		end;
+	if (KNGT_SK <= 2) {
+		mes "[?]";
+		mes "Kiiiiiiai~!";
+		mes "Yaaaaaaaaap!";
+		mes "Hoo! Haa! Haiyah!";
+		next;
+		mes "[?]";
+		mes "Si-Aiyah!";
+		mes "Rowr rowr rowr";
+		mes "GrrrrrrrraaAAHH!";
+		next;
+		mes "^3355FFThese Knights appear to be";
+		mes "putting themselves through";
+		mes "some gruelingly difficult";
+		mes "training. But as you listen";
+		mes "a little more closely, their";
+		mes "screams seem a bit dramatized.^000000";
+		if (KNGT_SK == 1) set KNGT_SK,2;
+		close;
+	}
+	mes "^3355FFThis group of Knights";
+	mes "appear to be undergoing";
+	mes "so pretty grueling training,";
+	mes "judging from the wailing pitch";
+	mes "of their battle screams.^000000";
+	close;
+}
+
+prontera,72,352,7	script	Grand Master	733,{
+	mes "[Grand Master]";
+	if (KNGT_SK == 2 || KNGT_SK == 3) {
+		mes "Alright men, you don't";
+		mes "need to put ^333333that^000000 much effort";
+		mes "into your training. You have";
+		mes "to do this everyday, so make";
+		mes "sure that you don't exhaust";
+		mes "yourselves unnecessarily.";
+		next;
+		mes "[Grand Master]";
+		mes "The most important thing";
+		mes "is that you don't injure";
+		mes "yourselves. Take it easy";
+		mes "and make sure that you";
+		mes "don't pull a muscle.";
+		mes "Um, that's an order!";
+		if (KNGT_SK == 2) set KNGT_SK,3;
+		close;
+	}
+	mes "Put your backs into it,";
+	mes "men! I know training can";
+	mes "be tough, but it'll make";
+	mes "you harder, better, faster and";
+	mes "stronger! Prontera's safety is your responsibility, Knights!";
+	next;
+	mes "[Grand Master]";
+	mes "...";
+	mes "Oh, I'm just kidding around.";
+	mes "Let's go take a break, guys.";
+	close;
+}
+
+prontera,78,354,3	script	Knight#zabii	734,{
+	if (KNGT_SK == 3 || KNGT_SK == 4) {
+		mes "[Zabi]";
+		mes "I guess we're more like";
+		mes "government employees";
+		mes "than actual Knights. We're";
+		mes "overpaid, and don't really";
+		mes "have to do anything other";
+		mes "than pretend to train.";
+		next;
+		mes "[Zabi]";
+		mes "Me? I plan on milking";
+		mes "the system for all it's";
+		mes "worth. Work here a few";
+		mes "years, then live the rest";
+		mes "of my life on a fat pension.";
+		mes "Yeah, that's gonna be great.";
+		next;
+		mes "[Zabi]";
+		mes "Whoa-whoa-whoa,";
+		mes "the Grand Master's";
+		mes "looking this way! Quit";
+		mes "talkin' to me and let me";
+		mes "grunt like I've got a hernia.";
+		mes "Hooooo-AH! BWAH! HAI-YAH!";
+		if (KNGT_SK == 3) set KNGT_SK,4;
+		close;
+	}
+	mes "[A Knight]";
+	mes "Hooooo-AH!";
+	mes "BWAH! HAI-YAH!";
+	mes "Oh man, I can barely";
+	mes "breathe from all of this";
+	mes "arduous training. Ugh,";
+	mes "so incredibly enervated...";
+	close;
+}
+
+prontera,73,357,5	script	Knight#drake	734,{
+	if (KNGT_SK == 4 || KNGT_SK == 5) {
+		mes "[Gon]";
+		mes "What'll I get with";
+		mes "my next paycheck?";
+		mes "Ah~ I should get a nice";
+		mes "necklace for my wife.";
+		mes "I just know she'll love it!";
+		next;
+		if (KNGT_SK == 4) set KNGT_SK,5;
+		mes "[Gon]";
+		mes "Let's see, how many";
+		mes "more days until payday?";
+		mes "One, two... Hmm. For some";
+		mes "reason it never seems to";
+		mes "come soon enough, you know?";
+		close;
+	}
+	mes "[A Knight]";
+	mes "Maybe I'm not not so good";
+	mes "at fighting or defending the";
+	mes "weak, but this Knight position";
+	mes "is a pretty good job. Working";
+	mes "here really lets me save up";
+	mes "cash to invest in my future.";
+	next;
+	mes "[A Knight]";
+	mes "We may never get to see";
+	mes "any action, but at least";
+	mes "I can take some pride";
+	mes "in being a Knight.";
+	close;
+}
+
+prontera,78,357,3	script	Knight#sasword	734,{
+	mes "[Jiya]";
+	if (KNGT_SK == 5 || KNGT_SK == 6) {
+		mes "Man, this division of";
+		mes "the chivalry doesn't seem";
+		mes "to have too much potential.";
+		mes "Most of us here are pretty";
+		mes "second rate, except maybe";
+		mes "for that one guy, Essofeit.";
+		next;
+		set KNGT_SK,6;
+		mes "[Jiya]";
+		mes "As for me, I don't have too";
+		mes "much in the way of ambition.";
+		mes "As long as I do what I'm told,";
+		mes "they'll pay me. And as long";
+		mes "as I get paid, I'm happy.";
+		close;
+	}
+	mes "D-don't talk to me!";
+	mes "Gotta... muster up the...";
+	mes "Strength to... f-finish all";
+	mes "these... training exercises!";
+	mes "Alright man, c-concentrate...";
+	close;
+}
+
+prontera,66,358,5	script	Knight#gattack	733,{
+	mes "[Gatack]";
+	if (KNGT_SK == 7) {
+		mes "Wait, where's";
+		mes "Essofeit? He can't";
+		mes "just skip daily training,";
+		mes "even if he has the distinction";
+		mes "of killing countless ^FF0000Mystcases^000000";
+		mes "and ^FF0000Obeaunes^000000 in his time.";
+		next;
+		mes "[Gatack]";
+		mes "Gosh, I'm sick and tired of";
+		mes "him talking about Knighthood.";
+		mes "Essofeit insists that all Knights, even complete rookies, should be";
+		mes "able to obtain 5 Candy Canes and 3 Witherless Roses from hunting.";
+		next;
+		mes "[Gatack]";
+		mes "Hell, I just hate to hear";
+		mes "his preaching about his great";
+		mes "experiences fighting monsters.";
+		mes "But now Essofeit just researches stuff inside the building and";
+		mes "doesn't do much else...";
+		close;
+	}
+	mes "Man, Knight training";
+	mes "is pretty rough. Don't";
+	mes "they know that I'm far";
+	mes "too delicate for all this";
+	mes "strenuous activity?";
+	next;
+	mes "[Gatack]";
+	mes "Ah well, if I ever go";
+	mes "down in battle, I won't";
+	mes "be too surprised, seeing";
+	mes "as I'm one of the weakest";
+	mes "guys here. But when it happens,";
+	mes "I'll be too busy looking good.";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.4 Updated to the Official One. [Samuray22]
+//= 1.4a replaced item "names" with item id [Lupus]
+//============================================================

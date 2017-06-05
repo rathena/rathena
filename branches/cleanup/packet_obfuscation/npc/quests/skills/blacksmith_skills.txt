@@ -1,0 +1,670 @@
+//===== rAthena Script ======================================= 
+//= Blacksmith Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen, Samuray22
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Dubious Salesmanship, Greed
+//===== Additional Comments: ================================= 
+//= 1.6 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+geffen,178,72,3	script	Akkie#qsk_bs	726,{
+	if (BaseJob == Job_Blacksmith) {
+		if (BLACK_SK == 7 && getskilllv("BS_UNFAIRLYTRICK") == 0) {
+			mes "[Akkie]";
+			mes "I see that you've";
+			mes "transcended since the";
+			mes "last time we've met. Oh...";
+			mes "You must have forgotten";
+			mes "everything I've taught you.";
+			mes "Well, let me teach you again~";
+			next;
+			mes "[Akkie]";
+			mes "Actually, let me jog your";
+			mes "memory with this counterfeit";
+			mes "zeny that we made the last time. Do you remember how to perform";
+			mes "Dubious Salesmanship? You";
+			mes "should be able to use it now...";
+			set BLACK_SK,8;
+			skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
+			close;
+		}
+		else if (BLACK_SK == 8) {
+			mes "[Akkie]";
+			mes "Hi again~";
+			mes "How has the smithing";
+			mes "been coming along? Anyway,";
+			mes "it was really nice of you to";
+			mes "drop by and talk to me~";
+			next;
+			mes "[Akkie]";
+			mes "It can get a little boring";
+			mes "teaching Dubious Salesmanship";
+			mes "to Blacksmiths and Master Smiths, but somebody from our guild has";
+			mes "to do this job. Anyway, farewell and be safe in your travels, okay?";
+			close;
+		}
+		if (JobLevel > 29) {
+			if (BLACK_SK == 0) {
+				mes "[Akkie]";
+				mes "Hello there~";
+				mes "Isn't it such a";
+				mes "wonderful day today?";
+				mes "It's perfect for hunting!";
+				next;
+				mes "[Akkie]";
+				mes "Um, let me introduce myself.";
+				mes "I'm Akkie, a representative of";
+				mes "the Blacksmith Guild that has";
+				mes "been dispatched to teach the";
+				mes "Dubious Salesmanship skill to";
+				mes "Blacksmiths and Master Smiths.";
+				next;
+				mes "[Akkie]";
+				mes "This additional class";
+				mes "skill enables you to reduce";
+				mes "the amount of zeny spent to";
+				mes "cast Mammonite by 10%. This";
+				mes "Passive skill might come in";
+				mes "handy for you, "+ strcharinfo(0) +".";
+				next;
+				mes "[Akkie]";
+				mes "Although I'm new at";
+				mes "this, would you like";
+				mes "for me to teach you";
+				mes "Dubious Salesmanship?";
+				next;
+				if (select("Sure.:No, thanks.") == 1) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "Sure. I'll try learning this";
+					mes "new skill. Who knows?";
+					mes "It might be really useful.";
+					next;
+					mes "[Akkie]";
+					mes "Oh, that's great!";
+					mes "You won't regret this!";
+					mes "Now, let me explain how";
+					mes "this skill works. Um, now";
+					mes "where did I put that-- Ah.";
+					mes "Let me read these guidelines.";
+					next;
+					mes "[Akkie]";
+					mes "Using Dubious Salesmanship,";
+					mes "we can reduce Mammonite's";
+					mes "zeny cost by 10% by forging";
+					mes "fake zeny to use in the skill.";
+					mes "Since it's against enemies,";
+					mes "we can let the forgery slide.";
+					next;
+					mes "[Akkie]";
+					mes "Now, I need you to bring";
+					mes "some materials so that I can";
+					mes "demonstrate the forging of";
+					mes "counterfeit zeny. Please";
+					mes "bring me 1 Steel, 5 Coal,";
+					mes "1 Iron Hammer and... and...";
+					next;
+					mes "[Akkie]";
+					mes "Um, would you give";
+					mes "me a minute to look";
+					mes "up the information?";
+					mes "I'm sorry about th-this...";
+					mes "^333333(I thought I highlighted this";
+					mes "in the manual. Where is it?)^000000";
+					next;
+					mes "[Akkie]";
+					mes "Oh! Oh, I found it!";
+					mes "L-let me start all";
+					mes "over again. Uh...";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "............";
+					next;
+					mes "[Akkie]";
+					mes "^0000FF1 Steel^000000,";
+					mes "^0000FF5 Coal^000000,";
+					mes "^0000FF1 Iron Hammer^000000,";
+					mes "^0000FF500 zeny^000000 and";
+					mes "^0000FF1 Detrimindexta^000000. Would";
+					mes "you bring those, please?";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Sure, sure.";
+					mes "But are you actually";
+					mes "able to teach me this";
+					mes "skill? I mean...";
+					next;
+					mes "[Akkie]";
+					mes "Oh no, I knew this was going to";
+					mes "happen! I mean, um, it should";
+					mes "be fine! I've been working here";
+					mes "for 3 months a-and-- Just bring";
+					mes "me the materials and I'll prove";
+					mes "you can learn it e-easily!";
+					next;
+					mes "[Akkie]";
+					mes "You've gotta trust me!";
+					mes "You won't be disappointed,";
+					mes "I promise! This skill is sooo";
+					mes "useful! So just bring me those";
+					mes "materials soon, alright?";
+					set BLACK_SK,1;
+					close;
+				}
+				mes "[Akkie]";
+				mes "Wh-what?! But why not?";
+				mes "A-am I not good enough";
+				mes "for you? Please, I promise";
+				mes "to do my best to teach you.";
+				mes "Besides, I've got to reach";
+				mes "my quota for the guild...";
+				close;
+			}
+			else if (BLACK_SK == 1) {
+				if (countitem(999) > 0 && countitem(1003) > 4 && countitem(971) > 0 && countitem(613) > 0) {
+					if (Zeny >= 500) {
+						mes "[Akkie]";
+						mes "Oh, you came back~";
+						mes "Now let me see if you";
+						mes "brought everything we";
+						mes "need to make counterfeit";
+						mes "zeny so that I can teach";
+						mes "you Dubious Salesmanship.";
+						next;
+						mes "[Akkie]";
+						mes "Good job, it looks like";
+						mes "you've got what we need.";
+						mes "Alright, now please wait";
+						mes "while I get these materials";
+						mes "ready for forging, okay?";
+						delitem 1003,5; //Coal
+						delitem 999,1; //Steel
+						delitem 971,1; //Detrimindexta
+						delitem 613,1; //Iron_Hammer
+						set Zeny, Zeny-500;
+						set BLACK_SK,2;
+						close;
+					}
+					else {
+						mes "[Akkie]";
+						mes "Hmm, you have all the";
+						mes "forging materials, but";
+						mes "I still need 500 zeny.";
+						mes "We need that zeny to copy,";
+						mes "or we won't be able to make";
+						mes "convincing counterfeit money.";
+						close;
+					}
+				}
+				else {
+					mes "[Akkie]";
+					mes "Oh, you came back~";
+					mes "Now let me see if you";
+					mes "brought everything we";
+					mes "need to make counterfeit";
+					mes "zeny so that I can teach";
+					mes "you Dubious Salesmanship.";
+					next;
+					mes "[Akkie]";
+					mes "Hmm, you're still";
+					mes "missing a few things.";
+					mes "Let me tell you what you";
+					mes "need to bring me once again";
+					mes "so that we can start training";
+					mes "you in the skill right away.";
+					next;
+					mes "[Akkie]";
+					mes "^0000FF1 Steel^000000,";
+					mes "^0000FF5 Coal^000000,";
+					mes "^0000FF1 Iron Hammer^000000,";
+					mes "^0000FF500 zeny^000000 and";
+					mes "^0000FF1 Detrimindexta^000000.";
+					mes "Don't forget, okay?";
+					close;
+				}
+			}
+			else if (BLACK_SK == 2) {
+				mes "[Akkie]";
+				mes "A-ah! You came";
+				mes "back sooner than";
+				mes "I thought. Um, gee.";
+				mes "Hmm. How should";
+				mes "I tell you this?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				next;
+				mes "[Akkie]";
+				mes "I'm so sorry! I messed";
+				mes "something up while I was";
+				mes "making a counterfeit sample!";
+				mes "I'm so sorry, please d-don't";
+				mes "report me to the Blacksmith";
+				mes "Guild! Give me one more chance!";
+				next;
+				mes "[Akkie]";
+				mes "I promise that next time";
+				mes "I won't mess up! All I need";
+				mes "is 1 Steel and 3 more Coals!";
+				mes "Please d-don't be angry with";
+				mes "me, it was just an accident!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Okay, okay...";
+				mes "Are you sure that's";
+				mes "all you need me to get?";
+				next;
+				mes "[Akkie]";
+				mes "Yes, yes! Oh, thank";
+				mes "you for being so generous!";
+				mes "Just bring me ^FF00001 Steel^000000 and";
+				mes "^FF00003 Coals^000000 and we'll try again!";
+				set BLACK_SK,3;
+				close;
+			}
+			else if (BLACK_SK == 3) {
+				if (countitem(999) > 0 && countitem(1003) > 2) {
+					mes "[Akkie]";
+					mes "Oh, thank you so";
+					mes "much for bringing these";
+					mes "materials. Alright, I'll try";
+					mes "really hard to succeed";
+					mes "this time. Just give me";
+					mes "a minute to prepare...";
+					delitem 999,1; //Steel
+					delitem 1003,3; //Coal
+					set BLACK_SK,4;
+					close;
+				}
+				else {
+					mes "[Akkie]";
+					mes "All I need you to do";
+					mes "is bring me 1 Steel and";
+					mes "3 Coals. Then I should";
+					mes "be able to teach you the";
+					mes "Dubious Salesmanship skill~";
+					close;
+				}
+			}
+			else if (BLACK_SK == 4) {
+				mes "[Akkie]";
+				mes "......";
+				mes ".........";
+				mes "............";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Oh no...";
+				mes "Did... Did you...";
+				mes "Did something happen?";
+				next;
+				mes "[Akkie]";
+				mes "*Sniff* I b-broke the";
+				mes "Iron Hammer you gave";
+				mes "me! I c-can't finish forging";
+				mes "this without one! Waaah~";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "^333333(I guess I should";
+				mes "really bring her a new";
+				mes "^FF0000Iron Hammer^333333, or else";
+				mes "I'll never learn this skill!)^000000";
+				set BLACK_SK,5;
+				close;
+			}
+			else if (BLACK_SK == 5) {
+				if (countitem(613) > 0) {
+					mes "[Akkie]";
+					mes "^333333*Sniff*^000000 Did you";
+					mes "r-really bring this";
+					mes "Iron Hammer for me?";
+					mes "Th-thank you for being so";
+					mes "patient with my screwups...";
+					next;
+					mes "[Akkie]";
+					mes "Okay, would you";
+					mes "give me a moment?";
+					mes "I'm going to try";
+					mes "one more time.";
+					delitem 613,1; //Iron_Hammer
+					set BLACK_SK,6;
+					close;
+				}
+				else {
+					mes "[Akkie]";
+					mes "Waah~! I can't believe";
+					mes "I broke the Iron Hammer!";
+					mes "Would you please bring me";
+					mes "another one so that I can";
+					mes "finish this counterfeit zeny and teach you Dubious Salesmanship?";
+					close;
+				}
+			}
+			else if (BLACK_SK == 6) {
+				mes "[Akkie]";
+				mes "Oh, you're back!";
+				mes "Yaaaay, I finally did it!";
+				mes "I finished making a sample";
+				mes "of counterfeit zeny and even";
+				mes "tested it with Mammonite!";
+				next;
+				mes "[Akkie]";
+				mes "Oh, before you learn my";
+				mes "skill, I'm supposed to tell you";
+				mes "that my colleague, Goodman,";
+				mes "can teach you another additional skill known as Greed. So you";
+				mes "may want to look for him later.";
+				next;
+				mes "[Akkie]";
+				mes "Okay, now the first part to";
+				mes "learning Dubious Salesmanship";
+				mes "is making this fake zeny. Watch";
+				mes "this... Isn't it easy? Of course, you can only use this in battle to";
+				mes "reduce Mammonite's zeny cost...";
+				set BLACK_SK,7;
+				skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
+				next;
+				mes "[Akkie]";
+				mes "Also, 90% of the cost of";
+				mes "Mammonite has to be real";
+				mes "zeny or the skill will begin";
+				mes "to lose effectiveness. Well,";
+				mes "that's all for the lesson. Now you can use Dubious Salesmanship!";
+				next;
+				mes "[Akkie]";
+				mes "Thanks once again for";
+				mes "putting up with my mistakes,";
+				mes "I know it must have been really";
+				mes "annoying. Anyway, I hope this";
+				mes "skill is really useful for you.";
+				mes "Drop again sometime, okay?";
+				close;
+			}
+			else {
+				if (rand(1,2) == 1) {
+					mes "[Akkie]";
+					mes "Oh, have you spoken with";
+					//mes "Goodman in Einbroch yet?";
+					mes "Goodman in Geffen yet?";
+					mes "He's the representative of";
+					mes "the Blacksmith Guild that";
+					mes "teaches the Greed skill.";
+					next;
+					mes "[Akkie]";
+					mes "If you're serious about";
+					mes "smithing goods, the Greed";
+					mes "skill might be very convenient.";
+					mes "Though, I have to say that the";
+					mes "skill's name is a little... Um.";
+					mes "Hmm... It sounds pretty bad~";
+					close;
+				}
+				else {
+					mes "[Akkie]";
+					mes "Hi again~";
+					mes "How has the smithing";
+					mes "been coming along? Anyway,";
+					mes "it was really nice of you to";
+					mes "drop by and talk to me~";
+					next;
+					mes "[Akkie]";
+					mes "It can get a little boring";
+					mes "teaching Dubious Salesmanship";
+					mes "to Blacksmiths and Master Smiths, but somebody from our guild has";
+					mes "to do this job. Anyway, farewell and be safe in your travels, okay?";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Akkie]";
+			if (Upper == 1) {
+				mes "Hello, "+ strcharinfo(0) +",";
+				mes "I'm here on behalf of the";
+				mes "Blacksmith Guild to teach you";
+				mes "a new skill. However, your Job";
+				mes "Level is a little low right now";
+				mes "for me to teach you anything...";
+				next;
+				mes "[Akkie]";
+				mes "But practice smithing";
+				mes "a little bit more, and";
+				mes "once you qualify, I'll be";
+				mes "sure to teach you my skill!";
+				mes "Goodbye and good luck~";
+			}
+			else {
+				mes "Hello, I'm Akkie from";
+				mes "the Blacksmith Guild. I'm";
+				mes "here to teach this new skill";
+				mes "to all interested Blacksmiths";
+				mes "and Master Smiths, but it looks";
+				mes "like your Job Level is too low...";
+				next;
+				mes "[Akkie]";
+				mes "I'm sorry, "+ strcharinfo(0) +",";
+				mes "But you'll qualify for the";
+				mes "skill I teach after you";
+				mes "raise your Job Level.";
+				mes "In the meantime, keep";
+				mes "training, alright?";
+			}
+			close;
+		}
+	}
+	else {
+		mes "[Akkie]";
+		mes "Ah, today seems like";
+		mes "a perfect day for forging.";
+		mes "I just feel like going behind";
+		mes "a beautiful waterfall, getting";
+		mes "some high quality materials,";
+		mes "and just hammering things.";
+		close;
+	}
+}
+
+geffen,172,52,1	script	Goodman#qsk_bs	826,{
+	if (BaseJob == Job_Blacksmith) {
+		if (BLACK_SK2 == 2 && Upper == 1 && getskilllv("BS_GREED") == 0) {
+			mes "[Goodman]";
+			mes "Ah, I see that you have";
+			mes "transcended. It gladdens me";
+			mes "to see Blacksmiths become";
+			mes "Master Smiths for the sake";
+			mes "of improving their craft.";
+			next;
+			mes "[Goodman]";
+			mes "Hm? You've forgotten the";
+			mes "Greed skill? You should";
+			mes "remember how to use it now:";
+			mes "just looking at me should";
+			mes "jog the memories you require";
+			mes "to use this skill once again~";
+			skill "BS_GREED",1,SKILL_PERM;
+			set BLACK_SK2,3;
+			close;
+		}
+		else if (BLACK_SK2 == 3) {
+			mes "[Goodman]";
+			mes "How is your forging";
+			mes "technique coming along?";
+			mes "When the craft frustrates you,";
+			mes "traveling will offer a good";
+			mes "opportunity to relax, think,";
+			mes "and collect materials.";
+			close;
+		}
+		else {
+			if (BLACK_SK2 == 0) {
+				mes "[Goodman]";
+				mes "Hey. I'm a Blacksmith";
+				mes "skill master sent from the";
+				mes "Blacksmith Guild. Everyone";
+				mes "calls me Goodman. You're";
+				if (Upper == 1)
+					mes "a Master Smith, aren't you?";
+				else
+					mes "a Blackmith, aren't you?";
+				mes "Pffft, rhetorical question.";
+				next;
+				mes "[Goodman]";
+				mes "Good news. I'm in charge of";
+				mes "teaching the skill, developed";
+				mes "by the Blacksmith and Merchant";
+				mes "Guilds, called ^FF0000Greed^000000. It's your";
+				mes "choice whether you learn it,";
+				mes "but I recommend that you do.";
+				next;
+				mes "[Goodman]";
+				mes "If you want, I can start";
+				mes "teaching you the Greed";
+				mes "skill right now. So what";
+				mes "do you say, kid?";
+				next;
+				if (select("Sounds good!:Maybe later~") == 1) {
+					mes "[Goodman]";
+					mes "Heh! Good choice. Now,";
+					mes "the Greed skill automatically";
+					mes "picks up all items in a 5*5";
+					mes "cell area around the caster.";
+					mes "It's handy for picking up clumps of goods from looting monsters.";
+					next;
+					mes "[Goodman]";
+					mes "First thing's first. I need to";
+					mes "test you and see if you qualify";
+					mes "to learn this skill. Go fill your Inventory with any items until";
+					mes "it's so full, you can't put an";
+					mes "item of 500 Weight in it.";
+					next;
+					mes "[Goodman]";
+					mes "When you finish that";
+					mes "task, come back and";
+					mes "talk to me. Alright";
+						mes "then, good luck~";
+					set BLACK_SK2,1;
+					close;
+				}
+				mes "[Goodman]";
+				mes "I see. It's good to be";
+				mes "busy with other things,";
+				mes "but remember that time is ";
+				mes "a commodity, and you should";
+				mes "always spend it doing the most";
+				mes "worthwhile stuff. Understand?";
+				close;
+			}
+			else if (BLACK_SK2 == 1) {
+				if (MaxWeight - Weight < 5000) {
+					mes "[Goodman]";
+					mes "Back already, eh?";
+					mes "Alright, let me check";
+					mes "the things you're carrying.";
+					mes "Let's see, Inventory, Inventory...";
+					next;
+					mes "[Goodman]";
+					mes "Good work: you pass.";
+					mes "Do you realize now that the";
+					mes "time and experience spent in";
+					mes "gathering these items is worth";
+					mes "more than their prices in zeny?";
+					next;
+					mes "[Goodman]";
+					if (Upper == 1)
+						mes "I believe that Master Smiths";
+					else
+						mes "I believe that Blacksmiths";
+					mes "should first and foremost be";
+					mes "artisans. Being rich and famous";
+					mes "is merely a side effect of that.";
+					if (Upper == 1)
+						mes "Honorable Master Smiths know value is in the craftsmanship...";
+					else
+						mes "Honorable Blacksmiths know value is in the craftsmanship...";
+					next;
+					if (Upper == 1) {
+						mes "[Goodman]";
+						mes "Now, if you don't place too";
+						mes "much importance on an item's";
+						mes "worth in terms of zeny, you'll";
+						mes "be able to let go of them much";
+						mes "more easily. Watch me do this.";
+						mes "See? Now you can do it too.";
+						next;
+					}
+					mes "[Goodman]";
+					mes "The skill you learned is";
+					mes "called Greed, but I hope";
+					mes "you use it in a manner that";
+					mes "is different than its name.";
+					mes "Don't forget that, and I hope";
+					mes "you craft true masterpieces.";
+					skill "BS_GREED",1,SKILL_PERM;
+					set BLACK_SK2,2;
+					close;
+				}
+				else {
+					mes "[Goodman]";
+					mes "Hm. You've come back";
+					mes "too early. And you didn't";
+					mes "complete the objective that";
+					mes "I set for you. Listen carefully.";
+					next;
+					mes "[Goodman]";
+					mes "Go fill your Inventory";
+					mes "with any items until it";
+					mes "becomes too full to place";
+					mes "an item of 500 weight into it.";
+					mes "When you finish this task,";
+					mes "come back and report to me.";
+					close;
+				}
+			}
+			else {
+				mes "[Goodman]";
+				mes "How have you been using";
+				mes "the Greed skill? Hopefully,";
+				mes "it has been convenient in";
+				mes "your efforts to forge goods";
+				mes "of greater quality for all";
+				mes "of your comrades.";
+				close;
+			}
+		}
+	}
+	mes "[Goodman]";
+	mes "I feel like exploring";
+	mes "the mountains to look for";
+	mes "rare and interesting items";
+	mes "that I can use in forging.";
+	mes "For me, that's the greatest";
+	mes "pleasure of being a Blacksmith.";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//=     Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//=     some of the items required and made them into real
+//=     quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Inverted the weight check for Greed [DracoRPG]
+//= 1.4 Updated to the official One [Samuray22]
+//= 1.5 replaced item "names" with item id. Fixed a bug with
+//=     item deletion [Lupus]
+//============================================================

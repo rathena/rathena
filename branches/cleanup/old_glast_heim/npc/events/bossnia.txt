@@ -1,0 +1,317 @@
+//===== rAthena Script ======================================= 
+//= Bossnia Warp NPCs
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Bossnia MVP event.
+//===== Additional Comments: ================================= 
+//= 1.0 Converted from the official script.
+//= 1.1 Optimized. [Euphy]
+//= 1.2 Moved spawns and warps (by Masao) to this file. [Euphy]
+//= 1.3 Added VIP features. [Euphy]
+//============================================================ 
+
+// Entrance NPCs
+//============================================================
+prontera,132,125,4	script	Bossnia Staff#1	908,{
+	mes "[Riss]";
+	mes "Hello?";
+	mes "I found some beautiful places";
+	mes "while I travelled all over the world.";
+	mes "I am an adventurer.";
+	mes "Haha~";
+	next;
+	mes "[Riss]";
+	mes "What? My name is...";
+	mes "'Bossnia Staff'?? No no...";
+	mes "Well, my name is not so important.";
+	mes "Sometimes you should be generous.";
+	mes "No time for considering that kind of small stuff";
+	mes "when you have to concentrate on more important things.";
+	next;
+	mes "[Riss]";
+	mes "Hum... anyway I want to say... something..";
+	mes "While I was travelling through some places,";
+	mes "I found a really fearful place.";
+	next;
+	mes "[Riss]";
+	mes "Most of the time when you come to a place,";
+	mes "there is one strong and fearful monster.";
+	mes "Isn't it?";
+	next;
+	mes "[Riss]";
+	mes "But... but... in there...";
+	mes "There are lots of fearful and strong monsters in there...";
+	mes "That was really frightful.";
+	next;
+	mes "[Riss]";
+	mes "If I had reacted a bit later... a few seconds...";
+	mes "I might have been killed.";
+	next;
+	mes "[Riss]";
+	mes "What?";
+	mes "You want to go in there?";
+	mes "Oh~ Boy~ you didn't get me.";
+	mes "In there.......";
+	next;
+	mes "[Riss]";
+	mes "Uh... you already know?";
+	mes "Although you know the place, you want to go in...";
+	mes "Good, I will send you there.";
+	mes "But after you went there, don't hold";
+
+	// If the VIP system is enabled, players pay a Reset Stone for 5 entrances (with a choice of warps).
+	// If it's disabled, players pay 5,000z per entrance.
+	if (VIP_SCRIPT) {
+		mes "a grudge against me. It'll cost you 1 Reset Stone for 5 access.";
+		next;
+		mes "[Riss]";
+		if (bossnia_event > 0) {
+			set .@type,1;
+			mes "Remaining access: "+bossnia_event;
+		} else if (countitem(6320)) {
+			set .@type,2;
+			mes "Do you want to go?";
+		} else {
+			mes "You don't have a ticket now.....";
+			mes "So come to me again with a Reset Stone later.";
+			close;
+		}
+		next;
+		if(select("Enter:Leave") == 2)
+			close;
+		set .@i, select("First:Second:Third:Fourth");
+		switch(select("Warp 1:Warp 2:Warp 3:Warp 4")) {
+			case 1: set .@x,31; set .@y,208; break;
+			case 2: set .@x,31; set .@y,31; break;
+			case 3: set .@x,208; set .@y,31; break;
+			case 4: set .@x,208; set .@y,208; break;
+		}
+		if (.@type == 1)
+			set bossnia_event, bossnia_event-1;
+		else {
+			delitem 6320,1; //Premium_Reset_Stone
+			set bossnia_event,4;
+		}
+		specialeffect2 EF_MAXPOWER;
+		warp "bossnia_0"+.@i,.@x,.@y;
+		close;
+	} else {
+		mes "a grudge against me. Also it costs 5,000 zeny.";
+		next;
+		if (Zeny > 4999) {
+			mes "[Riss]";
+			mes "Would you really like to take the challenge?";
+			mes "Ok, just choose the course.";
+			next;
+			set .@i, select("First:Second:Third:Fourth");
+			mes "[Riss]";
+			mes "Take care, boy~";
+			mes "Don't hold a grudge against me.";
+			close2;
+			set Zeny, Zeny - 5000;
+			warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
+			end;
+		} else {
+			mes "[Riss]";
+			mes "You don't have enough money...";
+			mes "Come back when you have at least 5,000 zeny.";
+			close;
+		}
+	}
+}
+geffen,124,169,4	duplicate(Bossnia Staff#1)	Bossnia Staff#2	908
+payon,165,150,4	duplicate(Bossnia Staff#1)	Bossnia Staff#3	908
+morocc,142,100,4	duplicate(Bossnia Staff#1)	Bossnia Staff#4	908
+lighthalzen,203,140,4	duplicate(Bossnia Staff#1)	Bossnia Staff#5	908
+rachel,132,144,4	duplicate(Bossnia Staff#1)	Bossnia Staff#6	908
+
+// Warp Portals
+//============================================================
+bossnia_01,204,204,0	warp	bossnia01	1,1,prontera,155,180
+bossnia_02,204,204,0	warp	bossnia02	1,1,prontera,155,180
+bossnia_03,204,204,0	warp	bossnia03	1,1,prontera,155,180
+bossnia_04,204,204,0	warp	bossnia04	1,1,prontera,155,180
+
+// Monster Spawns
+//============================================================
+
+//----------------------------------------------------------------------------
+// bossnia_01 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_01,0,0,0,0	monster	Garm	1252,5,7200000,0,1
+bossnia_01,0,0,0,0	monster	Gloom Under Night	1768,2,7200000,0,1
+bossnia_01,0,0,0,0	monster	Dark Lord	1272,3,7200000,0,1
+bossnia_01,0,0,0,0	monster	Doppelganger	1046,10,7200000,0,1
+bossnia_01,0,0,0,0	monster	Dracula	1389,5,1800000,0,1
+bossnia_01,0,0,0,0	monster	Drake	1112,10,1800000,0,1
+bossnia_01,0,0,0,0	monster	Detale	1719,2,7200000,0,1
+bossnia_01,0,0,0,0	monster	Maya	1147,10,1800000,0,1
+bossnia_01,0,0,0,0	monster	Mistress	1059,1,1800000,0,1
+bossnia_01,0,0,0,0	monster	Baphomet	1039,10,1800000,0,1
+bossnia_01,0,0,0,0	monster	Egnigem Cenia	1658,10,1800000,0,1
+bossnia_01,0,0,0,0	monster	Amon Ra	1511,1,1800000,0,1
+bossnia_01,0,0,0,0	monster	Atroce	1785,10,1800000,0,1
+bossnia_01,0,0,0,0	monster	Vesper	1685,2,7200000,0,1
+bossnia_01,0,0,0,0	monster	Eddga	1115,1,1800000,0,1
+bossnia_01,0,0,0,0	monster	Osiris	1038,10,7200000,0,1
+bossnia_01,0,0,0,0	monster	Orc Lord	1190,10,7200000,0,1
+bossnia_01,0,0,0,0	monster	Orc Hero	1087,2,1800000,0,1
+bossnia_01,0,0,0,0	monster	Samurai Specter	1492,1,3600000,0,1
+bossnia_01,0,0,0,0	monster	Moonlight Flower	1150,1,3600000,0,1
+bossnia_01,0,0,0,0	monster	Lord of the Dead	1373,1,3600000,0,1
+bossnia_01,0,0,0,0	monster	Ktullanux	1779,2,7200000,0,1
+bossnia_01,0,0,0,0	monster	Kiel D-01	1734,2,7200000,0,1
+bossnia_01,0,0,0,0	monster	Thanatos Phantom	1708,2,7200000,0,1
+bossnia_01,0,0,0,0	monster	Lady Tanee	1688,1,3600000,0,1
+bossnia_01,0,0,0,0	monster	Tao Gunka	1583,1,3600000,0,1
+bossnia_01,0,0,0,0	monster	Turtle General	1312,10,7200000,0,1
+bossnia_01,0,0,0,0	monster	Pharaoh	1157,2,3600000,0,1
+bossnia_01,0,0,0,0	monster	Stormy Knight	1251,2,3600000,0,1
+bossnia_01,0,0,0,0	monster	Falling Bishop	1871,5,7200000,0,1
+bossnia_01,0,0,0,0	monster	Phreeoni	1159,10,7200000,0,1
+bossnia_01,0,0,0,0	monster	Golden Thief Bug	1086,10,3600000,0,1
+bossnia_01,0,0,0,0	monster	Evil Snake Lord	1418,10,7200000,0,1
+bossnia_01,0,0,0,0	monster	RSX-0806	1623,5,7200000,0,1
+bossnia_01,0,0,0,0	monster	Assassin Cross Eremes	1647,1,0,0,1
+bossnia_01,137,118,1,1	monster	Whitesmith Howard	1648,1,0,0,1
+bossnia_01,122,195,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_01,45,118,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_01,196,122,1,1	monster	Valkyrie Randgris	1751,1,0,0,1
+bossnia_01,142,61,1,1	monster	Ifrit	1832,1,0,0,1
+
+//----------------------------------------------------------------------------
+// bossnia_02 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_02,0,0,0,0	monster	Garm	1252,5,7200000,0,1
+bossnia_02,0,0,0,0	monster	Gloom Under Night	1768,2,7200000,0,1
+bossnia_02,0,0,0,0	monster	Dark Lord	1272,3,7200000,0,1
+bossnia_02,0,0,0,0	monster	Doppelganger	1046,10,7200000,0,1
+bossnia_02,0,0,0,0	monster	Dracula	1389,5,1800000,0,1
+bossnia_02,0,0,0,0	monster	Drake	1112,10,1800000,0,1
+bossnia_02,0,0,0,0	monster	Detale	1719,2,7200000,0,1
+bossnia_02,0,0,0,0	monster	Maya	1147,10,1800000,0,1
+bossnia_02,0,0,0,0	monster	Mistress	1059,1,1800000,0,1
+bossnia_02,0,0,0,0	monster	Baphomet	1039,10,1800000,0,1
+bossnia_02,0,0,0,0	monster	Egnigem Cenia	1658,10,1800000,0,1
+bossnia_02,0,0,0,0	monster	Amon Ra	1511,1,1800000,0,1
+bossnia_02,0,0,0,0	monster	Atroce	1785,10,1800000,0,1
+bossnia_02,0,0,0,0	monster	Vesper	1685,2,7200000,0,1
+bossnia_02,0,0,0,0	monster	Eddga	1115,1,1800000,0,1
+bossnia_02,0,0,0,0	monster	Osiris	1038,10,7200000,0,1
+bossnia_02,0,0,0,0	monster	Orc Lord	1190,10,7200000,0,1
+bossnia_02,0,0,0,0	monster	Orc Hero	1087,2,1800000,0,1
+bossnia_02,0,0,0,0	monster	Samurai Specter	1492,1,3600000,0,1
+bossnia_02,0,0,0,0	monster	Moonlight Flower	1150,1,3600000,0,1
+bossnia_02,0,0,0,0	monster	Lord of the Dead	1373,1,3600000,0,1
+bossnia_02,0,0,0,0	monster	Ktullanux	1779,2,7200000,0,1
+bossnia_02,0,0,0,0	monster	Kiel D-01	1734,2,7200000,0,1
+bossnia_02,0,0,0,0	monster	Thanatos Phantom	1708,2,7200000,0,1
+bossnia_02,0,0,0,0	monster	Lady Tanee	1688,1,3600000,0,1
+bossnia_02,0,0,0,0	monster	Tao Gunka	1583,1,3600000,0,1
+bossnia_02,0,0,0,0	monster	Turtle General	1312,10,7200000,0,1
+bossnia_02,0,0,0,0	monster	Pharaoh	1157,2,3600000,0,1
+bossnia_02,0,0,0,0	monster	Stormy Knight	1251,2,3600000,0,1
+bossnia_02,0,0,0,0	monster	Falling Bishop	1871,5,7200000,0,1
+bossnia_02,0,0,0,0	monster	Phreeoni	1159,10,7200000,0,1
+bossnia_02,0,0,0,0	monster	Golden Thief Bug	1086,10,3600000,0,1
+bossnia_02,0,0,0,0	monster	Evil Snake Lord	1418,10,7200000,0,1
+bossnia_02,0,0,0,0	monster	RSX-0806	1623,5,7200000,0,1
+bossnia_02,0,0,0,0	monster	Assassin Cross Eremes	1647,1,0,0,1
+bossnia_02,137,118,1,1	monster	Whitesmith Howard	1648,1,0,0,1
+bossnia_02,122,195,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_02,45,118,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_02,196,122,1,1	monster	Valkyrie Randgris	1751,1,0,0,1
+bossnia_02,142,61,1,1	monster	Ifrit	1832,1,0,0,1
+
+//----------------------------------------------------------------------------
+// bossnia_03 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_03,0,0,0,0	monster	Garm	1252,5,7200000,0,1
+bossnia_03,0,0,0,0	monster	Gloom Under Night	1768,2,7200000,0,1
+bossnia_03,0,0,0,0	monster	Dark Lord	1272,3,7200000,0,1
+bossnia_03,0,0,0,0	monster	Doppelganger	1046,10,7200000,0,1
+bossnia_03,0,0,0,0	monster	Dracula	1389,5,1800000,0,1
+bossnia_03,0,0,0,0	monster	Drake	1112,10,1800000,0,1
+bossnia_03,0,0,0,0	monster	Detale	1719,2,7200000,0,1
+bossnia_03,0,0,0,0	monster	Maya	1147,10,1800000,0,1
+bossnia_03,0,0,0,0	monster	Mistress	1059,1,1800000,0,1
+bossnia_03,0,0,0,0	monster	Baphomet	1039,10,1800000,0,1
+bossnia_03,0,0,0,0	monster	Egnigem Cenia	1658,10,1800000,0,1
+bossnia_03,0,0,0,0	monster	Amon Ra	1511,1,1800000,0,1
+bossnia_03,0,0,0,0	monster	Atroce	1785,10,1800000,0,1
+bossnia_03,0,0,0,0	monster	Vesper	1685,2,7200000,0,1
+bossnia_03,0,0,0,0	monster	Eddga	1115,1,1800000,0,1
+bossnia_03,0,0,0,0	monster	Osiris	1038,10,7200000,0,1
+bossnia_03,0,0,0,0	monster	Orc Lord	1190,10,7200000,0,1
+bossnia_03,0,0,0,0	monster	Orc Hero	1087,2,1800000,0,1
+bossnia_03,0,0,0,0	monster	Samurai Specter	1492,1,3600000,0,1
+bossnia_03,0,0,0,0	monster	Moonlight Flower	1150,1,3600000,0,1
+bossnia_03,0,0,0,0	monster	Lord of the Dead	1373,1,3600000,0,1
+bossnia_03,0,0,0,0	monster	Ktullanux	1779,2,7200000,0,1
+bossnia_03,0,0,0,0	monster	Kiel D-01	1734,2,7200000,0,1
+bossnia_03,0,0,0,0	monster	Thanatos Phantom	1708,2,7200000,0,1
+bossnia_03,0,0,0,0	monster	Lady Tanee	1688,1,3600000,0,1
+bossnia_03,0,0,0,0	monster	Tao Gunka	1583,1,3600000,0,1
+bossnia_03,0,0,0,0	monster	Turtle General	1312,10,7200000,0,1
+bossnia_03,0,0,0,0	monster	Pharaoh	1157,2,3600000,0,1
+bossnia_03,0,0,0,0	monster	Stormy Knight	1251,2,3600000,0,1
+bossnia_03,0,0,0,0	monster	Falling Bishop	1871,5,7200000,0,1
+bossnia_03,0,0,0,0	monster	Phreeoni	1159,10,7200000,0,1
+bossnia_03,0,0,0,0	monster	Golden Thief Bug	1086,10,3600000,0,1
+bossnia_03,0,0,0,0	monster	Evil Snake Lord	1418,10,7200000,0,1
+bossnia_03,0,0,0,0	monster	RSX-0806	1623,5,7200000,0,1
+bossnia_03,0,0,0,0	monster	Assassin Cross Eremes	1647,1,0,0,1
+bossnia_03,137,118,1,1	monster	Whitesmith Howard	1648,1,0,0,1
+bossnia_03,122,195,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_03,45,118,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_03,196,122,1,1	monster	Valkyrie Randgris	1751,1,0,0,1
+bossnia_03,142,61,1,1	monster	Ifrit	1832,1,0,0,1
+
+//----------------------------------------------------------------------------
+// bossnia_04 - Bossnia
+//----------------------------------------------------------------------------
+bossnia_04,0,0,0,0	monster	Garm	1252,5,7200000,0,1
+bossnia_04,0,0,0,0	monster	Gloom Under Night	1768,2,7200000,0,1
+bossnia_04,0,0,0,0	monster	Dark Lord	1272,3,7200000,0,1
+bossnia_04,0,0,0,0	monster	Doppelganger	1046,10,7200000,0,1
+bossnia_04,0,0,0,0	monster	Dracula	1389,5,1800000,0,1
+bossnia_04,0,0,0,0	monster	Drake	1112,10,1800000,0,1
+bossnia_04,0,0,0,0	monster	Detale	1719,2,7200000,0,1
+bossnia_04,0,0,0,0	monster	Maya	1147,10,1800000,0,1
+bossnia_04,0,0,0,0	monster	Mistress	1059,1,1800000,0,1
+bossnia_04,0,0,0,0	monster	Baphomet	1039,10,1800000,0,1
+bossnia_04,0,0,0,0	monster	Egnigem Cenia	1658,10,1800000,0,1
+bossnia_04,0,0,0,0	monster	Amon Ra	1511,1,1800000,0,1
+bossnia_04,0,0,0,0	monster	Atroce	1785,10,1800000,0,1
+bossnia_04,0,0,0,0	monster	Vesper	1685,2,7200000,0,1
+bossnia_04,0,0,0,0	monster	Eddga	1115,1,1800000,0,1
+bossnia_04,0,0,0,0	monster	Osiris	1038,10,7200000,0,1
+bossnia_04,0,0,0,0	monster	Orc Lord	1190,10,7200000,0,1
+bossnia_04,0,0,0,0	monster	Orc Hero	1087,2,1800000,0,1
+bossnia_04,0,0,0,0	monster	Samurai Specter	1492,1,3600000,0,1
+bossnia_04,0,0,0,0	monster	Moonlight Flower	1150,1,3600000,0,1
+bossnia_04,0,0,0,0	monster	Lord of the Dead	1373,1,3600000,0,1
+bossnia_04,0,0,0,0	monster	Ktullanux	1779,2,7200000,0,1
+bossnia_04,0,0,0,0	monster	Kiel D-01	1734,2,7200000,0,1
+bossnia_04,0,0,0,0	monster	Thanatos Phantom	1708,2,7200000,0,1
+bossnia_04,0,0,0,0	monster	Lady Tanee	1688,1,3600000,0,1
+bossnia_04,0,0,0,0	monster	Tao Gunka	1583,1,3600000,0,1
+bossnia_04,0,0,0,0	monster	Turtle General	1312,10,7200000,0,1
+bossnia_04,0,0,0,0	monster	Pharaoh	1157,2,3600000,0,1
+bossnia_04,0,0,0,0	monster	Stormy Knight	1251,2,3600000,0,1
+bossnia_04,0,0,0,0	monster	Falling Bishop	1871,5,7200000,0,1
+bossnia_04,0,0,0,0	monster	Phreeoni	1159,10,7200000,0,1
+bossnia_04,0,0,0,0	monster	Golden Thief Bug	1086,10,3600000,0,1
+bossnia_04,0,0,0,0	monster	Evil Snake Lord	1418,10,7200000,0,1
+bossnia_04,0,0,0,0	monster	RSX-0806	1623,5,7200000,0,1
+bossnia_04,0,0,0,0	monster	Assassin Cross Eremes	1647,1,0,0,1
+bossnia_04,137,118,1,1	monster	Whitesmith Howard	1648,1,0,0,1
+bossnia_04,122,195,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_04,45,118,1,1	monster	Beelzebub	1873,1,0,0,1
+bossnia_04,196,122,1,1	monster	Valkyrie Randgris	1751,1,0,0,1
+bossnia_04,142,61,1,1	monster	Ifrit	1832,1,0,0,1
