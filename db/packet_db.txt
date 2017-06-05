@@ -2657,5 +2657,10 @@ packet_keys: 0x4C17382A,0x7ED174C9,0x29961E4F // [Winnie]
 0x088D,5,hommenu,2:4
 0x0940,36,storagepassword,2:4:20
 
+// 2017-02-15aRagexeRE
+0x0A43,85
+0x0A44,-1
+0x0ABD,10
+
 //Add new packets here
 //packet_ver: 56
