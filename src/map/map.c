@@ -4629,6 +4629,10 @@ const char* map_msg_txt(struct map_session_data *sd, int msg_number){
 	return "??";
 }
 
+// Called when a SIGUSR1 signal is received.
+void sigusr1_callback(void) {
+	npc_reload();
+}
 
 /// Called when a terminate signal is received.
 void do_shutdown(void)

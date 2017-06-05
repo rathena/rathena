@@ -802,6 +802,11 @@ void do_shutdown(void) {
 void do_abort(void) {
 }
 
+// Called when a SIGUSR1 signal is received.
+void sigusr1_callback(void) {
+}
+
+
 // Is this still used ??
 void set_server_type(void) {
 	SERVER_TYPE = ATHENA_SERVER_LOGIN;
