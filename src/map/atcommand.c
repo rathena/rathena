@@ -5999,7 +5999,7 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
-	guild_gm_change(sd->status.guild_id, pl_sd);
+	guild_gm_change(sd->status.guild_id, pl_sd->status.char_id);
 	return 0;
 }
 

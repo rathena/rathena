@@ -8611,6 +8611,18 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
 	pc_show_questinfo(sd);
+	if( sd->status.party_id ){
+		struct party_data* p;
+		
+		if( ( p = party_search( sd->status.party_id ) ) != NULL ){
+			ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == sd->status.char_id);
+
+			if( i < MAX_PARTY ){
+				p->party.member[i].class_ = sd->status.class_;
+				clif_party_job_and_level(sd);
+			}
+		}
+	}
 
 	chrif_save(sd, CSAVE_NORMAL);
 	//if you were previously famous, not anymore.
