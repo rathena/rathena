@@ -3903,8 +3903,8 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 	case SP_AUTOSPELL_ONSKILL: // bonus4 bAutoSpellOnSkill,sk,x,y,n;
 		if(sd->state.lr_flag != 2)
 		{
-			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
-			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
+			int target = skill_get_inf(type3); //Support or Self (non-auto-target) skills should pick self.
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type3)&INF2_NO_TARGET_SELF));
 
 			pc_bonus_autospell_onskill(sd->autospell3, ARRAYLENGTH(sd->autospell3), type2, target?-type3:type3, type4, val, current_equip_card_id);
 		}

@@ -208,6 +208,7 @@ ex: if your NPC is named 'Hunter#hunter1', it will be displayed as 'Hunter'
 ** Define a warp point
 
 <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
 
 This will define a warp NPC that will warp a player between maps, and while most 
 arguments of that are obvious, some deserve special mention.
@@ -222,6 +223,8 @@ with 'enablenpc'/'disablenpc'
 
 Facing of a warp object is irrelevant, it is not used in the code and all 
 current scripts have a zero in there.
+
+Unlike 'warp', 'warp2' will also be triggered by hidden player.
 
 ** Define an NPC object.
 
@@ -313,7 +316,7 @@ optional value which makes the price at that shop become affected by discount sk
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
-warp: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
+warp/warp2: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
 shop/cashshop/itemshop/pointshop/npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
 shop/cashshop/itemshop/pointshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
 npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
@@ -8414,10 +8417,11 @@ Instance Mode options:
  IM_CHAR: Attached to a single character.
  IM_PARTY: Attached to a party (default instance mode).
  IM_GUILD: Attached to a guild.
+ IM_CLAN: Attached to a clan.
 
 The command returns the instance ID upon success, and these values upon failure:
  -1: Invalid type.
- -2: Character/Party/Guild not found.
+ -2: Character/Party/Guild/Clan not found.
  -3: Instance already exists.
  -4: No free instances (MAX_INSTANCE exceeded).
 
@@ -8428,7 +8432,7 @@ The command returns the instance ID upon success, and these values upon failure:
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player is used (if it is a character, party,
-or guild mode). If it is not owned by anyone, no player needs to be attached. If
+guild or clan mode). If it is not owned by anyone, no player needs to be attached. If
 that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
 label in all NPCs inside the instance.
 
@@ -8440,9 +8444,9 @@ Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns IE_OK upon success, and these values upon failure:
- IE_NOMEMBER:	Party/Guild not found (for party/guild modes).
- IE_NOINSTANCE:	Character/Party/Guild does not have an instance.
- IE_OTHER:		Other errors (invalid instance name, instance doesn't match with character/party/guild).
+ IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
+ IE_NOINSTANCE:	Character/Party/Guild/Clan does not have an instance.
+ IE_OTHER:		Other errors (invalid instance name, instance doesn't match with character/party/guild/clan).
 
 Put -1 for x and y if want to warp player with default entrance coordinates.
 
@@ -8452,8 +8456,8 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 
 Returns the unique name of the instanced script. If no ID is specified,
 the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached NPC, player, party, or guild
-is used. If that fails, the script will come to a halt.
+an instance, the instance of the currently attached NPC, player, party, guild
+or clan is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
@@ -8462,7 +8466,7 @@ is used. If that fails, the script will come to a halt.
 Returns the unique name of the instanced map. If no instance ID is specified,
 the instance the script is attached to is used. If the script is not attached to
 an instance, the instance of the currently attached player is used (if it is a
-character, party, or guild mode). If it is not owned by anyone, no player needs
+character, party, guild or clan mode). If it is not owned by anyone, no player needs
 to be attached. If that fails, the command returns an empty string instead.
 
 ---------------------------------------
@@ -8471,7 +8475,7 @@ to be attached. If that fails, the command returns an empty string instead.
 
 Returns the unique instance id of the attached script. If the script is not
 attached to an instance, the instance of the currently attached player is
-used (if it is a character, party, or guild mode). If it is not owned by anyone, no
+used (if it is a character, party, guild or clan mode). If it is not owned by anyone, no
 player needs to be attached. If that fails, the function will return 0.
 
 ---------------------------------------
@@ -8481,7 +8485,7 @@ player needs to be attached. If that fails, the function will return 0.
 Warps all players in the instance <instance id> to <map name> at given
 coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
-currently attached player is used (if it is a character, party, or guild
+currently attached player is used (if it is a character, party, guild or clan
 mode). If it is not owned by anyone, no player needs to be attached. If that
 fails, the script will come to a halt.
 
@@ -8493,7 +8497,7 @@ Broadcasts a message to all players in the instance <instance id> currently
 residing on an instance map. If 0 is specified for <instance id>, the instance
 the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player is used (if it is a character,
-party, or guild mode). If it is not owned by anyone, no player needs to be attached.
+party, guild or clan mode). If it is not owned by anyone, no player needs to be attached.
 
 For details on the other parameters, see 'announce'.
 
@@ -8538,6 +8542,28 @@ if (instance_check_guild(getcharid(2),2,2,149)) {
 	close;
 } else {
 	mes "Sorry, your guild does not meet requirements.";
+	close;
+}
+
+---------------------------------------
+
+*instance_check_clan(<clan id>{,<amount>{,<min>{,<max>}}})
+
+This function checks if a clan meets certain requirements, returning 1 if all
+conditions are met and 0 otherwise. It will only check online characters.
+
+amount - number of online clan members (default is 1).
+min    - minimum level of all characters in the clan (default is 1).
+max    - maximum level of all characters in the clan (default is max level in conf).
+
+Example:
+
+if (instance_check_clan(getcharid(5),2,2,149)) {
+	mes "Your clan meets the Memorial Dungeon requirements.",
+	mes "All online members are between levels 1-150 and at least two are online.";
+	close;
+} else {
+	mes "Sorry, your clan does not meet requirements.";
 	close;
 }
 

@@ -3216,6 +3216,7 @@
 	export_constant(IM_CHAR);
 	export_constant(IM_PARTY);
 	export_constant(IM_GUILD);
+	export_constant(IM_CLAN);
 
 	/* mob random groups */
 	export_constant(MOBG_Branch_Of_Dead_Tree);

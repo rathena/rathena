@@ -1031,85 +1031,60 @@ OnTimer30000:
 
 // Warp Portals
 //============================================================
-1@ma_h,35,156,0	script	#Boss Room Exit	WARPNPC,2,2,{
-OnTouch:
-	warp "ma_dun01",150,9;
-	end;
-}
-1@ma_h,105,157,0	script	#Boss Room Door	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,116,157;
-	end;
-}
-1@ma_h,112,157,0	script	#Boss Room Door1	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,100,157;
-	end;
-}
-1@ma_h,112,63,0	script	#Boss Room Door3	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,100,63;
-	end;
-}
+1@ma_h,35,156,0	warp2	#Boss Room Exit	2,2,ma_dun01,150,9
+1@ma_h,105,157,0	warp2	#Boss Room Door	2,2,1@ma_h,116,157
+1@ma_h,112,157,0	warp2	#Boss Room Door1	2,2,1@ma_h,100,157
+1@ma_h,112,63,0	warp2	#Boss Room Door3	2,2,1@ma_h,100,63
+1@ma_h,104,63,0	warp2	#Boss Room Door2	2,2,1@ma_h,117,63
+1@ma_h,36,157,0	duplicate(#Boss Room Door2)	#Patternwarp1	7,7
+1@ma_h,46,157,0	duplicate(#Boss Room Door2)	#Patternwarp2	7,7
+1@ma_h,57,157,0	duplicate(#Boss Room Door2)	#Patternwarp3	7,7
+1@ma_h,67,157,0	duplicate(#Boss Room Door2)	#Patternwarp4	7,7
+1@ma_h,79,157,0	duplicate(#Boss Room Door2)	#Patternwarp5	7,7
+1@ma_h,89,157,0	duplicate(#Boss Room Door2)	#Patternwarp6	7,7
+1@ma_h,100,157,0	duplicate(#Boss Room Door2)	#Patternwarp7	7,7
+1@ma_h,51,173,0	duplicate(#Boss Room Door2)	#Patternwarp8	10,10
+1@ma_h,52,140,0	duplicate(#Boss Room Door2)	#Patternwarp34	10,10
+1@ma_h,73,173,0	duplicate(#Boss Room Door2)	#Patternwarp35	10,10
+1@ma_h,73,140,0	duplicate(#Boss Room Door2)	#Patternwarp36	10,10
+1@ma_h,95,173,0	duplicate(#Boss Room Door2)	#Patternwarp37	10,10
+1@ma_h,95,140,0	duplicate(#Boss Room Door2)	#Patternwarp38	10,10
+//1@ma_h,70,170,0	duplicate(#Boss Room Door2)	#Patternwarp39	10,10
+//1@ma_h,77,169,0	duplicate(#Boss Room Door2)	#Patternwarp40	10,10
+1@ma_h,117,171,0	duplicate(#Boss Room Door2)	#Patternwarp41	10,10
+1@ma_h,131,171,0	duplicate(#Boss Room Door2)	#Patternwarp42	10,10
+1@ma_h,146,171,0	duplicate(#Boss Room Door2)	#Patternwarp43	10,10
+1@ma_h,117,157,0	duplicate(#Boss Room Door2)	#Patternwarp44	10,10
+1@ma_h,131,157,0	duplicate(#Boss Room Door2)	#Patternwarp45	10,10
+1@ma_h,146,157,0	duplicate(#Boss Room Door2)	#Patternwarp46	10,10
+1@ma_h,117,143,0	duplicate(#Boss Room Door2)	#Patternwarp47	10,10
+1@ma_h,131,143,0	duplicate(#Boss Room Door2)	#Patternwarp48	10,10
+1@ma_h,146,143,0	duplicate(#Boss Room Door2)	#Patternwarp49	10,10
 
-1@ma_h,104,63,0	script	#Boss Room Door2	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,117,63;
-	end;
-}
-1@ma_h,36,157,0	duplicate(#Boss Room Door2)	#Patternwarp1	WARPNPC,7,7
-1@ma_h,46,157,0	duplicate(#Boss Room Door2)	#Patternwarp2	WARPNPC,7,7
-1@ma_h,57,157,0	duplicate(#Boss Room Door2)	#Patternwarp3	WARPNPC,7,7
-1@ma_h,67,157,0	duplicate(#Boss Room Door2)	#Patternwarp4	WARPNPC,7,7
-1@ma_h,79,157,0	duplicate(#Boss Room Door2)	#Patternwarp5	WARPNPC,7,7
-1@ma_h,89,157,0	duplicate(#Boss Room Door2)	#Patternwarp6	WARPNPC,7,7
-1@ma_h,100,157,0	duplicate(#Boss Room Door2)	#Patternwarp7	WARPNPC,7,7
-1@ma_h,51,173,0	duplicate(#Boss Room Door2)	#Patternwarp8	WARPNPC,10,10
-1@ma_h,52,140,0	duplicate(#Boss Room Door2)	#Patternwarp34	WARPNPC,10,10
-1@ma_h,73,173,0	duplicate(#Boss Room Door2)	#Patternwarp35	WARPNPC,10,10
-1@ma_h,73,140,0	duplicate(#Boss Room Door2)	#Patternwarp36	WARPNPC,10,10
-1@ma_h,95,173,0	duplicate(#Boss Room Door2)	#Patternwarp37	WARPNPC,10,10
-1@ma_h,95,140,0	duplicate(#Boss Room Door2)	#Patternwarp38	WARPNPC,10,10
-//1@ma_h,70,170,0	duplicate(#Boss Room Door2)	#Patternwarp39	WARPNPC,10,10
-//1@ma_h,77,169,0	duplicate(#Boss Room Door2)	#Patternwarp40	WARPNPC,10,10
-1@ma_h,117,171,0	duplicate(#Boss Room Door2)	#Patternwarp41	WARPNPC,10,10
-1@ma_h,131,171,0	duplicate(#Boss Room Door2)	#Patternwarp42	WARPNPC,10,10
-1@ma_h,146,171,0	duplicate(#Boss Room Door2)	#Patternwarp43	WARPNPC,10,10
-1@ma_h,117,157,0	duplicate(#Boss Room Door2)	#Patternwarp44	WARPNPC,10,10
-1@ma_h,131,157,0	duplicate(#Boss Room Door2)	#Patternwarp45	WARPNPC,10,10
-1@ma_h,146,157,0	duplicate(#Boss Room Door2)	#Patternwarp46	WARPNPC,10,10
-1@ma_h,117,143,0	duplicate(#Boss Room Door2)	#Patternwarp47	WARPNPC,10,10
-1@ma_h,131,143,0	duplicate(#Boss Room Door2)	#Patternwarp48	WARPNPC,10,10
-1@ma_h,146,143,0	duplicate(#Boss Room Door2)	#Patternwarp49	WARPNPC,10,10
-
-1@ma_h,36,63,0	script	#Patternwarp10	WARPNPC,7,7,{
-OnTouch:
-	warp 'map_name$,116,157;
-	end;
-}
-1@ma_h,46,63,0	duplicate(#Patternwarp10)	#Patternwarp11	WARPNPC,7,7
-1@ma_h,56,63,0	duplicate(#Patternwarp10)	#Patternwarp12	WARPNPC,7,7
-1@ma_h,67,63,0	duplicate(#Patternwarp10)	#Patternwarp13	WARPNPC,7,7
-1@ma_h,78,63,0	duplicate(#Patternwarp10)	#Patternwarp14	WARPNPC,7,7
-1@ma_h,89,63,0	duplicate(#Patternwarp10)	#Patternwarp15	WARPNPC,7,7
-1@ma_h,100,63,0	duplicate(#Patternwarp10)	#Patternwarp16	WARPNPC,7,7
-1@ma_h,51,79,0	duplicate(#Patternwarp10)	#Patternwarp17	WARPNPC,10,10
-1@ma_h,51,46,0	duplicate(#Patternwarp10)	#Patternwarp18	WARPNPC,10,10
-1@ma_h,73,80,0	duplicate(#Patternwarp10)	#Patternwarp19	WARPNPC,10,10
-1@ma_h,73,46,0	duplicate(#Patternwarp10)	#Patternwarp20	WARPNPC,10,10
-1@ma_h,95,79,0	duplicate(#Patternwarp10)	#Patternwarp21	WARPNPC,10,10
-1@ma_h,95,46,0	duplicate(#Patternwarp10)	#Patternwarp22	WARPNPC,10,10
-//1@ma_h,193,82,0	duplicate(#Patternwarp10)	#Patternwarp23	WARPNPC,7,7
-//1@ma_h,193,82,0	duplicate(#Patternwarp10)	#Patternwarp24	WARPNPC,7,7
-1@ma_h,117,77,0	duplicate(#Patternwarp10)	#Patternwarp25	WARPNPC,10,10
-1@ma_h,131,77,0	duplicate(#Patternwarp10)	#Patternwarp26	WARPNPC,10,10
-1@ma_h,146,77,0	duplicate(#Patternwarp10)	#Patternwarp27	WARPNPC,10,10
-1@ma_h,117,63,0	duplicate(#Patternwarp10)	#Patternwarp28	WARPNPC,10,10
-1@ma_h,131,63,0	duplicate(#Patternwarp10)	#Patternwarp29	WARPNPC,10,10
-1@ma_h,146,63,0	duplicate(#Patternwarp10)	#Patternwarp30	WARPNPC,10,10
-1@ma_h,117,49,0	duplicate(#Patternwarp10)	#Patternwarp31	WARPNPC,10,10
-1@ma_h,131,49,0	duplicate(#Patternwarp10)	#Patternwarp32	WARPNPC,10,10
-1@ma_h,146,49,0	duplicate(#Patternwarp10)	#Patternwarp33	WARPNPC,10,10
+1@ma_h,36,63,0	warp2	#Patternwarp10	7,7,1@ma_h,116,157
+1@ma_h,46,63,0	duplicate(#Patternwarp10)	#Patternwarp11	7,7
+1@ma_h,56,63,0	duplicate(#Patternwarp10)	#Patternwarp12	7,7
+1@ma_h,67,63,0	duplicate(#Patternwarp10)	#Patternwarp13	7,7
+1@ma_h,78,63,0	duplicate(#Patternwarp10)	#Patternwarp14	7,7
+1@ma_h,89,63,0	duplicate(#Patternwarp10)	#Patternwarp15	7,7
+1@ma_h,100,63,0	duplicate(#Patternwarp10)	#Patternwarp16	7,7
+1@ma_h,51,79,0	duplicate(#Patternwarp10)	#Patternwarp17	10,10
+1@ma_h,51,46,0	duplicate(#Patternwarp10)	#Patternwarp18	10,10
+1@ma_h,73,80,0	duplicate(#Patternwarp10)	#Patternwarp19	10,10
+1@ma_h,73,46,0	duplicate(#Patternwarp10)	#Patternwarp20	10,10
+1@ma_h,95,79,0	duplicate(#Patternwarp10)	#Patternwarp21	10,10
+1@ma_h,95,46,0	duplicate(#Patternwarp10)	#Patternwarp22	10,10
+//1@ma_h,193,82,0	duplicate(#Patternwarp10)	#Patternwarp23	7,7
+//1@ma_h,193,82,0	duplicate(#Patternwarp10)	#Patternwarp24	7,7
+1@ma_h,117,77,0	duplicate(#Patternwarp10)	#Patternwarp25	10,10
+1@ma_h,131,77,0	duplicate(#Patternwarp10)	#Patternwarp26	10,10
+1@ma_h,146,77,0	duplicate(#Patternwarp10)	#Patternwarp27	10,10
+1@ma_h,117,63,0	duplicate(#Patternwarp10)	#Patternwarp28	10,10
+1@ma_h,131,63,0	duplicate(#Patternwarp10)	#Patternwarp29	10,10
+1@ma_h,146,63,0	duplicate(#Patternwarp10)	#Patternwarp30	10,10
+1@ma_h,117,49,0	duplicate(#Patternwarp10)	#Patternwarp31	10,10
+1@ma_h,131,49,0	duplicate(#Patternwarp10)	#Patternwarp32	10,10
+1@ma_h,146,49,0	duplicate(#Patternwarp10)	#Patternwarp33	10,10
 
 // Disable select warps.
 // Custom, but saves processing and lines.
