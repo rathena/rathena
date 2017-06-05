@@ -820,32 +820,18 @@ static int inter_config_read(const char* cfgName)
 *  Supplied arguments: activity, origin, target, guild pointer, castle_id
 * @return 0
 */
-int inter_log(int ArgNum, ...)
+int inter_log(char* fmt, ...)
 { 
 	va_list ap;
 	char *activity, *origin, *target;
-	int gid = 0, castle_id = 0, i;
+	int gid = 0, castle_id = 0;
 
-	va_start(ap, ArgNum);
-	for (i = 0; i < ArgNum; i++) {
-		switch(i){
-			case 0:
-				activity = va_arg(ap, char*);
-				break;
-			case 1:
-				origin = va_arg(ap, char*);
-				break;
-			case 2:
-				target = va_arg(ap, char*);
-				break;
-			case 3:
-				gid = va_arg(ap, int);
-				break;
-			case 4:
-				castle_id = va_arg(ap, int);
-				break;
-		}
-	}
+	va_start(ap, fmt);
+	activity = fmt;
+	origin = va_arg(ap, char*);
+	target = va_arg(ap, char*);
+	gid = va_arg(ap, int);
+	castle_id = va_arg(ap, int);
 	va_end(ap);
 	
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, origin, target, gid, castle_id))
