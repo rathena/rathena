@@ -158,14 +158,17 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 				return MAIL_ATTACH_ERROR;
 			}
 
-			for( j = 0; j < i; j++ ){
-				total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
-			}
+			// Check if it exceeds the total weight
+			if( battle_config.mail_attachment_weight ){
+				for( j = 0; j < i; j++ ){
+					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
+				}
 
-			total += amount * sd->inventory_data[idx]->weight / 10;
+				total += amount * sd->inventory_data[idx]->weight / 10;
 
-			if( total > battle_config.mail_attachment_weight ){
-				return MAIL_ATTACH_WEIGHT;
+				if( total > battle_config.mail_attachment_weight ){
+					return MAIL_ATTACH_WEIGHT;
+				}
 			}
 
 			sd->mail.item[i].amount += amount;
@@ -178,14 +181,17 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 				return MAIL_ATTACH_SPACE;
 			}
 
-			for( j = 0; j < i; j++ ){
-				total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
-			}
+			// Check if it exceeds the total weight
+			if( battle_config.mail_attachment_weight ){
+				for( j = 0; j < i; j++ ){
+					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
+				}
 
-			total += amount * sd->inventory_data[idx]->weight / 10;
+				total += amount * sd->inventory_data[idx]->weight / 10;
 
-			if( total > battle_config.mail_attachment_weight ){
-				return MAIL_ATTACH_WEIGHT;
+				if( total > battle_config.mail_attachment_weight ){
+					return MAIL_ATTACH_WEIGHT;
+				}
 			}
 		}
 #endif

@@ -15027,7 +15027,9 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 	int cmd = 0x9f0;
 #endif
 
-	mail_refresh_remaining_amount(sd);
+	if( battle_config.mail_daily_count ){
+		mail_refresh_remaining_amount(sd);
+	}
 
 	// If a starting mail id was sent
 	if( mailID != 0 ){
