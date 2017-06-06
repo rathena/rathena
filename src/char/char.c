@@ -2370,7 +2370,7 @@ bool char_checkdb(void){
 	}
 	//checking mail_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,"
-			"`title`,`message`,`time`,`status`,`zeny`"
+			"`title`,`message`,`time`,`status`,`zeny`,`type`"
 			" FROM `%s` LIMIT 1;", schema_config.mail_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;

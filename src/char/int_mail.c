@@ -379,14 +379,15 @@ static void mapif_Mail_getattach(int fd, uint32 char_id, int mail_id, int type)
 		// No item was found
 		if( i == MAIL_MAX_ITEM ){
 			type &= ~MAIL_ATT_ITEM;
+		}else{
+			if( !mail_DeleteAttach(mail_id) ){
+				return;
+			}
 		}
 	}
 
 	if( type == MAIL_ATT_NONE )
 		return; // No Attachment
-
-	if( !mail_DeleteAttach(mail_id) )
-		return;
 
 	WFIFOHEAD(fd, sizeof(struct item)*MAIL_MAX_ITEM + 16);
 	WFIFOW(fd,0) = 0x384a;

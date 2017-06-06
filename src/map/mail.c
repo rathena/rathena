@@ -345,14 +345,16 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 		return;
 	}
 
-	mail_refresh_remaining_amount(sd);
+	if( battle_config.mail_daily_count ){
+		mail_refresh_remaining_amount(sd);
 
-	// After calling mail_refresh_remaining_amount the status should always be there
-	if( sd->sc.data[SC_DAILYSENDMAILCNT] == NULL || sd->sc.data[SC_DAILYSENDMAILCNT]->val2 >= battle_config.mail_daily_count ){
-		clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
-		return;
-	}else{
-		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, -1 );
+		// After calling mail_refresh_remaining_amount the status should always be there
+		if( sd->sc.data[SC_DAILYSENDMAILCNT] == NULL || sd->sc.data[SC_DAILYSENDMAILCNT]->val2 >= battle_config.mail_daily_count ){
+			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
+			return;
+		}else{
+			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, -1 );
+		}
 	}
 
 	if( body_len > MAIL_BODY_LENGTH )
