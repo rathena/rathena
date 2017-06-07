@@ -2075,12 +2075,14 @@ struct status_data {
 		max_hp, max_sp;
 	short
 		str, agi, vit, int_, dex, luk,
-		batk,
+		batk
 #ifdef RENEWAL
 		watk,
 		watk2,
-		eatk,
+		eatk
 #endif
+		;
+	unsigned short
 		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;
