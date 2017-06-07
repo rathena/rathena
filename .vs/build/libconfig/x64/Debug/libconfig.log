@@ -1,0 +1,16 @@
+﻿  strbuf.c
+  scanner.c
+scanner.c(941): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+scanner.l(182): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1452): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1461): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1416): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1430): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1907): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1945): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+scanner.c(1967): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+  scanctx.c
+  libconfig.c
+  grammar.c
+  Generating Code...
+  libconfig.vcxproj -> D:\Games\rathena - Jezznar\.vs\build\libconfig.lib

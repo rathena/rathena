@@ -1,0 +1,45 @@
+﻿  vending.c
+  unit.c
+  trade.c
+  storage.c
+  status.c
+  skill.c
+  searchstore.c
+  script.c
+  quest.c
+  pet.c
+  pc_groups.c
+  pc.c
+  path.c
+  party.c
+  npc_chat.c
+  npc.c
+  mob.c
+  mercenary.c
+  mapreg.c
+  map.c
+  Generating Code...
+  Compiling...
+  mail.c
+  log.c
+  itemdb.c
+  intif.c
+  instance.c
+  homunculus.c
+  guild.c
+  elemental.c
+  duel.c
+  date.c
+  clif.c
+  clan.c
+  chrif.c
+  chat.c
+  channel.c
+  cashshop.c
+  buyingstore.c
+  battleground.c
+  battle.c
+  atcommand.c
+  Generating Code...
+  map-server.vcxproj -> D:\Games\rathena - Jezznar\map-server.exe
+  map-server.vcxproj -> D:\Games\rathena - Jezznar\map-server.pdb (Full PDB)

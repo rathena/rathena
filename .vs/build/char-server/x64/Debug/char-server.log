@@ -1,0 +1,31 @@
+﻿  int_storage.c
+  int_quest.c
+d:\games\rathena - jezznar\src\char\int_quest.c(197): warning C4267: '=': conversion from 'size_t' to 'uint16', possible loss of data
+  int_pet.c
+  int_party.c
+  int_mercenary.c
+  int_mail.c
+  int_homun.c
+  int_guild.c
+  int_elemental.c
+  int_clan.c
+  int_auction.c
+  inter.c
+d:\games\rathena - jezznar\src\char\inter.c(647): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\char\inter.c(661): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\char\inter.c(727): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\char\inter.c(822): warning C4101: 'ap': unreferenced local variable
+  char_mapif.c
+d:\games\rathena - jezznar\src\char\char_mapif.c(316): warning C4267: '=': conversion from 'size_t' to 'uint16', possible loss of data
+d:\games\rathena - jezznar\src\char\char_mapif.c(568): warning C4267: '=': conversion from 'size_t' to 'uint16', possible loss of data
+  char_logif.c
+d:\games\rathena - jezznar\src\char\char_logif.c(192): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\char\char_logif.c(209): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+  char_cnslif.c
+  char_clif.c
+  char.c
+d:\games\rathena - jezznar\src\char\char.c(2724): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\char\char.c(2767): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  char-server.vcxproj -> D:\Games\rathena - Jezznar\char-server.exe
+  char-server.vcxproj -> D:\Games\rathena - Jezznar\char-server.pdb (Full PDB)
