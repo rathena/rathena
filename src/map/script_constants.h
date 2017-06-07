@@ -3786,6 +3786,15 @@
 	export_constant(IG_BOMB);
 	export_constant(IG_THROWABLE);
 	export_constant(IG_MERCENARY);
+	export_constant(IG_NOIVE_BOX);
+	export_constant(IG_VALERIAN_SCROLL);
+	export_constant(IG_IMMORTAL_EGG);
+	export_constant(IG_SAPPHIRE_EGG);
+	export_constant(IG_IDN_HEART_SCROLL);
+	export_constant(IG_IDN_WISDOM_EGG);
+	export_constant(IG_CHRISTMAS_BOX);
+	export_constant(IG_SPECIAL_CHRISTMAS_BOX);
+	export_constant(IG_SANTA_GIFT);
 
 	#undef export_constant
 	#undef export_constant2
