@@ -8,7 +8,7 @@
 //  Items are in same order as data\buyingstoreitemlist.txt, which
 //  must be edited as well for the client to accept added items.
 
-//--- 2015 / 12 / 16 - Àü»çÀÚ¹«´ı
+//--- 2015 / 12 / 16 - ì „ì‚¬ìë¬´ë¤
 //25127
 //25128
 //25129
@@ -43,9 +43,9 @@
 4694	//V_Gertie_Card
 4695	//V_Trentini_Card
 4696	//V_Alphoccio_Card
-//--- 2015 / 11 19 - ºÎ¼­Áø ¸¶¹ı¼® Ãß°¡
+//--- 2015 / 11 19 - ë¶€ì„œì§„ ë§ˆë²•ì„ ì¶”ê°€
 6905	//Broken_Magic_Stone
-//--- 2015 / 11 / 30 - Ä«µå Ãß°¡
+//--- 2015 / 11 / 30 - ì¹´ë“œ ì¶”ê°€
 4001	//Poring_Card
 4002	//Fabre_Card
 4003	//Pupa_Card
@@ -690,7 +690,7 @@
 4656	//N_Mummy_Card
 4657	//N_Ancient_Mummy_Card
 4658	//N_Verit_Card
-//--- 2015 / 7 / 9 - ÃÖÁ¾¼öÁ¤ÀÏ
+//--- 2015 / 7 / 9 - ìµœì¢…ìˆ˜ì •ì¼
 11600	//Shining_Holy_Water
 22847	//Prontera_Medal
 22848	//Prison_Key
