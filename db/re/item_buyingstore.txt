@@ -8,7 +8,7 @@
 //  Items are in same order as data\buyingstoreitemlist.txt, which
 //  must be edited as well for the client to accept added items.
 
-//--- 2015 / 12 / 16 - �����ڹ���
+//--- 2015 / 12 / 16 - 전사자무덤
 //25127
 //25128
 //25129
@@ -43,9 +43,9 @@
 4694	//V_Gertie_Card
 4695	//V_Trentini_Card
 4696	//V_Alphoccio_Card
-//--- 2015 / 11 19 - �μ��� ������ �߰�
+//--- 2015 / 11 19 - 부서진 마법석 추가
 6905	//Broken_Magic_Stone
-//--- 2015 / 11 / 30 - ī�� �߰�
+//--- 2015 / 11 / 30 - 카드 추가
 4001	//Poring_Card
 4002	//Fabre_Card
 4003	//Pupa_Card
@@ -690,7 +690,7 @@
 4656	//N_Mummy_Card
 4657	//N_Ancient_Mummy_Card
 4658	//N_Verit_Card
-//--- 2015 / 7 / 9 - ����������
+//--- 2015 / 7 / 9 - 최종수정일
 11600	//Shining_Holy_Water
 22847	//Prontera_Medal
 22848	//Prison_Key
