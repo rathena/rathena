@@ -3699,7 +3699,7 @@
 	export_constant(IG_HOLY_EGG_2);
 	export_constant(IG_ADVENTURER_RETURNS_SUPPORT_BOX);
 	export_constant(IG_SUPPORT_PACKAGE);
-	export_constant(IG_Support_Package_10);
+	export_constant(IG_SUPPORT_PACKAGE_10);
 	export_constant(IG_EVENT_ALMIGHTY_BOX);
 	export_constant(IG_EVENT_ALMIGHTY_BOX_100);
 	export_constant(IG_LOTTOBOX1);

@@ -18948,7 +18948,7 @@ static void buildin_questinfo_setjob(struct questinfo *qi, int job) {
 BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id, icon;
+	int quest_id, icon, color = 0;
 	struct questinfo qi, *q2;
 
 	if( nd == NULL || nd->bl.m == -1 ) {
@@ -18989,14 +18989,14 @@ BUILDIN_FUNC(questinfo)
 	qi.nd = nd;
 
 	if( script_hasdata(st, 4) ) {
-		int color = script_getnum(st, 4);
+		color = script_getnum(st, 4);
 		if( color < 0 || color > 3 ) {
 			ShowWarning("buildin_questinfo: invalid color '%d', changing to 0\n",color);
 			script_reportfunc(st);
 			color = 0;
 		}
-		qi.color = (unsigned char)color;
 	}
+	qi.color = (unsigned char)color;
 
 	qi.min_level = 1;
 	qi.max_level = MAX_LEVEL;
