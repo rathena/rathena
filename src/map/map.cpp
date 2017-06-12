@@ -3483,13 +3483,13 @@ void map_flags_init(void)
 		if (map[i].skill_damage.count)
 			map_skill_damage_free(&map[i]);
 #endif
+		map_skill_duration_free(&map[i]);
 
 		// adjustments
 		if( battle_config.pk_mode )
 			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
 
 		map_free_questinfo(i);
-		map_skill_duration_free(&map[i]);
 	}
 }
 
@@ -4367,13 +4367,13 @@ bool map_skill_duration_add(struct map_data *map, uint16 skill_id, uint16 per) {
 		struct s_skill_duration *entry = NULL;
 
 		for (i = 0; i < map->skill_duration.count; i++) {
-			if (map->skill_duration.entries[i] && map->skill_duration.entries[i]->skill_id == skill_id) {// Replace
+			if (map->skill_duration.entries[i] && map->skill_duration.entries[i]->skill_id == skill_id) { // Replace
 				map->skill_duration.entries[i]->per = per;
 				return true;
 			}
 		}
 
-		RECREATE(map->skill_duration.entries, struct s_skill_duration *, map->skill_duration.count+1);
+		RECREATE(map->skill_duration.entries, struct s_skill_duration *, map->skill_duration.count + 1);
 		CREATE(map->skill_duration.entries[map->skill_duration.count], struct s_skill_duration, 1);
 		map->skill_duration.entries[map->skill_duration.count]->skill_id = skill_id;
 		map->skill_duration.entries[map->skill_duration.count]->per = per;
@@ -4494,11 +4494,11 @@ void do_final(void)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 		map_free_questinfo(i);
-		map_skill_duration_free(&map[i]);
 #ifdef ADJUST_SKILL_DAMAGE
 		if (map[i].skill_damage.count)
 			map_skill_damage_free(&map[i]);
 #endif
+		map_skill_duration_free(&map[i]);
 	}
 
 	mapindex_final();

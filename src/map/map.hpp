@@ -601,9 +601,10 @@ struct s_skill_damage {
 extern struct eri *map_skill_damage_ers;
 #endif
 
+/// Struct of skill duration adjustment
 struct s_skill_duration {
-	uint16 skill_id;
-	uint16 per;
+	uint16 skill_id; ///< Skill ID
+	uint16 per; ///< Rate
 };
 
 struct questinfo_req {
