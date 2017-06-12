@@ -3345,6 +3345,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WL_CHAINLIGHTNING_ATK:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,1,WL_CHAINLIGHTNING_ATK,-2,DMG_SKILL);
 			break;
+		case WL_TETRAVORTEX_FIRE:
+			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, WL_TETRAVORTEX_WIND, -1, DMG_SPLASH);
+			break;
 		case LG_SHIELDPRESS:
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, status_get_amotion(src), dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_SKILL);
 			break;
@@ -5853,6 +5856,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_OF_PARALYZE:
 	case MH_SONIC_CRAW:
+	case MH_MIDNIGHT_FRENZY:
+	case MH_SILVERVEIN_RUSH:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case MH_TINDER_BREAKER:
@@ -7370,9 +7375,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			status_change_end(bl, SC_STUN, INVALID_TIMER);
 			status_change_end(bl, SC_WHITEIMPRISON, INVALID_TIMER);
-			status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
 		}
 		status_change_end(bl, SC_STASIS, INVALID_TIMER);
+		status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
 		if(battle_check_undead(tstatus->race,tstatus->def_ele))
 			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -8988,23 +8993,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
  		break;
 
 	case RK_FIGHTINGSPIRIT: {
-			// val1: ATKBonus: Caster: 7*PartyMember. Member: 7*PartyMember/4
+			// val1: ATKBonus: Caster: 70 + 7 * PartyMember. Member: 70 + 7 * PartyMember / 2
 			// val2: ASPD boost: [RK_RUNEMASTERYlevel * 4 / 10] * 10 ==> RK_RUNEMASTERYlevel * 4
 			if( flag&1 ) {
 				if( skill_area_temp[1] == bl->id )
-					sc_start2(src,bl,type,100,7 * skill_area_temp[0],4 * ((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY)),skill_area_temp[4]);
+					sc_start2(src,bl,type,100,70 + 7 * skill_area_temp[0],4 * ((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY)),skill_area_temp[4]);
 				else
 					sc_start(src,bl,type,100,skill_area_temp[3],skill_area_temp[4]);
 			} else {
 				if( sd && sd->status.party_id ) {
 					skill_area_temp[0] = party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,BCT_PARTY,skill_area_sub_count);
 					skill_area_temp[1] = src->id;
-					skill_area_temp[3] = 7 * skill_area_temp[0] / 4;
+					skill_area_temp[3] = 70 + 7 * skill_area_temp[0] / 2;
 					skill_area_temp[4] = skill_get_time(skill_id,skill_lv);
 					party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
 				}
 				else
-					sc_start2(src,bl,type,100,7,4 * ((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY)),skill_get_time(skill_id,skill_lv));
+					sc_start2(src,bl,type,100,77,4 * ((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY)),skill_get_time(skill_id,skill_lv));
 				clif_skill_nodamage(src,bl,skill_id,1,1);
 			}
 		}
@@ -11590,6 +11595,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NJ_HUUMA:
 #endif
 	case NPC_EVILLAND:
+	case NPC_VENOMFOG:
 	case RA_ELECTRICSHOCKER:
 	case RA_CLUSTERBOMB:
 	case RA_MAGENTATRAP:
@@ -11997,7 +12003,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SC_FEINTBOMB: {
 			struct skill_unit_group *group = skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
 
-			map_foreachinrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl); // Release all targets against the caster.
+			if( group == NULL || group->unit == NULL ) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				return 1;
+			}
+			// Release all targets against the caster.
+			map_foreachinrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl);
 			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 			clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
 		}
@@ -13442,6 +13453,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 		case UNT_PSYCHIC_WAVE:
 		case UNT_MAGMA_ERUPTION:
 		case UNT_MAKIBISHI:
+		case UNT_VENOMFOG:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
@@ -15337,7 +15349,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case SC_FEINTBOMB:
-			if( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKLANDPROTECTOR) ) {
+			if( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKLANDPROTECTOR) || map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKMAELSTROM) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}

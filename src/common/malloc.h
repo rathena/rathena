@@ -4,6 +4,9 @@
 #ifndef _MALLOC_H_
 #define _MALLOC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "cbasetypes.h"
 
 #define ALC_MARK __FILE__, __LINE__, __func__
@@ -88,5 +91,9 @@ bool malloc_verify_ptr(void* ptr);
 size_t malloc_usage (void);
 void malloc_init (void);
 void malloc_final (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MALLOC_H_ */

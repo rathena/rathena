@@ -477,6 +477,8 @@ enum clif_messages {
 	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
 	ITEM_NOUSE_SITTING = 0x297,
+	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
+	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
 	MERC_MSG_BASE = 0x4f2,
 	SKILL_CANT_USE_AREA = 0x536,
 	ITEM_CANT_USE_AREA =  0x537,
@@ -731,6 +733,7 @@ void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
+void clif_party_job_and_level(struct map_session_data *sd);
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);

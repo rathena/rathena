@@ -986,6 +986,7 @@ int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_setequipindex(struct map_session_data *sd);
 uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
+int pc_equippoint_sub(struct map_session_data *sd, struct item_data* id);
 void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);

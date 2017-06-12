@@ -21,3 +21,4 @@
 14,Sara's Memories,3600,300,1@sara,250,155
 15,Geffen Magic Tournament,7200,300,1@gef,119,209,1@gef_in,1@ge_st
 16,Horror Toy Factory,3600,300,1@xm_d,111,22
+17,Faceworm's Nest,3600,300,1@face,112,374

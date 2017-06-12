@@ -165,6 +165,8 @@ struct CharServ_Config {
 	char default_map[MAP_NAME_LENGTH];
 	unsigned short default_map_x;
 	unsigned short default_map_y;
+
+	int clan_remove_inactive_days;
 };
 extern struct CharServ_Config charserv_config;
 
