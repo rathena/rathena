@@ -71,19 +71,23 @@ lasagna,298,84,5	script	Vigilante#dorcon01	4_DR_SOLDIER,{
 	mes "[Vigilante]";
 	mes "The wind is very uneasy today.";
 	close;
-// OnInit:
-	// questinfo 14541, QTYPE_QUEST, 1;
-	// end;
+OnInit:
+	questinfo 14541, QTYPE_QUEST, 1;
+	setquestinfo_req 14541,14539,1;
+	end;
 }
 
 lasa_dun01,29,146,5	script	Vigilante#dorcon03	HIDDEN_WARP_NPC,5,5,{
+	end;
 OnTouch:
 	if (lasagna_quest[1] == 22) {// summoner
+		classchange( 4_DR_SOLDIER, "", bc_self );
 		mes "[Vigilante]";
 		mes "I don't see it near here. We should go deeper!";
 		npctalk "I don't see it near here. We should go deeper!", "", bc_self;
-		classchange( 4_DR_SOLDIER, "", bc_self );
-		close;
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
 	}
 	end;
 }
@@ -119,7 +123,7 @@ lasa_dun01,153,103,3	script	Vigilante#dorcon02	4_DR_SOLDIER,{
 			mes "Hey! Machie! Wake up! What's going on? Oh, my...";
 			next;
 			mes "[Vigilante]";
-			mes "didn't you say that you would like to bring your mother from your hometown? You cannot die like this! Hey, buddy! Machie! don't die on me!";
+			mes "Didn't you say that you would like to bring your mother from your hometown? You cannot die like this! Hey, buddy! Machie! don't die on me!";
 		}
 		else {
 			mes "Hey! Machie! Wake up! What's going on? didn't you say that you would like to bring your mother from your hometown? You cannot die like this!";
@@ -420,7 +424,7 @@ lasa_dun_q,162,158,3	script	Tartufi#dorcon01	4_TARUTUPI,{
 		mes "It was short, but I really enjoyed your being here. Goodbye.";
 		erasequest 14543;// Basilisk Hunt
 		setquest 14544;// Now I can leave
-		getexp 0,0;// todo ???
+		getexp 500,500;
 		lasagna_quest[1] = 27;// jump to 27
 		close;
 	}
@@ -692,13 +696,13 @@ lasa_in01,186,57,3	script	Vigilante Chef#dorcon99	4_CAT_CHEF,{
 }
 
 lasagna,56,186,0	script	#dorcon96	HIDDEN_WARP_NPC,5,5,{
+	end;
 OnTouch:
 	if (conch_in_recorder == 3)
 		warp "lasa_in01",162,61;
 	end;
 }
 
-// unaccurate
 lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 	if (conch_in_recorder == 3) {
 		mes "[" + strcharinfo(0) + "]";
@@ -739,7 +743,7 @@ lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 		next;
 		mes "[Vigilante]";
 		mes "Sir, That's not what you said the last time we talked over a drink. You said you left because you hated being looked down upon due to poverty.";
-		npctalk "You said you'll slap their faces with a wad of bills one day.", "", bc_self;
+		npctalk "You said you'll slap their faces with a wad of bills one day.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "What are you talking about? You must've been very drunk that day. What more can an adventurer ask for when you get to experience so many things in a vast ocean?";
@@ -760,7 +764,7 @@ lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 		next;
 		mes "Vigilante Chef";
 		mes "I heard you guys fought.";
-		npctalk "Almost to the point of totally destroying a store.", "", bc_self;
+		npctalk "Almost to the point of totally destroying a store.", "Vigilante Chef#dorcon99", bc_self;
 		npctalk "Do you cook with your mouth?", "", bc_self;
 		next;
 		mes "[Peperoncino]";
@@ -774,7 +778,7 @@ lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 		next;
 		mes "Vigilante Chef";
 		mes "That story doesn't add up.";
-		npctalk "It's different from the version I heard.", "", bc_self;
+		npctalk "It's different from the version I heard.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "At any rate, Captain Gamberry is a good man. He was influenced by me since his ragtag days and now he's become a doram.";
@@ -787,25 +791,25 @@ lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 		next;
 		mes "[Peperoncino]";
 		mes "If violence subdues violence, then what will subdue that violence? Anyway, Lasagna was like a rotten trash can. In comparison, Fusilli is a town with totally innocent people!";
-		npctalk "I'll never hear the end of that darn Fusilli.", "", bc_self;
+		npctalk "I'll never hear the end of that darn Fusilli.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "Vigilante Chef";
 		mes "I ask the newcomers about Fusilli and none of them knows. It must be in the backwoods or something.";
-		npctalk "don't insult Fusilli!", "", bc_self;
+		npctalk "Don't insult Fusilli!", "", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "Anyhow, the biggest obstacle when we started the business was Lasagna's lousy dorams. They pounced on me for a fight. Is everyone who live by sea so belligerent like that?";
 		next;
 		mes "Vigilante Chef";
 		mes "No, don't insult them. It's this place That's unusual.";
-		npctalk "My hometown wasn't like that.", "", bc_self;
+		npctalk "My hometown wasn't like that.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "At first, I tried to persuade those lousy dorams through conversation. I tried to be a gentleman but they wouldn't listen. That's when Gamberry took the matters into his own hands.";
 		next;
 		mes "[Peperoncino]";
 		mes "didn't I tell you just before? He took care of it completely. I gathered those lousy dorams and spoke to them. They were so touched by my speech that they volunteered to join the vigilance corps.";
-		npctalk "You threatened them to join or leave.", "", bc_self;
+		npctalk "You threatened them to join or leave.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "Hmph! Anyway, with the efforts of vigilance corps and merchants, Lasagna was reborn to its current state.";
@@ -822,7 +826,7 @@ lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 		mes "Vigilante Chef";
 		mes "See what I mean? Different version from the last.";
 		npctalk "I'm thinking about inviting all the crewmen of Con-Chliina tomorrow and throwing a banquet.", "", bc_self;
-		npctalk "No, It's okay. I'll keep my mouth shut now.", "", bc_self;
+		npctalk "No, It's okay. I'll keep my mouth shut now.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "We gathered those lousy dorams and sent them to the vigilance corps and merchants. Lasagna's ^0000cdmaintenance of order was handled by the vigilantes^000000, and ^0000cdeverything related to the products was handled by the merchants^000000.";
@@ -836,7 +840,7 @@ lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 		mes "Vigilante Chef";
 		mes "Well, that was Stello of Con-Chliina...";
 		npctalk "Banquet?", "", bc_self;
-		npctalk "Nope.", "", bc_self;
+		npctalk "Nope.", "Vigilante Chef#dorcon99", bc_self;
 		next;
 		mes "[Peperoncino]";
 		mes "Anything else you're curious about?";
@@ -956,9 +960,8 @@ lasagna,263,156,5	script	Grandma#dorcon01	4_CAT_REST,{
 	close;
 }
 
-// classchange inaccurate
 lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
-	if (BaseLevel < 140) {// 110 < level req < 145
+	if (BaseLevel < 140) {
 		mes "[Kalu]";
 		mes "If you wish to speak to me, then you'd better go and get some more experience.";
 		close;
@@ -1094,7 +1097,7 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 	}
 	if (lasagna_quest[2] < 7) {
 		mes "[Kalu]";
-		mes "didn't you say you were going to find out why Legalas was not able to make the delivery?";
+		mes "Didn't you say you were going to find out why Legalas was not able to make the delivery?";
 		next;
 		mes "[Kalu]";
 		mes "I beg you. I'm really worried. Can't even sleep these days.";
@@ -1227,21 +1230,19 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 			if (isbegin_quest(14578) == 1) {
 				mes "[Kalu]";
 				mes "Good job today as well. Two of you, get some food. Adventurer, that this. I'm counting on you tomorrow as well!";
-				classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
-				classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 				erasequest 14578;// Delivery Complete Report
 				setquest 14576;// Meal Box Delivery Time
 				close;
 			}
 			mes "[Kalu]";
 			mes "Just deliver this big lunchbox to Panna who's out on a cave patrol.";
-			classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
-			classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 			if (countitem(25048) < 1)
 				getitem 25048,1;// Hearty Lunchbox
 			close;
 		case 0:
 		case 1:
+			classchange( 4_SEA_OTTER, "Daldal#dorcon05", bc_self );
+			classchange( 4_GALAPAGO, "Gopara#dorcon05", bc_self );
 			mes "[Kalu]";
 			mes "Adventurer, you're here already? It's not the time for lunchbox delivery yet.";
 			next;
@@ -1293,7 +1294,7 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 	end;
 
 OnInit:
-	questinfo 14567, QTYPE_QUEST2, 1;
+	questinfo 14567, QTYPE_QUEST, 1;
 	setquestinfo_level 14567,140,175;
 	end;
 }
@@ -1767,7 +1768,7 @@ lasagna,193,234,5	script	Daldal#dorcon02	HIDDEN_WARP_NPC,{
 lasagna,192,236,5	script	Gopara#dorcon02	HIDDEN_WARP_NPC,5,5,{
 	if (lasagna_quest[2] == 3) {
 		mes "[Gopara]";
-		mes "wouldn't Babysitting be easy? What can a little kid do?";
+		mes "Wouldn't Babysitting be easy? What can a little kid do?";
 		close;
 	}
 	end;
@@ -1988,7 +1989,7 @@ lasagna,225,290,5	script	Workshop Manager#dorcon	4_M_BOSSCAT,{
 	}
 	if (lasagna_quest[2] == 5) {
 		mes "[Workshop Manager]";
-		mes "didn't you say you were going to the anchovy shipping boat? Beats me what you can do there even if you go there.";
+		mes "Didn't you say you were going to the anchovy shipping boat? Beats me what you can do there even if you go there.";
 		close;
 	}
 	mes "[Workshop Manager]";
@@ -2142,7 +2143,7 @@ lasagna,139,299,3	script	Captain of Anchovy Fish	4_CAT_SAILOR5,{
 	}
 	if (lasagna_quest[2] == 6) {
 		mes "Captain of Anchovy Fishing Boat";
-		mes "didn't you say that you're going back to Legalas? And next time you bring some helpers, make sure they're decent.";
+		mes "Didn't you say that you're going back to Legalas? And next time you bring some helpers, make sure they're decent.";
 		close;
 	}
 	mes "Captain of Anchovy Fishing Boat";
@@ -2169,7 +2170,7 @@ lasagna,222,180,7	script	Daldal#dorcon05	HIDDEN_WARP_NPC,5,5,{
 	}
 	end;
 OnTouch:
-	if (lasagna_quest[2] >= 7) {
+	if (lasagna_quest[2] == 7 || lasagna_quest[2] > 8) {
 		classchange( 4_SEA_OTTER, "Daldal#dorcon05", bc_self );
 		classchange( 4_GALAPAGO, "Gopara#dorcon05", bc_self );
 	}
@@ -2179,7 +2180,7 @@ OnTouch:
 lasagna,224,178,7	script	Gopara#dorcon05	HIDDEN_WARP_NPC,{
 	if (lasagna_quest[2] == 7) {
 		mes "[Gopara]";
-		mes "didn't you say you had something to say to Kalu? Go ahead.";
+		mes "Didn't you say you had something to say to Kalu? Go ahead.";
 		close;
 	}
 	if (lasagna_quest[2] == 9) {
@@ -2301,6 +2302,7 @@ lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
 	mes "Oh, I'm so hungry. When is the food coming? Food.";
 	close;
 }
+
 conch_in,122,61,5	script	Crewman#dorcon01	4_CAT_ADV1,{
 	npctalk "Thank you for boarding on Con-Chliina. Please enjoy a safe and comfortable trip to your destination!", "", bc_self;
 	end;

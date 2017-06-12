@@ -1,7 +1,25 @@
 lasa_fild01,353,370,5	script	Shepherd#dorcon	4_DR_KID_01,{
 	if (BaseLevel < 6 || BaseLevel > 9) {
-		if (isbegin_quest(14592) > 0)
+		if (checkquest(14592,PLAYTIME) == 2)
 			erasequest 14592;
+		if (checkquest(14546,HUNTING) == 2) {
+			mes "[Shepherd]";
+			mes "Thank you. Now our cows can enjoy delicious meal.";
+			next;
+			mes "[Shepherd]";
+			mes "But you seem too skilled to do this kind of work. There are many other jobs that require physical strength, so perhaps you should go seek them.";
+			next;
+			mes "[Shepherd]";
+			mes "Not today. Maybe tomorrow? Let me see... Who said needed some help?";
+			next;
+			mes "[Shepherd]";
+			mes "Speaking of which, ^4D4DFF[Fisher]^000000 said he needed some help. Would you like to give it a try? Thank you for helping us.";
+			erasequest 14546;// Take care of grass thief
+			if (isbegin_quest(14592) == 0)
+				setquest 14592;// Resting Time
+			getexp 150,250;
+			close;
+		}
 		mes "[Shepherd]";
 		mes "Hey cows- eat a lot and relax a lot- I'll sing you a song-";
 		close;
@@ -75,16 +93,34 @@ lasa_fild01,353,370,5	script	Shepherd#dorcon	4_DR_KID_01,{
 		close;
 	}
 OnInit:
-	questinfo 14546, QTYPE_QUEST2, 1;
-	setquestinfo_req 14546,14592,0;
+	questinfo 14546, QTYPE_QUEST, 1;
+	setquestinfo_req 14546, 14592,0;
 	setquestinfo_level 14546,6,9;
 	end;
 }
 
 lasa_fild02,102,372,5	script	Florin#dorcon	4_DR_F_01,{
 	if (BaseLevel < 10 || BaseLevel > 13) {
-		if (isbegin_quest(14592) > 0)
+		if (checkquest(14592,PLAYTIME) == 2)
 			erasequest 14592;
+		if (checkquest(14588,HUNTING) == 2) {
+			mes "[Florin]";
+			mes "Thanks to you, we were able to collect so much honey. Thank you!";
+			next;
+			mes "[Florin]";
+			mes "But I think you are better off working not in this field, but in a different one.";
+			next;
+			mes "[Florin]";
+			mes "If It's all right with you, may I find you work? You've done a lot today, so please get some good rest and see you tomorrow.";
+			next;
+			mes "[Florin]";
+			mes "I heard that Prok needs some help right now. Why don't you go see ^4D4DFF[Prok]^000000? Thank you for helping us.";
+			erasequest 14588;// The Competition
+			if (isbegin_quest(14592) == 0)
+				setquest 14592;// Resting Time
+			getexp 200,300;
+			close;
+		}
 		mes "[Florin]";
 		mes "I really like this job! I can smell sweet flowers and also get some honey!";
 		close;
@@ -152,7 +188,7 @@ lasa_fild02,102,372,5	script	Florin#dorcon	4_DR_F_01,{
 			navigateto "lasa_fild01",177,241;
 			erasequest 14588;// The Competition
 			setquest 14592;// Resting Time
-			getexp 0,450;
+			getexp 200,300;
 			close;
 		}
 	case 0:
@@ -178,23 +214,42 @@ lasa_fild02,102,372,5	script	Florin#dorcon	4_DR_F_01,{
 	}
 
 OnInit:
-	questinfo 14588, QTYPE_QUEST2, 1;
-	setquestinfo_req 14588,14592,0;
+	questinfo 14588, QTYPE_QUEST, 1;
+	setquestinfo_req 14588, 14592,0;
 	setquestinfo_level 14588,10,13;
 	end;
 }
 
 lasa_fild02,177,241,5	script	Prok#dorcon	4_DR_M_02,{
 	if (BaseLevel < 14 || BaseLevel > 15) {
-		if (isbegin_quest(14592) > 0)
+		if (checkquest(14592,PLAYTIME) == 2)
 			erasequest 14592;
+		if (checkquest(14589,HUNTING) == 2 && countitem(918) >= 5) {
+			mes "[Prok]";
+			mes "Wow, thank you! That was quick.";
+			next;
+			mes "[Prok]";
+			mes "But rather than working on this side, I think you should seek out for an adventure.";
+			next;
+			mes "[Prok]";
+			mes "If you wish, I can find something for you. But not today. Perhaps tomorrow. Today you should get some rest.";
+			next;
+			mes "[Prok]";
+			mes "Taking a ship from the ^4D4DFF[dock]^000000 in search of a bigger adventure is also a good idea. Thank you for helping us.";
+			erasequest 14589;// Sticky ingredient
+			if (isbegin_quest(14592) == 0)
+				setquest 14592;// Resting Time
+			delitem 918,5;// Sticky Webfoot
+			getexp 300,500;
+			close;
+		}
 		mes "[Prok]";
 		mes "Slippery- sticky- It's amazing such creatures exist.";
 		close;
 	}
 	switch( checkquest(14592,PLAYTIME) ) {
 	case -1:
-		switch( checkquest(14588,HUNTING) ) {
+		switch( checkquest(14589,HUNTING) ) {
 		case -1:
 			mes "[Prok]";
 			mes "Can you by any chance help me? If you have time, that is.";
@@ -240,9 +295,9 @@ lasa_fild02,177,241,5	script	Prok#dorcon	4_DR_M_02,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "Can I ask for a favor again next time? I need to take fresh ones every day.";
 			erasequest 14589;// Sticky ingredient
-			delitem 918,5;// Sticky Webfoot
 			setquest 14592;// Resting Time
-			getexp 0,675;// todo
+			delitem 918,5;// Sticky Webfoot
+			getexp 300,500;
 			close;
 		}
 	case 0:
@@ -265,16 +320,34 @@ lasa_fild02,177,241,5	script	Prok#dorcon	4_DR_M_02,{
 	}
 
 OnInit:
-	questinfo 14589, QTYPE_QUEST2, 1;
-	setquestinfo_req 14589,14592,0;
+	questinfo 14589, QTYPE_QUEST, 1;
+	setquestinfo_req 14589, 14592,0;
 	setquestinfo_level 14589,14,15;
 	end;
 }
 
 lasa_fild02,326,170,5	script	Fisher#dorcon	4_CAT_ADV2,{
 	if (BaseLevel < 16 || BaseLevel > 19) {
-		if (isbegin_quest(14592) > 0)
+		if (checkquest(14592,PLAYTIME) == 2)
 			erasequest 14592;
+		if (checkquest(14590,HUNTING) == 2) {
+			mes "[Fisher]";
+			mes "Thank you so much. I bet they'll be scared to show up for a while.";
+			next;
+			mes "[Fisher]";
+			mes "But I think you should seek for bigger adventures. don't let your skills go to waste in this boondocks and go out to a bigger place.";
+			next;
+			mes "[Fisher]";
+			mes "Right. There was someone who needed help. You had a long day today, so perhaps you should go see him tomorrow.";
+			next;
+			mes "[Fisher]";
+			mes "Taking a ship from the ^4D4DFF[dock]^000000 in search of a bigger adventure is also a good idea. Thank you for helping us.";
+			erasequest 14590;// Hunter's destination
+			if (isbegin_quest(14592) == 0)
+				setquest 14592;// Resting Time
+			getexp 400,800;
+			close;
+		}
 		mes "[Fisher]";
 		mes "Today's wind is good! The fish will dry nicely.";
 		close;
@@ -332,7 +405,7 @@ lasa_fild02,326,170,5	script	Fisher#dorcon	4_CAT_ADV2,{
 			mes "I hope you can help me tomorrow as well!";
 			erasequest 14590;// Hunter's destination
 			setquest 14592;// Resting Time
-			getexp 600,1200;
+			getexp 400,800;
 			close;
 		}
 	case 0:
@@ -355,218 +428,258 @@ lasa_fild02,326,170,5	script	Fisher#dorcon	4_CAT_ADV2,{
 	}
 
 OnInit:
-	questinfo 14590, QTYPE_QUEST2, 1;
-	setquestinfo_req 14590,14592,0;
+	questinfo 14590, QTYPE_QUEST, 1;
+	setquestinfo_req 14590, 14592,0;
 	setquestinfo_level 14590,16,19;
 	end;
 }
 
-// inaccurate
 lasa_fild02,331,251,5	script	Sleepy meow#dorcon	4_CAT_REST,{
-	if (BaseLevel < 20 || BaseLevel > 21) {
-		if (isbegin_quest(14592) > 0)
+	if (BaseLevel != 20) {
+		if (checkquest(14592,PLAYTIME) == 2)
 			erasequest 14592;
+		if (checkquest(14591,HUNTING) == 2 && countitem(921) >= 5) {
+			mes "[Sleepy meow]";
+			mes "Adventurer. You're kind... You saved my life.";
+			next;
+			mes "[Sleepy meow]";
+			mes "But what are you doing in such a rustic place? Isn't it better that you go and search for a bigger world? Like the new world, for example.";
+			next;
+			mes "[Sleepy meow]";
+			mes "If I were you, I would've left long ago. You're not here because you don't know how to get there, right? If That's the case, then I'll tell you. I can do that much for my life's savior.";
+			next;
+			mes "[Sleepy meow]";
+			mes "If you go to Lasagna, there is a ^4D4DFF[dock]^000000 there. Take a ship that goes to the new world from there. Wherever you go, I wish you the best. Thanks for everything meow.";
+			erasequest 14591;// Secret Ingredient
+			delitem 921,5;// Mushroom Spore
+			getexp 500,1000;
+			navigateto "lasagna",205,325;
+			close;
+		}
 		mes "[Sleepy meow]";
-		mes "don't block the sunlight meow...";
+		mes "Don't block the sunlight meow...";
 		close;
 	}
-	if (isbegin_quest(14591) == 2) {
+	switch( checkquest(14592,PLAYTIME) ) {
+	case -1:
+		switch( checkquest(14591,HUNTING) ) {
+		case -1:
+			mes "[Sleepy meow]";
+			mes "Adventurer...please save me...";
+			next;
+			if (select( "Why? What's wrong?", "What do you mean, save you?" ) == 2) {
+				mes "[" + strcharinfo(0) + "]";
+				mes "I think someone with more experience should take care of this. I'm still a rookie.";
+				next;
+				mes "[Sleepy meow]";
+				mes "So cold-hearted...";
+				close;
+			}
+			mes "[Sleepy meow]";
+			mes "I think I'm going to die at this rate...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "So what's the matter?";
+			next;
+			mes "[Sleepy meow]";
+			mes "My dad, I mean, Chef, told me to get mushroom spores or something...";
+			next;
+			mes "[Sleepy meow]";
+			mes "But look. The sunlight.";
+			next;
+			mes "[Sleepy meow]";
+			mes "I must bathe in the sunlight and sleep on days like this...";
+			next;
+			mes "[Sleepy meow]";
+			mes "This sunlight is putting me to sleep meow...";
+			next;
+			mes "[Sleepy meow]";
+			mes "I was here, desperately fighting against the sunlight and waiting for someone to pass by meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "I think I'm going to die, trying to fight sleepiness meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "So please get those mushroom spores for me cuz I'm dying meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "And while you're at it, beat those Trans Spores, too. I hate them meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "My dad, I mean, Chef, gave me a training on entering caves so he can use me for such tasks meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "So just the thought of them makes me all furious meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "What is that look in your eyes? Do you think I'm pathetic meow?";
+			next;
+			mes "[Sleepy meow]";
+			mes "That's rude but It's okay. You're not the only one meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "It's okay if you decide not to help meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "Even if I don't die here fighting against sleep, my dad, I mean, Chef, will kill me. Merely over mushroom spores meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "That's okay, too. I came back to life many times already. Long and deep sleep is all I need to revive meow.";
+			next;
+			mes "[Sleepy meow]";
+			mes "So, please think of it as... saving someone's life...and help meeee...";
+			setquest 14591;// Secret Ingredient
+			close;
+		case 0:
+		case 1:
+			break;
+		case 2:
+			if (countitem(921) < 5)
+				break;
+			mes "[Sleepy meow]";
+			mes "Adventurer...? Are you waking me up cuz you're done? Let me see...";
+			next;
+			mes "[Sleepy meow]";
+			mes "Wow, you're really done! That was so quick of you that I am wide awake. You really are a wonder!";
+			next;
+			mes "[Sleepy meow]";
+			mes "Why don't you work at Pub-Oven instead of me? Then again, I'm sure you'd hate that, too.";
+			next;
+			mes "[Sleepy meow]";
+			mes "I might need to get some mushroom spores or something tomorrow as well, so drop by again. I'm going to bring these quickly and relax. Thanks! I owe you.";
+			erasequest 14591;// Secret Ingredient
+			delitem 921,5;// Mushroom Spore
+			setquest 14592;// Resting Time
+			getexp 500,1000;
+			close;
+		}
+		mes "[Sleepy meow]";
+		mes "Have you finished it already meow?";
+		next;
+		mes "[Sleepy meow]";
+		mes "Of course not. This is not it. Did you forget already meow?";
+		next;
+		mes "[Sleepy meow]";
+		mes "Catch ten Trans Spores and bring five mushroom spores meow.";
+		next;
+		mes "[Sleepy meow]";
+		mes "Call me when you're done. Don't wake me up for no reason meow.";
+		close;
+	case 0:
+	case 1:
 		mes "[Sleepy meow]";
 		mes "there's no more for today, so can go...";
 		next;
 		mes "[Sleepy meow]";
 		mes "don't disturb my... sleep...";
 		close;
-	}
-	switch( checkquest(14591,HUNTING) ) {
-	case -1:
+	case 2:
 		mes "[Sleepy meow]";
-		mes "Adventurer...please save me...";
-		next;
-		if (select( "Why? What's wrong?", "What do you mean, save you?" ) == 2) {
-			mes "[" + strcharinfo(0) + "]";
-			mes "I think someone with more experience should take care of this. I'm still a rookie.";
-			next;
-			mes "[Sleepy meow]";
-			mes "So cold-hearted...";
-			close;
-		}
-		mes "[Sleepy meow]";
-		mes "I think I'm going to die at this rate...";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "So what's the matter?";
+		mes "An adventurer. The adventurer from yesterday. Great, please save me today as well meow.";
 		next;
 		mes "[Sleepy meow]";
-		mes "My dad, I mean, Chef, told me to get mushroom spores or something...";
+		mes "There seems to be another bothersome fish cake order that came in. So please get the ingredients for me. I'm busy today as well, desperately fighting against the sunlight meow.";
 		next;
 		mes "[Sleepy meow]";
-		mes "But look. The sunlight.";
+		mes "Catch ten Trans Spores and bring them five mushroom spores meow.";
 		next;
 		mes "[Sleepy meow]";
-		mes "I must bathe in the sunlight and sleep on days like this...";
-		next;
-		mes "[Sleepy meow]";
-		mes "This sunlight is putting me to sleep meow...";
-		next;
-		mes "[Sleepy meow]";
-		mes "I was here, desperately fighting against the sunlight and waiting for someone to pass by meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "I think I'm going to die, trying to fight sleepiness meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "So please get those mushroom spores for me cuz I'm dying meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "And while you're at it, beat those Trans Spores, too. I hate them meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "My dad, I mean, Chef, gave me a training on entering caves so he can use me for such tasks meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "So just the thought of them makes me all furious meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "What is that look in your eyes? Do you think I'm pathetic meow?";
-		next;
-		mes "[Sleepy meow]";
-		mes "That's rude but It's okay. You're not the only one meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "It's okay if you decide not to help meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "Even if I don't die here fighting against sleep, my dad, I mean, Chef, will kill me. Merely over mushroom spores meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "That's okay, too. I came back to life many times already. Long and deep sleep is all I need to revive meow.";
-		next;
-		mes "[Sleepy meow]";
-		mes "So, please think of it as... saving someone's life...and help meeee...";
+		mes "Please...help me...";
 		erasequest 14592;// Resting Time
 		setquest 14591;// Secret Ingredient
 		close;
-	case 0:
-	case 1:
-		break;
-	case 2:
-		if (countitem(921) < 5)
-			break;
-		mes "[Sleepy meow]";
-		mes "Adventurer. You're kind... You saved my life.";
-		next;
-		mes "[Sleepy meow]";
-		mes "But what are you doing in such a rustic place? Isn't it better that you go and search for a bigger world? Like the new world, for example.";
-		next;
-		mes "[Sleepy meow]";
-		mes "If I were you, I would've left long ago. You're not here because you don't know how to get there, right? If That's the case, then I'll tell you. I can do that much for my life's savior.";
-		next;
-		mes "[Sleepy meow]";
-		mes "If you go to Lasagna, there is a ^4D4DFF[dock]^000000 there. Take a ship that goes to the new world from there. Wherever you go, I wish you the best. Thanks for everything meow.";
-		completequest 14591;// Secret Ingredient
-		delitem 921,5;// Mushroom Spore
-		getexp 625,0;
-		navigateto "lasagna",205,325;
-		close;
 	}
-	mes "[Sleepy meow]";
-	mes "Have you finished it already meow?";
-	next;
-	mes "[Sleepy meow]";
-	mes "Of course not. This is not it. Did you forget already meow?";
-	next;
-	mes "[Sleepy meow]";
-	mes "Catch ten Trans Spores and bring five mushroom spores meow.";
-	next;
-	mes "[Sleepy meow]";
-	mes "Call me when you're done. don't wake me up for no reason meow.";
-	close;
 
 OnInit:
-	questinfo 14591, QTYPE_QUEST2, 1;
-	setquestinfo_req 14591,14592,0;
-	setquestinfo_level 14591,20,21;
+	questinfo 14591, QTYPE_QUEST, 1;
+	setquestinfo_req 14591, 14592,0;
+	setquestinfo_level 14591,20,20;
 	end;
 }
 
+// todo : quest depends on player level
 lasagna,222,187,3	script	Chef#dorcon	4_CAT_CHEF,{
 	if (BaseLevel < 6 || BaseLevel > 20) {
-		if (isbegin_quest(14592) > 0)
+		if (checkquest(14592,PLAYTIME) == 2)
 			erasequest 14592;
+		// todo completed quest
 		mes "[Chef]";
 		mes "I'm busy! So busy!";
 		close;
 	}
 	switch( checkquest(14592,PLAYTIME) ) {
 	case -1:
-		switch( checkquest(14546,HUNTING) ) {
-		case -1:
-			mes "[Chef]";
-			mes "Adventurer, can you do me a small favor? There are things I must do right now but as you can see, I am shorthanded. What'd you say?";
-			next;
-			mes "[Chef]";
-			mes "Think of it as a continuation of your training and please help me. I'll give you a hefty wage, so what'd you say?";
-			next;
-			if (select( "I'll give it a try.", "I'm busy." ) == 2) {
-				mes "[Kileop]";
-				mes "I'm busy right now. I'll do it later.";
+		if (BaseLevel < 10) {
+			switch( checkquest(14546,HUNTING) ) {
+			case -1:
+				mes "[Chef]";
+				mes "Adventurer, can you do me a small favor? There are things I must do right now but as you can see, I am shorthanded. What'd you say?";
+				next;
+				mes "[Chef]";
+				mes "Think of it as a continuation of your training and please help me. I'll give you a hefty wage, so what'd you say?";
+				next;
+				if (select( "I'll give it a try.", "I'm busy." ) == 2) {
+					mes "[" + strcharinfo(0) + "]";
+					mes "I'm busy right now. I'll do it later.";
+					close;
+				}
+				mes "[Chef]";
+				mes "Oh, thanks a bunch. What a relief, really!";
+				next;
+				mes "[Chef]";
+				mes "Then Let's cut to the chase.";
+				next;
+				mes "[Chef]";
+				mes "All people from Lasagna love kaluna milk, but do you know what It's made of? Kaluna made from well-fermented kalunyak and fresh milk.";
+				next;
+				mes "[Chef]";
+				mes "As the recipe is simple, it takes good ingredients to come up with the best taste. So we get milk from our own cow that we raised.";
+				next;
+				mes "[Chef]";
+				mes "I'm sure you've been to Raviol Plains. You must come from there.";
+				next;
+				mes "[Chef]";
+				mes "Where you must go is not the guard post. If you go south straight down, you'll see crossroads. Then go straight down underneath.";
+				next;
+				mes "[Chef]";
+				mes "That's where our cows are grazing. Grass there is fresh and clean, so the milk tastes superb.";
+				next;
+				mes "[Chef]";
+				mes "But the Grass Fabres and Leaf Lunatics are devouring the grasses.";
+				next;
+				mes "[Chef]";
+				mes "So please go and get rid of them. Five from each group should be enough.";
+				next;
+				mes "[Chef]";
+				mes "You may come to me after catching all of them, or you can talk to the ^4D4DFF[shepherd]^000000 there.";
+				navigateto "lasa_fild01",353,370;
+				next;
+				mes "[Chef]";
+				mes "Pay is same anywhere. You ready?";
+				setquest 14546;// Take care of grass thief
+				close;
+			case 0:
+			case 1:
+				mes "[Chef]";
+				mes "Our cow...should eat lots of tasty stuff... Please take care of five Leaf Lunatics and five Grass Fabres.";
+				close;
+			case 2:
+				mes "[Chef]";
+				mes "Now our cows can have lots of tasty grasses. Thank you.";
+				next;
+				mes "[Chef]";
+				mes "Our cows liked you very much. That's surprising because they're usually very shy.";
+				next;
+				mes "[Chef]";
+				mes "So can you do me another favor tomorrow? Oh, no need to answer right away. Get some good rest tonight and come back tomorrow.";
+				erasequest 14546;// Take care of grass thief
+				setquest 14592;// Resting Time
+				getexp 120,200;
 				close;
 			}
-			mes "[Chef]";
-			mes "Oh, thanks a bunch. What a relief, really!";
-			next;
-			mes "[Chef]";
-			mes "Then Let's cut to the chase.";
-			next;
-			mes "[Chef]";
-			mes "All people from Lasagna love kaluna milk, but do you know what It's made of? Kaluna made from well-fermented kalunyak and fresh milk.";
-			next;
-			mes "[Chef]";
-			mes "As the recipe is simple, it takes good ingredients to come up with the best taste. So we get milk from our own cow that we raised.";
-			next;
-			mes "[Chef]";
-			mes "I'm sure you've been to Raviol Plains. You must come from there.";
-			next;
-			mes "[Chef]";
-			mes "Where you must go is not the guard post. If you go south straight down, you'll see crossroads. Then go straight down underneath.";
-			next;
-			mes "[Chef]";
-			mes "That's where our cows are grazing. Grass there is fresh and clean, so the milk tastes superb.";
-			next;
-			mes "[Chef]";
-			mes "But the Grass Fabres and Leaf Lunatics are devouring the grasses.";
-			next;
-			mes "[Chef]";
-			mes "So please go and get rid of them. Five from each group should be enough.";
-			next;
-			mes "[Chef]";
-			mes "You may come to me after catching all of them, or you can talk to the ^4D4DFF[shepherd]^000000 there.";
-			navigateto "lasa_fild01",353,370;
-			next;
-			mes "[Chef]";
-			mes "Pay is same anywhere. You ready?";
-			setquest 14546;// Take care of grass thief
-			close;
-		case 0:
-		case 1:
-			mes "[Chef]";
-			mes "Our cow...should eat lots of tasty stuff... Please take care of five Leaf Lunatics and five Grass Fabres.";
-			close;
-		case 2:
-			mes "[Chef]";
-			mes "Now our cows can have lots of tasty grasses. Thank you.";
-			next;
-			mes "[Chef]";
-			mes "Our cows liked you very much. That's surprising because they're usually very shy.";
-			next;
-			mes "[Chef]";
-			mes "So can you do me another favor tomorrow? Oh, no need to answer right away. Get some good rest tonight and come back tomorrow.";
-			erasequest 14546;// Take care of grass thief
-			setquest 14592;// Resting Time
-			getexp 120,200;
-			close;
 		}
+		// todo
+		end;
 	case 0:
 	case 1:
 		mes "[Chef]";
@@ -586,36 +699,39 @@ lasagna,222,187,3	script	Chef#dorcon	4_CAT_CHEF,{
 		mes "Will you help today as well?";
 		next;
 		if (select( "I'll try.", "I'm busy." ) == 2) {
-			mes "[Kileop]";
+			mes "[" + strcharinfo(0) + "]";
 			mes "I'm busy right now. I'll do it later.";
 			close;
 		}
-		mes "[Chef]";
-		mes "Please guard the grasses from Grass Fabre and Leaf Lunatic. They are food for our cows.";
-		next;
-		mes "[Chef]";
-		mes "Grass Fabre and Leaf Lunatic, five each. That should scare the rest nearby and keep them at bay.";
-		next;
-		mes "[Chef]";
-		mes "Once you cross the south bridge, you'll see crossroads. Take the road right underneath and go straight to the Raviol Plains where the shepherd is.";
-		next;
-		mes "[Chef]";
-		mes "You may come to me after catching all of them, or you can talk to the <NAVI>^4D4DFF[shepherd]^000000<INFO>lasa_fild01,353,370,000,1,</INFO></NAVI>.";
-		next;
-		mes "[Chef]";
-		mes "Pay is same anywhere. You ready?";
-		erasequest 14592;// Resting Time
-		setquest 14546;// Take care of grass thief
-		close;
+		if (BaseLevel < 10) {
+			mes "[Chef]";
+			mes "Please guard the grasses from Grass Fabre and Leaf Lunatic. They are food for our cows.";
+			next;
+			mes "[Chef]";
+			mes "Grass Fabre and Leaf Lunatic, five each. That should scare the rest nearby and keep them at bay.";
+			next;
+			mes "[Chef]";
+			mes "Once you cross the south bridge, you'll see crossroads. Take the road right underneath and go straight to the Raviol Plains where the shepherd is.";
+			next;
+			mes "[Chef]";
+			mes "You may come to me after catching all of them, or you can talk to the <NAVI>^4D4DFF[shepherd]^000000<INFO>lasa_fild01,353,370,000,1,</INFO></NAVI>.";
+			next;
+			mes "[Chef]";
+			mes "Pay is same anywhere. You ready?";
+			erasequest 14592;// Resting Time
+			setquest 14546;// Take care of grass thief
+			close;
+		}
+		// todo
+		end;
 	}
 OnInit:
-	questinfo 14546, QTYPE_QUEST2, 1;
-	setquestinfo_req 14546,14592,0;
-	setquestinfo_level 14546,6,19;// but BaseLevel == 20 can do quest
+	questinfo 14546, QTYPE_QUEST, 1;
+	setquestinfo_req 14546, 14592,0;
+	setquestinfo_level 14546,6,19;
 	end;
 }
 
-// 110 < level req < 140
 lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 	if (conch_in_boatswain == 1) {
 		mes "[Shaman meow]";
@@ -773,8 +889,27 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		close;
 	}
 	if (conch_in_boatswain == 4) {
-		// todo there is several daily quest
-		if (checkquest(14559,PLAYTIME) == 2) {
+		switch( checkquest(14559,PLAYTIME) ) {
+		case -1:
+			mes "[Shaman meow]";
+			if (isbegin_quest(14560) == 1)
+				mes "Today's talisman is ^0000cd5 basil locks and 1 holy water^000000. In the new world, the holy water drives the evil spirits away. It must've worked when the boatswain came in contact with the people of the new world.";
+			else if (isbegin_quest(14561) == 1) {
+				mes "Today's talisman is ^0000cd20 basil locks^000000. You'll get your hands very dirty today. I'm sorry. But grandma has spoken so That's the bottom line.";
+				next;
+				mes "[Shaman meow]";
+				mes "That thing clinging onto the boatswain is also a doram. It especially hates basil locks. That is the reason why basil locks are used.";
+			}
+			else
+				mes "Today's talisman is ^0000cd20 basils and 5 basil locks^000000. Same as the first. The most basic is the most useful.";
+			next;
+			mes "[Shaman meow]";
+			mes "I pray for your peace and safety. Tell the boatswain to come back anytime he changes his mind.";
+			close;
+		case 0:
+		case 1:
+			break;
+		case 2:
 			mes "[Shaman meow]";
 			mes "The boatswain must've sent you. I'll tell you about the talisman that'll help you get through today safely.";
 			next;
@@ -787,23 +922,28 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 			next;
 			specialeffect 330;
 			mes "[Shaman meow]";
-			mes "^0000cd20 basils and 5 basil locks^000000. Same as the first. The most basic is the most useful.";
+			.@quest_id = rand(14560,14562);
+			switch( .@quest_id ) {
+			case 14560:
+				mes "^0000cd5 basil locks and 1 holy water^000000. In the new world, the holy water drives the evil spirits away. It must've worked when the boatswain came in contact with the people of the new world.";
+				break;
+			case 14561:
+				mes "^0000cd20 basil locks^000000. You'll get your hands very dirty today. I'm sorry. But grandma has spoken so That's the bottom line.";
+				next;
+				mes "[Shaman meow]";
+				mes "That thing clinging onto the boatswain is also a doram. It especially hates basil locks. That is the reason why basil locks are used.";
+				break;
+			case 14562:
+				mes "^0000cd20 basils and 5 basil locks^000000. Same as the first. The most basic is the most useful.";
+				break;
+			}
 			next;
 			mes "[Shaman meow]";
 			mes "I pray for your peace and safety. Tell the boatswain to come back anytime he changes his mind.";
 			erasequest 14559;// Charm Effect Duration
-			setquest 14562;// The basic are the best
+			setquest .@quest_id;
 			close;
 		}
-		if (isbegin_quest(14562) == 1) {
-			mes "[Shaman meow]";
-			mes "Today's talisman is ^0000cd20 basils and 5 basil locks^000000. Same as the first. The most basic is the most useful.";
-			next;
-			mes "[Shaman meow]";
-			mes "I pray for your peace and safety. Tell the boatswain to come back anytime he changes his mind.";
-			close;
-		}
-		// continue
 	}
 	mes "[Shaman meow]";
 	mes "You want to know the future? The past? If you know where you're standing, then you can see the past, future, everything.";
@@ -812,6 +952,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 	mes "If you need to curse someone, break a curse, or need a bit of luck, then come see me.";
 	close;
 }
+
 lasagna,174,160,3	script	Vigilante Guide#lasa	4_DR_SOLDIER,5,5,{
 	mes "[Vigilante Guide]";
 	mes "Hello.";
@@ -863,7 +1004,7 @@ OnTouch:
 	npctalk "Vigilante Guide: If you're ever in need of help, please visit the Vigilante Corp at any time.", "", bc_self;
 	end;
 OnInit:
-	questinfo 11435, QTYPE_QUEST;
+	questinfo 11435, QTYPE_QUEST, 1;
 	end;
 }
 lasagna,202,291,3	duplicate(Vigilante Guide#lasa)	Vigilante Guide#lasa2	4_DR_SOLDIER,5,5
@@ -960,11 +1101,9 @@ lasagna,233,197,5	script	Vigilante Olio#lasa	4_DR_OLIO,{
 			mes "[Vigilante Olio]";
 			mes "You need the chief's permission to join the Vigilante, so you'd better ask him.";
 			getitem 22076,1;// Wooden Slippers [1]
-			getexp 0,400;
+			getexp 500,400;
 		}
 		else {
-			select("Ask about reaching the continent of Midgard.");
-			mes "[Vigilante Olio]";
 			mes "Huh? aren't you from Midgard?";
 			mes "How did you get here in the first place?";
 			mes "can't you just go back the same way you came here?";
@@ -1117,7 +1256,7 @@ lasagna,235,198,3	script	Chief Peperoncino#lasa	4_DR_PEPE,{
 	}
 	if (lasagna_quest[1] == 11) {
 		mes "[Chief Peperoncino]";
-		mes "you're back.";
+		mes "You're back.";
 		mes "It wouldn't have been... easy to deal with her, so well done.";
 		mes "And Tali brought these, saying there was a lot of cloths left over.";
 		next;
@@ -1143,7 +1282,7 @@ lasagna,235,198,3	script	Chief Peperoncino#lasa	4_DR_PEPE,{
 		completequest 11445;
 		getitem 15151,1;// White Eco Shirt [1]
 		getitem 25046,1;// Boarding Pass
-		getexp 770,550;
+		getexp 700,500;
 		lasagna_quest[1] = 12;
 		close;
 	}
@@ -1607,7 +1746,7 @@ lasagna,205,325,5	script	Eggling#dorcon	4_M_MERCAT1,2,2,{
 		mes "You seem to understand it so well. I like it. What is your name, by the way? Haha...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "My name is" + strcharinfo(0) + ".";
+		mes "My name is " + strcharinfo(0) + ".";
 		next;
 		mes "[Eggling]";
 		mes "I see. Let's say hi when we run into each other. Well, make sure to follow my instructions when you hand it over to the Sous Chef, OK?";
@@ -1622,6 +1761,8 @@ lasagna,205,325,5	script	Eggling#dorcon	4_M_MERCAT1,2,2,{
 		mes "OK. Get on there now.";
 		delitem 25046,1;// Boarding Pass
 		setquest 14531;// Everything about Con-Chliina
+		setquest 14545;// To Purser
+		completequest 14545;
 		getitem 25047,1;// Kahlunac
 		lasagna_quest[1] = 13;
 		close2;
@@ -1706,7 +1847,7 @@ lasagna,205,325,5	script	Eggling#dorcon	4_M_MERCAT1,2,2,{
 			erasequest 14540;// An errand out of nowhere
 			delitem 25049, countitem(25049);// Basilac Clam
 			getitem 11601,10;// Delicious Anchovy
-			getexp 405,405;
+			getexp 300,300;
 			lasagna_quest[1] = 28;
 			close2;
 			warp "conch_in",58,61;
@@ -1836,15 +1977,15 @@ S_quest21:
 		close;
 	}
 	return;
-	
+
 OnTouch:
 	callsub S_quest21;
 	end;
 OnInit:
-	questinfo 14545, QTYPE_QUEST2, 1;
-	setquestinfo_req 14545,11445,0;
+	questinfo 14545, QTYPE_QUEST, 1;
 	end;
 }
+
 // hall
 conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 	if (lasagna_quest[1] == 13) {
@@ -1884,7 +2025,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		npctalk "Tell me your name.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Eh, my name is" + strcharinfo(0) + ".";
+		mes "Eh, my name is " + strcharinfo(0) + ".";
 		next;
 		mes "[Purser]";
 		mes "Oh, yeah. I see your name on the list. " + strcharinfo(0) + ".";
@@ -1911,7 +2052,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		npctalk "The Captain's Cabin is right up the stairs.", "", bc_self;
 		erasequest 14531;// Everything about Con-Chliina
 		setquest 14532;// Greetings to Captain Gamberi
-		getexp 250,375;
+		getexp 200,300;
 		lasagna_quest[1] = 14;
 		close;
 	}
@@ -2053,11 +2194,17 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 	close;
 
 OnInit:
-	questinfo 14532, QTYPE_QUEST, 1, Job_Summoner;// inaccurate
+	questinfo 14532, QTYPE_QUEST, 1;
+	setquestinfo_req 14532,14531,1;
+	questinfo 14536, QTYPE_QUEST, 1;
+	setquestinfo_req 14536,14535,1;
+	questinfo 14547, QTYPE_QUEST, 1;
+	setquestinfo_req 14547,14531,1;
 	end;
 }
 
 conch_in,52,60,0	script	#dorcon95	HIDDEN_WARP_NPC,1,1,{
+	end;
 OnTouch:
 	if (lasagna_quest[1] != 14)
 		npctalk "- Knock knock -", "", bc_self;

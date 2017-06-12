@@ -160,11 +160,11 @@ lasa_fild01,53,322,3	script	Applicant Paul#doramt13	4_M_MERCAT1,4,4,{
 	}
 OnTouch:
 	if (Class == Job_Summoner && isbegin_quest(7723) == 0) {
-		npctalk "You, dimwit! Nothing beats damage! You should boost your STR first!", "", bc_self;
+		npctalk "You, dimwit! Nothing beats damage! You should boost your STR first!", "Applicant Paul#doramt13", bc_self;
 		sleep2 2000;
 		npctalk "You have no idea! DEX comes first if you want your attack to be successful!!", "Applicant MacCarnie#doramt13", bc_self;
 		sleep2 1000;
-		emotion 36;
+		emotion 36,0,"Applicant Paul#doramt13";
 		emotion 54,0,"Applicant MacCarnie#doramt13";
 	}
 	end;
@@ -232,22 +232,17 @@ lasa_fild01,54,325,3	script	Vigilante Gnocchi#doramt13	4_DR_SOLDIER,{
 	mes "[Vigilante Gnocchi]";
 	mes "DEX is highly crucial in the early stages because it is what boosts Accuracy.";
 	mes "This can be a difficult concept to get, so you should try boosting this and that to find your own way.";
-	switch( isbegin_quest(7723) ) {
-	case 0:
-		close;
-	case 1:
+	if (isbegin_quest(7723) == 1) {
 		completequest 7723;// The potential within
 		getexp 50,50;
 		next;
 		mes "[Vigilante Gnocchi]";
 		mes "I wish you godspeed!";
-		close;
-	case 2:
-		close;
 	}
+	close;
 OnInit:
-	questinfo 7723, QTYPE_QUEST, 1;// todo : display when set, removed when completed
-	setquestinfo_req 7723,7723,2;
+	questinfo 7723, QTYPE_QUEST, 1;
+	setquestinfo_req 7723, 7723,1;// todo : display when isbegin_quest(7723) == 1 only
 	end;
 }
 
@@ -258,7 +253,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		mes "Out-of-towner Dorams abound in this place, I definitely don't want any more of them.";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "wouldn't they be surprised to see you guys?";
+		mes "Wouldn't they be surprised to see you guys?";
 		mes "Moreover, it's dangerous to cross the mountain ridge.";
 		mes "This is for your own good. Just go back to where you come from.";
 		close;
@@ -326,25 +321,23 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 				mes "^4d4dffCheck out the quest details by pressing the shortcut key [Alt+U],^000000 or through the Quest icon found in the menu tray.^000000";
 				close;
 			}
-			else {
-				mes "[Vigilante Aglio]";
-				mes "Whoa, you're good!";
-				mes "I should've seen that in you because crossing the mountains is never easy.";
-				next;
-				mes "[Vigilante Aglio]";
-				mes "I believe you can do very well, even in a new location.";
-				mes "Here, take this.";
-				next;
-				mes "[Vigilante Aglio]";
-				mes "I brought some snacks for you.";
-				mes "It's cool apple juice!";
-				completequest 7713;// First Battle!
-				getexp 70,70;
-				setquest 7714;// Refreshing Apple Juice
-				lasagna_quest[0] = 2;
-				getitem 531,1;// Apple Juice
-				next;
-			}
+			mes "[Vigilante Aglio]";
+			mes "Whoa, you're good!";
+			mes "I should've seen that in you because crossing the mountains is never easy.";
+			next;
+			mes "[Vigilante Aglio]";
+			mes "I believe you can do very well, even in a new location.";
+			mes "Here, take this.";
+			next;
+			mes "[Vigilante Aglio]";
+			mes "I brought some snacks for you.";
+			mes "It's cool apple juice!";
+			completequest 7713;// First Battle!
+			getexp 70,70;
+			setquest 7714;// Refreshing Apple Juice
+			lasagna_quest[0] = 2;
+			getitem 531,1;// Apple Juice
+			next;
 		}
 		if (lasagna_quest[0] == 2) {
 			if (countitem(531) > 0) {
@@ -500,7 +493,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		mes "Follow the arrows that just appeared on the ground.";
 		erasequest 7715;// Midding Box
 		setquest 7716;// To the Village!
-		getexp 100,0;
+		getexp 100,100;
 		lasagna_quest[0] = 5;
 		next;
 		mes "!- Notice -!";
@@ -514,7 +507,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		mes "Arrows will be generated pointing toward the location of the target.^000000";
 		cutin "navi02.bmp",4;
 		navigateto "lasagna",168,124;
-		close;
+		close3;
 	}
 	if (lasagna_quest[0] == 5) {
 		mes "[Vigilante Aglio]";
@@ -535,9 +528,14 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 	mes "Haven't you left for Midgard yet?";
 	mes "Well, problems do occur at the harbor from time to time, but I thought it wouldn't be an issue for you.";
 	close;
-// OnInit:
-	// questinfo 7712, QTYPE_QUEST, 1;// inaccurate
-	// end;
+OnInit:
+	questinfo 7715, QTYPE_QUEST, 1;
+	setquestinfo_req 7715, 7713,2;
+	questinfo 7712, QTYPE_QUEST, 1;
+	setquestinfo_req 7712, 7712,1;
+	// questinfo 7713, QTYPE_QUEST, 1;
+	// setquestinfo_req 7713, 7713,2;// todo display when HUNTING is QUEST_COMPLETE
+	end;
 }
 
 lasa_fild01,62,321,3	script	Kid#doram03t	HIDDEN_WARP_NPC,{ end; }
@@ -590,10 +588,12 @@ lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
 	close2;
 	npctalk "You're too young! Just join the Vigilante Corp.", "Tool Merchant#doram05t", bc_self;
 	end;
-// OnInit:
-	// questinfo 7716, 
-	// end;
+OnInit:
+	questinfo 7716, QTYPE_QUEST, 1;
+	setquestinfo_req 7716, 7716,1;// todo display when Active, removed when completed
+	end;
 }
+
 
 lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
 	if (lasagna_quest[0] == 5) {
@@ -648,7 +648,7 @@ lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
 		getitem 7059,10;// Free Ticket for Kafra Storage
 		getitem 12849,5;// Combination Kit
 		getitem 15150,1;// White Shirt [1]
-		getexp 50,0;
+		getexp 50,50;
 		lasagna_quest[0] = 7;
 		next;
 		mes "[Tool Merchant]";
@@ -699,6 +699,7 @@ lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
 	callshop "tool_shop_lasagna",2;
 	end;
 }
+
 -	shop	tool_shop_lasagna	-1,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,713:-1,601:-1,602:-1,1065:-1
 
 lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
@@ -721,7 +722,7 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 			mes "Oh, no...";
 			mes "It's going to be fine.";
 			npcskill "AL_HEAL",10,130,115;// 1748 hp
-			percentheal 100,100;
+			percentheal 0,100;
 			close;
 		}
 		mes "[Healer Haru]";
@@ -738,7 +739,7 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 			Zeny = Zeny - 5000;
 		mes "[Healer Haru]";
 		mes "Thank you for using our service.";
-		npcskill "AL_HEAL",10,130,115;// 1748 hp
+		// npcskill "AL_HEAL",10,130,115;// 1748 hp
 		percentheal 100,100;
 		close;
 	case 2:
@@ -761,9 +762,11 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 		mes "[Healer Haru]";
 		mes "Click the ^4d4dffSkill^000000 button to open the Skill Window.";
 		mes "FYI, the shortcut key is ^4d4dffAlt+S^000000.";
-		getexp 0,100;
-		setquest 7722;// EMT
-		completequest 7722;// EMT
+		getexp 100,100;
+		if (isbegin_quest(7722) == 0) {
+			setquest 7722;// EMT
+			completequest 7722;// EMT
+		}
 		skill "NV_FIRSTAID",1,SKILL_PERM;
 		next;
 		mes "[Healer Haru]";
@@ -818,7 +821,8 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 			mes "[Healer Haru]";
 			mes "The herbs are growing in the entrance of the village. Did you see them?";
 			mes "^4d4dffGo and collect 1 Red Herb in the entrance of the village.^000000 This should be a good practice.";
-			erasequest 7717;
+			if (isbegin_quest(7717) == 1)
+				erasequest 7717;
 			if (isbegin_quest(7718) == 0)
 				setquest 7718;// I'm used to this
 			if (lasagna_quest[0] == 7)
@@ -827,7 +831,7 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 			mes "[Healer Haru]";
 			mes "Come on. Hurry!";
 			close2;
-			if (lasagna_quest[0] == 7)
+			if (lasagna_quest[0] == 7 && Class == Job_Summoner)
 				npctalk "Hey, there. Newbie Doram. Talk to me.", "Hypnotist#doram08t", bc_self;
 			end;
 		}
@@ -913,20 +917,21 @@ OnInit:
 	end;
 }
 
-lasagna,230,127,3	script	Vigilante Aglio#doram09	4_DR_AGLIO,{
-	mes "[Vigilante Aglio]";
-	mes "I was looking for you at the tool shop and they said you headed here.";
-	next;
-	mes "[Vigilante Aglio]";
-	mes "First off, we should meet up with our leader to make decisions about the schedule.";
-	mes "We'd better head to the square.";
-	next;
-	mes "[Vigilante Aglio]";
-	mes "I think you can find another Vigilante like myself in the square...";
-	navigateto "lasagna",170,152;
-	close;
+lasagna,230,127,3	script	Vigilante Aglio#doram09	HIDDEN_WARP_NPC,{
+	if (lasagna_quest[0] == 9) {
+		mes "[Vigilante Aglio]";
+		mes "I was looking for you at the tool shop and they said you headed here.";
+		next;
+		mes "[Vigilante Aglio]";
+		mes "First off, we should meet up with our leader to make decisions about the schedule.";
+		mes "We'd better head to the square.";
+		next;
+		mes "[Vigilante Aglio]";
+		mes "I think you can find another Vigilante like myself in the square...";
+		navigateto "lasagna",170,152;
+		close;
+	}
 }
-
 
 lasa_fild01,132,374,3	script	Sloth#doram	4_DR_KID_01,3,3,{
 	switch( isbegin_quest(7719) ) {
@@ -1009,7 +1014,7 @@ lasa_fild01,132,374,3	script	Sloth#doram	4_DR_KID_01,3,3,{
 		getitem 11601,20;// Delicious Anchovy
 		getitem 12323,10;// Novice Fly Wing
 		getitem 12324,10;// Novice Butterfly Wing
-		getexp 4,20;
+		getexp 80,80;
 		close;
 	case 2:
 		mes "[Sloth]";
@@ -1191,6 +1196,11 @@ OnTouch:
 	if (Class == Job_Summoner && isbegin_quest(7721) == 0)
 		npctalk "Meeow?? Is this another out-of-towner Doram that I haven't met before?", "", bc_self;
 	end;
+
+OnInit:
+	questinfo 7721, QTYPE_QUEST, 1;
+	setquestinfo_req 7721, 7716,1;
+	end;
 }
 
 lasa_fild01,102,342,7	script	Vigilante Aglio#doram12	HIDDEN_WARP_NPC,{ end; }
@@ -1279,7 +1289,7 @@ izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 		next;
 		mes "[Vigilante Penne]";
 		mes "By the way, how's your settlement in this land coming along?";
-		mes "Have you been to ^4d4dffProntera^00000 or ^4d4dffPayon^000000 near here?";
+		mes "Have you been to ^4d4dffProntera^000000 or ^4d4dffPayon^000000 near here?";
 		next;
 		mes "[Vigilante Penne]";
 		mes "There is a Paradise Group you might want to visit.";
@@ -1473,7 +1483,7 @@ lasagna,208,188,3	script	Cat Paw Service#lasagna	4_M_MERCAT1,4,4,{
 		completequest 7720;// Service Manual
 		getitem 12323,10;// Novice Fly Wing
 		getitem 12324,10;// Novice Butterfly Wing
-		getexp 62,62;
+		getexp 50,50;
 		next;
 		mes "[Cat Paw Commerce Group]";
 		mes "Oh, do you want me to explain it again?";
@@ -1561,7 +1571,7 @@ OnTouch:
 		npctalk "Meow! Hey, a new friend! I've got a story to tell you. You don't want to miss this!", "", bc_self;
 	end;
 OnInit:
-	questinfo 7720, QTYPE_QUEST, 1;
+	questinfo 7720, QTYPE_QUEST, 1;// perma for human
 	end;
 }
 
@@ -1675,8 +1685,8 @@ OnTouch:
 		npctalk "Please don't miss the announcement about the details of Con-Chliina!", "", bc_self;
 	end;
 OnInit:
-	questinfo 14545, QTYPE_QUEST2, 1;
-	setquestinfo_req 14545,11445,2;
+	questinfo 14545, QTYPE_QUEST, 1;
+	setquestinfo_req 14545, 11445,2;
 	end;
 }
 
@@ -1720,9 +1730,6 @@ lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
 	next;
 	if (Class != Job_Summoner) {
 		mes "[Lonza]";
-		mes "If you're one of the trendsetting Dorams, watch what Lonza can do with her great scissors!";
-		next;
-		mes "[Lonza]";
 		mes "Oh? I'm sorry, but my great scissors are not for anyone who demands it.";
 		mes "They're allowed only for the Doram.";
 		close;
@@ -1736,14 +1743,14 @@ lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
 			.@i++;
 			cutin "hair_dr_m_0" + (.@i%6) + ".bmp",4;
 			mes "[Lonza]";
-			mes "This is the " + (.@i%6) + "th hairdo. How do you like it?";
+			mes "This is the " + callfunc("F_GetNumSuffix",(.@i%6)) + " hairdo. How do you like it?";
 			next;
 			switch( select( "Browse other styles.", "I'll take this.", "End of dialogue." ) ) {
 			case 1:
 				continue;
 			case 2:
 				mes "[Lonza]";
-				mes "So you picked the " + (.@i%6) + "th hairstyle. I like your choice.";
+				mes "So you picked the " + callfunc("F_GetNumSuffix",(.@i%6)) + " hairstyle. I like your choice.";
 				next;
 				mes "[Lonza]";
 				mes "But you need some preparations before you change your hairdo.";
@@ -1839,7 +1846,6 @@ lasagna,186,231,3	script	Youngster meow#dorcon05	4_DR_KID_01,{
 	npctalk "Why Isn't this rolling- Make it roll-", "", bc_self;
 	end;
 }
-
 
 lasagna,226,196,5	script	Aram#dorcon01	4_DR_F_02,{
 	npctalk "Is this the famous Pub-Oven?", "Tos#dorcon01", bc_self;
@@ -2254,14 +2260,32 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	mes "Do you mind if I search you to see the items you have with you?";
 	mes "If I find an item suitable for Jogi, I'll pay <INFO>25142</INFO><ITEM>Doram Token </ITEM>....";
 	next;
-	if (select( "Search", "Cancel" ) == 1) {	// todo complete
-		setarray .@item_data[0],
+	if (select( "Search", "Cancel" ) == 1) {
+		setarray .@item_data[0],	// keep the order
+			15156, 4,	// Elegant Doram Suit [1]
+			20790, 4,	// Elegant Doram Manteau [1]
+			22085, 4,	// Elegant Doram Shoes [1]
+			28415, 4,	// Advanced Saurel Charm [1]
+			28418, 4,	// Advanced Leaf Charm [1]
+			28421, 4,	// Advanced Bunny Charm [1]
+			28414, 3,	// Fair Saurel Charm [1]
+			28417, 3,	// Fair Leaf Charm [1]
+			28420, 3,	// Fair Bunny Charm [1]
+			15129, 3,	// Luxurious Doram Suit [1]
+			20789, 3,	// Luxurious Doram Manteau [1]
+			22084, 3,	// Luxurious Doram Shoes [1]
+			15126, 3,	// Doram Suit [1]
+			20788, 3,	// Doram Manteau [1]
+			22083, 3,	// Doram Shoes [1]
 			28380, 2,	// Fresh Grass Necklace [1]
 			28381, 2,	// Cute Grass Necklace [1]
 			28382, 2,	// Charming Grass Necklace [1]
-			15156, 4,	// Elegant Doram Suit [1]
-			20790, 4,	// Elegant Doram Manteau [1]
-			22085, 4;	// Elegant Doram Shoes [1]
+			28422, 2,	// Shining Branch Charm [1]
+			28423, 2,	// Fresh Tuna Charm [1]
+			28423, 2,	// Plump Earthworm Charm [1]
+			28413, 2,	// Basic Saurel Charm [1]
+			28416, 2,	// Basic Leaf Charm [1]
+			28419, 2;	// Basic Bunny Charm [1]
 		.@total_item = getarraysize(.@item_data);
 
 		while(true) {

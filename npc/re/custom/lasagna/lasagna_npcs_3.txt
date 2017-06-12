@@ -250,7 +250,7 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 			next;
 			mes "[Boo-]";
 			completequest 14544;// Now I can leave
-			getexp 675,675;
+			getexp 500,500;
 			getitem 19084,1;// Parfaille Vigilante Hat [1]
 			getitem 28374,1;// Foxtail Ring
 			getitem 11601,50;// Delicious Anchovy
@@ -418,14 +418,14 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 		mes "Who are you? You are not allowed to enter hear with no permission. Please leave.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Hello, I am" + strcharinfo(0) + " who is on a new adventure.";
+		mes "Hello, I am " + strcharinfo(0) + " who is on a new adventure.";
 		next;
 		mes "[Captain Gamberi]";
 		mes "A new adventurer. A polite Doram always knocks before entering. Since you must be nervous before the adventure, I'll let it slide this time.";
 		npctalk "Knock... Yes, it is very important to knock.", "Stello#dorcon", bc_self;
 		next;
 		mes "[Captain Gamberi]";
-		mes "I am Captain^0000cdGamberi^000000 in charge of this ship. Welcome aboard.";
+		mes "I am Captain ^0000cdGamberi^000000 in charge of this ship. Welcome aboard.";
 		npctalk "I am Captain Gamberi in charge of this ship.", "Stello#dorcon", bc_self;
 		npctalk "Stello?", "", bc_self;
 		npctalk "Huh! I am sorry.", "Stello#dorcon", bc_self;
@@ -451,7 +451,7 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 		mes "Yes, I will. Thank you.";
 		erasequest 14532;// Greetings to Captain Gamberi
 		setquest 14533;// Say hi to recorder
-		getexp 0,375;
+		getexp 200,300;
 		lasagna_quest[1] = 15;
 		close;
 	}
@@ -475,6 +475,7 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 		mes "You need to calm down the dragon to sail off. Please do your bedt.";
 		close;
 	}
+
 	if (conch_in_recorder == 1) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Excuse me, captain.";
@@ -651,7 +652,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "Let me record your profile now. Oh, you don't need to do anything. You may just stand there.";
 		next;
 		mes "[Recorder]";
-		mes "Your name is..." + strcharinfo(0) + "...The height must be... and the color is... like this... The accent of yours... You must have lived in Pane and moved to Bongola.";
+		mes "Your name is... " + strcharinfo(0) + "... The height must be... and the color is... like this... The accent of yours... You must have lived in Pane and moved to Bongola.";
 		npctalk "And you are here in Lasagna...", "", bc_self;
 		next;
 		mes "[Recorder]";
@@ -678,7 +679,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "Ha! Yes. Thank you.";
 		erasequest 14533;// Say hi to recorder
 		setquest 14534;// To the kitchen
-		getexp 250,375;
+		getexp 200,300;
 		lasagna_quest[1] = 16;
 		close;
 	}
@@ -717,6 +718,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "You should go see the Captain and the Chief Officer. Everyone is waiting to set off.";
 		close;
 	}
+
 	if (conch_in_recorder == 0) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Excuse me.";
@@ -731,7 +733,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "Oh, I see. Nice to meet you. I am the Recorder of this ship who is in charge of all records of this ship. You may come by whenever you have a question. You are free to access any records except the classified ones.";
 		next;
 		mes "[Recorder]";
-		mes "Let me record your profile now. Oh, you don't need to do anything. You may just stand there. Your name is..." + strcharinfo(0) + "...The height must be... and the color is... like this...";
+		mes "Let me record your profile now. Oh, you don't need to do anything. You may just stand there. Your name is... " + strcharinfo(0) + "...The height must be... and the color is... like this...";
 		npctalk "The people from the new continent are so tall.", "", bc_self;
 		next;
 		mes "[Recorder]";
@@ -1010,7 +1012,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		emotion 23,0,"Captain Gamberi#dorcon0";
 		mes "[Captain Gamberi]";
 		mes "You were in place. I am just checking if everyone is in the right place prior to the voyage.";
-		npctalk "Hum! Hum! I thought there was no one around here.", "", bc_self;
+		npctalk "Hum! Hum! I thought there was no one around here.", "Captain Gamberi#dorcon0_2", bc_self;
 		next;
 		mes "[Recorder]";
 		mes "Since when it has been your duty to check it? So quietly? Without a knock on the door?";
@@ -1022,11 +1024,11 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Recorder]";
 		mes "I see. ^0000cdIt must be the duty of the captain to tear and burn the document as well^000000, I guess.";
 		npctalk "Did you really think that I wouldn't find out? You have left a long trail od evidence after you.", "", bc_self;
-		npctalk "I don't know what you are talking about.", "", bc_self;
+		npctalk "I don't know what you are talking about.", "Captain Gamberi#dorcon0_2", bc_self;
 		next;
 		mes "[Captain Gamberi]";
 		mes "Oh, hum. I should go check if the Boatswain in the right place.";
-		npctalk "I should stop by so many places.", "", bc_self;
+		npctalk "I should stop by so many places.", "Captain Gamberi#dorcon0_2", bc_self;
 		next;
 		classchange( HIDDEN_WARP_NPC, "Captain Gamberi#dorcon0_2", bc_self );
 		mes "[Recorder]";
@@ -1046,7 +1048,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Recorder]";
 		mes "Dear adventurer. since you have completed your mission, here is the reward for you. You may access all documents in the recording room freely from now on. Well then.";
 		completequest 14584;// Back to Recorder
-		getexp 875,875;
+		getexp 700,700;
 		conch_in_recorder = 7;
 		close;
 	}
@@ -1198,7 +1200,7 @@ conch_in,98,33,5	script	Con-Chliina Ship's Log#	HIDDEN_NPC,{
 			close;
 		case 6:
 			mes "[" + strcharinfo(0) + "]";
-			mes "there's nothing to see.";
+			mes "There's nothing to see.";
 			close;
 		}
 	case 2:
@@ -1289,7 +1291,7 @@ conch_in,98,33,5	script	Con-Chliina Ship's Log#	HIDDEN_NPC,{
 			close;
 		case 4:
 			mes "[" + strcharinfo(0) + "]";
-			mes "there's nothing to see.";
+			mes "There's nothing to see.";
 			close;
 		}
 	case 3:
@@ -1322,7 +1324,7 @@ conch_in,98,33,5	script	Con-Chliina Ship's Log#	HIDDEN_NPC,{
 		close;
 	case 4:
 		mes "[" + strcharinfo(0) + "]";
-		mes "there's nothing to see.";
+		mes "There's nothing to see.";
 		close;
 	}
 }
@@ -1378,7 +1380,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		mes "A mature Doram doesn't hold on to such things. You may go. We are about to set off.";
 		erasequest 14534;// To the kitchen
 		setquest 14535;// To Purser
-		getexp 250,0;
+		getexp 200,300;
 		lasagna_quest[1] = 17;
 		close;
 	}
@@ -1396,7 +1398,8 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		mes "5 creases on the sail, check. Good!";
 		close;
 	}
-	if (conch_in_boatswain == 0) {
+
+	if (conch_in_boatswain == 0) {// start for daily quest
 		mes "[Boatswain]";
 		mes "Doll, check.";
 		mes "Bell, check.";
@@ -1411,7 +1414,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "You seem to be in trouble. What is the matter?";
 		next;
-		if (BaseLevel < 140) {// todo
+		if (BaseLevel < 140) {
 			mes "[Boatswain]";
 			mes "You don't seem to be experienced enough to resolve my problem. Come back after gaining more experience.";
 			close;
@@ -1534,6 +1537,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		mes "[Boatswain]";
 		mes "The Shaman meow lives in a secluded place near the entrance of the village.";
 		setquest 14556;// There also is a scary thing for me
+		conch_in_boatswain = 1;
 		close;
 	}
 	if (conch_in_boatswain == 1) {
@@ -1618,12 +1622,12 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[Boatswain]";
 		mes "Argh... Give it to me. No, no. Not like that. Just wrap it a little so that no one can see. Right. Like that. Give me all you have.";
-		// npctalk "I can't believe I should keep it with me all day...";
+		npctalk "I can't believe I should keep it with me all day...", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "This is difficult.";
-		// npctalk "Hey, you seem suspicious.";
-		// npctalk "No, never mind!";
+		npctalk "Hey, you seem suspicious.", "Helmsman#dorcon", bc_self;
+		npctalk "No, never mind!", "", bc_self;
 		next;
 		mes "[Boatswain]";
 		mes "This... This is...";
@@ -1637,8 +1641,8 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[Boatswain]";
 		mes "It is unfair that I haven't known about this method so far!";
-		// npctalk "What is unfair?";
-		// npctalk "Nothing! don't you have other things to do?";
+		npctalk "What is unfair?", "Helmsman#dorcon", bc_self;
+		npctalk "Nothing! don't you have other things to do?", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "It only lasts a day. When it expires, it will be burnt up. I guess you should be close to Shaman meow from now on.";
@@ -1658,11 +1662,11 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[Boatswain]";
 		mes "I will reward you handsomely. However, you haven't been able to solve the problem permanently so I don't have to keep the promise I have made.";
-		// npctalk "You haven't really solved the problem for good.";
+		npctalk "You haven't really solved the problem for good.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "This is unfair.";
-		// npctalk "The Boatswain is kind of sleazy.";
+		npctalk "The Boatswain is kind of sleazy.", "Helmsman#dorcon", bc_self;
 		next;
 		mes "[Boatswain]";
 		mes "I will reward you handsomely. Please do me another favor tomorrow.";
@@ -1672,7 +1676,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[Boatswain]";
 		mes "Oh, you would come. I have a hunch.";
-		// npctalk "My hunch is never wrong.";
+		npctalk "My hunch is never wrong.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I am pretty sure that it is the evil ghost talking to you.";
@@ -1683,19 +1687,66 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		setquest 14559;// Charm Effect Duration
 		delitem 22985,20;// Basil
 		delitem 25049, countitem(25049);// Basilac Clam
+		getexp 500000,0;// none jexp
 		conch_in_boatswain = 4;
 		close;
 	}
-	if (conch_in_boatswain == 4) {// todo daily reward ?
-		if (checkquest(14559,PLAYTIME) == 0 || checkquest(14559,PLAYTIME) == 1) {
+	if (conch_in_boatswain == 4) {
+		switch( checkquest(14559,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(14560) == 1)
+				.@count = ( countitem(25049) < 5 || countitem(523) < 1 );
+			else if (isbegin_quest(14561) == 1)
+				.@count = ( countitem(25049) < 20 );
+			else
+				.@count = ( countitem(25049) < 5 || countitem(22985) < 20 );
+			if (.@count == 0) {
+				mes "[Boatswain]";
+				mes "Did you bring the amulet for today? You seem to be empty-handed. Is there anything wrong?";
+				next;
+				mes "[Boatswain]";
+				mes "Please give it to me now. I feel the power of the amulet fading away now.";
+				close;
+			}
+			mes "[Boatswain]";
+			mes "This is the amulet for today! Give me all the Basilrocks you have.";
+			next;
+			mes "[Boatswain]";
+			specialeffect 66;
+			if (isbegin_quest(14560) == 1) {
+				mes "It feels like watching the blue horizon on a clear and windless day. It is refreshing.";
+				next;
+				erasequest 14560;// New Ingredient
+				delitem 25049,5;// Basilac Clam
+				delitem 523,1;// Holy Water
+			}
+			else if (isbegin_quest(14561) == 1) {
+				mes "It feels like watching the clouds go by lying on my back on a green hill.";
+				next;
+				delitem 25049,20;// Basilac Clam
+				erasequest 14561;// Dirty and Filty
+			}
+			else {
+				mes "It feels like seeing the sunshine through the black fog.";
+				next;
+				delitem 22985,20;// Basil
+				delitem 25049,5;// Basilac Clam
+				erasequest 14562;// The basic are the best
+			}
+			setquest 14559;// Charm Effect Duration
+			mes "[Boatswain]";
+			mes "Thank you for getting them for me. Please come back tomorrow.";
+			getexp 500000,0;
+			close;
+		case 0:
+		case 1:
 			mes "[Boatswain]";
 			mes "You said you would come if you wanted to.";
 			next;
 			mes "[Boatswain]";
 			mes "The amulet is still effective. Go to see Shamanyang after ^0000cd4:00 am^000000 and bring me tomorrow's amulet.";
 			close;
-		}
-		if (isbegin_quest(14562) == 0) {
+		case 2:
 			mes "[Boatswain]";
 			mes "You said you would come if you wanted to.";
 			npctalk "You didn't feel comfortable not coming, right?", "", bc_self;
@@ -1707,28 +1758,6 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 			mes "I am counting on you then.";
 			close;
 		}
-		if (countitem(25049) < 5 || countitem(22985) < 20) {
-			mes "[Boatswain]";
-			mes "Did you bring the amulet for today? You seem to be empty-handed. Is there anything wrong?";
-			next;
-			mes "[Boatswain]";
-			mes "Please give it to me now. I feel the power of the amulet fading away now.";
-			close;
-		}
-		mes "[Boatswain]";
-		mes "This is the amulet for today! Give me all the Basilrocks you have.";
-		next;
-		mes "[Boatswain]";
-		mes "It feels like seeing the sunshine through the black fog.";
-		specialeffect 66;
-		next;
-		mes "[Boatswain]";
-		mes "Thank you for getting them for me. Please come back tomorrow.";
-		delitem 22985,20;// Basil
-		delitem 25049,5;// Basilac Clam
-		erasequest 14562;// The basic are the best
-		setquest 14559;// Charm Effect Duration
-		close;
 	}
 }
 
@@ -1776,7 +1805,7 @@ conch_in,181,58,3	script	Helmsman#dorcon	4_CAT_SAILOR5,{
 		mes "A mature Doram doesn't hold on to such things. You may go. We are about to set off.";
 		erasequest 14534;// To the kitchen
 		setquest 14535;// To Purser
-		getexp 250,0;
+		getexp 200,300;
 		lasagna_quest[1] = 17;
 		close;
 	}
@@ -1838,7 +1867,6 @@ conch_in,189,63,3	script	Head Chef#dorcon	4_DR_TORTEL,{
 	close;
 }
 
-// inaccurate
 conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 	if (lasagna_quest[1] < 16) {
 		mes "[Sous Chef]";
@@ -1883,7 +1911,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		mes "A mature Doram doesn't hold on to such things. You may go. We are about to set off.";
 		erasequest 14534;// To the kitchen
 		setquest 14535;// To Purser
-		getexp 250,0;
+		getexp 200,300;
 		lasagna_quest[1] = 17;
 		close;
 	}
@@ -1957,7 +1985,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		delitem 25047,1;// Kahlunac
 		erasequest 14536;// Delivery to Chef
 		setquest 14537;// When do we take off?
-		getexp 250,375;
+		getexp 200,300;
 		lasagna_quest[1] = 19;
 		close;
 	}
@@ -1966,7 +1994,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		mes "It is going to be the time to eat soon. I should hurry up.";
 		close;
 	}
-	if (lasagna_quest[1] == 29 && isbegin_quest(14536) == 0) {
+	if (lasagna_quest[1] == 29 && isbegin_quest(14536) == 0) {// Delivery to Chef
 		mes "[Sous Chef]";
 		mes "Are you here to learn how to cook?";
 		next;
@@ -1975,7 +2003,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 			mes "If you want to learn how to cook, come to see me anytime.";
 			close;
 		}
-		if (BaseLevel > 30) {// todo
+		if (BaseLevel > 30) {
 			mes "[Sous Chef]";
 			mes "You don't seem to be a novice anymore. I cannot teach you any further since I am too busy. If you want to explore the world of cooking more, you should find someone else.";
 			next;
@@ -2192,30 +2220,44 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 			}
 		}
 	}
-	if (BaseLevel < 140) {// todo
+
+	// daily quest
+	if (BaseLevel < 140) {
 		mes "[Sous Chef]";
 		mes "I need someone to ask a favor. You don't seem experienced enough.";
 		close;
 	}
-	// daily quest ? or chain quest ?
-	if (isbegin_quest(14555) == 0) {// humain
-		mes "[Sous Chef]";
-		mes "I told you not to enter the kitchen like that... Oh... Are you from the new continent?";
-		npctalk "The new continent! The new continent!", "Head Chef#dorcon", bc_self;
-		next;
-		mes "[Sous Chef]";
-		mes "I see you around often these days. You look so strange. The face without any whiskers and the butt with no tail.";
-		npctalk "It is not polite to discuss the looks in front of the person!", "Boatswain#dorcon", bc_self;
-		npctalk "Bad manners!", "Helmsman#dorcon", bc_self;
-		next;
-		mes "[Sous Chef]";
-		mes "Please excuse me. I am the Sous Chef in charge of this kitchen.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Hello. I am " + strcharinfo(0) + ".";
-		next;
-		mes "[Sous Chef]";
-		mes "Your name is strange too.";
+	switch( isbegin_quest(14555) ) {
+	case 0:
+		if (Class != Job_Summoner) {
+			mes "[Sous Chef]";
+			mes "I told you not to enter the kitchen like that... Oh... Are you from the new continent?";
+			npctalk "The new continent! The new continent!", "Head Chef#dorcon", bc_self;
+			next;
+			mes "[Sous Chef]";
+			mes "I see you around often these days. You look so strange. The face without any whiskers and the butt with no tail.";
+			npctalk "It is not polite to discuss the looks in front of the person!", "Boatswain#dorcon", bc_self;
+			npctalk "Bad manners!", "Helmsman#dorcon", bc_self;
+			next;
+			mes "[Sous Chef]";
+			mes "Please excuse me. I am the Sous Chef in charge of this kitchen.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hello. I am " + strcharinfo(0) + ".";
+			next;
+			mes "[Sous Chef]";
+			mes "Your name is strange too.";
+		}
+		else {
+			mes "[Sous Chef]";
+			mes "I told you not to enter the kitchen like that... Oh... You seem familiar...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hello. I am an adventurer " + strcharinfo(0) + " who has set off on an adventure on Con-Killina.";
+			next;
+			mes "[Sous Chef]";
+			mes "Is that so? Let me introduce myself. I am the Sous Chef in charge of this kitchen.";
+		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "How about the Head Chef? Why is the Sous Chef in charge of the kitchen?";
@@ -2273,8 +2315,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		mes "Well then. I am counting on you.";
 		setquest 14555;// Whole new world of taste
 		close;
-	}
-	if (isbegin_quest(14555) == 1) {
+	case 1:
 		if (countitem(522) < 4 || countitem(11536) < 1) {
 			mes "[Sous Chef]";
 			mes "What happened to the favor I asked you. 4 Mastela Fruit and 1 Cat Hardtacks.";
@@ -2298,126 +2339,127 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		delitem 522,4;// Mastela Fruit
 		delitem 11536,1;// Cat's Ship Biscuit
 		close;
-	}
-	switch( checkquest(14563,PLAYTIME) ) {
-	case -1:
-		if (isbegin_quest(14565) == 0) {
-			if (countitem(11536) < 5 || countitem(12636) < 5) {
-				mes "[Sous Chef]";
-				mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
-				next;
-				mes "[Sous Chef]";
-				mes "Bring ^0000cd5 Cat Hardtacks and 5 Malangdo Canned Food^000000. Please hurry up.";
-				close;
-			}
-			mes "[Sous Chef]";
-			mes "Cat Hardtack and Malangdo Canned Food... Well, they will last long enough.";
-			npctalk "I can feed them to my grandchildren.", "Boatswain#dorcon", bc_self;
-			npctalk "If you get to have any.", "Helmsman#dorcon", bc_self;
-			next;
-			mes "[Sous Chef]";
-			mes "Thank you form getting them for me. Now Con-Chliina can come up with our own ways to store food for a long time.";
-			delitem 11536,5;// Cat's Ship Biscuit
-			delitem 12636,5;// Malang Sp Can
-			completequest 14565;// Emergency food supplies
-			setquest 14563;// Free time
-			close;
-		}
-		if (isbegin_quest(14566) == 0) {
-			if (countitem(7066) < 20) {
-				mes "[Sous Chef]";
-				mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
-				next;
-				mes "[Sous Chef]";
-				mes "You should bring ^0000cd20 ice cubes^000000. It is to keep the stored food fresh. Please hurry up.";
-				close;
-			}
-			mes "[Sous Chef]";
-			mes "The ice cubes. I am just so excited to see them. The ice cubes that don't melt! It sure is the new continent.";
-			// npctalk "Cold Kahlugna Milk is the best.";
-			// npctalk "Fresh milk anytime!";
-			next;
-			mes "[Sous Chef]";
-			mes "Thank you for bringing them to me. Thanks to you, the crews of Con-Chliina can have some fresh food.";
-			delitem 7066,20;// Ice Cubic
-			completequest 14566;// Brilliant idea
-			setquest 14563;// Free time
-			close;
-		}
-		if (isbegin_quest(14564) == 0) {
-			if (countitem(553) < 20) {
-				mes "[Sous Chef]";
-				mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
-				next;
-				mes "[Sous Chef]";
-				mes "^0000cd20 Buns^000000. In order to keep them fresh, you should hurry up.";
-				close;
-			}
-			mes "[Sous Chef]";
-			mes "Oh, this is the Bun... It sure is hot and huge. This is totally different from that of our side.";
-			// npctalk "Give me one. Even one of them would be enough to keep me full all day.";
-			// npctalk "Yeah, right.";
-			next;
-			mes "[Sous Chef]";
-			mes "Thank you for bringing them to me. Thanks to you, the food of Lasagna can take another step forward.";
-			delitem 553,20;// Bao
-			completequest 14564;// I love buns, too
-			setquest 14563;// Free time
-			close;
-		}
-		end;
-	case 0:
-	case 1:
-		mes "[Sous Chef]";
-		mes "What brought you here? Is it about the favor yesterday?";
-		next;
-		mes "[Sous Chef]";
-		mes "Since I am on duty, I cannot proceed with any personal study of cooking. Come back after the break of day.";
-		npctalk "What is the reason to be so impetuous when you are so young.", "Boatswain#dorcon", bc_self;
-		npctalk "Impetuous because of youth.", "Helmsman#dorcon", bc_self;
-		npctalk "All the rush doesn't help when it comes to cooking.", "", bc_self;
-		close;
 	case 2:
-		mes "[Sous Chef]";
-		mes "Just in time. I just have a moment to spare and I'd like to keep working on my study of the cuisine in the new continent. Would you get some ingredients for me?";
-		next;
-		mes "[Sous Chef]";
-		if (isbegin_quest(14565) == 0) {
-			mes "What I need to day are the ^0000cdCat Hardtack and Malangdo Canned Food^000000. I am curious how the crews of Navi survived through such a long voyage.";
-			npctalk "It sounds cute, but it doesn't sound quite delicious.", "Boatswain#dorcon", bc_self;
-			npctalk "But you'll still eat them, right?", "Helmsman#dorcon", bc_self;
-			npctalk "Yes.", "Boatswain#dorcon", bc_self;
+		switch( checkquest(14563,PLAYTIME) ) {
+		case -1:
+			for ( .@quest_id = 14565; .@quest_id < 14567 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
+				continue;
+			switch( .@quest_id ) {
+			case 14564:
+				if (countitem(553) < 20) {
+					mes "[Sous Chef]";
+					mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
+					next;
+					mes "[Sous Chef]";
+					mes "^0000cd20 Buns^000000. In order to keep them fresh, you should hurry up.";
+					close;
+				}
+				mes "[Sous Chef]";
+				mes "Oh, this is the Bun... It sure is hot and huge. This is totally different from that of our side.";
+				npctalk "Give me one. Even one of them would be enough to keep me full all day.", "Boatswain#dorcon", bc_self;
+				npctalk "Yeah, right.", "Boatswain#dorcon", bc_self;
+				next;
+				mes "[Sous Chef]";
+				mes "Thank you for bringing them to me. Thanks to you, the food of Lasagna can take another step forward.";
+				delitem 553,20;// Bao
+				erasequest 14564;// I love buns, too
+				setquest 14563;// Free time
+				close;
+			case 14565:
+				if (countitem(11536) < 5 || countitem(12636) < 5) {
+					mes "[Sous Chef]";
+					mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
+					next;
+					mes "[Sous Chef]";
+					mes "Bring ^0000cd5 Cat Hardtacks and 5 Malangdo Canned Food^000000. Please hurry up.";
+					close;
+				}
+				mes "[Sous Chef]";
+				mes "Cat Hardtack and Malangdo Canned Food... Well, they will last long enough.";
+				npctalk "I can feed them to my grandchildren.", "Boatswain#dorcon", bc_self;
+				npctalk "If you get to have any.", "Helmsman#dorcon", bc_self;
+				next;
+				mes "[Sous Chef]";
+				mes "Thank you form getting them for me. Now Con-Chliina can come up with our own ways to store food for a long time.";
+				delitem 11536,5;// Cat's Ship Biscuit
+				delitem 12636,5;// Malang Sp Can
+				erasequest 14565;// Emergency food supplies
+				setquest 14563;// Free time
+				close;
+			case 14566:
+				if (countitem(7066) < 20) {
+					mes "[Sous Chef]";
+					mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
+					next;
+					mes "[Sous Chef]";
+					mes "You should bring ^0000cd20 ice cubes^000000. It is to keep the stored food fresh. Please hurry up.";
+					close;
+				}
+				mes "[Sous Chef]";
+				mes "The ice cubes. I am just so excited to see them. The ice cubes that don't melt! It sure is the new continent.";
+				npctalk "Cold Kahlugna Milk is the best.", "Boatswain#dorcon", bc_self;
+				npctalk "Fresh milk anytime!", "Helmsman#dorcon", bc_self;
+				next;
+				mes "[Sous Chef]";
+				mes "Thank you for bringing them to me. Thanks to you, the crews of Con-Chliina can have some fresh food.";
+				delitem 7066,20;// Ice Cubic
+				erasequest 14566;// Brilliant idea
+				setquest 14563;// Free time
+				close;
+			}
+			end;
+		case 0:
+		case 1:
+			mes "[Sous Chef]";
+			mes "What brought you here? Is it about the favor yesterday?";
 			next;
 			mes "[Sous Chef]";
-			mes "I'd like to know how they are made. Please bring me some. ^0000cd5 Cat Hardtacks and 5 Malangdo Canned Food^000000 would do.";
-			erasequest 14563;// Free time
-			setquest 14565;// Emergency food supplies
+			mes "Since I am on duty, I cannot proceed with any personal study of cooking. Come back after the break of day.";
+			npctalk "What is the reason to be so impetuous when you are so young.", "Boatswain#dorcon", bc_self;
+			npctalk "Impetuous because of youth.", "Helmsman#dorcon", bc_self;
+			npctalk "All the rush doesn't help when it comes to cooking.", "", bc_self;
 			close;
-		}
-		if (isbegin_quest(14566) == 0) {
-			mes "I need ^0000cdIce Cubes^000000 today. I have heard that the Ice Cubes from this one cave doesn't melt even in the middle of summer.";
-			// npctalk "What on earth! Why doesn't it melt?";
-			// npctalk "Beats me. The world is full of mysteries.";
+		case 2:
+			mes "[Sous Chef]";
+			mes "Just in time. I just have a moment to spare and I'd like to keep working on my study of the cuisine in the new continent. Would you get some ingredients for me?";
 			next;
 			mes "[Sous Chef]";
-			mes "If we had those, we could keep food fresh and drink cold Kahlugna Milk anytime. ^0000cd20 Ice Cubes^000000 would do, Thank you.";
-			erasequest 14563;// Free time
-			setquest 14566;// Brilliant idea
-			close;
+			switch( rand(3) ) {
+			case 0:
+				mes "What I need to day is the ^0000cdBun^000000. We have something similar in Lasagna, but the recipe is totally different.";
+				npctalk "The Bun sounds super delicious.", "Helmsman#dorcon", bc_self;
+				npctalk "Is there anything that doesn't sound delicious to you?", "Boatswain#dorcon", bc_self;
+				next;
+				mes "[Sous Chef]";
+				mes "I'd like to know how it is made. Please bring me some. ^0000cd20 Buns^000000 would do.";
+				erasequest 14563;// Free time
+				setquest 14564;// I love buns, too
+				close;
+			case 1:
+				mes "What I need to day are the ^0000cdCat Hardtack and Malangdo Canned Food^000000. I am curious how the crews of Navi survived through such a long voyage.";
+				npctalk "It sounds cute, but it doesn't sound quite delicious.", "Boatswain#dorcon", bc_self;
+				npctalk "But you'll still eat them, right?", "Helmsman#dorcon", bc_self;
+				npctalk "Yes.", "Boatswain#dorcon", bc_self;
+				next;
+				mes "[Sous Chef]";
+				mes "I'd like to know how they are made. Please bring me some. ^0000cd5 Cat Hardtacks and 5 Malangdo Canned Food^000000 would do.";
+				erasequest 14563;// Free time
+				setquest 14565;// Emergency food supplies
+				close;
+			case 2:
+				mes "I need ^0000cdIce Cubes^000000 today. I have heard that the Ice Cubes from this one cave doesn't melt even in the middle of summer.";
+				npctalk "What on earth! Why doesn't it melt?", "Helmsman#dorcon", bc_self;
+				npctalk "Beats me. The world is full of mysteries.", "Boatswain#dorcon", bc_self;
+				next;
+				mes "[Sous Chef]";
+				mes "If we had those, we could keep food fresh and drink cold Kahlugna Milk anytime. ^0000cd20 Ice Cubes^000000 would do, Thank you.";
+				erasequest 14563;// Free time
+				setquest 14566;// Brilliant idea
+				close;
+			}
 		}
-		if (isbegin_quest(14564) == 0) {
-			mes "What I need to day is the ^0000cdBun^000000. We have something similar in Lasagna, but the recipe is totally different.";
-			// npctalk "The Bun sounds super delicious.";
-			// npctalk "Is there anything that doesn't sound delicious to you?";
-			next;
-			mes "[Sous Chef]";
-			mes "I'd like to know how it is made. Please bring me some. ^0000cd20 Buns^000000 would do.";
-			erasequest 14563;// Free time
-			setquest 14564;// I love buns, too
-			close;
-		}
-		end;
 	}
+	end;
 
 S_Check:
 	.@arg_count = getargcount();
