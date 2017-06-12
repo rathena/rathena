@@ -18332,8 +18332,8 @@ BUILDIN_FUNC(unitstopwalk)
  *
  * unittalk <unit_id>,"<message>"{,"<flag>"};
  * @param flag: Specify target
- *   true  - Message is sent to players in the vicinity of the source (default).
- *   false - Message is sent only to player attached.
+ *   bc_area - Message is sent to players in the vicinity of the source (default).
+ *   bc_self - Message is sent only to player attached.
  */
 BUILDIN_FUNC(unittalk)
 {
@@ -18341,15 +18341,25 @@ BUILDIN_FUNC(unittalk)
 	struct block_list* bl;
 
 	message = script_getstr(st, 3);
-	bool flag = ( script_hasdata(st,4) ? (bool)script_getnum(st,4) : 0 );
 
 	if(script_rid2bl(2,bl))
 	{
+		send_target target = AREA;
 		struct StringBuf sbuf;
+
+		if (script_hasdata(st, 4)) {
+			if (script_getnum(st, 4) == BC_SELF) {
+				if (map_id2sd(bl->id) == NULL) {
+					ShowWarning("script: unittalk: bc_self can't be used for non-players objects.\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				target = SELF;
+			}
+		}
 
 		StringBuf_Init(&sbuf);
 		StringBuf_Printf(&sbuf, "%s", message);
-		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), flag);
+		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), target);
 		StringBuf_Destroy(&sbuf);
 	}
 

@@ -824,8 +824,8 @@ void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_manner_message(struct map_session_data* sd, uint32 type);
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type);
 
-void clif_disp_overhead_(struct block_list *bl, const char* mes, bool flag);
-#define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, true)
+void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
+#define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
 
 void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
 

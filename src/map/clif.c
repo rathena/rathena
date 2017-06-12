@@ -9564,7 +9564,7 @@ void clif_slide(struct block_list *bl, int x, int y)
 
 /// Public chat message (ZC_NOTIFY_CHAT). lordalfa/Skotlex - used by @me as well
 /// 008d <packet len>.W <id>.L <message>.?B
-void clif_disp_overhead_(struct block_list *bl, const char* mes, bool flag)
+void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag)
 {
 	unsigned char buf[256]; //This should be more than sufficient, the theorical max is CHAT_SIZE + 8 (pads and extra inserted crap)
 	int len_mes = strlen(mes)+1; //Account for \0
@@ -9574,7 +9574,7 @@ void clif_disp_overhead_(struct block_list *bl, const char* mes, bool flag)
 		len_mes = sizeof(buf)-8; //Trunk it to avoid problems.
 	}
 	// send message to others
-	if (flag == true) {
+	if (flag == AREA) {
 		WBUFW(buf,0) = 0x8d;
 		WBUFW(buf,2) = len_mes + 8; // len of message + 8 (command+len+id)
 		WBUFL(buf,4) = bl->id;
