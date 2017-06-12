@@ -103,7 +103,7 @@ static struct view_data npc_viewdb2[MAX_NPC_CLASS2_END-MAX_NPC_CLASS2_START];
 static struct script_event_s
 {	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 	struct event_data *event[UCHAR_MAX];
-	const char *event_name[UCHAR_MAX];
+	const char *event_name[EVENT_NAME_LENGTH];
 	uint8 event_count;
 } script_event[NPCE_MAX];
 
@@ -3221,7 +3221,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 		for(i = 0; i < im->cnt_map; i++)
 			if(im->map[i]->m && map_mapname2mapid(map[im->map[i]->src_m].name) == dm) {
-				imap = map_mapname2mapid(map[m].name);
+				imap = map_mapname2mapid(map[im->map[i]->m].name);
 				break; // Instance map matches destination, update to instance map
 			}
 
