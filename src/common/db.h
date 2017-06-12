@@ -42,6 +42,10 @@
 #ifndef _DB_H_
 #define _DB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 
 #include <stdarg.h>
@@ -1655,6 +1659,8 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @return negative if v1 is top, positive if v2 is top, 0 if equal
 #define BHEAP_MAXTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 > v2 ? -1 : 1 )
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _DB_H_ */

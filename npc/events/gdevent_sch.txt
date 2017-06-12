@@ -1322,7 +1322,7 @@ OnInit:
 	disablenpc "removepp_sch_gd";
 	end;
 
-OnTouch2:
+OnTouch:
 	set .@paper_sch_gd,countitem(6030);
 	set .@spaper_sch_gd,countitem(6031);
 	if ((.@paper_sch_gd > 0) || (.@spaper_sch_gd > 0)) {

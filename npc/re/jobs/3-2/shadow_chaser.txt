@@ -2506,6 +2506,6 @@ OnTouch:
 
 // Quest Mob Spawn
 //============================================================
-tur_dun03,0,0,0,0	monster	Shadow of Deception	2076,1,1000,0,0
-ice_dun02,0,0,0,0	monster	Shadow of Illusion	2077,1,1000,0,0
-niflheim,0,0,0,0	monster	Shadow of Pleasure	2078,1,1000,0,0
+tur_dun03,0,0	monster	Shadow of Deception	2076,1,1000
+ice_dun02,0,0	monster	Shadow of Illusion	2077,1,1000
+niflheim,0,0	monster	Shadow of Pleasure	2078,1,1000

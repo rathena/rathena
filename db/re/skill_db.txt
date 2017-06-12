@@ -16,7 +16,13 @@
 //    0x20 - Skill ignores target's defense (misc type always ignores)
 //    0x40 - Skill ignores target's flee (magic type always ignores)
 //    0x80 - Skill ignores target's def cards
-// 07 splash/effect range (-1 for screen-wide)
+// 07 splash/effect range
+//      -1 - for screen-wide
+//       0 - no splash
+//      all other values follow the formula: value * 2 + 1
+//       1 - 3x3
+//       2 - 5x5
+//       3 - 7x7
 // 08 MaxLv
 // 09 Number of hits (when positive, damage is increased by hits, 
 //    negative values just show number of hits without increasing total damage)
@@ -224,8 +230,8 @@
 119,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,0x3000,	HT_SANDMAN,Sandman
 120,3,6,2,0,0x3,1,5,1,no,0,0x80,0,misc,0,0x3000,	HT_FLASHER,Flasher
 121,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x3800,	HT_FREEZINGTRAP,Freezing Trap
-122,3,6,2,4,0xF2,1,5,1,no,0,0x80,0,misc,0,0x3800,	HT_BLASTMINE,Blast Mine
-123,3,6,2,3,0xF2,2,5,1,no,0,0x40080,0,misc,0,0x3800,	HT_CLAYMORETRAP,Claymore Trap
+122,3,6,2,4,0xC2,1,5,1,no,0,0x80,0,misc,0,0x3800,	HT_BLASTMINE,Blast Mine
+123,3,6,2,3,0xC2,2,5,1,no,0,0x40080,0,misc,0,0x3800,	HT_CLAYMORETRAP,Claymore Trap
 124,2,6,32,0,0x1,0,1,1,no,0,0x40000,0,misc,0,0x0,		HT_REMOVETRAP,Remove Trap
 125,3,6,2,0,0x1,0,1,1,no,0,0x80,0,misc,0,0x2000,		HT_TALKIEBOX,Talkie Box
 126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		HT_BEASTBANE,Beast Bane
@@ -843,7 +849,7 @@
 //703,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDECOLD,Wide Crystalize
 //704,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDE_DEEP_SLEEP,Wide Deep Sleep
 //705,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDESIREN,Wide Siren's Voice
-//706,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_VENOMFOG,Venom Fog
+706,0,6,4,5,0,0,10,1,no,0,0x2,0,magic,0,0x1,	NPC_VENOMFOG,Venom Fog
 //707,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MILLENNIUMSHIELD,Millenium Shield 2
 //708,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_COMET,Comet 2
 //709,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ICEMINE,Ice Mine
@@ -853,8 +859,8 @@
 //713,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DANCINGBLADE,Dancing Blade
 //714,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DANCINGBLADE_ATK,Dancing Blade Attack
 //715,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DARKPIERCING,Dark Piercing
-//716,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
-//717,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
+716,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
+717,0,6,1,0,0xD2,18,10,1,no,0,0x2,0,misc,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
 //718,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DEATHSUMMON,Death Summon
 //719,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HELLBURNING,Hell Burning
 //720,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_JACKFROST,Jack Frost 2

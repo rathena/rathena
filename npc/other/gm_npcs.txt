@@ -88,6 +88,8 @@ List of GM Management NPCs (incomplete)
 - Purification Admin#nyd2
 - Bakonawa's Rage (RE)
 - Bangungot Gate (RE)
+- Horror Toy Factory (RE)
+- Faceworm's Nest (RE)
 
 [ Job-related ]
 ----- 3rd Class (RE) -----

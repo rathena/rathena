@@ -110,7 +110,7 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 	struct mmo_charstatus *cp;
 
 	//Update DB
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1', `last_login`=NOW() WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	//Check to see for online conflicts
@@ -1247,16 +1247,31 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 	if( !char_mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
 		return 2;
 
+	// If the new name is exactly the same as the old one
+	if( !strcmp( sd->new_name, char_dat.name ) )
+		return 0;
+
 	if( char_dat.rename == 0 )
 		return 1;
 
+	if( !charserv_config.char_config.char_rename_party && char_dat.party_id ){
+		return 6;
+	}
+
+	if( !charserv_config.char_config.char_rename_guild && char_dat.guild_id ){
+		return 5;
+	}
+
 	Sql_EscapeStringLen(sql_handle, esc_name, sd->new_name, strnlen(sd->new_name, NAME_LENGTH));
 
-	// check if the char exist
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` LIKE '%s' LIMIT 1", schema_config.char_db, esc_name) )
-	{
-		Sql_ShowDebug(sql_handle);
-		return 4;
+	switch( char_check_char_name( sd->new_name, esc_name ) ){
+		case 0:
+			break;
+		case -1:
+			// character already exists
+			return 4;
+		default:
+			return 8;
 	}
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", schema_config.char_db, esc_name, --char_dat.rename, char_id) )
@@ -1264,6 +1279,10 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 		Sql_ShowDebug(sql_handle);
 		return 3;
 	}
+	
+	// Update party and party members with the new player name
+	if( char_dat.party_id )
+		inter_party_charname_changed(char_dat.party_id, char_id, sd->new_name);
 
 	// Change character's name into guild_db.
 	if( char_dat.guild_id )
@@ -1304,6 +1323,10 @@ int char_check_char_name(char * name, char * esc_name)
 	// check for reserved names
 	if( strcmpi(name, charserv_config.wisp_server_name) == 0 )
 		return -1; // nick reserved for internal server messages
+
+	// check for the channel symbol
+	if( name[0] == '#' )
+		return -2;
 
 	// Check Authorised letters/symbols in the name of the character
 	if( charserv_config.char_config.char_name_option == 1 )
@@ -1954,7 +1977,7 @@ void char_read_fame_list(void)
 		memcpy(chemist_fame_list[i].name, data, zmin(len, NAME_LENGTH));
 	}
 	// Build Taekwon ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, fame_list_size_taekwon) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, JOB_BABY_TAEKWON, fame_list_size_taekwon) )
 		Sql_ShowDebug(sql_handle);
 	for( i = 0; i < fame_list_size_taekwon && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
@@ -2119,7 +2142,18 @@ static int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t
 	return 0;
 }
 
+static int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+	// Auto removal is disabled
+	if( charserv_config.clan_remove_inactive_days <= 0 ){
+		return 0;
+	}
 
+	if( SQL_ERROR == Sql_Query( sql_handle, "UPDATE `%s` SET `clan_id`='0' WHERE `online`='0' AND `clan_id`<>'0' AND `last_login` IS NOT NULL AND `last_login` <= NOW() - INTERVAL %d DAY", schema_config.char_db, charserv_config.clan_remove_inactive_days ) ){
+		Sql_ShowDebug(sql_handle);
+	}
+
+	return 0;
+}
 
 //----------------------------------
 // Reading Lan Support configuration
@@ -2198,8 +2232,10 @@ bool char_checkdb(void){
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) ){
+			Sql_ShowDebug(sql_handle);
 			return false;
+		}
 	}
 	//checking char_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,"
@@ -2208,7 +2244,7 @@ bool char_checkdb(void){
 		"`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,`hair_color`,`clothes_color`,`weapon`,"
 		"`shield`,`head_top`,`head_mid`,`head_bottom`,`robe`,`last_map`,`last_x`,`last_y`,`save_map`,"
 		"`save_x`,`save_y`,`partner_id`,`online`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,"
-		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`"
+		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`"
 		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2661,6 +2697,8 @@ void char_set_defaults(){
 	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
 	charserv_config.default_map_x = 156;
 	charserv_config.default_map_y = 191;
+
+	charserv_config.clan_remove_inactive_days = 14;
 }
 
 /**
@@ -2875,6 +2913,10 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_del_option = atoi(w2);
 		} else if (strcmpi(w1, "char_del_restriction") == 0) {
 			charserv_config.char_config.char_del_restriction = atoi(w2);
+		} else if (strcmpi(w1, "char_rename_party") == 0) {
+			charserv_config.char_config.char_rename_party = (bool)config_switch(w2);
+		} else if (strcmpi(w1, "char_rename_guild") == 0) {
+			charserv_config.char_config.char_rename_guild = (bool)config_switch(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(schema_config.db_path, w2, sizeof(schema_config.db_path));
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
@@ -2929,6 +2971,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.default_map_x = atoi(w2);
 		} else if (strcmpi(w1, "default_map_y") == 0) {
 			charserv_config.default_map_y = atoi(w2);
+		} else if (strcmpi(w1, "clan_remove_inactive_days") == 0) {
+			charserv_config.clan_remove_inactive_days = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -3098,6 +3142,10 @@ int do_init(int argc, char **argv)
 	// Online Data timers (checking if char still connected)
 	add_timer_func_list(char_online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 1000, char_online_data_cleanup, 0, 0, 600 * 1000);
+
+	// periodically remove players that have not logged in for a long time from clans
+	add_timer_func_list(char_clan_member_cleanup, "clan_member_cleanup");
+	add_timer_interval(gettick() + 1000, char_clan_member_cleanup, 0, 0, 60 * 60 * 1000); // every 60 minutes
 
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){

@@ -19,30 +19,30 @@
 //==================================================
 // niflheim - Nifflheim, Realm of the Dead
 //==================================================
-niflheim,0,0,0,0	monster	Lude	1509,20,5000,0,0
-niflheim,0,0,0,0	monster	Quve	1508,20,5000,0,0
-niflheim,0,0,0,0	monster	Gibbet	1503,10,5000,0,0
-niflheim,0,0,0,0	monster	Heirozoist	1510,10,5000,0,0
-niflheim,0,0,0,0	monster	Dullahan	1504,5,5000,0,0
+niflheim,0,0	monster	Lude	1509,20,5000
+niflheim,0,0	monster	Quve	1508,20,5000
+niflheim,0,0	monster	Gibbet	1503,10,5000
+niflheim,0,0	monster	Heirozoist	1510,10,5000
+niflheim,0,0	monster	Dullahan	1504,5,5000
 
 //==================================================
 // nif_fild01 - Skellington, a Solitary Village in Nifflheim
 //==================================================
-nif_fild01,0,0,0,0	monster	Disguise	1506,50,5000,0,0
-nif_fild01,0,0,0,0	monster	Quve	1508,30,5000,0,0
-nif_fild01,0,0,0,0	monster	Dullahan	1504,20,5000,0,0
-nif_fild01,0,0,0,0	monster	Gibbet	1503,10,5000,0,0
-nif_fild01,0,0,0,0	monster	Heirozoist	1510,10,5000,0,0
+nif_fild01,0,0	monster	Disguise	1506,50,5000
+nif_fild01,0,0	monster	Quve	1508,30,5000
+nif_fild01,0,0	monster	Dullahan	1504,20,5000
+nif_fild01,0,0	monster	Gibbet	1503,10,5000
+nif_fild01,0,0	monster	Heirozoist	1510,10,5000
 
 //==================================================
 // nif_fild02 - Vally of Gyoll
 //==================================================
-nif_fild02,0,0,0,0	monster	Loli Ruri	1505,21,5000,0,0
-nif_fild02,0,0,0,0	monster	Gibbet	1503,20,5000,0,0
-nif_fild02,0,0,0,0	monster	Bloody Murderer	1507,11,5000,0,0
-nif_fild02,0,0,0,0	monster	Dullahan	1504,10,5000,0,0
-nif_fild02,0,0,0,0	monster	Lude	1509,10,5000,0,0
-nif_fild02,0,0,0,0	monster	Heirozoist	1510,10,5000,0,0
+nif_fild02,0,0	monster	Loli Ruri	1505,21,5000
+nif_fild02,0,0	monster	Gibbet	1503,20,5000
+nif_fild02,0,0	monster	Bloody Murderer	1507,11,5000
+nif_fild02,0,0	monster	Dullahan	1504,10,5000
+nif_fild02,0,0	monster	Lude	1509,10,5000
+nif_fild02,0,0	monster	Heirozoist	1510,10,5000
 
 niflheim,0,0,0	script	mvp_niflheim	-1,{
 OnTimer7980000: // delay1 = 7980000 ms (133 min)

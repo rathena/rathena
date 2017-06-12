@@ -31,6 +31,7 @@ struct battleground_data;
 struct quest;
 struct party_booking_ad_info;
 enum e_party_member_withdraw;
+struct sale_item_data;
 #include <stdarg.h>
 
 enum { // packet DB
@@ -474,6 +475,8 @@ enum clif_messages {
 	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
 	ITEM_NOUSE_SITTING = 0x297,
+	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
+	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
 	MERC_MSG_BASE = 0x4f2,
 	SKILL_CANT_USE_AREA = 0x536,
 	ITEM_CANT_USE_AREA =  0x537,
@@ -728,6 +731,7 @@ void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
+void clif_party_job_and_level(struct map_session_data *sd);
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
@@ -779,7 +783,6 @@ void clif_font(struct map_session_data *sd);
 
 // atcommand
 void clif_displaymessage(const int fd, const char* mes);
-void clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target);
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
@@ -811,8 +814,7 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 void clif_weather(int16 m); // [Valaris]
 void clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
-void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg); // Mob/Npc color talk [SnakeDrak]
-void clif_messagecolor2(struct map_session_data *sd, unsigned long color, const char* msg);		// Use for dispcolor [Napster]
+void clif_messagecolor(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type); // Mob/Npc color talk [SnakeDrak]
 void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
 
 void clif_GM_kickack(struct map_session_data *sd, int id);
@@ -985,6 +987,11 @@ void clif_clan_message(struct clan *clan,const char *mes,int len);
 void clif_clan_onlinecount( struct clan* clan );
 void clif_clan_leave( struct map_session_data* sd );
 
+// Bargain Tool
+void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+
 /**
  * Color Table
  **/
@@ -994,12 +1001,12 @@ enum clif_colors {
 	COLOR_WHITE,
 	COLOR_YELLOW,
 	COLOR_CYAN,
+	COLOR_LIGHT_GREEN,
 	COLOR_MAX
 };
 unsigned long color_table[COLOR_MAX];
-int clif_colormes(int fd, unsigned long color, const char* msg);
 
-void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
+void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 

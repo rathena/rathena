@@ -232,6 +232,7 @@ extern struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_master_dead;
 
 	int skill_min_damage;
 	int finger_offensive_type;
@@ -331,6 +332,7 @@ extern struct Battle_Config
 	int item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
 
 	int prevent_logout;	// Added by RoVeRT
+	int prevent_logout_trigger;
 
 	int alchemist_summon_reward;	// [Valaris]
 	int drops_by_luk;
@@ -613,6 +615,9 @@ extern struct Battle_Config
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
 	int change_party_leader_samemap;
+	int dispel_song; //Can songs be dispelled?
+	int guild_maprespawn_clones; // Should clones be killed by maprespawnguildid?
+	int hide_fav_sell;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

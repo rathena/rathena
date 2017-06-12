@@ -69,6 +69,14 @@ enum equip_index {
 	EQI_MAX
 };
 
+enum prevent_logout_trigger {
+	PLT_NONE = 0,
+	PLT_LOGIN = 1,
+	PLT_ATTACK = 2,
+	PLT_SKILL = 4,
+	PLT_DAMAGE = 8
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
@@ -251,6 +259,8 @@ struct map_session_data {
 		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
 		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
 		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
+		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
+		bool keepshop; // Whether shop data should be removed when the player disconnects
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -516,6 +526,7 @@ struct map_session_data {
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
+	int clanspy;
 
 	struct clan *clan;
 
@@ -632,7 +643,7 @@ struct map_session_data {
 	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor;
-	unsigned int channel_tick;
+	unsigned int *channel_tick;
 
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
@@ -867,7 +878,7 @@ struct {
 
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
-#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
+#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE && !((sd)->sc.data && (sd)->sc.data[SC__FEINTBOMB]) )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 
@@ -913,7 +924,10 @@ short pc_maxaspd(struct map_session_data *sd);
 	( (class_) >= JOB_BABY_RUNE      && (class_) <= JOB_BABY_MECHANIC2 ) || \
 	( (class_) >= JOB_SUPER_NOVICE_E && (class_) <= JOB_SUPER_BABY_E   ) || \
 	( (class_) >= JOB_KAGEROU        && (class_) <= JOB_OBORO          ) || \
-	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER            \
+	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER         || \
+	  (class_) == JOB_BABY_SUMMONER 				     || \
+	( (class_) >= JOB_BABY_NINJA     && (class_) <= JOB_BABY_REBELLION ) || \
+	  (class_) == JOB_BABY_STAR_GLADIATOR2 \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
@@ -972,6 +986,7 @@ int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_setequipindex(struct map_session_data *sd);
 uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
+int pc_equippoint_sub(struct map_session_data *sd, struct item_data* id);
 void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
@@ -1187,7 +1202,7 @@ struct sg_data {
 	short comfort_id;
 	char feel_var[NAME_LENGTH];
 	char hate_var[NAME_LENGTH];
-	int (*day_func)(void);
+	bool (*day_func)(void);
 };
 extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 

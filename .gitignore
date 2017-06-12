@@ -14,6 +14,8 @@ Thumbs.db
 /*.exe
 /*.exe.*
 /*.ilk
+/*.iobj
+/*.ipdb
 /*.log
 /*.ncb
 /*.opensdf
@@ -54,9 +56,6 @@ Thumbs.db
 # /conf/
 /conf/import
 /conf/msg_conf/import
-
-# /doc/
-/doc/doxygen
 
 # /log/
 /log/*.log
@@ -151,3 +150,15 @@ Thumbs.db
 /.idea/workspace.xml
 /build/
 
+# bat tools
+/charserv.bat
+/logserv.bat
+/mapcache.bat
+/mapserv.bat
+/runserver.bat
+/serv.bat
+
+# dlls
+/libmysql.dll
+/pcre8.dll
+/zlib.dll

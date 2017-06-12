@@ -1,9 +1,13 @@
 #ifndef _rA_MEMPOOL_H_
 #define _rA_MEMPOOL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 
-typedef struct mempool *mempool;
+typedef struct mempool *pMempool;
 
 typedef void (*memPoolOnNodeAllocationProc)(void *ptr);
 typedef void (*memPoolOnNodeDeallocationProc)(void *ptr);
@@ -45,7 +49,7 @@ void mempool_final();
  *
  * @return not NULL
  */
-mempool mempool_create(const char *name,
+pMempool mempool_create(const char *name,
 						uint64 elem_size,
 						uint64 initial_count,
 						uint64 realloc_count,
@@ -63,7 +67,7 @@ mempool mempool_create(const char *name,
  *	Everything gets deallocated, regardless if everything was freed properly!
  *	So you have to ensure that all references are cleared properly!
  */
-void mempool_destroy(mempool pool);
+void mempool_destroy(pMempool pool);
 
 
 /**
@@ -73,7 +77,7 @@ void mempool_destroy(mempool pool);
  *
  * @return Address of empty Node
  */
-void *mempool_node_get(mempool pool);
+void *mempool_node_get(pMempool pool);
 
 
 /**
@@ -82,7 +86,7 @@ void *mempool_node_get(mempool pool);
  * @param pool - the pool to put the node, to
  * @param node - the node to return 
  */
-void mempool_node_put(mempool pool, void *node);
+void mempool_node_put(pMempool pool, void *node);
 
 
 /** 
@@ -94,7 +98,10 @@ void mempool_node_put(mempool pool, void *node);
  *
  * @return stats struct
  */
-mempool_stats mempool_get_stats(mempool pool);
+mempool_stats mempool_get_stats(pMempool pool);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif
