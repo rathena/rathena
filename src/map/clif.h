@@ -494,6 +494,12 @@ enum clif_messages {
 	NEED_REINS_OF_MOUNT = 0x78c,
 	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
+	SKILL_NEED_GATLING = 0x9fa,
+	SKILL_NEED_SHOTGUN = 0x9fb,
+	SKILL_NEED_RIFLE = 0x9fc,
+	SKILL_NEED_REVOLVER = 0x9fd,
+	SKILL_NEED_HOLY_BULLET = 0x9fe,
+	SKILL_NEED_GRENADE = 0xa01,
 };
 
 enum e_personalinfo {

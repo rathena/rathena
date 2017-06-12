@@ -15380,15 +15380,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		case RL_P_ALTER:
-			if ((i = sd->equip_index[EQI_AMMO]) < 0 || !sd->inventory_data[i]) {
-				clif_arrow_fail(sd, 0);
-				return false;
-			} else if (sd->inventory_data[i]->nameid != ITEMID_SILVER_BULLET && sd->inventory_data[i]->nameid != ITEMID_PURIFICATION_BULLET && sd->inventory_data[i]->nameid != ITEMID_SILVER_BULLET_) {
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_EQUIPPED_WEAPON_CLASS, 0); //! TODO: Need official error message (USESKILL_FAIL_NEED_SILVER_BULLET)
-				return false;
-			}
-			break;
 		case KO_JYUMONJIKIRI:
 			if (sd->weapontype1 && (sd->weapontype2 || sd->status.shield))
 				return true;
@@ -15530,7 +15521,14 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				break; //no required item; get out of here
 			if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
 				if (i == require.eqItem_count) {
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
+					switch(skill_id) {
+						case RL_P_ALTER:
+							clif_msg(sd, SKILL_NEED_HOLY_BULLET);
+							break;
+						default:
+							clif_skill_fail(sd, skill_id, USESKILL_FAIL_THIS_WEAPON, 0);
+							break;
+					}
 					return false;
 				}
 			} else
@@ -15546,8 +15544,24 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 	}
 
 	if( require.weapon && !pc_check_weapontype(sd,require.weapon) ) {
-		clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
-		return false;
+		switch(skill_id) {
+			case RA_AIMEDBOLT:
+				break;
+			default:
+				if (require.weapon&(1<<W_REVOLVER))
+					clif_msg(sd, SKILL_NEED_REVOLVER);
+				else if (require.weapon&(1<<W_RIFLE))
+					clif_msg(sd, SKILL_NEED_RIFLE);
+				else if (require.weapon&(1<<W_GATLING))
+					clif_msg(sd, SKILL_NEED_GATLING);
+				else if (require.weapon&(1<<W_SHOTGUN))
+					clif_msg(sd, SKILL_NEED_SHOTGUN);
+				else if (require.weapon&(1<<W_GRENADE))
+					clif_msg(sd, SKILL_NEED_GRENADE);
+				else
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_THIS_WEAPON, 0);
+				return false;
+		}
 	}
 
 	if( require.sp > 0 && status->sp < (unsigned int)require.sp) {
