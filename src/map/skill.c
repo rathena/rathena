@@ -7406,9 +7406,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			status_change_end(bl, SC_STUN, INVALID_TIMER);
 			status_change_end(bl, SC_WHITEIMPRISON, INVALID_TIMER);
-			status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
 		}
 		status_change_end(bl, SC_STASIS, INVALID_TIMER);
+		status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
 		if(battle_check_undead(tstatus->race,tstatus->def_ele))
 			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
