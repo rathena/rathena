@@ -7,9 +7,12 @@
 //==================================================
 // lasa_fild01 - Ravioli Plain Watch
 //==================================================
-lasa_fild01,0,0	monster	Eggring	3495,80
-lasa_fild01,0,0	monster	Leaf Lunatic	3496,80
-lasa_fild01,0,0	monster	Grass Fabre	3497,80
+lasa_fild01,0,0	monster	Eggring	3495,30
+lasa_fild01,0,0	monster	Leaf Lunatic	3496,30
+lasa_fild01,0,0	monster	Grass Fabre	3497,30
+lasa_fild01,20,325,75,53	monster	Eggring	3495,50
+lasa_fild01,20,325,75,53	monster	Leaf Lunatic	3496,50
+lasa_fild01,20,325,75,53	monster	Grass Fabre	3497,50
 lasa_fild01,140,365,15,15	monster	Red Plant	1078,5
 
 //==================================================
@@ -19,14 +22,3 @@ lasa_fild02,0,0	monster	Wild Hornet	3498,40
 lasa_fild02,0,0	monster	Sweet Roda Frog	3499,40
 lasa_fild02,0,0	monster	Hunter Desert Wolf	3500,40
 lasa_fild02,0,0	monster	Combat Basilisk	3502,5
-
-lasa_dun01,0,0	monster	Trans Spore	3501,40
-lasa_dun01,0,0	monster	Combat Basilisk	3502,40
-
-lasa_dun02,0,0	monster	Combat Basilisk	3503,40
-lasa_dun02,0,0	monster	Jungle Madragora	3506,40
-
-lasa_dun03,0,0	monster	Combat Basilisk	3504,80
-lasa_dun03,0,0	monster	Fruits Pom Spider	3507,80
-
-lasa_dun_q,0,0	monster	Combat Basilisk	3502,40
