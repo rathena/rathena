@@ -4353,31 +4353,31 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, 
 
 /**
  * Add skill_duration to a map.
- * @param map Pointer to specified map.
- * @param skill_id Skill ID.
- * @param per Skill duration adjustment value in percent.
+ * @param md: Pointer to specified map.
+ * @param skill_id: Skill ID.
+ * @param per: Skill duration adjustment value in percent.
  * @return True:Success, False:Failed
  **/
-bool map_skill_duration_add(struct map_data *map, uint16 skill_id, uint16 per) {
+bool map_skill_duration_add(struct map_data *md, uint16 skill_id, uint16 per) {
 
-	if (!map || !skill_get_index(skill_id))
+	if (!md || !skill_get_index(skill_id))
 		return false;
 	else {
 		uint16 i;
 		struct s_skill_duration *entry = NULL;
 
-		for (i = 0; i < map->skill_duration.count; i++) {
-			if (map->skill_duration.entries[i] && map->skill_duration.entries[i]->skill_id == skill_id) { // Replace
-				map->skill_duration.entries[i]->per = per;
+		for (i = 0; i < md->skill_duration.count; i++) {
+			if (md->skill_duration.entries[i] && md->skill_duration.entries[i]->skill_id == skill_id) { // Replace
+				md->skill_duration.entries[i]->per = per;
 				return true;
 			}
 		}
 
-		RECREATE(map->skill_duration.entries, struct s_skill_duration *, map->skill_duration.count + 1);
-		CREATE(map->skill_duration.entries[map->skill_duration.count], struct s_skill_duration, 1);
-		map->skill_duration.entries[map->skill_duration.count]->skill_id = skill_id;
-		map->skill_duration.entries[map->skill_duration.count]->per = per;
-		map->skill_duration.count++;
+		RECREATE(md->skill_duration.entries, struct s_skill_duration *, md->skill_duration.count + 1);
+		CREATE(md->skill_duration.entries[md->skill_duration.count], struct s_skill_duration, 1);
+		md->skill_duration.entries[md->skill_duration.count]->skill_id = skill_id;
+		md->skill_duration.entries[md->skill_duration.count]->per = per;
+		md->skill_duration.count++;
 	}
 
 	return true;
@@ -4385,25 +4385,25 @@ bool map_skill_duration_add(struct map_data *map, uint16 skill_id, uint16 per) {
 
 /**
  * Clear skill_duration adjustment from a map.
- * @param map Pointer to specified map.
+ * @param md: Pointer to specified map.
  **/
-void map_skill_duration_free(struct map_data *map) {
+void map_skill_duration_free(struct map_data *md) {
 	uint16 i;
 
-	if (!map)
+	if (!md)
 		return;
 
-	if (map->skill_duration.entries) {
-		for (i = 0; i < map->skill_duration.count; i++) {
-			if (map->skill_duration.entries[i]) {
-				aFree(map->skill_duration.entries[i]);
-				map->skill_duration.entries[i] = NULL;
+	if (md->skill_duration.entries) {
+		for (i = 0; i < md->skill_duration.count; i++) {
+			if (md->skill_duration.entries[i]) {
+				aFree(md->skill_duration.entries[i]);
+				md->skill_duration.entries[i] = NULL;
 			}
 		}
-		aFree(map->skill_duration.entries);
+		aFree(md->skill_duration.entries);
 	}
-	map->skill_duration.entries = NULL;
-	map->skill_duration.count = 0;
+	md->skill_duration.entries = NULL;
+	md->skill_duration.count = 0;
 }
 
 /**
