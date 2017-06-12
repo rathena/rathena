@@ -4266,7 +4266,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 					skillratio += -100 + 1200 * skill_lv;
 				else // Player
 					skillratio += -100 + 2000 * skill_lv;
-				switch(tstatus->size) { //! TODO: Figure out modifier formula
+				switch(tstatus->size) {
 					case SZ_SMALL: skillratio += w * 2; break;
 					case SZ_MEDIUM: skillratio += w * 3; break;
 					case SZ_BIG: skillratio += w * 4; break;

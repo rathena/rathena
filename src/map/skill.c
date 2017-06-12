@@ -1908,13 +1908,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		break;
 	case RL_S_STORM:
-		//kRO update 2014-02-12. Break 1 Equipment by minimum chance 5%/10%/15%/20%/25%
-		{
-			uint16 pos[] = { EQP_HEAD_LOW, EQP_HEAD_MID, EQP_HEAD_TOP, EQP_HAND_R, EQP_HAND_L, EQP_ARMOR, EQP_SHOES, EQP_GARMENT, EQP_ACC_L, EQP_ACC_R };
-			skill_break_equip(src,bl,pos[rnd()%ARRAYLENGTH(pos)],
-				max(skill_lv * 500,(sstatus->dex * skill_lv * 10) - (tstatus->agi * 20)), //! TODO: Figure out break chance formula
-				BCT_ENEMY);
-		}
+		//kRO update 2014-02-12. Break a headgear by minimum chance 5%/10%/15%/20%/25%
+		skill_break_equip(src, bl, EQP_HEAD_TOP, max(skill_lv * 500, (sstatus->dex * skill_lv * 10) - (tstatus->agi * 20)), BCT_ENEMY); //! TODO: Figure out break chance formula
 		break;
 	case RL_AM_BLAST:
 		sc_start(src,bl,SC_ANTI_M_BLAST,20 + 10 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -5131,6 +5126,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
+	case AL_HOLYLIGHT:
+		status_change_end(bl, SC_P_ALTER, INVALID_TIMER);
 	case MG_SOULSTRIKE:
 	case NPC_DARKSTRIKE:
 	case MG_COLDBOLT:
@@ -5138,7 +5135,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MG_LIGHTNINGBOLT:
 	case WZ_EARTHSPIKE:
 	case AL_HEAL:
-	case AL_HOLYLIGHT:
 	case NPC_DARKTHUNDER:
 	case PR_ASPERSIO:
 	case MG_FROSTDIVER:
