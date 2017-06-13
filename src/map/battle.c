@@ -6592,7 +6592,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case RL_B_TRAP:
 			// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level
-			md.damage = status_get_dex(src) * 10 + (skill_lv * 3 * status_get_hp(target)) / 100; //! TODO: Figure out exact formula
+			md.damage = status_get_dex(src) * 10 + (skill_lv * 3 * status_get_hp(target)) / 100;
 			if (status_bl_has_mode(target, MD_STATUS_IMMUNE))
 				md.damage /= 10;
 			break;
