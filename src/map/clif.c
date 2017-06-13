@@ -6325,7 +6325,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 
 #if PACKETVER >= 20121010
 	WBUFL(buf,4) = ((map[bl->m].flag.pvp?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
-		((map[bl->m].flag.battleground || map_flag_gvg(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
+		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
 		((map[bl->m].flag.nolockon || map_flag_vs(bl->m)?1:0)<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
@@ -7802,7 +7802,7 @@ void clif_sendegg(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	fd=sd->fd;
-	if (battle_config.pet_no_gvg && map_flag_gvg(sd->bl.m)) { //Disable pet hatching in GvG grounds during Guild Wars [Skotlex]
+	if (battle_config.pet_no_gvg && map_flag_gvg2(sd->bl.m)) { //Disable pet hatching in GvG grounds during Guild Wars [Skotlex]
 		clif_displaymessage(fd, msg_txt(sd,666));
 		return;
 	}
