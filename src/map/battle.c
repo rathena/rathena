@@ -4253,7 +4253,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 
 				if (sd) {
 					unsigned short slug[] = { ITEMID_SLUG_AMMUNITION_XH, ITEMID_SLUG_AMMUNITION_SH, ITEMID_SLUG_AMMUNITION_H, ITEMID_SLUG_AMMUNITION_M, ITEMID_SLUG_AMMUNITION_L }; // In order of priority
-					int16 index = -1, i;
+					int16 index = -1;
 
 					for (i = 0; i < ARRAYLENGTH(slug); i++) {
 						if ((index = pc_search_inventory(sd, slug[i])) >= 0) {
