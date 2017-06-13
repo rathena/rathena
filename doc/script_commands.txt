@@ -2530,10 +2530,11 @@ Note: SECURE_NPCTIMEOUT must be enabled for this to work.
 \\
 ---------------------------------------
 
-*getequipid(<equipment slot>{,<char_id>})
+*getequipid({<equipment slot>,<char_id>})
 
-This function returns the item ID of the item equipped in the equipment slot 
-specified on the invoking character. If nothing is equipped there, it returns -1. 
+This function returns the item ID of the item slot that calls the script
+on the invoking character or the specified equipment slot. If nothing is
+equipped there, it returns -1.
 Valid equipment slots are:
 
 EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script)

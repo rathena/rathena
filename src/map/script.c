@@ -8298,33 +8298,31 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 /**
- * getequipid(<equipment slot>{,<char_id>})
+ * getequipid({<equipment slot>,<char_id>})
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num;
+	int i, num = EQI_COMPOUND_ON;
 	TBL_PC* sd;
-	struct item_data* item;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2);
+	if (script_hasdata(st, 2))
+		num = script_getnum(st, 2);
 
-	if (num == -1) {
+	if (num == EQI_COMPOUND_ON)
 		i = current_equip_item_index;
-	}
-	else if (equip_index_check(num)) {
-		// get inventory position of item
+	else if (equip_index_check(num)) // get inventory position of item
 		i = pc_checkequip(sd, equip_bitmask[num]);
-	} else	{
+	else {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (i >= 0 && sd->inventory_data[i])
+	if (i >= EQI_ACC_L && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
 		script_pushint(st, 0);
