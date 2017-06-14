@@ -10093,7 +10093,7 @@ static int pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
 	return 0;
 }
 /*==========================================
- * Calculate new rank beetween all present players (map_foreachinarea)
+ * Calculate new rank beetween all present players (map_foreachinallarea)
  * and display result
  *------------------------------------------*/
 int pc_calc_pvprank(struct map_session_data *sd)
