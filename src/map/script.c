@@ -8514,39 +8514,34 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 /**
- * getequipid(<equipment slot>{,<char_id>})
+ * getequipid({<equipment slot>,<char_id>})
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num;
+	int i, num = EQI_COMPOUND_ON;
 	TBL_PC* sd;
-	struct item_data* item;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2);
-	if( !equip_index_check(num) )
-	{
-		script_pushint(st,-1);
-		return SCRIPT_CMD_FAILURE;
-	}
+	if (script_hasdata(st, 2))
+		num = script_getnum(st, 2);
 
-	// get inventory position of item
-	i = pc_checkequip(sd,equip_bitmask[num]);
-	if( i < 0 )
-	{
+	if (num == EQI_COMPOUND_ON)
+		i = current_equip_item_index;
+	else if (equip_index_check(num)) // get inventory position of item
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	else {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	item = sd->inventory_data[i];
-	if( item != 0 )
-		script_pushint(st,item->nameid);
+	if (i >= EQI_ACC_L && sd->inventory_data[i])
+		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23218,7 +23213,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
-	BUILDIN_DEF(getequipid,"i?"),
+	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]

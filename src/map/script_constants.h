@@ -708,6 +708,7 @@
 	export_constant2("bRegenPercentSP", SP_REGEN_PERCENT_SP);
 
 	/* equip indices */
+	export_constant(EQI_COMPOUND_ON);
 	export_constant(EQI_HEAD_TOP);
 	export_constant(EQI_ARMOR);
 	export_constant(EQI_HAND_L);
