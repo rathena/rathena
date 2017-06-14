@@ -103,7 +103,7 @@
     <ClCompile Include="conf.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core.c">
+    <ClCompile Include="core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="db.c">

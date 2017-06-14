@@ -51,7 +51,9 @@
   <ItemGroup>
     <ClCompile Include="cli.c" />
     <ClCompile Include="conf.c" />
-    <ClCompile Include="core.c" />
+    <ClCompile Include="core.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="db.c" />
     <ClCompile Include="des.c" />
     <ClCompile Include="ers.c" />
