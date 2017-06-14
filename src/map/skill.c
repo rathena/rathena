@@ -15572,9 +15572,12 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		return false;
 	}
 
-	if( (require.spiritball > 0 && sd->spiritball < require.spiritball) || 
-		(require.spiritball == -1 && sd->spiritball < 1) ) {
-		clif_skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,(require.spiritball == -1)? 1: require.spiritball);
+	if ((require.spiritball > 0 && sd->spiritball < require.spiritball) ||
+		(require.spiritball == -1 && sd->spiritball < 1)) {
+		if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_COINS, (require.spiritball == -1) ? 1 : require.spiritball);
+		else
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_SPIRITS, (require.spiritball == -1) ? 1 : require.spiritball);
 		return false;
 	}
 
