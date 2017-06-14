@@ -14,7 +14,7 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 COMMON_OBJ = ../common/obj/sql.o
 COMMON_H = ../common/sql.h
 
-CHAR_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g")
+CHAR_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g") $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 CHAR_DIR_OBJ = $(CHAR_OBJ:%=obj/%)
 CHAR_H = $(shell ls ../char/*.h)
 
@@ -25,6 +25,8 @@ else
 	SERVER_DEPENDS=needs_mysql
 endif
 ALL_DEPENDS=server
+
+CXXFLAGS=-std=c++11
 
 @SET_MAKE@
 
@@ -51,7 +53,7 @@ help:
 
 char-server: obj $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR)
 	@echo "	LD	@OCHR@@EXEEXT@"
-	@@CC@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
@@ -64,6 +66,10 @@ obj:
 obj/%.o: %.c $(CHAR_H) $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
 	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	
+obj/%.o: %.cpp $(CHAR_H) $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
