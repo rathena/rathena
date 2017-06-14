@@ -60,6 +60,7 @@ struct npc_data {
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
+	bool trigger_on_hidden;
 	int src_id;
 	union {
 		struct {
@@ -108,7 +109,7 @@ enum actor_classes
 #define MAX_NPC_CLASS 1000
 // New NPC range
 #define MAX_NPC_CLASS2_START 10000
-#define MAX_NPC_CLASS2_END 10236
+#define MAX_NPC_CLASS2_END 10255
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)

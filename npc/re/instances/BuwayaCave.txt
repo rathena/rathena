@@ -77,7 +77,7 @@ ma_fild02,312,317,5	script	Guard#buwaya_cave	570,{
 				}
 				if (instance_create(.@md_name$) < 0) {
 					mes "[Guard]";
-					mes "Party name is... "+getpartyname(.@party_id)+".";;
+					mes "Party name is... "+getpartyname(.@party_id)+".";
 					mes "Party leader is... "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+"^000000 cannot be opened now.";
 					mes "Please try a moment later.";

@@ -104,13 +104,13 @@ RequiredAmmoAmount: Amount of ammo needed to use the skill.
 
 RequiredState: The active 'State' needed to use the skill.
 
-none = Nothing special.
+none = Nothing.
 hidden = Requires hidden status by using Hiding, Cloaking, or Chasewalk.
 riding = Requires the player to ride either a Peco or a Dragon.
 falcon = Requires a Falcon.
 cart = Requires a Pushcart.
        For renewal, this state can be replaced by SC_PUSH_CART in 'RequiredStatuses' field.
-shield = Requires a shield equipped.
+shield = Requires an equipped shield.
 recover_weight_rate = Requires to be less than 50% weight.
 move_enable = Requires to be able to move.
 water = Requires to be standing on a water cell.

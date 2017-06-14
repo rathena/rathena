@@ -354,7 +354,7 @@ int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
 
 	if( sd->status.pet_id > 0 && sd->pd )
 		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
-	if( sd->hd && hom_is_active(sd->hd) )
+	if( hom_is_active(sd->hd) )
 		hom_save(sd->hd);
 	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);

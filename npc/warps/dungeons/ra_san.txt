@@ -40,8 +40,4 @@ ra_san04,35,221,0	warp	sanctuary13	1,1,ra_san02,213,9
 ra_san02,30,21,0	warp	sanctuary14	1,1,ra_san05,14,149
 
 //Additional Dungeon warp. (Exit)
-ra_san01,139,139,0	script	sanctuary15	WARPNPC,1,1,{
-OnTouch:
-	warp "ra_temin",27,314;
-	end;
-}
+ra_san01,139,139,0	warp2	sanctuary15	1,1,ra_temin,27,314

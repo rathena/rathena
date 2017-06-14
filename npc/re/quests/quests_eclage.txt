@@ -476,10 +476,12 @@ OnTouch:
 			mes "Hey!!!!!!!";
 			mes "Be careful over there!!";
 			emotion e_omg,0,"Fairy Carpenter#ep14_2";
+			close;
 		}
-		else if (ep14_2_oliver <= 6)
+		if (ep14_2_oliver <= 6) {
 			mes "- The bridge is broken. There should be some kind of a solution. -";
-		close;
+			close;
+		}
 	}
 }
 

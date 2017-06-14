@@ -46,7 +46,7 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 				mes "You are very knowledgeable. Do you think you might understand her work?";
 				next;
 				mes "[Alchemist Union Member]";
-				mes "Her study may help you gain the knowledge to help you make a Geneticist!";;
+				mes "Her study may help you gain the knowledge to help you make a Geneticist!";
 				next;
 				mes "[Alchemist Union Member]";
 				mes "How's that sound? Do you want to meet a Geneticist?";
