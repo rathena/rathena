@@ -12013,7 +12013,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				return 1;
 			}
 			// Release all targets against the caster.
-			map_foreachinrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl);
+			map_foreachinallrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl);
 			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 			clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
 		}
