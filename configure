@@ -2432,7 +2432,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 ac_config_files="$ac_config_files Makefile src/common/Makefile"
 
-ac_config_files="$ac_config_files 3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile"
+ac_config_files="$ac_config_files 3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile"
 
 ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile"
 
@@ -8370,6 +8370,7 @@ do
     "src/common/Makefile") CONFIG_FILES="$CONFIG_FILES src/common/Makefile" ;;
     "3rdparty/mt19937ar/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/mt19937ar/Makefile" ;;
     "3rdparty/libconfig/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/libconfig/Makefile" ;;
+    "3rdparty/yaml-cpp/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/yaml-cpp/Makefile" ;;
     "src/char/Makefile") CONFIG_FILES="$CONFIG_FILES src/char/Makefile" ;;
     "src/login/Makefile") CONFIG_FILES="$CONFIG_FILES src/login/Makefile" ;;
     "src/map/Makefile") CONFIG_FILES="$CONFIG_FILES src/map/Makefile" ;;
