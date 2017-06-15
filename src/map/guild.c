@@ -1819,11 +1819,13 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
 	if (g->member[pos].sd && g->member[pos].sd->fd) {
 		clif_displaymessage(g->member[pos].sd->fd, msg_txt(g->member[pos].sd,678)); //"You no longer are the Guild Master."
 		g->member[pos].sd->state.gmaster_flag = 0;
+		clif_name_area(&g->member[pos].sd->bl);
 	}
 
 	if (g->member[0].sd && g->member[0].sd->fd) {
 		clif_displaymessage(g->member[0].sd->fd, msg_txt(g->member[pos].sd,679)); //"You have become the Guild Master!"
 		g->member[0].sd->state.gmaster_flag = 1;
+		clif_name_area(&g->member[0].sd->bl);
 		//Block his skills to prevent abuse.
 		if (battle_config.guild_skill_relog_delay)
 			guild_block_skill(g->member[0].sd, battle_config.guild_skill_relog_delay);
