@@ -6982,10 +6982,10 @@
 12843,Pearl_Treasure_Box,Pearl Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,60,,,{},{},{}
 12844,Diamond_Treasure_Box,Diamond Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,70,,,{},{},{}
 12845,Amatsu_Butterfly_Wing,Amatsu_Butterfly_Wing,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12846,Little_Unripe_Apple,Little_Unripe_Apple,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2398; },{},{}
+12846,Little_Unripe_Apple,Little Unripe Apple,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2398; },{},{}
 12847,Old_Equipment_Box,Old Equipment Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); } },{},{}
-12849,Combination_Kit,Combination Kit,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12849,Combination_Kit,Combination Kit,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ cooking 30; },{},{}
 12850,Heaven_Scroll,Heaven Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Heaven_Scroll); },{},{}
 12851,Vocation_Scroll,Vocation Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Vocation_Scroll); },{},{}
 12852,Wisdom_Scroll,Wisdom Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Wisdom_Scroll); },{},{}
