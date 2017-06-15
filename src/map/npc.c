@@ -148,7 +148,7 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 bool npc_isnear(struct block_list * bl) {
 
     if( battle_config.min_npc_vendchat_distance > 0 &&
-            map_foreachinrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC, 0) )
+            map_foreachinallrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC, 0) )
         return true;
 
     return false;
@@ -242,7 +242,7 @@ int npc_enable(const char* name, int flag)
 		clif_changeoption(&nd->bl);
 
 	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) ) 	//check if player standing on a OnTouchArea
-		map_foreachinarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
+		map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
 
 	return 0;
 }
@@ -3547,7 +3547,7 @@ void npc_unsetcells(struct npc_data* nd)
 			map_setcell(m, j, i, CELL_NPC, false);
 
 	//Re-deploy NPC cells for other nearby npcs.
-	map_foreachinarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
+	map_foreachinallarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
 }
 
 void npc_movenpc(struct npc_data* nd, int16 x, int16 y)
@@ -3558,9 +3558,9 @@ void npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 	x = cap_value(x, 0, map[m].xs-1);
 	y = cap_value(y, 0, map[m].ys-1);
 
-	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 }
 
 /// Changes the display name of the npc.

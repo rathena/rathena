@@ -96,7 +96,7 @@ struct block_list* battle_gettargeted(struct block_list *target)
 	nullpo_retr(NULL, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
-	map_foreachinrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
+	map_foreachinallrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
 	if ( c == 0 )
 		return NULL;
 	if( c > 24 )
@@ -172,7 +172,7 @@ struct block_list* battle_getenemy(struct block_list *target, int type, int rang
 	int c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
-	map_foreachinrange(battle_getenemy_sub, target, range, type, bl_list, &c, target);
+	map_foreachinallrange(battle_getenemy_sub, target, range, type, bl_list, &c, target);
 
 	if ( c == 0 )
 		return NULL;
@@ -232,7 +232,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 	int c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
-	map_foreachinarea(battle_getenemyarea_sub, src->m, x - range, y - range, x + range, y + range, type, bl_list, &c, src, ignore_id);
+	map_foreachinallarea(battle_getenemyarea_sub, src->m, x - range, y - range, x + range, y + range, type, bl_list, &c, src, ignore_id);
 
 	if( c == 0 )
 		return NULL;

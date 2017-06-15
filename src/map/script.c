@@ -5741,7 +5741,7 @@ BUILDIN_FUNC(areawarp)
 	else if( !(index=mapindex_name2id(str)) )
 		return SCRIPT_CMD_FAILURE;
 
-	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3);
+	map_foreachinallarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5774,7 +5774,7 @@ BUILDIN_FUNC(areapercentheal)
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return SCRIPT_CMD_FAILURE;
 
-	map_foreachinarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
+	map_foreachinallarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -8514,39 +8514,34 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 /**
- * getequipid(<equipment slot>{,<char_id>})
+ * getequipid({<equipment slot>,<char_id>})
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num;
+	int i, num = EQI_COMPOUND_ON;
 	TBL_PC* sd;
-	struct item_data* item;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2);
-	if( !equip_index_check(num) )
-	{
-		script_pushint(st,-1);
-		return SCRIPT_CMD_FAILURE;
-	}
+	if (script_hasdata(st, 2))
+		num = script_getnum(st, 2);
 
-	// get inventory position of item
-	i = pc_checkequip(sd,equip_bitmask[num]);
-	if( i < 0 )
-	{
+	if (num == EQI_COMPOUND_ON)
+		i = current_equip_item_index;
+	else if (equip_index_check(num)) // get inventory position of item
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	else {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	item = sd->inventory_data[i];
-	if( item != 0 )
-		script_pushint(st,item->nameid);
+	if (i >= EQI_ACC_L && sd->inventory_data[i])
+		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10929,7 +10924,7 @@ BUILDIN_FUNC(areaannounce)
 	if ((m = map_mapname2mapid(mapname)) < 0)
 		return SCRIPT_CMD_SUCCESS;
 
-	map_foreachinarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
+	map_foreachinallarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
 		mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11041,7 +11036,7 @@ BUILDIN_FUNC(getareausers)
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	map_foreachinarea(buildin_getareausers_sub,
+	map_foreachinallarea(buildin_getareausers_sub,
 		m,x0,y0,x1,y1,BL_PC,&users);
 	script_pushint(st,users);
 	return SCRIPT_CMD_SUCCESS;
@@ -11088,7 +11083,7 @@ BUILDIN_FUNC(getareadropitem)
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	map_foreachinarea(buildin_getareadropitem_sub,
+	map_foreachinallarea(buildin_getareadropitem_sub,
 		m,x0,y0,x1,y1,BL_ITEM,nameid,&amount);
 	script_pushint(st,amount);
 	return SCRIPT_CMD_SUCCESS;
@@ -12087,7 +12082,7 @@ BUILDIN_FUNC(addrid)
 			}
 			break;
 		case 4:
-			map_foreachinarea(buildin_addrid_sub,
+			map_foreachinallarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
@@ -13960,7 +13955,7 @@ BUILDIN_FUNC(playBGMall)
 		int x1 = script_getnum(st,6);
 		int y1 = script_getnum(st,7);
 
-		map_foreachinarea(playBGM_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name);
+		map_foreachinallarea(playBGM_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name);
 	}
 	else if( script_hasdata(st,3) ) {// entire map
 		const char* mapname = script_getstr(st,3);
@@ -14041,7 +14036,7 @@ BUILDIN_FUNC(soundeffectall)
 		int y0 = script_getnum(st,6);
 		int x1 = script_getnum(st,7);
 		int y1 = script_getnum(st,8);
-		map_foreachinarea(soundeffect_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name, type);
+		map_foreachinallarea(soundeffect_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name, type);
 	}
 	else
 	{
@@ -20166,7 +20161,7 @@ BUILDIN_FUNC(areamobuseskill)
 	emotion = script_getnum(st,11);
 	target = script_getnum(st,12);
 
-	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
+	map_foreachinallrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20804,7 +20799,7 @@ BUILDIN_FUNC(cleanmap)
 		int16 x1 = script_getnum(st, 5);
 		int16 y1 = script_getnum(st, 6);
 		if (x0 > 0 && y0 > 0 && x1 > 0 && y1 > 0) {
-			map_foreachinarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
+			map_foreachinallarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
 		} else {
 			ShowError("cleanarea: invalid coordinate defined!\n");
 			return SCRIPT_CMD_FAILURE;
@@ -23218,7 +23213,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
-	BUILDIN_DEF(getequipid,"i?"),
+	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]

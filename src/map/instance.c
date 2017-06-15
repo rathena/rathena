@@ -345,11 +345,11 @@ void instance_addnpc(struct instance_data *im)
 
 	// First add the NPCs
 	for(i = 0; i < im->cnt_map; i++)
-		map_foreachinarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, map[im->map[i]->src_m].xs, map[im->map[i]->src_m].ys, BL_NPC, im->map[i]->m);
+		map_foreachinallarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, map[im->map[i]->src_m].xs, map[im->map[i]->src_m].ys, BL_NPC, im->map[i]->m);
 
 	// Now run their OnInstanceInit
 	for(i = 0; i < im->cnt_map; i++)
-		map_foreachinarea(instance_npcinit, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
+		map_foreachinallarea(instance_npcinit, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
 
 }
 
@@ -654,7 +654,7 @@ int instance_destroy(unsigned short instance_id)
 
 		// Run OnInstanceDestroy on all NPCs in the instance
 		for(i = 0; i < im->cnt_map; i++){
-			map_foreachinarea(instance_npcdestroy, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
+			map_foreachinallarea(instance_npcdestroy, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
 		}
 
 		for(i = 0; i < im->cnt_map; i++) {

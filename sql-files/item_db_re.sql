@@ -11426,6 +11426,12 @@ REPLACE INTO `item_db_re` VALUES (27017,'Scrap_Robots_Card','Scrap Robots Card',
 REPLACE INTO `item_db_re` VALUES (27018,'GC109_Card','GC109 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bDelayrate,-(1+(BaseLevel>=90)+(BaseLevel>=120));',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27019,'DR815_Card','DR815 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bHit,1+(BaseLevel>=90)+(BaseLevel>=120);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27020,'T_W_O_Card','T W O Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus bAtkRate,10; bonus3 bAutoSpell,"NPC_WIDESOULDRAIN",2,50+((getrefine()/3)*10);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27025,'Lich_Lord_Card','Lich Lord Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bDef,30; bonus bMdef,10; bonus2 bAddEff,Eff_Silence,900; if(getequipid() == 28483){ bonus bAtkRate,5; bonus bMatkRate,5; } /* TODO: Confirm Mob ID to transform */ autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 1875,7000; }";',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27026,'Fire_Condor_Card','Fire Condor Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus2 bVariableCastRate,"MG_FIREBALL",-50; bonus2 bSkillAtk,"MG_FIREBALL",100;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27027,'Fire_Sandman_Card','Fire Sandman Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,16,NULL,NULL,NULL,NULL,'bonus bDef,50; bonus2 bSubDefEle,Ele_Fire,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27028,'Fire_Frilldora_Card','Fire Frilldora Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bMagicAddEle,Ele_Earth,3+((.@r>=7)*5)+((.@r>=9)*7);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27029,'Fire_Golem_Card','Fire Golem Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27030,'Fulbuk_Card','Fulbuk Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,769,NULL,NULL,NULL,NULL,'bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;',NULL,NULL);
 #===================================================================
 # New Katars
 #===================================================================
