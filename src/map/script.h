@@ -4,6 +4,10 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "map.h"
 
@@ -768,6 +772,10 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _SCRIPT_H_ */

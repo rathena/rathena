@@ -4,6 +4,10 @@
 #ifndef _CHAR_SQL_H_
 #define _CHAR_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../config/core.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/msg_conf.h"
@@ -308,5 +312,8 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CHAR_SQL_H_ */

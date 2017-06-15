@@ -4,6 +4,10 @@
 #ifndef _QUEST_H_
 #define _QUEST_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct quest_dropitem {
 	uint16 nameid;
 	uint16 count;
@@ -54,5 +58,9 @@ struct quest_db *quest_search(int quest_id);
 void do_init_quest(void);
 void do_final_quest(void);
 void do_reload_quest(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

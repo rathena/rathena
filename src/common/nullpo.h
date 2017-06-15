@@ -4,6 +4,9 @@
 #ifndef _NULLPO_H_
 #define _NULLPO_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "cbasetypes.h"
 
@@ -207,5 +210,9 @@ void nullpo_info(const char *file, int line, const char *func);
 void nullpo_info_f(const char *file, int line, const char *func, 
                    const char *fmt, ...)
                    __attribute__((format(printf,4,5)));
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _NULLPO_H_ */

@@ -4,6 +4,10 @@
 #ifndef _INT_MAIL_SQL_H_
 #define _INT_MAIL_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int inter_mail_parse_frommap(int fd);
 void mail_sendmail(int send_id, const char* send_name, int dest_id, const char* dest_name, const char* title, const char* body, int zeny, struct item *item);
 
@@ -12,5 +16,9 @@ void inter_mail_sql_final(void);
 
 int mail_savemessage(struct mail_message* msg);
 void mapif_Mail_new(struct mail_message *msg);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INT_MAIL_SQL_H_ */

@@ -174,7 +174,9 @@
     <ClInclude Include="int_storage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="char.c" />
+    <ClCompile Include="char.cpp">
+		<CompileAs>CompileAsCpp</CompileAs>
+	</ClCompile>
     <ClCompile Include="char_clif.c" />
     <ClCompile Include="char_cnslif.c" />
     <ClCompile Include="char_logif.c" />

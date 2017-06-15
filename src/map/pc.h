@@ -4,6 +4,10 @@
 #ifndef _PC_H_
 #define _PC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/ers.h"
 #include "../common/timer.h" // INVALID_TIMER
@@ -714,8 +718,8 @@ struct map_session_data {
 #endif
 };
 
-struct eri *pc_sc_display_ers; /// Player's SC display table
-struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
+extern struct eri *pc_sc_display_ers; /// Player's SC display table
+extern struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
 
 /**
  * ERS for the bulk of pc vars
@@ -1305,4 +1309,9 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* _PC_H_ */

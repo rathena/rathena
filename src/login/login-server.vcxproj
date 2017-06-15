@@ -166,7 +166,9 @@
   <ItemGroup>
     <ClCompile Include="account.c" />
     <ClCompile Include="ipban.c" />
-    <ClCompile Include="login.c" />
+    <ClCompile Include="login.cpp">
+		<CompileAs>CompileAsCpp</CompileAs>
+	</ClCompile>
     <ClCompile Include="loginchrif.c" />
     <ClCompile Include="loginclif.c" />
     <ClCompile Include="logincnslif.c" />
