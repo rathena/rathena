@@ -961,6 +961,11 @@ lasagna,263,156,5	script	Grandma#dorcon01	4_CAT_REST,{
 }
 
 lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
+	if (checkweight(1001,1) == 0) {
+		mes "[Kalu]";
+		mes "It looks huge and heavy. Go and get rid of some.";
+		close;
+	}
 	if (BaseLevel < 140) {
 		mes "[Kalu]";
 		mes "If you wish to speak to me, then you'd better go and get some more experience.";
@@ -2221,7 +2226,6 @@ lasa_dun02,53,150,7	script	Daldal#dorcon06	HIDDEN_WARP_NPC,{
 }
 
 lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
-	// if (lasagna_quest[2] == 8 || lasagna_quest[2] == 10) {
 	if (isbegin_quest(14574) > 0 || isbegin_quest(14577) > 0) {
 		mes "[Panna]";
 		mes "Oh, I'm so hungry. When is the food coming? Food.";
@@ -2241,9 +2245,10 @@ lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
 			next;
 			mes "[Daldal]";
 			mes "I can understand, though. Let's go find the lunchbox.";
+			close2;
 			classchange( HIDDEN_WARP_NPC, "Daldal#dorcon06", bc_self );
 			classchange( HIDDEN_WARP_NPC, "Gopara#dorcon06", bc_self );
-			close;
+			end;
 		}
 		mes "Panna? Here's your lunchbox...";
 		next;
@@ -2275,11 +2280,11 @@ lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
 		next;
 		mes "[Gopara]";
 		mes "I'm going.";
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon06", bc_self );
 		next;
 		mes "[Daldal]";
 		mes "I'm leaving.";
 		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon06", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon06", bc_self );
 		delitem 25048,1;// Hearty Lunchbox
 		if (lasagna_quest[2] == 8) {
 			erasequest 14574;// Meal Box Delivery
@@ -2292,7 +2297,6 @@ lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
 		}
 		close;
 	}
-	// if (lasagna_quest[2] == 9) {
 	if (isbegin_quest(14575) == 1 || isbegin_quest(14578) == 1) {
 		mes "[Panna]";
 		mes "Thanks to you, I was able to eat a hearty meal. Please tell Kalu that I'm grateful for the delicious lunch. Hopefully, today will be another safe...";

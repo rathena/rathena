@@ -258,6 +258,14 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		mes "This is for your own good. Just go back to where you come from.";
 		close;
 	}
+	if (checkweight(1001,2) == 0) {
+		mes "- Hold on a second here!! -";
+		mes "- You have too many items. -";
+		mes "- That means you can no longer receive any items. -";
+		mes "- Free up some space -";
+		mes "- and try again. -";
+		close;
+	}
 	if (lasagna_quest[0] == 0) {
 		mes "[Vigilante Aglio]";
 		mes "Oh, hello?";
@@ -540,400 +548,15 @@ OnInit:
 
 lasa_fild01,62,321,3	script	Kid#doram03t	HIDDEN_WARP_NPC,{ end; }
 
-lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
-	if (lasagna_quest[0] == 5) {
-		if (countitem(1081) > 0) {
-			mes "[Kitten]";
-			mes "This is it!!";
-			next;
-			mes "The kitten hoisted the box given to him up high, screaming out in joy";
-			next;
-			mes "[Tool Merchant]";
-			mes "Wait. This box looks familiar...";
-			mes "Hey! Isn't this the box that I told you to deliver to Haru?";
-			next;
-			mes "[Kitten]";
-			mes "~Gulps~";
-			mes "I'm leaving! Right now!";
-			mes "Thank you for finding the box!";
-			delitem 1081, countitem(1081);// Delivery Box
-			completequest 7716;// To the Village!
-			getexp 70,70;
-			classchange( HIDDEN_WARP_NPC, "", bc_self );
-			lasagna_quest[0] = 6;
-			next;
-			npctalk "...Wow, that was fast.", "Tool Merchant#doram05t", bc_self;
-			mes "[Tool Merchant]";
-			mes "Anyway, thank you for finding the box.";
-			mes "If you have the time, sit down and talk with me.";
-			close;
-		}
-	}
-	if (lasagna_quest[0] < 6) {
-		mes "[Kitten]";
-		mes "Why is he taking so long...?";
-		mes "I'm worried.";
-		next;
-		select("Is there anything that troubles you?");
-		mes "[Kitten]";
-		mes "No, it's nothing.";
-		mes "I'm not one of the Dorams who would randomly give up on their errands!";
-		next;
-		mes "The little Doram starts whining, secretly being conscious of the adult Doram next to him.";
-		close;
-	}
-	mes "[Kitten]";
-	mes "I was told you're headed to the New Continent.";
-	mes "I want to go there myself, too!";
-	close2;
-	npctalk "You're too young! Just join the Vigilante Corp.", "Tool Merchant#doram05t", bc_self;
-	end;
-OnInit:
-	questinfo 7716, QTYPE_QUEST, 1;
-	setquestinfo_req 7716, 7716,1;// todo display when Active, removed when completed
-	end;
-}
-
-
-lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
-	if (lasagna_quest[0] == 5) {
-		if (countitem(1081) > 0) {
-			mes "[Kitten]";
-			mes "This is it!!";
-			next;
-			mes "The kitten hoisted the box given to him up high, screaming out in joy";
-			next;
-			mes "[Tool Merchant]";
-			mes "Wait. This box looks familiar...";
-			mes "Hey! Isn't this the box that I told you to deliver to Haru?";
-			next;
-			mes "[Kitten]";
-			mes "~Gulps~";
-			mes "I'm leaving! Right now!";
-			mes "Thank you for finding the box!";
-			delitem 1081, countitem(1081);// Delivery Box
-			completequest 7716;// To the Village!
-			getexp 70,70;
-			classchange( HIDDEN_WARP_NPC, "Kid#doram04t", bc_self );
-			lasagna_quest[0] = 6;
-			next;
-			npctalk "...Wow, that was fast.", "", bc_self;
-			mes "[Tool Merchant]";
-			mes "Anyway, thank you for finding the box.";
-			mes "If you have the time, sit down and talk with me.";
-			close;
-		}
-	}
-	if (lasagna_quest[0] == 6) {
-		mes "[Tool Merchant]";
-		mes "You must be here to apply for the expedition to the New Continent.";
-		mes "It looks like my son caused some trouble for you.";
-		mes "Thank you for your help.";
-		next;
-		mes "[Tool Merchant]";
-		mes "This is not much, but please take it. It's a token of my appreciation.";
-		mes "I also gave you ^4d4dffa new set of clothes^000000 so that you can change out of your dirty ones.";
-		next;
-		mes "[Tool Merchant]";
-		mes "You can find other tool merchants like me in each village.";
-		mes "You can buy and sell the items through those merchants.";
-		next;
-		mes "[Tool Merchant]";
-		mes "Ask ^4d4dffHealer Haru about the Combination Kit^000000 and she'll help you use it effectively.";
-		mes "Just take this with you.";
-		setquest 7717;// Merchant's Kindness
-		getitem 569,50;// Novice Potion
-		getitem 12323,10;// Novice Fly Wing
-		getitem 12324,10;// Novice Butterfly Wing
-		getitem 7059,10;// Free Ticket for Kafra Storage
-		getitem 12849,5;// Combination Kit
-		getitem 15150,1;// White Shirt [1]
-		getexp 50,50;
-		lasagna_quest[0] = 7;
-		next;
-		mes "[Tool Merchant]";
-		mes "If you want to dispose of any items, you should see me.";
-		mes "Do you understand?";
-		next;
-		mes "[Tool Merchant]";
-		mes "^4d4dffHealer Haru's house^000000 is straight ^4d4dffto the east^000000 from here.";
-		next;
-		mes "[Tool Merchant]";
-		mes "Plants and grasses are packed in front of her house because she's busy testing medicinal herbs.";
-		mes "^4d4dffIt's the house where lots of flowerpots are aligned.^000000 You can't miss it.";
-		close;
-	}
-	if (lasagna_quest[0] == 7) {
-		mes "[Tool Merchant]";
-		mes "Haru is a very smart girl, so every sick person goes to her place.";
-		next;
-		mes "[Tool Merchant]";
-		mes "You're about to go on a journey and she's going to be a lot of help.";
-		mes "Be sure to meet her.";
-		next;
-		mes "[Tool Merchant]";
-		mes "^4d4dffHealer Haru's house^000000 is straight ^4d4dffto the east^000000 from here.";
-		next;
-		mes "[Tool Merchant]";
-		mes "Plants and grasses are packed in front of her house because she's busy testing medicinal herbs.";
-		mes "^4d4dffIt's the house where lots of flowerpots are aligned.^000000 You can't miss it.";
-		next;
-		mes "[Tool Merchant]";
-		mes "Is there anything you need?";
-	}
-	else {
-		mes "[Tool Merchant]";
-		mes "Welcome.";
-	}
-	next;
-	if (select( "Buy an item.", "Sell your belongings." ) == 1) {
-		mes "[Tool Merchant]";
-		mes "Do you need anything? I have basic potions, traps, magnifiers...You name it!";
-		close2;
-		callshop "tool_shop_lasagna",1;
-		end;
-	}
-	mes "[Tool Merchant]";
-	mes "Good thinking! I knew you would. you'd better sell away items that you no longer need!";
-	close2;
-	callshop "tool_shop_lasagna",2;
-	end;
-}
-
--	shop	tool_shop_lasagna	-1,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,713:-1,601:-1,602:-1,1065:-1
-
-lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
-	if (lasagna_quest[0] == 7) {
-		mes "[Healer Haru]";
-		mes "I see a lot of out-of-towners these days.";
-		mes "What do you need?";
-		.@menu$[2] = "Show her the Combination Kit.";
-	}
-	else {
-		mes "[Healer Haru]";
-		mes "What's up?";
-		setarray .@menu$[0], "Somebody, help me!", "About First Aid", "About Medical Botany";
-	}
-	next;
-	switch( select( .@menu$[0], .@menu$[1], .@menu$[2] ) ) {
-	case 1:
-		if (Class == Job_Summoner) {
-			mes "[Healer Haru]";
-			mes "Oh, no...";
-			mes "It's going to be fine.";
-			npcskill "AL_HEAL",10,130,115;// 1748 hp
-			percentheal 0,100;
-			close;
-		}
-		mes "[Healer Haru]";
-		mes "Oh, dear...";
-		mes "Does it hurt a lot?";
-		mes "You need 5,000 Zeny to heal it all. Do you want me to do it?";
-		next;
-		if (select( "Say yes.", "It's too expensive." ) == 2) {
-			mes "[Healer Haru]";
-			mes "Take your time and get some rest.";
-			close;
-		}
-		if (Zeny >= 5000)// intended ?
-			Zeny = Zeny - 5000;
-		mes "[Healer Haru]";
-		mes "Thank you for using our service.";
-		// npcskill "AL_HEAL",10,130,115;// 1748 hp
-		percentheal 100,100;
-		close;
-	case 2:
-		if (getskilllv("NV_FIRSTAID") > 0) {
-			mes "[Healer Haru]";
-			mes "You already know what First Aid is...";
-			mes "Please. I don't have all day.";
-			close;
-		}
-		mes "[Healer Haru]";
-		mes "Oh, you'd like to learn about First Aid! How admirable of you!";
-		mes "First Aid is a skill converting your SP into HP in an emergency.";
-		next;
-		mes "[Healer Haru]";
-		mes "The healing amount can be minimal...";
-		mes "But you can at least avoid getting stunned by a critical hit.";
-		specialeffect EF_BEGINSPELL6;
-		specialeffect EF_SPELLBREAKER;
-		next;
-		mes "[Healer Haru]";
-		mes "Click the ^4d4dffSkill^000000 button to open the Skill Window.";
-		mes "FYI, the shortcut key is ^4d4dffAlt+S^000000.";
-		getexp 100,100;
-		if (isbegin_quest(7722) == 0) {
-			setquest 7722;// EMT
-			completequest 7722;// EMT
-		}
-		skill "NV_FIRSTAID",1,SKILL_PERM;
-		next;
-		mes "[Healer Haru]";
-		mes "Well, then. I'll let you in on something juicy while I'm at it.";
-		mes "Press the ^4d4dffF12 key^000000, will you?";
-		mes "Surprise! It brings up the shortcut key window where nine small slots are arranged in a row.";
-		next;
-		mes "[Healer Haru]";
-		mes "Drag the corner area in the right-hand side of the shortcut key window to view other pages.";
-		next;
-		mes "[Healer Haru]";
-		mes "It's easy to use. ^4d4dffEach slot corresponds to the keys from F1 through F9.^000000";
-		mes "Drag your skill or item to use in the slot and press the corresponding key to activate it instantly.";
-		next;
-		cutin "tutorial05.BMP",4;
-		mes "!- Notice -!";
-		mes "^4d4dffTo place an item or skill icon to use, drag it to the shortcut key slot.^000000";
-		next;
-		mes "!- Notice -!";
-		mes "^4d4dffTo use or equip an item or equipment registered in the slot, press the key that corresponds to each slot from F1 to F9.^000000";
-		next;
-		mes "!- Notice -!";
-		mes "^4d4dffIn the shortcut key settings, you can select the corresponding shortcut keys as you desire.^000000";
-		next;
-		mes "!- Notice -!";
-		mes "^4d4dffPlace an item and/or skill that you often use for quick usage.^000000";
-		cutin "",255;
-		next;
-		mes "[Healer Haru]";
-		mes "Well, now. Open the Skill Window and place the First Aid skill in a shortcut key slot to use.";
-		mes "It's going to be a lot easier to use it.";
-		close;
-	case 3:
-		if (isbegin_quest(7718) == 0 || lasagna_quest[0] == 7) {
-			mes "[Healer Haru]";
-			mes "Oh, so you're here to learn the potion combination?";
-			mes "Then, you need a combination scroll first.";
-			mes "Above all, the most important out of all the combination items should be a potion.";
-			next;
-			mes "[Healer Haru]";
-			mes "Have you ever seen the grass growing in the field while you're traveling?";
-			mes "^4d4dffRed Grass, Blue Grass, Green Grass, White Grass...^000000etc...";
-			next;
-			mes "[Healer Haru]";
-			mes "You can obtain herbs from these grasses.";
-			mes "Each herb is a good source to be processed into various kinds of medicine.";
-			next;
-			mes "[Healer Haru]";
-			mes "Red Herbs are running out.";
-			mes "I think you should go pick some now.";
-			next;
-			mes "[Healer Haru]";
-			mes "The herbs are growing in the entrance of the village. Did you see them?";
-			mes "^4d4dffGo and collect 1 Red Herb in the entrance of the village.^000000 This should be a good practice.";
-			if (isbegin_quest(7717) == 1)
-				erasequest 7717;
-			if (isbegin_quest(7718) == 0)
-				setquest 7718;// I'm used to this
-			if (lasagna_quest[0] == 7)
-				lasagna_quest[0] = 8;
-			next;
-			mes "[Healer Haru]";
-			mes "Come on. Hurry!";
-			close2;
-			if (lasagna_quest[0] == 7 && Class == Job_Summoner)
-				npctalk "Hey, there. Newbie Doram. Talk to me.", "Hypnotist#doram08t", bc_self;
-			end;
-		}
-		if (isbegin_quest(7718) == 1) {
-			if (countitem(507) > 0) {
-				mes "[Healer Haru]";
-				mes "You've got them, perfect.";
-				mes "This ^4d4dffherb is effective even when eaten as it is, but, it is far more effective when it is made into a potion.^000000";
-				next;
-				mes "[Healer Haru]";
-				mes "Effects vary for the herbs, depending on their colors.";
-				mes "^4d4dffGreen Herbs are known for detoxification.^000000";
-				mes "^4d4dff Blue Herbs restore SP^000000.";
-				next;
-				mes "[Healer Haru]";
-				mes "Anything else?";
-				mes "Well, now. Your HP is being restored as the Red Herb does it's work.";
-				mes "Press juice out of it and put them in a bottle...";
-				next;
-				mes "[Healer Haru]";
-				mes "This is what we call a potion that you can take anytime, anywhere!";
-				mes "This is for you on this special encounter.";
-				next;
-				mes "[Healer Haru]";
-				mes "Prepare the materials written in the combination scroll.";
-				mes "Then, ^4d4dffuse the Combination Kit or cooking utensils^000000 to make an item you want.";
-				next;
-				mes "[Healer Haru]";
-				mes "You can also make various other types of tools, other than potions, with the materials you pick up, so use them well.";
-				next;
-				mes "[Healer Haru]";
-				mes "I gave you Red Herbs and apples.";
-				mes "So give it a try and craft something with the Combination Kit.";
-				next;
-				mes "[Healer Haru]";
-				mes "Here's the directions. To read the combination scroll,";
-				mes "^4d4dffRight-click the scroll,^000000 and then, click the ^4d4dffbook-shaped icon^000000 found in the description window.";
-				if (isbegin_quest(7717) > 0)
-					erasequest 7717;
-				if (isbegin_quest(7718) == 0)
-					setquest 7718;// I'm used to this
-				completequest 7718;
-				getexp 200,200;
-				getitem 569,30;// Novice Potion
-				getitem 11058,1;// Novice Combination Book
-				getitem 12849,10;// Combination Kit
-				getitem 507,1;// Red Herb
-				getitem 512,1;// Apple
-				npctalk "Oh! Here you are!", "Vigilante Aglio#doram09", bc_self;
-				classchange( 4_DR_AGLIO, "Vigilante Aglio#doram09", bc_self );
-				lasagna_quest[0] = 9;
-				close;
-			}
-			else {
-				mes "[Healer Haru]";
-				mes "There is a place near the entrance of the village where herbs grow.";
-				mes "^4d4dffBeat the Red Grass and get 1 Red Herb^000000.";
-				next;
-				mes "[Healer Haru]";
-				mes "You should know what the herbs look like.";
-				close;
-			}
-		}
-		mes "[Healer Haru]";
-		mes "I've given you all the details about the basics of medicinal botany.";
-		mes "By the way, there is ^4d4dffShining Grass^000000 in this world.";
-		next;
-		mes "[Healer Haru]";
-		mes "You have no idea what kind of herb the Shining Grass will produce.";
-		mes "I was lucky enough to obtain Igdrasil's Fruit once.";
-		next;
-		mes "[Healer Haru]";
-		mes "Rumor has it that, among humans, ^4d4dffAlchemist^000000, ^4d4dffCreator^000000, or the upper-level ^4d4dffGeneric^000000";
-		mes "are highly specialized in crafting potions.";
-		next;
-		mes "[Healer Haru]";
-		mes "If you happen to meet a human in the Midgard Continent, why don't you ask them?";
-		close;
-	}
-
-OnInit:
-	questinfo 7722, QTYPE_QUEST, 1;
-	end;
-}
-
-lasagna,230,127,3	script	Vigilante Aglio#doram09	HIDDEN_WARP_NPC,{
-	if (lasagna_quest[0] == 9) {
-		mes "[Vigilante Aglio]";
-		mes "I was looking for you at the tool shop and they said you headed here.";
-		next;
-		mes "[Vigilante Aglio]";
-		mes "First off, we should meet up with our leader to make decisions about the schedule.";
-		mes "We'd better head to the square.";
-		next;
-		mes "[Vigilante Aglio]";
-		mes "I think you can find another Vigilante like myself in the square...";
-		navigateto "lasagna",170,152;
-		close;
-	}
-}
-
 lasa_fild01,132,374,3	script	Sloth#doram	4_DR_KID_01,3,3,{
+	if (checkweight(1001,3) == 0) {
+		mes "- Hold on a second here!! -";
+		mes "- You have too many items. -";
+		mes "- That means you can no longer receive any items. -";
+		mes "- Free up some space -";
+		mes "- and try again. -";
+		close;
+	}
 	switch( isbegin_quest(7719) ) {
 	case 0:
 		mes "[Sloth]";
@@ -1207,6 +830,471 @@ lasa_fild01,102,342,7	script	Vigilante Aglio#doram12	HIDDEN_WARP_NPC,{ end; }
 
 -	shop	Cat Paw Shrimp Merchant#shop::doram_shrimp	-1,515:-1,567:-1,11602:-1
 
+lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
+	if (lasagna_quest[0] == 5) {
+		if (countitem(1081) > 0) {
+			mes "[Kitten]";
+			mes "This is it!!";
+			next;
+			mes "The kitten hoisted the box given to him up high, screaming out in joy";
+			next;
+			mes "[Tool Merchant]";
+			mes "Wait. This box looks familiar...";
+			mes "Hey! Isn't this the box that I told you to deliver to Haru?";
+			next;
+			mes "[Kitten]";
+			mes "~Gulps~";
+			mes "I'm leaving! Right now!";
+			mes "Thank you for finding the box!";
+			delitem 1081, countitem(1081);// Delivery Box
+			completequest 7716;// To the Village!
+			getexp 70,70;
+			classchange( HIDDEN_WARP_NPC, "", bc_self );
+			lasagna_quest[0] = 6;
+			next;
+			npctalk "...Wow, that was fast.", "Tool Merchant#doram05t", bc_self;
+			mes "[Tool Merchant]";
+			mes "Anyway, thank you for finding the box.";
+			mes "If you have the time, sit down and talk with me.";
+			close;
+		}
+	}
+	if (lasagna_quest[0] < 6) {
+		mes "[Kitten]";
+		mes "Why is he taking so long...?";
+		mes "I'm worried.";
+		next;
+		select("Is there anything that troubles you?");
+		mes "[Kitten]";
+		mes "No, it's nothing.";
+		mes "I'm not one of the Dorams who would randomly give up on their errands!";
+		next;
+		mes "The little Doram starts whining, secretly being conscious of the adult Doram next to him.";
+		close;
+	}
+	mes "[Kitten]";
+	mes "I was told you're headed to the New Continent.";
+	mes "I want to go there myself, too!";
+	close2;
+	npctalk "You're too young! Just join the Vigilante Corp.", "Tool Merchant#doram05t", bc_self;
+	end;
+OnInit:
+	questinfo 7716, QTYPE_QUEST, 1;
+	setquestinfo_req 7716, 7716,1;// todo display when Active, removed when completed
+	end;
+}
+
+lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
+	if (lasagna_quest[0] == 5) {
+		if (countitem(1081) > 0) {
+			mes "[Kitten]";
+			mes "This is it!!";
+			next;
+			mes "The kitten hoisted the box given to him up high, screaming out in joy";
+			next;
+			mes "[Tool Merchant]";
+			mes "Wait. This box looks familiar...";
+			mes "Hey! Isn't this the box that I told you to deliver to Haru?";
+			next;
+			mes "[Kitten]";
+			mes "~Gulps~";
+			mes "I'm leaving! Right now!";
+			mes "Thank you for finding the box!";
+			delitem 1081, countitem(1081);// Delivery Box
+			completequest 7716;// To the Village!
+			getexp 70,70;
+			classchange( HIDDEN_WARP_NPC, "Kid#doram04t", bc_self );
+			lasagna_quest[0] = 6;
+			next;
+			npctalk "...Wow, that was fast.", "", bc_self;
+			mes "[Tool Merchant]";
+			mes "Anyway, thank you for finding the box.";
+			mes "If you have the time, sit down and talk with me.";
+			close;
+		}
+	}
+	if (lasagna_quest[0] == 6) {
+		if (checkweight(1001,6) == 0) {
+			mes "- Hold on a second here!! -";
+			mes "- You have too many items. -";
+			mes "- That means you can no longer receive any items. -";
+			mes "- Free up some space -";
+			mes "- and try again. -";
+			close;
+		}
+		mes "[Tool Merchant]";
+		mes "You must be here to apply for the expedition to the New Continent.";
+		mes "It looks like my son caused some trouble for you.";
+		mes "Thank you for your help.";
+		next;
+		mes "[Tool Merchant]";
+		mes "This is not much, but please take it. It's a token of my appreciation.";
+		mes "I also gave you ^4d4dffa new set of clothes^000000 so that you can change out of your dirty ones.";
+		next;
+		mes "[Tool Merchant]";
+		mes "You can find other tool merchants like me in each village.";
+		mes "You can buy and sell the items through those merchants.";
+		next;
+		mes "[Tool Merchant]";
+		mes "Ask ^4d4dffHealer Haru about the Combination Kit^000000 and she'll help you use it effectively.";
+		mes "Just take this with you.";
+		setquest 7717;// Merchant's Kindness
+		getitem 569,50;// Novice Potion
+		getitem 12323,10;// Novice Fly Wing
+		getitem 12324,10;// Novice Butterfly Wing
+		getitem 7059,10;// Free Ticket for Kafra Storage
+		getitem 12849,5;// Combination Kit
+		getitem 15150,1;// White Shirt [1]
+		getexp 50,50;
+		lasagna_quest[0] = 7;
+		next;
+		mes "[Tool Merchant]";
+		mes "If you want to dispose of any items, you should see me.";
+		mes "Do you understand?";
+		next;
+		mes "[Tool Merchant]";
+		mes "^4d4dffHealer Haru's house^000000 is straight ^4d4dffto the east^000000 from here.";
+		next;
+		mes "[Tool Merchant]";
+		mes "Plants and grasses are packed in front of her house because she's busy testing medicinal herbs.";
+		mes "^4d4dffIt's the house where lots of flowerpots are aligned.^000000 You can't miss it.";
+		close;
+	}
+	if (lasagna_quest[0] == 7) {
+		mes "[Tool Merchant]";
+		mes "Haru is a very smart girl, so every sick person goes to her place.";
+		next;
+		mes "[Tool Merchant]";
+		mes "You're about to go on a journey and she's going to be a lot of help.";
+		mes "Be sure to meet her.";
+		next;
+		mes "[Tool Merchant]";
+		mes "^4d4dffHealer Haru's house^000000 is straight ^4d4dffto the east^000000 from here.";
+		next;
+		mes "[Tool Merchant]";
+		mes "Plants and grasses are packed in front of her house because she's busy testing medicinal herbs.";
+		mes "^4d4dffIt's the house where lots of flowerpots are aligned.^000000 You can't miss it.";
+		next;
+		mes "[Tool Merchant]";
+		mes "Is there anything you need?";
+	}
+	else {
+		mes "[Tool Merchant]";
+		mes "Welcome.";
+	}
+	next;
+	if (select( "Buy an item.", "Sell your belongings." ) == 1) {
+		mes "[Tool Merchant]";
+		mes "Do you need anything? I have basic potions, traps, magnifiers...You name it!";
+		close2;
+		callshop "tool_shop_lasagna",1;
+		end;
+	}
+	mes "[Tool Merchant]";
+	mes "Good thinking! I knew you would. you'd better sell away items that you no longer need!";
+	close2;
+	callshop "tool_shop_lasagna",2;
+	end;
+}
+
+-	shop	tool_shop_lasagna	-1,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,713:-1,601:-1,602:-1,1065:-1
+
+lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
+	if (lasagna_quest[0] == 7) {
+		mes "[Healer Haru]";
+		mes "I see a lot of out-of-towners these days.";
+		mes "What do you need?";
+		.@menu$[2] = "Show her the Combination Kit.";
+	}
+	else {
+		mes "[Healer Haru]";
+		mes "What's up?";
+		setarray .@menu$[0], "Somebody, help me!", "About First Aid", "About Medical Botany";
+	}
+	next;
+	switch( select( .@menu$[0], .@menu$[1], .@menu$[2] ) ) {
+	case 1:
+		if (Class == Job_Summoner) {
+			mes "[Healer Haru]";
+			mes "Oh, no...";
+			mes "It's going to be fine.";
+			npcskill "AL_HEAL",10,130,115;// 1748 hp
+			percentheal 0,100;
+			close;
+		}
+		mes "[Healer Haru]";
+		mes "Oh, dear...";
+		mes "Does it hurt a lot?";
+		mes "You need 5,000 Zeny to heal it all. Do you want me to do it?";
+		next;
+		if (select( "Say yes.", "It's too expensive." ) == 2) {
+			mes "[Healer Haru]";
+			mes "Take your time and get some rest.";
+			close;
+		}
+		if (Zeny >= 5000)// intended ?
+			Zeny = Zeny - 5000;
+		mes "[Healer Haru]";
+		mes "Thank you for using our service.";
+		// npcskill "AL_HEAL",10,130,115;// 1748 hp
+		percentheal 100,100;
+		close;
+	case 2:
+		if (getskilllv("NV_FIRSTAID") > 0) {
+			mes "[Healer Haru]";
+			mes "You already know what First Aid is...";
+			mes "Please. I don't have all day.";
+			close;
+		}
+		mes "[Healer Haru]";
+		mes "Oh, you'd like to learn about First Aid! How admirable of you!";
+		mes "First Aid is a skill converting your SP into HP in an emergency.";
+		next;
+		mes "[Healer Haru]";
+		mes "The healing amount can be minimal...";
+		mes "But you can at least avoid getting stunned by a critical hit.";
+		specialeffect EF_BEGINSPELL6;
+		specialeffect EF_SPELLBREAKER;
+		next;
+		mes "[Healer Haru]";
+		mes "Click the ^4d4dffSkill^000000 button to open the Skill Window.";
+		mes "FYI, the shortcut key is ^4d4dffAlt+S^000000.";
+		getexp 100,100;
+		if (isbegin_quest(7722) == 0) {
+			setquest 7722;// EMT
+			completequest 7722;// EMT
+		}
+		skill "NV_FIRSTAID",1,SKILL_PERM;
+		next;
+		mes "[Healer Haru]";
+		mes "Well, then. I'll let you in on something juicy while I'm at it.";
+		mes "Press the ^4d4dffF12 key^000000, will you?";
+		mes "Surprise! It brings up the shortcut key window where nine small slots are arranged in a row.";
+		next;
+		mes "[Healer Haru]";
+		mes "Drag the corner area in the right-hand side of the shortcut key window to view other pages.";
+		next;
+		mes "[Healer Haru]";
+		mes "It's easy to use. ^4d4dffEach slot corresponds to the keys from F1 through F9.^000000";
+		mes "Drag your skill or item to use in the slot and press the corresponding key to activate it instantly.";
+		next;
+		cutin "tutorial05.BMP",4;
+		mes "!- Notice -!";
+		mes "^4d4dffTo place an item or skill icon to use, drag it to the shortcut key slot.^000000";
+		next;
+		mes "!- Notice -!";
+		mes "^4d4dffTo use or equip an item or equipment registered in the slot, press the key that corresponds to each slot from F1 to F9.^000000";
+		next;
+		mes "!- Notice -!";
+		mes "^4d4dffIn the shortcut key settings, you can select the corresponding shortcut keys as you desire.^000000";
+		next;
+		mes "!- Notice -!";
+		mes "^4d4dffPlace an item and/or skill that you often use for quick usage.^000000";
+		cutin "",255;
+		next;
+		mes "[Healer Haru]";
+		mes "Well, now. Open the Skill Window and place the First Aid skill in a shortcut key slot to use.";
+		mes "It's going to be a lot easier to use it.";
+		close;
+	case 3:
+		if (isbegin_quest(7718) == 0 || lasagna_quest[0] == 7) {
+			mes "[Healer Haru]";
+			mes "Oh, so you're here to learn the potion combination?";
+			mes "Then, you need a combination scroll first.";
+			mes "Above all, the most important out of all the combination items should be a potion.";
+			next;
+			mes "[Healer Haru]";
+			mes "Have you ever seen the grass growing in the field while you're traveling?";
+			mes "^4d4dffRed Grass, Blue Grass, Green Grass, White Grass...^000000etc...";
+			next;
+			mes "[Healer Haru]";
+			mes "You can obtain herbs from these grasses.";
+			mes "Each herb is a good source to be processed into various kinds of medicine.";
+			next;
+			mes "[Healer Haru]";
+			mes "Red Herbs are running out.";
+			mes "I think you should go pick some now.";
+			next;
+			mes "[Healer Haru]";
+			mes "The herbs are growing in the entrance of the village. Did you see them?";
+			mes "^4d4dffGo and collect 1 Red Herb in the entrance of the village.^000000 This should be a good practice.";
+			if (isbegin_quest(7717) == 1)
+				erasequest 7717;
+			if (isbegin_quest(7718) == 0)
+				setquest 7718;// I'm used to this
+			if (lasagna_quest[0] == 7)
+				lasagna_quest[0] = 8;
+			next;
+			mes "[Healer Haru]";
+			mes "Come on. Hurry!";
+			close2;
+			if (lasagna_quest[0] == 7 && Class == Job_Summoner)
+				npctalk "Hey, there. Newbie Doram. Talk to me.", "Hypnotist#doram08t", bc_self;
+			end;
+		}
+		if (isbegin_quest(7718) == 1) {
+			if (countitem(507) > 0) {
+				if (checkweight(1001,5) == 0) {
+					mes "- Hold on a second here!! -";
+					mes "- You have too many items. -";
+					mes "- That means you can no longer receive any items. -";
+					mes "- Free up some space -";
+					mes "- and try again. -";
+					close;
+				}
+				mes "[Healer Haru]";
+				mes "You've got them, perfect.";
+				mes "This ^4d4dffherb is effective even when eaten as it is, but, it is far more effective when it is made into a potion.^000000";
+				next;
+				mes "[Healer Haru]";
+				mes "Effects vary for the herbs, depending on their colors.";
+				mes "^4d4dffGreen Herbs are known for detoxification.^000000";
+				mes "^4d4dff Blue Herbs restore SP^000000.";
+				next;
+				mes "[Healer Haru]";
+				mes "Anything else?";
+				mes "Well, now. Your HP is being restored as the Red Herb does it's work.";
+				mes "Press juice out of it and put them in a bottle...";
+				next;
+				mes "[Healer Haru]";
+				mes "This is what we call a potion that you can take anytime, anywhere!";
+				mes "This is for you on this special encounter.";
+				next;
+				mes "[Healer Haru]";
+				mes "Prepare the materials written in the combination scroll.";
+				mes "Then, ^4d4dffuse the Combination Kit or cooking utensils^000000 to make an item you want.";
+				next;
+				mes "[Healer Haru]";
+				mes "You can also make various other types of tools, other than potions, with the materials you pick up, so use them well.";
+				next;
+				mes "[Healer Haru]";
+				mes "I gave you Red Herbs and apples.";
+				mes "So give it a try and craft something with the Combination Kit.";
+				next;
+				mes "[Healer Haru]";
+				mes "Here's the directions. To read the combination scroll,";
+				mes "^4d4dffRight-click the scroll,^000000 and then, click the ^4d4dffbook-shaped icon^000000 found in the description window.";
+				if (isbegin_quest(7717) > 0)
+					erasequest 7717;
+				if (isbegin_quest(7718) == 0)
+					setquest 7718;// I'm used to this
+				completequest 7718;
+				getexp 200,200;
+				getitem 569,30;// Novice Potion
+				getitem 11058,1;// Novice Combination Book
+				getitem 12849,10;// Combination Kit
+				getitem 507,1;// Red Herb
+				getitem 512,1;// Apple
+				npctalk "Oh! Here you are!", "Vigilante Aglio#doram09", bc_self;
+				classchange( 4_DR_AGLIO, "Vigilante Aglio#doram09", bc_self );
+				lasagna_quest[0] = 9;
+				close;
+			}
+			else {
+				mes "[Healer Haru]";
+				mes "There is a place near the entrance of the village where herbs grow.";
+				mes "^4d4dffBeat the Red Grass and get 1 Red Herb^000000.";
+				next;
+				mes "[Healer Haru]";
+				mes "You should know what the herbs look like.";
+				close;
+			}
+		}
+		mes "[Healer Haru]";
+		mes "I've given you all the details about the basics of medicinal botany.";
+		mes "By the way, there is ^4d4dffShining Grass^000000 in this world.";
+		next;
+		mes "[Healer Haru]";
+		mes "You have no idea what kind of herb the Shining Grass will produce.";
+		mes "I was lucky enough to obtain Igdrasil's Fruit once.";
+		next;
+		mes "[Healer Haru]";
+		mes "Rumor has it that, among humans, ^4d4dffAlchemist^000000, ^4d4dffCreator^000000, or the upper-level ^4d4dffGeneric^000000";
+		mes "are highly specialized in crafting potions.";
+		next;
+		mes "[Healer Haru]";
+		mes "If you happen to meet a human in the Midgard Continent, why don't you ask them?";
+		close;
+	}
+
+OnInit:
+	questinfo 7722, QTYPE_QUEST, 1;
+	end;
+}
+
+lasagna,222,123,5	script	Hypnotist#doram08t	4_CAT_MERMASTER,{
+	if (Class != Job_Summoner) {
+		mes "[Hypnotist]";
+		mes "Oh! So you're that famous human everyone is talking about!";
+		mes "But why is your hair uneven?";
+		next;
+		mes "[Hypnotist]";
+		mes "Have you come down with a skin disease or something?";
+		mes "This healer next to me is really good. You should ask her to take a look at it!";
+		next;
+		mes "[Hypnotist]";
+		mes "You're really big and that type of poor hair just doesn't go well with you...";
+		mes "It must've been a lot of work.";
+		close;
+	}
+	mes "[Hypnotist]";
+	mes "I'm casting hypnosis on the young lads for their future.";
+	next;
+	if (BaseLevel > 49) {
+		mes "[Hypnotist]";
+		mes "You must have been over with wandering by now.";
+		close;
+	}
+	mes "[Hypnotist]";
+	mes "If you don't like a skill you just learned, I can reset it for you.";
+	next;
+	mes "[Hypnotist]";
+	mes "^4d4dffUp to level 49, your skills and status can be reset anytime you want.^000000";
+	next;
+	.@s = select( "Reset the status.", "Reset the skill." );
+	if (Weight > 0) {
+		mes "[Hypnotist]";
+		mes "Your items can be lost, so be sure to make yourself weigh ^FF00000^000000.";
+		next;
+		mes "[Hypnotist]";
+		mes "The Cat Paw Commerce Group is responsible for the warehouse, so leave your items to them.";
+		close;
+	}
+	if (.@s == 1) {
+		resetstatus();
+		mes "[Hypnotist]";
+		mes "Your status has been reset successfully!";
+		next;
+		mes "[Hypnotist]";
+		mes "I don't do it for the experienced. So you should figure out your own status well beforehand.";
+		close;
+	}
+	resetskill();
+	mes "[Hypnotist]";
+	mes "Your skill has been reset successfully!";
+	next;
+	mes "[Hypnotist]";
+	mes "I reset skills and statuses without charge only when your level stays at 49 or below.";
+	mes "Before that, I advise you to practice with many skills in diverse ways, to help you decide what you like.";
+	close;
+}
+
+lasagna,230,127,3	script	Vigilante Aglio#doram09	HIDDEN_WARP_NPC,{
+	if (lasagna_quest[0] == 9) {
+		mes "[Vigilante Aglio]";
+		mes "I was looking for you at the tool shop and they said you headed here.";
+		next;
+		mes "[Vigilante Aglio]";
+		mes "First off, we should meet up with our leader to make decisions about the schedule.";
+		mes "We'd better head to the square.";
+		next;
+		mes "[Vigilante Aglio]";
+		mes "I think you can find another Vigilante like myself in the square...";
+		navigateto "lasagna",170,152;
+		close;
+	}
+}
+
 izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
 	npctalk "Here are the shrimps, carrots and catnip!", "", bc_self;
 	switch( select( "Buy", "Sell", "Cancel" ) ) {
@@ -1446,6 +1534,14 @@ lasagna,220,172,6	script	Master of Property#do_h	4_M_BABYCAT,{
 
 lasagna,208,188,3	script	Cat Paw Service#lasagna	4_M_MERCAT1,4,4,{
 	if (Class == Job_Summoner && isbegin_quest(7720) == 0) {
+		if (checkweight(1001,2) == 0) {
+			mes "- Hold on a second here!! -";
+			mes "- You have too many items. -";
+			mes "- That means you can no longer receive any items. -";
+			mes "- Free up some space -";
+			mes "- and try again. -";
+			close;
+		}
 		mes "[Cat Paw Commerce Group]";
 		mes "Hey, little fellow!";
 		mes "Are you headed to the Midgard Continent?";
@@ -1575,63 +1671,6 @@ OnInit:
 	end;
 }
 
-lasagna,222,123,5	script	Hypnotist#doram08t	4_CAT_MERMASTER,{
-	if (Class != Job_Summoner) {
-		mes "[Hypnotist]";
-		mes "Oh! So you're that famous human everyone is talking about!";
-		mes "But why is your hair uneven?";
-		next;
-		mes "[Hypnotist]";
-		mes "Have you come down with a skin disease or something?";
-		mes "This healer next to me is really good. You should ask her to take a look at it!";
-		next;
-		mes "[Hypnotist]";
-		mes "You're really big and that type of poor hair just doesn't go well with you...";
-		mes "It must've been a lot of work.";
-		close;
-	}
-	mes "[Hypnotist]";
-	mes "I'm casting hypnosis on the young lads for their future.";
-	next;
-	if (BaseLevel > 49) {
-		mes "[Hypnotist]";
-		mes "You must have been over with wandering by now.";
-		close;
-	}
-	mes "[Hypnotist]";
-	mes "If you don't like a skill you just learned, I can reset it for you.";
-	next;
-	mes "[Hypnotist]";
-	mes "^4d4dffUp to level 49, your skills and status can be reset anytime you want.^000000";
-	next;
-	.@s = select( "Reset the status.", "Reset the skill." );
-	if (Weight > 0) {
-		mes "[Hypnotist]";
-		mes "Your items can be lost, so be sure to make yourself weigh ^FF00000^000000.";
-		next;
-		mes "[Hypnotist]";
-		mes "The Cat Paw Commerce Group is responsible for the warehouse, so leave your items to them.";
-		close;
-	}
-	if (.@s == 1) {
-		resetstatus();
-		mes "[Hypnotist]";
-		mes "Your status has been reset successfully!";
-		next;
-		mes "[Hypnotist]";
-		mes "I don't do it for the experienced. So you should figure out your own status well beforehand.";
-		close;
-	}
-	resetskill();
-	mes "[Hypnotist]";
-	mes "Your skill has been reset successfully!";
-	next;
-	mes "[Hypnotist]";
-	mes "I reset skills and statuses without charge only when your level stays at 49 or below.";
-	mes "Before that, I advise you to practice with many skills in diverse ways, to help you decide what you like.";
-	close;
-}
-
 lasagna,171,105,5	script	Emergency Patient#dorco	4_M_DIEMAN,5,5,{
 	emotion 26;
 	npctalk "S-someone help me... Dorams, they're so cute I'm going to die...", "", bc_self;
@@ -1739,18 +1778,20 @@ lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
 		mes "[Lonza]";
 		mes "I've lined up the attractive hairstyles that never go out of style. Will you take a look?";
 		next;
+		.@gender$ = Sex ? "m" : "f";
 		while( true ) {
 			.@i++;
-			cutin "hair_dr_m_0" + (.@i%6) + ".bmp",4;
+			.@i = .@i > 6 ? 1 : .@i;
+			cutin "hair_dr_" + .@gender$ + "_0" + .@i + ".bmp",4;
 			mes "[Lonza]";
-			mes "This is the " + callfunc("F_GetNumSuffix",(.@i%6)) + " hairdo. How do you like it?";
+			mes "This is the " + callfunc("F_GetNumSuffix",.@i) + " hairdo. How do you like it?";
 			next;
 			switch( select( "Browse other styles.", "I'll take this.", "End of dialogue." ) ) {
 			case 1:
 				continue;
 			case 2:
 				mes "[Lonza]";
-				mes "So you picked the " + callfunc("F_GetNumSuffix",(.@i%6)) + " hairstyle. I like your choice.";
+				mes "So you picked the " + callfunc("F_GetNumSuffix",.@i) + " hairstyle. I like your choice.";
 				next;
 				mes "[Lonza]";
 				mes "But you need some preparations before you change your hairdo.";
@@ -1772,13 +1813,28 @@ lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
 					mes "Good! Keep it up! Run!";
 					close;
 				}
-				if (countitem(501) < 1) {// todo
+				if (countitem(973) < 3 || countitem(974) < 3 || countitem(901) < 100 || countitem(1094) < 100 || countitem(1020) < 100 || countitem(1060) < 100 || countitem(7152) < 100 || Zeny < 99800) {
 					mes "[Lonza]";
 					mes "I can help you only when you bring me the materials. Will you check on your belongings again?";
 					close;
 				}
-				// todo
-				end;
+				Zeny = Zeny - 99800;
+				delitem 973,3;// Counteragent
+				delitem 974,3;// Mixture
+				delitem 901,100;// Daenggie
+				delitem 1094,100;// Short Daenggie
+				delitem 1020,100;// Black Hair
+				delitem 1060,100;// Golden Hair
+				delitem 7152,100;// Glossy Hair
+				setlook LOOK_HAIR, .@i;
+				mes "~Snip, snip, snip~";
+				mes "~Snip, snip, snip~";
+				mes "~Snip, snip, snip~";
+				mes "~Whirring~";
+				next;
+				mes "[Lonza]";
+				mes "Wow! Amazing! Perfect! Now, go ahead and show off your lovely look to others! Come on!";
+				close;
 			case 3:
 				mes "[Lonza]";
 				mes "Goodbye then. Don't make me and my great scissors wait too long for you to return.";
@@ -1795,14 +1851,20 @@ lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
 		mes "^FF0000[!!Caution!!]^000000";
 		mes "^FF0000The Dorams inherently have the shortest hair. Even if you proceed with the dialogue, therefore, nothing will happen.^000000";
 		next;
-		.@s = select( "Yellow", "Purple", "Orange", "Green" );
-		if (countitem(501) < 1) {// todo
+		setarray .@dye_id[0],976,981,980,979;
+		.@s = select( "Yellow", "Purple", "Orange", "Green" ) - 1;
+		if (countitem(.@dye_id[.@s]) < 1) {
 			mes "[Lonza]";
 			mes "How can I dye your hair without the dye?";
 			close;
 		}
-		// todo
-		end;
+		delitem .@dye_id[.@s],1;
+		Zeny = Zeny - 1000;
+		// nothing happen
+		mes "[Lonza]";
+		mes "It'll be done in a jiff!";
+		mes "What a lovely color! Why don't you show it off to your friends?";
+		close;
 	case 3:
 		mes "[Lonza]";
 		mes "It feels as if you want someone to take care of your whole day. don't you have one of those days?";
@@ -2042,6 +2104,14 @@ lasagna,232,187,6	script	Fettuccina#dorcon01	4_CAT_SAILOR2,{
 }
 
 lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
+	if (checkweight(1001,1) == 0) {
+		mes "- Hold on a second here!! -";
+		mes "- You have too many items. -";
+		mes "- That means you can no longer receive any items. -";
+		mes "- Free up some space -";
+		mes "- and try again. -";
+		close;
+	}
 	mes "[Yota Chara]";
 	mes "Father, mother. Please come back home safely.";
 	mes "(He's making something, mumbling.)";
@@ -2134,6 +2204,14 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 }
 
 lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
+	if (checkweight(1001,1) == 0) {
+		mes "- Hold on a second here!! -";
+		mes "- You have too many items. -";
+		mes "- That means you can no longer receive any items. -";
+		mes "- Free up some space -";
+		mes "- and try again. -";
+		close;
+	}
 	mes "[Jogi Chara]";
 	mes "~Whirring~";
 	mes "Here is Jogi, the bomber from Lasagna!";
@@ -2228,6 +2306,14 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 }
 
 lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
+	if (checkweight(1001,1) == 0) {
+		mes "- Hold on a second here!! -";
+		mes "- You have too many items. -";
+		mes "- That means you can no longer receive any items. -";
+		mes "- Free up some space -";
+		mes "- and try again. -";
+		close;
+	}
 	emotion 23;
 	mes "[Dandi Chara]";
 	mes "~Shrieks~ Hi...Hiya...";
@@ -2325,6 +2411,14 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 }
 
 lasagna,140,245,3	script	The sensitive-minded el	4_CAT_SAILOR3,{
+	if (checkweight(1001,1) == 0) {
+		mes "- Hold on a second here!! -";
+		mes "- You have too many items. -";
+		mes "- That means you can no longer receive any items. -";
+		mes "- Free up some space -";
+		mes "- and try again. -";
+		close;
+	}
 	mes "[Goma Chara]";
 	mes "I'm Goma Chara, the eldest daughter of the Charas. These brats are who quicken my ageing process...";
 	mes "If you happen to have the amulet that my brother Yota made, I can polish it for you.";

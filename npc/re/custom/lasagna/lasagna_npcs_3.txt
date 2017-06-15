@@ -1,5 +1,10 @@
 // in A_B
 conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
+	if (checkweight(1001,4) == 0) {
+		mes "[Stello]";
+		mes "It looks a lot and large. How about cutting down some?";
+		close;
+	}
 	if (lasagna_quest[1] < 14) {
 		mes "[Stello]";
 		mes "Who are you? You are not allowed to enter hear with no permission. Please leave.";
@@ -629,6 +634,11 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 
 // in G_H
 conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
+	if (checkweight(1001,1) == 0) {
+		mes "[Recorder]";
+		mes "It looks a lot and large. How about cutting down some?";
+		close;
+	}
 	if (lasagna_quest[1] < 15) {
 		mes "[Recorder]";
 		mes "Since it takes concentration, please don't interrupt me.";
@@ -1330,6 +1340,11 @@ conch_in,98,33,5	script	Con-Chliina Ship's Log#	HIDDEN_NPC,{
 }
 
 conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
+	if (checkweight(1001,1) == 0) {
+		mes "[Boatswain]";
+		mes "It looks a lot and large. How about cutting down some?";
+		close;
+	}
 	if (lasagna_quest[1] < 16) {
 		mes "[Boatswain]";
 		mes "Doll, check.";
@@ -1762,6 +1777,11 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 }
 
 conch_in,181,58,3	script	Helmsman#dorcon	4_CAT_SAILOR5,{
+	if (checkweight(1001,1) == 0) {
+		mes "[Helmsman]";
+		mes "It looks a lot and large. How about cutting down some?";
+		close;
+	}
 	if (lasagna_quest[1] < 16) {
 		mes "[Helmsman]";
 		mes "We can go anywhere if we have the wind and the sail.";
@@ -1868,6 +1888,11 @@ conch_in,189,63,3	script	Head Chef#dorcon	4_DR_TORTEL,{
 }
 
 conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
+	if (checkweight(1001,1) == 0) {
+		mes "[Sous Chef]";
+		mes "It looks a lot and large. How about cutting down some?";
+		close;
+	}
 	if (lasagna_quest[1] < 16) {
 		mes "[Sous Chef]";
 		mes "It is going to be the time to eat soon. I should hurry up.";
