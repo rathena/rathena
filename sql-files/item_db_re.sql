@@ -7014,10 +7014,10 @@ REPLACE INTO `item_db_re` VALUES (12842,'Platinum_Treasure_Box','Platinum Treasu
 REPLACE INTO `item_db_re` VALUES (12843,'Pearl_Treasure_Box','Pearl Treasure Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'60',NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12844,'Diamond_Treasure_Box','Diamond Treasure Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'70',NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12845,'Amatsu_Butterfly_Wing','Amatsu_Butterfly_Wing',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12846,'Little_Unripe_Apple','Little_Unripe_Apple',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'pet 2398;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12846,'Little_Unripe_Apple','Little Unripe Apple',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'pet 2398;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12847,'Old_Equipment_Box','Old Equipment Box',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12848,'Falcon_Flute','Falcon Flute',11,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12849,'Combination_Kit','Combination Kit',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12849,'Combination_Kit','Combination Kit',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'cooking 30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12850,'Heaven_Scroll','Heaven Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Heaven_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12851,'Vocation_Scroll','Vocation Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Vocation_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12852,'Wisdom_Scroll','Wisdom Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Wisdom_Scroll);',NULL,NULL);
