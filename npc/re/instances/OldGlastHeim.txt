@@ -26,13 +26,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 		mes "Maybe, level 130.";
 		close;
 	}
-	if (ghinstance == 1) {
-		mes "[Hugin]";
-		mes "Umm? Did you see me at another place? I don't think so. What about this time?";
-		if (isbegin_quest(12322) == 1)
-			erasequest 12322;
-		next;
-	} else {
+	if (isbegin_quest(12316) == 0) {
 		mes "[Hugin]";
 		mes "A long time ago, this castle did not look like this.";
 		next;
@@ -74,35 +68,37 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 		mes "[Hugin]";
 		mes "I knew that you would understand what I said. Well, please tell me what you want to do.";
 		setquest 12316;// Meeting Hugin
-		ghinstance = 1;
+		completequest 12316;
 		next;
+	}
+	else {
+		mes "[Hugin]";
+		mes "Umm? Did you see me at another place? I don't think so. What about this time?";
+		if (isbegin_quest(12322) == 1)
+			erasequest 12322;
 	}
 	switch( checkquest(12317,PLAYTIME) ) {
 	case -1:
 		.@party_id = getcharid(1);
 		.@p_name$ = getpartyname(.@party_id);
 		.@md_name$ = "Old Glast Heim";
+
 		if (!instance_check_party(.@party_id)) {
 			mes "[Hugin]";
 			mes "Why don't you make a party with more than 1 person and talk to me again?";
 			close;
 		}
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
-			if (isbegin_quest(12316) == 1)
-				erasequest 12316;
+		if (getcharid(0) == getpartyleader(.@party_id,2))
 			.@menu$ = "Generate Time Gap";
-		} else {
-			if (checkquest(12316) == 1) {
-				mes "[Hugin]";
-				mes "Have we met before? No way. It's my first time seeing you. What do you want?";
-				erasequest 12316;
-			}
+		else {
+			mes "[Hugin]";
+			mes "Have we met before? No way. It's my first time seeing you. What do you want?";
 		}
-		if (checkquest(12318,HUNTING) == -1)
+		if (isbegin_quest(12318) == 0)
 			setquest 12318;// Corrupted Soul Hunt
 		switch( select( .@menu$, "Enter Old Glast Heim", "Cancel" ) ) {
 		case 1:
-			switch (instance_create(.@md_name$)) {
+			switch( instance_create(.@md_name$) ) {
 			case -3:
 				dispbottom "Memorial Dungeon, 'Old Glast Heim' is already in progress.",0xFFFFFF;
 				close;
@@ -118,7 +114,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 			mes "After the time gap opens, please tell me again.";
 			close;
 		case 2:
-			switch(instance_enter(.@md_name$)) {
+			switch( instance_enter(.@md_name$) ) {
 			case IE_OTHER:
 				mes "[Hugin]";
 				mes "An unknown error has occurred.";
@@ -134,9 +130,8 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 			case IE_OK:
 				mapannounce "glast_01",.@p_name$ + " party member " + strcharinfo(0) + " enters the Old Glast Heim",bc_map,"0x00ff99";
 				setquest 12317;// Trace of Time Travel
-				close;
+				end;
 			}
-			break;
 		case 3:
 			close;
 		}
@@ -151,7 +146,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 		close;
 	case 2:
 		mes "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000";
-		if (checkquest(12318,HUNTING) == -1)
+		if (isbegin_quest(12318) == 0)
 			setquest 12318;// Corrupted Soul Hunt
 		erasequest 12317;
 		close;
@@ -1050,26 +1045,27 @@ OnInstanceInit:
 	end;
 }
 
-1@gl_k,156,259,3	script	Varmundt#ghinstance3	4_M_BARMUND,{
+1@gl_k,156,258,3	script	Varmundt#ghinstance3	4_M_BARMUND,{
+	cutin "GL_BARMUND1",2;
+	mes "[Varmundt]";
 	if (checkquest(12318,HUNTING) == 2) {
-		cutin "gl_barmund1",2;
-		mes "[Varmundt]";
+		npctalk "Varmundt: I collected some items dropped from its body. You can take it from me.";
 		mes "This item has an extraordinary aura with it. Can be very useful for someone special.";
 		erasequest 12318;
 		if (checkquest(12319,HUNTING) == -1)
-			setquest 12319;
-		// setquest 12320;// Time Traveler
-		// erasequest 12320;
+			setquest 12319;// Amdarais Hunt
 		getitem 6607,1;// Temporal_Crystal
 		getitem 6608,1;// Coagulated_Spell
-		getexp 250000,250000;
-		close2;
-		cutin "",255;
-		end;
+		if (isbegin_quest(12320) == 0)
+			setquest 12320;// Time Traveler
+			completequest 12320;
+			getexp 250000,250000;
+		}
 	}
-	mes "[Varmundt]";
-	mes "I guess this is it. Is it impossible to stop the time traveler's will?! A portal seems to have appeared to the north.";
-	cutin "gl_barmund1",2;
+	else {
+		mes "I guess this is it. Is it impossible to stop the time traveler's will?!";
+		mes "A portal seems to have appeared to the north.";
+	}
 	close2;
 	cutin "",255;
 	end;
@@ -1594,16 +1590,16 @@ OnInstanceInit:
 		mes "[Hugin]";
 		mes "Hm, you are very well. First of all, let me give you some loot from Amdarais.";
 		erasequest 12319;
-		setquest 12321;// Time Conqueror
 		setquest 12322;// Space Distortion
-		erasequest 12321;
-		if (gh_instance == 1) {
-			getitem 6607,1; //Temporal_Crystal
-			getitem 6608,1; //Coagulated_Spell
-		} else {
+		if (isbegin_quest(12321) == 0) {
+			setquest 12321;// Time Conqueror
+			completequest 12321;
 			getitem 6607,5; //Temporal_Crystal
 			getitem 6608,5; //Coagulated_Spell
-			gh_instance = 1;
+		}
+		else {
+			getitem 6607,1; //Temporal_Crystal
+			getitem 6608,1; //Coagulated_Spell
 		}
 		getexp 350000,350000;
 		next;
@@ -1623,8 +1619,7 @@ OnInstanceInit:
 		mes "Now let me remove your memory. If you see me again it will be someone new.";
 		specialeffect2 EF_FREEZE;
 		close2;
-		getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
-		warp .@map$,.@x,.@y;
+		warp 'map_name$[1],158,244;
 		end;
 	} else {
 		mes "[Hugin]";
