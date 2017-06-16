@@ -7335,7 +7335,7 @@ void clif_party_created(struct map_session_data *sd,int result)
 void clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 {
 	int i;
-#if PACKETVER < 20170524
+#if PACKETVER < 20170517
 	unsigned char buf[81];
 	int cmd = 0x1e9;
 	int offset = 0;
@@ -7356,7 +7356,7 @@ void clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 	WBUFW(buf, 0) = cmd;
 	WBUFL(buf, 2) = sd->status.account_id;
 	WBUFL(buf, 6) = (p->party.member[i].leader)?0:1;
-#if PACKETVER >= 20170524
+#if PACKETVER >= 20170517
 	WBUFW(buf,10) = sd->status.class_;
 	WBUFW(buf,12) = sd->status.base_level;
 #endif
@@ -7386,7 +7386,7 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd)
 	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1)*MAX_PARTY];
 	struct map_session_data* party_sd = NULL;
 	int i, c;
-#if PACKETVER < 20170524
+#if PACKETVER < 20170517
 	int cmd = 0xfb;
 	int size = 46;
 #else
@@ -7410,13 +7410,13 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd)
 		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,28+c*size+28));
 		WBUFB(buf,28+c*size+44) = (m->leader) ? 0 : 1;
 		WBUFB(buf,28+c*size+45) = (m->online) ? 0 : 1;
-#if PACKETVER >= 20170524
+#if PACKETVER >= 20170517
 		WBUFW(buf,28+c*size+46) = m->class_;
 		WBUFW(buf,28+c*size+48) = m->lv;
 #endif
 		c++;
 	}
-#if PACKETVER < 20170524
+#if PACKETVER < 20170517
 	WBUFW(buf,2) = 28+c*size;
 #else
 	WBUFB(buf,28+c*size) = (p->party.item & 1) ? 1 : 0;
@@ -7669,7 +7669,7 @@ void clif_party_hp(struct map_session_data *sd)
 /// Updates the job and level of a party member
 /// 0abd <account id>.L <job>.W <level>.W
 void clif_party_job_and_level(struct map_session_data *sd){
-#if PACKETVER >= 20170524
+#if PACKETVER >= 20170517
 	unsigned char buf[10];
 
 	nullpo_retv(sd);
