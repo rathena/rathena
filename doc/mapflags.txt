@@ -323,6 +323,13 @@ Notes:
 
 ---------------------------------------
 
+*instakill
+
+Applies maximum damage on every hit or skill from players or monsters.
+Ignores damage reduction.
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================

@@ -460,6 +460,7 @@ enum {
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
 	MF_HIDEMOBHPBAR,
+	MF_INSTAKILL,
 };
 
 const char* script_op2name(int op)
@@ -12374,6 +12375,7 @@ BUILDIN_FUNC(setmapflag)
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				break;
 			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 1; break;
+			case MF_INSTAKILL:		map[m].flag.instakill = 1; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12482,6 +12484,7 @@ BUILDIN_FUNC(removemapflag)
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				break;
 			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 0; break;
+			case MF_INSTAKILL:			map[m].flag.instakill = 0; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
