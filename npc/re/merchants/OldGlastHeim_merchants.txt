@@ -9,7 +9,7 @@
 
 // Merchant
 //============================================================
-glast_01,210,273,5	script	Hugin's Buttler	1_F_04,{
+glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
@@ -81,7 +81,7 @@ glast_01,210,273,5	script	Hugin's Buttler	1_F_04,{
 
 // Enchant and Socket NPC
 //============================================================
-glast_01,212,273,4	script	Hugin's Magic Master	1_F_01,{
+glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
@@ -211,7 +211,7 @@ glast_01,212,273,4	script	Hugin's Magic Master	1_F_01,{
 	}
 }
 
-glast_01,210,270,0	script	Hugin's Craftsman	4_F_JOB_BLACKSMITH,{
+glast_01,210,270,0	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
