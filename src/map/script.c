@@ -13881,8 +13881,8 @@ BUILDIN_FUNC(undisguise)
  *
  * classchange(<view id>{,"<NPC name>","<flag>"});
  * @param flag: Specify target
- *   BC_AREA - Message is sent to players in the vicinity of the source (default).
- *   BC_SELF - Message is sent only to player attached.
+ *   BC_AREA - Sprite is sent to players in the vicinity of the source (default).
+ *   BC_SELF - Sprite is sent only to player attached.
  */
 BUILDIN_FUNC(classchange)
 {
