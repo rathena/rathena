@@ -1,7 +1,8 @@
-language: c
+language: cpp
 compiler:
   - clang
   - gcc
+dist: trusty
 
 before_script:
   - uname -a
@@ -24,6 +25,10 @@ before_script:
   - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db2_re.sql || aborterror "Unable to import renewal monster skill 2 table."
   - mysql -u $DB_ROOT $DB_NAME < sql-files/roulette_default_data.sql || aborterror "Unable to import roulette table."
   - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -q
+  - sudo apt-get install gcc-4.8 -y
+  - sudo apt-get install g++-4.8 -y
 
 script:
   - ./configure $CONFIGURE_FLAGS

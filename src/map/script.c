@@ -5741,7 +5741,7 @@ BUILDIN_FUNC(areawarp)
 	else if( !(index=mapindex_name2id(str)) )
 		return SCRIPT_CMD_FAILURE;
 
-	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3);
+	map_foreachinallarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5774,7 +5774,7 @@ BUILDIN_FUNC(areapercentheal)
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return SCRIPT_CMD_FAILURE;
 
-	map_foreachinarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
+	map_foreachinallarea(buildin_areapercentheal_sub,m,x0,y0,x1,y1,BL_PC,hp,sp);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6708,6 +6708,15 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 
 	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
 	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
+
+	if (opt_val_n < 1) {
+		ShowError("buildin_%s: No option value listed.\n", funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (opt_param_n < 1) {
+		ShowError("buildin_%s: No option parameter listed.\n", funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	opt_id_id = reference_getid(opt_id);
 	opt_val_id = reference_getid(opt_val);
@@ -8505,39 +8514,34 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 /**
- * getequipid(<equipment slot>{,<char_id>})
+ * getequipid({<equipment slot>,<char_id>})
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num;
+	int i, num = EQI_COMPOUND_ON;
 	TBL_PC* sd;
-	struct item_data* item;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2);
-	if( !equip_index_check(num) )
-	{
-		script_pushint(st,-1);
-		return SCRIPT_CMD_FAILURE;
-	}
+	if (script_hasdata(st, 2))
+		num = script_getnum(st, 2);
 
-	// get inventory position of item
-	i = pc_checkequip(sd,equip_bitmask[num]);
-	if( i < 0 )
-	{
+	if (num == EQI_COMPOUND_ON)
+		i = current_equip_item_index;
+	else if (equip_index_check(num)) // get inventory position of item
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	else {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	item = sd->inventory_data[i];
-	if( item != 0 )
-		script_pushint(st,item->nameid);
+	if (i >= EQI_ACC_L && sd->inventory_data[i])
+		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10031,11 +10035,7 @@ BUILDIN_FUNC(makepet)
 		pet_id = search_petDB_index(id, PET_EGG);
 	if (pet_id >= 0 && sd) {
 		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(
-			sd->status.account_id, sd->status.char_id,
-			(short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
-			(short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
-			100, 0, 1, pet_db[pet_id].jname);
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -10107,7 +10107,7 @@ BUILDIN_FUNC(guildchangegm)
 	if (!sd)
 		script_pushint(st,0);
 	else
-		script_pushint(st,guild_gm_change(guild_id, sd));
+		script_pushint(st,guild_gm_change(guild_id, sd->status.char_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10924,7 +10924,7 @@ BUILDIN_FUNC(areaannounce)
 	if ((m = map_mapname2mapid(mapname)) < 0)
 		return SCRIPT_CMD_SUCCESS;
 
-	map_foreachinarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
+	map_foreachinallarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
 		mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11036,7 +11036,7 @@ BUILDIN_FUNC(getareausers)
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	map_foreachinarea(buildin_getareausers_sub,
+	map_foreachinallarea(buildin_getareausers_sub,
 		m,x0,y0,x1,y1,BL_PC,&users);
 	script_pushint(st,users);
 	return SCRIPT_CMD_SUCCESS;
@@ -11083,7 +11083,7 @@ BUILDIN_FUNC(getareadropitem)
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	map_foreachinarea(buildin_getareadropitem_sub,
+	map_foreachinallarea(buildin_getareadropitem_sub,
 		m,x0,y0,x1,y1,BL_ITEM,nameid,&amount);
 	script_pushint(st,amount);
 	return SCRIPT_CMD_SUCCESS;
@@ -12085,7 +12085,7 @@ BUILDIN_FUNC(addrid)
 			}
 			break;
 		case 4:
-			map_foreachinarea(buildin_addrid_sub,
+			map_foreachinallarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
 			break;
@@ -13958,7 +13958,7 @@ BUILDIN_FUNC(playBGMall)
 		int x1 = script_getnum(st,6);
 		int y1 = script_getnum(st,7);
 
-		map_foreachinarea(playBGM_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name);
+		map_foreachinallarea(playBGM_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name);
 	}
 	else if( script_hasdata(st,3) ) {// entire map
 		const char* mapname = script_getstr(st,3);
@@ -14039,7 +14039,7 @@ BUILDIN_FUNC(soundeffectall)
 		int y0 = script_getnum(st,6);
 		int x1 = script_getnum(st,7);
 		int y1 = script_getnum(st,8);
-		map_foreachinarea(soundeffect_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name, type);
+		map_foreachinallarea(soundeffect_sub, map_mapname2mapid(mapname), x0, y0, x1, y1, BL_PC, name, type);
 	}
 	else
 	{
@@ -18946,7 +18946,7 @@ static void buildin_questinfo_setjob(struct questinfo *qi, int job) {
 BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id, icon;
+	int quest_id, icon, color = 0;
 	struct questinfo qi, *q2;
 
 	if( nd == NULL || nd->bl.m == -1 ) {
@@ -18987,14 +18987,14 @@ BUILDIN_FUNC(questinfo)
 	qi.nd = nd;
 
 	if( script_hasdata(st, 4) ) {
-		int color = script_getnum(st, 4);
+		color = script_getnum(st, 4);
 		if( color < 0 || color > 3 ) {
 			ShowWarning("buildin_questinfo: invalid color '%d', changing to 0\n",color);
 			script_reportfunc(st);
 			color = 0;
 		}
-		qi.color = (unsigned char)color;
 	}
+	qi.color = (unsigned char)color;
 
 	qi.min_level = 1;
 	qi.max_level = MAX_LEVEL;
@@ -19521,16 +19521,19 @@ unsigned short script_instancegetid(struct script_state* st)
 		instance_id = nd->instance_id;
 	else {
 		struct map_session_data *sd = NULL;
-		struct party_data *p = NULL;
-		struct guild *g = NULL;
+		struct party_data *pd = NULL;
+		struct guild *gd = NULL;
+		struct clan *cd = NULL;
 
 		if (script_rid2sd(sd)) {
 			if (sd->instance_id)
 				instance_id = sd->instance_id;
-			if (instance_id == 0 && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
-				instance_id = p->instance_id;
-			if (instance_id == 0 && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
-				instance_id = g->instance_id;
+			if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
+				instance_id = pd->instance_id;
+			if (instance_id == 0 && sd->status.guild_id && (gd = guild_search(sd->status.guild_id)) != NULL && gd->instance_id)
+				instance_id = gd->instance_id;
+			if (instance_id == 0 && sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+				instance_id = cd->instance_id;
 		}
 	}
 
@@ -19575,6 +19578,10 @@ BUILDIN_FUNC(instance_create)
 			case IM_GUILD:
 				if (script_rid2sd(sd))
 					owner_id = sd->status.guild_id;
+				break;
+			case IM_CLAN:
+				if (script_rid2sd(sd))
+					owner_id = sd->status.clan_id;
 				break;
 			default:
 				ShowError("buildin_instance_create: Invalid instance mode (instance name: %s)\n", script_getstr(st, 2));
@@ -19739,6 +19746,9 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 			break;
 		case IM_GUILD:
 			if (sd->status.guild_id != owner_id)
+				return 0;
+		case IM_CLAN:
+			if (sd->status.clan_id != owner_id)
 				return 0;
 	}
 
@@ -19926,6 +19936,68 @@ BUILDIN_FUNC(instance_check_guild)
 }
 
 /*==========================================
+ * instance_check_clan
+ * Values:
+ * clan_id : Clan ID of the invoking character. [Required Parameter]
+ * amount : Amount of needed Clan members for the Instance. [Optional Parameter]
+ * min : Minimum Level needed to join the Instance. [Optional Parameter]
+ * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * Example: instance_check_clan (getcharid(5){,amount}{,min}{,max});
+ * Example 2: instance_check_clan (getcharid(5),1,1,99);
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_check_clan)
+{
+	int amount, min, max, i, clan_id = 0, c = 0;
+	struct clan *cd = NULL;
+
+	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Clan members for the Instance.
+	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+
+	if (min < 1 || min > MAX_LEVEL) {
+		ShowError("buildin_instance_check_clan: Invalid min level, %d\n", min);
+		return SCRIPT_CMD_FAILURE;
+	} else if (max < 1 || max > MAX_LEVEL) {
+		ShowError("buildin_instance_check_clan: Invalid max level, %d\n", max);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st,2))
+		clan_id = script_getnum(st,2);
+	else
+		return SCRIPT_CMD_FAILURE;
+
+	if (!(cd = clan_search(clan_id))) {
+		script_pushint(st, 0); // Returns false if clan does not exist.
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for(i = 0; i < MAX_CLAN; i++) {
+		struct map_session_data *pl_sd;
+
+		if ((pl_sd = cd->members[i])) {
+			if (map_id2bl(pl_sd->bl.id)) {
+				if (pl_sd->status.base_level < min) {
+					script_pushint(st, 0);
+					return SCRIPT_CMD_SUCCESS;
+				} else if (pl_sd->status.base_level > max) {
+					script_pushint(st, 0);
+					return SCRIPT_CMD_SUCCESS;
+				}
+				c++;
+			}
+		}
+	}
+
+	if (c < amount)
+		script_pushint(st, 0); // Not enough Members in the Clan to join Instance.
+	else
+		script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
 * instance_info
 * Values:
 * name : name of the instance you want to look up. [Required Parameter]
@@ -20092,7 +20164,7 @@ BUILDIN_FUNC(areamobuseskill)
 	emotion = script_getnum(st,11);
 	target = script_getnum(st,12);
 
-	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
+	map_foreachinallrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20730,7 +20802,7 @@ BUILDIN_FUNC(cleanmap)
 		int16 x1 = script_getnum(st, 5);
 		int16 y1 = script_getnum(st, 6);
 		if (x0 > 0 && y0 > 0 && x1 > 0 && y1 > 0) {
-			map_foreachinarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
+			map_foreachinallarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
 		} else {
 			ShowError("cleanarea: invalid coordinate defined!\n");
 			return SCRIPT_CMD_FAILURE;
@@ -23144,7 +23216,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
-	BUILDIN_DEF(getequipid,"i?"),
+	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
@@ -23518,6 +23590,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	BUILDIN_DEF(instance_check_guild,"i???"),
+	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
 	/**
 	 * 3rd-related

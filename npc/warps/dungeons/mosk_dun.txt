@@ -18,11 +18,7 @@
 
 mosk_fild02,190,257,0	warp	moscoviawarp0401	1,1,mosk_dun01,189,45
 mosk_dun01,189,42,0	warp	moscoviawarp0501	1,1,mosk_fild02,190,254
-mosk_in,215,36,0	script	babayagaout	WARPNPC,1,1,{
-OnTouch:
-	warp "mosk_dun02",53,217;
-	end;
-}
+mosk_in,215,36,0	warp2	babayagaout	1,1,mosk_dun02,53,217
 
 mosk_dun02,53,220,4	script	#babayagain	WARPNPC,1,1,{
 	end;
