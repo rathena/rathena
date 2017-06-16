@@ -1056,7 +1056,7 @@ OnInstanceInit:
 			setquest 12319;// Amdarais Hunt
 		getitem 6607,1;// Temporal_Crystal
 		getitem 6608,1;// Coagulated_Spell
-		if (isbegin_quest(12320) == 0)
+		if (isbegin_quest(12320) == 0) {
 			setquest 12320;// Time Traveler
 			completequest 12320;
 			getexp 250000,250000;
