@@ -1,0 +1,26 @@
+//=====TristonRO=========================
+//=====By:===============================
+//=Exmas
+//=====Description=======================
+//Guide
+//=======================================
+prt_in,41,114,4	Script	FAQ	106,{
+mes	"[FAQ]";
+mes	"Hello, what do you want to know?";
+next;
+menu "Origins",ori,"Modifications - Nerfs and Buffs",mod,"Triston's Offer",offer;
+ori:
+mes	"The creators of TristonRO had gotten the idea of making a server for a very long time now, but only recently have been able to make the dream come true. Mixed with nostalgia and will, TristonRO is aimed at the nostalgic basic things of Ragnarok. By this we mean no one-shotting, spread merchants instead of a dull room where everyone goes,and a balanced and wide playstyle. Exmas along with Howl, both experienced in their own ways, have made their changes into what they hope it becomes one of the best Ragnarok servers world-wide";
+close;
+mod:
+mes "We've made a series of changes within classes and combat. This is mainly because of our preference in a combat based in skill and gear, not just gear where anyone can oneshot someone because of overpowered items. We have done things like reducing damage on formulas, Eg: Tiger Cannon, Gates of Hell, Hell Plant, etc; in a way to prevent such scenarios. We have also decreased the renowned Mora's set efficiency, in a way to give other equipment a chance and stop the monotous choice of gear players normally use. Vellum and recently introduced items E.g: Guillotine Katar; have also been modified. The skill Full Throttle has been removed to prevent out of sheer luck duels and ridiculous situations of survival. It is possible that these changes are undone or suffer a re-think, depends on the feedback.";
+close;
+offer:
+mes "We're aware of the inconditional love players have when it comes to Headgears. In TristonRO we made sure that everyone was able to get tons of headgears most servers usually forget to include in whatever branch they can. It is our pleasure to announce that we plan on constantly including obtainable headgears in all the different branches, like custom drops within monster, mini-bosses and MVPs; cash shop costumes and headgears; vote shop headgears; BG headgears and of course, quest headgears. We want players to experience the wide variety of Ragnarok as it was back then, the glorious effort to obtain the things they want and need, with great WoE, PvP and Battlegrounds with rewards";
+close;
+OnInit:
+waitingroom "Triston FAQ",0;
+end;
+}
+
+

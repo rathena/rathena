@@ -16,7 +16,7 @@
 //= 1.4 Rebellion added.
 //============================================================
 
-prontera,153,193,6	script	Job Master	123,{
+prt_in,44,112,4	script	Job Master	459,{
 function Job_Menu;
 
 	mes "[Job Master]";

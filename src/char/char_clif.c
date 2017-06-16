@@ -304,7 +304,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 void chclif_charlist_notify( int fd, struct char_session_data* sd ){
 // This is needed on RE clients from october 2015 onwards
 // If you want to use one replace false by true here
-#if false && PACKETVER >= 20151001
+#if true && PACKETVER >= 20151001
 	WFIFOHEAD(fd, 10);
 	WFIFOW(fd, 0) = 0x9a0;
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up

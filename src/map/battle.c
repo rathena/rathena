@@ -2083,9 +2083,9 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 	if (!battle_skill_damage_iscaster(damage->caster, src->type))
 		return 0;
 
-	if ((damage->map&1 && (!mapd->flag.pvp && !map_flag_gvg2(m) && !mapd->flag.battleground && !mapd->flag.skill_damage && !mapd->flag.restricted)) ||
+	if ((damage->map&1 && (!mapd->flag.pvp && !map_flag_gvg(m) && !mapd->flag.battleground && !mapd->flag.skill_damage && !mapd->flag.restricted)) ||
 		(damage->map&2 && mapd->flag.pvp) ||
-		(damage->map&4 && map_flag_gvg2(m)) ||
+		(damage->map&4 && map_flag_gvg(m)) ||
 		(damage->map&8 && mapd->flag.battleground) ||
 		(damage->map&16 && mapd->flag.skill_damage) ||
 		(mapd->flag.restricted && damage->map&(8*mapd->zone)))
@@ -3820,7 +3820,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 200;
 			break;
 		case RA_WUGSTRIKE:
-			skillratio += -100 + 200 * skill_lv;
+			skillratio += -100 + 130 * skill_lv;
 			break;
 		case RA_WUGBITE:
 			skillratio += 300 + 200 * skill_lv;
@@ -3995,8 +3995,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
  			break;
 		case SR_TIGERCANNON:
 			{
-				unsigned int hp = sstatus->max_hp * abs(skill_get_hp_rate(skill_id, skill_lv)) / 100,
-							 sp = sstatus->max_sp * abs(skill_get_sp_rate(skill_id, skill_lv)) / 100;
+				unsigned int hp = sstatus->max_hp * abs(skill_get_hp_rate(skill_id, skill_lv)) / 130,
+							 sp = sstatus->max_sp * abs(skill_get_sp_rate(skill_id, skill_lv)) / 130;
 
 				if (wd.miscflag&8)
 					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
@@ -4043,9 +4043,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case SR_GATEOFHELL:
 			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
-				skillratio += -100 + 800 * skill_lv;
+				skillratio += -100 + 400 * skill_lv;
 			else
-				skillratio += -100 + 500 * skill_lv;
+				skillratio += -100 + 420 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case SR_GENTLETOUCH_QUIET:
@@ -4091,7 +4091,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case GN_CARTCANNON:
 			// ATK [{( Cart Remodeling Skill Level x 50 ) x ( INT / 40 )} + ( Cart Cannon Skill Level x 60 )] %
-			skillratio += -100 + 60 * skill_lv + ((sd) ? pc_checkskill(sd, GN_REMODELING_CART) : 1) * 50 * status_get_int(src) / 40;
+			skillratio += -100 + 400 * skill_lv + ((sd) ? pc_checkskill(sd, GN_REMODELING_CART) : 1) * 50 * status_get_int(src) / 40;
 			break;
 		case GN_SPORE_EXPLOSION:
 			skillratio += 100 + status_get_int(src) + 100 * skill_lv;
@@ -4405,8 +4405,8 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 #endif
 		if (sc->data[SC_SPIRIT]) {
 			if (skill_id == AS_SONICBLOW && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN) {
-				ATK_ADDRATE(wd.damage, wd.damage2, map_flag_gvg2(src->m) ? 25 : 100); //+25% dmg on woe/+100% dmg on nonwoe
-				RE_ALLATK_ADDRATE(wd, map_flag_gvg2(src->m) ? 25 : 100); //+25% dmg on woe/+100% dmg on nonwoe
+				ATK_ADDRATE(wd.damage, wd.damage2, map_flag_gvg(src->m) ? 25 : 100); //+25% dmg on woe/+100% dmg on nonwoe
+				RE_ALLATK_ADDRATE(wd, map_flag_gvg(src->m) ? 25 : 100); //+25% dmg on woe/+100% dmg on nonwoe
 			} else if (skill_id == CR_SHIELDBOOMERANG && sc->data[SC_SPIRIT]->val2 == SL_CRUSADER) {
 				ATK_ADDRATE(wd.damage, wd.damage2, 100);
 				RE_ALLATK_ADDRATE(wd, 100);
@@ -5385,7 +5385,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case SR_TIGERCANNON:
 			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
 			if (wd.miscflag&8) {
-				ATK_ADD(wd.damage, wd.damage2, skill_lv * 500 + status_get_lv(target) * 40);
+				ATK_ADD(wd.damage, wd.damage2, skill_lv * 400 + status_get_lv(target) * 40);
 			} else
 				ATK_ADD(wd.damage, wd.damage2, skill_lv * 240 + status_get_lv(target) * 40);
 			break;
@@ -6571,7 +6571,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case GN_HELLS_PLANT_ATK:
 			//[{( Hell Plant Skill Level x Casters Base Level ) x 10 } + {( Casters INT x 7 ) / 2 } x { 18 + ( Casters Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
-			md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( status_get_int(src) * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : 0)) );
+			md.damage = ( skill_lv * status_get_lv(src) * 5 ) + ( status_get_int(src) * 4 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : 0)) );
 			break;
 		case RL_B_TRAP:
 			// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level

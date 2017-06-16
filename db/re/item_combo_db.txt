@@ -188,9 +188,9 @@
 2472:2570:15030:16018,{ bonus2 bAddRace,RC_Undead,30; bonus2 bMagicAddRace,RC_Undead,30; bonus2 bSkillAtk,"AB_ADORAMUS",200; bonus2 bSkillUseSP,"AB_ADORAMUS",-30; bonus2 bVariableCastrate,"AL_HOLYLIGHT",-50; bonus2 bVariableCastrate,"PR_TURNUNDEAD",-50; bonus2 bVariableCastrate,"PR_MAGNUS",-50; bonus2 bVariableCastrate,"AB_JUDEX",-50; bonus2 bVariableCastrate,"AB_ADORAMUS",-50; }
 2475:2574:2883:15036,{ bonus bMaxHPRate,14; bonus2 bSubEle,Ele_Neutral,10; bonus2 bSkillAtk,"RK_HUNDREDSPEAR",50; skill "CR_AUTOGUARD",1; bonus bUseSPrate,10; }
 2476:2575:2884:15037,{ bonus2 bAddClass,Class_All,10; bonus3 bAutoSpell,"RK_STORMBLAST",1,20; bonus2 bSkillAtk,"RK_WINDCUTTER",100; bonus2 bSkillAtk,"RK_SONICWAVE",100; autobonus3 "{ bonus bAspd,2; }",1000,10000,"LK_CONCENTRATION","{ specialeffect2 EF_ENHANCE; }"; }
-2477:2577:2886:15038,{ bonus bFlee,10; bonus bCritical,15; bonus bCritAtkRate,40; bonus2 bSkillAtk,"GC_CROSSIMPACT",20; bonus bUseSPrate,10; }
+2477:2577:2886:15038,{ bonus bFlee,10; bonus bCritical,15; bonus bCritAtkRate,40; bonus2 bSkillAtk,"GC_CROSSIMPACT",13; bonus bUseSPrate,10; }
 2478:2578:2887:15039,{ bonus3 bAutoSpell,"ASC_BREAKER",max(getskilllv("ASC_BREAKER"),1),20; if(readparam(bStr)>119) { bonus bBaseAtk,30; } bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; bonus bCritical,-20; }
-2479:2580:2890:15042,{ bonus bAspd,2; bonus2 bSkillAtk,"RA_ARROWSTORM",50; bonus bLongAtkRate,30; bonus3 bAutoSpell,"AC_DOUBLE",max(getskilllv("AC_DOUBLE"),3),20; }
+2479:2580:2890:15042,{ bonus bAspd,2; bonus2 bSkillAtk,"RA_ARROWSTORM",23; bonus bLongAtkRate,17; bonus3 bAutoSpell,"AC_DOUBLE",max(getskilllv("AC_DOUBLE"),3),20; }
 2480:2581:2891:15043,{ bonus bMaxHPRate,15; bonus bFlee2,20; bonus2 bSkillAtk,"RA_CLUSTERBOMB",20; bonus bLongAtkRate,-30; bonus bAspd,-7; }
 2481:2730,{ bonus bBaseAtk,getequiprefinerycnt(EQI_SHOES); }
 2481:2731,{ bonus bMatkRate,getequiprefinerycnt(EQI_SHOES)/2; bonus bVariableCastrate,-(getequiprefinerycnt(EQI_SHOES)/2); }

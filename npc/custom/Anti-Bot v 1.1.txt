@@ -1,0 +1,93 @@
+//===== Thaddeus Scripts ================================== 
+//= Simple Cool Anti-Bot
+//===== By: ================================================== 
+//= Thaddeus
+//===== Current Version: ===================================== 
+//= 2.0
+//===== Compatible With: ===================================== 
+//= Hercules, rAthena, 3ceam, eAthena
+//===== Description: =========================================
+// Improvise Simple Anti-Bot! from method of Brian.
+//===== Comments: ============================================
+//= Change the % chance of triggering, change jail time.
+//===== Additional Comments: =================================
+//= 1.00 Initial Release
+//= 1.01 Cleaned up and removed the use of goto (Stolao)
+//===== Contact Info: =========================================
+//= http://hercules.ws/board/user/457-thaddeus/
+//============================================================
+//===== Credits to: =========================================
+//= Brian, Stolao
+//============================================================
+
+-	script	anti-bot2	-1,{
+OnPCLoginEvent:
+	set checkbot,0;
+	if(botter >= 1) {
+		doevent "anti-bot::Oncheckb";
+	}
+
+}
+
+-	script	anti-bot	-1,{
+OnNPCKillEvent:
+	if( rand(100) < 75 ) { end;} // Default Setting: 75% Chance to Ignore the Anti-Bot
+	Oncheckb:
+	function GetString;
+	if (getgmlevel() >= 3) { end;} /* Uncomment if you want to Ignore this by GM */
+	if(checkbot >= 1) { end; }
+
+	atcommand "@jail "+strcharinfo(0)+"";
+	set botter,1;
+	sc_start SC_BERSERK, 1000000000, 1;
+	sc_start SC_FREEZE, 1000000000, 1;
+	sleep2 3000;
+	for(set botter,botter; botter < 4; set botter,botter + 1;){
+		set .@String$,GetString( 15,rand(3,7) );
+		mes "You Have 3 Chance to Type the Red Text Correctly";
+		mes "If you failed- You will be jailed";
+		mes "Input the ^FF0000RED COLOUR^000000 part";
+		mes "^0000FF"+GetString( 15,rand(5,10) )+"^FF0000"+.@String$+"^0000FF"+GetString( 15,rand(3,10) )+"^000000";
+		input .@Input$;
+		if( .@Input$ != .@String$ ){
+			if (botter >= 3) {
+				atcommand "@unjail "+strcharinfo(0)+"";
+				sleep2 1000;
+				atcommand "@jailfor 10d "+strcharinfo(0)+"";
+				announce "[Anti-BOT]: The user [" +strcharinfo(0) +"] Has Been Jailed For 10 Days.",0,0xe80f0f;
+				set botter,0;
+				close;
+				end;
+			}
+			mes "Wrong..";
+			next;
+		} else {
+			break;
+		}
+	}
+	atcommand "@unjail "+strcharinfo(0)+"";
+	set botter,0;
+	set checkbot,1;
+	sc_end SC_BERSERK;
+	sc_end SC_FREEZE; 
+	percentheal 100,100;
+	sc_start SC_INC_AGI,240000,10;
+	sc_start SC_BLESSING,240000,10; 
+end;
+
+	function	GetString	{
+		if( getarg(0) & 1 ) setarray .@List$[ getarraysize( .@List$ ) ],"1","2","3","4","5","6","7","8","9";
+		if( getarg(0) & 2 ) setarray .@List$[ getarraysize( .@List$ ) ],"A","B","C","D","E","F","G","H","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z";
+		if( getarg(0) & 4 ) setarray .@List$[ getarraysize( .@List$ ) ],"a","b","c","d","e","f","g","h","i","j","k","m","n","o","p","q","r","s","t","u","v","w","x","y","z";
+		//if( getarg(0) & 8 ) setarray .@List$[ getarraysize( .@List$ ) ],"!","@","#","$","%","^","&","*","(",")","-","=","/","+";
+
+	set .@Str$,"";
+		while( getstrlen( .@Str$ ) < getarg(1) )
+		set .@Str$,.@Str$ + .@List$[ rand( getarraysize( .@List$ ) ) ];
+		return .@Str$;
+
+	}
+
+}
+
+sec_pri	mapflag	pvp	off

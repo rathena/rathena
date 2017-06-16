@@ -1,0 +1,51 @@
+prontera,160,182,4	script	PvP Warper	821,{
+
+
+if(agitcheck() || agitcheck2()){
+mes "[ PvP Warper ]";
+mes "Sorry, You cannot Enter during ^00CC00War of Emperium^000000";
+mes "Come back later, Thank You";
+close;
+}
+
+else{
+menu "PvP Room",rpvp,"GvG Room",rgvg;
+
+rpvp:
+announce "[ PvP Warper ] "+strcharinfo(0)+" has entered in PvP Room",0,0xEE0000;
+warp "guild_vs3",0,0;
+end;
+
+rgvg:
+announce "[ PvP Warper ] "+strcharinfo(0)+" has entered in GvG Room",0,0x00CC99;
+warp "guild_vs5",0,0;
+end;
+
+OnInit:
+waitingroom "PvP and GvG",0;
+end;
+}
+
+}
+
+guild_vs3	mapflag	pvp
+guild_vs3	mapflag	nowarp
+guild_vs3	mapflag	nowarpto
+guild_vs3	mapflag	noreturn
+guild_vs3	mapflag	nosave
+guild_vs3	mapflag	pvp_noguild
+guild_vs3	mapflag	pvp_noparty
+guild_vs3	mapflag	nobranch
+guild_vs3	mapflag	noicewall
+
+guild_vs5	mapflag	gvg
+guild_vs5	mapflag	nowarp
+guild_vs5	mapflag	nowarpto
+guild_vs5	mapflag	noreturn
+guild_vs5	mapflag	nosave
+guild_vs5	mapflag	nobranch
+guild_vs5	mapflag	noicewall
+
+OnInit:
+waitingroom	"PvP and GvG",0;
+end;

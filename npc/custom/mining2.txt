@@ -1,0 +1,4464 @@
+//======Name========================================
+// Mining NPC
+//======Version=====================================
+// 1.0
+//======Author(s)===================================
+// Sandbox
+//======Comments====================================
+// In loving memory of AstralRO
+//==================================================
+
+prontera,153,179,3	script	Hermoining	726,{
+
+mes "[^0000FF Hermoining ^000000]";
+mes "Hiya! I'm the master of Mining, ^880000Hermoining^000000!";
+menu "Whoa, teach me master!",-;
+next;
+mes "[^0000FF Hermoining ^000000]";	
+mes "Okay, You'll be needing a ^008800Pick Axe^000000 for mining. While inside the map, you'll be able to mine mithril ores which can be sold for zeny!";
+next;
+mes "[^0000FF Hermoining ^000000]";
+mes "So, do you want to proceed?";
+menu "Yes master!",-,"Buy Pick Axe",Lpick;
+next;
+if(JobLevel < 50) goto Lnjob;
+mes "[^0000FF Hermoining ^000000]";
+mes "Have fun!";
+sc_end SC_ALL;
+warp "force_2-2",174,115;
+close;
+
+Lpick:
+callshop "PickShop";
+close;
+
+Lnjob:
+next;
+mes "[^0000FF Hermoining ^000000]";
+mes "Sorry, you need to be atleast job 50 or higher in order to enter.";
+close;
+
+
+}
+
+
+-	shop	PickShop	-1,6010:10000
+
+force_2-2,159,177,5	script	Mine Exit	848,{
+
+mes "[^888800 Minero ^000000]";
+mes "Do you want to get out of here?";
+menu "Yes please!",-;
+next;
+mes "[^888800 Minero ^000000]";
+mes "See you soon!";
+warp "mellina",118,86;
+close;
+
+
+}
+
+
+force_2-2,161,184,3	script	Mithril Ore	1976,{
+
+
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay; //Comment if you dont want to put a limit on mining
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) { //Comment if you dont want to put a limit on mining DEFAULT = 10,000x failed or success
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2); //50% chance to obtain mithril ore
+set @purechance,rand(1,3); //33.33% chance to obtain an ADDITIONAL mithril, which sells higher
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102; //Mining level 0 waits 4 seconds before mining
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102; //Mining level 1 waits 3 seconds before mining
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) { //Mining level 2 waits 2 seconds before mining
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102; //Mining level 3 waits 1 second before mining
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+//Required experience before a player's mining level increases.
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+
+//==================================================================
+// I did not duplicate the NPCs since I encountered players who tried
+// To abuse this script by using WPE/macros that can get the NPC ID
+// That can bypass the delay between the mining process..
+//==================================================================
+
+force_2-2,161,184,3	script	Mithril Ore#1	1976,{
+
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#2	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#3	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#4	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#5	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#6	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#7	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#8	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#9	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#10	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#11	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#12	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#13	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#14	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#15	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+
+force_2-2,161,184,3	script	Mithril Ore#16	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#17	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#18	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#19	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#20	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#21	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#22	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#23	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+force_2-2,161,184,3	script	Mithril Ore#24	1976,{
+if(#minedelay+86400 > gettimetick(2)) goto Ldelay;
+if(@mining != 0) goto Lstillmine;
+if(.mining != 0) goto Lalreadymine;
+//mes "Do you want to mine this rock?";
+//menu "Proceed",-;
+//next;
+
+if(countitem(6010) < 1) goto Lnopick;
+
+delitem 6010,1;
+
+set #MineCount,#MineCount+1;
+	if(#MineCount == 10000) {
+		set #minedelay,gettimetick(2);
+		set #MineCount,0;
+	}
+
+set @minechance,rand(1,2);
+set @purechance,rand(1,3);
+
+set .mining,1;
+set @mining,1;
+pcblockmove getcharid(3),1;
+
+if(MineLvl == 0) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 1) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+else if(MineLvl == 2) {
+
+	misceffect 102;
+	sleep2 1000;
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+if(MineLvl == 3) {
+
+	misceffect 102;
+	sleep2 1000;
+	set .mining,0;
+	set @mining,0;
+	pcblockmove getcharid(3),0;
+
+
+	if(@minechance == 2) {
+	misceffect 154;
+	set MineExp,MineExp+1;
+	if(@purechance == 3) getitem 7757,1;
+	else getitem 7233,1;
+	goto Lsuccess;
+	}
+else {
+	misceffect 155;
+	goto Lfail;
+	}
+}
+
+Lsuccess:
+dispbottom "You've successfully mined the ore.";
+if(MineExp < 10000) dispbottom "You've gained 1 Mining Exp.";
+if(MineExp == 1000) { set MineLvl,1;
+dispbottom "Congratulations! Your Mining Mastery is now Level 1!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 1!",bc_all,0x00FFFF;
+}
+else if(MineExp == 5000) { set MineLvl,2;
+dispbottom "Congratulations! Your Mining Mastery is now Level 2!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 2!",bc_all,0x00FFFF;
+}
+else if(MineExp == 10000) { set MineLvl,3;
+dispbottom "Congratulations! Your Mining Mastery is now Level 3!";
+announce strcharinfo(0)+"'s Mining Mastery reached Level 3!",bc_all,0x00FFFF;
+}
+end;
+
+Lfail:
+dispbottom "You got nothing from the ore.";
+end;
+
+Lnopick:
+mes "^FF0000*Hand Smash!!*^000000";
+next;
+mes "Ouch! I'll be needing a ^008800Pickaxe^000000 for this..";
+close;
+
+Lalreadymine:
+mes "Hey! Get your own spot!";
+close;
+
+
+Lstillmine:
+mes "Ugh, i'm not done mining yet!";
+close;
+
+
+Ldelay:
+mes "You can only mine 10,000 ores a day!";
+close;
+
+OnInit:
+goto Lwalk;
+end;
+
+
+Lwalk:
+sleep2 1000;
+npcwalkto rand(161,186),rand(119,184);
+goto Lwalk;
+end;
+
+}
+
+//force_2-2,161,184,3	script	Mithril Ore#25	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#26	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#27	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#28	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#30	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#31	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#32	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#33	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#34	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#35	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#36	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#37	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#38	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#39	1976,{}
+//force_2-2,161,184,3	script	Mithril Ore#40	1976,{}

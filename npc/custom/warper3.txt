@@ -1,0 +1,1227 @@
+/*
+CREATE TABLE IF NOT EXISTS warper_visited (
+	_id INT NOT NULL,
+	_map VARCHAR(20) NOT NULL,
+	_type BIT(1) NOT NULL DEFAULT 0,
+	KEY(_id, _type)
+) ENGINE = MyIsam;
+
+CREATE TABLE IF NOT EXISTS warper_favorite (
+	_accountid INT NOT NULL,
+	_map VARCHAR(20) NOT NULL,
+	KEY(_accountid)
+) ENGINE = MyIsam;
+*/
+
+-	script	_WarperConfig	-1,{
+OnInit:
+	// NPC's name
+	$@__warper_name$               = "^E66A7A[ Warper ]^000000";
+	// Map names' color in the menu
+	$@__warper_map_color$          = "41BDD9";
+	// Locked maps color in the menu
+	$@__warper_locked_color$       = "C4C4C4";
+	// Enable map search by title, e.g: "Payon Cave"
+	$@__warper_search_title        = 0;
+	// Enable map search by name, e.g: "pay_dun01"
+	$@__warper_search_name         = 1;
+	// Maximum "recently visited" maps
+	$@__warper_list_last_maps      = 5;
+	// Maximum favorite maps
+	$@__warper_list_favorites      = 15;
+	// Enable exploration system
+	$@__warper_exploration_enabled = 1;
+	// Exploration ticket ID
+	$@__warper_ticket_id           = 12347;
+	// Exploration ticket price
+	$@__warper_ticket_price        = 200;
+	// Instant warp pattern
+//	setarray $@__warper_pattern$,
+//		"[wW]arp:? ([A-za-z0-9-_]+)";
+}
+/* ---------------------------------- *
+ * ---------------------------------- *
+ * ---------------------------------- */
+function	script	_WarperExplorerTicket	{
+	mes $@__warper_name$,
+		"^1B87E0Explorer's Tickets^000000 are used",
+		"to save explored maps so you can visit it",
+		"again using our warping services.",
+		"You must use an ^1B87E0Exploration Ticket^000000",
+		"when you visit a new map",
+		"in order to save it, otherwise",
+		"we won't be able to tell whether",
+		"you've visited a certain map.";
+	if($@__Warper_Ticket_Price) {
+		mes " ", "Each ticket costs ^1B87E0" + $@__warper_ticket_price + "^000000 zeny.";
+	}
+	next;
+	if(select("Buy tickets:Return") == 1) {
+		while(1) {
+			mes $@__warper_name$,
+				"How many tickets " + ($@__warper_ticket_price ? "would you like to buy" : "do you want") + "?";
+				input(.@q, 0, 9999);
+				next;
+			if(!.@q) {
+				break;
+			} else if(!checkweight($@__warper_ticket_id, .@q)) {
+				mes $@__warper_name$,
+					"You're carrying too much weight,",
+					"you won't be able yo carry ^1B87E0" + .@q + "^000000 tickets.";
+				next; continue;
+			} else if(($@__warper_ticket_price * .@q) > Zeny) {
+				mes $@__warper_name$,
+					"You don't have enough zeny to buy this ammount of tickets.";
+				next; continue;
+			}
+			break;
+		}
+		if(.@q > 0) {
+			set Zeny, Zeny - ($@__warper_ticket_price * .@q);
+			getitem $@__warper_ticket_id, .@q;
+		}
+	}
+	return;
+}
+
+function	script	_WarperSavePoint	{
+	.@town$ = strnpcinfo(2);
+	if(.@town$ == "townPrt") {
+		save "prontera",156,187;
+	} else if(.@town$ == "townAlb") {
+		save "alberta",103,137;
+	} else if(.@town$ == "townAlde") {
+		save "aldebaran",140,123;
+	} else if(.@town$ == "townAama") {
+		save "amatsu",198,85;
+	} else if(.@town$ == "townAyo") {
+		save "ayothaya",207,166;
+	} else if(.@town$ == "townBras") {
+		save "brasilis",195,210;
+	} else if(.@town$ == "townDew") {
+		save "dewata",200,178;
+	} else if(.@town$ == "townEcl") {
+		save "eclage",110,39;
+	} else if(.@town$ == "townCmd") {
+		save "comodo",189,149;
+	} else if(.@town$ == "townEine") {
+		save "einbech",75,110;
+	} else if(.@town$ == "townEinr") {
+		save "einbroch",64,200;
+	} else if(.@town$ == "townSpl") {
+		save "splendide",197,176;
+	} else if(.@town$ == "townJawi") {
+		save "jawaii",249,127;
+	} else if(.@town$ == "townEinc") {
+		save "einbroch",232,190;
+	} else if(.@town$ == "townHugel") {
+		save "hugel",96,145;
+    } else if(.@town$ == "townDic") {
+		save "dicastes",198,187;
+	} else if(.@town$ == "townManu") {
+		save "manuk",282,138;
+	} else if(.@town$ == "townLhz") {
+		save "lighthalzen",159,93;
+	} else if(.@town$ == "townGef") {
+		save "geffen",119,58;
+	} else if(.@town$ == "townIz") {
+		save "izlude",128,99;
+	} else if(.@town$ == "townXmas") {
+		save "xmas",147,134;
+	} else if(.@town$ == "townMoc") {
+		save "morocc",160,91;
+	} else if(.@town$ == "townPay") {
+		save "payon",156,225;
+	} else if(.@town$ == "townYuno") {
+		save "yuno",158,158;
+	} else if(.@town$ == "townGon") {
+		save "gonryun",159,117;
+	} else if(.@town$ == "townLou") {
+		save "louyang",217,109;
+	} else if(.@town$ == "townUmb") {
+		save "umbala",89,157;
+	} else if(.@town$ == "townMosc") {
+		save "moscovia",223,184;
+	} else if(.@town$ == "townVeins") {
+		save "veins",216,123;
+	} else if(.@town$ == "townRach") {
+		save "rachel",130,110;
+	}
+	mes $@__warper_name$,
+		"Your respawn point has been saved.";
+	next;
+	return;
+}
+function	script	_warper_chk_amatsu	{
+	if(event_amatsu < 6) {
+		@reason$ = "You haven't finished the Amatsu dungeon quest.";
+		return 0;
+	}
+	if(countitem(7160) < 0) {
+		@reason$ = "You need a Transit Permit to go there.";
+		return 0;
+	}
+	@reason$ = "";
+	return 1;
+}
+function	script	_warper_chk_ayothaya	{ 
+	if(ayodunquest < 2) {
+		@reason$ = "You haven't finished the Ayothaya dungeon quest.";
+		return 0;
+	}
+	if(countitem(7285) < 0 && countitem(7287) < 0) {
+		@reason$ = "You need a Holy Thread to enter this map.";
+		return 0;
+	}
+	@reason$ = "";
+	return 1;
+}
+function	script	_warper_chk_biolab	{ 
+	@reason$ = "You haven't finished the Biolab quest.";
+	return (MISC_QUEST&512);
+}
+/* ---------------------------------- *
+ * ---------------------------------- *
+ * ---------------------------------- */
+-	script	_Warper	-1,{
+
+	function StartMenu;
+	function EndMenu;
+	function StartNode;
+	function EndNode;
+	function AddMap;
+	function AddOption;
+	function SetPrice;
+	function SetEaJob;
+	function SetGMLevel;
+	function SetBaseLevel;
+	function SetJobLevel;
+	function SetColor;
+	function AddSkill;
+	function AddCondition;
+	function AddFunction;
+	function ShowMapName;
+	function Exploration;
+	function Favorites;
+	function SelectNode;
+	function SelectMap;
+	function SelectOption;
+	function CheckConditions;
+	function RCheckConditions;
+	function DoFunctions;
+	function RDoFunctions;
+	function IsExplored;
+	function SaveExploredMaps;
+	function IsFavorite;
+	function AddFavorite;
+	function RemoveFavorite;
+	function AddToNode;
+	function AddMenu;
+	function GetNodeType;
+
+goto OnTalk;
+
+OnInit:
+	if(.originalID) {
+		set .duplicate, 1;
+		if(getarraysize($@__warper_pattern$)) {
+			set .@arrSize, getarraysize($@__warper_pattern$);
+			for(set .@i, 0; .@i < getarraysize($@__warper_pattern$); set .@i, .@i + 1) {
+				defpattern(1, $@__warper_pattern$[.@i], "OnTalk2");
+			}
+			activatepset 1;
+		}
+		end;
+	}
+	set .originalID, getnpcid(0);
+	StartMenu();
+/* ------------------------- Cities - */
+		StartNode("Towns");	
+			SetColor("0890D4");
+			ShowMapName(0);
+			Exploration(0);
+			AddMap("Alberta", "alberta", 28, 234);
+			AddMap("Al De Baran", "aldebaran", 140, 131);
+			AddMap("Amatsu", "amatsu", 198, 84);
+			AddMap("Ayotaya", "ayothaya", 207, 166);
+			AddMap("Brasilis", "brasilis", 195, 210);
+			AddMap("Comodo", "comodo", 189, 156);
+			//AddMap("Dewata", "dewata", 200, 180);
+			//AddMap("Eclage", "eclage", 110, 39);
+			AddMap("Einbech", "einbech", 70, 95);
+			AddMap("Einbroch", "einbroch", 177, 166);
+			AddMap("El Dicastes", "dicastes01", 198, 187);
+			AddMap("Splendide", "splendide", 197, 176);
+			AddMap("Geffen", "geffen", 119, 59);
+			AddMap("Gonryun", "gonryun", 160, 121);
+			AddMap("Hugel", "hugel", 96, 145);
+			AddMap("Nameless Island", "nameless_n", 256, 215);
+			AddMap("Izlude", "izlude", 128, 114);
+			AddMap("Jawaii", "jawaii", 213, 230);
+			AddMap("Lighthalzen", "lighthalzen", 158, 92);
+			AddMap("Louyang", "louyang", 217, 102);
+			AddMap("Lutie", "xmas", 147, 134);
+			AddMap("Manuk", "manuk", 282, 138);
+			//AddMap("Malangdo", "malangdo", 140, 114);
+			//AddMap("Malaya", "malaya", 242, 211);
+			AddMap("Moscovia", "moscovia", 214, 183);
+			//AddMap("Mora", "mora", 108, 67);
+			AddMap("Morroc", "morocc", 156, 93);
+			AddMap("Niflheim", "niflheim", 85, 154);
+			AddMap("Payon", "payon", 152, 75);
+			AddMap("Prontera", "prontera", 155, 183);
+			AddMap("Rachel", "rachel", 130, 137);
+			AddMap("Thor", "thor_camp", 254, 90);
+			AddMap("Veins", "veins", 216, 123);
+			AddMap("Yuno", "yuno", 158, 186);
+			AddMap("Umbala", "umbala", 145, 155);
+		EndNode();
+/* ----------------------- Dungeons - */
+		StartNode("Dungeons");
+			SetColor("0890D4");
+			Exploration(0);
+			AddMap("Abyss Lake", "abyss_01", 262, 272);
+			AddMap("Amatsu Dungeon", "ama_dun01", 229, 10);
+			AddCondition("_warper_chk_amatsu");
+			AddMap("Ant Hell", "anthell01", 32, 262);
+			AddMap("Ancient Shrine", "ayo_dun01", 275, 18);
+			AddCondition("_warper_chk_ayothaya");
+			StartNode("Beach Dungeon");
+				AddMap("Karu, the West cave", "beach_dun", 266, 67);
+				AddMap("Ruande, the Northern cave", "beach_dun2", 154, 25);
+				AddMap("Mao, the East cave", "beach_dun3", 23, 260);
+			EndNode();
+			AddMap("Bio Laboratory", "lhz_cube", 232, 17);
+			AddCondition("_warper_chk_biolab");
+			AddMap("Brasilis Dungeon", "bra_in01", 206, 182);
+			AddMap("Coal Mine", "mjo_dun01", 52, 17);
+			AddMap("Einbroch Mine", "ein_dun01", 21, 16);
+			AddMap("Undersea Tunnel", "iz_dun00", 168, 168);
+		EndNode();
+/* ------------------------- Fields - */
+		StartNode("Fields");
+			SetColor("0890D4");
+			Exploration(0);
+			StartNode("Amatsu");
+				AddMap("Amatsu Field", "ama_fild01", 73, 35);
+			EndNode();
+			StartNode("Ayothaya");
+				AddMap("Ayothaya Field", "ayo_fild01", 37, 241);
+				AddMap("Ayothaya Field", "ayo_fild02", 30, 135);
+				AddCondition("_warper_chk_ayothaya");
+			EndNode();
+			StartNode("Brasilis");
+				AddMap("Brasilis Field", "bra_fild01", 78, 33);
+			EndNode();
+			StartNode("Comodo");
+				AddMap("Papuchicha Forest", "cmd_fild01", 30, 317);
+				AddMap("Kokomo Beach", "cmd_fild02", 222, 372);
+				AddMap("Kokomo Beach", "cmd_fild04", 35, 94);
+				AddMap("Zenhai Marsh", "cmd_fild03", 27, 68);
+				AddMap("Border of Papuchica forest", "cmd_fild05", 26, 161);
+				AddMap("Beacon Island, Pharos", "cmd_fild07", 174, 370);
+				AddMap("Fortress Saint Darmain (W)", "cmd_fild06", 26, 288);
+				AddMap("Fortress Saint Darmain (E)", "cmd_fild08", 31, 359);
+				AddMap("Fortress Saint Darmain (S)", "cmd_fild09", 18, 170);
+			EndNode();
+			StartNode("Einbroch");
+				AddMap("Einbroch Field", "ein_fild01", 106, 40);
+				AddMap("Einbroch Field", "ein_fild02", 170, 37);
+				AddMap("Einbroch Field", "ein_fild03", 361, 257);
+				AddMap("Einbroch Field", "ein_fild04", 184, 31);
+				AddMap("Einbroch Field", "ein_fild05", 80, 294);
+				AddMap("Einbroch Field", "ein_fild06", 47, 166);
+				AddMap("Einbroch Field", "ein_fild07", 147, 360);
+				AddMap("Einbroch Field", "ein_fild08", 164, 377);
+				AddMap("Einbroch Field", "ein_fild09", 327, 346);
+				AddMap("Einbroch Field", "ein_fild10", 194, 370);
+			EndNode();
+			StartNode("Geffen");
+				AddMap("Geffen Field", "gef_fild00", 46, 199);
+				AddMap("Geffen Field", "gef_fild01", 69, 20);
+				AddMap("Geffen Field", "gef_fild02", 19, 275);
+				AddMap("Geffen Field", "gef_fild03", 21, 52);
+				AddMap("Geffen Field", "gef_fild04", 187, 42);
+				AddMap("Geffen Field", "gef_fild05", 361, 309);
+				AddMap("Geffen Field", "gef_fild06", 379, 211);
+				AddMap("Geffen Field", "gef_fild07", 336, 187);
+				AddMap("Geffen Field", "gef_fild08", 357, 187);
+				AddMap("Geffen Field", "gef_fild09", 27, 56);
+				AddMap("Geffen Field", "gef_fild10", 31, 219);
+				AddMap("Geffen Field", "gef_fild11", 114, 360);
+				AddMap("Geffen Field", "gef_fild12", 221, 369);
+				AddMap("Kordt Forest", "gef_fild13", 41, 369);
+				AddMap("West Orc Village", "gef_fild14", 180, 357);
+			EndNode();
+		EndNode();
+		if($@__warper_ticket_id && $@__warper_exploration_enabled ) {
+			setitemscript($@__warper_ticket_id, "{ doevent \"_Warper::OnSaveMap\"; }", 0);
+			AddOption("Buy tickets", "_WarperExplorerTicket");
+		}
+		AddOption("Save respawn point", "_WarperSavePoint");
+	EndMenu();
+	end;
+/* ---------------------------------- *
+ * ------------------------- Script - *
+ * ---------------------------------- */
+OnTalk:
+	set .@currentNode, 0;
+	while(1) {
+		switch(.@currentNode) {
+			default:
+			mes $@__warper_name$;
+			if(!.@currentNode) {
+			    mes "Welcome, " + strcharinfo(0) + ".";
+			}
+			mes "How may I help you?";
+			next;
+			set .@previoustNode, .@currentNode;
+			set .@arrSize, getarraysize(getd(".menu_" + .@currentNode));
+			DoFunctions(.@currentNode);
+			if(.@currentNode == 0) {
+				set .@menu$, .@menu$ + "Recent maps:";
+				set .@options[getarraysize(.@options)], -1;
+				if($@__warper_list_favorites > 0) {
+					set .@menu$, .@menu$ + "Favorites:";
+					set .@options[getarraysize(.@options)], -2;
+				}
+				if($@__warper_search_title || $@__warper_search_name) {
+					set .@menu$, .@menu$ + "Search:";
+					set .@options[getarraysize(.@options)], -3;
+				}
+			}
+			for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+				set .@itemID, getd(".menu_" + .@currentNode + "[" + .@i + "]");
+				set .@mapName$, "";
+				set .@c, CheckConditions(.@itemID);
+				if(.@c < 0) {
+					continue;
+				}
+				if(GetNodeType(.@itemID) == 1 && getd(".map_" + getd(".menu_" + .@itemID + "$[2]") + "[6]")) {
+					set .@mapName$, " ^" + $@__warper_map_color$ + "(" + getd(".menu_" + .@itemID + "$[2]") + ")^000000";
+				}
+				if(!.@c) {
+					set .@disabled$[getarraysize(.@options)], @reason$ == "" ? "." : @reason$;
+					set .@menu$, .@menu$ + "^" + $@__warper_locked_color$ + getd(".menu_" + .@itemID + "$[0]") + "^000000" + .@mapName$ + ":";
+				} else if(getd(".menu_" + .@itemID + "$[3]") != "") {
+					set .@menu$, .@menu$ + "^" + getd(".menu_" + .@itemID + "$[3]") + getd(".menu_" + .@itemID + "$[0]") + "^000000" + .@mapName$ + ":";
+				} else {
+					set .@menu$, .@menu$ + getd(".menu_" + .@itemID + "$[0]") + .@mapName$ + ":";
+				}
+				set .@options[getarraysize(.@options)], .@itemID;
+			}
+			if(.@currentNode) {
+				set .@menu$, .@menu$ + "Return";
+				set .@options[getarraysize(.@options)], -5;
+			} else {
+				set .@menu$, .@menu$ + "Exit";
+				set .@options[getarraysize(.@options)], -4;
+			}
+			set .@selectedNode, SelectNode(
+					.@menu$,
+					.@options,
+					.@disabled$
+					);
+			if(.@selectedNode != -10) { 
+				set .@currentNode, .@selectedNode;
+			}
+			set .@menu$, "";
+			deletearray(.@options);
+			deletearray(.@disabled$);
+			continue;
+
+			case -1:
+			// Last Maps
+			mes $@__warper_name$;
+			if(!getarraysize(@_warper_last_maps)) {
+				mes "You haven't warped anywhere recently.";
+				set .@currentNode, @lastNode;
+			} else {
+				mes "Select a map:";
+				next;
+				set .@arrSize, getarraysize(@_warper_last_maps);
+				for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+					set .@itemID, @_warper_last_maps[.@i];
+					set .@c, RCheckConditions(.@itemID);
+					if(.@c < 0) {
+						continue;
+					} else if(!.@c) {
+						set .@menu$, .@menu$ + "^" + $@__warper_locked_color$;
+						set .@disabled$[getarraysize(.@options)], @reason$ == "" ? "." : @reason$;
+					}
+					set .@menu$, .@menu$ + getd(".menu_" + .@itemID + "$[0]") + " ^" + $@__warper_map_color$ + "(" + getd(".menu_" + .@itemID + "$[2]") + ")^000000:";
+					set .@options[getarraysize(.@options)], .@itemID;
+				}
+				set .@menu$, .@menu$ + "Return";
+				set .@options[getarraysize(.@options)], 0;
+				set .@selectedNode, SelectNode(
+						.@menu$,
+						.@options,
+						.@disabled$
+						);
+				if(.@selectedNode != -10) {
+					set .@currentNode, .@selectedNode;
+				}
+				set .@menu$, "";
+				deletearray(.@options);
+				deletearray(.@disabled$);
+			}
+			next; continue;
+
+			case -2:
+			// Favorite Maps
+			mes $@__warper_name$;
+			if(!getarraysize(@_warper_favorite_maps)) {
+				mes "Your favorites list is empty.";
+				set .@currentNode, 0;
+			} else {
+				mes "Select a map:";
+				next;
+				set .@arrSize, getarraysize(@_warper_favorite_maps);
+				for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+					set .@itemID, @_warper_favorite_maps[.@i];
+					set .@c, RCheckConditions(.@itemID);
+					if(.@c < 0) {
+						continue;
+					} else if(!.@c) {
+						set .@menu$, .@menu$ + "^" + $@__warper_locked_color$;
+						set .@disabled$[getarraysize(.@options)], @reason$ == "" ? "." : @reason$;
+					}
+					set .@menu$, .@menu$ + getd(".menu_" + .@itemID + "$[0]") + " ^" + $@__warper_map_color$ + "(" + getd(".menu_" + .@itemID + "$[2]") + ")^000000:";
+					set .@options[getarraysize(.@options)], .@itemID;
+				}
+				set .@menu$, .@menu$ + "Return";
+				set .@options[getarraysize(.@options)], 0;
+				set .@selectedNode, SelectNode(
+						.@menu$,
+						.@options,
+						.@disabled$
+						);
+				if(.@selectedNode != -10) {
+					set .@currentNode, .@selectedNode;
+				}
+				set .@menu$, "";
+				deletearray(.@options);
+				deletearray(.@disabled$);
+			}
+			next; continue;
+
+			case -3:
+			// Search
+			if($@__warper_search_name && $@__warper_search_title) {
+				mes $@__warper_name$,
+					"Select a search type.";
+				next;
+				set .@searchType, select("Search by title:Search by map name:Return") - 1;
+				if(.@searchType == 2) {
+					set .@currentNode, 0;
+					next; continue;
+				}
+			} else {
+				set .@searchType, ($@__warper_search_title ? 0 : 1);
+			}
+			mes $@__warper_name$;
+			if(.@searchType == 1) {
+				mes "Type the name of the map you're looking for.",
+					"e.g.: \"pay_dun01\"";
+				next;
+				input .@mapName$;
+				.@nId = getd(".map_" + .@mapName$ + "[2]");
+				if(!.@nId) {
+					mes $@__warper_name$,
+						"No matches found.";
+					next;
+					if(select("Search:Return") == 2) {
+						set .@currentNode, 0;
+					}
+					continue;
+				}
+				.@c = RCheckConditions(.@nId);
+				if(.@c < 0) {
+					mes $@__warper_name$,
+						"No matches found.";
+					next;
+					if(select("Search:Return") == 2) {
+						set .@currentNode, 0;
+					}
+					continue;
+				} else if(!.@c) {
+					mes $@__warper_name$,
+						"You can't warp there.";
+					if(@reason$) { mes @reason$; }
+					next;
+					if(select("Search:Return") == 2) {
+						set .@currentNode, 0;
+					}
+					continue;
+				}
+				SelectMap(getd(".map_" + .@mapName$ + "[2]"));
+			} else {
+				mes "Type a keyword for the map you're looking for.",
+					"e.g.: \"Payon Dungeon\"";
+				next;
+				input .@mapName$;
+				query_sql "SELECT _node_id FROM __warper_search WHERE MATCH(_title) AGAINST('+" + escape_sql(.@mapName$) + "')", .@maps;
+				set .@arrSize, getarraysize(.@maps);
+				for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+					set .@itemID, .@maps[.@i];
+					set .@c, RCheckConditions(.@itemID);
+					if(.@c < 0) {
+						continue;
+					} else if(!.@c) {
+						set .@menu$, .@menu$ + "^" + $@__warper_locked_color$;
+						set .@disabled$[getarraysize(.@options)], @reason$ == "" ? "." : @reason$;
+					}
+					set .@menu$, .@menu$ + getd(".menu_" + .@itemID + "$[0]") + " ^" + $@__warper_map_color$ + "(" + getd(".menu_" + .@itemID + "$[2]") + ")^000000:";
+					set .@options[getarraysize(.@options)], .@itemID;
+				}
+				set .@menu$, .@menu$ + "Return";
+				set .@options[getarraysize(.@options)], 0;
+				if(!.@arrSize) {
+					mes $@__warper_name$,
+						"No matches found.";
+					next;
+					if(select("Search:Return") == 2) {
+						set .@currentNode, 0;
+					}
+				} else while(1) {
+					next;
+					set .@selectedNode, SelectNode(
+							.@menu$,
+							.@options,
+							.@disabled$
+							);
+					if(.@selectedNode != -10) {
+						break;
+					}
+				}
+				set .@menu$, "";
+				deletearray(.@maps);
+				deletearray(.@options);
+				deletearray(.@disabled$);
+			}
+			continue;
+
+			case -4:
+			break;
+			
+			case -5:
+			if(.@previoustNode < 0) {
+				set .@currentNode, 0;
+			} else {
+				set .@currentNode, atoi(getd(".menu_" + .@previoustNode + "$[4]"));
+			}
+			continue;
+		}
+		break;
+	}
+close;
+
+OnPCLoginEvent:
+	if(getnpcid(0) != .originalID) end;
+	if($@__warper_exploration_enabled) {
+		set .@s, getarraysize(.@maps$);
+		set .@query$, "SELECT _map FROM warper_visited";
+		set .@query$, .@query$ + " WHERE (_id = " + getcharid(0) + " AND _type = b'0')";
+		set .@query$, .@query$ + " OR (_id = " + getcharid(3) + " AND _type = b'1')";
+		do {
+			query_sql .@query$ + " LIMIT " + (.@j*128) + ", 128", .@maps$;
+			set .@arrSize, getarraysize(.@maps$);
+			for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+				setd "@_warper_explored_maps_" + getd(".map_" + .@maps$[.@i] + "[0]") + "[" + getd(".map_" + .@maps$[.@i] + "[1]") + "]", 1;
+			}
+			set .@j, .@j + 1;
+		} while(.@arrSize == 128);
+		deletearray(.@maps$);
+	}
+	if($@__warper_list_favorites > 0) {
+		set .@query$, "SELECT _map FROM warper_favorite";
+		set .@query$, .@query$ + " WHERE _accountid = " + getcharid(3);
+		set .@query$, .@query$ + " LIMIT " + $@__warper_list_favorites;
+		query_sql .@query$, .@maps$;
+		set .@arrSize, getarraysize(.@maps$);
+		for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+			set @_warper_favorite_maps[.@i], getd(".map_" + .@maps$[.@i] + "[2]");
+		}
+	}
+end;
+
+OnPCLogoutEvent:
+	if(getnpcid(0) != .originalID) end;
+	if($@__warper_exploration_enabled) {
+		SaveExploredMaps();
+	}
+	if($@__warper_list_favorites > 0) {
+		if(getarraysize(@_warper_del_favorite_maps$)) {
+			set .@query$, "DELETE FROM warper_favorite WHERE _accountid = %d AND _map IN('%s')";
+			query_sql sprintf(.@query$, getcharid(3), implode(@_warper_del_favorite_maps$, "', '"));
+		}
+		if(getarraysize(@_warper_new_favorite_maps$)) {
+			set .@arraySize, getarraysize(@_warper_new_favorite_maps$);
+			set .@accID, getcharid(3);
+			set .@query$, "INSERT INTO warper_favorite VALUES ";
+			for(set .@i, 0; .@i < .@arraySize; set .@i, .@i + 1) {
+				if(@_warper_new_favorite_maps$[.@i] == "") {
+					continue;
+				}
+				set .@values$[getarraysize(.@values$)], "(" + .@accID + ", '" + @_warper_new_favorite_maps$[.@i] + "')";
+			}
+			query_sql .@query$ + implode(.@values$, ", ");
+		}
+	}
+end;
+
+OnTalk2:
+	set .@map$, $@p1$;
+	if(getd(".map_" + .@map$ + "[2]")) {
+		set .@nodeID, getd(".map_" + .@map$ + "[2]");
+		set .@c, RCheckConditions(.@nodeID);
+		if(.@c < 0) {
+			end;
+		} else if(!.@c) {
+			dispbottom "You can't warp there.";
+			if(@reason$ != "") {
+				dispbottom @reason$;
+			}
+		} else if(getd(".map_" + .@map$ + "[5]") && Zeny < getd(".map_" + .@map$ + "[5]")) {
+			dispbottom "You have to pay a warping fee of " + getd(".map_" + .@map$ + "[5]") + " zeny to go there.";
+			dispbottom "You don't have enough zeny.";
+		} else {
+			set Zeny, Zeny - getd(".map_" + .@map$ + "[5]");
+			warp
+				getd(".menu_" + .@nodeID + "$[2]"),
+				getd(".map_" + .@map$ + "[3]"),
+				getd(".map_" + .@map$ + "[4]");
+		}
+	}
+end;
+
+OnSaveMap:
+	getmapxy(.@map$, .@x, .@y, 0);
+	if(!getd(".map_" + .@map$ + "[2]")) {
+		dispbottom "Warps to this map are not avaiable.";
+		getitem $@__warper_ticket_id, 1;
+		end;
+	} else if(!getd(".map_" + .@map$ + "[7]")) {
+		dispbottom "This map doesn't need to be explored.";
+		getitem $@__warper_ticket_id, 1;
+		end;
+	} else if(IsExplored(.@map$)) {
+		dispbottom "You've already saved this map.";
+		getitem $@__warper_ticket_id, 1;
+		end;
+	}
+	if(getarraysize(@_warper_new_explored_maps$) == 128) {
+		SaveExploredMaps();
+	}
+	dispbottom "Done!";
+	set @_warper_new_explored_maps$[getarraysize(@_warper_new_explored_maps$)], .@map$;
+	setd "@_warper_explored_maps_" + getd(".map_" + .@map$ + "[0]") + "[" + getd(".map_" + .@map$ + "[1]") + "]", 1;
+end;
+
+/* ---------------------------------- *
+ * ------------------------ Funções - *
+ * ---------------------------------- */
+function StartMenu {
+	if($@__warper_search_title) {
+		query_sql "DROP TABLE IF EXISTS __warper_search";
+		set .@query$, .@query$ + "CREATE TEMPORARY TABLE __warper_search (";
+		set .@query$, .@query$ + "_node_id INT UNSIGNED NOT NULL,";
+		set .@query$, .@query$ + "_title VARCHAR(40) NOT NULL,";
+		set .@query$, .@query$ + "_map VARCHAR(20) NOT NULL,";
+		set .@query$, .@query$ + "FULLTEXT(_title),";
+		set .@query$, .@query$ + "PRIMARY KEY(_node_id)";
+		set .@query$, .@query$ + ") ENGINE = MyIsam;";
+		query_sql .@query$;
+	}
+	setarray .nodeOptions0,
+		0x0, // Jobs
+		0, // Min GM lvl 
+		0, // Max GM lvl
+		0, // Min Base lvl
+		0, // Max Base lvl
+		0, // Min Job lvl
+		0, // Max Job lvl
+		0, // Price
+		1,
+		1,
+		1;
+	StartNode("Menu");
+}
+
+function EndMenu {
+	EndNode();
+
+	set .currentItemID,    0;
+	set .nextItemID,       0;
+	set .currentNodeID,    0;
+	set .currentNodeDepth, 0;
+	set .nodeTrace,        0;
+	set .nodeOptions,      0;
+	set .currentGroupID,   0;
+	set .currentMapID,     0;
+	set .currentMap$,     "";
+}
+
+function StartNode {
+	set .currentNodeID, AddMenu(0, getarg(0));
+	set .nodeTrace[.currentNodeDepth], .currentNodeID;
+	set .currentNodeDepth, .currentNodeDepth + 1;
+	copyarray(getd(".nodeOptions" + .currentNodeDepth), getd(".nodeOptions" + (.currentNodeDepth - 1)), 11);
+	if(.currentNodeDepth > 1) {
+		set .@parentNode, .nodeTrace[.currentNodeDepth - 2];
+		AddToNode(.currentNodeID, .@parentNode);
+	}
+	return .currentNodeID;
+}
+
+function EndNode {
+	deletearray .nodeTrace[.currentNodeDepth - 1], 1;
+	deletearray getd(".nodeOptions" + (.currentNodeDepth));
+	set .currentNodeDepth, .currentNodeDepth - 1;
+	set .currentNodeID, .nodeTrace[(getarraysize(.nodeTrace) ? getarraysize(.nodeTrace) - 1: 0)];
+	set .currentMap$, "";
+	return;
+}
+
+function AddToNode {
+	set .@parentID, getarg(1, .currentNodeID);
+	set .@nodeID,   getarg(0, .currentItemID);
+	setd ".menu_" + .@parentID + "[" + getarraysize(getd(".menu_" + .@parentID)) + "]", .@nodeID;
+	setd ".menu_" + .@nodeID + "$[4]", .@parentID;
+	return;
+}
+
+function AddMenu {
+	set .currentItemID, .nextItemID;
+	setarray getd(".menu_" + .currentItemID + "$"),
+		getarg(1),
+		getarg(0),
+		getarg(2, ""),
+		getarg(3, "");
+	setarray getd(".menu_" + .currentItemID + "_conditions"),
+		getd(".nodeOptions" + .currentNodeDepth + "[0]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[1]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[2]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[3]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[4]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[5]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[6]");
+	set .nextItemID, .nextItemID + 1;
+	return .currentItemID;
+}
+
+function AddMap {
+	set .@map$, getarg(1);
+	if(getmapusers(.@map$) == -1) {
+		debugmes "'" + .@map$ + "' is not a valid map ( AddMap )";
+		return;
+	}
+	if(.currentMapID == 127) {
+		set .currentGroupID, .currentGroupID + 1;
+		set .currentMapID, 0;
+	}
+	set .@nID, AddMenu(1, getarg(0), .@map$);
+	setarray getd(".map_" + .@map$),
+		.currentGroupID,
+		.currentMapID,
+		.@nID,
+		getarg(2, 0),
+		getarg(3, 0),
+		getd(".nodeOptions" + .currentNodeDepth + "[7]"),
+		getd(".nodeOptions" + .currentNodeDepth + "[8]"),  // Show name
+		getd(".nodeOptions" + .currentNodeDepth + "[9]"),  // Exploration
+		getd(".nodeOptions" + .currentNodeDepth + "[10]"); // Favorite
+	AddToNode(.@nID);
+	set .currentMap$, .@map$;
+	set .currentMapID, .currentMapID + 1;
+	if($@__warper_search_title) {
+		query_sql "INSERT INTO __warper_search VALUES (" + .@nID + ", '" + getarg(0) + "', '" + .@map$ + "')";
+	}
+	return .currentItemID;
+}
+
+function AddOption {
+	if(!is_function(getarg(1))) {
+		debugmes "Warper: " + getarg(1) + " is not a function. ( AddOption )";
+	} else {
+		AddToNode(AddMenu(2, getarg(0), getarg(1)));
+	}
+}
+
+function SetPrice {
+	if(.currentMap$ != "") {
+		setd ".map_" + .currentMap$ + "[5]", getarg(0);
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[7]"), getarg(0);
+	} return;
+}
+
+function SetEaJob {
+	if(!getarg(2, 0)) {
+		setd ".menu_" + .currentItemID + "_conditions[0]", getarg(0);
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[0]"), getarg(0);
+	}
+}
+
+function SetGMLevel {
+	if(!getarg(2, 0)) {
+		setd ".menu_" + .currentItemID + "_conditions[1]", getarg(0);
+		setd ".menu_" + .currentItemID + "_conditions[2]", getargcount() == 2 ?
+		                                                   getarg(1) : 99;
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[1]"), getarg(0);
+		set getd(".nodeOptions" + .currentNodeDepth + "[2]"), getargcount() == 2 ? getarg(1) : 99;
+	}
+}
+
+function SetBaseLevel {
+	if(!getarg(2, 0)) {
+		setd ".menu_" + .currentItemID + "_conditions[3]", getarg(0);
+		setd ".menu_" + .currentItemID + "_conditions[4]", getargcount() == 2 ?
+		                                                   getarg(1) : 999;
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[3]"), getarg(0);
+		set getd(".nodeOptions" + .currentNodeDepth + "[4]"), getargcount() == 2 ? getarg(1) : 999;
+	}
+}
+
+function SetJobLevel {
+	if(!getarg(2, 0)) {
+		setd ".menu_" + .currentItemID + "_conditions[5]", getarg(0);
+		setd ".menu_" + .currentItemID + "_conditions[6]", getargcount() == 2 ?
+		                                                   getarg(1) : 999;
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[5]"), getarg(0);
+		set getd(".nodeOptions" + .currentNodeDepth + "[6]"), getargcount() == 2 ? getarg(1) : 999;
+	}
+}
+
+function AddSkill {
+	set .@key, getarraysize(getd(".menu_" + .currentItemID + "_skill_id"));
+	setd ".menu_" + .currentItemID + "_skill_id[" + .@key + "]", getarg(0);
+	setd ".menu_" + .currentItemID + "_skill_lv[" + .@key + "]", getarg(1);
+}
+
+function SetColor {
+	setd ".menu_" + .currentItemID + "$[3]", getarg(0);
+}
+
+function AddCondition {
+	if(!is_function(getarg(0))) {
+		debugmes "Warper: " + getarg(0) + " is not a function. ( AddCondition )";
+	} else {
+		set .@key, getarraysize(getd(".menu_" + .currentItemID + "_conditions$"));
+		setd ".menu_" + .currentItemID + "_conditions$[" + .@key + "]", getarg(0);
+	}
+}
+
+function AddFunction {
+	if(!is_function(getarg(0))) {
+		debugmes "Warper: " + getarg(0) + " is not a function. ( AddFunction )";
+	} else {
+		set .@key, getarraysize(getd(".menu_" + .currentItemID + "_func$"));
+		setd ".menu_" + .currentItemID + "_func$[" + .@key + "]", getarg(0);
+	}
+
+}
+
+function ShowMapName {
+	if(.currentMap$ != "") {
+		setd ".map_" + .currentMap$ + "[6]", getarg(0);
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[8]"), getarg(0);
+	}
+}
+
+function Exploration {
+	if(.currentMap$ != "") {
+		setd ".map_" + .currentMap$ + "[7]", getarg(0);
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[9]"), getarg(0);
+	}
+}
+
+function Favorites {
+	if(.currentMap$ != "") {
+		setd ".map_" + .currentMap$ + "[8]", getarg(0);
+	} else {
+		set getd(".nodeOptions" + .currentNodeDepth + "[10]"), getarg(0);
+	}
+}
+
+function CheckConditions {
+	set .@nodeID, getarg(0);
+	if($@__warper_exploration_enabled && GetNodeType(.@nodeID, 1) &&
+	   getd(".map_" + getd(".menu_" + .@nodeID + "$[2]") + "[7]") &&
+	   !IsExplored(getd(".menu_" + .@nodeID + "$[2]"))) {
+		set @reason$, "You haven't visited this map yet.";
+		return 0;
+	}
+	if((getd(".menu_" + .@nodeID + "_conditions[0]") &&
+	   (!eaclass() & getd(".menu_" + .@nodeID + "_conditions[0]")))   ||
+	   (getd(".menu_" + .@nodeID + "_conditions[1]") &&
+	   (getgroupid() < getd(".menu_" + .@nodeID + "_conditions[1]"))) ||
+	   (getd(".menu_" + .@nodeID + "_conditions[2]") &&
+	   (getgroupid() > getd(".menu_" + .@nodeID + "_conditions[2]"))) ||
+	   (getd(".menu_" + .@nodeID + "_conditions[3]") &&
+	   (BaseLevel < getd(".menu_" + .@nodeID + "_conditions[3]")))    ||
+	   (getd(".menu_" + .@nodeID + "_conditions[4]") &&
+	   (BaseLevel > getd(".menu_" + .@nodeID + "_conditions[4]")))    ||
+	   (getd(".menu_" + .@nodeID + "_conditions[5]") &&
+	   (JobLevel < getd(".menu_" + .@nodeID + "_conditions[5]")))     ||
+	   (getd(".menu_" + .@nodeID + "_conditions[6]") &&
+	   (JobLevel > getd(".menu_" + .@nodeID + "_conditions[6]")))
+	   ) {
+		return -1;
+	}
+	set .@arrSize, getarraysize(getd(".menu_" + .@nodeID + "_skill_id"));
+	for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+		if(getskilllv(getd(".menu_" + .@nodeID + "_skill_id[" + .@i + "]")) < getd(".menu_" + .@nodeID + "_skill_lv[" + .@i + "]")) {
+			return -1;
+		}
+	}
+	set .@arrSize, getarraysize(getd(".menu_" + .@nodeID + "_conditions$"));
+	for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+		set .@a, callfunc(getd(".menu_" + .@nodeID + "_conditions$[" + .@i + "]"));
+		if(.@a == 1) {
+			continue;
+		} return .@a;
+	}
+	return 1;
+}
+
+function RCheckConditions {
+	set .@nodeID, getarg(0);
+	do {
+		set .@c, CheckConditions(.@nodeID);
+		if(.@c < 1) {
+			return .@c;
+		}
+		set .@nodeID, atoi(getd(".menu_" + .@nodeID + "$[4]"));
+	} while(.@nodeID);
+	return 1;
+}
+
+function DoFunctions {
+	set .@nodeID, getarg(0);
+	set .@arrSize, getarraysize(getd(".menu_" + .@nodeID + "_func$"));
+	for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+		callfunc(getd(".menu_" + .@nodeID + "_func$[" + .@i + "]"));
+	}
+}
+
+function RDoFunctions {
+	set .@nodeID, getarg(0);
+	do {
+		DoFunctions(.@nodeID);
+		set .@nodeID, atoi(getd(".menu_" + .@nodeID + "$[4]"));
+	} while(.@nodeID);
+	return 1;
+}
+
+function SelectNode {
+	set .@menu$, getarg(0);
+	while(1) {
+		select(.@menu$);
+		set @menu, @menu - 1;
+		set .@selectedNode, getelementofarray(getarg(1), @menu);
+		if(.@selectedNode < 0) {
+			return .@selectedNode;
+		} else if(getelementofarray(getarg(2), @menu) != "") {
+			if(getelementofarray(getarg(2), @menu) != ".") {
+				mes $@__warper_name$, getelementofarray(getarg(2), @menu);
+			}
+			next;
+		} else {
+			if(GetNodeType(.@selectedNode) == 0) {
+				return .@selectedNode;
+			} else if(GetNodeType(.@selectedNode) == 1) {
+				SelectMap(.@selectedNode);
+			} else {
+				SelectOption(.@selectedNode);
+			}
+		}
+		mes $@__warper_name$,
+			"How may I help you?";
+		next; continue;
+	} return -10;
+}
+
+function SelectMap {
+	set .@nodeID, getarg(0);
+	set .@title$, getd(".menu_" + .@nodeID + "$[0]");
+	set .@map$, getd(".menu_" + .@nodeID + "$[2]");
+	set .@price, getd(".map_" + .@map$ + "[5]");
+	while(1) {
+		mes $@__warper_name$,
+			"There are ^1B87E0" + getmapusers(.@map$) + "^000000 players",
+			"on ^1B87E0" + .@title$ + "^000000";
+		if(.@price) {
+			mes "", "The warping fee is ^1B87E0" + .@price +"^000000 zeny.";
+		}
+		next;
+		set .@menu$, "Warp:";
+		set .@options[0], 1;
+		if(getd(".map_" + .@map$ + "[8]") && $@__warper_list_favorites > 0) {
+			if(IsFavorite(.@nodeID) >= 0) {
+				set .@isFave, 1;
+			} else {
+				set .@isFave, 0;
+			}
+			set .@menu$, .@menu$ + (.@isFave ? "Remove from" : "Add to") + " favorites:";
+			set .@options[getarraysize(.@options)], 2;
+		}
+		set .@menu$, .@menu$ + "Return";
+		set .@options[getarraysize(.@options)], 3;
+		switch(.@options[(select(.@menu$) - 1)]) {
+			case 1:
+			if(.@price && Zeny < .@price) {
+				mes $@__warper_name$,
+					"You have to pay ^1B87E0" + .@price + "^000000 zeny to go to ^1B87E0" + .@title$ + "^000000.",
+					"You don't have enough zeny.";
+				next; break;
+			}
+			set Zeny, Zeny - .@price;
+			DoFunctions(.@nodeID);
+			if(getarraysize(@_warper_maps) >= $@__warper_list_last_maps) {
+				deletearray(@_warper_maps[0], 1);
+			}
+			set @_warper_maps[getarraysize(@_warper_maps)], .@nodeID;
+			close2;
+			set .@arrSize, getarraysize(@_warper_last_maps);
+			for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+				if(@_warper_last_maps[.@i] == .@nodeID) {
+					break;
+				}
+			}
+			if(.@i != (.@arrSize - 1)) {
+				if(.@arrSize >= $@__warper_list_last_maps) {
+					deletearray(@_warper_last_maps[0], 1);
+				}
+				set @_warper_last_maps[getarraysize(@_warper_last_maps)], .@nodeID;
+			}
+			warp .@map$, getd(".map_" + .@map$ + "[3]"), getd(".map_" + .@map$ + "[4]");
+			end;
+			case 2:
+			mes $@__warper_name$;
+			if(.@isFave) {
+				RemoveFavorite(.@nodeID);
+				mes "^1B87E0" + .@title$ + "^000000 have been removed from your favorites.";
+			} else if(AddFavorite(.@nodeID) == 0) {
+				mes "You can't add any more maps to your favorites, your list is full.";
+			} else {
+				mes "^1B87E0" + .@title$ + "^000000 have been added to your favorites.";
+			}
+			next; continue;
+			case 3:
+			return 0;
+		}
+		break;
+	}
+	return 0;
+}
+
+function SelectOption {
+	set .@nodeID, getarg(0);
+	DoFunctions(.@nodeID);
+	return callfunc(getd(".menu_" + .@nodeID + "$[2]"));
+}
+
+function IsExplored {
+	set .@map$, getarg(0);
+	return (getd("@_warper_explored_maps_" + getd(".map_" + .@map$ + "[0]") + "[" + getd(".map_" + .@map$ + "[1]") + "]") ? 1 : 0);
+}
+
+function SaveExploredMaps {
+	if(getarraysize(@_warper_new_explored_maps$)) {
+		set .@arrSize, getarraysize(@_warper_new_explored_maps$);
+		set .@charID, getcharid(0);
+		set .@accountID, getcharid(3);
+		set .@query$, "INSERT INTO warper_visited (_id, _map, _type) VALUES ";
+		for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+			.@type = getd(".map_" + @_warper_new_explored_maps$[.@i] + "[7]") - 1;
+			if(.@type < 0) continue;
+			set .@values$[getarraysize(.@values$)], "(" + (.@type ? .@accountID : .@charID)+ ", '" + escape_sql(@_warper_new_explored_maps$[.@i]) + "', b'" +  .@type + "')";
+		}
+		query_sql .@query$ + implode(.@values$, ", ");
+	}
+	deletearray(@_warper_new_explored_maps$);
+}
+
+function IsFavorite {
+	set .@nodeID, getarg(0);
+	set .@arrSize, getarraysize(@_warper_favorite_maps);
+	for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+		if(@_warper_favorite_maps[.@i] == .@nodeID) {
+			return .@i;
+		}
+	}
+	return -1;
+}
+
+function AddFavorite {
+	if(getarraysize(@_warper_favorite_maps$) >= $@__warper_list_favorites) {
+		return 0;
+	}
+	set @_warper_new_favorite_maps$[getarraysize(@_warper_favorite_maps)], getd(".menu_" + getarg(0) + "$[2]");
+	set @_warper_favorite_maps[getarraysize(@_warper_favorite_maps)], getarg(0);
+	return 1;
+}
+
+function RemoveFavorite {
+	set .@map$, getd(".menu_" + getarg(0) + "$[2]");
+	set .@key, getarg(1, IsFavorite(getarg(0)));
+	if(.@key < 0) {
+		return;
+	}
+	deletearray(@_warper_favorite_maps[.@key], 1);
+	deletearray(@_warper_new_favorite_maps$[.@key], 1);
+	set .@arrSize, getarraysize(@_warper_del_favorite_maps$);
+	for(set .@i, 0; .@i < .@arrSize; set .@i, .@i + 1) {
+		if(@_warper_del_favorite_maps$[.@i] == .@map$) {
+			return;
+		}
+	}
+	set @_warper_del_favorite_maps$[getarraysize(@_warper_favorite_maps$)], .@map$;
+}
+
+function GetNodeType {
+	return atoi(getd(".menu_" + getarg(0) + "$[1]"));
+}
+
+}
+/* ---------------------------------- *
+ * --------------------- Duplicatas - *
+ * ---------------------------------- */
+prontera,151,191,4	duplicate(_Warper)	Warper#townPrt	894
+alberta,23,241,5	duplicate(_Warper)	Warper#townAlb	894
+aldebaran,147,117,4	duplicate(_Warper)	Warper#townAlde	894
+amatsu,190,86,1	duplicate(_Warper)	Warper#townAma	894
+ayothaya,212,179,6	duplicate(_Warper)	Warper#townAyo	894
+brasilis,199,220,6	duplicate(_Warper)	Warper#townBras	894
+//dewata,202,185,6	duplicate(_Warper)	Warper#townDew	894
+//eclage,103,29,1	duplicate(_Warper)	Warper#townEcl	894
+comodo,193,161,3	duplicate(_Warper)	Warper#townCmd	894
+einbech,79,102,1	duplicate(_Warper)	Warper#townEine	894
+einbroch,71,206,4	duplicate(_Warper)	Warper#townEinr	894
+dicastes01,191,190,4	duplicate(_Warper)	Warper#townDic	894
+jawaii,244,144,4	duplicate(_Warper)	Warper#townJawi	894
+einbroch,243,189,2	duplicate(_Warper)	Warper#townEinc	894
+hugel,101,141,2	duplicate(_Warper)	Warper#townHugel	894
+manuk,288,131,2	duplicate(_Warper)	Warper#townManu	894
+lighthalzen,148,90,6	duplicate(_Warper)	Warper#townLhz	894
+geffen,116,59,0	duplicate(_Warper)	Warper#townGef	894
+izlude,123,118,3	duplicate(_Warper)	Warper#townIz	894
+xmas,149,136,4	duplicate(_Warper)	Warper#townXmas	894
+splendide,194,175,4	duplicate(_Warper)	Warper#townSpl	894
+morocc,156,95,4	duplicate(_Warper)	Warper#townMoc	894
+payon,148,228,4	duplicate(_Warper)	Warper#townPay	894
+yuno,146,187,4	duplicate(_Warper)	Warper#townYuno	894
+gonryun,162,122,4	duplicate(_Warper)	Warper#townGon	894
+louyang,211,109,4	duplicate(_Warper)	Warper#townLou	894
+umbala,95,164,4	duplicate(_Warper)	Warper#townUmb	894
+moscovia,220,198,4	duplicate(_Warper)	Warper#townMosc	894
+veins,217,127,4	duplicate(_Warper)	Warper#townVeins	894
+rachel,133,115,4	duplicate(_Warper)	Warper#townRach	894

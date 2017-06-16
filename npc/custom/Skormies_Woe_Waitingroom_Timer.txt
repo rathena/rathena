@@ -1,0 +1,65 @@
+//Skormie's WOE Waitingroom Timer v1.03
+//Should natively work with Euphy's WOE Controller.
+prontera,151,193,5	script	Woe Time	100,{
+end;
+OnInit:
+	function s;
+	function woe_update;
+	
+	// CONFIG //                  ...If you're not using Euphy's Woe Controller.
+	setarray .@start_day,   5, 1; //Day of the week WOE Starts on. (1 for Sunday, 7 is Saturday)
+	setarray .@start_hour, 20, 0; //rAthena works on a 24 hour clock.
+	.auto_update = 60;            //Auto update timer in seconds.
+	
+	.woe_len = getarraysize( .@start_day );
+	for( .@i = 0; .@i < .woe_len; .@i++ ) {
+		.woe_day[ .@i * 4 ] = .@start_day[ .@i ] -1;
+		.woe_day[ (.@i * 4) + 1 ] = .@start_hour[ .@i ];
+	}
+	.woe_len = ( ( .woe_len ) * 4 );
+	
+	woe_update();
+
+	while ( 1 ) {
+		if( !( gettimetick(2) % .auto_update ) )
+			woe_update();
+		.@woe_tick = .woe_time[.current] - gettimetick(2);
+		.@day  = .@woe_tick / 86400;
+		.@hour = .@woe_tick % 86400 / 3600;
+		.@min  = .@woe_tick % 3600 / 60;
+		.@sec  = .@woe_tick % 60;
+		.@mes$ = ( .@day  ? .@day  +" day"+    s( .@day )    : "" ) +
+		         ( .@hour ? .@hour +" hour"+   s( .@hour )   : "" ) +
+		         ( .@min  ? .@min  +" minute"+ s( .@min )    : "" ) +
+		         ( .@sec  ? .@sec  +" second"+ s( .@sec, 1 ) : "" );
+		delwaitingroom strnpcinfo(0);
+		waitingroom ( .woe_len ? ( agitcheck() ? "WOE is Active!" : .@mes$ ) : "WOE is Disabled!" ), 0;
+		sleep 1000;
+	}
+	end;
+	
+	OnAgitEnd:
+		woe_update();
+		end;
+	
+	function s {
+		return ( getarg(0) > 1 ? "s" : "" ) + ( getarg(1,0) ? "" : " " );
+	}
+	function woe_update {
+		if( getnpcid( 0, "WOE_CONTROL" ) ) {
+			.@Euphy_Len = getarraysize( $WOE_CONTROL );
+			copyarray .woe_day, $WOE_CONTROL, .@Euphy_Len;
+			.woe_len = .@Euphy_Len;
+		}
+		
+		for( .@a = 0; .@a < .woe_len; .@a += 4 ) {
+			.@woe_day[.@a] = ( .woe_day[.@a] - gettime(4) + 7 ) % 7 * 86400;
+			.@woe_hour[.@a] = ( .woe_day[.@a+1] * 3600 ) - gettimetick(1);
+			.woe_time[.@a] = gettimetick(2) + .@woe_day[.@a] + .@woe_hour[.@a];
+			if(gettimetick(2) > .woe_time[.@a])
+				.woe_time[.@a] = .woe_time[.@a] + 7 * 86400;
+			if( .woe_time[.@a] <= .woe_time[.current] )
+				.current = .@a;
+		}
+	}
+}

@@ -37,7 +37,7 @@ struct sale_item_data;
 enum { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_VER = 55,
+	MAX_PACKET_VER = 56,
 	MAX_PACKET_POS = 20,
 };
 
@@ -731,7 +731,6 @@ void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
-void clif_party_job_and_level(struct map_session_data *sd);
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);

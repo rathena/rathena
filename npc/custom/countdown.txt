@@ -1,0 +1,87 @@
+//===== rAthena Script =======================================
+//= Countdown Mini-Game Script
+//===== By: ==================================================
+//= Nova http://www.novaragnarok.com
+//============================================================
+
+prontera,149,186,6	script	Countdown#summ	904,{
+
+	if ( .start == 0 ) {
+	.@n$ = "[ ^FF0000Countdown^000000 ]";
+	mes .@n$;
+	mes "In order to win, you must click me after counting down to 0.";
+	mes "Cost of participation is ^3355FF2 Festival Coins^000000";
+	mes "If you win, I'll give you ^3355FF35 Coins^000000";
+	@novacountdown = 0;
+	deltimer "Countdown#summ::OnCountdown";
+	next;
+
+	switch(select("Play Countdown:Leave")){
+
+	case 1:
+			if (@NovaCount > gettimetick(2)) { .@t = @NovaCount - gettimetick(2); dispbottom "Countdown: You must wait "+.@t+" seconds before playing again."; end; }
+			if (.start == 1) { dispbottom "Countdown: Somebody is already playing. Wait for them to finish."; end; }
+			if(countitem(6767) < 2) { mes .@n$; mes "You don't have enough coins."; end; }
+			initnpctimer;
+			delitem 6767,2;
+			@NovaCount = gettimetick(2) + 60;
+			.start = 1;
+			close2;
+			.player$ = strcharinfo(0);
+			
+			.@timer = rand(8,11);
+			.@r = rand(600,1000);
+			.@timer1 = .@timer*.@r;
+			.@timer2 = .@timer1+.@r;
+			emotion 27;
+			showscript "Countdown: "+.player$+"! Count in your head, and click me again when the timer reaches 0.",.gid$;
+			dispbottom "Countdown: Count in your head, and click me on the NPC again when the timer reaches 0.";
+			sleep2 5000;
+			addtimer .@timer1,"Countdown#summ::OnCountdown";
+			addtimer .@timer2,"Countdown#summ::OnCountdown2";
+			.@time$ = .@timer;
+			showscript .@time$,.gid$;
+			sleep2 .@r;
+			.@time$ = .@timer-1;
+			showscript .@time$,.gid$;
+			sleep2 .@r;
+			.@time$ = .@timer-2;
+			showscript .@time$,.gid$;
+			end;
+
+		case 2:
+		end;
+
+	}
+
+	end;
+	}
+
+	if ( .start == 1 && .player$ == strcharinfo(0) ) {
+			if (@novacountdown == 0) { showscript "Countdown: You went too quickly. You lose.",.gid$; .start = 0; @NovaCount = gettimetick(2) + 30; stopnpctimer; end; }
+			if (@novacountdown == 1) { showscript "Countdown: Nice one. You win this time "+.player$+".",.gid$; .start = 0; getitem 6767,35; @NovaCount = gettimetick(2) + 30; stopnpctimer; end; }
+			if (@novacountdown == 2) { showscript "Countdown: You went too slowly. You lose.",.gid$; .start = 0; @NovaCount = gettimetick(2) + 30; stopnpctimer; end; }
+			end;
+		} else {
+		dispbottom "Somebody is already playing Countdown. Wait for them to finish.";
+		end;
+		}
+
+OnInit:
+	.gid$ = getnpcid(0);
+	end;
+
+OnCountdown:
+	@novacountdown = 1;
+	end;
+
+OnCountdown2:
+	@novacountdown = 2;
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	showscript "Countdown: You went too slowly. You lose.",.gid$; .start = 0;
+	end;
+
+}

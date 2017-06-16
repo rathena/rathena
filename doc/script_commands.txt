@@ -2517,14 +2517,12 @@ Note: SECURE_NPCTIMEOUT must be enabled for this to work.
 \\
 ---------------------------------------
 
-*getequipid({<equipment slot>,<char_id>})
+*getequipid(<equipment slot>{,<char_id>})
 
-This function returns the item ID of the item slot that calls the script
-on the invoking character or the specified equipment slot. If nothing is
-equipped there, it returns -1.
+This function returns the item ID of the item equipped in the equipment slot 
+specified on the invoking character. If nothing is equipped there, it returns -1. 
 Valid equipment slots are:
 
-EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script)
 EQI_ACC_L (0)             - Accessory 1
 EQI_ACC_R (1)             - Accessory 2
 EQI_SHOES (2)             - Footgear (shoes, boots)
@@ -2683,6 +2681,9 @@ this is +10:
 This function returns the weapon level for the weapon equipped in the specified 
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
+
+If -1 is passed as the equipment slot argument then the weapon level for the item calling this function, 
+assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
 a weapon level. You can, however, probably, use this field for other equippable

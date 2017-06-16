@@ -605,7 +605,7 @@ int guild_invite(struct map_session_data *sd, struct map_session_data *tsd) {
 
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
-		map_flag_gvg2(tsd->bl.m))
+		map_flag_gvg(tsd->bl.m))
 	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
@@ -774,7 +774,7 @@ int guild_leave(struct map_session_data* sd, int guild_id, uint32 account_id, ui
 
 	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
-		map_flag_gvg2(sd->bl.m))
+		map_flag_gvg(sd->bl.m))
 		return 0;
 
 	guild_trade_bound_cancel(sd);
@@ -806,7 +806,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
-		map_flag_gvg2(tsd->bl.m))
+		map_flag_gvg(tsd->bl.m))
 		return 0;
 
 	// find the member and perform expulsion
@@ -1760,29 +1760,22 @@ int guild_broken(int guild_id,int flag) {
 * @param guild_id
 * @param sd New guild master
 */
-int guild_gm_change(int guild_id, uint32 char_id) {
+int guild_gm_change(int guild_id, struct map_session_data *sd) {
 	struct guild *g;
-	char *name;
-	int i;
+	nullpo_ret(sd);
+
+	if (sd->status.guild_id != guild_id)
+		return 0;
 
 	g = guild_search(guild_id);
 
 	nullpo_ret(g);
 
-	ARR_FIND(0, MAX_GUILD, i, g->member[i].char_id == char_id);
-	
-	if( i == MAX_GUILD ){
-		// Not part of the guild
-		return 0;
-	}
-
-	name = g->member[i].name;
-
-	if (strcmp(g->master, name) == 0) //Nothing to change.
+	if (strcmp(g->master, sd->status.name) == 0) //Nothing to change.
 		return 0;
 
 	//Notify servers that master has changed.
-	intif_guild_change_gm(guild_id, name, strlen(name)+1);
+	intif_guild_change_gm(guild_id, sd->status.name, strlen(sd->status.name)+1);
 	return 1;
 }
 
@@ -1834,7 +1827,6 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
 		if( g->member[i].sd && g->member[i].sd->fd ) {
 			clif_guild_basicinfo(g->member[i].sd);
 			clif_guild_memberlist(g->member[i].sd);
-			clif_guild_belonginfo(g->member[i].sd); // Update clientside guildmaster flag
 		}
 	}
 

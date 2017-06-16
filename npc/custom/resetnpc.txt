@@ -16,7 +16,7 @@
 //= 1.4 Compressed Script, Added limit use option [Stolao]
 //=	Changed set -> setarray, Improved text with F_InsertPlural
 //============================================================
-prontera,150,193,4	script	Reset Girl	124,{
+prt_in,41,112,4	script	Reset Girl	124,{
 	//	 		Skills,	Stats,	Both,	Limit
 	setarray .@Reset,	5000,	5000,	9000,	0;
 	mes "[Reset Girl]";

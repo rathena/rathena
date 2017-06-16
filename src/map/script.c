@@ -8514,34 +8514,39 @@ BUILDIN_FUNC(strnpcinfo)
 }
 
 /**
- * getequipid({<equipment slot>,<char_id>})
+ * getequipid(<equipment slot>{,<char_id>})
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num = EQI_COMPOUND_ON;
+	int i, num;
 	TBL_PC* sd;
+	struct item_data* item;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (script_hasdata(st, 2))
-		num = script_getnum(st, 2);
+	num = script_getnum(st,2);
+	if( !equip_index_check(num) )
+	{
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	if (num == EQI_COMPOUND_ON)
-		i = current_equip_item_index;
-	else if (equip_index_check(num)) // get inventory position of item
-		i = pc_checkequip(sd, equip_bitmask[num]);
-	else {
+	// get inventory position of item
+	i = pc_checkequip(sd,equip_bitmask[num]);
+	if( i < 0 )
+	{
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (i >= EQI_ACC_L && sd->inventory_data[i])
-		script_pushint(st, sd->inventory_data[i]->nameid);
+	item = sd->inventory_data[i];
+	if( item != 0 )
+		script_pushint(st,item->nameid);
 	else
-		script_pushint(st, 0);
+		script_pushint(st,0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10107,7 +10112,7 @@ BUILDIN_FUNC(guildchangegm)
 	if (!sd)
 		script_pushint(st,0);
 	else
-		script_pushint(st,guild_gm_change(guild_id, sd->status.char_id));
+		script_pushint(st,guild_gm_change(guild_id, sd));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18943,7 +18948,7 @@ static void buildin_questinfo_setjob(struct questinfo *qi, int job) {
 BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id, icon, color = 0;
+	int quest_id, icon;
 	struct questinfo qi, *q2;
 
 	if( nd == NULL || nd->bl.m == -1 ) {
@@ -18984,14 +18989,14 @@ BUILDIN_FUNC(questinfo)
 	qi.nd = nd;
 
 	if( script_hasdata(st, 4) ) {
-		color = script_getnum(st, 4);
+		int color = script_getnum(st, 4);
 		if( color < 0 || color > 3 ) {
 			ShowWarning("buildin_questinfo: invalid color '%d', changing to 0\n",color);
 			script_reportfunc(st);
 			color = 0;
 		}
+		qi.color = (unsigned char)color;
 	}
-	qi.color = (unsigned char)color;
 
 	qi.min_level = 1;
 	qi.max_level = MAX_LEVEL;
@@ -23213,7 +23218,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
-	BUILDIN_DEF(getequipid,"??"),
+	BUILDIN_DEF(getequipid,"i?"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]

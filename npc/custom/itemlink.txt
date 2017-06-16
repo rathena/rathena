@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= In-game Item Descriptions Script
+//===== By: ==================================================
+//= Nova http://www.novaragnarok.com
+//============================================================
+
+-	script	itemdescs	-1,{
+end;
+
+OnInit:
+	bindatcmd "ii2",strnpcinfo(3)+"::OnAtcommand";
+	bindatcmd "itemdesc",strnpcinfo(3)+"::OnAtcommand";
+	end;
+	
+OnAtcommand:
+  mes "^3355FF[ Description ]^000000";
+  .@item = atoi(.@atcmd_parameters$[0]);
+  mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+  mes "Click on the name of the item above.";
+  end;
+
+}

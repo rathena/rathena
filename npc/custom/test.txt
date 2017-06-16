@@ -1,0 +1,19 @@
+prontera,52,144,4	script	CheckQuest	51,{
+
+if (!questprogress(62239,HUNTING)) {
+mes "[Jelly]";
+mes "Quest not Started",
+close;
+} else if (questprogress(62239,HUNTING) == 1) {
+mes "[Jelly]";
+mes "You haven't killed all of the target monsters.";
+close;
+} else if (questprogress(62239,HUNTING) == 2) {
+completequest 62239;
+set zeny,zeny+100;      //Zeny Reward
+getitem 501,1;          // Item Reward
+mes "[Jelly]";
+mes "Quest Finished";
+close;
+}
+}

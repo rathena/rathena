@@ -1,0 +1,19 @@
+prt_in,43,114,3	script	Dismounter	105,{
+
+	mes "[ Dismounter ]";
+	mes "It seems you're stuck on your mount! I'll make that thing run away for you.";
+	next;
+	
+	switch(select("Please! I can't get rid of it.:No! I want to keep my mount.")) {
+		case 1:
+			mes "[ Dismounter ]";
+			mes "OOGA BOOGA!";
+			if(SC_ALL_RIDING>=1) { sc_start SC_ALL_RIDING,1,0; }
+			mes "- Your mount has ran away -";
+			end;
+		case 2:
+			mes "[ Dismounter ]";
+			mes "Keep your mount for all I care!";
+			end;
+	}
+}

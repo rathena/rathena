@@ -1,0 +1,149 @@
+/////////////////////////////////////////////////////////////////////////
+//---------------------------------------------------------------------//
+//                       MINING (EXPLOSION TYPE)                       //
+//                     AUTHOR: LIL TROLL//COLDFIRE                     //
+//---------------------------------------------------------------------//
+//                          RATHENA SCRIPT                             //
+//---------------------------------------------------------------------//
+//                            Version 1                                //
+//---------------------------------------------------------------------//
+//    Credits to: 											 		   //
+//	 - Sir Emistry(For teaching me OnTouch)           		 	 	   //
+//    - Lesbie for requesting the script.				 			   //
+//	 FEATURES:												   	 	   //
+//    - Set the configuration, run the script.					 	   //
+//    - Player set the explosion and run for it!					   //
+//    - Wait till the explosion off then grab the items.               //
+//    - NPC AutoHides after set of explosions.					 	   //
+//    - Then add duplicates.								  		   //
+//---------------------------------------------------------------------//
+/////////////////////////////////////////////////////////////////////////
+	
+prontera,155,176,0	script	Crystal	1907,3,3,{
+
+function	Scatter_Debris;
+	if(@ExplodedInFace == 2 ) end;
+	for (.@i = 0; .@i < getarraysize(.Equips); .@i++){
+		if (!isequipped(.Equips[.@i])){
+			message strcharinfo(0), "I need to equip '"+ getitemname(.Equips[.@i]) +"' mine!";
+			.@Unequipped++;
+		}
+	}
+	if (.@Unequipped){
+		message strcharinfo(0), .@Unequipped +" of "+ getarraysize(.Equips) +" equipment has not been worn.";
+		end;
+	}
+	for (.@i = 0; .@i < getarraysize(.Explosives); .@i++){
+		if (countitem(.Explosives[.@i]) < .Amount[.@i]){
+			message strcharinfo(0), "I need to bring "+ .Amount[.@i] +" "+ getitemname(.Explosives[.@i]) +" explosives to mine!";
+			.@Gearless++;
+		}
+	}
+	if (.@gearless){
+		if (getarraysize(.Explosives) > 1)
+			.@Dialogue$ = "tools were";
+		else
+			.@Dialogue$ = "tool was";
+			message strcharinfo(0), .@Gearless +" of "+ getarraysize(.Explosives) +" "+ .@Dialogue$ +" not brought.";	
+			end;
+	}
+	for (.@i = 0; .@i < getarraysize(.SFXS); .@i++) specialeffect .SFXS[.@i];
+	for (.@i = 0; .@i < getarraysize(.SFXS); .@i++) specialeffect2 .SFXS[.@i];
+	specialeffect2 950;
+	progressbar "green",.Progress;
+	specialeffect2 950;
+	set @ExplodedInFace,2;
+	for (.@i = 0; .@i < getarraysize(.Explosives); .@i++) {
+		delitem .Explosives[.@i],.Amount[.@i]; 
+	}
+	announce "Explosives are set, run away from the mine...",bc_self; 
+	sleep2 1000;
+	announce "5..",bc_self;
+	sleep2 1000;
+	announce "4..",bc_self;
+	sleep2 1000;
+	announce "3..",bc_self;
+	sleep2 1000;
+	announce "2..",bc_self;
+	sleep2 1000;
+	announce "1..",bc_self;
+	set @ExplodedInFace,1;
+	sleep2 1000;
+	announce "Igniting Explosions!",bc_self;
+	if(checkidle(strcharinfo(0))>=.Delay) {
+		unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1;
+		announce "You died on explosion!",bc_self;
+	}
+	Scatter_Debris;
+	sleep2 1000;
+	Scatter_Debris;
+	sleep2 1000;
+	Scatter_Debris;
+	sleep2 1000;
+	Scatter_Debris;
+	sleep2 1000;
+	Scatter_Debris;
+	set @ExplodedInFace,0;
+	announce "Explosions ended!",bc_self;
+	hideonnpc strnpcinfo(0);
+    	set .@Random,rand(1,100);
+	if(.@Random < .Chance) {
+		for(set .@i,0; .@i<getarraysize(.Rewards); set .@i,.@i+1){
+			getmapxy(.@m$,.@x,.@y,1);
+			set .@Rewards,.Rewards[rand(getarraysize(.Rewards))];
+			set .@Amount,.Amount[rand(getarraysize(.Amount))];
+			makeitem .@Rewards,.@Amount,.@m$,.@x+rand(-.ScatArea,.ScatArea),.@y+rand(-.ScatArea,.ScatArea);
+			sleep2 .Hidetime*60000;
+			hideoffnpc strnpcinfo(0);
+		end;
+		}
+	}
+	else {
+		set @ExplodedInFace,0;
+		sleep2 .Hidetime*60000;
+		hideoffnpc strnpcinfo(0);
+		end;
+	}
+
+set @ExplodedInFace,0;
+
+function	Scatter_Debris	{
+	getmapxy(.@m$,.@x,.@y,1);				// DONT CHANGE THIS ONE.
+	for (.@i = 0; .@i < getarraysize(.SFX); .@i++) specialeffect .SFX[.@i];
+	set .@Debris,$Debris[rand(getarraysize($Debris))];
+	set .@Scatter,$Scatter[rand(getarraysize($Scatter))];
+	makeitem .@Debris,.@Scatter,.@m$,.@x+rand(-.ScatArea,.ScatArea),.@y+rand(-.ScatArea,.ScatArea);
+	return;
+}
+
+OnTouch:
+	if(@ExplodedInFace==1){
+		specialeffect2 EF_SUI_EXPLOSION;
+		unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1;
+		announce "You died on explosion!",bc_self;
+		set @ExplodedInFace,0;
+	}
+end;
+
+OnInit:	
+set .Chance,25;					// MINING REWARD CHANCE IN %.
+setarray .Equips[0],6010,5405,2270; 	// CHANGE THIS TO MINING EQUIPMENTS.
+setarray .Explosives[0],501,502,503;	// CHANGE THIS TO MINING EXPLOSIVES(CREATE YOUR OWN ITEM ID FOR EXPLOSIVE).   
+setarray .Amount[0],1,1,1;			// EXPLOSIVES AMOUNT.
+setarray .Rewards[0],501,502,503;		// MINING REWARDS.
+setarray .RewAmou[0],1,2,3;			// REWARDS AMOUNT.
+set .Progress,5;					// TIME TO SET THE EXPLOSIVE ON MINE.
+set .HideTime,1;					// MINE HIDES AFTER IT EXPLODE, APPEAR AGAIN TIME. IN MINUTES.
+setarray .Debris[0],7049,757,756,6077,1010,1011,984,985;	// DEBRIS, STONES,ELUNIUM,ORIDECON,REFINE MATERIALS && ETC..
+setarray .Scatter[0],1,2,3;							// DEBRIS AMOUNT.
+setarray .ScatArea[0],1,2,3;							// SCATTER AREA.
+setarray .SFXS[0],225,805,60;							// MINING CAST
+setarray .SFX[0],44,100,4,18,53,65,960,965,967,901,730,722,585,32,907,810,941,563;	// Mining Explosion.
+set .Delay,5;									
+end;
+}
+
+prontera,155,175,0	duplicate(Crystal)	Crystal#2	1907
+prontera,155,174,0	duplicate(Crystal)	Crystal#3	1907
+prontera,155,173,0	duplicate(Crystal)	Crystal#4	1907
+prontera,155,172,0	duplicate(Crystal)	Crystal#5	1907
