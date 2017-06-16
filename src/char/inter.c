@@ -816,7 +816,7 @@ static int inter_config_read(const char* cfgName)
 
 /**
 * Save interlog values to SQL
-* @param ArgNum: Number of arguments
+* @param fmt: Pointer containing the type of activity to be stored
 *  Supplied arguments: activity, origin, target, guild pointer, castle_id
 * @return 0
 */
