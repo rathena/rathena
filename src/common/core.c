@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "mmo.h"
+#include "cbasetypes.h"
 #include "showmsg.h"
 #include "malloc.h"
 #include "core.h"
@@ -164,14 +165,14 @@ const char* get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if( (fp = fopen(".svn"PATHSEP_STR"wc.db", "rb")) != NULL || (fp = fopen(".."PATHSEP_STR".svn"PATHSEP_STR"wc.db", "rb")) != NULL )
+	if( (fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL )
 	{
 	#ifndef SVNNODEPATH
 		//not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
 		#define SVNNODEPATH trunk
 	#endif
 		const char* prefix = "!svn/ver/";
-		const char* postfix = "/"EXPAND_AND_QUOTE(SVNNODEPATH)")"; // there should exist only 1 entry like this
+		const char* postfix = "/" EXPAND_AND_QUOTE(SVNNODEPATH) ")"; // there should exist only 1 entry like this
 		size_t prefix_len = strlen(prefix);
 		size_t postfix_len = strlen(postfix);
 		size_t i,j,len;
@@ -257,7 +258,7 @@ const char *get_git_hash (void) {
 	if( GitHash[0] != '\0' )
 		return GitHash;
 
-	if( (fp = fopen(".git/"GIT_ORIGIN, "r")) != NULL ) {
+	if( (fp = fopen(".git/" GIT_ORIGIN, "r")) != NULL ) {
 		char line[64];
 		char *rev = (char*)malloc(sizeof(char) * 50);
 
@@ -286,21 +287,21 @@ static void display_title(void) {
 	const char* git = get_git_hash();
 
 	ShowMessage("\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"                                                                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"       "CL_BT_WHITE"            rAthena Development Team presents                  "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"                 ___   __  __                                    "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"           _____/   | / /_/ /_  ___  ____  ____ _                "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"          / ___/ /| |/ __/ __ \\/ _ \\/ __ \\/ __ `/                "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"         / /  / ___ / /_/ / / /  __/ / / / /_/ /                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"        /_/  /_/  |_\\__/_/ /_/\\___/_/ /_/\\__,_/                  "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"                                                                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"       "CL_GREEN"              http://rathena.org/board/                        "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"     "CL_BOLD"                                                                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS"" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "       " CL_BT_WHITE "            rAthena Development Team presents                  " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                 ___   __  __                                    " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "           _____/   | / /_/ /_  ___  ____  ____ _                " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "          / ___/ /| |/ __/ __ \\/ _ \\/ __ \\/ __ `/                " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "         / /  / ___ / /_/ / / /  __/ / / / /_/ /                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "        /_/  /_/  |_\\__/_/ /_/\\___/_/ /_/\\__,_/                  " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "       " CL_GREEN "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 
 	if( svn[0] != UNKNOWN_VERSION )
-		ShowInfo("SVN Revision: '"CL_WHITE"%s"CL_RESET"'\n", svn);
+		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
 	else if( git[0] != UNKNOWN_VERSION )
-		ShowInfo("Git Hash: '"CL_WHITE"%s"CL_RESET"'\n", git);
+		ShowInfo("Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
 }
 
 // Warning if executed as superuser (root)

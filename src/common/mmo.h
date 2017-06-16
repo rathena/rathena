@@ -188,6 +188,12 @@ struct quest {
 	enum quest_state state;          ///< Current quest state
 };
 
+struct s_item_randomoption {
+	short id;
+	short value;
+	char param;
+};
+
 struct item {
 	int id;
 	unsigned short nameid;
@@ -197,11 +203,7 @@ struct item {
 	char refine;
 	char attribute;
 	unsigned short card[MAX_SLOTS];
-	struct {
-		short id;
-		short value;
-		char param;
-	} option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
+	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
@@ -354,8 +356,8 @@ struct s_pet {
 	int pet_id;
 	short class_;
 	short level;
-	short egg_id;//pet egg id
-	short equip;//pet equip name_id
+	unsigned short egg_id;//pet egg id
+	unsigned short equip;//pet equip name_id
 	short intimate;//pet friendly
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];
@@ -569,6 +571,7 @@ struct guild_member {
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
 	unsigned char modified;
+	uint32 last_login;
 };
 
 struct guild_position {
@@ -915,6 +918,7 @@ struct clan{
 	short max_member, connect_member;
 	struct map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
+	unsigned short instance_id;
 };
 
 // Sanity checks...
