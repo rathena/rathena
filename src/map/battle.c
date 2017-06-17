@@ -3316,7 +3316,7 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 		{
 			wd.div_ = skill_get_num(GS_CHAINACTION,skill_lv);
 			wd.type = DMG_MULTI_HIT;
-			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time2(RL_QD_SHOT,1));
+			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
