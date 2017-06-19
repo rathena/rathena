@@ -45,6 +45,7 @@
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
 enum equip_index {
+	EQI_COMPOUND_ON = -1,
 	EQI_ACC_L = 0,
 	EQI_ACC_R,
 	EQI_SHOES,
