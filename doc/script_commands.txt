@@ -3912,8 +3912,10 @@ the affected area to a random set of co-ordinates on "place2".
 By using the optional x4 and y4 parameters, the destination coordinates will be a 
 random place within the defined x3/y3-x4/y4 square.
 
-Like 'warp', areawarp will also explicitly warp characters randomly into the 
-current map if you give the 'to map name' as "Random".
+There are also three special 'map names' you can use.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
 
 See also 'warp'.
 
@@ -3973,6 +3975,11 @@ This function will find the invoking character's marriage partner, if any, and
 warp them to the map and coordinates given. It will return 1 upon success and
 0 if the partner is not online, the character is not married, or if there's no 
 invoking character (no RID). 0,0 will, as usual, normally translate to random coordinates.
+
+There are also three special 'map names' you can use.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
 
 ---------------------------------------
 
@@ -6716,6 +6723,11 @@ The obvious way of using this effectively would be to set up a waiting room for
 two characters to be warped onto a random PVP map for a one-on-one duel, for 
 example.
 
+There are also three special 'map names' you can use.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
+
 ---------------------------------------
 
 *waitingroomkick "<NPC object name>" , "<character name>";
@@ -6853,6 +6865,11 @@ Example:
 
 // Will warp all members of guild with ID 63 on map prontera to map alberta.
 	mapwarp "prontera","alberta",150,150,1,63;
+
+There are also three special 'map names' you can use for <to map>.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
 
 ---------------------------------------
 \\
