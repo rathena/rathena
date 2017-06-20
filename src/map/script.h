@@ -697,6 +697,12 @@ enum instance_info_type {
 	IIT_MAP
 };
 
+enum vip_status_type {
+	VIP_STATUS_ACTIVE = 1,
+	VIP_STATUS_EXPIRE,
+	VIP_STATUS_REMAINING
+};
+
 /**
  * used to generate quick script_array entries
  **/

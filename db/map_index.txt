@@ -983,6 +983,31 @@ lasa_dun_q
 1@pop1
 1@pop2
 1@pop3
+1@slw
+1@swat
+que_swat
+slabw01
+rebel_in
+1@md_gef
+1@md_pay
+har_in01
+harboro1
+harboro2
+rockmi1
+rockmi2
+rockrdg1
+rockrdg2
+1@gl_k2
+2@gl_k2
+1@xm_d2
+pay_d03_i
+gef_d01_i
+ice_d03_i
+1@tre
+1@begi
+tur_d03_i
+tur_d04_i
+1@crd
 
 // Only add maps under this line if they are not standard maps!
 

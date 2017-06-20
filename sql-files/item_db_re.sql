@@ -1049,7 +1049,7 @@ REPLACE INTO `item_db_re` VALUES (1664,'Thorn_Staff_of_Darkness','Thorn Staff of
 REPLACE INTO `item_db_re` VALUES (1665,'Piercing_Staff_','Piercing Staff',5,20,NULL,500,'80:145',NULL,1,2,0x00018314,18,2,2,3,'70',1,10,'.@r = getrefine(); bonus bInt,4; bonus2 bIgnoreMdefClassRate,Class_Normal,10+.@r; bonus2 bIgnoreMdefClassRate,Class_Boss,10+.@r;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1666,'Healing_Staff_','Healing Staff',5,20,NULL,400,'10:105',NULL,1,2,0x00008110,63,2,2,3,'55',1,10,'bonus bAtkEle,Ele_Holy; bonus bHealPower,(getrefine()*3/2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1667,'TE_Woe_Staff','TE Woe Staff',5,0,NULL,0,'50:100',NULL,1,0,0x00818315,63,2,2,3,'40',1,10,'bonus2 bMagicAddRace,RC_Player,10; bonus3 bAddEff,Eff_Blind,1000,ATF_MAGIC; bonus bHPRecovRate,5; bonus bSPRecovRate,5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1668,'Sword_Stick','Sword Stick',5,10,NULL,500,'120:150',NULL,NULL,2,0x800200,63,2,2,4,'80',1,8,'bonus bAspdRate,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1668,'Sword_Stick','Sword Stick',5,10,NULL,500,'120:150',NULL,NULL,2,0x800200,63,2,2,4,'80',1,10,'bonus bAspdRate,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1669,'Tanos_Staff','Tanos Staff',5,10,NULL,1000,'100:200',NULL,NULL,1,0x00818314,63,2,2,4,'120',1,10,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1670,'RWC_Memory_Staff','RWC Memory Staff',5,20,NULL,500,'25:30',NULL,1,1,0x00818315,63,2,2,3,'1',1,10,'.@r = getrefine(); bonus bMatk,30*(.@r/3); if(.@r>=6) bonus2 bMagicAddClass,Class_All,(.@r>=9?10:5); if(.@r>=9) bonus4 bAutoSpell,"HW_MAGICPOWER",1,10,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1671,'Devil_Won_Staff','Devil Won Staff',5,10,NULL,800,'30:155',NULL,NULL,1,0x00818315,63,2,2,3,'100',1,10,'bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_Demon,10; bonus bMatkRate,10;',NULL,NULL);
@@ -7014,10 +7014,10 @@ REPLACE INTO `item_db_re` VALUES (12842,'Platinum_Treasure_Box','Platinum Treasu
 REPLACE INTO `item_db_re` VALUES (12843,'Pearl_Treasure_Box','Pearl Treasure Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'60',NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12844,'Diamond_Treasure_Box','Diamond Treasure Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'70',NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12845,'Amatsu_Butterfly_Wing','Amatsu_Butterfly_Wing',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12846,'Little_Unripe_Apple','Little_Unripe_Apple',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'pet 2398;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12846,'Little_Unripe_Apple','Little Unripe Apple',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'pet 2398;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12847,'Old_Equipment_Box','Old Equipment Box',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12848,'Falcon_Flute','Falcon Flute',11,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12849,'Combination_Kit','Combination Kit',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12849,'Combination_Kit','Combination Kit',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'cooking 30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12850,'Heaven_Scroll','Heaven Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Heaven_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12851,'Vocation_Scroll','Vocation Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Vocation_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12852,'Wisdom_Scroll','Wisdom Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Wisdom_Scroll);',NULL,NULL);
@@ -11426,6 +11426,12 @@ REPLACE INTO `item_db_re` VALUES (27017,'Scrap_Robots_Card','Scrap Robots Card',
 REPLACE INTO `item_db_re` VALUES (27018,'GC109_Card','GC109 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bDelayrate,-(1+(BaseLevel>=90)+(BaseLevel>=120));',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27019,'DR815_Card','DR815 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bHit,1+(BaseLevel>=90)+(BaseLevel>=120);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27020,'T_W_O_Card','T W O Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus bAtkRate,10; bonus3 bAutoSpell,"NPC_WIDESOULDRAIN",2,50+((getrefine()/3)*10);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27025,'Lich_Lord_Card','Lich Lord Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bDef,30; bonus bMdef,10; bonus2 bAddEff,Eff_Silence,900; if(getequipid() == 28483){ bonus bAtkRate,5; bonus bMatkRate,5; } /* TODO: Confirm Mob ID to transform */ autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 1875,7000; }";',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27026,'Fire_Condor_Card','Fire Condor Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus2 bVariableCastRate,"MG_FIREBALL",-50; bonus2 bSkillAtk,"MG_FIREBALL",100;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27027,'Fire_Sandman_Card','Fire Sandman Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,16,NULL,NULL,NULL,NULL,'bonus bDef,50; bonus2 bSubDefEle,Ele_Fire,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27028,'Fire_Frilldora_Card','Fire Frilldora Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bMagicAddEle,Ele_Earth,3+((.@r>=7)*5)+((.@r>=9)*7);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27029,'Fire_Golem_Card','Fire Golem Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27030,'Fulbuk_Card','Fulbuk Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,769,NULL,NULL,NULL,NULL,'bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;',NULL,NULL);
 #===================================================================
 # New Katars
 #===================================================================
