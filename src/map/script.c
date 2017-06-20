@@ -4089,8 +4089,8 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 		// Attached player is offline or another unit type - should not happen
 		if( !sd ){
-			ShowWarning( "Script sleep timer called by an offline character or non player unit.\n" );
-			script_reportsrc(st);
+			// ShowWarning( "Script sleep timer called by an offline character or non player unit.\n" );
+			// script_reportsrc(st);
 			st->rid = 0;
 			st->state = END;
 		// Character mismatch. Cancel execution.
@@ -18410,7 +18410,7 @@ BUILDIN_FUNC(sleep)
 }
 
 /// Pauses the execution of the script, keeping the unit attached
-/// Returns if the unit is still attached
+/// Stop the script if none unit attached
 ///
 /// sleep2(<mili secconds>) -> <bool>
 BUILDIN_FUNC(sleep2)
@@ -18419,20 +18419,17 @@ BUILDIN_FUNC(sleep2)
 
 	ticks = script_getnum(st,2);
 
-	if( ticks <= 0 )
-	{// do nothing
-		script_pushint(st, (map_id2bl(st->rid)!=NULL));
-	}
-	else if( !st->sleep.tick )
-	{// sleep for the target amount of time
+	if (ticks <= 0) {
+		return SCRIPT_CMD_SUCCESS;
+	} else if (map_id2bl(st->rid) == NULL) {
+		st->rid = 0;
+		st->state = END;
+	} else if (!st->sleep.tick) {// sleep for the target amount of time
 		st->state = RERUNLINE;
 		st->sleep.tick = ticks;
-	}
-	else
-	{// sleep time is over
+	} else {// sleep time is over
 		st->state = RUN;
 		st->sleep.tick = 0;
-		script_pushint(st, (map_id2bl(st->rid)!=NULL));
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
