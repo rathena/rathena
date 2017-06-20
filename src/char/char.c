@@ -110,7 +110,7 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
 	struct mmo_charstatus *cp;
 
 	//Update DB
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1', `last_login`=NOW() WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	//Check to see for online conflicts
@@ -2142,7 +2142,18 @@ static int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t
 	return 0;
 }
 
+static int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+	// Auto removal is disabled
+	if( charserv_config.clan_remove_inactive_days <= 0 ){
+		return 0;
+	}
 
+	if( SQL_ERROR == Sql_Query( sql_handle, "UPDATE `%s` SET `clan_id`='0' WHERE `online`='0' AND `clan_id`<>'0' AND `last_login` IS NOT NULL AND `last_login` <= NOW() - INTERVAL %d DAY", schema_config.char_db, charserv_config.clan_remove_inactive_days ) ){
+		Sql_ShowDebug(sql_handle);
+	}
+
+	return 0;
+}
 
 //----------------------------------
 // Reading Lan Support configuration
@@ -2233,7 +2244,7 @@ bool char_checkdb(void){
 		"`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,`hair_color`,`clothes_color`,`weapon`,"
 		"`shield`,`head_top`,`head_mid`,`head_bottom`,`robe`,`last_map`,`last_x`,`last_y`,`save_map`,"
 		"`save_x`,`save_y`,`partner_id`,`online`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,"
-		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`"
+		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`"
 		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2686,6 +2697,8 @@ void char_set_defaults(){
 	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
 	charserv_config.default_map_x = 156;
 	charserv_config.default_map_y = 191;
+
+	charserv_config.clan_remove_inactive_days = 14;
 }
 
 /**
@@ -2958,6 +2971,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.default_map_x = atoi(w2);
 		} else if (strcmpi(w1, "default_map_y") == 0) {
 			charserv_config.default_map_y = atoi(w2);
+		} else if (strcmpi(w1, "clan_remove_inactive_days") == 0) {
+			charserv_config.clan_remove_inactive_days = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -3127,6 +3142,10 @@ int do_init(int argc, char **argv)
 	// Online Data timers (checking if char still connected)
 	add_timer_func_list(char_online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 1000, char_online_data_cleanup, 0, 0, 600 * 1000);
+
+	// periodically remove players that have not logged in for a long time from clans
+	add_timer_func_list(char_clan_member_cleanup, "clan_member_cleanup");
+	add_timer_interval(gettick() + 1000, char_clan_member_cleanup, 0, 0, 60 * 60 * 1000); // every 60 minutes
 
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){
