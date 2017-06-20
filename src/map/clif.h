@@ -866,14 +866,25 @@ void do_init_clif(void);
 void do_final_clif(void);
 
 // MAIL SYSTEM
+enum mail_send_result{
+	WRITE_MAIL_SUCCESS = 0x0,
+	WRITE_MAIL_FAILED = 0x1,
+	WRITE_MAIL_FAILED_CNT = 0x2,
+	WRITE_MAIL_FAILED_ITEM = 0x3,
+	WRITE_MAIL_FAILED_CHECK_CHARACTER_NAME = 0x4,
+	WRITE_MAIL_FAILED_WHISPEREXREGISTER = 0x5,
+};
+
 void clif_Mail_window(int fd, int flag);
 void clif_Mail_read(struct map_session_data *sd, int mail_id);
-void clif_Mail_delete(int fd, int mail_id, short fail);
+void clif_mail_delete(struct map_session_data* sd, struct mail_message *msg, bool success);
 void clif_Mail_return(int fd, int mail_id, short fail);
-void clif_Mail_send(int fd, bool fail);
-void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
-void clif_Mail_refreshinbox(struct map_session_data *sd);
-void clif_Mail_getattachment(int fd, uint8 flag);
+void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result);
+void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title);
+void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type type,int64 mailID);
+void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type);
+void clif_Mail_Receiver_Ack(struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name);
+void clif_mail_removeitem(struct map_session_data* sd, bool success, int index, int amount);
 // AUCTION SYSTEM
 void clif_Auction_openwindow(struct map_session_data *sd);
 void clif_Auction_results(struct map_session_data *sd, short count, short pages, uint8 *buf);
