@@ -105,7 +105,7 @@ S_RefineValidate:
 	set .@price, getarg(2);
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-	if (VIP_SCRIPT && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 		switch(.@weapon_lvl){
 			case 0: set .@price, .@price * 10; break;
 			case 1: set .@price, .@price * 40; break;
