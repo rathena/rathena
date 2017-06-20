@@ -2466,9 +2466,9 @@ Examples:
 Returns various information about a player's VIP status.
 
 Valid types:
- 1 - VIP status. (1 if VIP, 0 if non-VIP)
- 2 - VIP expire date. (timestamp string if VIP, 0 if non-VIP)
- 3 - VIP time remaining. (timestamp string if VIP, 0 if non-VIP)
+ VIP_STATUS_ACTIVE - VIP status: true if the player is a VIP or false if not
+ VIP_STATUS_EXPIRE - VIP expire timestamp if the player is VIP or 0 if not
+ VIP_STATUS_REMAINING - VIP time remaining in seconds
 
 NOTE: This command is only available if the VIP System is enabled.
 
@@ -2518,12 +2518,14 @@ Note: SECURE_NPCTIMEOUT must be enabled for this to work.
 \\
 ---------------------------------------
 
-*getequipid(<equipment slot>{,<char_id>})
+*getequipid({<equipment slot>,<char_id>})
 
-This function returns the item ID of the item equipped in the equipment slot 
-specified on the invoking character. If nothing is equipped there, it returns -1. 
+This function returns the item ID of the item slot that calls the script
+on the invoking character or the specified equipment slot. If nothing is
+equipped there, it returns -1.
 Valid equipment slots are:
 
+EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script)
 EQI_ACC_L (0)             - Accessory 1
 EQI_ACC_R (1)             - Accessory 2
 EQI_SHOES (2)             - Footgear (shoes, boots)
@@ -2682,9 +2684,6 @@ this is +10:
 This function returns the weapon level for the weapon equipped in the specified 
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
-
-If -1 is passed as the equipment slot argument then the weapon level for the item calling this function, 
-assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
 a weapon level. You can, however, probably, use this field for other equippable
@@ -5180,7 +5179,7 @@ Values for <mode> are:
 	STOR_MODE_PUT  : Player can put items in the storage.
 
 Example:
-	if (vip_status(1)) {
+	if (vip_status(VIP_STATUS_ACTIVE)) {
 		mes "I will open your Premium storage.";
 		mes "Thank you for using our service.";
 		close2;
@@ -6096,6 +6095,12 @@ As they are now, these commands are pointless, it is suggested to use
 sprite location and other accompanying data from memory when it is not used.
 However, you can use these for some quest ideas (such as cloaking NPCs talking 
 while hidden then revealing.... you can wonder around =P
+
+---------------------------------------
+
+*unloadnpc "<NPC object name>";
+
+This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
 

@@ -45,6 +45,7 @@
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
 enum equip_index {
+	EQI_COMPOUND_ON = -1,
 	EQI_ACC_L = 0,
 	EQI_ACC_R,
 	EQI_SHOES,
@@ -261,6 +262,7 @@ struct map_session_data {
 		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
 		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
 		bool keepshop; // Whether shop data should be removed when the player disconnects
+		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -582,8 +584,11 @@ struct map_session_data {
 
 	// Mail System [Zephyrus]
 	struct s_mail {
-		unsigned short nameid;
-		int index, amount, zeny;
+		struct {
+			unsigned short nameid;
+			int index, amount;
+		} item[MAIL_MAX_ITEM];
+		int zeny;
 		struct mail_data inbox;
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
@@ -881,9 +886,9 @@ struct {
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
 #ifdef VIP_ENABLE
-	#define pc_isvip(sd)      ( sd->vip.enabled ? 1 : 0 )
+	#define pc_isvip(sd)      ( sd->vip.enabled ? true : false )
 #else
-	#define pc_isvip(sd)      ( 0 )
+	#define pc_isvip(sd)      ( false )
 #endif
 #ifdef NEW_CARTS
 	#define pc_iscarton(sd)       ( (sd)->sc.data[SC_PUSH_CART] )
