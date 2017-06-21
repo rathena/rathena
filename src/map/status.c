@@ -1118,6 +1118,9 @@ void initChangeTables(void)
     StatusIconChangeTable[SC_GEFFEN_MAGIC2] = SI_GEFFEN_MAGIC2;
     StatusIconChangeTable[SC_GEFFEN_MAGIC3] = SI_GEFFEN_MAGIC3;
 
+	// RODEX
+	StatusIconChangeTable[SC_DAILYSENDMAILCNT] = SI_DAILYSENDMAILCNT;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1261,6 +1264,9 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_GOLDENMACECLAN] |= SCB_LUK|SCB_INT|SCB_MAXHP|SCB_MAXSP;
 	StatusChangeFlagTable[SC_CROSSBOWCLAN] |= SCB_DEX|SCB_AGI|SCB_MAXHP|SCB_MAXSP;
 	StatusChangeFlagTable[SC_JUMPINGCLAN] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
+
+	// RODEX
+	StatusChangeFlagTable[SC_DAILYSENDMAILCNT] |= SCB_NONE;
 
 	// Doram Buffs
 	StatusChangeFlagTable[SC_DORAM_BUF_01] |= SCB_REGEN;
@@ -9166,6 +9172,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PUSH_CART:
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
+		case SC_DAILYSENDMAILCNT:
 			tick = -1;
 			break;
 
@@ -10912,6 +10919,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_UPHEAVAL_OPTION:
 		case SC_CIRCLE_OF_FIRE_OPTION:
 		case SC_CLAN_INFO:
+		case SC_DAILYSENDMAILCNT:
 			val_flag |= 1|2;
 			break;
 		// Start |1|2|4 val_flag setting
@@ -11528,6 +11536,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
 			case SC_JUMPINGCLAN:
+			case SC_DAILYSENDMAILCNT:
 				continue;
 			}
 		}
@@ -11561,6 +11570,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
 			case SC_JUMPINGCLAN:
+			case SC_DAILYSENDMAILCNT:
 				continue;
 			}
 		}

@@ -2465,9 +2465,9 @@ Examples:
 Returns various information about a player's VIP status.
 
 Valid types:
- 1 - VIP status. (1 if VIP, 0 if non-VIP)
- 2 - VIP expire date. (timestamp string if VIP, 0 if non-VIP)
- 3 - VIP time remaining. (timestamp string if VIP, 0 if non-VIP)
+ VIP_STATUS_ACTIVE - VIP status: true if the player is a VIP or false if not
+ VIP_STATUS_EXPIRE - VIP expire timestamp if the player is VIP or 0 if not
+ VIP_STATUS_REMAINING - VIP time remaining in seconds
 
 NOTE: This command is only available if the VIP System is enabled.
 
@@ -5184,7 +5184,7 @@ Values for <mode> are:
 	STOR_MODE_PUT  : Player can put items in the storage.
 
 Example:
-	if (vip_status(1)) {
+	if (vip_status(VIP_STATUS_ACTIVE)) {
 		mes "I will open your Premium storage.";
 		mes "Thank you for using our service.";
 		close2;
@@ -6100,6 +6100,12 @@ As they are now, these commands are pointless, it is suggested to use
 sprite location and other accompanying data from memory when it is not used.
 However, you can use these for some quest ideas (such as cloaking NPCs talking 
 while hidden then revealing.... you can wonder around =P
+
+---------------------------------------
+
+*unloadnpc "<NPC object name>";
+
+This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
 
