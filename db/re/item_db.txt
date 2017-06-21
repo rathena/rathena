@@ -10759,7 +10759,7 @@
 20725,Ribbon_Piamat,Ribbon Piamat,4,10,,100,0:10,,,1,0xFFFFFFFF,63,2,4,,30,1,7,{ bonus bInt,1; bonus bDex,1; },{},{}
 20727,Brilliant_Golden_Wings,Brilliant Golden Wings,4,10,,0,,,,0,0xFFFFFFFF,63,2,8192,,1,1,5,{},{},{}
 20730,Loyalists_Hood,Loyalists Hood,4,10,,200,,30,,1,0xFFFFFFFF,63,2,8192,,80,,,{ bonus bStr,2; bonus bMaxHPrate,10; bonus bNoKnockback,1; bonus2 bSubEle,Ele_All,-20; },{},{}
-20732,STR_Complement,STR Complement,4,10,,500,,20,,1,0x00000400,56,2,4,,100,1,,{ .@r = getrefine(); bonus bMaxHPrate,6+(.@r/2); if(.@r>=9){bonus bHPrecovRate,50;} },{},{}
+20732,Supplement_Part_Con,Supplement Part Con,4,25000,,500,,20,,1,0x00000400,56,2,4,,100,1,,{ .@r = getrefine(); bonus bMaxHPrate,6+(.@r/2); if(.@r>=9){bonus bHPrecovRate,50;} },{},{}
 20733,Reinforced_Parts_Engine,Reinforced Parts - Engine,4,10,,1500,,25,,1,0x00000400,56,2,4,,100,1,,{ bonus bDelayrate,-10; .@r = getrefine(); if(.@r>=7) {bonus2 bSubEle,0,10;}; if(.@r>=9) {bonus bDelayrate,-10;} },{},{}
 20737,C_Kirin_Wing,Costume Kirin Wing,4,10,,0,,,,0,0xFFFFFFFF,63,2,8192,,1,0,6,{},{},{}
 20743,Cloak_Of_Airship,Cloak Of Airship,4,10,,0,,25,,1,0xFFFFFFFF,63,2,4,,125,0,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-20; },{},{}
@@ -10838,7 +10838,7 @@
 22036,Heroic_Silver_Fox_Leather_Boots,Heroic Silver Fox Leather Boots,4,10,,300,,15,,1,0xFFFFFFFF,63,2,64,,160,1,,{ .@r = getrefine(); if (.@r>=8 && .@r<=13) .@i=.@r; else if (.@r>13) .@i=13; bonus bLongAtkRate,5+.@i; },{},{}
 22037,Heroic_Ungoliant_Upgrade_Boots,Heroic Ungoliant Upgrade Boots,4,10,,300,,10,,1,0xFFFFFFFF,63,2,64,,160,1,,{ .@r = getrefine(); if (.@r>=8 && .@r<=13) .@i=.@r; else if (.@r>13) .@i=13; bonus bUseSPrate,-5-.@i; },{},{}
 22042,Talaria_Shoes,Talaria Shoes,4,10,,300,,15,,1,0xFFFFFFFF,63,2,64,,50,1,,{ bonus bAgi,2; bonus bAspd,1; bonus bUnbreakableShoes,1; },{},{}
-22043,AGI_Complement,AGI Complement,4,10,,350,,25,,1,0x00000400,56,2,64,,100,1,,{ bonus bAspdRate,5+(getrefine()/4); },{},{}
+22043,Supplement_Part_Agi,Supplement Part Agi,4,25000,,350,,25,,1,0x00000400,56,2,64,,100,1,,{ bonus bAspdRate,5+(getrefine()/4); },{},{}
 22044,Reinforced_Parts_Booster,Reinforced Parts - Booster,4,10,,1000,,23,,1,0x00000400,56,2,64,,100,1,,{ bonus2 bSkillUseSP,"NC_HOVERING",15; if(getrefine()>=7){bonus2 bSkillUseSP,"NC_HOVERING",-20;} },{},{}
 22045,Beach_Sandals,Summer Sandals,4,10,,200,,5,,0,0xFFFFFFFF,63,2,64,,0,1,0,{ bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,300; },{},{}
 22046,Boots_Of_Airship,Boots Of Airship,4,10,,0,,26,,0,0xFFFFFFFF,63,2,64,,125,1,,{ bonus bAgi,1; bonus bSpeedRate,10; },{},{}
