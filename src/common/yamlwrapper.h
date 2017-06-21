@@ -21,7 +21,9 @@
 */
 
 #pragma once
+#ifdef WIN32
 #pragma warning(disable:4099) // Damn it, Microsoft! [Secret]
+#endif
 
 #ifndef YAMLWRAPPER_H
 #define YAMLWRAPPER_H
@@ -35,10 +37,14 @@ extern "C" {
 
 #include "cbasetypes.h"
 
-typedef struct yamlwrapper yamlwrapper;
-typedef struct yamliterator yamliterator;
-
 #ifdef __cplusplus
+class yamliterator {
+public:
+	YAML::Node sequence;
+	unsigned int index;
+	yamliterator(YAML::Node sequence);
+};
+
 class yamlwrapper {
 public:
 	YAML::Node root;
@@ -46,23 +52,20 @@ public:
 	yamlwrapper(YAML::Node node);
 	yamliterator* iterator();
 };
-
-class yamliterator {
-public:
-	YAML::Node sequence;
-	int index;
-	yamliterator(YAML::Node sequence);
-};
+#else
+typedef struct yamlwrapper yamlwrapper;
+typedef struct yamliterator yamliterator;
 #endif
 
 yamlwrapper* yaml_load_file(const char* file_name);
 void yaml_destroy_wrapper(yamlwrapper* wrapper);
 char* yaml_get_c_string(yamlwrapper* wrapper, const char* key);
-int8 yaml_get_int8(yamlwrapper* wrapper, const char* key);
+int yaml_get_int(yamlwrapper* wrapper, const char* key);
 int16 yaml_get_int16(yamlwrapper* wrapper, const char* key);
 int32 yaml_get_int32(yamlwrapper* wrapper, const char* key);
 int64 yaml_get_int64(yamlwrapper* wrapper, const char* key);
 bool yaml_get_boolean(yamlwrapper* wrapper, const char* key);
+bool yaml_node_is_defined(yamlwrapper* wrapper, const char* key);
 yamlwrapper* yaml_get_subnode(yamlwrapper* wrapper, const char* key);
 yamliterator* yaml_get_iterator(yamlwrapper* wrapper);
 
@@ -76,4 +79,4 @@ void yaml_iterator_destroy(yamliterator* it);
 }
 #endif
 
-#endif
+#endif /* extern "C" */

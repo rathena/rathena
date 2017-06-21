@@ -23,12 +23,9 @@
 #include "yamlwrapper.h"
 #include <cstring>
 #include "malloc.h"
+#include "showmsg.h"
 
 extern "C" {
-
-yamlwrapper::yamlwrapper(std::string file) {
-	this->root = YAML::LoadFile(file);
-}
 
 yamlwrapper::yamlwrapper(YAML::Node node) {
 	this->root = node;
@@ -44,14 +41,19 @@ yamliterator* yamlwrapper::iterator() {
 }
 
 yamlwrapper* yaml_load_file(const char* file_name) {
-	return new yamlwrapper(file_name);
+	YAML::Node node = YAML::LoadFile(file_name);
+	if (!node.IsDefined())
+		return NULL;
+	return new yamlwrapper(node);
 }
 
 extern "C++" YAML::Node yaml_get_node(YAML::Node& node, std::string& key) {
-	size_t pos = key.find('.');
 	if (key.empty())
 		return node;
-	else if (pos == std::string::npos)
+
+	size_t pos = key.find('.');
+
+	if (pos == std::string::npos)
 		return node[key];
 	else
 		return yaml_get_node(node[key.substr(0, pos)], key.substr(pos+1));
@@ -70,24 +72,45 @@ char* yaml_get_c_string(yamlwrapper* wrapper, const char* key) {
 	return buf;
 }
 
-int8 yaml_get_int8(yamlwrapper* wrapper, const char* key) {
-	return yaml_get_node(wrapper->root, std::string(key)).as<int8>();
+extern "C++" {
+	template<typename T>
+	T yaml_get_value(yamlwrapper* wrapper, const char* key) {
+		if (wrapper == nullptr || key == nullptr)
+			return {};
+		try {
+			return yaml_get_node(wrapper->root, std::string(key)).as<T>();
+		}
+		catch (const std::exception& e) {
+			ShowError("Error during YAML node value resolving in node %s.\n", e.what());
+			return {};
+		}
+	}
+}
+
+int yaml_get_int(yamlwrapper* wrapper, const char* key) {
+	return yaml_get_value<int>(wrapper, key);
 }
 
 int16 yaml_get_int16(yamlwrapper* wrapper, const char* key) {
-	return yaml_get_node(wrapper->root, std::string(key)).as<int16>();
+	return yaml_get_value<int16>(wrapper, key);
 }
 
 int32 yaml_get_int32(yamlwrapper* wrapper, const char* key) {
-	return yaml_get_node(wrapper->root, std::string(key)).as<int32>();
+	return yaml_get_value<int32>(wrapper, key);
 }
 
 int64 yaml_get_int64(yamlwrapper* wrapper, const char* key) {
-	return yaml_get_node(wrapper->root, std::string(key)).as<int64>();
+	return yaml_get_value<int64>(wrapper, key);
 }
 
 bool yaml_get_boolean(yamlwrapper* wrapper, const char* key) {
-	return yaml_get_node(wrapper->root, std::string(key)).as<bool>();
+	return yaml_get_value<bool>(wrapper, key);
+}
+
+bool yaml_node_is_defined(yamlwrapper* wrapper, const char* key) {
+	if (wrapper == nullptr || key == nullptr)
+		return false;
+	return yaml_get_node(wrapper->root, std::string(key)).IsDefined();
 }
 
 yamlwrapper* yaml_get_subnode(yamlwrapper* wrapper, const char* key) {
