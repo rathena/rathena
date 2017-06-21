@@ -15307,7 +15307,7 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd){
 #if PACKETVER < 20150513
 	int mail_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 #else
-	uint8 openType = RFIFOB(fd, 2);
+	//uint8 openType = RFIFOB(fd, 2);
 	int mail_id = (int)RFIFOQ(fd, 3);
 #endif
 
@@ -15393,7 +15393,6 @@ void clif_parse_Mail_Receiver_Check(int fd, struct map_session_data *sd) {
 /// 09f3 <mail id>.Q <mail tab>.B (CZ_REQ_ITEM_FROM_MAIL)
 void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 	int i;
-	bool fail = false;
 	struct mail_message* msg;
 #if PACKETVER < 20150513
 	int mail_id = RFIFOL(fd, packet_db[sd->packet_ver][RFIFOW(fd, 0)].pos[0]);
@@ -15495,7 +15494,7 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd){
 #if PACKETVER < 20150513
 	int mail_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 #else
-	int openType = RFIFOB(fd, 2);
+	//int openType = RFIFOB(fd, 2);
 	int mail_id = (int)RFIFOQ(fd, 3);
 #endif
 	int i, j;

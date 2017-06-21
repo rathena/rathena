@@ -539,12 +539,10 @@ static void mapif_parse_Mail_send(int fd)
 {
 	struct mail_message msg;
 	char esc_name[NAME_LENGTH*2+1];
-	uint32 account_id = 0;
 
 	if(RFIFOW(fd,2) != 8 + sizeof(struct mail_message))
 		return;
 
-	account_id = RFIFOL(fd,4);
 	memcpy(&msg, RFIFOP(fd,8), sizeof(struct mail_message));
 
 	// Try to find the Dest Char by Name
@@ -556,6 +554,8 @@ static void mapif_parse_Mail_send(int fd)
 	{
 		char *data;
 #if PACKETVER < 20150513
+		uint32 account_id = RFIFOL(fd,4);
+
 		Sql_GetData(sql_handle, 0, &data, NULL);
 		if (atoi(data) != account_id)
 		{ // Cannot send mail to char in the same account
