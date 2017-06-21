@@ -5638,22 +5638,22 @@ BUILDIN_FUNC(rand)
 /**
  * Warp character based on given parameters
  * @param sd: Player data
- * @param map: Map name/Warp type
+ * @param mapname: Map name/Warp type
  * @param x: X location
  * @param y: Y location
  * @return SETPOS_OK on success and failure otherwise (see pc.h::e_setpos)
  */
-static enum e_setpos buildin_warp_sub(struct map_session_data *sd, const char *map, int16 x, int16 y) {
+static enum e_setpos buildin_warp_sub(struct map_session_data *sd, const char *mapname, int16 x, int16 y) {
 	nullpo_retr(SETPOS_OK, sd);
 
-	if (strcmp(map, "Random") == 0)
+	if (strcmp(mapname, "Random") == 0)
 		return pc_setpos(sd, sd->mapindex, 0, 0, CLR_TELEPORT);
-	else if (strcmp(map, "SavePoint") == 0 || strcmp(map, "Save") == 0)
+	else if (strcmp(mapname, "SavePoint") == 0 || strcmp(mapname, "Save") == 0)
 		return pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 	else {
 		int16 index;
 
-		if (!(index = mapindex_name2id(map)))
+		if (!(index = mapindex_name2id(mapname)))
 			return SETPOS_MAPINDEX;
 
 		return pc_setpos(sd, index, x, y, CLR_OUTSIGHT);
@@ -5696,10 +5696,10 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 	const char *str;
 
 	index = va_arg(ap,unsigned int);
-	x2 = va_arg(ap,int16);
-	y2 = va_arg(ap,int16);
-	x3 = va_arg(ap,int16);
-	y3 = va_arg(ap,int16);
+	x2 = (int16)va_arg(ap,int);
+	y2 = (int16)va_arg(ap,int);
+	x3 = (int16)va_arg(ap,int);
+	y3 = (int16)va_arg(ap,int);
 	str = va_arg(ap, char *);
 
 	if (x3 && y3) { // Warp within given area
