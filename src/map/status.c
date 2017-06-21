@@ -10,6 +10,7 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/strlib.h"
+#include "../common/yamlwrapper.h"
 
 #include "battle.h"
 #include "itemdb.h"
@@ -36,7 +37,7 @@ enum e_regen {
 
 // Bonus values and upgrade chances for refining equipment
 static struct {
-	int chance[MAX_REFINE]; /// Success chance
+	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
 	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
 	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
 } refine_info[REFINE_TYPE_MAX];
@@ -14092,7 +14093,7 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
 	if ( refine < 0 || refine >= MAX_REFINE)
 		return 0;
 
-	return refine_info[wlv].chance[refine];
+	return refine_info[wlv].chance[REFINE_CHANCE_NORMAL][refine];
 }
 
 /**
@@ -14196,44 +14197,77 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
 	return true;
 }
 
-/**
- * Read refine database for refining calculations
- * @param fields: Fields passed from sv_readdb
- * @param columns: Columns passed from sv_readdb function call
- * @param current: Current row being read into refine_info array
- * @return True
- */
-static bool status_readdb_refine(char* fields[], int columns, int current)
-{
-	int i, bonus_per_level, random_bonus, random_bonus_start_level;
-
-	current = atoi(fields[0]);
-
-	if (current < 0 || current >= REFINE_TYPE_MAX)
+static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_index) {
+	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
-	bonus_per_level = atoi(fields[1]);
-	random_bonus_start_level = atoi(fields[2]);
-	random_bonus = atoi(fields[3]);
+	int bonus_per_level = yaml_get_int(wrapper, "StatsPerLevel");
+	int random_bonus_start_level = yaml_get_int(wrapper, "RandomBonusStartLevel");
+	int random_bonus = yaml_get_int(wrapper, "RandomBonusValue");
+	yamlwrapper* rates = yaml_get_subnode(wrapper, "Rates");
+	yamliterator* it = yaml_get_iterator(rates);
+	if (yaml_iterator_is_valid(it)) {
+		for (yamlwrapper* level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
+			int refine_level = yaml_get_int(level, "Level") - 1;
 
-	for(i = 0; i < MAX_REFINE; i++) {
-		char* delim;
+			if (refine_level >= MAX_REFINE) {
+				yaml_destroy_wrapper(level);
+				continue;
+			}
+				
+			if (yaml_node_is_defined(level, "NormalChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = yaml_get_int(level, "NormalChance");
+			if (yaml_node_is_defined(level, "EnrichedChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = yaml_get_int(level, "EnrichedChance");
+			if (yaml_node_is_defined(level, "EventNormalChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = yaml_get_int(level, "EventNormalChance");
+			if (yaml_node_is_defined(level, "EventEnrichedChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = yaml_get_int(level, "EventEnrichedChance");
+			if (yaml_node_is_defined(level, "Bonus"))
+				refine_info[refine_info_index].bonus[refine_level] = yaml_get_int(level, "Bonus");
 
-		if (!(delim = strchr(fields[4+i], ':')))
-			return false;
-
-		*delim = '\0';
-
-		refine_info[current].chance[i] = atoi(fields[4+i]);
-
-		if (i >= random_bonus_start_level - 1)
-			refine_info[current].randombonus_max[i] = random_bonus * (i - random_bonus_start_level + 2);
-
-		refine_info[current].bonus[i] = bonus_per_level + atoi(delim+1);
-		if (i > 0)
-			refine_info[current].bonus[i] += refine_info[current].bonus[i-1];
+			if (refine_level >= random_bonus_start_level - 1)
+				refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
+			refine_info[refine_info_index].bonus[refine_level] = bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
+			yaml_destroy_wrapper(level);
+		}
 	}
+	yaml_destroy_wrapper(rates);
+	yaml_iterator_destroy(it);
+
 	return true;
+}
+
+static void status_yaml_readdb_refine(const char* directory, const char* file) {
+	int count = 0;
+	const char* weapon_lv_label = "WeaponLv%d";
+	size_t str_size = strlen(directory) + strlen(file) + 2;
+	char* buf = (char*)aCalloc(1, str_size);
+	sprintf(buf, "%s/%s", directory, file);
+	yamlwrapper* root_node = yaml_load_file(buf);
+	yamlwrapper* sub_node;
+
+	if (yaml_node_is_defined(root_node, "Armor")) {
+		sub_node = yaml_get_subnode(root_node, "Armor");
+		if (status_yaml_readdb_refine_sub(sub_node, 0))
+			count++;
+		yaml_destroy_wrapper(sub_node);
+	}
+	for (int i = 1; i < ARRAYLENGTH(refine_info); i++) {
+		char* label = (char*)aCalloc(1, strlen(weapon_lv_label) + 2);
+		sprintf(label, weapon_lv_label, i);
+		if (yaml_node_is_defined(root_node, label)) {
+			sub_node = yaml_get_subnode(root_node, label);
+			if (status_yaml_readdb_refine_sub(sub_node, i))
+				count++;
+			yaml_destroy_wrapper(sub_node);
+		}
+		aFree(label);
+	}
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, buf);
+
+	yaml_destroy_wrapper(root_node);
+	aFree(buf);
 }
 
 /**
@@ -14318,12 +14352,13 @@ int status_readdb(void)
 	// refine_db.txt
 	for(i=0;i<ARRAYLENGTH(refine_info);i++)
 	{
-		for(j=0;j<MAX_REFINE; j++)
-		{
-			refine_info[i].chance[j] = 100;
-			refine_info[i].bonus[j] = 0;
-			refine_info[i].randombonus_max[j] = 0;
-		}
+		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
+			for(k=0;k<MAX_REFINE; k++)
+			{
+				refine_info[i].chance[j][k] = 100;
+				refine_info[i].bonus[k] = 0;
+				refine_info[i].randombonus_max[k] = 0;
+			}
 	}
 	// attr_fix.txt
 	for(i=0;i<4;i++)
@@ -14351,7 +14386,7 @@ int status_readdb(void)
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i);
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
-		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
+		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}

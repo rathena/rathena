@@ -2062,6 +2062,15 @@ enum e_status_calc_weight_opt {
 	CALCWT_CARTSTATE = 0x4,	///< Whether to check for cart state
 };
 
+// Enum for refine chance types
+enum e_refine_chance_type {
+	REFINE_CHANCE_NORMAL = 0,
+	REFINE_CHANCE_ENRICHED,
+	REFINE_CHANCE_EVENT_NORMAL,
+	REFINE_CHANCE_EVENT_ENRICHED,
+	REFINE_CHANCE_TYPE_MAX
+};
+
 ///Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 ///Define to determine who has regen
