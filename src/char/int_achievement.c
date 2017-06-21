@@ -300,8 +300,7 @@ int mapif_parse_achievement_reward(int fd){
 		safesnprintf(mail_title, MAIL_TITLE_LENGTH, char_msg_txt(228)); // 228: Achievement Reward Mail
 		safesnprintf(mail_text, MAIL_BODY_LENGTH, char_msg_txt(229), RFIFOCP(fd,16+NAME_LENGTH) ); // 229: [%s] Achievement Reward.
 
-		// TODO: load the character name from DB
-		success = mail_sendmail(0, mail_sender, char_id, "Lemongrass", mail_title, mail_text, 0, &item, 1);
+		success = mail_sendmail(0, mail_sender, char_id, mail_receiver, mail_title, mail_text, 0, &item, 1);
 	}
 
 	mapif_achievement_reward(fd, char_id, achievement_id, success);
