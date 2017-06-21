@@ -1014,14 +1014,14 @@ void pc_clean_skilltree(struct map_session_data *sd);
 
 enum e_setpos{
 	SETPOS_OK = 0,
-	SETPOS_MAPINDEX = 1,
-	SETPOS_NO_MAPSERVER = 2,
-	SETPOS_AUTOTRADE = 3
+	SETPOS_MAPINDEX,
+	SETPOS_NO_MAPSERVER,
+	SETPOS_AUTOTRADE,
+	SETPOS_MAX_ATTEMPTS
 };
 
-enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
+enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int16 x, int16 y, clr_type clrtype);
 void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y);
-char pc_randomwarp(struct map_session_data *sd,clr_type type);
 bool pc_memo(struct map_session_data* sd, int pos);
 
 char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amount);

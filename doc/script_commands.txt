@@ -3917,6 +3917,8 @@ There are also three special 'map names' you can use.
 "Random" will warp the player randomly on the current map.
 "Save" and "SavePoint" will warp the player back to their save point.
 
+Use 0,0 as the x3/y3 values when using a special 'map name'.
+
 See also 'warp'.
 
 ---------------------------------------
@@ -3971,9 +3973,9 @@ warpguild "prontera",x,y,Guild_ID;
 
 *warppartner("<map name>",<x>,<y>);
 
-This function will find the invoking character's marriage partner, if any, and 
-warp them to the map and coordinates given. It will return 1 upon success and
-0 if the partner is not online, the character is not married, or if there's no 
+This function will find the invoking character's marriage partner, if any, and
+warp them to the map and coordinates given. It will return true upon success and
+false if the partner is not online, the character is not married, or if there's no
 invoking character (no RID). 0,0 will, as usual, normally translate to random coordinates.
 
 There are also three special 'map names' you can use.
@@ -6860,6 +6862,7 @@ Optionally, a type and ID can be specified. Available types are:
  0 - Everyone
  1 - Guild
  2 - Party
+ 3 - Clan
 
 Example:
 

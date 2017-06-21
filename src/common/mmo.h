@@ -162,6 +162,8 @@
 #define EL_CLASS_BASE 2114
 #define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
+#define MAX_WARP_ATTEMPTS 1000 /// Max amount of attempts to randomly warp a character onto valid coordinates
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1

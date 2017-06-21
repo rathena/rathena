@@ -5641,30 +5641,23 @@ BUILDIN_FUNC(rand)
  * @param map: Map name/Warp type
  * @param x: X location
  * @param y: Y location
- * @return 0 on success and failure otherwise
+ * @return SETPOS_OK on success and failure otherwise (see pc.h::e_setpos)
  */
-static int buildin_warp_sub(struct map_session_data *sd, const char *map, int x, int y) {
-	int ret = 0;
-
-	nullpo_retr(1, sd);
+static enum e_setpos buildin_warp_sub(struct map_session_data *sd, const char *map, int16 x, int16 y) {
+	nullpo_retr(SETPOS_OK, sd);
 
 	if (strcmp(map, "Random") == 0)
-		ret = pc_randomwarp(sd, CLR_TELEPORT);
+		return pc_setpos(sd, sd->mapindex, 0, 0, CLR_TELEPORT);
 	else if (strcmp(map, "SavePoint") == 0 || strcmp(map, "Save") == 0)
-		ret = pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+		return pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 	else {
-		int16 index = 0;
+		int16 index;
 
 		if (!(index = mapindex_name2id(map)))
-			return 1;
+			return SETPOS_MAPINDEX;
 
-		ret = pc_setpos(sd, index, x, y, CLR_OUTSIGHT);
+		return pc_setpos(sd, index, x, y, CLR_OUTSIGHT);
 	}
-
-	if (ret)
-		ShowError("buildin_warp_sub: Moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, map, x, y);
-
-	return ret;
 }
 
 /**
@@ -5673,7 +5666,7 @@ static int buildin_warp_sub(struct map_session_data *sd, const char *map, int x,
  */
 BUILDIN_FUNC(warp)
 {
-	int x,y;
+	int16 x, y;
 	const char* str;
 	struct map_session_data* sd;
 
@@ -5698,39 +5691,35 @@ BUILDIN_FUNC(warp)
  */
 static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 {
-	int x2,y2,x3,y3;
+	int16 x2,y2,x3,y3;
 	unsigned int index;
 	const char *str;
 
 	index = va_arg(ap,unsigned int);
-	x2 = va_arg(ap,int);
-	y2 = va_arg(ap,int);
-	x3 = va_arg(ap,int);
-	y3 = va_arg(ap,int);
-	str = va_arg(ap,char *);
+	x2 = va_arg(ap,int16);
+	y2 = va_arg(ap,int16);
+	x3 = va_arg(ap,int16);
+	y3 = va_arg(ap,int16);
+	str = va_arg(ap, char *);
 
-	if (index == 0)
-		pc_randomwarp((TBL_PC *)bl, CLR_TELEPORT);
-	else if(x3 && y3) {
-		int max, tx, ty, j = 0;
-		int16 m;
+	if (x3 && y3) { // Warp within given area
+		int16 max, tx, ty, j = 0, m;
 
 		m = map_mapindex2mapid(index);
 
 		// choose a suitable max number of attempts
-		if( (max = (y3-y2+1)*(x3-x2+1)*3) > 1000 )
-			max = 1000;
+		if( (max = (y3-y2+1)*(x3-x2+1)*3) > MAX_WARP_ATTEMPTS )
+			max = MAX_WARP_ATTEMPTS;
 
 		// find a suitable map cell
 		do {
 			tx = rnd()%(x3-x2+1)+x2;
 			ty = rnd()%(y3-y2+1)+y2;
-			j++;
-		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < max );
+		} while (map_getcell(m, tx, ty, CELL_CHKNOPASS) && (j++) < max);
 
 		if (buildin_warp_sub((TBL_PC *)bl, str, tx, ty))
 			return 1;
-	} else {
+	} else { // Warp to set location
 		if (buildin_warp_sub((TBL_PC *)bl, str, x2, y2))
 			return 1;
 	}
@@ -5744,7 +5733,6 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(areawarp)
 {
 	int16 m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
-	unsigned int index;
 	const char *str;
 	const char *mapname;
 
@@ -5768,15 +5756,10 @@ BUILDIN_FUNC(areawarp)
 		}
 	}
 
-	if( (m = map_mapname2mapid(mapname)) < 0 )
+	if ((m = map_mapname2mapid(mapname)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	if( strcmp(str,"Random") == 0 )
-		index = 0;
-	else if( !(index=mapindex_name2id(str)) )
-		return SCRIPT_CMD_FAILURE;
-
-	map_foreachinallarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3,NULL);
+	map_foreachinallarea(buildin_areawarp_sub, m, x0, y0, x1, y1, BL_PC, mapindex_name2id(str), x2, y2, x3, y3, str);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5888,7 +5871,7 @@ BUILDIN_FUNC(warpparty)
 		{
 		case 0: // Random
 			if(!map[pl_sd->bl.m].flag.nowarp)
-				pc_randomwarp(pl_sd,CLR_TELEPORT);
+				pc_setpos(pl_sd, pl_sd->bl.m, 0, 0, CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
 			if(!map[pl_sd->bl.m].flag.noreturn)
@@ -5972,7 +5955,7 @@ BUILDIN_FUNC(warpguild)
 		{
 		case 0: // Random
 			if(!map[pl_sd->bl.m].flag.nowarp)
-				pc_randomwarp(pl_sd,CLR_TELEPORT);
+				pc_setpos(pl_sd, pl_sd->bl.m, 0, 0, CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
 			if(!map[pl_sd->bl.m].flag.noreturn)
@@ -11965,10 +11948,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 /// warpwaitingpc "<map name>",<x>,<y>;
 BUILDIN_FUNC(warpwaitingpc)
 {
-	int x;
-	int y;
-	int i;
-	int n;
+	int16 x, y, i, n;
 	const char* map_name;
 	struct npc_data* nd;
 	struct chat_data* cd;
@@ -11989,10 +11969,8 @@ BUILDIN_FUNC(warpwaitingpc)
 	{
 		TBL_PC* sd = cd->usersd[0];
 
-		if( strcmp(map_name,"SavePoint") == 0 && map[sd->bl.m].flag.noteleport )
-		{// can't teleport on this map
+		if ((strcmp(map_name, "SavePoint") == 0 || strcmp(map_name, "Save") == 0) && map[sd->bl.m].flag.noteleport) // Can't teleport on the current map
 			break;
-		}
 
 		if( cd->zeny )
 		{// fee set
@@ -13154,11 +13132,12 @@ BUILDIN_FUNC(failedremovecards) {
  */
 BUILDIN_FUNC(mapwarp)
 {
-	int x, y, m, check_val = 0, check_ID = 0, i = 0;
+	int16 x, y, m, type = 0, i = 0;
+	int type_id = 0;
 	struct guild *g = NULL;
 	struct party_data *p = NULL;
+	struct clan *c = NULL;
 	const char *str, *mapname;
-	unsigned int index;
 
 	mapname = script_getstr(st, 2);
 	str = script_getstr(st, 3);
@@ -13166,19 +13145,16 @@ BUILDIN_FUNC(mapwarp)
 	y = script_getnum(st, 5);
 
 	if (script_hasdata(st, 7)){
-		check_val = script_getnum(st, 6);
-		check_ID = script_getnum(st, 7);
+		type = script_getnum(st, 6);
+		type_id = script_getnum(st, 7);
 	}
 
 	if ((m = map_mapname2mapid(mapname)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	if (!(index = mapindex_name2id(str)))
-		return SCRIPT_CMD_FAILURE;
-
-	switch (check_val) {
+	switch (type) {
 		case 1:
-			g = guild_search(check_ID);
+			g = guild_search(type_id);
 			if (g) {
 				for (i = 0; i < g->max_member; i++) {
 					if (g->member[i].sd && g->member[i].sd->bl.m == m)
@@ -13187,7 +13163,7 @@ BUILDIN_FUNC(mapwarp)
 			}
 			break;
 		case 2:
-			p = party_search(check_ID);
+			p = party_search(type_id);
 			if (p) {
 				for (i = 0; i < MAX_PARTY; i++) {
 					if (p->data[i].sd && p->data[i].sd->bl.m == m)
@@ -13195,8 +13171,17 @@ BUILDIN_FUNC(mapwarp)
 				}
 			}
 			break;
+		case 3:
+			c = clan_search(type_id);
+			if (c) {
+				for (i = 0; i < MAX_CLAN; i++) {
+					if (c->members[i] && c->members[i]->bl.m == m)
+						buildin_warp_sub(c->members[i], str, x, y);
+				}
+			}
+			break;
 		default:
-			map_foreachinmap(buildin_areawarp_sub, m, BL_PC, index, x, y, 0, 0, str);
+			map_foreachinmap(buildin_areawarp_sub, m, BL_PC, mapindex_name2id(str), x, y, 0, 0, str);
 			break;
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -13370,11 +13355,9 @@ BUILDIN_FUNC(getfatherid)
  */
 BUILDIN_FUNC(warppartner)
 {
-	int x,y;
-	unsigned short mapindex;
+	int16 x, y;
 	const char *str;
-	TBL_PC *sd;
-	TBL_PC *p_sd;
+	TBL_PC *sd, *p_sd;
 
 	if(!script_rid2sd(sd) || !pc_ismarried(sd) ||
 	(p_sd=map_charid2sd(sd->status.partner_id)) == NULL) {
@@ -13386,16 +13369,12 @@ BUILDIN_FUNC(warppartner)
 	x=script_getnum(st,3);
 	y=script_getnum(st,4);
 
-	mapindex = mapindex_name2id(str);
-	if (mapindex) {
-		if (buildin_warp_sub(p_sd, str, x, y))
-			script_pushint(st, 0);
-		else {
-			script_pushint(st, 1);
-			return SCRIPT_CMD_SUCCESS;
-		}
+	if (buildin_warp_sub(p_sd, str, x, y) == SETPOS_OK) {
+		script_pushint(st, true);
+		return SCRIPT_CMD_SUCCESS;
 	} else
-		script_pushint(st,0);
+		script_pushint(st, false);
+
 	return SCRIPT_CMD_FAILURE;
 }
 
