@@ -133,7 +133,7 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
 		memmove(&sd->achievement_data.achievements[i], &sd->achievement_data.achievements[i + 1], sizeof(struct achievement) * (sd->achievement_data.count - 1 - i));
 
 	sd->achievement_data.count--;
-	if (!sd->achievement_data.achievements[i].complete)
+	if (!sd->achievement_data.achievements[i].completed)
 		sd->achievement_data.incompleteCount--;
 	RECREATE(sd->achievement_data.achievements, struct achievement, sd->achievement_data.count);
 	sd->achievement_data.save = true;
@@ -175,7 +175,7 @@ bool achievement_check_dependent(struct map_session_data *sd, int achievement_id
 			if (adb_dep == &achievement_dummy)
 				return false;
 
-			ARR_FIND(0, sd->achievement_data.count, j, sd->achievement_data.achievements[j].achievement_id == adb->dependents[i].achievement_id && sd->achievement_data.achievements[j].complete == true);
+			ARR_FIND(0, sd->achievement_data.count, j, sd->achievement_data.achievements[j].achievement_id == adb->dependents[i].achievement_id && sd->achievement_data.achievements[j].completed > 0);
 			if (j == sd->achievement_data.count)
 				return false; // One of the dependent is not complete!
 		}
@@ -240,7 +240,7 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 	if (i == sd->achievement_data.incompleteCount)
 		return false;
 
-	if (sd->achievement_data.achievements[i].complete == true)
+	if (sd->achievement_data.achievements[i].completed > 0)
 		return false;
 
 	// Finally we send the updated achievement to the client
@@ -256,8 +256,7 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 			}
 		}
 
-		sd->achievement_data.achievements[i].complete = true;
-		sd->achievement_data.achievements[i].completeDate = time(NULL);
+		sd->achievement_data.achievements[i].completed = time(NULL);
 
 		if (i < (--sd->achievement_data.incompleteCount)) { // The achievement needs to be moved to the completed achievements block at the end of the array
 			struct achievement tmp_ach;
@@ -289,12 +288,17 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
  * @param sd: Player getting the reward
  * @param achievement_id: Achievement to get reward data
  */
-void achievement_get_reward(struct map_session_data *sd, int achievement_id)
+void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded)
 {
 	struct achievement_db *adb = achievement_search(achievement_id);
 	int i;
 
 	nullpo_retv(sd);
+
+	if( rewarded == 0 ){
+		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		return;
+	}
 
 	if (adb == &achievement_dummy) {
 		ShowError("achievement_reward: Inter server sent a reward claim for achievement %d not found in DB.\n", achievement_id);
@@ -308,7 +312,7 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id)
 	}
 
 	// Only update in the cache, db was updated already
-	sd->achievement_data.achievements[i].gotReward = true;
+	sd->achievement_data.achievements[i].rewarded = rewarded;
 
 	run_script(adb->rewards.script, 0, sd->bl.id, fake_nd->bl.id);
 	if (adb->rewards.title_id) {
@@ -319,6 +323,7 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id)
 	}
 
 	clif_achievement_reward_ack(sd->fd, 1, achievement_id);
+	clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 }
 
 /**
@@ -345,7 +350,7 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 		return;
 	}
 
-	if (sd->achievement_data.achievements[i].gotReward == true || sd->achievement_data.achievements[i].complete == false) {
+	if (sd->achievement_data.achievements[i].rewarded > 0 || sd->achievement_data.achievements[i].completed == 0) {
 		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
@@ -373,7 +378,7 @@ void achievement_get_titles(uint32 char_id)
 			for (i = 0; i < sd->achievement_data.count; i++) {
 				struct achievement_db *adb = achievement_search(sd->achievement_data.achievements[i].achievement_id);
 
-				if (adb && adb->rewards.title_id && sd->achievement_data.achievements[i].complete == true) { // If the achievement has a title and is complete, give it to the player
+				if (adb && adb->rewards.title_id && sd->achievement_data.achievements[i].completed > 0) { // If the achievement has a title and is complete, give it to the player
 					RECREATE(sd->titles, int, sd->titleCount + 1);
 					sd->titles[sd->titleCount] = adb->rewards.title_id;
 					sd->titleCount++;
@@ -430,11 +435,11 @@ int achievement_check_progress(struct map_session_data *sd, int achievement_id, 
 	if (type >= ACHIEVEINFO_COUNT1 && type <= ACHIEVEINFO_COUNT10)
 		return sd->achievement_data.achievements[i].count[type - 1];
 	else if (type == ACHIEVEINFO_COMPLETE)
-		return sd->achievement_data.achievements[i].complete;
+		return sd->achievement_data.achievements[i].completed > 0;
 	else if (type == ACHIEVEINFO_COMPLETEDATE)
-		return (int)sd->achievement_data.achievements[i].completeDate;
+		return (int)sd->achievement_data.achievements[i].completed;
 	else if (type == ACHIEVEINFO_GOTREWARD)
-		return sd->achievement_data.achievements[i].gotReward;
+		return sd->achievement_data.achievements[i].rewarded > 0;
 	return -2;
 }
 
@@ -455,7 +460,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	old_level = sd->achievement_data.level;
 
 	for (i = 0; i < sd->achievement_data.count; i++) {
-		if (sd->achievement_data.achievements[i].complete == true)
+		if (sd->achievement_data.achievements[i].completed > 0)
 			sd->achievement_data.total_score += sd->achievement_data.achievements[i].score;
 	}
 
@@ -530,7 +535,7 @@ static int achievement_update_objectives(DBKey key, DBData *data, va_list ap)
 	} else {
 		entry = &sd->achievement_data.achievements[i];
 
-		if (entry->complete == true) // Player has completed the achievement
+		if (entry->completed > 0) // Player has completed the achievement
 			return 0;
 
 		memcpy(objective_count, entry->count, sizeof(objective_count));

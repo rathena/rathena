@@ -211,9 +211,8 @@ struct s_item_randomoption {
 struct achievement {
 	int achievement_id;                    ///< Achievement ID
 	int count[MAX_ACHIEVEMENT_OBJECTIVES]; ///< Counters of each achievement objective
-	time_t completeDate;                   ///< Date completed
-	bool complete;                         ///< Current achievement state
-	bool gotReward;                        ///< Received reward?
+	time_t completed;                      ///< Date completed
+	time_t rewarded;                       ///< Received reward?
 	int score;                             ///< Amount of points achievement is worth
 };
 

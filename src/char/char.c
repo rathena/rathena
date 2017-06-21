@@ -2482,7 +2482,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking achievement_table
-	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`id`,`complete`,`count1`,`count2`,`count3`,`count4`,`count5`,`count6`,`count7`,`count8`,`count9`,`count10`,`completeDate`,`gotReward`"
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`id`,`count1`,`count2`,`count3`,`count4`,`count5`,`count6`,`count7`,`count8`,`count9`,`count10`,`completed`,`rewarded`"
 		" FROM `%s` LIMIT 1;", schema_config.achievement_table)) {
 		Sql_ShowDebug(sql_handle);
 		return false;

@@ -35,7 +35,7 @@ static const int packet_len_table[] = {
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	-1, 0, 0,14,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 38, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] / itembound[Akinari]
-	-1, 7,-1, 7, 11, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
+	-1, 7,-1, 7, 14, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
 	12,-1, 7, 3,  0, 0, 0, 0,  0, 0,-1, 9, -1, 0,  0, 0, //0x3880  Pet System,  Storages
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -2132,7 +2132,7 @@ void intif_parse_achievements(int fd)
 
 			received[i].score = adb->score;
 
-			if (received[i].complete == false) // Insert at the beginning
+			if (received[i].completed == 0) // Insert at the beginning
 				memcpy(&sd->achievement_data.achievements[sd->achievement_data.incompleteCount++], &received[i], sizeof(struct achievement));
 			else // Insert at the end
 				memcpy(&sd->achievement_data.achievements[--k], &received[i], sizeof(struct achievement));
@@ -2207,10 +2207,7 @@ void intif_parse_achievementreward(int fd){
 		return;
 	}
 
-	// If the request succeeded
-	if( RFIFOB(fd,10) ){
-		achievement_get_reward(sd, RFIFOL(fd, 6));
-	}
+	achievement_get_reward(sd, RFIFOL(fd, 6), RFIFOL(fd, 10));
 }
 
 /**

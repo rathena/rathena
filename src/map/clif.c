@@ -19909,11 +19909,11 @@ void clif_achievement_list_all(struct map_session_data *sd)
 
 	for (i = 0; i < count; i++) {
 		WFIFOL(fd, i * 50 + 22) = (uint32)sd->achievement_data.achievements[i].achievement_id;
-		WFIFOB(fd, i * 50 + 26) = (uint32)sd->achievement_data.achievements[i].complete;
+		WFIFOB(fd, i * 50 + 26) = (uint32)sd->achievement_data.achievements[i].completed > 0;
 		for (j = 0; j < MAX_ACHIEVEMENT_OBJECTIVES; j++) 
 			WFIFOL(fd, (i * 50) + 27 + (j * 4)) = (uint32)sd->achievement_data.achievements[i].count[j];
-		WFIFOL(fd, i * 50 + 67) = (uint32)sd->achievement_data.achievements[i].completeDate;
-		WFIFOB(fd, i * 50 + 71) = sd->achievement_data.achievements[i].gotReward;
+		WFIFOL(fd, i * 50 + 67) = (uint32)sd->achievement_data.achievements[i].completed;
+		WFIFOB(fd, i * 50 + 71) = sd->achievement_data.achievements[i].rewarded > 0;
 	}
 	WFIFOSET(fd, len);
 }
@@ -19944,11 +19944,11 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 	WFIFOL(fd, 12) = info[1]; // Achievement EXP TNL (right number in bar)
 	if (ach) {
 		WFIFOL(fd, 16) = ach->achievement_id; // Achievement ID
-		WFIFOB(fd, 20) = ach->complete; // Is it complete?
+		WFIFOB(fd, 20) = ach->completed > 0; // Is it complete?
 		for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; i++)
 			WFIFOL(fd, 21 + (i * 4)) = (uint32)ach->count[i]; // 1~10 pre-reqs
-		WFIFOL(fd, 61) = (uint32)ach->completeDate; // Epoch time
-		WFIFOB(fd, 65) = ach->gotReward; // Got reward?
+		WFIFOL(fd, 61) = (uint32)ach->completed; // Epoch time
+		WFIFOB(fd, 65) = ach->rewarded > 0; // Got reward?
 	} else
 		memset(WFIFOP(fd, 16), 0, 40);
 	WFIFOSET(fd, packet_len(0xa24));
@@ -19961,6 +19961,9 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 void clif_parse_AchievementCheckReward(int fd, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
+
+	if( sd->achievement_data.save )
+		intif_achievement_save(sd);
 
 	achievement_check_reward(sd, RFIFOL(fd,2));
 }

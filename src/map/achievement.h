@@ -102,7 +102,7 @@ struct achievement_db achievement_dummy;	///< Dummy entry for invalid achievemen
 
 struct achievement_db *achievement_search(int achievement_id);
 bool achievement_mobexists(int mob_id);
-void achievement_get_reward(struct map_session_data *sd, int achievement_id);
+void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
 bool achievement_remove(struct map_session_data *sd, int achievement_id);
 bool achievement_update_achievement(struct map_session_data *sd, int achievement_id, bool complete);

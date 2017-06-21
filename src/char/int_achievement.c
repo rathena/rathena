@@ -37,7 +37,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 	memset(&tmp_achieve, 0, sizeof(tmp_achieve));
 
 	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, "SELECT `id`, `complete`, `completeDate`, `gotReward`");
+	StringBuf_AppendStr(&buf, "SELECT `id`, COALESCE(UNIX_TIMESTAMP(`completed`),0), COALESCE(UNIX_TIMESTAMP(`rewarded`),0)");
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id` = '%u'", schema_config.achievement_table, char_id);
@@ -54,11 +54,10 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 	}
 
 	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_CHAR, &tmp_achieve.complete, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.completeDate, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 3, SQLDT_INT,  &tmp_achieve.gotReward, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, NULL, NULL);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 4 + i, SQLDT_INT, &tmp_achieve.count[i], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, NULL, NULL);
 
 	*count = (int)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
@@ -110,11 +109,21 @@ bool mapif_achievement_add(uint32 char_id, struct achievement ad)
 	int i;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `complete`, `completeDate`, `gotReward`", schema_config.achievement_table);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `completed`, `rewarded`", schema_config.achievement_table);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
 	StringBuf_AppendStr(&buf, ")");
-	StringBuf_Printf(&buf, " VALUES ('%u', '%d', '%d', '%u', '%d'", char_id, ad.achievement_id, ad.complete, (uint32)ad.completeDate, ad.gotReward);
+	StringBuf_Printf(&buf, " VALUES ('%u', '%d',", char_id, ad.achievement_id, (uint32)ad.completed, (uint32)ad.rewarded);
+	if( ad.completed ){
+		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u'),", (uint32)ad.completed);
+	}else{
+		StringBuf_AppendStr(&buf, "NULL,");
+	}
+	if( ad.rewarded ){
+		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u')", (uint32)ad.rewarded);
+	}else{
+		StringBuf_AppendStr(&buf, "NULL");
+	}
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", '%d'", ad.count[i]);
 	StringBuf_AppendStr(&buf, ")");
@@ -142,7 +151,17 @@ bool mapif_achievement_update(uint32 char_id, struct achievement ad)
 	int i;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `complete` = '%d', `completeDate` = '%u', `gotReward` = '%d'", schema_config.achievement_table, ad.complete, (uint32)ad.completeDate, ad.gotReward);
+	StringBuf_Printf(&buf, "UPDATE `%s` SET ", schema_config.achievement_table);
+	if( ad.completed ){
+		StringBuf_Printf(&buf, "`completed` = FROM_UNIXTIME('%u'),", (uint32)ad.completed);
+	}else{
+		StringBuf_AppendStr(&buf, "`completed` = NULL,");
+	}
+	if( ad.rewarded ){
+		StringBuf_Printf(&buf, "`rewarded` = FROM_UNIXTIME('%u')", (uint32)ad.rewarded);
+	}else{
+		StringBuf_AppendStr(&buf, "`rewarded` = NULL");
+	}
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", `count%d` = '%d'", i + 1, ad.count[i]);
 	StringBuf_Printf(&buf, " WHERE `id` = %d AND `char_id` = %u", ad.achievement_id, char_id);
@@ -191,7 +210,7 @@ int mapif_parse_achievement_save(int fd)
 		if (j < old_n) { // Update existing achievements
 			// Only counts, complete, and reward are changable.
 			ARR_FIND(0, MAX_ACHIEVEMENT_OBJECTIVES, k, new_ad[i].count[k] != old_ad[j].count[k]);
-			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].complete != old_ad[j].complete || new_ad[i].gotReward != old_ad[j].gotReward) {
+			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].completed != old_ad[j].completed || new_ad[i].rewarded != old_ad[j].rewarded) {
 				if ((success = mapif_achievement_update(char_id, new_ad[i])) == false)
 					break;
 			}
@@ -260,13 +279,13 @@ int mapif_parse_achievement_load(int fd)
 /**
  * Notify the map-server if claiming the reward has succeeded.
  */
-void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, bool success ){
-	WFIFOHEAD(fd, 11);
+void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, time_t rewarded ){
+	WFIFOHEAD(fd, 14);
 	WFIFOW(fd, 0) = 0x3864;
 	WFIFOL(fd, 2) = char_id;
 	WFIFOL(fd, 6) = achievement_id;
-	WFIFOB(fd, 10) = success;
-	WFIFOSET(fd, 11);
+	WFIFOL(fd, 10) = (uint32)rewarded;
+	WFIFOSET(fd, 14);
 }
 
 /**
@@ -274,21 +293,19 @@ void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, boo
  * @see inter_parse_frommap
  */
 int mapif_parse_achievement_reward(int fd){
+	time_t current = time(NULL);
 	uint32 char_id = RFIFOL(fd, 2);
 	int32 achievement_id = RFIFOL(fd, 6);
-	bool success;
 
-	if( Sql_Query( sql_handle, "UPDATE `%s` SET `gotReward` = '1' WHERE `char_id`='%u' AND `id` = '%d' AND `completeDate` <> '0' AND `gotReward` = '0'", schema_config.achievement_table, char_id, achievement_id ) == SQL_ERROR ||
+	if( Sql_Query( sql_handle, "UPDATE `%s` SET `rewarded` = FROM_UNIXTIME('%u') WHERE `char_id`='%u' AND `id` = '%d' AND `completed` IS NOT NULL AND `rewarded` IS NULL", schema_config.achievement_table, (uint32)current, char_id, achievement_id ) == SQL_ERROR ||
 		Sql_NumRowsAffected(sql_handle) <= 0 ){
-		success = false;
-	}else{
+		current = 0;
+	}else if( RFIFOW(fd,10) > 0 ){ // Do not send a mail if no item reward
 		char mail_sender[NAME_LENGTH];
 		char mail_receiver[NAME_LENGTH];
 		char mail_title[MAIL_TITLE_LENGTH];
 		char mail_text[MAIL_BODY_LENGTH];
 		struct item item;
-
-		success = true;
 
 		memset(&item, 0, sizeof(struct item));
 		item.nameid = RFIFOW(fd, 10);
@@ -300,10 +317,12 @@ int mapif_parse_achievement_reward(int fd){
 		safesnprintf(mail_title, MAIL_TITLE_LENGTH, char_msg_txt(228)); // 228: Achievement Reward Mail
 		safesnprintf(mail_text, MAIL_BODY_LENGTH, char_msg_txt(229), RFIFOCP(fd,16+NAME_LENGTH) ); // 229: [%s] Achievement Reward.
 
-		success = mail_sendmail(0, mail_sender, char_id, mail_receiver, mail_title, mail_text, 0, &item, 1);
+		if( !mail_sendmail(0, mail_sender, char_id, mail_receiver, mail_title, mail_text, 0, &item, 1) ){
+			current = 0;
+		}
 	}
 
-	mapif_achievement_reward(fd, char_id, achievement_id, success);
+	mapif_achievement_reward(fd, char_id, achievement_id, current);
 
 	return 0;
 }

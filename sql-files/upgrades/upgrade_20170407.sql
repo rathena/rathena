@@ -8,7 +8,6 @@ ALTER TABLE `char`
 CREATE TABLE IF NOT EXISTS `achievement` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `id` bigint(11) unsigned NOT NULL,
-  `complete` enum('0','1') NOT NULL default '0',
   `count1` mediumint(8) unsigned NOT NULL default '0',
   `count2` mediumint(8) unsigned NOT NULL default '0',
   `count3` mediumint(8) unsigned NOT NULL default '0',
@@ -19,8 +18,8 @@ CREATE TABLE IF NOT EXISTS `achievement` (
   `count8` mediumint(8) unsigned NOT NULL default '0',
   `count9` mediumint(8) unsigned NOT NULL default '0',
   `count10` mediumint(8) unsigned NOT NULL default '0',
-  `completeDate` int(11) unsigned NOT NULL default '0',
-  `gotReward` int(11) unsigned NOT NULL default '0',
+  `completed` datetime,
+  `rewarded` datetime,
   PRIMARY KEY (`char_id`,`id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
