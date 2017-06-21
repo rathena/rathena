@@ -6,6 +6,8 @@
 
 #include "../common/db.h"
 
+#define ACHIEVEMENT_NAME_LENGTH 50 /// Max Achievement Name length
+
 enum e_achievement_group {
 	AG_NONE = 0,
 	AG_ADD_FRIEND,
@@ -75,6 +77,7 @@ struct av_condition {
 
 struct achievement_db {
 	int achievement_id;
+	char name[ACHIEVEMENT_NAME_LENGTH];
 	enum e_achievement_group group;
 	uint8 target_count;
 	struct achievement_target *targets;

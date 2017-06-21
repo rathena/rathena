@@ -5,8 +5,9 @@
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
-#include "../common/utils.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
+#include "../common/utils.h"
 
 #include "achievement.h"
 #include "chrif.h"
@@ -984,16 +985,14 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 	struct config_setting_t *t = NULL;
 	enum e_achievement_group group = AG_NONE;
 	int score = 0, achievement_id = 0;
-	const char *group_char = NULL;
-	const char *condition = NULL;
-	const char *mapname = NULL;
+	const char *group_char = NULL, *name = NULL, *condition = NULL, *mapname = NULL;
 
 	if (!config_setting_lookup_int(cs, "id", &achievement_id)) {
 		ShowWarning("achievement_read_db_sub: Missing ID in \"%s\", entry #%d, skipping.\n", source, n);
 		return NULL;
 	}
 	if (achievement_id < 1 || achievement_id >= INT_MAX) {
-		ShowWarning("achievement_read_db_sub: Invalid achievement ID '%d' in \"%s\", entry #%d (min: 0, max: %d), skipping.\n", achievement_id, source, n, INT_MAX);
+		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source, n, INT_MAX);
 		return NULL;
 	}
 	if (!config_setting_lookup_string(cs, "group", &group_char) || !*group_char) {
@@ -1005,9 +1004,15 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 		return NULL;
 	}
 
+	if (!config_setting_lookup_string(cs, "name", &name) || !*name) {
+		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", name, achievement_id, source);
+		return NULL;
+	}
+
 	CREATE(entry, struct achievement_db, 1);
 	entry->achievement_id = achievement_id;
 	entry->group = group;
+	safestrncpy(entry->name, name, sizeof(entry->name));
 	entry->mapindex = -1;
 
 	if ((t = config_setting_get_member(cs, "target")) && config_setting_is_list(t)) {
