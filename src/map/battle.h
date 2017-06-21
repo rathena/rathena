@@ -622,6 +622,10 @@ extern struct Battle_Config
 	int dispel_song; //Can songs be dispelled?
 	int guild_maprespawn_clones; // Should clones be killed by maprespawnguildid?
 	int hide_fav_sell;
+	int mail_daily_count;
+	int mail_zeny_fee;
+	int mail_attachment_price;
+	int mail_attachment_weight;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

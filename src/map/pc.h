@@ -266,6 +266,7 @@ struct map_session_data {
 		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
 		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
 		bool keepshop; // Whether shop data should be removed when the player disconnects
+		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -587,8 +588,11 @@ struct map_session_data {
 
 	// Mail System [Zephyrus]
 	struct s_mail {
-		unsigned short nameid;
-		int index, amount, zeny;
+		struct {
+			unsigned short nameid;
+			int index, amount;
+		} item[MAIL_MAX_ITEM];
+		int zeny;
 		struct mail_data inbox;
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;

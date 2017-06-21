@@ -62,6 +62,7 @@ struct Schema_Config {
 	char party_db[DB_NAME_LEN];
 	char pet_db[DB_NAME_LEN];
 	char mail_db[DB_NAME_LEN]; // MAIL SYSTEM
+	char mail_attachment_db[DB_NAME_LEN];
 	char auction_db[DB_NAME_LEN]; // Auctions System
 	char friend_db[DB_NAME_LEN];
 	char hotkey_db[DB_NAME_LEN];
@@ -171,6 +172,8 @@ struct CharServ_Config {
 	unsigned short default_map_y;
 
 	int clan_remove_inactive_days;
+	int mail_return_days;
+	int mail_delete_days;
 };
 extern struct CharServ_Config charserv_config;
 
