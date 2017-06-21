@@ -18410,9 +18410,9 @@ BUILDIN_FUNC(sleep)
 }
 
 /// Pauses the execution of the script, keeping the unit attached
-/// Stop the script if none unit attached
+/// Stop the script if no unit attached
 ///
-/// sleep2(<mili secconds>) -> <bool>
+/// sleep2(<milli seconds>)
 BUILDIN_FUNC(sleep2)
 {
 	int ticks;
