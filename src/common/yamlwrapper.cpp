@@ -24,8 +24,6 @@
 #include <cstring>
 #include "malloc.h"
 
-static YAML::Node empty_node;
-
 extern "C" {
 
 yamlwrapper::yamlwrapper(std::string file) {
