@@ -158,6 +158,17 @@ bool mapif_achievement_update(uint32 char_id, struct achievement ad)
 }
 
 /**
+ * Notifies the map-server of the result of saving a character's achievementlog.
+ */
+void mapif_achievement_save( int fd, uint32 char_id, bool success ){
+	WFIFOHEAD(fd, 7);
+	WFIFOW(fd, 0) = 0x3863;
+	WFIFOL(fd, 2) = char_id;
+	WFIFOB(fd, 6) = success;
+	WFIFOSET(fd, 7);
+}
+
+/**
  * Handles the save request from mapserver for a character's achievementlog.
  * Received achievements are saved, and an ack is sent back to the map server.
  * @see inter_parse_frommap
@@ -205,26 +216,17 @@ int mapif_parse_achievement_save(int fd)
 	if (old_ad)
 		aFree(old_ad);
 
-	// Send ack
-	WFIFOHEAD(fd, 7);
-	WFIFOW(fd, 0) = 0x3863;
-	WFIFOL(fd, 2) = char_id;
-	WFIFOB(fd, 6) = success ? 1 : 0;
-	WFIFOSET(fd, 7);
+	mapif_achievement_save(fd, char_id, success);
 
 	return 0;
 }
 
 /**
- * Sends achievementlog to the map server
- * NOTE: Achievements sent to the player are only completed ones
- * @see inter_parse_frommap
+ * Sends the achievementlog of a character to the map-server.
  */
-int mapif_parse_achievement_load(int fd)
-{
-	uint32 char_id = RFIFOL(fd, 2);
+void mapif_achievement_load( int fd, uint32 char_id ){
 	struct achievement *tmp_achievementlog = NULL;
-	int num_achievements;
+	int num_achievements = 0;
 
 	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
 
@@ -240,6 +242,16 @@ int mapif_parse_achievement_load(int fd)
 
 	if (tmp_achievementlog)
 		aFree(tmp_achievementlog);
+}
+
+/**
+ * Sends achievementlog to the map server
+ * NOTE: Achievements sent to the player are only completed ones
+ * @see inter_parse_frommap
+ */
+int mapif_parse_achievement_load(int fd)
+{
+	mapif_achievement_load( fd, RFIFOL(fd, 2) );
 
 	return 0;
 }
