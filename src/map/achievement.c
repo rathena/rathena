@@ -288,28 +288,28 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
  * Get the reward of an achievement
  * @param sd: Player getting the reward
  * @param achievement_id: Achievement to get reward data
- * @return -2 for invalid player, -1 for invalid achievement; 0 successfully gave reward; 1 no inventory slot
  */
-int achievement_check_reward_sub(struct map_session_data *sd, int achievement_id)
+void achievement_get_reward(struct map_session_data *sd, int achievement_id)
 {
 	struct achievement_db *adb = achievement_search(achievement_id);
+	int i;
 
-	nullpo_retr(-2, sd);
+	nullpo_retv(sd);
 
 	if (adb == &achievement_dummy) {
-		ShowError("achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id);
-		return -1;
+		ShowError("achievement_reward: Inter server sent a reward claim for achievement %d not found in DB.\n", achievement_id);
+		return;
 	}
 
-	if (adb->rewards.nameid) { //! TODO: Change this to RODEX
-		struct item item;
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 
-		memset(&item, 0, sizeof(item));
-		item.nameid = adb->rewards.nameid;
-		item.identify = 1;
-		if (pc_additem(sd, &item, adb->rewards.amount, LOG_TYPE_MAIL) != ADDITEM_SUCCESS) // Logged as log_type mail until RODEX is implemented
-			return 1;
+	if (i == sd->achievement_data.count) {
+		return;
 	}
+
+	// Only update in the cache, db was updated already
+	sd->achievement_data.achievements[i].gotReward = true;
+
 	run_script(adb->rewards.script, 0, sd->bl.id, fake_nd->bl.id);
 	if (adb->rewards.title_id) {
 		RECREATE(sd->titles, int, sd->titleCount + 1);
@@ -318,54 +318,41 @@ int achievement_check_reward_sub(struct map_session_data *sd, int achievement_id
 		sd->achievement_data.sendlist = true;
 	}
 
-	return 0;
+	clif_achievement_reward_ack(sd->fd, 1, achievement_id);
 }
 
 /**
  * Check if player has recieved an achievement's reward
  * @param sd: Player to get reward
  * @param achievement_id: Achievement to get reward data
- * @return False on failure, otherwise true
  */
-bool achievement_check_reward(struct map_session_data *sd, int achievement_id)
+void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 {
 	int i;
+	struct achievement_db *adb = achievement_search(achievement_id);
 
-	nullpo_retr(false, sd);
+	nullpo_retv(sd);
+
+	if (adb == &achievement_dummy) {
+		ShowError("achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id);
+		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		return;
+	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i == sd->achievement_data.count) {
 		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
-		return false;
+		return;
 	}
 
 	if (sd->achievement_data.achievements[i].gotReward == true || sd->achievement_data.achievements[i].complete == false) {
 		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
-		return false;
+		return;
 	}
 
-	switch(achievement_check_reward_sub(sd, achievement_id)) {
-		case 0:
-			ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id); // Find the achievement's index again, it may have changed
-			sd->achievement_data.achievements[i].gotReward = true;
-			intif_achievement_save(sd);
-			clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
-			clif_achievement_reward_ack(sd->fd, 1, achievement_id);
-
-			if (sd->achievement_data.sendlist) {
-				clif_achievement_list_all(sd);
-				sd->achievement_data.sendlist = false;
-			}
-			break;
-		case 1:
-			clif_displaymessage(sd->fd, "Achievement: Please make room in your inventory before trying to receive this item.");
-			clif_achievement_reward_ack(sd->fd, 0, achievement_id);
-			return false;
-		default:
-			break;
+	if( !intif_achievement_reward(sd,adb) ){
+		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
 	}
-
-	return true;
 }
 
 /**

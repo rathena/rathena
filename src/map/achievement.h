@@ -4,9 +4,8 @@
 #ifndef MAP_ACHIEVEMENTS_H
 #define MAP_ACHIEVEMENTS_H
 
+#include "../common/mmo.h"
 #include "../common/db.h"
-
-#define ACHIEVEMENT_NAME_LENGTH 50 /// Max Achievement Name length
 
 enum e_achievement_group {
 	AG_NONE = 0,
@@ -103,11 +102,11 @@ struct achievement_db achievement_dummy;	///< Dummy entry for invalid achievemen
 
 struct achievement_db *achievement_search(int achievement_id);
 bool achievement_mobexists(int mob_id);
-int achievement_check_reward_sub(struct map_session_data *sd, int achievement_id);
+void achievement_get_reward(struct map_session_data *sd, int achievement_id);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
 bool achievement_remove(struct map_session_data *sd, int achievement_id);
 bool achievement_update_achievement(struct map_session_data *sd, int achievement_id, bool complete);
-bool achievement_check_reward(struct map_session_data *sd, int achievement_id);
+void achievement_check_reward(struct map_session_data *sd, int achievement_id);
 void achievement_free(struct map_session_data *sd);
 int achievement_check_progress(struct map_session_data *sd, int achievement_id, int type);
 int *achievement_level(struct map_session_data *sd, bool flag);

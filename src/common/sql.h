@@ -175,6 +175,13 @@ uint64 Sql_NumRows(Sql* self);
 
 
 
+/// Returns the number of rows affected by the last query
+///
+/// @return Number of rows
+uint64 Sql_NumRowsAffected(Sql* self);
+
+
+
 /// Fetches the next row.
 /// The data of the previous row is no longer valid.
 ///
