@@ -21,7 +21,7 @@
 // see conf/battle/client.conf for other version
 
 #ifndef PACKETVER
-	#define PACKETVER 20130807
+	#define PACKETVER 20151104
 	//#define PACKETVER 20120410
 #endif
 
@@ -140,7 +140,14 @@
 //Mail System
 #define MAIL_MAX_INBOX 30
 #define MAIL_TITLE_LENGTH 40
+#if PACKETVER < 20150513
 #define MAIL_BODY_LENGTH 200
+#define MAIL_MAX_ITEM 1
+#else
+#define MAIL_BODY_LENGTH 500
+#define MAIL_MAX_ITEM 5
+#define MAIL_PAGE_SIZE 7
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
@@ -188,6 +195,12 @@ struct quest {
 	enum quest_state state;          ///< Current quest state
 };
 
+struct s_item_randomoption {
+	short id;
+	short value;
+	char param;
+};
+
 struct item {
 	int id;
 	unsigned short nameid;
@@ -197,11 +210,7 @@ struct item {
 	char refine;
 	char attribute;
 	unsigned short card[MAX_SLOTS];
-	struct {
-		short id;
-		short value;
-		char param;
-	} option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
+	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
@@ -354,8 +363,8 @@ struct s_pet {
 	int pet_id;
 	short class_;
 	short level;
-	short egg_id;//pet egg id
-	short equip;//pet equip name_id
+	unsigned short egg_id;//pet egg id
+	unsigned short equip;//pet equip name_id
 	short intimate;//pet friendly
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];
@@ -498,6 +507,19 @@ typedef enum mail_status {
 	MAIL_READ,
 } mail_status;
 
+enum mail_inbox_type {
+	MAIL_INBOX_NORMAL = 0,
+	MAIL_INBOX_ACCOUNT,
+	MAIL_INBOX_RETURNED
+};
+
+enum mail_attachment_type {
+	MAIL_ATT_NONE = 0,
+	MAIL_ATT_ZENY = 1,
+	MAIL_ATT_ITEM = 2,
+	MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM
+};
+
 struct mail_message {
 	int id;
 	uint32 send_id;                 //hold char_id of sender
@@ -506,12 +528,14 @@ struct mail_message {
 	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
+	int type; // enum mail_inbox_type
+	time_t scheduled_deletion;
 
 	mail_status status;
 	time_t timestamp; // marks when the message was sent
 
 	uint32 zeny;
-	struct item item;
+	struct item item[MAIL_MAX_ITEM];
 };
 
 struct mail_data {
@@ -569,6 +593,7 @@ struct guild_member {
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
 	unsigned char modified;
+	uint32 last_login;
 };
 
 struct guild_position {
@@ -915,6 +940,7 @@ struct clan{
 	short max_member, connect_member;
 	struct map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
+	unsigned short instance_id;
 };
 
 // Sanity checks...

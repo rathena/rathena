@@ -23,6 +23,8 @@ else
 endif
 ALL_DEPENDS=server
 
+CXXFLAG =-std=c++11
+
 @SET_MAKE@
 
 #####################################################################
@@ -63,9 +65,17 @@ obj/%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
 	@@CC@ @CFLAGS_AR@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
+obj/%.o: %.cpp $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
+	@echo "	CXX	$<"
+	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
 obj/mini%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
 	@@CC@ @CFLAGS_AR@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ -DMINICORE @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/mini%.o: %.cpp $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
+	@echo "	CXX	$<"
+	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ -DMINICORE @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(MT19937AR_OBJ):

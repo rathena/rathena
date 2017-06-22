@@ -391,7 +391,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0
 	len: 2
 	parameter:
-		- cmd : packet identification (0x2735
+		- cmd : packet identification (0x2735)
 	desc:
 		- IP address update signal from login server.
 		- Send back the IP of char server to login-server if IP was changed.
@@ -1006,13 +1006,14 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3048
 	Type: ZI
-	Structure: <cmd>.W <cid>.L <flag>.B
-	index: 0,2,6
-	len: 7
+	Structure: <cmd>.W <cid>.L <flag>.B <mail_type>.B
+	index: 0,2,6,7
+	len: 8
 	parameter:
 		- cmd : packet identification (0x3048)
 		- cid
 		- flag
+		- mail_type
 	desc:
 		- Inbox request
 
@@ -1029,13 +1030,14 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x304a
 	Type: ZI
-	Structure: <cmd>.W <cid>.L <mail_id>.L
-	index: 0,2,6
-	len: 10
+	Structure: <cmd>.W <cid>.L <mail_id>.L <attachment_type>.B
+	index: 0,2,6,10
+	len: 11
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x304a)
 		- cid
 		- mail_id
+		- attachment_type
 	desc:
 		- Mail get attachment
 
@@ -1045,7 +1047,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,6
 	len: 10
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x304b)
 		- cid
 		- mail_id
 	desc:
@@ -1057,7 +1059,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,6
 	len: 10
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x304c)
 		- cid
 		- mail_id
 	desc:
@@ -1069,12 +1071,24 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,8
 	len: variable: 8+mail_message
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x304d)
 		- len
 		- aid
 		- msg
 	desc:
 		- Mail send
+
+0x304e
+	Type: ZI
+	Structure: <cmd>.W <cid>.L <name>.24B
+	index: 0,2,6
+	len: 30
+	parameter:
+		- cmd : packet identification (0x304e)
+		- cid
+		- name
+	desc:
+		- Checks if a character with the given name exists.
 
 0x3050
 	Type: ZI
@@ -1082,7 +1096,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,8,10,14,16
 	len: variable: 16+NAME_LENGTH
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3050)
 		- len
 		- cid
 		- type
@@ -1098,7 +1112,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4
 	len: variable: 4+auction_data
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3051)
 		- len
 		- auction_data
 	desc:
@@ -1110,7 +1124,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,6
 	len: 10
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3052)
 		- cid
 		- auction_id
 	desc:
@@ -1122,7 +1136,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,6
 	len: 10
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3053)
 		- cid
 		- auction_id
 	desc:
@@ -1134,7 +1148,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,8,12,16
 	len: variable: 16+NAME_LENGTH
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3055)
 		- len
 		- cid
 		- auction_id
@@ -1148,7 +1162,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,6,10
 	len: 12
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3056)
 		- cid
 		- aid
 		- guild_id
@@ -1161,7 +1175,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2
 	len: 6
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3060)
 		- cid
 	desc:
 		- Requests a character's quest log entries to the inter server.
@@ -1172,7 +1186,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,8
 	len: variable: 8+num_quests
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3061)
 	desc:
 		- Requests to the inter server to save a character's quest log entries.
 
@@ -1182,7 +1196,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4
 	len: variable: 4+s_mercenary
 	parameter:
-		- cmd : packet identification (0x3093)
+		- cmd : packet identification (0x3070)
 		- size
 		- merc
 	desc:
@@ -1346,7 +1360,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,5,9,13
 	len: 11
 	parameter:
-		- cmd : packet identification (0x308a)
+		- cmd : packet identification (0x308b)
 		- type : 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
 		- account_id
 		- char_id
@@ -1512,7 +1526,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,4+NAME_LENGTH,8+NAME_LENGTH
 	len: variable: mes_len + 8 + NAME_LENGTH
 	parameter:
-		- cmd : packet identification (0x3003)
+		- cmd : packet identification (0x3803)
 		- packet_len: mes_len + 8 + NAME_LENGTH
 		- wisp_name
 		- permission
@@ -1575,7 +1589,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,6,10
 	len: variable: 10+NAME+LENGTH
 	parameter:
-		- cmd : packet identification (0x3807)
+		- cmd : packet identification (0x3808)
 		- u_fd
 		- aid
 		- acc_name
@@ -1966,14 +1980,15 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3848
 	Type: IZ
-	Structure: <cmd>.W <size>.W <char_id>.L <flag>.B <md>.?B
-	index: 0,2,4,8,9
-	len: variable: 9+md
+	Structure: <cmd>.W <size>.W <char_id>.L <flag>.B <mail_type>.B <md>.?B
+	index: 0,2,4,8,9,10
+	len: variable: 10+md
 	parameter:
 		- cmd : packet identification (0x3848)
 		- size
 		- char_id
 		- flag
+		- mail_type
 		- md : Mail
 	desc:
 		- A player request for mail inbox
@@ -2043,6 +2058,21 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- mail_message
 	desc:
 		- Mail sent status (to player if the sender is player and online)
+
+0x384e
+	Type: IZ
+	Structure: <cmd>.W <cid_sender>.L <cid_receiver>.L <class>.W <level>.W <name>.24B
+	index: 0,2,6,10,12,14
+	len: 38
+	parameter:
+		- cmd : packet identification (0x384e)
+		- cid_sender
+		- cid_receiver
+		- class
+		- level
+		- name
+	desc:
+		- Mail receiver's character data(character id, job, level and name)
 
 0x3850
 	Type: IZ
@@ -2126,7 +2156,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,6,8
 	len: variable: 8+items
 	parameter:
-		- cmd : packet identification (0x3856)
+		- cmd : packet identification (0x3857)
 		- size
 		- count : number of item retrieved
 		- guild_id
@@ -2269,7 +2299,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	index: 0,2,4,8,9
 	len: variable: 9+s_homunculus
 	parameter:
-		- cmd : packet identification (0x3890)
+		- cmd : packet identification (0x3891)
 		- size
 		- account_id
 		- flag: 0 means failed to retrieve homunculus data

@@ -2,7 +2,12 @@
 
 * **rAthena Hash**: 
 
-<!-- Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue. -->
+<!-- Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue. 
+How to get your GitHub Hash:
+1. cd your/rAthena/directory/
+2. git rev-parse --short HEAD
+3. Copy the resulting hash.
+-->
 
 * **Client Date**: 
 

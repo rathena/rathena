@@ -12,10 +12,10 @@ struct s_pet_db {
 	short class_; ///< Monster ID
 	char name[NAME_LENGTH], ///< AEGIS name
 		jname[NAME_LENGTH]; ///< English name
-	short itemID; ///< Lure ID
-	short EggID; ///< Egg ID
-	short AcceID; ///< Accessory ID
-	short FoodID; ///< Food ID
+	unsigned short itemID; ///< Lure ID
+	unsigned short EggID; ///< Egg ID
+	unsigned short AcceID; ///< Accessory ID
+	unsigned short FoodID; ///< Food ID
 	int fullness; ///< Amount of hunger decresed each hungry_delay interval
 	int hungry_delay; ///< Hunger value decrease each x seconds
 	int r_hungry; ///< Intimacy increased after feeding

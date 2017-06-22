@@ -320,6 +320,13 @@ OnStart2:
 
 OnInstanceInit:
 	disablenpc instance_npcname( strnpcinfo(0) );
+	// disable some warps
+	disablenpc instance_npcname("#fac3wp");
+	disablenpc instance_npcname("#fac3wp2");
+	disablenpc instance_npcname("#fac4wp");
+	disablenpc instance_npcname("#fac4wp2");
+	disablenpc instance_npcname("#fac5wp");
+	disablenpc instance_npcname("#fac6wp");
 	end;
 }
 
@@ -458,24 +465,12 @@ OnTouch:
 	end;
 }
 
-1@xm_d,79,129,0	script	#fac1wp2	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,73,129;
-	end;
-}
-
 1@xm_d,179,129,0	script	#fac2wp	WARPNPC,2,2,{
 OnTouch:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
 		warp 'xm_d_map$,183,100;
 		playBGM "54";
 	}
-	end;
-}
-
-1@xm_d,184,109,0	script	#fac2wp2	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,170,129;
 	end;
 }
 
@@ -715,24 +710,6 @@ OnMyMobDead:
 
 OnInstanceInit:
 	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
-}
-
-1@xm_d,130,178,0	script	#fac3wp	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,130,193;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
-}
-
-1@xm_d,130,184,0	script	#fac3wp2	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,129,173;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -984,24 +961,6 @@ OnInstanceInit:
 	end;
 }
 
-1@xm_d,107,208,0	script	#fac4wp	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,87,208;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
-}
-
-1@xm_d,95,208,0	script	#fac4wp2	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,115,208;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
-}
-
 1@xm_d,1,5,3	script	#fac3ct	CLEAR_NPC,{
 	end;
 OnEnd:
@@ -1080,15 +1039,6 @@ OnStart:
 	enablenpc instance_npcname("#fac5wp");
 	// enablenpc instance_npcname("#fac5wp2");// never enabled
 	enablenpc instance_npcname("#jeton1");
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
-}
-
-1@xm_d,152,208,0	script	#fac5wp	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,167,208;
 	end;
 OnInstanceInit:
 	disablenpc instance_npcname( strnpcinfo(0) );
@@ -1490,15 +1440,6 @@ OnInstanceInit:
 	end;
 }
 
-1@xm_d,205,159,0	script	#fac6wp	WARPNPC,2,2,{
-OnTouch:
-	warp 'xm_d_map$,205,147;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
-}
-
 1@xm_d,218,145,0	script	#jeton2	-1,4,4,{
 OnTouch_:
 	disablenpc instance_npcname("#jeton2");
@@ -1686,6 +1627,17 @@ OnInstanceInit:
 1@xm_d,218,136,3	duplicate(Packaged Present#1)	Packaged Present#8	4_TREASURE_BOX
 1@xm_d,222,136,3	duplicate(Packaged Present#1)	Packaged Present#9	4_TREASURE_BOX
 1@xm_d,226,136,3	duplicate(Packaged Present#1)	Packaged Present#10	4_TREASURE_BOX
+
+// Warps
+//==========================================
+1@xm_d,79,129,0	warp2	#fac1wp2	2,2,1@xm_d,73,129
+1@xm_d,184,109,0	warp2	#fac2wp2	2,2,1@xm_d,170,129
+1@xm_d,130,178,0	warp2	#fac3wp	2,2,1@xm_d,130,193
+1@xm_d,130,184,0	warp2	#fac3wp2	2,2,1@xm_d,129,173
+1@xm_d,107,208,0	warp2	#fac4wp	2,2,1@xm_d,87,208
+1@xm_d,95,208,0	warp2	#fac4wp2	2,2,1@xm_d,115,208
+1@xm_d,152,208,0	warp2	#fac5wp	2,2,1@xm_d,167,208
+1@xm_d,205,159,0	warp2	#fac6wp	2,2,1@xm_d,205,147
 
 // Instance GM Functions :: mx_xm_ad
 //==========================================

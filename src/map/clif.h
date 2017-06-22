@@ -32,6 +32,9 @@ struct quest;
 struct party_booking_ad_info;
 enum e_party_member_withdraw;
 struct sale_item_data;
+enum mail_inbox_type;
+struct mail_message;
+enum mail_attachment_type;
 #include <stdarg.h>
 
 enum { // packet DB
@@ -475,6 +478,8 @@ enum clif_messages {
 	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
 	ITEM_NOUSE_SITTING = 0x297,
+	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
+	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
 	MERC_MSG_BASE = 0x4f2,
 	SKILL_CANT_USE_AREA = 0x536,
 	ITEM_CANT_USE_AREA =  0x537,
@@ -729,6 +734,7 @@ void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
+void clif_party_job_and_level(struct map_session_data *sd);
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
@@ -863,14 +869,25 @@ void do_init_clif(void);
 void do_final_clif(void);
 
 // MAIL SYSTEM
+enum mail_send_result{
+	WRITE_MAIL_SUCCESS = 0x0,
+	WRITE_MAIL_FAILED = 0x1,
+	WRITE_MAIL_FAILED_CNT = 0x2,
+	WRITE_MAIL_FAILED_ITEM = 0x3,
+	WRITE_MAIL_FAILED_CHECK_CHARACTER_NAME = 0x4,
+	WRITE_MAIL_FAILED_WHISPEREXREGISTER = 0x5,
+};
+
 void clif_Mail_window(int fd, int flag);
 void clif_Mail_read(struct map_session_data *sd, int mail_id);
-void clif_Mail_delete(int fd, int mail_id, short fail);
+void clif_mail_delete(struct map_session_data* sd, struct mail_message *msg, bool success);
 void clif_Mail_return(int fd, int mail_id, short fail);
-void clif_Mail_send(int fd, bool fail);
-void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
-void clif_Mail_refreshinbox(struct map_session_data *sd);
-void clif_Mail_getattachment(int fd, uint8 flag);
+void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result);
+void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title);
+void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type type,int64 mailID);
+void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type);
+void clif_Mail_Receiver_Ack(struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name);
+void clif_mail_removeitem(struct map_session_data* sd, bool success, int index, int amount);
 // AUCTION SYSTEM
 void clif_Auction_openwindow(struct map_session_data *sd);
 void clif_Auction_results(struct map_session_data *sd, short count, short pages, uint8 *buf);
@@ -1003,7 +1020,7 @@ enum clif_colors {
 };
 unsigned long color_table[COLOR_MAX];
 
-void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
+void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 
