@@ -396,39 +396,39 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 
 	// if no maps found, search by edit distance
 	if (!count) {
-		unsigned int distance[MAX_MAP_PER_SERVER][2];
+		unsigned int dist[MAX_MAP_PER_SERVER][2];
 		int j;
 
 		// calculate Levenshtein distance for all maps
 		for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
 			if (strlen(map[i].name) < 4)  // invalid map name?
-				distance[i][0] = INT_MAX;
+				dist[i][0] = INT_MAX;
 			else {
-				distance[i][0] = levenshtein(map[i].name, name);
-				distance[i][1] = i;
+				dist[i][0] = levenshtein(map[i].name, name);
+				dist[i][1] = i;
 			}
 		}
 
 		// selection sort elements as needed
 		count = min(MAX_SUGGESTIONS, 5);  // results past 5 aren't worth showing
 		for (i = 0; i < count; i++) {
-			int min = i;
+			int minimum = i;
 			for (j = i+1; j < MAX_MAP_PER_SERVER; j++) {
-				if (distance[j][0] < distance[min][0])
-					min = j;
+				if (dist[j][0] < dist[minimum][0])
+					minimum = j;
 			}
 
 			// print map name
-			if (distance[min][0] > 4) {  // awful results, don't bother
+			if (dist[minimum][0] > 4) {  // awful results, don't bother
 				if (!i) return;
 				break;
 			}
-			strcat(buffer, map[distance[min][1]].name);
+			strcat(buffer, map[dist[minimum][1]].name);
 			strcat(buffer, " ");
 
 			// swap elements
-			swap(distance[i][0], distance[min][0]);
-			swap(distance[i][1], distance[min][1]);
+			swap(dist[i][0], dist[minimum][0]);
+			swap(dist[i][1], dist[minimum][1]);
 		}
 	}
 
@@ -7599,7 +7599,7 @@ ACMD_FUNC(homstats)
 	struct homun_data *hd;
 	struct s_homunculus_db *db;
 	struct s_homunculus *hom;
-	int lv, min, max, evo;
+	int lv, minimum, maximum, evo;
 
 	nullpo_retr(-1, sd);
 
@@ -7620,44 +7620,44 @@ ACMD_FUNC(homstats)
 	lv--; //Since the first increase is at level 2.
 
 	evo = (hom->class_ == db->evo_class);
-	min = db->base.HP +lv*db->gmin.HP +(evo?db->emin.HP:0);
-	max = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1267), hom->max_hp, min, max); // Max HP: %d (%d~%d)
+	minimum = db->base.HP +lv*db->gmin.HP +(evo?db->emin.HP:0);
+	maximum = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1267), hom->max_hp, minimum, maximum); // Max HP: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.SP +lv*db->gmin.SP +(evo?db->emin.SP:0);
-	max = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1268), hom->max_sp, min, max); // Max SP: %d (%d~%d)
+	minimum = db->base.SP +lv*db->gmin.SP +(evo?db->emin.SP:0);
+	maximum = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1268), hom->max_sp, minimum, maximum); // Max SP: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.str +lv*(db->gmin.str/10) +(evo?db->emin.str:0);
-	max = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1269), hom->str/10, min, max); // Str: %d (%d~%d)
+	minimum = db->base.str +lv*(db->gmin.str/10) +(evo?db->emin.str:0);
+	maximum = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1269), hom->str/10, minimum, maximum); // Str: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.agi +lv*(db->gmin.agi/10) +(evo?db->emin.agi:0);
-	max = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1270), hom->agi/10, min, max); // Agi: %d (%d~%d)
+	minimum = db->base.agi +lv*(db->gmin.agi/10) +(evo?db->emin.agi:0);
+	maximum = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1270), hom->agi/10, minimum, maximum); // Agi: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.vit +lv*(db->gmin.vit/10) +(evo?db->emin.vit:0);
-	max = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1271), hom->vit/10, min, max); // Vit: %d (%d~%d)
+	minimum = db->base.vit +lv*(db->gmin.vit/10) +(evo?db->emin.vit:0);
+	maximum = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1271), hom->vit/10, minimum, maximum); // Vit: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.int_ +lv*(db->gmin.int_/10) +(evo?db->emin.int_:0);
-	max = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1272), hom->int_/10, min, max); // Int: %d (%d~%d)
+	minimum = db->base.int_ +lv*(db->gmin.int_/10) +(evo?db->emin.int_:0);
+	maximum = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1272), hom->int_/10, minimum, maximum); // Int: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.dex +lv*(db->gmin.dex/10) +(evo?db->emin.dex:0);
-	max = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1273), hom->dex/10, min, max); // Dex: %d (%d~%d)
+	minimum = db->base.dex +lv*(db->gmin.dex/10) +(evo?db->emin.dex:0);
+	maximum = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1273), hom->dex/10, minimum, maximum); // Dex: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
-	min = db->base.luk +lv*(db->gmin.luk/10) +(evo?db->emin.luk:0);
-	max = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);;
-	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1274), hom->luk/10, min, max); // Luk: %d (%d~%d)
+	minimum = db->base.luk +lv*(db->gmin.luk/10) +(evo?db->emin.luk:0);
+	maximum = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1274), hom->luk/10, minimum, maximum); // Luk: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
@@ -7844,16 +7844,16 @@ ACMD_FUNC(version)
 static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 {
 
-	int time, id;
+	int duration, id;
 	struct map_session_data *pl_sd = (struct map_session_data *)bl;
 	if (pl_sd == NULL)
 		return 0;
 
 	id = va_arg(ap, int);
-	time = va_arg(ap, int);
+	duration = va_arg(ap, int);
 
 	if (id != bl->id && !pc_get_group_level(pl_sd)) {
-		pl_sd->status.manner -= time;
+		pl_sd->status.manner -= duration;
 		if (pl_sd->status.manner < 0)
 			sc_start(NULL,&pl_sd->bl,SC_NOCHAT,100,0,0);
 		else
@@ -7864,7 +7864,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 
 ACMD_FUNC(mutearea)
 {
-	int time;
+	int duration;
 	nullpo_ret(sd);
 
 	if (!message || !*message) {
@@ -7872,11 +7872,11 @@ ACMD_FUNC(mutearea)
 		return -1;
 	}
 
-	time = atoi(message);
+	duration = atoi(message);
 
 	map_foreachinallarea(atcommand_mutearea_sub,sd->bl.m,
 		sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE,
-		sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_PC, sd->bl.id, time);
+		sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_PC, sd->bl.id, duration);
 
 	return 0;
 }
@@ -10368,7 +10368,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
 
-	bool is_atcommand = true; // false if it's a charcommand
+	bool isAtCmd = true; // false if it's a charcommand
 
 	nullpo_retr(false, sd);
 
@@ -10402,9 +10402,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	if (*message == charcommand_symbol)
-		is_atcommand = false;
+		isAtCmd = false;
 
-	if (is_atcommand) { // @command
+	if (isAtCmd) { // @command
 		sprintf(atcmd_msg, "%s", message);
 		ssd = sd;
 	} else { // #command
@@ -10459,8 +10459,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 		// Check if the binding isn't NULL and there is a NPC event, level of usage met, et cetera
 		if( binding != NULL && binding->npc_event[0] &&
-			((is_atcommand && pc_get_group_level(sd) >= binding->level) ||
-			 (!is_atcommand && pc_get_group_level(sd) >= binding->level2)))
+			((isAtCmd && pc_get_group_level(sd) >= binding->level) ||
+			 (!isAtCmd && pc_get_group_level(sd) >= binding->level2)))
 		{
 			// Check if self or character invoking; if self == character invoked, then self invoke.
 			npc_do_atcmd_event(ssd, command, params, binding->npc_event);
@@ -10476,7 +10476,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 		sprintf(output, msg_txt(sd,153), command); // "%s is Unknown Command."
 		clif_displaymessage(fd, output);
-		atcommand_get_suggestions(sd, command + 1, is_atcommand);
+		atcommand_get_suggestions(sd, command + 1, isAtCmd);
 		return true;
 	}
 
@@ -10487,14 +10487,14 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		if (info->restriction&ATCMD_NOSCRIPT && (type == 0 || type == 3)) //scripts prevent
 			return true;
 		if (info->restriction&ATCMD_NOAUTOTRADE && (type == 0 || type == 3)
-			&& ((is_atcommand && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
+			&& ((isAtCmd && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
 			return true;
 	}
 
 	// type == 1 : player invoked
 	if (type == 1) {
-		if ((is_atcommand && info->at_groups[sd->group_pos] == 0) ||
-			(!is_atcommand && info->char_groups[sd->group_pos] == 0) )
+		if ((isAtCmd && info->at_groups[sd->group_pos] == 0) ||
+			(!isAtCmd && info->char_groups[sd->group_pos] == 0) )
 			return false;
 
 		if( pc_isdead(sd) && pc_has_permission(sd,PC_PERM_DISABLE_CMD_DEAD) ) {
@@ -10512,7 +10512,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	//Log only if successful.
-	log_atcommand(sd, is_atcommand ? atcmd_msg : message);
+	log_atcommand(sd, isAtCmd ? atcmd_msg : message);
 
 	return true;
 }

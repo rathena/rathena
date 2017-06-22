@@ -36,7 +36,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
+int pc_split_atoui(char* str, unsigned int* val, char sep, int maximum);
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
 #define MAX_LEVEL_BASE_EXP 99999999 ///< Max Base EXP for player on Max Base Level
@@ -213,21 +213,21 @@ static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr_t data
 * Adds a spiritball to player for 'interval' ms
 * @param sd
 * @param interval
-* @param max
+* @param maximum
 */
-void pc_addspiritball(struct map_session_data *sd,int interval,int max)
+void pc_addspiritball(struct map_session_data *sd,int interval,int maximum)
 {
 	int tid;
 	uint8 i;
 
 	nullpo_retv(sd);
 
-	if(max > MAX_SPIRITBALL)
-		max = MAX_SPIRITBALL;
+	if(maximum > MAX_SPIRITBALL)
+		maximum = MAX_SPIRITBALL;
 	if(sd->spiritball < 0)
 		sd->spiritball = 0;
 
-	if( sd->spiritball && sd->spiritball >= max )
+	if( sd->spiritball && sd->spiritball >= maximum )
 	{
 		if(sd->spirit_timer[0] != INVALID_TIMER)
 			delete_timer(sd->spirit_timer[0],pc_spiritball_timer);
@@ -1999,14 +1999,14 @@ int pc_disguise(struct map_session_data *sd, int class_)
 /// Check for valid SC, break & show error message if invalid SC
 #define PC_BONUS_CHK_SC(sc,bonus) { if ((sc) <= SC_NONE || (sc) >= SC_MAX) { PC_BONUS_SHOW_ERROR((bonus),Effect,(sc)); }}
 
-static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, unsigned short card_id)
+static void pc_bonus_autospell(struct s_autospell *spell, int maximum, short id, short lv, short rate, short flag, unsigned short card_id)
 {
 	uint8 i;
 
 	if( !rate )
 		return;
 
-	for( i = 0; i < max && spell[i].id; i++ )
+	for( i = 0; i < maximum && spell[i].id; i++ )
 	{
 		if( (spell[i].card_id == card_id || spell[i].rate < 0 || rate < 0) && spell[i].id == id && spell[i].lv == lv )
 		{
@@ -2016,8 +2016,8 @@ static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, sho
 			break;
 		}
 	}
-	if (i == max) {
-		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", max);
+	if (i == maximum) {
+		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", maximum);
 		return;
 	}
 	spell[i].id = id;
@@ -2034,21 +2034,21 @@ static void pc_bonus_autospell(struct s_autospell *spell, int max, short id, sho
 	spell[i].card_id = card_id;
 }
 
-static void pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short src_skill, short id, short lv, short rate, unsigned short card_id)
+static void pc_bonus_autospell_onskill(struct s_autospell *spell, int maximum, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
 	uint8 i;
 
 	if( !rate )
 		return;
 
-	for( i = 0; i < max && spell[i].id; i++ )
+	for( i = 0; i < maximum && spell[i].id; i++ )
 	{
 		;  // each autospell works independently
 	}
 
-	if( i == max )
+	if( i == maximum )
 	{
-		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", max);
+		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", maximum);
 		return;
 	}
 
@@ -2139,14 +2139,14 @@ static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int pmax,
 
 /** Adjust/add drop rate modifier for player
 * @param drop: Player's sd->add_drop (struct s_add_drop)
-* @param max: Max bonus can be received
+* @param maximum: Max bonus can be received
 * @param nameid: item id that will be dropped
 * @param group: group id
 * @param class_: target class
 * @param race: target race. if < 0, means monster_id
 * @param rate: rate value: 1 ~ 10000. If < 0, it will be multiplied with mob level/10
 */
-static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigned short nameid, uint16 group, int class_, short race, int rate)
+static void pc_bonus_item_drop(struct s_add_drop *drop, const short maximum, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
 	uint8 i;
 
@@ -2179,7 +2179,7 @@ static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigne
 	}
 
 	//Find match entry, and adjust the rate only
-	for (i = 0; i < max; i++) {
+	for (i = 0; i < maximum; i++) {
 		if (!&drop[i] || (!drop[i].nameid && !drop[i].group))
 			continue;
 		if (drop[i].nameid == nameid &&
@@ -2197,9 +2197,9 @@ static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigne
 			}
 		}
 	}
-	ARR_FIND(0,max,i,!&drop[i] || (drop[i].nameid == 0 && drop[i].group == 0));
-	if (i >= max) {
-		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid:%hu group:%d class_:%d race:%d rate:%d)\n",max,nameid,group,class_,race,rate);
+	ARR_FIND(0,maximum,i,!&drop[i] || (drop[i].nameid == 0 && drop[i].group == 0));
+	if (i >= maximum) {
+		ShowWarning("pc_bonus_item_drop: Reached max (%d) number of added drops per character! (nameid:%hu group:%d class_:%d race:%d rate:%d)\n",maximum,nameid,group,class_,race,rate);
 		return;
 	}
 	drop[i].nameid = nameid;
@@ -2209,14 +2209,14 @@ static void pc_bonus_item_drop(struct s_add_drop *drop, const short max, unsigne
 	drop[i].rate = rate;
 }
 
-bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short flag,const char *other_script,unsigned int pos,bool onskill)
+bool pc_addautobonus(struct s_autobonus *bonus,char maximum,const char *script,short rate,unsigned int dur,short flag,const char *other_script,unsigned int pos,bool onskill)
 {
 	int i;
 
-	ARR_FIND(0, max, i, bonus[i].rate == 0);
-	if( i == max )
+	ARR_FIND(0, maximum, i, bonus[i].rate == 0);
+	if( i == maximum )
 	{
-		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", max);
+		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", maximum);
 		return false;
 	}
 
@@ -2245,13 +2245,13 @@ bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short
 	return true;
 }
 
-void pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,char max,bool restore)
+void pc_delautobonus(struct map_session_data* sd, struct s_autobonus *autobonus,char maximum,bool restore)
 {
 	int i;
 	if (!sd)
 		return;
 
-	for( i = 0; i < max; i++ )
+	for( i = 0; i < maximum; i++ )
 	{
 		if( autobonus[i].active != INVALID_TIMER )
 		{
@@ -5770,15 +5770,15 @@ short pc_checkequip(struct map_session_data *sd,int pos)
  * Check if sd has nameid equipped somewhere
  * @sd : the player session
  * @nameid : id of the item to check
- * @min : : see pc.h enum equip_index from ? to @max
- * @max : see pc.h enum equip_index for @min to ?
+ * @minimum : : see pc.h enum equip_index from ? to @maximum
+ * @maximum : see pc.h enum equip_index for @minimum to ?
  * -return true,false
  *------------------------------------------*/
-bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max)
+bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int minimum, int maximum)
 {
 	int i;
 
-	for(i = min; i < max; i++) {
+	for(i = minimum; i < maximum; i++) {
 		if(equip_bitmask[i]) {
 			int idx = sd->equip_index[i];
 
@@ -6858,15 +6858,15 @@ int pc_gets_status_point(int level)
 /// raise the specified stat from (current value - val) to current value.
 int pc_need_status_point(struct map_session_data* sd, int type, int val)
 {
-	int low, high, sp = 0, max = 0;
+	int low, high, sp = 0, maximum = 0;
 
 	if ( val == 0 )
 		return 0;
 
 	low = pc_getstat(sd,type);
-	max = pc_maxparameter(sd,(enum e_params)(type-SP_STR));
+	maximum = pc_maxparameter(sd,(enum e_params)(type-SP_STR));
 
-	if ( low >= max && val > 0 )
+	if ( low >= maximum && val > 0 )
 		return 0; // Official servers show '0' when max is reached
 
 	high = low + val;
@@ -6981,7 +6981,7 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
  */
 int pc_statusup2(struct map_session_data* sd, int type, int val)
 {
-	int max, need;
+	int maximum, need;
 	nullpo_ret(sd);
 
 	if( type < SP_STR || type > SP_LUK )
@@ -6991,9 +6991,9 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	}
 
 	need = pc_need_status_point(sd,type,1);
-	max = pc_maxparameter(sd,(enum e_params)(type-SP_STR)); // set new value
+	maximum = pc_maxparameter(sd,(enum e_params)(type-SP_STR)); // set new value
 
-	val = pc_setstat(sd, type, cap_value(pc_getstat(sd,type) + val, 1, max));
+	val = pc_setstat(sd, type, cap_value(pc_getstat(sd,type) + val, 1, maximum));
 
 	status_calc_pc(sd,SCO_NONE);
 
@@ -10563,10 +10563,10 @@ static int pc_spiritcharm_timer(int tid, unsigned int tick, int id, intptr_t dat
  * Adds a spirit charm.
  * @param sd: Target character
  * @param interval: Duration
- * @param max: Maximum amount of charms to add
+ * @param maximum: Maximum amount of charms to add
  * @param type: Charm type (@see spirit_charm_types)
  */
-void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type)
+void pc_addspiritcharm(struct map_session_data *sd, int interval, int maximum, int type)
 {
 	int tid, i;
 
@@ -10575,13 +10575,13 @@ void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int t
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && type != sd->spiritcharm_type)
 		pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 
-	if (max > MAX_SPIRITCHARM)
-		max = MAX_SPIRITCHARM;
+	if (maximum > MAX_SPIRITCHARM)
+		maximum = MAX_SPIRITCHARM;
 
 	if (sd->spiritcharm < 0)
 		sd->spiritcharm = 0;
 
-	if (sd->spiritcharm && sd->spiritcharm >= max) {
+	if (sd->spiritcharm && sd->spiritcharm >= maximum) {
 		if (sd->spiritcharm_timer[0] != INVALID_TIMER)
 			delete_timer(sd->spiritcharm_timer[0], pc_spiritcharm_timer);
 		sd->spiritcharm--;
@@ -10691,10 +10691,10 @@ int pc_split_str(char *str,char **val,int num)
 	return i;
 }
 
-int pc_split_atoi(char* str, int* val, char sep, int max)
+int pc_split_atoi(char* str, int* val, char sep, int maximum)
 {
 	int i,j;
-	for (i=0; i<max; i++) {
+	for (i=0; i<maximum; i++) {
 		if (!str) break;
 		val[i] = atoi(str);
 		str = strchr(str,sep);
@@ -10702,16 +10702,16 @@ int pc_split_atoi(char* str, int* val, char sep, int max)
 			*str++=0;
 	}
 	//Zero up the remaining.
-	for(j=i; j < max; j++)
+	for(j=i; j < maximum; j++)
 		val[j] = 0;
 	return i;
 }
 
-int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
+int pc_split_atoui(char* str, unsigned int* val, char sep, int maximum)
 {
 	static int warning=0;
 	int i,j;
-	for (i=0; i<max; i++) {
+	for (i=0; i<maximum; i++) {
 		double f;
 		if (!str) break;
 		f = atof(str);
@@ -10730,7 +10730,7 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 			*str++=0;
 	}
 	//Zero up the remaining.
-	for(j=i; j < max; j++)
+	for(j=i; j < maximum; j++)
 		val[j] = 0;
 	return i;
 }

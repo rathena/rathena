@@ -1613,21 +1613,21 @@ static DBData* db_obj_get(DBMap* self, DBKey key)
 
 /**
  * Get the data of the entries matched by <code>match</code>.
- * It puts a maximum of <code>max</code> entries into <code>buf</code>.
+ * It puts a maximum of <code>maximum</code> entries into <code>buf</code>.
  * If <code>buf</code> is NULL, it only counts the matches.
  * Returns the number of entries that matched.
- * NOTE: if the value returned is greater than <code>max</code>, only the
- * first <code>max</code> entries found are put into the buffer.
+ * NOTE: if the value returned is greater than <code>maximum</code>, only the
+ * first <code>maximum</code> entries found are put into the buffer.
  * @param self Interface of the database
  * @param buf Buffer to put the data of the matched entries
- * @param max Maximum number of data entries to be put into buf
+ * @param maximum Maximum number of data entries to be put into buf
  * @param match Function that matches the database entries
  * @param ... Extra arguments for match
  * @return The number of entries that matched
  * @protected
  * @see DBMap#vgetall
  */
-static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, DBMatcher match, va_list args)
+static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int maximum, DBMatcher match, va_list args)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
 	unsigned int i;
@@ -1649,7 +1649,7 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 				va_list argscopy;
 				va_copy(argscopy, args);
 				if (match(node->key, node->data, argscopy) == 0) {
-					if (buf && ret < max)
+					if (buf && ret < maximum)
 						buf[ret] = &node->data;
 					ret++;
 				}
@@ -1684,14 +1684,14 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 /**
  * Just calls {@link DBMap#vgetall}.
  * Get the data of the entries matched by <code>match</code>.
- * It puts a maximum of <code>max</code> entries into <code>buf</code>.
+ * It puts a maximum of <code>maximum</code> entries into <code>buf</code>.
  * If <code>buf</code> is NULL, it only counts the matches.
  * Returns the number of entries that matched.
- * NOTE: if the value returned is greater than <code>max</code>, only the
- * first <code>max</code> entries found are put into the buffer.
+ * NOTE: if the value returned is greater than <code>maximum</code>, only the
+ * first <code>maximum</code> entries found are put into the buffer.
  * @param self Interface of the database
  * @param buf Buffer to put the data of the matched entries
- * @param max Maximum number of data entries to be put into buf
+ * @param maximum Maximum number of data entries to be put into buf
  * @param match Function that matches the database entries
  * @param ... Extra arguments for match
  * @return The number of entries that matched
@@ -1699,7 +1699,7 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
  * @see DBMap#vgetall
  * @see DBMap#getall
  */
-static unsigned int db_obj_getall(DBMap* self, DBData **buf, unsigned int max, DBMatcher match, ...)
+static unsigned int db_obj_getall(DBMap* self, DBData **buf, unsigned int maximum, DBMatcher match, ...)
 {
 	va_list args;
 	unsigned int ret;
@@ -1708,7 +1708,7 @@ static unsigned int db_obj_getall(DBMap* self, DBData **buf, unsigned int max, D
 	if (self == NULL) return 0; // nullpo candidate
 
 	va_start(args, match);
-	ret = self->vgetall(self, buf, max, match, args);
+	ret = self->vgetall(self, buf, maximum, match, args);
 	va_end(args);
 	return ret;
 }

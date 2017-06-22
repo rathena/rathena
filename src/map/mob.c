@@ -227,10 +227,10 @@ int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data) {
  * Create and display a tombstone on the map
  * @param md: the mob to create a tombstone for
  * @param killer: name of player who killed the mob
- * @param time: time of mob's death
+ * @param death_time: time of mob's death
  * @author [GreenBox]
  */
-void mvptomb_create(struct mob_data *md, char *killer, time_t time)
+void mvptomb_create(struct mob_data *md, char *killer, time_t death_time)
 {
 	struct npc_data *nd;
 
@@ -254,7 +254,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	nd->subtype = NPCTYPE_TOMB;
 
 	nd->u.tomb.md = md;
-	nd->u.tomb.kill_time = time;
+	nd->u.tomb.kill_time = death_time;
 	nd->u.tomb.spawn_timer = INVALID_TIMER;
 
 	if (killer)
@@ -416,7 +416,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 int mob_get_random_id(int type, int flag, int lv)
 {
 	struct mob_db *mob;
-	int i = 0, mob_id = 0, rand = 0;
+	int i = 0, mob_id = 0, rand_val = 0;
 	struct s_randomsummon_group *msummon = (struct s_randomsummon_group *)idb_get(mob_summon_db, type);
 	struct s_randomsummon_entry *entry = NULL;
 
@@ -433,11 +433,11 @@ int mob_get_random_id(int type, int flag, int lv)
 	}
 
 	do {
-		rand = rnd()%msummon->count;
-		entry = &msummon->list[rand];
+		rand_val = rnd()%msummon->count;
+		entry = &msummon->list[rand_val];
 		mob_id = entry->mob_id;
 		mob = mob_db(mob_id);
-	} while ((rand == 0 || // Skip default first
+	} while ((rand_val == 0 || // Skip default first
 		mob == mob_dummy ||
 		mob_is_clone(mob_id) ||
 		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
@@ -635,7 +635,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
  *------------------------------------------*/
 int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, unsigned int ai)
 {
-	int i, max, id = 0;
+	int i, maximum, id = 0;
 	int lx = -1, ly = -1;
 
 	if (m < 0 || amount <= 0)
@@ -648,9 +648,9 @@ int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0
 		swap(y0, y1);
 
 	// choose a suitable max. number of attempts
-	max = (y1 - y0 + 1)*(x1 - x0 + 1)*3;
-	if (max > 1000)
-		max = 1000;
+	maximum = (y1 - y0 + 1)*(x1 - x0 + 1)*3;
+	if (maximum > 1000)
+		maximum = 1000;
 
 	// spawn mobs, one by one
 	for (i = 0; i < amount; i++)
@@ -663,9 +663,9 @@ int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0
 			x = rnd()%(x1-x0+1)+x0;
 			y = rnd()%(y1-y0+1)+y0;
 			j++;
-		} while (map_getcell(m,x,y,CELL_CHKNOPASS) && j < max);
+		} while (map_getcell(m,x,y,CELL_CHKNOPASS) && j < maximum);
 
-		if (j == max)
+		if (j == maximum)
 		{// attempt to find an available cell failed
 			if (lx == -1 && ly == -1)
 				return 0; // total failure
@@ -1477,7 +1477,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 int mob_randomwalk(struct mob_data *md,unsigned int tick)
 {
 	const int d=7;
-	int i,c,r,rdir,dx,dy,max;
+	int i,c,r,rdir,dx,dy,maximum;
 	int speed;
 
 	nullpo_ret(md);
@@ -1492,8 +1492,8 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	rdir=rnd()%4; // Randomize direction in which we iterate to prevent monster cluttering up in one corner
 	dx=r%(d*2+1)-d;
 	dy=r/(d*2+1)%(d*2+1)-d;
-	max=(d*2+1)*(d*2+1);
-	for(i=0;i<max;i++){	// Search of a movable place
+	maximum=(d*2+1)*(d*2+1);
+	for(i=0;i<maximum;i++){	// Search of a movable place
 		int x = dx + md->bl.x;
 		int y = dy + md->bl.y;
 		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,0)){
@@ -1544,7 +1544,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 			break;
 		}
 	}
-	if(i==max){
+	if(i==maximum){
 		// None of the available cells worked, try again next interval
 		if(battle_config.mob_stuck_warning) {
 			md->move_fail_count++;
@@ -1572,7 +1572,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 int mob_warpchase(struct mob_data *md, struct block_list *target)
 {
 	struct npc_data *warp = NULL;
-	int distance = AREA_SIZE;
+	int dist = AREA_SIZE;
 	if (!(target && battle_config.mob_ai&0x40 && battle_config.mob_warp&1))
 		return 0; //Can't warp chase.
 
@@ -1585,7 +1585,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 
 	//Search for warps within mob's viewing range.
 	map_foreachinallrange(mob_warpchase_sub, &md->bl,
-		md->db->range2, BL_NPC, target, &warp, &distance);
+		md->db->range2, BL_NPC, target, &warp, &dist);
 
 	if (warp && unit_walktobl(&md->bl, &warp->bl, 1, 1))
 		return 1;
@@ -2466,7 +2466,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
 			int flag=1,zeny=0;
 			unsigned int base_exp, job_exp;
-			double per; //Your share of the mob's exp
+			double per, exp; //Your share of the mob's exp
 
 			if (!tmpsd[i]) continue;
 
@@ -2511,7 +2511,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (map[m].flag.nobaseexp || !md->db->base_exp)
 				base_exp = 0;
 			else {
-				double exp = apply_rate2(md->db->base_exp, per, 1);
+				exp = apply_rate2(md->db->base_exp, per, 1);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map[m].adjust.bexp);
 				base_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
@@ -2520,7 +2520,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
 				job_exp = 0;
 			else {
-				double exp = apply_rate2(md->db->job_exp, per, 1);
+				exp = apply_rate2(md->db->job_exp, per, 1);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map[m].adjust.jexp);
 				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
@@ -3289,14 +3289,14 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
  *------------------------------------------*/
 int mob_skill_id2skill_idx(int mob_id,uint16 skill_id)
 {
-	int i, max = mob_db(mob_id)->maxskill;
+	int i, maximum = mob_db(mob_id)->maxskill;
 	struct mob_skill *ms=mob_db(mob_id)->skill;
 
 	if(ms==NULL)
 		return -1;
 
-	ARR_FIND( 0, max, i, ms[i].skill_id == skill_id );
-	return ( i < max ) ? i : -1;
+	ARR_FIND( 0, maximum, i, ms[i].skill_id == skill_id );
+	return ( i < maximum ) ? i : -1;
 }
 
 /*==========================================

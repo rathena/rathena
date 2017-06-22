@@ -1751,7 +1751,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	}
 
 	if( sc && sc->data[SC_KAIZEL] && !map_flag_gvg2(target->m) ) { // flag&8 = disable Kaizel
-		int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
+		int duration = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
 		// Look for Osiris Card's bonus effect on the character and revive 100% or revive normally
 		if ( target->type == BL_PC && BL_CAST(BL_PC,target)->special_state.restart_full_recover )
 			status_revive(target, 100, 100);
@@ -1759,7 +1759,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
 		status_change_clear(target,0);
 		clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
-		sc_start(src,target,status_skill2sc(PR_KYRIE),100,10,time);
+		sc_start(src,target,status_skill2sc(PR_KYRIE),100,10,duration);
 
 		if( target->type == BL_MOB )
 			((TBL_MOB*)target)->state.rebirth = 1;
@@ -6835,45 +6835,45 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
 	if( !sc->data[SC_QUAGMIRE] ) {
-		int max = 0;
+		int maximum = 0;
 		if(sc->data[SC_STAR_COMFORT])
-			max = sc->data[SC_STAR_COMFORT]->val2;
+			maximum = sc->data[SC_STAR_COMFORT]->val2;
 
 		if(sc->data[SC_TWOHANDQUICKEN] &&
-			max < sc->data[SC_TWOHANDQUICKEN]->val2)
-			max = sc->data[SC_TWOHANDQUICKEN]->val2;
+			maximum < sc->data[SC_TWOHANDQUICKEN]->val2)
+			maximum = sc->data[SC_TWOHANDQUICKEN]->val2;
 
 		if(sc->data[SC_ONEHAND] &&
-			max < sc->data[SC_ONEHAND]->val2)
-			max = sc->data[SC_ONEHAND]->val2;
+			maximum < sc->data[SC_ONEHAND]->val2)
+			maximum = sc->data[SC_ONEHAND]->val2;
 
 		if(sc->data[SC_MERC_QUICKEN] &&
-			max < sc->data[SC_MERC_QUICKEN]->val2)
-			max = sc->data[SC_MERC_QUICKEN]->val2;
+			maximum < sc->data[SC_MERC_QUICKEN]->val2)
+			maximum = sc->data[SC_MERC_QUICKEN]->val2;
 
 		if(sc->data[SC_ADRENALINE2] &&
-			max < sc->data[SC_ADRENALINE2]->val3)
-			max = sc->data[SC_ADRENALINE2]->val3;
+			maximum < sc->data[SC_ADRENALINE2]->val3)
+			maximum = sc->data[SC_ADRENALINE2]->val3;
 
 		if(sc->data[SC_ADRENALINE] &&
-			max < sc->data[SC_ADRENALINE]->val3)
-			max = sc->data[SC_ADRENALINE]->val3;
+			maximum < sc->data[SC_ADRENALINE]->val3)
+			maximum = sc->data[SC_ADRENALINE]->val3;
 
 		if(sc->data[SC_SPEARQUICKEN] &&
-			max < sc->data[SC_SPEARQUICKEN]->val2)
-			max = sc->data[SC_SPEARQUICKEN]->val2;
+			maximum < sc->data[SC_SPEARQUICKEN]->val2)
+			maximum = sc->data[SC_SPEARQUICKEN]->val2;
 
 		if(sc->data[SC_GATLINGFEVER] &&
-			max < sc->data[SC_GATLINGFEVER]->val2)
-			max = sc->data[SC_GATLINGFEVER]->val2;
+			maximum < sc->data[SC_GATLINGFEVER]->val2)
+			maximum = sc->data[SC_GATLINGFEVER]->val2;
 
 		if(sc->data[SC_FLEET] &&
-			max < sc->data[SC_FLEET]->val2)
-			max = sc->data[SC_FLEET]->val2;
+			maximum < sc->data[SC_FLEET]->val2)
+			maximum = sc->data[SC_FLEET]->val2;
 
-		if(sc->data[SC_ASSNCROS] && max < sc->data[SC_ASSNCROS]->val2) {
+		if(sc->data[SC_ASSNCROS] && maximum < sc->data[SC_ASSNCROS]->val2) {
 			if (bl->type!=BL_PC)
-				max = sc->data[SC_ASSNCROS]->val2;
+				maximum = sc->data[SC_ASSNCROS]->val2;
 			else
 				switch(((TBL_PC*)bl)->status.weapon) {
 					case W_BOW:
@@ -6884,10 +6884,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 					case W_GRENADE:
 						break;
 					default:
-						max = sc->data[SC_ASSNCROS]->val2;
+						maximum = sc->data[SC_ASSNCROS]->val2;
 			}
 		}
-		aspd_rate -= max;
+		aspd_rate -= maximum;
 
 		if(sc->data[SC_BERSERK])
 			aspd_rate -= 300;

@@ -4767,7 +4767,7 @@ void do_final_script() {
 			int count[SCRIPT_HASH_SIZE];
 			int count2[SCRIPT_HASH_SIZE]; // number of buckets with a certain number of items
 			int n=0;
-			int min=INT_MAX,max=0,zero=0;
+			int minimum=INT_MAX,maximum=0,zero=0;
 			double mean=0.0f;
 			double median=0.0f;
 
@@ -4784,20 +4784,20 @@ void do_final_script() {
 			memset(count2, 0, sizeof(count2));
 			for(i=0; i<SCRIPT_HASH_SIZE; i++) {
 				fprintf(fp,"  hash %3d = %d\n",i,count[i]);
-				if(min > count[i])
-					min = count[i];		// minimun count of collision
-				if(max < count[i])
-					max = count[i];		// maximun count of collision
+				if(minimum > count[i])
+					minimum = count[i];		// minimun count of collision
+				if(maximum < count[i])
+					maximum = count[i];		// maximun count of collision
 				if(count[i] == 0)
 					zero++;
 				++count2[count[i]];
 			}
 			fprintf(fp,"\n--------------------\n  items : buckets\n--------------------\n");
-			for( i=min; i <= max; ++i ){
+			for( i=minimum; i <= maximum; ++i ){
 				fprintf(fp,"  %5d : %7d\n",i,count2[i]);
 				mean += 1.0f*i*count2[i]/SCRIPT_HASH_SIZE; // Note: this will always result in <nr labels>/<nr buckets>
 			}
-			for( i=min; i <= max; ++i ){
+			for( i=minimum; i <= maximum; ++i ){
 				n += count2[i];
 				if( n*2 >= SCRIPT_HASH_SIZE )
 				{
@@ -4808,7 +4808,7 @@ void do_final_script() {
 					break;
 				}
 			}
-			fprintf(fp,"--------------------\n    min = %d, max = %d, zero = %d\n    mean = %lf, median = %lf\n",min,max,zero,mean,median);
+			fprintf(fp,"--------------------\n    min = %d, max = %d, zero = %d\n    mean = %lf, median = %lf\n",minimum,maximum,zero,mean,median);
 			fclose(fp);
 		}
 	}
@@ -5612,25 +5612,25 @@ BUILDIN_FUNC(return)
 BUILDIN_FUNC(rand)
 {
 	int range;
-	int min;
+	int minimum;
 
 	if( script_hasdata(st,3) )
 	{// min,max
-		int max = script_getnum(st,3);
-		min = script_getnum(st,2);
-		if( max < min )
-			swap(min, max);
-		range = max - min + 1;
+		int maximum = script_getnum(st,3);
+		minimum = script_getnum(st,2);
+		if( maximum < minimum )
+			swap(minimum, maximum);
+		range = maximum - minimum + 1;
 	}
 	else
 	{// range
-		min = 0;
+		minimum = 0;
 		range = script_getnum(st,2);
 	}
 	if( range <= 1 )
-		script_pushint(st, min);
+		script_pushint(st, minimum);
 	else
-		script_pushint(st, rnd()%range + min);
+		script_pushint(st, rnd()%range + minimum);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -5683,21 +5683,21 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 	if(index == 0)
 		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT);
 	else if(x3 && y3) {
-		int max, tx, ty, j = 0;
+		int maximum, tx, ty, j = 0;
 		int16 m;
 
 		m = map_mapindex2mapid(index);
 
 		// choose a suitable max number of attempts
-		if( (max = (y3-y2+1)*(x3-x2+1)*3) > 1000 )
-			max = 1000;
+		if( (maximum = (y3-y2+1)*(x3-x2+1)*3) > 1000 )
+			maximum = 1000;
 
 		// find a suitable map cell
 		do {
 			tx = rnd()%(x3-x2+1)+x2;
 			ty = rnd()%(y3-y2+1)+y2;
 			j++;
-		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < max );
+		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < maximum );
 
 		pc_setpos((TBL_PC *)bl,index,tx,ty,CLR_OUTSIGHT);
 	}
@@ -6083,8 +6083,8 @@ BUILDIN_FUNC(input)
 	struct script_data* data;
 	int64 uid;
 	const char* name;
-	int min;
-	int max;
+	int minimum;
+	int maximum;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
@@ -6098,8 +6098,8 @@ BUILDIN_FUNC(input)
 	}
 	uid = reference_getuid(data);
 	name = reference_getname(data);
-	min = (script_hasdata(st,3) ? script_getnum(st,3) : script_config.input_min_value);
-	max = (script_hasdata(st,4) ? script_getnum(st,4) : script_config.input_max_value);
+	minimum = (script_hasdata(st,3) ? script_getnum(st,3) : script_config.input_min_value);
+	maximum = (script_hasdata(st,4) ? script_getnum(st,4) : script_config.input_max_value);
 
 #ifdef SECURE_NPCTIMEOUT
 	sd->npc_idle_type = NPCT_WAIT;
@@ -6121,13 +6121,13 @@ BUILDIN_FUNC(input)
 		{
 			int len = (int)strlen(sd->npc_str);
 			set_reg(st, sd, uid, name, (void*)sd->npc_str, script_getref(st,2));
-			script_pushint(st, (len > max ? 1 : len < min ? -1 : 0));
+			script_pushint(st, (len > maximum ? 1 : len < minimum ? -1 : 0));
 		}
 		else
 		{
 			int amount = sd->npc_amount;
-			set_reg(st, sd, uid, name, (void*)__64BPRTSIZE(cap_value(amount,min,max)), script_getref(st,2));
-			script_pushint(st, (amount > max ? 1 : amount < min ? -1 : 0));
+			set_reg(st, sd, uid, name, (void*)__64BPRTSIZE(cap_value(amount,minimum,maximum)), script_getref(st,2));
+			script_pushint(st, (amount > maximum ? 1 : amount < minimum ? -1 : 0));
 		}
 		st->state = RUN;
 	}
@@ -13726,19 +13726,19 @@ BUILDIN_FUNC(petskillbonus)
  *------------------------------------------*/
 BUILDIN_FUNC(petloot)
 {
-	int max;
+	int maximum;
 	struct pet_data *pd;
 	TBL_PC *sd;
 
 	if(!script_rid2sd(sd) || sd->pd==NULL)
 		return SCRIPT_CMD_SUCCESS;
 
-	max=script_getnum(st,2);
+	maximum=script_getnum(st,2);
 
-	if(max < 1)
-		max = 1;	//Let'em loot at least 1 item.
-	else if (max > MAX_PETLOOT_SIZE)
-		max = MAX_PETLOOT_SIZE;
+	if(maximum < 1)
+		maximum = 1;	//Let'em loot at least 1 item.
+	else if (maximum > MAX_PETLOOT_SIZE)
+		maximum = MAX_PETLOOT_SIZE;
 
 	pd = sd->pd;
 	if (pd->loot != NULL)
@@ -13749,9 +13749,9 @@ BUILDIN_FUNC(petloot)
 	else
 		pd->loot = (struct pet_loot *)aMalloc(sizeof(struct pet_loot));
 
-	pd->loot->item = (struct item *)aCalloc(max,sizeof(struct item));
+	pd->loot->item = (struct item *)aCalloc(maximum,sizeof(struct item));
 
-	pd->loot->max=max;
+	pd->loot->max=maximum;
 	pd->loot->count = 0;
 	pd->loot->weight = 0;
 	return SCRIPT_CMD_SUCCESS;
@@ -19823,18 +19823,18 @@ BUILDIN_FUNC(instance_announce) {
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_party)
 {
-	int amount, min, max, i, party_id, c = 0;
+	int amount, minimum, maximum, i, party_id, c = 0;
 	struct party_data *p = NULL;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Partymembers for the Instance.
-	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	minimum = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	maximum  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
 
-	if( min < 1 || min > MAX_LEVEL) {
-		ShowError("buildin_instance_check_party: Invalid min level, %d\n", min);
+	if( minimum < 1 || minimum > MAX_LEVEL) {
+		ShowError("buildin_instance_check_party: Invalid min level, %d\n", minimum);
 		return SCRIPT_CMD_FAILURE;
-	} else if(  max < 1 || max > MAX_LEVEL) {
-		ShowError("buildin_instance_check_party: Invalid max level, %d\n", max);
+	} else if(  maximum < 1 || maximum > MAX_LEVEL) {
+		ShowError("buildin_instance_check_party: Invalid max level, %d\n", maximum);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19851,10 +19851,10 @@ BUILDIN_FUNC(instance_check_party)
 		struct map_session_data *pl_sd;
 		if( (pl_sd = p->data[i].sd) )
 			if(map_id2bl(pl_sd->bl.id)) {
-				if(pl_sd->status.base_level < min) {
+				if(pl_sd->status.base_level < minimum) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
-				} else if(pl_sd->status.base_level > max) {
+				} else if(pl_sd->status.base_level > maximum) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
 				}
@@ -19882,18 +19882,18 @@ BUILDIN_FUNC(instance_check_party)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_guild)
 {
-	int amount, min, max, i, guild_id = 0, c = 0;
+	int amount, minimum, maximum, i, guild_id = 0, c = 0;
 	struct guild *g = NULL;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Guild members for the Instance.
-	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	minimum = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	maximum  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
 
-	if (min < 1 || min > MAX_LEVEL) {
-		ShowError("buildin_instance_check_guild: Invalid min level, %d\n", min);
+	if (minimum < 1 || minimum > MAX_LEVEL) {
+		ShowError("buildin_instance_check_guild: Invalid min level, %d\n", minimum);
 		return SCRIPT_CMD_FAILURE;
-	} else if (max < 1 || max > MAX_LEVEL) {
-		ShowError("buildin_instance_check_guild: Invalid max level, %d\n", max);
+	} else if (maximum < 1 || maximum > MAX_LEVEL) {
+		ShowError("buildin_instance_check_guild: Invalid max level, %d\n", maximum);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19912,10 +19912,10 @@ BUILDIN_FUNC(instance_check_guild)
 
 		if ((pl_sd = g->member[i].sd)) {
 			if (map_id2bl(pl_sd->bl.id)) {
-				if (pl_sd->status.base_level < min) {
+				if (pl_sd->status.base_level < minimum) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
-				} else if (pl_sd->status.base_level > max) {
+				} else if (pl_sd->status.base_level > maximum) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
 				}
@@ -19944,18 +19944,18 @@ BUILDIN_FUNC(instance_check_guild)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_clan)
 {
-	int amount, min, max, i, clan_id = 0, c = 0;
+	int amount, minimum, maximum, i, clan_id = 0, c = 0;
 	struct clan *cd = NULL;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Clan members for the Instance.
-	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	minimum = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	maximum  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
 
-	if (min < 1 || min > MAX_LEVEL) {
-		ShowError("buildin_instance_check_clan: Invalid min level, %d\n", min);
+	if (minimum < 1 || minimum > MAX_LEVEL) {
+		ShowError("buildin_instance_check_clan: Invalid min level, %d\n", minimum);
 		return SCRIPT_CMD_FAILURE;
-	} else if (max < 1 || max > MAX_LEVEL) {
-		ShowError("buildin_instance_check_clan: Invalid max level, %d\n", max);
+	} else if (maximum < 1 || maximum > MAX_LEVEL) {
+		ShowError("buildin_instance_check_clan: Invalid max level, %d\n", maximum);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19974,10 +19974,10 @@ BUILDIN_FUNC(instance_check_clan)
 
 		if ((pl_sd = cd->members[i])) {
 			if (map_id2bl(pl_sd->bl.id)) {
-				if (pl_sd->status.base_level < min) {
+				if (pl_sd->status.base_level < minimum) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
-				} else if (pl_sd->status.base_level > max) {
+				} else if (pl_sd->status.base_level > maximum) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
 				}

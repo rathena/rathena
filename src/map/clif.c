@@ -191,9 +191,9 @@ static inline bool disguised(struct block_list* bl) {
 
 
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex]
-static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int max) {
-	if( len > max )
-		len = max;
+static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int maximum) {
+	if( len > maximum )
+		len = maximum;
 
 	mes[len-1] = '\0';
 
@@ -4705,9 +4705,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 
 //Modifies the type of damage according to status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-static enum e_damage_type clif_calc_delay(enum e_damage_type type, int div, int64 damage, int delay)
+static enum e_damage_type clif_calc_delay(enum e_damage_type type, int div_, int64 damage, int delay)
 {
-	return ( delay == 0 && damage > 0 ) ? ( div > 1 ? DMG_MULTI_HIT_ENDURE : DMG_ENDURE ) : type;
+	return ( delay == 0 && damage > 0 ) ? ( div_ > 1 ? DMG_MULTI_HIT_ENDURE : DMG_ENDURE ) : type;
 }
 
 /*==========================================
@@ -4756,7 +4756,7 @@ static int clif_hallucination_damage()
 /// 02e1 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT2)
 /// 08c8 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <IsSPDamage>.B <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT3)
 /// type:
-///     0 = damage [ damage: total damage, div: amount of hits, damage2: assassin dual-wield damage ]
+///     0 = damage [ damage: total damage, div_: amount of hits, damage2: assassin dual-wield damage ]
 ///     1 = pick up item
 ///     2 = sit down
 ///     3 = stand up
@@ -4769,7 +4769,7 @@ static int clif_hallucination_damage()
 ///     10 = critical hit
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage)
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div_, enum e_damage_type type, int64 sdamage2, bool spdamage)
 {
 	unsigned char buf[34];
 	struct status_change *sc;
@@ -4789,7 +4789,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	nullpo_ret(src);
 	nullpo_ret(dst);
 
-	type = clif_calc_delay(type,div,damage+damage2,ddelay);
+	type = clif_calc_delay(type,div_,damage+damage2,ddelay);
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION]) {
@@ -4806,11 +4806,11 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	WBUFL(buf,18) = ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
 #if PACKETVER < 20071113
-		WBUFW(buf,22) = damage ? div : 0;
-		WBUFW(buf,27+offset) = damage2 ? div : 0;
+		WBUFW(buf,22) = damage ? div_ : 0;
+		WBUFW(buf,27+offset) = damage2 ? div_ : 0;
 #else
-		WBUFL(buf, 22) = damage ? div : 0;
-		WBUFL(buf, 27 + offset) = damage2 ? div : 0;
+		WBUFL(buf, 22) = damage ? div_ : 0;
+		WBUFL(buf, 27 + offset) = damage2 ? div_ : 0;
 #endif
 	} else {
 #if PACKETVER < 20071113
@@ -4824,7 +4824,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 #if PACKETVER >= 20131223
 	WBUFB(buf,26) = (spdamage) ? 1 : 0; // IsSPDamage - Displays blue digits.
 #endif
-	WBUFW(buf,24+offset) = div;
+	WBUFW(buf,24+offset) = div_;
 	WBUFB(buf,26+offset) = type;
 
 	if(disguised(dst)) {
@@ -4852,7 +4852,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 		unit_setdir(src, unit_getdir(src));
 	}
 	//Return adjusted can't walk delay for further processing.
-	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
+	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div_);
 }
 
 /*==========================================
@@ -5526,7 +5526,7 @@ void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned 
 /// Skill attack effect and damage.
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
-int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
+int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int64 sdamage,int div_,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
@@ -5535,7 +5535,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	nullpo_ret(src);
 	nullpo_ret(dst);
 
-	type = clif_calc_delay(type,div,damage,ddelay);
+	type = clif_calc_delay(type,div_,damage,ddelay);
 
 	if( ( sc = status_get_sc(dst) ) && sc->count ) {
 		if(sc->data[SC_HALLUCINATION] && damage)
@@ -5551,12 +5551,12 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,24)=damage?div:0;
+		WBUFW(buf,24)=damage?div_:0;
 	} else {
 		WBUFW(buf,24)=damage;
 	}
 	WBUFW(buf,26)=skill_lv;
-	WBUFW(buf,28)=div;
+	WBUFW(buf,28)=div_;
 	WBUFB(buf,30)=type;
 	if (disguised(dst)) {
 		clif_send(buf,packet_len(0x114),dst,AREA_WOS);
@@ -5582,12 +5582,12 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFL(buf,24)=damage?div:0;
+		WBUFL(buf,24)=damage?div_:0;
 	} else {
 		WBUFL(buf,24)=damage;
 	}
 	WBUFW(buf,28)=skill_lv;
-	WBUFW(buf,30)=div;
+	WBUFW(buf,30)=div_;
 	// For some reason, late 2013 and newer clients have
 	// a issue that causes players and monsters to endure
 	// type 6 (ACTION_SKILL) skills. So we have to do a small
@@ -5615,14 +5615,14 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 #endif
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	return clif_calc_walkdelay(dst,ddelay,type,damage,div);
+	return clif_calc_walkdelay(dst,ddelay,type,damage,div_);
 }
 
 
 /// Ground skill attack effect and damage (ZC_NOTIFY_SKILL_POSITION).
 /// 0115 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <x>.W <y>.W <damage>.W <level>.W <div>.W <type>.B
 /*
-int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
+int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div_,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
@@ -5631,7 +5631,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 	nullpo_ret(dst);
 
 	type = (type>DMG_NORMAL)?type:skill_get_hit(skill_id);
-	type = clif_calc_delay(type,div,damage,ddelay);
+	type = clif_calc_delay(type,div_,damage,ddelay);
 	sc = status_get_sc(dst);
 
 	if(sc && sc->count) {
@@ -5649,12 +5649,12 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 	WBUFW(buf,24)=dst->x;
 	WBUFW(buf,26)=dst->y;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,28)=damage?div:0;
+		WBUFW(buf,28)=damage?div_:0;
 	} else {
 		WBUFW(buf,28)=damage;
 	}
 	WBUFW(buf,30)=skill_lv;
-	WBUFW(buf,32)=div;
+	WBUFW(buf,32)=div_;
 	WBUFB(buf,34)=type;
 	clif_send(buf,packet_len(0x115),src,AREA);
 	if(disguised(src)) {
@@ -5673,7 +5673,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 	}
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	return clif_calc_walkdelay(dst,ddelay,type,damage,div);
+	return clif_calc_walkdelay(dst,ddelay,type,damage,div_);
 }
 */
 
@@ -10560,13 +10560,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 /// Server's tick (ZC_NOTIFY_TIME).
 /// 007f <time>.L
-void clif_notify_time(struct map_session_data* sd, unsigned long time)
+void clif_notify_time(struct map_session_data* sd, unsigned long server_time)
 {
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0x7f));
 	WFIFOW(fd,0) = 0x7f;
-	WFIFOL(fd,2) = time;
+	WFIFOL(fd,2) = server_time;
 	WFIFOSET(fd,packet_len(0x7f));
 }
 
@@ -12420,14 +12420,14 @@ void clif_parse_WeaponRefine(int fd, struct map_session_data *sd)
 void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	int npc_id = RFIFOL(fd,info->pos[0]);
-	uint8 select = RFIFOB(fd,info->pos[1]);
+	uint8 option = RFIFOB(fd,info->pos[1]);
 
-	if( (select > sd->npc_menu && select != 0xff) || select == 0 ) {
+	if( (option > sd->npc_menu && option != 0xff) || option == 0 ) {
 #ifdef SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer != INVALID_TIMER ) {
 #endif
 			TBL_NPC* nd = map_id2nd(npc_id);
-			ShowWarning("Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", npc_id, (nd)?nd->name:"invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name);
+			ShowWarning("Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", npc_id, (nd)?nd->name:"invalid npc id", option, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name);
 			clif_GM_kick(NULL,sd);
 #ifdef SECURE_NPCTIMEOUT
 		}
@@ -12435,7 +12435,7 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 		return;
 	}
 
-	sd->npc_menu = select;
+	sd->npc_menu = option;
 	npc_scriptcont(sd,npc_id, false);
 }
 
@@ -18636,7 +18636,7 @@ void clif_parse_GMFullStrip(int fd, struct map_session_data *sd) {
 * @param fd
 * @param bl Crimson Marker target
 **/
-void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove) {
+void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove_marker) {
 	struct s_packet_db* info;
 	int cmd = 0;
 	int16 len;
@@ -18653,8 +18653,8 @@ void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, boo
 
 	WBUFW(buf, 0) = cmd;
 	WBUFL(buf, info->pos[0]) = bl->id;
-	WBUFW(buf, info->pos[1]) = (remove ? -1 : bl->x);
-	WBUFW(buf, info->pos[2]) = (remove ? -1 : bl->y);
+	WBUFW(buf, info->pos[1]) = (remove_marker ? -1 : bl->x);
+	WBUFW(buf, info->pos[2]) = (remove_marker ? -1 : bl->y);
 	clif_send(buf, len, &sd->bl, SELF);
 }
 

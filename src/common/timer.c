@@ -239,12 +239,12 @@ static int acquire_timer(void)
 
 /// Starts a new timer that is deleted once it expires (single-use).
 /// Returns the timer's id.
-int add_timer(unsigned int tick, TimerFunc func, int id, intptr_t data)
+int add_timer(unsigned int timertick, TimerFunc func, int id, intptr_t data)
 {
 	int tid;
 
 	tid = acquire_timer();
-	timer_data[tid].tick     = tick;
+	timer_data[tid].tick     = timertick;
 	timer_data[tid].func     = func;
 	timer_data[tid].id       = id;
 	timer_data[tid].data     = data;
@@ -257,18 +257,18 @@ int add_timer(unsigned int tick, TimerFunc func, int id, intptr_t data)
 
 /// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
 /// Returns the timer's id, or INVALID_TIMER if it fails.
-int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr_t data, int interval)
+int add_timer_interval(unsigned int timertick, TimerFunc func, int id, intptr_t data, int interval)
 {
 	int tid;
 
 	if( interval < 1 )
 	{
-		ShowError("add_timer_interval: invalid interval (tick=%u %p[%s] id=%d data=%d diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
+		ShowError("add_timer_interval: invalid interval (tick=%u %p[%s] id=%d data=%d diff_tick=%d)\n", timertick, func, search_timer_func_list(func), id, data, DIFF_TICK(timertick, gettick()));
 		return INVALID_TIMER;
 	}
 
 	tid = acquire_timer();
-	timer_data[tid].tick     = tick;
+	timer_data[tid].tick     = timertick;
 	timer_data[tid].func     = func;
 	timer_data[tid].id       = id;
 	timer_data[tid].data     = data;
@@ -309,14 +309,14 @@ int delete_timer(int tid, TimerFunc func)
 
 /// Adjusts a timer's expiration time.
 /// Returns the new tick value, or -1 if it fails.
-int addtick_timer(int tid, unsigned int tick)
+int addtick_timer(int tid, unsigned int timertick)
 {
-	return settick_timer(tid, timer_data[tid].tick+tick);
+	return settick_timer(tid, timer_data[tid].tick+timertick);
 }
 
 /// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
 /// Returns the new tick value, or -1 if it fails.
-int settick_timer(int tid, unsigned int tick)
+int settick_timer(int tid, unsigned int timertick)
 {
 	size_t i;
 
@@ -328,22 +328,22 @@ int settick_timer(int tid, unsigned int tick)
 		return -1;
 	}
 
-	if( (int)tick == -1 )
-		tick = 0;// add 1ms to avoid the error value -1
+	if( (int)timertick == -1 )
+		timertick = 0;// add 1ms to avoid the error value -1
 
-	if( timer_data[tid].tick == tick )
-		return (int)tick;// nothing to do, already in propper position
+	if( timer_data[tid].tick == timertick )
+		return (int)timertick;// nothing to do, already in propper position
 
 	// pop and push adjusted timer
 	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP, swap);
-	timer_data[tid].tick = tick;
+	timer_data[tid].tick = timertick;
 	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, swap);
-	return (int)tick;
+	return (int)timertick;
 }
 
 /// Executes all expired timers.
 /// Returns the value of the smallest non-expired timer (or 1 second if there aren't any).
-int do_timer(unsigned int tick)
+int do_timer(unsigned int timertick)
 {
 	int diff = TIMER_MAX_INTERVAL; // return value
 
@@ -352,7 +352,7 @@ int do_timer(unsigned int tick)
 	{
 		int tid = BHEAP_PEEK(timer_heap);// top element in heap (smallest tick)
 
-		diff = DIFF_TICK(timer_data[tid].tick, tick);
+		diff = DIFF_TICK(timer_data[tid].tick, timertick);
 		if( diff > 0 )
 			break; // no more expired timers to process
 
@@ -364,7 +364,7 @@ int do_timer(unsigned int tick)
 		{
 			if( diff < -1000 )
 				// timer was delayed for more than 1 second, use current tick instead
-				timer_data[tid].func(tid, tick, timer_data[tid].id, timer_data[tid].data);
+				timer_data[tid].func(tid, timertick, timer_data[tid].id, timer_data[tid].data);
 			else
 				timer_data[tid].func(tid, timer_data[tid].tick, timer_data[tid].id, timer_data[tid].data);
 		}
@@ -387,8 +387,8 @@ int do_timer(unsigned int tick)
 				free_timer_list[free_timer_list_pos++] = tid;
 			break;
 			case TIMER_INTERVAL:
-				if( DIFF_TICK(timer_data[tid].tick, tick) < -1000 )
-					timer_data[tid].tick = tick + timer_data[tid].interval;
+				if( DIFF_TICK(timer_data[tid].tick, timertick) < -1000 )
+					timer_data[tid].tick = timertick + timer_data[tid].interval;
 				else
 					timer_data[tid].tick += timer_data[tid].interval;
 				push_timer_heap(tid);

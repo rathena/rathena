@@ -164,7 +164,7 @@ uint32 str2ip(const char* ip_str);
 #define MAKEIP(a,b,c,d) (uint32)( ( ( (a)&0xFF ) << 24 ) | ( ( (b)&0xFF ) << 16 ) | ( ( (c)&0xFF ) << 8 ) | ( ( (d)&0xFF ) << 0 ) )
 uint16 ntows(uint16 netshort);
 
-int socket_getips(uint32* ips, int max);
+int socket_getips(uint32* ips, int maximum);
 
 extern uint32 addr_[16];   // ip addresses of local host (host byte order)
 extern int naddr_;   // # of ip addresses
