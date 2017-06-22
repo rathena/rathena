@@ -5687,25 +5687,23 @@ BUILDIN_FUNC(warp)
  * Warp a specified area
  * @param bl: Player to warp
  * @param va_list: map index, x2, xy2, x3, y3, warp type
- * @return 0 on success and failure otherwise
+ * @return 0 on success and 1 in case of failure
  */
 static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 {
 	int16 x2,y2,x3,y3;
-	unsigned int index;
-	const char *str;
+	const char *mapname;
 
-	index = va_arg(ap,unsigned int);
 	x2 = (int16)va_arg(ap,int);
 	y2 = (int16)va_arg(ap,int);
 	x3 = (int16)va_arg(ap,int);
 	y3 = (int16)va_arg(ap,int);
-	str = va_arg(ap, char *);
+	mapname = va_arg(ap, char *);
 
 	if (x3 && y3) { // Warp within given area
 		int16 max, tx, ty, j = 0, m;
 
-		m = map_mapindex2mapid(index);
+		m = map_mapname2mapid(mapname);
 
 		// choose a suitable max number of attempts
 		if( (max = (y3-y2+1)*(x3-x2+1)*3) > MAX_WARP_ATTEMPTS )
@@ -5715,36 +5713,53 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 		do {
 			tx = rnd()%(x3-x2+1)+x2;
 			ty = rnd()%(y3-y2+1)+y2;
-		} while (map_getcell(m, tx, ty, CELL_CHKNOPASS) && (j++) < max);
+		} while ((map_getcell(m, tx, ty, CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1, m, tx, ty, 1))) && (j++) < max);
+		
+		if (j == max){
+			return 1;
+		}
 
-		if (buildin_warp_sub((TBL_PC *)bl, str, tx, ty))
-			return 1;
-	} else { // Warp to set location
-		if (buildin_warp_sub((TBL_PC *)bl, str, x2, y2))
-			return 1;
+		x2 = tx;
+		y2 = ty;
 	}
+	
+	if (buildin_warp_sub((TBL_PC *)bl, mapname, x2, y2) != SETPOS_OK)
+		return 1;
+	
 	return 0;
 }
 
 /**
  * Warp a given area of a map
- * areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>",<x3>,<y3>{,<x4>,<y4>};
+ * areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>",{<x3>,<y3>,<x4>,<y4>};
  */
 BUILDIN_FUNC(areawarp)
 {
-	int16 m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
+	int16 m, x0,y0,x1,y1, x2,y2,x3,y3;
 	const char *str;
 	const char *mapname;
 
 	mapname = script_getstr(st,2);
+	
+	if ((m = map_mapname2mapid(mapname)) < 0){
+		ShowError( "buildin_areawarp: Unknown source map \"%s\"\n", mapname );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
 	x0  = script_getnum(st,3);
 	y0  = script_getnum(st,4);
 	x1  = script_getnum(st,5);
 	y1  = script_getnum(st,6);
 	str = script_getstr(st,7);
-	x2  = script_getnum(st,8);
-	y2  = script_getnum(st,9);
-
+	
+	if (script_hasdata(st,9)){
+		x2 = script_getnum(st,8);
+		y2 = script_getnum(st,9);
+	}else{
+		x2 = 0;
+		y2 = 0;
+	}
+	
 	if( script_hasdata(st,10) && script_hasdata(st,11) ) { // Warp area to area
 		if( (x3 = script_getnum(st,10)) < 0 || (y3 = script_getnum(st,11)) < 0 ){
 			x3 = 0;
@@ -5754,12 +5769,12 @@ BUILDIN_FUNC(areawarp)
 			if( x3 < x2 ) swap(x3,x2);
 			if( y3 < y2 ) swap(y3,y2);
 		}
+	}else{
+		x3 = 0;
+		y3 = 0;
 	}
 
-	if ((m = map_mapname2mapid(mapname)) < 0)
-		return SCRIPT_CMD_FAILURE;
-
-	map_foreachinallarea(buildin_areawarp_sub, m, x0, y0, x1, y1, BL_PC, mapindex_name2id(str), x2, y2, x3, y3, str);
+	map_foreachinallarea(buildin_areawarp_sub, m, x0, y0, x1, y1, BL_PC, x2, y2, x3, y3, str);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13165,7 +13180,7 @@ BUILDIN_FUNC(mapwarp)
 
 	switch (type) {
 		case MAPWARP_ALL:
-			map_foreachinmap(buildin_areawarp_sub, m, BL_PC, mapindex_name2id(str), x, y, 0, 0, str);
+			map_foreachinmap(buildin_areawarp_sub, m, BL_PC, x, y, 0, 0, str);
 			break;
 		case MAPWARP_GUILD:
 			g = guild_search(type_id);
@@ -23199,7 +23214,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(input,"r??"),
 	BUILDIN_DEF(warp,"sii?"),
 	BUILDIN_DEF2(warp, "warpchar", "sii?"),
-	BUILDIN_DEF(areawarp,"siiiisii??"),
+	BUILDIN_DEF(areawarp,"siiiis????"),
 	BUILDIN_DEF(warpparty,"siii???"), // [Fredzilla] [Paradox924X]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii?"),

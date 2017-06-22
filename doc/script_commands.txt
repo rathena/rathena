@@ -3889,7 +3889,7 @@ There are also three special 'map names' you can use.
 
 ---------------------------------------
 
-*areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>",<x3>,<y3>{,<x4>,<y4>};
+*areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>"{,<x3>,<y3>,<x4>,<y4>};
 
 This command is similar to 'warp', however, it will not refer to the invoking 
 character, but instead, all characters within a specified area, defined by the 
@@ -3903,8 +3903,9 @@ shape, on the map called "place", will be affected, and warped to "place2" X 150
 Y 150
 
     areawarp "place",10,10,120,120,"place2",0,0;
+    areawarp "place",10,10,120,120,"place2";
 
-By using ,0,0; as the destination coordinates it will take all the characters in 
+By using zeroes as the destination coordinates or leaving them out it will take all the characters in 
 the affected area to a random set of co-ordinates on "place2".
 
     areawarp "place",10,10,120,120,"place2",150,150,200,200;
@@ -3912,12 +3913,13 @@ the affected area to a random set of co-ordinates on "place2".
 By using the optional x4 and y4 parameters, the destination coordinates will be a 
 random place within the defined x3/y3-x4/y4 square.
 
-There are also three special 'map names' you can use.
+There are also three special 'map names' you can use:
 
 "Random" will warp the player randomly on the current map.
 "Save" and "SavePoint" will warp the player back to their save point.
 
-Use 0,0 as the x3/y3 values when using a special 'map name'.
+It is recommended that you do not supply any target coordinates if you use one of
+these maps because they will be ignored anyway.
 
 See also 'warp'.
 
@@ -6874,7 +6876,7 @@ There are also three special 'map names' you can use for <to map>:
 "Save" and "SavePoint" will warp the player back to their save point.
 
 It is recommended that you do not supply any target coordinates if you use one of
-these maps, because they will be ignored anyway.
+these maps because they will be ignored anyway.
 
 ---------------------------------------
 \\
