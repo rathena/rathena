@@ -622,6 +622,7 @@ extern struct Battle_Config
 	int mail_zeny_fee;
 	int mail_attachment_price;
 	int mail_attachment_weight;
+	int banana_bomb_duration;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

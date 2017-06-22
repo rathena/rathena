@@ -1713,9 +1713,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					sc_start4(src, bl, SC_MELON_BOMB, 100, skill_lv, 20 + sd->status.job_level, 10 + sd->status.job_level / 2, 0, 1000 * status_get_lv(src) / 4);
 					break;
 				case ITEMID_BANANA_BOMB:
-					sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, status_get_lv(src) + sd->status.job_level + sstatus->dex / 6 - status_get_lv(bl) - tstatus->agi / 4 - tstatus->luk / 5, skill_lv, 1000 * sd->status.job_level / 4);
-					sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 30000);
-					break;
+					{
+						uint16 duration = (battle_config.banana_bomb_duration ? battle_config.banana_bomb_duration : 1000 * sd->status.job_level / 4);
+
+						sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, status_get_lv(src) + sd->status.job_level + sstatus->dex / 6 - status_get_lv(bl) - tstatus->agi / 4 - tstatus->luk / 5, skill_lv, duration);
+						sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 30000);
+						break;
+					}
 			}
 			sd->itemid = -1;
 		}
