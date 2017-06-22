@@ -699,6 +699,13 @@ enum vip_status_type {
 	VIP_STATUS_REMAINING
 };
 
+enum mapwarp_type {
+	MAPWARP_ALL = 0,
+	MAPWARP_GUILD,
+	MAPWARP_PARTY,
+	MAPWARP_CLAN
+};
+
 /**
  * used to generate quick script_array entries
  **/

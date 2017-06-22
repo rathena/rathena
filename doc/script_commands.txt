@@ -6850,29 +6850,31 @@ Examples:
 
 ---------------------------------------
 
-*mapwarp "<from map>","<to map>",<x>,<y>{,<type>,<ID>};
+*mapwarp "<from map>","<to map>",{<x>,<y>,<type>,<ID>};
 
-This command will collect all characters located on the From map and warp them 
-wholesale to the same point on the To map, or randomly distribute them there if 
-the coordinates are zero. "Random" is understood as a special To map name and 
-will mean randomly shuffling everyone on the same map.
+This command will collect all characters located on the <from map> and warp them 
+wholesale to the same point on the <to map>, or randomly distribute them there if 
+the coordinates are zero or left out.
 
-Optionally, a type and ID can be specified. Available types are:
+Optionally, a <type> and <ID> can be specified. Available types are:
 
- 0 - Everyone
- 1 - Guild
- 2 - Party
- 3 - Clan
+ MAPWARP_ALL - Everyone
+ MAPWARP_GUILD - Guild
+ MAPWARP_PARTY - Party
+ MAPWARP_CLAN - Clan
 
 Example:
 
 // Will warp all members of guild with ID 63 on map prontera to map alberta.
-	mapwarp "prontera","alberta",150,150,1,63;
+	mapwarp "prontera","alberta",150,150,MAPWARP_GUILD,63;
 
-There are also three special 'map names' you can use for <to map>.
+There are also three special 'map names' you can use for <to map>:
 
 "Random" will warp the player randomly on the current map.
 "Save" and "SavePoint" will warp the player back to their save point.
+
+It is recommended that you do not supply any target coordinates if you use one of
+these maps, because they will be ignored anyway.
 
 ---------------------------------------
 \\

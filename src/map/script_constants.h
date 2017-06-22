@@ -3311,6 +3311,12 @@
 	export_constant(VIP_STATUS_EXPIRE);
 	export_constant(VIP_STATUS_REMAINING);
 
+	/* mapwarp types */
+	export_constant(MAPWARP_ALL);
+	export_constant(MAPWARP_GUILD);
+	export_constant(MAPWARP_PARTY);
+	export_constant(MAPWARP_CLAN);
+
 	/* item groups */
 	export_constant(IG_BLUEBOX);
 	export_constant(IG_VIOLETBOX);

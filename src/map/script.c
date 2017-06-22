@@ -13127,33 +13127,47 @@ BUILDIN_FUNC(failedremovecards) {
 
 /**
  * Warp a given map
- * mapwarp "<from map>","<to map>",<x>,<y>{,<type>,<ID>};
+ * mapwarp "<from map>","<to map>",{<x>,<y>,<type>,<ID>};
  * @author [Reddozen], [RoVeRT]; improved by [Lance]
  */
 BUILDIN_FUNC(mapwarp)
 {
-	int16 x, y, m, type = 0, i = 0;
-	int type_id = 0;
-	struct guild *g = NULL;
-	struct party_data *p = NULL;
-	struct clan *c = NULL;
+	int16 x, y, m, i;
+	int type, type_id;
+	struct guild *g;
+	struct party_data *p;
+	struct clan *c;
 	const char *str, *mapname;
 
 	mapname = script_getstr(st, 2);
 	str = script_getstr(st, 3);
-	x = script_getnum(st, 4);
-	y = script_getnum(st, 5);
+	
+	if (script_hasdata(st, 5)){
+		x = script_getnum(st, 4);
+		y = script_getnum(st, 5);
+	}else{
+		x = 0;
+		y = 0;
+	}
 
 	if (script_hasdata(st, 7)){
 		type = script_getnum(st, 6);
 		type_id = script_getnum(st, 7);
+	}else{
+		type = MAPWARP_ALL;
+		type_id = 0;
 	}
 
-	if ((m = map_mapname2mapid(mapname)) < 0)
+	if ((m = map_mapname2mapid(mapname)) < 0){
+		ShowError("buildin_mapwarp: Unknown source map \"%s\"\n", mapname);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	switch (type) {
-		case 1:
+		case MAPWARP_ALL:
+			map_foreachinmap(buildin_areawarp_sub, m, BL_PC, mapindex_name2id(str), x, y, 0, 0, str);
+			break;
+		case MAPWARP_GUILD:
 			g = guild_search(type_id);
 			if (g) {
 				for (i = 0; i < g->max_member; i++) {
@@ -13162,7 +13176,7 @@ BUILDIN_FUNC(mapwarp)
 				}
 			}
 			break;
-		case 2:
+		case MAPWARP_PARTY:
 			p = party_search(type_id);
 			if (p) {
 				for (i = 0; i < MAX_PARTY; i++) {
@@ -13171,7 +13185,7 @@ BUILDIN_FUNC(mapwarp)
 				}
 			}
 			break;
-		case 3:
+		case MAPWARP_CLAN:
 			c = clan_search(type_id);
 			if (c) {
 				for (i = 0; i < MAX_CLAN; i++) {
@@ -13181,8 +13195,8 @@ BUILDIN_FUNC(mapwarp)
 			}
 			break;
 		default:
-			map_foreachinmap(buildin_areawarp_sub, m, BL_PC, mapindex_name2id(str), x, y, 0, 0, str);
-			break;
+			ShowError("buildin_mapwarp: Unknown type '%d'\n", type);
+			return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23417,7 +23431,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
 	BUILDIN_DEF(nude,"?"), // nude command [Valaris]
-	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
+	BUILDIN_DEF(mapwarp,"ss????"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
