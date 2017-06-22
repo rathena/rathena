@@ -1466,6 +1466,7 @@
 	export_constant(SC_ARMOR_ELEMENT_EARTH);
 	export_constant(SC_ARMOR_ELEMENT_FIRE);
 	export_constant(SC_ARMOR_ELEMENT_WIND);
+	export_constant(SC_DAILYSENDMAILCNT);
 	export_constant(SC_FALLEN_ANGEL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -3305,6 +3306,11 @@
 	export_constant(IIT_ENTER_Y);
 	export_constant(IIT_MAPCOUNT);
 	export_constant(IIT_MAP);
+
+	/* VIP status */
+	export_constant(VIP_STATUS_ACTIVE);
+	export_constant(VIP_STATUS_EXPIRE);
+	export_constant(VIP_STATUS_REMAINING);
 
 	/* item groups */
 	export_constant(IG_BLUEBOX);

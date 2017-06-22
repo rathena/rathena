@@ -1017,7 +1017,7 @@
 1665,Piercing_Staff_,Piercing Staff,5,20,,500,80:145,,1,2,0x00018314,18,2,2,3,70,1,10,{ .@r = getrefine(); bonus bInt,4; bonus2 bIgnoreMdefClassRate,Class_Normal,10+.@r; bonus2 bIgnoreMdefClassRate,Class_Boss,10+.@r; },{},{}
 1666,Healing_Staff_,Healing Staff,5,20,,400,10:105,,1,2,0x00008110,63,2,2,3,55,1,10,{ bonus bAtkEle,Ele_Holy; bonus bHealPower,(getrefine()*3/2); },{},{}
 1667,TE_Woe_Staff,TE Woe Staff,5,0,,0,50:100,,1,0,0x00818315,63,2,2,3,40,1,10,{ bonus2 bMagicAddRace,RC_Player,10; bonus3 bAddEff,Eff_Blind,1000,ATF_MAGIC; bonus bHPRecovRate,5; bonus bSPRecovRate,5; },{},{}
-1668,Sword_Stick,Sword Stick,5,10,,500,120:150,,,2,0x800200,63,2,2,4,80,1,8,{ bonus bAspdRate,10; },{},{}
+1668,Sword_Stick,Sword Stick,5,10,,500,120:150,,,2,0x800200,63,2,2,4,80,1,10,{ bonus bAspdRate,10; },{},{}
 1669,Tanos_Staff,Tanos Staff,5,10,,1000,100:200,,,1,0x00818314,63,2,2,4,120,1,10,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000; },{},{}
 1670,RWC_Memory_Staff,RWC Memory Staff,5,20,,500,25:30,,1,1,0x00818315,63,2,2,3,1,1,10,{ .@r = getrefine(); bonus bMatk,30*(.@r/3); if(.@r>=6) bonus2 bMagicAddClass,Class_All,(.@r>=9?10:5); if(.@r>=9) bonus4 bAutoSpell,"HW_MAGICPOWER",1,10,0; },{},{}
 1671,Devil_Won_Staff,Devil Won Staff,5,10,,800,30:155,,,1,0x00818315,63,2,2,3,100,1,10,{ bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_Demon,10; bonus bMatkRate,10; },{},{}
@@ -6982,10 +6982,10 @@
 12843,Pearl_Treasure_Box,Pearl Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,60,,,{},{},{}
 12844,Diamond_Treasure_Box,Diamond Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,70,,,{},{},{}
 12845,Amatsu_Butterfly_Wing,Amatsu_Butterfly_Wing,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12846,Little_Unripe_Apple,Little_Unripe_Apple,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2398; },{},{}
+12846,Little_Unripe_Apple,Little Unripe Apple,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2398; },{},{}
 12847,Old_Equipment_Box,Old Equipment Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); } },{},{}
-12849,Combination_Kit,Combination Kit,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12849,Combination_Kit,Combination Kit,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ cooking 30; },{},{}
 12850,Heaven_Scroll,Heaven Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Heaven_Scroll); },{},{}
 12851,Vocation_Scroll,Vocation Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Vocation_Scroll); },{},{}
 12852,Wisdom_Scroll,Wisdom Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Wisdom_Scroll); },{},{}

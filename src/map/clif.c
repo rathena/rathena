@@ -72,6 +72,15 @@ static unsigned int clif_cryptKey[3]; // Used keys
 static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd);
 static bool clif_session_isValid(struct map_session_data *sd);
 
+#if PACKETVER >= 20150513
+enum mail_type {
+	MAIL_TYPE_TEXT = 0x0,
+	MAIL_TYPE_ZENY = 0x2,
+	MAIL_TYPE_ITEM = 0x4,
+	MAIL_TYPE_NPC = 0x8
+};
+#endif
+
 /** Converts item type to display it on client if necessary.
 * @param nameid: Item ID
 * @return item type. For IT_PETEGG will be displayed as IT_WEAPON. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
@@ -9386,8 +9395,14 @@ void clif_refresh(struct map_session_data *sd)
 		clif_changed_dir(&sd->bl, SELF);
 	clif_efst_status_change_sub(sd,&sd->bl,SELF);
 
-	// unlike vending, resuming buyingstore crashes the client.
-	buyingstore_close(sd);
+	//Issue #2143
+	//Cancel Trading State 
+	if (sd->state.trading)
+		trade_tradecancel(sd);
+	//Cancel Buying/Selling State
+	if (sd->state.buyingstore)
+		buyingstore_close(sd);
+
 
 	mail_clear(sd);
 
@@ -10532,6 +10547,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	pc_show_questinfo_reinit(sd);
 	pc_show_questinfo(sd);
 
+#if PACKETVER >= 20150513
+	if( sd->mail.inbox.unread ){
+		clif_Mail_new(sd, 0, NULL, NULL);
+	}
+#endif
+
 	sd->state.connect_new = 0;
 	sd->state.changemap = false;
 }
@@ -11432,6 +11453,8 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 #endif
 	if (pc_cant_act2(sd) || sd->npc_id)
 		return;
+	if( sd->state.mail_writing )
+		return;
 
 	bl = map_id2bl(RFIFOL(fd,info->pos[0]));
 	//type = RFIFOB(fd,info->pos[1]);
@@ -11675,10 +11698,24 @@ void clif_parse_TradeRequest(int fd,struct map_session_data *sd)
 	if(!sd->chatID && pc_cant_act(sd))
 		return; //You can trade while in a chatroom.
 
-	// @noask [LuzZza]
-	if(t_sd && t_sd->state.noask) {
-		clif_noask_sub(sd, t_sd, 0);
-		return;
+	if(t_sd){
+		// @noask [LuzZza]
+		if(t_sd->state.noask) {
+			clif_noask_sub(sd, t_sd, 0);
+			return;
+		}
+
+		if (t_sd->state.mail_writing) {
+			int old = sd->trade_partner;
+
+			// Fake trading
+			sd->trade_partner = t_sd->status.account_id;
+			clif_tradestart(sd, 5);
+			// Restore old state
+			sd->trade_partner = old;
+
+			return;
+		}
 	}
 
 	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 1 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
@@ -14753,62 +14790,144 @@ void clif_parse_Check(int fd, struct map_session_data *sd)
 /// By Zephyrus
 ///
 
-/// Notification about the result of adding an item to mail (ZC_ACK_MAIL_ADD_ITEM).
-/// 0255 <index>.W <result>.B
+/// Notification about the result of adding an item to mail
+/// 0255 <index>.W <result>.B (ZC_ACK_MAIL_ADD_ITEM)
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_Mail_setattachment(int fd, int index, uint8 flag)
+/// 0a05 <result>.B <index>.W <amount>.W <item id>.W <item type>.B <identified>.B <damaged>.B <refine>.B (ZC_ACK_ADD_ITEM_TO_MAIL)
+///		{ <card id>.W }*4 { <option index>.W <option value>.W <option parameter>.B }*5
+/// result:
+///		0 = success
+///		1 = over weight
+///		2 = fatal error
+void clif_Mail_setattachment(struct map_session_data* sd, int index, int amount, uint8 flag)
 {
+	int fd = sd->fd;
+
+#if PACKETVER < 20150513
 	WFIFOHEAD(fd,packet_len(0x255));
 	WFIFOW(fd,0) = 0x255;
 	WFIFOW(fd,2) = index;
 	WFIFOB(fd,4) = flag;
 	WFIFOSET(fd,packet_len(0x255));
+#else
+	struct item* item = &sd->inventory.u.items_inventory[index-2];
+	int i, total = 0;
+
+	WFIFOHEAD(fd, 53);
+	WFIFOW(fd, 0) = 0xa05;
+	WFIFOB(fd, 2) = flag;
+	WFIFOW(fd, 3) = index;
+	WFIFOW(fd, 5) = amount;
+	WFIFOW(fd, 7) = item->nameid;
+	WFIFOB(fd, 9) = itemtype(item->nameid);
+	WFIFOB(fd, 10) = item->identify;
+	WFIFOB(fd, 11) = item->attribute;
+	WFIFOB(fd, 12) = item->refine;
+	clif_addcards(WFIFOP(fd,13), item);
+	clif_add_random_options(WFIFOP(fd,21), item);
+
+	for( i = 0; i < MAIL_MAX_ITEM; i++ ){
+		if( sd->mail.item[i].nameid == 0 ){
+			break;
+		}
+
+		total += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
+	}
+
+	WFIFOW(fd, 46) = total;
+	// 5 empty unknown bytes
+	memset(WFIFOP(fd, 48), 0, 5);
+	WFIFOSET(fd, 53);
+#endif
 }
 
 
-/// Notification about the result of retrieving a mail attachment (ZC_MAIL_REQ_GET_ITEM).
-/// 0245 <result>.B
+/// Notification about the result of retrieving a mail attachment
+/// 0245 <result>.B (ZC_MAIL_REQ_GET_ITEM)
 /// result:
 ///     0 = success
 ///     1 = failure
 ///     2 = too many items
-void clif_Mail_getattachment(int fd, uint8 result)
-{
+/// 09f2 <mail id>.Q <mail tab>.B <result>.B (ZC_ACK_ZENY_FROM_MAIL)
+/// 09f4 <mail id>.Q <mail tab>.B <result>.B (ZC_ACK_ITEM_FROM_MAIL)
+void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type) {
+	int fd = sd->fd;
+
+#if PACKETVER < 20150513
 	WFIFOHEAD(fd,packet_len(0x245));
 	WFIFOW(fd,0) = 0x245;
 	WFIFOB(fd,2) = result;
 	WFIFOSET(fd,packet_len(0x245));
+#else
+	switch( type ){
+		case MAIL_ATT_ITEM:
+		case MAIL_ATT_ZENY:
+			break;
+		default:
+			return;
+	}
+
+	WFIFOHEAD(fd, 12);
+	WFIFOW(fd, 0) = type == MAIL_ATT_ZENY ? 0x9f2 : 0x9f4;
+	WFIFOQ(fd, 2) = msg->id;
+	WFIFOB(fd, 10) = msg->type;
+	WFIFOB(fd, 11) = result;
+	WFIFOSET(fd, 12);
+
+	clif_Mail_refreshinbox( sd, msg->type, 0 );
+#endif
 }
 
 
-/// Notification about the result of sending a mail (ZC_MAIL_REQ_SEND).
-/// 0249 <result>.B
+/// Notification about the result of sending a mail
+/// 0249 <result>.B (ZC_MAIL_REQ_SEND)
 /// result:
 ///     0 = success
 ///     1 = recipinent does not exist
-void clif_Mail_send(int fd, bool fail)
-{
+/// 09ed <result>.B (ZC_ACK_WRITE_MAIL)
+void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result){
+	int fd = sd->fd;
+#if PACKETVER < 20150513
 	WFIFOHEAD(fd,packet_len(0x249));
 	WFIFOW(fd,0) = 0x249;
-	WFIFOB(fd,2) = fail;
+	WFIFOB(fd,2) = result != WRITE_MAIL_SUCCESS;
 	WFIFOSET(fd,packet_len(0x249));
+#else
+	WFIFOHEAD(fd, 3);
+	WFIFOW(fd, 0) = 0x9ed;
+	WFIFOB(fd, 2) = result;
+	WFIFOSET(fd, 3);
+#endif
 }
 
 
-/// Notification about the result of deleting a mail (ZC_ACK_MAIL_DELETE).
-/// 0257 <mail id>.L <result>.W
+/// Notification about the result of deleting a mail.
+/// 0257 <mail id>.L <result>.W (ZC_ACK_MAIL_DELETE)
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_Mail_delete(int fd, int mail_id, short fail)
-{
+// 09f6 <mail tab>.B <mail id>.Q (ZC_ACK_DELETE_MAIL)
+void clif_mail_delete( struct map_session_data* sd, struct mail_message *msg, bool success ){
+	int fd = sd->fd;
+
+#if PACKETVER < 20150513
 	WFIFOHEAD(fd, packet_len(0x257));
 	WFIFOW(fd,0) = 0x257;
-	WFIFOL(fd,2) = mail_id;
-	WFIFOW(fd,6) = fail;
+	WFIFOL(fd,2) = msg->id;
+	WFIFOW(fd,6) = !success;
 	WFIFOSET(fd, packet_len(0x257));
+#else
+	// This is only a success notification
+	if( success ){
+		WFIFOHEAD(fd, 11);
+		WFIFOW(fd, 0) = 0x9f6;
+		WFIFOB(fd, 2) = msg->type;
+		WFIFOQ(fd, 3) = msg->id;
+		WFIFOSET(fd, 11);
+	}
+#endif
 }
 
 
@@ -14826,19 +14945,25 @@ void clif_Mail_return(int fd, int mail_id, short fail)
 	WFIFOSET(fd,packet_len(0x274));
 }
 
-
-/// Notification about new mail (ZC_MAIL_RECEIVE).
-/// 024a <mail id>.L <title>.40B <sender>.24B
-void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title)
-{
+/// Notification about new mail.
+/// 024a <mail id>.L <title>.40B <sender>.24B (ZC_MAIL_RECEIVE)
+/// 09e7 <result>.B (ZC_NOTIFY_UNREADMAIL)
+void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title){
+	int fd = sd->fd;
+#if PACKETVER < 20150513
 	WFIFOHEAD(fd,packet_len(0x24a));
 	WFIFOW(fd,0) = 0x24a;
 	WFIFOL(fd,2) = mail_id;
 	safestrncpy(WFIFOCP(fd,6), title, MAIL_TITLE_LENGTH);
 	safestrncpy(WFIFOCP(fd,46), sender, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x24a));
+#else
+	WFIFOHEAD(fd,3);
+	WFIFOW(fd,0) = 0x9e7;
+	WFIFOB(fd,2) = sd->mail.inbox.unread > 0 || sd->mail.inbox.unchecked > 0; // unread
+	WFIFOSET(fd,3);
+#endif
 }
-
 
 /// Opens/closes the mail window (ZC_MAIL_WINDOWS).
 /// 0260 <type>.L
@@ -14853,14 +14978,17 @@ void clif_Mail_window(int fd, int flag)
 	WFIFOSET(fd,packet_len(0x260));
 }
 
-
-/// Lists mails stored in inbox (ZC_MAIL_REQ_GET_LIST).
-/// 0240 <packet len>.W <amount>.L { <mail id>.L <title>.40B <read>.B <sender>.24B <time>.L }*amount
+/// Lists mails stored in inbox.
+/// 0240 <packet len>.W <amount>.L { <mail id>.L <title>.40B <read>.B <sender>.24B <time>.L }*amount (ZC_MAIL_REQ_GET_LIST)
 /// read:
 ///     0 = unread
 ///     1 = read
-void clif_Mail_refreshinbox(struct map_session_data *sd)
-{
+/// 09f0 <packet len>.W <type>.B <amount>.B <last page>.B (ZC_ACK_MAIL_LIST)
+///		{ <mail id>.Q <read>.B <type>.B <sender>.24B <received>.L <expires>.L <title length>.W <title>.?B }*
+/// 0a7d <packet len>.W <type>.B <amount>.B <last page>.B (ZC_ACK_MAIL_LIST2)
+///		{ <mail id>.Q <read>.B <type>.B <sender>.24B <received>.L <expires>.L <title length>.W <title>.?B }*
+void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type type,int64 mailID){
+#if PACKETVER < 20150513
 	int fd = sd->fd;
 	struct mail_data *md = &sd->mail.inbox;
 	struct mail_message *msg;
@@ -14892,29 +15020,176 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 		safesnprintf(output,sizeof(output),"Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
+#else
+	int fd = sd->fd;
+	struct mail_data *md = &sd->mail.inbox;
+	struct mail_message *msg;
+	int i, j, k, offset, titleLength;
+	uint8 mailType, amount, remaining;
+	uint32 now = (uint32)time(NULL);
+#if PACKETVER >= 20160601
+	int cmd = 0xa7d;
+#else
+	int cmd = 0x9f0;
+#endif
+
+	if( battle_config.mail_daily_count ){
+		mail_refresh_remaining_amount(sd);
+	}
+
+	// If a starting mail id was sent
+	if( mailID != 0 ){
+		ARR_FIND( 0, md->amount, i, md->msg[i].id == mailID );
+
+		// Unknown mail
+		if( i == md->amount ){
+			// Ignore the request for now
+			return; // TODO: Should we just show the first page instead?
+		}
+
+		// It was actually the oldest/first mail, there is no further page
+		if( i == 0 ){
+			return;
+		}
+
+		// We actually want the next/older mail
+		i -= 1;
+	}else{
+		i = md->amount;
+	}
+	
+	// Count the remaining mails from the starting mail or the beginning
+	// Only count mails of the target type and those that should not have been deleted already
+	for( j = i, remaining = 0; j >= 0; j-- ){
+		msg = &md->msg[j];
+
+		if (msg->id < 1)
+			continue;
+		if (msg->type != type)
+			continue;
+		if (msg->scheduled_deletion > 0 && msg->scheduled_deletion <= now)
+			continue;
+
+		remaining++;
+	}
+
+	if( remaining > MAIL_PAGE_SIZE ){
+		amount = MAIL_PAGE_SIZE;
+	}else{
+		amount = remaining;
+	}
+
+	WFIFOHEAD(fd, 7 + ((44 + MAIL_TITLE_LENGTH) * amount));
+	WFIFOW(fd, 0) = cmd;
+	WFIFOB(fd, 4) = type;
+	WFIFOB(fd, 5) = amount;
+	WFIFOB(fd, 6) = ( remaining < MAIL_PAGE_SIZE ); // last page
+
+	for( offset = 7, amount = 0; i >= 0; i-- ){
+		msg = &md->msg[i];
+
+		if (msg->id < 1)
+			continue;
+		if (msg->type != type)
+			continue;
+		if (msg->scheduled_deletion > 0 && msg->scheduled_deletion <= now)
+			continue;
+
+		WFIFOQ(fd, offset + 0) = (uint64)msg->id;
+		WFIFOB(fd, offset + 8) = (msg->status != MAIL_UNREAD);
+
+		mailType = MAIL_TYPE_TEXT; // Normal letter
+
+		if( msg->zeny > 0 ){
+			mailType |= MAIL_TYPE_ZENY; // Mail contains zeny
+		}
+
+		for( k = 0; k < MAIL_MAX_ITEM; k++ ){
+			if( msg->item[k].nameid > 0 ){
+				mailType |= MAIL_TYPE_ITEM; // Mail contains items
+				break;
+			}
+		}
+
+		// If it came from an npc?
+		//mailType |= MAIL_TYPE_NPC;
+
+		WFIFOB(fd, offset + 9) = mailType;
+		safestrncpy(WFIFOCP(fd, offset + 10), msg->send_name, NAME_LENGTH);
+
+		// How much time has passed since you received the mail
+		WFIFOL(fd, offset + 34 ) = now - (uint32)msg->timestamp;
+
+		// If automatic return/deletion of mails is enabled, notify the client when it will kick in
+		if( msg->scheduled_deletion > 0 ){
+			WFIFOL(fd, offset + 38) = (uint32)msg->scheduled_deletion - now;
+		}else{
+			// Fake the scheduled deletion to one year in the future
+			// Sadly the client always displays the scheduled deletion after 24 hours no matter how high this value gets [Lemongrass]
+			WFIFOL(fd, offset + 38) = 365 * 24 * 60 * 60;
+		}
+
+		WFIFOW(fd, offset + 42) = titleLength = (int16)(strlen(msg->title) + 1);
+		safestrncpy(WFIFOCP(fd, offset + 44), msg->title, titleLength);
+
+		offset += 44 + titleLength;
+	}
+	WFIFOW(fd, 2) = (int16)offset;
+	WFIFOSET(fd, offset);
+#endif
 }
 
-
-/// Mail inbox list request (CZ_MAIL_GET_LIST).
-/// 023f
-void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd)
-{
+/// Mail inbox list request.
+/// 023f (CZ_MAIL_GET_LIST)
+/// 09e8 <mail tab>.B <mail id>.Q (CZ_OPEN_MAILBOX)
+/// 09ee <mail tab>.B <mail id>.Q (CZ_REQ_NEXT_MAIL_LIST)
+/// 09ef <mail tab>.B <mail id>.Q (CZ_REQ_REFRESH_MAIL_LIST)
+void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd){
+#if PACKETVER < 20150513
 	struct mail_data* md = &sd->mail.inbox;
 
 	if( md->amount < MAIL_MAX_INBOX && (md->full || sd->mail.changed) )
-		intif_Mail_requestinbox(sd->status.char_id, 1);
+		intif_Mail_requestinbox(sd->status.char_id, 1, MAIL_INBOX_NORMAL);
 	else
-		clif_Mail_refreshinbox(sd);
+		clif_Mail_refreshinbox(sd, MAIL_INBOX_NORMAL,0);
 
-	mail_removeitem(sd, 0);
-	mail_removezeny(sd, 0);
+	mail_removeitem(sd, 0, sd->mail.item[0].index, sd->mail.item[0].amount);
+	mail_removezeny(sd, false);
+#else
+	uint8 openType = RFIFOB(fd, 2);
+	uint64 mailId = RFIFOQ(fd, 3);
+
+	switch( openType ){
+		case MAIL_INBOX_NORMAL:
+		case MAIL_INBOX_ACCOUNT:
+		case MAIL_INBOX_RETURNED:
+			break;
+		default:
+			// Unknown type: ignore request
+			return;
+	}
+
+	if( sd->mail.changed || RFIFOW(fd,0) == 0x9ef ){
+		intif_Mail_requestinbox(sd->status.char_id, 1, openType);
+		return;
+	}
+
+	// If it is not a next page request
+	if( RFIFOW(fd,0) != 0x9ee ){
+		mailId = 0;
+	}
+
+	clif_Mail_refreshinbox(sd,(enum mail_inbox_type)openType,mailId);
+#endif
 }
 
-
-/// Opens a mail (ZC_MAIL_REQ_OPEN).
-/// 0242 <packet len>.W <mail id>.L <title>.40B <sender>.24B <time>.L <zeny>.L
+/// Opens a mail
+/// 0242 <packet len>.W <mail id>.L <title>.40B <sender>.24B <time>.L <zeny>.L (ZC_MAIL_REQ_OPEN)
 ///     <amount>.L <name id>.W <item type>.W <identified>.B <damaged>.B <refine>.B
 ///     <card1>.W <card2>.W <card3>.W <card4>.W <message>.?B
+/// 09eb <packet len>.W <type>.B <mail id>.Q <message length>.W <zeny>.Q <item count>.B (ZC_ACK_READ_MAIL)
+///		{  }*n
+// TODO: Packet description => for repeated block
 void clif_Mail_read(struct map_session_data *sd, int mail_id)
 {
 	int i, fd = sd->fd;
@@ -14926,14 +15201,20 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		return;
 	} else {
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
-		struct item *item = &msg->item;
+		struct item *item;
 		struct item_data *data;
-		int msg_len = strlen(msg->body), len;
+		int msg_len = strlen(msg->body), len, count = 0;
+#if PACKETVER >= 20150513
+		int offset, j, itemsize;
+#endif
 
 		if( msg_len == 0 ) {
-			strcpy(msg->body, "(no message)");
+			strcpy(msg->body, "(no message)"); // TODO: confirm for RODEX
 			msg_len = strlen(msg->body);
 		}
+
+#if PACKETVER < 20150513
+		item = &msg->item[0];
 
 		len = 101 + msg_len;
 
@@ -14963,21 +15244,72 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		WFIFOB(fd,99) = (unsigned char)msg_len;
 		safestrncpy(WFIFOCP(fd,100), msg->body, msg_len + 1);
 		WFIFOSET(fd,len);
+#else
+		// Count the attached items
+		ARR_FIND( 0, MAIL_MAX_ITEM, count, msg->item[count].nameid == 0 );
+
+		msg_len += 1; // Zero Termination
+
+		itemsize = 24 + 5 * MAX_ITEM_RDM_OPT;
+		len = 24 + msg_len+1 + itemsize * count;
+
+		WFIFOHEAD(fd, len);
+		WFIFOW(fd, 0) = 0x9eb;
+		WFIFOW(fd, 2) = len;
+		WFIFOB(fd, 4) = msg->type;
+		WFIFOQ(fd, 5) = msg->id;
+		WFIFOW(fd, 13) = msg_len;
+		WFIFOQ(fd, 15) = msg->zeny;
+		WFIFOB(fd, 23) = (uint8)count; // item count
+		safestrncpy(WFIFOCP(fd, 24), msg->body, msg_len);
+
+		offset = 24 + msg_len;
+
+		for (j = 0; j < MAIL_MAX_ITEM; j++) {
+			item = &msg->item[j];
+
+			if (item->nameid > 0 && item->amount > 0 && (data = itemdb_exists(item->nameid)) != NULL) {
+				WFIFOW(fd, offset) = item->amount;
+				WFIFOW(fd, offset + 2) = (data->view_id) ? data->view_id : item->nameid;
+				WFIFOB(fd, offset + 4) = item->identify;
+				WFIFOB(fd, offset + 5) = item->attribute;
+				WFIFOB(fd, offset + 6) = item->refine;
+				clif_addcards(WFIFOP(fd, offset + 7), item);
+				// 4B unsigned long location
+				WFIFOB(fd, offset + 15 + 4) = data->type;
+				// 2B unsigned short wItemSpriteNumber
+				//WFIFOW(fd, offset + 15 + 5) = data->view_id;
+				// 2B unsigned short bindOnEquipType
+				clif_add_random_options(WFIFOP(fd, offset + 15 + 9 ), item);
+				offset += itemsize;
+			}
+		}
+
+		WFIFOSET(fd, len);
+#endif
 
 		if (msg->status == MAIL_UNREAD) {
 			msg->status = MAIL_READ;
 			intif_Mail_read(mail_id);
 			clif_parse_Mail_refreshinbox(fd, sd);
+
+			sd->mail.inbox.unread--;
+			clif_Mail_new(sd, 0, msg->send_name, msg->title);
 		}
 	}
 }
 
 
-/// Request to open a mail (CZ_MAIL_OPEN).
-/// 0241 <mail id>.L
-void clif_parse_Mail_read(int fd, struct map_session_data *sd)
-{
+/// Request to open a mail.
+/// 0241 <mail id>.L (CZ_MAIL_OPEN)
+/// 09ea <mail tab>.B <mail id>.Q (CZ_REQ_READ_MAIL)
+void clif_parse_Mail_read(int fd, struct map_session_data *sd){
+#if PACKETVER < 20150513
 	int mail_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+#else
+	//uint8 openType = RFIFOB(fd, 2);
+	int mail_id = (int)RFIFOQ(fd, 3);
+#endif
 
 	if( mail_id <= 0 )
 		return;
@@ -14987,14 +15319,90 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd)
 	clif_Mail_read(sd, mail_id);
 }
 
+/// Allow a player to begin writing a mail
+/// 0a12 <receiver>.24B <success>.B (ZC_ACK_OPEN_WRITE_MAIL)
+void clif_send_Mail_beginwrite_ack( struct map_session_data *sd, char* name, bool success ){
+	int fd = sd->fd;
 
-/// Request to receive mail's attachment (CZ_MAIL_GET_ITEM).
-/// 0244 <mail id>.L
-void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
-{
-	int mail_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+	WFIFOHEAD(fd, 27);
+	WFIFOW(fd, 0) = 0xa12;
+	safestrncpy(WFIFOCP(fd, 2), name, NAME_LENGTH);
+	WFIFOB(fd, 26) = success;
+	WFIFOSET(fd, 27);
+}
+
+/// Request to start writing a mail
+/// 0a08 <receiver>.24B (CZ_REQ_OPEN_WRITE_MAIL)
+void clif_parse_Mail_beginwrite( int fd, struct map_session_data *sd ){
+	char name[NAME_LENGTH];
+
+	safestrncpy(name, RFIFOCP(fd, 2), NAME_LENGTH);
+
+	if( sd->state.storage_flag || sd->state.mail_writing || sd->trade_partner ){
+		clif_send_Mail_beginwrite_ack(sd, name, false);
+		return;
+	}
+
+	mail_clear(sd);
+
+	sd->state.mail_writing = true;
+	clif_send_Mail_beginwrite_ack(sd, name,true);
+}
+
+/// Notification that the client cancelled writing a mail
+/// 0a03 (CZ_REQ_CANCEL_WRITE_MAIL)
+void clif_parse_Mail_cancelwrite( int fd, struct map_session_data *sd ){
+	sd->state.mail_writing = false;
+}
+
+/// Give the client information about the recipient, if available
+/// 0a14 <char id>.L <class>.W <base level>.W (ZC_CHECK_RECEIVE_CHARACTER_NAME)
+/// 0a51 <char id>.L <class>.W <base level>.W <name>.24B (ZC_CHECK_RECEIVE_CHARACTER_NAME2)
+void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
+	int fd = sd->fd;
+#if PACKETVER <= 20160302
+	int cmd = 0xa14;
+#else
+	int cmd = 0xa51;
+#endif
+
+	WFIFOHEAD(fd, packet_len(cmd));
+	WFIFOW(fd, 0) = cmd;
+	WFIFOL(fd, 2) = char_id;
+	WFIFOW(fd, 6) = class_;
+	WFIFOW(fd, 8) = level;
+#if PACKETVER >= 20160302
+	strncpy(WFIFOCP(fd, 10), name, NAME_LENGTH);
+#endif
+	WFIFOSET(fd, packet_len(cmd));
+}
+
+/// Request information about the recipient
+/// 0a13 <name>.24B (CZ_CHECK_RECEIVE_CHARACTER_NAME)
+void clif_parse_Mail_Receiver_Check(int fd, struct map_session_data *sd) {
+	static char name[NAME_LENGTH];
+
+	safestrncpy(name, RFIFOCP(fd, 2), NAME_LENGTH);
+
+	intif_mail_checkreceiver(sd, name);
+}
+
+/// Request to receive mail's attachment.
+/// 0244 <mail id>.L (CZ_MAIL_GET_ITEM)
+/// 09f1 <mail id>.Q <mail tab>.B (CZ_REQ_ZENY_FROM_MAIL)
+/// 09f3 <mail id>.Q <mail tab>.B (CZ_REQ_ITEM_FROM_MAIL)
+void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 	int i;
-	bool fail = false;
+	struct mail_message* msg;
+#if PACKETVER < 20150513
+	int mail_id = RFIFOL(fd, packet_db[sd->packet_ver][RFIFOW(fd, 0)].pos[0]);
+	int attachment = MAIL_ATT_ALL;
+#else
+	uint16 packet_id = RFIFOW(fd, 0);
+	int mail_id = (int)RFIFOQ(fd, 2);
+	//int openType = RFIFOB(fd, 10);
+	int attachment = packet_id == 0x9f1 ? MAIL_ATT_ZENY : packet_id == 0x9f3 ? MAIL_ATT_ITEM : MAIL_ATT_NONE;
+#endif
 
 	if( !chrif_isconnected() )
 		return;
@@ -15007,54 +15415,89 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 	if( i == MAIL_MAX_INBOX )
 		return;
 
-	if( sd->mail.inbox.msg[i].zeny < 1 && (sd->mail.inbox.msg[i].item.nameid < 1 || sd->mail.inbox.msg[i].item.amount < 1) )
-		return;
+	msg = &sd->mail.inbox.msg[i];
 
-	if( sd->mail.inbox.msg[i].zeny + sd->status.zeny > MAX_ZENY ) {
-		clif_Mail_getattachment(fd, 1); //too many zeny
-		return;
+	if( attachment&MAIL_ATT_ZENY && msg->zeny < 1 ){
+		attachment &= ~MAIL_ATT_ZENY;
 	}
+	
+	if( attachment&MAIL_ATT_ITEM ){
+		ARR_FIND(0, MAIL_MAX_ITEM, i, msg->item[i].nameid > 0 || msg->item[i].amount > 0);
 
-	if( sd->mail.inbox.msg[i].item.nameid > 0 ) {
-		struct item_data *data;
-		unsigned int weight;
-
-		if ((data = itemdb_exists(sd->mail.inbox.msg[i].item.nameid)) == NULL)
-			return;
-
-		switch( pc_checkadditem(sd, data->nameid, sd->mail.inbox.msg[i].item.amount) ) {
-			case CHKADDITEM_NEW:
-				fail = ( pc_inventoryblank(sd) == 0 );
-				break;
-			case CHKADDITEM_OVERAMOUNT:
-				fail = true;
-		}
-
-		if( fail ) {
-			clif_Mail_getattachment(fd, 1);
-			return;
-		}
-
-		weight = data->weight * sd->mail.inbox.msg[i].item.amount;
-		if( sd->weight + weight > sd->max_weight ) {
-			clif_Mail_getattachment(fd, 2);
-			return;
+		// No items were found
+		if( i == MAIL_MAX_ITEM ){
+			attachment &= ~MAIL_ATT_ITEM;
 		}
 	}
 
-	sd->mail.inbox.msg[i].zeny = 0;
-	memset(&sd->mail.inbox.msg[i].item, 0, sizeof(struct item));
+	// Either no attachment requested at all or there are no zeny or items in the mail
+	if( attachment == MAIL_ATT_NONE ){
+		return;
+	}
+
+	if( attachment&MAIL_ATT_ZENY ){
+		if( msg->zeny + sd->status.zeny > MAX_ZENY ){
+			clif_mail_getattachment(sd, msg, 1, MAIL_ATT_ZENY); //too many zeny
+			return;
+		}else{
+			// To make sure another request fails
+			msg->zeny = 0;
+		}
+	}
+
+	if( attachment&MAIL_ATT_ITEM ){
+		int new_ = 0, totalweight = 0;
+
+		for( i = 0; i < MAIL_MAX_ITEM; i++ ){
+			struct item* item = &msg->item[i];
+
+			if( item->nameid > 0 && item->amount > 0 ){
+				struct item_data *data;
+
+				if((data = itemdb_exists(item->nameid)) == NULL)
+					continue;
+
+				switch( pc_checkadditem(sd, item->nameid, item->amount) ){
+					case CHKADDITEM_NEW:
+						new_++;
+						break;
+					case CHKADDITEM_OVERAMOUNT:
+						clif_mail_getattachment(sd, msg, 2, MAIL_ATT_ITEM);
+						return;
+				}
+
+				totalweight += data->weight * item->amount;
+			}
+		}
+
+		if( ( totalweight + sd->weight ) > sd->max_weight ){
+			clif_mail_getattachment(sd, msg, 2, MAIL_ATT_ITEM);
+			return;
+		}else if( pc_inventoryblank(sd) < new_ ){
+			clif_mail_getattachment(sd, msg, 2, MAIL_ATT_ITEM);
+			return;
+		}
+
+		// To make sure another request fails
+		memset(msg->item, 0, MAIL_MAX_ITEM*sizeof(struct item));
+	}
+
+	intif_mail_getattach(sd,msg,attachment);
 	clif_Mail_read(sd, mail_id);
-
-	intif_Mail_getattach(sd->status.char_id, mail_id);
 }
 
 
-/// Request to delete a mail (CZ_MAIL_DELETE).
-/// 0243 <mail id>.L
+/// Request to delete a mail.
+/// 0243 <mail id>.L (CZ_MAIL_DELETE)
+/// 09f5 <mail tab>.B <mail id>.Q (CZ_REQ_DELETE_MAIL)
 void clif_parse_Mail_delete(int fd, struct map_session_data *sd){
+#if PACKETVER < 20150513
 	int mail_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	int i;
+#else
+	//int openType = RFIFOB(fd, 2);
+	int mail_id = (int)RFIFOQ(fd, 3);
+#endif
+	int i, j;
 
 	if( !chrif_isconnected() )
 		return;
@@ -15067,12 +15510,24 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd){
 	if (i < MAIL_MAX_INBOX) {
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 
-		if( (msg->item.nameid > 0 && msg->item.amount > 0) || msg->zeny > 0 ) {// can't delete mail without removing attachment first
-			clif_Mail_delete(sd->fd, mail_id, 1);
+		// can't delete mail without removing zeny first
+		if( msg->zeny > 0 ){
+			clif_mail_delete(sd, msg, false);
 			return;
 		}
 
-		intif_Mail_delete(sd->status.char_id, mail_id);
+		// can't delete mail without removing attachment(s) first
+		for( j = 0; j < MAIL_MAX_ITEM; j++ ){
+			if( msg->item[j].nameid > 0 && msg->item[j].amount > 0 ){
+				clif_mail_delete(sd, msg, false);
+				return;
+			}
+		}
+
+		if( intif_Mail_delete(sd->status.char_id, mail_id) && msg->status == MAIL_UNREAD ){
+			sd->mail.inbox.unread--;
+			clif_Mail_new(sd,0,NULL,NULL);
+		}
 	}
 }
 
@@ -15097,12 +15552,17 @@ void clif_parse_Mail_return(int fd, struct map_session_data *sd){
 }
 
 
-/// Request to add an item or Zeny to mail (CZ_MAIL_ADD_ITEM).
-/// 0247 <index>.W <amount>.L
+/// Request to add an item or Zeny to mail.
+/// 0247 <index>.W <amount>.L (CZ_MAIL_ADD_ITEM)
+/// 0a04 <index>.W <amount>.W (CZ_REQ_ADD_ITEM_TO_MAIL)
 void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	int idx = RFIFOW(fd,info->pos[0]);
+#if PACKETVER < 20150513
 	int amount = RFIFOL(fd,info->pos[1]);
+#else
+	int amount = RFIFOW(fd,info->pos[1]);
+#endif
 	unsigned char flag;
 
 	if( !chrif_isconnected() )
@@ -15111,31 +15571,54 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
-	clif_Mail_setattachment(fd,idx,!flag);
+
+	clif_Mail_setattachment(sd,idx,amount,flag);
 }
 
+/// Remove an item from a mail
+/// 0a07 <result>.B <index>.W <amount>.W <weight>.W
+void clif_mail_removeitem( struct map_session_data* sd, bool success, int index, int amount ){
+	int fd = sd->fd;
 
-/// Request to reset mail item and/or Zeny (CZ_MAIL_RESET_ITEM).
-/// 0246 <type>.W
+	WFIFOHEAD(fd, 9);
+	WFIFOW(fd, 0) = 0xa07;
+	WFIFOB(fd, 2) = success;
+	WFIFOW(fd, 3) = index;
+	WFIFOW(fd, 5) = amount;
+	WFIFOW(fd, 7) = 0; // TODO: which weight? item weight? removed weight? remaining weight?
+	WFIFOSET(fd, 9);
+}
+
+/// Request to reset mail item and/or Zeny
+/// 0246 <type>.W (CZ_MAIL_RESET_ITEM)
 /// type:
 ///     0 = reset all
 ///     1 = remove item
 ///     2 = remove zeny
+/// 0a06 <index>.W <amount>.W (CZ_REQ_REMOVE_ITEM_MAIL)
 void clif_parse_Mail_winopen(int fd, struct map_session_data *sd)
 {
+#if PACKETVER < 20150513
 	int type = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
 	if (type == 0 || type == 1)
-		mail_removeitem(sd, 0);
+		mail_removeitem(sd, 0, sd->mail.item[0].index, sd->mail.item[0].amount);
 	if (type == 0 || type == 2)
-		mail_removezeny(sd, 0);
+		mail_removezeny(sd, false);
+#else
+	uint16 index = RFIFOW(fd, 2);
+	uint16 count = RFIFOW(fd, 4);
+
+	mail_removeitem(sd,0,index,count);
+#endif
 }
 
-
-/// Request to send mail (CZ_MAIL_SEND).
-/// 0248 <packet len>.W <recipient>.24B <title>.40B <body len>.B <body>.?B
-void clif_parse_Mail_send(int fd, struct map_session_data *sd)
-{
+/// Request to send mail
+/// 0248 <packet len>.W <recipient>.24B <title>.40B <body len>.B <body>.?B (CZ_MAIL_SEND)
+/// 09ec <packet len>.W <recipient>.24B <sender>.24B <zeny>.Q <title length>.W <body length>.W <title>.?B <body>.?B (CZ_REQ_WRITE_MAIL)
+/// 0a6e <packet len>.W <recipient>.24B <sender>.24B <zeny>.Q <title length>.W <body length>.W <char id>.L <title>.?B <body>.?B (CZ_REQ_WRITE_MAIL2)
+void clif_parse_Mail_send(int fd, struct map_session_data *sd){
+#if PACKETVER < 20150513
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
 	if( !chrif_isconnected() )
@@ -15147,6 +15630,59 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	}
 
 	mail_send(sd, RFIFOCP(fd,info->pos[1]), RFIFOCP(fd,info->pos[2]), RFIFOCP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
+#else
+	unsigned short length;
+	static char receiver[NAME_LENGTH];
+	static char sender[NAME_LENGTH];
+	char *title;
+	char *text;
+	uint64 zeny;
+	uint16 titleLength;
+	uint16 textLength;
+
+	length = RFIFOW(fd, 2);
+
+	if( length < 0x3e ){
+		ShowWarning("Too short...\n");
+		clif_Mail_send(sd, WRITE_MAIL_FAILED);
+		return;
+	}
+
+	// Forged request without a begin writing packet?
+	if( !sd->state.mail_writing ){
+		return; // Ignore it
+	}
+
+	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
+	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
+	zeny = RFIFOQ(fd, 52);
+	titleLength = RFIFOW(fd, 60);
+	textLength = RFIFOW(fd, 62);
+
+	title = (char*)aMalloc(titleLength);
+	text = (char*)aMalloc(textLength);
+
+#if PACKETVER <= 20160330
+	safestrncpy(title, RFIFOCP(fd, 64), titleLength);
+	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), textLength);
+#else
+	// 64 = <char id>.L
+	safestrncpy(title, RFIFOCP(fd, 68), titleLength);
+	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), textLength);
+#endif
+
+	if( zeny > 0 ){
+		if( mail_setitem(sd,0,(uint32)zeny) != MAIL_ATTACH_SUCCESS ){
+			clif_Mail_send(sd,WRITE_MAIL_FAILED);
+			return;
+		}
+	}
+
+	mail_send(sd, receiver, title, text, textLength);
+
+	aFree(title);
+	aFree(text);
+#endif
 }
 
 
@@ -19655,20 +20191,20 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  8,  8,  0,  0,  0,  0,  0, 23,  17,  0,  0,102,  0,
 		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  -1,  -1,  -1,  0,  7,
 		0,  0,  0,  0,  0,  18,  22,  3, 11,  0, 11, -1,  0,  3, 11,  0,
-		0, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,
+		-1, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,
 	//#0x0A00
 #if PACKETVER >= 20141022
 	  269,  3,  4,  2,  6, 49,  6,  9, 26, 45, 47, 47, 56, -1,  14,  -1,
 #else
 	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  14,  0,
 #endif
-		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
+		-1,  0,  0, 26, 10,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
 	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  -1,  0,  -1,  0,  0,
  	  106,  0,  0,  0,  0,  4,  0, 59,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0A40
 		0,  0,  0, 85, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0, 34,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0A80
 		0,  0,  0,  0, 94,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -19845,6 +20381,9 @@ void packetdb_readdb(bool reload)
 		{clif_parse_Mail_setattach,"mailsetattach"},
 		{clif_parse_Mail_winopen,"mailwinopen"},
 		{clif_parse_Mail_send,"mailsend"},
+		{clif_parse_Mail_beginwrite,"mailbegin"},
+		{clif_parse_Mail_cancelwrite,"mailcancel"},
+		{clif_parse_Mail_Receiver_Check,"mailreceiver"},
 		// AUCTION SYSTEM
 		{clif_parse_Auction_search,"auctionsearch"},
 		{clif_parse_Auction_buysell,"auctionbuysell"},

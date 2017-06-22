@@ -74,7 +74,7 @@ function	script	F_CoolEventCorp	{
 		mes "Please choose";
 		mes "your destination.";
 		next;
-		if (VIP_SCRIPT && !vip_status(1))
+		if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE))
 			set .@cost,4400;
 		else
 			set .@cost,2200;
