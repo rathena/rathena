@@ -598,15 +598,6 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
 	PRIMARY KEY (`char_id`,`hotkey`)
 ) ENGINE=MyISAM;
 
--- 
--- Table structure for table `interlog`
---
-
-CREATE TABLE IF NOT EXISTS `interlog` (
-  `time` datetime NOT NULL,
-  `log` varchar(255) NOT NULL default ''
-) ENGINE=MyISAM; 
-
 --
 -- Table structure for table `interreg`
 --
@@ -1031,3 +1022,18 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+-- 
+-- Table structure for table `interlog`
+--
+
+CREATE TABLE IF NOT EXISTS `interlog` (
+	`time` DATETIME NULL DEFAULT NULL,
+	`activity` enum('ADD MEMBER','DEL MEMBER','ADD ALLIANCE','DEL ALLIANCE','ADD ANTAGONIST','DEL ANTAGONIST','CREATE GUILD','BREAK GUILD','OCCUPY','ABANDON','CHANGE MASTER') NULL DEFAULT 'CREATE GUILD',
+	`guild_id` INT(11) NULL DEFAULT NULL,
+	`origin` VARCHAR(255) NULL DEFAULT NULL,
+	`target` VARCHAR(255) NULL DEFAULT NULL,
+	`castle_id` INT(11) NULL DEFAULT NULL
+)
+ENGINE=MyISAM;
+

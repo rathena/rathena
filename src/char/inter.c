@@ -814,19 +814,27 @@ static int inter_config_read(const char* cfgName)
 	return 0;
 }
 
-// Save interlog into sql
+/**
+* Save interlog values to SQL
+* @param fmt: Pointer containing the type of activity to be stored
+*  Supplied arguments: activity, origin, target, guild pointer, castle_id
+* @return 0
+*/
 int inter_log(char* fmt, ...)
-{
-	char str[255];
-	char esc_str[sizeof(str)*2+1];// escaped str
+{ 
 	va_list ap;
+	char *activity, *origin, *target;
+	int gid = 0, castle_id = 0;
 
-	va_start(ap,fmt);
-	vsnprintf(str, sizeof(str), fmt, ap);
+	va_start(ap, fmt);
+	activity = fmt;
+	origin = va_arg(ap, char*);
+	target = va_arg(ap, char*);
+	gid = va_arg(ap, int);
+	castle_id = va_arg(ap, int);
 	va_end(ap);
-
-	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", schema_config.interlog_db, esc_str) )
+	
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, origin, target, gid, castle_id))
 		Sql_ShowDebug(sql_handle);
 
 	return 0;
