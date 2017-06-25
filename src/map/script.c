@@ -13876,21 +13876,45 @@ BUILDIN_FUNC(undisguise)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Transform a bl to another _class,
- * @type unused
- *------------------------------------------*/
+ /**
+ * Transform an NPC to another _class
+ *
+ * classchange(<view id>{,"<NPC name>","<flag>"});
+ * @param flag: Specify target
+ *   BC_AREA - Sprite is sent to players in the vicinity of the source (default).
+ *   BC_SELF - Sprite is sent only to player attached.
+ */
 BUILDIN_FUNC(classchange)
 {
-	int _class,type;
-	struct block_list *bl=map_id2bl(st->oid);
+	int _class, type = 1;
+	struct npc_data* nd = NULL;
+	TBL_PC *sd = map_id2sd(st->rid);
+	send_target target = AREA;
 
-	if (bl==NULL)
+	_class = script_getnum(st,2);
+
+	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (nd == NULL)
 		return SCRIPT_CMD_FAILURE;
 
-	_class=script_getnum(st,2);
-	type=script_getnum(st,3);
-	clif_class_change(bl,_class,type);
+	if (script_hasdata(st, 4)) {
+		switch(script_getnum(st, 4)) {
+			case BC_SELF:	target = SELF;			break;
+			case BC_AREA:
+			default:		target = AREA;			break;
+		}
+	}
+	if (target != SELF)
+		clif_class_change(&nd->bl,_class,type);
+	else if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
+	else
+		clif_class_change_target(&nd->bl,_class,type,target,sd);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14739,22 +14763,46 @@ BUILDIN_FUNC(message)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * npctalk (sends message to surrounding area)
- *------------------------------------------*/
+/**
+ * npctalk("<message>"{,"<NPC name>","<flag>"});
+ * @param flag: Specify target
+ *   BC_ALL  - Broadcast message is sent server-wide.
+ *   BC_MAP  - Message is sent to everyone in the same map as the source of the npc.
+ *   BC_AREA - Message is sent to players in the vicinity of the source (default).
+ *   BC_SELF - Message is sent only to player attached.
+ */
 BUILDIN_FUNC(npctalk)
 {
 	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
 
-	if (script_hasdata(st, 3))
+	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
+
 	if (nd != NULL) {
-		char message[256];
+		send_target target = AREA;
+		char message[CHAT_SIZE_MAX];
+
+		if (script_hasdata(st, 4)) {
+			switch(script_getnum(st, 4)) {
+				case BC_ALL:	target = ALL_CLIENT;	break;
+				case BC_MAP:	target = ALL_SAMEMAP;	break;
+				case BC_SELF:	target = SELF;			break;
+				case BC_AREA:
+				default:		target = AREA;			break;
+			}
+		}
 		safesnprintf(message, sizeof(message), "%s", str);
-		clif_disp_overhead(&nd->bl, message);
+		if (target != SELF)
+			clif_messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
+		else {
+			TBL_PC *sd = map_id2sd(st->rid);
+			if (sd == NULL)
+				return SCRIPT_CMD_FAILURE;
+			clif_messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
+		}
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18274,9 +18322,14 @@ BUILDIN_FUNC(unitstopwalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit say the given message.
-///
-/// unittalk <unit_id>,"<message>";
+/**
+ * Makes the unit say the given message.
+ *
+ * unittalk <unit_id>,"<message>"{,"<flag>"};
+ * @param flag: Specify target
+ *   bc_area - Message is sent to players in the vicinity of the source (default).
+ *   bc_self - Message is sent only to player attached.
+ */
 BUILDIN_FUNC(unittalk)
 {
 	const char* message;
@@ -18286,11 +18339,22 @@ BUILDIN_FUNC(unittalk)
 
 	if(script_rid2bl(2,bl))
 	{
+		send_target target = AREA;
 		struct StringBuf sbuf;
+
+		if (script_hasdata(st, 4)) {
+			if (script_getnum(st, 4) == BC_SELF) {
+				if (map_id2sd(bl->id) == NULL) {
+					ShowWarning("script: unittalk: bc_self can't be used for non-players objects.\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				target = SELF;
+			}
+		}
 
 		StringBuf_Init(&sbuf);
 		StringBuf_Printf(&sbuf, "%s", message);
-		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
+		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), target);
 		StringBuf_Destroy(&sbuf);
 	}
 
@@ -23382,7 +23446,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getinventorylist,"?"),
 	BUILDIN_DEF(getskilllist,"?"),
 	BUILDIN_DEF(clearitem,"?"),
-	BUILDIN_DEF(classchange,"ii"),
+	BUILDIN_DEF(classchange,"i??"),
 	BUILDIN_DEF(misceffect,"i"),
 	BUILDIN_DEF(playBGM,"s"),
 	BUILDIN_DEF(playBGMall,"s?????"),
@@ -23407,7 +23471,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
+	BUILDIN_DEF(npctalk,"s??"), // [Valaris]
 	BUILDIN_DEF(chatmes,"s?"), // [Jey]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
@@ -23528,7 +23592,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i"),
-	BUILDIN_DEF(unittalk,"is"),
+	BUILDIN_DEF(unittalk,"is?"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
