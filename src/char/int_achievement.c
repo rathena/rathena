@@ -61,7 +61,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 
 	*count = (int)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
-		int i = 0;
+		i = 0;
 
 		achievelog = (struct achievement *)aCalloc(*count, sizeof(struct achievement));
 		while (SQL_SUCCESS == SqlStmt_NextRow(stmt)) {
