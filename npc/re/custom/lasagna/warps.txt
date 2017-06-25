@@ -1,3 +1,9 @@
+//===== rAthena Script =======================================
+//= Lasagna Warps
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
 lasa_fild02,348,244,0	warp	lasa_fild02#lasa_dun01	1,1,lasa_dun01,24,143
 lasa_dun01,18,143,0	warp	lasa_dun01#lasa_fild02	1,1,lasa_fild02,344,243
 
