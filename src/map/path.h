@@ -4,6 +4,10 @@
 #ifndef _PATH_H_
 #define _PATH_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "map.h" // enum cell_chk
 
 #define MOVE_COST 10
@@ -69,6 +73,10 @@ int distance_client(int dx, int dy);
 //
 void do_init_path();
 void do_final_path();
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* _PATH_H_ */

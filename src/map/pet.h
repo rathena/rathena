@@ -4,6 +4,10 @@
 #ifndef _PET_H_
 #define _PET_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MAX_PET_DB	300
 #define MAX_PETLOOT_SIZE	30
 
@@ -137,5 +141,9 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data); // [Valar
 void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _PET_H_ */

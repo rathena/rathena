@@ -4,6 +4,10 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
@@ -1001,5 +1005,9 @@ extern char market_table[32];
 extern char roulette_table[32];
 
 void do_shutdown(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAP_H_ */

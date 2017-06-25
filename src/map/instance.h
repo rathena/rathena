@@ -4,6 +4,10 @@
 #ifndef _INSTANCE_H_
 #define _INSTANCE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // struct point
 #include "script.h" // struct reg_db
 
@@ -93,6 +97,10 @@ void do_final_instance(void);
 
 #if MAX_MAP_PER_INSTANCE > 255
 	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

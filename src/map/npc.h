@@ -4,6 +4,10 @@
 #ifndef _NPC_H_
 #define _NPC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "map.h" // struct block_list
 #include "status.h" // struct status_change
 #include "unit.h" // struct unit_data
@@ -214,5 +218,9 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _NPC_H_ */

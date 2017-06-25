@@ -27,7 +27,7 @@ Thumbs.db
 /*.suo
 *.o
 *.a
-*.yml
+*.vcxproj.user
 /char-server
 /config.log
 /config.status

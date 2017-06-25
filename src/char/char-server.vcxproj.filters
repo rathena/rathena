@@ -64,7 +64,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="char.c">
+    <ClCompile Include="char.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="char_clif.c">

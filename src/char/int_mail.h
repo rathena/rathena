@@ -4,6 +4,10 @@
 #ifndef _INT_MAIL_SQL_H_
 #define _INT_MAIL_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int mail_return_timer( int tid, unsigned int tick, int id, intptr_t data );
 int mail_delete_timer( int tid, unsigned int tick, int id, intptr_t data );
 
@@ -15,5 +19,9 @@ void inter_mail_sql_final(void);
 
 int mail_savemessage(struct mail_message* msg);
 void mapif_Mail_new(struct mail_message *msg);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INT_MAIL_SQL_H_ */
