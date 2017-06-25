@@ -4370,7 +4370,7 @@ void run_script_main(struct script_state *st)
 	}
 }
 
-int script_config_read(char *cfgName)
+int script_config_read(const char *cfgName)
 {
 	int i;
 	char line[1024],w1[1024],w2[1024];

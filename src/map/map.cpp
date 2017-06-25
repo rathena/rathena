@@ -3581,7 +3581,7 @@ int map_readallmaps (void)
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
-		char* mapcachefilepath[] = {
+		const char* mapcachefilepath[] = {
 			"db/" DBPATH "map_cache.dat",
 			"db/import/map_cache.dat"
 		};
@@ -3772,7 +3772,7 @@ int parse_console(const char* buf){
 /*==========================================
  * Read map server configuration files (conf/map_athena.conf...)
  *------------------------------------------*/
-int map_config_read(char *cfgName)
+int map_config_read(const char *cfgName)
 {
 	char line[1024], w1[32], w2[1024];
 	FILE *fp;
@@ -3878,7 +3878,7 @@ int map_config_read(char *cfgName)
 	return 0;
 }
 
-void map_reloadnpc_sub(char *cfgName)
+void map_reloadnpc_sub(const char *cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
@@ -3932,7 +3932,7 @@ void map_reloadnpc(bool clear)
 #endif
 }
 
-int inter_config_read(char *cfgName)
+int inter_config_read(const char *cfgName)
 {
 	char line[1024],w1[1024],w2[1024];
 	FILE *fp;
@@ -4523,7 +4523,7 @@ struct msg_data *map_lang2msgdb(uint8 lang){
 
 void map_do_init_msg(void){
 	int test=0, i=0, size;
-	char * listelang[] = {
+	const char * listelang[] = {
 		MSG_CONF_NAME_EN,	//default
 		MSG_CONF_NAME_RUS,
 		MSG_CONF_NAME_SPN,
@@ -4559,7 +4559,7 @@ void map_msg_reload(void){
 	map_do_final_msg(); //clear data
 	map_do_init_msg();
 }
-int map_msg_config_read(char *cfgName, int lang){
+int map_msg_config_read(const char *cfgName, int lang){
 	struct msg_data *mdb;
 
 	if( (mdb = map_lang2msgdb(lang)) == NULL )

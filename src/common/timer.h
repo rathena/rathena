@@ -51,7 +51,7 @@ int delete_timer(int tid, TimerFunc func);
 int addtick_timer(int tid, unsigned int tick);
 int settick_timer(int tid, unsigned int tick);
 
-int add_timer_func_list(TimerFunc func, char* name);
+int add_timer_func_list(TimerFunc func, const char* name);
 
 unsigned long get_uptime(void);
 
