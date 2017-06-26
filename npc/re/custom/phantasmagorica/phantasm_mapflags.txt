@@ -1,0 +1,8 @@
+// non exhaustive
+un_myst	mapflag	noteleport
+un_myst	mapflag	nowarp
+un_myst	mapflag	nowarpto
+un_myst	mapflag	noreturn
+un_myst	mapflag	nosave
+
+verus04	mapflag	noteleport
