@@ -10,6 +10,10 @@
 #ifndef __ACCOUNT_H_INCLUDED__
 #define __ACCOUNT_H_INCLUDED__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // ACCOUNT_REG2_NUM
 #include "../config/core.h"
@@ -141,5 +145,8 @@ struct AccountDB {
 void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
 void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __ACCOUNT_H_INCLUDED__

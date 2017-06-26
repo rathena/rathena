@@ -27,7 +27,7 @@ Thumbs.db
 /*.suo
 *.o
 *.a
-*.yml
+*.vcxproj.user
 /char-server
 /config.log
 /config.status
@@ -49,6 +49,9 @@ Thumbs.db
 # /3rdparty/mt19937ar/
 /3rdparty/mt19937ar/Makefile
 /3rdparty/mt19937ar/*.o
+
+# /3rdparty/yaml-cpp/
+/3rdparty/yaml-cpp/Makefile
 
 # /db/
 /db/import

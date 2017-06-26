@@ -4,6 +4,10 @@
 #ifndef _BATTLE_H_
 #define _BATTLE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h"
 #include "../config/core.h"
 #include "clif.h" // e_damage_type
@@ -641,5 +645,9 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
  * Royal Guard
  **/
 int battle_damage_area( struct block_list *bl, va_list ap);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _BATTLE_H_ */

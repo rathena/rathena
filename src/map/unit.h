@@ -4,6 +4,10 @@
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#include "map.h"
 struct block_list;
 struct unit_data;
@@ -159,5 +163,8 @@ int unit_changetarget(struct block_list *bl,va_list ap);
 void do_init_unit(void);
 void do_final_unit(void);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _UNIT_H_ */

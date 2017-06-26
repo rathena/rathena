@@ -4,6 +4,10 @@
 #ifndef _CLIF_H_
 #define _CLIF_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
 //#include "../common/mmo.h"
@@ -632,7 +636,8 @@ void clif_storageclose(struct map_session_data* sd);
 int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 
-void clif_class_change(struct block_list *bl,int class_,int type);
+void clif_class_change_target(struct block_list *bl,int class_, int type, enum send_target target, struct map_session_data *sd);
+#define clif_class_change(bl, class_, type) clif_class_change_target(bl, class_, type, AREA, NULL)
 #define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 
 void clif_skillinfoblock(struct map_session_data *sd);
@@ -818,7 +823,8 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 void clif_weather(int16 m); // [Valaris]
 void clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
-void clif_messagecolor(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type); // Mob/Npc color talk [SnakeDrak]
+void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, struct map_session_data *sd);
+#define clif_messagecolor(bl, color, msg, rgb2bgr, type) clif_messagecolor_target(bl, color, msg, rgb2bgr, type, NULL) // Mob/Npc color talk [SnakeDrak]
 void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
 
 void clif_GM_kickack(struct map_session_data *sd, int id);
@@ -826,7 +832,8 @@ void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_manner_message(struct map_session_data* sd, uint32 type);
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type);
 
-void clif_disp_overhead(struct block_list *bl, const char* mes);
+void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
+#define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
 
 void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
 
@@ -1049,5 +1056,9 @@ void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
 void clif_pAchievementCheckReward(int fd, struct map_session_data *sd);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CLIF_H_ */
