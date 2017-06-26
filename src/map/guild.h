@@ -4,6 +4,10 @@
 #ifndef _GUILD_H_
 #define _GUILD_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#include "../common/mmo.h"
 struct guild;
 struct guild_member;
@@ -114,5 +118,9 @@ void guild_retrieveitembound(uint32 char_id,uint32 account_id,int guild_id);
 #endif
 
 void do_final_guild(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GUILD_H_ */

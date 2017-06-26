@@ -1467,6 +1467,8 @@
 	export_constant(SC_ARMOR_ELEMENT_FIRE);
 	export_constant(SC_ARMOR_ELEMENT_WIND);
 	export_constant(SC_DAILYSENDMAILCNT);
+	export_constant(SC_DORAM_BUF_01);
+	export_constant(SC_DORAM_BUF_02);
 	export_constant(SC_HISS);
 	export_constant(SC_NYANGGRASS);
 	export_constant(SC_GROOMING);

@@ -4,6 +4,10 @@
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // MAX_SKILL, struct square
 #include "../common/db.h"
 #include "map.h" // struct block_list
@@ -2181,5 +2185,9 @@ enum e_skill_damage_caster {
 #define SKILL_CHK_MERC(skill_id)  ( (skill_id) >= MC_SKILLBASE && (skill_id) < MC_SKILLBASE+MAX_MERCSKILL )
 #define SKILL_CHK_ELEM(skill_id)  ( (skill_id) >= EL_SKILLBASE && (skill_id) < EL_SKILLBASE+MAX_ELEMENTALSKILL )
 #define SKILL_CHK_GUILD(skill_id) ( (skill_id) >= GD_SKILLBASE && (skill_id) < GD_SKILLBASE+MAX_GUILDSKILL )
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _SKILL_H_ */

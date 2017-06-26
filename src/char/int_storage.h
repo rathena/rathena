@@ -4,6 +4,10 @@
 #ifndef _INT_STORAGE_SQL_H_
 #define _INT_STORAGE_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_storage;
 
 void inter_storage_sql_init(void);
@@ -17,5 +21,9 @@ const char *inter_premiumStorage_getPrintableName(uint8 id);
 bool inter_storage_parse_frommap(int fd);
 
 bool guild_storage_tosql(int guild_id, struct s_storage *p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INT_STORAGE_SQL_H_ */

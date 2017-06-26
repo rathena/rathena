@@ -95,15 +95,15 @@
     <ClInclude Include="winapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="yamlwrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="conf.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="core.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="db.c">
@@ -164,6 +164,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="yamlwrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

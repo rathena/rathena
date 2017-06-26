@@ -4,6 +4,10 @@
 #ifndef _LOG_H_
 #define _LOG_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#include "map.h"
 struct block_list;
 struct map_session_data;
@@ -100,6 +104,10 @@ extern struct Log_Config
 		char** entry;
 		int count;
 	} logThreadData;
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _LOG_H_ */

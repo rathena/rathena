@@ -1716,9 +1716,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					sc_start4(src, bl, SC_MELON_BOMB, 100, skill_lv, 20 + sd->status.job_level, 10 + sd->status.job_level / 2, 0, 1000 * status_get_lv(src) / 4);
 					break;
 				case ITEMID_BANANA_BOMB:
-					sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, status_get_lv(src) + sd->status.job_level + sstatus->dex / 6 - status_get_lv(bl) - tstatus->agi / 4 - tstatus->luk / 5, skill_lv, 1000 * sd->status.job_level / 4);
-					sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 30000);
-					break;
+					{
+						uint16 duration = (battle_config.banana_bomb_duration ? battle_config.banana_bomb_duration : 1000 * sd->status.job_level / 4);
+
+						sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, status_get_lv(src) + sd->status.job_level + sstatus->dex / 6 - status_get_lv(bl) - tstatus->agi / 4 - tstatus->luk / 5, skill_lv, duration);
+						sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 30000);
+						break;
+					}
 			}
 			sd->itemid = -1;
 		}
@@ -1871,7 +1875,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_C_MARKER:		case SC_B_TRAP:			case SC_H_MINE:
 					case SC_STRANGELIGHTS:		case SC_DECORATION_OF_MUSIC:	case SC_GN_CARTBOOST:
 					case SC_RECOGNIZEDSPELL:	case SC_CHASEWALK2:	case SC_BITE:
-					case SC_ACTIVE_MONSTER_TRANSFORM:
+					case SC_ACTIVE_MONSTER_TRANSFORM:	case SC_DORAM_BUF_01:	case SC_DORAM_BUF_02:
 #ifdef RENEWAL
 					case SC_EXTREMITYFIST2:
 #endif
@@ -7963,7 +7967,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_P_ALTER:		case SC_E_CHAIN:		case SC_C_MARKER:
 					case SC_B_TRAP:			case SC_H_MINE:			case SC_STRANGELIGHTS:
 					case SC_DECORATION_OF_MUSIC:	case SC_GN_CARTBOOST:		case SC_CHASEWALK2:
-					case SC_ACTIVE_MONSTER_TRANSFORM:
+					case SC_ACTIVE_MONSTER_TRANSFORM:	case SC_DORAM_BUF_01:	case SC_DORAM_BUF_02:
 #ifdef RENEWAL
 					case SC_EXTREMITYFIST2:
 #endif
@@ -9382,7 +9386,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_REUSE_LIMIT_G:	case SC_REUSE_LIMIT_H:	case SC_REUSE_LIMIT_MTF:
 					case SC_REUSE_LIMIT_ASPD_POTION:	case SC_REUSE_MILLENNIUMSHIELD:	case SC_REUSE_CRUSHSTRIKE:
 					case SC_REUSE_STORMBLAST:	case SC_ALL_RIDING_REUSE_LIMIT:
-					case SC_SPRITEMABLE:
+					case SC_SPRITEMABLE:	case SC_DORAM_BUF_01:	case SC_DORAM_BUF_02:
 					case SC_QUEST_BUFF1:	case SC_QUEST_BUFF2:	case SC_QUEST_BUFF3:
 					case SC_CLAN_INFO:		case SC_SWORDCLAN:		case SC_ARCWANDCLAN:
 					case SC_GOLDENMACECLAN:	case SC_CROSSBOWCLAN:
@@ -16344,7 +16348,7 @@ int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
 	if (time < 0)
 		return 0;
 
-	if (bl->type == BL_MOB)
+	if (bl->type == BL_MOB || bl->type == BL_NPC)
 		return (int)time;
 
 	if (sc && sc->count) {
@@ -16397,7 +16401,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	if (time < 0)
 		return 0;
 
-	if (bl->type == BL_MOB)
+	if (bl->type == BL_MOB || bl->type == BL_NPC)
 		return (int)time;
 
 	if (fixed < 0 || !battle_config.default_fixed_castrate) // no fixed cast time

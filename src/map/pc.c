@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "pc.h"
+
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // get_svn_revision()
 #include "../common/malloc.h"

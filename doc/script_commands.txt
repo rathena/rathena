@@ -4171,7 +4171,7 @@ The command will run for the invoking character unless an account ID is given.
 
 ---------------------------------------
 
-*classchange <view id>,<type>;
+*classchange(<view id>{,"<NPC name>","<flag>"});
 
 This command is very ancient, its origins are clouded in mystery. 
 It will send a 'display id change' packet to everyone in the immediate area of 
@@ -4190,6 +4190,12 @@ run will actually just crash the client.
 
 It could be a real gem if it can be gotten to actually do what it's supposed to 
 do, but this will only happen in a later SVN revision.
+
+Empty <NPC name> means attached NPC.
+
+Target for <flag>:
+- bc_area : Sprite is sent to players in the vicinity of the source (default value).
+- bc_self : Sprite is sent only to player attached.
 
 ---------------------------------------
 
@@ -6179,13 +6185,19 @@ Returns true if the command was executed on the other NPC successfully, false if
 
 ---------------------------------------
 
-*npctalk "<message>"{,"<NPC name>"};
+*npctalk "<message>"{,"<NPC name>","<flag>"};
 
-This command will display a message to the surrounding area as if the NPC object 
-running it was a player talking - that is, above their head and in the chat 
-window. The display name of the NPC won't get appended in front of the message.
-If the <NPC name> option is given, then that NPC will display the message, else
-the attached NPC will display the message.
+This command will display a message as if the NPC object running it was a player
+talking - that is, above their head and in the chat window.
+The display name of the NPC won't get appended in front of the message.
+If the <NPC name> option is given and not empty, then that NPC will display the message,
+else the attached NPC will display the message.
+
+Target for <flag>:
+- bc_all  : Broadcast message is sent server-wide (only in the chat window).
+- bc_map  : Message is sent to everyone in the same map as the source of the npc.
+- bc_area : Message is sent to players in the vicinity of the source (default value).
+- bc_self : Message is sent only to player attached.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -7386,9 +7398,12 @@ Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
 
 ---------------------------------------
 
-*unittalk <GID>,"<text>";
+*unittalk <GID>,"<text>"{,flag};
 
 This command will make a <GID> say a message. The display name of the <GID> won't get appended in front of the message.
+flag: Specify target
+   bc_area - Message is sent to players in the vicinity of the source (default).
+   bc_self - Message is sent only to player attached.
 
 ---------------------------------------
 

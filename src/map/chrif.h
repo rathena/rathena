@@ -4,6 +4,10 @@
 #ifndef _CHRIF_H_
 #define _CHRIF_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/socket.h" // enum chrif_req_op
 #include <time.h>
@@ -54,7 +58,7 @@ int chrif_skillcooldown_request(uint32 account_id, uint32 char_id);
 int chrif_skillcooldown_save(struct map_session_data *sd);
 int chrif_skillcooldown_load(int fd);
 
-int chrif_save(struct map_session_data* sd, enum e_chrif_save_opt flag);
+int chrif_save(struct map_session_data* sd, int flag);
 int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip);
 int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port);
 
@@ -87,5 +91,9 @@ void do_final_chrif(void);
 void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CHRIF_H_ */

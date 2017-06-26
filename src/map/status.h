@@ -4,6 +4,10 @@
 #ifndef _STATUS_H_
 #define _STATUS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct block_list;
 struct mob_data;
 struct pet_data;
@@ -800,7 +804,10 @@ typedef enum sc_type {
 
 	SC_DAILYSENDMAILCNT,
 
-  /**
+	SC_DORAM_BUF_01,
+	SC_DORAM_BUF_02,
+
+	/**
 	 * Summoner - Extended
 	 */
 	SC_HISS,
@@ -2210,8 +2217,6 @@ int status_sc2skill(sc_type sc);
 unsigned int status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int StatusIconChangeTable[SC_MAX];          /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
@@ -2365,5 +2370,9 @@ void initChangeTables(void);
 int status_readdb(void);
 int do_init_status(void);
 void do_final_status(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _STATUS_H_ */

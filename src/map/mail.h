@@ -4,6 +4,10 @@
 #ifndef _MAIL_H_
 #define _MAIL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h"
 
 enum mail_attach_result {
@@ -32,5 +36,9 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg);
 bool mail_invalid_operation(struct map_session_data *sd);
 void mail_send(struct map_session_data *sd, const char *dest_name, const char *title, const char *body_msg, int body_len);
 void mail_refresh_remaining_amount( struct map_session_data* sd );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAIL_H_ */

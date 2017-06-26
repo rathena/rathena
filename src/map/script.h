@@ -4,6 +4,10 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "map.h"
 
@@ -743,7 +747,7 @@ void script_hardcoded_constants(void);
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
 void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
 
-int script_config_read(char *cfgName);
+int script_config_read(const char *cfgName);
 void do_init_script(void);
 void do_final_script(void);
 int add_str(const char* p);
@@ -774,6 +778,10 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _SCRIPT_H_ */
