@@ -4,6 +4,10 @@
 #ifndef MAP_ACHIEVEMENTS_H
 #define MAP_ACHIEVEMENTS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h"
 #include "../common/db.h"
 
@@ -124,5 +128,9 @@ const char *av_parse_subexpr(const char *p,int limit, struct av_condition *paren
 const char *av_parse_simpleexpr(const char *p, struct av_condition *parent);
 long long achievement_check_condition(struct av_condition *condition, struct map_session_data *sd, int *count);
 void achievement_script_free(struct av_condition *condition);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MAP_ACHIEVEMENTS_H */
