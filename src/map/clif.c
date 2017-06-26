@@ -1344,7 +1344,7 @@ static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 /// 01b0 <id>.L <type>.B <value>.L
 /// type:
 ///     unused
-void clif_class_change(struct block_list *bl,int class_,int type)
+void clif_class_change_target(struct block_list *bl,int class_,int type, enum send_target target, struct map_session_data *sd)
 {
 	nullpo_retv(bl);
 
@@ -1355,7 +1355,7 @@ void clif_class_change(struct block_list *bl,int class_,int type)
 		WBUFL(buf,2)=bl->id;
 		WBUFB(buf,6)=type;
 		WBUFL(buf,7)=class_;
-		clif_send(buf,packet_len(0x1b0),bl,AREA);
+		clif_send(buf,packet_len(0x1b0),(sd == NULL ? bl : &(sd->bl)),target);
 	}
 }
 
@@ -9295,9 +9295,9 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
-void clif_messagecolor(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type) {
+void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, struct map_session_data *sd) {
 	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
-	uint8 buf[256];
+	uint8 buf[CHAT_SIZE_MAX];
 
 	nullpo_retv(bl);
 
@@ -9315,7 +9315,7 @@ void clif_messagecolor(struct block_list *bl, unsigned long color, const char *m
 	WBUFL(buf,8) = color;
 	memcpy(WBUFCP(buf,12), msg, msg_len);
 
-	clif_send(buf, WBUFW(buf,2), bl, type);
+	clif_send(buf, WBUFW(buf,2), (sd == NULL ? bl : &(sd->bl)), type);
 }
 
 /**
@@ -9579,7 +9579,7 @@ void clif_slide(struct block_list *bl, int x, int y)
 
 /// Public chat message (ZC_NOTIFY_CHAT). lordalfa/Skotlex - used by @me as well
 /// 008d <packet len>.W <id>.L <message>.?B
-void clif_disp_overhead(struct block_list *bl, const char* mes)
+void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag)
 {
 	unsigned char buf[256]; //This should be more than sufficient, the theorical max is CHAT_SIZE + 8 (pads and extra inserted crap)
 	int len_mes = strlen(mes)+1; //Account for \0
@@ -9589,11 +9589,13 @@ void clif_disp_overhead(struct block_list *bl, const char* mes)
 		len_mes = sizeof(buf)-8; //Trunk it to avoid problems.
 	}
 	// send message to others
-	WBUFW(buf,0) = 0x8d;
-	WBUFW(buf,2) = len_mes + 8; // len of message + 8 (command+len+id)
-	WBUFL(buf,4) = bl->id;
-	safestrncpy(WBUFCP(buf,8), mes, len_mes);
-	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
+	if (flag == AREA) {
+		WBUFW(buf,0) = 0x8d;
+		WBUFW(buf,2) = len_mes + 8; // len of message + 8 (command+len+id)
+		WBUFL(buf,4) = bl->id;
+		safestrncpy(WBUFCP(buf,8), mes, len_mes);
+		clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
+	}
 
 	// send back message to the speaker
 	if( bl->type == BL_PC ) {

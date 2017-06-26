@@ -4,6 +4,10 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/conf.h"
 #include "../common/mmo.h"
 #include "../common/sql.h"
@@ -37,5 +41,9 @@ extern Sql* lsql_handle;
 
 void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string);
 int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INTER_SQL_H_ */

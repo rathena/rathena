@@ -1086,6 +1086,8 @@ void initChangeTables(void)
 
 	/* Summoners status icons */
 	StatusIconChangeTable[SC_SPRITEMABLE] = SI_SPRITEMABLE;
+	StatusIconChangeTable[SC_DORAM_BUF_01] = SI_DORAM_BUF_01;
+	StatusIconChangeTable[SC_DORAM_BUF_02] = SI_DORAM_BUF_02;
 
 	// Item Reuse Limits
 	StatusIconChangeTable[SC_REUSE_REFRESH] = SI_REUSE_REFRESH;
@@ -1268,6 +1270,10 @@ void initChangeTables(void)
 
 	// RODEX
 	StatusChangeFlagTable[SC_DAILYSENDMAILCNT] |= SCB_NONE;
+
+	// Doram Buffs
+	StatusChangeFlagTable[SC_DORAM_BUF_01] |= SCB_REGEN;
+	StatusChangeFlagTable[SC_DORAM_BUF_02] |= SCB_REGEN;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -9090,6 +9096,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_ECL:
 			case SC_REUSE_LIMIT_RECALL:
 			case SC_REUSE_LIMIT_ASPD_POTION:
+			case SC_DORAM_BUF_01:
+			case SC_DORAM_BUF_02:
 				return 0;
 			case SC_PUSH_CART:
 			case SC_COMBO:
@@ -10813,6 +10821,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = -1;
 			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
 			break;
+		case SC_DORAM_BUF_01:
+		case SC_DORAM_BUF_02:
+			tick_time = 10000; // every 10 seconds
+			if( (val4 = tick/tick_time) < 1 )
+				val4 = 1;
+			break;
 
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == -1 && StatusIconChangeTable[type] == SI_BLANK ) {
@@ -11496,6 +11510,8 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_REUSE_STORMBLAST:
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
+			case SC_DORAM_BUF_01:
+			case SC_DORAM_BUF_02:
             case SC_GEFFEN_MAGIC1:
             case SC_GEFFEN_MAGIC2:
             case SC_GEFFEN_MAGIC3:
@@ -13239,6 +13255,22 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, status->max_hp * 4 / 100, 0, 2);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick, status_change_timer, bl->id, data);
+		}
+		break;
+	case SC_DORAM_BUF_01:
+		if( sd && --(sce->val4) >= 0 ) {
+			if( status->hp < status->max_hp )
+				status_heal(bl, 10, 0, 2);
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+		break;
+	case SC_DORAM_BUF_02:
+		if( sd && --(sce->val4) >= 0 ) {
+			if( status->sp < status->max_sp )
+				status_heal(bl, 0, 5, 2);
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
+			return 0;
 		}
 		break;
 	}

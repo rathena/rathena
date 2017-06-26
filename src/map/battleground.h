@@ -4,6 +4,10 @@
 #ifndef _BATTLEGROUND_H_
 #define _BATTLEGROUND_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // struct party
 #include "guild.h"
 
@@ -41,5 +45,9 @@ int bg_team_leave(struct map_session_data *sd, int flag);
 int bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
 int bg_member_respawn(struct map_session_data *sd);
 int bg_send_message(struct map_session_data *sd, const char *mes, int len);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _BATTLEGROUND_H_ */

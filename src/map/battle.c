@@ -8422,6 +8422,7 @@ static const struct _battle_data {
 	{ "mail_zeny_fee",						&battle_config.mail_zeny_fee,					2,		0,		100,			},
 	{ "mail_attachment_price",				&battle_config.mail_attachment_price,			2500,	0,		INT32_MAX,		},
 	{ "mail_attachment_weight",				&battle_config.mail_attachment_weight,			2000,	0,		INT32_MAX,		},
+	{ "banana_bomb_duration",				&battle_config.banana_bomb_duration,			0,		0,		UINT16_MAX,		},
 
 #include "../custom/battle_config_init.inc"
 };
