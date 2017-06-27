@@ -1484,7 +1484,7 @@ int clif_spawn(struct block_list *bl)
 				clif_spiritcharm(sd);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-			clif_efst_status_change_sub(sd, bl, AREA);
+			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_hat_effects(sd,bl,AREA);
 		}
 		break;
@@ -1504,6 +1504,7 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(&nd->bl,423,AREA);
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect(&nd->bl,421,AREA);
+			clif_efst_status_change_sub(bl, bl, AREA);
 		}
 		break;
 	case BL_PET:
@@ -4660,7 +4661,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
-			clif_efst_status_change_sub(sd, bl, SELF);
+			clif_efst_status_change_sub(&sd->bl, bl, SELF);
 			clif_hat_effects(sd,bl,SELF);
 		}
 		break;
@@ -4677,6 +4678,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_specialeffect_single(bl,423,sd->fd);
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect_single(bl,421,sd->fd);
+			clif_efst_status_change_sub(&sd->bl, bl, SELF);
 		}
 		break;
 	case BL_MOB:
@@ -6054,20 +6056,34 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
  * @param bl: Objects walking into view
  * @param target: Client send type
  */
-void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list *bl, enum send_target target) {
-	struct map_session_data *tsd = NULL;
+void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target) {
 	unsigned char i;
+	struct sc_display_entry **sc_display;
+	unsigned char sc_display_count;
 
-	nullpo_retv(sd);
 	nullpo_retv(bl);
 
-	if (target == SELF)
-		tsd = (TBL_PC *)bl;
-	else
-		tsd = sd;
+	switch( bl->type ){
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)bl;
 
-	for (i = 0; i < tsd->sc_display_count; i++) {
-		enum sc_type type = tsd->sc_display[i]->type;
+			sc_display = sd->sc_display;
+			sc_display_count = sd->sc_display_count;
+			}
+			break;
+		case BL_NPC: {
+			struct npc_data* nd = (struct npc_data*)bl;
+
+			sc_display = nd->sc_display;
+			sc_display_count = nd->sc_display_count;
+			}
+			break;
+		default:
+			return;
+	}
+
+	for (i = 0; i < sc_display_count; i++) {
+		enum sc_type type = sc_display[i]->type;
 		struct status_change *sc = status_get_sc(bl);
 		const struct TimerData *td = (sc && sc->data[type] ? get_timer(sc->data[type]->timer) : NULL);
 		int tick = 0;
@@ -6075,9 +6091,9 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
 #if PACKETVER > 20120418
-		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
+		clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-		clif_status_change_sub(&sd->bl, bl->id, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, target);
+		clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
 	}
 }
@@ -9393,7 +9409,7 @@ void clif_refresh(struct map_session_data *sd)
 		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
-	clif_efst_status_change_sub(sd,&sd->bl,SELF);
+	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
 
 	//Issue #2143
 	//Cancel Trading State 

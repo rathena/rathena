@@ -96,7 +96,12 @@ struct npc_data {
 			int spawn_timer;
 		} tomb;
 	} u;
+
+	struct sc_display_entry **sc_display;
+	unsigned char sc_display_count;
 };
+
+struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 
