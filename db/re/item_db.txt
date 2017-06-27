@@ -4878,6 +4878,8 @@
 6957,Lamb_Fleece,Lamb Fleece,3,10,,0,,,,,,,,,,,,,{},{},{}
 6958,Lamb_Horns,Lamb Horns,3,10,,0,,,,,,,,,,,,,{},{},{}
 6960,Key_Air_Fortress,Key Air Fortress,3,10,,10,,,,,,,,,,,,,{},{},{}
+6961,Huge_Metal_Scrap,Huge Metal Scrap,3,10,0,1000,,,,,,,,,,,,,{},{},{}
+6962,Old_Fuel,Old Fuel,3,10,0,100,,,,,,,,,,,,,{},{},{}
 //
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
