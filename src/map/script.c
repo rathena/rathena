@@ -3483,7 +3483,7 @@ void script_free_code(struct script_code* code)
 	nullpo_retv(code);
 
 	if (code->instances)
-		script_stop_instances(code);
+		script_stop_scriptinstances(code);
 	script_free_vars(code->local.vars);
 	if (code->local.arrays)
 		code->local.arrays->destroy(code->local.arrays, script_free_array_db);
@@ -4058,7 +4058,11 @@ void run_script(struct script_code *rootscript, int pos, int rid, int oid)
 	run_script_main(st);
 }
 
-void script_stop_instances(struct script_code *code) {
+/**
+ * Free all related script code
+ * @param code: Script code to free
+ */
+void script_stop_scriptinstances(struct script_code *code) {
 	DBIterator *iter;
 	struct script_state* st;
 
