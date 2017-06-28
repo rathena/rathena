@@ -452,7 +452,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 {
 	static int info[2];
 	int i, old_level;
-	const int score_table[MAX_ACHIEVEMENT_RANK] = { 50, 100, 200, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 }; //! TODO: Figure out the score required to level up
+	const int score_table[MAX_ACHIEVEMENT_RANK] = { 18, 31, 49, 73, 135, 104, 140, 178, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 }; //! TODO: Figure out the EXP required to level up from 8-20
 
 	nullpo_retr(0, sd);
 
