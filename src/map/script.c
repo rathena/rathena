@@ -18384,26 +18384,30 @@ BUILDIN_FUNC(unitskillusepos)
 /// sleep <mili seconds>;
 BUILDIN_FUNC(sleep)
 {
-	int ticks;
+	// First call(by function call)
+	if (st->sleep.tick == 0) {
+		int ticks;
 
-	ticks = script_getnum(st,2);
+		ticks = script_getnum(st, 2);
 
-	// detach the player
-	script_detach_rid(st);
+		if (ticks <= 0) {
+			ShowError("buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks);
+			return SCRIPT_CMD_FAILURE;
+		}
 
-	if( ticks <= 0 )
-	{// do nothing
-	}
-	else if( st->sleep.tick == 0 )
-	{// sleep for the target amount of time
+		// detach the player
+		script_detach_rid(st);
+
+		// sleep for the target amount of time
 		st->state = RERUNLINE;
 		st->sleep.tick = ticks;
-	}
-	else
-	{// sleep time is over
+	// Second call(by timer after sleeping time is over)
+	} else {		
+		// Continue the script
 		st->state = RUN;
 		st->sleep.tick = 0;
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18414,7 +18418,7 @@ BUILDIN_FUNC(sleep)
 BUILDIN_FUNC(sleep2)
 {
 	// First call(by function call)
-	if (!st->sleep.tick) {
+	if (st->sleep.tick == 0) {
 		int ticks;
 
 		ticks = script_getnum(st, 2);
