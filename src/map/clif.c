@@ -6052,7 +6052,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 
 /**
  * Send any active EFST to those around.
- * @param sd: Player to send the packet to
+ * @param tbl: Unit to send the packet to
  * @param bl: Objects walking into view
  * @param target: Client send type
  */
