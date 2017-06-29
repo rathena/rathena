@@ -4087,10 +4087,8 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if( id != 0 && st->rid ){
 		struct map_session_data *sd = map_id2sd(st->rid);
 
-		// Attached player is offline or another unit type - should not happen
+		// Attached player is offline(logout) or another unit type(should not happen)
 		if( !sd ){
-			// ShowWarning( "Script sleep timer called by an offline character or non player unit.\n" );
-			// script_reportsrc(st);
 			st->rid = 0;
 			st->state = END;
 		// Character mismatch. Cancel execution.
@@ -18415,22 +18413,40 @@ BUILDIN_FUNC(sleep)
 /// sleep2(<milli seconds>)
 BUILDIN_FUNC(sleep2)
 {
-	int ticks;
+	// First call(by function call)
+	if (!st->sleep.tick) {
+		int ticks;
 
-	ticks = script_getnum(st,2);
+		ticks = script_getnum(st, 2);
 
-	if (ticks <= 0) {
-		return SCRIPT_CMD_SUCCESS;
-	} else if (map_id2bl(st->rid) == NULL) {
-		st->rid = 0;
-		st->state = END;
-	} else if (!st->sleep.tick) {// sleep for the target amount of time
+		if (ticks <= 0) {
+			ShowError( "buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (map_id2bl(st->rid) == NULL) {
+			ShowError( "buildin_sleep2: no unit is attached\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+		
+		// sleep for the target amount of time
 		st->state = RERUNLINE;
 		st->sleep.tick = ticks;
-	} else {// sleep time is over
-		st->state = RUN;
-		st->sleep.tick = 0;
+	// Second call(by timer after sleeping time is over)
+	} else {		
+		// Check if the unit is still attached
+		// NOTE: This should never happen, since run_script_timer already checks this
+		if (map_id2bl(st->rid) == NULL) {
+			// The unit is not attached anymore - terminate the script
+			st->rid = 0;
+			st->state = END;
+		} else {
+			// The unit is still attached - continue the script
+			st->state = RUN;
+			st->sleep.tick = 0;
+		}
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
