@@ -11324,10 +11324,10 @@ int pc_read_motd(void)
 	if( ( fp = fopen(motd_txt, "r") ) != NULL )
 	{
 		unsigned int entries = 0;
+		char buf[CHAT_SIZE_MAX];
 
-		while( entries < MOTD_LINE_SIZE && fgets(motd_text[entries], sizeof(motd_text[entries]), fp) )
+		while( entries < MOTD_LINE_SIZE && fgets(buf, CHAT_SIZE_MAX, fp) )
 		{
-			char* buf = motd_text[entries];
 			unsigned int lines = 0;
 			size_t len;
 			lines++;
@@ -11346,6 +11346,7 @@ int pc_read_motd(void)
 				buf[0] = ' ';
 				buf[1] = 0;
 			}
+			safestrncpy(motd_text[entries], buf, CHAT_SIZE_MAX);
 			entries++;
 		}
 		fclose(fp);

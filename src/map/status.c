@@ -1289,62 +1289,62 @@ void initChangeTables(void)
 #endif
 
 	/* StatusDisplayType Table [Ind] */
-	StatusDisplayType[SC_ALL_RIDING]	  = true;
-	StatusDisplayType[SC_PUSH_CART]		  = true;
-	StatusDisplayType[SC_SPHERE_1]		  = true;
-	StatusDisplayType[SC_SPHERE_2]		  = true;
-	StatusDisplayType[SC_SPHERE_3]		  = true;
-	StatusDisplayType[SC_SPHERE_4]		  = true;
-	StatusDisplayType[SC_SPHERE_5]		  = true;
-	StatusDisplayType[SC_CAMOUFLAGE]	  = true;
-	StatusDisplayType[SC_STEALTHFIELD]	  = true;
-	StatusDisplayType[SC_DUPLELIGHT]	  = true;
-	StatusDisplayType[SC_ORATIO]		  = true;
-	StatusDisplayType[SC_FREEZING]		  = true;
-	StatusDisplayType[SC_VENOMIMPRESS]	  = true;
-	StatusDisplayType[SC_HALLUCINATIONWALK]	  = true;
-	StatusDisplayType[SC_ROLLINGCUTTER]	  = true;
-	StatusDisplayType[SC_BANDING]		  = true;
-	StatusDisplayType[SC_CRYSTALIZE]	  = true;
-	StatusDisplayType[SC_DEEPSLEEP]		  = true;
-	StatusDisplayType[SC_CURSEDCIRCLE_ATKER]  = true;
-	StatusDisplayType[SC_CURSEDCIRCLE_TARGET] = true;
-	StatusDisplayType[SC_NETHERWORLD]	  = true;
-	StatusDisplayType[SC_VOICEOFSIREN]	  = true;
-	StatusDisplayType[SC_BLOODSUCKER]	  = true;
-	StatusDisplayType[SC__SHADOWFORM]	  = true;
-	StatusDisplayType[SC__MANHOLE]		  = true;
-	StatusDisplayType[SC_JYUMONJIKIRI]	  = true;
-	StatusDisplayType[SC_AKAITSUKI]		  = true;
-	StatusDisplayType[SC_MONSTER_TRANSFORM] = true;
-	StatusDisplayType[SC_ACTIVE_MONSTER_TRANSFORM] = true;
-	StatusDisplayType[SC_DARKCROW]		  = true;
-	StatusDisplayType[SC_OFFERTORIUM]	  = true;
-	StatusDisplayType[SC_TELEKINESIS_INTENSE] = true;
-	StatusDisplayType[SC_UNLIMIT]		  = true;
-	StatusDisplayType[SC_ILLUSIONDOPING]	  = true;
-	StatusDisplayType[SC_C_MARKER]		  = true;
-	StatusDisplayType[SC_ANTI_M_BLAST]	  = true;
-	StatusDisplayType[SC_SPRITEMABLE]     = true;
-	StatusDisplayType[SC_SV_ROOTTWIST]    = true;
+	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
+	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_1]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_2]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_3]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_4]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_5]		  = BL_PC;
+	StatusDisplayType[SC_CAMOUFLAGE]	  = BL_PC;
+	StatusDisplayType[SC_STEALTHFIELD]	  = BL_PC;
+	StatusDisplayType[SC_DUPLELIGHT]	  = BL_PC;
+	StatusDisplayType[SC_ORATIO]		  = BL_PC;
+	StatusDisplayType[SC_FREEZING]		  = BL_PC;
+	StatusDisplayType[SC_VENOMIMPRESS]	  = BL_PC;
+	StatusDisplayType[SC_HALLUCINATIONWALK]	  = BL_PC;
+	StatusDisplayType[SC_ROLLINGCUTTER]	  = BL_PC;
+	StatusDisplayType[SC_BANDING]		  = BL_PC;
+	StatusDisplayType[SC_CRYSTALIZE]	  = BL_PC;
+	StatusDisplayType[SC_DEEPSLEEP]		  = BL_PC;
+	StatusDisplayType[SC_CURSEDCIRCLE_ATKER]  = BL_PC;
+	StatusDisplayType[SC_CURSEDCIRCLE_TARGET] = BL_PC;
+	StatusDisplayType[SC_NETHERWORLD]	  = BL_PC;
+	StatusDisplayType[SC_VOICEOFSIREN]	  = BL_PC;
+	StatusDisplayType[SC_BLOODSUCKER]	  = BL_PC;
+	StatusDisplayType[SC__SHADOWFORM]	  = BL_PC;
+	StatusDisplayType[SC__MANHOLE]		  = BL_PC;
+	StatusDisplayType[SC_JYUMONJIKIRI]	  = BL_PC;
+	StatusDisplayType[SC_AKAITSUKI]		  = BL_PC;
+	StatusDisplayType[SC_MONSTER_TRANSFORM] = BL_PC;
+	StatusDisplayType[SC_ACTIVE_MONSTER_TRANSFORM] = BL_PC;
+	StatusDisplayType[SC_DARKCROW]		  = BL_PC;
+	StatusDisplayType[SC_OFFERTORIUM]	  = BL_PC;
+	StatusDisplayType[SC_TELEKINESIS_INTENSE] = BL_PC;
+	StatusDisplayType[SC_UNLIMIT]		  = BL_PC;
+	StatusDisplayType[SC_ILLUSIONDOPING]	  = BL_PC;
+	StatusDisplayType[SC_C_MARKER]		  = BL_PC;
+	StatusDisplayType[SC_ANTI_M_BLAST]	  = BL_PC;
+	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
+	StatusDisplayType[SC_SV_ROOTTWIST]    = BL_PC;
 
 	// Costumes
-	StatusDisplayType[SC_MOONSTAR] = true;
-	StatusDisplayType[SC_SUPER_STAR] = true;
-	StatusDisplayType[SC_STRANGELIGHTS] = true;
-	StatusDisplayType[SC_DECORATION_OF_MUSIC] = true;
-	StatusDisplayType[SC_LJOSALFAR] = true;
-	StatusDisplayType[SC_MERMAID_LONGING] = true;
-	StatusDisplayType[SC_HAT_EFFECT] = true;
-	StatusDisplayType[SC_FLOWERSMOKE] = true;
-	StatusDisplayType[SC_FSTONE] = true;
-	StatusDisplayType[SC_HAPPINESS_STAR] = true;
-	StatusDisplayType[SC_MAPLE_FALLS] = true;
-	StatusDisplayType[SC_TIME_ACCESSORY] = true;
-	StatusDisplayType[SC_MAGICAL_FEATHER] = true;
+	StatusDisplayType[SC_MOONSTAR] = BL_PC;
+	StatusDisplayType[SC_SUPER_STAR] = BL_PC;
+	StatusDisplayType[SC_STRANGELIGHTS] = BL_PC;
+	StatusDisplayType[SC_DECORATION_OF_MUSIC] = BL_PC;
+	StatusDisplayType[SC_LJOSALFAR] = BL_PC;
+	StatusDisplayType[SC_MERMAID_LONGING] = BL_PC;
+	StatusDisplayType[SC_HAT_EFFECT] = BL_PC;
+	StatusDisplayType[SC_FLOWERSMOKE] = BL_PC;
+	StatusDisplayType[SC_FSTONE] = BL_PC;
+	StatusDisplayType[SC_HAPPINESS_STAR] = BL_PC;
+	StatusDisplayType[SC_MAPLE_FALLS] = BL_PC;
+	StatusDisplayType[SC_TIME_ACCESSORY] = BL_PC;
+	StatusDisplayType[SC_MAGICAL_FEATHER] = BL_PC;
 
 	// Clans
-	StatusDisplayType[SC_CLAN_INFO] = true;
+	StatusDisplayType[SC_CLAN_INFO] = BL_PC|BL_NPC;
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
@@ -8125,74 +8125,135 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 }
 
 /**
- * Applies SC effect to the player
- * @param sd: Source to apply effect [PC]
+ * Applies SC effect
+ * @param bl: Source to apply effect
  * @param type: Status change (SC_*)
  * @param dval1~3: Depends on type of status change
  * Author: Ind
  */
-void status_display_add(struct map_session_data *sd, enum sc_type type, int dval1, int dval2, int dval3) {
+void status_display_add(struct block_list *bl, enum sc_type type, int dval1, int dval2, int dval3) {
+	struct eri *eri;
+	struct sc_display_entry **sc_display;
+	struct sc_display_entry ***sc_display_ptr;
 	struct sc_display_entry *entry;
 	int i;
+	unsigned char sc_display_count;
+	unsigned char *sc_display_count_ptr;
 
-	for( i = 0; i < sd->sc_display_count; i++ ) {
-		if( sd->sc_display[i]->type == type )
+	nullpo_retv(bl);
+
+	switch( bl->type ){
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)bl;
+
+			sc_display_ptr = &sd->sc_display;
+			sc_display_count_ptr = &sd->sc_display_count;
+			eri = pc_sc_display_ers;
+			}
 			break;
+		case BL_NPC: {
+			struct npc_data* nd = (struct npc_data*)bl;
+
+			sc_display_ptr = &nd->sc_display;
+			sc_display_count_ptr = &nd->sc_display_count;
+			eri = npc_sc_display_ers;
+			}
+			break;
+		default:
+			return;
 	}
 
-	if( i != sd->sc_display_count ) {
-		sd->sc_display[i]->val1 = dval1;
-		sd->sc_display[i]->val2 = dval2;
-		sd->sc_display[i]->val3 = dval3;
+	sc_display = *sc_display_ptr;
+	sc_display_count = *sc_display_count_ptr;
+
+	ARR_FIND(0, sc_display_count, i, sc_display[i]->type == type);
+
+	if( i != sc_display_count ) {
+		sc_display[i]->val1 = dval1;
+		sc_display[i]->val2 = dval2;
+		sc_display[i]->val3 = dval3;
 		return;
 	}
 
-	entry = ers_alloc(pc_sc_display_ers, struct sc_display_entry);
+	entry = ers_alloc(eri, struct sc_display_entry);
 
 	entry->type = type;
 	entry->val1 = dval1;
 	entry->val2 = dval2;
 	entry->val3 = dval3;
 
-	RECREATE(sd->sc_display, struct sc_display_entry *, ++sd->sc_display_count);
-	sd->sc_display[sd->sc_display_count - 1] = entry;
+	RECREATE(sc_display, struct sc_display_entry *, ++sc_display_count);
+	sc_display[sc_display_count - 1] = entry;
+	*sc_display_ptr = sc_display;
+	*sc_display_count_ptr = sc_display_count;
 }
 
 /**
- * Removes SC effect of the player
- * @param sd: Source to remove effect [PC]
+ * Removes SC effect
+ * @param bl: Source to remove effect
  * @param type: Status change (SC_*)
  * Author: Ind
  */
-void status_display_remove(struct map_session_data *sd, enum sc_type type) {
+void status_display_remove(struct block_list *bl, enum sc_type type) {
+	struct eri *eri;
+	struct sc_display_entry **sc_display;
+	struct sc_display_entry ***sc_display_ptr;
 	int i;
+	unsigned char sc_display_count;
+	unsigned char *sc_display_count_ptr;
 
-	for( i = 0; i < sd->sc_display_count; i++ ) {
-		if( sd->sc_display[i]->type == type )
+	nullpo_retv(bl);
+
+	switch( bl->type ){
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)bl;
+
+			sc_display_ptr = &sd->sc_display;
+			sc_display_count_ptr = &sd->sc_display_count;
+			eri = pc_sc_display_ers;
+			}
 			break;
+		case BL_NPC: {
+			struct npc_data* nd = (struct npc_data*)bl;
+
+			sc_display_ptr = &nd->sc_display;
+			sc_display_count_ptr = &nd->sc_display_count;
+			eri = npc_sc_display_ers;
+			}
+			break;
+		default:
+			return;
 	}
 
-	if( i != sd->sc_display_count ) {
+	sc_display = *sc_display_ptr;
+	sc_display_count = *sc_display_count_ptr;
+
+	ARR_FIND(0, sc_display_count, i, sc_display[i]->type == type);
+
+	if( i != sc_display_count ) {
 		int cursor;
 
-		ers_free(pc_sc_display_ers, sd->sc_display[i]);
-		sd->sc_display[i] = NULL;
+		ers_free(eri, sc_display[i]);
+		sc_display[i] = NULL;
 
 		/* The all-mighty compact-o-matic */
-		for( i = 0, cursor = 0; i < sd->sc_display_count; i++ ) {
-			if( sd->sc_display[i] == NULL )
+		for( i = 0, cursor = 0; i < sc_display_count; i++ ) {
+			if( sc_display[i] == NULL )
 				continue;
 
 			if( i != cursor )
-				sd->sc_display[cursor] = sd->sc_display[i];
+				sc_display[cursor] = sc_display[i];
 
 			cursor++;
 		}
 
-		if( !(sd->sc_display_count = cursor) ) {
-			aFree(sd->sc_display);
-			sd->sc_display = NULL;
+		if( !(sc_display_count = cursor) ) {
+			aFree(sc_display);
+			sc_display = NULL;
 		}
+
+		*sc_display_ptr = sc_display;
+		*sc_display_count_ptr = sc_display_count;
 	}
 }
 
@@ -8229,7 +8290,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( !sc )
 		return 0; // Unable to receive status changes
 
-	if( status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
+	if( bl->type != BL_NPC && status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
 	if (status_change_isDisabledOnMap(type, bl->m))
@@ -11050,7 +11111,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	/* [Ind] */
-	if (sd && StatusDisplayType[type]) {
+	if (StatusDisplayType[type]&bl->type) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 
 		switch (type) {
@@ -11066,7 +11127,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				dval1 = val1;
 				break;
 		}
-		status_display_add(sd,type,dval1,dval2,dval3);
+		status_display_add(bl,type,dval1,dval2,dval3);
+		clif_efst_status_change_sub(bl, bl, AREA);
 	}
 
 	// Those that make you stop attacking/walking....
@@ -11800,8 +11862,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	sc->data[type] = NULL;
 
-	if (sd && StatusDisplayType[type])
-		status_display_remove(sd,type);
+	if (StatusDisplayType[type]&bl->type)
+		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];

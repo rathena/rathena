@@ -4384,11 +4384,11 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 
 	if (battle_config.tarotcard_equal_chance) {
 		//eAthena equal chances
-		card = rand() % 14 + 1;
+		card = rnd() % 14 + 1;
 	}
 	else {
 		//Official chances
-		int rate = rand() % 100;
+		int rate = rnd() % 100;
 		if (rate < 10) card = 1; // THE FOOL
 		else if (rate < 20) card = 2; // THE MAGICIAN
 		else if (rate < 30) card = 3; // THE HIGH PRIESTESS
