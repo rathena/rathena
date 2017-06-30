@@ -6395,7 +6395,7 @@ sleep and sleep2 will pause the script for the given amount of milliseconds.
 Awake is used to cancel a sleep. When awake is called on a NPC it will run as
 if the sleep timer ran out, and thus making the script continue. Sleep and sleep2
 basically do the same, but the main difference is that sleep will not keep the rid,
-while sleep2 does.
+while sleep2 does. Also sleep2 will stop the script if there is no unit attached.
 
 Examples:
 	sleep 10000; //pause the script for 10 seconds and ditch the RID (so no player is attached anymore)
