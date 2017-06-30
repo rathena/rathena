@@ -19504,7 +19504,7 @@ BUILDIN_FUNC(bg_get_data)
 		case 1:
 			for (i = 0; bg->members[i].sd != NULL; i++)
 				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), bg->members[i].sd->bl.id);
-			mapreg_setreg(reference_uid(add_str("$@arenamemberscount"), i), i);
+			mapreg_setreg(add_str("$@arenamemberscount"), i);
 			script_pushint(st, i);
 			break;
 		default:
