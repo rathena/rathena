@@ -18412,7 +18412,7 @@ BUILDIN_FUNC(sleep)
 }
 
 /// Pauses the execution of the script, keeping the unit attached
-/// Stop the script if no unit attached
+/// Stops the script if no unit is attached
 ///
 /// sleep2(<milli seconds>)
 BUILDIN_FUNC(sleep2)
