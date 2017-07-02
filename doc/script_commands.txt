@@ -2704,7 +2704,7 @@ Examples:
     }
 
 // Left hand can hold either a weapon or shield.
-    if (getequipid(EQI_HAND_R) == 0) {
+    if (!getequipisequiped(EQI_HAND_R)) {
         mes "Seems you have nothing equipped here.";
         close;
     }

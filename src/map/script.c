@@ -8521,7 +8521,7 @@ BUILDIN_FUNC(strnpcinfo)
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num = EQI_COMPOUND_ON;
+	int i, num;
 	TBL_PC* sd;
 
 	if (!script_charid2sd(3, sd)) {
@@ -8531,20 +8531,23 @@ BUILDIN_FUNC(getequipid)
 
 	if (script_hasdata(st, 2))
 		num = script_getnum(st, 2);
+	else
+		num = EQI_COMPOUND_ON;
 
 	if (num == EQI_COMPOUND_ON)
 		i = current_equip_item_index;
 	else if (equip_index_check(num)) // get inventory position of item
 		i = pc_checkequip(sd, equip_bitmask[num]);
 	else {
+		ShowError( "buildin_getequipid: Unknown equip index '%d'\n", num );
 		script_pushint(st,-1);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (i >= EQI_ACC_L && sd->inventory_data[i])
+	if (i >= 0 && i < MAX_INVENTORY && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
-		script_pushint(st, 0);
+		script_pushint(st, -1);
 
 	return SCRIPT_CMD_SUCCESS;
 }
