@@ -4,6 +4,10 @@
 #ifndef _CLIF_H_
 #define _CLIF_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
 //#include "../common/mmo.h"
@@ -32,6 +36,9 @@ struct quest;
 struct party_booking_ad_info;
 enum e_party_member_withdraw;
 struct sale_item_data;
+enum mail_inbox_type;
+struct mail_message;
+enum mail_attachment_type;
 #include <stdarg.h>
 
 enum { // packet DB
@@ -628,7 +635,8 @@ void clif_storageclose(struct map_session_data* sd);
 int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 
-void clif_class_change(struct block_list *bl,int class_,int type);
+void clif_class_change_target(struct block_list *bl,int class_, int type, enum send_target target, struct map_session_data *sd);
+#define clif_class_change(bl, class_, type) clif_class_change_target(bl, class_, type, AREA, NULL)
 #define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 
 void clif_skillinfoblock(struct map_session_data *sd);
@@ -668,7 +676,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3);
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3);
-void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list *bl, enum send_target target);
+void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int result);
@@ -814,7 +822,8 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 void clif_weather(int16 m); // [Valaris]
 void clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
-void clif_messagecolor(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type); // Mob/Npc color talk [SnakeDrak]
+void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, struct map_session_data *sd);
+#define clif_messagecolor(bl, color, msg, rgb2bgr, type) clif_messagecolor_target(bl, color, msg, rgb2bgr, type, NULL) // Mob/Npc color talk [SnakeDrak]
 void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
 
 void clif_GM_kickack(struct map_session_data *sd, int id);
@@ -822,7 +831,8 @@ void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_manner_message(struct map_session_data* sd, uint32 type);
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type);
 
-void clif_disp_overhead(struct block_list *bl, const char* mes);
+void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
+#define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
 
 void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
 
@@ -866,14 +876,25 @@ void do_init_clif(void);
 void do_final_clif(void);
 
 // MAIL SYSTEM
+enum mail_send_result{
+	WRITE_MAIL_SUCCESS = 0x0,
+	WRITE_MAIL_FAILED = 0x1,
+	WRITE_MAIL_FAILED_CNT = 0x2,
+	WRITE_MAIL_FAILED_ITEM = 0x3,
+	WRITE_MAIL_FAILED_CHECK_CHARACTER_NAME = 0x4,
+	WRITE_MAIL_FAILED_WHISPEREXREGISTER = 0x5,
+};
+
 void clif_Mail_window(int fd, int flag);
 void clif_Mail_read(struct map_session_data *sd, int mail_id);
-void clif_Mail_delete(int fd, int mail_id, short fail);
+void clif_mail_delete(struct map_session_data* sd, struct mail_message *msg, bool success);
 void clif_Mail_return(int fd, int mail_id, short fail);
-void clif_Mail_send(int fd, bool fail);
-void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
-void clif_Mail_refreshinbox(struct map_session_data *sd);
-void clif_Mail_getattachment(int fd, uint8 flag);
+void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result);
+void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title);
+void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type type,int64 mailID);
+void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type);
+void clif_Mail_Receiver_Ack(struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name);
+void clif_mail_removeitem(struct map_session_data* sd, bool success, int index, int amount);
 // AUCTION SYSTEM
 void clif_Auction_openwindow(struct map_session_data *sd);
 void clif_Auction_results(struct map_session_data *sd, short count, short pages, uint8 *buf);
@@ -1028,5 +1049,9 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(struct map_session_data *sd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CLIF_H_ */

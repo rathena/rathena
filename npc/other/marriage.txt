@@ -32,7 +32,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		// If the VIP system is enabled:
 		// - Non-VIP players must use a Marriage Covenant to get married.
 		// - VIP players may either pay the Zeny fee or use a Marriage Covenant.
-		if (VIP_SCRIPT && !vip_status(1)) {
+		if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 			mes "[Marry Happy]";
 			mes "Sorry but you can't get married right now.";
 			mes "The wedding is only available for subscribed players.";

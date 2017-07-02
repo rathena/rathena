@@ -1083,6 +1083,8 @@ void initChangeTables(void)
 
 	/* Summoners status icons */
 	StatusIconChangeTable[SC_SPRITEMABLE] = SI_SPRITEMABLE;
+	StatusIconChangeTable[SC_DORAM_BUF_01] = SI_DORAM_BUF_01;
+	StatusIconChangeTable[SC_DORAM_BUF_02] = SI_DORAM_BUF_02;
 
 	// Item Reuse Limits
 	StatusIconChangeTable[SC_REUSE_REFRESH] = SI_REUSE_REFRESH;
@@ -1115,6 +1117,9 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GEFFEN_MAGIC1] = SI_GEFFEN_MAGIC1;
     StatusIconChangeTable[SC_GEFFEN_MAGIC2] = SI_GEFFEN_MAGIC2;
     StatusIconChangeTable[SC_GEFFEN_MAGIC3] = SI_GEFFEN_MAGIC3;
+
+	// RODEX
+	StatusIconChangeTable[SC_DAILYSENDMAILCNT] = SI_DAILYSENDMAILCNT;
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -1260,67 +1265,74 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_CROSSBOWCLAN] |= SCB_DEX|SCB_AGI|SCB_MAXHP|SCB_MAXSP;
 	StatusChangeFlagTable[SC_JUMPINGCLAN] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
 
+	// RODEX
+	StatusChangeFlagTable[SC_DAILYSENDMAILCNT] |= SCB_NONE;
+
+	// Doram Buffs
+	StatusChangeFlagTable[SC_DORAM_BUF_01] |= SCB_REGEN;
+	StatusChangeFlagTable[SC_DORAM_BUF_02] |= SCB_REGEN;
+
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
 	/* StatusDisplayType Table [Ind] */
-	StatusDisplayType[SC_ALL_RIDING]	  = true;
-	StatusDisplayType[SC_PUSH_CART]		  = true;
-	StatusDisplayType[SC_SPHERE_1]		  = true;
-	StatusDisplayType[SC_SPHERE_2]		  = true;
-	StatusDisplayType[SC_SPHERE_3]		  = true;
-	StatusDisplayType[SC_SPHERE_4]		  = true;
-	StatusDisplayType[SC_SPHERE_5]		  = true;
-	StatusDisplayType[SC_CAMOUFLAGE]	  = true;
-	StatusDisplayType[SC_STEALTHFIELD]	  = true;
-	StatusDisplayType[SC_DUPLELIGHT]	  = true;
-	StatusDisplayType[SC_ORATIO]		  = true;
-	StatusDisplayType[SC_FREEZING]		  = true;
-	StatusDisplayType[SC_VENOMIMPRESS]	  = true;
-	StatusDisplayType[SC_HALLUCINATIONWALK]	  = true;
-	StatusDisplayType[SC_ROLLINGCUTTER]	  = true;
-	StatusDisplayType[SC_BANDING]		  = true;
-	StatusDisplayType[SC_CRYSTALIZE]	  = true;
-	StatusDisplayType[SC_DEEPSLEEP]		  = true;
-	StatusDisplayType[SC_CURSEDCIRCLE_ATKER]  = true;
-	StatusDisplayType[SC_CURSEDCIRCLE_TARGET] = true;
-	StatusDisplayType[SC_NETHERWORLD]	  = true;
-	StatusDisplayType[SC_VOICEOFSIREN]	  = true;
-	StatusDisplayType[SC_BLOODSUCKER]	  = true;
-	StatusDisplayType[SC__SHADOWFORM]	  = true;
-	StatusDisplayType[SC__MANHOLE]		  = true;
-	StatusDisplayType[SC_JYUMONJIKIRI]	  = true;
-	StatusDisplayType[SC_AKAITSUKI]		  = true;
-	StatusDisplayType[SC_MONSTER_TRANSFORM] = true;
-	StatusDisplayType[SC_ACTIVE_MONSTER_TRANSFORM] = true;
-	StatusDisplayType[SC_DARKCROW]		  = true;
-	StatusDisplayType[SC_OFFERTORIUM]	  = true;
-	StatusDisplayType[SC_TELEKINESIS_INTENSE] = true;
-	StatusDisplayType[SC_UNLIMIT]		  = true;
-	StatusDisplayType[SC_ILLUSIONDOPING]	  = true;
-	StatusDisplayType[SC_C_MARKER]		  = true;
-	StatusDisplayType[SC_ANTI_M_BLAST]	  = true;
-	StatusDisplayType[SC_SPRITEMABLE]     = true;
+	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
+	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_1]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_2]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_3]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_4]		  = BL_PC;
+	StatusDisplayType[SC_SPHERE_5]		  = BL_PC;
+	StatusDisplayType[SC_CAMOUFLAGE]	  = BL_PC;
+	StatusDisplayType[SC_STEALTHFIELD]	  = BL_PC;
+	StatusDisplayType[SC_DUPLELIGHT]	  = BL_PC;
+	StatusDisplayType[SC_ORATIO]		  = BL_PC;
+	StatusDisplayType[SC_FREEZING]		  = BL_PC;
+	StatusDisplayType[SC_VENOMIMPRESS]	  = BL_PC;
+	StatusDisplayType[SC_HALLUCINATIONWALK]	  = BL_PC;
+	StatusDisplayType[SC_ROLLINGCUTTER]	  = BL_PC;
+	StatusDisplayType[SC_BANDING]		  = BL_PC;
+	StatusDisplayType[SC_CRYSTALIZE]	  = BL_PC;
+	StatusDisplayType[SC_DEEPSLEEP]		  = BL_PC;
+	StatusDisplayType[SC_CURSEDCIRCLE_ATKER]  = BL_PC;
+	StatusDisplayType[SC_CURSEDCIRCLE_TARGET] = BL_PC;
+	StatusDisplayType[SC_NETHERWORLD]	  = BL_PC;
+	StatusDisplayType[SC_VOICEOFSIREN]	  = BL_PC;
+	StatusDisplayType[SC_BLOODSUCKER]	  = BL_PC;
+	StatusDisplayType[SC__SHADOWFORM]	  = BL_PC;
+	StatusDisplayType[SC__MANHOLE]		  = BL_PC;
+	StatusDisplayType[SC_JYUMONJIKIRI]	  = BL_PC;
+	StatusDisplayType[SC_AKAITSUKI]		  = BL_PC;
+	StatusDisplayType[SC_MONSTER_TRANSFORM] = BL_PC;
+	StatusDisplayType[SC_ACTIVE_MONSTER_TRANSFORM] = BL_PC;
+	StatusDisplayType[SC_DARKCROW]		  = BL_PC;
+	StatusDisplayType[SC_OFFERTORIUM]	  = BL_PC;
+	StatusDisplayType[SC_TELEKINESIS_INTENSE] = BL_PC;
+	StatusDisplayType[SC_UNLIMIT]		  = BL_PC;
+	StatusDisplayType[SC_ILLUSIONDOPING]	  = BL_PC;
+	StatusDisplayType[SC_C_MARKER]		  = BL_PC;
+	StatusDisplayType[SC_ANTI_M_BLAST]	  = BL_PC;
+	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
 
 	// Costumes
-	StatusDisplayType[SC_MOONSTAR] = true;
-	StatusDisplayType[SC_SUPER_STAR] = true;
-	StatusDisplayType[SC_STRANGELIGHTS] = true;
-	StatusDisplayType[SC_DECORATION_OF_MUSIC] = true;
-	StatusDisplayType[SC_LJOSALFAR] = true;
-	StatusDisplayType[SC_MERMAID_LONGING] = true;
-	StatusDisplayType[SC_HAT_EFFECT] = true;
-	StatusDisplayType[SC_FLOWERSMOKE] = true;
-	StatusDisplayType[SC_FSTONE] = true;
-	StatusDisplayType[SC_HAPPINESS_STAR] = true;
-	StatusDisplayType[SC_MAPLE_FALLS] = true;
-	StatusDisplayType[SC_TIME_ACCESSORY] = true;
-	StatusDisplayType[SC_MAGICAL_FEATHER] = true;
+	StatusDisplayType[SC_MOONSTAR] = BL_PC;
+	StatusDisplayType[SC_SUPER_STAR] = BL_PC;
+	StatusDisplayType[SC_STRANGELIGHTS] = BL_PC;
+	StatusDisplayType[SC_DECORATION_OF_MUSIC] = BL_PC;
+	StatusDisplayType[SC_LJOSALFAR] = BL_PC;
+	StatusDisplayType[SC_MERMAID_LONGING] = BL_PC;
+	StatusDisplayType[SC_HAT_EFFECT] = BL_PC;
+	StatusDisplayType[SC_FLOWERSMOKE] = BL_PC;
+	StatusDisplayType[SC_FSTONE] = BL_PC;
+	StatusDisplayType[SC_HAPPINESS_STAR] = BL_PC;
+	StatusDisplayType[SC_MAPLE_FALLS] = BL_PC;
+	StatusDisplayType[SC_TIME_ACCESSORY] = BL_PC;
+	StatusDisplayType[SC_MAGICAL_FEATHER] = BL_PC;
 
 	// Clans
-	StatusDisplayType[SC_CLAN_INFO] = true;
+	StatusDisplayType[SC_CLAN_INFO] = BL_PC|BL_NPC;
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
@@ -8065,74 +8077,135 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 }
 
 /**
- * Applies SC effect to the player
- * @param sd: Source to apply effect [PC]
+ * Applies SC effect
+ * @param bl: Source to apply effect
  * @param type: Status change (SC_*)
  * @param dval1~3: Depends on type of status change
  * Author: Ind
  */
-void status_display_add(struct map_session_data *sd, enum sc_type type, int dval1, int dval2, int dval3) {
+void status_display_add(struct block_list *bl, enum sc_type type, int dval1, int dval2, int dval3) {
+	struct eri *eri;
+	struct sc_display_entry **sc_display;
+	struct sc_display_entry ***sc_display_ptr;
 	struct sc_display_entry *entry;
 	int i;
+	unsigned char sc_display_count;
+	unsigned char *sc_display_count_ptr;
 
-	for( i = 0; i < sd->sc_display_count; i++ ) {
-		if( sd->sc_display[i]->type == type )
+	nullpo_retv(bl);
+
+	switch( bl->type ){
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)bl;
+
+			sc_display_ptr = &sd->sc_display;
+			sc_display_count_ptr = &sd->sc_display_count;
+			eri = pc_sc_display_ers;
+			}
 			break;
+		case BL_NPC: {
+			struct npc_data* nd = (struct npc_data*)bl;
+
+			sc_display_ptr = &nd->sc_display;
+			sc_display_count_ptr = &nd->sc_display_count;
+			eri = npc_sc_display_ers;
+			}
+			break;
+		default:
+			return;
 	}
 
-	if( i != sd->sc_display_count ) {
-		sd->sc_display[i]->val1 = dval1;
-		sd->sc_display[i]->val2 = dval2;
-		sd->sc_display[i]->val3 = dval3;
+	sc_display = *sc_display_ptr;
+	sc_display_count = *sc_display_count_ptr;
+
+	ARR_FIND(0, sc_display_count, i, sc_display[i]->type == type);
+
+	if( i != sc_display_count ) {
+		sc_display[i]->val1 = dval1;
+		sc_display[i]->val2 = dval2;
+		sc_display[i]->val3 = dval3;
 		return;
 	}
 
-	entry = ers_alloc(pc_sc_display_ers, struct sc_display_entry);
+	entry = ers_alloc(eri, struct sc_display_entry);
 
 	entry->type = type;
 	entry->val1 = dval1;
 	entry->val2 = dval2;
 	entry->val3 = dval3;
 
-	RECREATE(sd->sc_display, struct sc_display_entry *, ++sd->sc_display_count);
-	sd->sc_display[sd->sc_display_count - 1] = entry;
+	RECREATE(sc_display, struct sc_display_entry *, ++sc_display_count);
+	sc_display[sc_display_count - 1] = entry;
+	*sc_display_ptr = sc_display;
+	*sc_display_count_ptr = sc_display_count;
 }
 
 /**
- * Removes SC effect of the player
- * @param sd: Source to remove effect [PC]
+ * Removes SC effect
+ * @param bl: Source to remove effect
  * @param type: Status change (SC_*)
  * Author: Ind
  */
-void status_display_remove(struct map_session_data *sd, enum sc_type type) {
+void status_display_remove(struct block_list *bl, enum sc_type type) {
+	struct eri *eri;
+	struct sc_display_entry **sc_display;
+	struct sc_display_entry ***sc_display_ptr;
 	int i;
+	unsigned char sc_display_count;
+	unsigned char *sc_display_count_ptr;
 
-	for( i = 0; i < sd->sc_display_count; i++ ) {
-		if( sd->sc_display[i]->type == type )
+	nullpo_retv(bl);
+
+	switch( bl->type ){
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)bl;
+
+			sc_display_ptr = &sd->sc_display;
+			sc_display_count_ptr = &sd->sc_display_count;
+			eri = pc_sc_display_ers;
+			}
 			break;
+		case BL_NPC: {
+			struct npc_data* nd = (struct npc_data*)bl;
+
+			sc_display_ptr = &nd->sc_display;
+			sc_display_count_ptr = &nd->sc_display_count;
+			eri = npc_sc_display_ers;
+			}
+			break;
+		default:
+			return;
 	}
 
-	if( i != sd->sc_display_count ) {
+	sc_display = *sc_display_ptr;
+	sc_display_count = *sc_display_count_ptr;
+
+	ARR_FIND(0, sc_display_count, i, sc_display[i]->type == type);
+
+	if( i != sc_display_count ) {
 		int cursor;
 
-		ers_free(pc_sc_display_ers, sd->sc_display[i]);
-		sd->sc_display[i] = NULL;
+		ers_free(eri, sc_display[i]);
+		sc_display[i] = NULL;
 
 		/* The all-mighty compact-o-matic */
-		for( i = 0, cursor = 0; i < sd->sc_display_count; i++ ) {
-			if( sd->sc_display[i] == NULL )
+		for( i = 0, cursor = 0; i < sc_display_count; i++ ) {
+			if( sc_display[i] == NULL )
 				continue;
 
 			if( i != cursor )
-				sd->sc_display[cursor] = sd->sc_display[i];
+				sc_display[cursor] = sc_display[i];
 
 			cursor++;
 		}
 
-		if( !(sd->sc_display_count = cursor) ) {
-			aFree(sd->sc_display);
-			sd->sc_display = NULL;
+		if( !(sc_display_count = cursor) ) {
+			aFree(sc_display);
+			sc_display = NULL;
 		}
+
+		*sc_display_ptr = sc_display;
+		*sc_display_count_ptr = sc_display_count;
 	}
 }
 
@@ -8169,7 +8242,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( !sc )
 		return 0; // Unable to receive status changes
 
-	if( status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
+	if( bl->type != BL_NPC && status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
 	if (status_change_isDisabledOnMap(type, bl->m))
@@ -9080,6 +9153,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_ECL:
 			case SC_REUSE_LIMIT_RECALL:
 			case SC_REUSE_LIMIT_ASPD_POTION:
+			case SC_DORAM_BUF_01:
+			case SC_DORAM_BUF_02:
 				return 0;
 			case SC_PUSH_CART:
 			case SC_COMBO:
@@ -9158,6 +9233,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PUSH_CART:
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
+		case SC_DAILYSENDMAILCNT:
 			tick = -1;
 			break;
 
@@ -10804,6 +10880,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = -1;
 			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
 			break;
+		case SC_DORAM_BUF_01:
+		case SC_DORAM_BUF_02:
+			tick_time = 10000; // every 10 seconds
+			if( (val4 = tick/tick_time) < 1 )
+				val4 = 1;
+			break;
 
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == -1 && StatusIconChangeTable[type] == SI_BLANK ) {
@@ -10898,6 +10980,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_UPHEAVAL_OPTION:
 		case SC_CIRCLE_OF_FIRE_OPTION:
 		case SC_CLAN_INFO:
+		case SC_DAILYSENDMAILCNT:
 			val_flag |= 1|2;
 			break;
 		// Start |1|2|4 val_flag setting
@@ -10924,7 +11007,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	/* [Ind] */
-	if (sd && StatusDisplayType[type]) {
+	if (StatusDisplayType[type]&bl->type) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 
 		switch (type) {
@@ -10940,7 +11023,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				dval1 = val1;
 				break;
 		}
-		status_display_add(sd,type,dval1,dval2,dval3);
+		status_display_add(bl,type,dval1,dval2,dval3);
+		clif_efst_status_change_sub(bl, bl, AREA);
 	}
 
 	// Those that make you stop attacking/walking....
@@ -11488,6 +11572,8 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_REUSE_STORMBLAST:
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
+			case SC_DORAM_BUF_01:
+			case SC_DORAM_BUF_02:
             case SC_GEFFEN_MAGIC1:
             case SC_GEFFEN_MAGIC2:
             case SC_GEFFEN_MAGIC3:
@@ -11512,6 +11598,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
 			case SC_JUMPINGCLAN:
+			case SC_DAILYSENDMAILCNT:
 				continue;
 			}
 		}
@@ -11545,6 +11632,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
 			case SC_JUMPINGCLAN:
+			case SC_DAILYSENDMAILCNT:
 				continue;
 			}
 		}
@@ -11670,8 +11758,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	sc->data[type] = NULL;
 
-	if (sd && StatusDisplayType[type])
-		status_display_remove(sd,type);
+	if (StatusDisplayType[type]&bl->type)
+		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
@@ -13233,6 +13321,22 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, status->max_hp * 4 / 100, 0, 2);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick, status_change_timer, bl->id, data);
+		}
+		break;
+	case SC_DORAM_BUF_01:
+		if( sd && --(sce->val4) >= 0 ) {
+			if( status->hp < status->max_hp )
+				status_heal(bl, 10, 0, 2);
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+		break;
+	case SC_DORAM_BUF_02:
+		if( sd && --(sce->val4) >= 0 ) {
+			if( status->sp < status->max_sp )
+				status_heal(bl, 0, 5, 2);
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
+			return 0;
 		}
 		break;
 	}

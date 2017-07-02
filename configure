@@ -2432,7 +2432,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 ac_config_files="$ac_config_files Makefile src/common/Makefile"
 
-ac_config_files="$ac_config_files 3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile"
+ac_config_files="$ac_config_files 3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile"
 
 ac_config_files="$ac_config_files src/char/Makefile src/login/Makefile"
 
@@ -5527,182 +5527,6 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-maybe-uninitialized" >&5
-$as_echo_n "checking whether $CC supports -Wno-maybe-uninitialized... " >&6; }
-		OLD_CFLAGS="$CFLAGS"
-		CFLAGS="$CFLAGS -Werror -Wno-maybe-uninitialized"
-		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-int foo;
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-				# Recent versions of gcc don't fail if -Wno-foo is not recognized
-				# (unless there are also other warnings), so we also check for -Wfoo
-				# which always fails if not supported
-				CFLAGS="$OLD_CFLAGS -Werror -Wmaybe-uninitialized"
-				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-int foo;
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-						CFLAGS="$OLD_CFLAGS -Wno-maybe-uninitialized"
-						# Optionally, run a test
-						if test "x" != "x"; then
-							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-maybe-uninitialized" >&5
-$as_echo_n "checking whether $CC can actually use -Wno-maybe-uninitialized... " >&6; }
-							CFLAGS="$OLD_CFLAGS -Werror -Wmaybe-uninitialized"
-							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
-$as_echo "not needed but enabled" >&6; }
-									CFLAGS="$OLD_CFLAGS"
-
-else
-
-									CFLAGS="$OLD_CFLAGS -Werror -Wno-maybe-uninitialized"
-									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-											CFLAGS="$OLD_CFLAGS -Wno-maybe-uninitialized"
-
-else
-
-											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-											CFLAGS="$OLD_CFLAGS"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-						fi
-
-else
-
-						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-						CFLAGS="$OLD_CFLAGS"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-
-else
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-				CFLAGS="$OLD_CFLAGS"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-
-
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-clobbered" >&5
-$as_echo_n "checking whether $CC supports -Wno-clobbered... " >&6; }
-		OLD_CFLAGS="$CFLAGS"
-		CFLAGS="$CFLAGS -Werror -Wno-clobbered"
-		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-int foo;
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-				# Recent versions of gcc don't fail if -Wno-foo is not recognized
-				# (unless there are also other warnings), so we also check for -Wfoo
-				# which always fails if not supported
-				CFLAGS="$OLD_CFLAGS -Werror -Wclobbered"
-				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-int foo;
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-						CFLAGS="$OLD_CFLAGS -Wno-clobbered"
-						# Optionally, run a test
-						if test "x" != "x"; then
-							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-clobbered" >&5
-$as_echo_n "checking whether $CC can actually use -Wno-clobbered... " >&6; }
-							CFLAGS="$OLD_CFLAGS -Werror -Wclobbered"
-							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
-$as_echo "not needed but enabled" >&6; }
-									CFLAGS="$OLD_CFLAGS"
-
-else
-
-									CFLAGS="$OLD_CFLAGS -Werror -Wno-clobbered"
-									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-
-											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-											CFLAGS="$OLD_CFLAGS -Wno-clobbered"
-
-else
-
-											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-											CFLAGS="$OLD_CFLAGS"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-						fi
-
-else
-
-						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-						CFLAGS="$OLD_CFLAGS"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-
-else
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-				CFLAGS="$OLD_CFLAGS"
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-
-
-
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wempty-body" >&5
 $as_echo_n "checking whether $CC supports -Wempty-body... " >&6; }
 		OLD_CFLAGS="$CFLAGS"
@@ -5751,12 +5575,6 @@ fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
-#AC_CHECK_COMPILER_WFLAG(newline-eof)
-#AC_CHECK_COMPILER_WFLAG(int-conversion)
-#AC_CHECK_COMPILER_WFLAG(enum-conversion)
-#AC_CHECK_COMPILER_WFLAG(shorten-64-to-32)
-#AC_CHECK_COMPILER_WFLAG(constant-conversion)
-#AC_CHECK_COMPILER_WFLAG(bool-conversion)
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-switch" >&5
 $as_echo_n "checking whether $CC supports -Wno-switch... " >&6; }
@@ -5933,6 +5751,191 @@ fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether compiler is clang" >&5
+$as_echo_n "checking whether compiler is clang... " >&6; }
+if test -n "`$CC --version | grep -i clang`" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes, skipping some flags.." >&5
+$as_echo "yes, skipping some flags.." >&6; }
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-maybe-uninitialized" >&5
+$as_echo_n "checking whether $CC supports -Wno-maybe-uninitialized... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-maybe-uninitialized"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wmaybe-uninitialized"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -Wno-maybe-uninitialized"
+						# Optionally, run a test
+						if test "x" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-maybe-uninitialized" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-maybe-uninitialized... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wmaybe-uninitialized"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-maybe-uninitialized"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-maybe-uninitialized"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC supports -Wno-clobbered" >&5
+$as_echo_n "checking whether $CC supports -Wno-clobbered... " >&6; }
+		OLD_CFLAGS="$CFLAGS"
+		CFLAGS="$CFLAGS -Werror -Wno-clobbered"
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+				# Recent versions of gcc don't fail if -Wno-foo is not recognized
+				# (unless there are also other warnings), so we also check for -Wfoo
+				# which always fails if not supported
+				CFLAGS="$OLD_CFLAGS -Werror -Wclobbered"
+				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int foo;
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+						CFLAGS="$OLD_CFLAGS -Wno-clobbered"
+						# Optionally, run a test
+						if test "x" != "x"; then
+							{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC can actually use -Wno-clobbered" >&5
+$as_echo_n "checking whether $CC can actually use -Wno-clobbered... " >&6; }
+							CFLAGS="$OLD_CFLAGS -Werror -Wclobbered"
+							cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+									{ $as_echo "$as_me:${as_lineno-$LINENO}: result: not needed but enabled" >&5
+$as_echo "not needed but enabled" >&6; }
+									CFLAGS="$OLD_CFLAGS"
+
+else
+
+									CFLAGS="$OLD_CFLAGS -Werror -Wno-clobbered"
+									cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+_ACEOF
+if ac_fn_cxx_try_compile "$LINENO"; then :
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+											CFLAGS="$OLD_CFLAGS -Wno-clobbered"
+
+else
+
+											{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+											CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+						fi
+
+else
+
+						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+						CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+else
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+				CFLAGS="$OLD_CFLAGS"
+
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+fi
 
 # Certain versions of gcc make -Wshadow completely useless by making it flood
 # you with unnecessary warnings <https://lkml.org/lkml/2006/11/28/239>
@@ -8370,6 +8373,7 @@ do
     "src/common/Makefile") CONFIG_FILES="$CONFIG_FILES src/common/Makefile" ;;
     "3rdparty/mt19937ar/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/mt19937ar/Makefile" ;;
     "3rdparty/libconfig/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/libconfig/Makefile" ;;
+    "3rdparty/yaml-cpp/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/yaml-cpp/Makefile" ;;
     "src/char/Makefile") CONFIG_FILES="$CONFIG_FILES src/char/Makefile" ;;
     "src/login/Makefile") CONFIG_FILES="$CONFIG_FILES src/login/Makefile" ;;
     "src/map/Makefile") CONFIG_FILES="$CONFIG_FILES src/map/Makefile" ;;

@@ -4,6 +4,12 @@
 #ifndef _INT_GUILD_SQL_H_
 #define _INT_GUILD_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "../common/cbasetypes.h"
+
 enum {
 	GS_BASIC = 0x0001,
 	GS_MEMBER = 0x0002,
@@ -33,5 +39,9 @@ int inter_guild_sex_changed(int guild_id,uint32 account_id,uint32 char_id, short
 int inter_guild_charname_changed(int guild_id,uint32 account_id, uint32 char_id, char *name);
 int inter_guild_CharOnline(uint32 char_id, int guild_id);
 int inter_guild_CharOffline(uint32 char_id, int guild_id);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INT_GUILD_SQL_H_ */

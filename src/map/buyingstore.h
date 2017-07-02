@@ -4,6 +4,10 @@
 #ifndef _BUYINGSTORE_H_
 #define _BUYINGSTORE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_search_store_search;
 
 #define MAX_BUYINGSTORE_SLOTS 5
@@ -63,5 +67,9 @@ void do_init_buyingstore(void);
 
 void do_init_buyingstore_autotrade( void );
 void buyingstore_reopen( struct map_session_data* sd );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // _BUYINGSTORE_H_

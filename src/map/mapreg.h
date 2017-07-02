@@ -4,6 +4,10 @@
 #ifndef _MAPREG_H_
 #define _MAPREG_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "script.h"
 
 struct mapreg_save {
@@ -29,5 +33,9 @@ char* mapreg_readregstr(int64 uid);
 bool mapreg_setreg(int64 uid, int val);
 bool mapreg_setregstr(int64 uid, const char* str);
 int mapreg_destroyreg(DBKey key, DBData *data, va_list ap);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAPREG_H_ */
