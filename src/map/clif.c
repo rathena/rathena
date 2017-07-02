@@ -13368,6 +13368,16 @@ void clif_parse_GuildChangeMemberPosition(int fd, struct map_session_data *sd)
 
 	// Guild leadership change
 	if( len == 16 && RFIFOL(fd,12) == 0 ){
+		if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
+			clif_msg(sd, GUILD_MASTER_WOE);
+			return;
+		}
+
+		if( battle_config.guild_leaderchange_delay && DIFF_TICK(time(NULL),sd->guild->last_leader_change) < battle_config.guild_leaderchange_delay ){
+			clif_msg(sd, GUILD_MASTER_DELAY);
+			return;
+		}
+
 		guild_gm_change(sd->status.guild_id, RFIFOL(fd, 8));
 		return;
 	}

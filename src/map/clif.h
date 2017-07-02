@@ -486,7 +486,7 @@ enum clif_messages {
 	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
 	MERC_MSG_BASE = 0x4f2,
 	SKILL_CANT_USE_AREA = 0x536,
-	ITEM_CANT_USE_AREA =  0x537,
+	ITEM_CANT_USE_AREA = 0x537,
 	VIEW_EQUIP_FAIL = 0x54d,
 	RUNE_CANT_CREATE = 0x61b,
 	ITEM_CANT_COMBINE = 0x623,
@@ -499,6 +499,8 @@ enum clif_messages {
 	NEED_REINS_OF_MOUNT = 0x78c,
 	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
+	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
+	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 };
 
 enum e_personalinfo {
