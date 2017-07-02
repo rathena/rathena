@@ -408,8 +408,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
-		if (ud->walk_done_event[0])
+		if (ud->walk_done_event[0]){
 			npc_event_do_id(ud->walk_done_event,bl->id);
+			ud->walk_done_event[0] = 0;
+		}
 		if (ud->state.walk_script)
 			ud->state.walk_script = 0;
 	}
