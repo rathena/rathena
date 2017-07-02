@@ -2666,7 +2666,7 @@ packet_keys: 0x4C17382A,0x7ED174C9,0x29961E4F // [Winnie]
 // 2016-06-01aRagexe
 0x0A7D,-1
 
-// 2017-05-17bRagexeRE
+// 2017-05-02dRagexeRE
 0x0A43,85
 0x0A44,-1
 0x0ABD,10
