@@ -16078,11 +16078,13 @@ void clif_cashshop_open( struct map_session_data* sd ){
 }
 
 void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
+	sd->state.cashshop_open = true;
 	sd->npc_shopid = -1; // Set npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
 	clif_cashshop_open( sd );
 }
 
 void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
+	sd->state.cashshop_open = false;
 	sd->npc_shopid = 0; // Reset npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
 	// No need to do anything here
 }
