@@ -3396,6 +3396,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case KO_BAKURETSU:
 		case GN_CRAZYWEED_ATK:
 		case NC_MAGMA_ERUPTION:
+		case SU_SV_ROOTTWIST_ATK:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,-1,DMG_SPLASH);
 			break;
 		case GN_FIRE_EXPANSION_ACID:
@@ -4192,10 +4193,11 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case SU_SV_ROOTTWIST_ATK: {
 						struct status_change *tsc = status_get_sc(target);
 
-						if (check_distance_bl(src, target, 32)) // Only damage if caster is within 32x32 area
-							skill_attack(skl->type, target, target, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
-						if (tsc && tsc->data[SC_SV_ROOTTWIST])
-							skill_addtimerskill(src, tick + 1000, target->id, 0, 0, skl->skill_id, skl->skill_lv, skl->type, skl->flag|SD_ANIMATION);
+						if (tsc && tsc->data[SC_SV_ROOTTWIST]) {
+							if (check_distance_bl(src, target, 32)) // Only damage if caster is within 32x32 area
+								skill_attack(skl->type, src, target, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
+							skill_addtimerskill(src, tick + 1000, target->id, 0, 0, skl->skill_id, skl->skill_lv, skl->type, skl->flag);
+						}
 					}
 					break;
 				default:
@@ -6712,26 +6714,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_HELLPOWER:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv,
 			sc_start(src, bl, type, skill_lv*20, skill_lv, skill_get_time2(skill_id, skill_lv)));
-		break;
-
-	case SU_STOOP:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
- 		break;
-
-	case SU_SV_ROOTTWIST: {
-			struct status_change *tsc = status_get_sc(bl);
-
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			if (tsc->count && tsc->data[type]) // Refresh the status only if it's already active.
-				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			else {
-				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
-					sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));
-				skill_addtimerskill(src, tick + 1000, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag|SD_ANIMATION);
-			}
-		}
 		break;
 
 	case KN_AUTOCOUNTER:
@@ -10852,6 +10834,27 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
  		break;
+
+	case SU_STOOP:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+ 		break;
+
+	case SU_SV_ROOTTWIST:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		if (sd && status_get_class_(bl) == CLASS_BOSS) {
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_TOTARGET, 0);
+			break;
+		}
+		if (tsc->count && tsc->data[type]) // Refresh the status only if it's already active.
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else {
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
+				sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));
+			skill_addtimerskill(src, tick + 1000, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag);
+		}
+		break;
 
 	case SU_TUNABELLY:
 	{

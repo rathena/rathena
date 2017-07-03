@@ -5741,9 +5741,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					ad.damage >>= 1;
 #endif
 				break;
-			case SU_SV_ROOTTWIST_ATK:
-				ad.damage = 100;
-				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -6596,6 +6593,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = ssc->data[SC_MAXPAIN]->val2;
 			else
 				md.damage = 0;
+			break;
+		case SU_SV_ROOTTWIST_ATK:
+			md.damage = 100;
 			break;
 	}
 
