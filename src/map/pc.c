@@ -4361,7 +4361,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 	{
 		char output[CHAT_SIZE_MAX];
 
-		sprintf(output, msg_txt(sd,504), points, cash, sd->kafraPoints, sd->cashPoints);
+		sprintf(output, msg_txt(sd,504), points, cash, sd->kafraPoints, sd->cashPoints); // Used %d kafra points and %d cash points. %d kafra and %d cash points remaining.
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	return cash+points;
