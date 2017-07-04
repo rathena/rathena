@@ -11788,7 +11788,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 					pc_delitem(sd, item_idx, 1, 0, 1, LOG_TYPE_CONSUME);
 					flag |= 1;
 				}
-				if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
+				if (pc_checkskill(sd, SU_SPIRITOFLAND))
 					sc_start(src, src, SC_DORAM_SVSP, 100, 100, skill_get_time(SU_SPIRITOFLAND, 1));
 			}
 			for (i = 1; i <= skill_get_time(skill_id, skill_lv)/skill_get_unit_interval(skill_id); i++) {

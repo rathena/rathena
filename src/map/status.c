@@ -4395,13 +4395,15 @@ int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt)
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen)
 {
 	struct map_session_data *sd;
-	struct status_change *sc = status_get_sc(bl);
+	struct status_change *sc;
 	int val, skill, reg_flag;
 
 	if( !(bl->type&BL_REGEN) || !regen )
 		return;
 
 	sd = BL_CAST(BL_PC,bl);
+	sc = status_get_sc(bl);
+
 	val = 1 + (status->vit/5) + (status->max_hp/200);
 
 	if( sd && sd->hprecov_rate != 100 )
@@ -10941,10 +10943,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					max += sd->right_weapon.overrefine - 1;
 				}
 
+				val2 += min + 178; // Heal
 				if (max > min)
-					val2 += min + rnd() % (max - min) + 178; // Heal
-				else
-					val2 += min + 178; // Heal
+					val2 += rnd() % (max - min); // Heal
 
 				if (sd) {
 					if (pc_checkskill(sd, SU_POWEROFSEA)) {
