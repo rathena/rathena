@@ -917,12 +917,13 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 
 	nullpo_retr(false,bl);
 
-	sd = BL_CAST(BL_PC, bl);
 	ud = unit_bl2ud(bl);
-	sc = status_get_sc(bl);
 
 	if(ud == NULL)
 		return false;
+
+	sd = BL_CAST(BL_PC, bl);
+	sc = status_get_sc(bl);
 
 	unit_stop_walking(bl, 1);
 	unit_stop_attack(bl);
