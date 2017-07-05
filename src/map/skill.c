@@ -2390,10 +2390,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	if (dstsd && !status_isdead(bl) && !(skill_id && skill_get_nk(skill_id)&NK_NO_DAMAGE)) {
-		struct status_change *sc = status_get_sc(src);
+		struct status_change *sc = status_get_sc(bl);
 
 		if (sc && sc->data[SC_DORAM_SVSP] && attack_type&(BF_MAGIC|BF_LONG))
-			skill_castend_damage_id(src, bl, SU_SV_STEMSPEAR, 5, tick, 0);
+			skill_castend_damage_id(bl, src, SU_SV_STEMSPEAR, (pc_checkskill(dstsd, SU_SV_STEMSPEAR) ? pc_checkskill(dstsd, SU_SV_STEMSPEAR) : 1), tick, 0);
 	}
 
 	// Trigger counter-spells to retaliate against damage causing skills.
