@@ -807,6 +807,19 @@ typedef enum sc_type {
 	SC_DORAM_BUF_01,
 	SC_DORAM_BUF_02,
 
+	/**
+	 * Summoner - Extended
+	 */
+	SC_HISS,
+	SC_NYANGGRASS,
+	SC_GROOMING,
+	SC_SHRIMPBLESSING,
+	SC_CHATTERING,
+	SC_DORAM_WALKSPEED,
+	SC_DORAM_MATK,
+	SC_DORAM_FLEE2,
+	SC_DORAM_SVSP,
+
 	SC_FALLEN_ANGEL,
 
 #ifdef RENEWAL
@@ -2077,7 +2090,7 @@ unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
 int StatusSkillChangeTable[SC_MAX];          /// status -> skill
 int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
 unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-bool StatusDisplayType[SC_MAX];
+unsigned int StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {

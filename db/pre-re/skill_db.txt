@@ -1379,6 +1379,24 @@
 5040,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_BUNCHOFSHRIMP,Bunch of Shrimp
 5041,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_FRESHSHRIMP,Fresh Shrimp
 
+// Unknown Unconfirmed Summoner Skills - Animations Show On These
+//5042,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_CN_METEOR_SEC,
+//5043,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_LUNATICCARROTBEAT_SEC,
+
+5044,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SOULATTACK,Soul Attack
+5045,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_POWEROFFLOCK,Power of Flock
+5046,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SVG_SPIRIT,Spirit of Savage
+5047,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_HISS,Hiss
+5048,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_NYANGGRASS,Nyang Grass
+5049,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_GROOMING,Grooming
+5050,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_PURRING,Purring
+5051,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SHRIMPARTY,Tasty Shrimp Party
+5052,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SPIRITOFLIFE,Spirit of Life
+5053,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_MEOWMEOW,Meow Meow
+5054,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SPIRITOFLAND,Spirit of Land
+5055,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_CHATTERING,Chattering
+5056,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SPIRITOFSEA,Spirit of Sea
+
 //****
 // Homunculus S
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,	HLIF_HEAL,Healing Touch

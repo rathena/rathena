@@ -627,6 +627,8 @@ extern struct Battle_Config
 	int mail_attachment_price;
 	int mail_attachment_weight;
 	int banana_bomb_duration;
+	int guild_leaderchange_delay;
+	int guild_leaderchange_woe;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

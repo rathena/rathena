@@ -3483,7 +3483,7 @@ void script_free_code(struct script_code* code)
 	nullpo_retv(code);
 
 	if (code->instances)
-		script_stop_instances(code);
+		script_stop_scriptinstances(code);
 	script_free_vars(code->local.vars);
 	if (code->local.arrays)
 		code->local.arrays->destroy(code->local.arrays, script_free_array_db);
@@ -4058,7 +4058,11 @@ void run_script(struct script_code *rootscript, int pos, int rid, int oid)
 	run_script_main(st);
 }
 
-void script_stop_instances(struct script_code *code) {
+/**
+ * Free all related script code
+ * @param code: Script code to free
+ */
+void script_stop_scriptinstances(struct script_code *code) {
 	DBIterator *iter;
 	struct script_state* st;
 
@@ -4087,10 +4091,8 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if( id != 0 && st->rid ){
 		struct map_session_data *sd = map_id2sd(st->rid);
 
-		// Attached player is offline or another unit type - should not happen
+		// Attached player is offline(logout) or another unit type(should not happen)
 		if( !sd ){
-			ShowWarning( "Script sleep timer called by an offline character or non player unit.\n" );
-			script_reportsrc(st);
 			st->rid = 0;
 			st->state = END;
 		// Character mismatch. Cancel execution.
@@ -8519,7 +8521,7 @@ BUILDIN_FUNC(strnpcinfo)
  **/
 BUILDIN_FUNC(getequipid)
 {
-	int i, num = EQI_COMPOUND_ON;
+	int i, num;
 	TBL_PC* sd;
 
 	if (!script_charid2sd(3, sd)) {
@@ -8529,20 +8531,23 @@ BUILDIN_FUNC(getequipid)
 
 	if (script_hasdata(st, 2))
 		num = script_getnum(st, 2);
+	else
+		num = EQI_COMPOUND_ON;
 
 	if (num == EQI_COMPOUND_ON)
 		i = current_equip_item_index;
 	else if (equip_index_check(num)) // get inventory position of item
 		i = pc_checkequip(sd, equip_bitmask[num]);
 	else {
+		ShowError( "buildin_getequipid: Unknown equip index '%d'\n", num );
 		script_pushint(st,-1);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (i >= EQI_ACC_L && sd->inventory_data[i])
+	if (i >= 0 && i < MAX_INVENTORY && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
-		script_pushint(st, 0);
+		script_pushint(st, -1);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18451,54 +18456,73 @@ BUILDIN_FUNC(unitskillusepos)
 /// sleep <mili seconds>;
 BUILDIN_FUNC(sleep)
 {
-	int ticks;
+	// First call(by function call)
+	if (st->sleep.tick == 0) {
+		int ticks;
 
-	ticks = script_getnum(st,2);
+		ticks = script_getnum(st, 2);
 
-	// detach the player
-	script_detach_rid(st);
+		if (ticks <= 0) {
+			ShowError("buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks);
+			return SCRIPT_CMD_FAILURE;
+		}
 
-	if( ticks <= 0 )
-	{// do nothing
-	}
-	else if( st->sleep.tick == 0 )
-	{// sleep for the target amount of time
+		// detach the player
+		script_detach_rid(st);
+
+		// sleep for the target amount of time
 		st->state = RERUNLINE;
 		st->sleep.tick = ticks;
-	}
-	else
-	{// sleep time is over
+	// Second call(by timer after sleeping time is over)
+	} else {		
+		// Continue the script
 		st->state = RUN;
 		st->sleep.tick = 0;
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Pauses the execution of the script, keeping the unit attached
-/// Returns if the unit is still attached
+/// Stops the script if no unit is attached
 ///
-/// sleep2(<mili secconds>) -> <bool>
+/// sleep2(<milli seconds>)
 BUILDIN_FUNC(sleep2)
 {
-	int ticks;
+	// First call(by function call)
+	if (st->sleep.tick == 0) {
+		int ticks;
 
-	ticks = script_getnum(st,2);
+		ticks = script_getnum(st, 2);
 
-	if( ticks <= 0 )
-	{// do nothing
-		script_pushint(st, (map_id2bl(st->rid)!=NULL));
-	}
-	else if( !st->sleep.tick )
-	{// sleep for the target amount of time
+		if (ticks <= 0) {
+			ShowError( "buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (map_id2bl(st->rid) == NULL) {
+			ShowError( "buildin_sleep2: no unit is attached\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+		
+		// sleep for the target amount of time
 		st->state = RERUNLINE;
 		st->sleep.tick = ticks;
+	// Second call(by timer after sleeping time is over)
+	} else {		
+		// Check if the unit is still attached
+		// NOTE: This should never happen, since run_script_timer already checks this
+		if (map_id2bl(st->rid) == NULL) {
+			// The unit is not attached anymore - terminate the script
+			st->rid = 0;
+			st->state = END;
+		} else {
+			// The unit is still attached - continue the script
+			st->state = RUN;
+			st->sleep.tick = 0;
+		}
 	}
-	else
-	{// sleep time is over
-		st->state = RUN;
-		st->sleep.tick = 0;
-		script_pushint(st, (map_id2bl(st->rid)!=NULL));
-	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19550,7 +19574,7 @@ BUILDIN_FUNC(bg_get_data)
 {
 	struct battleground_data *bg;
 	int bg_id = script_getnum(st,2),
-		type = script_getnum(st,3);
+		type = script_getnum(st,3), i;
 
 	if( (bg = bg_team_search(bg_id)) == NULL )
 	{
@@ -19561,6 +19585,12 @@ BUILDIN_FUNC(bg_get_data)
 	switch( type )
 	{
 		case 0: script_pushint(st, bg->count); break;
+		case 1:
+			for (i = 0; bg->members[i].sd != NULL; i++)
+				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), bg->members[i].sd->bl.id);
+			mapreg_setreg(add_str("$@arenamemberscount"), i);
+			script_pushint(st, i);
+			break;
 		default:
 			ShowError("script:bg_get_data: unknown data identifier %d\n", type);
 			break;

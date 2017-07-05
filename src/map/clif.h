@@ -487,7 +487,7 @@ enum clif_messages {
 	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
 	MERC_MSG_BASE = 0x4f2,
 	SKILL_CANT_USE_AREA = 0x536,
-	ITEM_CANT_USE_AREA =  0x537,
+	ITEM_CANT_USE_AREA = 0x537,
 	VIEW_EQUIP_FAIL = 0x54d,
 	RUNE_CANT_CREATE = 0x61b,
 	ITEM_CANT_COMBINE = 0x623,
@@ -500,6 +500,8 @@ enum clif_messages {
 	NEED_REINS_OF_MOUNT = 0x78c,
 	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
+	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
+	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 	SKILL_NEED_GATLING = 0x9fa,
 	SKILL_NEED_SHOTGUN = 0x9fb,
 	SKILL_NEED_RIFLE = 0x9fc,
@@ -683,7 +685,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3);
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3);
-void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list *bl, enum send_target target);
+void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int result);

@@ -56,7 +56,7 @@ enum e_pc_permission {
 
 static const struct {
 	const char *name;
-	unsigned int permission;
+	enum e_pc_permission permission;
 } pc_g_permission_name[] = {
 	{ "can_trade", PC_PERM_TRADE },
 	{ "can_party", PC_PERM_PARTY },
