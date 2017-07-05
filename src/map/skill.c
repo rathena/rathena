@@ -2686,8 +2686,12 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 		dy = -diry[dir];
 	}
 
-	if (tsc && tsc->data[SC_SU_STOOP]) // Any knockback will cancel it.
-		status_change_end(target, SC_SU_STOOP, INVALID_TIMER);
+	if (tsc) {
+		if (tsc->data[SC_SU_STOOP]) // Any knockback will cancel it.
+			status_change_end(target, SC_SU_STOOP, INVALID_TIMER);
+		if (tsc->data[SC_SV_ROOTTWIST]) // Shouldn't move.
+			return 0;
+	}
 
 	return unit_blown(target, dx, dy, count, flag);	// Send over the proper flag
 }
@@ -20680,6 +20684,8 @@ int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
  * @return True:If unit can be moved, False:If check on flags are met or unit cannot be moved.
  **/
 static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath) {
+	struct status_change *sc;
+
 	nullpo_retr(false, bl);
 
 	if (check_flag&1 && map[bl->m].flag.battleground)
@@ -20687,6 +20693,10 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 	if (check_flag&2 && map_flag_gvg(bl->m))
 		return false;
 	if (check_flag&4 && map_flag_gvg2(bl->m))
+		return false;
+
+	sc = status_get_sc(bl);
+	if (sc && sc->data[SC_SV_ROOTTWIST])
 		return false;
 
 	return unit_movepos(bl, dst_x, dst_y, easy, checkpath);

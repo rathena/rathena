@@ -913,17 +913,14 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	uint8 dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
-	struct status_change    *sc = NULL;
 
 	nullpo_retr(false,bl);
 
+	sd = BL_CAST(BL_PC, bl);
 	ud = unit_bl2ud(bl);
 
 	if(ud == NULL)
 		return false;
-
-	sd = BL_CAST(BL_PC, bl);
-	sc = status_get_sc(bl);
 
 	unit_stop_walking(bl, 1);
 	unit_stop_attack(bl);
@@ -947,9 +944,6 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->walktimer = CLIF_WALK_TIMER; // Arbitrary non-INVALID_TIMER value to make the clif code send walking packets
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, (sd ? BL_ALL : BL_PC), bl);
 	ud->walktimer = INVALID_TIMER;
-
-	if (sc && sc->data && sc->data[SC_SV_ROOTTWIST])
-		return false;
 
 	if(sd) {
 		if( sd->touching_id )
