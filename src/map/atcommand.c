@@ -531,12 +531,14 @@ ACMD_FUNC(jumpto)
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,911)); // Please enter a player name (usage: @jumpto/@warpto/@goto <char name/ID>).
 		return -1;
 	}
 
-	if((pl_sd=map_nick2sd((char *)message,true)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL)
+	if((pl_sd=map_nick2sd(atcmd_player_name,true)) == NULL && (pl_sd=map_charid2sd(atoi(atcmd_player_name))) == NULL)
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -2884,12 +2886,14 @@ ACMD_FUNC(recall) {
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1018)); // Please enter a player name (usage: @recall <char name/ID>).
 		return -1;
 	}
 
-	if((pl_sd=map_nick2sd((char *)message,true)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL)
+	if((pl_sd=map_nick2sd(atcmd_player_name,true)) == NULL && (pl_sd=map_charid2sd(atoi(atcmd_player_name))) == NULL)
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -3220,12 +3224,12 @@ ACMD_FUNC(kick)
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	if (!message || !*message) {
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1026)); // Please enter a player name (usage: @kick <char name/ID>).
 		return -1;
 	}
 
-	if((pl_sd=map_nick2sd((char *)message,false)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL)
+	if((pl_sd=map_nick2sd(atcmd_player_name,false)) == NULL && (pl_sd=map_charid2sd(atoi(atcmd_player_name))) == NULL)
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -5444,7 +5448,9 @@ ACMD_FUNC(follow)
 	struct map_session_data *pl_sd = NULL;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		if (sd->followtarget == -1)
 			return -1;
 
@@ -5453,7 +5459,7 @@ ACMD_FUNC(follow)
 		return 0;
 	}
 
-	if ( (pl_sd = map_nick2sd((char *)message,true)) == NULL )
+	if ( (pl_sd = map_nick2sd(atcmd_player_name,true)) == NULL )
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -5702,16 +5708,18 @@ ACMD_FUNC(useskill)
 	struct block_list *bl;
 	uint16 skill_id;
 	uint16 skill_lv;
-	char target[100];
 	nullpo_retr(-1, sd);
 
-	if(!message || !*message || sscanf(message, "%6hu %6hu %23[^\n]", &skill_id, &skill_lv, target) != 3) {
-		clif_displaymessage(fd, msg_txt(sd,1165)); // Usage: @useskill <skill ID> <skill level> <target>
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if(!message || !*message || sscanf(message, "%6hu %6hu %23[^\n]", &skill_id, &skill_lv, atcmd_player_name) != 3) {
+		clif_displaymessage(fd, msg_txt(sd,1165)); // Usage: @useskill <skill ID> <skill level> <char name>
 		return -1;
 	}
 
-	if(!strcmp(target,"self")) pl_sd = sd; //quick keyword
-	else if ( (pl_sd = map_nick2sd(target,true)) == NULL ){
+	if(!strcmp(atcmd_player_name,"self"))
+		pl_sd = sd; //quick keyword
+	else if ( (pl_sd = map_nick2sd(atcmd_player_name,true)) == NULL ){
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
 	}
@@ -5770,16 +5778,17 @@ ACMD_FUNC(skilltree)
 	struct map_session_data *pl_sd = NULL;
 	uint16 skill_id;
 	int meets, i, j, c=0;
-	char target[NAME_LENGTH];
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
 
-	if(!message || !*message || sscanf(message, "%6hu %23[^\r\n]", &skill_id, target) != 2) {
-		clif_displaymessage(fd, msg_txt(sd,1167)); // Usage: @skilltree <skill ID> <target>
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if(!message || !*message || sscanf(message, "%6hu %23[^\r\n]", &skill_id, atcmd_player_name) != 2) {
+		clif_displaymessage(fd, msg_txt(sd,1167)); // Usage: @skilltree <skill ID> <char name>
 		return -1;
 	}
 
-	if ( (pl_sd = map_nick2sd(target,true)) == NULL )
+	if ( (pl_sd = map_nick2sd(atcmd_player_name,true)) == NULL )
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -5847,16 +5856,17 @@ void getring (struct map_session_data* sd)
 ACMD_FUNC(marry)
 {
 	struct map_session_data *pl_sd = NULL;
-	char player_name[NAME_LENGTH] = "";
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", player_name) != 1) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1172)); // Usage: @marry <char name>
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(player_name,false)) == NULL) {
+	if ((pl_sd = map_nick2sd(atcmd_player_name,false)) == NULL) {
 		clif_displaymessage(fd, msg_txt(sd,3));
 		return -1;
 	}
@@ -5979,6 +5989,8 @@ ACMD_FUNC(changegm)
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
 	if (sd->status.guild_id == 0 || (g = sd->guild) == NULL || strcmp(g->master,sd->status.name)) {
 		clif_displaymessage(fd, msg_txt(sd,1181)); // You need to be a Guild Master to use this command.
 		return -1;
@@ -5989,12 +6001,12 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
-	if( !message[0] ) {
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1183)); // Usage: @changegm <guild_member_name>
 		return -1;
 	}
 
-	if((pl_sd=map_nick2sd((char *) message,false)) == NULL || pl_sd->status.guild_id != sd->status.guild_id) {
+	if((pl_sd=map_nick2sd(atcmd_player_name,false)) == NULL || pl_sd->status.guild_id != sd->status.guild_id) {
 		clif_displaymessage(fd, msg_txt(sd,1184)); // Target character must be online and be a guild member.
 		return -1;
 	}
@@ -6011,13 +6023,14 @@ ACMD_FUNC(changeleader)
 {
 	nullpo_retr(-1, sd);
 
-	if( !message[0] )
-	{
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1185)); // Usage: @changeleader <party_member_name>
 		return -1;
 	}
 
-	if (party_changeleader(sd, map_nick2sd((char *) message,false),NULL))
+	if (party_changeleader(sd, map_nick2sd(atcmd_player_name,false),NULL))
 		return 0;
 	return -1;
 }
@@ -6839,12 +6852,14 @@ ACMD_FUNC(trade)
     struct map_session_data *pl_sd = NULL;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1230)); // Please enter a player name (usage: @trade <char name>).
 		return -1;
 	}
 
-	if ( (pl_sd = map_nick2sd((char *)message,true)) == NULL )
+	if ( (pl_sd = map_nick2sd(atcmd_player_name,true)) == NULL )
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -6891,12 +6906,14 @@ ACMD_FUNC(unmute)
 	struct map_session_data *pl_sd = NULL;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1234)); // Please enter a player name (usage: @unmute <char name>).
 		return -1;
 	}
 
-	if ( (pl_sd = map_nick2sd((char *)message,false)) == NULL )
+	if ( (pl_sd = map_nick2sd(atcmd_player_name,false)) == NULL )
 	{
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
@@ -6987,6 +7004,8 @@ ACMD_FUNC(mute)
 	struct map_session_data *pl_sd = NULL;
 	int manner;
 	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%11d %23[^\n]", &manner, atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1237)); // Usage: @mute <time> <char name>
@@ -8244,7 +8263,14 @@ ACMD_FUNC(showdelay)
 ACMD_FUNC(invite)
 {
 	unsigned int did = sd->duel_group;
-	struct map_session_data *target_sd = map_nick2sd((char *)message,true);
+	struct map_session_data *target_sd = NULL;
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		clif_displaymessage(fd, msg_txt(sd,352)); // "Duel: Player not found."
+		return -1;
+	}
 
 	if(did == 0) {
 		// "Duel: @invite without @duel."
@@ -8260,7 +8286,7 @@ ACMD_FUNC(invite)
 		return 0;
 	}
 
-	if(target_sd == NULL) {
+	if((target_sd = map_nick2sd(atcmd_player_name, true)) == NULL) {
 		// "Duel: Player not found."
 		clif_displaymessage(fd, msg_txt(sd,352));
 		return 0;
@@ -8274,7 +8300,7 @@ ACMD_FUNC(invite)
 
 	if(battle_config.duel_only_on_same_map && target_sd->bl.m != sd->bl.m)
 	{
-		sprintf(atcmd_output, msg_txt(sd,364), message);
+		sprintf(atcmd_output, msg_txt(sd,364), atcmd_player_name);
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
@@ -8316,8 +8342,17 @@ ACMD_FUNC(duel)
 			}
 			duel_create(sd, maxpl);
 		} else {
-			struct map_session_data *target_sd;
-			target_sd = map_nick2sd((char *)message,true);
+			struct map_session_data *target_sd = NULL;
+
+			memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+			if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+				clif_displaymessage(fd, msg_txt(sd,352)); // "Duel: Player not found."
+				return -1;
+			}
+
+			target_sd = map_nick2sd(atcmd_player_name,true);
+
 			if(target_sd != NULL) {
 				unsigned int newduel;
 				if((newduel = duel_create(sd, 2)) != -1) {
@@ -8470,12 +8505,14 @@ ACMD_FUNC(clone)
 	int x=0,y=0,flag=0,master=0,i=0;
 	struct map_session_data *pl_sd=NULL;
 
-	if (!message || !*message) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1323)); // You must enter a player name or ID.
 		return 0;
 	}
 
-	if((pl_sd=map_nick2sd((char *)message,true)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL) {
+	if((pl_sd=map_nick2sd(atcmd_player_name,true)) == NULL && (pl_sd=map_charid2sd(atoi(atcmd_player_name))) == NULL) {
 		clif_displaymessage(fd, msg_txt(sd,3));	// Character not found.
 		return 0;
 	}
@@ -9659,13 +9696,15 @@ ACMD_FUNC(fullstrip) {
 	TBL_PC *tsd;
 	
 	nullpo_retr(-1,sd);
-	
-	if (!message || !*message) {
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,349)); // Please enter a player name (usage: @fullstrip/@warpto/@goto <char name/ID>).
 		return -1;
 	}
 
-	if((tsd=map_nick2sd((char *)message,false)) == NULL && (tsd=map_id2sd(atoi(message))) == NULL){
+	if((tsd=map_nick2sd(atcmd_player_name,false)) == NULL && (tsd=map_id2sd(atoi(atcmd_player_name))) == NULL){
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
 	}
@@ -9743,22 +9782,17 @@ ACMD_FUNC(costume) {
 */
 ACMD_FUNC(cloneequip) {
 	struct map_session_data *pl_sd;
-	uint32 char_id = 0;
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	if( !message || !*message || (sscanf(message, "%11d", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
 		return -1;
 	}
 
-	if (char_id)
-		pl_sd = map_charid2sd(char_id);
-	else
-		pl_sd = map_nick2sd(atcmd_output,true);
-
-	if (!pl_sd) {
+	if (!(pl_sd = map_nick2sd(atcmd_player_name, true)) && !(pl_sd = map_charid2sd(atoi(atcmd_player_name)))) {
 		clif_displaymessage(fd, msg_txt(sd, 3));
 		return -1;
 	}
@@ -9823,18 +9857,14 @@ ACMD_FUNC(clonestat) {
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	if( !message || !*message || (sscanf(message, "%11d", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
 		return -1;
 	}
 
-	if (char_id)
-		pl_sd = map_charid2sd(char_id);
-	else
-		pl_sd = map_nick2sd(atcmd_output,true);
-
-	if (!pl_sd) {
+	if (!(pl_sd = map_nick2sd(atcmd_player_name, true)) && !(pl_sd = map_charid2sd(atoi(atcmd_player_name)))) {
 		clif_displaymessage(fd, msg_txt(sd, 3));
 		return -1;
 	}
@@ -9922,7 +9952,7 @@ ACMD_FUNC(adopt)
 		return -1;
 	}
 
-	if ((b_sd = map_nick2sd((char *)atcmd_player_name,false)) == NULL) {
+	if ((b_sd = map_nick2sd(atcmd_player_name,false)) == NULL) {
 		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
 		return -1;
 	}
