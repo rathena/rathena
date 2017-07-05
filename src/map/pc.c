@@ -1038,7 +1038,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip && sd->sc.data[SC_KYOUGAKU])
+		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
 			return ITEM_EQUIP_ACK_FAIL;
 
 		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SUPERNOVICE) {
@@ -5666,6 +5666,8 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	if (!idx) return 0;
 	if (skill_db[idx]->cooldown[skill_lv - 1])
 		cooldown = skill_db[idx]->cooldown[skill_lv - 1];
+	if (skill_id == SU_TUNABELLY && pc_checkskill(sd, SU_SPIRITOFSEA))
+		cooldown -= skill_get_time(SU_TUNABELLY, skill_lv);
 
 	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
 	if (i < cooldownlen) {
@@ -8257,8 +8259,8 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
  *------------------------------------------*/
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type)
 {
-	if (type) {
-		if (hp)
+	if (type&2) {
+		if (hp || type&4)
 			clif_heal(sd->fd,SP_HP,hp);
 		if (sp)
 			clif_heal(sd->fd,SP_SP,sp);
