@@ -5628,6 +5628,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (skill_lv == 2)
 				s_ele = ELE_HOLY;
 			break;
+		case WL_HELLINFERNO:
+			if (ad.miscflag&ELE_DARK)
+				s_ele = ELE_DARK;
+			break;
 		case SO_PSYCHIC_WAVE:
 			if( sc && sc->count ) {
 				if( sc->data[SC_HEATER_OPTION] )

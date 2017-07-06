@@ -1786,9 +1786,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case MH_XENO_SLASHER:
 		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
 		break;
-	case WL_HELLINFERNO:
-		sc_start4(src,bl,SC_BURNING,55+5*skill_lv,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
-		break;
 	case NC_MAGMA_ERUPTION:
 		if (attack_type&BF_WEAPON) // Stun effect from 'slam'
 			sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -3281,6 +3278,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	dmg_type = (skill_id == 0) ? DMG_SPLASH : skill_get_hit(skill_id);
 
 	switch( skill_id ) {
+		case WL_HELLINFERNO:
+			if (dmg.dmg_lv == ATK_DEF && !(flag&ELE_DARK)) // Burning only starts if the fire attack successfully lands
+				sc_start4(src, bl, SC_BURNING, 55 + 5 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time(skill_id, skill_lv));
 		case SC_TRIANGLESHOT:
 			if( rnd()%100 > (1 + skill_lv) )
 				dmg.blewcount = 0;
@@ -5624,7 +5624,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case WL_HELLINFERNO:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag|ELE_DARK);
+		skill_addtimerskill(src,tick + 200,bl->id,0,0,skill_id,skill_lv,BF_MAGIC,flag|ELE_DARK);
 		break;
 	case RA_WUGSTRIKE:
 		if( sd && pc_isridingwug(sd) ){
