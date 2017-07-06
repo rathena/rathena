@@ -42,9 +42,8 @@
     <ClCompile Include="cli.c" />
     <ClCompile Include="conf.c" />
     <ClCompile Include="core.cpp">
-		<CompileAs>CompileAsCpp</CompileAs>
-	</ClCompile>
-    <ClCompile Include="db.c" />
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="des.c" />
     <ClCompile Include="grfio.c" />
     <ClCompile Include="malloc.c" />

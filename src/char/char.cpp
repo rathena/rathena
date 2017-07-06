@@ -15,6 +15,7 @@
 #include "../common/malloc.h"
 #include "../common/mapindex.h"
 #include "../common/mmo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
@@ -1381,7 +1382,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	struct point tmp_start_point[MAX_STARTPOINT];
 	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
-	int flag, k, start_point_idx = rand() % charserv_config.start_point_count;
+	int flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1455,7 +1456,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 		memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
 		memcpy(tmp_start_point, charserv_config.start_point_doram, MAX_STARTPOINT * sizeof(struct point));
 		memcpy(tmp_start_items, charserv_config.start_items_doram, MAX_STARTITEM * sizeof(struct startitem));
-		start_point_idx = rand() % charserv_config.start_point_count_doram;
+		start_point_idx = rnd() % charserv_config.start_point_count_doram;
 	}
 #endif
 

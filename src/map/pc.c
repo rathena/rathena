@@ -1043,7 +1043,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip && sd->sc.data[SC_KYOUGAKU])
+		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
 			return ITEM_EQUIP_ACK_FAIL;
 
 		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SUPERNOVICE) {
@@ -4379,7 +4379,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 	{
 		char output[CHAT_SIZE_MAX];
 
-		sprintf(output, msg_txt(sd,504), points, cash, sd->kafraPoints, sd->cashPoints);
+		sprintf(output, msg_txt(sd,504), points, cash, sd->kafraPoints, sd->cashPoints); // Used %d kafra points and %d cash points. %d kafra and %d cash points remaining.
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	return cash+points;
@@ -5686,6 +5686,8 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	if (!idx) return 0;
 	if (skill_db[idx]->cooldown[skill_lv - 1])
 		cooldown = skill_db[idx]->cooldown[skill_lv - 1];
+	if (skill_id == SU_TUNABELLY && pc_checkskill(sd, SU_SPIRITOFSEA))
+		cooldown -= skill_get_time(SU_TUNABELLY, skill_lv);
 
 	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
 	if (i < cooldownlen) {
@@ -8282,8 +8284,8 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
  *------------------------------------------*/
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type)
 {
-	if (type) {
-		if (hp)
+	if (type&2) {
+		if (hp || type&4)
 			clif_heal(sd->fd,SP_HP,hp);
 		if (sp)
 			clif_heal(sd->fd,SP_SP,sp);
@@ -11352,10 +11354,10 @@ int pc_read_motd(void)
 	if( ( fp = fopen(motd_txt, "r") ) != NULL )
 	{
 		unsigned int entries = 0;
+		char buf[CHAT_SIZE_MAX];
 
-		while( entries < MOTD_LINE_SIZE && fgets(motd_text[entries], sizeof(motd_text[entries]), fp) )
+		while( entries < MOTD_LINE_SIZE && fgets(buf, CHAT_SIZE_MAX, fp) )
 		{
-			char* buf = motd_text[entries];
 			unsigned int lines = 0;
 			size_t len;
 			lines++;
@@ -11374,6 +11376,7 @@ int pc_read_motd(void)
 				buf[0] = ' ';
 				buf[1] = 0;
 			}
+			safestrncpy(motd_text[entries], buf, CHAT_SIZE_MAX);
 			entries++;
 		}
 		fclose(fp);

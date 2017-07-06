@@ -176,8 +176,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="char.cpp">
-		<CompileAs>CompileAsCpp</CompileAs>
-	</ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="char_clif.c" />
     <ClCompile Include="char_cnslif.c" />
     <ClCompile Include="char_logif.c" />

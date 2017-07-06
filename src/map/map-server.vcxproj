@@ -224,8 +224,8 @@
     <ClCompile Include="log.c" />
     <ClCompile Include="mail.c" />
     <ClCompile Include="map.cpp">
-		<CompileAs>CompileAsCpp</CompileAs>
-	</ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="mapreg.c" />
     <ClCompile Include="mercenary.c" />
     <ClCompile Include="mob.c" />
