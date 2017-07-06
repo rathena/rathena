@@ -5783,7 +5783,7 @@ ACMD_FUNC(skilltree)
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	if(!message || !*message || sscanf(message, "%6hu %23[^\r\n]", &skill_id, atcmd_player_name) != 2) {
+	if(!message || !*message || sscanf(message, "%6hu %23[^\n]", &skill_id, atcmd_player_name) != 2) {
 		clif_displaymessage(fd, msg_txt(sd,1167)); // Usage: @skilltree <skill ID> <char name>
 		return -1;
 	}
@@ -5867,7 +5867,7 @@ ACMD_FUNC(marry)
 	}
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name,false)) == NULL) {
-		clif_displaymessage(fd, msg_txt(sd,3));
+		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
 	}
 
@@ -6030,9 +6030,8 @@ ACMD_FUNC(changeleader)
 		return -1;
 	}
 
-	if (party_changeleader(sd, map_nick2sd(atcmd_player_name,false),NULL))
-		return 0;
-	return -1;
+	party_changeleader(sd, map_nick2sd(atcmd_player_name,false),NULL);
+	return 0;
 }
 
 /*==========================================
@@ -8266,9 +8265,11 @@ ACMD_FUNC(invite)
 	struct map_session_data *target_sd = NULL;
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-		clif_displaymessage(fd, msg_txt(sd,352)); // "Duel: Player not found."
+		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
 
@@ -8300,7 +8301,7 @@ ACMD_FUNC(invite)
 
 	if(battle_config.duel_only_on_same_map && target_sd->bl.m != sd->bl.m)
 	{
-		sprintf(atcmd_output, msg_txt(sd,364), atcmd_player_name);
+		sprintf(atcmd_output, msg_txt(sd,364), atcmd_player_name); // Duel: You can't invite %s because he/she isn't on the same map.
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
@@ -8345,9 +8346,11 @@ ACMD_FUNC(duel)
 			struct map_session_data *target_sd = NULL;
 
 			memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+			memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-			if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-				clif_displaymessage(fd, msg_txt(sd,352)); // "Duel: Player not found."
+			if (sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+				sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+				clif_displaymessage(fd, atcmd_output);
 				return -1;
 			}
 
@@ -9776,7 +9779,7 @@ ACMD_FUNC(costume) {
 
 /**
 * Clone other player's equipments
-* Usage: @cloneequip <char_id or "char name">
+* Usage: @cloneequip <char name/ID>
 * http://rathena.org/board/topic/95076-new-atcommands-suggestion/
 * @author [Cydh], [Antares]
 */
@@ -9786,9 +9789,11 @@ ACMD_FUNC(cloneequip) {
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
+		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
 
@@ -9839,7 +9844,7 @@ ACMD_FUNC(cloneequip) {
 		}
 	}
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	sprintf(atcmd_output, msg_txt(sd, 738), "equip");
+	sprintf(atcmd_output, msg_txt(sd, 738), "equip"); // Clone '%s' is done.
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
@@ -9847,7 +9852,7 @@ ACMD_FUNC(cloneequip) {
 
 /**
 * Clone other player's statuses/parameters using method same like ACMD_FUNC(param), doesn't use stat point
-* Usage: @clonestat <char_id or "char name">
+* Usage: @clonestat <char name/ID>
 * http://rathena.org/board/topic/95076-new-atcommands-suggestion/
 * @author [Cydh], [Antares]
 */
@@ -9858,9 +9863,11 @@ ACMD_FUNC(clonestat) {
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
+		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
 
@@ -9924,7 +9931,7 @@ ACMD_FUNC(clonestat) {
 		status_calc_pc(sd, SCO_FORCE);
 	}
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	sprintf(atcmd_output, msg_txt(sd, 738), "status");
+	sprintf(atcmd_output, msg_txt(sd, 738), "status"); // Clone '%s' is done.
 	clif_displaymessage(fd, atcmd_output);
 
 #undef clonestat_check
