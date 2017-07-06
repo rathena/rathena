@@ -9792,7 +9792,7 @@ ACMD_FUNC(cloneequip) {
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		sprintf(atcmd_output, msg_txt(sd, 735), command); // Usage: %s <char name/ID>
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
@@ -9866,7 +9866,7 @@ ACMD_FUNC(clonestat) {
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		sprintf(atcmd_output, msg_txt(sd, 735), command); // Usage: %s <char name/ID>
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
