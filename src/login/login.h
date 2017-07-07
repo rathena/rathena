@@ -11,6 +11,10 @@
 #ifndef _LOGIN_H_
 #define _LOGIN_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // NAME_LENGTH,SEX_*
 #include "../common/core.h" // CORE_ST_LAST
 #include "account.h"
@@ -233,5 +237,9 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  *	x: acc state (TODO document me deeper)
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _LOGIN_H_ */

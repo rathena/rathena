@@ -4,6 +4,10 @@
 #ifndef _NPC_H_
 #define _NPC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "map.h" // struct block_list
 #include "status.h" // struct status_change
 #include "unit.h" // struct unit_data
@@ -60,6 +64,7 @@ struct npc_data {
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
+	bool trigger_on_hidden;
 	int src_id;
 	union {
 		struct {
@@ -91,7 +96,12 @@ struct npc_data {
 			int spawn_timer;
 		} tomb;
 	} u;
+
+	struct sc_display_entry **sc_display;
+	unsigned char sc_display_count;
 };
+
+struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 
@@ -108,7 +118,7 @@ enum actor_classes
 #define MAX_NPC_CLASS 1000
 // New NPC range
 #define MAX_NPC_CLASS2_START 10000
-#define MAX_NPC_CLASS2_END 10249
+#define MAX_NPC_CLASS2_END 10255
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
@@ -213,5 +223,9 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _NPC_H_ */

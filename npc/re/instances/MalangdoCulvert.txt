@@ -515,6 +515,7 @@ L_Enter:
 	end;
 OnInstanceInit:
 	disablenpc instance_npcname("Culvert Entrance#i");
+	disablenpc instance_npcname("Culvert Entrance#n");	// disable warp out
 	end;
 OnTouch:
 	if (BaseLevel >= 140)
@@ -878,15 +879,7 @@ OnInstanceInit:
 	end;
 }
 
-1@pump,32,100,0	script	Culvert Entrance#n	45,3,3,{
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
-	end;
-OnTouch:
-	warp "mal_in01",161,32;
-	end;
-}
+1@pump,32,100,0	warp2	Culvert Entrance#n	3,3,mal_in01,161,32
 
 //MD_Putmob "1@pump" 0 0 0 0 20 HYDRA 0 0 2
 1@pump,1,1,4	script	Hydra#n	-1,{

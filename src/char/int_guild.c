@@ -183,6 +183,9 @@ int inter_guild_tosql(struct guild *g,int flag)
 			else
 				add_comma = true;
 			StringBuf_Printf(&buf, "`name`='%s', `master`='%s', `char_id`=%d", esc_name, esc_master, g->member[0].char_id);
+
+			if (g->last_leader_change)
+				StringBuf_Printf(&buf, ", `last_master_change`=FROM_UNIXTIME(%d)", g->last_leader_change);
 		}
 		if (flag & GS_CONNECT)
 		{
@@ -348,7 +351,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	ShowInfo("Guild load request (%d)...\n", guild_id);
 #endif
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT g.`name`,c.`name`,g.`guild_lv`,g.`connect_member`,g.`max_member`,g.`average_lv`,g.`exp`,g.`next_exp`,g.`skill_point`,g.`mes1`,g.`mes2`,g.`emblem_len`,g.`emblem_id`,g.`emblem_data` "
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT g.`name`,c.`name`,g.`guild_lv`,g.`connect_member`,g.`max_member`,g.`average_lv`,g.`exp`,g.`next_exp`,g.`skill_point`,g.`mes1`,g.`mes2`,g.`emblem_len`,g.`emblem_id`,COALESCE(UNIX_TIMESTAMP(g.`last_master_change`),0), g.`emblem_data` "
 		"FROM `%s` g LEFT JOIN `%s` c ON c.`char_id` = g.`char_id` WHERE g.`guild_id`='%d'", schema_config.guild_db, schema_config.char_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -379,7 +382,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 	Sql_GetData(sql_handle, 10, &data, &len); memcpy(g->mes2, data, zmin(len, sizeof(g->mes2)));
 	Sql_GetData(sql_handle, 11, &data, &len); g->emblem_len = atoi(data);
 	Sql_GetData(sql_handle, 12, &data, &len); g->emblem_id = atoi(data);
-	Sql_GetData(sql_handle, 13, &data, &len);
+	Sql_GetData(sql_handle, 13, &data, NULL); g->last_leader_change = atoi(data);
+	Sql_GetData(sql_handle, 14, &data, &len);
 	// convert emblem data from hexadecimal to binary
 	//TODO: why not store it in the db as binary directly? [ultramage]
 	for( i = 0, p = g->emblem_data; i < g->emblem_len; ++i, ++p )
@@ -403,8 +407,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 
 	// load guild member info
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name` "
-		"FROM `%s` WHERE `guild_id`='%d' ORDER BY `position`", schema_config.guild_member_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `m`.`account_id`,`m`.`char_id`,`m`.`hair`,`m`.`hair_color`,`m`.`gender`,`m`.`class`,`m`.`lv`,`m`.`exp`,`m`.`exp_payper`,`m`.`online`,`m`.`position`,`m`.`name`,coalesce(UNIX_TIMESTAMP(`c`.`last_login`),0) "
+		"FROM `%s` `m` INNER JOIN `%s` `c` on `c`.`char_id`=`m`.`char_id` WHERE `m`.`guild_id`='%d' ORDER BY `position`", schema_config.guild_member_db, schema_config.char_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		aFree(g);
@@ -428,6 +432,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		if( m->position >= MAX_GUILDPOSITION ) // Fix reduction of MAX_GUILDPOSITION [PoW]
 			m->position = MAX_GUILDPOSITION - 1;
 		Sql_GetData(sql_handle, 11, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 12, &data, NULL); m->last_login = atoi(data);
 		m->modified = GS_MEMBER_UNMODIFIED;
 	}
 
@@ -1084,14 +1089,15 @@ int mapif_guild_emblem(struct guild *g)
 	return 0;
 }
 
-int mapif_guild_master_changed(struct guild *g, int aid, int cid)
+int mapif_guild_master_changed(struct guild *g, int aid, int cid, time_t time)
 {
-	unsigned char buf[14];
+	unsigned char buf[18];
 	WBUFW(buf,0)=0x3843;
 	WBUFL(buf,2)=g->guild_id;
 	WBUFL(buf,6)=aid;
 	WBUFL(buf,10)=cid;
-	chmapif_sendall(buf,14);
+	WBUFL(buf,14)=time;
+	chmapif_sendall(buf,18);
 	return 0;
 }
 
@@ -1824,13 +1830,16 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 	g->member[0].position = 0; //Position 0: guild Master.
 	g->member[0].modified = GS_MEMBER_MODIFIED;
 
+	// Store changing time
+	g->last_leader_change = time(NULL);
+
 	safestrncpy(g->master, name, len);
 	if (len < NAME_LENGTH)
 		g->master[len] = '\0';
 
 	ShowInfo("int_guild: Guildmaster Changed to %s (Guild %d - %s)\n",g->master, guild_id, g->name);
 	g->save_flag |= (GS_BASIC|GS_MEMBER); //Save main data and member data.
-	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id);
+	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id, g->last_leader_change);
 }
 
 // Communication from the map server

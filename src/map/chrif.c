@@ -287,7 +287,7 @@ int chrif_isconnected(void) {
  *  CSAVE_INVENTORY: Character changed inventory data
  *  CSAVE_CART: Character changed cart data
  */
-int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
+int chrif_save(struct map_session_data *sd, int flag) {
 	uint16 mmo_charstatus_len = 0;
 
 	nullpo_retr(-1, sd);

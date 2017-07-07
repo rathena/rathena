@@ -4,6 +4,10 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
@@ -29,7 +33,7 @@ enum E_MAPSERVER_ST {
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
-int map_msg_config_read(char *cfgName,int lang);
+int map_msg_config_read(const char *cfgName,int lang);
 const char* map_msg_txt(struct map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
@@ -586,7 +590,7 @@ struct s_skill_damage {
 		other; ///< Rate to Other target
 	uint8 caster; ///< Caster type
 };
-struct eri *map_skill_damage_ers;
+extern struct eri *map_skill_damage_ers;
 #endif
 
 struct questinfo_req {
@@ -797,8 +801,10 @@ int map_addblock(struct block_list* bl);
 int map_delblock(struct block_list* bl);
 int map_moveblock(struct block_list *, int, int, unsigned int);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
+int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+int map_foreachinallarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
 int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
 int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...);
 int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...);
@@ -925,24 +931,24 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, 
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
 //Options read in cli
-extern char *INTER_CONF_NAME;
-extern char *LOG_CONF_NAME;
-extern char *MAP_CONF_NAME;
-extern char *BATTLE_CONF_FILENAME;
-extern char *ATCOMMAND_CONF_FILENAME;
-extern char *SCRIPT_CONF_NAME;
-extern char *MSG_CONF_NAME_EN;
-extern char *GRF_PATH_FILENAME;
+extern const char*INTER_CONF_NAME;
+extern const char*LOG_CONF_NAME;
+extern const char*MAP_CONF_NAME;
+extern const char*BATTLE_CONF_FILENAME;
+extern const char*ATCOMMAND_CONF_FILENAME;
+extern const char*SCRIPT_CONF_NAME;
+extern const char*MSG_CONF_NAME_EN;
+extern const char*GRF_PATH_FILENAME;
 //Other languages supported
-char *MSG_CONF_NAME_RUS;
-char *MSG_CONF_NAME_SPN;
-char *MSG_CONF_NAME_GRM;
-char *MSG_CONF_NAME_CHN;
-char *MSG_CONF_NAME_MAL;
-char *MSG_CONF_NAME_IDN;
-char *MSG_CONF_NAME_FRN;
-char *MSG_CONF_NAME_POR;
-char *MSG_CONF_NAME_THA;
+const char*MSG_CONF_NAME_RUS;
+const char*MSG_CONF_NAME_SPN;
+const char*MSG_CONF_NAME_GRM;
+const char*MSG_CONF_NAME_CHN;
+const char*MSG_CONF_NAME_MAL;
+const char*MSG_CONF_NAME_IDN;
+const char*MSG_CONF_NAME_FRN;
+const char*MSG_CONF_NAME_POR;
+const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;
@@ -999,5 +1005,9 @@ extern char market_table[32];
 extern char roulette_table[32];
 
 void do_shutdown(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAP_H_ */

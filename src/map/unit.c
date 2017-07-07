@@ -408,8 +408,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
-		if (ud->walk_done_event[0])
+		if (ud->walk_done_event[0]){
 			npc_event_do_id(ud->walk_done_event,bl->id);
+			ud->walk_done_event[0] = 0;
+		}
 		if (ud->state.walk_script)
 			ud->state.walk_script = 0;
 	}
@@ -1111,7 +1113,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
-		&& (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)
+		&& (map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
 		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
 
@@ -1819,9 +1821,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv);
 #endif
 
-	if (src->type == BL_NPC) // NPC-objects do not have cast time
-		casttime = 0;
-
 	if(!ud->state.running) // Need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
 		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
 
@@ -2033,9 +2032,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 #else
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv );
 #endif
-
-	if (src->type == BL_NPC) // NPC-objects do not have cast time
-		casttime = 0;
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
@@ -2679,7 +2675,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 
