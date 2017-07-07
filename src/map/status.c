@@ -2324,38 +2324,52 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	int amotion;
 	int classidx = pc_class2idx(sd->status.class_);
 #ifdef RENEWAL_ASPD
-	short mod = -1;
+	int16 skill_lv, val = 0;
+	float temp_aspd = 0;
 
-	switch( sd->weapontype2 ) { // Adjustment for dual weilding
-		case W_DAGGER:	mod = 0;	break; // 0, 1, 1
-		case W_1HSWORD:
-		case W_1HAXE:	mod = 1;
-			if( (sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS ) // 0, 2, 3
-				mod = sd->weapontype2 / W_1HSWORD + W_1HSWORD / sd->weapontype2 ;
+	amotion = job_info[classidx].aspd_base[sd->status.weapon]; // Single weapon
+	if (sd->status.weapon > MAX_WEAPON_TYPE)
+		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
+	if (sd->status.shield)
+		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
+
+	switch(sd->status.weapon) {
+		case W_BOW:
+		case W_MUSICAL:
+		case W_WHIP:
+		case W_REVOLVER:
+		case W_RIFLE:
+		case W_GATLING:
+		case W_SHOTGUN:
+		case W_GRENADE:
+			temp_aspd = status->dex * status->dex / 7.0f + status->agi * status->agi * 0.5f;
+			break;
+		default:
+			temp_aspd = status->dex * status->dex / 5.0f + status->agi * status->agi * 0.5f;
+			break;
 	}
-
-	amotion = ( sd->status.weapon < MAX_WEAPON_TYPE && mod < 0 )
-			? (job_info[classidx].aspd_base[sd->status.weapon]) // Single weapon
-			: ((job_info[classidx].aspd_base[sd->weapontype2] // Dual-wield
-			+ job_info[classidx].aspd_base[sd->weapontype2]) * 6 / 10 + 10 * mod
-			- job_info[classidx].aspd_base[sd->weapontype2]
-			+ job_info[classidx].aspd_base[sd->weapontype1]);
-
-	if ( sd->status.shield )
-			amotion += ( 2000 - job_info[classidx].aspd_base[W_FIST] ) +
-					( job_info[classidx].aspd_base[MAX_WEAPON_TYPE] - 2000 );
-
+	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 0xc4;
+	if ((skill_lv = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0 && sd->status.weapon == W_BOOK)
+		val += (skill_lv - 1) / 2 + 1;
+	if ((skill_lv = pc_checkskill(sd,GS_SINGLEACTION)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
+		val += ((skill_lv + 1) / 2);
+	amotion = ((int)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(amotion, 200));
 #else
 	// Base weapon delay
 	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (job_info[classidx].aspd_base[sd->status.weapon]) // Single weapon
-	 : (job_info[classidx].aspd_base[sd->weapontype1] + job_info[classidx].aspd_base[sd->weapontype2])*7/10; // Dual-wield
+	 : (job_info[classidx].aspd_base[sd->weapontype1] + job_info[classidx].aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
 
 	// Percentual delay reduction from stats
-	amotion -= amotion * (4*status->agi + status->dex)/1000;
-#endif
+	amotion -= amotion * (4 * status->agi + status->dex) / 1000;
+
 	// Raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
+
+	// Angra Manyu disregards aspd_base and similar
+	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
+		return 0;
+#endif
 
  	return amotion;
 }
@@ -3967,13 +3981,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #else // Needs more info
-	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
-		base_status->aspd_rate += 5*skill;
 	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
 		base_status->aspd_rate += 30*skill;
-	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
-		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
-		base_status->aspd_rate += ((skill+1)/2) * 10;
 	if(pc_isriding(sd))
 		base_status->aspd_rate -= 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	else if(pc_isridingdragon(sd))
@@ -5074,21 +5083,23 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 			status->adelay = status->amotion;
 		} else if ( bl->type&BL_PC ) {
+			uint16 skill_lv;
+
 			amotion = status_base_amotion_pc(sd,status);
 #ifndef RENEWAL_ASPD
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
+#endif
+			// Absolute ASPD % modifier
+			if (status->aspd_rate != 1000)
+				amotion = amotion * status->aspd_rate / 1000;
+			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
+				amotion = amotion * 5 * (skill_lv + 10) / 100;
+#ifdef RENEWAL_ASPD
+			// RE ASPD % modifier
+			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(bl, sc, false))) / 100;
+			amotion = 10 * (200 - amotion);
 
-			if(status->aspd_rate != 1000)
-				amotion = amotion*status->aspd_rate/1000;
-#else
-			/// aspd = baseaspd + floor(sqrt((agi^2/2) + (dex^2/5))/4 + (potskillbonus*agi/200))
-			amotion -= (int)(sqrt( (pow(status->agi, 2) / 2) + (pow(status->dex, 2) / 5) ) / 4 + (status_calc_aspd(bl, sc, true) * status->agi / 200)) * 10;
-
-			if( (status_calc_aspd(bl, sc, false) + status->aspd_rate2) != 0 ) // RE ASPD percertage modifier
-				amotion -= ( amotion - pc_maxaspd(sd) ) * (status_calc_aspd(bl, sc, false) + status->aspd_rate2) / 100;
-
-			if(status->aspd_rate != 1000) // Absolute percentage modifier
-				amotion = ( 200 - (200-amotion/10) * status->aspd_rate / 1000 ) * 10;
+			amotion += sd->bonus.aspd_add;
 #endif
 			amotion = status_calc_fix_aspd(bl, sc, amotion);
 			status->amotion = cap_value(amotion,pc_maxaspd(sd),2000);
