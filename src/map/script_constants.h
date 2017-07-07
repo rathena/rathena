@@ -1467,6 +1467,17 @@
 	export_constant(SC_ARMOR_ELEMENT_FIRE);
 	export_constant(SC_ARMOR_ELEMENT_WIND);
 	export_constant(SC_DAILYSENDMAILCNT);
+	export_constant(SC_DORAM_BUF_01);
+	export_constant(SC_DORAM_BUF_02);
+	export_constant(SC_HISS);
+	export_constant(SC_NYANGGRASS);
+	export_constant(SC_GROOMING);
+	export_constant(SC_SHRIMPBLESSING);
+	export_constant(SC_CHATTERING);
+	export_constant(SC_DORAM_WALKSPEED);
+	export_constant(SC_DORAM_MATK);
+	export_constant(SC_DORAM_FLEE2);
+	export_constant(SC_DORAM_SVSP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

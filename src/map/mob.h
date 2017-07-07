@@ -4,6 +4,10 @@
 #ifndef _MOB_H_
 #define _MOB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // struct item
 #include "guild.h" // struct guardian_data
 #include "map.h" // struct status_data, struct view_data, struct mob_skill
@@ -363,5 +367,9 @@ void mvptomb_destroy(struct mob_data *md);
 void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MOB_H_ */

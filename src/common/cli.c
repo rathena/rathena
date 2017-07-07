@@ -22,21 +22,21 @@
 #include "cli.h"
 
 //map confs
-char* MAP_CONF_NAME;
-char* INTER_CONF_NAME;
-char* LOG_CONF_NAME;
-char* BATTLE_CONF_FILENAME;
-char* ATCOMMAND_CONF_FILENAME;
-char* SCRIPT_CONF_NAME;
-char* GRF_PATH_FILENAME;
+const char* MAP_CONF_NAME;
+const char* INTER_CONF_NAME;
+const char* LOG_CONF_NAME;
+const char* BATTLE_CONF_FILENAME;
+const char* ATCOMMAND_CONF_FILENAME;
+const char* SCRIPT_CONF_NAME;
+const char* GRF_PATH_FILENAME;
 //char confs
-char* CHAR_CONF_NAME;
-char* SQL_CONF_NAME;
+const char* CHAR_CONF_NAME;
+const char* SQL_CONF_NAME;
 //login confs
-char* LOGIN_CONF_NAME;
+const char* LOGIN_CONF_NAME;
 //common conf (used by multiple serv)
-char* LAN_CONF_NAME; //char-login
-char* MSG_CONF_NAME_EN; //all
+const char* LAN_CONF_NAME; //char-login
+const char* MSG_CONF_NAME_EN; //all
 
 /**
  * Function to check if the specified option has an argument following it.

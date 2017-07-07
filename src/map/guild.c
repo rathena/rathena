@@ -1791,7 +1791,7 @@ int guild_gm_change(int guild_id, uint32 char_id) {
 * @param account_id
 * @param char_id
 */
-int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
+int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t time) {
 	struct guild *g;
 	struct guild_member gm;
 	int pos, i;
@@ -1839,6 +1839,9 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
 			clif_guild_belonginfo(g->member[i].sd); // Update clientside guildmaster flag
 		}
 	}
+
+	// Store changing time
+	g->last_leader_change = time;
 
 	return 1;
 }
