@@ -15231,9 +15231,9 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 		struct item *item;
 		struct item_data *data;
-		int msg_len = strlen(msg->body), len, count = 0;
+		int msg_len = strlen(msg->body), len;
 #if PACKETVER >= 20150513
-		int offset, j, itemsize;
+		int offset, j, itemsize, count = 0;
 #endif
 
 		if( msg_len == 0 ) {
