@@ -2355,6 +2355,10 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 		val += ((skill_lv + 1) / 2);
 	amotion = ((int)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(amotion, 200));
 #else
+	// Angra Manyu disregards aspd_base and similar
+	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
+		return 0;
+
 	// Base weapon delay
 	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (job_info[classidx].aspd_base[sd->status.weapon]) // Single weapon
@@ -2365,10 +2369,6 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 
 	// Raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
-
-	// Angra Manyu disregards aspd_base and similar
-	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
-		return 0;
 #endif
 
  	return amotion;
