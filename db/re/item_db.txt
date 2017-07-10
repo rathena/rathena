@@ -6807,8 +6807,8 @@
 12674,God_Material_Box,God Material Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_God_Material_Box); },{},{}
 12675,Sg_Weapon_Supply_Box,WoE Weapon Supply Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Sg_Weapon_Supply_Box); },{},{}
 12676,Sg_Violet_Potion_Box,Siege Violet Potion Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11547,50; },{},{}
-12677,Siege_Arrow_Quiver_S,Siege Arrow Quiver S,2,2,,100,,,,,0xFFFFFFFF,63,2,,,130,,,{ getitem 1776,200; },{},{}
-12678,Siege_Arrow_Quiver_A,Siege Arrow Quiver A,2,2,,100,,,,,0xFFFFFFFF,63,2,,,95,,,{ getitem 1775,200; },{},{}
+12677,Siege_Arrow_Quiver_S,Siege Arrow Quiver S,2,2,,100,,,,,0xFFFFFFFF,63,2,,,130,,,{ getitem 1775,200; },{},{}
+12678,Siege_Arrow_Quiver_A,Siege Arrow Quiver A,2,2,,100,,,,,0xFFFFFFFF,63,2,,,95,,,{ getitem 1776,200; },{},{}
 12679,Sg_White_Potion_Box,Siege White Potion Box,2,20,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11548,30; },{},{}
 12680,Sg_Blue_Potion_Box,Siege Blue Potion Box,2,20,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11549,10; },{},{}
 12681,Nestea_Lemon,Nestea Lemon,2,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
