@@ -19,7 +19,7 @@
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
-static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove);
+static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove_at);
 static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap);
 
 /// constants (client-side restrictions)
@@ -757,9 +757,9 @@ void do_init_buyingstore_autotrade( void ) {
 /**
  * Remove an autotrader's data
  * @param at Autotrader
- * @param remove If true will removes from buyingstore_autotrader_db
+ * @param remove_at If true will removes from buyingstore_autotrader_db
  **/
-static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove) {
+static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove_at) {
 	nullpo_retv(at);
 	if (at->count && at->entries) {
 		uint16 i = 0;
@@ -769,7 +769,7 @@ static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove) 
 		}
 		aFree(at->entries);
 	}
-	if (remove)
+	if (remove_at)
 		uidb_remove(buyingstore_autotrader_db, at->char_id);
 	aFree(at);
 }

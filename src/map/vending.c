@@ -21,7 +21,7 @@ static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
 
 //Autotrader
 static DBMap *vending_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
-static void vending_autotrader_remove(struct s_autotrader *at, bool remove);
+static void vending_autotrader_remove(struct s_autotrader *at, bool remove_at);
 static int vending_autotrader_free(DBKey key, DBData *data, va_list ap);
 
 /**
@@ -637,9 +637,9 @@ void do_init_vending_autotrade(void)
 /**
  * Remove an autotrader's data
  * @param at Autotrader
- * @param remove If true will removes from vending_autotrader_db
+ * @param remove_at If true will removes from vending_autotrader_db
  **/
-static void vending_autotrader_remove(struct s_autotrader *at, bool remove) {
+static void vending_autotrader_remove(struct s_autotrader *at, bool remove_at) {
 	nullpo_retv(at);
 	if (at->count && at->entries) {
 		uint16 i = 0;
@@ -649,7 +649,7 @@ static void vending_autotrader_remove(struct s_autotrader *at, bool remove) {
 		}
 		aFree(at->entries);
 	}
-	if (remove)
+	if (remove_at)
 		uidb_remove(vending_autotrader_db, at->char_id);
 	aFree(at);
 }

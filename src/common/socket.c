@@ -1305,11 +1305,11 @@ void do_close(int fd)
 
 /// Retrieve local ips in host byte order.
 /// Uses loopback is no address is found.
-int socket_getips(uint32* ips, int max)
+int socket_getips(uint32* ips, int maximum)
 {
 	int num = 0;
 
-	if( ips == NULL || max <= 0 )
+	if( ips == NULL || maximum <= 0 )
 		return 0;
 
 #ifdef WIN32
@@ -1335,7 +1335,7 @@ int socket_getips(uint32* ips, int max)
 				return 0;
 			}
 			a = (u_long**)hent->h_addr_list;
-			for( ;num < max && a[num] != NULL; ++num)
+			for( ;num < maximum && a[num] != NULL; ++num)
 				ips[num] = (uint32)ntohl(*a[num]);
 		}
 	}
@@ -1362,7 +1362,7 @@ int socket_getips(uint32* ips, int max)
 		else
 		{
 			int pos;
-			for( pos=0; pos < ic.ifc_len && num < max; )
+			for( pos=0; pos < ic.ifc_len && num < maximum; )
 			{
 				struct ifreq* ir = (struct ifreq*)(buf+pos);
 				struct sockaddr_in*a = (struct sockaddr_in*) &(ir->ifr_addr);

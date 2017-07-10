@@ -58,11 +58,11 @@ uint32 rnd_roll(uint32 dice_faces)
 
 /// Generates a random number in the interval [min, max]
 /// Returns min if range is invalid.
-int32 rnd_value(int32 min, int32 max)
+int32 rnd_value(int32 minimum, int32 maximum)
 {
-	if( min >= max )
-		return min;
-	return min + (int32)(rnd_uniform()*(max-min+1));
+	if( minimum >= maximum )
+		return minimum;
+	return minimum + (int32)(rnd_uniform()*(maximum-minimum+1));
 }
 
 

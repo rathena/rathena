@@ -136,18 +136,18 @@ int hom_class2mapid(int hom_class)
 /**
 * Add homunculus spirit ball
 * @param hd
-* @param max Maximum number of spirit ball
+* @param maximum Maximum number of spirit ball
 */
-void hom_addspiritball(TBL_HOM *hd, int max) {
+void hom_addspiritball(TBL_HOM *hd, int maximum) {
 	nullpo_retv(hd);
 
-	if (max > MAX_SPIRITBALL)
-		max = MAX_SPIRITBALL;
+	if (maximum > MAX_SPIRITBALL)
+		maximum = MAX_SPIRITBALL;
 	if (hd->homunculus.spiritball < 0)
 		hd->homunculus.spiritball = 0;
 
-	if (hd->homunculus.spiritball && hd->homunculus.spiritball >= max)
-		hd->homunculus.spiritball = max;
+	if (hd->homunculus.spiritball && hd->homunculus.spiritball >= maximum)
+		hd->homunculus.spiritball = maximum;
 	else
 		hd->homunculus.spiritball++;
 
@@ -443,7 +443,7 @@ void hom_skillup(struct homun_data *hd, uint16 skill_id)
 int hom_levelup(struct homun_data *hd)
 {
 	struct s_homunculus *hom;
-	struct h_stats *min = NULL, *max = NULL;
+	struct h_stats *minimum = NULL, *maximum = NULL;
 	int growth_str, growth_agi, growth_vit, growth_int, growth_dex, growth_luk ;
 	int growth_max_hp, growth_max_sp ;
 	int m_class;
@@ -464,8 +464,8 @@ int hom_levelup(struct homun_data *hd)
 		i = hom_search(hd->homunculus.prev_class,HOMUNCULUS_CLASS);
 		if (i < 0) // Nothing should go wrong here, but check anyways
 			return 0;
-		max = &homunculus_db[i].gmax;
-		min = &homunculus_db[i].gmin;
+		maximum = &homunculus_db[i].gmax;
+		minimum = &homunculus_db[i].gmin;
 	}
 
 	if (((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level)
@@ -481,19 +481,19 @@ int hom_levelup(struct homun_data *hd)
 	hom->exp -= hd->exp_next ;
 	hd->exp_next = hexptbl[hom->level - 1] ;
 
-	if (!max) {
-		max  = &hd->homunculusDB->gmax;
-		min  = &hd->homunculusDB->gmin;
+	if (!maximum) {
+		maximum  = &hd->homunculusDB->gmax;
+		minimum  = &hd->homunculusDB->gmin;
 	}
 
-	growth_max_hp = rnd_value(min->HP, max->HP);
-	growth_max_sp = rnd_value(min->SP, max->SP);
-	growth_str = rnd_value(min->str, max->str);
-	growth_agi = rnd_value(min->agi, max->agi);
-	growth_vit = rnd_value(min->vit, max->vit);
-	growth_dex = rnd_value(min->dex, max->dex);
-	growth_int = rnd_value(min->int_,max->int_);
-	growth_luk = rnd_value(min->luk, max->luk);
+	growth_max_hp = rnd_value(minimum->HP, maximum->HP);
+	growth_max_sp = rnd_value(minimum->SP, maximum->SP);
+	growth_str = rnd_value(minimum->str, maximum->str);
+	growth_agi = rnd_value(minimum->agi, maximum->agi);
+	growth_vit = rnd_value(minimum->vit, maximum->vit);
+	growth_dex = rnd_value(minimum->dex, maximum->dex);
+	growth_int = rnd_value(minimum->int_,maximum->int_);
+	growth_luk = rnd_value(minimum->luk, maximum->luk);
 
 	//Aegis discards the decimals in the stat growth values!
 	growth_str-=growth_str%10;
@@ -557,7 +557,7 @@ static bool hom_change_class(struct homun_data *hd, short class_) {
 int hom_evolution(struct homun_data *hd)
 {
 	struct s_homunculus *hom;
-	struct h_stats *max, *min;
+	struct h_stats *maximum, *minimum;
 	struct map_session_data *sd;
 	nullpo_ret(hd);
 
@@ -576,16 +576,16 @@ int hom_evolution(struct homun_data *hd)
 
 	//Apply evolution bonuses
 	hom = &hd->homunculus;
-	max = &hd->homunculusDB->emax;
-	min = &hd->homunculusDB->emin;
-	hom->max_hp += rnd_value(min->HP, max->HP);
-	hom->max_sp += rnd_value(min->SP, max->SP);
-	hom->str += 10*rnd_value(min->str, max->str);
-	hom->agi += 10*rnd_value(min->agi, max->agi);
-	hom->vit += 10*rnd_value(min->vit, max->vit);
-	hom->int_+= 10*rnd_value(min->int_,max->int_);
-	hom->dex += 10*rnd_value(min->dex, max->dex);
-	hom->luk += 10*rnd_value(min->luk, max->luk);
+	maximum = &hd->homunculusDB->emax;
+	minimum = &hd->homunculusDB->emin;
+	hom->max_hp += rnd_value(minimum->HP, maximum->HP);
+	hom->max_sp += rnd_value(minimum->SP, maximum->SP);
+	hom->str += 10*rnd_value(minimum->str, maximum->str);
+	hom->agi += 10*rnd_value(minimum->agi, maximum->agi);
+	hom->vit += 10*rnd_value(minimum->vit, maximum->vit);
+	hom->int_+= 10*rnd_value(minimum->int_,maximum->int_);
+	hom->dex += 10*rnd_value(minimum->dex, maximum->dex);
+	hom->luk += 10*rnd_value(minimum->luk, maximum->luk);
 	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
@@ -1318,15 +1318,15 @@ int hom_shuffle(struct homun_data *hd)
 	if(hd->homunculus.class_ == hd->homunculusDB->evo_class) {
 		//Evolved bonuses
 		struct s_homunculus *hom = &hd->homunculus;
-		struct h_stats *max = &hd->homunculusDB->emax, *min = &hd->homunculusDB->emin;
-		hom->max_hp += rnd_value(min->HP, max->HP);
-		hom->max_sp += rnd_value(min->SP, max->SP);
-		hom->str += 10*rnd_value(min->str, max->str);
-		hom->agi += 10*rnd_value(min->agi, max->agi);
-		hom->vit += 10*rnd_value(min->vit, max->vit);
-		hom->int_+= 10*rnd_value(min->int_,max->int_);
-		hom->dex += 10*rnd_value(min->dex, max->dex);
-		hom->luk += 10*rnd_value(min->luk, max->luk);
+		struct h_stats *maximum = &hd->homunculusDB->emax, *minimum = &hd->homunculusDB->emin;
+		hom->max_hp += rnd_value(minimum->HP, maximum->HP);
+		hom->max_sp += rnd_value(minimum->SP, maximum->SP);
+		hom->str += 10*rnd_value(minimum->str, maximum->str);
+		hom->agi += 10*rnd_value(minimum->agi, maximum->agi);
+		hom->vit += 10*rnd_value(minimum->vit, maximum->vit);
+		hom->int_+= 10*rnd_value(minimum->int_,maximum->int_);
+		hom->dex += 10*rnd_value(minimum->dex, maximum->dex);
+		hom->luk += 10*rnd_value(minimum->luk, maximum->luk);
 	}
 
 	hd->homunculus.exp = exp;

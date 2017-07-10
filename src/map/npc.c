@@ -1215,9 +1215,9 @@ int npc_globalmessage(const char* name, const char* mes)
 void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 {
 	char buffer[200];
-	char time[10];
+	char tomb_time[10];
 
-	strftime(time, sizeof(time), "%H:%M", localtime(&nd->u.tomb.kill_time));
+	strftime(tomb_time, sizeof(tomb_time), "%H:%M", localtime(&nd->u.tomb.kill_time));
 
 	// TODO: Find exact color?
 	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name);
@@ -1225,7 +1225,7 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 
 	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,658));
 
-	snprintf(buffer, sizeof(buffer), msg_txt(sd,659), time);
+	snprintf(buffer, sizeof(buffer), msg_txt(sd,659), tomb_time);
 	clif_scriptmes(sd, nd->bl.id, buffer);
 
 	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,660));

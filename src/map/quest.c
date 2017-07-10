@@ -20,7 +20,7 @@
 #include <stdlib.h>
 
 static DBMap *questdb;
-static void questdb_free_sub(struct quest_db *quest, bool free);
+static void questdb_free_sub(struct quest_db *quest, bool free_quest);
 
 /**
  * Searches a quest by ID.
@@ -599,9 +599,9 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 /**
  * Clear quest single entry
  * @param quest
- * @param free Will free quest from memory
+ * @param free_quest Will free quest from memory
  **/
-static void questdb_free_sub(struct quest_db *quest, bool free)
+static void questdb_free_sub(struct quest_db *quest, bool free_quest)
 {
 	if (quest->objectives) {
 		aFree(quest->objectives);
@@ -615,7 +615,7 @@ static void questdb_free_sub(struct quest_db *quest, bool free)
 	}
 	if (&quest->name)
 		StringBuf_Destroy(&quest->name);
-	if (free)
+	if (free_quest)
 		aFree(quest);
 }
 

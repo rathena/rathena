@@ -972,7 +972,7 @@ short pc_maxaspd(struct map_session_data *sd);
     )
 #endif
 
-int pc_split_atoi(char* str, int* val, char sep, int max);
+int pc_split_atoi(char* str, int* val, char sep, int maximum);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
@@ -1002,7 +1002,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 short pc_checkequip(struct map_session_data *sd,int pos);
-bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max);
+bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int maximum);
 
 void pc_scdata_received(struct map_session_data *sd);
 void pc_check_expiration(struct map_session_data *sd);
@@ -1061,10 +1061,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 void pc_updateweightstatus(struct map_session_data *sd);
 
-bool pc_addautobonus(struct s_autobonus *bonus,char max,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned int pos,bool onskill);
+bool pc_addautobonus(struct s_autobonus *bonus,char maximum,const char *script,short rate,unsigned int dur,short atk_type,const char *o_script,unsigned int pos,bool onskill);
 void pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
 int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
-void pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char max,bool restore);
+void pc_delautobonus(struct map_session_data* sd,struct s_autobonus *bonus,char maximum,bool restore);
 
 void pc_bonus(struct map_session_data *sd, int type, int val);
 void pc_bonus2(struct map_session_data *sd, int type, int type2, int val);
@@ -1219,7 +1219,7 @@ extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);
 
-void pc_addspiritball(struct map_session_data *sd,int interval,int max);
+void pc_addspiritball(struct map_session_data *sd,int interval,int maximum);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(uint32 char_id, int job);
@@ -1273,7 +1273,7 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigne
 
 int pc_load_combo(struct map_session_data *sd);
 
-void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type);
+void pc_addspiritcharm(struct map_session_data *sd, int interval, int maximum, int type);
 void pc_delspiritcharm(struct map_session_data *sd, int count, int type);
 
 void pc_baselevelchanged(struct map_session_data *sd);

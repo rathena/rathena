@@ -1014,10 +1014,10 @@ int intif_guild_position(int guild_id,int idx,struct guild_position *p)
  * @param guild_id : Guild to alter
  * @param skill_id : Skill to lvl up
  * @param account_id : aid requesting update
- * @param max : skill max level
+ * @param maximum : skill max level
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_skillup(int guild_id, uint16 skill_id, uint32 account_id, int max)
+int intif_guild_skillup(int guild_id, uint16 skill_id, uint32 account_id, int maximum)
 {
 	if( CheckForCharServer() )
 		return 0;
@@ -1026,7 +1026,7 @@ int intif_guild_skillup(int guild_id, uint16 skill_id, uint32 account_id, int ma
 	WFIFOL(inter_fd, 2)  = guild_id;
 	WFIFOL(inter_fd, 6)  = skill_id;
 	WFIFOL(inter_fd, 10) = account_id;
-	WFIFOL(inter_fd, 14) = max;
+	WFIFOL(inter_fd, 14) = maximum;
 	WFIFOSET(inter_fd, 18);
 	return 1;
 }
@@ -1374,7 +1374,7 @@ void intif_parse_Registers(int fd)
 	if( RFIFOW(fd, 14) ) {
 		char key[32];
 		unsigned int index;
-		int max = RFIFOW(fd, 14), cursor = 16, i;
+		int maximum = RFIFOW(fd, 14), cursor = 16, i;
 
 		/**
 		 * Vessel!char_reg_num_db
@@ -1383,7 +1383,7 @@ void intif_parse_Registers(int fd)
 		 * { keyLength(B), key(<keyLength>), index(L), valLength(B), val(<valLength>) }
 		 **/
 		if (type) {
-			for(i = 0; i < max; i++) {
+			for(i = 0; i < maximum; i++) {
 				char sval[254];
 				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
@@ -1403,7 +1403,7 @@ void intif_parse_Registers(int fd)
 		 * { keyLength(B), key(<keyLength>), index(L), value(L) }
 		 **/
 		} else {
-			for(i = 0; i < max; i++) {
+			for(i = 0; i < maximum; i++) {
 				int ival;
 				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;

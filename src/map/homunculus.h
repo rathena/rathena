@@ -183,7 +183,7 @@ void hom_init_timers(struct homun_data * hd);
 void hom_reload_skill(void);
 void hom_reload(void);
 
-void hom_addspiritball(TBL_HOM *hd, int max);
+void hom_addspiritball(TBL_HOM *hd, int maximum);
 void hom_delspiritball(TBL_HOM *hd, int count, int type);
 
 uint8 hom_get_intimacy_grade(struct homun_data *hd);

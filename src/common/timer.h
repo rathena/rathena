@@ -43,13 +43,13 @@ struct TimerData {
 unsigned int gettick(void);
 unsigned int gettick_nocache(void);
 
-int add_timer(unsigned int tick, TimerFunc func, int id, intptr_t data);
-int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr_t data, int interval);
+int add_timer(unsigned int timertick, TimerFunc func, int id, intptr_t data);
+int add_timer_interval(unsigned int timertick, TimerFunc func, int id, intptr_t data, int interval);
 const struct TimerData* get_timer(int tid);
 int delete_timer(int tid, TimerFunc func);
 
-int addtick_timer(int tid, unsigned int tick);
-int settick_timer(int tid, unsigned int tick);
+int addtick_timer(int tid, unsigned int timertick);
+int settick_timer(int tid, unsigned int timertick);
 
 int add_timer_func_list(TimerFunc func, const char* name);
 
@@ -60,7 +60,7 @@ const char* timestamp2string(char* str, size_t size, time_t timestamp, const cha
 void split_time(int time, int* year, int* month, int* day, int* hour, int* minute, int* second);
 double solve_time(char* modif_p);
 
-int do_timer(unsigned int tick);
+int do_timer(unsigned int timertick);
 void timer_init(void);
 void timer_final(void);
 

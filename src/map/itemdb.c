@@ -246,13 +246,13 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 
 	// Get the 'random' item each random group
 	for (i = 0; i < MAX_ITEMGROUP_RANDGROUP; i++) {
-		uint16 rand;
+		uint16 rand_val;
 		if (!(&group->random[i]) || !group->random[i].data_qty) //Skip empty random group
 			continue;
-		rand = rnd()%group->random[i].data_qty;
-		if (!(&group->random[i].data[rand]) || !group->random[i].data[rand].nameid)
+		rand_val = rnd()%group->random[i].data_qty;
+		if (!(&group->random[i].data[rand_val]) || !group->random[i].data[rand_val].nameid)
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd,&group->random[i].data[rand]);
+		itemdb_pc_get_itemgroup_sub(sd,&group->random[i].data[rand_val]);
 	}
 
 	return 0;
@@ -578,7 +578,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	int group_id = -1;
 	unsigned int j, prob = 1;
 	uint8 rand_group = 1;
-	struct s_item_group_random *random = NULL;
+	struct s_item_group_random *rand_val = NULL;
 	struct s_item_group_db *group = NULL;
 	struct s_item_group_entry entry;
 
@@ -677,15 +677,15 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	else
 		rand_group -= 1;
 
-	random = &group->random[rand_group];
+	rand_val = &group->random[rand_group];
 	
-	RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
+	RECREATE(rand_val->data, struct s_item_group_entry, rand_val->data_qty+prob);
 
 	// Put the entry to its rand_group
-	for (j = random->data_qty; j < random->data_qty+prob; j++)
-		random->data[j] = entry;
+	for (j = rand_val->data_qty; j < rand_val->data_qty+prob; j++)
+		rand_val->data[j] = entry;
 	
-	random->data_qty += prob;
+	rand_val->data_qty += prob;
 	return true;
 }
 

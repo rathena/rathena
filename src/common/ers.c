@@ -158,7 +158,7 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	return cache;
 }
 
-static void ers_free_cache(ers_cache_t *cache, bool remove)
+static void ers_free_cache(ers_cache_t *cache)
 {
 	unsigned int i;
 
@@ -261,7 +261,7 @@ static void ers_obj_destroy(ERS *self)
 			ShowWarning("Memory leak detected at ERS '%s', %d objects not freed.\n", instance->Name, instance->Count);
 
 	if (--instance->Cache->ReferenceCount <= 0)
-		ers_free_cache(instance->Cache, true);
+		ers_free_cache(instance->Cache);
 
 	if (instance->Next)
 		instance->Next->Prev = instance->Prev;

@@ -520,7 +520,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 }
 
 /// Saves an array of 'item' entries into the specified table.
-int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id) {
+int char_memitemdata_to_sql(const struct item items[], int maximum, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
 	int i, j, offset = 0, errors = 0;
@@ -606,13 +606,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		SqlStmt_BindColumn(stmt, 12+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, NULL, NULL);
 	}
 	// bit array indicating which inventory items have already been matched
-	flag = (bool*) aCalloc(max, sizeof(bool));
+	flag = (bool*) aCalloc(maximum, sizeof(bool));
 
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
 	{
 		found = false;
 		// search for the presence of the item in the char's inventory
-		for( i = 0; i < max; ++i )
+		for( i = 0; i < maximum; ++i )
 		{
 			// skip empty and already matched entries
 			if( items[i].nameid == 0 || flag[i] )
@@ -694,7 +694,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 
 	found = false;
 	// insert non-matched items into the db as new items
-	for( i = 0; i < max; ++i )
+	for( i = 0; i < maximum; ++i )
 	{
 		// skip empty and already matched entries
 		if( items[i].nameid == 0 || flag[i] )
@@ -732,7 +732,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	return errors;
 }
 
-bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
+bool char_memitemdata_from_sql(struct s_storage* p, int maximum, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
 	int i,j, offset = 0;
@@ -826,7 +826,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 		SqlStmt_BindColumn(stmt, 12+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, NULL, NULL);
  	}
 
-	for( i = 0; i < max && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+	for( i = 0; i < maximum && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&storage[i], &item, sizeof(item));
 
 	p->amount = i;

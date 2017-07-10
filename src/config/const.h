@@ -90,7 +90,7 @@
 #ifdef RENEWAL_CAST
 	#define VARCAST_REDUCTION(val){ \
 		if( (varcast_r += val) != 0 && varcast_r >= 0 ) \
-			time = time * (1 - (float)min(val, 100) / 100); \
+			casttime = casttime * (1 - (float)min(val, 100) / 100); \
 	}
 #endif
 

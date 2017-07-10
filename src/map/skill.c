@@ -538,29 +538,29 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		default:
 			{
 				struct status_data *status = status_get_status_data(src);
-				int min, max;
+				int minimum, maximum;
 
-				min = max = status_base_matk(src, status, status_get_lv(src));
+				minimum = maximum = status_base_matk(src, status, status_get_lv(src));
 				if( status->rhw.matk > 0 ){
 					int wMatk, variance;
 					wMatk = status->rhw.matk;
 					variance = wMatk * status->rhw.wlv / 10;
-					min += wMatk - variance;
-					max += wMatk + variance;
+					minimum += wMatk - variance;
+					maximum += wMatk + variance;
 				}
 
 				if( sc && sc->data[SC_RECOGNIZEDSPELL] )
-					min = max;
+					minimum = maximum;
 
 				if( sd && sd->right_weapon.overrefine > 0 ){
-					min++;
-					max += sd->right_weapon.overrefine - 1;
+					minimum++;
+					maximum += sd->right_weapon.overrefine - 1;
 				}
 
-				if(max > min)
-					hp += min+rnd()%(max-min);
+				if(maximum > minimum)
+					hp += minimum+rnd()%(maximum-minimum);
 				else
-					hp += min;
+					hp += minimum;
 			}
 	}
 #endif
@@ -1077,7 +1077,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			// Trigger status effects
 			enum sc_type type;
 			uint8 i;
-			unsigned int time = 0;
+			unsigned int duration = 0;
 			for( i = 0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++ ) {
 				rate = sd->addeff[i].rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
@@ -1103,13 +1103,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 
 				type = sd->addeff[i].sc;
-				time = sd->addeff[i].duration;
+				duration = sd->addeff[i].duration;
 
 				if (sd->addeff[i].flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,duration,SCSTART_NONE);
 
 				if (sd->addeff[i].flag&ATF_SELF)
-					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,duration,SCSTART_NONE);
 			}
 		}
 
@@ -1117,17 +1117,17 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			// Trigger status effects on skills
 			enum sc_type type;
 			uint8 i;
-			unsigned int time = 0;
+			unsigned int duration = 0;
 			for( i = 0; i < ARRAYLENGTH(sd->addeff_onskill) && sd->addeff_onskill[i].skill_id; i++ ) {
 				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
 					continue;
 				type = sd->addeff_onskill[i].sc;
-				time = sd->addeff[i].duration;
+				duration = sd->addeff[i].duration;
 
 				if( sd->addeff_onskill[i].target&ATF_TARGET )
-					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,duration,SCSTART_NONE);
 				if( sd->addeff_onskill[i].target&ATF_SELF )
-					status_change_start(src,src,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,sd->addeff_onskill[i].rate,7,0,0,0,duration,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2291,7 +2291,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if(dstsd && attack_type&BF_WEAPON) {	//Counter effects.
 		enum sc_type type;
 		uint8 i;
-		unsigned int time = 0;
+		unsigned int duration = 0;
 
 		for (i = 0; i < ARRAYLENGTH(dstsd->addeff_atked) && dstsd->addeff_atked[i].flag; i++) {
 			rate = dstsd->addeff_atked[i].rate;
@@ -2306,13 +2306,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					continue; //Range Failed.
 			}
 			type = dstsd->addeff_atked[i].sc;
-			time = dstsd->addeff_atked[i].duration;
+			duration = dstsd->addeff_atked[i].duration;
 
 			if (dstsd->addeff_atked[i].flag&ATF_TARGET && src != bl)
-				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
+				status_change_start(src,src,type,rate,7,0,0,0,duration,SCSTART_NONE);
 
 			if (dstsd->addeff_atked[i].flag&ATF_SELF && !status_isdead(bl))
-				status_change_start(src,bl,type,rate,7,0,0,0,time,SCSTART_NONE);
+				status_change_start(src,bl,type,rate,7,0,0,0,duration,SCSTART_NONE);
 		}
 	}
 
@@ -2600,7 +2600,7 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 	return where; //Return list of pieces broken.
 }
 
-int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time)
+int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int duration)
 {
 	struct status_change *sc;
 	const int pos[5]             = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM, EQP_ACC};
@@ -2622,7 +2622,7 @@ int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned sho
 	if (!where) return 0;
 
 	for (i = 0; i < ARRAYLENGTH(pos); i++) {
-		if (where&pos[i] && !sc_start(src,bl, sc_atk[i], 100, lv, time))
+		if (where&pos[i] && !sc_start(src,bl, sc_atk[i], 100, lv, duration))
 			where&=~pos[i];
 	}
 	return where?1:0;
@@ -4462,8 +4462,8 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	{
 		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
 		uint8 rand_eff = rnd() % 3;
-		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_sc2skill(sc[rand_eff]), 1));
-		sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
+		int duration = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_sc2skill(sc[rand_eff]), 1));
+		sc_start(src, target, sc[rand_eff], 100, skill_lv, duration);
 		break;
 	}
 	case 9: // DEATH - curse, coma and poison
@@ -9902,10 +9902,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SR_RAISINGDRAGON:
 		if( sd ) {
-			short max = 5 + skill_lv;
+			short maximum = 5 + skill_lv;
 			sc_start(src,bl, SC_EXPLOSIONSPIRITS, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			for( i = 0; i < max; i++ ) // Don't call more than max available spheres.
-				pc_addspiritball(sd, skill_get_time(skill_id, skill_lv), max);
+			for( i = 0; i < maximum; i++ ) // Don't call more than max available spheres.
+				pc_addspiritball(sd, skill_get_time(skill_id, skill_lv), maximum);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src,bl, type, 100, skill_lv,skill_get_time(skill_id, skill_lv)));
 		}
 		break;
@@ -10279,14 +10279,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SO_SUMMON_VENTUS:
 	case SO_SUMMON_TERA:
 		if( sd ) {
-			int elemental_class = skill_get_elemental_type(skill_id,skill_lv);
+			int ele_class = skill_get_elemental_type(skill_id,skill_lv);
 
 			// Remove previous elemental first.
 			if( sd->ed )
 				elemental_delete(sd->ed);
 
 			// Summoning the new one.
-			if( !elemental_create(sd,elemental_class,skill_get_time(skill_id,skill_lv)) ) {
+			if( !elemental_create(sd,ele_class,skill_get_time(skill_id,skill_lv)) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
@@ -13870,7 +13870,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			{ // Support Effect only on party, not guild
 				int heal;
 				int i = rnd() % 13; // Positive buff count
-				int time = skill_get_time2(sg->skill_id, sg->skill_lv); //Duration
+				int duration = skill_get_time2(sg->skill_id, sg->skill_lv); //Duration
 				switch (i)
 				{
 					case 0: // Heal 1000~9999 HP
@@ -13883,19 +13883,19 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						if (tsd) clif_gospel_info(tsd, 0x15);
 						break;
 					case 2: // Immunity to all status
-						sc_start(ss, bl, SC_SCRESIST, 100, 100, time);
+						sc_start(ss, bl, SC_SCRESIST, 100, 100, duration);
 						if (tsd) clif_gospel_info(tsd, 0x16);
 						break;
 					case 3: // MaxHP +100%
-						sc_start(ss, bl, SC_INCMHPRATE, 100, 100, time);
+						sc_start(ss, bl, SC_INCMHPRATE, 100, 100, duration);
 						if (tsd) clif_gospel_info(tsd, 0x17);
 						break;
 					case 4: // MaxSP +100%
-						sc_start(ss, bl, SC_INCMSPRATE, 100, 100, time);
+						sc_start(ss, bl, SC_INCMSPRATE, 100, 100, duration);
 						if (tsd) clif_gospel_info(tsd, 0x18);
 						break;
 					case 5: // All stats +20
-						sc_start(ss, bl, SC_INCALLSTATUS, 100, 20, time);
+						sc_start(ss, bl, SC_INCALLSTATUS, 100, 20, duration);
 						if (tsd) clif_gospel_info(tsd, 0x19);
 						break;
 					case 6: // Level 10 Blessing
@@ -13905,11 +13905,11 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						sc_start(ss, bl, SC_INCREASEAGI, 100, 10, skill_get_time(AL_INCAGI, 10));
 						break;
 					case 8: // Enchant weapon with Holy element
-						sc_start(ss, bl, SC_ASPERSIO, 100, 1, time);
+						sc_start(ss, bl, SC_ASPERSIO, 100, 1, duration);
 						if (tsd) clif_gospel_info(tsd, 0x1c);
 						break;
 					case 9: // Enchant armor with Holy element
-						sc_start(ss, bl, SC_BENEDICTIO, 100, 1, time);
+						sc_start(ss, bl, SC_BENEDICTIO, 100, 1, duration);
 						if (tsd) clif_gospel_info(tsd, 0x1d);
 						break;
 					case 10: // DEF +25%
@@ -13917,12 +13917,12 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						if (tsd) clif_gospel_info(tsd, 0x1e);
 						break;
 					case 11: // ATK +100%
-						sc_start(ss, bl, SC_INCATKRATE, 100, 100, time);
+						sc_start(ss, bl, SC_INCATKRATE, 100, 100, duration);
 						if (tsd) clif_gospel_info(tsd, 0x1f);
 						break;
 					case 12: // HIT/Flee +50
-						sc_start(ss, bl, SC_INCHIT, 100, 50, time);
-						sc_start(ss, bl, SC_INCFLEE, 100, 50, time);
+						sc_start(ss, bl, SC_INCHIT, 100, 50, duration);
+						sc_start(ss, bl, SC_INCFLEE, 100, 50, duration);
 						if (tsd) clif_gospel_info(tsd, 0x20);
 						break;
 				}
@@ -15062,16 +15062,16 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break; //Combo ready.
 		case BD_ADAPTATION:
 			{
-				int time;
+				int duration;
 				if(!(sc && sc->data[SC_DANCING])) {
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					return false;
 				}
-				time = 1000*(sc->data[SC_DANCING]->val3>>16);
+				duration = 1000*(sc->data[SC_DANCING]->val3>>16);
 				if (skill_get_time(
 					(sc->data[SC_DANCING]->val1&0xFFFF), //Dance Skill ID
 					(sc->data[SC_DANCING]->val1>>16)) //Dance Skill LV
-					- time < skill_get_time2(skill_id,skill_lv))
+					- duration < skill_get_time2(skill_id,skill_lv))
 				{
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					return false;
@@ -16278,7 +16278,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
  * Does cast-time reductions based on dex, item bonuses and config setting
  *------------------------------------------*/
 int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
-	double time = skill_get_cast(skill_id, skill_lv);
+	double casttime = skill_get_cast(skill_id, skill_lv);
 
 	nullpo_ret(bl);
 
@@ -16294,7 +16294,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 
 			if (scale > 0)	// not instant cast
-				time = time * (float)scale / battle_config.castrate_dex_scale;
+				casttime = casttime * (float)scale / battle_config.castrate_dex_scale;
 			else
 				return 0; // instant cast
 		}
@@ -16308,7 +16308,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			// Skill-specific reductions work regardless of flag
 			for(i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++) {
 				if (sd->skillcastrate[i].id == skill_id) {
-					time += time * sd->skillcastrate[i].val / 100;
+					casttime += casttime * sd->skillcastrate[i].val / 100;
 					break;
 				}
 			}
@@ -16322,65 +16322,65 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			// Foresight halves the cast time, it does not stack additively
 			if (sc->data[SC_MEMORIZE]) {
 				if(!(flag&2))
-					time -= time * 50 / 100;
+					casttime -= casttime * 50 / 100;
 				// Foresight counter gets reduced even if the skill is not affected by it
 				if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
 					status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
 			}
 		}
 
-		time = time * (1 - (float)reduce_cast_rate / 100);
+		casttime = casttime * (1 - (float)reduce_cast_rate / 100);
 	}
 #endif
 
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
-		time = time * battle_config.cast_rate / 100;
+		casttime = casttime * battle_config.cast_rate / 100;
 	// return final cast time
-	time = max(time, 0);
-	//ShowInfo("Castime castfix = %f\n",time);
+	casttime = max(casttime, 0);
+	//ShowInfo("Castime castfix = %f\n",casttime);
 
-	return (int)time;
+	return (int)casttime;
 }
 
 #ifndef RENEWAL_CAST
 /**
  * Get the skill cast time for Pre-Re cast
  * @param bl: The caster
- * @param time: Cast time before Status Change addition or reduction
- * @return time: Modified castime after status change addition or reduction
+ * @param casttime: Cast time before Status Change addition or reduction
+ * @return casttime: Modified castime after status change addition or reduction
  */
-int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
+int skill_castfix_sc(struct block_list *bl, double casttime, uint8 flag)
 {
 	struct status_change *sc = status_get_sc(bl);
 
-	if (time < 0)
+	if (casttime < 0)
 		return 0;
 
 	if (bl->type == BL_MOB || bl->type == BL_NPC)
-		return (int)time;
+		return (int)casttime;
 
 	if (sc && sc->count) {
 		if (!(flag&2)) {
 			if (sc->data[SC_SLOWCAST])
-				time += time * sc->data[SC_SLOWCAST]->val2 / 100;
+				casttime += casttime * sc->data[SC_SLOWCAST]->val2 / 100;
 			if (sc->data[SC_PARALYSIS])
-				time += sc->data[SC_PARALYSIS]->val3;
+				casttime += sc->data[SC_PARALYSIS]->val3;
 			if (sc->data[SC_IZAYOI])
-				time -= time * 50 / 100;
+				casttime -= casttime * 50 / 100;
 		}
 		if (sc->data[SC_SUFFRAGIUM]) {
 			if(!(flag&2))
-				time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
+				casttime -= casttime * sc->data[SC_SUFFRAGIUM]->val2 / 100;
 			//Suffragium ends even if the skill is not affected by it
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
 	}
 
-	time = max(time, 0);
-	//ShowInfo("Castime castfix_sc = %f\n",time);
+	casttime = max(casttime, 0);
+	//ShowInfo("Castime castfix_sc = %f\n",casttime);
 
-	return (int)time;
+	return (int)casttime;
 }
 #else
 /**
@@ -16393,12 +16393,12 @@ int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
  *    Variable CastTime : VARCAST_REDUCTION(value)
  *    Fixed CastTime    : FIXEDCASTRATE2(value)
  * @param bl: The caster
- * @param time: Cast time without reduction
+ * @param casttime: Cast time without reduction
  * @param skill_id: Skill ID of the casted skill
  * @param skill_lv: Skill level of the casted skill
- * @return time: Modified castime after status and bonus addition or reduction
+ * @return casttime: Modified castime after status and bonus addition or reduction
  */
-int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv)
+int skill_vfcastfix(struct block_list *bl, double casttime, uint16 skill_id, uint16 skill_lv)
 {
 	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd = BL_CAST(BL_PC,bl);
@@ -16407,17 +16407,17 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 
 	nullpo_ret(bl);
 
-	if (time < 0)
+	if (casttime < 0)
 		return 0;
 
 	if (bl->type == BL_MOB || bl->type == BL_NPC)
-		return (int)time;
+		return (int)casttime;
 
 	if (fixed < 0 || !battle_config.default_fixed_castrate) // no fixed cast time
 		fixed = 0;
 	else if (fixed == 0) {
-		fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
-		time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
+		fixed = (int)casttime * battle_config.default_fixed_castrate / 100; // fixed time
+		casttime = casttime * (100 - battle_config.default_fixed_castrate) / 100; // variable time
 	}
 
 	// Additive Variable Cast bonus adjustments by items
@@ -16427,7 +16427,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 		if (sd->bonus.fixcastrate != 0)
 			fixcast_r -= sd->bonus.fixcastrate; // bonus bFixedCastrate
 		if (sd->bonus.add_varcast != 0)
-			time += sd->bonus.add_varcast; // bonus bVariableCast
+			casttime += sd->bonus.add_varcast; // bonus bVariableCast
 		if (sd->bonus.add_fixcast != 0)
 			fixed += sd->bonus.add_fixcast; // bonus bFixedCast
 		for (i = 0; i < ARRAYLENGTH(sd->skillfixcast) && sd->skillfixcast[i].id; i++) {
@@ -16438,7 +16438,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 		}
 		for (i = 0; i < ARRAYLENGTH(sd->skillvarcast) && sd->skillvarcast[i].id; i++) {
 			if (sd->skillvarcast[i].id == skill_id) { // bonus2 bSkillVariableCast
-				time += sd->skillvarcast[i].val;
+				casttime += sd->skillvarcast[i].val;
 				break;
 			}
 		}
@@ -16501,16 +16501,16 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 		fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);
 
 	if (varcast_r < 0)
-		time = time * (1 - (float)min(varcast_r, 100) / 100);
+		casttime = casttime * (1 - (float)min(varcast_r, 100) / 100);
 
 	// Apply Variable CastTime calculation by INT & DEX
 	if (!(flag&1))
-		time = time * (1 - sqrt(((float)(status_get_dex(bl) * 2 + status_get_int(bl)) / battle_config.vcast_stat_scale)));
+		casttime = casttime * (1 - sqrt(((float)(status_get_dex(bl) * 2 + status_get_int(bl)) / battle_config.vcast_stat_scale)));
 
-	time = time * (1 - (float)min(reduce_cast_rate, 100) / 100);
-	time = max(time, 0) + (1 - (float)min(fixcast_r, 100) / 100) * max(fixed, 0); //Underflow checking/capping
+	casttime = casttime * (1 - (float)min(reduce_cast_rate, 100) / 100);
+	casttime = max(casttime, 0) + (1 - (float)min(fixcast_r, 100) / 100) * max(fixed, 0); //Underflow checking/capping
 
-	return (int)time;
+	return (int)casttime;
 }
 #endif
 
@@ -16520,7 +16520,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 {
 	int delaynodex = skill_get_delaynodex(skill_id);
-	int time = skill_get_delay(skill_id, skill_lv);
+	int delaytime = skill_get_delay(skill_id, skill_lv);
 	struct map_session_data *sd;
 	struct status_change *sc = status_get_sc(bl);
 
@@ -16533,8 +16533,8 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 	if (bl->type&battle_config.no_skill_delay)
 		return battle_config.min_skill_delay_limit;
 
-	if (time < 0)
-		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
+	if (delaytime < 0)
+		delaytime = -delaytime + status_get_amotion(bl);	// If set to <0, add to attack motion.
 
 	// Delay reductions
 	switch (skill_id) {	//Monk combo skills have their delay reduced by agi/dex.
@@ -16546,30 +16546,30 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		case SR_DRAGONCOMBO:
 		case SR_FALLENEMPIRE:
 			//If delay not specified, it will be 1000 - 4*agi - 2*dex
-			if (time == 0)
-				time = 1000;
-			time -= (4 * status_get_agi(bl) + 2 * status_get_dex(bl));
+			if (delaytime == 0)
+				delaytime = 1000;
+			delaytime -= (4 * status_get_agi(bl) + 2 * status_get_dex(bl));
 			break;
 		case HP_BASILICA:
 			if (sc && !sc->data[SC_BASILICA])
-				time = 0; // There is no Delay on Basilica creation, only on cancel
+				delaytime = 0; // There is no Delay on Basilica creation, only on cancel
 			break;
 		default:
 			if (battle_config.delay_dependon_dex && !(delaynodex&1)) { // if skill delay is allowed to be reduced by dex
 				int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 
 				if (scale > 0)
-					time = time * scale / battle_config.castrate_dex_scale;
+					delaytime = delaytime * scale / battle_config.castrate_dex_scale;
 				else //To be capped later to minimum.
-					time = 0;
+					delaytime = 0;
 			}
 			if (battle_config.delay_dependon_agi && !(delaynodex&1)) { // if skill delay is allowed to be reduced by agi
 				int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
 
 				if (scale > 0)
-					time = time * scale / battle_config.castrate_dex_scale;
+					delaytime = delaytime * scale / battle_config.castrate_dex_scale;
 				else //To be capped later to minimum.
-					time = 0;
+					delaytime = 0;
 			}
 	}
 
@@ -16577,11 +16577,11 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		switch (skill_id) {
 			case CR_SHIELDBOOMERANG:
 				if (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
-					time /= 2;
+					delaytime /= 2;
 				break;
 			case AS_SONICBLOW:
 				if (!map_flag_gvg2(bl->m) && !map[bl->m].flag.battleground && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
-					time /= 2;
+					delaytime /= 2;
 				break;
 		}
 	}
@@ -16589,21 +16589,21 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 	if (!(delaynodex&2)) {
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI])
-				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;
+				delaytime -= delaytime * sc->data[SC_POEMBRAGI]->val3 / 100;
 			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && skill_get_type(skill_id) == BF_MAGIC && skill_get_ele(skill_id, skill_lv) == ELE_WIND)
-				time /= 2; // After Delay of Wind element spells reduced by 50%.
+				delaytime /= 2; // After Delay of Wind element spells reduced by 50%.
 		}
 	}
 
 	if (!(delaynodex&4) && sd && sd->delayrate != 100)
-		time = time * sd->delayrate / 100;
+		delaytime = delaytime * sd->delayrate / 100;
 
 	if (battle_config.delay_rate != 100)
-		time = time * battle_config.delay_rate / 100;
+		delaytime = delaytime * battle_config.delay_rate / 100;
 
-	//ShowInfo("Delay delayfix = %d\n",time);
+	//ShowInfo("Delay delayfix = %d\n",delaytime);
 
-	return max(time,0);
+	return max(delaytime,0);
 }
 
 
@@ -17094,7 +17094,7 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 int skill_graffitiremover(struct block_list *bl, va_list ap)
 {
 	struct skill_unit *unit = NULL;
-	int remove = va_arg(ap, int);
+	int remove_graffiti = va_arg(ap, int);
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
@@ -17103,7 +17103,7 @@ int skill_graffitiremover(struct block_list *bl, va_list ap)
 		return 0;
 
 	if ((unit->group) && (unit->group->unit_id == UNT_GRAFFITI)) {
-		if (remove == 1)
+		if (remove_graffiti == 1)
 			skill_delunit(unit);
 		return 1;
 	}
@@ -20761,10 +20761,10 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
  * @param *val: Temporary storage
  * @param *delim: Delimiter (for multiple value support)
  * @param min_value: Minimum value. If the splitted value is less or equal than this, will be skipped
- * @param max: Maximum number that can be allocated
+ * @param max_value: Maximum number that can be allocated
  * @return count: Number of success
  */
-uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, uint16 max) {
+uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, uint16 max_value) {
 	uint8 i = 0;
 	char *p = strtok(str, delim);
 
@@ -20784,7 +20784,7 @@ uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, u
 		if (n > min_value) {
 			val[i] = n;
 			i++;
-			if (i >= max)
+			if (i >= max_value)
 				break;
 		}
 		p = strtok(NULL, delim);

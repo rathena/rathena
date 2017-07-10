@@ -1625,7 +1625,7 @@ int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position 
 }
 
 // Guild Skill UP
-int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_id,int max)
+int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_id,int maximum)
 {
 	struct guild * g;
 	int idx = skill_id - GD_SKILLBASE;
@@ -1634,7 +1634,7 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_
 	if(g == NULL || idx < 0 || idx >= MAX_GUILDSKILL)
 		return 0;
 
-	if(g->skill_point>0 && g->skill[idx].id>0 && g->skill[idx].lv<max )
+	if(g->skill_point>0 && g->skill[idx].id>0 && g->skill[idx].lv<maximum )
 	{
 		g->skill[idx].lv++;
 		g->skill_point--;

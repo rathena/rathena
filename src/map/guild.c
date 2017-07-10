@@ -1298,7 +1298,7 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 void guild_skillup(struct map_session_data* sd, uint16 skill_id) {
 	struct guild* g;
 	short idx = guild_skill_get_index(skill_id);
-	short max = 0;
+	short maximum = 0;
 
 	nullpo_retv(sd);
 
@@ -1309,12 +1309,12 @@ void guild_skillup(struct map_session_data* sd, uint16 skill_id) {
 		strcmp(sd->status.name, g->master) ) // not the guild master
 		return;
 
-	max = guild_skill_get_max(skill_id);
+	maximum = guild_skill_get_max(skill_id);
 
 	if( g->skill_point > 0 &&
 		g->skill[idx].id != 0 &&
-		g->skill[idx].lv < max )
-		intif_guild_skillup(g->guild_id, skill_id, sd->status.account_id, max);
+		g->skill[idx].lv < maximum )
+		intif_guild_skillup(g->guild_id, skill_id, sd->status.account_id, maximum);
 }
 
 /*====================================================
@@ -1390,11 +1390,11 @@ int guild_get_alliance_count(struct guild *g,int flag) {
 }
 
 // Blocks all guild skills which have a common delay time.
-void guild_block_skill(struct map_session_data *sd, int time) {
+void guild_block_skill(struct map_session_data *sd, int delay_time) {
 	uint16 skill_id[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int i;
 	for (i = 0; i < 4; i++)
-		skill_blockpc_start(sd, skill_id[i], time);
+		skill_blockpc_start(sd, skill_id[i], delay_time);
 }
 
 /*====================================================
