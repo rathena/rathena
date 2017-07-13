@@ -5006,13 +5006,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 		else
 			clif_useitemack(sd, n, 0, false);
 	}
-	if(item.card[0]==CARD0_CREATE &&
-		pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
-	{
+	if (item.card[0]==CARD0_CREATE && pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
-		 if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
-			 potion_flag = 4; //Even more effective potions.
-	}
 
 	//Update item use time.
 	sd->canuseitem_tick = tick + battle_config.item_use_interval;
@@ -8302,6 +8297,9 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 			}
 		}
 
+		// Recieve an additional +100% effect from ranked potions to HP only
+		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE && potion_flag == 2)
+			bonus += 100;
 		// Recovery Potion
 		if (sd->sc.data[SC_INCHEALRATE])
 			bonus += sd->sc.data[SC_INCHEALRATE]->val1;
@@ -8315,6 +8313,7 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 	}
 	if (sp) {
 		bonus = 100 + (sd->battle_status.int_ << 1) + pc_checkskill(sd, MG_SRECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
+		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag > 1)
 			bonus += 50;
 
