@@ -4,6 +4,10 @@
 #ifndef _PARTY_H_
 #define _PARTY_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // struct party
 struct block_list;
 struct map_session_data;
@@ -97,5 +101,9 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
 bool party_booking_delete(struct map_session_data *sd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _PARTY_H_ */

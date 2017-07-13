@@ -507,7 +507,6 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 	}
 	else
 		return (struct Channel*) strdb_get(channel_db, chname + 1);
-	return NULL;
 }
 
 /**

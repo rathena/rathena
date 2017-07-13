@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#pragma warning(disable:4800)
+
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -13,6 +15,7 @@
 #include "../common/malloc.h"
 #include "../common/mapindex.h"
 #include "../common/mmo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
@@ -641,7 +644,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 				{
 					// update all fields.
 					StringBuf_Clear(&buf);
-					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%"PRIu64"'",
+					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%" PRIu64 "'",
 						tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 					if (tableswitch == TABLE_INVENTORY)
 						StringBuf_Printf(&buf, ", `favorite`='%d'", items[i].favorite);
@@ -702,7 +705,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		else
 			found = true;
 
-		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%d', '%d', '%d', '%d', '%u', '%d', '%"PRIu64"'",
+		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%d', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
 			id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 		if (tableswitch == TABLE_INVENTORY)
 			StringBuf_Printf(&buf, ", '%d'", items[i].favorite);
@@ -1377,7 +1380,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	struct point tmp_start_point[MAX_STARTPOINT];
 	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
-	int flag, k, start_point_idx = rand() % charserv_config.start_point_count;
+	int flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1451,7 +1454,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 		memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
 		memcpy(tmp_start_point, charserv_config.start_point_doram, MAX_STARTPOINT * sizeof(struct point));
 		memcpy(tmp_start_items, charserv_config.start_items_doram, MAX_STARTITEM * sizeof(struct startitem));
-		start_point_idx = rand() % charserv_config.start_point_count_doram;
+		start_point_idx = rnd() % charserv_config.start_point_count_doram;
 	}
 #endif
 
@@ -2049,10 +2052,10 @@ int char_lan_subnetcheck(uint32 ip){
 	int i;
 	ARR_FIND( 0, subnet_count, i, (subnet[i].char_ip & subnet[i].mask) == (ip & subnet[i].mask) );
 	if( i < subnet_count ) {
-		ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n", CONVIP(ip), CONVIP(subnet[i].char_ip & subnet[i].mask), CONVIP(subnet[i].mask));
+		ShowInfo("Subnet check [%u.%u.%u.%u]: Matches " CL_CYAN "%u.%u.%u.%u/%u.%u.%u.%u" CL_RESET"\n", CONVIP(ip), CONVIP(subnet[i].char_ip & subnet[i].mask), CONVIP(subnet[i].mask));
 		return subnet[i].map_ip;
 	} else {
-		ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", CONVIP(ip));
+		ShowInfo("Subnet check [%u.%u.%u.%u]: " CL_CYAN "WAN" CL_RESET "\n", CONVIP(ip));
 		return 0;
 	}
 }
@@ -3018,7 +3021,7 @@ static void char_config_adjust() {
 /*
  * Message conf function
  */
-int char_msg_config_read(char *cfgName){
+int char_msg_config_read(const char *cfgName){
 	return _msg_config_read(cfgName,CHAR_MAX_MSG,msg_table);
 }
 const char* char_msg_txt(int msg_number){
@@ -3196,7 +3199,7 @@ int do_init(int argc, char **argv)
 	set_defaultparse(chclif_parse);
 
 	if( (char_fd = make_listen_bind(charserv_config.bind_ip,charserv_config.char_port)) == -1 ) {
-		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",charserv_config.char_port);
+		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",charserv_config.char_port);
 		exit(EXIT_FAILURE);
 	}
 
@@ -3208,9 +3211,9 @@ int do_init(int argc, char **argv)
 
 	do_init_chcnslif();
 	mapindex_check_mapdefault(charserv_config.default_map);
-	ShowInfo("Default map: '"CL_WHITE"%s %d,%d"CL_RESET"'\n", charserv_config.default_map, charserv_config.default_map_x, charserv_config.default_map_y);
+	ShowInfo("Default map: '" CL_WHITE "%s %d,%d" CL_RESET "'\n", charserv_config.default_map, charserv_config.default_map_x, charserv_config.default_map_y);
 
-	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", charserv_config.char_port);
+	ShowStatus("The char-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %d).\n\n", charserv_config.char_port);
 
 	return 0;
 }

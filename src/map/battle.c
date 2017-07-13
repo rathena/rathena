@@ -1408,13 +1408,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if ((sce = sc->data[SC_TUNAPARTY]) && damage > 0) {
-			clif_specialeffect(bl, 336, AREA);
 			sce->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 			if (sce->val2 >= 0)
 				damage = 0;
 			else
 			  	damage = -sce->val2;
-			if (/*(--sce->val3) <= 0 ||*/ (sce->val2 <= 0))
+			if (sce->val2 <= 0)
 				status_change_end(bl, SC_TUNAPARTY, INVALID_TIMER);
 		}
 
@@ -4276,15 +4275,26 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case SU_SCAROFTAROU:
 			skillratio += -100 + 100 * skill_lv;
+			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
+				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_PICKYPECK:
 		case SU_PICKYPECK_DOUBLE_ATK:
 			skillratio += 100 + 100 * skill_lv;
-			if (status_get_max_hp(target) / 100 <= 50)
+			if (status_get_hp(target) < status_get_max_hp(target) >> 1)
 				skillratio *= 2;
+			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
+				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_LUNATICCARROTBEAT:
 			skillratio += 100 + 100 * skill_lv;
+			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
+				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
+			break;
+		case SU_SVG_SPIRIT:
+			skillratio += 150 + 150 * skill_lv;
+			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
+				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 	}
 	return skillratio;
@@ -4524,9 +4534,10 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 
 	if ((wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
 		if (sd && pc_checkskill(sd, SU_POWEROFLIFE) > 0) {
-			if (pc_checkskill(sd, SU_SCAROFTAROU) == 5 && pc_checkskill(sd, SU_PICKYPECK) == 5 && pc_checkskill(sd, SU_ARCLOUSEDASH) == 5 && pc_checkskill(sd, SU_LUNATICCARROTBEAT) == 5) {
-				ATK_ADDRATE(wd.damage, wd.damage2, 20);
-				RE_ALLATK_ADDRATE(wd, 20);
+			if ((pc_checkskill(sd, SU_SCAROFTAROU) + pc_checkskill(sd, SU_PICKYPECK) + pc_checkskill(sd, SU_ARCLOUSEDASH) + pc_checkskill(sd, SU_LUNATICCARROTBEAT) +
+				pc_checkskill(sd, SU_HISS) + pc_checkskill(sd, SU_POWEROFFLOCK) + pc_checkskill(sd, SU_SVG_SPIRIT)) > 19) {
+					ATK_ADDRATE(wd.damage, wd.damage2, 20);
+					RE_ALLATK_ADDRATE(wd, 20);
 			}
 		}
 	}
@@ -5617,6 +5628,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (skill_lv == 2)
 				s_ele = ELE_HOLY;
 			break;
+		case WL_HELLINFERNO:
+			if (ad.miscflag&ELE_DARK)
+				s_ele = ELE_DARK;
+			break;
 		case SO_PSYCHIC_WAVE:
 			if( sc && sc->count ) {
 				if( sc->data[SC_HEATER_OPTION] )
@@ -5729,9 +5744,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				if(tsd)
 					ad.damage >>= 1;
 #endif
-				break;
-			case SU_SV_ROOTTWIST_ATK:
-				ad.damage = 100;
 				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
@@ -6571,7 +6583,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case GN_HELLS_PLANT_ATK:
 			//[{( Hell Plant Skill Level x Casters Base Level ) x 10 } + {( Casters INT x 7 ) / 2 } x { 18 + ( Casters Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
-			md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( status_get_int(src) * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : 0)) );
+			md.damage = skill_lv * status_get_lv(src) * 10 + status_get_int(src) * 7 / 2 * (18 + (sd ? sd->status.job_level : 0) / 4) * 5 / (10 - (sd ? pc_checkskill(sd, AM_CANNIBALIZE) : 0));
 			break;
 		case RL_B_TRAP:
 			// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level
@@ -6585,6 +6597,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = ssc->data[SC_MAXPAIN]->val2;
 			else
 				md.damage = 0;
+			break;
+		case SU_SV_ROOTTWIST_ATK:
+			md.damage = 100;
 			break;
 	}
 
@@ -8411,6 +8426,9 @@ static const struct _battle_data {
 	{ "mail_zeny_fee",						&battle_config.mail_zeny_fee,					2,		0,		100,			},
 	{ "mail_attachment_price",				&battle_config.mail_attachment_price,			2500,	0,		INT32_MAX,		},
 	{ "mail_attachment_weight",				&battle_config.mail_attachment_weight,			2000,	0,		INT32_MAX,		},
+	{ "banana_bomb_duration",				&battle_config.banana_bomb_duration,			0,		0,		UINT16_MAX,		},
+	{ "guild_leaderchange_delay",			&battle_config.guild_leaderchange_delay,		1440,	0,		INT32_MAX,		},
+	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
 
 #include "../custom/battle_config_init.inc"
 };

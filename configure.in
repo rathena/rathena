@@ -6,7 +6,7 @@ AC_REVISION($Revision$)
 AC_PREREQ([2.59])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
-AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile])
+AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
 
@@ -697,17 +697,17 @@ AC_DEFUN(AC_CHECK_COMPILER_WNOFLAG,
 )
 
 AC_CHECK_COMPILER_WNOFLAG(unused-parameter, [int foo(int bar) { return 0; }])
-AC_CHECK_COMPILER_WNOFLAG(maybe-uninitialized)
-AC_CHECK_COMPILER_WNOFLAG(clobbered)
 AC_CHECK_COMPILER_WFLAG(empty-body)
-#AC_CHECK_COMPILER_WFLAG(newline-eof)
-#AC_CHECK_COMPILER_WFLAG(int-conversion)
-#AC_CHECK_COMPILER_WFLAG(enum-conversion)
-#AC_CHECK_COMPILER_WFLAG(shorten-64-to-32)
-#AC_CHECK_COMPILER_WFLAG(constant-conversion)
-#AC_CHECK_COMPILER_WFLAG(bool-conversion)
 AC_CHECK_COMPILER_WNOFLAG(switch)
 AC_CHECK_COMPILER_WNOFLAG(missing-field-initializers)
+AC_MSG_CHECKING([whether compiler is clang])
+if test -n "`$CC --version | grep -i clang`" ; then
+	AC_MSG_RESULT([yes, skipping some flags..])
+else
+	AC_MSG_RESULT([no])
+	AC_CHECK_COMPILER_WNOFLAG(maybe-uninitialized)
+	AC_CHECK_COMPILER_WNOFLAG(clobbered)
+fi
 
 # Certain versions of gcc make -Wshadow completely useless by making it flood
 # you with unnecessary warnings <https://lkml.org/lkml/2006/11/28/239>

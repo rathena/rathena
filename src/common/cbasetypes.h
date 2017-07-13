@@ -379,7 +379,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Set a pointer variable to a pointer value.
-#ifdef __cplusplus
+/*#ifdef __cplusplus
 template <typename T1, typename T2>
 void SET_POINTER(T1*&var, T2* p)
 {
@@ -396,7 +396,7 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #else
 #define SET_POINTER(var,p) (var) = (p)
 #define SET_FUNCPOINTER(var,p) (var) = (p)
-#endif
+#endif*/
 
 #ifdef max
 #undef max

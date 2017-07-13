@@ -8,6 +8,8 @@
  * @author rAthena Dev Team
  */
 
+#pragma warning(disable:4800)
+
 #include "../common/core.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
@@ -871,7 +873,7 @@ int do_init(int argc, char** argv) {
 
 	// server port open & binding
 	if( (login_fd = make_listen_bind(login_config.login_ip,login_config.login_port)) == -1 ) {
-		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",login_config.login_port);
+		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",login_config.login_port);
 		exit(EXIT_FAILURE);
 	}
 
@@ -882,7 +884,7 @@ int do_init(int argc, char** argv) {
 
 	do_init_logincnslif();
 
-	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %u).\n\n", login_config.login_port);
+	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
 
 	return 0;

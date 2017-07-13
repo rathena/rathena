@@ -1967,14 +1967,15 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3843
 	Type: IZ
-	Structure: <cmd>.W <guild_id>.L <aid>.L <cid>.L
-	index: 0,2,6,10
-	len: 14
+	Structure: <cmd>.W <guild_id>.L <aid>.L <cid>.L <time>.L
+	index: 0,2,6,10,14
+	len: 18
 	parameter:
 		- cmd : packet identification (0x3843)
 		- guild_id
 		- aid
 		- cid
+		- time of change
 	desc:
 		- mapif_guild_master_changed
 

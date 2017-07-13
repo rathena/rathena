@@ -4,6 +4,10 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "map.h"
 
@@ -733,7 +737,7 @@ void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void run_script_main(struct script_state *st);
 
-void script_stop_instances(struct script_code *code);
+void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct DBMap *storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);
@@ -750,7 +754,7 @@ void script_hardcoded_constants(void);
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
 void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
 
-int script_config_read(char *cfgName);
+int script_config_read(const char *cfgName);
 void do_init_script(void);
 void do_final_script(void);
 int add_str(const char* p);
@@ -781,6 +785,10 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _SCRIPT_H_ */
