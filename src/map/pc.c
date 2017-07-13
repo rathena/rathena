@@ -8283,8 +8283,11 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 
 		bonus = 100 + (sd->battle_status.vit << 1) + pc_checkskill(sd, SM_RECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
-		if (potion_flag > 1)
-			bonus += (potion_flag - 1) * 50;
+		if (potion_flag == 2) {
+			bonus += 50;
+			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
+				bonus += 100; // Receive an additional +100% effect from ranked potions to HP only
+		}
 		//All item bonuses.
 		bonus += sd->bonus.itemhealrate2;
 		//Item Group bonuses
@@ -8297,9 +8300,6 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 			}
 		}
 
-		// Recieve an additional +100% effect from ranked potions to HP only
-		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE && potion_flag == 2)
-			bonus += 100;
 		// Recovery Potion
 		if (sd->sc.data[SC_INCHEALRATE])
 			bonus += sd->sc.data[SC_INCHEALRATE]->val1;
@@ -8314,7 +8314,7 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 	if (sp) {
 		bonus = 100 + (sd->battle_status.int_ << 1) + pc_checkskill(sd, MG_SRECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
-		if (potion_flag > 1)
+		if (potion_flag == 2)
 			bonus += 50;
 
 		tmp = sp * bonus / 100; // Overflow check
