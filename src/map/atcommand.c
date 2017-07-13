@@ -2037,7 +2037,7 @@ ACMD_FUNC(go)
 		town = 34;
 	} else if (strncmp(map_name, "eclage", 3) == 0) {
 		town = 35;
-	} else if (strncmp(map_name, "lasagna", 3) == 0) {
+	} else if (strncmp(map_name, "lasagna", 2) == 0) {
 		town = 36;
 	}
 
