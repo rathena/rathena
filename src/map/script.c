@@ -18317,13 +18317,17 @@ BUILDIN_FUNC(unitstopattack)
 
 /// Makes the unit stop walking.
 ///
-/// unitstopwalk <unit_id>;
+/// unitstopwalk <unit_id>{,<flag>};
 BUILDIN_FUNC(unitstopwalk)
 {
 	struct block_list* bl;
+	int flag = USW_NONE;
+
+	if (script_hasdata(st, 3))
+		flag = script_getnum(st, 3);
 
 	if(script_rid2bl(2,bl))
-		unit_stop_walking(bl, 0);
+		unit_stop_walking(bl, flag);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23622,7 +23626,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitwarp,"isii"),
 	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstopattack,"i"),
-	BUILDIN_DEF(unitstopwalk,"i"),
+	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]

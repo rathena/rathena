@@ -3814,6 +3814,14 @@
 	export_constant(IG_SPECIAL_CHRISTMAS_BOX);
 	export_constant(IG_SANTA_GIFT);
 
+	/* unit stop walking */
+	export_constant(USW_NONE);
+	export_constant(USW_FIXPOS);
+	export_constant(USW_MOVE_ONCE);
+	export_constant(USW_MOVE_FULL_CELL);
+	export_constant(USW_FORCE_STOP);
+	export_constant(USW_ALL);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
