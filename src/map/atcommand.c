@@ -185,12 +185,12 @@ ACMD_FUNC(send)
 		long num;
 		if(len)
 		{// show packet length
-			sprintf(atcmd_output, msg_txt(sd,904), type, packet_db[sd->packet_ver][type].len); // Packet 0x%x length: %d
+			sprintf(atcmd_output, msg_txt(sd,904), type, packet_db[type].len); // Packet 0x%x length: %d
 			clif_displaymessage(fd, atcmd_output);
 			return 0;
 		}
 
-		len=packet_db[sd->packet_ver][type].len;
+		len=packet_db[type].len;
 		off=2;
 		if(len == 0)
 		{// unknown packet - ERROR
@@ -341,7 +341,7 @@ ACMD_FUNC(send)
 			SKIP_VALUE(message);
 		}
 
-		if(packet_db[sd->packet_ver][type].len == -1)
+		if(packet_db[type].len == -1)
 		{// send dynamic packet
 			WFIFOW(fd,2)=TOW(off);
 			WFIFOSET(fd,off);
@@ -3927,9 +3927,6 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
 		do_reload_quest();
 		clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
-	} else if (strstr(command, "packetdb") || strncmp(message, "packetdb", 4) == 0) {
-		packetdb_readdb(true);
-		clif_displaymessage(fd, msg_txt(sd,1477)); // Packet database has been reloaded.
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
 		instance_reload();
 		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
@@ -10085,7 +10082,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadmotd", reload),
 		ACMD_DEF2("reloadquestdb", reload),
 		ACMD_DEF2("reloadmsgconf", reload),
-		ACMD_DEF2("reloadpacketdb", reload),
 		ACMD_DEF2("reloadinstancedb", reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),

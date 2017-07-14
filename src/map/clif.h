@@ -44,12 +44,12 @@ enum mail_attachment_type;
 enum { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_VER = 55,
 	MAX_PACKET_POS = 20,
 };
 
 enum e_packet_ack {
 	ZC_ACK_OPEN_BANKING = 0,
+	ZC_ACK_CLOSE_BANKING,
 	ZC_ACK_BANKING_DEPOSIT,
 	ZC_ACK_BANKING_WITHDRAW,
 	ZC_BANKING_CHECK,
@@ -171,11 +171,9 @@ enum e_party_invite_reply {
 	PARTY_REPLY_INVALID_MAPPROPERTY_ME, ///< return=9 : !TODO "Cannot join a party in this map" -> MsgStringTable[1871] (since 20110205)
 };
 
-// packet_db[SERVER] is reserved for server use
-#define SERVER 0
-#define packet_len(cmd) packet_db[SERVER][cmd].len
-extern struct s_packet_db packet_db[MAX_PACKET_VER+1][MAX_PACKET_DB+1];
-extern int packet_db_ack[MAX_PACKET_VER + 1][MAX_ACK_FUNC + 1];
+#define packet_len(cmd) packet_db[cmd].len
+extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
+extern int packet_db_ack[MAX_ACK_FUNC + 1];
 
 // local define
 typedef enum send_target {
@@ -534,7 +532,6 @@ void clif_setport(uint16 port);
 uint32 clif_getip(void);
 uint32 clif_refresh_ip(void);
 uint16 clif_getport(void);
-void packetdb_readdb(bool reload);
 
 void clif_authok(struct map_session_data *sd);
 void clif_authrefuse(int fd, uint8 error_code);

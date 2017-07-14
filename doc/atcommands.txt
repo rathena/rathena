@@ -1320,7 +1320,6 @@ This will also send a packet to clients causing them to close.
 @reloadmobdb
 @reloadmotd
 @reloadmsgconf
-@reloadpacketdb
 @reloadpcdb
 @reloadquestdb
 @reloadscript
@@ -1333,7 +1332,6 @@ Databases:
 -- instancedb: Instance Database
 -- itemdb: Item Database
 -- mobdb: Monster Database
--- packetdb: Packet Database
 -- questdb: Quest Database
 -- script: NPC Scripts
 -- skilldb: Skill Database
@@ -1354,7 +1352,6 @@ Affected files:
 -- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.txt, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
 -- motd: motd.txt
 -- msgconf: atcommand_athena.conf
--- packetdb: packet_db.txt
 -- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_maxhpsp_db.txt, job_param_db.txt, level_penalty.txt
 -- questdb: quest_db.txt
 -- script: /npc/*.txt, /npc/*.conf

@@ -453,15 +453,14 @@ void chmapif_charselres(int fd, uint32 aid, uint8 res){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_authok(int fd){
-	if( RFIFOREST(fd) < 19 )
+	if( RFIFOREST(fd) < 18 )
 		return 0;
 	else{
 		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
 		uint32 ip = RFIFOL(fd,14);
-		int version = RFIFOB(fd,18);
-		RFIFOSKIP(fd,19);
+		RFIFOSKIP(fd,18);
 
 		if( runflag != CHARSERVER_ST_RUNNING ){
 			chmapif_charselres(fd,account_id,0);
@@ -478,7 +477,6 @@ int chmapif_parse_authok(int fd){
 			node->login_id2 = login_id2;
 			//node->sex = 0;
 			node->ip = ntohl(ip);
-			node->version = version; //upd version for mapserv
 			//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
 			//node->gmlevel = 0;
 			idb_put(auth_db, account_id, node);

@@ -21284,36 +21284,6 @@ BUILDIN_FUNC(party_destroy)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/** Checks if a player's client version meets a required version or date.
-* @param type: 0 - check by version number; 1 - check by date
-* @param data: Input
-*/
-BUILDIN_FUNC(is_clientver) {
-	TBL_PC *sd = NULL;
-	int type;
-	int data;
-	int ret = 0;
-
-	if ( !script_charid2sd(4,sd) ) {
-		script_pushint(st,0);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	type = script_getnum(st,2);
-	data = script_getnum(st,3);
-
-	switch(type){
-		case 0:
-			ret = (sd->packet_ver >= data)?1:0;
-			break;
-		case 1:
-			ret = (sd->packet_ver >= date2version(data))?1:0;
-			break;
-	}
-	script_pushint(st,ret);
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /** Returns various information about a player's VIP status. Need to enable VIP system
  * vip_status <type>,{"<character name>"};
  * @param type: Info type, see enum vip_status_type
@@ -23758,7 +23728,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(clan_join,"i?"),
 	BUILDIN_DEF(clan_leave,"?"),
 
-	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF2(montransform, "transform", "vi?????"), // Monster Transform [malufett/Hercules]
 	BUILDIN_DEF2(montransform, "active_transform", "vi?????"),
 	BUILDIN_DEF(vip_status,"i?"),
