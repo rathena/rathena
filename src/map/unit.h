@@ -97,11 +97,11 @@ enum e_unit_blown {
 
 /// Enum for unit_stop_walking
 enum e_unit_stop_walking {
-	USW_NONE = 0x0,
-	USW_FIXPOS = 0x1, // Issue a fixpos packet afterwards
-	USW_MOVE_ONCE = 0x2, // Force the unit to move one cell if it hasn't yet
-	USW_MOVE_FULL_CELL = 0x4, // Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change)
-	USW_FORCE_STOP = 0x8, // Force stop moving, even if walktimer is currently INVALID_TIMER
+	USW_NONE = 0x0, /// Unit will keep walking to their original destination
+	USW_FIXPOS = 0x1, /// Issue a fixpos packet afterwards
+	USW_MOVE_ONCE = 0x2, /// Force the unit to move one cell if it hasn't yet
+	USW_MOVE_FULL_CELL = 0x4, /// Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change)
+	USW_FORCE_STOP = 0x8, /// Force stop moving, even if walktimer is currently INVALID_TIMER
 	USW_ALL = 0xf,
 };
 
