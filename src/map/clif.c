@@ -4988,91 +4988,133 @@ static void clif_graffiti(struct block_list *bl, struct skill_unit *unit, enum s
 	clif_send(buf,packet_len(0x1c9),bl,target);
 }
 
+
 /// Notifies the client of a skill unit.
 /// 011f <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B (ZC_SKILL_ENTRY)
 /// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
-/// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
+/// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible) {
-	int header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
-	unsigned char buf[128];
+static inline int clif_getareachar_skillunit_addunit(char *buf, int unit_id, struct skill_unit *unit, bool visible){
+	int header;
 
-	nullpo_retv(bl);
-	nullpo_retv(unit);
-
-	if (bl->type == BL_PC)
-		fd = ((TBL_PC*)bl)->fd;
-
-	if (unit->group->state.guildaura)
-		return;
-
-	if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)
-		unit_id = unit->val2&UF_SONG ? UNT_DISSONANCE : UNT_UGLYDANCE;
-	else if (skill_get_unit_flag(unit->group->skill_id) & UF_RANGEDSINGLEUNIT && !(unit->val2 & UF_RANGEDSINGLEUNIT))
-		unit_id = UNT_DUMMYSKILL; // Use invisible unit id for other case of rangedsingle unit
-	else
-		unit_id = unit->group->unit_id;
-
-	if (!visible)
-		unit_id = UNT_DUMMYSKILL; // Hack to makes hidden trap really hidden!
-
-#if PACKETVER >= 3
-	if (unit_id == UNT_GRAFFITI) { // Graffiti [Valaris]
-		clif_graffiti(bl, unit, target);
-		return;
-	}
-#endif
-
-#if PACKETVER <= 20120702
+#if PACKETVER < 20110420
 	header = 0x011f;
-//#if PACKETVER < 20110718
-//	header = 0x011f;
-//#elif PACKETVER < 20121212
-//	header = 0x08c7;
+#elif PACKETVER < 20121212
+	header = 0x08c7;
 #elif PACKETVER < 20130731
 	header = 0x099f;
 #else
 	header = 0x09ca;
 #endif
 
-	len = packet_len(header);
-	WBUFW(buf,pos) = header;
-	if (header != 0x011f) {
-		WBUFW(buf, pos+2) = len;
-		pos += 2;
-	}
-	WBUFL(buf,pos+2) = unit->bl.id;
-	WBUFL(buf,pos+6) = unit->group->src_id;
-	WBUFW(buf,pos+10) = unit->bl.x;
-	WBUFW(buf,pos+12) = unit->bl.y;
-	switch (header) {
-		case 0x011f:
-			WBUFB(buf,pos+14) = unit_id;
-			WBUFB(buf,pos+15) = visible;
-			break;
-		case 0x08c7:
-			WBUFB(buf,pos+14) = unit_id;
-			WBUFW(buf,pos+15) = unit->range;
-			WBUFB(buf,pos+17) = visible;
-			break;
-		case 0x099f:
-			WBUFL(buf,pos+14) = unit_id;
-			WBUFW(buf,pos+18) = unit->range;
-			WBUFB(buf,pos+20) = visible;
-			break;
-		case 0x09ca:
-			WBUFL(buf,pos+14) = unit_id;
-			WBUFB(buf,pos+18) = (unsigned char)unit->range;
-			WBUFB(buf,pos+19) = visible;
-			WBUFB(buf,pos+20) = (unsigned char)unit->group->skill_lv;
-			break;
-	}
-	clif_send(buf, len, bl, target);
+	WBUFL(buf, 0)	= unit->bl.id;
+	WBUFL(buf, 4)	= unit->group->src_id;
+	WBUFW(buf, 8)	= unit->bl.x;
+	WBUFW(buf, 10)	= unit->bl.y;
 
-	if (unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
+	switch(header){
+		case 0x011f:
+			WBUFB(buf, 12) = (unsigned char)unit_id;
+			WBUFB(buf, 13) = (unsigned char)visible;
+			return 14;
+
+		case 0x08c7:
+			WBUFB(buf, 12) = (unsigned char)unit_id;
+			WBUFW(buf, 13) = (unsigned short)unit->range;
+			WBUFB(buf, 15) = (unsigned char)visible;
+			return 16;
+		
+		case 0x099f:
+			WBUFL(buf, 12) = unit_id;
+			WBUFB(buf, 16) = (unsigned char)unit->range;
+			WBUFB(buf, 17) = (unsigned char)visible;
+			return 18;
+
+		case 0x09ca:
+			WBUFL(buf, 12) = unit_id;
+			WBUFB(buf, 16) = (unsigned char)unit->range;
+			WBUFB(buf, 17) = (unsigned char)visible;
+			WBUFB(buf, 18) = (unsigned char)unit->group->skill_lv;
+			return 19;
+	}
+
+	ShowError("clif_getareachar_skillunit_addunit: error: code inconsistency detected! header %04x is not implemented\n", header);
+	return 0;
 }
 
+
+void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible) {
+	int header = 0, unit_id = 0, len = 0, fd = 0;
+	unsigned char buf[128];
+
+	nullpo_retv(bl);
+	nullpo_retv(unit);
+
+	if(unit->group->state.guildaura)
+		return;
+
+#if PACKETVER >= 3
+	if(unit->group->unit_id == UNT_GRAFFITI) { // Graffiti [Valaris]
+		clif_graffiti(bl, unit, target);
+		return;
+	}
+#endif
+
+	if (bl->type == BL_PC)
+		fd = ((TBL_PC*)bl)->fd;
+	
+	if(!visible){
+		unit_id = UNT_DUMMYSKILL; // Hack to makes hidden trap really hidden!
+
+	}else{
+		if(unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)
+			unit_id = unit->val2&UF_SONG ? UNT_DISSONANCE : UNT_UGLYDANCE;
+		else if(skill_get_unit_flag(unit->group->skill_id) & UF_RANGEDSINGLEUNIT && !(unit->val2 & UF_RANGEDSINGLEUNIT))
+			unit_id = UNT_DUMMYSKILL; // Use invisible unit id for other case of rangedsingle unit
+		else
+			unit_id = unit->group->unit_id;
+
+	}
+
+
+#if PACKETVER < 20110420
+	header = 0x011f;
+#elif PACKETVER < 20121212
+	header = 0x08c7;
+#elif PACKETVER < 20130731
+	header = 0x099f;
+#else
+	header = 0x09ca;
+#endif
+
+
+	WBUFW(buf, 0) = header;	
+	
+	if(header == 0x011f){
+		// PACKET_ZC_SKILL_ENTRY is PACKETTYPE_STATIC, so no packetLength paramter after header.
+		len = 2;
+
+		len += clif_getareachar_skillunit_addunit((char*) WBUFP(buf, len), unit_id, unit, visible);
+		if(len == 2) // Nothing has been added.
+			return;
+
+	}else{
+		// newer packets have dynamic length, supporting multiple units send at once.
+		len = 4;
+
+		len += clif_getareachar_skillunit_addunit((char*)WBUFP(buf, len), unit_id, unit, visible);
+		if(len == 4) // Nothing has been added.
+			return;
+
+		WBUFW(buf, 2) = len;
+	}
+
+	clif_send(buf, len, bl, target);
+
+	if(fd > 0 && unit->group->skill_id == WZ_ICEWALL)
+		clif_changemapcell(fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
+
+}
 
 /*==========================================
  * Server tells client to remove unit of id 'unit->bl.id'
@@ -20198,7 +20240,7 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x08C0
-		0,  0,  0,  0,  0,  0,  0, 20,  34,  0,  0,  0,  0,  0,  0, 10,
+		0,  0,  0,  0,  0,  0,  0, -1,  34,  0,  0,  0,  0,  0,  0, 10,
 		9,  7, 10,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 24,
@@ -20214,11 +20256,11 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  2,  0,  0, 14,  6, 50,  -1,  0,  0, 0, 12, -1,
 	//#0x0980
 		7,  0,  0, 29, 28,  0,  0,  0,  6,  2, -1,  0,  0, -1, -1,  0,
-		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, 22,
+		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, -1,
 		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6, -1,  8, 17,  4,
 		8,  4,  8,  4,  6,  0,  6,  4,  6,  4,  0,  0,  6,  0,  0,  0,
 	//#0x09C0
-		0,  0,  0,  8,  8,  0,  0,  0,  0,  0, 23,  17,  0,  0,102,  0,
+		0,  0,  0,  8,  8,  0,  0,  0,  0,  0, -1,  17,  0,  0,102,  0,
 		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  -1,  -1,  -1,  0,  7,
 		0,  0,  0,  0,  0,  18,  22,  3, 11,  0, 11, -1,  0,  3, 11,  0,
 		-1, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,

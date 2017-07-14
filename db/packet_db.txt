@@ -1680,6 +1680,7 @@ packet_keys: 0x5324329D,0x5D545D52,0x06137269 // [Shakto]
 0x08ab,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x088b,2,searchstoreinfonextpage,0
 0x08a2,12,searchstoreinfolistitemclick,2:6:10
+0x08c7,-1
 0x08cf,10 //Amulet spirits
 
 //2012-03-07fRagexeRE
@@ -1905,7 +1906,7 @@ packet_keys: 0x3F094C49,0x55F86C1E,0x58AA359A // [Shakto]
 0x08C8,34	// ZC_NOTIFY_ACT3
 0x08ff,24 	// ZC_EFST_SET_ENTER
 0x0984,28 	// ZC_EFST_SET_ENTER2
-0x099f,22 	// ZC_SKILL_ENTRY4
+0x099f,-1 	// ZC_SKILL_ENTRY4
 
 //2013-05-15aRagexe (Yommy)
 packet_ver: 35
@@ -2251,7 +2252,7 @@ packet_keys: 0x2BED4F91,0x5F9E00CF,0x5EE5520C
 0x09B9,4,ZC_ACK_CLOSE_BANKING,2
 
 //2013-07-31cRagexe
-0x09ca,23 // ZC_SKILL_ENTRY5
+0x09ca,-1 // ZC_SKILL_ENTRY5
 0x09cb,17	// ZC_USE_SKILL2
 
 //2013-08-07Ragexe
