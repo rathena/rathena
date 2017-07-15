@@ -47,9 +47,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2713:
 	Type: AH
-	Structure: <cmd>.W <aid>.L <login_id1>.L <login_id2>.L <sex>.B <auth>.B <request_id>.L <version>.L <clienttype>.B
-	index: 0,2,6,10,14,15,16,20,24
-	len: 25
+	Structure: <cmd>.W <aid>.L <login_id1>.L <login_id2>.L <sex>.B <auth>.B <request_id>.L <clienttype>.B
+	index: 0,2,6,10,14,15,16,20
+	len: 21
 	parameter:
 		- cmd : packet identification (0x2713)
 		- aid : account identification
@@ -58,7 +58,6 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- sex: the sex of the account
 		- ok : 1=auth failed, 1=ok
 		- request_id: unknown @FIXME
-		- version: client version, (clientinfo version)
 		- clienttype: unknown @FIXME
 	desc:
 		- Acknowledge the authentication request from char-serv
@@ -2769,16 +2768,15 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b02
 	Type: ZA
-	Structure: <cmd>.W <id>.L <login_id1>.L <login_id2>.L <s_ip>.L <packet_ver>.B
-	index: 0,2,6,10,14,18
-	len: 19
+	Structure: <cmd>.W <id>.L <login_id1>.L <login_id2>.L <s_ip>.L
+	index: 0,2,6,10,14
+	len: 18
 	parameter:
 		- cmd : packet identification (0x2b02)
 		- id
 		- login_id1
 		- login_id2
 		- s_ip
-		- packet_ver
 	desc:
 		- chrif_charselectreq
 

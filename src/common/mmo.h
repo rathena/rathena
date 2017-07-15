@@ -9,30 +9,9 @@
 #include "db.h"
 #include <time.h>
 
-// server->client protocol version
-//        0 - pre-?
-//        1 - ?                    - 0x196
-//        2 - ?                    - 0x78, 0x79
-//        3 - ?                    - 0x1c8, 0x1c9, 0x1de
-//        4 - ?                    - 0x1d7, 0x1d8, 0x1d9, 0x1da
-//        5 - 2003-12-18aSakexe+   - 0x1ee, 0x1ef, 0x1f0, ?0x1c4, 0x1c5?
-//        6 - 2004-03-02aSakexe+   - 0x1f4, 0x1f5
-//        7 - 2005-04-11aSakexe+   - 0x229, 0x22a, 0x22b, 0x22c
-// see conf/battle/client.conf for other version
-
 #ifndef PACKETVER
-	#define PACKETVER 20151104
-	//#define PACKETVER 20120410
+	#error Please define PACKETVER in src/config/packets.h
 #endif
-
-// Check if the specified packetversion supports the pincode system
-#define PACKETVER_SUPPORTS_PINCODE PACKETVER>=20110309
-
-/// Check if the client needs delete_date as remaining time and not the actual delete_date (actually it was tested for clients since 2013)
-#define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER <= 20141022) || PACKETVER >= 20150513
-
-// Check if the specified packetvresion supports the cashshop sale system
-#define PACKETVER_SUPPORTS_SALES PACKETVER>=20131223
 
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING
