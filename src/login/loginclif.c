@@ -301,7 +301,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		return 0;
 	else {
 		int result;
-		uint32 version;
 		char username[NAME_LENGTH];
 		char password[PASSWD_LENGTH];
 		unsigned char passhash[16];
@@ -315,8 +314,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 			size_t uAccLen = strlen(accname);
 			size_t uTokenLen = RFIFOREST(fd) - 0x5C;
 
-			version = RFIFOL(fd,4);
-
 			if(uAccLen > NAME_LENGTH - 1 || uAccLen == 0 || uTokenLen > NAME_LENGTH - 1  || uTokenLen == 0)
 			{
 				logclif_auth_failed(sd, 3);
@@ -329,7 +326,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		}
 		else
 		{
-			version = RFIFOL(fd,2);
 			safestrncpy(username, RFIFOCP(fd,6), NAME_LENGTH);
 			if( israwpass )
 			{
