@@ -1233,11 +1233,11 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
  * Stops a unit from walking
  * @param bl: Object to stop walking
  * @param type: Options
- *	&0x1: Issue a fixpos packet afterwards
- *	&0x2: Force the unit to move one cell if it hasn't yet
- *	&0x4: Enable moving to the next cell when unit was already half-way there
+ *	USW_FIXPOS: Issue a fixpos packet afterwards
+ *	USW_MOVE_ONCE: Force the unit to move one cell if it hasn't yet
+ *	USW_MOVE_FULL_CELL: Enable moving to the next cell when unit was already half-way there
  *		(may cause on-touch/place side-effects, such as a scripted map change)
- *	&0x8: Force stop moving, even if walktimer is currently INVALID_TIMER
+ *	USW_FORCE_STOP: Force stop moving, even if walktimer is currently INVALID_TIMER
  * @return Success(1); Failed(0);
  */
 int unit_stop_walking(struct block_list *bl,int type)
@@ -1250,7 +1250,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 
 	ud = unit_bl2ud(bl);
 
-	if(!ud || (!(type&0x08) && ud->walktimer == INVALID_TIMER))
+	if(!ud || (!(type&USW_FORCE_STOP) && ud->walktimer == INVALID_TIMER))
 		return 0;
 
 	// NOTE: We are using timer data after deleting it because we know the
@@ -1264,14 +1264,14 @@ int unit_stop_walking(struct block_list *bl,int type)
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 
-	if( (type&0x02 && !ud->walkpath.path_pos) // Force moving at least one cell.
-	||  (type&0x04 && td && DIFF_TICK(td->tick, tick) <= td->data/2) // Enough time has passed to cover half-cell
+	if( (type&USW_MOVE_ONCE && !ud->walkpath.path_pos) // Force moving at least one cell.
+	||  (type&USW_MOVE_FULL_CELL && td && DIFF_TICK(td->tick, tick) <= td->data/2) // Enough time has passed to cover half-cell
 	) {
 		ud->walkpath.path_len = ud->walkpath.path_pos+1;
 		unit_walktoxy_timer(INVALID_TIMER, tick, bl->id, ud->walkpath.path_pos);
 	}
 
-	if(type&0x01)
+	if(type&USW_FIXPOS)
 		clif_fixpos(bl);
 
 	ud->walkpath.path_len = 0;
@@ -1279,7 +1279,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	ud->to_x = bl->x;
 	ud->to_y = bl->y;
 
-	if(bl->type == BL_PET && type&~0xff)
+	if(bl->type == BL_PET && type&~USW_ALL)
 		ud->canmove_tick = gettick() + (type>>8);
 
 	// Re-added, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
