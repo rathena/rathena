@@ -2030,6 +2030,10 @@
 	parseable_packet(0x0879,41,clif_parse_PartyBookingRegisterReq,2,4,6);
 #endif
 
+#if PACKETVER >= 20121212
+	packet(0x08C7,20);
+#endif
+
 // 2013-03-20Ragexe (Judas)
 #if PACKETVER >= 20130320
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
@@ -2108,6 +2112,7 @@
 #if PACKETVER >= 20130710
 	parseable_packet(0x0848,-1,clif_parse_cashshop_buy,2,6,4,10);
 	packet(0x097D,288); //ZC_ACK_RANKING
+	packet(0x097E,12); //ZC_UPDATE_RANKING_POINT
 #endif
 
 // 2013-07-17Ragexe
@@ -2143,7 +2148,6 @@
 // 2013-12-23Ragexe
 #if PACKETVER >= 20131223
 	//New Packets
-	//packet(0x097E,12); //ZC_UPDATE_RANKING_POINT
 	parseable_packet(0x09CE,102,clif_parse_GM_Item_Monster,2);
 	parseable_packet(0x09D4,2,clif_parse_NPCShopClosed,0);
 	//NPC Market
@@ -2208,6 +2212,7 @@
 	packet(0x08e3,149);
 	// New Packet
 	packet(0x0A18,14); // ZC_ACCEPT_ENTER3
+	packet(0x0A27,8);
 	packet(0x0A28,3); // ZC_ACK_OPENSTORE2
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
 	packet(0x09FE,-1); // ZC_NOTIFY_NEWENTRY11
@@ -2296,6 +2301,21 @@
 // 2016-06-01aRagexe
 #if PACKETVER >= 20160601
 	packet(0x0A7D,-1);
+#endif
+
+// 2016-06-22aRagexeRE
+#if PACKETVER >= 20160622
+	packet(0x0A84,94);
+#endif
+
+// 2016-09-21bRagexeRE
+#if PACKETVER >= 20160921
+	packet(0x0A37,59);
+#endif
+
+// 2016-10-26bRagexeRE
+#if PACKETVER >= 20161026
+	packet(0x0AA5,-1);
 #endif
 
 // 2017-05-02dRagexeRE

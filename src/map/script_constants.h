@@ -3814,6 +3814,14 @@
 	export_constant(IG_SPECIAL_CHRISTMAS_BOX);
 	export_constant(IG_SANTA_GIFT);
 
+	/* unit stop walking */
+	export_constant(USW_NONE);
+	export_constant(USW_FIXPOS);
+	export_constant(USW_MOVE_ONCE);
+	export_constant(USW_MOVE_FULL_CELL);
+	export_constant(USW_FORCE_STOP);
+	export_constant(USW_ALL);
+
 	/* achievement groups */
 	export_constant2("AG_ADD_FRIEND", AG_ADD_FRIEND);
 	export_constant2("AG_ADVENTURE", AG_ADVENTURE);
