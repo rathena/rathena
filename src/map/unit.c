@@ -1197,7 +1197,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 			return 2;
 
 		}
-	} else if (map_getcell(m,x,y,CELL_CHKNOREACH)) { // Invalid target cell
+	} else if ( bl->type != BL_NPC && map_getcell(m,x,y,CELL_CHKNOREACH)) { // Invalid target cell
 		ShowWarning("unit_warp: Specified non-walkable target cell: %d (%s) at [%d,%d]\n", m, map[m].name, x,y);
 
 		if (!map_search_freecell(NULL, m, &x, &y, 4, 4, 1)) { // Can't find a nearby cell
