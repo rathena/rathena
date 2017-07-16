@@ -159,7 +159,6 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	node->login_id2 = sd->login_id2;
 	node->sex = sd->sex;
 	node->ip = ip;
-	node->version = sd->version;
 	node->clienttype = sd->clienttype;
 	idb_put(auth_db, sd->account_id, node);
 	{
@@ -181,7 +180,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
     3 = Rejected from Server
     4 = You have been blocked by the GM Team
     5 = Your Game's EXE file is not the latest version
-    6 = Your are Prohibited to log in until %s
+    6 = You are prohibited to log in until %s
     7 = Server is jammed due to over populated
     8 = No more accounts may be connected from this company
     9 = MSI_REFUSE_BAN_BY_DBA
@@ -216,37 +215,33 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 	if( (result == 0 || result == 1) && login_config.dynamic_pass_failure_ban )
 		ipban_log(ip); // log failed password attempt
 
-//#if PACKETVER >= 20120000 /* not sure when this started */
-	if( sd->version >= date2version(20120000) ){ /* not sure when this started */
-		WFIFOHEAD(fd,26);
-		WFIFOW(fd,0) = 0x83e;
-		WFIFOL(fd,2) = result;
-		if( result != 6 )
-			memset(WFIFOP(fd,6), '\0', 20);
-		else { // 6 = Your are Prohibited to log in until %s
-			struct mmo_account acc;
-			AccountDB* accounts = login_get_accounts_db();
-			time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
-			timestamp2string(WFIFOCP(fd,6), 20, unban_time, login_config.date_format);
-		}
-		WFIFOSET(fd,26);
+#if PACKETVER >= 20120000 /* not sure when this started */
+	WFIFOHEAD(fd,26);
+	WFIFOW(fd,0) = 0x83e;
+	WFIFOL(fd,2) = result;
+	if( result != 6 )
+		memset(WFIFOP(fd,6), '\0', 20);
+	else { // 6 = You are prohibited to log in until %s
+		struct mmo_account acc;
+		AccountDB* accounts = login_get_accounts_db();
+		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		timestamp2string(WFIFOCP(fd,6), 20, unban_time, login_config.date_format);
 	}
-//#else	
-	else {
-		WFIFOHEAD(fd,23);
-		WFIFOW(fd,0) = 0x6a;
-		WFIFOB(fd,2) = (uint8)result;
-		if( result != 6 )
-			memset(WFIFOP(fd,3), '\0', 20);
-		else { // 6 = Your are Prohibited to log in until %s
-			struct mmo_account acc;
-			AccountDB* accounts = login_get_accounts_db();
-			time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
-			timestamp2string(WFIFOCP(fd,3), 20, unban_time, login_config.date_format);
-		}
-		WFIFOSET(fd,23);
+	WFIFOSET(fd,26);
+#else
+	WFIFOHEAD(fd,23);
+	WFIFOW(fd,0) = 0x6a;
+	WFIFOB(fd,2) = (uint8)result;
+	if( result != 6 )
+		memset(WFIFOP(fd,3), '\0', 20);
+	else { // 6 = You are prohibited to log in until %s
+		struct mmo_account acc;
+		AccountDB* accounts = login_get_accounts_db();
+		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		timestamp2string(WFIFOCP(fd,3), 20, unban_time, login_config.date_format);
 	}
-//#endif	
+	WFIFOSET(fd,23);
+#endif	
 }
 
 /**
@@ -306,7 +301,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		return 0;
 	else {
 		int result;
-		uint32 version;
 		char username[NAME_LENGTH];
 		char password[PASSWD_LENGTH];
 		unsigned char passhash[16];
@@ -320,8 +314,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 			size_t uAccLen = strlen(accname);
 			size_t uTokenLen = RFIFOREST(fd) - 0x5C;
 
-			version = RFIFOL(fd,4);
-
 			if(uAccLen > NAME_LENGTH - 1 || uAccLen == 0 || uTokenLen > NAME_LENGTH - 1  || uTokenLen == 0)
 			{
 				logclif_auth_failed(sd, 3);
@@ -334,7 +326,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		}
 		else
 		{
-			version = RFIFOL(fd,2);
 			safestrncpy(username, RFIFOCP(fd,6), NAME_LENGTH);
 			if( israwpass )
 			{
@@ -350,11 +341,10 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		RFIFOSKIP(fd,RFIFOREST(fd)); // assume no other packet was sent
 
 		sd->clienttype = clienttype;
-		sd->version = version;
 		safestrncpy(sd->userid, username, NAME_LENGTH);
 		if( israwpass )
 		{
-			ShowStatus("Request for connection of %s (ip: %s) version=%d\n", sd->userid, ip,sd->version);
+			ShowStatus("Request for connection of %s (ip: %s)\n", sd->userid, ip);
 			safestrncpy(sd->passwd, password, NAME_LENGTH);
 			if( login_config.use_md5_passwds )
 				MD5_String(sd->passwd, sd->passwd);
@@ -362,7 +352,7 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		}
 		else
 		{
-			ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s) version=%d\n", sd->userid, ip,sd->version);
+			ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s)\n", sd->userid, ip);
 			bin2hex(sd->passwd, passhash, 16); // raw binary data here!
 			sd->passwdenc = PASSWORDENC;
 		}
@@ -430,7 +420,6 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 		if( login_config.use_md5_passwds )
 			MD5_String(sd->passwd, sd->passwd);
 		sd->passwdenc = 0;
-		sd->version = login_config.client_version_to_connect; // hack to skip version check
 		server_ip = ntohl(RFIFOL(fd,54));
 		server_port = ntohs(RFIFOW(fd,58));
 		safestrncpy(server_name, RFIFOCP(fd,60), 20);

@@ -295,7 +295,7 @@ int chlogif_parse_ackconnect(int fd, struct char_session_data* sd){
 }
 
 int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
-	if (RFIFOREST(fd) < 25)
+	if (RFIFOREST(fd) < 21)
 		return 0;
 	{
 		uint32 account_id = RFIFOL(fd,2);
@@ -304,19 +304,14 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 		uint8 sex = RFIFOB(fd,14);
 		uint8 result = RFIFOB(fd,15);
 		int request_id = RFIFOL(fd,16);
-		uint32 version = RFIFOL(fd,20);
-		uint8 clienttype = RFIFOB(fd,24);
-		RFIFOSKIP(fd,25);
+		uint8 clienttype = RFIFOB(fd,20);
+		RFIFOSKIP(fd,21);
 
 		if( session_isActive(request_id) && (sd=(struct char_session_data*)session[request_id]->session_data) &&
 			!sd->auth && sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 && sd->sex == sex )
 		{
 			int client_fd = request_id;
-			sd->version = version;
 			sd->clienttype = clienttype;
-			if(sd->version != date2version(PACKETVER))
-				ShowWarning("aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
-					sd->account_id,sd->version,date2version(PACKETVER));
 
 			switch( result )
 			{
@@ -372,8 +367,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 			// send characters to player
 			chclif_mmo_char_send(u_fd, sd);
 #if PACKETVER_SUPPORTS_PINCODE
-			if(sd->version >= date2version(20110309))
-				chlogif_pincode_start(u_fd,sd);
+			chlogif_pincode_start(u_fd,sd);
 #endif
 		}
 	}

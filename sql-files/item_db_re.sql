@@ -1411,7 +1411,7 @@ REPLACE INTO `item_db_re` VALUES (2173,'Crescent_Armguard','Crescent Wrist Guard
 REPLACE INTO `item_db_re` VALUES (2174,'Lumiere_Shield','Lumiere Shield',4,20,NULL,1300,NULL,50,NULL,1,0xFFFFFFFF,63,2,32,NULL,'65',1,3,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2175,'Esprit_Shield','Spirit Shield',4,20,NULL,1300,NULL,50,NULL,1,0xFFFFFFFF,63,2,32,NULL,'65',1,3,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2176,'Dark_Book','Black Book',4,20,NULL,500,NULL,80,NULL,1,0xFFFFFFFF,63,2,32,NULL,'65',1,5,'bonus bMdef,5; .@r = getrefine(); bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",1,(.@r<=6)?(10):((.@r<=8)?(20):(30));',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2177,'Shield_Of_Death','Shield Of Death',4,20,NULL,2000,NULL,150,NULL,1,0xFFFFFFFF,63,2,32,NULL,'90',1,3,'bonus2 bAddClass,Class_Boss,2; bonus2 bMagicAddClass,Class_Boss,2; bonus2 bAddClass,Class_Normal,10; bonus2 bMagicAddClass,Class_Normal,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2177,'Shield_Of_Death','Shield Of Death',4,20,NULL,2000,NULL,150,NULL,1,0xFFFFFFFF,63,2,32,NULL,'90',1,3,'bonus2 bAddClass,Class_Boss,2; bonus2 bMagicAddClass,Class_Boss,2; bonus2 bSubClass,Class_Normal,-10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2178,'TE_Woe_Buckler','TE Woe Buckler',4,0,NULL,0,NULL,15,NULL,0,0xFFFFFFFF,63,2,32,1,'40',1,2,'bonus bMdef,15; bonus bMaxHP,100; bonus bMaxSP,100; bonus2 bSubRace,RC_Player,15;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2179,'TE_Woe_Shield','TE Woe Shield',4,0,NULL,0,NULL,25,NULL,0,0x000444A2,63,2,32,1,'40',1,3,'bonus bMdef,5; bonus bMaxHP,200; bonus2 bSubRace,RC_Player,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2180,'TE_Woe_Magic_Guard','TE Woe Magic Guard',4,0,NULL,0,NULL,5,NULL,0,0x00818315,63,2,32,1,'40',1,1,'bonus bMdef,25; bonus bMaxSP,200; bonus2 bSubRace,RC_Player,10;',NULL,NULL);
@@ -6839,8 +6839,8 @@ REPLACE INTO `item_db_re` VALUES (12673,'Lucky_Egg_C10','Lucky Egg C10',2,20,NUL
 REPLACE INTO `item_db_re` VALUES (12674,'God_Material_Box','God Material Box',2,20,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_God_Material_Box);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12675,'Sg_Weapon_Supply_Box','WoE Weapon Supply Box',2,20,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Sg_Weapon_Supply_Box);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12676,'Sg_Violet_Potion_Box','Siege Violet Potion Box',2,20,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 11547,50;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12677,'Siege_Arrow_Quiver_S','Siege Arrow Quiver S',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'130',NULL,NULL,'getitem 1776,200;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12678,'Siege_Arrow_Quiver_A','Siege Arrow Quiver A',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'95',NULL,NULL,'getitem 1775,200;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12677,'Siege_Arrow_Quiver_S','Siege Arrow Quiver S',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'130',NULL,NULL,'getitem 1775,200;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12678,'Siege_Arrow_Quiver_A','Siege Arrow Quiver A',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'95',NULL,NULL,'getitem 1776,200;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12679,'Sg_White_Potion_Box','Siege White Potion Box',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 11548,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12680,'Sg_Blue_Potion_Box','Siege Blue Potion Box',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 11549,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12681,'Nestea_Lemon','Nestea Lemon',2,0,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

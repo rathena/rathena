@@ -34,7 +34,6 @@ script:
   - ./configure $CONFIGURE_FLAGS
   - make clean
   - make server
-  - 'echo packet_db_ver: $PACKETDBVER >> db/import/packet_db.txt'
   - ./map-server --run-once
 
 env:
@@ -44,7 +43,6 @@ env:
     - DB_NAME="ragnarok"
     - DB_USER="ragnarok"
     - DB_PASS="ragnarok"
-    - PACKETDBVER=45
   matrix:
     - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
     - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no --enable-buildbot=yes"
