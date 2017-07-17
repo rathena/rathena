@@ -290,7 +290,7 @@ void ers_cache_size(ERS *self, unsigned int new_size) {
 }
 
 
-ERS *ers_new(uint32 size, char *name, enum ERSOptions options)
+ERS *ers_new(uint32 size, const char *name, enum ERSOptions options)
 {
 	struct ers_instance_t *instance;
 	CREATE(instance,struct ers_instance_t, 1);
