@@ -35,7 +35,19 @@
     <ClInclude Include="chrif.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="clan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="clif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clif_obfuscation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clif_packetdb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clif_shuffle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="date.h">
@@ -128,18 +140,6 @@
     <ClInclude Include="vending.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clif_obfuscation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clif_packetdb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clif_shuffle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="atcommand.c">
@@ -164,6 +164,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="chrif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clif.c">
@@ -257,9 +260,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vending.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="clan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
