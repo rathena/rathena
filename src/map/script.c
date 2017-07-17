@@ -20264,7 +20264,10 @@ BUILDIN_FUNC(areamobuseskill)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-
+/**
+ * Display a progress bar above a character
+ * progressbar "<color>",<seconds>;
+ */
 BUILDIN_FUNC(progressbar)
 {
 	struct map_session_data * sd;
@@ -20287,6 +20290,10 @@ BUILDIN_FUNC(progressbar)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Display a progress bar above an NPC
+ * progressbar_npc "<color>",<seconds>{,<NPC Name>};
+ */
 BUILDIN_FUNC(progressbar_npc){
 	struct npc_data* nd = NULL;
 
