@@ -20292,7 +20292,7 @@ BUILDIN_FUNC(progressbar)
 
 /**
  * Display a progress bar above an NPC
- * progressbar_npc "<color>",<seconds>{,<NPC Name>};
+ * progressbar_npc "<color>",<seconds>{,<"NPC Name">};
  */
 BUILDIN_FUNC(progressbar_npc){
 	struct npc_data* nd = NULL;

@@ -6397,7 +6397,7 @@ currently ignored by the client and appears always green.
 
 ---------------------------------------
 
-*progressbar_npc "<color>",<seconds>{,<NPC Name>};
+*progressbar_npc "<color>",<seconds>{,<"NPC Name">};
 
 This command works like progressbar, but displays a progress bar
 above the head of the currently attached (or given) NPC. Once the
