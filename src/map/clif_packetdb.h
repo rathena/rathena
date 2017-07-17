@@ -2145,6 +2145,11 @@
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
 #endif
 
+// 2013-08-21bRagexe
+#if PACKETVER >= 20130821
+	packet(0x09D1,14);
+#endif
+
 // 2013-12-23Ragexe
 #if PACKETVER >= 20131223
 	//New Packets
