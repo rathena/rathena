@@ -5006,13 +5006,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 		else
 			clif_useitemack(sd, n, 0, false);
 	}
-	if(item.card[0]==CARD0_CREATE &&
-		pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
-	{
+	if (item.card[0]==CARD0_CREATE && pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
-		 if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
-			 potion_flag = 3; //Even more effective potions.
-	}
 
 	//Update item use time.
 	sd->canuseitem_tick = tick + battle_config.item_use_interval;
@@ -8273,56 +8268,59 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
 	return;
 }
 
-/*==========================================
- * HP/SP Recovery
- * Heal player hp and/or sp linearly.
- * Calculate bonus by status.
- *------------------------------------------*/
-int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
+/**
+ * Heal player HP and/or SP linearly. Calculate any bonus based on active statuses.
+ * @param sd: Player data
+ * @param itemid: Item ID
+ * @param hp: HP to heal
+ * @param sp: SP to heal
+ * @return Amount healed to an object
+ */
+int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 {
 	int bonus, tmp, penalty = 0;
 
-	if(hp) {
+	if (hp) {
 		int i;
-		bonus = 100 + (sd->battle_status.vit<<1)
-			+ pc_checkskill(sd,SM_RECOVERY)*10
-			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
+
+		bonus = 100 + (sd->battle_status.vit << 1) + pc_checkskill(sd, SM_RECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
-		if (potion_flag > 1)
-			bonus += bonus*(potion_flag-1)*50/100;
+		if (potion_flag == 2) {
+			bonus += 50;
+			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
+				bonus += 100; // Receive an additional +100% effect from ranked potions to HP only
+		}
 		//All item bonuses.
 		bonus += sd->bonus.itemhealrate2;
 		//Item Group bonuses
-		bonus += bonus*pc_get_itemgroup_bonus(sd, itemid)/100;
+		bonus += pc_get_itemgroup_bonus(sd, itemid);
 		//Individual item bonuses.
-		for(i = 0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid; i++)
-		{
+		for(i = 0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid; i++) {
 			if (sd->itemhealrate[i].nameid == itemid) {
-				bonus += bonus*sd->itemhealrate[i].rate/100;
+				bonus += sd->itemhealrate[i].rate;
 				break;
 			}
 		}
 
-		tmp = hp * bonus / 100;  // overflow check
-		if(bonus != 100 && tmp > hp)
-			hp = tmp;
-
 		// Recovery Potion
-		if( sd->sc.data[SC_INCHEALRATE] )
-			hp += (int)(hp * sd->sc.data[SC_INCHEALRATE]->val1/100.);
+		if (sd->sc.data[SC_INCHEALRATE])
+			bonus += sd->sc.data[SC_INCHEALRATE]->val1;
 		// 2014 Halloween Event : Pumpkin Bonus
-		if(sd->sc.data[SC_MTF_PUMPKIN] && itemid == ITEMID_PUMPKIN)
-			hp += (int)(hp * sd->sc.data[SC_MTF_PUMPKIN]->val1 / 100.);
-	}
-	if(sp) {
-		bonus = 100 + (sd->battle_status.int_<<1)
-			+ pc_checkskill(sd,MG_SRECOVERY)*10
-			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
-		if (potion_flag > 1)
-			bonus += bonus*(potion_flag-1)*50/100;
+		if (sd->sc.data[SC_MTF_PUMPKIN] && itemid == ITEMID_PUMPKIN)
+			bonus += sd->sc.data[SC_MTF_PUMPKIN]->val1;
 
-		tmp = sp * bonus / 100;
-		if(bonus != 100 && tmp > sp)
+		tmp = hp * bonus / 100; // Overflow check
+		if (bonus != 100 && tmp > hp)
+			hp = tmp;
+	}
+	if (sp) {
+		bonus = 100 + (sd->battle_status.int_ << 1) + pc_checkskill(sd, MG_SRECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
+		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
+		if (potion_flag == 2)
+			bonus += 50;
+
+		tmp = sp * bonus / 100; // Overflow check
+		if (bonus != 100 && tmp > sp)
 			sp = tmp;
 	}
 	if (sd->sc.count) {
@@ -8336,11 +8334,6 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if (sd->sc.data[SC_NORECOVER_STATE])
 			penalty = 100;
 
-		if (penalty > 0) {
-			hp -= hp * penalty / 100;
-			sp -= sp * penalty / 100;
-		}
-
 		if (sd->sc.data[SC_VITALITYACTIVATION]) {
 			hp += hp / 2; // 1.5 times
 			sp -= sp / 2;
@@ -8350,6 +8343,12 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 			hp += hp / 10;
 			sp += sp / 10;
 		}
+
+		if (penalty > 0) {
+			hp -= hp * penalty / 100;
+			sp -= sp * penalty / 100;
+		}
+
 #ifdef RENEWAL
 		if (sd->sc.data[SC_EXTREMITYFIST2])
 			sp = 0;
