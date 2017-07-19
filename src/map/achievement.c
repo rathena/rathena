@@ -1,13 +1,13 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/conf.h"
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/yamlwrapper.h"
 
 #include "achievement.h"
 #include "chrif.h"
@@ -29,7 +29,6 @@ static char*       av_error_msg;
 static const char* av_error_pos;
 static int         av_error_report;
 
-struct config_t achievement_db_conf;
 static DBMap *achievement_db = NULL; // int achievement_id -> struct achievement_db *
 static DBMap *achievementmobs_db = NULL; // Avoids checking achievements on every mob killed
 static void achievement_db_free_sub(struct achievement_db *achievement, bool free);
@@ -961,45 +960,47 @@ struct av_condition *parse_condition(const char *p, const char *file, int line)
 	return condition;
 }
 
-/*==========================================
- * Achievement loading section
- *------------------------------------------*/
 /**
  * Reads and parses an entry from the achievement_db.
- * @param cs: The config setting containing the entry.
- * @param n: The sequential index of the current config setting.
- * @param source: The source configuration file.
+ * @param wrapper: The YAML wrapper containing the entry.
+ * @param n: The sequential index of the current entry.
+ * @param source: The source YAML file.
  * @return The parsed achievement entry or NULL in case of error.
  */
-struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int n, const char *source)
+struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, const char *source)
 {
 	struct achievement_db *entry = NULL;
-	struct config_setting_t *t = NULL;
+	yamlwrapper *t = NULL;
+	yamliterator *it;
 	enum e_achievement_group group = AG_NONE;
 	int score = 0, achievement_id = 0;
 	const char *group_char = NULL, *name = NULL, *condition = NULL, *mapname = NULL;
 
-	if (!config_setting_lookup_int(cs, "id", &achievement_id)) {
+	if (!yaml_node_is_defined(wrapper, "ID")) {
 		ShowWarning("achievement_read_db_sub: Missing ID in \"%s\", entry #%d, skipping.\n", source, n);
 		return NULL;
-	}
-	if (achievement_id < 1 || achievement_id >= INT_MAX) {
+	} else
+		achievement_id = yaml_get_int(wrapper, "ID");
+	if (achievement_id < 1 || achievement_id > INT_MAX) {
 		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source, n, INT_MAX);
 		return NULL;
 	}
-	if (!config_setting_lookup_string(cs, "group", &group_char) || !*group_char) {
+
+	if (!yaml_node_is_defined(wrapper, "Group")) {
 		ShowWarning("achievement_read_db_sub: Missing group for achievement %d in \"%s\", skipping.\n", achievement_id, source);
 		return NULL;
-	}
+	} else
+		group_char = yaml_get_c_string(wrapper, "Group");
 	if (!script_get_constant(group_char, (int *)&group)) {
 		ShowWarning("achievement_read_db_sub: Invalid group %s for achievement %d in \"%s\", skipping.\n", group_char, achievement_id, source);
 		return NULL;
 	}
 
-	if (!config_setting_lookup_string(cs, "name", &name) || !*name) {
+	if (!yaml_node_is_defined(wrapper, "Name")) {
 		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", name, achievement_id, source);
 		return NULL;
-	}
+	} else
+		name = yaml_get_c_string(wrapper, "Name");
 
 	CREATE(entry, struct achievement_db, 1);
 	entry->achievement_id = achievement_id;
@@ -1007,43 +1008,38 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 	safestrncpy(entry->name, name, sizeof(entry->name));
 	entry->mapindex = -1;
 
-	if ((t = config_setting_get_member(cs, "target")) && config_setting_is_list(t)) {
-		int i, len = config_setting_length(t);
+	if (yaml_node_is_defined(wrapper, "Target") && (t = yaml_get_subnode(wrapper, "Target")) && (it = yaml_get_iterator(t)) && yaml_iterator_is_valid(it)) {
+		for (yamlwrapper *tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->target_count < MAX_ACHIEVEMENT_OBJECTIVES; tt = yaml_iterator_next(it)) {
+			int mobid = 0, count = 0;
 
-		for (i = 0; i < len && entry->target_count < MAX_ACHIEVEMENT_OBJECTIVES; i++) {
-			struct config_setting_t *tt = config_setting_get_elem(t, i);
-			int mob_id = 0, count = 0;
-
-			if (!tt)
-				break;
-			if (!config_setting_is_group(tt))
-				continue;
-			if (config_setting_lookup_int(tt, "mobid", &mob_id) && !mobdb_exists(mob_id)) { // The mob ID field is not required
-				ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mob_id, achievement_id, source);
+			if (yaml_node_is_defined(tt, "MobID") && (mobid = yaml_get_int(tt, "MobID")) && !mobdb_exists(mobid)) { // The mob ID field is not required
+				ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source);
 				continue;
 			}
-			if (!config_setting_lookup_int(tt, "count", &count) || count <= 0) {
+			if (yaml_node_is_defined(tt, "Count") && !(count = yaml_get_int(tt, "Count")) || count <= 0) {
 				ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source);
 				continue;
 			}
-			if (mob_id && group == AG_BATTLE && !idb_exists(achievementmobs_db, mob_id)) {
+			if (mobid && group == AG_BATTLE && !idb_exists(achievementmobs_db, mobid)) {
 				struct achievement_mob *entrymob = NULL;
 
 				CREATE(entrymob, struct achievement_mob, 1);
-				idb_put(achievementmobs_db, mob_id, entrymob);
+				idb_put(achievementmobs_db, mobid, entrymob);
 			}
 
 			RECREATE(entry->targets, struct achievement_target, entry->target_count + 1);
-			entry->targets[entry->target_count].mob = mob_id;
+			entry->targets[entry->target_count].mob = mobid;
 			entry->targets[entry->target_count].count = count;
 			entry->target_count++;
+			yaml_destroy_wrapper(tt);
 		}
+		yaml_iterator_destroy(it);
 	}
 
-	if (config_setting_lookup_string(cs, "condition", &condition))
-		entry->condition = parse_condition(condition, source, cs->line);
+	if (yaml_node_is_defined(wrapper, "Condition") && (condition = yaml_get_c_string(wrapper, "Condition")))
+		entry->condition = parse_condition(condition, source, n);
 
-	if (config_setting_lookup_string(cs, "map", &mapname)) {
+	if (yaml_node_is_defined(wrapper, "Map") && (mapname = yaml_get_c_string(wrapper, "Map"))) {
 		if (group != AG_CHAT)
 			ShowWarning("achievement_read_db_sub: The map argument can only be used with the group AG_CHATTING (achievement %d in \"%s\"), skipping.\n", achievement_id, source);
 		else {
@@ -1054,55 +1050,42 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 		}
 	}
 
-	if ((t = config_setting_get_member(cs, "dependent"))) {
-		if (config_setting_is_aggregate(t)) {
-			int i, len = config_setting_length(t);
-
-			for (i = 0; i < len && entry->dependent_count < MAX_ACHIEVEMENT_DEPENDENTS; i++) {
+	if (yaml_node_is_defined(wrapper, "Dependent") && (t = yaml_get_subnode(wrapper, "Dependent")) && (it = yaml_get_iterator(t))) {
+		if (yaml_iterator_is_valid(it)) {
+			for (yamlwrapper *tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->dependent_count < MAX_ACHIEVEMENT_DEPENDENTS; tt = yaml_iterator_next(it)) {
 				RECREATE(entry->dependents, struct achievement_dependent, entry->dependent_count + 1);
-				entry->dependents[entry->dependent_count].achievement_id = config_setting_get_int_elem(t, i);
+				entry->dependents[entry->dependent_count].achievement_id = yaml_as_int(tt);
 				entry->dependent_count++;
+				yaml_destroy_wrapper(tt);
 			}
+			yaml_iterator_destroy(it);
 		} else
 			ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source);
 	}
 
-	if ((t = config_setting_get_member(cs, "reward"))) {
-		if (config_setting_is_group(t)) {
-			if (config_setting_get_member(t, "itemid")) {
-				int nameid = 0;
+	if (yaml_node_is_defined(wrapper, "Reward") && (t = yaml_get_subnode(wrapper, "Reward"))) {
+		const char *script_char = NULL;
+		int nameid = 0, amount = 0, titleid = 0;
 
-				if (config_setting_lookup_int(t, "itemid", &nameid) && itemdb_exists(nameid)) {
-					entry->rewards.nameid = nameid;
-					entry->rewards.amount = 1; // Default the amount to 1
-				} else if (nameid && !itemdb_exists(nameid)) {
-					ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source);
-					entry->rewards.nameid = nameid = 0;
-				}
-
-				if (config_setting_get_member(t, "amount")) {
-					int amount = 0;
-
-					if (nameid && config_setting_lookup_int(t, "amount", &amount) && amount > 0)
-						entry->rewards.amount = amount;
-				}
+		if (yaml_node_is_defined(t, "ItemID") && (nameid = yaml_get_int(t, "ItemID"))) {
+			if (itemdb_exists(nameid)) {
+				entry->rewards.nameid = nameid;
+				entry->rewards.amount = 1; // Default the amount to 1
+			} else if (nameid && !itemdb_exists(nameid)) {
+				ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source);
+				entry->rewards.nameid = nameid = 0;
 			}
-			if (config_setting_get_member(t, "script")) {
-				const char *script_char = NULL;
 
-				if (config_setting_lookup_string(t, "script", &script_char))
-					entry->rewards.script = parse_script(script_char, source, achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
-			}
-			if (config_setting_get_member(t, "titleid")) {
-				int title_id = 0;
-
-				if (config_setting_lookup_int(t, "titleid", &title_id) && title_id > 0)
-					entry->rewards.title_id = title_id;
-			}
+			if (yaml_node_is_defined(t, "Amount") && (amount = yaml_get_int(t, "Amount")) && amount > 0 && nameid)
+				entry->rewards.amount = amount;
 		}
+		if (yaml_node_is_defined(t, "Script") && (script_char = yaml_get_c_string(t, "Script")))
+			entry->rewards.script = parse_script(script_char, source, achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		if (yaml_node_is_defined(t, "TitleID") && (titleid = yaml_get_int(t, "TitleID")) && titleid > 0)
+			entry->rewards.title_id = titleid;
 	}
 
-	if (config_setting_lookup_int(cs, "score", &score) && score > 0)
+	if ((score = yaml_get_int(wrapper, "Score")) && score > 0)
 		entry->score = score;
 
 	return entry;
@@ -1113,7 +1096,8 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
  */
 void achievement_read_db(void)
 {
-	struct config_setting_t *adb = NULL, *a = NULL;
+	yamlwrapper *adb = NULL, *adb_sub = NULL;
+	yamliterator *it;
 	int i = 0;
 	const char *dbsubpath[] = {
 		"",
@@ -1126,41 +1110,45 @@ void achievement_read_db(void)
 		int count = 0;
 
 		if (!i)
-			sprintf(filepath, "%s/%s%s%s", db_path, DBPATH, dbsubpath[i], "achievement_db.conf");
+			sprintf(filepath, "%s/%s%s%s", db_path, DBPATH, dbsubpath[i], "achievement_db.yml");
 		else
-			sprintf(filepath, "%s%s%s", db_path, dbsubpath[i], "achievement_db.conf");
+			sprintf(filepath, "%s%s%s", db_path, dbsubpath[i], "achievement_db.yml");
 
-		if (config_read_file(&achievement_db_conf, filepath))
-			continue;
-
-		if ((adb = config_lookup(&achievement_db_conf, "achievement_db")) == NULL) {
+		if ((adb = yaml_load_file(filepath)) == NULL) {
 			ShowError("Failed to read '%s'.\n", filepath);
 			continue;
 		}
 
-		while ((a = config_setting_get_elem(adb, count))) {
-			struct achievement_db *duplicate = &achievement_dummy, *entry = achievement_read_db_sub(a, count, filepath);
+		adb_sub = yaml_get_subnode(adb, "Achievements");
+		it = yaml_get_iterator(adb_sub);
+		if (yaml_iterator_is_valid(it)) {
+			for (yamlwrapper *id = yaml_iterator_first(it); yaml_iterator_has_next(it); id = yaml_iterator_next(it)) {
+				struct achievement_db *duplicate = &achievement_dummy, *entry = achievement_read_db_sub(id, count, filepath);
 
-			if (!entry) {
-				ShowWarning("achievement_read_db: Failed to parse achievement entry %d.\n", count);
-				continue;
-			}
-			if ((duplicate = achievement_search(entry->achievement_id)) != &achievement_dummy) {
-				if (!i) { // Normal file read-in
-					ShowWarning("achievement_read_db: Duplicate achievement %d.\n", entry->achievement_id);
-					achievement_db_free_sub(entry, false);
+				if (!entry) {
+					ShowWarning("achievement_read_db: Failed to parse achievement entry %d.\n", count);
 					continue;
-				} else // Import file read-in, free previous value and store new value
-					achievement_db_free_sub(duplicate, false);
+				}
+				if ((duplicate = achievement_search(entry->achievement_id)) != &achievement_dummy) {
+					if (!i) { // Normal file read-in
+						ShowWarning("achievement_read_db: Duplicate achievement %d.\n", entry->achievement_id);
+						achievement_db_free_sub(entry, false);
+						continue;
+					}
+					else // Import file read-in, free previous value and store new value
+						achievement_db_free_sub(duplicate, false);
+				}
+				yaml_destroy_wrapper(id);
+				idb_put(achievement_db, entry->achievement_id, entry);
+				count++;
 			}
-			idb_put(achievement_db, entry->achievement_id, entry);
-			count++;
 		}
+		yaml_destroy_wrapper(adb_sub);
+		yaml_iterator_destroy(it);
 
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filepath);
 	}
 
-	config_destroy(&achievement_db_conf);
 	return;
 }
 

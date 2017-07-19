@@ -5,16 +5,16 @@
 //===== Last Updated: ========================================
 //= 20170531
 //===== Description: =========================================
-//= Explanation of the achievements_db.conf file and structure.
+//= Explanation of the achievements_db.yml file and structure.
 //============================================================
 
 ---------------------------------------
 
-id: Unique achievement ID.
+ID: Unique achievement ID.
 
 ---------------------------------------
 
-group: Achievement group type. Each achievement type calls a specific objective check.
+Group: Achievement group type. Each achievement type calls a specific objective check.
 Valid groups:
 	AG_ADD_FRIEND - Triggered when a player adds a friend.
 	AG_ADVENTURE - Does not trigger automatically. These are triggered by the achievementcomplete script command.
@@ -42,41 +42,33 @@ Valid groups:
 
 ---------------------------------------
 
-name: Achievement name. Not read into source but used for quick look ups.
+Name: Achievement name. Not read into source but used for quick look ups.
 
 ---------------------------------------
 
-target: A list of monster ID and count values that the achievement requires.
+Target: A list of monster ID and count values that the achievement requires.
 		The target count can also be used for achievements that keep a counter while not being related to monster kills.
 		Capped at MAX_ACHIEVEMENT_OBJECTIVES.
 
 Example:
-	// Player must kill 5 Scorpions and 10 Poring.
-	target: (
-	{
-		mobid: 1001
-		count: 5
-	},
-	{
-		mobid: 1002
-		count: 10
-	}
-	)
+  // Player must kill 5 Scorpions and 10 Poring.
+  Target:
+    - MobID: 1001
+      Count: 5
+    - MobID: 1002
+      Count: 10
 
 Example 2:
-	// Player must have 100 or more of ARG0 value. Using the count target value is useful for achievements that are increased in increments
-	// and not checked for a total (UI_Type = 1).
-	// IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
-	condition: " ARG0 >= 100 "
-	target: (
-	{
-		count: 100
-	}
-	)
+  // Player must have 100 or more of ARG0 value. Using the count target value is useful for achievements that are increased in increments
+  // and not checked for a total (UI_Type = 1).
+  // IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
+  Condition: " ARG0 >= 100 "
+  Target:
+    Count: 100
 
 ---------------------------------------
 
-condition: A conditional statement that must be met for the achievement to be considered complete. Accepts script constants, player variables, and
+Condition: A conditional statement that must be met for the achievement to be considered complete. Accepts script constants, player variables, and
 		   ARGX (where X is the argument vector value). The ARGX values are sent from the server to the achievement script engine on special events.
 		   Below are two examples of how the ARGX feature works.
 
@@ -91,20 +83,20 @@ Example 2:
 
 ---------------------------------------
 
-map: A map name that is used for the AG_CHATTING type which increments the counter based on the player's map.
+Map: A map name that is used for the AG_CHATTING type which increments the counter based on the player's map.
 
 ---------------------------------------
 
-dependent: A list of achievement IDs that need to be completed before this achievement is considered complete.
+Dependent: A list of achievement IDs that need to be completed before this achievement is considered complete.
 
 ---------------------------------------
 
-reward: A list of rewards that are given on completion. All fields are optional.
-	itemid: Item ID
-	amount:	Amount of Item ID (default 1)
-	script: Bonus Script
-	titleid: Title ID
+Reward: A list of rewards that are given on completion. All fields are optional.
+  ItemID: Item ID
+  Amount:	Amount of Item ID (default 1)
+  Script: Bonus Script
+  TitleID: Title ID
 
 ---------------------------------------
 
-score: Achievement points that are given on completion.
+Score: Achievement points that are given on completion.
