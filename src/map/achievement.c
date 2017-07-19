@@ -1009,14 +1009,16 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 	entry->mapindex = -1;
 
 	if (yaml_node_is_defined(wrapper, "Target") && (t = yaml_get_subnode(wrapper, "Target")) && (it = yaml_get_iterator(t)) && yaml_iterator_is_valid(it)) {
-		for (yamlwrapper *tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->target_count < MAX_ACHIEVEMENT_OBJECTIVES; tt = yaml_iterator_next(it)) {
+		yamlwrapper *tt = NULL;
+
+		for (tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->target_count < MAX_ACHIEVEMENT_OBJECTIVES; tt = yaml_iterator_next(it)) {
 			int mobid = 0, count = 0;
 
 			if (yaml_node_is_defined(tt, "MobID") && (mobid = yaml_get_int(tt, "MobID")) && !mobdb_exists(mobid)) { // The mob ID field is not required
 				ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source);
 				continue;
 			}
-			if (yaml_node_is_defined(tt, "Count") && !(count = yaml_get_int(tt, "Count")) || count <= 0) {
+			if (yaml_node_is_defined(tt, "Count") && (!(count = yaml_get_int(tt, "Count")) || count <= 0)) {
 				ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source);
 				continue;
 			}
@@ -1052,7 +1054,9 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 
 	if (yaml_node_is_defined(wrapper, "Dependent") && (t = yaml_get_subnode(wrapper, "Dependent")) && (it = yaml_get_iterator(t))) {
 		if (yaml_iterator_is_valid(it)) {
-			for (yamlwrapper *tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->dependent_count < MAX_ACHIEVEMENT_DEPENDENTS; tt = yaml_iterator_next(it)) {
+			yamlwrapper *tt = NULL;
+
+			for (tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->dependent_count < MAX_ACHIEVEMENT_DEPENDENTS; tt = yaml_iterator_next(it)) {
 				RECREATE(entry->dependents, struct achievement_dependent, entry->dependent_count + 1);
 				entry->dependents[entry->dependent_count].achievement_id = yaml_as_int(tt);
 				entry->dependent_count++;
@@ -1122,7 +1126,9 @@ void achievement_read_db(void)
 		adb_sub = yaml_get_subnode(adb, "Achievements");
 		it = yaml_get_iterator(adb_sub);
 		if (yaml_iterator_is_valid(it)) {
-			for (yamlwrapper *id = yaml_iterator_first(it); yaml_iterator_has_next(it); id = yaml_iterator_next(it)) {
+			yamlwrapper *id = NULL;
+
+			for (id = yaml_iterator_first(it); yaml_iterator_has_next(it); id = yaml_iterator_next(it)) {
 				struct achievement_db *duplicate = &achievement_dummy, *entry = achievement_read_db_sub(id, count, filepath);
 
 				if (!entry) {
