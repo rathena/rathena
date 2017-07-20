@@ -55,7 +55,7 @@ yamlwrapper* yaml_load_file(const char* file_name) {
 	return new yamlwrapper(node);
 }
 
-extern "C++" YAML::Node yaml_get_node(YAML::Node& node, std::string& key) {
+extern "C++" YAML::Node yaml_get_node(const YAML::Node& node,const std::string& key) {
 	if (key.empty())
 		return node;
 

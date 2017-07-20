@@ -11,7 +11,7 @@ LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
-YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g )
+YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
 YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)
 YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
 YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
