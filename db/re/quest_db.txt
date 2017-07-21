@@ -2813,9 +2813,9 @@
 12344,0,3170,3,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
 12345,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
 
-// Episode 15.2
+// Episode 15.2: Central Laboratory
 12346,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Strange Ancient Science"
-12347,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Laboratory Access"
+12347,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Laboratory Access"
 
 12363,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"?????? ?? ??"
 

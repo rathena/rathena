@@ -65,3 +65,6 @@ te_aldecas2	mapflag	nowarpto
 te_aldecas3	mapflag	nowarpto
 te_aldecas4	mapflag	nowarpto
 te_aldecas5	mapflag	nowarpto
+
+// Episode 15
+1@lab	mapflag	nowarpto

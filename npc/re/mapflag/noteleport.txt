@@ -117,3 +117,7 @@ te_aldecas2	mapflag	monster_noteleport
 te_aldecas3	mapflag	monster_noteleport
 te_aldecas4	mapflag	monster_noteleport
 te_aldecas5	mapflag	monster_noteleport
+
+// Episode 15
+1@lab	mapflag	noteleport
+1@lab	mapflag	monster_noteleport

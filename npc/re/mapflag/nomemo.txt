@@ -145,3 +145,6 @@ te_aldecas4	mapflag	nomemo
 te_aldecas5	mapflag	nomemo
 teg_dun01	mapflag	nomemo
 teg_dun02	mapflag	nomemo
+
+// Episode 15
+1@lab	mapflag	nomemo
