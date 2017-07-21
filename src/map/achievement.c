@@ -1123,6 +1123,8 @@ void achievement_read_db(void)
 			continue;
 		}
 
+		if (yaml_node_is_defined(adb, "Achievements"))
+			continue; // Skip if base structure isn't defined
 		adb_sub = yaml_get_subnode(adb, "Achievements");
 		it = yaml_get_iterator(adb_sub);
 		if (yaml_iterator_is_valid(it)) {
