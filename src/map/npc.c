@@ -339,6 +339,17 @@ static int npc_event_export(struct npc_data *nd, int i)
 		struct event_data *ev;
 		char buf[EVENT_NAME_LENGTH];
 
+		if (nd->bl.m > -1 && map[nd->bl.m].instance_id > 0) { // Block script events in instances
+			int i;
+
+			for (i = 0; i < NPCE_MAX; i++) {
+				if (strcmpi(npc_get_script_event_name(i), lname) == 0) {
+					ShowWarning("npc_event_export: attempting to duplicate a script event in an instance (%s::%s), ignoring\n", nd->name, lname);
+					return 0;
+				}
+			}
+		}
+
 		// NPC:<name> the prefix uses 4 characters
 		if( !strncasecmp( lname, script_config.onwhisper_event_name, NAME_LENGTH ) && strlen(nd->exname) > ( NAME_LENGTH - 4 ) ){
 			// The client only allows that many character so that NPC could not be whispered by unmodified clients
@@ -4438,23 +4449,36 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type)
 	return i;
 }
 
+const char *npc_get_script_event_name(int npce_index)
+{
+	switch (npce_index) {
+	case NPCE_LOGIN:
+		return script_config.login_event_name;
+	case NPCE_LOGOUT:
+		return script_config.logout_event_name;
+	case NPCE_LOADMAP:
+		return script_config.loadmap_event_name;
+	case NPCE_BASELVUP:
+		return script_config.baselvup_event_name;
+	case NPCE_JOBLVUP:
+		return script_config.joblvup_event_name;
+	case NPCE_DIE:
+		return script_config.die_event_name;
+	case NPCE_KILLPC:
+		return script_config.kill_pc_event_name;
+	case NPCE_KILLNPC:
+		return script_config.kill_mob_event_name;
+	case NPCE_STATCALC:
+		return script_config.stat_calc_event_name;
+	default:
+		ShowError("npc_get_script_event_name: npce_index is outside the array limits: %d (max: %d).\n", npce_index, NPCE_MAX);
+		return NULL;
+	}
+}
+
 void npc_read_event_script(void)
 {
 	int i;
-	struct {
-		char *name;
-		const char *event_name;
-	} config[] = {
-		{"Login Event",script_config.login_event_name},
-		{"Logout Event",script_config.logout_event_name},
-		{"Load Map Event",script_config.loadmap_event_name},
-		{"Base LV Up Event",script_config.baselvup_event_name},
-		{"Job LV Up Event",script_config.joblvup_event_name},
-		{"Die Event",script_config.die_event_name},
-		{"Kill PC Event",script_config.kill_pc_event_name},
-		{"Kill NPC Event",script_config.kill_mob_event_name},
-		{"Stat Calc Event",script_config.stat_calc_event_name},
-	};
 
 	for (i = 0; i < NPCE_MAX; i++)
 	{
@@ -4463,7 +4487,7 @@ void npc_read_event_script(void)
 		DBData *data;
 		char name[EVENT_NAME_LENGTH];
 
-		safesnprintf(name,EVENT_NAME_LENGTH,"::%s",config[i].event_name);
+		safesnprintf(name,EVENT_NAME_LENGTH,"::%s", npc_get_script_event_name(i));
 
 		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);
@@ -4475,7 +4499,7 @@ void npc_read_event_script(void)
 
 			if( count >= ARRAYLENGTH(script_event[i].event) )
 			{
-				ShowWarning("npc_read_event_script: too many occurences of event '%s'!\n", config[i].event_name);
+				ShowWarning("npc_read_event_script: too many occurences of event '%s'!\n", npc_get_script_event_name(i));
 				break;
 			}
 
@@ -4492,7 +4516,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
+			ShowInfo("%d '%s' events.\n", script_event[i].event_count, npc_get_script_event_name(i));
 	}
 }
 
