@@ -42,7 +42,7 @@ class yamliterator {
 public:
 	YAML::Node sequence;
 	unsigned int index;
-	yamliterator(YAML::Node sequence);
+	yamliterator(YAML::Node sequence_);
 };
 
 class yamlwrapper {

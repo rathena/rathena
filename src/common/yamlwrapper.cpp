@@ -31,8 +31,8 @@ yamlwrapper::yamlwrapper(YAML::Node node) {
 	this->root = node;
 }
 
-yamliterator::yamliterator(YAML::Node sequence) {
-	this->sequence = sequence;
+yamliterator::yamliterator(YAML::Node sequence_) {
+	this->sequence = sequence_;
 	this->index = 0;
 }
 
