@@ -340,10 +340,10 @@ static int npc_event_export(struct npc_data *nd, int i)
 		char buf[EVENT_NAME_LENGTH];
 
 		if (nd->bl.m > -1 && map[nd->bl.m].instance_id > 0) { // Block script events in instances
-			int i;
+			int j;
 
-			for (i = 0; i < NPCE_MAX; i++) {
-				if (strcmpi(npc_get_script_event_name(i), lname) == 0) {
+			for (j = 0; j < NPCE_MAX; j++) {
+				if (strcmpi(npc_get_script_event_name(j), lname) == 0) {
 					ShowWarning("npc_event_export: attempting to duplicate a script event in an instance (%s::%s), ignoring\n", nd->name, lname);
 					return 0;
 				}
