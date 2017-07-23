@@ -657,7 +657,7 @@ void clif_authok(struct map_session_data *sd)
 	const int cmd = 0xa18;
 #endif
 	int fd = sd->fd;
-
+	ShowInfo("Packetver: %d, cmd: %04x", PACKETVER, cmd);
 	WFIFOHEAD(fd,packet_len(cmd));
 	WFIFOW(fd, 0) = cmd;
 	WFIFOL(fd, 2) = gettick();
