@@ -205,8 +205,8 @@ enum equip_pos {
 	EQP_ARMOR            = 0x000010, // 16
 	EQP_SHOES            = 0x000040, // 64
 	EQP_GARMENT          = 0x000004, // 4
-	EQP_ACC_L            = 0x000008, // 8
-	EQP_ACC_R            = 0x000080, // 128
+	EQP_ACC_R            = 0x000008, // 8
+	EQP_ACC_L            = 0x000080, // 128
 	EQP_COSTUME_HEAD_TOP = 0x000400, // 1024
 	EQP_COSTUME_HEAD_MID = 0x000800, // 2048
 	EQP_COSTUME_HEAD_LOW = 0x001000, // 4096
