@@ -2503,7 +2503,6 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 		return;
 
 	WFIFOHEAD(fd,packet_len(header));
-	ShowInfo("Packetlen: %d, PacketId: %04x\n", packet_len(header), header);
 	if( fail )
 	{
 		WFIFOW(fd,offs+0) = header;
