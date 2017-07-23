@@ -1,1 +1,0 @@
-ALTER TABLE `char` ADD COLUMN `hotkey_rowshift` TINYINT(3) UNSIGNED NOT NULL DEFAULT  '0';
