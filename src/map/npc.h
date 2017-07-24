@@ -99,6 +99,11 @@ struct npc_data {
 
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	struct {
+		unsigned int timeout;
+		unsigned long color;
+	} progressbar;
 };
 
 struct eri *npc_sc_display_ers;
