@@ -3177,7 +3177,7 @@ bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_o
 		if ((skill = pc_checkskill(sd, ALL_INCCARRY)) > 0)
 			sd->max_weight += 2000 * skill;
 		if (pc_ismadogear(sd))
-			sd->max_weight += 1500;
+			sd->max_weight += 15000;
 	}
 
 	// Update the client if the new weight calculations don't match
