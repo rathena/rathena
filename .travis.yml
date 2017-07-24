@@ -27,8 +27,8 @@ before_script:
   - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
-  - sudo apt-get install gcc-4.8 -y
-  - sudo apt-get install g++-4.8 -y
+  - sudo apt-get install gcc-5 -y
+  - sudo apt-get install g++-5 -y
 
 script:
   - ./configure $CONFIGURE_FLAGS
