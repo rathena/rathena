@@ -2226,7 +2226,7 @@
 #endif
 
 // 2015-05-13aRagexe
-#if PACKETVER >= 20150513
+#if PACKETVER >= 20150422
 	// New Packets
 	packet(0xA3B,-1); // ZC_HAT_EFFECT
 	// RODEX Mail system
@@ -2262,6 +2262,9 @@
 	packet(0x0A0B,47); // ZC_ADD_ITEM_TO_CART3
 	packet(0x0A0C,56); // ZC_ITEM_PICKUP_ACK_V6
 	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
+#endif
+
+#if PACKETVER >= 20150513
 	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6
 	packet(0x0A10,-1); // ZC_STORE_ITEMLIST_EQUIP_V6
 	packet(0x0A2D,-1); // ZC_EQUIPWIN_MICROSCOPE_V6
