@@ -1,8 +1,13 @@
 language: cpp
-compiler:
-  - clang
-  - gcc-5
-dist: trusty
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - clang
+    - gcc-5
+    - g++-5
 
 before_script:
   - uname -a
@@ -25,10 +30,6 @@ before_script:
   - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db2_re.sql || aborterror "Unable to import renewal monster skill 2 table."
   - mysql -u $DB_ROOT $DB_NAME < sql-files/roulette_default_data.sql || aborterror "Unable to import roulette table."
   - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -q
-  - sudo apt-get install gcc-5 -y
-  - sudo apt-get install g++-5 -y
 
 script:
   - ./configure $CONFIGURE_FLAGS
