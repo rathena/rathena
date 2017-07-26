@@ -556,7 +556,6 @@ static void mapif_parse_PartyInfo(int fd, int party_id, uint32 char_id)
 {
 	struct party_data *p;
 	p = inter_party_fromsql(party_id);
-
 	if (p)
 		mapif_party_info(fd, &p->party, char_id);
 	else
@@ -610,7 +609,8 @@ int mapif_parse_PartyChangeOption(int fd,int party_id,uint32 account_id,int exp,
 
 	if(!p)
 		return 0;
-
+	if (p->size == 2 || p->size == 3) //check family state. Also accept either of their parents.
+		int_party_calc_state(p);
 	p->party.exp=exp;
 	if( exp && !party_check_exp_share(p) ){
 		flag|=0x01;
