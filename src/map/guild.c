@@ -1486,6 +1486,13 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 		return 0;
 	}
 
+	// Check, is sd guild master, if not - cancel alliance. [f0und3r]
+	if (!sd->state.gmaster_flag) {
+		clif_guild_allianceack(sd, 1);
+		clif_guild_allianceack(tsd, 3);
+		return 0;
+	}
+
 	if (sd->guild_alliance != tsd->status.guild_id) // proposed guild_id alliance doesn't match tsd guildid
 		return 0;
 
