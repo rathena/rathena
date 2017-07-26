@@ -6393,8 +6393,21 @@ This command works almost like sleep2, but displays a progress bar
 above the head of the currently attached character (like cast bar).
 Once the given amount of seconds passes, the script resumes. If the
 character moves while the progress bar progresses, it is aborted and
-the script ends. The color format is in RGB (0xRRGGBB). The color is
+the script ends. The color format is in RGB (RRGGBB). The color is
 currently ignored by the client and appears always green.
+
+---------------------------------------
+
+*progressbar_npc "<color>",<seconds>{,<"NPC Name">};
+
+This command works like progressbar, but displays a progress bar
+above the head of the currently attached (or given) NPC. Once the
+given amount of seconds passes, the script resumes. The color format
+is in RGB (RRGGBB). The color is currently ignored by the client and
+appears always green.
+
+Note: If a player is attached to the NPC, they are detached from the NPC
+as soon as the progress bar activates.
 
 ---------------------------------------
 //

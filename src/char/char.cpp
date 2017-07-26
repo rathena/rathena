@@ -2320,7 +2320,7 @@ bool char_checkdb(void){
 	//checking guild_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`name`,`char_id`,`master`,`guild_lv`,"
 			"`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,"
-			"`emblem_len`,`emblem_id`,`emblem_data`"
+			"`emblem_len`,`emblem_id`,`emblem_data`,`last_master_change`"
 			" FROM `%s` LIMIT 1;", schema_config.guild_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;

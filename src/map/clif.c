@@ -1467,6 +1467,7 @@ int clif_spawn(struct block_list *bl)
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect(&nd->bl,421,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
+			clif_progressbar_npc_area(nd);
 		}
 		break;
 	case BL_PET:
@@ -4641,6 +4642,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect_single(bl,421,sd->fd);
 			clif_efst_status_change_sub(&sd->bl, bl, SELF);
+			clif_progressbar_npc(nd, sd);
 		}
 		break;
 	case BL_MOB:
@@ -10640,6 +10642,26 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd)
 	npc_scriptcont(sd, npc_id, false);
 }
 
+/// Displays cast-like progress bar on a NPC
+/// 09d1 <id>.L <color>.L <time>.L (ZC_PROGRESS_ACTOR)
+void clif_progressbar_npc( struct npc_data *nd, struct map_session_data* sd ){
+#if PACKETVER >= 20130821
+	unsigned char buf[14];
+
+	if( nd->progressbar.timeout > 0 ){
+		WBUFW(buf,0) = 0x9d1;
+		WBUFL(buf,2) = nd->bl.id;
+		WBUFL(buf,6) = nd->progressbar.color;
+		WBUFL(buf,10) = ( nd->progressbar.timeout - gettick() ) / 1000;
+
+		if( sd ){
+			clif_send(buf, packet_len(0x9d1), &sd->bl, SELF);
+		}else{
+			clif_send(buf, packet_len(0x9d1), &nd->bl, AREA);
+		}
+	}
+#endif
+}
 
 /// Request to walk to a certain position on the current map.
 /// 0085 <dest>.3B (CZ_REQUEST_MOVE)
@@ -11432,8 +11454,16 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 				break;
 			}
 #endif
-			if( bl->m != -1 )// the user can't click floating npcs directly (hack attempt)
-				npc_click(sd,(TBL_NPC*)bl);
+			if( bl->m != -1 ){ // the user can't click floating npcs directly (hack attempt)
+				struct npc_data* nd = (struct npc_data*)bl;
+
+				// Progressbar is running
+				if( nd->progressbar.timeout > 0 ){
+					return;
+				}
+
+				npc_click(sd,nd);
+			}
 			break;
 	}
 }

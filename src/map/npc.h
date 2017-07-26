@@ -99,6 +99,11 @@ struct npc_data {
 
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	struct {
+		unsigned int timeout;
+		unsigned long color;
+	} progressbar;
 };
 
 struct eri *npc_sc_display_ers;
@@ -159,6 +164,7 @@ void npc_parse_mob2(struct spawn_data* mob);
 bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
+const char *npc_get_script_event_name(int npce_index);
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
