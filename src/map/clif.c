@@ -15018,7 +15018,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 	int i, j, k, offset, titleLength;
 	uint8 mailType, amount, remaining;
 	uint32 now = (uint32)time(NULL);
-#if PACKETVER >= 20170228
+#if PACKETVER >= 20170419
 	int cmd = 0xac2;
 #elif PACKETVER >= 20160601
 	int cmd = 0xa7d;
@@ -15030,7 +15030,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		mail_refresh_remaining_amount(sd);
 	}
 
-#if PACKETVER >= 20170228
+#if PACKETVER >= 20170419
 	// Always send all
 	i = md->amount;
 #else
@@ -15057,13 +15057,13 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 #endif
 	
 	// Count the remaining mails from the starting mail or the beginning
-	// Only count mails of the target type(before 2017-02-28) and those that should not have been deleted already
+	// Only count mails of the target type(before 2017-04-19) and those that should not have been deleted already
 	for( j = i, remaining = 0; j >= 0; j-- ){
 		msg = &md->msg[j];
 
 		if (msg->id < 1)
 			continue;
-#if PACKETVER < 20170228
+#if PACKETVER < 20170419
 		if (msg->type != type)
 			continue;
 #endif
@@ -15073,7 +15073,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		remaining++;
 	}
 
-#if PACKETVER >= 20170228
+#if PACKETVER >= 20170419
 	// Always send all
 	amount = remaining;
 #else
@@ -15086,7 +15086,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 
 	WFIFOHEAD(fd, 7 + ((44 + MAIL_TITLE_LENGTH) * amount));
 	WFIFOW(fd, 0) = cmd;
-#if PACKETVER >= 20170228
+#if PACKETVER >= 20170419
 	WFIFOB(fd, 4) = 1; // Unknown
 	offset = 5;
 #else
@@ -15101,14 +15101,14 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 
 		if (msg->id < 1)
 			continue;
-#if PACKETVER < 20170228
+#if PACKETVER < 20170419
 		if (msg->type != type)
 			continue;
 #endif
 		if (msg->scheduled_deletion > 0 && msg->scheduled_deletion <= now)
 			continue;
 
-#if PACKETVER >= 20170228
+#if PACKETVER >= 20170419
 		WFIFOB(fd, offset) = msg->type;
 		offset += 1;
 #endif
@@ -15135,7 +15135,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		WFIFOB(fd, offset + 9) = mailType;
 		safestrncpy(WFIFOCP(fd, offset + 10), msg->send_name, NAME_LENGTH);
 
-#if PACKETVER < 20170228
+#if PACKETVER < 20170419
 		// How much time has passed since you received the mail
 		WFIFOL(fd, offset + 34 ) = now - (uint32)msg->timestamp;
 		offset += 4;
@@ -15180,7 +15180,7 @@ void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd){
 	mail_removezeny(sd, false);
 #else
 	int cmd = RFIFOW(fd, 0);
-#if PACKETVER < 20170228
+#if PACKETVER < 20170419
 	uint8 openType = RFIFOB(fd, 2);
 	uint64 mailId = RFIFOQ(fd, 3);
 #else
