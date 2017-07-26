@@ -1487,7 +1487,7 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 	}
 
 	// Check, is sd guild master, if not - cancel alliance. [f0und3r]
-	if (!sd->state.gmaster_flag) {
+	if (battle_config.guild_alliance_onlygm && !sd->state.gmaster_flag) {
 		clif_guild_allianceack(sd, 1);
 		clif_guild_allianceack(tsd, 3);
 		return 0;
