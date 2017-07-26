@@ -974,7 +974,7 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 	yamliterator *it;
 	enum e_achievement_group group = AG_NONE;
 	int score = 0, achievement_id = 0;
-	const char *group_char = NULL, *name = NULL, *condition = NULL, *mapname = NULL;
+	char *group_char = NULL, *name = NULL, *condition = NULL, *mapname = NULL;
 
 	if (!yaml_node_is_defined(wrapper, "ID")) {
 		ShowWarning("achievement_read_db_sub: Missing ID in \"%s\", entry #%d, skipping.\n", source, n);
@@ -995,6 +995,7 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 		ShowWarning("achievement_read_db_sub: Invalid group %s for achievement %d in \"%s\", skipping.\n", group_char, achievement_id, source);
 		return NULL;
 	}
+	aFree(group_char);
 
 	if (!yaml_node_is_defined(wrapper, "Name")) {
 		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", name, achievement_id, source);
@@ -1006,6 +1007,7 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 	entry->achievement_id = achievement_id;
 	entry->group = group;
 	safestrncpy(entry->name, name, sizeof(entry->name));
+	aFree(name);
 	entry->mapindex = -1;
 
 	if (yaml_node_is_defined(wrapper, "Target") && (t = yaml_get_subnode(wrapper, "Target")) && (it = yaml_get_iterator(t)) && yaml_iterator_is_valid(it)) {
@@ -1038,8 +1040,10 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 		yaml_iterator_destroy(it);
 	}
 
-	if (yaml_node_is_defined(wrapper, "Condition") && (condition = yaml_get_c_string(wrapper, "Condition")))
+	if (yaml_node_is_defined(wrapper, "Condition") && (condition = yaml_get_c_string(wrapper, "Condition"))){
 		entry->condition = parse_condition(condition, source, n);
+		aFree(condition);
+	}
 
 	if (yaml_node_is_defined(wrapper, "Map") && (mapname = yaml_get_c_string(wrapper, "Map"))) {
 		if (group != AG_CHAT)
@@ -1050,6 +1054,7 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 			if (entry->mapindex == -1)
 				ShowWarning("achievement_read_db_sub: Invalid map name %s for achievement %d in \"%s\".\n", mapname, achievement_id, source);
 		}
+		aFree(mapname);
 	}
 
 	if (yaml_node_is_defined(wrapper, "Dependent") && (t = yaml_get_subnode(wrapper, "Dependent")) && (it = yaml_get_iterator(t))) {
@@ -1068,7 +1073,7 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 	}
 
 	if (yaml_node_is_defined(wrapper, "Reward") && (t = yaml_get_subnode(wrapper, "Reward"))) {
-		const char *script_char = NULL;
+		char *script_char = NULL;
 		int nameid = 0, amount = 0, titleid = 0;
 
 		if (yaml_node_is_defined(t, "ItemID") && (nameid = yaml_get_int(t, "ItemID"))) {
@@ -1083,8 +1088,10 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 			if (yaml_node_is_defined(t, "Amount") && (amount = yaml_get_int(t, "Amount")) && amount > 0 && nameid)
 				entry->rewards.amount = amount;
 		}
-		if (yaml_node_is_defined(t, "Script") && (script_char = yaml_get_c_string(t, "Script")))
+		if (yaml_node_is_defined(t, "Script") && (script_char = yaml_get_c_string(t, "Script"))){
 			entry->rewards.script = parse_script(script_char, source, achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			aFree(script_char);
+		}
 		if (yaml_node_is_defined(t, "TitleID") && (titleid = yaml_get_int(t, "TitleID")) && titleid > 0)
 			entry->rewards.title_id = titleid;
 	}
