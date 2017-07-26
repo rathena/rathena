@@ -4761,10 +4761,6 @@ int do_init(int argc, char *argv[])
 		shutdown_callback = do_shutdown;
 		runflag = MAPSERVER_ST_RUNNING;
 	}
-#if defined(BUILDBOT)
-	if( buildbotflag )
-		exit(EXIT_FAILURE);
-#endif
 
 	if( console ){ //start listening
 		add_timer_func_list(parse_console_timer, "parse_console_timer");
