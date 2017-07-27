@@ -1434,12 +1434,6 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd) 
 	if(tsd==NULL || tsd->status.guild_id<=0)
 		return 0;
 
-	// Check, is tsd guild master, if not - cancel alliance. [f0und3r]
-	if (battle_config.guild_alliance_onlygm && !tsd->state.gmaster_flag) {
-		clif_guild_allianceack(tsd, 5);
-		return 0;
-	}
-
 	g[0]=sd->guild;
 	g[1]=tsd->guild;
 
@@ -1489,6 +1483,13 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 	tsd= map_id2sd( account_id );
 	if (!tsd) { //Character left? Cancel alliance.
 		clif_guild_allianceack(sd,3);
+		return 0;
+	}
+
+	// Check, is sd guild master, if not - cancel alliance. [f0und3r]
+	if (battle_config.guild_alliance_onlygm && !sd->state.gmaster_flag) {
+		clif_guild_allianceack(sd, 1);
+		clif_guild_allianceack(tsd, 3);
 		return 0;
 	}
 
