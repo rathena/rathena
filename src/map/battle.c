@@ -8427,6 +8427,7 @@ static const struct _battle_data {
 	{ "banana_bomb_duration",				&battle_config.banana_bomb_duration,			0,		0,		UINT16_MAX,		},
 	{ "guild_leaderchange_delay",			&battle_config.guild_leaderchange_delay,		1440,	0,		INT32_MAX,		},
 	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
+	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, },
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
