@@ -2323,6 +2323,12 @@
 	packet(0x0AA5,-1);
 #endif
 
+// 2017-04-19bRagexeRE
+#if PACKETVER >= 20170419
+	parseable_packet(0x0AC0,26,clif_parse_Mail_refreshinbox,2,10);
+	parseable_packet(0x0AC1,26,clif_parse_Mail_refreshinbox,2,10);
+#endif
+
 // 2017-05-02dRagexeRE
 #if PACKETVER >= 20170502
 	packet(0x0A43,85);
