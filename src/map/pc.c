@@ -949,6 +949,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 		pc_skill(p1_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
 		pc_skill(p2_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
 
+		chrif_save(p1_sd, CSAVE_NORMAL);
+		chrif_save(p2_sd, CSAVE_NORMAL);
+		chrif_save(b_sd, CSAVE_NORMAL);
+
 		achievement_update_objective(b_sd, AG_BABY, 1, 1);
 		achievement_update_objective(p1_sd, AG_BABY, 1, 2);
 		achievement_update_objective(p2_sd, AG_BABY, 1, 2);
