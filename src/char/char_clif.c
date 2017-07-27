@@ -303,8 +303,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 //----------------------------------------
 void chclif_charlist_notify( int fd, struct char_session_data* sd ){
 // This is needed on RE clients from october 2015 onwards
-// If you want to use one replace false by true here
-#if false && PACKETVER >= 20151001
+#if defined(PACKETVER_RE) && PACKETVER >= 20151001
 	WFIFOHEAD(fd, 10);
 	WFIFOW(fd, 0) = 0x9a0;
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
@@ -324,21 +323,25 @@ void chclif_charlist_notify( int fd, struct char_session_data* sd ){
 // Function to send characters to a player
 //----------------------------------------
 int chclif_mmo_send006b(int fd, struct char_session_data* sd){
-	int j, offset = 0;
-	bool newvers = (sd->version >= date2version(20100413) );
-	if(newvers) //20100413
-		offset += 3;
+	int j, offset;
+
+#if PACKETVER >= 20100413
+	offset = 3;
+#else
+	offset = 0;
+#endif
+
 	if (charserv_config.save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
-	if(newvers){ //20100413
+#if PACKETVER >= 20100413
 		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
 		WFIFOB(fd,5) = MIN_CHARS; // Available slots. (PremiumStartSlot)
 		WFIFOB(fd,6) = MIN_CHARS+sd->chars_vip; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
-	}
+#endif
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=char_mmo_chars_fromsql(sd, WFIFOP(fd,j));
 	WFIFOW(fd,2) = j; // packet len
@@ -377,16 +380,18 @@ void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
  * Function to choose wich kind of charlist to send to client depending on his version
  */
 void chclif_mmo_char_send(int fd, struct char_session_data* sd){
-	ShowInfo("sd->version = %d\n",sd->version);
-	if(sd->version >= date2version(20130000) ){
-		chclif_mmo_send082d(fd,sd);
-		chclif_mmo_send006b(fd,sd);
-		chclif_charlist_notify(fd,sd);
-	} else
-		chclif_mmo_send006b(fd,sd);
+#if PACKETVER >= 20130000
+	chclif_mmo_send082d(fd, sd);
+	chclif_mmo_send006b(fd, sd);
+	chclif_charlist_notify(fd, sd);
+#else
+	chclif_mmo_send006b(fd,sd);
 	//@FIXME dump from kro doesn't show 6b transmission
-	if(sd->version >= date2version(20060819) )
- 		chclif_block_character(fd,sd);
+#endif
+
+#if PACKETVER >= 20060819
+ 	chclif_block_character(fd,sd);
+#endif
 }
 
 /*
@@ -435,14 +440,11 @@ void chclif_char_delete2_ack(int fd, uint32 char_id, uint32 result, time_t delet
 /// Any (0x718): An unknown error has occurred.
 /// HC: <082a>.W <char id>.L <Msg:0-5>.L
 void chclif_char_delete2_accept_ack(int fd, uint32 char_id, uint32 result) {
+#if PACKETVER >= 20130000
 	if(result == 1 ){
-		struct char_session_data* sd;
-		sd = (struct char_session_data*)session[fd]->session_data;
-
-		if( sd->version >= date2version(20130000) ){
-			chclif_mmo_char_send(fd, sd);
-		}
+		chclif_mmo_char_send(fd, session[fd]->session_data);
 	}
+#endif
 
 	WFIFOHEAD(fd,10);
 	WFIFOW(fd,0) = 0x82a;
@@ -751,7 +753,6 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 			node->login_id2  == login_id2 /*&&
 			node->ip         == ipl*/ )
 		{// authentication found (coming from map server)
-			sd->version = node->version;
 			idb_remove(auth_db, account_id);
 			char_auth_ok(fd, sd);
 		}

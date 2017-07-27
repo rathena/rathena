@@ -289,7 +289,6 @@ struct map_session_data {
 	int count_rewarp; //count how many time we being rewarped
 
 	int langtype;
-	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 
 	// Item Storages
@@ -603,6 +602,21 @@ struct map_session_data {
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
 	struct quest *quest_log; ///< Quest log entries (note: Q_COMPLETE quests follow the first <avail_quests>th enties
 	bool save_quest;         ///< Whether the quest_log entries were modified and are waitin to be saved
+
+	// Achievement log system
+	struct s_achievement_data {
+		int total_score;                  ///< Total achievement points
+		int level;                        ///< Achievement level
+		bool save;                        ///< Flag to know if achievements need to be saved
+		bool sendlist;                    ///< Flag to know if all achievements should be sent to the player (refresh list if an achievement has a title)
+		uint16 count;                     ///< Total achievements in log
+		uint16 incompleteCount;           ///< Total incomplete achievements in log
+		struct achievement *achievements; ///< Achievement log entries
+	} achievement_data;
+
+	// Title system
+	int *titles;
+	uint8 titleCount;
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;

@@ -39,17 +39,18 @@ struct sale_item_data;
 enum mail_inbox_type;
 struct mail_message;
 enum mail_attachment_type;
+struct achievement;
 #include <stdarg.h>
 
 enum { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_VER = 55,
 	MAX_PACKET_POS = 20,
 };
 
 enum e_packet_ack {
 	ZC_ACK_OPEN_BANKING = 0,
+	ZC_ACK_CLOSE_BANKING,
 	ZC_ACK_BANKING_DEPOSIT,
 	ZC_ACK_BANKING_WITHDRAW,
 	ZC_BANKING_CHECK,
@@ -171,11 +172,9 @@ enum e_party_invite_reply {
 	PARTY_REPLY_INVALID_MAPPROPERTY_ME, ///< return=9 : !TODO "Cannot join a party in this map" -> MsgStringTable[1871] (since 20110205)
 };
 
-// packet_db[SERVER] is reserved for server use
-#define SERVER 0
-#define packet_len(cmd) packet_db[SERVER][cmd].len
-extern struct s_packet_db packet_db[MAX_PACKET_VER+1][MAX_PACKET_DB+1];
-extern int packet_db_ack[MAX_PACKET_VER + 1][MAX_ACK_FUNC + 1];
+#define packet_len(cmd) packet_db[cmd].len
+extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
+extern int packet_db_ack[MAX_ACK_FUNC + 1];
 
 // local define
 typedef enum send_target {
@@ -534,7 +533,6 @@ void clif_setport(uint16 port);
 uint32 clif_getip(void);
 uint32 clif_refresh_ip(void);
 uint16 clif_getport(void);
-void packetdb_readdb(bool reload);
 
 void clif_authok(struct map_session_data *sd);
 void clif_authrefuse(int fd, uint8 error_code);
@@ -930,6 +928,8 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 // Progress Bar [Inkfish]
 void clif_progressbar(struct map_session_data * sd, unsigned long color, unsigned int second);
 void clif_progressbar_abort(struct map_session_data * sd);
+void clif_progressbar_npc(struct npc_data *nd, struct map_session_data* sd);
+#define clif_progressbar_npc_area(nd) clif_progressbar_npc((nd),NULL)
 
 void clif_PartyBookingRegisterAck(struct map_session_data *sd, int flag);
 void clif_PartyBookingDeleteAck(struct map_session_data* sd, int flag);
@@ -1051,6 +1051,12 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(struct map_session_data *sd);
+
+/// Achievement System
+void clif_achievement_list_all(struct map_session_data *sd);
+void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
+void clif_pAchievementCheckReward(int fd, struct map_session_data *sd);
+void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
 #ifdef __cplusplus
 }

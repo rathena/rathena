@@ -80,6 +80,7 @@ struct Schema_Config {
 	char char_reg_num_table[DB_NAME_LEN];
 	char clan_table[DB_NAME_LEN];
 	char clan_alliance_table[DB_NAME_LEN];
+	char achievement_table[DB_NAME_LEN];
 };
 extern struct Schema_Config schema_config;
 
@@ -222,7 +223,6 @@ struct char_session_data {
 	uint8 char_slots; // total number of characters that can be created
 	uint8 chars_vip;
 	uint8 chars_billing;
-	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
 	char birthdate[10+1];  // YYYY-MM-DD

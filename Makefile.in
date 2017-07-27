@@ -5,10 +5,10 @@ OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
 	SERVER_DEPENDS=common login char map import
-	COMMON_DEPENDS=mt19937ar libconfig
+	COMMON_DEPENDS=mt19937ar libconfig yaml-cpp
 	LOGIN_DEPENDS=mt19937ar libconfig common
 	CHAR_DEPENDS=mt19937ar libconfig common
-	MAP_DEPENDS=mt19937ar libconfig common
+	MAP_DEPENDS=mt19937ar libconfig common yaml-cpp
 else
 	ALL_DEPENDS=needs_mysql
 	SERVER_DEPENDS=needs_mysql
@@ -93,7 +93,7 @@ help:
 	@echo "'common'      - builds object files used for the three servers"
 	@echo "'mt19937ar'   - builds object file of Mersenne Twister MT19937"
 	@echo "'libconfig'   - builds object files of libconfig"
-	@echo "'libconfig'   - builds object files of yaml-cpp"
+	@echo "'yaml-cpp'    - builds object files of yaml-cpp"
 	@echo "'login'       - builds login server"
 	@echo "'char'        - builds char server"
 	@echo "'map'         - builds map server"

@@ -8194,8 +8194,6 @@ static const struct _battle_data {
 	{ "night_at_start",                     &battle_config.night_at_start,                  0,      0,      1,              },
 	{ "show_mob_info",                      &battle_config.show_mob_info,                   0,      0,      1|2|4,          },
 	{ "ban_hack_trade",                     &battle_config.ban_hack_trade,                  0,      0,      INT_MAX,        },
-	{ "packet_ver_flag",                    &battle_config.packet_ver_flag,                 0x7FFFFFFF,0,   INT_MAX,        },
-	{ "packet_ver_flag2",                   &battle_config.packet_ver_flag2,                0x7FFFFFFF,0,   INT_MAX,        },
 	{ "min_hair_style",                     &battle_config.min_hair_style,                  0,      0,      INT_MAX,        },
 	{ "max_hair_style",                     &battle_config.max_hair_style,                  23,     0,      INT_MAX,        },
 	{ "min_hair_color",                     &battle_config.min_hair_color,                  0,      0,      INT_MAX,        },
@@ -8429,6 +8427,7 @@ static const struct _battle_data {
 	{ "banana_bomb_duration",				&battle_config.banana_bomb_duration,			0,		0,		UINT16_MAX,		},
 	{ "guild_leaderchange_delay",			&battle_config.guild_leaderchange_delay,		1440,	0,		INT32_MAX,		},
 	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
+	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8549,6 +8548,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_roulette) {
 		ShowWarning("conf/battle/feature.conf roulette is enabled but it requires PACKETVER 2014-10-22 or newer, disabling...\n");
 		battle_config.feature_roulette = 0;
+	}
+#endif
+
+#if PACKETVER < 20150513
+	if (battle_config.feature_achievement) {
+		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
+		battle_config.feature_achievement = 0;
 	}
 #endif
 

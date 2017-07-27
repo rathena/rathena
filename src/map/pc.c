@@ -34,6 +34,7 @@
 #include "party.h" // party_search()
 #include "storage.h"
 #include "quest.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -948,6 +949,14 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 		pc_skill(p1_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
 		pc_skill(p2_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
 
+		chrif_save(p1_sd, CSAVE_NORMAL);
+		chrif_save(p2_sd, CSAVE_NORMAL);
+		chrif_save(b_sd, CSAVE_NORMAL);
+
+		achievement_update_objective(b_sd, AG_BABY, 1, 1);
+		achievement_update_objective(p1_sd, AG_BABY, 1, 2);
+		achievement_update_objective(p2_sd, AG_BABY, 1, 2);
+
 		return true;
 	}
 
@@ -1228,10 +1237,10 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	//display login notice
 	ShowInfo("'"CL_WHITE"%s"CL_RESET"' logged in."
 	         " (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
-	         " Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
+	         " IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
 	         " Group '"CL_WHITE"%d"CL_RESET"').\n",
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
-	         sd->packet_ver, CONVIP(ip), sd->group_id);
+	         CONVIP(ip), sd->group_id);
 	// Send friends list
 	clif_friendslist_send(sd);
 
@@ -1453,6 +1462,17 @@ void pc_reg_received(struct map_session_data *sd)
 #endif
 	intif_Mail_requestinbox(sd->status.char_id, 0, MAIL_INBOX_NORMAL); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
+
+	if (battle_config.feature_achievement) {
+		sd->achievement_data.total_score = 0;
+		sd->achievement_data.level = 0;
+		sd->achievement_data.save = false;
+		sd->achievement_data.sendlist = false;
+		sd->achievement_data.count = 0;
+		sd->achievement_data.incompleteCount = 0;
+		sd->achievement_data.achievements = NULL;
+		intif_request_achievements(sd->status.char_id);
+	}
 
 	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
@@ -4311,6 +4331,8 @@ char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
+	achievement_update_objective(sd, AG_GET_ZENY, 1, sd->status.zeny);
+
 	return 0;
 }
 
@@ -4553,6 +4575,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			pc_inventory_rental_add(sd, seconds);
 		}
 	}
+
+	achievement_update_objective(sd, AG_GET_ITEM, 1, id->value_sell);
 
 	return ADDITEM_SUCCESS;
 }
@@ -5006,13 +5030,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 		else
 			clif_useitemack(sd, n, 0, false);
 	}
-	if(item.card[0]==CARD0_CREATE &&
-		pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
-	{
+	if (item.card[0]==CARD0_CREATE && pc_famerank(MakeDWord(item.card[2],item.card[3]), MAPID_ALCHEMIST))
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
-		 if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
-			 potion_flag = 3; //Even more effective potions.
-	}
 
 	//Update item use time.
 	sd->canuseitem_tick = tick + battle_config.item_use_interval;
@@ -6438,6 +6457,8 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		party_send_levelup(sd);
 
 	pc_baselevelchanged(sd);
+	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.base_level);
+	achievement_update_objective(sd, AG_GOAL_STATUS, 2, sd->status.base_level, sd->status.class_);
 	return 1;
 }
 
@@ -6485,6 +6506,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		clif_status_change(&sd->bl,SI_DEVIL, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
+	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
 	return 1;
 }
 
@@ -6937,6 +6959,8 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 	clif_statusupack(sd, type, 1, final_value); // required
 	if( final_value > 255 )
 		clif_updatestatus(sd, type); // send after the 'ack' to override the truncated value
+
+	achievement_update_objective(sd, AG_GOAL_STATUS, 1, final_value);
 
 	return true;
 }
@@ -8243,56 +8267,59 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
 	return;
 }
 
-/*==========================================
- * HP/SP Recovery
- * Heal player hp and/or sp linearly.
- * Calculate bonus by status.
- *------------------------------------------*/
-int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
+/**
+ * Heal player HP and/or SP linearly. Calculate any bonus based on active statuses.
+ * @param sd: Player data
+ * @param itemid: Item ID
+ * @param hp: HP to heal
+ * @param sp: SP to heal
+ * @return Amount healed to an object
+ */
+int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 {
 	int bonus, tmp, penalty = 0;
 
-	if(hp) {
+	if (hp) {
 		int i;
-		bonus = 100 + (sd->battle_status.vit<<1)
-			+ pc_checkskill(sd,SM_RECOVERY)*10
-			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
+
+		bonus = 100 + (sd->battle_status.vit << 1) + pc_checkskill(sd, SM_RECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
-		if (potion_flag > 1)
-			bonus += bonus*(potion_flag-1)*50/100;
+		if (potion_flag == 2) {
+			bonus += 50;
+			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
+				bonus += 100; // Receive an additional +100% effect from ranked potions to HP only
+		}
 		//All item bonuses.
 		bonus += sd->bonus.itemhealrate2;
 		//Item Group bonuses
-		bonus += bonus*pc_get_itemgroup_bonus(sd, itemid)/100;
+		bonus += pc_get_itemgroup_bonus(sd, itemid);
 		//Individual item bonuses.
-		for(i = 0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid; i++)
-		{
+		for(i = 0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid; i++) {
 			if (sd->itemhealrate[i].nameid == itemid) {
-				bonus += bonus*sd->itemhealrate[i].rate/100;
+				bonus += sd->itemhealrate[i].rate;
 				break;
 			}
 		}
 
-		tmp = hp * bonus / 100;  // overflow check
-		if(bonus != 100 && tmp > hp)
-			hp = tmp;
-
 		// Recovery Potion
-		if( sd->sc.data[SC_INCHEALRATE] )
-			hp += (int)(hp * sd->sc.data[SC_INCHEALRATE]->val1/100.);
+		if (sd->sc.data[SC_INCHEALRATE])
+			bonus += sd->sc.data[SC_INCHEALRATE]->val1;
 		// 2014 Halloween Event : Pumpkin Bonus
-		if(sd->sc.data[SC_MTF_PUMPKIN] && itemid == ITEMID_PUMPKIN)
-			hp += (int)(hp * sd->sc.data[SC_MTF_PUMPKIN]->val1 / 100.);
-	}
-	if(sp) {
-		bonus = 100 + (sd->battle_status.int_<<1)
-			+ pc_checkskill(sd,MG_SRECOVERY)*10
-			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
-		if (potion_flag > 1)
-			bonus += bonus*(potion_flag-1)*50/100;
+		if (sd->sc.data[SC_MTF_PUMPKIN] && itemid == ITEMID_PUMPKIN)
+			bonus += sd->sc.data[SC_MTF_PUMPKIN]->val1;
 
-		tmp = sp * bonus / 100;
-		if(bonus != 100 && tmp > sp)
+		tmp = hp * bonus / 100; // Overflow check
+		if (bonus != 100 && tmp > hp)
+			hp = tmp;
+	}
+	if (sp) {
+		bonus = 100 + (sd->battle_status.int_ << 1) + pc_checkskill(sd, MG_SRECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
+		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
+		if (potion_flag == 2)
+			bonus += 50;
+
+		tmp = sp * bonus / 100; // Overflow check
+		if (bonus != 100 && tmp > sp)
 			sp = tmp;
 	}
 	if (sd->sc.count) {
@@ -8306,11 +8333,6 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if (sd->sc.data[SC_NORECOVER_STATE])
 			penalty = 100;
 
-		if (penalty > 0) {
-			hp -= hp * penalty / 100;
-			sp -= sp * penalty / 100;
-		}
-
 		if (sd->sc.data[SC_VITALITYACTIVATION]) {
 			hp += hp / 2; // 1.5 times
 			sp -= sp / 2;
@@ -8320,6 +8342,12 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 			hp += hp / 10;
 			sp += sp / 10;
 		}
+
+		if (penalty > 0) {
+			hp -= hp * penalty / 100;
+			sp -= sp * penalty / 100;
+		}
+
 #ifdef RENEWAL
 		if (sd->sc.data[SC_EXTREMITYFIST2])
 			sp = 0;
@@ -8581,6 +8609,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
 	pc_show_questinfo(sd);
+	achievement_update_objective(sd, AG_JOB_CHANGE, 2, sd->status.base_level, job);
 	if( sd->status.party_id ){
 		struct party_data* p;
 		
@@ -10132,6 +10161,10 @@ bool pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 		return false;
 	sd->status.partner_id = dstsd->status.char_id;
 	dstsd->status.partner_id = sd->status.char_id;
+
+	achievement_update_objective(sd, AG_MARRY, 1, 1);
+	achievement_update_objective(dstsd, AG_MARRY, 1, 1);
+
 	return true;
 }
 

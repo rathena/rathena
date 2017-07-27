@@ -300,7 +300,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom) || (p->delete_date != cp->delete_date) ||
 		(p->rename != cp->rename) || (p->robe != cp->robe) || (p->character_moves != cp->character_moves) ||
 		(p->unban_time != cp->unban_time) || (p->font != cp->font) || (p->uniqueitem_counter != cp->uniqueitem_counter) ||
-		(p->hotkey_rowshift != cp->hotkey_rowshift) || (p->clan_id != cp->clan_id )
+		(p->hotkey_rowshift != cp->hotkey_rowshift) || (p->clan_id != cp->clan_id ) || (p->title_id != cp->title_id)
 	)
 	{	//Save status
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
@@ -311,7 +311,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d',"
 			"`delete_date`='%lu',`robe`='%d',`moves`='%d',`font`='%u',`uniqueitem_counter`='%u',"
-			"`hotkey_rowshift`='%d', `clan_id`='%d'"
+			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu'"
 			" WHERE `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->base_level, p->job_level,
 			p->base_exp, p->job_exp, p->zeny,
@@ -323,7 +323,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y, p->rename,
 			(unsigned long)p->delete_date, // FIXME: platform-dependent size
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
-			p->hotkey_rowshift, p->clan_id,
+			p->hotkey_rowshift, p->clan_id, p->title_id,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -917,7 +917,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`hair`,`hair_color`,"
 		"`clothes_color`,`body`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`rename`,`delete_date`,"
-		"`robe`,`moves`,`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`"
+		"`robe`,`moves`,`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`title_id`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, NULL, NULL)
@@ -963,6 +963,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_UINT,   &p.uniqueitem_counter, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_ENUM,   &sex, sizeof(sex), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_UCHAR,   &p.hotkey_rowshift, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_ULONG,	&p.title_id, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1026,7 +1027,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`body`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
 		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,`robe`, `moves`,"
-		"`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`clan_id`"
+		"`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`clan_id`,`title_id`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", schema_config.char_db)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
@@ -1090,6 +1091,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 57, SQLDT_ENUM,   &sex, sizeof(sex), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 58, SQLDT_UCHAR,  &p->hotkey_rowshift, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 59, SQLDT_INT,    &p->clan_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 60, SQLDT_ULONG,	&p->title_id, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1671,6 +1673,10 @@ int char_delete_char_sql(uint32 char_id){
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
+	/* Achievement Data */
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.achievement_table, char_id))
+		Sql_ShowDebug(sql_handle);
+
 	if (charserv_config.log_char) {
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`time`, `account_id`,`char_num`,`char_msg`,`name`) VALUES (NOW(), '%d', '%d', 'Deleted char (CID %d)', '%s')",
 			schema_config.charlog_db, account_id, 0, char_id, esc_name) )
@@ -2236,7 +2242,7 @@ bool char_checkdb(void){
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
 		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
-		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db
+		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
@@ -2252,7 +2258,7 @@ bool char_checkdb(void){
 		"`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,`hair_color`,`clothes_color`,`weapon`,"
 		"`shield`,`head_top`,`head_mid`,`head_bottom`,`robe`,`last_map`,`last_x`,`last_y`,`save_map`,"
 		"`save_x`,`save_y`,`partner_id`,`online`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,"
-		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`"
+		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`,`title_id`"
 		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2314,7 +2320,7 @@ bool char_checkdb(void){
 	//checking guild_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`name`,`char_id`,`master`,`guild_lv`,"
 			"`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,"
-			"`emblem_len`,`emblem_id`,`emblem_data`"
+			"`emblem_len`,`emblem_id`,`emblem_data`,`last_master_change`"
 			" FROM `%s` LIMIT 1;", schema_config.guild_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2478,6 +2484,12 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
+	//checking achievement_table
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`id`,`count1`,`count2`,`count3`,`count4`,`count5`,`count6`,`count7`,`count8`,`count9`,`count10`,`completed`,`rewarded`"
+		" FROM `%s` LIMIT 1;", schema_config.achievement_table)) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
 	Sql_FreeResult(sql_handle);
 	ShowInfo("DB integrity check finished with success\n");
 	return true;
@@ -2573,6 +2585,8 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.clan_table, w2, sizeof(schema_config.clan_table));
 		else if(!strcmpi(w1,"clan_alliance_table"))
 			safestrncpy(schema_config.clan_alliance_table, w2, sizeof(schema_config.clan_alliance_table));
+		else if(!strcmpi(w1,"achievement_table"))
+			safestrncpy(schema_config.achievement_table, w2, sizeof(schema_config.achievement_table));
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			char_sql_config_read(w2);
@@ -2622,6 +2636,7 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.acc_reg_num_table,"acc_reg_num",sizeof(schema_config.acc_reg_num_table));
 	safestrncpy(schema_config.clan_table,"clan",sizeof(schema_config.clan_table));
 	safestrncpy(schema_config.clan_table,"clan_alliance",sizeof(schema_config.clan_alliance_table));
+	safestrncpy(schema_config.achievement_table,"achievement",sizeof(schema_config.achievement_table));
 }
 
 //set default config

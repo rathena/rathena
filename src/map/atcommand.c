@@ -34,6 +34,7 @@
 #include "mapreg.h"
 #include "quest.h"
 #include "pc.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -185,12 +186,12 @@ ACMD_FUNC(send)
 		long num;
 		if(len)
 		{// show packet length
-			sprintf(atcmd_output, msg_txt(sd,904), type, packet_db[sd->packet_ver][type].len); // Packet 0x%x length: %d
+			sprintf(atcmd_output, msg_txt(sd,904), type, packet_db[type].len); // Packet 0x%x length: %d
 			clif_displaymessage(fd, atcmd_output);
 			return 0;
 		}
 
-		len=packet_db[sd->packet_ver][type].len;
+		len=packet_db[type].len;
 		off=2;
 		if(len == 0)
 		{// unknown packet - ERROR
@@ -341,7 +342,7 @@ ACMD_FUNC(send)
 			SKIP_VALUE(message);
 		}
 
-		if(packet_db[sd->packet_ver][type].len == -1)
+		if(packet_db[type].len == -1)
 		{// send dynamic packet
 			WFIFOW(fd,2)=TOW(off);
 			WFIFOSET(fd,off);
@@ -1422,6 +1423,8 @@ ACMD_FUNC(baselevelup)
 		status_calc_pc(sd, SCO_FORCE);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.base_level);
+		achievement_update_objective(sd, AG_GOAL_STATUS, 2, sd->status.base_level, sd->status.class_);
 		clif_displaymessage(fd, msg_txt(sd,21)); // Base level raised.
 	} else {
 		if (sd->status.base_level == 1) {
@@ -1483,6 +1486,7 @@ ACMD_FUNC(joblevelup)
 		sd->status.job_level += (unsigned int)level;
 		sd->status.skill_point += level;
 		clif_misceffect(&sd->bl, 1);
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
 		clif_displaymessage(fd, msg_txt(sd,24)); // Job level raised.
 	} else {
 		if (sd->status.job_level == 1) {
@@ -1757,7 +1761,7 @@ ACMD_FUNC(bodystyle)
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK || (sd->class_&MAPID_THIRDMASK) == MAPID_SHADOW_CHASER
-	        || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER)) {
+	        || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER || (sd->class_&MAPID_THIRDMASK) == MAPID_SORCERER)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -1917,6 +1921,7 @@ ACMD_FUNC(go)
 		{ MAP_MALANGDO,    140, 114 }, // 33=Malangdo Island
 		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
 		{ MAP_ECLAGE,      110,  39 }, // 35=Eclage
+		{ MAP_LASAGNA,     193, 182 }, // 36=Lasagna
 	};
 
 	nullpo_retr(-1, sd);
@@ -2036,6 +2041,8 @@ ACMD_FUNC(go)
 		town = 34;
 	} else if (strncmp(map_name, "eclage", 3) == 0) {
 		town = 35;
+	} else if (strncmp(map_name, "lasagna", 2) == 0) {
+		town = 36;
 	}
 
 	if (town >= 0 && town < ARRAYLENGTH(data))
@@ -2274,6 +2281,7 @@ ACMD_FUNC(refine)
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
+			achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 			count++;
 		}
 	}
@@ -3924,12 +3932,12 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
 		do_reload_quest();
 		clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
-	} else if (strstr(command, "packetdb") || strncmp(message, "packetdb", 4) == 0) {
-		packetdb_readdb(true);
-		clif_displaymessage(fd, msg_txt(sd,1477)); // Packet database has been reloaded.
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
 		instance_reload();
 		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
+		achievement_db_reload();
+		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
 	}
 
 	return 0;
@@ -10082,8 +10090,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadmotd", reload),
 		ACMD_DEF2("reloadquestdb", reload),
 		ACMD_DEF2("reloadmsgconf", reload),
-		ACMD_DEF2("reloadpacketdb", reload),
 		ACMD_DEF2("reloadinstancedb", reload),
+		ACMD_DEF2("reloadachievementdb",reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
