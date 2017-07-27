@@ -2096,14 +2096,15 @@ struct status_data {
 		hp, sp,  // see status_cpy before adding members before hp and sp
 		max_hp, max_sp;
 	short
-		str, agi, vit, int_, dex, luk;
-	unsigned short
-		batk,
+		str, agi, vit, int_, dex, luk,
+		batk;
 #ifdef RENEWAL
+	short
 		watk,
 		watk2,
-		eatk,
+		eatk;
 #endif
+	unsigned short
 		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;

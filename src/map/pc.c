@@ -2507,7 +2507,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.eatk += val;
 #else
 				bonus = status->batk + val;
-				status->batk = cap_value(bonus, 0, USHRT_MAX);
+				status->batk = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 #endif
 			}
 			break;
