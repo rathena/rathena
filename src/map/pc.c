@@ -9497,11 +9497,11 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					pos |= sd->inventory.u.items_inventory[index].equip;
 					found = true;
 					break;
-				} else { //Cards
+				} else { //Cards and enchants
 					uint16 z;
-					if ( sd->inventory_data[index]->slot == 0 || itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]) )
+					if ( itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]) )
 						continue;
-					for (z = 0; z < sd->inventory_data[index]->slot; z++) {
+					for (z = 0; z < MAX_SLOTS; z++) {
 						bool do_continue=false;			
 						if (sd->inventory.u.items_inventory[index].card[z] != id)
 							continue;
@@ -9509,7 +9509,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 							int c1, c2;
 							for (c1 = 0; c1 < nb_itemCombo-1; c1++){
 								if(combo_idx[c1].idx == index && combo_idx[c1].nameid == id){
-									for (c2 = 0; c2 < sd->inventory_data[index]->slot; c2++){
+									for (c2 = 0; c2 < MAX_SLOTS; c2++){
 										if(combo_idx[c1].card[c2] == id){ //we already have that card recorded (at this same idx)
 											do_continue = true;
 											break;
