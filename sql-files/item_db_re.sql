@@ -7328,8 +7328,8 @@ REPLACE INTO `item_db_re` VALUES (13194,'Peace_Breaker','Peace Breaker',5,195000
 REPLACE INTO `item_db_re` VALUES (13195,'RAG203_','RAG203',5,1800000,NULL,1300,'260',NULL,9,0,0x40000000,63,2,34,3,'140',1,18,'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,10,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13196,'Peace_Breaker_','Peace Breaker',5,1950000,NULL,1400,'250',NULL,9,1,0x41000000,63,2,34,3,'140',1,20,'bonus bHit,-25; bonus bAspdRate,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13197,'Mini_Mei','Mini Mei',5,1600000,NULL,2500,'220',NULL,9,2,0x41000000,63,2,34,2,'106',1,19,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13198,'Tempest_','Tempest',5,2200000,NULL,2500,'250',NULL,9,0,0x41000000,63,2,34,2,'140',1,19,'bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13199,'Tempest','Tempest',5,2200000,NULL,2500,'250',NULL,9,1,0x41000000,63,2,34,2,'140',1,19,'bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13198,'Tempest_','Tempest',5,2200000,NULL,2500,'250',NULL,9,0,0x41000000,63,2,34,4,'140',1,19,'bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13199,'Tempest','Tempest',5,2200000,NULL,2500,'250',NULL,9,1,0x41000000,63,2,34,4,'140',1,19,'bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20;',NULL,NULL);
 #===================================================================
 # Bullets
 #===================================================================
