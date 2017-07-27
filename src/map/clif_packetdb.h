@@ -2270,10 +2270,10 @@
 	// Achievement System
 	packet(0x0A23,-1); // ZC_ALL_ACH_LIST
 	packet(0x0A24,66); // ZC_ACH_UPDATE
-	parseable_packet(0x0A25,6,clif_parse_dull,0); // CZ_REQ_ACH_REWARD
+	parseable_packet(0x0A25,6,clif_parse_AchievementCheckReward,0); // CZ_REQ_ACH_REWARD
 	packet(0x0A26,7); // ZC_REQ_ACH_REWARD_ACK
 	// Title System
-	parseable_packet(0x0A2E,6,clif_parse_dull,0); // CZ_REQ_CHANGE_TITLE
+	parseable_packet(0x0A2E,6,clif_parse_change_title,0); // CZ_REQ_CHANGE_TITLE
 	packet(0x0A2F,7); // ZC_ACK_CHANGE_TITLE
 	packet(0x0A30,106); // ZC_ACK_REQNAMEALL2
 	// Pet Evolution System
