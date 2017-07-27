@@ -627,6 +627,7 @@ extern struct Battle_Config
 	int banana_bomb_duration;
 	int guild_leaderchange_delay;
 	int guild_leaderchange_woe;
+	int feature_achievement;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

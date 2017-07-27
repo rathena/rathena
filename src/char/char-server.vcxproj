@@ -161,6 +161,7 @@
     <ClInclude Include="char_logif.h" />
     <ClInclude Include="char_mapif.h" />
     <ClInclude Include="inter.h" />
+    <ClInclude Include="int_achievement.h" />
     <ClInclude Include="int_auction.h" />
     <ClInclude Include="int_clan.h" />
     <ClInclude Include="int_elemental.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="char_logif.c" />
     <ClCompile Include="char_mapif.c" />
     <ClCompile Include="inter.c" />
+    <ClCompile Include="int_achievement.c" />
     <ClCompile Include="int_auction.c" />
     <ClCompile Include="int_clan.c" />
     <ClCompile Include="int_elemental.c" />

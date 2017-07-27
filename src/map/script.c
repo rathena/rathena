@@ -50,6 +50,7 @@
 #include "quest.h"
 #include "elemental.h"
 #include "channel.h"
+#include "achievement.h"
 
 #include <math.h>
 #include <stdlib.h> // atoi, strtol, strtoll, exit
@@ -2291,6 +2292,20 @@ static void add_buildin_func(void)
 			else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
 		}
 	}
+}
+
+/// Retrieves the value of a constant parameter.
+bool script_get_parameter(const char* name, int* value)
+{
+	int n = search_str(name);
+
+	if (n == -1 || str_data[n].type != C_PARAM)
+	{// not found or not a parameter
+		return false;
+	}
+	value[0] = str_data[n].val;
+
+	return true;
 }
 
 /// Retrieves the value of a constant.
@@ -8918,6 +8933,7 @@ BUILDIN_FUNC(successrefitem) {
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,3);
+		achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 		if (sd->inventory.u.items_inventory[i].refine == MAX_REFINE &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
 			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]))
@@ -8967,6 +8983,7 @@ BUILDIN_FUNC(failedrefitem) {
 		clif_refine(sd->fd,1,i,sd->inventory.u.items_inventory[i].refine); //notify client of failure
 		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		clif_misceffect(&sd->bl,2); 	// display failure effect
+		achievement_update_objective(sd, AG_REFINE_FAIL, 1, 1);
 		script_pushint(st, 1);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -9015,6 +9032,7 @@ BUILDIN_FUNC(downrefitem) {
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,2);
+		achievement_update_objective(sd, AG_REFINE_FAIL, 1, sd->inventory.u.items_inventory[i].refine);
 		script_pushint(st, sd->inventory.u.items_inventory[i].refine);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -23226,6 +23244,127 @@ BUILDIN_FUNC(unloadnpc) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Add an achievement to the player's log
+ * achievementadd(<achievement ID>{,<char ID>});
+ */
+BUILDIN_FUNC(achievementadd) {
+	struct map_session_data *sd;
+	int achievement_id = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementadd: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_add(sd, achievement_id))
+		script_pushint(st, true);
+	else
+		script_pushint(st, false);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Removes an achievement on a player.
+ * achievementremove(<achievement ID>{,<char ID>});
+ * Just for Atemo. ;)
+ */
+BUILDIN_FUNC(achievementremove) {
+	struct map_session_data *sd;
+	int achievement_id = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementremove: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (achievement_remove(sd, achievement_id))
+		script_pushint(st, true);
+	else
+		script_pushint(st, false);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns achievement progress
+ * achievementinfo(<achievement ID>,<type>{,<char ID>});
+ */
+BUILDIN_FUNC(achievementinfo) {
+	struct map_session_data *sd;
+	int achievement_id = script_getnum(st, 2);
+
+	if (!script_charid2sd(4, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, achievement_check_progress(sd, achievement_id, script_getnum(st, 3)));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Award an achievement; Ignores requirements
+ * achievementcomplete(<achievement ID>{,<char ID>});
+ */
+BUILDIN_FUNC(achievementcomplete) {
+	struct map_session_data *sd;
+	int i, achievement_id = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementcomplete: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	if (i == sd->achievement_data.count)
+		achievement_add(sd, achievement_id);
+	achievement_update_achievement(sd, achievement_id, true);
+	script_pushint(st, true);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Checks if the achievement exists on player.
+ * achievementexists(<achievement ID>{,<char ID>});
+ */
+BUILDIN_FUNC(achievementexists) {
+	struct map_session_data *sd;
+	int i, achievement_id = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementexists: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	script_pushint(st, i < sd->achievement_data.count ? true : false);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -23856,6 +23995,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(makeitem2,"makeitem3","visiiiiiiiiirrr"),
 	BUILDIN_DEF2(delitem2,"delitem3","viiiiiiiirrr?"),
 	BUILDIN_DEF2(countitem,"countitem3","viiiiiiirrr?"),
+
+	// Achievement System
+	BUILDIN_DEF(achievementinfo,"ii?"),
+	BUILDIN_DEF(achievementadd,"i?"),
+	BUILDIN_DEF(achievementremove,"i?"),
+	BUILDIN_DEF(achievementcomplete,"i?"),
+	BUILDIN_DEF(achievementexists,"i?"),
 
 #include "../custom/script_def.inc"
 

@@ -24,6 +24,7 @@
 #include "elemental.h"
 #include "party.h"
 #include "quest.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -2904,6 +2905,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				map_foreachinallrange(quest_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md->mob_id);
 			else if (sd->avail_quests)
 				quest_update_objective(sd, md->mob_id);
+
+			if (achievement_mobexists(md->mob_id))
+				achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
 
 			if (sd->md && src && src->type == BL_MER && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
 				mercenary_kills(sd->md);

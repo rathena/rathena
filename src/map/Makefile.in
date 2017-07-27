@@ -11,6 +11,12 @@ LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
+YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
+YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)
+YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
+YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
+YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
+
 MAP_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g") $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
 MAP_H = $(shell ls ../map/*.h) \
@@ -67,20 +73,20 @@ obj:
 
 # executables
 
-map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR)
+map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
 
-obj/%.o: %.c $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H)
+obj/%.o: %.c $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
-obj/%.o: %.cpp $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H)
+obj/%.o: %.cpp $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
@@ -91,3 +97,6 @@ $(MT19937AR_OBJ):
 
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
+
+$(YAML_CPP_AR):
+	@$(MAKE) -C ../../3rdparty/yaml-cpp

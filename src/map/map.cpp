@@ -38,6 +38,7 @@
 #include "elemental.h"
 #include "cashshop.h"
 #include "channel.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -4385,6 +4386,7 @@ void do_final(void)
 	do_final_clif();
 	do_final_npc();
 	do_final_quest();
+	do_final_achievement();
 	do_final_script();
 	do_final_instance();
 	do_final_itemdb();
@@ -4739,6 +4741,7 @@ int do_init(int argc, char *argv[])
 	do_init_mercenary();
 	do_init_elemental();
 	do_init_quest();
+	do_init_achievement();
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();
@@ -4758,10 +4761,6 @@ int do_init(int argc, char *argv[])
 		shutdown_callback = do_shutdown;
 		runflag = MAPSERVER_ST_RUNNING;
 	}
-#if defined(BUILDBOT)
-	if( buildbotflag )
-		exit(EXIT_FAILURE);
-#endif
 
 	if( console ){ //start listening
 		add_timer_func_list(parse_console_timer, "parse_console_timer");

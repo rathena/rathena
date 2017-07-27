@@ -26,6 +26,9 @@
     <ClInclude Include="char_mapif.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="int_achievement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="int_auction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -77,6 +80,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="char_mapif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_achievement.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="int_auction.c">
