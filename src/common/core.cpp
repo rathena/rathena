@@ -379,5 +379,11 @@ int main (int argc, char **argv)
 
 	malloc_final();
 
+#if defined(BUILDBOT)
+	if( buildbotflag ){
+		exit(EXIT_FAILURE);
+	}
+#endif
+
 	return 0;
 }

@@ -1325,6 +1325,7 @@ This will also send a packet to clients causing them to close.
 @reloadscript
 @reloadskilldb
 @reloadstatusdb
+@reloadachievementdb
 
 Reloads a database or configuration file.
 
@@ -1335,6 +1336,7 @@ Databases:
 -- questdb: Quest Database
 -- script: NPC Scripts
 -- skilldb: Skill Database
+-- achievementdb: Achievement Database
 
 Configuration files:
 -- atcommand: Atcommand Settings
@@ -1356,7 +1358,8 @@ Affected files:
 -- questdb: quest_db.txt
 -- script: /npc/*.txt, /npc/*.conf
 -- skilldb: skill_db.txt, const.txt, skill_require_db.txt, skill_cast_db.txt, skill_castnodex_db.txt, skill_nocast_db.txt, skill_copyable_db.txt, skill_improvise_db.txt, skill_changematerial_db.txt, skill_nonearnpc_db.txt, skill_damage_db.txt, skill_unit_db.txt, abra_db.txt, create_arrow_db.txt, produce_db.txt, spellbook_db.txt, magicmushroom_db.txt
--- statusdb: attr_fix.txt, size_fix.txt, refine_db.tx
+-- statusdb: attr_fix.txt, size_fix.txt, refine_db.txt
+-- achievementdb: achievement_db.conf
 
 Restriction:
 	- Used from 'atcommand' or 'useatcmd'. For @reload & @reloadscript
