@@ -1471,8 +1471,8 @@ const char* parse_subexpr(const char* p,int limit)
 	p = skip_space(p);
 	while((
 			(op=C_OP3,opl=0,len=1,*p=='?') ||
-			(op=C_ADD,opl=9,len=1,*p=='+') ||
-			(op=C_SUB,opl=9,len=1,*p=='-') ||
+			((op=C_ADD,opl=9,len=1,*p=='+') && p[1]!='+') ||
+			((op=C_SUB,opl=9,len=1,*p=='-') && p[1]!='-') ||
 			(op=C_MUL,opl=10,len=1,*p=='*') ||
 			(op=C_DIV,opl=10,len=1,*p=='/') ||
 			(op=C_MOD,opl=10,len=1,*p=='%') ||
