@@ -22,7 +22,7 @@
 # Achievement Settings
 #
 ###########################################################################
-# Id - Unique achievement ID.
+# ID - Unique achievement ID.
 ###########################################################################
 # Group - Achievement group type. Each achievement type calls a specific
 # objective check.
@@ -69,10 +69,10 @@
 ###########################################################################
 # Reward - A list of rewards that are given on completion. All fields are
 # optional.
-#   ItemId: Item ID
+#   ItemID: Item ID
 #   Amount:  Amount of Item ID (default 1)
 #   Script: Bonus Script
-#   TitleId: Title ID
+#   TitleID: Title ID
 ###########################################################################
 # Score - Achievement points that are given on completion.
 ###########################################################################
