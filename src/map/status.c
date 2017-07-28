@@ -14087,13 +14087,22 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_
  * @param refine: The target's refine level
  * @return The chance to refine the item, in percent (0~100)
  */
-int status_get_refine_chance(enum refine_type wlv, int refine)
+int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
 {
-
 	if ( refine < 0 || refine >= MAX_REFINE)
 		return 0;
+	
+	enum e_refine_chance_type chance_type = REFINE_CHANCE_NORMAL;
 
-	return refine_info[wlv].chance[REFINE_CHANCE_NORMAL][refine];
+	if (enriched) {
+		if (battle_config.event_refine_chance)
+			chance_type = REFINE_CHANCE_EVENT_ENRICHED;
+		else
+			chance_type = REFINE_CHANCE_ENRICHED;
+	} else if (battle_config.event_refine_chance)
+		chance_type = REFINE_CHANCE_EVENT_NORMAL;
+
+	return refine_info[wlv].chance[chance_type][refine];
 }
 
 /**

@@ -38,7 +38,7 @@ enum refine_type {
 };
 
 /// Get refine chance
-int status_get_refine_chance(enum refine_type wlv, int refine);
+int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 
 /// Status changes listing. These code are for use by the server.
 typedef enum sc_type {

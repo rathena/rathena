@@ -8864,16 +8864,19 @@ BUILDIN_FUNC(getequipweaponlv)
  * return (npc)
  *	x : refine chance
  *	0 : false (max refine level or unequip..)
- * getequippercentrefinery(<equipment slot>{,<char_id>})
+ * getequippercentrefinery(<equipment slot>{,<enriched>,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(getequippercentrefinery)
 {
 	int i = -1,num;
+	bool enriched = false;
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
+	if (script_hasdata(st, 3))
+		enriched = script_getnum(st, 3) != 0;
 
-	if (!script_charid2sd(3, sd)) {
+	if (!script_charid2sd(4, sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -8881,7 +8884,7 @@ BUILDIN_FUNC(getequippercentrefinery)
 	if (equip_index_check(num))
 		i = pc_checkequip(sd,equip_bitmask[num]);
 	if(i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE)
-		script_pushint(st,status_get_refine_chance((enum refine_type)itemdb_wlv(sd->inventory.u.items_inventory[i].nameid), (int)sd->inventory.u.items_inventory[i].refine));
+		script_pushint(st,status_get_refine_chance((enum refine_type)itemdb_wlv(sd->inventory.u.items_inventory[i].nameid), (int)sd->inventory.u.items_inventory[i].refine, enriched));
 	else
 		script_pushint(st,0);
 
