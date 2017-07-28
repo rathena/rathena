@@ -14265,12 +14265,14 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 	size_t str_size = strlen(directory) + strlen(file) + 2;
 	char* buf = (char*)aCalloc(1, str_size);
 	sprintf(buf, "%s/%s", directory, file);
-	yamlwrapper* root_node = yaml_load_file(buf);
-	yamlwrapper* sub_node;
+	yamlwrapper* root_node, *sub_node;
 
-	if (!yaml_node_is_defined(root_node, "Armor"))
-		return; // Skip if base structure isn't defined
-	else {
+	if ((root_node = yaml_load_file(buf)) == NULL) {
+		ShowError("Failed to read '%s'.\n", buf);
+		return;
+	}
+
+	if (yaml_node_is_defined(root_node, "Armor")) {
 		sub_node = yaml_get_subnode(root_node, "Armor");
 		if (status_yaml_readdb_refine_sub(sub_node, 0))
 			count++;
