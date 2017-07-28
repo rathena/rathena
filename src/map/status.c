@@ -14206,6 +14206,12 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
 	return true;
 }
 
+/**
+ * Reads and parses an entry from the refine_db
+ * @param wrapper: The YAML wrapper containing the entry
+ * @param refine_info_index: The sequential index of the current entry
+ * @return True on success or false on failure
+ */
 static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_index) {
 	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
@@ -14247,6 +14253,11 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 	return true;
 }
 
+/**
+ * Loads refine values from the refine_db
+ * @param directory: Location of refine_db file
+ * @param file: File name
+ */
 static void status_yaml_readdb_refine(const char* directory, const char* file) {
 	int count = 0;
 	const char* weapon_lv_label = "WeaponLv%d";

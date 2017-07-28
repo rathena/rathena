@@ -2725,7 +2725,7 @@ Examples:
 This function calculates and returns the percent value chance to successfully
 refine the item found in the specified equipment slot of the invoking character
 by +1. There is no actual formula, the success rate for a given weapon level of
-a certain refine level is found in the db/refine_db.yml file. For a list of
+a certain refine level is found in the db/(pre-)re/refine_db.yml file. For a list of
 equipment slots see 'getequipid'.
 
 If enriched parameter is set to true, chance to successfully refine the item with

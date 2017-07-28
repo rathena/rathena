@@ -8430,6 +8430,7 @@ static const struct _battle_data {
 	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, },
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
+
 #include "../custom/battle_config_init.inc"
 };
 
