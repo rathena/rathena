@@ -1,11 +1,5 @@
 //===== rAthena Script ======================================= 
 //= HD Refiners
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiners that use HD ores to refine equipment. Upon
@@ -14,8 +8,9 @@
 //= to that for Enriched ores.
 //= - "Blacksmith Mighty Hammer" only refines from +7~9.
 //= - "Basta" only refines from +10 and up.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
 //============================================================
 
 // Blacksmith Mighty Hammer (+7~9) :: cash_smelting79
@@ -122,7 +117,7 @@
 	set Zeny, Zeny-.@price;
 	mes "[Blacksmith Mighty Hammer]";
 	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;
@@ -271,7 +266,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
 	mes "Pow! Pow! Pow! Pow!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;
