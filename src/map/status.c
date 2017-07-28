@@ -14221,6 +14221,7 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 	int random_bonus = yaml_get_int(wrapper, "RandomBonusValue");
 	yamlwrapper* rates = yaml_get_subnode(wrapper, "Rates");
 	yamliterator* it = yaml_get_iterator(rates);
+
 	if (yaml_iterator_is_valid(it)) {
 		for (yamlwrapper* level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
 			int refine_level = yaml_get_int(level, "Level") - 1;
@@ -14229,7 +14230,7 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 				yaml_destroy_wrapper(level);
 				continue;
 			}
-				
+
 			if (yaml_node_is_defined(level, "NormalChance"))
 				refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = yaml_get_int(level, "NormalChance");
 			if (yaml_node_is_defined(level, "EnrichedChance"))
@@ -14267,7 +14268,9 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 	yamlwrapper* root_node = yaml_load_file(buf);
 	yamlwrapper* sub_node;
 
-	if (yaml_node_is_defined(root_node, "Armor")) {
+	if (!yaml_node_is_defined(root_node, "Armor"))
+		return; // Skip if base structure isn't defined
+	else {
 		sub_node = yaml_get_subnode(root_node, "Armor");
 		if (status_yaml_readdb_refine_sub(sub_node, 0))
 			count++;
@@ -14275,6 +14278,7 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 	}
 	for (int i = 1; i < ARRAYLENGTH(refine_info); i++) {
 		char* label = (char*)aCalloc(1, strlen(weapon_lv_label) + 2);
+
 		sprintf(label, weapon_lv_label, i);
 		if (yaml_node_is_defined(root_node, label)) {
 			sub_node = yaml_get_subnode(root_node, label);
