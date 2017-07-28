@@ -746,8 +746,6 @@ extern struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate t
  **/
 struct eri *num_reg_ers;
 struct eri *str_reg_ers;
-/* */
-bool reg_load;
 
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
@@ -986,6 +984,7 @@ short pc_maxaspd(struct map_session_data *sd);
     )
 #endif
 
+void pc_set_reg_load(bool val);
 int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);

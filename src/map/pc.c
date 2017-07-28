@@ -67,6 +67,8 @@ struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
 
+bool reg_load;
+
 /**
  * Translation table from athena equip index to aegis bitmask
 */
@@ -100,6 +102,10 @@ const struct sg_data sg_info[MAX_PC_FEELHATE] = {
 		{ SG_MOON_ANGER, SG_MOON_BLESS, SG_MOON_COMFORT, "PC_FEEL_MOON", "PC_HATE_MOB_MOON", is_day_of_moon },
 		{ SG_STAR_ANGER, SG_STAR_BLESS, SG_STAR_COMFORT, "PC_FEEL_STAR", "PC_HATE_MOB_STAR", is_day_of_star }
 	};
+
+void pc_set_reg_load( bool val ){
+	reg_load = val;
+}
 
 /**
  * Item Cool Down Delay Saving

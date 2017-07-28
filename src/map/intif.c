@@ -1370,7 +1370,7 @@ void intif_parse_Registers(int fd)
 	}
 
 	// have it not complain about insertion of vars before loading, and not set those vars as new or modified
-	reg_load = true;
+	pc_set_reg_load(true);
 	
 	if( RFIFOW(fd, 14) ) {
 		char key[32];
@@ -1420,7 +1420,7 @@ void intif_parse_Registers(int fd)
 		}
 	}
 
-	reg_load = false;
+	pc_set_reg_load(false);
 
 	if (flag && sd->vars_received&PRL_ACCG && sd->vars_received&PRL_ACCL && sd->vars_received&PRL_CHAR)
 		pc_reg_received(sd); //Received all registry values, execute init scripts and what-not. [Skotlex]
