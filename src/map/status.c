@@ -14261,7 +14261,7 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
  */
 static void status_yaml_readdb_refine(const char* directory, const char* file) {
 	int count = 0;
-	const char* weapon_lv_label = "WeaponLv%d";
+	const char* labels[6] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
 	size_t str_size = strlen(directory) + strlen(file) + 2;
 	char* buf = (char*)aCalloc(1, str_size);
 	sprintf(buf, "%s/%s", directory, file);
@@ -14273,23 +14273,13 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 		return;
 	}
 
-	if (yaml_node_is_defined(root_node, "Armor")) {
-		sub_node = yaml_get_subnode(root_node, "Armor");
-		if (status_yaml_readdb_refine_sub(sub_node, 0))
-			count++;
-		yaml_destroy_wrapper(sub_node);
-	}
-	for (int i = 1; i < ARRAYLENGTH(refine_info); i++) {
-		char* label = (char*)aCalloc(1, strlen(weapon_lv_label) + 2);
-
-		sprintf(label, weapon_lv_label, i);
-		if (yaml_node_is_defined(root_node, label)) {
-			sub_node = yaml_get_subnode(root_node, label);
+	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
+		if (yaml_node_is_defined(root_node, labels[i])) {
+			sub_node = yaml_get_subnode(root_node, labels[i]);
 			if (status_yaml_readdb_refine_sub(sub_node, i))
 				count++;
 			yaml_destroy_wrapper(sub_node);
 		}
-		aFree(label);
 	}
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, buf);
 

@@ -407,5 +407,38 @@ WeaponLv4:
       EventNormalChance: 10
       EventEnrichedChance: 10
       Bonus: 1200
-#Shadow: #WIP [Secret]
-    
+Shadow:
+  StatsPerLevel: 0
+  RandomBonusStartLevel: 0
+  RandomBonusValue: 0
+  Rates:
+    - Level: 5
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 6
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 7
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 8
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 9
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 10
+      NormalChance: 9
+      EnrichedChance: 20
+      EventNormalChance: 9
+      EventEnrichedChance: 35
