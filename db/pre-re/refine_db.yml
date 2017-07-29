@@ -53,7 +53,6 @@ Armor:
       EnrichedChance: 20
       EventNormalChance: 9
       EventEnrichedChance: 35
-      Bonus: 300
 WeaponLv1:
   StatsPerLevel: 200
   RandomBonusStartLevel: 8
