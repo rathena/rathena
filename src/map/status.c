@@ -14269,6 +14269,7 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 
 	if ((root_node = yaml_load_file(buf)) == NULL) {
 		ShowError("Failed to read '%s'.\n", buf);
+		aFree(buf);
 		return;
 	}
 
