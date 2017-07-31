@@ -9761,7 +9761,7 @@ Returns true on success and false on failure.
 
 This function will return the specified <type> value for an achievement of the
 attached player or the supplied <char id>. If the player doesn't have the
-achievement active (no progress has been made), if the achievement doesn't
+achievement active (no progress has been made): if the achievement doesn't
 exist -1 will be returned, or -2 will be returned on any other error such as
 an invalid <type>.
 
@@ -9797,5 +9797,17 @@ Returns true on success and false on failure.
 This function will return if the achievement exists on the player or the supplied
 <char id>.
 Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementupdate(<achievement id>,<type>,<value>{,<char id>})
+
+This function will update an achievement's value for an achievement of the attached
+player or the supplied <char id>. If the player does not have the achievement active
+(no progress has been made) it will be added to the player's log first before updating
+the <type> value.
+Returns true on success and false on failure.
+
+See 'achievementinfo' for valid <type> values. Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
 
 ---------------------------------------

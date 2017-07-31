@@ -23365,6 +23365,58 @@ BUILDIN_FUNC(achievementexists) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Updates an achievement's value.
+ * achievementupdate(<achievement ID>,<type>,<value>{,<char ID>});
+ */
+BUILDIN_FUNC(achievementupdate) {
+	struct map_session_data *sd;
+	int i, achievement_id, type, value;
+
+	achievement_id = script_getnum(st, 2);
+	type = script_getnum(st, 3);
+	value = script_getnum(st, 4);
+
+	if (!script_charid2sd(5, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementupdate: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	if (i == sd->achievement_data.count)
+		achievement_add(sd, achievement_id);
+
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	if (i == sd->achievement_data.count) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (type >= ACHIEVEINFO_COUNT1 && type <= ACHIEVEINFO_COUNT10)
+		sd->achievement_data.achievements[i].count[type - 1] = value;
+	else if (type == ACHIEVEINFO_COMPLETE)
+		sd->achievement_data.achievements[i].complete = value ?  true : false;
+	else if (type == ACHIEVEINFO_COMPLETEDATE)
+		sd->achievement_data.achievements[i].completeDate = value;
+	else if (type == ACHIEVEINFO_GOTREWARD)
+		sd->achievement_data.achievements[i].gotReward = value ? true : false;
+	else {
+		ShowWarning("buildin_achievementupdate: Unknown type '%d'.\n", type);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	achievement_update_achievement(sd, achievement_id, false);
+	script_pushint(st, true);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24002,6 +24054,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementremove,"i?"),
 	BUILDIN_DEF(achievementcomplete,"i?"),
 	BUILDIN_DEF(achievementexists,"i?"),
+	BUILDIN_DEF(achievementupdate,"iii?"),
 
 #include "../custom/script_def.inc"
 
