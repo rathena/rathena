@@ -8883,8 +8883,12 @@ BUILDIN_FUNC(getequippercentrefinery)
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd,equip_bitmask[num]);
-	if(i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE)
-		script_pushint(st,status_get_refine_chance((enum refine_type)itemdb_wlv(sd->inventory.u.items_inventory[i].nameid), (int)sd->inventory.u.items_inventory[i].refine, enriched));
+	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE) {
+		enum refine_type type = REFINE_TYPE_SHADOW;
+		if (sd->inventory_data[i]->type != IT_SHADOWGEAR)
+			type = (enum refine_type)sd->inventory_data[i]->wlv;
+		script_pushint(st, status_get_refine_chance(type, (int)sd->inventory.u.items_inventory[i].refine, enriched));
+	}
 	else
 		script_pushint(st,0);
 
