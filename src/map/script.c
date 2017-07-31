@@ -23400,12 +23400,10 @@ BUILDIN_FUNC(achievementupdate) {
 
 	if (type >= ACHIEVEINFO_COUNT1 && type <= ACHIEVEINFO_COUNT10)
 		sd->achievement_data.achievements[i].count[type - 1] = value;
-	else if (type == ACHIEVEINFO_COMPLETE)
-		sd->achievement_data.achievements[i].complete = value ?  true : false;
-	else if (type == ACHIEVEINFO_COMPLETEDATE)
-		sd->achievement_data.achievements[i].completeDate = value;
+	else if (type == ACHIEVEINFO_COMPLETE || type == ACHIEVEINFO_COMPLETEDATE)
+		sd->achievement_data.achievements[i].completed = value;
 	else if (type == ACHIEVEINFO_GOTREWARD)
-		sd->achievement_data.achievements[i].gotReward = value ? true : false;
+		sd->achievement_data.achievements[i].rewarded = value;
 	else {
 		ShowWarning("buildin_achievementupdate: Unknown type '%d'.\n", type);
 		script_pushint(st, false);

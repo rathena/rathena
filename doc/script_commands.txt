@@ -9808,6 +9808,9 @@ player or the supplied <char id>. If the player does not have the achievement ac
 the <type> value.
 Returns true on success and false on failure.
 
-See 'achievementinfo' for valid <type> values. Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
+See 'achievementinfo' for valid <type> values.
+- ACHIEVEINFO_COMPLETE, ACHIEVEINFO_COMPLETEDATE, and ACHIEVEINFO_GOTREWARD require the
+  specific value returned from 'gettimetick(2)'.
+- Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
 
 ---------------------------------------
