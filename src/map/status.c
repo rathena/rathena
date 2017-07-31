@@ -5043,7 +5043,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 						matk_min += sd->bonus.ematk;
 					if (pc_checkskill(sd, SU_POWEROFLAND) > 0) {
 						if ((pc_checkskill(sd, SU_SV_STEMSPEAR) + pc_checkskill(sd, SU_CN_POWDERING) + pc_checkskill(sd, SU_CN_METEOR) + pc_checkskill(sd, SU_SV_ROOTTWIST) +
-  						pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS)) > 19)
+						pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS)) > 19)
 							matk_min += matk_min * 20 / 100;
 					}
 				}
@@ -5812,6 +5812,7 @@ unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, 
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
+
 /**
  * Adds base attack modifications based on status changes
  * @param bl: Object to change batk [PC|MOB|HOM|MER|ELEM]
@@ -7563,7 +7564,8 @@ struct status_data *status_get_display_status(struct block_list *bl)
 	nullpo_retr(&dummy_status, bl);
 
 	switch (bl->type) {
-		case BL_PC: 	return &((TBL_PC*)bl)->display_status;
+		case BL_PC:
+			return &((TBL_PC*)bl)->display_status;
 		default:
 			return &dummy_status;
 	}
