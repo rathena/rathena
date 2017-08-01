@@ -393,7 +393,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 
 	// Delete bound items from player's inventory
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `bound` = %d",schema_config.inventory_db, BOUND_GUILD);
+	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `char_id` = %d AND `bound` = %d",schema_config.inventory_db, char_id, BOUND_GUILD);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 		SQL_ERROR == SqlStmt_Execute(stmt) )
 	{
