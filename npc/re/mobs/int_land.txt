@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Beginner Area Monster Spawn Script
+//===== By: ==================================================
+//= Jenkijo
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+int_land,0,0	monster	Poring	1002,25,5000
+int_land01,0,0	monster	Poring	1002,25,5000
+int_land02,0,0	monster	Poring	1002,25,5000
+int_land03,0,0	monster	Poring	1002,25,5000
