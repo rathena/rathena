@@ -1518,22 +1518,34 @@ int char_divorce_char_sql(int partner_id1, int partner_id2){
 /* Returns 0 if successful
  * Returns < 0 for error
  */
-int char_delete_char_sql(uint32 char_id){
+enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1]; //Name needs be escaped.
 	uint32 account_id;
 	int party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
+	time_t delete_date;
 	char *data;
 	size_t len;
+	int i, k;
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`homun_id`,`partner_id`,`father`,`mother`,`elemental_id` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id))
+	ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == char_id);
+
+	// Such a character does not exist in the account
+	if (i == MAX_CHARS) {
+		ShowInfo("Char deletion aborted: %s, Account ID: %u, Character ID: %u\n", name, sd->account_id, char_id);
+		return CHAR_DELETE_NOTFOUND;
+	}
+
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`homun_id`,`partner_id`,`father`,`mother`,`elemental_id`,`delete_date` FROM `%s` WHERE `account_id`='%u' AND `char_id`='%u'", schema_config.char_db, sd->account_id, char_id)){
 		Sql_ShowDebug(sql_handle);
+		return CHAR_DELETE_DATABASE;
+	}
 
 	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
 	{
-		ShowError("delete_char_sql: Unable to fetch character data, deletion aborted.\n");
+		ShowInfo("Char deletion aborted: %s, Account ID: %u, Character ID: %u\n", name, sd->account_id, char_id);
 		Sql_FreeResult(sql_handle);
-		return -1;
+		return CHAR_DELETE_NOTFOUND;
 	}
 
 	Sql_GetData(sql_handle, 0, &data, &len); safestrncpy(name, data, NAME_LENGTH);
@@ -1546,29 +1558,34 @@ int char_delete_char_sql(uint32 char_id){
 	Sql_GetData(sql_handle, 7, &data, NULL); father_id = atoi(data);
 	Sql_GetData(sql_handle, 8, &data, NULL); mother_id = atoi(data);
 	Sql_GetData(sql_handle, 9, &data, NULL); elemental_id = atoi(data);
+	Sql_GetData(sql_handle,10, &data, NULL); delete_date = strtoul(data, NULL, 10);
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, zmin(len, NAME_LENGTH));
 	Sql_FreeResult(sql_handle);
 
 	//check for config char del condition [Lupus]
-	// TODO: Move this out to packet processing (0x68/0x1fb).
 	if( ( charserv_config.char_config.char_del_level > 0 && base_level >= charserv_config.char_config.char_del_level )
 	 || ( charserv_config.char_config.char_del_level < 0 && base_level <= -charserv_config.char_config.char_del_level )
 	) {
 			ShowInfo("Char deletion aborted: %s, BaseLevel: %i\n", name, base_level);
-			return -1;
+			return CHAR_DELETE_BASELEVEL;
 	}
 
 	if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_GUILD && guild_id) // character is in guild
 	{
 		ShowInfo("Char deletion aborted: %s, Guild ID: %i\n", name, guild_id);
-		return -1;
+		return CHAR_DELETE_GUILD;
 	}
 
 	if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_PARTY && party_id) // character is in party
 	{
 		ShowInfo("Char deletion aborted: %s, Party ID: %i\n", name, party_id);
-		return -1;
+		return CHAR_DELETE_PARTY;
+	}
+
+	if( charserv_config.char_config.char_del_delay > 0 && ( !delete_date || delete_date > time(NULL) ) ){ // not queued or delay not yet passed
+		ShowInfo("Char deletion aborted: %s, Time was not set or has not been reached ye\n", name );
+		return CHAR_DELETE_TIME;
 	}
 
 	/* Divorce [Wizputer] */
@@ -1582,7 +1599,7 @@ int char_delete_char_sql(uint32 char_id){
 
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `child`='0' WHERE `char_id`='%d' OR `char_id`='%d'", schema_config.char_db, father_id, mother_id) )
 			Sql_ShowDebug(sql_handle);
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '410'AND (`char_id`='%d' OR `char_id`='%d')", schema_config.skill_db, father_id, mother_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '410' AND (`char_id`='%d' OR `char_id`='%d')", schema_config.skill_db, father_id, mother_id) )
 			Sql_ShowDebug(sql_handle);
 
 		WBUFW(buf,0) = 0x2b25;
@@ -1699,7 +1716,14 @@ int char_delete_char_sql(uint32 char_id){
 		mapif_parse_BreakGuild(0,guild_id);
 	else if( guild_id )
 		inter_guild_leave(guild_id, account_id, char_id);// Leave your guild.
-	return 0;
+
+	// refresh character list cache
+	for(k = i; k < MAX_CHARS-1; k++){
+		sd->found_char[k] = sd->found_char[k+1];
+	}
+	sd->found_char[MAX_CHARS-1] = -1;
+
+	return CHAR_DELETE_OK;
 }
 
 /**
