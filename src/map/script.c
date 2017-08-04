@@ -8152,12 +8152,15 @@ BUILDIN_FUNC(readparam)
 {
 	int value;
 	struct script_data *data = script_getdata(st, 2);
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 
 	if( script_hasdata(st, 3) ){
-		if( script_isint(st, 3) ){
+		struct script_data *data2 = script_getdata(st, 3);
+
+		get_val(st, data2);
+		if (data_isint(data2) || script_getnum(st, 3)) {
 			script_charid2sd(3, sd);
-		}else{
+		} else if (data_isstring(data2)) {
 			script_nick2sd(3, sd);
 		}
 	}else{
