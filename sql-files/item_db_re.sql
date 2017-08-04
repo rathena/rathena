@@ -6784,7 +6784,7 @@ REPLACE INTO `item_db_re` VALUES (12618,'Bgrade_Pocket','B Grade Coin Bag',2,20,
 REPLACE INTO `item_db_re` VALUES (12619,'Cgrade_Pocket','C Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Cgrade_Pocket);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12620,'Dgrade_Pocket','D Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Dgrade_Pocket);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12621,'Egrade_Pocket','E Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Egrade_Pocket);',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12622,'Boarding_Halter','Reins Of Mount',11,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'setmounting();',NULL,'if (ismounting()) setmounting();');
+REPLACE INTO `item_db_re` VALUES (12622,'Boarding_Halter','Reins Of Mount',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'setmounting();',NULL,'if (ismounting()) setmounting();');
 REPLACE INTO `item_db_re` VALUES (12623,'High_Weapon_Box','Advanced Weapons Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Advanced_Weapons_Box,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12624,'Delicious_Jelly','Delicious Jelly',0,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 3,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12625,'Sapa_Feat_Cert_Pack','Sapa Feat Cert Pack',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -7039,7 +7039,7 @@ REPLACE INTO `item_db_re` VALUES (12883,'Almighty','Almighty',2,20,NULL,10,NULL,
 REPLACE INTO `item_db_re` VALUES (12884,'Infinite_Concentration_Potion','Infinite Concentration Potion',11,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION0,1800000,4;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12885,'Infinite_Awakening_Potion','Infinite Awakening Potion',11,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION1,1800000,6;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12886,'Infinite_Berserk_Potion','Infinite Berserk Potion',11,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION2,1800000,9;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12887,'C_Wing_Of_Fly','Infinite Flywing',11,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'unitskilluseid getcharid(3),"AL_TELEPORT",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12887,'C_Wing_Of_Fly','Infinite Flywing',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "AL_TELEPORT",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12888,'Siege_Kit_Box','Siege Kit Box',18,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12889,'Weapon_Box_Spear','Weapon Box(Spear)',2,10,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12890,'Weapon_Box_Mace','Weapon Box(Mace)',2,10,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -10905,7 +10905,7 @@ REPLACE INTO `item_db_re` VALUES (22126,'Para_Team_Boots160','Awakened Eden Grou
 #===================================================================
 # New Usable items
 #===================================================================
-REPLACE INTO `item_db_re` VALUES (22508,'Para_Team_Mark_','Eden Group Mark',11,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "moc_para01",171,115;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22508,'Para_Team_Mark_','Eden Group Mark',2,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'warp "moc_para01",171,115;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22507,'ShabbyOldScroll','Old Scroll',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'callfunc "F_22507";',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22510,'King_Wolf_Scroll','King Wolf Scroll',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*TODO, confirm the rates*/ getitem callfunc("F_Rand",6635,19598,5658,6238,6239),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22511,'Fenrirs_Power_Scroll','Fenrir\'s Power Scroll',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'bonus_script "bonus bMatk,25; bonus bFixedCastRate,-50;",300,1025;',NULL,NULL);
