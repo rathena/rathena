@@ -20,21 +20,17 @@
 iz_int,18,26,0	script	startpoint	HIDDEN_WARP_NPC,1,1,{
 OnTouch:
 	if (!izintspawn) {
-		specialeffect EF_ANGEL3, AREA, playerattached(); // On official it is some kind of Poring Angel, but I can't find it
+		specialeffect2 EF_ANGEL3; // On official it is some kind of Poring Angel, but I can't find it
 		navigateto("int_land", NAV_NONE, 1); // individual map name not required
 		izintspawn = 1;
 	}
 	end;
 }
-iz_int01,18,27,0	duplicate(startpoint)	startpoint#01	HIDDEN_WARP_NPC,1,1
-iz_int02,18,27,0	duplicate(startpoint)	startpoint#02	HIDDEN_WARP_NPC,1,1
-iz_int03,18,27,0	duplicate(startpoint)	startpoint#03	HIDDEN_WARP_NPC,1,1
-iz_int04,18,27,0	duplicate(startpoint)	startpoint#04	HIDDEN_WARP_NPC,1,1
 
 //== Wounded Swordsman (iz_int) =================================
 iz_int,56,32,3	script	Wounded Swordsman#izint	4_TOWER_01,8,8,{
 	if (!@display) {
-		classchange(4_TOWER_02, 0);
+		classchange 4_TOWER_02;
 		npctalk "Ohhhhhhh....";
 		@display = 1;
 		end;
@@ -76,16 +72,11 @@ OnTouch_:
 	if (@cd + 15 > gettimetick(2))
 		end;
 	@cd = gettimetick(2);
-	npctalk "Urgh... please... help me...";
+	npctalk "Urgh... please... help me...", "", bc_self;
 	sleep 7000;
 	npctalk "In order to talk with me.. click my body..";
 	end;
 }
-
-iz_int01,56,32,3	duplicate(Wounded Swordsman#izint)	Wounded Swordsman#izinta	4_TOWER_01,8,8
-iz_int02,56,32,3	duplicate(Wounded Swordsman#izint)	Wounded Swordsman#izintb	4_TOWER_01,8,8
-iz_int03,56,32,3	duplicate(Wounded Swordsman#izint)	Wounded Swordsman#izintc	4_TOWER_01,8,8
-iz_int04,56,32,3	duplicate(Wounded Swordsman#izint)	Wounded Swordsman#izintd	4_TOWER_01,8,8
 
 int_land,58,69,5	script	Sailor#int_land	4W_SAILOR,{
 	if (!checkquest(21002) || checkquest(21002) == 2) {
@@ -106,7 +97,7 @@ int_land,58,69,5	script	Sailor#int_land	4W_SAILOR,{
 			mes "[Sailor]";
 			mes "If you want to sail with us to Izlude, jump on board!";
 			getexp 600,0;
-			specialeffect EF_HEAL2, AREA, playerattached();
+			specialeffect2 EF_HEAL2;
 			heal 9999, 0;
 			specialeffect EF_INCAGILITY, AREA, playerattached();
 			sc_start SC_INC_AGI, 240000, 10;
@@ -140,11 +131,6 @@ OnInit:
 	questinfo 21002, QTYPE_QUEST, 1, Job_Novice;
 	end;
 }
-
-int_land01,58,69,5	duplicate(Sailor#int_land)	Sailor#int_land01	4W_SAILOR
-int_land02,58,69,5	duplicate(Sailor#int_land)	Sailor#int_land02	4W_SAILOR
-int_land03,58,69,5	duplicate(Sailor#int_land)	Sailor#int_land03	4W_SAILOR
-int_land04,58,69,5	duplicate(Sailor#int_land)	Sailor#int_land04	4W_SAILOR
 
 //== Captain Carocc (int_land) =================================
 int_land,78,103,5	script	Captain Carocc#int_land	4_M_REINDEER,{
@@ -182,7 +168,7 @@ int_land,78,103,5	script	Captain Carocc#int_land	4_M_REINDEER,{
 		mes "It is hard, but you look tough enough for this task.";
 		if (checkquest(21001) == 1)
 			completequest(21001);
-		specialeffect EF_HEAL2, AREA, playerattached();
+		specialeffect2 EF_HEAL2;
 		heal 9999, 0;
 		skilleffect 34,0;
 		sc_start SC_BLESSING,240000,10;
@@ -212,7 +198,7 @@ int_land,78,103,5	script	Captain Carocc#int_land	4_M_REINDEER,{
 	}
 	else {
 		mes "[Captain Carocc]";
-		specialeffect EF_HEAL2, AREA, playerattached();
+		specialeffect2 EF_HEAL2;
 		heal 9999, 0;
 		skilleffect 34,0;
 		sc_start SC_BLESSING,240000,10;
@@ -237,15 +223,10 @@ OnInit:
 	end;
 }
 
-int_land01,78,103,5	duplicate(Captain Carocc#int_land)	Captain Carocc#iz_int01	4_M_REINDEER
-int_land02,78,103,5	duplicate(Captain Carocc#int_land)	Captain Carocc#iz_int02	4_M_REINDEER
-int_land03,78,103,5	duplicate(Captain Carocc#int_land)	Captain Carocc#iz_int03	4_M_REINDEER
-int_land04,78,103,5	duplicate(Captain Carocc#int_land)	Captain Carocc#iz_int04	4_M_REINDEER
-
 //== Lumin (int_land) ==========================================
 int_land,73,100,3	script	Lumin#iz_int	4_M_NOV_RUMIN,{
 	if (Class == Job_Novice) {
-		if (!checkquest(7471)) {
+		if (!isbegin_quest(7471)) {
 			cutin "nov_lumin01", 0;
 			mes "[Lumin]";
 			mes "............";
@@ -295,7 +276,7 @@ int_land,73,100,3	script	Lumin#iz_int	4_M_NOV_RUMIN,{
 			mes "[Lumin]";
 			mes "Yes.";
 			next;
-			classchange(HIDDEN_WARP_NPC, 0);
+			classchange HIDDEN_WARP_NPC;
 			cutin "fly_trock", 2;
 			mes "[Carocc]";
 			mes "Oh, boy.";
@@ -319,7 +300,7 @@ int_land,73,100,3	script	Lumin#iz_int	4_M_NOV_RUMIN,{
 		mes ".....";
 		mes "....So?";
 		next;
-		classchange(HIDDEN_WARP_NPC, 0);
+		classchange HIDDEN_WARP_NPC;
 		mes "- Lu just walked away with a cynical look on his face.";
 		next;
 		cutin "fly_trock", 2;
@@ -338,11 +319,6 @@ OnInit:
 	questinfo 7471, QTYPE_QUEST, 1, Job_Novice;
 	end;
 }
-
-int_land01,73,100,3	duplicate(Lumin#iz_int)	Lumin#iz_int01	4_M_NOV_RUMIN
-int_land02,73,100,3	duplicate(Lumin#iz_int)	Lumin#iz_int02	4_M_NOV_RUMIN
-int_land03,73,100,3	duplicate(Lumin#iz_int)	Lumin#iz_int03	4_M_NOV_RUMIN
-int_land04,73,100,3	duplicate(Lumin#iz_int)	Lumin#iz_int04	4_M_NOV_RUMIN
 
 // - Captain Carocc
 // -----------------------------------------------------------------------------

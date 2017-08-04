@@ -57,7 +57,7 @@ iz_int,27,30,0	script	iz_int#room1-1	WARPNPC,2,2,{
 	end;
 
 OnTouch:
-	warp strnpcinfo(1), 51, 30;
+	warp "iz_int", 51, 30;
 	end;
 
 OnInit:
@@ -70,7 +70,7 @@ iz_int,47,30,3	script	iz_int#room1-2	WARPNPC,2,2,{
 
 OnTouch:
 	@display = 0;
-	warp strnpcinfo(1), 22, 30;
+	warp "iz_int", 22, 30;
 	end;
 }
 
@@ -78,8 +78,8 @@ iz_int,56,15,0	script	iz_int	WARPNPC,2,2,{
 	end;
 
 OnTouch:
-	savepoint "int_land"+strnpcinfo(2)+"", 77, 101;
-	warp "int_land"+strnpcinfo(2)+"", 85, 107;
+	savepoint "int_land", 77, 101;
+	warp "int_land", 85, 107;
 	end;
 }
 
