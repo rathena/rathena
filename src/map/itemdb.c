@@ -907,6 +907,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
 	if (flag&8) id->flag.bindOnEquip = true;
 	if (flag&16) id->flag.broadcast = 1;
+	if (flag&32) id->flag.delay_consume = 2;
 
 	return true;
 }
