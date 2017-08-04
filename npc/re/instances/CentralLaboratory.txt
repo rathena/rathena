@@ -1,7 +1,7 @@
 //===== rAthena Script =======================================
 //= Central Laboratory
 //===== Description: =========================================
-//= [Playing Conversion]
+//= [Walkthrough Conversion]
 //= Central Laboratory Instance
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
