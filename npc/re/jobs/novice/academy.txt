@@ -37,24 +37,24 @@ iz_int,56,32,3	script	Wounded Swordsman#izint	4_TOWER_01,8,8,{
 	}
 	if(checkquest(21001) == -1) {
 		mes "[Wounded]";
-			mes "Wow! Thank you a lot!";
-			mes "I don't know how this happend to our ship";
-			mes "but we should go to see the captain.";
-			next;
-			mes "[Wounded]";
-			mes "... ohh, it seems my body is injured too much.";
-			mes "Maybe you can go without me?";
-			setquest(21001);
-			close;
+		mes "Wow! Thank a lot!";
+		mes "I don't know how this happend to our ship";
+		mes "but we should go to see the captain.";
+		next;
+		mes "[Wounded]";
+		mes "... ohh, it seems my body is injured too much.";
+		mes "Maybe you can go without me?";
+		setquest(21001);
+		close;
 	}
 	else {
 		mes "[Wounded]";
-			mes "Luckily the water does not occupy the ship.";
-			mes "I wait here, you should go and see the captain.";
-			next;
-			mes "[Wounded]";
-			mes "I'm fine! I'm fine!";
-			mes "Don't worry about me, you should really go to the captain!";
+		mes "Luckily the water has not entered the ship.";
+		mes "I will wait here, you should go see the captain.";
+		next;
+		mes "[Wounded]";
+		mes "I'm fine! I'm fine!";
+		mes "Don't worry about me, you should really go to the captain!";
 	}
 	cutin "tutorial02", 4;
 	mes "^4d4dff!- Information -!^000000";
@@ -74,7 +74,7 @@ OnTouch_:
 	@cd = gettimetick(2);
 	npctalk "Urgh... please... help me...", "", bc_self;
 	sleep 7000;
-	npctalk "In order to talk with me.. click my body..";
+	npctalk "In order to talk with me.. click my body..", "", bc_self;
 	end;
 }
 
@@ -99,13 +99,13 @@ int_land,58,69,5	script	Sailor#int_land	4W_SAILOR,{
 			getexp 600,0;
 			specialeffect2 EF_HEAL2;
 			heal 9999, 0;
-			specialeffect EF_INCAGILITY, AREA, playerattached();
+			specialeffect2 EF_INCAGILITY;
 			sc_start SC_INC_AGI, 240000, 10;
-			specialeffect EF_BLESSING, AREA, playerattached();
+			specialeffect2 EF_BLESSING;
 			sc_start SC_BLESSING, 240000, 10;
 			next;
 			mes "[Sailor]";
-			mes "Oh, and take thos ^4d4dffMagnifier^000000.";
+			mes "Oh, and take this ^4d4dffMagnifier^000000.";
 			mes "When you hunt monsters you can find ^4d4dffunidentified items^000000.";
 			getitem 611, 5;
 			next;
@@ -113,17 +113,17 @@ int_land,58,69,5	script	Sailor#int_land	4W_SAILOR,{
 			mes "Using a Magnifier will identify the item.";
 			next;
 			mes "[Sailor]";
-			mes "Maybe you have already some unidentified items from your fights with those porings?";
+			mes "Maybe you already have some unidentified items from your fights with those Porings?";
 			close;
 		}
 		mes "[Sailor]";
-		mes "These Porings stole my materials to repaid the ship. Do you help me to get them back?";
+		mes "These Porings stole my materials to repair the ship. Do you help me to get them back?";
 		mes "There are plenty of Porings on this Island.";
 		next;
 		mes "[Sailor]";
-		mes "I really appreciate it if you help me.";
-		mes "Apparently I am not allowed to move or discover this island.";
-		mes "Thats why I ask you~";
+		mes "I would really appreciate it if you help me.";
+		mes "I am not allowed to set food on this island.";
+		mes "That's why I ask for your help~";
 		close;
 	}
 
@@ -136,30 +136,30 @@ OnInit:
 int_land,78,103,5	script	Captain Carocc#int_land	4_M_REINDEER,{
 	if(checkquest(21002) == -1) {
 		mes "[Captain Carocc]";
-		mes "There are still people in the cabins?!";
-		mes "At least you are save.";
+		mes "There are people still in the cabins?!";
+		mes "At least you are safe.";
 		mes "Are you alright?";
 		next;
-		if (select("Im alright, but others need help.", "I think I am the last?") == 1) {
+		if (select("I'm alright, but others need help.", "I think I am the last?") == 1) {
 			mes "[Captain Carocc]";
 			mes "There are more people left?";
-			mes "I will send a rescue team to them";
-			mes "Thank you for your report";
+			mes "I will send a rescue team to them.";
+			mes "Thank you for your report.";
 		} else {
 			mes "[Captain Carocc]";
-			mes "Alright, thats good.";
-			mes "The storm came unexpected but I never thought it hit us that hard.";
+			mes "Alright, that's good.";
+			mes "The storm came unexpectedly but I never thought it would hit us that hard.";
 		}
 		next;
 		mes "[Captain Carocc]";
-		mes "At least, most people are already in safety.";
+		mes "At least most people made it to safety.";
 		next;
 		mes "[Captain Carocc]";
 		mes "Look at the trees there, ^4d4dfffollow them to the southwest^000000 to find a new ship.";
 		mes "The Ship will take you to ^4d4dffIzlude^000000, our original destination.";
 		next;
 		mes "[Captain Carocc]";
-		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several material we could need for reparation.";
+		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several material we could use for repairs.";
 		next;
 		mes "[Captain Carocc]";
 		mes "^4d4dffKill the Porings and bring 2 Lumber to the southern crew^000000.";
@@ -179,21 +179,21 @@ int_land,78,103,5	script	Captain Carocc#int_land	4_M_REINDEER,{
 		next;
 		mes "[Captain Carocc]";
 		mes "Speaking of Porings, you have to equip your gears.";
-		mes "You should have a^4d4dffweapon and an armor^000000 equipped.";
+		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
 		next;
 		cutin "tutorial03", 4;
 		mes "!- Information -!";
-		mes "^4d4dffYou can equip gear or use items by simply double click them.";
-		mes "Item window can be opened by pressing Alt + E or using the buttons.^000000";
+		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
+		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
 		next;
 		mes "!- Information -!";
-		mes "^4d4dffEquipped Items can be seen by pressing ALT + Q.";
-		mes "Either double click or drag & drop them.^000000";
+		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
+		mes "Either double click or drag & drop to equip or unequip them.^000000";
 		next;
 		cutin "", 255;
 		mes "[Captain Carocc]";
 		mes "Kill Porings and bring the Lumber to the crew.";
-		mes "Good Luck!";
+		mes "Good luck!";
 		close;
 	}
 	else {
@@ -204,12 +204,12 @@ int_land,78,103,5	script	Captain Carocc#int_land	4_M_REINDEER,{
 		sc_start SC_BLESSING,240000,10;
 		skilleffect 29,0;
 		sc_start SC_INCREASEAGI,240000,10;
-		mes "^4d4dffThe Ship^000000 anchored in the southwest. It will take you to Izlude.";
+		mes "^4d4dffThe Ship^000000 is anchored in the southwest. It will take you to Izlude.";
 		mes "Don't forget to ^4d4dffget some Lumber^000000 for the ship.";
 		next;
 		mes "[Captain Carocc]";
 		mes "Wear your equipment.";
-		mes "Your knife is more helpful than fists.";
+		mes "Your Knife is more helpful than fists.";
 		mes "Once you have the Lumber, talk to the crew.";
 		close;
 	}
@@ -290,8 +290,8 @@ int_land,73,100,3	script	Lumin#iz_int	4_M_NOV_RUMIN,{
 		mes ".....";
 		next;
 		select("Should I introduce myself?", "My name is ~!");
-		mes strcharinfo(0);
-		mes "I am " + strcharinfo(0);
+		mes "["+strcharinfo(0)+"]";
+		mes "I am "+strcharinfo(0)+"!";
 		next;
 		mes "[Lu]";
 		mes ".....";
