@@ -91,7 +91,7 @@ int_land,58,69,5	script	Sailor#int_land	4W_SAILOR,{
 			mes "[Sailor]";
 			mes "Unbelievable, perfect! Any chance you want to join my crew?";
 			mes "Enough talking!!";
-			mes "Come on, we're ready to set sails!";
+			mes "Come on, we're ready to set sail!";
 			mes "Thank you so much!";
 			next;
 			mes "[Sailor]";
