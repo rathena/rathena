@@ -2105,7 +2105,6 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "Oh, you came to ask me about the feather, too?";
 		mes "It's just a plain old decoration, but everyone really likes to bother me about it.";
 		next;
-		mes "Traveler#ep14_2fl";
 		mes "[Traveler]";
 		mes "If you are thinking about selling it, you should just give up.";
 		next;
