@@ -210,6 +210,11 @@ time_t stall_time = 60;
 uint32 addr_[16];   // ip addresses of local host (host byte order)
 int naddr_ = 0;   // # of ip addresses
 
+#ifdef levent
+uint32 _bind_ip;
+uint16 _bind_port;
+#endif
+
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
 #if PACKETVER < 20131223
@@ -333,9 +338,11 @@ void set_eof(int fd)
 {
 	if( session_isActive(fd) )
 	{
+#ifndef levent
 #ifdef SEND_SHORTLIST
 		// Add this socket to the shortlist for eof handling.
 		send_shortlist_add_fd(fd);
+#endif
 #endif
 		session[fd]->flag.eof = 1;
 	}
@@ -343,6 +350,10 @@ void set_eof(int fd)
 
 int recv_to_fifo(int fd)
 {
+#ifdef levent
+	return 0;
+#endif
+
 	int len;
 
 	if( !session_isActive(fd) )
@@ -385,8 +396,23 @@ int send_from_fifo(int fd)
 	if( !session_isValid(fd) )
 		return -1;
 
+#ifdef levent
+	if (session[fd]->kill_tick > 0)
+		return -1;
+#endif
+
 	if( session[fd]->wdata_size == 0 )
 		return 0; // nothing to send
+
+#ifdef levent
+	len = bufferevent_write(session[fd]->bufev, (const char *)session[fd]->wdata, (int)session[fd]->wdata_size);
+	session[fd]->wdata_size = 0;
+
+	if (len == SOCKET_ERROR)
+	{//An exception has occured
+		set_eof(fd);
+	}
+#else
 
 	len = sSend(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
 
@@ -420,6 +446,7 @@ int send_from_fifo(int fd)
 		}
 #endif
 	}
+#endif
 
 	return 0;
 }
@@ -443,6 +470,10 @@ void flush_fifos(void)
  *--------------------------------------*/
 int connect_client(int listen_fd)
 {
+#ifdef levent
+	return 1;
+#endif
+
 	int fd;
 	struct sockaddr_in client_address;
 	socklen_t len;
@@ -488,6 +519,12 @@ int connect_client(int listen_fd)
 
 int make_listen_bind(uint32 ip, uint16 port)
 {
+#ifdef levent
+	_bind_ip = ip;
+	_bind_port = port;
+	return 1;
+#endif
+
 	struct sockaddr_in server_address;
 	int fd;
 	int result;
@@ -545,6 +582,71 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	int fd;
 	int result;
 
+#ifdef levent
+	struct bufferevent *bev;
+
+	if (!gbase)
+	{
+		ShowError("Bufferevent base is not valid!\n");
+		return -1;
+	}
+
+	bev = bufferevent_socket_new(gbase, -1, BEV_OPT_CLOSE_ON_FREE);
+
+	if (!bev)
+	{
+		ShowError("bufferevent_socket_new: Failed to create bufferevent - %d! \n", sErrno);
+		return -1;
+	}
+
+
+	remote_address.sin_family = AF_INET;
+	remote_address.sin_addr.s_addr = htonl(ip);
+	remote_address.sin_port = htons(port);
+
+	ShowStatus("Connecting to %d.%d.%d.%d:%i\n", CONVIP(ip), port);
+
+	//result = sConnect(fd, (struct sockaddr *)(&remote_address), sizeof(struct sockaddr_in));
+	result = bufferevent_socket_connect(bev, (struct sockaddr *)&remote_address, sizeof(remote_address));
+
+	if (result == SOCKET_ERROR) {
+		ShowError("make_connection: connect failed (socket #%d, code %d)!\n", fd, sErrno);
+		do_close(fd);
+		return -1;
+	}
+
+	fd = bufferevent_getfd(bev);
+
+	if (fd >= FD_SETSIZE)
+	{
+		ShowError("bufferevent_socket_new: fd out of bound - %d! \n", fd);
+		bufferevent_free(bev);
+		return -1;
+	}
+
+	if (fd == -1) {
+		ShowError("bufferevent_socket_new: socket creation failed (code %d) %d !\n", sErrno, fd);
+		return -1;
+	}
+	if (fd == 0)
+	{// reserved
+		ShowError("bufferevent_socket_new: Socket #0 is reserved - Please report this!!!\n");
+		sClose(fd);
+		return -1;
+	}
+
+
+	if (fd_max <= fd) fd_max = fd + 1;
+
+	create_session(fd, null_recv, send_from_fifo, default_func_parse);
+	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
+	session[fd]->bufev = bev;
+	session[fd]->kill_tick = 0;
+
+	bufferevent_setcb(bev, conn_readcb, NULL, conn_eventcb, (void *)fd);
+	bufferevent_enable(bev, EV_WRITE);
+	bufferevent_enable(bev, EV_READ);
+#else
 	fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
 	if (fd == -1) {
@@ -647,7 +749,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
-
+#endif
 	return fd;
 }
 
@@ -669,6 +771,9 @@ static void delete_session(int fd)
 {
 	if( session_isValid(fd) )
 	{
+#ifdef levent
+		session[fd]->kill_tick = 0;
+#endif
 #ifdef SHOW_SERVER_STATS
 		socket_data_qi -= session[fd]->rdata_size - session[fd]->rdata_pos;
 		socket_data_qo -= session[fd]->wdata_size;
@@ -676,6 +781,12 @@ static void delete_session(int fd)
 		aFree(session[fd]->rdata);
 		aFree(session[fd]->wdata);
 		aFree(session[fd]->session_data);
+#ifdef levent
+		if (session[fd]->bufev)
+		{
+			bufferevent_free(session[fd]->bufev);
+		}
+#endif
 		aFree(session[fd]);
 		session[fd] = NULL;
 	}
@@ -820,6 +931,9 @@ int WFIFOSET(int fd, size_t len)
 
 int do_sockets(int next)
 {
+#ifdef levent
+	return 0;
+#endif
 	fd_set rfd;
 	struct timeval timeout;
 	int ret,i;
@@ -1275,6 +1389,29 @@ void socket_final(void)
 		if(session[i])
 			do_close(i);
 
+#ifdef levent
+	int pending;
+	time_t now;
+	while (true)
+	{
+		pending = 0;
+		now = time(NULL);
+		for (i = 1; i < fd_max; i += 1)
+		{
+			if (session[i])
+			{
+				pending += 1;
+				if (session[i]->kill_tick > 0 && now > session[i]->kill_tick)
+				{
+					delete_session(i);
+				}
+			}
+		}
+
+		if (pending == 0)break;
+	}
+#endif
+
 	// session[0]
 	aFree(session[0]->rdata);
 	aFree(session[0]->wdata);
@@ -1297,10 +1434,18 @@ void do_close(int fd)
 		return;// invalid
 
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
+
+#ifdef levent
+	if (session[fd])
+	{
+		session[fd]->kill_tick = time(NULL) + 10;
+	}
+#else
 	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
 	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
+#endif
 }
 
 /// Retrieve local ips in host byte order.
@@ -1511,6 +1656,9 @@ uint16 ntows(uint16 netshort)
 // sending or eof handling.
 void send_shortlist_add_fd(int fd)
 {
+#ifdef levent
+	send_from_fifo(fd);
+#else
 	int i;
 	int bit;
 
@@ -1533,6 +1681,7 @@ void send_shortlist_add_fd(int fd)
 	send_shortlist_set[i] |= 1<<bit;
 	// Add to the end of the shortlist array.
 	send_shortlist_array[send_shortlist_count++] = fd;
+#endif
 }
 
 // Do pending network sends and eof handling from the shortlist.
@@ -1581,5 +1730,178 @@ void send_shortlist_do_sends()
 				send_shortlist_add_fd(fd);
 		}
 	}
+}
+#endif
+
+#ifdef levent
+void timercb(int fd, short event, void *arg)
+{
+	int next, i;
+	next = do_timer(gettick_nocache());
+
+	evutil_timerclear(&tv);
+	tv.tv_sec = next / 1000;
+	tv.tv_usec = next % 1000 * 1000;
+	event_add(timeout, &tv);
+
+	last_tick = time(NULL);
+
+	for (i = 1; i < fd_max; i += 1)
+	{
+		if (session[i])
+		{
+			if (session[i]->kill_tick > 0 && last_tick > session[i]->kill_tick)
+			{
+				delete_session(i);
+			}
+			else if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time)
+			{
+				ShowInfo("Session #%d timed out\n", i);
+				session[i]->rdata_tick = 0;
+				set_eof(i);
+				session[i]->func_parse(i);
+			}
+		}
+	}
+}
+
+void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
+{
+	int fd = user_data;
+	int len, i;
+
+
+	if (events & BEV_EVENT_EOF)
+	{
+		set_eof(fd);
+		session[fd]->func_parse(fd);
+		session[fd]->kill_tick = 1;
+	}
+	else if (events & BEV_EVENT_ERROR)
+	{
+		set_eof(fd);
+		session[fd]->func_parse(fd);
+		session[fd]->kill_tick = 1;
+	}
+	else if (events & BEV_EVENT_CONNECTED)
+	{
+		session[fd]->func_parse(fd);
+		session[fd]->func_send(fd);
+
+		if (session[fd]->flag.eof)
+		{
+			session[fd]->func_parse(fd);
+		}
+	}
+
+}
+
+void conn_readcb(struct bufferevent *bev, void *ptr)
+{
+
+	int len, i;
+	int fd = ptr;
+
+
+	if (!session_isValid(fd))
+	{
+		return;
+	}
+
+	len = bufferevent_read(bev, (char *)session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd));
+
+	if (len == 0)
+	{
+		set_eof(fd);
+	}
+
+
+	session[fd]->rdata_size += len;
+	session[fd]->rdata_tick = last_tick;
+
+
+	if (session[fd]->kill_tick > 0)
+		return;
+
+
+	session[fd]->func_parse(fd);
+	session[fd]->func_send(fd);
+
+
+	if (session[fd]->flag.eof)
+	{
+		session[fd]->func_parse(fd);
+	}
+
+	RFIFOFLUSH(fd);
+}
+
+
+static void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct sockaddr *sa, int socklen, void *user_data)
+{
+	struct event_base *base = user_data;
+	struct bufferevent *bev;
+
+
+	struct sockaddr_in *client_address = sa;
+
+
+	bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+
+	if (!bev) {
+		fprintf(stderr, "Error constructing bufferevent!");
+		event_base_loopbreak(base);
+		return;
+	}
+
+	fd = bufferevent_getfd(bev);
+
+	//ShowError("Callback listener_cb called fd %d...\n",fd);
+
+	if (fd >= FD_SETSIZE)
+	{
+		ShowError("bufferevent_socket_new: fd out of bound - %d! \n", fd);
+		bufferevent_free(bev);
+		return;
+	}
+
+	if (fd == -1) {
+		ShowError("bufferevent_socket_new: accept failed!\n");
+		bufferevent_free(bev);
+		return;
+	}
+	if (fd == 0)
+	{// reserved
+		ShowError("bufferevent_socket_new: Socket #0 is reserved - Please report this!!!\n");
+		//sClose(fd);
+		bufferevent_free(bev);
+		return;
+	}
+
+	if (ip_rules && !connect_check(ntohl(client_address->sin_addr.s_addr))) {
+		do_close(fd);
+		//bufferevent_free(bev);
+		return;
+	}
+
+	if (fd_max <= fd) fd_max = fd + 1;
+
+	create_session(fd, null_recv, send_from_fifo, default_func_parse, bev);
+	session[fd]->client_addr = ntohl(client_address->sin_addr.s_addr);
+	//session[fd]->bufev = bev;
+
+	bufferevent_setcb(bev, conn_readcb, NULL, conn_eventcb, (void *)fd);
+	bufferevent_enable(bev, EV_WRITE);
+	bufferevent_enable(bev, EV_READ);
+}
+
+static void signal_cb(evutil_socket_t sig, short events, void *user_data)
+{
+	struct event_base *base = user_data;
+	struct timeval delay = { 2, 0 };
+
+	ShowStatus("Caught an interrupt signal; exiting cleanly in two seconds.\n");
+
+	event_base_loopexit(base, &delay);
 }
 #endif

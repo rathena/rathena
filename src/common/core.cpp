@@ -312,6 +312,12 @@ void usercheck(void)
 #endif
 }
 
+#ifdef levent
+struct event_base *gbase;
+struct event *timeout;
+struct timeval tv;
+#endif
+
 /*======================================
  *	CORE : MAINROUTINE
  *--------------------------------------*/
@@ -333,6 +339,13 @@ int main (int argc, char **argv)
 			SERVER_NAME = argv[0];
 		}
 	}
+
+#ifdef levent
+	int fd, err = 0;
+	struct event_base *base;
+	struct evconnlistener *listener;
+	struct event *signal_event;
+#endif
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
 
@@ -361,15 +374,110 @@ int main (int argc, char **argv)
 
 	do_init(argc,argv);
 
+#ifdef levent
+	struct sockaddr_in sin;
+
+	gbase = event_base_new();
+	base = gbase;
+
+	if (!base) {
+		ShowError("Could not initialize libevent!\n");
+	}
+	else
+	{
+
+		memset(&sin, 0, sizeof(sin));
+
+		sin.sin_family = AF_INET;
+		sin.sin_addr.s_addr = htonl(_bind_ip);
+		sin.sin_port = htons(_bind_port);
+
+		listener = evconnlistener_new_bind(base, listener_cb, base,
+			LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE, -1,
+			(struct sockaddr*)&sin, sizeof(sin));
+
+		if (!listener) {
+			ShowError("Could not create a listener!\n");
+			err = 1;
+		}
+
+
+		if (listener)
+		{
+			fd = evconnlistener_get_fd(listener);
+		}
+
+		if (fd == -1)
+		{
+			ShowError("evconnlistener_new_bind: socket creation failed\n");
+			err = 1;
+		}
+
+		if (fd == 0)
+		{// reserved
+			ShowError("evconnlistener_new_bind: Socket #0 is reserved - Please report this!!!\n");
+			err = 1;
+		}
+
+		if (fd >= FD_SETSIZE)
+		{
+			err = 1;
+		}
+
+		if (err == 0)
+		{
+			create_session(fd, null_recv, null_send, default_func_parse, NULL);
+			session[fd]->client_addr = 0; // just listens
+			session[fd]->rdata_tick = 0; // disable timeouts on this socket
+			if (fd_max <= fd) fd_max = fd + 1;
+		}
+
+		if (err == 0)
+		{
+			signal_event = evsignal_new(base, SIGINT, signal_cb, (void *)base);
+		}
+
+		if (err == 0)
+		{
+			if (!signal_event || event_add(signal_event, NULL)<0) {
+				ShowError("Could not create/add a signal event!\n");
+				err = 1;
+			}
+		}
+
+		timeout = event_new(base, -1, NULL, timercb, NULL);
+		evutil_timerclear(&tv);
+		tv.tv_sec = 1;
+		event_add(timeout, &tv);
+
+		last_tick = time(NULL);
+
+		if (err == 0)
+		{
+			// libevent event loop
+			event_base_dispatch(base);
+		}
+	}
+#else
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
 		int next = do_timer(gettick_nocache());
 		do_sockets(next);
 	}
+#endif
 
 	do_final();
 
 	timer_final();
+
+#ifdef levent
+	if (err == 0)
+	{
+		event_free(timeout);
+		event_free(signal_event);
+	}
+#endif
+
 	socket_final();
 	db_final();
 	mempool_final();
@@ -382,6 +490,18 @@ int main (int argc, char **argv)
 #if defined(BUILDBOT)
 	if( buildbotflag ){
 		exit(EXIT_FAILURE);
+	}
+#endif
+
+#ifdef levent
+	if (listener)
+	{
+		evconnlistener_free(listener);
+	}
+
+	if (base)
+	{
+		event_base_free(base);
 	}
 #endif
 

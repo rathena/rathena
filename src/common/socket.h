@@ -6,6 +6,23 @@
 
 #include "cbasetypes.h"
 
+
+// use libevent (libevent.org) socket library (EPOLL in linux and IOCP in Windows)
+#define levent // temporary
+
+
+#ifdef WIN32
+#undef levent // support for windows using IOCP will be added later...
+#endif
+
+#ifdef levent
+#include <event2/bufferevent.h>
+#include <event2/buffer.h>
+#include <event2/listener.h>
+#include <event2/util.h>
+#include <event2/event.h>
+#endif
+
 #ifdef WIN32
 	#include "winapi.h"
 	typedef long in_addr_t;
@@ -21,7 +38,16 @@
 extern "C" {
 #endif
 
+
+
+
+
 #define FIFOSIZE_SERVERLINK 256*1024
+
+#ifdef levent
+#undef FD_SETSIZE
+#define FD_SETSIZE 4096
+#endif
 
 // socket I/O macros
 #define RFIFOHEAD(fd)
@@ -86,6 +112,11 @@ struct socket_data
 		unsigned char server : 1;
 		unsigned char ping : 2;
 	} flag;
+
+#ifdef levent
+	struct bufferevent * 	bufev;
+	time_t kill_tick;
+#endif
 
 	uint32 client_addr; // remote client address
 
@@ -169,6 +200,21 @@ int socket_getips(uint32* ips, int max);
 extern uint32 addr_[16];   // ip addresses of local host (host byte order)
 extern int naddr_;   // # of ip addresses
 
+#ifdef levent
+static void listener_cb(struct evconnlistener *, evutil_socket_t, struct sockaddr *, int socklen, void *);
+static void signal_cb(evutil_socket_t, short, void *);
+void timercb(int fd, short event, void *arg);
+
+
+void conn_readcb(struct bufferevent *, void *);
+void conn_writecb(struct bufferevent *, void *);
+void conn_eventcb(struct bufferevent *bev, short events, void *user_data);
+
+extern struct event_base *gbase;
+extern uint32 _bind_ip;
+extern uint16 _bind_port;
+#endif
+
 void set_eof(int fd);
 
 /// Use a shortlist of sockets instead of iterating all sessions for sockets
@@ -185,6 +231,8 @@ void send_shortlist_add_fd(int fd);
 // Do pending network sends (and eof handling) from the shortlist.
 void send_shortlist_do_sends();
 #endif
+
+
 
 #ifdef __cplusplus
 }
