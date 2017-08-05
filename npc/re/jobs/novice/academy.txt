@@ -37,7 +37,7 @@ iz_int,56,32,3	script	Wounded Swordsman#izint	4_TOWER_01,8,8,{
 	}
 	if(checkquest(21001) == -1) {
 		mes "[Wounded]";
-		mes "Wow! Thank a lot!";
+		mes "Wow! Thanks a lot!";
 		mes "I don't know how this happend to our ship";
 		mes "but we should go to see the captain.";
 		next;
@@ -117,7 +117,7 @@ int_land,58,69,5	script	Sailor#int_land	4W_SAILOR,{
 			close;
 		}
 		mes "[Sailor]";
-		mes "These Porings stole my materials to repair the ship. Do you help me to get them back?";
+		mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
 		mes "There are plenty of Porings on this Island.";
 		next;
 		mes "[Sailor]";

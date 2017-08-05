@@ -90,12 +90,12 @@ OnTouch:
 	mes "^4d4dffOnce you left this island there is no way back.";
 	mes "Are you sure you want to go directly to Izlude?^000000";
 	next;
-	mes "^4d4dffIf you do, the quest got deleted from your Quest Log.^000000";
+	mes "^4d4dffIf you do, the quest will be deleted from your Quest Log.^000000";
 	next;
 	if (select("Do not go to Izlude yet", "Sail to Izlude!") == 1) {
 		mes "[Sailor]";
 		mes "You want to stay here longer?";
-		mes "Good, then I wait until you're ready~";
+		mes "Good, then I'll wait until you're ready~";
 		close;
 	}
 	mes "[Sailor]";
