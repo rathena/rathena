@@ -173,6 +173,7 @@ struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
 	struct view_data *vd;
+	bool vd_changed;
 	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]

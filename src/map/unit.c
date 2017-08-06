@@ -3305,6 +3305,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		case BL_MOB: {
 			struct mob_data *md = (struct mob_data*)bl;
 
+			if( md->vd_changed ){
+				aFree(md->vd);
+				md->vd = NULL;
+				md->vd_changed = false;
+			}
+
 			if( md->spawn_timer != INVALID_TIMER ) {
 				delete_timer(md->spawn_timer,mob_delayspawn);
 				md->spawn_timer = INVALID_TIMER;

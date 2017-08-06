@@ -336,7 +336,7 @@ int mobdb_checkid(const int id)
 struct view_data * mob_get_viewdata(int mob_id)
 {
 	if (mob_db(mob_id) == mob_dummy)
-		return 0;
+		return NULL;
 	return &mob_db(mob_id)->vd;
 }
 /*==========================================

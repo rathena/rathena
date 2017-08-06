@@ -7672,9 +7672,15 @@ void status_set_viewdata(struct block_list *bl, int class_)
 	case BL_MOB:
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
-			if (vd)
+			if (vd){
+				if( md->vd_changed ){
+					aFree(md->vd);
+					md->vd = NULL;
+					md->vd_changed = false;
+				}
+
 				md->vd = vd;
-			else
+			}else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
 	break;
