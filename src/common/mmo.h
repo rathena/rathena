@@ -262,12 +262,6 @@ enum e_skill_flag
 	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
 };
 
-enum e_mmo_charstatus_opt {
-	OPT_NONE        = 0x0,
-	OPT_SHOW_EQUIP  = 0x1,
-	OPT_ALLOW_PARTY = 0x2,
-};
-
 struct s_skill {
 	uint16 id;
 	uint8 lv;
