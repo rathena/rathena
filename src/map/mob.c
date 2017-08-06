@@ -5193,10 +5193,13 @@ void mob_reload(void) {
 	int i;
 
 	//Mob skills need to be cleared before re-reading them. [Skotlex]
+	//Also clear mob drops to reload db/../mob_drop.txt
 	for (i = 0; i < MAX_MOB_DB; i++) {
 		if (mob_db_data[i]) {
 			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill = 0;
+			memset(&mob_db_data[i]->dropitem, 0, sizeof(mob_db_data[i]->dropitem));
+			memset(&mob_db_data[i]->mvpitem, 0, sizeof(mob_db_data[i]->mvpitem));
 		}
 	}
 
