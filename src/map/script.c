@@ -3461,6 +3461,7 @@ void pop_stack(struct script_state* st, int start, int end)
 		}
 		data->type = C_NOP;
 	}
+
 	// move the rest of the elements
 	if( stack->sp > end )
 	{
@@ -3468,13 +3469,26 @@ void pop_stack(struct script_state* st, int start, int end)
 		for( i = start + stack->sp - end; i < stack->sp; ++i )
 			stack->stack_data[i].type = C_NOP;
 	}
+
 	// adjust stack pointers
-	     if( st->start > end )   st->start -= end - start;
-	else if( st->start > start ) st->start = start;
-	     if( st->end > end )   st->end -= end - start;
-	else if( st->end > start ) st->end = start;
-	     if( stack->defsp > end )   stack->defsp -= end - start;
-	else if( stack->defsp > start ) stack->defsp = start;
+	if( st->start > end ){
+		st->start -= end - start;
+	}else if( st->start > start ){
+		st->start = start;
+	}
+	
+	if( st->end > end ){
+		st->end -= end - start;
+	}else if( st->end > start ){
+		st->end = start;
+	}
+	
+	if( stack->defsp > end ){
+		stack->defsp -= end - start;
+	}else if( stack->defsp > start ){
+		stack->defsp = start;
+	}
+	
 	stack->sp -= end - start;
 }
 
