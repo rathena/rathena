@@ -249,7 +249,6 @@ typedef uintptr_t uintptr;
 // keyword replacement
 #ifdef _MSC_VER
 // For MSVC (windows)
-#define inline __inline
 #define forceinline __forceinline
 #define ra_align(n) __declspec(align(n))
 #define _chdir chdir
