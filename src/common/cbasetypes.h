@@ -249,6 +249,9 @@ typedef uintptr_t uintptr;
 // keyword replacement
 #ifdef _MSC_VER
 // For MSVC (windows)
+#ifndef __cplusplus
+#define inline __inline
+#endif
 #define forceinline __forceinline
 #define ra_align(n) __declspec(align(n))
 #define _chdir chdir
