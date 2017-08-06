@@ -4,6 +4,7 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/mmo.h"
+#include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
@@ -78,6 +79,9 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 
 	SqlStmt_Free(stmt);
 	StringBuf_Clear(&buf);
+
+	ShowInfo("achievement load complete from DB - id: %d (total: %d)\n", char_id, *count);
+
 	return achievelog;
 }
 
