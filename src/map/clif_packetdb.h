@@ -2318,6 +2318,13 @@
 	packet(0x0A37,59);
 #endif
 
+// 2016-09-28cRagexeRE
+#if PACKETVER >= 20160928
+	parseable_packet(0x0A97,8,clif_parse_dull);
+	parseable_packet(0x0A99,4,clif_parse_dull);
+	parseable_packet(0x0A9C,2,clif_parse_dull);
+#endif
+
 // 2016-10-26bRagexeRE
 #if PACKETVER >= 20161026
 	packet(0x0AA5,-1);
