@@ -428,8 +428,8 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 			strcat(buffer, " ");
 
 			// swap elements
-			swap(distance[i][0], distance[min][0]);
-			swap(distance[i][1], distance[min][1]);
+			SWAP(distance[i][0], distance[min][0]);
+			SWAP(distance[i][1], distance[min][1]);
 		}
 	}
 

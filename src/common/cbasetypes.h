@@ -276,15 +276,15 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // macro tools
 
-#ifdef swap // just to be sure
-#undef swap
+#ifdef SWAP // just to be sure
+#undef SWAP
 #endif
 // hmm only ints?
-//#define swap(a,b) { int temp=a; a=b; b=temp;}
+//#define SWAP(a,b) { int temp=a; a=b; b=temp;}
 // if using macros then something that is type independent
-//#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
+//#define SWAP(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
 // Avoid "value computed is not used" warning and generates the same assembly code
-#define swap(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
+#define SWAP(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
 #define swap_ptr(a,b) if ((a) != (b)) ((a) = (void*)((intptr_t)(a) ^ (intptr_t)(b)), (b) = (void*)((intptr_t)(a) ^ (intptr_t)(b)), (a) = (void*)((intptr_t)(a) ^ (intptr_t)(b)))
 
 //////////////////////////////////////////////////////////////////////////

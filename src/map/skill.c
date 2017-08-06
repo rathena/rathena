@@ -5490,8 +5490,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			for( i = 0; i <= j - 2; i++ )
 				for( k = i + 1; k <= j - 1; k++ )
 					if( positions[i] < positions[k] ) {
-						swap(positions[i],positions[k]);
-						swap(spheres[i],spheres[k]);
+						SWAP(positions[i],positions[k]);
+						SWAP(spheres[i],spheres[k]);
 					}
 
 			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions (Official behavior)
@@ -5601,8 +5601,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					for( k = i + 1; k <= j - 1; k++ )
 						if( positions[i] > positions[k] )
 						{
-							swap(positions[i],positions[k]);
-							swap(spheres[i],spheres[k]);
+							SWAP(positions[i],positions[k]);
+							SWAP(spheres[i],spheres[k]);
 						}
 
 				if( skill_lv == 1 ) j = 1; // Limit only to one ball
