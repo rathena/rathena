@@ -53,11 +53,11 @@ izlude_c,52,172,0	warp	iz04_c	2,2,izlude_in,74,161
 izlude_d,52,172,0	warp	iz04_d	2,2,izlude_in,74,161
 
 //= iz_int(Intro) & int_land(Secluded Island) ================
-iz_int,27,30,0	script	iz_int#room1-1	WARPNPC,2,2,{
+iz_int,27,30,0	script	noviship#room1-1	WARPNPC,2,2,{
 	end;
 
 OnTouch:
-	warp "iz_int", 51, 30;
+	warp strnpcinfo(4),51,30;
 	end;
 
 OnInit:
@@ -65,21 +65,22 @@ OnInit:
 	end;
 }
 
-iz_int,47,30,3	script	iz_int#room1-2	WARPNPC,2,2,{
+iz_int,47,30,3	script	noviship#room1-2	WARPNPC,2,2,{
 	end;
 
 OnTouch:
 	@display = 0;
-	warp "iz_int", 22, 30;
+	warp strnpcinfo(4),22,30;
 	end;
 }
 
-iz_int,56,15,0	script	iz_int	WARPNPC,2,2,{
+iz_int,56,15,0	script	noviship	WARPNPC,2,2,{
 	end;
 
 OnTouch:
-	savepoint "int_land", 77, 101;
-	warp "int_land", 85, 107;
+	.@map$ = "int_land" + strnpcinfo(2);
+	savepoint .@map$,77,101;
+	warp .@map$,85,107;
 	end;
 }
 
@@ -101,18 +102,31 @@ OnTouch:
 	mes "[Sailor]";
 	mes "Lets head toward Izlude!";
 	close2;
-	if (checkquest(21001))
+	if (isbegin_quest(21001))
 		erasequest(21001);
-	if (checkquest(21002))
+	if (isbegin_quest(21002))
 		erasequest(21002);
-
-	.@map$ = "izlude";
-	if (strnpcinfo(2) != "izlude")
-		.@map$ = .@map$ + strnpcinfo(2);
-
-	warp .@map$, 196, 209;
+	warp "izlude" + strnpcinfo(2),196,209;
 	end;
 }
+
+//= iz_int(Intro) & int_land(Secluded Island) Duplicates =====
+iz_int01,27,30,0	duplicate(noviship#room1-1)	noviship#room1-1a	WARPNPC,2,2
+iz_int02,27,30,0	duplicate(noviship#room1-1)	noviship#room1-1b	WARPNPC,2,2
+iz_int03,27,30,0	duplicate(noviship#room1-1)	noviship#room1-1c	WARPNPC,2,2
+iz_int04,27,30,0	duplicate(noviship#room1-1)	noviship#room1-1d	WARPNPC,2,2
+iz_int01,47,30,0	duplicate(noviship#room1-2)	noviship#room1-2a	WARPNPC,2,2
+iz_int02,47,30,0	duplicate(noviship#room1-2)	noviship#room1-2b	WARPNPC,2,2
+iz_int03,47,30,0	duplicate(noviship#room1-2)	noviship#room1-2c	WARPNPC,2,2
+iz_int04,47,30,0	duplicate(noviship#room1-2)	noviship#room1-2d	WARPNPC,2,2
+iz_int01,56,15,0	duplicate(noviship)	noviship#01	WARPNPC,2,2
+iz_int02,56,15,0	duplicate(noviship)	noviship#02	WARPNPC,2,2
+iz_int03,56,15,0	duplicate(noviship)	noviship#03	WARPNPC,2,2
+iz_int04,56,15,0	duplicate(noviship)	noviship#04	WARPNPC,2,2
+int_land01,49,57,0	duplicate(noviship#izlude)	noviship#_a	WARPNPC,2,2
+int_land02,49,57,0	duplicate(noviship#izlude)	noviship#_b	WARPNPC,2,2
+int_land03,49,57,0	duplicate(noviship#izlude)	noviship#_c	WARPNPC,2,2
+int_land04,49,57,0	duplicate(noviship#izlude)	noviship#_d	WARPNPC,2,2
 
 //= Izlude Academy ===========================================
 izlude,125,257,0	warp	#to_ac01	2,2,iz_ac01,99,29
