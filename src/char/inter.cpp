@@ -24,6 +24,10 @@
 #include "int_clan.h"
 #include "int_achievement.h"
 
+#include <yaml-cpp/yaml.h>
+
+#include <string>
+#include <vector>
 #include <stdlib.h>
 
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
@@ -345,7 +349,7 @@ void geoip_readdb(void){
 	geoip_cache = (unsigned char *) aMalloc(sizeof(unsigned char) * bufa.st_size);
 	if(fread(geoip_cache, sizeof(unsigned char), bufa.st_size, db) != bufa.st_size) { ShowError("geoip_cache reading didn't read all elements \n"); }
 	fclose(db);
-	ShowStatus("Finished Reading "CL_GREEN"GeoIP"CL_RESET" Database.\n");
+	ShowStatus("Finished Reading " CL_GREEN "GeoIP" CL_RESET " Database.\n");
 }
 /* [Dekamaster/Nightroad] */
 /* WHY NOT A DBMAP: There are millions of entries in GeoIP and it has its own algorithm to go quickly through them, a DBMap wouldn't be efficient */
@@ -837,56 +841,50 @@ int inter_log(char* fmt, ...)
  * Read inter config file
  **/
 static void inter_config_readConf(void) {
-	int count = 0;
-	config_setting_t *config = NULL;
+	std::vector<std::string> directories = { "conf/", "conf/import/" };
+	static const std::string file_name(interserv_config.cfgFile);
 
-	if (conf_read_file(&interserv_config.cfg, interserv_config.cfgFile))
-		return;
+	for (auto directory : directories) {
+		std::string current_file = directory + file_name;
+		YAML::Node config;
+		try {
+			config = YAML::LoadFile(current_file);
+		}
+		catch (std::exception &e) {
+			ShowError("Cannot read storage definition file '" CL_WHITE "%s" CL_RESET "' (Caused by : " CL_WHITE "%s" CL_RESET ").\n", current_file.c_str(), e.what());
+			return;
+		}
 
-	// Read storages
-	config = config_lookup(&interserv_config.cfg, "storages");
-	if (config && (count = config_setting_length(config))) {
-		int i;
-		for (i = 0; i < count; i++) {
-			int id, max_num;
-			const char *name, *tablename;
-			struct s_storage_table table;
-			config_setting_t *entry = config_setting_get_elem(config, i);
+		if (config["storages"]) {
+			for (auto node : config["storages"]) {
+				struct s_storage_table table;
+				int cap = MAX_STORAGE;
 
-			if (!config_setting_lookup_int(entry, "id", &id)) {
-				ShowConfigWarning(entry, "inter_config_readConf: Cannot find storage \"id\" in member %d", i);
-				continue;
+				if (!node["id"].IsDefined() || !node["name"].IsDefined() || !node["table"].IsDefined()) {
+					YAML::Emitter out;
+					out << node;
+					ShowWarning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
+					ShowMessage("%s\n", out.c_str());
+					continue;
+				}
+
+				if (node["max"]) {
+					cap = node["max"].as<int>();
+				}
+
+				memset(&table, 0, sizeof(struct s_storage_table));
+
+				RECREATE(interserv_config.storages, struct s_storage_table, interserv_config.storage_count + 1);
+				interserv_config.storages[interserv_config.storage_count].id = node["id"].as<uint8>();
+				safestrncpy(interserv_config.storages[interserv_config.storage_count].name, node["name"].as<std::string>().c_str(), NAME_LENGTH);
+				safestrncpy(interserv_config.storages[interserv_config.storage_count].table, node["table"].as<std::string>().c_str(), DB_NAME_LEN);
+				interserv_config.storages[interserv_config.storage_count].max_num = cap;
+				interserv_config.storage_count++;
+
+				ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' storage informations in '" CL_WHITE "%s" CL_RESET "'\n", interserv_config.storage_count, current_file.c_str());
 			}
-
-			if (!config_setting_lookup_string(entry, "name", &name)) {
-				ShowConfigWarning(entry, "inter_config_readConf: Cannot find storage \"name\" in member %d", i);
-				continue;
-			}
-
-			if (!config_setting_lookup_string(entry, "table", &tablename)) {
-				ShowConfigWarning(entry, "inter_config_readConf: Cannot find storage \"table\" in member %d", i);
-				continue;
-			}
-
-			if (!config_setting_lookup_int(entry, "max", &max_num))
-				max_num = MAX_STORAGE;
-			else if (max_num > MAX_STORAGE) {
-				ShowConfigWarning(entry, "Storage \"%s\" has \"max\" %d, max is MAX_STORAGE (%d)!\n", name, max_num, MAX_STORAGE);
-				max_num = MAX_STORAGE;
-			}
-
-			memset(&table, 0, sizeof(struct s_storage_table));
-
-			RECREATE(interserv_config.storages, struct s_storage_table, interserv_config.storage_count+1);
-			interserv_config.storages[interserv_config.storage_count].id = id;
-			safestrncpy(interserv_config.storages[interserv_config.storage_count].name, name, NAME_LENGTH);
-			safestrncpy(interserv_config.storages[interserv_config.storage_count].table, tablename, DB_NAME_LEN);
-			interserv_config.storages[interserv_config.storage_count].max_num = max_num;
-			interserv_config.storage_count++;
 		}
 	}
-
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' storage informations in '"CL_WHITE"%s"CL_RESET"'\n", interserv_config.storage_count, interserv_config.cfgFile);
 }
 
 void inter_config_finalConf(void) {
@@ -903,7 +901,7 @@ static void inter_config_defaults(void) {
 	interserv_config.storage_count = 0;
 	interserv_config.storages = NULL;
 
-	safestrncpy(interserv_config.cfgFile, "conf/inter_server.conf", sizeof(interserv_config.cfgFile));
+	safestrncpy(interserv_config.cfgFile, "inter_server.yml", sizeof(interserv_config.cfgFile));
 }
 
 // initialize

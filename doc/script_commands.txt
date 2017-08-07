@@ -5158,7 +5158,7 @@ window, to avoid any disruption when both windows overlap.
 *openstorage2 <storage_id>,<mode>{,<account_id>};
 
 Just like the 'openstorage' command, except this command can open additional storages
-by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.conf
+by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.yml
 for storage groups.
 
 Values for <mode> are:
