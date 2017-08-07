@@ -128,14 +128,19 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
 		return false;
 	}
 
+	if (!sd->achievement_data.achievements[i].completed)
+		sd->achievement_data.incompleteCount--;
+
 	if (i != sd->achievement_data.count - 1)
 		memmove(&sd->achievement_data.achievements[i], &sd->achievement_data.achievements[i + 1], sizeof(struct achievement) * (sd->achievement_data.count - 1 - i));
 
 	aFree(&sd->achievement_data.achievements[sd->achievement_data.count-1]);
 	sd->achievement_data.count--;
-	if (!sd->achievement_data.achievements[i].completed)
-		sd->achievement_data.incompleteCount--;
-	RECREATE(sd->achievement_data.achievements, struct achievement, sd->achievement_data.count);
+	if( sd->achievement_data.count == 0 ){
+		sd->achievement_data.achievements = NULL;
+	}else{
+		RECREATE(sd->achievement_data.achievements, struct achievement, sd->achievement_data.count);
+	}
 	sd->achievement_data.save = true;
 
 	// Send a removed fake achievement
