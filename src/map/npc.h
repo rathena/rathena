@@ -106,7 +106,7 @@ struct npc_data {
 	} progressbar;
 };
 
-struct eri *npc_sc_display_ers;
+extern struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 

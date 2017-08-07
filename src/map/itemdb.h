@@ -769,7 +769,7 @@ struct s_item_group_db
 };
 
 /// Struct of Roulette db
-struct s_roulette_db {
+extern struct s_roulette_db {
 	unsigned short *nameid[MAX_ROULETTE_LEVEL], /// Item ID
 		           *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win

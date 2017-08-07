@@ -80,6 +80,8 @@ static char atcmd_output[CHAT_SIZE_MAX];
 static char atcmd_player_name[NAME_LENGTH];
 const char *parent_cmd;
 
+struct atcmd_binding_data** atcmd_binding;
+
 static AtCommandInfo* get_atcommandinfo_byname(const char *name); // @help
 static const char* atcommand_checkalias(const char *aliasname); // @help
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help

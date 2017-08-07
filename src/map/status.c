@@ -55,6 +55,14 @@ short current_equip_opt_index; /// Contains random option index of an equipped i
 
 unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
+sc_type SkillStatusChangeTable[MAX_SKILL];
+int StatusIconChangeTable[SC_MAX];
+unsigned int StatusChangeFlagTable[SC_MAX];
+int StatusSkillChangeTable[SC_MAX];
+int StatusRelevantBLTypes[SI_MAX];
+unsigned int StatusChangeStateTable[SC_MAX];
+unsigned int StatusDisplayType[SC_MAX];
+
 static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_vit(struct block_list *,struct status_change *,int);

@@ -58,11 +58,15 @@ int night_timer_tid = INVALID_TIMER;
 
 struct eri *pc_sc_display_ers = NULL;
 struct eri *pc_itemgrouphealrate_ers = NULL;
+struct eri *num_reg_ers;
+struct eri *str_reg_ers;
 int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
+
+struct s_job_info job_info[CLASS_COUNT];
 
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]

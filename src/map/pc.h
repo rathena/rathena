@@ -744,8 +744,8 @@ extern struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate t
 /**
  * ERS for the bulk of pc vars
  **/
-struct eri *num_reg_ers;
-struct eri *str_reg_ers;
+extern struct eri *num_reg_ers;
+extern struct eri *str_reg_ers;
 
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
@@ -832,7 +832,7 @@ enum item_check {
 	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
 };
 
-struct {
+extern struct s_job_info {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;

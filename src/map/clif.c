@@ -58,6 +58,8 @@ static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
+unsigned long color_table[COLOR_MAX];
+
 #include "clif_obfuscation.h"
 static bool clif_session_isValid(struct map_session_data *sd);
 
