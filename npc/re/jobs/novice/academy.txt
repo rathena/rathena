@@ -38,7 +38,7 @@ iz_int,56,32,3	script	Wounded Swordsman#izint	4_TOWER_01,8,8,{
 	case 0:
 		mes "[Wounded]";
 		mes "Wow! Thanks a lot!";
-		mes "I don't know how this happens to our ship";
+		mes "I don't know how this happened to our ship";
 		mes "but we should go to see the captain.";
 		next;
 		mes "[Wounded]";
@@ -5071,7 +5071,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "[Poring]";
 		mes "Dear oh dear...what do we have 'ere?";
 		next;
-		if (select("What happens?", "Ignore him/it?") == 2) {
+		if (select("What happened?", "Ignore him/it?") == 2) {
 			mes "[Poring]";
 			mes "Oh dear, oh dear...";
 			close;
