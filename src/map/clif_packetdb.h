@@ -2320,9 +2320,9 @@
 
 // 2016-09-28cRagexeRE
 #if PACKETVER >= 20160928
-	parseable_packet(0x0A97,8,clif_parse_dull);
-	parseable_packet(0x0A99,4,clif_parse_dull);
-	parseable_packet(0x0A9C,2,clif_parse_dull);
+	parseable_packet(0x0A97,8,clif_parse_dull,0);
+	parseable_packet(0x0A99,4,clif_parse_dull,0);
+	parseable_packet(0x0A9C,2,clif_parse_dull,0);
 #endif
 
 // 2016-10-26bRagexeRE
