@@ -23,20 +23,20 @@
 # The 'max' of premium storages are not adjusted by 'vip_storage_increase' config nor MIN_STORAGE.
 #
 # Structure:
-#	- id: <storage_id>          // (int) Storage ID will be used for script command 'openstorage2'.
-#	  name: "<storage name>"    // (string) Storage name will be sent to the client to display on the title bar.
-#	  table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
-#	  max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
+#	- ID: <storage_id>          // (int) Storage ID will be used for script command 'openstorage2'.
+#	  Name: "<storage name>"    // (string) Storage name will be sent to the client to display on the title bar.
+#	  Table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
+#	  Max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
 #  Duplicate the structure to create more storages
 
 
-storages:
-    - id: 0
-      name: "Storage"
-      table: "storage"
-      #max: 600
+Storages:
+    - ID: 0
+      Name: "Storage"
+      Table: "storage"
+      #Max: 600
 #   Additional storage example
-#   - id: 1
-#     name: "VIP Storage"
-#     table: "vip_storage"
-#     max: 300
+#   - ID: 1
+#     Name: "VIP Storage"
+#     Table: "vip_storage"
+#     Max: 300

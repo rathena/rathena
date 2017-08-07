@@ -855,12 +855,12 @@ static void inter_config_readConf(void) {
 			return;
 		}
 
-		if (config["storages"]) {
-			for (auto node : config["storages"]) {
+		if (config["Storages"]) {
+			for (auto node : config["Storages"]) {
 				struct s_storage_table table;
 				int cap = MAX_STORAGE;
 
-				if (!node["id"].IsDefined() || !node["name"].IsDefined() || !node["table"].IsDefined()) {
+				if (!node["ID"].IsDefined() || !node["Name"].IsDefined() || !node["Table"].IsDefined()) {
 					YAML::Emitter out;
 					out << node;
 					ShowWarning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
@@ -868,16 +868,16 @@ static void inter_config_readConf(void) {
 					continue;
 				}
 
-				if (node["max"]) {
-					cap = node["max"].as<int>();
+				if (node["Max"]) {
+					cap = node["Max"].as<int>();
 				}
 
 				memset(&table, 0, sizeof(struct s_storage_table));
 
 				RECREATE(interserv_config.storages, struct s_storage_table, interserv_config.storage_count + 1);
-				interserv_config.storages[interserv_config.storage_count].id = node["id"].as<uint8>();
-				safestrncpy(interserv_config.storages[interserv_config.storage_count].name, node["name"].as<std::string>().c_str(), NAME_LENGTH);
-				safestrncpy(interserv_config.storages[interserv_config.storage_count].table, node["table"].as<std::string>().c_str(), DB_NAME_LEN);
+				interserv_config.storages[interserv_config.storage_count].id = node["ID"].as<uint8>();
+				safestrncpy(interserv_config.storages[interserv_config.storage_count].name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
+				safestrncpy(interserv_config.storages[interserv_config.storage_count].table, node["Table"].as<std::string>().c_str(), DB_NAME_LEN);
 				interserv_config.storages[interserv_config.storage_count].max_num = cap;
 				interserv_config.storage_count++;
 
