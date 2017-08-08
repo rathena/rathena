@@ -22,6 +22,8 @@ static DBMap *itemdb_randomopt_group; /// Random option group DB
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
+struct s_roulette_db rd;
+
 /**
 * Check if combo exists
 * @param combo_id

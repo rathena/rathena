@@ -1027,7 +1027,7 @@ enum clif_colors {
 	COLOR_LIGHT_GREEN,
 	COLOR_MAX
 };
-unsigned long color_table[COLOR_MAX];
+extern unsigned long color_table[COLOR_MAX];
 
 void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 

@@ -20,7 +20,7 @@ struct mapreg_save {
 	bool save;         ///< Whether a save operation is pending
 };
 
-struct reg_db regs;
+extern struct reg_db regs;
 extern bool skip_insert;
 
 void mapreg_reload(void);

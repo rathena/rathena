@@ -45,7 +45,7 @@ struct atcmd_binding_data {
 	int level;
 	int level2;
 };
-struct atcmd_binding_data** atcmd_binding;
+extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
 
 #ifdef __cplusplus

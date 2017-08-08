@@ -58,6 +58,12 @@
 #include <errno.h>
 
 
+struct eri *array_ers;
+DBMap *st_db;
+unsigned int active_scripts;
+unsigned int next_id;
+struct eri *st_ers;
+struct eri *stack_ers;
 
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func );
 

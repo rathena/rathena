@@ -162,6 +162,16 @@ char help2_txt[256] = "conf/help2.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
 char channel_conf[256] = "conf/channels.conf";
 
+const char *MSG_CONF_NAME_RUS;
+const char *MSG_CONF_NAME_SPN;
+const char *MSG_CONF_NAME_GRM;
+const char *MSG_CONF_NAME_CHN;
+const char *MSG_CONF_NAME_MAL;
+const char *MSG_CONF_NAME_IDN;
+const char *MSG_CONF_NAME_FRN;
+const char *MSG_CONF_NAME_POR;
+const char *MSG_CONF_NAME_THA;
+
 char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
 
 struct s_map_default map_default;
