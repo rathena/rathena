@@ -837,6 +837,13 @@ int inter_log(char* fmt, ...)
 	return 0;
 }
 
+static void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string &file) {
+	YAML::Emitter out;
+	out << node;
+	ShowWarning(fmt, file.c_str());
+	ShowMessage("%s\n", out.c_str());
+}
+
 /**
  * Read inter config file
  **/
@@ -861,22 +868,25 @@ static void inter_config_readConf(void) {
 			for (auto node : config["Storages"]) {
 				unsigned int id;
 
-				if (!node["ID"].IsDefined()) {
-					YAML::Emitter out;
-					out << node;
-					ShowWarning("inter_config_readConf: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", current_file.c_str());
-					ShowMessage("%s\n", out.c_str());
+				if (!node["ID"]) {
+					yaml_invalid_warning("inter_config_readConf: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
 					continue;
 				}
-				id = node["ID"].as<unsigned int>();
+
+				try {
+					id = node["ID"].as<unsigned int>();
+				}
+				catch (std::exception &e) {
+					static_cast<std::exception>(e); // Suppress unused warning
+					yaml_invalid_warning("inter_config_readConf: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
+					continue;
+				}
+
 				bool existing = interserv_config.storages.find(id) == interserv_config.storages.end();
 				auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
 
-				if (!existing && (!node["Name"].IsDefined() || !node["Table"].IsDefined())) {
-					YAML::Emitter out;
-					out << node;
-					ShowWarning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
-					ShowMessage("%s\n", out.c_str());
+				if (!existing && (!node["Name"] || !node["Table"])) {
+					yaml_invalid_warning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, current_file);
 					continue;
 				}
 				
@@ -884,10 +894,19 @@ static void inter_config_readConf(void) {
 					safestrncpy(storage_table->name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
 				if(node["Table"])
 					safestrncpy(storage_table->table, node["Table"].as<std::string>().c_str(), DB_NAME_LEN);
-				if (node["Max"])
-					storage_table->max_num = node["Max"].as<uint16>();
+				if (node["Max"]) {
+					try {
+						storage_table->max_num = node["Max"].as<uint16>();
+					}
+					catch (std::exception &e) {
+						static_cast<std::exception>(e); // Suppress unused warning
+						yaml_invalid_warning("inter_config_readConf: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
+						continue;
+					}
+				}
 				else if (!existing)
 					storage_table->max_num = MAX_STORAGE;
+
 				if (!existing) {
 					storage_table->id = (uint8)id;
 					interserv_config.storages[id] = storage_table;
@@ -982,10 +1001,8 @@ void inter_Storage_sendInfo(int fd) {
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
 	WFIFOW(fd, 2) = len;
-	for (i = 0; i < interserv_config.storages.size(); i++) {
-		if (!&interserv_config.storages[i] || !interserv_config.storages[i]->name)
-			continue;
-		memcpy(WFIFOP(fd, 4 + size*i), &interserv_config.storages[i], size);
+	for (auto storage : interserv_config.storages) {
+		memcpy(WFIFOP(fd, 4 + size*i), storage.second.get(), size);
 	}
 	WFIFOSET(fd, len);
 }

@@ -4,14 +4,12 @@
 #ifndef _COMMON_SQL_H_
 #define _COMMON_SQL_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.h"
 #include <stdarg.h>// va_list
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // Return codes
 #define SQL_ERROR -1

@@ -4,21 +4,25 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/conf.h"
 #include "../common/mmo.h"
 #include "../common/sql.h"
 
+#ifdef __cplusplus // C codes can't see this
 #include <memory>
 #include <unordered_map>
+#endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus // C codes can't see this
 struct Inter_Config {
 	char cfgFile[128];				  ///< Inter-Config file
 	std::unordered_map< unsigned int, std::shared_ptr<s_storage_table> > storages; ///< Storage name & table information
 };
+#endif
 
 extern struct Inter_Config interserv_config;
 
