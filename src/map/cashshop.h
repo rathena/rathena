@@ -4,6 +4,10 @@
 #ifndef _CASHSHOP_H_
 #define _CASHSHOP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h" // uint16, uint32
 #include "pc.h" // struct map_session_data
 
@@ -16,14 +20,17 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 enum CASH_SHOP_TAB_CODE
 {
 	CASHSHOP_TAB_NEW =  0x0,
-	CASHSHOP_TAB_POPULAR =  0x1,
-	CASHSHOP_TAB_LIMITED =  0x2,
-	CASHSHOP_TAB_RENTAL =  0x3,
-	CASHSHOP_TAB_PERPETUITY =  0x4,
-	CASHSHOP_TAB_BUFF =  0x5,
-	CASHSHOP_TAB_RECOVERY =  0x6,
-	CASHSHOP_TAB_ETC =  0x7,
-	CASHSHOP_TAB_SEARCH =  0x8
+	CASHSHOP_TAB_POPULAR,
+	CASHSHOP_TAB_LIMITED,
+	CASHSHOP_TAB_RENTAL,
+	CASHSHOP_TAB_PERPETUITY,
+	CASHSHOP_TAB_BUFF,
+	CASHSHOP_TAB_RECOVERY,
+	CASHSHOP_TAB_ETC,
+#if PACKETVER_SUPPORTS_SALES
+	CASHSHOP_TAB_SALE,
+#endif
+	CASHSHOP_TAB_MAX
 };
 
 // PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT
@@ -54,7 +61,43 @@ struct cash_item_db{
 	uint32 count;
 };
 
-extern struct cash_item_db cash_shop_items[CASHSHOP_TAB_SEARCH];
+extern struct cash_item_db cash_shop_items[CASHSHOP_TAB_MAX];
 extern bool cash_shop_defined;
+
+enum e_sale_add_result {
+	SALE_ADD_SUCCESS = 0,
+	SALE_ADD_FAILED = 1,
+	SALE_ADD_DUPLICATE = 2
+};
+
+struct sale_item_data{
+	// Data
+	uint16 nameid;
+	time_t start;
+	time_t end;
+	uint32 amount;
+
+	// Timers
+	int timer_start;
+	int timer_end;
+};
+
+struct sale_item_db{
+	struct sale_item_data** item;
+	uint32 count;
+};
+
+#if PACKETVER_SUPPORTS_SALES
+extern struct sale_item_db sale_items;
+
+struct sale_item_data* sale_find_item(uint16 nameid, bool onsale);
+enum e_sale_add_result sale_add_item(uint16 nameid, int32 count, time_t from, time_t to);
+bool sale_remove_item(uint16 nameid);
+void sale_notify_login( struct map_session_data* sd );
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CASHSHOP_H_ */

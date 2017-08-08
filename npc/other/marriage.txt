@@ -32,7 +32,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		// If the VIP system is enabled:
 		// - Non-VIP players must use a Marriage Covenant to get married.
 		// - VIP players may either pay the Zeny fee or use a Marriage Covenant.
-		if (VIP_SCRIPT && !vip_status(1)) {
+		if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 			mes "[Marry Happy]";
 			mes "Sorry but you can't get married right now.";
 			mes "The wedding is only available for subscribed players.";
@@ -205,7 +205,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 			mes "^FF0000Please check the current state of your account, and the one of your lover, before register for a wedding.^000000";
 			next;
 		}
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "[Marry Happy]";
 			mes "So you'd like to get married?";
 			mes "As a groom, you need to prepare";
@@ -290,7 +290,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 				mes "back after you find it, okay?";
 				goto L_End;
 			}
-			else if (Sex == 0) {
+			else if (Sex == SEX_FEMALE) {
 				if (countitem(6026) == 0 && Zeny < 1200000) {
 					mes "[Marry Happy]";
 					mes "I'm sorry, but all brides";
@@ -313,7 +313,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 					goto L_End;
 				}
 			}
-			else if (Sex == 1) {
+			else if (Sex == SEX_MALE) {
 				if (countitem(6026) == 0 && Zeny < 1300000) {
 					mes "[Marry Happy]";
 					mes "I'm sorry, but you don't";
@@ -379,7 +379,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 			emotion e_lv;
 			next;
 			mes "[Marry Happy]";
-			if (Sex == 0) {
+			if (Sex == SEX_FEMALE) {
 				mes "Since you're the bride,";
 				mes "you need to wait for the";
 				mes "groom to speak to Bishop";
@@ -607,7 +607,7 @@ prt_church,100,128,4	script	Bishop#w	60,{
 				getpartymember(getcharid(1));
 				set .@partymembercount,$@partymembercount;
 				if (.@partymembercount == 2) {
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						set $@wedding,1;
 						initnpctimer;
 						mes "[Vomars]";
@@ -678,7 +678,7 @@ prt_church,100,128,4	script	Bishop#w	60,{
 				getpartymember(getcharid(1));
 				set .@partymembercount,$@partymembercount;
 				if (.@partymembercount == 2) {
-					if (Sex == 0) {
+					if (Sex == SEX_FEMALE) {
 						if (strcharinfo(0) == $@wed_bride$) {
 							mes "[Vomars]";
 							mes "Young lovers, please";
@@ -918,7 +918,7 @@ prt_church,20,179,4	script	Divorce Staff	71,{
 	next;
 	switch(select("Drop 1 Wedding Ring.:Keep it.")) {
 	case 1:
-		set .@ring, (Sex)?2634:2635; //Bridegroom_Ring, Bride_Ring
+		set .@ring, (Sex == SEX_MALE)?2634:2635; //Bridegroom_Ring, Bride_Ring
 		if (countitem(.@ring)) {
 			delitem .@ring,1;
 			mes "[Bad Ending]";
@@ -973,7 +973,7 @@ prt_church,22,179,4	script	Remarry Staff	71,{
 	next;
 	switch(select("Make new Wedding Ring.:Cancel.")) {
 	case 1:
-		set .@ring, (Sex)?2634:2635; //Bridegroom_Ring, Bride_Ring
+		set .@ring, (Sex == SEX_MALE)?2634:2635; //Bridegroom_Ring, Bride_Ring
 		if (countitem(.@ring) || isequipped(.@ring)) {
 			mes "[Wedding Again]";
 			mes "Wait, wait...";

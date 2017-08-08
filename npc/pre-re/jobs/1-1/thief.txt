@@ -29,7 +29,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 				mes "[Thief Guide]";
 				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
 				next;
-				if (getskilllv("NV_BASIC") < 9) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Thief Guide]";
 					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
 					next;
@@ -52,7 +52,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 			}
 			else {
 				mes "[Thief Guide]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Hey, dude.";
 				else
 					mes "Hey, baby~";
@@ -61,7 +61,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 		}
 		else {
 			mes "[Thief Guide]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Hey, dude.";
 			else
 				mes "Hey, baby.";
@@ -290,7 +290,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 		mes strcharinfo(0) + "? Um, where is it? Ah, here it is. Let's see...";
 		next;
 		mes "[Thief Guide]";
-		if (getskilllv("NV_BASIC") < 9) {
+		if (!callfunc("F_CanChangeJob")) {
 			mes "Isn't that cute? I can see you're ambitious, but you gotta learn all of the Basic Skills before you can become a Thief.";
 			close;
 		}
@@ -529,10 +529,10 @@ moc_ruins,141,125,3	script	Mr. Irrelevant	83,{
 
 // Monsters
 //============================================================
-job_thief1,0,0,0,0	monster	Orange Mushroom	1182,180,0,0,0
-job_thief1,0,0,0,0	monster	Fabre	1184,50,0,0,0
-job_thief1,0,0,0,0	monster	Chonchon	1183,50,0,0,0
-job_thief1,0,0,0,0	monster	Spore	1014,30,0,0,0
+job_thief1,0,0	monster	Orange Mushroom	1182,180
+job_thief1,0,0	monster	Fabre	1184,50
+job_thief1,0,0	monster	Chonchon	1183,50
+job_thief1,0,0	monster	Spore	1014,30
 
 //============================================================
 // mapflag

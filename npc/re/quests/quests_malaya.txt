@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.0 Added "Nurse in Port Malaya" and "Pintados Festival" quests. [Euphy]
 //= 1.1 Added GM management function and NPC. [Euphy]
 //= 1.2 Added VIP features. [Euphy]
+//= 1.3 Fixed Pintados Festival never ends. [Capuche]
 //============================================================
 
 // Cautious Village & Daily Quests :: hi_malaya
@@ -153,7 +154,7 @@ malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 				next;
 				mes "[Rodel the Guard]";
 				mes "I think there will be more Jejeling hunts in the future. Please join us again next time.";
-				if (!VIP_SCRIPT || vip_status(1))
+				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -706,7 +707,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 		erasequest 7374;
 		erasequest 7379;
 		setquest 7375;
-		if (!VIP_SCRIPT || vip_status(1))
+		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6497, 2; // Lesser_Agimat
 		else
 			getitem 6497, 1; // Lesser_Agimat
@@ -744,7 +745,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				delitem 6502, 6; // Silver_Cross
 				erasequest 7380;
 				setquest 7381;
-				if (!VIP_SCRIPT || vip_status(1))
+				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -812,7 +813,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				setquest 7375;
 				erasequest 7374;
 				erasequest 7379;
-				if (!VIP_SCRIPT || vip_status(1))
+				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -1114,7 +1115,7 @@ malaya,181,353,5	script	Old Man Nardo#malaya	574,{
 					delitem 6503, 5; // Soul_Protection
 					setquest 7378;
 					erasequest 7377;
-					if (!VIP_SCRIPT || vip_status(1))
+					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 						getitem 6497, 2; // Lesser_Agimat
 					else
 						getitem 6497, 1; // Lesser_Agimat
@@ -1514,7 +1515,7 @@ ma_fild01,178,206,0	script	Black Bamboo#malaya	844,4,4,{
 	mes "[" + strcharinfo(0) + "]";
 	mes "I knew I could do this!";
 	close;
-OnTouch:
+OnTouch_:
 	if ((checkquest(7366) != -1) || (checkquest(7380) != -1)) {
 		specialeffect EF_LEVEL99_4;
 	}
@@ -1728,7 +1729,7 @@ malaya,295,171,3	script	Collection Dealer Woeon	582,{
 					delitem 6498, countitem(6498); //Jejellopy
 					setquest 7392;
 					erasequest 7391;
-					if (!VIP_SCRIPT || vip_status(1))
+					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 						getitem 6497, 2; // Lesser_Agimat
 					else
 						getitem 6497, 1; // Lesser_Agimat
@@ -1962,7 +1963,7 @@ malaya,119,217,3	script	Blacksmith Pandoi	538,{
 				delitem 6508, 10; //Silver_Bracelet
 				setquest 7394;
 				erasequest 7393;
-				if (!VIP_SCRIPT || vip_status(1))
+				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -2374,7 +2375,7 @@ malaya,326,68,2	script	Pedro the Sailor	100,{
 			set malaya_diwata, 6;
 			erasequest 7399;
 			setquest 7401;
-			if (!VIP_SCRIPT || vip_status(1))
+			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6497, 2; // Lesser_Agimat
 			else
 				getitem 6497, 1; // Lesser_Agimat
@@ -2437,7 +2438,7 @@ malaya,326,68,2	script	Pedro the Sailor	100,{
 				mes "I think you kind of like doing it.";
 				setquest 7401;
 				erasequest 7403;
-				if (!VIP_SCRIPT || vip_status(1))
+				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -2928,7 +2929,7 @@ ma_fild01,239,253,3	script	Dhong the Guard	570,{
 				delitem 6505, 10; // Purified_Bone
 				setquest 7408;
 				erasequest 7407;
-				if (!VIP_SCRIPT || vip_status(1))
+				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -3024,7 +3025,7 @@ ma_fild01,200,190,3	script	Maries#malaya	579,{
 			mes "Thank you for delivering those precious shirts to my children.";
 			setquest 7390;
 			erasequest 7389;
-			if (!VIP_SCRIPT || vip_status(1))
+			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6497, 2; // Lesser_Agimat
 			else
 				getitem 6497, 1; // Lesser_Agimat
@@ -3160,7 +3161,7 @@ ma_fild01,251,93,3	script	Lost Child#malaya01	576,{
 			next;
 			mes "[Little Kid]";
 			mes "Why~ Do I always go in circles here?";
-			mes "Do you why, " + ((Sex) ? "mister" : "ma'am") + "?";
+			mes "Do you why, " + ((Sex == SEX_MALE) ? "mister" : "ma'am") + "?";
 			mes "What's with this road?";
 			mes "Is somebody trying to trick me?";
 			close;
@@ -3263,7 +3264,7 @@ ma_fild02,241,39,5	script	Good Capre Budidai	572,{
 					mes "This is a blessing for friends. Hey hey hey~";
 					setquest 7410;
 					erasequest 7409;
-					if (!VIP_SCRIPT || vip_status(1))
+					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 						getitem 6497, 2; // Lesser_Agimat
 					else
 						getitem 6497, 1; // Lesser_Agimat
@@ -4215,11 +4216,11 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Totoy]";
 		mes "Um... hey!";
 		next;
-		select("You are a " + ((Sex) ? "boy" : "girl") + ", aren't you?");
+		select("You are a " + ((Sex == SEX_MALE) ? "boy" : "girl") + ", aren't you?");
 		emotion e_omg,1;
 		mes "[Totoy]";
 		mes "Huh?";
-		if (!Sex) {
+		if (Sex == SEX_FEMALE) {
 			mes "Totoy is a girl, and you are a boy.";
 			mes "You're not a boy?";
 		} else {
@@ -4263,7 +4264,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Dog]";
 		mes "Woof woof woof!!!!";
 		set malaya_buwaya,14;
-		if (!VIP_SCRIPT || vip_status(1))
+		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6497,10; //Lesser_Agimat
 		else
 			getitem 6497,5; //Lesser_Agimat
@@ -4277,7 +4278,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "Would there be something awesome to surprise people with?";
 		close;
 	}
-OnTouch:
+OnTouch_:
 	emotion e_omg;
 	end;
 }
@@ -4368,7 +4369,7 @@ malaya,290,152,5	script	Master of Hunting#buwaya	578,{
 		mes "Try collecting 10 Animal Samples from where the kid saw the monster. I will look for traces of that monster from the samples.";
 		next;
 		mes "[Master of Hunting]";
-		mes (Sex) ? "It won't be pleasant but any brave man could easily do it, don't you agree?" : "I don't want the hands of a pretty girl to smell bad but I could care less with someone like you. Ha ha!";
+		mes (Sex == SEX_MALE) ? "It won't be pleasant but any brave man could easily do it, don't you agree?" : "I don't want the hands of a pretty girl to smell bad but I could care less with someone like you. Ha ha!";
 		set malaya_buwaya,7;
 		erasequest 2273;
 		setquest 2274;
@@ -4392,7 +4393,7 @@ malaya,290,152,5	script	Master of Hunting#buwaya	578,{
 		mes "Try collecting 10 Animal Samples from where the kid saw the monster. I will look for traces of that monster from the samples.";
 		next;
 		mes "[Master of Hunting]";
-		mes (Sex) ? "It won't be pleasant but any brave man could easily do it, don't you agree?" : "I don't want the hands of a pretty girl to smell bad but I could care less with someone like you. Ha ha!";
+		mes (Sex == SEX_MALE) ? "It won't be pleasant but any brave man could easily do it, don't you agree?" : "I don't want the hands of a pretty girl to smell bad but I could care less with someone like you. Ha ha!";
 		set malaya_buwaya,7;
 		erasequest 2273;
 		setquest 2274;
@@ -4699,7 +4700,7 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 			mes "[Guard Leader]";
 			mes "Good work.";
 			erasequest 2281;
-			if (!VIP_SCRIPT || vip_status(1))
+			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6497,10; //Lesser_Agimat
 			else
 				getitem 6497,5; //Lesser_Agimat
@@ -5224,7 +5225,7 @@ malaya,285,332,4	script	Old Legend Teller#bako1	574,{
 			mes "Please get rid of this monster for us.";
 			erasequest 1179;
 			set malaya_bakona1,7;
-			if (!VIP_SCRIPT || vip_status(1))
+			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6499,5; //Ancient_Grudge
 			else
 				getitem 6499,3; //Ancient_Grudge
@@ -5474,7 +5475,7 @@ ma_fild01,165,237,4	script	Malaya Immigrant#bako2	582,{
 
 ma_fild01,171,235,0	script	#bako1	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona1 == 5) {
 		mes "The damage is so severe";
 		mes "that the record is unidentifiable.";
@@ -5744,7 +5745,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		erasequest 1184;
 		setquest 1185;
 		set malaya_bakona2,6;
-		if (!VIP_SCRIPT || vip_status(1))
+		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 			getitem 12700,7; //Insideout_Shirt
 		else
 			getitem 12700,5; //Insideout_Shirt
@@ -5850,7 +5851,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		erasequest 1193;
 		set malaya_bakona2,15;
 		getexp 1000000,600000;
-		if (!VIP_SCRIPT || vip_status(1))
+		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6497,7; //Lesser_Agimat
 		else
 			getitem 6497,5; //Lesser_Agimat
@@ -6134,7 +6135,7 @@ malaya,289,364,4	script	Young Fortune Teller	583,{
 			erasequest 1186;
 			setquest 1187;
 			set malaya_bakona2,8;
-			if (!VIP_SCRIPT || vip_status(1))
+			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 				getitem 12699,7; //Tikbalang_Belt
 			else
 				getitem 12699,5; //Tikbalang_Belt
@@ -6195,7 +6196,7 @@ ma_fild01,54,253,4	script	Gruffy Worker#bako2	582,{
 
 ma_fild01,54,244,0	script	#bako2	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 9) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6264,7 +6265,7 @@ ma_fild01,236,119,5	script	Grumpy Worker#bako2	577,{
 
 ma_fild01,242,116,0	script	#bako3	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 10) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6337,7 +6338,7 @@ ma_scene01,177,89,4	script	Cowardly Worker#bako2	578,{
 
 ma_scene01,179,85,0	script	#bako4	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 11) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6407,7 +6408,7 @@ ma_scene01,141,118,4	script	Gloomy Worker#bako2	582,{
 
 ma_scene01,138,122,0	script	#bako5	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 12) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6474,7 +6475,7 @@ ma_scene01,175,170,5	script	Sentimental Worker#bako2	578,{
 
 ma_scene01,171,174,0	script	#bako6	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 13) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6752,7 +6753,7 @@ L_Warp:
 	}
 
 L_Reward:
-	if (!VIP_SCRIPT || vip_status(1)) {
+	if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE)) {
 		getitem 6499,5; //Ancient_Grudge
 		getitem 6497,10; //Lesser_Agimat
 	} else {
@@ -7234,7 +7235,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		emotion e_what;
 		next;
 		mes "[???]";
-		mes "Hey "+((Sex)?"dude":"missy")+",";
+		mes "Hey "+((Sex == SEX_MALE)?"dude":"missy")+",";
 		mes "You're not getting in the hospital.";
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -7779,7 +7780,7 @@ malaya,53,68,4	script	Bushes#ma	844,{
 	if (malaya_bang == 13) {
 		mes "[???]";
 		mes "Don't come any closer!";
-		mes "Old "+((Sex)?"man":"lady")+"!";
+		mes "Old "+((Sex == SEX_MALE)?"man":"lady")+"!";
 		mes "How'd you know I was here?";
 		emotion e_omg;
 		next;
@@ -7863,7 +7864,7 @@ malaya,53,68,4	script	Bushes#ma	844,{
 	} else if (malaya_bang == 15) {
 		mes "[???]";
 		mes "Don't come any closer!";
-		mes "Old "+((Sex)?"man":"lady")+"!";
+		mes "Old "+((Sex == SEX_MALE)?"man":"lady")+"!";
 		mes "How'd you know I was here?";
 		emotion e_omg;
 		next;
@@ -8328,16 +8329,16 @@ ma_fild01,1,1,4	script	Pintados Manager#pin	894,{
 	end;
 
 // Moved to individual NPCs for smoother processing.
-//OnInit:
-//	if ($malaya_pintados_00 > 0)
-//		donpcevent "Pintados Manager#pin::OnEnableNPC";
-//	end;
+OnInit:
+	if ($malaya_pintados_00 > 0) {
+		// donpcevent "Pintados Manager#pin::OnEnableNPC";
+		initnpctimer;// unoffical fix
+	}
+	end;
 
 OnTimer1800000:
-	set $malaya_pintados_00, $malaya_pintados_00;
 	if ($malaya_pintados_00 > 0 && $malaya_pintados_00 < 344) {
 		set $malaya_pintados_00,$malaya_pintados_00+1;
-		stopnpctimer;
 		initnpctimer;
 	} else {
 		set $malaya_pintados_00,0;
@@ -8484,7 +8485,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		mes "Sigh... We are still short of materials to start the '^7A96E0Pintados Festival^000000'.";
 		close;
 	case 3:
-		set .@str$, (Sex)?"Bro":"Sis";
+		set .@str$, (Sex == SEX_MALE)?"Bro":"Sis";
 		break;
 	}
 	emotion e_lv;
@@ -8563,7 +8564,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 			close;
 		}
 		mes "[Isco]";
-		mes .@str$+"! How many Scarlet Dyestuffs can you give me from the "+countitem(.@item)+" you have?";
+		mes .@str$+"! How many "+ getitemname(.@item) +" can you give me from the "+countitem(.@item)+" you have?";
 		next;
 		switch(select("Enter Quantity:All")) {
 		case 1:

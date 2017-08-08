@@ -4,7 +4,9 @@
 #ifndef _CHAR_SQL_H_
 #define _CHAR_SQL_H_
 
-#define DB_NAME_LEN 256 //max len of dbs
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "../config/core.h"
 #include "../common/core.h" // CORE_ST_LAST
@@ -25,11 +27,25 @@ enum E_CHARSERVER_ST {
 	CHARSERVER_ST_LAST
 };
 
-enum {
-	TABLE_INVENTORY,
-	TABLE_CART,
-	TABLE_STORAGE,
-	TABLE_GUILD_STORAGE,
+enum e_char_delete {
+	CHAR_DEL_EMAIL = 1,
+	CHAR_DEL_BIRTHDATE
+};
+
+enum e_char_delete_restriction {
+	CHAR_DEL_RESTRICT_PARTY = 1,
+	CHAR_DEL_RESTRICT_GUILD,
+	CHAR_DEL_RESTRICT_ALL
+};
+
+enum e_char_del_response {
+	CHAR_DELETE_OK = 0,
+	CHAR_DELETE_DATABASE,
+	CHAR_DELETE_NOTFOUND,
+	CHAR_DELETE_BASELEVEL,
+	CHAR_DELETE_GUILD,
+	CHAR_DELETE_PARTY,
+	CHAR_DELETE_TIME,
 };
 
 struct Schema_Config {
@@ -56,6 +72,7 @@ struct Schema_Config {
 	char party_db[DB_NAME_LEN];
 	char pet_db[DB_NAME_LEN];
 	char mail_db[DB_NAME_LEN]; // MAIL SYSTEM
+	char mail_attachment_db[DB_NAME_LEN];
 	char auction_db[DB_NAME_LEN]; // Auctions System
 	char friend_db[DB_NAME_LEN];
 	char hotkey_db[DB_NAME_LEN];
@@ -71,6 +88,9 @@ struct Schema_Config {
 	char acc_reg_str_table[DB_NAME_LEN];
 	char char_reg_str_table[DB_NAME_LEN];
 	char char_reg_num_table[DB_NAME_LEN];
+	char clan_table[DB_NAME_LEN];
+	char clan_alliance_table[DB_NAME_LEN];
+	char achievement_table[DB_NAME_LEN];
 };
 extern struct Schema_Config schema_config;
 
@@ -114,6 +134,9 @@ struct Char_Config {
 	char char_name_letters[1024]; // list of letters/symbols allowed (or not) in a character name. by [Yor]
 	int char_name_option; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 	int char_del_option;	// Character deletion type, email = 1, birthdate = 2 (default)
+	int char_del_restriction;	// Character deletion restriction (0: none, 1: if the character is in a party, 2: if the character is in a guild, 3: if the character is in a party or a guild)
+	bool char_rename_party;	// Character renaming in a party
+	bool char_rename_guild;	// Character renaming in a guild
 };
 
 #define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
@@ -145,9 +168,9 @@ struct CharServ_Config {
 	int log_inter;	// loggin inter or not [devil]
 	int char_check_db;	///cheking sql-table at begining ?
 
-	struct point start_point[MAX_STARTPOINT]; // Initial position the player will spawn on the server
-	short start_point_count; // Number of positions read
-	struct startitem start_items[MAX_STARTITEM]; // Initial items the player with spawn with on the server
+	struct point start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
+	short start_point_count, start_point_count_doram; // Number of positions read
+	struct startitem start_items[MAX_STARTITEM], start_items_doram[MAX_STARTITEM]; // Initial items the player with spawn with on the server
 	int console;
 	int max_connect_user;
 	int gm_allow_group;
@@ -158,6 +181,10 @@ struct CharServ_Config {
 	char default_map[MAP_NAME_LENGTH];
 	unsigned short default_map_x;
 	unsigned short default_map_y;
+
+	int clan_remove_inactive_days;
+	int mail_return_days;
+	int mail_delete_days;
 };
 extern struct CharServ_Config charserv_config;
 
@@ -198,8 +225,7 @@ DBMap* char_get_onlinedb(); // uint32 account_id -> struct online_char_data*
 
 struct char_session_data {
 	bool auth; // whether the session is authed or not
-	uint32 account_id, login_id1, login_id2;
-	int sex;
+	uint32 account_id, login_id1, login_id2, sex;
 	int found_char[MAX_CHARS]; // ids of chars on this account
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
@@ -207,7 +233,6 @@ struct char_session_data {
 	uint8 char_slots; // total number of characters that can be created
 	uint8 chars_vip;
 	uint8 chars_billing;
-	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
 	char birthdate[10+1];  // YYYY-MM-DD
@@ -257,18 +282,15 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
 int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
-int char_delete_char_sql(uint32 char_id);
+enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id);
 int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
-int char_memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
-
-void disconnect_player(uint32 account_id);
+int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id);
+bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id);
 
 int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
-
-int char_request_accreg2(uint32 account_id, uint32 char_id);
 
 //extern bool char_gm_read;
 int char_loadName(uint32 char_id, char* name);
@@ -303,5 +325,8 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _CHAR_SQL_H_ */

@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Payon City
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5) L0ne_W0lf (2.1)
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.1c
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Payon City Npcs
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Most Credits To Muad Dib, Some Stuff By Me
 //= 1.4 Corrected a few typos
 //= 1.5 Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
@@ -26,10 +26,10 @@
 //=     Moved Fortune Teller to /other/fortune.txt
 //= 2.1b Added a missing close in the Monster Scholar. [L0ne_W0lf]
 //= 2.1c Minor bug fixes. [Euphy]
-//============================================================ 
+//============================================================
 
 // Payon
-//============================================================ 
+//============================================================
 payon,246,154,0	script	Lady#payon	90,{
 	mes "[Lady]";
 	mes "A long time ago,";
@@ -115,7 +115,7 @@ payon,173,82,0	script	Young Man#2payon	88,{
 payon,158,246,3	script	Guardsman#payon	708,3,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Guardsman]";
 	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion once inside.";
 	next;
@@ -142,7 +142,7 @@ payon,249,156,1	script	Woman#payon	66,{
 	mes " To be honest, things are getting tough because of all those monsters. ^666666*Sigh...*^000000";
 	next;
 	mes "[Woman]";
-	if (Sex == 1)
+	if (Sex == SEX_MALE)
 		mes "Whoa~! I just noticed those arms of yours look pretty solid. You look pretty strong, guy. Just how many monsters have you killed?!";
 	else
 		mes "Oooh! I didn't notice before, but you look pretty strong beneath all of that feminine charm.";
@@ -191,7 +191,7 @@ payon,246,158,5	script	Woman#2payon	66,0,0,{
 	mes "of the people living in Payon by her behavior. She's the only loudmouth. I guess she's just too excited about what the fortune teller told her.";
 	next;
 	mes "[Jim's Mother]";
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "Ooh...!";
 		mes "You've got";
 		mes "such broad shoulders!";
@@ -372,7 +372,7 @@ payon,132,235,3	script	Monster Scholar#02	98,{
 }
 
 // Inside Payon
-//============================================================ 
+//============================================================
 payon_in01,180,7,2	script	Waitress#payon	90,{
 	mes "[Pub Lady]";
 	mes "This place is always bustling with busy people. Little Novices come and go to become Archers, and everyone else is buying arrows while I have to stay here in this small shop.";
@@ -387,7 +387,7 @@ payon_in01,180,7,2	script	Waitress#payon	90,{
 	mes "And lonely...";
 	next;
 	mes "[Pub Lady]";
-	if (Sex == 1)
+	if (Sex == SEX_MALE)
 		mes "Where I can find the right person, a hot and Sexy hunk who can take me away from here? Um, hey mister, are you listening?";
 	else {
 		mes "Where I can find the right person, a cute, yet hard-bodied hunk who can take me away from here?";
@@ -468,7 +468,7 @@ payon_in01,180,7,2	script	Waitress#payon	90,{
 payon_in03,96,116,3	script	Chief Guardsman#payon	708,3,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Chief Guardsman]";
 	mes "What brings";
 	mes "you here? ";
@@ -832,7 +832,7 @@ payon_in01,47,59,2	script	Archer Wolt#payon	88,{
 payon_in03,99,190,4	script	Chief#payon	107,2,2,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (BaseLevel < 30) {
 		mes "[Guard]";
 		mes "Hey...";
@@ -991,7 +991,7 @@ payon_in03,102,185,5	script	Guard#payon	708,{
 }
 
 // Payon Archer Village
-//============================================================ 
+//============================================================
 pay_arche,77,131,2	script	Archer Joe#payon	88,{
 	mes "[Archer Joe]";
 	mes "Payon!";

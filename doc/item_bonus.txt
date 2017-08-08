@@ -109,8 +109,10 @@ bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
 bonus bAtkRate,n;  			Attack power + n%
+bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%
+bonus bWeaponMatkRate,n;	Weapon Magical ATK + n% (renewal mode only)
 bonus bDef,n;      			Equipment DEF + n
 bonus bDefRate,n;  			Equipment DEF + n%
 bonus bDef2,n;     			VIT based DEF + n
@@ -125,6 +127,7 @@ Additional stats
 bonus bHit,n;         			Hit + n
 bonus bHitRate,n;     			Hit + n%
 bonus bCritical,n;    			Critical + n
+bonus bCriticalLong,n;			Critical + n for normal long ranged attack (won't be shown in status window)
 bonus2 bCriticalAddRace,r,n;	Critical + n against enemies of race r
 bonus bCriticalRate,n;			Critical + n%
 bonus bFlee,n;        			Flee + n
@@ -152,11 +155,13 @@ bonus2 bHPRegenRate,n,t;		Gain n HP every t milliseconds
 bonus2 bHPLossRate,n,t; 		Lose n HP every t milliseconds
 bonus2 bSPRegenRate,n,t;		Gain n SP every t milliseconds
 bonus2 bSPLossRate,n,t; 		Lose n SP every t milliseconds
+bonus2 bRegenPercentHP,n,t;		Gain n% of max HP every t milliseconds
+bonus2 bRegenPercentSP,n,t;		Gain n% of max SP every t milliseconds
 bonus bNoRegen,x;       		Stops HP or SP regeneration (x: 1=HP, 2=SP)
 
 bonus bUseSPrate,n;         		SP consumption + n%
-bonus2 bSkillUseSP,sk,n;    		Reduces SP consumption of skill sk by n
-bonus2 bSkillUseSPrate,sk,n;		Reduces SP consumption of skill sk by n%
+bonus2 bSkillUseSP,sk,n;    		Decreases SP consumption of skill sk by n
+bonus2 bSkillUseSPrate,sk,n;		Decreases SP consumption of skill sk by n%
 
 Atk/Def
 -------
@@ -165,7 +170,7 @@ bonus bLongAtkRate,n;     		Increases damage of ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped
-bonus2 bWeaponAtkRate,w,n;		Adds n% damage to normal attacks when weapon of type w is equipped
+bonus2 bWeaponDamageRate,w,n;	Adds n% damage to normal attacks when weapon of type w is equipped
 
 bonus bNearAtkDef,n; 			Adds n% damage reduction against melee physical attacks
 bonus bLongAtkDef,n; 			Adds n% damage reduction against ranged physical attacks
@@ -244,6 +249,7 @@ bonus2 bAddMDefMonster,mid,x;     	+x% magical damage reduction against monster 
 
 bonus2 bAddRace2,mr,x;			+x% damage against monster race mr
 bonus2 bSubRace2,mr,x;			+x% damage reduction against monster race mr
+bonus2 bMagicAddRace2,mr,x;		+x% magic damage against monster race mr
 
 bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
 
@@ -270,8 +276,11 @@ bonus bIgnoreDefRace,r; 		Disregard DEF against enemies of race r
 bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target belongs to race r
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
+bonus2 bIgnoreDefRaceRate,r,n; 	Disregard n% of the target's DEF if the target belongs to race r
 bonus2 bIgnoreMdefRaceRate,r,n; 	Disregard n% of the target's MDEF if the target belongs to race r
+bonus2 bIgnoreMdefRace2Rate,mr,n; 	Disregard n% of the target's MDEF if the target belongs to monster race mr
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
+bonus2 bIgnoreDefClassRate,c,n;	Disregard n% of the target's DEF if the target belongs to class c
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
 
 Experience
@@ -322,7 +331,8 @@ bonus2 bWeaponComaRace,r,n; 		Adds a n/100% chance to cause Coma when attacking 
 | 5. AutoSpell Bonuses |
 ========================
 NOTES:
-  - For all AutoSpell bonuses, target must be within the spell's range to go off.
+  - For all AutoSpell bonuses, target does not have be within the spell's range to go off.
+  -- Enable conf/battle/battle.conf::autospell_check_range to force a range check.
   - By default, AutoSpell skills are casted on target unless it is a self or support skill (inf = 4/16).
 
 bonus3 bAutoSpell,sk,y,n;       	Adds a n/10% chance to cast skill sk of level y when attacking
@@ -406,6 +416,9 @@ bonus bBreakArmorRate,n; 		Adds a n/100% chance to break enemy's armor while att
 
 Monster drops
 -------------
+bonus2 bDropAddRace,r,x;	Adds x% to player's drop rate when killing a monster with race r.
+bonus2 bDropAddClass,c,x;	Adds x% to player's drop rate when killing a monster with race c.
+
 bonus3 bAddMonsterIdDropItem,iid,mid,n;	Adds a n/100% chance of dropping item iid when killing monster mid
 
 bonus2 bAddMonsterDropItem,iid,n;    	Adds a n/100% chance for item iid to be dropped when killing a monster
@@ -431,10 +444,11 @@ bonus bSplashAddRange,n;  		Splash attack radius + n
                           		NOTE: n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc.
 bonus2 bAddSkillBlow,sk,n;		Knock back the target by n cells when using skill sk
 bonus bNoKnockback,n;     		Character is no longer knocked back by enemy skills with such effect (n is meaningless)
-bonus bNoGemStone,n;      		Skills requiring Gemstones do no require them (n is meaningless)
+bonus bNoGemStone,n;      		Skills requiring Gemstones do not require them (n is meaningless)
                           		NOTE: Hocus Pocus still requires 1 Yellow Gemstone, Ganbantein requirements not reduced
 bonus bIntravision,n;     		Always see Hiding and Cloaking players/mobs (n is meaningless)
 bonus bPerfectHide,n;     		Hidden/cloaked character is no longer detected by monsters with 'detector' mode (n is meaningless)
 bonus bRestartFullRecover,n;	When reviving, HP and SP are fully healed (n is meaningless)
 bonus bClassChange,n;     		Gives a n/100% chance to change the attacked monster's class with normal attack
 bonus bAddStealRate,n;    		Increases success rate of Steal skill by n/100%
+bonus bNoMadoFuel,n;			Nullify Magic Gear Fuel requirement for skills. (n is meaningless)

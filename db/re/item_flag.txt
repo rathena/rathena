@@ -7,6 +7,7 @@
 //  4 - GUID Item: When this item is obtained, will generates GUID that cannot be stacked even same or stackable item
 //  8 - Item will be bound item when equipped
 // 16 - Special Broadcast: When item dropped by monster and player loot it, will be broadcasted!
+// 32 - Item will not be removed on consumption. Also supports 'itemskill'
 // NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree
 
 // Logged as Dead Branch item
@@ -262,8 +263,10 @@
 14667,2 //Yong_Kwang_Scroll
 14699,2 //Memorial_Garuda_Lucky_Egg
 14701,2 //Rune_Midgard_Imortal_Lucky_Egg
+14735,2 //Shapeshifter_Costume
 14741,2 //Midgard_Celebration_Lucky_Egg
 14753,2 //Hero_Midgard_Egg
+14805,2 //Almighty_Lucky_Egg
 16245,2 //Tw_April_Scroll
 16257,2 //Buddah_Scroll
 16304,2 //Evil_Incarnation
@@ -361,6 +364,7 @@
 17143,2 //Ms_Scorpio_Scroll
 17156,2 //TCG_Card_Scroll
 17165,2 //Challenge_Kit
+17204,2 // Shining_Egg
 17209,2 //Tw_Rainbow_Scroll
 17210,2 //Tw_Red_Scroll
 17211,2 //Tw_Orange_Scroll
@@ -381,18 +385,25 @@
 17307,2 //Midgard_Egg
 17317,2 //Sweet_Midgard_Egg
 17320,2 //Birthday_IdRO10th_Scroll
-17326,2 //Requiem_Egg,Requiem Egg
+17326,2 //Requiem_Egg
 17337,2 //Holy_Spirit_Egg
 17431,2 //Miracle_Lucky_Egg
 17435,2 //Legend_Hero_Lucky_Egg
 17447,2 //Blessing_Midgard_Lucky_Egg
+17461,2 //Frozen_Egg_Costume
 17464,2 //Winter_Midgard_Egg
+17470,2 //Headgear_Costume_Scroll
 17471,2 //Spring_Festival_Lucky_Egg
 17479,2 //Midgard_Festival_Egg
+17481,2 //Flower_Blossom_Scroll
 17482,2 //Solaris_Festival_Scroll
 17490,2 //Time_Travel_Lucky_Egg
+17493,2 //Burning_Feather_Costume_Scroll
 17494,2 //Rise_Midgard_Lucky_Egg
+17497,2 //Seaside_Costume_Scroll
+17517,2 //Animal_Costume_Scroll
 17519,2 //Epic_Heroes_Scroll
+17523,2 //Mystical_Costume_Scroll
 17526,2 //Majestic_Lucky_Egg
 17532,2 //Blessing_Lucky_Egg
 17552,2 //Garnet_Lucky_Egg
@@ -400,10 +411,22 @@
 17584,2 //Venus_Lucky_Egg
 17588,2 //Amora_Lucky_Egg
 17598,2 //Sograt_Lucky_Scroll
+17607,2 //Sanctuary_Lucky_Egg
+17613,2 //Chronosian_Lucky_Egg
+17628,2 //Cyborg_Lucky_Egg
+17633,2 //Undine_Lucky_Egg
+17648,2 //Smithy_Lucky_Egg
+17659,2 //Ganymede_Lucky_Egg
+17665,2 //LastAngel_LuckyScroll
+17671,2 //Valkyrie_Lucky_Egg
+17674,2 //Splash_Rainbow_Lucky_Egg
+17681,2 //Midgard_Lucky_Scroll
+17692,2 //Blessing_Scarlet_Egg
 22514,2 //Candy_Holder
 22558,2 //Lucky_Bag
 22669,2 //HALLOWEEN_G_BOX
 22685,2 //Solo_Christmas_Gift
+23196,2 // Shining_Blue_Lucky_Egg
 
 // GUID
 12900,4 //Battle_Manual_Box
@@ -1321,6 +1344,12 @@
 14497,4 //Pisces_Diadem_Box
 14498,4 //Pisces_Crown_Box
 14499,4 //Peacock_Feather_Box
+14699,4 //Memorial_Garuda_Lucky_Egg
+14701,4 //Rune_Midgard_Imortal_Lucky_Egg
+14735,4 //Shapeshifter_Costume
+14741,4 //Midgard_Celebration_Lucky_Egg
+14753,4 //Hero_Midgard_Egg
+14805,4 //Almighty_Lucky_Egg
 16131,4 //Lady_Tanee_Doll_Box
 16132,4 //Lunatic_Hat_Box
 16133,4 //G_Staff_Of_Light_Box
@@ -1663,6 +1692,7 @@
 17181,4 //Jan_Groove_Box
 17184,4 //3rd_Test_Pass_Box
 17203,4 //Free_Pass_Box
+17204,4 // Shining_Egg
 17207,4 //Idn_Heart_Scroll
 17209,4 //Tw_Rainbow_Scroll
 17210,4 //Tw_Red_Scroll
@@ -1690,6 +1720,45 @@
 17273,4 //INT_Biscuit_Stick_Box
 17274,4 //DEX_Biscuit_Stick_Box
 17275,4 //LUK_Biscuit_Stick_Box
+17307,4 //Midgard_Egg
+17317,4 //Sweet_Midgard_Egg
+17320,4 //Birthday_IdRO10th_Scroll
+17337,4 //Holy_Spirit_Egg
+17431,4 //Miracle_Lucky_Egg
+17435,4 //Legend_Hero_Lucky_Egg
+17447,4 //Blessing_Midgard_Lucky_Egg
+17461,4 //Frozen_Egg_Costume
+17464,4 //Winter_Midgard_Egg
+17470,4 //Headgear_Costume_Scroll
+17471,4 //Spring_Festival_Lucky_Egg
+17479,4 //Midgard_Festival_Egg
+17481,4 //Flower_Blossom_Scroll
+17482,4 //Solaris_Festival_Scroll
+17490,4 //Time_Travel_Lucky_Egg
+17493,4 //Burning_Feather_Costume_Scroll
+17494,4 //Rise_Midgard_Lucky_Egg
+17497,4 //Seaside_Costume_Scroll
+17517,4 //Animal_Costume_Scroll
+17519,4 //Epic_Heroes_Scroll
+17523,4 //Mystical_Costume_Scroll
+17526,4 //Majestic_Lucky_Egg
+17532,4 //Blessing_Lucky_Egg
+17552,4 //Garnet_Lucky_Egg
+17572,4 //Erzulie_Lucky_Egg
+17584,4 //Venus_Lucky_Egg
+17588,4 //Amora_Lucky_Egg
+17598,4 //Sograt_Lucky_Scroll
+17607,4 //Sanctuary_Lucky_Egg
+17613,4 //Chronosian_Lucky_Egg
+17628,4 //Cyborg_Lucky_Egg
+17633,4 //Undine_Lucky_Egg
+17648,4 //Smithy_Lucky_Egg
+17659,4 //Ganymede_Lucky_Egg
+17665,4 //LastAngel_LuckyScroll
+17671,4 //Valkyrie_Lucky_Egg
+17674,4 //Splash_Rainbow_Lucky_Egg
+17681,4 //Midgard_Lucky_Scroll
+17692,4 //Blessing_Scarlet_Egg
 //17297,4 //B_Halter_Box_1year
 //17318,4 //10_Anniv_Package
 //17319,4 //10_Anniv_Collection
@@ -1699,7 +1768,13 @@
 //17330,4 //Fashion_Costume_Box4
 //17335,4 //Mysterious_Ingredient_B
 22558,4 //Lucky_Bag
+23196,4 // Shining_Blue_Lucky_Egg
 
 // Special Broadcast
 7782,16 //Gold_Key77
 7783,16 //Silver_Key77
+
+// Not removed after consumption
+12622,32 //Boarding_Halter
+12887,32 //C_Wing_Of_Fly
+22508,32 //Para_Team_Mark_

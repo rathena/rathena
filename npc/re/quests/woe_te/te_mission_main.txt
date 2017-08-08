@@ -160,7 +160,7 @@ S_Coord:
 			7509,"30 Small Wooden Boxes" );
 	}
 	mes "["+ .@npc_name$ +"]";
-	if (canParticipateSiegeTE() == 0) {
+	if (jobcanentermap("te_prtcas01") == 0) {
 		mes "Ah... you...";
 		mes "based on TE rules, I won't be ordering you or asking you favors unfortunately.";
 		next;
@@ -188,7 +188,7 @@ S_Coord:
 			mes "Unfortunately, you can't accept missions right now.";
 			next;
 			mes "["+ .@npc_name$ +"]";
-			.@playtime_check2 = checkquest(7516,PLAYTIME);
+			.@playtime_check2 = checkquest(7516,PLAYTIME);// A Break for Commercial Development
 			if (.@playtime_check2 == 2) {
 				erasequest 7516;
 				mes "Mm, you were taking a break?";
@@ -214,7 +214,7 @@ S_Coord:
 		.@mission02 = isbegin_quest(.@quest_id[.@index]);
 		.@mission03 = isbegin_quest(.@quest_id[.@index+1]);
 
-		if (.@s == 0 || .@s == 1 || .@s == 2) {
+		if (.@s == 0 || .@s == 1 || .@s == 2) {// Hunting suspicious quest
 			if (.@map$ == "te_alde_gld")
 				setarray .@mob_name$[0],"Porings","suspicious Porings";
 			else
@@ -242,7 +242,7 @@ S_Coord:
 						mes "I don't understand why "+ .@mob_name$[0] +" appear at that time of the day.";
 						mes "Anyway, good job.";
 						if (.@num_tool_box == 0) {
-							erasequest 7510;
+							erasequest .@main_quest;
 							getitem 11558,5;// TE_White_Slim_Potion
 							getexp 5000,2500;
 							close;
@@ -291,7 +291,7 @@ S_Coord:
 			mes "I would like you to ^4d4dffeliminate "+ .@num_kill +" or more of "+ .@mob_name$[1] +"^000000.";
 			callsub( S_Acceptquest, .@main_quest, .@npc_name$ );
 		}
-		else if (.@s == 3 || .@s == 4 || .@s == 5) {
+		else if (.@s == 3 || .@s == 4 || .@s == 5) {// Breaking Emperiums
 			if (.@s == 3) {
 				.@num_tool_box = 1;
 				.@num_kill = 1;
@@ -353,7 +353,7 @@ S_Coord:
 				close;
 			}
 			.@playtime_check2 = checkquest(7516,PLAYTIME);
-			if (.@playtime_check2 == 1) {
+			if (.@playtime_check2 == 0) {
 				mes "There is something called 'commercial development level' in each fortress.";
 				mes "It increases as much as each guild invests.";
 				next;
@@ -366,7 +366,7 @@ S_Coord:
 				mes "See you in a bit.";
 				close;
 			}
-			else if (.@playtime_check2 == 2 || .@playtime_check2 == 3) {
+			else if (.@playtime_check2 == 2) {
 				erasequest 7516;
 				mes "The break for commercial development of the fortress is over now.";
 				mes "Good. Think about what kind of missions you want and come back again.";
@@ -514,6 +514,7 @@ S_Cancelquest:
 		mes "You should cancel this mission. I would say it's failed.";
 		next;
 		switch( select( "I would like to go on.","Yes, I'll cancel it." ) ) {
+		case 1:
 			mes "["+ .@npc_name$ +"]";
 			mes "I don't think it's worth it. Well, good luck!";
 			close;

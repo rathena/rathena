@@ -16,11 +16,13 @@
 //= 1.6 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
 //= 2.0 Updated Instructor Ur's quests. [Capuche]
 //= 2.1 Updated Blacksmith Thorn and Weapons Expert NPC. [Capuche]
+//= 2.2 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 2.3 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	4_M_KNIGHT_GOLD,{
 	mes "[Boya]";
-	if (countitem(6219) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "You are not in my group are you?";
 		mes "I don't have anything to say to outsiders.";
 		mes "If you want something register with my group.";
@@ -819,7 +821,7 @@ moc_fild11,180,253,5	script	Talking Dog#para03	972,{
 	mes "Not a wolf.";
 	mes "I wasn't a dog originally...";
 	next;
-	if (countitem(6219) > 0) {
+	if (callfunc("F_HasEdenGroupMark")) {
 		mes "[Talking Dog]";
 		mes "Anyway are you a Eden Group member?";
 		mes "Oh good to see you.";
@@ -1027,7 +1029,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
 
 pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 	if (para_suv01 < 13) {
-		if (countitem(6219) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Karl]";
 			mes "Hey, how are you?";
 			mes "Good to see you~";
@@ -1170,7 +1172,7 @@ pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 
 anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 	if (para_suv01 < 17) {
-		if (countitem(6219) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Cloud]";
 			mes "Oops.";
 			mes "You are a member of my group.";
@@ -1360,7 +1362,7 @@ anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 
 in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 	if (para_suv01 < 24) {
-		if (countitem(6219) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Hooksha]";
 			mes "Unbelievable why did you come here?";
 			mes "Um... You are not on the third step of the training?";
@@ -1629,7 +1631,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 
 iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 	if (para_suv01 < 33) {
-		if (countitem(6219) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Callandiva]";
 			mes "How did you get so deep in this ocean city?";
 			mes "Ah, that symbol is of our group.";
@@ -1866,6 +1868,10 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 				callsub S_Select,"",
 					13112,"Eden Revolver I","Revolver","HIT-5, attack 44","";//P_Revolver1
 			}
+			if (Class == Job_Summoner) {
+				callsub S_Select,"",
+					1699,"Eden Foxtail Staff I","Staff","MATK+135, attack 120","";//P_Foxtail1
+			}
 			mes "Let me see... you will receive..";
 			mes "the Eden Group Boots II and Uniform II.";
 			next;
@@ -1917,7 +1923,7 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 					13424,"Eden Saber II","One-handed sword","Attack 170","",///P_Sabre2
 					1193,"Eden Slayer II","Two-handed sword","Attack 185","";//P_Slayer2
 			}
-			if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Novice || Class == Job_Novice_High || Class == Job_SuperNovice || Class == Job_Soul_Linker || Class == Job_Ninja) {
+			if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Novice || Class == Job_Novice_High || Class == Job_Super_Novice || Class == Job_Soul_Linker || Class == Job_Ninja) {
 				callsub S_Select,"",
 					13051,"Eden Dagger II","Dagger","MATK+70, attack 158","";//P_Dagger2
 			}
@@ -1942,6 +1948,10 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			if (Class == Job_Gunslinger) {
 				callsub S_Select,"",
 					13113,"Eden Revolver II","Revolver","HIT-5, attack 60","";//P_Revolver2
+			}
+			if (Class == Job_Summoner) {
+				callsub S_Select,"",
+					26100,"Eden Foxtail Staff II","Staff","MATK+165, attack 135","";//P_Foxtail1
 			}
 			mes "Let me see... you will receive..";
 			mes "the Eden Group Boots III and Uniform III.";
@@ -2225,7 +2235,7 @@ moc_para01,179,44,3	script	Chef	820,{
 			mes "Ah, Kim-dduck-soon.";
 			mes "It's the representative meal for normal citizens.";
 			next;
-			if (countitem(6219) > 0) {
+			if (callfunc("F_HasEdenGroupMark")) {
 				if (Zeny > 2699) {
 					mes "[Chef]";
 					mes "Hey, here you are.";
@@ -2264,7 +2274,7 @@ moc_para01,179,44,3	script	Chef	820,{
 			mes "Course meal B?";
 			mes "This food with meat and vegetables in hot soup has it's origins from nomadic life under the cold and dry nature.";
 			next;
-			if (countitem(6219) > 0) {
+			if (callfunc("F_HasEdenGroupMark")) {
 				if (Zeny > 3599) {
 					mes "[Chef]";
 					mes "Hey, here you are.";
@@ -2299,7 +2309,7 @@ moc_para01,179,44,3	script	Chef	820,{
 			mes "How many times do I have to tell you?";
 			close;
 		case 4:
-			if (countitem(6219) > 0) {
+			if (callfunc("F_HasEdenGroupMark")) {
 				if (Zeny > 4499) {
 					mes "[Chef]";
 					mes "Hey, here you are.";
@@ -2342,7 +2352,7 @@ moc_para01,179,44,3	script	Chef	820,{
 			close;
 		}
 	case 2:
-		if (countitem(6219) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Chef]";
 			mes "Most jobs should be managed by yourself. So it might be difficult, right?";
 			mes "Actually it's harmful so they have requested continuously.";
@@ -2451,7 +2461,7 @@ moc_para01,179,44,3	script	Chef	820,{
 
 moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 	mes "[Instructor Ur]";
-	if (countitem(6219) < 1) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Hey there!";
 		mes "I see you're not one of our agents?";
 		mes "Are you interested in joining us?";
@@ -3623,7 +3633,7 @@ man_fild01,43,234,3	script	Dispatched Instructor#07	4_DST_SOLDIER,{
 			mes "I'll just be here making sure other people hunt the Nepenthes. I might ask them to hunt more than 1 who knows.";
 			para_2nd01 = 25;
 			erasequest 7235;// Nepenthes Hunt
-			getexp 50000,50000;;
+			getexp 50000,50000;
 		}
 		else {
 			mes "Is hunting the Nepenthes too much for you?";
@@ -3707,7 +3717,7 @@ spl_fild02,377,149,3	script	Dispatched Instructor#08	4_M_DST_MASTER,{
 			mes "Oh don't worry she won't mind. I'll just go back to doing what I was doing. Here's your reward.";
 			para_2nd01 = 27;
 			erasequest 7236;// Pinguicula Hunt
-			getexp 50000,50000;;
+			getexp 50000,50000;
 		}
 		else {
 			mes "Come on 5 Pinguicula.";
@@ -3734,7 +3744,7 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 		close;
 	}
 	mes "[Thorn]";
-	if (countitem(6219) < 1) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Hmm, are you a member of Eden Group?";
 		mes "You need to be one of our members to use my services.";
 		close;
@@ -3960,6 +3970,8 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 			}
 			else if (Class == Job_Gunslinger)
 				getitem 13114,1; //P.Revolver III
+			else if (Class == Job_Summoner)
+				getitem 26101,1; //P.Foxtail III
 			else {
 				mes "Hmm, you are eligible to receive equipment.";
 				mes "Yeah I understand that.";
@@ -4102,7 +4114,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		1986,	// P_Tail1
 		13114,	// P_Revolver3
 		1831,	// P_Knuckle1
-		13310;	// P_Huuma_Shuriken1
+		13310,	// P_Huuma_Shuriken1
+		26101;	// P_Foxtail III
 	.@menu$ = "Eden Group Slayer III:" +
 		"Eden Group Saber III:" +
 		"Eden Group Dagger III:" +
@@ -4117,7 +4130,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		"Eden Group Whip I:" +
 		"Eden Group Revolver III:" +
 		"Eden Group Knuckles I:" +
-		"Eden Group Huuma Shuriken I";
+		"Eden Group Huuma Shuriken I:" +
+		"Eden Group Foxtail III";
 	mes "[BK]";
 	mes "What's happening?";
 	mes "No way?!";

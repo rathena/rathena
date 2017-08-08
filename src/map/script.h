@@ -4,6 +4,10 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "map.h"
 
@@ -148,6 +152,7 @@ extern struct Script_Config {
 	int input_min_value;
 	int input_max_value;
 
+	// PC related
 	const char *die_event_name;
 	const char *kill_pc_event_name;
 	const char *kill_mob_event_name;
@@ -158,8 +163,47 @@ extern struct Script_Config {
 	const char *joblvup_event_name;
 	const char *stat_calc_event_name;
 
-	const char* ontouch_name;
-	const char* ontouch2_name;
+	// NPC related
+	const char* ontouch_event_name;
+	const char* ontouch2_event_name;
+	const char* ontouchnpc_event_name;
+	const char* onwhisper_event_name;
+	const char* oncommand_event_name;
+
+	// Init related
+	const char* init_event_name;
+	const char* inter_init_event_name;
+	const char* inter_init_once_event_name;
+
+	// Guild related
+	const char* guild_break_event_name;
+	const char* agit_start_event_name;
+	const char* agit_init_event_name;
+	const char* agit_end_event_name;
+	const char* agit_start2_event_name;
+	const char* agit_init2_event_name;
+	const char* agit_end2_event_name;
+	const char* agit_start3_event_name;
+	const char* agit_init3_event_name;
+	const char* agit_end3_event_name;
+
+	// Timer related
+	const char* timer_event_name;
+	const char* timer_minute_event_name;
+	const char* timer_hour_event_name;
+	const char* timer_clock_event_name;
+	const char* timer_day_event_name;
+	const char* timer_sunday_event_name;
+	const char* timer_monday_event_name;
+	const char* timer_tuesday_event_name;
+	const char* timer_wednesday_event_name;
+	const char* timer_thursday_event_name;
+	const char* timer_friday_event_name;
+	const char* timer_saturday_event_name;
+
+	// Instance related
+	const char* instance_init_event_name;
+	const char* instance_destroy_event_name;
 } script_config;
 
 typedef enum c_op {
@@ -201,8 +245,10 @@ typedef enum c_op {
 	C_NOT, // ~ a
 	C_R_SHIFT, // a >> b
 	C_L_SHIFT, // a << b
-	C_ADD_PP, // ++a
-	C_SUB_PP, // --a
+	C_ADD_POST, // a++
+	C_SUB_POST, // a--
+	C_ADD_PRE, // ++a
+	C_SUB_PRE, // --a
 } c_op;
 
 /**
@@ -363,6 +409,16 @@ enum questinfo_types {
 	#define FW_HEAVY            900
 #endif
 
+enum getmapxy_types {
+	UNITTYPE_PC = 0,
+	UNITTYPE_NPC,
+	UNITTYPE_PET,
+	UNITTYPE_MOB,
+	UNITTYPE_HOM,
+	UNITTYPE_MER,
+	UNITTYPE_ELEM,
+};
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
@@ -387,6 +443,7 @@ enum unitdata_mobtypes {
 	UMOB_SHIELD,
 	UMOB_WEAPON,
 	UMOB_LOOKDIR,
+	UMOB_CANMOVETICK,
 	UMOB_STR,
 	UMOB_AGI,
 	UMOB_VIT,
@@ -612,6 +669,40 @@ enum unitdata_npctypes {
 	UNPC_DMOTION,
 };
 
+enum navigation_service {
+	NAV_NONE = 0, ///< 0
+	NAV_AIRSHIP_ONLY = 1, ///< 1 (actually 1-9)
+	NAV_SCROLL_ONLY = 10, ///< 10
+	NAV_AIRSHIP_AND_SCROLL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY, ///< 11 (actually 11-99)
+	NAV_KAFRA_ONLY = 100, ///< 100
+	NAV_KAFRA_AND_AIRSHIP = NAV_KAFRA_ONLY + NAV_AIRSHIP_ONLY, ///< 101 (actually 101-109)
+	NAV_KAFRA_AND_SCROLL = NAV_KAFRA_ONLY + NAV_SCROLL_ONLY, ///< 110
+	NAV_ALL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY + NAV_KAFRA_ONLY ///< 111 (actually 111-255)
+};
+
+enum random_option_attribute {
+	ROA_ID = 0,
+	ROA_VALUE,
+	ROA_PARAM,
+};
+
+enum instance_info_type {
+	IIT_ID,
+	IIT_TIME_LIMIT,
+	IIT_IDLE_TIMEOUT,
+	IIT_ENTER_MAP,
+	IIT_ENTER_X,
+	IIT_ENTER_Y,
+	IIT_MAPCOUNT,
+	IIT_MAP
+};
+
+enum vip_status_type {
+	VIP_STATUS_ACTIVE = 1,
+	VIP_STATUS_EXPIRE,
+	VIP_STATUS_REMAINING
+};
+
 /**
  * used to generate quick script_array entries
  **/
@@ -626,8 +717,8 @@ const char* skip_space(const char* p);
 void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
+bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
-void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
 int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
@@ -636,10 +727,11 @@ int conv_num(struct script_state *st,struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+void script_stop_sleeptimers(int id);
+struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void run_script_main(struct script_state *st);
 
-void script_stop_instances(struct script_code *code);
-struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
+void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct DBMap *storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);
@@ -649,14 +741,15 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
+bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter);
+void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
 void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
 
-int script_config_read(char *cfgName);
+int script_config_read(const char *cfgName);
 void do_init_script(void);
 void do_final_script(void);
 int add_str(const char* p);
@@ -687,6 +780,10 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _SCRIPT_H_ */

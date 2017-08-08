@@ -25,9 +25,9 @@
 SC_STONE	()
 	desc: DEF -50%; if HP>25% lose 1% HP/5 sec; MDEF +25%; change element to Earth Lv 1; ignore Steal & Lex Aeterna; can't move/attack/pick item/use item/use skill/sit/logout
 	val1:
-	val2: Caster's object ID (for mob_log_damage)
-	val3: Tick
-	val4: Petrifying tick
+	val2: Caster's object ID
+	val3: Incubation time
+	val4: Remaining tick
 
 SC_FREEZE	()
 	desc: DEF -50%; FLEE = 0; MDEF +25%; ignore Steal, Lex Aeterna, Storm Gust, Falling Ice Pillar; change element to Water Lv 1; can't move/attack/pick item/use item/sit/logout
@@ -44,9 +44,9 @@ SC_SLEEP	()
 SC_POISON	()
 	desc: DEF -25%; if HP>25% lose 1.5% + 2 HP/sec; SP Regeneration is disabled
 	val1: Skill Level
-	val2: Caster's object ID (for mob_log_damage)
-	val3: Tick
-	val4: HP Damage
+	val2: Caster's object ID
+	val3: 
+	val4: Remaining tick
 
 SC_CURSE	()
 	desc: ATK-25%; LUK = 0; Movement speed -300
@@ -69,14 +69,14 @@ SC_BLEEDING	(SI_BLEEDING)
 	val1: Skill Level
 	val2: Caster's object ID (for mob_log_damage)
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_DPOISON	()
 	desc: DEF -25%; if HP>25% lose 10/15% HP/sec
 	val1: Skill Level
 	val2: Caster's object ID (for mob_log_damage)
-	val3: Tick
-	val4: HP Damage
+	val3: 
+	val4: Remaining tick
 
 SC_PROVOKE	(SI_PROVOKE)
 	desc: Decrease DEF by (5+(5*Skill Lv))%; Increase ATK by (2+(3*Skill lv))%
@@ -710,9 +710,11 @@ SC_INTOABYSS	()
 	desc:
 	val1:
 
-SC_SIEGFRIED	()
-	desc:
-	val1:
+SC_SIEGFRIED	(SI_SIEGFRIED)
+	desc: Status change for BD_SIEGFRIED
+	val1: BD_SIEGFRIED Skill level
+	val2: Increase val2% damage reduction from non-Nuetral elemental attack
+	val3: Increase status resistance value by val3% of player's current resistance.
 
 SC_WHISTLE	()
 	desc:
@@ -882,8 +884,8 @@ SC_MATKFOOD	(SI_MATKFOOD)
 	val1: +MagicAttack
 
 SC_SCRESIST	()
-	desc:
-	val1:
+	desc: Status resistance from Gospel skill
+	val1: Increase status resistance value by n% of player's current resistance.
 
 SC_XMAS	()
 	desc:
@@ -1275,7 +1277,7 @@ SC_FOOD_LUK_CASH	(SI_FOOD_LUK_CASH)
 	val1: +LUK
 
 SC_FEAR	()
-	desc:
+	desc: Cause SC_ANKLE for 2 seconds, Hit/Flee -20%, remove blind, immune to blind
 	val1:
 
 SC_BURNING	(SI_BURNT)
@@ -1283,7 +1285,7 @@ SC_BURNING	(SI_BURNT)
 	val1: Skill Level
 	val2: 1000
 	val3: Caster's object ID (for mob_log_damage)
-	val4: Tick
+	val4: Remaining tick
 
 SC_FREEZING	()
 	desc:
@@ -1519,9 +1521,9 @@ SC_ROLLINGCUTTER	()
 SC_TOXIN	(SI_TOXIN)
 	desc: Inflict damage, which causes the affected entity to flinch every 10 seconds; This will interrupt the skill casting, even if protected against it
 	val1: GC_WEAPONRESEARCH Skill Level
-	val2: Caster's object ID (for mob_log_damage)
+	val2: Caster's object ID
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_PARALYSE	(SI_PARALYSE)
 	desc: Decrease both ASPD and Flee Rate by 10% and halve Movement Speed, which does not stack with Decrease AGI, Quagmire, Marsh Of Abyss or Freezing status
@@ -1540,9 +1542,9 @@ SC_VENOMBLEED	(SI_VENOMBLEED)
 SC_MAGICMUSHROOM	(SI_MAGICMUSHROOM)
 	desc: Force the affected entity to use /heh emote, to randomly use skills and drain 3% of Max HP every 4 seconds
 	val1: GC_WEAPONRESEARCH Skill Level
-	val2: Caster's object ID (for mob_log_damage)
+	val2: Caster's object ID
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_DEATHHURT	(SI_DEATHHURT)
 	desc: Drop the healing effectiveness by 20%; This effect stacks with Critical Wounds
@@ -1556,7 +1558,7 @@ SC_PYREXIA	(SI_PYREXIA)
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_OBLIVIONCURSE	(SI_OBLIVIONCURSE)
 	desc: Force the affected entity to use /? emote, block SP Recovery and cause Oblivion status; There is a chance (100% - (Target INT * 0.8)%) of being inflicted, with a minimum of 5%
@@ -1568,9 +1570,9 @@ SC_OBLIVIONCURSE	(SI_OBLIVIONCURSE)
 SC_LEECHESEND	(SI_LEECHESEND)
 	desc: Drain (Target VIT * (SkillLv - 3)) + (Target HP / 100) HP each second
 	val1: GC_WEAPONRESEARCH Skill Level
-	val2: Caster's object ID (for mob_log_damage)
+	val2: Caster's object ID
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_REFLECTDAMAGE	()
 	desc:
@@ -2251,8 +2253,8 @@ SC_EQC	(SI_EQC)
 	desc:
 	val1:
 	val2: -% Def
-	val3: -% Atk
-	val4: -%MaxHP
+	val3: -%MaxHP
+	val4:
 
 SC_GOLDENE_FERSE	(SI_GOLDENE_FERSE)
 	desc:
@@ -2527,6 +2529,143 @@ SC_ELEMENTAL_SHIELD	()
 SC_CHASEWALK2	(SI_CHASEWALK2)
 	desc: 2nd effect of Chasewalk
 	val1: +STR
+
+SC_SUHIDE	(SI_SUHIDE)
+	desc: Hide caster. Can be seen by insect, demon, and boss. Cannot move or pickup items.
+	val1: Skill Lv
+
+SC_SU_STOOP	(SI_SU_STOOP)
+	desc: Places a temporary buff on the user that decreases all damage taken by 90%.
+	val1: Skill Lv
+
+SC_SPRITEMABLE	(SI_SPRITEMABLE)
+	desc: Increase 1000 HP and 100 SP.
+	val1:
+
+SC_CATNIPPOWDER	(SI_CATNIPPOWDER)
+	desc: Reduces ATK and MATK by 50% to targets in a 3x3~7x7 area. HP and SP recovery rate increase.
+	val1: Skill Lv
+	val2: WATK% / MATK%
+	val3: Movement speed reduction
+
+SC_SV_ROOTTWIST	(SI_SV_ROOTTWIST)
+	desc: Prevents the target from moving and receives 100 Poison damage every second. Cannot be used on Boss monsters.
+	val1: Skill Lv
+
+SC_BITESCAR	(SI_BITESCAR)
+	desc: Drains a portion of the target's Max HP each second.
+	val1: Skill Lv
+	val2: Max HP% damage
+	val4: Tick
+
+SC_ARCLOUSEDASH	(SI_ARCLOUSEDASH)
+	desc: Increases Agi and movement speed.
+	val1: AGI
+	val2: Movement speed increase
+	val4: Ranged ATK increase for Doram
+
+SC_TUNAPARTY	(SI_TUNAPARTY)
+	desc: Protects from damage, the amount is based on Max HP.
+	val1: Max HP% to absorb
+	val2: Double the shield life with Spirit of Sea
+
+SC_SHRIMP	(SI_SHRIMP)
+	desc: Gives all party members on screen +10% ATK and MATK.
+	val1: BATK% / MATK%
+
+SC_FRESHSHRIMP	(SI_FRESHSHRIMP)
+	desc: Recovers a small amount of HP. Each level reduces the time between each HP recovery tick.
+	val1: Skill Lv
+	val2: Heal amount
+	val4: Tick
+
+SC_HISS	(SI_HISS)
+	desc: Increases movement speed and perfect dodge of the user and his party.
+	val1: Skill Lv
+	val2: Perfect Dodge
+
+SC_NYANGGRASS	(SI_NYANGGRASS)
+	desc: Reduces monster's DEF and MDEF by 50%. Reduces other player's equipment DEF and MDEF to 0.
+	val1: Skill Lv
+
+SC_GROOMING	(SI_GROOMING)
+	desc: FLEE + 100. Cures Poison, Frozen, Stun, Sleep, Bleeding, Silence, Crystallization, Deep Sleep, Fear, and Mandragora Howling.
+	val1: Skill Lv
+	val2: FLEE
+
+SC_SHRIMPBLESSING	(SI_PROTECTIONOFSHRIMP)
+	desc: Increases caster's SP recovery by 150%.
+	val1: Skill Lv
+
+SC_CHATTERING	(SI_CHATTERING)
+	desc: Increases the player's ATK and MATK by 100. Increases the player's movespeed.
+	val1: Skill Lv
+	val2: ATK / MATK
+
+SC_DORAM_WALKSPEED	()
+	desc: Adjusts player's walk speed.
+	val1: Movement speed adjustment
+
+SC_DORAM_MATK	()
+	desc: Statically increases MATK for Spirit of Land.
+	val1: MATK
+
+SC_DORAM_FLEE2	()
+	desc: Statically increase FLEE2 for Spirit of Land.
+	val1: FLEE2
+
+SC_DORAM_SVSP	()
+	desc: Casts Silvervine Stem Spear when receiving Magic or Ranged damage after using Catnip Meteor for Spirit of Land.
+	val1: Value to know it's active
+
+SC_GVG_GIANT	(SI_GVG_GIANT)
+	desc: Instantly consumes HP/SP, increases Physical/Magic damage on player enemies by n%.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+	val3: Increases % Physical damage
+	val4: Increases % Magical damage
+
+SC_GVG_GOLEM	(SI_GVG_GOLEM)
+	desc: Instantly consumes HP/SP, decreases n% damage received from other adventurers.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+	val3: Decreases % damage received of physical attack
+	val4: Decreases % damage received of magical attack
+
+SC_GVG_STUN	(SI_GVG_STUN)
+	desc: Instantly consumes HP/SP, immunizes you against Stun.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_STONE	(SI_GVG_STONE)
+	desc: Instantly consumes HP/SP, immunizes you against Petrification.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_FREEZ	(SI_GVG_FREEZ)
+	desc: Instantly consumes HP/SP, immunizes you against Frost.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_SLEEP	(SI_GVG_SLEEP)
+	desc: Instantly consumes HP/SP, immunizes you against Sleep.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_CURSE	(SI_GVG_CURSE)
+	desc: Instantly consumes HP/SP, immunizes you against Curse.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_SILENCE	(SI_GVG_SILENCE)
+	desc: Instantly consumes HP/SP, immunizes you against Silence.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_BLIND	(SI_GVG_BLIND)
+	desc: Instantly consumes HP/SP, immunizes you against Blind.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
 
 SC_EXTREMITYFIST2	()
 	desc:

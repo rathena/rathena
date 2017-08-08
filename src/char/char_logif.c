@@ -37,7 +37,7 @@ void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
 		WFIFOW(login_fd,0) = 0x2738;
 		WFIFOW(login_fd,2) = size;
 		WFIFOL(login_fd,4) = account_id;
-		strncpy( (char*)WFIFOP(login_fd,8), pin, PINCODE_LENGTH+1 );
+		strncpy( WFIFOCP(login_fd,8), pin, PINCODE_LENGTH+1 );
 		WFIFOSET(login_fd,size);
 	}
 }
@@ -188,7 +188,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t va
 	WFIFOB(login_fd, nlen) = (unsigned char)len; // won't be higher; the column size is 32
 	nlen += 1;
 
-	safestrncpy((char*)WFIFOP(login_fd,nlen), key, len);
+	safestrncpy(WFIFOCP(login_fd,nlen), key, len);
 	nlen += len;
 
 	WFIFOL(login_fd, nlen) = index;
@@ -205,7 +205,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t va
 			WFIFOB(login_fd, nlen) = (unsigned char)len; // won't be higher; the column size is 254
 			nlen += 1;
 
-			safestrncpy((char*)WFIFOP(login_fd,nlen), sval, len);
+			safestrncpy(WFIFOCP(login_fd,nlen), sval, len);
 			nlen += len;
 		}
 	} else {
@@ -295,7 +295,7 @@ int chlogif_parse_ackconnect(int fd, struct char_session_data* sd){
 }
 
 int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
-	if (RFIFOREST(fd) < 25)
+	if (RFIFOREST(fd) < 21)
 		return 0;
 	{
 		uint32 account_id = RFIFOL(fd,2);
@@ -304,19 +304,14 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 		uint8 sex = RFIFOB(fd,14);
 		uint8 result = RFIFOB(fd,15);
 		int request_id = RFIFOL(fd,16);
-		uint32 version = RFIFOL(fd,20);
-		uint8 clienttype = RFIFOB(fd,24);
-		RFIFOSKIP(fd,25);
+		uint8 clienttype = RFIFOB(fd,20);
+		RFIFOSKIP(fd,21);
 
 		if( session_isActive(request_id) && (sd=(struct char_session_data*)session[request_id]->session_data) &&
 			!sd->auth && sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 && sd->sex == sex )
 		{
 			int client_fd = request_id;
-			sd->version = version;
 			sd->clienttype = clienttype;
-			if(sd->version != date2version(PACKETVER))
-				ShowWarning("s aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
-					sd->account_id,sd->version,date2version(PACKETVER));
 
 			switch( result )
 			{
@@ -332,6 +327,10 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+/**
+ * Receive account data from login-server
+ * AH 0x2717 <aid>.L <email>.40B <expiration_time>.L <group_id>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B
+ **/
 int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 	int u_fd; //user fd
 	if (RFIFOREST(fd) < 75)
@@ -351,8 +350,8 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 			sd->char_slots = MAX_CHARS;/* cap to maximum */
 		} else if ( !sd->char_slots )/* no value aka 0 in sql */
 			sd->char_slots = MIN_CHARS;/* cap to minimum */
-		safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
-		safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
+		safestrncpy(sd->birthdate, RFIFOCP(fd,52), sizeof(sd->birthdate));
+		safestrncpy(sd->pincode, RFIFOCP(fd,63), sizeof(sd->pincode));
 		sd->pincode_change = (time_t)RFIFOL(fd,68);
 		sd->isvip = RFIFOB(fd,72);
 		sd->chars_vip = RFIFOB(fd,73);
@@ -368,8 +367,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 			// send characters to player
 			chclif_mmo_char_send(u_fd, sd);
 #if PACKETVER_SUPPORTS_PINCODE
-			if(sd->version >= date2version(20110309))
-				chlogif_pincode_start(u_fd,sd);
+			chlogif_pincode_start(u_fd,sd);
 #endif
 		}
 	}
@@ -413,6 +411,8 @@ void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int
 		class_ = (sex == SEX_MALE ? JOB_BABY_MINSTREL : JOB_BABY_WANDERER);
 	else if (class_ == JOB_KAGEROU || class_ == JOB_OBORO)
 		class_ = (sex == SEX_MALE ? JOB_KAGEROU : JOB_OBORO);
+	else if (class_ == JOB_BABY_KAGEROU || class_ == JOB_BABY_OBORO)
+		class_ = (sex == SEX_MALE ? JOB_BABY_KAGEROU : JOB_BABY_OBORO);
 
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
 		Sql_ShowDebug(sql_handle);
@@ -617,38 +617,37 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd){
  */
 int chlogif_parse_vipack(int fd) {
 #ifdef VIP_ENABLE
-	if (RFIFOREST(fd) < 20)
+	if (RFIFOREST(fd) < 19)
 		return 0;
 	else {
 		uint32 aid = RFIFOL(fd,2); //aid
 		uint32 vip_time = RFIFOL(fd,6); //vip_time
-		uint8 isvip = RFIFOB(fd,10); //isvip
+		uint8 flag = RFIFOB(fd,10);
 		uint32 groupid = RFIFOL(fd,11); //new group id
-		uint8 isgm = RFIFOB(fd,15); //isgm
-		int mapfd = RFIFOL(fd,16); //link to mapserv for ack
-		RFIFOSKIP(fd,20);
-		chmapif_vipack(mapfd,aid,vip_time,isvip,isgm,groupid);
+		int mapfd = RFIFOL(fd,15); //link to mapserv for ack
+		RFIFOSKIP(fd,19);
+		chmapif_vipack(mapfd,aid,vip_time,groupid,flag);
 	}
 #endif
 	return 1;
 }
 
 /**
- * HZ 0x2b2b
- * Request vip data from loginserv
+ * HA 0x2742
+ * Request vip data to loginserv
  * @param aid : account_id to request the vip data
- * @param type : &2 define new duration, &1 load info
+ * @param flag : 0x1 Select info and update old_groupid, 0x2 VIP duration is changed by atcommand or script, 0x8 First request on player login
  * @param add_vip_time : tick to add to vip timestamp
  * @param mapfd: link to mapserv for ack
  * @return 0 if success
  */
-int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
+int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
 	loginif_check(-1);
 #ifdef VIP_ENABLE
 	WFIFOHEAD(login_fd,15);
 	WFIFOW(login_fd,0) = 0x2742;
 	WFIFOL(login_fd,2) = aid; //aid
-	WFIFOB(login_fd,6) = type; //type
+	WFIFOB(login_fd,6) = flag; //flag
 	WFIFOL(login_fd,7) = timediff; //req_inc_duration
 	WFIFOL(login_fd,11) = mapfd; //req_inc_duration
 	WFIFOSET(login_fd,15);
@@ -691,8 +690,8 @@ int chlogif_parse_AccInfoAck(int fd) {
 		}
 		type>>=1;
 		mapif_accinfo_ack(true, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), type, RFIFOL(fd,19), RFIFOL(fd,23), RFIFOL(fd,27),
-			(char*)RFIFOP(fd,31), (char*)RFIFOP(fd,71), (char*)RFIFOP(fd,87), (char*)RFIFOP(fd,111),
-			(char*)RFIFOP(fd,122), (char*)RFIFOP(fd,155), (char*)RFIFOP(fd,155+PINCODE_LENGTH));
+			RFIFOCP(fd,31), RFIFOCP(fd,71), RFIFOCP(fd,87), RFIFOCP(fd,111),
+			RFIFOCP(fd,122), RFIFOCP(fd,155), RFIFOCP(fd,155+PINCODE_LENGTH));
 		RFIFOSKIP(fd,155+PINCODE_LENGTH+NAME_LENGTH);
 	}
 	return 1;

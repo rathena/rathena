@@ -490,7 +490,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 			close;
 		case 3:
 			mes "[Tutorial Instructor]";
-			mes "006400ENCHANT^000000, in general, is divided into two parts: ^006400SOCKET ENCHANT^000000 and ^006400HIDDEN SOCKET ENCHANT^000000.";
+			mes "^006400ENCHANT^000000, in general, is divided into two parts: ^006400SOCKET ENCHANT^000000 and ^006400HIDDEN SOCKET ENCHANT^000000.";
 			next;
 			mes "[Tutorial Instructor]";
 			mes "^006400SOCKET ENCHANT^000000 is used to add a SOCKET into equipments and ^006400HIDDEN SOCKET ENCHANT^000000 is used to put in stats into a socket of an armor.";

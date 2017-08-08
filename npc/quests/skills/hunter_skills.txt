@@ -197,7 +197,6 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "[Reidin Corse]";
 				mes "Ar-Arpesto, no!";
 				mes "...........................";
-				mes "";
 				mes "Oh. Oh, come on! The arrow";
 				mes "just glanced you! You'll be";
 				mes "alright. Quit being a baby.";

@@ -18,8 +18,8 @@ Info:		How to make juices. This bit keeps final state of the quest.
 How to set:	set MISC_QUEST, MISC_QUEST | 1;
 How to check:	if (MISC_QUEST & 1) {}
 
-Quest:		Tempestra Quest
-Info:		Determines if player has given a potion to Tempestra.
+Quest:		-
+Info:		-
 How to set:	set MISC_QUEST, MISC_QUEST | 2;
 How to check:	if (MISC_QUEST & 2) {}
 
@@ -43,14 +43,14 @@ Info:		The only way from Niflheim to Umbala.
 How to set:	set MISC_QUEST, MISC_QUEST | 32;
 How to check:	if (MISC_QUEST & 32) {}
 
-Quest:		Bio Ethics Quest
-Info:		Quest for homunculus skill for alchemists. This bit keeps final state of the quest.
-How to set:	set MISC_QUEST, MISC_QUEST|64;
+Quest:		-
+Info:		-
+How to set:	set MISC_QUEST, MISC_QUEST | 64;
 How to check:	if (MISC_QUEST & 64) {}
 
-Quest:		DTS Warper
-Info:		Determines if player has already voted.
-How to set:	set MISC_QUEST, MISC_QUEST|128;
+Quest:		-
+Info:		-
+How to set:	set MISC_QUEST, MISC_QUEST | 128;
 How to check:	if (MISC_QUEST & 128) {}
 
 Quest:		-

@@ -13,8 +13,8 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "Please lighten your load and try again.";
 		close;	}
 
-	.@guild_id = getcastledata( "te_prtcas01",1 );
-	.@economy = getcastledata( "te_prtcas01",2 );
+	.@guild_id = getcastledata("te_prtcas01",1);
+	.@economy  = getcastledata("te_prtcas01",2);
 	.@npc_name$ = "Kai";
 
 	mes "["+ .@npc_name$ +"]";
@@ -28,7 +28,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "Please, pretend not to see me.";
 		close;
 	}
-	if (WoeTETimeStart(14400) == 1 || agitcheck3() == 1) {
+	if (WoeTETimeStart(14400) == 1 || agitcheck3() == 1) {// cannot start the quest 4 hours before and during WOE TE
 		mes "From now on, I'll stay here quietly and not interrupt anyone until the siege ends.";
 		mes "Don't worry about me.";
 		close;
@@ -43,7 +43,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "I hope I can find that way here.";
 		close;
 	}
-	if ($@2012_tegod_gloria == 0) {
+	if ($2012_tegod_gloria == 0) {// event status
 		mes "Ah... Master.";
 		mes "I feel so thankful all the time.";
 		mes "Since I owe you big time, I'll help you with anything anytime.";
@@ -136,7 +136,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 			close;
 		}
 	}
-	if ($@2012_tegod_gloria == 1) {
+	if ($2012_tegod_gloria == 1) {// event started
 		mes "Did you hear the news?";
 		mes "The girls are coming.";
 		mes "The merciless girls!!!";
@@ -176,7 +176,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 			close;
 		}
 	}
-	if ($@2012_tegod_gloria == 2) {
+	if ($2012_tegod_gloria == 2) {// after 10 minutes delay
 		mes "Ah stop following me around!";
 		mes "If you could just get rid of them... Hervor, that's right! I'll make you Hervor!";
 		next;
@@ -189,7 +189,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "You have to get rid of those girls first.";
 		close;
 	}
-	if ($@2012_tegod_gloria == 3) {
+	if ($2012_tegod_gloria == 3) {// event failed
 		mes "... Although I managed to escape from them again...";
 		mes "it's hard.";
 		mes "life is... just so hard.";
@@ -200,7 +200,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "I'm sorry. I'll take a break.";
 		close;
 	}
-	if ($@2012_tegod_gloria == 4) {
+	if ($2012_tegod_gloria == 4) {
 		mes "I can finally breathe now.";
 		mes "I'll start making Hervor as promised.";
 		next;
@@ -236,13 +236,13 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 				delitem 6605,1;// Muspellium
 				delitem 6604,1;// Essence_Of_Rune
 				delitem 2115,1;// Valkyrja's_Shield
-				$@2012_tegod_gloria = 5;
+				$2012_tegod_gloria = 5;
 				getitem 2181,1;// Hervor
-				mapannounce "te_prtcas01","Velund's gift [ Hervor ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_map,"0x70dbdb",FW_NORMAL,12;
+				announce "Velund's gift [ Hervor ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_all,"0x70dbdb",FW_NORMAL,12;
 				if (.@economy > 20)
 					setcastledata "te_prtcas01",2,(.@economy-20);
 				else
-					setcastledata "te_prtcas01",2,0;
+					setcastledata "te_prtcas01",2,1;// min is 1 for WOE TE
 				next;
 				mes "["+ .@npc_name$ +"]";
 				mes "Whew.. I don't think I can work for a while.";
@@ -252,7 +252,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 			mes "["+ .@npc_name$ +"]";
 			mes "However, it seems like we need more materials.";
 			mes "Could you check again? I'll give you the list of what we need.";
-			callsub S_Material, .@npc_name$,0;
+			callsub S_Material, .@npc_name$,1;
 		case 2:
 			callsub S_Fuse, .@npc_name$, "Hervor";
 		case 3:
@@ -265,7 +265,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 			close;
 		}
 	}
-	if ($@2012_tegod_gloria == 5) {
+	if ($2012_tegod_gloria == 5) {
 		mes "I'm tired a little bit.";
 		mes "I think I should rest for a few days.";
 		mes "I may look just fine, but I was mentally very tired.";
@@ -369,7 +369,7 @@ S_Fuse:
 	}
 
 OnInit:
-	if ($@2012_tegod_gloria == 3 || agitcheck3())
+	if ($2012_tegod_gloria == 3 || agitcheck3())// 3 -> quest failed
 		disablenpc strnpcinfo(0);
 	else
 		enablenpc strnpcinfo(0);
@@ -384,14 +384,14 @@ te_prtcas01,190,2,0	script	#tequest_master_prt01	CLEAR_NPC,{
 		close;
 	}
 	.@map$ = "te_prtcas01";
-	mes "Current Status:" + $@2012_tegod_gloria;
+	mes "Current Status: " + $2012_tegod_gloria;
 	mes "0: Able to proceed with the quest";
 	mes "1: Proceed with the quest. 10-minute wait";
 	mes "2: Quest in progress";
 	mes "3: Quest failed";
 	mes "4: Able to produce items , 5: Items produced successfully.";
 	next;
-	mes "Princess Status:" + $@2012_tegirls_prt01;
+	mes "Princess Status: " + $@2012_tegirls_prt01;
 	mes "Current Commerce Level of the Fortress:" + getcastledata(.@map$,2);
 	next;
 	switch( select( "Do not proceed","Initialization","Raise Commerce Level","Lower Commerce Level" ) ) {
@@ -410,40 +410,51 @@ te_prtcas01,190,2,0	script	#tequest_master_prt01	CLEAR_NPC,{
 		close;
 	case 4:
 		.@economy1 = getcastledata(.@map$,2);
-		.@economy2 = .@economy1 > 29 ? (.@economy1 -30) : 0;
-		if (.@economy1 > 29) {// used .@economy1 for message when economy 30
+		.@economy2 = .@economy1 > 30 ? (.@economy1 -30) : 1;
+		if (.@economy1 > 30) {
 			mes "Lower Commerce Level by 30";
 			setcastledata .@map$,2,.@economy2;
 		}
 		else {
 			mes "Commerce Level gets decreased to 0 since current level is lower than 30.";
-			setcastledata .@map$,2,0;
+			setcastledata .@map$,2,1;// min is 1 for WOE TE
 		}
 		mes "Modified Commerce Level:" + .@economy2;
 		close;
 	}
 
+OnReset:// gm Initialization
+	callsub S_EventReset;// kill some quests mobs and stop timer of others npcs
+	callsub S_EventOff;// clear setnpcdisplay
+	$2012_tegod_gloria = 0;
+	$@2012_tegirls_prt01 = 0;
+	.npc_name$ = "";
+	enablenpc "prtg-1-22_prtg-1-31#te";
+	enablenpc "Blacksmith Kai#tegod01";
+	stopnpctimer;
+	end;
+
 OnCommandOn:
-	$@2012_tegod_kafra = 1;
+	$2012_tegod_gloria = 1;
 	.npc_name$ = strnpcinfo(0);// for script readability
 	initnpctimer;
 	end;
 
 OnTimer10000:
-	announce "Girls' voices: Cano~ We already know where you are. It's over!",bc_all,"0xFF0000",FW_NORMAL,10;
+	announce "Girls' voices: Kai~ We already know where you are. It's over!",bc_all,"0xFF0000",FW_NORMAL,10;
 	end;
 OnTimer15000:
 	announce "Girls' Voices: We'll wait just 10 minutes. If you don't show up in the meantime, we'll storm the fortress!",bc_all,"0xFF0000",FW_NORMAL,10;
 	end;
 OnTimer595000:
-	mapannounce "te_prtcas01", "A girl's voice: Cano! How dare you ignore our warning! So, you have company there, huh? But how long do you think they'll stay with you?!",bc_map,"0x00ff00",FW_NORMAL,12;
+	mapannounce "te_prtcas01", "A girl's voice: Kai! How dare you ignore our warning! So, you have company there, huh? But how long do you think they'll stay with you?!",bc_map,"0x00ff00",FW_NORMAL,12;
 	end;
 OnTimer598000:
 	mapannounce "te_prtcas01", "You are forced out of the fortress by unknown power.",bc_map,"0x00ff00",FW_NORMAL,12;
 	end;
 
 OnTimer600000:
-	$@2012_tegod_gloria = 2;
+	$2012_tegod_gloria = 2;
 	mapwarp "te_prtcas01", "te_prt_gld",159,211;
 	donpcevent "Aira#fake01_prt01::OnCommandOn";
 	donpcevent "Kuluna#fake01_prt01::OnCommandOn";
@@ -453,11 +464,11 @@ OnTimer600000:
 	donpcevent "Morin#fake01_prt01::OnCommandOn";
 	donpcevent "Nasarin#fake01_prt01::OnCommandOn";
 
-	disablenpc "prtg-1-22_prtg-1-31#te";
+	disablenpc "prtg-1-22_prtg-1-31#te";// warp to emperium room
 	end;
 
 OnTimer602000:
-	announce "Glaris in Kafragarten region is being attacked by a group of unidentified beings.",bc_all,"0xFF0000",FW_NORMAL,10;
+	announce "Gaebolg in Gloria region is being attacked by a group of unidentified beings.",bc_all,"0xFF0000",FW_NORMAL,10;
 	monster "te_prtcas01",0,0,"Raydric",1163,15, .npc_name$ +"::OnMyMobDead";
 	monster "te_prtcas01",0,0,"Khalitzburg",1132,10, .npc_name$ +"::OnMyMobDead";
 	monster "te_prtcas01",0,0,"Abysmal Knight",1219,5, .npc_name$ +"::OnMyMobDead";
@@ -485,6 +496,13 @@ OnTimer2500000:
 OnTimer3100000:
 	callsub S_MobRedondant;
 	end;
+S_MobRedondant:
+	monster "te_prtcas01",0,0,"Raydric",1163,10, .npc_name$ +"::OnMyMobDead";
+	monster "te_prtcas01",0,0,"Khalitzburg",1132,10, .npc_name$ +"::OnMyMobDead";
+	monster "te_prtcas01",0,0,"Abysmal Knight",1219,10, .npc_name$ +"::OnMyMobDead";
+	monster "te_prtcas01",0,0,"High Orc",1213,10, .npc_name$ +"::OnMyMobDead";
+	monster "te_prtcas01",0,0,"Bloody Knight",1268,5, .npc_name$ +"::OnMyMobDead";
+	end;
 
 OnTimer4200000:
 	mapannounce "te_prtcas01", "Girls: ... how long do we have to wait?",bc_map,"0x00ff00",FW_NORMAL,12;
@@ -495,11 +513,10 @@ OnTimer4205000:
 OnTimer4210000:
 	mapannounce "te_prtcas01", "Girls: Come on, cut if off! You guys are so persistent!!",bc_map,"0x00ff00",FW_NORMAL,12;
 	end;
-
 OnTimer4220000:
 	mapannounce "te_prtcas01", "Aira: Ah! I can't take it anymore! Girls, come here!",bc_map,"0x00ff00",FW_NORMAL,12;
 
-	$@2012_tegod_gloria = 3;
+	$2012_tegod_gloria = 3;// quest off until someone break the emp
 	callsub S_EventReset;
 	enablenpc "prtg-1-22_prtg-1-31#te";
 	end;
@@ -516,53 +533,30 @@ OnTimer4225000:
 	end;
 
 OnTimer4227000:
-	unittalk getnpcid(0,"Blacksmith Kai#tegod01"), "Kai: Oh... no! What are you going to do to me?!";
+	npctalk "Kai: Oh... no! What are you going to do to me?!", "Blacksmith Kai#tegod01";
 	end;
 OnTimer4230000:
-	unittalk getnpcid(0,"#end_aira_prt01"), "Aira: Mm? Hey Kai. You're going home.";
+	npctalk "Aira: Mm? Hey Kai. You're going home.", "#end_aira_prt01";
 	end;
 OnTimer4233000:
-	unittalk getnpcid(0,"#end_kuluna_prt01"), "Kuluna: Yup~ You have to fix my broken wand and make powerful weapons for me once you get back!";
+	npctalk "Kuluna: Yup~ You have to fix my broken wand and make powerful weapons for me once you get back!", "#end_kuluna_prt01";
 	end;
 OnTimer4236000:
-	unittalk getnpcid(0,"#end_ezella_prt01"), "Ezella: Try to run away again. You'll be sorry, understand?";
+	npctalk "Ezella: Try to run away again. You'll be sorry, understand?", "#end_ezella_prt01";
 	end;
 OnTimer4237000:
-	unittalk getnpcid(0,"#end_nasarin_prt01"), "Nasarin: ... Just take him. Why are you guys talking to him so much?";
+	npctalk "Nasarin: ... Just take him. Why are you guys talking to him so much?", "#end_nasarin_prt01";
 	end;
 OnTimer4240000:
-	unittalk getnpcid(0,"#end_aira_prt01"), "Aira: You're right! Alright then!";
-	unittalk getnpcid(0,"Blacksmith Kai#tegod01"), "Kai: Oh... No... Noooo!!!!";
+	npctalk "Aira: You're right! Alright then!", "#end_aira_prt01";
+	npctalk "Kai: Oh... No... Noooo!!!!!", "Blacksmith Kai#tegod01";
 	end;
 
 OnTimer4243000:
 	mapannounce "te_prtcas01", "You've failed to recapture the fortress. Kai is now gone.",bc_map,"0x00ff00",FW_NORMAL,12;
 	disablenpc "Blacksmith Kai#tegod01";
-	callsub S_EventOff;
+	callsub S_EventOff;// clear setnpcdisplay
 	.npc_name$ = "";
-	stopnpctimer;
-	end;
-
-OnStop:
-	callsub S_EventReset;
-	donpcevent "#eproom_girls_prt01::OnReset";
-	.npc_name$ = "";
-	$@2012_tegirls_prt01 = 0;
-	stopnpctimer;
-	end;
-
-OnReset:
-	callsub S_EventReset;
-	callsub S_EventOff;
-	donpcevent "#eproom_girls_prt01::OnReset";
-
-	$@2012_tegod_gloria = 0;
-	$@2012_tegirls_prt01 = 0;
-	.npc_name$ = "";
-
-	enablenpc "prtg-1-22_prtg-1-31#te";
-	enablenpc "Blacksmith Kai#tegod01";
-
 	stopnpctimer;
 	end;
 
@@ -576,8 +570,16 @@ S_EventOff:
 	donpcevent "#end_nasarin_prt01::OnCommandOff";
 	return;
 
+OnStop:// all girls have been defeated, kill remaining mobs and stop timer
+	callsub S_EventReset;
+	$@2012_tegirls_prt01 = 0;
+	.npc_name$ = "";
+	stopnpctimer;
+	end;
+
 S_EventReset:
 	killmonster "te_prtcas01", .npc_name$ +"::OnMyMobDead";
+	donpcevent "#eproom_girls_prt01::OnReset";
 	donpcevent "Aira#fake01_prt01::OnReset";
 	donpcevent "Kuluna#fake01_prt01::OnReset";
 	donpcevent "Mallina#fake01_prt01::OnReset";
@@ -595,85 +597,15 @@ S_EventReset:
 	donpcevent "#nasarin_real_prt01::OnReset";
 	return;
 
-S_MobRedondant:
-	monster "te_prtcas01",0,0,"Raydric",1163,10, .npc_name$ +"::OnMyMobDead";
-	monster "te_prtcas01",0,0,"Khalitzburg",1132,10, .npc_name$ +"::OnMyMobDead";
-	monster "te_prtcas01",0,0,"Abysmal Knight",1219,10, .npc_name$ +"::OnMyMobDead";
-	monster "te_prtcas01",0,0,"High Orc",1213,10, .npc_name$ +"::OnMyMobDead";
-	monster "te_prtcas01",0,0,"Bloody Knight",1268,5, .npc_name$ +"::OnMyMobDead";
-	return;
+OnMyMobDead:
+	end;
 
 OnInit:
-	$@2012_tegirls_prt01 = 0;
-	if ($@2012_tegod_gloria < 3)
-		$@2012_tegod_kafra = 0;
+	$@2012_tegirls_prt01 = 0;// girls mobs killed count
+	if ($2012_tegod_gloria < 3)
+		$2012_tegod_gloria = 0;
 	end;
 }
-
--	script	real_prt01	-1,{
-	end;
-OnCommandOn:
-	.@npc_name$ = strnpcinfo(0);
-	if (.@npc_name$ == "#aira_real_prt01")
-		monster "te_prtcas01",65,28,"Aira in a blaze",2443,1, .@npc_name$ +"::OnMyMobDead";
-	else if (.@npc_name$ == "#kuluna_real_prt01")
-		monster "te_prtcas01",54,61,"Passionate Kuluna",2444,1, .@npc_name$ +"::OnMyMobDead";
-	else if (.@npc_name$ == "#mallina_real_prt01")
-		monster "te_prtcas01",182,92,"Mallina of the Earth",2445,1, .@npc_name$ +"::OnMyMobDead";
-	else if (.@npc_name$ == "#ezella_real_prt01")
-		monster "te_prtcas01",161,111,"Ezella of Verdure",2446,1, .@npc_name$ +"::OnMyMobDead";
-	else if (.@npc_name$ == "#lune_real_prt01")
-		monster "te_prtcas01",149,97,"Lune of the Eternal Glacier",2447,1, .@npc_name$ +"::OnMyMobDead";
-	else if (.@npc_name$ == "#morin_real_prt01")
-		monster "te_prtcas01",99,176,"Morin of the Abyss",2448,1, .@npc_name$ +"::OnMyMobDead";
-	else if (.@npc_name$ == "#nasarin_real_prt01")
-		monster "te_prtcas01",125,170,"Fatal Nasarin",2449,1, .@npc_name$ +"::OnMyMobDead";
-	end;
-
-OnReset:
-	killmonster "te_prtcas01", strnpcinfo(0) +"::OnMyMobDead";
-	end;
-
-OnMyMobDead:
-	if (mobcount( "te_prtcas01",strnpcinfo(0) +"::OnMyMobDead" ) == 0)
-		initnpctimer;
-	end;
-
-OnTimer1000:
-	if (mobcount( "te_prtcas01",strnpcinfo(0) +"::OnMyMobDead" ) == 0) {
-		$@2012_tegirls_prt01++;
-		if ($@2012_tegirls_prt01 == 7) {
-			mapannounce "te_prtcas01","Kai: aaahh!! The girls broke the shields and made their way into where Emperium is!!!!",bc_map,"0x00ff00",FW_NORMAL,12;
-			donpcevent "#eproom_girls_prt01::OnCommandOn";
-		}
-		else {
-			.@npc_name$ = strnpcinfo(0);
-			if (.@npc_name$ == "#aira_real_prt01")
-				mapannounce "te_prtcas01","Aira: You think I lost? You're wrong! We force our way to where Kai is!!",bc_map,"0x00ff00",FW_NORMAL,12;
-			else if (.@npc_name$ == "#kuluna_real_prt01")
-				mapannounce "te_prtcas01","Kuluna: ... This is called a strategic retreat.",bc_map,"0x00ff00",FW_NORMAL,12;
-			else if (.@npc_name$ == "#mallina_real_prt01")
-				mapannounce "te_prtcas01","Mallina: ... Why are you disturbing us so much? But victory will be ours in the end!!",bc_map,"0x00ff00",FW_NORMAL,12;
-			else if (.@npc_name$ == "#ezella_real_prt01")
-				mapannounce "te_prtcas01","Ezella: Oh you, a weakling that would just disappear like the wind... !!!",bc_map,"0x00ff00",FW_NORMAL,12;
-			else if (.@npc_name$ == "#lune_real_prt01")
-				mapannounce "te_prtcas01","Lune: ..Alright. Let the battle begin!",bc_map,"0x00ff00",FW_NORMAL,12;
-			else if (.@npc_name$ == "#morin_real_prt01")
-				mapannounce "te_prtcas01","Morin: It's not... interesting anymore.",bc_map,"0x00ff00",FW_NORMAL,12;
-			else if (.@npc_name$ == "#nasarin_real_prt01")
-				mapannounce "te_prtcas01","Nasarin: .. I wasted my time. Kai is in the center of this fortress?",bc_map,"0x00ff00",FW_NORMAL,12;
-		}
-	}
-	stopnpctimer;
-	end;
-}
-te_prtcas01,192,2,0	duplicate(real_prt01)	#aira_real_prt01	CLEAR_NPC
-te_prtcas01,193,2,0	duplicate(real_prt01)	#kuluna_real_prt01	CLEAR_NPC
-te_prtcas01,194,2,0	duplicate(real_prt01)	#mallina_real_prt01	CLEAR_NPC
-te_prtcas01,194,2,0	duplicate(real_prt01)	#ezella_real_prt01	CLEAR_NPC
-te_prtcas01,196,2,0	duplicate(real_prt01)	#lune_real_prt01	CLEAR_NPC
-te_prtcas01,197,2,0	duplicate(real_prt01)	#morin_real_prt01	CLEAR_NPC
-te_prtcas01,198,2,0	duplicate(real_prt01)	#nasarin_real_prt01	CLEAR_NPC
 
 
 te_prtcas01,64,20,3	script	Aira#fake01_prt01	CLEAR_NPC,{
@@ -819,7 +751,6 @@ OnTimer3000:
 	end;
 }
 
-
 te_prtcas01,152,102,3	script	Lune#fake01_prt01	CLEAR_NPC,{
 	end;
 OnCommandOn:
@@ -945,12 +876,77 @@ OnTimer3000:
 	end;
 }
 
+-	script	real_prt01	-1,{
+	end;
+OnCommandOn:
+	.@npc_name$ = strnpcinfo(0);
+	if (.@npc_name$ == "#aira_real_prt01")
+		monster "te_prtcas01",65,28,"Aira in a blaze",2443,1, .@npc_name$ +"::OnMyMobDead";
+	else if (.@npc_name$ == "#kuluna_real_prt01")
+		monster "te_prtcas01",54,61,"Passionate Kuluna",2444,1, .@npc_name$ +"::OnMyMobDead";
+	else if (.@npc_name$ == "#mallina_real_prt01")
+		monster "te_prtcas01",182,92,"Mallina of the Earth",2445,1, .@npc_name$ +"::OnMyMobDead";
+	else if (.@npc_name$ == "#ezella_real_prt01")
+		monster "te_prtcas01",161,111,"Ezella of Verdure",2446,1, .@npc_name$ +"::OnMyMobDead";
+	else if (.@npc_name$ == "#lune_real_prt01")
+		monster "te_prtcas01",149,97,"Lune of the Eternal Glacier",2447,1, .@npc_name$ +"::OnMyMobDead";
+	else if (.@npc_name$ == "#morin_real_prt01")
+		monster "te_prtcas01",99,176,"Morin of the Abyss",2448,1, .@npc_name$ +"::OnMyMobDead";
+	else if (.@npc_name$ == "#nasarin_real_prt01")
+		monster "te_prtcas01",125,170,"Fatal Nasarin",2449,1, .@npc_name$ +"::OnMyMobDead";
+	end;
+
+OnReset:
+	stopnpctimer;
+	killmonster "te_prtcas01", strnpcinfo(0) +"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount( "te_prtcas01",strnpcinfo(0) +"::OnMyMobDead" ) == 0)
+		initnpctimer;
+	end;
+
+OnTimer1000:
+	if (mobcount( "te_prtcas01",strnpcinfo(0) +"::OnMyMobDead" ) == 0) {
+		$@2012_tegirls_prt01++;
+		if ($@2012_tegirls_prt01 == 7) {
+			mapannounce "te_prtcas01","Kai: aaahh!! The girls broke the shields and made their way into where Emperium is!!!!",bc_map,"0x00ff00",FW_NORMAL,12;
+			donpcevent "#eproom_girls_prt01::OnCommandOn";
+		}
+		else {
+			.@npc_name$ = strnpcinfo(0);
+			if (.@npc_name$ == "#aira_real_prt01")
+				mapannounce "te_prtcas01","Aira: You think I lost? You're wrong! We force our way to where Kai is!!",bc_map,"0x00ff00",FW_NORMAL,12;
+			else if (.@npc_name$ == "#kuluna_real_prt01")
+				mapannounce "te_prtcas01","Kuluna: ... This is called a strategic retreat.",bc_map,"0x00ff00",FW_NORMAL,12;
+			else if (.@npc_name$ == "#mallina_real_prt01")
+				mapannounce "te_prtcas01","Mallina: ... Why are you disturbing us so much? But victory will be ours in the end!!",bc_map,"0x00ff00",FW_NORMAL,12;
+			else if (.@npc_name$ == "#ezella_real_prt01")
+				mapannounce "te_prtcas01","Ezella: Oh you, a weakling that would just disappear like the wind... !!!",bc_map,"0x00ff00",FW_NORMAL,12;
+			else if (.@npc_name$ == "#lune_real_prt01")
+				mapannounce "te_prtcas01","Lune: ..Alright. Let the battle begin!",bc_map,"0x00ff00",FW_NORMAL,12;
+			else if (.@npc_name$ == "#morin_real_prt01")
+				mapannounce "te_prtcas01","Morin: It's not... interesting anymore.",bc_map,"0x00ff00",FW_NORMAL,12;
+			else if (.@npc_name$ == "#nasarin_real_prt01")
+				mapannounce "te_prtcas01","Nasarin: .. I wasted my time. Kai is in the center of this fortress?",bc_map,"0x00ff00",FW_NORMAL,12;
+		}
+	}
+	stopnpctimer;
+	end;
+}
+te_prtcas01,192,2,0	duplicate(real_prt01)	#aira_real_prt01	CLEAR_NPC
+te_prtcas01,193,2,0	duplicate(real_prt01)	#kuluna_real_prt01	CLEAR_NPC
+te_prtcas01,194,2,0	duplicate(real_prt01)	#mallina_real_prt01	CLEAR_NPC
+te_prtcas01,194,2,0	duplicate(real_prt01)	#ezella_real_prt01	CLEAR_NPC
+te_prtcas01,196,2,0	duplicate(real_prt01)	#lune_real_prt01	CLEAR_NPC
+te_prtcas01,197,2,0	duplicate(real_prt01)	#morin_real_prt01	CLEAR_NPC
+te_prtcas01,198,2,0	duplicate(real_prt01)	#nasarin_real_prt01	CLEAR_NPC
+
 
 te_prtcas01,199,2,0	script	#eproom_girls_prt01	CLEAR_NPC,{
 	end;
 OnCommandOn:
 	enablenpc "prtg-1-22_prtg-1-31#te";
-
 	monster "te_prtcas01",184,188,"Fatal Nasarin",2449,1, "#eproom_girls_prt01::OnMyMobDead";
 	monster "te_prtcas01",191,182,"Morin of the Abyss",2448,1, "#eproom_girls_prt01::OnMyMobDead";
 	monster "te_prtcas01",183,183,"Lune of the Eternal Glacier",2447,1, "#eproom_girls_prt01::OnMyMobDead";
@@ -961,6 +957,7 @@ OnCommandOn:
 	end;
 
 OnReset:
+	stopnpctimer;
 	killmonster "te_prtcas01", "#eproom_girls_prt01::OnMyMobDead";
 	end;
 
@@ -972,13 +969,12 @@ OnMyMobDead:
 OnTimer3000:
 	if (mobcount( "te_prtcas01","#eproom_girls_prt01::OnMyMobDead" ) == 0) {
 		donpcevent "#tequest_master_prt01::OnStop";
-		$@2012_tegod_gloria = 4;
+		$2012_tegod_gloria = 4;
 		mapannounce "te_prtcas01","You have defeated the girls and recaptured the fortress successfully.",bc_map,"0x00ff00",FW_NORMAL,12;
 	}
 	stopnpctimer;
 	end;
 }
-
 
 te_prtcas01,203,204,5	script	#end_aira_prt01	CLEAR_NPC,{
 	end;
@@ -1006,4 +1002,3 @@ te_prtcas01,203,205,5	duplicate(#end_aira_prt01)	#end_ezella_prt01	CLEAR_NPC
 te_prtcas01,205,204,3	duplicate(#end_aira_prt01)	#end_lune_prt01	CLEAR_NPC
 te_prtcas01,204,205,4	duplicate(#end_aira_prt01)	#end_morin_prt01	CLEAR_NPC
 te_prtcas01,205,203,1	duplicate(#end_aira_prt01)	#end_nasarin_prt01	CLEAR_NPC
-

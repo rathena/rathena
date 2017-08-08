@@ -196,13 +196,13 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					mes "<<Salvage Cape[0]>>";
 					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool time for this skill will be 30 seconds. When equiping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
 					mes "Garment / Def 1 / Weight 40 / Required Lv 130 / Socket 0 / for Archbishop";
-					callsub L_Reward, 2582, 100, 50, 35; //Salvage_Cape
+					callsub L_Reward, 2582, 300, 300, 400; //Salvage_Cape
 					break;
 				case 6:
 					mes "<<Assassin's Handcuffs[1]>>";
 					mes "MSP + 20, CRI + 3. When equipping with Krishna, ATK + 50, ATK power from 'Sonic Blow' 50% increased, FLEE - 30. When equipping with Cakram CRI + 4, Critical ATK power 40% increased, MHP - 10%.";
 					mes "Accessory / Def 3 / Weight 40 / Required Lv 100 / Socket 1 / for Guillotine Cross";
-					callsub L_Reward, 2892, 300, 300, 400; //Assassin_Handcuffs
+					callsub L_Reward, 2892, 100, 50, 35; //Assassin_Handcuffs
 					break;
 				case 7:
 					mes "<<Green Operating Gown[1]>>";

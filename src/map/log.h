@@ -4,6 +4,10 @@
 #ifndef _LOG_H_
 #define _LOG_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#include "map.h"
 struct block_list;
 struct map_session_data;
@@ -17,6 +21,7 @@ typedef enum e_log_chat_type
 	LOG_CHAT_PARTY       = 0x04,
 	LOG_CHAT_GUILD       = 0x08,
 	LOG_CHAT_MAINCHAT    = 0x10,
+	LOG_CHAT_CLAN        = 0x20,
 	// all
 	LOG_CHAT_ALL         = 0xFF,
 } e_log_chat_type;
@@ -99,6 +104,10 @@ extern struct Log_Config
 		char** entry;
 		int count;
 	} logThreadData;
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _LOG_H_ */

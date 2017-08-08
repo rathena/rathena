@@ -292,7 +292,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 		mes "I'll send you back to your savepoint.";
 		close2;
 		if (WoP_SaveMap$ != "") {
-			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
+			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
 			set WoP_SaveMap_Y,0;
@@ -302,10 +302,10 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 	}
 
 OnPCLogoutEvent:
-	getmapxy .@map$,.@x,.@y,0;
+	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
 	if (.@map$ == "poring_w02") {
 		if (WoP_SaveMap$ != "") {
-			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
+			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
 			set WoP_SaveMap_Y,0;
@@ -316,7 +316,7 @@ OnPCLogoutEvent:
 	end;
 
 OnPCDieEvent:
-	getmapxy .@map$,.@x,.@y,0;
+	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
 	if (.@map$ == "poring_w02" && wop_team) {
 		if (getsavepoint(0) != "poring_w02" && WoP_SaveMap$ == "") {
 			set WoP_SaveMap$,getsavepoint(0);
@@ -333,7 +333,7 @@ OnPCDieEvent:
 	end;
 
 OnPCKillEvent:
-	getmapxy .@map$,.@x,.@y,0;
+	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
 	if (.@map$ == "poring_w02" && wop_team) {
 		getnameditem 7773,rid2name(killedrid);
 	}
@@ -1045,7 +1045,7 @@ OnDisable:
 	disablenpc "#wop_warp_a";
 	end;
 
-OnTouch:
+OnTouch_:
 	set wop_team,1;
 	warp "poring_w02",57,82;
 	end;
@@ -1067,7 +1067,7 @@ OnDisable:
 	disablenpc "#wop_warp_d";
 	end;
 
-OnTouch:
+OnTouch_:
 	set wop_team,2;
 	warp "poring_w02",140,82;
 	end;
@@ -1522,7 +1522,7 @@ OnDisable:
 	disablenpc "#aroom_ingate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",99,49;
 	end;
 }
@@ -1542,7 +1542,7 @@ OnDisable:
 	disablenpc "#aroom_outgate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",99,54;
 	end;
 }
@@ -1619,7 +1619,7 @@ OnDisable:
 	disablenpc "#droom_ingate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",98,116;
 	end;
 }
@@ -1639,7 +1639,7 @@ OnDisable:
 	disablenpc "#droom_outgate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",98,111;
 	end;
 }

@@ -1,5 +1,4 @@
 // Red Pouch of Surprise Summonable Monsters Database
 //
 // Structure of Database:
-// MobID,DummyName,Rate
-
+// MobRandomGroupID,MobID,DummyName,Rate

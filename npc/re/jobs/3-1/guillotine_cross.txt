@@ -19,6 +19,7 @@
 //= 1.4 Added missing labels. [Joseph]
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Added VIP features. [Euphy]
+//= 1.7 Fixed PLAYTIME issue. [Capuche]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -241,7 +242,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 	mes "[Daora]";
 	if (Class == Job_Assassin || Class == Job_Assassin_Cross || Class == Job_Baby_Assassin) {
 		if (job_3rd_gc < 4) {
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Oh~ you're good-looking!";
 				mes "So, what do you want?";
 			} else {
@@ -738,7 +739,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			close;
 		}
 	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Oh~ you're good-looking~!";
 			mes "It's worthwhile to open a pub~";
 			mes "I can feel fruitful labors whenever I see a guy like you~";
@@ -771,7 +772,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			close;
 		case 3:
 			mes "[Daora]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Uh... Umm...";
 				mes "It's complicated order. but I don't have any choice since you want it.";
 				next;
@@ -796,7 +797,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			}
 		}
 	} else {
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "Oh~ you're good-looking!";
 			mes "So, what do you want?";
 		}
@@ -1199,7 +1200,7 @@ ve_in,228,108,3	script	Waitress#3rdgc04	80,{
 					mes "What? My name?";
 					mes "Are you hitting on me?";
 					mes "Don't do that.";
-					if (Sex) mes "You are not my type.";
+					if (Sex == SEX_MALE) mes "You are not my type.";
 					else mes "I don't swing that way.";
 					close;
 				case 3:
@@ -2006,7 +2007,7 @@ veins,223,180,3	script	Girl#3rdgc09	941,{
 				}
 				next;
 				mes "[Melissa]";
-				mes "Hi, "+((Sex)?"brother":"sister")+"~ Let me collect all of the information you've provided...";
+				mes "Hi, "+((Sex == SEX_MALE)?"brother":"sister")+"~ Let me collect all of the information you've provided...";
 				next;
 				mes "- She begins to murmur and gestures toward the sky. Her hair springs up as she says... -";
 				next;
@@ -2090,7 +2091,7 @@ veins,337,284,0	script	#ghostestilla_3rdgc	139,3,3,{
 	end;
 OnTouch:
 	if (job_3rd_gc == 9) {
-		if ((checkquest(7104,PLAYTIME) == 1) || (checkquest(7105,PLAYTIME) == 1)) {
+		if ((checkquest(7104,PLAYTIME) == 0) || (checkquest(7105,PLAYTIME) == 0)) {
 			mes ".....?";
 			mes "There's a sign of somebody present.";
 			mes "You still have time.";
@@ -2333,7 +2334,7 @@ veins,206,56,0	script	#3rdgc_battleroom01	139,1,1,{
 OnInit:
 	set $@3rdgc_room01, 0;
 	end;
-OnTouch:
+OnTouch_:
 	if (job_3rd_gc == 12) {
 		if (checkquest(7107,PLAYTIME) == 2) {
 			mes "This must be the place Estillda told me about.";
@@ -2354,7 +2355,7 @@ OnTouch:
 				mes "I back up to watch the situation unfold.";
 				close;
 			}
-		} else if (checkquest(7107,PLAYTIME) == 1) {
+		} else if (checkquest(7107,PLAYTIME) == 0) {
 			mes "This must be the place Estillda told me about.";
 			mes "I have enough time for meeting.";
 			close;
@@ -2378,7 +2379,7 @@ OnDisable:
 OnStop:
 	stopnpctimer;
 	end;
-OnTouch:
+OnTouch_:
 	if (job_3rd_gc == 12) {
 		initnpctimer;
 		donpcevent "A man with black clothes::OnEnable";
@@ -2426,7 +2427,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil02","A man with black clothes::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	if (!.on) end;
 	mes "[A man with black clothes]";
 	mes "You just arrived here.";
@@ -2754,7 +2755,7 @@ OnDisable:
 OnStop:
 	stopnpctimer;
 	end;
-OnTouch:
+OnTouch_:
 	if (job_3rd_gc == 17) {
 		initnpctimer;
 		donpcevent "#3rdgc_event_master::OnEnable";
@@ -2837,7 +2838,7 @@ OnEnable:
 OnDisable:
 	disablenpc "Barbed-Wire Entanglement";
 	end;
-OnTouch:
+OnTouch_:
 	mes "There is space on the bottom of the old fence.";
 	next;
 	if(select("Find another way.:Climb into the space.") == 2) {
@@ -2857,7 +2858,7 @@ OnStop:
 	killmonster "job3_guil03","#3rdgc_hide01::OnMyMobDead";
 	stopnpctimer;
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Man's voice : Umm? Is that a shadow in the window?",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	initnpctimer;
 	end;
@@ -2884,7 +2885,7 @@ OnStop:
 	killmonster "job3_guil03","#3rdgc_hide02::OnMyMobDead";
 	stopnpctimer;
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Man's voice : There is something outside!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	initnpctimer;
 	end;
@@ -2911,7 +2912,7 @@ OnStop:
 	killmonster "job3_guil03","#3rdgc_hide03::OnMyMobDead";
 	stopnpctimer;
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Man's voice : What is that?",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	initnpctimer;
 	end;
@@ -3060,7 +3061,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Front Gate Guard#g01::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	disablenpc "Front Gate Guard#g01";
 	disablenpc "Front Gate Guard#g03";
 	disablenpc "Front Gate Guard#g04";
@@ -3091,7 +3092,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Back Gate Guard#g01::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	disablenpc "Back Gate Guard#g01";
 	disablenpc "Back Gate Guard#g03";
 	disablenpc "Back Gate Guard#g04";
@@ -3122,7 +3123,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Interior Guard#g01::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	disablenpc "Interior Guard#g01";
 	disablenpc "Interior Guard#g03";
 	disablenpc "Interior Guard#g04";
@@ -3153,7 +3154,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Exterior Guard#g01::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Guards : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g01";
 	monster "job3_guil03",88,44,"Exterior Guard",1985,1,"Exterior Guard#g01::OnMyMobDead";
@@ -3176,7 +3177,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Exterior Guard#g02::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Guards : Enemy?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g02";
 	monster "job3_guil03",88,55,"Exterior Guard",1985,1,"Exterior Guard#g02::OnMyMobDead";
@@ -3199,7 +3200,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Exterior Guard#g03::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Guards : An invader, remove!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g03";
 	monster "job3_guil03",88,64,"Exterior Guard",1985,1,"Exterior Guard#g03::OnMyMobDead";
@@ -3222,7 +3223,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Exterior Guard#g04::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Guards : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g04";
 	monster "job3_guil03",73,62,"Exterior Guard",1985,1,"Exterior Guard#g04::OnMyMobDead";
@@ -3245,7 +3246,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Exterior Guard#g05::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Guards : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g05";
 	monster "job3_guil03",77,51,"Exterior Guards",1985,1,"Exterior Guard#g05::OnMyMobDead";
@@ -3268,7 +3269,7 @@ OnEnable:
 OnReset:
 	killmonster "job3_guil03","Exterior Guard#g06::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","Guard : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g06";
 	monster "job3_guil03",73,34,"Exterior Guards",1985,1,"Exterior Guard#g06::OnMyMobDead";
@@ -3290,7 +3291,7 @@ OnDisable:
 OnReset:
 	killmonster "job3_guil03","Guard Dog#dog01::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","You have been detected by the guard dog.",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
 	disablenpc "Guard Dog#dog01";
 	monster "job3_guil03",110,27,"Guard Dog",1866,1,"Guard Dog#dog01::OnMyMobDead";
@@ -3313,7 +3314,7 @@ OnDisable:
 OnReset:
 	killmonster "job3_guil03","Guard Dog#dog02::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce "job3_guil03","You have been detected by the guard dog.",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
 	disablenpc "Guard Dog#dog02";
 	monster "job3_guil03",124,27,"Guard Dog",1866,1,"Guard Dog#dog02::OnMyMobDead";
@@ -3410,7 +3411,7 @@ OnStop:
 OnReset:
 	killmonster "job3_guil03",strnpcinfo(0)+"::OnMyMobDead";
 	end;
-OnTouch:
+OnTouch_:
 	set .@i, atoi(charat(strnpcinfo(0),19));
 	setarray .@x[1],64,86,83;
 	setarray .@y[1],68,63,36;
@@ -3435,14 +3436,14 @@ job3_guil03,83,36,5	duplicate(#3rdgc_gojung_kill01)	#3rdgc_gojung_kill03	456,6,6
 
 job3_guil03,88,71,0	script	#3rdgc_safezone01	139,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	mes "It's a good bush to hide yourself.";
 	donpcevent strnpcinfo(0)+"::OnTimer";
 	close;
 OnTimer:
 	//FIXME: This is a workaround for...
 	//var pccount_tt = GetNeighborPcNumber 2
-	getmapxy(.@map$,.@x,.@y,1);
+	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
 	setarray .@x[1],.@x-2,.@x+2;
 	setarray .@y[1],.@y-2,.@y+2;
 	sleep 1000;
@@ -3560,7 +3561,7 @@ job3_guil03,146,70,3	script	Renzak#3rdgc16	466,{
 		mes "Go to Mayshell for the report.";
 		next;
 		mes "[Renzak]";
-		if (checkquest(7110,PLAYTIME) == 1) {
+		if (checkquest(7110,PLAYTIME) == 0) {
 			mes "You finished quickly.";
 			mes "Good job.";
 			set job_3rd_gc, 18;

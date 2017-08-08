@@ -661,7 +661,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 	// Enchant types:
 	//   [1]ATK [2]CRIT [3]EVA [4]Healer [5]Spell 1 [6]Assist 1 [7]Assist 2 [8]STR [9]Range [10]Physical [11]Spell 2
 	switch(.@part) {
-	case 4: //EQI_HAND_R
+	case EQI_HAND_R:
 		switch(.@equip_id) {
 			case 1660: callsub L_Socket,4,5,1;  //Wand_Of_Affection2
 			case 2011: callsub L_Socket,5,11,1; //Golden_Rod_Staff2
@@ -671,7 +671,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 16018: callsub L_Socket,1,5,1; //Mace_Of_Judgement2
 		}
 		break;
-	case 6: //EQI_SHOES
+	case EQI_SHOES:
 		switch(.@equip_id) {
 			case 2475: callsub L_Socket,6,8,1;  //Ur_Greave
 			case 2476: callsub L_Socket,6,10,1; //Peuz_Greave
@@ -681,7 +681,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 2480: callsub L_Socket,6,1,1;  //Black_Wing_Boots
 		}
 		break;
-	case 5: //EQI_GARMENT
+	case EQI_GARMENT:
 		switch(.@equip_id) {
 			case 2574: callsub L_Socket,3,8,1; //Ur_Manteau
 			case 2575: callsub L_Socket,3,2,1; //Peuz_Manteau
@@ -691,7 +691,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 2581: callsub L_Socket,3,1,1; //Black_Wing_Manteau
 		}
 		break;
-	case 2: //EQI_ARMOR
+	case EQI_ARMOR:
 		switch(.@equip_id) {
 			case 15036: callsub L_Socket,8,1,1;  //Ur_Plate
 			case 15037: callsub L_Socket,10,2,1; //Peuz_Plate
@@ -701,7 +701,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 15043: callsub L_Socket,1,9,1;  //Black_Wing_Suits
 		}
 		break;
-	case 7: //EQI_ACC_L
+	case EQI_ACC_L:
 		switch(.@equip_id) {
 			case 2883: callsub L_Socket,6,0,2; //Ur_Seal
 			case 2884: callsub L_Socket,6,0,2; //Peuz_Seal

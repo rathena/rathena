@@ -246,7 +246,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 		mes "[Maroll Battle Recruiter]";
 		mes "May the war god bless you.";
 		close2;
-		getmapxy(.@mapname$,.@x,.@y,1);
+		getmapxy(.@mapname$,.@x,.@y,UNITTYPE_NPC);
 		if (.@mapname$ == "prontera")
 			set bat_return,1;
 		else if (.@mapname$ == "moc_ruins")
@@ -609,7 +609,7 @@ function	script	F_BG_Badge	{
 	close2;
 
 	// If the VIP system is enabled, VIP players receive an extra 2 badges.
-	if (VIP_SCRIPT && vip_status(1))
+	if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 		set .@amount, .@amount+2;
 
 	set .@medal_gap, 500 - countitem(.@badge);

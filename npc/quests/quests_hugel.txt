@@ -391,7 +391,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (hg_herb == 4) {
 		mes "[Allen]";
 		mes "^333333*Cough cough!*^000000";
@@ -520,7 +520,7 @@ hu_fild06,34,123,3	script	Postell Schuwell	97,{
 }
 
 hu_in01,370,255,3	script	Upper Drawer#First	139,2,2,{
-OnTouch:
+OnTouch_:
 	set .@rand,rand(1,7);
 	if (hg_herb < 5) {
 		mes "^3355FFThere are several";
@@ -684,7 +684,7 @@ OnInit:
 	disablenpc "Upper Drawer#Second";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (hg_herb == 5) {
 		mes "^3355FFYou take out one dose of";
 		mes "Withstander from the drawer.^000000";
@@ -3357,7 +3357,6 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "People say that his mansion is rather like a fortress.";
 					mes "I also don't know why someone would want to build his house";
 					mes "as strong as a fortress. Regardless, I am pretty sure that his support will be a great help for us.";
-					mes "";
 					mes "It was a really tiring day today. It was also a very chaotic day.";
 					mes "To be honest, I don't know what is going to happen now.";
 					mes "I am scared if I would die helplessly. I am scared and depressed.";
@@ -5819,7 +5818,7 @@ hugel,76,134,3	script	Neha	101,{
 			mes "this soup isn't good if it";
 			mes "isn't steaming hot?";
 			next;
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "[Neha]";
 				mes "But... You're a handsome";
 				mes "fellow, so I'll forgive you...";
@@ -7198,7 +7197,7 @@ hugel,56,104,3	script	Kurupe	709,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (BaseLevel > 49) {
 		if (!hg_milk) {
 			mes "[Kurupe]";
@@ -7344,7 +7343,7 @@ hu_fild06,217,270,3	script	Burupu	896,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (hg_milk == 2) {
 		mes "[Burupu]";
 		mes "Heeeyah!";
@@ -8955,7 +8954,7 @@ hu_in01,18,167,4	script	Julian	86,{
 }
 
 hu_in01,16,21,0	script	Ashe#5	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 18) {
 		mes "[Ashe]";
 		mes "......?";
@@ -9118,7 +9117,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 }
 
 hu_in01,174,90,0	script	Entrance	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 22 || hg_odin == 23) {
 		mes "[Laura]";
 		mes "So it means that everyone fooled me!";
@@ -9345,7 +9344,7 @@ hu_in01,162,85,4	script	Ashe#2	95,{
 }
 
 hu_in01,171,90,0	script	Ashe#3	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 25) {
 		mes "^3355FFAshe picked up";
 		mes "the file that Laura";
@@ -9398,7 +9397,7 @@ moc_fild12,160,372,0	script	Hit	139,{
 }
 
 moc_fild12,160,365,0	script	Ashe#4	139,4,4,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 59) {
 		mes "[???]";
 		mes "...Silence.";
@@ -9603,7 +9602,7 @@ OnEnter:
 	enablenpc "warpinside#1";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (hg_odin > 19 && hg_odin < 23) {
 		switch(rand(1,4)) {
 		case 1:
@@ -9635,7 +9634,7 @@ OnEnter:
 	enablenpc "warpinside#2";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (hg_odin > 19 && hg_odin < 23) {
 		switch(rand(1,4)) {
 		case 1:
@@ -9667,7 +9666,7 @@ OnEnter:
 	enablenpc "warpinside#3";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (hg_odin > 19 && hg_odin < 23) {
 		switch(rand(1,4)) {
 		case 1:
@@ -9699,7 +9698,7 @@ OnEnter:
 	enablenpc "warpinside#4";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (hg_odin > 19 && hg_odin < 23) {
 		switch(rand(1,4)) {
 		case 1:
@@ -9731,7 +9730,7 @@ OnEnter:
 	enablenpc "warpinside#5";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (hg_odin > 19 && hg_odin < 23) {
 		switch(rand(1,4)) {
 		case 1:
@@ -9755,7 +9754,7 @@ OnTouch:
 }
 
 hu_in01,99,90,0	script	Empty	139,3,3,{
-OnTouch:
+OnTouch_:
 	mes "^3355FFThis place is empty.";
 	mes "Everyone must";
 	mes "have already left.^000000";
@@ -9763,7 +9762,7 @@ OnTouch:
 }
 
 que_hugel,35,29,5	script	object#1	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 21) {
 		mes "^3355FFA weathered structure";
 		mes "of the Odin Shrine is";
@@ -9827,7 +9826,7 @@ OnTouch:
 }
 
 que_hugel,163,31,0	script	object#2	139,3,3,{
-OnTouch:
+OnTouch_:
 	mes "^3355FFWhen you come back";
 	mes "to your senses, you";
 	mes "find that nothing is";
@@ -9836,7 +9835,7 @@ OnTouch:
 }
 
 que_hugel,163,178,0	script	object#3	139,3,3,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 22) {
 		mes "["+strcharinfo(0)+"]";
 		mes "Huh?";
@@ -9852,7 +9851,7 @@ OnTouch:
 }
 
 hu_in01,15,108,0	script	alex#warp	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (hg_odin == 17) {
 		mes "[Alex]";
 		mes "Haven't you found it yet?";
@@ -9942,7 +9941,7 @@ OnTouch:
 }
 
 hugel,52,90,0	script	alex#warp2	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (hg_odin > 59) warp "hu_in01",102,90;
 	else if (hg_odin > 21 && hg_odin < 60) warp "hu_in01",173,90;
 	else warp "hu_in01",33,90;
@@ -9950,13 +9949,13 @@ OnTouch:
 }
 
 hu_in01,155,70,0	script	alex#warp3	45,1,1,{
-OnTouch:
+OnTouch_:
 	mes "^3355FFThe door is locked.^000000";
 	close;
 }
 
 hu_in01,155,108,0	script	alex#warp4	45,1,1,{
-OnTouch:
+OnTouch_:
 	mes "^3355FFThe door is locked.^000000";
 	close;
 }

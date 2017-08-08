@@ -1,18 +1,13 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable warpto.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Disables warping to a map.
 //= Atcommands @warp, @go, @load, @jump, @partyrecall,
 //=   @guildrecall, and @recallall are disabled.
 //= Command /memo is disabled.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added WOE:TE maps [Cydh]
 //============================================================
 
 // 14.1 Bifrost ==================
@@ -36,6 +31,7 @@ que_lhz	mapflag	nowarpto
 
 // 14.2 Eclage ===================
 1@ecl	mapflag	nowarpto
+1@xm_d	mapflag	nowarpto
 
 // Pyramids Basement Nightmare Mode
 moc_prydn1	mapflag	nowarpto

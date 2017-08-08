@@ -39,12 +39,12 @@ function	script	F_CoolEventCorp	{
 		mes getarg(1)+".";
 		mes "Thank you for using the";
 		mes "Cool Event Corp. service~";
-		savepoint getarg(2),getarg(3),getarg(4);
+		savepoint getarg(2),getarg(3),getarg(4),1,1;
 		close2;
 		break;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
-		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+		if(!callfunc("F_CanOpenStorage")){
 			mes "I'm sorry, but you";
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
@@ -74,7 +74,7 @@ function	script	F_CoolEventCorp	{
 		mes "Please choose";
 		mes "your destination.";
 		next;
-		if (VIP_SCRIPT && !vip_status(1))
+		if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE))
 			set .@cost,4400;
 		else
 			set .@cost,2200;

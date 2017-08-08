@@ -51,14 +51,13 @@ prt_in,24,61,7	script	Perchik	47,{
 	mes "[Perchik]";
 	mes "Show me your items to sign...";
 	next;
-	setarray .@pos$[1],"Upper Headgear","Armor","Left hand","Right hand","Garment","Footgear","Left Accessory","Right Accessory","Mid Headgear","Lower Headgear";
-	set .@menu$,"";
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 	for (set .@i,1; .@i<=10; set .@i,.@i+1) {
-		if (getequipisequiped(.@i))
-			set .@menu$, .@menu$+.@pos$[.@i]+" [^0055FF"+getequipname(.@i)+"^000000]";
+		if (getequipisequiped(.@indices[.@i]))
+			set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) +" [^0055FF"+getequipname(.@indices[.@i])+"^000000]";
 		set .@menu$, .@menu$+":";
 	}
-	set .@part, select(.@menu$);
+	set .@part, .@indices[ select(.@menu$) ];
 	set .@id, getequipid(.@part);
 	set .@ref, getequiprefinerycnt(.@part);
 	mes "[Perchik]";
@@ -118,7 +117,7 @@ prt_in,24,61,7	script	Perchik	47,{
 	}
 	if (!countitem2(.@id,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3])) {
 		mes "Where is "+getitemname(@id)+"...?";
-		npctalk "You're a snoozy cheater!";
+		npctalk "Perchik : You're a snoozy cheater!";
 		logmes "Hack: Tried to sign an item not having it: "+getitemname(@id);
 		emotion e_wah;
 		close;

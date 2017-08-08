@@ -78,16 +78,17 @@ OnTouch:
 	end;
 
 S_Warp:
-	if (canParticipateSiegeTE() == 0) {
+	.@castle$ = getarg(0);
+	if (jobcanentermap(.@castle$) == 0) {
 		mes "3rd and expansion job level can't enter in WoE TE.";
 		close;
 	}
 
-	.@guild_id = getcastledata(getarg(0),1);
+	.@guild_id = getcastledata(.@castle$,1);
 	.@my_guild_id = getcharid(2);
 
 	if (.@guild_id && .@guild_id == .@my_guild_id) {
-		warp getarg(0),getarg(1),getarg(2);
+		warp .@castle$,getarg(1),getarg(2);
 		end;
 	}
 
@@ -103,7 +104,7 @@ S_Warp:
 		mes "Welcome alliance guild.";
 		close2;
 	}
-	warp getarg(0),getarg(1),getarg(2);
+	warp .@castle$,getarg(1),getarg(2);
 	end;
 }
 

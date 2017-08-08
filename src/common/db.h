@@ -42,6 +42,10 @@
 #ifndef _DB_H_
 #define _DB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 
 #include <stdarg.h>
@@ -1338,6 +1342,15 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 	}while(0)
 
 
+/// Resets the length and clears content, so the vector is empty
+/// 
+/// @param __vec Vector
+#define VECTOR_RESET(__vec) \
+	if( VECTOR_LENGTH(__vec) > 0 ) { \
+		memset(VECTOR_DATA(__vec), 0, (VECTOR_LENGTH(__vec)*sizeof(VECTOR_FIRST(__vec)))); /* clear data */ \
+	} \
+	VECTOR_LENGTH(__vec) = 0; /* clear current length */
+
 
 /////////////////////////////////////////////////////////////////////
 // Binary heap library based on defines. (uses the vector defines above)
@@ -1622,6 +1635,11 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 #define BHEAP_CLEAR(__heap) VECTOR_CLEAR(__heap)
 
 
+/// Resets the binary heap and clears content so it can be treated as empty
+///
+/// @parm __heap Binary heap
+#define BHEAP_RESET(__heap) VECTOR_RESET(__heap)
+
 
 /// Generic comparator for a min-heap. (minimum value at top)
 /// Returns -1 if v1 is smaller, 1 if v2 is smaller, 0 if equal.
@@ -1641,6 +1659,8 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @return negative if v1 is top, positive if v2 is top, 0 if equal
 #define BHEAP_MAXTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 > v2 ? -1 : 1 )
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _DB_H_ */

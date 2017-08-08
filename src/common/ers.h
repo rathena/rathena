@@ -40,6 +40,10 @@
 #ifndef _ERS_H_
 #define _ERS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 
 /*****************************************************************************\
@@ -158,7 +162,7 @@ typedef struct eri {
  * @param The requested size of the entry in bytes
  * @return Interface of the object
  */
-ERS *ers_new(uint32 size, char *name, enum ERSOptions options);
+ERS *ers_new(uint32 size, const char *name, enum ERSOptions options);
 
 /**
  * Print a report about the current state of the Entry Reusage System.
@@ -174,5 +178,9 @@ void ers_report(void);
  **/
 void ers_final(void);
 #endif /* DISABLE_ERS / not DISABLE_ERS */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ERS_H_ */

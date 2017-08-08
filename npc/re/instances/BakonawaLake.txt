@@ -75,19 +75,19 @@ ma_scene01,174,179,4	script	Taho	541,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "[Taho]";
 				mes "An unknown error occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "[Taho]";
 				mes "The rope hasn't been weaved yet. Wait a little.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "[Taho]";
 				mes "Civilians cannot enter.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "ma_scene01","A party member, "+strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the dungeon, "+.@md_name$+".",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
 				setquest 12278;
 				//warp "1@ma_b",64,51;
@@ -165,7 +165,7 @@ OnStart:
 	enablenpc instance_npcname("#Bakonawan1");
 	set .@map$, instance_mapname("1@ma_b");
 	mapannounce .@map$,"Taho: I can see him there on the surface! ATTACK!!!",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
-	monster .@map$,78,81,"Bakonawa",2320,1,instance_npcname("#Bakonawan1")+"::OnMyMobDead"; //original: (78,83)
+	monster .@map$,78,83,"Bakonawa",2320,1,instance_npcname("#Bakonawan1")+"::OnMyMobDead";
 	initnpctimer;
 	end;
 OnFail:
@@ -331,7 +331,7 @@ OnInstanceInit:
 	end;
 OnStart:
 	enablenpc instance_npcname("#Bakonawan2-1");
-	monster instance_mapname("1@ma_b"),78,81,"Enraged Bakonawa",2321,1,instance_npcname("#Bakonawan2-1")+"::OnMyMobDead"; //original: (78,93)
+	monster instance_mapname("1@ma_b"),78,93,"Enraged Bakonawa",2321,1,instance_npcname("#Bakonawan2-1")+"::OnMyMobDead";
 	end;
 OnFail:
 	killmonster instance_mapname("1@ma_b"),instance_npcname("#Bakonawan2-1")+"::OnMyMobDead";
@@ -365,7 +365,7 @@ OnInstanceInit:
 OnStart:
 	enablenpc instance_npcname("#Bakonawan3");
 	initnpctimer;
-	monster instance_mapname("1@ma_b"),78,81,"Enraged Bakonawa",2322,1,instance_npcname("#Bakonawan3")+"::OnMyMobDead"; //original: (78,83)
+	monster instance_mapname("1@ma_b"),78,83,"Enraged Bakonawa",2322,1,instance_npcname("#Bakonawan3")+"::OnMyMobDead";
 	donpcevent instance_npcname("#Bakonawan3-1")+"::OnStart";
 	end;
 OnMyMobDead:
@@ -479,7 +479,7 @@ OnMobSpawn:
 		erasequest 12279;
 		mes "[Taho]";
 		mes "This was found from Bakonawa's corpse. It would be better if you take this.";
-		if (!VIP_SCRIPT || vip_status(1))
+		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6499,7; //Ancient_Grudge
 		else
 			getitem 6499,5; //Ancient_Grudge

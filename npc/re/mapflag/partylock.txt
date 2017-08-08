@@ -52,3 +52,6 @@
 1@face	mapflag	partylock
 1@sara	mapflag	partylock
 1@gef_in	mapflag	partylock
+
+// Horror Toy Factory
+1@xm_d	mapflag	partylock

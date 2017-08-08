@@ -4,6 +4,10 @@
 #ifndef _HOMUNCULUS_H_
 #define _HOMUNCULUS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
@@ -190,5 +194,9 @@ short hom_skill_get_index(uint16 skill_id);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _HOMUNCULUS_H_ */

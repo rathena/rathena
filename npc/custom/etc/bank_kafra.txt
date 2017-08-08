@@ -24,7 +24,7 @@
 	mes"[Maniss]";
 	mes strcharinfo(0)+", welcome to the 2nd Bank of Prontera!";
 
-	set @kb_int,(gettime(6)*31)+gettime(5); //today's number
+	set @kb_int,(gettime(DT_MONTH)*31)+gettime(DT_DAYOFMONTH); //today's number
 	set @income,0;
 	//calculate %
 	if (#kafrabank<=0 || #kb_int>=@kb_int) goto L_NoIncomeToday;

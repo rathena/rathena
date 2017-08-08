@@ -1680,7 +1680,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 	}
 	if (dew_weapon == 0) {
 		mes "[Gatti]";
-		mes "Hey there, young "+((Sex)?"man":"lady")+"~ Are you from around here?";
+		mes "Hey there, young "+((Sex == SEX_MALE)?"man":"lady")+"~ Are you from around here?";
 		next;
 		select("No, I'm not.");
 		mes "[Gatti]";
@@ -1796,7 +1796,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			end;
 		}
 		mes "[Gatti]";
-		if(Sex == 0)
+		if(Sex == SEX_FEMALE)
 			mes "Lady, you possess a strong energy.";
 		else
 			mes "You possess a strong energy.";
@@ -1841,7 +1841,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		next;
 		mes "[Gatti]";
 		mes "Oh yes! Finally.";
-		if (Sex == 0)
+		if (Sex == SEX_FEMALE)
 			mes "Lady, you also possess a strong energy.";
 		else
 			mes "You also possess a strong energy.";

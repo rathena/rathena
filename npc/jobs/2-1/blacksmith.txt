@@ -86,7 +86,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 
 	if (BaseClass == Job_Novice) {
 		mes "[Altiregen]";
-		if (Sex == 0) {
+		if (Sex == SEX_FEMALE) {
 			mes "Oh~";
 			mes "what a very";
 			mes "pretty lady!";

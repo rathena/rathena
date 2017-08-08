@@ -97,8 +97,23 @@ int quest_add(TBL_PC *sd, int quest_id)
 	memset(&sd->quest_log[n], 0, sizeof(struct quest));
 
 	sd->quest_log[n].quest_id = qi->id;
-	if( qi->time )
-		sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time);
+	if (qi->time) {
+		if (qi->time_type == 0)
+			sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time);
+		else {	// quest time limit at HH:MM
+			int time_today;
+			time_t t;
+			struct tm * lt;
+
+			t = time(NULL);
+			lt = localtime(&t);
+			time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			if (time_today < qi->time)
+				sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time - time_today);
+			else	// next day
+				sd->quest_log[n].time = (unsigned int)(time(NULL) + 86400 + qi->time - time_today);
+		}
+	}
 	sd->quest_log[n].state = Q_ACTIVE;
 
 	sd->save_quest = true;
@@ -107,7 +122,7 @@ int quest_add(TBL_PC *sd, int quest_id)
 	clif_quest_update_objective(sd, &sd->quest_log[n], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -148,8 +163,23 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = qi->id;
 
-	if( qi->time )
-		sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+	if (qi->time) {
+		if (qi->time_type == 0)
+			sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+		else {	// quest time limit at HH:MM
+			int time_today;
+			time_t t;
+			struct tm * lt;
+
+			t = time(NULL);
+			lt = localtime(&t);
+			time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			if (time_today < qi->time)
+				sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time - time_today);
+			else	// next day
+				sd->quest_log[i].time = (unsigned int)(time(NULL) + 86400 + qi->time - time_today);
+		}
+	}
 
 	sd->quest_log[i].state = Q_ACTIVE;
 
@@ -160,7 +190,7 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 	clif_quest_update_objective(sd, &sd->quest_log[i], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -199,7 +229,7 @@ int quest_delete(TBL_PC *sd, int quest_id)
 	clif_quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -244,7 +274,7 @@ void quest_update_objective(TBL_PC *sd, int mob_id)
 	for( i = 0; i < sd->avail_quests; i++ ) {
 		struct quest_db *qi = NULL;
 
-		if( sd->quest_log[i].state != Q_ACTIVE ) // Skip inactive quests
+		if( sd->quest_log[i].state == Q_COMPLETE ) // Skip complete quests
 			continue;
 
 		qi = quest_search(sd->quest_log[i].quest_id);
@@ -327,7 +357,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 	clif_quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -356,6 +386,8 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 
 	switch( type ) {
 		case HAVEQUEST:
+			if (sd->quest_log[i].state == Q_INACTIVE) // Player has the quest but it's in the inactive state; send it as Q_ACTIVE.
+				return 1;
 			return sd->quest_log[i].state;
 		case PLAYTIME:
 			return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
@@ -455,7 +487,21 @@ void quest_read_txtdb(void)
 				}
  			}
 
-			quest->time = atoi(str[1]);
+			if (strchr(str[1],':') == NULL) {
+				quest->time = atoi(str[1]);
+				quest->time_type = 0;
+			}
+			else {
+				unsigned char hour, min;
+
+				hour = atoi(str[1]);
+				str[1] = strchr(str[1],':');
+				*str[1] ++= 0;
+				min = atoi(str[1]);
+
+				quest->time = hour * 3600 + min * 60;
+				quest->time_type = 1;
+			}
 
 			for(i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
 				uint16 mob_id = (uint16)atoi(str[2 * i + 2]);

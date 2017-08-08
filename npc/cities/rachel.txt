@@ -11,7 +11,7 @@
 //= [Partial Official Conversion]
 //= Arunafeltz NPCs
 //===== Additional Comments: =================================
-//= 0.5 Text translated from Korean > English, incomplete, 
+//= 0.5 Text translated from Korean > English, incomplete,
 //= possibly missing some NPCs and missing all quests.
 //= 0.6 Removed Inn Keeper (it's in inn.txt), name duplicates [Lupus]
 //= 0.7 Total update of most if not all NPCs. [L0ne_W0lf]
@@ -632,7 +632,7 @@ ra_temple,172,113,5	script	Child Follower#6	921,{
 	close;
 }
 
-airplane,238,54,7	script	Adventurer	59,{
+airplane,238,54,7	script	Adventurer	4_M_ORIENT01,{
 	if ($rachel_donate < 10000) {
 		mes "[Adventurer]";
 		mes "You know that the temple";

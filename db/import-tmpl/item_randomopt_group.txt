@@ -1,0 +1,1 @@
+// <randopt_groupid>,<rate>,<randopt_id1>,<randopt_value1>,<randopt_param1>{,<randopt_id2>,<randopt_value2>,<randopt_param2>,<randopt_id3>,<randopt_value3>,<randopt_param3>,<randopt_id4>,<randopt_value4>,<randopt_param4>,<randopt_id5>,<randopt_value5>,<randopt_param5>}

@@ -20,12 +20,15 @@
 // 2048 - restricted in zone 7
 // 4096 - restricted in zone 8
 //
+// Passing negative value as flag will unset the flag instead.
+//
 // Examples:
 // 1201,1   // Knife can't be worn on normal maps
 // 608,4    // Yggdrasil Seed can't be consumed in both GvG and WoE Castles
 // 4174,6   // Deviling Card has no effect in every PVP or GVG map, and during WoE
 // 501,32   // Red Potion can't be consumed on maps marked as 'restricted zone 1'
 // 519,322  // Milk can't be consumed in PVP and maps marked as 'restricted zone 2' or 'restricted zone 4' (256+64+2)
+// 519,-2   // Unset `restricted in PVP` flag from Milk. Making it usable in PVP again.
 
 //----------------------------------------------------------------------------
 // Normal maps
@@ -70,6 +73,7 @@
 //----------------------------------------------------------------------------
 // GVG
 //----------------------------------------------------------------------------
+605,4		// Anodyne
 12218,4		// Assumptio_5_Scroll
 14529,4		// Greed_Scroll
 14590,4		// Pty_Assumptio_Scroll
@@ -82,8 +86,6 @@
 
 //----------------------------------------------------------------------------
 // CANNOT be consumed/equipped in WoE:TE Castles (16)
-// !TODO: [iRO] Vellums, Siege Equipment & Items, Battlegrounds, God Items 1 & 2
-// !CONFIRM: [idRO] Siege Equipment, God Items 1 & 2: are still usable
 //----------------------------------------------------------------------------
 // Krieger Gear
 1187,16		// Krieger_Twohand_Sword1
@@ -124,11 +126,6 @@
 13416,16	// Krieger_Onehand_Sword1
 13417,16	// Krieger_Onehand_Sword2
 13418,16	// Krieger_Onehand_Sword3
-12269,16	// Tasty_Colonel
-12270,16	// Tasty_Major
-12271,16	// Mre_A
-12272,16	// Mre_B
-12273,16	// Mre_C
 
 // Vellum Gear
 1293,16		// Velum_Jamadhar
@@ -188,6 +185,13 @@
 12388,16	// Runstone_Crush
 12389,16	// Runstone_Storm
 12390,16	// Runstone_Millennium
+12422,16	// HP_Increase_Potion_(Small)
+12423,16	// HP_Increase_Potion_(Medium)
+12424,16	// HP_Increase_Potion_(Large)
+12425,16	// SP_Increase_Potion_(Small)
+12426,16	// SP_Increase_Potion_(Medium)
+12427,16	// SP_Increase_Potion_(Large)
+12428,16	// Concentrated_White_Potion_Z
 12429,16	// Savage_Full_Roast
 12430,16	// Cocktail_Warg_Blood
 12431,16	// Minor_Stew

@@ -66,7 +66,7 @@ morocc,156,70,3	script	Girl#sc00	93,3,3,{
 	mes "Eh?";
 	mes "I don't have anything for you...";
 	close;
-OnTouch:
+OnTouch_:
 	if (BaseJob == Job_Rogue && BaseLevel > 98 && JobLevel > 49 && job_sha == 0) {
 		mes "[Girl]";
 		mes "Hey? Stop!";
@@ -1952,8 +1952,6 @@ job3_sha01,22,78,0	script	????#keybox01	844,{
 		mes " ";
 		mes " "+.@i;
 		next;
-		mes "";
-		mes "";
 		mes " "+.@Codes1$[.@i];
 		next;
 		mes "It shows some letters and numbers.";
@@ -2508,6 +2506,6 @@ OnTouch:
 
 // Quest Mob Spawn
 //============================================================
-tur_dun03,0,0,0,0	monster	Shadow of Deception	2076,1,1000,0,0
-ice_dun02,0,0,0,0	monster	Shadow of Illusion	2077,1,1000,0,0
-niflheim,0,0,0,0	monster	Shadow of Pleasure	2078,1,1000,0,0
+tur_dun03,0,0	monster	Shadow of Deception	2076,1,1000
+ice_dun02,0,0	monster	Shadow of Illusion	2077,1,1000
+niflheim,0,0	monster	Shadow of Pleasure	2078,1,1000
