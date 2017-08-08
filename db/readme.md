@@ -10,7 +10,7 @@ By placing your custom entries into the `import/` directory within these two loc
 
 Think of "import" as in "override". Place only the settings you have changed in the import files, or settings you are "overriding".
 
-For example, when setting up a server there are always a few config settings that users would like to change in order for rAthena to suit their needs. The following example will show you how to use the `/db/import/` directory correctly. (for `/conf/import/` eamples, see [/conf/import/readme.md](/conf/import/readme.md))
+For example, when setting up a server there are always a few config settings that users would like to change in order for rAthena to suit their needs. The following example will show you how to use the `/db/import/` directory correctly. (for `/conf/import/` eamples, see [/conf/readme.md](/conf/readme.md))
 
 ### Achievements
 ---
