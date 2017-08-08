@@ -32,8 +32,6 @@ else
 endif
 ALL_DEPENDS=server
 
-CXXFLAGS=-std=c++11
-
 @SET_MAKE@
 
 #####################################################################
