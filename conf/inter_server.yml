@@ -27,16 +27,8 @@
 #	  Name: "<storage name>"    // (string) Storage name will be sent to the client to display on the title bar.
 #	  Table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
 #	  Max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
-#  Duplicate the structure to create more storages
-
 
 Storages:
     - ID: 0
       Name: "Storage"
       Table: "storage"
-      #Max: 600
-#   Additional storage example
-#   - ID: 1
-#     Name: "VIP Storage"
-#     Table: "vip_storage"
-#     Max: 300
