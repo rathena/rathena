@@ -112,7 +112,7 @@
     <ClCompile Include="int_quest.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_storage.c">
+    <ClCompile Include="int_storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="inter.cpp">

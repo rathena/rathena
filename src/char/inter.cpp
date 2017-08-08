@@ -847,6 +847,8 @@ static void inter_config_readConf(void) {
 	for (auto directory : directories) {
 		std::string current_file = directory + file_name;
 		YAML::Node config;
+		int count = 0;
+
 		try {
 			config = YAML::LoadFile(current_file);
 		}
@@ -857,50 +859,50 @@ static void inter_config_readConf(void) {
 
 		if (config["Storages"]) {
 			for (auto node : config["Storages"]) {
-				struct s_storage_table table;
-				int cap = MAX_STORAGE;
+				unsigned int id;
 
-				if (!node["ID"].IsDefined() || !node["Name"].IsDefined() || !node["Table"].IsDefined()) {
+				if (!node["ID"].IsDefined()) {
+					YAML::Emitter out;
+					out << node;
+					ShowWarning("inter_config_readConf: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", current_file.c_str());
+					ShowMessage("%s\n", out.c_str());
+					continue;
+				}
+				id = node["ID"].as<unsigned int>();
+				bool existing = interserv_config.storages.find(id) == interserv_config.storages.end();
+				auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
+
+				if (!existing && (!node["Name"].IsDefined() || !node["Table"].IsDefined())) {
 					YAML::Emitter out;
 					out << node;
 					ShowWarning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
 					ShowMessage("%s\n", out.c_str());
 					continue;
 				}
-
-				if (node["Max"]) {
-					cap = node["Max"].as<int>();
+				
+				if (node["Name"])
+					safestrncpy(storage_table->name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
+				if(node["Table"])
+					safestrncpy(storage_table->table, node["Table"].as<std::string>().c_str(), DB_NAME_LEN);
+				if (node["Max"])
+					storage_table->max_num = node["Max"].as<uint16>();
+				else if (!existing)
+					storage_table->max_num = MAX_STORAGE;
+				if (!existing) {
+					storage_table->id = (uint8)id;
+					interserv_config.storages[id] = storage_table;
 				}
-
-				memset(&table, 0, sizeof(struct s_storage_table));
-
-				RECREATE(interserv_config.storages, struct s_storage_table, interserv_config.storage_count + 1);
-				interserv_config.storages[interserv_config.storage_count].id = node["ID"].as<uint8>();
-				safestrncpy(interserv_config.storages[interserv_config.storage_count].name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
-				safestrncpy(interserv_config.storages[interserv_config.storage_count].table, node["Table"].as<std::string>().c_str(), DB_NAME_LEN);
-				interserv_config.storages[interserv_config.storage_count].max_num = cap;
-				interserv_config.storage_count++;
-
-				ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' storage informations in '" CL_WHITE "%s" CL_RESET "'\n", interserv_config.storage_count, current_file.c_str());
 			}
 		}
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' storage informations in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
 	}
 }
 
 void inter_config_finalConf(void) {
 
-	if (interserv_config.storages)
-		aFree(interserv_config.storages);
-	interserv_config.storages = NULL;
-	interserv_config.storage_count = 0;
-
-	config_destroy(&interserv_config.cfg);
 }
 
 static void inter_config_defaults(void) {
-	interserv_config.storage_count = 0;
-	interserv_config.storages = NULL;
-
 	safestrncpy(interserv_config.cfgFile, "inter_server.yml", sizeof(interserv_config.cfgFile));
 }
 
@@ -975,13 +977,13 @@ void inter_final(void)
  * @param fd
  **/
 void inter_Storage_sendInfo(int fd) {
-	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storage_count * size, i = 0;
+	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storages.size() * size, i = 0;
 	// Send storage table information
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
 	WFIFOW(fd, 2) = len;
-	for (i = 0; i < interserv_config.storage_count; i++) {
-		if (!&interserv_config.storages[i] || !interserv_config.storages[i].name)
+	for (i = 0; i < interserv_config.storages.size(); i++) {
+		if (!&interserv_config.storages[i] || !interserv_config.storages[i]->name)
 			continue;
 		memcpy(WFIFOP(fd, 4 + size*i), &interserv_config.storages[i], size);
 	}

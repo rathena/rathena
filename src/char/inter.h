@@ -12,11 +12,12 @@ extern "C" {
 #include "../common/mmo.h"
 #include "../common/sql.h"
 
+#include <memory>
+#include <unordered_map>
+
 struct Inter_Config {
 	char cfgFile[128];				  ///< Inter-Config file
-	config_t cfg;					  ///< Config
-	struct s_storage_table *storages; ///< Storage name & table information
-	uint8 storage_count;			  ///< Number of available storage
+	std::unordered_map< unsigned int, std::shared_ptr<s_storage_table> > storages; ///< Storage name & table information
 };
 
 extern struct Inter_Config interserv_config;

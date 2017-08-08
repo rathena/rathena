@@ -198,7 +198,7 @@
     <ClCompile Include="int_party.c" />
     <ClCompile Include="int_pet.c" />
     <ClCompile Include="int_quest.c" />
-    <ClCompile Include="int_storage.c" />
+    <ClCompile Include="int_storage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "int_storage.h"
+
 #include "../common/malloc.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
@@ -21,14 +23,7 @@
  * @return True:Valid, False:Invalid
  **/
 bool inter_premiumStorage_exists(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (interserv_config.storages[i].id == id)
-				return true;
-		}
-	}
-	return false;
+	return interserv_config.storages.find(id) != interserv_config.storages.end();
 }
 
 /**
@@ -37,13 +32,8 @@ bool inter_premiumStorage_exists(uint8 id) {
  * @return Max amount
  **/
 int inter_premiumStorage_getMax(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
-				return interserv_config.storages[i].max_num;
-		}
-	}
+	if (inter_premiumStorage_exists(id))
+		return interserv_config.storages[id]->max_num;
 	return MAX_STORAGE;
 }
 
@@ -53,13 +43,8 @@ int inter_premiumStorage_getMax(uint8 id) {
  * @return Table name
  **/
 const char *inter_premiumStorage_getTableName(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
-				return interserv_config.storages[i].table;
-		}
-	}
+	if (inter_premiumStorage_exists(id))
+		return interserv_config.storages[id]->table;
 	return schema_config.storage_db;
 }
 
@@ -69,13 +54,8 @@ const char *inter_premiumStorage_getTableName(uint8 id) {
 * @return printable name
 **/
 const char *inter_premiumStorage_getPrintableName(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
-				return interserv_config.storages[i].name;
-		}
-	}
+	if (inter_premiumStorage_exists(id))
+		return interserv_config.storages[id]->name;
 	return "Storage";
 }
 
@@ -381,7 +361,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 		memcpy(&items[count++], &item, sizeof(struct item));
 	Sql_FreeResult(sql_handle);
 
-	ShowInfo("Found '"CL_WHITE"%d"CL_RESET"' guild bound item(s) from CID = "CL_WHITE"%d"CL_RESET", AID = %d, Guild ID = "CL_WHITE"%d"CL_RESET".\n", count, char_id, account_id, guild_id);
+	ShowInfo("Found '" CL_WHITE "%d" CL_RESET "' guild bound item(s) from CID = " CL_WHITE "%d" CL_RESET ", AID = %d, Guild ID = " CL_WHITE "%d" CL_RESET ".\n", count, char_id, account_id, guild_id);
 	if (!count) { //No items found - No need to continue
 		StringBuf_Destroy(&buf);
 		SqlStmt_Free(stmt);
