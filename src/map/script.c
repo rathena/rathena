@@ -23392,7 +23392,6 @@ BUILDIN_FUNC(achievementcomplete) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
-
 	
 	if( !sd->state.pc_loaded ){
 		if( !running_npc_stat_calc_event ){
