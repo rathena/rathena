@@ -2392,9 +2392,6 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty)
 
 	nullpo_ret(ud);
 
-	if(dir > 7)
-		return 1;
-
 	ud->to_x = tx;
 	ud->to_y = ty;
 
