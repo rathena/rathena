@@ -372,7 +372,7 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 		md->bl.m = sd->bl.m;
 		md->bl.x = sd->bl.x;
 		md->bl.y = sd->bl.y;
-		unit_calc_pos(&md->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		unit_calc_pos(&md->bl, sd->bl.x, sd->bl.y);
 		md->bl.x = md->ud.to_x;
 		md->bl.y = md->ud.to_y;
 

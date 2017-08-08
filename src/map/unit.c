@@ -2384,12 +2384,10 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
  * @param bl: Object to calculate position
  * @param tx: X coordinate to go to
  * @param ty: Y coordinate to go to
- * @param dir: Direction which to be 2 cells from master's position
  * @return Success(0); Fail(1);
  */
-int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
+int unit_calc_pos(struct block_list *bl, int tx, int ty)
 {
-	int dx, dy, x, y;
 	struct unit_data *ud = unit_bl2ud(bl);
 
 	nullpo_ret(ud);
@@ -2400,63 +2398,14 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 	ud->to_x = tx;
 	ud->to_y = ty;
 
-	// 2 cells from Master Position
-	dx = -dirx[dir] * 2;
-	dy = -diry[dir] * 2;
-	x = tx + dx;
-	y = ty + dy;
+	map_search_freecell(bl, bl->m, &ud->to_x, &ud->to_y, 3, 3, 1|2|4);
 
-	if( !unit_can_reach_pos(bl, x, y, 0) ) {
-		if( dx > 0 )
-			x--;
-		else if( dx < 0 )
-			x++;
+	if (!unit_can_reach_pos(bl, ud->to_x, ud->to_y, 0)) { // Attempt once more
+		map_search_freecell(bl, bl->m, &ud->to_x, &ud->to_y, 3, 3, 1|2|4);
 
-		if( dy > 0 )
-			y--;
-		else if( dy < 0 )
-			y++;
-
-		if( !unit_can_reach_pos(bl, x, y, 0) ) {
-			int i;
-
-			for( i = 0; i < 12; i++ ) {
-				int k = rnd()%8; // Pick a Random Dir
-
-				dx = -dirx[k] * 2;
-				dy = -diry[k] * 2;
-				x = tx + dx;
-				y = ty + dy;
-
-				if( unit_can_reach_pos(bl, x, y, 0) )
-					break;
-				else {
-					if( dx > 0 )
-						x--;
-					else if( dx < 0 )
-						x++;
-
-					if( dy > 0 )
-						y--;
-					else if( dy < 0 )
-						y++;
-
-					if( unit_can_reach_pos(bl, x, y, 0) )
-						break;
-				}
-			}
-
-			if( i == 12 ) {
-				x = tx; y = tx; // Exactly Master Position
-
-				if( !unit_can_reach_pos(bl, x, y, 0) )
-					return 1;
-			}
-		}
+		if (!unit_can_reach_pos(bl, ud->to_x, ud->to_y, 0))
+			return 1;
 	}
-
-	ud->to_x = x;
-	ud->to_y = y;
 
 	return 0;
 }

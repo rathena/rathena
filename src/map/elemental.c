@@ -243,7 +243,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		ed->bl.m = sd->bl.m;
 		ed->bl.x = sd->bl.x;
 		ed->bl.y = sd->bl.y;
-		unit_calc_pos(&ed->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		unit_calc_pos(&ed->bl, sd->bl.x, sd->bl.y);
 		ed->bl.x = ed->ud.to_x;
 		ed->bl.y = ed->ud.to_y;
 

@@ -112,7 +112,7 @@ int unit_walktoxy(struct block_list *bl, short x, short y, unsigned char flag);
 int unit_walktobl(struct block_list *bl, struct block_list *target, int range, unsigned char flag);
 void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type);
 bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type);
-int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
+int unit_calc_pos(struct block_list *bl, int tx, int ty);
 int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
 int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data);
 

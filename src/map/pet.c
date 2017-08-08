@@ -449,7 +449,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.m = sd->bl.m;
 	pd->bl.x = sd->bl.x;
 	pd->bl.y = sd->bl.y;
-	unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+	unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y);
 	pd->bl.x = pd->ud.to_x;
 	pd->bl.y = pd->ud.to_y;
 
@@ -1148,7 +1148,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		if(pd->ud.walktimer != INVALID_TIMER && check_distance_blxy(&sd->bl, pd->ud.to_x,pd->ud.to_y, 3))
 			return 0; // Already walking to him
 
-		unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y);
 
 		if(!unit_walktoxy(&pd->bl,pd->ud.to_x,pd->ud.to_y,0))
 			pet_randomwalk(pd,tick);
