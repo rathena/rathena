@@ -106,7 +106,7 @@ OnTouch:
 		erasequest(21001);
 	if (isbegin_quest(21002))
 		erasequest(21002);
-	warp "izlude" + strnpcinfo(2),196,209;
+	warp "izlude",196,209;
 	end;
 }
 
