@@ -2395,10 +2395,10 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty)
 	ud->to_x = tx;
 	ud->to_y = ty;
 
-	map_search_freecell(bl, bl->m, &ud->to_x, &ud->to_y, 3, 3, 1|2|4);
+	map_search_freecell(bl, bl->m, &ud->to_x, &ud->to_y, 3, 3, 1|2);
 
 	if (!unit_can_reach_pos(bl, ud->to_x, ud->to_y, 0)) { // Attempt once more
-		map_search_freecell(bl, bl->m, &ud->to_x, &ud->to_y, 3, 3, 1|2|4);
+		map_search_freecell(bl, bl->m, &ud->to_x, &ud->to_y, 3, 3, 1|2);
 
 		if (!unit_can_reach_pos(bl, ud->to_x, ud->to_y, 0))
 			return 1;
