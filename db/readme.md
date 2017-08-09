@@ -10,7 +10,7 @@ By placing your custom entries into the `import/` directory within these two loc
 
 Think of "import" as in "override". Place only the settings you have changed in the import files, or settings you are "overriding".
 
-For example, when setting up a server there are always a few config settings that users would like to change in order for rAthena to suit their needs. The following example will show you how to use the `/db/import/` directory correctly. (for `/conf/import/` eamples, see [/conf/readme.md](/conf/readme.md))
+For example, when setting up a server there are always a few config settings that users would like to change in order for rAthena to suit their needs. The following example will show you how to use the `/db/import/` directory correctly. (for `/conf/import/` examples, see [/conf/readme.md](/conf/readme.md))
 
 ### Achievements
 ---
@@ -18,7 +18,8 @@ We want to add our own custom achievement that can be given to a player via an N
 
 #### /db/import/achievement_db.yml
 
-	Achievements:
+
+    Achievements:
       - ID: 280000
         Group: "AG_GOAL_ACHIEVE"
         Name: "Emperio"
@@ -39,7 +40,7 @@ We want to add our own customized Housing Instance.
 
 #### /db/import/instance_db.txt
 
-	// ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,...,Map255
+    // ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,...,Map255
     35,Home,3600,900,1@home,24,6,2@home,3@home
 
 
@@ -49,7 +50,7 @@ We want to give a custom mob a Novice player sprite.
 
 #### /db/import/mob_avail.txt
 
-	// Structure of Database:
+    // Structure of Database:
     // MobID,SpriteID{,Equipment}
     3850,0
 
@@ -60,7 +61,7 @@ We want to add our own custom maps. For this we need to add our map names to `im
 
 #### /db/import/map_index.txt
 
-	1@home	1250
+    1@home	1250
     2@home
     3@home
     ev_has
@@ -74,7 +75,7 @@ We want to ensure that specific items cannot be traded, sold, dropped, placed in
 
 #### /db/import/item_trade.txt
 
-	// Legend for 'TradeMask' field (bitmask):
+    // Legend for 'TradeMask' field (bitmask):
     // 1   - item can't be dropped
     // 2   - item can't be traded (nor vended)
     // 4   - wedded partner can override restriction 2
@@ -96,7 +97,7 @@ We want to add our own custom quests to the quest_db.
 
 #### /db/import/quest_db.txt
 
-	// Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,MobID1,NameID1,Rate1,MobID2,NameID2,Rate2,MobID3,NameID3,Rate3,Quest Title
+    // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,MobID1,NameID1,Rate1,MobID2,NameID2,Rate2,MobID3,NameID3,Rate3,Quest Title
     89001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reputation Quest"
     89002,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reputation Quest"
 
