@@ -14,6 +14,7 @@
 //= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support.
 //= 1.3 Kagerou/Oboro added.
 //= 1.4 Rebellion added.
+//= 1.5 Enable/Disable Rebirth Class (By: Maz-V)
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -41,6 +42,10 @@ function Job_Menu;
 	.@eac = eaclass();
 	.@i = ((.ThirdClass) ? roclass(.@eac&EAJ_UPPERMASK) : Class);
 	if (.@i >= Job_Knight && .@i <= Job_Crusader2) {
+		if (.RebirthClass == 0) {
+			mes "No more jobs are available.";
+			close;
+		}	
 		if (BaseLevel < .Rebirth[0] || JobLevel < .Rebirth[1]) {
 			.@blvl = .Rebirth[0] - BaseLevel;
 			.@jlvl = .Rebirth[1] - JobLevel;
@@ -297,6 +302,7 @@ OnInit:
 	setarray .Rebirth[0],99,50;	// Minimum base level, job level to rebirth OR change to third class
 	setarray .JobReq[0],10,40;	// Minimum job level to turn into 1st class, 2nd class
 	.ThirdClass = 1;			// Enable third classes? (1: yes / 0: no)
+	.RebirthClass = 1;			// Enable rebirth classes? (1: yes / 0: no)
 	.SecondExpanded = 1;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion? (1: yes / 0: no)
 	.SNovice = 45;				// Minimum base level to turn into Super Novice
 	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
