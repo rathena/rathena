@@ -5201,9 +5201,26 @@ void mob_db_load(void){
 	mob_load();
 }
 
+static int mob_reload_sub( struct mob_data *md, va_list args ){
+	if( md->bl.prev == NULL ){
+		return 0;
+	}
+
+	if( !md->vd_changed ){
+		md->vd = mob_get_viewdata(md->mob_id);
+
+		// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
+		clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
+		clif_spawn(&md->bl);
+	}
+
+	return 0;
+}
+
 void mob_reload(void) {
 	do_final_mob();
 	mob_db_load();
+	map_foreachmob(mob_reload_sub);
 }
 
 void mob_clear_spawninfo()
