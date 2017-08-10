@@ -17788,7 +17788,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
 			case UMOB_SEX: MOB_VD_CHANGE(); md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); break;
+			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
 			case UMOB_HAIRSTYLE: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
 			case UMOB_HAIRCOLOR: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
 			case UMOB_HEADBOTTOM: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
