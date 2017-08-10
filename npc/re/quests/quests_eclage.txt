@@ -2107,10 +2107,11 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		next;
 		mes "[Traveler]";
 		mes "If you are thinking about selling it, you should just give up.";
+		mes "I have no wishes to sell it no matter how much you beg.";
 		next;
 		mes "[Traveler]";
-		mes "I have no wishes to sell it no matter how much you beg.";
-		mes "This feather..";
+		mes "This feather...";
+		mes "It's not an ordinary feather.";
 	}
 	close;
 }
