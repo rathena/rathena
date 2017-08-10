@@ -50,6 +50,8 @@ yamlwrapper* yaml_load_file(const char* file_name) {
 	} catch (YAML::ParserException &e) {
 		ShowError("YAML Exception Caught: %s\n", e.what());
 		return NULL;
+	} catch (YAML::BadFile &e) {
+		return NULL;
 	}
 
 	return new yamlwrapper(node);
