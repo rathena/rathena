@@ -340,6 +340,10 @@ struct view_data * mob_get_viewdata(int mob_id)
 	return &mob_db(mob_id)->vd;
 }
 
+/**
+ * Create unique view data associated to a spawned monster.
+ * @param md: Mob to adjust
+ */
 void mob_set_dynamic_viewdata( struct mob_data* md ){
 	// If it is a valid monster and it has not already been created
 	if( md && !md->vd_changed ){
@@ -357,6 +361,10 @@ void mob_set_dynamic_viewdata( struct mob_data* md ){
 	}
 }
 
+/**
+ * Free any view data associated to a spawned monster.
+ * @param md: Mob to free
+ */
 void mob_free_dynamic_viewdata( struct mob_data* md ){
 	// If it is a valid monster and it has already been allocated
 	if( md && md->vd_changed ){
@@ -5221,6 +5229,9 @@ static void mob_load(void)
 	mob_skill_db_set();
 }
 
+/**
+ * Initialize monster data
+ */
 void mob_db_load(void){
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
 	mob_db_data[0] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
@@ -5233,6 +5244,12 @@ void mob_db_load(void){
 	mob_load();
 }
 
+/**
+ * Apply the proper view data on monsters during mob_db reload.
+ * @param md: Mob to adjust
+ * @param args: va_list of arguments
+ * @return 0
+ */
 static int mob_reload_sub( struct mob_data *md, va_list args ){
 	if( md->bl.prev == NULL ){
 		return 0;
@@ -5251,12 +5268,18 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 	return 0;
 }
 
+/**
+ * Reload monster data
+ */
 void mob_reload(void) {
 	do_final_mob();
 	mob_db_load();
 	map_foreachmob(mob_reload_sub);
 }
 
+/**
+ * Clear spawn data for all monsters
+ */
 void mob_clear_spawninfo()
 {	//Clears spawn related information for a script reload.
 	int i;
