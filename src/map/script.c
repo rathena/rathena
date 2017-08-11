@@ -17764,14 +17764,20 @@ BUILDIN_FUNC(setunitdata)
 			memcpy(md->base_status, &md->db->status, sizeof(struct status_data));
 		}
 
-#define MOB_VD_CHANGE() { \
-			struct view_data* mobdb_vd = mob_get_viewdata(md->mob_id); \
-			\
-			if( !md->vd_changed ){ \
-				md->vd = (struct view_data*)aMalloc( sizeof( struct view_data ) ); \
-				memcpy( md->vd, mobdb_vd, sizeof( struct view_data ) ); \
-				md->vd_changed = true; \
-			} \
+		// Check if the view data will be modified
+		switch( type ){
+			case UMOB_SEX:
+			//case UMOB_CLASS: // Called by status_set_viewdata
+			case UMOB_HAIRSTYLE:
+			case UMOB_HAIRCOLOR:
+			case UMOB_HEADBOTTOM:
+			case UMOB_HEADMIDDLE:
+			case UMOB_HEADTOP:
+			case UMOB_CLOTHCOLOR:
+			case UMOB_SHIELD:
+			case UMOB_WEAPON:
+				mob_set_dynamic_viewdata( md );
+				break;
 		}
 
 		switch (type) {
@@ -17787,16 +17793,16 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
-			case UMOB_SEX: MOB_VD_CHANGE(); md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
+			case UMOB_SEX: md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
 			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-			case UMOB_HAIRSTYLE: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
-			case UMOB_HAIRCOLOR: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
-			case UMOB_HEADBOTTOM: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
-			case UMOB_HEADMIDDLE: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
-			case UMOB_HEADTOP: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
-			case UMOB_CLOTHCOLOR: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
-			case UMOB_SHIELD: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
-			case UMOB_WEAPON: MOB_VD_CHANGE(); clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
+			case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
+			case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
+			case UMOB_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
+			case UMOB_HEADMIDDLE: clif_changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
+			case UMOB_HEADTOP: clif_changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
+			case UMOB_CLOTHCOLOR: clif_changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
+			case UMOB_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
+			case UMOB_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
 			case UMOB_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
 			case UMOB_STR: md->base_status->str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;

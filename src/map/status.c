@@ -7673,20 +7673,11 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
 			if (vd){
-				if( md->vd_changed ){
-					aFree(md->vd);
-					md->vd = NULL;
-					md->vd_changed = false;
-				}
+				mob_free_dynamic_viewdata( md );
 
 				md->vd = vd;
 			}else if( pcdb_checkid( class_ ) ){
-				if( !md->vd_changed ){
-					vd = (struct view_data*)aMalloc( sizeof( struct view_data ) );
-					memcpy( vd, md->vd, sizeof( struct view_data ) );
-					md->vd = vd;
-					md->vd_changed = true;
-				}
+				mob_set_dynamic_viewdata( md );
 
 				md->vd->class_ = class_;
 			}else
