@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/mmo.h"
+#include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
@@ -876,13 +877,17 @@ static void inter_config_readConf(void) {
 				try {
 					id = node["ID"].as<unsigned int>();
 				}
-				catch (std::exception &e) {
-					static_cast<std::exception>(e); // Suppress unused warning
+				catch (std::exception) {
 					yaml_invalid_warning("inter_config_readConf: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
 					continue;
 				}
 
-				bool existing = interserv_config.storages.find(id) == interserv_config.storages.end();
+				if( id > UINT8_MAX ){
+					yaml_invalid_warning("inter_config_readConf: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
+					continue;
+				}
+
+				bool existing = inter_premiumStorage_exists(id);
 				auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
 
 				if (!existing && (!node["Name"] || !node["Table"])) {
@@ -898,8 +903,7 @@ static void inter_config_readConf(void) {
 					try {
 						storage_table->max_num = node["Max"].as<uint16>();
 					}
-					catch (std::exception &e) {
-						static_cast<std::exception>(e); // Suppress unused warning
+					catch (std::exception) {
 						yaml_invalid_warning("inter_config_readConf: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
 						continue;
 					}
@@ -911,9 +915,11 @@ static void inter_config_readConf(void) {
 					storage_table->id = (uint8)id;
 					interserv_config.storages[id] = storage_table;
 				}
+
+				count++;
 			}
 		}
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' storage informations in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' storage information in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
 	}
 }
 
@@ -996,13 +1002,15 @@ void inter_final(void)
  * @param fd
  **/
 void inter_Storage_sendInfo(int fd) {
-	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storages.size() * size, i = 0;
+	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storages.size() * size, offset;
 	// Send storage table information
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
 	WFIFOW(fd, 2) = len;
+	offset = 4;
 	for (auto storage : interserv_config.storages) {
-		memcpy(WFIFOP(fd, 4 + size*i), storage.second.get(), size);
+		memcpy(WFIFOP(fd, offset), storage.second.get(), size);
+		offset += size;
 	}
 	WFIFOSET(fd, len);
 }

@@ -4,6 +4,7 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
+#include "../common/cbasetypes.h"
 #include "../common/conf.h"
 #include "../common/mmo.h"
 #include "../common/sql.h"
@@ -16,7 +17,7 @@ extern "C" {
 
 struct Inter_Config {
 	char cfgFile[128];				  ///< Inter-Config file
-	std::unordered_map< unsigned int, std::shared_ptr<s_storage_table> > storages; ///< Storage name & table information
+	std::unordered_map< uint8, std::shared_ptr<s_storage_table> > storages; ///< Storage name & table information
 };
 #endif
 

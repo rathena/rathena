@@ -14,11 +14,8 @@
 
 #include <stdlib.h>
 
-
-#define STORAGE_MEMINC	16
-
 /**
- * Check if sotrage ID is valid
+ * Check if storage ID is valid
  * @param id Storage ID
  * @return True:Valid, False:Invalid
  **/
@@ -150,7 +147,6 @@ bool guild_storage_fromsql(int guild_id, struct s_storage* p)
 }
 
 static void inter_storage_checkDB(void) {
-	int i = 0;
 	// Checking storage tables
 	for (auto storage_table : interserv_config.storages) {
 		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
@@ -159,9 +155,10 @@ static void inter_storage_checkDB(void) {
 			"`expire_time`,`bound`,`unique_id`"
 			" FROM `%s` LIMIT 1;", storage_table.second->table)) {
 			Sql_ShowDebug(sql_handle);
+		}else{
+			Sql_FreeResult(sql_handle);
 		}
 	}
-	Sql_FreeResult(sql_handle);
 }
 
 //---------------------------------------------------------
