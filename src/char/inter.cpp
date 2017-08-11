@@ -809,7 +809,7 @@ static int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
-			strcpy(interserv_config.cfgFile, w2);
+			interserv_config.cfgFile = w2;
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -928,15 +928,12 @@ void inter_config_finalConf(void) {
 }
 
 static void inter_config_defaults(void) {
-	safestrncpy(interserv_config.cfgFile, "inter_server.yml", sizeof(interserv_config.cfgFile));
+	interserv_config.cfgFile = "inter_server.yml";
 }
 
 // initialize
 int inter_init_sql(const char *file)
 {
-	//int i;
-
-
 	inter_config_defaults();
 	inter_config_read(file);
 

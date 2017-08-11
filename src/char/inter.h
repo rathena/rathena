@@ -16,7 +16,7 @@
 extern "C" {
 
 struct Inter_Config {
-	char cfgFile[128];				  ///< Inter-Config file
+	std::string cfgFile; ///< Inter-Config file
 	std::unordered_map< uint8, std::shared_ptr<s_storage_table> > storages; ///< Storage name & table information
 };
 #endif
