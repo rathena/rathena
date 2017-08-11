@@ -17848,7 +17848,6 @@ BUILDIN_FUNC(setunitdata)
 			}
 			if (calc_status)
 				status_calc_bl(&md->bl, SCB_BATTLE);
-#undef MOB_VD_CHANGE
 		break;
 
 	case BL_HOM:
