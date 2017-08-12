@@ -61,7 +61,7 @@ dali02,43,129,5	script	Unpleasent Royal Guard#	4_M_SAKRAYROYAL,{
 	close;
 }
 
-dali02,40,134,5	script	Interdimensional Device	PORTAL,{
+dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	if (BaseLevel < 120) {
 		mes "[Unpleasent Royal Guard]";
 		mes "Althought I need help with a task, you are not strong enough to assist me, noob~!";
