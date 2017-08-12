@@ -2458,7 +2458,7 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 /// Fills in part of the item buffers that calls for variable bonuses data. [Napster]
 /// A maximum of 5 random options can be supported.
 void clif_add_random_options(unsigned char* buf, struct item *it) {
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	int i;
 
 	for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
@@ -2493,7 +2493,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 	header = 0x29a;
 #elif PACKETVER < 20120925
 	header = 0x2d4;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	header = 0x990;
 #elif PACKETVER < 20160921
 	header = 0xa0c;
@@ -2533,7 +2533,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 #endif
 #if PACKETVER >= 20071002
 		WFIFOW(fd,offs+27) = 0;  //  HireExpireDate
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,offs+31), &sd->inventory.u.items_inventory[n]);
 #if PACKETVER >= 20160921
 		WFIFOB(fd,offs+54) = 0; // Favorite
@@ -2573,7 +2573,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 		/* Yellow color only for non-stackable item */
 		WFIFOW(fd,offs+27)=(sd->inventory.u.items_inventory[n].bound && !itemdb_isstackable(sd->inventory.u.items_inventory[n].nameid)) ? BOUND_DISPYELLOW : sd->inventory_data[n]->flag.bindOnEquip ? BOUND_ONEQUIP : 0;
 #endif
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,31), &sd->inventory.u.items_inventory[n]);
 #if PACKETVER >= 20160921
 		WFIFOB(fd,offs+54) = sd->inventory.u.items_inventory[n].favorite;
@@ -2650,7 +2650,7 @@ void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *it, struc
 		WBUFL(buf,n+22) = it->expire_time;
 		WBUFW(buf,n+26) = it->bound ? BOUND_DISPYELLOW : id->flag.bindOnEquip ? BOUND_ONEQUIP : 0; //bindOnEquipType
 		WBUFW(buf,n+28) = (id->equip&EQP_VISIBLE) ? id->look : 0;
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		//V6_ITEM_Option
 		WBUFB(buf,n+30) = 0;	// nRandomOptionCnt
 		clif_add_random_options(WBUFP(buf, n+31), it);// optionData
@@ -2731,7 +2731,7 @@ void clif_inventorylist(struct map_session_data *sd) {
 	const int se = 26;
 #elif PACKETVER < 20120925
 	const int se = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int se = 31;
 #else
 	const int se = 57;
@@ -2779,7 +2779,7 @@ void clif_inventorylist(struct map_session_data *sd) {
 		WBUFW(bufe,0)=0xa4;
 #elif PACKETVER < 20120925
 		WBUFW(bufe,0)=0x2d0;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 		WBUFW(bufe,0)=0x992;
 #else
 		WBUFW(bufe,0)=0xa0d;
@@ -2811,7 +2811,7 @@ void clif_equiplist(struct map_session_data *sd)
 	const int cmd = 26;
 #elif PACKETVER < 20120925
 	const int cmd = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 31;
 #else
 	const int cmd = 57;
@@ -2835,7 +2835,7 @@ void clif_equiplist(struct map_session_data *sd)
 		WBUFW(buf,0)=0xa4;
 #elif PACKETVER < 20120925
 		WBUFW(buf,0)=0x2d0;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 		WBUFW(buf,0)=0x992;
 #else
 		WBUFW(buf,0)=0xa0d;
@@ -2881,7 +2881,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	const int se = 28;
 	const int sidxe = 4;
 	const int cmde = 0x2d1;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int se = 31;
 	const int sidxe = 4+24;
 	const int cmde = 0x996;
@@ -2969,7 +2969,7 @@ void clif_cartlist(struct map_session_data *sd)
 	const int cmd = 26;
 #elif PACKETVER < 20120925
 	const int cmd = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 31;
 #else
 	const int cmd = 57;
@@ -3012,7 +3012,7 @@ void clif_cartlist(struct map_session_data *sd)
 	WBUFW(bufe,0)=0x122;
 #elif PACKETVER < 20120925
 	WBUFW(bufe,0)=0x2d2;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	WBUFW(bufe,0)=0x994;
 #else
 	WBUFW(bufe,0)=0xa0f;
@@ -4308,7 +4308,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 	unsigned char *buf;
 #if PACKETVER < 20100223
 	const int cmd = 0xe9;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 0x80f;
 #else
 	const int cmd = 0xa09;
@@ -4338,7 +4338,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 		WBUFW(buf,13)= 0; //card (4w)
 		WBUFW(buf,15)= 0; //card (4w)
 		WBUFW(buf,17)= 0; //card (4w)
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WBUFP(buf, 19), &sd->inventory.u.items_inventory[index]);
 #endif
 	}
@@ -4364,7 +4364,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 		WBUFB(buf,9) = sd->inventory.u.items_inventory[index].attribute; // attribute
 		WBUFB(buf,10)= sd->inventory.u.items_inventory[index].refine; //refine
 		clif_addcards(WBUFP(buf, 11), &sd->inventory.u.items_inventory[index]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WBUFP(buf, 19), &sd->inventory.u.items_inventory[index]);
 #endif
 	}
@@ -4481,7 +4481,7 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 {
 #if PACKETVER < 5
 	const int cmd = 0xf4;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 0x1c4;
 #else
 	const int cmd = 0xa0a;
@@ -4507,7 +4507,7 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 	WFIFOB(fd,11+offset) = i->attribute; // attribute
 	WFIFOB(fd,12+offset) = i->refine; //refine
 	clif_addcards(WFIFOP(fd,13+offset), i);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	clif_add_random_options(WFIFOP(fd,21+offset), i);
 #endif
 	WFIFOSET(fd,packet_len(cmd));
@@ -6764,7 +6764,7 @@ void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 {
 #if PACKETVER < 5
 	const int cmd = 0x124;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 0x1c5;
 #else
 	const int cmd = 0xa0b;
@@ -6796,7 +6796,7 @@ void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 	WBUFB(buf,11+offset)=sd->cart.u.items_cart[n].attribute;
 	WBUFB(buf,12+offset)=sd->cart.u.items_cart[n].refine;
 	clif_addcards(WBUFP(buf,13+offset), &sd->cart.u.items_cart[n]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	clif_add_random_options(WBUFP(buf,21+offset), &sd->cart.u.items_cart[n]);
 #endif
 	WFIFOSET(fd,packet_len(cmd));
@@ -7126,7 +7126,7 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 	const int offset = 12;
 #endif
 
-#if PACKETVER < 20150226
+#if PACKETVER < 20150225
 	const int item_length = 22;
 #elif PACKETVER < 20160921
 	const int item_length = 47;
@@ -7162,7 +7162,7 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 		WFIFOB(fd,offset+12+i*item_length) = vsd->cart.u.items_cart[index].attribute;
 		WFIFOB(fd,offset+13+i*item_length) = vsd->cart.u.items_cart[index].refine;
 		clif_addcards(WFIFOP(fd,offset+14+i*item_length), &vsd->cart.u.items_cart[index]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,offset+22+i*item_length), &vsd->cart.u.items_cart[index]);
 #if PACKETVER >= 20160921
 		WFIFOL(fd,offset+47+i*item_length) = pc_equippoint_sub(sd,data);
@@ -7224,7 +7224,7 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 	int i,fd;
 	int count;
 
-#if PACKETVER < 20150226
+#if PACKETVER < 20150225
 	const int item_length = 22;
 #else
 	const int item_length = 47;
@@ -7251,7 +7251,7 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 		WFIFOB(fd,20+i*item_length) = sd->cart.u.items_cart[index].attribute;
 		WFIFOB(fd,21+i*item_length) = sd->cart.u.items_cart[index].refine;
 		clif_addcards(WFIFOP(fd,22+i*item_length), &sd->cart.u.items_cart[index]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,30+i*item_length), &sd->cart.u.items_cart[index]);
 #endif
 	}
@@ -9771,7 +9771,7 @@ void clif_equipcheckbox(struct map_session_data* sd)
 /// 0859 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE2, PACKETVER >= 20101124)
 /// 0859 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE2, PACKETVER >= 20110111)
 /// 0997 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.31B* (ZC_EQUIPWIN_MICROSCOPE_V5, PACKETVER >= 20120925)
-/// 0a2d <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V6, PACKETVER >= 20150226)
+/// 0a2d <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V6, PACKETVER >= 20150225)
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd)
 {
 	uint8* buf;
@@ -9780,7 +9780,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	const int s = 26;
 #elif PACKETVER < 20120925
 	const int s = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
  	const int s = 31;
 #else
 	const int s = 57;
@@ -9796,7 +9796,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	WBUFW(buf, 0) = 0x2d7;
 #elif PACKETVER < 20120925
 	WBUFW(buf, 0) = 0x859;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
  	WBUFW(buf, 0) = 0x997;
 #else
 	WBUFW(buf, 0) = 0xa2d;
@@ -17781,7 +17781,7 @@ static void clif_parse_SearchStoreInfo(int fd, struct map_session_data* sd)
 ///     1 = "next" label to retrieve more results
 void clif_search_store_info_ack(struct map_session_data* sd)
 {
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	const unsigned int blocksize = MESSAGE_SIZE+26+5*MAX_ITEM_RDM_OPT;
 #else
 	const unsigned int blocksize = MESSAGE_SIZE+26;
