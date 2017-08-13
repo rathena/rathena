@@ -290,6 +290,9 @@ static int storage_additem(struct map_session_data* sd, struct s_storage *stor, 
 		}
 	}
 
+	if( stor->amount >= stor->max_amount )
+		return 2;
+
 	// find free slot
 	ARR_FIND( 0, stor->max_amount, i, stor->u.items_storage[i].nameid == 0 );
 	if( i >= stor->max_amount )
