@@ -43,6 +43,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "char-server", "src\char\char-server.vcxproj", "{FED3A941-0AF7-49FE-85CF-E1DFDC0EBB23}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F8FD7B1E-8E1C-4CC3-9CD1-2E28F77B6559} = {F8FD7B1E-8E1C-4CC3-9CD1-2E28F77B6559}
+		{61D6A599-6BED-4154-A9FC-40553BD972E0} = {61D6A599-6BED-4154-A9FC-40553BD972E0}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "map-server", "src\map\map-server.vcxproj", "{B4114A9C-EEA4-433C-A830-56119A984F24}"

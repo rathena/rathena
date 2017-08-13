@@ -7,7 +7,7 @@ ifeq ($(HAVE_MYSQL),yes)
 	SERVER_DEPENDS=common login char map import
 	COMMON_DEPENDS=mt19937ar libconfig yaml-cpp
 	LOGIN_DEPENDS=mt19937ar libconfig common
-	CHAR_DEPENDS=mt19937ar libconfig common
+	CHAR_DEPENDS=mt19937ar libconfig common yaml-cpp
 	MAP_DEPENDS=mt19937ar libconfig common yaml-cpp
 else
 	ALL_DEPENDS=needs_mysql
