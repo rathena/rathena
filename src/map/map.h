@@ -940,15 +940,15 @@ extern const char*SCRIPT_CONF_NAME;
 extern const char*MSG_CONF_NAME_EN;
 extern const char*GRF_PATH_FILENAME;
 //Other languages supported
-const char*MSG_CONF_NAME_RUS;
-const char*MSG_CONF_NAME_SPN;
-const char*MSG_CONF_NAME_GRM;
-const char*MSG_CONF_NAME_CHN;
-const char*MSG_CONF_NAME_MAL;
-const char*MSG_CONF_NAME_IDN;
-const char*MSG_CONF_NAME_FRN;
-const char*MSG_CONF_NAME_POR;
-const char*MSG_CONF_NAME_THA;
+extern const char*MSG_CONF_NAME_RUS;
+extern const char*MSG_CONF_NAME_SPN;
+extern const char*MSG_CONF_NAME_GRM;
+extern const char*MSG_CONF_NAME_CHN;
+extern const char*MSG_CONF_NAME_MAL;
+extern const char*MSG_CONF_NAME_IDN;
+extern const char*MSG_CONF_NAME_FRN;
+extern const char*MSG_CONF_NAME_POR;
+extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;

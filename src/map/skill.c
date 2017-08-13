@@ -5490,8 +5490,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			for( i = 0; i <= j - 2; i++ )
 				for( k = i + 1; k <= j - 1; k++ )
 					if( positions[i] < positions[k] ) {
-						swap(positions[i],positions[k]);
-						swap(spheres[i],spheres[k]);
+						SWAP(positions[i],positions[k]);
+						SWAP(spheres[i],spheres[k]);
 					}
 
 			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions (Official behavior)
@@ -5601,8 +5601,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					for( k = i + 1; k <= j - 1; k++ )
 						if( positions[i] > positions[k] )
 						{
-							swap(positions[i],positions[k]);
-							swap(spheres[i],spheres[k]);
+							SWAP(positions[i],positions[k]);
+							SWAP(spheres[i],spheres[k]);
 						}
 
 				if( skill_lv == 1 ) j = 1; // Limit only to one ball
@@ -14865,7 +14865,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			//Consume
 			sd->itemid = sd->itemindex = -1;
-			if( skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2 ) // [marquis007]
+			if( (skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2) || sd->inventory_data[i]->flag.delay_consume == 2 ) // [marquis007]
 				; //Do not consume item.
 			else if( sd->inventory.u.items_inventory[i].expire_time == 0 )
 				pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME); // Rental usable items are not consumed until expiration
@@ -20879,6 +20879,11 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[11]);
 	if (split[11][0] != '\0' || atoi(split[11])) {
 		int require[MAX_SKILL_STATUS_REQUIRE];
+
+		if( skill_db[idx]->require.status_count > 0 ){
+			aFree(skill_db[idx]->require.status);
+		}
+
 		if ((skill_db[idx]->require.status_count = skill_split_atoi2(split[11], require, ":", SC_STONE, ARRAYLENGTH(require)))) {
 			CREATE(skill_db[idx]->require.status, enum sc_type, skill_db[idx]->require.status_count);
 			for (i = 0; i < skill_db[idx]->require.status_count; i++){
@@ -20905,6 +20910,10 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[33]);
 	if (split[33][0] != '\0' || atoi(split[33])) {
 		int require[MAX_SKILL_EQUIP_REQUIRE];
+
+		if( skill_db[idx]->require.eqItem_count > 0 ){
+			aFree(skill_db[idx]->require.eqItem);
+		}
 
 		if ((skill_db[idx]->require.eqItem_count = skill_split_atoi2(split[33], require, ":", 500, ARRAYLENGTH(require)))) {
 			CREATE(skill_db[idx]->require.eqItem, uint16, skill_db[idx]->require.eqItem_count);

@@ -1628,12 +1628,18 @@ lasagna,208,188,3	script	Cat Paw Service#lasagna	4_M_MERCAT1,4,4,{
 		savepoint "lasagna",193,183,1,1;
 		close;
 	case 2:
-		if (getskilllv("SU_BASIC_SKILL") < 1) {
+		if (!callfunc("F_CanOpenStorage")) {
 			mes "[Cat Paw Commerce Group]";
 			mes "I'm sorry, but...";
-			mes "You should learn some basic skills first if you want to use the warehouse.";
-			mes "Go and learn the skills until you reach the level to use the warehouse.";
-			mes "I believe it should be ^4d4dffbasic level 6^000000 for humans.";
+			if (Class == Job_Summoner) {
+				mes "You should learn the new basic skill first.";
+				mes "Go and learn the skill if you want to use the warehouse.";
+			}
+			else {
+				mes "You should learn some basic skills first if you want to use the warehouse.";
+				mes "Go and learn the skills until you reach the level to use the warehouse.";
+				mes "I believe it should be ^4d4dffbasic level 6^000000 for humans.";
+			}
 			close;
 		}
 		if (countitem(7059) > 0)// Free Ticket for Kafra Storage

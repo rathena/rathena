@@ -42,6 +42,8 @@ static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
 
+struct eri *npc_sc_display_ers;
+
 // Market Shop
 #if PACKETVER >= 20131223
 struct s_npc_market {

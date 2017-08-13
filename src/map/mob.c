@@ -336,9 +336,49 @@ int mobdb_checkid(const int id)
 struct view_data * mob_get_viewdata(int mob_id)
 {
 	if (mob_db(mob_id) == mob_dummy)
-		return 0;
+		return NULL;
 	return &mob_db(mob_id)->vd;
 }
+
+/**
+ * Create unique view data associated to a spawned monster.
+ * @param md: Mob to adjust
+ */
+void mob_set_dynamic_viewdata( struct mob_data* md ){
+	// If it is a valid monster and it has not already been created
+	if( md && !md->vd_changed ){
+		// Allocate a dynamic entry
+		struct view_data* vd = (struct view_data*)aMalloc( sizeof( struct view_data ) );
+
+		// Copy the current values
+		memcpy( vd, md->vd, sizeof( struct view_data ) );
+
+		// Update the pointer to the new entry
+		md->vd = vd;
+
+		// Flag it as changed so it is freed later on
+		md->vd_changed = true;
+	}
+}
+
+/**
+ * Free any view data associated to a spawned monster.
+ * @param md: Mob to free
+ */
+void mob_free_dynamic_viewdata( struct mob_data* md ){
+	// If it is a valid monster and it has already been allocated
+	if( md && md->vd_changed ){
+		// Free it
+		aFree( md->vd );
+
+		// Remove the reference
+		md->vd = NULL;
+
+		// Unflag it as changed
+		md->vd_changed = false;
+	}
+}
+
 /*==========================================
  * Cleans up mob-spawn data to make it "valid"
  *------------------------------------------*/
@@ -644,9 +684,9 @@ int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0
 
 	// normalize x/y coordinates
 	if (x0 > x1)
-		swap(x0, x1);
+		SWAP(x0, x1);
 	if (y0 > y1)
-		swap(y0, y1);
+		SWAP(y0, y1);
 
 	// choose a suitable max. number of attempts
 	max = (y1 - y0 + 1)*(x1 - x0 + 1)*3;
@@ -5189,24 +5229,57 @@ static void mob_load(void)
 	mob_skill_db_set();
 }
 
-void mob_reload(void) {
-	int i;
-
-	//Mob skills need to be cleared before re-reading them. [Skotlex]
-	for (i = 0; i < MAX_MOB_DB; i++) {
-		if (mob_db_data[i]) {
-			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
-			mob_db_data[i]->maxskill = 0;
-		}
-	}
-
-	// Clear item_drop_ratio_db
-	mob_item_drop_ratio->clear(mob_item_drop_ratio, mob_item_drop_ratio_free);
-	mob_skill_db->clear(mob_skill_db, mob_skill_db_free);
-	mob_summon_db->clear(mob_summon_db, mob_summon_db_free);
+/**
+ * Initialize monster data
+ */
+void mob_db_load(void){
+	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
+	mob_db_data[0] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
+	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
+	item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_CLEAN);
+	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
+	mob_item_drop_ratio = idb_alloc(DB_OPT_BASE);
+	mob_skill_db = idb_alloc(DB_OPT_BASE);
+	mob_summon_db = idb_alloc(DB_OPT_BASE);
 	mob_load();
 }
 
+/**
+ * Apply the proper view data on monsters during mob_db reload.
+ * @param md: Mob to adjust
+ * @param args: va_list of arguments
+ * @return 0
+ */
+static int mob_reload_sub( struct mob_data *md, va_list args ){
+	if( md->bl.prev == NULL ){
+		return 0;
+	}
+
+	// If the view data was not overwritten manually
+	if( !md->vd_changed ){
+		// Get the new view data from the mob database
+		md->vd = mob_get_viewdata(md->mob_id);
+
+		// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
+		clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
+		clif_spawn(&md->bl);
+	}
+
+	return 0;
+}
+
+/**
+ * Reload monster data
+ */
+void mob_reload(void) {
+	do_final_mob();
+	mob_db_load();
+	map_foreachmob(mob_reload_sub);
+}
+
+/**
+ * Clear spawn data for all monsters
+ */
 void mob_clear_spawninfo()
 {	//Clears spawn related information for a script reload.
 	int i;
@@ -5219,15 +5292,7 @@ void mob_clear_spawninfo()
  * Circumference initialization of mob
  *------------------------------------------*/
 void do_init_mob(void){
-	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
-	mob_db_data[0] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
-	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
-	item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_CLEAN);
-	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
-	mob_item_drop_ratio = idb_alloc(DB_OPT_BASE);
-	mob_skill_db = idb_alloc(DB_OPT_BASE);
-	mob_summon_db = idb_alloc(DB_OPT_BASE);
-	mob_load();
+	mob_db_load();
 
 	add_timer_func_list(mob_delayspawn,"mob_delayspawn");
 	add_timer_func_list(mob_delay_item_drop,"mob_delay_item_drop");

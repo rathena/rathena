@@ -162,6 +162,16 @@ char help2_txt[256] = "conf/help2.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
 char channel_conf[256] = "conf/channels.conf";
 
+const char *MSG_CONF_NAME_RUS;
+const char *MSG_CONF_NAME_SPN;
+const char *MSG_CONF_NAME_GRM;
+const char *MSG_CONF_NAME_CHN;
+const char *MSG_CONF_NAME_MAL;
+const char *MSG_CONF_NAME_IDN;
+const char *MSG_CONF_NAME_FRN;
+const char *MSG_CONF_NAME_POR;
+const char *MSG_CONF_NAME_THA;
+
 char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
 
 struct s_map_default map_default;
@@ -697,9 +707,9 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 		return 0;
 
 	if (x1 < x0)
-		swap(x0, x1);
+		SWAP(x0, x1);
 	if (y1 < y0)
-		swap(y0, y1);
+		SWAP(y0, y1);
 
 	x0 = i16max(x0, 0);
 	y0 = i16max(y0, 0);
@@ -863,9 +873,9 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 		return 0;
 
 	if ( x1 < x0 )
-		swap(x0, x1);
+		SWAP(x0, x1);
 	if ( y1 < y0 )
-		swap(y0, y1);
+		SWAP(y0, y1);
 
 	x0 = i16max(x0, 0);
 	y0 = i16max(y0, 0);
@@ -930,9 +940,9 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	y1 = center->y + range;
 
 	if ( x1 < x0 )
-		swap(x0, x1);
+		SWAP(x0, x1);
 	if ( y1 < y0 )
-		swap(y0, y1);
+		SWAP(y0, y1);
 
 	if( dx == 0 || dy == 0 ) {
 		//Movement along one axis only.
@@ -1158,9 +1168,9 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 
 	//The two fors assume mx0 < mx1 && my0 < my1
 	if ( mx0 > mx1 )
-		swap(mx0, mx1);
+		SWAP(mx0, mx1);
 	if ( my0 > my1 )
-		swap(my0, my1);
+		SWAP(my0, my1);
 
 	mx0 = max(mx0, 0);
 	my0 = max(my0, 0);
@@ -1308,9 +1318,9 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 
 	//The following assumes mx0 < mx1 && my0 < my1
 	if (mx0 > mx1)
-		swap(mx0, mx1);
+		SWAP(mx0, mx1);
 	if (my0 > my1)
-		swap(my0, my1);
+		SWAP(my0, my1);
 
 	//Apply width to the path by turning 90 degrees
 	mx0 -= abs(range*dirx[(dir + 2) % 8]);

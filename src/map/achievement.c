@@ -128,13 +128,19 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
 		return false;
 	}
 
+	if (!sd->achievement_data.achievements[i].completed)
+		sd->achievement_data.incompleteCount--;
+
 	if (i != sd->achievement_data.count - 1)
 		memmove(&sd->achievement_data.achievements[i], &sd->achievement_data.achievements[i + 1], sizeof(struct achievement) * (sd->achievement_data.count - 1 - i));
 
 	sd->achievement_data.count--;
-	if (!sd->achievement_data.achievements[i].completed)
-		sd->achievement_data.incompleteCount--;
-	RECREATE(sd->achievement_data.achievements, struct achievement, sd->achievement_data.count);
+	if( sd->achievement_data.count == 0 ){
+		aFree(sd->achievement_data.achievements);
+		sd->achievement_data.achievements = NULL;
+	}else{
+		RECREATE(sd->achievement_data.achievements, struct achievement, sd->achievement_data.count);
+	}
 	sd->achievement_data.save = true;
 
 	// Send a removed fake achievement
@@ -206,7 +212,7 @@ static int achievement_check_groups(DBKey key, DBData *data, va_list ap)
 		return 0;
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
-	if (i == sd->achievement_data.count) { // Achievment isn't in player's log
+	if (i == sd->achievement_data.count) { // Achievement isn't in player's log
 		if (achievement_check_dependent(sd, ad->achievement_id) == true) {
 			achievement_add(sd, ad->achievement_id);
 			achievement_update_achievement(sd, ad->achievement_id, true);
@@ -490,8 +496,9 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	if (flag == true && old_level != sd->achievement_data.level) {
 		int achievement_id = 240000 + sd->achievement_data.level;
 
-		achievement_add(sd, achievement_id);
-		achievement_update_achievement(sd, achievement_id, true);
+		if( achievement_add(sd, achievement_id) ){
+			achievement_update_achievement(sd, achievement_id, true);
+		}
 	}
 
 	return info;
@@ -527,7 +534,7 @@ static int achievement_update_objectives(DBKey key, DBData *data, va_list ap)
 	memset(objective_count, 0, sizeof(objective_count)); // Current objectives count
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
-	if (i == sd->achievement_data.count) { // Achievment isn't in player's log
+	if (i == sd->achievement_data.count) { // Achievement isn't in player's log
 		if (achievement_check_dependent(sd, ad->achievement_id) == false) // Check to see if dependents are complete before adding to player's log
 			return 0;
 		isNew = true;
@@ -879,8 +886,8 @@ const char* av_parse_subexpr(const char* p, int limit, struct av_condition *pare
 	p = skip_space(p);
 
 	while((
-			(op=C_ADD,opl=9,len=1,*p=='+') ||
-			(op=C_SUB,opl=9,len=1,*p=='-') ||
+			((op=C_ADD,opl=9,len=1,*p=='+') && p[1]!='+') ||
+			((op=C_SUB,opl=9,len=1,*p=='-') && p[1]!='-') ||
 			(op=C_MUL,opl=10,len=1,*p=='*') ||
 			(op=C_DIV,opl=10,len=1,*p=='/') ||
 			(op=C_MOD,opl=10,len=1,*p=='%') ||

@@ -58,6 +58,12 @@
 #include <errno.h>
 
 
+struct eri *array_ers;
+DBMap *st_db;
+unsigned int active_scripts;
+unsigned int next_id;
+struct eri *st_ers;
+struct eri *stack_ers;
 
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func );
 
@@ -1471,8 +1477,8 @@ const char* parse_subexpr(const char* p,int limit)
 	p = skip_space(p);
 	while((
 			(op=C_OP3,opl=0,len=1,*p=='?') ||
-			(op=C_ADD,opl=9,len=1,*p=='+') ||
-			(op=C_SUB,opl=9,len=1,*p=='-') ||
+			((op=C_ADD,opl=9,len=1,*p=='+') && p[1]!='+') ||
+			((op=C_SUB,opl=9,len=1,*p=='-') && p[1]!='-') ||
 			(op=C_MUL,opl=10,len=1,*p=='*') ||
 			(op=C_DIV,opl=10,len=1,*p=='/') ||
 			(op=C_MOD,opl=10,len=1,*p=='%') ||
@@ -3461,6 +3467,7 @@ void pop_stack(struct script_state* st, int start, int end)
 		}
 		data->type = C_NOP;
 	}
+
 	// move the rest of the elements
 	if( stack->sp > end )
 	{
@@ -3468,13 +3475,26 @@ void pop_stack(struct script_state* st, int start, int end)
 		for( i = start + stack->sp - end; i < stack->sp; ++i )
 			stack->stack_data[i].type = C_NOP;
 	}
+
 	// adjust stack pointers
-	     if( st->start > end )   st->start -= end - start;
-	else if( st->start > start ) st->start = start;
-	     if( st->end > end )   st->end -= end - start;
-	else if( st->end > start ) st->end = start;
-	     if( stack->defsp > end )   stack->defsp -= end - start;
-	else if( stack->defsp > start ) stack->defsp = start;
+	if( st->start > end ){
+		st->start -= end - start;
+	}else if( st->start > start ){
+		st->start = start;
+	}
+	
+	if( st->end > end ){
+		st->end -= end - start;
+	}else if( st->end > start ){
+		st->end = start;
+	}
+	
+	if( stack->defsp > end ){
+		stack->defsp -= end - start;
+	}else if( stack->defsp > start ){
+		stack->defsp = start;
+	}
+	
 	stack->sp -= end - start;
 }
 
@@ -5603,13 +5623,6 @@ BUILDIN_FUNC(return)
 					get_val(st, data); // current scope, convert to value
 				if( data->ref && data->ref->vars == st->stack->stack_data[st->stack->defsp-1].u.ri->scope.vars )
 					data->ref = NULL; // Reference to the parent scope, remove reference pointer
-			} else if( name[0] == '.' && !data->ref ) { // script variable, link to current script
-				data->ref = (struct reg_db *)aCalloc(sizeof(struct reg_db), 1);
-				data->ref->vars = st->script->local.vars;
-
-				if (!st->script->local.arrays)
-					st->script->local.arrays = idb_alloc(DB_OPT_BASE);
-				data->ref->arrays = st->script->local.arrays;
 			}
 		}
 	}
@@ -5636,7 +5649,7 @@ BUILDIN_FUNC(rand)
 		int max = script_getnum(st,3);
 		min = script_getnum(st,2);
 		if( max < min )
-			swap(min, max);
+			SWAP(min, max);
 		range = max - min + 1;
 	}
 	else
@@ -5745,8 +5758,8 @@ BUILDIN_FUNC(areawarp)
 			y3 = 0;
 		} else if( x3 && y3 ) {
 			// normalize x3/y3 coordinates
-			if( x3 < x2 ) swap(x3,x2);
-			if( y3 < y2 ) swap(y3,y2);
+			if( x3 < x2 ) SWAP(x3,x2);
+			if( y3 < y2 ) SWAP(y3,y2);
 		}
 	}
 
@@ -8152,12 +8165,15 @@ BUILDIN_FUNC(readparam)
 {
 	int value;
 	struct script_data *data = script_getdata(st, 2);
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 
 	if( script_hasdata(st, 3) ){
-		if( script_isint(st, 3) ){
+		struct script_data *data2 = script_getdata(st, 3);
+
+		get_val(st, data2);
+		if (data_isint(data2) || script_getnum(st, 3)) {
 			script_charid2sd(3, sd);
-		}else{
+		} else if (data_isstring(data2)) {
 			script_nick2sd(3, sd);
 		}
 	}else{
@@ -17753,6 +17769,23 @@ BUILDIN_FUNC(setunitdata)
 			md->base_status = (struct status_data*)aCalloc(1, sizeof(struct status_data));
 			memcpy(md->base_status, &md->db->status, sizeof(struct status_data));
 		}
+
+		// Check if the view data will be modified
+		switch( type ){
+			case UMOB_SEX:
+			//case UMOB_CLASS: // Called by status_set_viewdata
+			case UMOB_HAIRSTYLE:
+			case UMOB_HAIRCOLOR:
+			case UMOB_HEADBOTTOM:
+			case UMOB_HEADMIDDLE:
+			case UMOB_HEADTOP:
+			case UMOB_CLOTHCOLOR:
+			case UMOB_SHIELD:
+			case UMOB_WEAPON:
+				mob_set_dynamic_viewdata( md );
+				break;
+		}
+
 		switch (type) {
 			case UMOB_SIZE: md->base_status->size = (unsigned char)value; calc_status = true; break;
 			case UMOB_LEVEL: md->level = (unsigned short)value; break;
@@ -17766,8 +17799,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
-			case UMOB_SEX: md->vd->sex = (char)value; break;
-			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); break;
+			case UMOB_SEX: md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
+			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
 			case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
 			case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
 			case UMOB_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
@@ -18746,8 +18779,8 @@ BUILDIN_FUNC(setcell)
 
 	int x,y;
 
-	if( x1 > x2 ) swap(x1,x2);
-	if( y1 > y2 ) swap(y1,y2);
+	if( x1 > x2 ) SWAP(x1,x2);
+	if( y1 > y2 ) SWAP(y1,y2);
 
 	for( y = y1; y <= y2; ++y )
 		for( x = x1; x <= x2; ++x )
@@ -23270,6 +23303,16 @@ BUILDIN_FUNC(achievementadd) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if( !sd->state.pc_loaded ){
+		if( !running_npc_stat_calc_event ){
+			ShowError( "buildin_achievementadd: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
+			return SCRIPT_CMD_FAILURE;
+		}else{
+			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
 	if (achievement_add(sd, achievement_id))
 		script_pushint(st, true);
 	else
@@ -23297,6 +23340,16 @@ BUILDIN_FUNC(achievementremove) {
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	if( !sd->state.pc_loaded ){
+		if( !running_npc_stat_calc_event ){
+			ShowError( "buildin_achievementremove: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
+			return SCRIPT_CMD_FAILURE;
+		}else{
+			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
 	if (achievement_remove(sd, achievement_id))
 		script_pushint(st, true);
 	else
@@ -23315,6 +23368,23 @@ BUILDIN_FUNC(achievementinfo) {
 	if (!script_charid2sd(4, sd)) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementinfo: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !sd->state.pc_loaded ){
+		script_pushint(st, false);
+		if( !running_npc_stat_calc_event ){
+			ShowError( "buildin_achievementinfo: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
+			return SCRIPT_CMD_FAILURE;
+		}else{
+			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+			return SCRIPT_CMD_SUCCESS;
+		}
 	}
 
 	script_pushint(st, achievement_check_progress(sd, achievement_id, script_getnum(st, 3)));
@@ -23338,6 +23408,16 @@ BUILDIN_FUNC(achievementcomplete) {
 		ShowWarning("buildin_achievementcomplete: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
+	}
+	
+	if( !sd->state.pc_loaded ){
+		if( !running_npc_stat_calc_event ){
+			ShowError( "buildin_achievementcomplete: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
+			return SCRIPT_CMD_FAILURE;
+		}else{
+			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+			return SCRIPT_CMD_SUCCESS;
+		}
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
@@ -23367,8 +23447,79 @@ BUILDIN_FUNC(achievementexists) {
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	if( !sd->state.pc_loaded ){
+		script_pushint(st, false);
+		if( !running_npc_stat_calc_event ){
+			ShowError( "buildin_achievementexists: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
+			return SCRIPT_CMD_FAILURE;
+		}else{
+			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	script_pushint(st, i < sd->achievement_data.count ? true : false);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Updates an achievement's value.
+ * achievementupdate(<achievement ID>,<type>,<value>{,<char ID>});
+ */
+BUILDIN_FUNC(achievementupdate) {
+	struct map_session_data *sd;
+	int i, achievement_id, type, value;
+
+	achievement_id = script_getnum(st, 2);
+	type = script_getnum(st, 3);
+	value = script_getnum(st, 4);
+
+	if (!script_charid2sd(5, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (achievement_search(achievement_id) == &achievement_dummy) {
+		ShowWarning("buildin_achievementupdate: Achievement '%d' doesn't exist.\n", achievement_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !sd->state.pc_loaded ){
+		if( !running_npc_stat_calc_event ){
+			ShowError( "buildin_achievementupdate: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
+			return SCRIPT_CMD_FAILURE;
+		}else{
+			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	if (i == sd->achievement_data.count)
+		achievement_add(sd, achievement_id);
+
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	if (i == sd->achievement_data.count) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (type >= ACHIEVEINFO_COUNT1 && type <= ACHIEVEINFO_COUNT10)
+		sd->achievement_data.achievements[i].count[type - 1] = value;
+	else if (type == ACHIEVEINFO_COMPLETE || type == ACHIEVEINFO_COMPLETEDATE)
+		sd->achievement_data.achievements[i].completed = value;
+	else if (type == ACHIEVEINFO_GOTREWARD)
+		sd->achievement_data.achievements[i].rewarded = value;
+	else {
+		ShowWarning("buildin_achievementupdate: Unknown type '%d'.\n", type);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	achievement_update_achievement(sd, achievement_id, false);
+	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24009,6 +24160,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementremove,"i?"),
 	BUILDIN_DEF(achievementcomplete,"i?"),
 	BUILDIN_DEF(achievementexists,"i?"),
+	BUILDIN_DEF(achievementupdate,"iii?"),
 
 #include "../custom/script_def.inc"
 

@@ -45,10 +45,12 @@ yamlwrapper* yaml_load_file(const char* file_name) {
 
 	try {
 		node = YAML::LoadFile(file_name);
-		if (!node.IsDefined())
+		if (!node.IsDefined() || node.IsNull())
 			return NULL;
 	} catch (YAML::ParserException &e) {
 		ShowError("YAML Exception Caught: %s\n", e.what());
+		return NULL;
+	} catch (YAML::BadFile &e) {
 		return NULL;
 	}
 

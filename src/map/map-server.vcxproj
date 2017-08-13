@@ -270,7 +270,7 @@
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\battle_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\battle_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\char_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\char_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\inter_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\inter_conf.txt')" />
-    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\inter_server.conf" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\inter_server.conf')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\inter_server.yml" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\inter_server.yml')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\log_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\log_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\login_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\login_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\map_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\map_conf.txt')" />

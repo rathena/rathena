@@ -58,14 +58,20 @@ int night_timer_tid = INVALID_TIMER;
 
 struct eri *pc_sc_display_ers = NULL;
 struct eri *pc_itemgrouphealrate_ers = NULL;
+struct eri *num_reg_ers;
+struct eri *str_reg_ers;
 int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
+struct s_job_info job_info[CLASS_COUNT];
+
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
+
+bool reg_load;
 
 /**
  * Translation table from athena equip index to aegis bitmask
@@ -100,6 +106,10 @@ const struct sg_data sg_info[MAX_PC_FEELHATE] = {
 		{ SG_MOON_ANGER, SG_MOON_BLESS, SG_MOON_COMFORT, "PC_FEEL_MOON", "PC_HATE_MOB_MOON", is_day_of_moon },
 		{ SG_STAR_ANGER, SG_STAR_BLESS, SG_STAR_COMFORT, "PC_FEEL_STAR", "PC_HATE_MOB_STAR", is_day_of_star }
 	};
+
+void pc_set_reg_load( bool val ){
+	reg_load = val;
+}
 
 /**
  * Item Cool Down Delay Saving
@@ -4829,25 +4839,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			if( map[sd->bl.m].flag.noreturn && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
 				return false;
 			break;
-		case ITEMID_BUBBLE_GUM:
-		case ITEMID_COMP_BUBBLE_GUM:
-			if( sd->sc.data[SC_ITEMBOOST] )
-				return false;
-			break;
-		case ITEMID_BATTLE_MANUAL:
-		case ITEMID_COMP_BATTLE_MANUAL:
-		case ITEMID_THICK_BATTLE_MANUAL:
-		case ITEMID_NOBLE_NAMEPLATE:
-		case ITEMID_BATTLE_MANUAL25:
-		case ITEMID_BATTLE_MANUAL100:
-		case ITEMID_BATTLE_MANUAL300:
-			if( sd->sc.data[SC_EXPBOOST] )
-				return false;
-			break;
-		case ITEMID_JOB_MANUAL50:
-			if( sd->sc.data[SC_JEXPBOOST] )
-				return false;
-			break;
 		case ITEMID_MERCENARY_RED_POTION:
 		case ITEMID_MERCENARY_BLUE_POTION:
 		case ITEMID_M_CENTER_POTION:
@@ -6899,7 +6890,7 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 	high = low + val;
 
 	if ( val < 0 )
-		swap(low, high);
+		SWAP(low, high);
 
 	for ( ; low < high; low++ )
 		sp += PC_STATUS_POINT_COST(low);
