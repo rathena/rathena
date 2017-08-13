@@ -325,7 +325,7 @@ int storage_delitem(struct map_session_data* sd, struct s_storage *stor, int ind
 		memset(&stor->u.items_storage[index],0,sizeof(stor->u.items_storage[0]));
 		stor->amount--;
 		if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
-			clif_updatestorageamount(sd, stor->amount, sd->storage.max_amount);
+			clif_updatestorageamount(sd, stor->amount, stor->max_amount);
 	}
 
 	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
