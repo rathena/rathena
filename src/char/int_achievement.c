@@ -78,7 +78,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 	}
 
 	SqlStmt_Free(stmt);
-	StringBuf_Clear(&buf);
+	StringBuf_Destroy(&buf);
 
 	ShowInfo("achievement load complete from DB - id: %d (total: %d)\n", char_id, *count);
 
@@ -134,11 +134,11 @@ bool mapif_achievement_add(uint32 char_id, struct achievement ad)
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
-		StringBuf_Clear(&buf);
+		StringBuf_Destroy(&buf);
 		return false;
 	}
 
-	StringBuf_Clear(&buf);
+	StringBuf_Destroy(&buf);
 
 	return true;
 }
@@ -172,11 +172,11 @@ bool mapif_achievement_update(uint32 char_id, struct achievement ad)
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
-		StringBuf_Clear(&buf);
+		StringBuf_Destroy(&buf);
 		return false;
 	}
 
-	StringBuf_Clear(&buf);
+	StringBuf_Destroy(&buf);
 
 	return true;
 }
