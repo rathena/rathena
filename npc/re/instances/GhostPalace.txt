@@ -7,18 +7,18 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
-dali02,43,129,5	script	Unpleasent Royal Guard#	4_M_SAKRAYROYAL,{
+dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 	if (BaseLevel < 120) {
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "Althought I need help with a task, you are not strong enough to assist me, noob~!";
 		next;
-		mes "[Unpleasent Royal Guard]";
-		mes "Come back after when you have done some training and are at least level 120!";
+		mes "[Unpleasant Royal Guard]";
+		mes "Come back later when you have done some training and are at least level 120!";
 		close;
 	}
 	.@party_id = getcharid(1);
 	if (getcharid(0) != getpartyleader(.@party_id,2) || .@party_id < 1) {
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
 	}
@@ -27,58 +27,58 @@ dali02,43,129,5	script	Unpleasent Royal Guard#	4_M_SAKRAYROYAL,{
 		break;
 	case 0:
 	case 1:
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "Have you found the princess yet?! Is she safe?";
 		close;
 	case 2:
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "The monsters around the secret passage have disappeared. Now is our chance to save the princess!";
 		erasequest 1261;// Cursed Swordman
 		close;
 	}
-	mes "[Unpleasent Royal Guard]";
-	mes "I need some help; even from the likes of you.";
+	mes "[Unpleasant Royal Guard]";
+	mes "I need help, even from the likes of you.";
 	next;
-	mes "[Unpleasent Royal Guard]";
+	mes "[Unpleasant Royal Guard]";
 	mes "In the middle of battle the princess disappeared while I was guarding the palace.";
 	next;
-	mes "[Unpleasent Royal Guard]";
+	mes "[Unpleasant Royal Guard]";
 	mes "You run ahead and I will catch up. We must save her.";
 	next;
 	if (select( "I will help.", "This is not a good time." ) == 2) {
-		mes "[Unpleasent Royal Guard]";
-		mes "Even now all the royal guards are fighting and dying to the monsters.";
+		mes "[Unpleasant Royal Guard]";
+		mes "Even now all the royal guards are fighting and dying from the monsters.";
 		next;
-		mes "[Unpleasent Royal Guard]";
-		mes "We must, no matter how much fear grips our hearts; Save the Princess!";
+		mes "[Unpleasant Royal Guard]";
+		mes "We must, no matter how much fear grips our hearts, save the princess!";
 		close;
 	}
 	instance_create("Ghost Palace");
-	mes "[Unpleasent Royal Guard]";
+	mes "[Unpleasant Royal Guard]";
 	mes "Thank you..";
-	mes "I will open the the secret passage to ^0000ffGhost Palace^000000";
+	mes "I will open the secret passage to the ^0000ffGhost Palace^000000.";
 	mes "Please be ready!";
 	close;
 }
 
 dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	if (BaseLevel < 120) {
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "Althought I need help with a task, you are not strong enough to assist me, noob~!";
 		next;
-		mes "[Unpleasent Royal Guard]";
-		mes "Come back after when you have done some training and are at least level 120!";
+		mes "[Unpleasant Royal Guard]";
+		mes "Come back later when you have done some training and are at least level 120!";
 		close;
 	}
-	mes "[Unpleasent Royal Guard]";
-	mes "I can see the secret passage into the Palace... Are you ready to save the princess?!";
+	mes "[Unpleasant Royal Guard]";
+	mes "I can see the secret passage into the palace. Are you ready to save the princess?!";
 	next;
 	if (select( "Enter", "Stop" ) == 2) {
-		mes "[Unpleasent Royal Guard]";
-		mes "Even now all the royal guards are fighting and dying to the monsters.";
+		mes "[Unpleasant Royal Guard]";
+		mes "Even now all the royal guards are fighting and dying from the monsters.";
 		next;
-		mes "[Unpleasent Royal Guard]";
-		mes "We must, no matter how much fear grips our hearts; Save the Princess!";
+		mes "[Unpleasant Royal Guard]";
+		mes "We must, no matter how much fear grips our hearts, save the princess!";
 		close;
 	}
 	switch( checkquest(1261,PLAYTIME) ) {
@@ -86,20 +86,20 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 		break;
 	case 0:
 	case 1:
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "The monsters that attacked the palace are wandering around the secret entrance. It would be very bad if they spotted us... Please wait.";
 		next;
-		mes "When the time limit for entrance is over";
+		mes "When the time limit for the entrance is up";
 		mes "let's try to re-enter.";
 		close;
 	case 2:
-		mes "^0000ffThe time limit for entering to the Curse of the Swordsman is finished. Please try to talk to Unpleasent Royal Guard again..^000000";
+		mes "^0000ffThe time limit for entering to the Curse of the Swordsman is finished. Please try to talk to the Unpleasent Royal Guard again..^000000";
 		erasequest 1261;// Cursed Swordman
 		close;
 	}
 	.@party_id = getcharid(1);
 	if (getcharid(0) != getpartyleader(.@party_id,2) || .@party_id < 1) {
-		mes "[Unpleasent Royal Guard]";
+		mes "[Unpleasant Royal Guard]";
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
 	}
@@ -110,7 +110,7 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 		mes "An unknown error occurred.";
 		close;
 	case IE_NOINSTANCE:
-		mes "^ff0000Inside the devices you see a dark hole. If you wish to enter you may wish to talk to the Unpleasent Royal Guard first.";
+		mes "^ff0000Inside the devices you see a dark hole. If you wish to enter you must to talk to the Unpleasent Royal Guard first.^000000";
 		close;
 	case IE_NOMEMBER:
 		mes "Only registered members can enter the " + .@md_name$ + " instance.";
@@ -130,8 +130,8 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	npctalk "King: You are hereby appointed as the personal guard to Princess Tiara. I trust your loyalty above all else.";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "I will protect the Princess with my life.";
-	npctalk "Lurid Royal Guard: I will protect the Princess with my life.", instance_npcname("Lurid Royal Guard#dk");
+	mes "I will protect the princess with my life.";
+	npctalk "Lurid Royal Guard: I will protect the princess with my life.", instance_npcname("Lurid Royal Guard#dk");
 	next;
 	mes "[King]";
 	mes "The marriage arrangements are going as planned. The prince is here to meet with the princess.";
@@ -294,11 +294,12 @@ OnMyMobDead3:
 	cutin "npc-tiara.bmp",255;
 	next;
 	mes "[Princess Tiara]";
-	mes "Monsters in the castle? Protect me!";
-	npctalk "Princess Tiara: Monsters in the castle? Protect me!", .@tiara$;
+	mes "Monsters have gotten inside the castle? Please, protect me!";
+	npctalk "Princess Tiara: Monsters have gotten inside the castle? Please, protect me!", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "Step back, Let's go!";
+	mes "Stay behind me. Let's go!";
+	npctalk "Lurid Royal Guard: Stay behind me. Let's go!";
 	close2;
 	donpcevent instance_npcname("#gp_control_2") + "::OnStart";
 	end;
@@ -359,16 +360,16 @@ OnMyMobDead3:
 // 3rd floor
 1@spa,32,54,1	script	King#dk1	4_M_RUSKING,{
 	mes "[King]";
-	mes "It was you who brought the monsters here, you want to get rid of me and have the princess for yourself?";
-	npctalk "King: It was you who brought the monsters here, you want to get rid of me and have the princess for yourself?";
+	mes "It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?";
+	npctalk "King: It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "It is a trap, you should trust me, your majesty!";
-	npctalk "Lurid Royal Guard: It is a trap, you should trust me, your majesty!", instance_npcname("Lurid Royal Guard#dk2");
+	mes "It is a trap your majesty! You must trust me!";
+	npctalk "Lurid Royal Guard: It is a trap your majesty! You must trust me!", instance_npcname("Lurid Royal Guard#dk2");
 	next;
 	mes "[King]";
-	mes "Shut up! You've betrayed me ! I trusted you... you must pay for your disgrace.";
-	npctalk "King: Shut up! You've betrayed me ! I trusted you... you must pay for your disgrace.";
+	mes "Shut up! You've betrayed me! I trusted you... you must pay for your disgrace.";
+	npctalk "King: Shut up! You've betrayed me! I trusted you... you must pay for your disgrace.";
 	next;
 	mes "[King]";
 	mes "You will suffer for the rest of your life.";
@@ -476,7 +477,7 @@ OnSpawn2:
 	monster 'map_spa$,62,48, "Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "Run away!";
 	monster 'map_spa$,57,46, "Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,51,48, "Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
 	unittalk $@mobid[0], "Faithful royal guard...";
 	monster 'map_spa$,56,55, "Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
@@ -488,33 +489,33 @@ OnSpawn2:
 	monster 'map_spa$,66,64, "Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "Faithful royal guard...";
 	monster 'map_spa$,62,65, "Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,57,67, "Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "You are trapped...";
 	monster 'map_spa$,49,66, "Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
 	unittalk $@mobid[0], "Run away!";
 	monster 'map_spa$,44,66, "Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,45,20, "Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "Run away!";
 	monster 'map_spa$,38,20, "Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
 	unittalk $@mobid[0], "You are trapped...";
 	monster 'map_spa$,32,20, "Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,51,22, "Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,26,34,"Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
 	unittalk $@mobid[0], "Run away!";
 	monster 'map_spa$,21,37,"Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "Faithful royal guard...";
 	monster 'map_spa$,18,39,"Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,21,45,"Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "Run away!";
 	monster 'map_spa$,23,49,"Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
 	unittalk $@mobid[0], "You are trapped...";
 	monster 'map_spa$,25,54,"Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,29,54,"Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "You put your princess in grave danger...";
 	monster 'map_spa$,56,39,"Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
@@ -522,7 +523,7 @@ OnSpawn2:
 	monster 'map_spa$,61,36,"Tarnished Oath",2954,1, .@label$;		// COLORLESS_VOW
 	unittalk $@mobid[0], "Faithful royal guard...";
 	monster 'map_spa$,66,38,"Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
-	unittalk $@mobid[0], "Run away away quickly!";
+	unittalk $@mobid[0], "Run away quickly!";
 	monster 'map_spa$,42,54,"Wasted Friendship",2955,1, .@label$;	// OLD_FRIENDSHIP
 	unittalk $@mobid[0], "Run away!";
 	monster 'map_spa$,35,54,"Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
@@ -661,7 +662,7 @@ OnMyMobDead:
 	next;
 	mes "[Lurid Royal Guard]";
 	mes "princess!";
-	npctalk "Lurid Royal Guard: princess!", .@guard$;
+	npctalk "Lurid Royal Guard: Princess!", .@guard$;
 	next;
 	cutin "npc-tiara.bmp",3;
 	mes "[Princess Tiara]";
@@ -710,7 +711,7 @@ OnStart:
 	monster 'map_spa$,198,49, "Tarnished Oath#1" ,2954,1, .@label$;	// COLORLESS_VOW
 	unittalk $@mobid[0], "What is this..??";
 	monster 'map_spa$,212,28, "Fatal Days#5" ,2958,1, .@label$;		// FATAL_DAYS
-	unittalk $@mobid[0], "Sakray killed a princess !";
+	unittalk $@mobid[0], "Sakray killed a princess!";
 	end;
 OnMyMobDead1:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead1") < 1) {
@@ -723,7 +724,7 @@ OnMyMobDead1:
 		monster 'map_spa$,216,59, "Tarnished Oath#29" ,2954,1, .@label$;	// COLORLESS_VOW
 		unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
 		monster 'map_spa$,197,57, "Fatal Days#27" ,2958,1, .@label$;		// FATAL_DAYS
-		unittalk $@mobid[0], "Sakray killed a princess !";
+		unittalk $@mobid[0], "Sakray killed a princess!";
 	}
 	end;
 OnMyMobDead2:
@@ -737,7 +738,7 @@ OnMyMobDead2:
 		monster 'map_spa$,201,64, "Tarnished Oath#45" ,2954,1, .@label$;	// COLORLESS_VOW
 		unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
 		monster 'map_spa$,175,44, "Fatal Days#43" ,2958,1, .@label$;		// FATAL_DAYS
-		unittalk $@mobid[0], "Sakray killed a princess !";
+		unittalk $@mobid[0], "Sakray killed a princess!";
 	}
 	end;
 OnMyMobDead3:
@@ -770,12 +771,12 @@ OnMyMobDead4:
 	npctalk "Sakray: Okay, that is good. A traveller. Did you see?";
 	next;
 	mes "[" + strcharinfo(0) + "]";
-	mes "Sakray, What do you want sympathy? Or is it a trap?";
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Sakray, What do you want sympathy? Or is it a trap?";
+	mes "Sakray, what do you want? Sympathy? Or is it a trap?";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Sakray, what do you want? Sympathy? Or is it a trap?";
 	next;
 	mes "[Sakray]";
-	mes "None...I did not need to make an effort to catch a novice.";
-	npctalk "Sakray: None...I did not need to make an effort to catch a novice.";
+	mes "No... I do not need to make any effort to catch a novice.";
+	npctalk "Sakray: No... I do not need to make any effort to catch a novice.";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "If so... then why...?";
@@ -788,6 +789,7 @@ OnMyMobDead4:
 	next;
 	mes "[Sakray]";
 	mes "I am quite satisfied with the result.";
+	npctalk "Sakray: I am quite satisfied with the result.";
 	next;
 	mes "[Thanatos Magic Trace]";
 	mes "Sakray, offer the blood to me now!";
@@ -795,23 +797,28 @@ OnMyMobDead4:
 	next;
 	mes "[Sakray]";
 	mes "If you were me, what would you do?";
+	npctalk "Sakray: If you were me, what would you do?";
 	next;
 	mes "[Sakray]";
 	mes "Can you set yourself free from this curse?";
+	npctalk "Sakray: Can you set yourself free from this curse?";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "...";
 	unittalk getcharid(3), "" + strcharinfo(0) + " : ...";
 	next;
 	mes "[Sakray]";
-	mes "Heh heh... I will keep watching you until the day you grow up enough.";
+	mes "Heh heh... I will keep watching you until the day comes when you are old enough.";
+	npctalk "Sakray: Heh heh... I will keep watching you until the day comes when you are old enough.";
 	next;
 	mes "[Sakray]";
 	mes "I am willing to hunt you later for Thanatos.";
+	npctalk "Sakray: I am willing to hunt you later for Thanatos.";
 	cutin "",255;
 	next;
 	mes "[Sakray]";
 	mes "Farewell then.";
+	npctalk "Sakray: Farewell then.";
 	close2;
 	donpcevent instance_npcname("#tb") + "::OnStart";
 	end;
@@ -834,7 +841,7 @@ OnTimer8000:
 	npctalk "Voice of Sakray : I will always stand by you. Please rest beside me.", instance_npcname("#sv");
 	end;
 OnTimer13000:
-	npctalk "Thanatos Magic Trace: Sakray, Do not forget the covenant of blood between us.", instance_npcname("#tv");
+	npctalk "Thanatos Magic Trace: Sakray, do not forget the covenant of blood between us.", instance_npcname("#tv");
 	end;
 OnTimer17000:
 	npctalk "Thanatos Magic Trace: Your soul is mine until you find the blood that satisfies me...", instance_npcname("#tv");
@@ -863,19 +870,19 @@ OnTimer28500:
 	disable_items;
 	mes "[King]";
 	mes "Hey there, are you alive?";
-	mes "I did not expect to meet someone alive";
+	mes "I did not expect to meet someone who is still alive.";
 	next;
 	mes "[King]";
-	mes "Do you possibly have ^006400Gray Shard^000000?";
+	mes "Do you possibly have the ^006400Gray Shard^000000?";
 	mes "Can you give it to me?";
-	mes "The old memory of faituful royal guard,";
-	mes "the memory of everyone he loved";
-	mes "becomes broken pieces and are contained inside of it.";
+	mes "The memories of the faithful royal guard";
+	mes "and the memories of everyone he loved";
+	mes "are contained inside of these shards.";
 	next;
 	mes "[King]";
-	mes "Will you give ^006400Gray Shard^000000 to me?";
+	mes "Will you give the ^006400Gray Shard^000000 to me?";
 	mes "The guilt is eating my soul.";
-	mes "My soul is stuck in ghost palace.";
+	mes "My soul is stuck within the Ghost Palace.";
 	next;
 	mes "[King]";
 	mes "I am collecting Sakray's abandoned memories from these shards.";
@@ -903,9 +910,9 @@ OnTimer28500:
 		if (.@s == 20) {
 			mes "[King]";
 			mes "Someday, Sakray will";
-			mes "get out of curse for sure.";
+			mes "get out of this curse for sure.";
 			mes "I believe";
-			mes "^006400Gray Shard^000000 will be the only method";
+			mes "^006400Gray Shard^000000s are the only method";
 			mes "to save him....";
 			close;
 		}
@@ -924,8 +931,8 @@ OnTimer28500:
 		}
 		if (countitem(6672) < .@cost) {
 			mes "[King]";
-			mes "Not enough ^006400Gray Shard^000000..";
-			mes "to make a ^FF0000" + .@item_name$[.@s] + "^000000";
+			mes "You do not have enough ^006400Gray Shard^000000";
+			mes "to make a ^FF0000" + .@item_name$[.@s] + "^000000.";
 			mes "I need " + .@cost + " ^006400Gray Shard^000000.";
 			next;
 			continue;
@@ -953,9 +960,9 @@ OnTimer28500:
 1@spa,210,28,0	script	Way out of Palace	WARPNPC,2,2,{
 	end;
 OnTouch_:
-	mes "It is time to leave Palace of the ghost.";
-	mes "Everything is completed,";
-	mes "Everything will be vanished..";
+	mes "It is time to leave the Ghost Palace.";
+	mes "Everything is now complete";
+	mes "and will vanish..";
 	close2;
 	if (isbegin_quest(1263) == 2)
 		getitem 6672,1;// Gray Shard
