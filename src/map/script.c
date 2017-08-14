@@ -9945,22 +9945,32 @@ BUILDIN_FUNC(gettime)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * GetTimeStr("TimeFMT", Length);
- *------------------------------------------*/
+/**
+ * Returns the current server time or the provided time in a readable format.
+ * gettimestr(<"time_format">,<max_length>{,<time_tick>});
+ */
 BUILDIN_FUNC(gettimestr)
 {
 	char *tmpstr;
 	const char *fmtstr;
 	int maxlen;
-	time_t now = time(NULL);
+	time_t now;
 
-	fmtstr=script_getstr(st,2);
-	maxlen=script_getnum(st,3);
+	fmtstr = script_getstr(st,2);
+	maxlen = script_getnum(st,3);
 
-	tmpstr=(char *)aMalloc((maxlen+1)*sizeof(char));
+	if (script_hasdata(st, 4)) {
+		if (script_getnum(st, 4) < 0) {
+			ShowWarning("buildin_gettimestr: a positive value must be supplied to be valid.\n");
+			return SCRIPT_CMD_FAILURE;
+		} else
+			now = (time_t)script_getnum(st, 4);
+	} else
+		now = time(NULL);
+
+	tmpstr = (char *)aMalloc((maxlen+1)*sizeof(char));
 	strftime(tmpstr,maxlen,fmtstr,localtime(&now));
-	tmpstr[maxlen]='\0';
+	tmpstr[maxlen] = '\0';
 
 	script_pushstr(st,tmpstr);
 	return SCRIPT_CMD_SUCCESS;
@@ -23692,7 +23702,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),
 	BUILDIN_DEF(gettime,"i"),
-	BUILDIN_DEF(gettimestr,"si"),
+	BUILDIN_DEF(gettimestr,"si?"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
 	BUILDIN_DEF(itemskill,"vi?"),
