@@ -3118,6 +3118,12 @@
 4948,Skill_Delay1,After Skill Delay Lv1,6,10,,,,,,,,,,,,,,,{ bonus bDelayrate,-2; },{},{}
 4949,Skill_Delay2,After Skill Delay Lv2,6,10,,,,,,,,,,,,,,,{ bonus bDelayrate,-4; },{},{}
 4950,Skill_Delay3,After Skill Delay Lv3,6,10,,,,,,,,,,,,,,,{ bonus bDelayrate,-6; },{},{}
+4994,Rune_of_Strength_Lv_1,Rune of Strength Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,5; } if (.@r>=10) { bonus bAtkRate,5; } },{},{}
+4995,Rune_of_Strength_Lv_2,Rune of Strength Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,6; } if (.@r>=11) { bonus bStr,1; bonus bAtkRate,7; } },{},{}
+4996,Rune_of_Strength_Lv_3,Rune of Strength_Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,7; } if (.@r>=12) { bonus bStr,1; bonus bAtkRate,8; } if (.@r>=13) { bonus bStr,1; bonus bAtkRate,2; } },{},{}
+4997,Rune_of_Agility_Lv_1,Rune of Agility Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bAgi,5; } if (.@r>=10) { bonus bFlee2,5; } },{},{}
+4998,Rune_of_Agility_Lv_2,Rune of Agility Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bAgi,6; } if (.@r>=11) { bonus bAgi,1; bonus bFlee2,7; } },{},{}
+4999,Rune_of_Agility_Lv_3,Rune of Agility Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bAgi,7; } if (.@r>=12) { bonus bAgi,1; bonus bFlee2,5; } if (.@r>=13) { bonus bAgi,1; bonus bFlee2,5; } },{},{}
 //===================================================================
 // More Headgears
 //===================================================================
@@ -4839,7 +4845,8 @@
 6915,Captured_Soul,Captured Soul,3,10,,0,,,,,,,,,,,,,{},{},{}
 6916,Piece_Of_Soul_Monkey,Piece Of Soul Monkey,3,10,,0,,,,,,,,,,,,,{},{},{}
 6917,Piece_Of_Soul_Chicken,Piece Of Soul Chicken,3,10,,0,,,,,,,,,,,,,{},{},{}
-6919,Honor_Proof,Honor Proof,3,10,,10,,,,,,,,,,,,,{},{},{}
+6919,Honor_Proof,Honor Token,3,10,,10,,,,,,,,,,,,,{},{},{}
+6920,Rune_Magic_Powder,Rune Magic Powder,3,10,,10,,,,,,,,,,,,,{},{},{}
 6921,Dehumidifiers,Dehumidifiers,3,10,,10,,,,,,,,,,,,,{},{},{}
 6922,Sandpaper,Sandpaper,3,10,,10,,,,,,,,,,,,,{},{},{}
 6923,Bright_Fire_Lights,Bright Fire Lights,3,10,,10,,,,,,,,,,,,,{},{},{}
@@ -11057,9 +11064,9 @@
 22844,Sealed_Dracula_Card_Album,Sealed Dracula Card Album,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
 22845,Sealed_Fortune_Egg,Sealed Fortune Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1; },{},{}
 22846,Sealed_Dracula_Card_,Sealed Dracula Card,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus2 bSPDrainRate,50,5; }",300; },{},{}
-22847,Prontera_Medal,Prontera Medal,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prontera",0,0; /*No coord info*/ },{},{}
+22847,Prontera_Medal,Prontera Medal,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prontera",159,192; /*No coord info*/ },{},{}
 22848,Prison_Key,Prison Key,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prt_prison",0,0; /*No coord info*/ },{},{}
-22849,Prontera_Time_Crystal,Prontera Time Crystal,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prt_lib_q",0,0; /*No map+coord info*/ },{},{}
+22849,Prontera_Time_Crystal,Prontera Time Crystal,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "prt_q",155,27; },{},{}
 22850,January_Gift_Box_,January Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 19052,604800; },{},{}
 22851,February_Gift_Box_,February Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12105,2; },{},{}
 22852,March_Gift_Box_,March Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{/*2 Lucky Eggs*/},{},{}
@@ -11464,6 +11471,9 @@
 28332,Jewerly_Ring,Jewerly Ring,4,10,,100,,,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus bLuk,20; autobonus "{ bonus bAspd,2; }",50,2000,BF_WEAPON|BF_MAGIC; },{},{}
 28333,Gold_PC_Room_Ring,Gold PC Room Ring,4,10,,0,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus bMaxHPrate,3; bonus bMaxSPrate,3; },{},{}
 28342,Critical_Anklet,Critical Anklet,4,0,,200,,3,,1,0xFFFFFFFF,63,2,136,,,0,,{ bonus bCritical,5; },{},{}
+28354,City_Map,City Map,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ /* todo */ },{},{}
+28355,Shining_Holy_Water,Shining Holy Water,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ /* todo */ },{},{}
+28356,Prontera_Badge,Prontera Badge,4,0,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ /*warp "prontera",159,192;  15 mins cooldown */ },{},{}
 28358,Cursed_Lucky_Clover,Cursed Lucky Clover,4,0,,100,,,,1,0xFFFFFFFF,63,2,136,0,100,0,,{ bonus bLuk,2; bonus bFlee,3; bonus2 bAddEff2,Eff_Curse,5; },{},{ sc_end SC_CLOAKING; /*FIXME: Because the combo has Cloaking skill*/ }
 28372,Imperial_Ring,Imperial Ring,4,0,,500,,3,,1,0xFFFFFFFF,63,2,136,0,50,0,,{ bonus bStr,1; bonus bInt,1; bonus bMaxHPRate,3; bonus bMaxSPRate,3; },{},{}
 28374,Foxtail_Ring,Foxtail Ring,4,20,,100,,0,,0,0x80000000,7,2,136,,1,0,,{ bonus2 bExpAddRace,RC_All,5; .@lvl = min(BaseLevel/5,10); bonus bAtk,2*.@lvl; bonus bMatk,2*.@lvl; bonus bMaxHP,10*.@lvl; bonus bMaxSP,5*.@lvl; },{},{}
@@ -11559,6 +11569,18 @@
 //===================================================================
 // Enchantment stones
 //===================================================================
+29000,Rune_of_Intellect_Lv_1,Rune of Intellect Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bInt,5; } if (.@r>=10) { bonus bMatkRate,5; } },{},{}
+29001,Rune_of_Intellect_Lv_2,Rune of Intellect Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bInt,6; } if (.@r>=11) { bonus bInt,1; bonus bMatkRate,7; } },{},{}
+29002,Rune_of_Intellect_Lv_3,Rune of Intellect Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bInt,7; } if (.@r>=12) { bonus bInt,1; bonus bMatkRate,8; } if (.@r>=13) { bonus bInt,1; bonus bMatkRate,2; } },{},{}
+29003,Rune_of_Dexterity_Lv_1,Rune of Dexterity Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bDex,5; } if (.@r>=10) { bonus bLongAtkRate,5; } },{},{}
+29004,Rune_of_Dexterity_Lv_2,Rune of Dexterity Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bDex,6; } if (.@r>=11) { bonus bDex,1; bonus bLongAtkRate,7; } },{},{}
+29005,Rune_of_Dexterity_Lv_3,Rune of Dexterity Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bDex,7; } if (.@r>=12) { bonus bDex,1; bonus bLongAtkRate,8; } if (.@r>=13) { bonus bDex,1; bonus bLongAtkRate,2; } },{},{}
+29006,Rune_of_Luck_Lv_1,Rune of Luck Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bLuk,5; } if (.@r>=10) { bonus bCritAtkRate,5; } },{},{}
+29007,Rune_of_Luck_Lv_2,Rune of Luck Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bLuk,6; } if (.@r>=11) { bonus bLuk,1; bonus bCritAtkRate,7; } },{},{}
+29008,Rune_of_Luck_Lv_3,Rune of Luck Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bLuk,7; } if (.@r>=12) { bonus bLuk,1; bonus bCritAtkRate,8; } if (.@r>=13) { bonus bLuk,1; bonus bCritAtkRate,6; } },{},{}
+29009,Rune_of_Vitality_Lv_1,Rune of Vitality Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,5; } if (.@r>=10) { bonus bMaxHPrate,5; } },{},{}
+29010,Rune_of_Vitality_Lv_2,Rune of Vitality Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,6; } if (.@r>=11) { bonus bVit,1; bonus bMaxHPrate,7; } },{},{}
+29011,Rune_of_Vitality_Lv_3,Rune of Vitality Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,7; } if (.@r>=12) { bonus bVit,1; bonus bMaxHPrate,8; } if (.@r>=13) { bonus bVit,1; bonus bMaxHPrate,2; } },{},{}
 29061,Ambition1Lv,Ambition1Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,3; bonus bHit,3; },{},{}
 29062,Ambition2Lv,Ambition2Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,6; bonus bHit,6; },{},{}
 29063,Ambition3Lv,Ambition3Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,9; bonus bHit,9; },{},{}
