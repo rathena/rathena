@@ -269,8 +269,8 @@ OnMyMobDead3:
 	npctalk "Lurid Royal Guard: Your highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
 	next;
 	mes "[Princess Tiara]";
-	mes "If...If a marriage is arranged what shoud I do?";
-	npctalk "Princess Tiara: If...If a marriage is arranged what shoud I do?", .@tiara$;
+	mes "If...If a marriage is arranged what should I do?";
+	npctalk "Princess Tiara: If...If a marriage is arranged what should I do?", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
 	mes "The only thing I can do is protect you from physical harm.";
@@ -924,8 +924,7 @@ OnTimer28500:
 		if (select( "Cancel", "Hand over " + .@cost + " Gray Shard." ) == 1) {
 			mes "[King]";
 			mes "Someday, Sakray will";
-			mes "get out of curse for sure.";
-			mes "I believe";
+			mes "get out of this curse for sure.";
 			next;
 			continue;
 		}
@@ -945,7 +944,7 @@ OnTimer28500:
 		next;
 		mes "[King]";
 		mes "All right, it is done.";
-		mes "Take this ^FF0000" + .@item_name$[.@s] + "^000000.";
+		mes "Take this ^FF0000" + .@item_name$[.@s] + "^000000";
 		mes "to confront Sakray and Thanatos.";
 		next;
 		mes "[King]";
