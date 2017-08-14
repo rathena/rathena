@@ -5251,6 +5251,9 @@ void mob_db_load(void){
  * @return 0
  */
 static int mob_reload_sub( struct mob_data *md, va_list args ){
+	// Relink the mob to the new database entry
+	md->db = mob_db(md->mob_id);
+
 	if( md->bl.prev == NULL ){
 		return 0;
 	}
@@ -5269,12 +5272,37 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 }
 
 /**
+ * Apply the proper view data on NPCs during mob_db reload.
+ * @param md: NPC to adjust
+ * @param args: va_list of arguments
+ * @return 0
+ */
+static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
+	if( nd->bl.prev == NULL ){
+		return 0;
+	}
+	
+	// If the view data points to a mob
+	if( mobdb_checkid(nd->class_) ){
+		// Get the new view data from the mob database
+		nd->vd = mob_get_viewdata(nd->class_);
+
+		// Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
+		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
+		clif_spawn(&nd->bl);
+	}
+
+	return 0;
+}
+
+/**
  * Reload monster data
  */
 void mob_reload(void) {
 	do_final_mob();
 	mob_db_load();
 	map_foreachmob(mob_reload_sub);
+	map_foreachnpc(mob_reload_sub_npc);
 }
 
 /**
