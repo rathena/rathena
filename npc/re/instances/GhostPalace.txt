@@ -251,11 +251,10 @@ OnSpawn2:
 	end;
 OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_1") + "::OnMyMobDead3") < 1) {
-		mapannounce 'map_spa$, "The passage on the 2nd floor in the palace of ghost is open .", bc_map,0xFFFF00,FW_NORMAL,12;
+		mapannounce 'map_spa$, "The passage on the 2nd floor in the palace of ghost is open .", bc_map,0xFFFF00;
 		enablenpc instance_npcname("The second floor of Palace");
 		enablenpc instance_npcname("Lurid Royal Guard#dk1");
 		enablenpc instance_npcname("Princess Tiara#dk");
-		disablenpc instance_npcname("#gp_control_1");
 	}
 	end;
 }
@@ -314,6 +313,11 @@ OnStart:
 	disablenpc instance_npcname("Lurid Royal Guard#dk1");
 	disablenpc instance_npcname("Princess Tiara#dk");
 	disablenpc instance_npcname("The second floor of Palace");
+
+	killmonster 'map_spa$, instance_npcname("#gp_control_1") + "::OnMyMobDead1";
+	killmonster 'map_spa$, instance_npcname("#gp_control_1") + "::OnMyMobDead2";
+	killmonster 'map_spa$, instance_npcname("#gp_control_1") + "::OnMyMobDead3";
+	disablenpc instance_npcname("#gp_control_1");
 	initnpctimer;
 	end;
 OnTimer2000:
@@ -344,7 +348,7 @@ OnMyMobDead2:
 	end;
 OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_2") + "::OnMyMobDead3") < 1) {
-		mapannounce 'map_spa$, "The passage on the 3rd floor of the palace is open.", bc_map,0xFFFF00,FW_NORMAL,12;
+		mapannounce 'map_spa$, "The passage on the 3rd floor of the palace is open.", bc_map,0xFFFF00;
 		enablenpc instance_npcname("3rd floor in the palace");
 		enablenpc instance_npcname("King#dk1");
 		enablenpc instance_npcname("Lurid Royal Guard#dk2");
@@ -448,10 +452,8 @@ OnTimer2000:
 	stopnpctimer;
 	end;
 OnMyMobDead1:
-	if (mobcount('map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead1") < 1) {
-		deltimer instance_npcname("#gp_control_3") + "::OnSpawn1";
+	if (mobcount('map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead1") < 1)
 		addtimer 2000, instance_npcname("#gp_control_3") + "::OnSpawn1";
-	}
 	end;
 OnSpawn1:
 	.@label$ = instance_npcname("#gp_control_3") + "::OnMyMobDead2";
@@ -461,15 +463,18 @@ OnSpawn1:
 	end;
 OnMyMobDead2:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead2") < (1 + 'bool_double_spawn)) {
-		mapannounce 'map_spa$, "The passage on the 4th floor of the palace is open.", bc_map,0xFFFF00,FW_NORMAL,12;
-		enablenpc instance_npcname("4th floor in the palace");
-		donpcevent instance_npcname("#gp_control_4") + "::OnStart";
-		deltimer instance_npcname("#gp_control_3") + "::OnSpawn1";
-		deltimer instance_npcname("#gp_control_3") + "::OnSpawn2";
-		addtimer 2000, instance_npcname("#gp_control_3") + "::OnSpawn2";
+		deltimer instance_npcname("#gp_control_3") + "::OnAnnounce";
+		addtimer 500, instance_npcname("#gp_control_3") + "::OnAnnounce";
 	}
 	end;
+OnAnnounce:
+	mapannounce 'map_spa$, "The passage on the 4th floor of the palace is open.", bc_map,0xFFFF00;
+	enablenpc instance_npcname("4th floor in the palace");
+	deltimer instance_npcname("#gp_control_3") + "::OnSpawn2";	// stop double spawn if timer is running
+	addtimer 2000, instance_npcname("#gp_control_3") + "::OnSpawn2";
+	end;
 OnSpawn2:
+	donpcevent instance_npcname("#gp_control_4") + "::OnStart";
 	// 35 mobs
 	.@label$ = instance_npcname("#gp_control_3") + "::OnMyMobDead3";
 	monster 'map_spa$,67,46, "Regretful Memory",2953,1, .@label$;	// CURSED_MEMORY
@@ -641,14 +646,15 @@ OnStart:
 OnMyMobDead:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_5") + "::OnMyMobDead") < 1) {
 		deltimer instance_npcname("#gp_control_4") + "::OnSpawn1";	// stop double spawn if timer is running
-		mapannounce 'map_spa$, "The passage on the 5th floor of the palace is open.", bc_map,0xFFFF00,FW_NORMAL,12;
-		killmonster 'map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead2";
-		killmonster 'map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead3";
-		disablenpc instance_npcname("#gp_control_3");
+		mapannounce 'map_spa$, "The passage on the 5th floor of the palace is open.", bc_map,0xFFFF00;
 		disablenpc instance_npcname("4th floor in the palace");
 		enablenpc instance_npcname("5th floor of Palace");
 		enablenpc instance_npcname("Princess Tiara#dk1");
 		enablenpc instance_npcname("Lurid Royal Guard#dk5");
+
+		killmonster 'map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead2";
+		killmonster 'map_spa$, instance_npcname("#gp_control_3") + "::OnMyMobDead3";
+		disablenpc instance_npcname("#gp_control_3");
 	}
 	end;
 }
@@ -699,31 +705,35 @@ OnStart:
 	enablenpc instance_npcname("#gp_control_6");
 	disablenpc instance_npcname("Princess Tiara#dk1");
 	disablenpc instance_npcname("Lurid Royal Guard#dk5");
+
+	killmonster 'map_spa$, instance_npcname("#gp_control_4") + "::OnMyMobDead1";
+	killmonster 'map_spa$, instance_npcname("#gp_control_4") + "::OnMyMobDead2";
 	killmonster 'map_spa$, instance_npcname("#gp_control_5") + "::OnMyMobDead";
+	disablenpc instance_npcname("#gp_control_4");
 	disablenpc instance_npcname("#gp_control_5");
 	disablenpc instance_npcname("5th floor of Palace");
 	sleep 2000;
 	.@label$ = instance_npcname("#gp_control_6") + "::OnMyMobDead1";
-	monster 'map_spa$,217,52, "Forgotten Name#3" ,2957,1, .@label$;	// FORGOTTEN_NAME
+	monster 'map_spa$,217,52, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
 	unittalk $@mobid[0], "Wake up! look at us... We are monsters?";
-	monster 'map_spa$,190,21, "Tarnished Oath#7" ,2954,1, .@label$;	// COLORLESS_VOW
+	monster 'map_spa$,190,21, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
 	unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
-	monster 'map_spa$,198,49, "Tarnished Oath#1" ,2954,1, .@label$;	// COLORLESS_VOW
+	monster 'map_spa$,198,49, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
 	unittalk $@mobid[0], "What is this..??";
-	monster 'map_spa$,212,28, "Fatal Days#5" ,2958,1, .@label$;		// FATAL_DAYS
+	monster 'map_spa$,212,28, "Fatal Days" ,2958,1, .@label$;		// FATAL_DAYS
 	unittalk $@mobid[0], "Sakray killed a princess!";
 	end;
 OnMyMobDead1:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead1") < 1) {
 		sleep 2000;
 		.@label$ = instance_npcname("#gp_control_6") + "::OnMyMobDead2";
-		monster 'map_spa$,217,43, "Forgotten Name#25" ,2957,1, .@label$;	// FORGOTTEN_NAME
+		monster 'map_spa$,217,43, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
 		unittalk $@mobid[0], "Wake up! look at us... We are monsters?";
-		monster 'map_spa$,193,24, "Forgotten Name#31" ,2957,1, .@label$;	// FORGOTTEN_NAME
+		monster 'map_spa$,193,24, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
 		unittalk $@mobid[0], "Sakray..?? why.....Sakray!";
-		monster 'map_spa$,216,59, "Tarnished Oath#29" ,2954,1, .@label$;	// COLORLESS_VOW
+		monster 'map_spa$,216,59, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
 		unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
-		monster 'map_spa$,197,57, "Fatal Days#27" ,2958,1, .@label$;		// FATAL_DAYS
+		monster 'map_spa$,197,57, "Fatal Days" ,2958,1, .@label$;		// FATAL_DAYS
 		unittalk $@mobid[0], "Sakray killed a princess!";
 	}
 	end;
@@ -731,20 +741,20 @@ OnMyMobDead2:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead2") < 1) {
 		sleep 2000;
 		.@label$ = instance_npcname("#gp_control_6") + "::OnMyMobDead3";
-		monster 'map_spa$,193,39, "Forgotten Name#41" ,2957,1, .@label$;	// FORGOTTEN_NAME
+		monster 'map_spa$,193,39, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
 		unittalk $@mobid[0], "Wake up! look at us... We are monsters?";
-		monster 'map_spa$,212,34, "Forgotten Name#47" ,2957,1, .@label$;	// FORGOTTEN_NAME
+		monster 'map_spa$,212,34, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
 		unittalk $@mobid[0], "Sakray..?? why.....Sakray!";
-		monster 'map_spa$,201,64, "Tarnished Oath#45" ,2954,1, .@label$;	// COLORLESS_VOW
+		monster 'map_spa$,201,64, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
 		unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
-		monster 'map_spa$,175,44, "Fatal Days#43" ,2958,1, .@label$;		// FATAL_DAYS
+		monster 'map_spa$,175,44, "Fatal Days" ,2958,1, .@label$;		// FATAL_DAYS
 		unittalk $@mobid[0], "Sakray killed a princess!";
 	}
 	end;
 OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead3") < 1) {
 		sleep 2000;
-		monster 'map_spa$,200,45, "Torturous Redeemer#21" ,2961,1, instance_npcname("#gp_control_6") + "::OnMyMobDead4";	// E_TORTUROUS_REDEEMER
+		monster 'map_spa$,200,45, "Torturous Redeemer" ,2961,1, instance_npcname("#gp_control_6") + "::OnMyMobDead4";	// E_TORTUROUS_REDEEMER
 		unittalk $@mobid[0], "Thanatos Magic Trace! I will destroy you if I can't have you... Oh no! How could this be?";
 		sleep 5000;
 		killmonster 'map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead4";
@@ -856,7 +866,7 @@ OnTimer28500:
 	disablenpc instance_npcname("#tb");
 	disablenpc instance_npcname("#sv");
 	disablenpc instance_npcname("#tv");
-	mapannounce 'map_spa$, "It is time to leave the Ghost Palace.", bc_map,0xFFFF00,FW_NORMAL,12;
+	mapannounce 'map_spa$, "It is time to leave the Ghost Palace.", bc_map,0xFFFF00;
 	enablenpc instance_npcname("Way out of Palace");
 	enablenpc instance_npcname("King#dk11");
 	end;
