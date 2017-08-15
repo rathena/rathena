@@ -11,6 +11,7 @@
 
 #ifdef __cplusplus // C codes can't see this
 #include <memory>
+#include <string>
 #include <unordered_map>
 
 extern "C" {
