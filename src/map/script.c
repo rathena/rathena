@@ -18316,7 +18316,7 @@ BUILDIN_FUNC(unitattack)
 	int actiontype = 0;
 
 	if (!script_rid2bl(2,unit_bl)) {
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -18331,7 +18331,7 @@ BUILDIN_FUNC(unitattack)
 		target_bl = map_id2bl(conv_num(st, data));
 
 	if (!target_bl) {
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -18339,10 +18339,13 @@ BUILDIN_FUNC(unitattack)
 		actiontype = script_getnum(st,4);
 
 	switch(unit_bl->type) {
-		case BL_PC:
-			clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
-			script_pushint(st, 1);
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)unit_bl;
+
+			clif_parse_ActionRequest_sub(sd, actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
+			script_pushint(st, sd->ud.target == target_bl->id);
 			return SCRIPT_CMD_SUCCESS;
+		}
 		case BL_MOB:
 			((TBL_MOB *)unit_bl)->target_id = target_bl->id;
 			break;
@@ -18351,7 +18354,7 @@ BUILDIN_FUNC(unitattack)
 			break;
 		default:
 			ShowError("buildin_unitattack: Unsupported source unit type %d.\n", unit_bl->type);
-			script_pushint(st, 0);
+			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 	}
 
