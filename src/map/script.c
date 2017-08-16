@@ -21070,9 +21070,9 @@ BUILDIN_FUNC(npcskill)
 		status_calc_npc(nd, SCO_NONE);
 
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
-		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
+		unit_skilluse_pos2(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level,0,0);
 	else
-		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
+		unit_skilluse_id2(&nd->bl, sd->bl.id, skill_id, skill_level,0,0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
