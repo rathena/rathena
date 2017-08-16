@@ -1428,12 +1428,16 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 		return -2; // invalid input
 #endif
 
-
 	// check the number of already existing chars in this account
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, sd->account_id) )
 		Sql_ShowDebug(sql_handle);
+#ifdef VIP_ENABLE
+	if( Sql_NumRows(sql_handle) >= MAX_CHARS )
+		return -2; // character account limit exceeded
+#else
 	if( Sql_NumRows(sql_handle) >= sd->char_slots )
 		return -2; // character account limit exceeded
+#endif
 
 	// check char slot
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' LIMIT 1", schema_config.char_db, sd->account_id, slot) )
