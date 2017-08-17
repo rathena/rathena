@@ -1096,7 +1096,7 @@ int mapif_guild_master_changed(struct guild *g, int aid, int cid, time_t time)
 	WBUFL(buf,2)=g->guild_id;
 	WBUFL(buf,6)=aid;
 	WBUFL(buf,10)=cid;
-	WBUFL(buf,14)=time;
+	WBUFL(buf,14)=(uint32)time;
 	chmapif_sendall(buf,18);
 	return 0;
 }

@@ -38,6 +38,16 @@ enum e_char_delete_restriction {
 	CHAR_DEL_RESTRICT_ALL
 };
 
+enum e_char_del_response {
+	CHAR_DELETE_OK = 0,
+	CHAR_DELETE_DATABASE,
+	CHAR_DELETE_NOTFOUND,
+	CHAR_DELETE_BASELEVEL,
+	CHAR_DELETE_GUILD,
+	CHAR_DELETE_PARTY,
+	CHAR_DELETE_TIME,
+};
+
 struct Schema_Config {
 	int db_use_sqldbs;
 	char db_path[1024];
@@ -80,6 +90,7 @@ struct Schema_Config {
 	char char_reg_num_table[DB_NAME_LEN];
 	char clan_table[DB_NAME_LEN];
 	char clan_alliance_table[DB_NAME_LEN];
+	char achievement_table[DB_NAME_LEN];
 };
 extern struct Schema_Config schema_config;
 
@@ -222,7 +233,6 @@ struct char_session_data {
 	uint8 char_slots; // total number of characters that can be created
 	uint8 chars_vip;
 	uint8 chars_billing;
-	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
 	char birthdate[10+1];  // YYYY-MM-DD
@@ -272,7 +282,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
 int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
-int char_delete_char_sql(uint32 char_id);
+enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id);
 int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
 int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id);

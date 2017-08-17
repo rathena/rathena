@@ -99,9 +99,14 @@ struct npc_data {
 
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	struct {
+		unsigned int timeout;
+		unsigned long color;
+	} progressbar;
 };
 
-struct eri *npc_sc_display_ers;
+extern struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 
@@ -118,7 +123,7 @@ enum actor_classes
 #define MAX_NPC_CLASS 1000
 // New NPC range
 #define MAX_NPC_CLASS2_START 10000
-#define MAX_NPC_CLASS2_END 10255
+#define MAX_NPC_CLASS2_END 10270
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
@@ -159,6 +164,7 @@ void npc_parse_mob2(struct spawn_data* mob);
 bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
+const char *npc_get_script_event_name(int npce_index);
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);

@@ -373,8 +373,6 @@ extern struct Battle_Config
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]
 	int ban_hack_trade; // added by [Yor]
-	int packet_ver_flag; // added by [Yor]
-	int packet_ver_flag2; // expend of packet_ver_flag
 
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]
@@ -629,6 +627,8 @@ extern struct Battle_Config
 	int banana_bomb_duration;
 	int guild_leaderchange_delay;
 	int guild_leaderchange_woe;
+	int guild_alliance_onlygm;
+	int feature_achievement;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

@@ -132,7 +132,10 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 		// clif_updatestatus(sd, SP_ZENY);
 		return MAIL_ATTACH_SUCCESS;
 	} else { // Item Transfer
-		int i, j, total = 0;
+		int i;
+#if PACKETVER >= 20150513
+		int j, total = 0;
+#endif
 
 		idx -= 2;
 

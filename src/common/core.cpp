@@ -148,12 +148,10 @@ void signals_init (void) {
 }
 #endif
 
-#ifdef SVNVERSION
-const char *get_svn_revision(void) {
-		return EXPAND_AND_QUOTE(SVNVERSION);
-	}
-#else// not SVNVERSION
 const char* get_svn_revision(void) {
+#ifdef SVNVERSION
+	return EXPAND_AND_QUOTE(SVNVERSION);
+#else// not SVNVERSION
 	static char svn_version_buffer[16] = "";
 	FILE *fp;
 
@@ -244,11 +242,8 @@ const char* get_svn_revision(void) {
 	// fallback
 	svn_version_buffer[0] = UNKNOWN_VERSION;
 	return svn_version_buffer;
-}
 #endif
-
-// GIT path
-#define GIT_ORIGIN "refs/remotes/origin/master"
+}
 
 // Grabs the hash from the last time the user updated their working copy (last pull)
 const char *get_git_hash (void) {
@@ -258,7 +253,8 @@ const char *get_git_hash (void) {
 	if( GitHash[0] != '\0' )
 		return GitHash;
 
-	if( (fp = fopen(".git/" GIT_ORIGIN, "r")) != NULL ) {
+	if( (fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
+		(fp = fopen(".git/refs/heads/master", "r")) != NULL ) { // Cloned only
 		char line[64];
 		char *rev = (char*)malloc(sizeof(char) * 50);
 
@@ -380,6 +376,12 @@ int main (int argc, char **argv)
 #endif
 
 	malloc_final();
+
+#if defined(BUILDBOT)
+	if( buildbotflag ){
+		exit(EXIT_FAILURE);
+	}
+#endif
 
 	return 0;
 }

@@ -115,6 +115,7 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 			tmp_chan.opt = channel_config.private_channel.opt;
 			tmp_chan.msg_delay = channel_config.private_channel.delay;
 			tmp_chan.color = channel_config.private_channel.color;
+			tmp_chan.char_id = owner;
 			break;
 		default:
 			return NULL;
@@ -943,11 +944,12 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 		if (channel->char_id != sd->status.char_id) {
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
 			clif_displaymessage(sd->fd, output);
+			return -1;
 		} else if (!channel_config.private_channel.ban) {
 			sprintf(output, msg_txt(sd,765), chname); // You're not allowed to ban a player.
 			clif_displaymessage(sd->fd, output);
+			return -1;
 		}
-		return -1;
 	}
 
 	if(flag != 2 && flag != 3){
@@ -974,7 +976,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 		if( !db_size(channel->banned) ) {
 			sprintf(output, msg_txt(sd,1439), chname);// Channel '%s' contains no banned players.
 			clif_displaymessage(sd->fd, output);
-			return -1;
+			return 0;
 		}
 	}
 

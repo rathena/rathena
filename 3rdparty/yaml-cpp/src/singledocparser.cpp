@@ -166,10 +166,10 @@ void SingleDocParser::HandleBlockSequence(EventHandler& eventHandler) {
 
     // check for null
     if (!m_scanner.empty()) {
-      const Token& token = m_scanner.peek();
-      if (token.type == Token::BLOCK_ENTRY ||
-          token.type == Token::BLOCK_SEQ_END) {
-        eventHandler.OnNull(token.mark, NullAnchor);
+      const Token& token_ = m_scanner.peek();
+      if (token_.type == Token::BLOCK_ENTRY ||
+          token_.type == Token::BLOCK_SEQ_END) {
+        eventHandler.OnNull(token_.mark, NullAnchor);
         continue;
       }
     }

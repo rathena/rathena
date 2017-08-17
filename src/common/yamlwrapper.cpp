@@ -31,8 +31,8 @@ yamlwrapper::yamlwrapper(YAML::Node node) {
 	this->root = node;
 }
 
-yamliterator::yamliterator(YAML::Node sequence) {
-	this->sequence = sequence;
+yamliterator::yamliterator(YAML::Node sequence_) {
+	this->sequence = sequence_;
 	this->index = 0;
 }
 
@@ -41,13 +41,23 @@ yamliterator* yamlwrapper::iterator() {
 }
 
 yamlwrapper* yaml_load_file(const char* file_name) {
-	YAML::Node node = YAML::LoadFile(file_name);
-	if (!node.IsDefined())
+	YAML::Node node;
+
+	try {
+		node = YAML::LoadFile(file_name);
+		if (!node.IsDefined() || node.IsNull())
+			return NULL;
+	} catch (YAML::ParserException &e) {
+		ShowError("YAML Exception Caught: %s\n", e.what());
 		return NULL;
+	} catch (YAML::BadFile &e) {
+		return NULL;
+	}
+
 	return new yamlwrapper(node);
 }
 
-extern "C++" YAML::Node yaml_get_node(YAML::Node& node, std::string& key) {
+extern "C++" YAML::Node yaml_get_node(const YAML::Node& node,const std::string& key) {
 	if (key.empty())
 		return node;
 
@@ -105,6 +115,50 @@ int64 yaml_get_int64(yamlwrapper* wrapper, const char* key) {
 
 bool yaml_get_boolean(yamlwrapper* wrapper, const char* key) {
 	return yaml_get_value<bool>(wrapper, key);
+}
+
+char* yaml_as_c_string(yamlwrapper* wrapper) {
+	std::string cpp_str = wrapper->root.as<std::string>();
+	const char* c_str = cpp_str.c_str();
+	size_t str_size = std::strlen(c_str) + 1;
+	char* buf = (char*)aCalloc(1, str_size);
+	strcpy(buf, c_str);
+	return buf;
+}
+
+extern "C++" {
+	template<typename T>
+	T yaml_as_value(yamlwrapper* wrapper) {
+		if (wrapper == nullptr)
+			return {};
+		try {
+			return wrapper->root.as<T>();
+		}
+		catch (const std::exception& e) {
+			ShowError("Error during YAML node value resolving in node %s.\n", e.what());
+			return {};
+		}
+	}
+}
+
+int yaml_as_int(yamlwrapper* wrapper) {
+	return yaml_as_value<int>(wrapper);
+}
+
+int16 yaml_as_int16(yamlwrapper* wrapper) {
+	return yaml_as_value<int16>(wrapper);
+}
+
+int32 yaml_as_int32(yamlwrapper* wrapper) {
+	return yaml_as_value<int32>(wrapper);
+}
+
+int64 yaml_as_int64(yamlwrapper* wrapper) {
+	return yaml_as_value<int64>(wrapper);
+}
+
+bool yaml_as_boolean(yamlwrapper* wrapper) {
+	return yaml_as_value<bool>(wrapper);
 }
 
 bool yaml_node_is_defined(yamlwrapper* wrapper, const char* key) {

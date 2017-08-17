@@ -706,17 +706,18 @@ enum vip_status_type {
 /**
  * used to generate quick script_array entries
  **/
-struct eri *array_ers;
-DBMap *st_db;
-unsigned int active_scripts;
-unsigned int next_id;
-struct eri *st_ers;
-struct eri *stack_ers;
+extern struct eri *array_ers;
+extern DBMap *st_db;
+extern unsigned int active_scripts;
+extern unsigned int next_id;
+extern struct eri *st_ers;
+extern struct eri *stack_ers;
 
 const char* skip_space(const char* p);
 void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
+bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
@@ -740,6 +741,7 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
+bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
 void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
 void script_hardcoded_constants(void);
