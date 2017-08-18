@@ -5254,18 +5254,17 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 	// Relink the mob to the new database entry
 	md->db = mob_db(md->mob_id);
 
-	if( md->bl.prev == NULL ){
-		return 0;
-	}
-
 	// If the view data was not overwritten manually
 	if( !md->vd_changed ){
 		// Get the new view data from the mob database
 		md->vd = mob_get_viewdata(md->mob_id);
 
-		// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
-		clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
-		clif_spawn(&md->bl);
+		// If they are spawned right now
+		if( md->bl.prev != NULL ){
+			// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
+			clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
+			clif_spawn(&md->bl);
+		}
 	}
 
 	return 0;
@@ -5278,18 +5277,17 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
  * @return 0
  */
 static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
-	if( nd->bl.prev == NULL ){
-		return 0;
-	}
-	
 	// If the view data points to a mob
 	if( mobdb_checkid(nd->class_) ){
 		// Get the new view data from the mob database
 		nd->vd = mob_get_viewdata(nd->class_);
 
-		// Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		clif_spawn(&nd->bl);
+		// If they are spawned right now
+		if( nd->bl.prev == NULL ){
+			// Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
+			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
+			clif_spawn(&nd->bl);
+		}
 	}
 
 	return 0;
