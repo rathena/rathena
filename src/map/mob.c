@@ -5283,7 +5283,7 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 		nd->vd = mob_get_viewdata(nd->class_);
 
 		// If they are spawned right now
-		if( nd->bl.prev == NULL ){
+		if( nd->bl.prev != NULL ){
 			// Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
 			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
 			clif_spawn(&nd->bl);
