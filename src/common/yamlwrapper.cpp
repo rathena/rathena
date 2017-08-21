@@ -113,6 +113,22 @@ int64 yaml_get_int64(yamlwrapper* wrapper, const char* key) {
 	return yaml_get_value<int64>(wrapper, key);
 }
 
+int yaml_get_uint(yamlwrapper* wrapper, const char* key) {
+	return yaml_get_value<unsigned int>(wrapper, key);
+}
+
+int16 yaml_get_uint16(yamlwrapper* wrapper, const char* key) {
+	return yaml_get_value<uint16>(wrapper, key);
+}
+
+int32 yaml_get_uint32(yamlwrapper* wrapper, const char* key) {
+	return yaml_get_value<uint32>(wrapper, key);
+}
+
+int64 yaml_get_uint64(yamlwrapper* wrapper, const char* key) {
+	return yaml_get_value<uint64>(wrapper, key);
+}
+
 bool yaml_get_boolean(yamlwrapper* wrapper, const char* key) {
 	return yaml_get_value<bool>(wrapper, key);
 }
@@ -157,6 +173,22 @@ int64 yaml_as_int64(yamlwrapper* wrapper) {
 	return yaml_as_value<int64>(wrapper);
 }
 
+int yaml_as_uint(yamlwrapper* wrapper) {
+	return yaml_as_value<unsigned int>(wrapper);
+}
+
+int16 yaml_as_uint16(yamlwrapper* wrapper) {
+	return yaml_as_value<uint16>(wrapper);
+}
+
+int32 yaml_as_uint32(yamlwrapper* wrapper) {
+	return yaml_as_value<uint32>(wrapper);
+}
+
+int64 yaml_as_uint64(yamlwrapper* wrapper) {
+	return yaml_as_value<uint64>(wrapper);
+}
+
 bool yaml_as_boolean(yamlwrapper* wrapper) {
 	return yaml_as_value<bool>(wrapper);
 }
@@ -169,6 +201,14 @@ bool yaml_node_is_defined(yamlwrapper* wrapper, const char* key) {
 
 yamlwrapper* yaml_get_subnode(yamlwrapper* wrapper, const char* key) {
 	return new yamlwrapper(yaml_get_node(wrapper->root, std::string(key)));
+}
+
+char* yaml_verify_nodes(yamlwrapper* wrapper, int amount, char** nodes) {
+	for (int i = 0; i < amount; i++) {
+		if (!yaml_node_is_defined(wrapper, nodes[i]))
+			return nodes[i];
+	}
+	return NULL;
 }
 
 yamliterator* yaml_get_iterator(yamlwrapper* wrapper) {
