@@ -3022,10 +3022,10 @@ It will only return numbers. If another type is supplied -1 will be returned.
 
 ---------------------------------------
 
-*gettimestr(<format string>,<max length>)
+*gettimestr(<"time format">,<max length>{,<time_tick>})
 
 This function will return a string containing time data as specified by the
-format string.
+time format.
 
 This uses the C function 'strfmtime', which obeys special format characters. For
 a full description see, for example, the description of 'strfmtime' at
@@ -3037,7 +3037,11 @@ The example given in rAthena sample scripts works like this:
 
   mes gettimestr("%Y-%m/%d %H:%M:%S",21);
 
-This will print a full date and time like 'YYYY-MM/DD HH:MM:SS'.
+The example above will print the current date and time like 'YYYY-MM/DD HH:MM:SS'.
+The following example will print the date and time when the player's VIP status
+expires by the given <time_tick>:
+
+  mes gettimestr("%Y-%m/%d %H:%M:%S",21,vip_status(VIP_STATUS_EXPIRE));
 
 ---------------------------------------
 
@@ -7355,11 +7359,16 @@ Examples:
 *unitattack <GID>,<Target ID>{,<action type>};
 *unitattack <GID>,"<Target Name>"{,<action type>};
 
-This command will make a <GID> attack the specified target. It returns 1 upon
-success and 0 for all failures.
+This command will make a <GID> attack the specified target. It returns true upon
+success and false for all failures.
 
 If <GID> is a player and a non-zero <action type> is given, the unit will perform a
 continuous attack instead of a single attack.
+
+Note:
+Using unitattack with <GID> 0 means that it will use the currently attached unit.
+For players any attack requests will fail, because talking to an NPC prevents attacking a monster.
+Therefore you need to detach the player from the NPC before using this command.
 
 ---------------------------------------
 

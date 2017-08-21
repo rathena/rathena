@@ -9952,22 +9952,32 @@ BUILDIN_FUNC(gettime)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * GetTimeStr("TimeFMT", Length);
- *------------------------------------------*/
+/**
+ * Returns the current server time or the provided time in a readable format.
+ * gettimestr(<"time_format">,<max_length>{,<time_tick>});
+ */
 BUILDIN_FUNC(gettimestr)
 {
 	char *tmpstr;
 	const char *fmtstr;
 	int maxlen;
-	time_t now = time(NULL);
+	time_t now;
 
-	fmtstr=script_getstr(st,2);
-	maxlen=script_getnum(st,3);
+	fmtstr = script_getstr(st,2);
+	maxlen = script_getnum(st,3);
 
-	tmpstr=(char *)aMalloc((maxlen+1)*sizeof(char));
+	if (script_hasdata(st, 4)) {
+		if (script_getnum(st, 4) < 0) {
+			ShowWarning("buildin_gettimestr: a positive value must be supplied to be valid.\n");
+			return SCRIPT_CMD_FAILURE;
+		} else
+			now = (time_t)script_getnum(st, 4);
+	} else
+		now = time(NULL);
+
+	tmpstr = (char *)aMalloc((maxlen+1)*sizeof(char));
 	strftime(tmpstr,maxlen,fmtstr,localtime(&now));
-	tmpstr[maxlen]='\0';
+	tmpstr[maxlen] = '\0';
 
 	script_pushstr(st,tmpstr);
 	return SCRIPT_CMD_SUCCESS;
@@ -18313,7 +18323,7 @@ BUILDIN_FUNC(unitattack)
 	int actiontype = 0;
 
 	if (!script_rid2bl(2,unit_bl)) {
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -18328,7 +18338,7 @@ BUILDIN_FUNC(unitattack)
 		target_bl = map_id2bl(conv_num(st, data));
 
 	if (!target_bl) {
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -18336,10 +18346,13 @@ BUILDIN_FUNC(unitattack)
 		actiontype = script_getnum(st,4);
 
 	switch(unit_bl->type) {
-		case BL_PC:
-			clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
-			script_pushint(st, 1);
+		case BL_PC: {
+			struct map_session_data* sd = (struct map_session_data*)unit_bl;
+
+			clif_parse_ActionRequest_sub(sd, actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
+			script_pushint(st, sd->ud.target == target_bl->id);
 			return SCRIPT_CMD_SUCCESS;
+		}
 		case BL_MOB:
 			((TBL_MOB *)unit_bl)->target_id = target_bl->id;
 			break;
@@ -18348,7 +18361,7 @@ BUILDIN_FUNC(unitattack)
 			break;
 		default:
 			ShowError("buildin_unitattack: Unsupported source unit type %d.\n", unit_bl->type);
-			script_pushint(st, 0);
+			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 	}
 
@@ -21067,9 +21080,9 @@ BUILDIN_FUNC(npcskill)
 		status_calc_npc(nd, SCO_NONE);
 
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
-		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
+		unit_skilluse_pos2(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level,0,0);
 	else
-		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
+		unit_skilluse_id2(&nd->bl, sd->bl.id, skill_id, skill_level,0,0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23699,7 +23712,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),
 	BUILDIN_DEF(gettime,"i"),
-	BUILDIN_DEF(gettimestr,"si"),
+	BUILDIN_DEF(gettimestr,"si?"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
 	BUILDIN_DEF(itemskill,"vi?"),
