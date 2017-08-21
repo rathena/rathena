@@ -38,6 +38,20 @@ enum refine_type {
 	REFINE_TYPE_MAX		= 6
 };
 
+/// Refine cost type
+enum refine_cost_type {
+	REFINE_COST_NORMAL = 0,
+	REFINE_COST_OVER10,
+	REFINE_COST_HD,
+	REFINE_COST_ENRICHED,
+	REFINE_COST_MAX
+};
+
+struct refine_cost {
+	unsigned short nameid;
+	int zeny;
+};
+
 /// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 

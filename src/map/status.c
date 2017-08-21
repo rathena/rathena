@@ -22,6 +22,7 @@
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
+#include "script.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -40,6 +41,7 @@ static struct {
 	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
 	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
 	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
+	struct refine_cost cost[REFINE_COST_MAX];
 } refine_info[REFINE_TYPE_MAX];
 
 static int atkmods[3][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
@@ -14218,17 +14220,45 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
  * Reads and parses an entry from the refine_db
  * @param wrapper: The YAML wrapper containing the entry
  * @param refine_info_index: The sequential index of the current entry
+ * @param file_name: File name for displaying only
  * @return True on success or false on failure
  */
-static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_index) {
+static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_index, char* file_name) {
 	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
 	int bonus_per_level = yaml_get_int(wrapper, "StatsPerLevel");
 	int random_bonus_start_level = yaml_get_int(wrapper, "RandomBonusStartLevel");
 	int random_bonus = yaml_get_int(wrapper, "RandomBonusValue");
+
+	yamlwrapper* costs = yaml_get_subnode(wrapper, "Costs");
+	yamliterator* it = yaml_get_iterator(costs);
+	if (yaml_iterator_is_valid(it)) {
+		for (yamlwrapper* type = yaml_iterator_first(it); yaml_iterator_has_next(it); type = yaml_iterator_next(it)) {
+			int idx = 0, price;
+			unsigned short material;
+			static char* keys[] = {"Type", "Price", "Material" };
+			char* result;
+
+			if ((result = yaml_verify_nodes(type, ARRAYLENGTH(keys), keys)) != NULL) {
+				ShowWarning("status_yaml_readdb_refine_sub: Invalid refine cost with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", result, file_name);
+				yaml_destroy_wrapper(type);
+				continue;
+			}
+
+			char* refine_cost_const = yaml_get_c_string(type, "Type");
+			idx = ISDIGIT(refine_cost_const[0]) ? atoi(refine_cost_const) : script_get_constant(refine_cost_const, &idx); // Remove non-constant support?
+			price = yaml_get_int(type, "Price");
+			material = yaml_get_uint16(type, "Material");
+
+			yaml_destroy_wrapper(type);
+		}
+	}
+	yaml_destroy_wrapper(costs);
+	yaml_iterator_destroy(it);
+
 	yamlwrapper* rates = yaml_get_subnode(wrapper, "Rates");
-	yamliterator* it = yaml_get_iterator(rates);
+	it = yaml_get_iterator(rates);
 
 	if (yaml_iterator_is_valid(it)) {
 		for (yamlwrapper* level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
@@ -14284,7 +14314,7 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
 		if (yaml_node_is_defined(root_node, labels[i])) {
 			sub_node = yaml_get_subnode(root_node, labels[i]);
-			if (status_yaml_readdb_refine_sub(sub_node, i))
+			if (status_yaml_readdb_refine_sub(sub_node, i, buf))
 				count++;
 			yaml_destroy_wrapper(sub_node);
 		}
@@ -14374,9 +14404,10 @@ int status_readdb(void)
 	for(i=0;i<ARRAYLENGTH(atkmods);i++)
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
-	// refine_db.txt
+	// refine_db.yml
 	for(i=0;i<ARRAYLENGTH(refine_info);i++)
 	{
+		memset(refine_info[i].cost, 0, sizeof(struct refine_cost));
 		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
 			for(k=0;k<MAX_REFINE; k++)
 			{
