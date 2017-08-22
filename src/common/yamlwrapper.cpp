@@ -192,6 +192,10 @@ bool yaml_iterator_has_next(yamliterator* it) {
 	return it->index <= it->sequence.size();
 }
 
+int64 yaml_iterator_size(yamliterator* it) {
+	return it->sequence.size();
+}
+
 void yaml_iterator_destroy(yamliterator* it) {
 	delete it;
 }

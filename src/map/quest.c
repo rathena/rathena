@@ -412,141 +412,223 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 }
 
 /**
- * Loads quests from the quest db.txt
+ * Loads quests from the quest db.yml
  * @return Number of loaded quests, or -1 if the file couldn't be read.
  */
-void quest_read_txtdb(void)
+void quest_read_ymldb(void)
 {
 	const char* dbsubpath[] = {
 		DBPATH,
 		DBIMPORT"/",
 	};
 	uint8 f;
-
 	for (f = 0; f < ARRAYLENGTH(dbsubpath); f++) {
-		FILE *fp;
-		char line[1024];
-		uint32 ln = 0, count = 0;
 		char filename[256];
 
-		sprintf(filename, "%s/%s%s", db_path, dbsubpath[f], "quest_db.txt");
-		if ((fp = fopen(filename, "r")) == NULL) {
-			if (f == 0)
-				ShowError("Can't read %s\n", filename);
-			return;
+		struct quest_db *quest = NULL;
+		int quest_id = 0;
+		uint16 total_quest = 0;
+		int64 iterator_size = 0;
+
+		sprintf(filename, "%s/%s%s", db_path, dbsubpath[f], "quest_db.yml");
+		yamlwrapper* root_node = yaml_load_file(filename);
+		yamlwrapper* quests_list = NULL;
+
+		if (root_node == NULL) {
+			ShowError("Can't read %s\n", filename);
+			continue;
 		}
-
-		while(fgets(line, sizeof(line), fp)) {
-			struct quest_db *quest = NULL;
-			char *str[19], *p;
-			int quest_id = 0;
-			uint8 i;
-
-			++ln;
-			if (line[0] == '\0' || (line[0] == '/' && line[1] == '/'))
-				continue;
-
-			p = trim(line);
-
-			if (*p == '\0')
-				continue; // empty line
-
-			memset(str, 0, sizeof(str));
-			for(i = 0, p = line; i < 18 && p; i++) {
-				str[i] = p;
-				p = strchr(p,',');
-				if (p)
-					*p++ = 0;
-			}
-			if (str[0] == NULL)
-				continue;
-			if (i < 18) {
-				ShowError("quest_read_txtdb: Insufficient columns in '%s' line %d (%d of %d)\n", filename, ln, i, 18);
-				continue;
-			}
-
-			quest_id = atoi(str[0]);
-
-			if (quest_id < 0 || quest_id >= INT_MAX) {
-				ShowError("quest_read_txtdb: Invalid quest ID '%d' in '%s' line '%s' (min: 0, max: %d.)\n", quest_id, filename,ln, INT_MAX);
-				continue;
-			}
-
-			if (!(quest = (struct quest_db *)idb_get(questdb, quest_id)))
-				CREATE(quest, struct quest_db, 1);
-			else {
-				if (quest->objectives) {
-					aFree(quest->objectives);
-					quest->objectives = NULL;
-					quest->objectives_count = 0;
-				}
-				if (quest->dropitem) {
-					aFree(quest->dropitem);
-					quest->dropitem = NULL;
-					quest->dropitem_count = 0;
-				}
- 			}
-
-			if (strchr(str[1],':') == NULL) {
-				quest->time = atoi(str[1]);
-				quest->time_type = 0;
-			}
-			else {
-				unsigned char hour, min;
-
-				hour = atoi(str[1]);
-				str[1] = strchr(str[1],':');
-				*str[1] ++= 0;
-				min = atoi(str[1]);
-
-				quest->time = hour * 3600 + min * 60;
-				quest->time_type = 1;
-			}
-
-			for(i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
-				uint16 mob_id = (uint16)atoi(str[2 * i + 2]);
-
-				if (!mob_id)
-					continue;
-				if (mobdb_exists(mob_id) == NULL) {
-					ShowWarning("quest_read_txtdb: Invalid monster as objective '%d' in line %d.\n", mob_id, ln);
-					continue;
-				}
-				RECREATE(quest->objectives, struct quest_objective, quest->objectives_count+1);
-				quest->objectives[quest->objectives_count].mob = mob_id;
-				quest->objectives[quest->objectives_count].count = (uint16)atoi(str[2 * i + 3]);
-				quest->objectives_count++;
-			}
-
-			for(i = 0; i < MAX_QUEST_DROPS; i++) {
-				uint16 mob_id = (uint16)atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
-
-				if (!nameid)
-					continue;
-				if (!itemdb_exists(nameid) || (mob_id && mobdb_exists(mob_id) == NULL)) {
-					ShowWarning("quest_read_txtdb: Invalid item reward '%d' (mob %d, optional) in line %d.\n", nameid, mob_id, ln);
-					continue;
-				}
-				RECREATE(quest->dropitem, struct quest_dropitem, quest->dropitem_count+1);
-				quest->dropitem[quest->dropitem_count].mob_id = mob_id;
-				quest->dropitem[quest->dropitem_count].nameid = nameid;
-				quest->dropitem[quest->dropitem_count].count = 1;
-				quest->dropitem[quest->dropitem_count].rate = atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
-				quest->dropitem_count++;
- 			}
-
-			//StringBuf_Init(&entry.name);
-			//StringBuf_Printf(&entry.name, "%s", str[17]);
-
-			if (!quest->id) {
-				quest->id = quest_id;
-				idb_put(questdb, quest->id, quest);
-			}
-			count++;
+		if (!yaml_node_is_defined(root_node, "Quest_list")) {
+			ShowError("Missing 'Quest_list' in \"%s\", skipping.\n", filename);
+			yaml_destroy_wrapper(root_node);
+			continue;
 		}
+		quests_list = yaml_get_subnode(root_node, "Quest_list");
+		yamliterator* quest_iterator = yaml_get_iterator(quests_list);
 
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+		if (yaml_iterator_is_valid(quest_iterator)) {
+			yamlwrapper *id = NULL;
+
+			iterator_size = yaml_iterator_size(quest_iterator);
+			for (id = yaml_iterator_first(quest_iterator); yaml_iterator_has_next(quest_iterator); id = yaml_iterator_next(quest_iterator)) {
+				yamlwrapper* hunt = NULL;
+				yamlwrapper* hunt_for_item = NULL;
+				yamlwrapper *tmp_node = NULL;
+				yamliterator *tmp_it;
+
+				// quest id
+				if (!yaml_node_is_defined(id, "Quest_Infos")) {
+					ShowError("Missing Quest info in '%s', entry #%d, skipping.\n", filename, total_quest);
+					yaml_destroy_wrapper(id);
+					continue;
+				}
+				tmp_node = yaml_get_subnode(id, "Quest_Infos");
+				tmp_it = yaml_get_iterator(tmp_node);
+				if (!yaml_iterator_is_valid(tmp_it)) {
+					ShowWarning("quest_db: Invalid Quest_Infos format in '%s', entry #%d, skipping.\n", filename, total_quest);
+					yaml_destroy_wrapper(id);
+					yaml_destroy_wrapper(tmp_node);
+					continue;
+				}
+				if (yaml_iterator_size(tmp_it) > 2)
+					ShowDebug("quest_db: Invalid Quest_Infos size in '%s, entry #%d.\n", quest_id, filename, total_quest);
+				yamlwrapper *wrapper_id = yaml_iterator_first(tmp_it);
+				quest_id = yaml_as_int(wrapper_id);
+				// if (yaml_iterator_has_next(tmp_it)) {
+					// yamlwrapper *wrapper_name = yaml_iterator_next(tmp_it);
+					// char* quest_name = yaml_as_c_string(tmp_it);
+					// yaml_destroy_wrapper(wrapper_name);
+				// }
+				yaml_destroy_wrapper(wrapper_id);
+				yaml_destroy_wrapper(tmp_node);
+				yaml_iterator_destroy(tmp_it);
+
+				if (quest_id < 0 || quest_id >= INT_MAX) {
+					ShowError("Invalid quest ID '%d' in '%s'' (min: 0, max: %d.), skipping.\n", quest_id, filename, INT_MAX);
+					yaml_destroy_wrapper(id);
+					continue;
+				}
+
+				if (!(quest = (struct quest_db *)idb_get(questdb, quest_id)))
+					CREATE(quest, struct quest_db, 1);
+				else {
+					if (quest->objectives) {
+						aFree(quest->objectives);
+						quest->objectives = NULL;
+						quest->objectives_count = 0;
+					}
+					if (quest->dropitem) {
+						aFree(quest->dropitem);
+						quest->dropitem = NULL;
+						quest->dropitem_count = 0;
+					}
+				}
+
+				if (quest->id) {
+					ShowWarning("Duplicate quest ID '%d' in '%s'.\n", quest_id, filename);
+					yaml_destroy_wrapper(id);
+					continue;
+				}
+
+				// TimeLimit
+				if (yaml_node_is_defined(id, "TimeLimit")) {
+					quest->time = yaml_get_int(id, "TimeLimit");
+					quest->time_type = 0;
+				}
+				else if (yaml_node_is_defined(id, "TimeLimit_HourMin")) {
+					char* time_limit_value = yaml_get_c_string(id, "TimeLimit_HourMin");
+					if (strchr(time_limit_value,':') == NULL) {
+						ShowWarning("Invalid TimeLimit_HourMin format for quest ID '%d' in '%s'.\n", quest_id, filename);
+						yaml_destroy_wrapper(id);
+						continue;
+					}
+					unsigned char hour, min;
+
+					hour = atoi(time_limit_value);
+					time_limit_value = strchr(time_limit_value,':');
+					*time_limit_value ++= 0;
+					min = atoi(time_limit_value);
+
+					quest->time = hour * 3600 + min * 60;
+					quest->time_type = 1;
+				}
+
+				// hunt objectives
+				if (yaml_node_is_defined(id, "Hunt") && (tmp_node = yaml_get_subnode(id, "Hunt"))) {
+					tmp_it = yaml_get_iterator(tmp_node);
+					if (!yaml_iterator_is_valid(tmp_it)) {
+						ShowWarning("quest_db: Invalid Hunt format for quest id %d in '%s', skipping.\n", quest_id, filename);
+						yaml_destroy_wrapper(id);
+						yaml_destroy_wrapper(tmp_node);
+						continue;
+					}
+					if (yaml_iterator_size(tmp_it) % 2) {
+						ShowWarning("quest_db: Invalid Hunt size for quest id %d in '%s, skipping.\n", quest_id, filename);
+						yaml_destroy_wrapper(id);
+						yaml_destroy_wrapper(tmp_node);
+						continue;
+					}
+					yamlwrapper *wrapper_hunt = NULL;
+					yamlwrapper *wrapper_count = NULL;
+
+					for (wrapper_hunt = yaml_iterator_first(tmp_it); yaml_iterator_has_next(tmp_it) && quest->objectives_count < MAX_QUEST_OBJECTIVES; wrapper_hunt = yaml_iterator_next(tmp_it)) {
+						wrapper_count = yaml_iterator_next(tmp_it);
+						uint16 mob_id = yaml_as_int(wrapper_hunt);
+						if (mob_id && mobdb_exists(mob_id) == NULL)
+							ShowWarning("Invalid monster ID '%d' for quest id %d in '%s.\n", mob_id, quest_id, filename);
+						else {
+							RECREATE(quest->objectives, struct quest_objective, quest->objectives_count+1);
+							quest->objectives[quest->objectives_count].mob = mob_id;
+							quest->objectives[quest->objectives_count].count = yaml_as_int(wrapper_count);
+							quest->objectives_count++;
+						}
+						yaml_destroy_wrapper(wrapper_hunt);
+						yaml_destroy_wrapper(wrapper_count);
+					}
+					yaml_iterator_destroy(tmp_it);
+					yaml_destroy_wrapper(tmp_node);
+				}
+
+				// drop objectives
+				if (yaml_node_is_defined(id, "Hunt_For_Item") && (tmp_node = yaml_get_subnode(id, "Hunt_For_Item"))) {
+					tmp_it = yaml_get_iterator(tmp_node);
+					if (!yaml_iterator_is_valid(tmp_it)) {
+						ShowWarning("quest_db: Invalid Hunt_For_Item format for quest id %d in '%s, skipping.\n", quest_id, filename);
+						yaml_destroy_wrapper(id);
+						yaml_destroy_wrapper(tmp_node);
+						continue;
+					}
+					if (yaml_iterator_size(tmp_it) % 3) {
+						ShowWarning("quest_db: Invalid Hunt_For_Item size for quest id %d in '%s, skipping.\n", quest_id, filename);
+						yaml_destroy_wrapper(id);
+						yaml_destroy_wrapper(tmp_node);
+						continue;
+					}
+					yamlwrapper *wrapper_hunt = NULL;
+					yamlwrapper *wrapper_nameid = NULL;
+					yamlwrapper *wrapper_rate = NULL;
+
+					for (wrapper_hunt = yaml_iterator_first(tmp_it); yaml_iterator_has_next(tmp_it) && quest->objectives_count < MAX_QUEST_OBJECTIVES; wrapper_hunt = yaml_iterator_next(tmp_it), wrapper_nameid = yaml_iterator_next(tmp_it), wrapper_rate = yaml_iterator_next(tmp_it)) {
+						wrapper_nameid = yaml_iterator_next(tmp_it);
+						wrapper_rate = yaml_iterator_next(tmp_it);
+						uint16 nameid = yaml_as_int(wrapper_nameid);
+						if (nameid && itemdb_exists(nameid) == NULL)
+							ShowWarning("Invalid item reward '%d' for quest id %d in '%s.\n", nameid, quest_id, filename);
+						else {
+							uint16 mob_id = yaml_as_int(wrapper_hunt);
+							if (mob_id && mobdb_exists(mob_id) == NULL)
+								ShowWarning("Invalid monster ID '%d' for quest id %d in '%s.\n", mob_id, quest_id, filename);
+							else {
+								uint16 rate = yaml_as_int(wrapper_rate);
+								RECREATE(quest->dropitem, struct quest_dropitem, quest->dropitem_count+1);
+								quest->dropitem[quest->dropitem_count].mob_id = mob_id;
+								quest->dropitem[quest->dropitem_count].nameid = nameid;
+								quest->dropitem[quest->dropitem_count].count = 1;
+								quest->dropitem[quest->dropitem_count].rate = rate;
+								quest->dropitem_count++;
+							}
+						}
+						yaml_destroy_wrapper(wrapper_hunt);
+						yaml_destroy_wrapper(wrapper_nameid);
+						yaml_destroy_wrapper(wrapper_rate);
+					}
+					yaml_iterator_destroy(tmp_it);
+					yaml_destroy_wrapper(tmp_node);
+				}
+
+				if (!quest->id) {
+					quest->id = quest_id;
+					idb_put(questdb, quest->id, quest);
+				}
+				yaml_destroy_wrapper(id);
+				total_quest++;
+			}
+		}
+		yaml_iterator_destroy(quest_iterator);
+		yaml_destroy_wrapper(quests_list);
+		yaml_destroy_wrapper(root_node);
+
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"/"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", total_quest, iterator_size, filename);
 	}
 }
 
@@ -555,7 +637,7 @@ void quest_read_txtdb(void)
  */
 static void quest_read_db(void)
 {
-	quest_read_txtdb();
+	quest_read_ymldb();
 }
 
 /**

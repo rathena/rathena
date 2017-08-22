@@ -79,6 +79,7 @@ bool yaml_iterator_is_valid(yamliterator* it);
 yamlwrapper* yaml_iterator_first(yamliterator* it);
 yamlwrapper* yaml_iterator_next(yamliterator* it);
 bool yaml_iterator_has_next(yamliterator* it);
+int64 yaml_iterator_size(yamliterator* it);
 void yaml_iterator_destroy(yamliterator* it);
 
 #ifdef __cplusplus
