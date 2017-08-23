@@ -91,11 +91,9 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Configure and compile:
 
 				./configure && make clean && make server
-				
 	* Configure and compile (for Centos 64 bit with Maria DB):
 
 				./configure --enable-64bit --with-MYSQL_LIBS=/usr/lib64/libmysqlclient.so && make clean && make server
-				
 	* When you're ready, start the servers:
 
 				./athena-start start
