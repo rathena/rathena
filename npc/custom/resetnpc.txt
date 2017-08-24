@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 All statuses removed upon skill reset. [Euphy]
 //= 1.4 Compressed Script, Added limit use option [Stolao]
 //=	Changed set -> setarray, Improved text with F_InsertPlural
+//= 1.5 Adding SC per Class [sader1992]
 //============================================================
 prontera,150,193,4	script	Reset Girl	124,{
 	//	 		Skills,	Stats,	Both,	Limit
@@ -44,11 +45,341 @@ prontera,150,193,4	script	Reset Girl	124,{
 	}
 	set Zeny, Zeny-.@Reset[.@i-1];
 	if(.@i&1){
-		sc_end SC_ALL;// TODO make a sc_end current classes sc only
+		callsub SC_Class;
 		ResetSkill;
 	}
 	if(.@i&2) ResetStatus;
 	mes "There you go!";
 	if(.@Reset[3]) set reset_limit,reset_limit + 1;
 	close;
+	
+SC_Class:
+	sc_end SC_SPIRIT;
+	switch (BaseClass) {
+		case Job_Novice:
+			sc_end SC_TRICKDEAD;
+			sc_end SC_ENDURE;
+			sc_end SC_HIDING;
+			sc_end SC_INCREASEAGI;
+			sc_end SC_BLESSING;
+			sc_end SC_ANGELUS;
+			sc_end SC_CONCENTRATE;
+			sc_end SC_SIGHT;
+			break;
+		case Job_Swordman:
+			//-Swordman-
+			sc_end SC_BERSERK;
+			sc_end SC_ENDURE;
+			//-Lord Knight-
+			sc_end SC_AUTOCOUNTER;
+			sc_end SC_AUTOBERSERK;
+			sc_end SC_AURABLADE;
+			sc_end SC_TENSIONRELAX;
+			sc_end SC_CONCENTRATE;
+			sc_end SC_ONEHAND;
+			//-Paladin-
+			sc_end SC_SACRIFICE;
+			sc_end SC_AUTOGUARD;
+			sc_end SC_REFLECTSHIELD;
+			sc_end SC_GOSPEL;
+			sc_end SC_DEFENDER;
+			sc_end SC_SPEARQUICKEN;
+			sc_end SC_SHRINK;
+			//-Rune Knight-
+			sc_end SC_ENCHANTBLADE;
+			sc_end SC_DEATHBOUND;
+			sc_end SC_MILLENNIUMSHIELD;
+			sc_end SC_CRUSHSTRIKE;
+			sc_end SC_REFRESH;
+			sc_end SC_REUSE_REFRESH;
+			sc_end SC_GIANTGROWTH;
+			sc_end SC_STONEHARDSKIN;
+			sc_end SC_VITALITYACTIVATION;
+			sc_end SC_STORMBLAST;
+			sc_end SC_FIGHTINGSPIRIT;
+			sc_end SC_ABUNDANCE;
+			//-Royal Guard-
+			sc_end SC_REFLECTDAMAGE;
+			sc_end SC_FORCEOFVANGUARD;
+			sc_end SC_SHIELDSPELL_DEF;
+			sc_end SC_SHIELDSPELL_MDEF;
+			sc_end SC_SHIELDSPELL_REF;
+			sc_end SC_EXEEDBREAK;
+			sc_end SC_PRESTIGE;
+			sc_end SC_BANDING;
+			sc_end SC_BANDING_DEFENCE;
+			sc_end SC_EARTHDRIVE;
+			sc_end SC_INSPIRATION;
+			break;
+		case Job_Mage:
+			//-Mage-
+			sc_end SC_ENERGYCOAT;
+			sc_end SC_SIGHT;
+			//-High Wizard-
+			sc_end SC_SIGHTBLASTER;
+			sc_end SC_MAGICPOWER;
+			//-Professor-
+			sc_end SC_DOUBLECAST;
+			sc_end SC_AUTOSPELL;
+			sc_end SC_MEMORIZE;
+			//-Warlock-
+			sc_end SC_WHITEIMPRISON;
+			sc_end SC_MARSHOFABYSS;
+			sc_end SC_RECOGNIZEDSPELL;
+			sc_end SC_STASIS;
+			sc_end SC_SPHERE_1;
+			sc_end SC_SPHERE_2;
+			sc_end SC_SPHERE_3;
+			sc_end SC_SPHERE_4;
+			sc_end SC_SPHERE_5;
+			sc_end SC_READING_SB;
+			sc_end SC_FREEZE_SP;
+			//Warlock Spell books
+			sc_end SC_SPELLBOOK1;
+			sc_end SC_SPELLBOOK2;
+			sc_end SC_SPELLBOOK3;
+			sc_end SC_SPELLBOOK4;
+			sc_end SC_SPELLBOOK5;
+			sc_end SC_SPELLBOOK6;
+			//-Sorcerer-
+			sc_end SC_SPELLFIST;
+			sc_end SC_CRYSTALIZE;
+			sc_end SC_STRIKING;
+			sc_end SC_WARMER;
+			sc_end SC_VACUUM_EXTREME;
+			sc_end SC_PROPERTYWALK;
+			//Sorcerer Extra
+			sc_end SC_FIRE_INSIGNIA;
+			sc_end SC_WATER_INSIGNIA;
+			sc_end SC_WIND_INSIGNIA;
+			sc_end SC_EARTH_INSIGNIA;
+			break;
+		case Job_Archer:
+			//-Archer-
+			sc_end SC_CONCENTRATE;
+			//-Sniper-
+			sc_end SC_WINDWALK;
+			sc_end SC_TRUESIGHT;
+			//-bard / dancer-
+			sc_end SC_WHISTLE;
+			sc_end SC_INTOABYSS;
+			sc_end SC_ASSNCROS;
+			sc_end SC_POEMBRAGI;
+			sc_end SC_APPLEIDUN;
+			//-Ranger-
+			sc_end SC_FEARBREEZE;
+			sc_end SC_ELECTRICSHOCKER;
+			sc_end SC_WUGDASH;
+			sc_end SC_BITE;
+			sc_end SC_CAMOUFLAGE;
+			//-Minstrel / Wanderer-
+			sc_end SC_SWINGDANCE;
+			sc_end SC_SYMPHONYOFLOVER;
+			sc_end SC_MOONLITSERENADE;
+			sc_end SC_RUSHWINDMILL;
+			sc_end SC_ECHOSONG;
+			sc_end SC_HARMONIZE;
+			sc_end SC_VOICEOFSIREN;
+			sc_end SC_DEEPSLEEP;
+			sc_end SC_SIRCLEOFNATURE;
+			sc_end SC_GLOOMYDAY;
+			sc_end SC_GLOOMYDAY_SK;
+			sc_end SC_SONGOFMANA;
+			sc_end SC_DANCEWITHWUG;
+			sc_end SC_SATURDAYNIGHTFEVER;
+			sc_end SC_LERADSDEW;
+			sc_end SC_MELODYOFSINK;
+			sc_end SC_BEYONDOFWARCRY;
+			sc_end SC_UNLIMITEDHUMMINGVOICE;
+			sc_end SC_SITDOWN_FORCE;
+			sc_end SC_NETHERWORLD;
+			break;
+		case Job_Acolyte:
+			//-Acolyte-
+			sc_end SC_RUWACH;
+			sc_end SC_INCREASEAGI;
+			sc_end SC_BLESSING;
+			sc_end SC_ANGELUS;
+			//-High Priest-
+			sc_end SC_KYRIE;
+			sc_end SC_GLORIA;
+			sc_end SC_MAGNIFICAT;
+			sc_end SC_ASSUMPTIO;
+			//-Champion-
+			//dangerouse soul collect?
+			sc_end SC_STEELBODY;
+			sc_end SC_EXPLOSIONSPIRITS;
+			//-Arch Bishop-
+			sc_end SC_ADORAMUS;
+			sc_end SC_EPICLESIS;
+			sc_end SC_ORATIO;
+			sc_end SC_LAUDAAGNUS;
+			sc_end SC_LAUDARAMUS;
+			sc_end SC_RENOVATIO;
+			sc_end SC_EXPIATIO;
+			sc_end SC_DUPLELIGHT;
+			sc_end SC_SECRAMENT;
+			//-Sura-
+			sc_end SC_CRESCENTELBOW;
+			sc_end SC_CURSEDCIRCLE_ATKER;
+			sc_end SC_CURSEDCIRCLE_TARGET;
+			sc_end SC_LIGHTNINGWALK;
+			sc_end SC_RAISINGDRAGON;
+			sc_end SC_GT_ENERGYGAIN;
+			sc_end SC_GT_CHANGE;
+			sc_end SC_GT_REVITALIZE;
+			break;
+		case Job_Merchant:
+			//-Merchant-
+			sc_end SC_LOUD;
+			//-Whitesmith-
+			sc_end SC_CARTBOOST;
+			sc_end SC_MELTDOWN;
+			sc_end SC_WEAPONPERFECTION;
+			sc_end SC_MAXIMIZEPOWER;
+			sc_end SC_ADRENALINE;
+			sc_end SC_OVERTHRUST;
+			sc_end SC_MAXOVERTHRUST;
+			//-Creator-
+			sc_end SC_CP_WEAPON;
+			sc_end SC_CP_SHIELD;
+			sc_end SC_CP_ARMOR;
+			sc_end SC_CP_HELM;
+			//-Mechanic-
+			sc_end SC_ACCELERATION;
+			sc_end SC_HOVERING;
+			sc_end SC_SHAPESHIFT;
+			sc_end SC_INFRAREDSCAN;
+			sc_end SC_ANALYZE;
+			sc_end SC_MAGNETICFIELD;
+			sc_end SC_NEUTRALBARRIER;
+			sc_end SC_NEUTRALBARRIER_MASTER;
+			sc_end SC_STEALTHFIELD;
+			sc_end SC_STEALTHFIELD_MASTER;
+			sc_end SC_OVERHEAT;
+			sc_end SC_OVERHEAT_LIMITPOINT;
+			//-Genetic-
+			sc_end SC_GN_CARTBOOST;
+			sc_end SC_THORNSTRAP;
+			sc_end SC_BLOODSUCKER;
+			sc_end SC_SMOKEPOWDER;
+			sc_end SC_TEARGAS;
+			sc_end SC_MANDRAGORA;
+			sc_end SC_STOMACHACHE;
+			sc_end SC_MYSTERIOUS_POWDER;
+			sc_end SC_MELON_BOMB;
+			sc_end SC_BANANA_BOMB;
+			sc_end SC_BANANA_BOMB_SITDOWN;
+			sc_end SC_SAVAGE_STEAK;
+			sc_end SC_COCKTAIL_WARG_BLOOD;
+			sc_end SC_MINOR_BBQ;
+			sc_end SC_SIROMA_ICE_TEA;
+			sc_end SC_DROCERA_HERB_STEAMED;
+			sc_end SC_PUTTI_TAILS_NOODLES;
+			sc_end SC_BOOST500;
+			sc_end SC_FULL_SWING_K;
+			sc_end SC_MANA_PLUS;
+			sc_end SC_MUSTLE_M;
+			sc_end SC_LIFE_FORCE_F;
+			sc_end SC_EXTRACT_WHITE_POTION_Z;
+			sc_end SC_VITATA_500;
+			sc_end SC_EXTRACT_SALAMINE_JUICE;
+			break;
+		case Job_Thief:
+			//-Thief-
+			sc_end SC_HIDING;
+			//-Assassin Cross-
+			sc_end SC_CLOAKING;
+			sc_end SC_POISONREACT;
+			sc_end SC_ENCPOISON;
+			//-Stalker-
+			sc_end SC_CHASEWALK;
+			sc_end SC_REJECTSWORD;
+			sc_end SC_PRESERVE;
+			//-Guillotine Cross-
+			sc_end SC_VENOMIMPRESS;
+			sc_end SC_POISONINGWEAPON;
+			sc_end SC_WEAPONBLOCKING;
+			sc_end SC_CLOAKINGEXCEED;
+			sc_end SC_HALLUCINATIONWALK;
+			sc_end SC_HALLUCINATIONWALK_POSTDELAY;
+			sc_end SC_ROLLINGCUTTER;
+			sc_end SC_TOXIN;
+			sc_end SC_PARALYSE;
+			sc_end SC_VENOMBLEED;
+			sc_end SC_MAGICMUSHROOM;
+			sc_end SC_DEATHHURT;
+			sc_end SC_PYREXIA;
+			sc_end SC_OBLIVIONCURSE;
+			sc_end SC_LEECHESEND;
+			//-Shadow Chaser-
+			sc_end SC__REPRODUCE;
+			sc_end SC__AUTOSHADOWSPELL;
+			sc_end SC__SHADOWFORM;
+			sc_end SC__BODYPAINT;
+			sc_end SC__INVISIBILITY;
+			sc_end SC__DEADLYINFECT;
+			sc_end SC__ENERVATION;
+			sc_end SC__GROOMY;
+			sc_end SC__IGNORANCE;
+			sc_end SC__LAZINESS;
+			sc_end SC__UNLUCKY;
+			sc_end SC__WEAKNESS;
+			sc_end SC__STRIPACCESSORY;
+			sc_end SC__MANHOLE;
+			sc_end SC__BLOODYLUST;
+			break;
+		case Job_Ninja:
+			sc_end SC_MAGICMIRROR;
+			//Cisada Skin Shed?
+			//ninja aura?
+			//mirror image?
+			//-Kagerou / Oboro-
+			sc_end SC_HIDING;
+			//fire charm?
+			//ice charm?
+			//wind charm?
+			//earth charm?
+			//the 16th night?
+			sc_end sc_all;
+			break;
+		case Job_Gunslinger:
+			sc_end SC_ADJUSTMENT;
+			sc_end SC_GATLINGFEVER;
+			sc_end SC_MADNESSCANCEL;
+			sc_end SC_INCREASING;
+			break;
+		case Job_Taekwon:
+			//-Taekwon-
+			//tornado kick ?
+			//heel drop stance?
+			//roundhouse stance?
+			//counter kick stance?
+			//tumbling?
+			//mild wind?
+			//-Soul Linker-
+			//no self buffs
+			//-Star Gladiator-
+			//solar heat/protaction ?
+			//lunar heat/protaction ?
+			//stellar heat/protaction ?
+			//union?
+			sc_end sc_all;
+			break;
+		case Job_Summoner:
+			sc_end SC_SUHIDE;
+			sc_end SC_SU_STOOP;
+			sc_end SC_SPRITEMABLE;
+			sc_end SC_CATNIPPOWDER;
+			sc_end SC_SV_ROOTTWIST;
+			sc_end SC_BITESCAR;
+			sc_end SC_ARCLOUSEDASH;
+			sc_end SC_TUNAPARTY;
+			sc_end SC_SHRIMP;
+			sc_end SC_FRESHSHRIMP;
+			break;
+		default:
+			break;
+		}
+	return;
 }
