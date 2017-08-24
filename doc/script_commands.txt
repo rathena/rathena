@@ -5303,28 +5303,24 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*resetskill({<SC reset>},{<char_id>});
+*resetskill({<char_id>});
 
 This command takes off all the skill points on the invoking character, so they
 only have Basic Skill blanked out (lvl 0) left, and returns the points for them
 to spend again. Nothing else will change but the skills. Quest skills will also
 reset if 'quest_skill_reset' option is set to Yes in 'battle_athena.conf'. If
 the 'quest_skill_learn' option is set in there, the points in the quest skills
-will also count towards the total. If <SC reset> is given then the player will
-have any active status changes removed for any skills that they know.
-
-Valid SC reset flags:
- false - Don't reset SC
- true  - Reset SC
+will also count towards the total.
 
 Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
-*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
-*sc_start4 	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
-*sc_end 	<effect type>{,<GID>};
+*sc_start <effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
+*sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
+*sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
+*sc_end <effect type>{,<GID>};
+*sc_end_class {<GID>};
 
 These commands will bestow a status effect on a character.
 
@@ -5361,6 +5357,9 @@ and theirs val1, val2, val3, and val4 usage in source.
 
 'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
 perform a complete removal of all statuses (although permanent ones will re-apply).
+
+'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
+skill on the invoking character.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
