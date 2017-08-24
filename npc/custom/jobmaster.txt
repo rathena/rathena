@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: =========================================
@@ -14,10 +14,12 @@
 //= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support.
 //= 1.3 Kagerou/Oboro added.
 //= 1.4 Rebellion added.
+//= 1.5 Added option to get weapons on job change.
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
 function Job_Menu;
+function Get_Job_Equip;
 
 	mes "[Job Master]";
 	if (Class > Job_Soul_Linker) {
@@ -196,6 +198,8 @@ function Job_Menu {
 			specialeffect2 EF_ELECTRIC;
 			if (.Platinum)
 				callsub Get_Platinum;
+			if (.GetJobEquip)
+				Get_Job_Equip(.@i);
 			close;
 		}
 		if (getargcount() == 1)
@@ -293,6 +297,55 @@ Get_Platinum:
 	}
 	return;
 
+function	Get_Job_Equip
+{
+	if(getarg(0) >= 4054 && getarg(0) <= 4108)
+		getitem 2795,1;	//	Green Apple Ring for 3rd Class
+	switch(getarg(0))
+	{	//First/Second | Rebirth First/Second | Baby First/Second
+		case 1:	case 4002:	case 4024:	getitem 1108,1;	break;	//	Blade [4]
+		case 2:	case 4003:	case 4025:	getitem 1602,1;	break;	//	Rod [4]
+		case 3:	case 4004:	case 4026:	getitem 1705,1;	break;	//	Composite Bow [4]
+		case 4:	case 4005:	case 4027:	getitem 1505,1;	break;	//	Mace [4]
+		case 5:	case 4006:	case 4028:	getitem 1302,1;	break;	//	Axe [4]
+		case 6:	case 4007:	case 4029:	getitem 1208,1;	break;	//	Main Gauche [4]
+		case 7:	case 4008:	case 4030:	getitem 1163,1;	break;	//	Claymore [0]
+		case 8:	case 4009:	case 4031:	getitem 1522,1;	break;	//	Stunner [0]
+		case 9:	case 4010:	case 4032:	getitem 1617,1;	break;	//	Survivor's Rod [0]
+		case 10:	case 4011:	case 4033:	getitem 1360,1;	break;	//	Two-Handed-Axe [1]
+		case 11:	case 4012:	case 4034:	getitem 1718,1;	break;	//	Hunter Bow [0]
+		case 12:	case 4013:	case 4035:	getitem 1254,1;	break;	//	Jamadhar [0]
+		case 14:	case 4015:	case 4037:	getitem 1410,1;	break;	//	Lance [0]
+		case 15:	case 4016:	case 4038:	getitem 1807,1;	break;	//	Fist [0]
+		case 16:	case 4017:	case 4039:	getitem 1550,1;	break;	//	Book [3]
+		case 17:	case 4018:	case 4040:	getitem 1222,1;	break;	//	Damascus [1]
+		case 18:	case 4019:	case 4041:	getitem 1126,1;	break;	//	Saber [2]
+		case 19:	case 4020:	case 4042:	getitem 1907,1;	break;	//	Guitar [0]
+		case 20:	case 4021:	case 4043:	getitem 1960,1;	break;	//	Whip [1]
+		case 23:	case 4001:	case 4045:	getitem 1208,1;	break;	//	Main Gauche [4]
+		case 24:	getitem 13101,1;	break;	//	Six Shooter [2]
+		case 25:	getitem 13010,1;	break;	//	Asura [2]
+		case 4047:	getitem 1550,1;	break;	//	Book [3]
+		case 4049:	getitem 1617,1;	break;	//	Survivor's Rod [0]
+
+		//=	3rd Class
+		case 4054:	case 4060:	case 4096:	getitem 5746,1;	break;	//	Rune Circlet [1]
+		case 4055:	case 4061:	case 4097:	getitem 5753,1;	break;	//	Magic Stone Hat [1]
+		case 4056:	case 4062:	case 4098:	getitem 5748,1;	break;	//	Sniper Goggle [1]
+		case 4057:	case 4063:	case 4099:	getitem 5747,1;	break;	//	Mitra [1]
+		case 4058:	case 4064:	case 4100:	getitem 5749,1;	break;	//	Driver Band [1]
+		case 4059:	case 4065:	case 4101:	getitem 5755,1;	break;	//	Silent Executor [1]
+		case 4066:	case 4073:	case 4102:	getitem 5757,1;	break;	//	Dip Schmidt Helm [1]
+		case 4067:	case 4074:	case 4103:	getitem 5756,1;	break;	//	Wind Whisper [1]
+		case 4068:	case 4075:	case 4104:	getitem 5751,1;	break;	//	Maestro Song's Hat [1]
+		case 4069:	case 4076:	case 4105:	getitem 5758,1;	break;	//	Dying Swan [1]
+		case 4070:	case 4077:	case 4106:	getitem 5754,1;	break;	//	Blazing Soul [1]
+		case 4071:	case 4078:	case 4107:	getitem 5752,1;	break;	//	Midas Whisper[1]
+		case 4072:	case 4079:	case 4108:	getitem 5750,1; getitem 6121,1; getitem 6122,1;	break;	//	Shadow Handicraft [1]
+	}
+	return;
+}
+
 OnInit:
 	setarray .Rebirth[0],99,50;	// Minimum base level, job level to rebirth OR change to third class
 	setarray .JobReq[0],10,40;	// Minimum job level to turn into 1st class, 2nd class
@@ -302,5 +355,6 @@ OnInit:
 	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
 	.SkillPointCheck = 1;		// Force player to use up all skill points? (1: yes / 0: no)
 	.Platinum = 1;				// Get platinum skills automatically? (1: yes / 0: no)
+	.GetJobEquip = 0;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
 	end;
 }
