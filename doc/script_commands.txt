@@ -5314,8 +5314,8 @@ will also count towards the total. If <SC reset> is given then the player will
 have any active status changes removed for any skills that they know.
 
 Valid SC reset flags:
- 0 - Don't reset SC
- 1 - Reset SC
+ false - Don't reset SC
+ true  - Reset SC
 
 Used in reset NPC's (duh!)
 

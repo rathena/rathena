@@ -39,7 +39,7 @@ prontera,150,193,4	script	Reset Girl	124,{
 	}
 	set Zeny, Zeny-.@Reset[.@i-1];
 	if(.@i&1)
-		ResetSkill 1;
+		ResetSkill true;
 	if(.@i&2) ResetStatus;
 	mes "There you go!";
 	if(.@Reset[3]) set reset_limit,reset_limit + 1;
