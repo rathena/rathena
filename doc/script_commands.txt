@@ -5303,14 +5303,19 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*resetskill({<char_id>});
+*resetskill({<SC reset>},{<char_id>});
 
 This command takes off all the skill points on the invoking character, so they
 only have Basic Skill blanked out (lvl 0) left, and returns the points for them
 to spend again. Nothing else will change but the skills. Quest skills will also
 reset if 'quest_skill_reset' option is set to Yes in 'battle_athena.conf'. If
 the 'quest_skill_learn' option is set in there, the points in the quest skills
-will also count towards the total.
+will also count towards the total. If <SC reset> is given then the player will
+have any active status changes removed for any skills that they know.
+
+Valid SC reset flags:
+ 0 - Don't reset SC
+ 1 - Reset SC
 
 Used in reset NPC's (duh!)
 

@@ -11646,14 +11646,17 @@ BUILDIN_FUNC(resetstatus)
 
 /**
  * Reset player's skill
- * resetskill({<char_id>});
+ * resetskill({<SC reset>},{<char_id>});
  **/
 BUILDIN_FUNC(resetskill)
 {
 	TBL_PC *sd;
-	if (!script_charid2sd(2,sd))
+	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
-	pc_resetskill(sd,1);
+	if (script_hasdata(st, 2) && script_getnum(st, 2))
+		pc_resetskill(sd, 1|8);
+	else
+		pc_resetskill(sd, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 

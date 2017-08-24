@@ -7288,10 +7288,11 @@ int pc_resetstate(struct map_session_data* sd)
  * if flag&1, perform block resync and status_calc call.
  * if flag&2, just count total amount of skill points used by player, do not really reset.
  * if flag&4, just reset the skills if the player class is a bard/dancer type (for changesex.)
+ * if flag&8, remove Status Change related to the learned skill
  *------------------------------------------*/
 int pc_resetskill(struct map_session_data* sd, int flag)
 {
-	int i, skill_point=0;
+	int i, skill_id, skill_point=0;
 	nullpo_ret(sd);
 
 	if( flag&4 && (sd->class_&MAPID_UPPERMASK) != MAPID_BARDDANCER )
@@ -7334,6 +7335,15 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		if (sd->sc.data[SC_SPRITEMABLE] && pc_checkskill(sd, SU_SPRITEMABLE))
 			status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
+	}
+
+	if (flag&8) { // Status Changes to remove when changing class tree.
+		for (i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0; i++) { // Remove status specific to your current tree skills.
+			enum sc_type sc = status_skill2sc(skill_id);
+
+			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+				status_change_end(&sd->bl, sc, INVALID_TIMER);
+		}
 	}
 
 	for( i = 1; i < MAX_SKILL; i++ )
