@@ -231,7 +231,7 @@ SC_Class:
 			break;
 		case Job_Merchant:
 			//-Merchant-
-			//crazy uproar?
+			sc_end SC_LOUD;
 			//-Whitesmith-
 			sc_end SC_CARTBOOST;
 			sc_end SC_MELTDOWN;
@@ -347,7 +347,7 @@ SC_Class:
 			sc_end SC_ADJUSTMENT;
 			sc_end SC_GATLINGFEVER;
 			sc_end SC_MADNESSCANCEL;
-			//SC_INCREASING incress accuracy?
+			sc_end SC_INCREASING;
 			break;
 		case Job_Taekwon:
 			//-Taekwon-
