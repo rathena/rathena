@@ -11321,9 +11321,9 @@ BUILDIN_FUNC(sc_end)
 
 /**
  * Ends all status effects from any learned skill on the attached player.
- * sc_end_class {<GID>};
+ * sc_end_class {<char_id>};
  */
-BUILDIN_DEF(sc_end_class)
+BUILDIN_FUNC(sc_end_class)
 {
 	struct map_session_data *sd;
 	uint16 skill_id;
@@ -11676,7 +11676,7 @@ BUILDIN_FUNC(resetskill)
 	TBL_PC *sd;
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	pc_resetskill(sd, 1);
+	pc_resetskill(sd,1);
 	return SCRIPT_CMD_SUCCESS;
 }
 

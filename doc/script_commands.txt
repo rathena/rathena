@@ -5320,7 +5320,7 @@ Used in reset NPC's (duh!)
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
 *sc_end <effect type>{,<GID>};
-*sc_end_class {<GID>};
+*sc_end_class {<char_id>};
 
 These commands will bestow a status effect on a character.
 
