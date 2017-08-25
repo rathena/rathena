@@ -1123,7 +1123,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
 					continue;
 				type = sd->addeff_onskill[i].sc;
-				time = sd->addeff[i].duration;
+				time = sd->addeff_onskill[i].duration;
 
 				if( sd->addeff_onskill[i].target&ATF_TARGET )
 					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
