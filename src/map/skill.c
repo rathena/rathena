@@ -15625,18 +15625,21 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 
 	//check if equipped item
 	if (require.eqItem_count) {
+		uint8 count = require.eqItem_count;
+
 		for (i = 0; i < require.eqItem_count; i++) {
 			uint16 reqeqit = require.eqItem[i];
 
 			if (!reqeqit)
 				break; //no required item; get out of here
 			if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
-				if (i == require.eqItem_count) {
+				count--;
+				if (!count) {
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
 					return false;
-				}
-			} else
-				break; // Wearing an applicable item.
+				} else
+					continue;
+			}
 		}
 	}
 
