@@ -11319,6 +11319,29 @@ BUILDIN_FUNC(sc_end)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Ends all status effects from any learned skill on the attached player.
+ * sc_end_class {<char_id>};
+ */
+BUILDIN_FUNC(sc_end_class)
+{
+	struct map_session_data *sd;
+	uint16 skill_id;
+	int i;
+
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	for (i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0; i++) { // Remove status specific to your current tree skills.
+		enum sc_type sc = status_skill2sc(skill_id);
+
+		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+			status_change_end(&sd->bl, sc, INVALID_TIMER);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * @FIXME atm will return reduced tick, 0 immune, 1 no tick
  *------------------------------------------*/
@@ -23747,6 +23770,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 	BUILDIN_DEF(sc_end,"i?"),
+	BUILDIN_DEF(sc_end_class,"?"),
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
