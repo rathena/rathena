@@ -3562,7 +3562,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			int16 x = skill_area_temp[4], y = skill_area_temp[5];
 
 			map_search_freecell(NULL, bl->m, &x, &y, 2, 2, 1);
-			skill_addtimerskill_(bl,tick + 800,bl->id,x,y,skill_id,skill_lv,0,flag);
+			skill_addtimerskill(bl,tick + 800,bl->id,x,y,skill_id,skill_lv,0,flag);
 		}
 	}
 
