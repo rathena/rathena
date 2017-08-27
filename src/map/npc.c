@@ -1412,18 +1412,17 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 			{
 				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
 
-				if (id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
-					if (cost[0] < (price - points)) {
-						char output[CHAT_SIZE_MAX];
-
-						memset(output, '\0', sizeof(output));
-
-						sprintf(output, msg_txt(sd, 712), id->jname, id->nameid); // You do not have enough %s (%hu).
-						clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
-						return ERROR_TYPE_PURCHASE_FAIL;
-					}
-				} else {
+				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
 					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+					return ERROR_TYPE_PURCHASE_FAIL;
+				}
+				if (cost[0] < (price - points)) {
+					char output[CHAT_SIZE_MAX];
+
+					memset(output, '\0', sizeof(output));
+
+					sprintf(output, msg_txt(sd, 712), id->jname, id->nameid); // You do not have enough %s (%hu).
+					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 				if (pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC)) {
@@ -1582,7 +1581,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
 					if (sd->inventory.u.items_inventory[i].nameid == id->nameid &&
-					    npc_can_sell_item(sd, &sd->inventory.u.items_inventory[i])) {
+					    pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i])) {
 						total += sd->inventory.u.items_inventory[i].amount;
 					}
 				}
@@ -4801,29 +4800,5 @@ void do_init_npc(void){
 	fake_nd->u.scr.timerid = INVALID_TIMER;
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
-}
-
-/**
-* Check if the player can sell the current item
-* @param sd map_session_data of the player
-* @param item struct of the checking item.
-* @return bool 'true' is sellable, 'false' otherwise
-*/
-bool npc_can_sell_item(struct map_session_data * sd, struct item * item) {
-	if (sd == NULL || item == NULL)
-		return false;
-
-	if (!itemdb_cansell(item, pc_get_group_level(sd)))
-		return false;
-
-	if (battle_config.hide_fav_sell && item->favorite)
-		return false; //Cannot sell favs (optional config)
-
-	if (item->expire_time)
-		return false; // Cannot Sell Rental Items
-
-	if (item->bound && !pc_can_give_bounded_items(sd))
-		return false; // Don't allow sale of bound items
-	return true;
 }
 
