@@ -1962,17 +1962,8 @@ void clif_selllist(struct map_session_data *sd)
 	{
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory_data[i] )
 		{
-			if( !itemdb_cansell(&sd->inventory.u.items_inventory[i], pc_get_group_level(sd)) )
+			if( !npc_can_sell_item(sd, &sd->inventory.u.items_inventory[i]))
 				continue;
-
-			if( battle_config.hide_fav_sell && sd->inventory.u.items_inventory[i].favorite )
-				continue; //Cannot sell favs [Jey]
-
-			if( sd->inventory.u.items_inventory[i].expire_time )
-				continue; // Cannot Sell Rental Items
-
-			if( sd->inventory.u.items_inventory[i].bound && !pc_can_give_bounded_items(sd))
-				continue; // Don't allow sale of bound items
 
 			val=sd->inventory_data[i]->value_sell;
 			if( val < 0 )

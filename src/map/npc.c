@@ -1581,19 +1581,8 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
-					if (sd->inventory.u.items_inventory[i].nameid == id->nameid) {
-						if (!itemdb_cansell(&sd->inventory.u.items_inventory[i], pc_get_group_level(sd)))
-							continue;
-
-						if (battle_config.hide_fav_sell && sd->inventory.u.items_inventory[i].favorite)
-							continue; //Cannot sell favs [Jey]
-
-						if (sd->inventory.u.items_inventory[i].expire_time)
-							continue; // Cannot Sell Rental Items
-
-						if (sd->inventory.u.items_inventory[i].bound && !pc_can_give_bounded_items(sd))
-							continue; // Don't allow sale of bound items
-
+					if (sd->inventory.u.items_inventory[i].nameid == id->nameid &&
+					    npc_can_sell_item(sd, &sd->inventory.u.items_inventory[i])) {
 						total += sd->inventory.u.items_inventory[i].amount;
 					}
 				}
@@ -4813,3 +4802,28 @@ void do_init_npc(void){
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
 }
+
+/**
+* Check if the player can sell the current item
+* @param sd map_session_data of the player
+* @param item struct of the checking item.
+* @return bool 'true' is sellable, 'false' otherwise
+*/
+bool npc_can_sell_item(struct map_session_data * sd, struct item * item) {
+	if (sd == NULL || item == NULL)
+		return false;
+
+	if (!itemdb_cansell(item, pc_get_group_level(sd)))
+		return false;
+
+	if (battle_config.hide_fav_sell && item->favorite)
+		return false; //Cannot sell favs (optional config)
+
+	if (item->expire_time)
+		return false; // Cannot Sell Rental Items
+
+	if (item->bound && !pc_can_give_bounded_items(sd))
+		return false; // Don't allow sale of bound items
+	return true;
+}
+
