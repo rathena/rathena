@@ -14,8 +14,9 @@
 //= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support.
 //= 1.3 Kagerou/Oboro added.
 //= 1.4 Rebellion added.
-//= 1.5 Added option to get weapons on job change.
-//=		Added option to enable/disable rebirth class.
+//= 1.5 Added option to disable RebirthClass. [mazvi]
+//= 1.6 Added option to get weapons on job change.
+//= 1.7 Readability changes.
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
