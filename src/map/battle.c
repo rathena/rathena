@@ -2185,16 +2185,16 @@ static int battle_skill_damage(struct block_list *src, struct block_list *target
 
 /**
  * Calculates Minstrel/Wanderer bonus for Chorus skills.
- * @param sd Player who has Chorus skill active
+ * @param sd: Player who has Chorus skill active
  * @return Bonus value based on party count
  */
-static int battle_calc_chorusbonus(struct map_session_data *sd) {
+int battle_calc_chorusbonus(struct map_session_data *sd) {
 	int members = 0;
 
 	if (!sd || !sd->status.party_id)
 		return 0;
 
-	members = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+	members = party_foreachsamemap(party_sub_count_class, sd, 0, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
 
 	if (members < 3)
 		return 0; // Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
