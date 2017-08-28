@@ -2111,8 +2111,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (skill_id != RK_REFRESH && skill_id != SU_GROOMING && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
-			if (!(skill_get_inf(skill_id)&INF_GROUND_SKILL)) 
-				return false; // Targetted spells can't come off.
+			if (skill_get_casttype(skill_id) == CAST_DAMAGE)
+				return false; // Damage spells stop casting.
 		}
 
 		if (
