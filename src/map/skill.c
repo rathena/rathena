@@ -34,6 +34,7 @@
 #include "guild.h"
 #include "date.h"
 #include "unit.h"
+#include "achievement.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1122,7 +1123,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
 					continue;
 				type = sd->addeff_onskill[i].sc;
-				time = sd->addeff[i].duration;
+				time = sd->addeff_onskill[i].duration;
 
 				if( sd->addeff_onskill[i].target&ATF_TARGET )
 					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
@@ -3557,8 +3558,12 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			rate = rate + (status_get_lv(src) - status_get_lv(bl));
 			if(rnd()%100 < rate)
 				skill_addtimerskill(src,tick + 800,bl->id,0,0,skill_id,skill_lv,0,flag);
-		} else if( skill_id == SC_FATALMENACE )
-			skill_addtimerskill(src,tick + 800,bl->id,skill_area_temp[4],skill_area_temp[5],skill_id,skill_lv,0,flag);
+		} else if( skill_id == SC_FATALMENACE ) {
+			int16 x = skill_area_temp[4], y = skill_area_temp[5];
+
+			map_search_freecell(NULL, bl->m, &x, &y, 2, 2, 1);
+			skill_addtimerskill(bl,tick + 800,bl->id,x,y,skill_id,skill_lv,0,flag);
+		}
 	}
 
 	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
@@ -4141,13 +4146,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
 				case SC_FATALMENACE:
-					if( src == target ) // Casters Part
-						unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
-					else { // Target's Part
-						short x = skl->x, y = skl->y;
-						map_search_freecell(NULL, target->m, &x, &y, 2, 2, 1);
-						unit_warp(target,-1,x,y,CLR_TELEPORT);
-					}
+					unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
 					break;
 				case LG_MOONSLASHER:
 				case SR_WINDMILL:
@@ -5489,8 +5488,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			for( i = 0; i <= j - 2; i++ )
 				for( k = i + 1; k <= j - 1; k++ )
 					if( positions[i] < positions[k] ) {
-						swap(positions[i],positions[k]);
-						swap(spheres[i],spheres[k]);
+						SWAP(positions[i],positions[k]);
+						SWAP(spheres[i],spheres[k]);
 					}
 
 			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions (Official behavior)
@@ -5600,8 +5599,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					for( k = i + 1; k <= j - 1; k++ )
 						if( positions[i] > positions[k] )
 						{
-							swap(positions[i],positions[k]);
-							swap(spheres[i],spheres[k]);
+							SWAP(positions[i],positions[k]);
+							SWAP(spheres[i],spheres[k]);
 						}
 
 				if( skill_lv == 1 ) j = 1; // Limit only to one ball
@@ -8010,8 +8009,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
-		if (skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),BLOWN_IGNORE_NO_KNOCKBACK))
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_DONT_SEND_PACKET);
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
 		break;
 
 	case TK_HIGHJUMP:
@@ -14863,7 +14863,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			//Consume
 			sd->itemid = sd->itemindex = -1;
-			if( skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2 ) // [marquis007]
+			if( (skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2) || sd->inventory_data[i]->flag.delay_consume == 2 ) // [marquis007]
 				; //Do not consume item.
 			else if( sd->inventory.u.items_inventory[i].expire_time == 0 )
 				pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME); // Rental usable items are not consumed until expiration
@@ -16724,6 +16724,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				clif_upgrademessage(sd->fd, 0, item->nameid);
 				clif_inventorylist(sd);
 				clif_refine(sd->fd,0,idx,item->refine);
+				achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, ditem->wlv, item->refine);
 				if (ep)
 					pc_equipitem(sd,idx,ep);
 				clif_misceffect(&sd->bl,3);
@@ -16749,6 +16750,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 					pc_unequipitem(sd,idx,3);
 				clif_upgrademessage(sd->fd, 1, item->nameid);
 				clif_refine(sd->fd,1,idx,item->refine);
+				achievement_update_objective(sd, AG_REFINE_FAIL, 1, 1);
 				pc_delitem(sd,idx,1,0,2, LOG_TYPE_OTHER);
 				clif_misceffect(&sd->bl,2);
 				clif_emotion(&sd->bl, E_OMG);
@@ -20875,6 +20877,11 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[11]);
 	if (split[11][0] != '\0' || atoi(split[11])) {
 		int require[MAX_SKILL_STATUS_REQUIRE];
+
+		if( skill_db[idx]->require.status_count > 0 ){
+			aFree(skill_db[idx]->require.status);
+		}
+
 		if ((skill_db[idx]->require.status_count = skill_split_atoi2(split[11], require, ":", SC_STONE, ARRAYLENGTH(require)))) {
 			CREATE(skill_db[idx]->require.status, enum sc_type, skill_db[idx]->require.status_count);
 			for (i = 0; i < skill_db[idx]->require.status_count; i++){
@@ -20901,6 +20908,10 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[33]);
 	if (split[33][0] != '\0' || atoi(split[33])) {
 		int require[MAX_SKILL_EQUIP_REQUIRE];
+
+		if( skill_db[idx]->require.eqItem_count > 0 ){
+			aFree(skill_db[idx]->require.eqItem);
+		}
 
 		if ((skill_db[idx]->require.eqItem_count = skill_split_atoi2(split[33], require, ":", 500, ARRAYLENGTH(require)))) {
 			CREATE(skill_db[idx]->require.eqItem, uint16, skill_db[idx]->require.eqItem_count);

@@ -22,6 +22,7 @@ bool skip_insert = false;
 
 static char mapreg_table[32] = "mapreg";
 static bool mapreg_dirty = false; // Whether there are modified regs to be saved
+struct reg_db regs;
 
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
 

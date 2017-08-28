@@ -290,6 +290,9 @@ static int storage_additem(struct map_session_data* sd, struct s_storage *stor, 
 		}
 	}
 
+	if( stor->amount >= stor->max_amount )
+		return 2;
+
 	// find free slot
 	ARR_FIND( 0, stor->max_amount, i, stor->u.items_storage[i].nameid == 0 );
 	if( i >= stor->max_amount )
@@ -325,7 +328,7 @@ int storage_delitem(struct map_session_data* sd, struct s_storage *stor, int ind
 		memset(&stor->u.items_storage[index],0,sizeof(stor->u.items_storage[0]));
 		stor->amount--;
 		if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
-			clif_updatestorageamount(sd, stor->amount, sd->storage.max_amount);
+			clif_updatestorageamount(sd, stor->amount, stor->max_amount);
 	}
 
 	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )

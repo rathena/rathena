@@ -4,10 +4,6 @@
 #ifndef _STRLIB_H_
 #define _STRLIB_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.h"
 #include <stdarg.h>
 
@@ -19,6 +15,10 @@ extern "C" {
 #if defined(__USED_GNU)
 #undef __USE_GNU
 #undef __USED_GNU
+#endif
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 char* jstrescape (char* pt);

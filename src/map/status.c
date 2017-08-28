@@ -53,6 +53,14 @@ bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
+sc_type SkillStatusChangeTable[MAX_SKILL];
+int StatusIconChangeTable[SC_MAX];
+unsigned int StatusChangeFlagTable[SC_MAX];
+int StatusSkillChangeTable[SC_MAX];
+int StatusRelevantBLTypes[SI_MAX];
+unsigned int StatusChangeStateTable[SC_MAX];
+unsigned int StatusDisplayType[SC_MAX];
+
 static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_vit(struct block_list *,struct status_change *,int);
@@ -3790,7 +3798,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 #else
 	base_status->watk = status_weapon_atk(base_status->rhw, sd);
 	base_status->watk2 = status_weapon_atk(base_status->lhw, sd);
-	base_status->eatk = max(sd->bonus.eatk,0);
+	base_status->eatk = sd->bonus.eatk;
 #endif
 
 // ----- HP MAX CALCULATION -----
@@ -7894,9 +7902,15 @@ void status_set_viewdata(struct block_list *bl, int class_)
 	case BL_MOB:
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
-			if (vd)
+			if (vd){
+				mob_free_dynamic_viewdata( md );
+
 				md->vd = vd;
-			else
+			}else if( pcdb_checkid( class_ ) ){
+				mob_set_dynamic_viewdata( md );
+
+				md->vd->class_ = class_;
+			}else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
 	break;

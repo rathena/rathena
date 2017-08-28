@@ -42,7 +42,7 @@ class yamliterator {
 public:
 	YAML::Node sequence;
 	unsigned int index;
-	yamliterator(YAML::Node sequence);
+	yamliterator(YAML::Node sequence_);
 };
 
 class yamlwrapper {
@@ -65,6 +65,12 @@ int16 yaml_get_int16(yamlwrapper* wrapper, const char* key);
 int32 yaml_get_int32(yamlwrapper* wrapper, const char* key);
 int64 yaml_get_int64(yamlwrapper* wrapper, const char* key);
 bool yaml_get_boolean(yamlwrapper* wrapper, const char* key);
+char* yaml_as_c_string(yamlwrapper* wrapper);
+int yaml_as_int(yamlwrapper* wrapper);
+int16 yaml_as_int16(yamlwrapper* wrapper);
+int32 yaml_as_int32(yamlwrapper* wrapper);
+int64 yaml_as_int64(yamlwrapper* wrapper);
+bool yaml_as_boolean(yamlwrapper* wrapper);
 bool yaml_node_is_defined(yamlwrapper* wrapper, const char* key);
 yamlwrapper* yaml_get_subnode(yamlwrapper* wrapper, const char* key);
 yamliterator* yaml_get_iterator(yamlwrapper* wrapper);

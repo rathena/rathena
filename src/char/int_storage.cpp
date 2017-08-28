@@ -1,6 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#pragma warning(disable:4800)
+
+#include "int_storage.h"
+
 #include "../common/malloc.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
@@ -12,23 +16,13 @@
 
 #include <stdlib.h>
 
-
-#define STORAGE_MEMINC	16
-
 /**
- * Check if sotrage ID is valid
+ * Check if storage ID is valid
  * @param id Storage ID
  * @return True:Valid, False:Invalid
  **/
 bool inter_premiumStorage_exists(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (interserv_config.storages[i].id == id)
-				return true;
-		}
-	}
-	return false;
+	return interserv_config.storages.find(id) != interserv_config.storages.end();
 }
 
 /**
@@ -37,13 +31,8 @@ bool inter_premiumStorage_exists(uint8 id) {
  * @return Max amount
  **/
 int inter_premiumStorage_getMax(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
-				return interserv_config.storages[i].max_num;
-		}
-	}
+	if (inter_premiumStorage_exists(id))
+		return interserv_config.storages[id]->max_num;
 	return MAX_STORAGE;
 }
 
@@ -53,13 +42,8 @@ int inter_premiumStorage_getMax(uint8 id) {
  * @return Table name
  **/
 const char *inter_premiumStorage_getTableName(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
-				return interserv_config.storages[i].table;
-		}
-	}
+	if (inter_premiumStorage_exists(id))
+		return interserv_config.storages[id]->table;
 	return schema_config.storage_db;
 }
 
@@ -69,13 +53,8 @@ const char *inter_premiumStorage_getTableName(uint8 id) {
 * @return printable name
 **/
 const char *inter_premiumStorage_getPrintableName(uint8 id) {
-	if (interserv_config.storages && interserv_config.storage_count) {
-		int i;
-		for (i = 0; i < interserv_config.storage_count; i++) {
-			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
-				return interserv_config.storages[i].name;
-		}
-	}
+	if (inter_premiumStorage_exists(id))
+		return interserv_config.storages[id]->name;
 	return "Storage";
 }
 
@@ -170,20 +149,18 @@ bool guild_storage_fromsql(int guild_id, struct s_storage* p)
 }
 
 static void inter_storage_checkDB(void) {
-	int i = 0;
 	// Checking storage tables
-	for (i = 0; i < interserv_config.storage_count; i++) {
-		if (!&interserv_config.storages[i] || !interserv_config.storages[i].name || !interserv_config.storages[i].table || *interserv_config.storages[i].table == '\0')
-			continue;
+	for (auto storage_table : interserv_config.storages) {
 		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
 			"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,"
 			"`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,"
 			"`expire_time`,`bound`,`unique_id`"
-			" FROM `%s` LIMIT 1;", interserv_config.storages[i].table) ){
+			" FROM `%s` LIMIT 1;", storage_table.second->table)) {
 			Sql_ShowDebug(sql_handle);
+		}else{
+			Sql_FreeResult(sql_handle);
 		}
 	}
-	Sql_FreeResult(sql_handle);
 }
 
 //---------------------------------------------------------
@@ -381,7 +358,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 		memcpy(&items[count++], &item, sizeof(struct item));
 	Sql_FreeResult(sql_handle);
 
-	ShowInfo("Found '"CL_WHITE"%d"CL_RESET"' guild bound item(s) from CID = "CL_WHITE"%d"CL_RESET", AID = %d, Guild ID = "CL_WHITE"%d"CL_RESET".\n", count, char_id, account_id, guild_id);
+	ShowInfo("Found '" CL_WHITE "%d" CL_RESET "' guild bound item(s) from CID = " CL_WHITE "%d" CL_RESET ", AID = %d, Guild ID = " CL_WHITE "%d" CL_RESET ".\n", count, char_id, account_id, guild_id);
 	if (!count) { //No items found - No need to continue
 		StringBuf_Destroy(&buf);
 		SqlStmt_Free(stmt);
@@ -393,7 +370,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 
 	// Delete bound items from player's inventory
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `bound` = %d",schema_config.inventory_db, BOUND_GUILD);
+	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `char_id` = %d AND `bound` = %d",schema_config.inventory_db, char_id, BOUND_GUILD);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 		SQL_ERROR == SqlStmt_Execute(stmt) )
 	{

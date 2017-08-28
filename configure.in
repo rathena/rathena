@@ -440,6 +440,7 @@ AC_LANG([C++])
 
 CFLAGS="$CFLAGS -pipe -ffast-math -Wall"
 CPPFLAGS="$CPPFLAGS -I../common"
+CXXFLAGS="$CXXFLAGS -std=c++11"
 
 
 AC_C_BIGENDIAN(

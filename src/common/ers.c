@@ -290,7 +290,7 @@ void ers_cache_size(ERS *self, unsigned int new_size) {
 }
 
 
-ERS *ers_new(uint32 size, char *name, enum ERSOptions options)
+ERS *ers_new(uint32 size, const char *name, enum ERSOptions options)
 {
 	struct ers_instance_t *instance;
 	CREATE(instance,struct ers_instance_t, 1);
@@ -308,7 +308,7 @@ ERS *ers_new(uint32 size, char *name, enum ERSOptions options)
 	instance->VTable.destroy = ers_obj_destroy;
 	instance->VTable.chunk_size = ers_cache_size;
 
-	instance->Name = ( options & ERS_OPT_FREE_NAME ) ? aStrdup(name) : name;
+	instance->Name = ( options & ERS_OPT_FREE_NAME ) ? (char *)aStrdup(name) : (char *)name;
 	instance->Options = options;
 
 	instance->Cache = ers_find_cache(size,instance->Options);

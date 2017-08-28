@@ -1037,6 +1037,7 @@ From here on, we will have the commands sorted as follow:
 12.- Mercenary commands.
 13.- Party commands.
 14.- Channel commands.
+15.- Achievement commands.
 
 =====================
 |1.- Basic commands.|
@@ -3018,10 +3019,10 @@ It will only return numbers. If another type is supplied -1 will be returned.
 
 ---------------------------------------
 
-*gettimestr(<format string>,<max length>)
+*gettimestr(<"time format">,<max length>{,<time_tick>})
 
 This function will return a string containing time data as specified by the
-format string.
+time format.
 
 This uses the C function 'strfmtime', which obeys special format characters. For
 a full description see, for example, the description of 'strfmtime' at
@@ -3033,7 +3034,11 @@ The example given in rAthena sample scripts works like this:
 
   mes gettimestr("%Y-%m/%d %H:%M:%S",21);
 
-This will print a full date and time like 'YYYY-MM/DD HH:MM:SS'.
+The example above will print the current date and time like 'YYYY-MM/DD HH:MM:SS'.
+The following example will print the date and time when the player's VIP status
+expires by the given <time_tick>:
+
+  mes gettimestr("%Y-%m/%d %H:%M:%S",21,vip_status(VIP_STATUS_EXPIRE));
 
 ---------------------------------------
 
@@ -3722,18 +3727,6 @@ The renewal feature to check is determined by type.
  3 - RENEWAL_EXP (renewal exp rate algorithms)
  4 - RENEWAL_LVDMG (renewal level modifier on damage)
  5 - RENEWAL_ASPD (renewal ASPD)
-
----------------------------------------
-
-*is_clientver(<type>,<value>{,<char id>})
-
-Checks a character's client version against a specified value. If no char id is
-given, the command will run for the invoking character. The function will return
-1 if the player's version is greater than or equal to the value, and 0 otherwise.
-
-Available types are:
- 0 - version number (packet_db_ver)
- 1 - client date (YYYYMMDD)
 
 ---------------------------------------
 \\
@@ -5169,7 +5162,7 @@ window, to avoid any disruption when both windows overlap.
 *openstorage2 <storage_id>,<mode>{,<account_id>};
 
 Just like the 'openstorage' command, except this command can open additional storages
-by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.conf
+by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.yml
 for storage groups.
 
 Values for <mode> are:
@@ -5323,10 +5316,11 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
-*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
-*sc_start4 	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
-*sc_end 	<effect type>{,<GID>};
+*sc_start <effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
+*sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
+*sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
+*sc_end <effect type>{,<GID>};
+*sc_end_class {<char_id>};
 
 These commands will bestow a status effect on a character.
 
@@ -5363,6 +5357,9 @@ and theirs val1, val2, val3, and val4 usage in source.
 
 'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
 perform a complete removal of all statuses (although permanent ones will re-apply).
+
+'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
+skill on the invoking character.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -6404,8 +6401,21 @@ This command works almost like sleep2, but displays a progress bar
 above the head of the currently attached character (like cast bar).
 Once the given amount of seconds passes, the script resumes. If the
 character moves while the progress bar progresses, it is aborted and
-the script ends. The color format is in RGB (0xRRGGBB). The color is
+the script ends. The color format is in RGB (RRGGBB). The color is
 currently ignored by the client and appears always green.
+
+---------------------------------------
+
+*progressbar_npc "<color>",<seconds>{,<"NPC Name">};
+
+This command works like progressbar, but displays a progress bar
+above the head of the currently attached (or given) NPC. Once the
+given amount of seconds passes, the script resumes. The color format
+is in RGB (RRGGBB). The color is currently ignored by the client and
+appears always green.
+
+Note: If a player is attached to the NPC, they are detached from the NPC
+as soon as the progress bar activates.
 
 ---------------------------------------
 //
@@ -7350,11 +7360,16 @@ Examples:
 *unitattack <GID>,<Target ID>{,<action type>};
 *unitattack <GID>,"<Target Name>"{,<action type>};
 
-This command will make a <GID> attack the specified target. It returns 1 upon
-success and 0 for all failures.
+This command will make a <GID> attack the specified target. It returns true upon
+success and false for all failures.
 
 If <GID> is a player and a non-zero <action type> is given, the unit will perform a
 continuous attack instead of a single attack.
+
+Note:
+Using unitattack with <GID> 0 means that it will use the currently attached unit.
+For players any attack requests will fail, because talking to an NPC prevents attacking a monster.
+Therefore you need to detach the player from the NPC before using this command.
 
 ---------------------------------------
 
@@ -7382,13 +7397,21 @@ This command will make a <GID> stop attacking.
 
 ---------------------------------------
 
-*unitstopwalk <GID>;
+*unitstopwalk <GID>{,<flag>};
 
 This command will make a <GID> stop moving.
 
 Note: If this is called from OnTouch, then the walktimer attached to the unit is
 removed from OnTouch which causes this command to not stop the unit from walking.
 Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
+
+The <flag> value affects how the unit is stopped. The following flags are bitwise
+values (can be combined using the pipe operator):
+	USW_NONE = Unit will keep walking to their original destination.
+	USW_FIXPOS = Issue a fixpos packet afterwards.
+	USW_MOVE_ONCE = Force the unit to move one cell if it hasn't yet.
+	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
+	USW_FORCE_STOP = Force stop moving.
 
 ---------------------------------------
 
@@ -9722,5 +9745,85 @@ Returns 1 on success.
 Delete an existing public or private channel. Cannot delete ally or
 local map channel.
 Returns 0 on success.
+
+---------------------------------------
+
+============================
+|15.- Achievement commands.|
+============================
+---------------------------------------
+
+*achievementadd(<achievement id>{,<char id>})
+
+This function will add an achievement to the player's log for the attached
+player or the supplied <char id>. The objective requirements are not ignored
+when using this function.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementremove(<achievement id>{,<char id>})
+
+This function will remove an achievement from the player's log for the attached
+player or the supplied <char id>.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementinfo(<achievement id>,<type>{,<char id>})
+
+This function will return the specified <type> value for an achievement of the
+attached player or the supplied <char id>. If the player doesn't have the
+achievement active (no progress has been made): if the achievement doesn't
+exist -1 will be returned, or -2 will be returned on any other error such as
+an invalid <type>.
+
+Valid types:
+- ACHIEVEINFO_COUNT1
+- ACHIEVEINFO_COUNT2
+- ACHIEVEINFO_COUNT3
+- ACHIEVEINFO_COUNT4
+- ACHIEVEINFO_COUNT5
+- ACHIEVEINFO_COUNT6
+- ACHIEVEINFO_COUNT7
+- ACHIEVEINFO_COUNT8
+- ACHIEVEINFO_COUNT9
+- ACHIEVEINFO_COUNT10
+- ACHIEVEINFO_COMPLETE
+- ACHIEVEINFO_COMPLETEDATE
+- ACHIEVEINFO_GOTREWARD
+- ACHIEVEINFO_LEVEL (<achievement id> is useless for this)
+- ACHIEVEINFO_SCORE (<achievement id> is useless for this)
+
+---------------------------------------
+
+*achievementcomplete(<achievement id>{,<char id>})
+
+This function will complete an achievement for the attached player or the supplied
+<char id>. The objective requirements are ignored when using this function.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementexists(<achievement id>{,<char id>});
+
+This function will return if the achievement exists on the player or the supplied
+<char id>.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementupdate(<achievement id>,<type>,<value>{,<char id>})
+
+This function will update an achievement's value for an achievement of the attached
+player or the supplied <char id>. If the player does not have the achievement active
+(no progress has been made) it will be added to the player's log first before updating
+the <type> value.
+Returns true on success and false on failure.
+
+See 'achievementinfo' for valid <type> values.
+- ACHIEVEINFO_COMPLETE, ACHIEVEINFO_COMPLETEDATE, and ACHIEVEINFO_GOTREWARD require the
+  specific value returned from 'gettimetick(2)'.
+- Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
 
 ---------------------------------------

@@ -7,6 +7,7 @@
 //  4 - GUID Item: When this item is obtained, will generates GUID that cannot be stacked even same or stackable item
 //  8 - Item will be bound item when equipped
 // 16 - Special Broadcast: When item dropped by monster and player loot it, will be broadcasted!
+// 32 - Item will not be removed on consumption. Also supports 'itemskill'
 // NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree
 
 // Logged as Dead Branch item
@@ -1772,3 +1773,8 @@
 // Special Broadcast
 7782,16 //Gold_Key77
 7783,16 //Silver_Key77
+
+// Not removed after consumption
+12622,32 //Boarding_Halter
+12887,32 //C_Wing_Of_Fly
+22508,32 //Para_Team_Mark_

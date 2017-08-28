@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Reset NPC
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.4
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Resets skills, stats, or both.
 //===== Additional Comments: =================================
@@ -15,6 +9,7 @@
 //= 1.3 All statuses removed upon skill reset. [Euphy]
 //= 1.4 Compressed Script, Added limit use option [Stolao]
 //=	Changed set -> setarray, Improved text with F_InsertPlural
+//= 1.5 Added sc_end_class to reset related status changes [sader1992]
 //============================================================
 prontera,150,193,4	script	Reset Girl	124,{
 	//	 		Skills,	Stats,	Both,	Limit
@@ -44,7 +39,7 @@ prontera,150,193,4	script	Reset Girl	124,{
 	}
 	set Zeny, Zeny-.@Reset[.@i-1];
 	if(.@i&1){
-		sc_end SC_ALL;// TODO make a sc_end current classes sc only
+		sc_end_class;
 		ResetSkill;
 	}
 	if(.@i&2) ResetStatus;

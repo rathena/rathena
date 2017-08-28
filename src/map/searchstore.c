@@ -185,7 +185,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	}
 
 	if( max_price < min_price )
-		swap(min_price, max_price);
+		SWAP(min_price, max_price);
 
 	sd->searchstore.uses--;
 	sd->searchstore.type = type;
