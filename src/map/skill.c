@@ -1651,6 +1651,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case SR_EARTHSHAKER:
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
+		status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
 		break;
 	case SR_HOWLINGOFLION:
 		sc_start(src,bl, SC_FEAR, 5 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
