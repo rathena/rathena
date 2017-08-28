@@ -1007,7 +1007,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	enum sc_type status;
 	int skill;
 	int rate;
-	int chorusbonus = 0;
+	int chorusbonus;
 
 	nullpo_ret(src);
 	nullpo_ret(bl);
@@ -1064,13 +1064,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
-	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, AREA_SIZE, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
-		if( chorusbonus > 7 )
-			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
-		else if( chorusbonus > 2 )
-			chorusbonus = chorusbonus - 2; // Effect bonus from additional Minstrels/Wanderers if not above the max possible.
-	}
+	if (sd && sd->status.party_id)
+		chorusbonus = battle_calc_chorusbonus(sd);
 
 	if( sd )
 	{ // These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
@@ -6078,7 +6073,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	struct status_data *sstatus, *tstatus;
 	struct status_change *tsc;
 	struct status_change_entry *tsce;
-	int chorusbonus = 0;
+	int chorusbonus;
 
 	int i = 0;
 	enum sc_type type;
@@ -6121,13 +6116,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
-	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, AREA_SIZE, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
-		if( chorusbonus > 7 )
-			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
-		else if( chorusbonus > 2 )
-			chorusbonus = chorusbonus - 2; // Effect bonus from additional Minstrels/Wanderers if not above the max possible.
-	}
+	if (sd && sd->status.party_id)
+		chorusbonus = battle_calc_chorusbonus(sd);
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skill_id) {
