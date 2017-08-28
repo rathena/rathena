@@ -3558,8 +3558,12 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			rate = rate + (status_get_lv(src) - status_get_lv(bl));
 			if(rnd()%100 < rate)
 				skill_addtimerskill(src,tick + 800,bl->id,0,0,skill_id,skill_lv,0,flag);
-		} else if( skill_id == SC_FATALMENACE )
-			skill_addtimerskill(src,tick + 800,bl->id,skill_area_temp[4],skill_area_temp[5],skill_id,skill_lv,0,flag);
+		} else if( skill_id == SC_FATALMENACE ) {
+			int16 x = skill_area_temp[4], y = skill_area_temp[5];
+
+			map_search_freecell(NULL, bl->m, &x, &y, 2, 2, 1);
+			skill_addtimerskill(bl,tick + 800,bl->id,x,y,skill_id,skill_lv,0,flag);
+		}
 	}
 
 	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
@@ -4142,13 +4146,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
 				case SC_FATALMENACE:
-					if( src == target ) // Casters Part
-						unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
-					else { // Target's Part
-						short x = skl->x, y = skl->y;
-						map_search_freecell(NULL, target->m, &x, &y, 2, 2, 1);
-						unit_warp(target,-1,x,y,CLR_TELEPORT);
-					}
+					unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
 					break;
 				case LG_MOONSLASHER:
 				case SR_WINDMILL:
