@@ -426,7 +426,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 					return 0;
 			} else
-				sd->areanpc_id=0;
+				sd->areanpc.count = 0;
 			pc_cell_basilica(sd);
 			break;
 		case BL_MOB:
@@ -436,7 +436,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				if( npc_touch_areanpc2(md) )
 					return 0; // Warped
 			} else
-				md->areanpc_id = 0;
+				sd->areanpc.count = 0;
 			if (md->min_chase > md->db->range3)
 				md->min_chase--;
 			// Walk skills are triggered regardless of target due to the idle-walk mob state.
@@ -958,7 +958,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 				return false;
 		} else
-			sd->areanpc_id=0;
+			sd->areanpc.count = 0;
 
 		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ) {
 			// Check if pet needs to be teleported. [Skotlex]
@@ -1086,7 +1086,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 				if(map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC))
 					npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
 				else
-					sd->areanpc_id = 0;
+					sd->areanpc.count = 0;
 			}
 		}
 
@@ -3220,6 +3220,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->qi_display = NULL;
 			}
 			sd->qi_count = 0;
+
+			if (sd->areanpc.mem_count) {
+				aFree(sd->areanpc.ids);
+				sd->areanpc.count = 0;
+				sd->areanpc.mem_count = 0;
+			}
 
 #if PACKETVER >= 20150513
 			if( sd->hatEffectCount > 0 ){
