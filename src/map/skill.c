@@ -15623,7 +15623,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		}
 	}
 
-	//check if equipped item
+	// Check for equipped item(s)
 	if (require.eqItem_count) {
 		uint8 count = require.eqItem_count;
 
@@ -15631,14 +15631,40 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			uint16 reqeqit = require.eqItem[i];
 
 			if (!reqeqit)
-				break; //no required item; get out of here
-			if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
-				count--;
-				if (!count) {
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
-					return false;
-				} else
-					continue;
+				break; // Skill has no required item(s); get out of here
+			switch(skill_id) { // Specific skills require multiple items while default will handle singular cases
+				case NC_PILEBUNKER:
+					if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
+						count--;
+						if (!count) {
+							clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
+							return false;
+						} else
+							continue;
+					}
+					break;
+				case NC_ACCELERATION:
+				case NC_SELFDESTRUCTION:
+				case NC_SHAPESHIFT:
+				case NC_EMERGENCYCOOL:
+				case NC_MAGNETICFIELD:
+				case NC_NEUTRALBARRIER:
+				case NC_STEALTHFIELD:
+					if (pc_search_inventory(sd,reqeqit) == INDEX_NOT_FOUND) {
+						count--;
+						if (!count) {
+							clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,0);
+							return false;
+						} else
+							continue;
+					}
+					break;
+				default:
+					if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
+						clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,0);
+						return false;
+					}
+					break;
 			}
 		}
 	}
