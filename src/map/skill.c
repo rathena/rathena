@@ -15650,7 +15650,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				case NC_MAGNETICFIELD:
 				case NC_NEUTRALBARRIER:
 				case NC_STEALTHFIELD:
-					if (pc_search_inventory(sd,reqeqit) == INDEX_NOT_FOUND) {
+					if (pc_search_inventory(sd,reqeqit) < 0) {
 						count--;
 						if (!count) {
 							clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,0);
