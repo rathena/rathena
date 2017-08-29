@@ -1118,9 +1118,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "I just.. Don't want to let it be known I am there..";
 		mes "If you have business, let's meet officially in the Squad office.";
-		close2;
-		cutin "",255;
-		end;
+		close3;
 	}
 	switch(VER_MAIN) {
 	case 23:
@@ -1148,13 +1146,13 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			VER_MAIN = 24;
 			emotion 0,0,"Record player#e152a01";
 		}
-		break;
+		close3;
 	case 24:
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "It's the table right here.";
 		mes "I set it up so you can operate it.";
 		mes "You just have to play it.";
-		break;
+		close3;
 	case 25:
 		cutin "Arquien_n_atnad02.bmp",2;
 		mes "...The content is not a big deal.";
@@ -1185,7 +1183,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		changequest 7646,7647;// Play Memory Record -> Report Memory Record
 		VER_MAIN = 26;
 		getexp 750000,500000;
-		break;
+		close3;
 	case 26:
 		cutin "Arquien_n_atnad04.bmp",2;
 		mes "You remember the gist right?";
@@ -1193,7 +1191,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		mes "Tell him I will collect the items myself.";
 		mes "He will probably have no problem.";
 		mes "Since the old man is soooooo superior.";
-		break;
+		close3;
 	case 27:
 		if (countitem(6824) < 5) {// // Experimental_Dong_Memory_Record
 			cutin "Arquien_n_atnad04.bmp",2;
@@ -1223,12 +1221,12 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			delitem 6824,5;// Experimental_Dong_Memory_Record
 			VER_MAIN = 28;
 		}
-		break;
+		close3;
 	case 28:
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "The record player is next to me.";
 		mes "Listen to it yourself, record the messages yourself.";
-		break;
+		close3;
 	case 29:
 		cutin "Arquien_n_atnad02.bmp",2;
 		mes "So that crunching noise, wasn't static but the sound of the connecting part cracking?";
@@ -1269,7 +1267,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		getexp 750000,500000;
 		next;
 		mes "^4d4dffYou can now receive daily quests for collecting Memory Records through Arquien Nile Atnad.^000000";
-		break;
+		close3;
 	default:
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "What's going on?";
@@ -1283,46 +1281,41 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 					if (countitem(6757) < 5) {
 						mes "5 Research facilities Memory Records.";
 						mes "I'm looking forward to hear about my ancestors again.";
+						close3;
 					}
-					else {
-						mes "You obtained all the Memory Records.";
-						mes "I wonder how many Memory Records are out there with this content?";
-						next;
-						mes "[Nile]";
-						mes "I guess we have no choice to gather as much information as possible?";
-						mes "Preparations for playing the record is finished.";
-						mes "Just have to play it now.";
-						delitem 6757,5;// The_Memory_Recorder
-						if (isbegin_quest(7654) == 0)
-							setquest 7654;// Play Research facilities Memory Records
-					}
-				}
-				else {
-					mes "Are you here to collect Research facilities Memory Records?";
-					mes "Let's do what we have been doing.";
-					mes "Collecting 5 Research facilities Memory Records.";
+					mes "You obtained all the Memory Records.";
+					mes "I wonder how many Memory Records are out there with this content?";
 					next;
 					mes "[Nile]";
-					mes "In the meantime I will be preparing the record player to play it right away.";
-					mes "I wonder what the content will be this time.";
-					next;
-					switch( select( "Accept.","Reject." ) ) {
-					case 1:
-						mes "[Nile]";
-						mes "I knew you'd say that.";
-						mes "You're curious about the content too, right?";
-						mes "I will be looking forward to it as well.";
-						setquest 7650;// Collect Memory Records of Research facilities
-						break;
-					case 2:
-						mes "[Nile]";
-						mes "Well, what can I do.";
-						mes "You are probably busy too from everybody you have to answer to.";
-						mes "Then see you later.";
-						break;
-					}
+					mes "I guess we have no choice to gather as much information as possible?";
+					mes "Preparations for playing the record is finished.";
+					mes "Just have to play it now.";
+					delitem 6757,5;// The_Memory_Recorder
+					if (isbegin_quest(7654) == 0)
+						setquest 7654;// Play Research facilities Memory Records
+					close3;
 				}
-				break;
+				mes "Are you here to collect Research facilities Memory Records?";
+				mes "Let's do what we have been doing.";
+				mes "Collecting 5 Research facilities Memory Records.";
+				next;
+				mes "[Nile]";
+				mes "In the meantime I will be preparing the record player to play it right away.";
+				mes "I wonder what the content will be this time.";
+				next;
+				if (select( "Accept.","Reject." ) == 2) {
+					mes "[Nile]";
+					mes "Well, what can I do.";
+					mes "You are probably busy too from everybody you have to answer to.";
+					mes "Then see you later.";
+					close3;
+				}
+				mes "[Nile]";
+				mes "I knew you'd say that.";
+				mes "You're curious about the content too, right?";
+				mes "I will be looking forward to it as well.";
+				setquest 7650;// Collect Memory Records of Research facilities
+				close3;
 			case 0:
 			case 1:
 				mes "As for collecting the Research Facilities Memory Records, we decided to do it only once a day, right?";
@@ -1332,15 +1325,14 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 				mes "So, come back if the time I suggested is passed.";
 				mes "And you will be tired as well.";
 				mes "I am not the type to shove people around.";
-				break;
+				close3;
 			case 2:
 				erasequest 7651;// One Memory a Day
 				mes "Hm.. Should we start to gather Memory Records again?";
 				mes "Let me know if you want to.";
 				mes "I will be tuning the record player in the meanwhile.";
-				break;
+				close3;
 			}
-			break;
 		case 2:
 			mes "[Nile]";
 			switch( checkquest(7653,PLAYTIME) ) {
@@ -1349,46 +1341,41 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 					if (countitem(6824) < 5) {
 						mes "5 laboratories area's Memory Records.";
 						mes "I wonder what that Dorothy lady will talk about this time.";
+						close3;
 					}
-					else {
-						mes "I see you have obtained all the laboratories Memory Records.";
-						mes "I wonder how many Memory Records are out there with this content?";
-						next;
-						mes "[Nile]";
-						mes "I guess we have no choice to gather as much information as possible?";
-						mes "Preparations for playing the record is finished.";
-						mes "Just have to play it now.";
-						delitem 6824,5;// Experimental_Dong_Memory_Record
-						if (isbegin_quest(7655) == 0)
-							setquest 7655;// Play Laboratories Memory Records
-					}
-				}
-				else {
-					mes "Are you here to collect Research facilities Memory Records?";
-					mes "Let's do what we have been doing.";
-					mes "I mean ^4d4dffcollecting 5 laboratories Memory Records in the underground facility of laboratories^000000.";
+					mes "I see you have obtained all the laboratories Memory Records.";
+					mes "I wonder how many Memory Records are out there with this content?";
 					next;
 					mes "[Nile]";
-					mes "In the meantime I will be preparing the record player to play it right away.";
-					mes "I wonder what the content will be this time.";
-					next;
-					switch( select( "Accept.", "Reject." ) ) {
-					case 1:
-						mes "[Nile]";
-						mes "I knew you'd say that.";
-						mes "You're curious about the content too, right?";
-						mes "I will be looking forward to it as well.";
-						setquest 7652;// Collect Memory Records of Laboratories
-						break;
-					case 2:
-						mes "[Nile]";
-						mes "Well, what can I do.";
-						mes "You are probably busy too from everybody you have to answer to.";
-						mes "Then see you later.";
-						break;
-					}
+					mes "I guess we have no choice to gather as much information as possible?";
+					mes "Preparations for playing the record is finished.";
+					mes "Just have to play it now.";
+					delitem 6824,5;// Experimental_Dong_Memory_Record
+					if (isbegin_quest(7655) == 0)
+						setquest 7655;// Play Laboratories Memory Records
+					close3;
 				}
-				break;
+				mes "Are you here to collect Research facilities Memory Records?";
+				mes "Let's do what we have been doing.";
+				mes "I mean ^4d4dffcollecting 5 laboratories Memory Records in the underground facility of laboratories^000000.";
+				next;
+				mes "[Nile]";
+				mes "In the meantime I will be preparing the record player to play it right away.";
+				mes "I wonder what the content will be this time.";
+				next;
+				if (select( "Accept.","Reject." ) == 2) {
+					mes "[Nile]";
+					mes "Well, what can I do.";
+					mes "You are probably busy too from everybody you have to answer to.";
+					mes "Then see you later.";
+					close3;
+				}
+				mes "[Nile]";
+				mes "I knew you'd say that.";
+				mes "You're curious about the content too, right?";
+				mes "I will be looking forward to it as well.";
+				setquest 7652;// Collect Memory Records of Laboratories
+				close3;
 			case 0:
 			case 1:
 				cutin "Arquien_n_atnad01.bmp",2;
@@ -1399,22 +1386,21 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 				mes "So, come back if the time I suggested is passed.";
 				mes "And you will be tired as well.";
 				mes "I am not the type to shove people around.";
-				break;
+				close3;
 			case 2:
 				erasequest 7653;// One Memory a Day 2
 				mes "Hm.. Should we start to gather Memory Records again?";
 				mes "Let me know if you want to.";
 				mes "I will be tuning the record player in the meanwhile.";
-				break;
+				close3;
 			}
-			break;
 		case 3:
 			mes "[Nile]";
 			if (VER_MAIN >= 37) {
 				cutin "Arquien_n_atnad02.bmp",2;
 				mes "The truth is I didn't really have hard feelings forward my father.";
 				mes "I just wanted to hear one apology...";
-				break;
+				close3;
 			}
 			if (VER_MAIN == 36) {
 				mes "Wait, something is going on?";
@@ -1447,18 +1433,14 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			mes "[Nile]";
 			mes "Even so... haha. Can I really be a descendant of this area of Verus?";
 			mes "It's probably just the same name. Hahaha...";
-			break;
+			close3;
 		case 4:
 			mes "[Nile]";
 			cutin "Arquien_n_atnad01.bmp",2;
 			mes "Hey. I don't have that much time to spare okay?";
-			break;
+			close3;
 		}
-		break;
 	}
-	close2;
-	cutin "",255;
-	end;
 }
 
 // Note : 2 players can use the npc at the same time
