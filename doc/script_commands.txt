@@ -6414,9 +6414,6 @@ given amount of seconds passes, the script resumes. The color format
 is in RGB (RRGGBB). The color is currently ignored by the client and
 appears always green.
 
-Note: If a player is attached to the NPC, they are detached from the NPC
-as soon as the progress bar activates.
-
 ---------------------------------------
 //
 5,1.- End of time-related commands
