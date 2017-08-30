@@ -4888,14 +4888,9 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false; // Mercenary Scrolls
 
 	/**
-	 * Only Rune Knights may use runes
-	 **/
-	if( itemdb_group_item_exists(IG_RUNE, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
-		return false;
-	/**
 	 * Only GCross may use poisons
 	 **/
-	else if( itemdb_group_item_exists(IG_POISON, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
+	if( itemdb_group_item_exists(IG_POISON, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
 		return false;
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
