@@ -5232,12 +5232,16 @@ static void mob_load(void)
 /**
  * Initialize monster data
  */
-void mob_db_load(void){
+void mob_db_load(bool is_reload){
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
 	mob_db_data[0] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
-	item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_CLEAN);
-	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
+	if( !is_reload ) {
+		// on mobdbreload it's not neccessary to execute this
+		// item ers needs to be allocated only once
+		item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_CLEAN);
+		item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
+	}
 	mob_item_drop_ratio = idb_alloc(DB_OPT_BASE);
 	mob_skill_db = idb_alloc(DB_OPT_BASE);
 	mob_summon_db = idb_alloc(DB_OPT_BASE);
@@ -5297,8 +5301,8 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
  * Reload monster data
  */
 void mob_reload(void) {
-	do_final_mob();
-	mob_db_load();
+	do_final_mob(true);
+	mob_db_load(true);
 	map_foreachmob(mob_reload_sub);
 	map_foreachnpc(mob_reload_sub_npc);
 }
@@ -5318,7 +5322,7 @@ void mob_clear_spawninfo()
  * Circumference initialization of mob
  *------------------------------------------*/
 void do_init_mob(void){
-	mob_db_load();
+	mob_db_load(false);
 
 	add_timer_func_list(mob_delayspawn,"mob_delayspawn");
 	add_timer_func_list(mob_delay_item_drop,"mob_delay_item_drop");
@@ -5335,7 +5339,7 @@ void do_init_mob(void){
 /*==========================================
  * Clean memory usage.
  *------------------------------------------*/
-void do_final_mob(void){
+void do_final_mob(bool is_reload){
 	int i;
 	if (mob_dummy)
 	{
@@ -5361,6 +5365,8 @@ void do_final_mob(void){
 	mob_item_drop_ratio->destroy(mob_item_drop_ratio,mob_item_drop_ratio_free);
 	mob_skill_db->destroy(mob_skill_db, mob_skill_db_free);
 	mob_summon_db->destroy(mob_summon_db, mob_summon_db_free);
-	ers_destroy(item_drop_ers);
-	ers_destroy(item_drop_list_ers);
+	if( !is_reload ) {
+		ers_destroy(item_drop_ers);
+		ers_destroy(item_drop_list_ers);
+	}
 }
