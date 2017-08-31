@@ -6868,15 +6868,15 @@
 //===================================================================
 // Rune Knight's Rune Stones
 //===================================================================
-12725,Runstone_Nosiege,Nauthiz Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_REFRESH",1; },{},{}
-12726,Runstone_Rhydo,Raido Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_CRUSHSTRIKE",1; },{},{}
-12727,Runstone_Verkana,Berkana Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_MILLENNIUMSHIELD",1; },{},{}
-12728,Runstone_Isia,Isa Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_VITALITYACTIVATION",1; },{},{}
-12729,Runstone_Asir,Othila Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_FIGHTINGSPIRIT",1; },{},{}
-12730,Runstone_Urj,Uruz Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_ABUNDANCE",1; },{},{}
-12731,Runstone_Turisus,Thurisaz Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_GIANTGROWTH",1; },{},{}
-12732,Runstone_Pertz,Wyrd Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_STORMBLAST",1; },{},{}
-12733,Runstone_Hagalas,Hagalaz Rune,11,100,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_STONEHARDSKIN",1; },{},{}
+12725,Runstone_Nosiege,Nauthiz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_REFRESH",1; },{},{}
+12726,Runstone_Rhydo,Raido Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1; },{},{}
+12727,Runstone_Verkana,Berkana Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1; },{},{}
+12728,Runstone_Isia,Isa Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1; },{},{}
+12729,Runstone_Asir,Othila Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1; },{},{}
+12730,Runstone_Urj,Uruz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_ABUNDANCE",1; },{},{}
+12731,Runstone_Turisus,Thurisaz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_GIANTGROWTH",1; },{},{}
+12732,Runstone_Pertz,Wyrd Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STORMBLAST",1; },{},{}
+12733,Runstone_Hagalas,Hagalaz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1; },{},{}
 //===================================================================
 // Rune Knight Rune Ores
 //===================================================================
