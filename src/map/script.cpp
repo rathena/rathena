@@ -17859,7 +17859,7 @@ BUILDIN_FUNC(setunitdata)
 					md->state.copy_master_mode = 0;
 				calc_status = true;
 				break;
-			case UMOB_DMGIMMUNE: md->ud.immune_attack = value > 0 ? 1 : 0; break;
+			case UMOB_DMGIMMUNE: md->ud.immune_attack = value > 0; break;
 			case UMOB_ATKRANGE: md->base_status->rhw.range = (unsigned short)value; calc_status = true; break;
 			case UMOB_ATKMIN: md->base_status->rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UMOB_ATKMAX: md->base_status->rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -17912,7 +17912,7 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_INT: hd->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_DEX: hd->base_status.dex = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LUK: hd->base_status.luk = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
-			case UHOM_DMGIMMUNE: hd->ud.immune_attack = value > 0 ? 1 : 0; break;
+			case UHOM_DMGIMMUNE: hd->ud.immune_attack = value > 0; break;
 			case UHOM_ATKRANGE: hd->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
 			case UHOM_ATKMIN: hd->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UHOM_ATKMAX: hd->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -17963,7 +17963,7 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_INT: pd->status.int_ = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_DEX: pd->status.dex = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_LUK: pd->status.luk = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
-			case UPET_DMGIMMUNE: pd->ud.immune_attack = value > 0 ? 1 : 0; break;
+			case UPET_DMGIMMUNE: pd->ud.immune_attack = value > 0; break;
 			case UPET_ATKRANGE: pd->status.rhw.range = (unsigned short)value; break;
 			case UPET_ATKMIN: pd->status.rhw.atk = (unsigned short)value; break;
 			case UPET_ATKMAX: pd->status.rhw.atk2 = (unsigned short)value; break;
@@ -18011,7 +18011,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_INT: mc->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_DEX: mc->base_status.dex = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_LUK: mc->base_status.luk = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
-			case UMER_DMGIMMUNE: mc->ud.immune_attack = value > 0 ? 1 : 0; break;
+			case UMER_DMGIMMUNE: mc->ud.immune_attack = value > 0; break;
 			case UMER_ATKRANGE: mc->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
 			case UMER_ATKMIN: mc->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UMER_ATKMAX: mc->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -18063,7 +18063,7 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_INT: ed->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_DEX: ed->base_status.dex = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_LUK: ed->base_status.luk = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
-			case UELE_DMGIMMUNE: ed->ud.immune_attack = value > 0 ? 1 : 0; break;
+			case UELE_DMGIMMUNE: ed->ud.immune_attack = value > 0; break;
 			case UELE_ATKRANGE: ed->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
 			case UELE_ATKMIN: ed->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UELE_ATKMAX: ed->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -22192,7 +22192,6 @@ BUILDIN_FUNC(setquestinfo_req) {
 	TBL_NPC* nd = map_id2nd(st->oid);
 	int quest_id = script_getnum(st, 2);
 	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-	//struct quest_db quest_dummy;
 	uint8 i = 0;
 	uint8 num = script_lastdata(st);
 
