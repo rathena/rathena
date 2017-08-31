@@ -15653,7 +15653,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 					if (pc_search_inventory(sd,reqeqit) < 0) {
 						count--;
 						if (!count) {
-							clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,0);
+							clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,reqeqit<<16);
 							return false;
 						} else
 							continue;
@@ -15661,7 +15661,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 					break;
 				default:
 					if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
-						clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,0);
+						clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,reqeqit<<16);
 						return false;
 					}
 					break;
