@@ -57,6 +57,9 @@
 #include <setjmp.h>
 #include <errno.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -605,7 +608,7 @@ static void script_reportdata(struct script_data* data)
 			ShowDebug("Data: nothing (nil)\n");
 			break;
 		case C_INT:// number
-			ShowDebug("Data: number value=%"PRId64"\n", data->u.num);
+			ShowDebug("Data: number value=%" PRId64 "\n", data->u.num);
 			break;
 		case C_STR:
 		case C_CONSTSTR:// string
@@ -629,7 +632,7 @@ static void script_reportdata(struct script_data* data)
 			}
 			break;
 		case C_POS:// label
-			ShowDebug("Data: label pos=%"PRId64"\n", data->u.num);
+			ShowDebug("Data: label pos=%" PRId64 "\n", data->u.num);
 			break;
 		default:
 			ShowDebug("Data: %s\n", script_op2name(data->type));
@@ -945,7 +948,7 @@ const char* skip_space(const char* p)
 			for(;;)
 			{
 				if( *p == '\0' ) {
-					disp_warning_message("script:script->skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
+					disp_warning_message("script:script->skip_space: end of file while parsing block comment. expected " CL_BOLD "*/" CL_NORM, p);
 					return p;
 				}
 				if( *p == '*' && p[1] == '/' )
@@ -2389,13 +2392,13 @@ static void read_constdb(void)
 		}
 		else {
 			skipped++;
-			ShowWarning("Skipping line '"CL_WHITE"%d"CL_RESET"', invalid constant definition\n",linenum);
+			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n",linenum);
 		}
 	}
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/const.txt"CL_RESET"'.\n", entries, db_path);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s/const.txt" CL_RESET "'.\n", entries, db_path);
 	if(skipped){
-		ShowWarning("Skipped '"CL_WHITE"%d"CL_RESET"', entries\n",skipped);
+		ShowWarning("Skipped '" CL_WHITE "%d" CL_RESET "', entries\n",skipped);
 	}
 }
 
@@ -2889,7 +2892,7 @@ void script_array_ensure_zero(struct script_state *st, struct map_session_data *
 	}
 
 	if (src && src->arrays) {
-		struct script_array *sa = idb_get(src->arrays, script_getvarid(uid));
+		struct script_array *sa = (struct script_array*)idb_get(src->arrays, script_getvarid(uid));
 		if (sa) {
 			unsigned int i;
 
@@ -2916,7 +2919,7 @@ unsigned int script_array_size(struct script_state *st, struct map_session_data 
 	struct reg_db *src = script_array_src(st, sd, name, ref);
 
 	if (src && src->arrays)
-		sa = idb_get(src->arrays, search_str(name));
+		sa = static_cast<script_array *>(idb_get(src->arrays, search_str(name)));
 
 	return sa ? sa->size : 0;
 }
@@ -2934,7 +2937,7 @@ unsigned int script_array_highest_key(struct script_state *st, struct map_sessio
 
 		script_array_ensure_zero(st,sd,reference_uid(key, 0), ref);
 
-		if( ( sa = idb_get(src->arrays, key) ) ) {
+		if( ( sa = static_cast<script_array *>(idb_get(src->arrays, key)) ) ) {
 			unsigned int i, highest_key = 0;
 
 			for(i = 0; i < sa->size; i++) {
@@ -2951,7 +2954,7 @@ unsigned int script_array_highest_key(struct script_state *st, struct map_sessio
 
 int script_free_array_db(DBKey key, DBData *data, va_list ap)
 {
-	struct script_array *sa = db_data2ptr(data);
+	struct script_array *sa = static_cast<script_array *>(db_data2ptr(data));
 	aFree(sa->members);
 	ers_free(array_ers, sa);
 	return SCRIPT_CMD_SUCCESS;
@@ -3067,7 +3070,7 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 	if (!src->arrays) {
 		src->arrays = idb_alloc(DB_OPT_BASE);
 	} else {
-		sa = idb_get(src->arrays, id);
+		sa = static_cast<script_array *>(idb_get(src->arrays, id));
 	}
 
 	if( sa ) {
@@ -3260,7 +3263,7 @@ const char* conv_str_(struct script_state* st, struct script_data* data, struct 
 	else if( data_isint(data) )
 	{// int -> string
 		CREATE(p, char, ITEM_NAME_LENGTH);
-		snprintf(p, ITEM_NAME_LENGTH, "%"PRId64"", data->u.num);
+		snprintf(p, ITEM_NAME_LENGTH, "%" PRId64 "", data->u.num);
 		p[ITEM_NAME_LENGTH-1] = '\0';
 		data->type = C_STR;
 		data->u.str = p;
@@ -4106,7 +4109,7 @@ void script_stop_scriptinstances(struct script_code *code) {
 
 	iter = db_iterator(st_db);
 
-	for( st = dbi_first(iter); dbi_exists(iter); st = dbi_next(iter) ) {
+	for( st = static_cast<script_state *>(dbi_first(iter)); dbi_exists(iter); st = static_cast<script_state *>(dbi_next(iter)) ) {
 		if( st->script == code )
 			script_free_state(st);
 	}
@@ -4462,7 +4465,7 @@ int script_config_read(const char *cfgName)
  */
 static int db_script_free_code_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct script_code *code = db_data2ptr(data);
+	struct script_code *code = (struct script_code*)db_data2ptr(data);
 	if (code)
 		script_free_code(code);
 	return 0;
@@ -4517,7 +4520,7 @@ void script_cleararray_pc(struct map_session_data* sd, const char* varname, void
 	if( value )
 		script_array_ensure_zero(NULL,sd,reference_uid(key,0), NULL);
 
-	if( !(sa = idb_get(src->arrays, key)) ) /* non-existent array, nothing to empty */
+	if( !(sa = static_cast<script_array *>(idb_get(src->arrays, key))) ) /* non-existent array, nothing to empty */
 		return;
 
 	size = sa->size;
@@ -4560,7 +4563,7 @@ int script_reg_destroy(DBKey key, DBData *data, va_list ap)
 	if( data->type != DB_DATA_PTR ) // got no need for those!
 		return 0;
 
-	src = db_data2ptr(data);
+	src = static_cast<script_reg_state *>(db_data2ptr(data));
 
 	if( src->type ) {
 		struct script_reg_str *p = (struct script_reg_str *)src;
@@ -4862,7 +4865,7 @@ void do_final_script() {
 		aFree(generic_ui_array);
 
 	iter = db_iterator(st_db);
-	for(st = dbi_first(iter); dbi_exists(iter); st = dbi_next(iter))
+	for( st = static_cast<script_state *>(dbi_first(iter)); dbi_exists(iter); st = static_cast<script_state *>(dbi_next(iter)) )
 		script_free_state(st);
 	dbi_destroy(iter);
 
@@ -4915,9 +4918,9 @@ void do_init_script(void) {
 	scriptlabel_db = strdb_alloc(DB_OPT_DUP_KEY,50);
 	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
 
-	st_ers = ers_new(sizeof(struct script_state), "script.c::st_ers", ERS_CACHE_OPTIONS);
-	stack_ers = ers_new(sizeof(struct script_stack), "script.c::script_stack", ERS_OPT_FLEX_CHUNK);
-	array_ers = ers_new(sizeof(struct script_array), "script.c:array_ers", ERS_OPT_CLEAN|ERS_OPT_CLEAR); // TODO: This value is not yet in the enum
+	st_ers = ers_new(sizeof(struct script_state), "script.cpp::st_ers", ERS_CACHE_OPTIONS);
+	stack_ers = ers_new(sizeof(struct script_stack), "script.cpp::script_stack", ERS_OPT_FLEX_CHUNK);
+	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
 
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
@@ -4988,7 +4991,7 @@ void script_reload(void) {
 	atcmd_binding_count = 0;
 
 	iter = db_iterator(st_db);
-	for(st = dbi_first(iter); dbi_exists(iter); st = dbi_next(iter))
+	for( st = static_cast<script_state *>(dbi_first(iter)); dbi_exists(iter); st = static_cast<script_state *>(dbi_next(iter)) )
 		script_free_state(st);
 	dbi_destroy(iter);
 	db_clear(st_db);
@@ -6510,7 +6513,7 @@ BUILDIN_FUNC(deletearray)
 
 	script_array_ensure_zero(st, NULL, data->u.num, reference_getref(data));
 
-	if ( !(sa = idb_get(src->arrays, id)) ) { // non-existent array, nothing to empty
+	if ( !(sa = static_cast<script_array *>(idb_get(src->arrays, id))) ) { // non-existent array, nothing to empty
 		return SCRIPT_CMD_SUCCESS;// not a variable
 	}
 
@@ -6604,7 +6607,7 @@ BUILDIN_FUNC(getelementofarray)
 
 	i = script_getnum(st, 3);
 	if (i < 0 || i >= SCRIPT_MAX_ARRAYSIZE) {
-		ShowWarning("script:getelementofarray: index out of range (%"PRId64")\n", i);
+		ShowWarning("script:getelementofarray: index out of range (%" PRId64 ")\n", i);
 		script_reportdata(data);
 		script_pushnil(st);
 		st->state = END;
@@ -6757,11 +6760,11 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	opt_param_idx = reference_getindex(opt_param);
 	
 	for (i = 0; i < opt_id_n && i < MAX_ITEM_RDM_OPT; i++) {
-		it->option[i].id = (short)__64BPRTSIZE(get_val2(st,reference_uid(opt_id_id,opt_id_idx+i),opt_id_ref));
+		it->option[i].id = *static_cast<short*>(__64BPRTSIZE(get_val2(st,reference_uid(opt_id_id,opt_id_idx+i),opt_id_ref)));
 		script_removetop(st, -1, 0);
-		it->option[i].value = (short)__64BPRTSIZE(get_val2(st,reference_uid(opt_val_id,opt_val_idx+i),opt_val_ref));
+		it->option[i].value = *static_cast<short*>(__64BPRTSIZE(get_val2(st,reference_uid(opt_val_id,opt_val_idx+i),opt_val_ref)));
 		script_removetop(st, -1, 0);
-		it->option[i].param = (char)__64BPRTSIZE(get_val2(st,reference_uid(opt_param_id,opt_param_idx+i),opt_param_ref));
+		it->option[i].param = *static_cast<char*>(__64BPRTSIZE(get_val2(st,reference_uid(opt_param_id,opt_param_idx+i),opt_param_ref)));
 		script_removetop(st, -1, 0);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -10431,7 +10434,7 @@ BUILDIN_FUNC(clone)
 	TBL_PC *sd, *msd=NULL;
 	uint32 char_id, master_id = 0, x, y, flag = 0;
 	int16 m;
-	enum e_mode mode = 0;
+	enum e_mode mode = MD_NONE;
 
 	unsigned int duration = 0;
 	const char *mapname,*event;
@@ -10446,7 +10449,7 @@ BUILDIN_FUNC(clone)
 		master_id=script_getnum(st,7);
 
 	if( script_hasdata(st,8) )
-		mode=script_getnum(st,8);
+		mode=static_cast<e_mode>(script_getnum(st,8));
 
 	if( script_hasdata(st,9) )
 		flag=script_getnum(st,9);
@@ -11380,7 +11383,7 @@ BUILDIN_FUNC(getstatus)
 
 	if( id <= SC_NONE || id >= SC_MAX )
 	{// invalid status type given
-		ShowWarning("script.c:getstatus: Invalid status type given (%d).\n", id);
+		ShowWarning("script.cpp:getstatus: Invalid status type given (%d).\n", id);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
@@ -17856,7 +17859,7 @@ BUILDIN_FUNC(setunitdata)
 					md->state.copy_master_mode = 0;
 				calc_status = true;
 				break;
-			case UMOB_DMGIMMUNE: md->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			case UMOB_DMGIMMUNE: md->ud.immune_attack = value > 0 ? 1 : 0; break;
 			case UMOB_ATKRANGE: md->base_status->rhw.range = (unsigned short)value; calc_status = true; break;
 			case UMOB_ATKMIN: md->base_status->rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UMOB_ATKMAX: md->base_status->rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -17909,7 +17912,7 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_INT: hd->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_DEX: hd->base_status.dex = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LUK: hd->base_status.luk = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
-			case UHOM_DMGIMMUNE: hd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			case UHOM_DMGIMMUNE: hd->ud.immune_attack = value > 0 ? 1 : 0; break;
 			case UHOM_ATKRANGE: hd->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
 			case UHOM_ATKMIN: hd->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UHOM_ATKMAX: hd->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -17960,7 +17963,7 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_INT: pd->status.int_ = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_DEX: pd->status.dex = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_LUK: pd->status.luk = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
-			case UPET_DMGIMMUNE: pd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			case UPET_DMGIMMUNE: pd->ud.immune_attack = value > 0 ? 1 : 0; break;
 			case UPET_ATKRANGE: pd->status.rhw.range = (unsigned short)value; break;
 			case UPET_ATKMIN: pd->status.rhw.atk = (unsigned short)value; break;
 			case UPET_ATKMAX: pd->status.rhw.atk2 = (unsigned short)value; break;
@@ -18008,7 +18011,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_INT: mc->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_DEX: mc->base_status.dex = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_LUK: mc->base_status.luk = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
-			case UMER_DMGIMMUNE: mc->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			case UMER_DMGIMMUNE: mc->ud.immune_attack = value > 0 ? 1 : 0; break;
 			case UMER_ATKRANGE: mc->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
 			case UMER_ATKMIN: mc->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UMER_ATKMAX: mc->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -18060,7 +18063,7 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_INT: ed->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_DEX: ed->base_status.dex = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_LUK: ed->base_status.luk = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
-			case UELE_DMGIMMUNE: ed->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
+			case UELE_DMGIMMUNE: ed->ud.immune_attack = value > 0 ? 1 : 0; break;
 			case UELE_ATKRANGE: ed->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
 			case UELE_ATKMIN: ed->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UELE_ATKMAX: ed->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
@@ -18633,7 +18636,7 @@ BUILDIN_FUNC(awake)
 
 	iter = db_iterator(st_db);
 
-	for (tst = dbi_first(iter); dbi_exists(iter); tst = dbi_next(iter)) {
+	for (tst = static_cast<script_state *>(dbi_first(iter)); dbi_exists(iter); tst = static_cast<script_state *>(dbi_next(iter))) {
 		if (tst->oid == nd->bl.id) {
 			if (tst->sleep.timer == INVALID_TIMER) { // already awake ???
 				continue;
@@ -19733,7 +19736,7 @@ BUILDIN_FUNC(instance_create)
 	int owner_id = 0;
 
 	if (script_hasdata(st, 3)) {
-		mode = script_getnum(st, 3);
+		mode = static_cast<instance_mode>(script_getnum(st, 3));
 
 		if (mode < IM_NONE || mode >= IM_MAX) {
 			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
@@ -20466,7 +20469,7 @@ BUILDIN_FUNC(pushpc)
 	dx = dirx[dir];
 	dy = diry[dir];
 
-	unit_blown(&sd->bl, dx, dy, cells, 0);
+	unit_blown(&sd->bl, dx, dy, cells, BLOWN_NONE);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -22189,6 +22192,7 @@ BUILDIN_FUNC(setquestinfo_req) {
 	TBL_NPC* nd = map_id2nd(st->oid);
 	int quest_id = script_getnum(st, 2);
 	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+	//struct quest_db quest_dummy;
 	uint8 i = 0;
 	uint8 num = script_lastdata(st);
 
@@ -24196,3 +24200,7 @@ struct script_function buildin_func[] = {
 
 	{NULL,NULL,NULL},
 };
+
+#ifdef __cplusplus
+}
+#endif
