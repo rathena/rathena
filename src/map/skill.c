@@ -19520,7 +19520,8 @@ int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
 			clif_skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_LEVEL,0);
 			return 0;
 	}
-	
+
+	status_change_end(&sd->bl, SC_POISONINGWEAPON, INVALID_TIMER); // End the status so a new poison can be applied (if changed)
 	chance = 2 + 2 * sd->menuskill_val; // 2 + 2 * skill_lv
 	sc_start4(&sd->bl,&sd->bl, SC_POISONINGWEAPON, 100, pc_checkskill(sd, GC_RESEARCHNEWPOISON), //in Aegis it store the level of GC_RESEARCHNEWPOISON in val1
 		type, chance, val4, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val));

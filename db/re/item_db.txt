@@ -6857,14 +6857,14 @@
 //===================================================================
 // Guillotine Cross Poisons
 //===================================================================
-12717,Poison_Paralysis,Paralyze,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_PARALYSE,300000,0,10,2; },{},{}
-12718,Poison_Leech,Leech End,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_LEECHESEND,300000,0,10,2; },{},{}
-12719,Poison_Oblivion,Oblivion Curse,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_OBLIVIONCURSE,300000,0,10,2; },{},{}
-12720,Poison_Disheart,Disheart,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DEATHHURT,300000,0,10,2; },{},{}
-12721,Poison_Numb,Toxin,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_TOXIN,300000,0,10,2; },{},{}
-12722,Poison_Fever,Pyrexia,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_PYREXIA,300000,0,10,2; },{},{}
-12723,Poison_Laughing,Magic Mushroom,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_MAGICMUSHROOM,300000,0,10,2; },{},{}
-12724,Poison_Fatigue,Venom Bleed,0,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_VENOMBLEED,15000,0,10,2; },{},{}
+12717,Poison_Paralysis,Paralyze,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12718,Poison_Leech,Leech End,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12719,Poison_Oblivion,Oblivion Curse,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12720,Poison_Disheart,Disheart,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12721,Poison_Numb,Toxin,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12722,Poison_Fever,Pyrexia,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12723,Poison_Laughing,Magic Mushroom,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12724,Poison_Fatigue,Venom Bleed,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //===================================================================
 // Rune Knight's Rune Stones
 //===================================================================
