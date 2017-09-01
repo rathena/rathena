@@ -1606,7 +1606,8 @@ OnTouch_:
 	if (ASSIN_Q == 5 || ASSIN_Q == 6) {
 		warp "in_moc_16",181,183;
 		set ASSIN_Q,ASSIN_Q+1;
-		changequest 8005,8006;
+		if (!isbegin_quest(8006))
+			changequest 8005,8006;
 	}
 	else {
 		mapannounce "in_moc_16",strcharinfo(0)+" has entered 'Guildmaster's room.'",bc_map;
