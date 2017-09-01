@@ -2892,7 +2892,7 @@ void script_array_ensure_zero(struct script_state *st, struct map_session_data *
 	}
 
 	if (src && src->arrays) {
-		struct script_array *sa = (struct script_array*)idb_get(src->arrays, script_getvarid(uid));
+		struct script_array *sa = static_cast<script_array *>(idb_get(src->arrays, script_getvarid(uid)));
 		if (sa) {
 			unsigned int i;
 
@@ -4465,7 +4465,7 @@ int script_config_read(const char *cfgName)
  */
 static int db_script_free_code_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct script_code *code = (struct script_code*)db_data2ptr(data);
+	struct script_code *code = static_cast<script_code *>(db_data2ptr(data));
 	if (code)
 		script_free_code(code);
 	return 0;
