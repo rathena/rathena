@@ -676,12 +676,13 @@ int pc_equippoint_sub(struct map_session_data *sd,struct item_data* id){
 		return 0; //Not equippable by players.
 
 	ep = id->equip;
-	if(id->look == W_DAGGER	||
-		id->look == W_1HSWORD ||
-		id->look == W_1HAXE) {
-		if(ep == EQP_HAND_R && (pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN ||
-			(sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO))//Kagerou and Oboro can dual wield daggers. [Rytech]
-			return EQP_ARMS;
+	if(id->look == W_DAGGER	|| id->look == W_1HSWORD || id->look == W_1HAXE) {
+		if(pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) { //Kagerou and Oboro can dual wield daggers. [Rytech]
+			if (ep == EQP_WEAPON)
+				return EQP_ARMS;
+			if (ep == EQP_SHADOW_WEAPON)
+				return EQP_SHADOW_ARMS;
+		}
 	}
 	return ep;
 }
@@ -9697,16 +9698,21 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 			pos = sd->equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
 	}
 
+	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
+		pos = (req_pos&EQP_ARMS);
+		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
+			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
+	}
+
 	if(pos == EQP_SHADOW_ACC) { // Shadow System
 		pos = req_pos&EQP_SHADOW_ACC;
 		if (pos == EQP_SHADOW_ACC)
 			pos = sd->equip_index[EQI_SHADOW_ACC_L] >= 0 ? EQP_SHADOW_ACC_R : EQP_SHADOW_ACC_L;
 	}
-
-	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
-		pos = (req_pos&EQP_ARMS);
-		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
-			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
+	if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
+		pos = (req_pos&EQP_SHADOW_ARMS);
+		if( pos == EQP_SHADOW_ARMS )
+			pos = (sd->equip_index[EQI_SHADOW_WEAPON] >= 0 ? EQP_SHADOW_SHIELD : EQP_SHADOW_WEAPON);
 	}
 
 	if (pos&EQP_HAND_R && battle_config.use_weapon_skill_range&BL_PC) {
@@ -10933,9 +10939,9 @@ static bool pc_readdb_job1(char* fields[], int columns, int current){
 	job_info[idx].sp_factor  = atoi(fields[4]);
 
 #ifdef RENEWAL_ASPD
-	for(i = 0; i <= MAX_WEAPON_TYPE; i++)
+	for(i = 0; i <= MAX_SINGLE_WEAPON_TYPE; i++)
 #else
-	for(i = 0; i < MAX_WEAPON_TYPE; i++)
+	for(i = 0; i < MAX_SINGLE_WEAPON_TYPE; i++)
 #endif
 	{
 		job_info[idx].aspd_base[i] = atoi(fields[i+5]);
@@ -11259,12 +11265,12 @@ void pc_readdb(void) {
 		s = pc_read_statsdb(dbsubpath2,s,i);
 		if (i == 0)
 #ifdef RENEWAL_ASPD
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_SINGLE_WEAPON_TYPE,6+MAX_SINGLE_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
 #else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_SINGLE_WEAPON_TYPE,5+MAX_SINGLE_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
 #endif
 		else
-			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_SINGLE_WEAPON_TYPE,6+MAX_SINGLE_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
 		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i);
 		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i); //support till 1000lvl
 #ifdef HP_SP_TABLES

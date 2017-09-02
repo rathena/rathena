@@ -763,7 +763,9 @@ enum weapon_type {
 	W_GRENADE,	//21
 	W_HUUMA,	//22
 	W_2HSTAFF,	//23
-	MAX_WEAPON_TYPE,
+#ifndef MAX_SINGLE_WEAPON_TYPE
+	MAX_SINGLE_WEAPON_TYPE,
+#endif
 	// dual-wield constants
 	W_DOUBLE_DD, // 2 daggers
 	W_DOUBLE_SS, // 2 swords
@@ -771,6 +773,9 @@ enum weapon_type {
 	W_DOUBLE_DS, // dagger + sword
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
+#ifndef MAX_WEAPON_TYPE
+	MAX_WEAPON_TYPE,
+#endif
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
@@ -826,9 +831,9 @@ struct {
 	int max_weight_base;
 	char job_bonus[MAX_LEVEL];
 #ifdef RENEWAL_ASPD
-	int aspd_base[MAX_WEAPON_TYPE+1];
+	int aspd_base[MAX_SINGLE_WEAPON_TYPE+1];
 #else
-	int aspd_base[MAX_WEAPON_TYPE];	//[blackhole89]
+	int aspd_base[MAX_SINGLE_WEAPON_TYPE];	//[blackhole89]
 #endif
 	uint32 exp_table[2][MAX_LEVEL];
 	uint32 max_level[2];
@@ -923,7 +928,7 @@ short pc_maxaspd(struct map_session_data *sd);
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
 
 //Weapon check considering dual wielding.
-#define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_WEAPON_TYPE? \
+#define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_SINGLE_WEAPON_TYPE? \
 	1<<(sd)->status.weapon:(1<<(sd)->weapontype1)|(1<<(sd)->weapontype2)|(1<<(sd)->status.weapon)))
 //Checks if the given class value corresponds to a player class. [Skotlex]
 //JOB_NOVICE isn't checked for class_ is supposed to be unsigned
