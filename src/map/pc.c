@@ -4887,12 +4887,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	if( itemdb_group_item_exists(IG_MERCENARY, nameid) && sd->md != NULL )
 		return false; // Mercenary Scrolls
 
-	/**
-	 * Only GCross may use poisons
-	 **/
-	if( itemdb_group_item_exists(IG_POISON, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
-		return false;
-
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
 		if( pc_is90overweight(sd) ) {
 			clif_msg(sd, ITEM_CANT_OBTAIN_WEIGHT);
