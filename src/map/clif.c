@@ -10004,6 +10004,23 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	return true;
 }
 
+/* clif_pk_mode_message
+ * Displays a message if the player joins a PK Zone
+ * (Only enabled in pk_mode)
+ * @param sd
+ * @return void
+ *------------------------------------------*/
+inline void clif_pk_mode_message(struct map_session_data * sd)
+{
+	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
+	    sd && map[sd->bl.m].flag.pvp) {
+		// 407: You've entered the PK Zone.
+		clif_disp_overhead_(&sd->bl, msg_txt(sd,407), BC_SELF);
+		//clif_broadcast(&sd->bl, msg_txt(sd,407), strlen(msg_txt(sd,407)) + 1, BC_BLUE, SELF);
+	}
+	return;
+}
+
 // ---------------------
 // clif_parse_wanttoconnect
 // ---------------------
@@ -10439,6 +10456,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		// Instances do not need their own channels
 		if( channel_config.map_tmpl.name != NULL && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
+
+		clif_pk_mode_message(sd);
 	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
 		clif_guild_notice(sd); // Displays at end
 
