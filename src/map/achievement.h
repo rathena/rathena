@@ -100,7 +100,7 @@ struct achievement_db {
 struct map_session_data;
 struct block_list;
 
-extern struct achievement_db achievement_dummy;	///< Dummy entry for invalid achievement lookups
+struct achievement_db achievement_dummy;	///< Dummy entry for invalid achievement lookups
 
 struct achievement_db *achievement_search(int achievement_id);
 bool achievement_mobexists(int mob_id);

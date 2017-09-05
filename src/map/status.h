@@ -1810,7 +1810,6 @@ extern short current_equip_opt_index;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
-	MD_NONE					= 0x0000000,
 	MD_CANMOVE				= 0x0000001,
 	MD_LOOTER				= 0x0000002,
 	MD_AGGRESSIVE			= 0x0000004,

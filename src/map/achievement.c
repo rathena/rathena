@@ -32,7 +32,6 @@ static int         av_error_report;
 static DBMap *achievement_db = NULL; // int achievement_id -> struct achievement_db *
 static DBMap *achievementmobs_db = NULL; // Avoids checking achievements on every mob killed
 static void achievement_db_free_sub(struct achievement_db *achievement, bool free);
-struct achievement_db achievement_dummy;
 
 /**
  * Searches an achievement by ID
