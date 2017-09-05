@@ -244,7 +244,7 @@
     <ClCompile Include="quest.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="script.cpp">
+    <ClCompile Include="script.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="searchstore.c">

@@ -240,7 +240,7 @@
     <ClCompile Include="pc_groups.c" />
     <ClCompile Include="pet.c" />
     <ClCompile Include="quest.c" />
-    <ClCompile Include="script.cpp" />
+    <ClCompile Include="script.c" />
     <ClCompile Include="searchstore.c" />
     <ClCompile Include="skill.c" />
     <ClCompile Include="status.c" />
