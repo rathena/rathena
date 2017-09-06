@@ -2723,7 +2723,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 			if( postfix == '$' ) {// string variable
 				ShowWarning("script:get_val: cannot access player variable '%s', defaulting to \"\"\n", name);
 				data->type = C_CONSTSTR;
-				data->u.str = "";
+				safestrncpy(data->u.str, "", sizeof(data->u.str));
 			} else {// integer variable
 				ShowWarning("script:get_val: cannot access player variable '%s', defaulting to 0\n", name);
 				data->type = C_INT;
@@ -2778,7 +2778,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 
 		if( data->u.str == NULL || data->u.str[0] == '\0' ) {// empty string
 			data->type = C_CONSTSTR;
-			data->u.str = "";
+			safestrncpy(data->u.str, "", sizeof(data->u.str));
 		} else {// duplicate string
 			data->type = C_STR;
 			data->u.str = aStrdup(data->u.str);
@@ -3280,7 +3280,7 @@ const char* conv_str_(struct script_state* st, struct script_data* data, struct 
 		script_reportdata(data);
 		script_reportsrc(st);
 		data->type = C_CONSTSTR;
-		data->u.str = "";
+		safestrncpy(data->u.str, "", sizeof(data->u.str));
 	}
 	return data->u.str;
 }
@@ -15179,7 +15179,7 @@ BUILDIN_FUNC(mapid2name)
 	uint16 m = script_getnum(st, 2);
 
 	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
-		script_pushstr(st, "");
+		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -20228,7 +20228,7 @@ BUILDIN_FUNC(instance_info)
 		case IIT_MAP:
 			if( !script_hasdata(st, 4) || script_isstring(st, 4) ){
 				ShowError( "buildin_instance_info: Type IIT_MAP requires a numeric index argument.\n" );
-				script_pushstr(st, "");
+				script_pushconststr(st, "");
 				return SCRIPT_CMD_FAILURE;
 			}
 			
@@ -20236,13 +20236,13 @@ BUILDIN_FUNC(instance_info)
 
 			if( index < 0 ){
 				ShowError( "buildin_instance_info: Type IIT_MAP does not support a negative index argument.\n" );
-				script_pushstr(st, "");
+				script_pushconststr(st, "");
 				return SCRIPT_CMD_FAILURE;
 			}
 
 			if( index > UINT8_MAX ){
 				ShowError( "buildin_instance_info: Type IIT_MAP does only support up to index %hu.\n", UINT8_MAX );
-				script_pushstr(st, "");
+				script_pushconststr(st, "");
 				return SCRIPT_CMD_FAILURE;
 			}
 
@@ -20774,7 +20774,7 @@ BUILDIN_FUNC(get_githash) {
 	if ( git[0] != UNKNOWN_VERSION )
 		script_pushstr(st,buf);
 	else
-		script_pushstr(st,"Unknown"); //unknown
+		script_pushconststr(st,"Unknown"); //unknown
 	return SCRIPT_CMD_SUCCESS;
 }
 /**
