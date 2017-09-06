@@ -2723,7 +2723,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 			if( postfix == '$' ) {// string variable
 				ShowWarning("script:get_val: cannot access player variable '%s', defaulting to \"\"\n", name);
 				data->type = C_CONSTSTR;
-				safestrncpy(data->u.str, "", sizeof(data->u.str));
+				data->u.str = const_cast<char *>("");
 			} else {// integer variable
 				ShowWarning("script:get_val: cannot access player variable '%s', defaulting to 0\n", name);
 				data->type = C_INT;
@@ -2778,7 +2778,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 
 		if( data->u.str == NULL || data->u.str[0] == '\0' ) {// empty string
 			data->type = C_CONSTSTR;
-			safestrncpy(data->u.str, "", sizeof(data->u.str));
+			data->u.str = const_cast<char *>("");
 		} else {// duplicate string
 			data->type = C_STR;
 			data->u.str = aStrdup(data->u.str);
@@ -3280,7 +3280,7 @@ const char* conv_str_(struct script_state* st, struct script_data* data, struct 
 		script_reportdata(data);
 		script_reportsrc(st);
 		data->type = C_CONSTSTR;
-		safestrncpy(data->u.str, "", sizeof(data->u.str));
+		data->u.str = const_cast<char *>("");
 	}
 	return data->u.str;
 }
