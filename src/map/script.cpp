@@ -6760,11 +6760,11 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	opt_param_idx = reference_getindex(opt_param);
 	
 	for (i = 0; i < opt_id_n && i < MAX_ITEM_RDM_OPT; i++) {
-		it->option[i].id = (short)(__64BPRTSIZE(get_val2(st,reference_uid(opt_id_id,opt_id_idx+i),opt_id_ref)));
+		it->option[i].id = static_cast<short>((int32)__64BPRTSIZE(get_val2(st,reference_uid(opt_id_id,opt_id_idx+i),opt_id_ref)));
 		script_removetop(st, -1, 0);
-		it->option[i].value = (short)(__64BPRTSIZE(get_val2(st,reference_uid(opt_val_id,opt_val_idx+i),opt_val_ref)));
+		it->option[i].value = static_cast<short>((int32)__64BPRTSIZE(get_val2(st,reference_uid(opt_val_id,opt_val_idx+i),opt_val_ref)));
 		script_removetop(st, -1, 0);
-		it->option[i].param = (char)(__64BPRTSIZE(get_val2(st,reference_uid(opt_param_id,opt_param_idx+i),opt_param_ref)));
+		it->option[i].param = static_cast<char>((int32)__64BPRTSIZE(get_val2(st,reference_uid(opt_param_id,opt_param_idx+i),opt_param_ref)));
 		script_removetop(st, -1, 0);
 	}
 	return SCRIPT_CMD_SUCCESS;
