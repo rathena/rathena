@@ -1324,7 +1324,7 @@ OnStart:
 		.@mon_num++;
 		if (.@mon_num > 20)
 			break;
-		sleep2 200;
+		sleep 200;
 	}
 	sleep 6000;
 	killmonster 'xm_d_map$, .@event$;
