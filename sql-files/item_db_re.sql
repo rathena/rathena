@@ -9542,7 +9542,7 @@ REPLACE INTO `item_db_re` VALUES (18561,'B_Feather_Beret','B Feather Beret',4,20
 REPLACE INTO `item_db_re` VALUES (18562,'Bone_Hat','Bone Hat',4,20,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,63,2,256,NULL,'10',1,732,'bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18563,'Heart_Wing_Hairband','Heart Wing Hairband',4,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,256,NULL,'50',1,733,'bonus bUseSPrate,-10; bonus bDelayrate,-5; .@r = getrefine()/3; if(.@r>0){ bonus bUseSPrate,.@r*3; bonus bDelayrate,.@r*3; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18564,'Love_Piece','Love Piece',4,20,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'50',0,734,'bonus bNoCastCancel,1; bonus bUseSPrate,15;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18565,'Leprechaun_Hat','Leprechaun Hat',4,20,NULL,300,NULL,8,NULL,1,0xFFFFFFFF,63,2,256,NULL,'40',0,735,'bonus bStr,1; bonus bInt,1; bonus bMdef,4; if(getrefine()>6){ bonus2 bAddMonsterDropItem,12135,50; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18565,'Leprechaun_Hat','St Patrick\'s Hat',4,20,NULL,300,NULL,8,NULL,1,0xFFFFFFFF,63,2,256,NULL,'40',1,735,'bonus bStr,1; bonus bInt,1; bonus bMdef,4; if(getrefine()>6){ bonus2 bAddMonsterDropItem,12135,50; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18566,'Nut_Donut_In_Mouth','Nut Donut In Mouth',4,20,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,736,'bonus bBaseAtk,5; bonus bMatk,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18567,'Stretched_Nose','Stretched Nose',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,737,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18568,'Humming_Bird','Humming Bird',4,20,NULL,100,NULL,3,NULL,0,0xFFFFFFFF,63,2,256,NULL,'10',0,702,'bonus bMdef,6;',NULL,NULL);
