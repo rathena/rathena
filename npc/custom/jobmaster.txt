@@ -19,8 +19,10 @@
 //= 1.7 Readability changes.
 //============================================================
 
+// https://github.com/HerculesWS/Hercules/commit/ed9dd7c18014ad596445cb00dc353c5c57a4d7d6#diff-5a3baaecdcaf1c909de82f146e48434cR245
+// TODO Which exploit has been fixed in there by Haru?
+
 prontera,153,193,6	script	Job Master	123,{
-function Job_Menu;
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -42,6 +44,19 @@ function	RequireLevel	{
 // the temporary character array .@job_opt
 // returns > 0 on failure, see 
 // TODO comment needed?
+
+/*TODO Testing:
+
+	JOB_BABY_NINJA = 4222,
+	JOB_BABY_KAGEROU,
+	JOB_BABY_OBORO,
+	JOB_BABY_TAEKWON,
+	JOB_BABY_STAR_GLADIATOR,
+	JOB_BABY_SOUL_LINKER,
+	JOB_BABY_GUNSLINGER,
+	JOB_BABY_REBELLION,
+
+*/
 
 // Check if there are more Jobs available
 /*
@@ -67,20 +82,29 @@ TODO: Last_Job isn't necessary anymore. But I'll keep that here as a comment to 
 // Checks if the player can change to third class.
 // Note: This does not include the level checks.
 function	canChangeThird	{
-	if( !.ThirdClass )
-		return false;
-	// TODO
 	// To change to third class you either need to be:
 	// * Second Class
 	// * Transcendent Second Class
+	// * Baby Second Class
+	if( !.ThirdClass )
+		return false; // Third job change disabled
+	if( !(eaclass()&JOBL_2) )
+		return false; // Not second Class
+	if( roclass(.@eac|EAJL_THIRD) < 0 )
+		return false; // Job has no third Class
+	return true;
 }
 
 function	canRebirth	{
-	if( !.RebirthClass )
-		return false;
-	// To rebirth, you either need to be:
+	// To rebirth, you need to be:
 	// * Second Class
-	// TODO
+	if( !.RebirthClass )
+		return false; // Rebirth disabled
+	if( !(eaclass()&JOBL_2) )
+		return false; // Not second Class
+	if( roclass(.@eac|EAJL_UPPER) < 0 )
+		return false; // Job has no transcended class
+	return true;
 }
 function	checkRiding	{
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
@@ -122,8 +146,6 @@ function	checkSkillPoints	{
 	// and fills the the array `.@job_opt` with possible
 	// job options for the player.
 	
-	//Check for Rebirth and Third Class
-	// Option should be at the top of the menu
 	if( .@rebirth_possible ) {
 		// Rebirth option (displayed on the top of the menu)
 		RequireLevel(.Req_Rebirth[0], .Req_Rebirth[1]);
@@ -131,6 +153,7 @@ function	checkSkillPoints	{
 			.CHANGE_REBIRTH;
 	}
 	if( .@third_possible ) {
+		// Third Job change (displayed below rebirth)
 		RequireLevel(.Req_Third[0], .Req_Third[1]);
 		setarray .@job_opt[getarraysize(.@job_opt)],
 			.CHANGE_THIRD;
@@ -186,12 +209,12 @@ function	checkSkillPoints	{
 		}
 	}
 	
-	// Player is: 
+	// Player is First Class, by means:
 	// * First Class
 	// * Transcendend First Class
 	// * Baby First Class
 	// most jobs should have two options here  (2-1 and 2-2)
-	if( .@eac <= EAJL_NINJA || 						// First Class
+	if( .@eac <= EAJL_NINJA || 						// First Class TODO: Can we check First Cls in a different way?
 		(.@eac&(~JOBL_UPPER)) <= EAJL_NINJA || 		// Trans. First Cls
 		(.@eac&(~JOBL_BABY)) <= EAJL_NINJA ) {		// Baby First Cls
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
@@ -205,11 +228,11 @@ function	checkSkillPoints	{
 		} else {
 			// Class is not enforced, player can decide.
 			if( .@class1 > 0 ) { // 2-1
-				RequireLevel(1, .Req_Second[1]); // TODO: No BaseLevel required?
+				RequireLevel(.Req_Second[], .Req_Second[1]);
 				setarray .@job_opt[getarraysize(.@job_opt)], .@class1;
 			}
 			if( .@class2 > 0 ) { // 2-2
-				RequireLevel(1, .Req_Second[1]); // TODO: No BaseLevel required?
+				RequireLevel(.Req_Second[0], .Req_Second[1]);
 				setarray .@job_opt[getarraysize(.@job_opt)], .@class2;
 			}
 		}
@@ -218,7 +241,7 @@ function	checkSkillPoints	{
 	// TODO show the menu
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
-	Job_Change;
+	function Confirm_Change;
 	while(1) {
 		.@opt_cnt =  getarraysize(.@job_opt);
 		if( .@opt_cnt <= 0 ) {
@@ -227,6 +250,7 @@ function	checkSkillPoints	{
 		}
 		if (.@opt_cnt > 1) {
 			// Multiple job classes given. Select one and save it to .@class
+			// After that confirm .@class
 			mes "Select a job.";
 			.@menu$ = "";
 			for (.@i = 0; .@i < .@opt_cnt; .@i++)
@@ -238,6 +262,9 @@ function	checkSkillPoints	{
 				close; // shouldn't happen
 			.@class = .@job_opt[.@selected];
 			if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) && BaseLevel < .SNovice) {
+				// Special Level Requirement because Super Novice and 
+				// Supber Baby can be both selected in one of the first class
+				// changes. That's why the Levelrequirement is here.
 				mes .NPCName$;
 				mes "A base level of " + .SNovice + " is required to turn into a " + jobname(.@class) + ".";
 				close;
@@ -246,20 +273,15 @@ function	checkSkillPoints	{
 			mes "Are you sure?";
 			next;
 		} else {
-			// Just one job class given
+			// Just a single job class given
 			.@class = .@job_opt[0];
 		}
 		// TODO class change confirm in extra func
-		// Player confirms he want to change into .@class
-		if (select(" ~ Change into ^0055FF" + jobname(.@class) + "^000000 class: ~ ^777777" + ((getargcount() > 1) ? "Go back" : "Cancel") + "^000000") == 1) {
-			Job_Change(.@class);
-		}
-		if (.@opt_cnt == 1)
-			close;
+		Confirm_Change(.@class, .@opt_cnt > 1);
 		mes .NPCName$;
 	}
-	end;
 	close;
+
 
 // Executes the actual jobchange and closes.
 function	Job_Change	{
@@ -281,8 +303,39 @@ function	Job_Change	{
 	if (.Platinum)
 		Get_Platinum();
 	if (.GetJobEquip)
-		Get_Job_Equip(.@to_cls);
-	close;
+		Get_Job_Equip();
+	close; // Always closes after the change
+}
+
+function	Confirm_Change	{
+	// Player confirms he want to change into .@class
+	.@class = getarg(0, .CHANGE_ERROR);
+	.@back = getarg(1, false);
+	switch(.@class) {
+		// Special Class Changes:
+		case .CHANGE_REBIRTH:
+			.@class = Job_Novice_High;
+			break;
+		case .CHANGE_THIRD:
+			.@class = roclass(.@eac|EAJL_THIRD);
+			if( .@class != -1 )
+				break;
+			// fallthrough if the class has no third cls. Should never happen.
+		case .CHANGE_ERROR:
+			mes "Unknow Class Error.";
+			close;
+	}
+	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
+	if( .@class == Job_Novice_High)
+		.@job_option$ = " ~ ^0055FFRebirth^000000";
+	
+	if (select(.@job_option$+": ~ ^777777" + 
+			((.@back) ?"Go back" : "Cancel") + "^000000") == 1) {
+		Job_Change(.@class);
+	}
+	if (!.@back)
+		close; // "Cancel" pressed
+	return;
 }
 
 function	Get_Platinum	{
@@ -377,86 +430,101 @@ function	Get_Platinum	{
 // Function which gives a job related item to the player
 // the items are the rewards from the original job change quests
 function	Get_Job_Equip	{
-	if(getarg(0) >= 4054 && getarg(0) <= 4108)
-		getitem 2795,1;	//	Green Apple Ring for 3rd Class
-	switch(getarg(0))
-	{	//First/Second | Rebirth First/Second | Baby First/Second
-		case JOB_SWORDMAN:	case JOB_SWORDMAN_HIGH:	case JOB_BABY_SWORDMAN:
-			getitem 1108,1;	break;	//	Blade [4]
-		case JOB_MAGE:		case JOB_MAGE_HIGH:		case JOB_BABY_MAGE:
-			getitem 1602,1;	break;	//	Rod [4]
-		case JOB_ARCHER:	case JOB_ARCHER_HIGH:	case JOB_BABY_ARCHER:
-			getitem 1705,1;	break;	//	Composite Bow [4]
-		case JOB_ACOLYTE:	case JOB_ARCHER_HIGH:	case JOB_BABY_ACOLYTE:
-			getitem 1505,1;	break;	//	Mace [4]
-		case JOB_MERCHANT:	case JOB_MERCHANT_HIGH:	case JOB_BABY_MERCHANT:
-			getitem 1302,1;	break;	//	Axe [4]
-		case JOB_THIEF: 	case JOB_THIEF_HIGH:	case JOB_BABY_THIEF:
-			getitem 1208,1;	break;	//	Main Gauche [4]
-		case JOB_KNIGHT:	case JOB_LORD_KNIGHT:	case JOB_BABY_KNIGHT:
-			getitem 1163,1;	break;	//	Claymore [0]
-		case JOB_PRIEST:	case JOB_HIGH_PRIEST:	case JOB_BABY_PRIEST:
-			getitem 1522,1;	break;	//	Stunner [0]
-		case JOB_WIZARD:	case JOB_HIGH_PRIEST:	case JOB_BABY_WIZARD:
-			getitem 1617,1;	break;	//	Survivor's Rod [0]
-		case JOB_BLACKSMITH: case JOB_WHITESMITH:	case JOB_BABY_BLACKSMITH:
-			getitem 1360,1;	break;	//	Two-Handed-Axe [1]
-		case JOB_HUNTER:	case JOB_SNIPER:		case JOB_BABY_HUNTER:
-			getitem 1718,1;	break;	//	Hunter Bow [0]
-		case JOB_ASSASSIN:	case JOB_ASSASSIN_CROSS: case JOB_BABY_ASSASSIN:
-			getitem 1254,1;	break;	//	Jamadhar [0]
-		case JOB_CRUSADER:	case JOB_PALADIN:		case JOB_BABY_CRUSADER:
-			getitem 1410,1;	break;	//	Lance [0]
-		case JOB_MONK:		case JOB_CHAMPION:		case JOB_BABY_MONK:
-			getitem 1807,1;	break;	//	Fist [0]
-		case JOB_SAGE:		case JOB_PROFESSOR:		case JOB_BABY_SAGE:
-			getitem 1550,1;	break;	//	Book [3]
-		case JOB_ROGUE:		case JOB_STALKER:		case JOB_BABY_ROGUE:
-			getitem 1222,1;	break;	//	Damascus [1]
-		case JOB_ALCHEMIST:	case JOB_CREATOR:		case JOB_BABY_ALCHEMIST:
-			getitem 1126,1;	break;	//	Saber [2]
-		case JOB_BARD:		case JOB_CLOWN:			case JOB_BABY_BARD:
-			getitem 1907,1;	break;	//	Guitar [0]
-		case JOB_DANCER:	case JOB_GYPSY:			case JOB_BABY_DANCER:
-			getitem 1960,1;	break;	//	Whip [1]
-		case JOB_SUPER_NOVICE: case JOB_NOVICE_HIGH: case JOB_SUPER_BABY:
-			getitem 1208,1;	break;	//	Main Gauche [4]
-		case JOB_GUNSLINGER:
-			getitem 13101,1; break;	//	Six Shooter [2]
-		case JOB_NINJA:
-			getitem 13010,1; break;	//	Asura [2]
-		case JOB_STAR_GLADIATOR:
-			getitem 1550,1;	break;	//	Book [3]
-		case JOB_SOUL_LINKER:
-			getitem 1617,1;	break;	//	Survivor's Rod [0]
-
-		//=	3rd Class
-		case JOB_RUNE_KNIGHT:	case JOB_RUNE_KNIGHT_T:		case JOB_BABY_RUNE:
-			getitem 5746,1;	break;	//	Rune Circlet [1]
-		case JOB_WARLOCK:	case JOB_WARLOCK_T:				case JOB_BABY_WARLOCK:
-			getitem 5753,1;	break;	//	Magic Stone Hat [1]
-		case JOB_RANGER:		case JOB_RANGER_T:			case JOB_BABY_RANGER:
-			getitem 5748,1;	break;	//	Sniper Goggle [1]
-		case JOB_ARCH_BISHOP:	case JOB_ARCH_BISHOP_T:		case JOB_BABY_BISHOP:
-			getitem 5747,1;	break;	//	Mitra [1]
-		case JOB_MECHANIC:		case JOB_MECHANIC_T:		case JOB_BABY_MECHANIC:
-			getitem 5749,1;	break;	//	Driver Band [1]
-		case JOB_GUILLOTINE_CROSS: case JOB_GUILLOTINE_CROSS_T: case JOB_BABY_CROSS:
-			getitem 5755,1;	break;	//	Silent Executor [1]
-		case JOB_ROYAL_GUARD:	case JOB_ROYAL_GUARD_T:		case JOB_BABY_GUARD:
-			getitem 5757,1;	break;	//	Dip Schmidt Helm [1]
-		case JOB_SORCERER:		case JOB_SORCERER_T:		case JOB_BABY_SORCERER:
-			getitem 5756,1;	break;	//	Wind Whisper [1]
-		case JOB_MINSTREL:		case JOB_MINSTREL_T:		case JOB_BABY_MINSTREL:
-			getitem 5751,1;	break;	//	Maestro Song's Hat [1]
-		case JOB_WANDERER:		case JOB_WANDERER_T:		case JOB_BABY_WANDERER:
-			getitem 5758,1;	break;	//	Dying Swan [1]
-		case JOB_SURA:			case JOB_SURA_T:			case JOB_BABY_SURA:
-			getitem 5754,1;	break;	//	Blazing Soul [1]
-		case JOB_GENETIC:		case JOB_GENETIC_T:			case JOB_BABY_GENETIC:
-			getitem 5752,1;	break;	//	Midas Whisper[1]
-		case JOB_SHADOW_CHASER:	case JOB_SHADOW_CHASER_T:	case JOB_BABY_CHASER:
-			getitem 5750,1; getitem 6121,1; getitem 6122,1;	break;	//	Shadow Handicraft [1]
+	.@eac = eaclass();
+	if( .@eac&EAJL_THIRD ) {
+		// Third Class Items
+		getitem 2795,1;	//	Green Apple Ring for every 3rd Class
+		switch(BaseJob) {
+			// BaseJob of Third Cls
+			// For Normal Third, Baby Third and Transcended Third Cls
+			case Job_Knight:
+				getitem 5746,1;	break;	//	Rune Circlet [1]
+			case Job_Wizard:
+				getitem 5753,1;	break;	//	Magic Stone Hat [1]
+			case Job_Hunter:
+				getitem 5748,1;	break;	//	Sniper Goggle [1]
+			case Job_Priest:
+				getitem 5747,1;	break;	//	Mitra [1]
+			case Job_Blacksmith:
+				getitem 5749,1;	break;	//	Driver Band [1]
+			case Job_Assassin:
+				getitem 5755,1;	break;	//	Silent Executor [1]
+			case Job_Crusader:
+				getitem 5757,1;	break;	//	Dip Schmidt Helm [1]
+			case Job_Sage:
+				getitem 5756,1;	break;	//	Wind Whisper [1]
+			case Job_Bard:
+				getitem 5751,1;	break;	//	Maestro Song's Hat [1]
+			case Job_Dancer:
+				getitem 5758,1;	break;	//	Dying Swan [1]
+			case Job_Monk:
+				getitem 5754,1;	break;	//	Blazing Soul [1]
+			case Job_Alchemist:
+				getitem 5752,1;	break;	//	Midas Whisper[1]
+			case Job_Rogue:
+				getitem 5750,1; 		//	Shadow Handicraft [1]
+				getitem 6121,1;			//	Makeover Brush
+				getitem 6122,1;	break;	//	Paint Brush
+		}
+	} else if (.@eac&JOBL_2) {
+		// Second Class (And not Third Class)
+		switch(BaseJob) {
+			// Second Class
+			case Job_Knight:
+				getitem 1163,1;	break;	//	Claymore [0]
+			case Job_Priest:
+				getitem 1522,1;	break;	//	Stunner [0]
+			case Job_Wizard:
+				getitem 1617,1;	break;	//	Survivor's Rod [0]
+			case Job_Blacksmith:
+				getitem 1360,1;	break;	//	Two-Handed-Axe [1]
+			case Job_Hunter:
+				getitem 1718,1;	break;	//	Hunter Bow [0]
+			case Job_Assassin:
+				getitem 1254,1;	break;	//	Jamadhar [0]
+			case Job_Crusader:
+				getitem 1410,1;	break;	//	Lance [0]
+			case Job_Monk:
+				getitem 1807,1;	break;	//	Fist [0]
+			case Job_Sage:
+				getitem 1550,1;	break;	//	Book [3]
+			case Job_Rouge:
+				getitem 1222,1;	break;	//	Damascus [1]
+			case Job_Alchemist:
+				getitem 1126,1;	break;	//	Saber [2]
+			case Job_Bard:
+				getitem 1907,1;	break;	//	Guitar [0]
+			case Job_Dancer:
+				getitem 1960,1;	break;	//	Whip [1]
+			case Job_Super_Novice:
+				getitem 1208,1;	break;	//	Main Gauche [4]
+			case Job_Gunslinger:
+				getitem 13101,1; break;	//	Six Shooter [2]
+			case Job_Ninja:
+				getitem 13010,1; break;	//	Asura [2]
+			case Job_Star_Gladiator:
+				getitem 1550,1;	break;	//	Book [3]
+			case Job_Soul_Linker:
+				getitem 1617,1;	break;	//	Survivor's Rod [0]
+		}
+	} else {
+		// Neither Second or Third Cls
+		// => First Cls or not covered by the switch
+		switch(BaseClass) {
+			// First Class
+			case Job_Swordman:
+				getitem 1108,1;	break;	//	Blade [4]
+			case Job_Mage:
+				getitem 1602,1;	break;	//	Rod [4]
+			case Job_Archer:
+				getitem 1705,1;	break;	//	Composite Bow [4]
+			case Job_Acolyte:
+				getitem 1505,1;	break;	//	Mace [4]
+			case Job_Merchant:
+				getitem 1302,1;	break;	//	Axe [4]
+			case Job_Thief:
+				getitem 1208,1;	break;	//	Main Gauche [4]
+		}
 	}
 	return;
 }
@@ -467,8 +535,9 @@ OnInit:
 	
 	// .@job_opt is the main array for the available job changes.
 	// Each element is a roclass or a "special" change:
-	.CHANGE_REBIRTH = -1;
-	.CHANGE_THIRD = -2;
+	.CHANGE_ERROR = -1;
+	.CHANGE_REBIRTH = -2;
+	.CHANGE_THIRD = -3;
 	
 	// Settings
 	.ThirdClass = 1;			// Enable third classes? (1: yes / 0: no)
@@ -480,8 +549,8 @@ OnInit:
 	.GetJobEquip = 0;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
 	
 	// Level Requirements
-	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
-	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
+	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class TODO: No BaseLevel required?
+	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class TODO: No BaseLevel required?
 	setarray .Req_Rebirth[0],99,50;		// Minimum base level, job level to rebirth
 	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class
 	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
