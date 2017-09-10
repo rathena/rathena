@@ -30,22 +30,22 @@ function	RequireLevel	{
 	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
 		.@blvl = getarg(0) - BaseLevel;
 		.@jlvl = getarg(1) - JobLevel;
-		mes "Level requirement: "+getarg(0)+" / "+getarg(1);
+		mes "Level requirement:";
+		mes ((getarg(0)>1)? 
+			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
+			getarg(1)+"^000000 (^00bb00Job^000000)";
 		mes "You need " +
-			((.@blvl > 0) ? .@blvl + " more base levels " + ((.@jlvl > 0) ? "/ " : "") : "") +
-			((.@jlvl > 0) ? .@jlvl + " more job levels " : "") + "to continue.";
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " + 
+				((.@jlvl > 0) ? "and " : "") : "") +
+			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 more job levels " : "") +
+			"to continue.";
 		close;
 	}
 	return;
 }
 
-// Function to get the job change possibilities.
-// return 0 on success, possibilities will be held in 
-// the temporary character array .@job_opt
-// returns > 0 on failure, see 
-// TODO comment needed?
 
-/*TODO Testing:
+/*TODO These are missing:
 
 	JOB_BABY_NINJA = 4222,
 	JOB_BABY_KAGEROU,
@@ -88,10 +88,14 @@ function	canChangeThird	{
 	// * Baby Second Class
 	if( !.ThirdClass )
 		return false; // Third job change disabled
-	if( !(eaclass()&JOBL_2) )
+	if( !(eaclass()&EAJL_2) )
 		return false; // Not second Class
-	if( roclass(.@eac|EAJL_THIRD) < 0 )
+	if( eaclass()&EAJL_THIRD )
+		return false; // Already Third Class
+	if( roclass(eaclass()|EAJL_THIRD) < 0 )
 		return false; // Job has no third Class
+	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
+		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
 	return true;
 }
 
@@ -100,13 +104,19 @@ function	canRebirth	{
 	// * Second Class
 	if( !.RebirthClass )
 		return false; // Rebirth disabled
-	if( !(eaclass()&JOBL_2) )
+	if( !(eaclass()&EAJL_2) )
 		return false; // Not second Class
-	if( roclass(.@eac|EAJL_UPPER) < 0 )
+	if( eaclass()&EAJL_UPPER )
+		return false; // Already Rebirthed
+	if( roclass(eaclass()|EAJL_UPPER) < 0 )
 		return false; // Job has no transcended class
 	return true;
 }
-function	checkRiding	{
+function	Check_Riding	{
+	// Note: Why we should always check for Riding:
+	// Mounts are considered as another class, which
+	// would make this NPC bigger just to handle with
+	// those special cases.
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
 		mes "Please remove your " +
 			((checkfalcon()) ? "falcon" : "") +
@@ -118,7 +128,7 @@ function	checkRiding	{
 	}
 	return;
 }
-function	checkSkillPoints	{
+function	Check_SkillPoints	{
 	if (.SkillPointCheck && SkillPoint) {
 		mes "Please use all your skill points before proceeding.";
 		close;
@@ -128,19 +138,22 @@ function	checkSkillPoints	{
 
 // Begin of the NPC
 	mes .NPCName$;
-	checkRiding();
-	checkSkillPoints();
+	Check_Riding();
+	Check_SkillPoints();
 
 	// initialisation
 	deletearray .@job_opt[0],getarraysize(.@job_opt);
 	.@eac = eaclass();
 	.@third_possible = canChangeThird();
 	.@rebirth_possible = canRebirth();
+	.@first_eac = .@eac&EAJ_BASEMASK;
+	.@second_eac = .@eac&EAJ_UPPERMASK;
 	// Note: These are already set in pc.c
-	// BaseClass = .@eac&EAJ_BASEMASK which is the players First Class
-	// BaseJob = .@eac&EAJ_UPPERMASK which is the players Second Class
+	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
+	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
 	dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible
-		+"), rebirth("+.@rebirth_possible+")";
+		+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass
+		+"), BaseJob ("+BaseJob+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the the array `.@job_opt` with possible
@@ -149,22 +162,23 @@ function	checkSkillPoints	{
 	if( .@rebirth_possible ) {
 		// Rebirth option (displayed on the top of the menu)
 		RequireLevel(.Req_Rebirth[0], .Req_Rebirth[1]);
-		setarray .@job_opt[getarraysize(.@job_opt)],
-			.CHANGE_REBIRTH;
+		setarray .@job_opt[getarraysize(.@job_opt)], Job_Novice_High;
 	}
 	if( .@third_possible ) {
 		// Third Job change (displayed below rebirth)
 		RequireLevel(.Req_Third[0], .Req_Third[1]);
-		setarray .@job_opt[getarraysize(.@job_opt)],
-			.CHANGE_THIRD;
+		setarray .@job_opt[getarraysize(.@job_opt)], roclass(.@eac|EAJL_THIRD);
 	}
-	
-	if (.SecondExpanded && (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) {
+	 
+	if (.SecondExpanded && 
+	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
+	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
 		RequireLevel(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
 		setarray .@job_opt[getarraysize(.@job_opt)],
 			roclass(.@eac|EAJL_THIRD); // Expanded SN is "third" cls
 	}
+	
 	if (.SecondExpanded && (Class == Job_Ninja || Class == Job_Gunslinger)) { // TODO: Baby Classes are missing
 		// (Baby) Ninja to (Baby) Kagerou / Oboro
 		// (Baby) Gunslinger to (Baby) Rebellion
@@ -174,10 +188,10 @@ function	checkSkillPoints	{
 	}
 	
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
-	if (BaseClass == EAJ_NOVICE) {
+	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
 		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
-		// TODO: MAPID_SUPER_NOVICE should lead to an error (ingame test)
 		RequireLevel(.Req_First[0], .Req_First[1]);
+		dispbottom "Debug: First Job Change";
 		switch(Class) {
 			case Job_Novice:
 				// First job change
@@ -207,20 +221,17 @@ function	checkSkillPoints	{
 				mes "An error has occurred.";
 				close;
 		}
-	}
-	
-	// Player is First Class, by means:
-	// * First Class
-	// * Transcendend First Class
-	// * Baby First Class
-	// most jobs should have two options here  (2-1 and 2-2)
-	if( .@eac <= EAJL_NINJA || 						// First Class TODO: Can we check First Cls in a different way?
-		(.@eac&(~JOBL_UPPER)) <= EAJL_NINJA || 		// Trans. First Cls
-		(.@eac&(~JOBL_BABY)) <= EAJL_NINJA ) {		// Baby First Cls
+	} else if( .@eac <= EAJ_NINJA || 				// First Class TODO: Can we check First Cls in a different way?
+			 (.@eac&(~EAJL_UPPER)) <= EAJ_NINJA ||	// Trans. First Cls
+			 (.@eac&(~EAJL_BABY)) <= EAJ_NINJA ) {	// Baby First Cls
+		// Player is First Class (not Novice)
+		// most jobs should have two options here  (2-1 and 2-2)
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
 		.@class2 = roclass(.@eac|EAJL_2_2); // 2-2
+		dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
 		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
 			// Player is rebirth Cls and linear class changes are enforced
+			RequireLevel(.Req_Second[0], .Req_Second[1]);
 			setarray .@job_opt[getarraysize(.@job_opt)], 
 				lastJob + Job_Novice_High;
 			// TODO should we add a check here if lastJob+Job_Novice_High
@@ -228,7 +239,7 @@ function	checkSkillPoints	{
 		} else {
 			// Class is not enforced, player can decide.
 			if( .@class1 > 0 ) { // 2-1
-				RequireLevel(.Req_Second[], .Req_Second[1]);
+				RequireLevel(.Req_Second[0], .Req_Second[1]);
 				setarray .@job_opt[getarraysize(.@job_opt)], .@class1;
 			}
 			if( .@class2 > 0 ) { // 2-2
@@ -238,7 +249,6 @@ function	checkSkillPoints	{
 		}
 	}
 	
-	// TODO show the menu
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
 	function Confirm_Change;
@@ -253,31 +263,36 @@ function	checkSkillPoints	{
 			// After that confirm .@class
 			mes "Select a job.";
 			.@menu$ = "";
-			for (.@i = 0; .@i < .@opt_cnt; .@i++)
-				.@menu$ = .@menu$ + " ~ " + jobname(.@job_opt[.@i]) + ":";
+			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
+				if( .@job_opt[.@i] == Job_Novice_High)
+					.@jobname$ = "^0055FFRebirth^000000";
+				else
+					.@jobname$ = jobname(.@job_opt[.@i]);
+				.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
+			}
 			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
-			next;
 			.@selected = select(.@menu$) - 1;
-			if( .@selected < 0 || .@selected > .@opt_cnt )
+			if( .@selected < 0 || .@selected >= .@opt_cnt )
 				close; // shouldn't happen
+			next;
+			mes .NPCName$;
 			.@class = .@job_opt[.@selected];
-			if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) && BaseLevel < .SNovice) {
+			if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) && 
+					BaseLevel < .SNovice) {
 				// Special Level Requirement because Super Novice and 
 				// Supber Baby can be both selected in one of the first class
 				// changes. That's why the Levelrequirement is here.
-				mes .NPCName$;
-				mes "A base level of " + .SNovice + " is required to turn into a " + jobname(.@class) + ".";
+				mes "A base level of " + .SNovice + 
+					" is required to turn into a " + jobname(.@class) + ".";
 				close;
 			}
-			mes .NPCName$;
-			mes "Are you sure?";
-			next;
 		} else {
 			// Just a single job class given
 			.@class = .@job_opt[0];
 		}
-		// TODO class change confirm in extra func
+		// Confirm the Class
 		Confirm_Change(.@class, .@opt_cnt > 1);
+		next;
 		mes .NPCName$;
 	}
 	close;
@@ -285,7 +300,9 @@ function	checkSkillPoints	{
 
 // Executes the actual jobchange and closes.
 function	Job_Change	{
+	function Get_Platinum;
 	.@to_cls = getarg(0);
+	next;
 	mes .NPCName$;
 	mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
 	if (.@to_cls == Job_Novice_High && .LastJob)
@@ -309,22 +326,13 @@ function	Job_Change	{
 
 function	Confirm_Change	{
 	// Player confirms he want to change into .@class
-	.@class = getarg(0, .CHANGE_ERROR);
+	.@class = getarg(0, -1);
 	.@back = getarg(1, false);
-	switch(.@class) {
-		// Special Class Changes:
-		case .CHANGE_REBIRTH:
-			.@class = Job_Novice_High;
-			break;
-		case .CHANGE_THIRD:
-			.@class = roclass(.@eac|EAJL_THIRD);
-			if( .@class != -1 )
-				break;
-			// fallthrough if the class has no third cls. Should never happen.
-		case .CHANGE_ERROR:
-			mes "Unknow Class Error.";
-			close;
+	if( .@class < 0 ) {
+		mes "Unknow Class Error.";
+		close;
 	}
+	mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";
 	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
 	if( .@class == Job_Novice_High)
 		.@job_option$ = " ~ ^0055FFRebirth^000000";
@@ -466,7 +474,7 @@ function	Get_Job_Equip	{
 				getitem 6121,1;			//	Makeover Brush
 				getitem 6122,1;	break;	//	Paint Brush
 		}
-	} else if (.@eac&JOBL_2) {
+	} else if (.@eac&EAJL_2) {
 		// Second Class (And not Third Class)
 		switch(BaseJob) {
 			// Second Class
@@ -488,7 +496,7 @@ function	Get_Job_Equip	{
 				getitem 1807,1;	break;	//	Fist [0]
 			case Job_Sage:
 				getitem 1550,1;	break;	//	Book [3]
-			case Job_Rouge:
+			case Job_Rogue:
 				getitem 1222,1;	break;	//	Damascus [1]
 			case Job_Alchemist:
 				getitem 1126,1;	break;	//	Saber [2]
@@ -546,8 +554,8 @@ OnInit:
 	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
 	.SkillPointCheck = 1;		// Force player to use up all skill points? (1: yes / 0: no)
 	.Platinum = 1;				// Get platinum skills automatically? (1: yes / 0: no)
-	.GetJobEquip = 0;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
-	
+	.GetJobEquip = 1;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
+	// TODO: Set .GetJobEquip to 0 and remove debug msgs once testing is finished
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class TODO: No BaseLevel required?
 	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class TODO: No BaseLevel required?
