@@ -12,18 +12,18 @@
 //- To Phantasmagorika!
 //- Looking for the Traces
 //- Vestige
-//--- Don't contain memory Quests / instances
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
 
 moc_para01,31,14,0	script	#atnevt01	HIDDEN_WARP_NPC,2,2,{
+	end;
 OnTouch:
 	if (VER_MAIN == 0 && BaseLevel >= 140) {
 		cutin "laime_evenor01.bmp",2;
 		mes "[Secretary Lime Evenor]";
 		mes "Welcome back,";
-		mes strcharinfo(0) +". I don't know how we can survive without you.";
+		mes "" + strcharinfo(0) + ". I don't know how we can survive without you.";
 		next;
 		mes "[Secretary Lime Evenor]";
 		mes "Have you heard?";
@@ -61,69 +61,65 @@ moc_para01,38,175,5	script	Lime Eveno#evtat01	4_F_EDEN_OFFICER,{
 		cutin "laime_evenor01.bmp",2;
 		mes "I also come up here sometimes to attend some business.";
 		mes "Actually the central room is mine.";
+		close3;
 	}
-	else {
-		switch(VER_MAIN) {
-		case 0:
-			cutin "laime_evenor01.bmp",2;
-			mes "Welcome back,";
-			mes strcharinfo(0) +". I don't know how we can survive without you.";
-			next;
-			mes "[Secretary Lime Evenor]";
-			mes "Have you heard?";
-			mes "An ancient site was just discovered in Juperos.";
-			mes "Rekenber is recruiting adventurers for the excavation of the place,";
-			next;
-			mes "[Secretary Lime Evenor]";
-			mes "and we've decided to join it.";
-			mes "The Captain wants to see you about that.";
-			next;
-			select("I didn't know you had a captain.");
-			cutin "laime_evenor02.bmp",2;
-			mes "[Secretary Lime Eveno]";
-			mes "What, did you think I was running this gig alone?";
-			mes "The Mistre--I mean, the Captain is rarely excited about anything, and this is one of those rare occasions. You should meet her.";
-			next;
-			cutin "laime_evenor01.bmp",2;
-			mes "[Secretary Lime Eveno]";
-			mes "Her office is to the far left on the second floor.";
-			VER_MAIN = 1;
-			setquest 7607;// Eden Group Leader
-			break;
-		case 1:
-		case 2:
-			cutin "laime_evenor03.bmp",2;
-			mes "The Captain is waiting for you.";
-			mes "Her office is to the far left from here.";
-			mes "I'll see you again later.";
-			break;
-		case 3:
-			cutin "laime_evenor03.bmp",2;
-			mes "It seems everything went smoothly with the Captain.";
-			mes "Let's move to the central room, shall we?";
-			mes "We have a guest waiting";
-			mes "to talk us about something.";
-			break;
-		case 4:
-			cutin "laime_evenor01.bmp",2;
-			mes "I'll be here rooting for you.";
-			mes "Don't worry about support.";
-			mes "I'll see that you get everything you need.";
-			break;
-		default:
-			cutin "laime_evenor01.bmp",2;
-			mes "The excavation seems to be going well so far.";
-			mes "The item Dr. Atnard was interested in is also on Rekenber's radar; it should be appraised highly.";
-			next;
-			mes "[Secretary Lime Evenor]";
-			mes "Thank you for helping the doctors focus on their work.";
-			mes "Keep up the good work.";
-			break;
-		}
+	switch(VER_MAIN) {
+	case 0:
+		cutin "laime_evenor01.bmp",2;
+		mes "Welcome back,";
+		mes "" + strcharinfo(0) + ". I don't know how we can survive without you.";
+		next;
+		mes "[Secretary Lime Evenor]";
+		mes "Have you heard?";
+		mes "An ancient site was just discovered in Juperos.";
+		mes "Rekenber is recruiting adventurers for the excavation of the place,";
+		next;
+		mes "[Secretary Lime Evenor]";
+		mes "and we've decided to join it.";
+		mes "The Captain wants to see you about that.";
+		next;
+		select("I didn't know you had a captain.");
+		cutin "laime_evenor02.bmp",2;
+		mes "[Secretary Lime Eveno]";
+		mes "What, did you think I was running this gig alone?";
+		mes "The Mistre--I mean, the Captain is rarely excited about anything, and this is one of those rare occasions. You should meet her.";
+		next;
+		cutin "laime_evenor01.bmp",2;
+		mes "[Secretary Lime Eveno]";
+		mes "Her office is to the far left on the second floor.";
+		VER_MAIN = 1;
+		setquest 7607;// Eden Group Leader
+		close3;
+	case 1:
+	case 2:
+		cutin "laime_evenor03.bmp",2;
+		mes "The Captain is waiting for you.";
+		mes "Her office is to the far left from here.";
+		mes "I'll see you again later.";
+		close3;
+	case 3:
+		cutin "laime_evenor03.bmp",2;
+		mes "It seems everything went smoothly with the Captain.";
+		mes "Let's move to the central room, shall we?";
+		mes "We have a guest waiting";
+		mes "to talk us about something.";
+		close3;
+	case 4:
+		cutin "laime_evenor01.bmp",2;
+		mes "I'll be here rooting for you.";
+		mes "Don't worry about support.";
+		mes "I'll see that you get everything you need.";
+		close3;
+	default:
+		cutin "laime_evenor01.bmp",2;
+		mes "The excavation seems to be going well so far.";
+		mes "The item Dr. Atnard was interested in is also on Rekenber's radar; it should be appraised highly.";
+		next;
+		mes "[Secretary Lime Evenor]";
+		mes "Thank you for helping the doctors focus on their work.";
+		mes "Keep up the good work.";
+		close3;
 	}
-	close2;
-	cutin "", 255;
-	end;
 
 OnInit:
 	questinfo 7607, QTYPE_QUEST, 1;
@@ -152,12 +148,12 @@ moc_para01,174,165,3	script	Lime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		break;
 	case 3:
 		cutin "laime_evenor01.bmp",2;
-		mes strcharinfo(0) +". Please come this way.";
+		mes "" + strcharinfo(0) + ". Please come this way.";
 		mes "Let me introduce you to";
 		mes "Archaeologist Aures of the Atnad Excavation Team.";
 		next;
 		mes "[Lime]";
-		mes "Dr. Aures, this is "+ strcharinfo(0) +", who will assist you in Phantasmagorika.";
+		mes "Dr. Aures, this is " + strcharinfo(0) + ", who will assist you in Phantasmagorika.";
 		next;
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
@@ -257,7 +253,7 @@ moc_para01,174,165,3	script	Lime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		cutin "laime_evenor03.bmp",2;
 		mes "[Lime]";
 		mes "Aures, Luke will come with you.";
-		mes strcharinfo(0) +", you can go to Phantasmagorika whenever you're ready.";
+		mes "" + strcharinfo(0) + ", you can go to Phantasmagorika whenever you're ready.";
 		next;
 		mes "[Lime]";
 		mes "It's accessible through Juperos,";
@@ -294,9 +290,7 @@ moc_para01,174,165,3	script	Lime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "Sigh, why can't Ian just forgive his daughter?";
 		break;
 	}
-	close2;
-	cutin "", 255;
-	end;
+	close3;
 }
 
 moc_para01,172,164,5	script	Archaeologist Aureth#atnd02	4_M_OLDSCHOLAR,{
@@ -326,9 +320,7 @@ moc_para01,172,164,5	script	Archaeologist Aureth#atnd02	4_M_OLDSCHOLAR,{
 		mes "Hah hah hah!";
 		mes "I'll see you at the excavation site.";
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 moc_para01,178,167,3	script	Luke Lapez#atnd03	4_M_EDEN_GUARDER,{
@@ -348,9 +340,7 @@ moc_para01,178,167,3	script	Luke Lapez#atnd03	4_M_EDEN_GUARDER,{
 		cutin "looke_rapez03.bmp",0;
 		mes "Hmm...";
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
@@ -370,7 +360,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		if (VER_MAIN == 1) {
 			mes "[Commander Arquien]";
 			cutin "Arquien_n_atnad01.bmp",2;
-			mes "Oh, you're that famous "+ strcharinfo(0) +"?";
+			mes "Oh, you're that famous " + strcharinfo(0) + "?";
 			mes "I should offer you some tea or something but I don't have any tea.";
 			mes "Sorry about that.";
 			next;
@@ -656,9 +646,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		}
 		break;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 ver_eju,114,40,4	script	Manager Michelle#atnd05	4_M_LGTGUARD,{
@@ -689,7 +677,7 @@ ver_eju,114,40,4	script	Manager Michelle#atnd05	4_M_LGTGUARD,{
 			select("Yes.");
 			mes "[Manager Michelle]";
 			mes "Let me check the roster.";
-			mes "Your name is... "+ strcharinfo(0) +". Ah, there you are.";
+			mes "Your name is... " + strcharinfo(0) + ". Ah, there you are.";
 			mes "You're from the Eden Group, all right.";
 			next;
 			mes "[Manager Michelle]";
@@ -792,7 +780,7 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 			close;
 		}
 	}
-	else if (VER_MAIN == 4) {
+	if (VER_MAIN == 4) {
 		mes "Hello.";
 		mes "Thank you for using the Phantasmagorika excavation reception desk.";
 		mes "Do you have a referral? Or are you a member of an excavation team?";
@@ -800,7 +788,7 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 		select("I'm from the Eden Group.");
 		mes "[Nara]";
 		mes "From the Eden Group, got it.";
-		mes "May I have your name? "+ strcharinfo(0) +"...";
+		mes "May I have your name? " + strcharinfo(0) + "...";
 		mes "Ah, there you are.";
 		next;
 		mes "[Nara]";
@@ -810,7 +798,7 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 		input .@string$;
 		mes "[Nara]";
 		if (.@string$ != "Atnad") {
-			mes "..."+ .@string$ +"...?";
+			mes "..." + .@string$ + "...?";
 			mes "Are you sure that's correct?";
 			mes "Because I can't find that name on the list.";
 			next;
@@ -820,7 +808,7 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 		}
 		mes "Atnad... Atnad...";
 		mes "Oh, I've found it.";
-		mes "With you "+ strcharinfo(0) +", the team barely passed the minimum member requirement.";
+		mes "With you " + strcharinfo(0) + ", the team barely passed the minimum member requirement.";
 		mes "Oh, we don't discriminate against small groups. Don't worry.";
 		next;
 		mes "[Nara]";
@@ -839,8 +827,9 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 		completequest 7610;// Registered Excavator
 		VER_MAIN = 5;
 		getexp 300000,300000;
+		close;
 	}
-	else if (VER_MAIN == 5) {
+	if (VER_MAIN == 5) {
 		mes "Now you have unlimited access to this area.";
 		mes "Feel free to let us know if you experience problems excavating or exploring.";
 		next;
@@ -850,11 +839,10 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 		next;
 		mes "[Nara]";
 		mes "Good luck!";
+		close;
 	}
-	else {
-		mes "How are you today?";
-		mes "Keep up the good work.";
-	}
+	mes "How are you today?";
+	mes "Keep up the good work.";
 	close;
 
 OnInit:
@@ -966,21 +954,19 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 				mes "Monsters are growing more numerous in the tunnel and the ruins.";
 				mes "The mercenaries have requested reinforcements.";
 				next;
-				switch( select( "I'll go.", "Decline." ) ) {
-				case 1:
-					mes "[Louis]";
-					mes "Good.";
-					mes "Thank you in advance.";
-					mes "When you're done, you can report the results to Manager Michell in the eastern ruins.";
-					mes "Happy hunting.";
-					setquest 7611;// Passage Cleaning
-					close;
-				case 2:
+				if (select( "I'll go.", "Decline." ) == 2) {
 					mes "[Louis]";
 					mes "Of course, your priority is the excavation.";
 					mes "I'll look for someone else.";
 					close;
 				}
+				mes "[Louis]";
+				mes "Good.";
+				mes "Thank you in advance.";
+				mes "When you're done, you can report the results to Manager Michell in the eastern ruins.";
+				mes "Happy hunting.";
+				setquest 7611;// Passage Cleaning
+				close;
 			case 0:
 			case 1:
 				mes "Thank you.";
@@ -1024,20 +1010,18 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 				mes "Threatening machines have appeared at the Plaza.";
 				mes "The workers have requested a combat unit.";
 				next;
-				switch( select( "I'll go.", "Decline." ) ) {
-				case 1:
-					mes "[Louis]";
-					mes "Good.";
-					mes "Thank you in advance.";
-					mes "Please be careful!";
-					setquest 7613;// Eliminating Risks
-					close;
-				case 2:
+				if (select( "I'll go.", "Decline." ) == 2) {
 					mes "[Louis]";
 					mes "Of course, your priority is the excavation.";
 					mes "I'll look for someone else.";
 					close;
 				}
+				mes "[Louis]";
+				mes "Good.";
+				mes "Thank you in advance.";
+				mes "Please be careful!";
+				setquest 7613;// Eliminating Risks
+				close;
 			case 0:
 			case 1:
 				mes "Thank you.";
@@ -1107,7 +1091,7 @@ verus04,176,161,5	script	Healer Miyo#atnd08	4_F_ACOLYTE,{
 	percentheal (100 / .@s), (100 / .@s);
 	mes "[Miyo]";
 	mes "Oh, you're exhausted.";
-	mes "Let me restore "+ ( .@s == 1 ? "your full" : "some of your" ) +" energy.";
+	mes "Let me restore " + ( .@s == 1 ? "your full" : "some of your" ) + " energy.";
 	mes "I'm offering a 10% discount to the official excavators.";
 	mes "Smile, and you'll feel better.";
 	close;
@@ -1147,13 +1131,13 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			VER_MAIN = 24;
 			emotion 0,0,"Record player#e152a01";
 		}
-		close3;
+		break;
 	case 24:
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "It's the table right here.";
 		mes "I set it up so you can operate it.";
 		mes "You just have to play it.";
-		close3;
+		break;
 	case 25:
 		cutin "Arquien_n_atnad02.bmp",2;
 		mes "...The content is not a big deal.";
@@ -1184,7 +1168,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		changequest 7646,7647;// Play Memory Record -> Report Memory Record
 		VER_MAIN = 26;
 		getexp 750000,500000;
-		close3;
+		break;
 	case 26:
 		cutin "Arquien_n_atnad04.bmp",2;
 		mes "You remember the gist right?";
@@ -1192,7 +1176,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		mes "Tell him I will collect the items myself.";
 		mes "He will probably have no problem.";
 		mes "Since the old man is soooooo superior.";
-		close3;
+		break;
 	case 27:
 		if (countitem(6824) < 5) {// // Experimental_Dong_Memory_Record
 			cutin "Arquien_n_atnad04.bmp",2;
@@ -1222,12 +1206,12 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			delitem 6824,5;// Experimental_Dong_Memory_Record
 			VER_MAIN = 28;
 		}
-		close3;
+		break;
 	case 28:
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "The record player is next to me.";
 		mes "Listen to it yourself, record the messages yourself.";
-		close3;
+		break;
 	case 29:
 		cutin "Arquien_n_atnad02.bmp",2;
 		mes "So that crunching noise, wasn't static but the sound of the connecting part cracking?";
@@ -1268,7 +1252,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		getexp 750000,500000;
 		next;
 		mes "^4d4dffYou can now receive daily quests for collecting Memory Records through Arquien Nile Atnad.^000000";
-		close3;
+		break;
 	default:
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "What's going on?";
@@ -1364,7 +1348,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 				mes "In the meantime I will be preparing the record player to play it right away.";
 				mes "I wonder what the content will be this time.";
 				next;
-				if (select( "Accept.","Reject." ) == 2) {
+				if (select( "Accept.", "Reject." ) == 2) {
 					mes "[Nile]";
 					mes "Well, what can I do.";
 					mes "You are probably busy too from everybody you have to answer to.";
@@ -1502,6 +1486,7 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 	}
 	.@quest_7654 = isbegin_quest(7654);// Play Research facilities Memory Records
 	.@quest_7655 = isbegin_quest(7655);// Play Laboratories Memory Records
+
 	if (.@quest_7654 > 0 || .@quest_7655 > 0) {
 		mes "Playing audible information of the Memory Record.";
 		sleep2 1000;
@@ -1753,7 +1738,7 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 			}
 		}
 		else {
-			switch( rand(1,13) ) {//maybe more case
+			switch( rand(1,14) ) {//maybe more case
 			case 1:
 				npctalk "This is Dorothy Florence. Dorothy who only knows how to do laundry.";
 				sleep2 4000;
@@ -1951,6 +1936,48 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 				sleep2 4000;
 				npctalk "I hope they find freedom again.";
 				break;
+			case 14:
+				npctalk "This is Dorothy Florence. Day 44 of the explosion.";
+				sleep2 4000;
+				npctalk "I hear a portion of the people within the protective wall have changed strangely.";
+				sleep2 4000;
+				npctalk "Apparently it is related to having gone outside.";
+				sleep2 4000;
+				npctalk "People are scrambling to check the wall.";
+				sleep2 4000;
+				npctalk "What is going to happen to us...?";
+				break;
+			case 15:
+				npctalk "--------Bang-----";
+				sleep2 4000;
+				npctalk "Urk..";
+				sleep2 4000;
+				npctalk "Sob sob...";
+				sleep2 4000;
+				npctalk "Why! Why did it happen like this!!!";
+				sleep2 4000;
+				npctalk "Sob sob..";
+				sleep2 4000;
+				npctalk "-------Baang-----";
+				sleep2 4000;
+				npctalk "--Zizip-Ah --doctor --before --zizizip-- he zizip- look zizip--for..";
+				sleep2 4000;
+				npctalk "--Zizizip--here.";
+				sleep2 4000;
+				npctalk "-Click-";
+				sleep2 4000;
+				npctalk "Hm. The doctor looks very tired as well.";
+				sleep2 4000;
+				npctalk "Ah! This was on? I'm going to get in trouble for leaving it on too long..";
+				sleep2 4000;
+				npctalk "Umph! Hm! This is Vanilla Luide. I am tired a lot these days for some reason.";
+				sleep2 4000;
+				npctalk "I guess looking at the situation it's not a shock to see everybody's state.";
+				sleep2 4000;
+				npctalk "Hoo...";
+				sleep2 4000;
+				npctalk "Bzz..";
+				break;
 			}
 			sleep2 3000;
 			next;
@@ -1958,8 +1985,8 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 			erasequest 7652;// Collect Memory Records of Laboratories
 			erasequest 7655;// Play Laboratories Memory Records
 			setquest 7653;// One Memory a Day 2
-			if (countitem(22691) < 1)
-				getitem 22691,1;// Record_Fragment1
+			if (countitem(22691) < 1 && countitem(22692) < 1 && countitem(22693) < 1 && countitem(22694) < 1 && countitem(22695) < 1)
+				getitem rand(22691,22695),1;// Record_Fragment
 		}
 		getexp 1500000,1000000;
 		next;
@@ -1990,17 +2017,13 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 			mes "It seems someone is visiting?";
 			mes "Go along now!";
 		}
-		close2;
-		cutin "",255;
-		end;
+		close3;
 	}
 	if (VER_MAIN < 30) {
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "[Nile]";
 		mes "Can you, not touch things without asking?";
-		close2;
-		cutin "",255;
-		end;
+		close3;
 	}
 	mes "There are no more Memory Records to play.";
 	close;
@@ -2033,7 +2056,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "[Aureth]";
 		mes "Come back when you're done. I'll introduce you to the other members.";
 		mes "Go on.";
-		break;
+		close3;
 	case 5:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2091,7 +2114,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "You'd better go.";
 		mes "Don't let him get on your nerves.";
 		VER_MAIN = 6;
-		break;
+		close3;
 	case 6:
 	case 7:
 		cutin "verus_aures.bmp",0;
@@ -2099,7 +2122,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "Thank you for your patience with Ian.";
 		mes "He wasn't always like that.";
 		mes "He's doing it on purpose.";
-		break;
+		close3;
 	case 8:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2117,7 +2140,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "Thank you.";
 		changequest 7619,7620;// Assisting the Excavation Team -> Young Blood?
 		VER_MAIN = 9;
-		break;
+		close3;
 	case 9:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2131,7 +2154,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "[Aureth]";
 		mes "Please take good care of";
 		mes "Lloyd.";
-		break;
+		close3;
 	case 10:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2152,7 +2175,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "[Aureth]";
 		mes "Sigh, would you stop?";
 		mes "*Shaking his head*";
-		break;
+		close3;
 	case 11:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2177,7 +2200,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		changequest 7622,7617;// Good News! -> Turning In Excavation Report
 		VER_MAIN = 12;
 		getitem 6748,1;// Daily_Report_He_And_His_Team
-		break;
+		close3;
 	case 12:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2186,7 +2209,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		next;
 		mes "[Aureth]";
 		mes "I've noticed Louis has been watching us. I hope that's a good sign.";
-		break;
+		close3;
 	case 13:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2199,7 +2222,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "No, you can't!";
 		mes "You've got work to do!";
 		mes "Come over here, now!";
-		break;
+		close3;
 	case 14:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2233,14 +2256,14 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "You're helpless.";
 		mes "I'm really, really sorry about him.";
 		mes "You really should talk to those two.";
-		break;
+		close3;
 	case 15:
 	case 16:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
 		mes "So you've found some clues, eh?";
 		mes "Hm, even I'm excited.";
-		break;
+		close3;
 	case 32:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2258,7 +2281,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		setquest 7617;// Turning In Excavation Report
 		getitem 6748,1;// Daily_Report_He_And_His_Team
 		VER_MAIN = 33;
-		break;
+		close3;
 	case 33:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2267,7 +2290,7 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		next;
 		mes "[Aureth]";
 		mes "I've noticed Louis has been watching us. I hope that's a good sign.";
-		break;
+		close3;
 	case 34:
 		if (checkquest(7618,PLAYTIME) == 2) {
 			erasequest 7618;// Reporting the Results - Down
@@ -2275,22 +2298,21 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 			mes "[Aureth]";
 			mes "It's time we write another report.";
 			mes "I'll do it after I'm done studying Power Control Devices.";
+			close3;
 		}
-		else {
-			cutin "verus_aures.bmp",0;
-			mes "[Aureth]";
-			mes "Did you deliver the report?";
-			mes "It may be a simple errand,";
-			mes "but it gives you an opportunity to get acquainted with the Commander.";
-			next;
-			mes "[Aureth]";
-			mes "We're old, so we don't care about fame. You're different.";
-			mes "Winning favor with Rekenber can go a long way.";
-			next;
-			mes "[Aureth]";
-			mes "So let's have you submit reports from now on.";
-		}
-		break;
+		cutin "verus_aures.bmp",0;
+		mes "[Aureth]";
+		mes "Did you deliver the report?";
+		mes "It may be a simple errand,";
+		mes "but it gives you an opportunity to get acquainted with the Commander.";
+		next;
+		mes "[Aureth]";
+		mes "We're old, so we don't care about fame. You're different.";
+		mes "Winning favor with Rekenber can go a long way.";
+		next;
+		mes "[Aureth]";
+		mes "So let's have you submit reports from now on.";
+		close3;
 	default:
 		cutin "verus_aures.bmp",0;
 		mes "[Aureth]";
@@ -2303,11 +2325,8 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		next;
 		mes "[Aureth]";
 		mes "The quicker we gather research materials, the quicker we can report.";
-		break;
+		close3;
 	}
-	close2;
-	cutin "",255;
-	end;
 
 OnInit:
 	questinfo 7615,QTYPE_QUEST,1;// inaccurate
@@ -2328,7 +2347,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 	case 4:
 		cutin "verus_ian01.bmp",2;
 		mes "...that's distracting.";
-		break;
+		close3;
 	case 5:
 		cutin "verus_ian01.bmp",2;
 		mes "What have you been loafing around for?";
@@ -2391,7 +2410,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "Let's us go first.";
 		mes "I have your back.";
 		VER_MAIN = 6;
-		break;
+		close3;
 	case 6:
 		cutin "verus_ian01.bmp",2;
 		mes "So, you said you will help us with our work?";
@@ -2410,14 +2429,14 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "I will see how well you work.";
 		setquest 7615;// Core Collection
 		VER_MAIN = 7;
-		break;
+		close3;
 	case 7:
 		if (countitem(6749) < 20) {// Operation_Control_Device
 			cutin "verus_ian01.bmp",2;
 			mes "20 Power Control Devices.";
 			mes "Should be no problem for one who is recommended by that supposedly great person, should it?";
 			mes "Hm.";
-			break;
+			close3;
 		}
 		cutin "verus_ian02.bmp",2;
 		mes ".. Hm..";
@@ -2457,7 +2476,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Ian Atnad]";
 		mes "You two are getting along well.";
 		mes "Go away!";
-		break;
+		close3;
 	case 8:
 		cutin "verus_ian01.bmp",2;
 		mes "...I still don't trust you.";
@@ -2473,7 +2492,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		cutin "verus_ian01.bmp",2;
 		mes "[Ian Atnad]";
 		mes "...... huh.. what are you doing? Go!";
-		break;
+		close3;
 	case 9:
 	case 10:
 	case 11:
@@ -2490,7 +2509,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Ian Atnad]";
 		mes ".....hm.";
 		mes "Quickly come back to me after you are done with what you are doing.";
-		break;
+		close3;
 	case 13:
 		cutin "verus_ian01.bmp",2;
 		mes "Are you coming back from sending the report?";
@@ -2533,7 +2552,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Ian Atnad]";
 		mes "If it's hard for you find it with that dimwitted head of yours then try to ask others at least!";
 		mes "Something that will suit my taste.";
-		break;
+		close3;
 	case 16:
 		cutin "verus_ian01.bmp",2;
 		if (countitem(11519) < 1) {// Beef_Toast
@@ -2602,7 +2621,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		delitem 11519,1;// Beef_Toast
 		changequest 7626,7627;// Delicacy for Him -> Last Exploration
 		VER_MAIN = 17;
-		break;
+		close3;
 	case 17:
 	case 18:
 	case 19:
@@ -2614,7 +2633,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		switch( select( "About the excavation project", "Converse", "Cancel" ) ) {
 		case 1:
 			callsub S_Daily, 0;
-			break;
+			close3;
 		case 2:
 			cutin "verus_ian04.bmp",2;
 			mes "[Ian Atnad]";
@@ -2649,8 +2668,9 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 				mes "Arquien has to know, too.";
 				mes "We will start soon so come back when you're ready.";
 				VER_MAIN = 18;
+				close3;
 			}
-			else if (VER_MAIN == 18) {
+			if (VER_MAIN == 18) {
 				cutin "verus_ian01.bmp",2;
 				mes "The position of our excavation team has improved quite a bit due to your actions.";
 				mes "Thanks to you we received permission to explore closed areas.";
@@ -2670,24 +2690,22 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 				setquest 7641;// Access Permitted
 				setquest 7642;// Explore Research facilities
 				VER_MAIN = 19;
+				close3;
 			}
-			else {
-				cutin "verus_ian01.bmp",2;
-				mes "They say the Research facilities area is connected to the road going up from the right side of the plaza.";
-				mes "Well, if you get up there the corporate bastards will be there restricting access.";
-				next;
-				mes "[Ian Atnad]";
-				mes "If you find something worth risking danger for come back right away and tell me!";
-			}
-			break;
+			cutin "verus_ian01.bmp",2;
+			mes "They say the Research facilities area is connected to the road going up from the right side of the plaza.";
+			mes "Well, if you get up there the corporate bastards will be there restricting access.";
+			next;
+			mes "[Ian Atnad]";
+			mes "If you find something worth risking danger for come back right away and tell me!";
+			close3;
 		case 3:
 			cutin "verus_ian01.bmp",2;
 			mes "[Ian Atnad]";
 			mes "Let's look around as well instead of just working.";
 			mes "These kind of opportunities are rare.";
-			break;
+			close3;
 		}
-		break;
 	case 20:
 		cutin "verus_ian01.bmp",2;
 		mes "You're finally here.";
@@ -2766,12 +2784,12 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "If it's okay we would like to ask you to do so.";
 		changequest 7643,7644;// Mysterious Piece -> Record Player
 		VER_MAIN = 21;
-		break;
+		close3;
 	case 21:
 		cutin "verus_ian01.bmp",2;
 		mes "Find that child Arquien, and bring back the record player.";
 		mes "She must give me at least that much.";
-		break;
+		close3;
 	case 22:
 	case 23:
 	case 24:
@@ -2793,7 +2811,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "Yeah, not bad.";
 		mes "Not!";
 		mes "Anyway.. Since it turned out like this you make sure to bring it. Okay?";
-		break;
+		close3;
 	case 26:
 		cutin "verus_ian01.bmp",2;
 		mes "Did you see some results this time?";
@@ -2847,7 +2865,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "Do you understand?";
 		changequest 7647,7648;// Report Memory Record -> Memory Records of the Laboratories
 		VER_MAIN = 27;
-		break;
+		close3;
 	case 27:
 		cutin "verus_ian01.bmp",2;
 		mes "You will find the restricted area if you go to the connected path North-west of the plaza area.";
@@ -2863,7 +2881,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Ian Atnad]";
 		mes "At least five? We need five to decipher it right?";
 		mes "Collect them and go to Arquien.";
-		break;
+		close3;
 	case 28:
 	case 29:
 		cutin "verus_ian03.bmp",2;
@@ -2899,7 +2917,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Ian Atnad]";
 		mes "Well, that's not untrue...";
 		mes "Anyway go along.";
-		break;
+		close3;
 	case 36:
 		cutin "verus_ian01.bmp",2;
 		mes "Have you arrived?";
@@ -2968,7 +2986,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "Let's meet at the Rekenber Corporation Headquarters.";
 		mes "It's better to take care of things like this at once.";
 		VER_MAIN = 37;
-		break;
+		close3;
 	case 37:
 	case 38:
 	case 39:
@@ -2976,7 +2994,7 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "What are you doing? Hurry up.";
 		mes "^4d4dffRekenber Headquarters is in Lighthalzen^000000.";
 		mes "You go on ahead. Let's meet there.";
-		break;
+		close3;
 	default:
 		cutin "verus_ian01.bmp",2;
 		if (VER_MAIN < 36) {
@@ -3003,49 +3021,46 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 				mes "[Ian Atnad]";
 				mes "Since I am getting results without moving a finger..";
 				mes "......Good.. I will think positively. Yeah.";
+				close3;
 			}
-			else {
-				cutin "verus_ian01.bmp",2;
-				mes "I cannot figure out what Arquien is thinking.";
-				mes "It would be so much better for me to bring back the Record player.";
-				next;
-				cutin "verus_ian02.bmp",2;
-				mes "[Ian Atnad]";
-				mes "What? She wants to participate in this project too?";
-				mes "She will regularly decipher the Memory Records and send the results..?";
-				next;
-				mes "[Ian Atnad]";
-				mes "It's odd she's like this now when she used to hate even dreaming of working.";
-				next;
-				cutin "verus_aures.bmp",0;
-				mes "[Aures]";
-				mes "It seems she's become aware of something as well.";
-				mes "Is this not a good thing?";
-				mes "Father and daughter can get along and figure out their ancestors' past.";
-				next;
-				cutin "verus_ian01.bmp",2;
-				mes "[Ian Atnad]";
-				mes "...Is that so? Is there no other way?";
-				mes "Anyway, it seems we need your help.";
-				mes "You have to check if Arquien is doing it correctly.";
-				next;
-				cutin "verus_aures.bmp",0;
-				mes "[Aures]";
-				mes "We need somebody to collect the Memory Records as well?";
-				mes "Ahahahahaha";
-				next;
-				cutin "verus_ian01.bmp",2;
-				mes "[Ian Atnad]";
-				mes "Well, that's not untrue...";
-				mes "^4d4dffWork with Arquien for the time being.^000000";
-				completequest 7649;// Report Memory Record Content
-				VER_MAIN = 31;
-			}
+			cutin "verus_ian01.bmp",2;
+			mes "I cannot figure out what Arquien is thinking.";
+			mes "It would be so much better for me to bring back the Record player.";
+			next;
+			cutin "verus_ian02.bmp",2;
+			mes "[Ian Atnad]";
+			mes "What? She wants to participate in this project too?";
+			mes "She will regularly decipher the Memory Records and send the results..?";
+			next;
+			mes "[Ian Atnad]";
+			mes "It's odd she's like this now when she used to hate even dreaming of working.";
+			next;
+			cutin "verus_aures.bmp",0;
+			mes "[Aures]";
+			mes "It seems she's become aware of something as well.";
+			mes "Is this not a good thing?";
+			mes "Father and daughter can get along and figure out their ancestors' past.";
+			next;
+			cutin "verus_ian01.bmp",2;
+			mes "[Ian Atnad]";
+			mes "...Is that so? Is there no other way?";
+			mes "Anyway, it seems we need your help.";
+			mes "You have to check if Arquien is doing it correctly.";
+			next;
+			cutin "verus_aures.bmp",0;
+			mes "[Aures]";
+			mes "We need somebody to collect the Memory Records as well?";
+			mes "Ahahahahaha";
+			next;
+			cutin "verus_ian01.bmp",2;
+			mes "[Ian Atnad]";
+			mes "Well, that's not untrue...";
+			mes "^4d4dffWork with Arquien for the time being.^000000";
+			completequest 7649;// Report Memory Record Content
+			VER_MAIN = 31;
 		}
+		close3;
 	}
-	close2;
-	cutin "",255;
-	end;
 
 S_Daily:
 	mes "[Ian Atnad]";
@@ -3078,48 +3093,45 @@ S_Daily:
 				mes "... And.. I feel like I've seen it.. feels like I will know it.";
 				mes "Like I will remember. If I research and research until it is stuck in my brain I am sure something will come of it.";
 				setquest 7615;// Core Collection
+				return;
 			}
-			else {
-				mes "[Ian Atnad]";
-				mes "If you aren't here to work then go away.";
-				mes "You're distracting me.";
-			}
+			mes "[Ian Atnad]";
+			mes "If you aren't here to work then go away.";
+			mes "You're distracting me.";
+			return;
 		}
-		else {
-			if (countitem(6749) < 20) {// Operation_Control_Device
-				mes "It's always the same.";
-				mes "It's ^4d4dff20 Power Control Devices^000000.";
-				mes "Since we're already here, I want to do this right so try not to mess up.";
-			}
-			else {
-				mes "You got it right again.";
-				mes "....";
-				mes "What are you looking at?";
-				mes "Drop what you brought and leave.";
-				next;
-				mes "[Ian Atnad]";
-				mes "......This time I will use it well without breaking it.";
-				mes "Let's slowly get into restoration as well.";
-				delitem 6749, countitem(6749);// Operation_Control_Device
-				changequest 7615,7616;// Core Collection -> Core Collection - Down
-				getexp 1500000,1000000;
-				if (getarg(0) && VERUS_DAILY_QUEST < 10) {// inaccurate
-					if (VER_MAIN != 32)
-						VERUS_DAILY_QUEST++;
-					if (VER_MAIN == 35 && VERUS_DAILY_QUEST == 10)
-						VER_MAIN = 36;
-					else if (VER_MAIN == 31 && VERUS_DAILY_QUEST >= 4)
-						VER_MAIN = 32;
-				}
-			}
+		if (countitem(6749) < 20) {// Operation_Control_Device
+			mes "It's always the same.";
+			mes "It's ^4d4dff20 Power Control Devices^000000.";
+			mes "Since we're already here, I want to do this right so try not to mess up.";
+			return;
 		}
-		break;
+		mes "You got it right again.";
+		mes "....";
+		mes "What are you looking at?";
+		mes "Drop what you brought and leave.";
+		next;
+		mes "[Ian Atnad]";
+		mes "......This time I will use it well without breaking it.";
+		mes "Let's slowly get into restoration as well.";
+		delitem 6749, countitem(6749);// Operation_Control_Device
+		changequest 7615,7616;// Core Collection -> Core Collection - Down
+		getexp 1500000,1000000;
+		if (getarg(0) && VERUS_DAILY_QUEST < 10) {// inaccurate
+			if (VER_MAIN != 32)
+				VERUS_DAILY_QUEST++;
+			if (VER_MAIN == 35 && VERUS_DAILY_QUEST == 10)
+				VER_MAIN = 36;
+			else if (VER_MAIN == 31 && VERUS_DAILY_QUEST >= 4)
+				VER_MAIN = 32;
+		}
+		return;
 	case 0:
 	case 1:
 		mes "We are researching it now.";
 		mes "It's possible we will render it useless from the experiments.";
 		mes "Anyway I am busy now so leave me alone.";
-		break;
+		return;
 	case 2:
 		erasequest 7616;// Core Collection - Down
 		mes "The Power Control Devices we recovered in the past are all broken.";
@@ -3131,9 +3143,8 @@ S_Daily:
 		mes "Arquien is like that too.";
 		mes "......Because she couldn't withstand it... ..";
 		mes "...Hoo..";
-		break;
+		return;
 	}
-	return;
 
 OnInit:
 	questinfo 7615,QTYPE_QUEST,1;// inaccurate
@@ -3150,7 +3161,7 @@ verus03,167,257,5	script	Access Controller Damhw#atnd	4_M_LGTGUARD,{
 	else
 		.@npc_name$ = "Gyuhwa";
 
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	if (VER_MAIN < 19) {
 		mes "I am sorry, only permitted excavation team members are permitted access.";
 		mes "If you work hard with your current excavation team the permit will come.";
@@ -3165,34 +3176,34 @@ verus03,167,257,5	script	Access Controller Damhw#atnd	4_M_LGTGUARD,{
 	mes "Where are you coming from?";
 	next;
 	if (select("I am coming from the atnad excavation", "Why am I prohibited?") == 1) {
-		mes "["+ .@npc_name$ +"]";
+		mes "[" + .@npc_name$ + "]";
 		mes "Ah. You are a member of the Atnad excavation team.";
 		mes "Yes I have confirmed you on the list.";
 		mes "Atnad excavators are permitted access.";
 		next;
 		select("Why is access prohibited?");
 	}
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	mes "Verus City is divided into four large sections.";
 	mes "Did you know?";
 	next;
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	mes "The area currently open are the town and plaza.";
 	mes "While the reason is unknown this place has been closed off and prohibited.";
 	next;
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	mes "During independent corporate investigations before excavator recruitment,";
 	mes "we found that there was a large explosion here and to check the safety of the area,";
 	mes "an inspection period was needed.";
 	next;
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	mes "This is place currently not seen as a great risk other than the dangerous terrain and possibility of";
 	mes "being attacked by machines like the plaza, so access is limited only to the excavation team.";
 	next;
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	mes "Please note that the permit also includes the zone connected in the West.";
 	next;
-	mes "["+ .@npc_name$ +"]";
+	mes "[" + .@npc_name$ + "]";
 	mes "Anyway, since you are permitted you may enter freely from now on.";
 	mes "Then I expect there to be good results!";
 	completequest 7641;// Access Permitted (note : you can enter in verus01 without the quest)
@@ -3248,24 +3259,24 @@ verus02,60,30,1	script	Strewn paper#e152a01	4_ENERGY_BLUE,{
 	else
 		mes "Something may come out by a search.";
 	next;
-	if (select("Check adequately.", "Quit.") == 2)
+	if (select("Check adequately.", "Quit.") == 2) {
 		mes "Decided to investigate something else.";
-	else {
-		progressbar "00ff00",3;
-		hideonnpc strnpcinfo(0);
-		getitem 6757,1;// The_Memory_Recorder
-		if (VER_MAIN == 19) {
-			mes "You find a object never seen before as you go through the clutter of documents and office supplies.";
-			mes "^4d4dffThis needs to be checked if it has enough research value to be brought back to Dr. Ian Atnad.^000000";
-			changequest 7642,7643;// Explore Research facilities -> Mysterious Piece
-			VER_MAIN = 20;
-		}
-		else {
-			mes "Found a Memory Record between the piles of documents.";
-			mes "Seems like someone hid it there on purpose.";
-		}
-		initnpctimer;
+		close;
 	}
+	progressbar "00ff00",3;
+	hideonnpc strnpcinfo(0);
+	getitem 6757,1;// The_Memory_Recorder
+	if (VER_MAIN == 19) {
+		mes "You find a object never seen before as you go through the clutter of documents and office supplies.";
+		mes "^4d4dffThis needs to be checked if it has enough research value to be brought back to Dr. Ian Atnad.^000000";
+		changequest 7642,7643;// Explore Research facilities -> Mysterious Piece
+		VER_MAIN = 20;
+	}
+	else {
+		mes "Found a Memory Record between the piles of documents.";
+		mes "Seems like someone hid it there on purpose.";
+	}
+	initnpctimer;
 	close;
 
 OnTimer60000:
@@ -3327,9 +3338,7 @@ verus01,123,181,3	script	Verity#Warper	4_F_BERRYTEA,{
 	mes "Is that so?";
 	mes "Hm...";
 	cutin "EP15_2_brt_1.bmp",2;
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
@@ -3339,21 +3348,20 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 	}
 	if (VER_MAIN == 27 || isbegin_quest(7652) > 0) {// Collect Memory Records of Laboratories
 		if (countitem(6824) < 5) {
-			if (VER_MAIN == 27)
-				mes "Something shiny is seen under the desk.";
-			else
-				mes "Something may come out by a search.";
-			next;
-			if (select( "Check below.", "Quit." ) == 1) {
-				progressbar "00ff00",3;
-				mes "Found a Memory Record under the desk.";
-				hideonnpc strnpcinfo(0);
-				getitem 6824,1;// Experimental_Dong_Memory_Record
-			}
-		}
-		else {
 			mes "Enough Memory Records are collected.";
 			mes "No need to keep on crawling and searching.";
+			close;
+		}
+		if (VER_MAIN == 27)
+			mes "Something shiny is seen under the desk.";
+		else
+			mes "Something may come out by a search.";
+		next;
+		if (select( "Check below.", "Quit." ) == 1) {
+			progressbar "00ff00",3;
+			mes "Found a Memory Record under the desk.";
+			hideonnpc strnpcinfo(0);
+			getitem 6824,1;// Experimental_Dong_Memory_Record
 		}
 		close;
 	}
@@ -3450,28 +3458,26 @@ function checkstatusquest;
 		if (checkstatusquest(.@quest_id[.@i]) == 0) {
 			mes "^ff0000You have not yet met the requirements to complete the quest.^000000";
 			next;
-			switch( select( "Return the quest.", "End conversation." ) ) {
-			case 1:
-				mes "[Wandering Bard]";
-				mes "Maybe you're not ready";
-				mes "for that task just yet.";
-				next;
-				mes "[Wandering Bard]";
-				mes "Come back later,";
-				mes "and I'll have a new story ready for you.";
-				mes "Bye for now.";
-				erasequest .@quest_id[.@i];
-				wandering_bard_quest++;
-				if (wandering_bard_quest >= 2) {
-					setquest 4296;// Take a Break
-					wandering_bard_quest = 0;
-				}
-				close;
-			case 2:
+			if (select( "Return the quest.", "End conversation." ) == 2) {
 				mes "[Wandering Bard]";
 				mes "Please be safe.";
 				close;
 			}
+			mes "[Wandering Bard]";
+			mes "Maybe you're not ready";
+			mes "for that task just yet.";
+			next;
+			mes "[Wandering Bard]";
+			mes "Come back later,";
+			mes "and I'll have a new story ready for you.";
+			mes "Bye for now.";
+			erasequest .@quest_id[.@i];
+			wandering_bard_quest++;
+			if (wandering_bard_quest >= 2) {
+				setquest 4296;// Take a Break
+				wandering_bard_quest = 0;
+			}
+			close;
 		}
 		mes "- Tell your story. -";
 		next;
@@ -3912,7 +3918,7 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 					delitem 6753, .@amount;
 					getitem 22611, .@amount;// Packed_Envelope
 					mes "[Police Chief Kesler]";
-					mes "You've brought "+ .@amount +" Doom Tokens. I can give you "+ .@amount +" Packing Envelopes.";
+					mes "You've brought " + .@amount + " Doom Tokens. I can give you " + .@amount + " Packing Envelopes.";
 					next;
 					mes "[Police Chief Kesler]";
 					mes "Thank you, and keep up the good work.";
@@ -3925,7 +3931,7 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 				}
 			}
 		}
-		else if (countitem(6753) > 0) {// Token_Of_Destruction
+		if (countitem(6753) > 0) {// Token_Of_Destruction
 			emotion 23;
 			mes "[Police Chief Kesler]";
 			mes "Oh, the Doom Prayers carry this ^F8081EDoom Token^000000.";
@@ -3967,49 +3973,48 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 				delitem 6753, .@amount;
 				getitem 22611, .@amount;// Packed_Envelope
 				mes "[Police Chief Kesler]";
-				mes "In exchange for your "+ .@amount +" Doom Tokens, I've given you "+ .@amount +" Packing Envelopes.";
+				mes "In exchange for your " + .@amount + " Doom Tokens, I've given you " + .@amount + " Packing Envelopes.";
 			}
 			setquest 5304;// Police Chief Kesler
 			completequest 5304;
 			next;
 			mes "[Police Chief Kesler]";
 			mes "Thank you for your continue support in the subjugation of the Doom Prayers.";
+			close;
 		}
-		else {
-			emotion 23;
-			mes "[Police Chief Kesler]";
-			mes "Oh, is this your first time in Phantasmagorika?";
-			next;
-			mes "[Police Chief Kesler]";
-			mes "This site was only recently discovered, and therefore fairly safe. I can't think of anything you should be worried about...";
-			next;
-			emotion 23;
-			mes "[Police Chief Kesler]";
-			mes "Oh, strike that--there's one thing.";
-			next;
-			mes "[Police Chief Kesler]";
-			mes "This ^82ABE9Verus Excavation Site^000000 is safe, but if you're planning to move to the ^82ABE9Verus Central Plaza^000000, then make sure you're prepared for the worst.";
-			next;
-			mes "[Police Chief Kesler]";
-			mes "By the way the excavation of this site just has begun, and everything in it must be kept in place until the excavation is over.";
-			next;
-			emotion 6;
-			mes "[Police Chief Kesler]";
-			mes "But those Doom Payers are making it impossible. Bah! %$#@#$#@";
-			next;
-			mes "[Police Chief Kesler]";
-			mes "I'm going bald, worrying over them so much. I didn't have much hair to begin with.";
-			next;
-			mes "[Police Chief Kesler]";
-			mes "...";
-			next;
-			mes "[Police Chief Kesler]";
-			mes "Um, didn't mean to rant about my hair.";
-			next;
-			emotion 33;
-			mes "[Police Chief Kesler]";
-			mes "Just be careful not to break anything that has been discovered in this site.";
-		}
+		emotion 23;
+		mes "[Police Chief Kesler]";
+		mes "Oh, is this your first time in Phantasmagorika?";
+		next;
+		mes "[Police Chief Kesler]";
+		mes "This site was only recently discovered, and therefore fairly safe. I can't think of anything you should be worried about...";
+		next;
+		emotion 23;
+		mes "[Police Chief Kesler]";
+		mes "Oh, strike that--there's one thing.";
+		next;
+		mes "[Police Chief Kesler]";
+		mes "This ^82ABE9Verus Excavation Site^000000 is safe, but if you're planning to move to the ^82ABE9Verus Central Plaza^000000, then make sure you're prepared for the worst.";
+		next;
+		mes "[Police Chief Kesler]";
+		mes "By the way the excavation of this site just has begun, and everything in it must be kept in place until the excavation is over.";
+		next;
+		emotion 6;
+		mes "[Police Chief Kesler]";
+		mes "But those Doom Payers are making it impossible. Bah! %$#@#$#@";
+		next;
+		mes "[Police Chief Kesler]";
+		mes "I'm going bald, worrying over them so much. I didn't have much hair to begin with.";
+		next;
+		mes "[Police Chief Kesler]";
+		mes "...";
+		next;
+		mes "[Police Chief Kesler]";
+		mes "Um, didn't mean to rant about my hair.";
+		next;
+		emotion 33;
+		mes "[Police Chief Kesler]";
+		mes "Just be careful not to break anything that has been discovered in this site.";
 		close;
 	case 4:
 		emotion 22;
@@ -4092,7 +4097,7 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 				mes "[Police Officer Salgran]";
 				mes "Whew, you're not the Chief. Who are you?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Your chief in the middle of Phantasmagorika sent me.";
 				next;
 				emotion 43;
@@ -4140,26 +4145,25 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 				setquest 5314;
 				mes "[Police Officer Salgran]";
 				mes "Thank you. Come back when you get rid of 10 Illegal Leaflets.";
+				close;
 			}
-			else {
-				emotion 12;
+			emotion 12;
+			mes "[Police Officer Salgran]";
+			mes "Welcome back. Did the Chief send you again?";
+			next;
+			emotion 1;
+			mes "[Police Officer Salgran]";
+			mes "Great, can you help me again to get rid of those illegal leaflets?";
+			next;
+			if (select( "Help.", "Maybe next time." ) == 1) {
+				setquest 5314;
 				mes "[Police Officer Salgran]";
-				mes "Welcome back. Did the Chief send you again?";
-				next;
-				emotion 1;
-				mes "[Police Officer Salgran]";
-				mes "Great, can you help me again to get rid of those illegal leaflets?";
-				next;
-				if (select( "Help.", "Maybe next time." ) == 1) {
-					setquest 5314;
-					mes "[Police Officer Salgran]";
-					mes "Thank you. Come back when you get rid of 10 Illegal Leaflets.";
-					close;
-				}
-				setquest 5310;// Salgran's Problem
-				mes "[Police Officer Salgran]";
-				mes "You must be busy. All right, then tell the Chief that everything's good in my sector.";
+				mes "Thank you. Come back when you get rid of 10 Illegal Leaflets.";
+				close;
 			}
+			setquest 5310;// Salgran's Problem
+			mes "[Police Officer Salgran]";
+			mes "You must be busy. All right, then tell the Chief that everything's good in my sector.";
 			close;
 		case 1:
 			mes "[Police Officer Salgran]";
@@ -4172,11 +4176,10 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 					mes "Oh, good job! The Chief never forgets a favor. He might reward you more handsomely depending on his mood.";
 					completequest 5314;
 					setquest 5310;
+					close;
 				}
-				else {
-					emotion 54;
-					mes "Hmpf, of course no one can be so quick. I asked you to get rid of at least 10 Illegal Leaflets.";
-				}
+				emotion 54;
+				mes "Hmpf, of course no one can be so quick. I asked you to get rid of at least 10 Illegal Leaflets.";
 				close;
 			case 2:
 				emotion 23;
@@ -4247,7 +4250,7 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				emotion 53;
 				mes "Argh, where's my pen? I had it when I left the station. Did those robots steal it from me?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Check behind your ear.";
 				next;
 				emotion 23;
@@ -4258,7 +4261,7 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				mes "[Police Officer Gerev]";
 				mes "Oops, sorry. How may I help you?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Your chief in the middle of Phantasmagorika sent me.";
 				next;
 				emotion 6;
@@ -4312,26 +4315,24 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				next;
 				mes "[Police Officer Gerev]";
 				mes "I appreciate it if you can get rid of those in my vicinity first.";
-			}
-			else {
-				mes "Hello again. Did the Chief send you?";
-				next;
-				mes "[Police Officer Gerev]";
-				mes "If you're not busy, could you disarm the Doom Prayers' traps scattered across Phantasmagorika?";
-				next;
-				if (select( "Sure.", "Maybe next time." ) == 1) {
-					setquest 5315;
-					trap_doom_prayers = 0;
-					mes "[Police Officer Gerev]";
-					mes "Thank you. Please disarm 10 traps installed in Phantasmagorika.";
-					close;
-				}
-				emotion 20;
-				setquest 5311;
-				mes "[Police Officer Gerev]";
-				mes "You're just as busy, eh? No worries. I have other adventurers helping me. Please tell Chief Kesler everything's good in my sector.";
 				close;
 			}
+			mes "Hello again. Did the Chief send you?";
+			next;
+			mes "[Police Officer Gerev]";
+			mes "If you're not busy, could you disarm the Doom Prayers' traps scattered across Phantasmagorika?";
+			next;
+			if (select( "Sure.", "Maybe next time." ) == 1) {
+				setquest 5315;
+				trap_doom_prayers = 0;
+				mes "[Police Officer Gerev]";
+				mes "Thank you. Please disarm 10 traps installed in Phantasmagorika.";
+				close;
+			}
+			emotion 20;
+			setquest 5311;
+			mes "[Police Officer Gerev]";
+			mes "You're just as busy, eh? No worries. I have other adventurers helping me. Please tell Chief Kesler everything's good in my sector.";
 			close;
 		case 1:
 			emotion 23;
@@ -4424,7 +4425,7 @@ verus03,81,241,6	script	Police Officer Seiden#EP15_1	4_M_ORIENT02,{
 				mes "*Chuckle* The Chief sent you. I know because I've been waiting.";
 				next;
 				emotion 0,1;
-				mes "["+ strcharinfo(0) +"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "?!";
 				next;
 				mes "[Police Officer Seiden]";
@@ -4473,24 +4474,23 @@ verus03,81,241,6	script	Police Officer Seiden#EP15_1	4_M_ORIENT02,{
 				count_stone_seiden = 0;
 				mes "[Police Officer Seiden]";
 				mes "*Chuckles* Pebbles don't count. Please bring 10 stones big enough to fit your hand.";
+				close;
 			}
-			else {
-				mes "*Chuckle* I thought it's about time.";
-				next;
+			mes "*Chuckle* I thought it's about time.";
+			next;
+			mes "[Police Officer Seiden]";
+			mes "*Chuckle* Please clear Phantasmagorika of stones, just like the last time.";
+			next;
+			if (select( "Sure.", "Maybe next time." ) == 1) {
+				setquest 5316;
+				count_stone_seiden = 0;
 				mes "[Police Officer Seiden]";
-				mes "*Chuckle* Please clear Phantasmagorika of stones, just like the last time.";
-				next;
-				if (select( "Sure.", "Maybe next time." ) == 1) {
-					setquest 5316;
-					count_stone_seiden = 0;
-					mes "[Police Officer Seiden]";
-					mes "Pebbles don't count. Please bring 10 stones big enough to fit your hand.";
-					close;
-				}
-				setquest 5312;
-				mes "[Police Officer Seiden]";
-				mes "You're still busy, huh? No worries. Just tell Chief Kesler that everything's quiet in my sector.";
+				mes "Pebbles don't count. Please bring 10 stones big enough to fit your hand.";
+				close;
 			}
+			setquest 5312;
+			mes "[Police Officer Seiden]";
+			mes "You're still busy, huh? No worries. Just tell Chief Kesler that everything's quiet in my sector.";
 			close;
 		case 1:
 			mes "*Chuckle* Did you pick up all the stones?";
@@ -4504,23 +4504,22 @@ verus03,81,241,6	script	Police Officer Seiden#EP15_1	4_M_ORIENT02,{
 						mes "*Chuckle* Where are they? Pick them up, or the spirits of the victims will haunt you forever.";
 					else
 						mes "*Chuckle* Look around--there are stones everywhere. Where did you find this stone, then?";
+					close;
 				}
-				else {
-					if (countitem(7049) < 10)
-						mes "*Chuckle* Where are the stones? Please bring them to me.";
-					else {
-						delitem 7049,10;// Stone
-						count_stone_seiden = 0;
-						completequest 5316;
-						if (isbegin_quest(5307) == 0) {
-							setquest 5307;
-							completequest 5307;
-						}
-						setquest 5312;
-						mes "[Police Officer Seiden]";
-						mes "*Chuckle* Thank you. The spirits of the victims are appeased for now.";
-					}
+				if (countitem(7049) < 10) {
+					mes "*Chuckle* Where are the stones? Please bring them to me.";
+					close;
 				}
+				delitem 7049,10;// Stone
+				count_stone_seiden = 0;
+				completequest 5316;
+				if (isbegin_quest(5307) == 0) {
+					setquest 5307;
+					completequest 5307;
+				}
+				setquest 5312;
+				mes "[Police Officer Seiden]";
+				mes "*Chuckle* Thank you. The spirits of the victims are appeased for now.";
 				close;
 			case 2:
 				emotion 29;
@@ -4674,7 +4673,7 @@ verus04,202,258,4	script	Police Officer Piffs#EP15_1	4_M_SAGE_C,{
 				emotion 37;
 				mes "*Yum Yum* Delish!";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Excuse me.";
 				next;
 				emotion 23;
@@ -4860,8 +4859,9 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 		cutin "looke_rapez04.bmp",0;
 		mes "Don't worry about him.";
 		mes "He knows what he's doing.";
+		close3;
 	}
-	else if (VER_MAIN == 14) {
+	if (VER_MAIN == 14) {
 		cutin "looke_rapez02.bmp",0;
 		mes "...?";
 		mes "Interesting.";
@@ -4888,8 +4888,9 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 		mes "You'll have to look hard for them.";
 		changequest 7624,7625;// In Search of a Delicacy -> Count On Me
 		VER_MAIN = 15;
+		close3;
 	}
-	else if (VER_MAIN == 15) {
+	if (VER_MAIN == 15) {
 		if (countitem(517) < 2 || countitem(11520) < 1 || countitem(513) < 1) {
 			cutin "looke_rapez04.bmp",0;
 			mes "Did you forget the ingredients?";
@@ -4898,28 +4899,28 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 			mes "[Luke]";
 			mes "Some of the fruits grow near the ^4d4dffMisty Forest Labyrinth^000000.";
 			mes "...";
+			close3;
 		}
-		else {
-			cutin "looke_rapez02.bmp",0;
-			mes "This should suffice.";
-			mes "I haven't cooked it in a while, but the recipe is in my head.";
-			next;
-			mes "[Luke]";
-			mes "Done.";
-			mes "This food should fit all the conditions you told me.";
-			next;
-			cutin "",255;
-			mes "Luke gave you Mora's specialty food, Beef Toast.";
-			mes "It perfectly fits everything Ian said he wanted.";
-			delitem 517,2;	// Meat
-			delitem 11520,1;// Mora_Mandarin
-			delitem 513,1;	// Banana
-			getitem 11519,1;// Beef_Toast
-			changequest 7625,7626;// Count On Me -> Delicacy for Him
-			VER_MAIN = 16;
-		}
+		cutin "looke_rapez02.bmp",0;
+		mes "This should suffice.";
+		mes "I haven't cooked it in a while, but the recipe is in my head.";
+		next;
+		mes "[Luke]";
+		mes "Done.";
+		mes "This food should fit all the conditions you told me.";
+		next;
+		cutin "",255;
+		mes "Luke gave you Mora's specialty food, Beef Toast.";
+		mes "It perfectly fits everything Ian said he wanted.";
+		delitem 517,2;	// Meat
+		delitem 11520,1;// Mora_Mandarin
+		delitem 513,1;	// Banana
+		getitem 11519,1;// Beef_Toast
+		changequest 7625,7626;// Count On Me -> Delicacy for Him
+		VER_MAIN = 16;
+		close3;
 	}
-	else if (VER_MAIN == 16) {
+	if (VER_MAIN == 16) {
 		cutin "looke_rapez01.bmp",0;
 		mes "*Chuckle*";
 		mes "If you need more, it'll be easier to buy it from the Mora Village.";
@@ -4928,28 +4929,25 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 		mes "[Luke]";
 		mes "Or you won't find the answer the Captain wanted.";
 		mes "Good luck.";
+		close3;
 	}
-	else {
-		cutin "looke_rapez03.bmp",0;
-		mes "This place is boring, just like everywhere else.";
-		mes "Aren't there stronger monsters?";
-		next;
-		cutin "",255;
-		mes "[Lloyd]";
-		mes "Don't say that.";
-		mes "You'll jinx us.";
-		mes "I'm a brave Cat, but my claws can't even scratch those.";
-		next;
-		cutin "looke_rapez01.bmp",0;
-		mes "[Luke]";
-		mes "Alright, alright.";
-		mes "But don't worry.";
-		mes "I'm not stupid.";
-		mes "I'll never put my charges in danger.";
-	}
-	close2;
+	cutin "looke_rapez03.bmp",0;
+	mes "This place is boring, just like everywhere else.";
+	mes "Aren't there stronger monsters?";
+	next;
 	cutin "",255;
-	end;
+	mes "[Lloyd]";
+	mes "Don't say that.";
+	mes "You'll jinx us.";
+	mes "I'm a brave Cat, but my claws can't even scratch those.";
+	next;
+	cutin "looke_rapez01.bmp",0;
+	mes "[Luke]";
+	mes "Alright, alright.";
+	mes "But don't worry.";
+	mes "I'm not stupid.";
+	mes "I'll never put my charges in danger.";
+	close3;
 }
 
 verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
@@ -4967,8 +4965,9 @@ verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
 		mes "[Lloyd]";
 		mes "Just keep your distance and mind your own business.";
 		mes "You and I will be fine so long as you don't steal my hard work.";
+		close;
 	}
-	else if (VER_MAIN == 9) {
+	if (VER_MAIN == 9) {
 		mes "You're looking down your nose at me because I'm a Cat.";
 		next;
 		select("Are you Lloyd?");
@@ -5037,8 +5036,9 @@ verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
 		mes "I'll be waiting.";
 		changequest 7620,7621;// Young Blood? -> Bottling the Energy
 		VER_MAIN = 10;
+		close;
 	}
-	else if (VER_MAIN == 10) {
+	if (VER_MAIN == 10) {
 		if (countitem(6756) < 10) {// Cohesive_Energy
 			mes "This place is littered with broken robots and machines.";
 			mes "Clouds of physical energy are discovered near them.";
@@ -5049,128 +5049,121 @@ verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
 			next;
 			mes "[Lloyd]";
 			mes "You must be dumber than you look if you have to ask twice.";
+			close;
 		}
-		else {
-			mes "Oh, this is enough.";
-			mes "You're good.";
-			mes "My estimation of you went up a notch.";
-			next;
-			mes "[Lloyd]";
-			mes "You've made my job easier.";
-			mes "Finally, I can be useful to Aureth.";
-			mes "If I find the cause of the condensation of energy and its possible applications, maybe";
-			next;
-			mes "[Lloyd]";
-			mes "Ian and I can reactivate the robots in this place.";
-			mes "That's what we've wanted all along.";
-			next;
-			mes "[Lloyd]";
-			mes "Tell Aureth I'm making progress.";
-			mes "Good job, Human.";
-			mes "I'll look forward to using your service again.";
-			delitem 6756,10;// Cohesive_Energy
-			changequest 7621,7622;// Bottling the Energy -> Good News!
-			VER_MAIN = 11;
-		}
+		mes "Oh, this is enough.";
+		mes "You're good.";
+		mes "My estimation of you went up a notch.";
+		next;
+		mes "[Lloyd]";
+		mes "You've made my job easier.";
+		mes "Finally, I can be useful to Aureth.";
+		mes "If I find the cause of the condensation of energy and its possible applications, maybe";
+		next;
+		mes "[Lloyd]";
+		mes "Ian and I can reactivate the robots in this place.";
+		mes "That's what we've wanted all along.";
+		next;
+		mes "[Lloyd]";
+		mes "Tell Aureth I'm making progress.";
+		mes "Good job, Human.";
+		mes "I'll look forward to using your service again.";
+		delitem 6756,10;// Cohesive_Energy
+		changequest 7621,7622;// Bottling the Energy -> Good News!
+		VER_MAIN = 11;
+		close;
 	}
-	else if (VER_MAIN > 10 && VER_MAIN < 17) {
+	if (VER_MAIN > 10 && VER_MAIN < 17) {
 		mes "Soon I'll need your service on a daily basis.";
 		mes "Don't fret and take one for the team.";
+		close;
 	}
-	else {
-		switch( checkquest(7629,PLAYTIME) ) {
-		case -1:
-			if (isbegin_quest(7628) == 0) {
-				mes "You know the drill: collect condensed energy.";
-				mes "You'll do that for me, won't you?";
+	switch( checkquest(7629,PLAYTIME) ) {
+	case -1:
+		if (isbegin_quest(7628) == 0) {
+			mes "You know the drill: collect condensed energy.";
+			mes "You'll do that for me, won't you?";
+			next;
+			if (select( "Sure.","Decline." ) == 2) {
+				mes "[Lloyd]";
+				mes "Why, do you have something else to do?";
+				mes "All right then,";
+				mes "I'll ask Luke to take me around.";
 				next;
-				if (select( "Sure.","Decline." ) == 2) {
-					mes "[Lloyd]";
-					mes "Why, do you have something else to do?";
-					mes "All right then,";
-					mes "I'll ask Luke to take me around.";
-					next;
-					cutin "looke_rapez01.bmp",0;
-					mes "[Luke]";
-					mes "I thought you'd never ask!";
-					mes "I've been itching for some action.";
-				}
-				else {
-					mes "[Lloyd]";
-					mes "All you have to do is collect energy that naturally gathers around the remnants of robots and machines.";
-					mes "I need 10 bottles every day.";
-					setquest 7628;// New Power Source
-				}
+				cutin "looke_rapez01.bmp",0;
+				mes "[Luke]";
+				mes "I thought you'd never ask!";
+				mes "I've been itching for some action.";
+				close3;
 			}
-			else {
-				if (countitem(6756) < 10) {
-					mes "All you have to do is collect energy that naturally gathers around the remnants of robots and machines.";
-					mes "I need 10 bottles every day.";
-				}
-				else {
-					mes "I think I like you!";
-					mes "Not as much as Aureth and Luke, though.";
-					mes "All right, I'll make good use of this energy.";
-					next;
-					mes "[Lloyd]";
-					mes "Come back tomorrow.";
-					mes "Well, you might as well come back every day at this time.";
-					mes "You can't say no.";
-					mes "I need you.";
-					delitem 6756,10;// Cohesive_Energy
-					changequest 7628,7629;// Tomorrow for Tomorrow's Energy
-					getexp 150000,1000000;
-				}
-			}
-			break;
-		case 0:
-		case 1:
-			mes "I'm analyzing the collected energy.";
-			mes "...";
-			next;
 			mes "[Lloyd]";
-			mes "Are you dense?";
-			mes "That means I want to be left alone!";
+			mes "All you have to do is collect energy that naturally gathers around the remnants of robots and machines.";
+			mes "I need 10 bottles every day.";
+			setquest 7628;// New Power Source
 			close;
-		case 2:
-			erasequest 7629;
-			mes "Hm, maybe I need to find a special storage method.";
-			mes "The energy dissipates so easily.";
-			next;
-			mes "[Lloyd]";
-			mes "I'll need more bottles of the energy.";
-			mes "How are you?";
-			mes "Are you ready to take one for the team?";
-			break;
 		}
+		if (countitem(6756) < 10) {
+			mes "All you have to do is collect energy that naturally gathers around the remnants of robots and machines.";
+			mes "I need 10 bottles every day.";
+			close;
+		}
+		mes "I think I like you!";
+		mes "Not as much as Aureth and Luke, though.";
+		mes "All right, I'll make good use of this energy.";
+		next;
+		mes "[Lloyd]";
+		mes "Come back tomorrow.";
+		mes "Well, you might as well come back every day at this time.";
+		mes "You can't say no.";
+		mes "I need you.";
+		delitem 6756,10;// Cohesive_Energy
+		changequest 7628,7629;// Tomorrow for Tomorrow's Energy
+		getexp 150000,1000000;
+		close;
+	case 0:
+	case 1:
+		mes "I'm analyzing the collected energy.";
+		mes "...";
+		next;
+		mes "[Lloyd]";
+		mes "Are you dense?";
+		mes "That means I want to be left alone!";
+		close;
+	case 2:
+		erasequest 7629;
+		mes "Hm, maybe I need to find a special storage method.";
+		mes "The energy dissipates so easily.";
+		next;
+		mes "[Lloyd]";
+		mes "I'll need more bottles of the energy.";
+		mes "How are you?";
+		mes "Are you ready to take one for the team?";
+		close;
 	}
-	close2;
-	cutin "",255;
-	end;
 }
 verus03,127,145,0	script	Machine Remnant#atnd01	4_ENERGY_RED,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You are carrying too many items to proceed with the quest. -";
 		close;
 	}
-	if (isbegin_quest(7628) == 0 && VER_MAIN != 10)
+	if (isbegin_quest(7628) == 0 && VER_MAIN != 10) {
 		mes "You don't have to collect more energy at this moment.";
+		close;
+	}
+	if (countitem(6756) > 9)// Cohesive_Energy
+		mes "You have enough ^4d4dffCondensed Energy^000000.";
+	else if (countitem(713) < 1)
+		mes "^4d4dffEmpty Bottle^000000 is required to collect Condensed Energy.";
 	else {
-		if (countitem(6756) > 9)// Cohesive_Energy
-			mes "You have enough ^4d4dffCondensed Energy^000000.";
-		else if (countitem(713) < 1)
-			mes "^4d4dffEmpty Bottle^000000 is required to collect Condensed Energy.";
-		else {
-			mes "A thick cloud of energy is visible between the broken pieces of metal.";
-			mes "Bring an empty bottle close to the waving edges of the cloud to collect the energy.";
-			next;
-			progressbar "00ff00",3;
-			delitem 713,1;// Empty Bottle
-			getitem 6756,1;// Cohesive_Energy
-			mes "Collected Condensed Energy!";
-			initnpctimer;
-			hideonnpc strnpcinfo(0);
-		}
+		mes "A thick cloud of energy is visible between the broken pieces of metal.";
+		mes "Bring an empty bottle close to the waving edges of the cloud to collect the energy.";
+		next;
+		progressbar "00ff00",3;
+		delitem 713,1;// Empty Bottle
+		getitem 6756,1;// Cohesive_Energy
+		mes "Collected Condensed Energy!";
+		initnpctimer;
+		hideonnpc strnpcinfo(0);
 	}
 	close;
 
@@ -6048,8 +6041,6 @@ verus04,204,235,3	script	#tre34	CLEAR_NPC,{
 	close;
 }
 
-
-
 verus04,91,252,5	script	Archaeologist#tevt01	4_M_6THPRIN1,10,10,{
 	mes "[Archaeologist]";
 	mes "Sometimes, we gather around to talk.";
@@ -6173,6 +6164,7 @@ OnTimer178000:
 	stopnpctimer;
 	end;
 }
+
 verus04,89,251,5	script	Historian#tevt02	4_TOWER_07,{
 	mes "[Historian]";
 	mes "What's the hardest thing about my job?";
@@ -6183,6 +6175,7 @@ verus04,89,251,5	script	Historian#tevt02	4_TOWER_07,{
 	mes "Today was not an exception.";
 	close;
 }
+
 verus04,91,248,7	script	New Excavator#tevt03	4_TOWER_04,{
 	mes "[New Excavator]";
 	mes "I have a lot to learn, and I'm a fast learner.";
@@ -6192,6 +6185,7 @@ verus04,91,248,7	script	New Excavator#tevt03	4_TOWER_04,{
 	mes "I'm given free food, a place to sleep, and money. What else can I ask for?";
 	close;
 }
+
 verus04,94,251,3	script	Civilization Researcher	4_TOWER_16,{
 	mes "[Civilization Researcher]";
 	mes "I thought this was a part of Juperos.";
@@ -6202,6 +6196,7 @@ verus04,94,251,3	script	Civilization Researcher	4_TOWER_16,{
 	mes "Everything about it is more refined and sophisticated somehow.";
 	close;
 }
+
 verus04,94,248,1	script	Scientist#tevt05	4_M_SAGE_C,{
 	mes "[Scientist]";
 	mes "This city's level of mechanical engineering is astonishing.";
@@ -6212,6 +6207,7 @@ verus04,94,248,1	script	Scientist#tevt05	4_M_SAGE_C,{
 	mes "rapid development and sudden introduction of advanced technology could do more harm than good.";
 	close;
 }
+
 verus04,116,220,0	script	#ep15_1elb	PORTAL,{
 	mes "- Caution -";
 	mes "- For your safety, -";
@@ -6220,12 +6216,14 @@ verus04,116,220,0	script	#ep15_1elb	PORTAL,{
 	mes "- while inside. -";
 	close;
 }
+
 verus04,153,193,8	script	Merchant#ep15_1el10	4_F_CAPEGIRL,{
 	mes "[Merchant]";
 	mes "Ho ho ho!";
 	mes "I came first, so I took the best spot!";
 	close;
 }
+
 verus04,155,197,5	script	Adventurer ?#ep15_1el11	4_M_LGTPOOR,{
 	mes "[Adventurer ?]";
 	mes "*Stomach rumbles*";
@@ -6235,46 +6233,54 @@ verus04,155,197,5	script	Adventurer ?#ep15_1el11	4_M_LGTPOOR,{
 	mes "But I have no money to buy food...";
 	close;
 }
+
 verus04,150,193,3	script	Adventurer#ep15_1el12	4_M_DIEMAN,{
 	mes "[Jean Baljean]";
 	mes "Ugh, I was struck 19 times for a piece of bread.";
 	close;
 }
+
 verus04,102,246,3	script	Adventurer#ep15_1el13	4_M_RACHMAN2,{
 	mes "[Adventurer]";
 	mes "Mushrooms growing out of rocks.";
 	mes "How resilient!";
 	close;
 }
+
 verus04,16,157,3	script	Adventurer#ep15_1el14	4_M_MIDDLE1,{
 	mes "[Adventurer]";
 	mes "Argh!";
 	mes "So many paths are blocked!";
 	close;
 }
+
 // missing #ep15_1el15 - 18
 verus04,104,120,3	script	Cow#ep15_1el19	4_BULL,{
 	mes "[Cow]";
 	mes "*Moo*";
 	close;
 }
+
 verus04,111,215,5	script	Adventurer#ep15_1el20	4_F_SHABBY,{
 	mes "[Adventurer]";
 	mes "Heh. *Drool*";
 	mes "This place is incredible!";
 	close;
 }
+
 verus04,111,211,3	script	Adventurer#ep15_1el21	4_F_KHGIRL,{
 	mes "[Adventurer]";
 	mes "This site is amazing.";
 	mes "No wonder why Rekenber called dibs on it.";
 	close;
 }
+
 verus04,113,235,5	script	Adventurer#ep15_1el22	4_M_PECOKNIGHT,{
 	mes "[Adventurer]";
 	mes "I want to find something awesome!";
 	close;
 }
+
 verus04,124,220,8	script	Adventurer#ep15_1el23	4_M_HUMERCHANT,{
 	mes "[Adventurer]";
 	mes "The coming era will be yours.";
@@ -6560,22 +6566,20 @@ lhz_in01,270,257,4	script	Rekenber Chairman#e152i	4_M_REKENBER,{
 		mes "I don't know what is happening.";
 		mes "Should we listen to the Atnads first?";// cross line?
 		VER_MAIN = 38;
+		close3;
 	}
-	else if (VER_MAIN == 38) {
+	if (VER_MAIN == 38) {
 		cutin "ep15_rekenber02.bmp",0;
 		mes "[Rekenber]";
 		mes ".... What can we do.";
 		mes "We will wait. Please speak.";
+		close3;
 	}
-	else if (VER_MAIN >= 39) {
-		cutin "ep15_rekenber01.bmp",0;
-		mes "[Rekenber]";
-		mes "A chairman's job is to do nothing in times like this.";
-		mes "... That is it.";
-	}
-	close2;
-	cutin "",255;
-	end;
+	cutin "ep15_rekenber01.bmp",0;
+	mes "[Rekenber]";
+	mes "A chairman's job is to do nothing in times like this.";
+	mes "... That is it.";
+	close3;
 }
 
 lhz_in01,267,257,5	script	Chief secretary#e152i01	4_M_TATIO,{
@@ -6586,8 +6590,9 @@ lhz_in01,267,257,5	script	Chief secretary#e152i01	4_M_TATIO,{
 		cutin "ep15_tatio01.bmp",0;
 		mes "The chairman has waited for a long time.";
 		mes "I as well.";
+		close3;
 	}
-	else if (VER_MAIN == 38) {
+	if (VER_MAIN == 38) {
 		mes "[Chief secretary]";
 		cutin "ep15_tatio01.bmp",0;
 		mes "Are you taken aback?";
@@ -6600,8 +6605,9 @@ lhz_in01,267,257,5	script	Chief secretary#e152i01	4_M_TATIO,{
 		mes "True.";
 		mes "Please speak.";
 		mes "I will wait.";
+		close3;
 	}
-	else if (VER_MAIN == 39) {
+	if (VER_MAIN == 39) {
 		mes "[Chief secretary]";
 		cutin "ep15_tatio01.bmp",0;
 		mes "I see it is my turn again.";
@@ -6741,22 +6747,19 @@ lhz_in01,267,257,5	script	Chief secretary#e152i01	4_M_TATIO,{
 		mes "In reality there is not much change to the actual work.";
 		mes "Ah also...";
 		mes "For working diligently as a member of the Atnad excavation team..";
-		mes strcharinfo(0) +" I will give you a small reward.";
+		mes "" + strcharinfo(0) + " I will give you a small reward.";
 		getexp 4500000,3000000;
 		VER_MAIN = 40;
 		next;
 		mes "[Tatio]";
 		mes "The contents of the Memory Records are precious memories to me.";
 		mes "...It is like going through my diary. So I hope you take care in the future.";
+		close3;
 	}
-	else if (VER_MAIN > 39) {
-		cutin "ep15_tatio03.bmp",0;
-		mes "[Tatio]";
-		mes "...I hope everything goes smoothly with this...";
-	}
-	close2;
-	cutin "",255;
-	end;
+	cutin "ep15_tatio03.bmp",0;
+	mes "[Tatio]";
+	mes "...I hope everything goes smoothly with this...";
+	close3;
 }
 
 lhz_in01,272,255,3	script	Ian Atnad#ep152i01	4_M_IAN,{
@@ -6768,8 +6771,9 @@ lhz_in01,272,255,3	script	Ian Atnad#ep152i01	4_M_IAN,{
 		mes "Have you arrived now?";
 		mes "It seems everybody has gathered.";
 		mes "So, let's see what it was you had to say to everybody.";
+		close3;
 	}
-	else if (VER_MAIN == 38) {
+	if (VER_MAIN == 38) {
 		cutin "verus_ian01.bmp",2;
 		mes "So, what do you want to say?";
 		mes "What is it that you cut me off in this important moment.";
@@ -6825,22 +6829,20 @@ lhz_in01,272,255,3	script	Ian Atnad#ep152i01	4_M_IAN,{
 		mes "An..anyway isn't that secretary the main instigator of this whole incident?";
 		mes "What happened?";
 		VER_MAIN = 39;
+		close3;
 	}
-	else if (VER_MAIN == 39) {
+	if (VER_MAIN == 39) {
 		cutin "verus_ian01.bmp",2;
 		mes "We keep losing the point.";
 		mes "Shouldn't you ask why he attacked me first.";
 		mes "Let's please listen to what he has to say. Daughter.";
+		close3;
 	}
-	else if (VER_MAIN > 39) {
-		cutin "verus_ian01.bmp",2;
-		mes "It is confusing to hear a surprising story at once but";
-		mes "At the same time it's cathartic.";
-		mes "Hm.. I see. I see.";
-	}
-	close2;
-	cutin "",255;
-	end;
+	cutin "verus_ian01.bmp",2;
+	mes "It is confusing to hear a surprising story at once but";
+	mes "At the same time it's cathartic.";
+	mes "Hm.. I see. I see.";
+	close3;
 }
 
 lhz_in01,267,255,7	script	Aures#ep152i01	4_M_OLDSCHOLAR,{
@@ -6865,9 +6867,7 @@ lhz_in01,267,255,7	script	Aures#ep152i01	4_M_OLDSCHOLAR,{
 		mes "[Aures]";
 		mes "I loathe fighting but.. It is fun to see them together. Yes.";
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 lhz_in01,272,251,3	script	Commander Arquien#ep152i	4_F_EDEN_MASTER,{
@@ -6877,8 +6877,9 @@ lhz_in01,272,251,3	script	Commander Arquien#ep152i	4_F_EDEN_MASTER,{
 		mes "[Arquien]";
 		cutin "Arquien_n_atnad01.bmp",2;
 		mes "Let's see if you gathered all of us to give us some bombastic story.";
+		close3;
 	}
-	else if (VER_MAIN == 38) {
+	if (VER_MAIN == 38) {
 		cutin "verus_ian01.bmp",2;
 		mes "[Ian Atnad]";
 		mes "So, what do you want to say?";
@@ -6935,27 +6936,25 @@ lhz_in01,272,251,3	script	Commander Arquien#ep152i	4_F_EDEN_MASTER,{
 		mes "An..anyway isn't that secretary the main instigator of this whole incident?";
 		mes "What happened?";
 		VER_MAIN = 39;
+		close3;
 	}
-	else if (VER_MAIN == 39) {
+	if (VER_MAIN == 39) {
 		mes "[Arquien]";
 		mes ".......Let's keep listening to that secretary guy.";
 		mes "If give me nonsense I'm going to flip this company over.";
+		close3;
 	}
-	else if (VER_MAIN > 39) {
-		cutin "Arquien_n_atnad02.bmp",2;
-		mes "[Arquien]";
-		mes "So he means we can know the embarrassing past of the secretary by collecting and listening to the Memory Records?";
-		mes "That is kind of interesting.";
-		next;
-		cutin "Arquien_n_atnad03.bmp",2;
-		mes "[Arquien]";
-		mes "What are you doing?";
-		mes "Let's go back now.";
-		mes "To the city that was too good for its own good.";
-	}
-	close2;
-	cutin "",255;
-	end;
+	cutin "Arquien_n_atnad02.bmp",2;
+	mes "[Arquien]";
+	mes "So he means we can know the embarrassing past of the secretary by collecting and listening to the Memory Records?";
+	mes "That is kind of interesting.";
+	next;
+	cutin "Arquien_n_atnad03.bmp",2;
+	mes "[Arquien]";
+	mes "What are you doing?";
+	mes "Let's go back now.";
+	mes "To the city that was too good for its own good.";
+	close3;
 }
 
 //- To Phantasmagorika!
@@ -7036,7 +7035,7 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
 				emotion 23,1;
 				next;
 				mes "[Elisha]";
-				mes "I'm sorry, "+ strcharinfo(0) +".";
+				mes "I'm sorry, " + strcharinfo(0) + ".";
 				mes "I know you're registered for the service, but it's out of order at this moment.";
 				mes "I'm sorry for this inconvenience.";
 				emotion 19;
@@ -7080,7 +7079,7 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
 				emotion 19;
 				next;
 				mes "[Elisha]";
-				mes strcharinfo(0) +", your registration has been confirmed.";
+				mes "" + strcharinfo(0) + ", your registration has been confirmed.";
 				mes "Would you like to move to Phantasmagorika?";
 				emotion 3;
 				next;
@@ -7398,7 +7397,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		cutin "",255;
 		next;
 		mes "[Scarlet]";
-		mes "And "+ strcharinfo(0) +", thank you so much.";
+		mes "And " + strcharinfo(0) + ", thank you so much.";
 		mes "We could have been in big trouble if it weren't for you.";
 		emotion 15;
 		next;
@@ -7411,7 +7410,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		mes "The elevator is back in operation now. Let me know if you want to go up.";
 		next;
 		mes "[Mark]";
-		mes "Whew! "+ strcharinfo(0) +", you've saved us.";
+		mes "Whew! " + strcharinfo(0) + ", you've saved us.";
 		mes "Sigh, I don't know when he's going to grow up.";
 		emotion 15,0,"Mark#ep15_1elb";
 		cutin "bu_mark2.bmp",0;
@@ -7429,7 +7428,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		next;
 		mes "[Tamarin]";
 		mes "Thank you.";
-		mes "Sigh, I don't want to imagine what might have happened if you, "+ strcharinfo(0) +", didn't pass by at that moment.";
+		mes "Sigh, I don't want to imagine what might have happened if you, " + strcharinfo(0) + ", didn't pass by at that moment.";
 		emotion 15,0,"Tamarin#ep15_1elb";
 		cutin "ep143_tasmi.bmp",2;
 		next;
@@ -7476,7 +7475,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		if (select( "Say your name.", "End conversation." ) == 1) {
 			mes "[Scarlet]";
 			mes "Hm...";
-			mes "Yes, "+ strcharinfo(0) +", your registration has been confirmed.";
+			mes "Yes, " + strcharinfo(0) + ", your registration has been confirmed.";
 			mes "Would you like to move to the entrance to Juperos?";
 			next;
 			if (select( "No.", "Yes." ) == 2) {
@@ -7582,9 +7581,7 @@ verus04,117,219,0	script	Alf#ep15_1elb	4_M_BLACKMAN,{
 		cutin "bu_alp1.bmp",2;
 		break;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 verus04,115,220,5	script	Deu#ep15_1elb	4_M_REDMAN,{
 	switch(VER_ELEVATOR) {
@@ -7644,9 +7641,7 @@ verus04,115,220,5	script	Deu#ep15_1elb	4_M_REDMAN,{
 		mes "Adventuring is all about bravery and curiosity!";
 		cutin "bu_du2.bmp",2;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 verus04,117,220,3	script	Magi#ep15_1elb	4_F_PINKWOMAN,{
 	switch(VER_ELEVATOR) {
@@ -7698,9 +7693,7 @@ verus04,117,220,3	script	Magi#ep15_1elb	4_F_PINKWOMAN,{
 		emotion 28;
 		cutin "bu_maggi4.bmp",2;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 verus04,115,221,5	script	Mark#ep15_1elb	4_M_BLUEMAN,{
 	switch(VER_ELEVATOR) {
@@ -7751,13 +7744,11 @@ verus04,115,221,5	script	Mark#ep15_1elb	4_M_BLUEMAN,{
 		break;
 	default:
 		mes "[Mark]";
-		mes "Whew! "+ strcharinfo(0) +", you've saved us.";
+		mes "Whew! " + strcharinfo(0) + ", you've saved us.";
 		mes "Sigh, I don't know when he's going to grow up.";
 		cutin "bu_mark3.bmp",0;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 verus04,116,219,5	script	Tamarin#ep15_1elb	4_M_TAMARIN,{
 	switch(VER_ELEVATOR) {
@@ -7804,12 +7795,10 @@ verus04,116,219,5	script	Tamarin#ep15_1elb	4_M_TAMARIN,{
 	default:
 		mes "[Tamarin]";
 		mes "Thank you.";
-		mes "Sigh, I don't want to imagine what might have happened if you, "+ strcharinfo(0) +", didn't pass by at that moment.";
+		mes "Sigh, I don't want to imagine what might have happened if you, " + strcharinfo(0) + ", didn't pass by at that moment.";
 		cutin "ep143_tasmi.bmp",2;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
@@ -7879,9 +7868,7 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		mes "- Ordinary-looking Fountain -";
 		mes "- There's nothing in it. -";
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus04,95,238,0	script	Sundries#ep15_1elb	4_ENERGY_BLUE,{
@@ -7909,9 +7896,7 @@ verus04,95,238,0	script	Sundries#ep15_1elb	4_ENERGY_BLUE,{
 	}
 	else
 		mes "- The ground is littered with sundries. -";
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus04,79,249,0	script	Tree#ep15_1elb	4_ENERGY_BLUE,{
@@ -7957,9 +7942,7 @@ verus04,79,249,0	script	Tree#ep15_1elb	4_ENERGY_BLUE,{
 		mes "A tall, verdant tree.";
 		mes "Nothing looks special about it, except that it's growing underground.";
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus04,62,255,0	script	Signboard#ep15_1elb	4_ENERGY_BLUE,{
@@ -8034,9 +8017,7 @@ verus04,62,255,0	script	Signboard#ep15_1elb	4_ENERGY_BLUE,{
 			changequest 11370,11371;// Looking for the Traces
 			VER_ELEVATOR = 104;
 		}
-		close2;
-		cutin "",255;
-		end;
+		close3;
 	}
 	mes "- The door is blocked. -";
 	close;
@@ -8073,9 +8054,7 @@ verus03,46,23,3	script	Deu#ep15_1elb03	4_M_REDMAN,{
 		mes "What does this place have to do with Juperos?";
 		cutin "bu_du5.bmp",2;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
@@ -8133,9 +8112,7 @@ verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
 		mes "- Ordinary-looking Fountain -";
 		mes "- There's nothing in it. -";
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus03,88,237,3	script	Mark#ep15_1elb03	4_M_BLUEMAN,{
@@ -8174,9 +8151,7 @@ verus03,88,237,3	script	Mark#ep15_1elb03	4_M_BLUEMAN,{
 		mes "Unlike the first place, this place is filled with giant machines.";
 		cutin "bu_mark3.bmp", 0;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus03,51,256,3	script	Tamarin#ep15_1elb03	4_M_TAMARIN,{
@@ -8195,9 +8170,7 @@ verus03,51,256,3	script	Tamarin#ep15_1elb03	4_M_TAMARIN,{
 			VER_ELEVATOR = 108;
 		}
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 verus03,35,254,3	script	Magi#ep15_1elb03	612,{
@@ -8290,9 +8263,7 @@ verus03,35,254,3	script	Magi#ep15_1elb03	612,{
 		mes "Let's check the other places first.";
 		cutin "bu_mark2.bmp",0;
 	}
-	close2;
-	cutin "",255;
-	end;
+	close3;
 }
 
 // Part 3 : Vestige
@@ -8359,14 +8330,11 @@ verus01,221,65,5	script	Due#Verus	4_M_REDMAN,{
 			setquest 11381;// Vestige
 			VER_ELEVATOR = 1000;
 		}
+		close3;
 	}
-	else {
-		mes "Investigations are supposed to be done calmly...";
-		cutin "bu_du3.bmp",2;
-	}
-	close2;
-	cutin "",255;
-	end;
+	mes "Investigations are supposed to be done calmly...";
+	cutin "bu_du3.bmp",2;
+	close3;
 }
 
 verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
@@ -8380,8 +8348,9 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 		mes "[Fruit]";
 		mes "Doesn't it look like something will go swirly?!";
 		mes "Haaa!";
+		close3;
 	}
-	else if (VER_ELEVATOR == 1000 || VER_ELEVATOR == 1001) {
+	if (VER_ELEVATOR == 1000 || VER_ELEVATOR == 1001) {
 		if (VER_ELEVATOR == 1000) {
 			mes "Coooooooooolll!!!!";
 			mes "See this?";
@@ -8433,58 +8402,68 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 			changequest 11381,11382;// Vestige -> Vestige
 			VER_ELEVATOR = 1001;
 		}
+		close3;
 	}
-	else {
-		mes "Hm... Is there anything more interesting?";
-		cutin "EP15_2_fru_1.bmp",2;
+	if (checkquest(11380,HUNTING) == 2) {
+		mes "[Fruit]";
+		mes "Aarrghhhh!!!";
+		mes "Amazing!!!";
+		cutin "EP15_2_fru_2.bmp",2;
 		next;
-		switch( select( "Trade goods.", "Quit." ) ) {
+		mes "[Fruit]";
+		mes "So? So? Then what?";
+		mes "Come on! Tell me more!!!";
+		erasequest 11380;// Final Room
+		getitem 6827,1;// Intact Machine Component
+		getitem 6828,1;// Gravity Safety Device
+		close3;
+	}
+	mes "Hm... Is there anything more interesting?";
+	cutin "EP15_2_fru_1.bmp",2;
+	next;
+	if (select( "Trade goods.", "Quit." ) == 1) {
+		mes "[Fruit]";
+		mes "I will give you equipment in return for 17 intact machine components!";
+		next;
+		switch( select( "Runaway Chip", "Broken Chip 1", "Broken Chip 2" ) ) {
 		case 1:
 			mes "[Fruit]";
-			mes "I will give you equipment in return for 17 intact machine components!";
+			mes "Runaway Chip is HIT + 50, FLEE + 50, MSP - 50%";
 			next;
-			switch( select( "Runaway Chip", "Broken Chip 1", "Broken Chip 2" ) ) {
-			case 1:
-				mes "[Fruit]";
-				mes "Runaway Chip is HIT + 50, FLEE + 50, MSP - 50%";
-				next;
-				mes "[Fruit]";
-				mes "When equipped together with Broken Chip 1 and Broken Chip 2, you get unlimited movement acceleration.";
-				next;
-				mes "[Fruit]";
-				mes "ATK and MATK + 50. If helmet refinement is at 9, it has an affect of MSP + 50%, MHP + 10%.";
-				break;
-			case 2:
-				mes "[Fruit]";
-				mes "Broken Chip 1 has STR + 4. If equipped with Broken Chip 2, it has a STR + 8, INT+ 8 affect.";
-				break;
-			case 3:
-				mes "[Fruit]";
-				mes "Broken Chip 2 has INT + 4. If equipped with Broken Chip 1, it has a STR + 8, INT+ 8 affect.";
-				break;
-			}
+			mes "[Fruit]";
+			mes "When equipped together with Broken Chip 1 and Broken Chip 2, you get unlimited movement acceleration.";
 			next;
-			if (select( "Exchange", "Quit." ) == 1) {
-				mes "[Fruit]";
-				if (countitem(6827) < 17)// Complete_Machine_Parts
-					mes "Not enough!!!";
-				else {
-					// delitem 6827,17;
-					// todo
-					mes "Work in progress.";
-				}
-				break;
-			}
-			// continue
+			mes "[Fruit]";
+			mes "ATK and MATK + 50. If helmet refinement is at 9, it has an affect of MSP + 50%, MHP + 10%.";
+			.@item_id = 18997;
+			break;
 		case 2:
 			mes "[Fruit]";
-			mes "Is this not what you wanted?";
+			mes "Broken Chip 1 has STR + 4. If equipped with Broken Chip 2, it has a STR + 8, INT+ 8 affect.";
+			.@item_id = 28326;
+			break;
+		case 3:
+			mes "[Fruit]";
+			mes "Broken Chip 2 has INT + 4. If equipped with Broken Chip 1, it has a STR + 8, INT+ 8 affect.";
+			.@item_id = 28327;
 			break;
 		}
+		next;
+		if (select( "Exchange", "Quit." ) == 1) {
+			if (countitem(6827) < 17) {
+				mes "[Fruit]";
+				mes "Not enough!!!";
+				close3;
+			}
+			delitem 6827,17;// Intact Machine Component
+			getitem .@item_id,1;// Runaway Chip
+			close3;
+		}
+		// continue
 	}
-	close2;
-	cutin "",255;
-	end;
+	mes "[Fruit]";
+	mes "Is this not what you wanted?";
+	close3;
 }
 
 un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
@@ -8541,14 +8520,11 @@ un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
 			changequest 11382,11383;// Vestige
 			VER_ELEVATOR = 1002;
 		}
+		close3;
 	}
-	else {
-		mes "What is this disgusting smell?";
-		cutin "bu_mark4.bmp",0;
-	}
-	close2;
-	cutin "",255;
-	end;
+	mes "What is this disgusting smell?";
+	cutin "bu_mark4.bmp",0;
+	close3;
 }
 
 un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
@@ -8556,8 +8532,9 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 	if (VER_ELEVATOR < 1002) {
 		mes "There are too many suspicious places...";
 		cutin "bu_alp3.bmp",2;
+		close3;
 	}
-	else if (VER_ELEVATOR == 1002) {
+	if (VER_ELEVATOR == 1002) {
 		mes "Um...";
 		mes "You're here...";
 		cutin "bu_alp3.bmp",2;
@@ -8635,34 +8612,27 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 			end;
 		}
 	}
-	else {
-		mes "Is there more left to investigate in this room?";
-		cutin "bu_alp1.bmp",2;
-		next;
-		switch( select( "Quit.", "Go in." ) ) {
-		case 1:
-			mes "[Alp]";
-			mes "...";
-			mes "Don't forget our goal is to investigate...";
-			break;
-		case 2:
-			mes "[Alp]";
-			mes "Right...";
-			mes "There's a bad energy so be careful...";
-			close2;
-			warp "un_bunker",385,83;
-			end;
-		}
+	mes "Is there more left to investigate in this room?";
+	cutin "bu_alp1.bmp",2;
+	next;
+	if (select( "Quit.", "Go in." ) == 1) {
+		mes "[Alp]";
+		mes "...";
+		mes "Don't forget our goal is to investigate...";
+		close3;
 	}
+	mes "[Alp]";
+	mes "Right...";
+	mes "There's a bad energy so be careful...";
 	close2;
-	cutin "",255;
+	warp "un_bunker",385,83;
 	end;
 }
 
 un_bunker,388,86,3	script	Alp#Entrance2	4_M_BLACKMAN,{
 	if (VER_ELEVATOR < 1003)// inaccurate
 		end;
-	else if (VER_ELEVATOR == 1003) {
+	if (VER_ELEVATOR == 1003) {
 		mes "[Alp]";
 		mes "As expected..";
 		mes "Only this room has a different lay out than the rest...";
@@ -8690,20 +8660,16 @@ un_bunker,388,86,3	script	Alp#Entrance2	4_M_BLACKMAN,{
 	mes "Unnatural room... Unnatural door...";
 	cutin "bu_alp1.bmp",2;
 	next;
-	switch( select( "Quit.", "Go in." ) ) {
-	case 1:
+	if (select( "Quit.", "Go in." ) == 1) {
 		mes "[Alp]";
 		mes "...";
-		close2;
-		cutin "",255;
-		end;
-	case 2:
-		mes "[Alp]";
-		mes "Haa...";
-		close2;
-		warp "un_myst",11,206;
-		end;
+		close3;
 	}
+	mes "[Alp]";
+	mes "Haa...";
+	close2;
+	warp "un_myst",11,206;
+	end;
 }
 
 un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
@@ -8738,49 +8704,41 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 		.@string$ = "Move to the door.";
 	else
 		.@string$ = "Quit.";
-	switch( select( .@string$, "Leave." ) ) {
-	case 1:
+	if (select( .@string$, "Leave." ) == 1) {
 		mes "[Verity]";
 		mes "...Should have brought some painkillers for headaches.";
 		cutin "EP15_2_brt_4.bmp",2;
-		close2;
-		cutin "",255;
-		end;
-	case 2:
-		mes "[Verity]";
-		mes "Are you quitting the investigation?";
-		cutin "EP15_2_brt_4.bmp",2;
-		close2;
-		warp "un_bunker",300,166;
-		end;
+		close3;
 	}
+	mes "[Verity]";
+	mes "Are you quitting the investigation?";
+	cutin "EP15_2_brt_4.bmp",2;
+	close2;
+	warp "un_bunker",300,166;
+	end;
 }
 
 un_myst,56,206,0	script	warp_un_myst	WARPNPC,1,1,{
+	end;
 OnTouch:
 	if (VER_ELEVATOR == 1005) {
 		mes "- Does not seem locked but blocked by something.-";
 		next;
-		switch( select( "Break it.", "Quit." ) ) {
-		case 1:
-			mes "[Due]";
-			mes "Alright then....";
-			mes "One!";
-			mes "Two!";
-			mes "Three!";
-			cutin "bu_du5.bmp",2;
-			changequest 11386,11387;// Vestige -> Vestige
-			VER_ELEVATOR = 1006;
-			close2;
-			break;
-		case 2:
+		if (select( "Break it.", "Quit." ) == 2) {
 			mes "[Due]";
 			mes "You want to leave a place like this alone?";
 			cutin "bu_du1.bmp",2;
-			close2;
-			cutin "",255;
-			end;
+			close3;
 		}
+		mes "[Due]";
+		mes "Alright then....";
+		mes "One!";
+		mes "Two!";
+		mes "Three!";
+		cutin "bu_du5.bmp",2;
+		changequest 11386,11387;// Vestige -> Vestige
+		VER_ELEVATOR = 1006;
+		close2;
 	}
 	warp "un_myst",81,190;
 	end;
@@ -8872,20 +8830,17 @@ un_myst,100,190,3	script	Due#Hall	4_M_REDMAN,{
 			changequest 11387,11388;// Vestige -> Vestige
 			VER_ELEVATOR = 1007;
 		}
+		close3;
 	}
-	else {
-		mes "[Due]";
-		mes "Wow...What is this place?";
-		cutin "bu_du1.bmp",2;
-		next;
-		mes "[Mark]";
-		mes "It is a really suspicious place...";
-		mes "I didn't think such a space would exist inside a bunker...";
-		cutin "bu_mark1.bmp",0;
-	}
-	close2;
-	cutin "",255;
-	end;
+	mes "[Due]";
+	mes "Wow...What is this place?";
+	cutin "bu_du1.bmp",2;
+	next;
+	mes "[Mark]";
+	mes "It is a really suspicious place...";
+	mes "I didn't think such a space would exist inside a bunker...";
+	cutin "bu_mark1.bmp",0;
+	close3;
 }
 
 un_myst,333,206,3	script	Weird piece#01	4_GC109,{
@@ -9056,9 +9011,9 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entran	4_M_TAMARIN,{
 		getitem 6828,1;// Gravity_Safety_Device
 	}
 	else {
-		if (@weird_piece == 0)// can't go outside folliwing path weird piece
+		if (@weird_piece == 0)// can't go outside following path weird piece
 			.@string$ = "Go outside.";
-		.@s = select( "Open door.",.@string$ ) -1;
+		.@s = select( "Open door.", .@string$ ) - 1;
 	}
 	mes "[Tamarin]";
 	mes "There is a bitter feeling of sorts...";
@@ -9071,5 +9026,3 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entran	4_M_TAMARIN,{
 	}
 	end;
 }
-
-// To last room instance (req. lvl 140)

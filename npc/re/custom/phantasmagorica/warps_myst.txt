@@ -1,5 +1,6 @@
 // A
 un_myst,124,189,0	script	#un_myst_entrance	WARPNPC,1,1,{
+	end;
 OnTouch:
 	warp "un_myst",171,197;
 	@weird_piece = 1;
@@ -8,6 +9,7 @@ OnTouch:
 un_myst,171,183,0	warp2	#un_myst_A_1	1,1,un_myst,259,200
 
 un_myst,258,208,0	script	#un_myst_A_2	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -19,6 +21,7 @@ OnTouch:
 	end;
 }
 un_myst,295,208,0	script	#un_myst_A_3	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -32,6 +35,7 @@ OnTouch:
 
 // B
 un_myst,393,139,0	script	#un_myst_B_1	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -43,6 +47,7 @@ OnTouch:
 	end;
 }
 un_myst,104,136,0	script	#un_myst_B_2	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -54,6 +59,7 @@ OnTouch:
 	end;
 }
 un_myst,138,140,0	script	#un_myst_B_3	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -67,6 +73,7 @@ OnTouch:
 
 // C
 un_myst,75,91,0	script	#un_myst_C_1	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -78,6 +85,7 @@ OnTouch:
 	end;
 }
 un_myst,169,89,0	script	#un_myst_C_2	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -89,6 +97,7 @@ OnTouch:
 	end;
 }
 un_myst,121,82,0	script	#un_myst_C_3	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)
@@ -100,6 +109,7 @@ OnTouch:
 	end;
 }
 un_myst,219,88,0	script	#un_myst_C_4	WARPNPC,1,1,{
+	end;
 OnTouch:
 	.@r = rand(9);
 	if (.@r == 0)

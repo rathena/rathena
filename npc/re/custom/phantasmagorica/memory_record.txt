@@ -40,6 +40,7 @@ function	script	F_erase_datas_recorder	{
 un_bk_q,97,141,0	script	Monitoring room#A-0	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
 		mes "[Bunker Sayhu]";
 		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
@@ -64,6 +65,7 @@ OnTouch:
 un_bk_q,126,168,0	script	Monitoring room#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
 		mes "[Bunker Sayhu]";
 		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
@@ -976,6 +978,7 @@ un_bk_q,103,393,4	script	Memory_Record#EP15.2MR	4_ENERGY_BLUE,{
 un_bk_q,41,275,0	script	Machine Warehouse#J-0	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 2 && recorder_quest_status == 0) {
 		emotion 24,0,"Mechanician Mugeosi#EP1";
 		mes "[Mechanician Mugeosi]";
@@ -1549,6 +1552,7 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 un_bk_q,216,300,0	script	C-0#farm	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	mes "[Bioengineer Touring]";
 	mes "Wait a minute. You cannot enter the farm right now.";
 	close;
@@ -1557,6 +1561,7 @@ OnTouch:
 un_bk_q,213,346,0	script	farm#C-0	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 3 && recorder_quest_status == 0) {
 		emotion 14,0,"Bioengineer Ebrik#EP15.2MR";
 		mes "[Bioengineer Ebrik]";
@@ -1749,6 +1754,7 @@ un_bk_q,249,344,2	script	Bioengineer#EP15.2MR5	4_M_ALCHE_C,{
 un_bk_q,269,236,0	script	Clinic#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
 		mes "[Nurse Lapplad]";
 		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
@@ -1761,6 +1767,7 @@ OnTouch:
 un_bk_q,297,221,0	script	Clinic#H-0	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
 		mes "[Nurse Lapplad]";
 		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
@@ -1773,6 +1780,7 @@ OnTouch:
 un_bk_q,326,236,0	script	Clinic#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
 		mes "[Nurse Lapplad]";
 		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
@@ -2034,6 +2042,7 @@ un_bk_q,296,254,4	script	Nurse#EP15.2MR7	4_F_NURSE,{
 un_bk_q,271,290,0	script	Cafeteria#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
 		emotion 6,0,"Transportation Executive Ernon";
 		mes "[Transportation Executive Ernon]";
@@ -2047,6 +2056,7 @@ OnTouch:
 un_bk_q,324,290,0	script	Cafeteria#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
+	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
 		mes "[Transportation Executive Ernon]";
 		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
