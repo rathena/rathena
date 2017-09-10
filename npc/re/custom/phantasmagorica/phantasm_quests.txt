@@ -1,6 +1,7 @@
 //===== rAthena Script =======================================
 //= Phantasmagorika Quests.
 //===== Description: =========================================
+//= [Walkthrough Conversion]
 //--- Quests list:
 //- Phantasmagorika Main Quests
 //- Wandering Bard Quest
