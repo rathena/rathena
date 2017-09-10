@@ -25,6 +25,29 @@ CREATE TABLE IF NOT EXISTS `acc_reg_str` (
 ) ENGINE=MyISAM;
 
 --
+-- Table structure for table `achievement`
+--
+
+CREATE TABLE IF NOT EXISTS `achievement` (
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `id` bigint(11) unsigned NOT NULL,
+  `count1` mediumint(8) unsigned NOT NULL default '0',
+  `count2` mediumint(8) unsigned NOT NULL default '0',
+  `count3` mediumint(8) unsigned NOT NULL default '0',
+  `count4` mediumint(8) unsigned NOT NULL default '0',
+  `count5` mediumint(8) unsigned NOT NULL default '0',
+  `count6` mediumint(8) unsigned NOT NULL default '0',
+  `count7` mediumint(8) unsigned NOT NULL default '0',
+  `count8` mediumint(8) unsigned NOT NULL default '0',
+  `count9` mediumint(8) unsigned NOT NULL default '0',
+  `count10` mediumint(8) unsigned NOT NULL default '0',
+  `completed` datetime,
+  `rewarded` datetime,
+  PRIMARY KEY (`char_id`,`id`),
+  KEY `char_id` (`char_id`)
+) ENGINE=MyISAM;
+
+--
 -- Table structure for table `auction`
 --
 
@@ -185,10 +208,10 @@ CREATE TABLE IF NOT EXISTS `char` (
   `int` smallint(4) unsigned NOT NULL default '0',
   `dex` smallint(4) unsigned NOT NULL default '0',
   `luk` smallint(4) unsigned NOT NULL default '0',
-  `max_hp` mediumint(8) unsigned NOT NULL default '0',
-  `hp` mediumint(8) unsigned NOT NULL default '0',
-  `max_sp` mediumint(6) unsigned NOT NULL default '0',
-  `sp` mediumint(6) unsigned NOT NULL default '0',
+  `max_hp` int(11) unsigned NOT NULL default '0',
+  `hp` int(11) unsigned NOT NULL default '0',
+  `max_sp` int(11) unsigned NOT NULL default '0',
+  `sp` int(11) unsigned NOT NULL default '0',
   `status_point` int(11) unsigned NOT NULL default '0',
   `skill_point` int(11) unsigned NOT NULL default '0',
   `option` int(11) NOT NULL default '0',
@@ -231,6 +254,8 @@ CREATE TABLE IF NOT EXISTS `char` (
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL default '0',
   `clan_id` int(11) unsigned NOT NULL default '0',
   `last_login` datetime DEFAULT NULL,
+  `title_id` INT(11) unsigned NOT NULL default '0',
+  `show_equip` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -338,10 +363,10 @@ CREATE TABLE IF NOT EXISTS `elemental` (
   `char_id` int(11) NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
   `mode` int(11) unsigned NOT NULL default '1',
-  `hp` int(12) NOT NULL default '1',
-  `sp` int(12) NOT NULL default '1',
-  `max_hp` mediumint(8) unsigned NOT NULL default '0',
-  `max_sp` mediumint(6) unsigned NOT NULL default '0',
+  `hp` int(11) unsigned NOT NULL default '0',
+  `sp` int(11) unsigned NOT NULL default '0',
+  `max_hp` int(11) unsigned NOT NULL default '0',
+  `max_sp` int(11) unsigned NOT NULL default '0',
   `atk1` MEDIUMINT(6) unsigned NOT NULL default '0',
   `atk2` MEDIUMINT(6) unsigned NOT NULL default '0',
   `matk` MEDIUMINT(6) unsigned NOT NULL default '0',
@@ -412,6 +437,7 @@ CREATE TABLE IF NOT EXISTS `guild` (
   `emblem_len` int(11) unsigned NOT NULL default '0',
   `emblem_id` int(11) unsigned NOT NULL default '0',
   `emblem_data` blob,
+  `last_master_change` datetime,
   PRIMARY KEY  (`guild_id`,`char_id`),
   UNIQUE KEY `guild_id` (`guild_id`),
   KEY `char_id` (`char_id`)
@@ -574,10 +600,10 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `int` smallint(4) unsigned NOT NULL default '0',
   `dex` smallint(4) unsigned NOT NULL default '0',
   `luk` smallint(4) unsigned NOT NULL default '0',
-  `hp` int(12) NOT NULL default '1',
-  `max_hp` int(12) NOT NULL default '1',
-  `sp` int(12) NOT NULL default '1',
-  `max_sp` int(12) NOT NULL default '1',
+  `hp` int(11) unsigned NOT NULL default '0',
+  `max_hp` int(11) unsigned NOT NULL default '0',
+  `sp` int(11) NOT NULL default '0',
+  `max_sp` int(11) NOT NULL default '0',
   `skill_point` smallint(4) unsigned NOT NULL default '0',
   `alive` tinyint(2) NOT NULL default '1',
   `rename_flag` tinyint(2) NOT NULL default '0',
@@ -802,8 +828,8 @@ CREATE TABLE IF NOT EXISTS `mercenary` (
   `mer_id` int(11) unsigned NOT NULL auto_increment,
   `char_id` int(11) NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
-  `hp` int(12) NOT NULL default '1',
-  `sp` int(12) NOT NULL default '1',
+  `hp` int(11) unsigned NOT NULL default '0',
+  `sp` int(11) unsigned NOT NULL default '0',
   `kill_counter` int(11) NOT NULL,
   `life_time` int(11) NOT NULL default '0',
   PRIMARY KEY  (`mer_id`)

@@ -4951,7 +4951,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 CFLAGS="$CFLAGS -pipe -ffast-math -Wall"
 CPPFLAGS="$CPPFLAGS -I../common"
-
+CXXFLAGS="$CXXFLAGS -std=c++11"
 
 
  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether byte ordering is bigendian" >&5

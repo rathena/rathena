@@ -1,0 +1,80 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2017 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Custom Achievement Database
+###########################################################################
+#
+# Achievement Settings
+#
+###########################################################################
+# ID - Unique achievement ID.
+###########################################################################
+# Group - Achievement group type. Each achievement type calls a specific
+# objective check.
+# Valid groups:
+#  AG_ADD_FRIEND
+#  AG_ADVENTURE
+#  AG_BABY
+#  AG_BATTLE
+#  AG_CHATTING
+#  AG_CHATTING_COUNT
+#  AG_CHATTING_CREATE
+#  AG_CHATTING_DYING
+#  AG_EAT
+#  AG_GET_ITEM
+#  AG_GET_ZENY
+#  AG_GOAL_ACHIEVE
+#  AG_GOAL_LEVEL
+#  AG_GOAL_STATUS
+#  AG_HEAR
+#  AG_JOB_CHANGE
+#  AG_MARRY
+#  AG_PARTY
+#  AG_ENCHANT_FAIL
+#  AG_ENCHANT_SUCCESS
+#  AG_SEE
+#  AG_SPEND_ZENY
+#  AG_TAMING
+###########################################################################
+# Name - Achievement name. Used when sending rewards through RODEX.
+###########################################################################
+# Target - A list of monster ID and count values that the achievement
+# requires. The target count can also be used for achievements that keep
+# a counter while not being related to monster kills.
+# Capped at MAX_ACHIEVEMENT_OBJECTIVES.
+###########################################################################
+# Condition - A conditional statement that must be met for the achievement
+# to be considered complete.
+###########################################################################
+# Map - A map name that is used for the AG_CHATTING type which increments
+# the counter based on the player's map.
+###########################################################################
+# Dependent: - A list of achievement IDs that need to be completed before
+# this achievement is considered complete.
+###########################################################################
+# Reward - A list of rewards that are given on completion. All fields are
+# optional.
+#   ItemID: Item ID
+#   Amount:  Amount of Item ID (default 1)
+#   Script: Bonus Script
+#   TitleID: Title ID
+###########################################################################
+# Score - Achievement points that are given on completion.
+###########################################################################
+
+Achievements:

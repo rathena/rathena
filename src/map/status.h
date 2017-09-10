@@ -804,8 +804,21 @@ typedef enum sc_type {
 
 	SC_DAILYSENDMAILCNT,
 
-  SC_DORAM_BUF_01,
+	SC_DORAM_BUF_01,
 	SC_DORAM_BUF_02,
+
+	/**
+	 * Summoner - Extended
+	 */
+	SC_HISS,
+	SC_NYANGGRASS,
+	SC_GROOMING,
+	SC_SHRIMPBLESSING,
+	SC_CHATTERING,
+	SC_DORAM_WALKSPEED,
+	SC_DORAM_MATK,
+	SC_DORAM_FLEE2,
+	SC_DORAM_SVSP,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1797,6 +1810,7 @@ extern short current_equip_opt_index;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
+	MD_NONE					= 0x0000000,
 	MD_CANMOVE				= 0x0000001,
 	MD_LOOTER				= 0x0000002,
 	MD_AGGRESSIVE			= 0x0000004,
@@ -2069,13 +2083,13 @@ struct weapon_atk {
 #endif
 };
 
-sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
-int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
-int StatusSkillChangeTable[SC_MAX];          /// status -> skill
-int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
-unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-bool StatusDisplayType[SC_MAX];
+extern sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
+extern int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
+extern unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
+extern int StatusSkillChangeTable[SC_MAX];          /// status -> skill
+extern int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
+extern unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
+extern unsigned int StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
@@ -2083,13 +2097,13 @@ struct status_data {
 		hp, sp,  // see status_cpy before adding members before hp and sp
 		max_hp, max_sp;
 	short
-		str, agi, vit, int_, dex, luk;
+		str, agi, vit, int_, dex, luk,
+		eatk;
 	unsigned short
 		batk,
 #ifdef RENEWAL
 		watk,
 		watk2,
-		eatk,
 #endif
 		matk_min, matk_max,
 		speed,

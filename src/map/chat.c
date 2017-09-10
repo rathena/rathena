@@ -14,6 +14,7 @@
 #include "npc.h" // npc_event_do()
 #include "pc.h"
 #include "chat.h"
+#include "achievement.h"
 
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
@@ -102,6 +103,11 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 		pc_stop_attack(sd);
 		clif_createchat(sd,0);
 		clif_dispchat(cd,0);
+
+		if (status_isdead(&sd->bl))
+			achievement_update_objective(sd, AG_CHAT_DYING, 1, 1);
+		else
+			achievement_update_objective(sd, AG_CHAT_CREATE, 1, 1);
 	} else
 		clif_createchat(sd,1);
 
@@ -161,6 +167,9 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	clif_joinchatok(sd, cd); //To the person who newly joined the list of all
 	clif_addchat(cd, sd); //Reports To the person who already in the chat
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
+
+	if (cd->owner->type == BL_PC)
+		achievement_update_objective(map_id2sd(cd->owner->id), AG_CHAT_COUNT, 1, cd->users);
 
 	chat_triggerevent(cd); //Event
 

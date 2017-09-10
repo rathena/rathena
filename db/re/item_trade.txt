@@ -916,7 +916,7 @@
 6916,499,100	// Piece_Of_Soul_Monkey
 6917,499,100	// Piece_Of_Soul_Chicken
 6919,499,100	// Honor_Proof
-//6920,467,100	//
+6920,499,100	// Rune_Magic_Powder
 6923,499,100	// Bright_Fire_Lights
 6925,499,100	// Letter_Of_Prisoner
 6926,499,100	// Rune-Midgard_History_Book
