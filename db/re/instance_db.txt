@@ -24,3 +24,4 @@
 17,Faceworm's Nest,3600,300,1@face,112,374
 18,Ghost Palace,3600,300,1@spa,42,196
 19,Central Laboratory,3600,300,1@lab,120,30
+20,Last room,3600,300,1@uns,142,30
