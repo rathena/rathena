@@ -22,13 +22,34 @@
 prontera,153,193,6	script	Job Master	123,{
 function Job_Menu;
 function Get_Job_Equip;
+// Checks if the Player has the required level.
+// closes if not, returns if yes
+function	RequireLevel	{
+	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
+		.@blvl = getarg(0) - BaseLevel;
+		.@jlvl = getarg(1) - JobLevel;
+		mes "Level requirement: "+getarg(0)+" / "+getarg(1);
+		mes "You need " +
+			((.@blvl > 0) ? .@blvl + " more base levels " + ((.@jlvl > 0) ? "/ " : "") : "") +
+			((.@jlvl > 0) ? .@jlvl + " more job levels " : "") + "to continue.";
+		close;
+	}
+	return;
+}
+
+// Function to get the job change possibilities.
+// return 0 on success, possibilities will be held in 
+// the temporary character array .@job_opt
+// returns > 0 on failure, see 
+// TODO comment needed?
 
 // Check if there are more Jobs available
+/*
 function	Last_Job	{
 	if (Class > Job_Soul_Linker) {
 		// Everything above is Third Class
 		// No more job changes possible
-		return 1;
+		return true;
 	}
 	// Custom Jobs; job change not posssible
 	switch(Class) {
@@ -36,29 +57,32 @@ function	Last_Job	{
 		case JOB_XMAS:		case JOB_SUMMER:		case JOB_HANBOK:
 		case JOB_OKTOBERFEST: case JOB_LORD_KNIGHT2:	case JOB_LORD_KNIGHT2:
 		case JOB_LORD_KNIGHT2:
-			return 1;
+			return true;
 	}
-	return 0;
+	return false;
 }
+TODO: Last_Job isn't necessary anymore. But I'll keep that here as a comment to check the classes above.
+*/
 
 // Checks if the player can change to third class.
 // Note: This does not include the level checks.
 function	canChangeThird	{
 	if( !.ThirdClass )
-		return 0;
+		return false;
 	// TODO
+	// To change to third class you either need to be:
+	// * Second Class
+	// * Transcendent Second Class
 }
 
 function	canRebirth	{
 	if( !.RebirthClass )
-		return 0;
+		return false;
+	// To rebirth, you either need to be:
+	// * Second Class
 	// TODO
 }
-	mes "[Job Master]";
-	if ( Last_Job() ) {
-		mes "No more jobs are available.";
-		close;
-	}
+function	checkRiding	{
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
 		mes "Please remove your " +
 			((checkfalcon()) ? "falcon" : "") +
@@ -68,152 +92,182 @@ function	canRebirth	{
 			" before proceeding.";
 		close;
 	}
+	return;
+}
+function	checkSkillPoints	{
 	if (.SkillPointCheck && SkillPoint) {
 		mes "Please use all your skill points before proceeding.";
 		close;
 	}
+	return;
+}
 
+// Begin of the NPC
+	mes .NPCName$;
+	checkRiding();
+	checkSkillPoints();
+
+	// initialisation
+	deletearray .@job_opt[0],getarraysize(.@job_opt);
 	.@eac = eaclass();
 	.@third_possible = canChangeThird();
 	.@rebirth_possible = canRebirth();
-	if( .@third_possible || .@rebirth_possible ) {
-		// Player can change to third / rebirth
-		// Check for the level restriction
-		if (BaseLevel < .Rebirth[0] || JobLevel < .Rebirth[1]) {
-			.@blvl = .Rebirth[0] - BaseLevel;
-			.@jlvl = .Rebirth[1] - JobLevel;
-			mes "You need " +
-				((.@blvl > 0) ? .@blvl + " more base levels " + ((.@jlvl > 0) ? "/ " : "") : "") +
-				((.@jlvl > 0) ? .@jlvl + " more job levels " : "") + "to continue.";
-			close;
-		}
-		while(1) {
-			// Rebirth/Third Cls menu
-			mes "Select an option.";
-			.@menu$ = (.@rebirth_possible) ? " ~ ^0055FFRebirth^000000:" : "";
-			.@menu$ += (.@third_possible) ? " ~ ^FF0000Third Class^000000:" : "";
-			.@menu$ += " ~ ^777777Cancel^000000";
-			switch(select(.@menu$)) {
-				case 1:
-					if( .@rebirth_possible ) {
-						next;
-						mes "[Job Master]";
-						mes "Are you sure?";
-						Job_Menu(Job_Novice_High);
-						break;
-					}
-					// fallthrough
-				case 2:
-					if( .@third_possible ) {
-						next;
-						mes "[Job Master]";
-						mes "Are you sure?";
-						Job_Menu(roclass(.@eac|EAJL_THIRD));
-					}
-					// fallthrough
-				default:
-					close;
-			}
-			next;
-			mes "[Job Master]";
-		}
+	// Note: These are already set in pc.c
+	// BaseClass = .@eac&EAJ_BASEMASK which is the players First Class
+	// BaseJob = .@eac&EAJ_UPPERMASK which is the players Second Class
+	dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible
+		+"), rebirth("+.@rebirth_possible+")";
+		
+	// From here on the jobmaster checks the current class
+	// and fills the the array `.@job_opt` with possible
+	// job options for the player.
+	
+	//Check for Rebirth and Third Class
+	// Option should be at the top of the menu
+	if( .@rebirth_possible ) {
+		// Rebirth option (displayed on the top of the menu)
+		RequireLevel(.Req_Rebirth[0], .Req_Rebirth[1]);
+		setarray .@job_opt[getarraysize(.@job_opt)],
+			.CHANGE_REBIRTH;
 	}
-	.@j1 = roclass(.@eac|EAJL_2_1);
-	.@j2 = roclass(.@eac|EAJL_2_2);
-	if ((.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE)
-		setarray .@exp[0], roclass(.@eac|EAJL_THIRD), 99;
-	if (Class == Job_Ninja || Class == Job_Gunslinger)
-		setarray .@exp[0], .@j1, 70;
-	if (.@exp[0] && .SecondExpanded) {
-		if (BaseLevel < .Rebirth[0] || JobLevel < .@exp[1]) {
-			.@blvl = .Rebirth[0] - BaseLevel;
-			.@jlvl = .@exp[1] - JobLevel;
-			mes "You need " +
-				((.@blvl > 0) ? .@blvl + " more base levels " + ((.@jlvl > 0) ? "/ " : "") : "") +
-				((.@jlvl > 0) ? .@jlvl + " more job levels " : "") + "to continue.";
-			close;
-		}
-		mes "Switch to " + jobname(.@exp[0]) + "?";
-		next;
-		Job_Menu(.@exp[0]);
-		close;
+	if( .@third_possible ) {
+		RequireLevel(.Req_Third[0], .Req_Third[1]);
+		setarray .@job_opt[getarraysize(.@job_opt)],
+			.CHANGE_THIRD;
 	}
-	if (.@eac&EAJL_2)
-		if ((.@eac&(EAJL_UPPER|EAJL_BABY)) || roclass(.@eac|EAJL_UPPER) == -1) {
-			mes "No more jobs are available.";
-			close;
-		}
-	if ((.@eac&EAJ_BASEMASK) == EAJ_NOVICE) {
-		if (JobLevel < .JobReq[0])
-			mes "A job level of " + .JobReq[0] + " is required to change into the 1st Class.";
-		else if (Class == Job_Novice_High && .LastJob && lastJob) {
-			mes "Switch classes now?";
-			next;
-			Job_Menu(roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
-		} else {
-			switch(Class) {
+	
+	if (.SecondExpanded && (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) {
+		// (Baby) Super Novice to Expanded (Baby) Super Novice
+		RequireLevel(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
+		setarray .@job_opt[getarraysize(.@job_opt)],
+			roclass(.@eac|EAJL_THIRD); // Expanded SN is "third" cls
+	}
+	if (.SecondExpanded && (Class == Job_Ninja || Class == Job_Gunslinger)) { // TODO: Baby Classes are missing
+		// (Baby) Ninja to (Baby) Kagerou / Oboro
+		// (Baby) Gunslinger to (Baby) Rebellion
+		RequireLevel(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
+		setarray .@job_opt[getarraysize(.@job_opt)],
+			.@class1; // TODO class1 seems wrong
+	}
+	
+	// Player is Job_Novice, Job_Novice_High or Job_Baby
+	if (BaseClass == EAJ_NOVICE) {
+		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
+		// TODO: MAPID_SUPER_NOVICE should lead to an error (ingame test)
+		RequireLevel(.Req_First[0], .Req_First[1]);
+		switch(Class) {
 			case Job_Novice:
-				Job_Menu(
-					Job_Swordman,
-					Job_Mage,
-					Job_Archer,
-					Job_Acolyte,
-					Job_Merchant,
-					Job_Thief,
-					Job_Super_Novice,
-					Job_Taekwon,
-					Job_Gunslinger,
-					Job_Ninja,
-					Job_Baby
-				);
+				// First job change
+				setarray .@job_opt[getarraysize(.@job_opt)],Job_Swordman,
+					Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
+					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja,
+					Job_Baby;
 				break;
 			case Job_Novice_High:
-				Job_Menu(
-					Job_Swordman_High,
-					Job_Mage_High,
-					Job_Archer_High,
-					Job_Acolyte_High,
-					Job_Merchant_High,
-					Job_Thief_High
-				);
+				// Job change after rebirth
+				if( .LastJob && lastJob )
+					setarray .@job_opt[getarraysize(.@job_opt)],
+						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER);
+				else
+					setarray .@job_opt[getarraysize(.@job_opt)],
+						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
+						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High;
 				break;
 			case Job_Baby:
-				Job_Menu(
-					Job_Baby_Swordman,
-					Job_Baby_Mage,
-					Job_Baby_Archer,
-					Job_Baby_Acolyte,
-					Job_Baby_Merchant,
-					Job_Baby_Thief,
-					Job_Super_Baby
-				);
+				// First job change as a baby
+				setarray .@job_opt[getarraysize(.@job_opt)],
+					Job_Baby_Swordman, Job_Baby_Mage, Job_Baby_Archer,
+					Job_Baby_Acolyte, Job_Baby_Merchant, Job_Baby_Thief,
+					Job_Super_Baby;
 				break;
 			default:
 				mes "An error has occurred.";
-				break;
+				close;
+		}
+	}
+	
+	// Player is: 
+	// * First Class
+	// * Transcendend First Class
+	// * Baby First Class
+	// most jobs should have two options here  (2-1 and 2-2)
+	if( .@eac <= EAJL_NINJA || 						// First Class
+		(.@eac&(~JOBL_UPPER)) <= EAJL_NINJA || 		// Trans. First Cls
+		(.@eac&(~JOBL_BABY)) <= EAJL_NINJA ) {		// Baby First Cls
+		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
+		.@class2 = roclass(.@eac|EAJL_2_2); // 2-2
+		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
+			// Player is rebirth Cls and linear class changes are enforced
+			setarray .@job_opt[getarraysize(.@job_opt)], 
+				lastJob + Job_Novice_High;
+			// TODO should we add a check here if lastJob+Job_Novice_High
+			// is really either .@class1 or .@class2?
+		} else {
+			// Class is not enforced, player can decide.
+			if( .@class1 > 0 ) { // 2-1
+				RequireLevel(1, .Req_Second[1]); // TODO: No BaseLevel required?
+				setarray .@job_opt[getarraysize(.@job_opt)], .@class1;
+			}
+			if( .@class2 > 0 ) { // 2-2
+				RequireLevel(1, .Req_Second[1]); // TODO: No BaseLevel required?
+				setarray .@job_opt[getarraysize(.@job_opt)], .@class2;
 			}
 		}
-		close;
 	}
-	if (roclass(.@eac|EAJL_2_1) == -1 || roclass(.@eac|EAJL_2_2) == -1)
-		mes "No more jobs are available.";
-	else if (!(.@eac&EAJL_2) && JobLevel < .JobReq[1])
-		mes "A job level of " + .JobReq[1] + " is required to change into the 2nd Class.";
-	else if (.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
-		mes "Switch classes now?";
-		next;
-		Job_Menu(lastJob + Job_Novice_High);
-	} else
-		Job_Menu(.@j1, .@j2);
+	
+	// TODO show the menu
+	// Displaying the Job Menu defined by .@job_opt.
+	// .@job_opt should not be changed below this line.
+	Job_Change;
+	while(1) {
+		.@opt_cnt =  getarraysize(.@job_opt);
+		if( .@opt_cnt <= 0 ) {
+			mes "No more jobs are available.";
+			close;
+		}
+		if (.@opt_cnt > 1) {
+			// Multiple job classes given. Select one and save it to .@class
+			mes "Select a job.";
+			.@menu$ = "";
+			for (.@i = 0; .@i < .@opt_cnt; .@i++)
+				.@menu$ = .@menu$ + " ~ " + jobname(.@job_opt[.@i]) + ":";
+			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
+			next;
+			.@selected = select(.@menu$) - 1;
+			if( .@selected < 0 || .@selected > .@opt_cnt )
+				close; // shouldn't happen
+			.@class = .@job_opt[.@selected];
+			if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) && BaseLevel < .SNovice) {
+				mes .NPCName$;
+				mes "A base level of " + .SNovice + " is required to turn into a " + jobname(.@class) + ".";
+				close;
+			}
+			mes .NPCName$;
+			mes "Are you sure?";
+			next;
+		} else {
+			// Just one job class given
+			.@class = .@job_opt[0];
+		}
+		// TODO class change confirm in extra func
+		// Player confirms he want to change into .@class
+		if (select(" ~ Change into ^0055FF" + jobname(.@class) + "^000000 class: ~ ^777777" + ((getargcount() > 1) ? "Go back" : "Cancel") + "^000000") == 1) {
+			Job_Change(.@class);
+		}
+		if (.@opt_cnt == 1)
+			close;
+		mes .NPCName$;
+	}
+	end;
 	close;
 
 // Executes the actual jobchange and closes.
 function	Job_Change	{
 	.@to_cls = getarg(0);
-	mes "[Job Master]";
+	mes .NPCName$;
 	mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
 	if (.@to_cls == Job_Novice_High && .LastJob)
-		lastJob = Class;
+		lastJob = Class; // Saves the lastJob for rebirth
 	jobchange .@to_cls;
 	if (.@to_cls == Job_Novice_High)
 		resetlvl(1);
@@ -229,44 +283,6 @@ function	Job_Change	{
 	if (.GetJobEquip)
 		Get_Job_Equip(.@to_cls);
 	close;
-}
-
-// Opens a menu with the Job class options given
-// from the parameters.
-function Job_Menu {
-	while(1) {
-		if (getargcount() > 1) {
-			// Multiple job classes given. Select one and save it to .@class
-			mes "Select a job.";
-			.@menu$ = "";
-			for (.@i = 0; .@i < getargcount(); .@i++)
-				.@menu$ = .@menu$ + " ~ " + jobname(getarg(.@i)) + ":";
-			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
-			next;
-			.@class = getarg(select(.@menu$) - 1, 0);
-			if (!.@class)
-				close;
-			if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) && BaseLevel < .SNovice) {
-				mes "[Job Master]";
-				mes "A base level of " + .SNovice + " is required to turn into a " + jobname(.@class) + ".";
-				close;
-			}
-			mes "[Job Master]";
-			mes "Are you sure?";
-			next;
-		} else {
-			// Just one job class given
-			.@class = getarg(0);
-		}
-		// Player confirms he want to change into .@class
-		if (select(" ~ Change into ^0055FF" + jobname(.@class) + "^000000 class: ~ ^777777" + ((getargcount() > 1) ? "Go back" : "Cancel") + "^000000") == 1) {
-			Job_Change(.@class);
-		}
-		if (getargcount() == 1)
-			return;
-		mes "[Job Master]";
-	}
-	end;
 }
 
 function	Get_Platinum	{
@@ -446,15 +462,30 @@ function	Get_Job_Equip	{
 }
 
 OnInit:
-	setarray .Rebirth[0],99,50;	// Minimum base level, job level to rebirth OR change to third class
-	setarray .JobReq[0],10,40;	// Minimum job level to turn into 1st class, 2nd class
+	// Initialisation, do not edit these
+	.NPCName$ = "[Job Master]";
+	
+	// .@job_opt is the main array for the available job changes.
+	// Each element is a roclass or a "special" change:
+	.CHANGE_REBIRTH = -1;
+	.CHANGE_THIRD = -2;
+	
+	// Settings
 	.ThirdClass = 1;			// Enable third classes? (1: yes / 0: no)
-	.RebirthClass = 1;			// Enable rebirth classes? (1: yes / 0: no) TODO
+	.RebirthClass = 1;			// Enable rebirth classes? (1: yes / 0: no)
 	.SecondExpanded = 1;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion? (1: yes / 0: no)
-	.SNovice = 45;				// Minimum base level to turn into Super Novice
 	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
 	.SkillPointCheck = 1;		// Force player to use up all skill points? (1: yes / 0: no)
 	.Platinum = 1;				// Get platinum skills automatically? (1: yes / 0: no)
 	.GetJobEquip = 0;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
+	
+	// Level Requirements
+	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
+	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
+	setarray .Req_Rebirth[0],99,50;		// Minimum base level, job level to rebirth
+	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class
+	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
+	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
+	.SNovice = 45;						// Minimum base level to turn into Super Novice
 	end;
 }
