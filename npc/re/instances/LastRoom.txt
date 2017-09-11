@@ -174,7 +174,7 @@ OnInstanceInit:
 	'protocole = 0;
 	disablenpc instance_npcname("protocole1");
 	disablenpc instance_npcname("Tamarin#room2");
-	disablenpc instance_npcname("zone_1_2_last_room");
+	disablenpc instance_npcname("#lrdoor4");
 	disablenpc instance_npcname("Verity#room2");
 	disablenpc instance_npcname("Verity#room3");
 	disablenpc instance_npcname("protocole3");
@@ -283,7 +283,7 @@ OnMyMobDead2:
 	close2;
 	if ('protocole == 2) {
 		'protocole = 3;
-		enablenpc instance_npcname("zone_1_2_last_room");
+		enablenpc instance_npcname("#lrdoor4");
 		for ( .@i = 1; .@i < 16; ++.@i )
 			enablenpc instance_npcname( "#lrboom" + .@i );
 		enablenpc instance_npcname("Verity#room2");
