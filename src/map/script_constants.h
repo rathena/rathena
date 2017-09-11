@@ -3797,7 +3797,6 @@
 	export_constant(IG_SOMETHING_CANDY_HOLDER);
 	export_constant(IG_MYSTERIOUS_EGG);
 	export_constant(IG_AGUST_LUCKY_SCROLL);
-	export_constant(IG_RUNE);
 	export_constant(IG_ELEMENT);
 	export_constant(IG_POISON);
 	export_constant(IG_CASH_FOOD);

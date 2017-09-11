@@ -4407,7 +4407,7 @@ void do_final(void)
 	do_final_pet();
 	do_final_homunculus();
 	do_final_mercenary();
-	do_final_mob();
+	do_final_mob(false);
 	do_final_msg();
 	do_final_skill();
 	do_final_status();
