@@ -255,7 +255,6 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	set Zeny, Zeny-.@price;
 	mes "Pow! Pow! Pow! Pow!";
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
-		debugmes "Rate: " + getequippercentrefinery(.@part, true);
 		successrefitem .@part;
 		next;
 		emotion e_no1;
