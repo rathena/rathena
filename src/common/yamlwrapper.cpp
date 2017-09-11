@@ -28,7 +28,12 @@
 extern "C" {
 
 yamlwrapper::yamlwrapper(YAML::Node node) {
-	this->root = node;
+	try {
+		this->root = node;
+	}
+	catch (std::exception) {
+		//ignore
+	}
 }
 
 yamliterator::yamliterator(YAML::Node sequence_) {
