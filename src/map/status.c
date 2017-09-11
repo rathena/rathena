@@ -14258,6 +14258,8 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 
 			refine_info[refine_info_index].cost[idx].nameid = material;
 			refine_info[refine_info_index].cost[idx].zeny = price;
+
+			aFree(refine_cost_const);
 			yaml_destroy_wrapper(type);
 		}
 	}
