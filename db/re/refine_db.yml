@@ -22,6 +22,22 @@ Armor:
   StatsPerLevel: 0
   RandomBonusStartLevel: 0
   RandomBonusValue: 0
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 2000
+      Material: 985
+    - Type: REFINE_COST_OVER10
+      Price: 100000
+      Material: 6223
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6241
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7619
+    - Type: REFINE_COST_OVER10_HD
+      Price: 100000
+      Material: 6225
   Rates:
     - Level: 1
       Bonus: 100
@@ -121,6 +137,22 @@ WeaponLv1:
   StatsPerLevel: 200
   RandomBonusStartLevel: 8
   RandomBonusValue: 300
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 50
+      Material: 1010
+    - Type: REFINE_COST_OVER10
+      Price: 100000
+      Material: 6224
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6240
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+    - Type: REFINE_COST_OVER10_HD
+      Price: 100000
+      Material: 6226
   Rates:
     - Level: 8
       NormalChance: 60
@@ -186,6 +218,22 @@ WeaponLv2:
   StatsPerLevel: 300
   RandomBonusStartLevel: 7
   RandomBonusValue: 500
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 200
+      Material: 1011
+    - Type: REFINE_COST_OVER10
+      Price: 100000
+      Material: 6224
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6240
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+    - Type: REFINE_COST_OVER10_HD
+      Price: 100000
+      Material: 6226
   Rates:
     - Level: 7
       NormalChance: 60
@@ -256,6 +304,22 @@ WeaponLv3:
   StatsPerLevel: 500
   RandomBonusStartLevel: 6
   RandomBonusValue: 800
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 5000
+      Material: 984
+    - Type: REFINE_COST_OVER10
+      Price: 100000
+      Material: 6224
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6240
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+    - Type: REFINE_COST_OVER10_HD
+      Price: 100000
+      Material: 6226
   Rates:
     - Level: 6
       NormalChance: 60
@@ -331,6 +395,22 @@ WeaponLv4:
   StatsPerLevel: 700
   RandomBonusStartLevel: 5
   RandomBonusValue: 1400
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 20000
+      Material: 984
+    - Type: REFINE_COST_OVER10
+      Price: 100000
+      Material: 6224
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6240
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+    - Type: REFINE_COST_OVER10_HD
+      Price: 100000
+      Material: 6226
   Rates:
     - Level: 5
       NormalChance: 60
@@ -411,6 +491,16 @@ Shadow:
   StatsPerLevel: 0
   RandomBonusStartLevel: 0
   RandomBonusValue: 0
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 20000
+      Material: 985
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6241
+    - Type: REFINE_COST_ENRICHED
+      Price: 20000
+      Material: 7619
   Rates:
     - Level: 5
       NormalChance: 60

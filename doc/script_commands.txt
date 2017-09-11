@@ -2740,6 +2740,24 @@ random change of a refine succeeding or failing and then going through with it
 
 ---------------------------------------
 
+*getequiprefinecost(<equipment slot>,<type>,<information>{,<char id>})
+
+This function returns refine cost for equipment in <equipment slot> based on
+passed arguments <type> and <information>.
+
+Valid cost types are:
+
+REFINE_COST_NORMAL     - For normal refining
+REFINE_COST_OVER10     - For refining over +10
+REFINE_COST_HD         - For refining with HD ores
+REFINE_COST_ENRICHED   - For refining with enriched ores
+REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
+
+This function will return zeny required for refining if <information> argument is true.
+Otherwise it returns required ore item ID for refining.
+
+---------------------------------------
+
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
 
 This function will count all the items with the specified ID number lying on the

@@ -73,20 +73,10 @@
 		mes "I only handle items with refine levels from +7 to +9.";
 		close;
 	}
-	switch(getequipweaponlv(.@part)) {
-	default:
-	case 0:
-		set .@price,20000;
-		set .@material,6241; //HD_Elunium
-		break;
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		set .@price,20000;
-		set .@material,6240; //HD_Oridecon
-		break;
-	}
+	
+	.@price = getequiprefinecost(.@part, REFINE_COST_HD, 1);
+	.@material = getequiprefinecost(.@part, REFINE_COST_HD, 0);
+	
 	mes "[Blacksmith Mighty Hammer]";
 	mes "In order to refine the gear you selected you need ^ff9999"+getitemname(.@material)+"^000000 and 20,000 zeny as a fee.";
 	mes "Do you have them ready?";
@@ -210,25 +200,23 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 		mes "This weapon is perfect, no need to refine it anymore~";
 		close;
 	}
+	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, 1);
+	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, 0);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:
-		set .@price,100000;
-		set .@material,6225; //HD_Carnium
 		set .@type$,"armor";
 		break;
 	case 1:
 	case 2:
 	case 3:
 	case 4:
-		set .@price,100000;
-		set .@material,6226; //HD_Bradium
 		set .@type$,"weapon";
 		break;
 	}
 	mes "[Basta]";
 	mes "Hmm... is this the one you want to refine?";
-	mes "To refine this equipment, I need 1 ^ff9999"+getitemname(.@material)+"^000000 and 100,000 zeny as a fee.";
+	mes "To refine this equipment, I need 1 ^ff9999"+getitemname(.@material)+"^000000 and " + callfunc("F_InsertComma",.@price) + " zeny as a fee.";
 	mes "Do you really want to refine this?";
 	next;
 	if(select("Yes:No") == 2) {

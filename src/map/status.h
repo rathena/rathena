@@ -44,6 +44,7 @@ enum refine_cost_type {
 	REFINE_COST_OVER10,
 	REFINE_COST_HD,
 	REFINE_COST_ENRICHED,
+	REFINE_COST_OVER10_HD,
 	REFINE_COST_MAX
 };
 
@@ -54,6 +55,7 @@ struct refine_cost {
 
 /// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
+int status_get_refine_cost(int weapon_lv, int type, bool what);
 
 /// Status changes listing. These code are for use by the server.
 typedef enum sc_type {

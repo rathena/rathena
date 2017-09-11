@@ -55,15 +55,8 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 		close;
 	}
 
-	// Make sure you have the neccessary items and Zeny to refine your items
-	// Determines chance of failure and verifies that you want to continue.
-	switch(getequipweaponlv(.@part)) {
-		case 1: callsub S_RefineValidate,1,7620,50,.@part; break;
-		case 2: callsub S_RefineValidate,2,7620,200,.@part; break;
-		case 3: callsub S_RefineValidate,3,7620,5000,.@part; break;
-		case 4: callsub S_RefineValidate,4,7620,20000,.@part; break;
-		default: callsub S_RefineValidate,0,7619,2000,.@part; break;
-	}
+	.@price = getequiprefinecost(.@part, REFINE_COST_ENRICHED, 1);
+	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, 0);
 
 	mes "[Suhnbi]";
 	mes "Clang! Clang! Clang!";

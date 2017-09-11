@@ -3864,6 +3864,14 @@
 	export_constant(ACHIEVEINFO_SCORE);
 	export_constant(ACHIEVEINFO_MAX);
 
+	// refine cost type
+	export_constant(REFINE_COST_NORMAL);
+	export_constant(REFINE_COST_OVER10);
+	export_constant(REFINE_COST_HD);
+	export_constant(REFINE_COST_ENRICHED);
+	export_constant(REFINE_COST_OVER10_HD);
+	export_constant(REFINE_COST_MAX);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

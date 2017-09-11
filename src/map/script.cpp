@@ -23562,6 +23562,39 @@ BUILDIN_FUNC(achievementupdate) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get an equipment's refine cost
+ * getequiprefinecost(<equipment slot>,<type>,<information>{,<char id>})
+ */
+BUILDIN_FUNC(getequiprefinecost) {
+	int i = -1, slot, type, info;
+	map_session_data *sd;
+
+	slot = script_getnum(st, 2);
+	type = script_getnum(st, 3);
+	info = script_getnum(st, 4);
+
+	if (!script_charid2sd(5, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (equip_index_check(slot))
+		i = pc_checkequip(sd, equip_bitmask[slot]);
+
+	int weapon_lv = sd->inventory_data[i]->wlv;
+	if (sd->inventory_data[i]->type == IT_SHADOWGEAR) {
+		if (sd->inventory_data[i]->equip == EQP_SHADOW_WEAPON)
+			weapon_lv = REFINE_TYPE_WEAPON4;
+		else
+			weapon_lv = REFINE_TYPE_SHADOW;
+	}
+
+	script_pushint(st, status_get_refine_cost(weapon_lv, type, info));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24202,6 +24235,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementexists,"i?"),
 	BUILDIN_DEF(achievementupdate,"iii?"),
 
+
+	BUILDIN_DEF(getequiprefinecost,"iii?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

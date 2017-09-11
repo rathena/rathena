@@ -6,6 +6,7 @@
 //===== Changelog: ===========================================
 //= 1.0 Added Malangdo Refiner "Holink". [Euphy]
 //= 1.1 Removed re-roll behavior. [Secret]
+//= 1.2 Added db-based material ID [Secret]
 //============================================================
 
 // Main NPC :: mal_jerun
@@ -69,35 +70,32 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		close;
 	}
 	mes "[Holink]";
+	// TODO: Price is different to Suhnbi of Payon. Intended? [Secret]
+	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, 0);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0: // Armor
 		set .@price,15000;
-		set .@material,7619; //Enriched_Elunium
 		set .@type$,"armor";
 		mes "You have chosen an armor, meow~";
 		break;
 	case 1: // Level 1 Weapon
 		set .@price,500;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "A level 1 weapon...?";
 		break;
 	case 2: // Level 2 Weapon
 		set .@price,2000;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "Meow, a level 2 weapon...?";
 		break;
 	case 3: // Level 3 Weapon
 		set .@price,20000;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "Meow Meow~~ A level 3 weapon~~";
 		break;
 	case 4: // Level 4 Weapon
 		set .@price,50000;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "Me-Meow!... A level 4 weapon...!";
 		mes "I've only seen it twice while";

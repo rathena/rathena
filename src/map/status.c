@@ -14249,10 +14249,15 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 			}
 
 			char* refine_cost_const = yaml_get_c_string(type, "Type");
-			idx = ISDIGIT(refine_cost_const[0]) ? atoi(refine_cost_const) : script_get_constant(refine_cost_const, &idx); // Remove non-constant support?
+			if (ISDIGIT(refine_cost_const[0]))
+				idx = atoi(refine_cost_const);
+			else
+				script_get_constant(refine_cost_const, &idx);
 			price = yaml_get_int(type, "Price");
 			material = yaml_get_uint16(type, "Material");
 
+			refine_info[refine_info_index].cost[idx].nameid = material;
+			refine_info[refine_info_index].cost[idx].zeny = price;
 			yaml_destroy_wrapper(type);
 		}
 	}
@@ -14325,6 +14330,17 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 
 	yaml_destroy_wrapper(root_node);
 	aFree(buf);
+}
+
+/**
+ * Returns refine cost (zeny or item) for a weapon level.
+ * @param weapon_lv Weapon level
+ * @param type Refine type (can be retrieved from refine_cost_type enum)
+ * @param what true = returns zeny, false = returns item id
+ * @return Refine cost for a weapon level
+ */
+int status_get_refine_cost(int weapon_lv, int type, bool what) {
+	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
 }
 
 /**
