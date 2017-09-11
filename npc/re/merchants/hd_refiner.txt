@@ -224,7 +224,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 		mes "Okay. If that's what you want...";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, true) < 100) {
 		mes "[Basta]";
 		mes "This "+.@type$+" has already been refined pretty high.";
 		mes "If you try to refine it more, the refine level could decrease.";
@@ -255,6 +255,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	set Zeny, Zeny-.@price;
 	mes "Pow! Pow! Pow! Pow!";
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
+		debugmes "Rate: " + getequippercentrefinery(.@part, true);
 		successrefitem .@part;
 		next;
 		emotion e_no1;

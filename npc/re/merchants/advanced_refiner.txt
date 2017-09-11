@@ -111,7 +111,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		mes "You don't belive in refine master Holink, meow?~";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, true) < 100) {
 		mes "[Holink]";
 		mes "Meow!!";
 		if (.@type$ == "armor")
