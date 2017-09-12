@@ -43,7 +43,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		end;
 	}
 	if (BaseJob == Job_Novice) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			cutin "orleans_5",0;
 			mes "[Charles Orleans]";
 			mes "Excuse me, monsieur?";
@@ -80,7 +80,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		goto L_End;
 	}
 	else if (getequipid(EQI_HEAD_TOP) != 5026) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			cutin "orleans_5",0;
 			emotion e_an;
 			mes "[Charles Orleans]";
@@ -2061,10 +2061,11 @@ prt_castle,45,35,5	script	Madeleine Chu#cook	886,{
 	close;
 
 S_SellSets:
-	set .@item_cost,getiteminfo(getarg(0),0);
-	set .@item_weight,getiteminfo(getarg(0),6);
+	.@item_id = getarg(0);
+	.@item_cost = getiteminfo(.@item_id,0);
+	.@item_weight = getiteminfo(.@item_id,6);
 	mes "[Madeleine Chu]";
-	mes "How many " + (getarg(0)==12125 ? "Outdoor":"Indoor");
+	mes "How many "+ (.@item_id == 12125 ? "Outdoor":"Indoor");
 	mes "Cooking Kits would";
 	mes "you like to buy? If you";
 	mes "want to cancel, please";
@@ -2076,7 +2077,7 @@ S_SellSets:
 			mes "[Madeleine Chu]";
 			mes "You've changed your";
 			mes "mind? Well, if you need";
-			mes "to buy "+getitemname(getarg(0));
+			mes "to buy "+ getitemname(.@item_id);
 			mes "Kits later, just come back";
 			mes "to me at anytime, alright?";
 			close;
@@ -2085,7 +2086,7 @@ S_SellSets:
 			mes "[Madeleine Chu]";
 			mes "Oh, I'm sorry, but";
 			mes "I don't sell more than";
-			mes "100 "+getitemname(getarg(0));
+			mes "100 "+ getitemname(.@item_id);
 			mes "at a time, just to be safe.";
 			next;
 		}
@@ -2097,21 +2098,21 @@ S_SellSets:
 		mes "[Madeleine Chu]";
 		mes "Oh, I'm sorry, but you";
 		mes "can't afford this many";
-		mes getitemname(getarg(0));
+		mes getitemname(.@item_id);
 		mes "Please check your zeny";
 		mes "before purchasing my kits~";
 		close;
 	}
-	if (!checkweight(getarg(0),.@sell)) {
+	if (!checkweight(.@item_id,.@sell)) {
 		mes "[Madeleine Chu]";
 		mes "I'm sorry, but you don't";
 		mes "have enough room in your";
 		mes "Inventory for this many";
-		mes getitemname(getarg(0))+"...";
+		mes getitemname(.@item_id) +"...";
 		close;
 	}
 	set Zeny, Zeny-.@total_cost;
-	getitem getarg(0),.@sell;
+	getitem .@item_id,.@sell;
 	mes "[Madeleine Chu]";
 	mes "Here you are~";
 	mes "Best of luck with";

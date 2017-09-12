@@ -38,7 +38,6 @@
 gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 
 	set .@party_id,getcharid(1);
-	set .@p_name$,getpartyname(.@party_id);
 	set .@md_name$,"Orc's Memory";
 
 	if (!instance_check_party(.@party_id,2,30,80)) {
@@ -54,7 +53,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 			switch(select("Reserve the "+.@md_name$+":Enter the Dungeon:Cancel")) {
 			case 1:
 				if (instance_create(.@md_name$) < 0) {
-					mes "Party Name: "+.@p_name$;
+					mes "Party Name: "+ getpartyname(.@party_id);
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed.";
 					close;
@@ -86,18 +85,18 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	close;
 L_Enter:
 	switch(instance_enter("Orc's Memory")) {
-	case 3:
+	case IE_OTHER:
 		mes "An unknown error has occurred.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "Memorial Dungeon Orc's Memory does not exist.";
 		mes "Memorial Dungeon has been destroyed by the Party Leader, or because of the time limit. Please try again after 2 hours.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "Only a member of the party can enter the Memorial Dungeon.";
 		close;
-	case 0:
-		mapannounce "gef_fild10",.@p_name$+" party's member "+strcharinfo(0)+" has entered the Orc's Memory.",bc_map,"0x00ff99";
+	case IE_OK:
+		mapannounce "gef_fild10", getpartyname( getcharid(1) ) +" party's member "+strcharinfo(0)+" has entered the Orc's Memory.",bc_map,"0x00ff99";
 		if (checkquest(12059) == -1) setquest 12059;
 		//warp "1@orcs",179,15;
 		if (getarg(0) == 0) close;
@@ -397,7 +396,7 @@ OnEnable:
 	areamonster instance_mapname("1@orcs"),103,105,109,111,"Enchanted Orc",1023,1,instance_npcname("B1 Area Mobs")+"::OnMyMobDead1";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@orcs"),168,130;
 	end;
 
@@ -426,7 +425,7 @@ OnEnable:
 	areamonster instance_mapname("1@orcs"),32,40,38,46,"Enchanted Orc",1023,1,instance_npcname("B1 Area Mobs")+"::OnMyMobDead2";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@orcs"),85,85;
 	end;
 
@@ -455,7 +454,7 @@ OnEnable:
 	areamonster instance_mapname("1@orcs"),19,177,25,183,"Enchanted Orc",1023,1,instance_npcname("B1 Area Mobs")+"::OnMyMobDead3";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@orcs"),38,110;
 	end;
 
@@ -487,7 +486,7 @@ OnEnable:
 	donpcevent instance_npcname("#Resurrect Monsters4")+"::OnDisable";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("2@orcs"),32,171;
 	end;
 }
@@ -732,7 +731,7 @@ OnTimer10000:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("2@orcs"),47,93;
 	end;
 }
@@ -763,7 +762,7 @@ OnTimer10000:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("2@orcs"),107,55;
 	end;
 }
@@ -808,7 +807,7 @@ OnTimer13110:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("2@orcs"),167,95;
 	end;
 }
@@ -861,7 +860,7 @@ OnEnable:
 	enablenpc instance_npcname("#Warp Outside Orc Dun");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "gef_fild10",240,197;
 	end;
 }

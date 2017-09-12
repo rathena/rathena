@@ -133,7 +133,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	if (DANC_Q == 0 && Sex == 0 && BaseJob == Job_Archer) {
+	if (DANC_Q == 0 && Sex == SEX_FEMALE && BaseJob == Job_Archer) {
 		cutin "job_dancer_eir01",2;
 		mes "[Aile]";
 		mes "Welcome~!";
@@ -209,7 +209,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	else if (Sex == 1) {
+	else if (Sex == SEX_MALE) {
 		cutin "job_dancer_eir03",2;
 		mes "[Aile]";
 		mes "Welco--Mmm?";
@@ -1236,7 +1236,7 @@ OnTimer89000:
 }
 
 job_duncer,69,110,0	script	dance#return	-1,1,4,{
-OnTouch:
+OnTouch_:
 	mapannounce "job_duncer","Good! Well done! Go back to Bijou!",bc_map;
 	set DANC_Q,9;
 	changequest 7005,7006;
@@ -1256,7 +1256,7 @@ OnEnable:
 }
 
 job_duncer,66,110,0	script	dance#return#2	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set DANC_Q,9;
 	warp "comodo",188,162;
 	end;
@@ -1272,7 +1272,7 @@ OnEnable:
 }
 
 job_duncer,72,110,0	script	dance#return#3	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set DANC_Q,9;
 	warp "comodo",188,162;
 	end;
@@ -1291,7 +1291,7 @@ OnEnable:
 // Dance Move Triggers
 //============================================================ 
 -	script	dancestep::StepTrigger	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Backdancer#1::OnOmg";
 	mapannounce "job_duncer"," " + strcharinfo(0) + ", you lack rhythm... Your timing was too late!",bc_map;
 	set DANC_Q,8;
@@ -1309,7 +1309,7 @@ job_duncer,69,110,0	duplicate(StepTrigger)	dance#cen	-1,1,1
 
 job_duncer,10,10,0	script	dance#poring	-1,{
 OnEnable:
-	monster "job_duncer",69,106,"Poring",1002,1,"dance#poring::OnMyMobDead";
+	areamonster "job_duncer",68,105,70,107,"Poring",1002,1,"dance#poring::OnMyMobDead";
 	end;
 
 OnMyMobDead:

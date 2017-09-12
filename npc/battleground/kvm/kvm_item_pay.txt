@@ -249,31 +249,35 @@ PurchaseItem:
 	// Pricing for Weapon, Suit1, Muffler1, Shoes1, Ring1m Suit2, Shoes2, Ring2, Suit3, Shoes3, Ring3
 	setarray .@prices[0],2000,840,630,580,1200,120,70,200,15,10,30;
 
+	.@item_id = getarg(0);
+	.@req_setting = getarg(1);
+	.@item_type = getarg(2);
+
 	mes "[Logistics]";
 
-	if (!getarg(2))
-		mes "You have selected ^ff0000"+getitemname(getarg(0))+"^000000.";
-	else if (getarg(2) == 1)
-		mes "There is only one "+callfunc("F_GetWeaponType",getarg(0))+": "+getitemname(getarg(0))+".";
-	else if (getarg(2) == 2) {
-		mes "You have selected '"+callfunc("F_GetArmorType",getarg(0))+"'.";
-		mes "The armor for one whose Lvl is more than 80 is: ^ff0000"+getitemname(getarg(0))+"^000000.";
+	if (!.@item_type)
+		mes "You have selected ^ff0000"+ getitemname(.@item_id) +"^000000.";
+	else if (.@item_type == 1)
+		mes "There is only one "+ callfunc("F_GetWeaponType",.@item_id) +": "+ getitemname(.@item_id) +".";
+	else if (.@item_type == 2) {
+		mes "You have selected '"+ callfunc("F_GetArmorType",.@item_id) +"'.";
+		mes "The armor for one whose Lvl is more than 80 is: ^ff0000"+ getitemname(.@item_id) +"^000000.";
 	}
-	else if (getarg(2) == 3) {
-		mes "You have selected 'Mass-Production "+callfunc("F_GetArmorType",getarg(0))+"'.";
-		mes "There is only one Mass-Production "+callfunc("F_GetArmorType",getarg(0))+": ^ff0000"+getitemname(getarg(0))+"^000000.";
+	else if (.@item_type == 3) {
+		mes "You have selected 'Mass-Production "+ callfunc("F_GetArmorType",.@item_id) +"'.";
+		mes "There is only one Mass-Production "+ callfunc("F_GetArmorType",.@item_id) +": ^ff0000"+ getitemname(.@item_id) +"^000000.";
 	}
-	else if (getarg(2) == 4) {
-		mes "You have selected 'Popularized "+callfunc("F_GetArmorType",getarg(0))+"'.";
-		mes "There is only one Popularized "+callfunc("F_GetArmorType",getarg(0))+": ^ff0000"+getitemname(getarg(0))+"^000000.";
+	else if (.@item_type == 4) {
+		mes "You have selected 'Popularized "+ callfunc("F_GetArmorType",.@item_id) +"'.";
+		mes "There is only one Popularized "+ callfunc("F_GetArmorType",.@item_id) +": ^ff0000"+ getitemname(.@item_id) +"^000000.";
 	}
 
-	if (!getarg(1))
+	if (!.@req_setting)
 		mes "It requires ^0000ff2,000^000000 KVM Points, and "+ .@name$ +", your points are: ^580080"+ kvm_point +"^000000.";
-	else if (getarg(1) == 4)
+	else if (.@req_setting == 4)
 		mes "It requires ^0000ff1,200^000000 KVM Points, and "+ .@name$ +", your points are: ^580080"+ kvm_point +"^000000.";
 	else
-		mes "It requires ^0000ff"+.@prices[getarg(1)]+"^000000 KVM Points, and "+ .@name$ +", your points are: ^580080"+ kvm_point +"^000000.";
+		mes "It requires ^0000ff"+ .@prices[.@req_setting] +"^000000 KVM Points, and "+ .@name$ +", your points are: ^580080"+ kvm_point +"^000000.";
 
 	mes "Are you sure you want this item?";
 	next;
@@ -284,26 +288,26 @@ PurchaseItem:
 		mes "When purchasing an item, please be careful there are no refunds.";
 		break;
 	case 2:
-		if (kvm_point >= .@prices[getarg(1)]) {
-			set kvm_point,kvm_point-.@prices[getarg(1)];
-			getitem getarg(0),1;
+		if (kvm_point >= .@prices[.@req_setting]) {
+			kvm_point = kvm_point -.@prices[.@req_setting];
+			getitem .@item_id,1;
 			mes "[Logistics]";
-			mes "You have purchased a "+getitemname(getarg(0))+".";
-			if (!getarg(1))
-				mes "Your KVM Points are reduced by ^0000ff"+getarg(1)+"^000000 points, your KVM Points are now ^580080"+kvm_point+"^000000.";
-			if (getarg(1) == 4)
+			mes "You have purchased a "+ getitemname(.@item_id) +".";
+			if (!.@req_setting)
+				mes "Your KVM Points are reduced by ^0000ff"+ .@req_setting +"^000000 points, your KVM Points are now ^580080"+kvm_point+"^000000.";
+			if (.@req_setting == 4)
 				mes "Your KVM Points are reduced by ^0000ff1,200^000000 points, your KVM Points are now ^580080"+kvm_point+"^000000.";
 			else
-				mes "Your KVM Points are reduced by ^0000ff"+.@prices[getarg(1)]+"^000000 points, your KVM Points are now ^580080"+kvm_point+"^000000.";
+				mes "Your KVM Points are reduced by ^0000ff"+ .@prices[.@req_setting] +"^000000 points, your KVM Points are now ^580080"+kvm_point+"^000000.";
 		}
 		else {
 			mes "[Logistics]";
-			if (!getarg(1))
+			if (!.@req_setting)
 				mes "You need ^0000ff2,000^000000 KVM Points to purchase this item.";
-			else if (getarg(1) == 4)
+			else if (.@req_setting == 4)
 				mes "You need ^0000ff1,200^000000 KVM Points to purchase this item.";
 			else
-				mes "You need ^0000ff"+.@prices[getarg(1)]+"^000000 KVM Points to purchase this item.";
+				mes "You need ^0000ff"+ .@prices[.@req_setting] +"^000000 KVM Points to purchase this item.";
 			mes "However, your KVM Points are now ^580080"+ kvm_point +"^000000.";
 			mes "Which are not enough to buy it.";
 			mes "When you get enough points, please come back again.";

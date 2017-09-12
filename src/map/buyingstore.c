@@ -182,7 +182,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 			break;
 		}
 
-		if( sd->status.inventory[idx].amount+amount > BUYINGSTORE_MAX_AMOUNT )
+		if( sd->inventory.u.items_inventory[idx].amount + amount > BUYINGSTORE_MAX_AMOUNT )
 		{// too many items of same kind
 			break;
 		}
@@ -228,12 +228,12 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `limit`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d, '%d', '%d', '%d' );",
-		buyingstores_db, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
+		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES", buyingstore_items_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES", buyingstore_items_table);
 	for (i = 0; i < sd->buyingstore.slots; i++){
 		StringBuf_Printf(&buf, "(%d,%d,%hu,%d,%d)", sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price);
 		if (i < sd->buyingstore.slots-1)
@@ -259,8 +259,8 @@ void buyingstore_close(struct map_session_data* sd) {
 
 	if( sd->state.buyingstore ) {
 		if( 
-			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE buyingstore_id = %d;", buyingstore_items_db, sd->buyer_id ) != SQL_SUCCESS ||
-			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS
+			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE buyingstore_id = %d;", buyingstore_items_table, sd->buyer_id ) != SQL_SUCCESS ||
+			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", buyingstores_table, sd->buyer_id ) != SQL_SUCCESS
 		) {
 			Sql_ShowDebug(mmysql_handle);
 		}
@@ -386,13 +386,13 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 			}
 		}
 
-		if( index < 0 || index >= ARRAYLENGTH(sd->status.inventory) || sd->inventory_data[index] == NULL || sd->status.inventory[index].nameid != nameid || sd->status.inventory[index].amount < amount )
+		if( index < 0 || index >= ARRAYLENGTH(sd->inventory.u.items_inventory) || sd->inventory_data[index] == NULL || sd->inventory.u.items_inventory[index].nameid != nameid || sd->inventory.u.items_inventory[index].amount < amount )
 		{// invalid input
 			clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, nameid);
 			return;
 		}
 
-		if( sd->status.inventory[index].expire_time || (sd->status.inventory[index].bound && !pc_can_give_bounded_items(sd)) || !itemdb_cantrade(&sd->status.inventory[index], pc_get_group_level(sd), pc_get_group_level(pl_sd)) || memcmp(sd->status.inventory[index].card, buyingstore_blankslots, sizeof(buyingstore_blankslots)) )
+		if( sd->inventory.u.items_inventory[index].expire_time || (sd->inventory.u.items_inventory[index].bound && !pc_can_give_bounded_items(sd)) || !itemdb_cantrade(&sd->inventory.u.items_inventory[index], pc_get_group_level(sd), pc_get_group_level(pl_sd)) || memcmp(sd->inventory.u.items_inventory[index].card, buyingstore_blankslots, sizeof(buyingstore_blankslots)) )
 		{// non-tradable item
 			clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, nameid);
 			return;
@@ -447,16 +447,16 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		zeny = amount*pl_sd->buyingstore.items[listidx].price;
 
 		// move item
-		pc_additem(pl_sd, &sd->status.inventory[index], amount, LOG_TYPE_BUYING_STORE);
+		pc_additem(pl_sd, &sd->inventory.u.items_inventory[index], amount, LOG_TYPE_BUYING_STORE);
 		pc_delitem(sd, index, amount, 1, 0, LOG_TYPE_BUYING_STORE);
 		pl_sd->buyingstore.items[listidx].amount-= amount;
 
 		if( pl_sd->buyingstore.items[listidx].amount > 0 ){
-			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `buyingstore_id` = %d AND `index` = %d;", buyingstore_items_db, pl_sd->buyingstore.items[listidx].amount, pl_sd->buyer_id, listidx ) != SQL_SUCCESS ){
+			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `buyingstore_id` = %d AND `index` = %d;", buyingstore_items_table, pl_sd->buyingstore.items[listidx].amount, pl_sd->buyer_id, listidx ) != SQL_SUCCESS ){
 				Sql_ShowDebug( mmysql_handle );
 			}
 		}else{
-			if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `buyingstore_id` = %d AND `index` = %d;", buyingstore_items_db, pl_sd->buyer_id, listidx ) != SQL_SUCCESS ){
+			if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `buyingstore_id` = %d AND `index` = %d;", buyingstore_items_table, pl_sd->buyer_id, listidx ) != SQL_SUCCESS ){
 				Sql_ShowDebug( mmysql_handle );
 			}
 		}
@@ -468,12 +468,12 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 
 		// notify clients
 		clif_buyingstore_delete_item(sd, index, amount, pl_sd->buyingstore.items[listidx].price);
-		clif_buyingstore_update_item(pl_sd, nameid, amount);
+		clif_buyingstore_update_item(pl_sd, nameid, amount, sd->status.char_id, zeny);
 	}
 
-	if( save_settings&CHARSAVE_BANK ) {
-		chrif_save(sd, 0);
-		chrif_save(pl_sd, 0);
+	if( save_settings&CHARSAVE_VENDING ) {
+		chrif_save(sd, CSAVE_NORMAL|CSAVE_INVENTORY);
+		chrif_save(pl_sd, CSAVE_NORMAL|CSAVE_INVENTORY);
 	}
 	
 	// check whether or not there is still something to buy
@@ -488,7 +488,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 	}
 	else
 	{// continue buying
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `limit` = %d WHERE `id` = %d;", buyingstores_db, pl_sd->buyingstore.zenylimit, pl_sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `limit` = %d WHERE `id` = %d;", buyingstores_table, pl_sd->buyingstore.zenylimit, pl_sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 
@@ -586,7 +586,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 	nullpo_retv(sd);
 
 	// Ready to open buyingstore for this char
-	if ((at = uidb_get(buyingstore_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
+	if ((at = (struct s_autotrader *)uidb_get(buyingstore_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
 		uint8 *data, *p;
 		uint16 j, count;
 
@@ -626,7 +626,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 			}
 
 			// Immediate save
-			chrif_save(sd, 3);
+			chrif_save(sd, CSAVE_AUTOTRADE);
 
 			ShowInfo("Buyingstore loaded for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
@@ -656,7 +656,7 @@ void do_init_buyingstore_autotrade( void ) {
 			"FROM `%s` "
 			"WHERE `autotrade` = 1 AND `limit` > 0 AND (SELECT COUNT(`buyingstore_id`) FROM `%s` WHERE `buyingstore_id` = `id`) > 0 "
 			"ORDER BY `id`;",
-			buyingstores_db, buyingstore_items_db ) != SQL_SUCCESS )
+			buyingstores_table, buyingstore_items_table ) != SQL_SUCCESS )
 		{
 			Sql_ShowDebug(mmysql_handle);
 			return;
@@ -678,7 +678,7 @@ void do_init_buyingstore_autotrade( void ) {
 				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
 				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
 				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? 0 : 1;
-				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, min(len + 1, MESSAGE_SIZE));
+				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
 				Sql_GetData(mmysql_handle, 5, &data, NULL); at->limit = atoi(data);
 				Sql_GetData(mmysql_handle, 6, &data, NULL); at->dir = atoi(data);
 				Sql_GetData(mmysql_handle, 7, &data, NULL); at->head_dir = atoi(data);
@@ -704,7 +704,7 @@ void do_init_buyingstore_autotrade( void ) {
 			
 			// Init items for each autotraders
 			iter = db_iterator(buyingstore_autotrader_db);
-			for (at = dbi_first(iter); dbi_exists(iter); at = dbi_next(iter)) {
+			for (at = (struct s_autotrader *)dbi_first(iter); dbi_exists(iter); at = (struct s_autotrader *)dbi_next(iter)) {
 				uint16 j = 0;
 
 				if (SQL_ERROR == Sql_Query(mmysql_handle,
@@ -712,7 +712,7 @@ void do_init_buyingstore_autotrade( void ) {
 					"FROM `%s` "
 					"WHERE `buyingstore_id` = %d "
 					"ORDER BY `index` ASC;",
-					buyingstore_items_db, at->id ) )
+					buyingstore_items_table, at->id ) )
 				{
 					Sql_ShowDebug(mmysql_handle);
 					continue;
@@ -747,8 +747,8 @@ void do_init_buyingstore_autotrade( void ) {
 	}
 
 	// Everything is loaded fine, their entries will be reinserted once they are loaded
-	if (Sql_Query( mmysql_handle, "DELETE FROM `%s`;", buyingstores_db ) != SQL_SUCCESS ||
-		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", buyingstore_items_db ) != SQL_SUCCESS)
+	if (Sql_Query( mmysql_handle, "DELETE FROM `%s`;", buyingstores_table ) != SQL_SUCCESS ||
+		Sql_Query( mmysql_handle, "DELETE FROM `%s`;", buyingstore_items_table ) != SQL_SUCCESS)
 	{
 		Sql_ShowDebug(mmysql_handle);
 	}
@@ -779,7 +779,7 @@ static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove) 
 * @author [Cydh]
 */
 static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
-	struct s_autotrader *at = db_data2ptr(data);
+	struct s_autotrader *at = (struct s_autotrader *)db_data2ptr(data);
 	if (at)
 		buyingstore_autotrader_remove(at, false);
 	return 0;

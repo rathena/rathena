@@ -4,6 +4,10 @@
 #ifndef _INT_HOMUN_SQL_H_
 #define _INT_HOMUN_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_homunculus;
 
 int inter_homunculus_sql_init(void);
@@ -14,5 +18,9 @@ bool mapif_homunculus_save(struct s_homunculus* hd);
 bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd);
 bool mapif_homunculus_delete(int homun_id);
 bool mapif_homunculus_rename(char *name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INT_HOMUN_SQL_H_ */

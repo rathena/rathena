@@ -96,7 +96,7 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 			//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
 			// send ack
-			WFIFOHEAD(fd,25);
+			WFIFOHEAD(fd,21);
 			WFIFOW(fd,0) = 0x2713;
 			WFIFOL(fd,2) = account_id;
 			WFIFOL(fd,6) = login_id1;
@@ -104,15 +104,14 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 			WFIFOB(fd,14) = sex;
 			WFIFOB(fd,15) = 0;// ok
 			WFIFOL(fd,16) = request_id;
-			WFIFOL(fd,20) = node->version;
-			WFIFOB(fd,24) = node->clienttype;
-			WFIFOSET(fd,25);
+			WFIFOB(fd,20) = node->clienttype;
+			WFIFOSET(fd,21);
 
 			// each auth entry can only be used once
 			idb_remove(auth_db, account_id);
 		}else{// authentication not found
 			ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", ch_server[id].name, account_id, ip);
-			WFIFOHEAD(fd,25);
+			WFIFOHEAD(fd,21);
 			WFIFOW(fd,0) = 0x2713;
 			WFIFOL(fd,2) = account_id;
 			WFIFOL(fd,6) = login_id1;
@@ -120,9 +119,8 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 			WFIFOB(fd,14) = sex;
 			WFIFOB(fd,15) = 1;// auth failed
 			WFIFOL(fd,16) = request_id;
-			WFIFOL(fd,20) = 0;
-			WFIFOB(fd,24) = 0;
-			WFIFOSET(fd,25);
+			WFIFOB(fd,20) = 0;
+			WFIFOSET(fd,21);
 		}
 	}
 	return 1;
@@ -150,39 +148,6 @@ int logchrif_parse_ackusercount(int fd, int id){
 }
 
 /**
- * Receive a request from char-server to change e-mail from default "a@a.com".
- * @param fd: fd to parse from (char-serv)
- * @param id: id of char-serv
- * @param ip: char-serv ip (used for info)
- * @return 0 not enough info transmitted, 1 success
- */
-int logchrif_parse_updmail(int fd, int id, char* ip){
-	if (RFIFOREST(fd) < 46)
-		return 0;
-	else{
-		AccountDB* accounts = login_get_accounts_db();
-		struct mmo_account acc;
-		char email[40];
-
-		uint32 account_id = RFIFOL(fd,2);
-		safestrncpy(email, (char*)RFIFOP(fd,6), 40); remove_control_chars(email);
-		RFIFOSKIP(fd,46);
-
-		if( e_mail_check(email) == 0 )
-			ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - e-mail is invalid (account: %d, ip: %s)\n", ch_server[id].name, account_id, ip);
-		else if( !accounts->load_num(accounts, &acc, account_id) || strcmp(acc.email, "a@a.com") == 0 || acc.email[0] == '\0' )
-			ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - account doesn't exist or e-mail of account isn't default e-mail (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
-		else{
-			memcpy(acc.email, email, 40);
-			ShowNotice("Char-server '%s': Create an e-mail on an account with a default e-mail (account: %d, new e-mail: %s, ip: %s).\n", ch_server[id].name, account_id, email, ip);
-			// Save
-			accounts->save(accounts, &acc);
-		}
-	}
-	return 1;
-}
-
-/**
  * Transmit account data to char_server
  * S 2717 aid.W email.40B exp_time.L group_id.B char_slot.B birthdate.11B pincode.5B pincode_change.L
  *  isvip.1B char_vip.1B max_billing.1B (tot 75)  
@@ -196,7 +161,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	char birthdate[10+1] = "";
 	char pincode[PINCODE_LENGTH+1];
 	char isvip = false;
-	uint8 char_slots = MIN_CHARS, char_vip = 0;
+	uint8 char_slots = MIN_CHARS, char_vip = 0, char_billing = 0;
 	AccountDB* accounts = login_get_accounts_db();
 
 	memset(pincode,0,PINCODE_LENGTH+1);
@@ -216,40 +181,44 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 			char_slots = login_config.char_per_account + char_vip;
 		} else
 			char_slots = login_config.char_per_account;
+		char_billing = MAX_CHAR_BILLING; //TODO create a config for this
 #endif
 	}
 
 	WFIFOHEAD(fd,75);
 	WFIFOW(fd,0) = 0x2717;
 	WFIFOL(fd,2) = aid;
-	safestrncpy((char*)WFIFOP(fd,6), email, 40);
+	safestrncpy(WFIFOCP(fd,6), email, 40);
 	WFIFOL(fd,46) = (uint32)expiration_time;
 	WFIFOB(fd,50) = (unsigned char)group_id;
 	WFIFOB(fd,51) = char_slots;
-	safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
-	safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
+	safestrncpy(WFIFOCP(fd,52), birthdate, 10+1);
+	safestrncpy(WFIFOCP(fd,63), pincode, 4+1 );
 	WFIFOL(fd,68) = (uint32)acc.pincode_change;
 	WFIFOB(fd,72) = isvip;
 	WFIFOB(fd,73) = char_vip;
-	WFIFOB(fd,74) = MAX_CHAR_BILLING; //TODO create a config for this
+	WFIFOB(fd,74) = char_billing;
 	WFIFOSET(fd,75);
 	return 1;
 }
 
 /**
  * Transmit vip specific data to char-serv (will be transfered to mapserv)
+ * @param fd
+ * @param acc
+ * @param flag 0x1: VIP, 0x2: GM, 0x4: Show rates on player
+ * @param mapfd
  */
-int logchrif_sendvipdata(int fd, struct mmo_account acc, char isvip, char isgm, int mapfd) {
+int logchrif_sendvipdata(int fd, struct mmo_account acc, unsigned char flag, int mapfd) {
 #ifdef VIP_ENABLE
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
 	WFIFOL(fd,2) = acc.account_id;
 	WFIFOL(fd,6) = (int)acc.vip_time;
-	WFIFOB(fd,10) = isvip;
+	WFIFOB(fd,10) = flag;
 	WFIFOL(fd,11) = acc.group_id; //new group id
-	WFIFOL(fd,15) = isgm;
-	WFIFOL(fd,16) = mapfd; //link to mapserv
-	WFIFOSET(fd,20);
+	WFIFOL(fd,15) = mapfd; //link to mapserv
+	WFIFOSET(fd,19);
 	logchrif_send_accdata(fd,acc.account_id); //refresh char with new setting
 #endif
 	return 1;
@@ -305,8 +274,8 @@ int logchrif_parse_reqchangemail(int fd, int id, char* ip){
 		char new_email[40];
 
 		uint32 account_id = RFIFOL(fd,2);
-		safestrncpy(actual_email, (char*)RFIFOP(fd,6), 40);
-		safestrncpy(new_email, (char*)RFIFOP(fd,46), 40);
+		safestrncpy(actual_email, RFIFOCP(fd,6), 40);
+		safestrncpy(new_email, RFIFOCP(fd,46), 40);
 		RFIFOSKIP(fd, 86);
 
 		if( e_mail_check(actual_email) == 0 )
@@ -476,7 +445,7 @@ int logchrif_parse_reqchgsex(int fd, int id, char* ip){
  * @param ip: char-serv ip (used for info)
  * @return 0 not enough info transmitted, 1 success
  */
-int logchrif_parse_updreg2(int fd, int id, char* ip){
+int logchrif_parse_upd_global_accreg(int fd, int id, char* ip){
 	if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
 		return 0;
 	else{
@@ -486,28 +455,8 @@ int logchrif_parse_updreg2(int fd, int id, char* ip){
 
 		if( !accounts->load_num(accounts, &acc, account_id) )
 			ShowStatus("Char-server '%s': receiving (from the char-server) of account_reg2 (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
-		else{
-			int len;
-			int p;
-			uint8 j;
-			ShowNotice("char-server '%s': receiving (from the char-server) of account_reg2 (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
-			for( j = 0, p = 13; j < ACCOUNT_REG2_NUM && p < RFIFOW(fd,2); ++j ){
-				sscanf((char*)RFIFOP(fd,p), "%31c%n", acc.account_reg2[j].str, &len);
-				acc.account_reg2[j].str[len]='\0';
-				p +=len+1; //+1 to skip the '\0' between strings.
-				sscanf((char*)RFIFOP(fd,p), "%255c%n", acc.account_reg2[j].value, &len);
-				acc.account_reg2[j].value[len]='\0';
-				p +=len+1;
-				remove_control_chars(acc.account_reg2[j].str);
-				remove_control_chars(acc.account_reg2[j].value);
-			}
-			acc.account_reg2_num = j;
-			// Save
-			accounts->save(accounts, &acc);
-			// Sending information towards the other char-servers.
-			RFIFOW(fd,0) = 0x2729;// reusing read buffer
-			logchrif_sendallwos(fd, RFIFOP(fd,0), RFIFOW(fd,2));
-		}
+		else
+			mmo_save_global_accreg(accounts,fd,account_id,RFIFOL(fd, 8));
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;
@@ -588,7 +537,7 @@ int logchrif_parse_updonlinedb(int fd, int id){
 		users = RFIFOW(fd,4);
 		for (i = 0; i < users; i++) {
 			int aid = RFIFOL(fd,6+i*4);
-			struct online_login_data *p = idb_ensure(online_db, aid, login_create_online_user);
+			struct online_login_data *p = (struct online_login_data*)idb_ensure(online_db, aid, login_create_online_user);
 			p->char_server = id;
 			if (p->waiting_disconnect != INVALID_TIMER){
 				delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
@@ -605,37 +554,16 @@ int logchrif_parse_updonlinedb(int fd, int id){
  * @param fd: fd to parse from (char-serv)
  * @return 0 not enough info transmitted, 1 success
  */
-int logchrif_parse_reqacc2reg(int fd){
+int logchrif_parse_req_global_accreg(int fd){
 	if (RFIFOREST(fd) < 10)
 		return 0;
 	else{
-		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
-		size_t off;
-
 		uint32 account_id = RFIFOL(fd,2);
 		uint32 char_id = RFIFOL(fd,6);
 		RFIFOSKIP(fd,10);
 
-		WFIFOHEAD(fd,ACCOUNT_REG2_NUM*sizeof(struct global_reg));
-		WFIFOW(fd,0) = 0x2729;
-		WFIFOL(fd,4) = account_id;
-		WFIFOL(fd,8) = char_id;
-		WFIFOB(fd,12) = 1; //Type 1 for Account2 registry
-
-		off = 13;
-		if( accounts->load_num(accounts, &acc, account_id) ){
-			uint8 j;
-			for( j = 0; j < acc.account_reg2_num; j++ ){
-				if( acc.account_reg2[j].str[0] != '\0' ){
-					off += sprintf((char*)WFIFOP(fd,off), "%s", acc.account_reg2[j].str)+1; //We add 1 to consider the '\0' in place.
-					off += sprintf((char*)WFIFOP(fd,off), "%s", acc.account_reg2[j].value)+1;
-				}
-			}
-		}
-
-		WFIFOW(fd,2) = (uint16)off;
-		WFIFOSET(fd,WFIFOW(fd,2));
+		mmo_send_global_accreg(accounts,fd,account_id,char_id);
 	}
 	return 1;
 }
@@ -668,6 +596,7 @@ int logchrif_parse_setalloffline(int fd, int id){
 	return 1;
 }
 
+#if PACKETVER_SUPPORTS_PINCODE
 /**
  * Request to change PIN Code for an account.
  * @param fd: fd to parse from (char-serv)
@@ -681,7 +610,7 @@ int logchrif_parse_updpincode(int fd){
 		AccountDB* accounts = login_get_accounts_db();
 
 		if( accounts->load_num(accounts, &acc, RFIFOL(fd,4) ) ){
-			strncpy( acc.pincode, (char*)RFIFOP(fd,8), PINCODE_LENGTH+1 );
+			strncpy( acc.pincode, RFIFOCP(fd,8), PINCODE_LENGTH+1 );
 			acc.pincode_change = time( NULL );
 			accounts->save(accounts, &acc);
 		}
@@ -716,12 +645,14 @@ int logchrif_parse_pincode_authfail(int fd){
 	}
 	return 1;
 }
+#endif
 
 /**
  * Received a vip data reqest from char
  * type is the query to perform
- *  &1 : Select info and update old_groupid
- *  &2 : Update vip time
+ *  0x1 : Select info and update old_groupid
+ *  0x2 : VIP duration is changed by atcommand or script
+ *  0x8 : First request on player login
  * @param fd link to charserv
  * @return 0 missing data, 1 succeeded
  */
@@ -733,7 +664,7 @@ int logchrif_parse_reqvipdata(int fd) {
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 		int aid = RFIFOL(fd,2);
-		int8 type = RFIFOB(fd,6);
+		int8 flag = RFIFOB(fd,6);
 		int32 timediff = RFIFOL(fd,7);
 		int mapfd = RFIFOL(fd,11);
 		RFIFOSKIP(fd,15);
@@ -744,10 +675,10 @@ int logchrif_parse_reqvipdata(int fd) {
 			bool isvip = false;
 
 			if( acc.group_id > login_config.vip_sys.group ) { //Don't change group if it's higher.
-				logchrif_sendvipdata(fd,acc,false,true,mapfd);
+				logchrif_sendvipdata(fd,acc,0x2|((flag&0x8)?0x4:0),mapfd);
 				return 1;
 			}
-			if( type&2 ) {
+			if( flag&2 ) {
 				if(!vip_time)
 					vip_time = now; //new entry
 				vip_time += timediff; // set new duration
@@ -767,8 +698,8 @@ int logchrif_parse_reqvipdata(int fd) {
 			}
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
-			if( type&1 )
-				logchrif_sendvipdata(fd,acc,isvip,false,mapfd);
+			if( flag&1 )
+				logchrif_sendvipdata(fd,acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
 		}
 	}
 #endif
@@ -803,19 +734,19 @@ int logchrif_parse_accinfo(int fd) {
 			WFIFOL(fd, 19) = acc.group_id;
 			WFIFOL(fd, 23) = acc.logincount;
 			WFIFOL(fd, 27) = acc.state;
-			safestrncpy((char*)WFIFOP(fd, 31), acc.email, 40);
-			safestrncpy((char*)WFIFOP(fd, 71), acc.last_ip, 16);
-			safestrncpy((char*)WFIFOP(fd, 87), acc.lastlogin, 24);
-			safestrncpy((char*)WFIFOP(fd, 111), acc.birthdate, 11);
+			safestrncpy(WFIFOCP(fd, 31), acc.email, 40);
+			safestrncpy(WFIFOCP(fd, 71), acc.last_ip, 16);
+			safestrncpy(WFIFOCP(fd, 87), acc.lastlogin, 24);
+			safestrncpy(WFIFOCP(fd, 111), acc.birthdate, 11);
 			if ((unsigned int)u_group >= acc.group_id) {
-				safestrncpy((char*)WFIFOP(fd, 122), acc.pass, 33);
-				safestrncpy((char*)WFIFOP(fd, 155), acc.pincode, PINCODE_LENGTH);
+				safestrncpy(WFIFOCP(fd, 122), acc.pass, 33);
+				safestrncpy(WFIFOCP(fd, 155), acc.pincode, PINCODE_LENGTH);
 			}
 			else {
 				memset(WFIFOP(fd, 122), '\0', 33);
 				memset(WFIFOP(fd, 155), '\0', PINCODE_LENGTH);
 			}
-			safestrncpy((char*)WFIFOP(fd, 155 + PINCODE_LENGTH), acc.userid, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd, 155 + PINCODE_LENGTH), acc.userid, NAME_LENGTH);
 			WFIFOSET(fd, len);
 		}
 		else {
@@ -863,36 +794,38 @@ int logchrif_parse(int fd){
 	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 ){
-		int next = 1;
+		int next = 1; // 0: avoid processing followup packets (prev was probably incomplete) packet, 1: Continue parsing
 		uint16 command = RFIFOW(fd,0);
 		switch( command ){
-		case 0x2712: next = logchrif_parse_reqauth(fd, cid, ip); break;
-		case 0x2714: next = logchrif_parse_ackusercount(fd, cid); break;
-		case 0x2715: next = logchrif_parse_updmail(fd, cid, ip); break;
-		case 0x2716: next = logchrif_parse_reqaccdata(fd, cid, ip); break;
-		case 0x2719: next = logchrif_parse_keepalive(fd); break;
-		case 0x2720: next = logchrif_parse_accinfo(fd); break; //@accinfo from inter-server
-		case 0x2722: next = logchrif_parse_reqchangemail(fd,cid,ip); break;
-		case 0x2724: next = logchrif_parse_requpdaccstate(fd,cid,ip); break;
-		case 0x2725: next = logchrif_parse_reqbanacc(fd,cid,ip); break;
-		case 0x2727: next = logchrif_parse_reqchgsex(fd,cid,ip); break;
-		case 0x2728: next = logchrif_parse_updreg2(fd,cid,ip); break;
-		case 0x272a: next = logchrif_parse_requnbanacc(fd,cid,ip); break;
-		case 0x272b: next = logchrif_parse_setacconline(fd,cid); break;
-		case 0x272c: next = logchrif_parse_setaccoffline(fd); break;
-		case 0x272d: next = logchrif_parse_updonlinedb(fd,cid); break;
-		case 0x272e: next = logchrif_parse_reqacc2reg(fd); break;
-		case 0x2736: next = logchrif_parse_updcharip(fd,cid); break;
-		case 0x2737: next = logchrif_parse_setalloffline(fd,cid); break;
-		case 0x2738: next = logchrif_parse_updpincode(fd); break;
-		case 0x2739: next = logchrif_parse_pincode_authfail(fd); break;
-		case 0x2742: next = logchrif_parse_reqvipdata(fd); break; //Vip sys
-		default:
-			ShowError("logchrif_parse: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
-			set_eof(fd);
-			return 0;
+			case 0x2712: next = logchrif_parse_reqauth(fd, cid, ip); break;
+			case 0x2714: next = logchrif_parse_ackusercount(fd, cid); break;
+			case 0x2716: next = logchrif_parse_reqaccdata(fd, cid, ip); break;
+			case 0x2719: next = logchrif_parse_keepalive(fd); break;
+			case 0x2720: next = logchrif_parse_accinfo(fd); break; //@accinfo from inter-server
+			case 0x2722: next = logchrif_parse_reqchangemail(fd,cid,ip); break;
+			case 0x2724: next = logchrif_parse_requpdaccstate(fd,cid,ip); break;
+			case 0x2725: next = logchrif_parse_reqbanacc(fd,cid,ip); break;
+			case 0x2727: next = logchrif_parse_reqchgsex(fd,cid,ip); break;
+			case 0x2728: next = logchrif_parse_upd_global_accreg(fd,cid,ip); break;
+			case 0x272a: next = logchrif_parse_requnbanacc(fd,cid,ip); break;
+			case 0x272b: next = logchrif_parse_setacconline(fd,cid); break;
+			case 0x272c: next = logchrif_parse_setaccoffline(fd); break;
+			case 0x272d: next = logchrif_parse_updonlinedb(fd,cid); break;
+			case 0x272e: next = logchrif_parse_req_global_accreg(fd); break;
+			case 0x2736: next = logchrif_parse_updcharip(fd,cid); break;
+			case 0x2737: next = logchrif_parse_setalloffline(fd,cid); break;
+#if PACKETVER_SUPPORTS_PINCODE
+			case 0x2738: next = logchrif_parse_updpincode(fd); break;
+			case 0x2739: next = logchrif_parse_pincode_authfail(fd); break;
+#endif
+			case 0x2742: next = logchrif_parse_reqvipdata(fd); break; //Vip sys
+			default:
+				ShowError("logchrif_parse: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
+				set_eof(fd);
+				return 0;
 		} // switch
-		if(next==0) return 0; // avoid processing of followup packets (prev was probably incomplete)
+		if (next == 0)
+			return 0;
 	} // while
 	return 1; //or 0
 }

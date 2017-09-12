@@ -15,7 +15,7 @@ CREATE TABLE `item_db2` (
   `defence` smallint(5) unsigned DEFAULT NULL,
   `range` tinyint(2) unsigned DEFAULT NULL,
   `slots` tinyint(2) unsigned DEFAULT NULL,
-  `equip_jobs` int(10) unsigned DEFAULT NULL,
+  `equip_jobs` bigint(20) unsigned DEFAULT NULL,
   `equip_upper` tinyint(2) unsigned DEFAULT NULL,
   `equip_genders` tinyint(1) unsigned DEFAULT NULL,
   `equip_locations` mediumint(7) unsigned DEFAULT NULL,
@@ -26,13 +26,14 @@ CREATE TABLE `item_db2` (
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UniqueAegisName` (`name_english`)
 ) ENGINE=MyISAM;
 
 # Items Additional Database
 #
 # Structure of Database:
-#REPLACE INTO `item_db2` VALUES ( ID,'Name','Name',Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Class,Gender,Loc,wLV,eLV,Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
+#REPLACE INTO `item_db2` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,ATK,DEF,Range,Slots,Job,Class,Gender,Loc,wLV,eLV,Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
 #
 # THQ Quest Items
 #=============================================================

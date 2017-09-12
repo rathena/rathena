@@ -1019,7 +1019,7 @@ um_in,139,48,5	script	Phrenetan	783,{
 		emotion e_go;
 		close;
 	}
-	else if (um_wind == 6 || MISC_QUEST & 32768) {
+	else if (um_wind == 6 || (MISC_QUEST & 32768)) {
 		emotion e_an;
 		mes "[Phrenetan]";
 		mes "Umbabah! Umbaumbah.....";
@@ -1128,7 +1128,7 @@ um_in,101,73,3	script	Wainatan	783,{
 		close;
 	}
 	if (um_wind == 1) {
-		if (gettime(3) > 18) {
+		if (gettime(DT_HOUR) > 18) {
 			set um_wind,2;
 			emotion e_an;
 			mes "[Wainatan]";
@@ -1172,7 +1172,7 @@ um_in,94,123,5	script	Bertztan	783,{
 		close;
 	}
 	if (um_wind == 2) {
-		if (gettime(3) > 18) {
+		if (gettime(DT_HOUR) > 18) {
 			set um_wind,3;
 			emotion e_an;
 			mes "[Bertztan]";
@@ -1224,7 +1224,7 @@ umbala,145,217,3	script	Chabimatan	783,{
 		close;
 	}
 	if (um_wind == 3) {
-		if (gettime(3) > 18) {
+		if (gettime(DT_HOUR) > 18) {
 			set um_wind,4;
 			emotion e_an;
 			mes "[Chabimatan]";
@@ -1267,7 +1267,7 @@ OnInit:
 	disablenpc "#!@#$%";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (um_wind == 4) {
 		set um_wind,5;
 		mes "^3355FFAs you enter the house";
@@ -1296,7 +1296,7 @@ OnInit:
 	disablenpc "#unpc";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (um_wind == 5) {
 		mes "^3355FFAs you realized what happened";
 		mes "after being kicked out of the";

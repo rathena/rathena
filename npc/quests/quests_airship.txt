@@ -504,7 +504,7 @@ airplane,47,61,7	script	Crewman	4_M_ZONDAOYAJI,{
 // Empty Room 201
 //----------------------------------------------------------------------------
 ein_in01,227,279,3	script	#door_ein	-1,5,5,{
-OnTouch:
+OnTouch_:
 	if (kain_ticket == 5) {
 		kain_ticket = 6;
 		mes "["+strcharinfo(0)+"]";
@@ -554,7 +554,7 @@ OnTouch:
 // Elle Cherno
 //----------------------------------------------------------------------------
 ein_in01,261,241,3	script	Elle Cherno	4_F_KID2,3,3,{
-OnTouch:
+OnTouch_:
 	mes "[Elle Cherno]";
 	mes "Let's get to work";
 	mes "fear-less comraaades~!";
@@ -1097,7 +1097,7 @@ ein_in01,121,99,3	script	Mirror#ein	HIDDEN_NPC,{
 			mes "good. So this must be";
 			mes "why I get such great";
 			mes "service at restaurants...";
-		} else if (Sex) {
+		} else if (Sex == SEX_MALE) {
 			switch(.@r) {
 			case 1:
 				mes "["+strcharinfo(0)+"]";
@@ -3136,7 +3136,7 @@ airplane,33,69,4	script	Kaci	1_F_MERCHANT_01,{
 
 ein_in01,279,25,0	script	#lab01_heart	HIDDEN_WARP_NPC,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (lhz_heart == 9) {
 		mes "["+strcharinfo(0)+"]";
 		mes "(^333333I've... I've just";
@@ -3150,7 +3150,7 @@ OnTouch:
 
 ein_in01,264,17,0	script	#lab02_heart	HIDDEN_WARP_NPC,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (lhz_heart == 9) {
 		mes "["+strcharinfo(0)+"]";
 		mes "What the...";
@@ -3186,7 +3186,7 @@ OnInit:
 
 ein_in01,261,35,0	script	lab03#heart	HIDDEN_WARP_NPC,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (lhz_heart == 9) {
 		mes "[Security System]";
 		mes "^FF0000Unauthorized person";

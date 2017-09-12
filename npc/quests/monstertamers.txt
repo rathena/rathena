@@ -626,7 +626,7 @@ comodo,112,182,0	script	Munak's Grandma	103,{
 		mes "[Munak's grandma]";
 		mes "Oh my...";
 		mes "Have you seen my granddaughter,";
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "boy? My poor granddaughter";
 		}
 		else {
@@ -678,7 +678,7 @@ comodo,112,182,0	script	Munak's Grandma	103,{
 				mes "Th-This is her writing! Oh my...!";
 				next;
 				mes "[Munak's Grandma]";
-				if (Sex == 1) {
+				if (Sex == SEX_MALE) {
 					mes "Young man... I'll read this to you if";
 				}
 				else {
@@ -692,7 +692,7 @@ comodo,112,182,0	script	Munak's Grandma	103,{
 				case 1:
 					mes "[Munak's Grandma]";
 					mes "Oh...?";
-					if (Sex == 1) {
+					if (Sex == SEX_MALE) {
 						mes "Alright, young man.";
 						mes "Thank you anyway.";
 					}
@@ -710,7 +710,7 @@ comodo,112,182,0	script	Munak's Grandma	103,{
 					delitem 1558,1;
 					delitem 901,1;
 					mes "[Munak's Grandma]";
-					if (Sex == 1) {
+					if (Sex == SEX_MALE) {
 						mes "Oh!";
 						mes "Thank you,";
 						mes "young man~!";

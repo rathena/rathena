@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
+#include "cbasetypes.h"
+#include "showmsg.h"
 #include "socket.h"
 #include "utils.h"
 
@@ -11,7 +11,7 @@
 #include <math.h> // floor()
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 	#ifndef F_OK
 		#define F_OK   0x0
 	#endif  /* F_OK */
@@ -142,13 +142,28 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	return;
 }
 
-int check_filepath(const char* filepath){
+/**
+ * Check if the path is a directory or file
+ * @param filepath: Location of file
+ * @return 0 = Error
+ *         1 = Directory
+ *         2 = File
+ *         3 = File but doesn't exist
+ */
+int check_filepath(const char* filepath)
+{
 	DWORD Attribute;
-	if( Attribute = GetFileAttributes(filepath) ){
-		if( (Attribute & INVALID_FILE_ATTRIBUTES) && GetLastError() == ERROR_FILE_NOT_FOUND ) return 3;
-		else if( Attribute & FILE_ATTRIBUTE_DIRECTORY ) return 1;
-		else return 2;
+
+	if (Attribute = GetFileAttributes(filepath)) {
+		if ((Attribute&INVALID_FILE_ATTRIBUTES) && GetLastError() == ERROR_FILE_NOT_FOUND) {
+			SetLastError(0);
+			return 3;
+		} else if (Attribute&FILE_ATTRIBUTE_DIRECTORY)
+			return 1;
+		else
+			return 2;
 	}
+
 	return 0;
 }
 
@@ -156,23 +171,28 @@ int check_filepath(const char* filepath){
 
 #define MAX_DIR_PATH 2048
 
-
 /**
  * Check if the path is a directory or file
- * @param filepath
- * @return 1=dir, 2=file, 3=else, 0=error
+ * @param filepath: Location of file
+ * @return 0 = Error
+ *         1 = Directory
+ *         2 = File
+ *         3 = Neither a file or directory
  */
-int check_filepath(const char* filepath){
-    struct stat s;
+int check_filepath(const char* filepath)
+{
+	struct stat s;
 
-    if( stat(filepath,&s) == 0 ){
-            if( s.st_mode & S_IFDIR ) return 1;
-            else if( s.st_mode & S_IFREG )return 2;
-            else return 3;
-    }
-    else  {
-        return 0;
-    }
+	if (stat(filepath, &s) == 0) {
+		if (s.st_mode&S_IFDIR)
+			return 1;
+		else if (s.st_mode&S_IFREG)
+			return 2;
+		else
+			return 3;
+	}
+
+	return 0;
 }
 
 static char* checkpath(char *path, const char*srcpath)
@@ -336,51 +356,6 @@ float GetFloat(const unsigned char* buf)
 {
 	uint32 val = GetULong(buf);
 	return *((float*)(void*)&val);
-}
-
-uint32 date2version(int date) {
-	if(date < 20040906) return 5;
-	else if(date < 20040920) return 10;
-	else if(date < 20041005) return 11;
-	else if(date < 20041025) return 12;
-	else if(date < 20041129) return 13;
-	else if(date < 20050110) return 14;
-	else if(date < 20050509) return 15;
-	else if(date < 20050628) return 16;
-	else if(date < 20050718) return 17;
-	else if(date < 20050719) return 18;
-	else if(date < 20060327) return 19;
-	else if(date < 20070108) return 20;
-	else if(date < 20070212) return 21;
-	//wtf @FIXME
-	//else if(date < 20080910) return 22;
-	else if(date < 20080827) return 23;
-	else if(date < 20080910) return 24;
-	//unable to solve from date
-	else if(date < 20101124) return 25;
-	else if(date < 20111005) return 26;
-	else if(date < 20111102) return 27;
-	else if(date < 20120307) return 28;
-	else if(date < 20120410) return 29;
-	else if(date < 20120418) return 30;
-	else if(date < 20120618) return 31;
-	else if(date < 20120702) return 32;
-	else if(date < 20130320) return 33;
-	else if(date < 20130515) return 34;
-	else if(date < 20130522) return 35;
-	else if(date < 20130529) return 36;
-	else if(date < 20130605) return 37;
-	else if(date < 20130612) return 38;
-	else if(date < 20130618) return 39;
-	else if(date < 20130626) return 40;
-	else if(date < 20130703) return 41;
-	else if(date < 20130710) return 42;
-	else if(date < 20130717) return 43;
-	else if(date < 20130807) return 44;
-	else if(date < 20131223) return 45;
-	else if(date >= 20131223) return 46;
-
-	else return 30; //default
 }
 
 /// calculates the value of A / B, in percent (rounded down)

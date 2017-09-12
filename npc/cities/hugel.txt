@@ -57,7 +57,7 @@ hugel,126,151,3	script	Emily	90,{
 	mes "Don't you think that sounds weird?";
 	close;
 }
- 
+
 hugel,86,165,5	script	Kayplas	896,{
 	mes "[Kayplas]";
 	mes "Ooh, I really want to";
@@ -150,7 +150,7 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 	next;
 	switch (select("Buy:Cancel")) {
 		case 1:
-			if (Zeny < 500) { 
+			if (Zeny < 500) {
 				mes "[Shopkeeper]";
 				mes "I am sorry, but you don't have";
 				mes "enough money~";

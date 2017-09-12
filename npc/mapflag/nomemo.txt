@@ -228,6 +228,7 @@ monk_in	mapflag	nomemo
 in_rogue	mapflag	nomemo
 job_sage	mapflag	nomemo
 job_soul	mapflag	nomemo
+que_ba	mapflag	nomemo
 que_ng	mapflag	nomemo
 
 // Special Quests Places =====

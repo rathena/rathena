@@ -167,7 +167,7 @@ static int elemental_summon_end(int tid, unsigned int tick, int id, intptr_t dat
 	}
 
 	ed->summon_timer = INVALID_TIMER;
-	elemental_delete(ed, 0); // Elemental's summon time is over.
+	elemental_delete(ed); // Elemental's summon time is over.
 
 	return 0;
 }
@@ -179,7 +179,7 @@ void elemental_summon_stop(struct elemental_data *ed) {
 	ed->summon_timer = INVALID_TIMER;
 }
 
-int elemental_delete(struct elemental_data *ed, int reply) {
+int elemental_delete(struct elemental_data *ed) {
 	struct map_session_data *sd;
 
 	nullpo_ret(ed);
@@ -191,12 +191,12 @@ int elemental_delete(struct elemental_data *ed, int reply) {
 	elemental_summon_stop(ed);
 
 	if( !sd )
-		return unit_free(&ed->bl, 0);
+		return unit_free(&ed->bl, CLR_OUTSIGHT);
 
 	sd->ed = NULL;
 	sd->status.ele_id = 0;
 
-	return unit_remove_map(&ed->bl, 0);
+	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
 }
 
 void elemental_summon_init(struct elemental_data *ed) {
@@ -461,7 +461,7 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned 
  * Action that elemental perform after changing mode.
  * Activates one of the skills of the new mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode_ack(struct elemental_data *ed, int mode) {
+int elemental_change_mode_ack(struct elemental_data *ed, enum elemental_skillmode skill_mode) {
 	struct block_list *bl = &ed->master->bl;
 	uint16 skill_id, skill_lv;
 	int i;
@@ -472,7 +472,7 @@ int elemental_change_mode_ack(struct elemental_data *ed, int mode) {
 		return 0;
 
 	// Select a skill.
-	ARR_FIND(0, MAX_ELESKILLTREE, i, ed->db->skill[i].id && (ed->db->skill[i].mode&mode));
+	ARR_FIND(0, MAX_ELESKILLTREE, i, ed->db->skill[i].id && (ed->db->skill[i].mode&skill_mode));
 	if( i == MAX_ELESKILLTREE )
 		return 0;
 
@@ -503,7 +503,9 @@ int elemental_change_mode_ack(struct elemental_data *ed, int mode) {
 /*===============================================================
  * Change elemental mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode(struct elemental_data *ed, int mode) {
+int elemental_change_mode(struct elemental_data *ed, enum e_mode mode) {
+	enum elemental_skillmode skill_mode;
+
 	nullpo_ret(ed);
 
 	// Remove target
@@ -515,17 +517,20 @@ int elemental_change_mode(struct elemental_data *ed, int mode) {
 	ed->battle_status.mode = ed->elemental.mode = mode;
 
 	// Normalize elemental mode to elemental skill mode.
-	if( mode == EL_MODE_AGGRESSIVE ) mode = EL_SKILLMODE_AGGRESSIVE;	// Aggressive spirit mode -> Aggressive spirit skill.
-	else if( mode == EL_MODE_ASSIST ) mode = EL_SKILLMODE_ASSIST;		// Assist spirit mode -> Assist spirit skill.
-	else mode = EL_SKILLMODE_PASIVE;									// Passive spirit mode -> Passive spirit skill.
+	if( mode == EL_MODE_AGGRESSIVE ) skill_mode = EL_SKILLMODE_AGGRESSIVE;	// Aggressive spirit mode -> Aggressive spirit skill.
+	else if( mode == EL_MODE_ASSIST ) skill_mode = EL_SKILLMODE_ASSIST;		// Assist spirit mode -> Assist spirit skill.
+	else skill_mode = EL_SKILLMODE_PASSIVE;									// Passive spirit mode -> Passive spirit skill.
 
 	// Use a skill inmediately after every change mode.
-	if( mode != EL_SKILLMODE_AGGRESSIVE )
-		elemental_change_mode_ack(ed,mode);
+	if( skill_mode != EL_SKILLMODE_AGGRESSIVE )
+		return elemental_change_mode_ack(ed, skill_mode);
+
 	return 1;
 }
 
 void elemental_heal(struct elemental_data *ed, int hp, int sp) {
+	if (ed->master == NULL)
+		return;
 	if( hp )
 		clif_elemental_updatestatus(ed->master, SP_HP);
 	if( sp )
@@ -533,7 +538,7 @@ void elemental_heal(struct elemental_data *ed, int hp, int sp) {
 }
 
 int elemental_dead(struct elemental_data *ed) {
-	elemental_delete(ed, 1);
+	elemental_delete(ed);
 	return 0;
 }
 
@@ -625,7 +630,8 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 
 static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, unsigned int tick) {
 	struct block_list *target = NULL;
-	int master_dist, view_range, mode;
+	int master_dist, view_range;
+	enum e_mode mode;
 
 	nullpo_ret(ed);
 	nullpo_ret(sd);
@@ -649,7 +655,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 		}
 
 		if( status_get_sp(&sd->bl) < sp ){ // Can't sustain delete it.
-			elemental_delete(sd->ed,0);
+			elemental_delete(sd->ed);
 			return 0;
 		}
 
@@ -702,7 +708,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 		target = map_id2bl(ed->ud.target);
 
 		if( !target )
-			map_foreachinrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
+			map_foreachinallrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
 
 		if( !target ) { //No targets available.
 			elemental_unlocktarget(ed);
@@ -846,7 +852,7 @@ static bool read_elemental_skilldb_sub(char* str[], int columns, int current) {
 	skill_lv = atoi(str[2]);
 
 	skillmode = atoi(str[3]);
-	if( skillmode < EL_SKILLMODE_PASIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
+	if( skillmode < EL_SKILLMODE_PASSIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
 		ShowError("read_elemental_skilldb_sub: Skillmode out of range, line %d.\n",current);
 		return false;
 	}

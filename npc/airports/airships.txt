@@ -32,7 +32,7 @@ OnUnhide:
 	specialeffect EF_SUMMONSLAVE;
 	end;
 
-OnTouch:
+OnTouch_:
 	switch ($@airplanelocation) {
 	case 0: warp "yuno",92,260; end;
 	case 1: warp "einbroch",92,278; end;
@@ -655,7 +655,7 @@ airplane,50,66,5	script	Apple Merchant#airplane	86,{
 airplane_01,243,73,0	script	#AirshipWarp-3	45,1,1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	switch ($@airplanelocation2) {
 	case 0: warp "ra_fild12",292,204; end;
 	case 1: 
@@ -1027,7 +1027,7 @@ airplane_01,83,61,2	script	Dianne#01airplane_01	72,2,2,{
 	mes "Do you think that...";
 	close;
 
-OnTouch:
+OnTouch_:
 	emotion e_sob;
 	end;
 }
@@ -1139,18 +1139,18 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 		mes .@line1_1$[.@wordtest];
 		mes .@line1_2$[.@wordtest];
 		mes .@line1_3$[.@wordtest];
-		set .@start_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@start_time, gettimetick(1);
 		next;
 		input .@save1$;
-		set .@end_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@end_time, gettimetick(1);
 		set .@total_time, .@end_time - .@start_time;
 		mes "[Nils]";
 		mes .@line2_1$[.@wordtest];
 		mes .@line2_2$[.@wordtest];
-		set .@start_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@start_time, gettimetick(1);
 		next;
 		input .@save2$;
-		set .@end_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@end_time, gettimetick(1);
 		set .@total_time, .@total_time + (.@start_time - .@end_time);
 		set .@tasoo, (.@letters[.@wordtest] / .@total_time) * 6;
 		if ((.@save1$ == .@word1$[.@wordtest]) && (.@save2$ == .@word2$[.@wordtest])) {
@@ -1248,10 +1248,10 @@ airplane_01,33,68,4	script	Clarice	74,{
 }
 
 function	script	applegamble	{
-
+	.@npc_name$ = getarg(0);
 	switch (select("Play Dice Game:Learn Dice Game Rules:Cancel")) {
 	case 3:
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "I'm up for a game of";
 		mes "dice whenever you feel";
 		mes "like it. Just talk to me if";
@@ -1259,7 +1259,7 @@ function	script	applegamble	{
 		mes "sudden urge to gamble, kay?";
 		close;
 	case 2:
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "The rules for the Dice game";
 		mes "are pretty simple. First, you";
 		mes "place a bet by wagering Apples.";
@@ -1267,14 +1267,14 @@ function	script	applegamble	{
 		mes "Apples at a time. To keep things";
 		mes "legal, I can only accept Apples.";
 		next;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "But hey, if all that zeny";
 		mes "is burning a hole in your";
 		mes "pocket, head over to Fruitz";
 		mes "and you can buy as many";
 		mes "Apples as you want, playah~";
 		next;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "Now, we begin with me";
 		mes "rolling two 6-sided dice.";
 		mes "When it's your turn, you'll";
@@ -1282,7 +1282,7 @@ function	script	applegamble	{
 		mes "that, both of us will have the";
 		mes "option of rolling a third die.";
 		next;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "Now here's the important";
 		mes "thing. If your total is higher";
 		mes "than 12, you'll bust, meaning";
@@ -1290,14 +1290,14 @@ function	script	applegamble	{
 		mes "person with the higher total";
 		mes "is the winner. Got it?";
 		next;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "Now, you'll be the first";
 		mes "to decide whether or not";
 		mes "you'll roll the third die. Then,";
 		mes "depending on your result, I'll";
 		mes "roll my third die... Or maybe not.";
 		next;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "When you win, you'll";
 		mes "receive twice as many";
 		mes "Apples as you wagered.";
@@ -1308,7 +1308,7 @@ function	script	applegamble	{
 	case 1:
 		break;
 	}
-	mes "["+getarg(0)+"]";
+	mes "["+ .@npc_name$ +"]";
 	mes "Ooh, so you'll play with";
 	mes "me? Great! How many";
 	mes "Apples would you like to bet?";
@@ -1319,14 +1319,14 @@ function	script	applegamble	{
 	while(1) {
 		input .@amount;
 		if (.@amount == 0) {
-			mes "["+getarg(0)+"]";
+			mes "["+ .@npc_name$ +"]";
 			mes "Changed your mind?";
 			mes "I understand. Well then,";
 			mes "I hope we can play sometime.";
 			close;
 		}
 		else if (.@amount < 1 || .@amount > 50) {
-			mes "["+getarg(0)+"]";
+			mes "["+ .@npc_name$ +"]";
 			mes "You can't bet more than";
 			mes "50 Apples. Remember, we";
 			mes "need to keep these stakes";
@@ -1335,13 +1335,13 @@ function	script	applegamble	{
 			next;
 			continue;
 		}
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "So you'll be";
 		mes "betting ^FF0000"+.@amount+"^000000 Apples.";
 		mes "Is that right?";
 		next;
 		if (select("Yes:No") == 2) {
-			mes "["+getarg(0)+"]";
+			mes "["+ .@npc_name$ +"]";
 			mes "Mm, made a mistake?";
 			mes "Alright, please enter the";
 			mes "number of Apples you";
@@ -1359,7 +1359,7 @@ function	script	applegamble	{
 			continue;
 		}
 		delitem 512,.@amount;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		mes "Good!";
 		mes "Now we can start";
 		mes "this game! I'll roll first~";
@@ -1372,7 +1372,7 @@ function	script	applegamble	{
 	set .@table2, rand(1,6);
 	set .@tablesub, .@table1 + .@table2;
 	set .@tabletotal, .@tablesub;
-	mes "["+getarg(0)+"]";
+	mes "["+ .@npc_name$ +"]";
 	mes "I got a ^0000FF" + .@table1 + "^000000 and a ^0000FF" + .@table2 + "^000000.";
 	mes "That's a total of ^0000FF" + .@tablesub + "^000000.";
 	mes "^FF0000" + strcharinfo(0) + "^000000, now it's your turn.";
@@ -1389,10 +1389,10 @@ function	script	applegamble	{
 	}
 	set .@playertotal, .@playersub;
 	next;
-	mes "["+getarg(0)+"]";
+	mes "["+ .@npc_name$ +"]";
 	mes "^FF0000" + strcharinfo(0) + "^000000, you have ^FF0000" + .@player1 + "^000000 and ^FF0000" + .@player2 + "^000000. The total is ^FF0000" + .@playersub + "^000000 .";
 	next;
-	mes "["+getarg(0)+"]";
+	mes "["+ .@npc_name$ +"]";
 	if(.@playersub == .@tablesub) {
 		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. We are making an even game. Would you like to cast dice again?";
 	} else if (.@playersub > .@tablesub) {
@@ -1407,7 +1407,7 @@ function	script	applegamble	{
 		set .@player3, rand(1,6);
 		set .@playertotal, .@playertotal + .@player3;
 		next;
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		if (.@playertotal > 12) {
 			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. You lost this game. I am sorry but please try again.";
 			close;
@@ -1423,13 +1423,15 @@ function	script	applegamble	{
 				getitem 512,.@amount; //Apple
 				end;
 			}
+			mes "Alright.";
+			mes "Let me cast the dice again.";
 		}
 		else {
 			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. Now it is my turn.";
 		}
 		break;
 	case 2:
-		mes "["+getarg(0)+"]";
+		mes "["+ .@npc_name$ +"]";
 		if (.@playersub > .@tablesub) {
 			mes "I see, you don't want to take risk of losing the game. Okay, let me cast dice again.";
 		}
@@ -1457,7 +1459,7 @@ function	script	applegamble	{
 	set .@table3, rand(1,6);
 	set .@tabletotal, .@tabletotal + .@table3;
 	next;
-	mes "["+getarg(0)+"]";
+	mes "["+ .@npc_name$ +"]";
 	if (.@tabletotal > 12) {
 		mes "I got ^0000FF" + .@table3 + "^000000 and the total is now ^0000FF" + .@tabletotal + "^000000. I lost this game since my total exceeded 12. Let me give you my apples. Congratulations, that was a great game.";
 		close2;

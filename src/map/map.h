@@ -4,6 +4,10 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
@@ -29,7 +33,7 @@ enum E_MAPSERVER_ST {
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
-int map_msg_config_read(char *cfgName,int lang);
+int map_msg_config_read(const char *cfgName,int lang);
 const char* map_msg_txt(struct map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
@@ -50,63 +54,6 @@ void map_msg_reload(void);
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
 #define MAX_MAP_SIZE 512*512 	// Wasn't there something like this already? Can't find it.. [Shinryo]
-
-/** Added definitions for WoESE objects and other [L0ne_W0lf], [aleos] */
-enum MOBID {
-	MOBID_PORING			= 1002,
-	MOBID_RED_PLANT			= 1078,
-	MOBID_BLACK_MUSHROOM	= 1084,
-	MOBID_GOBLIN_1			= 1122,
-	MOBID_GOBLIN_2,
-	MOBID_GOBLIN_3,
-	MOBID_GOBLIN_4,
-	MOBID_GOBLIN_5,
-	MOBID_MARINE_SPHERE		= 1142,
-	MOBID_A_GUARDIAN		= 1285,
-	MOBID_K_GUARDIAN,
-	MOBID_S_GUARDIAN,
-	MOBID_EMPERIUM,
-	MOBID_TREAS01			= 1324,
-	MOBID_TREAS40			= 1363,
-	MOBID_G_PARASITE		= 1555,
-	MOBID_G_FLORA			= 1575,
-	MOBID_G_HYDRA			= 1579,
-	MOBID_G_MANDRAGORA		= 1589,
-	MOBID_G_GEOGRAPHER		= 1590,
-	MOBID_S_GUARDIAN_		= 1899,
-	MOBID_A_GUARDIAN_,
-	MOBID_BARRICADE1		= 1905,
-	MOBID_BARRICADE2,
-	MOBID_GUARDIAN_STONE1,
-	MOBID_GUARDIAN_STONE2,
-	MOBID_FOOD_STOR,
-	MOBID_BLUE_CRYST		= 1914,
-	MOBID_PINK_CRYST,
-	MOBID_TREAS41			= 1938,
-	MOBID_TREAS49			= 1946,
-	MOBID_TATACHO			= 1986,
-	MOBID_CENTIPEDE,
-	MOBID_NEPENTHES,
-	MOBID_HILLSRION,
-	MOBID_HARDROCK_MOMMOTH,
-	MOBID_TENDRILRION,
-	MOBID_CORNUS,
-	MOBID_NAGA,
-	MOBID_LUCIOLA_VESPA,
-	MOBID_PINGUICULA,
-	MOBID_G_TATACHO			= 1997,
-	MOBID_G_HILLSRION,
-	MOBID_CENTIPEDE_LARVA,
-	MOBID_SILVERSNIPER		= 2042,
-	MOBID_MAGICDECOY_FIRE,
-	MOBID_MAGICDECOY_WATER,
-	MOBID_MAGICDECOY_EARTH,
-	MOBID_MAGICDECOY_WIND,
-	MOBID_ZANZOU			= 2308,
-	MOBID_S_HORNET			= 2158,
-	MOBID_S_GIANT_HORNET,
-	MOBID_S_LUCIOLA_VESPA,
-};
 
 //The following system marks a different job ID system used by the map server,
 //which makes a lot more sense than the normal one. [Skotlex]
@@ -146,8 +93,9 @@ enum e_mapid {
 	MAPID_HANBOK,
 	MAPID_GANGSI,
 	MAPID_OKTOBERFEST,
+	MAPID_SUMMONER,
 //2-1 Jobs
-	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
+	MAPID_SUPER_NOVICE = JOBL_2_1|MAPID_NOVICE,
 	MAPID_KNIGHT,
 	MAPID_WIZARD,
 	MAPID_HUNTER,
@@ -155,20 +103,20 @@ enum e_mapid {
 	MAPID_BLACKSMITH,
 	MAPID_ASSASSIN,
 	MAPID_STAR_GLADIATOR,
-	MAPID_REBELLION = JOBL_2_1 | 0x09,
-	MAPID_KAGEROUOBORO = JOBL_2_1|0x0A,
-	MAPID_DEATH_KNIGHT = JOBL_2_1|0x0E,
+	MAPID_REBELLION = JOBL_2_1|MAPID_GUNSLINGER,
+	MAPID_KAGEROUOBORO,
+	MAPID_DEATH_KNIGHT = JOBL_2_1|MAPID_GANGSI,
 //2-2 Jobs
-	MAPID_CRUSADER = JOBL_2_2|0x1,
+	MAPID_CRUSADER = JOBL_2_2|MAPID_SWORDMAN,
 	MAPID_SAGE,
 	MAPID_BARDDANCER,
 	MAPID_MONK,
 	MAPID_ALCHEMIST,
 	MAPID_ROGUE,
 	MAPID_SOUL_LINKER,
-	MAPID_DARK_COLLECTOR = JOBL_2_2|0x0E,
+	MAPID_DARK_COLLECTOR = JOBL_2_2|MAPID_GANGSI,
 //Trans Novice And Trans 1-1 Jobs
-	MAPID_NOVICE_HIGH = JOBL_UPPER|0x0,
+	MAPID_NOVICE_HIGH = JOBL_UPPER|MAPID_NOVICE,
 	MAPID_SWORDMAN_HIGH,
 	MAPID_MAGE_HIGH,
 	MAPID_ARCHER_HIGH,
@@ -176,44 +124,52 @@ enum e_mapid {
 	MAPID_MERCHANT_HIGH,
 	MAPID_THIEF_HIGH,
 //Trans 2-1 Jobs
-	MAPID_LORD_KNIGHT = JOBL_UPPER|JOBL_2_1|0x1,
+	MAPID_LORD_KNIGHT = JOBL_UPPER|MAPID_KNIGHT,
 	MAPID_HIGH_WIZARD,
 	MAPID_SNIPER,
 	MAPID_HIGH_PRIEST,
 	MAPID_WHITESMITH,
 	MAPID_ASSASSIN_CROSS,
 //Trans 2-2 Jobs
-	MAPID_PALADIN = JOBL_UPPER|JOBL_2_2|0x1,
+	MAPID_PALADIN = JOBL_UPPER|MAPID_CRUSADER,
 	MAPID_PROFESSOR,
 	MAPID_CLOWNGYPSY,
 	MAPID_CHAMPION,
 	MAPID_CREATOR,
 	MAPID_STALKER,
 //Baby Novice And Baby 1-1 Jobs
-	MAPID_BABY = JOBL_BABY|0x0,
+	MAPID_BABY = JOBL_BABY|MAPID_NOVICE,
 	MAPID_BABY_SWORDMAN,
 	MAPID_BABY_MAGE,
 	MAPID_BABY_ARCHER,
 	MAPID_BABY_ACOLYTE,
 	MAPID_BABY_MERCHANT,
 	MAPID_BABY_THIEF,
+	MAPID_BABY_TAEKWON,
+	MAPID_BABY_GUNSLINGER = JOBL_BABY|MAPID_GUNSLINGER,
+	MAPID_BABY_NINJA,
+	MAPID_BABY_SUMMONER = JOBL_BABY|MAPID_SUMMONER,
 //Baby 2-1 Jobs
-	MAPID_SUPER_BABY = JOBL_BABY|JOBL_2_1|0x0,
+	MAPID_SUPER_BABY = JOBL_BABY|MAPID_SUPER_NOVICE,
 	MAPID_BABY_KNIGHT,
 	MAPID_BABY_WIZARD,
 	MAPID_BABY_HUNTER,
 	MAPID_BABY_PRIEST,
 	MAPID_BABY_BLACKSMITH,
 	MAPID_BABY_ASSASSIN,
+	MAPID_BABY_STAR_GLADIATOR,
+	MAPID_BABY_REBELLION = JOBL_BABY|MAPID_REBELLION,
+	MAPID_BABY_KAGEROUOBORO,
 //Baby 2-2 Jobs
-	MAPID_BABY_CRUSADER = JOBL_BABY|JOBL_2_2|0x1,
+	MAPID_BABY_CRUSADER = JOBL_BABY|MAPID_CRUSADER,
 	MAPID_BABY_SAGE,
 	MAPID_BABY_BARDDANCER,
 	MAPID_BABY_MONK,
 	MAPID_BABY_ALCHEMIST,
 	MAPID_BABY_ROGUE,
+	MAPID_BABY_SOUL_LINKER,
 //3-1 Jobs
-	MAPID_SUPER_NOVICE_E = JOBL_THIRD|JOBL_2_1|0x0,
+	MAPID_SUPER_NOVICE_E = JOBL_THIRD|MAPID_SUPER_NOVICE,
 	MAPID_RUNE_KNIGHT,
 	MAPID_WARLOCK,
 	MAPID_RANGER,
@@ -221,28 +177,28 @@ enum e_mapid {
 	MAPID_MECHANIC,
 	MAPID_GUILLOTINE_CROSS,
 //3-2 Jobs
-	MAPID_ROYAL_GUARD = JOBL_THIRD|JOBL_2_2|0x1,
+	MAPID_ROYAL_GUARD = JOBL_THIRD|MAPID_CRUSADER,
 	MAPID_SORCERER,
 	MAPID_MINSTRELWANDERER,
 	MAPID_SURA,
 	MAPID_GENETIC,
 	MAPID_SHADOW_CHASER,
 //Trans 3-1 Jobs
-	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|JOBL_UPPER|JOBL_2_1|0x1,
+	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|MAPID_LORD_KNIGHT,
 	MAPID_WARLOCK_T,
 	MAPID_RANGER_T,
 	MAPID_ARCH_BISHOP_T,
 	MAPID_MECHANIC_T,
 	MAPID_GUILLOTINE_CROSS_T,
 //Trans 3-2 Jobs
-	MAPID_ROYAL_GUARD_T = JOBL_THIRD|JOBL_UPPER|JOBL_2_2|0x1,
+	MAPID_ROYAL_GUARD_T = JOBL_THIRD|MAPID_PALADIN,
 	MAPID_SORCERER_T,
 	MAPID_MINSTRELWANDERER_T,
 	MAPID_SURA_T,
 	MAPID_GENETIC_T,
 	MAPID_SHADOW_CHASER_T,
 //Baby 3-1 Jobs
-	MAPID_SUPER_BABY_E = JOBL_THIRD|JOBL_BABY|JOBL_2_1|0x0,
+	MAPID_SUPER_BABY_E = JOBL_THIRD|MAPID_SUPER_BABY,
 	MAPID_BABY_RUNE,
 	MAPID_BABY_WARLOCK,
 	MAPID_BABY_RANGER,
@@ -250,7 +206,7 @@ enum e_mapid {
 	MAPID_BABY_MECHANIC,
 	MAPID_BABY_CROSS,
 //Baby 3-2 Jobs
-	MAPID_BABY_GUARD = JOBL_THIRD|JOBL_BABY|JOBL_2_2|0x1,
+	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
 	MAPID_BABY_MINSTRELWANDERER,
 	MAPID_BABY_SURA,
@@ -267,19 +223,24 @@ enum e_mapid {
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
-//24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
-#define EVENT_NAME_LENGTH ( NAME_LENGTH * 2 + 3 )
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
-//Specifies maps where players may hit each other
-#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.battleground)
-//Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle))
-//Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
-#define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
-// No Kill Steal Protection
-#define map_flag_ks(m) (map[m].flag.town || map[m].flag.pvp || map[m].flag.gvg || map[m].flag.battleground)
+/// Specifies maps where players may hit each other
+#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle) || map[m].flag.battleground)
+/// Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
+#define map_flag_vs2(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || map[m].flag.gvg_castle || map[m].flag.gvg_te || map[m].flag.gvg_te_castle || map[m].flag.battleground)
+/// Specifies maps that have special GvG/WoE restrictions
+#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle))
+/// Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
+#define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.gvg_castle || map[m].flag.gvg_te_castle)
+/// No Kill Steal Protection
+#define map_flag_ks(m) (map[m].flag.town || map[m].flag.pvp || map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.battleground)
+
+/// WOE:TE Maps (regardless of agit_flag status) [Cydh]
+#define map_flag_gvg2_te(m) (map[m].flag.gvg_te || map[m].flag.gvg_te_castle)
+/// Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status) [Cydh]
+#define map_flag_gvg2_no_te(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
@@ -336,6 +297,7 @@ enum e_classAE {
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
 	CLASS_GUARDIAN,
+	CLASS_BATTLEFIELD,
 	CLASS_ALL,
 	CLASS_MAX //auto upd enum for array len
 };
@@ -348,6 +310,13 @@ enum e_race2 {
 	RC2_GOLEM,
 	RC2_GUARDIAN,
 	RC2_NINJA,
+	RC2_GVG,
+	RC2_BATTLEFIELD,
+	RC2_TREASURE,
+	RC2_BIOLAB,
+	RC2_MANUK,
+	RC2_SPLENDIDE,
+	RC2_SCARABA,
 	RC2_MAX
 };
 
@@ -394,13 +363,13 @@ enum mob_ai {
 };
 
 enum auto_trigger_flag {
-	ATF_SELF=0x01,
-	ATF_TARGET=0x02,
-	ATF_SHORT=0x04,
-	ATF_LONG=0x08,
-	ATF_WEAPON=0x10,
-	ATF_MAGIC=0x20,
-	ATF_MISC=0x40,
+	ATF_SELF   = 0x01,
+	ATF_TARGET = 0x02,
+	ATF_SHORT  = 0x04,
+	ATF_LONG   = 0x08,
+	ATF_WEAPON = 0x10,
+	ATF_MAGIC  = 0x20,
+	ATF_MISC   = 0x40,
 };
 
 struct block_list {
@@ -437,6 +406,7 @@ struct flooritem_data {
 	int first_get_charid,second_get_charid,third_get_charid;
 	unsigned int first_get_tick,second_get_tick,third_get_tick;
 	struct item item;
+	unsigned short mob_id; ///< ID of monster who dropped it. 0 for non-monster who dropped it.
 };
 
 enum _sp {
@@ -459,6 +429,9 @@ enum _sp {
 	SP_CHARRENAME=125,
 	SP_CHARFONT=126,
 	SP_BANK_VAULT = 127,
+	SP_ROULETTE_BRONZE = 128,
+	SP_ROULETTE_SILVER = 129,
+	SP_ROULETTE_GOLD = 130,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -486,7 +459,7 @@ enum _sp {
 	SP_MAGIC_DAMAGE_RETURN,SP_ALL_STATS=1073,SP_AGI_VIT,SP_AGI_DEX_STR,SP_PERFECT_HIDE, // 1071-1076
 	SP_NO_KNOCKBACK,SP_CLASSCHANGE, // 1077-1078
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
-	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
+	SP_WEAPON_ATK,SP_WEAPON_DAMAGE_RATE, // 1081-1082
 	SP_DELAYRATE,SP_HP_DRAIN_VALUE_RACE, SP_SP_DRAIN_VALUE_RACE, // 1083-1085
 	SP_IGNORE_MDEF_RACE_RATE,SP_IGNORE_DEF_RACE_RATE,SP_SKILL_HEAL2,SP_ADDEFF_ONSKILL, //1086-1089
 	SP_ADD_HEAL_RATE,SP_ADD_HEAL2_RATE, SP_EQUIP_ATK, //1090-1092
@@ -503,7 +476,7 @@ enum _sp {
 	SP_UNSTRIPABLE_WEAPON,SP_UNSTRIPABLE_ARMOR,SP_UNSTRIPABLE_HELM,SP_UNSTRIPABLE_SHIELD,  // 2034-2037
 	SP_INTRAVISION, SP_ADD_MONSTER_DROP_ITEMGROUP, SP_SP_LOSS_RATE, // 2038-2040
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE, SP_MAGIC_SP_GAIN_VALUE, SP_MAGIC_HP_GAIN_VALUE, SP_ADD_MONSTER_ID_DROP_ITEM, //2041-2045
-	SP_EMATK, SP_SP_GAIN_RACE_ATTACK, SP_HP_GAIN_RACE_ATTACK, SP_SKILL_USE_SP_RATE, //2046-2049
+	SP_EMATK, SP_COMA_CLASS, SP_COMA_RACE, SP_SKILL_USE_SP_RATE, //2046-2049
 	SP_SKILL_COOLDOWN,SP_SKILL_FIXEDCAST, SP_SKILL_VARIABLECAST, SP_FIXCASTRATE, SP_VARCASTRATE, //2050-2054
 	SP_SKILL_USE_SP,SP_MAGIC_ATK_ELE, SP_ADD_FIXEDCAST, SP_ADD_VARIABLECAST,  //2055-2058
 	SP_SET_DEF_RACE,SP_SET_MDEF_RACE,SP_HP_VANISH_RATE,  //2059-2061
@@ -511,9 +484,10 @@ enum _sp {
 	SP_IGNORE_DEF_CLASS, SP_DEF_RATIO_ATK_CLASS, SP_ADDCLASS, SP_SUBCLASS, SP_MAGIC_ADDCLASS, //2062-2066
 	SP_WEAPON_COMA_CLASS, SP_IGNORE_MDEF_CLASS_RATE, SP_EXP_ADDCLASS, SP_ADD_CLASS_DROP_ITEM, //2067-2070
 	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE,  // 2071-2073
-	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_HP_GAIN_RACE_ATTACK_RATE, SP_SP_GAIN_RACE_ATTACK_RATE, // 2074-2077
-	SP_ABSORB_DMG_MAXHP, SP_HP_GAIN_ATTACK, SP_SP_GAIN_ATTACK, SP_HP_GAIN_ATTACK_RATE, SP_SP_GAIN_ATTACK_RATE, SP_SUB_SKILL, // 2078-2083
-	SP_SUBDEF_ELE, SP_COMA_CLASS, SP_COMA_RACE, // 2084-2086
+	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
+	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
+	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
+	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, //2088-2091
 };
 
 enum _look {
@@ -530,7 +504,8 @@ enum _look {
 	LOOK_BODY,			//Purpose Unknown. Doesen't appear to do anything.
 	LOOK_RESET_COSTUMES,//Makes all headgear sprites on player vanish when activated.
 	LOOK_ROBE,
-	LOOK_FLOOR
+	// LOOK_FLOOR,	// TODO : fix me!! offcial use this ?
+	LOOK_BODY2
 };
 
 // used by map_setcell()
@@ -615,16 +590,25 @@ struct s_skill_damage {
 		other; ///< Rate to Other target
 	uint8 caster; ///< Caster type
 };
-struct eri *map_skill_damage_ers;
+extern struct eri *map_skill_damage_ers;
 #endif
+
+struct questinfo_req {
+	unsigned int quest_id;
+	unsigned state : 2; // 0: Doesn't have, 1: Inactive, 2: Active, 3: Complete //! TODO: CONFIRM ME!!
+};
 
 struct questinfo {
 	struct npc_data *nd;
 	unsigned short icon;
 	unsigned char color;
 	int quest_id;
-	bool hasJob;
-	unsigned short job;/* perhaps a mapid mask would be most flexible? */
+	unsigned short min_level,
+		max_level;
+	uint8 req_count;
+	uint8 jobid_count;
+	struct questinfo_req *req;
+	unsigned short *jobid;
 };
 
 struct map_data {
@@ -696,6 +680,10 @@ struct map_data {
 		unsigned nomineeffect : 1; //allow /mineeffect
 		unsigned nolockon : 1;
 		unsigned notomb : 1;
+		unsigned nocostume : 1; // Disable costume sprites [Cydh]
+		unsigned gvg_te : 1; // GVG WOE:TE. This was added as purpose to change 'gvg' for GVG TE, so item_noequp, skill_nocast exlude GVG TE maps from 'gvg' (flag &4)
+		unsigned gvg_te_castle : 1; // GVG WOE:TE Castle
+		unsigned hidemobhpbar : 1;
 #ifdef ADJUST_SKILL_DAMAGE
 		unsigned skill_damage : 1;
 #endif
@@ -709,7 +697,7 @@ struct map_data {
 	} drop_list[MAX_DROP_PER_MAP];
 
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
-	int mob_delete_timer;	// [Skotlex]
+	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 	uint32 zone;	// zone number (for item/skill restrictions)
 	int nocommand; //Blocks @/# commands for non-gms. [Skotlex]
 	struct {
@@ -726,7 +714,7 @@ struct map_data {
 	} skill_damage;
 #endif
 	// Instance Variables
-	int instance_id;
+	unsigned short instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */
@@ -761,15 +749,20 @@ extern int map_num;
 extern int autosave_interval;
 extern int minsave_interval;
 extern unsigned char save_settings;
-extern int agit_flag;
-extern int agit2_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+
+// Agit Flags
+extern bool agit_flag;
+extern bool agit2_flag;
+extern bool agit3_flag;
+#define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
 
 extern char motd_txt[];
 extern char help_txt[];
 extern char help2_txt[];
 extern char charhelp_txt[];
+extern char channel_conf[];
 
 extern char wisp_server_name[];
 
@@ -808,13 +801,17 @@ int map_addblock(struct block_list* bl);
 int map_delblock(struct block_list* bl);
 int map_moveblock(struct block_list *, int, int, unsigned int);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
+int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
-int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+int map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+int map_foreachinallarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
 int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...);
 int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...);
 int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...);
 int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...);
 int map_foreachinpath(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int type, ...);
+int map_foreachindir(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...);
 int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type, ...);
 //blocklist nb in one cell
 int map_count_oncell(int16 m,int16 x,int16 y,int type,int flag);
@@ -832,11 +829,11 @@ bool map_addnpc(int16 m,struct npc_data *);
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
 
 // instances
-int map_addinstancemap(const char*,int);
-int map_delinstancemap(int);
+int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_delinstancemap(int m);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);
@@ -871,15 +868,16 @@ void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
-struct map_session_data * map_nick2sd(const char*);
+struct map_session_data * map_nick2sd(const char* nick, bool allow_partial);
 struct mob_data * map_getmob_boss(int16 m);
 struct mob_data * map_id2boss(int id);
 
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
 
-void map_add_questinfo(int m, struct questinfo *qi);
+struct questinfo *map_add_questinfo(int m, struct questinfo *qi);
 bool map_remove_questinfo(int m, struct npc_data *nd);
+struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags
@@ -904,7 +902,7 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 int map_check_dir(int s_dir,int t_dir);
 uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
 uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
-int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
+int map_random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);
 
@@ -918,7 +916,6 @@ void map_iwall_remove(const char *wall_name);
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int16 m); // [Wizputer]
 void map_removemobs(int16 m); // [Wizputer]
-void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
@@ -934,24 +931,24 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, 
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
 //Options read in cli
-extern char *INTER_CONF_NAME;
-extern char *LOG_CONF_NAME;
-extern char *MAP_CONF_NAME;
-extern char *BATTLE_CONF_FILENAME;
-extern char *ATCOMMAND_CONF_FILENAME;
-extern char *SCRIPT_CONF_NAME;
-extern char *MSG_CONF_NAME_EN;
-extern char *GRF_PATH_FILENAME;
+extern const char*INTER_CONF_NAME;
+extern const char*LOG_CONF_NAME;
+extern const char*MAP_CONF_NAME;
+extern const char*BATTLE_CONF_FILENAME;
+extern const char*ATCOMMAND_CONF_FILENAME;
+extern const char*SCRIPT_CONF_NAME;
+extern const char*MSG_CONF_NAME_EN;
+extern const char*GRF_PATH_FILENAME;
 //Other languages supported
-char *MSG_CONF_NAME_RUS;
-char *MSG_CONF_NAME_SPN;
-char *MSG_CONF_NAME_GRM;
-char *MSG_CONF_NAME_CHN;
-char *MSG_CONF_NAME_MAL;
-char *MSG_CONF_NAME_IDN;
-char *MSG_CONF_NAME_FRN;
-char *MSG_CONF_NAME_POR;
-char *MSG_CONF_NAME_THA;
+extern const char*MSG_CONF_NAME_RUS;
+extern const char*MSG_CONF_NAME_SPN;
+extern const char*MSG_CONF_NAME_GRM;
+extern const char*MSG_CONF_NAME_CHN;
+extern const char*MSG_CONF_NAME_MAL;
+extern const char*MSG_CONF_NAME_IDN;
+extern const char*MSG_CONF_NAME_FRN;
+extern const char*MSG_CONF_NAME_POR;
+extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;
@@ -994,21 +991,23 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
-extern char buyingstores_db[32];
-extern char buyingstore_items_db[32];
-extern char item_db_db[32];
-extern char item_db2_db[32];
-extern char item_db_re_db[32];
-extern char mob_db_db[32];
-extern char mob_db_re_db[32];
-extern char mob_db2_db[32];
-extern char mob_skill_db_db[32];
-extern char mob_skill_db_re_db[32];
-extern char mob_skill_db2_db[32];
-extern char vendings_db[32];
-extern char vending_items_db[32];
+extern char buyingstores_table[32];
+extern char buyingstore_items_table[32];
+extern char item_table[32];
+extern char item2_table[32];
+extern char mob_table[32];
+extern char mob2_table[32];
+extern char mob_skill_table[32];
+extern char mob_skill2_table[32];
+extern char vendings_table[32];
+extern char vending_items_table[32];
 extern char market_table[32];
+extern char roulette_table[32];
 
 void do_shutdown(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAP_H_ */

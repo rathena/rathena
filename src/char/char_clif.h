@@ -16,11 +16,13 @@ extern "C" {
 
 void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason );
 int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd);
+#if PACKETVER_SUPPORTS_PINCODE
 void chclif_pincode_sendstate( int fd, struct char_session_data* sd, enum pincode_state state );
 int chclif_parse_reqpincode_window(int fd, struct char_session_data* sd);
 int chclif_parse_pincode_check( int fd, struct char_session_data* sd );
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd );
 int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd );
+#endif
 
 void chclif_reject(int fd, uint8 errCode);
 void chclif_refuse_delchar(int fd, uint8 errCode);
@@ -46,7 +48,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl);
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd);
 int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd);
 int chclif_parse_keepalive(int fd);
-int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd);
+int chclif_parse_reqrename(int fd, struct char_session_data* sd);
 int chclif_parse_ackrename(int fd, struct char_session_data* sd);
 int chclif_ack_captcha(int fd);
 int chclif_parse_reqcaptcha(int fd);

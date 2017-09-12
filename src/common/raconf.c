@@ -14,12 +14,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
+#include "cbasetypes.h"
+#include "showmsg.h"
+#include "db.h"
+#include "malloc.h"
 
-#include "../common/raconf.h"
+#include "raconf.h"
 
 #define SECTION_LEN 32
 #define VARNAME_LEN 64

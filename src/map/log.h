@@ -4,6 +4,10 @@
 #ifndef _LOG_H_
 #define _LOG_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#include "map.h"
 struct block_list;
 struct map_session_data;
@@ -17,6 +21,7 @@ typedef enum e_log_chat_type
 	LOG_CHAT_PARTY       = 0x04,
 	LOG_CHAT_GUILD       = 0x08,
 	LOG_CHAT_MAINCHAT    = 0x10,
+	LOG_CHAT_CLAN        = 0x20,
 	// all
 	LOG_CHAT_ALL         = 0xFF,
 } e_log_chat_type;
@@ -24,30 +29,33 @@ typedef enum e_log_chat_type
 typedef enum e_log_pick_type
 {
 	LOG_TYPE_NONE             = 0,
-	LOG_TYPE_TRADE            = 0x00001,
-	LOG_TYPE_VENDING          = 0x00002,
-	LOG_TYPE_PICKDROP_PLAYER  = 0x00004,
-	LOG_TYPE_PICKDROP_MONSTER = 0x00008,
-	LOG_TYPE_NPC              = 0x00010,
-	LOG_TYPE_SCRIPT           = 0x00020,
-	LOG_TYPE_STEAL            = 0x00040,
-	LOG_TYPE_CONSUME          = 0x00080,
-	LOG_TYPE_PRODUCE          = 0x00100,
-	LOG_TYPE_MVP              = 0x00200,
-	LOG_TYPE_COMMAND          = 0x00400,
-	LOG_TYPE_STORAGE          = 0x00800,
-	LOG_TYPE_GSTORAGE         = 0x01000,
-	LOG_TYPE_MAIL             = 0x02000,
-	LOG_TYPE_AUCTION          = 0x04000,
-	LOG_TYPE_BUYING_STORE     = 0x08000,
-	LOG_TYPE_OTHER            = 0x10000,
-	LOG_TYPE_CASH             = 0x20000,
-	LOG_TYPE_BANK             = 0x40000,
-	LOG_TYPE_BOUND_REMOVAL    = 0x80000,
+	LOG_TYPE_TRADE            = 0x000001,
+	LOG_TYPE_VENDING          = 0x000002,
+	LOG_TYPE_PICKDROP_PLAYER  = 0x000004,
+	LOG_TYPE_PICKDROP_MONSTER = 0x000008,
+	LOG_TYPE_NPC              = 0x000010,
+	LOG_TYPE_SCRIPT           = 0x000020,
+	LOG_TYPE_STEAL            = 0x000040,
+	LOG_TYPE_CONSUME          = 0x000080,
+	LOG_TYPE_PRODUCE          = 0x000100,
+	LOG_TYPE_MVP              = 0x000200,
+	LOG_TYPE_COMMAND          = 0x000400,
+	LOG_TYPE_STORAGE          = 0x000800,
+	LOG_TYPE_GSTORAGE         = 0x001000,
+	LOG_TYPE_MAIL             = 0x002000,
+	LOG_TYPE_AUCTION          = 0x004000,
+	LOG_TYPE_BUYING_STORE     = 0x008000,
+	LOG_TYPE_OTHER            = 0x010000,
+	LOG_TYPE_CASH             = 0x020000,
+	LOG_TYPE_BANK             = 0x040000,
+	LOG_TYPE_BOUND_REMOVAL    = 0x080000,
+	LOG_TYPE_ROULETTE         = 0x100000,
+	LOG_TYPE_MERGE_ITEM       = 0x200000,
+	LOG_TYPE_QUEST            = 0x400000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all
-	LOG_TYPE_ALL              = 0xFFFFF,
+	LOG_TYPE_ALL              = 0xFFFFFF,
 } e_log_pick_type;
 
 typedef enum e_log_cash_type
@@ -55,6 +63,11 @@ typedef enum e_log_cash_type
 	LOG_CASH_TYPE_CASH = 0x1,
 	LOG_CASH_TYPE_KAFRA = 0x2
 } e_log_cash_type;
+
+typedef enum e_log_feeding_type {
+	LOG_FEED_HOMUNCULUS = 0x1,
+	LOG_FEED_PET        = 0x2,
+} e_log_feeding_type;
 
 /// new logs
 void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, struct item* itm);
@@ -64,6 +77,7 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
 void log_npc(struct map_session_data* sd, const char *message);
 void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
 void log_atcommand(struct map_session_data* sd, const char* message);
+void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned short nameid);
 
 /// old, but useful logs
 void log_branch(struct map_session_data* sd);
@@ -80,7 +94,9 @@ extern struct Log_Config
 	bool cash;
 	int rare_items_log,refine_items_log,price_items_log,amount_items_log; //for filter
 	int branch, mvpdrop, zeny, commands, npc, chat;
+	unsigned feeding : 2;
 	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64], log_cash[64];
+	char log_feeding[64];
 } log_config;
 
 #ifdef BETA_THREAD_TEST
@@ -88,6 +104,10 @@ extern struct Log_Config
 		char** entry;
 		int count;
 	} logThreadData;
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _LOG_H_ */

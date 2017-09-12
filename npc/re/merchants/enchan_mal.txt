@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.0.3
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -12,7 +12,9 @@
 //= for Malangdo coins.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Euphy]
-//= 1.0a Added 'delequip' command. [Euphy]
+//= 1.0.1 Added 'delequip' command. [Euphy]
+//= 1.0.2 Remove redundant usage of 'getarg' [Cydh]
+//= 1.0.3 Fixed typo in 1.0.2 [Dastgir]
 //============================================================ 
 
 // Enchanter NPC :: mal_yong
@@ -327,13 +329,15 @@ L_Socket:
 		mes "^0000ff"+.@equip_name$+"^000000! Do you want to enchant this equipment? How will you pay for this?";
 		next;
 
+		.@enccost = getarg(0);
+		.@enclimit = getarg(1);
 		setarray .@coin[0],6422,6421,6420,6419,6418,6423; // Payment ID
 		setarray .@cost[0],  15,  10,   6,   3,   2,   1; // Payment multiplier
 
 		set .@menu$, "Stop:";
 		for(set .@i,0; .@i<getarraysize(.@coin); set .@i,.@i+1) {
 			set .@count[.@i], countitem(.@coin[.@i]);
-			set .@total[.@i], getarg(0)*.@cost[.@i];
+			set .@total[.@i], .@enccost*.@cost[.@i];
 			if (.@count[.@i] < .@total[.@i])
 				set .@menu$, .@menu$+"^999999"+getitemname(.@coin[.@i])+" (missing "+(.@total[.@i]-.@count[.@i])+")^000000:";
 			else
@@ -384,10 +388,10 @@ L_Socket:
 			}
 			break;
 		}
-		if (.@equip_card[3] == 0 && getarg(1) < 4) {
+		if (.@equip_card[3] == 0 && .@enclimit < 4) {
 			set .@socket,4;
 			set .@str$,"1st";
-		} else if (.@equip_card[2] == 0 && getarg(1) < 3) {
+		} else if (.@equip_card[2] == 0 && .@enclimit < 3) {
 			set .@socket,3;
 			set .@str$,"2nd";
 		} else {
@@ -575,10 +579,10 @@ L_Socket:
 		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
-		     if (.@equip_card[3] == 0 && getarg(1) < 4) set .@equip_card[3],.@enchant;
-		else if (.@equip_card[2] == 0 && getarg(1) < 3) set .@equip_card[2],.@enchant;
-		else if (.@equip_card[1] == 0 && getarg(1) < 2) set .@equip_card[1],.@enchant;
-		else if (.@equip_card[0] == 0 && getarg(1) < 1) set .@equip_card[0],.@enchant;
+		     if (.@equip_card[3] == 0 && .@enclimit < 4) set .@equip_card[3],.@enchant;
+		else if (.@equip_card[2] == 0 && .@enclimit < 3) set .@equip_card[2],.@enchant;
+		else if (.@equip_card[1] == 0 && .@enclimit < 2) set .@equip_card[1],.@enchant;
+		else if (.@equip_card[0] == 0 && .@enclimit < 1) set .@equip_card[0],.@enchant;
 		else {
 			mes "[Mayomayo]";
 			mes "This equipment is at the end of enchant. I provide enchant for two times maximum.";

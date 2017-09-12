@@ -1055,15 +1055,16 @@ S_GetSword:
 		mes "space available. Then, we can finally claim your doomed sword.";
 		close;
 	}
+	.@num = getarg(1);
 	mes "[Huey]";
-	if (getarg(1) == 0) {
+	if (.@num == 0) {
 		mes "Th-that's the Grimtooth!";
 		mes "Ever since I've been taught";
 		mes "the pentagram techniques by";
 		mes "those Dwarves, I've never once";
 		mes "imagined that I'd see that sword. Please use that weapon wisely.";
 	}
-	else if (getarg(1) == 1) {
+	else if (.@num == 1) {
 		mes "I don't believe it!";
 		mes "You... You've been found";
 		mes "worthy of the Mysteltainn?";
@@ -1071,7 +1072,7 @@ S_GetSword:
 		mes "its power overwhelm you.";
 		mes "Wield it only for just ends...";
 	}
-	else if (getarg(1) == 2) {
+	else if (.@num == 2) {
 		mes "Th-that's...!";
 		mes "The Executionier has";
 		mes "chosen you to wield it?";

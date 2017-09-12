@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -12,10 +12,12 @@
 //= 1.0 First Version.
 //= 1.1 Some little optimization here and there. [Masao]
 //= 1.2 Optimized. [Euphy]
+//= 1.3 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.4 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,38,38,3	script	Mission [26 - 40]	857,{
-	if (countitem(6219) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "You are not a qualified member. You can not use the bulletin board.";
 		close;
 	}
@@ -71,11 +73,12 @@ moc_para01,38,38,3	script	Mission [26 - 40]	857,{
 	end;
 L_Quest:
 	//QuestID,ReqLvl,Quest,Client,Loc,Desc
+	.@string$ = getarg(2);
 	if (BaseLevel < getarg(1,26)) {
-		mes "Your level doesn't meet the requirements. You can't take the '"+getarg(2)+"' mission.";
+		mes "Your level doesn't meet the requirements. You can't take the '"+ .@string$ +"' mission.";
 		close;
 	}
-	mes "["+getarg(2)+" !!]";
+	mes "["+ .@string$ +" !!]";
 	mes "Client : "+getarg(3);
 	mes "Client Location : "+getarg(4);
 	mes "Requested Mission : "+getarg(5);
@@ -83,13 +86,13 @@ L_Quest:
 	mes "Will you accept this mission?";
 	next;
 	if(select("No, I won't accept it.:Yes, I will accept it.") == 1) {
-		mes "You have declined the "+getarg(2)+" mission.";
+		mes "You have declined the "+ .@string$ +" mission.";
 		close;
 	}
 	if (checkquest(getarg(0)) > -1) mes "You are already doing this mission.";
 	else {
 		setquest getarg(0);
-		mes "You have accepted the "+getarg(2)+" mission.";
+		mes "You have accepted the "+ .@string$ +" mission.";
 	}
 	mes "You can get a reward from the client after you finish the mission.";
 	next;
@@ -136,8 +139,9 @@ geffen,103,42,5	script	Sponiac	99,{
 	end;
 L_Quest:
 	//QuestID,Quest,BExp,JExp,PotionAmt,Desc
-	if (checkquest(getarg(0)) == 1) {
-		if (checkquest(getarg(0),HUNTING) == 2) {
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id) == 1) {
+		if (checkquest(.@quest_id,HUNTING) == 2) {
 			mes "[Sponiac]";
 			mes getarg(1)+"!";
 			mes "Wow, I didn't expect you would do that mission. I was just about to give up. But you did good job. I appreciate it!";
@@ -150,7 +154,7 @@ L_Quest:
 			mes "Here it is. Thank you very much. God bless you!";
 			getitem 569,getarg(4); //Novice_Potion
 			getexp getarg(2),getarg(3);
-			erasequest getarg(0);
+			erasequest .@quest_id;
 			close;
 		}
 		mes "[Sponiac]";

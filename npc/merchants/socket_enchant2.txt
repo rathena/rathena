@@ -386,35 +386,39 @@ prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
 moc_ruins,154,86,3	duplicate(SocketEnchant2)	Leablem#moc	86
 
 function	script	Func_Socket2	{
+	.@item_id = getarg(0);
+	.@zeny_req = getarg(4);
+	setarray .@item_req[0], getarg(5), getarg(7,0);
+	setarray .@req_amount[0], getarg(6), getarg(8,0);
 
 	disable_items;
 	mes "[Leablem]";
-	if(getarg(7,0) != 0 && getarg(8,0) != 0)
+	if (.@item_req[1] != 0 && .@req_amount[1] != 0)
 	{
-		mes getitemname(getarg(0)) + "... Okay, then you need to bring me";
-		mes "^FF0000" + (getarg(4) >= 1000 ? (getarg(4)/1000 + ",000") : getarg(4)) + ",000 zeny as service charge,";
-		mes "^FF0000" + getarg(6) + "ea " + getitemname(getarg(5)) + " and " + getarg(8) + "ea " + getitemname(getarg(7)) + ".";
-		mes "^FF0000Of course, you need a " + getitemname(getarg(0)) + ".^000000";
+		mes getitemname(.@item_id) +"... Okay, then you need to bring me";
+		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny as service charge,";
+		mes "^FF0000"+ .@req_amount[0] +"ea "+ getitemname(.@item_req[0]) +" and "+ .@req_amount[1] +"ea "+ getitemname(.@item_req[1]) +".";
+		mes "^FF0000Of course, you need a "+ getitemname(.@item_id) +".^000000";
 	}
 	else
 	{
-		mes getitemname(getarg(0)) + "? Okay, then you need to bring me";
-		mes "^FF0000" + (getarg(4) >= 1000 ? (getarg(4)/1000 + ",000") : getarg(4)) + ",000 zeny as service charge and " + getarg(6) + " " + getitemname(getarg(5)) + (getarg(6) > 1 && getarg(5) != 999 ? "s":"") + " as the requirement.";
-		mes "^FF0000Of course, don't forget to bring me a " + getitemname(getarg(0)) + ".";
+		mes getitemname(.@item_id) +"? Okay, then you need to bring me";
+		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req/1000 +",000") : .@zeny_req) +",000 zeny as service charge and "+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +" as the requirement.";
+		mes "^FF0000Of course, don't forget to bring me a "+ getitemname(.@item_id) +".";
 		mes "^FF0000You should have all items.^000000";
 	}
 	next;
 	mes "[Leablem]";
 	mes "Did you already bring all of them?";
 	mes "For your information, if you fail to create a slot,";
-	mes "you will lose all the item requirement as well as the target " + (getiteminfo(getarg(0),5)&2 ? "weapon" : "armor") + "."; // EQP_HAND_R = 2, it's a weapon, otherwise armor
-	mes "Also remember, if the " + (getiteminfo(getarg(0),5)&2 ? "weapon" : "armor") + " has been upgraded, and has been inserted with a card,";
+	mes "you will lose all the item requirement as well as the target "+ ((getiteminfo(.@item_id,5)&EQP_HAND_R) ? "weapon" : "armor") +".";
+	mes "Also remember, if the "+ ((getiteminfo(.@item_id,5)&EQP_HAND_R) ? "weapon" : "armor") +" has been upgraded, and has been inserted with a card,";
 	mes "you will lose them even if you succeed in creating a slot.";
 	next;
 	switch(select("Ask for slot creation.:Try next time."))
 	{
 		case 1:
-			if ((Zeny >= getarg(4)*1000) && (countitem(getarg(5)) >= getarg(6)) && (countitem(getarg(7,512)) >= getarg(8,0)) && (countitem(getarg(0)) > 0)) // if there's no getarg(7) and getarg(8) provided, check itemcount against 0 (we still need a valid item ID though)
+			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no .@req_amount[0] and .@req_amount[1] provided, check itemcount against 0 (we still need a valid item ID though)
 			{
 				mes "[Leablem]";
 				mes "Alright then, let the work begin!";
@@ -427,11 +431,11 @@ function	script	Func_Socket2	{
 					mes "[Leablem]";
 					mes "Great, it seems to be successful.";
 					mes "It looks pretty well done. Congratulations!";
-					delitem getarg(0),1;
-					delitem getarg(5),getarg(6);
-					if (getarg(7,0) != 0 && getarg(8,0) != 0)
-						delitem getarg(7),getarg(8);
-					set Zeny, Zeny - getarg(4)*1000;
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
 					getitem getarg(1),1;
 					next;
 					mes "[Leablem]";
@@ -447,11 +451,11 @@ function	script	Func_Socket2	{
 					mes "This is your luck, and it is destined by god, okay?";
 					mes "Don't be so disappointed,";
 					mes "and try next time.";
-					delitem getarg(0),1;
-					delitem getarg(5),getarg(6);
-					if (getarg(7,0) != 0 && getarg(8,0) != 0)
-						delitem getarg(7),getarg(8);
-					set Zeny, Zeny - getarg(4)*1000;
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
 					next;
 					mes "[Leablem]";
 					mes "See you again, buddy!";

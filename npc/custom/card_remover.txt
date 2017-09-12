@@ -30,16 +30,13 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		mes "Very well. Which item shall I examine for you?";
 		next;
 
-		setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
-		set .@menu$,"";
-		for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
-		{
-			if( getequipisequiped(.@i) )
-			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
-
+		setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+		for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
+			if( getequipisequiped(.@indices[.@i]) )
+				set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
 			set .@menu$, .@menu$ + ":";
 		}
-		set .@part,select(.@menu$);
+		set .@part, .@indices[ select(.@menu$) ];
 		if(!getequipisequiped(.@part)) {
 			mes "[Wise Old Woman]";
 			mes "Young one... Your not wearing anything there that I can remove cards from.";

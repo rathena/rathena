@@ -5230,7 +5230,7 @@ OnInit:
 
 OnTouch:
 	warp "ra_temin",85,137;
-	close;
+	end;
 }
 
 ra_temin,115,140,1	script	Flower Vase#vol	111,{
@@ -7339,7 +7339,7 @@ ve_in,237,131,1	script	Female Customer#ve1	940,{
 	mes "men? You know, I've been";
 	mes "pretty lonely lately...";
 	next;
-	if (Sex == 0) {
+	if (Sex == SEX_FEMALE) {
 		mes "[Bartender]";
 		mes "Haha, well,";
 		mes "I'm not so sure..";

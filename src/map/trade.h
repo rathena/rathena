@@ -4,6 +4,10 @@
 #ifndef	_TRADE_H_
 #define	_TRADE_H_
 
+#ifdef __cplusplus
+extern "C" {
+
+#endif
 //#include "map.h"
 struct map_session_data;
 
@@ -14,5 +18,9 @@ void trade_tradeaddzeny(struct map_session_data *sd,int amount);
 void trade_tradeok(struct map_session_data *sd);
 void trade_tradecancel(struct map_session_data *sd);
 void trade_tradecommit(struct map_session_data *sd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _TRADE_H_ */

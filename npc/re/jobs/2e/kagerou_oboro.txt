@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kagerou/Oboro Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= M45T3R, Dastgir Pojee, Euphy
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= [Official Conversion] 
+//= [Official Conversion]
 //= Job change Quest from Ninja -> Kagerou/Oboro.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. Uses official script structure and text
 //=     from iRO (ripped by M45T3R/Dastgir Pojee). [Euphy]
-//============================================================ 
+//============================================================
 
 // Starting the Quest
 //============================================================
@@ -258,7 +258,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "Sorry I am not a teacher. But!";
 		next;
 		mes "[Guide Gion]";
-		mes "I can help you on the path you've chosen, the ^33CC71"+((Sex)?"Kagerou":"Oboro")+"^000000 path.";
+		mes "I can help you on the path you've chosen, the ^33CC71"+((Sex == SEX_MALE)?"Kagerou":"Oboro")+"^000000 path.";
 		next;
 		mes "^1A95E6You hear Guide Gion's voice faintly as you slip away.^1A95E6";
 		next;
@@ -266,14 +266,14 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		setquest 5134;
 		set job_kagero,4;
 		mes "[Guide Gion]";
-		mes "If you are prepared to follow me, Guide Gion, on the "+((Sex)?"Kagerou":"Oboro")+" path, we will meet again.";
+		mes "If you are prepared to follow me, Guide Gion, on the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+" path, we will meet again.";
 		close2;
 		warp "amatsu",147,136;
 		end;
 	} else if (job_kagero == 4) {
 		cutin "job_ko02",2;
 		mes "[Guide Gion]";
-		mes "I thought you were afraid of the ^33CC71path of the "+((Sex)?"Kagerou":"Oboro")+"^33CC71 and wouldn't come back.";
+		mes "I thought you were afraid of the ^33CC71path of the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+"^33CC71 and wouldn't come back.";
 		next;
 		mes "[Guide Gion]";
 		mes "But from the look of your eyes, I guess I misjudged you.";
@@ -663,7 +663,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "And if you are lucky, there will be others targeting the monster.";
 		next;
 		mes "[Guide Gion]";
-		mes "May the blessings of '" + ((Sex)?"Kagerou, dancing sun":"Oboro, misty moonlight") + "' be with you.";
+		mes "May the blessings of '" + ((Sex == SEX_MALE)?"Kagerou, dancing sun":"Oboro, misty moonlight") + "' be with you.";
 		next;
 		setquest 5146;
 		set job_kagero,7;
@@ -2263,30 +2263,30 @@ job_ko,131,124,0	script	Crafting Tools#ko_01	844,{
 	callsub L_CheckMaterials;
 	while(1) {
 		switch(select("Melt Iron Ore.:Melt Iron.:Melt Steel.:Melt Phracon.:Melt Emveretarcon.:Melt Rough Oridecon.:Melt Rough Elunium.:Stop.")) {
-			case 1: set .@item,1002; set .@val1,1; break;  //Iron_Ore
-			case 2: set .@item, 998; set .@val1,2; break;  //Iron
-			case 3: set .@item, 999; set .@val1,3; break;  //Steel
-			case 4: set .@item,1010; set .@val2,1; break;  //Phracon
-			case 5: set .@item,1011; set .@val2,2; break;  //Emveretarcon
-			case 6: set .@item, 756; set .@val2,3; break;  //Oridecon_Stone
-			case 7: set .@item, 757; set .@val3,5; break;  //Elunium_Stone
+			case 1: set .@item,1002; setarray .@val[0],1,0,0; break;  //Iron_Ore
+			case 2: set .@item, 998; setarray .@val[0],2,0,0; break;  //Iron
+			case 3: set .@item, 999; setarray .@val[0],3,0,0; break;  //Steel
+			case 4: set .@item,1010; setarray .@val[0],0,1,0; break;  //Phracon
+			case 5: set .@item,1011; setarray .@val[0],0,2,0; break;  //Emveretarcon
+			case 6: set .@item, 756; setarray .@val[0],0,3,0; break;  //Oridecon_Stone
+			case 7: set .@item, 757; setarray .@val[0],0,0,5; break;  //Elunium_Stone
 			case 8: close;
 		}
 		if (countitem(.@item)) {
 			delitem .@item,1;
-			if (.@val1) {         //Iron Ore, Iron, Steel
-				set .@ston_t01, .@ston_t01 + .@val1;
+			if (.@val[0]) {			//Iron Ore, Iron, Steel
+				set .@ston_t01, .@ston_t01 + .@val[0];
 				if (.@ston_t02 > 0)
-					set .@ston_t02, .@ston_t02 - .@val1;
-			} else if (.@val2) {  //Phracon, Emveretarcon, Rough Oridecon
-				set .@ston_t02, .@ston_t02 + .@val2;
+					set .@ston_t02, .@ston_t02 - .@val[0];
+			} else if (.@val[1]) {	//Phracon, Emveretarcon, Rough Oridecon
+				set .@ston_t02, .@ston_t02 + .@val[1];
 				if (.@ston_t01 > 0)
-					set .@ston_t01, .@ston_t01 - .@val2;
-			} else if (.@val3) {  //Rouch Elunium
+					set .@ston_t01, .@ston_t01 - .@val[1];
+			} else if (.@val[2]) {	//Rouch Elunium
 				if (.@ston_t01 > 0)
-					set .@ston_t01, .@ston_t01 - .@val3;
+					set .@ston_t01, .@ston_t01 - .@val[2];
 				if (.@ston_t02 > 0)
-					set .@ston_t02, .@ston_t02 - .@val3;
+					set .@ston_t02, .@ston_t02 - .@val[2];
 			}
 			specialeffect EF_DEMONSTRATION;
 			mes "Melted " + getitemname(.@item) + " in high temperature.";
@@ -2471,19 +2471,19 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 	}
 	progressbar "ffff00",1;
 	set .@rand, rand(1,100);
-	if (.@equip_refine < 5) {          // 0>5 100%
+	if (.@equip_refine < 5) {			// 0>5 100%
 		set .@wlevel_up,1;
-	} else if (.@equip_refine == 5) {  // 5>6  40%
+	} else if (.@equip_refine == 5) {	// 5>6  40%
 		if (.@rand < 41) set .@wlevel_up,1;
-	} else if (.@equip_refine == 6) {  // 6>7  30%
+	} else if (.@equip_refine == 6) {	// 6>7  30%
 		if (.@rand < 31) set .@wlevel_up,1;
-	} else if (.@equip_refine == 7) {  // 7>8  20%
+	} else if (.@equip_refine == 7) {	// 7>8  20%
 		if (.@rand < 21) set .@wlevel_up,1;
-	} else if (.@equip_refine == 8) {  // 8>9  10%
+	} else if (.@equip_refine == 8) {	// 8>9  10%
 		if (.@rand < 11) set .@wlevel_up,1;
-	} else if (.@equip_refine == 9) {  // 9>10  5%
+	} else if (.@equip_refine == 9) {	// 9>10  5%
 		if (.@rand < 6) set .@wlevel_up,1;
-	} else {                           // 10>20 2%
+	} else {							// 10>20 2%
 		if (.@rand < 3) set .@wlevel_up,1;
 	}
 	if (.@wlevel_up) {
@@ -2557,9 +2557,9 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 		mes "[Guide Gion]";
 		mes "The Test of Battle will be put off for a while. Don't worry because this does not have affect to other tests.";
 		next;
-		mapannounce "job_ko","[Gion] My Friend " + strcharinfo(0) + " made it to " + ((Sex)?"Kagerou":"Oboro") + " Path. Congratulations!!",bc_map;
+		mapannounce "job_ko","[Gion] My Friend " + strcharinfo(0) + " made it to " + ((Sex == SEX_MALE)?"Kagerou":"Oboro") + " Path. Congratulations!!",bc_map;
 		mes "[Guide Gion]";
-		mes "My friend " + strcharinfo(0) + " made it to " + ((Sex)?"Kagerou":"Oboro") + " Path. Congratulations!!";
+		mes "My friend " + strcharinfo(0) + " made it to " + ((Sex == SEX_MALE)?"Kagerou":"Oboro") + " Path. Congratulations!!";
 		next;
 		cutin "job_ko02",2;
 		mes "[Guide Gion]";
@@ -2623,7 +2623,7 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,9;
 		getnameditem .@item,strcharinfo(0);
-		jobchange (Sex)?Job_Kagerou:Job_Oboro;
+		jobchange (Sex == SEX_MALE)?Job_Kagerou:Job_Oboro;
 		donpcevent "Summon Target#ko::OnEnable";
 		mes "[Guide Gion]";
 		mes "I hope the blessings of Kagerou, dancing sun and Oboro, misty moonlight will be with you on your journey ahead.";

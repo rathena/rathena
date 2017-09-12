@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include "nullpo.h"
-#include "../common/showmsg.h"
+#include "showmsg.h"
 
 static void nullpo_info_core(const char *file, int line, const char *func, const char *fmt, va_list ap);
 static void nullpo_info_core_(const char *file, int line, const char *func);

@@ -26,29 +26,29 @@ prontera,156,219,4	script	Cluckers	800,{
 	if (.startcluck) {
 		specialeffect2 EF_HIT3;
 		switch(rand(15)) {
-			case 0: npctalk "CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
-			case 1: npctalk "Cluuuuuck!~"; break;
+			case 0: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 1: npctalk "Cluckers : Cluuuuuck!~"; break;
 			case 2: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
 			case 3: sc_start SC_Freeze,10000,0; break;
-			case 4: npctalk "CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 4: npctalk "Cluckers : CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
 			case 5: sc_start SC_Sleep,10000,0; break;
 			case 6: sc_start SC_Stone,10000,0; emotion e_gg; break;
-			case 7: npctalk "CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
-			case 8: npctalk "Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 7: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 8: npctalk "Cluckers : Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
 			case 9: sc_start SC_Stun,10000,0; break;
 			case 10: sc_start SC_Sleep,10000,0; emotion e_gg; break;
-			case 11: npctalk "Cluck! Cluck!"; break;
+			case 11: npctalk "Cluckers : Cluck! Cluck!"; break;
 			case 12: sc_start SC_Stun,10000,0; break;
 			case 13: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
 			default:
 				if (rand(50) < 4) {
-					npctalk "WOOF!...........";
+					npctalk "Cluckers : WOOF!...........";
 					specialeffect2 EF_SPHERE;
 					announce "[Cluck! Cluck! Boom!] " + strcharinfo(0) + " squeezed out the prize! Well done!",0;
 					getitem $cluck_item_id,$cluck_item_amount;
 					set .startcluck,0;
 				} else {
-					npctalk "Cluck! CLUUUCK!!";
+					npctalk "Cluckers : Cluck! CLUUUCK!!";
 					unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1;
 				}
 				break;

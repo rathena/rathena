@@ -1,7 +1,7 @@
 rAthena
 =======
 
-Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena)
+Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena) [![Build status](https://ci.appveyor.com/api/projects/status/8574b8nlwd57loda/branch/master?svg=true)](https://ci.appveyor.com/project/rAthenaAPI/rathena/branch/master)
 
 Table of Contents
 ---------
@@ -11,6 +11,7 @@ Table of Contents
 4. Troubleshooting
 5. Helpful Links
 6. More Documentation
+7. How to Contribute
 
 1. What is rAthena?
 ---------
@@ -36,6 +37,7 @@ is broken down into Windows and Linux prerequisites.
 
 * Linux (names of packages may require specific version numbers on certain distributions)
 	* gcc
+	* g++
 	* make
 	* mysql
 	* mysql-devel
@@ -56,6 +58,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Paste the GitHub URL into the box:
 
 				https://github.com/rathena/rathena.git
+				
 	* Open MySQL Workbench and create an instance to connect to your MySQL Server
 	* Create a database (rathena), a user (rathena), give permissions (GRANT SELECT,INSERT,UPDATE,DELETE)
 		and then login using the new user
@@ -65,13 +68,10 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Type:
 		* (For CentOS)
 
-				yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel
-				rpm -Uvhhttp://repo.webtatic.com/yum/centos/5/latest.rpm
-				yum install --enablerepo=webtatic git-all
-				yum install --enablerepo=webtatic --disableexcludes=main git-all
+				yum install gcc g++ make mysql mysql-devel mysql-server pcre-devel zlib-devel git
 		* (For Debian)
 
-				apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
+				apt-get install git make gcc g++ libmysqlclient-dev zlib1g-dev libpcre3-dev
 	* Type:
 
 				mysql_secure_installation
@@ -91,11 +91,34 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Configure and compile:
 
 				./configure && make clean && make server
+	* Configure and compile (for Centos 64 bit with Maria DB):
+
+				./configure --enable-64bit --with-MYSQL_LIBS=/usr/lib64/libmysqlclient.so && make clean && make server
 	* When you're ready, start the servers:
 
 				./athena-start start
 
+* Optional
+	* If you want to have your own forked version but still get updates from the main rAthena repository
+		* Fork this repository to your GitHub account
+		* List the current configured remote repository for your fork:
+		
+				git remote -v
 
+		* Specify a new remote upstream repository that will be synced with your fork:
+		
+				git remote add upstream https://github.com/rathena/rathena.git
+				
+		* Verify the new upstream repository you've specified for your fork:
+		
+				git remote -v
+				
+		* You should see the main rAthena repository as well as your forked repository
+		* Now, when you want to get updates from rAthena, simply do:
+		
+				git pull upstream master
+
+	* Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
 4. Troubleshooting
 ---------
@@ -154,17 +177,20 @@ Examples:
 	* https://github.com/rathena/rathena
 
 * Full Installation Instructions
-	* Windows: https://rathena.org/wiki/Installation_on_Windows
-	* CentOS: https://rathena.org/wiki/Installation_(CentOS)
-	* Debian: https://rathena.org/wiki/Installation_(Debian)
-	* FreeBSD: https://rathena.org/wiki/Installation_(FreeBSD)
+	* [Windows](https://github.com/rathena/rathena/wiki/Install-on-Windows)
+	* [CentOS](https://github.com/rathena/rathena/wiki/Install-on-Centos)
+	* [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
+	* [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
 	
 * rAthena IRC Channel
 	* irc://irc.rizon.net/rathena
 	* Web Chat: https://rathena.org/board/page/chat.html
 
+* rAthena Discord Chat
+	http://discord.rathena.org
+
 * rAthena Wiki
-	https://rathena.org/board/index.php?app=ipbwiki
+	https://github.com/rathena/rathena/wiki
 
 * Fork and Pull Request Q&A
 	https://rathena.org/board/topic/86913-pull-request-qa/
@@ -177,3 +203,7 @@ directory. These include detailed explanations of NPC script commands, atcommand
 group permissions, item bonuses, and packet structures, among many other topics. We
 recommend that all users take the time to look over this directory before asking for
 assistance elsewhere.
+
+7. How to Contribute
+---------
+Details on how to contribute to rAthena can be found in [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/.github/CONTRIBUTING.md)!

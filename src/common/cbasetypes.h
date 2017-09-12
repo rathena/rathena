@@ -229,7 +229,9 @@ typedef uintptr_t uintptr;
 #define strcasecmp			stricmp
 #define strncasecmp			strnicmp
 #define strncmpi			strnicmp
+#if defined(__BORLANDC__) || _MSC_VER < 1900
 #define snprintf			_snprintf
+#endif
 #if defined(_MSC_VER) && _MSC_VER < 1400
 #define vsnprintf			_vsnprintf
 #endif
@@ -247,7 +249,9 @@ typedef uintptr_t uintptr;
 // keyword replacement
 #ifdef _MSC_VER
 // For MSVC (windows)
+#ifndef __cplusplus
 #define inline __inline
+#endif
 #define forceinline __forceinline
 #define ra_align(n) __declspec(align(n))
 #define _chdir chdir
@@ -275,24 +279,16 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // macro tools
 
-#ifdef swap // just to be sure
-#undef swap
+#ifdef SWAP // just to be sure
+#undef SWAP
 #endif
 // hmm only ints?
-//#define swap(a,b) { int temp=a; a=b; b=temp;}
+//#define SWAP(a,b) { int temp=a; a=b; b=temp;}
 // if using macros then something that is type independent
-//#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
+//#define SWAP(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
 // Avoid "value computed is not used" warning and generates the same assembly code
-#define swap(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
+#define SWAP(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
 #define swap_ptr(a,b) if ((a) != (b)) ((a) = (void*)((intptr_t)(a) ^ (intptr_t)(b)), (b) = (void*)((intptr_t)(a) ^ (intptr_t)(b)), (a) = (void*)((intptr_t)(a) ^ (intptr_t)(b)))
-
-#ifndef max
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-#endif
-
-#ifndef min
-#define min(a,b) (((a) < (b)) ? (a) : (b))
-#endif
 
 //////////////////////////////////////////////////////////////////////////
 // should not happen
@@ -358,7 +354,7 @@ typedef char bool;
 #define TOUPPER(c) (toupper((unsigned char)(c)))
 
 //////////////////////////////////////////////////////////////////////////
-// length of a static array
+// length of a static array (size_t)
 #define ARRAYLENGTH(A) ( sizeof(A)/sizeof((A)[0]) )
 
 //////////////////////////////////////////////////////////////////////////
@@ -385,7 +381,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Set a pointer variable to a pointer value.
-#ifdef __cplusplus
+/*#ifdef __cplusplus
 template <typename T1, typename T2>
 void SET_POINTER(T1*&var, T2* p)
 {
@@ -402,7 +398,42 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #else
 #define SET_POINTER(var,p) (var) = (p)
 #define SET_FUNCPOINTER(var,p) (var) = (p)
+#endif*/
+
+#ifdef max
+#undef max
 #endif
 
+#ifndef max
+static inline int max(int a, int b){ return (a > b) ? a : b; } //default is int
+#endif
+static inline int8 i8max(int8 a, int8 b){ return (a > b) ? a : b; }
+static inline int16 i16max(int16 a, int16 b){ return (a > b) ? a : b; }
+static inline int32 i32max(int32 a, int32 b){ return (a > b) ? a : b; }
+static inline int64 i64max(int64 a, int64 b){ return (a > b) ? a : b; }
+static inline uint32 umax(uint32 a, uint32 b){ return (a > b) ? a : b; }
+static inline uint8 u8max(uint8 a, uint8 b){ return (a > b) ? a : b; }
+static inline uint16 u16max(uint16 a, uint16 b){ return (a > b) ? a : b; }
+static inline uint32 u32max(uint32 a, uint32 b){ return (a > b) ? a : b; }
+static inline uint64 u64max(uint64 a, uint64 b){ return (a > b) ? a : b; }
+static inline size_t zmax(size_t a, size_t b){ return (a > b) ? a : b; } //cause those varie
+
+#ifdef min
+#undef min
+#endif
+
+#ifndef min
+static inline int min(int a, int b){ return (a < b) ? a : b; } //default is int
+#endif
+static inline int8 i8min(int8 a, int8 b){ return (a < b) ? a : b; }
+static inline int16 i16min(int16 a, int16 b){ return (a < b) ? a : b; }
+static inline int32 i32min(int32 a, int32 b){ return (a < b) ? a : b; }
+static inline int64 i64min(int64 a, int64 b){ return (a < b) ? a : b; }
+static inline uint32 umin(uint32 a, uint32 b){ return (a < b) ? a : b; }
+static inline uint8 u8min(uint8 a, uint8 b){ return (a < b) ? a : b; }
+static inline uint16 u16min(uint16 a, uint16 b){ return (a < b) ? a : b; }
+static inline uint32 u32min(uint32 a, uint32 b){ return (a < b) ? a : b; }
+static inline uint64 u64min(uint64 a, uint64 b){ return (a < b) ? a : b; }
+static inline size_t zmin(size_t a, size_t b){ return (a < b) ? a : b; }
 
 #endif /* _CBASETYPES_H_ */

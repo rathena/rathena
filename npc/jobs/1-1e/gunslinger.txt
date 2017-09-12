@@ -39,7 +39,7 @@ que_ng,152,167,3	script	Master Miller	901,{
 		close;
 	}
 	if (Class == Job_Novice) {
-		if (JobLevel < 10 || getskilllv("NV_BASIC") < 9) {
+		if (!callfunc("F_CanChangeJob")) {
 			mes "[Master Miller]";
 			mes "Interested in becoming";
 			mes "a Gunslinger, eh? You've";

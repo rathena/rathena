@@ -4,10 +4,10 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>
@@ -17,6 +17,10 @@
 
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
@@ -25,6 +29,8 @@
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
+#define RFIFOCP(fd,pos) ((char*)RFIFOP(fd,pos))
+#define WFIFOCP(fd,pos) ((char*)WFIFOP(fd,pos))
 #define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
 #define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
 #define RFIFOW(fd,pos) (*(uint16*)RFIFOP(fd,pos))
@@ -50,12 +56,14 @@
 
 // buffer I/O macros
 #define RBUFP(p,pos) (((uint8*)(p)) + (pos))
+#define RBUFCP(p,pos) ((char*)RBUFP((p),(pos)))
 #define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))
 #define RBUFW(p,pos) (*(uint16*)RBUFP((p),(pos)))
 #define RBUFL(p,pos) (*(uint32*)RBUFP((p),(pos)))
 #define RBUFQ(p,pos) (*(uint64*)RBUFP((p),(pos)))
 
 #define WBUFP(p,pos) (((uint8*)(p)) + (pos))
+#define WBUFCP(p,pos) ((char*)WBUFP((p),(pos)))
 #define WBUFB(p,pos) (*(uint8*)WBUFP((p),(pos)))
 #define WBUFW(p,pos) (*(uint16*)WBUFP((p),(pos)))
 #define WBUFL(p,pos) (*(uint32*)WBUFP((p),(pos)))
@@ -130,6 +138,24 @@ extern void set_nonblocking(int fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
 
+
+/// Server operation request
+enum chrif_req_op {
+	// Char-server <-> login-server oepration
+	CHRIF_OP_LOGIN_BLOCK = 1,
+	CHRIF_OP_LOGIN_BAN,
+	CHRIF_OP_LOGIN_UNBLOCK,
+	CHRIF_OP_LOGIN_UNBAN,
+	CHRIF_OP_LOGIN_CHANGESEX,
+	CHRIF_OP_LOGIN_VIP,
+
+	// Char-server operation
+	CHRIF_OP_BAN,
+	CHRIF_OP_UNBAN,
+	CHRIF_OP_CHANGECHARSEX,
+};
+
+
 // hostname/ip conversion functions
 uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
@@ -158,6 +184,10 @@ void set_eof(int fd);
 void send_shortlist_add_fd(int fd);
 // Do pending network sends (and eof handling) from the shortlist.
 void send_shortlist_do_sends();
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _SOCKET_H_ */

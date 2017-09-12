@@ -761,9 +761,10 @@ payon,135,320,3	script	Chungwolmang	97,{
 	close;
 
 S_MakeMask:
+	.@item_id = getarg(0);
 	mes "[Chungwolmang]";
 	mes "Oh, you have brought everything";
-	mes "to make a "+getitemname(getarg(0))+". Excellent.";
+	mes "to make a "+ getitemname(.@item_id) +". Excellent.";
 	mes "Please give me the materials. I will make the mask right away.";
 	next;
 	if (select("Give him the items.:Don't give him the items.") == 1) {
@@ -786,14 +787,14 @@ S_MakeMask:
 		delitem getarg(1),getarg(2);
 		delitem getarg(3),getarg(4);
 		delitem getarg(5),getarg(6);
-		if (getarg(0) == 5169) 
+		if (.@item_id == 5169) 
 			delitem getarg(7),getarg(8);
-		getitem getarg(0),1;
+		getitem .@item_id,1;
 		set moza_tal,0;
 		mes "[Chungwolmang]";
 		mes "Wow, it was a piece of cake!";
 		mes "You know, I am not an artisan only in title.";
-		mes "Hahaha, here, take your "+getitemname(getarg(0))+".";
+		mes "Hahaha, here, take your "+ getitemname(.@item_id) +".";
 		mes "I hope that you will wear it with pride, hahaha!";
 		next;
 		mes "[Chungwolmang]";
@@ -802,7 +803,7 @@ S_MakeMask:
 		close;
 	}
 	mes "[Chungwolmang]";
-	mes "Err? Don't you want "+getitemname(getarg(0))+"?";
+	mes "Err? Don't you want "+ getitemname(.@item_id) +"?";
 	mes "Alright then...coward.";
 	close;
 }

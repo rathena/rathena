@@ -140,7 +140,10 @@ alde_alche,24,188,3	script	Guild Dealer	740,{
 	}
 
 S_SellManual:
-	if (Zeny < getarg(1)) {
+	.@item_id = getarg(0);
+	.@zeny_req = getarg(1);
+
+	if (Zeny < .@zeny_req) {
 		mes "[Gever Al Sharp]";
 		mes "You don't";
 		mes "have enough zeny.";
@@ -149,12 +152,12 @@ S_SellManual:
 		close;
 	}
 	mes "[Gever Al Sharp]";
-	mes ""+getitemname(getarg(0))+"?";
-	mes "That'll be "+getarg(1)+" zeny.";
+	mes getitemname(.@item_id) +"?";
+	mes "That'll be "+ .@zeny_req +" zeny.";
 	next;
 	if (select("Purchase.:Quit.") == 1) {
-		set Zeny, Zeny-getarg(1);
-		getitem getarg(0),1;
+		Zeny = Zeny - .@zeny_req;
+		getitem .@item_id,1;
 		mes "[Gever Al Sharp]";
 		mes "Thank you for";
 		mes "your patronage.";

@@ -98,7 +98,7 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 }
 
 function	script	VIP_iRO_Acolyte	{
-	if (!vip_status(1)) {
+	if (!vip_status(VIP_STATUS_ACTIVE)) {
 		mes getarg(0);
 		mes "But, my full powers are only available to those who have are VIPs.";
 		mes "I can still offer you a warp to "+getarg(1)+" though.";
@@ -136,7 +136,7 @@ function	script	VIP_iRO_Acolyte	{
 moc_para01,26,15,3	script	Primo d'Buffer	790,{
 	mes "[Primo d'Buffer]";
 	mes "Hello adventurer, you look like you are itching to get out there and save the world!";
-	if (!vip_status(1)) {
+	if (!vip_status(VIP_STATUS_ACTIVE)) {
 		mes "I can also tell that you haven't been blessed with '^6666ffVIP Status^000000'.";
 		next;
 		mes "[Primo d'Buffer]";
@@ -179,7 +179,7 @@ moc_para01,53,30,3	script	Clearchus	470,{
 	mes "[Clearchus]";
 	mes "Our organization is 10,000 strong! Now let me see if you are registered for this service.";
 	next;
-	if (!vip_status(1)) {
+	if (!vip_status(VIP_STATUS_ACTIVE)) {
 		mes "[Clearchus]";
 		mes "Unfortunately it appears that you are not VIP, please get VIP so that you can use this service. You can get a temporary VIP access by talking to Gramps at the Eden Group Headquarters.";
 		next;
@@ -222,6 +222,8 @@ moc_para01,53,30,3	script	Clearchus	470,{
 	mes "[Clearchus]";
 	mes "Have fun now, ya hear?";
 	getitem .@base_id + .@i,1;
+	if (isbegin_quest(62238) > 0)
+		erasequest 62238;
 	setquest 62238;
 	close;
 }

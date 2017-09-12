@@ -50,7 +50,7 @@
 1023,ORK_WARRIOR,Orc Warrior,635,9017,10009,537,80,60,20,100,250,20,500,150,1,0,600,200,300,{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; },{ bonus bAtk,10; bonus bDef,-3; }
 1026,MUNAK,Munak,636,9018,10008,537,80,60,20,100,250,20,500,150,0,0,300,750,300,{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; },{ bonus bInt,1; bonus bDef,1; }
 1110,DOKEBI,Dokebi,637,9019,10005,537,80,60,20,100,250,20,500,150,0,0,300,300,800,{ petskillattack "BS_HAMMERFALL",1,0,10; },{ bonus bMatkRate,1; bonus bAtkRate,-1; }
-1170,SOHEE,Sohee,638,9020,10016,537,80,60,10,100,250,20,500,150,0,0,100,1000,200,{ petheal 400,60,33,100; },{ bonus bStr,1; bonus bDex,1; }
+1170,SOHEE,Sohee,638,9020,10016,537,80,60,10,100,250,20,500,150,0,0,100,1000,200,{ petskillsupport "AL_HEAL",5,60,33,100; },{ bonus bStr,1; bonus bDex,1; }
 1029,ISIS,Isis,639,9021,10006,537,80,60,10,100,250,20,500,150,0,0,650,450,150,{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; },{ bonus bMatkRate,-1; bonus bAtkRate,1; }
 1155,PETIT,Petite,640,9022,10011,537,80,60,20,100,250,20,500,150,0,0,800,400,100,{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; },{ bonus bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; }
 1109,DEVIRUCHI,Deviruchi,641,9023,10004,711,80,60,10,100,250,20,500,150,0,0,800,200,100,{ petskillbonus bAgiDexStr,6,20,40; },{ bonus bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }
@@ -78,8 +78,8 @@
 1148,MEDUSA,Medusa,12368,9050,10032,6108,80,60,10,100,250,20,200,150,0,0,300,300,800,{},{ bonus bVit,1; bonus2 bResEff,Eff_Stone,500; }
 1179,WHISPER,Whisper,12363,9045,10027,6100,80,60,20,100,250,20,500,150,0,0,300,300,800,{},{ bonus bFlee,7; bonus bDef,-3; }
 1299,GOBLIN_LEADER,Goblin Leader,12364,9046,10028,6104,80,60,10,100,250,20,50,150,0,0,300,300,800,{},{ bonus2 bAddRace,RC_DemiHuman,3; }
-1370,SUCCUBUS,Succubus,12373,9055,10037,6113,80,60,10,100,250,20,200,150,0,0,300,300,800,{ bonus2 bHPGainAttackRate,10,5; },{ bonus2 bHPGainAttackRate,30,5; bonus bMaxHPrate,1; }
-1374,INCUBUS,Incubus,12370,9052,10034,6110,80,60,10,100,250,20,50,150,0,0,300,300,800,{ bonus bMaxSPRate,3; bonus2 bSPGainAttackRate,10,1; },{ bonus bMaxSPRate,5; bonus2 bSPGainAttackRate,30,1; }
+1370,SUCCUBUS,Succubus,12373,9055,10037,6113,80,60,10,100,250,20,200,150,0,0,300,300,800,{ bonus2 bHPDrainRate,10,5; },{ bonus2 bHPDrainRate,30,5; bonus bMaxHPrate,1; }
+1374,INCUBUS,Incubus,12370,9052,10034,6110,80,60,10,100,250,20,50,150,0,0,300,300,800,{ bonus bMaxSPRate,3; bonus2 bSPDrainRate,10,1; },{ bonus bMaxSPRate,5; bonus2 bSPDrainRate,30,1; }
 1379,NIGHTMARE_TERROR,Nightmare Terror,12372,9054,10036,6112,80,60,10,100,250,20,200,150,0,0,300,300,800,{},{ bonus2 bResEff,Eff_Sleep,10000; }
 1401,SHINOBI,Shinobi,12362,9044,10026,6099,80,60,20,100,250,20,500,150,0,0,300,300,800,{},{ bonus bAgi,2; }
 1404,MIYABI_NINGYO,Miyabi Doll,12366,9048,10030,6106,80,60,15,100,250,20,200,150,0,0,300,300,800,{},{ bonus bInt,1; bonus bCastrate,-3; }

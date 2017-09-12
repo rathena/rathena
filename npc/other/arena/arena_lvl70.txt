@@ -39,8 +39,8 @@ force_3-1,99,20,4	script	Cadillac#arena	124,{
 
 OnStart:
 	initnpctimer;
-	set $arena_min70st,gettime(2);
-	set $arena_sec70st,gettime(1);
+	set $arena_min70st,gettime(DT_MINUTE);
+	set $arena_sec70st,gettime(DT_SECOND);
 	end;
 
 OnTimer3000:
@@ -310,56 +310,56 @@ OnReset_All:
 }
 
 force_3-1,62,26,1	script	force_08_01#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On01_Start";
 	warp "force_3-1",40,26;
 	end;
 }
 
 force_3-1,25,44,1	script	force_01_02#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On02_Start";
 	warp "force_3-1",25,69;
 	end;
 }
 
 force_3-1,25,134,1	script	force_02_03#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On03_Start";
 	warp "force_3-1",25,159;
 	end;
 }
 
 force_3-1,44,174,1	script	force_03_04#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On04_Start";
 	warp "force_3-1",69,174;
 	end;
 }
 
 force_3-1,134,174,1	script	force_04_05#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On05_Start";
 	warp "force_3-1",159,174;
 	end;
 }
 
 force_3-1,174,155,1	script	force_05_06#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On06_Start";
 	warp "force_3-1",174,130;
 	end;
 }
 
 force_3-1,174,65,1	script	force_06_07#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On07_Start";
 	warp "force_3-1",174,40;
 	end;
 }
 
 force_3-1,155,26,1	script	force_07_08#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On08_Start";
 	warp "force_3-1",132,26;
 	enablenpc "force_08_09#70";
@@ -367,14 +367,14 @@ OnTouch:
 }
 
 force_3-1,99,54,1	script	force_08_09#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::On09_Start";
 	warp "force_3-1",99,82;
 	end;
 }
 
 force_3-1,99,124,1	script	force_exit#70	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Cadillac#arena::OnTimerOff";
 	donpcevent "#arn_timer_70::OnEnable";
 	mapwarp "force_3-1","prt_are_in",22,87,0,0;
@@ -751,8 +751,8 @@ OnMyMobDead:
 		donpcevent "Cadillac#arena::On09_End";
 		donpcevent "arena#70::OnReset_09";
 		donpcevent "arena#70::OnReset_All";
-		set $arena_min70end,gettime(2);
-		set $arena_sec70end,gettime(1);
+		set $arena_min70end,gettime(DT_MINUTE);
+		set $arena_sec70end,gettime(DT_SECOND);
 	}
 	end;
 }

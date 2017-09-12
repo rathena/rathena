@@ -16,12 +16,12 @@
 //
  
 #ifdef WIN32
-#include "../common/winapi.h"
+#include "winapi.h"
 #endif
 
-#include "../common/cbasetypes.h"
-#include "../common/atomic.h"
-#include "../common/thread.h"
+#include "cbasetypes.h"
+#include "atomic.h"
+#include "thread.h"
 
 #ifdef WIN32
 

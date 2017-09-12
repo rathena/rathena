@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Einbroch Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Everybody mentioned in the comments
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Einbroch Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 0.2 Added some NPCs [MasterOfMuppets]
 //= 0.3 Added a few npcs by reddozen [MasterOfMuppets]
 //= 0.4 Added a crappy quest, have fun guys... [MasterOfMuppets]
@@ -33,8 +33,95 @@
 //============================================================
 
 einbroch,218,198,5	script	Mark#ein	855,{
-	callfunc "EinTower","Mark";
-	end;
+	.@npc_name$ = strnpcinfo(1);
+	mes "["+ .@npc_name$ +"]";
+	mes "Good day~";
+	mes "I'm "+ .@npc_name$ +", your";
+	mes "guide to exploring";
+	mes "the Einbroch Tower.";
+	next;
+	mes "["+ .@npc_name$ +"]";
+	mes "Einbroch Tower offers";
+	mes "the best view of our city";
+	mes "and it's a great place to";
+	mes "meet with friends or take";
+	mes "a date. The Einbroch Tower";
+	mes "admission fee is 10 zeny.";
+	next;
+	mes "["+ .@npc_name$ +"]";
+	mes "Right now, we're offering";
+	mes "a special promotion called";
+	mes "the Apple Combo Set for only";
+	mes "20 zeny. This set includes";
+	mes "Einbroch Tower admission";
+	mes "and an Apple to snack on.";
+	next;
+	switch(select("Tower Admission Only:Apple Combo Set:Cancel")) {
+	case 1:
+		if (Zeny < 10) {
+			mes "["+ .@npc_name$ +"]";
+			mes "I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny. The Einbroch";
+			mes "Tower Admission";
+			mes "fee is 10 zeny.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "Thank you for";
+			mes "using our services.";
+			mes "Let me guide you to";
+			mes "the tower right away.";
+			set Zeny, Zeny-10;
+			close2;
+			warp "einbroch",181,196;
+			end;
+		}
+	case 2:
+		if (Zeny < 20) {
+			mes "["+ .@npc_name$ +"]";
+			mes "I'm sorry, but you don't";
+			mes "have enough zeny. The";
+			mes "Apple Combo Set is 20 zeny.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "Before I guide you to";
+			mes "the tower, let me check";
+			mes "your status to insure";
+			mes "your safety before I give";
+			mes "you the Apple Combo Set.";
+			next;
+			if (checkweight(512,1)) {
+				mes "["+ .@npc_name$ +"]";
+				mes "Thank you for";
+				mes "using our services.";
+				mes "Let me guide you to";
+				mes "the tower right away.";
+				set Zeny, Zeny-20;
+				getitem 512,1; //Apple
+				close2;
+				warp "einbroch",174,204;
+				end;
+			}
+			else {
+				mes "["+ .@npc_name$ +"]";
+				mes "I'm sorry, but you're carrying";
+				mes "too many items with you. Please store some of your things in your Kafra Storage before purchasing";
+				mes "the Apple Combo Set.";
+				close;
+			}
+		}
+	case 3:
+		mes "["+ .@npc_name$ +"]";
+		mes "I see.";
+		mes "Feel free to";
+		mes "come back any";
+		mes "time. Thank you.";
+		close;
+	}
 }
 
 einbroch,175,196,5	script	Morei#ein	854,{
@@ -81,105 +168,8 @@ einbroch,175,196,5	script	Morei#ein	854,{
 	}
 }
 
-einbroch,173,229,5	script	Oberu#ein	855,{
-	callfunc "EinTower","Oberu";
-	end;
-}
-einbroch,176,172,5	script	Khemko#ein	855,{
-	callfunc "EinTower","Khemko";
-	end;
-}
-
-function	script	EinTower	{
-	mes "[" + getarg(0) + "]";
-	mes "Good day~";
-	mes "I'm " + getarg(0) + ", your";
-	mes "guide to exploring";
-	mes "the Einbroch Tower.";
-	next;
-	mes "[" + getarg(0) + "]";
-	mes "Einbroch Tower offers";
-	mes "the best view of our city";
-	mes "and it's a great place to";
-	mes "meet with friends or take";
-	mes "a date. The Einbroch Tower";
-	mes "admission fee is 10 zeny.";
-	next;
-	mes "[" + getarg(0) + "]";
-	mes "Right now, we're offering";
-	mes "a special promotion called";
-	mes "the Apple Combo Set for only";
-	mes "20 zeny. This set includes";
-	mes "Einbroch Tower admission";
-	mes "and an Apple to snack on.";
-	next;
-	switch(select("Tower Admission Only:Apple Combo Set:Cancel")) {
-	case 1:
-		if (Zeny < 10) {
-			mes "[" + getarg(0) + "]";
-			mes "I'm sorry, but you";
-			mes "don't have enough";
-			mes "zeny. The Einbroch";
-			mes "Tower Admission";
-			mes "fee is 10 zeny.";
-			close;
-		}
-		else {
-			mes "[" + getarg(0) + "]";
-			mes "Thank you for";
-			mes "using our services.";
-			mes "Let me guide you to";
-			mes "the tower right away.";
-			set Zeny, Zeny-10;
-			close2;
-			warp "einbroch",181,196;
-			end;
-		}
-	case 2:
-		if (Zeny < 20) {
-			mes "[" + getarg(0) + "]";
-			mes "I'm sorry, but you don't";
-			mes "have enough zeny. The";
-			mes "Apple Combo Set is 20 zeny.";
-			close;
-		}
-		else {
-			mes "[" + getarg(0) + "]";
-			mes "Before I guide you to";
-			mes "the tower, let me check";
-			mes "your status to insure";
-			mes "your safety before I give";
-			mes "you the Apple Combo Set.";
-			next;
-			if (checkweight(512,1)) {
-				mes "[" + getarg(0) + "]";
-				mes "Thank you for";
-				mes "using our services.";
-				mes "Let me guide you to";
-				mes "the tower right away.";
-				set Zeny, Zeny-20;
-				getitem 512,1; //Apple
-				close2;
-				warp "einbroch",174,204;
-				end;
-			}
-			else {
-				mes "[" + getarg(0) + "]";
-				mes "I'm sorry, but you're carrying";
-				mes "too many items with you. Please store some of your things in your Kafra Storage before purchasing";
-				mes "the Apple Combo Set.";
-				close;
-			}
-		}
-	case 3:
-		mes "[" + getarg(0) + "]";
-		mes "I see.";
-		mes "Feel free to";
-		mes "come back any";
-		mes "time. Thank you.";
-		close;
-	}
-}
+einbroch,173,229,5	duplicate(Mark#ein)	Oberu#ein	855
+einbroch,176,172,5	duplicate(Mark#ein)	Khemko#ein	855
 
 einbroch,232,272,3	script	Train Station Staff#ein1::EinbrochTrain	852,{
 	mes "[Staff]";
@@ -239,7 +229,7 @@ einbroch,232,272,3	script	Train Station Staff#ein1::EinbrochTrain	852,{
 		close;
 	}
 }
-	
+
 einbroch,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#ein2	852
 
 einbroch,259,326,3	script	Leslie#ein_1	846,{
@@ -287,7 +277,7 @@ einbroch,236,191,3	script	Tan#ein	855,{
 	mes "you should carry one with you.";
 	close;
 }
-	
+
 einbroch,228,121,5	script	Little Toby#ein-1	855,{
 	mes "[Little Toby]";
 	mes "Excuse me...";
@@ -827,7 +817,7 @@ ein_in01,206,224,3	script	Hotel Employee#ein	855,{
 			mes "Thank you, and please";
 			mes "come again.";
 			close2;
-			savepoint "ein_in01",200,224;
+			savepoint "ein_in01",200,224,1,1;
 			end;
 		case 2:
 			if (Zeny > 4999) {

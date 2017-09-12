@@ -4,6 +4,10 @@
 #ifndef _PARTY_H_
 #define _PARTY_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // struct party
 struct block_list;
 struct map_session_data;
@@ -12,8 +16,8 @@ struct item;
 
 #include <stdarg.h>
 
-#define PARTY_BOOKING_JOBS 6
-#define PARTY_BOOKING_RESULTS 10
+#define MAX_PARTY_BOOKING_JOBS 6
+#define MAX_PARTY_BOOKING_RESULTS 10
 
 struct party_member_data {
 	struct map_session_data *sd;
@@ -25,7 +29,7 @@ struct party_data {
 	struct party party;
 	struct party_member_data data[MAX_PARTY];
 	uint8 itemc; //For item distribution, position of last picker in party
-	unsigned int instance_id;
+	unsigned short instance_id;
 	struct {
 		unsigned monk : 1; //There's at least one monk in party?
 		unsigned sg : 1;	//There's at least one Star Gladiator in party?
@@ -37,7 +41,7 @@ struct party_data {
 struct party_booking_detail {
 	short level;
     short mapid;
-    short job[PARTY_BOOKING_JOBS];
+    short job[MAX_PARTY_BOOKING_JOBS];
 };
 
 struct party_booking_ad_info {
@@ -65,7 +69,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id,int flag);
 int party_leave(struct map_session_data *sd);
 int party_removemember(struct map_session_data *sd,uint32 account_id,char *name);
 int party_removemember2(struct map_session_data *sd,uint32 char_id,int party_id);
-int party_member_withdraw(int party_id,uint32 account_id,uint32 char_id);
+int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
 int party_reply_invite(struct map_session_data *sd,int party_id,int flag);
 #define party_add_member(party_id,sd) party_reply_invite(sd,party_id,1)
 int party_recv_noinfo(int party_id, uint32 char_id);
@@ -83,7 +87,7 @@ int party_send_message(struct map_session_data *sd,const char *mes,int len);
 int party_recv_message(int party_id,uint32 account_id,const char *mes,int len);
 int party_skill_check(struct map_session_data *sd, int party_id, uint16 skill_id, uint16 skill_lv);
 int party_send_xy_clear(struct party_data *p);
-int party_exp_share(struct party_data *p,struct block_list *src,unsigned int base_exp,unsigned int job_exp,int zeny);
+void party_exp_share(struct party_data *p,struct block_list *src,unsigned int base_exp,unsigned int job_exp,int zeny);
 int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item, int first_charid);
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
@@ -97,5 +101,9 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
 bool party_booking_delete(struct map_session_data *sd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _PARTY_H_ */

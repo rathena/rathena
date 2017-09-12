@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -19,6 +19,8 @@
 //= 1.6 Added Izlude RE coordinates. [Euphy]
 //= 1.7 Added Malaya teleporter. [Euphy]
 //= 1.8 Updated to match the latest official script. [Euphy]
+//= 1.9 Added support to Para_Team_Mark_ in Eden Group. [AtlantisRO/Ragno]
+//= 2.0 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 // Common NPCs :: lv_tre
@@ -30,6 +32,26 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 		mes "- too many items with you. -";
 		mes "- Please try again -";
 		mes "- after you loose some weight. -";
+		close;
+	}
+	if (countitem(6219) > 0) {
+		mes "[Lime Evenor]";
+		mes "Thanks to many adventurers visiting our Eden Group, we've recently prepared a new version of Eden Group Mark for our visitors.";
+		mes "And it is also possible to exchange old version of Eden Group Mark into a new one.";
+		next;
+		mes "[Lime Evenor]";
+		mes "Though it has a slight time delay, this new version of Eden Group Mark will send you back to current saved location.";
+		mes "Would you like to exchange yours?";
+		next;
+		if (select("Sure:I'm good.") == 2){
+			mes "[Lime Evenor]";
+			mes "What possible reason would you have... to not exchange?";
+			close;
+		}
+		delitem 6219,1;
+		getitem 22508,1;
+		mes "[Lime Evenor]";
+		mes "There you go. Come back again~";
 		close;
 	}
 	mes "[Lime Evenor]";
@@ -55,7 +77,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 			next;
 			break;
 		case 2:
-			if (countitem(6219) < 1) {
+			if (!callfunc("F_HasEdenGroupMark")) {
 				mes "[Lime Evenor]";
 				mes "You can be a Eden's member by simply registering with me.";
 				mes "Would you like to join Eden Group?";
@@ -94,7 +116,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 					next;
 					mes "[Lime Evenor]";
 					mes "Hopefully you can do great work as an Eden's member.";
-					getitem 6219,1; //Para_Team_Mark
+					getitem 22508,1; //Para_Team_Mark_
 					next;
 					break;
 				case 2:
@@ -167,7 +189,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 			}
 			break;
 		case 4:
-			if (countitem(6219) > 0) {
+			if (callfunc("F_HasEdenGroupMark")) {
 				mes "[Lime Evenor]";
 				mes "Would like to try some missions as an Eden member?";
 				next;
@@ -294,7 +316,7 @@ OnTouch:
 }
 
 moc_para01,47,39,3	script	#warp_2_pass	111,{
-	if (countitem(6219) > 0) {
+	if (callfunc("F_HasEdenGroupMark")) {
 		mes "[Lime Evenor]";
 		mes "Oh, it is an exclusive place only for Eden's members.";
 		mes "If you are a member, you can come whenever you want!";
@@ -407,4 +429,8 @@ moc_para01,20,35,5	script	Office Assistant Neede	814,{
 	mes "[Neede]";
 	mes "Huh? Did you hear that? Gosh~!";
 	close;
+}
+
+function	script	F_HasEdenGroupMark	{
+	return (countitem(6219) > 0 || countitem(22508) > 0);
 }

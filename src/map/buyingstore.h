@@ -4,6 +4,10 @@
 #ifndef _BUYINGSTORE_H_
 #define _BUYINGSTORE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_search_store_search;
 
 #define MAX_BUYINGSTORE_SLOTS 5
@@ -24,7 +28,7 @@ struct s_buyingstore
 
 /// Autotrade entry
 struct s_autotrade_entry {
-	uint16 cartinventory_id; ///< Item entry id/cartinventory_id in cart_inventory table (for vending)
+	uint32 cartinventory_id; ///< Item entry id/cartinventory_id in cart_inventory table (for vending)
 	uint16 amount; ///< Amount
 	uint32 price; ///< Price
 	uint16 index; ///< Item index in cart
@@ -33,7 +37,7 @@ struct s_autotrade_entry {
 
 /// Struct of autotrader
 struct s_autotrader {
-	uint16 id; ///< vendor/buyer id
+	uint32 id; ///< vendor/buyer id
 	uint32 account_id; ///< Account ID
 	uint32 char_id; ///< Char ID
 	int m; ///< Map location
@@ -63,5 +67,9 @@ void do_init_buyingstore(void);
 
 void do_init_buyingstore_autotrade( void );
 void buyingstore_reopen( struct map_session_data* sd );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // _BUYINGSTORE_H_

@@ -1,15 +1,15 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
+#include "cbasetypes.h"
+#include "malloc.h"
+#include "showmsg.h"
+#include "strlib.h"
+#include "timer.h"
 #include "sql.h"
 
 #ifdef WIN32
-#include "../common/winapi.h"
+#include "winapi.h"
 #endif
 #include <mysql.h>
 #include <stdlib.h>// strtoul
@@ -347,6 +347,16 @@ uint64 Sql_NumRows(Sql* self)
 {
 	if( self && self->result )
 		return (uint64)mysql_num_rows(self->result);
+	return 0;
+}
+
+
+
+/// Returns the number of rows affected by the last query
+uint64 Sql_NumRowsAffected(Sql* self)
+{
+	if( self )
+		return (uint64)mysql_affected_rows(&self->handle);
 	return 0;
 }
 

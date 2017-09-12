@@ -3,7 +3,6 @@
 
 #include "../common/mmo.h"
 #include "../common/malloc.h"
-#include "../common/db.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
@@ -15,8 +14,6 @@
 #include "int_mail.h"
 #include "int_auction.h"
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
@@ -24,13 +21,13 @@ static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
 void auction_delete(struct auction_data *auction);
 static int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data);
 
-static int auction_count(int char_id, bool buy)
+static int auction_count(uint32 char_id, bool buy)
 {
 	int i = 0;
 	struct auction_data *auction;
 	DBIterator *iter = db_iterator(auction_db_);
 
-	for( auction = dbi_first(iter); dbi_exists(iter); auction = dbi_next(iter) )
+	for( auction = (struct auction_data *)dbi_first(iter); dbi_exists(iter); auction = (struct auction_data *)dbi_next(iter) )
 	{
 		if( (buy && auction->buyer_id == char_id) || (!buy && auction->seller_id == char_id) )
 			i++;
@@ -54,6 +51,11 @@ void auction_save(struct auction_data *auction)
 		schema_config.auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ", `card%d` = '%hu'", j, auction->item.card[j]);
+	for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+		StringBuf_Printf(&buf, ", `option_id%d` = '%d'", j, auction->item.option[j].id);
+		StringBuf_Printf(&buf, ", `option_val%d` = '%d'", j, auction->item.option[j].value);
+		StringBuf_Printf(&buf, ", `option_parm%d` = '%d'", j, auction->item.option[j].param);
+	}
 	StringBuf_Printf(&buf, " WHERE `auction_id` = '%d'", auction->auction_id);
 
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -85,10 +87,20 @@ unsigned int auction_create(struct auction_data *auction)
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`", schema_config.auction_db);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
+	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
+		StringBuf_Printf(&buf, ", `option_id%d`", j);
+		StringBuf_Printf(&buf, ", `option_val%d`", j);
+		StringBuf_Printf(&buf, ", `option_parm%d`", j);
+	}
 	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%hu',?,'%d','%d','%d','%"PRIu64"'",
 		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.unique_id);
-	for( j = 0; j < MAX_SLOTS; j++ )
+	for( j = 0; j < MAX_SLOTS; j++ )	
 		StringBuf_Printf(&buf, ",'%hu'", auction->item.card[j]);
+	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
+		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].id);
+		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].value);
+		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].param);
+	}
 	StringBuf_AppendStr(&buf, ")");
 
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -125,7 +137,7 @@ unsigned int auction_create(struct auction_data *auction)
 	return auction->auction_id;
 }
 
-static void mapif_Auction_message(int char_id, unsigned char result)
+static void mapif_Auction_message(uint32 char_id, unsigned char result)
 {
 	unsigned char buf[74];
 
@@ -142,12 +154,12 @@ static int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data)
 	{
 		if( auction->buyer_id )
 		{
-			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(202), 0, &auction->item);
+			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(202), 0, &auction->item, 1);
 			mapif_Auction_message(auction->buyer_id, 6); // You have won the auction
-			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(203), auction->price, NULL);
+			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(203), auction->price, NULL, 0);
 		}
 		else
-			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(204), 0, &auction->item);
+			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(204), 0, &auction->item, 1);
 
 		ShowInfo("Auction End: id %u.\n", auction->auction_id);
 
@@ -184,6 +196,11 @@ void inter_auctions_fromsql(void)
 		"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`");
 	for( i = 0; i < MAX_SLOTS; i++ )
 		StringBuf_Printf(&buf, ",`card%d`", i);
+	for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+		StringBuf_Printf(&buf, ", `option_id%d`", i);
+		StringBuf_Printf(&buf, ", `option_val%d`", i);
+		StringBuf_Printf(&buf, ", `option_parm%d`", i);
+	}
 	StringBuf_Printf(&buf, " FROM `%s` ORDER BY `auction_id` DESC", schema_config.auction_db);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
@@ -225,6 +242,15 @@ void inter_auctions_fromsql(void)
 			item->card[i] = atoi(data);
 		}
 
+		for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
+			Sql_GetData(sql_handle, 15 + MAX_SLOTS + i*3, &data, NULL);
+			item->option[i].id = atoi(data);
+			Sql_GetData(sql_handle, 16 + MAX_SLOTS + i*3, &data, NULL);
+			item->option[i].value = atoi(data);
+			Sql_GetData(sql_handle, 17 + MAX_SLOTS + i*3, &data, NULL);
+			item->option[i].param = atoi(data);
+		}
+
 		if( auction->timestamp > now )
 			endtick = ((unsigned int)(auction->timestamp - now) * 1000) + tick;
 		else
@@ -237,7 +263,7 @@ void inter_auctions_fromsql(void)
 	Sql_FreeResult(sql_handle);
 }
 
-static void mapif_Auction_sendlist(int fd, int char_id, short count, short pages, unsigned char *buf)
+static void mapif_Auction_sendlist(int fd, uint32 char_id, short count, short pages, unsigned char *buf)
 {
 	int len = (sizeof(struct auction_data) * count) + 12;
 
@@ -254,7 +280,7 @@ static void mapif_Auction_sendlist(int fd, int char_id, short count, short pages
 static void mapif_parse_Auction_requestlist(int fd)
 {
 	char searchtext[NAME_LENGTH];
-	int char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
+	uint32 char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
 	int price = RFIFOL(fd,10);
 	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
@@ -318,7 +344,7 @@ static void mapif_parse_Auction_register(int fd)
 	mapif_Auction_register(fd, &auction);
 }
 
-static void mapif_Auction_cancel(int fd, int char_id, unsigned char result)
+static void mapif_Auction_cancel(int fd, uint32 char_id, unsigned char result)
 {
 	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3852;
@@ -329,7 +355,7 @@ static void mapif_Auction_cancel(int fd, int char_id, unsigned char result)
 
 static void mapif_parse_Auction_cancel(int fd)
 {
-	int char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
+	uint32 char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
 	struct auction_data *auction;
 
 	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL )
@@ -350,13 +376,13 @@ static void mapif_parse_Auction_cancel(int fd)
 		return;
 	}
 
-	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(205), 0, &auction->item);
+	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(205), 0, &auction->item, 1);
 	auction_delete(auction);
 
 	mapif_Auction_cancel(fd, char_id, 0); // The auction has been canceled
 }
 
-static void mapif_Auction_close(int fd, int char_id, unsigned char result)
+static void mapif_Auction_close(int fd, uint32 char_id, unsigned char result)
 {
 	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3853;
@@ -367,7 +393,7 @@ static void mapif_Auction_close(int fd, int char_id, unsigned char result)
 
 static void mapif_parse_Auction_close(int fd)
 {
-	int char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
+	uint32 char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
 	struct auction_data *auction;
 
 	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL )
@@ -389,16 +415,16 @@ static void mapif_parse_Auction_close(int fd)
 	}
 
 	// Send Money to Seller
-	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(206), auction->price, NULL);
+	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(206), auction->price, NULL, 0);
 	// Send Item to Buyer
-	mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(207), 0, &auction->item);
+	mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(207), 0, &auction->item, 1);
 	mapif_Auction_message(auction->buyer_id, 6); // You have won the auction
 	auction_delete(auction);
 
 	mapif_Auction_close(fd, char_id, 0); // You have ended the auction
 }
 
-static void mapif_Auction_bid(int fd, int char_id, int bid, unsigned char result)
+static void mapif_Auction_bid(int fd, uint32 char_id, int bid, unsigned char result)
 {
 	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0) = 0x3855;
@@ -410,8 +436,8 @@ static void mapif_Auction_bid(int fd, int char_id, int bid, unsigned char result
 
 static void mapif_parse_Auction_bid(int fd)
 {
-	int char_id = RFIFOL(fd,4), bid = RFIFOL(fd,12);
-	unsigned int auction_id = RFIFOL(fd,8);
+	uint32 char_id = RFIFOL(fd,4), auction_id = RFIFOL(fd,8);
+	int bid = RFIFOL(fd,12);
 	struct auction_data *auction;
 
 	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL || auction->price >= bid || auction->seller_id == char_id )
@@ -430,24 +456,24 @@ static void mapif_parse_Auction_bid(int fd)
 	{ // Send Money back to the previous Buyer
 		if( auction->buyer_id != char_id )
 		{
-			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(208), auction->price, NULL);
+			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(208), auction->price, NULL, 0);
 			mapif_Auction_message(auction->buyer_id, 7); // You have failed to win the auction
 		}
 		else
-			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(209), auction->price, NULL);
+			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(209), auction->price, NULL, 0);
 	}
 
 	auction->buyer_id = char_id;
-	safestrncpy(auction->buyer_name, (char*)RFIFOP(fd,16), NAME_LENGTH);
+	safestrncpy(auction->buyer_name, RFIFOCP(fd,16), NAME_LENGTH);
 	auction->price = bid;
 
 	if( bid >= auction->buynow )
 	{ // Automatic won the auction
 		mapif_Auction_bid(fd, char_id, bid - auction->buynow, 1); // You have successfully bid in the auction
 
-		mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(210), 0, &auction->item);
+		mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(210), 0, &auction->item, 1);
 		mapif_Auction_message(char_id, 6); // You have won the auction
-		mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(211), auction->buynow, NULL);
+		mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(211), auction->buynow, NULL, 0);
 
 		auction_delete(auction);
 		return;

@@ -4,7 +4,7 @@
 #ifndef _rA_CONF_H_
 #define _rA_CONF_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 // rAthena generic configuration file parser
 // 

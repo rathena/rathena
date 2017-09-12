@@ -58,8 +58,6 @@ int read_map(char *name, struct map_data *m)
 	unsigned char *gat, *rsw;
 	int water_height;
 	size_t xy, off, num_cells;
-	float height;
-	uint32 type;
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
@@ -93,9 +91,9 @@ int read_map(char *name, struct map_data *m)
 	for (xy = 0; xy < num_cells; xy++)
 	{
 		// Height of the bottom-left corner
-		height = GetFloat( gat + off      );
+		float height = GetFloat( gat + off      );
 		// Type of cell
-		type   = GetULong( gat + off + 16 );
+		uint32 type   = GetULong( gat + off + 16 );
 		off += 20;
 
 		if (type == 0 && water_height != NO_WATER && height > water_height)

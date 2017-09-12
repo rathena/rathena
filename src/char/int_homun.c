@@ -76,7 +76,7 @@ static void mapif_homunculus_renamed(int fd, uint32 account_id, uint32 char_id, 
 	WFIFOL(fd, 2) = account_id;
 	WFIFOL(fd, 6) = char_id;
 	WFIFOB(fd,10) = flag;
-	safestrncpy((char*)WFIFOP(fd,11), name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(fd,11), name, NAME_LENGTH);
 	WFIFOSET(fd, NAME_LENGTH+12);
 }
 
@@ -91,7 +91,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 	{// new homunculus
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`char_id`, `class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
-			"VALUES ('%d', '%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+			"VALUES ('%d', '%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%d')",
 			schema_config.homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
 		{
@@ -105,7 +105,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 	}
 	else
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_id`='%d', `class`='%d',`prev_class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_id`='%d', `class`='%d',`prev_class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%u',`max_hp`='%u',`sp`='%u',`max_sp`='%u',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
 			schema_config.homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
 		{
@@ -195,7 +195,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle, 21, &data, NULL); hd->vaporize = atoi(data);
 	Sql_FreeResult(sql_handle);
 
-	hd->intimacy = min(hd->intimacy,100000);
+	hd->intimacy = umin(hd->intimacy,100000);
 	hd->hunger = cap_value(hd->hunger, 0, 100);
 
 	// Load Homunculus Skill
@@ -305,7 +305,7 @@ int inter_homunculus_parse_frommap(int fd)
 		case 0x3091: mapif_parse_homunculus_load  (fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
 		case 0x3092: mapif_parse_homunculus_save  (fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
 		case 0x3093: mapif_parse_homunculus_delete(fd, (int)RFIFOL(fd,2)); break;
-		case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), (char*)RFIFOP(fd,10)); break;
+		case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), RFIFOCP(fd,10)); break;
 		default:
 			return 0;
 	}

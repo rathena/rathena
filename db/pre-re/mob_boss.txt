@@ -1,50 +1,50 @@
 // Bloody Branch Summonable Monsters Database
 //
 // Structure of Database:
-// MobID,DummyName,Rate
+// MobRandomGroupID,MobID,DummyName,Rate
 
-0,Baphomet,1039
-1038,Osiris,500000
-1039,Baphomet,500000
-1046,Doppelganger,500000
-1059,Mistress,500000
-1086,Golden Thief Bug,500000
-1087,Orc Hero,500000
-1096,Angeling,500000
-1112,Drake,500000
-1115,Eddga,500000
-1120,Ghostring,500000
-1147,Maya,500000
-1150,Moonlight Flower,500000
-1157,Pharaoh,500000
-1159,Phreeoni,500000
-1190,Orc Lord,500000
-1251,Stormy Knight,500000
-1252,Hatii,500000
-1272,Dark Lord,500000
-1312,Turtle General,500000
-1373,Lord of the Dead,500000
-1388,Arc Angeling,500000
-1389,Dracula,500000
-1418,Evil Snake Lord,500000
-1492,Samurai Specter,500000
-1511,Amon Ra,500000
-1582,Deviling,500000
-1583,Tao Gunka,500000
-1623,RSX-0806,500000
-1630,White Lady,500000
-1658,Egnigem Cenia,500000
-1685,Vesper,500000
-1688,Lady Tanee,500000
-1708,Thanatos Phantom,500000
-1719,Detardeurus,500000
-1734,Kiel D-01,500000
-1751,Valkyrie Randgris,500000
-1768,Gloom Under Night,500000
-1779,Ktullanux,500000
-1785,Atroce,1000000
-1832,Ifrit,500000
-1871,Falling Bishop,500000
-1873,Beelzebub,500000
-1885,Gopinich,500000
-2022,Nidhoggur's Shadow,500000
+MOBG_Bloody_Dead_Branch,0,Baphomet,1039
+MOBG_Bloody_Dead_Branch,1038,Osiris,500000
+MOBG_Bloody_Dead_Branch,1039,Baphomet,500000
+MOBG_Bloody_Dead_Branch,1046,Doppelganger,500000
+MOBG_Bloody_Dead_Branch,1059,Mistress,500000
+MOBG_Bloody_Dead_Branch,1086,Golden Thief Bug,500000
+MOBG_Bloody_Dead_Branch,1087,Orc Hero,500000
+MOBG_Bloody_Dead_Branch,1096,Angeling,500000
+MOBG_Bloody_Dead_Branch,1112,Drake,500000
+MOBG_Bloody_Dead_Branch,1115,Eddga,500000
+MOBG_Bloody_Dead_Branch,1120,Ghostring,500000
+MOBG_Bloody_Dead_Branch,1147,Maya,500000
+MOBG_Bloody_Dead_Branch,1150,Moonlight Flower,500000
+MOBG_Bloody_Dead_Branch,1157,Pharaoh,500000
+MOBG_Bloody_Dead_Branch,1159,Phreeoni,500000
+MOBG_Bloody_Dead_Branch,1190,Orc Lord,500000
+MOBG_Bloody_Dead_Branch,1251,Stormy Knight,500000
+MOBG_Bloody_Dead_Branch,1252,Hatii,500000
+MOBG_Bloody_Dead_Branch,1272,Dark Lord,500000
+MOBG_Bloody_Dead_Branch,1312,Turtle General,500000
+MOBG_Bloody_Dead_Branch,1373,Lord of the Dead,500000
+MOBG_Bloody_Dead_Branch,1388,Arc Angeling,500000
+MOBG_Bloody_Dead_Branch,1389,Dracula,500000
+MOBG_Bloody_Dead_Branch,1418,Evil Snake Lord,500000
+MOBG_Bloody_Dead_Branch,1492,Samurai Specter,500000
+MOBG_Bloody_Dead_Branch,1511,Amon Ra,500000
+MOBG_Bloody_Dead_Branch,1582,Deviling,500000
+MOBG_Bloody_Dead_Branch,1583,Tao Gunka,500000
+MOBG_Bloody_Dead_Branch,1623,RSX-0806,500000
+MOBG_Bloody_Dead_Branch,1630,White Lady,500000
+MOBG_Bloody_Dead_Branch,1658,Egnigem Cenia,500000
+MOBG_Bloody_Dead_Branch,1685,Vesper,500000
+MOBG_Bloody_Dead_Branch,1688,Lady Tanee,500000
+MOBG_Bloody_Dead_Branch,1708,Thanatos Phantom,500000
+MOBG_Bloody_Dead_Branch,1719,Detardeurus,500000
+MOBG_Bloody_Dead_Branch,1734,Kiel D-01,500000
+MOBG_Bloody_Dead_Branch,1751,Valkyrie Randgris,500000
+MOBG_Bloody_Dead_Branch,1768,Gloom Under Night,500000
+MOBG_Bloody_Dead_Branch,1779,Ktullanux,500000
+MOBG_Bloody_Dead_Branch,1785,Atroce,1000000
+MOBG_Bloody_Dead_Branch,1832,Ifrit,500000
+MOBG_Bloody_Dead_Branch,1871,Falling Bishop,500000
+MOBG_Bloody_Dead_Branch,1873,Beelzebub,500000
+MOBG_Bloody_Dead_Branch,1885,Gopinich,500000
+MOBG_Bloody_Dead_Branch,2022,Nidhoggur's Shadow,500000

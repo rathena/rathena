@@ -246,7 +246,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 		mes "[Maroll Battle Recruiter]";
 		mes "May the war god bless you.";
 		close2;
-		getmapxy(.@mapname$,.@x,.@y,1);
+		getmapxy(.@mapname$,.@x,.@y,UNITTYPE_NPC);
 		if (.@mapname$ == "prontera")
 			set bat_return,1;
 		else if (.@mapname$ == "moc_ruins")
@@ -567,12 +567,14 @@ bat_room,160,150,3	script	Erundek	109,{
 // Badge Reward Function
 //============================================================
 function	script	F_BG_Badge	{
+	.@team$ = getarg(1);
+	.@bg_type$ = getarg(2);
 
-	if (getarg(2) == "Tierra") {
+	if (.@bg_type$ == "Tierra") {
 		set .@badge,7828; //BF_Badge1
 		set .@amount_win,3;
 		set .@amount_lose,1;
-	} else if (getarg(2) == "Flavius") {
+	} else if (.@bg_type$ == "Flavius") {
 		set .@badge,7829; //BF_Badge2
 		set .@amount_win,9;
 		set .@amount_lose,3;
@@ -581,10 +583,10 @@ function	script	F_BG_Badge	{
 
 	if (getarg(0) == 1) {
 		set .@amount, .@amount_win;
-		if (getarg(1) == "Guillaume") {
+		if (.@team$ == "Guillaume") {
 			mes "[Axl Rose]";
 			mes "Blessed Guillaume!";
-		} else if (getarg(1) == "Croix") {
+		} else if (.@team$ == "Croix") {
 			mes "[Swandery]";
 			mes "Blessed Croix!";
 		}
@@ -592,12 +594,12 @@ function	script	F_BG_Badge	{
 		mes strcharinfo(0)+", it's a sign reflecting victory.";
 	} else {
 		set .@amount, .@amount_lose;
-		if (getarg(1) == "Guillaume") {
+		if (.@team$ == "Guillaume") {
 			mes "[Axl Rose]";
 			mes "You lost, but you're dedicated to this battle.";
 			mes "This is a reward for your great dedication by Guillaume Marollo!";
 			mes "Just take this defeat as a lesson, and next time you will definitely win.";
-		} else if (getarg(1) == "Croix") {
+		} else if (.@team$ == "Croix") {
 			mes "[Swandery]";
 			mes "Oh, "+strcharinfo(0)+" Don't be sad.";
 			mes "Even though we didn't win, we did our best.";
@@ -607,7 +609,7 @@ function	script	F_BG_Badge	{
 	close2;
 
 	// If the VIP system is enabled, VIP players receive an extra 2 badges.
-	if (VIP_SCRIPT && vip_status(1))
+	if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 		set .@amount, .@amount+2;
 
 	set .@medal_gap, 500 - countitem(.@badge);

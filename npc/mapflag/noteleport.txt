@@ -155,6 +155,7 @@ job_soul	mapflag	noteleport
 que_ng	mapflag	noteleport
 
 // Special Quests Places =========
+que_ba	mapflag	noteleport
 que_god01	mapflag	noteleport
 que_god02	mapflag	noteleport
 que_bingo	mapflag	noteleport

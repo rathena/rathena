@@ -205,7 +205,6 @@ alberta,214,77,6	script	Captain Janssen	709,{
 e_tower,81,105,0	script	Tower Protection Stone	406,{
 
 	set .@party_id,getcharid(1);
-	set .@p_name$,getpartyname(.@party_id);
 	set .@md_name$,"Endless Tower";
 
 	set .@etower_timer,checkquest(60200,PLAYTIME); // 1 week
@@ -215,14 +214,15 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		mes "Make or join a party with more than 1 member and try again.";
 		close;
 	}
-	if (.@etower_timer == -1) {
+	switch(.@etower_timer) {
+	case -1:
 		if (getcharid(0) == getpartyleader(.@party_id,2)) {
 			mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
 			next;
 			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {
 			case 1:
 				if (instance_create(.@md_name$) < 0) {
-					mes "Party Name: "+.@p_name$;
+					mes "Party Name: "+ getpartyname(.@party_id);
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
 					close;
@@ -252,38 +252,39 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		case 3:
 			end;
 		}
-	} else if ((.@etower_timer >= 0) && (.@etower_timer2 < 2)) {
-		mes "If you have the dungeon generated already, you can enter it. ";
-		next;
-		switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
-		case 1:
-			callsub L_Enter,0,0;
-		case 2:
-			mes "I will move you to Alberta.";
+	case 0:
+	case 1:
+		if (.@etower_timer2 < 2 && getcharid(1) == etower_partyid) {
+			mes "If you have the dungeon generated already, you can enter it. ";
+			next;
+			switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
+			case 1:
+				callsub L_Enter,0,0;
+			case 2:
+				mes "I will move you to Alberta.";
+				close2;
+				warp "alberta",223,36;
+				end;
+			case 3:
+				close;
+			}
+		} else {
+			set .@dun_lim_time,etower_timer+604800; // 1 week
+			// set .@dun_lim_time2,etower_timer+14400; // 4 hours
+			set .@dun_cur_time,gettimetick(2);
+			set .@dun_ent_t,(.@dun_lim_time - .@dun_cur_time);
+			set .@dun_h,(.@dun_ent_t / 3600);
+			set .@dun_m,(.@dun_ent_t - (.@dun_h * 3600)) / 60;
+			set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
+
+			mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
+			next;
+			mes "It is dangerous here. Let me move you to Alberta.";
 			close2;
 			warp "alberta",223,36;
 			end;
-		case 3:
-			break;
 		}
-		close;
-	} else if ((.@etower_timer >= 0) && (.@etower_timer < 2) && (.@etower_timer2 == 2)) {
-
-		set .@dun_lim_time,etower_timer+604800; // 1 week
-		set .@dun_lim_time2,etower_timer+14400; // 4 hours
-		set .@dun_cur_time,gettimetick(2);
-		set .@dun_ent_t,(.@dun_lim_time - .@dun_cur_time);
-		set .@dun_h,(.@dun_ent_t / 3600);
-		set .@dun_m,(.@dun_ent_t - (.@dun_h * 3600)) / 60;
-		set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
-
-		mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
-		next;
-		mes "It is dangerous here. Let me move you to Alberta.";
-		close2;
-		warp "alberta",223,36;
-		end;
-	} else {
+	case 2:
 		set etower_timer,0;
 		erasequest 60200;
 		erasequest 60201;
@@ -293,20 +294,21 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 
 L_Enter:
 	switch(instance_enter("Endless Tower")) {
-	case 3:
+	case IE_OTHER:
 		mes "An unknown error has occurred.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "The memorial dungeon Endless Tower does not exist.";
 		mes "The party leader did not generate the dungeon yet.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "You can enter the dungeon after making the party.";
 		close;
-	case 0:
-		mapannounce "e_tower", strcharinfo(0)+" of the party, "+.@p_name$+", is entering the dungeon, Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
+	case IE_OK:
+		mapannounce "e_tower", strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
 		if (getarg(1)) {
 			set etower_timer,gettimetick(2);
+			set etower_partyid, getcharid(1);
 			setquest 60200;
 			setquest 60201;
 		}

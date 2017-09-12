@@ -90,7 +90,7 @@ turbo_n_1,298,167,3	duplicate(Helper#tt_main)	Helper#n1_F	124
 turbo_e_4,298,167,0	script	Point#tt_main	-1,15,15,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (tt_point < 28999) {
 		set tt_point,tt_point+2;
 		warp strnpcinfo(4),59,364;
@@ -400,7 +400,8 @@ OnInit:
 	end;
 	
 	function	RName	{
-		set .@s,(getstrlen(getarg(0)) > 2)?(substr(getarg(0),1,2)):(charat(getarg(0),getstrlen(getarg(0))-1));
+		.@string$ = getarg(0);
+		.@s = ( getstrlen(.@string$) > 2 ? substr(.@string$,1,2) : charat(.@string$,getstrlen(.@string$)-1) );
 		set .@rn$,((compare(strnpcinfo(4),"_e_"+.@s))?"Expert mode":"Normal mode")+" - "+.@s+" person";
 		return .@rn$;
 	}
@@ -414,7 +415,7 @@ turbo_n_8,167,3,0	duplicate(Master#tt_main)	Master#n16	-1
 turbo_n_1,167,3,0	duplicate(Master#tt_main)	Master#n1	-1
 
 -	script	NoUnfair#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	warp strnpcinfo(4),59,364;
 	end;
 }
@@ -434,7 +435,7 @@ turbo_n_1,62,379,0	duplicate(NoUnfair#tt_main)	No_Unfair_Start#n1-1	-1,0,31
 turbo_n_1,68,379,5	duplicate(NoUnfair#tt_main)	No_Unfair_Start#n1-2	-1,5,31
 
 -	script	LogTrap#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	switch (rand(1,3)) {
 		case 1: warp strnpcinfo(4),72,372; end;
 		case 2: warp strnpcinfo(4),72,365; end;
@@ -989,7 +990,7 @@ turbo_n_1,145,357,0	duplicate(LogTrap#tt_main)	trap_d#n1-14	-1,1,2
 turbo_n_1,148,357,0	duplicate(LogTrap#tt_main)	trap_d#n1-15	-1,1,2
 
 -	script	SandTrap#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	switch(rand(1,10)) {
 		case 1:
 		case 9:
@@ -1177,7 +1178,7 @@ turbo_n_1,382,363,0	duplicate(SandTrap#tt_main)	#TBT_trap_n1-22	-1,2,2
 turbo_n_1,381,354,0	duplicate(SandTrap#tt_main)	#TBT_trap_n1-23	-1,1,1
 
 -	script	Trap#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	if (rand(1,3) == 1) {
 		set .@w$,callfunc("F_tt");
 		cutin "kafra_03",2;
@@ -1247,7 +1248,7 @@ turbo_n_16,355,362,0	duplicate(Trap#tt_main)	#TBT_trap_n16-24	-1,3,3
 turbo_n_1,355,362,0	duplicate(Trap#tt_main)	#TBT_trap_n1-24	-1,3,3
 
 -	script	WaterTrap#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	sc_start SC_BLIND,60000,0;
 	end;
 }
@@ -1610,7 +1611,7 @@ turbo_n_1,90,241,0	duplicate(WaterTrap#tt_main)	flasher#n1-48a	-1,1,0
 turbo_n_1,236,3,0	duplicate(WaterTrap#tt_main)	flasher#n1-48b	-1,3,0
 
 -	script	snake01#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@turbo2,rand(1,7);
 	if (.@turbo2 < 3) warp strnpcinfo(4),370,292;
 	if (.@turbo2 < 5) warp strnpcinfo(4),295,293;
@@ -1627,7 +1628,7 @@ turbo_n_16,324,279,0	duplicate(snake01#tt_main)	snake01#n16	45,1,1
 turbo_n_1,324,279,0	duplicate(snake01#tt_main)	snake01#n1	45,1,1
 
 -	script	snake02#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@turbo2,rand(1,8);
 	if (.@turbo2 < 3) warp strnpcinfo(4),287,256;
 	if (.@turbo2 < 5) warp strnpcinfo(4),303,256;
@@ -1645,7 +1646,7 @@ turbo_n_1,332,279,0	duplicate(snake02#tt_main)	snake02#n1	45,1,1
 
 
 -	script	snake03#tt_main	45,1,1,{
-OnTouch:
+OnTouch_:
 	set .@turbo2,rand(1,8);
 	if (.@turbo2 < 3) warp strnpcinfo(4),279,292;
 	if (.@turbo2 < 5) warp strnpcinfo(4),311,292;
@@ -1663,7 +1664,7 @@ turbo_n_1,324,270,0	duplicate(snake03#tt_main)	snake03#n1	45,1,1
 
 
 -	script	snake04#tt_main	45,1,1,{
-OnTouch:
+OnTouch_:
 	set .@turbo2,rand(1,7);
 	if (.@turbo2 < 3) warp strnpcinfo(4),363,256;
 	if (.@turbo2 < 5) warp strnpcinfo(4),295,293;
@@ -1719,7 +1720,7 @@ turbo_n_4,90,46,0	duplicate(SnakeHunt#tt_main)	hunting#n4	111
 turbo_n_1,90,46,0	duplicate(SnakeHunt#tt_main)	hunting#n1	111
 
 -	script	cos#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@n, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	switch (.@n) {
 		case 1:
@@ -1805,7 +1806,7 @@ turbo_n_1,93,19,0	duplicate(cos#tt_main)	#cos_n1_7	45,1,1
 turbo_n_1,232,14,0	duplicate(cos#tt_main)	#cos_n1_8	45,1,1
 
 turbo_e_16,179,55,0	script	TurboHint_1#tt_main	-1,1,1,{
-OnTouch:
+OnTouch_:
 	emotion e_what,1;
 	end;
 }
@@ -1853,7 +1854,7 @@ turbo_n_1,209,61,0	duplicate(TurboHint_1#tt_main)	#n1Intersectionm	-1,1,1
 turbo_n_1,208,56,0	duplicate(TurboHint_1#tt_main)	#n1Intersectionn	-1,1,1
 
 -	script	TurboHint_2#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	emotion e_gasp,1;
 	end;
 }
@@ -1886,7 +1887,7 @@ turbo_n_1,208,26,0	duplicate(TurboHint_2#tt_main)	#n1CorrectPath8	-1,1,1
 turbo_n_1,191,30,0	duplicate(TurboHint_2#tt_main)	#n1CorrectPath9	-1,1,1
 
 -	script	TurboHint_3#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	emotion e_swt2,1;
 	if (rand(1,4) == 3)
 		emotion e_gasp;
@@ -1906,7 +1907,7 @@ turbo_n_1,222,26,0	duplicate(TurboHint_3#tt_main)	#n1NoWayOut3	-1,1,1
 turbo_n_1,219,39,0	duplicate(TurboHint_3#tt_main)	#n1NoWayOut4	-1,1,1
 
 -	script	TurboHint_4#tt_main	-1,1,1,{
-OnTouch:
+OnTouch_:
 	emotion e_swt2,1;
 	end;
 }
@@ -1922,7 +1923,7 @@ turbo_n_1,222,65,0	duplicate(TurboHint_4#tt_main)	#n1NoWayOut7	-1,1,1
 
 -	script	cos_end#tt_main	01,{
 	function	GetNumber;
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	if (.@w$ == "n1") set $@end_time,gettimetick(0);
 	mapannounce strnpcinfo(4),strcharinfo(0) +" has just arrived at the Finish Line! Congratulations!",bc_map,"0xFFFF00";
@@ -1972,7 +1973,7 @@ turbo_n_16,371,47,0	duplicate(cos_end#tt_main)	#cos_n16_end	45,1,1
 turbo_n_1,371,47,0	duplicate(cos_end#tt_main)	#cos_n1_end	45,1,1
 
 -	script	cos_end2#tt_main	45,1,1,{
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is second to reach the Finish Line! Congratulations!",bc_map,"0xFFFF00";
 	if (.@w$ == "e8" || .@w$ == "n8") setarray .@pts, 28961,40;
@@ -1994,7 +1995,7 @@ turbo_n_8,371,51,0	duplicate(cos_end2#tt_main)	#cos_n8_end2	45,1,1
 turbo_n_16,371,51,0	duplicate(cos_end2#tt_main)	#cos_n16_end2	45,1,1
 
 -	script	cos_end3#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	mapannounce strnpcinfo(4),"" + strcharinfo(0) +" is third to reach the Finish Line! Congratulations!",bc_map,"0xFFFF00";
 	if (.@w$ == "e8" || .@w$ == "n8") setarray .@pts, 28971,30;
@@ -2018,7 +2019,7 @@ turbo_n_8,371,43,0	duplicate(cos_end3#tt_main)	#cos_n8_end3	45,1,1
 turbo_n_16,371,43,0	duplicate(cos_end3#tt_main)	#cos_n16_end3	45,1,1
 
 turbo_e_4,316,365,0	script	DSwitch#tt_main	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	if (rand(1,2) == 1)
 		enablenpc "Flasher_Exit_1#"+.@w$;
@@ -2036,7 +2037,7 @@ turbo_n_16,316,365,0	duplicate(DSwitch#tt_main)	Disposable_Switch#n16	-1,1,1
 turbo_n_1,316,365,0	duplicate(DSwitch#tt_main)	Disposable_Switch#n1	-1,1,1
 
 -	script	Flasher#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	mapannounce strnpcinfo(4),strcharinfo(0) +" has just passed the Flasher Maze!",bc_map,"0x70DBDB";
 	warp strnpcinfo(4),185,227;
 	end;
@@ -2529,7 +2530,8 @@ OnTimer71000:
 	end;
 	
 	function	RName	{
-		set .@s,(getstrlen(getarg(0)) > 2)?(substr(getarg(0),1,2)):(charat(getarg(0),getstrlen(getarg(0))-1));
+		.@string$ = getarg(0);
+		.@s = ( getstrlen(.@string$) > 2 ? substr(.@string$,1,2) : charat(.@string$,getstrlen(.@string$)-1) );
 		set .@rn$,((compare(strnpcinfo(4),"_e_"+.@s))?"Expert mode":"Normal mode")+" - "+.@s+" person";
 		return .@rn$;
 	}
@@ -2762,7 +2764,7 @@ OnInit:
 }
 
 -	script	NMaker1#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is now entering the Small Cave! " + strcharinfo(0) +" is now in the lead!",bc_map,"0xFFFF00";
 	donpcevent "Turbo Track Guide::OnEnd_"+.@w$;
@@ -2783,7 +2785,7 @@ turbo_n_16,11,91,0	duplicate(NMaker1#tt_main)	Notice_Maker1#TBT_n16	-1,3,3
 turbo_n_1,11,91,0	duplicate(NMaker1#tt_main)	Notice_Maker1#TBT_n1	-1,3,3
 
 -	script	NMaker3#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is now entering the Single Snail! " + strcharinfo(0) +" is now in the lead!",bc_map,"0xFFFF00";
 	disablenpc "Notice_Maker3#TBT_"+.@w$;
@@ -2803,7 +2805,7 @@ turbo_n_16,234,223,0	duplicate(NMaker3#tt_main)	Notice_Maker3#TBT_n16	-1,3,3
 turbo_n_1,234,223,0	duplicate(NMaker3#tt_main)	Notice_Maker3#TBT_n1	-1,3,3
 
 -	script	NMaker4#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is currently in First Place!",bc_map,"0xFFFF00";
 	disablenpc "Notice_Maker4#TBT_"+.@w$;
@@ -2824,7 +2826,7 @@ turbo_n_16,226,15,0	duplicate(NMaker4#tt_main)	Notice_Maker4#TBT_n16	-1,3,3
 turbo_n_1,226,15,0	duplicate(NMaker4#tt_main)	Notice_Maker4#TBT_n1	-1,3,3
 
 -	script	warp#tt_main	-1,{
-OnTouch:
+OnTouch_:
 	switch (rand(1,20)) {
 		case 1: warp strnpcinfo(4),216,378; break;
 		case 2: warp strnpcinfo(4),218,360; break;
@@ -2887,7 +2889,7 @@ turbo_n_1,253,364,0	duplicate(warp#tt_main)	Warp#n1_7	-1,2,2
 
 -	script	TurboTrap#tt_main	-1,{
 	end;
-OnTouch:
+OnTouch_:
 	specialeffect EF_BLASTMINEBOMB;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
@@ -3524,7 +3526,7 @@ turbo_n_1,368,36,0	duplicate(TurboTrap#tt_main)	trap_n1#F95	139,1,1
 
 -	script	TurboTrap_2#tt_main	-1,{
 	end;
-OnTouch:
+OnTouch_:
 	specialeffect EF_FREEZING;
 	set .@HitTrap,10;
 	if (.@HitTrap > 0 && .@HitTrap < 4)
@@ -3590,7 +3592,7 @@ turbo_n_1,340,55,0	duplicate(TurboTrap_2#tt_main)	trap_n1#F48	139,1,1
 
 -	script	bing_1#tt_main	-1,{
 	end;
-OnTouch:
+OnTouch_:
 	set .@w$,callfunc("F_tt");
 	set .@bing1,rand(1,10);
 	if (.@bing1 > 0 && .@bing1 < 4)
@@ -3616,7 +3618,7 @@ turbo_n_16,217,214,0	duplicate(bing_1#tt_main)	bing#n16	45,3,3
 
 -	script	bing_2#tt_main	-1,{
 	end;
-OnTouch:
+OnTouch_:
 	switch (rand(1,10)) {
 		case 1: warp strnpcinfo(4),217,232; break;
 		case 2: warp strnpcinfo(4),233,207; break;
@@ -3652,7 +3654,7 @@ turbo_room,130,92,3	script	Kafra Staff#tt	115,{
 	callfunc "F_Kafra",5,8,1,40,0;
 
 	M_Save:
-		savepoint "aldebaran",168,112;
+		savepoint "aldebaran",168,112,1,1;
 		callfunc "F_KafEnd",0,1,"in Al De Baran";
 
 }
@@ -4592,7 +4594,7 @@ S_ExchangePoints:
 }
 
 alde_gld,183,204,0	script	en_turbo	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";

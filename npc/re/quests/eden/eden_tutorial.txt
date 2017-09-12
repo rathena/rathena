@@ -201,7 +201,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 				mes "The ^006400Universal Silver Catalog^000000";
 				mes "can be obtained from";
 				mes "the ^0000FFCatalogue Wizard^000000";
-				mes "that is located in South Prontera.";
+				mes "that is located in the Eden Group Headquarter.";
 				next;
 				mes "[Tutorial Instructor]";
 				mes "Now, go and obtain";
@@ -252,7 +252,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 			mes "You can get the";
 			mes "^006400Universal Silver Catalog^000000";
 			mes "from the ^0000FFCatalogue Wizard^000000";
-			mes "who is located in Prontera.";
+			mes "who is located in the Eden Group Headquarter.";
 			next;
 			mes "[Tutorial Instructor]";
 			mes "So, go and get the";
@@ -490,7 +490,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 			close;
 		case 3:
 			mes "[Tutorial Instructor]";
-			mes "006400ENCHANT^000000, in general, is divided into two parts: ^006400SOCKET ENCHANT^000000 and ^006400HIDDEN SOCKET ENCHANT^000000.";
+			mes "^006400ENCHANT^000000, in general, is divided into two parts: ^006400SOCKET ENCHANT^000000 and ^006400HIDDEN SOCKET ENCHANT^000000.";
 			next;
 			mes "[Tutorial Instructor]";
 			mes "^006400SOCKET ENCHANT^000000 is used to add a SOCKET into equipments and ^006400HIDDEN SOCKET ENCHANT^000000 is used to put in stats into a socket of an armor.";
@@ -515,7 +515,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 			mes "The ^006400Universal Silver Catalog^000000";
 			mes "can be obtained from ";
 			mes "the ^0000FFCatalogue Wizard^000000";
-			mes "that is located in South Prontera;";
+			mes "that is located in the Eden Group Headquarter.";
 			next;
 			mes "[Tutorial Instructor]";
 			mes "It only costs 200 zeny for one";

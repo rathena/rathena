@@ -177,7 +177,7 @@ OnTimer30000:
 	if (.Timer) end;
 	set .Change,0;
 	setnpcdisplay "Disguise Event",795;
-	npctalk "You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
+	npctalk "Disguise Event : You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
 	specialeffect EF_DETECT2;
 	set $MonsterName$,"";
 	deletepset 1;
@@ -238,7 +238,7 @@ iCorrect:
 		setnpcdisplay "Disguise Event",795;
 		set .RoundCount,0; set .Change,0; set .EventON,0;
 		setnpctimer 0; stopnpctimer;
-		npctalk "Thank you all for playing. That was the last round of the Disguise Event. Come play again later.";
+		npctalk "Disguise Event : Thank you all for playing. That was the last round of the Disguise Event. Come play again later.";
 		end;
 	}
 	setnpcdisplay "Disguise Event",795;

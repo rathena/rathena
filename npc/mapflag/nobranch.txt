@@ -81,6 +81,7 @@ yuno_in02	mapflag	nobranch
 yuno_in03	mapflag	nobranch
 yuno_in04	mapflag	nobranch
 yuno_in05	mapflag	nobranch
+que_ba	mapflag	nobranch
 que_sign01	mapflag	nobranch
 ein_in01	mapflag	nobranch
 airport	mapflag	nobranch

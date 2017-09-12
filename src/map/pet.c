@@ -15,6 +15,7 @@
 #include "intif.h"
 #include "chrif.h"
 #include "pet.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 
@@ -64,7 +65,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	pd->pet.intimate = value;
 
-	if( (intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly) )
+	if( sd && ((intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly)) )
 		status_calc_pc(sd,SCO_NONE);
 }
 
@@ -85,12 +86,7 @@ int pet_create_egg(struct map_session_data *sd, unsigned short item_id)
 		return 0; // Inventory full
 
 	sd->catch_target_class = pet_db[pet_id].class_;
-	intif_create_pet(sd->status.account_id, sd->status.char_id,
-		(short)pet_db[pet_id].class_,
-		(short)mob_db(pet_db[pet_id].class_)->lv,
-		(short)pet_db[pet_id].EggID, 0,
-		(short)pet_db[pet_id].intimate,
-		100, 0, 1, pet_db[pet_id].jname);
+	intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
 
 	return 1;
 }
@@ -151,17 +147,16 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 
 /**
  * Make sure pet can attack from given config values.
- * @param sd : player requesting (owner)
- * @param bl : target
- * @param type : pet's attack rate type
+ * @param pd: pet data
+ * @param bl: target
+ * @param type: pet's attack rate type
  * @return 0
  */
-int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
+int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 {
-	struct pet_data *pd;
 	int rate;
 
-	pd = sd->pd;
+	nullpo_ret(pd);
 
 	Assert((pd->master == 0) || (pd->master->pd == pd));
 
@@ -174,6 +169,11 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 	if(pd->bl.m != bl->m ||
 		!check_distance_bl(&pd->bl, bl, pd->db->range2))
 		return 0;
+
+	if (!battle_config.pet_master_dead && pc_isdead(pd->master)) {
+		pet_unlocktarget(pd);
+		return 0;
+	}
 
 	if (!status_check_skilluse(&pd->bl, bl, 0, 0))
 		return 0;
@@ -381,7 +381,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	pd->pet.incubate = 1;
@@ -512,7 +512,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 	intif_save_petdata(sd->status.account_id,pet);
 	
 	if (save_settings&CHARSAVE_PET)
-		chrif_save(sd,0); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
+		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
 	if(sd->bl.prev != NULL) {
 		if(map_addblock(&sd->pd->bl))
@@ -557,8 +557,8 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 
 		//Delete egg from inventory. [Skotlex]
 		for (i = 0; i < MAX_INVENTORY; i++) {
-			if(sd->status.inventory[i].card[0] == CARD0_PET &&
-				p->pet_id == MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2]))
+			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_PET &&
+				p->pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
 				break;
 		}
 
@@ -602,8 +602,8 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
 
-	if(sd->status.inventory[egg_index].card[0] == CARD0_PET)
-		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->status.inventory[egg_index].card[1], sd->status.inventory[egg_index].card[2]) );
+	if(sd->inventory.u.items_inventory[egg_index].card[0] == CARD0_PET)
+		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->inventory.u.items_inventory[egg_index].card[1], sd->inventory.u.items_inventory[egg_index].card[2]) );
 	else
 		ShowError("wrong egg item inventory %d\n",egg_index);
 
@@ -653,7 +653,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	i = search_petDB_index(md->mob_id,PET_CLASS);
 
 	//catch_target_class == 0 is used for universal lures (except bosses for now). [Skotlex]
-	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
+	if (sd->catch_target_class == 0 && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		sd->catch_target_class = md->mob_id;
 
 	if(i < 0 || sd->catch_target_class != md->mob_id) {
@@ -673,11 +673,11 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		pet_catch_rate = (pet_catch_rate*battle_config.pet_catch_rate)/100;
 
 	if(rnd()%10000 < pet_catch_rate) {
+		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
 		clif_pet_roulette(sd,1);
-		intif_create_pet(sd->status.account_id,sd->status.char_id,pet_db[i].class_,mob_db(pet_db[i].class_)->lv,
-			pet_db[i].EggID,0,pet_db[i].intimate,100,0,1,pet_db[i].jname);
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[i].class_, mob_db(pet_db[i].class_)->lv, pet_db[i].EggID, 0, pet_db[i].intimate, 100, 0, 1, pet_db[i].jname);
 	} else {
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = -1;
@@ -732,7 +732,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	return true;
@@ -839,7 +839,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	}
 
 	memcpy(pd->pet.name, name, NAME_LENGTH);
-	clif_charnameack (0,&pd->bl);
+	clif_name_area(&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
 	clif_send_petstatus(sd);
@@ -865,7 +865,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 	if (!pd)
 		return 1;
 
-	nameid = sd->status.inventory[index].nameid;
+	nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pd->petDB->AcceID == 0 || nameid != pd->petDB->AcceID || pd->pet.equip != 0) {
 		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
@@ -919,7 +919,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	if( battle_config.pet_equip_required ) { // Skotlex: halt support timers if needed
@@ -995,6 +995,8 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 
 	if( pd->pet.hungry > 100 )
 		pd->pet.hungry = 100;
+
+	log_feeding(sd, LOG_FEED_PET, pd->petDB->FoodID);
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);
@@ -1136,7 +1138,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 
 	if(!target && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick) > 0) {
 		// Use half the pet's range of sight.
-		map_foreachinrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
+		map_foreachinallrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
 	}
 
 	if (!target) { // Just walk around.
@@ -1278,7 +1280,7 @@ static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data
 
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
-			list->first_charid,list->second_charid,list->third_charid,4);
+			list->first_charid,list->second_charid,list->third_charid,4,0);
 		ditem_prev = ditem;
 		ditem = ditem->next;
 		ers_free(item_drop_ers, ditem_prev);

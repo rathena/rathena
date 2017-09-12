@@ -21,8 +21,8 @@ izlude_b,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword2	4_M
 izlude_c,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword3	4_M_JOB_KNIGHT2
 izlude_d,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword4	4_M_JOB_KNIGHT2
 
-izlude,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	4_F_HUGRANMA
-izlude_a,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_a	4_F_HUGRANMA
-izlude_b,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_b	4_F_HUGRANMA
-izlude_c,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_c	4_F_HUGRANMA
-izlude_d,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_d	4_F_HUGRANMA
+izlude,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	4_F_HUWOMAN
+izlude_a,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_a	4_F_HUWOMAN
+izlude_b,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_b	4_F_HUWOMAN
+izlude_c,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_c	4_F_HUWOMAN
+izlude_d,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_d	4_F_HUWOMAN

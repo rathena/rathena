@@ -50,11 +50,11 @@
 //	Acid Demonstration can only be copied by Stalker/Trans. Shadow Chaser with Plagiarism or Reproduce.
 //	This mode simulates the previous battle config, which allowed only Trans. classes to copy Trans. skills.
 
-//Swordsman
+// Swordsman
 SM_BASH,3   //Bash
 SM_MAGNUM,3 //Magnum Break
 
-//Mage
+// Mage
 MG_NAPALMBEAT,3 // Napalm Beat
 MG_SOULSTRIKE,3 // Soul Strike
 MG_COLDBOLT,3   // Cold Bolt
@@ -65,18 +65,18 @@ MG_FIREBOLT,3   // Fire Bolt
 MG_LIGHTNINGBOLT,3 // Lightning Bolt
 MG_THUNDERSTORM,3  // Thunderstorm
 
-//Acolyte
+// Acolyte
 AL_RUWACH,3 // Ruwach
 AL_HEAL,3   // Heal
 
-//Merchant
+// Merchant
 MC_MAMMONITE,3 // Mammonite
 
-//Archer
+// Archer
 AC_DOUBLE,3 // Double Strafe
 AC_SHOWER,3 // Arrow Shower
 
-//Thief
+// Thief
 TF_POISON,3 // Envenom
 
 // Resurrection
@@ -152,6 +152,7 @@ NJ_SHADOWJUMP,3   // Shadow Leap
 NJ_KIRIKAGE,3     // Shadow Slash
 NJ_UTSUSEMI,3     // Cicada Skin Sheeding
 NJ_KOUENKA,3      // Crimson Fire Petal
+NJ_KAENSIN,3      // Crimson Fire Formation
 NJ_BAKUENRYU,3    // Raging Fire Dragon
 NJ_HYOUSENSOU,3   // Spear of Ice
 NJ_HYOUSYOURAKU,3 // Ice Meteor
@@ -175,6 +176,7 @@ RK_IGNITIONBREAK,2 // Ignition Break
 GC_CROSSIMPACT,2   // Cross Impact
 GC_DARKILLUSION,2  // Dark Illusion
 GC_PHANTOMMENACE,2 // Phantom Menace
+GC_DARKCROW,2      // Dark Claw
 
 // Arch Bishop
 AB_JUDEX,2        // Judex
@@ -194,7 +196,20 @@ WL_HELLINFERNO,2    // Hell Inferno
 WL_COMET,2          // Comet
 WL_CHAINLIGHTNING,2 // Chain Lightning
 WL_EARTHSTRAIN,2    // Earth Strain
+WL_TETRAVORTEX,2    // Tetra Vortex
+WL_SUMMONFB,2       // Summon Fire Ball
+WL_SUMMONBL,2       // Summon Lightning Ball
+WL_SUMMONWB,2       // Summon Water Ball
+WL_SUMMONSTONE,2    // Summon Stone
 WL_CHAINLIGHTNING_ATK,2	// Dummy skill for Chain Lightning
+WL_TETRAVORTEX_FIRE,2   // Dummy skill for Tetra Vortex
+WL_TETRAVORTEX_WATER,2  // Dummy skill for Tetra Vortex
+WL_TETRAVORTEX_WIND,2   // Dummy skill for Tetra Vortex
+WL_TETRAVORTEX_GROUND,2 // Dummy skill for Tetra Vortex
+WL_SUMMON_ATK_FIRE,2    // Dummy skill for Summon Fire Ball
+WL_SUMMON_ATK_WIND,2    // Dummy skill for Summon Lightning Ball
+WL_SUMMON_ATK_WATER,2   // Dummy skill for Summon Water Ball
+WL_SUMMON_ATK_GROUND,2  // Dummy skill for Summon Stone
 
 // Ranger
 RA_ARROWSTORM,2   // Arrow Storm
@@ -202,6 +217,9 @@ RA_AIMEDBOLT,2    // Aimed Bolt
 RA_CLUSTERBOMB,2  // Cluster Bomb
 RA_FIRINGTRAP,2   // Firing Trap
 RA_ICEBOUNDTRAP,2 // Icebound Trap
+
+// Mechanic
+NC_MAGMA_ERUPTION,2 // Magma Eruption
 
 // Shadow Chaser
 SC_FATALMENACE,2  // Fatal Menace
@@ -218,8 +236,8 @@ LG_OVERBRAND_BRANDISH,2	// Dummy skill for Over Brand
 LG_OVERBRAND_PLUSATK,2	// Dummy skill for Over Brand
 
 // Sura
-SR_DRAGONCOMBO,2  // Dragon Combo
-SR_SKYNETBLOW,2   // Sky Net Blow
+SR_DRAGONCOMBO,2    // Dragon Combo
+SR_SKYNETBLOW,2     // Sky Net Blow
 SR_EARTHSHAKER,2    // Earth Shaker
 SR_TIGERCANNON,2    // Tiger Cannon
 SR_RAMPAGEBLASTER,2 // Rampage Blaster
@@ -255,5 +273,9 @@ GN_SPORE_EXPLOSION,2 // Spore Explosion
 GN_WALLOFTHORN,2     // Wall of Thorns
 GN_CRAZYWEED,2       // Crazy Weed
 GN_HELLS_PLANT,2     // Hell's Plant
-GN_CRAZYWEED_ATK,2	// Dummy skill for Crazy Weed
-GN_HELLS_PLANT_ATK,2	//Dummy skil for Hell's Plant
+GN_CRAZYWEED_ATK,2   // Dummy skill for Crazy Weed
+GN_HELLS_PLANT_ATK,2 // Dummy skil for Hell's Plant
+GN_ILLUSIONDOPING,2  // Illusion Doping
+
+// Kagerou/Oboro
+KO_MUCHANAGE,3   // Rapid Throw

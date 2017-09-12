@@ -24,20 +24,22 @@ echo "destdir = $PKG_PATH "
 check_inst_right
 check_files
 mkdir -p $PKG_PATH/bin/
-mkdir -p $PKG_PATH/etc/$PKG/conf
+mkdir -p $PKG_PATH/etc/$PKG/
+mkdir -p $PKG_PATH/usr/$PKG/
 mkdir -p $PKG_PATH/var/$PKG/log
 
 #we copy all file into opt/ dir and treat dir like normal unix arborescence
 cp -r db/ $PKG_PATH/var/$PKG/db
-if [ -d log ]; then cp -r log/ $PKG_PATH/var/$PKG/log; fi
+if [ -d log ]; then cp -r log/* $PKG_PATH/var/$PKG/log/; fi
 cp -r conf/ $PKG_PATH/etc/$PKG/conf
-cp -r npc/ $PKG_PATH/npc
-cp athena-start $PKG_PATH/	
-mv *-server* $PKG_PATH/bin/
+cp -r npc/ $PKG_PATH/usr/$PKG/npc
+cp athena-start $PKG_PATH/
+cp *-server* $PKG_PATH/bin/
 
 ln -fs $PKG_PATH/var/$PKG/db/ $PKG_PATH/db
 ln -fs $PKG_PATH/var/$PKG/log/ $PKG_PATH/log
 ln -fs $PKG_PATH/etc/$PKG/conf/ $PKG_PATH/conf
+ln -fs $PKG_PATH/usr/$PKG/npc/ $PKG_PATH/npc
 ln -fs $PKG_PATH/athena-start /usr/bin/$PKG
 for f in $(ls $PKG_PATH/bin/) ; do ln -fs $PKG_PATH/bin/$f $PKG_PATH/$f; done
 echo "Installation is done. You can now control the server with '$PKG start'"

@@ -4,6 +4,10 @@
 #ifndef _MERCENARY_H_
 #define _MERCENARY_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
@@ -81,5 +85,9 @@ void mercenary_read_skilldb(void);
 
 void do_init_mercenary(void);
 void do_final_mercenary(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MERCENARY_H_ */

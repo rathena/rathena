@@ -184,7 +184,8 @@ void hom_delspiritball(TBL_HOM *hd, int count, int type) {
 * @param hd
 */
 void hom_damage(struct homun_data *hd) {
-	clif_hominfo(hd->master,hd,0);
+	if (hd->master)
+		clif_hominfo(hd->master,hd,0);
 }
 
 /**
@@ -513,14 +514,19 @@ int hom_levelup(struct homun_data *hd)
 
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
-	if ( battle_config.homunculus_show_growth ) {
+	// Needed to update skill list for mutated homunculus so unlocked skills will appear when the needed level is reached.
+	status_calc_homunculus(hd,SCO_NONE);
+	clif_hominfo(hd->master,hd,0);
+	clif_homskillinfoblock(hd->master);
+
+	if ( hd->master && battle_config.homunculus_show_growth ) {
 		char output[256] ;
 		sprintf(output,
 			"Growth: hp:%d sp:%d str(%.2f) agi(%.2f) vit(%.2f) int(%.2f) dex(%.2f) luk(%.2f) ",
 			growth_max_hp, growth_max_sp,
 			growth_str/10.0, growth_agi/10.0, growth_vit/10.0,
 			growth_int/10.0, growth_dex/10.0, growth_luk/10.0);
-		clif_disp_onlyself(hd->master,output,strlen(output));
+		clif_messagecolor(&hd->master->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	return 1;
 }
@@ -683,7 +689,7 @@ void hom_gainexp(struct homun_data *hd,int exp)
 
 	hd->homunculus.exp += exp;
 
-	if (hd->homunculus.exp < hd->exp_next) {
+	if (hd->master && hd->homunculus.exp < hd->exp_next) {
 		clif_hominfo(hd->master,hd,0);
 		return;
 	}
@@ -745,7 +751,8 @@ int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 * @param hd
 */
 void hom_heal(struct homun_data *hd) {
-	clif_hominfo(hd->master,hd,0);
+	if (hd->master)
+		clif_hominfo(hd->master,hd,0);
 }
 
 /**
@@ -837,6 +844,8 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 	hd->homunculus.hunger += 10;	//dunno increase value for each food
 	if(hd->homunculus.hunger > 100)
 		hd->homunculus.hunger = 100;
+
+	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
 
 	clif_emotion(&hd->bl,emotion);
 	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
@@ -950,7 +959,7 @@ void hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
 		return;
 	}
 	safestrncpy(hd->homunculus.name,name,NAME_LENGTH);
-	clif_charnameack (0,&hd->bl);
+	clif_name_area(&hd->bl);
 	hd->homunculus.rename_flag = 1;
 	clif_hominfo(sd,hd,0);
 }

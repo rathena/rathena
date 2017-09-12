@@ -4,6 +4,10 @@
 #ifndef _PET_H_
 #define _PET_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MAX_PET_DB	300
 #define MAX_PETLOOT_SIZE	30
 
@@ -12,10 +16,10 @@ struct s_pet_db {
 	short class_; ///< Monster ID
 	char name[NAME_LENGTH], ///< AEGIS name
 		jname[NAME_LENGTH]; ///< English name
-	short itemID; ///< Lure ID
-	short EggID; ///< Egg ID
-	short AcceID; ///< Accessory ID
-	short FoodID; ///< Food ID
+	unsigned short itemID; ///< Lure ID
+	unsigned short EggID; ///< Egg ID
+	unsigned short AcceID; ///< Accessory ID
+	unsigned short FoodID; ///< Food ID
 	int fullness; ///< Amount of hunger decresed each hungry_delay interval
 	int hungry_delay; ///< Hunger value decrease each x seconds
 	int r_hungry; ///< Intimacy increased after feeding
@@ -108,7 +112,7 @@ struct pet_data {
 int pet_create_egg(struct map_session_data *sd, unsigned short item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
-int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type);
+int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
 int pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
 int search_petDB_index(int key,int type);
@@ -137,5 +141,9 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data); // [Valar
 void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _PET_H_ */

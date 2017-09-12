@@ -11,6 +11,10 @@
 #ifndef _LOGIN_H_
 #define _LOGIN_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // NAME_LENGTH,SEX_*
 #include "../common/core.h" // CORE_ST_LAST
 #include "account.h"
@@ -42,7 +46,6 @@ struct login_session_data {
 	char lastlogin[24];		///date when last logged, Y-M-D HH:MM:SS
 	uint8 group_id;			///groupid of account
 	uint8 clienttype;		/// ???
-	uint32 version;			///version contained in clientinfo
 
 	uint8 client_hash[16];		///hash of client
 	int has_client_hash;		///client ha sent an hash
@@ -82,8 +85,6 @@ struct Login_Config {
 	bool use_md5_passwds;                           /// work with password hashes instead of plaintext passwords?
 	int group_id_to_connect;                        /// required group id to connect
 	int min_group_id_to_connect;                    /// minimum group id to connect
-	bool check_client_version;                      /// check the clientversion set in the clientinfo ?
-	uint32 client_version_to_connect;               /// the client version needed to connect (if checking is enabled)
 
 	bool ipban;                                     /// perform IP blocking (via contents of `ipbanlist`) ?
 	bool dynamic_pass_failure_ban;                  /// automatic IP blocking due to failed login attempts ?
@@ -139,7 +140,6 @@ struct auth_node {
 	uint32 login_id2;
 	uint32 ip;
 	char sex;
-	uint32 version;
 	uint8 clienttype;
 };
 extern DBMap* auth_db; // uint32 account_id -> struct auth_node*
@@ -233,5 +233,9 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  *	x: acc state (TODO document me deeper)
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _LOGIN_H_ */

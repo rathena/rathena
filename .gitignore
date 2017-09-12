@@ -12,7 +12,10 @@ Thumbs.db
 # /
 /*_fifo
 /*.exe
+/*.exe.*
 /*.ilk
+/*.iobj
+/*.ipdb
 /*.log
 /*.ncb
 /*.opensdf
@@ -24,18 +27,16 @@ Thumbs.db
 /*.suo
 *.o
 *.a
-*.yml
-/char-server
+*.vcxproj.user
 /char-server
 /config.log
 /config.status
 /core
+/enc_temp_folder
 /ipch
-/login-server
 /login-server
 /Makefile
 /Makefile.cache
-/map-server
 /map-server
 /mapcache
 /nbproject
@@ -49,15 +50,15 @@ Thumbs.db
 /3rdparty/mt19937ar/Makefile
 /3rdparty/mt19937ar/*.o
 
+# /3rdparty/yaml-cpp/
+/3rdparty/yaml-cpp/Makefile
+
 # /db/
 /db/import
 
 # /conf/
 /conf/import
 /conf/msg_conf/import
-
-# /doc/
-/doc/doxygen
 
 # /log/
 /log/*.log
@@ -100,6 +101,23 @@ Thumbs.db
 /tools/*.ilk
 /tools/*.pdb
 
+# /vcproj-15/
+/vcproj-15/char-server
+/vcproj-15/login-server
+/vcproj-15/mapcache
+/vcproj-15/map-server
+/vcproj-15/*.user
+
+# /vcproj-14/
+.vs
+*.VC.db
+*.VC.opendb
+/vcproj-14/char-server
+/vcproj-14/login-server
+/vcproj-14/mapcache
+/vcproj-14/map-server
+/vcproj-14/*.user
+
 # /vcproj-13/
 /vcproj-13/char-server
 /vcproj-13/login-server
@@ -134,3 +152,16 @@ Thumbs.db
 /.idea/vcs.xml
 /.idea/workspace.xml
 /build/
+
+# bat tools
+/charserv.bat
+/logserv.bat
+/mapcache.bat
+/mapserv.bat
+/runserver.bat
+/serv.bat
+
+# dlls
+/libmysql.dll
+/pcre8.dll
+/zlib.dll

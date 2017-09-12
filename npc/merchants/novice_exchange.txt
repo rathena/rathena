@@ -297,25 +297,28 @@ geffen,173,88,5	script	Merchant#geff	85,{
 }
 
 function	script	F_PotExchange	{
-	if (countitem(getarg(0)) < getarg(1)) {
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+
+	if (countitem(.@item_req) < .@req_amount) {
 		mes "[Merchant]";
 		mes "Hey, where are";
-		mes "all those "+getitemname(getarg(0))+"";
+		mes "all those "+ getitemname(.@item_req) +"";
 		mes "that you promised?";
-		mes "Give me "+getitemname(getarg(0))+"!";
+		mes "Give me "+ getitemname(.@item_req) +"!";
 		close;
 	}
 	else {
 		mes "[Merchant]";
 		mes "Okay, let me check";
-		mes "how many "+getitemname(getarg(0))+" you";
+		mes "how many "+ getitemname(.@item_req) +" you";
 		mes "have on you. Hmm...";
 		next;
 		mes "[Merchant]";
 		mes "You have";
-		mes "a total of " + countitem(getarg(0)) + " "+getitemname(getarg(0))+".";
+		mes "a total of "+ countitem(.@item_req) +" "+ getitemname(.@item_req) +".";
 		mes "I can give you a total";
-		mes "of " + (countitem(getarg(0))/getarg(1)) + " Red Potions for those.";
+		mes "of "+ (countitem(.@item_req)/.@req_amount) +" Red Potions for those.";
 		next;
 		mes "[Merchant]";
 		mes "What do you say?";
@@ -326,7 +329,7 @@ function	script	F_PotExchange	{
 			mes "You know the exact";
 			mes "number of Red Potions";
 			mes "you want to receive for";
-			mes "those "+getitemname(getarg(0))+", don't you?";
+			mes "those "+ getitemname(.@item_req) +", don't you?";
 			next;
 			mes "[Merchant]";
 			mes "Now, I can trade you";
@@ -357,8 +360,8 @@ function	script	F_PotExchange	{
 					break;
 				}
 			}
-			set .@put_out_item,.@input * getarg(1);
-			if (countitem(getarg(0)) < .@put_out_item) {
+			.@put_out_item = .@input * .@req_amount;
+			if (countitem(.@item_req) < .@put_out_item) {
 				mes "[Merchant]";
 				mes "Uh oh, the number you entered doesn't seem right. You better check the number of Red Potions that you can trade for again.";
 				close;
@@ -367,7 +370,7 @@ function	script	F_PotExchange	{
 			mes "There you go!";
 			mes "Check how many Red Potions";
 			mes "I've given you, it should be good. Thanks, that was a good deal~";
-			delitem getarg(0),.@put_out_item; //Shell
+			delitem .@item_req,.@put_out_item; //Shell
 			getitem 501,.@input; //Red_Potion
 			close;
 		}

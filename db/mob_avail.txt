@@ -13,6 +13,7 @@
 //
 // SpriteID is a job class value.
 // Weapon and Shield uses Item ID, while Head uses View ID.
+// Option for carts only works if you compiled your server for a packet version before 2012-02-01
 
 //1002,1039		// Poring - Baphomet
 //1970,1002,10013	// Displays a Poring with a backpack

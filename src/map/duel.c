@@ -16,6 +16,8 @@
 struct duel duel_list[MAX_DUEL]; //list of current duel
 int duel_count = 0; //number of duel active
 
+static void duel_set(const unsigned int did, struct map_session_data* sd);
+
 /*
  * Save the current time of the duel in PC_LAST_DUEL_TIME
  */
@@ -27,7 +29,7 @@ void duel_savetime(struct map_session_data* sd)
 	time(&timer);
 	t = localtime(&timer);
 
-	pc_setglobalreg(sd, "PC_LAST_DUEL_TIME", t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min);
+	pc_setglobalreg(sd, add_str("PC_LAST_DUEL_TIME"), t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min);
 }
 
 /*
@@ -42,7 +44,7 @@ int duel_checktime(struct map_session_data* sd)
 	time(&timer);
 	t = localtime(&timer);
 
-	diff = t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min - pc_readglobalreg(sd, "PC_LAST_DUEL_TIME");
+	diff = t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min - pc_readglobalreg(sd, add_str("PC_LAST_DUEL_TIME"));
 
 	return !(diff >= 0 && diff < battle_config.duel_time_interval);
 }
@@ -59,7 +61,7 @@ static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 	if (sd->duel_group != ssd->duel_group) return 0;
 
 	sprintf(output, "      %d. %s", ++(*p), sd->status.name);
-	clif_disp_onlyself(ssd, output, strlen(output));
+	clif_messagecolor(&ssd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	return 1;
 }
 
@@ -84,8 +86,28 @@ void duel_showinfo(const unsigned int did, struct map_session_data* sd)
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count);
 
-	clif_disp_onlyself(sd, output, strlen(output));
+	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	map_foreachpc(duel_showinfo_sub, sd, &p);
+}
+
+/*
+* Moves sd to duel
+*/
+static void duel_set(const unsigned int did, struct map_session_data* sd) {
+	sd->state.changemap = 1;
+	sd->state.warping = 1;
+
+	// As you move to a different plane, ground effects need to be cleared
+	skill_clear_unitgroup(&sd->bl);
+	skill_unit_move(&sd->bl, gettick(), 2);
+	skill_cleartimerskill(&sd->bl);
+
+	sd->duel_group = did;
+
+	skill_unit_move(&sd->bl, gettick(), 3);
+
+	sd->state.changemap = 0;
+	sd->state.warping = 0;
 }
 
 /*
@@ -100,16 +122,15 @@ int duel_create(struct map_session_data* sd, const unsigned int maxpl)
 	if(i == MAX_DUEL) return 0;
 
 	duel_count++;
-	sd->duel_group = i;
+	duel_set(i, sd);
 	duel_list[i].members_count++;
 	duel_list[i].invites_count = 0;
 	duel_list[i].max_players_limit = maxpl;
 
 	strcpy(output, msg_txt(sd,372)); // " -- Duel has been created (@invite/@leave) --"
-	clif_disp_onlyself(sd, output, strlen(output));
+	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 
-	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-	clif_maptypeproperty2(&sd->bl,SELF);
+	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	//clif_misceffect2(&sd->bl, 159);
 	return i;
 }
@@ -169,10 +190,9 @@ void duel_leave(const unsigned int did, struct map_session_data* sd)
 		duel_count--;
 	}
 
-	sd->duel_group = 0;
+	duel_set(0, sd);
 	duel_savetime(sd);
-	clif_map_property(sd, MAPPROPERTY_NOTHING);
-	clif_maptypeproperty2(&sd->bl,SELF);
+	clif_map_property(&sd->bl, MAPPROPERTY_NOTHING, SELF);
 }
 
 /*
@@ -185,7 +205,7 @@ void duel_accept(const unsigned int did, struct map_session_data* sd)
 	char output[256];
 
 	duel_list[did].members_count++;
-	sd->duel_group = sd->duel_invite;
+	duel_set(sd->duel_invite, sd);
 	duel_list[did].invites_count--;
 	sd->duel_invite = 0;
 
@@ -193,8 +213,7 @@ void duel_accept(const unsigned int did, struct map_session_data* sd)
 	sprintf(output, msg_txt(sd,376), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 
-	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-	clif_maptypeproperty2(&sd->bl,SELF);
+	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	//clif_misceffect2(&sd->bl, 159);
 }
 

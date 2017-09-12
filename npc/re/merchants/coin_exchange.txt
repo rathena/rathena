@@ -430,9 +430,10 @@ function	script	F_mal_coin	{
 
 // Initial dialogue and checks:
 // -- callfunc "F_mal_coin",0,"[<NPC Name>]",<NPC ID>;
+	.@npc_name$ = getarg(1);
 	if (getarg(0) == 0) {
 		if (getarg(2) != 2 && BaseLevel < 50) {
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Ahaaa~";
 			mes "If you want to buy this stuff,";
 			mes "you can talk to me";
@@ -441,13 +442,13 @@ function	script	F_mal_coin	{
 			mes "for a child~";
 			close;
 		}
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "Nice to meet you~~";
 		mes "I am! YES~~ That's right!";
 		mes "I'm selling special stuff";
 		mes "which you can see only here on Meow Meow Island!";
 		next;
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "How about it? What are you waiting for?";
 		mes "Why don't you take a look at";
 		mes "what kinds of stuff I have?";
@@ -468,29 +469,29 @@ function	script	F_mal_coin	{
 			next;
 			break;
 		}
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "Well then, do you want to take a look at what I have now?";
 		next;
 		switch(select("Yes:No")) {
 		case 1:
 			if (checkweight(1201,1) == 0) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "It seems that there are too many items in your inventory.";
 				mes "Please make space and come back again~";
 				close;
 			}
 			if (MaxWeight - Weight < 2500) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "It seems that you're overweight.";
 				mes "Please reduce your weight and come back again~";
 				close;
 			}
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Well, take a good look at them~~~";
 			next;
 			return;
 		case 2:
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Well, then. I'll see you next time.";
 			mes "Goodbye.";
 			close;
@@ -500,7 +501,7 @@ function	script	F_mal_coin	{
 // Exchange function:
 // -- callfunc "F_mal_coin",1,"[<NPC Name>]","<Display Name>",<Item ID>,<Egrade_Coin>,<Malang_Sp_Can>,<Silvervine>
 	if (getarg(0) == 1) {
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "The price of ^0000FF["+getarg(2)+"]^000000 is";
 		if (getarg(4) && getarg(5)) { // Type 1: Egrade_Coin or Malang_Sp_Can
 			mes getarg(4)+" E Grade Coin or "+getarg(5)+" Malangdo Canned Specialties.";
@@ -516,7 +517,7 @@ function	script	F_mal_coin	{
 			.@menu$ = "Yes.::I don't want to purchase any.";
 		}
 		next;
-		mes getarg(1);
+		mes .@npc_name$;
 		if (.@type == 1) {
 			mes "Would you like to purchase";
 			mes "^0000FF["+getarg(2)+"]^000000 with E Grade Coins?";
@@ -547,23 +548,23 @@ function	script	F_mal_coin	{
 				break;
 			}
 			if (countitem(.@item) < .@amount) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "I'm sorry, you need more "+.@str$+".";
 				close;
 			}
 			if (MaxWeight - Weight < getiteminfo(getarg(3),6)) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "Sorry, you've purchased too many.";
 				mes "You need to make more space in your inventory. Please come back later.";
 				close;
 			}
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Thank you.";
 			delitem .@item,.@amount;
 			getitem getarg(3),1;
 			return;
 		case 3:
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Always be careful";
 			mes "when you purchase items.";
 			close;

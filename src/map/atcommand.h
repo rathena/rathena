@@ -4,6 +4,12 @@
 #ifndef _ATCOMMAND_H_
 #define _ATCOMMAND_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "../common/mmo.h"
+
 struct map_session_data;
 
 //This is the distance at which @autoloot works,
@@ -35,11 +41,15 @@ bool atcommand_exists(const char* name);
 // @commands (script based)
 struct atcmd_binding_data {
 	char command[50];
-	char npc_event[50];
+	char npc_event[EVENT_NAME_LENGTH];
 	int level;
 	int level2;
 };
-struct atcmd_binding_data** atcmd_binding;
+extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ATCOMMAND_H_ */

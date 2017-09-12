@@ -593,7 +593,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 		mes "do you not?";
 		next;
 		mes "[Nelliorde]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Hahahaha, forgive my rudeness,";
 			mes "but I fail to remember your name, although your face does seem rather familiar.";
 		}
@@ -2301,7 +2301,7 @@ prt_castle,84,51,5	script	Librarian#2	105,{
 		next;
 		switch(select("Lowen, Sibling:Lowen, Spouse:Lowen, Enemy:Lowen, a Friend")) {
 		case 1:
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "[Librarian]";
 				mes "How dare you";
 				mes "lie to the royal";
@@ -2348,7 +2348,7 @@ prt_castle,84,51,5	script	Librarian#2	105,{
 				close;
 			}
 		case 2:
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "[Librarian]";
 				mes "Spouse...?";
 				mes "Well, I guess you look like a husband. Heh, I've got a girlfriend myself. Well, at least I think so. Anyway...";
@@ -2571,7 +2571,6 @@ prontera,262,353,0	script	Gravestone	111,{
 			mes "Lowen Ellenen";
 			mes " ";
 			mes " XXXX. XX. XX.";
-			mes "";
 			mes "Her noble spirit";
 			mes "was sent to the holy";
 			mes "place by Valkyrie's will.";
@@ -2708,7 +2707,7 @@ gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if ((god_brising > 9) && (god_brising < 34)) {
 		emotion e_gasp;
 	}
@@ -2840,7 +2839,7 @@ gef_dun01,203,48,0	script	#lowentrace1	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if ((god_brising > 9) && (god_brising < 34)) {
 		emotion e_gasp;
 	}
@@ -2981,7 +2980,7 @@ que_god02,54,64,4	script	Soldier#1_brising	105,1,1,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (god_brising == 31) {
 		warp "que_god02",174,49;
 		donpcevent "#brisinsold::OnSold1Off";
@@ -3159,7 +3158,7 @@ que_god02,167,58,4	script	#knight3	752,{ end; }
 
 que_god02,174,49,0	script	#lowenone	139,0,0,{
 
-OnTouch:
+OnTouch_:
 	donpcevent "brisinsold2::OnSold2On";
 	mes "[" + strcharinfo(0) + "]";
 	mes "Where am I?";
@@ -3244,7 +3243,7 @@ que_god02,124,59,7	script	#hermite	798,{ end; }
  
 que_god02,120,52,0	script	#monologue	139,0,0,{
 
-OnTouch:
+OnTouch_:
 	mes "[" + strcharinfo(0) + "]";
 	mes "Where am I?";
 	mes "Isn't that...";
@@ -3677,7 +3676,7 @@ xmas,38,105,0	script	#brisindwarf1	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (god_brising > 39) {
 		emotion e_gasp,1;
 	}
@@ -4144,7 +4143,7 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (god_brising > 41) {
 		emotion e_gasp,1;
 	}
@@ -4338,7 +4337,7 @@ mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (god_brising > 42) {
 		emotion e_gasp,1;
 	}
@@ -4578,7 +4577,7 @@ mjo_dun02,126,36,0	script	#brisindwarf4	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if ($God2 < $@god_check1) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Beh, no way out.";

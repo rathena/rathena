@@ -1,9 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
+#include "cbasetypes.h"
+#include "malloc.h"
+#include "showmsg.h"
 #include "strlib.h"
 
 #include <stdlib.h>
@@ -1044,6 +1044,8 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		if( !parseproc(fields+1, columns, entries) )
 		{
 			ShowError("sv_readdb: Could not process contents of line %d of \"%s\".\n", lines, path);
+                        //perhaps call a provided function to clean entries if we have fail
+                        //clearproc(fields+1, columns, entries)
 			continue; // invalid row contents
 		}
 

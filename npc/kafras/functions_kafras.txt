@@ -74,8 +74,11 @@
 //==========================================================================
 function	script	F_Kafra	{
 	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	.@welcome = getarg(0);
+	.@menu_num = getarg(1);
+
 	// Display Kafra Welcome Message
-	switch(getarg(0)){
+	switch(.@welcome){
 		default:
 		case 0:
 			// Default message (obsolete)
@@ -122,11 +125,11 @@ function	script	F_Kafra	{
 	next;
 	while (1) {
 		deletearray @K_Menu0$[0],getarraysize(@K_Menu0$);
-		if (getarg(0) == 2) {
+		if (.@welcome == 2) {
 			// Guild Kafra Menu override (free Teleport, free Storage, Free Cart)
 			setarray @K_Menu0$[0],"Use Storage","Use Guild Storage","Rent a Pushcart","Use Teleport Service","Cancel";
 		} else {
-			switch(getarg(1)){
+			switch(.@menu_num){
 				// Save and Storage only
 				case 1:	setarray @K_Menu0$[0],"Save","Use Storage","Cancel"; break;
 				// Storage only
@@ -158,14 +161,14 @@ function	script	F_Kafra	{
 			return;
 		} else if (@K_Menu0$[.@j] == "Use Storage") {
 			// Do not charge for Guild Storage
-			if(getarg(0) == 2) 
+			if(.@welcome == 2) 
 				callfunc "F_KafStor",2,0,0;
 			else 
-				callfunc "F_KafStor",0,getarg(3),getarg(0);
+				callfunc "F_KafStor",0,getarg(3),.@welcome;
 			next;
 		} else if (@K_Menu0$[.@j] == "Use Teleport Service") {
 			// Display Einbroch "No Teleport Service" notice.
-			if(getarg(1) != 4) callfunc "F_KafTele",getarg(0);
+			if(.@menu_num != 4) callfunc "F_KafTele",.@welcome;
 			else {
 				mes "[Kafra Employee]";
 				mes "Because of the ^FF0000Limited";
@@ -182,13 +185,13 @@ function	script	F_Kafra	{
 			}
 			next;
 		} else if (@K_Menu0$[.@j] == "Rent a Pushcart") {
-			if(callfunc("F_KafCart",getarg(0),getarg(4)) == 1) 
+			if(callfunc("F_KafCart",.@welcome,getarg(4)) == 1) 
 				next;
 		} else if (@K_Menu0$[.@j] == "Check Other Information") {
 			callfunc "F_KafInfo",getarg(2);
 			next;
 		} else if (@K_Menu0$[.@j] == "Cancel"){
-			callfunc "F_KafEnd",getarg(0),0;
+			callfunc "F_KafEnd",.@welcome,0;
 			end;
 		} else if (@K_Menu0$[.@j] == "Use Guild Storage") {
 			callfunc "F_KafStor",1,0;
@@ -201,8 +204,11 @@ function	script	F_Kafra	{
 // Storage Function
 //===================================================
 function	script	F_KafStor	{
+	.@type = getarg(0);
+	.@fee = getarg(1);
+
 	// Unable to access Guild Storage (Busy)
-	if(getarg(0) == 1){
+	if(.@type == 1){
 		if(guildopenstorage()){
 			mes "[Kafra Employee]";
 			mes "I'm sorry but another guild member is using the guild storage";
@@ -215,7 +221,7 @@ function	script	F_KafStor	{
 		close;
 	}
 	// Unable to access Normal Storage (Insufficient Basic Skills)
-	if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+	if(!callfunc("F_CanOpenStorage")){
 		mes "[Kafra Employee]";
 		// Niflheim Specific Message
 		if (getarg(2) == 1) {
@@ -232,11 +238,11 @@ function	script	F_KafStor	{
 		return;
 	}
 	// Accessing Normal Storage (Skipped if accessing Storage from Guild castle)
-	if(getarg(0) != 2){
+	if(.@type != 2){
 		// Consume "Free Ticket for Kafra Storage" if available.
 		if(countitem(7059)) delitem 7059,1;
 		else {
-			if(Zeny<getarg(1)){
+			if(Zeny<.@fee){
 				mes "[Kafra Employee]";
 				// Niflheim Specific Message
 				if (getarg(2) == 1) {
@@ -251,16 +257,16 @@ function	script	F_KafStor	{
 				mes "I'm sorry, but you don't";
 				mes "have enough zeny to use";
 				mes "the Storage Service. Our";
-				mes "Storage access fee is "+getarg(1)+" zeny.";
+				mes "Storage access fee is "+.@fee+" zeny.";
 				return;
 			}
-			set Zeny, Zeny-getarg(1);
-			set RESRVPTS, RESRVPTS + (getarg(1)/5);
+			set Zeny, Zeny-.@fee;
+			set RESRVPTS, RESRVPTS + (.@fee/5);
 		}
 	}
 
 	// Surpress the "End" message if in guild castle.
-	if (getarg(0) != 2) {
+	if (.@type != 2) {
 		// Niflheim specific Message
 		if (getarg(2) == 1) {
 			percentheal 0,-10;
@@ -484,13 +490,16 @@ function	script	F_CheckKafCode	{
 // getarg(1): Company Name
 //=======================================================
 function	script	F_SetKafCode	{
-	mes getarg(0);
+	.@npc_name$ = getarg(0);
+	.@comp_name$ = getarg(1);
+
+	mes .@npc_name$;
 	if(#kafra_code) {
 		mes "Your storage is protected with a password. What would you do now?";
 		next;
 		switch (select("Change old password -> 5000z:Remove storage password -> 1000z:Cancel")) {
 			case 1:
-				mes getarg(0);
+				mes .@npc_name$;
 				mes "At first, please enter your ^0000FFold password^000000.";
 				set @code,callfunc("F_EntKafCode");
 				if(!@code || @code != #kafra_code) {
@@ -499,10 +508,10 @@ function	script	F_SetKafCode	{
 					break;
 				}
 				next;
-				callsub S_SET,getarg(0),getarg(1);
+				callsub S_SET,.@npc_name$,.@comp_name$;
 				break;
 			case 2:
-				mes getarg(0);
+				mes .@npc_name$;
 				mes "Please, enter your password before its removal.";
 				set @code,callfunc("F_EntKafCode");
 				if(!@code) {
@@ -511,7 +520,7 @@ function	script	F_SetKafCode	{
 					break;
 				}
 				next;
-				mes getarg(0);
+				mes .@npc_name$;
 				if(Zeny < 1000) {
 					mes "You don't have enough zeny.";
 					emotion e_cash;
@@ -521,7 +530,7 @@ function	script	F_SetKafCode	{
 				if(@code == #kafra_code) {
 					set #kafra_code,0;
 					mes "You've successfully cleared your storage password.";
-					mes "Thank you for using "+getarg(1)+".";
+					mes "Thank you for using "+.@comp_name$+".";
 					emotion e_thx;
 				} else {
 					mes "Wrong password. We won't return your 1000z.";
@@ -533,11 +542,11 @@ function	script	F_SetKafCode	{
 				break;
 		}
 	} else {
-		mes getarg(1)+" proudly presents you a new service:";
+		mes .@comp_name$+" proudly presents you a new service:";
 		mes "Additional storage protection with a password.";
 		next;
 		switch (select("Set new password -> 5000z:Cancel")) {
-			case 1: callsub S_SET,getarg(0),getarg(1); break;
+			case 1: callsub S_SET,.@npc_name$,.@comp_name$; break;
 			case 2: break;		
 		}
 	}
@@ -546,7 +555,7 @@ function	script	F_SetKafCode	{
 	end;
 
 S_SET:
-	mes getarg(0);
+	mes .@npc_name$;
 	mes "Now enter your ^FF0000new password^000000 to protect your storage from thieves.";
 	set @code,callfunc("F_EntKafCode");
 	if(!@code) {
@@ -555,7 +564,7 @@ S_SET:
 		return;
 	}
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	if(Zeny < 5000) {
 		mes "You don't have enough zeny.";
 		emotion e_cash;
@@ -564,7 +573,7 @@ S_SET:
 	set Zeny,Zeny-5000;
 	set #kafra_code,@code;
 	mes "You've protected your storage with a secret password.";
-	mes "Thank you for using "+getarg(1)+".";
+	mes "Thank you for using "+.@comp_name$+".";
 	emotion e_thx;
 	return;
 }
@@ -649,7 +658,7 @@ function	script	F_KafSet	{
 	}
 
 	// VIP pricing varies across the regional servers; this is most practical.
-	if (VIP_SCRIPT && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 		for (set .@i, 0; .@i < getarraysize(@wrpD$); set .@i, .@i + 1)
 			setd "@wrpP["+.@i+"]",getd("@wrpP["+.@i+"]") * 2;
 	}

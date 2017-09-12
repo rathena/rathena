@@ -5,18 +5,23 @@
 #include "../common/socket.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 
+#include "itemdb.h"
 #include "map.h"
 #include "pc.h"
 #include "party.h"
 #include "quest.h"
 #include "chrif.h"
+#include "intif.h"
 
 #include <stdlib.h>
 
 static DBMap *questdb;
+static void questdb_free_sub(struct quest_db *quest, bool free);
+struct quest_db quest_dummy;
 
 /**
  * Searches a quest by ID.
@@ -38,17 +43,22 @@ struct quest_db *quest_search(int quest_id)
  */
 int quest_pc_login(TBL_PC *sd)
 {
+#if PACKETVER < 20141022
 	int i;
+#endif
 
 	if( sd->avail_quests == 0 )
 		return 1;
 
 	clif_quest_send_list(sd);
+
+#if PACKETVER < 20141022
 	clif_quest_send_mission(sd);
 
 	//@TODO[Haru]: Is this necessary? Does quest_send_mission not take care of this?
 	for( i = 0; i < sd->avail_quests; i++ )
-		clif_quest_update_objective(sd, &sd->quest_log[i]);
+		clif_quest_update_objective(sd, &sd->quest_log[i], 0);
+#endif
 
 	return 0;
 }
@@ -88,17 +98,32 @@ int quest_add(TBL_PC *sd, int quest_id)
 	memset(&sd->quest_log[n], 0, sizeof(struct quest));
 
 	sd->quest_log[n].quest_id = qi->id;
-	if( qi->time )
-		sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time);
+	if (qi->time) {
+		if (qi->time_type == 0)
+			sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time);
+		else {	// quest time limit at HH:MM
+			int time_today;
+			time_t t;
+			struct tm * lt;
+
+			t = time(NULL);
+			lt = localtime(&t);
+			time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			if (time_today < qi->time)
+				sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time - time_today);
+			else	// next day
+				sd->quest_log[n].time = (unsigned int)(time(NULL) + 86400 + qi->time - time_today);
+		}
+	}
 	sd->quest_log[n].state = Q_ACTIVE;
 
 	sd->save_quest = true;
 
 	clif_quest_add(sd, &sd->quest_log[n]);
-	clif_quest_update_objective(sd, &sd->quest_log[n]);
+	clif_quest_update_objective(sd, &sd->quest_log[n], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -139,8 +164,23 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = qi->id;
 
-	if( qi->time )
-		sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+	if (qi->time) {
+		if (qi->time_type == 0)
+			sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+		else {	// quest time limit at HH:MM
+			int time_today;
+			time_t t;
+			struct tm * lt;
+
+			t = time(NULL);
+			lt = localtime(&t);
+			time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			if (time_today < qi->time)
+				sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time - time_today);
+			else	// next day
+				sd->quest_log[i].time = (unsigned int)(time(NULL) + 86400 + qi->time - time_today);
+		}
+	}
 
 	sd->quest_log[i].state = Q_ACTIVE;
 
@@ -148,10 +188,10 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 
 	clif_quest_delete(sd, qid1);
 	clif_quest_add(sd, &sd->quest_log[i]);
-	clif_quest_update_objective(sd, &sd->quest_log[i]);
+	clif_quest_update_objective(sd, &sd->quest_log[i], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -190,7 +230,7 @@ int quest_delete(TBL_PC *sd, int quest_id)
 	clif_quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -205,47 +245,76 @@ int quest_delete(TBL_PC *sd, int quest_id)
 int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
-	int mob, party;
+	int mob_id, party_id;
 
 	nullpo_ret(bl);
 	nullpo_ret(sd = (struct map_session_data *)bl);
 
-	party = va_arg(ap,int);
-	mob = va_arg(ap,int);
+	party_id = va_arg(ap,int);
+	mob_id = va_arg(ap,int);
 
 	if( !sd->avail_quests )
 		return 0;
-	if( sd->status.party_id != party )
+	if( sd->status.party_id != party_id )
 		return 0;
 
-	quest_update_objective(sd, mob);
+	quest_update_objective(sd, mob_id);
 
 	return 1;
 }
 
 /**
- * Updates the quest objectives for a character after killing a monster.
+ * Updates the quest objectives for a character after killing a monster, including the handling of quest-granted drops.
  * @param sd : Character's data
  * @param mob_id : Monster ID
  */
-void quest_update_objective(TBL_PC *sd, int mob)
+void quest_update_objective(TBL_PC *sd, int mob_id)
 {
 	int i, j;
 
 	for( i = 0; i < sd->avail_quests; i++ ) {
 		struct quest_db *qi = NULL;
 
-		if( sd->quest_log[i].state != Q_ACTIVE ) // Skip inactive quests
+		if( sd->quest_log[i].state == Q_COMPLETE ) // Skip complete quests
 			continue;
 
 		qi = quest_search(sd->quest_log[i].quest_id);
 
-		for( j = 0; j < qi->num_objectives; j++ ) {
-			if( qi->mob[j] == mob && sd->quest_log[i].count[j] < qi->count[j] )  {
+		for( j = 0; j < qi->objectives_count; j++ ) {
+			if( qi->objectives[j].mob == mob_id && sd->quest_log[i].count[j] < qi->objectives[j].count )  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
-				clif_quest_update_objective(sd, &sd->quest_log[i]);
+				clif_quest_update_objective(sd, &sd->quest_log[i], mob_id);
 			}
+		}
+
+		// process quest-granted extra drop bonuses
+		for (j = 0; j < qi->dropitem_count; j++) {
+			struct quest_dropitem *dropitem = &qi->dropitem[j];
+			struct item item;
+			int temp;
+
+			if (dropitem->mob_id != 0 && dropitem->mob_id != mob_id)
+				continue;
+			// TODO: Should this be affected by server rates?
+			if (dropitem->rate < 10000 && rnd()%10000 >= dropitem->rate)
+				continue;
+			if (!itemdb_exists(dropitem->nameid))
+				continue;
+
+			memset(&item,0,sizeof(item));
+			item.nameid = dropitem->nameid;
+			item.identify = itemdb_isidentified(dropitem->nameid);
+			item.amount = dropitem->count;
+//#ifdef BOUND_ITEMS
+//			item.bound = dropitem->bound;
+//#endif
+//			if (dropitem->isGUID)
+//				item.unique_id = pc_generate_unique_id(sd);
+			if ((temp = pc_additem(sd, &item, 1, LOG_TYPE_QUEST)) != 0) // Failed to obtain the item
+				clif_additem(sd, 0, 0, temp);
+//			else if (dropitem->isAnnounced || itemdb_exists(dropitem->nameid)->flag.broadcast)
+//				intif_broadcast_obtain_special_item(sd, dropitem->nameid, dropitem->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
 }
@@ -273,7 +342,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 	sd->save_quest = true;
 
 	if( status < Q_COMPLETE ) {
-		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE);
+		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE ? true : false);
 		return 0;
 	}
 
@@ -289,7 +358,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 	clif_quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
 }
@@ -318,6 +387,8 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 
 	switch( type ) {
 		case HAVEQUEST:
+			if (sd->quest_log[i].state == Q_INACTIVE) // Player has the quest but it's in the inactive state; send it as Q_ACTIVE.
+				return 1;
 			return sd->quest_log[i].state;
 		case PLAYTIME:
 			return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
@@ -326,8 +397,8 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 				int j;
 				struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
 
-				ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < qi->count[j]);
-				if( j == MAX_QUEST_OBJECTIVES )
+				ARR_FIND(0, qi->objectives_count, j, sd->quest_log[i].count[j] < qi->objectives[j].count);
+				if( j == qi->objectives_count )
 					return 2;
 				if( sd->quest_log[i].time < (unsigned int)time(NULL) )
 					return 1;
@@ -342,13 +413,13 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 }
 
 /**
- * Loads quests from the quest db.
+ * Loads quests from the quest db.txt
  * @return Number of loaded quests, or -1 if the file couldn't be read.
  */
-int quest_read_db(void)
+void quest_read_txtdb(void)
 {
 	const char* dbsubpath[] = {
-		"",
+		DBPATH,
 		DBIMPORT"/",
 	};
 	uint8 f;
@@ -356,71 +427,120 @@ int quest_read_db(void)
 	for (f = 0; f < ARRAYLENGTH(dbsubpath); f++) {
 		FILE *fp;
 		char line[1024];
-		uint32 count = 0;
+		uint32 ln = 0, count = 0;
 		char filename[256];
 
 		sprintf(filename, "%s/%s%s", db_path, dbsubpath[f], "quest_db.txt");
-		if( (fp = fopen(filename, "r")) == NULL ) {
+		if ((fp = fopen(filename, "r")) == NULL) {
 			if (f == 0)
 				ShowError("Can't read %s\n", filename);
-
-			return -1;
+			return;
 		}
 
-		while( fgets(line, sizeof(line), fp) ) {
-			struct quest_db *quest = NULL, entry;
-			char *str[9], *p, *np;
+		while(fgets(line, sizeof(line), fp)) {
+			struct quest_db *quest = NULL;
+			char *str[19], *p;
+			int quest_id = 0;
 			uint8 i;
 
-			if( line[0] == '/' && line[1] == '/' )
+			++ln;
+			if (line[0] == '\0' || (line[0] == '/' && line[1] == '/'))
 				continue;
+
+			p = trim(line);
+
+			if (*p == '\0')
+				continue; // empty line
 
 			memset(str, 0, sizeof(str));
+			for(i = 0, p = line; i < 18 && p; i++) {
+				str[i] = p;
+				p = strchr(p,',');
+				if (p)
+					*p++ = 0;
+			}
+			if (str[0] == NULL)
+				continue;
+			if (i < 18) {
+				ShowError("quest_read_txtdb: Insufficient columns in '%s' line %d (%d of %d)\n", filename, ln, i, 18);
+				continue;
+			}
 
-			for( i = 0, p = line; i < 8; i++ ) {
-				if( (np = strchr(p, ',')) != NULL ) {
-					str[i] = p;
-					*np = 0;
-					p = np + 1;
-				} else if( str[0] == NULL )
-					break;
-				else {
-					ShowError("quest_read_db: Insufficient columns in line %s\n", line);
+			quest_id = atoi(str[0]);
+
+			if (quest_id < 0 || quest_id >= INT_MAX) {
+				ShowError("quest_read_txtdb: Invalid quest ID '%d' in '%s' line '%s' (min: 0, max: %d.)\n", quest_id, filename,ln, INT_MAX);
+				continue;
+			}
+
+			if (!(quest = (struct quest_db *)idb_get(questdb, quest_id)))
+				CREATE(quest, struct quest_db, 1);
+			else {
+				if (quest->objectives) {
+					aFree(quest->objectives);
+					quest->objectives = NULL;
+					quest->objectives_count = 0;
+				}
+				if (quest->dropitem) {
+					aFree(quest->dropitem);
+					quest->dropitem = NULL;
+					quest->dropitem_count = 0;
+				}
+ 			}
+
+			if (strchr(str[1],':') == NULL) {
+				quest->time = atoi(str[1]);
+				quest->time_type = 0;
+			}
+			else {
+				unsigned char hour, min;
+
+				hour = atoi(str[1]);
+				str[1] = strchr(str[1],':');
+				*str[1] ++= 0;
+				min = atoi(str[1]);
+
+				quest->time = hour * 3600 + min * 60;
+				quest->time_type = 1;
+			}
+
+			for(i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
+				uint16 mob_id = (uint16)atoi(str[2 * i + 2]);
+
+				if (!mob_id)
+					continue;
+				if (mobdb_exists(mob_id) == NULL) {
+					ShowWarning("quest_read_txtdb: Invalid monster as objective '%d' in line %d.\n", mob_id, ln);
 					continue;
 				}
+				RECREATE(quest->objectives, struct quest_objective, quest->objectives_count+1);
+				quest->objectives[quest->objectives_count].mob = mob_id;
+				quest->objectives[quest->objectives_count].count = (uint16)atoi(str[2 * i + 3]);
+				quest->objectives_count++;
 			}
 
-			if( str[0] == NULL )
-				continue;
+			for(i = 0; i < MAX_QUEST_DROPS; i++) {
+				uint16 mob_id = (uint16)atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
 
-			memset(&entry, 0, sizeof(struct quest_db));
-			entry.id = atoi(str[0]);
-
-			if( entry.id < 0 || entry.id >= INT_MAX ) {
-				ShowError("quest_read_db: Invalid quest ID '%d' in line '%s' (min: 0, max: %d.)\n", entry.id, line, INT_MAX);
-				continue;
-			}
-
-			if (!(quest = (struct quest_db *)idb_get(questdb, entry.id))) {
-				CREATE(quest, struct quest_db, 1);
-			}
-
-			entry.time = atoi(str[1]);
-
-			for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
-				entry.mob[i] = (uint16)atoi(str[2 * i + 2]);
-				entry.count[i] = (uint16)atoi(str[2 * i + 3]);
-
-				if( !entry.mob[i] || !entry.count[i] )
-					break;
-			}
-			entry.num_objectives = i;
+				if (!nameid)
+					continue;
+				if (!itemdb_exists(nameid) || (mob_id && mobdb_exists(mob_id) == NULL)) {
+					ShowWarning("quest_read_txtdb: Invalid item reward '%d' (mob %d, optional) in line %d.\n", nameid, mob_id, ln);
+					continue;
+				}
+				RECREATE(quest->dropitem, struct quest_dropitem, quest->dropitem_count+1);
+				quest->dropitem[quest->dropitem_count].mob_id = mob_id;
+				quest->dropitem[quest->dropitem_count].nameid = nameid;
+				quest->dropitem[quest->dropitem_count].count = 1;
+				quest->dropitem[quest->dropitem_count].rate = atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
+				quest->dropitem_count++;
+ 			}
 
 			//StringBuf_Init(&entry.name);
-			//StringBuf_Printf(&entry.name, "%s", str[7]);
+			//StringBuf_Printf(&entry.name, "%s", str[17]);
 
 			if (!quest->id) {
-				memcpy(quest, &entry, sizeof(entry));
+				quest->id = quest_id;
 				idb_put(questdb, quest->id, quest);
 			}
 			count++;
@@ -429,8 +549,14 @@ int quest_read_db(void)
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
 	}
+}
 
-	return 0;
+/**
+ * Loads Quest DB
+ */
+static void quest_read_db(void)
+{
+	quest_read_txtdb();
 }
 
 /**
@@ -472,16 +598,39 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 }
 
 /**
+ * Clear quest single entry
+ * @param quest
+ * @param free Will free quest from memory
+ **/
+static void questdb_free_sub(struct quest_db *quest, bool free)
+{
+	if (quest->objectives) {
+		aFree(quest->objectives);
+		quest->objectives = NULL;
+		quest->objectives_count = 0;
+	}
+	if (quest->dropitem) {
+		aFree(quest->dropitem);
+		quest->dropitem = NULL;
+		quest->dropitem_count = 0;
+	}
+	if (&quest->name)
+		StringBuf_Destroy(&quest->name);
+	if (free)
+		aFree(quest);
+}
+
+/**
  * Clears the quest database for shutdown or reload.
  */
+static int questdb_free(DBKey key, DBData *data, va_list ap)
+{
+	struct quest_db *quest = (struct quest_db *)db_data2ptr(data);
 
-static int questdb_free(DBKey key, DBData *data, va_list ap) {
-	struct quest_db *quest = db_data2ptr(data);
 	if (!quest)
 		return 0;
-	//if (&quest->name)
-	//	StringBuf_Destroy(&quest->name);
-	aFree(quest);
+
+	questdb_free_sub(quest, true);
 	return 1;
 }
 

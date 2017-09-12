@@ -1,9 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/malloc.h"
-#include "../common/core.h"
-#include "../common/showmsg.h"
+#include "malloc.h"
+#include "core.h"
+#include "showmsg.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -529,6 +529,7 @@ static void memmgr_log (char *buf)
 {
 	if( !log_fp )
 	{
+		const char* version;
 		time_t raw;
 		struct tm* t;
 
@@ -537,8 +538,14 @@ static void memmgr_log (char *buf)
 
 		time(&raw);
 		t = localtime(&raw);
-		fprintf(log_fp, "\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Revision %s).\n",
-			(t->tm_year+1900), (t->tm_mon+1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, get_svn_revision());
+
+		if( ( version = get_git_hash() ) && version[0] != UNKNOWN_VERSION ){
+			fprintf(log_fp, "\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Git Hash %s).\n", (t->tm_year+1900), (t->tm_mon+1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, version );
+		}else if( ( version = get_svn_revision() ) && version[0] != UNKNOWN_VERSION ){
+			fprintf(log_fp, "\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (SVN Revision %s).\n", (t->tm_year + 1900), (t->tm_mon + 1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, version );
+		}else{
+			fprintf(log_fp, "\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Unknown version).\n", (t->tm_year + 1900), (t->tm_mon + 1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec );
+		}
 	}
 	fprintf(log_fp, "%s", buf);
 	return;

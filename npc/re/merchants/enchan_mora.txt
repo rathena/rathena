@@ -661,7 +661,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 	// Enchant types:
 	//   [1]ATK [2]CRIT [3]EVA [4]Healer [5]Spell 1 [6]Assist 1 [7]Assist 2 [8]STR [9]Range [10]Physical [11]Spell 2
 	switch(.@part) {
-	case 4: //EQI_HAND_R
+	case EQI_HAND_R:
 		switch(.@equip_id) {
 			case 1660: callsub L_Socket,4,5,1;  //Wand_Of_Affection2
 			case 2011: callsub L_Socket,5,11,1; //Golden_Rod_Staff2
@@ -671,7 +671,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 16018: callsub L_Socket,1,5,1; //Mace_Of_Judgement2
 		}
 		break;
-	case 6: //EQI_SHOES
+	case EQI_SHOES:
 		switch(.@equip_id) {
 			case 2475: callsub L_Socket,6,8,1;  //Ur_Greave
 			case 2476: callsub L_Socket,6,10,1; //Peuz_Greave
@@ -681,7 +681,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 2480: callsub L_Socket,6,1,1;  //Black_Wing_Boots
 		}
 		break;
-	case 5: //EQI_GARMENT
+	case EQI_GARMENT:
 		switch(.@equip_id) {
 			case 2574: callsub L_Socket,3,8,1; //Ur_Manteau
 			case 2575: callsub L_Socket,3,2,1; //Peuz_Manteau
@@ -691,7 +691,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 2581: callsub L_Socket,3,1,1; //Black_Wing_Manteau
 		}
 		break;
-	case 2: //EQI_ARMOR
+	case EQI_ARMOR:
 		switch(.@equip_id) {
 			case 15036: callsub L_Socket,8,1,1;  //Ur_Plate
 			case 15037: callsub L_Socket,10,2,1; //Peuz_Plate
@@ -701,7 +701,7 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 			case 15043: callsub L_Socket,1,9,1;  //Black_Wing_Suits
 		}
 		break;
-	case 7: //EQI_ACC_L
+	case EQI_ACC_L:
 		switch(.@equip_id) {
 			case 2883: callsub L_Socket,6,0,2; //Ur_Seal
 			case 2884: callsub L_Socket,6,0,2; //Peuz_Seal
@@ -721,6 +721,8 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 L_Socket:
 	set .@select, @mora_enchant_select;
 	set .@enchant_type, getarg(0);
+	.@bonus_enchant = getarg(1);
+	.@allowed_slot = getarg(2);
 	set .@part, @mora_equip_part;
 	set .@equip_id, getequipid(.@part);
 	set .@equip_name$, getitemname(.@equip_id);
@@ -731,8 +733,8 @@ L_Socket:
 
 	if (.@select == 1) {
 		// If refine is +9 or higher, unlock bonus enchant type.
-		if (.@equip_refine >= 9 && getarg(1) > 0) {
-			if (.@enchant_type < 1 || .@enchant_type > 11 || getarg(1) > 11) {
+		if (.@equip_refine >= 9 && .@bonus_enchant > 0) {
+			if (.@enchant_type < 1 || .@enchant_type > 11 || .@bonus_enchant > 11) {
 				mes "[Artifact Researcher]";
 				mes "Mm-hmm something is wrong.";
 				close;
@@ -741,26 +743,26 @@ L_Socket:
 			mes "[Artifact Researcher]";
 			mes "It's a considerable reinforcement to the equipment. In this case extended enhancements can be granted. Which stat do you want to enhance?";
 			next;
-			switch(select(.@enchant_type$[.@enchant_type],.@enchant_type$[getarg(1)])) {
+			switch(select(.@enchant_type$[.@enchant_type],.@enchant_type$[.@bonus_enchant])) {
 			case 1:
 				break;
 			case 2:
-				set .@enchant_type, getarg(1);
+				set .@enchant_type, .@bonus_enchant;
 				break;
 			}
 		}
-		if (.@equip_card[3] == 0 && getarg(2) < 4) {
+		if (.@equip_card[3] == 0 && .@allowed_slot < 4) {
 			set .@slot,4;
 			mes "[Artifact Researcher]";
 			mes "Attempting to strengthen the ability further. The previous enforcement won't be affected. Do you want to continue?";
-		} else if (.@equip_card[2] == 0 && getarg(2) < 3) {
+		} else if (.@equip_card[2] == 0 && .@allowed_slot < 3) {
 			set .@slot,3;
 			mes "[Artifact Researcher]";
 			mes "Attempting second enhancement. The previous enforcement won't be affected.";
 			next;
 			mes "[Artifact Researcher]";
 			mes "I may have a chance to fail now with this attempt. Do you wish to continue?";
-		} else if (.@equip_card[1] == 0 && getarg(2) < 2) {
+		} else if (.@equip_card[1] == 0 && .@allowed_slot < 2) {
 			set .@slot,2;
 			mes "[Artifact Researcher]";
 			mes "Let's start the third enhancement. I can give the best stats at this stage but remember, ^990000there is now a chance for the artifact to be destroyed and previous enhancements will be erased^000000. Continue?";
@@ -1085,14 +1087,14 @@ L_Socket:
 		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
-		if (.@equip_card[3] == 0 && getarg(2) < 4) {
+		if (.@equip_card[3] == 0 && .@allowed_slot < 4) {
 			set .@equip_card[3],.@enchant;
-		} else if (.@equip_card[2] == 0 && getarg(2) < 3) {
+		} else if (.@equip_card[2] == 0 && .@allowed_slot < 3) {
 			set .@equip_card[2],.@enchant;
 			if (.@enchant == 0) {
 				set .@equip_card[3],0;
 			}
-		} else if (.@equip_card[1] == 0 && getarg(2) < 2) {
+		} else if (.@equip_card[1] == 0 && .@allowed_slot < 2) {
 			set .@equip_card[1],.@enchant;
 			if (.@enchant == 0) {
 				set .@equip_card[2],0;

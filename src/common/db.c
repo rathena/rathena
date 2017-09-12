@@ -3,7 +3,7 @@
  *  For more information, see LICENCE in the main folder
  *
  *  This file is separated in five sections:
- *  (1) Private typedefs, enums, structures, defines and gblobal variables
+ *  (1) Private typedefs, enums, structures, defines and global variables
  *  (2) Private functions
  *  (3) Protected functions used internally
  *  (4) Protected functions used in the interface of the database
@@ -47,6 +47,8 @@
  *  - create a db that organizes itself by splaying
  *
  *  HISTORY:
+ *    2013/08/25 - Added int64/uint64 support for keys [Ind/Hercules]
+ *    2013/04/27 - Added ERS to speed up iterator memory allocation [Ind/Hercules]
  *    2012/03/09 - Added enum for data types (int, uint, void*)
  *    2008/02/19 - Fixed db_obj_get not handling deleted entries correctly.
  *    2007/11/09 - Added an iterator to the database.
@@ -65,14 +67,17 @@
  * @encoding US-ASCII
  * @see #db.h
 \*****************************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "db.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/ers.h"
-#include "../common/strlib.h"
+
+#include "ers.h"
+#include "malloc.h"
+#include "mmo.h"
+#include "showmsg.h"
+#include "strlib.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
@@ -82,15 +87,15 @@
  *  DBNColor        - Enumeration of colors of the nodes.                    *
  *  DBNode          - Structure of a node in RED-BLACK trees.                *
  *  struct db_free  - Structure that holds a deleted node to be freed.       *
- *  DBMap_impl      - Struture of the database.                              *
+ *  DBMap_impl      - Structure of the database.                             *
  *  stats           - Statistics about the database system.                  *
 \*****************************************************************************/
 
 /**
- * If defined statistics about database nodes, database creating/destruction 
- * and function usage are keept and displayed when finalizing the database
+ * If defined statistics about database nodes, database creating/destruction
+ * and function usage are kept and displayed when finalizing the database
  * system.
- * WARNING: This adds overhead to every database operation (not shure how much).
+ * WARNING: This adds overhead to every database operation (not sure how much).
  * @private
  * @see #DBStats
  * @see #stats
@@ -138,7 +143,7 @@ typedef struct dbn {
 	// Other
 	node_color color;
 	unsigned deleted : 1;
-} *DBNode;
+} DBNode;
 
 /**
  * Structure that holds a deleted node.
@@ -148,8 +153,8 @@ typedef struct dbn {
  * @see DBMap_impl#free_list
  */
 struct db_free {
-	DBNode node;
-	DBNode *root;
+	DBNode *node;
+	DBNode **root;
 };
 
 /**
@@ -186,12 +191,12 @@ typedef struct DBMap_impl {
 	unsigned int free_max;
 	unsigned int free_lock;
 	// Other
-	ERS nodes;
+	ERS *nodes;
 	DBComparator cmp;
 	DBHasher hash;
 	DBReleaser release;
-	DBNode ht[HASH_SIZE];
-	DBNode cache;
+	DBNode *ht[HASH_SIZE];
+	DBNode *cache;
 	DBType type;
 	DBOptions options;
 	uint32 item_count;
@@ -215,7 +220,7 @@ typedef struct DBIterator_impl {
 	struct DBIterator vtable;
 	DBMap_impl* db;
 	int ht_index;
-	DBNode node;
+	DBNode *node;
 } DBIterator_impl;
 
 #if defined(DB_ENABLE_STATS)
@@ -234,10 +239,14 @@ static struct db_stats {
 	uint32 db_uint_alloc;
 	uint32 db_string_alloc;
 	uint32 db_istring_alloc;
+	uint32 db_int64_alloc;
+	uint32 db_uint64_alloc;
 	uint32 db_int_destroy;
 	uint32 db_uint_destroy;
 	uint32 db_string_destroy;
 	uint32 db_istring_destroy;
+	uint32 db_int64_destroy;
+	uint32 db_uint64_destroy;
 	// Function usage counters
 	uint32 db_rotate_left;
 	uint32 db_rotate_right;
@@ -254,10 +263,14 @@ static struct db_stats {
 	uint32 db_uint_cmp;
 	uint32 db_string_cmp;
 	uint32 db_istring_cmp;
+	uint32 db_int64_cmp;
+	uint32 db_uint64_cmp;
 	uint32 db_int_hash;
 	uint32 db_uint_hash;
 	uint32 db_string_hash;
 	uint32 db_istring_hash;
+	uint32 db_int64_hash;
+	uint32 db_uint64_hash;
 	uint32 db_release_nothing;
 	uint32 db_release_key;
 	uint32 db_release_data;
@@ -296,6 +309,8 @@ static struct db_stats {
 	uint32 db_i2key;
 	uint32 db_ui2key;
 	uint32 db_str2key;
+	uint32 db_i642key;
+	uint32 db_ui642key;
 	uint32 db_i2data;
 	uint32 db_ui2data;
 	uint32 db_ptr2data;
@@ -313,10 +328,14 @@ static struct db_stats {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0
 };
-#define DB_COUNTSTAT(token) if (stats. ## token != UINT32_MAX) ++stats. ## token
+#define DB_COUNTSTAT(token) do { if ((stats.token) != UINT32_MAX) ++(stats.token); } while(0)
 #else /* !defined(DB_ENABLE_STATS) */
 #define DB_COUNTSTAT(token)
 #endif /* !defined(DB_ENABLE_STATS) */
+
+/* [Ind/Hercules] */
+struct eri *db_iterator_ers;
+struct eri *db_alloc_ers;
 
 /*****************************************************************************\
  *  (2) Section of private functions used by the database system.            *
@@ -340,12 +359,12 @@ static struct db_stats {
  * @param node Node to be rotated
  * @param root Pointer to the root of the tree
  * @private
- * @see #db_rebalance(DBNode,DBNode *)
- * @see #db_rebalance_erase(DBNode,DBNode *)
+ * @see #db_rebalance(DBNode *,DBNode **)
+ * @see #db_rebalance_erase(DBNode *,DBNode **)
  */
-static void db_rotate_left(DBNode node, DBNode *root)
+static void db_rotate_left(DBNode *node, DBNode **root)
 {
-	DBNode y = node->right;
+	DBNode *y = node->right;
 
 	DB_COUNTSTAT(db_rotate_left);
 	// put the left of y at the right of node
@@ -371,12 +390,12 @@ static void db_rotate_left(DBNode node, DBNode *root)
  * @param node Node to be rotated
  * @param root Pointer to the root of the tree
  * @private
- * @see #db_rebalance(DBNode,DBNode *)
- * @see #db_rebalance_erase(DBNode,DBNode *)
+ * @see #db_rebalance(DBNode *,DBNode **)
+ * @see #db_rebalance_erase(DBNode *,DBNode **)
  */
-static void db_rotate_right(DBNode node, DBNode *root)
+static void db_rotate_right(DBNode *node, DBNode **root)
 {
-	DBNode y = node->left;
+	DBNode *y = node->left;
 
 	DB_COUNTSTAT(db_rotate_right);
 	// put the right of y at the left of node
@@ -403,13 +422,13 @@ static void db_rotate_right(DBNode node, DBNode *root)
  * @param node Node to be rebalanced
  * @param root Pointer to the root of the tree
  * @private
- * @see #db_rotate_left(DBNode,DBNode *)
- * @see #db_rotate_right(DBNode,DBNode *)
+ * @see #db_rotate_left(DBNode *,DBNode **)
+ * @see #db_rotate_right(DBNode *,DBNode **)
  * @see #db_obj_put(DBMap*,DBKey,DBData)
  */
-static void db_rebalance(DBNode node, DBNode *root)
+static void db_rebalance(DBNode *node, DBNode **root)
 {
-	DBNode y;
+	DBNode *y;
 
 	DB_COUNTSTAT(db_rebalance);
 	// Restore the RED-BLACK properties
@@ -465,15 +484,15 @@ static void db_rebalance(DBNode node, DBNode *root)
  * @param node Node to be erased from the tree
  * @param root Root of the tree
  * @private
- * @see #db_rotate_left(DBNode,DBNode *)
- * @see #db_rotate_right(DBNode,DBNode *)
+ * @see #db_rotate_left(DBNode *,DBNode **)
+ * @see #db_rotate_right(DBNode *,DBNode **)
  * @see #db_free_unlock(DBMap_impl*)
  */
-static void db_rebalance_erase(DBNode node, DBNode *root)
+static void db_rebalance_erase(DBNode *node, DBNode **root)
 {
-	DBNode y = node;
-	DBNode x = NULL;
-	DBNode x_parent = NULL;
+	DBNode *y = node;
+	DBNode *x = NULL;
+	DBNode *x_parent = NULL;
 
 	DB_COUNTSTAT(db_rebalance_erase);
 	// Select where to change the tree
@@ -489,7 +508,7 @@ static void db_rebalance_erase(DBNode node, DBNode *root)
 	}
 
 	// Remove the node from the tree
-	if (y != node) { // both childs existed
+	if (y != node) { // both child existed
 		// put the left of 'node' in the left of 'y'
 		node->left->parent = y;
 		y->left = node->left;
@@ -500,10 +519,10 @@ static void db_rebalance_erase(DBNode node, DBNode *root)
 			x_parent = y->parent;
 			if (x) x->parent = y->parent;
 			y->parent->left = x;
-			// put the right of 'node' in 'y' 
+			// put the right of 'node' in 'y'
 			y->right = node->right;
 			node->right->parent = y;
-		// 'y' is a direct child of 'node'
+			// 'y' is a direct child of 'node'
 		} else {
 			x_parent = y;
 		}
@@ -541,7 +560,7 @@ static void db_rebalance_erase(DBNode node, DBNode *root)
 	// Restore the RED-BLACK properties
 	if (y->color != RED) {
 		while (x != *root && (x == NULL || x->color == BLACK)) {
-			DBNode w;
+			DBNode *w;
 			if (x == x_parent->left) {
 				w = x_parent->right;
 				if (w->color == RED) {
@@ -556,7 +575,7 @@ static void db_rebalance_erase(DBNode node, DBNode *root)
 					x = x_parent;
 					x_parent = x_parent->parent;
 				} else {
-					if (w->right == NULL ||	w->right->color == BLACK) {
+					if (w->right == NULL || w->right->color == BLACK) {
 						if (w->left) w->left->color = BLACK;
 						w->color = RED;
 						db_rotate_right(w, root);
@@ -629,8 +648,8 @@ static int db_is_key_null(DBType type, DBKey key)
  * @param key Key to be duplicated
  * @param Duplicated key
  * @private
- * @see #db_free_add(DBMap_impl*,DBNode,DBNode *)
- * @see #db_free_remove(DBMap_impl*,DBNode)
+ * @see #db_free_add(DBMap_impl*,DBNode *,DBNode **)
+ * @see #db_free_remove(DBMap_impl*,DBNode *)
  * @see #db_obj_put(DBMap*,DBKey,void *)
  * @see #db_dup_key_free(DBMap_impl*,DBKey)
  */
@@ -689,9 +708,9 @@ static void db_dup_key_free(DBMap_impl* db, DBKey key)
  * @see DBMap_impl#free_count
  * @see DBMap_impl#free_max
  * @see #db_obj_remove(DBMap*,DBKey)
- * @see #db_free_remove(DBMap_impl*,DBNode)
+ * @see #db_free_remove(DBMap_impl*,DBNode *)
  */
-static void db_free_add(DBMap_impl* db, DBNode node, DBNode *root)
+static void db_free_add(DBMap_impl* db, DBNode *node, DBNode **root)
 {
 	DBKey old_key;
 
@@ -738,9 +757,9 @@ static void db_free_add(DBMap_impl* db, DBNode node, DBNode *root)
  * @see DBMap_impl#free_list
  * @see DBMap_impl#free_count
  * @see #db_obj_put(DBMap*,DBKey,DBData)
- * @see #db_free_add(DBMap_impl*,DBNode*,DBNode)
+ * @see #db_free_add(DBMap_impl*,DBNode**,DBNode*)
  */
-static void db_free_remove(DBMap_impl* db, DBNode node)
+static void db_free_remove(DBMap_impl* db, DBNode *node)
 {
 	unsigned int i;
 
@@ -789,7 +808,7 @@ static void db_free_lock(DBMap_impl* db)
  * @param db Target database
  * @private
  * @see DBMap_impl#free_lock
- * @see #db_free_dbn(DBNode)
+ * @see #db_free_dbn(DBNode*)
  * @see #db_lock(DBMap_impl*)
  */
 static void db_free_unlock(DBMap_impl* db)
@@ -824,10 +843,14 @@ static void db_free_unlock(DBMap_impl* db)
  *  db_uint_cmp        - Default comparator for DB_UINT databases.           *
  *  db_string_cmp      - Default comparator for DB_STRING databases.         *
  *  db_istring_cmp     - Default comparator for DB_ISTRING databases.        *
+ *  db_int64_cmp       - Default comparator for DB_INT64 databases.          *
+ *  db_uint64_cmp      - Default comparator for DB_UINT64 databases.         *
  *  db_int_hash        - Default hasher for DB_INT databases.                *
  *  db_uint_hash       - Default hasher for DB_UINT databases.               *
  *  db_string_hash     - Default hasher for DB_STRING databases.             *
  *  db_istring_hash    - Default hasher for DB_ISTRING databases.            *
+ *  db_int64_hash      - Default hasher for DB_INT64 databases.              *
+ *  db_uint64_hash     - Default hasher for DB_UINT64 databases.             *
  *  db_release_nothing - Releaser that releases nothing.                     *
  *  db_release_key     - Releaser that only releases the key.                *
  *  db_release_data    - Releaser that only releases the data.               *
@@ -915,6 +938,51 @@ static int db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
 }
 
 /**
+ * Default comparator for DB_INT64 databases.
+ * Compares key1 to key2.
+ * Return 0 if equal, negative if lower and positive if higher.
+ * <code>maxlen</code> is ignored.
+ * @param key1 Key to be compared
+ * @param key2 Key being compared to
+ * @param maxlen Maximum length of the key to hash
+ * @return 0 if equal, negative if lower and positive if higher
+ * @see DBType#DB_INT64
+ * @see #DBComparator
+ * @see #db_default_cmp(DBType)
+ */
+static int db_int64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+{
+	(void)maxlen;//not used
+	DB_COUNTSTAT(db_int64_cmp);
+	if (key1.i64 < key2.i64) return -1;
+	if (key1.i64 > key2.i64) return 1;
+	return 0;
+}
+
+/**
+ * Default comparator for DB_UINT64 databases.
+ * Compares key1 to key2.
+ * Return 0 if equal, negative if lower and positive if higher.
+ * <code>maxlen</code> is ignored.
+ * @param key1 Key to be compared
+ * @param key2 Key being compared to
+ * @param maxlen Maximum length of the key to hash
+ * @return 0 if equal, negative if lower and positive if higher
+ * @see DBType#DB_UINT64
+ * @see #DBComparator
+ * @see #db_default_cmp(DBType)
+ */
+static int db_uint64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+{
+	(void)maxlen;//not used
+	DB_COUNTSTAT(db_uint64_cmp);
+	if (key1.ui64 < key2.ui64) return -1;
+	if (key1.ui64 > key2.ui64) return 1;
+	return 0;
+}
+
+
+/**
  * Default hasher for DB_INT databases.
  * Returns the value of the key as an unsigned int.
  * <code>maxlen</code> is ignored.
@@ -925,11 +993,11 @@ static int db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static unsigned int db_int_hash(DBKey key, unsigned short maxlen)
+static uint64 db_int_hash(DBKey key, unsigned short maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_int_hash);
-	return (unsigned int)key.i;
+	return (uint64)key.i;
 }
 
 /**
@@ -943,11 +1011,11 @@ static unsigned int db_int_hash(DBKey key, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static unsigned int db_uint_hash(DBKey key, unsigned short maxlen)
+static uint64 db_uint_hash(DBKey key, unsigned short maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_uint_hash);
-	return key.ui;
+	return (uint64)key.ui;
 }
 
 /**
@@ -959,7 +1027,7 @@ static unsigned int db_uint_hash(DBKey key, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
+static uint64 db_string_hash(DBKey key, unsigned short maxlen)
 {
 	const char *k = key.str;
 	unsigned int hash = 0;
@@ -974,7 +1042,7 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 			break;
 	}
 
-	return hash;
+	return (uint64)hash;
 }
 
 /**
@@ -985,7 +1053,7 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
  * @see DBType#DB_ISTRING
  * @see #db_default_hash(DBType)
  */
-static unsigned int db_istring_hash(DBKey key, unsigned short maxlen)
+static uint64 db_istring_hash(DBKey key, unsigned short maxlen)
 {
 	const char *k = key.str;
 	unsigned int hash = 0;
@@ -1000,7 +1068,43 @@ static unsigned int db_istring_hash(DBKey key, unsigned short maxlen)
 			break;
 	}
 
-	return hash;
+	return (uint64)hash;
+}
+
+/**
+ * Default hasher for DB_INT64 databases.
+ * Returns the value of the key as an unsigned int.
+ * <code>maxlen</code> is ignored.
+ * @param key Key to be hashed
+ * @param maxlen Maximum length of the key to hash
+ * @return hash of the key
+ * @see DBType#DB_INT64
+ * @see #DBHasher
+ * @see #db_default_hash(DBType)
+ */
+static uint64 db_int64_hash(DBKey key, unsigned short maxlen)
+{
+	(void)maxlen;//not used
+	DB_COUNTSTAT(db_int64_hash);
+	return (uint64)key.i64;
+}
+
+/**
+ * Default hasher for DB_UINT64 databases.
+ * Just returns the value of the key.
+ * <code>maxlen</code> is ignored.
+ * @param key Key to be hashed
+ * @param maxlen Maximum length of the key to hash
+ * @return hash of the key
+ * @see DBType#DB_UINT64
+ * @see #DBHasher
+ * @see #db_default_hash(DBType)
+ */
+static uint64 db_uint64_hash(DBKey key, unsigned short maxlen)
+{
+	(void)maxlen;//not used
+	DB_COUNTSTAT(db_uint64_hash);
+	return key.ui64;
 }
 
 /**
@@ -1049,7 +1153,10 @@ static void db_release_data(DBKey key, DBData data, DBRelease which)
 {
 	(void)key;//not used
 	DB_COUNTSTAT(db_release_data);
-	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) aFree(data.u.ptr);
+	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) {
+		aFree(data.u.ptr);
+		data.u.ptr = NULL;
+	}
 }
 
 /**
@@ -1068,7 +1175,10 @@ static void db_release_both(DBKey key, DBData data, DBRelease which)
 {
 	DB_COUNTSTAT(db_release_both);
 	if (which&DB_RELEASE_KEY) aFree((char*)key.str); // needs to be a pointer
-	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) aFree(data.u.ptr);
+	if (which&DB_RELEASE_DATA && data.type == DB_DATA_PTR) {
+		aFree(data.u.ptr);
+		data.u.ptr = NULL;
+	}
 }
 
 /*****************************************************************************\
@@ -1117,7 +1227,7 @@ static void db_release_both(DBKey key, DBData data, DBRelease which)
 DBData* dbit_obj_first(DBIterator* self, DBKey* out_key)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	
+
 	DB_COUNTSTAT(dbit_first);
 	// position before the first entry
 	it->ht_index = -1;
@@ -1139,7 +1249,7 @@ DBData* dbit_obj_first(DBIterator* self, DBKey* out_key)
 DBData* dbit_obj_last(DBIterator* self, DBKey* out_key)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	
+
 	DB_COUNTSTAT(dbit_last);
 	// position after the last entry
 	it->ht_index = HASH_SIZE;
@@ -1161,8 +1271,8 @@ DBData* dbit_obj_last(DBIterator* self, DBKey* out_key)
 DBData* dbit_obj_next(DBIterator* self, DBKey* out_key)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 	struct dbn fake;
 
 	DB_COUNTSTAT(dbit_next);
@@ -1237,8 +1347,8 @@ DBData* dbit_obj_next(DBIterator* self, DBKey* out_key)
 DBData* dbit_obj_prev(DBIterator* self, DBKey* out_key)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 	struct dbn fake;
 
 	DB_COUNTSTAT(dbit_prev);
@@ -1261,7 +1371,6 @@ DBData* dbit_obj_prev(DBIterator* self, DBKey* out_key)
 			node = &fake;
 		}
 
-		
 		while( node )
 		{// next node
 			if( node->left )
@@ -1303,7 +1412,7 @@ DBData* dbit_obj_prev(DBIterator* self, DBKey* out_key)
 
 /**
  * Returns true if the fetched entry exists.
- * The databases entries might have NULL data, so use this to to test if 
+ * The databases entries might have NULL data, so use this to to test if
  * the iterator is done.
  * @param self Iterator
  * @return true if the entry exists
@@ -1320,9 +1429,9 @@ bool dbit_obj_exists(DBIterator* self)
 
 /**
  * Removes the current entry from the database.
- * NOTE: {@link DBIterator#exists} will return false until another entry 
+ * NOTE: {@link DBIterator#exists} will return false until another entry
  *       is fetched
- * Puts data of the removed entry in out_data, if out_data is not NULL.
+ * Puts data of the removed entry in out_data, if out_data is not NULL (unless data has been released)
  * @param self Iterator
  * @param out_data Data of the removed entry.
  * @return 1 if entry was removed, 0 otherwise
@@ -1333,7 +1442,7 @@ bool dbit_obj_exists(DBIterator* self)
 int dbit_obj_remove(DBIterator* self, DBData *out_data)
 {
 	DBIterator_impl* it = (DBIterator_impl*)self;
-	DBNode node;
+	DBNode *node;
 	int retval = 0;
 
 	DB_COUNTSTAT(dbit_remove);
@@ -1343,10 +1452,10 @@ int dbit_obj_remove(DBIterator* self, DBData *out_data)
 		DBMap_impl* db = it->db;
 		if( db->cache == node )
 			db->cache = NULL;
+		db->release(node->key, node->data, DB_RELEASE_DATA);
 		if( out_data )
 			memcpy(out_data, &node->data, sizeof(DBData));
 		retval = 1;
-		db->release(node->key, node->data, DB_RELEASE_DATA);
 		db_free_add(db, node, &db->ht[it->ht_index]);
 	}
 	return retval;
@@ -1365,13 +1474,13 @@ void dbit_obj_destroy(DBIterator* self)
 	// unlock the database
 	db_free_unlock(it->db);
 	// free iterator
-	aFree(self);
+	ers_free(db_iterator_ers,self);
 }
 
 /**
  * Returns a new iterator for this database.
  * The iterator keeps the database locked until it is destroyed.
- * The database will keep functioning normally but will only free internal 
+ * The database will keep functioning normally but will only free internal
  * memory when unlocked, so destroy the iterator as soon as possible.
  * @param self Database
  * @return New iterator
@@ -1383,7 +1492,7 @@ static DBIterator* db_obj_iterator(DBMap* self)
 	DBIterator_impl* it;
 
 	DB_COUNTSTAT(db_iterator);
-	CREATE(it, struct DBIterator_impl, 1);
+	it = ers_alloc(db_iterator_ers, struct DBIterator_impl);
 	/* Interface of the iterator **/
 	it->vtable.first   = dbit_obj_first;
 	it->vtable.last    = dbit_obj_last;
@@ -1412,7 +1521,7 @@ static DBIterator* db_obj_iterator(DBMap* self)
 static bool db_obj_exists(DBMap* self, DBKey key)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
+	DBNode *node;
 	bool found = false;
 
 	DB_COUNTSTAT(db_exists);
@@ -1462,7 +1571,7 @@ static bool db_obj_exists(DBMap* self, DBKey key)
 static DBData* db_obj_get(DBMap* self, DBKey key)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
+	DBNode *node;
 	DBData *data = NULL;
 
 	DB_COUNTSTAT(db_get);
@@ -1507,7 +1616,7 @@ static DBData* db_obj_get(DBMap* self, DBKey key)
  * It puts a maximum of <code>max</code> entries into <code>buf</code>.
  * If <code>buf</code> is NULL, it only counts the matches.
  * Returns the number of entries that matched.
- * NOTE: if the value returned is greater than <code>max</code>, only the 
+ * NOTE: if the value returned is greater than <code>max</code>, only the
  * first <code>max</code> entries found are put into the buffer.
  * @param self Interface of the database
  * @param buf Buffer to put the data of the matched entries
@@ -1522,8 +1631,8 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 {
 	DBMap_impl* db = (DBMap_impl*)self;
 	unsigned int i;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 	unsigned int ret = 0;
 
 	DB_COUNTSTAT(db_vgetall);
@@ -1546,17 +1655,17 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 				}
 				va_end(argscopy);
 			}
-			
+
 			if (node->left) {
 				node = node->left;
 				continue;
 			}
-			
+
 			if (node->right) {
 				node = node->right;
 				continue;
 			}
-			
+
 			while (node) {
 				parent = node->parent;
 				if (parent && parent->right && parent->left == node) {
@@ -1578,7 +1687,7 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
  * It puts a maximum of <code>max</code> entries into <code>buf</code>.
  * If <code>buf</code> is NULL, it only counts the matches.
  * Returns the number of entries that matched.
- * NOTE: if the value returned is greater than <code>max</code>, only the 
+ * NOTE: if the value returned is greater than <code>max</code>, only the
  * first <code>max</code> entries found are put into the buffer.
  * @param self Interface of the database
  * @param buf Buffer to put the data of the matched entries
@@ -1606,7 +1715,7 @@ static unsigned int db_obj_getall(DBMap* self, DBData **buf, unsigned int max, D
 
 /**
  * Get the data of the entry identified by the key.
- * If the entry does not exist, an entry is added with the data returned by 
+ * If the entry does not exist, an entry is added with the data returned by
  * <code>create</code>.
  * @param self Interface of the database
  * @param key Key that identifies the entry
@@ -1619,8 +1728,8 @@ static unsigned int db_obj_getall(DBMap* self, DBData **buf, unsigned int max, D
 static DBData* db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_list args)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
-	DBNode parent = NULL;
+	DBNode *node;
+	DBNode *parent = NULL;
 	unsigned int hash;
 	int c = 0;
 	DBData *data = NULL;
@@ -1688,7 +1797,7 @@ static DBData* db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_li
 		if (db->options&DB_OPT_DUP_KEY) {
 			node->key = db_dup_key(db, key);
 			if (db->options&DB_OPT_RELEASE_KEY)
-				db->release(key, *data, DB_RELEASE_KEY);
+				db->release(key, node->data, DB_RELEASE_KEY);
 		} else {
 			node->key = key;
 		}
@@ -1705,7 +1814,7 @@ static DBData* db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_li
 /**
  * Just calls {@link DBMap#vensure}.
  * Get the data of the entry identified by the key.
- * If the entry does not exist, an entry is added with the data returned by 
+ * If the entry does not exist, an entry is added with the data returned by
  * <code>create</code>.
  * @param self Interface of the database
  * @param key Key that identifies the entry
@@ -1732,7 +1841,7 @@ static DBData* db_obj_ensure(DBMap* self, DBKey key, DBCreateData create, ...)
 
 /**
  * Put the data identified by the key in the database.
- * Puts the previous data in out_data, if out_data is not NULL.
+ * Puts the previous data in out_data, if out_data is not NULL. (unless data has been released)
  * NOTE: Uses the new key, the old one is released.
  * @param self Interface of the database
  * @param key Key that identifies the data
@@ -1742,12 +1851,14 @@ static DBData* db_obj_ensure(DBMap* self, DBKey key, DBCreateData create, ...)
  * @protected
  * @see #db_malloc_dbn(void)
  * @see DBMap#put
+ * FIXME: If this method fails shouldn't it return another value?
+ *        Other functions rely on this to know if they were able to put something [Panikon]
  */
 static int db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
-	DBNode parent = NULL;
+	DBNode *node;
+	DBNode *parent = NULL;
 	int c = 0, retval = 0;
 	unsigned int hash;
 
@@ -1838,20 +1949,20 @@ static int db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
 
 /**
  * Remove an entry from the database.
- * Puts the previous data in out_data, if out_data is not NULL.
- * NOTE: The key (of the database) is released in {@link #db_free_add(DBMap_impl*,DBNode,DBNode *)}.
+ * Puts the previous data in out_data, if out_data is not NULL. (unless data has been released)
+ * NOTE: The key (of the database) is released in {@link #db_free_add(DBMap_impl*,DBNode*,DBNode **)}.
  * @param self Interface of the database
  * @param key Key that identifies the entry
  * @param out_data Previous data if the entry exists
  * @return 1 if if the entry already exists, 0 otherwise
  * @protected
- * @see #db_free_add(DBMap_impl*,DBNode,DBNode *)
+ * @see #db_free_add(DBMap_impl*,DBNode*,DBNode **)
  * @see DBMap#remove
  */
 static int db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
 {
 	DBMap_impl* db = (DBMap_impl*)self;
-	DBNode node;
+	DBNode *node;
 	unsigned int hash;
 	int retval = 0;
 
@@ -1863,7 +1974,7 @@ static int db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
 				db->alloc_file, db->alloc_line);
 		return 0; // nullpo candidate
 	}
-	if (!(db->options&DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key))	{
+	if (!(db->options&DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
 		ShowError("db_remove: Attempted to use non-allowed NULL key for db allocated at %s:%d\n",db->alloc_file, db->alloc_line);
 		return 0; // nullpo candidate
 	}
@@ -1876,10 +1987,10 @@ static int db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
 			if (!(node->deleted)) {
 				if (db->cache == node)
 					db->cache = NULL;
+				db->release(node->key, node->data, DB_RELEASE_DATA);
 				if (out_data)
 					memcpy(out_data, &node->data, sizeof(*out_data));
 				retval = 1;
-				db->release(node->key, node->data, DB_RELEASE_DATA);
 				db_free_add(db, node, &db->ht[hash]);
 			}
 			break;
@@ -1908,8 +2019,8 @@ static int db_obj_vforeach(DBMap* self, DBApply func, va_list args)
 	DBMap_impl* db = (DBMap_impl*)self;
 	unsigned int i;
 	int sum = 0;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 
 	DB_COUNTSTAT(db_vforeach);
 	if (db == NULL) return 0; // nullpo candidate
@@ -1956,7 +2067,7 @@ static int db_obj_vforeach(DBMap* self, DBApply func, va_list args)
  * Apply <code>func</code> to every entry in the database.
  * Returns the sum of values returned by func.
  * @param self Interface of the database
- * @param func Function to be applyed
+ * @param func Function to be applied
  * @param ... Extra arguments for func
  * @return Sum of the values returned by func
  * @protected
@@ -1994,8 +2105,8 @@ static int db_obj_vclear(DBMap* self, DBApply func, va_list args)
 	DBMap_impl* db = (DBMap_impl*)self;
 	int sum = 0;
 	unsigned int i;
-	DBNode node;
-	DBNode parent;
+	DBNode *node;
+	DBNode *parent;
 
 	DB_COUNTSTAT(db_vclear);
 	if (db == NULL) return 0; // nullpo candidate
@@ -2053,7 +2164,7 @@ static int db_obj_vclear(DBMap* self, DBApply func, va_list args)
  * Before deleting an entry, func is applied to it.
  * Releases the key and the data.
  * Returns the sum of values returned by func, if it exists.
- * NOTE: This locks the database globally. Any attempt to insert or remove 
+ * NOTE: This locks the database globally. Any attempt to insert or remove
  * a database entry will give an error and be aborted (except for clearing).
  * @param self Interface of the database
  * @param func Function to be applied to every entry before deleting
@@ -2081,7 +2192,7 @@ static int db_obj_clear(DBMap* self, DBApply func, ...)
  * Finalize the database, feeing all the memory it uses.
  * Before deleting an entry, func is applied to it.
  * Returns the sum of values returned by func, if it exists.
- * NOTE: This locks the database globally. Any attempt to insert or remove 
+ * NOTE: This locks the database globally. Any attempt to insert or remove
  * a database entry will give an error and be aborted (except for clearing).
  * @param self Interface of the database
  * @param func Function to be applied to every entry before deleting
@@ -2114,6 +2225,8 @@ static int db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
 		case DB_UINT: DB_COUNTSTAT(db_uint_destroy); break;
 		case DB_STRING: DB_COUNTSTAT(db_string_destroy); break;
 		case DB_ISTRING: DB_COUNTSTAT(db_istring_destroy); break;
+		case DB_INT64: DB_COUNTSTAT(db_int64_destroy); break;
+		case DB_UINT64: DB_COUNTSTAT(db_uint64_destroy); break;
 	}
 #endif /* DB_ENABLE_STATS */
 	db_free_lock(db);
@@ -2124,7 +2237,7 @@ static int db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
 	db->free_max = 0;
 	ers_destroy(db->nodes);
 	db_free_unlock(db);
-	aFree(db);
+	ers_free(db_alloc_ers, db);
 	return sum;
 }
 
@@ -2134,7 +2247,7 @@ static int db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
  * Before deleting an entry, func is applied to it.
  * Releases the key and the data.
  * Returns the sum of values returned by func, if it exists.
- * NOTE: This locks the database globally. Any attempt to insert or remove 
+ * NOTE: This locks the database globally. Any attempt to insert or remove
  * a database entry will give an error and be aborted.
  * @param self Database
  * @param func Function to be applied to every entry before deleting
@@ -2233,11 +2346,13 @@ static DBOptions db_obj_options(DBMap* self)
  *  db_default_cmp     - Get the default comparator for a type of database.
  *  db_default_hash    - Get the default hasher for a type of database.
  *  db_default_release - Get the default releaser for a type of database with the specified options.
- *  db_custom_release  - Get a releaser that behaves a certains way.
+ *  db_custom_release  - Get a releaser that behaves a certain way.
  *  db_alloc           - Allocate a new database.
  *  db_i2key           - Manual cast from 'int' to 'DBKey'.
  *  db_ui2key          - Manual cast from 'unsigned int' to 'DBKey'.
  *  db_str2key         - Manual cast from 'unsigned char *' to 'DBKey'.
+ *  db_i642key         - Manual cast from 'int64' to 'DBKey'.
+ *  db_ui642key        - Manual cast from 'uin64' to 'DBKey'.
  *  db_i2data          - Manual cast from 'int' to 'DBData'.
  *  db_ui2data         - Manual cast from 'unsigned int' to 'DBData'.
  *  db_ptr2data        - Manual cast from 'void*' to 'DBData'.
@@ -2264,7 +2379,9 @@ DBOptions db_fix_options(DBType type, DBOptions options)
 	DB_COUNTSTAT(db_fix_options);
 	switch (type) {
 		case DB_INT:
-		case DB_UINT: // Numeric database, do nothing with the keys
+		case DB_UINT:
+		case DB_INT64:
+		case DB_UINT64: // Numeric database, do nothing with the keys
 			return (DBOptions)(options&~(DB_OPT_DUP_KEY|DB_OPT_RELEASE_KEY));
 
 		default:
@@ -2284,6 +2401,8 @@ DBOptions db_fix_options(DBType type, DBOptions options)
  * @see #db_uint_cmp(DBKey,DBKey,unsigned short)
  * @see #db_string_cmp(DBKey,DBKey,unsigned short)
  * @see #db_istring_cmp(DBKey,DBKey,unsigned short)
+ * @see #db_int64_cmp(DBKey,DBKey,unsigned short)
+ * @see #db_uint64_cmp(DBKey,DBKey,unsigned short)
  */
 DBComparator db_default_cmp(DBType type)
 {
@@ -2293,6 +2412,8 @@ DBComparator db_default_cmp(DBType type)
 		case DB_UINT:    return &db_uint_cmp;
 		case DB_STRING:  return &db_string_cmp;
 		case DB_ISTRING: return &db_istring_cmp;
+		case DB_INT64:   return &db_int64_cmp;
+		case DB_UINT64:  return &db_uint64_cmp;
 		default:
 			ShowError("db_default_cmp: Unknown database type %u\n", type);
 			return NULL;
@@ -2308,6 +2429,8 @@ DBComparator db_default_cmp(DBType type)
  * @see #db_uint_hash(DBKey,unsigned short)
  * @see #db_string_hash(DBKey,unsigned short)
  * @see #db_istring_hash(DBKey,unsigned short)
+ * @see #db_int64_hash(DBKey,unsigned short)
+ * @see #db_uint64_hash(DBKey,unsigned short)
  */
 DBHasher db_default_hash(DBType type)
 {
@@ -2317,6 +2440,8 @@ DBHasher db_default_hash(DBType type)
 		case DB_UINT:    return &db_uint_hash;
 		case DB_STRING:  return &db_string_hash;
 		case DB_ISTRING: return &db_istring_hash;
+		case DB_INT64:   return &db_int64_hash;
+		case DB_UINT64:  return &db_uint64_hash;
 		default:
 			ShowError("db_default_hash: Unknown database type %u\n", type);
 			return NULL;
@@ -2324,7 +2449,7 @@ DBHasher db_default_hash(DBType type)
 }
 
 /**
- * Returns the default releaser for the specified type of database with the 
+ * Returns the default releaser for the specified type of database with the
  * specified options.
  * NOTE: the options are fixed with {@link #db_fix_options(DBType,DBOptions)}
  * before choosing the releaser.
@@ -2385,17 +2510,17 @@ DBReleaser db_custom_release(DBRelease which)
  * @param line Line of the file where the database is being allocated
  * @param type Type of database
  * @param options Options of the database
- * @param maxlen Maximum length of the string to be used as key in string 
+ * @param maxlen Maximum length of the string to be used as key in string
  *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
  * @see #DBMap_impl
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen)
-{
+DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOptions options, unsigned short maxlen) {
 	DBMap_impl* db;
 	unsigned int i;
+	char ers_name[50];
 
 #ifdef DB_ENABLE_STATS
 	DB_COUNTSTAT(db_alloc);
@@ -2404,9 +2529,11 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 		case DB_UINT: DB_COUNTSTAT(db_uint_alloc); break;
 		case DB_STRING: DB_COUNTSTAT(db_string_alloc); break;
 		case DB_ISTRING: DB_COUNTSTAT(db_istring_alloc); break;
+		case DB_INT64: DB_COUNTSTAT(db_int64_alloc); break;
+		case DB_UINT64: DB_COUNTSTAT(db_uint64_alloc); break;
 	}
 #endif /* DB_ENABLE_STATS */
-	CREATE(db, struct DBMap_impl, 1);
+	db = ers_alloc(db_alloc_ers, struct DBMap_impl);
 
 	options = db_fix_options(type, options);
 	/* Interface of the database */
@@ -2437,7 +2564,8 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 	db->free_max = 0;
 	db->free_lock = 0;
 	/* Other */
-	db->nodes = ers_new(sizeof(struct dbn),"db.c::db_alloc",ERS_OPT_NONE);
+	snprintf(ers_name, 50, "db_alloc:nodes:%s:%s:%d",func,file,line);
+	db->nodes = ers_new(sizeof(struct dbn),ers_name,ERS_OPT_WAIT|ERS_OPT_FREE_NAME|ERS_OPT_CLEAN);
 	db->cmp = db_default_cmp(type);
 	db->hash = db_default_hash(type);
 	db->release = db_default_release(type, options);
@@ -2498,6 +2626,36 @@ DBKey db_str2key(const char *key)
 
 	DB_COUNTSTAT(db_str2key);
 	ret.str = key;
+	return ret;
+}
+
+/**
+ * Manual cast from 'int64' to the union DBKey.
+ * @param key Key to be casted
+ * @return The key as a DBKey union
+ * @public
+ */
+DBKey db_i642key(int64 key)
+{
+	DBKey ret;
+
+	DB_COUNTSTAT(db_i642key);
+	ret.i64 = key;
+	return ret;
+}
+
+/**
+ * Manual cast from 'uin64' to the union DBKey.
+ * @param key Key to be casted
+ * @return The key as a DBKey union
+ * @public
+ */
+DBKey db_ui642key(uint64 key)
+{
+	DBKey ret;
+
+	DB_COUNTSTAT(db_ui642key);
+	ret.ui64 = key;
 	return ret;
 }
 
@@ -2599,8 +2757,11 @@ void* db_data2ptr(DBData *data)
  * @public
  * @see #db_final(void)
  */
-void db_init(void)
-{
+void db_init(void) {
+	db_iterator_ers = ers_new(sizeof(struct DBIterator_impl),"db.c::db_iterator_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	db_alloc_ers = ers_new(sizeof(struct DBMap_impl),"db.c::db_alloc_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	ers_chunk_size(db_alloc_ers, 50);
+	ers_chunk_size(db_iterator_ers, 10);
 	DB_COUNTSTAT(db_init);
 }
 
@@ -2620,11 +2781,15 @@ void db_final(void)
 			"DB_INT     : allocated %10u, destroyed %10u\n"
 			"DB_UINT    : allocated %10u, destroyed %10u\n"
 			"DB_STRING  : allocated %10u, destroyed %10u\n"
-			"DB_ISTRING : allocated %10u, destroyed %10u\n",
+			"DB_ISTRING : allocated %10u, destroyed %10u\n"
+			"DB_INT64   : allocated %10u, destroyed %10u\n"
+			"DB_UINT64  : allocated %10u, destroyed %10u\n",
 			stats.db_int_alloc,     stats.db_int_destroy,
 			stats.db_uint_alloc,    stats.db_uint_destroy,
 			stats.db_string_alloc,  stats.db_string_destroy,
-			stats.db_istring_alloc, stats.db_istring_destroy);
+			stats.db_istring_alloc, stats.db_istring_destroy,
+			stats.db_int64_alloc,   stats.db_int64_destroy,
+			stats.db_uint64_alloc,  stats.db_uint64_destroy);
 	ShowInfo(CL_WHITE"Database function counters"CL_RESET":\n"
 			"db_rotate_left     %10u, db_rotate_right    %10u,\n"
 			"db_rebalance       %10u, db_rebalance_erase %10u,\n"
@@ -2634,8 +2799,10 @@ void db_final(void)
 			"db_free_lock       %10u, db_free_unlock     %10u,\n"
 			"db_int_cmp         %10u, db_uint_cmp        %10u,\n"
 			"db_string_cmp      %10u, db_istring_cmp     %10u,\n"
+			"db_int64_cmp       %10u, db_uint64_cmp      %10u,\n"
 			"db_int_hash        %10u, db_uint_hash       %10u,\n"
 			"db_string_hash     %10u, db_istring_hash    %10u,\n"
+			"db_int64_hash      %10u, db_uint64_hash     %10u,\n"
 			"db_release_nothing %10u, db_release_key     %10u,\n"
 			"db_release_data    %10u, db_release_both    %10u,\n"
 			"dbit_first         %10u, dbit_last          %10u,\n"
@@ -2655,6 +2822,7 @@ void db_final(void)
 			"db_default_release %10u, db_custom_release  %10u,\n"
 			"db_alloc           %10u, db_i2key           %10u,\n"
 			"db_ui2key          %10u, db_str2key         %10u,\n"
+			"db_i642key         %10u, db_ui642key        %10u,\n"
 			"db_i2data          %10u, db_ui2data         %10u,\n"
 			"db_ptr2data        %10u, db_data2i          %10u,\n"
 			"db_data2ui         %10u, db_data2ptr        %10u,\n"
@@ -2667,8 +2835,10 @@ void db_final(void)
 			stats.db_free_lock,       stats.db_free_unlock,
 			stats.db_int_cmp,         stats.db_uint_cmp,
 			stats.db_string_cmp,      stats.db_istring_cmp,
+			stats.db_int64_cmp,       stats.db_uint64_cmp,
 			stats.db_int_hash,        stats.db_uint_hash,
 			stats.db_string_hash,     stats.db_istring_hash,
+			stats.db_int64_hash,      stats.db_uint64_hash,
 			stats.db_release_nothing, stats.db_release_key,
 			stats.db_release_data,    stats.db_release_both,
 			stats.dbit_first,         stats.dbit_last,
@@ -2688,11 +2858,14 @@ void db_final(void)
 			stats.db_default_release, stats.db_custom_release,
 			stats.db_alloc,           stats.db_i2key,
 			stats.db_ui2key,          stats.db_str2key,
+			stats.db_i642key,         stats.db_ui642key,
 			stats.db_i2data,          stats.db_ui2data,
 			stats.db_ptr2data,        stats.db_data2i,
 			stats.db_data2ui,         stats.db_data2ptr,
 			stats.db_init,            stats.db_final);
 #endif /* DB_ENABLE_STATS */
+	ers_destroy(db_iterator_ers);
+	ers_destroy(db_alloc_ers);
 }
 
 // Link DB System - jAthena
@@ -2717,29 +2890,24 @@ void linkdb_insert( struct linkdb_node** head, void *key, void* data)
 	node->data = data;
 }
 
-int linkdb_vforeach( struct linkdb_node** head, LinkDBFunc func, va_list ap) {
+void linkdb_vforeach( struct linkdb_node** head, LinkDBFunc func, va_list ap) {
 	struct linkdb_node *node;
-	int retCount = 0;
-	if( head == NULL )
-		return 0;
+	if( head == NULL ) return;
 	node = *head;
 	while ( node ) {
 		va_list argscopy;
 		va_copy(argscopy, ap);
-		retCount += func(node->key, node->data, argscopy);
+		func(node->key, node->data, argscopy);
 		va_end(argscopy);
 		node = node->next;
 	}
-	return retCount;
 }
 
-int linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  ) {
+void linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...) {
 	va_list ap;
-	int retCount = 0;
 	va_start(ap, func);
-	retCount = linkdb_vforeach(head, func, ap);
+	linkdb_vforeach(head, func, ap);
 	va_end(ap);
-	return retCount;
 }
 
 void* linkdb_search( struct linkdb_node** head, void *key)

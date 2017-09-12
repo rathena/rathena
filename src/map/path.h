@@ -4,6 +4,10 @@
 #ifndef _PATH_H_
 #define _PATH_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "map.h" // enum cell_chk
 
 #define MOVE_COST 10
@@ -20,6 +24,19 @@ struct shootpath_data {
 	int rx,ry,len;
 	int x[MAX_WALKPATH];
 	int y[MAX_WALKPATH];
+};
+
+enum directions{
+	DIR_CENTER = -1,
+	DIR_NORTH = 0,
+	DIR_NORTHWEST = 1,
+	DIR_WEST = 2,
+	DIR_SOUTHWEST = 3,
+	DIR_SOUTH = 4,
+	DIR_SOUTHEAST = 5,
+	DIR_EAST = 6,
+	DIR_NORTHEAST = 7,
+	DIR_MAX
 };
 
 #define check_distance_bl(bl1, bl2, distance) check_distance((bl1)->x - (bl2)->x, (bl1)->y - (bl2)->y, distance)
@@ -52,5 +69,14 @@ bool check_distance(int dx, int dy, int distance);
 unsigned int distance(int dx, int dy);
 bool check_distance_client(int dx, int dy, int distance);
 int distance_client(int dx, int dy);
+
+//
+void do_init_path();
+void do_final_path();
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* _PATH_H_ */

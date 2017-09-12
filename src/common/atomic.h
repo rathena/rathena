@@ -14,10 +14,10 @@
 //
 // our Abstraction is fully API-Compatible to Microsofts implementation @ NT5.0+
 // 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #if defined(_MSC_VER)
-#include "../common/winapi.h"
+#include "winapi.h"
 
 // This checks if C/C++ Compiler Version is 18.00
 #if _MSC_VER < 1800

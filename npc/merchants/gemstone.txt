@@ -38,29 +38,32 @@ payon,173,238,5	script	Jade#pay	754,{
 	}
 
 S_TradeGems:
-	if (countitem(getarg(0)) < 2) {
+	.@item_req = getarg(0);
+	.@item_id = getarg(1);
+
+	if (countitem(.@item_req) < 2) {
 		mes "[Jade]";
 		mes "Hah...!";
 		mes "You're kidding me, right?";
 		mes "I can't provide you with this";
 		mes "service if you don't";
 		mes "give me at least";
-		mes "2 "+getitemname(getarg(0))+"s!";
+		mes "2 "+ getitemname(.@item_req) +"s!";
 		close;
 	}
 	else {
-		set .@gems,countitem(getarg(0))/2;
+		.@gems = countitem(.@item_req) /2;
 		mes "[Jade]";
 		mes "I believe I can create";
-		mes "a total of " + .@gems + " " + getitemname(getarg(1)) + "s";
-		mes "using the "+getitemname(getarg(0))+"s";
+		mes "a total of "+ .@gems +" "+ getitemname(.@item_id) +"s";
+		mes "using the "+ getitemname(.@item_req) +"s";
 		mes "that you currently have.";
 		mes "What do you want to do?";
 		next;
 		switch(select("Give me as many as you can.:I want to set the amount.:I quit.")) {
 		case 1:
-			delitem getarg(0),.@gems * 2;
-			getitem getarg(1),.@gems;
+			delitem .@item_req,.@gems * 2;
+			getitem .@item_id,.@gems;
 			break;
 		case 2:
 			mes "[Jade]";
@@ -96,8 +99,8 @@ S_TradeGems:
 				}
 				else break;
 			}
-			delitem getarg(0),.@input * 2;
-			getitem getarg(1),.@input;
+			delitem .@item_req,.@input * 2;
+			getitem .@item_id,.@input;
 			break;
 		case 3:
 			mes "[Jade]";

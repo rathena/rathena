@@ -21,7 +21,7 @@ function	script	F_GM_NPC	{
 	// To set a minimum GM level to access the NPCs, edit the line below.
 	if (getgmlevel() < 99) {
 		// Log the event.
-		getmapxy(.@map$,.@x,.@y,1);
+		getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
 		logmes strcharinfo(0)+" attempted to access GM NPC "+strnpcinfo(0)+" ("+.@map$+","+.@x+","+.@y+").";
 		end;
 	}
@@ -88,6 +88,8 @@ List of GM Management NPCs (incomplete)
 - Purification Admin#nyd2
 - Bakonawa's Rage (RE)
 - Bangungot Gate (RE)
+- Horror Toy Factory (RE)
+- Faceworm's Nest (RE)
 
 [ Job-related ]
 ----- 3rd Class (RE) -----

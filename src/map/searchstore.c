@@ -185,7 +185,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	}
 
 	if( max_price < min_price )
-		swap(min_price, max_price);
+		SWAP(min_price, max_price);
 
 	sd->searchstore.uses--;
 	sd->searchstore.type = type;
@@ -207,7 +207,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	s.max_price  = max_price;
 	iter         = db_iterator((type == SEARCHTYPE_VENDING) ? vending_getdb() : buyingstore_getdb());
 
-	for( pl_sd = dbi_first(iter); dbi_exists(iter);  pl_sd = dbi_next(iter) ) {
+	for( pl_sd = (struct map_session_data*)dbi_first(iter); dbi_exists(iter);  pl_sd = (struct map_session_data*)dbi_next(iter) ) {
 		if( sd == pl_sd ) // skip own shop, if any
 			continue;
 

@@ -178,7 +178,7 @@ nif_in,31,20,3	script	Kuzkahina#nif	794,{
 niflheim,208,103,1	script	#Graveyard1	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 5 || nif_esc == 7 || nif_esc == 8 || nif_esc == 10) {
 		mes "^3355FFYou found something";
 		mes "half-buried near a grave.";
@@ -200,7 +200,7 @@ OnTouch:
 niflheim,169,71,1	script	#Graveyard2	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 6 || nif_esc == 9) {
 		mes "^3355FFYou found something";
 		mes "half-buried near a grave.";
@@ -219,7 +219,7 @@ OnTouch:
 nif_in,115,181,0	script	#Piano	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
 		mes "^3355FFYou see a big, heavy piano.";
 		mes "You get the feeling that";
@@ -252,8 +252,8 @@ OnTouch:
 nif_in,114,181,0	script	#Piano3	111,1,1,{
 	end;
 
-OnTouch:
-	if (nif_esc == 12 || nif_esc == 13 || MISC_QUEST & 32) {
+OnTouch_:
+	if (nif_esc == 12 || nif_esc == 13 || (MISC_QUEST & 32)) {
 		mes "^3355FFAs you bend towards";
 		mes "the final empty key space";
 		mes "to take a better look at it...^000000";
@@ -508,7 +508,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 }
 
 umbala,215,181,3	script	Billik	733,{
-	if (nif_revive > 1 || MISC_QUEST & 16384) {
+	if (nif_revive > 1 || (MISC_QUEST & 16384)) {
 		mes "[Billik]";
 		mes "Well, long time no see.";
 		mes "If you have a chance in the";
@@ -575,7 +575,7 @@ umbala,215,181,3	script	Billik	733,{
 niflheim,153,215,3	script	Feylin	794,{
 	if (nif_revive == 2) {
 		mes "[Feylin]";
-		mes "Poor "+((Sex)?"guy":"girl")+"...";
+		mes "Poor "+((Sex == SEX_MALE)?"guy":"girl")+"...";
 		mes "Dying at such a young age...";
 		mes "I am always sorry to see the";
 		mes "young pass away.";

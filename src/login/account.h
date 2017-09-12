@@ -10,6 +10,10 @@
 #ifndef __ACCOUNT_H_INCLUDED__
 #define __ACCOUNT_H_INCLUDED__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // ACCOUNT_REG2_NUM
 #include "../config/core.h"
@@ -35,15 +39,13 @@ struct mmo_account {
 	unsigned int logincount;// number of successful auth attempts
 	char lastlogin[24];     // date+time of last successful login
 	char last_ip[16];       // save of last IP of connection
-	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD, default: 0000-00-00)
+	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD)
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
-	int account_reg2_num;
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;
 #endif
-	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
 };
 
 
@@ -140,5 +142,11 @@ struct AccountDB {
 	AccountDBIterator* (*iterator)(AccountDB* self);
 };
 
+void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
+void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __ACCOUNT_H_INCLUDED__

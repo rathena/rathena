@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Manuk Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Town-specific NPCs for Manuk.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Added more town NPCs
 //= 1.2 Added more town NPCs
@@ -221,7 +221,6 @@ manuk,286,147,3	script	Piom#ep13_2_2	454,{
 }
 
 manuk,183,185,5	script	Piom#ep13_2_3	454,{
-	set tongyeok,Ring_Of_Wise_King;
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		mes "[Piom]";
 		mes "Our lives exist for Saphas.";

@@ -91,7 +91,7 @@ OnInit:
 	disablenpc "toarena#party";
 	end;
 
-OnTouch:
+OnTouch_:
 	if(Zeny < 1000)
 		warp "arena_room",100,75;
 	else {
@@ -125,7 +125,7 @@ OnTimer70000:
 	donpcevent "Ponox::OnStart";
 	disablenpc "toout#party";
 
-OnTouch:
+OnTouch_:
 	set $arn_partywait,0;
 	warp "arena_room",100,75;
 
@@ -140,7 +140,7 @@ OnStop:
 }
 
 prt_are_in,73,74,0	script	arena_out	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set $arn_partywait,0;
 	warp "arena_room",100,75;
 	end;
@@ -149,8 +149,8 @@ OnTouch:
 force_1-2,99,31,4	script	Slipslowrun#party	124,{
 OnStart:
 	initnpctimer;
-	set $arena_minptst,gettime(2);
-	set $arena_secptst,gettime(1);
+	set $arena_minptst,gettime(DT_MINUTE);
+	set $arena_secptst,gettime(DT_SECOND);
 	end;
 
 OnTimer2000:
@@ -413,9 +413,9 @@ OnReset:
 }
 
 force_1-2,95,187,0	script	force_09_exit	45,1,1,{
-OnTouch:
-	set $arena_minptend,gettime(2);
-	set $arena_secptend,gettime(1);
+OnTouch_:
+	set $arena_minptend,gettime(DT_MINUTE);
+	set $arena_secptend,gettime(DT_SECOND);
 	warp "prt_are_in",73,139;
 	donpcevent "#arn_timer_pt::OnEnter";
 	donpcevent "arena_p::OnReset";
@@ -424,7 +424,7 @@ OnTouch:
 }
 
 force_1-2,36,26,0	script	force_01start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_01mob#party::OnEnable";
 	disablenpc "force_01start#party";
 	end;
@@ -479,7 +479,7 @@ OnMyMobDead:
 }
 
 force_1-2,162,26,0	script	force_02start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_02mob#party::OnEnable";
 	disablenpc "force_02start#party";
 	end;
@@ -538,7 +538,7 @@ OnMyMobDead:
 }
 
 force_1-2,99,66,0	script	force_03start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_03mob#party::OnEnable";
 	disablenpc "force_03start#party";
 	end;
@@ -593,7 +593,7 @@ OnMyMobDead:
 }
 
 force_1-2,162,78,0	script	force_04start#party	-1,3,3,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_04mob#party::OnEnable";
 	disablenpc "force_04start#party";
 	end;
@@ -640,7 +640,7 @@ OnMyMobDead:
 }
 
 force_1-2,36,77,0	script	force_05start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_05mob#party::OnEnable";
 	disablenpc "force_05start#party";
 	end;
@@ -687,7 +687,7 @@ OnMyMobDead:
 }
 
 force_1-2,26,118,0	script	force_06start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_06mob#party::OnEnable";
 	disablenpc "force_06start#party";
 	end;
@@ -733,7 +733,7 @@ OnMyMobDead:
 }
 
 force_1-2,92,124,0	script	force_07start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_07mob#party::OnEnable";
 	disablenpc "force_07start#party";
 	end;
@@ -769,7 +769,7 @@ OnMyMobDead:
 }
 
 force_1-2,173,118,0	script	force_08start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_08mob#party::OnEnable";
 	disablenpc "force_08start#party";
 	end;
@@ -812,7 +812,7 @@ OnMyMobDead:
 }
 
 force_1-2,133,178,0	script	force_09start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_09mob#party::OnEnable";
 	disablenpc "force_09start#party";
 	end;
@@ -852,7 +852,7 @@ OnMyMobDead:
 }
 
 force_1-2,29,178,0	script	force_10start#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_10mob-1#party::OnEnable";
 	disablenpc "force_10start#party";
 	end;
@@ -904,7 +904,7 @@ OnMyMobDead:
 }
 
 force_1-2,59,178,0	script	force_exit#party	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_exitmob#party::OnEnable";
 	disablenpc "force_exit#party";
 	end;

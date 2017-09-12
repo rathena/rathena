@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -15,10 +15,12 @@
 //= 1.3 Fixed Puppet Master's Agony Quest (12217 -> 3259). [Joseph]
 //= 1.4 Fixed invalid check (Magic Wand Quest). [Joseph]
 //= 1.5 Optimized, based on code by Zopokx. [Euphy]
+//= 1.6 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.7 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,42,38,3	script	Mission [56 - 70]	857,{
-	if (countitem(6219) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "To get these missions, I need to Join the Eden Group first. I must find Secretary Lime Evenor and become a member.";
 		close;
 	}
@@ -53,8 +55,9 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 	end;
 
 L_Quest:
-	if (checkquest(getarg(0)) == -1) {
-		callsub L_Details, getarg(0);
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id) == -1) {
+		callsub L_Details, .@quest_id;
 		next;
 		mes "Would you like to accept this mission?";
 		next;
@@ -63,7 +66,7 @@ L_Quest:
 				mes "These missions are not fit for my level. I should look for other missions.";
 				close;
 			}
-			setquest getarg(0);
+			setquest .@quest_id;
 			mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
 			next;
 			mes "This mission doesn't have time limits.";
@@ -76,11 +79,11 @@ L_Quest:
 		else
 			set .@items,2; //complete
 	}
-	if (checkquest(getarg(0)) < 2 && (countitem(getarg(3)) < getarg(4) || .@items == 1)) {
+	if (checkquest(.@quest_id) < 2 && (countitem(getarg(3)) < getarg(4) || .@items == 1)) {
 		mes "You have an on-going mission. Would you like to check the details?";
 		next;
 		if(select("Check the details.:Cancel.") == 1)
-			callsub L_Details, getarg(0);
+			callsub L_Details, .@quest_id;
 		close;
 	} else {
 		mes "I have done pretty well for the mission. Should I report it now?";
@@ -90,7 +93,7 @@ L_Quest:
 			if (.@items)
 				delitem getarg(5),getarg(6);
 			getexp getarg(1),getarg(2);
-			erasequest getarg(0);
+			erasequest .@quest_id;
 			mes "You have completed the mission. Get rewards.";
 		}
 		close;
@@ -98,8 +101,9 @@ L_Quest:
 	end;
 
 L_HuntingQuest:
-	if (checkquest(getarg(0)) == -1) {
-		callsub L_Details, getarg(0);
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id) == -1) {
+		callsub L_Details, .@quest_id;
 		next;
 		mes "Would you like to accept this mission?";
 		next;
@@ -108,7 +112,7 @@ L_HuntingQuest:
 				mes "These missions are not fit for my level. I should look for other missions.";
 				close;
 			}
-			setquest getarg(0);
+			setquest .@quest_id;
 			mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
 			next;
 			mes "This mission doesn't have time limits.";
@@ -121,20 +125,20 @@ L_HuntingQuest:
 		else
 			set .@items,2; //complete
 	}
-	if (checkquest(getarg(0),HUNTING) < 2 || .@items == 1) {
+	if (checkquest(.@quest_id,HUNTING) < 2 || .@items == 1) {
 		mes "You have an on-going mission. Would you like to check the details?";
 		next;
 		if(select("Check the details.:Cancel.") == 1)
-			callsub L_Details, getarg(0);
+			callsub L_Details, .@quest_id;
 		close;
-	} else if (checkquest(getarg(0),HUNTING) == 2) {
+	} else if (checkquest(.@quest_id,HUNTING) == 2) {
 		mes "I have done pretty well for the mission. Should I report it now?";
 		next;
 		if(select("Report the mission.:Do not report it yet.") == 1) {
 			if (.@items)
 				delitem getarg(3),getarg(4);
 			getexp getarg(1),getarg(2);
-			erasequest getarg(0);
+			erasequest .@quest_id;
 			mes "You have completed the mission. Get rewards.";
 		}
 		close;

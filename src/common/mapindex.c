@@ -2,11 +2,11 @@
 // For more information, see LICENCE in the main folder
 
 #include "../config/core.h"
-#include "../common/core.h"
-#include "../common/mapindex.h"
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "core.h"
+#include "mapindex.h"
+#include "mmo.h"
+#include "showmsg.h"
+#include "strlib.h"
 
 #include <stdlib.h>
 
@@ -33,7 +33,7 @@ const char* mapindex_getmapname(const char* string, char* output) {
 	if (len >= 4 && stricmp(&string[len-4], ".gat") == 0)
 		len -= 4; // strip .gat extension
 
-	len = min(len, MAP_NAME_LENGTH-1);
+	len = zmin(len, MAP_NAME_LENGTH-1);
 	safestrncpy(dest, string, len+1);
 	memset(&dest[len], '\0', MAP_NAME_LENGTH-len);
 
@@ -120,7 +120,7 @@ unsigned short mapindex_name2idx(const char* name, const char *func) {
 }
 
 const char* mapindex_idx2name(unsigned short id, const char *func) {
-	if (id > MAX_MAPINDEX || !mapindex_exists(id)) {
+	if (id >= MAX_MAPINDEX || !mapindex_exists(id)) {
 		ShowDebug("(%s) mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", func, id);
 		return indexes[0].name; // dummy empty string so that the callee doesn't crash
 	}

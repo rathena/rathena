@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Capuche
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,6 +11,8 @@
 //= Repeatable quests for players between BaseLevel 100 - 111.
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.2 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
@@ -27,7 +29,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 		end;
 	}
 	mes "[Gelkah]";
-	if (countitem(6219) == 0) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Show me proof that you're part of the Eden Group or I have no business with you.";
 		mes "I'm giving requests to base level ^FF0000100 - 110^000000 adventurers.";
 	}
@@ -680,7 +682,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						emotion e_heh;
 						break;
 					case 2:
-						if (Sex == 1)
+						if (Sex == SEX_MALE)
 							mes "I'm not sure if I'm cut out for that job. Besides...";
 						else
 							mes "I am sorry to say this but I am the only pupil of master now and forever... He said ^FF0000I don't need an ugly female pupil^000000 but I still stick to him.";
@@ -1003,7 +1005,7 @@ S_Hunting:
 
 moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 	mes "[Rohtert]";
-	if (countitem(6219) == 0) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		cutin "rote01",2;
 		mes "You are not even a member of Eden Group. What are you doing here?";
 		mes "I'm only dealing with base level ^FF0000100 - 110^000000 adventurers.";
