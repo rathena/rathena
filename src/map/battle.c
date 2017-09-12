@@ -2331,7 +2331,8 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 
 	if( !(wd.type&DMG_MULTI_HIT) && sstatus->cri && (!skill_id ||
 		skill_id == KN_AUTOCOUNTER || skill_id == SN_SHARPSHOOTING ||
-		skill_id == MA_SHARPSHOOTING || skill_id == NJ_KIRIKAGE))
+		skill_id == MA_SHARPSHOOTING || skill_id == NJ_KIRIKAGE || 
+		skill_id == AS_SONICBLOW || skill_id == MO_TRIPLEATTACK || skill_id == RA_FEARBREEZE))
 	{
 		short cri = sstatus->cri;
 
