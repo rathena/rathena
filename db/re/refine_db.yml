@@ -202,8 +202,8 @@ WeaponLv1:
     - Level: 15
       NormalChance: 18
       EnrichedChance: 18
-      EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventNormalChance: 30
+      EventEnrichedChance: 30
     - Level: 16
       NormalChance: 17
       EnrichedChance: 17
@@ -522,8 +522,8 @@ WeaponLv4:
     - Level: 18
       NormalChance: 7
       EnrichedChance: 7
-      EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventNormalChance: 14
+      EventEnrichedChance: 14
       Bonus: 1200
     - Level: 19
       NormalChance: 5
