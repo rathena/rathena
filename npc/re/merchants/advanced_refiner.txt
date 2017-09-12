@@ -71,7 +71,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	}
 	mes "[Holink]";
 	// TODO: Price is different to Suhnbi of Payon. Intended? [Secret]
-	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, 0);
+	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0: // Armor

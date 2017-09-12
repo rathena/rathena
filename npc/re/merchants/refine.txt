@@ -100,8 +100,8 @@ function	script	refinenew	{
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
-	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10, 1);
-	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10, 0);
+	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_MATERIAL_ID);
 	.@safe = 10;
 
 	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4)) {
@@ -439,8 +439,8 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		close;
 	}
 	
-	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, 1);
-	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, 0);
+	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 	
 	mes "[Clink]";
 	switch(getequipweaponlv(.@part)) {

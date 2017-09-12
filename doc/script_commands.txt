@@ -2753,8 +2753,12 @@ REFINE_COST_HD         - For refining with HD ores
 REFINE_COST_ENRICHED   - For refining with enriched ores
 REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
 
-This function will return zeny required for refining if <information> argument is true.
-Otherwise it returns required ore item ID for refining.
+This function will return required cost for refining based on <information> argument.
+
+Valid information types are:
+
+REFINE_ZENY_COST       - Zeny
+REFINE_MATERIAL_ID     - Material Item ID
 
 ---------------------------------------
 
