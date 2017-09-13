@@ -3873,8 +3873,8 @@
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
-	script_set_constant("REFINE_MATERIAL_ID", 1, false, false);
-	script_set_constant("REFINE_ZENY_COST", 0, false, false);
+	script_set_constant("REFINE_MATERIAL_ID", 0, false, false);
+	script_set_constant("REFINE_ZENY_COST", 1, false, false);
 
 	#undef export_constant
 	#undef export_constant2
