@@ -40,6 +40,8 @@ The table below explains which fields are accessed in each.
 
 GroupID: See the "Item Group ID" section in 'src/map/itemdb.h'.
          Supports IG_* constants.
+	and "Item Group ID" section in 'src/map/script_constants.h'.
+	 Supports export_constant(IG_* constants.
 
 ---------------------------------------
 
