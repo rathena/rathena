@@ -7365,16 +7365,18 @@ void clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 /// 0a44 <packet len>.W <party name>.24B { <account id>.L <nick>.24B <map name>.16B <role>.B <state>.B <class>.W <base level>.W }* <item pickup rule>.B <item share rule>.B <unknown>.L
 void clif_party_info(struct party_data* p, struct map_session_data *sd)
 {
-	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1)*MAX_PARTY];
 	struct map_session_data* party_sd = NULL;
 	int i, c;
 #if PACKETVER < 20170502
+	const int M_SIZE = 46; // 4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1
+	unsigned char buf[2+2+NAME_LENGTH+46*MAX_PARTY];
 	int cmd = 0xfb;
-	int size = 46;
 #else
+	const int M_SIZE = 50; // 4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1+4
+	unsigned char buf[2+2+NAME_LENGTH+50*MAX_PARTY+6];
 	int cmd = 0xa44;
-	int size = 50;
 #endif
+	const int PRE_SIZE = 28; // cmd, actual cmd_size, party_name
 
 	nullpo_retv(p);
 
@@ -7387,24 +7389,24 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd)
 
 		if(party_sd == NULL) party_sd = p->data[i].sd;
 
-		WBUFL(buf,28+c*size) = m->account_id;
-		safestrncpy(WBUFCP(buf,28+c*size+4), m->name, NAME_LENGTH);
-		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,28+c*size+28));
-		WBUFB(buf,28+c*size+44) = (m->leader) ? 0 : 1;
-		WBUFB(buf,28+c*size+45) = (m->online) ? 0 : 1;
+		WBUFL(buf,PRE_SIZE+c*M_SIZE) = m->account_id;
+		safestrncpy(WBUFCP(buf,PRE_SIZE+c*M_SIZE+4), m->name, NAME_LENGTH);
+		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,PRE_SIZE+c*M_SIZE+PRE_SIZE));
+		WBUFB(buf,PRE_SIZE+c*M_SIZE+44) = (m->leader) ? 0 : 1;
+		WBUFB(buf,PRE_SIZE+c*M_SIZE+45) = (m->online) ? 0 : 1;
 #if PACKETVER >= 20170502
-		WBUFW(buf,28+c*size+46) = m->class_;
-		WBUFW(buf,28+c*size+48) = m->lv;
+		WBUFW(buf,PRE_SIZE+c*M_SIZE+46) = m->class_;
+		WBUFW(buf,PRE_SIZE+c*M_SIZE+48) = m->lv;
 #endif
 		c++;
 	}
 #if PACKETVER < 20170502
-	WBUFW(buf,2) = 28+c*size;
+	WBUFW(buf,2) = PRE_SIZE+c*M_SIZE;
 #else
-	WBUFB(buf,28+c*size) = (p->party.item & 1) ? 1 : 0;
-	WBUFB(buf,28+c*size+1) = (p->party.item & 2) ? 1 : 0;
-	WBUFL(buf,28+c*size+2) = 0; // unknown
-	WBUFW(buf,2) = 28+c*size+6;
+	WBUFB(buf,PRE_SIZE+c*M_SIZE) = (p->party.item & 1) ? 1 : 0;
+	WBUFB(buf,PRE_SIZE+c*M_SIZE+1) = (p->party.item & 2) ? 1 : 0;
+	WBUFL(buf,PRE_SIZE+c*M_SIZE+2) = 0; // unknown
+	WBUFW(buf,2) = PRE_SIZE+c*M_SIZE+6;
 #endif
 
 	if(sd) { // send only to self
