@@ -22102,7 +22102,7 @@ BUILDIN_FUNC(showscript) {
 	}
 
 	if (script_hasdata(st, 4)) {
-		target = script_getnum(st, 4);
+		target = static_cast<send_target>(script_getnum(st, 4));
 		if (target == SELF && map_id2sd(bl->id) == NULL) {
 			ShowWarning("script: showscript: self can't be used for non-players objects.\n");
 			return SCRIPT_CMD_FAILURE;
