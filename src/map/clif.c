@@ -10004,12 +10004,10 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	return true;
 }
 
-/* clif_pk_mode_message
- * Displays a message if the player joins a PK Zone
- * (Only enabled in pk_mode)
- * @param sd
- * @return void
- *------------------------------------------*/
+/**
+ * Displays a message if the player enters a PK Zone (during pk_mode)
+ * @param sd: Player data
+ */
 inline void clif_pk_mode_message(struct map_session_data * sd)
 {
 	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
