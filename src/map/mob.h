@@ -337,7 +337,7 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 
 void mob_clear_spawninfo();
 void do_init_mob(void);
-void do_final_mob(void);
+void do_final_mob(bool is_reload);
 
 int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
 int mob_deleteslave(struct mob_data *md);

@@ -581,6 +581,37 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 }
 
 /**
+ * Check if the player can sell the current item
+ * @param sd: map_session_data of the player
+ * @param item: struct of the checking item
+ * @return bool 'true' is sellable, 'false' otherwise
+ */
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
+	struct npc_data *nd;
+
+	if (sd == NULL || item == NULL)
+		return false;
+
+	nd = map_id2nd(sd->npc_shopid);
+
+	if (!itemdb_cansell(item, pc_get_group_level(sd)))
+		return false;
+
+	if (battle_config.hide_fav_sell && item->favorite)
+		return false; //Cannot sell favs (optional config)
+
+	if (item->expire_time)
+		return false; // Cannot Sell Rental Items
+
+	if (nd && nd->subtype == NPCTYPE_ITEMSHOP && item->bound && battle_config.allow_bound_sell)
+		return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
+
+	if (item->bound && !pc_can_give_bounded_items(sd))
+		return false; // Don't allow sale of bound items
+	return true;
+}
+
+/**
  * Determines if player can give / drop / trade / vend items
  */
 bool pc_can_give_items(struct map_session_data *sd)
@@ -4862,17 +4893,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 
 	if( itemdb_group_item_exists(IG_MERCENARY, nameid) && sd->md != NULL )
 		return false; // Mercenary Scrolls
-
-	/**
-	 * Only Rune Knights may use runes
-	 **/
-	if( itemdb_group_item_exists(IG_RUNE, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
-		return false;
-	/**
-	 * Only GCross may use poisons
-	 **/
-	else if( itemdb_group_item_exists(IG_POISON, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
-		return false;
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
 		if( pc_is90overweight(sd) ) {

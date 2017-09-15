@@ -565,8 +565,7 @@ setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
 
 Some source-end constants can also be accessed in scripts. This list is located in
-'src/map/script.c' in the 'script_hardcoded_constants' function, which contains
-constants such as server defines and status options:
+'src/map/script_constants.h', which contains constants such as server defines and status options:
 
 	PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
 	MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
@@ -5316,10 +5315,11 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
-*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
-*sc_start4 	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
-*sc_end 	<effect type>{,<GID>};
+*sc_start <effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
+*sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
+*sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
+*sc_end <effect type>{,<GID>};
+*sc_end_class {<char_id>};
 
 These commands will bestow a status effect on a character.
 
@@ -5356,6 +5356,9 @@ and theirs val1, val2, val3, and val4 usage in source.
 
 'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
 perform a complete removal of all statuses (although permanent ones will re-apply).
+
+'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
+skill on the invoking character.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.

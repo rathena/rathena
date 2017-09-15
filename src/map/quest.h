@@ -35,7 +35,7 @@ struct quest_db {
 	StringBuf name;
 };
 
-struct quest_db quest_dummy;	///< Dummy entry for invalid quest lookups
+extern struct quest_db quest_dummy;	///< Dummy entry for invalid quest lookups
 
 // Questlog check types
 enum quest_check_type {
