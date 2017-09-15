@@ -179,12 +179,14 @@ function	Check_SkillPoints	{
 			roclass(.@eac|EAJL_THIRD); // Expanded SN is "third" cls
 	}
 	
-	if (.SecondExpanded && (Class == Job_Ninja || Class == Job_Gunslinger)) { // TODO: Baby Classes are missing
+	if (.SecondExpanded && 
+		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		// is (Baby) Ninja
+		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
 		// (Baby) Ninja to (Baby) Kagerou / Oboro
 		// (Baby) Gunslinger to (Baby) Rebellion
 		RequireLevel(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
-		setarray .@job_opt[getarraysize(.@job_opt)],
-			.@class1; // TODO class1 seems wrong
+		// Kagerou, Oboro, Rebellion are considered as a 2-1 class
+		setarray .@job_opt[getarraysize(.@job_opt)], roclass(.@eac|EAJL_2_1);
 	}
 	
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
@@ -215,15 +217,16 @@ function	Check_SkillPoints	{
 				setarray .@job_opt[getarraysize(.@job_opt)],
 					Job_Baby_Swordman, Job_Baby_Mage, Job_Baby_Archer,
 					Job_Baby_Acolyte, Job_Baby_Merchant, Job_Baby_Thief,
-					Job_Super_Baby;
+					Job_Super_Baby, Job_Baby_Taekwon, Job_Baby_Gunslinger,
+					Job_Baby_Ninja, Job_Baby_Summoner;
 				break;
 			default:
 				mes "An error has occurred.";
 				close;
 		}
-	} else if( .@eac <= EAJ_NINJA || 				// First Class TODO: Can we check First Cls in a different way?
-			 (.@eac&(~EAJL_UPPER)) <= EAJ_NINJA ||	// Trans. First Cls
-			 (.@eac&(~EAJL_BABY)) <= EAJ_NINJA ) {	// Baby First Cls
+	} else if( .@eac <= EAJ_TAEKWON || 				// First Class TODO: Can we check First Cls in a different way?
+			 (.@eac&(~EAJL_UPPER)) <= EAJ_TAEKWON ||	// Trans. First Cls
+			 (.@eac&(~EAJL_BABY)) <= EAJ_TAEKWON ) {	// Baby First Cls
 		// Player is First Class (not Novice)
 		// most jobs should have two options here  (2-1 and 2-2)
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
@@ -540,12 +543,6 @@ function	Get_Job_Equip	{
 OnInit:
 	// Initialisation, do not edit these
 	.NPCName$ = "[Job Master]";
-	
-	// .@job_opt is the main array for the available job changes.
-	// Each element is a roclass or a "special" change:
-	.CHANGE_ERROR = -1;
-	.CHANGE_REBIRTH = -2;
-	.CHANGE_THIRD = -3;
 	
 	// Settings
 	.ThirdClass = 1;			// Enable third classes? (1: yes / 0: no)
