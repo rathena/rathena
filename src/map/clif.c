@@ -10012,7 +10012,7 @@ inline void clif_pk_mode_message(struct map_session_data * sd)
 {
 	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
 	    sd && map[sd->bl.m].flag.pvp) {
-		// 407: You've entered the PK Zone.
+		// 407: You've entered a PK Zone.
 		clif_showscript(&sd->bl, msg_txt(sd,407), SELF);
 	}
 	return;
