@@ -10013,8 +10013,7 @@ inline void clif_pk_mode_message(struct map_session_data * sd)
 	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
 	    sd && map[sd->bl.m].flag.pvp) {
 		// 407: You've entered the PK Zone.
-		clif_disp_overhead_(&sd->bl, msg_txt(sd,407), BC_SELF);
-		//clif_broadcast(&sd->bl, msg_txt(sd,407), strlen(msg_txt(sd,407)) + 1, BC_BLUE, SELF);
+		clif_showscript(&sd->bl, msg_txt(sd,407), SELF);
 	}
 	return;
 }
@@ -18749,7 +18748,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
 * [Ind/Hercules]
 * 08b3 <Length>.W <id>.L <message>.?B (ZC_SHOWSCRIPT)
 **/
-void clif_showscript(struct block_list* bl, const char* message) {
+void clif_showscript(struct block_list* bl, const char* message, enum send_target flag) {
 	char buf[256];
 	size_t len;
 	nullpo_retv(bl);
@@ -18768,7 +18767,7 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	WBUFW(buf,2) = (uint16)(len+8);
 	WBUFL(buf,4) = bl->id;
 	safestrncpy(WBUFCP(buf,8), message, len);
-	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, AREA);
+	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, flag);
 }
 
 /**
