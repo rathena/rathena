@@ -136,6 +136,17 @@ function	Check_SkillPoints	{
 	return;
 }
 
+// addJobOptions is essentially the same like
+// setarray .@array[getarraysize(.@array)],opt1,opt2,...;
+// It's just easier to read, since we're using it very often
+function	Add_Job_Options	{
+	.@argcount = getargcount();
+	.@arr_size = getarraysize(getarg(0));
+	for( .@i = 1; .@i < .@argcount; .@i++) {
+		setarray getelementofarray(getarg(0), .@arr_size++),getarg(.@i);
+	}
+}
+
 // Begin of the NPC
 	mes .NPCName$;
 	Check_Riding();
@@ -162,12 +173,13 @@ function	Check_SkillPoints	{
 	if( .@rebirth_possible ) {
 		// Rebirth option (displayed on the top of the menu)
 		RequireLevel(.Req_Rebirth[0], .Req_Rebirth[1]);
-		setarray .@job_opt[getarraysize(.@job_opt)], Job_Novice_High;
+		Add_Job_Options
+		Add_Job_Options(.@job_opt, Job_Novice_High);
 	}
 	if( .@third_possible ) {
 		// Third Job change (displayed below rebirth)
 		RequireLevel(.Req_Third[0], .Req_Third[1]);
-		setarray .@job_opt[getarraysize(.@job_opt)], roclass(.@eac|EAJL_THIRD);
+		Add_Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
 	}
 	 
 	if (.SecondExpanded && 
@@ -175,8 +187,7 @@ function	Check_SkillPoints	{
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
 		RequireLevel(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
-		setarray .@job_opt[getarraysize(.@job_opt)],
-			roclass(.@eac|EAJL_THIRD); // Expanded SN is "third" cls
+		Add_Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
 	}
 	
 	if (.SecondExpanded && 
@@ -186,7 +197,7 @@ function	Check_SkillPoints	{
 		// (Baby) Gunslinger to (Baby) Rebellion
 		RequireLevel(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
 		// Kagerou, Oboro, Rebellion are considered as a 2-1 class
-		setarray .@job_opt[getarraysize(.@job_opt)], roclass(.@eac|EAJL_2_1);
+		Add_Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
 	}
 	
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
@@ -197,28 +208,28 @@ function	Check_SkillPoints	{
 		switch(Class) {
 			case Job_Novice:
 				// First job change
-				setarray .@job_opt[getarraysize(.@job_opt)],Job_Swordman,
+				Add_Job_Options(.@job_opt,Job_Swordman,
 					Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
 					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja,
-					Job_Baby;
+					Job_Baby);
+				//Add_Job_Options(.@job_opt,);
 				break;
 			case Job_Novice_High:
 				// Job change after rebirth
 				if( .LastJob && lastJob )
-					setarray .@job_opt[getarraysize(.@job_opt)],
-						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER);
+					Add_Job_Options(.@job_opt,
+						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
 				else
-					setarray .@job_opt[getarraysize(.@job_opt)],
+					Add_Job_Options(.@job_opt, 
 						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
-						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High;
+						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
 				break;
 			case Job_Baby:
 				// First job change as a baby
-				setarray .@job_opt[getarraysize(.@job_opt)],
-					Job_Baby_Swordman, Job_Baby_Mage, Job_Baby_Archer,
-					Job_Baby_Acolyte, Job_Baby_Merchant, Job_Baby_Thief,
-					Job_Super_Baby, Job_Baby_Taekwon, Job_Baby_Gunslinger,
-					Job_Baby_Ninja, Job_Baby_Summoner;
+				Add_Job_Options(.@job_opt, Job_Baby_Swordman, Job_Baby_Mage,
+					Job_Baby_Archer,Job_Baby_Acolyte, Job_Baby_Merchant,
+					Job_Baby_Thief, Job_Super_Baby, Job_Baby_Taekwon,
+					Job_Baby_Gunslinger, Job_Baby_Ninja, Job_Baby_Summoner);
 				break;
 			default:
 				mes "An error has occurred.";
@@ -235,22 +246,26 @@ function	Check_SkillPoints	{
 		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
 			// Player is rebirth Cls and linear class changes are enforced
 			RequireLevel(.Req_Second[0], .Req_Second[1]);
-			setarray .@job_opt[getarraysize(.@job_opt)], 
-				lastJob + Job_Novice_High;
+			Add_Job_Options(.@job_opt, lastJob + Job_Novice_High);
 			// TODO should we add a check here if lastJob+Job_Novice_High
 			// is really either .@class1 or .@class2?
 		} else {
 			// Class is not enforced, player can decide.
 			if( .@class1 > 0 ) { // 2-1
 				RequireLevel(.Req_Second[0], .Req_Second[1]);
-				setarray .@job_opt[getarraysize(.@job_opt)], .@class1;
+				Add_Job_Options(.@job_opt, .@class1);
 			}
 			if( .@class2 > 0 ) { // 2-2
 				RequireLevel(.Req_Second[0], .Req_Second[1]);
-				setarray .@job_opt[getarraysize(.@job_opt)], .@class2;
+				Add_Job_Options(.@job_opt, .@class2);
 			}
 		}
 	}
+	
+	// apply the user defined settings by
+	// removing the jobs from .@job_opt
+	// TODO apply the settings here
+	
 	
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
@@ -441,6 +456,7 @@ function	Get_Platinum	{
 // Function which gives a job related item to the player
 // the items are the rewards from the original job change quests
 function	Get_Job_Equip	{
+	// TODO checkweight, currently the item drops on the ground if the player can't hold it.
 	.@eac = eaclass();
 	if( .@eac&EAJL_THIRD ) {
 		// Third Class Items
