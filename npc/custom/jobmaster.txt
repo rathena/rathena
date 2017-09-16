@@ -44,41 +44,6 @@ function	Require_Level	{
 	return;
 }
 
-
-/*TODO These are missing:
-
-	JOB_BABY_NINJA = 4222,
-	JOB_BABY_KAGEROU,
-	JOB_BABY_OBORO,
-	JOB_BABY_TAEKWON,
-	JOB_BABY_STAR_GLADIATOR,
-	JOB_BABY_SOUL_LINKER,
-	JOB_BABY_GUNSLINGER,
-	JOB_BABY_REBELLION,
-
-*/
-
-// Check if there are more Jobs available
-/*
-function	Last_Job	{
-	if (Class > Job_Soul_Linker) {
-		// Everything above is Third Class
-		// No more job changes possible
-		return true;
-	}
-	// Custom Jobs; job change not posssible
-	switch(Class) {
-		case JOB_KNIGHT2:	case JOB_CRUSADER2:		case JOB_WEDDING:
-		case JOB_XMAS:		case JOB_SUMMER:		case JOB_HANBOK:
-		case JOB_OKTOBERFEST: case JOB_LORD_KNIGHT2:	case JOB_LORD_KNIGHT2:
-		case JOB_LORD_KNIGHT2:
-			return true;
-	}
-	return false;
-}
-TODO: Last_Job isn't necessary anymore. But I'll keep that here as a comment to check the classes above.
-*/
-
 // Checks if the player can change to third class.
 // Note: This does not include the level checks.
 function	Can_Change_Third	{
@@ -580,8 +545,8 @@ OnInit:
 	.GetJobEquip = 1;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
 	// TODO: Set .GetJobEquip to 0 and remove debug msgs once testing is finished
 	// Level Requirements
-	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class TODO: No BaseLevel required?
-	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class TODO: No BaseLevel required?
+	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
+	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
 	setarray .Req_Rebirth[0],99,50;		// Minimum base level, job level to rebirth
 	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class
 	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
