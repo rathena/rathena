@@ -12,33 +12,33 @@
 	.@zeny_cost = 200000; // Zeny cost is 200,000 according to official script [Secret]
 	disable_items;
 	mes "[Shadow Blacksmith]";
-	mes "Do you want to refine a shadow item? Pick yer poison!"
+	mes "Do you want to refine a shadow item? Pick yer poison!";
 	next;
 	setarray .@indices[1], EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_R, EQI_SHADOW_ACC_L;
-	for(.@i = 1; .@i <= EQI_SHADOW_ACC_L; set .@i++)
+	for(.@i = 1; .@i <= EQI_SHADOW_ACC_L; .@i++)
 		.@menu$ = .@menu$ + (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[Not equipped]") +":";
 	.@menu$ = .@menu$ + "Refine info";
 	.@part = .@indices[select(.@menu$)];
 
 	if (.@part == EQI_SHADOW_ACC_L + 1) { // Refine info
 		mes "[Shadow Blacksmith]";
-		mes "When a shadow item is refined, it gains extra bonuses very much like normal items."
+		mes "When a shadow item is refined, it gains extra bonuses very much like normal items.";
 		next;
 		mes "[Shadow Blacksmith]";
-		mes "Weapon: ATK, MATK + 1 increase for each +1 refine success."
-		mes "Etc: HP + 10 increase for each +1 refine success."
+		mes "Weapon: ATK, MATK + 1 increase for each +1 refine success.";
+		mes "Etc: HP + 10 increase for each +1 refine success.";
 		next;
 		mes "[Shadow Blacksmith]";
-		mes "All types of Oridecon and Elunium can be used to refine shadow items. Each attempt will also cost 20,000 zeny."
+		mes "All types of Oridecon and Elunium can be used to refine shadow items. Each attempt will also cost 20,000 zeny.";
 		next;
 		mes "[Shadow Blacksmith]";
-		mes "HD ores can be used for gear that is at least refine level +7 and will prevent breaking as long as you stay talking to me."
+		mes "HD ores can be used for gear that is at least refine level +7 and will prevent breaking as long as you stay talking to me.";
 		close;
 	}
 	while(1) {
 		mes "[Shadow Blacksmith]";
-		mes "I require " + callfunc("F_InsertComma", .@zeny_cost) + " zeny as a fee for EACH refine attempt."
-		mes "Choose your Ore and start refining."
+		mes "I require " + callfunc("F_InsertComma", .@zeny_cost) + " zeny as a fee for EACH refine attempt.";
+		mes "Choose your Ore and start refining.";
 		next;
 		.@isNormalEqp = 0;
 		if (.@part != EQI_SHADOW_WEAPON)
@@ -76,7 +76,7 @@
 		else if (.@option == 3) { // HD
 			if (getequiprefinerycnt(.@part) < 7) {
 				mes "[Shadow Blacksmith]";
-				mes "HD Ore can only used for +7 or higher refine level items."
+				mes "HD Ore can only used for +7 or higher refine level items.";
 				close;
 			}
 			.@hoihoi = 1;
@@ -94,7 +94,7 @@
 		}
 		if (getequiprefinerycnt(.@part) > 9) {
 			mes "[Shadow Blacksmith]";
-			mes "Shadow Equipment can be refined to the maximum of 10..."
+			mes "Shadow Equipment can be refined to the maximum of 10...";
 			close;
 		}
 		if (!getequipisenableref(.@part)) {
@@ -104,7 +104,7 @@
 		}
 		if (getequippercentrefinery(.@part) < 100) {
 			mes "[Shadow Blacksmith]";
-			mes "The safety refine level for Shadow Equipment is +4."
+			mes "The safety refine level for Shadow Equipment is +4.";
 			if (!.@hoihoi)
 				mes "Shadow equipment may be destroyed in subsequent refinements. Want to get started?";
 			else
@@ -139,5 +139,5 @@
 	}
 }
 
-moc_paraup,45,185,5	duplicate(ShadowBlacksmith)	Shadow Blacksmith#eden1	4_F_JOB_BLACKSMITH
+//moc_paraup,45,185,5	duplicate(ShadowBlacksmith)	Shadow Blacksmith#eden1	4_F_JOB_BLACKSMITH // Commented out until it's added to the map index
 prt_in,59,54,3	duplicate(ShadowBlacksmith)	Shadow Blacksmith#itemmall	4_F_JOB_BLACKSMITH
