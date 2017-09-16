@@ -44,6 +44,11 @@ function	Require_Level	{
 	return;
 }
 
+// Checks if the given eac is a baby class
+function Is_Baby	{
+	return ((getarg(0, eaclass())&EAJL_BABY)>0);
+}
+
 // Checks if the player can change to third class.
 // Note: This does not include the level checks.
 function	Can_Change_Third	{
@@ -61,6 +66,8 @@ function	Can_Change_Third	{
 		return false; // Job has no third Class
 	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
 		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
+	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
+		return false; // No Baby (Third) change allowed
 	return true;
 }
 
@@ -75,11 +82,16 @@ function	Can_Rebirth	{
 		return false; // Already Rebirthed
 	if( roclass(eaclass()|EAJL_UPPER) < 0 )
 		return false; // Job has no transcended class
+	if( Is_Baby() && !.BabyClass )
+		return false; // No Baby changes allowed
 	return true;
 }
-function	Is_First_EAC	{
+
+// Checks if the given eac is a first class
+function	Is_First_Cls	{
 	return (getarg(0) <= EAJ_TAEKWON); // First Class TODO: Can we check First Cls in a different way?
 }
+
 function	Check_Riding	{
 	// Note: Why we should always check for Riding:
 	// Mounts are considered as another class, which
@@ -153,8 +165,11 @@ function	Job_Options	{
 	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
-		Require_Level(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
-		Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
+	   	if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
+			// .BabyClass & .BabyExpanded must be enabled if the is a baby
+			Require_Level(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
+			Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
+		}
 	}
 	
 	if (.SecondExpanded && 
@@ -162,9 +177,12 @@ function	Job_Options	{
 		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
 		// (Baby) Ninja to (Baby) Kagerou / Oboro
 		// (Baby) Gunslinger to (Baby) Rebellion
-		Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
-		// Kagerou, Oboro, Rebellion are considered as a 2-1 class
-		Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
+		if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
+			// .BabyClass & .BabyExpanded must be enabled if the is a baby
+			Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
+			// Kagerou, Oboro, Rebellion are considered as a 2-1 class
+			Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
+		}
 	}
 	
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
@@ -177,9 +195,9 @@ function	Job_Options	{
 				// First job change
 				Job_Options(.@job_opt,Job_Swordman,
 					Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
-					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja,
-					Job_Baby);
-				//Job_Options(.@job_opt,);
+					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja);
+				if( .BabyClass )
+					Job_Options(.@job_opt, Job_Baby);
 				break;
 			case Job_Novice_High:
 				// Job change after rebirth
@@ -192,12 +210,14 @@ function	Job_Options	{
 						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
 				break;
 			case Job_Baby:
+				if( !.BabyClass )
+					break;
 				// First job change as a baby
 				Job_Options(.@job_opt, Job_Baby_Swordman, Job_Baby_Mage,
 					Job_Baby_Archer,Job_Baby_Acolyte, Job_Baby_Merchant,
-					Job_Baby_Thief, Job_Super_Baby);
+					Job_Baby_Thief);
 				if( .BabyExpanded )
-					Job_Options(.@job_opt, Job_Baby_Taekwon,
+					Job_Options(.@job_opt, Job_Super_Baby, Job_Baby_Taekwon,
 						Job_Baby_Gunslinger, Job_Baby_Ninja);
 				if( .BabySummoner )
 					Job_Options(.@job_opt, Job_Baby_Summoner);
@@ -206,9 +226,9 @@ function	Job_Options	{
 				mes "An error has occurred.";
 				close;
 		}
-	} else if( Is_First_EAC(.@eac) || 				// First Class
-			   Is_First_EAC(.@eac&(~EAJL_UPPER)) ||	// Trans. First Cls
-			   Is_First_EAC(.@eac&(~EAJL_BABY)) ) {	// Baby First Cls
+	} else if( Is_First_Cls(.@eac) || 				// First Class
+			   Is_First_Cls(.@eac&(~EAJL_UPPER)) ||	// Trans. First Cls
+			   (.BabyClass && Is_First_Cls(.@eac&(~EAJL_BABY))) ) {	// Baby First Cls
 		// Player is First Class (not Novice)
 		// most jobs should have two options here  (2-1 and 2-2)
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
@@ -218,8 +238,6 @@ function	Job_Options	{
 			// Player is rebirth Cls and linear class changes are enforced
 			Require_Level(.Req_Second[0], .Req_Second[1]);
 			Job_Options(.@job_opt, lastJob + Job_Novice_High);
-			// TODO should we add a check here if lastJob+Job_Novice_High
-			// is really either .@class1 or .@class2?
 		} else {
 			// Class is not enforced, player can decide.
 			if( .@class1 > 0 ) { // 2-1
@@ -233,20 +251,9 @@ function	Job_Options	{
 		}
 	}
 	
-	for( .@i = 0; .@i < getarraysize(.@job_opt); .@i++) {
-		// Removes all Baby Classes from the menu, when .BabyClass is disabled
-		// Note: Other options are applied above, because the LevelRequirement
-		// is also requested there. But for Baby Classes it's really annoying
-		// to check for them in every explicit case.
-		if( !.BabyClass && (eaclass(.@job_opt[.@i])&(EAJL_BABY)) ) {
-			deletearray .@job_opt[.@i], 1;
-			// decrement i, because the current index is removed
-			.@i--;
-		}
-	}
-	
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
+	// TODO move the job menu to an own function
 	function Confirm_Change;
 	while(1) {
 		.@opt_cnt =  getarraysize(.@job_opt);
@@ -543,6 +550,7 @@ OnInit:
 	.RebirthClass = 1;			// Enable rebirth classes? (1: yes / 0: no)
 	.SecondExpanded = 1;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion? (1: yes / 0: no)
 	.BabyClass = 1;				// Enable Baby classes? (1: yes / 0: no)
+	.BabyThird = 1;				// Enable Baby third classes? (1: yes / 0: no)
 	.BabyExpanded = 1;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc. (1: yes / 0: no)
 	.BabySummoner = 1;			// Enable Baby Summoner? (1: yes / 0: no)
 	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
