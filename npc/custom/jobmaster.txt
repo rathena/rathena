@@ -26,7 +26,7 @@ prontera,153,193,6	script	Job Master	123,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
-function	RequireLevel	{
+function	Require_Level	{
 	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
 		.@blvl = getarg(0) - BaseLevel;
 		.@jlvl = getarg(1) - JobLevel;
@@ -81,7 +81,7 @@ TODO: Last_Job isn't necessary anymore. But I'll keep that here as a comment to 
 
 // Checks if the player can change to third class.
 // Note: This does not include the level checks.
-function	canChangeThird	{
+function	Can_Change_Third	{
 	// To change to third class you either need to be:
 	// * Second Class
 	// * Transcendent Second Class
@@ -99,7 +99,7 @@ function	canChangeThird	{
 	return true;
 }
 
-function	canRebirth	{
+function	Can_Rebirth	{
 	// To rebirth, you need to be:
 	// * Second Class
 	if( !.RebirthClass )
@@ -111,6 +111,9 @@ function	canRebirth	{
 	if( roclass(eaclass()|EAJL_UPPER) < 0 )
 		return false; // Job has no transcended class
 	return true;
+}
+function	Is_First_EAC	{
+	return (getarg(0) <= EAJ_TAEKWON); // First Class TODO: Can we check First Cls in a different way?
 }
 function	Check_Riding	{
 	// Note: Why we should always check for Riding:
@@ -155,8 +158,8 @@ function	Add_Job_Options	{
 	// initialisation
 	deletearray .@job_opt[0],getarraysize(.@job_opt);
 	.@eac = eaclass();
-	.@third_possible = canChangeThird();
-	.@rebirth_possible = canRebirth();
+	.@third_possible = Can_Change_Third();
+	.@rebirth_possible = Can_Rebirth();
 	.@first_eac = .@eac&EAJ_BASEMASK;
 	.@second_eac = .@eac&EAJ_UPPERMASK;
 	// Note: These are already set in pc.c
@@ -172,13 +175,12 @@ function	Add_Job_Options	{
 	
 	if( .@rebirth_possible ) {
 		// Rebirth option (displayed on the top of the menu)
-		RequireLevel(.Req_Rebirth[0], .Req_Rebirth[1]);
-		Add_Job_Options
+		Require_Level(.Req_Rebirth[0], .Req_Rebirth[1]);
 		Add_Job_Options(.@job_opt, Job_Novice_High);
 	}
 	if( .@third_possible ) {
 		// Third Job change (displayed below rebirth)
-		RequireLevel(.Req_Third[0], .Req_Third[1]);
+		Require_Level(.Req_Third[0], .Req_Third[1]);
 		Add_Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
 	}
 	 
@@ -186,7 +188,7 @@ function	Add_Job_Options	{
 	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
-		RequireLevel(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
+		Require_Level(.Req_Exp_SNOVI[0], .Req_Exp_SNOVI[1]);
 		Add_Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
 	}
 	
@@ -195,7 +197,7 @@ function	Add_Job_Options	{
 		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
 		// (Baby) Ninja to (Baby) Kagerou / Oboro
 		// (Baby) Gunslinger to (Baby) Rebellion
-		RequireLevel(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
+		Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
 		// Kagerou, Oboro, Rebellion are considered as a 2-1 class
 		Add_Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
 	}
@@ -203,7 +205,7 @@ function	Add_Job_Options	{
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
 	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
 		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
-		RequireLevel(.Req_First[0], .Req_First[1]);
+		Require_Level(.Req_First[0], .Req_First[1]);
 		dispbottom "Debug: First Job Change";
 		switch(Class) {
 			case Job_Novice:
@@ -235,9 +237,9 @@ function	Add_Job_Options	{
 				mes "An error has occurred.";
 				close;
 		}
-	} else if( .@eac <= EAJ_TAEKWON || 				// First Class TODO: Can we check First Cls in a different way?
-			 (.@eac&(~EAJL_UPPER)) <= EAJ_TAEKWON ||	// Trans. First Cls
-			 (.@eac&(~EAJL_BABY)) <= EAJ_TAEKWON ) {	// Baby First Cls
+	} else if( Is_First_EAC(.@eac) || 				// First Class
+			   Is_First_EAC(.@eac&(~EAJL_UPPER)) ||	// Trans. First Cls
+			   Is_First_EAC(.@eac&(~EAJL_BABY)) ) {	// Baby First Cls
 		// Player is First Class (not Novice)
 		// most jobs should have two options here  (2-1 and 2-2)
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
@@ -245,18 +247,18 @@ function	Add_Job_Options	{
 		dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
 		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
 			// Player is rebirth Cls and linear class changes are enforced
-			RequireLevel(.Req_Second[0], .Req_Second[1]);
+			Require_Level(.Req_Second[0], .Req_Second[1]);
 			Add_Job_Options(.@job_opt, lastJob + Job_Novice_High);
 			// TODO should we add a check here if lastJob+Job_Novice_High
 			// is really either .@class1 or .@class2?
 		} else {
 			// Class is not enforced, player can decide.
 			if( .@class1 > 0 ) { // 2-1
-				RequireLevel(.Req_Second[0], .Req_Second[1]);
+				Require_Level(.Req_Second[0], .Req_Second[1]);
 				Add_Job_Options(.@job_opt, .@class1);
 			}
 			if( .@class2 > 0 ) { // 2-2
-				RequireLevel(.Req_Second[0], .Req_Second[1]);
+				Require_Level(.Req_Second[0], .Req_Second[1]);
 				Add_Job_Options(.@job_opt, .@class2);
 			}
 		}
