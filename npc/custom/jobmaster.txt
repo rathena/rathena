@@ -255,7 +255,7 @@ function	Job_Options	{
 	// .@job_opt should not be changed below this line.
 	// TODO move the job menu to an own function
 	function Confirm_Change;
-	while(1) {
+	while(true) {
 		.@opt_cnt =  getarraysize(.@job_opt);
 		if( .@opt_cnt <= 0 ) {
 			mes "No more jobs are available.";
@@ -546,17 +546,17 @@ OnInit:
 	.NPCName$ = "[Job Master]";
 	
 	// Settings
-	.ThirdClass = 1;			// Enable third classes? (1: yes / 0: no)
-	.RebirthClass = 1;			// Enable rebirth classes? (1: yes / 0: no)
-	.SecondExpanded = 1;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion? (1: yes / 0: no)
-	.BabyClass = 1;				// Enable Baby classes? (1: yes / 0: no)
-	.BabyThird = 1;				// Enable Baby third classes? (1: yes / 0: no)
-	.BabyExpanded = 1;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc. (1: yes / 0: no)
-	.BabySummoner = 1;			// Enable Baby Summoner? (1: yes / 0: no)
-	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
-	.SkillPointCheck = 1;		// Force player to use up all skill points? (1: yes / 0: no)
-	.Platinum = 1;				// Get platinum skills automatically? (1: yes / 0: no)
-	.GetJobEquip = 1;			// Get job equipment (mostly weapons) on job change? (1: yes / 0: no)
+	.ThirdClass = true;			// Enable third classes?
+	.RebirthClass = true;			// Enable rebirth classes?
+	.SecondExpanded = true;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
+	.BabyClass = true;				// Enable Baby classes?
+	.BabyThird = true;				// Enable Baby third classes?
+	.BabyExpanded = true;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
+	.BabySummoner = true;			// Enable Baby Summoner?
+	.LastJob = true;				// Enforce linear class changes?
+	.SkillPointCheck = true;		// Force player to use up all skill points?
+	.Platinum = true;				// Get platinum skills automatically?
+	.GetJobEquip = true;			// Get job equipment (mostly weapons) on job change?
 	// TODO: Set .GetJobEquip to 0 and remove debug msgs once testing is finished
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
@@ -569,8 +569,13 @@ OnInit:
 	
 	// Setting adjustments by PACKETVER
 	if( PACKETVER < 20161207 ) {
-		.BabyExpanded = 0;
-		.BabySummoner = 0;
+		if( .BabyExpanded )
+			debugmes "jobmaster: BabyExpanded is disabled due to outdated PACKETVER.";
+		if( .BabySummoner )
+			debugmes "jobmaster: BabySummoner is disabled due to outdated PACKETVER.";
+		.BabyExpanded = false;
+		.BabySummoner = false;
 	}
 	end;
 }
+
