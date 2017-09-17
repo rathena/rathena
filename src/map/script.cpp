@@ -22083,7 +22083,7 @@ BUILDIN_FUNC(getvar) {
 
 /**
  * Display script message
- * showscript "<message>"{,<GID>};
+ * showscript "<message>"{,<GID>,<flag>};
  * @param flag: Specify target
  *   AREA - Message is sent to players in the vicinity of the source (default).
  *   SELF - Message is sent only to player attached.

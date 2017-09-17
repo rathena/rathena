@@ -3871,7 +3871,7 @@ by default green
 
 ---------------------------------------
 
-*showscript "<message>"{,<GID>, flag};
+*showscript "<message>"{,<GID>, <flag>};
 
 Makes attached player or GID says a message like shouting a skill name, the message
 will be seen to everyone around but not in chat window.
