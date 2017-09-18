@@ -3129,8 +3129,11 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			else if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%d\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 			}
-			else {
+			else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%d\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			}
+			else {
+				ShowWarning("pc_bonus: unknown bonus type %d %d in unknown usage. Report this!\n", type, val);
 			}
 			break;
 	}
