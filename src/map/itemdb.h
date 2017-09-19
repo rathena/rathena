@@ -726,6 +726,8 @@ enum e_random_item_group {
 	IG_CHRISTMAS_BOX,
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
+	IG_PrizeOfHero,
+	IG_Squad_Prize,
 };
 
 ///Item combo struct
