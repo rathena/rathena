@@ -23590,7 +23590,7 @@ BUILDIN_FUNC(getequiprefinecost) {
 			weapon_lv = REFINE_TYPE_SHADOW;
 	}
 
-	script_pushint(st, status_get_refine_cost(weapon_lv, type, info));
+	script_pushint(st, status_get_refine_cost(weapon_lv, type, info != 0));
 
 	return SCRIPT_CMD_SUCCESS;
 }
