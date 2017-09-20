@@ -485,7 +485,7 @@ static void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 			char temp_[MAIL_TITLE_LENGTH];
 
 			// swap sender and receiver
-			swap(msg.send_id, msg.dest_id);
+			SWAP(msg.send_id, msg.dest_id);
 			safestrncpy(temp_, msg.send_name, NAME_LENGTH);
 			safestrncpy(msg.send_name, msg.dest_name, NAME_LENGTH);
 			safestrncpy(msg.dest_name, temp_, NAME_LENGTH);
@@ -578,7 +578,7 @@ static void mapif_parse_Mail_send(int fd)
 	mapif_Mail_new(&msg); // notify recipient
 }
 
-void mail_sendmail(int send_id, const char* send_name, int dest_id, const char* dest_name, const char* title, const char* body, int zeny, struct item *item, int amount)
+bool mail_sendmail(int send_id, const char* send_name, int dest_id, const char* dest_name, const char* title, const char* body, int zeny, struct item *item, int amount)
 {
 	struct mail_message msg;
 	memset(&msg, 0, sizeof(struct mail_message));
@@ -601,8 +601,12 @@ void mail_sendmail(int send_id, const char* send_name, int dest_id, const char* 
 	msg.timestamp = time(NULL);
 	msg.type = MAIL_INBOX_NORMAL;
 
-	mail_savemessage(&msg);
+	if( !mail_savemessage(&msg) ){
+		return false;
+	}
+
 	mapif_Mail_new(&msg);
+	return true;
 }
 
 static void mapif_Mail_receiver_send( int fd, int requesting_char_id, int char_id, int class_, int base_level, const char* name ){

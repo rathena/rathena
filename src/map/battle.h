@@ -106,6 +106,8 @@ int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 d
 void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool spdamage);
 int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool spdamage);
 
+int battle_calc_chorusbonus(struct map_session_data *sd);
+
 // Summary normal attack treatment (basic attack)
 enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
 
@@ -373,8 +375,6 @@ extern struct Battle_Config
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]
 	int ban_hack_trade; // added by [Yor]
-	int packet_ver_flag; // added by [Yor]
-	int packet_ver_flag2; // expend of packet_ver_flag
 
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]
@@ -629,6 +629,10 @@ extern struct Battle_Config
 	int banana_bomb_duration;
 	int guild_leaderchange_delay;
 	int guild_leaderchange_woe;
+	int guild_alliance_onlygm;
+	int feature_achievement;
+	int allow_bound_sell;
+	int event_refine_chance;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

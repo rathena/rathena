@@ -27,14 +27,15 @@ before_script:
   - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
-  - sudo apt-get install gcc-4.8 -y
-  - sudo apt-get install g++-4.8 -y
+  - sudo apt-get install gcc-5 -y
+  - sudo apt-get install g++-5 -y
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 1
 
 script:
   - ./configure $CONFIGURE_FLAGS
   - make clean
   - make server
-  - 'echo packet_db_ver: $PACKETDBVER >> db/import/packet_db.txt'
   - ./map-server --run-once
 
 env:
@@ -44,7 +45,6 @@ env:
     - DB_NAME="ragnarok"
     - DB_USER="ragnarok"
     - DB_PASS="ragnarok"
-    - PACKETDBVER=45
   matrix:
     - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
     - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no --enable-buildbot=yes"

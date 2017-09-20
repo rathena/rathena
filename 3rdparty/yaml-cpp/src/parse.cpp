@@ -31,7 +31,7 @@ Node Load(std::istream& input) {
 
 Node LoadFile(const std::string& filename) {
   std::ifstream fin(filename.c_str());
-  if (!fin) {
+  if (!fin || fin.bad()) {
     throw BadFile();
   }
   return Load(fin);

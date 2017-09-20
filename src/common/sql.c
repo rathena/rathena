@@ -352,6 +352,16 @@ uint64 Sql_NumRows(Sql* self)
 
 
 
+/// Returns the number of rows affected by the last query
+uint64 Sql_NumRowsAffected(Sql* self)
+{
+	if( self )
+		return (uint64)mysql_affected_rows(&self->handle);
+	return 0;
+}
+
+
+
 /// Fetches the next row.
 int Sql_NextRow(Sql* self)
 {

@@ -1324,7 +1324,7 @@ OnStart:
 		.@mon_num++;
 		if (.@mon_num > 20)
 			break;
-		sleep2 200;
+		sleep 200;
 	}
 	sleep 6000;
 	killmonster 'xm_d_map$, .@event$;
@@ -1455,19 +1455,19 @@ OnInstanceInit:
 OnStart:
 	sleep 1000;
 	npctalk "Catherine Jet Johnson: Unfortunately, I am failed to persuade Kimi.";
-	sleep2 3000;
+	sleep 3000;
 	npctalk "Catherine Jet Johnson: What was the voice of phantom? Why it torments Kimi so harshly...";
-	sleep2 4000;
+	sleep 4000;
 	npctalk "Catherine Jet Johnson: I guess that the curse of my face was form the unidentified voice.";
-	sleep2 4000;
+	sleep 4000;
 	npctalk "Catherine Jet Johnson: Anyway, even Kimi, saying hates everyone, has collected her recollections here a lot.";
-	sleep2 6000;
+	sleep 6000;
 	npctalk "Catherine Jet Johnson: I will put this thing safely even if her soul will return and she won't be disappointed.";
-	sleep2 5000;
+	sleep 5000;
 	npctalk "Catherine Jet Johnson: Thanks to you, everything that I have wondered is completely resolved. Please call me again if you are going to send her to Heaven next time.";
-	sleep2 5000;
+	sleep 5000;
 	npctalk "Catherine Jet Johnson: I will open the exit way out. I will go outside first, so just follow me.";
-	sleep2 3000;
+	sleep 3000;
 	disablenpc instance_npcname("Catherine Jet Johnson#6");
 	enablenpc instance_npcname("#exwp1");
 	end;

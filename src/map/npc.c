@@ -42,6 +42,8 @@ static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
 
+struct eri *npc_sc_display_ers;
+
 // Market Shop
 #if PACKETVER >= 20131223
 struct s_npc_market {
@@ -338,6 +340,17 @@ static int npc_event_export(struct npc_data *nd, int i)
 	if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
 		struct event_data *ev;
 		char buf[EVENT_NAME_LENGTH];
+
+		if (nd->bl.m > -1 && map[nd->bl.m].instance_id > 0) { // Block script events in instances
+			int j;
+
+			for (j = 0; j < NPCE_MAX; j++) {
+				if (strcmpi(npc_get_script_event_name(j), lname) == 0) {
+					ShowWarning("npc_event_export: attempting to duplicate a script event in an instance (%s::%s), ignoring\n", nd->name, lname);
+					return 0;
+				}
+			}
+		}
 
 		// NPC:<name> the prefix uses 4 characters
 		if( !strncasecmp( lname, script_config.onwhisper_event_name, NAME_LENGTH ) && strlen(nd->exname) > ( NAME_LENGTH - 4 ) ){
@@ -1399,19 +1412,23 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 			{
 				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
 
+				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
+					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+					return ERROR_TYPE_PURCHASE_FAIL;
+				}
 				if (cost[0] < (price - points)) {
 					char output[CHAT_SIZE_MAX];
 
 					memset(output, '\0', sizeof(output));
 
-					sprintf(output, msg_txt(sd, 712), (id) ? id->jname : "NULL", (id) ? id->nameid : 0); // You do not have enough %s (%hu).
+					sprintf(output, msg_txt(sd, 712), id->jname, id->nameid); // You do not have enough %s (%hu).
 					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
-				if (id)
-					pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC);
-				else
-					ShowWarning("Failed to delete item %hu from itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+				if (pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC)) {
+					ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+					return ERROR_TYPE_PURCHASE_FAIL;
+				}
 			}
 			break;
 		case NPCTYPE_POINTSHOP:
@@ -1563,8 +1580,10 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
-					if (sd->inventory.u.items_inventory[i].nameid == id->nameid)
+					if (sd->inventory.u.items_inventory[i].nameid == id->nameid &&
+					    pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i])) {
 						total += sd->inventory.u.items_inventory[i].amount;
+					}
 				}
 			}
 
@@ -2418,6 +2437,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->bl.y = y;
 	nd->sc_display = NULL;
 	nd->sc_display_count = 0;
+	nd->progressbar.timeout = 0;
 
 	return nd;
 }
@@ -2464,7 +2484,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	nd->u.warp.x = to_x;
 	nd->u.warp.y = to_y;
 	nd->u.warp.xs = xs;
-	nd->u.warp.ys = xs;
+	nd->u.warp.ys = ys;
 	nd->bl.type = BL_NPC;
 	nd->subtype = NPCTYPE_WARP;
 	nd->trigger_on_hidden = false;
@@ -4438,23 +4458,36 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type)
 	return i;
 }
 
+const char *npc_get_script_event_name(int npce_index)
+{
+	switch (npce_index) {
+	case NPCE_LOGIN:
+		return script_config.login_event_name;
+	case NPCE_LOGOUT:
+		return script_config.logout_event_name;
+	case NPCE_LOADMAP:
+		return script_config.loadmap_event_name;
+	case NPCE_BASELVUP:
+		return script_config.baselvup_event_name;
+	case NPCE_JOBLVUP:
+		return script_config.joblvup_event_name;
+	case NPCE_DIE:
+		return script_config.die_event_name;
+	case NPCE_KILLPC:
+		return script_config.kill_pc_event_name;
+	case NPCE_KILLNPC:
+		return script_config.kill_mob_event_name;
+	case NPCE_STATCALC:
+		return script_config.stat_calc_event_name;
+	default:
+		ShowError("npc_get_script_event_name: npce_index is outside the array limits: %d (max: %d).\n", npce_index, NPCE_MAX);
+		return NULL;
+	}
+}
+
 void npc_read_event_script(void)
 {
 	int i;
-	struct {
-		char *name;
-		const char *event_name;
-	} config[] = {
-		{"Login Event",script_config.login_event_name},
-		{"Logout Event",script_config.logout_event_name},
-		{"Load Map Event",script_config.loadmap_event_name},
-		{"Base LV Up Event",script_config.baselvup_event_name},
-		{"Job LV Up Event",script_config.joblvup_event_name},
-		{"Die Event",script_config.die_event_name},
-		{"Kill PC Event",script_config.kill_pc_event_name},
-		{"Kill NPC Event",script_config.kill_mob_event_name},
-		{"Stat Calc Event",script_config.stat_calc_event_name},
-	};
 
 	for (i = 0; i < NPCE_MAX; i++)
 	{
@@ -4463,7 +4496,7 @@ void npc_read_event_script(void)
 		DBData *data;
 		char name[EVENT_NAME_LENGTH];
 
-		safesnprintf(name,EVENT_NAME_LENGTH,"::%s",config[i].event_name);
+		safesnprintf(name,EVENT_NAME_LENGTH,"::%s", npc_get_script_event_name(i));
 
 		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);
@@ -4475,7 +4508,7 @@ void npc_read_event_script(void)
 
 			if( count >= ARRAYLENGTH(script_event[i].event) )
 			{
-				ShowWarning("npc_read_event_script: too many occurences of event '%s'!\n", config[i].event_name);
+				ShowWarning("npc_read_event_script: too many occurences of event '%s'!\n", npc_get_script_event_name(i));
 				break;
 			}
 
@@ -4492,7 +4525,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
+			ShowInfo("%d '%s' events.\n", script_event[i].event_count, npc_get_script_event_name(i));
 	}
 }
 
@@ -4768,3 +4801,4 @@ void do_init_npc(void){
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
 }
+

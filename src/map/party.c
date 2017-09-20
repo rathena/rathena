@@ -18,6 +18,7 @@
 #include "intif.h"
 #include "mapreg.h"
 #include "trade.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 
@@ -174,6 +175,8 @@ void party_created(uint32 account_id,uint32 char_id,int fail,int party_id,char *
 	if( !fail ) {
 		sd->status.party_id = party_id;
 		clif_party_created(sd,0); // Success message
+
+		achievement_update_objective(sd, AG_PARTY, 1, 1);
 
 		// We don't do any further work here because the char-server sends a party info packet right after creating the party
 		if(party_create_byscript) {	// returns party id in $@party_create_id if party is created by script
@@ -1199,9 +1202,12 @@ int party_send_dot_remove(struct map_session_data *sd)
 	return 0;
 }
 
-// To use for Taekwon's "Fighting Chant"
-// int c = 0;
-// party_foreachsamemap(party_sub_count, sd, 0, &c);
+/**
+ * Check whether a party member is in autotrade or idle for count functions
+ * @param bl: Object invoking the counter
+ * @param ap: List of parameters
+ * @return 1 when neither autotrading and not idle or 0 otherwise
+ */
 int party_sub_count(struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd = (TBL_PC *)bl;
@@ -1215,7 +1221,12 @@ int party_sub_count(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-// To use for counting classes in a party.
+/**
+ * To use for counting classes in a party.
+ * @param bl: Object invoking the counter
+ * @param ap: List of parameters: Class_Mask, Class_ID
+ * @return 1 when class exists in party or 0 otherwise
+ */
 int party_sub_count_class(struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd = (TBL_PC *)bl;

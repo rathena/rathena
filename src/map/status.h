@@ -34,11 +34,28 @@ enum refine_type {
 	REFINE_TYPE_WEAPON2	= 2,
 	REFINE_TYPE_WEAPON3	= 3,
 	REFINE_TYPE_WEAPON4	= 4,
-	REFINE_TYPE_MAX		= 5
+	REFINE_TYPE_SHADOW	= 5,
+	REFINE_TYPE_MAX		= 6
+};
+
+/// Refine cost type
+enum refine_cost_type {
+	REFINE_COST_NORMAL = 0,
+	REFINE_COST_OVER10,
+	REFINE_COST_HD,
+	REFINE_COST_ENRICHED,
+	REFINE_COST_OVER10_HD,
+	REFINE_COST_MAX
+};
+
+struct refine_cost {
+	unsigned short nameid;
+	int zeny;
 };
 
 /// Get refine chance
-int status_get_refine_chance(enum refine_type wlv, int refine);
+int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
+int status_get_refine_cost(int weapon_lv, int type, bool what);
 
 /// Status changes listing. These code are for use by the server.
 typedef enum sc_type {
@@ -1810,6 +1827,7 @@ extern short current_equip_opt_index;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
+	MD_NONE					= 0x0000000,
 	MD_CANMOVE				= 0x0000001,
 	MD_LOOTER				= 0x0000002,
 	MD_AGGRESSIVE			= 0x0000004,
@@ -2062,6 +2080,15 @@ enum e_status_calc_weight_opt {
 	CALCWT_CARTSTATE = 0x4,	///< Whether to check for cart state
 };
 
+// Enum for refine chance types
+enum e_refine_chance_type {
+	REFINE_CHANCE_NORMAL = 0,
+	REFINE_CHANCE_ENRICHED,
+	REFINE_CHANCE_EVENT_NORMAL,
+	REFINE_CHANCE_EVENT_ENRICHED,
+	REFINE_CHANCE_TYPE_MAX
+};
+
 ///Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 ///Define to determine who has regen
@@ -2082,13 +2109,13 @@ struct weapon_atk {
 #endif
 };
 
-sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
-int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
-int StatusSkillChangeTable[SC_MAX];          /// status -> skill
-int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
-unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-unsigned int StatusDisplayType[SC_MAX];
+extern sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
+extern int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
+extern unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
+extern int StatusSkillChangeTable[SC_MAX];          /// status -> skill
+extern int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
+extern unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
+extern unsigned int StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
@@ -2096,13 +2123,13 @@ struct status_data {
 		hp, sp,  // see status_cpy before adding members before hp and sp
 		max_hp, max_sp;
 	short
-		str, agi, vit, int_, dex, luk;
+		str, agi, vit, int_, dex, luk,
+		eatk;
 	unsigned short
 		batk,
 #ifdef RENEWAL
 		watk,
 		watk2,
-		eatk,
 #endif
 		matk_min, matk_max,
 		speed,

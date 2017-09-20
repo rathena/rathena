@@ -4,6 +4,8 @@
 #ifndef _INT_STORAGE_SQL_H_
 #define _INT_STORAGE_SQL_H_
 
+#include "../common/cbasetypes.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -18,6 +18,8 @@ struct s_mercenary;
 struct s_elemental;
 struct mail_message;
 struct auction_data;
+enum storage_type;
+struct achievement_db;
 
 int intif_parse(int fd);
 
@@ -116,6 +118,10 @@ int intif_clan_requestclans();
 int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len);
 int intif_clan_member_joined( int clan_id );
 int intif_clan_member_left( int clan_id );
+// ACHIEVEMENT SYSTEM
+void intif_request_achievements(uint32 char_id);
+int intif_achievement_save(struct map_session_data *sd);
+int intif_achievement_reward(struct map_session_data *sd, struct achievement_db *adb);
 
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
 

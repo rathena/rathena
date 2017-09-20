@@ -4,14 +4,12 @@
 #ifndef _COMMON_SQL_H_
 #define _COMMON_SQL_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.h"
 #include <stdarg.h>// va_list
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // Return codes
 #define SQL_ERROR -1
@@ -172,6 +170,13 @@ uint32 Sql_NumColumns(Sql* self);
 ///
 /// @return Number of rows
 uint64 Sql_NumRows(Sql* self);
+
+
+
+/// Returns the number of rows affected by the last query
+///
+/// @return Number of rows
+uint64 Sql_NumRowsAffected(Sql* self);
 
 
 

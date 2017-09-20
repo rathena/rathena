@@ -1434,6 +1434,12 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd) 
 	if(tsd==NULL || tsd->status.guild_id<=0)
 		return 0;
 
+	// Check, is tsd guild master, if not - cancel alliance. [f0und3r]
+	if (battle_config.guild_alliance_onlygm && !tsd->state.gmaster_flag) {
+		clif_guild_allianceack(sd, 5);
+		return 0;
+	}
+
 	g[0]=sd->guild;
 	g[1]=tsd->guild;
 
