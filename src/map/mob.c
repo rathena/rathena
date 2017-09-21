@@ -2150,17 +2150,17 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	if( test_autoloot ) {	//Autoloot.
 		struct party_data *p = party_search(sd->status.party_id);
 
+		if ((itemdb_search(ditem->item_data.nameid))->flag.broadcast &&
+			(!p || !(p->party.item & 2)) // Somehow, if party's pickup distribution is 'Even Share', no announcemet
+			)
+			intif_broadcast_obtain_special_item(sd, ditem->item_data.nameid, md->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
+
 		if (party_share_loot(party_search(sd->status.party_id),
 			sd, &ditem->item_data, sd->status.char_id) == 0
 		) {
 			ers_free(item_drop_ers, ditem);
 			return;
 		}
-
-		if ((itemdb_search(ditem->item_data.nameid))->flag.broadcast &&
-			(!p || !(p->party.item&2)) // Somehow, if party's pickup distribution is 'Even Share', no announcemet
-			)
-			intif_broadcast_obtain_special_item(sd, ditem->item_data.nameid, md->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 	}
 	ditem->next = dlist->item;
 	dlist->item = ditem;
@@ -3643,12 +3643,16 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		//Skill used. Post-setups...
 		if ( ms[ i ].msg_id ){ //Display color message [SnakeDrak]
 			struct mob_chat *mc = mob_chat(ms[i].msg_id);
-			char temp[CHAT_SIZE_MAX];
- 			char name[NAME_LENGTH];
- 			snprintf(name, sizeof name,"%s", md->name);
- 			strtok(name, "#"); // discard extra name identifier if present [Daegaladh]
- 			snprintf(temp, sizeof temp,"%s : %s", name, mc->msg);
-			clif_messagecolor(&md->bl, mc->color, temp, true, AREA_CHAT_WOC);
+
+			if (mc) {
+				char temp[CHAT_SIZE_MAX];
+				char name[NAME_LENGTH];
+
+				snprintf(name, sizeof name,"%s", md->name);
+				strtok(name, "#"); // discard extra name identifier if present [Daegaladh]
+				snprintf(temp, sizeof temp,"%s : %s", name, mc->msg);
+				clif_messagecolor(&md->bl, mc->color, temp, true, AREA_CHAT_WOC);
+			}
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
 			for (j = 0; j < md->db->maxskill; j++)
@@ -3810,6 +3814,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		ms[i].cancel = 0;
 		ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
 		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
+		ms[i].msg_id = 0;
 
 		inf = skill_get_inf(skill_id);
 		if (inf&INF_ATTACK_SKILL) {
@@ -5232,12 +5237,16 @@ static void mob_load(void)
 /**
  * Initialize monster data
  */
-void mob_db_load(void){
+void mob_db_load(bool is_reload){
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
 	mob_db_data[0] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
-	item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_CLEAN);
-	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
+	if( !is_reload ) {
+		// on mobdbreload it's not neccessary to execute this
+		// item ers needs to be allocated only once
+		item_drop_ers = ers_new(sizeof(struct item_drop),"mob.c::item_drop_ers",ERS_OPT_CLEAN);
+		item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.c::item_drop_list_ers",ERS_OPT_NONE);
+	}
 	mob_item_drop_ratio = idb_alloc(DB_OPT_BASE);
 	mob_skill_db = idb_alloc(DB_OPT_BASE);
 	mob_summon_db = idb_alloc(DB_OPT_BASE);
@@ -5297,8 +5306,8 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
  * Reload monster data
  */
 void mob_reload(void) {
-	do_final_mob();
-	mob_db_load();
+	do_final_mob(true);
+	mob_db_load(true);
 	map_foreachmob(mob_reload_sub);
 	map_foreachnpc(mob_reload_sub_npc);
 }
@@ -5318,7 +5327,7 @@ void mob_clear_spawninfo()
  * Circumference initialization of mob
  *------------------------------------------*/
 void do_init_mob(void){
-	mob_db_load();
+	mob_db_load(false);
 
 	add_timer_func_list(mob_delayspawn,"mob_delayspawn");
 	add_timer_func_list(mob_delay_item_drop,"mob_delay_item_drop");
@@ -5335,7 +5344,7 @@ void do_init_mob(void){
 /*==========================================
  * Clean memory usage.
  *------------------------------------------*/
-void do_final_mob(void){
+void do_final_mob(bool is_reload){
 	int i;
 	if (mob_dummy)
 	{
@@ -5361,6 +5370,8 @@ void do_final_mob(void){
 	mob_item_drop_ratio->destroy(mob_item_drop_ratio,mob_item_drop_ratio_free);
 	mob_skill_db->destroy(mob_skill_db, mob_skill_db_free);
 	mob_summon_db->destroy(mob_summon_db, mob_summon_db_free);
-	ers_destroy(item_drop_ers);
-	ers_destroy(item_drop_list_ers);
+	if( !is_reload ) {
+		ers_destroy(item_drop_ers);
+		ers_destroy(item_drop_list_ers);
+	}
 }

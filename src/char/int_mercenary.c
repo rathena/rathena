@@ -69,7 +69,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	if( merc->mercenary_id == 0 )
 	{ // Create new DB entry
 		if( SQL_ERROR == Sql_Query(sql_handle,
-			"INSERT INTO `%s` (`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time`) VALUES ('%d','%d','%d','%d','%u','%u')",
+			"INSERT INTO `%s` (`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time`) VALUES ('%d','%d','%u','%u','%u','%u')",
 			schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -79,7 +79,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
-		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%d', `sp` = '%d', `kill_counter` = '%u', `life_time` = '%u' WHERE `mer_id` = '%d'",
+		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%u' WHERE `mer_id` = '%d'",
 		schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time, merc->mercenary_id) )
 	{ // Update DB entry
 		Sql_ShowDebug(sql_handle);

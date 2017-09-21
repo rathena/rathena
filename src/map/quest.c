@@ -21,6 +21,7 @@
 
 static DBMap *questdb;
 static void questdb_free_sub(struct quest_db *quest, bool free);
+struct quest_db quest_dummy;
 
 /**
  * Searches a quest by ID.
