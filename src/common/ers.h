@@ -84,6 +84,7 @@ enum ERSOptions {
 
 	/* Compound, is used to determine whether it should be looking for a cache of matching options */
 	ERS_CACHE_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK,
+	ERS_CLEAN_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_CLEAR,
 };
 
 /**

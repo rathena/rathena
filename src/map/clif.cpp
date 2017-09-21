@@ -53,6 +53,10 @@
 #include <stdarg.h>
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
 
@@ -213,7 +217,7 @@ int clif_setip(const char* ip) {
 	}
 
 	safestrncpy(map_ip_str, ip, sizeof(map_ip_str));
-	ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(map_ip, ip_str));
+	ShowInfo("Map Server IP Address : '" CL_WHITE "%s" CL_RESET "' -> '" CL_WHITE "%s" CL_RESET "'.\n", ip, ip2str(map_ip, ip_str));
 	return 1;
 }
 
@@ -222,7 +226,7 @@ void clif_setbindip(const char* ip)
 	bind_ip = host2ip(ip);
 	if (bind_ip) {
 		char ip_str[16];
-		ShowInfo("Map Server Bind IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(bind_ip, ip_str));
+		ShowInfo("Map Server Bind IP Address : '" CL_WHITE "%s" CL_RESET "' -> '" CL_WHITE "%s" CL_RESET "'.\n", ip, ip2str(bind_ip, ip_str));
 	} else {
 		ShowWarning("Failed to Resolve Map Server Address! (%s)\n", ip);
 	}
@@ -7365,16 +7369,18 @@ void clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 /// 0a44 <packet len>.W <party name>.24B { <account id>.L <nick>.24B <map name>.16B <role>.B <state>.B <class>.W <base level>.W }* <item pickup rule>.B <item share rule>.B <unknown>.L
 void clif_party_info(struct party_data* p, struct map_session_data *sd)
 {
-	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1)*MAX_PARTY];
 	struct map_session_data* party_sd = NULL;
 	int i, c;
 #if PACKETVER < 20170502
+	const int M_SIZE = 46; // 4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1
+	unsigned char buf[2+2+NAME_LENGTH+46*MAX_PARTY];
 	int cmd = 0xfb;
-	int size = 46;
 #else
+	const int M_SIZE = 50; // 4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1+4
+	unsigned char buf[2+2+NAME_LENGTH+50*MAX_PARTY+6];
 	int cmd = 0xa44;
-	int size = 50;
 #endif
+	const int PRE_SIZE = 28; // cmd, actual cmd_size, party_name
 
 	nullpo_retv(p);
 
@@ -7387,24 +7393,24 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd)
 
 		if(party_sd == NULL) party_sd = p->data[i].sd;
 
-		WBUFL(buf,28+c*size) = m->account_id;
-		safestrncpy(WBUFCP(buf,28+c*size+4), m->name, NAME_LENGTH);
-		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,28+c*size+28));
-		WBUFB(buf,28+c*size+44) = (m->leader) ? 0 : 1;
-		WBUFB(buf,28+c*size+45) = (m->online) ? 0 : 1;
+		WBUFL(buf,PRE_SIZE+c*M_SIZE) = m->account_id;
+		safestrncpy(WBUFCP(buf,PRE_SIZE+c*M_SIZE+4), m->name, NAME_LENGTH);
+		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,PRE_SIZE+c*M_SIZE+PRE_SIZE));
+		WBUFB(buf,PRE_SIZE+c*M_SIZE+44) = (m->leader) ? 0 : 1;
+		WBUFB(buf,PRE_SIZE+c*M_SIZE+45) = (m->online) ? 0 : 1;
 #if PACKETVER >= 20170502
-		WBUFW(buf,28+c*size+46) = m->class_;
-		WBUFW(buf,28+c*size+48) = m->lv;
+		WBUFW(buf,PRE_SIZE+c*M_SIZE+46) = m->class_;
+		WBUFW(buf,PRE_SIZE+c*M_SIZE+48) = m->lv;
 #endif
 		c++;
 	}
 #if PACKETVER < 20170502
-	WBUFW(buf,2) = 28+c*size;
+	WBUFW(buf,2) = PRE_SIZE+c*M_SIZE;
 #else
-	WBUFB(buf,28+c*size) = (p->party.item & 1) ? 1 : 0;
-	WBUFB(buf,28+c*size+1) = (p->party.item & 2) ? 1 : 0;
-	WBUFL(buf,28+c*size+2) = 0; // unknown
-	WBUFW(buf,2) = 28+c*size+6;
+	WBUFB(buf,PRE_SIZE+c*M_SIZE) = (p->party.item & 1) ? 1 : 0;
+	WBUFB(buf,PRE_SIZE+c*M_SIZE+1) = (p->party.item & 2) ? 1 : 0;
+	WBUFL(buf,PRE_SIZE+c*M_SIZE+2) = 0; // unknown
+	WBUFW(buf,2) = PRE_SIZE+c*M_SIZE+6;
 #endif
 
 	if(sd) { // send only to self
@@ -9873,7 +9879,7 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 /// Formats: false - <packet id>.w <packet len>.w (<name> : <message>).?B 00
 ///          true - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
 static bool clif_process_message(struct map_session_data* sd, bool whisperFormat, char* out_name, char* out_message, char* out_full_message ){
-	char* seperator = " : ";
+	const char* seperator = " : ";
 	int fd;
 	struct s_packet_db* info;
 	uint16 packetLength, inputLength;
@@ -13204,7 +13210,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 		bool flag;
 
 		len -= 85;
-		flag = (bool)RFIFOB(fd,info->pos[2]);
+		flag = RFIFOB(fd,info->pos[2]) != 0;
 		if (!flag) {
 			sd->state.prevend = 0;
 			sd->state.workinprogress = WIP_DISABLE_NONE;
@@ -15220,7 +15226,7 @@ void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd){
 	}
 
 	if( sd->mail.changed || ( cmd == 0x9ef || cmd == 0xac1 ) ){
-		intif_Mail_requestinbox(sd->status.char_id, 1, openType);
+		intif_Mail_requestinbox(sd->status.char_id, 1, (enum mail_inbox_type)openType);
 		return;
 	}
 
@@ -15532,7 +15538,7 @@ void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 		memset(msg->item, 0, MAIL_MAX_ITEM*sizeof(struct item));
 	}
 
-	intif_mail_getattach(sd,msg,attachment);
+	intif_mail_getattach(sd,msg, (enum mail_attachment_type)attachment);
 	clif_Mail_read(sd, mail_id);
 }
 
@@ -16448,7 +16454,7 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 void clif_parse_EquipTick(int fd, struct map_session_data* sd)
 {
 	//int type = RFIFOL(fd,packet_db[cmd].pos[0]);
-	bool flag = (bool)RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[1]);
+	bool flag = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[1]) != 0;
 	sd->status.show_equip = flag;
 	clif_equiptickack(sd, flag);
 }
@@ -20020,11 +20026,11 @@ static int clif_parse(int fd)
 				//Disassociate character from the socket connection.
 				session[fd]->session_data = NULL;
 				sd->fd = 0;
-				ShowInfo("Character '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n", sd->status.name);
+				ShowInfo("Character '" CL_WHITE "%s" CL_RESET "' logged off (using @autotrade).\n", sd->status.name);
 			} else
 			if (sd->state.active) {
 				// Player logout display [Valaris]
-				ShowInfo("Character '"CL_WHITE"%s"CL_RESET"' logged off.\n", sd->status.name);
+				ShowInfo("Character '" CL_WHITE "%s" CL_RESET "' logged off.\n", sd->status.name);
 				clif_quitsave(fd, sd);
 			} else {
 				//Unusual logout (during log on/off/map-changer procedure)
@@ -20032,7 +20038,7 @@ static int clif_parse(int fd)
 				map_quit(sd);
 			}
 		} else {
-			ShowInfo("Closed connection from '"CL_WHITE"%s"CL_RESET"'.\n", ip2str(session[fd]->client_addr, NULL));
+			ShowInfo("Closed connection from '" CL_WHITE "%s" CL_RESET "'.\n", ip2str(session[fd]->client_addr, NULL));
 		}
 		do_close(fd);
 		return 0;
@@ -20171,12 +20177,12 @@ void packetdb_readdb(){
 #include "clif_packetdb.h"
 #include "clif_shuffle.h"
 
-	ShowStatus("Using packet version: "CL_WHITE"%d"CL_RESET".\n", PACKETVER);
+	ShowStatus("Using packet version: " CL_WHITE "%d" CL_RESET ".\n", PACKETVER);
 
 #ifdef PACKET_OBFUSCATION
-	ShowStatus("Packet Obfuscation: "CL_GREEN"Enabled"CL_RESET". Keys: "CL_WHITE"0x%08X, 0x%08X, 0x%08X"CL_RESET"\n", clif_cryptKey[0], clif_cryptKey[1], clif_cryptKey[2]);
+	ShowStatus("Packet Obfuscation: " CL_GREEN "Enabled" CL_RESET ". Keys: " CL_WHITE "0x%08X, 0x%08X, 0x%08X" CL_RESET "\n", clif_cryptKey[0], clif_cryptKey[1], clif_cryptKey[2]);
 #else
-	ShowStatus("Packet Obfuscation: "CL_RED"Disabled"CL_RESET".\n");
+	ShowStatus("Packet Obfuscation: " CL_RED "Disabled" CL_RESET ".\n");
 #endif
 }
 
@@ -20205,16 +20211,20 @@ void do_init_clif(void) {
 
 	set_defaultparse(clif_parse);
 	if( make_listen_bind(bind_ip,map_port) == -1 ) {
-		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",map_port);
+		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",map_port);
 		exit(EXIT_FAILURE);
 	}
 
 	add_timer_func_list(clif_clearunit_delayed_sub, "clif_clearunit_delayed_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 
-	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.c::delay_clearunit_ers",ERS_OPT_CLEAR);
+	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.cpp::delay_clearunit_ers",ERS_OPT_CLEAR);
 }
 
 void do_final_clif(void) {
 	ers_destroy(delay_clearunit_ers);
 }
+
+#ifdef __cplusplus
+}
+#endif
