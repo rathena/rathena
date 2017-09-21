@@ -9879,7 +9879,7 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 /// Formats: false - <packet id>.w <packet len>.w (<name> : <message>).?B 00
 ///          true - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
 static bool clif_process_message(struct map_session_data* sd, bool whisperFormat, char* out_name, char* out_message, char* out_full_message ){
-	char* seperator = " : ";
+	const char* seperator = " : ";
 	int fd;
 	struct s_packet_db* info;
 	uint16 packetLength, inputLength;
