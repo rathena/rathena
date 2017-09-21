@@ -1,22 +1,11 @@
 //===== rAthena Script =======================================
 //= Advanced Refiner
-//===== By: ==================================================
-//= L0ne_W0lf
-//===== Current Version: =====================================
-//= 1.6
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiner that uses Enriched ores to increase upgrade success.
-//= After a conversation with Doddler, it's been established that
-//= the advanced refiner works similar the the "Bubble Gum" item.
-//= The success percentage is not "increased" however, if it fails
-//= You get a second try. This tries twice at the same time,
-//= effectively giving you a re-roll on your attempt.
 //= - Dialog is only partly official to iRO.
 //= - Uses the iRO position for this NPC.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Fixed a weird carriage return. o_o [L0ne_W0lf]
 //= 1.2 Optimizing refine method [Zephyrus]
@@ -26,6 +15,7 @@
 //= 1.4b Fixed coordinates. [Euphy]
 //= 1.5 Some official script updates. [Euphy]
 //= 1.6 Added VIP features. [Euphy]
+//= 1.7 Removed re-roll behavior. [Secret]
 //============================================================
 
 payon,157,146,6	script	Suhnbi#cash	85,{
@@ -65,19 +55,12 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 		close;
 	}
 
-	// Make sure you have the neccessary items and Zeny to refine your items
-	// Determines chance of failure and verifies that you want to continue.
-	switch(getequipweaponlv(.@part)) {
-		case 1: callsub S_RefineValidate,1,7620,50,.@part; break;
-		case 2: callsub S_RefineValidate,2,7620,200,.@part; break;
-		case 3: callsub S_RefineValidate,3,7620,5000,.@part; break;
-		case 4: callsub S_RefineValidate,4,7620,20000,.@part; break;
-		default: callsub S_RefineValidate,0,7619,2000,.@part; break;
-	}
+	.@price = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 
 	mes "[Suhnbi]";
 	mes "Clang! Clang! Clang!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;
@@ -105,7 +88,7 @@ S_RefineValidate:
 	set .@price, getarg(2);
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-	if (VIP_SCRIPT && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 		switch(.@weapon_lvl){
 			case 0: set .@price, .@price * 10; break;
 			case 1: set .@price, .@price * 40; break;

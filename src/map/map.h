@@ -4,6 +4,10 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
@@ -29,7 +33,7 @@ enum E_MAPSERVER_ST {
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
-int map_msg_config_read(char *cfgName,int lang);
+int map_msg_config_read(const char *cfgName,int lang);
 const char* map_msg_txt(struct map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
@@ -91,7 +95,7 @@ enum e_mapid {
 	MAPID_OKTOBERFEST,
 	MAPID_SUMMONER,
 //2-1 Jobs
-	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
+	MAPID_SUPER_NOVICE = JOBL_2_1|MAPID_NOVICE,
 	MAPID_KNIGHT,
 	MAPID_WIZARD,
 	MAPID_HUNTER,
@@ -99,20 +103,20 @@ enum e_mapid {
 	MAPID_BLACKSMITH,
 	MAPID_ASSASSIN,
 	MAPID_STAR_GLADIATOR,
-	MAPID_REBELLION = JOBL_2_1 | 0x09,
-	MAPID_KAGEROUOBORO = JOBL_2_1|0x0A,
-	MAPID_DEATH_KNIGHT = JOBL_2_1|0x0E,
+	MAPID_REBELLION = JOBL_2_1|MAPID_GUNSLINGER,
+	MAPID_KAGEROUOBORO,
+	MAPID_DEATH_KNIGHT = JOBL_2_1|MAPID_GANGSI,
 //2-2 Jobs
-	MAPID_CRUSADER = JOBL_2_2|0x1,
+	MAPID_CRUSADER = JOBL_2_2|MAPID_SWORDMAN,
 	MAPID_SAGE,
 	MAPID_BARDDANCER,
 	MAPID_MONK,
 	MAPID_ALCHEMIST,
 	MAPID_ROGUE,
 	MAPID_SOUL_LINKER,
-	MAPID_DARK_COLLECTOR = JOBL_2_2|0x0E,
+	MAPID_DARK_COLLECTOR = JOBL_2_2|MAPID_GANGSI,
 //Trans Novice And Trans 1-1 Jobs
-	MAPID_NOVICE_HIGH = JOBL_UPPER|0x0,
+	MAPID_NOVICE_HIGH = JOBL_UPPER|MAPID_NOVICE,
 	MAPID_SWORDMAN_HIGH,
 	MAPID_MAGE_HIGH,
 	MAPID_ARCHER_HIGH,
@@ -120,21 +124,21 @@ enum e_mapid {
 	MAPID_MERCHANT_HIGH,
 	MAPID_THIEF_HIGH,
 //Trans 2-1 Jobs
-	MAPID_LORD_KNIGHT = JOBL_UPPER|JOBL_2_1|0x1,
+	MAPID_LORD_KNIGHT = JOBL_UPPER|MAPID_KNIGHT,
 	MAPID_HIGH_WIZARD,
 	MAPID_SNIPER,
 	MAPID_HIGH_PRIEST,
 	MAPID_WHITESMITH,
 	MAPID_ASSASSIN_CROSS,
 //Trans 2-2 Jobs
-	MAPID_PALADIN = JOBL_UPPER|JOBL_2_2|0x1,
+	MAPID_PALADIN = JOBL_UPPER|MAPID_CRUSADER,
 	MAPID_PROFESSOR,
 	MAPID_CLOWNGYPSY,
 	MAPID_CHAMPION,
 	MAPID_CREATOR,
 	MAPID_STALKER,
 //Baby Novice And Baby 1-1 Jobs
-	MAPID_BABY = JOBL_BABY|0x0,
+	MAPID_BABY = JOBL_BABY|MAPID_NOVICE,
 	MAPID_BABY_SWORDMAN,
 	MAPID_BABY_MAGE,
 	MAPID_BABY_ARCHER,
@@ -142,11 +146,11 @@ enum e_mapid {
 	MAPID_BABY_MERCHANT,
 	MAPID_BABY_THIEF,
 	MAPID_BABY_TAEKWON,
-	MAPID_BABY_GUNSLINGER = JOBL_BABY|0x9,
+	MAPID_BABY_GUNSLINGER = JOBL_BABY|MAPID_GUNSLINGER,
 	MAPID_BABY_NINJA,
-	MAPID_BABY_SUMMONER = JOBL_BABY|0x11,
+	MAPID_BABY_SUMMONER = JOBL_BABY|MAPID_SUMMONER,
 //Baby 2-1 Jobs
-	MAPID_SUPER_BABY = JOBL_BABY|JOBL_2_1|0x0,
+	MAPID_SUPER_BABY = JOBL_BABY|MAPID_SUPER_NOVICE,
 	MAPID_BABY_KNIGHT,
 	MAPID_BABY_WIZARD,
 	MAPID_BABY_HUNTER,
@@ -154,10 +158,10 @@ enum e_mapid {
 	MAPID_BABY_BLACKSMITH,
 	MAPID_BABY_ASSASSIN,
 	MAPID_BABY_STAR_GLADIATOR,
-	MAPID_BABY_REBELLION = JOBL_BABY|JOBL_2_1|0x9,
+	MAPID_BABY_REBELLION = JOBL_BABY|MAPID_REBELLION,
 	MAPID_BABY_KAGEROUOBORO,
 //Baby 2-2 Jobs
-	MAPID_BABY_CRUSADER = JOBL_BABY|JOBL_2_2|0x1,
+	MAPID_BABY_CRUSADER = JOBL_BABY|MAPID_CRUSADER,
 	MAPID_BABY_SAGE,
 	MAPID_BABY_BARDDANCER,
 	MAPID_BABY_MONK,
@@ -165,7 +169,7 @@ enum e_mapid {
 	MAPID_BABY_ROGUE,
 	MAPID_BABY_SOUL_LINKER,
 //3-1 Jobs
-	MAPID_SUPER_NOVICE_E = JOBL_THIRD|JOBL_2_1|0x0,
+	MAPID_SUPER_NOVICE_E = JOBL_THIRD|MAPID_SUPER_NOVICE,
 	MAPID_RUNE_KNIGHT,
 	MAPID_WARLOCK,
 	MAPID_RANGER,
@@ -173,28 +177,28 @@ enum e_mapid {
 	MAPID_MECHANIC,
 	MAPID_GUILLOTINE_CROSS,
 //3-2 Jobs
-	MAPID_ROYAL_GUARD = JOBL_THIRD|JOBL_2_2|0x1,
+	MAPID_ROYAL_GUARD = JOBL_THIRD|MAPID_CRUSADER,
 	MAPID_SORCERER,
 	MAPID_MINSTRELWANDERER,
 	MAPID_SURA,
 	MAPID_GENETIC,
 	MAPID_SHADOW_CHASER,
 //Trans 3-1 Jobs
-	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|JOBL_UPPER|JOBL_2_1|0x1,
+	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|MAPID_LORD_KNIGHT,
 	MAPID_WARLOCK_T,
 	MAPID_RANGER_T,
 	MAPID_ARCH_BISHOP_T,
 	MAPID_MECHANIC_T,
 	MAPID_GUILLOTINE_CROSS_T,
 //Trans 3-2 Jobs
-	MAPID_ROYAL_GUARD_T = JOBL_THIRD|JOBL_UPPER|JOBL_2_2|0x1,
+	MAPID_ROYAL_GUARD_T = JOBL_THIRD|MAPID_PALADIN,
 	MAPID_SORCERER_T,
 	MAPID_MINSTRELWANDERER_T,
 	MAPID_SURA_T,
 	MAPID_GENETIC_T,
 	MAPID_SHADOW_CHASER_T,
 //Baby 3-1 Jobs
-	MAPID_SUPER_BABY_E = JOBL_THIRD|JOBL_BABY|JOBL_2_1|0x0,
+	MAPID_SUPER_BABY_E = JOBL_THIRD|MAPID_SUPER_BABY,
 	MAPID_BABY_RUNE,
 	MAPID_BABY_WARLOCK,
 	MAPID_BABY_RANGER,
@@ -202,7 +206,7 @@ enum e_mapid {
 	MAPID_BABY_MECHANIC,
 	MAPID_BABY_CROSS,
 //Baby 3-2 Jobs
-	MAPID_BABY_GUARD = JOBL_THIRD|JOBL_BABY|JOBL_2_2|0x1,
+	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
 	MAPID_BABY_MINSTRELWANDERER,
 	MAPID_BABY_SURA,
@@ -586,7 +590,7 @@ struct s_skill_damage {
 		other; ///< Rate to Other target
 	uint8 caster; ///< Caster type
 };
-struct eri *map_skill_damage_ers;
+extern struct eri *map_skill_damage_ers;
 #endif
 
 struct questinfo_req {
@@ -758,6 +762,7 @@ extern char motd_txt[];
 extern char help_txt[];
 extern char help2_txt[];
 extern char charhelp_txt[];
+extern char channel_conf[];
 
 extern char wisp_server_name[];
 
@@ -796,8 +801,10 @@ int map_addblock(struct block_list* bl);
 int map_delblock(struct block_list* bl);
 int map_moveblock(struct block_list *, int, int, unsigned int);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
+int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+int map_foreachinallarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
 int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
 int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...);
 int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...);
@@ -924,24 +931,24 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, 
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
 //Options read in cli
-extern char *INTER_CONF_NAME;
-extern char *LOG_CONF_NAME;
-extern char *MAP_CONF_NAME;
-extern char *BATTLE_CONF_FILENAME;
-extern char *ATCOMMAND_CONF_FILENAME;
-extern char *SCRIPT_CONF_NAME;
-extern char *MSG_CONF_NAME_EN;
-extern char *GRF_PATH_FILENAME;
+extern const char*INTER_CONF_NAME;
+extern const char*LOG_CONF_NAME;
+extern const char*MAP_CONF_NAME;
+extern const char*BATTLE_CONF_FILENAME;
+extern const char*ATCOMMAND_CONF_FILENAME;
+extern const char*SCRIPT_CONF_NAME;
+extern const char*MSG_CONF_NAME_EN;
+extern const char*GRF_PATH_FILENAME;
 //Other languages supported
-char *MSG_CONF_NAME_RUS;
-char *MSG_CONF_NAME_SPN;
-char *MSG_CONF_NAME_GRM;
-char *MSG_CONF_NAME_CHN;
-char *MSG_CONF_NAME_MAL;
-char *MSG_CONF_NAME_IDN;
-char *MSG_CONF_NAME_FRN;
-char *MSG_CONF_NAME_POR;
-char *MSG_CONF_NAME_THA;
+extern const char*MSG_CONF_NAME_RUS;
+extern const char*MSG_CONF_NAME_SPN;
+extern const char*MSG_CONF_NAME_GRM;
+extern const char*MSG_CONF_NAME_CHN;
+extern const char*MSG_CONF_NAME_MAL;
+extern const char*MSG_CONF_NAME_IDN;
+extern const char*MSG_CONF_NAME_FRN;
+extern const char*MSG_CONF_NAME_POR;
+extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;
@@ -998,5 +1005,9 @@ extern char market_table[32];
 extern char roulette_table[32];
 
 void do_shutdown(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAP_H_ */

@@ -7,7 +7,23 @@
 //= 1.0 Initial release. [Lemongrass]
 //= 1.1 iRO translation. [RagnarokNova]
 //= 1.2 Dialogue cleanup. [Aleos]
+//= 1.3 Added clan helper. [exneval]
 //============================================================
+
+prontera,138,183,7	script	Clan Helper	703,{
+	mes "[Clan Helper]";
+	mes "Do you want to build connections without being in a guild?";
+	next;
+	mes "[Clan Helper]";
+	mes "Can't find the perfect guild for yourself?";
+	next;
+	mes "[Clan Helper]";
+	mes "You can join or leave clans freely! Just join!";
+	next;
+	mes "[Clan Helper]";
+	mes "Now, come on in and meet the masters of the Kingdom's best clans!";
+	close;
+}
 
 prt_in,33,114,5	script	Raffam Oranpere	10058,{
 	cutin "laperm01.bmp", 2;
@@ -144,6 +160,10 @@ prt_in,33,114,5	script	Raffam Oranpere	10058,{
 	}
 	close2;
 	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_SWORDCLAN, -1, 0, SWORDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }
 
@@ -308,6 +328,10 @@ prt_in,35,114,5	script	Devon Aire	10059,{
 	close2;
 	cutin "", 255;
 	end;
+
+OnInit:
+	sc_start2 SC_ARCWANDCLAN, -1, 0, ARCWANDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
 }
 
 prt_in,37,114,5	script	Berman Aire	10060,{
@@ -447,6 +471,10 @@ prt_in,37,114,5	script	Berman Aire	10060,{
 	}
 	close2;
 	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_GOLDENMACECLAN, -1, 0, GOLDENMACECLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }
 
@@ -596,5 +624,9 @@ prt_in,39,114,5	script	Shaam Rumi	10027,{
 	}
 	close2;
 	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_CROSSBOWCLAN, -1, 0, CROSSBOWCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }

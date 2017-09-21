@@ -30,11 +30,12 @@
 2423,1	//WM_SIRCLEOFNATURE
 2430,1	//WM_SATURDAY_NIGHT_FEVER
 2455,1	//SO_ARRULLO
+2299,1	//SC_MANHOLE
 
 //----------------------------------------------------------------------------
 // PVP
 //----------------------------------------------------------------------------
-
+2300,2	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
 // GVG
@@ -92,7 +93,6 @@
 691,8	//CASH_ASSUMPITO
 2284,8	//SC_FATALMENACE
 2300,8	//SC_DIMENSIONDOOR
-5023,8	//SU_LOPE
 
 //----------------------------------------------------------------------------
 // Mixed
@@ -126,9 +126,9 @@
 529,16	// NJ_SHADOWJUMP
 // 530,16	// NJ_KIRIKAGE
 691,16	// CASH_ASSUMPTIO
+2300,16	// SC_DIMENSIONDOOR
 //!TODO: More 3rd Class skills
 // 2284,16	// SC_FATALMENACE
-// 2300,16	// SC_DIMENSIONDOOR
 // 2293,16	// SC_GROOMY
 // 2296,16	// SC_UNLUCKY
 // 2494,16	// GN_CHANGEMATERIAL
@@ -176,7 +176,6 @@
 //----------------------------------------------------------------------------
 426,256 //TK_HIGHJUMP
 290,256	//SA_ABRACADABRA
-5023,256	//SU_LOPE
 
 //----------------------------------------------------------------------------
 // Zone 5 - Sealed Shrine
@@ -209,10 +208,6 @@
 233,2048	//AM_SPHEREMINE
 491,2048	//CR_CULTIVATION
 1013,2048	//BS_GREED
-2299,2048	//SC_MANHOLE
-2300,2048	//SC_DIMENSIONDOOR
-2301,2048	//SC_CHAOSPANIC
-2303,2048	//SC_BLOODYLUST
 2419,2048	//WM_POEMOFNETHERWORLD
 2482,2048	//GN_WALLOFTHORN
 2493,2048	//GN_SLINGITEM

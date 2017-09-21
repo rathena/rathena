@@ -4,6 +4,10 @@
 #ifndef _MOB_H_
 #define _MOB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // struct item
 #include "guild.h" // struct guardian_data
 #include "map.h" // struct status_data, struct view_data, struct mob_skill
@@ -19,6 +23,10 @@
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
 #define MAX_MVP_DROP 3
+#define MAX_MOB_DROP_ADD 5
+#define MAX_MVP_DROP_ADD 2
+#define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
+#define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 #define MAX_STEAL_DROP 7
 
 #define MAX_RACE2_MOBS 100
@@ -137,6 +145,14 @@ struct s_mob_lootitem {
 	unsigned short mob_id; ///< ID of monster that dropped the item
 };
 
+/// Struct for monster's drop item
+struct s_mob_drop {
+	unsigned short nameid;
+	int p;
+	uint8 randomopt_group;
+	unsigned steal_protected : 1;
+};
+
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
@@ -144,14 +160,7 @@ struct mob_db {
 	short range2,range3;
 	enum e_race2 race2;	// celest
 	unsigned short lv;
-	struct {
-		unsigned short nameid;
-		int p;
-	} dropitem[MAX_MOB_DROP];
-	struct {
-		unsigned short nameid;
-		int p;
-	} mvpitem[MAX_MVP_DROP];
+	struct s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
@@ -164,6 +173,7 @@ struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
 	struct view_data *vd;
+	bool vd_changed;
 	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
@@ -289,6 +299,8 @@ int mobdb_searchname(const char *str);
 int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
+void mob_set_dynamic_viewdata( struct mob_data* md );
+void mob_free_dynamic_viewdata( struct mob_data* md );
 
 struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
 
@@ -325,7 +337,7 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 
 void mob_clear_spawninfo();
 void do_init_mob(void);
-void do_final_mob(void);
+void do_final_mob(bool is_reload);
 
 int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
 int mob_deleteslave(struct mob_data *md);
@@ -355,6 +367,12 @@ int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
+void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
+
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MOB_H_ */

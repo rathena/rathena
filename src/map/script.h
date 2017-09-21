@@ -4,6 +4,10 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/cbasetypes.h"
 #include "map.h"
 
@@ -38,7 +42,7 @@
 /// Pushes a copy of a string into the stack
 #define script_pushstrcopy(st,val) push_str((st)->stack, C_STR, aStrdup(val))
 /// Pushes a constant string into the stack (must never change or be freed)
-#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, (val))
+#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, const_cast<char *>(val))
 /// Pushes a nil into the stack
 #define script_pushnil(st) push_val((st)->stack, C_NOP, 0)
 /// Pushes a copy of the data in the target index
@@ -693,20 +697,27 @@ enum instance_info_type {
 	IIT_MAP
 };
 
+enum vip_status_type {
+	VIP_STATUS_ACTIVE = 1,
+	VIP_STATUS_EXPIRE,
+	VIP_STATUS_REMAINING
+};
+
 /**
  * used to generate quick script_array entries
  **/
-struct eri *array_ers;
-DBMap *st_db;
-unsigned int active_scripts;
-unsigned int next_id;
-struct eri *st_ers;
-struct eri *stack_ers;
+extern struct eri *array_ers;
+extern DBMap *st_db;
+extern unsigned int active_scripts;
+extern unsigned int next_id;
+extern struct eri *st_ers;
+extern struct eri *stack_ers;
 
 const char* skip_space(const char* p);
 void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
+bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
@@ -720,7 +731,7 @@ void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void run_script_main(struct script_state *st);
 
-void script_stop_instances(struct script_code *code);
+void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct DBMap *storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);
@@ -730,14 +741,15 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
+bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter);
+void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
 void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
 
-int script_config_read(char *cfgName);
+int script_config_read(const char *cfgName);
 void do_init_script(void);
 void do_final_script(void);
 int add_str(const char* p);
@@ -768,6 +780,10 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _SCRIPT_H_ */

@@ -4,6 +4,10 @@
 #ifndef _SEARCHSTORE_H_
 #define _SEARCHSTORE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SEARCHSTORE_RESULTS_PER_PAGE 10
 
 /// information about the search being performed
@@ -50,5 +54,9 @@ void searchstore_click(struct map_session_data* sd, uint32 account_id, int store
 bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id);
 void searchstore_clearremote(struct map_session_data* sd);
 bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // _SEARCHSTORE_H_

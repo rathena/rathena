@@ -4,6 +4,10 @@
 #ifndef	_TIMER_H_
 #define	_TIMER_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 #include <time.h>
 
@@ -47,7 +51,7 @@ int delete_timer(int tid, TimerFunc func);
 int addtick_timer(int tid, unsigned int tick);
 int settick_timer(int tid, unsigned int tick);
 
-int add_timer_func_list(TimerFunc func, char* name);
+int add_timer_func_list(TimerFunc func, const char* name);
 
 unsigned long get_uptime(void);
 
@@ -59,5 +63,9 @@ double solve_time(char* modif_p);
 int do_timer(unsigned int tick);
 void timer_init(void);
 void timer_final(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _TIMER_H_ */

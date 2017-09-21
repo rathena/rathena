@@ -40,6 +40,10 @@
 #ifndef _ERS_H_
 #define _ERS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 
 /*****************************************************************************\
@@ -80,6 +84,7 @@ enum ERSOptions {
 
 	/* Compound, is used to determine whether it should be looking for a cache of matching options */
 	ERS_CACHE_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK,
+	ERS_CLEAN_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_CLEAR,
 };
 
 /**
@@ -158,7 +163,7 @@ typedef struct eri {
  * @param The requested size of the entry in bytes
  * @return Interface of the object
  */
-ERS *ers_new(uint32 size, char *name, enum ERSOptions options);
+ERS *ers_new(uint32 size, const char *name, enum ERSOptions options);
 
 /**
  * Print a report about the current state of the Entry Reusage System.
@@ -174,5 +179,9 @@ void ers_report(void);
  **/
 void ers_final(void);
 #endif /* DISABLE_ERS / not DISABLE_ERS */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ERS_H_ */

@@ -534,7 +534,7 @@ int guild_recv_info(struct guild *sg) {
 		if( sd==NULL )
 			continue;
 		sd->guild = g;
-		if(channel_config.ally_autojoin ) {
+		if(channel_config.ally_tmpl.name && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
 		}
 
@@ -605,7 +605,7 @@ int guild_invite(struct map_session_data *sd, struct map_session_data *tsd) {
 
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
-		map_flag_gvg(tsd->bl.m))
+		map_flag_gvg2(tsd->bl.m))
 	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
@@ -703,7 +703,7 @@ void guild_member_joined(struct map_session_data *sd) {
 
 		if (g->instance_id != 0)
 			instance_reqinfo(sd, g->instance_id);
-		if( channel_config.ally_enable && channel_config.ally_autojoin ) {
+		if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
 		}
 	}
@@ -774,7 +774,7 @@ int guild_leave(struct map_session_data* sd, int guild_id, uint32 account_id, ui
 
 	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
-		map_flag_gvg(sd->bl.m))
+		map_flag_gvg2(sd->bl.m))
 		return 0;
 
 	guild_trade_bound_cancel(sd);
@@ -806,7 +806,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
-		map_flag_gvg(tsd->bl.m))
+		map_flag_gvg2(tsd->bl.m))
 		return 0;
 
 	// find the member and perform expulsion
@@ -1434,6 +1434,12 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd) 
 	if(tsd==NULL || tsd->status.guild_id<=0)
 		return 0;
 
+	// Check, is tsd guild master, if not - cancel alliance. [f0und3r]
+	if (battle_config.guild_alliance_onlygm && !tsd->state.gmaster_flag) {
+		clif_guild_allianceack(sd, 5);
+		return 0;
+	}
+
 	g[0]=sd->guild;
 	g[1]=tsd->guild;
 
@@ -1662,7 +1668,11 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 				struct map_session_data *sd_mem = g[i]->member[j].sd;
 				if( sd_mem!=NULL){
 					clif_guild_allianceinfo(sd_mem);
-					channel_gjoin(sd_mem,2); //join ally join
+
+					// join ally channel
+					if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
+						channel_gjoin(sd_mem,2);
+					}
 				}
 			}
 	}
@@ -1745,8 +1755,8 @@ int guild_broken(int guild_id,int flag) {
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
 	storage_guild_delete(guild_id);
-	if( channel_config.ally_enable ) {
-		channel_delete(g->channel);
+	if( channel_config.ally_tmpl.name != NULL ) {
+		channel_delete(g->channel,false);
 	}
 	idb_remove(guild_db,guild_id);
 	return 0;
@@ -1756,22 +1766,29 @@ int guild_broken(int guild_id,int flag) {
 * @param guild_id
 * @param sd New guild master
 */
-int guild_gm_change(int guild_id, struct map_session_data *sd) {
+int guild_gm_change(int guild_id, uint32 char_id) {
 	struct guild *g;
-	nullpo_ret(sd);
-
-	if (sd->status.guild_id != guild_id)
-		return 0;
+	char *name;
+	int i;
 
 	g = guild_search(guild_id);
 
 	nullpo_ret(g);
 
-	if (strcmp(g->master, sd->status.name) == 0) //Nothing to change.
+	ARR_FIND(0, MAX_GUILD, i, g->member[i].char_id == char_id);
+	
+	if( i == MAX_GUILD ){
+		// Not part of the guild
+		return 0;
+	}
+
+	name = g->member[i].name;
+
+	if (strcmp(g->master, name) == 0) //Nothing to change.
 		return 0;
 
 	//Notify servers that master has changed.
-	intif_guild_change_gm(guild_id, sd->status.name, strlen(sd->status.name)+1);
+	intif_guild_change_gm(guild_id, name, strlen(name)+1);
 	return 1;
 }
 
@@ -1780,7 +1797,7 @@ int guild_gm_change(int guild_id, struct map_session_data *sd) {
 * @param account_id
 * @param char_id
 */
-int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
+int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t time) {
 	struct guild *g;
 	struct guild_member gm;
 	int pos, i;
@@ -1808,11 +1825,13 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
 	if (g->member[pos].sd && g->member[pos].sd->fd) {
 		clif_displaymessage(g->member[pos].sd->fd, msg_txt(g->member[pos].sd,678)); //"You no longer are the Guild Master."
 		g->member[pos].sd->state.gmaster_flag = 0;
+		clif_name_area(&g->member[pos].sd->bl);
 	}
 
 	if (g->member[0].sd && g->member[0].sd->fd) {
 		clif_displaymessage(g->member[0].sd->fd, msg_txt(g->member[pos].sd,679)); //"You have become the Guild Master!"
 		g->member[0].sd->state.gmaster_flag = 1;
+		clif_name_area(&g->member[0].sd->bl);
 		//Block his skills to prevent abuse.
 		if (battle_config.guild_skill_relog_delay)
 			guild_block_skill(g->member[0].sd, battle_config.guild_skill_relog_delay);
@@ -1823,8 +1842,12 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id) {
 		if( g->member[i].sd && g->member[i].sd->fd ) {
 			clif_guild_basicinfo(g->member[i].sd);
 			clif_guild_memberlist(g->member[i].sd);
+			clif_guild_belonginfo(g->member[i].sd); // Update clientside guildmaster flag
 		}
 	}
+
+	// Store changing time
+	g->last_leader_change = time;
 
 	return 1;
 }
@@ -2053,9 +2076,14 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 			if( i != ev )
 				guild_request_info(c->guild_id);
 			else { // last owned one
-				guild_npc_request_info(c->guild_id, script_config.agit_init_event_name);
-				guild_npc_request_info(c->guild_id, script_config.agit_init2_event_name);
-				guild_npc_request_info(c->guild_id, script_config.agit_init3_event_name);
+				char event_name[EVENT_NAME_LENGTH];
+
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init2_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init3_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
 			}
 		}
 	}
@@ -2303,7 +2331,7 @@ void do_final_guild(void) {
 	struct guild *g;
 
 	for( g = (struct guild *)dbi_first(iter); dbi_exists(iter); g = (struct guild *)dbi_next(iter) ) {
-		channel_delete(g->channel);
+		channel_delete(g->channel,false);
 	}
 	dbi_destroy(iter);
 

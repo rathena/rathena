@@ -4,6 +4,10 @@
 #ifndef _ATCOMMAND_H_
 #define _ATCOMMAND_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h"
 
 struct map_session_data;
@@ -41,7 +45,11 @@ struct atcmd_binding_data {
 	int level;
 	int level2;
 };
-struct atcmd_binding_data** atcmd_binding;
+extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ATCOMMAND_H_ */

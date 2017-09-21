@@ -38,7 +38,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 986,1; // Anvil
-			set Zeny, Zeny-30000;
+			Zeny = Zeny-30000;
 			mes "[Christopher Guillenrow]";
 			mes "This is the cheapest one, but efficient enough to forge most items. Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
 			close;
@@ -49,7 +49,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 987,1; // Oridecon_Anvil
-			set Zeny, Zeny-120000;
+			Zeny = Zeny-120000;
 			mes "[Christopher Guillenrow]";
 			mes "Aye, friend ye have an eye for the anvil. This must be the proper anvil for a Blacksmith, eh? Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
 			close;
@@ -60,7 +60,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 988,1; // Golden_Anvil
-			set Zeny, Zeny-300000;
+			Zeny = Zeny-300000;
 			mes "[Christopher Guillenrow]";
 			mes "This one is the best among all me stuffs in me workshop! With this, ye can rule the Blacksmith world! Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
 			close;
@@ -101,7 +101,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 					break;
 				}
 			}
-			set .@sell,.@input * 150;
+			.@sell = .@input * 150;
 			if (Zeny < .@sell) {
 				mes "[Christopher Guillenrow]";
 				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
@@ -113,7 +113,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 612,.@input; // Portable_Furnace
-			set Zeny, Zeny-.@sell;
+			Zeny = Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -124,7 +124,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 613,1; // Iron_Hammer
-			set Zeny, Zeny-1000;
+			Zeny = Zeny-1000;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -135,7 +135,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 614,1; // Golden_Hammer
-			set Zeny, Zeny-3000;
+			Zeny = Zeny-3000;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -146,7 +146,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 615,1; // Oridecon_Hammer
-			set Zeny, Zeny-5000;
+			Zeny = Zeny-5000;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -182,7 +182,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 					break;
 				}
 			}
-			set .@sell,.@input * 200;
+			.@sell = .@input * 200;
 			if (Zeny < .@sell) {
 				mes "[Christopher Guillenrow]";
 				mes "Ye don't have enough money. Ye know I can't sell this at a lower price... You know how the wifey nags about Zeny.";
@@ -194,7 +194,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 1010,.@input; // Phracon
-			set Zeny, Zeny-.@sell;
+			Zeny = Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need.";
 			close;
@@ -220,7 +220,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 					break;
 				}
 			}
-			set .@sell,.@input * 1000;
+			.@sell = .@input * 1000;
 			if (Zeny < .@sell) {
 				mes "[Christopher Guillenrow]";
 				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
@@ -232,7 +232,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 			getitem 1011,.@input; // Emveretarcon
-			set Zeny, Zeny-.@sell;
+			Zeny = Zeny-.@sell;
 			mes "[Christopher Guillenrow]";
 			mes "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need, whenever ye want.";
 			close;
@@ -314,7 +314,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 				close;
 			}
 			getitem 986,1; //Anvil
-			set Zeny, Zeny-30000;
+			Zeny = Zeny-30000;
 			mes "[Paul Spanner]";
 			mes "It is the cheapest anvil which has the most basic ability.";
 			mes "Thank you for using my shop. If you need anything, just let me know.";
@@ -326,7 +326,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 				close;
 			}
 			getitem 987,1; //Oridecon_Anvil
-			set Zeny, Zeny-120000;
+			Zeny = Zeny-120000;
 			mes "[Paul Spanner]";
 			mes "Ah, you have an eye for anvil. A Blacksmith needs an anvil at least as good as this.";
 			mes "Thank you for using my shop. If you need anything, just let me know.";
@@ -338,7 +338,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 				close;
 			}
 			getitem 988,1; //Golden_Anvil
-			set Zeny, Zeny-300000;
+			Zeny = Zeny-300000;
 			mes "[Paul Spanner]";
 			mes "I can tell your ambition to become a good Blacksmith just by looking at you to choose this Golden Anvil!";
 			mes "This anvil will surely aid you in creating the best weapons.";
@@ -360,27 +360,27 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 		next;
 		switch(select("Mini Furnace - 150z.:Iron Hammer - 1,000z.:Golden Hammer - 3,000z.:Oridecon Hammer - 5,000z.:Cancel.")) {
 		case 1:
-			set .@item,612;
-			set .@item_cost,150;
-			set .@item_weight,200;
+			.@item = 612;
+			.@item_cost = 150;
+			.@item_weight = 200;
 			mes "[Paul Spanner]";
 			mes "You definately need this furnce to process ores!";
 			next;
 			break;
 		case 2:
-			set .@item,613;
-			set .@item_cost,1000;
-			set .@item_weight,200;
+			.@item = 613;
+			.@item_cost = 1000;
+			.@item_weight = 200;
 			break;
 		case 3:
-			set .@item,614;
-			set .@item_cost,3000;
-			set .@item_weight,300;
+			.@item = 614;
+			.@item_cost = 3000;
+			.@item_weight = 300;
 			break;
 		case 4:
-			set .@item,615;
-			set .@item_cost,5000;
-			set .@item_weight,400;
+			.@item = 615;
+			.@item_cost = 5000;
+			.@item_weight = 400;
 			break;
 		case 5:
 			mes "[Paul Spanner]";
@@ -406,7 +406,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 				break;
 			}
 		}
-		set .@sell,.@input * .@item_cost;
+		.@sell = .@input * .@item_cost;
 		if (Zeny < .@sell) {
 			mes "[Paul Spanner]";
 			mes "You don't have enough money. Sorry, I cannot sell them at a loss.";
@@ -417,7 +417,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			mes "Hey, you look pale. Why don't you go lighten your weight first.";
 			close;
 		}
-		set Zeny, Zeny-.@sell;
+		Zeny = Zeny-.@sell;
 		getitem .@item,.@input;
 		mes "[Paul Spanner]";
 		mes "Thank you for using my shop. If you need anything, just let me know.";
@@ -429,12 +429,12 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 		next;
 		switch(select("Phracon - 200z.:Emveretarcon - 1,000z.:Quit.")) {
 		case 1:
-			set .@item,1010;
-			set .@item_price,200;
+			.@item = 1010;
+			.@item_price = 200;
 			break;
 		case 2:
-			set .@item,1011;
-			set .@item_price,1000;
+			.@item = 1011;
+			.@item_price = 1000;
 			break;
 		case 3:
 			mes "[Paul Spanner]";
@@ -460,7 +460,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 				break;
 			}
 		}
-		set .@sell,.@input * .@item_price;
+		.@sell = .@input * .@item_price;
 		if (Zeny < .@sell) {
 			mes "[Paul Spanner]";
 			mes "You don't have enough money. Sorry, I cannot sell them at a loss.";
@@ -472,7 +472,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 			close;
 		}
 		getitem .@item,.@input;
-		set Zeny, Zeny-.@sell;
+		Zeny = Zeny-.@sell;
 		mes "[Paul Spanner]";
 		mes "Thank you for using my shop. If you need anything, just let me know.";
 		close;
@@ -562,7 +562,7 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 function	script	refinemain	{
 	disable_items;
 	.@npc_name$ = getarg(0);
-	set .@features,getarg(1);
+	.@features = getarg(1);
 	mes "["+ .@npc_name$ +"]";
 	mes "I'm the Armsmith.";
 	mes "I can refine all kinds of weapons, armor and equipment, so let me";
@@ -570,19 +570,19 @@ function	script	refinemain	{
 	next;
 
 	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
-	for(set .@i,1; .@i<getarraysize(.@indices); set .@i,.@i+1) {
+	for(.@i = 1; .@i<getarraysize(.@indices); ++.@i) {
 		if(getequipisequiped(.@indices[.@i])) {
-			set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
-			set .@equipped,1;
+			.@menu$ = .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			.@equipped = 1;
 		}
-		set .@menu$, .@menu$ + ":";
+		.@menu$ = .@menu$ + ":";
 	}
 	if (.@equipped == 0) {
 		mes "["+ .@npc_name$ +"]";
 		mes "I don't think I can refine any items you have...";
 		close;
 	}
-	set .@part, .@indices[select(.@menu$)];
+	.@part = .@indices[select(.@menu$)];
 
 	if(!getequipisequiped(.@part)) { //custom check
 		mes "["+ .@npc_name$ +"]";
@@ -607,50 +607,20 @@ function	script	refinemain	{
 		mes "refined as it gets!";
 		close;
 	}
-	set .@refineitemid, getequipid(.@part); // save id of the item
-	set .@refinerycnt, getequiprefinerycnt(.@part); //save refinery count
-	switch(getequipweaponlv(.@part)){
-	case 0: 	//Refine Armor
-		set .@price,2000;
-		set .@material,985; //Elunium
-		set .@safe,4;
-		break;
-	case 1: 	//Refine Level 1 Weapon
-		set .@price,50;
-		set .@material,1010; //Phracon
-		set .@safe,7;
-		break;
-	case 2: 	//Refine Level 2 Weapon
-		set .@price,200;
-		set .@material,1011; //Emveretarcon
-		set .@safe,6;
-		break;
-	case 3: 	//Refine Level 3 Weapon
-		set .@price,5000;
-		set .@material,984; //Oridecon
-		set .@safe,5;
-		break;
-	case 4: 	//Refine Level 4 Weapon
-		set .@price,20000;
-		set .@material,984; //Oridecon
-		set .@safe,4;
-		break;
-	case 5: 	//Refine other stuff?
-		set .@price,2000;
-		set .@material,985; //Elunium
-		set .@safe,4;
-		break;
-	}
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-	if (VIP_SCRIPT && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 		switch(getequipweaponlv(.@part)) {
-			case 0: set .@price, .@price * 10; break;
-			case 1: set .@price, .@price * 40; break;
-			case 2: set .@price, .@price * 50; break;
-			case 3: set .@price, .@price * 2; break;
-			case 4: set .@price, .@price * 2; break;
-			case 5: set .@price, .@price * 10; break;
+			case 0: .@price = .@price * 10; break;
+			case 1: .@price = .@price * 40; break;
+			case 2: .@price = .@price * 50; break;
+			case 3: .@price = .@price * 2; break;
+			case 4: .@price = .@price * 2; break;
+			case 5: .@price = .@price * 10; break;
 		}
 	}
 
@@ -705,7 +675,7 @@ function	script	refinemain	{
 			mes "here all day if you need me.";
 			close;
 		}
-		set Zeny, Zeny-.@price;
+		Zeny = Zeny-.@price;
 		delitem .@material,1;
 
 		// anti-hack
@@ -723,7 +693,7 @@ function	script	refinemain	{
 			failedrefitem .@part;
 			mes "["+ .@npc_name$ +"]";
 			emotion (!rand(5))?e_cash:e_omg;
-			set .@lose,rand(1,3);
+			.@lose = rand(1,3);
 			if (.@lose == 1) {
 				mes "OH! MY GOD!";
 				mes "Damn it! Not again!";
@@ -744,7 +714,7 @@ function	script	refinemain	{
 		mes "["+getarg(0)+"]";
 		successrefitem .@part;
 		emotion e_heh;
-		set .@win,rand(1,3);
+		.@win = rand(1,3);
 		if (.@win == 1) {
 			mes "Perfect!";
 			mes "Heh heh!";
@@ -771,12 +741,12 @@ function	script	refinemain	{
 		mes "["+ .@npc_name$ +"]";
 		mes "I can refine this to the safe limit or a desired number of times. It's your choice.";
 		next;
-		set .@menu2,select("To the safe limit, please.","I'll decide how many times.","I've changed my mind...");
+		.@menu2 = select("To the safe limit, please.","I'll decide how many times.","I've changed my mind...");
 	} else
-		set .@menu2,2;
+		.@menu2 = 2;
 	switch(.@menu2){
 	case 1: 
-		set .@refinecnt,.@safe - getequiprefinerycnt(.@part);
+		.@refinecnt = .@safe - getequiprefinerycnt(.@part);
 		break;
 	case 2:
 		next;
@@ -784,14 +754,14 @@ function	script	refinemain	{
 		mes "How many times would you like me to refine your item?";
 		next;
 		input .@refinecnt;
-		set .@refinecheck,.@refinecnt + getequiprefinerycnt(.@part);
+		.@refinecheck = .@refinecnt + getequiprefinerycnt(.@part);
 		if (.@refinecnt < 1 || .@refinecheck > 10) {
 			mes "["+ .@npc_name$ +"]";
 			mes "I can't refine this item that many times.";
 			close;
 		}
 		if(.@refinecheck > .@safe) {
-			set .@refinecheck,.@refinecheck - .@safe;
+			.@refinecheck = .@refinecheck - .@safe;
 			mes "["+ .@npc_name$ +"]";
 			mes "This will try to refine the equipment " + .@refinecheck + " times past the safe limit. Your equipment may be destroyed... is that ok?";
 			next;
@@ -808,7 +778,7 @@ function	script	refinemain	{
 		mes "You said so... So be it.";
 		close;
 	}
-	set .@fullprice,.@price * .@refinecnt;
+	.@fullprice = .@price * .@refinecnt;
 	mes "["+ .@npc_name$ +"]";
 	mes "That will cost you " + .@refinecnt + " " + getitemname(.@material) + " and " + .@fullprice + " Zeny. Is that ok?";
 	next;
@@ -822,7 +792,7 @@ function	script	refinemain	{
 		mes "Is that all you got? Unfortunately I can't work for you at a lower price. Try putting yourself in my shoes.";
 		close;
 	}
-	set Zeny, Zeny - .@fullprice;
+	Zeny = Zeny - .@fullprice;
 	delitem .@material,.@refinecnt;
 	while(.@refinecnt){
 		if (getequipisequiped(.@part) == 0) {
@@ -843,17 +813,17 @@ function	script	refinemain	{
 			emotion e_omg;
 			mes "["+ .@npc_name$ +"]";
 			mes "WAHHHH!!! I'm so sorry... I warned you this could happen...";
-			set .@refinecnt,.@refinecnt - 1;
+			.@refinecnt = .@refinecnt - 1;
 			if(.@refinecnt == 0) close;
 			mes "Here's the unused Zeny and materials back...";
 			getitem .@material,.@refinecnt;
-			set .@fullprice,.@refinecnt * .@price;
-			set Zeny, Zeny + .@fullprice;
+			.@fullprice = .@refinecnt * .@price;
+			Zeny = Zeny + .@fullprice;
 			close;
 		}
 		successrefitem .@part;
 		emotion e_no1;
-		set .@refinecnt,.@refinecnt - 1;
+		.@refinecnt = .@refinecnt - 1;
 		next;
 	}
 	mes "["+ .@npc_name$ +"]";
@@ -913,12 +883,12 @@ function	script	phramain	{
 	next;
 	switch(select("Phracon - 200 Zeny:Emveretarcon - 1000 Zeny:Ask about other Metals")) {
 	case 1:
-		set .@material,1010;
-		set .@price,200;
+		.@material = 1010;
+		.@price = 200;
 		break;
 	case 2:
-		set .@material,1011;
-		set .@price,1000;
+		.@material = 1011;
+		.@price = 1000;
 		break;
 	case 3:
 		mes "["+ .@npc_name$ +"]";
@@ -951,7 +921,7 @@ function	script	phramain	{
 			break;
 		}
 	}
-	set .@sell,.@input * .@price;
+	.@sell = .@input * .@price;
 	if (Zeny < .@sell) {
 		mes "["+ .@npc_name$ +"]";
 		mes "Err...";
@@ -967,7 +937,7 @@ function	script	phramain	{
 		close;
 	}
 	getitem .@material,.@input;
-	set Zeny, Zeny-.@sell;
+	Zeny = Zeny-.@sell;
 	mes "["+ .@npc_name$ +"]";
 	mes "Here you are!";
 	mes "Thank you for";
@@ -1151,7 +1121,7 @@ sch_gld,340,80,7	script	Repairman#sch_gld	86,{
 // Equipment Repair Function
 //============================================================
 function	script	repairmain	{
-	set .@repairprice,5000;
+	.@repairprice = 5000;
 	.@npc_name$ = getarg(0);
 	mes "["+ .@npc_name$ +"]";
 	mes "Hey there!";
@@ -1162,14 +1132,14 @@ function	script	repairmain	{
 	next;
 	switch(select("Actually, I do have some items...:None at the moment.")) {
 	case 1:
-		set .@checkitem,1;
+		.@checkitem = 1;
 		while (1) {
 			if (getbrokenid(.@checkitem) == 0) {
 				break;
 			}
-			set .@checkitem,.@checkitem+1;
+			.@checkitem = .@checkitem+1;
 		}
-		set .@checkitem,.@checkitem-1;
+		.@checkitem = .@checkitem-1;
 		if (!.@checkitem) {
 			mes "["+ .@npc_name$ +"]";
 			mes "Oh wow, this is incredible!";
@@ -1186,7 +1156,7 @@ function	script	repairmain	{
 		mes "" + .@checkitem + " are damaged.";
 		mes "Would you like to repair?";
 		next;
-		set .@totalcost,.@repairprice*.@checkitem;
+		.@totalcost = .@repairprice*.@checkitem;
 		mes "["+ .@npc_name$ +"]";
 		mes "Each repair costs " + .@repairprice + " Zeny. So to repair all your damaged items would cost " + .@totalcost + " Zeny! Would you like to repair the items?";
 		next;
@@ -1198,19 +1168,19 @@ function	script	repairmain	{
 				mes "Check your wallet before you receive the repair bill! I can't repair anything because you don't have enough Zeny.";
 				close;
 			}
-			set .@checkitem2,1;
+			.@checkitem2 = 1;
 			while (1) {
 				if (getbrokenid(.@checkitem2) == 0) {
 					break;
 				}
-				set .@checkitem2,.@checkitem2+1;
+				.@checkitem2 = .@checkitem2+1;
 			}
-			set .@checkitem2,.@checkitem2-1;
+			.@checkitem2 = .@checkitem2-1;
 			if (.@checkitem == .@checkitem2) {
-				set Zeny, Zeny-.@totalcost;
+				Zeny = Zeny-.@totalcost;
 				while (.@checkitem) {
 					repair(.@checkitem);
-					set .@checkitem,.@checkitem-1;
+					.@checkitem = .@checkitem-1;
 				}
 				mes "["+ .@npc_name$ +"]";
 				mes "Okay! All done. Now, try to be a little more careful. Items have lives too you know.";

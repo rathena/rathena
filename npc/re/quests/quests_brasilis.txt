@@ -52,7 +52,7 @@ brasilis,297,307,5	script	Angelo#br	1_M_04,{
 		mes "Oh, thank you. You found all of 3 puppies.";
 		mes "Thanks a lot.";
 		mes "I hope this is useful to you. hoho.";
-		if (VIP_SCRIPT && vip_status(1))
+		if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 			getexp 75000,0;
 		else
 			getexp 50000,0;
@@ -410,7 +410,7 @@ brasilis,187,162,5	script	Candy Maker	4_M_BRZ_MAN1,{
 		brazil_gua = 11;
 		completequest 2200;
 		getitem 12414,1; //Guarana_Candy
-		if (VIP_SCRIPT && vip_status(1))
+		if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 			getexp 105000,15000;
 		else
 			getexp 70000,10000;
@@ -1029,7 +1029,7 @@ brasilis,203,286,3	script	Botanist Karmen#bra	4_F_HUWOMAN,{
 		mes "The water lily must truly be a lucky flower. hahaha";
 		brazil_regia = 10;
 		completequest 2207;
-		if (VIP_SCRIPT && vip_status(1))
+		if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 			getexp 75000,15000;
 		else
 			getexp 50000,10000;
@@ -2582,7 +2582,7 @@ bra_in01,206,188,1	script	Open Manhole#todunbra	CLEAR_NPC,{
 		brazil_ghost = 8;
 		//completequest 2208;
 		completequest 60355;
-		if (VIP_SCRIPT && vip_status(1))
+		if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 			getexp 135000,0;
 		else
 			getexp 90000,0;

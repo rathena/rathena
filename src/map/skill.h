@@ -4,6 +4,10 @@
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // MAX_SKILL, struct square
 #include "../common/db.h"
 #include "map.h" // struct block_list
@@ -14,7 +18,7 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	270 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	280 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
@@ -498,7 +502,7 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 // Abnormal status
 void skill_enchant_elemental_end(struct block_list *bl, int type);
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
-bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd);
+bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
@@ -1785,6 +1789,21 @@ enum e_skill {
 	SU_TUNAPARTY,
 	SU_BUNCHOFSHRIMP,
 	SU_FRESHSHRIMP,
+	SU_CN_METEOR2,
+	SU_LUNATICCARROTBEAT2,
+	SU_SOULATTACK,
+	SU_POWEROFFLOCK,
+	SU_SVG_SPIRIT,
+	SU_HISS,
+	SU_NYANGGRASS,
+	SU_GROOMING,
+	SU_PURRING,
+	SU_SHRIMPARTY,
+	SU_SPIRITOFLIFE,
+	SU_MEOWMEOW,
+	SU_SPIRITOFLAND,
+	SU_CHATTERING,
+	SU_SPIRITOFSEA,
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
@@ -2057,7 +2076,7 @@ enum s_skill_unit_id {
 	UNT_FIRE_RAIN,
 
 	UNT_CATNIPPOWDER,
-	UNT_SV_ROOTTWIST,
+	UNT_NYANGGRASS,
 
 	/**
 	 * Guild Auras
@@ -2166,5 +2185,9 @@ enum e_skill_damage_caster {
 #define SKILL_CHK_MERC(skill_id)  ( (skill_id) >= MC_SKILLBASE && (skill_id) < MC_SKILLBASE+MAX_MERCSKILL )
 #define SKILL_CHK_ELEM(skill_id)  ( (skill_id) >= EL_SKILLBASE && (skill_id) < EL_SKILLBASE+MAX_ELEMENTALSKILL )
 #define SKILL_CHK_GUILD(skill_id) ( (skill_id) >= GD_SKILLBASE && (skill_id) < GD_SKILLBASE+MAX_GUILDSKILL )
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _SKILL_H_ */
