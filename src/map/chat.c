@@ -168,10 +168,10 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	clif_addchat(cd, sd); //Reports To the person who already in the chat
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
 
-	chat_triggerevent(cd); //Event
-
 	if (cd->owner->type == BL_PC)
 		achievement_update_objective(map_id2sd(cd->owner->id), AG_CHAT_COUNT, 1, cd->users);
+
+	chat_triggerevent(cd); //Event
 
 	return 0;
 }

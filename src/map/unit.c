@@ -1602,7 +1602,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( battle_config.ksprotection && sd && mob_ksprotected(src, target) )
 		return 0;
 
-	// Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
+	// Normally not needed because clif.cpp checks for it, but the at/char/script commands don't! [Skotlex]
 	if(ud->skilltimer != INVALID_TIMER && skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST)
 		return 0;
 
@@ -1965,7 +1965,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (ud && ud->state.blockedskill)
 		return 0;
 
-	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
+	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.cpp checks for it, but at/char/script commands don't! [Skotlex]
 		return 0;
 
 	sc = status_get_sc(src);
@@ -3250,6 +3250,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		}
 		case BL_MOB: {
 			struct mob_data *md = (struct mob_data*)bl;
+
+			mob_free_dynamic_viewdata( md );
 
 			if( md->spawn_timer != INVALID_TIMER ) {
 				delete_timer(md->spawn_timer,mob_delayspawn);
