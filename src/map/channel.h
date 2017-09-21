@@ -52,7 +52,7 @@ struct Channel {
 	unsigned short *groups;		  ///< List of group id, only these groups can join the channel
 };
 
-struct chan_banentry {
+extern struct chan_banentry {
 	uint32 char_id;
 	char char_name[NAME_LENGTH];
 } chan_banentry;

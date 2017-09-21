@@ -1,21 +1,12 @@
 //===== rAthena Script =======================================
 //= Advanced Refiner
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiner that uses Enriched ores to increase upgrade success.
-//= After a conversation with Doddler, it's been established that
-//= the advanced refiner works similar the the "Bubble Gum" item.
-//= The success percentage is not "increased" however, if it fails
-//= You get a second try. This tries twice at the same time,
-//= effectively giving you a re-roll on your attempt.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 Added Malangdo Refiner "Holink". [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
+//= 1.2 Added db-based material ID [Secret]
 //============================================================
 
 // Main NPC :: mal_jerun
@@ -79,35 +70,32 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		close;
 	}
 	mes "[Holink]";
+	// TODO: Price is different to Suhnbi of Payon. Intended? [Secret]
+	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0: // Armor
 		set .@price,15000;
-		set .@material,7619; //Enriched_Elunium
 		set .@type$,"armor";
 		mes "You have chosen an armor, meow~";
 		break;
 	case 1: // Level 1 Weapon
 		set .@price,500;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "A level 1 weapon...?";
 		break;
 	case 2: // Level 2 Weapon
 		set .@price,2000;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "Meow, a level 2 weapon...?";
 		break;
 	case 3: // Level 3 Weapon
 		set .@price,20000;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "Meow Meow~~ A level 3 weapon~~";
 		break;
 	case 4: // Level 4 Weapon
 		set .@price,50000;
-		set .@material,7620; //Enriched_Oridecon
 		set .@type$,"weapon";
 		mes "Me-Meow!... A level 4 weapon...!";
 		mes "I've only seen it twice while";
@@ -123,7 +111,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		mes "You don't belive in refine master Holink, meow?~";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, true) < 100) {
 		mes "[Holink]";
 		mes "Meow!!";
 		if (.@type$ == "armor")
@@ -160,7 +148,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	}
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		mes "[Holink]";
 		mes "Me~ Me~ Meow! Fun fun refining~";

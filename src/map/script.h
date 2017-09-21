@@ -42,7 +42,7 @@ extern "C" {
 /// Pushes a copy of a string into the stack
 #define script_pushstrcopy(st,val) push_str((st)->stack, C_STR, aStrdup(val))
 /// Pushes a constant string into the stack (must never change or be freed)
-#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, (val))
+#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, const_cast<char *>(val))
 /// Pushes a nil into the stack
 #define script_pushnil(st) push_val((st)->stack, C_NOP, 0)
 /// Pushes a copy of the data in the target index
