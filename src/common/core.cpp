@@ -148,12 +148,10 @@ void signals_init (void) {
 }
 #endif
 
-#ifdef SVNVERSION
-const char *get_svn_revision(void) {
-		return EXPAND_AND_QUOTE(SVNVERSION);
-	}
-#else// not SVNVERSION
 const char* get_svn_revision(void) {
+#ifdef SVNVERSION
+	return EXPAND_AND_QUOTE(SVNVERSION);
+#else// not SVNVERSION
 	static char svn_version_buffer[16] = "";
 	FILE *fp;
 
@@ -244,8 +242,8 @@ const char* get_svn_revision(void) {
 	// fallback
 	svn_version_buffer[0] = UNKNOWN_VERSION;
 	return svn_version_buffer;
-}
 #endif
+}
 
 // Grabs the hash from the last time the user updated their working copy (last pull)
 const char *get_git_hash (void) {

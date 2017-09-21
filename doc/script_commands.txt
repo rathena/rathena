@@ -565,8 +565,7 @@ setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
 
 Some source-end constants can also be accessed in scripts. This list is located in
-'src/map/script.c' in the 'script_hardcoded_constants' function, which contains
-constants such as server defines and status options:
+'src/map/script_constants.h', which contains constants such as server defines and status options:
 
 	PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
 	MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
@@ -2720,13 +2719,16 @@ Examples:
 
 ---------------------------------------
 
-*getequippercentrefinery(<equipment slot>{,<char_id>})
+*getequippercentrefinery(<equipment slot>{,<enriched>,<char_id>})
 
 This function calculates and returns the percent value chance to successfully
 refine the item found in the specified equipment slot of the invoking character
 by +1. There is no actual formula, the success rate for a given weapon level of
-a certain refine level is found in the db/refine_db.txt file. For a list of
+a certain refine level is found in the db/(pre-)re/refine_db.yml file. For a list of
 equipment slots see 'getequipid'.
+
+If enriched parameter is set to true, chance to successfully refine the item with
+enriched material is returned instead.
 
 These values can be displayed for the player to see, or used to calculate the
 random change of a refine succeeding or failing and then going through with it
@@ -2735,6 +2737,28 @@ random change of a refine succeeding or failing and then going through with it
 // This will find a random number from 0 - 99 and if that is equal to or more
 // than the value recovered by this command it will go to L_Fail
     if (getequippercentrefinery(EQI_HAND_L)<=rand(100)) goto L_Fail;
+
+---------------------------------------
+
+*getequiprefinecost(<equipment slot>,<type>,<information>{,<char id>})
+
+This function returns refine cost for equipment in <equipment slot> based on
+passed arguments <type> and <information>.
+
+Valid cost types are:
+
+REFINE_COST_NORMAL     - For normal refining
+REFINE_COST_OVER10     - For refining over +10
+REFINE_COST_HD         - For refining with HD ores
+REFINE_COST_ENRICHED   - For refining with enriched ores
+REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
+
+This function will return required cost for refining based on <information> argument.
+
+Valid information types are:
+
+REFINE_ZENY_COST       - Zeny
+REFINE_MATERIAL_ID     - Material Item ID
 
 ---------------------------------------
 
@@ -3019,10 +3043,10 @@ It will only return numbers. If another type is supplied -1 will be returned.
 
 ---------------------------------------
 
-*gettimestr(<format string>,<max length>)
+*gettimestr(<"time format">,<max length>{,<time_tick>})
 
 This function will return a string containing time data as specified by the
-format string.
+time format.
 
 This uses the C function 'strfmtime', which obeys special format characters. For
 a full description see, for example, the description of 'strfmtime' at
@@ -3034,7 +3058,11 @@ The example given in rAthena sample scripts works like this:
 
   mes gettimestr("%Y-%m/%d %H:%M:%S",21);
 
-This will print a full date and time like 'YYYY-MM/DD HH:MM:SS'.
+The example above will print the current date and time like 'YYYY-MM/DD HH:MM:SS'.
+The following example will print the date and time when the player's VIP status
+expires by the given <time_tick>:
+
+  mes gettimestr("%Y-%m/%d %H:%M:%S",21,vip_status(VIP_STATUS_EXPIRE));
 
 ---------------------------------------
 
@@ -5169,7 +5197,7 @@ window, to avoid any disruption when both windows overlap.
 *openstorage2 <storage_id>,<mode>{,<account_id>};
 
 Just like the 'openstorage' command, except this command can open additional storages
-by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.conf
+by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.yml
 for storage groups.
 
 Values for <mode> are:
@@ -5323,10 +5351,11 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
-*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
-*sc_start4 	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
-*sc_end 	<effect type>{,<GID>};
+*sc_start <effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
+*sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
+*sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
+*sc_end <effect type>{,<GID>};
+*sc_end_class {<char_id>};
 
 These commands will bestow a status effect on a character.
 
@@ -5363,6 +5392,9 @@ and theirs val1, val2, val3, and val4 usage in source.
 
 'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
 perform a complete removal of all statuses (although permanent ones will re-apply).
+
+'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
+skill on the invoking character.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -7376,11 +7408,16 @@ Examples:
 *unitattack <GID>,<Target ID>{,<action type>};
 *unitattack <GID>,"<Target Name>"{,<action type>};
 
-This command will make a <GID> attack the specified target. It returns 1 upon
-success and 0 for all failures.
+This command will make a <GID> attack the specified target. It returns true upon
+success and false for all failures.
 
 If <GID> is a player and a non-zero <action type> is given, the unit will perform a
 continuous attack instead of a single attack.
+
+Note:
+Using unitattack with <GID> 0 means that it will use the currently attached unit.
+For players any attack requests will fail, because talking to an NPC prevents attacking a monster.
+Therefore you need to detach the player from the NPC before using this command.
 
 ---------------------------------------
 
@@ -9785,7 +9822,7 @@ Returns true on success and false on failure.
 
 This function will return the specified <type> value for an achievement of the
 attached player or the supplied <char id>. If the player doesn't have the
-achievement active (no progress has been made), if the achievement doesn't
+achievement active (no progress has been made): if the achievement doesn't
 exist -1 will be returned, or -2 will be returned on any other error such as
 an invalid <type>.
 
@@ -9821,5 +9858,20 @@ Returns true on success and false on failure.
 This function will return if the achievement exists on the player or the supplied
 <char id>.
 Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementupdate(<achievement id>,<type>,<value>{,<char id>})
+
+This function will update an achievement's value for an achievement of the attached
+player or the supplied <char id>. If the player does not have the achievement active
+(no progress has been made) it will be added to the player's log first before updating
+the <type> value.
+Returns true on success and false on failure.
+
+See 'achievementinfo' for valid <type> values.
+- ACHIEVEINFO_COMPLETE, ACHIEVEINFO_COMPLETEDATE, and ACHIEVEINFO_GOTREWARD require the
+  specific value returned from 'gettimetick(2)'.
+- Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
 
 ---------------------------------------

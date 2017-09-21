@@ -222,8 +222,8 @@ enum equip_pos {
 	EQP_ARMOR            = 0x000010, // 16
 	EQP_SHOES            = 0x000040, // 64
 	EQP_GARMENT          = 0x000004, // 4
-	EQP_ACC_L            = 0x000008, // 8
-	EQP_ACC_R            = 0x000080, // 128
+	EQP_ACC_R            = 0x000008, // 8
+	EQP_ACC_L            = 0x000080, // 128
 	EQP_COSTUME_HEAD_TOP = 0x000400, // 1024
 	EQP_COSTUME_HEAD_MID = 0x000800, // 2048
 	EQP_COSTUME_HEAD_LOW = 0x001000, // 4096
@@ -262,12 +262,6 @@ enum e_skill_flag
 
 	//! NOTE: This flag be the last flag, and don't change the value if not needed!
 	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
-};
-
-enum e_mmo_charstatus_opt {
-	OPT_NONE        = 0x0,
-	OPT_SHOW_EQUIP  = 0x1,
-	OPT_ALLOW_PARTY = 0x2,
 };
 
 struct s_skill {
@@ -525,7 +519,7 @@ struct mail_message {
 	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
-	int type; // enum mail_inbox_type
+	enum mail_inbox_type type;
 	time_t scheduled_deletion;
 
 	mail_status status;

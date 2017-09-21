@@ -106,7 +106,7 @@ struct npc_data {
 	} progressbar;
 };
 
-struct eri *npc_sc_display_ers;
+extern struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 
@@ -123,7 +123,7 @@ enum actor_classes
 #define MAX_NPC_CLASS 1000
 // New NPC range
 #define MAX_NPC_CLASS2_START 10000
-#define MAX_NPC_CLASS2_END 10255
+#define MAX_NPC_CLASS2_END 10270
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)

@@ -1399,140 +1399,140 @@ Achievements:
   - ID: 129001
     Group: "AG_ADVENTURE"
     Name: "Prontera Explorer"
-    Depdendent: [120001, 120002, 120003, 120004, 120005, 120006, 120007, 120008, 120009, 120010]
+    Dependent: [120001, 120002, 120003, 120004, 120005, 120006, 120007, 120008, 120009, 120010]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129002
     Group: "AG_ADVENTURE"
     Name: "Geffen Explorer"
-    Depdendent: [120011, 120012, 120013, 120014, 120015, 120016, 120017]
+    Dependent: [120011, 120012, 120013, 120014, 120015, 120016, 120017]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129003
     Group: "AG_ADVENTURE"
     Name: "Sograt Desert Explorer"
-    Depdendent: [120018, 120019, 120020, 120021, 120022, 120023]
+    Dependent: [120018, 120019, 120020, 120021, 120022, 120023]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129004
     Group: "AG_ADVENTURE"
     Name: "Payon Explorer"
-    Depdendent: [120024, 120025, 120026, 120027, 120028, 120029, 120030, 120031]
+    Dependent: [120024, 120025, 120026, 120027, 120028, 120029, 120030, 120031]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129005
     Group: "AG_ADVENTURE"
     Name: "North Mjolnir Explorer"
-    Depdendent: [120032, 120033, 120034, 120035, 120036]
+    Dependent: [120032, 120033, 120034, 120035, 120036]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129006
     Group: "AG_ADVENTURE"
     Name: "South Mjolnir Explorer"
-    Depdendent: [120037, 120038, 120039, 120040, 120041, 120042, 120043]
+    Dependent: [120037, 120038, 120039, 120040, 120041, 120042, 120043]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129007
     Group: "AG_ADVENTURE"
     Name: "Comodo Explorer"
-    Depdendent: [120044, 120045, 120046, 120047, 120048, 120049, 120050, 120051]
+    Dependent: [120044, 120045, 120046, 120047, 120048, 120049, 120050, 120051]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129008
     Group: "AG_ADVENTURE"
     Name: "Rune Midgard Explorer"
-    Depdendent: [129001, 129002, 129003, 129004, 129005, 129006, 129007]
+    Dependent: [129001, 129002, 129003, 129004, 129005, 129006, 129007]
     Reward:
       ItemID: 617
     Score: 50
   - ID: 129009
     Group: "AG_ADVENTURE"
     Name: "Yuno Explorer"
-    Depdendent: [120052, 120053, 120054, 120055, 120056, 120057, 120058, 120059, 120060, 120061]
+    Dependent: [120052, 120053, 120054, 120055, 120056, 120057, 120058, 120059, 120060, 120061]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129010
     Group: "AG_ADVENTURE"
     Name: "Hugel Explorer"
-    Depdendent: [120062, 120063, 120064, 120065, 120066]
+    Dependent: [120062, 120063, 120064, 120065, 120066]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129011
     Group: "AG_ADVENTURE"
     Name: "Einbroch Explorer"
-    Depdendent: [120067, 120068, 120069, 120070, 120071, 120072, 120073, 120074]
+    Dependent: [120067, 120068, 120069, 120070, 120071, 120072, 120073, 120074]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129012
     Group: "AG_ADVENTURE"
     Name: "Lighthalzen Explorer"
-    Depdendent: [120075, 120076, 120077]
+    Dependent: [120075, 120076, 120077]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129013
     Group: "AG_ADVENTURE"
     Name: "Schwarzwald Explorer"
-    Depdendent: [129009, 129010, 129011, 129012]
+    Dependent: [129009, 129010, 129011, 129012]
     Reward:
       ItemID: 617
     Score: 50
   - ID: 129014
     Group: "AG_ADVENTURE"
     Name: "Rachel Explorer"
-    Depdendent: [120078, 120079, 120080, 120081, 120082, 120083, 120084]
+    Dependent: [120078, 120079, 120080, 120081, 120082, 120083, 120084]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129015
     Group: "AG_ADVENTURE"
     Name: "Veins Explorer"
-    Depdendent: [120085, 120086, 120087, 120088, 120089]
+    Dependent: [120085, 120086, 120087, 120088, 120089]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129016
     Group: "AG_ADVENTURE"
     Name: "Arunafeltz Explorer"
-    Depdendent: [129014, 129015]
+    Dependent: [129014, 129015]
     Reward:
       ItemID: 617
     Score: 50
   - ID: 129017
     Group: "AG_ADVENTURE"
     Name: "Laphine Explorer"
-    Depdendent: [120090, 120091, 120092, 120093, 120094, 120095]
+    Dependent: [120090, 120091, 120092, 120093, 120094, 120095]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129018
     Group: "AG_ADVENTURE"
     Name: "Manuk Explorer"
-    Depdendent: [120096, 120097, 120098, 120099, 120100]
+    Dependent: [120096, 120097, 120098, 120099, 120100]
     Reward:
       ItemID: 644
     Score: 20
   - ID: 129019
     Group: "AG_ADVENTURE"
     Name: "Eclage Explorer"
-    Depdendent: [129017, 129018]
+    Dependent: [129017, 129018]
     Reward:
       ItemID: 617
     Score: 50
   - ID: 129020
     Group: "AG_ADVENTURE"
     Name: "Localizing fields explorer"
-    Depdendent: [120101, 120102, 120103, 120104, 120105, 120106, 120107, 120108, 120109]
+    Dependent: [120101, 120102, 120103, 120104, 120105, 120106, 120107, 120108, 120109]
     Reward:
       ItemID: 617
     Score: 50
@@ -1563,7 +1563,7 @@ Achievements:
     Group: "AG_GOAL_LEVEL"
     Name: "Acquire the second aura!"
     Condition: " BaseLevel >= 150 "
-    Depdendent: [200000]
+    Dependent: [200000]
     Reward:
       ItemID: 5364
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
@@ -1573,7 +1573,7 @@ Achievements:
     Group: "AG_GOAL_LEVEL"
     Name: "Acquire the third aura!"
     Condition: " BaseLevel >= 175 "
-    Depdendent: [200001]
+    Dependent: [200001]
     Reward:
       ItemID: 18880
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
@@ -1592,7 +1592,7 @@ Achievements:
     Group: "AG_GOAL_LEVEL"
     Name: "Grandmaster Job level!"
     Condition: " JobLevel >= 70 "
-    Depdendent: [200003]
+    Dependent: [200003]
     Reward:
       ItemID: 12817
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
@@ -1786,7 +1786,7 @@ Achievements:
   - ID: 230100
     Group: "AG_TAMING"
     Name: "Poring is Love"
-    Depdendent: [230101, 230102, 230103, 230104]
+    Dependent: [230101, 230102, 230103, 230104]
     Reward:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1025
@@ -1794,7 +1794,7 @@ Achievements:
   - ID: 230110
     Group: "AG_TAMING"
     Name: "Entomologist"
-    Depdendent: [230111, 230112, 230113, 230114, 230115, 230116]
+    Dependent: [230111, 230112, 230113, 230114, 230115, 230116]
     Reward:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1026
@@ -1802,7 +1802,7 @@ Achievements:
   - ID: 230120
     Group: "AG_TAMING"
     Name: "Animals are also our friend"
-    Depdendent: [230121, 230122, 230123, 230124, 230125, 230126, 230127, 230128]
+    Dependent: [230121, 230122, 230123, 230124, 230125, 230126, 230127, 230128]
     Reward:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1027
@@ -1810,7 +1810,7 @@ Achievements:
   - ID: 230140
     Group: "AG_TAMING"
     Name: "Monster Girls Unite!!"
-    Depdendent: [230141, 230142, 230143, 230144, 230145, 230146, 230147]
+    Dependent: [230141, 230142, 230143, 230144, 230145, 230146, 230147]
     Reward:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1029
@@ -2189,7 +2189,7 @@ Achievements:
   - ID: 230200
     Group: "AG_BATTLE"
     Name: "Poring seeker"
-    Depdendent: [230201, 230202, 230203]
+    Dependent: [230201, 230202, 230203]
     Score: 10
   - ID: 230201
     Group: "AG_BATTLE"
@@ -2246,7 +2246,7 @@ Achievements:
   - ID: 240002
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 2"
-    Depdendent: [240001]
+    Dependent: [240001]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2254,7 +2254,7 @@ Achievements:
   - ID: 240003
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 3"
-    Depdendent: [240002]
+    Dependent: [240002]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2262,7 +2262,7 @@ Achievements:
   - ID: 240004
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 4"
-    Depdendent: [240003]
+    Dependent: [240003]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2270,7 +2270,7 @@ Achievements:
   - ID: 240005
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 5"
-    Depdendent: [240004]
+    Dependent: [240004]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2278,7 +2278,7 @@ Achievements:
   - ID: 240006
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 6"
-    Depdendent: [240005]
+    Dependent: [240005]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2286,7 +2286,7 @@ Achievements:
   - ID: 240007
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 7"
-    Depdendent: [240006]
+    Dependent: [240006]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2294,7 +2294,7 @@ Achievements:
   - ID: 240008
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 8"
-    Depdendent: [240007]
+    Dependent: [240007]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2302,7 +2302,7 @@ Achievements:
   - ID: 240009
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 9"
-    Depdendent: [240008]
+    Dependent: [240008]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2310,7 +2310,7 @@ Achievements:
   - ID: 240010
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 10"
-    Depdendent: [240009]
+    Dependent: [240009]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2319,7 +2319,7 @@ Achievements:
   - ID: 240011
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 11"
-    Depdendent: [240010]
+    Dependent: [240010]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2327,7 +2327,7 @@ Achievements:
   - ID: 240012
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 12"
-    Depdendent: [240011]
+    Dependent: [240011]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2335,7 +2335,7 @@ Achievements:
   - ID: 240013
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 13"
-    Depdendent: [240012]
+    Dependent: [240012]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2343,7 +2343,7 @@ Achievements:
   - ID: 240014
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 14"
-    Depdendent: [240013]
+    Dependent: [240013]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2351,7 +2351,7 @@ Achievements:
   - ID: 240015
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 15"
-    Depdendent: [240014]
+    Dependent: [240014]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2359,7 +2359,7 @@ Achievements:
   - ID: 240016
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 16"
-    Depdendent: [240015]
+    Dependent: [240015]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2367,7 +2367,7 @@ Achievements:
   - ID: 240017
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 17"
-    Depdendent: [240016]
+    Dependent: [240016]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2375,7 +2375,7 @@ Achievements:
   - ID: 240018
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 18"
-    Depdendent: [240017]
+    Dependent: [240017]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2383,7 +2383,7 @@ Achievements:
   - ID: 240019
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 19"
-    Depdendent: [240018]
+    Dependent: [240018]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2391,7 +2391,7 @@ Achievements:
   - ID: 240020
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 20"
-    Depdendent: [240019]
+    Dependent: [240019]
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "

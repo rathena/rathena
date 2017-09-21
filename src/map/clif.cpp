@@ -53,11 +53,17 @@
 #include <stdarg.h>
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
+unsigned long color_table[COLOR_MAX];
+
 #include "clif_obfuscation.h"
 static bool clif_session_isValid(struct map_session_data *sd);
 
@@ -211,7 +217,7 @@ int clif_setip(const char* ip) {
 	}
 
 	safestrncpy(map_ip_str, ip, sizeof(map_ip_str));
-	ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(map_ip, ip_str));
+	ShowInfo("Map Server IP Address : '" CL_WHITE "%s" CL_RESET "' -> '" CL_WHITE "%s" CL_RESET "'.\n", ip, ip2str(map_ip, ip_str));
 	return 1;
 }
 
@@ -220,7 +226,7 @@ void clif_setbindip(const char* ip)
 	bind_ip = host2ip(ip);
 	if (bind_ip) {
 		char ip_str[16];
-		ShowInfo("Map Server Bind IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(bind_ip, ip_str));
+		ShowInfo("Map Server Bind IP Address : '" CL_WHITE "%s" CL_RESET "' -> '" CL_WHITE "%s" CL_RESET "'.\n", ip, ip2str(bind_ip, ip_str));
 	} else {
 		ShowWarning("Failed to Resolve Map Server Address! (%s)\n", ip);
 	}
@@ -1960,17 +1966,8 @@ void clif_selllist(struct map_session_data *sd)
 	{
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory_data[i] )
 		{
-			if( !itemdb_cansell(&sd->inventory.u.items_inventory[i], pc_get_group_level(sd)) )
+			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i]))
 				continue;
-
-			if( battle_config.hide_fav_sell && sd->inventory.u.items_inventory[i].favorite )
-				continue; //Cannot sell favs [Jey]
-
-			if( sd->inventory.u.items_inventory[i].expire_time || (sd->inventory.u.items_inventory[i].bound && !pc_can_give_bounded_items(sd)) )
-				continue; // Cannot Sell Rental Items or Account Bounded Items
-
-			if( sd->inventory.u.items_inventory[i].bound && !pc_can_give_bounded_items(sd))
-				continue; // Don't allow sale of bound items
 
 			val=sd->inventory_data[i]->value_sell;
 			if( val < 0 )
@@ -2456,7 +2453,7 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 /// Fills in part of the item buffers that calls for variable bonuses data. [Napster]
 /// A maximum of 5 random options can be supported.
 void clif_add_random_options(unsigned char* buf, struct item *it) {
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	int i;
 
 	for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
@@ -2491,7 +2488,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 	header = 0x29a;
 #elif PACKETVER < 20120925
 	header = 0x2d4;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	header = 0x990;
 #elif PACKETVER < 20160921
 	header = 0xa0c;
@@ -2531,7 +2528,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 #endif
 #if PACKETVER >= 20071002
 		WFIFOW(fd,offs+27) = 0;  //  HireExpireDate
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,offs+31), &sd->inventory.u.items_inventory[n]);
 #if PACKETVER >= 20160921
 		WFIFOB(fd,offs+54) = 0; // Favorite
@@ -2571,7 +2568,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 		/* Yellow color only for non-stackable item */
 		WFIFOW(fd,offs+27)=(sd->inventory.u.items_inventory[n].bound && !itemdb_isstackable(sd->inventory.u.items_inventory[n].nameid)) ? BOUND_DISPYELLOW : sd->inventory_data[n]->flag.bindOnEquip ? BOUND_ONEQUIP : 0;
 #endif
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,31), &sd->inventory.u.items_inventory[n]);
 #if PACKETVER >= 20160921
 		WFIFOB(fd,offs+54) = sd->inventory.u.items_inventory[n].favorite;
@@ -2648,7 +2645,7 @@ void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *it, struc
 		WBUFL(buf,n+22) = it->expire_time;
 		WBUFW(buf,n+26) = it->bound ? BOUND_DISPYELLOW : id->flag.bindOnEquip ? BOUND_ONEQUIP : 0; //bindOnEquipType
 		WBUFW(buf,n+28) = (id->equip&EQP_VISIBLE) ? id->look : 0;
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		//V6_ITEM_Option
 		WBUFB(buf,n+30) = 0;	// nRandomOptionCnt
 		clif_add_random_options(WBUFP(buf, n+31), it);// optionData
@@ -2729,7 +2726,7 @@ void clif_inventorylist(struct map_session_data *sd) {
 	const int se = 26;
 #elif PACKETVER < 20120925
 	const int se = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int se = 31;
 #else
 	const int se = 57;
@@ -2777,7 +2774,7 @@ void clif_inventorylist(struct map_session_data *sd) {
 		WBUFW(bufe,0)=0xa4;
 #elif PACKETVER < 20120925
 		WBUFW(bufe,0)=0x2d0;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 		WBUFW(bufe,0)=0x992;
 #else
 		WBUFW(bufe,0)=0xa0d;
@@ -2809,7 +2806,7 @@ void clif_equiplist(struct map_session_data *sd)
 	const int cmd = 26;
 #elif PACKETVER < 20120925
 	const int cmd = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 31;
 #else
 	const int cmd = 57;
@@ -2833,7 +2830,7 @@ void clif_equiplist(struct map_session_data *sd)
 		WBUFW(buf,0)=0xa4;
 #elif PACKETVER < 20120925
 		WBUFW(buf,0)=0x2d0;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 		WBUFW(buf,0)=0x992;
 #else
 		WBUFW(buf,0)=0xa0d;
@@ -2879,7 +2876,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	const int se = 28;
 	const int sidxe = 4;
 	const int cmde = 0x2d1;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int se = 31;
 	const int sidxe = 4+24;
 	const int cmde = 0x996;
@@ -2967,7 +2964,7 @@ void clif_cartlist(struct map_session_data *sd)
 	const int cmd = 26;
 #elif PACKETVER < 20120925
 	const int cmd = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 31;
 #else
 	const int cmd = 57;
@@ -3010,7 +3007,7 @@ void clif_cartlist(struct map_session_data *sd)
 	WBUFW(bufe,0)=0x122;
 #elif PACKETVER < 20120925
 	WBUFW(bufe,0)=0x2d2;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	WBUFW(bufe,0)=0x994;
 #else
 	WBUFW(bufe,0)=0xa0f;
@@ -4306,7 +4303,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 	unsigned char *buf;
 #if PACKETVER < 20100223
 	const int cmd = 0xe9;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 0x80f;
 #else
 	const int cmd = 0xa09;
@@ -4336,7 +4333,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 		WBUFW(buf,13)= 0; //card (4w)
 		WBUFW(buf,15)= 0; //card (4w)
 		WBUFW(buf,17)= 0; //card (4w)
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WBUFP(buf, 19), &sd->inventory.u.items_inventory[index]);
 #endif
 	}
@@ -4362,7 +4359,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 		WBUFB(buf,9) = sd->inventory.u.items_inventory[index].attribute; // attribute
 		WBUFB(buf,10)= sd->inventory.u.items_inventory[index].refine; //refine
 		clif_addcards(WBUFP(buf, 11), &sd->inventory.u.items_inventory[index]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WBUFP(buf, 19), &sd->inventory.u.items_inventory[index]);
 #endif
 	}
@@ -4479,7 +4476,7 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 {
 #if PACKETVER < 5
 	const int cmd = 0xf4;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 0x1c4;
 #else
 	const int cmd = 0xa0a;
@@ -4505,7 +4502,7 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 	WFIFOB(fd,11+offset) = i->attribute; // attribute
 	WFIFOB(fd,12+offset) = i->refine; //refine
 	clif_addcards(WFIFOP(fd,13+offset), i);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	clif_add_random_options(WFIFOP(fd,21+offset), i);
 #endif
 	WFIFOSET(fd,packet_len(cmd));
@@ -6762,7 +6759,7 @@ void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 {
 #if PACKETVER < 5
 	const int cmd = 0x124;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
 	const int cmd = 0x1c5;
 #else
 	const int cmd = 0xa0b;
@@ -6794,7 +6791,7 @@ void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 	WBUFB(buf,11+offset)=sd->cart.u.items_cart[n].attribute;
 	WBUFB(buf,12+offset)=sd->cart.u.items_cart[n].refine;
 	clif_addcards(WBUFP(buf,13+offset), &sd->cart.u.items_cart[n]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	clif_add_random_options(WBUFP(buf,21+offset), &sd->cart.u.items_cart[n]);
 #endif
 	WFIFOSET(fd,packet_len(cmd));
@@ -7124,7 +7121,7 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 	const int offset = 12;
 #endif
 
-#if PACKETVER < 20150226
+#if PACKETVER < 20150225
 	const int item_length = 22;
 #elif PACKETVER < 20160921
 	const int item_length = 47;
@@ -7160,7 +7157,7 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 		WFIFOB(fd,offset+12+i*item_length) = vsd->cart.u.items_cart[index].attribute;
 		WFIFOB(fd,offset+13+i*item_length) = vsd->cart.u.items_cart[index].refine;
 		clif_addcards(WFIFOP(fd,offset+14+i*item_length), &vsd->cart.u.items_cart[index]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,offset+22+i*item_length), &vsd->cart.u.items_cart[index]);
 #if PACKETVER >= 20160921
 		WFIFOL(fd,offset+47+i*item_length) = pc_equippoint_sub(sd,data);
@@ -7222,7 +7219,7 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 	int i,fd;
 	int count;
 
-#if PACKETVER < 20150226
+#if PACKETVER < 20150225
 	const int item_length = 22;
 #else
 	const int item_length = 47;
@@ -7249,7 +7246,7 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 		WFIFOB(fd,20+i*item_length) = sd->cart.u.items_cart[index].attribute;
 		WFIFOB(fd,21+i*item_length) = sd->cart.u.items_cart[index].refine;
 		clif_addcards(WFIFOP(fd,22+i*item_length), &sd->cart.u.items_cart[index]);
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 		clif_add_random_options(WFIFOP(fd,30+i*item_length), &sd->cart.u.items_cart[index]);
 #endif
 	}
@@ -7372,16 +7369,18 @@ void clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 /// 0a44 <packet len>.W <party name>.24B { <account id>.L <nick>.24B <map name>.16B <role>.B <state>.B <class>.W <base level>.W }* <item pickup rule>.B <item share rule>.B <unknown>.L
 void clif_party_info(struct party_data* p, struct map_session_data *sd)
 {
-	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1)*MAX_PARTY];
 	struct map_session_data* party_sd = NULL;
 	int i, c;
 #if PACKETVER < 20170502
+	const int M_SIZE = 46; // 4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1
+	unsigned char buf[2+2+NAME_LENGTH+46*MAX_PARTY];
 	int cmd = 0xfb;
-	int size = 46;
 #else
+	const int M_SIZE = 50; // 4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1+4
+	unsigned char buf[2+2+NAME_LENGTH+50*MAX_PARTY+6];
 	int cmd = 0xa44;
-	int size = 50;
 #endif
+	const int PRE_SIZE = 28; // cmd, actual cmd_size, party_name
 
 	nullpo_retv(p);
 
@@ -7394,24 +7393,24 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd)
 
 		if(party_sd == NULL) party_sd = p->data[i].sd;
 
-		WBUFL(buf,28+c*size) = m->account_id;
-		safestrncpy(WBUFCP(buf,28+c*size+4), m->name, NAME_LENGTH);
-		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,28+c*size+28));
-		WBUFB(buf,28+c*size+44) = (m->leader) ? 0 : 1;
-		WBUFB(buf,28+c*size+45) = (m->online) ? 0 : 1;
+		WBUFL(buf,PRE_SIZE+c*M_SIZE) = m->account_id;
+		safestrncpy(WBUFCP(buf,PRE_SIZE+c*M_SIZE+4), m->name, NAME_LENGTH);
+		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,PRE_SIZE+c*M_SIZE+PRE_SIZE));
+		WBUFB(buf,PRE_SIZE+c*M_SIZE+44) = (m->leader) ? 0 : 1;
+		WBUFB(buf,PRE_SIZE+c*M_SIZE+45) = (m->online) ? 0 : 1;
 #if PACKETVER >= 20170502
-		WBUFW(buf,28+c*size+46) = m->class_;
-		WBUFW(buf,28+c*size+48) = m->lv;
+		WBUFW(buf,PRE_SIZE+c*M_SIZE+46) = m->class_;
+		WBUFW(buf,PRE_SIZE+c*M_SIZE+48) = m->lv;
 #endif
 		c++;
 	}
 #if PACKETVER < 20170502
-	WBUFW(buf,2) = 28+c*size;
+	WBUFW(buf,2) = PRE_SIZE+c*M_SIZE;
 #else
-	WBUFB(buf,28+c*size) = (p->party.item & 1) ? 1 : 0;
-	WBUFB(buf,28+c*size+1) = (p->party.item & 2) ? 1 : 0;
-	WBUFL(buf,28+c*size+2) = 0; // unknown
-	WBUFW(buf,2) = 28+c*size+6;
+	WBUFB(buf,PRE_SIZE+c*M_SIZE) = (p->party.item & 1) ? 1 : 0;
+	WBUFB(buf,PRE_SIZE+c*M_SIZE+1) = (p->party.item & 2) ? 1 : 0;
+	WBUFL(buf,PRE_SIZE+c*M_SIZE+2) = 0; // unknown
+	WBUFW(buf,2) = PRE_SIZE+c*M_SIZE+6;
 #endif
 
 	if(sd) { // send only to self
@@ -9769,7 +9768,7 @@ void clif_equipcheckbox(struct map_session_data* sd)
 /// 0859 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE2, PACKETVER >= 20101124)
 /// 0859 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE2, PACKETVER >= 20110111)
 /// 0997 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.31B* (ZC_EQUIPWIN_MICROSCOPE_V5, PACKETVER >= 20120925)
-/// 0a2d <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V6, PACKETVER >= 20150226)
+/// 0a2d <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V6, PACKETVER >= 20150225)
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd)
 {
 	uint8* buf;
@@ -9778,7 +9777,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	const int s = 26;
 #elif PACKETVER < 20120925
 	const int s = 28;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
  	const int s = 31;
 #else
 	const int s = 57;
@@ -9794,7 +9793,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	WBUFW(buf, 0) = 0x2d7;
 #elif PACKETVER < 20120925
 	WBUFW(buf, 0) = 0x859;
-#elif PACKETVER < 20150226
+#elif PACKETVER < 20150225
  	WBUFW(buf, 0) = 0x997;
 #else
 	WBUFW(buf, 0) = 0xa2d;
@@ -9880,7 +9879,7 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 /// Formats: false - <packet id>.w <packet len>.w (<name> : <message>).?B 00
 ///          true - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
 static bool clif_process_message(struct map_session_data* sd, bool whisperFormat, char* out_name, char* out_message, char* out_full_message ){
-	char* seperator = " : ";
+	const char* seperator = " : ";
 	int fd;
 	struct s_packet_db* info;
 	uint16 packetLength, inputLength;
@@ -13211,7 +13210,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 		bool flag;
 
 		len -= 85;
-		flag = (bool)RFIFOB(fd,info->pos[2]);
+		flag = RFIFOB(fd,info->pos[2]) != 0;
 		if (!flag) {
 			sd->state.prevend = 0;
 			sd->state.workinprogress = WIP_DISABLE_NONE;
@@ -14993,6 +14992,8 @@ void clif_Mail_window(int fd, int flag)
 ///		{ <mail id>.Q <read>.B <type>.B <sender>.24B <received>.L <expires>.L <title length>.W <title>.?B }*
 /// 0a7d <packet len>.W <type>.B <amount>.B <last page>.B (ZC_ACK_MAIL_LIST2)
 ///		{ <mail id>.Q <read>.B <type>.B <sender>.24B <received>.L <expires>.L <title length>.W <title>.?B }*
+/// 0ac2 <packet len>.W <unknown>.B (ZC_ACK_MAIL_LIST3)
+///		{ <type>.B <mail id>.Q <read>.B <type>.B <sender>.24B <expires>.L <title length>.W <title>.?B }*
 void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type type,int64 mailID){
 #if PACKETVER < 20150513
 	int fd = sd->fd;
@@ -15033,7 +15034,9 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 	int i, j, k, offset, titleLength;
 	uint8 mailType, amount, remaining;
 	uint32 now = (uint32)time(NULL);
-#if PACKETVER >= 20160601
+#if PACKETVER >= 20170419
+	int cmd = 0xac2;
+#elif PACKETVER >= 20160601
 	int cmd = 0xa7d;
 #else
 	int cmd = 0x9f0;
@@ -15043,6 +15046,10 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		mail_refresh_remaining_amount(sd);
 	}
 
+#if PACKETVER >= 20170419
+	// Always send all
+	i = md->amount;
+#else
 	// If a starting mail id was sent
 	if( mailID != 0 ){
 		ARR_FIND( 0, md->amount, i, md->msg[i].id == mailID );
@@ -15063,43 +15070,64 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 	}else{
 		i = md->amount;
 	}
+#endif
 	
 	// Count the remaining mails from the starting mail or the beginning
-	// Only count mails of the target type and those that should not have been deleted already
+	// Only count mails of the target type(before 2017-04-19) and those that should not have been deleted already
 	for( j = i, remaining = 0; j >= 0; j-- ){
 		msg = &md->msg[j];
 
 		if (msg->id < 1)
 			continue;
+#if PACKETVER < 20170419
 		if (msg->type != type)
 			continue;
+#endif
 		if (msg->scheduled_deletion > 0 && msg->scheduled_deletion <= now)
 			continue;
 
 		remaining++;
 	}
 
+#if PACKETVER >= 20170419
+	// Always send all
+	amount = remaining;
+#else
 	if( remaining > MAIL_PAGE_SIZE ){
 		amount = MAIL_PAGE_SIZE;
 	}else{
 		amount = remaining;
 	}
+#endif
 
 	WFIFOHEAD(fd, 7 + ((44 + MAIL_TITLE_LENGTH) * amount));
 	WFIFOW(fd, 0) = cmd;
+#if PACKETVER >= 20170419
+	WFIFOB(fd, 4) = 1; // Unknown
+	offset = 5;
+#else
 	WFIFOB(fd, 4) = type;
 	WFIFOB(fd, 5) = amount;
 	WFIFOB(fd, 6) = ( remaining < MAIL_PAGE_SIZE ); // last page
+	offset = 7;
+#endif
 
-	for( offset = 7, amount = 0; i >= 0; i-- ){
+	for( amount = 0; i >= 0; i-- ){
 		msg = &md->msg[i];
 
 		if (msg->id < 1)
 			continue;
+#if PACKETVER < 20170419
 		if (msg->type != type)
 			continue;
+#endif
 		if (msg->scheduled_deletion > 0 && msg->scheduled_deletion <= now)
 			continue;
+
+#if PACKETVER >= 20170419
+		WFIFOB(fd, offset) = msg->type;
+		offset += 1;
+#endif
 
 		WFIFOQ(fd, offset + 0) = (uint64)msg->id;
 		WFIFOB(fd, offset + 8) = (msg->status != MAIL_UNREAD);
@@ -15123,22 +15151,25 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		WFIFOB(fd, offset + 9) = mailType;
 		safestrncpy(WFIFOCP(fd, offset + 10), msg->send_name, NAME_LENGTH);
 
+#if PACKETVER < 20170419
 		// How much time has passed since you received the mail
 		WFIFOL(fd, offset + 34 ) = now - (uint32)msg->timestamp;
+		offset += 4;
+#endif
 
 		// If automatic return/deletion of mails is enabled, notify the client when it will kick in
 		if( msg->scheduled_deletion > 0 ){
-			WFIFOL(fd, offset + 38) = (uint32)msg->scheduled_deletion - now;
+			WFIFOL(fd, offset + 34) = (uint32)msg->scheduled_deletion - now;
 		}else{
 			// Fake the scheduled deletion to one year in the future
 			// Sadly the client always displays the scheduled deletion after 24 hours no matter how high this value gets [Lemongrass]
-			WFIFOL(fd, offset + 38) = 365 * 24 * 60 * 60;
+			WFIFOL(fd, offset + 34) = 365 * 24 * 60 * 60;
 		}
 
-		WFIFOW(fd, offset + 42) = titleLength = (int16)(strlen(msg->title) + 1);
-		safestrncpy(WFIFOCP(fd, offset + 44), msg->title, titleLength);
+		WFIFOW(fd, offset + 38) = titleLength = (int16)(strlen(msg->title) + 1);
+		safestrncpy(WFIFOCP(fd, offset + 40), msg->title, titleLength);
 
-		offset += 44 + titleLength;
+		offset += 40 + titleLength;
 	}
 	WFIFOW(fd, 2) = (int16)offset;
 	WFIFOSET(fd, offset);
@@ -15150,6 +15181,8 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 /// 09e8 <mail tab>.B <mail id>.Q (CZ_OPEN_MAILBOX)
 /// 09ee <mail tab>.B <mail id>.Q (CZ_REQ_NEXT_MAIL_LIST)
 /// 09ef <mail tab>.B <mail id>.Q (CZ_REQ_REFRESH_MAIL_LIST)
+/// 0ac0 <mail id>.Q <unknown>.16B (CZ_OPEN_MAILBOX2)
+/// 0ac1 <mail id>.Q <unknown>.16B (CZ_REQ_REFRESH_MAIL_LIST2)
 void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd){
 #if PACKETVER < 20150513
 	struct mail_data* md = &sd->mail.inbox;
@@ -15162,8 +15195,25 @@ void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd){
 	mail_removeitem(sd, 0, sd->mail.item[0].index, sd->mail.item[0].amount);
 	mail_removezeny(sd, false);
 #else
+	int cmd = RFIFOW(fd, 0);
+#if PACKETVER < 20170419
 	uint8 openType = RFIFOB(fd, 2);
 	uint64 mailId = RFIFOQ(fd, 3);
+#else
+	uint8 openType;
+	uint64 mailId = RFIFOQ(fd, 2);
+	int i;
+
+	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mailId);
+
+	if( i == MAIL_MAX_INBOX ){
+		openType = MAIL_INBOX_NORMAL;
+		mailId = 0;
+	}else{
+		openType = sd->mail.inbox.msg[i].type;
+		mailId = 0;
+	}
+#endif
 
 	switch( openType ){
 		case MAIL_INBOX_NORMAL:
@@ -15175,13 +15225,13 @@ void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd){
 			return;
 	}
 
-	if( sd->mail.changed || RFIFOW(fd,0) == 0x9ef ){
-		intif_Mail_requestinbox(sd->status.char_id, 1, openType);
+	if( sd->mail.changed || ( cmd == 0x9ef || cmd == 0xac1 ) ){
+		intif_Mail_requestinbox(sd->status.char_id, 1, (enum mail_inbox_type)openType);
 		return;
 	}
 
 	// If it is not a next page request
-	if( RFIFOW(fd,0) != 0x9ee ){
+	if( cmd != 0x9ee ){
 		mailId = 0;
 	}
 
@@ -15488,7 +15538,7 @@ void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 		memset(msg->item, 0, MAIL_MAX_ITEM*sizeof(struct item));
 	}
 
-	intif_mail_getattach(sd,msg,attachment);
+	intif_mail_getattach(sd,msg, (enum mail_attachment_type)attachment);
 	clif_Mail_read(sd, mail_id);
 }
 
@@ -16404,7 +16454,7 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 void clif_parse_EquipTick(int fd, struct map_session_data* sd)
 {
 	//int type = RFIFOL(fd,packet_db[cmd].pos[0]);
-	bool flag = (bool)RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[1]);
+	bool flag = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[1]) != 0;
 	sd->status.show_equip = flag;
 	clif_equiptickack(sd, flag);
 }
@@ -17255,9 +17305,7 @@ void clif_parse_LessEffect(int fd, struct map_session_data* sd){
 	sd->state.lesseffect = ( isLess != 0 );
 }
 
-/// S 07e4 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_ITEMLISTWIN_RES)
-/// S 0945 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_* RagexeRE 2012-04-10a)
-/// S 0281 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_* Ragexe 2013-08-07)
+/// 07e4 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_ITEMLISTWIN_RES)
 void clif_parse_ItemListWindowSelected(int fd, struct map_session_data* sd) {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int n = (RFIFOW(fd,info->pos[0])-12) / 4;
@@ -17730,7 +17778,7 @@ static void clif_parse_SearchStoreInfo(int fd, struct map_session_data* sd)
 ///     1 = "next" label to retrieve more results
 void clif_search_store_info_ack(struct map_session_data* sd)
 {
-#if PACKETVER >= 20150226
+#if PACKETVER >= 20150225
 	const unsigned int blocksize = MESSAGE_SIZE+26+5*MAX_ITEM_RDM_OPT;
 #else
 	const unsigned int blocksize = MESSAGE_SIZE+26;
@@ -19978,11 +20026,11 @@ static int clif_parse(int fd)
 				//Disassociate character from the socket connection.
 				session[fd]->session_data = NULL;
 				sd->fd = 0;
-				ShowInfo("Character '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n", sd->status.name);
+				ShowInfo("Character '" CL_WHITE "%s" CL_RESET "' logged off (using @autotrade).\n", sd->status.name);
 			} else
 			if (sd->state.active) {
 				// Player logout display [Valaris]
-				ShowInfo("Character '"CL_WHITE"%s"CL_RESET"' logged off.\n", sd->status.name);
+				ShowInfo("Character '" CL_WHITE "%s" CL_RESET "' logged off.\n", sd->status.name);
 				clif_quitsave(fd, sd);
 			} else {
 				//Unusual logout (during log on/off/map-changer procedure)
@@ -19990,7 +20038,7 @@ static int clif_parse(int fd)
 				map_quit(sd);
 			}
 		} else {
-			ShowInfo("Closed connection from '"CL_WHITE"%s"CL_RESET"'.\n", ip2str(session[fd]->client_addr, NULL));
+			ShowInfo("Closed connection from '" CL_WHITE "%s" CL_RESET "'.\n", ip2str(session[fd]->client_addr, NULL));
 		}
 		do_close(fd);
 		return 0;
@@ -20129,12 +20177,12 @@ void packetdb_readdb(){
 #include "clif_packetdb.h"
 #include "clif_shuffle.h"
 
-	ShowStatus("Using packet version: "CL_WHITE"%d"CL_RESET".\n", PACKETVER);
+	ShowStatus("Using packet version: " CL_WHITE "%d" CL_RESET ".\n", PACKETVER);
 
 #ifdef PACKET_OBFUSCATION
-	ShowStatus("Packet Obfuscation: "CL_GREEN"Enabled"CL_RESET". Keys: "CL_WHITE"0x%08X, 0x%08X, 0x%08X"CL_RESET"\n", clif_cryptKey[0], clif_cryptKey[1], clif_cryptKey[2]);
+	ShowStatus("Packet Obfuscation: " CL_GREEN "Enabled" CL_RESET ". Keys: " CL_WHITE "0x%08X, 0x%08X, 0x%08X" CL_RESET "\n", clif_cryptKey[0], clif_cryptKey[1], clif_cryptKey[2]);
 #else
-	ShowStatus("Packet Obfuscation: "CL_RED"Disabled"CL_RESET".\n");
+	ShowStatus("Packet Obfuscation: " CL_RED "Disabled" CL_RESET ".\n");
 #endif
 }
 
@@ -20163,16 +20211,20 @@ void do_init_clif(void) {
 
 	set_defaultparse(clif_parse);
 	if( make_listen_bind(bind_ip,map_port) == -1 ) {
-		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",map_port);
+		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",map_port);
 		exit(EXIT_FAILURE);
 	}
 
 	add_timer_func_list(clif_clearunit_delayed_sub, "clif_clearunit_delayed_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 
-	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.c::delay_clearunit_ers",ERS_OPT_CLEAR);
+	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.cpp::delay_clearunit_ers",ERS_OPT_CLEAR);
 }
 
 void do_final_clif(void) {
 	ers_destroy(delay_clearunit_ers);
 }
+
+#ifdef __cplusplus
+}
+#endif

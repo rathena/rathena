@@ -80,6 +80,8 @@ static char atcmd_output[CHAT_SIZE_MAX];
 static char atcmd_player_name[NAME_LENGTH];
 const char *parent_cmd;
 
+struct atcmd_binding_data** atcmd_binding;
+
 static AtCommandInfo* get_atcommandinfo_byname(const char *name); // @help
 static const char* atcommand_checkalias(const char *aliasname); // @help
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help
@@ -428,8 +430,8 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 			strcat(buffer, " ");
 
 			// swap elements
-			swap(distance[i][0], distance[min][0]);
-			swap(distance[i][1], distance[min][1]);
+			SWAP(distance[i][0], distance[min][0]);
+			SWAP(distance[i][1], distance[min][1]);
 		}
 	}
 
@@ -1761,7 +1763,8 @@ ACMD_FUNC(bodystyle)
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK || (sd->class_&MAPID_THIRDMASK) == MAPID_SHADOW_CHASER
-	        || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER || (sd->class_&MAPID_THIRDMASK) == MAPID_SORCERER)) {
+	    || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER || (sd->class_&MAPID_THIRDMASK) == MAPID_SORCERER
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_SURA)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}

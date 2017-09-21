@@ -559,16 +559,6 @@ IG_Xmas_Gift,12354,24	// Buche_De_Noel
 IG_Xmas_Gift,12702,36	// Old_Bleu_Box
 IG_Xmas_Gift,14546,6	// Fire_Cracker_Love
 IG_Xmas_Gift,14550,6	// Fire_Cracker_Xmas
-// Runes
-IG_Rune,12725,1 // Runstone_Nosiege
-IG_Rune,12726,1 // Runstone_Rhydo
-IG_Rune,12727,1 // Runstone_Verkana
-IG_Rune,12728,1 // Runstone_Isia
-IG_Rune,12729,1 // Runstone_Asir
-IG_Rune,12730,1 // Runstone_Urj
-IG_Rune,12731,1 // Runstone_Turisus
-IG_Rune,12732,1 // Runstone_Pertz
-IG_Rune,12733,1 // Runstone_Hagalas
 // Elemental Points
 IG_Element,6360,1 // Scarlet_Pts
 IG_Element,6361,1 // Indigo_Pts

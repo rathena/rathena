@@ -58,14 +58,20 @@ int night_timer_tid = INVALID_TIMER;
 
 struct eri *pc_sc_display_ers = NULL;
 struct eri *pc_itemgrouphealrate_ers = NULL;
+struct eri *num_reg_ers;
+struct eri *str_reg_ers;
 int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
+struct s_job_info job_info[CLASS_COUNT];
+
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
+
+bool reg_load;
 
 /**
  * Translation table from athena equip index to aegis bitmask
@@ -100,6 +106,10 @@ const struct sg_data sg_info[MAX_PC_FEELHATE] = {
 		{ SG_MOON_ANGER, SG_MOON_BLESS, SG_MOON_COMFORT, "PC_FEEL_MOON", "PC_HATE_MOB_MOON", is_day_of_moon },
 		{ SG_STAR_ANGER, SG_STAR_BLESS, SG_STAR_COMFORT, "PC_FEEL_STAR", "PC_HATE_MOB_STAR", is_day_of_star }
 	};
+
+void pc_set_reg_load( bool val ){
+	reg_load = val;
+}
 
 /**
  * Item Cool Down Delay Saving
@@ -568,6 +578,37 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 		}
 	} else
 		sd->rental_timer = add_timer(gettick() + umin(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+}
+
+/**
+ * Check if the player can sell the current item
+ * @param sd: map_session_data of the player
+ * @param item: struct of the checking item
+ * @return bool 'true' is sellable, 'false' otherwise
+ */
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
+	struct npc_data *nd;
+
+	if (sd == NULL || item == NULL)
+		return false;
+
+	nd = map_id2nd(sd->npc_shopid);
+
+	if (!itemdb_cansell(item, pc_get_group_level(sd)))
+		return false;
+
+	if (battle_config.hide_fav_sell && item->favorite)
+		return false; //Cannot sell favs (optional config)
+
+	if (item->expire_time)
+		return false; // Cannot Sell Rental Items
+
+	if (nd && nd->subtype == NPCTYPE_ITEMSHOP && item->bound && battle_config.allow_bound_sell)
+		return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
+
+	if (item->bound && !pc_can_give_bounded_items(sd))
+		return false; // Don't allow sale of bound items
+	return true;
 }
 
 /**
@@ -2504,7 +2545,8 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_BASE_ATK:
 			if(sd->state.lr_flag != 2) {
 #ifdef RENEWAL
-				sd->bonus.eatk += val;
+				bonus = sd->bonus.eatk + val;
+				sd->bonus.eatk = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 #else
 				bonus = status->batk + val;
 				status->batk = cap_value(bonus, 0, USHRT_MAX);
@@ -3087,8 +3129,11 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			else if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%d\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 			}
-			else {
+			else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%d\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			}
+			else {
+				ShowWarning("pc_bonus: unknown bonus type %d %d in unknown usage. Report this!\n", type, val);
 			}
 			break;
 	}
@@ -3768,9 +3813,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+		} 
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
 		else {
-			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in unknown usage. Report this!\n", type, type2, val);
 		}
 		break;
 	}
@@ -3892,8 +3940,11 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in a combo with item #%d\n", type, type2, type3, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
-		else {
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in item #%d\n", type, type2, type3, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
+		else {
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, val);
 		}
 		break;
 	}
@@ -3975,8 +4026,11 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
-		else {
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in item #%d\n", type, type2, type3, type4, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
+		else {
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, type4, val);
 		}
 		break;
 	}
@@ -4024,8 +4078,11 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, type5, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
-		else {
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in item #%d\n", type, type2, type3, type4, type5, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
+		else {
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, type4, type5, val);
 		}
 		break;
 	}
@@ -4828,25 +4885,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			if( map[sd->bl.m].flag.noreturn && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
 				return false;
 			break;
-		case ITEMID_BUBBLE_GUM:
-		case ITEMID_COMP_BUBBLE_GUM:
-			if( sd->sc.data[SC_ITEMBOOST] )
-				return false;
-			break;
-		case ITEMID_BATTLE_MANUAL:
-		case ITEMID_COMP_BATTLE_MANUAL:
-		case ITEMID_THICK_BATTLE_MANUAL:
-		case ITEMID_NOBLE_NAMEPLATE:
-		case ITEMID_BATTLE_MANUAL25:
-		case ITEMID_BATTLE_MANUAL100:
-		case ITEMID_BATTLE_MANUAL300:
-			if( sd->sc.data[SC_EXPBOOST] )
-				return false;
-			break;
-		case ITEMID_JOB_MANUAL50:
-			if( sd->sc.data[SC_JEXPBOOST] )
-				return false;
-			break;
 		case ITEMID_MERCENARY_RED_POTION:
 		case ITEMID_MERCENARY_BLUE_POTION:
 		case ITEMID_M_CENTER_POTION:
@@ -4870,17 +4908,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 
 	if( itemdb_group_item_exists(IG_MERCENARY, nameid) && sd->md != NULL )
 		return false; // Mercenary Scrolls
-
-	/**
-	 * Only Rune Knights may use runes
-	 **/
-	if( itemdb_group_item_exists(IG_RUNE, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
-		return false;
-	/**
-	 * Only GCross may use poisons
-	 **/
-	else if( itemdb_group_item_exists(IG_POISON, nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
-		return false;
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
 		if( pc_is90overweight(sd) ) {
@@ -6868,7 +6895,7 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 	high = low + val;
 
 	if ( val < 0 )
-		swap(low, high);
+		SWAP(low, high);
 
 	for ( ; low < high; low++ )
 		sp += PC_STATUS_POINT_COST(low);
@@ -9412,6 +9439,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	for( i = 0; i < data->combos_count; i++ ) {
 		struct itemchk {
 			int idx;
+			unsigned short nameid;
 			short card[MAX_SLOTS];
 		} *combo_idx;
 		int idx, j;
@@ -9432,6 +9460,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		CREATE(combo_idx,struct itemchk,nb_itemCombo);
 		for(j=0; j < nb_itemCombo; j++){
 			combo_idx[j].idx=-1;
+			combo_idx[j].nameid=-1;
 			memset(combo_idx[j].card,-1,MAX_SLOTS);
 		}
 			
@@ -9455,28 +9484,29 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						bool do_continue = false; //used to continue that specific loop with some check that also use some loop
 						uint8 z;
 						for (z = 0; z < nb_itemCombo-1; z++)
-							if(combo_idx[z].idx == index) //we already have that index recorded
+							if(combo_idx[z].idx == index && combo_idx[z].nameid == id) //we already have that index recorded
 								do_continue=true;
 						if(do_continue)
 							continue;
 					}
+					combo_idx[j].nameid = id;
 					combo_idx[j].idx = index;
 					pos |= sd->inventory.u.items_inventory[index].equip;
 					found = true;
 					break;
-				} else { //Cards
+				} else { //Cards and enchants
 					uint16 z;
-					if ( sd->inventory_data[index]->slot == 0 || itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]) )
+					if ( itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]) )
 						continue;
-					for (z = 0; z < sd->inventory_data[index]->slot; z++) {
+					for (z = 0; z < MAX_SLOTS; z++) {
 						bool do_continue=false;			
 						if (sd->inventory.u.items_inventory[index].card[z] != id)
 							continue;
 						if(j>0){
 							int c1, c2;
 							for (c1 = 0; c1 < nb_itemCombo-1; c1++){
-								if(combo_idx[c1].idx == index){
-									for (c2 = 0; c2 < sd->inventory_data[index]->slot; c2++){
+								if(combo_idx[c1].idx == index && combo_idx[c1].nameid == id){
+									for (c2 = 0; c2 < MAX_SLOTS; c2++){
 										if(combo_idx[c1].card[c2] == id){ //we already have that card recorded (at this same idx)
 											do_continue = true;
 											break;
@@ -9487,6 +9517,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						}
 						if(do_continue)
 							continue;
+						combo_idx[j].nameid = id;
 						combo_idx[j].idx = index;
 						combo_idx[j].card[z] = id;
 						pos |= sd->inventory.u.items_inventory[index].equip;

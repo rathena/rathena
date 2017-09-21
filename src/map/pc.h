@@ -744,10 +744,8 @@ extern struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate t
 /**
  * ERS for the bulk of pc vars
  **/
-struct eri *num_reg_ers;
-struct eri *str_reg_ers;
-/* */
-bool reg_load;
+extern struct eri *num_reg_ers;
+extern struct eri *str_reg_ers;
 
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
@@ -834,7 +832,7 @@ enum item_check {
 	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
 };
 
-struct {
+extern struct s_job_info {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;
@@ -986,10 +984,12 @@ short pc_maxaspd(struct map_session_data *sd);
     )
 #endif
 
+void pc_set_reg_load(bool val);
 int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
+bool pc_can_sell_item(struct map_session_data* sd, struct item * item);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 

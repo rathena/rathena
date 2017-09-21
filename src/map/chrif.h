@@ -4,13 +4,13 @@
 #ifndef _CHRIF_H_
 #define _CHRIF_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/cbasetypes.h"
 #include "../common/socket.h" // enum chrif_req_op
 #include <time.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 enum sd_state { ST_LOGIN, ST_LOGOUT, ST_MAPCHANGE };
 

@@ -1370,7 +1370,7 @@ void intif_parse_Registers(int fd)
 	}
 
 	// have it not complain about insertion of vars before loading, and not set those vars as new or modified
-	reg_load = true;
+	pc_set_reg_load(true);
 	
 	if( RFIFOW(fd, 14) ) {
 		char key[32];
@@ -1420,7 +1420,7 @@ void intif_parse_Registers(int fd)
 		}
 	}
 
-	reg_load = false;
+	pc_set_reg_load(false);
 
 	if (flag && sd->vars_received&PRL_ACCG && sd->vars_received&PRL_ACCL && sd->vars_received&PRL_CHAR)
 		pc_reg_received(sd); //Received all registry values, execute init scripts and what-not. [Skotlex]
@@ -2112,6 +2112,8 @@ void intif_parse_achievements(int fd)
 		if (sd->achievement_data.achievements) {
 			aFree(sd->achievement_data.achievements);
 			sd->achievement_data.achievements = NULL;
+			sd->achievement_data.incompleteCount = 0;
+			sd->achievement_data.count = 0;
 		}
 	} else {
 		struct achievement *received = (struct achievement *)RFIFOP(fd, 8);
@@ -2409,7 +2411,6 @@ int intif_parse_Mail_delete(int fd)
 	uint32 char_id = RFIFOL(fd,2);
 	int mail_id = RFIFOL(fd,6);
 	bool failed = RFIFOB(fd,10);
-	enum mail_inbox_type type;
 
 	struct map_session_data *sd = map_charid2sd(char_id);
 	if (sd == NULL)
@@ -2424,14 +2425,14 @@ int intif_parse_Mail_delete(int fd)
 		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 		if( i < MAIL_MAX_INBOX )
 		{
+			enum mail_inbox_type type = sd->mail.inbox.msg[i].type;
 			clif_mail_delete(sd, &sd->mail.inbox.msg[i], !failed);
-			type = sd->mail.inbox.msg[i].type;
 			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
 			sd->mail.inbox.amount--;
-		}
 
-		if( sd->mail.inbox.full || sd->mail.inbox.unchecked > 0 )
-			intif_Mail_requestinbox(sd->status.char_id, 1, type); // Free space is available for new mails
+			if( sd->mail.inbox.full || sd->mail.inbox.unchecked > 0 )
+				intif_Mail_requestinbox(sd->status.char_id, 1, type); // Free space is available for new mails
+		}
 	}
 
 	return 1;
@@ -2471,7 +2472,6 @@ int intif_parse_Mail_return(int fd)
 	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
 	int mail_id = RFIFOL(fd,6);
 	short fail = RFIFOB(fd,10);
-	enum mail_inbox_type type;
 
 	if( sd == NULL )
 	{
@@ -2485,13 +2485,13 @@ int intif_parse_Mail_return(int fd)
 		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 		if( i < MAIL_MAX_INBOX )
 		{
-			type = sd->mail.inbox.msg[i].type;
+			enum mail_inbox_type type = sd->mail.inbox.msg[i].type;
 			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
 			sd->mail.inbox.amount--;
-		}
 
-		if( sd->mail.inbox.full )
-			intif_Mail_requestinbox(sd->status.char_id, 1, type); // Free space is available for new mails
+			if( sd->mail.inbox.full )
+				intif_Mail_requestinbox(sd->status.char_id, 1, type); // Free space is available for new mails
+		}
 	}
 
 	clif_Mail_return(sd->fd, mail_id, fail);
@@ -3509,11 +3509,6 @@ void intif_parse_StorageInfo_recv(int fd) {
 	storage_db = NULL;
 
 	for (i = 0; i < count; i++) {
-		char name[NAME_LENGTH + 1];
-
-		safestrncpy(name, RFIFOCP(fd, 5 + size * i), NAME_LENGTH);
-		if (name[0] == '\0')
-			continue;
 		RECREATE(storage_db, struct s_storage_table, storage_count+1);
 		memcpy(&storage_db[storage_count], RFIFOP(fd, 4 + size * i), size);
 		storage_count++;

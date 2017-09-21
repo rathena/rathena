@@ -2225,6 +2225,18 @@
 	//packet(0x09F8,-1); // ZC_ALL_QUEST_LIST3
 #endif
 
+// 2015-02-25aRagexeRE
+#if PACKETVER >= 20150225
+	packet(0x0A09,45); // ZC_ADD_EXCHANGE_ITEM3
+	packet(0x0A0A,47); // ZC_ADD_ITEM_TO_STORE3
+	packet(0x0A0B,47); // ZC_ADD_ITEM_TO_CART3
+	packet(0x0A0C,56); // ZC_ITEM_PICKUP_ACK_V6
+	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
+	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6
+	packet(0x0A10,-1); // ZC_STORE_ITEMLIST_EQUIP_V6
+	packet(0x0A2D,-1); // ZC_EQUIPWIN_MICROSCOPE_V6
+#endif
+
 // 2015-05-13aRagexe
 #if PACKETVER >= 20150513
 	// New Packets
@@ -2256,15 +2268,6 @@
 	parseable_packet(0x0A13,26,clif_parse_Mail_Receiver_Check,2); // CZ_CHECK_RECEIVE_CHARACTER_NAME
 	packet(0x0A14,10); // ZC_CHECK_RECEIVE_CHARACTER_NAME
 	packet(0x0A32,2); // ZC_OPEN_RODEX_THROUGH_NPC_ONLY
-	// New EquipPackets Support
-	packet(0x0A09,45); // ZC_ADD_EXCHANGE_ITEM3
-	packet(0x0A0A,47); // ZC_ADD_ITEM_TO_STORE3
-	packet(0x0A0B,47); // ZC_ADD_ITEM_TO_CART3
-	packet(0x0A0C,56); // ZC_ITEM_PICKUP_ACK_V6
-	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
-	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6
-	packet(0x0A10,-1); // ZC_STORE_ITEMLIST_EQUIP_V6
-	packet(0x0A2D,-1); // ZC_EQUIPWIN_MICROSCOPE_V6
 	// OneClick Itemidentify
 	parseable_packet(0x0A35,4,clif_parse_Oneclick_Itemidentify,2); // CZ_REQ_ONECLICK_ITEMIDENTIFY
 	// Achievement System
@@ -2318,9 +2321,22 @@
 	packet(0x0A37,59);
 #endif
 
+// 2016-09-28cRagexeRE
+#if PACKETVER >= 20160928
+	parseable_packet(0x0A97,8,clif_parse_dull,0);
+	parseable_packet(0x0A99,4,clif_parse_dull,0);
+	parseable_packet(0x0A9C,2,clif_parse_dull,0);
+#endif
+
 // 2016-10-26bRagexeRE
 #if PACKETVER >= 20161026
 	packet(0x0AA5,-1);
+#endif
+
+// 2017-04-19bRagexeRE
+#if PACKETVER >= 20170419
+	parseable_packet(0x0AC0,26,clif_parse_Mail_refreshinbox,2,10);
+	parseable_packet(0x0AC1,26,clif_parse_Mail_refreshinbox,2,10);
 #endif
 
 // 2017-05-02dRagexeRE
