@@ -175,7 +175,7 @@
     <ClCompile Include="clan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="clif.c">
+    <ClCompile Include="clif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="date.c">
