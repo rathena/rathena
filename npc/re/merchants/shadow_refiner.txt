@@ -19,9 +19,8 @@
 	for(.@i = 1; .@i <= .@indlen; .@i++)
 		.@menu$ = .@menu$ + (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[Not equipped]") +":";
 	.@menu$ = .@menu$ + "Refine info";
-	.@part = .@indices[select(.@menu$)];
-
-	if (.@part == .@indlen + 1) { // Refine info
+	.@choice = select(.@menu$);
+	if (.@choice == .@indlen + 1) { // Refine info
 		mes "[Shadow Blacksmith]";
 		mes "When a shadow item is refined, it gains extra bonuses very much like normal items.";
 		next;
@@ -36,6 +35,15 @@
 		mes "HD ores can be used for gear that is at least refine level +7 and will prevent breaking as long as you stay talking to me.";
 		close;
 	}
+	
+	.@part = .@indices[.@choice];
+	
+	if (!getequipisequiped(.@part)) {
+		mes "[Shadow Blacksmith]";
+		mes "There's nothing here!";
+		close;
+	}
+	
 	while(1) {
 		mes "[Shadow Blacksmith]";
 		mes "I require " + callfunc("F_InsertComma", .@zeny_cost) + " zeny as a fee for EACH refine attempt.";
@@ -85,7 +93,7 @@
 		.@choose = .@material[.@option-1];
 		if (!countitem(.@choose)) {
 			mes "[Shadow Blacksmith]";
-			mes "You do not have enough "+ getitemname(.@choose) +" / "+ getitemname(.@choose) +".";
+			mes "You do not have enough "+ getitemname(.@choose) +".";
 			close;
 		}
 		if (Zeny < .@zeny_cost) {
