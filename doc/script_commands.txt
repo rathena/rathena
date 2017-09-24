@@ -2760,6 +2760,9 @@ Valid information types are:
 REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
 
+This function will return -1 on failure. The function fails if the cost type
+is invalid or if there is no item in the equipment slot. 
+
 ---------------------------------------
 
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)

@@ -23565,6 +23565,7 @@ BUILDIN_FUNC(achievementupdate) {
 /**
  * Get an equipment's refine cost
  * getequiprefinecost(<equipment slot>,<type>,<information>{,<char id>})
+ * returns -1 on fail
  */
 BUILDIN_FUNC(getequiprefinecost) {
 	int i = -1, slot, type, info;
@@ -23579,8 +23580,18 @@ BUILDIN_FUNC(getequiprefinecost) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if (type < 0 || type >= REFINE_COST_MAX) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	if (equip_index_check(slot))
 		i = pc_checkequip(sd, equip_bitmask[slot]);
+
+	if (i < 0) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	int weapon_lv = sd->inventory_data[i]->wlv;
 	if (sd->inventory_data[i]->type == IT_SHADOWGEAR) {
