@@ -950,7 +950,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		}
 		WFIFOSET(fd,3);
 	} else {
-		int len, ch;
+		int len;
 		// retrieve data
 		struct mmo_charstatus char_dat;
 		char_mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
@@ -962,9 +962,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		WFIFOSET(fd,len);
 
 		// add new entry to the chars list
-		ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
-		if( ch < MAX_CHARS )
-			sd->found_char[ch] = i; // the char_id of the new char
+		sd->found_char[char_dat.slot] = i; // the char_id of the new char
 	}
 	return 1;
 }
