@@ -10975,7 +10975,7 @@
 22659,Pig_Steamed_Ribs,Pig Steamed Ribs,0,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180; },{},{}
 22658,Cow_Steamed_Ribs,Cow Steamed Ribs,0,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bVariableCastrate,5; bonus bUseSPrate,-3; }",180; },{},{}
 22669,HALLOWEEN_G_BOX,Halloween Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_HALLOWEEN_G_BOX); },{},{}
-22670,"DARK_INVITATIO, 0",Invitation of Darkness,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ .@r = rand(1,3); if(.@r==1){ specialeffect2 EF_DEVIL; warp "niflheim",193,186; }else if(.@r==2){ heal -500,-1000; sc_start SC_STUN,3000,0; }else{ specialeffect2 EF_DEVIL; warp "niflheim",347,255; } },{},{}
+22670,DARK_INVITATIO,Invitation of Darkness,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ .@r = rand(1,3); if(.@r==1){ specialeffect2 EF_DEVIL; warp "niflheim",193,186; }else if(.@r==2){ heal -500,-1000; sc_start SC_STUN,3000,0; }else{ specialeffect2 EF_DEVIL; warp "niflheim",347,255; } },{},{}
 22671,March_Gift_Box,March Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{/*2 Lucky Eggs*/},{},{}
 22672,April_Gift_Box,April Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600; },{},{}
 22673,May_Gift_Box,May Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22777,2; },{},{}
