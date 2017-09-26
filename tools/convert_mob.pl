@@ -107,53 +107,38 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 				printf $sFHoutinfo ("%s\n",$string);
 				printf $sFHoutdrop ("\n// %s | %s | %s\n", $champ[0], $champ[2], $champ[3]);
 				
-				#mvp drops
-				$string = "";
-				$mobid = $champ[0];
-				for (my $i = $nb_columns_mvp; $i < $nb_columns_item; $i += 2) {
-					my $dropflag = 0;
-					my $idx;
-					$string = "";
-					if ($champ[$i] eq "0") {
-						next;
-					}
-					$idx = ($i - $nb_columns_mvp) / 2 + 1;
-					if ($sWasCom == 1) {
-						$string = '//';
-					}
-					$string .= $mobid . ','; #mobid
-					$string .= '1,'; #DropType
-					$string .= $idx . ','; #DropIndex
-					$string .= $champ[$i] . ','; #ItemId
-					$string .= $champ[$i+1] . ','; #ItemPercentage
-					$string .= $dropflag;
-					printf $sFHoutdrop ("%s\n", $string);
-				}
-				
 				#mob drops
 				$string = "";
-				for (my $i = $nb_columns_item; $i < $nb_columns; $i += 2) {
-					my $dropflag = 0;
+				$mobid = $champ[0];
+				for (my $i = $nb_columns_mvp; $i < $nb_columns; $i += 2) {
 					my $idx;
+					my $dropType;
+					my $dropflag = 0;
 					$string = "";
 					if ($champ[$i] eq "0") {
 						next;
 					}
-					$idx = ($i - $nb_columns_item) / 2 + 1;
+					if ($i < $nb_columns_item) { #mvp item
+						$idx = ($i - $nb_columns_mvp) / 2 + 1;
+						$dropType = 1;
+					} else {
+						$idx = ($i - $nb_columns_item) / 2 + 1;
+						$dropType = 0;
+						if ($idx < 7) {
+							$dropflag |= 1; #Is Stealable?
+						}
+						if ($idx == 10) {
+							$dropflag |= 2; #Is Card?
+						}
+					}
 					if ($sWasCom == 1) {
 						$string = '//';
 					}
 					$string .= $mobid . ','; #mobid
-					$string .= '0,'; #DropType
+					$string .= $dropType . ','; #DropType
 					$string .= $idx . ','; #DropIndex
 					$string .= $champ[$i] . ','; #ItemId
 					$string .= $champ[$i+1] . ','; #ItemPercentage
-					if ($idx <= 7) {
-						$dropflag |= 1; #Is Stealable?
-					}
-					if ($idx == 10) {
-						$dropflag |= 2; #Is Card?
-					}
 					$string .= $dropflag;
 					printf $sFHoutdrop ("%s\n", $string);
 				}
