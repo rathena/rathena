@@ -6537,6 +6537,8 @@ The options are:
 	1 = The buy window
 	2 = The sell window
 
+Note: The <option> parameter only works on the 'shop' type NPC.
+
 A shop called with this command will trigger the labels "OnBuyItem" and "OnSellItem"
 (as long as an npcshop* command is executed from that NPC, see note below). These
 labels, if used, will replace how the shop handles the buying and selling of items,
