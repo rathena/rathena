@@ -134,12 +134,14 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 					if ($sWasCom == 1) {
 						$string = '//';
 					}
-					$string .= $mobid . ','; #mobid
-					$string .= $dropType . ','; #DropType
-					$string .= $idx . ','; #DropIndex
-					$string .= $champ[$i] . ','; #ItemId
-					$string .= $champ[$i+1] . ','; #ItemPercentage
-					$string .= $dropflag;
+					$string .= $mobid; #mobid
+					$string .= ',' . $dropType; #DropType
+					$string .= ',' . $idx; #DropIndex
+					$string .= ',' . $champ[$i]; #ItemId
+					$string .= ',' . $champ[$i+1]; #ItemPercentage
+					unless ($dropflag == 0) {
+						$string .= ',' . $dropflag;
+					}
 					printf $sFHoutdrop ("%s\n", $string);
 				}
 			}
