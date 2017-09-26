@@ -169,7 +169,7 @@ sub BuildData{
 "// Monster Drop Database
 //
 // Structure of Database :
-// MonsterId,DropType,DropIndex,ItemId,ItemPercentage,DropFlag{,randopt_groupid}
+// MonsterId,DropType,DropIndex,ItemId,ItemPercentage{,DropFlag{,randopt_groupid}}
 // Note: DropType valid values: 0 - Normal Drop | 1 - MvP Drop
 // Note: DropFlags are bitmask:
 //     0x0 = None
