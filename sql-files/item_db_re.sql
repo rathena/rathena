@@ -2142,7 +2142,7 @@ REPLACE INTO `item_db_re` VALUES (2903,'Morpheus\'s_Armlet_','Morpheus\'s Armlet
 REPLACE INTO `item_db_re` VALUES (2904,'Naqsh','Naqsi',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'skill "BS_MAXIMIZE",5; skill "BS_WEAPONPERFECT",5; skill "WL_RECOGNIZEDSPELL",5; skill "ECL_SNOWFLIP",1; skill "ECL_PEONYMAMY",1; skill "ECL_SADAGUI",1; skill "ECL_SEQUOIADUST",1; bonus2 bSkillCooldown,"WL_RECOGNIZEDSPELL",-180000; bonus bDelayRate,-100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2905,'Super_Ora_Ora','Super Ora Ora',4,0,NULL,1000,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2906,'Happy_Gauntlet','Happy Gauntlet',4,20,NULL,1000,NULL,3,NULL,1,0xFFFFFFFF,63,2,136,NULL,'70',0,0,'bonus bMdef,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2907,'Buwaya_Tattoo','Bawaya Agimat Tattoo',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',0,0,'bonus bMatkRate,7; bonus bVariableCastrate,-7;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2907,'Buwaya_Tattoo','Bawaya Agimat Tattoo',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',0,0,'bonus bMatkRate,7; bonus bFixedCastrate,-7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2908,'Light_Ring','Light Ring',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,63,2,136,NULL,'0',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2909,'Darkness_Ring','Darkness Ring',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,63,2,136,NULL,'0',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2910,'Bakonawa_Tattoo','Bakunawa Agimat Tattoo',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',0,0,'bonus2 bAddClass,Class_All,7; bonus bAspdRate,10;',NULL,NULL);
