@@ -12,14 +12,12 @@ use strict;
 use warnings;
 use Getopt::Long;
 use File::Basename;
+use File::Copy;
 
 my $sFilein = "";
 my $sFileoutinfo = "";
 my $sFileoutdrop = "";
 my $sHelp = 0;
-
-my @str_col = (); #Use basic escape.
-my @str_col2 = (); #Use second escape (currently for scripts).
 
 my $nb_columns;
 my $nb_columns_info;
@@ -28,7 +26,6 @@ my $nb_columns_item;
 my $nb_columns_card;
 my $create_csv_info;
 my $create_csv_drop;
-my @defaults = ();
 
 Main();
 
@@ -63,19 +60,20 @@ sub Main {
 }
 
 sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
-	my $sFHoutinfo;
 	my $sFHoutdrop;
-	my $sFHoutcom;
-	my $comCount = 1;
+	my $sFHoutinfo;
+	my @lines;
 	print "Starting ConvertFile with: \n\t filein=$sFilein \n\t fileoutinfo=$sFileoutinfo \n\t fileoutdrop=$sFileoutdrop \n";
 	open FHIN,"$sFilein" or die "ERROR: Can't read or locate $sFilein.\n";
-	open $sFHoutinfo,">$sFileoutinfo" or die "ERROR: Can't write $sFileoutinfo.\n";
-	open $sFHoutdrop,">$sFileoutdrop" or die "ERROR: Can't write $sFileoutdrop.\n";
-	open $sFHoutcom, ">./test.txt" or die "ERROR: Cant write comment.\n";
-	
+	@lines = <FHIN>;
+	close FHIN or die "Error: closing FHIN $!.\n";
+	open $sFHoutdrop,">$sFileoutdrop" or die "ERROR: Can't write $sFileoutdrop $!.\n";
+	open $sFHoutinfo,">$sFileoutinfo" or die "ERROR: Can't write $sFileoutinfo $!.\n";
+
 	#printf $sFHoutinfo ("%s\n",$create_csv_info);
 	printf $sFHoutdrop ("%s\n",$create_csv_drop);
-	while(my $ligne=<FHIN>) {
+	foreach(@lines) {
+		my $ligne = $_;
 		my $sWasCom = 0;
 		if ($ligne =~ /^\s*$/ ) { #if white space line, print a newline, continue
 				print $sFHoutinfo "\n";
@@ -148,6 +146,7 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 		}
 	}
 	print $sFHoutinfo "\n";
+	print $sFHoutdrop "\n";
 }
 
 sub BuildData{ 

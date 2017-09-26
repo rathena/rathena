@@ -4174,7 +4174,7 @@ static bool mob_parse_dbrow(char** str)
 	//Since mobs always respawn with full life...
 	status->hp = status->max_hp;
 	status->sp = status->max_sp;
-
+	/*
 	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 	for(i = 0; i < MAX_MVP_DROP; i++) {
 		db->mvpitem[i].nameid = atoi(str[31+i*2]);
@@ -4211,7 +4211,7 @@ static bool mob_parse_dbrow(char** str)
 		db->dropitem[i].nameid = 0;
 		db->dropitem[i].p = 0;
 	}
-
+	*/
 	// Finally insert monster's data into the database.
 	if (mob_db_data[mob_id] == NULL)
 		mob_db_data[mob_id] = (struct mob_db*)aCalloc(1, sizeof(struct mob_db));
@@ -5188,7 +5188,9 @@ static void mob_load(void)
 				safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
 			}
 
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+			//sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31, 31, -1, &mob_readdb_sub, i);
+			sv_readdb(dbsubpath2, "mob_drop.txt", ',', 5, 6, -1, &mob_readdb_drop, i);
 
 			aFree(dbsubpath2);
 		}
