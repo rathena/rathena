@@ -2712,7 +2712,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		return 0;
 
 	// Kaite reflection - Does not bypass Boss check
-	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80) ) {
+	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80)
+#ifdef RENEWAL
+		&& type // Does not reflect AoE
+#endif
+		) {
 		// Kaite only works against non-players if they are low-level.
 		// Kyomu doesn't disable Kaite, but the "skill fail chance" part of Kyomu applies to it.
 		clif_specialeffect(bl, 438, AREA);
