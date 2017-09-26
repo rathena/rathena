@@ -1,0 +1,32 @@
+// Monster Drop Database
+//
+// Structure of Database :
+// MonsterId,DropIndex,isMvpDrop,ItemId,ItemPercentage,isStealProtected,isCard
+// Note: DropIndex is used to overwrite item drops
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
