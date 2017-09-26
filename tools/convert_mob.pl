@@ -22,7 +22,10 @@ my @str_col = (); #Use basic escape.
 my @str_col2 = (); #Use second escape (currently for scripts).
 
 my $nb_columns;
-my $nb_columbs_info;
+my $nb_columns_info;
+my $nb_columns_mvp;
+my $nb_columns_item;
+my $nb_columns_card;
 my $create_csv_info;
 my $create_csv_drop;
 my @defaults = ();
@@ -62,10 +65,13 @@ sub Main {
 sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 	my $sFHoutinfo;
 	my $sFHoutdrop;
+	my $sFHoutcom;
+	my $comCount = 1;
 	print "Starting ConvertFile with: \n\t filein=$sFilein \n\t fileoutinfo=$sFileoutinfo \n\t fileoutdrop=$sFileoutdrop \n";
 	open FHIN,"$sFilein" or die "ERROR: Can't read or locate $sFilein.\n";
 	open $sFHoutinfo,">$sFileoutinfo" or die "ERROR: Can't write $sFileoutinfo.\n";
 	open $sFHoutdrop,">$sFileoutdrop" or die "ERROR: Can't write $sFileoutdrop.\n";
+	open $sFHoutcom, ">./test.txt" or die "ERROR: Cant write comment.\n";
 	
 	#printf $sFHoutinfo ("%s\n",$create_csv_info);
 	printf $sFHoutdrop ("%s\n",$create_csv_drop);
@@ -76,8 +82,8 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 				print $sFHoutdrop "\n";
 				next;
 		}
-		if ($ligne =~ /[^\r\n]+/) { #if the line has a lineending, continue
-			$ligne = $&;
+		if ($ligne =~ /[^\r\n]+/) { #if the line has a line ending
+			$ligne = $&; #strip the line ending
 			if ($ligne =~ /^\/\//) { #check for comment
 				printf $sFHoutinfo ("//");
 				$ligne = substr($ligne, 2);
@@ -91,12 +97,66 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 				#print "Real String!\n" . $ligne . "\n";
 			} else {
 				my $string;
-				for (my $i=0; $i<$nb_columbs_info; $i++) {
+				my $mobid;
+
+				#mobinfo 
+				for (my $i=0; $i<$nb_columns_mvp; $i++){
 					$string .= $champ[$i] . ",";
 				}
 				$string = substr($string, 0, -1);
 				printf $sFHoutinfo ("%s\n",$string);
-
+				printf $sFHoutdrop ("\n// %s | %s | %s\n", $champ[0], $champ[2], $champ[3]);
+				
+				#mvp drops
+				$string = "";
+				$mobid = $champ[0];
+				for (my $i = $nb_columns_mvp; $i < $nb_columns_item; $i += 2) {
+					my $dropflag = 0;
+					my $idx;
+					$string = "";
+					if ($champ[$i] eq "0") {
+						next;
+					}
+					$idx = ($i - $nb_columns_mvp) / 2 + 1;
+					if ($sWasCom == 1) {
+						$string = '//';
+					}
+					$string .= $mobid . ','; #mobid
+					$string .= '1,'; #DropType
+					$string .= $idx . ','; #DropIndex
+					$string .= $champ[$i] . ','; #ItemId
+					$string .= $champ[$i+1] . ','; #ItemPercentage
+					$string .= $dropflag;
+					printf $sFHoutdrop ("%s\n", $string);
+				}
+				
+				#mob drops
+				$string = "";
+				for (my $i = $nb_columns_item; $i < $nb_columns; $i += 2) {
+					my $dropflag = 0;
+					my $idx;
+					$string = "";
+					if ($champ[$i] eq "0") {
+						next;
+					}
+					$idx = ($i - $nb_columns_item) / 2 + 1;
+					if ($sWasCom == 1) {
+						$string = '//';
+					}
+					$string .= $mobid . ','; #mobid
+					$string .= '0,'; #DropType
+					$string .= $idx . ','; #DropIndex
+					$string .= $champ[$i] . ','; #ItemId
+					$string .= $champ[$i+1] . ','; #ItemPercentage
+					if ($idx <= 7) {
+						$dropflag |= 1; #Is Stealable?
+					}
+					if ($idx == 10) {
+						$dropflag |= 2; #Is Card?
+					}
+					$string .= $dropflag;
+					printf $sFHoutdrop ("%s\n", $string);
+				}
 			}
 		}
 	}
@@ -106,8 +166,11 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 sub BuildData{ 
 	print "Starting BuildData\n";
 	$nb_columns = 57;
-	$nb_columbs_info = 31;
-	$create_csv_info =
+	$nb_columns_info = 31;
+	$nb_columns_mvp = 31;
+	$nb_columns_item = 37;
+	$nb_columns_card = 55;
+	$create_csv_info = 
 "// Monster Info Database
 //
 // Structure of Database :
@@ -119,7 +182,12 @@ sub BuildData{
 "// Monster Drop Database
 //
 // Structure of Database :
-// MonsterId,DropIndex,isMvpDrop,ItemId,ItemPercentage,isStealProtected,isCard
+// MonsterId,DropType,DropIndex,ItemId,ItemPercentage,DropFlag{,randopt_groupid}
+// Note: DropType valid values: 0 - Normal Drop | 1 - MvP Drop
+// Note: DropFlags are bitmask:
+//     0x0 = None
+//     0x1 = Is Stealable
+//     0x2 = Is Card
 // Note: DropIndex is used to overwrite item drops
 ";
 }
