@@ -1,0 +1,17 @@
+// Monster Drop Database
+// Add drop item to monster
+//
+// Structure:
+// <mobid>,<itemid>,<rate>{,<randopt_groupid>,<flag>}
+//
+// <mobid>  : Monster ID. See db/[pre-]re/mob_db.txt
+// <itemid> : Item ID.
+// <rate>   : 1 = 0.01%
+//            100 = 1%
+//            10000 = 100%
+//            Just like rate in mob_db.txt, adjusted by battle_config.
+//            To remove original drop from monster, use 0 as rate.
+// Optional:
+// <randopt_groupid> : If set, the dropped item will be modified by Random Option Group based on db/[pre-]re/item_randomopt_group.txt
+// <flag>            : 1 - The item is protected from steal.
+//                     2 - As MVP Reward
