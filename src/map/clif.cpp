@@ -10010,6 +10010,28 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	return true;
 }
 
+/**
+ * Displays a message if the player enters a PK Zone (during pk_mode)
+ * @param sd: Player data
+ */
+inline void clif_pk_mode_message(struct map_session_data * sd)
+{
+	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
+	    sd && map[sd->bl.m].flag.pvp) {
+	    if( (int)sd->status.base_level < battle_config.pk_min_level ) {
+	    	char output[CHAT_SIZE_MAX];
+			// 1504: You've entered a PK Zone (safe until level %d).
+	    	safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,1504), 
+	    				 battle_config.pk_min_level);
+			clif_showscript(&sd->bl, output, SELF);
+	    } else {
+			// 1503: You've entered a PK Zone.
+			clif_showscript(&sd->bl, msg_txt(sd,1503), SELF);
+		}
+	}
+	return;
+}
+
 // ---------------------
 // clif_parse_wanttoconnect
 // ---------------------
@@ -10445,6 +10467,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		// Instances do not need their own channels
 		if( channel_config.map_tmpl.name != NULL && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
+
+		clif_pk_mode_message(sd);
 	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
 		clif_guild_notice(sd); // Displays at end
 
@@ -18738,7 +18762,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
 * [Ind/Hercules]
 * 08b3 <Length>.W <id>.L <message>.?B (ZC_SHOWSCRIPT)
 **/
-void clif_showscript(struct block_list* bl, const char* message) {
+void clif_showscript(struct block_list* bl, const char* message, enum send_target flag) {
 	char buf[256];
 	size_t len;
 	nullpo_retv(bl);
@@ -18757,7 +18781,7 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	WBUFW(buf,2) = (uint16)(len+8);
 	WBUFL(buf,4) = bl->id;
 	safestrncpy(WBUFCP(buf,8), message, len);
-	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, AREA);
+	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, flag);
 }
 
 /**
