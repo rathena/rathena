@@ -3864,6 +3864,18 @@
 	export_constant(ACHIEVEINFO_SCORE);
 	export_constant(ACHIEVEINFO_MAX);
 
+	/* refine cost types */
+	export_constant(REFINE_COST_NORMAL);
+	export_constant(REFINE_COST_OVER10);
+	export_constant(REFINE_COST_HD);
+	export_constant(REFINE_COST_ENRICHED);
+	export_constant(REFINE_COST_OVER10_HD);
+	export_constant(REFINE_COST_MAX);
+
+	/* refine information types */
+	script_set_constant("REFINE_MATERIAL_ID", 0, false, false);
+	script_set_constant("REFINE_ZENY_COST", 1, false, false);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

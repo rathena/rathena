@@ -215,7 +215,9 @@
     <ClCompile Include="chat.c" />
     <ClCompile Include="chrif.c" />
     <ClCompile Include="clan.c" />
-    <ClCompile Include="clif.c" />
+    <ClCompile Include="clif.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="date.c" />
     <ClCompile Include="duel.c" />
     <ClCompile Include="elemental.c" />
@@ -240,7 +242,9 @@
     <ClCompile Include="pc_groups.c" />
     <ClCompile Include="pet.c" />
     <ClCompile Include="quest.c" />
-    <ClCompile Include="script.cpp" />
+    <ClCompile Include="script.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="searchstore.c" />
     <ClCompile Include="skill.c" />
     <ClCompile Include="status.c" />
@@ -347,7 +351,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\pet_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\pet_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\produce_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\produce_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_cast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_cast_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_castnodex_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_castnodex_db.txt')" />
