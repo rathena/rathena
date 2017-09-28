@@ -10018,8 +10018,16 @@ inline void clif_pk_mode_message(struct map_session_data * sd)
 {
 	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
 	    sd && map[sd->bl.m].flag.pvp) {
-		// 407: You've entered a PK Zone.
-		clif_showscript(&sd->bl, msg_txt(sd,407), SELF);
+	    if( (int)sd->status.base_level < battle_config.pk_min_level ) {
+	    	char output[CHAT_SIZE_MAX];
+			// 1504: You've entered a PK Zone (safe until level %d).
+	    	safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,1504), 
+	    				 battle_config.pk_min_level);
+			clif_showscript(&sd->bl, output, SELF);
+	    } else {
+			// 1503: You've entered a PK Zone.
+			clif_showscript(&sd->bl, msg_txt(sd,1503), SELF);
+		}
 	}
 	return;
 }
