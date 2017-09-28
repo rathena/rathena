@@ -1725,10 +1725,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 		inter_guild_leave(guild_id, account_id, char_id);// Leave your guild.
 
 	// refresh character list cache
-	for(k = i; k < MAX_CHARS-1; k++){
-		sd->found_char[k] = sd->found_char[k+1];
-	}
-	sd->found_char[MAX_CHARS-1] = -1;
+	sd->found_char[i] = -1;
 
 	return CHAR_DELETE_OK;
 }
