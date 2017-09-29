@@ -17450,6 +17450,9 @@ BUILDIN_FUNC(getunitdata)
 		case BL_MER:  mc = map_id2mc(bl->id); break;
 		case BL_ELEM: ed = map_id2ed(bl->id); break;
 		case BL_NPC:  nd = map_id2nd(bl->id); break;
+		default:
+			ShowWarning("buildin_getunitdata: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	name = reference_getname(data);
@@ -18160,6 +18163,9 @@ BUILDIN_FUNC(setunitdata)
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
 			break;
+		default:
+			ShowWarning("buildin_setunitdata: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -18206,6 +18212,9 @@ BUILDIN_FUNC(setunitname)
 		case BL_MOB:  md = map_id2md(bl->id); break;
 		case BL_HOM:  hd = map_id2hd(bl->id); break;
 		case BL_PET:  pd = map_id2pd(bl->id); break;
+		default:
+			ShowWarning("buildin_setunitname: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;		
 	}
 
 	switch (bl->type) {
@@ -19928,6 +19937,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	owner_id = instance_data[instance_id].owner_id;
 	switch(instance_data[instance_id].mode) {
 		case IM_NONE:
+		case IM_MAX:
 			break;
 		case IM_CHAR:
 			if (sd->status.char_id != owner_id)
@@ -20654,7 +20664,7 @@ BUILDIN_FUNC(ismounting) {
 	
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.data[SC_ALL_RIDING] )
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
@@ -20672,11 +20682,11 @@ BUILDIN_FUNC(setmounting) {
 	
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
+	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
 		clif_msg(sd, NEED_REINS_OF_MOUNT);
 		script_pushint(st,0); //can't mount with one of these
 	} else {
-		if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+		if( sd->sc.data[SC_ALL_RIDING] )
 			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER); //release mount
 		else
 			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER); //mount
