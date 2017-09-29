@@ -15,3 +15,8 @@
 // <randopt_groupid> : If set, the dropped item will be modified by Random Option Group based on db/[pre-]re/item_randomopt_group.txt
 // <flag>            : 1 - The item is protected from steal.
 //                     2 - As MVP Reward
+1,3,3
+13,12,3
+10,3,2
+2,3,0
+1,3,1,3

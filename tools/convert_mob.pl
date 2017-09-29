@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # Mob Database:
-#     --i=../db/pre-re/mob_db.txt --o=../db/pre-re/mob_db_new.txt --o2=../db/pre-re/mob_drop_new.txt
-#     --i=../db/re/mob_db.txt --o=../db/re/mob_db_new.txt --o2=../db/re/mob_drop_new.txt
+#     --iinfo=../db/pre-re/mob_db.txt --idrop=../db/pre-re/mob_drop.txt --oinfo=../db/pre-re/mob_db_new.txt --odrop=../db/pre-re/mob_drop_new.txt
+#     --iinfo=../db/re/mob_db.txt --idrop=../db/re/mob_drop.txt --oinfo=../db/re/mob_db_new.txt --odrop=../db/re/mob_drop_new.txt
 
 
 # List of options:
@@ -14,9 +14,10 @@ use Getopt::Long;
 use File::Basename;
 use File::Copy;
 
-my $sFilein = "";
-my $sFileoutinfo = "";
-my $sFileoutdrop = "";
+my $iInfoFile = "";
+my $iDropFile = "";
+my $oInfoFile = "";
+my $oDropFile = "";
 my $sHelp = 0;
 
 my $nb_columns;
@@ -31,21 +32,23 @@ Main();
 
 sub GetArgs {
 	GetOptions(
-	'i=s' => \$sFilein, #Input file name.
-	'o=s' => \$sFileoutinfo, #Mob Info Output file name.
-	'o2:s' => \$sFileoutdrop, #Mob Drop Output file name.
+	'iinfo=s' => \$iInfoFile, #Mob Info Input file name.
+	'idrop:s' => \$iDropFile, #Mob Drop Input file name
+	'oinfo=s' => \$oInfoFile, #Mob Info Output file name.
+	'odrop=s' => \$oDropFile, #Mob Drop Output file name.
 	'help!' => \$sHelp,
 	) or $sHelp=1; #Display help if invalid options are supplied.
 
 	if( $sHelp ) {
 		print "Incorrect option specified. Available options:\n"
-			."\t --o=filename => Mob Info Output file name. \n"
-			."\t --o2=filename => Mob Drop Output file name. \n"
-			."\t --i=filename => Input file name. \n";
+			."\t --iinfo=filename => Mob Info Input file name. \n"
+			."\t --idrop=filename => Mob Drop Input file name. (Optional) \n"
+			."\t --oinfo=filename => Mob Info Output file name. \n"
+			."\t --odrop=filename => Mob Drop Output file name. \n";
 		exit;
 	}
-	unless($sFilein or $sFileoutinfo or $sFileoutdrop){
-		print "ERROR: Filename_in, Filename_out, Filename_out2 are required to continue.\n";
+	unless($iInfoFile and $oInfoFile and $oDropFile){
+		print "ERROR: iinfo, oinfo, odrop are required to continue.\n";
 		exit;
 	}
 }
@@ -55,44 +58,59 @@ sub Main {
 	my($filename, $dir, $suffix) = fileparse($0);
 	chdir $dir; #put ourself like was called in tool folder
 	BuildData();
-	ConvertFile($sFilein,$sFileoutinfo,$sFileoutdrop);
+	if (!$iDropFile) {
+		print "No Input drop file, ignoring...";
+	}
+	ConvertFile($iInfoFile,$iDropFile,$oInfoFile,$oDropFile);
 	print "Conversion ended.\n";
 }
 
-sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
-	my $sFHoutdrop;
-	my $sFHoutinfo;
+sub ConvertFile { my($iInfoFile,$iDropFile,$oInfoFile,$oDropFile)=@_;
+	my $oDrop;
+	my $oInfo;
 	my @lines;
-	print "Starting ConvertFile with: \n\t filein=$sFilein \n\t fileoutinfo=$sFileoutinfo \n\t fileoutdrop=$sFileoutdrop \n";
-	open FHIN,"$sFilein" or die "ERROR: Can't read or locate $sFilein.\n";
+	my @drops;
+	print "Starting ConvertFile with: \n"
+		."\t fileininfo=$iInfoFile \n"
+		."\t fileindrop=$iDropFile \n"
+		."\t fileoutinfo=$oInfoFile \n"
+		."\t fileoutdrop=$oDropFile \n";
+	open FHIN,"$iInfoFile" or die "ERROR: Can't read or locate $iInfoFile.\n";
 	@lines = <FHIN>;
 	close FHIN or die "Error: closing FHIN $!.\n";
-	open $sFHoutdrop,">$sFileoutdrop" or die "ERROR: Can't write $sFileoutdrop $!.\n";
-	open $sFHoutinfo,">$sFileoutinfo" or die "ERROR: Can't write $sFileoutinfo $!.\n";
+	if ($iDropFile and open FHDROP, "cat $iDropFile | sed '/^\\/\\// d' | sort -t ',' -n -k 1,1 |") {
+		@drops = <FHDROP>;
+		foreach(@drops) {
+			print $_;
+		}
+	}
+	return;
+	open $oDrop,">$oDropFile" or die "ERROR: Can't write $oDropFile $!.\n";
+	open $oInfo,">$oInfoFile" or die "ERROR: Can't write $oInfoFile $!.\n";
 
-	#printf $sFHoutinfo ("%s\n",$create_csv_info);
-	printf $sFHoutdrop ("%s\n",$create_csv_drop);
+	#printf $oInfo ("%s\n",$create_csv_info);
+	printf $oDrop ("%s\n",$create_csv_drop);
 	foreach(@lines) {
-		my $ligne = $_;
+		my $line = $_;
 		my $sWasCom = 0;
-		if ($ligne =~ /^\s*$/ ) { #if white space line, print a newline, continue
-				print $sFHoutinfo "\n";
-				print $sFHoutdrop "\n";
+		if ($line =~ /^\s*$/ ) { #if white space line, print a newline, continue
+				print $oInfo "\n";
+				print $oDrop "\n";
 				next;
 		}
-		if ($ligne =~ /[^\r\n]+/) { #if the line has a line ending
-			$ligne = $&; #strip the line ending
-			if ($ligne =~ /^\/\//) { #check for comment
-				printf $sFHoutinfo ("//");
-				$ligne = substr($ligne, 2);
+		if ($line =~ /[^\r\n]+/) { #if the line has a line ending
+			$line = $&; #strip the line ending
+			if ($line =~ /^\/\//) { #check for comment
+				printf $oInfo ("//");
+				$line = substr($line, 2);
 				$sWasCom = 1;
 			}
 			my @champ = ();
-			@champ = split(",",$ligne); #split the string to an array
+			@champ = split(",",$line); #split the string to an array
 			
 			if ($#champ != $nb_columns - 1) { #Can't parse, it's a real comment.
-				printf $sFHoutinfo ("%s\n", $ligne);
-				#print "Real String!\n" . $ligne . "\n";
+				printf $oInfo ("%s\n", $line);
+				#print "Real String!\n" . $line . "\n";
 			} else {
 				my $string;
 				my $mobid;
@@ -102,8 +120,8 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 					$string .= $champ[$i] . ",";
 				}
 				$string = substr($string, 0, -1);
-				printf $sFHoutinfo ("%s\n",$string);
-				printf $sFHoutdrop ("\n// %s | %s | %s\n", $champ[0], $champ[2], $champ[3]);
+				printf $oInfo ("%s\n",$string);
+				printf $oDrop ("\n// %s | %s | %s\n", $champ[0], $champ[2], $champ[3]);
 				
 				#mob drops
 				$string = "";
@@ -140,13 +158,13 @@ sub ConvertFile { my($sFilein,$sFileoutinfo,$sFileoutdrop)=@_;
 					unless ($dropflag == 0) {
 						$string .= ',' . $dropflag;
 					}
-					printf $sFHoutdrop ("%s\n", $string);
+					printf $oDrop ("%s\n", $string);
 				}
 			}
 		}
 	}
-	print $sFHoutinfo "\n";
-	print $sFHoutdrop "\n";
+	print $oInfo "\n";
+	print $oDrop "\n";
 }
 
 sub BuildData{ 
