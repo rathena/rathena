@@ -2712,7 +2712,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		return 0;
 
 	// Kaite reflection - Does not bypass Boss check
-	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80) ) {
+	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80)
+#ifdef RENEWAL
+		&& type // Does not reflect AoE
+#endif
+		) {
 		// Kaite only works against non-players if they are low-level.
 		// Kyomu doesn't disable Kaite, but the "skill fail chance" part of Kyomu applies to it.
 		clif_specialeffect(bl, 438, AREA);
@@ -10319,17 +10323,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SO_EL_CURE:
 		if( sd ) {
 			struct elemental_data *ed = sd->ed;
-			int s_hp = sd->battle_status.hp * 10 / 100, s_sp = sd->battle_status.sp * 10 / 100;
-			int e_hp, e_sp;
+			int s_hp, s_sp;
 
-			if( !ed )	break;
+			if( !ed )
+				break;
+
+			s_hp = sd->battle_status.hp * 10 / 100;
+			s_sp = sd->battle_status.sp * 10 / 100;
+
 			if( !status_charge(&sd->bl,s_hp,s_sp) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
-			e_hp = ed->battle_status.max_hp * 10 / 100;
-			e_sp = ed->battle_status.max_sp * 10 / 100;
-			status_heal(&ed->bl,e_hp,e_sp,3);
+
+			status_heal(&ed->bl,s_hp,s_sp,3);
 			clif_skill_nodamage(src,&ed->bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -16683,7 +16690,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				clif_upgrademessage(sd->fd, 3, material[ditem->wlv]);
 				return;
 			}
-			per = status_get_refine_chance(ditem->wlv, (int)item->refine);
+			per = status_get_refine_chance(ditem->wlv, (int)item->refine, false);
 			if( sd->class_&JOBL_THIRD )
 				per += 10;
 			else
