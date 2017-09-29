@@ -19,9 +19,6 @@
 //= 1.7 Readability changes. Also added BabyExpanded and BabySummoner classes. [Jey]
 //============================================================
 
-// https://github.com/HerculesWS/Hercules/commit/ed9dd7c18014ad596445cb00dc353c5c57a4d7d6#diff-5a3baaecdcaf1c909de82f146e48434cR245
-// TODO Which exploit has been fixed in there by Haru?
-
 prontera,153,193,6	script	Job Master	123,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
@@ -89,7 +86,7 @@ function	Can_Rebirth	{
 
 // Checks if the given eac is a first class
 function	Is_First_Cls	{
-	return (getarg(0) <= EAJ_TAEKWON); // First Class TODO: Can we check First Cls in a different way?
+	return (getarg(0) <= EAJ_TAEKWON);
 }
 
 function	Check_Riding	{
@@ -253,24 +250,32 @@ function	Job_Options	{
 	
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
-	// TODO move the job menu to an own function
+	function Job_Menu;
+	Job_Menu(.@job_opt);
+	close;
+
+// Displays the job menu
+function	Job_Menu	{
+	// getarg(0) is the .@job_opt array holding all available job changes.
 	function Confirm_Change;
 	while(true) {
-		.@opt_cnt =  getarraysize(.@job_opt);
+		.@opt_cnt =  getarraysize(getarg(0));
 		if( .@opt_cnt <= 0 ) {
 			mes "No more jobs are available.";
 			close;
 		}
+
+		.@selected = 0; // Just a single job class given, no select needed
 		if (.@opt_cnt > 1) {
 			// Multiple job classes given. Select one and save it to .@class
 			// After that confirm .@class
 			mes "Select a job.";
 			.@menu$ = "";
 			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
-				if( .@job_opt[.@i] == Job_Novice_High)
+				if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
 					.@jobname$ = "^0055FFRebirth^000000";
 				else
-					.@jobname$ = jobname(.@job_opt[.@i]);
+					.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
 				.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
 			}
 			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
@@ -279,26 +284,25 @@ function	Job_Options	{
 				close; // shouldn't happen
 			next;
 			mes .NPCName$;
-			.@class = .@job_opt[.@selected];
-			if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) && 
-					BaseLevel < .SNovice) {
-				// Special Level Requirement because Super Novice and 
-				// Supber Baby can be both selected in one of the first class
-				// changes. That's why the Levelrequirement is here.
-				mes "A base level of " + .SNovice + 
-					" is required to turn into a " + jobname(.@class) + ".";
-				close;
-			}
-		} else {
-			// Just a single job class given
-			.@class = .@job_opt[0];
+		}
+		.@class = getelementofarray(getarg(0), .@selected);
+		if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) &&
+				BaseLevel < .SNovice) {
+			// Special Level Requirement because Super Novice and
+			// Supber Baby can both be selected in one of the first class
+			// changes. That's why the Levelrequirement is after and not before
+			// the selection.
+			mes "A base level of " + .SNovice +
+				" is required to turn into a " + jobname(.@class) + ".";
+			return;
 		}
 		// Confirm the Class
 		Confirm_Change(.@class, .@opt_cnt > 1);
 		next;
 		mes .NPCName$;
 	}
-	close;
+	return;
+}
 
 
 // Executes the actual jobchange and closes.
@@ -441,7 +445,8 @@ function	Get_Platinum	{
 // Function which gives a job related item to the player
 // the items are the rewards from the original job change quests
 function	Get_Job_Equip	{
-	// TODO checkweight, currently the item drops on the ground if the player can't hold it.
+	// Note: The item is dropping, when the player can't hold it.
+	// But that's better than don't giving the item at all.
 	.@eac = eaclass();
 	if( .@eac&EAJL_THIRD ) {
 		// Third Class Items
