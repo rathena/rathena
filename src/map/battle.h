@@ -349,6 +349,7 @@ extern struct Battle_Config
 	int multi_level_up;
 	int max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int pk_mode;
+	int pk_mode_mes;
 	int pk_level_range;
 
 	int manner_system; // end additions [Valaris]

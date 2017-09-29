@@ -19718,7 +19718,7 @@ unsigned short script_instancegetid(struct script_state* st)
 		struct guild *gd = NULL;
 		struct clan *cd = NULL;
 
-		if (script_rid2sd(sd)) {
+		if ((sd = map_id2sd(st->rid))) {
 			if (sd->instance_id)
 				instance_id = sd->instance_id;
 			if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
@@ -22083,12 +22083,16 @@ BUILDIN_FUNC(getvar) {
 
 /**
  * Display script message
- * showscript "<message>"{,<GID>};
+ * showscript "<message>"{,<GID>,<flag>};
+ * @param flag: Specify target
+ *   AREA - Message is sent to players in the vicinity of the source (default).
+ *   SELF - Message is sent only to player attached.
  **/
 BUILDIN_FUNC(showscript) {
 	struct block_list *bl = NULL;
 	const char *msg = script_getstr(st,2);
 	int id = 0;
+	send_target target = AREA;
 
 	if (script_hasdata(st,3)) {
 		id = script_getnum(st,3);
@@ -22104,7 +22108,15 @@ BUILDIN_FUNC(showscript) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_showscript(bl, msg);
+	if (script_hasdata(st, 4)) {
+		target = static_cast<send_target>(script_getnum(st, 4));
+		if (target == SELF && map_id2sd(bl->id) == NULL) {
+			ShowWarning("script: showscript: self can't be used for non-players objects.\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	clif_showscript(bl, msg, target);
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -23565,6 +23577,7 @@ BUILDIN_FUNC(achievementupdate) {
 /**
  * Get an equipment's refine cost
  * getequiprefinecost(<equipment slot>,<type>,<information>{,<char id>})
+ * returns -1 on fail
  */
 BUILDIN_FUNC(getequiprefinecost) {
 	int i = -1, slot, type, info;
@@ -23579,8 +23592,18 @@ BUILDIN_FUNC(getequiprefinecost) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if (type < 0 || type >= REFINE_COST_MAX) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	if (equip_index_check(slot))
 		i = pc_checkequip(sd, equip_bitmask[slot]);
+
+	if (i < 0) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	int weapon_lv = sd->inventory_data[i]->wlv;
 	if (sd->inventory_data[i]->type == IT_SHADOWGEAR) {
@@ -24178,7 +24201,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopupdate,"sii?"),
 	BUILDIN_DEF(getattachedrid,""),
 	BUILDIN_DEF(getvar,"vi"),
-	BUILDIN_DEF(showscript,"s?"),
+	BUILDIN_DEF(showscript,"s??"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
 	BUILDIN_DEF(setquestinfo_level,"iii"),

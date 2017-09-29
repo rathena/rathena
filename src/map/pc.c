@@ -6410,7 +6410,7 @@ int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
 	sd->followtimer = INVALID_TIMER;
 	tbl = map_id2bl(sd->followtarget);
 
-	if (tbl == NULL || pc_isdead(sd) || status_isdead(tbl))
+	if (tbl == NULL || pc_isdead(sd))
 	{
 		pc_stop_following(sd);
 		return 0;
