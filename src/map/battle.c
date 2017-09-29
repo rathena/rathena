@@ -4612,7 +4612,10 @@ static short battle_get_defense(struct block_list *src, struct block_list *targe
 				def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 			}
 		}
-#ifndef RENEWAL
+#ifdef RENEWAL
+		if (skill_id == AM_ACIDTERROR)
+			def2 = 0; //Ignore only status defense. [FatalEror]
+#else
 		if (skill_id == AM_ACIDTERROR)
 			def1 = 0; //Ignores only armor defense. [Skotlex]
 #endif
