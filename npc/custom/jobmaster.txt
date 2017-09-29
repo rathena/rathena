@@ -281,7 +281,7 @@ function	Job_Menu	{
 			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
 			.@selected = select(.@menu$) - 1;
 			if( .@selected < 0 || .@selected >= .@opt_cnt )
-				close; // shouldn't happen
+				close;
 			next;
 			mes .NPCName$;
 		}
