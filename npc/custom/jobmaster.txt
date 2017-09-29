@@ -446,7 +446,7 @@ function	Get_Platinum	{
 // the items are the rewards from the original job change quests
 function	Get_Job_Equip	{
 	// Note: The item is dropping, when the player can't hold it.
-	// But that's better than don't giving the item at all.
+	// But that's better than not giving the item at all.
 	.@eac = eaclass();
 	if( .@eac&EAJL_THIRD ) {
 		// Third Class Items
