@@ -69,7 +69,8 @@ sub ConvertFile { my($iInfoFile,$iDropFile,$oInfoFile,$oDropFile)=@_;
 	my $oDrop;
 	my $oInfo;
 	my @lines;
-	my @drops;
+	my @drops_in;
+	my @drops = ();
 	print "Starting ConvertFile with: \n"
 		."\t fileininfo=$iInfoFile \n"
 		."\t fileindrop=$iDropFile \n"
@@ -79,11 +80,30 @@ sub ConvertFile { my($iInfoFile,$iDropFile,$oInfoFile,$oDropFile)=@_;
 	@lines = <FHIN>;
 	close FHIN or die "Error: closing FHIN $!.\n";
 	if ($iDropFile and open FHDROP, "cat $iDropFile | sed '/^\\/\\// d' | sort -t ',' -n -k 1,1 |") {
-		@drops = <FHDROP>;
-		foreach(@drops) {
-			print $_;
+		@drops_in = <FHDROP>;
+		foreach(@drops_in) {
+			my $line = $_;
+			if ($line =~ /^\s*$/) { #skip whitespace lines
+				next;
+			}
+			if ($line =~ /[^\r\n]+/) { #if line has a line ending
+				$line = $&; #strip line ending
+				if ($line =~ /^\/\//) { #skip comments
+					next;
+				}
+				my @arr = ();
+				@arr = split(",", $line); #split string into an array
+				if ($#arr < 2 || $#arr > 4) { #if the length is less than 3 or more than 5
+					next;								#not a real line
+				}
+				unless ($arr[0] =~ /^\d+$/) { #if not a number
+					next; 							#not a real line
+				}
+				push(@drops, join(',', @arr));
+			}
 		}
 	}
+	print join("\n", @drops) . "\n";
 	return;
 	open $oDrop,">$oDropFile" or die "ERROR: Can't write $oDropFile $!.\n";
 	open $oInfo,">$oInfoFile" or die "ERROR: Can't write $oInfoFile $!.\n";
