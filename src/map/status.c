@@ -2925,7 +2925,7 @@ void status_calc_pet_(struct pet_data *pd, enum e_status_calc_opt opt)
  * @return bonus: total bonus for HP
  * @author [Cydh]
  */
-int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
+static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 	int bonus = 0;
 
 	if (type == STATUS_BONUS_FIX) {
@@ -6547,7 +6547,7 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
 		def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
 
 	if( bl->type&BL_HOM )
-		def += (status->vit/5 - b_status->vit/5); // TODO: NOTE - Not a SC, but belongs here imo [Jey]
+		def += (status->vit/5 - b_status->vit/5);
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
