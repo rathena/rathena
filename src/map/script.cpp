@@ -19937,7 +19937,6 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	owner_id = instance_data[instance_id].owner_id;
 	switch(instance_data[instance_id].mode) {
 		case IM_NONE:
-		case IM_MAX:
 			break;
 		case IM_CHAR:
 			if (sd->status.char_id != owner_id)
@@ -19953,6 +19952,8 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		case IM_CLAN:
 			if (sd->status.clan_id != owner_id)
 				return 0;
+		default:
+			return 0;
 	}
 
 	pc_setpos(sd, m, x, y, CLR_TELEPORT);
