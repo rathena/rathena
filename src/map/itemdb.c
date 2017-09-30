@@ -1902,7 +1902,7 @@ void itemdb_reload_itemmob_data(void) {
 		struct mob_db *entry = mob_db(i);
 		int d, k;
 
-		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
+		for(d = 0; d < MAX_MOB_DROP; d++) {
 			struct item_data *id;
 			if( !entry->dropitem[d].nameid )
 				continue;

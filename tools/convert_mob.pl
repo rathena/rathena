@@ -128,7 +128,7 @@ sub ConvertFile {
 					$idx = ($i - $nb_columns_item) / 2 + 1;
 					$dropType = 'DTYPE_NORMAL';
 					if ($idx <= 7) {
-						$dropflag = 'DFLAG_STEAL'; #Is Stealable?
+						$dropflag = '1'; #Is Stealable?
 					}
 				}
 				if ($sWasCom == 1) {
@@ -174,9 +174,10 @@ sub BuildData{
 //     DTYPE_NORMAL = Normal Drop
 //     DTYPE_MVP    = MvP Drop
 // Note: DropFlags are bitmask:
-//     DFLAG_NONE  = No Flags
-//     DFLAG_STEAL = Is Stealable
+//     0 = No Flags
+//     1 = Is Stealable
 // Note: DropIndex is used to overwrite item drops
+// Note: To remove an item drop, use the DropIndex to choose which item to delete, then set itemId to 0
 ";
 }
 

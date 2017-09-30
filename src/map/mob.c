@@ -2650,7 +2650,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = NULL;
 
-		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		for (i = 0; i < MAX_MOB_DROP; i++) {
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
@@ -2832,15 +2832,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( !(map[m].flag.nomvploot || type&1) ) {
 			//Order might be random depending on item_drop_mvp_mode config setting
-			struct s_mob_drop mdrop[MAX_MVP_DROP_TOTAL];
+			struct s_mob_drop mdrop[MAX_MVP_DROP];
 
 			memset(&mdrop,0,sizeof(mdrop));
 
 			if(battle_config.item_drop_mvp_mode == 1) {
 				//Random order
-				for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+				for(i = 0; i < MAX_MVP_DROP; i++) {
 					while( 1 ) {
-						uint8 va = rnd()%MAX_MVP_DROP_TOTAL;
+						uint8 va = rnd()% MAX_MVP_DROP;
 						if (mdrop[va].nameid == 0) {
 							if (md->db->mvpitem[i].nameid > 0)
 								memcpy(&mdrop[va],&md->db->mvpitem[i],sizeof(mdrop[va]));
@@ -2850,13 +2850,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				}
 			} else {
 				//Normal order
-				for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+				for(i = 0; i < MAX_MVP_DROP; i++) {
 					if (md->db->mvpitem[i].nameid > 0)
 						memcpy(&mdrop[i],&md->db->mvpitem[i],sizeof(mdrop[i]));
 				}
 			}
 
-			for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+			for(i = 0; i < MAX_MVP_DROP; i++) {
 				struct item_data *i_data;
 
 				if(mdrop[i].nameid <= 0 || !(i_data = itemdb_exists(mdrop[i].nameid)))
@@ -4254,12 +4254,12 @@ static int mob_read_sqldb(void)
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
 			// wrap the result into a TXT-compatible format
 			char line[1024];
-			char* str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
+			char* str[31];
 			char* p;
 			int i;
 
 			lines++;
-			for(i = 0, p = line; i < 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP; i++)
+			for(i = 0, p = line; i < 31; i++)
 			{
 				char* data;
 				size_t len;
@@ -4823,7 +4823,7 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
  **/
 static bool mob_readdb_drop(char* str[], int columns, int current) {
 	unsigned short mobid, nameid;
-	int rate, i, size, flag = 0;
+	int rate, idx, type, flag = 0;
 	struct mob_db *mob;
 	struct s_mob_drop *drop;
 
@@ -4833,64 +4833,115 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		return false;
 	}
 
-	nameid = atoi(str[1]);
-	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_drop: Invalid item id %s.\n", str[1]);
+	
+	if (!script_get_constant(trim(str[1]), &type) || type < 0 || type >= DTYPE_MAX) {
+		ShowError("mob_readdb_drop: Invalid drop type %s.\n", str[1]);
 		return false;
 	}
 
-	rate = atoi(str[2]);
-	if (columns > 4 && (flag = atoi(str[4])) == 2) {
-		drop = mob->mvpitem;
-		size = ARRAYLENGTH(mob->mvpitem);
+	idx = atoi(str[2]) - 1;
+	if (idx < 0 || (type == DTYPE_NORMAL && idx >= MAX_MOB_DROP) || (type == DTYPE_MVP && idx >= MAX_MVP_DROP)) {
+		ShowError("mob_readdb_drop: Invalid drop idx %s.\n", str[2]);
+		return false;
 	}
-	else {
+
+	nameid = atoi(str[3]);
+	if (itemdb_exists(nameid) == NULL && nameid != 0) {
+		ShowWarning("mob_readdb_drop: Invalid item id %s.\n", str[3]);
+		return false;
+	}
+
+	rate = atoi(str[4]);
+
+	if (columns > 5) {
+		flag = atoi(str[5]);
+	}
+	
+	if (type == DTYPE_NORMAL) {
 		drop = mob->dropitem;
-		size = ARRAYLENGTH(mob->dropitem);
-	}
-
-	if (rate == 0) {
-		for (i = 0; i < size; i++) {
-			if (drop[i].nameid == nameid) {
-				memset(&drop[i], 0, sizeof(struct s_mob_drop));
-				ShowInfo("mob_readdb_drop: Removed item '%hu' from monster '%hu'.\n", nameid, mobid);
-				return true;
-			}
-		}
 	}
 	else {
-		for (i = 0; i < size; i++) {
-			if (drop[i].nameid == 0)
-				break;
-		}
-		if (i == size) {
-			ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached '%d'.\n", nameid, mobid, size);
-			return true;
-		}
+		drop = mob->mvpitem;
+	}
 
-		drop[i].nameid = nameid;
-		drop[i].p = rate;
-		drop[i].steal_protected = (flag) ? 1 : 0;
-		drop[i].randomopt_group = 0;
+	if (nameid == 0) {
+		unsigned short remid = drop[idx].nameid;
+		memset(&drop[idx], 0, sizeof(struct s_mob_drop));
+		ShowInfo("mob_readdb_Drop: Removed item '%hu' from monster '%hu'.\n", remid, mobid);
+	}
+	else {
 
-		if (columns > 3) {
+		drop[idx].nameid = nameid;
+		drop[idx].p = rate;
+		drop[idx].stealable = flag & DFLAG_STEAL ? 1 : 0;
+		drop[idx].randomopt_group = 0;
+
+		if (columns > 6) {
 			int randomopt_group = -1;
-			if (!script_get_constant(trim(str[3]), &randomopt_group)) {
-				ShowError("mob_readdb_drop: Invalid 'randopt_groupid' '%s' for monster '%hu'.\n", str[3], mobid);
+			if (!script_get_constant(trim(str[6]), &randomopt_group)) {
+				ShowError("mob_readdb_drop: Invalid 'randopt_groupid' '%s' for monster '%hu'.\n", str[6], mobid);
 				return false;
 			}
 			if (randomopt_group == RDMOPTG_None)
 				return true;
 			if (!itemdb_randomopt_group_exists(randomopt_group)) {
-				ShowError("mob_readdb_drop: 'randopt_groupid' '%s' cannot be found in DB for monster '%hu'.\n", str[3], mobid);
+				ShowError("mob_readdb_drop: 'randopt_groupid' '%s' cannot be found in DB for monster '%hu'.\n", str[6], mobid);
 				return false;
 			}
-			drop[i].randomopt_group = randomopt_group;
+			drop[idx].randomopt_group = randomopt_group;
 		}
 	}
 
 	return true;
 }
+
+
+/**
+* mob_drop table reading [nitrous]
+*/
+static int mob_read_sqldrop(void)
+{
+	const char* mob_drop_db_name[] = {
+		mob_drop_table,
+		mob_drop2_table };
+	int fi;
+	
+	for (fi = 0; fi < ARRAYLENGTH(mob_drop_db_name); ++fi) {
+		uint32 lines = 0, count = 0;
+
+		// retrieve all rows from the mob drop database
+		if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_drop_db_name[fi])) {
+			Sql_ShowDebug(mmysql_handle);
+			continue;
+		}
+
+		// process rows one by one
+		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+			// wrap the result into a TXT-compatible format
+			char* str[7];
+			char* dummy = "";
+			int i;
+			++lines;
+			for (i = 0; i < 7; ++i)
+			{
+				Sql_GetData(mmysql_handle, i, &str[i], NULL);
+				if (str[i] == NULL) str[i] = dummy; // get rid of NULL columns
+			}
+
+			if (!mob_readdb_drop(str, 7, count))
+				continue;
+
+			count++;
+		}
+
+		// free the query result
+		Sql_FreeResult(mmysql_handle);
+
+		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, mob_drop_db_name[fi]);
+	}
+	return 0;
+}
+
 
 /**
  * Free drop ratio data
@@ -4922,7 +4973,7 @@ static void mob_drop_ratio_adjust(void){
 
 		mob_id = i;
 
-		for( j = 0; j < MAX_MVP_DROP_TOTAL; j++ ){
+		for( j = 0; j < MAX_MVP_DROP; j++ ){
 			nameid = mob->mvpitem[j].nameid;
 			rate = mob->mvpitem[j].p;
 
@@ -4959,7 +5010,7 @@ static void mob_drop_ratio_adjust(void){
 			mob->mvpitem[j].p = rate;
 		}
 
-		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
+		for( j = 0; j < MAX_MOB_DROP; j++ ){
 			unsigned short ratemin, ratemax;
 			bool is_treasurechest;
 
@@ -5176,6 +5227,7 @@ static void mob_load(void)
 	// First we parse all the possible monsters to add additional data in the second loop
 	if( db_use_sqldbs ){
 		mob_read_sqldb();
+		mob_read_sqldrop();
 		mob_read_sqlskilldb();
 	}else{
 		for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
@@ -5190,7 +5242,7 @@ static void mob_load(void)
 
 			//sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
 			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31, 31, -1, &mob_readdb_sub, i);
-			sv_readdb(dbsubpath2, "mob_drop.txt", ',', 5, 6, -1, &mob_readdb_drop, i);
+			sv_readdb(dbsubpath2, "mob_drop.txt", ',', 5, 7, -1, &mob_readdb_drop, i);
 
 			aFree(dbsubpath2);
 		}
@@ -5226,7 +5278,7 @@ static void mob_load(void)
 		sv_readdb(dbsubpath2, "mob_boss.txt", ',', 4, 4, -1, &mob_readdb_group, i );
 		sv_readdb(dbsubpath1, "mob_pouch.txt", ',', 4, 4, -1, &mob_readdb_group, i );
 		sv_readdb(dbsubpath1, "mob_classchange.txt", ',', 4, 4, -1, &mob_readdb_group, i );
-		sv_readdb(dbsubpath2, "mob_drop.txt", ',', 3, 5, -1, &mob_readdb_drop, i );
+		//sv_readdb(dbsubpath2, "mob_drop.txt", ',', 3, 5, -1, &mob_readdb_drop, i );
 		
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);

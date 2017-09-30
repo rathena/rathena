@@ -71,6 +71,8 @@ char mob_table[32] = "mob_db_re";
 char mob2_table[32] = "mob_db2_re";
 char mob_skill_table[32] = "mob_skill_db_re";
 char mob_skill2_table[32] = "mob_skill_db2_re";
+char mob_drop_table[32] = "mob_drop_re";
+char mob_drop2_table[32] = "mob_drop2_re";
 #else
 char item_table[32] = "item_db";
 char item2_table[32] = "item_db2";
@@ -78,6 +80,8 @@ char mob_table[32] = "mob_db";
 char mob2_table[32] = "mob_db2";
 char mob_skill_table[32] = "mob_skill_db";
 char mob_skill2_table[32] = "mob_skill_db2";
+char mob_drop_table[32] = "mob_drop";
+char mob_drop2_table[32] = "mob_drop2";
 #endif
 char sales_table[32] = "sales";
 char vendings_table[32] = "vendings";
@@ -3989,6 +3993,10 @@ int inter_config_read(const char *cfgName)
 			strcpy(mob_skill_table,w2);
 		else if(strcmpi(w1,"mob_skill2_table")==0)
 			strcpy(mob_skill2_table,w2);
+		else if (strcmpi(w1, "mob_drop_table") == 0)
+			strcpy(mob_drop_table, w2);
+		else if (strcmpi(w1, "mob_drop2_table") == 0)
+			strcpy(mob_drop2_table, w2);
 		else if( strcmpi( w1, "item_cash_table" ) == 0 )
 			strcpy( item_cash_table, w2 );
 		else if( strcmpi( w1, "item_cash2_table" ) == 0 )
