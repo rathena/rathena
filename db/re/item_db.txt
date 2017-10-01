@@ -11418,6 +11418,12 @@
 27028,Fire_Frilldora_Card,Fire Frilldora Card,6,20,,10,,,,,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); bonus2 bMagicAddEle,Ele_Earth,3+((.@r>=7)*5)+((.@r>=9)*7); },{},{}
 27029,Fire_Golem_Card,Fire Golem Card,6,20,,10,,,,,0xFFFFFFFF,63,2,32,,,,,{ bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5; },{},{}
 27030,Fulbuk_Card,Fulbuk Card,6,20,,10,,,,,0xFFFFFFFF,63,2,769,,,,,{ bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC; },{},{}
+27147,Humanoid_Chimera_Card,Humanoid Chimera Card,6,20,,10,,,,,,,,136,,,,,{ bonus bHit,(BaseLevel >= 90 ? 15 : 5); },{},{}
+27148,Material_Chimera_Card,Material Chimera Card,6,20,,10,,,,,,,,136,,,,,{ bonus bFlee,(BaseLevel >= 90 ? 15 : 5); },{},{}
+27149,Heart_Hunter_Card,Heart Hunter Card,6,20,,10,,,,,,,,2,,,,,{ .@type = getiteminfo(getequipid(EQI_COMPOUND_ON),11); .@r = getrefine(); if(.@type == 17 || .@type == 18 || .@type == 21){ bonus bLongAtkRate,5+.@r+(.@r >= 10 ? 5 : 0); } },{},{}
+27150,Toxic_Enchanted_Chimera_Card,Toxic Enchanted Chimera Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHP,1000; bonus bMaxSP,200; if(getrefine() >= 12){ bonus bMaxHPrate,15; bonus bMaxSPrate,15; } },{},{}
+27151,Heart_Hunter_Evil_Card,Heart Hunter Evil Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,SC_FREEZING,1000 + (readparam(bInt) >= 110 ? 5 : 0); },{},{}
+27152,Cutie_Card,Cutie Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,10; .@r = getrefine()/2; bonus bAgi,.@r; bonus bAspdRate,.@r; },{},{}
 //===================================================================
 // New Katars
 //===================================================================

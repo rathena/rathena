@@ -636,6 +636,7 @@
 24249:24254,{ bonus2 bMagicAddRace,RC_All,1; bonus bMaxSPrate,1; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=10) { bonus2 bMagicAddRace,RC_All,2; bonus bMaxSPrate,2; } }
 24253:28391,{ bonus2 bAddRace,RC_All,1; bonus bMaxHPrate,1; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=10) { bonus2 bAddRace,RC_All,2; bonus bMaxHPrate,2; } }
 24255:28392,{ bonus2 bAddRace,RC_All,1; bonus bMaxHPrate,1; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=10) { bonus2 bAddRace,RC_All,2; bonus bMaxHPrate,2; } }
+27147:27148,{ bonus bDelayrate,-3; }
 28315:28317,{ bonus2 bAddClass,Class_All,4; bonus bMatkRate,4; }
 28316:28318,{ bonus2 bAddClass,Class_All,4; bonus bMatkRate,4; }
 28326:28327,{ bonus bInt,8; bonus bStr,8; }
