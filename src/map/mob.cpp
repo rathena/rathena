@@ -3768,7 +3768,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	if (mode) //User provided mode.
 		status->mode = mode;
 	else if (flag&1) //Friendly Character, remove looting.
-		status->mode = (enum e_mode)(status->mode&(~MD_LOOTER));
+		status->mode = static_cast<enum e_mode>(status->mode&(~MD_LOOTER));
 	status->hp = status->max_hp;
 	status->sp = status->max_sp;
 	memcpy(&db->vd, &sd->vd, sizeof(struct view_data));
@@ -4129,9 +4129,9 @@ static bool mob_parse_dbrow(char** str)
 		return false;
 	}
 
-	status->mode = (enum e_mode)strtol(str[25], NULL, 0);
+	status->mode = static_cast<enum e_mode>(strtol(str[25], NULL, 0));
 	if (!battle_config.monster_active_enable)
-		status->mode = (enum e_mode)(status->mode&(~MD_AGGRESSIVE));
+		status->mode = static_cast<enum e_mode>(status->mode&(~MD_AGGRESSIVE));
 
 	if (status_has_mode(status,MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
 		status->class_ = CLASS_BOSS;
