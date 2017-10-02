@@ -7813,11 +7813,11 @@ ACMD_FUNC(whodrops)
 	return 0;
 }
 
+#define MAX_SPAWN_DISP 10
 ACMD_FUNC(whereis)
 {
 	MobID mob_ids[MAX_SEARCH] = {0};
 	int count = 0;
-	const int MAX_SPAWN_DISP = 10;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
@@ -7869,6 +7869,7 @@ ACMD_FUNC(whereis)
 
 	return 0;
 }
+#undef MAX_SPAWN_DISP
 
 ACMD_FUNC(version)
 {
