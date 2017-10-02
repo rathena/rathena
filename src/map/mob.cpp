@@ -29,6 +29,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -63,6 +67,16 @@ struct mob_db *mob_db_data[MAX_MOB_DB+1];
 struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant one is requested.
 
 struct mob_db *mob_db(int mob_id) { if (mob_id < 0 || mob_id > MAX_MOB_DB || mob_db_data[mob_id] == NULL) return mob_dummy; return mob_db_data[mob_id]; }
+
+// Monster Spawn informations
+class MobSpawns {
+public:
+	std::vector<struct spawn_info> m_spawns;
+	MobSpawns(struct spawn_info new_spawn);
+	void add_spawn(struct spawn_info new_spawn);
+};
+// unordered map mob_id -> MobSpawns
+std::unordered_map<MobID, MobSpawns> mob_spawn_data;
 
 //Dynamic mob chat database
 struct mob_chat *mob_chat_db[MAX_MOB_CHAT+1];
@@ -115,34 +129,6 @@ static DBMap *mob_summon_db; /// Random Summon DB. struct s_randomsummon_group -
 static int mob_makedummymobdb(int);
 static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data);
 int mob_skill_id2skill_idx(int mob_id,uint16 skill_id);
-
-/*==========================================
- * Mob is searched with a name.
- *------------------------------------------*/
-int mobdb_searchname(const char *str)
-{
-	int i;
-	for(i=0;i<=MAX_MOB_DB;i++){
-		struct mob_db *mob = mob_db(i);
-		if(mob == mob_dummy) //Skip dummy mobs.
-			continue;
-		if(strcmpi(mob->name,str)==0 || strcmpi(mob->jname,str)==0 || strcmpi(mob->sprite,str)==0)
-			return i;
-	}
-	return 0;
-}
-static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
-{
-	if (mob == mob_dummy)
-		return 1;
-	if(!mob->base_exp && !mob->job_exp && mob->spawn[0].qty < 1)
-		return 1; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
-	if(stristr(mob->jname,str))
-		return 0;
-	if(stristr(mob->name,str))
-		return 0;
-	return strcmpi(mob->jname,str);
-}
 
 /*========================================== [Playtester]
 * Removes all characters that spotted the monster but are no longer online
@@ -302,24 +288,67 @@ void mvptomb_destroy(struct mob_data *md) {
 	md->tomb_nid = 0;
 }
 
+/**
+ * Sub function for mob namesearch. Here is defined which are accepted.
+*/
+static bool mobdb_searchname_sub(MobID mob_id, const char * const str, bool full_cmp)
+{
+	const struct mob_db * const mob = mob_db(mob_id);
+	
+	if( mobdb_checkid(mob_id) <= 0 )
+		return false; // invalid mob_id (includes clone check)
+	if(!mob->base_exp && !mob->job_exp && !mob_has_spawn(mob_id))
+		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
+	if( full_cmp ) {
+		// str must equal the db value
+		if( strcmpi(mob->name, str) == 0 || 
+			strcmpi(mob->jname, str) == 0 || 
+			strcmpi(mob->sprite, str) == 0 )
+			return true;
+	} else {
+		// str must be in the db value
+		if( stristr(mob->name, str) != NULL ||
+			stristr(mob->jname, str) != NULL ||
+			stristr(mob->sprite, str) != NULL )
+			return true;
+	}
+	return false;
+}
+
+/**
+ * Searches for the Mobname
+*/
+MobID mobdb_searchname_(const char * const str, bool full_cmp)
+{
+	for(MobID mob_id = 0; mob_id <= MAX_MOB_DB; mob_id++) {
+		if( mobdb_searchname_sub(mob_id, str, full_cmp) )
+			return mob_id;
+	}
+	return 0;
+}
+
+MobID mobdb_searchname(const char * const str)
+{
+	return mobdb_searchname_(str, true);
+}
 /*==========================================
  * Founds up to N matches. Returns number of matches [Skotlex]
  *------------------------------------------*/
-int mobdb_searchname_array(struct mob_db** data, int size, const char *str)
+int mobdb_searchname_array_(const char *str, MobID * out, int size, bool full_cmp)
 {
-	int count = 0, i;
-	struct mob_db* mob;
-	for(i=0;i<=MAX_MOB_DB;i++){
-		mob = mob_db(i);
-		if (mob == mob_dummy || mob_is_clone(i) ) //keep clones out (or you leak player stats)
-			continue;
-		if (!mobdb_searchname_array_sub(mob, str)) {
-			if (count < size)
-				data[count] = mob;
+	unsigned short count = 0;
+	for(MobID mob_id = 0; mob_id <= MAX_MOB_DB && count < size; mob_id++) {
+		if( mobdb_searchname_sub(mob_id, str, full_cmp) ) {
+			out[count] = mob_id;
 			count++;
 		}
 	}
 	return count;
+}
+
+int mobdb_searchname_array(const char *str, MobID * out, int size)
+{
+	return mobdb_searchname_array_(str, out, size, false);
 }
 
 /*==========================================
@@ -488,12 +517,14 @@ int mob_get_random_id(int type, int flag, int lv)
 		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
 		(flag&0x02 && lv < mob->lv) ||
 		(flag&0x04 && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
-		(flag&0x08 && mob->spawn[0].qty < 1) ||
+		(flag&0x08 && !mob_has_spawn(mob_id)) ||
 		(flag&0x10 && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
 	) && (i++) < MAX_MOB_DB && msummon->count > 1);
 
-	if (i >= MAX_MOB_DB && &msummon->list[0])  // no suitable monster found, use fallback for given list
+	if (i >= MAX_MOB_DB && &msummon->list[0]) {
+		ShowError("mob_get_random_id: no suitable monster found, use fallback for given list. Last_MobID: %d\n", mob_id);
 		mob_id = msummon->list[0].mob_id;
+	}
 	return mob_id;
 }
 
@@ -3102,6 +3133,97 @@ int mob_random_class (int *value, size_t count)
 	return mobdb_checkid(value[rnd()%count]);
 }
 
+/**
+ * Fills the given spawn_info array with the spawns of the monster.
+ * Since we currently can't use C++ Features map-server wide, we need_skill
+ * to offer a interface for other modules.
+ * Returns the count of filled spawn infos in out.
+*/
+int mob_get_spawn(MobID mob_id, struct spawn_info * const out, int len)
+{
+	memset( out, 0, len*sizeof(spawn_info) ); // clear the output
+	auto it_MobSpawn = mob_spawn_data.find(mob_id);
+	
+	if( out == NULL )
+		return 0;
+	if( it_MobSpawn == mob_spawn_data.end() )
+		return 0; // nothing to be added
+	
+	typedef std::vector<struct spawn_info> spawn_infos; 
+	spawn_infos &spawns = it_MobSpawn->second.m_spawns;
+	// sort spawns by spawn quantity
+	std::sort(spawns.begin(), spawns.end(),
+		[](const struct spawn_info & a, const struct spawn_info & b) -> bool
+		{ return a.qty > b.qty; });
+	
+	// fill the info into the out array
+	int filled = 0;
+	for( auto &c_spawn : spawns )
+	{
+		if( filled > len )
+			break; // max len for out reached, stop here
+		out[filled].qty = c_spawn.qty;
+		out[filled].mapindex = c_spawn.mapindex;
+		filled++;
+	}
+	return filled;
+}
+
+/**
+ * Checks if a monster is spawned. Returns true if yes, false otherwise.
+*/
+bool mob_has_spawn(MobID mob_id)
+{
+	auto it = mob_spawn_data.find(mob_id);
+	if( it == mob_spawn_data.end() )
+		return false;
+	// It's enough to check if the monster is in mob_spawn_data, because
+	// none or empty spawns are ignored. Thus the monster is spawned.
+	return true;
+}
+
+MobSpawns::MobSpawns(struct spawn_info new_spawn)
+{
+	m_spawns.push_back(new_spawn);
+}
+
+/**
+ * Adds a spawn info to the specific mob. (To mob_spawn_data)
+*/
+void mob_add_spawn(MobID mob_id, struct spawn_info new_spawn)
+{
+	auto it = mob_spawn_data.find(mob_id);
+	if( it == mob_spawn_data.end() )
+	{
+		MobSpawns spawns(new_spawn);
+		mob_spawn_data.insert({mob_id, spawns});
+	}
+	else
+	{
+		it->second.add_spawn(new_spawn);
+	}
+}
+
+/**
+ * Adds the spawn info to the mob by mapindex
+*/
+void MobSpawns::add_spawn(struct spawn_info new_spawn)
+{
+	unsigned short m = new_spawn.mapindex;
+	
+	if( new_spawn.qty <= 0 )
+		return; //ignore empty spawns
+	
+	// Search if the map is already in spawns
+	auto it = std::find_if( m_spawns.begin(), m_spawns.end(),
+		[&m] (const spawn_info &s) 
+		{ return (s.mapindex == m); });
+	if( it != m_spawns.end() )
+		it->qty += new_spawn.qty; // add quantity, if map is found
+	else
+		m_spawns.push_back(new_spawn); // else, add the whole spawn info
+}
+
 /*==========================================
  * Change mob base class
  *------------------------------------------*/
@@ -4219,9 +4341,6 @@ static bool mob_parse_dbrow(char** str)
 	// Finally insert monster's data into the database.
 	if (mob_db_data[mob_id] == NULL)
 		mob_db_data[mob_id] = (struct mob_db*)aCalloc(1, sizeof(struct mob_db));
-	else
-		//Copy over spawn data
-		memcpy(&db->spawn, mob_db_data[mob_id]->spawn, sizeof(db->spawn));
 
 	memcpy(mob_db_data[mob_id], db, sizeof(struct mob_db));
 	return true;
@@ -5322,10 +5441,7 @@ void mob_reload(void) {
  */
 void mob_clear_spawninfo()
 {	//Clears spawn related information for a script reload.
-	int i;
-	for (i = 0; i < MAX_MOB_DB; i++)
-		if (mob_db_data[i])
-			memset(&mob_db_data[i]->spawn,0,sizeof(mob_db_data[i]->spawn));
+	mob_spawn_data.clear();
 }
 
 /*==========================================

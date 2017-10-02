@@ -115,6 +115,9 @@ enum e_Random_Monster {
 	MOBG_ClassChange			= 4,
 };
 
+// Typedefs
+typedef unsigned short MobID;
+
 struct mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
@@ -166,7 +169,6 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
-	struct spawn_info spawn[10];
 };
 
 struct mob_data {
@@ -295,8 +297,8 @@ struct item_drop_list {
 
 struct mob_db *mob_db(int mob_id);
 struct mob_db *mobdb_exists(uint16 mob_id);
-int mobdb_searchname(const char *str);
-int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
+MobID mobdb_searchname(const char * const str);
+int mobdb_searchname_array(const char *str, MobID * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
@@ -360,6 +362,10 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 int mob_clone_delete(struct mob_data *md);
 
 void mob_reload(void);
+
+void mob_add_spawn(MobID mob_id, struct spawn_info new_spawn);
+int mob_get_spawn(MobID mob_id, struct spawn_info * const out, int len);
+bool mob_has_spawn(MobID mob_id);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
