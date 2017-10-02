@@ -18214,7 +18214,7 @@ BUILDIN_FUNC(setunitname)
 		case BL_PET:  pd = map_id2pd(bl->id); break;
 		default:
 			ShowWarning("buildin_setunitname: Invalid object type!\n");
-			return SCRIPT_CMD_FAILURE;		
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	switch (bl->type) {
@@ -19952,8 +19952,6 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		case IM_CLAN:
 			if (sd->status.clan_id != owner_id)
 				return 0;
-		default:
-			return 0;
 	}
 
 	pc_setpos(sd, m, x, y, CLR_TELEPORT);

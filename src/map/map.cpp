@@ -2666,8 +2666,6 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 		case BL_SKILL:
 			skill_delunit((struct skill_unit *) bl);
 			break;
-		default:
-			break;
 	}
 
 	return 1;
@@ -4283,8 +4281,6 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 			break;
 		case BL_SKILL:
 			skill_delunit((struct skill_unit *) bl);
-			break;
-		default:
 			break;
 	}
 

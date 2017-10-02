@@ -942,8 +942,6 @@ static int clif_setlevel(struct block_list* bl) {
 		case BL_PET:
 			// npcs and pets do not have level
 			return 0;
-		default:
-			break;
 	}
 	return lv;
 }
@@ -1482,8 +1480,6 @@ int clif_spawn(struct block_list *bl)
 		if (vd->head_bottom)
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
 		break;
-	default:
-		break;
 	}
 	return 0;
 }
@@ -1746,8 +1742,6 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 	case BL_PET:
 		if(vd->head_bottom) // needed to display pet equip properly
 			clif_pet_equip_area((TBL_PET*)bl);
-		break;
-	default:
 		break;
 	}
 	clif_ally_only = false;
@@ -4692,8 +4686,6 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	case BL_PET:
 		if (vd->head_bottom)
 			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
-		break;
-	default:
 		break;
 	}
 }
@@ -8050,8 +8042,6 @@ void clif_spiritball(struct block_list *bl) {
     switch(bl->type){
         case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
         case BL_HOM: WBUFW(buf, 6) = hd->homunculus.spiritball; break;
-        default:
-        	break;
     }
     clif_send(buf, packet_len(0x1d0), bl, AREA);
 }
@@ -11521,8 +11511,6 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 
 				npc_click(sd,nd);
 			}
-			break;
-		default:
 			break;
 	}
 }
