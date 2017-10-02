@@ -14236,7 +14236,8 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 	yamlwrapper* costs = yaml_get_subnode(wrapper, "Costs");
 	yamliterator* it = yaml_get_iterator(costs);
 	if (yaml_iterator_is_valid(it)) {
-		for (yamlwrapper* type = yaml_iterator_first(it); yaml_iterator_has_next(it); type = yaml_iterator_next(it)) {
+		yamlwrapper* type;
+		for (type = yaml_iterator_first(it); yaml_iterator_has_next(it); type = yaml_iterator_next(it)) {
 			int idx = 0, price;
 			unsigned short material;
 			static char* keys[] = {"Type", "Price", "Material" };
@@ -14270,7 +14271,8 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 	it = yaml_get_iterator(rates);
 
 	if (yaml_iterator_is_valid(it)) {
-		for (yamlwrapper* level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
+		yamlwrapper* level;
+		for (level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
 			int refine_level = yaml_get_int(level, "Level") - 1;
 
 			if (refine_level >= MAX_REFINE) {
@@ -14307,7 +14309,7 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
  * @param file: File name
  */
 static void status_yaml_readdb_refine(const char* directory, const char* file) {
-	int count = 0;
+	int count = 0, i;
 	const char* labels[6] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
 	size_t str_size = strlen(directory) + strlen(file) + 2;
 	char* buf = (char*)aCalloc(1, str_size);
@@ -14320,7 +14322,7 @@ static void status_yaml_readdb_refine(const char* directory, const char* file) {
 		return;
 	}
 
-	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
+	for (i = 0; i < ARRAYLENGTH(labels); i++) {
 		if (yaml_node_is_defined(root_node, labels[i])) {
 			sub_node = yaml_get_subnode(root_node, labels[i]);
 			if (status_yaml_readdb_refine_sub(sub_node, i, buf))
