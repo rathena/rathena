@@ -11424,6 +11424,13 @@
 27150,Toxic_Enchanted_Chimera_Card,Toxic Enchanted Chimera Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHP,1000; bonus bMaxSP,200; if(getrefine() >= 12){ bonus bMaxHPrate,15; bonus bMaxSPrate,15; } },{},{}
 27151,Heart_Hunter_Evil_Card,Heart Hunter Evil Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,SC_FREEZING,1000 + (readparam(bInt) >= 110 ? 5 : 0); bonus bMdef,5; },{},{}
 27152,Cutie_Card,Cutie Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,10; .@r = getrefine()/2; bonus bAgi,.@r; bonus bAspdRate,.@r; },{},{}
+27163,Faceworm_Card,Faceworm Card,6,20,,10,,,,,,,,136,,,,,{ bonus bAgi,-1; bonus bDex,-1; bonus bAspdRate,3; },{},{}
+27164,Faceworm_Queen_Card,Faceworm Queen Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,-10; bonus bCritical,15 + getrefine(); bonus bCritAtkRate,getrefine(); },{},{}
+27165,Dark_Faceworm_Card,Dark Faceworm Card,6,20,,10,,,,,,,,136,,,,,{ bonus bVit,-1, bonus bInt,-1; },{},{}
+27166,Faceworm_Egg_Card,Faceworm Egg Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); bonus2 bSubEle,Ele_Fire,2+(.@r >= 9 ? 3 : .@r >= 7 ? 1 : 0); },{},{}
+27167,Faceworm_Larva_Card,Faceworm Larva Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,15; bonus2 bMagicAddEle,Ele_Water,getrefine()*3; },{},{}
+27168,Irene_High_Elder_Card,Irene High Elder Card,6,20,,10,,,,,,,,4,,,,,{ bonus bHit,10 + getrefine()/3; },{},{}
+27169,Payon_Soldier_Card,Payon Soldier Card,6,20,,10,,,,,,,,2,,,,,{ .@atk = 5; .@type = getiteminfo(getequipid(EQI_COMPOUND_ON),11); .@r = getrefine(); if(.@type == 4 || .@type == 5){ if(.@r >= 10){ .@atk += 20; } if(.@r >= 14){ .@atk += 20; } } bonus bAtk,.@atk; bonus bMatk,.@atk; },{},{}
 //===================================================================
 // New Katars
 //===================================================================
