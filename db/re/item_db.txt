@@ -11426,10 +11426,10 @@
 27152,Cutie_Card,Cutie Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,10; .@r = getrefine()/2; bonus bAgi,.@r; bonus bAspdRate,.@r; },{},{}
 27157,Wood_Goblin_Card,Wood Goblin Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Water,(.@r >= 9 ? 10 : 5); bonus2 bAddEle,Ele_Earth,(.@r >= 9 ? 10 : 5); },{},{}
 27158,Les_Card,Les Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubEle,Ele_Wind,30; },{},{}
-27159,Uzhas_Card,Uzhas Card,6,20,,10,,,,,,,769,,,,,{ bonus2 bMagicAddRace,RC_Demon,(getrefine() >= 9 ? 15 : 10); },{},{}
-27160,Vavayaga_Card,Vavayaga Card,6,20,,10,,,,,,,64,,,,,{ bonus2 bFlee,getrefine()*2; },{},{}
-27161,Mavka_Card,Mavka Card,6,20,,10,,,,,,,136,,,,,{ bonus2 bMagicAddEle,Ele_Fire,20; bonus2 bMagicAddEle,Ele_Earth,20; },{},{}
-27162,Gopinich_Card,Gopinich Card,6,20,,10,,,,,,,769,,,,,{ bonus bSPDrainValue,5; bonus bUseSPrate,50; },{},{}
+27159,Uzhas_Card,Uzhas Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bMagicAddRace,RC_Demon,(getrefine() >= 9 ? 15 : 10); },{},{}
+27160,Vavayaga_Card,Vavayaga Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bFlee,getrefine()*2; },{},{}
+27161,Mavka_Card,Mavka Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bMagicAddEle,Ele_Fire,20; bonus2 bMagicAddEle,Ele_Earth,20; },{},{}
+27162,Gopinich_Card,Gopinich Card,6,20,,10,,,,,,,,769,,,,,{ bonus bSPDrainValue,5; bonus bUseSPrate,50; },{},{}
 //===================================================================
 // New Katars
 //===================================================================
