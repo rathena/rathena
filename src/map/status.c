@@ -11203,8 +11203,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				unit_stop_walking(bl,1);
 			break;
 		case SC__MANHOLE:
+			// Manhole ignores blow_immune, when the enemy is BL_PC
 			if (bl->type == BL_PC || !unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
+			unit_stop_attack(bl);
 			break;
 		case SC_VACUUM_EXTREME:
 			if (bl->type != BL_PC && !unit_blown_immune(bl,0x1)) {
