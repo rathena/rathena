@@ -58,3 +58,4 @@
 
 // Central Laboratory Memorial ====
 1@lab	mapflag	partylock
+1@uns	mapflag	partylock

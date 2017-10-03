@@ -25,3 +25,6 @@ te_aldecas5	mapflag	nowarp
 
 // Episode 15
 1@lab	mapflag	nowarp
+1@uns	mapflag	nowarp
+un_bk_q	mapflag	nowarp
+un_myst	mapflag	nowarp

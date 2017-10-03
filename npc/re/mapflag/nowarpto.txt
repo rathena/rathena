@@ -68,3 +68,6 @@ te_aldecas5	mapflag	nowarpto
 
 // Episode 15
 1@lab	mapflag	nowarpto
+1@uns	mapflag	nowarpto
+un_bk_q	mapflag	nowarpto
+un_myst	mapflag	nowarpto

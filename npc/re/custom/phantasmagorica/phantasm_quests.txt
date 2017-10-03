@@ -8,13 +8,74 @@
 //- Police Quests
 //- New Power Source
 //- Krotzel's Request
-//--- 3 chains Quests -> Can enter Last Room instance:
 //- To Phantasmagorika!
 //- Looking for the Traces
 //- Vestige
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
+
+prontera,121,77,3	script	Phantasmagorika Spokesperson	4_F_ZONDAGIRL,{
+	mes "[Spokesperson]";
+	mes "Good day.";
+	mes "Rekenber is recruiting adventurers for an excavation project that takes place in Phantasmagorika, the newly discovered ruins in Juperos.";
+	next;
+	mes "[Spokesperson]";
+	mes "If you're interested, just come as you are.";
+	mes "Everything you need for the excavation will be provided by Rekenber.";
+	next;
+	mes "[Spokesperson]";
+	mes "Join us for adventure at the newly discovered ruins in Juperos,";
+	mes "an ancient city whose scientific knowledge has fueled the development of modern civilization.";
+	next;
+	mes "[Spokesperson]";
+	mes "If you'd like to join, then form an excavation team and fill out your application.";
+	next;
+	switch( select( "Excavation team? Application?", "Phantasmagorika?", "Bye." ) ) {
+	case 1:
+		mes "[Spokesperson]";
+		mes "We're recruiting teams of excavators for the research of Phantasmagorika, the newly discovered ruins.";
+		mes "This project requires expertise in various fields, so we've decided to recruit";
+		mes "teams of excavators instead of individuals.";
+		next;
+		mes "[Spokesperson]";
+		mes "You can register for the excavation project,";
+		mes "and help us however you can.";
+		mes "Registered excavators receive special benefits and commodities";
+		next;
+		mes "[Spokesperson]";
+		mes "in exchange for information that they discover in the ruins. We'll use the information to research the ruins.";
+		mes "Even if you fail to find useful information, we'll reward you just for your participation.";
+		next;
+		mes "[Spokesperson]";
+		mes "If you want to join the project, please go submit your application to the Eden Group.";
+		close;
+	case 2:
+		mes "[Spokesperson]";
+		mes "An ancient site was just discovered in Juperos.";
+		mes "It was hidden at the end of a long tunnel.";
+		next;
+		mes "[Spokesperson]";
+		mes "Rekenber has named the site ^4d4dffPhantasmagorika^000000";
+		mes "and commenced an excavation.";
+		next;
+		mes "[Spokesperson]";
+		mes "We're hoping to find more advanced magic gears and a higher level of scientific knowledge than what was ever discovered in the Juperos region.";
+		close;
+	case 3:
+		mes "[Spokesperson]";
+		mes "Rekenber is looking for talented adventurers for the excavation of Phantasmagorika.";
+		mes "Feel free to join us anytime!";
+		mes "We need you!";
+		close;
+	}
+
+OnInit:
+	questinfo 7610, QTYPE_QUEST, 1;
+	setquestinfo_level 7610, 140,175;
+	end;
+}
+geffen,135,64,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#2	4_F_ZONDAGIRL
 
 moc_para01,31,14,0	script	#atnevt01	HIDDEN_WARP_NPC,2,2,{
 	end;
@@ -744,8 +805,8 @@ ver_eju,114,40,4	script	Manager Michelle#atnd05	4_M_LGTGUARD,{
 OnInit:
 	questinfo 7611,QTYPE_QUEST,1;
 	setquestinfo_req 7611,7612,0;
-	questinfo 7612,QTYPE_QUEST,1;
-	setquestinfo_req 7612,7611,2;// todo : display when HUNTING completed
+	// questinfo 7612,QTYPE_QUEST,1;
+	// setquestinfo_req 7612,7611,2;// todo : display when HUNTING completed
 	end;
 }
 
@@ -932,7 +993,6 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 			mes "The upper management is interested in";
 			mes "hearing more about your findings.";
 			mes "I hope you'll continue to surprise us.";
-			break;
 		}
 		else {
 			mes "Are you here to report your daily results?";
@@ -1066,14 +1126,13 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 OnInit:
 	questinfo 7611,QTYPE_QUEST,1;
 	setquestinfo_req 7611,7612,0;
-	questinfo 7612,QTYPE_QUEST,1;
-	setquestinfo_req 7612,7611,2;// todo : display when HUNTING completed
+	// questinfo 7612,QTYPE_QUEST,1;
+	// setquestinfo_req 7612,7611,2;// todo : display when HUNTING completed
 
 	questinfo 7613,QTYPE_QUEST,1;
 	setquestinfo_req 7613,7614,0;
-	questinfo 7614,QTYPE_QUEST,1;
-	setquestinfo_req 7614,7613,2;// todo : display when HUNTING completed
-
+	// questinfo 7614,QTYPE_QUEST,1;
+	// setquestinfo_req 7614,7613,2;// todo : display when HUNTING completed
 	end;
 }
 
@@ -1738,7 +1797,7 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 			}
 		}
 		else {
-			switch( rand(1,14) ) {//maybe more case
+			switch( rand(1,14) ) {
 			case 1:
 				npctalk "This is Dorothy Florence. Dorothy who only knows how to do laundry.";
 				sleep2 4000;
@@ -1985,6 +2044,7 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 			erasequest 7652;// Collect Memory Records of Laboratories
 			erasequest 7655;// Play Laboratories Memory Records
 			setquest 7653;// One Memory a Day 2
+			// memory record daily quests
 			if (countitem(22691) < 1 && countitem(22692) < 1 && countitem(22693) < 1 && countitem(22694) < 1 && countitem(22695) < 1)
 				getitem rand(22691,22695),1;// Record_Fragment
 		}
@@ -3206,7 +3266,7 @@ verus03,167,257,5	script	Access Controller Damhw#atnd	4_M_LGTGUARD,{
 	mes "[" + .@npc_name$ + "]";
 	mes "Anyway, since you are permitted you may enter freely from now on.";
 	mes "Then I expect there to be good results!";
-	completequest 7641;// Access Permitted (note : you can enter in verus01 without the quest)
+	completequest 7641;// Access Permitted (note : player can enter in verus01 without this quest)
 	close;
 }
 verus03,172,257,3	duplicate(Access Controller Damhw#atnd)	Access Controller Gyuhw#atnd	4_M_LGTGUARD
@@ -4023,31 +4083,6 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 		close;
 	}
 }
-
-/*
-OnEvent:
-	mapannounce "verus04","Police Officer Piffs: The Doom Prayers have stricken!",0;
-	end;
-OnTimer2000:
-	mapannounce "verus04","Police Chief Kesler: Attention all police officers, stop the Doom Prayers before they destroy the excavation site!",0;
-	end;
-OnTimer29000:
-	mapannounce "verus04","Doom Prayers Executive: Destroy and bring the end of the world! Destroy and be saved!",0;
-	end;
-OnTimer59000:
-	mapannounce "verus04","Police Officer Piffs: Argh, Doom Prayers! Where do they keep coming from?!",0;
-	end;
-OnTimer120000:
-	mapannounce "verus04","Police Chief Kesler: Everyone, do not retreat! Don't let them destroy the excavation site!",0;
-	end;
-OnTimer179000:
-	mapannounce "verus04","Police Chief Kesler: Those Doom Prayers underestimate us.",0;
-	end;
-OnTimer240000:
-	mapannounce "verus04","Police Chief Kesler: Adventurers, the Doom Prayers have been driven out of Phantasmagorika. They're no longer a threat to your safety.",0;
-	end;
-*/
-
 
 verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 	if (checkweight(1301,1) == 0) {
@@ -4918,7 +4953,7 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 		getitem 11519,1;// Beef_Toast
 		changequest 7625,7626;// Count On Me -> Delicacy for Him
 		VER_MAIN = 16;
-		close3;
+		close;
 	}
 	if (VER_MAIN == 16) {
 		cutin "looke_rapez01.bmp",0;
@@ -5545,68 +5580,6 @@ verus01,172,146,4	script	Lame Journalist#1	4_M_HUBOY,{
 	}
 }
 
-prontera,121,77,3	script	Phantasmagorika Spokesperson	4_F_ZONDAGIRL,{
-	mes "[Spokesperson]";
-	mes "Good day.";
-	mes "Rekenber is recruiting adventurers for an excavation project that takes place in Phantasmagorika, the newly discovered ruins in Juperos.";
-	next;
-	mes "[Spokesperson]";
-	mes "If you're interested, just come as you are.";
-	mes "Everything you need for the excavation will be provided by Rekenber.";
-	next;
-	mes "[Spokesperson]";
-	mes "Join us for adventure at the newly discovered ruins in Juperos,";
-	mes "an ancient city whose scientific knowledge has fueled the development of modern civilization.";
-	next;
-	mes "[Spokesperson]";
-	mes "If you'd like to join, then form an excavation team and fill out your application.";
-	next;
-	switch( select( "Excavation team? Application?", "Phantasmagorika?", "Bye." ) ) {
-	case 1:
-		mes "[Spokesperson]";
-		mes "We're recruiting teams of excavators for the research of Phantasmagorika, the newly discovered ruins.";
-		mes "This project requires expertise in various fields, so we've decided to recruit";
-		mes "teams of excavators instead of individuals.";
-		next;
-		mes "[Spokesperson]";
-		mes "You can register for the excavation project,";
-		mes "and help us however you can.";
-		mes "Registered excavators receive special benefits and commodities";
-		next;
-		mes "[Spokesperson]";
-		mes "in exchange for information that they discover in the ruins. We'll use the information to research the ruins.";
-		mes "Even if you fail to find useful information, we'll reward you just for your participation.";
-		next;
-		mes "[Spokesperson]";
-		mes "If you want to join the project, please go submit your application to the Eden Group.";
-		close;
-	case 2:
-		mes "[Spokesperson]";
-		mes "An ancient site was just discovered in Juperos.";
-		mes "It was hidden at the end of a long tunnel.";
-		next;
-		mes "[Spokesperson]";
-		mes "Rekenber has named the site ^4d4dffPhantasmagorika^000000";
-		mes "and commenced an excavation.";
-		next;
-		mes "[Spokesperson]";
-		mes "We're hoping to find more advanced magic gears and a higher level of scientific knowledge than what was ever discovered in the Juperos region.";
-		close;
-	case 3:
-		mes "[Spokesperson]";
-		mes "Rekenber is looking for talented adventurers for the excavation of Phantasmagorika.";
-		mes "Feel free to join us anytime!";
-		mes "We need you!";
-		close;
-	}
-
-OnInit:
-	questinfo 7610, QTYPE_QUEST, 1;
-	setquestinfo_level 7610, 140,175;
-	end;
-}
-geffen,135,64,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#2	4_F_ZONDAGIRL
-
 ver_eju,116,43,5	script	Rekenber Mercenary#atd01	4_GEFFEN_09,{
 	switch( rand(0,2) ) {
 		case 0: npctalk "They don't stop coming."; end;
@@ -5765,6 +5738,40 @@ verus03,59,250,7	script	Coral Excavation team C#e152	2_M_SAGE_B,{
 }
 verus03,61,250,7	duplicate(Coral Excavation team C#e152)	Coral Excavation team C#e152_	4_M_ALCHE_C
 
+verus04,1,1,0	script	#verus04_invade	HIDDEN_WARP_NPC,{
+	end;
+OnInit:
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce "verus04", "Police Officer Piffs: The Doom Prayers have stricken!", bc_map;
+    monster "verus04",0,0,"Ruin Grace Believer",3158,20, "#verus04_invade::OnMobDead";
+	end;
+OnTimer3000:
+	mapannounce "verus04", "Police Chief Kesler: Attention all police officers, stop the Doom Prayers before they destroy the excavation site!", bc_map;
+	end;
+OnTimer30000:
+	mapannounce "verus04", "Doom Prayers Executive: Destroy and bring the end of the world! Destroy and be saved!", bc_map;
+	end;
+OnTimer60000:
+	mapannounce "verus04", "Police Officer Piffs: Argh, Doom Prayers! Where do they keep coming from?!", bc_map;
+	end;
+OnTimer120000:
+	mapannounce "verus04", "Police Chief Kesler: Everyone, do not retreat! Don't let them destroy the excavation site!", bc_map;
+	end;
+OnTimer180000:
+	mapannounce "verus04", "Police Chief Kesler: Those Doom Prayers underestimate us.", bc_map;
+	end;
+OnTimer240000:
+	mapannounce "verus04", "Police Chief Kesler: Adventurers, the Doom Prayers have been driven out of Phantasmagorika. They're no longer a threat to your safety.", bc_map;
+	killmonster "verus04", "#verus04_invade::OnMobDead";
+	end;
+OnTimer3600000:
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+}
 
 verus04,194,165,5	script	Rekenber Guard#ver01	4_M_LGTGUARD,{
 	mes "[Rekenber Guard]";
@@ -8848,7 +8855,7 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		mes "There is a weird piece.";
 		close;
 	}
-	if (@weird_piece == 1) {// A1
+	if (@weird_piece == 1) {// A
 		mes "I cannot tell how long it has been since I entered this place.";
 		mes "In this darkness my sense of time grows dull and the people are quickly growing tired.";
 		next;
@@ -8865,7 +8872,7 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		@weird_piece = 2;
 		end;
 	}
-	if (@weird_piece == 2) {// A2
+	if (@weird_piece == 2) {
 		mes "Even though I was ready for this, the situation is deteriorating.";
 		mes "I can only say I would not have survived if I stayed at that place.";
 		next;
@@ -8877,7 +8884,7 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		@weird_piece = 3;
 		end;
 	}
-	if (@weird_piece == 3) {// A3
+	if (@weird_piece == 3) {
 		mes "We should have been out by now according to the calculations but there is only dirt still.";
 		next;
 		mes "The calculations could be wrong and we may be going in circles.";
@@ -8893,7 +8900,7 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 }
 
 un_myst,182,137,3	script	Weird piece#02	4_GC109,{
-	if (@weird_piece == 4) {// B1
+	if (@weird_piece == 4) {// B
 		mes "I may have reached my limits.";
 		mes "I must blame my overtaxed body for not listening to me now.";
 		next;
@@ -8908,7 +8915,7 @@ un_myst,182,137,3	script	Weird piece#02	4_GC109,{
 		@weird_piece = 5;
 		end;
 	}
-	if (@weird_piece == 5) {// B2
+	if (@weird_piece == 5) {
 		mes "Even walking is difficult now.";
 		next;
 		mes "Once I confidently claimed I will lead all of us...";
@@ -8922,14 +8929,14 @@ un_myst,182,137,3	script	Weird piece#02	4_GC109,{
 		@weird_piece = 6;
 		end;
 	}
-	if (@weird_piece == 6) {// B3
+	if (@weird_piece == 6) {
 		mes "It would be better to abandon me...";
 		close2;
 		warp "un_myst",86,136;
 		@weird_piece = 7;
 		end;
 	}
-	if (@weird_piece == 7) {// B4
+	if (@weird_piece == 7) {
 		mes "The days I am asleep are outnumbering the days I am awake now.";
 		next;
 		mes "I suddenly picture his face in my increasingly hazy consciousness.";
@@ -8955,27 +8962,27 @@ un_myst,182,137,3	script	Weird piece#02	4_GC109,{
 
 un_myst,214,86,3	script	Weird piece#03	4_GC109,{
 	if (@weird_piece > 7 && @weird_piece < 17) {
-		if (@weird_piece == 8)// C1
+		if (@weird_piece == 8)// C
 			mes "01001000010001010100110001001100010011110101011101001111010100100100110001000100";
-		else if (@weird_piece == 9)// C2
+		else if (@weird_piece == 9)
 			mes "s o g g g o h o h h h h h h h h h h h h";
-		else if (@weird_piece == 10)// C3
+		else if (@weird_piece == 10)
 			mes "debugging";
-		else if (@weird_piece == 11) {// C4
+		else if (@weird_piece == 11) {
 			mes "File...error...restore...";
 			mes "Operation...range...25%...30%...35%.......";
 		}
-		else if (@weird_piece == 12)// C5
+		else if (@weird_piece == 12)
 			mes "45%...50%... Minimal normal operations possible start safety mode operations";
-		else if (@weird_piece == 13)// C6
+		else if (@weird_piece == 13)
 			mes "60% movement speed normal. Bodily functions normal.";
-		else if (@weird_piece == 14)// C7
+		else if (@weird_piece == 14)
 			mes "70% Most language function restored. Slight symptoms of septic anemia but it seems it will be fixed soon.";
-		else if (@weird_piece == 15) {// C8
+		else if (@weird_piece == 15) {
 			mes "80% Surgery was fairly successful despite having had no proper preparations.";
 			mes "Planning to apply treatment to the rest of the survivors based on this success.";
 		}
-		else if (@weird_piece == 16) {// C9
+		else if (@weird_piece == 16) {
 			mes "98% Corrupt sector detected.";
 			mes "For more effective operations I have copied the memory chip and constructed 'T_W_O_002b.'";
 			mes "There seems to have been some loss of data during the copying process...";
@@ -8991,7 +8998,7 @@ un_myst,214,86,3	script	Weird piece#03	4_GC109,{
 	}
 }
 
-un_myst,209,42,3	script	Tamarin#Lastroom Entran	4_M_TAMARIN,{
+un_myst,209,42,3	script	Tamarin#Lastroom Entrance	4_M_TAMARIN,{
 	if (VER_ELEVATOR < 1007)
 		end;
 	mes "[Tamarin]";
@@ -9011,7 +9018,7 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entran	4_M_TAMARIN,{
 		getitem 6828,1;// Gravity_Safety_Device
 	}
 	else {
-		if (@weird_piece == 0)// can't go outside following path weird piece
+		if (@weird_piece == 0)	// can't go outside following path weird piece
 			.@string$ = "Go outside.";
 		.@s = select( "Open door.", .@string$ ) - 1;
 	}

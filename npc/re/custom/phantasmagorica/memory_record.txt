@@ -129,7 +129,6 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 			next;
 			setquest 5341;// Limits of Journeys
 			setquest 5342;// Help Her
-			recorder_quest_type = 1;
 			recorder_quest_status = 1;
 			mes "[Bunker Sayhu]";
 			mes "Do you want to go and ask her if she needs any help?";
@@ -322,7 +321,7 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 			erasequest 5365;// Urgent News
 			setquest 5370;// Memory Record
 			getexp 750000,750000;
-			recorder_quest_status = 4;
+			recorder_quest_status = 3;
 			mes "The small round capsule has percolated through the skin. It feels like experience has accumulated.";
 			next;
 			mes "[Lona Fresa]";
@@ -2508,7 +2507,7 @@ un_bk_q,215,303,4	duplicate(Off Limits#01)	farm#C0	4_BULLETIN_BOARD2
 un_bk_q,58,185,4	duplicate(Off Limits#01)	Control room#Left	4_BULLETIN_BOARD2
 un_bk_q,139,187,4	duplicate(Off Limits#01)	Control room#Right	4_BULLETIN_BOARD2
 
-un_bk_q,101,122,4	duplicate(Off Limits#01)	Monitoring room#A0Cente	4_BULLETIN_BOARD2
+un_bk_q,101,122,4	duplicate(Off Limits#01)	Monitoring room#A0Center	4_BULLETIN_BOARD2
 un_bk_q,58,171,4	duplicate(Off Limits#01)	Monitoring room#L1Left	4_BULLETIN_BOARD2
 un_bk_q,139,171,4	duplicate(Off Limits#01)	Monitoring room#L2Right	4_BULLETIN_BOARD2
 

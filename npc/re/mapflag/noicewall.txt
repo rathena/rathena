@@ -53,3 +53,4 @@ te_aldecas5	mapflag	noicewall
 
 // Episode 15
 1@lab	mapflag	noicewall
+1@uns	mapflag	noicewall
