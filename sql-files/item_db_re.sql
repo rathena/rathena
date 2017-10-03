@@ -11450,6 +11450,12 @@ REPLACE INTO `item_db_re` VALUES (27027,'Fire_Sandman_Card','Fire Sandman Card',
 REPLACE INTO `item_db_re` VALUES (27028,'Fire_Frilldora_Card','Fire Frilldora Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bMagicAddEle,Ele_Earth,3+((.@r>=7)*5)+((.@r>=9)*7);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27029,'Fire_Golem_Card','Fire Golem Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27030,'Fulbuk_Card','Fulbuk Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,769,NULL,NULL,NULL,NULL,'bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27147,'Humanoid_Chimera_Card','Humanoid Chimera Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bHit,(BaseLevel >= 90 ? 15 : 5);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27148,'Material_Chimera_Card','Material Chimera Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bFlee,(BaseLevel >= 90 ? 20 : 10);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27149,'Heart_Hunter_Card','Heart Hunter Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'.@type = getiteminfo(getequipid(EQI_COMPOUND_ON),11); .@r = getrefine(); if(.@type == 17 || .@type == 18 || .@type == 21){ bonus bLongAtkRate,5+.@r+(.@r >= 10 ? 5 : 0); }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27150,'Toxic_Enchanted_Chimera_Card','Toxic Enchanted Chimera Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHP,1000; bonus bMaxSP,200; if(getrefine() >= 12){ bonus bMaxHPrate,15; bonus bMaxSPrate,15; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27151,'Heart_Hunter_Evil_Card','Heart Hunter Evil Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus2 bAddEffWhenHit,SC_FREEZING,1000 + (readparam(bInt) >= 110 ? 5 : 0); bonus bMdef,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27152,'Cutie_Card','Cutie Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,10; .@r = getrefine()/2; bonus bAgi,.@r; bonus bAspdRate,.@r;',NULL,NULL);
 #===================================================================
 # New Katars
 #===================================================================
