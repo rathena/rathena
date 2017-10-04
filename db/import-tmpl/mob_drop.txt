@@ -9,7 +9,7 @@
 //     0 = No Flags
 //     1 = Is Stealable
 // Note: DropIndex is used to overwrite item drops
-
+// Note: To remove an item drop, use the DropIndex to choose which item to delete, then set itemId to 0
 
 //  ID | Sprite_Name | iROName
 // ID,DTYPE_MVP,1,MVP1id,MVP1per
