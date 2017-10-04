@@ -775,9 +775,7 @@ enum weapon_type {
 	W_GRENADE,	//21
 	W_HUUMA,	//22
 	W_2HSTAFF,	//23
-#ifndef MAX_SINGLE_WEAPON_TYPE
 	MAX_SINGLE_WEAPON_TYPE,
-#endif
 	// dual-wield constants
 	W_DOUBLE_DD, // 2 daggers
 	W_DOUBLE_SS, // 2 swords
@@ -785,9 +783,7 @@ enum weapon_type {
 	W_DOUBLE_DS, // dagger + sword
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
-#ifndef MAX_WEAPON_TYPE
 	MAX_WEAPON_TYPE,
-#endif
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
