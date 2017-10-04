@@ -8988,12 +8988,11 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	nullpo_retr(false, sd);
 
-	if (!&sd->sc)
-		return true;
+	if( pc_is90overweight(sd) || pc_isridingwug(sd) )
+		return false;
 
 	if( sd->sc.data[SC_BASILICA] ||
 		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
 		sd->sc.data[SC_CURSEDCIRCLE_TARGET] ||
 		sd->sc.data[SC_CRYSTALIZE] ||

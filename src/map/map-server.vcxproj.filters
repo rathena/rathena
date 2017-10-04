@@ -217,7 +217,7 @@
     <ClCompile Include="mercenary.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mob.c">
+    <ClCompile Include="mob.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="npc.c">

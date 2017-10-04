@@ -2190,6 +2190,23 @@ int unit_unattackable(struct block_list *bl)
 }
 
 /**
+ * Checks if the unit can attack, returns yes if so.
+*/
+bool unit_can_attack(struct block_list *src, int target_id)
+{
+	struct status_change *sc = status_get_sc(src);
+
+	if( sc != NULL ) {
+		if( sc->data[SC__MANHOLE] )
+			return false;
+	}
+
+	if( src->type == BL_PC )
+		return pc_can_attack(BL_CAST(BL_PC, src), target_id);
+	return true;
+}
+
+/**
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
@@ -2212,23 +2229,16 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	if( src->type == BL_PC ) {
-		TBL_PC* sd = (TBL_PC*)src;
+	if( src->type == BL_PC &&
+		target->type == BL_NPC ) {
+		// Monster npcs [Valaris]
+		npc_click((TBL_PC*)src,(TBL_NPC*)target);
+		return 0;
+	}
 
-		if( target->type == BL_NPC ) { // Monster npcs [Valaris]
-			npc_click(sd,(TBL_NPC*)target); // Submitted by leinsirk10 [Celest]
-			return 0;
-		}
-
-		if( pc_is90overweight(sd) || pc_isridingwug(sd) ) { // Overweight or mounted on warg - stop attacking
-			unit_stop_attack(src);
-			return 0;
-		}
-
-		if( !pc_can_attack(sd, target_id) ) {
-			unit_stop_attack(src);
-			return 0;
-		}
+	if( !unit_can_attack(src, target_id) ) {
+		unit_stop_attack(src);
+		return 0;
 	}
 
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
