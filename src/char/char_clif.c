@@ -913,7 +913,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
 // S 0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
-	int i = 0;
+	int char_id = 0;
 
 	if (cmd == 0xa39) FIFOSD_CHECK(36) //>=20151001
 	else if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
@@ -921,39 +921,41 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	else return 0;
 
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
-		i = -2;
+		char_id = -2;
 	else {
 #if PACKETVER >= 20151001
-			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
+			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
 			RFIFOSKIP(fd,36);
 #elif PACKETVER >= 20120307
-			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
+			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
 			RFIFOSKIP(fd,31);
 #else
-			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
+			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 			RFIFOSKIP(fd,37);
 #endif
 	}
 
-	//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
-	if (i < 0) {
+	if (char_id < 0) {
+		// deny character creation
 		WFIFOHEAD(fd,3);
 		WFIFOW(fd,0) = 0x6e;
-		/* Others I found [Ind] */
-		/* 0x02 = Symbols in Character Names are forbidden */
-		/* 0x03 = You are not elegible to open the Character Slot. */
-		switch (i) {
+		switch (char_id) {
+			// 'Charname already exists' (-1)
 			case -1: WFIFOB(fd,2) = 0x00; break;
+			// 'Char creation denied' (-2)
 			case -2: WFIFOB(fd,2) = 0xFF; break;
+			// 'You are underaged' (-3)
 			case -3: WFIFOB(fd,2) = 0x01; break;
+			//  'You are not elegible to open the Character Slot' (-4)
 			case -4: WFIFOB(fd,2) = 0x03; break;
+		/* Unused: 0x02 = Symbols in Character Names are forbidden [Ind]*/
 		}
 		WFIFOSET(fd,3);
 	} else {
 		int len;
 		// retrieve data
 		struct mmo_charstatus char_dat;
-		char_mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
+		char_mmo_char_fromsql(char_id, &char_dat, false); //Only the short data is needed.
 
 		// send to player
 		WFIFOHEAD(fd,2+MAX_CHAR_BUF);
@@ -962,7 +964,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		WFIFOSET(fd,len);
 
 		// add new entry to the chars list
-		sd->found_char[char_dat.slot] = i; // the char_id of the new char
+		sd->found_char[char_dat.slot] = char_id;
 	}
 	return 1;
 }
