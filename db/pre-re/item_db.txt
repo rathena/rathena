@@ -4221,7 +4221,7 @@
 7853,Pass_F3,iPod nano Raffle Ticket,3,20,,10,,,,,,,,,,,,,{},{},{}
 7854,Pass_CF,Comodo Festival Ticket,3,20,,10,,,,,,,,,,,,,{},{},{}
 7855,Heart,Heart,3,20,,10,,,,,,,,,,,,,{},{},{}
-7856,Girl_Bunch_Of_Flower,Girl's Bouquet,3,20,,50,,,,,,,,,,,,,{},{},{}
+7856,Girl_Bunch_Of_Flower_,Girl's Bouquet,3,20,,50,,,,,,,,,,,,,{},{},{}
 7857,Handmade_Kitty_Doll,Hand-made Kitty Doll,3,20,,30,,,,,,,,,,,,,{},{},{}
 7858,Dragonball_Yellow_,Dragonball Yellow,3,20,,10,,,,,,,,,,,,,{},{},{}
 7859,Game_Ticket,Game Ticket,3,20,,100,,,,,,,,,,,,,{},{},{}
