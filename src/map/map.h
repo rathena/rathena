@@ -999,6 +999,8 @@ extern char mob_table[32];
 extern char mob2_table[32];
 extern char mob_skill_table[32];
 extern char mob_skill2_table[32];
+extern char mob_drop_table[32];
+extern char mob_drop2_table[32];
 extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];

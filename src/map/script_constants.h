@@ -3876,6 +3876,10 @@
 	script_set_constant("REFINE_MATERIAL_ID", 0, false, false);
 	script_set_constant("REFINE_ZENY_COST", 1, false, false);
 
+	/* Mob drop types*/
+	export_constant(DTYPE_NORMAL);
+	export_constant(DTYPE_MVP);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

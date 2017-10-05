@@ -21,13 +21,8 @@ extern "C" {
 #define MAX_MOB_DB 5000
 
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
-#define MAX_MOB_DROP 10
-#define MAX_MVP_DROP 3
-#define MAX_MOB_DROP_ADD 5
-#define MAX_MVP_DROP_ADD 2
-#define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
-#define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
-#define MAX_STEAL_DROP 7
+#define MAX_MOB_DROP 15
+#define MAX_MVP_DROP 5
 
 #define MAX_RACE2_MOBS 100
 
@@ -106,6 +101,17 @@ enum size {
 	SZ_MAX
 };
 
+enum MobDropType {
+	DTYPE_NORMAL = 0,
+	DTYPE_MVP,
+	DTYPE_MAX
+};
+
+enum MobDropFlag {
+	DFLAG_NONE = 0,
+	DFLAG_STEAL = 0x1
+};
+
 /// Used hardcoded Random Monster group in src
 enum e_Random_Monster {
 	MOBG_Branch_Of_Dead_Tree	= 0,
@@ -150,7 +156,7 @@ struct s_mob_drop {
 	unsigned short nameid;
 	int p;
 	uint8 randomopt_group;
-	unsigned steal_protected : 1;
+	unsigned stealable : 1;
 };
 
 struct mob_db {
@@ -160,7 +166,7 @@ struct mob_db {
 	short range2,range3;
 	enum e_race2 race2;	// celest
 	unsigned short lv;
-	struct s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
+	struct s_mob_drop dropitem[MAX_MOB_DROP], mvpitem[MAX_MVP_DROP];
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
