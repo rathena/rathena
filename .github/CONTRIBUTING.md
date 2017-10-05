@@ -164,10 +164,9 @@ Become a Team Member
 --------------------
 
 1. Before you send in a staff application, make sure you have an [rAthena account](https://rathena.org/board/register/).
-  * If you are new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
+    * If you are new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
 2. Please fill out the [Staff Application](https://rathena.org/board/staffapplications/) and you will be notified shortly.
 
-<br />
 The rAthena team is comprised of all volunteers ([AUTHORS](https://github.com/rathena/rathena/blob/master/AUTHORS)). We encourage you to pitch in and submit bug reports or Pull Requests!
 
 Thanks!
