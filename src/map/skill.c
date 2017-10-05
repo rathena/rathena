@@ -687,6 +687,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		case SC_FATALMENACE:
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
+		case WE_CALLALLFAMILY:
 			if(map[m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
@@ -6103,6 +6104,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			case PR_REDEMPTIO:
 			case ALL_RESURRECTION:
 			case WM_DEADHILLHERE:
+			case WE_ONEFOREVER:
 				break;
 			default:
 				return 1;
@@ -8353,6 +8355,75 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_start(src,bl,SC_STUN,10000,skill_lv,0,0,0,skill_get_time2(skill_id,skill_lv),SCSTART_NORATEDEF);
 			if (f_sd) sc_start(src,&f_sd->bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 			if (m_sd) sc_start(src,&m_sd->bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
+		}
+		break;
+
+	case WE_CALLALLFAMILY:
+		if (sd) {
+			struct map_session_data *p_sd = pc_get_partner(sd);
+			struct map_session_data *c_sd = pc_get_child(sd);
+
+			if (!p_sd && !c_sd) { // Fail if no family members are found
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				map_freeblock_unlock();
+				return 1;
+			}
+
+			// Partner must be on the same map and in same party
+			if (p_sd && !status_isdead(&p_sd->bl) && p_sd->bl.m == sd->bl.m && p_sd->status.party_id == sd->status.party_id)
+				pc_setpos(p_sd, map_id2index(sd->bl.m), sd->bl.x, sd->bl.y, CLR_TELEPORT);
+			// Child must be on the same map and in same party as the parent casting
+			if (c_sd && !status_isdead(&c_sd->bl) && c_sd->bl.m == sd->bl.m && c_sd->status.party_id == sd->status.party_id)
+				pc_setpos(c_sd, map_id2index(sd->bl.m), sd->bl.x, sd->bl.y, CLR_TELEPORT);
+		}
+		break;
+
+	case WE_ONEFOREVER:
+		if (sd) {
+			struct map_session_data *p_sd = pc_get_partner(sd);
+			struct map_session_data *c_sd = pc_get_child(sd);
+
+			if (!p_sd && !c_sd) { // Fail if no family members are found
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				map_freeblock_unlock();
+				return 1;
+			}
+			if ((map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)) { // No reviving in WoE grounds!
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				break;
+			}
+			if (status_isdead(bl)) {
+				int per = 30, sper = 0;
+
+				if (battle_check_undead(tstatus->race, tstatus->def_ele))
+					break;
+				if (tsc && tsc->data[SC_HELLPOWER])
+					break;
+				if (map[bl->m].flag.pvp && dstsd && dstsd->pvp_point < 0)
+					break;
+				if (dstsd && dstsd->special_state.restart_full_recover)
+					per = sper = 100;
+				if (dstsd && (dstsd->status.char_id == sd->status.partner_id || dstsd->status.char_id == sd->status.child) && status_revive(bl, per, sper)) // Only family members can be revived
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			}
+		}
+		break;
+
+	case WE_CHEERUP:
+		if (sd) {
+			struct map_session_data *f_sd = pc_get_father(sd);
+			struct map_session_data *m_sd = pc_get_mother(sd);
+
+			if (!f_sd && !m_sd) { // Fail if neither parent is found
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				map_freeblock_unlock();
+				return 1;
+			}
+			if (flag&1) { // Buff can only be given to parents in 7x7 AoE around baby
+				if (dstsd && (dstsd->status.char_id == sd->status.father || dstsd->status.char_id == sd->status.mother))
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+			} else
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ALL|1, skill_castend_nodamage_id);
 		}
 		break;
 

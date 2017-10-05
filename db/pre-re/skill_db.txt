@@ -1397,6 +1397,11 @@
 5055,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_CHATTERING,Chattering
 5056,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SPIRITOFSEA,Spirit of Sea
 
+// Wedding Skills 3
+5063,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	WE_CALLALLFAMILY,Call All Family
+5064,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	WE_ONEFOREVER,One Forever
+5065,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	WE_CHEERUP,Cheer Up
+
 //****
 // Homunculus S
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,	HLIF_HEAL,Healing Touch
