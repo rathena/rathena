@@ -11456,6 +11456,12 @@ REPLACE INTO `item_db_re` VALUES (27149,'Heart_Hunter_Card','Heart Hunter Card',
 REPLACE INTO `item_db_re` VALUES (27150,'Toxic_Enchanted_Chimera_Card','Toxic Enchanted Chimera Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHP,1000; bonus bMaxSP,200; if(getrefine() >= 12){ bonus bMaxHPrate,15; bonus bMaxSPrate,15; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27151,'Heart_Hunter_Evil_Card','Heart Hunter Evil Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus2 bAddEffWhenHit,SC_FREEZING,1000 + (readparam(bInt) >= 110 ? 5 : 0); bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27152,'Cutie_Card','Cutie Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,10; .@r = getrefine()/2; bonus bAgi,.@r; bonus bAspdRate,.@r;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27157,'Wood_Goblin_Card','Wood Goblin Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bAddEle,Ele_Water,(.@r >= 9 ? 10 : 5); bonus2 bAddEle,Ele_Earth,(.@r >= 9 ? 10 : 5); bonus2 bSubDefEle,Ele_Water,-5; bonus2 bSubDefEle,Ele_Earth,-5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27158,'Les_Card','Les Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Wind,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27159,'Uzhas_Card','Uzhas Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus2 bMagicAddRace,RC_Demon,(getrefine() >= 9 ? 15 : 10);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27160,'Vavayaga_Card','Vavayaga Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bFlee,getrefine()*2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27161,'Mavka_Card','Mavka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus2 bMagicAddEle,Ele_Fire,20; bonus2 bMagicAddEle,Ele_Earth,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27162,'Gopinich_Card','Gopinich Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bSPDrainValue,5; bonus bUseSPrate,50;',NULL,NULL);
 #===================================================================
 # New Katars
 #===================================================================
