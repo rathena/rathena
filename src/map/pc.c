@@ -6366,9 +6366,11 @@ const char* job_name(int class_)
 		return msg_txt(NULL,695);
 
 	case JOB_SUMMONER:
+		return msg_txt(NULL,697);
 	case JOB_BABY_SUMMONER:
+		return msg_txt(NULL,698);
 	case JOB_BABY_NINJA:
-		return msg_txt(NULL,697 - JOB_SUMMONER+class_);
+		return msg_txt(NULL,699);
 
 	case JOB_BABY_KAGEROU:
 	case JOB_BABY_OBORO:
