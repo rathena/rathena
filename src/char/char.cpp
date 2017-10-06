@@ -1533,7 +1533,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	time_t delete_date;
 	char *data;
 	size_t len;
-	int i, k;
+	int i;
 
 	ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == char_id);
 
