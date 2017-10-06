@@ -139,9 +139,7 @@ function	Job_Options	{
 	// Note: These are already set in pc.c
 	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
-	dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible
-		+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass
-		+"), BaseJob ("+BaseJob+")";
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the the array `.@job_opt` with possible
@@ -186,7 +184,6 @@ function	Job_Options	{
 	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
 		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
 		Require_Level(.Req_First[0], .Req_First[1]);
-		dispbottom "Debug: First Job Change";
 		switch(Class) {
 			case Job_Novice:
 				// First job change
@@ -230,7 +227,7 @@ function	Job_Options	{
 		// most jobs should have two options here  (2-1 and 2-2)
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
 		.@class2 = roclass(.@eac|EAJL_2_2); // 2-2
-		dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
+		// dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
 		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
 			// Player is rebirth Cls and linear class changes are enforced
 			Require_Level(.Req_Second[0], .Req_Second[1]);
@@ -561,8 +558,8 @@ OnInit:
 	.LastJob = true;				// Enforce linear class changes?
 	.SkillPointCheck = true;		// Force player to use up all skill points?
 	.Platinum = true;				// Get platinum skills automatically?
-	.GetJobEquip = true;			// Get job equipment (mostly weapons) on job change?
-	// TODO: Set .GetJobEquip to 0 and remove debug msgs once testing is finished
+	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
+
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
 	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
