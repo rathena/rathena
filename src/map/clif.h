@@ -1045,7 +1045,7 @@ void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int 
 
 void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove);
 
-void clif_showscript(struct block_list* bl, const char* message);
+void clif_showscript(struct block_list* bl, const char* message, enum send_target flag);
 void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, int new_leader_aid);
 
 void clif_account_name(int fd, uint32 account_id, const char* accname);

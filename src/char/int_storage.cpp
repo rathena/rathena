@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#pragma warning(disable:4800)
+
 #include "int_storage.h"
 
 #include "../common/malloc.h"

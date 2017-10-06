@@ -81,7 +81,7 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	//Caster's MDEF + (Caster's INT / (5 - Elemental Summon Skill Level)
 	ele.mdef = sd->battle_status.mdef + sd->battle_status.int_ / (5-i);
 	//Caster's FLEE + (Caster's Base Level / (5 - Elemental Summon Skill Level)
-	ele.flee = sd->status.base_level / (5-i);
+	ele.flee = sd->battle_status.flee + sd->status.base_level / (5-i);
 
 	//per individual bonuses
 	switch(db->class_){

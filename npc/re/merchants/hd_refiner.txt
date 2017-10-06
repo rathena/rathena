@@ -1,11 +1,5 @@
 //===== rAthena Script ======================================= 
 //= HD Refiners
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiners that use HD ores to refine equipment. Upon
@@ -14,8 +8,9 @@
 //= to that for Enriched ores.
 //= - "Blacksmith Mighty Hammer" only refines from +7~9.
 //= - "Basta" only refines from +10 and up.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
 //============================================================
 
 // Blacksmith Mighty Hammer (+7~9) :: cash_smelting79
@@ -78,20 +73,10 @@
 		mes "I only handle items with refine levels from +7 to +9.";
 		close;
 	}
-	switch(getequipweaponlv(.@part)) {
-	default:
-	case 0:
-		set .@price,20000;
-		set .@material,6241; //HD_Elunium
-		break;
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		set .@price,20000;
-		set .@material,6240; //HD_Oridecon
-		break;
-	}
+	
+	.@price = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
+	
 	mes "[Blacksmith Mighty Hammer]";
 	mes "In order to refine the gear you selected you need ^ff9999"+getitemname(.@material)+"^000000 and 20,000 zeny as a fee.";
 	mes "Do you have them ready?";
@@ -122,7 +107,7 @@
 	set Zeny, Zeny-.@price;
 	mes "[Blacksmith Mighty Hammer]";
 	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;
@@ -215,25 +200,23 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 		mes "This weapon is perfect, no need to refine it anymore~";
 		close;
 	}
+	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, REFINE_MATERIAL_ID);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:
-		set .@price,100000;
-		set .@material,6225; //HD_Carnium
 		set .@type$,"armor";
 		break;
 	case 1:
 	case 2:
 	case 3:
 	case 4:
-		set .@price,100000;
-		set .@material,6226; //HD_Bradium
 		set .@type$,"weapon";
 		break;
 	}
 	mes "[Basta]";
 	mes "Hmm... is this the one you want to refine?";
-	mes "To refine this equipment, I need 1 ^ff9999"+getitemname(.@material)+"^000000 and 100,000 zeny as a fee.";
+	mes "To refine this equipment, I need 1 ^ff9999"+getitemname(.@material)+"^000000 and " + callfunc("F_InsertComma",.@price) + " zeny as a fee.";
 	mes "Do you really want to refine this?";
 	next;
 	if(select("Yes:No") == 2) {
@@ -241,7 +224,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 		mes "Okay. If that's what you want...";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, true) < 100) {
 		mes "[Basta]";
 		mes "This "+.@type$+" has already been refined pretty high.";
 		mes "If you try to refine it more, the refine level could decrease.";
@@ -271,7 +254,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
 	mes "Pow! Pow! Pow! Pow!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;

@@ -175,7 +175,7 @@
     <ClCompile Include="clan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="clif.c">
+    <ClCompile Include="clif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="date.c">
@@ -217,7 +217,7 @@
     <ClCompile Include="mercenary.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mob.c">
+    <ClCompile Include="mob.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="npc.c">
@@ -244,7 +244,7 @@
     <ClCompile Include="quest.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="script.c">
+    <ClCompile Include="script.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="searchstore.c">

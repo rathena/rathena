@@ -106,6 +106,8 @@ int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 d
 void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool spdamage);
 int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool spdamage);
 
+int battle_calc_chorusbonus(struct map_session_data *sd);
+
 // Summary normal attack treatment (basic attack)
 enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
 
@@ -347,6 +349,7 @@ extern struct Battle_Config
 	int multi_level_up;
 	int max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int pk_mode;
+	int pk_mode_mes;
 	int pk_level_range;
 
 	int manner_system; // end additions [Valaris]
@@ -629,6 +632,8 @@ extern struct Battle_Config
 	int guild_leaderchange_woe;
 	int guild_alliance_onlygm;
 	int feature_achievement;
+	int allow_bound_sell;
+	int event_refine_chance;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;
