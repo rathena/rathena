@@ -233,7 +233,9 @@
     </ClCompile>
     <ClCompile Include="mapreg.c" />
     <ClCompile Include="mercenary.c" />
-    <ClCompile Include="mob.c" />
+    <ClCompile Include="mob.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="npc.c" />
     <ClCompile Include="npc_chat.c" />
     <ClCompile Include="party.c" />

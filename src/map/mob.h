@@ -302,13 +302,13 @@ struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
 void mob_free_dynamic_viewdata( struct mob_data* md );
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, enum mob_ai ai);
 
 int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y,
-	const char* mobname, int mob_id, int amount, const char* event, unsigned int size, unsigned int ai);
+	const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai);
 
 int mob_once_spawn_area(struct map_session_data* sd, int16 m,
-	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, unsigned int ai);
+	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai);
 
 bool mob_ksprotected (struct block_list *src, struct block_list *target);
 
