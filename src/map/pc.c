@@ -581,14 +581,18 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 }
 
 /**
-* Check if the player can sell the current item
-* @param sd map_session_data of the player
-* @param item struct of the checking item.
-* @return bool 'true' is sellable, 'false' otherwise
-*/
-bool pc_can_sell_item(struct map_session_data * sd, struct item * item) {
+ * Check if the player can sell the current item
+ * @param sd: map_session_data of the player
+ * @param item: struct of the checking item
+ * @return bool 'true' is sellable, 'false' otherwise
+ */
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
+	struct npc_data *nd;
+
 	if (sd == NULL || item == NULL)
 		return false;
+
+	nd = map_id2nd(sd->npc_shopid);
 
 	if (!itemdb_cansell(item, pc_get_group_level(sd)))
 		return false;
@@ -598,6 +602,9 @@ bool pc_can_sell_item(struct map_session_data * sd, struct item * item) {
 
 	if (item->expire_time)
 		return false; // Cannot Sell Rental Items
+
+	if (nd && nd->subtype == NPCTYPE_ITEMSHOP && item->bound && battle_config.allow_bound_sell)
+		return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
 
 	if (item->bound && !pc_can_give_bounded_items(sd))
 		return false; // Don't allow sale of bound items
@@ -3122,8 +3129,11 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			else if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%d\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 			}
-			else {
+			else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%d\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			}
+			else {
+				ShowWarning("pc_bonus: unknown bonus type %d %d in unknown usage. Report this!\n", type, val);
 			}
 			break;
 	}
@@ -3803,9 +3813,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+		} 
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
 		else {
-			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in unknown usage. Report this!\n", type, type2, val);
 		}
 		break;
 	}
@@ -3927,8 +3940,11 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in a combo with item #%d\n", type, type2, type3, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
-		else {
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in item #%d\n", type, type2, type3, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
+		else {
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, val);
 		}
 		break;
 	}
@@ -4010,8 +4026,11 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
-		else {
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in item #%d\n", type, type2, type3, type4, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
+		else {
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, type4, val);
 		}
 		break;
 	}
@@ -4059,8 +4078,11 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, type5, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
-		else {
+		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in item #%d\n", type, type2, type3, type4, type5, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
+		else {
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in unknown usage. Report this!\n", type, type2, type3, type4, type5, val);
 		}
 		break;
 	}
@@ -6344,9 +6366,11 @@ const char* job_name(int class_)
 		return msg_txt(NULL,695);
 
 	case JOB_SUMMONER:
+		return msg_txt(NULL,697);
 	case JOB_BABY_SUMMONER:
+		return msg_txt(NULL,698);
 	case JOB_BABY_NINJA:
-		return msg_txt(NULL,697 - JOB_SUMMONER+class_);
+		return msg_txt(NULL,699);
 
 	case JOB_BABY_KAGEROU:
 	case JOB_BABY_OBORO:
@@ -6388,7 +6412,7 @@ int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
 	sd->followtimer = INVALID_TIMER;
 	tbl = map_id2bl(sd->followtarget);
 
-	if (tbl == NULL || pc_isdead(sd) || status_isdead(tbl))
+	if (tbl == NULL || pc_isdead(sd))
 	{
 		pc_stop_following(sd);
 		return 0;
@@ -8966,12 +8990,11 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	nullpo_retr(false, sd);
 
-	if (!&sd->sc)
-		return true;
+	if( pc_is90overweight(sd) || pc_isridingwug(sd) )
+		return false;
 
 	if( sd->sc.data[SC_BASILICA] ||
 		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
 		sd->sc.data[SC_CURSEDCIRCLE_TARGET] ||
 		sd->sc.data[SC_CRYSTALIZE] ||

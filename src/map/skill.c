@@ -2712,7 +2712,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		return 0;
 
 	// Kaite reflection - Does not bypass Boss check
-	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80) ) {
+	if( sc->data[SC_KAITE] && (src->type == BL_PC || status_get_lv(src) <= 80)
+#ifdef RENEWAL
+		&& type // Does not reflect AoE
+#endif
+		) {
 		// Kaite only works against non-players if they are low-level.
 		// Kyomu doesn't disable Kaite, but the "skill fail chance" part of Kyomu applies to it.
 		clif_specialeffect(bl, 438, AREA);
@@ -10319,17 +10323,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SO_EL_CURE:
 		if( sd ) {
 			struct elemental_data *ed = sd->ed;
-			int s_hp = sd->battle_status.hp * 10 / 100, s_sp = sd->battle_status.sp * 10 / 100;
-			int e_hp, e_sp;
+			int s_hp, s_sp;
 
-			if( !ed )	break;
+			if( !ed )
+				break;
+
+			s_hp = sd->battle_status.hp * 10 / 100;
+			s_sp = sd->battle_status.sp * 10 / 100;
+
 			if( !status_charge(&sd->bl,s_hp,s_sp) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
-			e_hp = ed->battle_status.max_hp * 10 / 100;
-			e_sp = ed->battle_status.max_sp * 10 / 100;
-			status_heal(&ed->bl,e_hp,e_sp,3);
+
+			status_heal(&ed->bl,s_hp,s_sp,3);
 			clif_skill_nodamage(src,&ed->bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -10620,21 +10627,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_OVERED_BOOST:
-	     if (hd) {
-			 struct block_list *s_bl = battle_get_master(src);
-			 if(hd->homunculus.hunger>50) //reduce hunger
-				 hd->homunculus.hunger = hd->homunculus.hunger/2;
-			 else
-				 hd->homunculus.hunger = min(1,hd->homunculus.hunger);
-			 if(s_bl && s_bl->type==BL_PC) {
-				 status_set_sp(s_bl,status_get_max_sp(s_bl)/2,0); //master drain 50% sp
-				 clif_send_homdata(((TBL_PC *)s_bl), SP_HUNGRY, hd->homunculus.hunger); //refresh hunger info
-				 sc_start(src,s_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)); //gene bonus
-			 }
-			 sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			 skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-	     }
-	     break;
+		if (hd && battle_get_master(src)) {
+			sc_start(src, battle_get_master(src), type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
+		break;
 	case MH_GRANITIC_ARMOR:
 	case MH_PYROCLASTIC:
 		if(hd) {
@@ -10830,7 +10828,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_TOTARGET, 0);
 			break;
 		}
-		if (tsc->count && tsc->data[type]) // Refresh the status only if it's already active.
+		if (tsc && tsc->count && tsc->data[type]) // Refresh the status only if it's already active.
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		else {
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -16683,7 +16681,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				clif_upgrademessage(sd->fd, 3, material[ditem->wlv]);
 				return;
 			}
-			per = status_get_refine_chance(ditem->wlv, (int)item->refine);
+			per = status_get_refine_chance(ditem->wlv, (int)item->refine, false);
 			if( sd->class_&JOBL_THIRD )
 				per += 10;
 			else

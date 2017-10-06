@@ -8185,6 +8185,7 @@ static const struct _battle_data {
 	{ "equip_self_break_rate",              &battle_config.equip_self_break_rate,           100,    0,      INT_MAX,        },
 	{ "equip_skill_break_rate",             &battle_config.equip_skill_break_rate,          100,    0,      INT_MAX,        },
 	{ "pk_mode",                            &battle_config.pk_mode,                         0,      0,      2,              },
+	{ "pk_mode_mes",                        &battle_config.pk_mode_mes,                     1,      0,      1,              },
 	{ "pk_level_range",                     &battle_config.pk_level_range,                  0,      0,      INT_MAX,        },
 	{ "manner_system",                      &battle_config.manner_system,                   0xFFF,  0,      0xFFF,          },
 	{ "pet_equip_required",                 &battle_config.pet_equip_required,              0,      0,      1,              },
@@ -8429,6 +8430,8 @@ static const struct _battle_data {
 	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
 	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, },
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
+	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                1,      0,      1,              },
+	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

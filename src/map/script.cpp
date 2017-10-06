@@ -8883,24 +8883,31 @@ BUILDIN_FUNC(getequipweaponlv)
  * return (npc)
  *	x : refine chance
  *	0 : false (max refine level or unequip..)
- * getequippercentrefinery(<equipment slot>{,<char_id>})
+ * getequippercentrefinery(<equipment slot>{,<enriched>,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(getequippercentrefinery)
 {
 	int i = -1,num;
+	bool enriched = false;
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
+	if (script_hasdata(st, 3))
+		enriched = script_getnum(st, 3) != 0;
 
-	if (!script_charid2sd(3, sd)) {
+	if (!script_charid2sd(4, sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd,equip_bitmask[num]);
-	if(i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE)
-		script_pushint(st,status_get_refine_chance((enum refine_type)itemdb_wlv(sd->inventory.u.items_inventory[i].nameid), (int)sd->inventory.u.items_inventory[i].refine));
+	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE) {
+		enum refine_type type = REFINE_TYPE_SHADOW;
+		if (sd->inventory_data[i]->type != IT_SHADOWGEAR)
+			type = (enum refine_type)sd->inventory_data[i]->wlv;
+		script_pushint(st, status_get_refine_chance(type, (int)sd->inventory.u.items_inventory[i].refine, enriched));
+	}
 	else
 		script_pushint(st,0);
 
@@ -10179,7 +10186,7 @@ BUILDIN_FUNC(monster)
 	int amount			= script_getnum(st,7);
 	const char* event	= "";
 	unsigned int size	= SZ_SMALL;
-	unsigned int ai		= AI_NONE;
+	enum mob_ai ai		= AI_NONE;
 
 	struct map_session_data* sd;
 	int16 m;
@@ -10199,7 +10206,7 @@ BUILDIN_FUNC(monster)
 	}
 
 	if (script_hasdata(st, 10)) {
-		ai = script_getnum(st, 10);
+		ai = static_cast<enum mob_ai>(script_getnum(st, 10));
 		if (ai >= AI_MAX) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return SCRIPT_CMD_FAILURE;
@@ -10280,7 +10287,7 @@ BUILDIN_FUNC(areamonster)
 	int amount			= script_getnum(st,9);
 	const char* event	= "";
 	unsigned int size	= SZ_SMALL;
-	unsigned int ai		= AI_NONE;
+	enum mob_ai ai		= AI_NONE;
 
 	struct map_session_data* sd;
 	int16 m;
@@ -10300,7 +10307,7 @@ BUILDIN_FUNC(areamonster)
 	}
 
 	if (script_hasdata(st, 12)) {
-		ai = script_getnum(st, 12);
+		ai = static_cast<enum mob_ai>(script_getnum(st, 12));
 		if (ai >= AI_MAX) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return SCRIPT_CMD_FAILURE;
@@ -17443,6 +17450,9 @@ BUILDIN_FUNC(getunitdata)
 		case BL_MER:  mc = map_id2mc(bl->id); break;
 		case BL_ELEM: ed = map_id2ed(bl->id); break;
 		case BL_NPC:  nd = map_id2nd(bl->id); break;
+		default:
+			ShowWarning("buildin_getunitdata: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	name = reference_getname(data);
@@ -18153,6 +18163,9 @@ BUILDIN_FUNC(setunitdata)
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
 			break;
+		default:
+			ShowWarning("buildin_setunitdata: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -18199,6 +18212,9 @@ BUILDIN_FUNC(setunitname)
 		case BL_MOB:  md = map_id2md(bl->id); break;
 		case BL_HOM:  hd = map_id2hd(bl->id); break;
 		case BL_PET:  pd = map_id2pd(bl->id); break;
+		default:
+			ShowWarning("buildin_setunitname: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	switch (bl->type) {
@@ -19711,7 +19727,7 @@ unsigned short script_instancegetid(struct script_state* st)
 		struct guild *gd = NULL;
 		struct clan *cd = NULL;
 
-		if (script_rid2sd(sd)) {
+		if ((sd = map_id2sd(st->rid))) {
 			if (sd->instance_id)
 				instance_id = sd->instance_id;
 			if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
@@ -20647,7 +20663,7 @@ BUILDIN_FUNC(ismounting) {
 	
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.data[SC_ALL_RIDING] )
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
@@ -20665,11 +20681,11 @@ BUILDIN_FUNC(setmounting) {
 	
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
+	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
 		clif_msg(sd, NEED_REINS_OF_MOUNT);
 		script_pushint(st,0); //can't mount with one of these
 	} else {
-		if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+		if( sd->sc.data[SC_ALL_RIDING] )
 			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER); //release mount
 		else
 			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER); //mount
@@ -22076,12 +22092,16 @@ BUILDIN_FUNC(getvar) {
 
 /**
  * Display script message
- * showscript "<message>"{,<GID>};
+ * showscript "<message>"{,<GID>,<flag>};
+ * @param flag: Specify target
+ *   AREA - Message is sent to players in the vicinity of the source (default).
+ *   SELF - Message is sent only to player attached.
  **/
 BUILDIN_FUNC(showscript) {
 	struct block_list *bl = NULL;
 	const char *msg = script_getstr(st,2);
 	int id = 0;
+	send_target target = AREA;
 
 	if (script_hasdata(st,3)) {
 		id = script_getnum(st,3);
@@ -22097,7 +22117,15 @@ BUILDIN_FUNC(showscript) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_showscript(bl, msg);
+	if (script_hasdata(st, 4)) {
+		target = static_cast<send_target>(script_getnum(st, 4));
+		if (target == SELF && map_id2sd(bl->id) == NULL) {
+			ShowWarning("script: showscript: self can't be used for non-players objects.\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	clif_showscript(bl, msg, target);
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -23555,6 +23583,50 @@ BUILDIN_FUNC(achievementupdate) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get an equipment's refine cost
+ * getequiprefinecost(<equipment slot>,<type>,<information>{,<char id>})
+ * returns -1 on fail
+ */
+BUILDIN_FUNC(getequiprefinecost) {
+	int i = -1, slot, type, info;
+	map_session_data *sd;
+
+	slot = script_getnum(st, 2);
+	type = script_getnum(st, 3);
+	info = script_getnum(st, 4);
+
+	if (!script_charid2sd(5, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (type < 0 || type >= REFINE_COST_MAX) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (equip_index_check(slot))
+		i = pc_checkequip(sd, equip_bitmask[slot]);
+
+	if (i < 0) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	int weapon_lv = sd->inventory_data[i]->wlv;
+	if (sd->inventory_data[i]->type == IT_SHADOWGEAR) {
+		if (sd->inventory_data[i]->equip == EQP_SHADOW_WEAPON)
+			weapon_lv = REFINE_TYPE_WEAPON4;
+		else
+			weapon_lv = REFINE_TYPE_SHADOW;
+	}
+
+	script_pushint(st, status_get_refine_cost(weapon_lv, type, info != 0));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24138,7 +24210,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopupdate,"sii?"),
 	BUILDIN_DEF(getattachedrid,""),
 	BUILDIN_DEF(getvar,"vi"),
-	BUILDIN_DEF(showscript,"s?"),
+	BUILDIN_DEF(showscript,"s??"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
 	BUILDIN_DEF(setquestinfo_level,"iii"),
@@ -24195,6 +24267,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementexists,"i?"),
 	BUILDIN_DEF(achievementupdate,"iii?"),
 
+
+	BUILDIN_DEF(getequiprefinecost,"iii?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
