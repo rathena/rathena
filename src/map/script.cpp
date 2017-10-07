@@ -1052,12 +1052,9 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		if( *arg != '*' )
 			++arg; // count func as argument
 	} else {
-#ifdef SCRIPT_CALLFUNC_CHECK
 		const char* name = get_str(func);
 		if( !is_custom && strdb_get(userfunc_db, name) == NULL ) {
-#endif
 			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		} else {;
 			add_scriptl(buildin_callfunc_ref);
 			add_scriptc(C_ARG);
@@ -1067,7 +1064,6 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 			arg = buildin_func[str_data[buildin_callfunc_ref].val].arg;
 			if( *arg != '*' ) ++ arg;
 		}
-#endif
 	}
 
 	p = skip_word(p);
@@ -1410,14 +1406,12 @@ const char* parse_simpleexpr(const char *p)
 		l=add_word(p);
 		if( str_data[l].type == C_FUNC || str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS)
 			return parse_callfunc(p,1,0);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		else {
 			const char* name = get_str(l);
 			if( strdb_get(userfunc_db,name) != NULL ) {
 				return parse_callfunc(p,1,1);
 			}
 		}
-#endif
 
 		if( (pv = parse_variable(p)) )
 		{// successfully processed a variable assignment
