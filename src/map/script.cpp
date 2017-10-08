@@ -1052,12 +1052,9 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		if( *arg != '*' )
 			++arg; // count func as argument
 	} else {
-#ifdef SCRIPT_CALLFUNC_CHECK
 		const char* name = get_str(func);
 		if( !is_custom && strdb_get(userfunc_db, name) == NULL ) {
-#endif
 			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		} else {;
 			add_scriptl(buildin_callfunc_ref);
 			add_scriptc(C_ARG);
@@ -1067,7 +1064,6 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 			arg = buildin_func[str_data[buildin_callfunc_ref].val].arg;
 			if( *arg != '*' ) ++ arg;
 		}
-#endif
 	}
 
 	p = skip_word(p);
@@ -1410,14 +1406,12 @@ const char* parse_simpleexpr(const char *p)
 		l=add_word(p);
 		if( str_data[l].type == C_FUNC || str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS)
 			return parse_callfunc(p,1,0);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		else {
 			const char* name = get_str(l);
 			if( strdb_get(userfunc_db,name) != NULL ) {
 				return parse_callfunc(p,1,1);
 			}
 		}
-#endif
 
 		if( (pv = parse_variable(p)) )
 		{// successfully processed a variable assignment
@@ -17450,6 +17444,9 @@ BUILDIN_FUNC(getunitdata)
 		case BL_MER:  mc = map_id2mc(bl->id); break;
 		case BL_ELEM: ed = map_id2ed(bl->id); break;
 		case BL_NPC:  nd = map_id2nd(bl->id); break;
+		default:
+			ShowWarning("buildin_getunitdata: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	name = reference_getname(data);
@@ -18160,6 +18157,9 @@ BUILDIN_FUNC(setunitdata)
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
 			break;
+		default:
+			ShowWarning("buildin_setunitdata: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -18206,6 +18206,9 @@ BUILDIN_FUNC(setunitname)
 		case BL_MOB:  md = map_id2md(bl->id); break;
 		case BL_HOM:  hd = map_id2hd(bl->id); break;
 		case BL_PET:  pd = map_id2pd(bl->id); break;
+		default:
+			ShowWarning("buildin_setunitname: Invalid object type!\n");
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	switch (bl->type) {
@@ -20654,7 +20657,7 @@ BUILDIN_FUNC(ismounting) {
 	
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.data[SC_ALL_RIDING] )
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
@@ -20672,11 +20675,11 @@ BUILDIN_FUNC(setmounting) {
 	
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	if( &sd->sc && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
+	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
 		clif_msg(sd, NEED_REINS_OF_MOUNT);
 		script_pushint(st,0); //can't mount with one of these
 	} else {
-		if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+		if( sd->sc.data[SC_ALL_RIDING] )
 			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER); //release mount
 		else
 			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER); //mount

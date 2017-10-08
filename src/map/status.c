@@ -14293,8 +14293,10 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 
 			if (refine_level >= random_bonus_start_level - 1)
 				refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
-			refine_info[refine_info_index].bonus[refine_level] = bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
 			yaml_destroy_wrapper(level);
+		}
+		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level) {
+			refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
 		}
 	}
 	yaml_destroy_wrapper(rates);

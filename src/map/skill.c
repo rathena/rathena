@@ -10627,21 +10627,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_OVERED_BOOST:
-	     if (hd) {
-			 struct block_list *s_bl = battle_get_master(src);
-			 if(hd->homunculus.hunger>50) //reduce hunger
-				 hd->homunculus.hunger = hd->homunculus.hunger/2;
-			 else
-				 hd->homunculus.hunger = min(1,hd->homunculus.hunger);
-			 if(s_bl && s_bl->type==BL_PC) {
-				 status_set_sp(s_bl,status_get_max_sp(s_bl)/2,0); //master drain 50% sp
-				 clif_send_homdata(((TBL_PC *)s_bl), SP_HUNGRY, hd->homunculus.hunger); //refresh hunger info
-				 sc_start(src,s_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)); //gene bonus
-			 }
-			 sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			 skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-	     }
-	     break;
+		if (hd && battle_get_master(src)) {
+			sc_start(src, battle_get_master(src), type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
+		break;
 	case MH_GRANITIC_ARMOR:
 	case MH_PYROCLASTIC:
 		if(hd) {
@@ -20974,6 +20965,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 	skill_split_atoi(split[4],skill_db[idx]->unit_range);
 	skill_db[idx]->unit_interval = atoi(split[5]);
 
+	trim(split[6]);
 	if( strcmpi(split[6],"noenemy")==0 ) skill_db[idx]->unit_target = BCT_NOENEMY;
 	else if( strcmpi(split[6],"friend")==0 ) skill_db[idx]->unit_target = BCT_NOENEMY;
 	else if( strcmpi(split[6],"party")==0 ) skill_db[idx]->unit_target = BCT_PARTY;
