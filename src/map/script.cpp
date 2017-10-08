@@ -18157,9 +18157,6 @@ BUILDIN_FUNC(setunitdata)
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
 			break;
-		default:
-			ShowWarning("buildin_setunitdata: Invalid object type!\n");
-			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
