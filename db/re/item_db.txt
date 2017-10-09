@@ -3974,7 +3974,7 @@
 5844,Loyal_Ring3,Loyal Ring3,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,1,0,{ bonus bAllStats,3; },{},{}
 5845,Buzzy_Ball_Board,Buzzy Ball Board,4,50,,400,,0,,0,0xFFFFFFFF,63,2,256,,1,1,641,{},{},{}
 5846,Buzzy_Ball_Gum,Buzzy Ball Gum,4,50,,100,,1,,0,0xFFFFFFFF,63,2,1,,1,0,572,{ bonus bMdef,5; },{},{}
-5847,Fools_Day_hat,Fools Day Helmet,4,0,,0,,0,,0,0xFFFFFFFF,63,2,256,,1,0,647,{ bonus bInt,5; bonus bVit,-3; },{},{}
+5847,Fools_Day_hat_,Fools Day Helmet,4,0,,0,,0,,0,0xFFFFFFFF,63,2,256,,1,0,647,{ bonus bInt,5; bonus bVit,-3; },{},{}
 5848,Robin_Eyepatch,Robin Eyepatch,4,20,,0,,0,,0,0xFFFFFFFF,63,2,512,,1,0,50,{},{},{}
 5849,Doctor_Hairband,Doctor Hairband,4,20,,0,,0,,0,0xFFFFFFFF,63,2,256,,1,0,60,{},{},{}
 5850,Golden_Savage_Hat,Golden Savage Hat,4,20,,500,,5,,0,0xFFFFFFFF,63,2,256,,50,1,648,{},{},{}
@@ -9864,8 +9864,8 @@
 19109,Valhalla_Idol,Valhalla Idol,4,0,,300,,2,,0,0xFFFFFFFF,63,2,512,,70,0,1423,{ bonus bMaxSP,50; bonus3 bAutoSpell,"MG_SAFETYWALL",10,50; },{},{}
 19111,Laser_Of_Eagle,Laser of Eagle,4,0,,400,,5,,1,0xFFFFFFFF,63,2,256,,100,1,1424,{ bonus bDex,2; bonus bLongAtkRate,10; bonus5 bAutoSpell,"PR_LEXAETERNA",1,50,BF_LONG,1; /*TODO: Chance to transform become Shechil while attacking.*/ },{},{}
 19116,Red_Baby_Dragon,Red Baby Dragon,4,0,,700,,,1,1,0xFFFFFFFF,63,2,256,,90,1,1463,{ .@r=getrefine(); bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; if (.@r>=6) { bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; } if (.@r>=8) { bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; } },{},{}
-19117,Poring_Sunglasses,Poring Sunglasses,4,0,,10,,0,,0,0xFFFFFFFF,63,2,512,,1,0,954,{ bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; },{},{}
-19118,Poring_Sunglasses_,Poring Sunglasses,4,0,,10,,0,,1,0xFFFFFFFF,63,2,512,,1,0,954,{ bonus2 bDropAddRace,RC_All,4; bonus2 bExpAddRace,RC_All,4; },{},{}
+19117,Poring_Sunglasses_,Poring Sunglasses,4,0,,10,,0,,0,0xFFFFFFFF,63,2,512,,1,0,954,{ bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; },{},{}
+19118,Poring_Sunglasses__,Poring Sunglasses,4,0,,10,,0,,1,0xFFFFFFFF,63,2,512,,1,0,954,{ bonus2 bDropAddRace,RC_All,4; bonus2 bExpAddRace,RC_All,4; },{},{}
 19126,Shadow_Booster_,Magical Booster,4,10,,300,,,,1,0xFFFFFFFF,63,2,512,,1,1,873,{ bonus bAspd,1; bonus bDelayrate,-1; },{},{}
 19128,Ifrit's_Ear_,Ears Of Ifrit,4,20,,300,,0,,1,0xFFFFFFFE,63,2,512,,50,0,422,{ bonus bStr,1; bonus bMdef,3; bonus bInt,1; bonus2 bSkillAtk,"MG_FIREBOLT",3; bonus2 bSkillAtk,"WZ_FIREPILLAR",3; bonus2 bSkillAtk,"WZ_METEOR",3; bonus2 bSkillAtk,"SM_BASH",4; bonus2 bSkillAtk,"SM_MAGNUM",4; bonus2 bSkillAtk,"KN_PIERCE",3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Water,-3; },{},{}
 19129,Chick_Hat_,Chick Hat,4,20,,100,,2,,1,0xFFFFFFFF,63,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; skill "TF_DOUBLE",2; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player,3; },{},{}
@@ -9900,12 +9900,12 @@
 19165,Para_Team_Hat160,Awakened Eden Group Hat II,4,20,,0,,10,,1,0xFFFFFFFF,63,2,256,,160,1,1530,{ autobonus "{ bonus bBaseAtk,30; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,30; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; .@r = getrefine(); if(.@r >= 7){ bonus bAtk,15; bonus bMatk,15; if(.@r >= 9){ bonus bAllStats,2; if(.@r >= 12){ bonus2 bRegenPercentHP,2,10000; bonus2 bRegenPercentSP,1,10000; } } } },{},{}
 19166,RO_Celebration_Hat,RO Celebration Hat,4,20,,140,,14,,1,0xFFFFFFFF,63,2,256,,14,1,1541,{ bonus bMaxSP,140; bonus2 bSPRegenRate,6,4000; },{},{}
 19168,Band_Of_Kafra_,Kafra Staff Headband,4,20,,500,,0,,1,0xFFFFFFFF,63,2,256,,,1,106,{ bonus2 bSubClass,Class_All,5; .@r = getrefine()*10; bonus2 bAddMonsterDropItem,23177,10+.@r; bonus2 bAddMonsterDropItem,7059,10+.@r; bonus2 bAddMonsterDropItem,7060,10+.@r; },{},{}
-19176,Fallen_Angel_Blessing,Fallen Angel Blessing,4,20,,200,,1,,1,0xFFFFFFFF,63,2,512,,10,0,1250,{ bonus2 bAddRace,RC_Angel,5; bonus2 bSubRace,RC_Angel,5; },{},{}
+19176,Fallen_Angel_Blessing_,Fallen Angel Blessing,4,20,,200,,1,,1,0xFFFFFFFF,63,2,512,,10,0,1250,{ bonus2 bAddRace,RC_Angel,5; bonus2 bSubRace,RC_Angel,5; },{},{}
 19177,Elemental_Crown_,Elemental Crown,4,0,,500,,10,,0,0xFFFFFFFF,63,2,256,,50,1,1219,{ .@r = getrefine(); bonus bDex,3 + (.@r/2); bonus bLongAtkRate,4; },{},{}
 19178,Elemental_Crown__,Elemental Crown,4,0,,500,,10,,1,0xFFFFFFFF,63,2,256,,50,1,1219,{ .@r = getrefine(); bonus bDex,3 + (.@r/2); bonus bLongAtkRate,4; },{},{}
 19179,Rabbit_Magic_Hat_,Magic Rabit Hat,4,0,,800,,4,,1,0xFFFFFFFF,63,2,256,,0,1,497,{ bonus bDex,1; bonus bAgi,1; bonus bMdef,1; bonus bAspdRate,5; bonus bDelayRate,-4; },{},{}
 19180,Anubis_Helm_,Anubis Helm,4,20,,0,,8,,1,0xFFFFFFFF,63,2,768,,65,0,485,{ bonus bMdef,5; bonus2 bSubClass,Class_Boss,10; bonus bHealpower2,10; bonus bAddItemHealRate,10; },{},{}
-19181,New_Wave_Sunglasses,New Wave Sunglasses,4,20,,100,,1,,1,0xFFFFFFFF,63,2,512,,30,0,856,{ bonus bDelayRate,-5; },{},{}
+19181,New_Wave_Sunglasses_,New Wave Sunglasses,4,20,,100,,1,,1,0xFFFFFFFF,63,2,512,,30,0,856,{ bonus bDelayRate,-5; },{},{}
 //===================================================================
 // Costume System
 //===================================================================
@@ -10133,7 +10133,7 @@
 19744,C_Black_Tail_Ribbon,Costume Black Tail Ribbon,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,642,{},{},{}
 19745,C_Holy_Marching_Hat,Costume Holy Marching Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,587,{},{},{}
 19746,C_Cap_Of_Blindness,Costume Executioner Hood,4,20,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,1,326,{},{},{}
-19747,C_Tha_Despero_Mask,Costume Tha Despero Mask,4,20,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,1,693,{},{},{}
+19747,C_Tha_Despero_Mask_,Costume Tha Despero Mask,4,20,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,1,693,{},{},{}
 19748,C_Diadem,Costume Diadem,4,20,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,1,335,{},{},{}
 19749,C_Gold_Spirit_Chain,Costume Gold Spirit Chain,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,260,{},{},{}
 19750,C_Saint_Frill_Ribbon,Costume Saint Frill Ribbon,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,987,{},{},{}
@@ -11484,7 +11484,7 @@
 28333,Gold_PC_Room_Ring,Gold PC Room Ring,4,10,,0,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus bMaxHPrate,3; bonus bMaxSPrate,3; },{},{}
 28342,Critical_Anklet,Critical Anklet,4,0,,200,,3,,1,0xFFFFFFFF,63,2,136,,,0,,{ bonus bCritical,5; },{},{}
 28354,City_Map,City Map,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ /* todo */ },{},{}
-28355,Shining_Holy_Water,Shining Holy Water,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ /* todo */ },{},{}
+28355,Shining_Holy_Water_,Shining Holy Water,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ /* todo */ },{},{}
 28356,Prontera_Badge,Prontera Badge,4,0,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ /*warp "prontera",159,192;  15 mins cooldown */ },{},{}
 28358,Cursed_Lucky_Clover,Cursed Lucky Clover,4,0,,100,,,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bLuk,2; bonus bFlee,3; bonus2 bAddEff2,Eff_Curse,5; },{},{ sc_end SC_CLOAKING; /*FIXME: Because the combo has Cloaking skill*/ }
 28372,Imperial_Ring,Imperial Ring,4,0,,500,,3,,1,0xFFFFFFFF,63,2,136,,50,0,,{ bonus bStr,1; bonus bInt,1; bonus bMaxHPRate,3; bonus bMaxSPRate,3; },{},{}
