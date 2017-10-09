@@ -8568,6 +8568,12 @@ void battle_adjust_conf()
 		ShowWarning("conf/battle/feature.conf refine UI is enabled but it requires PACKETVER 2016-10-12 or newer, disabling...\n");
 		battle_config.feature_refineui = 0;
 	}
+#else
+	// Check if Refine UI is only enabled in scripts
+	if( battle_config.feature_refineui == 2 ){
+		ShowWarning("conf/battle/feature.conf refine UI is enabled in scripts but disabled in general, enabling...\n");
+		battle_config.feature_refineui = 3;
+	}
 #endif
 
 #ifndef CELL_NOSTACK
