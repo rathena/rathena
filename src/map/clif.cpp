@@ -20284,6 +20284,11 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+
 	// Get the item db reference
 	id = sd->inventory_data[index];
 
