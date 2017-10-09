@@ -2328,6 +2328,15 @@
 	parseable_packet(0x0A9C,2,clif_parse_dull,0);
 #endif
 
+// 2016-10-12aRagexeRE
+#if PACKETVER >= 20161012
+	packet(0x0AA0,2);
+	parseable_packet(0x0AA1,4,clif_parse_refineui_add,2);
+	packet(0x0AA2,-1);
+	parseable_packet(0x0AA3,7,clif_parse_refineui_refine,2,4,6);
+	parseable_packet(0x0AA4,2,clif_parse_refineui_close,0);
+#endif
+
 // 2016-10-26bRagexeRE
 #if PACKETVER >= 20161026
 	packet(0x0AA5,-1);

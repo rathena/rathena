@@ -2761,7 +2761,15 @@ REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
 
 This function will return -1 on failure. The function fails if the cost type
-is invalid or if there is no item in the equipment slot. 
+is invalid or if there is no item in the equipment slot.
+
+---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
 
 ---------------------------------------
 

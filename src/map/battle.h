@@ -634,6 +634,7 @@ extern struct Battle_Config
 	int feature_achievement;
 	int allow_bound_sell;
 	int event_refine_chance;
+	int feature_refineui;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;
