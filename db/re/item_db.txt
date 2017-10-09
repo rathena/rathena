@@ -11474,8 +11474,8 @@
 28316,RCC2013_ARMLET_,RCC2013_ARMLET_,4,200,,200,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
 28317,RCC2013_RING,RCC2013_RING,4,200,,200,,,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
 28318,RCC2013_RING_,RCC2013_RING_,4,200,,200,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
-28310,Earring_Of_Sarah_L,Sarah's Left Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,8,,145,0,,{ skill "AL_HEAL",1; },{},{}
-28311,Earring_Of_Sarah_R,Sarah's Right Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,128,,145,0,,{ skill "AL_TELEPORT",1; },{},{}
+28310,Earring_Of_Sarah_L,Sarah's Left Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,128,,145,0,,{ skill "AL_HEAL",1; },{},{}
+28311,Earring_Of_Sarah_R,Sarah's Right Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,8,,145,0,,{ skill "AL_TELEPORT",1; },{},{}
 28321,Falconer_Claw,Falconer Claw,4,0,,100,,5,,1,0x00000800,63,2,136,,80,0,,{ bonus bDex,1; bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW")*10; },{},{}
 28322,Falconer_Glove,Falconer Glove,4,0,,100,,5,,1,0x00000800,63,2,136,,80,0,,{ bonus bDex,1; bonus bUseSPrate,-5; },{},{}
 28326,Broken_Chip_1,Broken Chips 01,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bStr,4; },{},{}
