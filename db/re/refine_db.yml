@@ -32,12 +32,14 @@ Armor:
     - Type: REFINE_COST_HD
       Price: 20000
       Material: 6241
+      Breakable: false
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7619
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6225
+      Breakable: false
   Rates:
     - Level: 1
       Bonus: 100
@@ -157,12 +159,14 @@ WeaponLv1:
     - Type: REFINE_COST_HD
       Price: 20000
       Material: 6240
+      Breakable: false
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+      Breakable: false
   Rates:
     - Level: 8
       NormalChance: 60
@@ -248,12 +252,14 @@ WeaponLv2:
     - Type: REFINE_COST_HD
       Price: 20000
       Material: 6240
+      Breakable: false
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+      Breakable: false
   Rates:
     - Level: 7
       NormalChance: 60
@@ -344,12 +350,14 @@ WeaponLv3:
     - Type: REFINE_COST_HD
       Price: 20000
       Material: 6240
+      Breakable: false
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+      Breakable: false
   Rates:
     - Level: 6
       NormalChance: 60
@@ -445,12 +453,14 @@ WeaponLv4:
     - Type: REFINE_COST_HD
       Price: 20000
       Material: 6240
+      Breakable: false
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+      Breakable: false
   Rates:
     - Level: 5
       NormalChance: 60
@@ -548,6 +558,7 @@ Shadow:
     - Type: REFINE_COST_HD
       Price: 20000
       Material: 6241
+      Breakable: false
     - Type: REFINE_COST_ENRICHED
       Price: 20000
       Material: 7619

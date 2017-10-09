@@ -2759,6 +2759,8 @@ Valid information types are:
 
 REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
+REFINE_BREAKABLE       - If the equipment will be broken by using this material
+                         on a failed atempt
 
 This function will return -1 on failure. The function fails if the cost type
 is invalid or if there is no item in the equipment slot.

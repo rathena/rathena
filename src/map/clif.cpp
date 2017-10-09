@@ -20110,6 +20110,8 @@ static inline bool clif_refineui_materials_sub( struct item *item, struct item_d
 	materials[index].cost.nameid = status_get_refine_cost( id->wlv, type, REFINE_MATERIAL_ID );
 	// Get the amount of zeny that is required to refine the item with this material
 	materials[index].cost.zeny = status_get_refine_cost( id->wlv, type, REFINE_ZENY_COST );
+	// Get the breaking chance of the item with this material
+	materials[index].cost.breakable = status_get_refine_cost( id->wlv, type, REFINE_BREAKABLE );
 	// Get the chance for refining the item with this material
 	materials[index].chance = status_get_refine_chance( (enum refine_type)id->wlv, item->refine, type == REFINE_COST_ENRICHED );
 
@@ -20117,6 +20119,7 @@ static inline bool clif_refineui_materials_sub( struct item *item, struct item_d
 	if( materials[index].cost.nameid == 0 || materials[index].cost.zeny == 0 || materials[index].chance == 0 ){
 		// Reset all entries properly
 		materials[index].cost.nameid = materials[index].cost.zeny = materials[index].chance = 0;
+		materials[index].cost.breakable = true;
 		return false;
 	}else{
 		// Everything was set properly
@@ -20360,16 +20363,25 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	// Try to refine the item
 	if( materials[i].chance >= rnd() % 100 ){
 		// Success
-		item->refine++;
+		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
 		clif_misceffect( &sd->bl, 3 );
 		clif_refine( fd, 0, index, item->refine );
 		achievement_update_objective( sd, AG_REFINE_SUCCESS, 2, id->wlv, item->refine );
 		clif_refineui_info( sd, index );
 	}else{
 		// Failure
+
+		// Delete the item if it is breakable
+		if( materials[i].cost.breakable ){
+			clif_refine( fd, 1, index, item->refine );
+			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
+		}else{
+			// Otherwise downgrade it
+			item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
+			clif_refine( fd, 2, index, item->refine );
+		}
+		
 		clif_misceffect( &sd->bl, 2 );
-		clif_refine( fd, 1, index, item->refine );
-		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
 		achievement_update_objective( sd, AG_REFINE_FAIL, 1, 1 );
 	}
 #endif

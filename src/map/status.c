@@ -14253,7 +14253,7 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 		for (yamlwrapper* type = yaml_iterator_first(it); yaml_iterator_has_next(it); type = yaml_iterator_next(it)) {
 			int idx = 0, price;
 			unsigned short material;
-			static char* keys[] = {"Type", "Price", "Material" };
+			static char* keys[] = { "Type", "Price", "Material" };
 			char* result;
 
 			if ((result = yaml_verify_nodes(type, ARRAYLENGTH(keys), keys)) != NULL) {
@@ -14272,6 +14272,11 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
 
 			refine_info[refine_info_index].cost[idx].nameid = material;
 			refine_info[refine_info_index].cost[idx].zeny = price;
+			if( yaml_node_is_defined(type, "Breakable" ) ){
+				refine_info[refine_info_index].cost[idx].breakable = yaml_get_boolean(type, "Breakable");
+			}else{
+				refine_info[refine_info_index].cost[idx].breakable = true;
+			}
 
 			aFree(refine_cost_const);
 			yaml_destroy_wrapper(type);
@@ -14363,6 +14368,8 @@ int status_get_refine_cost(int weapon_lv, int type, enum refine_info_type what) 
 			return refine_info[weapon_lv].cost[type].nameid;
 		case REFINE_ZENY_COST:
 			return refine_info[weapon_lv].cost[type].zeny;
+		case REFINE_BREAKABLE:
+			return refine_info[weapon_lv].cost[type].breakable;
 	}
 
 	return 0;

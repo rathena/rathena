@@ -51,12 +51,14 @@ enum refine_cost_type {
 // Refine information type
 enum refine_info_type {
 	REFINE_MATERIAL_ID = 0,
-	REFINE_ZENY_COST
+	REFINE_ZENY_COST,
+	REFINE_BREAKABLE
 };
 
 struct refine_cost {
 	unsigned short nameid;
 	int zeny;
+	bool breakable;
 };
 
 /// Get refine chance

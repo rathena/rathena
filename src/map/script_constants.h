@@ -3875,6 +3875,7 @@
 	/* refine information types */
 	export_constant(REFINE_MATERIAL_ID);
 	export_constant(REFINE_ZENY_COST);
+	export_constant(REFINE_BREAKABLE);
 
 	#undef export_constant
 	#undef export_constant2
