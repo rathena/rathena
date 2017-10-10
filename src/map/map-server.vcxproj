@@ -248,7 +248,9 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="searchstore.c" />
-    <ClCompile Include="skill.c" />
+    <ClCompile Include="skill.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="status.c" />
     <ClCompile Include="storage.c" />
     <ClCompile Include="trade.c" />
