@@ -20219,6 +20219,11 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 		return;
 	}
 
+	// Check the current refine level
+	if( item->refine < 0 || item->refine >= MAX_REFINE ){
+		return;
+	}
+
 	// Calculate the possible materials
 	material_count = clif_refineui_materials( item, id, materials );
 
@@ -20325,6 +20330,11 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 	// Check if the item is broken
 	if( item->attribute ){
+		return;
+	}
+
+	// Check the current refine level
+	if( item->refine < 0 || item->refine >= MAX_REFINE ){
 		return;
 	}
 
