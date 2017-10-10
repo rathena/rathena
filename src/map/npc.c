@@ -767,11 +767,11 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		char buf[EVENT_NAME_LENGTH];
 		struct event_data *ev;
 
-		snprintf(buf, ARRAYLENGTH(buf), "%s::OnTimerQuit", nd->exname);
+		snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, script_config.timer_quit_event_name);
 		ev = (struct event_data*)strdb_get(ev_db, buf);
 		if( ev && ev->nd != nd )
 		{
-			ShowWarning("npc_timerevent_quit: Unable to execute \"OnTimerQuit\", two NPCs have the same event name [%s]!\n",buf);
+			ShowWarning("npc_timerevent_quit: Unable to execute \"%s\", two NPCs have the same event name [%s]!\n",script_config.timer_quit_event_name,buf);
 			ev = NULL;
 		}
 		if( ev )
@@ -1719,7 +1719,7 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
 	}
 
 	// invoke event
-	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnBuyItem", nd->exname);
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::%s", nd->exname, script_config.onbuy_event_name);
 	npc_event(sd, npc_ev, 0);
 
 	return 0;
@@ -1950,7 +1950,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	}
 
 	// invoke event
-	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnSellItem", nd->exname);
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::%s", nd->exname, script_config.onsell_event_name);
 	npc_event(sd, npc_ev, 0);
 	return 0;
 }
@@ -3085,7 +3085,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		char evname[EVENT_NAME_LENGTH];
 		struct event_data *ev;
 
-		snprintf(evname, ARRAYLENGTH(evname), "%s::OnInit", nd->exname);
+		snprintf(evname, ARRAYLENGTH(evname), "%s::%s", nd->exname, script_config.init_event_name);
 
 		if( ( ev = (struct event_data*)strdb_get(ev_db, evname) ) ) {
 
