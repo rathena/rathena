@@ -336,7 +336,8 @@ moc_para01,174,165,3	script	Lime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "Once your registration goes through, you can start working for the Arnard Excavation Team,";
 		mes "and everything else will take care of itself.";
 		mes "Thank you for doing this.";
-		changequest 7608,7609;// Artnard Excavation Team 1 -> Artnard Excavation Team 2
+		erasequest 7608;// Artnard Excavation Team 1
+		setquest 7609;// Artnard Excavation Team 2
 		VER_MAIN = 4;
 		break;
 	case 4:
@@ -673,7 +674,8 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		mes "[Nile]";
 		mes "You understood, what I said?";
 		mes "Then let's see each other in Verus.";
-		changequest 7644,7645;// Record Player -> Piece of Memory Record
+		erasequest 7644;// Record Player
+		setquest 7645;// Piece of Memory Record
 		VER_MAIN = 23;
 		break;
 	case 23:
@@ -786,7 +788,8 @@ ver_eju,114,40,4	script	Manager Michelle#atnd05	4_M_LGTGUARD,{
 			mes "Our soldiers will be grateful for your help.";
 			mes "Please take this small token of appreciation.";
 			mes "I hope it'll be useful for you.";
-			changequest 7611,7612;// Passage Cleaning -> Passage Cleaning - Down
+			erasequest 7611;// Passage Cleaning
+			setquest 7612;// Passage Cleaning - Down
 			getexp 1500000,1000000;
 			close;
 		}
@@ -884,7 +887,8 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 		mes "Rekenber provides you with everything you need while working at the excavation site.";
 		mes "In return, we expect you to focus on uncovering secrets buried within Phantasmagorika.";
 		mes "Good luck with your excavation.";
-		changequest 7609,7610;// Artnard Excavation Team 2 -> Registered Excavator
+		erasequest 7609;// Artnard Excavation Team 2
+		setquest 7610;// Registered Excavator
 		completequest 7610;// Registered Excavator
 		VER_MAIN = 5;
 		getexp 300000,300000;
@@ -958,7 +962,8 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 			mes "I guess the doctor is looking for you.";
 			mes "You should go.";
 			delitem 6748,1;// Daily_Report_He_And_His_Team
-			changequest 7617,7623;// Turning In Excavation Report -> Artnard's Summon
+			erasequest 7617;// Turning In Excavation Report
+			setquest 7623;// Artnard's Summon
 			VER_MAIN = 13;
 			getexp 300000,300000;
 		}
@@ -985,7 +990,8 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 			mes "Thank you for your hard work today.";
 			mes "See you tomorrow.";
 			delitem 6748,1;// Daily_Report_He_And_His_Team
-			changequest 7617,7618;// Turning In Excavation Report -> Reporting the Results - Down
+			erasequest 7617;// Turning In Excavation Report
+			setquest 7618;// Reporting the Results - Down
 			getexp 300000,300000;
 			VER_MAIN = 34;
 		}
@@ -1041,7 +1047,8 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 				mes "[Louis]";
 				mes "Thank you for your hard work.";
 				mes "Please go rest, so that you can get back on the excavation task.";
-				changequest 7611,7612;// Passage Cleaning -> Passage Cleaning - Down
+				erasequest 7611;// Passage Cleaning
+				setquest 7612;// Passage Cleaning - Down
 				getexp 1500000,1000000;
 				close;
 			}
@@ -1096,7 +1103,8 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 				mes "[Louis]";
 				mes "Thank you for your hard work.";
 				mes "Our workers will be grateful to you for keeping them safe.";
-				erasequest 7613,7614;// Eliminating Risks -> Eliminating Risks - Down
+				erasequest 7613;// Eliminating Risks
+				setquest 7614;// Eliminating Risks - Down
 				getexp 1500000,1000000;
 				close;
 			}
@@ -1186,7 +1194,8 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			mes "Alright, all ready.";
 			mes "You push the play switch youself.";
 			delitem 6757,5;// The_Memory_Recorder
-			changequest 7645,7646;// Piece of Memory Record -> Play Memory Record
+			erasequest 7645;// Piece of Memory Record
+			setquest 7646;// Play Memory Record
 			VER_MAIN = 24;
 			emotion 0,0,"Record player#e152a01";
 		}
@@ -1224,7 +1233,8 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		next;
 		mes "[Nile]";
 		mes "Recite the general idea to the old man, and ask him why the name Atnad is mentioned.";
-		changequest 7646,7647;// Play Memory Record -> Report Memory Record
+		erasequest 7646;// Play Memory Record
+		setquest 7647;// Report Memory Record
 		VER_MAIN = 26;
 		getexp 750000,500000;
 		break;
@@ -1306,7 +1316,8 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 		mes "[Nile]";
 		mes "You understand what I am saying?";
 		mes "Then, go to the old man and report this news.";
-		changequest 7648,7649;// Memory Records of the Laboratories -> Report Memory Record Content
+		erasequest 7648;// Memory Records of the Laboratories
+		setquest 7649;// Report Memory Record Content
 		VER_MAIN = 30;
 		getexp 750000,500000;
 		next;
@@ -2198,7 +2209,8 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "but I want to know how much progress Lloyd has made with his investigation.";
 		mes "Could you go check up on him?";
 		mes "Thank you.";
-		changequest 7619,7620;// Assisting the Excavation Team -> Young Blood?
+		erasequest 7619;// Assisting the Excavation Team
+		setquest 7620;// Young Blood?
 		VER_MAIN = 9;
 		close3;
 	case 9:
@@ -2257,7 +2269,8 @@ verus04,141,193,5	script	Archaeologist Aureth#atnd09	4_M_OLDSCHOLAR,{
 		mes "We're old, so we don't care about fame. You're different.";
 		mes "Winning favor with Rekenber";
 		mes "can go a long way.";
-		changequest 7622,7617;// Good News! -> Turning In Excavation Report
+		erasequest 7622;// Good News!
+		setquest 7617;// Turning In Excavation Report
 		VER_MAIN = 12;
 		getitem 6748,1;// Daily_Report_He_And_His_Team
 		close3;
@@ -2528,7 +2541,8 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Aures]";
 		mes "I will write the report soon so I will ask for you help then as well.";
 		delitem 6749, countitem(6749);// Operation_Control_Device
-		changequest 7615,7619;// Core Collection -> Assisting the Excavation Team
+		erasequest 7615;// Core Collection
+		setquest 7619;// Assisting the Excavation Team
 		getexp 750000,500000;
 		VER_MAIN = 8;
 		next;
@@ -2598,7 +2612,8 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		cutin "",255;
 		mes "In order to ask Ian Atnad about the ^4d4dffLast Exploration^000000";
 		mes "it seems a ^4d4dffdelicacy that is simple to eat yet juicy and refreshing and has a neat finish^000000 has to be found.";
-		changequest 7623,7624;// Artnard's Summon -> In Search of a Delicacy
+		erasequest 7623;// Artnard's Summon
+		setquest 7624;// In Search of a Delicacy
 		VER_MAIN = 14;
 		close;
 	case 14:
@@ -2679,7 +2694,8 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "Come back later.";
 		mes "Please.";
 		delitem 11519,1;// Beef_Toast
-		changequest 7626,7627;// Delicacy for Him -> Last Exploration
+		erasequest 7626;// Delicacy for Him
+		setquest 7627;// Last Exploration
 		VER_MAIN = 17;
 		close3;
 	case 17:
@@ -2842,7 +2858,8 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "[Aures]";
 		mes "I see. The one who can easily talk to her right now is you.";
 		mes "If it's okay we would like to ask you to do so.";
-		changequest 7643,7644;// Mysterious Piece -> Record Player
+		erasequest 7643;// Mysterious Piece
+		setquest 7644;// Record Player
 		VER_MAIN = 21;
 		close3;
 	case 21:
@@ -2923,7 +2940,8 @@ verus04,144,193,3	script	Ian Atnad#ep152	4_M_IAN,{
 		mes "And, if we gather enough Memory Records.....";
 		mes "Go to Arquien and find out the... ugh... contents.";
 		mes "Do you understand?";
-		changequest 7647,7648;// Report Memory Record -> Memory Records of the Laboratories
+		erasequest 7647;// Report Memory Record
+		setquest 7648;// Memory Records of the Laboratories
 		VER_MAIN = 27;
 		close3;
 	case 27:
@@ -3175,7 +3193,8 @@ S_Daily:
 		mes "......This time I will use it well without breaking it.";
 		mes "Let's slowly get into restoration as well.";
 		delitem 6749, countitem(6749);// Operation_Control_Device
-		changequest 7615,7616;// Core Collection -> Core Collection - Down
+		erasequest 7615;// Core Collection
+		setquest 7616;// Core Collection - Down
 		getexp 1500000,1000000;
 		if (getarg(0) && VERUS_DAILY_QUEST < 10) {// inaccurate
 			if (VER_MAIN != 32)
@@ -3329,7 +3348,8 @@ verus02,60,30,1	script	Strewn paper#e152a01	4_ENERGY_BLUE,{
 	if (VER_MAIN == 19) {
 		mes "You find a object never seen before as you go through the clutter of documents and office supplies.";
 		mes "^4d4dffThis needs to be checked if it has enough research value to be brought back to Dr. Ian Atnad.^000000";
-		changequest 7642,7643;// Explore Research facilities -> Mysterious Piece
+		erasequest 7642;// Explore Research facilities
+		setquest 7643;// Mysterious Piece
 		VER_MAIN = 20;
 	}
 	else {
@@ -4921,7 +4941,8 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 		mes "[Luke]";
 		mes "Some of the fruits grow near the ^4d4dffMisty Forest Labyrinth^000000.";
 		mes "You'll have to look hard for them.";
-		changequest 7624,7625;// In Search of a Delicacy -> Count On Me
+		erasequest 7624;// In Search of a Delicacy
+		setquest 7625;// Count On Me
 		VER_MAIN = 15;
 		close3;
 	}
@@ -4951,7 +4972,8 @@ verus03,107,177,3	script	Luke Lapez#atnd09	4_M_EDEN_GUARDER,{
 		delitem 11520,1;// Mora_Mandarin
 		delitem 513,1;	// Banana
 		getitem 11519,1;// Beef_Toast
-		changequest 7625,7626;// Count On Me -> Delicacy for Him
+		erasequest 7625;// Count On Me
+		setquest 7626;// Delicacy for Him
 		VER_MAIN = 16;
 		close;
 	}
@@ -5069,7 +5091,8 @@ verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
 		next;
 		mes "[Lloyd]";
 		mes "I'll be waiting.";
-		changequest 7620,7621;// Young Blood? -> Bottling the Energy
+		erasequest 7620;// Young Blood?
+		setquest 7621;// Bottling the Energy
 		VER_MAIN = 10;
 		close;
 	}
@@ -5104,7 +5127,8 @@ verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
 		mes "Good job, Human.";
 		mes "I'll look forward to using your service again.";
 		delitem 6756,10;// Cohesive_Energy
-		changequest 7621,7622;// Bottling the Energy -> Good News!
+		erasequest 7621;// Bottling the Energy
+		setquest 7622;// Good News!
 		VER_MAIN = 11;
 		close;
 	}
@@ -5357,7 +5381,8 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 		}
 		mes "Well we are all safe today. Because we are Adventure team 2! Thank you for helping!";
 		close2;
-		changequest 13198,13199;// Monthly Brigan : Krotzel's Request -> Krotzel's Request - Complete
+		erasequest 13198;// Monthly Brigan : Krotzel's Request
+		setquest 13199;// Krotzel's Request - Complete
 		getexp 1000000,500000;
 		end;
 	case 0:
@@ -5423,7 +5448,8 @@ verus02,134,169,4	script	Photo Journalist#1	4_F_GON,{
 				close;
 			case 2:
 				mes "Thanks to you, I think a great piece of work will be produced! I will go back to taking building photos.";
-				changequest 13202,13203;// Monthly Brigan : Photo Journalist's Request -> Photo Journalist's Request - Complete
+				erasequest 13202;// Monthly Brigan : Photo Journalist's Request
+				setquest 13203;// Photo Journalist's Request - Complete
 				getexp 1000000,500000;
 				close;
 			}
@@ -5564,7 +5590,8 @@ verus01,172,146,4	script	Lame Journalist#1	4_M_HUBOY,{
 				close;
 			case 2:
 				mes "Did you eradicate that much already? I am not done yet but thank you!";
-				changequest 13200,13201;// Monthly Brigan : Rookie's Request -> Rookie's Request - Complete
+				erasequest 13200;// Monthly Brigan : Rookie's Request
+				setquest 13201;// Rookie's Request - Complete
 				getexp 1000000,500000;
 				close;
 			}
@@ -8406,7 +8433,8 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 		mes "[Fruit]";
 		mes "I will be expecting you to bring back lots of fun stuff.";
 		if (VER_ELEVATOR == 1000) {
-			changequest 11381,11382;// Vestige -> Vestige
+			erasequest 11381;// Vestige
+			setquest 11382;// Vestige
 			VER_ELEVATOR = 1001;
 		}
 		close3;
@@ -8612,7 +8640,8 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 			mes "Right...";
 			mes "There's a bad energy so be careful...";
 			cutin "bu_alp1.bmp",2;
-			changequest 11383,11384;// Vestige -> Vestige
+			erasequest 11383;// Vestige
+			setquest 11384;// Vestige
 			VER_ELEVATOR = 1003;
 			close2;
 			warp "un_bunker",385,83;
@@ -8657,7 +8686,8 @@ un_bunker,388,86,3	script	Alp#Entrance2	4_M_BLACKMAN,{
 		mes "[Due]";
 		mes "Charge!!!!!";
 		cutin "bu_du5.bmp",2;
-		changequest 11384,11385;// Vestige -> Vestige
+		erasequest 11384;// Vestige
+		setquest 11385;// Vestige
 		VER_ELEVATOR = 1004;
 		close2;
 		warp "un_myst",11,206;
@@ -8743,7 +8773,8 @@ OnTouch:
 		mes "Two!";
 		mes "Three!";
 		cutin "bu_du5.bmp",2;
-		changequest 11386,11387;// Vestige -> Vestige
+		erasequest 11386;// Vestige
+		setquest 11387;// Vestige
 		VER_ELEVATOR = 1006;
 		close2;
 	}
@@ -8834,7 +8865,8 @@ un_myst,100,190,3	script	Due#Hall	4_M_REDMAN,{
 		mes "There is no other way!";
 		cutin "EP15_2_brt_6.bmp",2;
 		if (VER_ELEVATOR == 1006) {
-			changequest 11387,11388;// Vestige -> Vestige
+			erasequest 11387;// Vestige
+			setquest 11388;// Vestige
 			VER_ELEVATOR = 1007;
 		}
 		close3;
@@ -8867,7 +8899,8 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		next;
 		mes "How long can we keep running?";
 		close2;
-		changequest 11388,11389;// Vestige -> Vestige
+		erasequest 11388;// Vestige
+		setquest 11389;// Vestige
 		warp "un_myst",260,204;
 		@weird_piece = 2;
 		end;
