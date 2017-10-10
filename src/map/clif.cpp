@@ -20389,6 +20389,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 			// Otherwise downgrade it
 			item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
 			clif_refine( fd, 2, index, item->refine );
+			clif_refineui_info(sd, index);
 		}
 		
 		clif_misceffect( &sd->bl, 2 );
