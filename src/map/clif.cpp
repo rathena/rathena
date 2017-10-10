@@ -20087,7 +20087,8 @@ void clif_parse_refineui_close( int fd, struct map_session_data* sd ){
 #endif
 }
 
-#define REFINEUI_MAT_CNT 4
+#define REFINEUI_MAT_BS_BLESS 4
+#define REFINEUI_MAT_CNT (REFINEUI_MAT_BS_BLESS+1)
 
 /**
  * Structure to store all required data about refine requirements
@@ -20095,6 +20096,7 @@ void clif_parse_refineui_close( int fd, struct map_session_data* sd ){
 struct refine_materials {
 	struct refine_cost cost;
 	uint8 chance;
+	struct refine_bs_blessing bs_bless;
 };
 
 /**
@@ -20102,7 +20104,7 @@ struct refine_materials {
  * returns true on success or false on failure.
  */
 static inline bool clif_refineui_materials_sub( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT], int index, enum refine_cost_type type ){
-	if( index < 0 || index > REFINEUI_MAT_CNT ){
+	if( index < 0 || index >= REFINEUI_MAT_CNT ){
 		return false;
 	}
 
@@ -20165,6 +20167,9 @@ static inline uint8 clif_refineui_materials( struct item *item, struct item_data
 	if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_ENRICHED ) ){
 		count++;
 	}
+
+	// Blacksmith Blessing requirements if any
+	status_get_refine_blacksmithBlessing(&materials[REFINEUI_MAT_BS_BLESS].bs_bless, (enum refine_type)id->wlv, item->refine);
 
 	// Return the amount of found materials
 	return count;
@@ -20238,7 +20243,7 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 	WFIFOW(fd,0) = 0x0AA2;
 	WFIFOW(fd,2) = length;
 	WFIFOW(fd,4) = index + 2;
-	WFIFOB(fd,6) = 0; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
+	WFIFOB(fd,6) = (uint8)materials[REFINEUI_MAT_BS_BLESS].bs_bless.count;
 
 	for( i = 0; i < material_count; i++ ){
 		WFIFOW(fd,7 + i * 7) = materials[i].cost.nameid;
@@ -20370,6 +20375,16 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	if (use_blacksmith_blessing && materials[REFINEUI_MAT_BS_BLESS].bs_bless.count) {
+		if ((j = pc_search_inventory(sd, materials[REFINEUI_MAT_BS_BLESS].bs_bless.nameid)) < 0) {
+			return;
+		}
+
+		if (pc_delitem(sd, j, materials[REFINEUI_MAT_BS_BLESS].bs_bless.count, 0, 0, LOG_TYPE_CONSUME)) {
+			return;
+		}
+	}
+
 	// Try to refine the item
 	if( materials[i].chance >= rnd() % 100 ){
 		// Success
@@ -20381,8 +20396,10 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	}else{
 		// Failure
 
-		// Delete the item if it is breakable
-		if( materials[i].cost.breakable ){
+		if (use_blacksmith_blessing) { // Blacksmith Blessing were used, no break & no down refine
+			clif_refine(fd, 1, index, item->refine);
+			clif_refineui_info(sd, index);
+		} else if (materials[i].cost.breakable) { // Delete the item if it is breakable
 			clif_refine( fd, 1, index, item->refine );
 			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
 		}else{

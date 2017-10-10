@@ -73,30 +73,45 @@ Armor:
       EventNormalChance: 20
       EventEnrichedChance: 50
       Bonus: 200
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 1
     - Level: 9
       NormalChance: 20
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 50
       Bonus: 300
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 2
     - Level: 10
       NormalChance: 9
       EnrichedChance: 20
       EventNormalChance: 9
       EventEnrichedChance: 35
       Bonus: 300
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 4
     - Level: 11
       NormalChance: 8
       EnrichedChance: 8
       EventNormalChance: 20
       EventEnrichedChance: 20
       Bonus: 300
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 7
     - Level: 12
       NormalChance: 8
       EnrichedChance: 8
       EventNormalChance: 20
       EventEnrichedChance: 20
       Bonus: 300
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 11
     - Level: 13
       NormalChance: 8
       EnrichedChance: 8
@@ -173,26 +188,41 @@ WeaponLv1:
       EnrichedChance: 90
       EventNormalChance: 60
       EventEnrichedChance: 95
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 1
     - Level: 9
       NormalChance: 40
       EnrichedChance: 70
       EventNormalChance: 40
       EventEnrichedChance: 85
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 2
     - Level: 10
       NormalChance: 19
       EnrichedChance: 30
       EventNormalChance: 19
       EventEnrichedChance: 55
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 4
     - Level: 11
       NormalChance: 18
       EnrichedChance: 18
       EventNormalChance: 40
       EventEnrichedChance: 40
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 7
     - Level: 12
       NormalChance: 18
       EnrichedChance: 18
       EventNormalChance: 40
       EventEnrichedChance: 40
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 11
     - Level: 13
       NormalChance: 18
       EnrichedChance: 18
@@ -271,26 +301,41 @@ WeaponLv2:
       EnrichedChance: 70
       EventNormalChance: 40
       EventEnrichedChance: 85
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 1
     - Level: 9
       NormalChance: 20
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 60
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 2
     - Level: 10
       NormalChance: 19
       EnrichedChance: 30
       EventNormalChance: 19
       EventEnrichedChance: 45
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 4
     - Level: 11
       NormalChance: 18
       EnrichedChance: 18
       EventNormalChance: 40
       EventEnrichedChance: 40
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 7
     - Level: 12
       NormalChance: 18
       EnrichedChance: 18
       EventNormalChance: 40
       EventEnrichedChance: 40
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 11
     - Level: 13
       NormalChance: 18
       EnrichedChance: 18
@@ -374,26 +419,41 @@ WeaponLv3:
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 70
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 1
     - Level: 9
       NormalChance: 20
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 60
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 2
     - Level: 10
       NormalChance: 19
       EnrichedChance: 30
       EventNormalChance: 19
       EventEnrichedChance: 45
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 4
     - Level: 11
       NormalChance: 18
       EnrichedChance: 18
       EventNormalChance: 40
       EventEnrichedChance: 40
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 7
     - Level: 12
       NormalChance: 18
       EnrichedChance: 18
       EventNormalChance: 40
       EventEnrichedChance: 40
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 11
     - Level: 13
       NormalChance: 18
       EnrichedChance: 18
@@ -482,26 +542,41 @@ WeaponLv4:
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 60
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 1
     - Level: 9
       NormalChance: 20
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 50
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 2
     - Level: 10
       NormalChance: 9
       EnrichedChance: 20
       EventNormalChance: 9
       EventEnrichedChance: 35
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 4
     - Level: 11
       NormalChance: 8
       EnrichedChance: 8
       EventNormalChance: 20
       EventEnrichedChance: 20
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 7
     - Level: 12
       NormalChance: 8
       EnrichedChance: 8
       EventNormalChance: 20
       EventEnrichedChance: 20
+      BlacksmithBlessing:
+        ItemID: 6635
+        Count: 11
     - Level: 13
       NormalChance: 8
       EnrichedChance: 8
@@ -583,13 +658,26 @@ Shadow:
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 50
+    #  BlacksmithBlessing:
+    #    ItemID: 6635
+    #    Count: 1
     - Level: 9
       NormalChance: 20
       EnrichedChance: 40
       EventNormalChance: 20
       EventEnrichedChance: 50
+    #  BlacksmithBlessing:
+    #    ItemID: 6635
+    #    Count: 2
     - Level: 10
       NormalChance: 9
       EnrichedChance: 20
       EventNormalChance: 9
       EventEnrichedChance: 35
+    #  BlacksmithBlessing:
+    #    ItemID: 6635
+    #    Count: 4
+    #- Level: 11
+    #  BlacksmithBlessing:
+    #     ItemID: 6635
+    #     Count: 7
