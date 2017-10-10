@@ -266,6 +266,8 @@ struct Script_Config script_config = {
 	"OnTouchNPC", //ontouchnpc_event_name (run whenever a monster walks into the OnTouch area)
 	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
 	"OnCommand", //oncommand_event_name (is executed by script command cmdothernpc)
+	"OnBuyItem", //onbuy_event_name (is executed when items are bought)
+	"OnSellItem", //onsell_event_name (is executed when items are sold)
 	// Init related
 	"OnInit", //init_event_name (is executed on all npcs when all npcs were loaded)
 	"OnInterIfInit", //inter_init_event_name (is executed on inter server connection)
@@ -283,6 +285,7 @@ struct Script_Config script_config = {
 	"OnAgitEnd3", //agit_end3_event_name (is executed when WoE TE has ended)
 	// Timer related
 	"OnTimer", //timer_event_name (is executed by a timer at the specific second)
+	"OnTimerQuit", //timer_quit_event_name (is executed when a timer is aborted)
 	"OnMinute", //timer_minute_event_name (is executed by a timer at the specific minute)
 	"OnHour", //timer_hour_event_name (is executed by a timer at the specific hour)
 	"OnClock", //timer_clock_event_name (is executed by a timer at the specific hour and minute)
