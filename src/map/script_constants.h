@@ -5937,6 +5937,59 @@
 	export_constant(EF_SPRITEMABLE);
 	export_constant(EF_TUNAPARTY);
 
+	/* hat effects */
+	export_constant(HAT_EF_BLOSSOM_FLUTTERING);
+	export_constant(HAT_EF_MERMAID_LONGING);
+	export_constant(HAT_EF_RL_BANISHING_BUSTER);
+	export_constant(HAT_EF_LJOSALFAR);
+	export_constant(HAT_EF_CLOCKING);
+	export_constant(HAT_EF_SNOW);
+	export_constant(HAT_EF_MAKEBLUR);
+	export_constant(HAT_EF_SLEEPATTACK);
+	export_constant(HAT_EF_GUMGANG);
+	export_constant(HAT_EF_TALK_FROSTJOKE);
+	export_constant(HAT_EF_DEMONSTRATION);
+	export_constant(HAT_EF_FLUTTER_BUTTERFLY);
+	export_constant(HAT_EF_ANGEL_FLUTTERING);
+	export_constant(HAT_EF_BLESSING_OF_ANGELS);
+	export_constant(HAT_EF_ELECTRIC);
+	export_constant(HAT_EF_GREEN_FLOOR);
+	export_constant(HAT_EF_SHRINK);
+	export_constant(HAT_EF_VALHALLA_IDOL);
+	export_constant(HAT_EF_ANGEL_STAIRS);
+	export_constant(HAT_EF_GLOW_OF_NEW_YEAR);
+	export_constant(HAT_EF_BOTTOM_FORTUNEKISS);
+	export_constant(HAT_EF_PINKBODY);
+	export_constant(HAT_EF_DOUBLEGUMGANG);
+	export_constant(HAT_EF_GIANTBODY);
+	export_constant(HAT_EF_GREEN99_6);
+	export_constant(HAT_EF_CIRCLEPOWER);
+	export_constant(HAT_EF_BOTTOM_BLOODYLUST);
+	export_constant(HAT_EF_WATER_BELOW);
+	export_constant(HAT_EF_LEVEL99_150);
+	export_constant(HAT_EF_YELLOWFLY3);
+	export_constant(HAT_EF_KAGEMUSYA);
+	export_constant(HAT_EF_CHERRYBLOSSOM);
+	export_constant(HAT_EF_STRANGELIGHTS);
+	export_constant(HAT_EF_WL_TELEKINESIS_INTENSE);
+	export_constant(HAT_EF_AB_OFFERTORIUM_RING);
+	export_constant(HAT_EF_WHITEBODY2);
+	export_constant(HAT_EF_SAKURA);
+	export_constant(HAT_EF_CLOUD2);
+	export_constant(HAT_EF_FEATHER_FLUTTERING);
+	export_constant(HAT_EF_CAMELLIA_HAIR_PIN);
+	export_constant(HAT_EF_JP_EV_EFFECT01);
+	export_constant(HAT_EF_JP_EV_EFFECT02);
+	export_constant(HAT_EF_JP_EV_EFFECT03);
+	export_constant(HAT_EF_FLORAL_WALTZ);
+	export_constant(HAT_EF_MAGICAL_FEATHER);
+	export_constant(HAT_EF_HAT_EFFECT);
+	export_constant(HAT_EF_BAKURETSU_HADOU);
+	export_constant(HAT_EF_GOLD_SHOWER);
+	export_constant(HAT_EF_WHITEBODY);
+	export_constant(HAT_EF_WATER_BELOW2);
+	export_constant(HAT_EF_FIREWORK);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
