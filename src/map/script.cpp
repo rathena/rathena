@@ -16410,7 +16410,7 @@ BUILDIN_FUNC(setnpcdisplay)
 {
 	const char* name;
 	const char* newname = NULL;
-	int class_ = -1, size = -1;
+	int class_ = JT_FAKENPC, size = -1;
 	struct script_data* data;
 	struct npc_data* nd;
 
@@ -16450,7 +16450,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	else
 		size = -1;
 
-	if( class_ != -1 && nd->class_ != class_ )
+	if( class_ != JT_FAKENPC && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
 	{ // Required to update the visual size

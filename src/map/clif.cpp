@@ -1060,7 +1060,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,24) = vd->head_top;
 	WBUFW(buf,26) = vd->head_mid;
 
-	if( bl->type == BL_NPC && vd->class_ == FLAG_CLASS )
+	if( bl->type == BL_NPC && vd->class_ == JT_GUILD_FLAG )
 	{	//The hell, why flags work like this?
 		WBUFW(buf,22) = status_get_emblem_id(bl);
 		WBUFW(buf,24) = GetWord(status_get_guild_id(bl), 1);
@@ -1415,7 +1415,7 @@ int clif_spawn(struct block_list *bl)
 	int len;
 
 	vd = status_get_viewdata(bl);
-	if( !vd || vd->class_ == INVISIBLE_CLASS )
+	if( !vd || vd->class_ == JT_INVISIBLE )
 		return 0;
 
 	/**
@@ -1762,7 +1762,7 @@ void clif_move(struct unit_data *ud)
 	if (!vd )
 		return;
 	//This performance check is needed to keep GM-hidden objects from being notified to bots.
-	else if( vd->class_ == INVISIBLE_CLASS ){
+	else if( vd->class_ == JT_INVISIBLE ){
 		// If the player was disguised we still need to update the disguised unit, since the main unit will be updated through clif_walkok
 		if(disguised(bl)) {
 			WBUFW(buf,0)=0x86;
@@ -3492,7 +3492,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 				if (!sd) 
 					break;
 
-				if ( val == INVISIBLE_CLASS )
+				if ( val == JT_INVISIBLE )
 					return;
 
 				if (sd->sc.option&OPTION_COSTUME)
@@ -4612,7 +4612,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	int len;
 
 	vd = status_get_viewdata(bl);
-	if (!vd || vd->class_ == INVISIBLE_CLASS)
+	if (!vd || vd->class_ == JT_INVISIBLE)
 		return;
 
 	/**
@@ -5152,7 +5152,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		nullpo_ret(bl);
 		switch(bl->type){
 		case BL_PC:
-			if(sd->vd.class_ != INVISIBLE_CLASS)
+			if(sd->vd.class_ != JT_INVISIBLE)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
@@ -5176,7 +5176,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		default:
-			if((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
+			if((vd=status_get_viewdata(bl)) && vd->class_ != JT_INVISIBLE)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		}
@@ -5185,7 +5185,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		nullpo_ret(tbl);
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
-		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS) &&
+		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
 			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->sc.option&OPTION_INVISIBLE)))
 			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}

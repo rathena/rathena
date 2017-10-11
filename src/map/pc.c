@@ -1521,7 +1521,7 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = INVISIBLE_CLASS;
+		sd->vd.class_ = JT_INVISIBLE;
 		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 		// decrement the number of pvp players on the map
 		map[sd->bl.m].users_pvp--;
