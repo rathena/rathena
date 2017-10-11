@@ -7343,7 +7343,7 @@ Example:
 		bindatcmd "test",strnpcinfo(3) + "::OnAtcommand";
 		end;
 	OnAtcommand:
-		specialeffect2 338;
+		specialeffect2 EF_ANGEL2;
 		end;
 	}
 
