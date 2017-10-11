@@ -96,69 +96,69 @@ Armor:
         Count: 4
     - Level: 11
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 300
       BlacksmithBlessing:
         ItemID: 6635
         Count: 7
     - Level: 12
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 300
       BlacksmithBlessing:
         ItemID: 6635
         Count: 11
     - Level: 13
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 16
-      EventEnrichedChance: 16
+      EventEnrichedChance: 0
       Bonus: 400
     - Level: 14
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 16
-      EventEnrichedChance: 16
+      EventEnrichedChance: 0
       Bonus: 400
     - Level: 15
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 400
     - Level: 16
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 400
     - Level: 17
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 14
-      EventEnrichedChance: 14
+      EventEnrichedChance: 0
       Bonus: 500
     - Level: 18
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 14
-      EventEnrichedChance: 14
+      EventEnrichedChance: 0
       Bonus: 500
     - Level: 19
       NormalChance: 5
-      EnrichedChance: 5
+      EnrichedChance: 0
       EventNormalChance: 10
-      EventEnrichedChance: 10
+      EventEnrichedChance: 0
       Bonus: 500
     - Level: 20
       NormalChance: 5
-      EnrichedChance: 5
+      EnrichedChance: 0
       EventNormalChance: 10
-      EventEnrichedChance: 10
+      EventEnrichedChance: 0
       Bonus: 500
 WeaponLv1:
   StatsPerLevel: 200
@@ -209,64 +209,64 @@ WeaponLv1:
         Count: 4
     - Level: 11
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 40
-      EventEnrichedChance: 40
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 7
     - Level: 12
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 40
-      EventEnrichedChance: 40
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 11
     - Level: 13
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventEnrichedChance: 0
     - Level: 14
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventEnrichedChance: 0
     - Level: 15
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 30
-      EventEnrichedChance: 30
+      EventEnrichedChance: 0
     - Level: 16
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 30
-      EventEnrichedChance: 30
+      EventEnrichedChance: 0
       Bonus: 300
     - Level: 17
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 300
     - Level: 18
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 300
     - Level: 19
       NormalChance: 15
-      EnrichedChance: 15
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 300
     - Level: 20
       NormalChance: 15
-      EnrichedChance: 15
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 300
 WeaponLv2:
   StatsPerLevel: 300
@@ -322,64 +322,64 @@ WeaponLv2:
         Count: 4
     - Level: 11
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 40
-      EventEnrichedChance: 40
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 7
     - Level: 12
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 40
-      EventEnrichedChance: 40
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 11
     - Level: 13
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventEnrichedChance: 0
     - Level: 14
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventEnrichedChance: 0
     - Level: 15
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 30
-      EventEnrichedChance: 30
+      EventEnrichedChance: 0
     - Level: 16
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 30
-      EventEnrichedChance: 30
+      EventEnrichedChance: 0
       Bonus: 600
     - Level: 17
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 600
     - Level: 18
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 600
     - Level: 19
       NormalChance: 15
-      EnrichedChance: 15
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 600
     - Level: 20
       NormalChance: 15
-      EnrichedChance: 15
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 600
 WeaponLv3:
   StatsPerLevel: 500
@@ -440,64 +440,64 @@ WeaponLv3:
         Count: 4
     - Level: 11
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 40
-      EventEnrichedChance: 40
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 7
     - Level: 12
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 40
-      EventEnrichedChance: 40
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 11
     - Level: 13
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventEnrichedChance: 0
     - Level: 14
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 35
-      EventEnrichedChance: 35
+      EventEnrichedChance: 0
     - Level: 15
       NormalChance: 18
-      EnrichedChance: 18
+      EnrichedChance: 0
       EventNormalChance: 30
-      EventEnrichedChance: 30
+      EventEnrichedChance: 0
     - Level: 16
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 30
-      EventEnrichedChance: 30
+      EventEnrichedChance: 0
       Bonus: 900
     - Level: 17
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 900
     - Level: 18
       NormalChance: 17
-      EnrichedChance: 17
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       Bonus: 900
     - Level: 19
       NormalChance: 15
-      EnrichedChance: 15
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 900
     - Level: 20
       NormalChance: 15
-      EnrichedChance: 15
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 900
 WeaponLv4:
   StatsPerLevel: 700
@@ -563,64 +563,64 @@ WeaponLv4:
         Count: 4
     - Level: 11
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 7
     - Level: 12
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 20
-      EventEnrichedChance: 20
+      EventEnrichedChance: 0
       BlacksmithBlessing:
         ItemID: 6635
         Count: 11
     - Level: 13
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 16
-      EventEnrichedChance: 16
+      EventEnrichedChance: 0
     - Level: 14
       NormalChance: 8
-      EnrichedChance: 8
+      EnrichedChance: 0
       EventNormalChance: 16
-      EventEnrichedChance: 16
+      EventEnrichedChance: 0
     - Level: 15
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
     - Level: 16
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 15
-      EventEnrichedChance: 15
+      EventEnrichedChance: 0
       Bonus: 1200
     - Level: 17
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 14
-      EventEnrichedChance: 14
+      EventEnrichedChance: 0
       Bonus: 1200
     - Level: 18
       NormalChance: 7
-      EnrichedChance: 7
+      EnrichedChance: 0
       EventNormalChance: 14
-      EventEnrichedChance: 14
+      EventEnrichedChance: 0
       Bonus: 1200
     - Level: 19
       NormalChance: 5
-      EnrichedChance: 5
+      EnrichedChance: 0
       EventNormalChance: 10
-      EventEnrichedChance: 10
+      EventEnrichedChance: 0
       Bonus: 1200
     - Level: 20
       NormalChance: 5
-      EnrichedChance: 5
+      EnrichedChance: 0
       EventNormalChance: 10
-      EventEnrichedChance: 10
+      EventEnrichedChance: 0
       Bonus: 1200
 Shadow:
   StatsPerLevel: 0

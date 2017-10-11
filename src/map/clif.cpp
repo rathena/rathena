@@ -20157,8 +20157,9 @@ static inline uint8 clif_refineui_materials( struct item *item, struct item_data
 			count++;
 		}
 		
-		// HD refine requirements
-		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_HD ) ){
+		// HD refine requirements only if the refine is +7 ~ +9
+		// TODO: Remove this hardcoded check, add HD values separetd from 'normal' rates
+		if( item->refine >= 7 && item->refine <= 9 && clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_HD ) ){
 			count++;
 		}
 	}
