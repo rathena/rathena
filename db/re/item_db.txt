@@ -4707,8 +4707,8 @@
 6743,HPStone_Middle,HP Stone(Middle),6,10,,100,,,,,,,,,,,,,{ bonus bMaxHPrate,1; },{},{}
 6744,SPStone_Middle,SP Stone(Middle),6,10,,100,,,,,,,,,,,,,{ bonus bMaxSPrate,1; },{},{}
 6745,HealStone_Bottom,Recovery Stone(Low),6,20,,10,,,,,,,,,,,,,{ bonus bSPGainValue,1; bonus bMagicHPGainValue,1; },{},{}
-6746,Iron_Artifacts,Iron Artifacts,3,10,,0,,,,,,,,,,,,,{},{},{}
-6747,Steel_Workpiece,Steel Workpiece,3,10,,0,,,,,,,,,,,,,{},{},{}
+6746,Iron_Artifacts,Steel Artifact,3,10,,0,,,,,,,,,,,,,{},{},{}
+6747,Iron_Artifacts_,Steel Artifact,3,10,,0,,,,,,,,,,,,,{},{},{}
 6748,Daily_Report_He_And_His_Team,Daily Report He And His Team,3,10,,0,,,,,,,,,,,,,{},{},{}
 6749,Operation_Control_Device,Operation Control Device,3,10,,0,,,,,,,,,,,,,{},{},{}
 6750,Failed_Engine,Failed Engine,3,10,,10,,,,,,,,,,,,,{},{},{}
@@ -5535,7 +5535,7 @@
 7649,Big_Luk_Bookmark,Big Luk Bookmark,3,20,,10,,,,,,,,,,,,,{},{},{}
 7651,Mystery_Egg,Mystery Egg,3,10,,10,,,,,,,,,,,,,{},{},{}
 7663,Full_Metal_Jacket,Full Metal Jacket,10,200,,2,10,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-7664,Projection_Landmines,Projection Landmines,10,450,,3,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
+7664,Mine_Projectile,Grenade Launcher,10,450,,3,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
 7665,Dragon_Tail_Missile,Dragon Tail Missile,10,1500,,100,10,,,,0x41000000,63,2,32768,,1,,5,{},{},{}
 7666,TimeTravel_Scroll,Time Travel Scroll,3,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 7667,Abandoned_Machine,Abandoned Machine,3,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -7247,11 +7247,11 @@
 13115,Upg_Revolver,Upg Revolver,5,20,,500,35,,7,1,0x41000000,63,2,34,3,1,1,17,{ .@r = getrefine(); bonus bBaseAtk,(.@r*5); bonus bLongAtkRate,(.@r*2); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*5); },{},{}
 13116,Novice_Revolver,Novice Revolver,5,0,,500,20,,7,0,0x41000000,63,2,34,1,1,0,17,{ bonus bHit,-5; },{},{}
 13117,TE_Woe_Pistol,TE Woe Pistol,5,0,,0,60,,7,0,0x41000000,63,2,34,3,40,1,17,{ bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Curse,3000; },{},{}
-13118,Tiny_Flame,Spark Light,5,1,,100,0,,9,0,0x41000000,63,2,34,1,1,1,17,{},{},{}
-13119,Freedom_Flame,Spark Of Freedom,5,1,,100,100,,9,2,0x41000000,63,2,34,3,99,1,17,{},{},{}
-13120,H_FEATHER_H_FIRE,Heaven's Feather & Hell's Fire,5,1250000,,800,150,,9,1,0x41000000,63,2,34,3,99,1,17,{ bonus2 bSkillAtk,"GS_DESPERADO",20; bonus2 bSkillAtk,"RL_FALLEN_ANGEL",20; },{},{}
-13122,ALTAIR_ARES,Altea & Ares,5,1450000,,1000,200,,9,0,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
-13124,ALTAIR_ARES_,Altea & Ares,5,1450000,,1000,200,,9,1,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
+13118,Tiny_Flame,Fading Flame,5,1,,100,0,,7,0,0x01000000,63,2,34,1,1,1,17,{},{},{}
+13119,Freedom_Flame,Freedom Flame,5,1,,100,100,,7,2,0x01000000,63,2,34,3,99,1,17,{},{},{}
+13120,Heaven's_Feather_and_Hell's_Fire,Heaven's Feather & Hell's Fire,5,1250000,,800,150,,9,1,0x41000000,63,2,34,3,99,1,17,{ bonus2 bSkillAtk,"GS_DESPERADO",20; bonus2 bSkillAtk,"RL_FALLEN_ANGEL",20; },{},{}
+13122,Altea_and_Ares,Altea & Ares,5,1450000,,1000,200,,9,0,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
+13124,Altea_and_Ares_,Altea & Ares,5,1450000,,1000,200,,9,1,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
 13125,Metal_Revolver,Metal Revolver,5,0,,0,30,,7,1,0x41000000,63,2,34,3,1,0,17,{ bonus bBaseAtk,getrefine(); bonus bLongAtkRate,1; if (BaseLevel >= 20 && BaseLevel <= 120) { bonus bBaseAtk,3*(BaseLevel/10); } },{},{}
 13126,Infinity_Pistol,Infinity Pistol,5,10,,500,175,,7,1,0x40000000,63,2,34,4,100,0,17,{},{},{}
 13127,Crimson_Revolver,Crimson Revolver,5,20,,1000,100,,7,2,0x41000000,63,2,34,3,70,1,17,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
@@ -7320,8 +7320,8 @@
 13210,Slug_Bullet_1,Slug Ammunition L,10,250,,250,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13211,Slug_Bullet_2,Slug Ammunition M,10,500,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13212,Slug_Bullet_3,Slug Ammunition H,10,750,,750,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13213,Slug_Bullet_4,Slug Ammunition SH,10,1,,1000,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13214,Slug_Bullet_5,Slug Ammunition XH,10,1,,1200,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13213,Slug_Bullet_4,Slug Ammunition SH,10,1000,,1000,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13214,Slug_Bullet_5,Slug Ammunition XH,10,1200,,1200,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13215,AP_Ammo,Armor Burnt,10,10,,2,50,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
 13216,Blaze_Bullet,Incandescence Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
 13217,Freezing_Bullet,Glaciation Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Water; },{},{}
@@ -7335,6 +7335,11 @@
 13225,Poison_Sphere_,Poison Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; },{},{}
 13226,Blind_Sphere_,Blind Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; },{},{}
 13227,Freezing_Sphere_,Freezing Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
+13228,Flare_Bullet,Flare Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
+13229,Lightning_Bullet,Lightning Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
+13230,Ice_Bullet,Ice Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Water; },{},{}
+13231,Poison_Bullet,Poison Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Poison; },{},{}
+13232,Blind_Bullet,Blind Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Dark; },{},{}
 //===================================================================
 // Shurikens & Kunais
 //===================================================================
