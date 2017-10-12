@@ -101,6 +101,7 @@ izlude_d	mapflag	nobranch
 1@gef	mapflag	nobranch
 1@gef_in	mapflag	nobranch
 1@ge_st	mapflag	nobranch
+1@glast	mapflag	nobranch
 dali	mapflag	nobranch
 dali02	mapflag	nobranch
 

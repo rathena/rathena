@@ -93,6 +93,8 @@ gl_cas02_	mapflag	noteleport
 1@sara	mapflag	monster_noteleport
 1@gef_in	mapflag	noteleport
 1@gef_in	mapflag	monster_noteleport
+1@glast	mapflag	noteleport
+1@glast	mapflag	monster_noteleport
 dali	mapflag	noteleport
 dali02	mapflag	noteleport
 
