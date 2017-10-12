@@ -1602,7 +1602,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( battle_config.ksprotection && sd && mob_ksprotected(src, target) )
 		return 0;
 
-	// Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
+	// Normally not needed because clif.cpp checks for it, but the at/char/script commands don't! [Skotlex]
 	if(ud->skilltimer != INVALID_TIMER && skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST)
 		return 0;
 
@@ -1965,7 +1965,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (ud && ud->state.blockedskill)
 		return 0;
 
-	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
+	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.cpp checks for it, but at/char/script commands don't! [Skotlex]
 		return 0;
 
 	sc = status_get_sc(src);
@@ -2190,6 +2190,23 @@ int unit_unattackable(struct block_list *bl)
 }
 
 /**
+ * Checks if the unit can attack, returns yes if so.
+*/
+bool unit_can_attack(struct block_list *src, int target_id)
+{
+	struct status_change *sc = status_get_sc(src);
+
+	if( sc != NULL ) {
+		if( sc->data[SC__MANHOLE] )
+			return false;
+	}
+
+	if( src->type == BL_PC )
+		return pc_can_attack(BL_CAST(BL_PC, src), target_id);
+	return true;
+}
+
+/**
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
@@ -2212,23 +2229,16 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	if( src->type == BL_PC ) {
-		TBL_PC* sd = (TBL_PC*)src;
+	if( src->type == BL_PC &&
+		target->type == BL_NPC ) {
+		// Monster npcs [Valaris]
+		npc_click((TBL_PC*)src,(TBL_NPC*)target);
+		return 0;
+	}
 
-		if( target->type == BL_NPC ) { // Monster npcs [Valaris]
-			npc_click(sd,(TBL_NPC*)target); // Submitted by leinsirk10 [Celest]
-			return 0;
-		}
-
-		if( pc_is90overweight(sd) || pc_isridingwug(sd) ) { // Overweight or mounted on warg - stop attacking
-			unit_stop_attack(src);
-			return 0;
-		}
-
-		if( !pc_can_attack(sd, target_id) ) {
-			unit_stop_attack(src);
-			return 0;
-		}
+	if( !unit_can_attack(src, target_id) ) {
+		unit_stop_attack(src);
+		return 0;
 	}
 
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
@@ -2500,9 +2510,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 #endif
 	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
-
-	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
-		return 0;
 
 	if( src->m != target->m ) {
 		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )

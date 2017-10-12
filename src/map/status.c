@@ -10,6 +10,7 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/strlib.h"
+#include "../common/yamlwrapper.h"
 
 #include "battle.h"
 #include "itemdb.h"
@@ -21,6 +22,7 @@
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
+#include "script.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -36,9 +38,10 @@ enum e_regen {
 
 // Bonus values and upgrade chances for refining equipment
 static struct {
-	int chance[MAX_REFINE]; /// Success chance
+	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
 	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
 	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
+	struct refine_cost cost[REFINE_COST_MAX];
 } refine_info[REFINE_TYPE_MAX];
 
 static int atkmods[3][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
@@ -498,6 +501,9 @@ void initChangeTables(void)
 #endif
 	set_sc( GS_ADJUSTMENT		, SC_ADJUSTMENT		, SI_ADJUSTMENT		, SCB_HIT|SCB_FLEE );
 	set_sc( GS_INCREASING		, SC_INCREASING		, SI_ACCURACY		, SCB_AGI|SCB_DEX|SCB_HIT );
+#ifdef RENEWAL
+	set_sc( GS_MAGICALBULLET	, SC_MAGICALBULLET	, SI_GS_MAGICAL_BULLET	, SCB_NONE );
+#endif
 	set_sc( GS_GATLINGFEVER		, SC_GATLINGFEVER	, SI_GATLINGFEVER	,
 #ifndef RENEWAL
 		SCB_BATK|SCB_FLEE|SCB_SPEED|SCB_ASPD );
@@ -832,8 +838,9 @@ void initChangeTables(void)
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, SI_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, SI_E_CHAIN	, SCB_NONE );
 	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_NONE );
+	set_sc( RL_FALLEN_ANGEL , SC_FALLEN_ANGEL, SI_BLANK, SCB_NONE );
 	set_sc( RL_SLUGSHOT		, SC_STUN		, SI_SLUGSHOT	, SCB_NONE );
-	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_FLEE|SCB_ASPD );
+	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_HIT|SCB_ASPD );
 	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_FLEE );
 	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_NONE );
 
@@ -1052,7 +1059,6 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MTF_MLEATKED] = SI_MTF_MLEATKED;
 	StatusIconChangeTable[SC_MTF_CRIDAMAGE] = SI_MTF_CRIDAMAGE;
 	StatusIconChangeTable[SC_QD_SHOT_READY] = SI_E_QD_SHOT_READY;
-	StatusIconChangeTable[SC_HEAT_BARREL_AFTER] = SI_HEAT_BARREL_AFTER;
 	StatusIconChangeTable[SC_QUEST_BUFF1] = SI_QUEST_BUFF1;
 	StatusIconChangeTable[SC_QUEST_BUFF2] = SI_QUEST_BUFF2;
 	StatusIconChangeTable[SC_QUEST_BUFF3] = SI_QUEST_BUFF3;
@@ -1422,7 +1428,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOCAST;
-	StatusChangeStateTable[SC_HEAT_BARREL_AFTER]	|= SCS_NOCAST;
 
 	/* StatusChangeState (SCS_) NOCHAT (skills) */
 	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCHAT;
@@ -2111,8 +2116,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (skill_id != RK_REFRESH && skill_id != SU_GROOMING && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
-			if (!(skill_get_inf(skill_id)&INF_GROUND_SKILL)) 
-				return false; // Targetted spells can't come off.
+			if (skill_get_casttype(skill_id) == CAST_DAMAGE)
+				return false; // Damage spells stop casting.
 		}
 
 		if (
@@ -3497,8 +3502,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
 				wa->matk += refine_info[wlv].bonus[r-1] / 100;
-			if (sd->bonus.weapon_matk_rate)
-				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
 #endif
 			if(r) // Overrefine bonus.
 				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
@@ -3513,6 +3516,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
+#ifdef RENEWAL
+			if (sd->bonus.weapon_matk_rate)
+				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
+#endif
 			if(sd->inventory.u.items_inventory[index].card[0] == CARD0_FORGE) { // Forged weapon
 				wd->star += (sd->inventory.u.items_inventory[index].card[1]>>8);
 				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
@@ -6133,6 +6140,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += hit * sc->data[SC_INCHITRATE]->val1/100;
 	if(sc->data[SC_BLIND])
 		hit -= hit * 25/100;
+	if(sc->data[SC_HEAT_BARREL])
+		hit -= sc->data[SC_HEAT_BARREL]->val4;
 	if(sc->data[SC__GROOMY])
 		hit -= hit * sc->data[SC__GROOMY]->val3 / 100;
 	if(sc->data[SC_FEAR])
@@ -6247,8 +6256,6 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee -= flee * 50 / 100;
 	//if( sc->data[SC_C_MARKER] )
 	//	flee -= (flee * sc->data[SC_C_MARKER]->val3) / 100;
-	if(sc->data[SC_HEAT_BARREL])
-		flee -= sc->data[SC_HEAT_BARREL]->val4;
 	if (sc->data[SC_GROOMING])
 		flee += sc->data[SC_GROOMING]->val2;
 
@@ -6787,6 +6794,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[sc_val]->val1;
 		if (sc->data[SC_ATTHASTE_CASH])
 			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
+		if (sc->data[SC_HEAT_BARREL])
+			bonus += sc->data[SC_HEAT_BARREL]->val1;
 	} else {
 		if (sc->data[SC_DONTFORGETME])
 			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
@@ -6846,8 +6855,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_GATLINGFEVER]->val1;
 		if (sc->data[SC_STAR_COMFORT])
 			bonus += 3 * sc->data[SC_STAR_COMFORT]->val1;
-		if (sc->data[SC_HEAT_BARREL])
-			bonus += sc->data[SC_HEAT_BARREL]->val3;
 	}
 
 	return bonus;
@@ -7022,8 +7029,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate += sc->data[SC_PAIN_KILLER]->val2 * 10;
 	if( sc->data[SC_GOLDENE_FERSE])
 		aspd_rate -= sc->data[SC_GOLDENE_FERSE]->val3 * 10;
-	if( sc->data[SC_HEAT_BARREL] )
-		aspd_rate -= sc->data[SC_HEAT_BARREL]->val3 * 10;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
@@ -8030,7 +8035,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = status_get_lv(bl) * 100 + (sd ? sd->status.job_level : 1) * 200;
 			break;
 		case SC_B_TRAP:
-			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; // (custom)
+			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; //! TODO: Figure out reduction formula
 			break;
 		case SC_NORECOVER_STATE:
 			tick_def2 = status->luk * 100;
@@ -8725,7 +8730,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_HEAT_BARREL:
 		//kRO Update 2014-02-12
-		//- Cannot be stacked with Platinum Alter and Madness Canceler (and otherwise?) [Cydh]
+		//- Cannot be stacked with Platinum Alter and Madness Canceler [Cydh]
 		if (sc->data[SC_P_ALTER] || sc->data[SC_MADNESSCANCEL])
 			return 0;
 		break;
@@ -8734,6 +8739,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 	case SC_MADNESSCANCEL:
+		if (sc->data[type]) { // Toggle the status but still consume requirements.
+			status_change_end(bl, type, INVALID_TIMER);
+			return 0;
+		}
 		if (sc->data[SC_P_ALTER] || sc->data[SC_HEAT_BARREL])
 			return 0;
 		break;
@@ -10871,7 +10880,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		/* Rebellion */
 		case SC_B_TRAP:
 			val2 = src->id;
-			val3 = val1 * 25; // -movespeed (custom)
+			val3 = val1 * 25; // -movespeed TODO: Figure out movespeed rate
 			break;
 		case SC_C_MARKER:
 			// val1 = skill_lv
@@ -10885,14 +10894,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = src->id;
 			break;
 		case SC_HEAT_BARREL:
-			//kRO Update 2014-02-26
+			//kRO Update 2016-05-25
 			{
 				uint8 n = 10;
 				if (sd)
 					n = (uint8)sd->spiritball_old;
-				val2 = val1 * 5; // -fixed casttime (custom)
-				val3 = val1 * n / 5; // +aspd (custom)
-				val4 = 75 - val1 * 5; // -flee
+				val2 = val1 * 5; // -fixed casttime
+				val3 = 6 + val1 * 2; // ATK
+				val4 = 25 + val1 * 5; // -hit
 			}
 			break;
 		case SC_P_ALTER:
@@ -10900,8 +10909,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				uint8 n = 10;
 				if (sd)
 					n = (uint8)sd->spiritball_old;
-				val2 = val1 * n * 2; // +atk (custom)
-				val3 = val1 * 15; // +def (custom)
+				val2 = 10 * n; // +atk
+				val3 = (status->max_hp * (val1 * 5) / 100); // Barrier HP
 			}
 			break;
 		case SC_E_CHAIN:
@@ -10911,8 +10920,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ANTI_M_BLAST:
 			val2 = val1 * 10;
-			if (bl->type != BL_PC)
-				val2 /= 5; //(custom) //kRO update 2012-02-12, reduce the rate for Non-Player target [Cydh]
 			break;
 		case SC_CATNIPPOWDER:
 			val2 = 50; // WATK%, MATK%
@@ -11198,8 +11205,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				unit_stop_walking(bl,1);
 			break;
 		case SC__MANHOLE:
+			// Manhole ignores blow_immune, when the enemy is BL_PC
 			if (bl->type == BL_PC || !unit_blown_immune(bl,0x1))
 				unit_stop_walking(bl,1);
+			unit_stop_attack(bl);
 			break;
 		case SC_VACUUM_EXTREME:
 			if (bl->type != BL_PC && !unit_blown_immune(bl,0x1)) {
@@ -11216,7 +11225,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CAMOUFLAGE:
 		case SC_STEALTHFIELD:
 		case SC_VOICEOFSIREN:
-		case SC_HEAT_BARREL_AFTER:
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
@@ -11666,7 +11674,6 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_PUSH_CART:
 			case SC_LIGHT_OF_REGENE:
 			case SC_STYLE_CHANGE:
-			case SC_HEAT_BARREL_AFTER:
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:
@@ -12289,10 +12296,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd && sce->val2 != SI_BLANK)
 				clif_status_load(bl, (enum si_type)sce->val2, 0);
-			break;
-		case SC_HEAT_BARREL:
-			if (sd)
-				sc_start(bl,bl,SC_HEAT_BARREL_AFTER,100,sce->val1,skill_get_time2(RL_HEAT_BARREL, sce->val1));
 			break;
 		case SC_C_MARKER:
 			{
@@ -13655,7 +13658,6 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_MTF_MATK:
 			case SC_MTF_MLEATKED:
 			case SC_MTF_CRIDAMAGE:
-			case SC_HEAT_BARREL_AFTER:
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:
@@ -14100,13 +14102,16 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_
  * @param refine: The target's refine level
  * @return The chance to refine the item, in percent (0~100)
  */
-int status_get_refine_chance(enum refine_type wlv, int refine)
+int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
 {
-
 	if ( refine < 0 || refine >= MAX_REFINE)
 		return 0;
+	
+	int type = enriched ? 1 : 0;
+	if (battle_config.event_refine_chance)
+		type |= 2;
 
-	return refine_info[wlv].chance[refine];
+	return refine_info[wlv].chance[type][refine];
 }
 
 /**
@@ -14211,43 +14216,132 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
 }
 
 /**
- * Read refine database for refining calculations
- * @param fields: Fields passed from sv_readdb
- * @param columns: Columns passed from sv_readdb function call
- * @param current: Current row being read into refine_info array
- * @return True
+ * Reads and parses an entry from the refine_db
+ * @param wrapper: The YAML wrapper containing the entry
+ * @param refine_info_index: The sequential index of the current entry
+ * @param file_name: File name for displaying only
+ * @return True on success or false on failure
  */
-static bool status_readdb_refine(char* fields[], int columns, int current)
-{
-	int i, bonus_per_level, random_bonus, random_bonus_start_level;
-
-	current = atoi(fields[0]);
-
-	if (current < 0 || current >= REFINE_TYPE_MAX)
+static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_index, char* file_name) {
+	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
-	bonus_per_level = atoi(fields[1]);
-	random_bonus_start_level = atoi(fields[2]);
-	random_bonus = atoi(fields[3]);
+	int bonus_per_level = yaml_get_int(wrapper, "StatsPerLevel");
+	int random_bonus_start_level = yaml_get_int(wrapper, "RandomBonusStartLevel");
+	int random_bonus = yaml_get_int(wrapper, "RandomBonusValue");
 
-	for(i = 0; i < MAX_REFINE; i++) {
-		char* delim;
+	yamlwrapper* costs = yaml_get_subnode(wrapper, "Costs");
+	yamliterator* it = yaml_get_iterator(costs);
+	if (yaml_iterator_is_valid(it)) {
+		for (yamlwrapper* type = yaml_iterator_first(it); yaml_iterator_has_next(it); type = yaml_iterator_next(it)) {
+			int idx = 0, price;
+			unsigned short material;
+			static char* keys[] = {"Type", "Price", "Material" };
+			char* result;
 
-		if (!(delim = strchr(fields[4+i], ':')))
-			return false;
+			if ((result = yaml_verify_nodes(type, ARRAYLENGTH(keys), keys)) != NULL) {
+				ShowWarning("status_yaml_readdb_refine_sub: Invalid refine cost with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", result, file_name);
+				yaml_destroy_wrapper(type);
+				continue;
+			}
 
-		*delim = '\0';
+			char* refine_cost_const = yaml_get_c_string(type, "Type");
+			if (ISDIGIT(refine_cost_const[0]))
+				idx = atoi(refine_cost_const);
+			else
+				script_get_constant(refine_cost_const, &idx);
+			price = yaml_get_int(type, "Price");
+			material = yaml_get_uint16(type, "Material");
 
-		refine_info[current].chance[i] = atoi(fields[4+i]);
+			refine_info[refine_info_index].cost[idx].nameid = material;
+			refine_info[refine_info_index].cost[idx].zeny = price;
 
-		if (i >= random_bonus_start_level - 1)
-			refine_info[current].randombonus_max[i] = random_bonus * (i - random_bonus_start_level + 2);
-
-		refine_info[current].bonus[i] = bonus_per_level + atoi(delim+1);
-		if (i > 0)
-			refine_info[current].bonus[i] += refine_info[current].bonus[i-1];
+			aFree(refine_cost_const);
+			yaml_destroy_wrapper(type);
+		}
 	}
+	yaml_destroy_wrapper(costs);
+	yaml_iterator_destroy(it);
+
+	yamlwrapper* rates = yaml_get_subnode(wrapper, "Rates");
+	it = yaml_get_iterator(rates);
+
+	if (yaml_iterator_is_valid(it)) {
+		for (yamlwrapper* level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
+			int refine_level = yaml_get_int(level, "Level") - 1;
+
+			if (refine_level >= MAX_REFINE) {
+				yaml_destroy_wrapper(level);
+				continue;
+			}
+
+			if (yaml_node_is_defined(level, "NormalChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = yaml_get_int(level, "NormalChance");
+			if (yaml_node_is_defined(level, "EnrichedChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = yaml_get_int(level, "EnrichedChance");
+			if (yaml_node_is_defined(level, "EventNormalChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = yaml_get_int(level, "EventNormalChance");
+			if (yaml_node_is_defined(level, "EventEnrichedChance"))
+				refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = yaml_get_int(level, "EventEnrichedChance");
+			if (yaml_node_is_defined(level, "Bonus"))
+				refine_info[refine_info_index].bonus[refine_level] = yaml_get_int(level, "Bonus");
+
+			if (refine_level >= random_bonus_start_level - 1)
+				refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
+			yaml_destroy_wrapper(level);
+		}
+		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level) {
+			refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
+		}
+	}
+	yaml_destroy_wrapper(rates);
+	yaml_iterator_destroy(it);
+
 	return true;
+}
+
+/**
+ * Loads refine values from the refine_db
+ * @param directory: Location of refine_db file
+ * @param file: File name
+ */
+static void status_yaml_readdb_refine(const char* directory, const char* file) {
+	int count = 0;
+	const char* labels[6] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
+	size_t str_size = strlen(directory) + strlen(file) + 2;
+	char* buf = (char*)aCalloc(1, str_size);
+	sprintf(buf, "%s/%s", directory, file);
+	yamlwrapper* root_node, *sub_node;
+
+	if ((root_node = yaml_load_file(buf)) == NULL) {
+		ShowError("Failed to read '%s'.\n", buf);
+		aFree(buf);
+		return;
+	}
+
+	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
+		if (yaml_node_is_defined(root_node, labels[i])) {
+			sub_node = yaml_get_subnode(root_node, labels[i]);
+			if (status_yaml_readdb_refine_sub(sub_node, i, buf))
+				count++;
+			yaml_destroy_wrapper(sub_node);
+		}
+	}
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, buf);
+
+	yaml_destroy_wrapper(root_node);
+	aFree(buf);
+}
+
+/**
+ * Returns refine cost (zeny or item) for a weapon level.
+ * @param weapon_lv Weapon level
+ * @param type Refine type (can be retrieved from refine_cost_type enum)
+ * @param what true = returns zeny, false = returns item id
+ * @return Refine cost for a weapon level
+ */
+int status_get_refine_cost(int weapon_lv, int type, bool what) {
+	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
 }
 
 /**
@@ -14329,15 +14423,17 @@ int status_readdb(void)
 	for(i=0;i<ARRAYLENGTH(atkmods);i++)
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
-	// refine_db.txt
+	// refine_db.yml
 	for(i=0;i<ARRAYLENGTH(refine_info);i++)
 	{
-		for(j=0;j<MAX_REFINE; j++)
-		{
-			refine_info[i].chance[j] = 100;
-			refine_info[i].bonus[j] = 0;
-			refine_info[i].randombonus_max[j] = 0;
-		}
+		memset(refine_info[i].cost, 0, sizeof(struct refine_cost));
+		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
+			for(k=0;k<MAX_REFINE; k++)
+			{
+				refine_info[i].chance[j][k] = 100;
+				refine_info[i].bonus[k] = 0;
+				refine_info[i].randombonus_max[k] = 0;
+			}
 	}
 	// attr_fix.txt
 	for(i=0;i<4;i++)
@@ -14365,7 +14461,7 @@ int status_readdb(void)
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i);
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
-		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
+		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}

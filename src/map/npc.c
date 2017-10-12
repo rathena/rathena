@@ -767,11 +767,11 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		char buf[EVENT_NAME_LENGTH];
 		struct event_data *ev;
 
-		snprintf(buf, ARRAYLENGTH(buf), "%s::OnTimerQuit", nd->exname);
+		snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, script_config.timer_quit_event_name);
 		ev = (struct event_data*)strdb_get(ev_db, buf);
 		if( ev && ev->nd != nd )
 		{
-			ShowWarning("npc_timerevent_quit: Unable to execute \"OnTimerQuit\", two NPCs have the same event name [%s]!\n",buf);
+			ShowWarning("npc_timerevent_quit: Unable to execute \"%s\", two NPCs have the same event name [%s]!\n",script_config.timer_quit_event_name,buf);
 			ev = NULL;
 		}
 		if( ev )
@@ -1412,19 +1412,23 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 			{
 				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
 
+				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
+					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+					return ERROR_TYPE_PURCHASE_FAIL;
+				}
 				if (cost[0] < (price - points)) {
 					char output[CHAT_SIZE_MAX];
 
 					memset(output, '\0', sizeof(output));
 
-					sprintf(output, msg_txt(sd, 712), (id) ? id->jname : "NULL", (id) ? id->nameid : 0); // You do not have enough %s (%hu).
+					sprintf(output, msg_txt(sd, 712), id->jname, id->nameid); // You do not have enough %s (%hu).
 					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
-				if (id)
-					pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC);
-				else
-					ShowWarning("Failed to delete item %hu from itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+				if (pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC)) {
+					ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+					return ERROR_TYPE_PURCHASE_FAIL;
+				}
 			}
 			break;
 		case NPCTYPE_POINTSHOP:
@@ -1576,8 +1580,10 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
-					if (sd->inventory.u.items_inventory[i].nameid == id->nameid)
+					if (sd->inventory.u.items_inventory[i].nameid == id->nameid &&
+					    pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i])) {
 						total += sd->inventory.u.items_inventory[i].amount;
+					}
 				}
 			}
 
@@ -1713,7 +1719,7 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
 	}
 
 	// invoke event
-	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnBuyItem", nd->exname);
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::%s", nd->exname, script_config.onbuy_event_name);
 	npc_event(sd, npc_ev, 0);
 
 	return 0;
@@ -1877,6 +1883,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 {
 	char npc_ev[EVENT_NAME_LENGTH];
 	char card_slot[NAME_LENGTH];
+	char option_id[NAME_LENGTH], option_val[NAME_LENGTH], option_param[NAME_LENGTH];
 	int i, j;
 	int key_nameid = 0;
 	int key_amount = 0;
@@ -1884,6 +1891,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	int key_attribute = 0;
 	int key_identify = 0;
 	int key_card[MAX_SLOTS];
+	int key_option_id[MAX_ITEM_RDM_OPT], key_option_val[MAX_ITEM_RDM_OPT], key_option_param[MAX_ITEM_RDM_OPT];
 
 	// discard old contents
 	script_cleararray_pc(sd, "@sold_nameid", (void*)0);
@@ -1899,12 +1907,21 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 		script_cleararray_pc(sd, card_slot, (void*)0);
 	}
 
+	for (j = 0; j < MAX_ITEM_RDM_OPT; j++) { // Clear each of the item option entries
+		key_option_id[j] = key_option_val[j] = key_option_param[j] = 0;
+
+		snprintf(option_id, sizeof(option_id), "@sold_option_id%d", j + 1);
+		script_cleararray_pc(sd, option_id, (void *)0);
+		snprintf(option_val, sizeof(option_val), "@sold_option_val%d", j + 1);
+		script_cleararray_pc(sd, option_val, (void *)0);
+		snprintf(option_param, sizeof(option_param), "@sold_option_param%d", j + 1);
+		script_cleararray_pc(sd, option_param, (void *)0);
+	}
+
 	// save list of to be sold items
 	for( i = 0; i < n; i++ )
 	{
-		int idx;
-
-		idx = item_list[i*2]-2;
+		int idx = item_list[i * 2] - 2;
 
 		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].nameid, &key_nameid);
 		script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr_t)item_list[i*2+1], &key_amount);
@@ -1920,11 +1937,20 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 				snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
 				script_setarray_pc(sd, card_slot, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].card[j], &key_card[j]);
 			}
+
+			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) { // Store each of the item options in the array
+				snprintf(option_id, sizeof(option_id), "@sold_option_id%d", j + 1);
+				script_setarray_pc(sd, option_id, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].option[j].id, &key_option_id[j]);
+				snprintf(option_val, sizeof(option_val), "@sold_option_val%d", j + 1);
+				script_setarray_pc(sd, option_val, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].option[j].value, &key_option_val[j]);
+				snprintf(option_param, sizeof(option_param), "@sold_option_param%d", j + 1);
+				script_setarray_pc(sd, option_param, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].option[j].param, &key_option_param[j]);
+			}
 		}
 	}
 
 	// invoke event
-	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnSellItem", nd->exname);
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::%s", nd->exname, script_config.onsell_event_name);
 	npc_event(sd, npc_ev, 0);
 	return 0;
 }
@@ -3059,7 +3085,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		char evname[EVENT_NAME_LENGTH];
 		struct event_data *ev;
 
-		snprintf(evname, ARRAYLENGTH(evname), "%s::OnInit", nd->exname);
+		snprintf(evname, ARRAYLENGTH(evname), "%s::%s", nd->exname, script_config.init_event_name);
 
 		if( ( ev = (struct event_data*)strdb_get(ev_db, evname) ) ) {
 
@@ -4795,3 +4821,4 @@ void do_init_npc(void){
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
 }
+

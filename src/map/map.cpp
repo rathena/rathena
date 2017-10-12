@@ -2032,7 +2032,6 @@ int map_quit(struct map_session_data *sd) {
 			// Both these statuses are removed on logout. [L0ne_W0lf]
 			status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_HEAT_BARREL_AFTER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_H_MINE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_ANTI_M_BLAST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_B_TRAP, INVALID_TIMER);
@@ -4407,7 +4406,7 @@ void do_final(void)
 	do_final_pet();
 	do_final_homunculus();
 	do_final_mercenary();
-	do_final_mob();
+	do_final_mob(false);
 	do_final_msg();
 	do_final_skill();
 	do_final_status();
