@@ -266,6 +266,8 @@ struct Script_Config script_config = {
 	"OnTouchNPC", //ontouchnpc_event_name (run whenever a monster walks into the OnTouch area)
 	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
 	"OnCommand", //oncommand_event_name (is executed by script command cmdothernpc)
+	"OnBuyItem", //onbuy_event_name (is executed when items are bought)
+	"OnSellItem", //onsell_event_name (is executed when items are sold)
 	// Init related
 	"OnInit", //init_event_name (is executed on all npcs when all npcs were loaded)
 	"OnInterIfInit", //inter_init_event_name (is executed on inter server connection)
@@ -283,6 +285,7 @@ struct Script_Config script_config = {
 	"OnAgitEnd3", //agit_end3_event_name (is executed when WoE TE has ended)
 	// Timer related
 	"OnTimer", //timer_event_name (is executed by a timer at the specific second)
+	"OnTimerQuit", //timer_quit_event_name (is executed when a timer is aborted)
 	"OnMinute", //timer_minute_event_name (is executed by a timer at the specific minute)
 	"OnHour", //timer_hour_event_name (is executed by a timer at the specific hour)
 	"OnClock", //timer_clock_event_name (is executed by a timer at the specific hour and minute)
@@ -1052,12 +1055,9 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		if( *arg != '*' )
 			++arg; // count func as argument
 	} else {
-#ifdef SCRIPT_CALLFUNC_CHECK
 		const char* name = get_str(func);
 		if( !is_custom && strdb_get(userfunc_db, name) == NULL ) {
-#endif
 			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		} else {;
 			add_scriptl(buildin_callfunc_ref);
 			add_scriptc(C_ARG);
@@ -1067,7 +1067,6 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 			arg = buildin_func[str_data[buildin_callfunc_ref].val].arg;
 			if( *arg != '*' ) ++ arg;
 		}
-#endif
 	}
 
 	p = skip_word(p);
@@ -1410,14 +1409,12 @@ const char* parse_simpleexpr(const char *p)
 		l=add_word(p);
 		if( str_data[l].type == C_FUNC || str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS)
 			return parse_callfunc(p,1,0);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		else {
 			const char* name = get_str(l);
 			if( strdb_get(userfunc_db,name) != NULL ) {
 				return parse_callfunc(p,1,1);
 			}
 		}
-#endif
 
 		if( (pv = parse_variable(p)) )
 		{// successfully processed a variable assignment
@@ -18163,9 +18160,6 @@ BUILDIN_FUNC(setunitdata)
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
 			break;
-		default:
-			ShowWarning("buildin_setunitdata: Invalid object type!\n");
-			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;

@@ -169,6 +169,8 @@ extern struct Script_Config {
 	const char* ontouchnpc_event_name;
 	const char* onwhisper_event_name;
 	const char* oncommand_event_name;
+	const char* onbuy_event_name;
+	const char* onsell_event_name;
 
 	// Init related
 	const char* init_event_name;
@@ -189,6 +191,7 @@ extern struct Script_Config {
 
 	// Timer related
 	const char* timer_event_name;
+	const char* timer_quit_event_name;
 	const char* timer_minute_event_name;
 	const char* timer_hour_event_name;
 	const char* timer_clock_event_name;
