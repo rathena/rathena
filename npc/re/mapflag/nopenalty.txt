@@ -70,3 +70,4 @@ job3_gen01	mapflag	nopenalty
 // Ext --------------------
 job3_sha01	mapflag	nopenalty
 job_ko	mapflag	nopenalty
+job_gun	mapflag	nopenalty

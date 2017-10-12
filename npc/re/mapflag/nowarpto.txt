@@ -65,3 +65,5 @@ te_aldecas2	mapflag	nowarpto
 te_aldecas3	mapflag	nowarpto
 te_aldecas4	mapflag	nowarpto
 te_aldecas5	mapflag	nowarpto
+
+job_gun	mapflag	nowarpto
