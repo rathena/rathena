@@ -6418,6 +6418,7 @@ void clif_map_property_mapall(int map_idx, enum map_property property)
 ///     0 = success
 ///     1 = failure
 ///     2 = downgrade
+///     3 = failure without breaking nor downgrade
 void clif_refine(int fd, int fail, int index, int val)
 {
 	WFIFOHEAD(fd,packet_len(0x188));
@@ -20385,6 +20386,9 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 			return;
 		}
 	}
+	else {
+		use_blacksmith_blessing = false;
+	}
 
 	// Try to refine the item
 	if( materials[i].chance >= rnd() % 100 ){
@@ -20398,7 +20402,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		// Failure
 
 		if (use_blacksmith_blessing) { // Blacksmith Blessing were used, no break & no down refine
-			clif_refine(fd, 1, index, item->refine);
+			clif_refine(fd, 3, index, item->refine);
 			clif_refineui_info(sd, index);
 		} else if (materials[i].cost.breakable) { // Delete the item if it is breakable
 			clif_refine( fd, 1, index, item->refine );
