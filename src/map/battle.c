@@ -1408,7 +1408,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
-			clif_specialeffect(bl, 336, AREA);
+			clif_specialeffect(bl, EF_GUARD, AREA);
 			sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 			if (sce->val3 >= 0)
 				damage = 0;
