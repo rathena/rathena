@@ -501,6 +501,9 @@ void initChangeTables(void)
 #endif
 	set_sc( GS_ADJUSTMENT		, SC_ADJUSTMENT		, SI_ADJUSTMENT		, SCB_HIT|SCB_FLEE );
 	set_sc( GS_INCREASING		, SC_INCREASING		, SI_ACCURACY		, SCB_AGI|SCB_DEX|SCB_HIT );
+#ifdef RENEWAL
+	set_sc( GS_MAGICALBULLET	, SC_MAGICALBULLET	, SI_GS_MAGICAL_BULLET	, SCB_NONE );
+#endif
 	set_sc( GS_GATLINGFEVER		, SC_GATLINGFEVER	, SI_GATLINGFEVER	,
 #ifndef RENEWAL
 		SCB_BATK|SCB_FLEE|SCB_SPEED|SCB_ASPD );
@@ -835,8 +838,9 @@ void initChangeTables(void)
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, SI_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, SI_E_CHAIN	, SCB_NONE );
 	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_NONE );
+	set_sc( RL_FALLEN_ANGEL , SC_FALLEN_ANGEL, SI_BLANK, SCB_NONE );
 	set_sc( RL_SLUGSHOT		, SC_STUN		, SI_SLUGSHOT	, SCB_NONE );
-	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_FLEE|SCB_ASPD );
+	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_HIT|SCB_ASPD );
 	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_FLEE );
 	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, SI_ANTI_M_BLAST	, SCB_NONE );
 
@@ -1055,7 +1059,6 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MTF_MLEATKED] = SI_MTF_MLEATKED;
 	StatusIconChangeTable[SC_MTF_CRIDAMAGE] = SI_MTF_CRIDAMAGE;
 	StatusIconChangeTable[SC_QD_SHOT_READY] = SI_E_QD_SHOT_READY;
-	StatusIconChangeTable[SC_HEAT_BARREL_AFTER] = SI_HEAT_BARREL_AFTER;
 	StatusIconChangeTable[SC_QUEST_BUFF1] = SI_QUEST_BUFF1;
 	StatusIconChangeTable[SC_QUEST_BUFF2] = SI_QUEST_BUFF2;
 	StatusIconChangeTable[SC_QUEST_BUFF3] = SI_QUEST_BUFF3;
@@ -1425,7 +1428,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOCAST;
-	StatusChangeStateTable[SC_HEAT_BARREL_AFTER]	|= SCS_NOCAST;
 
 	/* StatusChangeState (SCS_) NOCHAT (skills) */
 	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCHAT;
@@ -6138,6 +6140,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += hit * sc->data[SC_INCHITRATE]->val1/100;
 	if(sc->data[SC_BLIND])
 		hit -= hit * 25/100;
+	if(sc->data[SC_HEAT_BARREL])
+		hit -= sc->data[SC_HEAT_BARREL]->val4;
 	if(sc->data[SC__GROOMY])
 		hit -= hit * sc->data[SC__GROOMY]->val3 / 100;
 	if(sc->data[SC_FEAR])
@@ -6252,8 +6256,6 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee -= flee * 50 / 100;
 	//if( sc->data[SC_C_MARKER] )
 	//	flee -= (flee * sc->data[SC_C_MARKER]->val3) / 100;
-	if(sc->data[SC_HEAT_BARREL])
-		flee -= sc->data[SC_HEAT_BARREL]->val4;
 	if (sc->data[SC_GROOMING])
 		flee += sc->data[SC_GROOMING]->val2;
 
@@ -6792,6 +6794,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[sc_val]->val1;
 		if (sc->data[SC_ATTHASTE_CASH])
 			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
+		if (sc->data[SC_HEAT_BARREL])
+			bonus += sc->data[SC_HEAT_BARREL]->val1;
 	} else {
 		if (sc->data[SC_DONTFORGETME])
 			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
@@ -6851,8 +6855,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_GATLINGFEVER]->val1;
 		if (sc->data[SC_STAR_COMFORT])
 			bonus += 3 * sc->data[SC_STAR_COMFORT]->val1;
-		if (sc->data[SC_HEAT_BARREL])
-			bonus += sc->data[SC_HEAT_BARREL]->val3;
 	}
 
 	return bonus;
@@ -7027,8 +7029,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate += sc->data[SC_PAIN_KILLER]->val2 * 10;
 	if( sc->data[SC_GOLDENE_FERSE])
 		aspd_rate -= sc->data[SC_GOLDENE_FERSE]->val3 * 10;
-	if( sc->data[SC_HEAT_BARREL] )
-		aspd_rate -= sc->data[SC_HEAT_BARREL]->val3 * 10;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
@@ -8035,7 +8035,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = status_get_lv(bl) * 100 + (sd ? sd->status.job_level : 1) * 200;
 			break;
 		case SC_B_TRAP:
-			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; // (custom)
+			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; //! TODO: Figure out reduction formula
 			break;
 		case SC_NORECOVER_STATE:
 			tick_def2 = status->luk * 100;
@@ -8730,7 +8730,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_HEAT_BARREL:
 		//kRO Update 2014-02-12
-		//- Cannot be stacked with Platinum Alter and Madness Canceler (and otherwise?) [Cydh]
+		//- Cannot be stacked with Platinum Alter and Madness Canceler [Cydh]
 		if (sc->data[SC_P_ALTER] || sc->data[SC_MADNESSCANCEL])
 			return 0;
 		break;
@@ -8739,6 +8739,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 	case SC_MADNESSCANCEL:
+		if (sc->data[type]) { // Toggle the status but still consume requirements.
+			status_change_end(bl, type, INVALID_TIMER);
+			return 0;
+		}
 		if (sc->data[SC_P_ALTER] || sc->data[SC_HEAT_BARREL])
 			return 0;
 		break;
@@ -10876,7 +10880,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		/* Rebellion */
 		case SC_B_TRAP:
 			val2 = src->id;
-			val3 = val1 * 25; // -movespeed (custom)
+			val3 = val1 * 25; // -movespeed TODO: Figure out movespeed rate
 			break;
 		case SC_C_MARKER:
 			// val1 = skill_lv
@@ -10890,14 +10894,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = src->id;
 			break;
 		case SC_HEAT_BARREL:
-			//kRO Update 2014-02-26
+			//kRO Update 2016-05-25
 			{
 				uint8 n = 10;
 				if (sd)
 					n = (uint8)sd->spiritball_old;
-				val2 = val1 * 5; // -fixed casttime (custom)
-				val3 = val1 * n / 5; // +aspd (custom)
-				val4 = 75 - val1 * 5; // -flee
+				val2 = val1 * 5; // -fixed casttime
+				val3 = 6 + val1 * 2; // ATK
+				val4 = 25 + val1 * 5; // -hit
 			}
 			break;
 		case SC_P_ALTER:
@@ -10905,8 +10909,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				uint8 n = 10;
 				if (sd)
 					n = (uint8)sd->spiritball_old;
-				val2 = val1 * n * 2; // +atk (custom)
-				val3 = val1 * 15; // +def (custom)
+				val2 = 10 * n; // +atk
+				val3 = (status->max_hp * (val1 * 5) / 100); // Barrier HP
 			}
 			break;
 		case SC_E_CHAIN:
@@ -10916,8 +10920,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ANTI_M_BLAST:
 			val2 = val1 * 10;
-			if (bl->type != BL_PC)
-				val2 /= 5; //(custom) //kRO update 2012-02-12, reduce the rate for Non-Player target [Cydh]
 			break;
 		case SC_CATNIPPOWDER:
 			val2 = 50; // WATK%, MATK%
@@ -11223,7 +11225,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CAMOUFLAGE:
 		case SC_STEALTHFIELD:
 		case SC_VOICEOFSIREN:
-		case SC_HEAT_BARREL_AFTER:
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
@@ -11673,7 +11674,6 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_PUSH_CART:
 			case SC_LIGHT_OF_REGENE:
 			case SC_STYLE_CHANGE:
-			case SC_HEAT_BARREL_AFTER:
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:
@@ -12296,10 +12296,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd && sce->val2 != SI_BLANK)
 				clif_status_load(bl, (enum si_type)sce->val2, 0);
-			break;
-		case SC_HEAT_BARREL:
-			if (sd)
-				sc_start(bl,bl,SC_HEAT_BARREL_AFTER,100,sce->val1,skill_get_time2(RL_HEAT_BARREL, sce->val1));
 			break;
 		case SC_C_MARKER:
 			{
@@ -13662,7 +13658,6 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_MTF_MATK:
 			case SC_MTF_MLEATKED:
 			case SC_MTF_CRIDAMAGE:
-			case SC_HEAT_BARREL_AFTER:
 			case SC_QUEST_BUFF1:
 			case SC_QUEST_BUFF2:
 			case SC_QUEST_BUFF3:

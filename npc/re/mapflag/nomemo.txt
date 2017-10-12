@@ -68,6 +68,7 @@ gld2_gef	mapflag	nomemo
 gld2_pay	mapflag	nomemo
 gld2_prt	mapflag	nomemo
 job_ko	mapflag	nomemo
+job_gun	mapflag	nomemo
 ma_scene01	mapflag	nomemo
 ma_in01	mapflag	nomemo
 ma_dun01	mapflag	nomemo
