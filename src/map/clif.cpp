@@ -16436,11 +16436,11 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd){
 /// Convex Mirror (ZC_BOSS_INFO).
 /// 0293 <infoType>.B <x>.L <y>.L <minHours>.W <minMinutes>.W <maxHours>.W <maxMinutes>.W <monster name>.51B
 /// infoType:
-///     0 = No boss on this map (BOSS_INFO_NOT).
-///     1 = Boss is alive (position update) (BOSS_INFO_ALIVE).
-///     2 = Boss is alive (initial announce) (BOSS_INFO_ALIVE_WITHMSG).
-///     3 = Boss is dead (BOSS_INFO_DEAD).
-void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
+///     BOSS_INFO_NOT = No boss on this map.
+///     BOSS_INFO_ALIVE = Boss is alive (position update).
+///     BOSS_INFO_ALIVE_WITHMSG = Boss is alive (initial announce).
+///     BOSS_INFO_DEAD = Boss is dead.
+void clif_bossmapinfo(int fd, struct mob_data *md, enum e_bossmap_info flag)
 {
 	WFIFOHEAD(fd,70);
 	memset(WFIFOP(fd,0),0,70);

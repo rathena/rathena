@@ -9619,14 +9619,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BOSSMAPINFO:
 			if( sd != NULL ) {
 				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
+
 				if( boss_md == NULL || boss_md->bl.prev == NULL ) { // No MVP on this map - MVP is dead
-					clif_bossmapinfo(sd->fd, boss_md, 1);
-					return 0; // No need to start SC
-				}
-				val1 = boss_md->bl.id;
-				if( (val4 = tick/1000) < 1 )
-					val4 = 1;
+					clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE);
+					val1 = 0;
+				} else
+					val1 = boss_md->bl.id;
 				tick_time = 1000; // [GodLesZ] tick time
+				val4 = tick / tick_time;
 			}
 			break;
 		case SC_HIDING:
@@ -11510,7 +11510,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_BOSSMAPINFO:
-			clif_bossmapinfo(sd->fd, map_id2boss(sce->val1), 0); // First Message
+			if (sd)
+				clif_bossmapinfo(sd->fd, map_id2boss(sce->val1), BOSS_INFO_NOT); // First Message
 			break;
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
@@ -12832,13 +12833,16 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_BOSSMAPINFO:
 		if( sd && --(sce->val4) >= 0 ) {
 			struct mob_data *boss_md = map_id2boss(sce->val1);
-			if( boss_md && sd->bl.m == boss_md->bl.m ) {
-				clif_bossmapinfo(sd->fd, boss_md, 1); // Update X, Y on minimap
-				if (boss_md->bl.prev != NULL) {
-					sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
-					return 0;
-				}
+
+			if (boss_md && sd->bl.m == boss_md->bl.m && boss_md->spawn_timer == INVALID_TIMER) {
+				clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Update X, Y on minimap
+				sce->val2 = 0;
+			} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) {
+				clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Display respawn notice once
+				sce->val2 = 1;
 			}
+			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+			return 0;
 		}
 		break;
 
