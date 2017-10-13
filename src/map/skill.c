@@ -15550,6 +15550,42 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		}
 	}
 
+	// Check for required item(s) in the inventory
+	switch( skill_id ){
+		case NC_ACCELERATION:
+		case NC_SELFDESTRUCTION:
+		case NC_SHAPESHIFT:
+		case NC_EMERGENCYCOOL:
+		case NC_MAGNETICFIELD:
+		case NC_NEUTRALBARRIER:
+		case NC_STEALTHFIELD:
+		case RL_P_ALTER:
+			for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ){
+				int index;
+
+				if( require.itemid[i] == 0 || require.amount[i] == 0 ){
+					continue;
+				}
+
+				index = pc_search_inventory( sd, require.itemid[i] );
+
+				if( index < 0 || sd->inventory.u.items_inventory[index].amount < require.amount[i] ){
+					switch( skill_id ){
+						case RL_P_ALTER:
+							clif_msg( sd, SKILL_NEED_HOLY_BULLET );
+							break;
+						default:
+							clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, ( require.itemid[i] << 16 ) | require.amount[i] );
+							break;
+					}
+
+					// Fail casting
+					return false;
+				}
+			}
+			break;
+	}
+
 	// Check for equipped item(s)
 	if (require.eqItem_count) {
 		uint8 count = require.eqItem_count;
@@ -15565,32 +15601,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 						count--;
 						if (!count) {
 							clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
-							return false;
-						} else
-							continue;
-					}
-					break;
-				case NC_ACCELERATION:
-				case NC_SELFDESTRUCTION:
-				case NC_SHAPESHIFT:
-				case NC_EMERGENCYCOOL:
-				case NC_MAGNETICFIELD:
-				case NC_NEUTRALBARRIER:
-				case NC_STEALTHFIELD:
-					if (pc_search_inventory(sd,reqeqit) < 0) {
-						count--;
-						if (!count) {
-							clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_EQUIPMENT,reqeqit<<16);
-							return false;
-						} else
-							continue;
-					}
-					break;
-				case RL_P_ALTER:
-					if (pc_search_inventory(sd,reqeqit) < 0) {
-						count--;
-						if (!count) {
-					    clif_msg(sd, SKILL_NEED_HOLY_BULLET);
 							return false;
 						} else
 							continue;
