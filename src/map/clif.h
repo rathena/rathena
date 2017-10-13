@@ -462,6 +462,7 @@ enum useskill_fail_cause
 	USESKILL_FAIL_STYLE_CHANGE_GRAPPLER = 82,
 	USESKILL_FAIL_THERE_ARE_NPC_AROUND = 83,
 	USESKILL_FAIL_NEED_MORE_BULLET = 84,
+	USESKILL_FAIL_COINS = 85,
 
 	USESKILL_FAIL_MAX
 };
@@ -500,6 +501,12 @@ enum clif_messages {
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
+	SKILL_NEED_GATLING = 0x9fa,
+	SKILL_NEED_SHOTGUN = 0x9fb,
+	SKILL_NEED_RIFLE = 0x9fc,
+	SKILL_NEED_REVOLVER = 0x9fd,
+	SKILL_NEED_HOLY_BULLET = 0x9fe,
+	SKILL_NEED_GRENADE = 0xa01,
 };
 
 enum e_personalinfo {

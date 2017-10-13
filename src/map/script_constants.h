@@ -1368,7 +1368,7 @@
 	export_constant(SC_MOONSTAR);
 	export_constant(SC_SUPER_STAR);
 	export_constant(SC_HEAT_BARREL);
-	export_constant(SC_HEAT_BARREL_AFTER);
+	export_constant(SC_MAGICALBULLET);
 	export_constant(SC_P_ALTER);
 	export_constant(SC_E_CHAIN);
 	export_constant(SC_C_MARKER);
@@ -1478,6 +1478,7 @@
 	export_constant(SC_DORAM_MATK);
 	export_constant(SC_DORAM_FLEE2);
 	export_constant(SC_DORAM_SVSP);
+	export_constant(SC_FALLEN_ANGEL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
