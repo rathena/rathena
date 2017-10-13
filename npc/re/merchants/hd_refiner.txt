@@ -110,7 +110,8 @@
 			mes "With the Blacksmith Blessing, the equipment won't vanish if the refine is failed!";
 			next;
 			mes "[Blacksmith Mighty Hammer]";
-			if (getequipweaponlv(.@part) < 1 || getequipweaponlv(.@part) > 4)
+			.@weapon_lvl = getequipweaponlv(.@part);
+			if (.@weapon_lvl < 1 || .@weapon_lvl > 4)
 				mes "For +" + getequiprefinerycnt(.@part) + " equipment, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment to be vanished. Do you want use it to refine?";
 			else
 				mes "For +" + getequiprefinerycnt(.@part) + " weapon, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment to be vanished. Do you want use it to refine?";
@@ -180,17 +181,6 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 
 // iRO NPC locations:
 // payon,174,133,4	duplicate(MightyHammer)	Mighty Hammer#im	4_M_DWARF
-
-// Refine UI makes these NPCs useless
--	script	RefineUIMightyHammerInit	-1,{
-	end;
-
-OnInit:
-	if( getbattleflag( "feature.refineui" ) == 3 ){
-		unloadnpc "MightyHammer";
-	}
-	end;
-}
 
 // Basta (+10 and up) :: cash_smelting
 //============================================================
@@ -263,7 +253,8 @@ OnInit:
 	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, REFINE_MATERIAL_ID);
 
-	if (getequipweaponlv(.@part) < 1 || getequipweaponlv(.@part) > 4)
+	.@weapon_lvl = getequipweaponlv(.@part);
+	if (.@weapon_lvl < 1 || .@weapon_lvl > 4)
 		.@type$ = "armor";
 	else
 		.@type$ = "weapon";
@@ -365,11 +356,6 @@ OnInit:
 	mes "[Basta]";
 	mes "I'll do better next time! Don't worry!";
 	close;
-
-OnInit:	// Refine UI makes these NPCs useless
-	if (getbattleflag("feature.refineui") == 3)
-		unloadnpc strnpcinfo(0);
-	end;
 }
 
 prt_in,57,54,3	duplicate(Basta)	Basta#prt	4_M_DWARF
@@ -379,3 +365,14 @@ alberta_in,18,56,3	duplicate(Basta)	Basta#alberta	4_M_DWARF
 yuno_in01,173,18,3	duplicate(Basta)	Basta#yuno	4_M_DWARF
 ein_in01,24,82,3	duplicate(Basta)	Basta#einbroch	4_M_DWARF
 lhz_in02,280,17,3	duplicate(Basta)	Basta#lighthalzen	4_M_DWARF
+
+// Refine UI makes these NPCs useless
+-	script	RefineUI_Init	-1,{
+	end;
+OnInit:
+	if (getbattleflag("feature.refineui") == 3) {
+		unloadnpc "Basta";
+		unloadnpc "MightyHammer";
+	}
+	end;
+}
