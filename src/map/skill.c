@@ -15550,42 +15550,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		}
 	}
 
-	// Check for required item(s) in the inventory
-	switch( skill_id ){
-		case NC_ACCELERATION:
-		case NC_SELFDESTRUCTION:
-		case NC_SHAPESHIFT:
-		case NC_EMERGENCYCOOL:
-		case NC_MAGNETICFIELD:
-		case NC_NEUTRALBARRIER:
-		case NC_STEALTHFIELD:
-		case RL_P_ALTER:
-			for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ){
-				int index;
-
-				if( require.itemid[i] == 0 || require.amount[i] == 0 ){
-					continue;
-				}
-
-				index = pc_search_inventory( sd, require.itemid[i] );
-
-				if( index < 0 || sd->inventory.u.items_inventory[index].amount < require.amount[i] ){
-					switch( skill_id ){
-						case RL_P_ALTER:
-							clif_msg( sd, SKILL_NEED_HOLY_BULLET );
-							break;
-						default:
-							clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, ( require.itemid[i] << 16 ) | require.amount[i] );
-							break;
-					}
-
-					// Fail casting
-					return false;
-				}
-			}
-			break;
-	}
-
 	// Check for equipped item(s)
 	if (require.eqItem_count) {
 		uint8 count = require.eqItem_count;
@@ -15597,10 +15561,15 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				break; // Skill has no required item(s); get out of here
 			switch(skill_id) { // Specific skills require multiple items while default will handle singular cases
 				case NC_PILEBUNKER:
+				case RL_P_ALTER:
 					if (!pc_checkequip2(sd,reqeqit,EQI_ACC_L,EQI_MAX)) {
 						count--;
 						if (!count) {
-							clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
+							if( skill_id == RL_P_ALTER ){
+								clif_msg( sd, SKILL_NEED_HOLY_BULLET );
+							}else{
+								clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
+							}
 							return false;
 						} else
 							continue;
@@ -15853,11 +15822,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 				else
 					clif_skill_fail(sd, RL_SLUGSHOT, USESKILL_FAIL_NEED_MORE_BULLET, 0); // Bullet is required.
 			} else {
-				char output[CHAT_SIZE_MAX];
-				//Official is using msgstringtable.txt for each requirement failure
-				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				sprintf(output, msg_txt(sd,720), itemdb_jname(require.itemid[i])); // %s is required.
-				clif_messagecolor(&sd->bl,color_table[COLOR_RED],output,false,SELF);
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, ( require.itemid[i] << 16 ) | require.amount[i] ); // [%s] required '%d' amount.
 			}
 			return false;
 		} else if (skill_id == RL_SLUGSHOT) // Slug found - simulate priority and cancel the loop
