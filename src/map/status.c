@@ -12834,12 +12834,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( sd && --(sce->val4) >= 0 ) {
 			struct mob_data *boss_md = map_id2boss(sce->val1);
 
-			if (boss_md && sd->bl.m == boss_md->bl.m && boss_md->spawn_timer == INVALID_TIMER) {
-				clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Update X, Y on minimap
-				sce->val2 = 0;
-			} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) {
-				clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Display respawn notice once
-				sce->val2 = 1;
+			if( boss_md ){
+				if (sd->bl.m == boss_md->bl.m && boss_md->spawn_timer == INVALID_TIMER) {
+					clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Update X, Y on minimap
+					sce->val2 = 0;
+				} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) {
+					clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Display respawn notice once
+					sce->val2 = 1;
+				}
 			}
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
