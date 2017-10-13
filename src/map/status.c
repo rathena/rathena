@@ -10895,14 +10895,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_HEAT_BARREL:
 			//kRO Update 2016-05-25
-			{
-				uint8 n = 10;
-				if (sd)
-					n = (uint8)sd->spiritball_old;
-				val2 = val1 * 5; // -fixed casttime
-				val3 = 6 + val1 * 2; // ATK
-				val4 = 25 + val1 * 5; // -hit
-			}
+			val2 = val1 * 5; // -fixed casttime
+			val3 = 6 + val1 * 2; // ATK
+			val4 = 25 + val1 * 5; // -hit
 			break;
 		case SC_P_ALTER:
 			{
