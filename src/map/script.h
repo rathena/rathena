@@ -706,7 +706,7 @@ enum vip_status_type {
 	VIP_STATUS_REMAINING
 };
 
-enum special_effects {
+enum e_special_effects {
 	EF_NONE = -1,
 	EF_HIT1,
 	EF_HIT2,
@@ -1809,7 +1809,7 @@ enum special_effects {
 	EF_MAX
 };
 
-enum hat_effects {
+enum e_hat_effects {
 	HAT_EF_MIN = 0,
 	HAT_EF_BLOSSOM_FLUTTERING,
 	HAT_EF_MERMAID_LONGING,

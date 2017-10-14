@@ -110,7 +110,7 @@ extern struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 
-enum actor_classes
+enum e_job_types
 {
 	NPC_RANGE1_START = 44,
 	JT_WARPNPC,
