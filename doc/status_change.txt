@@ -939,21 +939,28 @@ SC_MIRACLE	()
 	desc:
 	val1:
 
-SC_MADNESSCANCEL	()
-	desc:
+SC_MADNESSCANCEL	(SI_MADNESSCANCEL)
+	desc: Increases some statuses (Base ATK, ASPD)
 	val1:
 
-SC_ADJUSTMENT	()
-	desc:
+SC_ADJUSTMENT	(SI_ADJUSTMENT)
+	desc: Increases some statuses (Hit, Flee)
 	val1:
 
 SC_INCREASING	(SI_ACCURACY)
-	desc: Increase some statuses (hit, dex, agi), GS_INCREASING effect
-	val1: (hardocded)
-
-SC_GATLINGFEVER	()
-	desc:
+	desc: Increase some statuses (Hit, Dex, Agi), GS_INCREASING effect
 	val1:
+
+SC_MAGICALBULLET	(SI_GS_MAGICAL_BULLET)
+	desc: Increases damage based on source's MATK and is reduced by target's MDEF
+	val1:
+
+SC_GATLINGFEVER	(SI_GATLINGFEVER)
+	desc: Increases some statuses (Base ATK, Flee, Movement Speed, ASPD)
+	val1: SkillLv
+	val2: ASPD increase (20 * val1)
+	val3: Base ATK (20 + 10 * val1) [pre-renewal]
+	val4: Flee decrease (5 * val1)
 
 SC_TATAMIGAESHI	()
 	desc:
@@ -1065,8 +1072,11 @@ SC_ITEMBOOST	(SI_ITEMBOOST)
 	val1: +% Drop
 
 SC_BOSSMAPINFO	(SI_BOSSMAPINFO)
-	desc:
-	val1:
+	desc: Used to display Boss location on minimap
+	val1: Boss game ID
+	val2: Used to keep timer message from spamming chat window
+	val3:
+	val4: Remaining tick
 
 SC_LIFEINSURANCE	(SI_LIFEINSURANCE)
 	desc: Remove death pleanlties
@@ -2398,47 +2408,43 @@ SC_SUPER_STAR	(SI_SUPER_STAR)
 	desc: Visual effect
 	val1:
 
-SC_HEAT_BARREL	()
-	desc: (Rebellion) Reduce fixed cast time, add ASPD rate, & reduce flee
-	val1:
-	val2: -Fixed Casttime
-	val3: +% ASPD
-	val4: -Flee
-
-SC_HEAT_BARREL_AFTER	(SI_HEAT_BARREL_AFTER)
-	desc: (Rebellion) Heat Barrel after-effect, can't do anything in this effect (like Extremity Fist after-effect)
-	val1:
+SC_HEAT_BARREL	(SI_HEAT_BARREL)
+	desc: (Rebellion) Reduce fixed cast time, add ASPD rate, and reduce FLEE
+	val1: SkillLv
+	val2: -Fixed Casttime (5 * val1)
+	val3: +% ASPD (6 + val1 * 2)
+	val4: -FLEE (25 + val1 * 5)
 
 SC_P_ALTER	(SI_P_ALTER)
-	desc: Increase attack ratio & def againts Undead monster
-	val1:
-	val2: +ATK ratio
-	val3: +Def
+	desc: Increase attack ratio and creates a barrier like Kyrie
+	val1: SkillLv
+	val2: +ATK ratio (10 * Coin Count)
+	val3: Barrier HP (Max HP * (val1 * 5) / 100)
 
 SC_E_CHAIN	(SI_E_CHAIN)
 	desc: (Rebellion) Has chance to trigger Chain Action for any weapon
-	val1:
-	val2: Coins used for succes rate. (5*val)
+	val1: SkillLv
+	val2: Coins used for success rate. (5 * val)
 
 SC_C_MARKER	(SI_C_MARKER)
 	desc: (Rebellion) Crimson Marker effect, also sends the target location to the caster
-	val1:
+	val1: SkillLv
 	val2:
-	val3: -Flee
+	val3: -FLEE (10)
 
 SC_ANTI_M_BLAST	(SI_ANTI_M_BLAST)
 	desc: (Rebellion) Anti-Material effect, reduce resistance of Neutral attack
-	val1: Level for duration look up
-	val2: Reduction ratio
+	val1: SkillLv
+	val2: Reduction ratio (10 * val1)
 
 SC_B_TRAP	(SI_B_TRAP)
-	desc: (Rebellion) Bind Trap effect, waiting for Flicker being used
-	val1:
+	desc: (Rebellion) Bind Trap effect, waiting for Flicker to be used
+	val1: SkillLv
 	val2:
-	val3: -Walk Speed (Unstackable penalty)
+	val3: -Walk Speed (Unstackable penalty) (25 * val1)
 
 SC_H_MINE	(SI_H_MINE)
-	desc: (Rebellion) Howling Mine effect, waiting for Flicker being used
+	desc: (Rebellion) Howling Mine effect, waiting for Flicker to be used
 	val1:
 
 SC_QD_SHOT_READY	(SI_E_QD_SHOT_READY)

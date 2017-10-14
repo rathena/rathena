@@ -113,7 +113,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 | Label Name | Search Link | Description |
 | --- | --- | --- |
-| `status:code-review` | [search][search-rathena-label-statuscode-review] | Issue that requires reviewing from other developers before being pushed to master. |
+| `status:code-review` | [search][search-rathena-label-statuscodereview] | Pull Request that requires reviewing from other developers before being pushed to master. |
 | `status:confirmed` | [search][search-rathena-label-statusconfirmed] | Issue that has been validated by a developer to affect rAthena. |
 | `status:duplicate` | [search][search-rathena-label-statusduplicate] |  Issue that has been reported before. |
 | `status:inprogress` | [search][search-rathena-label-statusinprogress] | Issue that has begun resolution by a developer. |
@@ -129,7 +129,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 | --- | --- | --- |
 | `type:bug` | [search][search-rathena-label-typebug] | Issue that is a bug within rAthena. |
 | `type:enhancement` | [search][search-rathena-label-typeenhancement] | Issue that is an enhancement to rAthena. |
-| `type:maintenance` | [search][search-rathena-label-typemaintenance] | Issue that is a refactor to rAthena. |
+| `type:maintenance` | [search][search-rathena-label-typemaintenance] | Issue for refactoring rAthena. |
 | `type:question` | [search][search-rathena-label-typequestion] | Issue that is a question for rAthena. |
 
 [search-rathena-label-componentcore]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Acore
@@ -146,6 +146,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 [search-rathena-label-priorityhigh]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Apriority%3Ahigh
 [search-rathena-label-prioritymedium]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Apriority%3Amedium
 [search-rathena-label-prioritylow]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Apriority%3Alow
+[search-rathena-label-statuscodereview]: https://github.com/rathena/rathena/pulls?q=is%3Apr+is%3Aopen+label%3Astatus%3Acode-review
 [search-rathena-label-statusconfirmed]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Aconfirmed
 [search-rathena-label-statusduplicate]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Aduplicate
 [search-rathena-label-statusinprogress]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ainprogress

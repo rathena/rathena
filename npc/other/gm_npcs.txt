@@ -104,6 +104,7 @@ List of GM Management NPCs (incomplete)
 - Button Girl#sura
 - Battle Test Control#ko
 - Guide#ko_helper
+- Admin1
 --------------------------
 - Soul Linker Var
 - 1st Job Quest Reset

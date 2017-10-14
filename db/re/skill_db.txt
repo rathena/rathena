@@ -735,7 +735,7 @@
 504,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		GS_MADNESSCANCEL,Madness Canceller
 505,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		GS_ADJUSTMENT,AdJustment
 506,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		GS_INCREASING,Increasing Accuracy
-507,-9,6,1,8,0x20,0,1,1,no,0,0,0,misc,0,0x0,		GS_MAGICALBULLET,Magical Bullet
+507,0,6,4,0,0x1,0,1,1,no,0,0,0,magic,0,0x0,		GS_MAGICALBULLET,Magical Bullet
 508,-9,6,1,-1,0x1,0,1,1,no,0,0,0,weapon,0,0x0,	GS_CRACKER,Cracker
 509,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		GS_SINGLEACTION,Single Action
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		GS_SNAKEEYE,Snake Eye
@@ -744,7 +744,7 @@
 513,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		GS_DISARM,Disarm
 514,-9,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,0,0x100,	GS_PIERCINGSHOT,Piercing Shot
 515,-9,8,1,-1,0,0,10,-5,no,0,0,0,weapon,0,0x100,	GS_RAPIDSHOWER,Rapid Shower
-516,0,8,4,-1,0x2,3,10,1,no,0,0,0,weapon,0,0x0,	GS_DESPERADO,Desperado
+516,5,8,4,-1,0x2,3,10,1,no,0,0,0,weapon,0,0x0,	GS_DESPERADO,Desperado
 517,0,6,4,-1,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	GS_GATLINGFEVER,Gatling Fever
 518,2,6,1,-1,0,0,10,1,no,0,0,0,weapon,5,0x0,		GS_DUST,Dust
 519,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0,0x100,	GS_FULLBUSTER,Full Buster
@@ -1273,24 +1273,24 @@
 //2551,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0,	RL_GLITTERING_GREED,Flip The Coin Greed
 2552,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	RL_RICHS_COIN,Rich's Coin
 2553,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_MASS_SPIRAL,Mass Spiral
-2554,-9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x10020,	RL_BANISHING_BUSTER,Banishing Buster
+2554,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x10020,	RL_BANISHING_BUSTER,Banishing Buster
 2555,3:4:4:5:5,6,2,0,0x1,1,5,1,no,0,0,1,misc,0,0x0,	RL_B_TRAP,Bind Trap
 2556,0,6,4,0,0x3,-1,1,1,no,0,0,0,none,0,0x0,	RL_FLICKER,Flicker
-2557,-9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_S_STORM,Shatter Storm
+2557,-9,6,1,-1,0x2,2:2:2:2:3,5,1,no,0,0,0,weapon,0,0x0,	RL_S_STORM,Shatter Storm
 2558,0,6,4,0,0x1,0,10,1,no,0,0,0,none,0,0x0,	RL_E_CHAIN,Eternal Chain
 2559,-9,6,4,-1,0x0,10,1,1,no,0,0x0,0,weapon,0,0x0,	RL_QD_SHOT,Quick Draw Shot
 2560,-9,6,1,0,0x1,0,1,1,no,0,0,3,none,0,0x0,	RL_C_MARKER,Crimson Marker
-2561,0,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,0x0,	RL_FIREDANCE,Fire Dance
+2561,5,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,0x0,	RL_FIREDANCE,Fire Dance
 2562,-9,6,1,-1,0x0,2,5,1,no,0,0,0,weapon,0,0x0,	RL_H_MINE,Howling Mine
 2563,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_P_ALTER,Platinum Alter
 2564,-9,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_FALLEN_ANGEL,Fallen Angel
-2565,0,6,4,-1,0x2,3:3:4:5:6,5,1,no,0,0,0,weapon,3,0x0,	RL_R_TRIP,Round Trip
-2566,0,6,4,-1,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	RL_D_TAIL,Dragon Tail
-2567,-9,6,2,-1,0x2,1,5,1,no,0,0,0,weapon,0,0,	RL_FIRE_RAIN,Fire Rain
+2565,5,6,4,-1,0x2,3:3:4:5:6,5,1,no,0,0,0,weapon,3,0x0,	RL_R_TRIP,Round Trip
+2566,5,6,4,0,0x30,-1,5,1,no,0,0,0,weapon,0,0x0,	RL_D_TAIL,Dragon Tail
+2567,2,6,2,-1,0x2,1,5,1,no,0,0,0,weapon,0,0,	RL_FIRE_RAIN,Fire Rain
 2568,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_HEAT_BARREL,Heat Barrel
 2569,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_AM_BLAST,Anti-Material Blast
-2570,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,6,0x0,	RL_SLUGSHOT,Slug Shot
-2571,-9,6,2,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
+2570,-9,6,1,0,0,0,5,1,no,0,0,0,weapon,6,0x0,	RL_SLUGSHOT,Slug Shot
+2571,-9,6,1,0,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
 2572,0,6,1,-1,0x40,0,5,1,no,0,0,0,weapon,0,0,	RL_R_TRIP_PLUSATK,Round Trip Plus Attack
 //2573,0,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0,	RL_B_FLICKER_ATK,Bind Flicker Attack
 //2574,0,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0,	RL_GLITTERING_GREED_ATK,Flip The Coin Greed Attack

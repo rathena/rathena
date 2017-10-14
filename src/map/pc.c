@@ -1522,7 +1522,7 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = INVISIBLE_CLASS;
+		sd->vd.class_ = JT_INVISIBLE;
 		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 		// decrement the number of pvp players on the map
 		map[sd->bl.m].users_pvp--;
@@ -4949,7 +4949,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_CRYSTALIZE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_HEAT_BARREL_AFTER] ||
 		sd->sc.data[SC_KINGS_GRACE] ||
 		sd->sc.data[SC_SUHIDE]))
 		return false;
@@ -6367,9 +6366,11 @@ const char* job_name(int class_)
 		return msg_txt(NULL,695);
 
 	case JOB_SUMMONER:
+		return msg_txt(NULL,697);
 	case JOB_BABY_SUMMONER:
+		return msg_txt(NULL,698);
 	case JOB_BABY_NINJA:
-		return msg_txt(NULL,697 - JOB_SUMMONER+class_);
+		return msg_txt(NULL,699);
 
 	case JOB_BABY_KAGEROU:
 	case JOB_BABY_OBORO:
@@ -9948,7 +9949,6 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 	}
 
 	// On armor change
@@ -9960,7 +9960,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	// On ammo change
-	if (sd->inventory_data[n]->type == IT_AMMO)
+	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
 	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)
