@@ -14006,6 +14006,13 @@ BUILDIN_FUNC(misceffect)
 	int type;
 
 	type=script_getnum(st,2);
+
+	if( type <= EF_NONE || type >= EF_MAX ){
+		ShowError( "buildin_misceffect: unsupported effect id %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+
 	if(st->oid && st->oid != fake_nd->bl.id) {
 		struct block_list *bl = map_id2bl(st->oid);
 		if (bl)
@@ -14369,6 +14376,11 @@ BUILDIN_FUNC(specialeffect)
 	if(bl==NULL)
 		return SCRIPT_CMD_SUCCESS;
 
+	if( type <= EF_NONE || type >= EF_MAX ){
+		ShowError( "buildin_specialeffect: unsupported effect id %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if( script_hasdata(st,4) )
 	{
 		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
@@ -14395,6 +14407,11 @@ BUILDIN_FUNC(specialeffect2)
 	if( script_nick2sd(4,sd) ){
 		int type = script_getnum(st,2);
 		enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
+
+		if( type <= EF_NONE || type >= EF_MAX ){
+			ShowError( "buildin_specialeffect2: unsupported effect id %d\n", type );
+			return SCRIPT_CMD_FAILURE;
+		}
 
 		clif_specialeffect(&sd->bl, type, target);
 	}
@@ -14507,7 +14524,7 @@ int recovery_sub(struct map_session_data* sd, int revive)
 	if(revive&(1|4) && pc_isdead(sd)) {
 		status_revive(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
-		clif_specialeffect(&sd->bl, 77, AREA);
+		clif_specialeffect(&sd->bl, EF_RESURRECTION, AREA);
 	} else if(revive&(1|2) && !pc_isdead(sd)) {
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
@@ -15238,7 +15255,7 @@ BUILDIN_FUNC(summon)
 			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer(tick+(timeout>0?timeout:60000),mob_timer_delete,md->bl.id,0);
 		mob_spawn (md); //Now it is ready for spawning.
-		clif_specialeffect(&md->bl,344,AREA);
+		clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
 		sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
 	script_pushint(st, md->bl.id);
@@ -16410,7 +16427,7 @@ BUILDIN_FUNC(setnpcdisplay)
 {
 	const char* name;
 	const char* newname = NULL;
-	int class_ = -1, size = -1;
+	int class_ = JT_FAKENPC, size = -1;
 	struct script_data* data;
 	struct npc_data* nd;
 
@@ -16450,7 +16467,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	else
 		size = -1;
 
-	if( class_ != -1 && nd->class_ != class_ )
+	if( class_ != JT_FAKENPC && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
 	{ // Required to update the visual size
@@ -22570,6 +22587,11 @@ BUILDIN_FUNC(hateffect){
 
 	effectID = script_getnum(st,2);
 	enable = script_getnum(st,3) ? true : false;
+
+	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
+		ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	ARR_FIND( 0, sd->hatEffectCount, i, sd->hatEffectIDs[i] == effectID );
 
