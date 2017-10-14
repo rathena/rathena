@@ -1,0 +1,2430 @@
+//===== rAthena Script ======================================= 
+//= Airship Assault
+//===== By: ================================================== 
+//= Anity99
+//===== Current Version: ===================================== 
+//= 1.0.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= The Airship Assault instance is part of Heroes' Trails,
+//= where you follow the adventures of Chaos and his friends.
+//= In this instance, you must help them survive the airship assault,
+//= and in return you will have a chance of obtaining Airship equipment set and Ferlock equipment set.
+//===== Additional Comments: ================================= 
+//= 1.0	Original [Ziu]
+//= 1.1 Walkthrough conversion [Anity99]
+//= 1.2 Fix bugs [Anity99]
+//============================================================
+
+dali02,136,79,3	script	Explorer Lion#air1	945,{
+	mes "[Explorer Lion]";
+	mes "Hm..after several days of observation, this place seems to be a device imprinted with the memories of airship.";
+	next;
+	mes "[Explorer Lion]";
+	mes "...that is different. I don't have infomation beyond that...";
+	close;
+}
+
+dali02,142,81,3	script	Dimensional Device#sara1	10007,{
+	set .@airassault_time,checkquest(15050,PLAYTIME);
+		if (.@airassault_time == 2) {
+			erasequest 15050;
+			erasequest 15051;
+			end;
+		}
+		else  if ((.@airassault_time == 1) || (.@airassault_time == 0)) {
+			set .@airreentrada,checkquest(15051,PLAYTIME);
+				if ((.@airreentrada == -1) || (.@airreentrada == 1) || (.@airreentrada == 0)) {
+					set .@party_id,getcharid(1);
+					set .@p_name$,getpartyname(.@party_id);
+					set .@md_name$,"Airship Assault";
+					
+					if (!instance_check_party(.@party_id,1)) {
+						mes "You must create a party!";
+						close;
+					}
+					if (getcharid(0) == getpartyleader(.@party_id,2))
+						switch(select("Power Up the Device","Use the Device","Cancel")) 
+						{
+							case 1:
+								if (instance_create(.@md_name$) < 0) {
+									mes "Party: "+.@p_name$;
+									mes "Party Leader: "+strcharinfo(0);
+									mes "^0000ff"+.@md_name$+" ^000000- Reservation failed!";
+									close;
+								} else {
+									mes "^ff0000After the dimensional device activities^000000";
+									mes "^ff0000Use it again to enter^000000";
+									close;
+								}
+							case 2:
+								mes "^ff0000Re-entry is not possible within 23 hours after the first entry.^000000";
+								next;
+								switch(instance_enter(.@md_name$))
+								{
+									case 0:
+										mapannounce "dali02",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
+										specialeffect2 EF_WARP;
+										end;
+									case 1:
+										mes "Only the registered members can enter the instance "+.@md_name$+".";
+										close;
+									case 2:
+										mes "The memorial dungeon "+.@md_name$+" does not exist.";
+										mes "The party leader did not generate the dungeon yet.";
+										close;
+									case 3:
+										mes "Unkwnon error";
+										close;
+								}
+							case 3:
+								close;
+						}
+				} else {
+					mes "^ff0000This memorial dungeon will not be able to re-enter within 23 hours of the last entry.^000000";
+					close;
+				}
+		}
+		else if (.@airassault_time == -1) {
+			set .@party_id,getcharid(1);
+			set .@p_name$,getpartyname(.@party_id);
+			set .@md_name$,"Airship Assault";
+			
+			if (!instance_check_party(.@party_id,1)) {
+				mes "You must create a party!";
+				close;
+			}
+			if (getcharid(0) == getpartyleader(.@party_id,2)) {
+				switch(select("Power Up the Device","Use the Device","Cancel"))
+				{
+					case 1:
+						if (instance_create(.@md_name$) < 0) {
+							mes "Party: "+.@p_name$;
+							mes "Party Leader: "+strcharinfo(0);
+							mes "^0000ff"+.@md_name$+" ^000000- Reservation failed!";
+							close;
+						} else {
+							mes "^ff0000After the dimensional device activities^000000";
+							mes "^ff0000Use it again to enter^000000";
+							close;
+						}
+					case 2:
+						mes "^ff0000Re-entry is not possible within 23 hours after the first entry.^000000";
+						next;
+						switch(instance_enter(.@md_name$))
+						{
+							case 0:
+								specialeffect2 EF_WARP;
+								mapannounce "dali02",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
+								setquest 15050;
+								setquest 15051;
+								end;
+							case 1:
+								mes "Only the registered members can enter the instance "+.@md_name$+".";
+								close;
+							case 2:
+								mes "The memorial dungeon "+.@md_name$+" does not exist.";
+								mes "The party leader did not generate the dungeon yet.";
+								close;
+							case 3:
+								mes "Unkwnon error";
+								close;
+						}
+					case 3:
+						close;
+				}
+			} else {
+				mes "^ff0000This memorial dungeon will not be able to re-enter within 23 hours of the last entry.^000000";
+				close;
+			}
+		}
+}
+
+1@air1,240,57,3	script	Loki#air1	512,{
+	cutin "ep14_roki02.bmp",2;
+	mes "[Loki]";
+	mes "...Glad there aren't any of those pesky things here...";
+	close2;
+	cutin "ep14_roki02.bmp",255;
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Loki#air1")+"::OnEnable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Loki#air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Loki#air1");
+	end;
+}
+	
+1@air1,235,57,5	script	Fenrir#air1	664,{
+	cutin "fenrir_a.bmp",2;
+	mes "[Fenrir]";
+	mes "Flying in the air through the strength of machinery... the development of technology is truly marvelous.";
+	next;
+	mes "[Fenrir]";
+	mes "But I feel a power of some kind... This airship probably wouldn't able to fly solely through the technology.";
+	close2;
+	cutin "fenrir_a.bmp",255;
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Fenrir#air1")+"::OnEnable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Fenrir#air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Fenrir#air1");
+	end;
+}
+1@air1,235,57,5	script	Fenrir#air11	664,{
+	cutin "fenrir_b.bmp",2;
+	mes "[Fenrir]";
+	mes "Here I'm gonna deal with these guys. Come with Kayas, Iris, go downstairs!";
+	close2;
+	cutin "fenrir_b.bmp",255;
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Fenrir#air11")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Fenrir#air11");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Fenrir#air11");
+	end;
+}
+1@air1,215,67,5	script	Iris#air1	666,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Iris#air1")+"::OnEnable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Iris#air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Iris#air1");
+	end;
+}
+1@air1,214,66,5	script	Chaos#air1	683,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Chaos#air1")+"::OnEnable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Chaos#air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Chaos#air1");
+	end;
+}
+1@air1,217,67,3	script	Captain Ferlock#air1	873,{
+	cutin "h_iris02.bmp",2;
+	mes "[Iris]";
+	mes "Whoa~this is good!! The wind is so cool~!!";
+	mes "Hooray~ we are flying through the sky! For free on top of that!";
+	next;
+	mes "[Iris]";
+	mes "Is it not marvelous how this huge ship can fly without the usage of magic? Chaos?";
+	next;
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "......";
+	next;
+	cutin "h_iris02.bmp",2;
+	mes "[Iris]";
+	mes "...?? Chaos?";
+	next;
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "......Sage Kadmon...";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "What are you doing instead of listening to me!!!!";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "Argh, Aaah~!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Humph! That's what you get for being absent-minded!";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "Ah...Iris!! Are you trying to kill me~?!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Humph! I don't care if you die or not...";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Hey!! No horsing around on the ship!!";
+	mes "This is what's wrong with young humans. They have no manners! If you act up, I will toss all of you off!!";
+	next;
+	cutin "h_iris02.bmp",2;
+	mes "[Iris]";
+	mes "Oops... By the way captain, how does this big airship fly through the sky? It is so marvelous!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Huh? That's a good question.";
+	mes "As you can see, we heat the large boiler to boil water, then use the pressure of the steam to move the pistons, turn the cogwheel, and move the turbine to turn the propeller";
+	next;
+	cutin "h_iris02.bmp",2;
+	mes "[Iris]";
+	mes "Eh... So that's how this big ship floats... but now the feeling of mystery is gone. I thought there would be some unknown device... I'm a little disappointed...";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "That's right. This big ship can't be in the sky with just steam. So it uses an amplifier called a 'Rune Engine'.";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Rune Engine? What is that?";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "It's a device that uses a magical stone.";
+	mes "Something about fallen fragments of a broken heart according to the legends... a ridiculous legend, but that doesn't matter... ";
+	next;
+	mes "[Captain Ferlock]";
+	mes "Right. The stone is the so-called 'Tear of Ymir'. If put in junction with locomotive engines such as this steam engine, the rune exuded from the stone amplifier the energy.";
+	next;
+	mes "[Captain Ferlock]";
+	mes "In truth it, is not an overstatement to say this rock the size of a thumb is moving the ship. It possesses incredible power.";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "That little thing...!!!";
+	next;
+	cutin "ep14_roki02.bmp",2;
+	mes "[Loki]";
+	mes "......Huh?";
+	mes "Something is coming this way...";
+	next;
+	cutin "ep14_roki02.bmp",255;
+	mes "[경계병]";
+	mes "Alert!! Alert!! A large Wyvern unit at 7 o'clock!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "What?!";
+	next;
+	cutin "fly_felrock2.bmp",255;
+	mes "[Guard]";
+	mes "Gre, Gremlins!! Gremlins have landed from the Wyvern!!";
+	donpcevent instance_npcname("Gremlin#1air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#2air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#3air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#4air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#5air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#6air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#7air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#8air1")+"::OnEnable";
+	donpcevent instance_npcname("Rotar Zairo#2air1")+"::OnEnable";
+	donpcevent instance_npcname("Rotar Zairo#1air1")+"::OnEnable";
+	donpcevent instance_npcname("Acidus#2air1")+"::OnEnable";
+	donpcevent instance_npcname("Acidus#1air1")+"::OnEnable";
+	donpcevent instance_npcname("Wyvern#air1")+"::OnEnable";
+	next;
+	cutin "h_chaos01.bmp",2;
+	mes "[Chaos]";
+	mes "Hm... What is this now?";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Hahahaha~ You have waited long!!";
+	mes "Genius beauty sorceress Arcana's suprise airborne monster show!!";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "Wha...what show?";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Now... Let us get started! Gremlinss~!!";
+	mes "It's PARTY TIME~!!";
+	next;
+	cutin "h_arcana02.bmp",255;
+	mes "[Guard]";
+	mes "Cap...Captain! This is serious!";
+	mes "Gremlins are all over the ship!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "What?! These are Gremlins! ";
+	mes "You bastards!! Come down from there now!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Captain. There is no need to be so agitated.";
+	mes "Gremlins are just monsters that mess with machines. Rather...";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "You don't know that you're talking about!!";
+	mes "We're at an altitude of 8,0000!! Event a minor malfuction coud lead to a deadly crash!";
+	next;
+	cutin "fly_felrock2.bmp",255;
+	mes "[Guard]";
+	mes "Argh!! Rear engine number 1!!";
+	mes "...This is serious! They are heading towards the Engine Room! We have to protect the Rune Engine!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Damn it... Where did I put my weapon...";
+	mes "Hey humans!! Block that nuisance while I go to the captain's room to lock for my weapon!!";
+	next;
+	mes "[Captain Ferlock]";
+	mes "We have to stop them from getting to the Rune Engine!! If that place is destroyed, the ship will not be able to fly!!";
+	next;
+	mes "[Captain Ferlock]";
+	mes "Damn... If only I had my weapon...";
+	next;
+	donpcevent instance_npcname("Captain Ferlock#air1")+"::OnDisable";
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "Iris!! Let's go down to the Engine Room! Loki and Fenrir! Hold this place!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Oh...okay! Alright... Let's go!!";
+	sleep2 500;
+	donpcevent instance_npcname("Iris#air1")+"::OnDisable";
+	donpcevent instance_npcname("Chaos#air1")+"::OnDisable";
+	donpcevent instance_npcname("Fenrir#air1")+"::OnDisable";
+	donpcevent instance_npcname("Fenrir#air11")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob1")+"::OnEnable";
+	close2;
+	cutin "h_iris01.bmp",255;
+	set .@map$, instance_mapname("1@air1");
+	mapannounce .@map$, "Enemies have suddenly appeared and are attempting to destroy the Airship",bc_map,"0xFFFF00";
+	sleep2 1000;
+	set .@map$, instance_mapname("1@air1");
+	mapannounce .@map$, "Go to the bottom of the Airship and defeat the enemy",bc_map,"0xFFFF00";
+	sleep 1000;
+	set .@map$, instance_mapname("1@air1");
+	mapannounce .@map$, "All the enemies on each floor have to be defeated in order to progress.",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("warp1#air1")+"::OnEnable";
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Captain Ferlock#air1")+"::OnEnable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Captain Ferlock#air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Captain Ferlock#air1");
+	end;
+}
+	
+1@air1,236,57,3	script	Gremlin#1air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#1air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#1air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#1air1");
+	end;
+}
+1@air1,239,57,5	script	Gremlin#2air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#2air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#2air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#2air1");
+	end;
+}
+1@air1,230,50,5	script	Gremlin#3air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#3air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#3air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#3air1");
+	end;
+}
+1@air1,226,62,3	script	Gremlin#4air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#4air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#4air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#4air1");
+	end;
+}
+1@air1,241,48,3	script	Gremlin#5air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#5air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#5air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#5air1");
+	end;
+}
+1@air1,225,40,7	script	Gremlin#6air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#6air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#6air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#6air1");
+	end;
+}
+1@air1,236,48,7	script	Gremlin#7air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#7air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#7air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#7air1");
+	end;
+}
+1@air1,224,66,5	script	Gremlin#8air1	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#8air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#8air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#8air1");
+	end;
+}
+
+//Warportals.
+1@air1,253,54,0	script	warp1#air1	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp1#air1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp1#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp1#air1");
+	end;
+OnTouch:
+	set .@map$, instance_mapname("1@air1");
+	warp .@map$,91,68;
+	end;
+}
+1@air1,104,72,0	script	warp2a#air1	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp2a#air1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp2a#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp2a#air1");
+	end;
+OnTouch:
+	set .@map$, instance_mapname("1@air1");
+	warp .@map$,101,200;
+	end;
+}
+1@air1,104,52,0	script	warp2b#air1	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp2b#air1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp2b#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp2b#air1");
+	end;
+OnTouch:
+	set .@map$, instance_mapname("1@air1");
+	warp .@map$,101,176;
+	end;
+}
+1@air1,103,200,0	script	warp3a#air1	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp3a#air1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp3a#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp3a#air1");
+	end;
+OnTouch:
+	set .@map$, instance_mapname("1@air2");
+	warp .@map$,104,72;
+	end;
+}
+1@air1,103,176,0	script	warp3b#air1	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp3b#air1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp3b#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp3b#air1");
+	end;
+OnTouch:
+	set .@map$, instance_mapname("1@air2");
+	warp .@map$,104,52;
+	end;
+}
+
+1@air2,88,67,0	script	warp4a#air2	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp4a#air2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp4a#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp4a#air2");
+	end;
+OnTouch:
+	set .@map$, instance_mapname("1@air2");
+	warp .@map$,247,53;
+	end;
+}
+1@air2,244,73,0	script	warp5a#air2	45,1,2,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("warp5a#air2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("warp5a#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("warp5a#air2");
+	end;
+OnTouch:
+	warp "dali02",137,82;
+	end;
+}
+
+//Monsters Spawn.
+1@air1,0,0,0	script	#airshipputmob1	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#airshipputmob1")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#airshipputmob1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#airshipputmob1");
+	set .@map$, instance_mapname("1@air1");
+	set .@label$, instance_npcname("#airshipputmob1")+"::OnMyMobDead";
+	areamonster .@map$,36,49,98,77,"Rotar Zairo",3175,9,.@label$;
+	areamonster .@map$,36,49,98,77,"Beholder",3177,10,.@label$;
+	
+	monster .@map$,62,92,"Rotar Zairo",3175,1,.@label$;
+	monster .@map$,61,88,"Rotar Zairo",3177,1,.@label$;
+	
+	monster .@map$,62,32,"Rotar Zairo",3175,1,.@label$;
+	monster .@map$,60,36,"Rotar Zairo",3177,1,.@label$;
+	
+	monster .@map$,19,66,"Rotar Zairo",3175,1,.@label$;
+	monster .@map$,19,64,"Rotar Zairo",3175,1,.@label$;
+	monster .@map$,19,62,"Rotar Zairo",3175,1,.@label$;
+	monster .@map$,19,60,"Rotar Zairo",3175,1,.@label$;
+	areamonster .@map$,102,68,117,54,"Beholder",3177,3,.@label$;
+	set .MyMobs,30;
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@air1");
+	set .MyMobs, .MyMobs-1;
+	if (.MyMobs == 0) {
+		donpcevent instance_npcname("#airshipputmob1")+"::OnComplete";
+	}
+	end;
+OnComplete:
+	initnpctimer;
+	end;
+OnTimer2000:
+	set .@map$, instance_mapname("1@air1");
+	mapannounce .@map$, "All the enemies on this floor have been defeated. Go down into the next floor.",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("warp2a#air1")+"::OnEnable";
+	donpcevent instance_npcname("warp2b#air1")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob2")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob1")+"::OnDisable";
+	stopnpctimer;
+	end;
+}
+1@air1,0,0,0	script	#airshipputmob2	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#airshipputmob2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#airshipputmob2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#airshipputmob2");
+	set .@map$, instance_mapname("1@air1");
+	set .@label$, instance_npcname("#airshipputmob2")+"::OnMyMobDead";
+	monster .@map$,97,201,"Gremlin",3176,1,.@label$;
+	monster .@map$,97,198,"Gremlin",3176,1,.@label$;
+	monster .@map$,97,177,"Gremlin",3176,1,.@label$;
+	monster .@map$,97,174,"Gremlin",3176,1,.@label$;
+	
+	monster .@map$,18,192,"Acidus",3179,1,.@label$;
+	monster .@map$,18,190,"Acidus",3179,1,.@label$;
+	monster .@map$,18,188,"Acidus",3179,1,.@label$;
+	monster .@map$,18,186,"Acidus",3179,1,.@label$;
+	
+	monster .@map$,65,215,"Gremlin",3176,1,.@label$;
+	monster .@map$,65,215,"Acidus",3179,1,.@label$;
+	monster .@map$,65,160,"Gremlin",3176,1,.@label$;
+	monster .@map$,65,160,"Acidus",3179,1,.@label$;
+	
+	areamonster .@map$,108,198,119,180,"Acidus",3179,2,.@label$;
+	areamonster .@map$,108,198,119,180,"Gremlin",3176,2,.@label$;
+	
+	areamonster .@map$,87,209,30,171,"Acidus",3179,7,.@label$;
+	areamonster .@map$,87,209,30,171,"Gremlin",3176,7,.@label$;
+	set .MyMobs,30;
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@air1");
+	set .MyMobs, .MyMobs-1;
+	if (.MyMobs == 0) {
+		donpcevent instance_npcname("#airshipputmob2")+"::OnComplete";
+	}
+	end;
+OnComplete:
+	initnpctimer;
+	end;
+OnTimer2000:
+	set .@map$, instance_mapname("1@air1");
+	mapannounce .@map$, "All the enemies on this floor have been defeated. Head to the Engine Room entrance.",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("Iris#2air1")+"::OnEnable";
+	donpcevent instance_npcname("Chaos#2air1")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#2aair")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob2")+"::OnDisable";
+	stopnpctimer;
+	end;
+}
+
+1@air2,0,0,0	script	#airshipputmob3	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#airshipputmob3")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#airshipputmob3");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#airshipputmob3");
+	set .@map$, instance_mapname("1@air2");
+	set .@label$, instance_npcname("#airshipputmob3")+"::OnMyMobDead";
+	areamonster .@map$,36,49,98,77,"Acidus",3178,9,.@label$;
+	areamonster .@map$,36,49,98,77,"Beholder",3177,10,.@label$;
+	
+	monster .@map$,62,92,"Acidus",3178,1,.@label$;
+	monster .@map$,61,88,"Acidus",3177,1,.@label$;
+	
+	monster .@map$,62,32,"Acidus",3178,1,.@label$;
+	monster .@map$,60,36,"Acidus",3177,1,.@label$;
+	
+	monster .@map$,19,66,"Acidus",3178,1,.@label$;
+	monster .@map$,19,64,"Acidus",3178,1,.@label$;
+	monster .@map$,19,62,"Acidus",3178,1,.@label$;
+	monster .@map$,19,60,"Acidus",3178,1,.@label$;
+	areamonster .@map$,102,68,117,54,"Beholder",3177,3,.@label$;
+	set .MyMobs,30;
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@air2");
+	set .MyMobs, .MyMobs-1;
+	if (.MyMobs == 0) {
+		donpcevent instance_npcname("#airshipputmob3")+"::OnComplete";
+	}
+	end;
+OnComplete:
+	initnpctimer;
+	end;
+OnTimer2000:
+	set .@map$, instance_mapname("1@air2");
+	mapannounce .@map$, "All the enemies on this floor have been defeated. Go up the deck.",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("warp4a#air2")+"::OnEnable";
+	donpcevent instance_npcname("Iris#air2")+"::OnEnable";
+	donpcevent instance_npcname("Fenrir#air2")+"::OnEnable";
+	donpcevent instance_npcname("Wyvern#2air2")+"::OnEnable";
+	donpcevent instance_npcname("Wyvern#3air2")+"::OnEnable";
+	donpcevent instance_npcname("firecontrol2#air2")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob3")+"::OnDisable";
+	stopnpctimer;
+	end;
+}
+1@air2,0,0,0	script	#airshipputmob4	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#airshipputmob4")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#airshipputmob4");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#airshipputmob4");
+	set .@map$, instance_mapname("1@air2");
+	set .@label$, instance_npcname("#airshipputmob4")+"::OnMyMobDead";
+	monster .@map$,235,49,"Wyvern",3180,1,.@label$;
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@air2");
+	if (mobcount(.@map$,instance_npcname("#airshipputmob4")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#airshipputmob4")+"::OnComplete";
+	}
+	end;
+OnComplete:
+	initnpctimer;
+	end;
+OnTimer2000:
+	set .@map$, instance_mapname("1@air2");
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#4air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#5air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#6air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#7air2")+"::OnEnable";
+	donpcevent instance_npcname("Gremlin#8air2")+"::OnEnable";
+	donpcevent instance_npcname("Iris#2air2")+"::OnEnable";
+	donpcevent instance_npcname("Captain Ferlock#air2")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob4")+"::OnDisable";
+	stopnpctimer;
+	end;
+}
+
+1@air2,0,0,0	script	#airshipputmob5	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#airshipputmob5")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("#airshipputmob5");
+	end;
+OnEnable:
+	enablenpc instance_npcname("#airshipputmob5");
+	set .@map$, instance_mapname("1@air2");
+	set .@label$, instance_npcname("#airshipputmob5")+"::OnMyMobDead";
+	monster .@map$,247,51,"Captain Ferlock Runaway",3181,1,.@label$;
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@air2");
+	if (mobcount(.@map$,instance_npcname("#airshipputmob5")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#airshipputmob5")+"::OnComplete";
+	}
+	end;
+OnComplete:
+	initnpctimer;
+	end;
+OnTimer2000:
+	set .@map$, instance_mapname("1@air2");
+	donpcevent instance_npcname("Chaos#air2")+"::OnEnable";
+	sleep2 500;
+	donpcevent instance_npcname("Captain Ferlock#2air2")+"::OnEnable";
+	donpcevent instance_npcname("#airshipputmob5")+"::OnDisable";
+	stopnpctimer;
+	end;
+}
+1@air2,229,54,5	script	Fenrir#air2	664,{
+	cutin "fenrir_a.bmp",2;
+	mes "[Fenrir]";
+	mes "...These bastards just keep coming.";
+	next;
+	cutin "h_guardian2.bmp",1;
+	mes "[?????]";
+	mes "As expected. Our intuition wasn't wrong. It was fruitful to have followed the wave of evil and come this far.";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "...?? Who goes there!!";
+	next;
+	cutin "h_guardian2.bmp",1;
+	mes "[?????]";
+	mes "Let us introduce ourselves...";
+	next;
+	mes "[?????]";
+	mes "Shiva! Basara! Laksm!";
+	mes "We are the invincible Rangers!";
+	next;
+	cutin "h_guardian1.bmp",1;
+	mes "[Guardian Heroines]";
+	mes "Guardian Heroines!!";
+	next;
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "......";
+	next;
+	cutin "fenrir_a.bmp",2;
+	mes "[Fenrir]";
+	mes "......";
+	next;
+	cutin "h_guardian1.bmp",1;
+	mes "[Shiva]";
+	mes "Hm? What's with the reaction? It's kind of lukewarm... Was it too much?";
+	next;
+	mes "[Basara]";
+	mes "Hm, no no. Everybody is just enraptured by our great entrance.";
+	next;
+	mes "[Laksmi]";
+	mes "Right right. This muc production for a hero's entrance is required!!";
+	next;
+	cutin "h_iris02.bmp",2;
+	mes "[Iris]";
+	mes "Pu....";
+	mes "Puhahahahahahahaha";
+	next;
+	mes "[Iris]";
+	mes "What? Who are these idiots?!";
+	mes "Just look at their clothes!!";
+	mes "Are those stage costumes? Are they celebrities and not heroes?";
+	next;
+	cutin "h_guardian3.bmp",1;
+	mes "[Shiva]";
+	mes "Humph. You don't know what you're talking about!";
+	mes "Do you know how much these clothes cost? That's what's wrong with people dull to the latest fashion~";
+	next;
+	mes "[Basara]";
+	mes "You guys! This isn't the time to be chatting like this! Let's root out the wave of evil!!";
+	next;
+	mes "[Shiva]";
+	mes "Roger, Basara! Let's end it with a switf attack!!";
+	mes "Huuma Metal Shuriken!! Hiyah!";
+	next;
+	cutin "h_iris02.bmp",255;
+	mes "- Pop! Pop pop!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	sleep2 200;
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "What, what are they... Absolute morons?...";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Oh? Gee!";
+	mes "An unexpected ally?";
+	mes "This could turn out to be a fun party~";
+	next;
+	cutin "fenrir_a.bmp",2;
+	mes "[Fenrir]";
+	mes "Wait!";
+	mes "It would be better to end this party now... What is this? Did Freyja send you?";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Oh. You have no fear.";
+	mes "How dare a mere lowly human say Freyja's name.";
+	next;
+	cutin "fenrir_a.bmp",2;
+	mes "[Fenrir]";
+	mes "As expected. You are Freyja's spawn?";
+	next;
+	cutin "h_arcana01.bmp",2;
+	mes "[Arcana]";
+	mes "...Careful. If you keep going on like that...";
+	mes "You will be subject to divine punishment!";
+	next;
+	cutin "fenrir_b.bmp",2;
+	mes "[Fenrir]";
+	mes "...!!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	sleep2 200;
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Okay~ I will show you something good. Something to cool your heads";
+	next;
+	cutin "fenrir_b.bmp",2;
+	mes "[Fenrir]";
+	mes "Could it be... Breath?!!";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "B.I.N.G.O ~";
+	next;
+	cutin "fenrir_b.bmp",255;
+	mes "[Wyvern]";
+	mes "Woooo..!!";
+	next;
+	cutin "fenrir_b.bmp",2;
+	mes "[Fenrir]";
+	mes "No...no!! The ship!!";
+	next;
+	donpcevent instance_npcname("Loki#air2")+"::OnEnable";
+	cutin "fenrir_b.bmp",255;
+	mes "- Boom!!!";
+	next;
+	cutin "fenrir_a.bmp",2;
+	mes "[Fenrir]";
+	mes "...?! Loki!!";
+	next;
+	cutin "ep14_roki02.bmp",2;
+	mes "[Loki]";
+	mes "Hm...";
+	mes "My new clothes are ruined...";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Ooh.. you countered Wyvern's Breath... an unexpected outcome. But can you face this one?";
+	next;
+	cutin "ep14_roki02.bmp",255;
+	mes "[Wyvern]";
+	mes "Boom...!!";
+	next;
+	cutin "ep14_roki02.bmp",2;
+	mes "[Loki]";
+	mes "Bothersome pests...";
+	mes "You! I will face one while you face other one...";
+	close2;
+	cutin "ep14_roki02.bmp",255;
+	donpcevent instance_npcname("Fenrir#air2")+"::OnDisable";
+	donpcevent instance_npcname("Loki#air2")+"::OnDisable";
+	donpcevent instance_npcname("Iris#air2")+"::OnDisable";
+	donpcevent instance_npcname("Wyvern#2air2")+"::OnDisable";
+	donpcevent instance_npcname("Wyvern#3air2")+"::OnDisable";
+	donpcevent instance_npcname("#airshipputmob4")+"::OnEnable";
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Fenrir#air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Fenrir#air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Fenrir#air2");
+	end;
+}
+
+1@air2,229,56,5	script	Loki#air2	512,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Loki#air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Loki#air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Loki#air2");
+	initnpctimer;
+	end;
+OnTimer1000:
+	specialeffect EF_SUI_EXPLOSION;
+	stopnpctimer;
+	end;
+}
+
+1@air2,241,54,3	script	Iris#air2	666,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Iris#air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Iris#air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Iris#air2");
+	end;
+}
+
+1@air2,235,59,3	script	Wyvern#2air2	3180,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Wyvern#2air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Wyvern#2air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Wyvern#2air2");
+	end;
+}
+
+1@air2,235,49,3	script	Wyvern#3air2	3180,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Wyvern#3air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Wyvern#3air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Wyvern#3air2");
+	end;
+}
+
+1@air1,88,189,5	script	Iris#2air1	666,{
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "Damn... They already reached this far! Thanks to you we were able to defend the Rune Engine.";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Uh...oh!! There's a gremlin heading towards the Engine Room!!";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "......!! We have to stop him!!";
+	next;
+	cutin "h_chaos03.bmp",255;
+	mes "[Gremlin]";
+	mes "Squeak..!!";
+	next;
+	donpcevent instance_npcname("Gremlin#2aair")+"::OnEffect";
+	mes "- Pop! Pop pop!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Eeek!!";
+	next;
+	cutin "h_iris01.bmp",255;
+	mes "[Crew Member]";
+	mes "Argh! The Rune Engine!! The Engine Room has exploded!! Fire suppression team! Put out the fire!!";
+	next;
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "Damn it!! It's dangerous here! Let's get out of here first! Iris hurry!!";
+	close2;
+	donpcevent instance_npcname("Iris#2air1")+"::OnDisable";
+	donpcevent instance_npcname("Chaos#2air1")+"::OnDisable";
+	donpcevent instance_npcname("#airshipputmob3")+"::OnEnable";
+	donpcevent instance_npcname("firecontrol#air2")+"::OnEnable";
+	sleep2 1000;
+	set .@map$, instance_mapname("1@air1");
+	mapannounce .@map$, "You must climb above the non-process deck. Go down to the deck with your enemies down.",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("warp3a#air1")+"::OnEnable";
+	donpcevent instance_npcname("warp3b#air1")+"::OnEnable";
+	cutin "h_chaos02.bmp",255;
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Iris#2air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Iris#2air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Iris#2air1");
+	end;
+}
+
+1@air1,88,187,5	script	Chaos#2air1	683,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Chaos#2air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Chaos#2air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Chaos#2air1");
+	end;
+}
+1@air1,93,188,5	script	Gremlin#2aair	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#2aair")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#2aair");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#2aair");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	donpcevent instance_npcname("Gremlin#2aair")+"::OnDisable";
+	end;
+}
+
+1@air2,232,51,5	script	Iris#2air2	666,{
+	mes "[Gremlin]";
+	mes "Squeak... Kooar~!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Eek! There are still more of these!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Found it! My weapon! Hehehe";
+	next;
+	mes "[Captain Ferlock]";
+	mes "I will show you what happens if you mess about on my ship!";
+	next;
+	mes "[Captain Ferlock]";
+	mes "I will end this with my specially manufactured Exodus Joker XIII Doom Rifle!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Just, just a minute...";
+	mes "You're really going to fire that?!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Of course!";
+	mes "Hehehehehe!";
+	next;
+	cutin "h_iris01.bmp",255;
+	mes "- Bang! Bangbang! Bang!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnDisable";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnDisable";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnDisable";
+	mes "[Gremlin]";
+	mes "Urrk!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Muhahahaha!";
+	mes "How do you like that!!";
+	mes "Muhahahaha";
+	next;
+	cutin "h_iris01.bmp",255;
+	mes "- Bang! Bangbang! Bang!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	mes "[Guard]";
+	mes "Arrgh... the engine!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "What?! Those bastards are breaking the engine?!! You're making me angry!!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "You're the one who did it!!!";
+	next;
+	cutin "h_iris01.bmp",255;
+	mes "- Bang! Bangbang! Bang!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Bastards! Die! Die!";
+	mes "Muhahahaha!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "The way things are going, the ship could sink because of that reindeer captain!! Stop that Captain!! I'm scared...";
+	next;
+	mes "[Iris]";
+	mes "How do you stop him? ...Maybe he will regain his sense if you beat him just enough to not die... I'm counting on you!!";
+	close2;
+	cutin "h_iris01.bmp",255;
+	donpcevent instance_npcname("Gremlin#4air2")+"::OnDisable";
+	donpcevent instance_npcname("Gremlin#5air2")+"::OnDisable";
+	donpcevent instance_npcname("Gremlin#6air2")+"::OnDisable";
+	donpcevent instance_npcname("Gremlin#7air2")+"::OnDisable";
+	donpcevent instance_npcname("Gremlin#8air2")+"::OnDisable";
+	donpcevent instance_npcname("Captain Ferlock#air2")+"::OnDisable";
+	donpcevent instance_npcname("#airshipputmob5")+"::OnEnable";
+	donpcevent instance_npcname("Iris#2air2")+"::OnDisable";
+	end;
+	
+OnInstanceInit:
+	donpcevent instance_npcname("Iris#2air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Iris#2air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Iris#2air2");
+	end;
+}
+
+1@air2,247,51,3	script	Captain Ferlock#air2	873,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Captain Ferlock#air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Captain Ferlock#air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Captain Ferlock#air2");
+	end;
+}
+
+1@air2,239,58,5	script	Chaos#air2	683,{
+	mes "[Captain Ferlock]";
+	mes "Oops... I was shooting like crazy. Looks like a lot of the Gremlins are gone? Hehehehe";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "This ship is damaged because of you!!";
+	next;
+	cutin "h_arcana02.bmp",2;
+	mes "[Arcana]";
+	mes "Doing our work for us. Hm, I guess this is enough?";
+	next;
+	mes "[Arcana]";
+	mes "Then it's time for us to slip away...";
+	next;
+	cutin "h_guardian1.bmp",1;
+	mes "[Laksmi]";
+	mes "Oh? ... There, Basara. Looks like the are retreating";
+	next;
+	mes "[Basara]";
+	mes "Of course!! They got a sense of our skill!! Hohoho~";
+	next;
+	mes "[Basara]";
+	mes "On that note, one last Huuma Metal Shuriken!!";
+	next;
+	cutin "fly_felrock2.bmp",255;
+	mes "- Bangbang! bang!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	cutin "fenrir_b.bmp",2;
+	mes "[Fenrir]";
+	mes "Eek!! Looks like we're falling!!";
+	mes "...Too short... Can't reach...";
+	next;
+	mes "[Fenrir]";
+	mes "...is this the end?";
+	mes "...A place I couldn't reach, just like before...";
+	mes "Chaos...";
+	next;
+	cutin "ep14_roki02.bmp",2;
+	mes "[Loki]";
+	mes "...Grab on";
+	next;
+	cutin "fenrir_b.bmp",2;
+	mes "[Fenrir]";
+	mes "Lo...ki?";
+	next;
+	cutin "ep14_roki02.bmp",2;
+	mes "[Loki]";
+	mes "What are you looking at. Here, come up...";
+	next;
+	cutin "fly_felrock2.bmp",255;
+	mes "[Guard]";
+	mes "All engines confirmed halted!!";
+	mes "We have to escape quickly!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Damn...";
+	mes "Everybody get on the lifeboats!";
+	mes "Board the lifeboats!! Passengers are first priority! Release the lifeboats that have completed boarding!";
+	next;
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "What!! There are still people left!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "There's nothing we can do!";
+	mes "If we keep stalling in this situation, everyone will be in danger!! It's a tragedy, but we have done all that we can!";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "But the remaining people's lives are precious as well! You're just going to leave them?!! Huh?!!";
+	next;
+	cutin "fly_felrock2.bmp",2;
+	mes "[Captain Ferlock]";
+	mes "Yeah, you are right...";
+	mes "On that note, I will leave you in charge to take of the aftermath!! I'm off!!";
+	donpcevent instance_npcname("Captain Ferlock#2air2")+"::OnDisable";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "Hey! Where are you going! Argh!!";
+	mes "I will catch you. I will kill you!!";
+	next;
+	cutin "h_guardian1.bmp",1;
+	mes "[Basara]";
+	mes "It is not the time for us to be facing these trivial Gremlins.";
+	next;
+	mes "[Basara]";
+	mes "I can feel a larger wave of evil.";
+	mes "Let's leave these little ones to theme. Let's go!";
+	next;
+	mes "[Laksmi & Shiva]";
+	mes "Roger!! Ranger Flying form!!";
+	next;
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Huh? hey!!";
+	mes "Where do you think you're going after making a mess out of the ship?!";
+	next;
+	mes "[Iris]";
+	mes "If I catch you next time, I will make sure you die!! Be nervous!! You got it?! Be ready, you yokels!!";
+	next;
+	cutin "h_guardian3.bmp",1;
+	mes "[Guardian Heroines]";
+	mes "...Yokels? (Rage)";
+	next;
+	mes "[Guardian Heroines]";
+	mes "The bunch who denigrate and condemn the path of righteousness... We should mercilessly hand down righteous judgment, right?";
+	next;
+	mes "[Guardian Heroines]";
+	mes "Die villains!! Huuma Metal Shuriken!!";
+	next;
+	cutin "h_iris01.bmp",255;
+	mes "- Bang! bangbang! Bang!";
+	next;
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnEffect";
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnEffect";
+	sleep2 300;
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnEffect";
+	cutin "h_iris01.bmp",2;
+	mes "[Iris]";
+	mes "Eek!!";
+	next;
+	cutin "h_guardian1.bmp",1;
+	mes "[Guardian Heroines]";
+	mes "Ahahahaha!!";
+	mes "Serves you right~ Serves you!! Let's go!!";
+	next;
+	cutin "h_chaos03.bmp",2;
+	mes "[Chaos]";
+	mes "Iris!! Come here!!";
+	mes "Let's quickly find Fenrir and Loki and get out of here ourselves!!";
+	next;
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "You get out of here now!! This ship is in danger!!";
+	close2;
+	donpcevent instance_npcname("warp5a#air2")+"::OnEnable";
+	disablenpc instance_npcname("Chaos#air2");
+	donpcevent instance_npcname("Chaos#1air2")+"::OnEnable";
+	cutin "h_chaos02.bmp",255;
+	getexp 1000000,600000;
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Chaos#air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Chaos#air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Chaos#air2");
+	end;
+}
+
+1@air2,239,58,5	script	Chaos#1air2	683,{
+	cutin "h_chaos02.bmp",2;
+	mes "[Chaos]";
+	mes "You get out of here now!! This ship is in danger!!";
+	close2;
+	cutin "h_chaos02.bmp",255;
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Chaos#1air2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Chaos#1air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Chaos#1air2");
+	end;
+}
+
+1@air2,243,58,3	script	Captain Ferlock#2air2	873,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Captain Ferlock#2air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Captain Ferlock#2air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Captain Ferlock#2air2");
+	end;
+}
+
+1@air1,120,62,3	script	Traveling Knight#air1	733,{
+	mes "[Traveling Knight]";
+	mes "What are these things?";
+	mes "Should I cut them all down? ...No, I'm not being paid enogh to be involved...";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Traveling Knight#air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Traveling Knight#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Traveling Knight#air1");
+	end;
+}
+
+1@air1,95,47,3	script	Drunk#air1	887,{
+	mes "[Drunks]";
+	mes "Uh ... take ... hiccup";
+	mes "....Kool...Zzz";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Drunk#air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Drunk#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Drunk#air1");
+	end;
+}
+
+1@air1,75,71,5	script	Passenger#air1	55,{
+	mes "[Đầu bếp]";
+	mes "Well ... something like these monsters?!";
+	mes "It's disturbing my precious meal! Bodyguards! Where are you?!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Passenger#air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Passenger#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Passenger#air1");
+	end;
+}
+
+1@air1,61,88,5	script	Free Riding Bard#air	51,{
+	mes "[Free Riding Bard]";
+	mes "Whoa... Gorgeous~ Fantastic~";
+	mes "I must think of magical lyrics to sing of this chaotic sight~";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Free Riding Bard#air")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Free Riding Bard#air");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Free Riding Bard#air");
+	end;
+}
+
+1@air1,46,61,5	script	Manager#air1	61,{
+	mes "[Manager]";
+	mes "It looks tough, but those monsters are also guests of my restaurant..";
+	mes "What would you like for the monster guest?";
+	next;
+	mes "[Manager]";
+	mes "Uh ... wow! People live!!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Manager#air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Manager#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Manager#air1");
+	end;
+}
+
+1@air1,28,67,5	script	Gambler#air1	853,{
+	mes "[Gambler]";
+	mes "Hey! Do not touch me!";
+	mes "I'll blow your hand!";
+	next;
+	mes "[Gambler]";
+	mes "Huh..?!";
+	mes "From now on, I started getting paid. What are these monsters?! Are you guys I've been trying to steal money for?!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Gambler#air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Gambler#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Gambler#air1");
+	end;
+}
+
+1@air1,93,193,3	script	Crew Member#1air1	852,{
+	mes "[Crew Member]";
+	mes "This is the entrance to the Engine Room. Stop them from coming in here!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Crew Member#1air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Crew Member#1air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Crew Member#1air1");
+	end;
+}
+
+1@air1,22,182,7	script	Crew Member#2air1	852,{
+	mes "[Crew Member]";
+	mes "Damn ... There are so many of them! This is the Engine Room.!!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Crew Member#2air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Crew Member#2air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Crew Member#2air1");
+	end;
+}
+
+1@air1,39,191,4	script	Royal Guard#2air1	105,{
+	mes "[Royal Guard]";
+	mes "No matter what happens, you should not wake your Majesty's sleep!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Royal Guard#2air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Royal Guard#2air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Royal Guard#2air1");
+	end;
+}
+
+1@air1,43,191,4	script	Royal Guard#1air1	105,{
+	mes "[Royal Guard]";
+	mes "No matter what happens, you should not wake your Majesty's sleep!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Royal Guard#1air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Royal Guard#1air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Royal Guard#1air1");
+	end;
+}
+
+1@air1,49,169,5	script	Tourist#2air1	887,{
+	mes "[Tourist]";
+	mes "....Cool...Zzz";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Tourist#2air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Tourist#2air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Tourist#2air1");
+	end;
+}
+
+1@air1,58,197,3	script	Tourist#1air1	887,{
+	mes "[Tourist]";
+	mes "....Cool...Zzz";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Tourist#1air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Tourist#1air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Tourist#1air1");
+	end;
+}
+
+1@air1,42,205,3	script	Strange King#air1	956,{
+	mes "[Strange King]";
+	mes "....Cool...Zzz";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Strange King#air1")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Strange King#air1");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Strange King#air1");
+	end;
+}
+
+1@air2,120,62,3	script	Traveling Knight#air2	733,{
+	mes "[Traveling Knight]";
+	mes "U .. uh!!";
+	mes "Explode! We have to cross ... we have to cross over to the non-procession on the other side!!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Traveling Knight#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Traveling Knight#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Traveling Knight#air2");
+	end;
+}
+
+1@air2,95,47,3	script	Man#air2	887,{
+	mes "[Man]";
+	mes "Uh ... take ... hiccup";
+	mes "....Cool...Zzz";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Man#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Man#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Man#air2");
+	end;
+}
+
+1@air2,61,88,5	script	Free Riding Bard#air2	51,{
+	mes "[Free Riding Bard]";
+	mes "Oooh ... Gods ~ Fantastic~";
+	mes "The explosion is also wonderful~";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Free Riding Bard#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Free Riding Bard#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Free Riding Bard#air2");
+	end;
+}
+
+1@air2,75,71,5	script	Chef#air2	55,{
+	mes "[Chef]";
+	mes "Let me live.!!";
+	mes "I'll give you any money! Please save me from this place !! Bodyguards! Where is it!!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Chef#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Chef#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Chef#air2");
+	end;
+}
+
+1@air2,28,67,5	script	Gambler#air2	853,{
+	mes "[Gambler]";
+	mes "What? Fire?";
+	mes "Ahahahaha~";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Gambler#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Gambler#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Gambler#air2");
+	end;
+}
+
+1@air2,46,61,5	script	Manager#air2	61,{
+	mes "[Manager]";
+	mes "This ship is falling ..";
+	mes "But I will be with this boat and destiny. This ship and I are like one body.!";
+	next;
+	mes "[Manager]";
+	mes "Uh ... wow! People live!!";
+	close;
+OnInstanceInit:
+	donpcevent instance_npcname("Manager#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("Manager#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Manager#air2");
+	end;
+}
+
+1@air2,113,52,0	script	fire1#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire1#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire1#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire1#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,115,68,0	script	fire2#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire2#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire2#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire2#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,96,58,0	script	fire3#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire3#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire3#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire3#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,90,75,0	script	fire4#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire4#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire4#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire4#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,92,51,0	script	fire5#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire5#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire5#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire5#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,77,42,0	script	fire6#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire6#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire6#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire6#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,69,77,0	script	fire7#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire7#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire7#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire7#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,50,49,0	script	fire8#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire8#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire8#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire8#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,44,61,0	script	fire9#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire9#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire9#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire9#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,31,53,0	script	fire10#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire10#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire10#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire10#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,24,74,0	script	fire11#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire11#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire11#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire11#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,43,45,0	script	fire12#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire12#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire12#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire12#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,73,65,0	script	fire13#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire13#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire13#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire13#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,53,72,0	script	fire14#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire14#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire14#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire14#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,82,62,0	script	fire15#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire15#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire15#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire15#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,234,70,0	script	fire21#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire21#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire21#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire21#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,247,64,0	script	fire22#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire22#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire22#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire22#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,230,33,0	script	fire23#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire23#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire23#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire23#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,277,39,0	script	fire25#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire25#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire25#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire25#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,223,50,0	script	fire26#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire26#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire26#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire26#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,238,70,0	script	fire29#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire29#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire29#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire29#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,238,32,0	script	fire30#air2	139,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("fire30#air2")+"::OnEnable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("fire30#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("fire30#air2");
+	end;
+OnEffect:
+	specialeffect EF_BLASTMINEBOMB;
+	end;
+}
+
+1@air2,0,0,0	script	firecontrol#air2	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("firecontrol#air2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("firecontrol#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("firecontrol#air2");
+	donpcevent instance_npcname("firecontrol#air2")+"::OnReplay";
+	end;
+OnReplay:
+	initnpctimer;
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("fire1#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire8#air2")+"::OnEffect";
+	end;
+OnTimer1400:
+	donpcevent instance_npcname("fire2#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire9#air2")+"::OnEffect";
+	end;
+OnTimer1800:
+	donpcevent instance_npcname("fire3#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire10#air2")+"::OnEffect";
+	end;
+OnTimer2200:
+	donpcevent instance_npcname("fire4#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire11#air2")+"::OnEffect";
+	end;
+OnTimer2600:
+	donpcevent instance_npcname("fire5#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire12#air2")+"::OnEffect";
+	end;
+OnTimer3000:
+	donpcevent instance_npcname("fire6#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire13#air2")+"::OnEffect";
+	end;
+OnTimer3400:
+	donpcevent instance_npcname("fire7#air2")+"::OnEffect";
+	donpcevent instance_npcname("fire14#air2")+"::OnEffect";
+	end;
+OnTimer3800:
+	donpcevent instance_npcname("fire15#air2")+"::OnEffect";
+	stopnpctimer;
+	donpcevent instance_npcname("firecontrol#air2")+"::OnReplay";
+	end;
+}
+
+1@air2,0,0,0	script	firecontrol2#air2	-1,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("firecontrol2#air2")+"::OnDisable";
+	end;
+OnDisable:
+	disablenpc instance_npcname("firecontrol2#air2");
+	end;
+OnEnable:
+	enablenpc instance_npcname("firecontrol2#air2");
+	donpcevent instance_npcname("firecontrol2#air2")+"::OnReplay";
+	end;
+OnReplay:
+	initnpctimer;
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("fire21#air2")+"::OnEffect";
+	end;
+OnTimer1400:
+	donpcevent instance_npcname("fire22#air2")+"::OnEffect";
+	end;
+OnTimer1800:
+	donpcevent instance_npcname("fire23#air2")+"::OnEffect";
+	end;
+OnTimer2200:
+	donpcevent instance_npcname("fire25#air2")+"::OnEffect";
+	end;
+OnTimer2600:
+	donpcevent instance_npcname("fire26#air2")+"::OnEffect";
+	end;
+OnTimer3000:
+	donpcevent instance_npcname("fire29#air2")+"::OnEffect";
+	end;
+OnTimer3400:
+	donpcevent instance_npcname("fire30#air2")+"::OnEffect";
+	stopnpctimer;
+	donpcevent instance_npcname("firecontrol2#air2")+"::OnReplay";
+	end;
+}
+	
+1@air2,236,57,3	script	Gremlin#1air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#1air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#1air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#1air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,239,57,5	script	Gremlin#2air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#2air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#2air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#2air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,230,50,5	script	Gremlin#3air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#3air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#3air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#3air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,226,62,3	script	Gremlin#4air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#4air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#4air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#4air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,241,48,3	script	Gremlin#5air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#5air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#5air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#5air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,225,40,7	script	Gremlin#6air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#6air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#6air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#6air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,236,48,7	script	Gremlin#7air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#7air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#7air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#7air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air2,224,66,5	script	Gremlin#8air2	3176,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Gremlin#8air2")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Gremlin#8air2");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Gremlin#8air2");
+	end;
+OnEffect:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+}
+
+1@air1,213,75,5	script	Wyvern#air1	3180,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Wyvern#air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Wyvern#air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Wyvern#air1");
+	end;
+}
+
+1@air1,218,78,3	script	Acidus#1air1	3178,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Acidus#1air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Acidus#1air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Acidus#1air1");
+	end;
+}
+
+1@air1,208,78,5	script	Acidus#2air1	3179,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Acidus#2air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Acidus#2air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Acidus#2air1");
+	end;
+}
+
+1@air1,200,78,5	script	Rotar Zairo#1air1	3175,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Rotar Zairo#1air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Rotar Zairo#1air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Rotar Zairo#1air1");
+	end;
+}
+
+1@air1,223,78,3	script	Rotar Zairo#2air1	3175,{
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("Rotar Zairo#2air1")+"::OnDisable";
+	end;
+OnDisable:
+	hideonnpc instance_npcname("Rotar Zairo#2air1");
+	end;
+OnEnable:
+	hideoffnpc instance_npcname("Rotar Zairo#2air1");
+	end;
+}
