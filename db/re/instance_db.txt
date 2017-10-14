@@ -23,8 +23,8 @@
 16,Horror Toy Factory,3600,300,1@xm_d,111,22
 17,Faceworm's Nest,3600,300,1@face,112,374
 18,Ghost Palace,3600,300,1@spa,42,196
-19,Bios Island,7200,300,1@dth1,19,94,1@dth2,1@dth3
-21,Nightmarish Jitterbug,3300,300,1@jtb,16,18
+19,Bios Island,3600,300,1@dth1,17,93,1@dth2,1@dth3
+21,Nightmarish Jitterbug,3600,300,1@jtb,16,18
 22,Airship Assault,3600,300,1@air1,244,73,1@air2
 23,Morse Cave,3600,300,1@rev,26,181
 24,Devil's Tower,3600,300,1@tnm1,50,104,1@tnm2,1@tnm3
