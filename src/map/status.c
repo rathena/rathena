@@ -9620,11 +9620,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if( sd != NULL ) {
 				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
 
-				if( boss_md == NULL || boss_md->bl.prev == NULL ) { // No MVP on this map - MVP is dead
-					clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE);
-					val1 = 0;
-				} else
-					val1 = boss_md->bl.id;
+				if( boss_md == NULL ) { // No MVP on this map
+					clif_bossmapinfo(sd, NULL, BOSS_INFO_NOT);
+					return 0;
+				}
+				val1 = boss_md->bl.id;
 				tick_time = 1000; // [GodLesZ] tick time
 				val4 = tick / tick_time;
 			}
@@ -11511,7 +11511,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_BOSSMAPINFO:
 			if (sd)
-				clif_bossmapinfo(sd->fd, map_id2boss(sce->val1), BOSS_INFO_NOT); // First Message
+				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
 			break;
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
@@ -12834,13 +12834,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( sd && --(sce->val4) >= 0 ) {
 			struct mob_data *boss_md = map_id2boss(sce->val1);
 
-			if( boss_md ){
-				if (sd->bl.m == boss_md->bl.m && boss_md->spawn_timer == INVALID_TIMER) {
-					clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Update X, Y on minimap
+			if (boss_md) {
+				if (sd->bl.m != boss_md->bl.m) // Not on same map anymore
+					return 0;
+				else if (boss_md->bl.prev != NULL) { // Boss is alive - Update X, Y on minimap
 					sce->val2 = 0;
-				} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) {
-					clif_bossmapinfo(sd->fd, boss_md, BOSS_INFO_ALIVE); // Display respawn notice once
+					clif_bossmapinfo(sd, boss_md, BOSS_INFO_ALIVE);
+				} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) { // Boss is dead
 					sce->val2 = 1;
+					clif_bossmapinfo(sd, boss_md, BOSS_INFO_DEAD);
 				}
 			}
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
