@@ -76,6 +76,34 @@ ecl_hub01	mapflag	noteleport
 gl_chyard_	mapflag	noteleport
 gl_cas02_	mapflag	noteleport
 
+// Heroes' Trails ================
+1@gef	mapflag	noteleport
+1@gef	mapflag	monster_noteleport
+1@face	mapflag	noteleport
+1@face	mapflag	monster_noteleport
+1@sara	mapflag	noteleport
+1@sara	mapflag	monster_noteleport
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	monster_noteleport
+1@ge_st	mapflag	noteleport
+1@ge_st	mapflag	monster_noteleport
+1@spa	mapflag	noteleport
+1@spa	mapflag	monster_noteleport
+1@tnm1	mapflag	noteleport
+1@tnm1	mapflag	monster_noteleport
+1@tnm2	mapflag	noteleport
+1@tnm2	mapflag	monster_noteleport
+1@tnm3	mapflag	noteleport
+1@tnm3	mapflag	monster_noteleport
+1@air1	mapflag	noteleport
+1@air1	mapflag	monster_noteleport
+1@air2	mapflag	noteleport
+1@air2	mapflag	monster_noteleport
+1@glast	mapflag	noteleport
+1@glast	mapflag	monster_noteleport
+dali	mapflag	noteleport
+dali02	mapflag	noteleport
+
 // Wave Mode Memorial Dungeon ====
 1@def01	mapflag	noteleport
 1@def01	mapflag	monster_noteleport

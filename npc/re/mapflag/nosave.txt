@@ -98,6 +98,20 @@ que_avan01	mapflag	nosave	SavePoint
 1@gl_k	mapflag	nosave	SavePoint
 2@gl_k	mapflag	nosave	SavePoint
 
+// Heroes' Trails ====================
+1@gef	mapflag	nosave	SavePoint
+1@face	mapflag	nosave	SavePoint
+1@sara	mapflag	nosave	SavePoint
+1@gef_in	mapflag	nosave	SavePoint
+1@ge_st	mapflag	nosave	SavePoint
+1@spa	mapflag	nosave	SavePoint
+1@tnm1	mapflag	nosave	SavePoint
+1@tnm2	mapflag	nosave	SavePoint
+1@tnm3	mapflag	nosave	SavePoint
+1@air1	mapflag	nosave	SavePoint
+1@air2	mapflag	nosave	SavePoint
+1@glast	mapflag	nosave	SavePoint
+
 // Wave Mode Memorial Dungeon =====
 1@def01	mapflag	nosave	SavePoint
 1@def02	mapflag	nosave	SavePoint
