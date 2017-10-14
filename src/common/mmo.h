@@ -517,7 +517,7 @@ struct mail_message {
 	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
-	int type; // enum mail_inbox_type
+	enum mail_inbox_type type;
 	time_t scheduled_deletion;
 
 	mail_status status;

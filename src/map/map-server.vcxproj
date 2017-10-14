@@ -215,7 +215,7 @@
     <ClCompile Include="chat.c" />
     <ClCompile Include="chrif.c" />
     <ClCompile Include="clan.c" />
-    <ClCompile Include="clif.c" />
+    <ClCompile Include="clif.cpp" />
     <ClCompile Include="date.c" />
     <ClCompile Include="duel.c" />
     <ClCompile Include="elemental.c" />
@@ -226,12 +226,10 @@
     <ClCompile Include="itemdb.c" />
     <ClCompile Include="log.c" />
     <ClCompile Include="mail.c" />
-    <ClCompile Include="map.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="mapreg.c" />
     <ClCompile Include="mercenary.c" />
-    <ClCompile Include="mob.c" />
+    <ClCompile Include="mob.cpp" />
     <ClCompile Include="npc.c" />
     <ClCompile Include="npc_chat.c" />
     <ClCompile Include="party.c" />
@@ -242,7 +240,7 @@
     <ClCompile Include="quest.c" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="searchstore.c" />
-    <ClCompile Include="skill.c" />
+    <ClCompile Include="skill.cpp" />
     <ClCompile Include="status.c" />
     <ClCompile Include="storage.c" />
     <ClCompile Include="trade.c" />
