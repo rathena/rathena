@@ -16436,25 +16436,37 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd){
 /// Convex Mirror (ZC_BOSS_INFO).
 /// 0293 <infoType>.B <x>.L <y>.L <minHours>.W <minMinutes>.W <maxHours>.W <maxMinutes>.W <monster name>.51B
 /// infoType:
-///     0 = No boss on this map (BOSS_INFO_NOT).
-///     1 = Boss is alive (position update) (BOSS_INFO_ALIVE).
-///     2 = Boss is alive (initial announce) (BOSS_INFO_ALIVE_WITHMSG).
-///     3 = Boss is dead (BOSS_INFO_DEAD).
-void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
+///     BOSS_INFO_NOT = No boss on this map.
+///     BOSS_INFO_ALIVE = Boss is alive (position update).
+///     BOSS_INFO_ALIVE_WITHMSG = Boss is alive (initial announce).
+///     BOSS_INFO_DEAD = Boss is dead.
+void clif_bossmapinfo(struct map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag)
 {
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,70);
 	memset(WFIFOP(fd,0),0,70);
 	WFIFOW(fd,0) = 0x293;
 
-	if( md != NULL ) {
-		if( md->bl.prev != NULL ) { // Boss on This Map
-			if( flag ) {
-				WFIFOB(fd,2) = 1;
-				WFIFOL(fd,3) = md->bl.x;
-				WFIFOL(fd,7) = md->bl.y;
-			} else
-				WFIFOB(fd,2) = 2; // First Time
-		} else if (md->spawn_timer != INVALID_TIMER) { // Boss is Dead
+	switch (flag) {
+		case BOSS_INFO_NOT:
+			WFIFOB(fd,2) = BOSS_INFO_NOT;
+			// No data required
+			break; 
+		case BOSS_INFO_ALIVE:
+			WFIFOB(fd,2) = BOSS_INFO_ALIVE;
+			// Update X/Y
+			WFIFOL(fd,3) = md->bl.x;
+			WFIFOL(fd,7) = md->bl.y;
+			break;
+		case BOSS_INFO_ALIVE_WITHMSG:
+			WFIFOB(fd,2) = BOSS_INFO_ALIVE_WITHMSG;
+			// Current X/Y
+			WFIFOL(fd,3) = md->bl.x;
+			WFIFOL(fd,7) = md->bl.y;
+			break;
+		case BOSS_INFO_DEAD:
+		{
 			const struct TimerData * timer_data = get_timer(md->spawn_timer);
 			unsigned int seconds;
 			int hours, minutes;
@@ -16464,12 +16476,16 @@ void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
 			seconds = seconds - (60 * 60 * hours);
 			minutes = seconds / 60;
 
-			WFIFOB(fd,2) = 3;
+			WFIFOB(fd,2) = BOSS_INFO_DEAD;
+			// Add respawn info
 			WFIFOW(fd,11) = hours; // Hours
 			WFIFOW(fd,13) = minutes; // Minutes
 		}
-		safestrncpy(WFIFOCP(fd,19), md->db->jname, NAME_LENGTH);
+			break;
 	}
+
+	if (md != NULL)
+		safestrncpy(WFIFOCP(fd,19), md->db->jname, NAME_LENGTH);
 
 	WFIFOSET(fd,70);
 }
