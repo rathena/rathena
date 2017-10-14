@@ -42,6 +42,10 @@
 #include <time.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
 
@@ -240,7 +244,7 @@ static void skill_chk2(int *idx) {
 #define skill_get3(id,x,var)  { skill_chk(&id); if (!id) return 0; skill_chk2(&x);  return var; }
 
 // Skill DB
-enum e_damage_type skill_get_hit( uint16 skill_id )                { skill_get  (skill_id, skill_db[skill_id]->hit); }
+enum e_damage_type skill_get_hit( uint16 skill_id )                { skill_chk(&skill_id); if (!skill_id) return DMG_NORMAL; return static_cast<e_damage_type>(skill_db[skill_id]->hit); }
 int skill_get_inf( uint16 skill_id )                               { skill_get  (skill_id, skill_db[skill_id]->inf); }
 int skill_get_ele( uint16 skill_id , uint16 skill_lv )             { skill_get2 (skill_id, skill_lv, skill_db[skill_id]->element); }
 int skill_get_nk( uint16 skill_id )                                { skill_get  (skill_id, skill_db[skill_id]->nk); }
@@ -935,7 +939,7 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 	if (pos_x <= 0) pos_x = src->x;
 	if (pos_y <= 0) pos_y = src->y;
 
-	return skill_check_unit_range2(src,pos_x,pos_y,skill_id,skill_lv,true);
+	return skill_check_unit_range2(src,pos_x,pos_y,skill_id,skill_lv,true) != 0;
 }
 
 struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y)
@@ -2713,7 +2717,7 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		) {
 		// Kaite only works against non-players if they are low-level.
 		// Kyomu doesn't disable Kaite, but the "skill fail chance" part of Kyomu applies to it.
-		clif_specialeffect(bl, 438, AREA);
+		clif_specialeffect(bl, EF_ATTACKENERGY2, AREA);
 		if( --sc->data[SC_KAITE]->val2 <= 0 )
 			status_change_end(bl, SC_KAITE, INVALID_TIMER);
 		return 2;
@@ -3032,14 +3036,14 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 	switch( skill_id ) {
 		case LG_OVERBRAND_BRANDISH:
 			// Give knockback damage bonus only hits the wall. (bugreport:9096)
-			if (skill_blown(dsrc,target,blewcount,dir,BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA) < blewcount)
+			if (skill_blown(dsrc,target,blewcount,dir,(enum e_skill_blown)(BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA)) < blewcount)
 				skill_addtimerskill(src, tick + status_get_amotion(src), target->id, 0, 0, LG_OVERBRAND_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
 			break;
 		case SR_KNUCKLEARROW:
 			// Ignore knockback damage bonus if in WOE (player cannot be knocked in WOE)
 			// Boss & Immune Knockback stay in place and don't get bonus damage
 			// Give knockback damage bonus only hits the wall. (bugreport:9096)
-			if (skill_blown(dsrc, target, blewcount, dir_ka, BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA) < blewcount)
+			if (skill_blown(dsrc, target, blewcount, dir_ka, (enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA)) < blewcount)
 				skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), target->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|4);
 			dir_ka = -1;
 			break;
@@ -4114,7 +4118,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 							}
 							if (j) {
 								i = applyeffects[rnd()%j];
-								status_change_start(src, target, i, 10000, skl->skill_lv,
+								status_change_start(src, target, static_cast<sc_type>(i), 10000, skl->skill_lv,
 									(i == SC_BURNING ? 1000 : (i == SC_BLEEDING ? src->id : 0)),
 									(i == SC_BURNING ? src->id : 0), 0,
 									(i == SC_BURNING ? 15000 : (i == SC_FREEZING ? 40000 :
@@ -5458,7 +5462,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					}
 
 			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions (Official behavior)
-				status_change_end(src, spheres[4], INVALID_TIMER);
+				status_change_end(src, static_cast<sc_type>(spheres[4]), INVALID_TIMER);
 				j = 4;
 			}
 
@@ -5472,7 +5476,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				}
 				skill_addtimerskill(src, tick + i * 200, bl->id, k, 0, subskill, skill_lv, i, flag);
 				clif_skill_nodamage(src, bl, subskill, skill_lv, 1);
-				status_change_end(src, spheres[i], INVALID_TIMER);
+				status_change_end(src, static_cast<sc_type>(spheres[i]), INVALID_TIMER);
 			}
 		}
 		break;
@@ -5501,7 +5505,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					pres_skill_id = sc->data[i]->val1;
 					pres_skill_lv = sc->data[i]->val2;
 					point = sc->data[i]->val3;
-					status_change_end(src, (sc_type)i, INVALID_TIMER);
+					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
 				}else //something went wrong :(
 					break;
 
@@ -5574,7 +5578,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					int skele = WL_RELEASE - 5 + sc->data[spheres[i]]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
 					// WL_SUMMON_ATK_FIRE, WL_SUMMON_ATK_WIND, WL_SUMMON_ATK_WATER, WL_SUMMON_ATK_GROUND
 					skill_addtimerskill(src,tick+status_get_adelay(src)*i,bl->id,0,0,skele,sc->data[spheres[i]]->val3,BF_MAGIC,flag|SD_LEVEL);
-					status_change_end(src, spheres[i], INVALID_TIMER); // Eliminate ball
+					status_change_end(src, static_cast<sc_type>(spheres[i]), INVALID_TIMER); // Eliminate ball
 				}
 				clif_skill_nodamage(src,bl,skill_id,0,1);
 			}
@@ -5848,7 +5852,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			struct elemental_data *ele = BL_CAST(BL_ELEM,src);
 			struct status_change *tsc_ele = status_get_sc(&ele->bl);
 			sc_type type = status_skill2sc(skill_id), type2;
-			type2 = type-1;
+
+			type2 = static_cast<sc_type>(type - 1);
 
 			clif_skill_nodamage(src,battle_get_master(src),skill_id,skill_lv,1);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
@@ -7958,7 +7963,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
-		skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_DONT_SEND_PACKET);
+		skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),(enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_DONT_SEND_PACKET));
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
 		break;
@@ -8602,7 +8607,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
 			card = skill_tarotcard(src, bl, skill_id, skill_lv, tick); // actual effect is executed here
-			clif_specialeffect((card == 6) ? src : bl, 522 + card, AREA);
+			clif_specialeffect((card == 6) ? src : bl, EF_TAROTCARD1 + card - 1, AREA);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -8631,7 +8636,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{	//Erase death count 1% of the casts
 			dstsd->die_counter = 0;
 			pc_setglobalreg(dstsd, add_str("PC_DIE_COUNTER"), 0);
-			clif_specialeffect(bl, 0x152, AREA);
+			clif_specialeffect(bl, EF_ANGEL2, AREA);
 			//SC_SPIRIT invokes status_calc_pc for us.
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
@@ -10253,8 +10258,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 			switch( skill_lv ) {// Select mode bassed on skill level used.
-				case 2: mode = EL_MODE_ASSIST; break;
-				case 3: mode = EL_MODE_AGGRESSIVE; break;
+				case 2: mode = static_cast<e_mode>(EL_MODE_ASSIST); break;
+				case 3: mode = static_cast<e_mode>(EL_MODE_AGGRESSIVE); break;
 			}
 			if( !elemental_change_mode(sd->ed,mode) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -11783,14 +11788,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		{
 			int summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_GEOGRAPHER };
 			int class_ = skill_id==AM_SPHEREMINE?MOBID_MARINE_SPHERE:summons[skill_lv-1];
-			int ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
+			enum mob_ai ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
 			struct mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
 			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, ai);
 			if (md) {
 				md->master_id = src->id;
-				md->special_state.ai = (enum mob_ai)ai;
+				md->special_state.ai = ai;
 				if( md->deletetimer != INVALID_TIMER )
 					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skill_id,skill_lv), mob_timer_delete, md->bl.id, 0);
@@ -14568,7 +14573,7 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 	static int c=0;
 	static int p_sd[MAX_PARTY];
 	int i;
-	bool is_chorus = ( skill_get_inf2(skill_id)&INF2_CHORUS_SKILL );
+	bool is_chorus = ( skill_get_inf2(skill_id)&INF2_CHORUS_SKILL ) != 0;
 
 	if (!sd)
 		return 0;
@@ -16675,7 +16680,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				clif_upgrademessage(sd->fd, 3, material[ditem->wlv]);
 				return;
 			}
-			per = status_get_refine_chance(ditem->wlv, (int)item->refine, false);
+			per = status_get_refine_chance(static_cast<refine_type>(ditem->wlv), (int)item->refine, false);
 			if( sd->class_&JOBL_THIRD )
 				per += 10;
 			else
@@ -19307,7 +19312,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					break;
 				default: //Those that don't require a skill?
 					if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20) { //Cooking items.
-						clif_specialeffect(&sd->bl, 608, AREA);
+						clif_specialeffect(&sd->bl, EF_COOKING_OK, AREA);
 						if (sd->cook_mastery < 1999)
 							pc_setglobalreg(sd, add_str("COOK_MASTERY"), sd->cook_mastery + ( 1 << ( (skill_produce_db[idx].itemlv - 11) / 2 ) ) * 5);
 					}
@@ -19419,7 +19424,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 				break;
 			default:
 				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
-					clif_specialeffect(&sd->bl, 609, AREA);
+					clif_specialeffect(&sd->bl, EF_COOKING_FAIL, AREA);
 					if (sd->cook_mastery > 0)
 						pc_setglobalreg(sd, add_str("COOK_MASTERY"), sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
 				}
@@ -20015,7 +20020,7 @@ void skill_usave_trigger(struct map_session_data *sd)
 	struct skill_usave *sus = NULL;
 	struct skill_unit_group *group = NULL;
 
-	if (!(sus = idb_get(skillusave_db,sd->status.char_id)))
+	if (!(sus = static_cast<skill_usave *>(idb_get(skillusave_db,sd->status.char_id))))
 		return;
 
 	if ((group = skill_unitsetting(&sd->bl, sus->skill_id, sus->skill_lv, sd->bl.x, sd->bl.y, 0)))
@@ -21414,7 +21419,7 @@ static void skill_readdb(void)
 	int i;
 	const char* dbsubpath[] = {
 		"",
-		"/"DBIMPORT,
+		"/" DBIMPORT,
 		//add other path here
 	};
 	
@@ -21448,24 +21453,24 @@ static void skill_readdb(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		
-		sv_readdb(dbsubpath2, "skill_db.txt"          , ',',  18, 18, -1, skill_parse_row_skilldb, i);
-		sv_readdb(dbsubpath2, "skill_require_db.txt"  , ',',  34, 34, -1, skill_parse_row_requiredb, i);
-		sv_readdb(dbsubpath2, "skill_cast_db.txt"     , ',',   7,  8, -1, skill_parse_row_castdb, i);
-		sv_readdb(dbsubpath2, "skill_castnodex_db.txt", ',',   2,  3, -1, skill_parse_row_castnodexdb, i);
-		sv_readdb(dbsubpath2, "skill_unit_db.txt"     , ',',   8,  8, -1, skill_parse_row_unitdb, i);
-		sv_readdb(dbsubpath2, "skill_nocast_db.txt"   , ',',   2,  2, -1, skill_parse_row_nocastdb, i);
+		sv_readdb(dbsubpath2, "skill_db.txt"          , ',',  18, 18, -1, skill_parse_row_skilldb, i > 0);
+		sv_readdb(dbsubpath2, "skill_require_db.txt"  , ',',  34, 34, -1, skill_parse_row_requiredb, i > 0);
+		sv_readdb(dbsubpath2, "skill_cast_db.txt"     , ',',   7,  8, -1, skill_parse_row_castdb, i > 0);
+		sv_readdb(dbsubpath2, "skill_castnodex_db.txt", ',',   2,  3, -1, skill_parse_row_castnodexdb, i > 0);
+		sv_readdb(dbsubpath2, "skill_unit_db.txt"     , ',',   8,  8, -1, skill_parse_row_unitdb, i > 0);
+		sv_readdb(dbsubpath2, "skill_nocast_db.txt"   , ',',   2,  2, -1, skill_parse_row_nocastdb, i > 0);
 
-		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i);
-		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i);
-		sv_readdb(dbsubpath1, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb, i);
-		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i);
-		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  2, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i);
-		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i);
-		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i);
-		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i);
-		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, -1, skill_parse_row_nonearnpcrangedb, i);
+		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
+		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i > 0);
+		sv_readdb(dbsubpath1, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb, i > 0);
+		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i > 0);
+		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  2, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i > 0);
+		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i > 0);
+		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i > 0);
+		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
+		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, -1, skill_parse_row_nonearnpcrangedb, i > 0);
 #ifdef ADJUST_SKILL_DAMAGE
-		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  7, -1, skill_parse_row_skilldamage, i);
+		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  7, -1, skill_parse_row_skilldamage, i > 0);
 #endif
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
@@ -21496,7 +21501,7 @@ void skill_reload (void) {
  *------------------------------------------*/
 void do_init_skill(void)
 {
-	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, 0);
+	skilldb_name2id = strdb_alloc((enum DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), 0);
 
 	skill_readdb();
 
@@ -21530,3 +21535,7 @@ void do_final_skill(void)
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 }
+
+#ifdef __cplusplus
+}
+#endif

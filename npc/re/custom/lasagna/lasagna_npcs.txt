@@ -3934,7 +3934,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 			mes "[Shaman meow]";
 			mes "I'll tell you today's talisman. It is...";
 			next;
-			specialeffect 330;
+			specialeffect EF_HITLINE;
 			mes "[Shaman meow]";
 			.@quest_id = rand(14560,14562);
 			switch( .@quest_id ) {
@@ -6910,7 +6910,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[Boatswain]";
 		mes "This... This is...";
-		specialeffect 66;
+		specialeffect EF_CURE;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "What do you think?";
@@ -6991,7 +6991,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 			mes "This is the amulet for today! Give me all the Basilrocks you have.";
 			next;
 			mes "[Boatswain]";
-			specialeffect 66;
+			specialeffect EF_CURE;
 			if (isbegin_quest(14560) == 1) {
 				mes "It feels like watching the blue horizon on a clear and windless day. It is refreshing.";
 				next;
@@ -8228,7 +8228,7 @@ lasa_dun03,161,292,5	script	Lord Imuk#dorcon	4_NFWISP,{
 		next;
 		mes "[???]";
 		mes "How dare you treat me like a ghost! I have lived for ^0000cd2,500 years^000000!";
-		specialeffect2 29;
+		specialeffect2 EF_LIGHTBOLT;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Oww...that hurts. I'm sorry if I've offended you, but are you Imoogi, the chief of the Basilisk?";
