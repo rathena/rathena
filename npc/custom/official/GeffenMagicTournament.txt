@@ -2304,13 +2304,13 @@ end;
 OnStart:
 	initnpctimer;
 		for ( .@i = 11; .@i <= 20; .@i++ ) {
-			specialeffect .effect[getarraysize(.effect)], AREA, instance_npcname("#fireworks_" +.@i);
+			specialeffect .effect[rand(getarraysize(.effect))], AREA, instance_npcname("#fireworks_" +.@i);
 		}
 	end;
 OnTimer6000:
 	initnpctimer;
 		for ( .@i = 0; .@i < 5; .@i++) {
-			specialeffect .effect[getarraysize(.effect)], AREA, instance_npcname("#fireworks_" + rand(11,20));
+			specialeffect .effect[rand(getarraysize(.effect))], AREA, instance_npcname("#fireworks_" + rand(11,20));
 		}
 	end;
 
