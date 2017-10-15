@@ -2760,31 +2760,6 @@ int unit_counttargeted(struct block_list* bl)
 }
 
 /**
- * Changes the size of a unit
- * @param bl: Object to change size [PC|MOB]
- * @param size: New size of bl
- * @return 0
- */
-int unit_changeviewsize(struct block_list *bl,short size)
-{
-	nullpo_ret(bl);
-
-	size = (size < 0) ? -1 : (size > 0) ? 1 : 0;
-
-	if(bl->type == BL_PC)
-		((TBL_PC*)bl)->state.size = size;
-	else if(bl->type == BL_MOB)
-		((TBL_MOB*)bl)->special_state.size = size;
-	else
-		return 0;
-
-	if(size != 0)
-		clif_specialeffect(bl,421+size, AREA);
-
-	return 0;
-}
-
-/**
  * Makes 'bl' that attacking 'src' switch to attack 'target'
  * @param bl
  * @param ap

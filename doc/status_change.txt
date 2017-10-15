@@ -1072,8 +1072,11 @@ SC_ITEMBOOST	(SI_ITEMBOOST)
 	val1: +% Drop
 
 SC_BOSSMAPINFO	(SI_BOSSMAPINFO)
-	desc:
-	val1:
+	desc: Used to display Boss location on minimap
+	val1: Boss game ID
+	val2: Used to keep timer message from spamming chat window
+	val3:
+	val4: Remaining tick
 
 SC_LIFEINSURANCE	(SI_LIFEINSURANCE)
 	desc: Remove death pleanlties

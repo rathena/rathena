@@ -1160,7 +1160,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		//Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 		if ((sce = sc->data[SC_KAUPE]) && rnd()%100 < sce->val2) {
-			clif_specialeffect(bl, 462, AREA);
+			clif_specialeffect(bl, EF_STORMKICK4, AREA);
 			//Shouldn't end until Breaker's non-weapon part connects.
 #ifndef RENEWAL
 			if (skill_id != ASC_BREAKER || !(flag&BF_WEAPON))
@@ -1176,7 +1176,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 
 		if( flag&BF_MAGIC && (sce=sc->data[SC_PRESTIGE]) && rnd()%100 < sce->val2) {
-			clif_specialeffect(bl, 462, AREA); // Still need confirm it.
+			clif_specialeffect(bl, EF_STORMKICK4, AREA); // Still need confirm it.
 			return 0;
 		}
 
@@ -1185,7 +1185,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if (!status_isdead(src))
 				skill_counter_additional_effect( src, bl, skill_id, skill_lv, flag, gettick() );
 			if (sce) {
-				clif_specialeffect(bl, 462, AREA);
+				clif_specialeffect(bl, EF_STORMKICK4, AREA);
 				skill_blown(src,bl,sce->val3,-1,BLOWN_NONE);
 			}
 			//Both need to be consumed if they are active.
@@ -1408,7 +1408,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
-			clif_specialeffect(bl, 336, AREA);
+			clif_specialeffect(bl, EF_GUARD, AREA);
 			sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 			if (sce->val3 >= 0)
 				damage = 0;
@@ -2369,7 +2369,7 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 			case 0:
 				if(sc && !sc->data[SC_AUTOCOUNTER])
 					break;
-				clif_specialeffect(src, 131, AREA);
+				clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
 				status_change_end(src, SC_AUTOCOUNTER, INVALID_TIMER);
 			case KN_AUTOCOUNTER:
 				if(battle_config.auto_counter_type &&

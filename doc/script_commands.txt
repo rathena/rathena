@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20161206
+//= 20171011
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -7343,7 +7343,7 @@ Example:
 		bindatcmd "test",strnpcinfo(3) + "::OnAtcommand";
 		end;
 	OnAtcommand:
-		specialeffect2 338;
+		specialeffect2 EF_ANGEL2;
 		end;
 	}
 
@@ -9577,7 +9577,8 @@ solution rather than sending the map and the monster_id.
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+The Hat Effect constants can be found in 'src/map/script_constants.h' starting
+with HAT_EF_*.
 
 Requires client 2015-05-13aRagEXE or newer.
 
