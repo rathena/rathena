@@ -5990,6 +5990,9 @@
 	export_constant(HAT_EF_WHITEBODY);
 	export_constant(HAT_EF_WATER_BELOW2);
 	export_constant(HAT_EF_FIREWORK);
+	export_constant(HAT_EF_RETURN_TW_1ST_HAT);
+	export_constant(HAT_EF_C_FLUTTERBUTTERFLY_BL);
+	export_constant(HAT_EF_QSCARABA);
 
 	#undef export_constant
 	#undef export_constant2
