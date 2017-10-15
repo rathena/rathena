@@ -18,6 +18,7 @@
 //= 1.0 First Version. [Nyalin]
 //= 1.0.1 Convert to Hercules [Ridley8819]
 //= 1.0.2 Convert to rAthena [Anity99]
+//= 1.0.3 Fix typos and update marketshop [Anity99]
 //============================================================
 
 // $event_paramk, 0 // Holiday Wednesday
@@ -79,43 +80,44 @@ function	script	F_CoolDown	{
 
 -	marketshop	para_plt01	FAKE_NPC,709:100000:500,7932:4000:99999,7933:4000:99999,7934:4000:99999,7935:4000:99999,7936:4000:99999,7937:4000:99999
 
-// I not sure about this code
+// Update Market Shop
 -	script	Update_Shop	-1,{
 	OnInit:
 	OnClock0000:
-		npcshopupdate "para_hei10",6608,0;
-		npcshopupdate "para_hei10",6607,0;
-		npcshopupdate "para_wp00",1484,0;
-		npcshopupdate "para_wp00",1191,0;
-		npcshopupdate "para_wp00",1261,0;
-		npcshopupdate "para_wp00",1269,0;
-		npcshopupdate "para_arm10",5492,0;
-		npcshopupdate "para_arm10",2258,0;
-		npcshopupdate "para_ptn10",505,0;
-		npcshopupdate "para_seed10",12290,0;
-		npcshopupdate "para_seed10",12376,0;
-		npcshopupdate "para_seed10",12291,0;
-		npcshopupdate "para_seed10",12377,0;
-		npcshopupdate "para_seed10",576,0;
-		npcshopupdate "para_seed10",587,0;
-		npcshopupdate "para_seed10",526,0;
-		npcshopupdate "para_seed10",607,0;
-		npcshopupdate "para_seed10",608,0;
-		npcshopupdate "para_mora10",11526,0;
-		npcshopupdate "para_mora10",11525,0;
-		npcshopupdate "para_mora10",11520,0;
-		npcshopupdate "para_mora10",12574,0;
-		npcshopupdate "para_ref10",998,0;
-		npcshopupdate "para_ref10",1003,0;
-		npcshopupdate "para_ref10",1002,0;
-		npcshopupdate "para_ref10",999,0;
-		npcshopupdate "para_alc10",971,0;
-		npcshopupdate "para_alc10",972,0;
-		npcshopupdate "para_alc10",970,0;
-		npcshopupdate "para_mag20",12119,0;
-		npcshopupdate "para_mag20",12121,0;
-		npcshopupdate "para_mag20",12120,0;
-		npcshopupdate "para_mag20",12118,0;
+		npcshopupdate "para_hei10",6608,0,1;
+		npcshopupdate "para_hei10",6607,0,1;
+		npcshopupdate "para_hei10",6755,0,1;
+		npcshopupdate "para_wp00",1484,0,1;
+		npcshopupdate "para_wp00",1191,0,1;
+		npcshopupdate "para_wp00",1261,0,1;
+		npcshopupdate "para_wp00",1269,0,1;
+		npcshopupdate "para_arm10",5016,0,1;
+		npcshopupdate "para_arm10",2258,0,1;
+		npcshopupdate "para_ptn10",505,0,100;
+		npcshopupdate "para_seed10",12290,0,50;
+		npcshopupdate "para_seed10",12376,0,50;
+		npcshopupdate "para_seed10",12291,0,50;
+		npcshopupdate "para_seed10",12377,0,50;
+		npcshopupdate "para_seed10",576,0,100;
+		npcshopupdate "para_seed10",587,0,100;
+		npcshopupdate "para_seed10",526,0,100;
+		npcshopupdate "para_seed10",607,0,20;
+		npcshopupdate "para_seed10",608,0,20;
+		npcshopupdate "para_mora10",11526,0,100;
+		npcshopupdate "para_mora10",11525,0,1000;
+		npcshopupdate "para_mora10",11520,0,100;
+		npcshopupdate "para_mora10",12574,0,100;
+		npcshopupdate "para_ref10",998,0,200;
+		npcshopupdate "para_ref10",1003,0,200;
+		npcshopupdate "para_ref10",1002,0,200;
+		npcshopupdate "para_ref10",999,0,200;
+		npcshopupdate "para_alc10",971,0,20;
+		npcshopupdate "para_alc10",972,0,20;
+		npcshopupdate "para_alc10",970,0,20;
+		npcshopupdate "para_mag20",12119,0,30;
+		npcshopupdate "para_mag20",12121,0,30;
+		npcshopupdate "para_mag20",12120,0,30;
+		npcshopupdate "para_mag20",12118,0,30;
 }
 
 //General Sales
@@ -221,7 +223,7 @@ moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 		next;
 		mes "[Hustler]";
 		mes "More special items are sold on weekends.";
-		mes "I have even seen an <ITEMLINK>Izidor<INFO>709</INFO></ITEMLINK> being sold~";
+		mes "I have even seen an <ITEM>Izidor<INFO>709</INFO></ITEM> being sold~";
 		mes "It was amazing.";
 		mes "Of course it was super expensive and only a handful were up for sale.";
 		next;
