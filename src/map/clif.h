@@ -456,6 +456,7 @@ enum useskill_fail_cause
 	//XXX_USESKILL_FAIL_II_HELLS_PLANT_BOTTLE = 68,
 	//XXX_USESKILL_FAIL_II_MANDRAGORA_FLOWERPOT = 69,
 	USESKILL_FAIL_MANUAL_NOTIFY = 70,
+	// CAUTION: client uses unidentified display name for displaying the required item. Still broken on 2017-05-31 [Lemongrass]
 	USESKILL_FAIL_NEED_ITEM = 71,
 	USESKILL_FAIL_NEED_EQUIPMENT = 72,
 	USESKILL_FAIL_COMBOSKILL = 73,
