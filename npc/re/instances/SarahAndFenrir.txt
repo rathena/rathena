@@ -379,7 +379,6 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			if (.@i == .@bonus_size) {
 				specialeffect2 102;
 				specialeffect2 104;
-				delequip .@part;
 				mes "[Chief Assistant]";
 				mes "Sadly... it is..";
 				mes "destroyed...";
@@ -389,7 +388,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			}
 			.@card[.@slot] = .@bonus[.@i];
 			specialeffect2 338;
-			getitem2 .@sarah_item_id,1,1,0,0,0,0,.@card[0],.@card[1];
+			getitem2 .@sarah_item_id,1,1,0,0,0,0,.@card[1],.@card[0];
 			mes "[Chief Assistant]";
 			mes "Enchantment completed!";
 			close;
@@ -420,7 +419,6 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				mes "You need enough in order for initialization to take place.";
 				close;
 			}
-			next;
 			mes "[Chief Assistant]";
 			mes "You must equip the item to make initialization possible.";
 			mes "Which column's earring do you wish to initialize?";
