@@ -7328,6 +7328,7 @@ The commands can also run without an attached rid.
 This command will bind a NPC event label to an atcommand. Upon execution of the
 atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
 one binding. If you rebind, it will override the original binding.
+Note: The default level for atcommand is 0 while the default level for charcommand is 100.
 
 The following variables are set upon execution:
 	.@atcmd_command$       =  The name of the @command used.
