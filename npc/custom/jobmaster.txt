@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.7
+//= 1.9
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.6 Added option to get job related equipment on change. [Braniff]
 //= 1.7 Readability changes. Also added BabyExpanded and BabySummoner classes. [Jey]
 //= 1.8 Added option to disable Baby Novice Only but Baby Class can be Enabled [mazvi]
+//= 1.9 Added option ThirdClassNonTrans please read Setting additional Note [mazvi & Jey]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -66,6 +67,8 @@ function	Can_Change_Third	{
 		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
 	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
 		return false; // No Baby (Third) change allowed
+	if( !.ThirdClassNonTrans && !(eaclass()&EAJL_UPPER) )
+		return false; //Third Class Non Trans Option
 	return true;
 }
 
@@ -550,9 +553,10 @@ OnInit:
 	
 	// Settings
 	.ThirdClass = true;			// Enable third classes?
+	.ThirdClassNonTrans = true;     // Enable not rebirthed third classes? (Needs .ThirdClass to be enabled)
 	.RebirthClass = true;			// Enable rebirth classes?
 	.SecondExpanded = true;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
-	.BabyNovice = true;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
+	.BabyNovice = true;		// Enable Baby novice classes?
 	.BabyClass = true;				// Enable Baby classes?
 	.BabyThird = true;				// Enable Baby third classes?
 	.BabyExpanded = true;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
@@ -561,6 +565,15 @@ OnInit:
 	.SkillPointCheck = true;		// Force player to use up all skill points?
 	.Platinum = true;				// Get platinum skills automatically?
 	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
+	
+	// Settings Additional Note:
+	// .BabyNovice 
+	// 	= Disable it if you like player must have parent to get job baby.
+	//	= Enable it if you like player force to get job baby without parent.
+	// .ThirdClassNonTrans
+	//	= Disable it if you want player MUST BE rebirth class first to get job 3
+	//	= Enable it if you want player with job 2 have choice get job 3 or job Rebirth
+	//
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
