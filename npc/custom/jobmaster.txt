@@ -17,6 +17,7 @@
 //= 1.5 Added option to disable RebirthClass. [mazvi]
 //= 1.6 Added option to get job related equipment on change. [Braniff]
 //= 1.7 Readability changes. Also added BabyExpanded and BabySummoner classes. [Jey]
+//= 1.8 Added option to disable Baby Novice Only but Baby Class can be Enabled [mazvi]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -190,7 +191,7 @@ function	Job_Options	{
 				Job_Options(.@job_opt,Job_Swordman,
 					Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief,
 					Job_Super_Novice, Job_Taekwon, Job_Gunslinger, Job_Ninja);
-				if( .BabyClass )
+				if( .BabyNovice )
 					Job_Options(.@job_opt, Job_Baby);
 				break;
 			case Job_Novice_High:
@@ -551,6 +552,7 @@ OnInit:
 	.ThirdClass = true;			// Enable third classes?
 	.RebirthClass = true;			// Enable rebirth classes?
 	.SecondExpanded = true;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
+	.BabyNovice = true;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
 	.BabyClass = true;				// Enable Baby classes?
 	.BabyThird = true;				// Enable Baby third classes?
 	.BabyExpanded = true;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
