@@ -18,7 +18,7 @@
 //= 1.6 Added option to get job related equipment on change. [Braniff]
 //= 1.7 Readability changes. Also added BabyExpanded and BabySummoner classes. [Jey]
 //= 1.8 Added option to disable Baby Novice Only but Baby Class can be Enabled [mazvi]
-//= 1.9 Added option ThirdClassNonTrans please read Setting additional Note [mazvi]
+//= 1.9 Added option ThirdClassNonTrans please read Setting additional Note [mazvi & Jey]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
