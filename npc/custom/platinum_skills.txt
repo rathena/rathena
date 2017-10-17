@@ -18,7 +18,8 @@
 //= 2.6 Fixed 2nd advanced classes not being able to get their advanced skills. [Ancyker]
 //= 2.7 Rewrote to give all correct skills to all proper classes. [Paradox924X]
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
-//= 2.9 Added New Skill MC_CARTDECORATE for Merchant Class [mazvi]
+//= 2.9 Added New Skill MC_CARTDECORATE for Merchant Class. [mazvi] 
+//=	thanks to [anacondaqq] for packetver.
 //============================================================
 
 prontera,128,200,6	script	Platinum Skill NPC	94,{
@@ -56,6 +57,7 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		skill "MC_CARTREVOLUTION",1,SKILL_PERM;
 		skill "MC_CHANGECART",1,SKILL_PERM;
 		skill "MC_LOUD",1,SKILL_PERM;
+		if(PACKETVER >= 20150826)
 		skill "MC_CARTDECORATE",1,SKILL_PERM;
 		break;
 	case Job_Thief:
