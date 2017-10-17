@@ -10864,8 +10864,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
-			tick_time = val4;
-			val4 = tick - tick_time;
+			if (val4 < tick) {
+				tick_time = val4;
+				val4 = tick - tick_time;
+			}
 			break;
 		case SC_NEUTRALBARRIER:
 			val2 = 10 + val1 * 5; // Def/Mdef
