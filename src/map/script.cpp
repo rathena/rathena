@@ -23643,6 +23643,35 @@ BUILDIN_FUNC(getequiprefinecost) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Round, floor, ceiling a number to arbitrary integer precision.
+ * round(<number>,<precision>);
+ * ceil(<number>,<precision>);
+ * floor(<number>,<precision>);
+ */
+BUILDIN_FUNC(round) {
+	int num = script_getnum(st, 2);
+	int precision = script_getnum(st, 3);
+	char* func = script_getfuncname(st);
+
+	if (precision <= 0) {
+		ShowError("buildin_round: Attempted to use zero or negative number as arbitrary precision.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (strcasecmp(func, "floor")) {
+		script_pushint(st, num - (num % precision));
+	}
+	else if (strcasecmp(func, "ceil")) {
+		script_pushint(st, num + precision - (num % precision));
+	}
+	else {
+		script_pushint(st, (int)(round(num / (precision * 1.))) * precision);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24285,6 +24314,9 @@ struct script_function buildin_func[] = {
 
 
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
+	BUILDIN_DEF2(round, "round", "i"),
+	BUILDIN_DEF2(round, "ceil", "i"),
+	BUILDIN_DEF2(round, "floor", "i"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
