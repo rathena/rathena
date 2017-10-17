@@ -58,7 +58,7 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		skill "MC_CHANGECART",1,SKILL_PERM;
 		skill "MC_LOUD",1,SKILL_PERM;
 		if(PACKETVER >= 20150826)
-		skill "MC_CARTDECORATE",1,SKILL_PERM;
+			skill "MC_CARTDECORATE",1,SKILL_PERM;
 		break;
 	case Job_Thief:
 		skill "TF_SPRINKLESAND",1,SKILL_PERM;
