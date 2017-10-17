@@ -148,7 +148,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 							if (select( "Take the request", "Quit." ) == 1) {
 								mes "[Ragi]";
 								mes "It will be more dangerous than you think. But the story must be conveyed.";
-								emotion e_no1;
+								emotion ET_BEST;
 								callsub S_Quest,13148,13147;
 							}
 						}
@@ -287,7 +287,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 							if (select( "Take the request", "Quit." ) == 1) {
 								mes "[Ragi]";
 								mes "Be sure to get at least 30 Angel looking Incarnations of Morocc.";
-								emotion e_wah;
+								emotion ET_KEK;
 								callsub S_Quest,13156,13155;
 							}
 						}

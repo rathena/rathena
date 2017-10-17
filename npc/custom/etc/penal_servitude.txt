@@ -18,7 +18,7 @@
 
 sec_pri,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes (Sex==SEX_MALE?"Mr.":"Ms.")+" Prisoner #"+BaseLevel+JobLevel+",";
 	mes "what's the noise over there?";
 	next;
@@ -83,7 +83,7 @@ M_Q1:
 
 	mes "[Saddeus]";
 	if(checkcart() || checkfalcon() || checkriding()){
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "I'm sorry, you should release your Cart, PecoPeco or Falcon!";
 		close;
 	}
@@ -121,7 +121,7 @@ M_NO_THANKS:
 	mes "[Saddeus]";  
 	if (rand(2)) mes "Is today X-Mas time, huh?";
 	mes "Now shut up and back off!";
-	if (rand(2)) emotion e_omg;
+	if (rand(2)) emotion ET_HUK;
 	close;  
 }
 

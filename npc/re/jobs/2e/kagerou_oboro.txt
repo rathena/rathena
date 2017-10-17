@@ -1054,7 +1054,7 @@ function	script	F_KO_Survival_dice	{
 	}
 	set job_kagero_lp, job_kagero_lp - getarg(1,1);
 	set .@dice, rand(1,6);
-	emotion 57 + .@dice,1;
+	emotion ET_OTL + .@dice, UNITTYPE_PC;
 	mes "The dice came out as " + .@dice + ".";
 	if (getarg(2,0))
 		return .@dice;
@@ -1081,25 +1081,25 @@ function	script	F_KO_Survival_dice2	{
 	mes "< Used " + getarg(1,2) + " LP >";
 	next;
 	set @job_ko_dice1, rand(1,6);
-	emotion 57 + @job_ko_dice1,1;
+	emotion ET_OTL + @job_ko_dice1, UNITTYPE_PC;
 	mes "First dice result is " + @job_ko_dice1 + ". Do you want to roll the second dice?";
 	next;
 	select("Roll the second dice.");
 	set @job_ko_dice2, rand(1,6);
-	emotion 57 + @job_ko_dice2,1;
+	emotion ET_OTL + @job_ko_dice2, UNITTYPE_PC;
 	return;
 }
 
 //Return: 1:win, 0:draw, -1:lose
 function	script	F_KO_Survival_rps	{
 	setarray .@rps$[1], "Scissors", "Rock", "Paper";
-	setarray .@emote[1], e_scissors, e_rock, e_paper;  //might be iRO custom(?)
+	setarray .@emote[1], ET_SCISSOR, ET_ROCK, ET_WRAP;  //might be iRO custom(?)
 
 	mes "Rock! Paper! Scissors!";
 	next;
 	set .@pc, select("Give scissors.:Give rock.:Give paper.");
 	set .@npc, rand(1,3);
-	emotion .@emote[.@pc],1;
+	emotion .@emote[.@pc], UNITTYPE_PC;
 	emotion .@emote[.@npc];
 	mes "=Game Results=";
 	mes "Machine: " + .@rps$[.@npc] + ".";

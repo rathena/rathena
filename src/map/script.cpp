@@ -11463,7 +11463,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, E_SWT);
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11498,9 +11498,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion(&sd->bl, E_SWT);
+			clif_emotion(&sd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, E_SWT);
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -11530,16 +11530,16 @@ BUILDIN_FUNC(morphembryo)
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
-				clif_emotion(&sd->bl, E_SWT); // Fail to avoid item drop exploit.
+				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion(&sd->hd->bl, E_SWT);
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, E_SWT);
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -12700,36 +12700,42 @@ BUILDIN_FUNC(gvgoff3)
 
 /*==========================================
  *	Shows an emoticon on top of the player/npc
- *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
+ *	emotion emotion#, <target: UNITTYPE_NPC (1) - NPC, UNITTYPE_PC (0) - PC>, <NPC/PC name>
  *------------------------------------------*/
-//Optional second parameter added by [Skotlex]
+// Optional second parameter added by [Skotlex]
 BUILDIN_FUNC(emotion)
 {
 	int type;
-	int player=0;
+	int player = UNITTYPE_NPC;
+	TBL_PC *sd = NULL;
 
-	type=script_getnum(st,2);
-	if(type < 0 || type > 100)
-		return SCRIPT_CMD_SUCCESS;
+	type = script_getnum(st,2);
+	if (type < ET_SURPRISE || type >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	if( script_hasdata(st,3) )
-		player=script_getnum(st,3);
+	if (script_hasdata(st,3))
+		player = script_getnum(st,3);
 
-	if (player) {
-		TBL_PC *sd = NULL;
-
-		if( script_nick2sd(4,sd) ){
-			clif_emotion(&sd->bl, type);
-		}			
-	} else
-		if( script_hasdata(st,4) )
-		{
-			TBL_NPC *nd = npc_name2id(script_getstr(st,4));
-			if(nd)
-				clif_emotion(&nd->bl,type);
-		}
-		else
-			clif_emotion(map_id2bl(st->oid),type);
+	switch (player) {
+		case UNITTYPE_PC:	// Character
+			if (script_nick2sd(4,sd))
+				clif_emotion(&sd->bl, type);
+			break;
+		case UNITTYPE_NPC:	// NPC
+			if (!script_hasdata(st,4))
+				clif_emotion(map_id2bl(st->oid),type);
+			else {
+				TBL_NPC *nd = npc_name2id(script_getstr(st,4));
+				if (nd)
+					clif_emotion(&nd->bl,type);
+			}
+			break;
+		default:
+			ShowWarning("buildin_emotion: Invalid target %d.\n", player);
+			return SCRIPT_CMD_FAILURE;
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18500,7 +18506,12 @@ BUILDIN_FUNC(unitemote)
 
 	emotion = script_getnum(st,3);
 
-	if(script_rid2bl(2,bl))
+	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_rid2bl(2,bl))
 		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;

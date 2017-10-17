@@ -657,7 +657,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		sd->catch_target_class = md->mob_id;
 
 	if(i < 0 || sd->catch_target_class != md->mob_id) {
-		clif_emotion(&md->bl, E_AG);	//mob will do /ag if wrong lure is used on them.
+		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = -1;
 
@@ -1428,7 +1428,7 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr_t data)
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
 		status_change_end(&sd->bl, pd->recovery->type, INVALID_TIMER);
-		clif_emotion(&pd->bl, E_OK);
+		clif_emotion(&pd->bl, ET_OK);
 	}
 
 	pd->recovery->timer = INVALID_TIMER;

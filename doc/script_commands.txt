@@ -7220,8 +7220,8 @@ see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what
 (a question mark) and 'e_gasp' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
-their head. If 0 (the default if omitted), the NPC in current use will show
-the emotion, if 1, the player that is running the script will display it.
+their head. If UNITTYPE_NPC (the default if omitted), the NPC in current use will show
+the emotion, if UNITTYPE_PC, the player that is running the script will display it.
 
 Target name parameter allows to display emotion on top of other NPC/PC without
 event labels. If specified name is not found, command does nothing.

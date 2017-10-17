@@ -32,10 +32,10 @@ function Chk;
 		mes "[Hunting Missions]";
 		mes "I can't find any records...";
 		mes "You must be new here!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		callsub Mission_Info;
-		emotion e_go;
+		emotion ET_GO;
 		#Mission_Delay = 1;
 		close;
 	}
@@ -62,7 +62,7 @@ function Chk;
 					mes "I can't seem to find any records";
 					mes "for that character, though...";
 					mes "One moment, please.";
-					emotion e_hmm;
+					emotion ET_SCRATCH;
 					#Mission_Count = 0;
 				}
 				@hm_char_del_check = 1;
@@ -108,11 +108,11 @@ function Chk;
 					mes "[Hunting Missions]";
 					mes "You don't have enough";
 					mes "Zeny to drop this mission.";
-					emotion e_sry;
+					emotion ET_SORRY;
 					close;
 				}
 				Zeny -= .Reset;
-				emotion e_cash;
+				emotion ET_MONEY;
 			}
 			mes "[Hunting Missions]";
 			mes "Alright, I've dropped";
@@ -130,7 +130,7 @@ function Chk;
 			mes "[Hunting Missions]";
 			mes "I knew you were kidding!";
 			mes "Keep up the good work.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 	case 4:
@@ -153,7 +153,7 @@ function Chk;
 	case 7:
 		mes "[Hunting Missions]";
 		mes "Nothing? Okay...";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		close;
 	}
 	end;
@@ -191,7 +191,7 @@ Mission_Status:
 	mes "Oh, you're done!";
 	mes "Good work.";
 	mes "Here's your reward.";
-	emotion e_no1;
+	emotion ET_BEST;
 	specialeffect2 EF_ANGEL;
 	specialeffect2 EF_TRUESIGHT;
 	#Mission_Points += .@Mission_Points;
@@ -259,7 +259,7 @@ OnBuyItem:
 		}
 		#Mission_Points -= @cost;
 		mes "Deal completed.";
-		emotion e_cash;
+		emotion ET_MONEY;
 	}
 	@cost = 0;
 	deletearray @bought_nameid[0], getarraysize(@bought_nameid);
