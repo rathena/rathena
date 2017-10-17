@@ -1685,7 +1685,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				* Endure count is only reduced by non-players on non-gvg maps.
 				* val4 signals infinite endure.
 				**/
-				if (src && src->type != BL_PC && !map_flag_gvg2(target->m) && !map[target->m].flag.battleground && --(sce->val2) < 0)
+				if (src && src->type != BL_PC && !map_flag_gvg2(target->m) && !map[target->m].flag.battleground && --(sce->val2) <= 0)
 					status_change_end(target, SC_ENDURE, INVALID_TIMER);
 			}
 			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF) {
