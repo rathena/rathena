@@ -19,7 +19,7 @@
 //= 2.7 Rewrote to give all correct skills to all proper classes. [Paradox924X]
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
 //= 2.9 Added New Skill MC_CARTDECORATE for Merchant Class. [mazvi] 
-//=	thanks to [anacondaqq] for packetver.
+//=	thanks to [anacondaqq] for packetver. 
 //============================================================
 
 prontera,128,200,6	script	Platinum Skill NPC	94,{
