@@ -10864,10 +10864,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
-			if (val4 < tick) {
+			// Does not suck targets on no-knockback maps
+			if (val4 < tick && unit_blown_immune(bl, 0x1) != UB_NO_KNOCKBACK_MAP) {
 				tick_time = val4;
 				val4 = tick - tick_time;
 			}
+			else
+				val4 = 0;
 			break;
 		case SC_NEUTRALBARRIER:
 			val2 = 10 + val1 * 5; // Def/Mdef
@@ -11203,7 +11206,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_attack(bl);
 			break;
 		case SC_VACUUM_EXTREME:
-			if (bl->type != BL_PC && !unit_blown_immune(bl,0x1)) {
+			if (bl->type != BL_PC && unit_blown_immune(bl, 0x1) == UB_KNOCKABLE) {
 				unit_stop_walking(bl,1);
 				unit_stop_attack(bl);
 			}
