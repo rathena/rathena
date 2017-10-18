@@ -23659,10 +23659,10 @@ BUILDIN_FUNC(round) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (strcasecmp(func, "floor")) {
+	if (strcasecmp(func, "floor") == 0) {
 		script_pushint(st, num - (num % precision));
 	}
-	else if (strcasecmp(func, "ceil")) {
+	else if (strcasecmp(func, "ceil") == 0) {
 		script_pushint(st, num + precision - (num % precision));
 	}
 	else {
