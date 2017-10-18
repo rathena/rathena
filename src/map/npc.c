@@ -1580,10 +1580,8 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
-					if (sd->inventory.u.items_inventory[i].nameid == id->nameid &&
-					    pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i])) {
+					if (sd->inventory.u.items_inventory[i].amount > 0 && sd->inventory.u.items_inventory[i].nameid == id->nameid && pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i]))
 						total += sd->inventory.u.items_inventory[i].amount;
-					}
 				}
 			}
 
