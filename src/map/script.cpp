@@ -12700,7 +12700,7 @@ BUILDIN_FUNC(gvgoff3)
 
 /*==========================================
  *	Shows an emoticon on top of the player/npc
- *	emotion emotion#, <target: UNITTYPE_NPC (1) - NPC, UNITTYPE_PC (0) - PC>, <NPC/PC name>
+ *	emotion emotion#, <target: UNITTYPE_NPC, UNITTYPE_PC>, <NPC/PC name>
  *------------------------------------------*/
 // Optional second parameter added by [Skotlex]
 BUILDIN_FUNC(emotion)
@@ -18498,7 +18498,7 @@ BUILDIN_FUNC(unittalk)
 ///
 /// unitemote <unit_id>,<emotion>;
 ///
-/// @see e_* in db/const.txt
+/// @see ET_* in script_constants.h
 BUILDIN_FUNC(unitemote)
 {
 	int emotion;
