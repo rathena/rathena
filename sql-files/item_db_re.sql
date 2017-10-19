@@ -1869,8 +1869,8 @@ REPLACE INTO `item_db_re` VALUES (2630,'Brysinggamen','Brisingamen',4,20,NULL,15
 REPLACE INTO `item_db_re` VALUES (2631,'First_Age_Ring','Celebration Ring',4,1,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bAllStats,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2632,'Korean_Trinket','Korean Trinket',4,125000,NULL,100,NULL,1,NULL,0,0xFFFFFFFE,63,2,136,NULL,'65',0,0,'bonus bVit,1; bonus bDex,1; bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2633,'Jade_Ring','Jade Ring',4,204000,NULL,100,NULL,0,NULL,0,0xFFFFFFFE,63,2,136,NULL,'80',0,0,'bonus bStr,2; bonus bInt,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2634,'Bridegroom_Ring','Wedding Ring',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,1,136,NULL,'0',0,0,'skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2635,'Bride_Ring','Wedding Ring',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,0,136,NULL,'0',0,0,'skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2634,'Bridegroom_Ring','Wedding Ring',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,1,136,NULL,'0',0,0,'skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1; skill "WE_CALLALLFAMILY",1; skill "WE_ONEFOREVER",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2635,'Bride_Ring','Wedding Ring',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,0,136,NULL,'0',0,0,'skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1; skill "WE_CALLALLFAMILY",1; skill "WE_ONEFOREVER",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2636,'Gold_Ring_','Gold Christmas Ring',4,30000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2637,'Silver_Ring_','Silver Christmas Ring',4,20000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2638,'Exorcize_Sachet','Sacred Incense',4,20000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bStr,1; bonus bLuk,1;',NULL,NULL);
