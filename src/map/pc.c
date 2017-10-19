@@ -985,6 +985,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 		// Baby Skills
 		pc_skill(b_sd, WE_BABY, 1, ADDSKILL_PERMANENT);
 		pc_skill(b_sd, WE_CALLPARENT, 1, ADDSKILL_PERMANENT);
+		pc_skill(b_sd, WE_CHEERUP, 1, ADDSKILL_PERMANENT);
 
 		// Parents Skills
 		pc_skill(p1_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);

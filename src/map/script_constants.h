@@ -1480,6 +1480,7 @@
 	export_constant(SC_DORAM_FLEE2);
 	export_constant(SC_DORAM_SVSP);
 	export_constant(SC_FALLEN_ANGEL);
+	export_constant(SC_CHEERUP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2530,6 +2531,7 @@
 	export_constant(SI_GLOOM_CARD);
 	export_constant(SI_PHARAOH_CARD);
 	export_constant(SI_KIEL_CARD);
+	export_constant(SI_CHEERUP);
 	export_constant(SI_S_MANAPOTION);
 	export_constant(SI_M_DEFSCROLL);
 
