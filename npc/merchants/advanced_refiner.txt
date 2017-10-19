@@ -58,6 +58,10 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 	.@price = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 
+	// Make sure you have the neccessary items and Zeny to refine your items
+	// Determines chance of failure and verifies that you want to continue.
+	callsub S_RefineValidate,getequipweaponlv(.@part),.@material,.@price,.@part;
+
 	mes "[Suhnbi]";
 	mes "Clang! Clang! Clang!";
 	if (getequippercentrefinery(.@part, true) > rand(100)) {

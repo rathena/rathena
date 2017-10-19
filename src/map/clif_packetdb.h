@@ -2346,4 +2346,10 @@
 	packet(0x0ABD,10);
 #endif
 
+// 2017-08-30bRagexeRE
+#if PACKETVER >= 20170830
+	packet(0x0ACB,12);
+	packet(0x0ACC,18);
+#endif
+
 #endif /* _CLIF_PACKETDB_H_ */

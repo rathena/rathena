@@ -2190,6 +2190,23 @@ int unit_unattackable(struct block_list *bl)
 }
 
 /**
+ * Checks if the unit can attack, returns yes if so.
+*/
+bool unit_can_attack(struct block_list *src, int target_id)
+{
+	struct status_change *sc = status_get_sc(src);
+
+	if( sc != NULL ) {
+		if( sc->data[SC__MANHOLE] )
+			return false;
+	}
+
+	if( src->type == BL_PC )
+		return pc_can_attack(BL_CAST(BL_PC, src), target_id);
+	return true;
+}
+
+/**
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
@@ -2212,23 +2229,16 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	if( src->type == BL_PC ) {
-		TBL_PC* sd = (TBL_PC*)src;
+	if( src->type == BL_PC &&
+		target->type == BL_NPC ) {
+		// Monster npcs [Valaris]
+		npc_click((TBL_PC*)src,(TBL_NPC*)target);
+		return 0;
+	}
 
-		if( target->type == BL_NPC ) { // Monster npcs [Valaris]
-			npc_click(sd,(TBL_NPC*)target); // Submitted by leinsirk10 [Celest]
-			return 0;
-		}
-
-		if( pc_is90overweight(sd) || pc_isridingwug(sd) ) { // Overweight or mounted on warg - stop attacking
-			unit_stop_attack(src);
-			return 0;
-		}
-
-		if( !pc_can_attack(sd, target_id) ) {
-			unit_stop_attack(src);
-			return 0;
-		}
+	if( !unit_can_attack(src, target_id) ) {
+		unit_stop_attack(src);
+		return 0;
 	}
 
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
@@ -2501,9 +2511,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
 
-	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
-		return 0;
-
 	if( src->m != target->m ) {
 		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
 			return 1; // Follow up.
@@ -2748,31 +2755,6 @@ int unit_counttargeted(struct block_list* bl)
 
 	if( bl && (ud = unit_bl2ud(bl)) )
 		return ud->target_count;
-
-	return 0;
-}
-
-/**
- * Changes the size of a unit
- * @param bl: Object to change size [PC|MOB]
- * @param size: New size of bl
- * @return 0
- */
-int unit_changeviewsize(struct block_list *bl,short size)
-{
-	nullpo_ret(bl);
-
-	size = (size < 0) ? -1 : (size > 0) ? 1 : 0;
-
-	if(bl->type == BL_PC)
-		((TBL_PC*)bl)->state.size = size;
-	else if(bl->type == BL_MOB)
-		((TBL_MOB*)bl)->special_state.size = size;
-	else
-		return 0;
-
-	if(size != 0)
-		clif_specialeffect(bl,421+size, AREA);
 
 	return 0;
 }

@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20161206
+//= 20171011
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -2760,6 +2760,9 @@ Valid information types are:
 REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
 
+This function will return -1 on failure. The function fails if the cost type
+is invalid or if there is no item in the equipment slot. 
+
 ---------------------------------------
 
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
@@ -3868,10 +3871,13 @@ by default green
 
 ---------------------------------------
 
-*showscript "<message>"{,<GID>};
+*showscript "<message>"{,<GID>, <flag>};
 
 Makes attached player or GID says a message like shouting a skill name, the message
 will be seen to everyone around but not in chat window.
+flag: Specify target
+   AREA - Message is sent to players in the vicinity of the source (default).
+   SELF - Message is sent only to player attached.
 
 ---------------------------------------
 
@@ -6545,6 +6551,8 @@ The options are:
 	1 = The buy window
 	2 = The sell window
 
+Note: The <option> parameter only works on the 'shop' type NPC.
+
 A shop called with this command will trigger the labels "OnBuyItem" and "OnSellItem"
 (as long as an npcshop* command is executed from that NPC, see note below). These
 labels, if used, will replace how the shop handles the buying and selling of items,
@@ -6555,15 +6563,30 @@ The label "OnBuyItem" sets the following arrays:
 	@bought_quantity - amount bought
 
 The label "OnSellItem" sets the following arrays:
-	@sold_nameid     - item ID sold
-	@sold_quantity   - amount sold
-	@sold_refine     - refine count
-	@sold_attribute  - if the item is broken (1) or not (0)
-	@sold_identify   - if the item is identified (1) or not (0)
-	@sold_card1      - card slot 1
-	@sold_card2      - card slot 2
-	@sold_card3      - card slot 3
-	@sold_card4      - card slot 4
+	@sold_nameid        - item ID sold
+	@sold_quantity      - amount sold
+	@sold_refine        - refine count
+	@sold_attribute     - if the item is broken (1) or not (0)
+	@sold_identify      - if the item is identified (1) or not (0)
+	@sold_card1         - card slot 1
+	@sold_card2         - card slot 2
+	@sold_card3         - card slot 3
+	@sold_card4         - card slot 4
+	@sold_option_id1    - random option ID 1
+	@sold_option_val1   - random option value 1
+	@sold_option_param1 - random option param 1
+	@sold_option_id2    - random option ID 2
+	@sold_option_val2   - random option value 2
+	@sold_option_param2 - random option param 2
+	@sold_option_id3    - random option ID 3
+	@sold_option_val3   - random option value 3
+	@sold_option_param3 - random option param 3
+	@sold_option_id4    - random option ID 4
+	@sold_option_val4   - random option value 4
+	@sold_option_param4 - random option param 4
+	@sold_option_id5    - random option ID 5
+	@sold_option_val5   - random option value 5
+	@sold_option_param5 - random option param 5
 
 Note: These labels will only be triggered if an npcshop* command is executed because these
 commands set a special data on the shop NPC, named master_nd in the source. The above labels
@@ -7329,6 +7352,7 @@ The commands can also run without an attached rid.
 This command will bind a NPC event label to an atcommand. Upon execution of the
 atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
 one binding. If you rebind, it will override the original binding.
+Note: The default level for atcommand is 0 while the default level for charcommand is 100.
 
 The following variables are set upon execution:
 	.@atcmd_command$       =  The name of the @command used.
@@ -7344,7 +7368,7 @@ Example:
 		bindatcmd "test",strnpcinfo(3) + "::OnAtcommand";
 		end;
 	OnAtcommand:
-		specialeffect2 338;
+		specialeffect2 EF_ANGEL2;
 		end;
 	}
 
@@ -7996,6 +8020,19 @@ Example:
 
 	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
 	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
+
+---------------------------------------
+
+*round(<number>,<precision>);
+*ceil(<number>,<precision>);
+*floor(<number>,<precision>);
+
+Returns <number> rounded to multiple of <precision>.
+
+`round` function will round the <number> up if its division with <precision> yield a remainder
+with a value equals to or more than half of <precision>. Otherwise, it rounds the <number> down.
+`ceil` always round the <number> up.
+`floor` always round the <number> down.
 
 ---------------------------------------
 
@@ -9578,7 +9615,8 @@ solution rather than sending the map and the monster_id.
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+The Hat Effect constants can be found in 'src/map/script_constants.h' starting
+with HAT_EF_*.
 
 Requires client 2015-05-13aRagEXE or newer.
 

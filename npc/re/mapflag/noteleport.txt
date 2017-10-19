@@ -58,6 +58,7 @@ ma_zif07	mapflag	noteleport
 ma_zif08	mapflag	noteleport
 ma_zif09	mapflag	noteleport
 job_ko	mapflag	noteleport
+job_gun	mapflag	noteleport
 ecl_in01	mapflag	noteleport
 ecl_in02	mapflag	noteleport
 ecl_in03	mapflag	noteleport

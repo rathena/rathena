@@ -1060,7 +1060,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,24) = vd->head_top;
 	WBUFW(buf,26) = vd->head_mid;
 
-	if( bl->type == BL_NPC && vd->class_ == FLAG_CLASS )
+	if( bl->type == BL_NPC && vd->class_ == JT_GUILD_FLAG )
 	{	//The hell, why flags work like this?
 		WBUFW(buf,22) = status_get_emblem_id(bl);
 		WBUFW(buf,24) = GetWord(status_get_guild_id(bl), 1);
@@ -1371,22 +1371,22 @@ static void clif_weather_check(struct map_session_data *sd)
 		|| map[m].flag.clouds2)
 	{
 		if (map[m].flag.snow)
-			clif_specialeffect_single(&sd->bl, 162, fd);
+			clif_specialeffect_single(&sd->bl, EF_SNOW, fd);
 		if (map[m].flag.clouds)
-			clif_specialeffect_single(&sd->bl, 233, fd);
+			clif_specialeffect_single(&sd->bl, EF_CLOUD3, fd);
 		if (map[m].flag.clouds2)
-			clif_specialeffect_single(&sd->bl, 516, fd);
+			clif_specialeffect_single(&sd->bl, EF_CLOUD5, fd);
 		if (map[m].flag.fog)
-			clif_specialeffect_single(&sd->bl, 515, fd);
+			clif_specialeffect_single(&sd->bl, EF_CLOUD4, fd);
 		if (map[m].flag.fireworks) {
-			clif_specialeffect_single(&sd->bl, 297, fd);
-			clif_specialeffect_single(&sd->bl, 299, fd);
-			clif_specialeffect_single(&sd->bl, 301, fd);
+			clif_specialeffect_single(&sd->bl, EF_POKJUK, fd);
+			clif_specialeffect_single(&sd->bl, EF_THROWITEM2, fd);
+			clif_specialeffect_single(&sd->bl, EF_POKJUK_SOUND, fd);
 		}
 		if (map[m].flag.sakura)
-			clif_specialeffect_single(&sd->bl, 163, fd);
+			clif_specialeffect_single(&sd->bl, EF_SAKURA, fd);
 		if (map[m].flag.leaves)
-			clif_specialeffect_single(&sd->bl, 333, fd);
+			clif_specialeffect_single(&sd->bl, EF_MAPLE, fd);
 	}
 }
 /**
@@ -1415,7 +1415,7 @@ int clif_spawn(struct block_list *bl)
 	int len;
 
 	vd = status_get_viewdata(bl);
-	if( !vd || vd->class_ == INVISIBLE_CLASS )
+	if( !vd || vd->class_ == JT_INVISIBLE )
 		return 0;
 
 	/**
@@ -1443,9 +1443,9 @@ int clif_spawn(struct block_list *bl)
 			if (sd->spiritball > 0)
 				clif_spiritball(&sd->bl);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
-				clif_specialeffect(bl,423,AREA);
+				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
-				clif_specialeffect(bl,421,AREA);
+				clif_specialeffect(bl,EF_BABYBODY2,AREA);
 			if( sd->bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
@@ -1460,18 +1460,18 @@ int clif_spawn(struct block_list *bl)
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
 			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
-				clif_specialeffect(&md->bl,423,AREA);
+				clif_specialeffect(&md->bl,EF_GIANTBODY2,AREA);
 			else if(md->special_state.size==SZ_MEDIUM)
-				clif_specialeffect(&md->bl,421,AREA);
+				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 		}
 		break;
 	case BL_NPC:
 		{
 			TBL_NPC *nd = ((TBL_NPC*)bl);
 			if( nd->size == SZ_BIG )
-				clif_specialeffect(&nd->bl,423,AREA);
+				clif_specialeffect(&nd->bl,EF_GIANTBODY2,AREA);
 			else if( nd->size == SZ_MEDIUM )
-				clif_specialeffect(&nd->bl,421,AREA);
+				clif_specialeffect(&nd->bl,EF_BABYBODY2,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_progressbar_npc_area(nd);
 		}
@@ -1723,9 +1723,9 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 			TBL_PC *sd = ((TBL_PC*)bl);
 //			clif_movepc(sd);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
-				clif_specialeffect(&sd->bl,423,AREA);
+				clif_specialeffect(&sd->bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
-				clif_specialeffect(&sd->bl,421,AREA);
+				clif_specialeffect(&sd->bl,EF_BABYBODY2,AREA);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 		}
@@ -1734,9 +1734,9 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
 			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
-				clif_specialeffect(&md->bl,423,AREA);
+				clif_specialeffect(&md->bl,EF_GIANTBODY2,AREA);
 			else if(md->special_state.size==SZ_MEDIUM)
-				clif_specialeffect(&md->bl,421,AREA);
+				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 		}
 		break;
 	case BL_PET:
@@ -1762,7 +1762,7 @@ void clif_move(struct unit_data *ud)
 	if (!vd )
 		return;
 	//This performance check is needed to keep GM-hidden objects from being notified to bots.
-	else if( vd->class_ == INVISIBLE_CLASS ){
+	else if( vd->class_ == JT_INVISIBLE ){
 		// If the player was disguised we still need to update the disguised unit, since the main unit will be updated through clif_walkok
 		if(disguised(bl)) {
 			WBUFW(buf,0)=0x86;
@@ -3141,6 +3141,7 @@ static int clif_hpmeter(struct map_session_data *sd)
 /// 0121 <current count>.W <max count>.W <current weight>.L <max weight>.L (ZC_NOTIFY_CARTITEM_COUNTINFO)
 /// 013a <atk range>.W (ZC_ATTACK_RANGE)
 /// 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
+/// 0acb <var id>.W <value>.Q (ZC_LONGPAR_CHANGE2)
 /// TODO: Extract individual packets.
 /// FIXME: Packet lengths from packet_len(cmd)
 void clif_updatestatus(struct map_session_data *sd,int type)
@@ -3257,6 +3258,28 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOW(fd,0)=0xb1;
 		WFIFOL(fd,4)=sd->status.zeny;
 		break;
+#if PACKETVER >= 20170830
+	case SP_BASEEXP:
+		WFIFOW(fd,0)=0xacb;
+		WFIFOQ(fd,4)=sd->status.base_exp;
+		len = packet_len(0xacb);
+		break;
+	case SP_JOBEXP:
+		WFIFOW(fd,0)=0xacb;
+		WFIFOQ(fd,4)=sd->status.job_exp;
+		len = packet_len(0xacb);
+		break;
+	case SP_NEXTBASEEXP:
+		WFIFOW(fd,0)=0xacb;
+		WFIFOQ(fd,4)=pc_nextbaseexp(sd);
+		len = packet_len(0xacb);
+		break;
+	case SP_NEXTJOBEXP:
+		WFIFOW(fd,0)=0xacb;
+		WFIFOQ(fd,4)=pc_nextjobexp(sd);
+		len = packet_len(0xacb);
+		break;
+#else
 	case SP_BASEEXP:
 		WFIFOW(fd,0)=0xb1;
 		WFIFOL(fd,4)=sd->status.base_exp;
@@ -3273,6 +3296,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOW(fd,0)=0xb1;
 		WFIFOL(fd,4)=pc_nextjobexp(sd);
 		break;
+#endif
 
 	/**
 	 * SP_U<STAT> are used to update the amount of points necessary to increase that stat
@@ -3468,7 +3492,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 				if (!sd) 
 					break;
 
-				if ( val == INVISIBLE_CLASS )
+				if ( val == JT_INVISIBLE )
 					return;
 
 				if (sd->sc.option&OPTION_COSTUME)
@@ -4588,7 +4612,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	int len;
 
 	vd = status_get_viewdata(bl);
-	if (!vd || vd->class_ == INVISIBLE_CLASS)
+	if (!vd || vd->class_ == JT_INVISIBLE)
 		return;
 
 	/**
@@ -4614,9 +4638,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 
 			clif_getareachar_pc(sd, tsd);
 			if(tsd->state.size==SZ_BIG) // tiny/big players [Valaris]
-				clif_specialeffect_single(bl,423,sd->fd);
+				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if(tsd->state.size==SZ_MEDIUM)
-				clif_specialeffect_single(bl,421,sd->fd);
+				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 			if( tsd->bg_id && map[tsd->bl.m].flag.battleground )
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
@@ -4635,9 +4659,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if( nd->chat_id )
 				clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
 			if( nd->size == SZ_BIG )
-				clif_specialeffect_single(bl,423,sd->fd);
+				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if( nd->size == SZ_MEDIUM )
-				clif_specialeffect_single(bl,421,sd->fd);
+				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 			clif_efst_status_change_sub(&sd->bl, bl, SELF);
 			clif_progressbar_npc(nd, sd);
 		}
@@ -4646,9 +4670,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
 			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
-				clif_specialeffect_single(bl,423,sd->fd);
+				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if(md->special_state.size==SZ_MEDIUM)
-				clif_specialeffect_single(bl,421,sd->fd);
+				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 #if PACKETVER >= 20120404
 			if (battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar) {
 				int i;
@@ -5128,7 +5152,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		nullpo_ret(bl);
 		switch(bl->type){
 		case BL_PC:
-			if(sd->vd.class_ != INVISIBLE_CLASS)
+			if(sd->vd.class_ != JT_INVISIBLE)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
@@ -5152,7 +5176,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		default:
-			if((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
+			if((vd=status_get_viewdata(bl)) && vd->class_ != JT_INVISIBLE)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			break;
 		}
@@ -5161,7 +5185,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		nullpo_ret(tbl);
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
-		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS) &&
+		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
 			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->sc.option&OPTION_INVISIBLE)))
 			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
@@ -10010,6 +10034,28 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	return true;
 }
 
+/**
+ * Displays a message if the player enters a PK Zone (during pk_mode)
+ * @param sd: Player data
+ */
+inline void clif_pk_mode_message(struct map_session_data * sd)
+{
+	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
+		sd && map[sd->bl.m].flag.pvp) {
+		if( (int)sd->status.base_level < battle_config.pk_min_level ) {
+			char output[CHAT_SIZE_MAX];
+			// 1504: You've entered a PK Zone (safe until level %d).
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,1504), 
+						 battle_config.pk_min_level);
+			clif_showscript(&sd->bl, output, SELF);
+		} else {
+			// 1503: You've entered a PK Zone.
+			clif_showscript(&sd->bl, msg_txt(sd,1503), SELF);
+		}
+	}
+	return;
+}
+
 // ---------------------
 // clif_parse_wanttoconnect
 // ---------------------
@@ -10445,6 +10491,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		// Instances do not need their own channels
 		if( channel_config.map_tmpl.name != NULL && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
+
+		clif_pk_mode_message(sd);
 	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
 		clif_guild_notice(sd); // Displays at end
 
@@ -16388,25 +16436,37 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd){
 /// Convex Mirror (ZC_BOSS_INFO).
 /// 0293 <infoType>.B <x>.L <y>.L <minHours>.W <minMinutes>.W <maxHours>.W <maxMinutes>.W <monster name>.51B
 /// infoType:
-///     0 = No boss on this map (BOSS_INFO_NOT).
-///     1 = Boss is alive (position update) (BOSS_INFO_ALIVE).
-///     2 = Boss is alive (initial announce) (BOSS_INFO_ALIVE_WITHMSG).
-///     3 = Boss is dead (BOSS_INFO_DEAD).
-void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
+///     BOSS_INFO_NOT = No boss on this map.
+///     BOSS_INFO_ALIVE = Boss is alive (position update).
+///     BOSS_INFO_ALIVE_WITHMSG = Boss is alive (initial announce).
+///     BOSS_INFO_DEAD = Boss is dead.
+void clif_bossmapinfo(struct map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag)
 {
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,70);
 	memset(WFIFOP(fd,0),0,70);
 	WFIFOW(fd,0) = 0x293;
 
-	if( md != NULL ) {
-		if( md->bl.prev != NULL ) { // Boss on This Map
-			if( flag ) {
-				WFIFOB(fd,2) = 1;
-				WFIFOL(fd,3) = md->bl.x;
-				WFIFOL(fd,7) = md->bl.y;
-			} else
-				WFIFOB(fd,2) = 2; // First Time
-		} else if (md->spawn_timer != INVALID_TIMER) { // Boss is Dead
+	switch (flag) {
+		case BOSS_INFO_NOT:
+			WFIFOB(fd,2) = BOSS_INFO_NOT;
+			// No data required
+			break; 
+		case BOSS_INFO_ALIVE:
+			WFIFOB(fd,2) = BOSS_INFO_ALIVE;
+			// Update X/Y
+			WFIFOL(fd,3) = md->bl.x;
+			WFIFOL(fd,7) = md->bl.y;
+			break;
+		case BOSS_INFO_ALIVE_WITHMSG:
+			WFIFOB(fd,2) = BOSS_INFO_ALIVE_WITHMSG;
+			// Current X/Y
+			WFIFOL(fd,3) = md->bl.x;
+			WFIFOL(fd,7) = md->bl.y;
+			break;
+		case BOSS_INFO_DEAD:
+		{
 			const struct TimerData * timer_data = get_timer(md->spawn_timer);
 			unsigned int seconds;
 			int hours, minutes;
@@ -16416,12 +16476,16 @@ void clif_bossmapinfo(int fd, struct mob_data *md, short flag)
 			seconds = seconds - (60 * 60 * hours);
 			minutes = seconds / 60;
 
-			WFIFOB(fd,2) = 3;
+			WFIFOB(fd,2) = BOSS_INFO_DEAD;
+			// Add respawn info
 			WFIFOW(fd,11) = hours; // Hours
 			WFIFOW(fd,13) = minutes; // Minutes
 		}
-		safestrncpy(WFIFOCP(fd,19), md->db->jname, NAME_LENGTH);
+			break;
 	}
+
+	if (md != NULL)
+		safestrncpy(WFIFOCP(fd,19), md->db->jname, NAME_LENGTH);
 
 	WFIFOSET(fd,70);
 }
@@ -17238,8 +17302,9 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 }
 
 
-/** Display gained exp (ZC_NOTIFY_EXP).
- * 07f6 <account id>.L <amount>.L <var id>.W <exp type>.W
+/** Display gained exp.
+ * 07f6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
+ * 0acc <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
  * amount: INT32_MIN ~ INT32_MAX
  * var id:
  *     SP_BASEEXP, SP_JOBEXP
@@ -17255,18 +17320,30 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost)
 {
 	int fd;
+	int offset;
+#if PACKETVER >= 20170830
+	int cmd = 0xacc;
+#else
+	int cmd = 0x7f6;
+#endif
 
 	nullpo_retv(sd);
 
 	fd = sd->fd;
 
-	WFIFOHEAD(fd, packet_len(0x7f6));
-	WFIFOW(fd,0) = 0x7f6;
+	WFIFOHEAD(fd, packet_len(cmd));
+	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = sd->bl.id;
+#if PACKETVER >= 20170830
+	WFIFOQ(fd,6) = (int64)u64min((uint64)exp, INT_MAX) * (lost ? -1 : 1);
+	offset = 4;
+#else
 	WFIFOL(fd,6) = (int)umin(exp, INT_MAX) * (lost ? -1 : 1);
-	WFIFOW(fd,10) = type;
-	WFIFOW(fd,12) = (quest && type != SP_JOBEXP) ? 1 : 0; // NOTE: Somehow JobEXP always in yellow color
-	WFIFOSET(fd,packet_len(0x7f6));
+	offset = 0;
+#endif
+	WFIFOW(fd,10+offset) = type;
+	WFIFOW(fd,12+offset) = (quest && type != SP_JOBEXP) ? 1 : 0; // NOTE: Somehow JobEXP always in yellow color
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 
@@ -18738,7 +18815,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
 * [Ind/Hercules]
 * 08b3 <Length>.W <id>.L <message>.?B (ZC_SHOWSCRIPT)
 **/
-void clif_showscript(struct block_list* bl, const char* message) {
+void clif_showscript(struct block_list* bl, const char* message, enum send_target flag) {
 	char buf[256];
 	size_t len;
 	nullpo_retv(bl);
@@ -18757,7 +18834,7 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	WBUFW(buf,2) = (uint16)(len+8);
 	WBUFL(buf,4) = bl->id;
 	safestrncpy(WBUFCP(buf,8), message, len);
-	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, AREA);
+	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, flag);
 }
 
 /**

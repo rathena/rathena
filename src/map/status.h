@@ -695,7 +695,7 @@ typedef enum sc_type {
 	 * Rebellion [Cydh]
 	 **/
 	SC_HEAT_BARREL,
-	SC_HEAT_BARREL_AFTER,
+	SC_MAGICALBULLET,
 	SC_P_ALTER,
 	SC_E_CHAIN,
 	SC_C_MARKER,
@@ -836,6 +836,10 @@ typedef enum sc_type {
 	SC_DORAM_MATK,
 	SC_DORAM_FLEE2,
 	SC_DORAM_SVSP,
+
+	SC_FALLEN_ANGEL,
+
+	SC_CHEERUP,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1800,6 +1804,8 @@ enum si_type {
 	SI_GLOOM_CARD = 988,
 	SI_PHARAOH_CARD = 989,
 	SI_KIEL_CARD = 990,
+
+	SI_CHEERUP = 992,
 
 	SI_S_MANAPOTION = 995,
 	SI_M_DEFSCROLL = 996,

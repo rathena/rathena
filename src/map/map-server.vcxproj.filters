@@ -217,7 +217,7 @@
     <ClCompile Include="mercenary.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mob.c">
+    <ClCompile Include="mob.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="npc.c">
@@ -250,7 +250,7 @@
     <ClCompile Include="searchstore.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="skill.c">
+    <ClCompile Include="skill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="status.c">
