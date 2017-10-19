@@ -943,8 +943,8 @@ void map_skill_damage_free(struct map_data *m);
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
 #endif
 
-bool map_skill_duration_add(struct map_data *md, uint16 skill_id, uint16 per);
-void map_skill_duration_free(struct map_data *md);
+bool map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
+void map_skill_duration_free(struct map_data *mapd);
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
