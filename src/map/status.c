@@ -5417,7 +5417,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		str += str * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP]);
+	if(sc->data[SC_CHEERUP])
 		str += 3;
 
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
@@ -5491,7 +5491,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += agi * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if (sc->data[SC_ARCLOUSEDASH])
 		agi += sc->data[SC_ARCLOUSEDASH]->val2;
-	if(sc->data[SC_CHEERUP]);
+	if(sc->data[SC_CHEERUP])
 		agi += 3;
 
 	return (unsigned short)cap_value(agi,0,USHRT_MAX);
@@ -5557,7 +5557,7 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if(sc->data[SC_DEFENCE])
 		vit += sc->data[SC_DEFENCE]->val2;
 #endif
-	if(sc->data[SC_CHEERUP]);
+	if(sc->data[SC_CHEERUP])
 		vit += 3;
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
@@ -5629,7 +5629,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		int_ += int_ * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP]);
+	if(sc->data[SC_CHEERUP])
 		int_ += 3;
 
 	if(bl->type != BL_PC) {
@@ -5712,7 +5712,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex -= dex * sc->data[SC_MARSHOFABYSS]->val2 / 100;
 	if(sc->data[SC_FULL_THROTTLE])
 		dex += dex * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP]);
+	if(sc->data[SC_CHEERUP])
 		dex += 3;
 
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
@@ -5776,7 +5776,7 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		luk += luk * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP]);
+	if(sc->data[SC_CHEERUP])
 		luk += 3;
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
