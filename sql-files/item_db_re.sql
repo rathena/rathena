@@ -7503,7 +7503,7 @@ REPLACE INTO `item_db_re` VALUES (13449,'Gladius_Daemonicus','Gladius Daemonicus
 REPLACE INTO `item_db_re` VALUES (13450,'Saber__','Saber',5,10,NULL,1000,'115',NULL,NULL,2,0x000654E2,63,2,2,3,'27',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13451,'Ru_Blue_Sword','Blue Sword',5,10,NULL,1200,'190',NULL,1,1,0x00000080,56,2,2,3,'100',1,2,'bonus bStr,5; bonus bAgi,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13452,'Ru_Gold_Sword','Ru Gold Sword',5,0,NULL,1200,'190',NULL,1,2,0x00000080,56,2,2,3,'120',1,2,'bonus bStr,8; bonus bAgi,8;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13454,'Crimson_Saber','Crimson Saber',5,20,NULL,850,'85',NULL,1,2,0x000654E3,56,2,2,3,'70',1,2,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13454,'Crimson_Saber','Crimson Saber',5,20,NULL,850,'85',NULL,1,2,0x000654E3,63,2,2,3,'70',1,2,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13455,'Saber_of_Vicious_Mind','Saber of Vicious Mind',5,20,NULL,1350,'135',NULL,1,1,0x000654E3,63,2,2,4,'160',1,2,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13456,'Unity_Sword','Unity Sword',5,20,NULL,420,'80',NULL,1,1,0x000654E3,56,2,2,3,'1',1,2,'bonus bBaseAtk,pow(getrefine(),2)*125/100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13457,'Unity_Dagger','Unity Dagger',5,20,NULL,270,'52',NULL,1,1,0x028F5EEF,63,2,2,3,'1',1,1,'bonus bBaseAtk,pow(getrefine(),2)*125/100;',NULL,NULL);
