@@ -34,7 +34,7 @@ prontera,167,177,5	script	Luppy	1107,{
 		mes "I like "+callfunc("F_Sex","smiling ladies!","bloody pirates!");
 
 		// Show one of 3 emotion from the list (we added ,1 to show emotion over PLAYER's head)
-		emotion callfunc("F_Rand",e_scissors,e_kis,e_pat),1;
+		emotion callfunc("F_Rand",ET_SCISSOR,ET_CHUP,ET_GOODBOY),1;
 		close;
 	}
 
