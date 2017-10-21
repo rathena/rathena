@@ -306,11 +306,8 @@ OnInit:
 //Guards
 paramk,103,17,3	script	Market Guard#1	4_M_YOUNGKNIGHT,{
 	callfunc("F_CoolDown", 5);
-	switch ((atoi(strnpcinfo(NPC_NAME_HIDDEN)) + 1) / 2) {
-	case 1:
-		npctalk "Welcome.";
-		break;
-	case 2:
+	switch (atoi(strnpcinfo(2))) {
+	default:
 		npctalk "Welcome.";
 		break;
 	case 3:
@@ -1131,42 +1128,43 @@ paramk,127,88,3	script	Sobok the Cook#fd01	4_M_CHNCOOK,{
 	.@menu = select("Goose Soup.:Maccaroni Noodles.:Weekend Special.:Cancel.");
 	switch (.@menu) {
 	case 1:
+		.@hp = 100;
+		.@sp = 0;
+		.@zeny = 3000;
+		.@talk$ = "Goose Soup shall detoxify and heal you.";
+		break;
 	case 2:
+		.@hp = 0;
+		.@sp = 100;
+		.@zeny = 3000;
+		.@talk$ = "Maccaroni Noodles shall refresh your spirit.";
+		break;
 	case 3:
-		if (.@menu == 1) {
-			.@hp = 100;
-			.@zeny = 3000;
-			.@talk$ = "Goose Soup shall detoxify and heal you.";
-		} else if (.@menu == 2) {
-			.@sp = 100;
-			.@zeny = 3000;
-			.@talk$ = "Maccaroni Noodles shall refresh your spirit.";
-		} else {
-			.@hp = 100;
-			.@sp = 100;
-			.@zeny = 5000;
-			.@talk$ = "Ultimate combination for body and mind.";
-		}
-		mes "[Sobok]";
-		mes .@talk$;
-		next;
-		if (select("Yes:No") == 2)
-			close;
-		if (Zeny < .@zeny) {
-			mes "[Sobok]";
-			mes "Do you think you can eat for free??";
-			close;
-		}
-		mes "[Sobok]";
-		mes "Delicious, isn't it?";
-		Zeny -= .@zeny;
-		percentheal(.@hp, .@sp);
-		close;
-	case 4:
+		.@hp = 100;
+		.@sp = 100;
+		.@zeny = 5000;
+		.@talk$ = "Ultimate combination for body and mind.";
+		break;
+	default: //	case 4:
 		mes "[Sobok]";
 		mes "Come by when you may.";
 		close;
 	}
+	mes "[Sobok]";
+	mes .@talk$;
+	next;
+	if (select("Yes:No") == 2)
+		close;
+	if (Zeny < .@zeny) {
+		mes "[Sobok]";
+		mes "Do you think you can eat for free??";
+		close;
+	}
+	mes "[Sobok]";
+	mes "Delicious, isn't it?";
+	Zeny -= .@zeny;
+	percentheal(.@hp, .@sp);
+	close;
 }
 
 //Cafe Mora
@@ -1636,11 +1634,11 @@ paramk,124,97,3	script	Gecko the Trainer#unm01	4_M_DESERT,{
 		switch (select("Yes:No")) {
 		case 1:
 			//if (!getskilllv(RK_DRAGONTRAINING)) {
-			if (!getskilllv(KN_RIDING)) {
+			if (!getskilllv("KN_RIDING")) {
 				mes "[Gecko the Trainer]";
 				mes "Please learn how to ride a Dragon first.";
 				close;
-			} else if (checkdragon()) {
+			} else if (checkriding() || checkdragon()) {
 				mes "[Gecko the Trainer]";
 				mes "You already have a Dragon.";
 				close;
@@ -1649,7 +1647,7 @@ paramk,124,97,3	script	Gecko the Trainer#unm01	4_M_DESERT,{
 				mes "Please remove your cash mount.";
 				close;
 			}
-			setmounting(MOUNT_DRAGON);
+			setdragon;
 			close;
 		case 2:
 			mes "[Gecko the Trainer]";
@@ -1662,20 +1660,22 @@ paramk,124,97,3	script	Gecko the Trainer#unm01	4_M_DESERT,{
 		next;
 		switch (select("Yes:No")) {
 		case 1:
-			if (!getskilllv(KN_RIDING)) {
+			if (!getskilllv("KN_RIDING")) {
 				mes "[Gecko the Trainer]";
 				mes "Please learn how to ride a Gryphon first.";
 				close;
-			} else if (checkdragon()) {
+			}
+			if (checkriding()) {
 				mes "[Gecko the Trainer]";
 				mes "You already have a Gryphon.";
 				close;
-			} else if (ismounting()) {
+			}
+			if (ismounting()) {
 				mes "[Gecko the Trainer]";
 				mes "Please remove your cash mount.";
 				close;
 			}
-			setmounting(MOUNT_PECO);
+			setriding;
 			close;
 		case 2:
 			mes "[Gecko the Trainer]";
@@ -1727,7 +1727,7 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 		next;
 		switch (select("Rent Falcon.:Buy a Falcon Flute.:Cancel.")) {
 		case 1:
-			if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
+			if (checkwug()) {
 				mes "[Mist, the Hunter]";
 				mes "Um...";
 				mes "You can't rent a Falcon";
@@ -1743,7 +1743,8 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 				mes "hunting money";
 				mes "instead of monsters~";
 				close;
-			} else if (getskilllv("HT_FALCON") == 0) {
+			}
+			if (getskilllv("HT_FALCON") == 0) {
 				mes "[Mist, the Hunter]";
 				mes "Gosh~";
 				mes "Go learn how to";
@@ -1752,7 +1753,8 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 				mes "to you if you can't";
 				mes "handle it, you know.";
 				close;
-			} else if (checkfalcon()) {
+			}
+			if (checkfalcon()) {
 				mes "[Mist, the Hunter]";
 				mes "Um...";
 				mes "You already have";
@@ -1800,7 +1802,7 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 				close;
 			}
 			if (Zeny >= .@price) {
-				if (countitem(Falcon_Flute) >= 1) {
+				if (countitem(12848) >= 1) { // Falcon_Flute
 					mes "[Mist, the Hunter]";
 					mes "As I can see you already have a Falcon Flute!";
 					mes "Don't worry, my young friend, once you've purchased the Falcon Flute you won't need to do so again";
@@ -1811,7 +1813,7 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 				mes "Here, take this flute.";
 				mes "With it you can whistle for your Falcon from anywhere.";
 				Zeny -= .@price;
-				getitem(Falcon_Flute, 1);
+				getitem(12848, 1); // Falcon_Flute
 				next;
 				mes "[Mist, the Hunter]";
 				mes "Just a reminder.";
