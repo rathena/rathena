@@ -9,6 +9,7 @@
 //= 1.2 Added dali, dali02 [Nova]
 //= 1.3 Added Nightmare Glastheim [Ridley8819]
 //= 1.4 Added GVG TE Maps. [Cydh]
+//= 1.5 Added Novice Island RE Maps. [mazvi]
 //============================================================
 
 // Episode 13 ====================
@@ -146,3 +147,16 @@ te_aldecas4	mapflag	nomemo
 te_aldecas5	mapflag	nomemo
 teg_dun01	mapflag	nomemo
 teg_dun02	mapflag	nomemo
+
+// Novice Island ===================
+int_land	mapflag	nomemo
+int_land01	mapflag	nomemo
+int_land02	mapflag	nomemo
+int_land03	mapflag	nomemo
+int_land04	mapflag	nomemo
+iz_int	mapflag	nomemo
+iz_int01	mapflag	nomemo
+iz_int02	mapflag	nomemo
+iz_int03	mapflag	nomemo
+iz_int04	mapflag	nomemo
+
