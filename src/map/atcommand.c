@@ -1900,7 +1900,7 @@ ACMD_FUNC(go)
 		{ MAP_NIFLHEIM,     21, 153 }, // 13=Niflheim
 		{ MAP_LOUYANG,     217,  40 }, // 14=Louyang
 #ifdef RENEWAL
-		{ MAP_NOVICE,       97, 90  }, // 15=Training Grounds (Renewal)
+		{ MAP_NOVICE,       18, 26  }, // 15=Training Grounds (Renewal)
 #else
 		{ MAP_NOVICE,       53, 111 }, // 15=Training Grounds
 #endif
