@@ -172,6 +172,14 @@ enum e_party_invite_reply {
 	PARTY_REPLY_INVALID_MAPPROPERTY_ME, ///< return=9 : !TODO "Cannot join a party in this map" -> MsgStringTable[1871] (since 20110205)
 };
 
+/// Enum for Convex Mirror (SC_BOSSMAPINFO)
+enum e_bossmap_info {
+	BOSS_INFO_NOT = 0,
+	BOSS_INFO_ALIVE,
+	BOSS_INFO_ALIVE_WITHMSG,
+	BOSS_INFO_DEAD,
+};
+
 #define packet_len(cmd) packet_db[cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
 extern int packet_db_ack[MAX_ACK_FUNC + 1];
@@ -448,6 +456,7 @@ enum useskill_fail_cause
 	//XXX_USESKILL_FAIL_II_HELLS_PLANT_BOTTLE = 68,
 	//XXX_USESKILL_FAIL_II_MANDRAGORA_FLOWERPOT = 69,
 	USESKILL_FAIL_MANUAL_NOTIFY = 70,
+	// CAUTION: client uses unidentified display name for displaying the required item. Still broken on 2017-05-31 [Lemongrass]
 	USESKILL_FAIL_NEED_ITEM = 71,
 	USESKILL_FAIL_NEED_EQUIPMENT = 72,
 	USESKILL_FAIL_COMBOSKILL = 73,
@@ -462,6 +471,7 @@ enum useskill_fail_cause
 	USESKILL_FAIL_STYLE_CHANGE_GRAPPLER = 82,
 	USESKILL_FAIL_THERE_ARE_NPC_AROUND = 83,
 	USESKILL_FAIL_NEED_MORE_BULLET = 84,
+	USESKILL_FAIL_COINS = 85,
 
 	USESKILL_FAIL_MAX
 };
@@ -500,6 +510,12 @@ enum clif_messages {
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
+	SKILL_NEED_GATLING = 0x9fa,
+	SKILL_NEED_SHOTGUN = 0x9fb,
+	SKILL_NEED_RIFLE = 0x9fc,
+	SKILL_NEED_REVOLVER = 0x9fd,
+	SKILL_NEED_HOLY_BULLET = 0x9fe,
+	SKILL_NEED_GRENADE = 0xa01,
 };
 
 enum e_personalinfo {
@@ -902,7 +918,7 @@ void clif_Auction_message(int fd, unsigned char flag);
 void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, struct map_session_data *sd);
 
-void clif_bossmapinfo(int fd, struct mob_data *md, short flag);
+void clif_bossmapinfo(struct map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag);
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION

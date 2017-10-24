@@ -22,3 +22,5 @@ te_aldecas2	mapflag	nowarp
 te_aldecas3	mapflag	nowarp
 te_aldecas4	mapflag	nowarp
 te_aldecas5	mapflag	nowarp
+
+job_gun	mapflag	nowarp
