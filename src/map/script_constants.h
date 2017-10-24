@@ -4818,6 +4818,8 @@
 	export_constant_npc(JT_4_BONFIRE);
 	export_constant_npc(JT_4_PCCOUNT);
 	export_constant_npc(JT_4_LAVAGOLEM);
+	export_constant_npc(JT_4_F_IA);
+	export_constant_npc(JT_4_LOCKE);
 	export_constant_npc(JT_JP_NPC02);
 	export_constant_npc(JT_JP_NPC03);
 	export_constant_npc(JT_JP_NPC04);
