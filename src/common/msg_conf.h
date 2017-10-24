@@ -4,6 +4,8 @@
 #ifndef MSG_CONF_H
 #define	MSG_CONF_H
 
+#include "../config/core.h"
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -20,10 +22,13 @@ enum lang_types {
 	LANG_THA = 0x100,
 	LANG_MAX
 };
-// Multilanguage System.
-// Define which languages to enable (bitmask).
-// 0xFFF will enable all, while 0x000 will enable English only.
-#define LANG_ENABLE 0x000
+
+#ifndef LANG_ENABLE
+	// Multilanguage System.
+	// Define which languages to enable (bitmask).
+	// 0xFFF will enable all, while 0x000 will enable English only.
+	#define LANG_ENABLE 0x000
+#endif
 
 //read msg in table
 const char* _msg_txt(int msg_number,int size, char ** msg_table);
