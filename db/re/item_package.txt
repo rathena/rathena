@@ -4675,3 +4675,29 @@ IG_Santa_Gift,14586,500,5,1,0,0,0	// 5x Spark_Candy
 IG_Santa_Gift,12350,500,5,1,0,0,0	// 5x Angeling_Potion
 IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
+
+// Squad_Prize
+IG_Squad_Prize,Force1,1167,1,1
+IG_Squad_Prize,Intellect1,1167,1,1
+IG_Squad_Prize,Swiftness1,1167,1,1
+IG_Squad_Prize,Tough1,1167,1,1
+IG_Squad_Prize,Artful1,1167,1,1
+IG_Squad_Prize,Fortune1,1167,1,1
+IG_Squad_Prize,Force2,416,1,1
+IG_Squad_Prize,Intellect2,416,1,1
+IG_Squad_Prize,Swiftness2,416,1,1
+IG_Squad_Prize,Tough2,416,1,1
+IG_Squad_Prize,Artful2,416,1,1
+IG_Squad_Prize,Fortune2,416,1,1
+IG_Squad_Prize,Force3,83,1,1
+IG_Squad_Prize,Intellect3,83,1,1
+IG_Squad_Prize,Swiftness3,83,1,1
+IG_Squad_Prize,Tough3,83,1,1
+IG_Squad_Prize,Artful3,83,1,1
+IG_Squad_Prize,Fortune3,83,1,1
+IG_Squad_Prize,Frost_Crystal,400,1,2
+IG_Squad_Prize,Treasure_Box,100,1,2
+IG_Squad_Prize,White_Slim_Potion,3500,10,2
+IG_Squad_Prize,Blue_Potion,4000,10,2
+IG_Squad_Prize,Seed_Of_Yggdrasil,1000,5,2
+IG_Squad_Prize,Yggdrasilberry,1000,3,2

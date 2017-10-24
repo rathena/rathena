@@ -10912,6 +10912,7 @@
 22534,Closedmind_Box,Closed Mind Box,18,10,,1000,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Sealed_Mind_Box); },{},{}
 22535,WorkerScroll_A,Scroll Summoning Workers(Male),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22536,WorkerScroll_B,Scroll Summoning Workers(Female),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22537,PrizeOfHero,Prize of Hero,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_PrizeOfHero,1); },{},{}
 22538,Hanbok_bag,Hanbok bag,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{},{},{}
 22540,Runstone_Lux,Lux Anima Runestone,11,2,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_LUXANIMA",1; },{},{}
 22541,PC_Room_Coupon_Box_VI,PC Room Coupon Box VI,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -10934,8 +10935,8 @@
 22558,Lucky_Bag,Lucky Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Lucky_Bag,1); },{},{}
 22559,Mock_Strawberry,Mock Strawberry,11,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; itemskill "SM_ENDURE",3; },{},{}
 22563,Lucky_Bag_Of_New_Era,Lucky Bag Of New Era,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /* TODO */ },{},{}
-22566,Frost_Crystal,Last Year's Frost,3,20,,0,,,,,,,,,,,,,{},{},{}
-22567,Squad_Prize,Expedition Award Box,0,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+22566,Frost_Crystal,Last Year's Frost,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_CHILL,10000,0; },{},{}
+22567,Squad_Prize,Expedition Award Box,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Squad_Prize); },{},{}
 22568,Nyd_Summon_Scroll,Nidhoggur Summon Scroll,0,20,,100,,,,,0xFFFFFFFF,63,,2,,,,,{},{},{}
 22569,Gift_New_start,Gift New start,18,10,,100,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22571,Easter_Egg,Easter Egg,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
