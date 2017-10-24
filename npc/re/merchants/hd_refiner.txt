@@ -141,7 +141,7 @@
 	Zeny = Zeny - .@price;
 	mes "[Blacksmith Mighty Hammer]";
 	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
+	if (getequippercentrefinery(.@part) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;
@@ -268,7 +268,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 		mes "Okay. If that's what you want...";
 		close;
 	}
-	if (getequippercentrefinery(.@part, true) < 100) {
+	if (getequippercentrefinery(.@part) < 100) {
 		mes "[Basta]";
 		mes "This " + .@type$ + " has already been refined pretty high.";
 		mes "If you try to refine it more, the refine level could decrease.";
@@ -318,7 +318,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 	delitem .@material,1;
 	Zeny = Zeny - .@price;
 	mes "Pow! Pow! Pow! Pow!";
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
+	if (getequippercentrefinery(.@part) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion e_no1;

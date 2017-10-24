@@ -131,7 +131,7 @@
 		next;
 		delitem .@choose,1;
 		Zeny -= .@zeny_cost;
-		if (getequippercentrefinery(.@part, .@option > 1) > rand(100)) {
+		if (getequippercentrefinery(.@part, .@option == 2) > rand(100)) {
 			successrefitem .@part;
 			mes "[Shadow Blacksmith]";
 			mes "It worked! It worked!";
