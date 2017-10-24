@@ -4,6 +4,10 @@
 #ifndef _ELEMENTAL_H_
 #define _ELEMENTAL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
@@ -110,5 +114,9 @@ void reload_elementaldb(void);
 void reload_elemental_skilldb(void);
 void do_init_elemental(void);
 void do_final_elemental(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ELEMENTAL_H_ */

@@ -4,6 +4,10 @@
 #ifndef _INTIF_H_
 #define _INTIF_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#include "../common/mmo.h"
 struct party_member;
 struct guild_member;
@@ -14,6 +18,8 @@ struct s_mercenary;
 struct s_elemental;
 struct mail_message;
 struct auction_data;
+enum storage_type;
+struct achievement_db;
 
 int intif_parse(int fd);
 
@@ -89,12 +95,13 @@ int intif_mercenary_delete(int merc_id);
 int intif_mercenary_save(struct s_mercenary *merc);
 
 // MAIL SYSTEM
-int intif_Mail_requestinbox(uint32 char_id, unsigned char flag);
+int intif_Mail_requestinbox(uint32 char_id, unsigned char flag, enum mail_inbox_type type);
 int intif_Mail_read(int mail_id);
-int intif_Mail_getattach(uint32 char_id, int mail_id);
+bool intif_mail_getattach( struct map_session_data* sd, struct mail_message *msg, enum mail_attachment_type type );
 int intif_Mail_delete(uint32 char_id, int mail_id);
 int intif_Mail_return(uint32 char_id, int mail_id);
 int intif_Mail_send(uint32 account_id, struct mail_message *msg);
+bool intif_mail_checkreceiver(struct map_session_data* sd, char* name);
 // AUCTION SYSTEM
 int intif_Auction_requestlist(uint32 char_id, short type, int price, const char* searchtext, short page);
 int intif_Auction_register(struct auction_data *auction);
@@ -111,6 +118,10 @@ int intif_clan_requestclans();
 int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len);
 int intif_clan_member_joined( int clan_id );
 int intif_clan_member_left( int clan_id );
+// ACHIEVEMENT SYSTEM
+void intif_request_achievements(uint32 char_id);
+int intif_achievement_save(struct map_session_data *sd);
+int intif_achievement_reward(struct map_session_data *sd, struct achievement_db *adb);
 
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
 
@@ -119,5 +130,9 @@ bool intif_storage_request(struct map_session_data *sd, enum storage_type type, 
 bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor);
 
 int CheckForCharServer(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INTIF_H_ */

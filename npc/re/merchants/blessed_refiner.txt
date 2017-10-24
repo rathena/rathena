@@ -1,11 +1,5 @@
 //===== rAthena Script ======================================= 
 //= Blessed Refiner
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiners that use Blessed ores to refine equipment.
@@ -13,8 +7,9 @@
 //= rate is identical to that for Enriched ores.
 //= - "Blacksmith Dister" only refines from +6~12.
 //= NOTE: This NPC is currently disabled on official servers.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
 //============================================================
 
 // Main NPC :: new_smelting612
@@ -141,7 +136,7 @@
 	set Zeny, Zeny-.@price;
 	mes "[Blacksmith Dister]";
 	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		specialeffect EF_BLESSING;
 		successrefitem .@part;
 		next;

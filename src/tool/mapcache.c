@@ -9,14 +9,11 @@
 #include <unistd.h>
 #endif
 
-#include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 #include "../common/grfio.h"
 #include "../common/malloc.h"
-#include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
-
-#include "../config/renewal.h"
 
 #define NO_WATER 1000000
 

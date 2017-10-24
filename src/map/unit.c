@@ -9,6 +9,7 @@
 #include "../common/random.h"
 #include "../common/socket.h"
 
+#include "achievement.h"
 #include "map.h"
 #include "path.h"
 #include "pc.h"
@@ -408,8 +409,10 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
-		if (ud->walk_done_event[0])
+		if (ud->walk_done_event[0]){
 			npc_event_do_id(ud->walk_done_event,bl->id);
+			ud->walk_done_event[0] = 0;
+		}
 		if (ud->state.walk_script)
 			ud->state.walk_script = 0;
 	}
@@ -1195,7 +1198,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 			return 2;
 
 		}
-	} else if (map_getcell(m,x,y,CELL_CHKNOREACH)) { // Invalid target cell
+	} else if ( bl->type != BL_NPC && map_getcell(m,x,y,CELL_CHKNOREACH)) { // Invalid target cell
 		ShowWarning("unit_warp: Specified non-walkable target cell: %d (%s) at [%d,%d]\n", m, map[m].name, x,y);
 
 		if (!map_search_freecell(NULL, m, &x, &y, 4, 4, 1)) { // Can't find a nearby cell
@@ -1231,11 +1234,11 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
  * Stops a unit from walking
  * @param bl: Object to stop walking
  * @param type: Options
- *	&0x1: Issue a fixpos packet afterwards
- *	&0x2: Force the unit to move one cell if it hasn't yet
- *	&0x4: Enable moving to the next cell when unit was already half-way there
+ *	USW_FIXPOS: Issue a fixpos packet afterwards
+ *	USW_MOVE_ONCE: Force the unit to move one cell if it hasn't yet
+ *	USW_MOVE_FULL_CELL: Enable moving to the next cell when unit was already half-way there
  *		(may cause on-touch/place side-effects, such as a scripted map change)
- *	&0x8: Force stop moving, even if walktimer is currently INVALID_TIMER
+ *	USW_FORCE_STOP: Force stop moving, even if walktimer is currently INVALID_TIMER
  * @return Success(1); Failed(0);
  */
 int unit_stop_walking(struct block_list *bl,int type)
@@ -1248,7 +1251,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 
 	ud = unit_bl2ud(bl);
 
-	if(!ud || (!(type&0x08) && ud->walktimer == INVALID_TIMER))
+	if(!ud || (!(type&USW_FORCE_STOP) && ud->walktimer == INVALID_TIMER))
 		return 0;
 
 	// NOTE: We are using timer data after deleting it because we know the
@@ -1262,14 +1265,14 @@ int unit_stop_walking(struct block_list *bl,int type)
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 
-	if( (type&0x02 && !ud->walkpath.path_pos) // Force moving at least one cell.
-	||  (type&0x04 && td && DIFF_TICK(td->tick, tick) <= td->data/2) // Enough time has passed to cover half-cell
+	if( (type&USW_MOVE_ONCE && !ud->walkpath.path_pos) // Force moving at least one cell.
+	||  (type&USW_MOVE_FULL_CELL && td && DIFF_TICK(td->tick, tick) <= td->data/2) // Enough time has passed to cover half-cell
 	) {
 		ud->walkpath.path_len = ud->walkpath.path_pos+1;
 		unit_walktoxy_timer(INVALID_TIMER, tick, bl->id, ud->walkpath.path_pos);
 	}
 
-	if(type&0x01)
+	if(type&USW_FIXPOS)
 		clif_fixpos(bl);
 
 	ud->walkpath.path_len = 0;
@@ -1277,7 +1280,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	ud->to_x = bl->x;
 	ud->to_y = bl->y;
 
-	if(bl->type == BL_PET && type&~0xff)
+	if(bl->type == BL_PET && type&~USW_ALL)
 		ud->canmove_tick = gettick() + (type>>8);
 
 	// Re-added, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
@@ -1599,7 +1602,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( battle_config.ksprotection && sd && mob_ksprotected(src, target) )
 		return 0;
 
-	// Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
+	// Normally not needed because clif.cpp checks for it, but the at/char/script commands don't! [Skotlex]
 	if(ud->skilltimer != INVALID_TIMER && skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST)
 		return 0;
 
@@ -1819,9 +1822,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv);
 #endif
 
-	if (src->type == BL_NPC) // NPC-objects do not have cast time
-		casttime = 0;
-
 	if(!ud->state.running) // Need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
 		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
 
@@ -1965,7 +1965,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (ud && ud->state.blockedskill)
 		return 0;
 
-	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
+	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.cpp checks for it, but at/char/script commands don't! [Skotlex]
 		return 0;
 
 	sc = status_get_sc(src);
@@ -2033,9 +2033,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 #else
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv );
 #endif
-
-	if (src->type == BL_NPC) // NPC-objects do not have cast time
-		casttime = 0;
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
@@ -2193,6 +2190,23 @@ int unit_unattackable(struct block_list *bl)
 }
 
 /**
+ * Checks if the unit can attack, returns yes if so.
+*/
+bool unit_can_attack(struct block_list *src, int target_id)
+{
+	struct status_change *sc = status_get_sc(src);
+
+	if( sc != NULL ) {
+		if( sc->data[SC__MANHOLE] )
+			return false;
+	}
+
+	if( src->type == BL_PC )
+		return pc_can_attack(BL_CAST(BL_PC, src), target_id);
+	return true;
+}
+
+/**
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
@@ -2215,23 +2229,16 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	if( src->type == BL_PC ) {
-		TBL_PC* sd = (TBL_PC*)src;
+	if( src->type == BL_PC &&
+		target->type == BL_NPC ) {
+		// Monster npcs [Valaris]
+		npc_click((TBL_PC*)src,(TBL_NPC*)target);
+		return 0;
+	}
 
-		if( target->type == BL_NPC ) { // Monster npcs [Valaris]
-			npc_click(sd,(TBL_NPC*)target); // Submitted by leinsirk10 [Celest]
-			return 0;
-		}
-
-		if( pc_is90overweight(sd) || pc_isridingwug(sd) ) { // Overweight or mounted on warg - stop attacking
-			unit_stop_attack(src);
-			return 0;
-		}
-
-		if( !pc_can_attack(sd, target_id) ) {
-			unit_stop_attack(src);
-			return 0;
-		}
+	if( !unit_can_attack(src, target_id) ) {
+		unit_stop_attack(src);
+		return 0;
 	}
 
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
@@ -2504,9 +2511,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
 
-	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
-		return 0;
-
 	if( src->m != target->m ) {
 		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
 			return 1; // Follow up.
@@ -2751,31 +2755,6 @@ int unit_counttargeted(struct block_list* bl)
 
 	if( bl && (ud = unit_bl2ud(bl)) )
 		return ud->target_count;
-
-	return 0;
-}
-
-/**
- * Changes the size of a unit
- * @param bl: Object to change size [PC|MOB]
- * @param size: New size of bl
- * @return 0
- */
-int unit_changeviewsize(struct block_list *bl,short size)
-{
-	nullpo_ret(bl);
-
-	size = (size < 0) ? -1 : (size > 0) ? 1 : 0;
-
-	if(bl->type == BL_PC)
-		((TBL_PC*)bl)->state.size = size;
-	else if(bl->type == BL_MOB)
-		((TBL_MOB*)bl)->special_state.size = size;
-	else
-		return 0;
-
-	if(size != 0)
-		clif_specialeffect(bl,421+size, AREA);
 
 	return 0;
 }
@@ -3232,6 +3211,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 #endif
 
+			if (sd->achievement_data.achievements)
+				achievement_free(sd);
+
 			// Clearing...
 			if (sd->bonus_script.head)
 				pc_bonus_script_clear(sd, BSF_REM_ALL);
@@ -3304,6 +3286,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		}
 		case BL_MOB: {
 			struct mob_data *md = (struct mob_data*)bl;
+
+			mob_free_dynamic_viewdata( md );
 
 			if( md->spawn_timer != INVALID_TIMER ) {
 				delete_timer(md->spawn_timer,mob_delayspawn);

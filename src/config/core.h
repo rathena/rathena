@@ -8,6 +8,8 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
+#include "../custom/defines_pre.h"
+
 /// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
 
@@ -19,13 +21,6 @@
 /// e.g. if they want to get around an obstacle they have to walk around it,
 /// while with OFFICIAL_WALKPATH disabled if they click to walk around a obstacle the server will do it automatically
 #define OFFICIAL_WALKPATH
-
-/// leave this line uncommented to enable callfunc checks when processing scripts.
-/// while allowed, the script engine will attempt to match user-defined functions
-/// in scripts allowing direct function callback (without the use of callfunc.)
-/// this CAN affect performance, so if you find scripts running slower or find
-/// your map-server using more resources while this is active, comment the line
-#define SCRIPT_CALLFUNC_CHECK
 
 /// uncomment to enable query_sql script command and mysql logs to function on it's own thread
 /// be aware this feature is under tests and you should use at your own risk, we however
@@ -76,12 +71,6 @@
 	#define MAX_CHAR_BILLING 0 // This must be less than MAX_CHARS
 #endif
 
-/// Comment to disable the official packet obfuscation support.
-/// When enabled, make sure there is value for 'packet_keys' of used packet version or
-/// defined 'packet_keys_use' in db/[import/]packet_db.txt.
-/// This requires PACKETVER 2011-08-17 or newer.
-#define PACKET_OBFUSCATION
-
 /// Comment to disable warnings for deprecated script commands
 #define SCRIPT_COMMAND_DEPRECATION
 
@@ -91,6 +80,7 @@
 /**
  * No settings past this point
  **/
+#include "./packets.h"
 #include "./renewal.h"
 #include "./secure.h"
 #include "./classes/general.h"
@@ -99,5 +89,7 @@
  * Constants come last; so they process anything that could've been modified in early includes
  **/
 #include "./const.h"
+
+#include "../custom/defines_post.h"
 
 #endif // _CONFIG_CORE_H_

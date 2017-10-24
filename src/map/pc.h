@@ -4,6 +4,10 @@
 #ifndef _PC_H_
 #define _PC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/ers.h"
 #include "../common/timer.h" // INVALID_TIMER
@@ -37,8 +41,8 @@
 #define ROULETTE_GOLD_VAR "RouletteGold"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 84 since Expanded Super Novice needs it.
-#define MAX_SKILL_TREE 84
+//Raised to 85 since Expanded Super Baby needs it.
+#define MAX_SKILL_TREE 85
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -262,6 +266,8 @@ struct map_session_data {
 		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
 		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
 		bool keepshop; // Whether shop data should be removed when the player disconnects
+		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
+		bool cashshop_open;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -283,7 +289,6 @@ struct map_session_data {
 	int count_rewarp; //count how many time we being rewarped
 
 	int langtype;
-	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 
 	// Item Storages
@@ -583,8 +588,11 @@ struct map_session_data {
 
 	// Mail System [Zephyrus]
 	struct s_mail {
-		unsigned short nameid;
-		int index, amount, zeny;
+		struct {
+			unsigned short nameid;
+			int index, amount;
+		} item[MAIL_MAX_ITEM];
+		int zeny;
 		struct mail_data inbox;
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
@@ -594,6 +602,21 @@ struct map_session_data {
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
 	struct quest *quest_log; ///< Quest log entries (note: Q_COMPLETE quests follow the first <avail_quests>th enties
 	bool save_quest;         ///< Whether the quest_log entries were modified and are waitin to be saved
+
+	// Achievement log system
+	struct s_achievement_data {
+		int total_score;                  ///< Total achievement points
+		int level;                        ///< Achievement level
+		bool save;                        ///< Flag to know if achievements need to be saved
+		bool sendlist;                    ///< Flag to know if all achievements should be sent to the player (refresh list if an achievement has a title)
+		uint16 count;                     ///< Total achievements in log
+		uint16 incompleteCount;           ///< Total incomplete achievements in log
+		struct achievement *achievements; ///< Achievement log entries
+	} achievement_data;
+
+	// Title system
+	int *titles;
+	uint8 titleCount;
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
@@ -715,16 +738,14 @@ struct map_session_data {
 #endif
 };
 
-struct eri *pc_sc_display_ers; /// Player's SC display table
-struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
+extern struct eri *pc_sc_display_ers; /// Player's SC display table
+extern struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
 
 /**
  * ERS for the bulk of pc vars
  **/
-struct eri *num_reg_ers;
-struct eri *str_reg_ers;
-/* */
-bool reg_load;
+extern struct eri *num_reg_ers;
+extern struct eri *str_reg_ers;
 
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
@@ -811,7 +832,7 @@ enum item_check {
 	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
 };
 
-struct {
+extern struct s_job_info {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;
@@ -867,9 +888,9 @@ struct {
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
 #ifdef VIP_ENABLE
-	#define pc_isvip(sd)      ( sd->vip.enabled ? 1 : 0 )
+	#define pc_isvip(sd)      ( sd->vip.enabled ? true : false )
 #else
-	#define pc_isvip(sd)      ( 0 )
+	#define pc_isvip(sd)      ( false )
 #endif
 #ifdef NEW_CARTS
 	#define pc_iscarton(sd)       ( (sd)->sc.data[SC_PUSH_CART] )
@@ -963,10 +984,12 @@ short pc_maxaspd(struct map_session_data *sd);
     )
 #endif
 
+void pc_set_reg_load(bool val);
 int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
+bool pc_can_sell_item(struct map_session_data* sd, struct item * item);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 
@@ -1306,4 +1329,9 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* _PC_H_ */

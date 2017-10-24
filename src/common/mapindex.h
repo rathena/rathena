@@ -4,7 +4,11 @@
 #ifndef _MAPINDEX_H_
 #define _MAPINDEX_H_
 
-#include "../config/renewal.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "../common/mmo.h"
 
 #define MAX_MAPINDEX 2000
 
@@ -50,6 +54,7 @@
 #define MAP_MALAYA "malaya"
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
+#define MAP_LASAGNA "lasagna"
 
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
@@ -67,5 +72,9 @@ void mapindex_check_mapdefault(const char *mapname);
 
 void mapindex_init(void);
 void mapindex_final(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MAPINDEX_H_ */

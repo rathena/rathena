@@ -4,7 +4,15 @@
 #ifndef _QUEST_H_
 #define _QUEST_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int inter_quest_parse_frommap(int fd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

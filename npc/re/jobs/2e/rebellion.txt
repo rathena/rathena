@@ -1,0 +1,855 @@
+//===== rAthena Script =======================================
+//= Rebellion Job Quest
+//===== Description: =========================================
+//= [Official Conversion]
+//= Job change Quest from Gunslinger -> Rebellion.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [exneval]
+//= 1.1 Syntax change. [Capuche]
+//============================================================
+
+moc_fild12,261,318,3	script	Suspicious Man	4_M_MOCASS2,2,2,{
+	end;
+OnTouch:
+	if (Class == Job_Gunslinger && BaseLevel >= 99 && JobLevel >= 70) {
+		if (isbegin_quest(12340) == 0) {
+			mes "[Suspicious Man]";
+			mes "Finally I've found you, Vagabond Spike! Your neck is mine!";
+			next;
+			select("Say what?");
+			mes "[Suspicious Man]";
+			mes "*Snort* Don't pretend like you don't know. Look at this poster! You're in it!";
+			next;
+			select("I see the resemblance, but that's not me.");
+			mes "["+strcharinfo(0)+"]";
+			mes "Forget the resemblance. Where did you get that poster? I've never committed a crime.";
+			next;
+			mes "[Suspicious Man]";
+			mes "I knew you'd try to lie your way out.";
+			next;
+			mes "[Suspicious Man]";
+			mes "The ^0000ffEinbroch Private Pub^000000 has released that wanted poster. You have many bounty hunters like me on your heels.";
+			next;
+			mes "[Suspicious Man]";
+			mes "I don't care if you're the right one so long as you look it and I can take you dead or alive.";
+		}
+		else {
+			mes "[Suspicious Man]";
+			mes "It's you again! You've got guts to come back here!";
+		}
+		next;
+		if (select("Make a run for it.:Fight him.") == 1)
+			mes "^0000ffI should run for now and think about this later.^000000";
+		else
+			mes "^0000ffHe's not the only bounty hunter after me, if he's telling the truth. I need time to strategize.^000000";
+		close2;
+		if (isbegin_quest(12340) == 0)
+			setquest 12340;// Rebellion Job Change Quest
+		warp "moc_fild12",186,83;
+	}
+	end;
+}
+
+einbroch,54,97,3	script	Bouncer	4_M_REBELLION,{
+	if (BaseClass != Job_Gunslinger) {
+		mes "[Bouncer]";
+		mes "No loitering around the venue.";
+		close;
+	}
+	switch( isbegin_quest(12340) ) {
+	case 0:
+		mes "[Bouncer]";
+		mes "Under construction, can't get in.";
+		close;
+	case 1:
+		mes "[Bouncer]";
+		mes "*Gasp* You! I thought you were already captured. Ooh, doesn't matter now. You're my Get Out of Jail Free card!";
+		next;
+		select("I'm not the criminal you think I am!");
+		mes "[Bouncer]";
+		mes "You aren't?";
+		next;
+		mes "^0000ffThe bouncer examines your face.^000000";
+		next;
+		mes "[Bouncer]";
+		mes "Hm, you bear a striking resemblance, though you don't look not as menacing as that criminal Spike";
+		next;
+		select("I want to talk to the poster publisher.");
+		mes "[Bouncer]";
+		mes "Your problem is a bit out of my league. Get in. If I find out you're the real deal all along, I'll see that you'll never see the outside again.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	case 2:
+		mes "[Bouncer]";
+		mes "You're back. Why?";
+		next;
+		if (select("I want in.:I was passing by.") == 2) {
+			mes "[Bouncer]";
+			mes "You're silly.";
+			close;
+		}
+		mes "[Bouncer]";
+		mes "Go ahead. Stay out of trouble.";
+		close2;
+		warp "job_gun",70,28;
+		end;
+	}
+}
+
+job_gun,68,33,3	script	Ruthless Rebellion	4_F_REBELLION,{
+	mes "[Ruthless Rebellion]";
+	mes "Do you know how to use a gun?";
+	close;
+}
+
+job_gun,78,33,3	script	Suspicious Gunslinger	4_M_JOB_BLACKSMITH,{
+	mes "[Suspicious Gunslinger]";
+	mes "...";
+	next;
+	mes "[Quiet Gunslinger]";
+	mes "Don't say I look like a blacksmith you know.";
+	close;
+}
+
+job_gun,74,24,6	script	Drunken Man	4_M_LIEMAN,{
+	mes "[Drunken Man]";
+	mes "*Hiccups* Oh, I'm the owner here.";
+	mes "Oh wait, am I in the pub or someplace else? Zzz...";
+	close;
+}
+
+job_gun,64,33,6	script	Anxious Man	4_M_ALCHE_A,{
+	mes "[Anxious Man]";
+	mes "Maybe I'm in the wrong place. This place doesn't look like a pub.";
+	close;
+}
+
+job_gun,86,29,3	script	Kulbertinov	4_M_REBELLION,{
+	if (Class == Job_Rebellion) {
+		mes "[Kulbertinov]";
+		mes "Do you want to see the boss?";
+		next;
+		if (select("Yes.:No.") == 1) {
+			close2;
+			warp "job_gun",220,130;
+			end;
+		}
+		end;
+	}
+	if (Class != Job_Gunslinger) {
+		mes "[Kulbertinov]";
+		mes "Are you looking for me?";
+		close;
+	}
+	switch( isbegin_quest(12340) ) {
+	case 0:
+		mes "[Kulbertinov]";
+		mes "Can I help you?";
+		close;
+	case 1:
+		mes "[Kulbertinov]";
+		mes "What do you want?";
+		next;
+		select("I'm mistaken for a criminal!.");
+		mes "[Kulbertinov]";
+		mes "Wait a minute... Mwah hah hah!";
+		next;
+		mes "^0000ffHe scans your face, then guffaws.^000000";
+		next;
+		mes "[Kulbertinov]";
+		mes "I'm sorry. For a moment, I thought Spike came back to life. He was found dead three days ago.";
+		next;
+		select("He was captured already?");
+		mes "[Kulbertinov]";
+		mes "Yes, and the bounty hunter was already paid. The news hasn't spread, and you're the spitting image of him. Go figure.";
+		next;
+		select("You have to do something!");
+		mes "[Kulbertinov]";
+		mes "I'm sorry, but I can't talk to every single bounty hunter for you. Of course, I'm willing to compensate for your inconvenience.";
+		next;
+		mes "[Kulbertinov]";
+		mes "Hey, how about you join our ranks? At the very last, you won't get shot.";
+		next;
+		select("You want me become a bounty hunter?");
+		mes "[Kulbertinov]";
+		mes "No, bounty hunting is just a pastime. We're the experts of all the firearms in the world.";
+		next;
+		mes "[Kulbertinov]";
+		mes "Carefree spirits!";
+		mes "Magical spitfires!";
+		mes "We call ourselves the ^0000ffRebellion^000000.";
+		next;
+		mes "[Kulbertinov]";
+		mes "You look like you know how to use a gun. How'd you like to join our ranks? You won't have to worry about other bounty hunters anymore too.";
+		next;
+		if (select("Let me think it over.:I don't think I have a choice.") == 1) {
+			mes "[Kulbertinov]";
+			mes "You can think it over and over, but the answer won't change. Just take the offer.";
+		}
+		else {
+			mes "[Kulbertinov]";
+			mes "Good thinking. Might as well do it now and get it over with.";
+		}
+		next;
+		mes "[Kulbertinov]";
+		mes "Talk to Enwin Conick. She guides drifting spirits like you to the way of the Rebellion. I'll send word to her. Ah, and don't point your gun at her.";
+		completequest 12340;
+		setquest 12341;// Rebellion Job Change Quest
+		close2;
+		warp "job_gun",19,15;
+		end;
+	case 2:
+		mes "[Kulbertinov]";
+		mes "Do you have business with Elwin Conick?";
+		next;
+		if (select("No.:Send me to Elwin Conick.") == 1) {
+			mes "[Kulbertinov]";
+			mes "All right. Care for a shot of vodka?";
+			close;
+		}
+		mes "[Kulbertinov]";
+		mes "Okay, I'll let her know.";
+		close2;
+		warp "job_gun",19,15;
+		end;
+	}
+}
+
+job_gun,19,24,3	script	Elwin Conick#1	4_F_REBELLION,{
+	if (Class != Job_Gunslinger) {
+		mes "[Elwin Conick]";
+		mes "If you don't want to join Rebellions, just get out.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	if (isbegin_quest(12341) == 1) {
+		mes "[Elwin Conick]";
+		mes "Do you to join us Rebellions?";
+		next;
+		mes "^0000ffThe short woman with keen eyes stares into your eyes.^000000";
+		next;
+		mes "[Elwin Conick]";
+		mes "Sign here.";
+		next;
+		mes "^0000ffThe undersigned party '_____' will not speak of the test even if he or she suffers injury, mutilation, or death in an unforeseen accident that may occur during the test.^000000";
+		next;
+		select("WHAT?!");
+		mes "[Elwin Conick]";
+		mes "Do you want join us or not?";
+		next;
+		if (select("I give up.:...I'll sign.") == 1) {
+			mes "[Elwin Conick]";
+			mes "Your choice.";
+			close2;
+			warp "job_gun",81,29;
+			end;
+		}
+		mes "[Elwin Conick]";
+		mes "Good. Now, follow me.";
+		close2;
+		warp "job_gun",117,41;
+		end;
+	}
+	if (isbegin_quest(12342) == 1) {
+		mes "[Elwin Conick]";
+		mes "Do you want to try again?";
+		next;
+		if (select("I give up.:Do it.") == 1) {
+			mes "[Elwin Conick]";
+			mes "Your choice.";
+			close2;
+			warp "job_gun",81,29;
+			end;
+		}
+		mes "[Elwin Conick]";
+		mes "Follow me.";
+		close2;
+		warp "job_gun",117,41;
+		end;
+	}
+	if (isbegin_quest(12343) > 0) {
+		mes "[Elwin Conick]";
+		if (isbegin_quest(12343) == 1)
+			mes "You still have Ivan's shooting test, do you want to try again?";
+		else
+			mes "Ivan's shooting test have not finished yet, do you want to try again?";
+		next;
+		if (select("I give up.:Do it.") == 1) {
+			mes "[Elwin Conick]";
+			mes "It's not worth to give up, now go out and relax.";
+			close2;
+			warp "job_gun",81,29;
+			end;
+		}
+		mes "[Elwin Conick]";
+		mes "Remember to give your best.";
+		close2;
+		warp "job_gun",120,130;
+		end;
+	}
+	if (isbegin_quest(12345) == 1) {
+		mes "[Elwin Conick]";
+		mes "Ivan is waiting for you, go find him.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	mes "[Elwin Conick]";
+	mes "You have no more test to take. Why don't you go out and have a drink?";
+	close2;
+	warp "job_gun",81,29;
+	end;
+}
+
+job_gun,117,46,3	script	Elwin Conick#2	4_F_REBELLION,{
+	if (Class != Job_Gunslinger) {
+		mes "[Elwin Conick]";
+		mes "If you don't want to join Rebellions, just get out.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	.@emt_chk = getstatus(SC_MONSTER_TRANSFORM,1);
+	.@quest_12341 = isbegin_quest(12341);
+	.@quest_12342 = isbegin_quest(12342);
+	if (.@emt_chk == 3169) {
+		mes "^0000ffYou are already in the test form. If you have finished all your tests, report to Elwin Conick in the Assembly Room^000000.";
+		close;
+	}
+	if (.@emt_chk) {
+		mes "[Elwin Conick]";
+		mes "Look at yourself, do you really want to test?";
+		next;
+		mes "^0000ffElwin see you turn into another form and she is very angry. Wait for your current form ends, and then find her again.^000000";
+		next;
+		if (select("Wait.:Go away.") == 2) {
+			mes "[Elwin Conick]";
+			mes "Come back when you aren't in any form.";
+			close2;
+			warp "job_gun",81,29;
+			end;
+		}
+		mes "[Elwin Conick]";
+		mes "It's not worth to give up, now go out and relax.";
+		close;
+	}
+	if (.@quest_12341 == 1 || .@quest_12342 == 1) {
+		if (countitem(6746)) {
+			mes "[Elwin Conick]";
+			mes "Any leftover Steel Artifacts must be returned after the test.";
+			delitem 6746,countitem(6746);// Steel_Article
+			close;
+		}
+		if (countitem(6747)) {
+			mes "[Elwin Conick]";
+			mes "Any leftover Steel Artifacts must be returned after the test.";
+			delitem 6747,countitem(6747);// Steel_Article_
+			close;
+		}
+		if ((countitem(13118) - isequipped(13118)) > 0) {
+			mes "[Elwin Conick]";
+			mes "Time over. You failed the test. Let me take all your leftover test materials.";
+			delitem 13118,1;// Tiny_Flame
+			close;
+		}
+		if (.@quest_12342 == 1)
+			.@menu$ = "Got it.";
+		else {
+			.@menu$ = "Okay.";
+			setquest 12342;// Rebellion Job Change Quest
+			completequest 12341;
+		}
+		mes "[Elwin Conick]";
+		mes "Listen up. I'm not going to great lengths trying to explain the test to you.";
+		next;
+		select( .@menu$ );
+		mes "[Elwin Conick]";
+		if (.@quest_12341 == 1) {
+			mes "This is where the firearm molds are cast. Everywhere you can see Steel Artifacts are being produced.";
+			next;
+			mes "[Elwin Conick]";
+			mes "We Rebellions are weapon experts at heart. Here you will learn to create and assemble firearms.";
+			next;
+			mes "[Elwin Conick]";
+			mes "You'll be asked to control the furnace controller near the entrance and select 5 standard Steel Artifacts.";
+			next;
+			mes "[Elwin Conick]";
+			mes "You'll then take them to the next Assembly Room and assemble them info a firearm. You'll be given 3 minutes to do all that. You'd better be fast and focused, or you will fail the test.";
+			next;
+			mes "[Elwin Conick]";
+			mes "I'll be in the next room, waiting for you to bring me a complete firearm. To check the elapsed time, you'll be transformed into a different job. ^0000ffIf you pass 3 minutes and turn back to normal, go back to me and start the test again.^000000.";
+		}
+		else {
+			mes "You'll be asked to control switches on the machine and select 5 standard Steel Artifacts.";
+			next;
+			mes "[Elwin Conick]";
+			mes "You'll then take them to the next Assembly Room and assemble them into a complete firearm. You'll be given 3 minutes to finish all that. ^0000ffTo check the elapsed time, you'll be transformed into a different job^000000.";
+			next;
+			mes "[Elwin Conick]";
+			mes "I'll be in the next room, waiting for you to bring me a complete firearm. Remember, ^0000ffyou fail the test when your transformation expires after 3 minutes^000000.";
+		}
+		transform 3169,180000;
+		close;
+	}
+	mes "[Elwin Conick]";
+	mes "Ah? Are you lost? You need to register first and then get back here.";
+	close2;
+	warp "job_gun",81,29;
+	end;
+}
+
+job_gun,198,39,3	script	Elwin Conick#3	4_F_REBELLION,{
+	if (Class != Job_Gunslinger) {
+		mes "[Elwin Conick]";
+		mes "If you don't want to join Rebellions, just get out.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	if (isbegin_quest(12342) == 1) {
+		.@emt_chk = getstatus(SC_MONSTER_TRANSFORM,1);
+		if (.@emt_chk == 3169) {
+			if ((countitem(13118) - isequipped(13118)) < 1) {// don't count if equipped
+				mes "[Elwin Conick]";
+				mes "Are you done? I don't see any completed firearm in your inventory.";
+				close;
+			}
+			mes "[Elwin Conick]";
+			mes "It's shoddy but not bad, given the time. You passed.";
+			delitem 13118,1;// Tiny_Flame
+			next;
+			mes "[Elwin Conick]";
+			mes "Let me take all your leftover test materials.";
+			delitem 6746,countitem(6746);// Iron_Artifact
+			delitem 6747,countitem(6747);// Steel_Artifact
+			next;
+			mes "[Elwin Conick]";
+			mes "Now you can move on to the next course. Ivan Sidorenko will oversee your test.";
+			completequest 12342;
+			close2;
+			warp "job_gun",120,133;
+			end;
+		}
+		if (.@emt_chk) {
+			mes "[Elwin Conick]";
+			mes "Look at yourself, do you really want to test?";
+			next;
+			mes "^0000ffElwin see you turn into another form and she is very angry. Wait for your current form ends, and then find her again.^000000";
+			next;
+			if (select("Wait.:Go away.") == 2) {
+				mes "[Elwin Conick]";
+				mes "Come back when you aren't in any form.";
+				close2;
+				warp "job_gun",81,29;
+				end;
+			}
+			mes "[Elwin Conick]";
+			mes "It's not worth to give up, now go out and relax.";
+			close;
+		}
+		mes "[Elwin Conick]";
+		mes "Time over. You failed the test. Let me take all your leftover test materials.";
+		delitem 6746,countitem(6746);// Iron_Artifact
+		delitem 6747,countitem(6747);// Steel_Artifact
+		delitem 13118,(countitem(13118) - isequipped(13118));// Tiny_Flame
+		next;
+		mes "[Elwin Conick]";
+		mes "Let's start again.";
+		close2;
+		warp "job_gun",117,41;
+		end;
+	}
+	mes "[Elwin Conick]";
+	mes "Ah? Are you lost? You need to register first and then get back here.";
+	close2;
+	warp "job_gun",81,29;
+	end;
+}
+
+job_gun,165,18,0	script	Furnace Controller#1	CLEAR_NPC,{
+	if (Class != Job_Gunslinger) {
+		mes "Only authorized user can do the operation.";
+		close;
+	}
+	if (getstatus(SC_MONSTER_TRANSFORM,1) == 3169) {// J_REB_SHECIL1
+		if (isbegin_quest(12342) == 1) {
+			mes "Do you want to dredge the mold up from the furnace?";
+			next;
+			if (select("Quit.:Begin.") == 1) {
+				mes "Switch to the Standby mode.";
+				close;
+			}
+			mes "Initializing Furnace Controller ZX-3100...";
+			disablenpc "Furnace Controller#1";
+			donpcevent "Furnace Controller#2::OnStart";
+			close;
+		}
+	}
+	mes "Not an authorized user. Abort the operation.";
+	close;
+}
+
+job_gun,214,36,0	script	Auto Anvil#1	CLEAR_NPC,{
+	if (Class != Job_Gunslinger) {
+		mes "Only authorized user can do the operation.";
+		close;
+	}
+	if ((countitem(13118) - isequipped(13118)) > 0) {// Tiny_Flame
+		mes "Unauthorized firearm creation has been detected. Report to Manager Elwin.";
+		close;
+	}
+	if (getstatus(SC_MONSTER_TRANSFORM,1) == 3169) {
+		if (countitem(6747) < 5) {// Steel_Article_
+			mes "You do not have standard Steel Artifacts.";
+			close;
+		}
+		if (isbegin_quest(12342) == 1) {
+			mes "Do you want to use the auto anvil and shape the standard Steel Artifacts into a firearm?";
+			next;
+			if (select("Quit.:Begin.") == 1) {
+				mes "For your safety, please step away from the auto anvil.";
+				close;
+			}
+			if (rand(1,10) > 6) {
+				mes "You have successfully created a firearm using the auto anvil. ^ff0000Please report before your transformation expires^000000.";
+				specialeffect EF_REPAIRWEAPON;
+				getitem 13118,1;// Tiny_Flame
+			}
+			else {
+				mes "Failed to create a firearm.";
+				specialeffect EF_SUI_EXPLOSION;
+			}
+			delitem 6747,5;// Steel_Article_
+			close;
+		}
+	}
+	mes "Not an authorized user. Abort the operation.";
+	close;
+}
+
+job_gun,165,18,0	script	Furnace Controller#2	CLEAR_NPC,{
+	mes "The system is busy dredging a completed mold from the furnace.";
+	close;
+
+OnStart:
+	enablenpc "Furnace Controller#2";
+	sleep 3000;
+	mapannounce "job_gun","Furnace Controller: Dredging a mold up from the furnace... Workers, stand by at the production line.",bc_map,"0x00ff44";
+	sleep 500;
+	for ( .@i = 0; .@i < 30; ++.@i ) {
+		.@eff_rnd = rand(1,100);
+		if (.@eff_rnd < 33)
+			donpcevent "Heating Furnace#3::OnStart";
+		else if (.@eff_rnd > 66)
+			donpcevent "Heating Furnace#4::OnStart";
+		else
+			donpcevent "Heating Furnace#5::OnStart";
+		sleep 200;
+		.@d_itemx = rand(127,143);
+		.@d_itemy = rand(26,29);
+		makeitem 6746,1,"job_gun",.@d_itemx,.@d_itemy;// Steel_Article
+		if (rand(1,10) > 7)
+			makeitem 6747,1,"job_gun",.@d_itemx,.@d_itemy;// Steel_Article_
+		sleep 500;
+	}
+	sleep 2000;
+	mapannounce "job_gun","Furnace Controller: Finishing the operation... Entering Standby mode in 15 seconds.",bc_map,"0x00ff44";
+	sleep 15000;
+	disablenpc "Furnace Controller#2";
+	enablenpc "Furnace Controller#1";
+	end;
+OnInit:
+	disablenpc "Furnace Controller#2";
+	end;
+}
+
+job_gun,130,31,0	script	Heating Furnace#3	CLEAR_NPC,{
+	end;
+OnStart:
+	specialeffect EF_FIREPILLAR;
+	sleep 500;
+	specialeffect EF_FIREPILLARBOMB;
+	end;
+}
+job_gun,136,31,0	duplicate(Heating Furnace#3)	Heating Furnace#4	CLEAR_NPC
+job_gun,141,31,0	duplicate(Heating Furnace#3)	Heating Furnace#5	CLEAR_NPC
+
+job_gun,120,138,3	script	Ivan Sidorenko#1	4_M_REBELLION,{
+	if (Class != Job_Gunslinger) {
+		mes "[Ivan Sidorenko]";
+		mes "This is shooting test area, you can't come here as you like.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	if (isbegin_quest(12342) < 2) {
+		mes "[Ivan Sidorenko]";
+		mes "There seems to be a mistake, you can't stay here.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	if (isbegin_quest(12343) == 0) {
+		mes "[Ivan Sidorenko]";
+		mes "Hey, stay focused--we're using live ammo here, and you can get shot anytime.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "Let me make this quick. Basically you'll be running in this shooting range consisting of 5 sections.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "The objective is to find enemies in the midst of a crowd quickly and without fail.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "Among all the targets, you must shoot only the ^0000ffStandard-issue Targets^000000. If you make a mistake, you'll lose points.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "Let's try. There aren't many ^0000ffStandard-issue Targets^000000, so keep your eyes peeled.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "^0000ffYou have 3 minutes to finish this test. If you can't finish before your transformation expires^000000, you'll fail. If that happens, just follow the path back to me.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "^0000ffYou'll fail if you miss a Standard-issue Target, or shoot 3 incorrect targets^000000. Let's get started.";
+		setquest 12343;// Rebellion Job Change Quest
+		setquest 12344;// Rebellion Job Change Quest
+		transform 3169,180000;
+		close2;
+		warp "job_gun",102,146;
+		end;
+	}
+	if (isbegin_quest(12343) == 1) {
+		if (checkquest(12343,HUNTING) == 2)
+			.@j_r_s = 10;
+		if (checkquest(12344,HUNTING) == 2)
+			.@j_r_f = 2;
+		if (getstatus(SC_MONSTER_TRANSFORM,1) != 3169)
+			.@j_r_t = 5;
+		.@j_r_c = .@j_r_s - .@j_r_f - .@j_r_t;
+		if (.@j_r_c > 9) {
+			mes "[Ivan Sidorenko]";
+			mes "Good job. I didn't think you could pass so quickly.";
+			completequest 12343;
+			completequest 12344;
+			setquest 12345;// Rebellion Job Change Quest
+			next;
+			mes "[Ivan Sidorenko]";
+			mes "You may leave and wait outside. I'll bring other instructors' evaluation reports to see you.";
+			close2;
+			warp "job_gun",210,132;
+			end;
+		}
+		if (.@j_r_c == 8) {
+			mes "[Ivan Sidorenko]";
+			mes "You're quick enough, but you shot too many incorrect targets. You failed.";
+		}
+		else if (.@j_r_c == 5) {
+			mes "[Ivan Sidorenko]";
+			mes "You accurate enough, but you took too much time. Slow Rebellions don't survive long enough.";
+		}
+		else if (.@j_r_c < 5) {
+			mes "[Ivan Sidorenko]";
+			mes "You failed at both speed and accuracy. How did you survive this long?";
+		}
+		else {
+			mes "[Ivan Sidorenko]";
+			mes "There's a problem, the statistic seems to be wrong. Well... This can happen sometimes.";
+		}
+		erasequest 12343;
+		erasequest 12344;
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "Let's try again. Be more careful this time.";
+		setquest 12343;
+		setquest 12344;
+		transform 3169,180000;
+		close2;
+		warp "job_gun",102,146;
+		end;
+	}
+	mes "[Ivan Sidorenko]";
+	mes "How did you not leave?";
+	next;
+	mes "[Ivan Sidorenko]";
+	mes "You may leave and wait outside. I'll bring other instructors' evaluation reports to see you.";
+	close2;
+	warp "job_gun",210,132;
+	end;
+}
+
+job_gun,1,4,0	script	#target	CLEAR_NPC,{
+	end;
+OnStart:
+	killmonster "job_gun","#target::OnMyMobDead";
+OnInit:
+OnMyMobDead:
+	hideonnpc "#target";
+	while( mobcount("job_gun","#target::OnMyMobDead") < 16 ) {
+		.@m_rg = rand(1,5);
+		if (.@m_rg == 1)
+			monster "job_gun",rand(88,99),rand(143,147),"Standard-issue Target",3169,1,"#target::OnMyMobDead";
+		else if (.@m_rg == 2)
+			monster "job_gun",rand(92,96),rand(95,122),"Standard-issue Target",3169,1,"#target::OnMyMobDead";
+		else if (.@m_rg == 3)
+			monster "job_gun",rand(143,159),rand(99,100),"Standard-issue Target",3169,1,"#target::OnMyMobDead";
+		else if (.@m_rg == 4)
+			monster "job_gun",rand(157,158),rand(137,160),"Standard-issue Target",3169,1,"#target::OnMyMobDead";
+		else
+			monster "job_gun",rand(119,134),rand(156,160),"Standard-issue Target",3169,1,"#target::OnMyMobDead";
+	}
+	end;
+}
+
+job_gun,1,5,0	script	#nontarget	CLEAR_NPC,{
+	end;
+OnStart:
+	killmonster "job_gun","#nontarget::OnMyMobDead";
+OnInit:
+OnMyMobDead:
+	hideonnpc "#nontarget";
+	while( mobcount("job_gun","#nontarget::OnMyMobDead") < 56 ) {
+		.@m_rg = rand(1,5);
+		if (.@m_rg == 1)
+			monster "job_gun",rand(88,99),rand(143,147),"Defective Target",3170,1,"#nontarget::OnMyMobDead";
+		else if (.@m_rg == 2)
+			monster "job_gun",rand(92,96),rand(95,122),"Defective Target",3170,1,"#nontarget::OnMyMobDead";
+		else if (.@m_rg == 3)
+			monster "job_gun",rand(143,159),rand(99,100),"Defective Target",3170,1,"#nontarget::OnMyMobDead";
+		else if (.@m_rg == 4)
+			monster "job_gun",rand(157,158),rand(137,160),"Defective Target",3170,1,"#nontarget::OnMyMobDead";
+		else
+			monster "job_gun",rand(119,134),rand(156,160),"Defective Target",3170,1,"#nontarget::OnMyMobDead";
+	}
+	end;
+}
+
+job_gun,220,132,3	script	Ivan Sidorenko#2	10062,{
+	if (!checkweight(1201,1)) {
+		mes "You have too many items, please reduce them to continue.";
+		close;
+	}
+	if ((MaxWeight - Weight) < 1000) {
+		mes "The items in your inventory are weighing you down. Lighten your weight first.";
+		close;
+	}
+	if (isbegin_quest(12345) == 0) {
+		mes "[Ivan Sidorenko]";
+		mes "There must have been a mistake. You aren't supposed to remain here.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	if (Class == Job_Gunslinger) {
+		if (BaseLevel < 99 || JobLevel < 70) {
+			mes "[Ivan Sidorenko]";
+			mes "Huh? You look so weak? I have nothing more to say.";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[Ivan Sidorenko]";
+			mes "Oh no~ You still have Skill Points.";
+			close;
+		}
+		mes "[Ivan Sidorenko]";
+		mes "Kulbertinov, Elwin, and I've evaluated your Rebellion test results.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "And...";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "You've met all our requirements including the attitude and the test performance.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "That's right, you're now a member of the Rebellion. Get ready to be wowed.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "And Elwin wants you to have this. Take good care of it. He made it for you.";
+		jobchange Job_Rebellion;
+		completequest 12345;
+		getitem 13119,1;// Freedom_Flame
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "See you later.";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	if (Class == Job_Rebellion) {
+		mes "[Ivan Sidorenko]";
+		mes "This life should be fun, not boring.";
+		next;
+		mes "[Ivan Sidorenko]";
+		mes "And by becoming a Rebellion your life should be upgraded. So, go and create a great journey, make us proud!";
+		close2;
+		warp "job_gun",81,29;
+		end;
+	}
+	mes "[Ivan Sidorenko]";
+	mes "Do you have something to say to me, don't you?";
+	close;
+}
+
+job_gun,220,138,4	shop	Prop Vending Machine	2_VENDING_MACHINE1,13210:-1,13211:-1,13212:-1,13213:-1,13214:-1,7663:-1,7664:-1,7665:-1
+
+job_gun,216,138,4	script	Butler Karlex	1_M_01,{
+	mes "[Butler Karlex]";
+	mes "Use this temporary storage to keep your items safe while on the Advancement test.";
+	next;
+	.@s = select("Quit.:Open the storage.");
+	mes "[Butler Karlex]";
+	mes "Thank you for using the service.";
+	close2;
+	if (.@s == 2)
+		openstorage;
+	end;
+}
+
+job_gun,56,26,0	warp	rebelroom#1	2,2,einbroch,49,97
+job_gun,18,10,0	warp	rebelroom#2	2,2,job_gun,81,29
+job_gun,165,22,0	warp	rebelroom#3	2,2,job_gun,196,35
+job_gun,197,49,0	warp	rebelroom#4	2,2,job_gun,157,21
+job_gun,88,144,0	warp	shootingrange#1	3,3,job_gun,93,123
+job_gun,105,97,0	warp	shootingrange#2	3,3,job_gun,125,98
+job_gun,156,115,0	warp	shootingrange#3	3,3,job_gun,157,137
+job_gun,152,154,0	warp	shootingrange#4	3,3,job_gun,135,154
+job_gun,130,146,0	warp	shootingrange#5	3,3,job_gun,120,130
+
+
+job_gun,1,1,0	script	Admin1	CLEAR_NPC,{
+	callfunc "F_GM_NPC";
+	if (callfunc("F_GM_NPC",1854,0) != 1)
+		end;
+	mes "[Time Manager]";
+	mes "What time would you like to return?";
+	next;
+	switch( select("Cancel:Test monster spawn:Start from beginning:Furnace Zone:Shooting Zone:Complete the test") ) {
+	case 1:
+		end;
+	case 2:
+		donpcevent "#target::OnStart";
+		donpcevent "#nontarget::OnStart";
+		end;
+	case 3:
+		callsub S_Quest,0,0;
+	case 4:
+		callsub S_Quest,12341,12341;
+	case 5:
+		callsub S_Quest,12342,12342;
+	case 6:
+		callsub S_Quest,12345,12344;
+	}
+	end;
+
+S_Quest:
+	setarray .@arguments[0], getarg(0), getarg(1);
+	for ( .@quest = 12340; .@quest <= 12345; ++.@quest ) {
+		if (isbegin_quest(.@quest) > 0)
+			erasequest .@quest;
+		if (.@quest <= .@arguments[0])
+			setquest .@quest;
+		if (.@quest <= .@arguments[1])
+			completequest .@quest;
+	}
+	end;
+}

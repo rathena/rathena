@@ -28,6 +28,7 @@ job3_gen01	mapflag	nosave	SavePoint
 // Ext
 job3_sha01	mapflag	nosave	SavePoint
 job_ko	mapflag	nosave	SavePoint
+job_gun	mapflag	nosave	SavePoint
 
 //Guild Dungeons ==============================
 gld_dun01_2	mapflag	nosave	SavePoint

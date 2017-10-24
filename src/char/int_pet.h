@@ -4,6 +4,10 @@
 #ifndef _INT_PET_SQL_H_
 #define _INT_PET_SQL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_pet;
 
 void inter_pet_sql_final(void);
@@ -14,5 +18,9 @@ int inter_pet_sql_init(void);
 //extern char pet_txt[256];
 
 int inter_pet_tosql(int pet_id, struct s_pet *p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INT_PET_SQL_H_ */

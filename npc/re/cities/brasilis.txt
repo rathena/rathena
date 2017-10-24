@@ -28,7 +28,7 @@ alberta,246,82,3	script	Crewman#bra2	100,{
 	mes "[Crewman]";
 	mes "We recently found a new ocean route to get there easily.";
 	if (VIP_SCRIPT) {
-		set .@cost, vip_status(1)?1000:10000;
+		set .@cost, vip_status(VIP_STATUS_ACTIVE)?1000:10000;
 		mes "It's just 10,000 zeny for a round trip, and 1,000 for VIP! So do you want to go?"; //custom translation (VIP)
 	} else {
 		set .@cost,10000;

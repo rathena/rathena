@@ -914,7 +914,7 @@
 6916,499,100	// Piece_Of_Soul_Monkey
 6917,499,100	// Piece_Of_Soul_Chicken
 6919,499,100	// Honor_Proof
-//6920,467,100	//
+6920,499,100	// Rune_Magic_Powder
 6923,499,100	// Bright_Fire_Lights
 6925,499,100	// Letter_Of_Prisoner
 6926,499,100	// Rune-Midgard_History_Book
@@ -3671,6 +3671,7 @@
 19051,475,100	// Warrior_Moon_Cat
 19052,507,100	// Sigruns_Wing
 19053,475,100	// Fighter_Moon_Cat
+19084,467,100	// Parfaille_Vigilante_Hat
 19523,475,100	// Donation_Ribbon
 19531,475,100	// C_Cube_Mask
 19532,475,100	// C_Red_Bunny_Band
@@ -3860,6 +3861,12 @@
 //22952,475,100	//
 23177,475,100	// Kafra_Card_
 23196,475,100	// Shining_Blue_Lucky_Egg
+25043,499,100	// Thorny_Vine_Flute
+25045,499,100	// Luxurious_Cloth
+25046,499,100	// Boarding_Pass
+25047,499,100	// Kahlunac
+25048,499,100	// Hearty_Lunchbox
+25049,499,100	// Basilac_Clam
 25132,499,100	// Pumpkin_Deco
 25133,499,100	// Dried_White_Stem
 25143,499,100	// Gift_Stuffed_Doll

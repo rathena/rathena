@@ -4,16 +4,23 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
+#include "../common/cbasetypes.h"
 #include "../common/conf.h"
 #include "../common/mmo.h"
 #include "../common/sql.h"
 
+#ifdef __cplusplus // C codes can't see this
+#include <memory>
+#include <string>
+#include <unordered_map>
+
+extern "C" {
+
 struct Inter_Config {
-	char cfgFile[128];				  ///< Inter-Config file
-	config_t cfg;					  ///< Config
-	struct s_storage_table *storages; ///< Storage name & table information
-	uint8 storage_count;			  ///< Number of available storage
+	std::string cfgFile; ///< Inter-Config file
+	std::unordered_map< uint8, std::shared_ptr<s_storage_table> > storages; ///< Storage name & table information
 };
+#endif
 
 extern struct Inter_Config interserv_config;
 
@@ -37,5 +44,9 @@ extern Sql* lsql_handle;
 
 void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string);
 int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _INTER_SQL_H_ */

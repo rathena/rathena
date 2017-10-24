@@ -4,6 +4,10 @@
 #ifndef _ITEMDB_H_
 #define _ITEMDB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../common/db.h"
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
 #include "map.h"
@@ -93,34 +97,33 @@ enum item_itemid
 	ITEMID_CATNIP_FRUIT					= 11602,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
-	ITEMID_BATTLE_MANUAL				= 12208,
-	ITEMID_BUBBLE_GUM					= 12210,
 	ITEMID_GIANT_FLY_WING				= 12212,
 	ITEMID_NEURALIZER					= 12213,
 	ITEMID_M_CENTER_POTION				= 12241,
 	ITEMID_M_AWAKENING_POTION			= 12242,
 	ITEMID_M_BERSERK_POTION				= 12243,
-	ITEMID_COMP_BATTLE_MANUAL			= 12263,
-	ITEMID_THICK_BATTLE_MANUAL			= 12312,
 	ITEMID_N_FLY_WING					= 12323,
 	ITEMID_N_BUTTERFLY_WING				= 12324,
 	ITEMID_NOVICE_MAGNIFIER				= 12325,
 	ITEMID_ANCILLA						= 12333,
 	ITEMID_DUN_TELE_SCROLL3				= 12352,
 	ITEMID_REINS_OF_MOUNT				= 12622,
-	ITEMID_COMP_BUBBLE_GUM				= 12264,
 	ITEMID_NOBLE_NAMEPLATE				= 12705,
+	ITEMID_SILVER_BULLET				= 13201,
+	ITEMID_SLUG_AMMUNITION_L			= 13210,
+	ITEMID_SLUG_AMMUNITION_M			= 13211,
+	ITEMID_SLUG_AMMUNITION_H			= 13212,
+	ITEMID_SLUG_AMMUNITION_SH			= 13213,
+	ITEMID_SLUG_AMMUNITION_XH			= 13214,
+	ITEMID_PURIFICATION_BULLET			= 13220,
+	ITEMID_SILVER_BULLET_				= 13221,
 	ITEMID_DUN_TELE_SCROLL1				= 14527,
-	ITEMID_BATTLE_MANUAL25				= 14532,
-	ITEMID_BATTLE_MANUAL100				= 14533,
-	ITEMID_BATTLE_MANUAL300				= 14545,
 	ITEMID_DUN_TELE_SCROLL2				= 14581,
 	ITEMID_WOB_RUNE						= 14582,
 	ITEMID_WOB_SCHWALTZ					= 14583,
 	ITEMID_WOB_RACHEL					= 14584,
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
-	ITEMID_JOB_MANUAL50					= 14592,
 };
 
 ///Rune Knight
@@ -717,7 +720,6 @@ enum e_random_item_group {
 	IG_SOMETHING_CANDY_HOLDER,
 	IG_MYSTERIOUS_EGG,
 	IG_AGUST_LUCKY_SCROLL,
-	IG_RUNE,
 	IG_ELEMENT,
 	IG_POISON,
 	IG_CASH_FOOD,
@@ -775,7 +777,7 @@ struct s_item_group_db
 };
 
 /// Struct of Roulette db
-struct s_roulette_db {
+extern struct s_roulette_db {
 	unsigned short *nameid[MAX_ROULETTE_LEVEL], /// Item ID
 		           *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
@@ -825,7 +827,7 @@ struct item_data
 		unsigned available : 1;
 		uint32 no_equip;
 		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume : 1;	// Signifies items that are not consumed immediately upon double-click [Skotlex]
+		unsigned delay_consume : 2;	// 1 - Signifies items that are not consumed immediately upon double-click; 2 - Signifies items that are not removed on consumption [Skotlex]
 		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
 		unsigned buyingstore : 1;
@@ -953,5 +955,9 @@ void itemdb_reload(void);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ITEMDB_H_ */

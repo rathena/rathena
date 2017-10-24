@@ -61,7 +61,7 @@ struct timer_func_list {
 } *tfl_root = NULL;
 
 /// Sets the name of a timer function.
-int add_timer_func_list(TimerFunc func, char* name)
+int add_timer_func_list(TimerFunc func, const char* name)
 {
 	struct timer_func_list* tfl;
 
@@ -198,7 +198,7 @@ unsigned int gettick(void)
 static void push_timer_heap(int tid)
 {
 	BHEAP_ENSURE(timer_heap, 1, 256);
-	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, swap);
+	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, SWAP);
 }
 
 /*==========================
@@ -335,9 +335,9 @@ int settick_timer(int tid, unsigned int tick)
 		return (int)tick;// nothing to do, already in propper position
 
 	// pop and push adjusted timer
-	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP, swap);
+	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP, SWAP);
 	timer_data[tid].tick = tick;
-	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, swap);
+	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, SWAP);
 	return (int)tick;
 }
 
@@ -357,7 +357,7 @@ int do_timer(unsigned int tick)
 			break; // no more expired timers to process
 
 		// remove timer
-		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP, swap);
+		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP, SWAP);
 		timer_data[tid].type |= TIMER_REMOVE_HEAP;
 
 		if( timer_data[tid].func )
