@@ -206,7 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.c" />
-    <ClCompile Include="atcommand.c" />
+    <ClCompile Include="atcommand.cpp" />
     <ClCompile Include="battle.c" />
     <ClCompile Include="battleground.c" />
     <ClCompile Include="buyingstore.c" />

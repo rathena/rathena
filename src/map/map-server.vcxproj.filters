@@ -148,7 +148,7 @@
     <ClCompile Include="achievement.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="atcommand.c">
+    <ClCompile Include="atcommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle.c">

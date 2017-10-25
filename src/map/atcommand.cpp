@@ -39,6 +39,9 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
@@ -6240,7 +6243,7 @@ ACMD_FUNC(autolootitem)
 ACMD_FUNC(autoloottype)
 {
 	uint8 action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
-	enum item_types type = -1;
+	enum item_types type;
 	int ITEM_MAX = 1533;
 
 	nullpo_retr(-1, sd);
@@ -6317,7 +6320,7 @@ ACMD_FUNC(autoloottype)
 				clif_displaymessage(fd, msg_txt(sd,1490)); // Item types on your autoloottype list:
 				while (i < IT_MAX) {
 					if (sd->state.autoloottype&(1<<i)) {
-						sprintf(atcmd_output, "  '%s' {%d}", itemdb_typename(i), i);
+						sprintf(atcmd_output, "  '%s' {%d}", itemdb_typename(static_cast<item_types>(i)), i);
 						clif_displaymessage(fd, atcmd_output);
 					}
 					i++;
@@ -8554,7 +8557,7 @@ ACMD_FUNC(clone)
 		y = sd->bl.y;
 	}
 
-	if((x = mob_clone_spawn(pl_sd, sd->bl.m, x, y, "", master, 0, flag?1:0, 0)) > 0) {
+	if((x = mob_clone_spawn(pl_sd, sd->bl.m, x, y, "", master, MD_NONE, flag?1:0, 0)) > 0) {
 		clif_displaymessage(fd, msg_txt(sd,128+flag*2));	// Evil Clone spawned. Clone spawned. Slave clone spawned.
 		return 0;
 	}
@@ -10649,7 +10652,7 @@ static void atcommand_config_read(const char* config_filename)
 		}
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' command aliases in '"CL_WHITE"%s"CL_RESET"'.\n", num_aliases, config_filename);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' command aliases in '" CL_WHITE "%s" CL_RESET "'.\n", num_aliases, config_filename);
 	return;
 }
 void atcommand_db_load_groups(int* group_ids) {
@@ -10699,8 +10702,8 @@ void atcommand_db_clear(void) {
 
 void atcommand_doload(void) {
 	atcommand_db_clear();
-	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
-	atcommand_alias_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
+	atcommand_db = stridb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), ATCOMMAND_LENGTH);
+	atcommand_alias_db = stridb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), ATCOMMAND_LENGTH);
 	atcommand_basecommands(); //fills initial atcommand_db with known commands
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
 }
@@ -10712,3 +10715,7 @@ void do_init_atcommand(void) {
 void do_final_atcommand(void) {
 	atcommand_db_clear();
 }
+
+#ifdef __cplusplus
+}
+#endif
