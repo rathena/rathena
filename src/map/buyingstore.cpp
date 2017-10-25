@@ -17,6 +17,10 @@
 
 #include <stdlib.h> // atoi
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
 static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove);
@@ -628,7 +632,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 			// Immediate save
 			chrif_save(sd, CSAVE_AUTOTRADE);
 
-			ShowInfo("Buyingstore loaded for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+			ShowInfo("Buyingstore loaded for '" CL_WHITE "%s" CL_RESET "' with '" CL_WHITE "%d" CL_RESET "' items at " CL_WHITE "%s (%d,%d)" CL_RESET "\n",
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		}
 		aFree(data);
@@ -641,7 +645,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 	}
 
 	if (fail != 0) {
-		ShowError("buyingstore_reopen: (Error:%d) Load failed for autotrader '"CL_WHITE"%s"CL_RESET"' (CID=%/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
+		ShowError("buyingstore_reopen: (Error:%d) Load failed for autotrader '" CL_WHITE "%s" CL_RESET "' (CID=%/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
 		map_quit(sd);
 	}
 }
@@ -742,7 +746,7 @@ void do_init_buyingstore_autotrade( void ) {
 			}
 			dbi_destroy(iter);
 
-			ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' buyingstore autotraders with '"CL_WHITE"%d"CL_RESET"' items.\n", db_size(buyingstore_autotrader_db), items);
+			ShowStatus("Done loading '" CL_WHITE "%d" CL_RESET "' buyingstore autotraders with '" CL_WHITE "%d" CL_RESET "' items.\n", db_size(buyingstore_autotrader_db), items);
 		}
 	}
 
@@ -803,3 +807,7 @@ void do_init_buyingstore(void) {
 	buyingstore_autotrader_db = uidb_alloc(DB_OPT_BASE);
 	buyingstore_nextid = 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
