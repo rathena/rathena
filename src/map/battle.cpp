@@ -26,6 +26,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
@@ -8629,3 +8633,7 @@ void do_final_battle(void)
 {
 	ers_destroy(delay_damage_ers);
 }
+
+#ifdef __cplusplus
+}
+#endif
