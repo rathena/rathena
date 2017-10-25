@@ -2446,7 +2446,7 @@ static bool battle_skill_get_damage_properties(uint16 skill_id, int is_splash)
 	int nk = skill_get_nk(skill_id);
 	if( !skill_id && is_splash ) //If flag, this is splash damage from Baphomet Card and it always hits.
 		nk |= NK_NO_CARDFIX_ATK|NK_IGNORE_FLEE;
-	return nk;
+	return nk > 0;
 }
 
 /*=============================
@@ -2660,7 +2660,7 @@ static bool attack_ignores_def(struct Damage wd, struct block_list *src, struct 
 		}
 	}
 
-	return (nk&NK_IGNORE_DEF);
+	return (nk&NK_IGNORE_DEF) > 0;
 }
 
 /*================================================
@@ -6673,11 +6673,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		}
 	}
 
-	switch(skill_id) {
-		default:
-			md.damage += battle_calc_cardfix(BF_MISC, src, target, nk, s_ele, 0, md.damage, 0, md.flag);
-			break;
-	}
+	md.damage += battle_calc_cardfix(BF_MISC, src, target, nk, s_ele, 0, md.damage, 0, md.flag);
 
 	if (sd && (i = pc_skillatk_bonus(sd, skill_id)))
 		md.damage += (int64)md.damage*i/100;
@@ -6719,15 +6715,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 	}
 
-	switch(skill_id) {
-		default:
-			md.damage = battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
-			if(map_flag_gvg2(target->m))
-				md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
-			else if(map[target->m].flag.battleground)
-				md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
-			break;
-	}
+	md.damage = battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
+	if(map_flag_gvg2(target->m))
+		md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
+	else if(map[target->m].flag.battleground)
+		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
 
 	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
