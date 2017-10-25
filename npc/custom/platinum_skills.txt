@@ -1,25 +1,19 @@
 //===== rAthena Script =======================================
 //= Platinum Skills
-//===== By: ==================================================
-//= Keichii, DarkChild
-//===== Current Version: =====================================
-//= 2.9
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Single NPC that assigns quests skills for all classes
 //===== Additional Comments: =================================
-//= 2.0 Added advanced classes by ShadowLady.
-//= 2.1 Added baby clases by Midas
-//= 2.2 Simplified Job Checks [Silentdragon]
-//= 2.3 Thehell? Cleaned up script removed the nastiness. Also added rebirth skills. [Spre]
+//= 1.0 Initial release. [Keichii] [DarkChild]
+//= 2.0 Added advanced classes. [ShadowLady]
+//= 2.1 Added baby classes. [Midas]
+//= 2.2 Simplified Job Checks. [Silentdragon]
+//= 2.3 Thehell? Cleaned up script, removed the nastiness. Also added rebirth skills. [Spre]
 //= 2.4 Added Advanced skills. [Spre]
 //= 2.5 Added dialog for if the user is none of the listed jobs. [Kisuka]
 //= 2.6 Fixed 2nd advanced classes not being able to get their advanced skills. [Ancyker]
 //= 2.7 Rewrote to give all correct skills to all proper classes. [Paradox924X]
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
-//= 2.9 Added New Skill MC_CARTDECORATE for Merchant Class. [mazvi] 
-//=	thanks to [anacondaqq] for packetver. 
+//= 2.9 Added MC_CARTDECORATE for Merchant class. [mazvi]
 //============================================================
 
 prontera,128,200,6	script	Platinum Skill NPC	94,{
