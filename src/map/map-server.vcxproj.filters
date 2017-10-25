@@ -154,7 +154,7 @@
     <ClCompile Include="battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battleground.c">
+    <ClCompile Include="battleground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="buyingstore.c">

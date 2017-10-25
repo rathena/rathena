@@ -208,7 +208,7 @@
     <ClCompile Include="achievement.c" />
     <ClCompile Include="atcommand.cpp" />
     <ClCompile Include="battle.cpp" />
-    <ClCompile Include="battleground.c" />
+    <ClCompile Include="battleground.cpp" />
     <ClCompile Include="buyingstore.c" />
     <ClCompile Include="cashshop.c" />
     <ClCompile Include="channel.c" />

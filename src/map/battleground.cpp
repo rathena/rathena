@@ -17,6 +17,10 @@
 #include "homunculus.h"
 #include "mercenary.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id
 
@@ -276,3 +280,7 @@ void do_final_battleground(void)
 {
 	bg_team_db->destroy(bg_team_db, NULL);
 }
+
+#ifdef __cplusplus
+}
+#endif
