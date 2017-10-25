@@ -16238,10 +16238,11 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 	nullpo_retv(sd);
 	nullpo_retv(nd);
 
-	npc_shop_currency_type(sd, nd, cost, true);
-
 	fd = sd->fd;
 	sd->npc_shopid = nd->bl.id;
+
+	npc_shop_currency_type(sd, nd, cost, true);
+
 	WFIFOHEAD(fd,offset+nd->u.shop.count*11);
 	WFIFOW(fd,0) = 0x287;
 	WFIFOW(fd,2) = offset+nd->u.shop.count*11;

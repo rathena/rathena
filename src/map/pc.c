@@ -594,17 +594,23 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
 
 	nd = map_id2nd(sd->npc_shopid);
 
-	if (!itemdb_cansell(item, pc_get_group_level(sd)))
-		return false;
-
 	if (battle_config.hide_fav_sell && item->favorite)
 		return false; //Cannot sell favs (optional config)
 
 	if (item->expire_time)
 		return false; // Cannot Sell Rental Items
 
-	if (nd && nd->subtype == NPCTYPE_ITEMSHOP && item->bound && battle_config.allow_bound_sell)
-		return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
+	if (nd && nd->subtype == NPCTYPE_ITEMSHOP) {
+		struct item_data *itd;
+
+		if (item->bound && battle_config.allow_bound_sell&ISR_BOUND)
+			return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
+		if ((itd = itemdb_search(item->nameid)) && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+			return true; // NPCTYPE_ITEMSHOP and sell restricted item config is sellable
+	}
+
+	if (!itemdb_cansell(item, pc_get_group_level(sd)))
+		return false;
 
 	if (item->bound && !pc_can_give_bounded_items(sd))
 		return false; // Don't allow sale of bound items

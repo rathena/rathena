@@ -737,6 +737,14 @@ enum e_random_item_group {
 	IG_SANTA_GIFT,
 };
 
+/// Enum for bound/sell restricted selling
+enum e_itemshop_restrictions {
+	ISR_NONE = 0x0,
+	ISR_BOUND = 0x1,
+	ISR_SELLABLE = 0x2,
+	ISR_ALL = 0x3,
+};
+
 ///Item combo struct
 struct item_combo
 {
