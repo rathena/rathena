@@ -160,7 +160,7 @@
     <ClCompile Include="buyingstore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cashshop.c">
+    <ClCompile Include="cashshop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="channel.c">

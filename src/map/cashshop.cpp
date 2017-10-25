@@ -11,6 +11,10 @@
 #include <string.h> // memset
 #include <stdlib.h> // atoi
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct cash_item_db cash_shop_items[CASHSHOP_TAB_MAX];
 #if PACKETVER_SUPPORTS_SALES
 struct sale_item_db sale_items;
@@ -71,7 +75,7 @@ static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
 static void cashshop_read_db_txt( void ){
 	const char* dbsubpath[] = {
 		"",
-		"/"DBIMPORT,
+		"/" DBIMPORT,
 	};
 	int fi;
 
@@ -137,7 +141,7 @@ static int cashshop_read_db_sql( void ){
 
 		Sql_FreeResult( mmysql_handle );
 
-		ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, cash_db_name[fi] );
+		ShowStatus( "Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, cash_db_name[fi] );
 	}
 
 	return 0;
@@ -225,7 +229,7 @@ static void sale_read_db_sql( void ){
 
 	Sql_FreeResult(mmysql_handle);
 
-	ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, sales_table );
+	ShowStatus( "Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, sales_table );
 }
 
 static int sale_end_timer( int tid, unsigned int tick, int id, intptr_t data ){
@@ -686,3 +690,7 @@ void do_init_cashshop( void ){
 	cash_shop_defined = false;
 	cashshop_read_db();
 }
+
+#ifdef __cplusplus
+}
+#endif

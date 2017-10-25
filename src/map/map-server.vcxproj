@@ -210,7 +210,7 @@
     <ClCompile Include="battle.cpp" />
     <ClCompile Include="battleground.cpp" />
     <ClCompile Include="buyingstore.cpp" />
-    <ClCompile Include="cashshop.c" />
+    <ClCompile Include="cashshop.cpp" />
     <ClCompile Include="channel.c" />
     <ClCompile Include="chat.c" />
     <ClCompile Include="chrif.c" />
