@@ -228,7 +228,7 @@
     <ClCompile Include="mail.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapreg.cpp" />
-    <ClCompile Include="mercenary.c" />
+    <ClCompile Include="mercenary.cpp" />
     <ClCompile Include="mob.cpp" />
     <ClCompile Include="npc.c" />
     <ClCompile Include="npc_chat.c" />

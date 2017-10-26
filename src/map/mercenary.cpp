@@ -23,6 +23,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
 static uint16 mercenary_count;
 
@@ -612,3 +616,7 @@ void do_init_mercenary(void){
 void do_final_mercenary(void){
 	//Nothing to do yet
 }
+
+#ifdef __cplusplus
+}
+#endif
