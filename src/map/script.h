@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 #include "map.h"
 
 #define NUM_WHISPER_VAR 10

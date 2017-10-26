@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#include "../common/mmo.h"
+
 struct block_list;
 struct mob_data;
 struct pet_data;
@@ -1830,43 +1832,6 @@ extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
 extern bool running_npc_stat_calc_event;
 extern short current_equip_opt_index;
-
-/// Mode definitions to clear up code reading. [Skotlex]
-enum e_mode {
-	MD_NONE					= 0x0000000,
-	MD_CANMOVE				= 0x0000001,
-	MD_LOOTER				= 0x0000002,
-	MD_AGGRESSIVE			= 0x0000004,
-	MD_ASSIST				= 0x0000008,
-	MD_CASTSENSOR_IDLE		= 0x0000010,
-	MD_NORANDOM_WALK		= 0x0000020,
-	MD_NOCAST_SKILL			= 0x0000040,
-	MD_CANATTACK			= 0x0000080,
-	//FREE					= 0x0000100,
-	MD_CASTSENSOR_CHASE		= 0x0000200,
-	MD_CHANGECHASE			= 0x0000400,
-	MD_ANGRY				= 0x0000800,
-	MD_CHANGETARGET_MELEE	= 0x0001000,
-	MD_CHANGETARGET_CHASE	= 0x0002000,
-	MD_TARGETWEAK			= 0x0004000,
-	MD_RANDOMTARGET			= 0x0008000,
-	MD_IGNOREMELEE			= 0x0010000,
-	MD_IGNOREMAGIC			= 0x0020000,
-	MD_IGNORERANGED			= 0x0040000,
-	MD_MVP					= 0x0080000,
-	MD_IGNOREMISC			= 0x0100000,
-	MD_KNOCKBACK_IMMUNE		= 0x0200000,
-	MD_TELEPORT_BLOCK		= 0x0400000,
-	//FREE					= 0x0800000,
-	MD_FIXED_ITEMDROP		= 0x1000000,
-	MD_DETECTOR				= 0x2000000,
-	MD_STATUS_IMMUNE		= 0x4000000,
-	MD_SKILL_IMMUNE			= 0x8000000,
-};
-
-#define MD_MASK 0x000FFFF
-#define ATR_MASK 0x0FF0000
-#define CL_MASK 0xF000000
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)

@@ -8,6 +8,7 @@
 extern "C" {
 #endif
 
+#include "../common/mmo.h"
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
