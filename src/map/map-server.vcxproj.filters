@@ -190,7 +190,7 @@
     <ClCompile Include="guild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="homunculus.c">
+    <ClCompile Include="homunculus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="instance.c">

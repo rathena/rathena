@@ -23,6 +23,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
 
@@ -1071,7 +1075,7 @@ bool hom_call(struct map_session_data *sd)
 
 	// If homunc not yet loaded, load it
 	if (!sd->hd)
-		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
+		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id) > 0;
 
 	hd = sd->hd;
 
@@ -1514,7 +1518,7 @@ void read_homunculusdb(void) {
 	homunculus_count = 0;
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, &read_homunculusdb_sub, i > 0);
 	}
 }
 
@@ -1567,7 +1571,7 @@ static void read_homunculus_skilldb(void) {
 	int i;
 	memset(hskill_tree,0,sizeof(hskill_tree));
 	for (i = 0; i<ARRAYLENGTH(filename); i++) {
-		sv_readdb(db_path, filename[i], ',', 15, 15, -1, &read_homunculus_skilldb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 15, 15, -1, &read_homunculus_skilldb_sub, i > 0);
 	}
 }
 
@@ -1609,7 +1613,7 @@ void read_homunculus_expdb(void)
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s/%s"CL_RESET"'.\n", j, db_path, filename[i]);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, filename[i]);
 	}
 }
 
@@ -1641,3 +1645,7 @@ void do_init_homunculus(void){
 void do_final_homunculus(void) {
 	//Nothing todo yet
 }
+
+#ifdef __cplusplus
+}
+#endif
