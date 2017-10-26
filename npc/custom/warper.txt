@@ -12,7 +12,7 @@
 //= 1.4 Added new Guild Dungeons.
 //= 1.4a Slight edits.
 //= 1.4b Added Wolfchev's Laboratory warp.
-//= 1.5 Added Lasagna and other Instances and settings [sader1992].
+//= 1.5 Added Lasagna ,WOE TE ,Instances and setting for old morroc maps [sader1992].
 //============================================================
 
 -	script	Warper	-1,{
@@ -382,8 +382,9 @@ D42: Restrict("RE");
 // --------------------------------------------------
 	Castles:
 // --------------------------------------------------
-menu	"Aldebaran Castles",C1, "Geffen Castles",C2, "Payon Castles",C3,
-    	"Prontera Castles",C4, "Arunafeltz Castles",C5, "Schwaltzvalt Castles",C6;
+menu	"[FE] Aldebaran Castles",C1, "[FE] Geffen Castles",C2, "[FE] Payon Castles",C3,
+    	"[FE] Prontera Castles",C4, "[SE] Arunafeltz Castles",C5, "[SE] Schwaltzvalt Castles",C6,
+		"[TE] Aldebaran Castles",C7, "[TE] Prontera Castles",C8;
 
 C1: setarray @c[2],48,83,95,249,142,85,239,242,264,90;
 	Disp("Neuschwanstein:Hohenschwangau:Nuenberg:Wuerzburg:Rothenburg");
@@ -403,12 +404,21 @@ C5: setarray @c[2],158,272,83,47,68,155,299,345,292,107;
 C6: setarray @c[2],293,100,288,252,97,196,137,90,71,315;
 	Disp("Himinn:Andlangr:Viblainn:Hljod:Skidbladnir");
 	Pick("","sch_gld","sch_gld","sch_gld","sch_gld","sch_gld");
-
+C7: Restrict("RE");
+	setarray @c[2],48,83,95,249,142,85,239,242,264,90;
+	Disp("Kafragarten 1:Kafragarten 2:Kafragarten 3:Kafragarten 4:Kafragarten 5");
+	Pick("","te_alde_gld","te_alde_gld","te_alde_gld","te_alde_gld","te_alde_gld");
+C8: Restrict("RE");
+	setarray @c[2],134,65,240,128,153,137,111,240,208,240;
+	Disp("Gloria 1:Gloria 2:Gloria 3:Gloria 4:Gloria 5");
+	Pick("","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld");
+	
 // --------------------------------------------------
 	Guild_Dungeons:
 // --------------------------------------------------
 menu	"Baldur",G1, "Luina",G2, "Valkyrie",G3, "Britoniah",G4,
-    	"Arunafeltz",G5, "Schwaltzvalt",G6;
+    	"Arunafeltz",G5, "Schwaltzvalt",G6, "Kafragarten",G7,
+		"Gloria",G8;
 
 G1: Restrict("RE",2,3);
 	setarray @c[2],119,93,119,93,120,130;
@@ -428,6 +438,10 @@ G4: Restrict("RE",2,3);
 	Pick("","gld_dun04","gld_dun04_2","gld2_gef");
 G5: Go("arug_dun01",199,195);
 G6: Go("schg_dun01",200,124);
+G7: Restrict("RE");
+	Go("teg_dun01",42,36);
+G8: Restrict("RE");
+	Go("teg_dun02",26,160);
 
 // --------------------------------------------------
 	Instances:
