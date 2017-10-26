@@ -13,6 +13,10 @@
 #include "intif.h"
 #include "date.h" // date_get_dayofyear
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void mail_clear(struct map_session_data *sd)
 {
 	int i;
@@ -414,3 +418,7 @@ void mail_refresh_remaining_amount( struct map_session_data* sd ){
 		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, -1 );
 	}
 }
+
+#ifdef __cplusplus
+}
+#endif
