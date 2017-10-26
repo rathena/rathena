@@ -105,7 +105,7 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 int channel_haspc(struct Channel *channel,struct map_session_data *sd);
 int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd);
 int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel);
-int channel_display_list(struct map_session_data *sd, char *option);
+int channel_display_list(struct map_session_data *sd, const char *option);
 
 void channel_autojoin(struct map_session_data *sd);
 bool channel_pccheckgroup(struct Channel *channel, int group_id);

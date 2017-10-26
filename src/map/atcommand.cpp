@@ -1532,7 +1532,7 @@ ACMD_FUNC(help)
 	config_setting_t *help;
 	const char *text = NULL;
 	const char *command_name = NULL;
-	char *default_command = "help";
+	const char *default_command = "help";
 
 	nullpo_retr(-1, sd);
 

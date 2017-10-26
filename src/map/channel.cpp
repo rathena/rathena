@@ -567,7 +567,7 @@ int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
  *   void: List of public channel and map and guild and number of users
  * @return 0 on success or -1 on failure
  */
-int channel_display_list(struct map_session_data *sd, char *options){
+int channel_display_list(struct map_session_data *sd, const char *options){
 
 	if(!sd || !options)
 		return -1;
