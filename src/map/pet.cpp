@@ -19,6 +19,9 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define MIN_PETTHINKTIME 100
 
@@ -1680,7 +1683,7 @@ void read_petdb()
 			ShowWarning("read_petdb: Reached max number of pets [%d]. Remaining pets were not read.\n ", MAX_PET_DB);
 
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' pets in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, db_path, filename[i]);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s/%s" CL_RESET "'.\n", entries, db_path, filename[i]);
 	}
 }
 
@@ -1691,8 +1694,8 @@ void do_init_pet(void)
 {
 	read_petdb();
 
-	item_drop_ers = ers_new(sizeof(struct item_drop),"pet.c::item_drop_ers",ERS_OPT_NONE);
-	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"pet.c::item_drop_list_ers",ERS_OPT_NONE);
+	item_drop_ers = ers_new(sizeof(struct item_drop),"pet.cpp::item_drop_ers",ERS_OPT_NONE);
+	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"pet.cpp::item_drop_list_ers",ERS_OPT_NONE);
 
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
@@ -1726,3 +1729,7 @@ void do_final_pet(void)
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
 }
+
+#ifdef __cplusplus
+}
+#endif

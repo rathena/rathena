@@ -236,7 +236,7 @@
     <ClCompile Include="path.c" />
     <ClCompile Include="pc.cpp" />
     <ClCompile Include="pc_groups.cpp" />
-    <ClCompile Include="pet.c" />
+    <ClCompile Include="pet.cpp" />
     <ClCompile Include="quest.c" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="searchstore.c" />

@@ -238,7 +238,7 @@
     <ClCompile Include="pc_groups.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pet.c">
+    <ClCompile Include="pet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="quest.c">
