@@ -2306,7 +2306,7 @@ void do_init_guild(void) {
 	castle_db          = idb_alloc(DB_OPT_BASE);
 	guild_expcache_db  = idb_alloc(DB_OPT_BASE);
 	guild_infoevent_db = idb_alloc(DB_OPT_BASE);
-	expcache_ers = ers_new(sizeof(struct guild_expcache),"guild.c::expcache_ers",ERS_OPT_NONE);
+	expcache_ers = ers_new(sizeof(struct guild_expcache),"guild.cpp::expcache_ers",ERS_OPT_NONE);
 
 	guild_flags_count = 0;
 

@@ -232,7 +232,7 @@
     <ClCompile Include="path.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pc.c">
+    <ClCompile Include="pc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pc_groups.c">

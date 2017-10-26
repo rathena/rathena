@@ -38,6 +38,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
@@ -1282,10 +1286,10 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->die_counter=-1;
 
 	//display login notice
-	ShowInfo("'"CL_WHITE"%s"CL_RESET"' logged in."
-	         " (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
-	         " IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
-	         " Group '"CL_WHITE"%d"CL_RESET"').\n",
+	ShowInfo("'" CL_WHITE "%s" CL_RESET "' logged in."
+	         " (AID/CID: '" CL_WHITE "%d/%d" CL_RESET "',"
+	         " IP: '" CL_WHITE "%d.%d.%d.%d" CL_RESET "',"
+	         " Group '" CL_WHITE "%d" CL_RESET "').\n",
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
 	         CONVIP(ip), sd->group_id);
 	// Send friends list
@@ -8910,7 +8914,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 		default:/* everything else is an allowed ID so we can move on */
 			if( !sd->sc.data[SC_PUSH_CART] ) { /* first time, so fill cart data */
 				clif_cartlist(sd);
-				status_calc_cart_weight(sd, CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE);
+				status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 			}
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl, &sd->bl, SC_PUSH_CART, 100, type, 0);
@@ -9308,9 +9312,9 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
-			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) : pc_setaccountreg(sd, add_str(reg), val);
+			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) > 0 : pc_setaccountreg(sd, add_str(reg), val) > 0;
 		default:
-			return pc_setglobalreg(sd, add_str(reg), val);
+			return pc_setglobalreg(sd, add_str(reg), val) > 0;
 	}
 
 	return false;
@@ -11245,7 +11249,7 @@ static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 	sprintf(line, "%s/statpoint.txt", basedir);
 	fp=fopen(line,"r");
 	if(fp == NULL){
-		if(silent==0) ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
+		if(silent==0) ShowWarning("Can't read '" CL_WHITE "%s" CL_RESET "'... Generating DB.\n",line);
 		return max(last_s,i);
 	} else {
 		int entries=0;
@@ -11264,7 +11268,7 @@ static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 			entries++;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, basedir,"statpoint.txt");
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s/%s" CL_RESET "'.\n", entries, basedir,"statpoint.txt");
 	}
 	return max(last_s,i);
 }
@@ -11282,7 +11286,7 @@ void pc_readdb(void) {
 	int i, k, s = 1;
 	const char* dbsubpath[] = {
 		"",
-		"/"DBIMPORT,
+		"/" DBIMPORT,
 		//add other path here
 	};
 		
@@ -11325,22 +11329,22 @@ void pc_readdb(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		s = pc_read_statsdb(dbsubpath2,s,i);
+		s = pc_read_statsdb(dbsubpath2,s,i > 0);
 		if (i == 0)
 #ifdef RENEWAL_ASPD
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
 #else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
+			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
 #endif
 		else
-			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i);
-		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i);
-		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i); //support till 1000lvl
+			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i > 0);
+		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i > 0); //support till 1000lvl
 #ifdef HP_SP_TABLES
-		sv_readdb(dbsubpath2, "job_basehpsp_db.txt", ',', 4, 4+500, CLASS_COUNT*2, &pc_readdb_job_basehpsp, i); //Make it support until lvl 500!
+		sv_readdb(dbsubpath2, "job_basehpsp_db.txt", ',', 4, 4+500, CLASS_COUNT*2, &pc_readdb_job_basehpsp, i > 0); //Make it support until lvl 500!
 #endif
-		sv_readdb(dbsubpath2, "job_param_db.txt", ',', 2, PARAM_MAX+1, CLASS_COUNT, &pc_readdb_job_param, i);
-		sv_readdb(dbsubpath2, "job_noenter_map.txt", ',', 3, 3, CLASS_COUNT, &pc_readdb_job_noenter_map, i);
+		sv_readdb(dbsubpath2, "job_param_db.txt", ',', 2, PARAM_MAX+1, CLASS_COUNT, &pc_readdb_job_param, i > 0);
+		sv_readdb(dbsubpath2, "job_noenter_map.txt", ',', 3, 3, CLASS_COUNT, &pc_readdb_job_noenter_map, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
@@ -11409,7 +11413,7 @@ int pc_read_motd(void)
 				char * ptr;
 				buf[len] = 0;
 				if( ( ptr = strstr(buf, " :") ) != NULL && ptr-buf >= NAME_LENGTH ) // crashes newer clients
-					ShowWarning("Found sequence '"CL_WHITE" :"CL_RESET"' on line '"CL_WHITE"%u"CL_RESET"' in '"CL_WHITE"%s"CL_RESET"'. This can cause newer clients to crash.\n", lines, motd_txt);
+					ShowWarning("Found sequence '" CL_WHITE " :" CL_RESET "' on line '" CL_WHITE "%u" CL_RESET "' in '" CL_WHITE "%s" CL_RESET "'. This can cause newer clients to crash.\n", lines, motd_txt);
 			}
 			else {// empty line
 				buf[0] = ' ';
@@ -11419,10 +11423,10 @@ int pc_read_motd(void)
 			entries++;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, motd_txt);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, motd_txt);
 	}
 	else
-		ShowWarning("File '"CL_WHITE"%s"CL_RESET"' not found.\n", motd_txt);
+		ShowWarning("File '" CL_WHITE "%s" CL_RESET "' not found.\n", motd_txt);
 
 	return 0;
 }
@@ -11627,7 +11631,7 @@ void pc_scdata_received(struct map_session_data *sd) {
 
 	if (pc_iscarton(sd)) {
 		sd->cart_weight_max = 0; // Force a client refesh
-		status_calc_cart_weight(sd, CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE);
+		status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 	}
 }
 
@@ -12474,12 +12478,16 @@ void do_init_pc(void) {
 
 	do_init_pc_groups();
 
-	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
-	pc_itemgrouphealrate_ers = ers_new(sizeof(struct s_pc_itemgrouphealrate), "pc.c:pc_itemgrouphealrate_ers", ERS_OPT_NONE);
-	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.c:num_reg_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
-	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.c:str_reg_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.cpp:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
+	pc_itemgrouphealrate_ers = ers_new(sizeof(struct s_pc_itemgrouphealrate), "pc.cpp:pc_itemgrouphealrate_ers", ERS_OPT_NONE);
+	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.cpp:num_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
+	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.cpp:str_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
 
 	ers_chunk_size(pc_sc_display_ers, 150);
 	ers_chunk_size(num_reg_ers, 300);
 	ers_chunk_size(str_reg_ers, 50);
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -2004,7 +2004,7 @@ void do_init_chrif(void) {
 	}
 
 	auth_db = idb_alloc(DB_OPT_BASE);
-	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.c::auth_db_ers",ERS_OPT_NONE);
+	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.cpp::auth_db_ers",ERS_OPT_NONE);
 
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");
 	add_timer_func_list(auth_db_cleanup, "auth_db_cleanup");

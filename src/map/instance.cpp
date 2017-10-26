@@ -1135,7 +1135,7 @@ void do_init_instance(void) {
 	memset(&instance_wait, 0, sizeof(instance_wait));
 	instance_wait.timer = -1;
 
-	instance_maps_ers = ers_new(sizeof(struct s_instance_map),"instance.c::instance_maps_ers", ERS_OPT_NONE);
+	instance_maps_ers = ers_new(sizeof(struct s_instance_map),"instance.cpp::instance_maps_ers", ERS_OPT_NONE);
 
 	add_timer_func_list(instance_delete_timer,"instance_delete_timer");
 	add_timer_func_list(instance_subscription_timer,"instance_subscription_timer");
