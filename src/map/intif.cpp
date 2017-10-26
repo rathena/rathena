@@ -27,6 +27,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {
 	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH,-1, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
@@ -2293,7 +2297,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 		// Refresh top right icon
 		clif_Mail_new(sd, 0, NULL, NULL);
 #endif
-		clif_Mail_refreshinbox(sd,RFIFOB(fd,9),0);
+		clif_Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
 	}else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
 		char output[128];
@@ -2410,7 +2414,7 @@ int intif_parse_Mail_delete(int fd)
 {
 	uint32 char_id = RFIFOL(fd,2);
 	int mail_id = RFIFOL(fd,6);
-	bool failed = RFIFOB(fd,10);
+	bool failed = RFIFOB(fd,10) > 0;
 
 	struct map_session_data *sd = map_charid2sd(char_id);
 	if (sd == NULL)
@@ -2577,7 +2581,7 @@ static void intif_parse_Mail_new(int fd)
 	clif_Mail_new(sd, mail_id, sender_name, title);
 #if PACKETVER >= 20150513
 	// Make sure the window gets refreshed when its open
-	intif_Mail_requestinbox(sd->status.char_id, 1, RFIFOB(fd,74));
+	intif_Mail_requestinbox(sd->status.char_id, 1, static_cast<mail_inbox_type>(RFIFOB(fd,74)));
 #endif
 }
 
@@ -2912,7 +2916,7 @@ int intif_parse_mercenary_received(int fd)
 		return 0;
 	}
 
-	mercenary_recv_data((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4));
+	mercenary_recv_data((struct s_mercenary*)RFIFOP(fd,5), RFIFOB(fd,4) > 0);
 	return 1;
 }
 
@@ -3037,7 +3041,7 @@ int intif_parse_elemental_received(int fd)
 		return 0;
 	}
 
-	elemental_data_received((struct s_elemental*)RFIFOP(fd,5), RFIFOB(fd,4));
+	elemental_data_received((struct s_elemental*)RFIFOP(fd,5), RFIFOB(fd,4) > 0);
 	return 1;
 }
 
@@ -3302,7 +3306,7 @@ void intif_itembound_guild_retrieve(uint32 char_id,uint32 account_id,int guild_i
 	WFIFOSET(inter_fd,12);
 	if (gstor)
 		gstor->lock = true; //Lock for retrieval process
-	ShowInfo("Request guild bound item(s) retrieval for CID = "CL_WHITE"%d"CL_RESET", AID = %d, Guild ID = "CL_WHITE"%d"CL_RESET".\n", char_id, account_id, guild_id);
+	ShowInfo("Request guild bound item(s) retrieval for CID = " CL_WHITE "%d" CL_RESET ", AID = %d, Guild ID = " CL_WHITE "%d" CL_RESET ".\n", char_id, account_id, guild_id);
 }
 
 /**
@@ -3342,7 +3346,7 @@ void intif_parse_itembound_store2gstorage(int fd) {
 		if (!storage_guild_additem2(gstor, item, item->amount))
 			failed++;
 	}
-	ShowInfo("Retrieved '"CL_WHITE"%d"CL_RESET"' (failed: %d) guild bound item(s) for Guild ID = "CL_WHITE"%d"CL_RESET".\n", count, failed, guild_id);
+	ShowInfo("Retrieved '" CL_WHITE "%d" CL_RESET "' (failed: %d) guild bound item(s) for Guild ID = " CL_WHITE "%d" CL_RESET ".\n", count, failed, guild_id);
 	gstor->lock = false;
 	gstor->status = false;
 }
@@ -3430,7 +3434,7 @@ static bool intif_parse_StorageReceived(int fd)
 			status_set_viewdata(&sd->bl, sd->status.class_);
 			pc_load_combo(sd);
 			status_calc_pc(sd, (enum e_status_calc_opt)(SCO_FIRST|SCO_FORCE));
-			status_calc_weight(sd, CALCWT_ITEM|CALCWT_MAXBONUS); // Refresh weight data
+			status_calc_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS)); // Refresh weight data
 			chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 			break;
 		}
@@ -3515,7 +3519,7 @@ void intif_parse_StorageInfo_recv(int fd) {
 	}
 
 	if (battle_config.etc_log)
-		ShowInfo("Received '"CL_WHITE"%d"CL_RESET"' storage info from inter-server.\n", storage_count);
+		ShowInfo("Received '" CL_WHITE "%d" CL_RESET "' storage info from inter-server.\n", storage_count);
 }
 
 /**
@@ -3798,3 +3802,7 @@ int intif_parse(int fd)
 
 	return 1;
 }
+
+#ifdef __cplusplus
+}
+#endif

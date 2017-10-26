@@ -196,7 +196,7 @@
     <ClCompile Include="instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="intif.c">
+    <ClCompile Include="intif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="itemdb.c">

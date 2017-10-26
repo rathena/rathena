@@ -222,7 +222,7 @@
     <ClCompile Include="guild.cpp" />
     <ClCompile Include="homunculus.cpp" />
     <ClCompile Include="instance.cpp" />
-    <ClCompile Include="intif.c" />
+    <ClCompile Include="intif.cpp" />
     <ClCompile Include="itemdb.c" />
     <ClCompile Include="log.c" />
     <ClCompile Include="mail.c" />
