@@ -216,7 +216,7 @@
     <ClCompile Include="chrif.cpp" />
     <ClCompile Include="clan.cpp" />
     <ClCompile Include="clif.cpp" />
-    <ClCompile Include="date.c" />
+    <ClCompile Include="date.cpp" />
     <ClCompile Include="duel.c" />
     <ClCompile Include="elemental.c" />
     <ClCompile Include="guild.c" />

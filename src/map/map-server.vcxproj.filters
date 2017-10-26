@@ -178,7 +178,7 @@
     <ClCompile Include="clif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="date.c">
+    <ClCompile Include="date.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="duel.c">
