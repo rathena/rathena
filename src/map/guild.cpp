@@ -25,6 +25,9 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 static DBMap* guild_db; // int guild_id -> struct guild*
 static DBMap* castle_db; // int castle_id -> struct guild_castle*
@@ -1940,7 +1943,7 @@ void guild_castle_map_init(void) {
 		}
 		dbi_destroy(iter);
 		if (intif_guild_castle_dataload(num, castle_ids))
-			ShowStatus("Requested '"CL_WHITE"%d"CL_RESET"' guild castles from char-server...\n", num);
+			ShowStatus("Requested '" CL_WHITE "%d" CL_RESET "' guild castles from char-server...\n", num);
 		aFree(castle_ids);
 	}
 }
@@ -2087,7 +2090,7 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 			}
 		}
 	}
-	ShowStatus("Received '"CL_WHITE"%d"CL_RESET"' guild castles from char-server.\n", n);
+	ShowStatus("Received '" CL_WHITE "%d" CL_RESET "' guild castles from char-server.\n", n);
 	return 0;
 }
 
@@ -2295,7 +2298,7 @@ void guild_flags_clear(void) {
 void do_init_guild(void) {
 	const char* dbsubpath[] = {
 		"",
-		"/"DBIMPORT,
+		"/" DBIMPORT,
 	};
 	int i;
 	
@@ -2314,8 +2317,8 @@ void do_init_guild(void) {
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
 		
-		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i);
-		sv_readdb(dbsubpath1, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db, i); //guild skill tree [Komurka]
+		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i > 0);
+		sv_readdb(dbsubpath1, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db, i > 0); //guild skill tree [Komurka]
 		
 		aFree(dbsubpath1);
 	}
@@ -2343,3 +2346,7 @@ void do_final_guild(void) {
 
 	aFree(guild_flags);/* never empty; created on boot */
 }
+
+#ifdef __cplusplus
+}
+#endif

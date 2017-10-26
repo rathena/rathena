@@ -219,7 +219,7 @@
     <ClCompile Include="date.cpp" />
     <ClCompile Include="duel.cpp" />
     <ClCompile Include="elemental.cpp" />
-    <ClCompile Include="guild.c" />
+    <ClCompile Include="guild.cpp" />
     <ClCompile Include="homunculus.c" />
     <ClCompile Include="instance.c" />
     <ClCompile Include="intif.c" />
