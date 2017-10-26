@@ -217,7 +217,7 @@
     <ClCompile Include="clan.cpp" />
     <ClCompile Include="clif.cpp" />
     <ClCompile Include="date.cpp" />
-    <ClCompile Include="duel.c" />
+    <ClCompile Include="duel.cpp" />
     <ClCompile Include="elemental.c" />
     <ClCompile Include="guild.c" />
     <ClCompile Include="homunculus.c" />

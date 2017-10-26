@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //global var (extern)
 struct duel duel_list[MAX_DUEL]; //list of current duel
 int duel_count = 0; //number of duel active
@@ -248,3 +252,7 @@ void do_final_duel(void)
 void do_init_duel(void) {
 	memset(&duel_list[0], 0, sizeof(duel_list));
 }
+
+#ifdef __cplusplus
+}
+#endif
