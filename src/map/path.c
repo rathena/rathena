@@ -16,10 +16,6 @@
 #include <string.h>
 #include <math.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define SET_OPEN 0
 #define SET_CLOSED 1
 
@@ -513,7 +509,3 @@ int distance_client(int dx, int dy)
 
 	return ((int)temp_dist);
 }
-
-#ifdef __cplusplus
-}
-#endif
