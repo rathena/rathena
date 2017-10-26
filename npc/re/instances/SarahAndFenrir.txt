@@ -13,32 +13,9 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 		close;
 	}
 	switch( checkquest(9336,PLAYTIME) ) {
-	case -1:// First time doing instance
-		if (isbegin_quest(9335) == 0) {
-			if (getpartyleader(getcharid(1),2) != getcharid(0)) {
-				mes "[Professor Bernhard]";
-				mes "I would say I am Professor Bernhard, the best weapons researcher in Schwaltzvalt.";
-				next;
-				mes "[Professor Bernhard]";
-				mes "After endless research I have created various weapons, but I felt something was missing so I found the ancient texts, and found out about the Dimensional Device.";
-				next;
-				mes "[Professor Bernhard]";
-				mes "I also realized that relics from the glorious past were also needed to create more powerful and superior weapons.";
-				mes "That is why..";
-				next;
-				mes "[Professor Bernhard]";
-				mes "A longing for accomplishing a powerful weapon as a genuine professor!";
-				mes "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah.";
-				next;
-				mes "[Professor Bernhard]";
-				mes "I cannot leave my post.";
-				mes "I need a warrior who can bring me the shards instead..";
-				mes "You seem capable.";
-				next;
-				mes "[Professor Bernhard]";
-				mes "I will continue discussing this further with your party leader rather than with you.";
-				close;
-			}
+	case -1:
+		switch( isbegin_quest(9335) ) {
+		case 0:// First time doing instance
 			mes "[Professor Bernhard]";
 			mes "I would say I am Professor Bernhard, the best weapons researcher in Schwaltzvalt.";
 			next;
@@ -51,6 +28,19 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 			mes "That is why..I need you..";
 			next;
 			mes "[Professor Bernhard]";
+			if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+				mes "A longing for accomplishing a powerful weapon as a genuine professor!";
+				mes "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah.";
+				next;
+				mes "[Professor Bernhard]";
+				mes "I cannot leave my post.";
+				mes "I need a warrior who can bring me the shards instead..";
+				mes "You seem capable.";
+				next;
+				mes "[Professor Bernhard]";
+				mes "I will continue discussing this further with your party leader rather than with you.";
+				close;
+			}
 			mes "I need a warrior who can bring me the shard of Gigantes instead..";
 			mes "You seem capable.";
 			next;
@@ -69,68 +59,50 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 			mes "The operating time isn't long so hurry up and come back.";
 			instance_create("Fenrir and Sarah");
 			close;
+		case 1:
+			mes "[Professor Bernhard]";
+			mes "Did you successfully bring back the shards of Gigantes?";
+			mes "You probably faced a lot of danger so thank you for the effort.";
+			next;
+			mes "[Professor Bernhard]";
+			mes "I don't expect to receive the shards for nothing when you have risked your life for them!";
+			if (sarah_fenrir == 0) {
+				mes "I will give you a useful looking earring from the relics I have happened to have obtained during my previous research.";
+				next;
+				mes "- The left earring of Sarah -";
+				mes "Usable for Heal 1Lv";
+				mes "- The right earring of Sarah -";
+				mes "Usable for Teleport 1Lv";
+				next;
+				.@s = select( "The left earring of Sarah", "The right earring of Sarah" ) - 1;
+			}
+			mes "[Professor Bernhard]";
+			mes "If you hand the shards of Gigantes to my chief assistant, I will make sure the earrings will be correspondingly great through an enchantment.";
+			next;
+			mes "[Professor Bernhard]";
+			mes "The more shards of Gigantes are collected, the better.";
+			mes "However, there isn't a stable supply of energy needed to work the Dimensional Device.";
+			next;
+			mes "[Professor Bernhard]";
+			mes "Come back and find me after one week has passed for the supply of Dimensional Device energy.";
+			mes "I need you to find shards of Gigantes again.";
+			erasequest 9335;// Search for shards of Gigantes
+			setquest 9336;// Go back to Professor Bernhard
+			if (isbegin_quest(9337) > 0)
+				erasequest 9337;// Wrapping up the Adventure
+			if (sarah_fenrir == 0) {
+				sarah_fenrir = 1;
+				getitem (28310+.@s),1;
+			}
+			close;
+		case 2:
+			end;
 		}
-		mes "[Professor Bernhard]";
-		mes "Did you successfully bring back the shards of Gigantes?";
-		mes "You probably faced a lot of danger so thank you for the effort.";
-		next;
-		mes "[Professor Bernhard]";
-		mes "I don't expect to receive the shards for nothing when you have risked your life for them!";
-		mes "I will give you a useful looking earring from the relics I have happened to have obtained during my previous research.";
-		next;
-		mes "- The left earring of Sarah -";
-		mes "Usable for Heal 1Lv";
-		mes "- The right earring of Sarah -";
-		mes "Usable for Teleport 1Lv";
-		next;
-		.@s = select( "The left earring of Sarah", "The right earring of Sarah" );
-		mes "[Professor Bernhard]";
-		mes "If you hand the shards of Gigantes to my chief assistant, I will make sure the earrings will be correspondingly great through an enchantment.";
-		next;
-		mes "[Professor Bernhard]";
-		mes "The more shards of Gigantes are collected, the better.";
-		mes "However, there isn't a stable supply of energy needed to work the Dimensional Device.";
-		next;
-		mes "[Professor Bernhard]";
-		mes "For the supply of Dimensional Device energy";
-		mes "After one week has passedcome find me again";
-		mes "I need you to find shards of Gigantes again.";
-		erasequest 9335;// Search for shards of Gigantes
-		setquest 9336;// Go back to Professor Bernhard
-		if (isbegin_quest(9337) > 0)
-			erasequest 9337;// Wrapping up the Adventure
-		getitem (28310+.@s),1;
-		close;
 	case 0:
 	case 1:
-		if (isbegin_quest(9335) == 0) {
-			mes "[Professor Bernhard]";
-			mes "We lack the shards of Gigantes in order to make powerful weapons.";
-			mes "Because a lot of energy is needed to open a dimension device, come back and find me when the energy has accumulated.";
-			close;
-		}
 		mes "[Professor Bernhard]";
-		mes "Did you successfully bring back the shards of Gigantes?";
-		mes "You probably faced a lot of danger so thank you for the effort.";
-		next;
-		mes "[Professor Bernhard]";
-		mes "I don't expect to receive the shards for nothing when you have risked your life for them!";
-		next;
-		mes "[Professor Bernhard]";
-		mes "If you hand the shards of Gigantes to my chief assistant, I will make sure the earrings will be enhanced through an enchantment.";
-		next;
-		mes "[Professor Bernhard]";
-		mes "The more shards of Gigantes are collected, the better.";
-		mes "However, there isn't a stable supply of energy needed to work the Dimensional Device.";
-		next;
-		mes "[Professor Bernhard]";
-		mes "Come back and find me after one week has passed for the supply of Dimensional Device energy.";
-		mes "I need you to find shards of Gigantes again.";
-		erasequest 9335;// Search for shards of Gigantes
-		erasequest 9336;
-		setquest 9336;// Go back to Professor Bernhard
-		if (isbegin_quest(9337) > 0)
-			erasequest 9337;// Wrapping up the Adventure
+		mes "We lack the shards of Gigantes in order to make powerful weapons.";
+		mes "Because a lot of energy is needed to open a dimension device, come back and find me when the energy has accumulated.";
 		close;
 	case 2:
 		mes "[Professor Bernhard]";
@@ -214,14 +186,13 @@ dali02,99,148,3	script	Dimensional Device#XX1	PORTAL,{
 		setquest 9335;// Search for shards of Gigantes
 		if (isbegin_quest(9336) > 0)
 			erasequest 9336;
-		setquest 9336;// Go back to Professor Bernhard
 		// warp "1@glast",367,304;
 		end;
 	}
 }
 
 dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
-	if (isbegin_quest(9336) == 0)
+	if (sarah_fenrir == 0)
 		end;
 	disable_items;
 	mes "[Chief Assistant]";
@@ -262,14 +233,14 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			if (select( "Left column", "Right column" ) == 1) {
 				.@part = EQI_ACC_L;
 				.@column$ = "left";
-				.@bonus_size = 4;
-				.@bonus_chance = 20;
+				.@bonus_size = 4;		// 4 possibilities
+				.@bonus_chance = 20;	// 20% per possibility
 			}
 			else {
 				.@part = EQI_ACC_R;
 				.@column$ = "right";
-				.@bonus_size = 6;
-				.@bonus_chance = 10;
+				.@bonus_size = 6;		// 6 possibilities
+				.@bonus_chance = 10;	// 10% per possibility
 			}
 			.@equip_id = getequipid(.@part);
 			if (.@equip_id != .@sarah_item_id) {
@@ -370,15 +341,15 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			mes "Aahhhh!!";
 			next;
 			progressbar "000000",5;
-			specialeffect2 182;
-			specialeffect2 205;
+			specialeffect2 EF_MAGICALATTHIT;
+			specialeffect2 EF_POTION2;
 			delitem 6803,4;// Shard of Gigantes
 			delequip .@part;
 			.@r = rand(100);
 			for ( .@i = 0; .@i < .@bonus_size && (.@bonus_chance * (.@i+1)) < .@r; .@i++ );
 			if (.@i == .@bonus_size) {
-				specialeffect2 102;
-				specialeffect2 104;
+				specialeffect2 EF_CRASHEARTH;
+				specialeffect2 EF_MAXPOWER;
 				mes "[Chief Assistant]";
 				mes "Sadly... it is..";
 				mes "destroyed...";
@@ -387,7 +358,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				close;
 			}
 			.@card[.@slot] = .@bonus[.@i];
-			specialeffect2 338;
+			specialeffect2 EF_ANGEL2;
 			getitem2 .@sarah_item_id,1,1,0,0,0,0,.@card[1],.@card[0];
 			mes "[Chief Assistant]";
 			mes "Enchantment completed!";
@@ -457,9 +428,9 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				mes "Yes sir. Initialization will start.";
 				next;
 				progressbar "000000",5;
-				specialeffect2 182;
-				specialeffect2 205;
-				specialeffect2 338;
+				specialeffect2 EF_MAGICALATTHIT;
+				specialeffect2 EF_POTION2;
+				specialeffect2 EF_ANGEL2;
 				delitem 6803,1;// Shard of Gigantes
 				delequip .@part;
 				getitem .@sarah_item_id,1;
