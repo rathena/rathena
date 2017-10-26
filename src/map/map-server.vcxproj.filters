@@ -247,7 +247,7 @@
     <ClCompile Include="script.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="searchstore.c">
+    <ClCompile Include="searchstore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="skill.cpp">

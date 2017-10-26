@@ -10,6 +10,10 @@
 #include "pc.h"  // struct map_session_data
 #include "searchstore.h"  // struct s_search_store_info
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// Failure constants for clif functions
 enum e_searchstore_failure
 {
@@ -417,3 +421,7 @@ bool searchstore_result(struct map_session_data* sd, int store_id, uint32 accoun
 
 	return true;
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -239,7 +239,7 @@
     <ClCompile Include="pet.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="script.cpp" />
-    <ClCompile Include="searchstore.c" />
+    <ClCompile Include="searchstore.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="status.c" />
     <ClCompile Include="storage.c" />
