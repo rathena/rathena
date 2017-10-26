@@ -10,7 +10,7 @@ extern "C" {
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
-//#include "../common/mmo.h"
+#include "../common/mmo.h"
 
 struct Channel;
 struct clan;
@@ -34,11 +34,8 @@ struct guild;
 struct battleground_data;
 struct quest;
 struct party_booking_ad_info;
-enum e_party_member_withdraw;
 struct sale_item_data;
-enum mail_inbox_type;
 struct mail_message;
-enum mail_attachment_type;
 struct achievement;
 #include <stdarg.h>
 

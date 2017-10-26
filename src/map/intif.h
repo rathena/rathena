@@ -8,7 +8,8 @@
 extern "C" {
 #endif
 
-//#include "../common/mmo.h"
+#include "../common/mmo.h"
+
 struct party_member;
 struct guild_member;
 struct guild_position;
@@ -18,7 +19,6 @@ struct s_mercenary;
 struct s_elemental;
 struct mail_message;
 struct auction_data;
-enum storage_type;
 struct achievement_db;
 
 int intif_parse(int fd);

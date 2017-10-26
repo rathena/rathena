@@ -16,6 +16,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static struct eri *mapreg_ers;
 
 bool skip_insert = false;
@@ -66,7 +70,7 @@ bool mapreg_setreg(int64 uid, int val)
 	const char* name = get_str(num);
 
 	if (val != 0) {
-		if ((m = i64db_get(regs.vars, uid))) {
+		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
 			m->u.i = val;
 			if (name[1] != '@') {
 				m->save = true;
@@ -94,7 +98,7 @@ bool mapreg_setreg(int64 uid, int val)
 	} else { // val == 0
 		if (i)
 			script_array_update(&regs, uid, true);
-		if ((m = i64db_get(regs.vars, uid))) {
+		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
 			ers_free(mapreg_ers, m);
 		}
 		i64db_remove(regs.vars, uid);
@@ -133,14 +137,14 @@ bool mapreg_setregstr(int64 uid, const char* str)
 			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, esc_name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
-		if ((m = i64db_get(regs.vars, uid))) {
+		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
 			if (m->u.str != NULL)
 				aFree(m->u.str);
 			ers_free(mapreg_ers, m);
 		}
 		i64db_remove(regs.vars, uid);
 	} else {
-		if ((m = i64db_get(regs.vars, uid))) {
+		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
 			if (m->u.str != NULL)
 				aFree(m->u.str);
 			m->u.str = aStrdup(str);
@@ -234,7 +238,7 @@ static void script_save_mapreg(void)
 	if (mapreg_dirty) {
 		DBIterator *iter = db_iterator(regs.vars);
 		struct mapreg_save *m;
-		for (m = dbi_first(iter); dbi_exists(iter); m = dbi_next(iter)) {
+		for (m = static_cast<mapreg_save *>(dbi_first(iter)); dbi_exists(iter); m = static_cast<mapreg_save *>(dbi_next(iter))) {
 			if (m->save) {
 				int num = script_getvarid(m->uid);
 				int i = script_getvaridx(m->uid);
@@ -281,7 +285,7 @@ int mapreg_destroyreg(DBKey key, DBData *data, va_list ap)
 	if (data->type != DB_DATA_PTR) // Sanity check
 		return 0;
 
-	m = db_data2ptr(data);
+	m = static_cast<mapreg_save *>(db_data2ptr(data));
 
 	if (m->is_string) {
 		if (m->u.str)
@@ -356,3 +360,7 @@ bool mapreg_config_read(const char* w1, const char* w2)
 
 	return true;
 }
+
+#ifdef __cplusplus
+}
+#endif

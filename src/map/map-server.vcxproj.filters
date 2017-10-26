@@ -211,7 +211,7 @@
     <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mapreg.c">
+    <ClCompile Include="mapreg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mercenary.c">
