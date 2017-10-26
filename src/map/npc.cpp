@@ -24,6 +24,9 @@
 #include <stdlib.h>
 #include <errno.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct npc_data* fake_nd;
 
@@ -355,7 +358,7 @@ static int npc_event_export(struct npc_data *nd, int i)
 		// NPC:<name> the prefix uses 4 characters
 		if( !strncasecmp( lname, script_config.onwhisper_event_name, NAME_LENGTH ) && strlen(nd->exname) > ( NAME_LENGTH - 4 ) ){
 			// The client only allows that many character so that NPC could not be whispered by unmodified clients
-			ShowWarning( "Whisper event in npc '"CL_WHITE"%s"CL_RESET"' was ignored, because it's name is too long.\n", nd->exname );
+			ShowWarning( "Whisper event in npc '" CL_WHITE "%s" CL_RESET "' was ignored, because it's name is too long.\n", nd->exname );
 			return 0;
 		}
 
@@ -451,7 +454,7 @@ int npc_event_doall(const char* name)
 
 // runs the specified event(global only) and reports call count
 void npc_event_runall( const char* eventname ){
-	ShowStatus( "Event '"CL_WHITE"%s"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", eventname, npc_event_doall( eventname ) );
+	ShowStatus( "Event '" CL_WHITE "%s" CL_RESET "' executed with '" CL_WHITE "%d" CL_RESET "' NPCs.\n", eventname, npc_event_doall( eventname ) );
 }
 
 // runs the specified event, with a RID attached (global only)
@@ -2795,7 +2798,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	if (type != NPCTYPE_SHOP) {
 		if (type == NPCTYPE_ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
 		else if (type == NPCTYPE_POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
-		nd->u.shop.discount = is_discount;
+		nd->u.shop.discount = is_discount > 0;
 	}
 
 	npc_parsename(nd, w3, start, buffer, filepath);
@@ -3353,7 +3356,7 @@ int npc_instancedestroy(struct npc_data* nd)
  **/
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%hu','%d','%hu','%"PRIu8"')",
+	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%hu','%d','%hu','%" PRIu8 "')",
 		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
 		SQL_ERROR == SqlStmt_Execute(stmt))
 		SqlStmt_ShowDebug(stmt);
@@ -3467,9 +3470,9 @@ static void npc_market_checkall(void) {
 	if (!db_size(NPCMarketDB))
 		return;
 	else {
-		ShowInfo("Checking '"CL_WHITE"%d"CL_RESET"' NPC Markets...\n", db_size(NPCMarketDB));
+		ShowInfo("Checking '" CL_WHITE "%d" CL_RESET "' NPC Markets...\n", db_size(NPCMarketDB));
 		NPCMarketDB->foreach(NPCMarketDB, npc_market_checkall_sub);
-		ShowStatus("Done checking '"CL_WHITE"%d"CL_RESET"' NPC Markets.\n", db_size(NPCMarketDB));
+		ShowStatus("Done checking '" CL_WHITE "%d" CL_RESET "' NPC Markets.\n", db_size(NPCMarketDB));
 		NPCMarketDB->clear(NPCMarketDB, npc_market_free);
 	}
 }
@@ -3510,7 +3513,7 @@ static void npc_market_fromsql(void) {
 	}
 	Sql_FreeResult(mmysql_handle);
 
-	ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' entries for '"CL_WHITE"%d"CL_RESET"' NPC Markets from '"CL_WHITE"%s"CL_RESET"' table.\n", count, db_size(NPCMarketDB), market_table);
+	ShowStatus("Done loading '" CL_WHITE "%d" CL_RESET "' entries for '" CL_WHITE "%d" CL_RESET "' NPC Markets from '" CL_WHITE "%s" CL_RESET "' table.\n", count, db_size(NPCMarketDB), market_table);
 }
 #endif
 
@@ -3756,11 +3759,12 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int num, class_, i, j, mob_lv = -1, ai = -1, size = -1, w1count;
+	int num, class_, i, j, mob_lv = -1, size = -1, w1count;
 	short m,x,y,xs = -1, ys = -1;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
+	enum mob_ai ai;
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
@@ -4630,16 +4634,16 @@ int npc_reload(void) {
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
 	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
-		ShowStatus("Loading NPC file: %s"CL_CLL"\r", nsl->name);
+		ShowStatus("Loading NPC file: %s" CL_CLL "\r", nsl->name);
 		npc_parsesrcfile(nsl->name,false);
 	}
-	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Spawn sets\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Cached\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
+	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
 		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	//Re-read the NPC Script Events cache.
@@ -4762,7 +4766,7 @@ void do_init_npc(void){
 
 	ev_db = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), EVENT_NAME_LENGTH);
 	npcname_db = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH+1);
-	npc_path_db = strdb_alloc(DB_OPT_BASE|DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,80);
+	npc_path_db = strdb_alloc((DBOptions)(DB_OPT_BASE|DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),80);
 #if PACKETVER >= 20131223
 	NPCMarketDB = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH+1);
 	npc_market_fromsql();
@@ -4774,16 +4778,16 @@ void do_init_npc(void){
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");
 	for( file = npc_src_files; file != NULL; file = file->next ) {
-		ShowStatus("Loading NPC file: %s"CL_CLL"\r", file->name);
+		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file->name);
 		npc_parsesrcfile(file->name,false);
 	}
-	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Spawn sets\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Cached\n"
-		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
+	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Warps\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Shops\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Scripts\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Spawn sets\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Cached\n"
+		"\t-'" CL_WHITE "%d" CL_RESET "' Mobs Not Cached\n",
 		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	// set up the events cache
@@ -4820,3 +4824,6 @@ void do_init_npc(void){
 	// End of initialization
 }
 
+#ifdef __cplusplus
+}
+#endif

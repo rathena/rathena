@@ -551,7 +551,7 @@ void mercenary_readdb(void) {
 	mercenary_count = 0; //Reset the counter
 	memset(mercenary_db,0,sizeof(mercenary_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 26, 26, MAX_MERCENARY_CLASS, &mercenary_readdb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 26, 26, MAX_MERCENARY_CLASS, &mercenary_readdb_sub, i > 0);
 	}
 }
 
@@ -596,7 +596,7 @@ void mercenary_read_skilldb(void){
 	uint8 i;
 
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &mercenary_read_skilldb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &mercenary_read_skilldb_sub, i > 0);
 	}
 }
 

@@ -230,7 +230,7 @@
     <ClCompile Include="mapreg.cpp" />
     <ClCompile Include="mercenary.cpp" />
     <ClCompile Include="mob.cpp" />
-    <ClCompile Include="npc.c" />
+    <ClCompile Include="npc.cpp" />
     <ClCompile Include="npc_chat.c" />
     <ClCompile Include="party.c" />
     <ClCompile Include="path.c" />
