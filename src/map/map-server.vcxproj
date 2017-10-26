@@ -233,7 +233,7 @@
     <ClCompile Include="npc.cpp" />
     <ClCompile Include="npc_chat.cpp" />
     <ClCompile Include="party.cpp" />
-    <ClCompile Include="path.c" />
+    <ClCompile Include="path.cpp" />
     <ClCompile Include="pc.c" />
     <ClCompile Include="pc_groups.c" />
     <ClCompile Include="pet.c" />
