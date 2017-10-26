@@ -3764,7 +3764,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
-	enum mob_ai ai;
+	int ai; // mob_ai
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
@@ -3839,7 +3839,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	if (size > SZ_SMALL && size <= SZ_BIG)
 		mob.state.size = size;
 	if (ai > AI_NONE && ai <= AI_MAX)
-		mob.state.ai = ai;
+		mob.state.ai = static_cast<enum mob_ai>(ai);
 
 	if (mob.xs < 0) {
 		if (w1count > 3) {
