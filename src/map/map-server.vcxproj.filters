@@ -184,7 +184,7 @@
     <ClCompile Include="duel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="elemental.c">
+    <ClCompile Include="elemental.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="guild.c">

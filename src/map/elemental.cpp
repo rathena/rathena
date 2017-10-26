@@ -23,6 +23,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 static uint16 elemental_count;
 
@@ -306,7 +310,7 @@ int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id) {
 			case SC_CIRCLE_OF_FIRE_OPTION:
 			case SC_TIDAL_WEAPON_OPTION:
 				if( bl ) status_change_end(bl,type,INVALID_TIMER);	// Master
-				status_change_end(&ed->bl,type-1,INVALID_TIMER);	// Elemental Spirit
+				status_change_end(&ed->bl,static_cast<sc_type>(type-1),INVALID_TIMER);	// Elemental Spirit
 				break;
 			case SC_ZEPHYR:
 				if( bl ) status_change_end(bl,type,INVALID_TIMER);
@@ -823,7 +827,7 @@ void read_elementaldb(void) {
 	elemental_count = 0;
 	memset(elemental_db, 0, sizeof(elemental_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &read_elementaldb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &read_elementaldb_sub, i > 0);
 	}
 }
 
@@ -871,7 +875,7 @@ void read_elemental_skilldb(void) {
 	const char *filename[] = { "elemental_skill_db.txt", DBIMPORT"/elemental_skill_db.txt" };
 	uint8 i;
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 4, 4, -1, &read_elemental_skilldb_sub, i);
+		sv_readdb(db_path, filename[i], ',', 4, 4, -1, &read_elemental_skilldb_sub, i > 0);
 	}
 }
 
@@ -895,3 +899,7 @@ void do_init_elemental(void) {
 void do_final_elemental(void) {
 	return;
 }
+
+#ifdef __cplusplus
+}
+#endif
