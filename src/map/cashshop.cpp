@@ -94,7 +94,7 @@ static void cashshop_read_db_txt( void ){
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[fi]);
 		}
 
-		sv_readdb(dbsubpath2, "item_cash_db.txt",          ',', 3, 3, -1, &cashshop_parse_dbrow, fi);
+		sv_readdb(dbsubpath2, "item_cash_db.txt", ',', 3, 3, -1, &cashshop_parse_dbrow, fi > 0);
 
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
