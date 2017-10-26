@@ -13,6 +13,9 @@
 
 #include "../../3rdparty/pcre/include/pcre.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  *  Written by MouseJstr in a vision... (2/21/2005)
@@ -438,5 +441,9 @@ int buildin_deletepset(struct script_state* st)
 	
 	return 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PCRE_SUPPORT

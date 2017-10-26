@@ -223,7 +223,7 @@
     <ClCompile Include="npc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="npc_chat.c">
+    <ClCompile Include="npc_chat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="party.c">
