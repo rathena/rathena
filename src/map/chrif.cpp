@@ -28,6 +28,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
@@ -261,7 +265,7 @@ int chrif_setip(const char* ip) {
 
 	safestrncpy(char_ip_str, ip, sizeof(char_ip_str));
 
-	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(char_ip, ip_str));
+	ShowInfo("Char Server IP Address : '" CL_WHITE "%s" CL_RESET "' -> '" CL_WHITE "%s" CL_RESET "'.\n", ip, ip2str(char_ip, ip_str));
 
 	return 1;
 }
@@ -510,7 +514,7 @@ int chrif_connectack(int fd) {
 		exit(EXIT_FAILURE);
 	}
 
-	ShowStatus("Successfully logged on to Char Server (Connection: '"CL_WHITE"%d"CL_RESET"').\n",fd);
+	ShowStatus("Successfully logged on to Char Server (Connection: '" CL_WHITE "%d" CL_RESET "').\n",fd);
 	chrif_state = 1;
 	chrif_connected = 1;
 
@@ -608,14 +612,14 @@ int chrif_sendmapack(int fd) {
 
 	// Server name
 	memcpy(wisp_server_name, RFIFOP(fd,5), NAME_LENGTH);
-	ShowStatus("Map-server connected to char-server '"CL_WHITE"%s"CL_RESET"'.\n", wisp_server_name);
+	ShowStatus("Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "'.\n", wisp_server_name);
 
 	// Default map
 	memcpy(map_default.mapname, RFIFOP(fd, (offs+=NAME_LENGTH)), MAP_NAME_LENGTH);
 	map_default.x = RFIFOW(fd, (offs+=MAP_NAME_LENGTH));
 	map_default.y = RFIFOW(fd, (offs+=2));
 	if (battle_config.etc_log)
-		ShowInfo("Received default map from char-server '"CL_WHITE"%s %d,%d"CL_RESET"'.\n", map_default.mapname, map_default.x, map_default.y);
+		ShowInfo("Received default map from char-server '" CL_WHITE "%s %d,%d" CL_RESET "'.\n", map_default.mapname, map_default.x, map_default.y);
 
 	chrif_on_ready();
 
@@ -698,7 +702,7 @@ void chrif_authok(int fd) {
 	login_id2 = RFIFOL(fd,12);
 	expiration_time = (time_t)(int32)RFIFOL(fd,16);
 	group_id = RFIFOL(fd,20);
-	changing_mapservers = (RFIFOB(fd,24));
+	changing_mapservers = (RFIFOB(fd,24)) > 0;
 	status = (struct mmo_charstatus*)RFIFOP(fd,25);
 	char_id = status->char_id;
 
@@ -1271,7 +1275,7 @@ int chrif_recvfamelist(int fd) {
 
 	total += num;
 
-	ShowInfo("Received Fame List of '"CL_WHITE"%d"CL_RESET"' characters.\n", total);
+	ShowInfo("Received Fame List of '" CL_WHITE "%d" CL_RESET "' characters.\n", total);
 
 	return 0;
 }
@@ -2014,3 +2018,7 @@ void do_init_chrif(void) {
 	// send the user count every 10 seconds, to hide the charserver's online counting problem
 	add_timer_interval(gettick() + 1000, send_usercount_tochar, 0, 0, UPDATE_INTERVAL);
 }
+
+#ifdef __cplusplus
+}
+#endif

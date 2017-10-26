@@ -213,7 +213,7 @@
     <ClCompile Include="cashshop.cpp" />
     <ClCompile Include="channel.cpp" />
     <ClCompile Include="chat.cpp" />
-    <ClCompile Include="chrif.c" />
+    <ClCompile Include="chrif.cpp" />
     <ClCompile Include="clan.c" />
     <ClCompile Include="clif.cpp" />
     <ClCompile Include="date.c" />
