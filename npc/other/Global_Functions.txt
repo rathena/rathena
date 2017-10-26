@@ -662,7 +662,7 @@ function	script	F_getpositionname	{
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-// Platinum Skills Global Function: F_GetPlatinumSkills [mazvi]
+// Platinum Skills Global Function: F_GetPlatinumSkills [mazvi] 
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetPlatinumSkills	{
 	skill "NV_FIRSTAID",1,SKILL_PERM;
