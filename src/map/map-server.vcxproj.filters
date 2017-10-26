@@ -226,7 +226,7 @@
     <ClCompile Include="npc_chat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="party.c">
+    <ClCompile Include="party.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="path.c">

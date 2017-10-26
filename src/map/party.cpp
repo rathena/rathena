@@ -22,6 +22,9 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 static DBMap* party_db; // int party_id -> struct party_data* (releases data)
 static DBMap* party_booking_db; // uint32 char_id -> struct party_booking_ad_info* (releases data) // Party Booking [Spiria]
@@ -1405,3 +1408,7 @@ bool party_booking_delete(struct map_session_data *sd)
 
 	return true;
 }
+
+#ifdef __cplusplus
+}
+#endif
