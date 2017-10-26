@@ -12,6 +12,10 @@
 #include "pc_groups.h"
 #include "pc.h" // e_pc_permission
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct GroupSettings GroupSettings;
 
 // Cached config settings/pointers for quick lookup
@@ -125,7 +129,7 @@ static void read_config(void)
 			group_settings->id = id;
 			group_settings->level = level;
 			group_settings->name = groupname;
-			group_settings->log_commands = (bool)log_commands;
+			group_settings->log_commands = log_commands > 0;
 			group_settings->inherit = config_setting_get_member(group, "inherit");
 			group_settings->commands = config_setting_get_member(group, "commands");
 			group_settings->permissions = config_setting_get_member(group, "permissions");
@@ -270,7 +274,7 @@ static void read_config(void)
 		dbi_destroy(iter);
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' groups in '"CL_WHITE"%s"CL_RESET"'.\n", group_count, config_filename);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' groups in '" CL_WHITE "%s" CL_RESET "'.\n", group_count, config_filename);
 
 	
 	if( ( pc_group_max = group_count ) ) {
@@ -333,12 +337,12 @@ bool pc_group_can_use_command(int group_id, const char *command, AtCommandType t
 		
 		// <commandname> : <bool> (only atcommand)
 		if (type == COMMAND_ATCOMMAND && config_setting_lookup_bool(commands, command, &result))
-			return (bool)result;
+			return result > 0;
 
 		// <commandname> : [ <bool>, <bool> ] ([ atcommand, charcommand ])
 		if ((cmd = config_setting_get_member(commands, command)) != NULL &&
 		    config_setting_is_aggregate(cmd) && config_setting_length(cmd) == 2)
-			return (bool)config_setting_get_bool_elem(cmd, AtCommandType2idx(type));
+			return config_setting_get_bool_elem(cmd, AtCommandType2idx(type)) > 0;
 	}
 	return false;
 }
@@ -462,3 +466,7 @@ void pc_groups_reload(void) {
 	}
 	mapit_free(iter);
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -235,7 +235,7 @@
     <ClCompile Include="party.cpp" />
     <ClCompile Include="path.c" />
     <ClCompile Include="pc.cpp" />
-    <ClCompile Include="pc_groups.c" />
+    <ClCompile Include="pc_groups.cpp" />
     <ClCompile Include="pet.c" />
     <ClCompile Include="quest.c" />
     <ClCompile Include="script.cpp" />

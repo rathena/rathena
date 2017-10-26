@@ -4,6 +4,10 @@
 #ifndef _PC_GROUPS_H_
 #define _PC_GROUPS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "atcommand.h" // AtCommandType
 
 extern int pc_group_max;
@@ -88,5 +92,9 @@ static const struct {
 	{ "cashshop_sale", PC_PERM_CASHSHOP_SALE },
 	{ "all_permission", PC_PERM_ALLPERMISSION },
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _PC_GROUPS_H_

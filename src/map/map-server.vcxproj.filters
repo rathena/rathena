@@ -235,7 +235,7 @@
     <ClCompile Include="pc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pc_groups.c">
+    <ClCompile Include="pc_groups.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pet.c">
