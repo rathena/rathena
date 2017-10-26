@@ -20,6 +20,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
 int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
@@ -1038,7 +1042,7 @@ void instance_readdb(void) {
 	int f;
 
 	for (f = 0; f<ARRAYLENGTH(filename); f++) {
-		sv_readdb(db_path, filename[f], ',', 7, 7+MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, f);
+		sv_readdb(db_path, filename[f], ',', 7, 7+MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, f > 0);
 	}
 }
 
@@ -1124,7 +1128,7 @@ void do_reload_instance(void)
 
 void do_init_instance(void) {
 	InstanceDB = uidb_alloc(DB_OPT_BASE);
-	InstanceNameDB = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,0);
+	InstanceNameDB = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),0);
 
 	instance_readdb();
 	memset(instance_data, 0, sizeof(instance_data));
@@ -1147,3 +1151,7 @@ void do_final_instance(void) {
 	InstanceDB->destroy(InstanceDB, instance_db_free);
 	db_destroy(InstanceNameDB);
 }
+
+#ifdef __cplusplus
+}
+#endif

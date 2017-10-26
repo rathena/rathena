@@ -193,7 +193,7 @@
     <ClCompile Include="homunculus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="instance.c">
+    <ClCompile Include="instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="intif.c">

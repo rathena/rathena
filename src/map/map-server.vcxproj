@@ -221,7 +221,7 @@
     <ClCompile Include="elemental.cpp" />
     <ClCompile Include="guild.cpp" />
     <ClCompile Include="homunculus.cpp" />
-    <ClCompile Include="instance.c" />
+    <ClCompile Include="instance.cpp" />
     <ClCompile Include="intif.c" />
     <ClCompile Include="itemdb.c" />
     <ClCompile Include="log.c" />
