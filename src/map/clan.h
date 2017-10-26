@@ -9,7 +9,6 @@ extern "C" {
 #endif
 
 	#include "../common/mmo.h"
-	#include "status.h"
 
 	void do_init_clan();
 	void do_final_clan();

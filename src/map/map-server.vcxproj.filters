@@ -202,7 +202,7 @@
     <ClCompile Include="itemdb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="log.c">
+    <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mail.c">

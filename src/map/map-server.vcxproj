@@ -224,7 +224,7 @@
     <ClCompile Include="instance.cpp" />
     <ClCompile Include="intif.cpp" />
     <ClCompile Include="itemdb.cpp" />
-    <ClCompile Include="log.c" />
+    <ClCompile Include="log.cpp" />
     <ClCompile Include="mail.c" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapreg.c" />

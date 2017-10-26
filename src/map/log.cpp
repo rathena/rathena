@@ -17,6 +17,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static char log_timestamp_format[20];
 
 /// filters for item logging
@@ -219,11 +223,11 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 #ifdef BETA_THREAD_TEST
 		char entry[512];
 		int e_length = 0;
-		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%"PRIu64"', '%d')",
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%" PRIu64 "', '%d')",
 				log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
 		queryThread_log(entry,e_length);
 #else
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%"PRIu64"', '%d')",
+		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%" PRIu64 "', '%d')",
 			log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound) )
 		{
 			Sql_ShowDebug(logmysql_handle);
@@ -241,7 +245,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%"PRIu64"',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
+		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%" PRIu64 "',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
 		fclose(logfp);
 	}
 }
@@ -559,11 +563,11 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned 
 #ifdef BETA_THREAD_TEST
 		char entry[512];
 		int e_length = 0;
-		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%"PRIu32"', '%hu', '%s', '%hu', '%hu' )",
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%" PRIu32 "', '%" PRIu32 "', '%hu', '%c', '%" PRIu32 "', '%hu', '%s', '%hu', '%hu' )",
 			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		queryThread_log(entry, e_length);
 #else
-		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%"PRIu32"', '%hu', '%s', '%hu', '%hu' )",
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%" PRIu32 "', '%" PRIu32 "', '%hu', '%c', '%" PRIu32 "', '%hu', '%s', '%hu', '%hu' )",
 			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y))
 		{
 			Sql_ShowDebug(logmysql_handle);
@@ -623,7 +627,7 @@ int log_config_read(const char* cfgName)
 			if( strcmpi(w1, "enable_logs") == 0 )
 				log_config.enable_logs = (e_log_pick_type)config_switch(w2);
 			else if( strcmpi(w1, "sql_logs") == 0 )
-				log_config.sql_logs = (bool)config_switch(w2);
+				log_config.sql_logs = config_switch(w2) > 0;
 //start of common filter settings
 			else if( strcmpi(w1, "rare_items_log") == 0 )
 				log_config.rare_items_log = atoi(w2);
@@ -641,7 +645,7 @@ int log_config_read(const char* cfgName)
 			else if( strcmpi(w1, "log_zeny") == 0 )
 				log_config.zeny = config_switch(w2);
 			else if( strcmpi( w1, "log_cash" ) == 0 )
-				log_config.cash = config_switch( w2 );
+				log_config.cash = config_switch( w2 ) > 0;
 			else if( strcmpi(w1, "log_commands") == 0 )
 				log_config.commands = config_switch(w2);
 			else if( strcmpi(w1, "log_npc") == 0 )
@@ -653,7 +657,7 @@ int log_config_read(const char* cfgName)
 			else if( strcmpi(w1, "log_feeding") == 0 )
 				log_config.feeding = config_switch(w2);
 			else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
-				log_config.log_chat_woe_disable = (bool)config_switch(w2);
+				log_config.log_chat_woe_disable = config_switch(w2) > 0;
 			else if( strcmpi(w1, "log_branch_db") == 0 )
 				safestrncpy(log_config.log_branch, w2, sizeof(log_config.log_branch));
 			else if( strcmpi(w1, "log_pick_db") == 0 )
@@ -727,3 +731,7 @@ int log_config_read(const char* cfgName)
 
 	return 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
