@@ -16,6 +16,9 @@
 #include "chat.h"
 #include "achievement.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
@@ -501,3 +504,7 @@ int chat_npckickall(struct chat_data* cd)
 
 	return 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
