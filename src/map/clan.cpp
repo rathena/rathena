@@ -14,6 +14,10 @@
 #include "script.h"
 #include "status.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static DBMap* clan_db; // int clan_id -> struct clan*
 
 void do_init_clan(){
@@ -47,7 +51,7 @@ void clan_load_clandata( int count, struct clan* clans ){
 		j++;
 	}
 
-	ShowStatus( "Received '"CL_WHITE"%d"CL_RESET"' clans from char-server.\n", j );
+	ShowStatus( "Received '" CL_WHITE "%d" CL_RESET "' clans from char-server.\n", j );
 }
 
 struct clan* clan_search( int id ){
@@ -212,3 +216,7 @@ int clan_get_alliance_count( struct clan *clan, int flag ){
 
 	return count;
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -172,7 +172,7 @@
     <ClCompile Include="chrif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="clan.c">
+    <ClCompile Include="clan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clif.cpp">
