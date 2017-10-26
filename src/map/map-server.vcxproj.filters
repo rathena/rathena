@@ -241,7 +241,7 @@
     <ClCompile Include="pet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="quest.c">
+    <ClCompile Include="quest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="script.cpp">

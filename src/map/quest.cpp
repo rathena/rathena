@@ -19,6 +19,10 @@
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static DBMap *questdb;
 static void questdb_free_sub(struct quest_db *quest, bool free);
 struct quest_db quest_dummy;
@@ -547,7 +551,7 @@ void quest_read_txtdb(void)
 		}
 
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, filename);
 	}
 }
 
@@ -665,3 +669,7 @@ void do_reload_quest(void)
 	//Update quest data for players, to ensure no entries about removed quests are left over.
 	map_foreachpc(&quest_reload_check_sub);
 }
+
+#ifdef __cplusplus
+}
+#endif
