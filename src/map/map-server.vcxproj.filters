@@ -259,7 +259,7 @@
     <ClCompile Include="storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="trade.c">
+    <ClCompile Include="trade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="unit.c">

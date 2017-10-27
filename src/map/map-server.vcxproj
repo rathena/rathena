@@ -247,7 +247,7 @@
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="status.cpp" />
     <ClCompile Include="storage.cpp" />
-    <ClCompile Include="trade.c" />
+    <ClCompile Include="trade.cpp" />
     <ClCompile Include="unit.c" />
     <ClCompile Include="vending.c" />
   </ItemGroup>

@@ -15,6 +15,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
 /**
@@ -648,3 +652,7 @@ void trade_tradecommit(struct map_session_data *sd)
 		chrif_save(tsd, CSAVE_INVENTORY|CSAVE_CART);
 	}
 }
+
+#ifdef __cplusplus
+}
+#endif
