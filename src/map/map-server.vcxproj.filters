@@ -265,7 +265,7 @@
     <ClCompile Include="unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vending.c">
+    <ClCompile Include="vending.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

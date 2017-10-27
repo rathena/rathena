@@ -17,6 +17,10 @@
 
 #include <stdlib.h> // atoi
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static uint32 vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
 
@@ -511,7 +515,7 @@ void vending_reopen( struct map_session_data* sd )
 			// Immediate save
 			chrif_save(sd, CSAVE_AUTOTRADE);
 
-			ShowInfo("Vending loaded for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
+			ShowInfo("Vending loaded for '" CL_WHITE "%s" CL_RESET "' with '" CL_WHITE "%d" CL_RESET "' items at " CL_WHITE "%s (%d,%d)" CL_RESET "\n",
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		}
 		aFree(data);
@@ -524,7 +528,7 @@ void vending_reopen( struct map_session_data* sd )
 	}
 
 	if (fail != 0) {
-		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '"CL_WHITE"%s"CL_RESET"' (CID=%d/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
+		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '" CL_WHITE "%s" CL_RESET "' (CID=%d/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
 		map_quit(sd);
 	}
 }
@@ -625,7 +629,7 @@ void do_init_vending_autotrade(void)
 			}
 			dbi_destroy(iter);
 
-			ShowStatus("Done loading '"CL_WHITE"%d"CL_RESET"' vending autotraders with '"CL_WHITE"%d"CL_RESET"' items.\n", db_size(vending_autotrader_db), items);
+			ShowStatus("Done loading '" CL_WHITE "%d" CL_RESET "' vending autotraders with '" CL_WHITE "%d" CL_RESET "' items.\n", db_size(vending_autotrader_db), items);
 		}
 	}
 
@@ -687,3 +691,7 @@ void do_init_vending(void)
 	vending_autotrader_db = uidb_alloc(DB_OPT_BASE);
 	vending_nextid = 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
