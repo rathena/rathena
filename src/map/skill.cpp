@@ -1788,9 +1788,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if (attack_type&BF_MISC) // Burning effect from 'eruption'
 			sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
-	case GC_DARKCROW:
-		sc_start(src,bl,SC_DARKCROW,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,100 - skill_lv * 10,skill_lv,skill_get_time(skill_id,skill_lv)) )
 			sc_start(src,bl,SC_HALLUCINATION,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -4645,7 +4642,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case WM_GREAT_ECHO:
 	case GN_SLINGITEM_RANGEMELEEATK:
 	case KO_SETSUDAN:
-	case GC_DARKCROW:
 	case RL_MASS_SPIRAL:
 	case RL_BANISHING_BUSTER:
 	case RL_SLUGSHOT:
@@ -5419,6 +5415,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER); // Should only end, no damage dealt.
 		}
 		break;
+
+	case GC_DARKCROW:
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+		sc_start(src, bl, status_skill2sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv)); // Should be applied even on miss
+		break;
+
 	case WL_CHAINLIGHTNING:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		skill_addtimerskill(src,tick + status_get_amotion(src),bl->id,0,0,WL_CHAINLIGHTNING_ATK,skill_lv,0,flag);
