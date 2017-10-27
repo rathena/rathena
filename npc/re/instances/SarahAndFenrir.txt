@@ -213,11 +213,11 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			switch( select( "The left earring of Sarah", "The right earring of Sarah", "Quit" ) ) {
 			case 1:
 				.@sarah_item_id = 28310;
-				.@sarah_ring$ = "left";
+				.@sarah_earring$ = "left";
 				break;
 			case 2:
 				.@sarah_item_id = 28311;
-				.@sarah_ring$ = "right";
+				.@sarah_earring$ = "right";
 				break;
 			case 3:
 				mes "[Chief Assistant]";
@@ -245,7 +245,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			.@equip_id = getequipid(.@part);
 			if (.@equip_id != .@sarah_item_id) {
 				mes "[Chief Assistant]";
-				mes "If you wish to enchant, you must equip Sarah's " + .@sarah_ring$ + " earring.";
+				mes "If you wish to enchant, you must equip Sarah's " + .@sarah_earring$ + " earring.";
 				close;
 			}
 			setarray .@card[0], getequipcardid(.@part,3), getequipcardid(.@part,2);
@@ -256,12 +256,12 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			}
 			if (.@card[0] < 1) {// none enchant
 				mes "[Chief Assistant]";
-				mes "Currently Sarah's earring is Without an enchantment in a state";
+				mes "Sarah's Earring is currently in a state without enchantment.";
 				.@slot = 0;
 			}
 			else {// 1 enchant
 				mes "[Chief Assistant]";
-				mes "Currently Sarah's earring is Enchantment on slot 4 in a state";
+				mes "Sarah's Earring is currently in a state of enchantment in slot 4.";
 				.@slot = 1;
 			}
 			next;
@@ -319,12 +319,12 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			mes "4 shards of Gigantes is required for one enchantment.";
 			next;
 			mes "[Chief Assistant]";
-			mes "Because enchantment is a high risk process, there is risk of Sarah's ring being destroyed.";
+			mes "Because enchantment is a high risk process, there is risk of Sarah's earring being destroyed.";
 			mes "Do you still want to do it?";
 			next;
 			if (select( "No", "Yes" ) == 1) {
 				mes "[Chief Assistant]";
-				mes "Please speak again after making a clear decision!";
+				mes "Please speak to me again after making a clear decision!";
 				close;
 			}
 			if (countitem(6803) < 4) {
@@ -370,11 +370,11 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			switch( select( "The left earring of Sarah", "The right earring of Sarah", "Quit" ) ) {
 			case 1:
 				.@sarah_item_id = 28310;
-				.@sarah_ring$ = "left";
+				.@sarah_earring$ = "left";
 				break;
 			case 2:
 				.@sarah_item_id = 28311;
-				.@sarah_ring$ = "right";
+				.@sarah_earring$ = "right";
 				break;
 			case 3:
 				mes "[Chief Assistant]";
@@ -387,7 +387,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			if (countitem(6803) < 1) {
 				mes "[Chief Assistant]";
 				mes "There are not enough shards of Gigantes.";
-				mes "You need enough in order for initialization to take place.";
+				mes "You will need them in order for initialization to take place.";
 				close;
 			}
 			mes "[Chief Assistant]";
@@ -419,7 +419,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				close;
 			}
 			mes "[Chief Assistant]";
-			mes "You have selected Sarah's " + .@sarah_ring$ + " earring on the " + .@column$ + " column.";
+			mes "You have selected Sarah's " + .@sarah_earring$ + " earring on the " + .@column$ + " column.";
 			mes "It is impossible to restore abilities that are gone after initialization.";
 			mes "Do you still want to proceed?";
 			next;
@@ -467,7 +467,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			if (countitem(6803) < 1) {
 				mes "[Chief Assistant]";
 				mes "There are not enough shards of Gigantes.";
-				mes "You need enough for me to trade with you.";
+				mes "You will need them for me to trade with you.";
 				close;
 			}
 			delitem 6803,1;// Shard of Gigantes
@@ -696,7 +696,7 @@ OnTouch:
 	disablenpc instance_npcname("#glast_event_5");
 	mes "";
 	cutin "fenrir_a.bmp",2;
-	npctalk "Fenrith Fenrir: You are still im Glast Heim? Why aren't you leaving this  dangerous place?", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: You are still in Glast Heim? Why aren't you leaving this dangerous place?", 'fenrir_2$;
 	sleep2 2000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : I know it's dangerous but I thought it would be fun so I couldn't help myself..";
 	sleep2 2000;
@@ -720,7 +720,7 @@ OnTouch:
 	cutin "",255;
 	disablenpc 'fenrir_2$;
 	sleep2 1000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Hm.. what should i do..? I need shards of Gigantes as requested by Professor Bernhard..";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Hm.. what should I do..? I need shards of Gigantes as requested by Professor Bernhard..";
 	sleep2 2000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Should I help that person.. Or should I look for Gigantes to take the shards as requested by Professor Bernhard..?";
 	sleep2 2000;
@@ -740,7 +740,7 @@ OnTouch:
 	end;
 OnTouch:
 	if (getcharid(0) != getpartyleader(getcharid(1),2))
-		npctalk "Fenrith Fenrir: I would like your party master to come and help me!", 'fenrir_3$;
+		npctalk "Fenrith Fenrir: I would like your party leader to come and help me!", 'fenrir_3$;
 	else {
 		mes "";
 		disablenpc instance_npcname("#glast_event_7");
@@ -1028,7 +1028,7 @@ OnTouch:
 	sleep2 3000;
 	npctalk "Fenrith Fenrir: I will wait in the central castle of Glast Heim for about 5 minutes.", 'fenrir_5$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Since it is dangerous you do not have to feel obliged to help me. I will try by myself if I have to.", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Since it is dangerous you do not have to feel obligated to help me. I will try by myself if I have to.", 'fenrir_5$;
 	viewpoint 1,199,237,1,0xFF0000;
 	sleep2 3000;
 	npctalk "Fenrith Fenrir: Then I will go on ahead! Warp!", 'fenrir_5$;
@@ -1086,7 +1086,7 @@ OnTimer317000:
 	end;
 OnTimer319000:
 	stopnpctimer;
-	mapannounce 'map_glast$, "Fenrith Fenrir: Since it is dangerous you do not have to feel obliged to help me. I will try by myself if I have to.", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Since it is dangerous you do not have to feel obligated to help me. I will try by myself if I have to.", bc_map,0xEBFF;
 	enablenpc instance_npcname("#glast_move_03");
 	enablenpc 'fenrir_6$;
 	enablenpc instance_npcname("#glast_event_15");
@@ -1207,7 +1207,7 @@ OnTimer1000:
 	end;
 OnTimer10000:
 	callsub S_Hit,1;
-	npctalk "Fenrith Fenrir: Go! Cloud kill!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Go! Cloud Kill!!!!!", 'fenrir_7$;
 	specialeffect EF_POISONSMOKE, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		specialeffect EF_POISONSMOKE, AREA, instance_npcname("#effect_glast_event03_" + .@i);
@@ -1242,7 +1242,7 @@ OnTimer13000:
 	end;
 OnTimer20000:
 	callsub S_Hit,2;
-	npctalk "Fenrith Fenrir: Go! Cloud kill!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Go! Cloud Kill!!!!!", 'fenrir_7$;
 	specialeffect EF_POISONSMOKE, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
