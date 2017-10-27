@@ -144,7 +144,7 @@ int pc_class2idx(int class_) {
 * @param sd
 * @return Group ID
 */
-inline int pc_get_group_id(struct map_session_data *sd) {
+int pc_get_group_id(struct map_session_data *sd) {
 	return sd->group_id;
 }
 
@@ -152,7 +152,7 @@ inline int pc_get_group_id(struct map_session_data *sd) {
 * @param sd
 * @return Group Level
 */
-inline int pc_get_group_level(struct map_session_data *sd) {
+int pc_get_group_level(struct map_session_data *sd) {
 	return sd->group_level;
 }
 

@@ -27,6 +27,10 @@
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Regen related flags.
 enum e_regen {
 	RGN_NONE = 0x00,
@@ -104,7 +108,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground, map[(m)].zone << 3, map_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp != 0, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground != 0, (map[(m)].zone << 3) != 0, map_flag_gvg2_te((m))) )
 
 /**
  * Returns the status change associated with a skill.
@@ -2801,7 +2805,7 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 					break;
 				case AM_CANNIBALIZE:
 					status->max_hp = 1500 + 200*ud->skill_lv + 10*status_get_lv(mbl);
-					status->mode|= MD_CANATTACK|MD_AGGRESSIVE;
+					status->mode = static_cast<e_mode>(status->mode|MD_CANATTACK|MD_AGGRESSIVE);
 					break;
 				case MH_SUMMON_LEGION:
 				{
@@ -2863,7 +2867,7 @@ void status_calc_pet_(struct pet_data *pd, enum e_status_calc_opt opt)
 
 		if(battle_config.pet_attack_support || battle_config.pet_damage_support) {
 			// Attack support requires the pet to be able to attack
-			pd->status.mode |= MD_CANATTACK;
+			pd->status.mode = static_cast<e_mode>(pd->status.mode|MD_CANATTACK);
 		}
 	}
 
@@ -3388,7 +3392,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// !FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
 	// Give them all modes except these (useful for clones)
-	base_status->mode = MD_MASK&~(MD_STATUS_IMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK);
+	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUS_IMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
 	base_status->size = (sd->class_&JOBL_BABY || (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? SZ_SMALL : SZ_MEDIUM;
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
@@ -4200,7 +4204,7 @@ int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt
 	if (opt&SCO_FIRST) {
 		memcpy(status, &md->db->status, sizeof(struct status_data));
 		status->class_ = CLASS_NORMAL;
-		status->mode = MD_CANMOVE|MD_CANATTACK;
+		status->mode = static_cast<e_mode>(MD_CANMOVE|MD_CANATTACK);
 		status->hp = status->max_hp;
 		status->sp = status->max_sp;
 		md->battle_status.hp = merc->hp;
@@ -4245,7 +4249,7 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
 		status->class_ = CLASS_NORMAL;
 		status->size = (hom->class_ == db->evo_class) ? db->evo_size : db->base_size;
 		status->rhw.range = 1 + status->size;
-		status->mode = MD_CANMOVE|MD_CANATTACK;
+		status->mode = static_cast<e_mode>(MD_CANMOVE|MD_CANATTACK);
 		status->speed = DEFAULT_WALK_SPEED;
 		if (battle_config.hom_setting&HOMSET_COPY_SPEED && hd->master)
 			status->speed = status_get_speed(&hd->master->bl);
@@ -4385,7 +4389,7 @@ int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt)
 		status->class_ = CLASS_NORMAL;
 		status->size = nd->size;
 		status->rhw.range = 1 + status->size;
-		status->mode = (MD_CANMOVE|MD_CANATTACK);
+		status->mode = static_cast<e_mode>(MD_CANMOVE|MD_CANATTACK);
 		status->speed = nd->speed;
 	}
 
@@ -7215,16 +7219,16 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode)
 {
 	if(!sc || !sc->count)
-		return cap_value(mode, 0, INT_MAX);
+		return cap_value(mode, MD_NONE, static_cast<e_mode>(INT_MAX));
 	if(sc->data[SC_MODECHANGE]) {
 		if (sc->data[SC_MODECHANGE]->val2)
-			mode = (mode&~MD_MASK)|sc->data[SC_MODECHANGE]->val2; // Set mode
+			mode = static_cast<e_mode>((mode&~MD_MASK)|sc->data[SC_MODECHANGE]->val2); // Set mode
 		if (sc->data[SC_MODECHANGE]->val3)
-			mode|= sc->data[SC_MODECHANGE]->val3; // Add mode
+			mode = static_cast<e_mode>(mode|sc->data[SC_MODECHANGE]->val3); // Add mode
 		if (sc->data[SC_MODECHANGE]->val4)
-			mode&=~sc->data[SC_MODECHANGE]->val4; // Del mode
+			mode = static_cast<e_mode>(mode&~sc->data[SC_MODECHANGE]->val4); // Del mode
 	}
-	return cap_value(mode, 0, INT_MAX);
+	return cap_value(mode, MD_NONE, static_cast<e_mode>(INT_MAX));
 }
 
 /**
@@ -8572,9 +8576,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 |= sc->data[type]->val3;
 			val4 |= sc->data[type]->val4;
 		}
-		mode = val2 ? ((val2&~MD_MASK)|val2) : bstatus->mode; // Base mode
-		if (val4) mode&=~val4; // Del mode
-		if (val3) mode|= val3; // Add mode
+		mode = val2 ? static_cast<e_mode>((val2&~MD_MASK)|val2) : bstatus->mode; // Base mode
+		if (val4) mode = static_cast<e_mode>(mode&~val4); // Del mode
+		if (val3) mode = static_cast<e_mode>(mode|val3); // Add mode
 		if (mode == bstatus->mode) { // No change.
 			if (sc->data[type]) // Abort previous status
 				return status_change_end(bl, type, INVALID_TIMER);
@@ -11810,7 +11814,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_change_entry *sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag = 0, calc_flag;
+	int opt_flag = 0;
+	enum scb_flag calc_flag = SCB_NONE;
 
 	nullpo_ret(bl);
 
@@ -11898,7 +11903,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);
-	calc_flag = StatusChangeFlagTable[type];
+	calc_flag = static_cast<scb_flag>(StatusChangeFlagTable[type]);
 	switch(type) {
 		case SC_GRANITIC_ARMOR:
 			{
@@ -12530,14 +12535,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (calc_flag&SCB_DYE) { // Restore DYE color
 		if (vd && !vd->cloth_color && sce->val4)
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,sce->val4);
-		calc_flag&=~SCB_DYE;
+		calc_flag = static_cast<scb_flag>(calc_flag&~SCB_DYE);
 	}
 
 	/*if (calc_flag&SCB_BODY)// Might be needed in the future. [Rytech]
 	{	//Restore body style
 		if (vd && !vd->body_style && sce->val4)
 			clif_changelook(bl,LOOK_BODY2,sce->val4);
-		calc_flag&=~SCB_BODY;
+		calc_flag = static_cast<scb_flag>(calc_flag&~SCB_BODY);
 	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
@@ -12708,12 +12713,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_POISON:
 	case SC_DPOISON:
 		if (sce->val4 >= 0 && !sc->data[SC_SLOWPOISON]) {
-			int64 damage = 0;
+			unsigned int damage = 0;
 			if (sd)
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
 			else
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 100 : 2 + status->max_hp / 200;
-			if (status->hp > max(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
+			if (status->hp > umax(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
 				status_zap(bl, damage, 0);
 		}
 		break;
@@ -13306,9 +13311,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( !status_charge(bl,0,sce->val2) ) {
 			struct block_list *s_bl = battle_get_master(bl);
 			if (bl->type == BL_ELEM)
-				elemental_change_mode(BL_CAST(BL_ELEM, bl), MAX_ELESKILLTREE);
+				elemental_change_mode(BL_CAST(BL_ELEM, bl), static_cast<e_mode>(MAX_ELESKILLTREE));
 			if( s_bl )
-				status_change_end(s_bl,type+1,INVALID_TIMER);
+				status_change_end(s_bl,static_cast<sc_type>(type+1),INVALID_TIMER);
 			status_change_end(bl,type,INVALID_TIMER);
 			break;
 		}
@@ -13564,7 +13569,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_TINDER_BREAKER:
 	case SC_CLOSECONFINE:{
-		int type2 = ((type==SC_CLOSECONFINE)?SC_CLOSECONFINE2:SC_TINDER_BREAKER2);
+		enum sc_type type2 = ((type==SC_CLOSECONFINE)?SC_CLOSECONFINE2:SC_TINDER_BREAKER2);
 		// Lock char has released the hold on everyone...
 		if (tsc && tsc->data[type2] && tsc->data[type2]->val2 == src->id) {
 			tsc->data[type2]->val2 = 0;
@@ -14172,9 +14177,9 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 	if (sc && sc->count) {
 		unsigned short i;
 		bool mapIsVS = map_flag_vs2(bl->m);
-		bool mapIsPVP = map[bl->m].flag.pvp;
+		bool mapIsPVP = map[bl->m].flag.pvp != 0;
 		bool mapIsGVG = map_flag_gvg2_no_te(bl->m);
-		bool mapIsBG = map[bl->m].flag.battleground;
+		bool mapIsBG = map[bl->m].flag.battleground != 0;
 		bool mapIsTE = map_flag_gvg2_te(bl->m);
 		unsigned int mapZone = map[bl->m].zone << 3;
 
@@ -14411,7 +14416,7 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 		entries++;
 	}
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, path);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
 	return true;
 }
 
@@ -14430,7 +14435,7 @@ int status_readdb(void)
 	int i, j, k;
 	const char* dbsubpath[] = {
 		"",
-		"/"DBIMPORT,
+		"/" DBIMPORT,
 		//add other path here
 	};
 	// Initialize databases to default
@@ -14475,9 +14480,9 @@ int status_readdb(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		
-		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
-		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i);
-		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
+		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
+		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
+		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i > 0);
 		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
@@ -14496,7 +14501,7 @@ int do_init_status(void)
 	initDummyData();
 	status_readdb();
 	natural_heal_prev_tick = gettick();
-	sc_data_ers = ers_new(sizeof(struct status_change_entry),"status.c::sc_data_ers",ERS_OPT_NONE);
+	sc_data_ers = ers_new(sizeof(struct status_change_entry),"status.cpp::sc_data_ers",ERS_OPT_NONE);
 	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, status_natural_heal_timer, 0, 0, NATURAL_HEAL_INTERVAL);
 	return 0;
 }
@@ -14504,3 +14509,7 @@ void do_final_status(void)
 {
 	ers_destroy(sc_data_ers);
 }
+
+#ifdef __cplusplus
+}
+#endif

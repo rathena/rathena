@@ -129,7 +129,7 @@ static void read_config(void)
 			group_settings->id = id;
 			group_settings->level = level;
 			group_settings->name = groupname;
-			group_settings->log_commands = log_commands > 0;
+			group_settings->log_commands = log_commands != 0;
 			group_settings->inherit = config_setting_get_member(group, "inherit");
 			group_settings->commands = config_setting_get_member(group, "commands");
 			group_settings->permissions = config_setting_get_member(group, "permissions");
@@ -337,12 +337,12 @@ bool pc_group_can_use_command(int group_id, const char *command, AtCommandType t
 		
 		// <commandname> : <bool> (only atcommand)
 		if (type == COMMAND_ATCOMMAND && config_setting_lookup_bool(commands, command, &result))
-			return result > 0;
+			return result != 0;
 
 		// <commandname> : [ <bool>, <bool> ] ([ atcommand, charcommand ])
 		if ((cmd = config_setting_get_member(commands, command)) != NULL &&
 		    config_setting_is_aggregate(cmd) && config_setting_length(cmd) == 2)
-			return config_setting_get_bool_elem(cmd, AtCommandType2idx(type)) > 0;
+			return config_setting_get_bool_elem(cmd, AtCommandType2idx(type)) != 0;
 	}
 	return false;
 }
