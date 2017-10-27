@@ -209,7 +209,7 @@
     <ClInclude Include="vending.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="achievement.c" />
+    <ClCompile Include="achievement.cpp" />
     <ClCompile Include="atcommand.cpp" />
     <ClCompile Include="battle.cpp" />
     <ClCompile Include="battleground.cpp" />

@@ -1120,7 +1120,7 @@ void achievement_read_db(void)
 	int i = 0;
 	const char *dbsubpath[] = {
 		"",
-		"/"DBIMPORT"/",
+		"/" DBIMPORT "/",
 		//add other path here
 	};
 
@@ -1169,7 +1169,7 @@ void achievement_read_db(void)
 		yaml_destroy_wrapper(adb_sub);
 		yaml_iterator_destroy(it);
 
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filepath);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, filepath);
 	}
 
 	return;
