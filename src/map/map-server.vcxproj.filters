@@ -256,7 +256,7 @@
     <ClCompile Include="status.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="storage.c">
+    <ClCompile Include="storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trade.c">

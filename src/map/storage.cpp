@@ -18,6 +18,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
 struct s_storage_table *storage_db;
@@ -125,7 +128,7 @@ void do_final_storage(void)
  */
 static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct s_storage *stor = db_data2ptr(data);
+	struct s_storage *stor = static_cast<s_storage *>(db_data2ptr(data));
 
 	if (stor->dirty && stor->status == 0) //Save closed storages.
 		storage_guild_storagesave(0, stor->id, 0);
@@ -714,7 +717,7 @@ bool storage_guild_additem2(struct s_storage* stor, struct item* item, int amoun
 				// Set the amount, make it fit with max amount
 				amount = min(amount, ((id->stack.guildstorage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
 				if (amount != item->amount)
-					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \""CL_WHITE"%s"CL_RESET"\" (%d). '"CL_WHITE"%d"CL_RESET"' -> '"CL_WHITE"%d"CL_RESET"'.\n", id->name, id->nameid, item->amount, amount);
+					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%d). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name, id->nameid, item->amount, amount);
 				stor->u.items_guild[i].amount += amount;
 				stor->dirty = true;
 				return true;
@@ -1121,3 +1124,7 @@ void storage_premiumStorage_quit(struct map_session_data *sd) {
 
 	storage_premiumStorage_save(sd);
 }
+
+#ifdef __cplusplus
+}
+#endif
