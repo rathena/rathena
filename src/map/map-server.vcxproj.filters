@@ -262,7 +262,7 @@
     <ClCompile Include="trade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="unit.c">
+    <ClCompile Include="unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vending.c">

@@ -29,6 +29,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // Directions values
 // 1 0 7
@@ -3441,3 +3444,7 @@ void do_init_unit(void){
 void do_final_unit(void){
 	// Nothing to do
 }
+
+#ifdef __cplusplus
+}
+#endif
