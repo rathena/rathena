@@ -12,7 +12,7 @@
 //= 1.4 Added new Guild Dungeons.
 //= 1.4a Slight edits.
 //= 1.4b Added Wolfchev's Laboratory warp.
-//= 1.5 Added Lasagna ,WOE TE ,Instances and setting for old morroc maps [sader1992].
+//= 1.5 Added Lasagna ,Para Market ,WOE TE ,Instances and setting for old morroc maps [sader1992].
 //============================================================
 
 -	script	Warper	-1,{
@@ -492,7 +492,7 @@ I19: Restrict("RE");
 // --------------------------------------------------
 menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
 		"Eden Group Headquarters",S5, "Gonryun Arena",S6, "Izlude Arena",S7, 
-		"Monster Race Arena",S8, "Turbo Track",S9;
+		"Monster Race Arena",S8, "Para Market",S9, "Turbo Track",S10;
 
 S1: Go("auction_01",22,68);
 S2: Go("bat_room",154,150);
@@ -504,7 +504,9 @@ S5: Restrict("RE");
 S6: Go("gon_test",48,10);
 S7: Go("arena_room",100,88);
 S8: Go("p_track01",62,41);
-S9: Go("turbo_room",99,114);
+S9: Restrict("RE");
+	Go("paramk",97,17);
+S10: Go("turbo_room",99,114);
 
 OnInit:
 	.Satan_Morroc = true;	//	false will enable moc_fild 4,5,6,8,9,10,14,15 while disable moc_fild 20,21,22 Default is true.
