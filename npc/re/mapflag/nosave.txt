@@ -104,10 +104,18 @@ que_avan01	mapflag	nosave	SavePoint
 1@def02	mapflag	nosave	SavePoint
 1@def03	mapflag	nosave	SavePoint
 
-// Heroes' Trails - Part 1 ========
-1@gef	mapflag	nosave	SavePoint
+// Heroes' Trail - Part 1 ========
 1@face	mapflag	nosave	SavePoint
 1@sara	mapflag	nosave	SavePoint
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	nosave	SavePoint
+1@gef	mapflag	nosave	SavePoint
 1@gef_in	mapflag	nosave	SavePoint
+1@spa	mapflag	nosave	SavePoint
+1@tnm1	mapflag	nosave	SavePoint
+1@tnm2	mapflag	nosave	SavePoint
+1@tnm3	mapflag	nosave	SavePoint
+
+// Heroes' Trail - Part 3 ========
 1@glast	mapflag	nosave	SavePoint
-dali	mapflag	nosave	SavePoint

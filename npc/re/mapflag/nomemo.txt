@@ -125,15 +125,6 @@ gl_cas02_	mapflag	nomemo
 1@def02	mapflag	nomemo
 1@def03	mapflag	nomemo
 
-// Heroes' Trails - Part 1 =======
-1@gef	mapflag	nomemo
-1@face	mapflag	nomemo
-1@sara	mapflag	nomemo
-1@gef_in	mapflag	nomemo
-1@glast	mapflag	nomemo
-dali	mapflag	nomemo
-dali02	mapflag	nomemo
-
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	nomemo
 te_prtcas02	mapflag	nomemo
