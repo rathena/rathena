@@ -665,6 +665,7 @@ function	script	F_getpositionname	{
 // Platinum Skills Global Function: F_GetPlatinumSkills [mazvi] 
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetPlatinumSkills	{
+	if (Class == Job_Summoner) end;
 	skill "NV_FIRSTAID",1,SKILL_PERM;
 	switch (BaseClass) {
 	case Job_Novice:
