@@ -306,7 +306,6 @@ function	Job_Menu	{
 
 // Executes the actual jobchange and closes.
 function	Job_Change	{
-	callfunc "F_GetPlatinumSkills";
 	.@to_cls = getarg(0);
 	next;
 	mes .NPCName$;
