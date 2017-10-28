@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.25
+//= 2.27
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -49,6 +49,7 @@
 //= 2.24 Added functions to check for equipment swap hacks. [Euphy]
 //= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
 //= 2.26 Added "F_getpositionname". [Capuche]
+//= 2.27 Added "close3". [Capuche]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -658,4 +659,13 @@ function	script	F_getpositionname	{
 		default:
 			return "Unknown";
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Shortcut : close button and clear cutin.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	close3	{
+	close2;
+	cutin "",255;
+	end;
 }

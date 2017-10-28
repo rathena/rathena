@@ -1446,7 +1446,7 @@
 7563,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Standby for Kafragaten Challenge 1"
 7564,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Standby for Kafragaten Challenge 2"
 
-// Devil Tower memorial
+// Devil Tower Memorial
 7568,5400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Explore the tower"
 7569,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Treat the injured"
 7570,0,2939,7,2940,7,2941,7,0,0,0,0,0,0,0,0,0,"Destroy the demons"
