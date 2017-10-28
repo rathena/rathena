@@ -306,7 +306,7 @@ function	Job_Menu	{
 
 // Executes the actual jobchange and closes.
 function	Job_Change	{
-	function Get_Platinum;
+	callfunc "F_GetPlatinumSkills";
 	.@to_cls = getarg(0);
 	next;
 	mes .NPCName$;
@@ -324,7 +324,7 @@ function	Job_Change	{
 	specialeffect2 EF_ANGEL2;
 	specialeffect2 EF_ELECTRIC;
 	if (.Platinum)
-		Get_Platinum();
+		callfunc "F_GetPlatinumSkills";
 	if (.GetJobEquip)
 		Get_Job_Equip();
 	close; // Always closes after the change
@@ -349,11 +349,6 @@ function	Confirm_Change	{
 	}
 	if (!.@back)
 		close; // "Cancel" pressed
-	return;
-}
-
-function	Get_Platinum	{
-	callfunc "F_GetPlatinumSkills";
 	return;
 }
 
