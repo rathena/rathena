@@ -229,7 +229,7 @@
     <ClCompile Include="party.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="path.c">
+    <ClCompile Include="path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pc.cpp">

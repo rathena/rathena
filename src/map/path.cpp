@@ -54,7 +54,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 /// @}
 
 // Translates dx,dy into walking direction
-static const unsigned char walk_choices [3][3] =
+static const char walk_choices [3][3] =
 {
 	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
 	{DIR_WEST,DIR_CENTER,DIR_EAST},
@@ -197,11 +197,14 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
+
+#define swap_ptrcast_pathnode(a, b) swap_ptrcast(struct path_node *, a, b)
+
 static void heap_push_node(struct node_heap *heap, struct path_node *node)
 {
 #ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
-	BHEAP_ENSURE(*heap, 1, 256);
-	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP, swap_ptr);
+	BHEAP_ENSURE2(*heap, 1, 256, struct path_node **);
+	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP, swap_ptrcast_pathnode);
 #endif // __clang_analyzer__
 }
 
@@ -214,7 +217,7 @@ static int heap_update_node(struct node_heap *heap, struct path_node *node)
 		ShowError("heap_update_node: node not found\n");
 		return 1;
 	}
-	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP, swap_ptr);
+	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP, swap_ptrcast_pathnode);
 	return 0;
 }
 
@@ -371,7 +374,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			}
 
 			current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-			BHEAP_POP2(g_open_set, NODE_MINTOPCMP, swap_ptr); // Remove it from 'open' set
+			BHEAP_POP2(g_open_set, NODE_MINTOPCMP, swap_ptrcast_pathnode); // Remove it from 'open' set
 
 			x      = current->x;
 			y      = current->y;
