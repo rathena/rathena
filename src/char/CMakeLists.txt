@@ -15,6 +15,7 @@ set( CHAR_HEADERS
 	"${SERVER_CHAR_SOURCE_DIR}/char_cnslif.h"
 	"${SERVER_CHAR_SOURCE_DIR}/char_logif.h"
 	"${SERVER_CHAR_SOURCE_DIR}/char_mapif.h"
+	"${SERVER_CHAR_SOURCE_DIR}/int_achievement.h"
 	"${SERVER_CHAR_SOURCE_DIR}/int_auction.h"
 	"${SERVER_CHAR_SOURCE_DIR}/int_clan.h"
 	"${SERVER_CHAR_SOURCE_DIR}/int_elemental.h"
@@ -29,11 +30,12 @@ set( CHAR_HEADERS
 	"${SERVER_CHAR_SOURCE_DIR}/inter.h"
 	)
 set( CHAR_SOURCES
-	"${SERVER_CHAR_SOURCE_DIR}/char.c"
+	"${SERVER_CHAR_SOURCE_DIR}/char.cpp"
 	"${SERVER_CHAR_SOURCE_DIR}/char_clif.c"
 	"${SERVER_CHAR_SOURCE_DIR}/char_cnslif.c"
 	"${SERVER_CHAR_SOURCE_DIR}/char_logif.c"
 	"${SERVER_CHAR_SOURCE_DIR}/char_mapif.c"
+	"${SERVER_CHAR_SOURCE_DIR}/int_achievement.c"
 	"${SERVER_CHAR_SOURCE_DIR}/int_auction.c"
 	"${SERVER_CHAR_SOURCE_DIR}/int_clan.c"
 	"${SERVER_CHAR_SOURCE_DIR}/int_elemental.c"
@@ -44,8 +46,8 @@ set( CHAR_SOURCES
 	"${SERVER_CHAR_SOURCE_DIR}/int_party.c"
 	"${SERVER_CHAR_SOURCE_DIR}/int_pet.c"
 	"${SERVER_CHAR_SOURCE_DIR}/int_quest.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_storage.c"
-	"${SERVER_CHAR_SOURCE_DIR}/inter.c"
+	"${SERVER_CHAR_SOURCE_DIR}/int_storage.cpp"
+	"${SERVER_CHAR_SOURCE_DIR}/inter.cpp"
 	)
 set( DEPENDENCIES common )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )
@@ -55,10 +57,12 @@ set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${CHAR_HEADERS} ${CHA
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( char FILES ${CHAR_HEADERS} ${CHAR_SOURCES} )
 include_directories( ${INCLUDE_DIRS} )
+
 add_executable( char-server ${SOURCE_FILES} )
 add_dependencies( char-server ${DEPENDENCIES} )
 target_link_libraries( char-server ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( char-server PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+
 if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_charserver DESCRIPTION "char-server" DISPLAY_NAME "char-server" GROUP Runtime )
 	install( TARGETS char-server
