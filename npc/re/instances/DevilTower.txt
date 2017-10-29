@@ -334,10 +334,8 @@ dali02,141,120,3	script	Dimensional Device#tnm0	PORTAL,{
 dali02,134,112,3	script	#tnmtks01	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch_:
-	if (.talk == 0) {
-		.talk = 1;
-		initnpctimer;
-	}
+	disablenpc "#tnmtks01";
+	initnpctimer;
 	end;
 OnTimer1000:
 	npctalk "Artie: Hey, you! How is your research going?", "Magic Scholar Artie#tnm";
@@ -390,7 +388,7 @@ OnTimer42000:
 OnTimer45000:
 	npctalk "Artie: You sure that's the right thing to say? Maybe your recruiting tactics need refining...", "Magic Scholar Artie#tnm";
 	stopnpctimer;
-	.talk = 0;
+	enablenpc "#tnmtks01";
 	end;
 }
 
@@ -1057,22 +1055,6 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer1000:
-	callsub S_Spawn;
-OnTimer6000:
-	killmonster 'map_tnm2$, instance_npcname("#devil_flamecross") + "::OnFlameDead";
-	end;
-OnTimer20000:
-	stopnpctimer;
-	donpcevent instance_npcname("#devil_flamecross") + "::OnStart";
-	end;
-OnStop:
-	stopnpctimer;
-	killmonster 'map_tnm2$, instance_npcname("#devil_flamecross") + "::OnFlameDead";
-	end;
-OnFlameDead:
-	end;
-
-S_Spawn:
 	setarray .@north[0], 138,151, 138,160, 140,165, 140,176, 140,170, 140,181, 140,186, 140,191;
 	setarray .@north_west[0], 126,149, 122,151, 118,153, 113,154, 107,156, 101,158, 96,160, 91,161, 86,162, 81,163;
 	setarray .@south_west[0], 128,130, 125,127, 122,124, 118,121, 115,118, 112,115, 109,114, 106,106, 102,102, 99,98;
@@ -1088,6 +1070,19 @@ S_Spawn:
 		monster 'map_tnm2$,.@north_east[.@i],.@north_east[.@i+1], "",2960,1, .@label$;	
 		sleep 200;
 	}
+	end;
+OnTimer6000:
+	killmonster 'map_tnm2$, instance_npcname("#devil_flamecross") + "::OnFlameDead";
+	end;
+OnTimer20000:
+	stopnpctimer;
+	donpcevent instance_npcname("#devil_flamecross") + "::OnStart";
+	end;
+OnStop:
+	stopnpctimer;
+	killmonster 'map_tnm2$, instance_npcname("#devil_flamecross") + "::OnFlameDead";
+	end;
+OnFlameDead:
 	end;
 }
 
@@ -1137,8 +1132,8 @@ OnTimer191000:
 	mapannounce 'map_tnm2$, "Thanatos: What are you doing!!! Are you playing a game now?!", bc_map,0xFF00;
 	end;
 OnTimer193000:
-	specialeffect 17,AREA, 'thanatos$;
-	specialeffect 90,AREA, 'thanatos$;
+	specialeffect EF_MAGNUMBREAK,AREA, 'thanatos$;
+	specialeffect EF_LORD,AREA, 'thanatos$;
 	donpcevent instance_npcname("devil_seal_spawn#1") + "::OnStop";
 	donpcevent instance_npcname("devil_seal_spawn#2") + "::OnStop";
 	donpcevent instance_npcname("devil_seal_spawn#3") + "::OnStop";
@@ -1262,8 +1257,8 @@ OnTimer30000:
 
 OnDisable:
 	stopnpctimer;
-	killmonster 'map_tnm2$, instance_npcname(strnpcinfo(0)) + "::OnMobDead";	// officially still alive
-	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSealDead" + strnpcinfo(2);	// officially still alive
+	killmonster 'map_tnm2$, instance_npcname(strnpcinfo(0)) + "::OnMobDead";	// note : officially still alive
+	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSealDead" + strnpcinfo(2);	// note : officially still alive
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 OnStop:
@@ -1332,7 +1327,7 @@ OnTimer3000:
 	npctalk "Thanatos: It will be the last time to show off!! Good bye!!!", 'thanatos$;
 	end;
 OnTimer5000:
-	specialeffect 90,AREA, 'thanatos$;
+	specialeffect EF_LORD,AREA, 'thanatos$;
 	end;
 OnTimer7000:
 	stopnpctimer;
