@@ -58,6 +58,7 @@ ma_zif07	mapflag	noteleport
 ma_zif08	mapflag	noteleport
 ma_zif09	mapflag	noteleport
 job_ko	mapflag	noteleport
+job_gun	mapflag	noteleport
 ecl_in01	mapflag	noteleport
 ecl_in02	mapflag	noteleport
 ecl_in03	mapflag	noteleport
@@ -93,6 +94,8 @@ gl_cas02_	mapflag	noteleport
 1@sara	mapflag	monster_noteleport
 1@gef_in	mapflag	noteleport
 1@gef_in	mapflag	monster_noteleport
+1@glast	mapflag	noteleport
+1@glast	mapflag	monster_noteleport
 dali	mapflag	noteleport
 dali02	mapflag	noteleport
 

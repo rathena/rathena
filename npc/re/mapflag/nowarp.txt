@@ -28,3 +28,5 @@ te_aldecas5	mapflag	nowarp
 1@uns	mapflag	nowarp
 un_bk_q	mapflag	nowarp
 un_myst	mapflag	nowarp
+
+job_gun	mapflag	nowarp

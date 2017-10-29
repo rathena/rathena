@@ -2511,9 +2511,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
 
-	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
-		return 0;
-
 	if( src->m != target->m ) {
 		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
 			return 1; // Follow up.
@@ -2758,31 +2755,6 @@ int unit_counttargeted(struct block_list* bl)
 
 	if( bl && (ud = unit_bl2ud(bl)) )
 		return ud->target_count;
-
-	return 0;
-}
-
-/**
- * Changes the size of a unit
- * @param bl: Object to change size [PC|MOB]
- * @param size: New size of bl
- * @return 0
- */
-int unit_changeviewsize(struct block_list *bl,short size)
-{
-	nullpo_ret(bl);
-
-	size = (size < 0) ? -1 : (size > 0) ? 1 : 0;
-
-	if(bl->type == BL_PC)
-		((TBL_PC*)bl)->state.size = size;
-	else if(bl->type == BL_MOB)
-		((TBL_MOB*)bl)->special_state.size = size;
-	else
-		return 0;
-
-	if(size != 0)
-		clif_specialeffect(bl,421+size, AREA);
 
 	return 0;
 }

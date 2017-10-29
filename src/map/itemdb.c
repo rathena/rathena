@@ -77,11 +77,11 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 	dst2 = va_arg(ap,struct item_data **);
 
 	//Absolute priority to Aegis code name.
-	if (strcmpi(item->name,str) == 0)
+	if (dst != NULL && strcmpi(item->name, str) == 0)
 		*dst = item;
 
 	//Second priority to Client displayed name.
-	if (strcmpi(item->jname,str) == 0)
+	if (dst2 != NULL && strcmpi(item->jname, str) == 0)
 		*dst2 = item;
 	return 0;
 }
@@ -89,14 +89,24 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 /*==========================================
  * Return item data from item name. (lookup)
  * @param str Item Name
+ * @param aegis_only
  * @return item data
  *------------------------------------------*/
-struct item_data* itemdb_searchname(const char *str)
+static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 {
 	struct item_data *item = NULL, * item2 = NULL;
 
-	itemdb->foreach(itemdb,itemdb_searchname_sub,str,&item,&item2);
-	return item ? item : item2;
+	if( !aegis_only )
+		itemdb->foreach(itemdb, itemdb_searchname_sub, str, &item, &item2);
+	else
+		itemdb->foreach(itemdb, itemdb_searchname_sub, str, &item, NULL);
+
+	return ((item) ? item : item2);
+}
+
+struct item_data* itemdb_searchname(const char *str)
+{
+	return itemdb_searchname1(str, false);
 }
 
 /**
@@ -1247,8 +1257,14 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	nameid = atoi(str[0]);
 
 	//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Job Upper,Gender,Loc,wLV,eLV,refineable,View
-	if (!(id = itemdb_exists(nameid)))
+	if (!(id = itemdb_exists(nameid))) {
+		// Checks if the Itemname is already taken by another id
+		if( itemdb_searchname1(str[1], true) != NULL )
+			ShowWarning("itemdb_parse_dbrow: Duplicate item name for \"%s\"\n", str[1]);
+
+		// Adds a new Item ID
 		id = itemdb_create_item(nameid);
+	}
 
 	safestrncpy(id->name, str[1], sizeof(id->name));
 	safestrncpy(id->jname, str[2], sizeof(id->jname));

@@ -266,6 +266,8 @@ struct Script_Config script_config = {
 	"OnTouchNPC", //ontouchnpc_event_name (run whenever a monster walks into the OnTouch area)
 	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
 	"OnCommand", //oncommand_event_name (is executed by script command cmdothernpc)
+	"OnBuyItem", //onbuy_event_name (is executed when items are bought)
+	"OnSellItem", //onsell_event_name (is executed when items are sold)
 	// Init related
 	"OnInit", //init_event_name (is executed on all npcs when all npcs were loaded)
 	"OnInterIfInit", //inter_init_event_name (is executed on inter server connection)
@@ -283,6 +285,7 @@ struct Script_Config script_config = {
 	"OnAgitEnd3", //agit_end3_event_name (is executed when WoE TE has ended)
 	// Timer related
 	"OnTimer", //timer_event_name (is executed by a timer at the specific second)
+	"OnTimerQuit", //timer_quit_event_name (is executed when a timer is aborted)
 	"OnMinute", //timer_minute_event_name (is executed by a timer at the specific minute)
 	"OnHour", //timer_hour_event_name (is executed by a timer at the specific hour)
 	"OnClock", //timer_clock_event_name (is executed by a timer at the specific hour and minute)
@@ -1052,12 +1055,9 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		if( *arg != '*' )
 			++arg; // count func as argument
 	} else {
-#ifdef SCRIPT_CALLFUNC_CHECK
 		const char* name = get_str(func);
 		if( !is_custom && strdb_get(userfunc_db, name) == NULL ) {
-#endif
 			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		} else {;
 			add_scriptl(buildin_callfunc_ref);
 			add_scriptc(C_ARG);
@@ -1067,7 +1067,6 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 			arg = buildin_func[str_data[buildin_callfunc_ref].val].arg;
 			if( *arg != '*' ) ++ arg;
 		}
-#endif
 	}
 
 	p = skip_word(p);
@@ -1410,14 +1409,12 @@ const char* parse_simpleexpr(const char *p)
 		l=add_word(p);
 		if( str_data[l].type == C_FUNC || str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS)
 			return parse_callfunc(p,1,0);
-#ifdef SCRIPT_CALLFUNC_CHECK
 		else {
 			const char* name = get_str(l);
 			if( strdb_get(userfunc_db,name) != NULL ) {
 				return parse_callfunc(p,1,1);
 			}
 		}
-#endif
 
 		if( (pv = parse_variable(p)) )
 		{// successfully processed a variable assignment
@@ -14009,6 +14006,13 @@ BUILDIN_FUNC(misceffect)
 	int type;
 
 	type=script_getnum(st,2);
+
+	if( type <= EF_NONE || type >= EF_MAX ){
+		ShowError( "buildin_misceffect: unsupported effect id %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+
 	if(st->oid && st->oid != fake_nd->bl.id) {
 		struct block_list *bl = map_id2bl(st->oid);
 		if (bl)
@@ -14372,6 +14376,11 @@ BUILDIN_FUNC(specialeffect)
 	if(bl==NULL)
 		return SCRIPT_CMD_SUCCESS;
 
+	if( type <= EF_NONE || type >= EF_MAX ){
+		ShowError( "buildin_specialeffect: unsupported effect id %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if( script_hasdata(st,4) )
 	{
 		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
@@ -14398,6 +14407,11 @@ BUILDIN_FUNC(specialeffect2)
 	if( script_nick2sd(4,sd) ){
 		int type = script_getnum(st,2);
 		enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
+
+		if( type <= EF_NONE || type >= EF_MAX ){
+			ShowError( "buildin_specialeffect2: unsupported effect id %d\n", type );
+			return SCRIPT_CMD_FAILURE;
+		}
 
 		clif_specialeffect(&sd->bl, type, target);
 	}
@@ -14510,7 +14524,7 @@ int recovery_sub(struct map_session_data* sd, int revive)
 	if(revive&(1|4) && pc_isdead(sd)) {
 		status_revive(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
-		clif_specialeffect(&sd->bl, 77, AREA);
+		clif_specialeffect(&sd->bl, EF_RESURRECTION, AREA);
 	} else if(revive&(1|2) && !pc_isdead(sd)) {
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
@@ -15241,7 +15255,7 @@ BUILDIN_FUNC(summon)
 			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer(tick+(timeout>0?timeout:60000),mob_timer_delete,md->bl.id,0);
 		mob_spawn (md); //Now it is ready for spawning.
-		clif_specialeffect(&md->bl,344,AREA);
+		clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
 		sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
 	script_pushint(st, md->bl.id);
@@ -16413,7 +16427,7 @@ BUILDIN_FUNC(setnpcdisplay)
 {
 	const char* name;
 	const char* newname = NULL;
-	int class_ = -1, size = -1;
+	int class_ = JT_FAKENPC, size = -1;
 	struct script_data* data;
 	struct npc_data* nd;
 
@@ -16453,7 +16467,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	else
 		size = -1;
 
-	if( class_ != -1 && nd->class_ != class_ )
+	if( class_ != JT_FAKENPC && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
 	{ // Required to update the visual size
@@ -18163,9 +18177,6 @@ BUILDIN_FUNC(setunitdata)
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
 			break;
-		default:
-			ShowWarning("buildin_setunitdata: Invalid object type!\n");
-			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -20815,7 +20826,7 @@ BUILDIN_FUNC(freeloop) {
 BUILDIN_FUNC(bindatcmd) {
 	const char* atcmd;
 	const char* eventName;
-	int i, level = 0, level2 = 0;
+	int i, level = 0, level2 = 100;
 	bool create = false;
 
 	atcmd = script_getstr(st,2);
@@ -22577,6 +22588,11 @@ BUILDIN_FUNC(hateffect){
 	effectID = script_getnum(st,2);
 	enable = script_getnum(st,3) ? true : false;
 
+	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
+		ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	ARR_FIND( 0, sd->hatEffectCount, i, sd->hatEffectIDs[i] == effectID );
 
 	if( enable ){
@@ -23627,6 +23643,35 @@ BUILDIN_FUNC(getequiprefinecost) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Round, floor, ceiling a number to arbitrary integer precision.
+ * round(<number>,<precision>);
+ * ceil(<number>,<precision>);
+ * floor(<number>,<precision>);
+ */
+BUILDIN_FUNC(round) {
+	int num = script_getnum(st, 2);
+	int precision = script_getnum(st, 3);
+	char* func = script_getfuncname(st);
+
+	if (precision <= 0) {
+		ShowError("buildin_round: Attempted to use zero or negative number as arbitrary precision.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (strcasecmp(func, "floor") == 0) {
+		script_pushint(st, num - (num % precision));
+	}
+	else if (strcasecmp(func, "ceil") == 0) {
+		script_pushint(st, num + precision - (num % precision));
+	}
+	else {
+		script_pushint(st, (int)(round(num / (precision * 1.))) * precision);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24269,6 +24314,9 @@ struct script_function buildin_func[] = {
 
 
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
+	BUILDIN_DEF2(round, "round", "i"),
+	BUILDIN_DEF2(round, "ceil", "i"),
+	BUILDIN_DEF2(round, "floor", "i"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

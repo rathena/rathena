@@ -594,17 +594,23 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
 
 	nd = map_id2nd(sd->npc_shopid);
 
-	if (!itemdb_cansell(item, pc_get_group_level(sd)))
-		return false;
-
 	if (battle_config.hide_fav_sell && item->favorite)
 		return false; //Cannot sell favs (optional config)
 
 	if (item->expire_time)
 		return false; // Cannot Sell Rental Items
 
-	if (nd && nd->subtype == NPCTYPE_ITEMSHOP && item->bound && battle_config.allow_bound_sell)
-		return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
+	if (nd && nd->subtype == NPCTYPE_ITEMSHOP) {
+		struct item_data *itd;
+
+		if (item->bound && battle_config.allow_bound_sell&ISR_BOUND)
+			return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
+		if ((itd = itemdb_search(item->nameid)) && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+			return true; // NPCTYPE_ITEMSHOP and sell restricted item config is sellable
+	}
+
+	if (!itemdb_cansell(item, pc_get_group_level(sd)))
+		return false;
 
 	if (item->bound && !pc_can_give_bounded_items(sd))
 		return false; // Don't allow sale of bound items
@@ -985,6 +991,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 		// Baby Skills
 		pc_skill(b_sd, WE_BABY, 1, ADDSKILL_PERMANENT);
 		pc_skill(b_sd, WE_CALLPARENT, 1, ADDSKILL_PERMANENT);
+		pc_skill(b_sd, WE_CHEERUP, 1, ADDSKILL_PERMANENT);
 
 		// Parents Skills
 		pc_skill(p1_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
@@ -1521,7 +1528,7 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = INVISIBLE_CLASS;
+		sd->vd.class_ = JT_INVISIBLE;
 		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 		// decrement the number of pvp players on the map
 		map[sd->bl.m].users_pvp--;
@@ -4948,7 +4955,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_CRYSTALIZE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_HEAT_BARREL_AFTER] ||
 		sd->sc.data[SC_KINGS_GRACE] ||
 		sd->sc.data[SC_SUHIDE]))
 		return false;
@@ -9949,7 +9955,6 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 	}
 
 	// On armor change
@@ -9961,7 +9966,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	// On ammo change
-	if (sd->inventory_data[n]->type == IT_AMMO)
+	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
 	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)

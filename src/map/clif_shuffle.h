@@ -4067,6 +4067,130 @@
 	parseable_packet(0x0961,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0966,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x096A,2,clif_parse_SearchStoreInfoNextPage,0);
+// 2017-09-27bRagexeRE or 2017-09-27dRagexeRE
+#elif PACKETVER == 20170927
+	parseable_packet(0x02C4,5,clif_parse_HomMenu,2,4);
+	parseable_packet(0x035F,6,clif_parse_GetCharNameRequest,2);
+	//parseable_packet(0x0361,4,NULL,0); // CZ_GANGSI_RANK
+	parseable_packet(0x0362,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
+	parseable_packet(0x0366,19,clif_parse_WantToConnection,2,6,10,14,18);
+	parseable_packet(0x085C,10,clif_parse_UseSkillToId,2,4,6);
+	parseable_packet(0x0873,6,clif_parse_SolveCharName,2);
+	parseable_packet(0x0875,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x087D,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
+	parseable_packet(0x087E,5,clif_parse_ChangeDir,2,4);
+	parseable_packet(0x088B,2,clif_parse_SearchStoreInfoNextPage,0);
+	parseable_packet(0x0899,7,clif_parse_ActionRequest,2,6);
+	parseable_packet(0x089A,36,clif_parse_StoragePassword,0);
+	parseable_packet(0x089B,8,clif_parse_MoveFromKafra,2,4);
+	parseable_packet(0x08A3,2,clif_parse_ReqCloseBuyingStore,0);
+	parseable_packet(0x08A5,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
+	//parseable_packet(0x08A6,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
+	parseable_packet(0x08AD,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
+	parseable_packet(0x091E,6,clif_parse_ReqClickBuyingStore,2);
+	parseable_packet(0x0922,26,clif_parse_PartyInvite2,2);
+	parseable_packet(0x0923,6,clif_parse_DropItem,2,4);
+	parseable_packet(0x0927,5,clif_parse_WalkToXY,2);
+	parseable_packet(0x093B,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+	parseable_packet(0x0942,18,clif_parse_PartyBookingRegisterReq,2,4);
+	parseable_packet(0x0945,6,clif_parse_TickSend,2);
+	parseable_packet(0x094B,26,clif_parse_FriendsListAdd,2);
+	parseable_packet(0x094D,6,clif_parse_TakeItem,2);
+	parseable_packet(0x0959,8,clif_parse_MoveToKafra,2,4);
+	parseable_packet(0x095A,10,clif_parse_UseSkillToPos,2,4,6,8);
+// 2017-10-02cRagexeRE
+#elif PACKETVER == 20171002
+	parseable_packet(0x022D,6,clif_parse_DropItem,2,4);
+	parseable_packet(0x035F,6,clif_parse_TickSend,2);
+	parseable_packet(0x0360,6,clif_parse_ReqClickBuyingStore,2);
+	parseable_packet(0x0363,10,clif_parse_UseSkillToPos,2,4,6,8);
+	parseable_packet(0x0366,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+	parseable_packet(0x0368,6,clif_parse_SolveCharName,2);
+	parseable_packet(0x0369,7,clif_parse_ActionRequest,2,6);
+	parseable_packet(0x0437,5,clif_parse_WalkToXY,2);
+	parseable_packet(0x0438,5,clif_parse_HomMenu,2,4);
+	parseable_packet(0x0811,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
+	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
+	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
+	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
+	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
+	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
+	parseable_packet(0x0885,8,clif_parse_MoveToKafra,2,4);
+	parseable_packet(0x0897,5,clif_parse_ChangeDir,2,4);
+	parseable_packet(0x0899,26,clif_parse_FriendsListAdd,2);
+	parseable_packet(0x089D,19,clif_parse_WantToConnection,2,6,10,14,18);
+	parseable_packet(0x0928,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
+	parseable_packet(0x092D,18,clif_parse_PartyBookingRegisterReq,2,4);
+	parseable_packet(0x0934,36,clif_parse_StoragePassword,0);
+	parseable_packet(0x093B,8,clif_parse_MoveFromKafra,2,4);
+	parseable_packet(0x093D,6,clif_parse_TakeItem,2);
+	//parseable_packet(0x093E,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
+	parseable_packet(0x0943,26,clif_parse_PartyInvite2,2);
+	//parseable_packet(0x095F,4,NULL,0); // CZ_GANGSI_RANK
+	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
+// 2017-10-11bRagexeRE
+#elif PACKETVER == 20171011
+	parseable_packet(0x023B,5,clif_parse_WalkToXY,2);
+	parseable_packet(0x0281,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
+	parseable_packet(0x035F,6,clif_parse_TickSend,2);
+	parseable_packet(0x0360,6,clif_parse_ReqClickBuyingStore,2);
+	parseable_packet(0x0362,6,clif_parse_DropItem,2,4);
+	//parseable_packet(0x0363,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
+	parseable_packet(0x0364,8,clif_parse_MoveFromKafra,2,4);
+	parseable_packet(0x0365,18,clif_parse_PartyBookingRegisterReq,2,4);
+	parseable_packet(0x0366,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+	parseable_packet(0x0368,6,clif_parse_SolveCharName,2);
+	parseable_packet(0x0369,7,clif_parse_ActionRequest,2,6);
+	//parseable_packet(0x0436,4,NULL,0); // CZ_GANGSI_RANK
+	parseable_packet(0x0437,36,clif_parse_StoragePassword,0);
+	parseable_packet(0x0438,10,clif_parse_UseSkillToPos,2,4,6,8);
+	parseable_packet(0x07E4,6,clif_parse_TakeItem,2);
+	parseable_packet(0x07EC,8,clif_parse_MoveToKafra,2,4);
+	parseable_packet(0x0802,26,clif_parse_PartyInvite2,2);
+	parseable_packet(0x0811,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
+	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
+	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
+	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
+	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
+	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
+	parseable_packet(0x087B,26,clif_parse_FriendsListAdd,2);
+	parseable_packet(0x0882,5,clif_parse_HomMenu,2,4);
+	parseable_packet(0x0950,19,clif_parse_WantToConnection,2,6,10,14,18);
+	parseable_packet(0x0954,5,clif_parse_ChangeDir,2,4);
+	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
+// 2017-10-18aRagexeRE
+#elif PACKETVER == 20171018
+	parseable_packet(0x035F,6,clif_parse_TickSend,2);
+	parseable_packet(0x0360,6,clif_parse_ReqClickBuyingStore,2);
+	parseable_packet(0x0363,19,clif_parse_WantToConnection,2,6,10,14,18);
+	parseable_packet(0x0364,8,clif_parse_MoveToKafra,2,4);
+	parseable_packet(0x0366,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+	parseable_packet(0x0368,6,clif_parse_SolveCharName,2);
+	parseable_packet(0x0369,7,clif_parse_ActionRequest,2,6);
+	parseable_packet(0x0436,6,clif_parse_TakeItem,2);
+	parseable_packet(0x0437,5,clif_parse_WalkToXY,2);
+	parseable_packet(0x0438,10,clif_parse_UseSkillToPos,2,4,6,8);
+	parseable_packet(0x0811,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
+	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
+	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
+	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
+	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
+	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
+	//parseable_packet(0x086A,4,NULL,0); // CZ_GANGSI_RANK
+	//parseable_packet(0x087A,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
+	parseable_packet(0x087E,5,clif_parse_HomMenu,2,4);
+	parseable_packet(0x0889,8,clif_parse_MoveFromKafra,2,4);
+	parseable_packet(0x089A,6,clif_parse_DropItem,2,4);
+	parseable_packet(0x089F,26,clif_parse_PartyInvite2,2);
+	parseable_packet(0x08A6,5,clif_parse_ChangeDir,2,4);
+	parseable_packet(0x0938,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
+	parseable_packet(0x0944,36,clif_parse_StoragePassword,0);
+	parseable_packet(0x094A,26,clif_parse_FriendsListAdd,2);
+	parseable_packet(0x094F,18,clif_parse_PartyBookingRegisterReq,2,4);
+	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
 #endif
 
 #endif /* _CLIF_SHUFFLE_H_ */

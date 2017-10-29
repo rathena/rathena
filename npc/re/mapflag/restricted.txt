@@ -23,6 +23,7 @@
 1@face	mapflag	restricted	6
 1@lab	mapflag	restricted	6
 1@uns	mapflag	restricted	6
+1@glast	mapflag	restricted	6
 
 // Towns =========================
 brasilis	mapflag	restricted	7
