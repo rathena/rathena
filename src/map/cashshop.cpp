@@ -119,6 +119,7 @@ static int cashshop_read_db_sql( void ){
 
 		while( SQL_SUCCESS == Sql_NextRow( mmysql_handle ) ){
 			char* str[3];
+			char dummy[256] = "";
 			int i;
 
 			++lines;
@@ -127,7 +128,7 @@ static int cashshop_read_db_sql( void ){
 				Sql_GetData( mmysql_handle, i, &str[i], NULL );
 
 				if( str[i] == NULL ){
-					str[i] = "";
+					str[i] = dummy;
 				}
 			}
 
@@ -207,6 +208,7 @@ static void sale_read_db_sql( void ){
 
 	while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ){
 		char* str[4];
+		char dummy[256] = "";
 		int i;
 
 		lines++;
@@ -215,7 +217,7 @@ static void sale_read_db_sql( void ){
 			Sql_GetData( mmysql_handle, i, &str[i], NULL );
 
 			if( str[i] == NULL ){
-				str[i] = "";
+				str[i] = dummy;
 			}
 		}
 

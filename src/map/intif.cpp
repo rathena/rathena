@@ -645,7 +645,7 @@ int intif_party_changeoption(int party_id,uint32 account_id,int exp,int item)
  * @param char_id : cid of player to leave
  * @return 0:char-serv disconected, 1=msg sent
  */
-int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type)
+int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, const char *name, enum e_party_member_withdraw type)
 {
 	if (CheckForCharServer())
 		return 0;

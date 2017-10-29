@@ -1581,7 +1581,7 @@ static void read_homunculus_skilldb(void) {
 void read_homunculus_expdb(void)
 {
 	int i;
-	char *filename[]={
+	const char *filename[]={
 		DBPATH"exp_homun.txt",
 		DBIMPORT"/exp_homun.txt"
 	};

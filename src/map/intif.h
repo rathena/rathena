@@ -43,7 +43,7 @@ int intif_request_partyinfo(int party_id, uint32 char_id);
 
 int intif_party_addmember(int party_id,struct party_member *member);
 int intif_party_changeoption(int party_id, uint32 account_id, int exp, int item);
-int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
+int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, const char *name, enum e_party_member_withdraw type);
 int intif_party_changemap(struct map_session_data *sd, int online);
 int intif_break_party(int party_id);
 int intif_party_message(int party_id, uint32 account_id, const char *mes,int len);

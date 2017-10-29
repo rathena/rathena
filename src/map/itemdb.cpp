@@ -1531,7 +1531,7 @@ static int itemdb_read_sqldb(void) {
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
 			char* str[22];
-			char* dummy = "";
+			char dummy[256] = "";
 			int i;
 			++lines;
 			for( i = 0; i < 22; ++i ) {
