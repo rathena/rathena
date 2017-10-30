@@ -19,7 +19,7 @@ set( LOGIN_HEADERS
 set( LOGIN_SOURCES
 	"${LOGIN_SOURCE_DIR}/account.c"
 	"${LOGIN_SOURCE_DIR}/ipban.c"
-	"${LOGIN_SOURCE_DIR}/login.c"
+	"${LOGIN_SOURCE_DIR}/login.cpp"
 	"${LOGIN_SOURCE_DIR}/loginclif.c"
 	"${LOGIN_SOURCE_DIR}/loginchrif.c"
 	"${LOGIN_SOURCE_DIR}/logincnslif.c"
@@ -33,6 +33,7 @@ set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${LOGIN_HEADERS} ${LO
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( login FILES ${LOGIN_HEADERS} ${LOGIN_SOURCES} )
 include_directories( ${INCLUDE_DIRS} )
+
 add_executable( login-server ${SOURCE_FILES} )
 add_dependencies( login-server ${DEPENDENCIES} )
 target_link_libraries( login-server ${LIBRARIES} ${DEPENDENCIES} )
