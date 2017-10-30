@@ -31,7 +31,7 @@
 # Update to 3.1 for CMAKE_CXX_STANDARD cross support definition
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
 cmake_minimum_required( VERSION 3.1 )
-project( rAthena)
+project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
