@@ -9,6 +9,7 @@
 //===== Description: ========================================= 
 //= General script functions.
 //===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Lupus] [kobra_k88]
 //= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
 //= Removed individual job check functions as they were redundant [kobra_k88]
 //= 1.3 Added Job Change Function for Baby/Normal Classes
@@ -662,7 +663,7 @@ function	script	F_getpositionname	{
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-// Platinum Skills Global Function: F_GetPlatinumSkills [mazvi] 
+// Gives attached player their Platinum Skill based on their class.
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetPlatinumSkills	{
 	skill "NV_FIRSTAID",1,SKILL_PERM;
