@@ -20,6 +20,7 @@
 #include "intif.h"
 #include "npc.h"
 #include "pc.h"
+#include "pc_groups.h"
 #include "pet.h"
 #include "homunculus.h"
 #include "instance.h"
