@@ -458,11 +458,13 @@ G8: Restrict("RE");
 // --------------------------------------------------
 	Instances:
 // --------------------------------------------------
-menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3, "Eclage Interior",I4,
-    	"Endless Tower",I5, "Faceworms Nest",I6, "Geffen Magic Tournament",I7, "Ghost Palace",I8,
-		"Hazy Forest",I9, "Horror Toy Factory",I10, "Malangdo Culvert",I11, "Nidhoggur's Nest",I12,
-		"Octopus Cave",I13, "Old Glast Heim",I14, "Orc's Memory",I15, "Sarah and Fenrir",I16,
-		"Sara Memory",I17, "Sealed Shrine",I18, "Wolfchev's Laboratory",I19;
+menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
+		"Devil Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
+		"Faceworms Nest",I7, "Geffen Magic Tournament",I8, "Ghost Palace",I9,
+		"Hazy Forest",I10, "Horror Toy Factory",I11, "Malangdo Culvert",I12,
+		"Nidhoggur's Nest",I13, "Octopus Cave",I14, "Old Glast Heim",I15,
+		"Orc's Memory",I16, "Sarah and Fenrir",I17, "Sara Memory",I18,
+		"Sealed Shrine",I19, "Wolfchev's Laboratory",I20;
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -471,32 +473,34 @@ I2: Restrict("RE");
 I3: Restrict("RE");
 	Go("ma_fild02",316,317);
 I4: Restrict("RE");
+	Go("dali02",137,115);
+I5: Restrict("RE");
 	Go("ecl_hub01",129,12);
-I5: Go("e_tower",72,112);
-I6: Restrict("RE");
-	Go("dali",85,64);
+I6: Go("e_tower",72,112);
 I7: Restrict("RE");
-	Go("dali",94,141);
+	Go("dali",85,64);
 I8: Restrict("RE");
-	Go("dali02",46,128);
+	Go("dali",94,141);
 I9: Restrict("RE");
-	Go("bif_fild01",161,334);
+	Go("dali02",46,128);
 I10: Restrict("RE");
-	Go("xmas",234,298);
+	Go("bif_fild01",161,334);
 I11: Restrict("RE");
+	Go("xmas",234,298);
+I12: Restrict("RE");
 	Go("mal_in01",164,21);
-I12: Go("nyd_dun02",95,193);
-I13: Restrict("RE");
-	Go("mal_dun01",152,230);
+I13: Go("nyd_dun02",95,193);
 I14: Restrict("RE");
+	Go("mal_dun01",152,230);
+I15: Restrict("RE");
 	Go("glast_01",204,268);
-I15: Go("gef_fild10",240,198);
-I16: Restrict("RE");
-	Go("dali02",92,141);
+I16: Go("gef_fild10",240,198);
 I17: Restrict("RE");
+	Go("dali02",92,141);
+I18: Restrict("RE");
 	Go("dali",133,108);
-I18: Go("monk_test",306,143);
-I19: Restrict("RE");
+I19: Go("monk_test",306,143);
+I20: Restrict("RE");
 	Go("lhz_dun04",148,269);
 
 // --------------------------------------------------
