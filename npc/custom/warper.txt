@@ -44,6 +44,7 @@ menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
 // * Disp("<Menu Option>",<first option>,<last option>);
 // * Pick("<map_prefix>"{,<index offset>});
 //	~ Dynamic menu and map selection (auto-numbered).
+//	~ Fields and Dungeons must use Disp and Pick Functions.
 //
 // * Disp("<Option 1>:<Option 2>:<etc.>");
 // * Pick("","<map1>","<map2>","<etc.>");
