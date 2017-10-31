@@ -4,28 +4,31 @@
 #ifndef _PC_H_
 #define _PC_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
-#include "../common/ers.h"
-#include "../common/timer.h" // INVALID_TIMER
+//#include "../common/ers.h"
+//#include "../common/timer.h" // INVALID_TIMER
 #include "../common/strlib.h"// StringBuf
 #include "map.h" // RC_ALL
-#include "atcommand.h" // AtCommandType
-#include "battle.h" // battle_config
-#include "buyingstore.h"  // struct s_buyingstore
-#include "clan.h"
+//#include "battle.h" // battle_config
+//#include "clan.h"
 #include "itemdb.h" // MAX_ITEMGROUP
-#include "script.h" // struct script_reg, struct script_regstr
 #include "searchstore.h"  // struct s_search_store_info
-#include "status.h" // OPTION_*, struct weapon_atk
-#include "unit.h" // unit_stop_attack(), unit_stop_walking()
 #include "vending.h" // struct s_vending
-#include "mob.h"
-#include "log.h"
-#include "pc_groups.h"
+#include "buyingstore.h" // struct s_buyingstore
+#include "unit.h" // unit_data
+#include "status.h" // unit_data
+#include "script.h" // struct script_reg, struct script_regstr
+#include "mob.h" //e_size
+#include "clif.h" //e_wip_block
+//#include "atcommand.h" // AtCommandType
+//#include "log.h"
+//#include "pc_groups.h"
+
+enum AtCommandType : uint8;
+//enum e_log_chat_type : uint8;
+enum e_log_pick_type : uint32;
+enum sc_type : int16;
+enum si_type : short;
 
 #define MAX_PC_BONUS 10 /// Max bonus, usually used by item bonus
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
@@ -832,7 +835,7 @@ enum item_check {
 	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
 };
 
-extern struct s_job_info {
+struct s_job_info {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;
@@ -851,7 +854,8 @@ extern struct s_job_info {
 		uint32 zone;
 		uint8 group_lv;
 	} noenter_map;
-} job_info[CLASS_COUNT];
+};
+extern struct s_job_info job_info[CLASS_COUNT];
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
@@ -1295,6 +1299,8 @@ void pc_baselevelchanged(struct map_session_data *sd);
 void pc_damage_log_add(struct map_session_data *sd, int id);
 void pc_damage_log_clear(struct map_session_data *sd, int id);
 
+enum e_BANKING_DEPOSIT_ACK : uint8;
+enum e_BANKING_WITHDRAW_ACK : uint8;
 enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int money);
 enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int money);
 
@@ -1329,9 +1335,4 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif /* _PC_H_ */

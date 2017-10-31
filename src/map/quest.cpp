@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "quest.h"
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/malloc.h"
@@ -13,15 +14,15 @@
 #include "map.h"
 #include "pc.h"
 #include "party.h"
-#include "quest.h"
 #include "chrif.h"
 #include "intif.h"
+#include "clif.h"
+#include "mob.h"
+#include "battle.h"
+#include "log.h"
 
 #include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static DBMap *questdb;
 static void questdb_free_sub(struct quest_db *quest, bool free);
@@ -669,7 +670,3 @@ void do_reload_quest(void)
 	//Update quest data for players, to ensure no entries about removed quests are left over.
 	map_foreachpc(&quest_reload_check_sub);
 }
-
-#ifdef __cplusplus
-}
-#endif

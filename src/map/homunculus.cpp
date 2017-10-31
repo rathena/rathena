@@ -11,6 +11,7 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 
+#include "homunculus.h"
 #include "log.h"
 #include "clif.h"
 #include "intif.h"
@@ -18,14 +19,12 @@
 #include "pc.h"
 #include "party.h"
 #include "trade.h"
+#include "npc.h"
+#include "battle.h"
 
-#include "homunculus.h"
+
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
@@ -1645,7 +1644,3 @@ void do_init_homunculus(void){
 void do_final_homunculus(void) {
 	//Nothing todo yet
 }
-
-#ifdef __cplusplus
-}
-#endif

@@ -1,5 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "chrif.h"
+#include <cstdlib>
+#include <cstring>
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
@@ -22,15 +25,11 @@
 #include "instance.h"
 #include "mercenary.h"
 #include "elemental.h"
-#include "chrif.h"
+
 #include "script.h" // script_config
 #include "storage.h"
-
-#include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "guild.h"
+#include "log.h"
 
 static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
 
@@ -2018,7 +2017,3 @@ void do_init_chrif(void) {
 	// send the user count every 10 seconds, to hide the charserver's online counting problem
 	add_timer_interval(gettick() + 1000, send_usercount_tochar, 0, 0, UPDATE_INTERVAL);
 }
-
-#ifdef __cplusplus
-}
-#endif

@@ -40,14 +40,15 @@
 #include "channel.h"
 #include "achievement.h"
 
+#include "guild.h"
+#include "atcommand.h"
+#include "battle.h"
+#include "log.h"
+#include "mob.h"
+
+
 #include <stdlib.h>
 #include <math.h>
-#ifndef _WIN32
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 char default_codepage[32] = "";
 
@@ -4781,6 +4782,3 @@ int do_init(int argc, char *argv[])
 	return 0;
 }
 
-#ifdef __cplusplus
-}
-#endif

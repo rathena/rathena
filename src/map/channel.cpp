@@ -1,23 +1,25 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "channel.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/conf.h" //libconfig
 #include "../common/showmsg.h"
-#include "../common/nullpo.h"
 #include "../common/strlib.h" //safestrncpy
 #include "../common/socket.h" //set_eof
+#include "../common/timer.h"  // DIFF_TICK
+#include "../common/nullpo.h"
 
 #include "map.h" //msg_conf
 #include "clif.h" //clif_chsys_msg
-#include "channel.h"
+#include "pc.h"
+#include "guild.h"
+#include "pc_groups.h"
+#include "battle.h"
+
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static DBMap* channel_db; // channels
 
@@ -43,7 +45,7 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
 	CREATE(channel, struct Channel, 1); //will exit on fail allocation
 	//channel->id = tmp_chan->id;
 	channel->users = idb_alloc(DB_OPT_BASE);
-	channel->banned = idb_alloc((DBOptions)(DB_OPT_BASE|DB_OPT_RELEASE_DATA));
+	channel->banned = idb_alloc(static_cast<DBOptions>(DB_OPT_BASE|DB_OPT_RELEASE_DATA) );
 	channel->opt = tmp_chan->opt;
 	channel->type = tmp_chan->type;
 	channel->color = tmp_chan->color;
@@ -1474,7 +1476,7 @@ void channel_read_config(void) {
  * Initialise db and read configuration
  */
 void do_init_channel(void) {
-	channel_db = stridb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), CHAN_NAME_LENGTH);
+	channel_db = stridb_alloc(static_cast<DBOptions>(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), CHAN_NAME_LENGTH);
 	memset(&channel_config.private_channel, 0, sizeof(struct Channel));
 	memset(&channel_config.ally_tmpl, 0, sizeof(struct Channel));
 	memset(&channel_config.map_tmpl, 0, sizeof(struct Channel));
@@ -1507,7 +1509,3 @@ void do_final_channel(void) {
 		aFree(channel_config.colors);
 	}
 }
-
-#ifdef __cplusplus
-}
-#endif

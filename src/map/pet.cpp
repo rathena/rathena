@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "pet.h"
 #include "../common/db.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -14,14 +15,14 @@
 #include "pc.h"
 #include "intif.h"
 #include "chrif.h"
-#include "pet.h"
+#include "npc.h"
+#include "clif.h"
+#include "mob.h"
+#include "battle.h"
+#include "log.h"
 #include "achievement.h"
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define MIN_PETTHINKTIME 100
 
@@ -1729,7 +1730,3 @@ void do_final_pet(void)
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
 }
-
-#ifdef __cplusplus
-}
-#endif

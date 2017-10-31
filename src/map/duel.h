@@ -4,9 +4,7 @@
 #ifndef _DUEL_H_
 #define _DUEL_H_
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+#include "../common/cbasetypes.h"
 
 struct duel {
 	int members_count;
@@ -30,8 +28,5 @@ int duel_checktime(struct map_session_data* sd);
 void do_init_duel(void);
 void do_final_duel(void);
 
-#ifdef	__cplusplus
-}
-#endif
 
 #endif /* _DUEL_H_ */

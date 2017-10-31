@@ -7,6 +7,7 @@
 #include "../common/showmsg.h"  // ShowWarning
 #include "../common/socket.h"  // RBUF*
 #include "../common/strlib.h"  // safestrncpy
+#include "../common/timer.h"  // gettick
 #include "atcommand.h"  // msg_txt
 #include "battle.h"  // battle_config.*
 #include "buyingstore.h"  // struct s_buyingstore
@@ -14,12 +15,10 @@
 #include "log.h"  // log_pick_pc, log_zeny
 #include "pc.h"  // struct map_session_data
 #include "chrif.h"
+#include "npc.h"
 
 #include <stdlib.h> // atoi
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
@@ -807,7 +806,3 @@ void do_init_buyingstore(void) {
 	buyingstore_autotrader_db = uidb_alloc(DB_OPT_BASE);
 	buyingstore_nextid = 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

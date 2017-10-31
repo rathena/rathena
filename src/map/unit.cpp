@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "unit.h"
 #include "../common/showmsg.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -8,6 +9,7 @@
 #include "../common/malloc.h"
 #include "../common/random.h"
 #include "../common/socket.h"
+#include "../common/ers.h"  // ers_destroy
 
 #include "achievement.h"
 #include "map.h"
@@ -25,13 +27,14 @@
 #include "party.h"
 #include "intif.h"
 #include "storage.h"
+#include "guild.h"
+#include "npc.h"
+#include "clif.h"
+#include "mob.h"
+#include "battle.h"
 
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 // Directions values
 // 1 0 7
@@ -3444,7 +3447,3 @@ void do_init_unit(void){
 void do_final_unit(void){
 	// Nothing to do
 }
-
-#ifdef __cplusplus
-}
-#endif

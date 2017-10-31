@@ -1,10 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "elemental.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
+#include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/random.h"
 #include "../common/strlib.h"
@@ -17,14 +19,13 @@
 #include "pc.h"
 #include "party.h"
 #include "trade.h"
-#include "elemental.h"
+#include "npc.h"
+#include "battle.h"
 
 #include <stdlib.h>
 #include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <ctgmath> //floor
+#include <cstring>
 
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 static uint16 elemental_count;
@@ -898,7 +899,3 @@ void do_init_elemental(void) {
 void do_final_elemental(void) {
 	return;
 }
-
-#ifdef __cplusplus
-}
-#endif

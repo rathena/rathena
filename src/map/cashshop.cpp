@@ -6,14 +6,13 @@
 #include "../common/showmsg.h" // ShowWarning, ShowStatus
 
 #include "cashshop.h"
+#include "pc.h" // s_map_session_data
 #include "pet.h" // pet_create_egg
+#include "clif.h"
+#include "log.h"
 
 #include <string.h> // memset
 #include <stdlib.h> // atoi
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct cash_item_db cash_shop_items[CASHSHOP_TAB_MAX];
 #if PACKETVER_SUPPORTS_SALES
@@ -116,6 +115,7 @@ static int cashshop_read_db_sql( void ){
 			Sql_ShowDebug( mmysql_handle );
 			continue;
 		}
+
 
 		while( SQL_SUCCESS == Sql_NextRow( mmysql_handle ) ){
 			char* str[3];
@@ -692,7 +692,3 @@ void do_init_cashshop( void ){
 	cash_shop_defined = false;
 	cashshop_read_db();
 }
-
-#ifdef __cplusplus
-}
-#endif

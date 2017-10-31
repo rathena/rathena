@@ -3,11 +3,7 @@
 
 #ifndef _STORAGE_H_
 #define _STORAGE_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include "../common/cbasetypes.h"
 //#include "../common/mmo.h"
 struct s_storage;
 struct item;
@@ -66,9 +62,5 @@ void storage_premiumStorage_close(struct map_session_data *sd);
 void storage_premiumStorage_quit(struct map_session_data *sd);
 
 int compare_item(struct item *a, struct item *b);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _STORAGE_H_ */

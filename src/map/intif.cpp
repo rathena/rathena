@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "intif.h"
 
 #include "../common/showmsg.h"
 #include "../common/socket.h"
@@ -7,13 +8,14 @@
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/mmo.h"
+#include "../common/timer.h"
 #include "map.h"
 #include "battle.h"
 #include "chrif.h"
 #include "clan.h"
+#include "guild.h"
 #include "clif.h"
 #include "pc.h"
-#include "intif.h"
 #include "storage.h"
 #include "party.h"
 #include "pet.h"
@@ -24,12 +26,9 @@
 #include "quest.h"
 #include "status.h"
 #include "achievement.h"
+#include "log.h"
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {
@@ -3802,7 +3801,3 @@ int intif_parse(int fd)
 
 	return 1;
 }
-
-#ifdef __cplusplus
-}
-#endif

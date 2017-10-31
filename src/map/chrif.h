@@ -8,9 +8,8 @@
 #include "../common/socket.h" // enum chrif_req_op
 #include <time.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+//fwd declaration
+struct map_session_data;
 
 enum sd_state { ST_LOGIN, ST_LOGOUT, ST_MAPCHANGE };
 
@@ -91,9 +90,5 @@ void do_final_chrif(void);
 void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _CHRIF_H_ */

@@ -6,10 +6,6 @@
 
 #include "map.h" // struct block_list, CHATROOM_TITLE_SIZE
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 struct map_session_data;
 struct chat_data;
 
@@ -46,9 +42,5 @@ int chat_disableevent(struct chat_data* cd);
 int chat_npckickall(struct chat_data* cd);
 
 int chat_npckickchat(struct chat_data* cd, const char* kickusername);
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif /* _CHAT_H_ */

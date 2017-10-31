@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "guild.h"
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -12,7 +13,6 @@
 #include "../common/utils.h"
 
 #include "map.h"
-#include "guild.h"
 #include "storage.h"
 #include "battle.h"
 #include "npc.h"
@@ -22,12 +22,10 @@
 #include "channel.h"
 #include "log.h"
 #include "trade.h"
+#include "clif.h"
+#include "mob.h"
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static DBMap* guild_db; // int guild_id -> struct guild*
 static DBMap* castle_db; // int castle_id -> struct guild_castle*
@@ -52,7 +50,7 @@ struct guild_expcache {
 static struct eri *expcache_ers; //For handling of guild exp payment.
 
 #define MAX_GUILD_SKILL_REQUIRE 5
-struct{
+struct s_guild_skill_tree {
 	int id;
 	int max;
 	struct{
@@ -2346,7 +2344,3 @@ void do_final_guild(void) {
 
 	aFree(guild_flags);/* never empty; created on boot */
 }
-
-#ifdef __cplusplus
-}
-#endif

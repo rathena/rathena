@@ -4,13 +4,9 @@
 #ifndef _ITEMDB_H_
 #define _ITEMDB_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/db.h"
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
-#include "map.h"
+//#include "map.h"
 
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
@@ -785,12 +781,13 @@ struct s_item_group_db
 };
 
 /// Struct of Roulette db
-extern struct s_roulette_db {
+struct s_roulette_db {
 	unsigned short *nameid[MAX_ROULETTE_LEVEL], /// Item ID
 		           *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
-} rd;
+};
+extern struct s_roulette_db rd;
 
 ///Main item data struct
 struct item_data
@@ -963,9 +960,5 @@ void itemdb_reload(void);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _ITEMDB_H_ */

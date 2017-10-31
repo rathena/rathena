@@ -4,11 +4,14 @@
 #ifndef CHANNEL_H
 #define	CHANNEL_H
 
-#include "pc.h"
+#include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+//namespace rA {
+
+struct map_session_data;
+struct guild;
+struct DBMap;
 
 #define CHAN_NAME_LENGTH 20
 #define CHAN_MSG_LENGTH 150
@@ -52,10 +55,11 @@ struct Channel {
 	unsigned short *groups;		  ///< List of group id, only these groups can join the channel
 };
 
-extern struct chan_banentry {
+struct chan_banentry {
 	uint32 char_id;
 	char char_name[NAME_LENGTH];
-} chan_banentry;
+};
+extern chan_banentry chan_banentry;
 
 struct Channel_Config {
 	unsigned long *colors;		///< List of available colors
@@ -123,9 +127,5 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 
 void do_init_channel(void);
 void do_final_channel(void);
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* CHANNEL_H */

@@ -4,10 +4,6 @@
 #ifndef _NPC_H_
 #define _NPC_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "map.h" // struct block_list
 #include "status.h" // struct status_change
 #include "unit.h" // struct unit_data
@@ -106,6 +102,7 @@ struct npc_data {
 	} progressbar;
 };
 
+struct eri;
 extern struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
@@ -1100,7 +1097,7 @@ void npc_chat_finalize(struct npc_data* nd);
 #endif
 
 //Script NPC events.
-enum npce_event {
+enum npce_event : uint8 {
 	NPCE_LOGIN,
 	NPCE_LOGOUT,
 	NPCE_LOADMAP,
@@ -1195,9 +1192,5 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _NPC_H_ */

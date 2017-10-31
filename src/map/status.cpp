@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "status.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -23,13 +24,14 @@
 #include "mercenary.h"
 #include "elemental.h"
 #include "script.h"
+#include "npc.h"
+#include "guild.h"
+#include "clif.h"
+#include "mob.h"
+#include "pc_groups.h"
 
 #include <stdlib.h>
 #include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 // Regen related flags.
 enum e_regen {
@@ -14509,7 +14511,3 @@ void do_final_status(void)
 {
 	ers_destroy(sc_data_ers);
 }
-
-#ifdef __cplusplus
-}
-#endif

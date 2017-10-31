@@ -4,13 +4,13 @@
 #ifndef _INSTANCE_H_
 #define _INSTANCE_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include "../common/cbasetypes.h"
 #include "../common/mmo.h" // struct point
+#include "../common/strlib.h"
+
 #include "script.h" // struct reg_db
 
+enum send_target : uint8;
 struct block_list;
 
 #define MAX_INSTANCE_DATA		300	// Essentially how many instances we can create, but instance creation is primarily decided by MAX_MAP_PER_SERVER
@@ -18,11 +18,11 @@ struct block_list;
 
 #define INSTANCE_NAME_LENGTH (60+1)
 
-typedef enum instance_state {
+enum instance_state {
 	INSTANCE_FREE,
 	INSTANCE_IDLE,
 	INSTANCE_BUSY
-} instance_state;
+};
 
 enum instance_mode {
 	IM_NONE,
@@ -64,7 +64,7 @@ struct instance_db {
 	StringBuf *name; ///< Instance name
 	unsigned int limit, ///< Duration limit
 		timeout; ///< Timeout limit
-	struct {
+	struct s_MapInfo {
 		StringBuf *mapname; ///< Mapname, the limit should be MAP_NAME_LENGTH_EXT
 		short x, y; ///< Map coordinates
 	} enter;
@@ -97,10 +97,6 @@ void do_final_instance(void);
 
 #if MAX_MAP_PER_INSTANCE > 255
 	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif

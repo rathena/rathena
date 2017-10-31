@@ -4,9 +4,16 @@
 #ifndef _PET_H_
 #define _PET_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "../common/cbasetypes.h"
+#include "../common/mmo.h"
+
+//#include "map.h"
+#include "unit.h"
+#include "status.h"
+
+//fwd declaration
+struct s_map_session_data;
+enum e_sc_type : int16;
 
 #define MAX_PET_DB	300
 #define MAX_PETLOOT_SIZE	30
@@ -39,7 +46,7 @@ struct s_pet_db {
 };
 extern struct s_pet_db pet_db[MAX_PET_DB];
 
-enum { PET_CLASS,PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
+enum e_pet_itemtype : uint8 { PET_CLASS,PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
 
 struct pet_recovery { //Stat recovery
 	enum sc_type type;	//Status Change id
@@ -141,9 +148,5 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data); // [Valar
 void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _PET_H_ */

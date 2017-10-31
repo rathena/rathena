@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "itemdb.h"
 
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
@@ -7,16 +8,17 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
-#include "itemdb.h"
 #include "battle.h" // struct battle_config
 #include "cashshop.h"
 #include "intif.h"
+#include "pc.h"
+#include "status.h"
+#include "clif.h"
+#include "log.h"
+#include "mob.h"
+
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -2020,7 +2022,3 @@ void do_init_itemdb(void) {
 	if (battle_config.feature_roulette)
 		itemdb_parse_roulette_db();
 }
-
-#ifdef __cplusplus
-}
-#endif

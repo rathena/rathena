@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#include "instance.h"
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -9,20 +9,17 @@
 #include "../common/strlib.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
+#include "../common/ers.h"  // ers_destroy
 
+#include "clan.h"
 #include "clif.h"
 #include "guild.h"
-#include "instance.h"
 #include "map.h"
 #include "npc.h"
 #include "party.h"
 #include "pc.h"
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
@@ -1151,7 +1148,3 @@ void do_final_instance(void) {
 	InstanceDB->destroy(InstanceDB, instance_db_free);
 	db_destroy(InstanceNameDB);
 }
-
-#ifdef __cplusplus
-}
-#endif

@@ -12,6 +12,7 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 
+#include "battle.h"
 #include "map.h"
 #include "path.h"
 #include "pc.h"
@@ -22,13 +23,14 @@
 #include "party.h"
 #include "battleground.h"
 #include "chrif.h"
+#include "guild.h"
+#include "clif.h"
+#include "mob.h"
+#include "log.h"
+#include "pc_groups.h"
 
 #include <stdlib.h>
 #include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
@@ -8633,7 +8635,3 @@ void do_final_battle(void)
 {
 	ers_destroy(delay_damage_ers);
 }
-
-#ifdef __cplusplus
-}
-#endif

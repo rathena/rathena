@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "atcommand.h"
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/timer.h"
@@ -14,7 +15,6 @@
 #include "../common/conf.h"
 
 #include "map.h"
-#include "atcommand.h"
 #include "battle.h"
 #include "chat.h"
 #include "channel.h"
@@ -34,15 +34,18 @@
 #include "mapreg.h"
 #include "quest.h"
 #include "pc.h"
+#include "pc_groups.h"
+#include "npc.h"
+#include "guild.h"
+#include "clif.h"
+#include "log.h"
+#include "itemdb.h" // MAX_ITEMGROUP
+#include "mob.h"
 #include "achievement.h"
+#include "clan.h"
 
 #include <stdlib.h>
 #include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 
@@ -6243,7 +6246,7 @@ ACMD_FUNC(autolootitem)
 ACMD_FUNC(autoloottype)
 {
 	uint8 action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
-	enum item_types type;
+	enum item_types type= IT_UNKNOWN;
 	int ITEM_MAX = 1533;
 
 	nullpo_retr(-1, sd);
@@ -10715,7 +10718,3 @@ void do_init_atcommand(void) {
 void do_final_atcommand(void) {
 	atcommand_db_clear();
 }
-
-#ifdef __cplusplus
-}
-#endif

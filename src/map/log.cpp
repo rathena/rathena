@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#include "log.h"
 #include "../common/cbasetypes.h"
 #include "../common/sql.h" // SQL_INNODB
 #include "../common/strlib.h"
@@ -10,16 +10,12 @@
 #include "battle.h"
 #include "itemdb.h"
 #include "homunculus.h"
-#include "log.h"
 #include "mob.h"
 #include "pet.h"
 #include "pc.h"
 
 #include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static char log_timestamp_format[20];
 
@@ -731,7 +727,3 @@ int log_config_read(const char* cfgName)
 
 	return 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

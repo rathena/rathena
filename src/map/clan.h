@@ -4,11 +4,10 @@
 #ifndef _CLAN_H_
 	#define _CLAN_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 	#include "../common/mmo.h"
+  
+	struct clan;
+	struct map_session_data;
 
 	void do_init_clan();
 	void do_final_clan();
@@ -23,9 +22,5 @@ extern "C" {
 	void clan_recv_message(int clan_id,uint32 account_id,const char *mes,int len);
 	struct map_session_data* clan_getavailablesd( struct clan* clan );
 	int clan_get_alliance_count( struct clan *clan, int flag );
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

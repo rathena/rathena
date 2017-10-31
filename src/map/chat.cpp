@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include <cstring>
+
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
@@ -10,15 +12,12 @@
 #include "map.h"
 #include "atcommand.h" // msg_txt()
 #include "battle.h" // struct battle_config
+#include "chat.h"
 #include "clif.h"
 #include "npc.h" // npc_event_do()
 #include "pc.h"
-#include "chat.h"
+#include "pc_groups.h"
 #include "achievement.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
@@ -504,7 +503,3 @@ int chat_npckickall(struct chat_data* cd)
 
 	return 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

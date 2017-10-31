@@ -6,10 +6,6 @@
 
 #include "../common/cbasetypes.h"
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 enum e_month{
 	JANUARY = 1,
 	FEBRUARY,
@@ -64,7 +60,4 @@ bool is_day_of_sun(void);
 bool is_day_of_moon(void);
 bool is_day_of_star(void);
 
-#ifdef	__cplusplus
-}
-#endif
 #endif /* _DATE_H_ */

@@ -4,11 +4,9 @@
 #ifndef _PC_GROUPS_H_
 #define _PC_GROUPS_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "../common/cbasetypes.h"
 
-#include "atcommand.h" // AtCommandType
+enum AtCommandType : uint8;
 
 extern int pc_group_max;
 
@@ -24,7 +22,7 @@ void do_init_pc_groups(void);
 void do_final_pc_groups(void);
 void pc_groups_reload(void);
 
-enum e_pc_permission {
+enum e_pc_permission : uint32 {
 	PC_PERM_NONE                = 0,
 	PC_PERM_TRADE               = 0x00000001,
 	PC_PERM_PARTY               = 0x00000002,
@@ -58,7 +56,7 @@ enum e_pc_permission {
 	PC_PERM_ALLPERMISSION       = 0xFFFFFFFF,
 };
 
-static const struct {
+static const struct s_pcg_permission_name {
 	const char *name;
 	enum e_pc_permission permission;
 } pc_g_permission_name[] = {
@@ -92,9 +90,5 @@ static const struct {
 	{ "cashshop_sale", PC_PERM_CASHSHOP_SALE },
 	{ "all_permission", PC_PERM_ALLPERMISSION },
 };
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // _PC_GROUPS_H_

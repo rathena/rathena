@@ -1,5 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "clif.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cstdarg>
+#include <ctime>
 
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
@@ -17,6 +23,7 @@
 #include "map.h"
 #include "chrif.h"
 #include "pc.h"
+#include "pc_groups.h"
 #include "status.h"
 #include "npc.h"
 #include "itemdb.h"
@@ -46,16 +53,7 @@
 #include "cashshop.h"
 #include "channel.h"
 #include "achievement.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <time.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "clan.h"
 
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
@@ -20303,6 +20301,3 @@ void do_final_clif(void) {
 	ers_destroy(delay_clearunit_ers);
 }
 
-#ifdef __cplusplus
-}
-#endif

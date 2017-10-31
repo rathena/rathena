@@ -4,9 +4,6 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // CORE_ST_LAST
@@ -244,7 +241,7 @@ enum e_mapid {
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
-enum bl_type {
+enum bl_type : uint16{
 	BL_NUL   = 0x000,
 	BL_PC    = 0x001,
 	BL_MOB   = 0x002,
@@ -264,7 +261,7 @@ enum bl_type {
 #define BL_CHAR (BL_PC|BL_MOB|BL_HOM|BL_MER|BL_ELEM)
 
 /// NPC Subtype
-enum npc_subtype {
+enum npc_subtype : uint8{
 	NPCTYPE_WARP, /// Warp
 	NPCTYPE_SHOP, /// Shop
 	NPCTYPE_SCRIPT, /// Script
@@ -275,7 +272,7 @@ enum npc_subtype {
 	NPCTYPE_MARKETSHOP, /// Marketshop
 };
 
-enum e_race {
+enum e_race : int8{
 	RC_NONE_ = -1, //don't give us bonus
 	RC_FORMLESS = 0,
 	RC_UNDEAD,
@@ -292,7 +289,7 @@ enum e_race {
 	RC_MAX //auto upd enum for array size
 };
 
-enum e_classAE {
+enum e_classAE : int8{
 	CLASS_NONE = -1, //don't give us bonus
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
@@ -302,7 +299,7 @@ enum e_classAE {
 	CLASS_MAX //auto upd enum for array len
 };
 
-enum e_race2 {
+enum e_race2 : uint8{
 	RC2_NONE = 0,
 	RC2_GOBLIN,
 	RC2_KOBOLD,
@@ -321,7 +318,7 @@ enum e_race2 {
 };
 
 /// Element list
-enum e_element {
+enum e_element : int8{
 	ELE_NONE=-1,
 	ELE_NEUTRAL=0,
 	ELE_WATER,
@@ -509,7 +506,7 @@ enum _look {
 };
 
 // used by map_setcell()
-typedef enum {
+enum cell_t{
 	CELL_WALKABLE,
 	CELL_SHOOTABLE,
 	CELL_WATER,
@@ -522,10 +519,10 @@ typedef enum {
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
 
-} cell_t;
+};
 
 // used by map_getcell()
-typedef enum {
+enum cell_chk : uint8 {
 	CELL_GETTYPE,			// Retrieves a cell's 'gat' type
 
 	CELL_CHKWALL,			// Whether the cell is a wall (gat type 1)
@@ -546,7 +543,7 @@ typedef enum {
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
 
-} cell_chk;
+};
 
 struct mapcell
 {
@@ -1005,9 +1002,5 @@ extern char market_table[32];
 extern char roulette_table[32];
 
 void do_shutdown(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _MAP_H_ */

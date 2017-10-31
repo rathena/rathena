@@ -1,23 +1,23 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "trade.h"
 #include "../common/nullpo.h"
 #include "../common/socket.h"
 #include "clif.h"
 #include "itemdb.h"
 #include "path.h"
-#include "trade.h"
 #include "pc.h"
 #include "chrif.h"
 #include "storage.h"
 #include "intif.h"
+#include "atcommand.h"
+#include "log.h"
+#include "pc_groups.h"
+#include "battle.h"
 
 #include <stdio.h>
 #include <string.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
@@ -652,7 +652,3 @@ void trade_tradecommit(struct map_session_data *sd)
 		chrif_save(tsd, CSAVE_INVENTORY|CSAVE_CART);
 	}
 }
-
-#ifdef __cplusplus
-}
-#endif

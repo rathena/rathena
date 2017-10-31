@@ -4,16 +4,13 @@
 #ifndef _MOB_H_
 #define _MOB_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/mmo.h" // struct item
-#include "guild.h" // struct guardian_data
-#include "map.h" // struct status_data, struct view_data, struct mob_skill
+//#include "guild.h" // struct guardian_data
+//#include "map.h" // struct status_data, struct view_data, struct mob_skill
 #include "status.h" // struct status data, struct status_change
 #include "unit.h" // unit_stop_walking(), unit_stop_attack()
-#include "npc.h"
+//#include "npc.h"
+struct guardian_data;
 
 // Change this to increase the table size in your mob_db to accomodate a larger mob database.
 // Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
@@ -178,12 +175,12 @@ struct mob_data {
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
 	char name[NAME_LENGTH];
-	struct {
+	struct s_specialState {
 		unsigned int size : 2; //Small/Big monsters.
 		enum mob_ai ai; //Special ai for summoned monsters.
 		unsigned int clone : 1;/* is clone? 1:0 */
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
-	struct {
+	struct s_MobState {
 		unsigned int aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
@@ -370,9 +367,5 @@ void mvptomb_destroy(struct mob_data *md);
 void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _MOB_H_ */

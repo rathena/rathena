@@ -1,5 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "clan.h"
+
+#include <string.h> //memset
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
@@ -7,16 +10,12 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 
-#include "clan.h"
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
 #include "script.h"
 #include "status.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "log.h"
 
 static DBMap* clan_db; // int clan_id -> struct clan*
 
@@ -216,7 +215,3 @@ int clan_get_alliance_count( struct clan *clan, int flag ){
 
 	return count;
 }
-
-#ifdef __cplusplus
-}
-#endif

@@ -4,10 +4,6 @@
 #ifndef _CLIF_H_
 #define _CLIF_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
 #include "../common/mmo.h"
@@ -39,13 +35,13 @@ struct mail_message;
 struct achievement;
 #include <stdarg.h>
 
-enum { // packet DB
+enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
 	MAX_PACKET_POS = 20,
 };
 
-enum e_packet_ack {
+enum e_packet_ack : uint8_t{
 	ZC_ACK_OPEN_BANKING = 0,
 	ZC_ACK_CLOSE_BANKING,
 	ZC_ACK_BANKING_DEPOSIT,
@@ -77,7 +73,7 @@ struct s_packet_keys {
 };
 #endif
 
-enum e_CASHSHOP_ACK {
+enum e_CASHSHOP_ACK : uint8_t{
 	ERROR_TYPE_NONE             = 0, ///< The deal has successfully completed.
 	ERROR_TYPE_NPC              = 1, ///< The Purchase has failed because the NPC does not exist.
 	ERROR_TYPE_SYSTEM           = 2, ///< The Purchase has failed because the Kafra Shop System is not working correctly.
@@ -89,67 +85,67 @@ enum e_CASHSHOP_ACK {
 	ERROR_TYPE_PURCHASE_FAIL    = 8, ///< Some items could not be purchased.
 };
 
-enum e_BANKING_DEPOSIT_ACK {
+enum e_BANKING_DEPOSIT_ACK : uint8_t {
 	BDA_SUCCESS  = 0x0,
 	BDA_ERROR    = 0x1,
 	BDA_NO_MONEY = 0x2,
 	BDA_OVERFLOW = 0x3,
 };
 
-enum e_BANKING_WITHDRAW_ACK {
+enum e_BANKING_WITHDRAW_ACK : uint8_t {
 	BWA_SUCCESS       = 0x0,
 	BWA_NO_MONEY      = 0x1,
 	BWA_UNKNOWN_ERROR = 0x2,
 };
 
-enum RECV_ROULETTE_ITEM_REQ {
+enum RECV_ROULETTE_ITEM_REQ : uint8_t {
 	RECV_ITEM_SUCCESS    = 0x0,
 	RECV_ITEM_FAILED     = 0x1,
 	RECV_ITEM_OVERCOUNT  = 0x2,
 	RECV_ITEM_OVERWEIGHT = 0x3,
 };
 
-enum RECV_ROULETTE_ITEM_ACK {
+enum RECV_ROULETTE_ITEM_ACK : uint8_t {
 	RECV_ITEM_NORMAL =  0x0,
 	RECV_ITEM_LOSING =  0x1,
 };
 
-enum GENERATE_ROULETTE_ACK {
+enum GENERATE_ROULETTE_ACK : uint8_t {
 	GENERATE_ROULETTE_SUCCESS         = 0x0,
 	GENERATE_ROULETTE_FAILED          = 0x1,
 	GENERATE_ROULETTE_NO_ENOUGH_POINT = 0x2,
 	GENERATE_ROULETTE_LOSING          = 0x3,
 };
 
-enum OPEN_ROULETTE_ACK {
+enum OPEN_ROULETTE_ACK : uint8_t {
 	OPEN_ROULETTE_SUCCESS = 0x0,
 	OPEN_ROULETTE_FAILED  = 0x1,
 };
 
-enum CLOSE_ROULETTE_ACK {
+enum CLOSE_ROULETTE_ACK : uint8_t {
 	CLOSE_ROULETTE_SUCCESS = 0x0,
 	CLOSE_ROULETTE_FAILED  = 0x1,
 };
 
-enum MERGE_ITEM_ACK {
+enum MERGE_ITEM_ACK : uint8_t {
 	MERGE_ITEM_SUCCESS = 0x0,
 	MERGE_ITEM_FAILED_NOT_MERGE = 0x1,
 	MERGE_ITEM_FAILED_MAX_COUNT = 0x2,
 };
 
-enum BROADCASTING_SPECIAL_ITEM_OBTAIN {
+enum BROADCASTING_SPECIAL_ITEM_OBTAIN : uint8_t {
 	ITEMOBTAIN_TYPE_BOXITEM =  0x0,
 	ITEMOBTAIN_TYPE_MONSTER_ITEM =  0x1,
 	ITEMOBTAIN_TYPE_NPC =  0x2,
 };
 
-enum e_adopt_reply {
+enum e_adopt_reply : uint8_t {
 	ADOPT_REPLY_MORE_CHILDREN = 0,
 	ADOPT_REPLY_LEVEL_70,
 	ADOPT_REPLY_MARRIED,
 };
 
-enum e_wip_block {
+enum e_wip_block : uint8_t {
 	WIP_DISABLE_NONE = 0x0,
 	WIP_DISABLE_SKILLITEM = 0x1,
 	WIP_DISABLE_NPC = 0x2,
@@ -182,8 +178,8 @@ extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
 extern int packet_db_ack[MAX_ACK_FUNC + 1];
 
 // local define
-typedef enum send_target {
-	ALL_CLIENT,
+enum send_target : uint8_t {
+	ALL_CLIENT = 0,
 	ALL_SAMEMAP,
 	AREA,				// area
 	AREA_WOS,			// area, without self
@@ -217,9 +213,9 @@ typedef enum send_target {
 	BG_AREA_WOS,
 
 	CLAN,				// Clan System
-} send_target;
+};
 
-typedef enum broadcast_flags {
+enum broadcast_flags : uint8_t {
 	BC_ALL			= 0,
 	BC_MAP			= 1,
 	BC_AREA			= 2,
@@ -236,9 +232,9 @@ typedef enum broadcast_flags {
 	BC_COLOR_MASK	= 0x30, // BC_YELLOW|BC_BLUE|BC_WOE
 
 	BC_DEFAULT		= BC_ALL|BC_PC|BC_YELLOW
-} broadcast_flags;
+};
 
-typedef enum emotion_type {
+enum emotion_type {
 	E_GASP = 0,     // /!
 	E_WHAT,         // /?
 	E_HO,
@@ -329,18 +325,18 @@ typedef enum emotion_type {
 	E_YUT7,
 	//
 	E_MAX
-} emotion_type;
+};
 
-typedef enum clr_type
+enum clr_type : uint8_t 
 {
 	CLR_OUTSIGHT = 0,
 	CLR_DEAD,
 	CLR_RESPAWN,
 	CLR_TELEPORT,
 	CLR_TRICKDEAD,
-} clr_type;
+};
 
-enum map_property
+enum map_property : uint8_t 
 {// clif_map_property
 	MAPPROPERTY_NOTHING       = 0,
 	MAPPROPERTY_FREEPVPZONE   = 1,
@@ -351,7 +347,7 @@ enum map_property
 	MAPPROPERTY_DENYSKILLZONE = 6,
 };
 
-enum map_type
+enum map_type : uint8_t 
 {// clif_map_type
 	MAPTYPE_VILLAGE              = 0,
 	MAPTYPE_VILLAGE_IN           = 1,
@@ -380,7 +376,7 @@ enum map_type
 	MAPTYPE_UNUSED               = 29,
 };
 
-enum useskill_fail_cause
+enum useskill_fail_cause : uint8_t 
 {// clif_skill_fail
 	USESKILL_FAIL_LEVEL = 0,
 	USESKILL_FAIL_SP_INSUFFICIENT = 1,
@@ -473,7 +469,7 @@ enum useskill_fail_cause
 	USESKILL_FAIL_MAX
 };
 
-enum clif_messages {
+enum clif_messages : uint16_t {
 	/* Constant values */
 	// clif_cart_additem_ack flags
 	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
@@ -515,7 +511,7 @@ enum clif_messages {
 	SKILL_NEED_GRENADE = 0xa01,
 };
 
-enum e_personalinfo {
+enum e_personalinfo : uint8_t {
 	PINFO_BASIC = 0,
 	PINFO_PREMIUM,
 	PINFO_SERVER,
@@ -523,7 +519,7 @@ enum e_personalinfo {
 	PINFO_MAX,
 };
 
-enum e_damage_type {
+enum e_damage_type : uint8_t {
 	DMG_NORMAL = 0,			/// damage [ damage: total damage, div: amount of hits, damage2: assassin dual-wield damage ]
 	DMG_PICKUP_ITEM,		/// pick up item
 	DMG_SIT_DOWN,			/// sit down
@@ -889,7 +885,7 @@ void do_init_clif(void);
 void do_final_clif(void);
 
 // MAIL SYSTEM
-enum mail_send_result{
+enum mail_send_result : uint8_t {
 	WRITE_MAIL_SUCCESS = 0x0,
 	WRITE_MAIL_FAILED = 0x1,
 	WRITE_MAIL_FAILED_CNT = 0x2,
@@ -1070,9 +1066,5 @@ void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
 void clif_pAchievementCheckReward(int fd, struct map_session_data *sd);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _CLIF_H_ */

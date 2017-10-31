@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#include "skill.h"
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -16,7 +16,7 @@
 #include "clif.h"
 #include "pc.h"
 #include "status.h"
-#include "skill.h"
+
 #include "pet.h"
 #include "homunculus.h"
 #include "mercenary.h"
@@ -35,6 +35,7 @@
 #include "date.h"
 #include "unit.h"
 #include "achievement.h"
+#include "pc_groups.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,9 +43,6 @@
 #include <time.h>
 #include <math.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
@@ -21605,7 +21603,3 @@ void do_final_skill(void)
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 }
-
-#ifdef __cplusplus
-}
-#endif

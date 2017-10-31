@@ -4,13 +4,10 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/cbasetypes.h"
+#include "../common/db.h"
 #include "../common/mmo.h"
-#include "map.h"
+//#include "map.h"
 
 #define NUM_WHISPER_VAR 10
 
@@ -134,7 +131,7 @@ enum script_cmd_result {
 };
 
 #define SCRIPT_BLOCK_SIZE 512
-enum { LABEL_NEXTLINE = 1, LABEL_START };
+enum e_labelType { LABEL_NEXTLINE = 1, LABEL_START };
 
 struct map_session_data;
 struct eri;
@@ -145,7 +142,7 @@ extern int potion_target;
 extern unsigned int *generic_ui_array;
 extern unsigned int generic_ui_array_size;
 
-extern struct Script_Config {
+struct Script_Config {
 	unsigned warn_func_mismatch_argtypes : 1;
 	unsigned warn_func_mismatch_paramnum : 1;
 	int check_cmdcount;
@@ -208,7 +205,8 @@ extern struct Script_Config {
 	// Instance related
 	const char* instance_init_event_name;
 	const char* instance_destroy_event_name;
-} script_config;
+};
+extern struct Script_Config script_config;
 
 typedef enum c_op {
 	C_NOP, // end of script/no value (nil)
@@ -1887,7 +1885,7 @@ bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
-int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
+int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
@@ -1923,7 +1921,7 @@ const char* get_str(int id);
 void script_reload(void);
 
 // @commands (script based)
-void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem, void *value, struct reg_db *ref);
+void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref);
 
 /**
  * Array Handling
@@ -1946,10 +1944,6 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif /* _SCRIPT_H_ */

@@ -4,10 +4,6 @@
 #ifndef _ELEMENTAL_H_
 #define _ELEMENTAL_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/mmo.h"
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
@@ -21,14 +17,14 @@ extern "C" {
 #define EL_MODE_PASSIVE MD_CANMOVE
 
 ///Enum of Elemental Skill Mode
-enum elemental_skillmode {
+enum elemental_skillmode : uint8 {
 	EL_SKILLMODE_PASSIVE    = 0x1,
 	EL_SKILLMODE_ASSIST     = 0x2,
 	EL_SKILLMODE_AGGRESSIVE = 0x4,
 };
 
 ///Enum of Elemental ID
-enum elemental_elementalid {
+enum elemental_elementalid  : uint16 {
 	ELEMENTALID_AGNI_S = 2114,
 	ELEMENTALID_AGNI_M,
 	ELEMENTALID_AGNI_L,
@@ -115,9 +111,5 @@ void reload_elementaldb(void);
 void reload_elemental_skilldb(void);
 void do_init_elemental(void);
 void do_final_elemental(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _ELEMENTAL_H_ */

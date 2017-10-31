@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "mercenary.h"
+
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/timer.h"
@@ -18,14 +20,10 @@
 #include "pc.h"
 #include "party.h"
 #include "trade.h"
-#include "mercenary.h"
+#include "npc.h"
 
 #include <stdlib.h>
 #include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
 static uint16 mercenary_count;
@@ -616,7 +614,3 @@ void do_init_mercenary(void){
 void do_final_mercenary(void){
 	//Nothing to do yet
 }
-
-#ifdef __cplusplus
-}
-#endif

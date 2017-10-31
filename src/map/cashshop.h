@@ -4,12 +4,11 @@
 #ifndef _CASHSHOP_H_
 #define _CASHSHOP_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/cbasetypes.h" // uint16, uint32
-#include "pc.h" // struct map_session_data
+#include "../common/timer.h" // ShowWarning, ShowStatus
+#include "../config/packets.h"
+
+struct map_session_data;
 
 void do_init_cashshop( void );
 void do_final_cashshop( void );
@@ -94,10 +93,6 @@ struct sale_item_data* sale_find_item(uint16 nameid, bool onsale);
 enum e_sale_add_result sale_add_item(uint16 nameid, int32 count, time_t from, time_t to);
 bool sale_remove_item(uint16 nameid);
 void sale_notify_login( struct map_session_data* sd );
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif /* _CASHSHOP_H_ */

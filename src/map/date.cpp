@@ -4,10 +4,6 @@
 #include "date.h"
 #include <time.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * Get the current year
  */
@@ -154,7 +150,3 @@ bool is_day_of_star(void)
 {
 	return date_get_dayofyear()%5 == 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

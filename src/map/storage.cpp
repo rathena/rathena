@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "storage.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
@@ -8,19 +9,18 @@
 #include "../common/showmsg.h"
 
 #include "map.h" // struct map_session_data
-#include "storage.h"
 #include "chrif.h"
 #include "itemdb.h"
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
+#include "pc_groups.h"
+#include "guild.h"
+#include "log.h"
+#include "battle.h"
 
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
 struct s_storage_table *storage_db;
@@ -1124,7 +1124,3 @@ void storage_premiumStorage_quit(struct map_session_data *sd) {
 
 	storage_premiumStorage_save(sd);
 }
-
-#ifdef __cplusplus
-}
-#endif

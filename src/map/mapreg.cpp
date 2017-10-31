@@ -16,10 +16,6 @@
 
 #include <stdlib.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 static struct eri *mapreg_ers;
 
 bool skip_insert = false;
@@ -360,7 +356,3 @@ bool mapreg_config_read(const char* w1, const char* w2)
 
 	return true;
 }
-
-#ifdef __cplusplus
-}
-#endif

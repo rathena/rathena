@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "npc.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -20,13 +21,13 @@
 #include "instance.h"
 #include "chat.h"
 #include "script.h" // script_config
+#include "guild.h"
+#include "battle.h"
+#include "mob.h"
+#include "log.h"
 
 #include <stdlib.h>
 #include <errno.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 struct npc_data* fake_nd;
 
@@ -4823,7 +4824,3 @@ void do_init_npc(void){
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
 }
-
-#ifdef __cplusplus
-}
-#endif

@@ -3,28 +3,31 @@
 
 #ifndef _BATTLE_H_
 #define _BATTLE_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../config/core.h"
-#include "clif.h" // e_damage_type
+//#include "clif.h" // e_damage_type
 #include "map.h" //ELE_MAX
 
+//fwd declaration
+struct map_session_data;
+struct mob_data;
+struct block_list;
+enum e_damage_type : uint8;
+
+
 /// State of a single attack attempt; used in flee/def penalty calculations when mobbed
-typedef enum damage_lv {
+enum damage_lv : uint8 {
 	ATK_NONE,    /// Not an attack
 	ATK_LUCKY,   /// Attack was lucky-dodged
 	ATK_FLEE,    /// Attack was dodged
 	ATK_MISS,    /// Attack missed because of element/race modifier.
 	ATK_BLOCK,   /// Attack was blocked by some skills.
 	ATK_DEF      /// Attack connected
-} damage_lv;
+};
 
 /// Flag of the final calculation
-enum e_battle_flag {
+enum e_battle_flag : uint16 {
 	BF_WEAPON	= 0x0001, /// Weapon attack
 	BF_MAGIC	= 0x0002, /// Magic attack
 	BF_MISC		= 0x0004, /// Misc attack
@@ -41,7 +44,7 @@ enum e_battle_flag {
 };
 
 /// Battle check target [Skotlex]
-enum e_battle_check_target {
+enum e_battle_check_target : uint32 {
 	BCT_NOONE		= 0x000000, ///< No one
 	BCT_SELF		= 0x010000, ///< Self
 	BCT_ENEMY		= 0x020000, ///< Enemy
@@ -79,10 +82,6 @@ struct Damage {
 
 //(Used in read pc.c,) attribute table (battle_attr_fix)
 extern int attr_fix_table[4][ELE_MAX][ELE_MAX];
-
-struct map_session_data;
-struct mob_data;
-struct block_list;
 
 // Damage Calculation
 
@@ -137,7 +136,7 @@ bool is_infinite_defense(struct block_list *target, int flag);
 #define MIN_BODY_STYLE battle_config.min_body_style
 #define MAX_BODY_STYLE battle_config.max_body_style
 
-extern struct Battle_Config
+struct Battle_Config
 {
 	int warp_point_debug;
 	int enable_critical;
@@ -636,7 +635,9 @@ extern struct Battle_Config
 	int event_refine_chance;
 
 #include "../custom/battle_config_struct.inc"
-} battle_config;
+};
+
+extern struct Battle_Config battle_config;
 
 void do_init_battle(void);
 void do_final_battle(void);
@@ -651,9 +652,5 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
  * Royal Guard
  **/
 int battle_damage_area( struct block_list *bl, va_list ap);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _BATTLE_H_ */

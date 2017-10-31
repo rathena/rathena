@@ -3,11 +3,7 @@
 
 #ifndef _ATCOMMAND_H_
 #define _ATCOMMAND_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 
 struct map_session_data;
@@ -23,10 +19,10 @@ extern char atcommand_symbol;
 extern char charcommand_symbol;
 extern int atcmd_binding_count;
 
-typedef enum {
+enum AtCommandType : uint8 {
 	COMMAND_ATCOMMAND = 1,
 	COMMAND_CHARCOMMAND = 2,
-} AtCommandType;
+} ;
 
 typedef int (*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
 
@@ -47,9 +43,4 @@ struct atcmd_binding_data {
 };
 extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif /* _ATCOMMAND_H_ */

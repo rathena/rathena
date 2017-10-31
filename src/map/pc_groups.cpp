@@ -12,10 +12,6 @@
 #include "pc_groups.h"
 #include "pc.h" // e_pc_permission
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct GroupSettings GroupSettings;
 
 // Cached config settings/pointers for quick lookup
@@ -466,7 +462,3 @@ void pc_groups_reload(void) {
 	}
 	mapit_free(iter);
 }
-
-#ifdef __cplusplus
-}
-#endif

@@ -4,9 +4,7 @@
 #ifndef _INTIF_H_
 #define _INTIF_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "../common/cbasetypes.h"
 
 #include "../common/mmo.h"
 
@@ -20,6 +18,7 @@ struct s_elemental;
 struct mail_message;
 struct auction_data;
 struct achievement_db;
+struct map_session_data;
 
 int intif_parse(int fd);
 
@@ -130,9 +129,5 @@ bool intif_storage_request(struct map_session_data *sd, enum storage_type type, 
 bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor);
 
 int CheckForCharServer(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _INTIF_H_ */

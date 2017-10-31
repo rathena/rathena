@@ -4,12 +4,9 @@
 #ifndef _STATUS_H_
 #define _STATUS_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../common/mmo.h"
 
+enum e_race2 : uint8;
 struct block_list;
 struct mob_data;
 struct pet_data;
@@ -60,7 +57,7 @@ int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 int status_get_refine_cost(int weapon_lv, int type, bool what);
 
 /// Status changes listing. These code are for use by the server.
-typedef enum sc_type {
+enum sc_type : int16 {
 	SC_NONE = -1,
 
 	//First we enumerate common status ailments which are often used around.
@@ -847,10 +844,10 @@ typedef enum sc_type {
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
-} sc_type;
+};
 
 /// Official status change ids, used to display status icons on the client.
-enum si_type {
+enum si_type : short {
 	SI_BLANK		= -1,
 	SI_PROVOKE		= 0,
 	SI_ENDURE		= 1,
@@ -2368,9 +2365,5 @@ void initChangeTables(void);
 int status_readdb(void);
 int do_init_status(void);
 void do_final_status(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _STATUS_H_ */

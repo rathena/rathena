@@ -4,17 +4,17 @@
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "../common/cbasetypes.h"
 
 //#include "map.h"
+enum sc_type : int16;
 struct block_list;
 struct unit_data;
 struct map_session_data;
+enum clr_type : uint8;
 
-#include "clif.h"  // clr_type
-#include "map.h" // struct block_list
+//#include "clif.h"  // clr_type
+//#include "map.h" // struct block_list
 #include "path.h" // struct walkpath_data
 #include "skill.h" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
 
@@ -48,7 +48,7 @@ struct unit_data {
 	uint8 dir;
 	unsigned char walk_count;
 	unsigned char target_count;
-	struct {
+	struct s_udState {
 		unsigned change_walk_target : 1 ;
 		unsigned skillcastcancel : 1 ;
 		unsigned attack_continue : 1 ;
@@ -65,12 +65,11 @@ struct unit_data {
 
 struct view_data {
 #ifdef __64BIT__
-	unsigned int class_;
+	unsigned int class_; //why arch dependant ??? make no sense imo [lighta]
+#else
+	unsigned short class_;
 #endif
-	unsigned short
-#ifndef __64BIT__
-		class_,
-#endif
+unsigned short
 		weapon,
 		shield, //Or left-hand weapon.
 		robe,
@@ -173,8 +172,5 @@ int unit_changetarget(struct block_list *bl,va_list ap);
 void do_init_unit(void);
 void do_final_unit(void);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _UNIT_H_ */

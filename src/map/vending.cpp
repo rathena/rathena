@@ -1,25 +1,28 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "vending.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.h" // ShowInfo
 #include "../common/strlib.h"
+#include "../common/timer.h"  // DIFF_TICK
+
+#include "buyingstore.h"
 #include "clif.h"
 #include "itemdb.h"
 #include "atcommand.h"
 #include "path.h"
 #include "chrif.h"
-#include "vending.h"
 #include "pc.h"
+#include "pc_groups.h"
 #include "buyingstore.h" // struct s_autotrade_entry, struct s_autotrader
+#include "npc.h"
+#include "battle.h"
+#include "log.h"
 #include "achievement.h"
 
 #include <stdlib.h> // atoi
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 static uint32 vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
@@ -691,7 +694,3 @@ void do_init_vending(void)
 	vending_autotrader_db = uidb_alloc(DB_OPT_BASE);
 	vending_nextid = 0;
 }
-
-#ifdef __cplusplus
-}
-#endif

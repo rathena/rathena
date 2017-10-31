@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "battleground.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -8,7 +9,6 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 
-#include "battleground.h"
 #include "battle.h"
 #include "clif.h"
 #include "npc.h"
@@ -16,10 +16,8 @@
 #include "pet.h"
 #include "homunculus.h"
 #include "mercenary.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "guild.h"
+#include "mob.h"
 
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id
@@ -280,7 +278,3 @@ void do_final_battleground(void)
 {
 	bg_team_db->destroy(bg_team_db, NULL);
 }
-
-#ifdef __cplusplus
-}
-#endif

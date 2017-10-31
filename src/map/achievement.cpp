@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "achievement.h"
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
@@ -9,7 +10,7 @@
 #include "../common/utils.h"
 #include "../common/yamlwrapper.h"
 
-#include "achievement.h"
+#include "battle.h"
 #include "chrif.h"
 #include "clif.h"
 #include "intif.h"
@@ -18,6 +19,7 @@
 #include "pc.h"
 #include "script.h"
 #include "status.h"
+#include "npc.h"
 
 #include <stdio.h>
 #include <stdlib.h>

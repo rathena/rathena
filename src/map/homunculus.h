@@ -4,10 +4,7 @@
 #ifndef _HOMUNCULUS_H_
 #define _HOMUNCULUS_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include "../common/cbasetypes.h"
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
@@ -38,17 +35,17 @@ struct s_homunculus_db {
 };
 extern struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];
 
-enum e_hom_search_type { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
+enum e_hom_search_type : uint8  { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 
-enum e_hom_mode { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
+enum e_hom_mode : uint8  { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
 
-enum e_hom_state {
+enum e_hom_state : uint8 {
 	HOM_ST_ACTIVE	= 0,
 	HOM_ST_REST		= 1,
 	HOM_ST_MORPH	= 2,
 };
 
-enum {
+enum e_hom_state2 : uint8 {
 	SP_ACK      = 0x0,
 	SP_INTIMATE = 0x1,
 	SP_HUNGRY   = 0x2,
@@ -111,7 +108,7 @@ enum homun_mapid {
 };
 
 /// Homunculus type
-enum homun_type {
+enum homun_type : int8 {
 	HT_REG		= 0x1,
 	HT_EVO		= 0x2,
 	HT_S		= 0x4,
@@ -119,7 +116,7 @@ enum homun_type {
 };
 
 /// Homunculus battle_config setting
-enum homun_setting {
+enum homun_setting : uint8 {
 	HOMSET_NO_SUPPORT_SKILL				= 0x01, /// Cannot be targetted by support skills, except for their master
 	HOMSET_NO_INSTANT_LAND_SKILL		= 0x02, /// Unit/land skill doesn't applied immediately
 	HOMSET_FIRST_TARGET					= 0x04, /// Mobs will always go after them instead of players until attacked
@@ -130,7 +127,7 @@ enum homun_setting {
 	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
 };
 
-enum e_homun_grade {
+enum e_homun_grade : uint8 {
 	HOMGRADE_HATE_WITH_PASSION = 0,
 	HOMGRADE_HATE,
 	HOMGRADE_AWKWARD,
@@ -194,9 +191,5 @@ short hom_skill_get_index(uint16 skill_id);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _HOMUNCULUS_H_ */
