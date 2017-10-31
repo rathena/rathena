@@ -53,6 +53,7 @@ gl_cas02_	mapflag	nowarpto
 1@face	mapflag	nowarpto
 1@sara	mapflag	nowarpto
 1@gef_in	mapflag	nowarpto
+1@glast	mapflag	nowarpto
 
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	nowarpto
