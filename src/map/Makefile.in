@@ -17,7 +17,8 @@ YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
 YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
 YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
 
-MAP_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g") $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+#MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
 MAP_H = $(shell ls ../map/*.h) \
 	$(shell ls ../config/*.h) 
