@@ -14247,7 +14247,7 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
  * @param file_name: File name for displaying only
  * @return True on success or false on failure
  */
-static bool status_yaml_readdb_refine_sub(YAML::Node &node, int refine_info_index, std::string file_name) {
+static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_info_index, const std::string &file_name) {
 	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
@@ -14256,11 +14256,11 @@ static bool status_yaml_readdb_refine_sub(YAML::Node &node, int refine_info_inde
 	int random_bonus = node["RandomBonusValue"].as<int>();
 	const YAML::Node &costs = node["Costs"];
 
-	for (auto it = costs.begin(); it != costs.end(); ++it) {
-		const YAML::Node &type = *it;
+	for (const auto costit : costs) {
+		const YAML::Node &type = costit;
 		int idx = 0, price;
 		unsigned short material;
-		std::string keys[] = { "Type", "Price", "Material" };
+		const std::string keys[] = { "Type", "Price", "Material" };
 
 		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
 			if (!type[keys[i]].IsDefined())
@@ -14281,8 +14281,8 @@ static bool status_yaml_readdb_refine_sub(YAML::Node &node, int refine_info_inde
 
 	const YAML::Node &rates = node["Rates"];
 
-	for (auto it = rates.begin(); it != rates.end(); ++it) {
-		const YAML::Node &level = *it;
+	for (const auto rateit : rates) {
+		const YAML::Node &level = rateit;
 		int refine_level = level["Level"].as<int>() - 1;
 
 		if (refine_level >= MAX_REFINE)
@@ -14313,22 +14313,24 @@ static bool status_yaml_readdb_refine_sub(YAML::Node &node, int refine_info_inde
  * @param directory: Location of refine_db file
  * @param file: File name
  */
-static void status_yaml_readdb_refine(std::string directory, std::string file) {
+static void status_yaml_readdb_refine(const std::string &directory, const std::string &file) {
 	int count = 0;
-	static const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
-	static const std::string current_file = directory + "/" + file;
+	const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
+	const std::string current_file = directory + "/" + file;
 	YAML::Node config;
 
 	try {
 		config = YAML::LoadFile(current_file);
 	}
-	catch (std::exception &e) {
-		ShowError("Failed to read '" CL_WHITE "%s" CL_RESET "' (Caused by : " CL_WHITE "%s" CL_RESET ").\n", current_file.c_str(), e.what());
+	catch (...) {
+		ShowError("Failed to read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
 		return;
 	}
 
 	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
-		if (config[labels[i]].IsDefined() && status_yaml_readdb_refine_sub(config[labels[i]], i, file))
+		const YAML::Node &node = config[labels[i]];
+
+		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, file))
 			count++;
 	}
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
