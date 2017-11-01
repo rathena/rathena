@@ -2,7 +2,8 @@
 // For more information, see LICENCE in the main folder
 
 #ifdef PCRE_SUPPORT
-#include "npc.h"
+
+#include "npc.hpp"
 
 #include "../../3rdparty/pcre/include/pcre.h"
 
@@ -11,8 +12,8 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 
-#include "mob.h" // struct mob_data
-#include "pc.h" // struct map_session_data
+#include "mob.hpp" // struct mob_data
+#include "pc.hpp" // struct map_session_data
 
 
 /**

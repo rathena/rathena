@@ -1,6 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "intif.h"
+
+#include "intif.hpp"
+
+#include <stdlib.h>
 
 #include "../common/showmsg.h"
 #include "../common/socket.h"
@@ -9,26 +12,25 @@
 #include "../common/strlib.h"
 #include "../common/mmo.h"
 #include "../common/timer.h"
-#include "map.h"
-#include "battle.h"
-#include "chrif.h"
-#include "clan.h"
-#include "guild.h"
-#include "clif.h"
-#include "pc.h"
-#include "storage.h"
-#include "party.h"
-#include "pet.h"
-#include "mercenary.h"
-#include "homunculus.h"
-#include "elemental.h"
-#include "mail.h"
-#include "quest.h"
-#include "status.h"
-#include "achievement.h"
-#include "log.h"
 
-#include <stdlib.h>
+#include "map.hpp"
+#include "battle.hpp"
+#include "chrif.hpp"
+#include "clan.hpp"
+#include "guild.hpp"
+#include "clif.hpp"
+#include "pc.hpp"
+#include "storage.hpp"
+#include "party.hpp"
+#include "pet.hpp"
+#include "mercenary.hpp"
+#include "homunculus.hpp"
+#include "elemental.hpp"
+#include "mail.hpp"
+#include "quest.hpp"
+#include "status.hpp"
+#include "achievement.hpp"
+#include "log.hpp"
 
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {

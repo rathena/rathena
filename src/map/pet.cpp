@@ -1,7 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "pet.h"
+#include "pet.hpp"
+
+#include <stdlib.h>
+
 #include "../common/db.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -12,17 +15,15 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 
-#include "pc.h"
-#include "intif.h"
-#include "chrif.h"
-#include "npc.h"
-#include "clif.h"
-#include "mob.h"
-#include "battle.h"
-#include "log.h"
-#include "achievement.h"
-
-#include <stdlib.h>
+#include "pc.hpp"
+#include "intif.hpp"
+#include "chrif.hpp"
+#include "npc.hpp"
+#include "clif.hpp"
+#include "mob.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "achievement.hpp"
 
 #define MIN_PETTHINKTIME 100
 

@@ -1,6 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "status.h"
+
+#include "status.hpp"
+
+#include <stdlib.h>
+#include <math.h>
+#include <string>
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -12,27 +18,22 @@
 #include "../common/ers.h"
 #include "../common/strlib.h"
 
-#include "battle.h"
-#include "itemdb.h"
-#include "map.h"
-#include "path.h"
-#include "pc.h"
-#include "pet.h"
-#include "battleground.h"
-#include "homunculus.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "script.h"
-#include "npc.h"
-#include "guild.h"
-#include "clif.h"
-#include "mob.h"
-#include "pc_groups.h"
-
-#include <stdlib.h>
-#include <math.h>
-#include <string>
-#include <yaml-cpp/yaml.h>
+#include "battle.hpp"
+#include "itemdb.hpp"
+#include "map.hpp"
+#include "path.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
+#include "battleground.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "script.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "clif.hpp"
+#include "mob.hpp"
+#include "pc_groups.hpp"
 
 // Regen related flags.
 enum e_regen {
@@ -3329,8 +3330,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->regen.state.block = 0;
 	sd->add_max_weight = 0;
 
-	// Zeroed arrays, order follows the order in pc.h.
-	// Add new arrays to the end of zeroed area in pc.h (see comments) and size here. [zzo]
+	// Zeroed arrays, order follows the order in pc.hpp.
+	// Add new arrays to the end of zeroed area in pc.hpp (see comments) and size here. [zzo]
 	memset (sd->param_bonus, 0, sizeof(sd->param_bonus)
 		+ sizeof(sd->param_equip)
 		+ sizeof(sd->subele)

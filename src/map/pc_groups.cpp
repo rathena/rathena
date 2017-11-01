@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "pc_groups.hpp"
+
 #include "../common/conf.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
@@ -8,9 +10,8 @@
 #include "../common/strlib.h" // strcmp
 #include "../common/socket.h"
 
-#include "atcommand.h" // AtCommandType
-#include "pc_groups.h"
-#include "pc.h" // e_pc_permission
+#include "atcommand.hpp" // AtCommandType
+#include "pc.hpp" // e_pc_permission
 
 typedef struct GroupSettings GroupSettings;
 

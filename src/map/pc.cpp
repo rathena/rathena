@@ -1,7 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "pc.h"
+#include "pc.hpp"
+
+#include <stdlib.h>
+#include <math.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // get_svn_revision()
@@ -16,44 +19,39 @@
 #include "../common/mmo.h" //NAME_LENGTH
 #include "../common/ers.h"  // ers_destroy
 
-#include "atcommand.h" // get_atcommand_level()
-#include "map.h"
-#include "battle.h" // battle_config
-#include "battleground.h"
-#include "channel.h"
-#include "chat.h"
-#include "chrif.h"
-#include "date.h" // is_day_of_*()
-#include "duel.h"
-#include "intif.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "pet.h" // pet_unlocktarget()
-#include "party.h" // party_search()
-#include "storage.h"
-#include "quest.h"
-#include "npc.h"
-#include "guild.h"
-#include "clif.h"
-
-#include "buyingstore.h"  // struct s_buyingstore
-#include "itemdb.h" // MAX_ITEMGROUP
-#include "script.h" // struct script_reg, struct script_regstr
-#include "searchstore.h"  // struct s_search_store_info
-#include "status.h" // OPTION_*, struct weapon_atk
-#include "unit.h" // unit_stop_attack(), unit_stop_walking()
-#include "vending.h" // struct s_vending
-#include "mob.h"
-#include "log.h"
-#include "pc_groups.h"
-#include "achievement.h"
-#include "clan.h"
-
-#include <stdlib.h>
-#include <math.h>
-
+#include "atcommand.hpp" // get_atcommand_level()
+#include "map.hpp"
+#include "battle.hpp" // battle_config
+#include "battleground.hpp"
+#include "channel.hpp"
+#include "chat.hpp"
+#include "chrif.hpp"
+#include "date.hpp" // is_day_of_*()
+#include "duel.hpp"
+#include "intif.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "pet.hpp" // pet_unlocktarget()
+#include "party.hpp" // party_search()
+#include "storage.hpp"
+#include "quest.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "clif.hpp"
+#include "buyingstore.hpp"  // struct s_buyingstore
+#include "itemdb.hpp" // MAX_ITEMGROUP
+#include "script.hpp" // struct script_reg, struct script_regstr
+#include "searchstore.hpp"  // struct s_search_store_info
+#include "status.hpp" // OPTION_*, struct weapon_atk
+#include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
+#include "vending.hpp" // struct s_vending
+#include "mob.hpp"
+#include "log.hpp"
+#include "pc_groups.hpp"
+#include "achievement.hpp"
+#include "clan.hpp"
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 
@@ -5842,8 +5840,8 @@ short pc_checkequip(struct map_session_data *sd,int pos)
  * Check if sd has nameid equipped somewhere
  * @sd : the player session
  * @nameid : id of the item to check
- * @min : : see pc.h enum equip_index from ? to @max
- * @max : see pc.h enum equip_index for @min to ?
+ * @min : : see pc.hpp enum equip_index from ? to @max
+ * @max : see pc.hpp enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
 bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max)

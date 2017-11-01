@@ -1,20 +1,21 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "mail.hpp"
+
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 
-#include "mail.h"
-#include "atcommand.h"
-#include "itemdb.h"
-#include "clif.h"
-#include "pc.h"
-#include "intif.h"
-#include "date.h" // date_get_dayofyear
-#include "log.h"
-#include "battle.h"
+#include "atcommand.hpp"
+#include "itemdb.hpp"
+#include "clif.hpp"
+#include "pc.hpp"
+#include "intif.hpp"
+#include "date.hpp" // date_get_dayofyear
+#include "log.hpp"
+#include "battle.hpp"
 
 void mail_clear(struct map_session_data *sd)
 {
@@ -113,7 +114,7 @@ bool mail_removezeny( struct map_session_data *sd, bool flag ){
 * @param sd : player attaching the content
 * @param idx 0 - Zeny; >= 2 - Inventory item
 * @param amount : amout of zeny or number of item
-* @return see enum mail_attach_result in mail.h
+* @return see enum mail_attach_result in mail.hpp
 */
 enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uint32 amount) {
 	if( pc_istrading(sd) )

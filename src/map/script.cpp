@@ -6,7 +6,13 @@
 //#define DEBUG_RUN
 //#define DEBUG_HASH
 //#define DEBUG_DUMP_STACK
-#include "script.h"
+
+#include "script.hpp"
+
+#include <math.h>
+#include <stdlib.h> // atoi, strtol, strtoll, exit
+#include <setjmp.h>
+#include <errno.h>
 
 #ifdef PCRE_SUPPORT
 #include "../../3rdparty/pcre/include/pcre.h" // preg_match
@@ -30,42 +36,36 @@
 	#include "../common/mutex.h"
 #endif
 
-#include "map.h"
-#include "path.h"
-#include "clan.h"
-#include "clif.h"
-#include "chrif.h"
-#include "date.h" // date type enum, date_get()
-#include "itemdb.h"
-#include "pc.h"
-#include "pc_groups.h"
-#include "storage.h"
-#include "pet.h"
-#include "mapreg.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "mercenary.h"
-#include "intif.h"
-#include "chat.h"
-#include "battleground.h"
-#include "party.h"
-#include "mail.h"
-#include "quest.h"
-#include "elemental.h"
-#include "npc.h"
-#include "guild.h"
-#include "atcommand.h"
-#include "battle.h"
-#include "log.h"
-#include "mob.h"
-
-#include "channel.h"
-#include "achievement.h"
-
-#include <math.h>
-#include <stdlib.h> // atoi, strtol, strtoll, exit
-#include <setjmp.h>
-#include <errno.h>
+#include "map.hpp"
+#include "path.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
+#include "chrif.hpp"
+#include "date.hpp" // date type enum, date_get()
+#include "itemdb.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "storage.hpp"
+#include "pet.hpp"
+#include "mapreg.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "mercenary.hpp"
+#include "intif.hpp"
+#include "chat.hpp"
+#include "battleground.hpp"
+#include "party.hpp"
+#include "mail.hpp"
+#include "quest.hpp"
+#include "elemental.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "mob.hpp"
+#include "channel.hpp"
+#include "achievement.hpp"
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -2409,7 +2409,7 @@ static void read_constdb(void)
  * Sets source-end constants for NPC scripts to access.
  **/
 void script_hardcoded_constants(void) {
-	#include "script_constants.h"
+	#include "script_constants.hpp"
 }
 
 /*==========================================

@@ -1,6 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "instance.h"
+
+#include "instance.hpp"
+
+#include <stdlib.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -11,15 +15,13 @@
 #include "../common/malloc.h"
 #include "../common/ers.h"  // ers_destroy
 
-#include "clan.h"
-#include "clif.h"
-#include "guild.h"
-#include "map.h"
-#include "npc.h"
-#include "party.h"
-#include "pc.h"
-
-#include <stdlib.h>
+#include "clan.hpp"
+#include "clif.hpp"
+#include "guild.hpp"
+#include "map.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "pc.hpp"
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 

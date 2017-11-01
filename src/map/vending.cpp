@@ -1,26 +1,26 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "vending.h"
+#include "vending.hpp"
 #include "../common/nullpo.h"
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.h" // ShowInfo
 #include "../common/strlib.h"
 #include "../common/timer.h"  // DIFF_TICK
 
-#include "buyingstore.h"
-#include "clif.h"
-#include "itemdb.h"
-#include "atcommand.h"
-#include "path.h"
-#include "chrif.h"
-#include "pc.h"
-#include "pc_groups.h"
-#include "buyingstore.h" // struct s_autotrade_entry, struct s_autotrader
-#include "npc.h"
-#include "battle.h"
-#include "log.h"
-#include "achievement.h"
+#include "buyingstore.hpp"
+#include "clif.hpp"
+#include "itemdb.hpp"
+#include "atcommand.hpp"
+#include "path.hpp"
+#include "chrif.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "buyingstore.hpp" // struct s_autotrade_entry, struct s_autotrader
+#include "npc.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "achievement.hpp"
 
 #include <stdlib.h> // atoi
 

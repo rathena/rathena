@@ -9,7 +9,7 @@ set( MAP_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 #
 if( BUILD_SERVERS )
 message( STATUS "Creating target map-server" )
-file(GLOB MAP_HEADERS ${MAP_SOURCE_DIR}/*.h)
+file(GLOB MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
 file(GLOB MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
 set( DEPENDENCIES common yaml-cpp)
 set( LIBRARIES ${GLOBAL_LIBRARIES} yaml-cpp)

@@ -2,17 +2,18 @@
 // For more information, see LICENCE in the main folder
 // Duel organizing functions [LuzZza]
 
-#include "duel.h"
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-
-#include "atcommand.h"  // msg_txt
-#include "clif.h"
-#include "pc.h"
-#include "battle.h"
+#include "duel.hpp"
 
 #include <stdio.h>
 #include <string.h>
+
+#include "../common/cbasetypes.h"
+#include "../common/timer.h"
+
+#include "atcommand.hpp"  // msg_txt
+#include "clif.hpp"
+#include "pc.hpp"
+#include "battle.hpp"
 
 //global var (extern)
 struct duel duel_list[MAX_DUEL]; //list of current duel

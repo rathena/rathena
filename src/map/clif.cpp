@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "clif.h"
+
+#include "clif.hpp"
+
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -20,40 +22,40 @@
 #include "../common/ers.h"
 #include "../common/conf.h"
 
-#include "map.h"
-#include "chrif.h"
-#include "pc.h"
-#include "pc_groups.h"
-#include "status.h"
-#include "npc.h"
-#include "itemdb.h"
-#include "chat.h"
-#include "trade.h"
-#include "storage.h"
-#include "script.h"
-#include "skill.h"
-#include "atcommand.h"
-#include "intif.h"
-#include "battle.h"
-#include "battleground.h"
-#include "mob.h"
-#include "party.h"
-#include "unit.h"
-#include "guild.h"
-#include "vending.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "log.h"
-#include "clif.h"
-#include "mail.h"
-#include "quest.h"
-#include "cashshop.h"
-#include "channel.h"
-#include "achievement.h"
-#include "clan.h"
+#include "map.hpp"
+#include "chrif.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "status.hpp"
+#include "npc.hpp"
+#include "itemdb.hpp"
+#include "chat.hpp"
+#include "trade.hpp"
+#include "storage.hpp"
+#include "script.hpp"
+#include "skill.hpp"
+#include "atcommand.hpp"
+#include "intif.hpp"
+#include "battle.hpp"
+#include "battleground.hpp"
+#include "mob.hpp"
+#include "party.hpp"
+#include "unit.hpp"
+#include "guild.hpp"
+#include "vending.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "log.hpp"
+#include "clif.hpp"
+#include "mail.hpp"
+#include "quest.hpp"
+#include "cashshop.hpp"
+#include "channel.hpp"
+#include "achievement.hpp"
+#include "clan.hpp"
 
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
@@ -62,7 +64,7 @@ struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
 unsigned long color_table[COLOR_MAX];
 
-#include "clif_obfuscation.h"
+#include "clif_obfuscation.hpp"
 static bool clif_session_isValid(struct map_session_data *sd);
 
 #if PACKETVER >= 20150513
@@ -20250,8 +20252,8 @@ void packetdb_readdb(){
 	memset(packet_db,0,sizeof(packet_db));
 	memset(packet_db_ack,0,sizeof(packet_db_ack));
 
-#include "clif_packetdb.h"
-#include "clif_shuffle.h"
+#include "clif_packetdb.hpp"
+#include "clif_shuffle.hpp"
 
 	ShowStatus("Using packet version: " CL_WHITE "%d" CL_RESET ".\n", PACKETVER);
 

@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "battleground.h"
+
+#include "battleground.hpp"
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -9,15 +10,15 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 
-#include "battle.h"
-#include "clif.h"
-#include "npc.h"
-#include "pc.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "mercenary.h"
-#include "guild.h"
-#include "mob.h"
+#include "battle.hpp"
+#include "clif.hpp"
+#include "npc.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "guild.hpp"
+#include "mob.hpp"
 
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id

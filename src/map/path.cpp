@@ -1,7 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "path.h"
+#include "path.hpp"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
@@ -9,13 +14,9 @@
 #include "../common/nullpo.h"
 #include "../common/random.h"
 #include "../common/showmsg.h"
-#include "map.h"
-#include "battle.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include "map.hpp"
+#include "battle.hpp"
 
 #define SET_OPEN 0
 #define SET_CLOSED 1

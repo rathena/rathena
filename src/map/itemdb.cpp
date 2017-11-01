@@ -1,6 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "itemdb.h"
+
+#include "itemdb.hpp"
+
+#include <stdlib.h>
 
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
@@ -8,17 +11,15 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
-#include "battle.h" // struct battle_config
-#include "cashshop.h"
-#include "intif.h"
-#include "pc.h"
-#include "status.h"
-#include "clif.h"
-#include "log.h"
-#include "mob.h"
 
-
-#include <stdlib.h>
+#include "battle.hpp" // struct battle_config
+#include "cashshop.hpp"
+#include "intif.hpp"
+#include "pc.hpp"
+#include "status.hpp"
+#include "clif.hpp"
+#include "log.hpp"
+#include "mob.hpp"
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB

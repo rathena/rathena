@@ -1,7 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "unit.h"
+#include "unit.hpp"
+
+#include <stdlib.h>
+#include <string.h>
+
 #include "../common/showmsg.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -11,30 +15,27 @@
 #include "../common/socket.h"
 #include "../common/ers.h"  // ers_destroy
 
-#include "achievement.h"
-#include "map.h"
-#include "path.h"
-#include "pc.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "channel.h"
-#include "duel.h"
-#include "battleground.h"
-#include "chat.h"
-#include "trade.h"
-#include "party.h"
-#include "intif.h"
-#include "storage.h"
-#include "guild.h"
-#include "npc.h"
-#include "clif.h"
-#include "mob.h"
-#include "battle.h"
-
-#include <stdlib.h>
-#include <string.h>
+#include "achievement.hpp"
+#include "map.hpp"
+#include "path.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "channel.hpp"
+#include "duel.hpp"
+#include "battleground.hpp"
+#include "chat.hpp"
+#include "trade.hpp"
+#include "party.hpp"
+#include "intif.hpp"
+#include "storage.hpp"
+#include "guild.hpp"
+#include "npc.hpp"
+#include "clif.hpp"
+#include "mob.hpp"
+#include "battle.hpp"
 
 // Directions values
 // 1 0 7
@@ -1039,7 +1040,7 @@ uint8 unit_getdir(struct block_list *bl)
  * @param dx: Destination cell X
  * @param dy: Destination cell Y
  * @param count: How many cells to push bl
- * @param flag: See skill.h::e_skill_blown
+ * @param flag: See skill.hpp::e_skill_blown
  * @return count (can be modified due to map cell restrictions)
  */
 int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag)

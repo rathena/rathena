@@ -1,7 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "mercenary.h"
+#include "mercenary.hpp"
+
+#include <stdlib.h>
+#include <math.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
@@ -13,17 +16,14 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 
-#include "log.h"
-#include "clif.h"
-#include "intif.h"
-#include "itemdb.h"
-#include "pc.h"
-#include "party.h"
-#include "trade.h"
-#include "npc.h"
-
-#include <stdlib.h>
-#include <math.h>
+#include "log.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "pc.hpp"
+#include "party.hpp"
+#include "trade.hpp"
+#include "npc.hpp"
 
 struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
 static uint16 mercenary_count;

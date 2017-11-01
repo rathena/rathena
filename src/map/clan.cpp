@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "clan.h"
+
+#include "clan.hpp"
 
 #include <string.h> //memset
 
@@ -10,12 +11,12 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 
-#include "clif.h"
-#include "intif.h"
-#include "pc.h"
-#include "script.h"
-#include "status.h"
-#include "log.h"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "pc.hpp"
+#include "script.hpp"
+#include "status.hpp"
+#include "log.hpp"
 
 static DBMap* clan_db; // int clan_id -> struct clan*
 

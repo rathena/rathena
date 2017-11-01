@@ -1,6 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "party.h"
+
+#include "party.hpp"
+
+#include <stdlib.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -12,20 +15,18 @@
 #include "../common/utils.h"
 #include "../common/strlib.h"
 
-#include "atcommand.h"	//msg_txt()
-#include "pc.h"
-#include "instance.h"
-#include "intif.h"
-#include "mapreg.h"
-#include "trade.h"
-#include "clif.h"
-#include "battle.h"
-#include "mob.h"
-#include "log.h"
-#include "pc_groups.h"
-#include "achievement.h"
-
-#include <stdlib.h>
+#include "atcommand.hpp"	//msg_txt()
+#include "pc.hpp"
+#include "instance.hpp"
+#include "intif.hpp"
+#include "mapreg.hpp"
+#include "trade.hpp"
+#include "clif.hpp"
+#include "battle.hpp"
+#include "mob.hpp"
+#include "log.hpp"
+#include "pc_groups.hpp"
+#include "achievement.hpp"
 
 static DBMap* party_db; // int party_id -> struct party_data* (releases data)
 static DBMap* party_booking_db; // uint32 char_id -> struct party_booking_ad_info* (releases data) // Party Booking [Spiria]

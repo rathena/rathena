@@ -1,7 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "atcommand.h"
+#include "atcommand.hpp"
+
+#include <stdlib.h>
+#include <math.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/timer.h"
@@ -14,38 +18,36 @@
 #include "../common/utils.h"
 #include "../common/conf.h"
 
-#include "map.h"
-#include "battle.h"
-#include "chat.h"
-#include "channel.h"
-#include "chrif.h"
-#include "duel.h"
-#include "instance.h"
-#include "intif.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "mail.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "party.h"
-#include "script.h"
-#include "storage.h"
-#include "trade.h"
-#include "mapreg.h"
-#include "quest.h"
-#include "pc.h"
-#include "pc_groups.h"
-#include "npc.h"
-#include "guild.h"
-#include "clif.h"
-#include "log.h"
-#include "itemdb.h" // MAX_ITEMGROUP
-#include "mob.h"
-#include "achievement.h"
-#include "clan.h"
+#include "map.hpp"
+#include "battle.hpp"
+#include "chat.hpp"
+#include "channel.hpp"
+#include "chrif.hpp"
+#include "duel.hpp"
+#include "instance.hpp"
+#include "intif.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "mail.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "party.hpp"
+#include "script.hpp"
+#include "storage.hpp"
+#include "trade.hpp"
+#include "mapreg.hpp"
+#include "quest.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "clif.hpp"
+#include "log.hpp"
+#include "itemdb.hpp" // MAX_ITEMGROUP
+#include "mob.hpp"
+#include "achievement.hpp"
+#include "clan.hpp"
 
-#include <stdlib.h>
-#include <math.h>
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 

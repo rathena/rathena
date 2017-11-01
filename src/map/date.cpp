@@ -1,7 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "date.h"
+#include "date.hpp"
+
 #include <time.h>
 
 /*

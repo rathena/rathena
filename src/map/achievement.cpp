@@ -1,6 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "achievement.h"
+
+#include "achievement.hpp"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <setjmp.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
@@ -10,21 +16,16 @@
 #include "../common/utils.h"
 #include "../common/yamlwrapper.h"
 
-#include "battle.h"
-#include "chrif.h"
-#include "clif.h"
-#include "intif.h"
-#include "itemdb.h"
-#include "map.h"
-#include "pc.h"
-#include "script.h"
-#include "status.h"
-#include "npc.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <setjmp.h>
+#include "battle.hpp"
+#include "chrif.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "map.hpp"
+#include "pc.hpp"
+#include "script.hpp"
+#include "status.hpp"
+#include "npc.hpp"
 
 static jmp_buf     av_error_jump;
 static char*       av_error_msg;

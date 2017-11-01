@@ -1,6 +1,9 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "channel.h"
+
+#include "channel.hpp"
+
+#include <stdlib.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
@@ -11,15 +14,12 @@
 #include "../common/timer.h"  // DIFF_TICK
 #include "../common/nullpo.h"
 
-#include "map.h" //msg_conf
-#include "clif.h" //clif_chsys_msg
-#include "pc.h"
-#include "guild.h"
-#include "pc_groups.h"
-#include "battle.h"
-
-
-#include <stdlib.h>
+#include "map.hpp" //msg_conf
+#include "clif.hpp" //clif_chsys_msg
+#include "pc.hpp"
+#include "guild.hpp"
+#include "pc_groups.hpp"
+#include "battle.hpp"
 
 static DBMap* channel_db; // channels
 

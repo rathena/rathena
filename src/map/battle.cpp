@@ -1,6 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "battle.hpp"
+
+#include <stdlib.h>
+#include <math.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -12,25 +17,21 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 
-#include "battle.h"
-#include "map.h"
-#include "path.h"
-#include "pc.h"
-#include "homunculus.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "pet.h"
-#include "party.h"
-#include "battleground.h"
-#include "chrif.h"
-#include "guild.h"
-#include "clif.h"
-#include "mob.h"
-#include "log.h"
-#include "pc_groups.h"
-
-#include <stdlib.h>
-#include <math.h>
+#include "map.hpp"
+#include "path.hpp"
+#include "pc.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "pet.hpp"
+#include "party.hpp"
+#include "battleground.hpp"
+#include "chrif.hpp"
+#include "guild.hpp"
+#include "clif.hpp"
+#include "mob.hpp"
+#include "log.hpp"
+#include "pc_groups.hpp"
 
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
@@ -1325,7 +1326,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (sc->data[SC_SU_STOOP])
 			damage -= damage * 90 / 100;
 
-		// Compressed code, fixed by map.h [Epoque]
+		// Compressed code, fixed by map.hpp [Epoque]
 		if (src->type == BL_MOB) {
 			if( sc->data[SC_MANU_DEF] && status_get_race2(src) == RC2_MANUK ){
 				damage -= damage * sc->data[SC_MANU_DEF]->val1 / 100;
@@ -7554,7 +7555,7 @@ struct block_list* battle_get_master(struct block_list *src)
  * (enemy, friend, party, guild, etc)
  *------------------------------------------
  * Usage:
- * See battle.h for possible values/combinations
+ * See battle.hpp for possible values/combinations
  * to be used here (BCT_* constants)
  * Return value is:
  * 1: flag holds true (is enemy, party, etc)

@@ -1,6 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "npc.h"
+
+#include "npc.hpp"
+
+#include <stdlib.h>
+#include <errno.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -11,23 +15,21 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/db.h"
-#include "map.h"
-#include "log.h"
-#include "clif.h"
-#include "date.h" // days of week enum
-#include "intif.h"
-#include "pc.h"
-#include "pet.h"
-#include "instance.h"
-#include "chat.h"
-#include "script.h" // script_config
-#include "guild.h"
-#include "battle.h"
-#include "mob.h"
-#include "log.h"
 
-#include <stdlib.h>
-#include <errno.h>
+#include "map.hpp"
+#include "log.hpp"
+#include "clif.hpp"
+#include "date.hpp" // days of week enum
+#include "intif.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
+#include "instance.hpp"
+#include "chat.hpp"
+#include "script.hpp" // script_config
+#include "guild.hpp"
+#include "battle.hpp"
+#include "mob.hpp"
+#include "log.hpp"
 
 struct npc_data* fake_nd;
 

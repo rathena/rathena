@@ -1,6 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "chat.hpp"
+
 #include <cstring>
 
 #include "../common/cbasetypes.h"
@@ -9,15 +11,15 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/mmo.h"
-#include "map.h"
-#include "atcommand.h" // msg_txt()
-#include "battle.h" // struct battle_config
-#include "chat.h"
-#include "clif.h"
-#include "npc.h" // npc_event_do()
-#include "pc.h"
-#include "pc_groups.h"
-#include "achievement.h"
+
+#include "map.hpp"
+#include "atcommand.hpp" // msg_txt()
+#include "battle.hpp" // struct battle_config
+#include "clif.hpp"
+#include "npc.hpp" // npc_event_do()
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "achievement.hpp"
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 

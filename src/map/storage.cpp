@@ -1,6 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "storage.h"
+
+#include "storage.hpp"
+
+#include <stdlib.h>
+#include <string.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
@@ -8,19 +12,16 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 
-#include "map.h" // struct map_session_data
-#include "chrif.h"
-#include "itemdb.h"
-#include "clif.h"
-#include "intif.h"
-#include "pc.h"
-#include "pc_groups.h"
-#include "guild.h"
-#include "log.h"
-#include "battle.h"
-
-#include <stdlib.h>
-#include <string.h>
+#include "map.hpp" // struct map_session_data
+#include "chrif.hpp"
+#include "itemdb.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "guild.hpp"
+#include "log.hpp"
+#include "battle.hpp"
 
 static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
 struct s_storage_table *storage_db;
