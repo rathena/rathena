@@ -16,6 +16,22 @@
 
 #include <stdarg.h>
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+//Options read in cli (clinkage for now
+extern const char*INTER_CONF_NAME;
+extern const char*LOG_CONF_NAME;
+extern const char*MAP_CONF_NAME;
+extern const char*BATTLE_CONF_FILENAME;
+extern const char*ATCOMMAND_CONF_FILENAME;
+extern const char*SCRIPT_CONF_NAME;
+extern const char*MSG_CONF_NAME_EN;
+extern const char*GRF_PATH_FILENAME;
+#ifdef	__cplusplus
+}
+#endif
+
 struct npc_data;
 struct item_data;
 struct Channel;
@@ -927,15 +943,6 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, 
 #define CHK_RACE2(race2) ((race2) >= RC2_NONE && (race2) < RC2_MAX) /// Check valid Race2
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
-//Options read in cli
-extern const char*INTER_CONF_NAME;
-extern const char*LOG_CONF_NAME;
-extern const char*MAP_CONF_NAME;
-extern const char*BATTLE_CONF_FILENAME;
-extern const char*ATCOMMAND_CONF_FILENAME;
-extern const char*SCRIPT_CONF_NAME;
-extern const char*MSG_CONF_NAME_EN;
-extern const char*GRF_PATH_FILENAME;
 //Other languages supported
 extern const char*MSG_CONF_NAME_RUS;
 extern const char*MSG_CONF_NAME_SPN;
