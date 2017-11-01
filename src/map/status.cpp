@@ -11,7 +11,6 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/strlib.h"
-#include "../common/yamlwrapper.h"
 
 #include "battle.h"
 #include "itemdb.h"
@@ -32,6 +31,8 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <string>
+#include <yaml-cpp/yaml.h>
 
 // Regen related flags.
 enum e_regen {
@@ -14241,85 +14242,68 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
 
 /**
  * Reads and parses an entry from the refine_db
- * @param wrapper: The YAML wrapper containing the entry
+ * @param node: The YAML node containing the entry
  * @param refine_info_index: The sequential index of the current entry
  * @param file_name: File name for displaying only
  * @return True on success or false on failure
  */
-static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_index, char* file_name) {
+static bool status_yaml_readdb_refine_sub(YAML::Node &node, int refine_info_index, std::string file_name) {
 	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
-	int bonus_per_level = yaml_get_int(wrapper, "StatsPerLevel");
-	int random_bonus_start_level = yaml_get_int(wrapper, "RandomBonusStartLevel");
-	int random_bonus = yaml_get_int(wrapper, "RandomBonusValue");
+	int bonus_per_level = node["StatsPerLevel"].as<int>();
+	int random_bonus_start_level = node["RandomBonusStartLevel"].as<int>();
+	int random_bonus = node["RandomBonusValue"].as<int>();
+	const YAML::Node &costs = node["Costs"];
 
-	yamlwrapper* costs = yaml_get_subnode(wrapper, "Costs");
-	yamliterator* it = yaml_get_iterator(costs);
-	if (yaml_iterator_is_valid(it)) {
-		for (yamlwrapper* type = yaml_iterator_first(it); yaml_iterator_has_next(it); type = yaml_iterator_next(it)) {
-			int idx = 0, price;
-			unsigned short material;
-			static char* keys[] = {"Type", "Price", "Material" };
-			char* result;
+	for (auto it = costs.begin(); it != costs.end(); ++it) {
+		const YAML::Node &type = *it;
+		int idx = 0, price;
+		unsigned short material;
+		std::string keys[] = { "Type", "Price", "Material" };
 
-			if ((result = yaml_verify_nodes(type, ARRAYLENGTH(keys), keys)) != NULL) {
-				ShowWarning("status_yaml_readdb_refine_sub: Invalid refine cost with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", result, file_name);
-				yaml_destroy_wrapper(type);
-				continue;
-			}
-
-			char* refine_cost_const = yaml_get_c_string(type, "Type");
-			if (ISDIGIT(refine_cost_const[0]))
-				idx = atoi(refine_cost_const);
-			else
-				script_get_constant(refine_cost_const, &idx);
-			price = yaml_get_int(type, "Price");
-			material = yaml_get_uint16(type, "Material");
-
-			refine_info[refine_info_index].cost[idx].nameid = material;
-			refine_info[refine_info_index].cost[idx].zeny = price;
-
-			aFree(refine_cost_const);
-			yaml_destroy_wrapper(type);
+		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
+			if (!type[keys[i]].IsDefined())
+				ShowWarning("status_yaml_readdb_refine_sub: Invalid refine cost with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
 		}
+
+		std::string refine_cost_const = type["Type"].as<std::string>();
+		if (ISDIGIT(refine_cost_const[0]))
+			idx = atoi(refine_cost_const.c_str());
+		else
+			script_get_constant(refine_cost_const.c_str(), &idx);
+		price = type["Price"].as<int>();
+		material = type["Material"].as<uint16>();
+
+		refine_info[refine_info_index].cost[idx].nameid = material;
+		refine_info[refine_info_index].cost[idx].zeny = price;
 	}
-	yaml_destroy_wrapper(costs);
-	yaml_iterator_destroy(it);
 
-	yamlwrapper* rates = yaml_get_subnode(wrapper, "Rates");
-	it = yaml_get_iterator(rates);
+	const YAML::Node &rates = node["Rates"];
 
-	if (yaml_iterator_is_valid(it)) {
-		for (yamlwrapper* level = yaml_iterator_first(it); yaml_iterator_has_next(it); level = yaml_iterator_next(it)) {
-			int refine_level = yaml_get_int(level, "Level") - 1;
+	for (auto it = rates.begin(); it != rates.end(); ++it) {
+		const YAML::Node &level = *it;
+		int refine_level = level["Level"].as<int>() - 1;
 
-			if (refine_level >= MAX_REFINE) {
-				yaml_destroy_wrapper(level);
-				continue;
-			}
+		if (refine_level >= MAX_REFINE)
+			continue;
 
-			if (yaml_node_is_defined(level, "NormalChance"))
-				refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = yaml_get_int(level, "NormalChance");
-			if (yaml_node_is_defined(level, "EnrichedChance"))
-				refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = yaml_get_int(level, "EnrichedChance");
-			if (yaml_node_is_defined(level, "EventNormalChance"))
-				refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = yaml_get_int(level, "EventNormalChance");
-			if (yaml_node_is_defined(level, "EventEnrichedChance"))
-				refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = yaml_get_int(level, "EventEnrichedChance");
-			if (yaml_node_is_defined(level, "Bonus"))
-				refine_info[refine_info_index].bonus[refine_level] = yaml_get_int(level, "Bonus");
+		if (level["NormalChance"].IsDefined())
+			refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = level["NormalChance"].as<int>();
+		if (level["EnrichedChance"].IsDefined())
+			refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = level["EnrichedChance"].as<int>();
+		if (level["EventNormalChance"].IsDefined())
+			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = level["EventNormalChance"].as<int>();
+		if (level["EventEnrichedChance"].IsDefined())
+			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = level["EventEnrichedChance"].as<int>();
+		if (level["Bonus"].IsDefined())
+			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();
 
-			if (refine_level >= random_bonus_start_level - 1)
-				refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
-			yaml_destroy_wrapper(level);
-		}
-		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level) {
-			refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
-		}
+		if (refine_level >= random_bonus_start_level - 1)
+			refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
 	}
-	yaml_destroy_wrapper(rates);
-	yaml_iterator_destroy(it);
+	for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
+		refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
 
 	return true;
 }
@@ -14329,32 +14313,25 @@ static bool status_yaml_readdb_refine_sub(yamlwrapper* wrapper, int refine_info_
  * @param directory: Location of refine_db file
  * @param file: File name
  */
-static void status_yaml_readdb_refine(const char* directory, const char* file) {
+static void status_yaml_readdb_refine(std::string directory, std::string file) {
 	int count = 0;
-	const char* labels[6] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
-	size_t str_size = strlen(directory) + strlen(file) + 2;
-	char* buf = (char*)aCalloc(1, str_size);
-	sprintf(buf, "%s/%s", directory, file);
-	yamlwrapper* root_node, *sub_node;
+	static const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
+	static const std::string current_file = directory + "/" + file;
+	YAML::Node config;
 
-	if ((root_node = yaml_load_file(buf)) == NULL) {
-		ShowError("Failed to read '%s'.\n", buf);
-		aFree(buf);
+	try {
+		config = YAML::LoadFile(current_file);
+	}
+	catch (std::exception &e) {
+		ShowError("Failed to read '" CL_WHITE "%s" CL_RESET "' (Caused by : " CL_WHITE "%s" CL_RESET ").\n", current_file.c_str(), e.what());
 		return;
 	}
 
 	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
-		if (yaml_node_is_defined(root_node, labels[i])) {
-			sub_node = yaml_get_subnode(root_node, labels[i]);
-			if (status_yaml_readdb_refine_sub(sub_node, i, buf))
-				count++;
-			yaml_destroy_wrapper(sub_node);
-		}
+		if (config[labels[i]].IsDefined() && status_yaml_readdb_refine_sub(config[labels[i]], i, file))
+			count++;
 	}
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, buf);
-
-	yaml_destroy_wrapper(root_node);
-	aFree(buf);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
 }
 
 /**
