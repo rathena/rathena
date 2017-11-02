@@ -176,6 +176,13 @@ int inter_party_tosql(struct party *p, int flag, int index)
 			schema_config.char_db, party_id, p->member[index].account_id, p->member[index].char_id) )
 			Sql_ShowDebug(sql_handle);
 	}
+	
+	if( flag & PS_DELLEADER )
+	{// Remove leader status
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `leader_id`='0', `leader_char`='0' WHERE `party_id`='%d'",
+			schema_config.party_db, party_id) )
+			Sql_ShowDebug(sql_handle);	
+	}
 
 	if( charserv_config.save_log )
 		ShowInfo("Party Saved (%d - %s)\n", party_id, p->name);
@@ -647,27 +654,15 @@ int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_
 
 	mapif_party_withdraw(party_id, account_id, char_id, name, type);
 
-	if (p->party.member[i].leader){
-		// TODO: Official allow 'leaderless' party
-		p->party.member[i].account_id = 0;
-		for (j = 0; j < MAX_PARTY; j++) {
-			if (!p->party.member[j].account_id)
-				continue;
-			mapif_party_withdraw(party_id, p->party.member[j].account_id, p->party.member[j].char_id, p->party.member[j].name, type);
-			p->party.member[j].account_id = 0;
-		}
-		//Party gets deleted on the check_empty call below.
-	} else {
-		inter_party_tosql(&p->party,PS_DELMEMBER,i);
-		j = p->party.member[i].lv;
-		if(p->party.member[i].online) p->party.count--;
-		memset(&p->party.member[i], 0, sizeof(struct party_member));
-		p->size--;
-		if (j == p->min_lv || j == p->max_lv || p->family)
-		{
-			if(p->family) p->family = 0; //Family state broken.
-			int_party_check_lv(p);
-		}
+	inter_party_tosql(&p->party, PS_DELMEMBER|((p->party.member[i].leader) ? PS_DELLEADER : 0x00), i);
+	j = p->party.member[i].lv;
+	if(p->party.member[i].online) p->party.count--;
+	memset(&p->party.member[i], 0, sizeof(struct party_member));
+	p->size--;
+	if (j == p->min_lv || j == p->max_lv || p->family)
+	{
+		if(p->family) p->family = 0; //Family state broken.
+		int_party_check_lv(p);
 	}
 
 	if (party_check_empty(p) == 0)
