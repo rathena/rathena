@@ -4820,6 +4820,10 @@
 	export_constant_npc(JT_4_LAVAGOLEM);
 	export_constant_npc(JT_4_F_IA);
 	export_constant_npc(JT_4_LOCKE);
+	export_constant_npc(JT_4_LIL_LIF);
+	export_constant_npc(JT_4_LIL_LIF2);
+	export_constant_npc(JT_4_F_DRAGONHAT);
+	export_constant_npc(JT_4_M_DRAGONHAT);
 	export_constant_npc(JT_JP_NPC02);
 	export_constant_npc(JT_JP_NPC03);
 	export_constant_npc(JT_JP_NPC04);
@@ -4829,6 +4833,7 @@
 	export_constant_npc(JT_JP_NPC08);
 	export_constant_npc(JT_JP_NPC09);
 	export_constant_npc(JT_JP_NPC10);
+	export_constant_npc(JT_4_FIRERING);
 	export_constant_npc(JT_4_SCATLETON);
 	export_constant_npc(JT_4_JP_AB_NPC_001);
 	export_constant_npc(JT_4_JP_AB_NPC_002);
@@ -4839,6 +4844,10 @@
 	export_constant_npc(JT_4_JP_AB_NPC_007);
 	export_constant_npc(JT_4_JP_AB_NPC_008);
 	export_constant_npc(JT_4_JJAK);
+	export_constant_npc(JT_4_M_SNOWMAN_B);
+	export_constant_npc(JT_4_M_SNOWMAN_R);
+	export_constant_npc(JT_4_M_SNOWMAN_G);
+	export_constant_npc(JT_WARPEFFECTNPC);
 	#undef export_constant_npc
 
 	/* special effects */
