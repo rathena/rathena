@@ -1,9 +1,20 @@
 
 #
 # Create svnversion.h
+# tbd, could be rename version.h
 #
 message( STATUS "Creating svnversion.h" )
-if( SVNVERSION )
+if(GIT_VERSION)
+	# those 2 was done in parent to produce this
+	#include(GetGitVersion)
+	#get_git_version()
+	string(SUBSTRING ${GIT_VERSION} 0 10 SHORT_GIT_VERSION)
+	string(SUBSTRING ${GIT_HEAD_VERSION} 0 10 SHORT_GIT_HEAD_VERSION)
+	string(CONCAT GIT_STR_VERSIONS ${SHORT_GIT_VERSION} "_" ${SHORT_GIT_HEAD_VERSION})
+	#message( STATUS "git version=${GIT_STR_VERSIONS}" )
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+		"#ifndef SVNVERSION\n#define SVNVERSION ${GIT_STR_VERSIONS}\n#endif\n" )
+elseif( SVNVERSION )
 	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
 		"#ifndef SVNVERSION\n#define SVNVERSION ${SVNVERSION}\n#endif\n" )
 else()
@@ -25,6 +36,7 @@ message( STATUS "Creating svnversion.h - done" )
 #
 set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
 	CACHE PATH "common source directory" )
+#message( STATUS "DEBUG COMMON_SOURCE_DIR=${COMMON_SOURCE_DIR}" )
 mark_as_advanced( COMMON_SOURCE_DIR )
 
 set( COMMON_ALL_HEADERS
@@ -42,7 +54,7 @@ set( COMMON_MINI_HEADERS
 	${LIBCONFIG_HEADERS} # needed by showmsg.h
 	CACHE INTERNAL "" )
 set( COMMON_MINI_SOURCES
-	"${COMMON_SOURCE_DIR}/core.c"
+	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.c"
 	"${COMMON_SOURCE_DIR}/showmsg.c"
 	"${COMMON_SOURCE_DIR}/strlib.c"
@@ -83,11 +95,12 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/mempool.h"
 	"${COMMON_SOURCE_DIR}/msg_conf.h"
 	"${COMMON_SOURCE_DIR}/cli.h"
+	"${COMMON_SOURCE_DIR}/yamlwrapper.h"
 	${LIBCONFIG_HEADERS} # needed by conf.h/showmsg.h
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/conf.c"
-	"${COMMON_SOURCE_DIR}/core.c"
+	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/db.c"
 	"${COMMON_SOURCE_DIR}/des.c"
 	"${COMMON_SOURCE_DIR}/ers.c"
@@ -108,24 +121,28 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/raconf.c"
 	"${COMMON_SOURCE_DIR}/msg_conf.c"
 	"${COMMON_SOURCE_DIR}/cli.c"
+	"${COMMON_SOURCE_DIR}/yamlwrapper.cpp"
 	${LIBCONFIG_SOURCES} # needed by conf.c/showmsg.c
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}
+  ${YAML_INCLUDE_DIRS}
 	CACHE INTERNAL "common_base include dirs" )
 set( COMMON_BASE_DEFINITIONS
 	${LIBCONFIG_DEFINITIONS}
 	CACHE INTERNAL "common_base definitions" )
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MT19937AR_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${MT19937AR_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS}} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${MT19937AR_HEADERS} ${MT19937AR_SOURCES} ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( mt19937ar FILES ${MT19937AR_HEADERS} ${MT19937AR_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
+
 add_library( common_base ${SOURCE_FILES} )
 target_link_libraries( common_base ${LIBRARIES} )
 set_target_properties( common_base PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
+
 set( HAVE_common_base ON  CACHE INTERNAL "" )
 set( TARGET_LIST ${TARGET_LIST} common_base  CACHE INTERNAL "" )
 message( STATUS "Creating target common_base - done" )
@@ -147,17 +164,19 @@ set( COMMON_HEADERS
 set( COMMON_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/sql.c"
 	CACHE INTERNAL "common sources" )
-set( DEPENDENCIES common_base )
+set( DEPENDENCIES common_base yaml-cpp )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
 source_group( common FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
+
 add_library( common ${SOURCE_FILES} )
 add_dependencies( common ${DEPENDENCIES} )
 target_link_libraries( common ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( common PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
-include_directories( ${INCLUDE_DIRS} )
+include_directories( ${INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} )
+
 set( HAVE_common ON  CACHE INTERNAL "" )
 set( TARGET_LIST ${TARGET_LIST} common  CACHE INTERNAL "" )
 message( STATUS "Creating target common - done" )
