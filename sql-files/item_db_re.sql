@@ -7503,7 +7503,7 @@ REPLACE INTO `item_db_re` VALUES (13449,'Gladius_Daemonicus','Gladius Daemonicus
 REPLACE INTO `item_db_re` VALUES (13450,'Saber__','Saber',5,10,NULL,1000,'115',NULL,NULL,2,0x000654E2,63,2,2,3,'27',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13451,'Ru_Blue_Sword','Blue Sword',5,10,NULL,1200,'190',NULL,1,1,0x00000080,56,2,2,3,'100',1,2,'bonus bStr,5; bonus bAgi,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13452,'Ru_Gold_Sword','Ru Gold Sword',5,0,NULL,1200,'190',NULL,1,2,0x00000080,56,2,2,3,'120',1,2,'bonus bStr,8; bonus bAgi,8;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13454,'Crimson_Saber','Crimson Saber',5,20,NULL,850,'85',NULL,1,2,0x000654E3,56,2,2,3,'70',1,2,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13454,'Crimson_Saber','Crimson Saber',5,20,NULL,850,'85',NULL,1,2,0x000654E3,63,2,2,3,'70',1,2,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13455,'Saber_of_Vicious_Mind','Saber of Vicious Mind',5,20,NULL,1350,'135',NULL,1,1,0x000654E3,63,2,2,4,'160',1,2,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13456,'Unity_Sword','Unity Sword',5,20,NULL,420,'80',NULL,1,1,0x000654E3,56,2,2,3,'1',1,2,'bonus bBaseAtk,pow(getrefine(),2)*125/100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13457,'Unity_Dagger','Unity Dagger',5,20,NULL,270,'52',NULL,1,1,0x028F5EEF,63,2,2,3,'1',1,1,'bonus bBaseAtk,pow(getrefine(),2)*125/100;',NULL,NULL);
@@ -9547,7 +9547,7 @@ REPLACE INTO `item_db_re` VALUES (18561,'B_Feather_Beret','B Feather Beret',4,20
 REPLACE INTO `item_db_re` VALUES (18562,'Bone_Hat','Bone Hat',4,20,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,63,2,256,NULL,'10',1,732,'bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18563,'Heart_Wing_Hairband','Heart Wing Hairband',4,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,63,2,256,NULL,'50',1,733,'bonus bUseSPrate,-10; bonus bDelayrate,-5; .@r = getrefine()/3; if(.@r>0){ bonus bUseSPrate,.@r*3; bonus bDelayrate,.@r*3; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18564,'Love_Piece','Love Piece',4,20,NULL,200,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'50',0,734,'bonus bNoCastCancel,1; bonus bUseSPrate,15;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18565,'Leprechaun_Hat','St Patrick\'s Hat',4,20,NULL,300,NULL,8,NULL,1,0xFFFFFFFF,63,2,256,NULL,'40',1,735,'bonus bStr,1; bonus bInt,1; bonus bMdef,4; if(getrefine()>6){ bonus2 bAddMonsterDropItem,12135,50; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18565,'Leprechaun_Hat','St Patrick\'s Hat',4,20,NULL,300,NULL,8,NULL,1,0xFFFFFFFF,63,2,256,NULL,'40',1,735,'bonus bStr,1; bonus bInt,1; bonus bMdef,4; if(getrefine()>7){ bonus2 bAddMonsterDropItem,12135,50; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18566,'Nut_Donut_In_Mouth','Nut Donut In Mouth',4,20,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,736,'bonus bBaseAtk,5; bonus bMatk,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18567,'Stretched_Nose','Stretched Nose',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'0',0,737,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18568,'Humming_Bird','Humming Bird',4,20,NULL,100,NULL,3,NULL,0,0xFFFFFFFF,63,2,256,NULL,'10',0,702,'bonus bMdef,6;',NULL,NULL);
@@ -11511,8 +11511,8 @@ REPLACE INTO `item_db_re` VALUES (28315,'RCC2013_ARMLET','RCC2013_ARMLET',4,200,
 REPLACE INTO `item_db_re` VALUES (28316,'RCC2013_ARMLET_','RCC2013_ARMLET_',4,200,NULL,200,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,136,NULL,'1',0,NULL,'bonus2 bAddClass,Class_All,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28317,'RCC2013_RING','RCC2013_RING',4,200,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',0,NULL,'bonus2 bAddClass,Class_All,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28318,'RCC2013_RING_','RCC2013_RING_',4,200,NULL,200,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,136,NULL,'1',0,NULL,'bonus2 bAddClass,Class_All,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (28310,'Earring_Of_Sarah_L','Sarah\'s Left Earring',4,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,128,NULL,'145',0,NULL,'skill "AL_HEAL",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (28311,'Earring_Of_Sarah_R','Sarah\'s Right Earring',4,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,8,NULL,'145',0,NULL,'skill "AL_TELEPORT",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28310,'Earring_Of_Sarah_L','Sarah\'s Left Earring',4,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,136,NULL,'145',0,NULL,'skill "AL_HEAL",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28311,'Earring_Of_Sarah_R','Sarah\'s Right Earring',4,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,136,NULL,'145',0,NULL,'skill "AL_TELEPORT",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28321,'Falconer_Claw','Falconer Claw',4,0,NULL,100,NULL,5,NULL,1,0x00000800,63,2,136,NULL,'80',0,NULL,'bonus bDex,1; bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW")*10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28322,'Falconer_Glove','Falconer Glove',4,0,NULL,100,NULL,5,NULL,1,0x00000800,63,2,136,NULL,'80',0,NULL,'bonus bDex,1; bonus bUseSPrate,-5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28326,'Broken_Chip_1','Broken Chips 01',4,10,NULL,100,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,136,NULL,'100',0,NULL,'bonus bStr,4;',NULL,NULL);

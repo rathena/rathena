@@ -130,6 +130,7 @@ gl_cas02_	mapflag	nomemo
 1@face	mapflag	nomemo
 1@sara	mapflag	nomemo
 1@gef_in	mapflag	nomemo
+1@glast	mapflag	nomemo
 dali	mapflag	nomemo
 dali02	mapflag	nomemo
 
