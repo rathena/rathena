@@ -17,6 +17,19 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include "map.hpp"
 #include "path.hpp"
 #include "pc.hpp"
@@ -6680,7 +6693,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		}
 	}
 
+
+
 	md.damage += battle_calc_cardfix(BF_MISC, src, target, nk, s_ele, 0, md.damage, 0, md.flag);
+
+
 
 	if (sd && (i = pc_skillatk_bonus(sd, skill_id)))
 		md.damage += (int64)md.damage*i/100;
@@ -6722,11 +6739,15 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 	}
 
+
+
 	md.damage = battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
 	if(map_flag_gvg2(target->m))
 		md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
 	else if(map[target->m].flag.battleground)
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
+
+
 
 	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
@@ -8151,22 +8172,22 @@ static const struct _battle_data {
 
 	// eAthena additions
 	{ "item_logarithmic_drops",             &battle_config.logarithmic_drops,               0,      0,      1,              },
-	{ "item_drop_common_min",               &battle_config.item_drop_common_min,            1,      1,      10000,          },
+	{ "item_drop_common_min",               &battle_config.item_drop_common_min,            1,      0,      10000,          },
 	{ "item_drop_common_max",               &battle_config.item_drop_common_max,            10000,  1,      10000,          },
-	{ "item_drop_equip_min",                &battle_config.item_drop_equip_min,             1,      1,      10000,          },
+	{ "item_drop_equip_min",                &battle_config.item_drop_equip_min,             1,      0,      10000,          },
 	{ "item_drop_equip_max",                &battle_config.item_drop_equip_max,             10000,  1,      10000,          },
-	{ "item_drop_card_min",                 &battle_config.item_drop_card_min,              1,      1,      10000,          },
+	{ "item_drop_card_min",                 &battle_config.item_drop_card_min,              1,      0,      10000,          },
 	{ "item_drop_card_max",                 &battle_config.item_drop_card_max,              10000,  1,      10000,          },
-	{ "item_drop_mvp_min",                  &battle_config.item_drop_mvp_min,               1,      1,      10000,          },
+	{ "item_drop_mvp_min",                  &battle_config.item_drop_mvp_min,               1,      0,      10000,          },
 	{ "item_drop_mvp_max",                  &battle_config.item_drop_mvp_max,               10000,  1,      10000,          },
 	{ "item_drop_mvp_mode",                 &battle_config.item_drop_mvp_mode,              0,      0,      2,              },
-	{ "item_drop_heal_min",                 &battle_config.item_drop_heal_min,              1,      1,      10000,          },
+	{ "item_drop_heal_min",                 &battle_config.item_drop_heal_min,              1,      0,      10000,          },
 	{ "item_drop_heal_max",                 &battle_config.item_drop_heal_max,              10000,  1,      10000,          },
-	{ "item_drop_use_min",                  &battle_config.item_drop_use_min,               1,      1,      10000,          },
+	{ "item_drop_use_min",                  &battle_config.item_drop_use_min,               1,      0,      10000,          },
 	{ "item_drop_use_max",                  &battle_config.item_drop_use_max,               10000,  1,      10000,          },
-	{ "item_drop_add_min",                  &battle_config.item_drop_adddrop_min,           1,      1,      10000,          },
+	{ "item_drop_add_min",                  &battle_config.item_drop_adddrop_min,           1,      0,      10000,          },
 	{ "item_drop_add_max",                  &battle_config.item_drop_adddrop_max,           10000,  1,      10000,          },
-	{ "item_drop_treasure_min",             &battle_config.item_drop_treasure_min,          1,      1,      10000,          },
+	{ "item_drop_treasure_min",             &battle_config.item_drop_treasure_min,          1,      0,      10000,          },
 	{ "item_drop_treasure_max",             &battle_config.item_drop_treasure_max,          10000,  1,      10000,          },
 	{ "item_rate_mvp",                      &battle_config.item_rate_mvp,                   100,    0,      1000000,        },
 	{ "item_rate_common",                   &battle_config.item_rate_common,                100,    0,      1000000,        },
