@@ -7,6 +7,13 @@
 //#define DEBUG_HASH
 //#define DEBUG_DUMP_STACK
 
+#include "script.hpp"
+
+#include <math.h>
+#include <stdlib.h> // atoi, strtol, strtoll, exit
+#include <setjmp.h>
+#include <errno.h>
+
 #ifdef PCRE_SUPPORT
 #include "../../3rdparty/pcre/include/pcre.h" // preg_match
 #endif
@@ -21,6 +28,7 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
+#include "../common/ers.h"  // ers_destroy
 #ifdef BETA_THREAD_TEST
 	#include "../common/atomic.h"
 	#include "../common/spinlock.h"
@@ -28,38 +36,36 @@
 	#include "../common/mutex.h"
 #endif
 
-#include "map.h"
-#include "path.h"
-#include "clan.h"
-#include "clif.h"
-#include "chrif.h"
-#include "date.h" // date type enum, date_get()
-#include "itemdb.h"
-#include "pc.h"
-#include "storage.h"
-#include "pet.h"
-#include "mapreg.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "mercenary.h"
-#include "intif.h"
-#include "chat.h"
-#include "battleground.h"
-#include "party.h"
-#include "mail.h"
-#include "quest.h"
-#include "elemental.h"
-#include "channel.h"
-#include "achievement.h"
-
-#include <math.h>
-#include <stdlib.h> // atoi, strtol, strtoll, exit
-#include <setjmp.h>
-#include <errno.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "map.hpp"
+#include "path.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
+#include "chrif.hpp"
+#include "date.hpp" // date type enum, date_get()
+#include "itemdb.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "storage.hpp"
+#include "pet.hpp"
+#include "mapreg.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "mercenary.hpp"
+#include "intif.hpp"
+#include "chat.hpp"
+#include "battleground.hpp"
+#include "party.hpp"
+#include "mail.hpp"
+#include "quest.hpp"
+#include "elemental.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "mob.hpp"
+#include "channel.hpp"
+#include "achievement.hpp"
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -2403,7 +2409,7 @@ static void read_constdb(void)
  * Sets source-end constants for NPC scripts to access.
  **/
 void script_hardcoded_constants(void) {
-	#include "script_constants.h"
+	#include "script_constants.hpp"
 }
 
 /*==========================================
@@ -3112,7 +3118,7 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
  *
  * TODO: return values are screwed up, have been for some time (reaad: years), e.g. some functions return 1 failure and success.
  *------------------------------------------*/
-int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
+int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
 
@@ -3238,7 +3244,7 @@ int set_var(struct map_session_data* sd, char* name, void* val)
 	return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
 }
 
-void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem, void *value, struct reg_db *ref)
+void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref)
 {
 	set_reg(st, sd, reference_uid(add_str(varname),elem), varname, value, ref);
 }
@@ -24347,7 +24353,3 @@ struct script_function buildin_func[] = {
 
 	{NULL,NULL,NULL},
 };
-
-#ifdef __cplusplus
-}
-#endif

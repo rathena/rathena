@@ -38,6 +38,7 @@
 // Heroes' Trail Part 1 =======
 1@sara	mapflag	noicewall
 1@face	mapflag	noicewall
+1@glast	mapflag	noicewall
 
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	noicewall

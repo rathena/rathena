@@ -1,6 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "map.hpp"
+
+#include <stdlib.h>
+#include <math.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/timer.h"
@@ -15,39 +20,34 @@
 #include "../common/cli.h"
 #include "../common/ers.h"
 
-#include "map.h"
-#include "path.h"
-#include "chrif.h"
-#include "clan.h"
-#include "clif.h"
-#include "duel.h"
-#include "intif.h"
-#include "npc.h"
-#include "pc.h"
-#include "chat.h"
-#include "storage.h"
-#include "trade.h"
-#include "party.h"
-#include "battleground.h"
-#include "quest.h"
-#include "mapreg.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "cashshop.h"
-#include "channel.h"
-#include "achievement.h"
-
-#include <stdlib.h>
-#include <math.h>
-#ifndef _WIN32
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "path.hpp"
+#include "chrif.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
+#include "duel.hpp"
+#include "intif.hpp"
+#include "npc.hpp"
+#include "pc.hpp"
+#include "chat.hpp"
+#include "storage.hpp"
+#include "trade.hpp"
+#include "party.hpp"
+#include "battleground.hpp"
+#include "quest.hpp"
+#include "mapreg.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "cashshop.hpp"
+#include "channel.hpp"
+#include "achievement.hpp"
+#include "guild.hpp"
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "mob.hpp"
 
 char default_codepage[32] = "";
 
@@ -4781,6 +4781,3 @@ int do_init(int argc, char *argv[])
 	return 0;
 }
 
-#ifdef __cplusplus
-}
-#endif
