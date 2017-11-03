@@ -612,6 +612,14 @@ function	script	refinemain	{
 	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
+	switch (getequipweaponlv(.@part)) {
+		case 1: .@safe = 7; break;
+		case 2: .@safe = 6; break;
+		case 3: .@safe = 5; break;
+		case 4:
+		default: .@safe = 4; break;
+	}
+
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
 	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 		switch(getequipweaponlv(.@part)) {
