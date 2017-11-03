@@ -21,6 +21,7 @@
 1@ecl	mapflag	restricted	6
 1@xm_d	mapflag	restricted	6
 1@face	mapflag	restricted	6
+1@glast	mapflag	restricted	6
 
 // Towns =========================
 brasilis	mapflag	restricted	7
