@@ -999,7 +999,7 @@ function	script	Func_Are_Rew	{
 	mes "If you wish to cancel, please enter 0. If you don't, please enter how many ^3131FFtimes^000000 of arena points you wish to spend.";
 	next;
 	input .@reward;
-	if (.@reward == 0) {
+	if (.@reward <= 0) {
 		mes "[Givu]";
 		mes "You have canceled your request.";
 		close;
@@ -1008,7 +1008,7 @@ function	script	Func_Are_Rew	{
 		mes "You have exceeded the maximum capacity.";
 		close;
 	}
-	if (arena_point < .@reward * .@arena_point) {
+	if (arena_point < (.@reward * .@arena_point)) {
 		mes "[Givu]";
 		mes "You do not have enough arena points.";
 		mes "Please check the total amount of arena points you have.";

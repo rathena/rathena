@@ -4492,7 +4492,7 @@ turbo_room,106,117,3	script	Point Manager#tt	833,{
 			mes "is 20. To cancel, enter '^3355FF0^000000.'";
 			next;
 			input .@input;
-			if (.@input == 0) {
+			if (.@input <= 0) {
 				mes "[Turbo Track Point Manager]";
 				mes "You have";
 				mes "canceled";
