@@ -1,6 +1,14 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "skill.hpp"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <math.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -11,40 +19,30 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 
-#include "map.h"
-#include "path.h"
-#include "clif.h"
-#include "pc.h"
-#include "status.h"
-#include "skill.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "mob.h"
-#include "npc.h"
-#include "battle.h"
-#include "battleground.h"
-#include "party.h"
-#include "itemdb.h"
-#include "script.h"
-#include "intif.h"
-#include "log.h"
-#include "chrif.h"
-#include "guild.h"
-#include "date.h"
-#include "unit.h"
-#include "achievement.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "map.hpp"
+#include "path.hpp"
+#include "clif.hpp"
+#include "pc.hpp"
+#include "status.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "battle.hpp"
+#include "battleground.hpp"
+#include "party.hpp"
+#include "itemdb.hpp"
+#include "script.hpp"
+#include "intif.hpp"
+#include "log.hpp"
+#include "chrif.hpp"
+#include "guild.hpp"
+#include "date.hpp"
+#include "unit.hpp"
+#include "achievement.hpp"
+#include "pc_groups.hpp"
 
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
@@ -691,6 +689,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		case SC_FATALMENACE:
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
+		case WE_CALLALLFAMILY:
 			if(map[m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
@@ -1786,9 +1785,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (attack_type&BF_MISC) // Burning effect from 'eruption'
 			sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
-		break;
-	case GC_DARKCROW:
-		sc_start(src,bl,SC_DARKCROW,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,100 - skill_lv * 10,skill_lv,skill_get_time(skill_id,skill_lv)) )
@@ -4644,7 +4640,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case WM_GREAT_ECHO:
 	case GN_SLINGITEM_RANGEMELEEATK:
 	case KO_SETSUDAN:
-	case GC_DARKCROW:
 	case RL_MASS_SPIRAL:
 	case RL_BANISHING_BUSTER:
 	case RL_SLUGSHOT:
@@ -5418,6 +5413,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER); // Should only end, no damage dealt.
 		}
 		break;
+
+	case GC_DARKCROW:
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+		sc_start(src, bl, status_skill2sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv)); // Should be applied even on miss
+		break;
+
 	case WL_CHAINLIGHTNING:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		skill_addtimerskill(src,tick + status_get_amotion(src),bl->id,0,0,WL_CHAINLIGHTNING_ATK,skill_lv,0,flag);
@@ -6071,6 +6072,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			case PR_REDEMPTIO:
 			case ALL_RESURRECTION:
 			case WM_DEADHILLHERE:
+			case WE_ONEFOREVER:
 				break;
 			default:
 				return 1;
@@ -8324,6 +8326,75 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_start(src,bl,SC_STUN,10000,skill_lv,0,0,0,skill_get_time2(skill_id,skill_lv),SCSTART_NORATEDEF);
 			if (f_sd) sc_start(src,&f_sd->bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 			if (m_sd) sc_start(src,&m_sd->bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
+		}
+		break;
+
+	case WE_CALLALLFAMILY:
+		if (sd) {
+			struct map_session_data *p_sd = pc_get_partner(sd);
+			struct map_session_data *c_sd = pc_get_child(sd);
+
+			if (!p_sd && !c_sd) { // Fail if no family members are found
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				map_freeblock_unlock();
+				return 1;
+			}
+
+			// Partner must be on the same map and in same party
+			if (p_sd && !status_isdead(&p_sd->bl) && p_sd->bl.m == sd->bl.m && p_sd->status.party_id == sd->status.party_id)
+				pc_setpos(p_sd, map_id2index(sd->bl.m), sd->bl.x, sd->bl.y, CLR_TELEPORT);
+			// Child must be on the same map and in same party as the parent casting
+			if (c_sd && !status_isdead(&c_sd->bl) && c_sd->bl.m == sd->bl.m && c_sd->status.party_id == sd->status.party_id)
+				pc_setpos(c_sd, map_id2index(sd->bl.m), sd->bl.x, sd->bl.y, CLR_TELEPORT);
+		}
+		break;
+
+	case WE_ONEFOREVER:
+		if (sd) {
+			struct map_session_data *p_sd = pc_get_partner(sd);
+			struct map_session_data *c_sd = pc_get_child(sd);
+
+			if (!p_sd && !c_sd && !dstsd) { // Fail if no family members are found
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				map_freeblock_unlock();
+				return 1;
+			}
+			if ((map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)) { // No reviving in WoE grounds!
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				break;
+			}
+			if (status_isdead(bl)) {
+				int per = 30, sper = 0;
+
+				if (battle_check_undead(tstatus->race, tstatus->def_ele))
+					break;
+				if (tsc && tsc->data[SC_HELLPOWER])
+					break;
+				if (map[bl->m].flag.pvp && dstsd->pvp_point < 0)
+					break;
+				if (dstsd->special_state.restart_full_recover)
+					per = sper = 100;
+				if ((dstsd == p_sd || dstsd == c_sd) && status_revive(bl, per, sper)) // Only family members can be revived
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			}
+		}
+		break;
+
+	case WE_CHEERUP:
+		if (sd) {
+			struct map_session_data *f_sd = pc_get_father(sd);
+			struct map_session_data *m_sd = pc_get_mother(sd);
+
+			if (!f_sd && !m_sd && !dstsd) { // Fail if no family members are found
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				map_freeblock_unlock();
+				return 1;
+			}
+			if (flag&1) { // Buff can only be given to parents in 7x7 AoE around baby
+				if (dstsd == f_sd || dstsd == m_sd)
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+			} else
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ALL|1, skill_castend_nodamage_id);
 		}
 		break;
 
@@ -21534,7 +21605,3 @@ void do_final_skill(void)
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 }
-
-#ifdef __cplusplus
-}
-#endif

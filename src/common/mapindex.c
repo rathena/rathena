@@ -1,10 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../config/core.h"
+#include "mmo.h"
 #include "core.h"
 #include "mapindex.h"
-#include "mmo.h"
 #include "showmsg.h"
 #include "strlib.h"
 

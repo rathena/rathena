@@ -13,166 +13,382 @@
 //= 1.0.0 Initial Release. [Kisuka]
 //= 1.0.1 Converted item constants to IDs and added hair coupon. [Kisuka]
 //= 2.0.0 Converted from Hercules Script to rAthena Script. [Capuche]
+//= 2.0.1 Add new Intro Renewal based on Hercules [Jenkijo]
 //==============================================================================
+
+//== Starting Point  (iz_int) =================================
+iz_int,18,30,0	script	iz_int#intro_start	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	navigateto("iz_int", 52, 30, NAV_NONE, 1); // Individual map name not required
+	if (getd(".start" + strnpcinfo(1)) == 0) {
+		setd ".start" + strnpcinfo(1), 1;
+		initnpctimer;
+		mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+	}
+	end;
+OnTimer9000:
+	mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	end;
+OnTimer18000:
+	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	emotion 0,0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" );
+	end;
+OnTimer21000:
+	emotion 0,0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" );
+	end;
+OnTimer24000:
+	emotion 0,0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" );
+	end;
+OnTimer27000:
+	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	stopnpctimer;
+	setd ".start" + strnpcinfo(1), 0;
+	end;
+}
+iz_int01,18,30,0	duplicate(iz_int#intro_start)	iz_int01#intro_start	HIDDEN_WARP_NPC,6,6
+iz_int02,18,30,0	duplicate(iz_int#intro_start)	iz_int02#intro_start	HIDDEN_WARP_NPC,6,6
+iz_int03,18,30,0	duplicate(iz_int#intro_start)	iz_int03#intro_start	HIDDEN_WARP_NPC,6,6
+iz_int04,18,30,0	duplicate(iz_int#intro_start)	iz_int04#intro_start	HIDDEN_WARP_NPC,6,6
+
+iz_int,51,30,0	script	iz_int#intro_evt02	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	navigateto("int_land", 75, 100, NAV_NONE, 1);
+	end;
+}
+iz_int01,51,30,0	duplicate(iz_int#intro_evt02)	iz_int01#intro_evt02	HIDDEN_WARP_NPC,1,1
+iz_int02,51,30,0	duplicate(iz_int#intro_evt02)	iz_int02#intro_evt02	HIDDEN_WARP_NPC,1,1
+iz_int03,51,30,0	duplicate(iz_int#intro_evt02)	iz_int03#intro_evt02	HIDDEN_WARP_NPC,1,1
+iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_NPC,1,1
+
+//== Wounded Swordsman (iz_int) =================================
+iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
+	@intro_npc01 = 1;
+	npctalk "Oh...", "", bc_self;
+	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
+	end;
+
+OnTouch:
+	if (@intro_npc01 == 0) {
+		npctalk "Urgh... please... help me...", "", bc_self;
+		sleep2 500;
+		npctalk "In order to talk with me.. click my body..", "", bc_self;
+	}
+	else {// debug
+		classchange HIDDEN_WARP_NPC, "", bc_self;
+		classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
+	}
+	end;
+
+OnInit:
+	questinfo 21001, QTYPE_QUEST, 1, Job_Novice;
+	end;
+}
+iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int01	4_TOWER_01,5,5
+iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int02	4_TOWER_01,5,5
+iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int03	4_TOWER_01,5,5
+iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int04	4_TOWER_01,5,5
+
+iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(21001) == 0) {
+		mes "[Wounded]";
+		mes "Wow! Thanks a lot!";
+		mes "I don't know how this happened to our ship";
+		mes "but we should go to see the captain.";
+		next;
+		mes "[Wounded]";
+		mes "... ohh, it seems my body is too injured.";
+		mes "Maybe you can go without me?";
+		setquest 21001;
+		next;
+		cutin "tutorial02",4;
+		mes "^4d4dff!- Information -!^000000";
+		mes "NPC Quest Received.";
+	}
+	else {
+		mes "[Wounded]";
+		mes "Luckily the water has not entered the ship.";
+		mes "I will wait here, you should go see the captain.";
+		next;
+		mes "[Wounded]";
+		mes "I'm fine! I'm fine!";
+		mes "Don't worry about me, you should really go to the captain!";
+		next;
+		mes "^4d4dff!- Information -!^000000";
+	}
+	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
+	mes "You can check your quest status there anytime.";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	questinfo 21001, QTYPE_QUEST, 1, Job_Novice;
+	end;
+}
+iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int01	HIDDEN_WARP_NPC
+iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int02	HIDDEN_WARP_NPC
+iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int03	HIDDEN_WARP_NPC
+iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int04	HIDDEN_WARP_NPC
 
 // - Captain Carocc (Ship)
 // -----------------------------------------------------------------------------
-iz_int,100,91,3	script	Captain Carocc#iz_int	4_M_REINDEER,{
-	if (Class == Job_Novice) {
-		cutin "fly_trock", 2;
-		if (!isbegin_quest(7471)) {
-			mes "[Captain Carocc]";
-			mes "Had a good dream?";
-			mes "Soon, we will get to ^4d4fffIzlude^000000.";
-			next;
-			mes "[Captain Carocc]";
-			mes "And you can talk to other people like you just talked to me.";
-			next;
-			cutin "tutorial01",3;
-			mes "!- Information -!";
-			mes "^4d4fffLeft mouse click allows basic game controls.";
-			mes "Such as conversation with NPC, movement, and attacks.^000000";
-			next;
-			cutin "fly_trock",2;
-			mes "[Captain Carocc]";
-			mes "Many youngsters visit the ^4d4fffRune Midgard Kingdom^000000 to chase their dreams.";
-			mes "Izlude is a satellite city of Prontera, the capital of the Rune Midgard Kingdom.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Izlude always welcomes young adventurers like you who have just started their journey to the World.";
-			mes "You are one of them of course.";
-			next;
-			mes "[Captain Carocc]";
-			mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-			mes "There is an academy in Izlude for newcomers like yourself.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Let me give you more details later.";
-			mes "See you back at the harbor deck.";
-			next;
-			mes "[Captain Carocc]";
-			mes "To get off this ship, you should enter the ^4d4fffShining Portal^000000 over there.";
-			mes "All transportation is made through the portals.";
-			setquest 7471;
-			completequest 7471;
-			close2;
-			cutin "", 255;
-			end;
-		}
+int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
+	switch( isbegin_quest(21008) ) {
+	case 0:
 		mes "[Captain Carocc]";
-		mes "Now, we are here in Izlude~";
-		mes "Go through that ^4d4fffShining Portal^000000 and exit outside.";
+		mes "There are still people in the cabins?!";
+		mes "At least you are safe.";
+		mes "Are you alright?";
+		next;
+		if (select("I'm alright, but others need help.", "I think I am the last?") == 1) {
+			mes "[Captain Carocc]";
+			mes "There are more people left?";
+			mes "I will send a rescue team to them.";
+			mes "Thank you for your report.";
+		} else {
+			mes "[Captain Carocc]";
+			mes "Alright, that's good.";
+			mes "The storm came unexpectedly but I never thought it would hit us that hard.";
+		}
 		next;
 		mes "[Captain Carocc]";
-		mes "Let's talk more when we get off to the deck.";
-		mes "There are lots of things I want to teach you.";
-		close2;
-		cutin "", 255;
-		end;
+		mes "At least most people made it to safety.";
+		next;
+		mes "[Captain Carocc]";
+		mes "Look at the trees there, ^4d4dfffollow them to the southwest^000000 to find a new ship.";
+		mes "The ship will take you to ^4d4dffIzlude^000000, our original destination.";
+		next;
+		mes "[Captain Carocc]";
+		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several materials we could use for repairs.";
+		next;
+		mes "[Captain Carocc]";
+		mes "^4d4dffKill the Porings and bring 2 Lumbers to the southern crew^000000.";
+		next;
+		mes "[Captain Carocc]";
+		mes "It is a hard task, but you look tough enough.";
+		specialeffect2 EF_HEAL2;
+		heal 9999,0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		if (isbegin_quest(21001) == 1) {
+			completequest 21001;
+			getexp 600,600;
+		}
+		setquest 21008;
+		next;
+		mes "[Captain Carocc]";
+		mes "Speaking of Porings, you have to equip your gears.";
+		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
+		next;
+		cutin "tutorial03",4;
+		mes "!- Information -!";
+		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
+		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
+		next;
+		mes "!- Information -!";
+		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
+		mes "Either double click or drag & drop to equip or unequip them.^000000";
+		next;
+		cutin "",255;
+		mes "[Captain Carlock]";
+		mes "Did you check all your equipment?";
+		mes "^4d4dffSkill distribution^000000 should be done.";
+		next;
+		mes "[Captain Carlock]";
+		mes "For a smooth battle, you have to distribute your abilities properly.";
+		mes "^4d4dffIf you want to increase your strength, you need to raise Str^000000. ^4d4dffIf you want to increase your hit, you must raise Dex^000000.";
+		break;
+	case 1:
+		mes "[Captain Carocc]";
+		specialeffect2 EF_HEAL2;
+		heal 9999, 0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		mes "^4d4dffThe Ship^000000 is anchored in the southwest. It will take you to Izlude.";
+		mes "Don't forget to ^4d4dffget some Lumber^000000 for the ship.";
+		next;
+		mes "[Captain Carocc]";
+		mes "Don't forget to raise your ^4d4dffskills^000000.";
+		break;
+	case 2:
+		mes "[Captain Carocc]";
+		mes "Everything is ready to sail over to Izlude.";
+		mes "The ship is located at the south-western part of the island.";
+		close;
 	}
+	next;
+	mes "! - Information -!";
+	mes "^4d4dffYou get a stats bonus for every level you raise.";
+	mes "The status window can be opened and closed with the shortcut Alt + A^000000.";
+	next;
+	mes "! - Information -!";
+	mes "^4d4dffPlease properly allocate the stats you need to battle^000000.";
+	next;
+	mes "[Captain Carocc]";
+	mes "Kill Porings and bring the Lumber to the crew.";
+	mes "Good luck!";
+	close;
+
+OnInit:
+	questinfo 21008, QTYPE_QUEST, 1, Job_Novice;
+	end;
 }
 
-iz_int01,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int01	4_M_REINDEER
-iz_int02,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int02	4_M_REINDEER
-iz_int03,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int03	4_M_REINDEER
-iz_int04,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int04	4_M_REINDEER
+int_land01,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_01	4_M_REINDEER
+int_land02,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_02	4_M_REINDEER
+int_land03,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_03	4_M_REINDEER
+int_land04,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_04	4_M_REINDEER
 
-// - Lumin (Ship)
-// -----------------------------------------------------------------------------
-iz_int,91,81,3	script	Lumin#iz_int	4_M_NOV_RUMIN,{
-	if (Class == Job_Novice) {
-		if (!isbegin_quest(7471)) {
-			mes "[Lumin]";
-			mes "............";
-			mes "...?";
-			next;
-			cutin "fly_trock",2;
-			mes "[Captain Carocc]";
-			mes "Hey, you awake now?";
-			mes "That fella without much talk, I rescued him from the ocean.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Think he lost his memory.";
-			mes "I gave him a new name 'Lumin'. But, just call him Lu...";
-			next;
-			mes "[Captain Carocc]";
-			mes "And you can talk to other people like you just talked to me.";
-			next;
-			cutin "tutorial01",3;
-			mes "!- Information -!";
-			mes "^4d4fffLeft mouse click allows basic game control.";
-			mes "Such as conversation with NPC, movement, and attacks.^000000";
-			next;
-			cutin "fly_trock",2;
-			mes "[Captain Carocc]";
-			mes "Many youngsters visit the ^4d4fffRune Midgard Kingdom^000000 to chase their dreams.";
-			mes "Izlude is a satellite city of Prontera, the capital of the Rune Midgard Kingdom.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Izlude always welcomes young adventurers like you who have just started their journey to the World.";
-			mes "You are one of them of course.";
-			next;
-			mes "[Captain Carocc]";
-			mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-			mes "There is an academy in Izlude for newcomers like yourself.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Let me give you more detail later.";
-			mes "See you back at the harbor deck.";
-			next;
-			mes "[Captain Carocc]";
-			mes "To get off this ship, you should enter the ^4d4fffShining Portal^000000 over there.";
-			mes "All transportation is made through those portals.";
-			setquest 7471;
-			completequest 7471;
-			next;
-			cutin "nov_lumin01",0;
-			mes "[Lumin]";
-			mes "Yes.";
-			next;
-			cutin "fly_trock",2;
-			mes "[Carocc]";
-			mes "Oh, boy.";
-			mes "What cute reaction.";
-			close2;
-			cutin "", 255;
-			end;
-		}
-		cutin "nov_lumin01",0;
+//== Lumin (int_land) ==========================================
+int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
+	if (isbegin_quest(7471) == 0) {
+		cutin "nov_lumin01.bmp",0;
 		mes "[Lumin]";
-		mes ".....";
+		mes ".............";
+		mes "..?";
 		next;
-		select("Should I introduce myself?", "My name is ~!");
-		mes "["+strcharinfo(0)+"]";
-		mes "I am "+strcharinfo(0)+"!";
+		cutin "fly_trock.bmp",2;
+		mes "[Captain Carocc]";
+		mes "Had a good dream?";
+		mes "Soon, we will get to Izlude. And you can talk to other people like you just talked to me.";
 		next;
-		mes "[Lu]";
-		mes ".....";
+		mes "[Captain Carocc]";
+		mes "I think that guy over there lost his memory. I gave him a new name.";
+		mes "Lumin.";
 		next;
-		mes "[Lu]";
-		mes ".....";
-		mes "....So?";
+		mes "[Captain Carocc]";
+		mes "Many youngsters visit the ^4d4dffRune-Midgarts Kingdom^000000 to chase their dreams.";
+		mes "Izlude is a satellite city of Prontera, the capital of the Rune-Midgarts Kingdom.";
 		next;
-		mes "- Lu just walked away with a cynical look on his face.";
+		mes "[Captain Carocc]";
+		mes "Izlude always welcomes young adventurers like you who have just started their journey through the world.";
+		mes "You are one of them, of course.";
 		next;
-		cutin "fly_trock",2;
-		mes "[Carocc]";
-		mes "He's just shy, you know.";
-		mes "You will see him again in Izlude, be good to him please.";
+		mes "[Captain Carocc]";
+		mes "I would like to tell you more stories, but it's time to get ready for arrival.";
+		mes "There is an academy in Izlude for newcomers like yourself.";
 		next;
-		mes "[Carocc]";
-		mes "From now on, I'll be driving this ship around Izlude.";
-		mes "Let's go, shall we?";
+		mes "[Captain Carocc]";
+		mes "Let me give you more details later. See you back at the harbor deck.";
+		next;
+		mes "[Captain Carocc]";
+		mes "To get off this ship, you should enter the ^4d4dffShining Portal^000000 over there.";
+		mes "All transportation is made through the portals.";
+		setquest 7471;
+		completequest 7471;
+		next;
+		cutin "nov_lumin01.bmp", 0;
+		mes "[Lumin]";
+		mes "Yes.";
+		next;
+		classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+		cutin "fly_trock.bmp",2;
+		mes "[Captain Carocc]";
+		mes "Oh boy.";
+		mes "What a cute reaction.";
 		close2;
-		cutin "", 255;
+		cutin "",255;
 		end;
 	}
+	cutin "nov_lumin01.bmp",0;
+	mes "[Lumin]";
+	mes ".....";
+	next;
+	select("Should I introduce myself?", "My name is ~!");
+	mes "[" + strcharinfo(0) + "]";
+	mes "I am " + strcharinfo(0) + "!";
+	next;
+	mes "[Lu]";
+	mes ".....";
+	next;
+	mes "[Lu]";
+	mes ".....";
+	mes "....So?";
+	next;
+	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	mes "- Lu just walked away with a cynical look on his face.";
+	next;
+	cutin "fly_trock.bmp",2;
+	mes "[Captain Carocc]";
+	mes "Looks like... he has a shy personality.";
+	mes "When you go to Izlude, will you check on him?";
+	next;
+	mes "[Captain Carocc]";
+	mes "From now on I'll be sailing the ship around the island.";
+	mes "Let's go, shall we?";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	questinfo 7471, QTYPE_QUEST, 1, Job_Novice;
+	setquestinfo_req 7471,21008,1;
+	end;
+}
+int_land01,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship01	4_M_NOV_RUMIN
+int_land02,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship02	4_M_NOV_RUMIN
+int_land03,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship03	4_M_NOV_RUMIN
+int_land04,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship04	4_M_NOV_RUMIN
+
+int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
+	if (isbegin_quest(21008) == 1) {
+		if (countitem(6008) < 2) {
+			mes "[Sailor]";
+			mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
+			mes "There are plenty of Porings on this island.";
+			next;
+			mes "[Sailor]";
+			mes "I would really appreciate it if you help me.";
+			mes "I am not allowed to set foot on this island.";
+			mes "That's why I ask for your help~";
+			close;
+		}
+		mes "[Sailor]";
+		mes "Unbelievable, perfect! Any chance you want to join my crew?";
+		mes "Enough talking!!";
+		mes "Come on, we're ready to set sail!";
+		mes "Thank you so much!";
+		next;
+		mes "[Sailor]";
+		mes "If you want to sail with us to Izlude, jump on board!";
+		delitem 6008,2;
+		getexp 100,100;
+		getitem 611,5;
+		completequest 21008;
+		next;
+		mes "[Sailor]";
+		mes "Oh, and take these ^4d4dffMagnifiers^000000.";
+		mes "When you hunt monsters you can find ^4d4dffunidentified items^000000.";
+		next;
+		mes "[Sailor]";
+		mes "Using a Magnifier will identify the item.";
+		next;
+		mes "[Sailor]";
+		mes "Maybe you already have some unidentified items from your fights with those Porings?";
+		close;
+	}
+	mes "[Sailor]";
+	mes "The ship is heading to Izlude soon~!";
+	mes "I'll let you know when we set sail~!";
+	close;
+
+OnInit:
+	questinfo 21002, QTYPE_QUEST, 1, Job_Novice;
+	setquestinfo_req 21002,21008,1;
+	end;
 }
 
-iz_int01,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int01	4_M_NOV_RUMIN
-iz_int02,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int02	4_M_NOV_RUMIN
-iz_int03,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int03	4_M_NOV_RUMIN
-iz_int04,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int04	4_M_NOV_RUMIN
+int_land01,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_01	4W_SAILOR
+int_land02,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_02	4W_SAILOR
+int_land03,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_03	4W_SAILOR
+int_land04,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_04	4W_SAILOR
 
 // - Captain Carocc
 // -----------------------------------------------------------------------------
@@ -4900,7 +5116,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "[Poring]";
 		mes "Dear oh dear...what do we have 'ere?";
 		next;
-		if (select("What happend?", "Ignore him/it?") == 2) {
+		if (select("What happened?", "Ignore him/it?") == 2) {
 			mes "[Poring]";
 			mes "Oh dear, oh dear...";
 			close;
