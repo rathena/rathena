@@ -17,19 +17,6 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 #include "map.hpp"
 #include "path.hpp"
 #include "pc.hpp"
@@ -6693,11 +6680,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		}
 	}
 
-
-
 	md.damage += battle_calc_cardfix(BF_MISC, src, target, nk, s_ele, 0, md.damage, 0, md.flag);
-
-
 
 	if (sd && (i = pc_skillatk_bonus(sd, skill_id)))
 		md.damage += (int64)md.damage*i/100;
@@ -6739,15 +6722,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 	}
 
-
-
 	md.damage = battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
 	if(map_flag_gvg2(target->m))
 		md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
 	else if(map[target->m].flag.battleground)
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
-
-
 
 	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
