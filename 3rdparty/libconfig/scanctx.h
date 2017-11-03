@@ -1,3 +1,5 @@
+#pragma once
+
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
    Copyright (C) 2005-2010  Mark A Lindner
@@ -31,6 +33,10 @@
 
 #define MAX_INCLUDE_DEPTH 10
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 struct scan_context
 {
   config_t *config;
@@ -59,4 +65,8 @@ extern char *scanctx_take_string(struct scan_context *ctx);
 
 extern const char *scanctx_current_filename(struct scan_context *ctx);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* __libconfig_scanctx_h */

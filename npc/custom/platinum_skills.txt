@@ -1,23 +1,20 @@
 //===== rAthena Script =======================================
 //= Platinum Skills
-//===== By: ==================================================
-//= Keichii, DarkChild
-//===== Current Version: =====================================
-//= 2.8
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Single NPC that assigns quests skills for all classes
 //===== Additional Comments: =================================
-//= 2.0 Added advanced classes by ShadowLady.
-//= 2.1 Added baby clases by Midas
-//= 2.2 Simplified Job Checks [Silentdragon]
-//= 2.3 Thehell? Cleaned up script removed the nastiness. Also added rebirth skills. [Spre]
+//= 1.0 Initial release. [Keichii] [DarkChild]
+//= 2.0 Added advanced classes. [ShadowLady]
+//= 2.1 Added baby classes. [Midas]
+//= 2.2 Simplified Job Checks. [Silentdragon]
+//= 2.3 Thehell? Cleaned up script, removed the nastiness. Also added rebirth skills. [Spre]
 //= 2.4 Added Advanced skills. [Spre]
 //= 2.5 Added dialog for if the user is none of the listed jobs. [Kisuka]
 //= 2.6 Fixed 2nd advanced classes not being able to get their advanced skills. [Ancyker]
 //= 2.7 Rewrote to give all correct skills to all proper classes. [Paradox924X]
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
+//= 2.9 Added MC_CARTDECORATE for Merchant class. [mazvi]
+//= 3.0 Migrate/Integrate to Global Functions. [mazvi]
 //============================================================
 
 prontera,128,200,6	script	Platinum Skill NPC	94,{
@@ -30,91 +27,7 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		mes "Have a nice day... >.>";
 		close;
 	}
-	skill "NV_FIRSTAID",1,SKILL_PERM;
-	switch (BaseClass) {
-	case Job_Novice:
-		if (Class != Job_Super_Novice)
-			skill "NV_TRICKDEAD",1,SKILL_PERM;
-		break;
-	case Job_Swordman:
-		skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
-		skill "SM_FATALBLOW",1,SKILL_PERM;
-		skill "SM_AUTOBERSERK",1,SKILL_PERM;
-		break;
-	case Job_Mage:
-		skill "MG_ENERGYCOAT",1,SKILL_PERM;
-		break;
-	case Job_Archer:
-		skill "AC_MAKINGARROW",1,SKILL_PERM;
-		skill "AC_CHARGEARROW",1,SKILL_PERM;
-		break;
-	case Job_Acolyte:
-		skill "AL_HOLYLIGHT",1,SKILL_PERM;
-		break;
-	case Job_Merchant:
-		skill "MC_CARTREVOLUTION",1,SKILL_PERM;
-		skill "MC_CHANGECART",1,SKILL_PERM;
-		skill "MC_LOUD",1,SKILL_PERM;
-		break;
-	case Job_Thief:
-		skill "TF_SPRINKLESAND",1,SKILL_PERM;
-		skill "TF_BACKSLIDING",1,SKILL_PERM;
-		skill "TF_PICKSTONE",1,SKILL_PERM;
-		skill "TF_THROWSTONE",1,SKILL_PERM;
-		break;
-	default:
-		break;
-	}
-	switch (BaseJob) {
-	case Job_Knight:
-		skill "KN_CHARGEATK",1,SKILL_PERM;
-		break;
-	case Job_Priest:
-		skill "PR_REDEMPTIO",1,SKILL_PERM;
-		break;
-	case Job_Wizard:
-		skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
-		break;
-	case Job_Blacksmith:
-		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
-		skill "BS_GREED",1,SKILL_PERM;
-		break;
-	case Job_Hunter:
-		skill "HT_PHANTASMIC",1,SKILL_PERM;
-		break;
-	case Job_Assassin:
-		skill "AS_SONICACCEL",1,SKILL_PERM;
-		skill "AS_VENOMKNIFE",1,SKILL_PERM;
-		break;
-	case Job_Crusader:
-		skill "CR_SHRINK",1,SKILL_PERM;
-		break;
-	case Job_Monk:
-		skill "MO_KITRANSLATION",1,SKILL_PERM;
-		skill "MO_BALKYOUNG",1,SKILL_PERM;
-		break;
-	case Job_Sage:
-		skill "SA_CREATECON",1,SKILL_PERM;
-		skill "SA_ELEMENTWATER",1,SKILL_PERM;
-		skill "SA_ELEMENTGROUND",1,SKILL_PERM;
-		skill "SA_ELEMENTFIRE",1,SKILL_PERM;
-		skill "SA_ELEMENTWIND",1,SKILL_PERM;
-		break;
-	case Job_Rogue:
-		skill "RG_CLOSECONFINE",1,SKILL_PERM;
-		break;
-	case Job_Alchemist:
-		skill "AM_BIOETHICS",1,SKILL_PERM;
-		break;
-	case Job_Bard:
-		skill "BA_PANGVOICE",1,SKILL_PERM;
-		break;
-	case Job_Dancer:
-		skill "DC_WINKCHARM",1,SKILL_PERM;
-		break;
-	default:
-		break;
-	}
+	callfunc "F_GetPlatinumSkills";
 	mes "[Platinum Skill NPC]";
 	mes "There you go!";
 	close;
