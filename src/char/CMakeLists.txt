@@ -1,7 +1,7 @@
 #
 # setup
 #
-set( SERVER_CHAR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
+set( CHAR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 
 
 #
@@ -9,46 +9,11 @@ set( SERVER_CHAR_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 #
 if( BUILD_SERVERS )
 message( STATUS "Creating target char-server" )
-set( CHAR_HEADERS
-	"${SERVER_CHAR_SOURCE_DIR}/char.h"
-	"${SERVER_CHAR_SOURCE_DIR}/char_clif.h"
-	"${SERVER_CHAR_SOURCE_DIR}/char_cnslif.h"
-	"${SERVER_CHAR_SOURCE_DIR}/char_logif.h"
-	"${SERVER_CHAR_SOURCE_DIR}/char_mapif.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_achievement.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_auction.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_clan.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_elemental.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_guild.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_homun.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_mail.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_mercenary.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_party.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_pet.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_quest.h"
-	"${SERVER_CHAR_SOURCE_DIR}/int_storage.h"
-	"${SERVER_CHAR_SOURCE_DIR}/inter.h"
-	)
-set( CHAR_SOURCES
-	"${SERVER_CHAR_SOURCE_DIR}/char.cpp"
-	"${SERVER_CHAR_SOURCE_DIR}/char_clif.c"
-	"${SERVER_CHAR_SOURCE_DIR}/char_cnslif.c"
-	"${SERVER_CHAR_SOURCE_DIR}/char_logif.c"
-	"${SERVER_CHAR_SOURCE_DIR}/char_mapif.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_achievement.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_auction.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_clan.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_elemental.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_guild.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_homun.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_mail.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_mercenary.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_party.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_pet.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_quest.c"
-	"${SERVER_CHAR_SOURCE_DIR}/int_storage.cpp"
-	"${SERVER_CHAR_SOURCE_DIR}/inter.cpp"
-	)
+file(GLOB CHAR_HEADERS ${CHAR_SOURCE_DIR}/*.h)
+file(GLOB CHAR_SOURCES_C ${CHAR_SOURCE_DIR}/*.c)
+file(GLOB CHAR_SOURCES_CXX ${CHAR_SOURCE_DIR}/*.cpp)
+set(CHAR_SOURCES ${CHAR_SOURCES_C} ${CHAR_SOURCES_CXX})
+#message( STATUS "CHAR_SOURCES="${CHAR_SOURCES})
 set( DEPENDENCIES common )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
