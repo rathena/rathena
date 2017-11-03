@@ -1837,8 +1837,8 @@
 2631,First_Age_Ring,Celebration Ring,4,1,,10,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bAllStats,5; },{},{}
 2632,Korean_Trinket,Korean Trinket,4,125000,,100,,1,,0,0xFFFFFFFE,63,2,136,,65,0,0,{ bonus bVit,1; bonus bDex,1; bonus bLuk,1; },{},{}
 2633,Jade_Ring,Jade Ring,4,204000,,100,,0,,0,0xFFFFFFFE,63,2,136,,80,0,0,{ bonus bStr,2; bonus bInt,1; },{},{}
-2634,Bridegroom_Ring,Wedding Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,1,136,,0,0,0,{ skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1; },{},{}
-2635,Bride_Ring,Wedding Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,0,136,,0,0,0,{ skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1; },{},{}
+2634,Bridegroom_Ring,Wedding Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,1,136,,0,0,0,{ skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1; skill "WE_CALLALLFAMILY",1; skill "WE_ONEFOREVER",1; },{},{}
+2635,Bride_Ring,Wedding Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,0,136,,0,0,0,{ skill "WE_MALE",1; skill "WE_FEMALE",1; skill "WE_CALLPARTNER",1; skill "WE_CALLALLFAMILY",1; skill "WE_ONEFOREVER",1; },{},{}
 2636,Gold_Ring_,Gold Christmas Ring,4,30000,,100,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bLuk,1; },{},{}
 2637,Silver_Ring_,Silver Christmas Ring,4,20000,,100,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bLuk,1; },{},{}
 2638,Exorcize_Sachet,Sacred Incense,4,20000,,100,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bStr,1; bonus bLuk,1; },{},{}
@@ -7471,7 +7471,7 @@
 13450,Saber__,Saber,5,10,,1000,115,,,2,0x000654E2,63,2,2,3,27,1,0,{},{},{}
 13451,Ru_Blue_Sword,Blue Sword,5,10,,1200,190,,1,1,0x00000080,56,2,2,3,100,1,2,{ bonus bStr,5; bonus bAgi,5; },{},{}
 13452,Ru_Gold_Sword,Ru Gold Sword,5,0,,1200,190,,1,2,0x00000080,56,2,2,3,120,1,2,{ bonus bStr,8; bonus bAgi,8; },{},{}
-13454,Crimson_Saber,Crimson Saber,5,20,,850,85,,1,2,0x000654E3,56,2,2,3,70,1,2,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
+13454,Crimson_Saber,Crimson Saber,5,20,,850,85,,1,2,0x000654E3,63,2,2,3,70,1,2,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 13455,Saber_of_Vicious_Mind,Saber of Vicious Mind,5,20,,1350,135,,1,1,0x000654E3,63,2,2,4,160,1,2,{ bonus bAtk,pow(min(getrefine(),15),2); },{},{}
 13456,Unity_Sword,Unity Sword,5,20,,420,80,,1,1,0x000654E3,56,2,2,3,1,1,2,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
 13457,Unity_Dagger,Unity Dagger,5,20,,270,52,,1,1,0x028F5EEF,63,2,2,3,1,1,1,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
@@ -9515,7 +9515,7 @@
 18562,Bone_Hat,Bone Hat,4,20,,200,,3,,1,0xFFFFFFFF,63,2,256,,10,1,732,{ bonus bMdef,3; },{},{}
 18563,Heart_Wing_Hairband,Heart Wing Hairband,4,20,,300,,0,,1,0xFFFFFFFF,63,2,256,,50,1,733,{ bonus bUseSPrate,-10; bonus bDelayrate,-5; .@r = getrefine()/3; if(.@r>0){ bonus bUseSPrate,.@r*3; bonus bDelayrate,.@r*3; } },{},{}
 18564,Love_Piece,Love Piece,4,20,,200,,0,,0,0xFFFFFFFF,63,2,1,,50,0,734,{ bonus bNoCastCancel,1; bonus bUseSPrate,15; },{},{}
-18565,Leprechaun_Hat,St Patrick's Hat,4,20,,300,,8,,1,0xFFFFFFFF,63,2,256,,40,1,735,{ bonus bStr,1; bonus bInt,1; bonus bMdef,4; if(getrefine()>6){ bonus2 bAddMonsterDropItem,12135,50; } },{},{}
+18565,Leprechaun_Hat,St Patrick's Hat,4,20,,300,,8,,1,0xFFFFFFFF,63,2,256,,40,1,735,{ bonus bStr,1; bonus bInt,1; bonus bMdef,4; if(getrefine()>7){ bonus2 bAddMonsterDropItem,12135,50; } },{},{}
 18566,Nut_Donut_In_Mouth,Nut Donut In Mouth,4,20,,0,,1,,0,0xFFFFFFFF,63,2,1,,0,0,736,{ bonus bBaseAtk,5; bonus bMatk,5; },{},{}
 18567,Stretched_Nose,Stretched Nose,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,737,{},{},{}
 18568,Humming_Bird,Humming Bird,4,20,,100,,3,,0,0xFFFFFFFF,63,2,256,,10,0,702,{ bonus bMdef,6; },{},{}
@@ -11479,8 +11479,8 @@
 28316,RCC2013_ARMLET_,RCC2013_ARMLET_,4,200,,200,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
 28317,RCC2013_RING,RCC2013_RING,4,200,,200,,,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
 28318,RCC2013_RING_,RCC2013_RING_,4,200,,200,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
-28310,Earring_Of_Sarah_L,Sarah's Left Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,128,,145,0,,{ skill "AL_HEAL",1; },{},{}
-28311,Earring_Of_Sarah_R,Sarah's Right Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,8,,145,0,,{ skill "AL_TELEPORT",1; },{},{}
+28310,Earring_Of_Sarah_L,Sarah's Left Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,136,,145,0,,{ skill "AL_HEAL",1; },{},{}
+28311,Earring_Of_Sarah_R,Sarah's Right Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,136,,145,0,,{ skill "AL_TELEPORT",1; },{},{}
 28321,Falconer_Claw,Falconer Claw,4,0,,100,,5,,1,0x00000800,63,2,136,,80,0,,{ bonus bDex,1; bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW")*10; },{},{}
 28322,Falconer_Glove,Falconer Glove,4,0,,100,,5,,1,0x00000800,63,2,136,,80,0,,{ bonus bDex,1; bonus bUseSPrate,-5; },{},{}
 28326,Broken_Chip_1,Broken Chips 01,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bStr,4; },{},{}
