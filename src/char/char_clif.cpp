@@ -539,7 +539,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
  * @param flag Delete flag
  * @return true:Success, false:Failure
  **/
- bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
+bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
 	// E-Mail check
 	if (flag&CHAR_DEL_EMAIL && (
 			!stricmp(delcode, sd->email) || //email does not match or

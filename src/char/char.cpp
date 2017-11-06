@@ -217,7 +217,7 @@ int char_db_setoffline(DBKey key, DBData *data, va_list ap) {
 /**
  * @see DBApply
  */
- int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
+int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
 	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int server_id = va_arg(ap, int);
 
@@ -2180,7 +2180,7 @@ int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t 
 /**
  * @see DBApply
  */
- int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
+int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct online_char_data *character= (struct online_char_data *)db_data2ptr(data);
 	if (character->fd != -1)
@@ -2193,12 +2193,12 @@ int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t 
 	return 0;
 }
 
- int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
- int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;
@@ -2784,7 +2784,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
- void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
+void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -2829,7 +2829,7 @@ void char_set_defaults(){
  * @param w2_value: Value from w2
  * @param start: Start item reference
  */
- void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
+void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -3066,7 +3066,7 @@ bool char_config_read(const char* cfgName, bool normal){
 /**
  * Checks for values out of range.
  */
- void char_config_adjust() {
+void char_config_adjust() {
 #if PACKETVER < 20100803
 	if (charserv_config.char_config.char_del_option&CHAR_DEL_BIRTHDATE) {
 		ShowWarning("conf/char_athena.conf:char_del_option birthdate is enabled but it requires PACKETVER 2010-08-03 or newer, defaulting to email...\n");

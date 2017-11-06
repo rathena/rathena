@@ -41,14 +41,14 @@ static unsigned int guild_exp[100];
 
 int mapif_parse_GuildLeave(int fd,int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
- bool guild_check_empty(struct guild *g);
+bool guild_check_empty(struct guild *g);
 int guild_calcinfo(struct guild *g);
 int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len);
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
 
- int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
+int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	static int last_id = 0; //To know in which guild we were.
 	int state = 0; //0: Have not reached last guild. 1: Reached last guild, ready for save. 2: Some guild saved, don't do further saving.
@@ -551,7 +551,7 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 }
 
 // Read guild_castle from SQL
- struct guild_castle* inter_guildcastle_fromsql(int castle_id)
+struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 {
 	char *data;
 	int i;
@@ -603,7 +603,7 @@ int inter_guildcastle_tosql(struct guild_castle *gc)
 
 
 // Read exp_guild.txt
- bool exp_guild_parse_row(char* split[], int column, int current)
+bool exp_guild_parse_row(char* split[], int column, int current)
 {
 	unsigned int exp = (unsigned int)atol(split[0]);
 
@@ -744,7 +744,7 @@ int inter_guild_sql_init(void)
 /**
  * @see DBApply
  */
- int guild_db_final(DBKey key, DBData *data, va_list ap)
+int guild_db_final(DBKey key, DBData *data, va_list ap)
 {
 	struct guild *g = (struct guild*)db_data2ptr(data);
 	if (g->save_flag&GS_MASK) {
@@ -791,7 +791,7 @@ int search_guildname(char *str)
 }
 
 // Check if guild is empty
- bool guild_check_empty(struct guild *g)
+bool guild_check_empty(struct guild *g)
 {
 	int i;
 	ARR_FIND( 0, g->max_member, i, g->member[i].account_id > 0 );
@@ -1652,7 +1652,7 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_
 }
 
 //Manual deletion of an alliance when partnering guild does not exists. [Skotlex]
- int mapif_parse_GuildDeleteAlliance(struct guild *g, int guild_id, uint32 account_id1, uint32 account_id2, int flag)
+int mapif_parse_GuildDeleteAlliance(struct guild *g, int guild_id, uint32 account_id1, uint32 account_id2, int flag)
 {
 	int i;
 	char name[NAME_LENGTH];

@@ -842,7 +842,7 @@ int inter_log(char* fmt, ...)
 	return 0;
 }
 
- void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string &file) {
+void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string &file) {
 	YAML::Emitter out;
 	out << node;
 	ShowWarning(fmt, file.c_str());
@@ -852,7 +852,7 @@ int inter_log(char* fmt, ...)
 /**
  * Read inter config file
  **/
- void inter_config_readConf(void) {
+void inter_config_readConf(void) {
 	std::vector<std::string> directories = { "conf/", "conf/import/" };
 	static const std::string file_name(interserv_config.cfgFile);
 
@@ -931,7 +931,7 @@ void inter_config_finalConf(void) {
 
 }
 
- void inter_config_defaults(void) {
+void inter_config_defaults(void) {
 	interserv_config.cfgFile = "inter_server.yml";
 }
 

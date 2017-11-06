@@ -86,7 +86,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
  * Load this character's account id into the 'online accounts' packet
  * @see DBApply
  */
- int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
+int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
 	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int* i = va_arg(ap, int*);
 	if(character->server > -1) {
