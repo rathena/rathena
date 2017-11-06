@@ -233,7 +233,9 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapreg.cpp" />
     <ClCompile Include="mercenary.cpp" />
-    <ClCompile Include="mob.cpp" />
+    <ClCompile Include="mob.cpp">
+      <Optimization Condition="'$(Configuration)'=='Release'">Disabled</Optimization>
+    </ClCompile>
     <ClCompile Include="npc.cpp" />
     <ClCompile Include="npc_chat.cpp" />
     <ClCompile Include="party.cpp" />
