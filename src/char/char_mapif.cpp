@@ -1133,10 +1133,10 @@ int chmapif_parse_updfamelist(int fd){
 
             switch(type)
             {
-            case RANK_BLACKSMITH:	size = fame_list_size_smith;	list = smith_fame_list;		break;
-            case RANK_ALCHEMIST:	size = fame_list_size_chemist;	list = chemist_fame_list;	break;
-            case RANK_TAEKWON:		size = fame_list_size_taekwon;	list = taekwon_fame_list;	break;
-            default:				size = 0;						list = NULL;				break;
+				case RANK_BLACKSMITH:	size = fame_list_size_smith;	list = smith_fame_list;		break;
+				case RANK_ALCHEMIST:	size = fame_list_size_chemist;	list = chemist_fame_list;	break;
+				case RANK_TAEKWON:		size = fame_list_size_taekwon;	list = taekwon_fame_list;	break;
+				default:				size = 0;						list = NULL;				break;
             }
 
             ARR_FIND(0, size, player_pos, list[player_pos].id == cid);// position of the player
