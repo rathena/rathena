@@ -8,25 +8,17 @@
  */
 
 #pragma once
-#ifndef CONSOLEIF_H
-#define	CONSOLEIF_H
+#ifndef _LOGINCNSLIF_HPP_
+#define _LOGINCNSLIF_HPP_
 
-#ifdef	__cplusplus
 extern "C" {
-#endif
-
-
 /**
  * Login-server console help: starting option info.
  *  Do not rename function used as extern.
  * @param do_exit: terminate program execution ?
  */
- 
 void display_helpscreen(bool do_exit);
-
-#ifdef	__cplusplus
 }
-#endif
 
 /**
  * Console Command Parser
@@ -58,5 +50,5 @@ void do_init_logincnslif(void);
 void do_final_logincnslif(void);
 
 
-#endif	/* CONSOLEIF_H */
+#endif	/* _LOGINCNSLIF_HPP_ */
 

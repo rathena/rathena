@@ -9,16 +9,17 @@
  */
 
 #pragma once
-#ifndef _LOGIN_H_
-#define _LOGIN_H_
+#ifndef _LOGIN_HPP_
+#define _LOGIN_HPP_
 
 #include <memory>
+
 #include "../config/core.h"
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // NAME_LENGTH,SEX_*
 #include "../common/core.h" // CORE_ST_LAST
-#include "account.hpp"
 
+#include "account.hpp"
 
 enum E_LOGINSERVER_ST {
 	LOGINSERVER_ST_RUNNING = CORE_ST_LAST,
@@ -235,4 +236,4 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
 
 
-#endif /* _LOGIN_H_ */
+#endif /* _LOGIN_HPP_ */

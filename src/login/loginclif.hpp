@@ -8,8 +8,8 @@
  */
 
 #pragma once
-#ifndef _LOGINCLIF_H
-#define	_LOGINCLIF_H
+#ifndef _LOGINCLIF_HPP_
+#define _LOGINCLIF_HPP_
 
 /**
  * Entry point from client to log-server.
@@ -31,5 +31,5 @@ void do_init_loginclif(void);
  */
 void do_final_loginclif(void);
 
-#endif	/* _LOGINCLIF_H */
+#endif	/* _LOGINCLIF_HPP_ */
 

@@ -36,7 +36,6 @@
 #include "loginchrif.hpp"
 #include "logincnslif.hpp"
 
-
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 

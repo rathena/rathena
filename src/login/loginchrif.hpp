@@ -8,8 +8,8 @@
  */
 
 #pragma once
-#ifndef LOGINCHRIF_H
-#define	LOGINCHRIF_H
+#ifndef _LOGINCHRIF_HPP_
+#define _LOGINCHRIF_HPP_
 
 #include "../common/cbasetypes.h"
 
@@ -48,5 +48,5 @@ void do_shutdown_loginchrif(void);
 void do_final_loginchrif(void);
 
 
-#endif	/* LOGINCHRIF_H */
+#endif	/* _LOGINCHRIF_HPP_ */
 

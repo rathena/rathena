@@ -6,7 +6,9 @@
  * @author Athena Dev Teams rev < 15k
  * @author rAthena Dev Team
  */
+
 #include "loginlog.hpp"
+
 #include <stdlib.h> // exit
 #include <string.h>
 

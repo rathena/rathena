@@ -6,7 +6,9 @@
  * @author Athena Dev Teams originally in login.c
  * @author rAthena Dev Team
  */
+
 #include "loginchrif.hpp"
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -14,10 +16,10 @@
 #include "../common/strlib.h" //safeprint
 #include "../common/showmsg.h" //show notice
 #include "../common/socket.h" //wfifo session
+
 #include "account.hpp"
 #include "login.hpp"
 #include "loginlog.hpp"
-
 
 //early declaration
 void logchrif_on_disconnect(int id);

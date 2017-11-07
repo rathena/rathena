@@ -8,11 +8,13 @@
  */
 
 #pragma once
-#ifndef __LOGINLOG_H_INCLUDED__
-#define __LOGINLOG_H_INCLUDED__
+#ifndef _LOGINLOG_HPP_
+#define _LOGINLOG_HPP_
 
 #include <memory>
+
 #include "../common/cbasetypes.h"
+
 /**
  * Get the number of failed login attempts by the ip in the last minutes.
  * @param ip: ip to search attempt from
@@ -54,4 +56,4 @@ bool loginlog_init(void);
 bool loginlog_final(void);
 
 
-#endif // __LOGINLOG_H_INCLUDED__
+#endif /* _LOGINLOG_HPP_ */

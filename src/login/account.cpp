@@ -6,7 +6,9 @@
  * @author Athena Dev Teams < r15k
  * @author rAthena Dev Team
  */
+
 #include "account.hpp"
+
 #include <stdlib.h>
 #include <string.h>
 #include <algorithm> //min / max

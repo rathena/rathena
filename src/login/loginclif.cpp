@@ -6,7 +6,9 @@
  * @author Athena Dev Teams originally in login.c
  * @author rAthena Dev Team
  */
+
 #include "loginclif.hpp"
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -18,12 +20,12 @@
 #include "../common/utils.h"
 #include "../common/md5calc.h"
 #include "../common/random.h"
+
 #include "account.hpp"
 #include "ipban.hpp" //ipban_check
 #include "login.hpp"
 #include "loginlog.hpp"
 #include "loginchrif.hpp"
-
 
 /**
  * Transmit auth result to client.

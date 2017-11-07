@@ -8,8 +8,8 @@
  */
 
 #pragma once
-#ifndef __ACCOUNT_H_INCLUDED__
-#define __ACCOUNT_H_INCLUDED__
+#ifndef _ACCOUNT_HPP_
+#define _ACCOUNT_HPP_
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // ACCOUNT_REG2_NUM
@@ -143,4 +143,4 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
 
 
-#endif // __ACCOUNT_H_INCLUDED__
+#endif /* _ACCOUNT_HPP_ */
