@@ -7,12 +7,9 @@
  * @author rAthena Dev Team
  */
 
+#pragma once
 #ifndef _LOGINCLIF_H
 #define	_LOGINCLIF_H
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
 
 /**
  * Entry point from client to log-server.
@@ -33,10 +30,6 @@ void do_init_loginclif(void);
  *  dealloc..., function called at exit of the login-serv
  */
 void do_final_loginclif(void);
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* _LOGINCLIF_H */
 

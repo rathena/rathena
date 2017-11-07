@@ -6,17 +6,18 @@
  * @author Athena Dev Teams originally in login.c
  * @author rAthena Dev Team
  */
+#include "loginchrif.hpp"
+#include <stdlib.h>
+#include <string.h>
 
 #include "../common/timer.h" //difftick
 #include "../common/strlib.h" //safeprint
 #include "../common/showmsg.h" //show notice
 #include "../common/socket.h" //wfifo session
-#include "account.h"
-#include "login.h"
-#include "loginlog.h"
-#include "loginchrif.h"
+#include "account.hpp"
+#include "login.hpp"
+#include "loginlog.hpp"
 
-#include <stdlib.h>
 
 //early declaration
 void logchrif_on_disconnect(int id);
@@ -52,7 +53,7 @@ int logchrif_sendallwos(int sfd, uint8* buf, size_t len) {
  * @param data: unused
  * @return 0
  */
-static int logchrif_sync_ip_addresses(int tid, unsigned int tick, int id, intptr_t data) {
+int logchrif_sync_ip_addresses(int tid, unsigned int tick, int id, intptr_t data) {
 	uint8 buf[2];
 	ShowInfo("IP Sync in progress...\n");
 	WBUFW(buf,0) = 0x2735;

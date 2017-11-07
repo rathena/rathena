@@ -7,16 +7,17 @@
  * @author Athena Dev Teams < r15k
  * @author rAthena Dev Team
  */
+#include "ipban.hpp"
+#include <stdlib.h>
+#include <string.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/showmsg.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
-#include "login.h"
-#include "ipban.h"
-#include "loginlog.h"
-#include <stdlib.h>
+#include "login.hpp"
+#include "loginlog.hpp"
 
 // login sql settings
 static char   ipban_db_hostname[32] = "127.0.0.1";

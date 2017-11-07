@@ -9,6 +9,11 @@
  */
 
 #pragma warning(disable:4800)
+#include "login.hpp"
+
+#include <stdlib.h>
+#include <string.h>
+#include <string>
 
 #include "../common/core.h"
 #include "../common/db.h"
@@ -24,15 +29,13 @@
 #include "../common/utils.h"
 #include "../common/mmo.h"
 #include "../config/core.h"
-#include "account.h"
-#include "ipban.h"
-#include "login.h"
-#include "loginlog.h"
-#include "loginclif.h"
-#include "loginchrif.h"
-#include "logincnslif.h"
+#include "account.hpp"
+#include "ipban.hpp"
+#include "loginlog.hpp"
+#include "loginclif.hpp"
+#include "loginchrif.hpp"
+#include "logincnslif.hpp"
 
-#include <stdlib.h>
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf

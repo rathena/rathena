@@ -6,6 +6,9 @@
  * @author Athena Dev Teams rev < 15k
  * @author rAthena Dev Team
  */
+#include "loginlog.hpp"
+#include <stdlib.h> // exit
+#include <string.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
@@ -13,7 +16,6 @@
 #include "../common/sql.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
-#include <stdlib.h> // exit
 
 // global sql settings (in ipban_sql.c)
 static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f

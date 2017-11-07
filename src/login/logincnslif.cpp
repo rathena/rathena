@@ -6,6 +6,9 @@
  * @author Athena Dev Teams originally in login.c
  * @author rAthena Dev Team
  */
+#include "logincnslif.hpp"
+#include <stdlib.h>
+#include <string.h>
 
 #include "../common/mmo.h" //cbasetype + NAME_LENGTH
 #include "../common/showmsg.h" //show notice
@@ -14,10 +17,7 @@
 #include "../common/cli.h"
 #include "../common/timer.h"
 #include "../common/strlib.h"
-#include "login.h"
-#include "logincnslif.h"
-
-#include <stdlib.h>
+#include "login.hpp"
 
 /**
  * Login-server console help: starting option info.

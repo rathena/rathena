@@ -6,6 +6,10 @@
  * @author Athena Dev Teams < r15k
  * @author rAthena Dev Team
  */
+#include "account.hpp"
+#include <stdlib.h>
+#include <string.h>
+#include <algorithm> //min / max
 
 #include "../common/malloc.h"
 #include "../common/mmo.h"
@@ -13,8 +17,6 @@
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
-#include "account.h"
-#include <stdlib.h>
 
 /// global defines
 
@@ -309,10 +311,7 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
 		Sql_GetData(sql_handle, 0, &data, &len);
 		account_id = ( data != NULL ) ? atoi(data) : 0;
 		Sql_FreeResult(sql_handle);
-
-		if( account_id < START_ACCOUNT_NUM )
-			account_id = START_ACCOUNT_NUM;
-
+		account_id = max((uint32_t) START_ACCOUNT_NUM, account_id);
 	}
 
 	// zero value is prohibited
@@ -497,6 +496,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 account_id) {
 	Sql* sql_handle = db->accounts;
 	char* data;
+	size_t out_len;
 
 	// retrieve login entry for the specified account
 	if( SQL_ERROR == Sql_Query(sql_handle,
@@ -517,25 +517,25 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); acc->account_id = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); safestrncpy(acc->userid, data, sizeof(acc->userid));
-	Sql_GetData(sql_handle,  2, &data, NULL); safestrncpy(acc->pass, data, sizeof(acc->pass));
-	Sql_GetData(sql_handle,  3, &data, NULL); acc->sex = data[0];
-	Sql_GetData(sql_handle,  4, &data, NULL); safestrncpy(acc->email, data, sizeof(acc->email));
-	Sql_GetData(sql_handle,  5, &data, NULL); acc->group_id = (unsigned int) atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); acc->state = (unsigned int) strtoul(data, NULL, 10);
-	Sql_GetData(sql_handle,  7, &data, NULL); acc->unban_time = atol(data);
-	Sql_GetData(sql_handle,  8, &data, NULL); acc->expiration_time = atol(data);
-	Sql_GetData(sql_handle,  9, &data, NULL); acc->logincount = (unsigned int) strtoul(data, NULL, 10);
-	Sql_GetData(sql_handle, 10, &data, NULL); safestrncpy(acc->lastlogin, data==NULL?"":data, sizeof(acc->lastlogin));
-	Sql_GetData(sql_handle, 11, &data, NULL); safestrncpy(acc->last_ip, data, sizeof(acc->last_ip));
-	Sql_GetData(sql_handle, 12, &data, NULL); safestrncpy(acc->birthdate, data==NULL?"":data, sizeof(acc->birthdate));
-	Sql_GetData(sql_handle, 13, &data, NULL); acc->char_slots = (uint8) atoi(data);
-	Sql_GetData(sql_handle, 14, &data, NULL); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
-	Sql_GetData(sql_handle, 15, &data, NULL); acc->pincode_change = atol(data);
+	Sql_GetData(sql_handle,  0, &data, &out_len); acc->account_id = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, &out_len); safestrncpy(acc->userid, data, sizeof(acc->userid));
+	Sql_GetData(sql_handle,  2, &data, &out_len); safestrncpy(acc->pass, data, sizeof(acc->pass));
+	Sql_GetData(sql_handle,  3, &data, &out_len); acc->sex = data[0];
+	Sql_GetData(sql_handle,  4, &data, &out_len); safestrncpy(acc->email, data, sizeof(acc->email));
+	Sql_GetData(sql_handle,  5, &data, &out_len); acc->group_id = (unsigned int) atoi(data);
+	Sql_GetData(sql_handle,  6, &data, &out_len); acc->state = (unsigned int) strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  7, &data, &out_len); acc->unban_time = atol(data);
+	Sql_GetData(sql_handle,  8, &data, &out_len); acc->expiration_time = atol(data);
+	Sql_GetData(sql_handle,  9, &data, &out_len); acc->logincount = (unsigned int) strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle, 10, &data, &out_len); safestrncpy(acc->lastlogin, data==NULL?"":data, sizeof(acc->lastlogin));
+	Sql_GetData(sql_handle, 11, &data, &out_len); safestrncpy(acc->last_ip, data, sizeof(acc->last_ip));
+	Sql_GetData(sql_handle, 12, &data, &out_len); safestrncpy(acc->birthdate, data==NULL?"":data, sizeof(acc->birthdate));
+	Sql_GetData(sql_handle, 13, &data, &out_len); acc->char_slots = (uint8) atoi(data);
+	Sql_GetData(sql_handle, 14, &data, &out_len); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
+	Sql_GetData(sql_handle, 15, &data, &out_len); acc->pincode_change = atol(data);
 #ifdef VIP_ENABLE
-	Sql_GetData(sql_handle, 16, &data, NULL); acc->vip_time = atol(data);
-	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
+	Sql_GetData(sql_handle, 16, &data, &out_len); acc->vip_time = atol(data);
+	Sql_GetData(sql_handle, 17, &data, &out_len); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
 

@@ -8,12 +8,9 @@
  * @author rAthena Dev Team
  */
 
+#pragma once
 #ifndef __IPBAN_H_INCLUDED__
 #define __IPBAN_H_INCLUDED__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "../common/cbasetypes.h"
 
@@ -50,9 +47,5 @@ void ipban_init(void);
  * Launched at login-serv end, cleanup db connection or other thing here.
  */
 void ipban_final(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // __IPBAN_H_INCLUDED__
