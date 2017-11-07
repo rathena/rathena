@@ -440,7 +440,8 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
  * @return modified heal value
  */
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal) {
-	int skill, hp = 0;
+	int skill, hp = 0, hp_bonus = 0;
+	double global_bonus = 1;
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change *sc, *tsc;
@@ -465,8 +466,16 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			hp = (skill_lv > 6) ? 666 : skill_lv * 100;
 			break;
 		case AB_HIGHNESSHEAL:
-			hp = ((status_get_lv(src) + status_get_int(src)) / 8) * (4 + ((sd ? pc_checkskill(sd,AL_HEAL) : 1) * 8));
-			hp = (hp * (17 + 3 * skill_lv)) / 10;
+			hp = ((status_get_int(src) + status_get_lv(src)) / 5) * 30;
+
+			if (sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0))
+				hp_bonus += skill * 2;
+			break;
+		case SU_FRESHSHRIMP:
+			hp = (status_get_lv(src) + status_get_int(src)) / 5 * 6;
+			break;
+		case SU_BUNCHOFSHRIMP:
+			hp = (status_get_lv(src) + status_get_int(src)) / 5 * 15;
 			break;
 		default:
 			if (skill_lv >= battle_config.max_heal_lv)
@@ -481,54 +490,44 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + (skill_lv * 8));
 #endif
 			if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
-				hp += hp * skill * 2 / 100;
-			else if( src->type == BL_HOM && (skill = hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
-				hp += hp * skill * 2 / 100;
+				hp_bonus += skill * 2;
+			else if (src->type == BL_HOM && (skill = hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0)
+				hp_bonus += skill * 2;
 			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
 				hp *= 2;
-			if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
-				hp += hp * 10 / 100;
-				if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
-					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
-					hp += hp * 20 / 100;
-			}
 			break;
 	}
 
 	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
 		hp >>= 1;
 
+	if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
+		hp_bonus += 10;
+
+		if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+			hp_bonus += 20;
+	}
+
 	if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
-		hp += hp * skill / 100;
+		hp_bonus += skill;
 
 	if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
-		hp += hp * skill / 100;
+		hp_bonus += skill;
 
-	if( sc && sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL ||
-		skill_id == PR_SANCTUARY || skill_id == AL_HEAL) )
-		hp += hp * sc->data[SC_OFFERTORIUM]->val2 / 100;
+	if( sc && sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL || skill_id == PR_SANCTUARY || skill_id == AL_HEAL) )
+		hp_bonus += sc->data[SC_OFFERTORIUM]->val2;
+
 	if (tsc && tsc->count) {
 		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
 			if (tsc->data[SC_INCHEALRATE])
-				hp += hp * tsc->data[SC_INCHEALRATE]->val1 / 100; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
+				hp_bonus += tsc->data[SC_INCHEALRATE]->val1; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
 			if (tsc->data[SC_EXTRACT_WHITE_POTION_Z])
-				hp += hp * tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100;
-			if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2)
-				hp += hp / 10;
-		}
-		if (heal) {
-			uint8 penalty = 0;
-
-			if (tsc->data[SC_CRITICALWOUND])
-				penalty += tsc->data[SC_CRITICALWOUND]->val2;
-			if (tsc->data[SC_DEATHHURT])
-				penalty += 20;
-			if (tsc->data[SC_NORECOVER_STATE])
-				penalty = 100;
-			if (penalty > 0)
-				hp -= hp * penalty / 100;
+				hp_bonus += tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1;
 		}
 	}
+
+	if (hp_bonus)
+		hp += hp * hp_bonus / 100;
 
 #ifdef RENEWAL
 	// MATK part of the RE heal formula [malufett]
@@ -567,7 +566,36 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			}
 	}
 #endif
-	return hp;
+
+	// Global multipliers are applied after the MATK is applied
+	if (tsc && tsc->count) {
+		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
+			if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2)
+				global_bonus *= 1.1f;
+		}
+	}
+
+	if (skill_id == AB_HIGHNESSHEAL)
+		global_bonus *= 2 + 0.3f * (skill_lv - 1);
+
+	if (heal && tsc && tsc->count) {
+		uint8 penalty = 0;
+
+		if (tsc->data[SC_CRITICALWOUND])
+			penalty += tsc->data[SC_CRITICALWOUND]->val2;
+		if (tsc->data[SC_DEATHHURT])
+			penalty += 20;
+		if (tsc->data[SC_NORECOVER_STATE])
+			penalty = 100;
+		if (penalty > 0) {
+			penalty = cap_value(penalty, 1, 100);
+			global_bonus *= (100 - penalty) / 100.f;
+		}
+	}
+
+	hp = (int)(hp * global_bonus);
+
+	return (heal) ? max(1, hp) : hp;
 }
 
 /**
