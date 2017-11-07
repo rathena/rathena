@@ -485,7 +485,7 @@ int logclif_parse(int fd) {
 
 	if( session[fd]->flag.eof )
 	{
-		ShowInfo("Closed connection from '"CL_WHITE"%s"CL_RESET"'.\n", ip);
+		ShowInfo("Closed connection from '" CL_WHITE "%s" CL_RESET "'.\n", ip);
 		do_close(fd);
 		return 0;
 	}
