@@ -2390,8 +2390,8 @@ bra_in01,151,180,3	script	Mirror#bra	CLEAR_NPC,{
 							.@cpudice = rand(1,6);
 							.@pcdice = rand(1,6);
 							if (.@cpudice != .@pcdice) {
-								emotion (57+.@cpudice), UNITTYPE_NPC, "Ghost#bra";
-								emotion (57+.@cpudice), UNITTYPE_PC;
+								emotion (ET_OTL+.@cpudice), UNITTYPE_NPC, "Ghost#bra";
+								emotion (ET_OTL+.@cpudice), UNITTYPE_PC;
 								break;
 							}
 						}
