@@ -16,7 +16,6 @@
 #include "char.hpp"
 #include "inter.hpp"
 
-
 int inter_homunculus_sql_init(void)
 {
 	return 0;

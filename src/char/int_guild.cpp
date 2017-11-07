@@ -19,7 +19,6 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 
-
 #define GS_MEMBER_UNMODIFIED 0x00
 #define GS_MEMBER_MODIFIED 0x01
 #define GS_MEMBER_NEW 0x02

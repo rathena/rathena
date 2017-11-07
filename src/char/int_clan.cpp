@@ -17,7 +17,6 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 
-
 //clan cache
 static DBMap* clan_db; // int clan_id -> struct clan*
 

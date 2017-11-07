@@ -1,10 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_MAIL_SQL_H_
-#define _INT_MAIL_SQL_H_
+#ifndef _INT_MAIL_HPP_
+#define _INT_MAIL_HPP_
 
 #include "../common/cbasetypes.h"
+
 struct mail_message;
 
 
@@ -22,4 +23,4 @@ void mapif_Mail_new(struct mail_message *msg);
 
 
 
-#endif /* _INT_MAIL_SQL_H_ */
+#endif /* _INT_MAIL_HPP_ */

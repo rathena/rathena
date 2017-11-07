@@ -6,7 +6,9 @@
  * @author Athena Dev Teams originally in login.c
  * @author rAthena Dev Team
  */
+
 #include "char_mapif.hpp"
+
 #include <stdlib.h>
 #include <string.h> //memcpy
 
@@ -15,10 +17,10 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+
 #include "inter.hpp"
 #include "char.hpp"
 #include "char_logif.hpp"
-
 
 /**
  * Packet send to all map-servers, attach to ourself

@@ -2,13 +2,10 @@
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800) //forcing value to bool
-
 #include "int_storage.hpp"
 
 #include <stdlib.h>
 #include <string.h>
-//#include <string>
-
 
 #include "../common/malloc.h"
 #include "../common/mmo.h"

@@ -20,7 +20,6 @@
 #include "inter.hpp"
 #include "int_mail.hpp"
 
-
 static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
 
 void auction_delete(struct auction_data *auction);

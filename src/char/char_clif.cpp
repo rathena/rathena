@@ -21,7 +21,6 @@
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
 
-
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
 #endif

@@ -7,8 +7,8 @@
  * @author rAthena Dev Team
  */
 
-#ifndef CHAR_MAPIF_H
-#define	CHAR_MAPIF_H
+#ifndef _CHAR_MAPIF_HPP_
+#define _CHAR_MAPIF_HPP_
 
 #include "../common/cbasetypes.h"
 
@@ -63,6 +63,5 @@ void chmapif_server_reset(int id);
 void chmapif_on_disconnect(int id);
 void do_final_chmapif(void);
 
-
-#endif	/* CHAR_MAPIF_H */
+#endif	/* _CHAR_MAPIF_HPP_ */
 

@@ -1,11 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_STORAGE_SQL_H_
-#define _INT_STORAGE_SQL_H_
+#ifndef _INT_STORAGE_HPP_
+#define _INT_STORAGE_HPP_
 
 #include "../common/cbasetypes.h"
-
 
 struct s_storage;
 
@@ -21,5 +20,4 @@ bool inter_storage_parse_frommap(int fd);
 
 bool guild_storage_tosql(int guild_id, struct s_storage *p);
 
-
-#endif /* _INT_STORAGE_SQL_H_ */
+#endif /* _INT_STORAGE_HPP_ */

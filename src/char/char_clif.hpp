@@ -1,13 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#ifndef _CHAR_CLIF_HPP_
+#define _CHAR_CLIF_HPP_
 
-#ifndef CHAR_CLIF_H
-#define	CHAR_CLIF_H
-
-//#include "char.h"
 #include "../common/cbasetypes.h"
 #include "../common/timer.h" //time_t
+
 struct char_session_data;
 enum pincode_state : uint8;
 
@@ -54,5 +53,5 @@ void chclif_block_character( int fd, struct char_session_data* sd);
 
 int chclif_parse(int fd);
 
-#endif	/* CHAR_CLIF_H */
+#endif	/* _CHAR_CLIF_HPP_ */
 

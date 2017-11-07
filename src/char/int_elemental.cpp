@@ -15,7 +15,6 @@
 #include "char.hpp"
 #include "inter.hpp"
 
-
 bool mapif_elemental_save(struct s_elemental* ele) {
 	bool flag = true;
 

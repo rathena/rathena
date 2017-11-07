@@ -5,10 +5,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 #include <yaml-cpp/yaml.h>
-
 #include <string>
 #include <vector>
 #include <stdlib.h>
@@ -36,7 +34,6 @@
 #include "int_elemental.hpp"
 #include "int_clan.hpp"
 #include "int_achievement.hpp"
-
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 #define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis

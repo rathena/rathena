@@ -17,7 +17,6 @@
 #include "char.hpp"
 #include "inter.hpp"
 
-
 struct s_pet *pet_pt;
 
 //---------------------------------------------------------

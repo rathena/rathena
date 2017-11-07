@@ -19,7 +19,6 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 
-
 struct party_data {
 	struct party party;
 	unsigned int min_lv, max_lv;

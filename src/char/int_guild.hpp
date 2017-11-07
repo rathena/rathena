@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_GUILD_SQL_H_
-#define _INT_GUILD_SQL_H_
+#ifndef _INT_GUILD_HPP_
+#define _INT_GUILD_HPP_
 
 #include "../common/cbasetypes.h"
 
@@ -36,4 +36,4 @@ int inter_guild_charname_changed(int guild_id,uint32 account_id, uint32 char_id,
 int inter_guild_CharOnline(uint32 char_id, int guild_id);
 int inter_guild_CharOffline(uint32 char_id, int guild_id);
 
-#endif /* _INT_GUILD_SQL_H_ */
+#endif /* _INT_GUILD_HPP_ */

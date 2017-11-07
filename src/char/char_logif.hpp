@@ -1,12 +1,11 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-
-#ifndef CHAR_LOGIF_H
-#define	CHAR_LOGIF_H
+#ifndef _CHAR_LOGIF_HPP_
+#define _CHAR_LOGIF_HPP_
 
 #include "../common/cbasetypes.h"
-//#include "char.hpp"
+
 struct char_session_data;
 
 #if PACKETVER_SUPPORTS_PINCODE
@@ -53,9 +52,7 @@ void chlogif_on_disconnect(void);
 void chlogif_on_ready(void);
 void do_final_chlogif(void);
 
-
 #define loginif_check(a) { if(!chlogif_isconnected()) return a; }
 
-
-#endif	/* CHAR_LOGIF_H */
+#endif	/* _CHAR_LOGIF_HPP_ */
 

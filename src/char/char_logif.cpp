@@ -1,5 +1,6 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
 #include "char_logif.hpp"
 
 #include <stdlib.h>
@@ -17,7 +18,6 @@
 #include "char.hpp"
 #include "char_clif.hpp"
 #include "char_mapif.hpp"
-
 
 //early declaration
 void chlogif_on_ready(void);

@@ -1,14 +1,13 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_SQL_H_
-#define _CHAR_SQL_H_
+#ifndef _CHAR_HPP_
+#define _CHAR_HPP_
 
 #include "../config/core.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/msg_conf.h"
 #include "../common/mmo.h"
-
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
@@ -321,5 +320,4 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
-
-#endif /* _CHAR_SQL_H_ */
+#endif /* _CHAR_HPP_ */

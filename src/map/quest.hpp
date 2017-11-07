@@ -63,4 +63,4 @@ void do_init_quest(void);
 void do_final_quest(void);
 void do_reload_quest(void);
 
-#endif
+#endif /* _QUEST_HPP_ */
