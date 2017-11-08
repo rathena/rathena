@@ -18,21 +18,22 @@
 #include "../common/utils.h"
 #include "../common/socket.h"
 
-#include "map.h"
-#include "path.h"
-#include "clif.h"
-#include "intif.h"
-#include "pc.h"
-#include "pet.h"
-#include "homunculus.h"
-#include "mercenary.h"
-#include "elemental.h"
-#include "party.h"
-#include "quest.h"
-#include "achievement.h"
-
-#include <stdlib.h>
-#include <math.h>
+#include "map.hpp"
+#include "path.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "elemental.hpp"
+#include "party.hpp"
+#include "quest.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "achievement.hpp"
 
 #include <vector>
 #include <unordered_map>
