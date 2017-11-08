@@ -8,15 +8,18 @@
  * @author rAthena Dev Team
  */
 
+#include "ipban.hpp"
+
+#include <stdlib.h>
+#include <string.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/showmsg.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
-#include "login.h"
-#include "ipban.h"
-#include "loginlog.h"
-#include <stdlib.h>
+#include "login.hpp"
+#include "loginlog.hpp"
 
 // login sql settings
 static char   ipban_db_hostname[32] = "127.0.0.1";
@@ -155,10 +158,10 @@ bool ipban_config_read(const char* key, const char* value) {
 			safestrncpy(ipban_table, value, sizeof(ipban_table));
 		else
 		if( strcmpi(key, "enable") == 0 )
-			login_config.ipban = (bool)config_switch(value);
+			login_config.ipban = (config_switch(value) != 0);
 		else
 		if( strcmpi(key, "dynamic_pass_failure_ban") == 0 )
-			login_config.dynamic_pass_failure_ban = (bool)config_switch(value);
+			login_config.dynamic_pass_failure_ban = (config_switch(value) != 0);
 		else
 		if( strcmpi(key, "dynamic_pass_failure_ban_interval") == 0 )
 			login_config.dynamic_pass_failure_ban_interval = atoi(value);

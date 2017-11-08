@@ -7,12 +7,11 @@
  * @author rAthena Dev Team
  */
 
-#ifndef LOGINCHRIF_H
-#define	LOGINCHRIF_H
+#pragma once
+#ifndef _LOGINCHRIF_HPP_
+#define _LOGINCHRIF_HPP_
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+#include "../common/cbasetypes.h"
 
 /**
  * Entry point from char-server to log-server.
@@ -48,9 +47,6 @@ void do_shutdown_loginchrif(void);
  */
 void do_final_loginchrif(void);
 
-#ifdef	__cplusplus
-}
-#endif
 
-#endif	/* LOGINCHRIF_H */
+#endif	/* _LOGINCHRIF_HPP_ */
 

@@ -7,12 +7,18 @@
  * @author rAthena Dev Team
  */
 
-#ifndef CONSOLEIF_H
-#define	CONSOLEIF_H
+#pragma once
+#ifndef _LOGINCNSLIF_HPP_
+#define _LOGINCNSLIF_HPP_
 
-#ifdef	__cplusplus
 extern "C" {
-#endif
+/**
+ * Login-server console help: starting option info.
+ *  Do not rename function used as extern.
+ * @param do_exit: terminate program execution ?
+ */
+void display_helpscreen(bool do_exit);
+}
 
 /**
  * Console Command Parser
@@ -34,13 +40,6 @@ int cnslif_parse(const char* buf);
 int logcnslif_get_options(int argc, char ** argv);
 
 /**
- * Login-server console help: starting option info.
- *  Do not rename function used as extern.
- * @param do_exit: terminate program execution ?
- */
-void display_helpscreen(bool do_exit);
-
-/**
  * Initialize the module.
  * Launched at login-serv start, create db or other long scope variable here.
  */
@@ -50,9 +49,6 @@ void do_init_logincnslif(void);
  */
 void do_final_logincnslif(void);
 
-#ifdef	__cplusplus
-}
-#endif
 
-#endif	/* CONSOLEIF_H */
+#endif	/* _LOGINCNSLIF_HPP_ */
 

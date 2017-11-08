@@ -7,6 +7,11 @@
  * @author rAthena Dev Team
  */
 
+#include "loginclif.hpp"
+
+#include <stdlib.h>
+#include <string.h>
+
 #include "../common/timer.h" //difftick
 #include "../common/strlib.h" //safeprint
 #include "../common/showmsg.h" //show notice
@@ -15,14 +20,12 @@
 #include "../common/utils.h"
 #include "../common/md5calc.h"
 #include "../common/random.h"
-#include "account.h"
-#include "ipban.h" //ipban_check
-#include "login.h"
-#include "loginlog.h"
-#include "loginclif.h"
-#include "loginchrif.h"
 
-#include <stdlib.h>
+#include "account.hpp"
+#include "ipban.hpp" //ipban_check
+#include "login.hpp"
+#include "loginlog.hpp"
+#include "loginchrif.hpp"
 
 /**
  * Transmit auth result to client.
@@ -484,7 +487,7 @@ int logclif_parse(int fd) {
 
 	if( session[fd]->flag.eof )
 	{
-		ShowInfo("Closed connection from '"CL_WHITE"%s"CL_RESET"'.\n", ip);
+		ShowInfo("Closed connection from '" CL_WHITE "%s" CL_RESET "'.\n", ip);
 		do_close(fd);
 		return 0;
 	}

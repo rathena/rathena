@@ -7,6 +7,11 @@
  * @author rAthena Dev Team
  */
 
+#include "logincnslif.hpp"
+
+#include <stdlib.h>
+#include <string.h>
+
 #include "../common/mmo.h" //cbasetype + NAME_LENGTH
 #include "../common/showmsg.h" //show notice
 #include "../common/md5calc.h"
@@ -14,10 +19,8 @@
 #include "../common/cli.h"
 #include "../common/timer.h"
 #include "../common/strlib.h"
-#include "login.h"
-#include "logincnslif.h"
 
-#include <stdlib.h>
+#include "login.hpp"
 
 /**
  * Login-server console help: starting option info.
@@ -121,7 +124,7 @@ int cnslif_parse(const char* buf){
 				runflag = 0;
 			}
 			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
-				ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
+				ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET"\n");
 			else if( strcmpi("reloadconf", command) == 0 ) {
 				ShowInfo("Reloading config file \"%s\"\n", login_config.loginconf_name);
 				login_config_read(login_config.loginconf_name, false);

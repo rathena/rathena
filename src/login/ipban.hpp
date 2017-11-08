@@ -8,12 +8,9 @@
  * @author rAthena Dev Team
  */
 
-#ifndef __IPBAN_H_INCLUDED__
-#define __IPBAN_H_INCLUDED__
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#pragma once
+#ifndef _IPBAN_HPP_
+#define _IPBAN_HPP_
 
 #include "../common/cbasetypes.h"
 
@@ -51,8 +48,4 @@ void ipban_init(void);
  */
 void ipban_final(void);
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif // __IPBAN_H_INCLUDED__
+#endif /* _IPBAN_HPP_ */

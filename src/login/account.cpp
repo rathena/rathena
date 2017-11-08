@@ -7,14 +7,18 @@
  * @author rAthena Dev Team
  */
 
+#include "account.hpp"
+
+#include <stdlib.h>
+#include <string.h>
+#include <algorithm> //min / max
+
 #include "../common/malloc.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
-#include "account.h"
-#include <stdlib.h>
 
 /// global defines
 
@@ -309,10 +313,7 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
 		Sql_GetData(sql_handle, 0, &data, &len);
 		account_id = ( data != NULL ) ? atoi(data) : 0;
 		Sql_FreeResult(sql_handle);
-
-		if( account_id < START_ACCOUNT_NUM )
-			account_id = START_ACCOUNT_NUM;
-
+		account_id = max((uint32_t) START_ACCOUNT_NUM, account_id);
 	}
 
 	// zero value is prohibited
