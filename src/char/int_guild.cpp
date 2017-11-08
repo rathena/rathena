@@ -732,7 +732,7 @@ int inter_guild_sql_init(void)
 
 	//Read exp file
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 1, 1, 100, exp_guild_parse_row, i);
+		sv_readdb(db_path, filename[i], ',', 1, 1, 100, exp_guild_parse_row, i > 0);
 	}
 
 	add_timer_func_list(guild_save_timer, "guild_save_timer");

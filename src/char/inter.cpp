@@ -822,7 +822,7 @@ int inter_config_read(const char* cfgName)
 }
 
 // Save interlog into sql
-int inter_log(char* fmt, ...)
+int inter_log(const char* fmt, ...)
 {
 	char str[255];
 	char esc_str[sizeof(str)*2+1];// escaped str

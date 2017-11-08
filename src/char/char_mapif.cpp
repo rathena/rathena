@@ -1028,7 +1028,7 @@ int chmapif_parse_reqauth(int fd, int id){
 		login_id1  = RFIFOL(fd,10);
 		sex        = RFIFOB(fd,14);
 		ip         = ntohl(RFIFOL(fd,15));
-		autotrade  = RFIFOB(fd,19);
+		autotrade  = RFIFOB(fd,19) != 0;
 		RFIFOSKIP(fd,20);
 
 		node = (struct auth_node*)idb_get(auth_db, account_id);
