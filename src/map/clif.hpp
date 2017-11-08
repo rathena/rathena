@@ -4,6 +4,8 @@
 #ifndef _CLIF_HPP_
 #define _CLIF_HPP_
 
+#include <stdarg.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
 #include "../common/mmo.h"
@@ -33,7 +35,6 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
-#include <stdarg.h>
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
