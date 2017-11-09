@@ -32,13 +32,13 @@ OnTimer9000:
 	end;
 OnTimer18000:
 	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
-	emotion 0,0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" );
+	emotion 0, getcharid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer21000:
-	emotion 0,0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" );
+	emotion 0, getcharid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer24000:
-	emotion 0,0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" );
+	emotion 0, getcharid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
 	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;

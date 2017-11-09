@@ -738,24 +738,24 @@ ein_in01,125,99,3	script	Tarsha Cherno	4_F_EINWOMAN,{
 		mes "my husband in school and";
 		mes "it was the greatest thing that";
 		mes "ever happened to me~";
-		emotion ET_THROB, UNITTYPE_NPC, "Theo Cherno";
+		emotion ET_THROB, getnpcid(0, "Theo Cherno");
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "By the way, I heard";
 		mes "your daughter singing";
 		mes "some sort of Miner's Song.";
 		mes "Did you teach her that?";
-		emotion ET_HUK, UNITTYPE_NPC, "Tarsha Cherno";
-		emotion ET_HUK, UNITTYPE_NPC, "Theo Cherno";
+		emotion ET_HUK;
+		emotion ET_HUK, getnpcid(0, "Theo Cherno");
 		next;
 		mes "[Theo Cherno]";
 		mes "I don't understand";
 		mes "why little Elle likes";
 		mes "such a rowdy, man song.";
 		mes "This is all your fault, Tarsha!";
-		emotion ET_ANGER, UNITTYPE_NPC, "Theo Cherno";
+		emotion ET_ANGER, getnpcid(0, "Theo Cherno");
 		next;
-		emotion ET_SMILE, UNITTYPE_NPC, "Tarsha Cherno";
+		emotion ET_SMILE;
 		mes "[Tarsha Cherno]";
 		mes "Oh~hohohoho~";
 		mes "I was too young to";
@@ -806,7 +806,7 @@ ein_in01,125,99,3	script	Tarsha Cherno	4_F_EINWOMAN,{
 		mes "Oh, welcome back~";
 		mes "So were you able to";
 		mes "bring back good news?";
-		emotion ET_SMILE, UNITTYPE_NPC, "Tarsha Cherno";
+		emotion ET_SMILE;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Why, yes.";
@@ -944,8 +944,8 @@ function	script	F_Cherno	{
 	specialeffect EF_POISONATTACK,AREA,"#exp_ein";
 	mes "^33355F*Crash!*^000000";
 	mes ".....";
-	emotion ET_SWEAT, UNITTYPE_NPC, "Theo Cherno";
-	emotion ET_SWEAT, UNITTYPE_NPC, "Tarsha Cherno";
+	emotion ET_SWEAT, getnpcid(0, "Theo Cherno");
+	emotion ET_SWEAT, getnpcid(0, "Tarsha Cherno");
 	next;
 	mes "[Theo Cherno]";
 	mes "Honey...";
@@ -963,7 +963,7 @@ function	script	F_Cherno	{
 	mes "it a day and finish";
 	mes "this tomorrow, yeah?";
 	next;
-	emotion ET_QUESTION, UNITTYPE_NPC, "Tarsha Cherno";
+	emotion ET_QUESTION, getnpcid(0, "Tarsha Cherno");
 	mes "[Tarsha Cherno]";
 	mes "Oh~";
 	mes "I didn't know we";
@@ -983,8 +983,8 @@ function	script	F_Cherno	{
 		mes "It's what we do...";
 		close;
 	case 2:
-		emotion ET_SWEAT, UNITTYPE_NPC, "Tarsha Cherno";
-		emotion ET_SWEAT, UNITTYPE_NPC, "Theo Cherno";
+		emotion ET_SWEAT, getnpcid(0, "Tarsha Cherno");
+		emotion ET_SWEAT, getnpcid(0, "Theo Cherno");
 		mes "[Tarsha Cherno]";
 		mes "Hahaha, Elle?";
 		mes "Why would our";
@@ -998,7 +998,7 @@ function	script	F_Cherno	{
 		mes "was sick or sad";
 		mes "...Or something?";
 		next;
-		emotion ET_HUK, UNITTYPE_NPC, "Tarsha Cherno";
+		emotion ET_HUK, getnpcid(0, "Tarsha Cherno");
 		mes "[Tarsha Cherno]";
 		mes "Oh my god...!";
 		mes "What is she thinking?";
@@ -1167,7 +1167,7 @@ ein_in01,121,99,3	script	Mirror#ein	HIDDEN_NPC,{
 				mes "and I can't seem to find";
 				mes "any flaws with my figure...";
 				next;
-				emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Tarsha Cherno";
+				emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Tarsha Cherno");
 				mes "[Tarsha Cherno]";
 				mes "Actually...";
 				mes "That's not one";
@@ -1517,7 +1517,7 @@ OnTimer63000:
 	hideoffnpc "Airship Captain#02";
 	end;
 OnTimer68000:
-	emotion ET_ANGER, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_ANGER, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: You ugly, godforsaken creatures... Get off my ship!",bc_map,0x70DBDB;
 	end;
 OnTimer73000:
@@ -1583,15 +1583,15 @@ OnTimer87000:
 	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
 	end;
 OnTimer88000:
-	emotion ET_ANGER, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_ANGER, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: You dirty monsters are dealing with this ship's captain...",bc_map,0x70DBDB;
 	end;
 OnTimer93000:
-	emotion ET_ANGER, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_ANGER, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: I'll protect this ship and my crew with my life!",bc_map,0x70DBDB;
 	end;
 OnTimer98000:
-	emotion ET_HNG, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_HNG, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: Here goes! Special Exodus Joker XIII Doom Rifle!",bc_map,0x70DBDB;
 	end;
 OnTimer103000:
@@ -1639,7 +1639,7 @@ OnTimer108000:
 	killmonster "airplane_01","Airship#airplane02::OnCaptainMobDead";
 	end;
 OnTimer113000:
-	emotion ET_HNG, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_HNG, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01","Captain Tarlock: Filthy animals! Stop ruining my ship!",bc_map,0x70DBDB;
 	end;
 OnTimer118000:
@@ -1699,18 +1699,18 @@ OnTimer127000:
 	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
 	end;
 OnTimer128000:
-	emotion ET_FRET, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_FRET, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: There's... Too many to handle!",bc_map,0x70DBDB;
 	end;
 OnTimer133000:
 	mapannounce "airplane_01", "Pilot: Captain, sir, the situation is getting critical!",bc_map,0x00FF00;
 	end;
 OnTimer138000:
-	emotion ET_SWEAT, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_SWEAT, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: We'll need all the help we can get!",bc_map,0x70DBDB;
 	end;
 OnTimer143000:
-	emotion ET_SORRY, UNITTYPE_NPC, "Airship Captain#02";
+	emotion ET_SORRY, getnpcid(0, "Airship Captain#02");
 	mapannounce "airplane_01", "Captain Tarlock: All hands and any passenger who can fight! We've got to drive away these monsters!",bc_map,0x70DBDB;
 	end;
 OnTimer148000:
@@ -3292,7 +3292,7 @@ OnTouch_:
 				mes "Airship. Wait, wait...";
 				mes "You look familiar...";
 				next;
-				emotion ET_HUK, UNITTYPE_NPC, "Ferlock#lab";
+				emotion ET_HUK, getnpcid(0, "Ferlock#lab");
 				mes "[Ferlock]";
 				mes "That's right, aren't you the";
 				mes "one who brought me my";
