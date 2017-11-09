@@ -9,6 +9,8 @@
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
+#include <vector>
+
 struct guardian_data;
 
 // Change this to increase the table size in your mob_db to accomodate a larger mob database.
@@ -138,6 +140,8 @@ struct spawn_info {
 	unsigned short qty;
 };
 
+typedef std::vector<struct spawn_info> SpawnInfos; 
+
 /// Loooitem struct
 struct s_mob_lootitem {
 	struct item item;	   ///< Item info
@@ -165,6 +169,9 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
+	bool has_spawn() const;
+	SpawnInfos get_spawns() const;
+	MobID get_mobid() const {return vd.class_; } // Simple wrapper. The MobID is saved in vd, noone wants to remind that
 };
 
 struct mob_data {
@@ -360,7 +367,6 @@ int mob_clone_delete(struct mob_data *md);
 void mob_reload(void);
 
 void mob_add_spawn(MobID mob_id, struct spawn_info new_spawn);
-int mob_get_spawn(MobID mob_id, struct spawn_info * const out, int len);
 bool mob_has_spawn(MobID mob_id);
 
 // MvP Tomb System

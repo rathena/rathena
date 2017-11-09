@@ -70,15 +70,8 @@ struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant 
 
 struct mob_db *mob_db(int mob_id) { if (mob_id < 0 || mob_id > MAX_MOB_DB || mob_db_data[mob_id] == NULL) return mob_dummy; return mob_db_data[mob_id]; }
 
-// Monster Spawn informations
-class MobSpawns {
-public:
-	std::vector<struct spawn_info> m_spawns;
-	MobSpawns(struct spawn_info new_spawn);
-	void add_spawn(struct spawn_info new_spawn);
-};
-// unordered map mob_id -> MobSpawns
-std::unordered_map<MobID, MobSpawns> mob_spawn_data;
+// holds Monster Spawn informations
+std::unordered_map<MobID, SpawnInfos> mob_spawn_data;
 
 //Dynamic mob chat database
 struct mob_chat *mob_chat_db[MAX_MOB_CHAT+1];
@@ -299,7 +292,7 @@ static bool mobdb_searchname_sub(MobID mob_id, const char * const str, bool full
 	
 	if( mobdb_checkid(mob_id) <= 0 )
 		return false; // invalid mob_id (includes clone check)
-	if(!mob->base_exp && !mob->job_exp && !mob_has_spawn(mob_id))
+	if(!mob->base_exp && !mob->job_exp && !mob->has_spawn())
 		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if( full_cmp ) {
 		// str must equal the db value
@@ -519,7 +512,7 @@ int mob_get_random_id(int type, int flag, int lv)
 		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
 		(flag&0x02 && lv < mob->lv) ||
 		(flag&0x04 && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
-		(flag&0x08 && !mob_has_spawn(mob_id)) ||
+		(flag&0x08 && !mob->has_spawn()) ||
 		(flag&0x10 && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
 	) && (i++) < MAX_MOB_DB && msummon->count > 1);
 
@@ -3136,94 +3129,57 @@ int mob_random_class (int *value, size_t count)
 }
 
 /**
- * Fills the given spawn_info array with the spawns of the monster.
- * Since we currently can't use C++ Features map-server wide, we need_skill
- * to offer a interface for other modules.
- * Returns the count of filled spawn infos in out.
+* Returns the SpawnInfos of the mob_db entry
 */
-int mob_get_spawn(MobID mob_id, struct spawn_info * const out, int len)
+SpawnInfos mob_db::get_spawns() const
 {
-	memset( out, 0, len*sizeof(spawn_info) ); // clear the output
-	auto it_MobSpawn = mob_spawn_data.find(mob_id);
-	
-	if( out == NULL )
-		return 0;
+	auto it_MobSpawn = mob_spawn_data.find(this->get_mobid());
 	if( it_MobSpawn == mob_spawn_data.end() )
-		return 0; // nothing to be added
+		return SpawnInfos(); // no spawns
 	
-	typedef std::vector<struct spawn_info> spawn_infos; 
-	spawn_infos &spawns = it_MobSpawn->second.m_spawns;
-	// sort spawns by spawn quantity
-	std::sort(spawns.begin(), spawns.end(),
-		[](const struct spawn_info & a, const struct spawn_info & b) -> bool
-		{ return a.qty > b.qty; });
-	
-	// fill the info into the out array
-	int filled = 0;
-	for( auto &c_spawn : spawns )
-	{
-		if( filled > len )
-			break; // max len for out reached, stop here
-		out[filled].qty = c_spawn.qty;
-		out[filled].mapindex = c_spawn.mapindex;
-		filled++;
-	}
-	return filled;
+	return it_MobSpawn->second;
 }
 
 /**
  * Checks if a monster is spawned. Returns true if yes, false otherwise.
 */
-bool mob_has_spawn(MobID mob_id)
+bool mob_db::has_spawn() const
 {
-	auto it = mob_spawn_data.find(mob_id);
-	if( it == mob_spawn_data.end() )
-		return false;
 	// It's enough to check if the monster is in mob_spawn_data, because
 	// none or empty spawns are ignored. Thus the monster is spawned.
-	return true;
-}
-
-MobSpawns::MobSpawns(struct spawn_info new_spawn)
-{
-	m_spawns.push_back(new_spawn);
+	return mob_spawn_data.find(this->get_mobid()) != mob_spawn_data.end();
 }
 
 /**
  * Adds a spawn info to the specific mob. (To mob_spawn_data)
+ * @param mob_id - Monster ID spawned
+ * @param new_spawn - spawn_info holding the map and quantity of the spawn
 */
 void mob_add_spawn(MobID mob_id, struct spawn_info new_spawn)
 {
-	auto it = mob_spawn_data.find(mob_id);
-	if( it == mob_spawn_data.end() )
-	{
-		MobSpawns spawns(new_spawn);
+	if( new_spawn.qty <= 0 )
+		return; //ignore empty spawns
+
+	auto itSpawnData = mob_spawn_data.find(mob_id);
+	if( itSpawnData == mob_spawn_data.end() )
+	{ // adds the first spawn of the mob
+		SpawnInfos spawns;
+		spawns.push_back(new_spawn);
 		mob_spawn_data.insert({mob_id, spawns});
 	}
 	else
-	{
-		it->second.add_spawn(new_spawn);
-	}
-}
+	{ // appends another spawn to the mob
+		unsigned short m = new_spawn.mapindex;
+		SpawnInfos &spawns = itSpawnData->second;
 
-/**
- * Adds the spawn info to the mob by mapindex
-*/
-void MobSpawns::add_spawn(struct spawn_info new_spawn)
-{
-	unsigned short m = new_spawn.mapindex;
-	
-	if( new_spawn.qty <= 0 )
-		return; //ignore empty spawns
-	
-	// Search if the map is already in spawns
-	auto it = std::find_if( m_spawns.begin(), m_spawns.end(),
-		[&m] (const spawn_info &s) 
-		{ return (s.mapindex == m); });
-	if( it != m_spawns.end() )
-		it->qty += new_spawn.qty; // add quantity, if map is found
-	else
-		m_spawns.push_back(new_spawn); // else, add the whole spawn info
+		// Search if the map is already in spawns
+		auto it = std::find_if(spawns.begin(), spawns.end(), 
+			[&m] (const spawn_info &s) { return (s.mapindex == m); });
+		if( it != spawns.end() )
+			it->qty += new_spawn.qty; // add quantity, if map is found
+		else
+			spawns.push_back(new_spawn); // else, add the whole spawn info
+	}
 }
 
 /*==========================================

@@ -7827,11 +7827,11 @@ ACMD_FUNC(whodrops)
 	return 0;
 }
 
-#define MAX_SPAWN_DISP 10
 ACMD_FUNC(whereis)
 {
 	MobID mob_ids[MAX_SEARCH] = {0};
 	int count = 0;
+	const int MAX_SPAWN_DISP = 10;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
@@ -7862,28 +7862,25 @@ ACMD_FUNC(whereis)
 	for (int i = 0; i < count; i++) {
 		MobID mob_id = mob_ids[i];
 		struct mob_db * mob = mob_db(mob_id);
-		struct spawn_info spawns[MAX_SPAWN_DISP];
 
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
-		int spawn_cnt = mob_get_spawn(mob_id, spawns, MAX_SPAWN_DISP);
-
-		for (int j = 0; j < spawn_cnt; j++)
+		SpawnInfos spawns = mob->get_spawns();
+		for( auto spawn : spawns)
 		{
-			int16 mapid = map_mapindex2mapid(spawns[j].mapindex);
+			int16 mapid = map_mapindex2mapid(spawn.mapindex);
 			if (mapid < 0)
 				continue;
-			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawns[j].qty);
+			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawn.qty);
 			clif_displaymessage(fd, atcmd_output);
 		}
-		if (spawn_cnt <= 0)
+		if (spawns.size() <= 0)
 			clif_displaymessage(fd, msg_txt(sd,1290)); // This monster does not spawn normally.
 	}
 
 	return 0;
 }
-#undef MAX_SPAWN_DISP
 
 ACMD_FUNC(version)
 {
