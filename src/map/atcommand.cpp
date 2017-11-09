@@ -7867,7 +7867,7 @@ ACMD_FUNC(whereis)
 		clif_displaymessage(fd, atcmd_output);
 		
 		SpawnInfos spawns = mob->get_spawns();
-		for( auto spawn : spawns)
+		for(auto& spawn : spawns)
 		{
 			int16 mapid = map_mapindex2mapid(spawn.mapindex);
 			if (mapid < 0)

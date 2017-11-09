@@ -3155,7 +3155,7 @@ bool mob_db::has_spawn() const
  * @param mob_id - Monster ID spawned
  * @param new_spawn - spawn_info holding the map and quantity of the spawn
 */
-void mob_add_spawn(MobID mob_id, struct spawn_info new_spawn)
+void mob_add_spawn(MobID mob_id, const struct spawn_info& new_spawn)
 {
 	if( new_spawn.qty <= 0 )
 		return; //ignore empty spawns
