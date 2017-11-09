@@ -365,6 +365,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 int mob_clone_delete(struct mob_data *md);
 
 void mob_reload(void);
+void mob_add_spawn(MobID mob_id, struct spawn_info new_spawn);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
