@@ -11128,7 +11128,6 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 
 		if( sd && ud->skilltimer != INVALID_TIMER && (pc_checkskill(sd,SA_FREECAST) > 0 || ud->skill_id == LG_EXEEDBREAK) )
 		{// restore original walk speed
-			ud->skilltimer = INVALID_TIMER;
 			status_calc_bl(&sd->bl, SCB_SPEED);
 		}
 
@@ -11409,7 +11408,6 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 
 	if( sd && ud->skilltimer != INVALID_TIMER && ( pc_checkskill(sd,SA_FREECAST) > 0 || ud->skill_id == LG_EXEEDBREAK ) )
 	{// restore original walk speed
-		ud->skilltimer = INVALID_TIMER;
 		status_calc_bl(&sd->bl, SCB_SPEED);
 	}
 	ud->skilltimer = INVALID_TIMER;
