@@ -1065,7 +1065,7 @@ um_in,144,45,5	script	Umpokoriohtan	789,{
 			mes "...........";
 			mes "My back--!";
 			mes "Simmer down, baby, your turn is comin' in a minute~";
-			emotion ET_ROCK, UNITTYPE_NPC, "Phrenetan";
+			emotion ET_ROCK, getnpcid(0, "Phrenetan");
 			emotion ET_SWEAT;
 			close;
 		}
@@ -1094,7 +1094,7 @@ um_in,144,45,5	script	Umpokoriohtan	789,{
 			mes "Baby, why you gotta be rough?";
 			mes "Hit me gently, ya dig??";
 			mes "I don't mean to hurt you~";
-			emotion ET_HUK, UNITTYPE_NPC, "Phrenetan";
+			emotion ET_HUK, getnpcid(0, "Phrenetan");
 			emotion ET_KEK;
 			close;
 		}

@@ -751,7 +751,7 @@ OnOmg:
 	emotion ET_HUK;
 	end;
 OnKik:
-	emotion ET_KIK;
+	emotion ET_KEK;
 	end;
 OnKis:
 	emotion ET_CHUP;

@@ -995,7 +995,7 @@ OnTouch_:
 		case 1:
 		case 9:
 			sc_start SC_CONFUSION,8000,0;
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+			emotion ET_PROFUSELY_SWEAT, getcharid(2);
 			end;
 		case 2:
 			sc_start SC_STONE,4000,0;
@@ -1005,7 +1005,7 @@ OnTouch_:
 			end;
 		case 6:
 			sc_start SC_FREEZE,4000,0;
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+			emotion ET_PROFUSELY_SWEAT, getcharid(2);
 			end;
 		case 8:
 			sc_start SC_STUN,4000,0;
@@ -1807,7 +1807,7 @@ turbo_n_1,232,14,0	duplicate(cos#tt_main)	#cos_n1_8	45,1,1
 
 turbo_e_16,179,55,0	script	TurboHint_1#tt_main	-1,1,1,{
 OnTouch_:
-	emotion ET_QUESTION, UNITTYPE_PC;
+	emotion ET_QUESTION, getcharid(2);
 	end;
 }
 turbo_e_16,179,55,0	duplicate(TurboHint_1#tt_main)	#e16Intersectiona	-1,1,1
@@ -1855,7 +1855,7 @@ turbo_n_1,208,56,0	duplicate(TurboHint_1#tt_main)	#n1Intersectionn	-1,1,1
 
 -	script	TurboHint_2#tt_main	-1,{
 OnTouch_:
-	emotion ET_SURPRISE, UNITTYPE_PC;
+	emotion ET_SURPRISE, getcharid(2);
 	end;
 }
 turbo_e_16,178,63,0	duplicate(TurboHint_2#tt_main)	#e16CorrectPath1	-1,1,1
@@ -1888,7 +1888,7 @@ turbo_n_1,191,30,0	duplicate(TurboHint_2#tt_main)	#n1CorrectPath9	-1,1,1
 
 -	script	TurboHint_3#tt_main	-1,{
 OnTouch_:
-	emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+	emotion ET_PROFUSELY_SWEAT, getcharid(2);
 	if (rand(1,4) == 3)
 		emotion ET_SURPRISE;
 	end;
@@ -1908,7 +1908,7 @@ turbo_n_1,219,39,0	duplicate(TurboHint_3#tt_main)	#n1NoWayOut4	-1,1,1
 
 -	script	TurboHint_4#tt_main	-1,1,1,{
 OnTouch_:
-	emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+	emotion ET_PROFUSELY_SWEAT, getcharid(2);
 	end;
 }
 turbo_e_16,222,45,0	duplicate(TurboHint_4#tt_main)	#e16NoWayOut5	-1,1,1

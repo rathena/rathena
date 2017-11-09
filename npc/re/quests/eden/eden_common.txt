@@ -421,7 +421,7 @@ moc_para01,20,35,5	script	Office Assistant Neede	814,{
 	emotion ET_OHNO;
 	mes "I don't trust Evenor. She never shows her feelings... she's going to snitch on me to my boss.";
 	next;
-	emotion ET_HNG, UNITTYPE_NPC, "Secretary Lime Evenor";
+	emotion ET_HNG, getnpcid(0, "Secretary Lime Evenor");
 	mes "[Lime Evenor]";
 	mes "I am not that kind of guy.";
 	next;

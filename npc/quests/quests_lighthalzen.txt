@@ -3421,7 +3421,7 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion ET_QUESTION, UNITTYPE_PC;
+			emotion ET_QUESTION, getcharid(2);
 			mes "["+strcharinfo(0)+"]";
 			mes "Those voices weren't";
 			mes "just in my head, were they?";
@@ -3499,7 +3499,7 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion ET_QUESTION, UNITTYPE_PC;
+			emotion ET_QUESTION, getcharid(2);
 			mes "["+strcharinfo(0)+"]";
 			mes "I'm hearing things";
 			mes "again! Where are all of";
@@ -3784,7 +3784,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	755,{
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion ET_SWEAT, UNITTYPE_NPC, "#li_Varmunt";
+			emotion ET_SWEAT;
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -3792,7 +3792,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	755,{
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion ET_BEST, UNITTYPE_NPC, "#li_researcher";
+			emotion ET_BEST, getnpcid(0, "#li_researcher");
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -3919,7 +3919,7 @@ lhz_que01,29,24,3	script	#li_researcher	754,{
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion ET_SWEAT, UNITTYPE_NPC, "#li_Varmunt";
+			emotion ET_SWEAT, getnpcid(0, "#li_Varmunt");
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -3927,7 +3927,7 @@ lhz_que01,29,24,3	script	#li_researcher	754,{
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion ET_BEST, UNITTYPE_NPC, "#li_researcher";
+			emotion ET_BEST;
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -4853,7 +4853,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	53,{
 				mes "What are you talking about?";
 				close;
 			}
-			emotion ET_SURPRISE, UNITTYPE_NPC, "Crippled Girl#li_tre";
+			emotion ET_SURPRISE;
 			mes "[Crippled Girl]";
 			mes "Oh, that's mine!";
 			mes "I gave it to my big brother";
@@ -5520,7 +5520,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 		mes "You again?!";
 		mes "What the hell do";
 		mes "you want from me?!";
-		emotion ET_ANGER, UNITTYPE_NPC, "Mad Scientist#li";
+		emotion ET_ANGER;
 		next;
 		switch(select("Let me speak with you.:Sorry for bothering you.")) {
 		case 1:
@@ -5531,7 +5531,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			next;
 			mes "[Wolfchev]";
 			mes "...........!";
-			emotion ET_SURPRISE, UNITTYPE_NPC, "Mad Scientist#li";
+			emotion ET_SURPRISE;
 			next;
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
@@ -5543,7 +5543,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			changequest 2089,2090;
 			close;
 		case 2:
-			emotion ET_FRET, UNITTYPE_NPC, "Mad Scientist#li";
+			emotion ET_FRET;
 			mes "[Wolfchev]";
 			mes "''Sorry?!'' Do you";
 			mes "think ''sorry'' will";
@@ -5571,7 +5571,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 				mes "now that I would never";
 				mes "tell you why I neeeeed";
 				mes "these Beads. Bweh-heh!";
-				emotion ET_KIK, UNITTYPE_NPC, "Mad Scientist#li";
+				emotion ET_KEK;
 				next;
 				break;
 			}
@@ -5673,9 +5673,9 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			next;
 			mes "[Wolfchev]";
 			mes "...........!";
-			emotion ET_SURPRISE, UNITTYPE_NPC, "Mad Scientist#li";
+			emotion ET_SURPRISE;
 			next;
-			emotion ET_KIK, UNITTYPE_NPC, "Mad Scientist#li";
+			emotion ET_KEK;
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
 			mes "something. Yes, bring me the";
@@ -5763,7 +5763,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 		case 1:
 			mes "[Sueii Slierre]";
 			mes ".............!";
-			emotion ET_SURPRISE, UNITTYPE_NPC, "Secretary Slierre#li";
+			emotion ET_SURPRISE;
 			next;
 			mes "[Sueii Slierre]";
 			mes "How do you know";
@@ -5828,7 +5828,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 			mes "you have any more questions.";
 			next;
 			select("About Wolfchev's Research");
-			emotion ET_THINK, UNITTYPE_NPC, "Secretary Slierre#li";
+			emotion ET_THINK;
 			mes "[Sueii Slierre]";
 			mes "I couldn't tell you any";
 			mes "more about Wolfchev.";
@@ -5900,7 +5900,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 						mes "[Sueii Slierre]";
 						mes "...";
 						mes "......";
-						emotion ET_AHA, UNITTYPE_NPC, "Secretary Slierre#li";
+						emotion ET_AHA;
 						next;
 						mes "[Sueii Slierre]";
 						mes "So... You're";
@@ -6008,7 +6008,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 			mes "[Sueii Slierre]";
 			mes "...";
 			mes "......";
-			emotion ET_AHA, UNITTYPE_NPC, "Secretary Slierre#li";
+			emotion ET_AHA;
 			next;
 			mes "[Sueii Slierre]";
 			mes "So... You're";

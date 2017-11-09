@@ -32,11 +32,11 @@ prontera,156,219,4	script	Cluckers	800,{
 			case 3: sc_start SC_Freeze,10000,0; break;
 			case 4: npctalk "Cluckers : CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 5: sc_start SC_Sleep,10000,0; break;
-			case 6: sc_start SC_Stone,10000,0; emotion ET_KIK; break;
+			case 6: sc_start SC_Stone,10000,0; emotion ET_KEK; break;
 			case 7: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 8: npctalk "Cluckers : Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 9: sc_start SC_Stun,10000,0; break;
-			case 10: sc_start SC_Sleep,10000,0; emotion ET_KIK; break;
+			case 10: sc_start SC_Sleep,10000,0; emotion ET_KEK; break;
 			case 11: npctalk "Cluckers : Cluck! Cluck!"; break;
 			case 12: sc_start SC_Stun,10000,0; break;
 			case 13: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;

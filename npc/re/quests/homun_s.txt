@@ -640,7 +640,7 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		mes "why don't you take a look at that board?";
 		mes "The ^006400Homunculus Mutation System^000000 has ^0000FF5 different types^000000 of new mutations.";
 		next;
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Magic Board#homun_s";
+		emotion ET_SURPRISE, getnpcid(0, "Magic Board#homun_s");
 		mes "[Jeyna]";
 		mes "Your ^FF4800Homunculus^000000 can mutate into any of the 5 different forms.";
 		next;
@@ -656,7 +656,7 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		mes "skills such as Caprice will be";
 		mes "^006400retained and usable even after Mutation^000000.";
 		next;
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Magic Board#homun_s";
+		emotion ET_SURPRISE, getnpcid(0, "Magic Board#homun_s");
 		mes "[Jeyna]";
 		mes "Take a look at the Magic Board behind me and decide for yourself.";
 		close2;
@@ -668,7 +668,7 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		mes "[Jeyna]";
 		mes "Take a look at the board behind me, on the right.";
 		close2;
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Magic Board#homun_s";
+		emotion ET_SURPRISE, getnpcid(0, "Magic Board#homun_s");
 		end;
 	} else if (checkquest(4158) > -1) {
 		playbgm "28.mp3"; // You're in Ruins
@@ -1318,7 +1318,7 @@ OnTimer6000:
 	emotion ET_SURPRISE;
 	end;
 OnTimer7000:
-	emotion ET_SURPRISE, UNITTYPE_NPC, "#04homun_s";
+	emotion ET_SURPRISE, getnpcid(0, "#04homun_s");
 	stopnpctimer;
 	initnpctimer;
 	end;
@@ -1335,7 +1335,7 @@ que_house_s,24,46,3	script	Jonathan#homun_s	6002,{
 }
 
 que_house_s,23,46,3	script	#05homun_s	111,{
-	emotion ET_STARE_ABOUT, UNITTYPE_NPC, "Jonathan#homun_s";
+	emotion ET_STARE_ABOUT, getnpcid(0, "Jonathan#homun_s");
 	if (gethominfo(1) < 6048 || gethominfo(1) > 6052) { // Not mutated Homunculus-S
 		mes "[Jonathan]";
 		mes "Hwang~ Hwang!";
@@ -1350,7 +1350,7 @@ que_house_s,23,46,3	script	#05homun_s	111,{
 		mes "[Jonathan]";
 		mes "Hwang~?!";
 		next;
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Jonathan#homun_s";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Jonathan#homun_s");
 		mes "[Jonathan]";
 		mes "*Sniff* ...";
 		next;

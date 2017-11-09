@@ -340,7 +340,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "arrange these nicely";
 			mes "out of the bottom of";
 			mes "my freakin' heart.";
-			emotion ET_THROB, UNITTYPE_PC;
+			emotion ET_THROB, getcharid(2);
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "...";
@@ -2010,7 +2010,7 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 		mes "a maid found a fragment of a";
 		mes "Red Gemstone while cleaning";
 		mes "the secret ceremonial grounds.";
-		emotion ET_SURPRISE, UNITTYPE_PC;
+		emotion ET_SURPRISE, getcharid(2);
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "I always thought it";
@@ -2312,7 +2312,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "at a young age^000000. That is";
 		mes "Jormungand's curse and";
 		mes "the royal family's secret.";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "What...?!";
@@ -2387,7 +2387,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "looking marks on their bodies.";
 		mes "It almost looked as if they";
 		mes "were growing snake scales.";
-		emotion ET_SURPRISE, UNITTYPE_PC;
+		emotion ET_SURPRISE, getcharid(2);
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Wait, they grew snake";
@@ -3205,7 +3205,7 @@ prt_church,21,111,5	script	#prince2	887,{
 		mes "curse, we all failed. Those";
 		mes "involved have begun to believe";
 		mes "that Odin may have abandoned us... ";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		next;
 		mes "^3355FFYou examine the body of";
 		mes "the second prince and notice";

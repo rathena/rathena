@@ -329,7 +329,7 @@ dewata,147,107,6	script	Gourmet#dew	85,{
 	mes "[Gourmet]";
 	mes "Master~ One more please~";
 	emotion ET_BEST;
-	emotion ET_OK, UNITTYPE_NPC, "Restauranteur#dew";
+	emotion ET_OK, getnpcid(0, "Restauranteur#dew");
 	next;
 	mes "[Gourmet]";
 	mes "You must try this! The Food here is succulent~";
@@ -674,13 +674,13 @@ OnTouch:
 	next;
 	mes "[Sweet Wife]";
 	mes "Really? I'm that beautiful? I love you, honey~";
-	emotion ET_CHUPCHUP, UNITTYPE_NPC, "Sweet Married Couple#dew2";
+	emotion ET_CHUPCHUP, getnpcid(0, "Sweet Married Couple#dew2");
 	next;
 	mes "[Sweet Married Couple]";
 	mes "Hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
 	mes "Hohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohoho";
 	emotion ET_SMILE;
-	emotion ET_SMILE, UNITTYPE_NPC, "Sweet Married Couple#dew2";
+	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#dew2");
 	next;
 	mes "Come on now, I'm growing tired of this. Let's go.";
 	close;
@@ -701,7 +701,7 @@ OnTouch:
 	next;
 	mes "[Sweet Husband]";
 	mes "No matter how pretty the flower is, you are always more beautiful~";
-	emotion ET_CHUP, UNITTYPE_NPC, "Sweet Married Couple#dew1";
+	emotion ET_CHUP, getnpcid(0, "Sweet Married Couple#dew1");
 	next;
 	mes "[Sweet Wife]";
 	mes "Really? I'm that pretty? I love you, sweetie~";
@@ -710,7 +710,7 @@ OnTouch:
 	mes "[Sweet Married Couple]";
 	mes "Hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
 	mes "Hohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohoho";
-	emotion ET_SMILE, UNITTYPE_NPC, "Sweet Married Couple#dew1";
+	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#dew1");
 	emotion ET_SMILE;
 	next;
 	mes "Come on now, this bores me. Let's move on.";
@@ -782,10 +782,10 @@ OnTouch:
 	next;
 	mes "[Sarr]";
 	mes "I found Siyak!! Come out, come out!!";
-	emotion ET_KIK, UNITTYPE_NPC, "Sarr#dew";
+	emotion ET_KEK, getnpcid(0, "Sarr#dew");
 	emotion ET_HUK;
-	emotion ET_KIK, UNITTYPE_NPC, "Sipo#dew";
-	emotion ET_HUK, UNITTYPE_PC;
+	emotion ET_KEK, getnpcid(0, "Sipo#dew");
+	emotion ET_HUK, getcharid(2);
 	next;
 	mes "[Siyak]";
 	mes "Arrgg!! This is all your fault~!!";
@@ -800,10 +800,10 @@ OnTouch:
 	next;
 	mes "[Sarr]";
 	mes "I found Siyak!! Come out come out!!";
-	emotion ET_KIK, UNITTYPE_NPC, "Sarr#dew";
-	emotion ET_HUK, UNITTYPE_NPC, "Siyak#dew";
-	emotion ET_KIK;
-	emotion ET_HUK, UNITTYPE_PC;
+	emotion ET_KEK, getnpcid(0, "Sarr#dew");
+	emotion ET_HUK, getnpcid(0, "Siyak#dew");
+	emotion ET_KEK;
+	emotion ET_HUK, getcharid(2);
 	next;
 	mes "[Sipo]";
 	mes "Hehe~ Now Siyak is IT~ I'll just keep hiding in here.";
@@ -845,7 +845,7 @@ OnTouch:
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "... ... ...";
-	emotion ET_THINK, UNITTYPE_PC;
+	emotion ET_THINK, getcharid(2);
 	close;
 }
 

@@ -1440,7 +1440,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 				mes "[Cleope Verce]";
 				mes "You'll have to go through a lot until you reach the point where I'm at right now. Ho ho ho! You still have a looong way to go~";
 				next;
-				emotion ET_KIK;
+				emotion ET_KEK;
 				mes "[Cleope Verce]";
 				mes "Good luck...";
 				mes "Rookie.";
@@ -1491,7 +1491,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 				mes "until you become a well";
 				mes "experienced Acolyte. Ho ho~";
 				next;
-				emotion ET_KIK;
+				emotion ET_KEK;
 				mes "[Cleope Verce]";
 				mes "Good luck,";
 				mes "young friend.";
@@ -1549,7 +1549,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 				mes "memories when you're";
 				mes "still an Acolyte.";
 				next;
-				emotion ET_KIK;
+				emotion ET_KEK;
 				mes "[Cleope Verce]";
 				mes "Good luck,";
 				mes "young friend~";

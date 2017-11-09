@@ -4234,7 +4234,7 @@ einbech,165,105,7	script	Buender Hikeman#ein	847,{
 		mes "...";
 		mes "......";
 		mes "......You...";
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		next;
 		mes "[Buender Hikeman]";
 		mes "...";
@@ -4856,7 +4856,7 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 		mes "["+strcharinfo(0)+"]";
 		mes "I was right.";
 		mes "You're Shinokas!";
-		emotion ET_KIK, UNITTYPE_PC;
+		emotion ET_KEK, getcharid(2);
 		next;
 		mes "[Shinokas]";
 		mes "Curses!";

@@ -2250,7 +2250,7 @@ S_Reward:
 			mes "becoming what you want";
 			mes "to be! B-believe... with";
 			mes "all of your freakin' heart!";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			emotion ET_HUK;
 			next;
 			mes "[Ei'felle]";
@@ -2310,7 +2310,7 @@ S_Reward:
 			mes "You've gotta see it, and";
 			mes "you've gotta feel it in your";
 			mes "freakin' heart and mind!";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			emotion ET_HUK;
 			next;
 			mes "[Ei'felle]";

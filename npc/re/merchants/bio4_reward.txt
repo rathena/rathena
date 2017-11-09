@@ -370,7 +370,7 @@ L_Reward:
 			mes "Okay..";
 			close;
 		}
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Weird old man#Bio4Reward";
+		emotion ET_PROFUSELY_SWEAT;
 		progressbar "FF00FF", 2;
 		delitem 6469, .@amount[0]; //Will_Of_Warrior
 		delitem 6470, .@amount[1]; //Blood_Thirst
@@ -423,20 +423,20 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "[Pudding]";
 		mes "From those monsters, I could find rare items like '^F2766EWill of Warrior^000000' '^952420Thirst for Blood^000000' '^88C6F7Chill of the Dead^000000' which you cannot find from any other place.";
 		next;
-		emotion ET_QUESTION, UNITTYPE_NPC, "Sorcerer#Bio4Reward";
+		emotion ET_QUESTION;
 		mes "[Pudding]";
 		mes "And after many hours of research on my own, I finally figured out a way to use those items. Do you wanna know?";
 		next;
 		switch(select("Oh....pardon?!", "Of course, I really wanna know.")) {
 		case 1:
-			emotion ET_HUK, UNITTYPE_PC;
-			emotion ET_FRET, UNITTYPE_NPC, "Sorcerer#Bio4Reward";
+			emotion ET_HUK, getcharid(2);
+			emotion ET_FRET;
 			mes "[Pudding]";
 			mes "Oh my! You fell asleep after you asked me something? Well, anyway I feel lazy to explain again so I will just continue.";
 			next;
 			break;
 		case 2:
-			emotion ET_SMILE, UNITTYPE_NPC, "Sorcerer#Bio4Reward";
+			emotion ET_SMILE;
 			mes "[Pudding]";
 			mes "Good, I am content that you are listening to my story carefully. Then I will keep explaining.";
 			next;
@@ -463,7 +463,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "Since those materials can only be found from the monsters in the Lab., the special power also can be dwelt into certain equipments which can be obtained from the Lab.";
 		next;
 		select("So what's the conclusion?");
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that becuase that's important.";

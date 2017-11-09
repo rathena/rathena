@@ -420,7 +420,7 @@ mal_in02,22,62,3	script	Tomas#mal	556,{
 		mes "[Samuel]";
 		mes "Yes, Admiral!";
 		mes "Moved all 3 thousand boxes, including the one I just received, to the storage. The next boxes are expected to be delivered in 5 hours!";
-		emotion ET_HUK, UNITTYPE_NPC, "Samuel#mal";
+		emotion ET_HUK, getnpcid(0, "Samuel#mal");
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "Samuel!";
@@ -429,7 +429,7 @@ mal_in02,22,62,3	script	Tomas#mal	556,{
 		mes "[Samuel]";
 		mes "Sorry! Village Chief!";
 		mes "I will correct myself!";
-		emotion ET_HUK, UNITTYPE_NPC, "Samuel#mal";
+		emotion ET_HUK, getnpcid(0, "Samuel#mal");
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "Hmm, hmm!";
@@ -441,7 +441,7 @@ mal_in02,22,62,3	script	Tomas#mal	556,{
 		mes "[Samuel]";
 		mes "Yes! Village Chief!";
 		mes "Seaweed, Sea cucumbers, sea squirts, sea anemones to the right! Seaweed and glasses downstairs! Send anchovies and drums to the gathering place! Let the rest stack assortatively in the corner!";
-		emotion ET_HUK, UNITTYPE_NPC, "Samuel#mal";
+		emotion ET_HUK, getnpcid(0, "Samuel#mal");
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "It it not.";
@@ -450,7 +450,7 @@ mal_in02,22,62,3	script	Tomas#mal	556,{
 		next;
 		mes "[Samuel]";
 		mes "Yes!!";
-		emotion ET_HUK, UNITTYPE_NPC, "Samuel#mal";
+		emotion ET_HUK, getnpcid(0, "Samuel#mal");
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "Huuu...";
@@ -531,7 +531,7 @@ mal_in02,22,62,3	script	Tomas#mal	556,{
 		mes "Admiral!";
 		mes "Sea bass, sea jelly, sea sponge are well arranged on the right!";
 		mes "Seaweed and kiwi downstairs! Anchovies and cod to the gathering place! Let the rest stack assortatively in the corner?";
-		emotion ET_HUK, UNITTYPE_NPC, "Samuel#mal";
+		emotion ET_HUK, getnpcid(0, "Samuel#mal");
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "....";
@@ -558,7 +558,7 @@ mal_in02,22,62,3	script	Tomas#mal	556,{
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "Huh?! If you really want to put Sea bass to the right that much, let yourself stand there all day long! Mew~";
-		emotion ET_HUK, UNITTYPE_NPC, "Samuel#mal";
+		emotion ET_HUK, getnpcid(0, "Samuel#mal");
 		next;
 		mes "[Tomas, Village Chief]";
 		mes "I'm busy enough without you. You're getting on my nerves! Mew~";
@@ -655,27 +655,27 @@ mal_in02,182,61,3	script	President of Meeting#mal	421,{
 		mes "Umm... Yes. Then, please say first, ^6666ccScottfold^000000.";
 		set ma_tomas,2;
 		changequest 11209,11210;
-		emotion ET_WRAP, UNITTYPE_NPC, "Scottfold#mal";
+		emotion ET_WRAP, getnpcid(0, "Scottfold#mal");
 		close;
 	} else if (ma_tomas == 2) {
 		mes "[President of Meeting]";
 		mes "Umm... Yes. Please speak first, ^6666ccScottfold^000000.";
-		emotion ET_WRAP, UNITTYPE_NPC, "Scottfold#mal";
+		emotion ET_WRAP, getnpcid(0, "Scottfold#mal");
 		close;
 	} else if (ma_tomas == 3) {
 		mes "[President of Meeting]";
 		mes "Please speak, Koon.... next.";
-		emotion ET_WRAP, UNITTYPE_NPC, "Koon#mal";
+		emotion ET_WRAP, getnpcid(0, "Koon#mal");
 		close;
 	} else if (ma_tomas == 4) {
 		mes "[President of Meeting]";
 		mes "There will be a presentation by Dr. Devore on his study continuously.";
-		emotion ET_WRAP, UNITTYPE_NPC, "Linguist Devore#mal";
+		emotion ET_WRAP, getnpcid(0, "Linguist Devore#mal");
 		close;
 	} else if (ma_tomas == 5) {
 		mes "[President of Meeting]";
 		mes "Please speak next, Dr. Mali.";
-		emotion ET_WRAP, UNITTYPE_NPC, "Geologist Mali#mal";
+		emotion ET_WRAP, getnpcid(0, "Geologist Mali#mal");
 		close;
 	} else if (ma_tomas == 6) {
 		mes "[President of Meeting]";
@@ -723,7 +723,7 @@ mal_in02,178,66,5	script	Scottfold#mal	422,{
 		mes "Then for the next... yes, Koon please speak now.";
 		set ma_tomas,3;
 		changequest 11210,11211;
-		emotion ET_WRAP, UNITTYPE_NPC, "Koon#mal";
+		emotion ET_WRAP, getnpcid(0, "Koon#mal");
 		close;
 	}
 	mes "[Scottfold]";
@@ -764,7 +764,7 @@ mal_in02,177,58,7	script	Koon#mal	546,{
 		mes "Yes. Carry on please.";
 		set ma_tomas,4;
 		changequest 11211,11212;
-		emotion ET_WRAP, UNITTYPE_NPC, "Linguist Devore#mal";
+		emotion ET_WRAP, getnpcid(0, "Linguist Devore#mal");
 		close;
 	}
 	mes "[Koon]";
@@ -823,7 +823,7 @@ mal_in02,174,64,5	script	Linguist Devore#mal	549,{
 		mes "Then, let's wrap up the progress of the language study, and listen to Geologist, Dr. Mali.";
 		set ma_tomas,5;
 		changequest 11212,11213;
-		emotion ET_WRAP, UNITTYPE_NPC, "Geologist Mali#mal";
+		emotion ET_WRAP, getnpcid(0, "Geologist Mali#mal");
 		close;
 	} else if (ma_tomas < 18) {
 		mes "[Linguist Devore]";
@@ -975,13 +975,13 @@ mal_in02,179,57,1	script	Geologist Mali#mal	559,{
 		mes "Wait!";
 		mes "It's not something to be done only with instant repairs!";
 		mes "My father was seriously injured from the earthquake some time ago!";
-		emotion ET_HUK, UNITTYPE_NPC, "Brie#mal";
+		emotion ET_HUK, getnpcid(0, "Brie#mal");
 		next;
 		mes "[President of Meeting]";
 		mes "Mr. Brie!! I understand what your situation is, but please clam dowm, since we're having a meeting.";
 		set ma_tomas,6;
 		changequest 11213,11214;
-		emotion ET_WRAP, UNITTYPE_NPC, "Brie#mal";
+		emotion ET_WRAP, getnpcid(0, "Brie#mal");
 		close;
 	} else if (ma_tomas < 13) {
 		mes "[Geologist Mali]";
@@ -1084,7 +1084,7 @@ mal_in02,179,57,1	script	Geologist Mali#mal	559,{
 		mes "[Linguist Devore]";
 		mes "I made this, since the Starfish study was well finished and you didn't need to do such hard work like this!";
 		mes "Sob sob!!!";
-		emotion ET_CRY, UNITTYPE_NPC, "Linguist Devore#mal";
+		emotion ET_CRY, getnpcid(0, "Linguist Devore#mal");
 		next;
 		mes "[Geologist Mali]";
 		mes "Ohhh! What are you talking about Dr. Devore, mew~!!!!";
@@ -1704,19 +1704,19 @@ mal_in01,114,169,5	script	Rican#mal	547,{
 			mes "[Rican]";
 			mes "Harvesting Yggdrasil Berry is very easy.";
 			mes "You can get it when you just dig the ground, mew~";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			next;
 			select("?!");
 			mes "[Rican]";
 			mes "Huh?";
 			mes "Doesn't it originally come from the ground?";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			next;
 			select("Doesn't it grow on trees?");
 			mes "[Rican]";
 			mes "Well, the Yggdrasil Berry in Midgard could do so.";
 			mes "But ^6666ccwe dig our Yggdrasil Berry here from the ground^000000.";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			next;
 			mes "[Rican]";
 			mes "You can get it on Malangdo Island easily. Bring me about 30.";
@@ -1873,7 +1873,7 @@ mal_in01,116,168,0	script	Dry Machine#mal	563,{
 		case 1:
 			mes "[Rican]";
 			mes "I'll press the button by myself!!!";
-			emotion ET_HUK, UNITTYPE_NPC, "Rican#mal";
+			emotion ET_HUK, getnpcid(0, "Rican#mal");
 			next;
 			mes "- The machine starts operating -";
 			mes "- when he presses the button. -";
@@ -1911,7 +1911,7 @@ mal_in01,116,168,0	script	Dry Machine#mal	563,{
 			mes "- I feel like I'm touching -";
 			mes "- something bad. -";
 			mes "- Ah, ah! Feels bad... -";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 		}
 		set .off,1;
 		donpcevent "Water Sand"+strnpcinfo(2)+"#mal::OnEnable";
@@ -2026,7 +2026,7 @@ mal_dun01,136,122,3	script	Biscuit#mal	551,{
 		mes "[Linguist Devore]";
 		mes "Ummm? What do you mean?";
 		mes "I cannot hear anything.";
-		emotion ET_QUESTION, UNITTYPE_NPC, "Linguist Devore#mald";
+		emotion ET_QUESTION, getnpcid(0, "Linguist Devore#mald");
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Huh? Biscuit said 'Well, that fellow is often the one ignoring my words. He wavers with words to say and makes me uncomfortable.'?";
@@ -2034,29 +2034,29 @@ mal_dun01,136,122,3	script	Biscuit#mal	551,{
 		mes "[Linguist Devore]";
 		mes "What? What are you taling about?";
 		mes "I cannot hear anything.";
-		emotion ET_QUESTION, UNITTYPE_NPC, "Linguist Devore#mald";
+		emotion ET_QUESTION, getnpcid(0, "Linguist Devore#mald");
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Huh?";
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		next;
 		mes "[Linguist Devore]";
 		mes "Ah?!";
 		mes "Ah?!?!?!?!?!?";
 		mes "Ah!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-		emotion ET_HUK, UNITTYPE_NPC, "Linguist Devore#mald";
+		emotion ET_HUK, getnpcid(0, "Linguist Devore#mald");
 		next;
 		mes "[Linguist Devore]";
 		mes "If... if that's the cause!";
 		mes "We may have totally misunderstood!";
-		emotion ET_HUK, UNITTYPE_NPC, "Linguist Devore#mald";
+		emotion ET_HUK, getnpcid(0, "Linguist Devore#mald");
 		next;
 		mes "[Linguist Devore]";
 		mes "Oh my, we couldn't have known, since we live here only with ourselves.";
 		next;
 		mes "[Linguist Devore]";
 		mes "Each living thing has its own area for audibility and vocalization. But we and Biscuit were in slightly different areas!";
-		emotion ET_HUK, UNITTYPE_NPC, "Linguist Devore#mald";
+		emotion ET_HUK, getnpcid(0, "Linguist Devore#mald");
 		next;
 		mes "[Linguist Devore]";
 		mes "In such conditions, we cannot hear any language properly!";
@@ -2076,7 +2076,7 @@ mal_dun01,136,122,3	script	Biscuit#mal	551,{
 		mes "["+strcharinfo(0)+"]";
 		mes "Wait, Dr. Devore, what on earth is next...?";
 		mes "What should I do...?";
-		emotion ET_THINK, UNITTYPE_PC;
+		emotion ET_THINK, getcharid(2);
 		next;
 		mes "[Linguist Devore]";
 		mes "Hahaha~ You are the kind who can have conversations with Biscuit. Please try to talk with him.";
@@ -2199,7 +2199,7 @@ mal_dun01,136,122,3	script	Biscuit#mal	551,{
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "...It's not a request, but a threat...";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			close;
 		}
 	} else if (ma_tomas == 26) {
@@ -2526,7 +2526,7 @@ mal_dun01,133,125,5	script	Star Candy#mal	552,{
 		mes "["+strcharinfo(0)+"]";
 		mes "?!";
 		mes "You can talk!";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		next;
 		mes "[Biscuit]";
 		mes "What?";
@@ -2540,7 +2540,7 @@ mal_dun01,133,125,5	script	Star Candy#mal	552,{
 		mes "[Biscuit]";
 		mes "Our precious Star Candy humbly supports them, and they treat her like this.";
 		mes "They don't know how to express thanks!";
-		emotion ET_ANGER, UNITTYPE_NPC, "Biscuit#mal";
+		emotion ET_ANGER, getnpcid(0, "Biscuit#mal");
 		next;
 		select("Support?");
 		mes "[Biscuit]";
@@ -2567,7 +2567,7 @@ mal_dun01,133,125,5	script	Star Candy#mal	552,{
 		mes "[Biscuit]";
 		mes "Star Candy sacrifices herself like this, but those fellows are setting the pillars around her for themselves only.";
 		mes "Hewww!!!";
-		emotion ET_ANGER, UNITTYPE_NPC, "Biscuit#mal";
+		emotion ET_ANGER, getnpcid(0, "Biscuit#mal");
 		next;
 		mes "[Biscuit]";
 		mes "They talk to her, but ignore me when I talk to her.";
@@ -3460,14 +3460,14 @@ malangdo,125,147,3	script	Patrol Leader#ml	545,{
 			mes "[Crime Prevention Staff]";
 			mes "Captain, we have work again, right?";
 			emotion ET_CRY;
-			emotion ET_CRY, UNITTYPE_NPC, "Crime Prevention Staff#ml";
+			emotion ET_CRY, getnpcid(0, "Crime Prevention Staff#ml");
 			next;
 			mes "[Patrol Leader]";
 			mes "Hide your tears and save your tears!";
 			mes "You should cry when having a clue for bad activity";
 			mes "at crime spot!";
 			emotion ET_CRY;
-			emotion ET_CRY, UNITTYPE_NPC, "Crime Prevention Staff#ml";
+			emotion ET_CRY, getnpcid(0, "Crime Prevention Staff#ml");
 			next;
 			mes "[Patrol Leader]";
 			mes "I will scold you once the investigation is over!";
@@ -6260,8 +6260,8 @@ L_ShowLights:
 		mes "The speed of spinning is getting faster after pressing the buttons.";
 		mes "After all...";
 		specialeffect EF_BEGINSPELL6;
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Cat Detective#nya_14";
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Friend of Detective#mal";
+		emotion ET_SURPRISE, getnpcid(0, "Cat Detective#nya_14");
+		emotion ET_SURPRISE, getnpcid(0, "Friend of Detective#mal");
 		next;
 		cutin "mal_homnya_s",2;
 		mes "[Homnya]";
@@ -6621,7 +6621,7 @@ mal_in01,31,210,2	script	Cat Gamers Director	549,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "A weakness is no longer a weakness when you say it out loud.";
-		emotion ET_BEST, UNITTYPE_PC;
+		emotion ET_BEST, getcharid(2);
 		next;
 		mes "[Cat Gamers Director]";
 		mes "Hahahaha I like that phrase.";
@@ -6740,11 +6740,11 @@ mal_in01,31,210,2	script	Cat Gamers Director	549,{
 			next;
 			mes "[Cat Gamers Director]";
 			mes "What good is it to scam innocent cats?~";
-			emotion ET_KIK;
+			emotion ET_KEK;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Yes, I think that you're right.";
-			emotion ET_SCRATCH, UNITTYPE_PC;
+			emotion ET_SCRATCH, getcharid(2);
 			next;
 			mes "[Cat Gamers Director]";
 			mes "Oh, so you met Eryu, Stew, Ketchup, and Eff.";
@@ -7126,7 +7126,7 @@ mal_in01,31,210,2	script	Cat Gamers Director	549,{
 	case 3:
 		mes "[Cat Gamers Director]";
 		mes "Heh~ What happened to your face, "+strcharinfo(0)+"? Guess you lost from the practice, right? Heh~";
-		emotion ET_KIK;
+		emotion ET_KEK;
 		next;
 		mes "[Cat Gamers Director]";
 		mes "Heh~ I saw players puting notes in the 'Petition box'. Heh~ Guess that was your work. Let me see...";
@@ -7393,16 +7393,16 @@ malangdo,127,111,4	script	Strange Cat#gamer	547,{
 		case 3:
 			mes "[Manager Cat]";
 			mes "Meow~ I want to tell you a story~ Follow me meow~ Let talk over there, meow~";
-			emotion ET_KIK;
+			emotion ET_KEK;
 			next;
 			break;
 		}
 		mes "["+strcharinfo(0)+"]";
 		mes "Haha, I was just kidding. I actually need to tell you that the Cat Gamers Director has an issue...";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		next;
 		mes "You explain the story to the Manager Cat.";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		next;
 		mes "[Manager Cat]";
 		mes "Scary image... Meow, I understand... Cat Gamers Director should feel peace by giving up things.";
@@ -7410,21 +7410,21 @@ malangdo,127,111,4	script	Strange Cat#gamer	547,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "... ... ...";
-		emotion ET_THINK, UNITTYPE_PC;
+		emotion ET_THINK, getcharid(2);
 		next;
 		mes "[Manager Cat]";
 		mes "Meow! Go tell him this, meow~ Prepare a box, meow~";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "A box?";
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		next;
 		mes "[Manager Cat]";
 		mes "Petition it is, meow!! There is some place where humans do such things, I think it will help us~";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Ok, I will go tell it to the Games Director~";
-		emotion ET_OK, UNITTYPE_PC;
+		emotion ET_OK, getcharid(2);
 		set malang_gamer,9;
 		erasequest 5066;
 		setquest 5067;
@@ -7668,7 +7668,7 @@ malangdo,161,197,4	script	Eryu#gamer	876,{
 				mes "Just answer a few questions for me, ok?";
 				mes "Be yourself and you'll do just fine.";
 				mes "Ok, first question: How much do you practice a day?";
-				emotion ET_QUESTION, UNITTYPE_PC;
+				emotion ET_QUESTION, getcharid(2);
 				next;
 				mes "[Eryu]";
 				mes "Usually for about 8 hours, but I have to tell you that I'm not on the team anymore...";
@@ -7676,7 +7676,7 @@ malangdo,161,197,4	script	Eryu#gamer	876,{
 				mes "["+strcharinfo(0)+"]";
 				mes "Wait, what?";
 				mes "You are not with the team now? How come...?";
-				emotion ET_HUK, UNITTYPE_PC;
+				emotion ET_HUK, getcharid(2);
 				next;
 				mes "[Eryu]";
 				mes "Well...";
@@ -7732,7 +7732,7 @@ malangdo,161,197,4	script	Eryu#gamer	876,{
 			mes "Sorry, I was trying to interview another cat...";
 			mes "And came back to you by mistake.";
 			mes "I'm sorry.";
-			emotion ET_SORRY, UNITTYPE_PC;
+			emotion ET_SORRY, getcharid(2);
 			next;
 			mes "[Eryu]";
 			mes "Ah... I see. Take care of yourself.";
@@ -7916,7 +7916,7 @@ malangdo,230,197,4	script	Stew#gamer	555,{
 				mes "Ah! I see.";
 				mes "Ok, the survey is over now.";
 				mes "Thank you for your opinion on our survey for the 'Boom Can' company.";
-				emotion ET_THANKS, UNITTYPE_PC;
+				emotion ET_THANKS, getcharid(2);
 				next;
 				mes "[Stew]";
 				mes "Meow? Did you aks anything meow?";
@@ -7925,7 +7925,7 @@ malangdo,230,197,4	script	Stew#gamer	555,{
 				mes "I already asked you everything...";
 				mes "Don't you remember?";
 				mes "There were 10 questions!";
-				emotion ET_QUESTION, UNITTYPE_PC;
+				emotion ET_QUESTION, getcharid(2);
 				next;
 				mes "[Stew]";
 				mes "Really meow? Strange meow.";
@@ -7960,7 +7960,7 @@ malangdo,230,197,4	script	Stew#gamer	555,{
 			mes "["+strcharinfo(0)+"]";
 			mes "Oops! I should be meeting other cats.";
 			mes "I am very sorry...";
-			emotion ET_SORRY, UNITTYPE_PC;
+			emotion ET_SORRY, getcharid(2);
 			next;
 			mes "[Stew]";
 			mes "It's ok meow~ Good bye meow~";
@@ -8079,7 +8079,7 @@ malangdo,244,144,4	script	Ketchup#gamer	546,{
 				mes "["+strcharinfo(0)+"]";
 				mes "I want to share some of our philosophy with you.";
 				mes "Do you believe in giving to others?";
-				emotion ET_QUESTION, UNITTYPE_PC;
+				emotion ET_QUESTION, getcharid(2);
 				next;
 				mes "[Ketchup]";
 				mes "Umm I guess so...";
@@ -8122,7 +8122,7 @@ malangdo,244,144,4	script	Ketchup#gamer	546,{
 				emotion ET_CRY;
 				next;
 				emotion ET_THINK;
-				emotion ET_THINK, UNITTYPE_PC;
+				emotion ET_THINK, getcharid(2);
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "The Lord of Cans forgives Ketchup's sins.";
@@ -8266,7 +8266,7 @@ malangdo,181,119,7	script	Eff#gamer	560,{
 				mes "["+strcharinfo(0)+"]";
 				mes "Haha! You are lucky today.";
 				mes "You heard that land can be a good investment, right?";
-				emotion ET_QUESTION, UNITTYPE_PC;
+				emotion ET_QUESTION, getcharid(2);
 				next;
 				mes "[Eff]";
 				mes "Oh oh~ I think so. Meow~";
@@ -8289,7 +8289,7 @@ malangdo,181,119,7	script	Eff#gamer	560,{
 				mes "Hmm, this is top secret.";
 				mes "Something that must not be revealed at all...";
 				mes "Can you really keep this secret...?";
-				emotion ET_QUESTION, UNITTYPE_PC;
+				emotion ET_QUESTION, getcharid(2);
 				next;
 				mes "[Eff]";
 				mes "Well... I've always been known for being a good keeper of secrets meow.";
@@ -8325,7 +8325,7 @@ malangdo,181,119,7	script	Eff#gamer	560,{
 				mes "["+strcharinfo(0)+"]";
 				mes "So, how many cans do you want to invest?";
 				mes "You'll be a part owner so make sure to invest the max that you can afford.";
-				emotion ET_QUESTION, UNITTYPE_PC;
+				emotion ET_QUESTION, getcharid(2);
 				next;
 				mes "[Eff]";
 				mes "I want to invest.";
@@ -8350,7 +8350,7 @@ malangdo,181,119,7	script	Eff#gamer	560,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "What!! Why would you quit such good a gig!! Are you crazy?";
-				emotion ET_HUK, UNITTYPE_PC;
+				emotion ET_HUK, getcharid(2);
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Let's say we invest 1,000 cans after getting that loan.";
@@ -8575,17 +8575,17 @@ mal_in01,91,216,4	script	Ser#gamer	544,{
 		mes "[Ser]";
 		mes "Scissors beats Paper,";
 		emotion ET_SCISSOR;
-		emotion ET_WRAP, UNITTYPE_PC;
+		emotion ET_WRAP, getcharid(2);
 		next;
 		mes "[Ser]";
 		mes "Paper beats Rock,";
 		emotion ET_WRAP;
-		emotion ET_ROCK, UNITTYPE_PC;
+		emotion ET_ROCK, getcharid(2);
 		next;
 		mes "[Ser]";
 		mes "And Rock beats Scissors.";
 		emotion ET_ROCK;
-		emotion ET_SCISSOR, UNITTYPE_PC;
+		emotion ET_SCISSOR, getcharid(2);
 		next;
 		mes "[Ser]";
 		mes "Ok? Got it now?";
@@ -8619,7 +8619,7 @@ mal_in01,91,216,4	script	Ser#gamer	544,{
 
 		set .@pc,  select("Rock:Paper:Scissors")-1;
 		set .@npc, rand(3);
-		emotion .@emote[.@pc], UNITTYPE_PC;
+		emotion .@emote[.@pc], getcharid(2);
 		emotion .@emote[.@npc];
 		mes "["+strcharinfo(0)+"] "+.@rps$[.@pc];
 		mes "--------------------------------";
@@ -8951,7 +8951,7 @@ mal_in01,86,222,4	script	Paa#gamer	544,{
 
 		set .@pc,  select("Rock:Paper:Scissors")-1;
 		set .@npc, rand(3);
-		emotion .@emote[.@pc], UNITTYPE_PC;
+		emotion .@emote[.@pc], getcharid(2);
 		emotion .@emote[.@npc];
 		mes "["+strcharinfo(0)+"] "+.@rps$[.@pc];
 		mes "--------------------------------";
@@ -9593,7 +9593,7 @@ mal_in01,134,221,4	script	KungKung#gamer	422,{
 
 		// Emote[58-63]:
 		// ET_DICE1, ET_DICE2, ET_DICE3, ET_DICE4, ET_DICE5, ET_DICE6
-		emotion ET_DICE1+.@pc_dic, UNITTYPE_PC;
+		emotion ET_DICE1+.@pc_dic, getcharid(2);
 		emotion ET_DICE1+.@npc_dic;
 
 		if (.@pc_dic > .@npc_dic) {
@@ -9624,17 +9624,17 @@ mal_in01,134,221,4	script	KungKung#gamer	422,{
 		next;
 		mes "[KungKung & "+strcharinfo(0)+"]";
 		mes "Kong!";
-		emotion ET_BLABLA, UNITTYPE_PC;
+		emotion ET_BLABLA, getcharid(2);
 		emotion ET_BLABLA;
 		next;
 		mes "[KungKung & "+strcharinfo(0)+"]";
 		mes "Kong! Nyang!";
-		emotion ET_BLABLA, UNITTYPE_PC;
+		emotion ET_BLABLA, getcharid(2);
 		emotion ET_BLABLA;
 		next;
 		mes "[KungKung & "+strcharinfo(0)+"]";
 		mes "Kong! Nyang! Kong!";
-		emotion ET_BLABLA, UNITTYPE_PC;
+		emotion ET_BLABLA, getcharid(2);
 		emotion ET_BLABLA;
 		next;
 		set .@cat_hand, rand(1,10);
@@ -10151,14 +10151,14 @@ mal_in01,133,214,6	script	Leader#gamer	546,{
 		mes "~ Flag Game challenger "+strcharinfo(0)+" ~";
 		mes "^FF0000"+.@you_flag$+"^000000 for game ^C1653E"+.@round+"^000000.";
 		mes .@flag_point+" Flag Point remaining.";
-		emotion .@emotion[0], UNITTYPE_PC;
+		emotion .@emotion[0], getcharid(2);
 		next;
 		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
 			mes "[Leader]";
 			mes "~ "+.@cat_name$[.@i]+.@cat_desc$[.@i]+" ~";
 			mes "^FF0000"+.@cat_flag$[.@i]+"^000000 the flag for game ^C1653E"+.@round+"^000000.";
 			mes .@flag_point_cat[.@i]+" Flag Point remaining for "+.@cat_name$[.@i]+".";
-			emotion .@emotion[.@i], UNITTYPE_NPC, .@npc_name$[.@i];
+			emotion .@emotion[.@i], getnpcid(0, .@npc_name$[.@i]);
 			next;
 		}
 		if (.@you_flag == 1) {
@@ -10319,7 +10319,7 @@ mal_in01,136,215,2	script	Row#gamer	559,{
 		next;
 		mes "[Row]";
 		mes "But, you know you can never beat me, the great Row.";
-		emotion ET_KIK;
+		emotion ET_KEK;
 		close;
 	} else {
 		mes "[Row]";

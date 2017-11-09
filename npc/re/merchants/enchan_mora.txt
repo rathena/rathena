@@ -1191,7 +1191,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "For over 200 years I've been working with Artifacts here in Mora. Toiling to get the perfect +9!";
 		next;
 		select("Gulp... +9?!");
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		mes "[Artifact Collector]";
 		mes "My business is collecting the old relics and refining them to their essence!";
 		next;
@@ -1213,12 +1213,12 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "But maybe the Humans that are starting to visit can bring in some new stock!";
 		next;
 		select("Humans... Stock?");
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		mes "[Artifact Collector]";
 		mes "Yes! If the humans can bring me new artifacts I can work on my ultimate achievement!";
 		next;
 		select("Ultimate Achievement?");
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		emotion ET_OK;
 		mes "[Artifact Collector]";
 		mes "Patience, we'll get to that...";
@@ -1242,12 +1242,12 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "But +7! +7 is rare and just barely strong enough to work in my crafting attempts.";
 		next;
 		select("I'm gonna be abused again...");
-		emotion ET_SCRATCH, UNITTYPE_PC;
+		emotion ET_SCRATCH, getcharid(2);
 		mes "[Artifact Collector]";
 		mes "Right you are! I know it is natural for you Humans to help a friend, even without the friend asking...";
 		next;
 		select("I'm not sure if...");
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		mes "[Artifact Collector]";
 		mes "Of course I'll accept your help!  Find me...";
 		next;
@@ -1259,7 +1259,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "- Mace of Judgement -";
 		next;
 		select("Anything else?");
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		mes "[Artifact Collector]";
 		mes "Well aside from the +7, there are very specific enchantments that need to be on the artifact that help catalyze the process.";
 		next;
@@ -1267,7 +1267,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "If either the +7 or the specific enchantment is missing I can't do it.";
 		next;
 		select("So the Refining will be preserved?");
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "No, but what you'll get back is so much better!";

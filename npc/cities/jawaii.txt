@@ -1243,7 +1243,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		next;
 		mes "[Bachewcca]";
 		mes "...!";
-		emotion ET_BEST, UNITTYPE_NPC, "Customer#Bachewcca";
+		emotion ET_BEST, getnpcid(0, "Customer#Bachewcca");
 		next;
 		mes "[SoloHan]";
 		mes "It's doesn't really matter whether you're married";

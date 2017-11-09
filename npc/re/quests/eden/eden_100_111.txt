@@ -117,7 +117,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 				cutin "rote01",2;
 				mes "[Rohtert]";
 				mes "Hmm...";
-				emotion ET_HNG, UNITTYPE_NPC, "Rohtert#12";
+				emotion ET_HNG, getnpcid(0, "Rohtert#12");
 				next;
 				cutin "gelca01",2;
 				mes "[Gelkah]";
@@ -825,7 +825,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										next;
 										mes "Oh boy the look on his face was priceless!";
 										emotion ET_BIGTHROB;
-										emotion ET_THINK, UNITTYPE_PC;
+										emotion ET_THINK, getcharid(2);
 										.@exp = 180000;
 										.@jexp = 168000;
 									}

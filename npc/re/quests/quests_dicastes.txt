@@ -1333,7 +1333,7 @@ OnTouch:
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		sc_end SC_Blind;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		set ep13_3_secret, 14;
 		erasequest 7198;
 		close2;
@@ -1538,7 +1538,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		SC_End SC_Blind;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		set ep13_3_secret, 14;
 		erasequest 7198;
 		close2;
@@ -6424,7 +6424,7 @@ function	script	eldicastes_c	{
 			mes "Commander!";
 			mes "You've come at such short notice.";
 			mes "Is there a situation?";
-			emotion ET_HUK, UNITTYPE_NPC, "Hound#ep133_is06";
+			emotion ET_HUK, getnpcid(0, "Hound#ep133_is06");
 			next;
 			mes "[Hibba Agip]";
 			mes "Huh? Nothing.";
@@ -6489,8 +6489,8 @@ function	script	eldicastes_c	{
 			setquest 7185;
 			next;
 			disablenpc "Hibba Agip#ep133_is07";
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Hound#ep133_is06";
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Sapha from Manuk";
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Hound#ep133_is06");
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Sapha from Manuk");
 			mes "Commander Hibba Agip quickly left the room after saying what he wanted to say.";
 			mes "First, let's listen to Vyhannus's story.";
 			close;

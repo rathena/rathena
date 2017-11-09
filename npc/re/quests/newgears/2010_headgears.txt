@@ -204,7 +204,7 @@ lhz_in02,276,281,1	script	Drunken Man#Necktie	748,{
 		next;
 		mes "[Drunken Man]";
 		mes "Drunk...drunk.... Zzzzz...";
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		next;
 		if (countitem(978) > 0 && countitem(7151) > 29 && countitem(1059) > 99 && countitem(7217) > 19) {
 			callsub L_CheckWeight;
@@ -300,7 +300,7 @@ comodo,236,164,0	script	Hat Girl#Hair_Brush	69,{
 		mes "Okay, I'll do it right away!";
 		next;
 		mes "Ch ch ch... combining...ch ch.";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		next;
 		mes "[Hat Girl]";
 		mes "Here, it's done!";
@@ -444,7 +444,7 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "There's nothing. Everything is lie!";
-			emotion ET_KIK, UNITTYPE_PC;
+			emotion ET_KEK, getcharid(2);
 			next;
 			mes "[Bebete]";
 			mes "You're a devil! a monster! an idiot!";
@@ -820,13 +820,13 @@ OnTouch:
 	case 2:
 		donpcevent "Roda Frog#Frog_Cap::OnEnable";
 		if (hat_2009 > 0) {
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes "[" + strcharinfo(0) + "]";
 			mes "It's so amazing to see";
 			mes "the frog which transforms itself.";
 			close;
 		} else {
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			mes "[" + strcharinfo(0) + "]";
 			mes "Oh my.. the frog transformed into a child...";
 			close;

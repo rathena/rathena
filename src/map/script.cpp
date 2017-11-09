@@ -12704,44 +12704,28 @@ BUILDIN_FUNC(gvgoff3)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- *	Shows an emoticon on top of the player/npc
- *	emotion emotion#, <target: UNITTYPE_NPC, UNITTYPE_PC>, <NPC/PC name>
- *------------------------------------------*/
-// Optional second parameter added by [Skotlex]
+/**
+ * Shows an emotion on top of a NPC by default or the given GID
+ * emotion <emotion ID>{,<target ID>};
+ */
 BUILDIN_FUNC(emotion)
 {
-	int type;
-	int player = UNITTYPE_NPC;
-	TBL_PC *sd = NULL;
+	struct block_list *bl = NULL;
+	int type = script_getnum(st,2);
 
-	type = script_getnum(st,2);
 	if (type < ET_SURPRISE || type >= ET_MAX) {
 		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, ET_SURPRISE, (ET_MAX-1));
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (script_hasdata(st,3))
-		player = script_getnum(st,3);
-
-	switch (player) {
-		case UNITTYPE_PC:	// Character
-			if (script_nick2sd(4,sd))
-				clif_emotion(&sd->bl, type);
-			break;
-		case UNITTYPE_NPC:	// NPC
-			if (!script_hasdata(st,4))
-				clif_emotion(map_id2bl(st->oid),type);
-			else {
-				TBL_NPC *nd = npc_name2id(script_getstr(st,4));
-				if (nd)
-					clif_emotion(&nd->bl,type);
-			}
-			break;
-		default:
-			ShowWarning("buildin_emotion: Invalid target %d.\n", player);
-			return SCRIPT_CMD_FAILURE;
+	if (script_hasdata(st, 3) && !script_rid2bl(3, bl)) {
+		ShowWarning("buildin_emotion: Unknown game ID supplied %d.\n", script_getnum(st, 3));
+		return SCRIPT_CMD_FAILURE;
 	}
+	if (!bl)
+		bl = map_id2bl(st->oid);
+
+	clif_emotion(bl, type);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23943,7 +23927,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pvpoff,"s"),
 	BUILDIN_DEF(gvgon,"s"),
 	BUILDIN_DEF(gvgoff,"s"),
-	BUILDIN_DEF(emotion,"i??"),
+	BUILDIN_DEF(emotion,"i?"),
 	BUILDIN_DEF(maprespawnguildid,"sii"),
 	BUILDIN_DEF(agitstart,""),	// <Agit>
 	BUILDIN_DEF(agitend,""),
@@ -24119,7 +24103,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
-	BUILDIN_DEF(unitemote,"ii"),
+	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
 // <--- [zBuffer] List of unit control commands

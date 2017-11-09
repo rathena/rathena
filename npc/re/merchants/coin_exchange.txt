@@ -1068,7 +1068,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "Don't you have any of those hats lying around in storage that are solid but too ugly to wear? You do, right?";
 		next;
 		select(".........");
-		emotion ET_THINK, UNITTYPE_PC;
+		emotion ET_THINK, getcharid(2);
 		emotion ET_SMILE;
 		mes "[Paltu]";
 		mes "See! I knew it. I knew it from the first minute.";
@@ -1176,7 +1176,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "Yeah, please make sure!";
 		close;
 	}
-	emotion ET_KIK;
+	emotion ET_KEK;
 	mes "[Paltu]";
 	mes "Woohoo- Got it.";
 	mes "It's finally time for me to use my skills again.";

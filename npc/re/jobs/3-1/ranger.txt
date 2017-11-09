@@ -515,7 +515,7 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 			mes "[Test Instructor, Teardrop]";
 			mes "Aha... You've failed the middle!";
 			mes "You are such a fool.";
-			emotion ET_KIK;
+			emotion ET_KEK;
 			next;
 			mes "[Test Instructor, Teardrop]";
 			mes "So what are you going to do? Try again?";

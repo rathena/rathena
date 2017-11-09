@@ -2191,7 +2191,7 @@ lou_in02,204,169,0	script	Supply Stack#1lou	111,{
 			mes "[Jiang Xiayou]";
 			mes "Hey, hey...";
 			mes "I told you! It's not too late, why don't you do me the favor I asked? I'm only asking you once!";
-			emotion ET_FRET, UNITTYPE_NPC, "Storage Keeper#lou";
+			emotion ET_FRET, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -2253,7 +2253,7 @@ lou_in02,207,168,0	script	Supply Stack#5lou	111,{
 	next;
 	mes "[Jiang Xiayou]";
 	mes "Hey, don't touch anything! If you mess anything up, you've gotta pile it up again, got it? If you don't want to clean up after yourself, don't make a mess!";
-	emotion ET_ROCK, UNITTYPE_NPC, "Storage Keeper#lou";
+	emotion ET_ROCK, getnpcid(0, "Storage Keeper#lou");
 	close;
 }
 
@@ -2282,7 +2282,7 @@ lou_in02,206,163,0	script	Supply Stack#4lou	111,{
 				mes "You found it...?!";
 				mes "I can't believe it!";
 				mes "You just lucked out.";
-				emotion ET_KEK, UNITTYPE_NPC, "Storage Keeper#lou";
+				emotion ET_KEK, getnpcid(0, "Storage Keeper#lou");
 				close;
 			}
 			mes "^3355FF*Rummage rummage*";
@@ -2347,7 +2347,7 @@ lou_in02,198,170,0	script	Supply Stack#3lou	111,{
 			mes "It's not too late for you";
 			mes "to do the favor I asked.";
 			mes "I'm only asking you once!";
-			emotion ET_KIK, UNITTYPE_NPC, "Storage Keeper#lou";
+			emotion ET_KEK, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -2395,7 +2395,7 @@ lou_in02,192,170,0	script	Supply Stack#2	111,{
 			next;
 			mes "[Jiang Xiayou]";
 			mes "I told you! Now stop bugging me and leave now! I don't wanna deal with someone who won't trust me.";
-			emotion ET_HNG, UNITTYPE_NPC, "Storage Keeper#lou";
+			emotion ET_HNG, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";

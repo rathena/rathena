@@ -66,7 +66,7 @@ L_DONE:
 	mes "[Bearded Man]";
 	mes "Sorry, I can only make one per person.";
 	mes "We don't want too many beards now. Right?";
-	emotion ET_KIK;
+	emotion ET_KEK;
 	close;
 
 L_MAKE:
@@ -90,7 +90,7 @@ L_MAKE:
 	set BEARD_QUEST, 5;
 	mes "[Bearded Man]";
 	mes "Have a nice day!";
-	emotion ET_KIK;
+	emotion ET_KEK;
 	close;
 
 L_NOITEMS:

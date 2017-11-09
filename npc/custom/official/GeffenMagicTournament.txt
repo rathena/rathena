@@ -127,27 +127,27 @@ OnTimer1000:
 		case  88: npctalk "Hook up with both of them? Ho ho ho~!", instance_npcname("Young Lady#gef1"); break;
 		case  91:
 			npctalk "Yes! You have finally arrived, my love!", instance_npcname("Handsome Adventurer#gef");
-			emotion ET_HUK, UNITTYPE_NPC, instance_npcname("Young Lady#gef1");
-			emotion ET_HUK, UNITTYPE_NPC, instance_npcname("Young Lady#gef2");
-			emotion ET_HUK, UNITTYPE_NPC, instance_npcname("Young Lady#gef3");
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef1"));
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef2"));
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef3"));
 			break;
 		case  95:
 			npctalk "My love...", instance_npcname("Male Adventurer#gef");
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Male Adventurer#gef");
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Handsome Adventurer#gef");
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Handsome Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
 			break;
 		case  99:
 			npctalk "Maybe... There are no good guys left for us...", instance_npcname("Young Lady#gef3");
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Handsome Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
 			break;
 		case 103:
 			npctalk "Ahem... Maybe... Just the three of us... will be together forever...", instance_npcname("Young Lady#gef2");
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Male Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
 			break;
 		case 106:
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef3");
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Handsome Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
 			sleep2 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef1");
 			sleep2 500;
@@ -155,14 +155,14 @@ OnTimer1000:
 			'm1_timer++;
 			break;
 		case 109:
-			emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Male Adventurer#gef");
-			emotion ET_CRY, UNITTYPE_NPC, instance_npcname("Young Lady#gef1");
-			emotion ET_CRY, UNITTYPE_NPC, instance_npcname("Young Lady#gef2");
-			emotion ET_CRY, UNITTYPE_NPC, instance_npcname("Young Lady#gef3");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef1"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef2"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef3"));
 			break;
-		case 111: emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Handsome Adventurer#gef"); break;
-		case 113: emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Male Adventurer#gef"); break;
-		case 115: emotion ET_THROB, UNITTYPE_NPC, instance_npcname("Handsome Adventurer#gef"); break;
+		case 111: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"); break);
+		case 113: emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"); break);
+		case 115: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"); break);
 		case 118:
 			hideonnpc instance_npcname("Male Adventurer#gef");
 			hideonnpc instance_npcname("Handsome Adventurer#gef");
@@ -4379,7 +4379,7 @@ OnMobKilled:
 					hideoffnpc instance_npcname("Geffen Bully#33");
 					break;
 				case 23:
-					emotion ET_SURPRISE, UNITTYPE_NPC, instance_npcname("Fenrir#1");
+					emotion ET_SURPRISE, getnpcid(0, instance_npcname("Fenrir#1"));
 					mapannounce instance_mapname("1@gef"), "Take your dirty hands off of me.", 0x00ebff;
 					break;
 				case 25:
@@ -4449,7 +4449,7 @@ OnMobKilled:
 				case 45:
 					specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("Loki#3");
 					sleep2 500;
-					emotion ET_KIK, UNITTYPE_NPC, instance_npcname("Loki#3");
+					emotion ET_KEK, getnpcid(0, instance_npcname("Loki#3"));
 					npctalk "Loki : 3... 2...", instance_npcname("Loki#3");
 					sleep2 500;
 					npctalk "Geffen Bully : What?! You went from from 9 to 3 seconds!!", instance_npcname("Geffen Bully#1");

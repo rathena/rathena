@@ -52,7 +52,7 @@ prontera,146,163,6	script	Novice Castles	729,{
 		mes "I see... your guild has Emergency Call mastered.";
 		mes "You cannot enter the Novice Castle area.";
 		emotion ET_SCRATCH;
-		emotion ET_KEK, UNITTYPE_PC;
+		emotion ET_KEK, getcharid(2);
 	} else {
 		mes "I'm a new usher of Novice Castles.";
 		next;

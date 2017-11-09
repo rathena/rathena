@@ -1259,7 +1259,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 		emotion ET_QUESTION;
 		next;
 		mes "["+strcharinfo(0)+"]";
-		emotion ET_BLABLA, UNITTYPE_PC;
+		emotion ET_BLABLA, getcharid(2);
 		mes "... ... ... ...";
 		next;
 		mes "[Lero]";
@@ -1573,7 +1573,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		specialeffect2 EF_BASH;
 		if (isequipped(5009)) { //Safety_Helmet
 			mes "something falls on your head, but since you're wearing a Safety Helmet you're safe and sound.";
-			emotion ET_BEST, UNITTYPE_PC;
+			emotion ET_BEST, getcharid(2);
 			break;
 		} else {
 			mes "something smashes down on your head, right where that soft spot is, $#*@! that's a one in a million shot.";

@@ -65,7 +65,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "Now, you try!";
 		mes "Come on, make";
 		mes "up a joke~!";
-		emotion ET_KIK;
+		emotion ET_KEK;
 		next;
 		if (Sex == SEX_MALE) {
 			select("A joke, eh?");
@@ -428,7 +428,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "Kavaruk told you";
 				mes "to come to me, eh?";
 				mes "Alright. Okay.";
-				emotion ET_KIK;
+				emotion ET_KEK;
 				next;
 				break;
 			case 2:
@@ -1146,7 +1146,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 	mes "for a one time fee of only ^3131FF1,000,000, zeny^000000! Hurry and join the Icarus Guild while";
 	mes "this offer still lasts!";
 	next;
-	emotion ET_HNG, UNITTYPE_NPC, "Arpesto";
+	emotion ET_HNG, getnpcid(0, "Arpesto");
 	mes "[Arpesto]";
 	mes "Reiden...";
 	mes "Stop messing around.";

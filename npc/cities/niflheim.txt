@@ -233,7 +233,7 @@ niflheim,350,258,1	script	Cursed Spirit#nif	802,{
 		mes "And the spell to lift";
 		mes "your curse has been";
 		mes "lost to the ages~!";
-		emotion ET_KIK;
+		emotion ET_KEK;
 		next;
 		if (select("Clover:Klaatu:Klaytos") == 2)
 			set .@spell,.@spell+1;

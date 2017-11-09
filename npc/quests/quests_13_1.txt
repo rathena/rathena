@@ -2666,7 +2666,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			mes "Hehe, don't mention it.";
 			mes "And Otto said that he";
 			mes "would come to see you.";
-			emotion ET_SHY, UNITTYPE_PC;
+			emotion ET_SHY, getcharid(2);
 			next;
 			mes "[Instructor Lugen]";
 			mes "Did he?";
@@ -2960,7 +2960,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hah!! How did you know my name?!";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			next;
 			mes "[Diego]";
 			mes "It's on your nameplate.";
@@ -3063,7 +3063,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			mes "No, I just...";
 			mes "I was assigned to stay";
 			mes "in these barracks.";
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+			emotion ET_PROFUSELY_SWEAT, getcharid(2);
 			next;
 			mes "[Diego]";
 			mes "Oh!!!";
@@ -3202,7 +3202,7 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Yes...";
-			emotion ET_SWEAT, UNITTYPE_PC;
+			emotion ET_SWEAT, getcharid(2);
 			next;
 			mes "[Jan]";
 			mes "Ahhh, it's exciting~";
@@ -4363,7 +4363,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "Everything about this world excites me.";
 			next;
 			emotion ET_BIGTHROB;
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes "[Botanist]";
 			mes "Oh, okay... Ah-hah!";
 			mes "This is how it goes...";
@@ -4380,7 +4380,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			case 2:
-				emotion ET_BIGTHROB, UNITTYPE_PC;
+				emotion ET_BIGTHROB, getcharid(2);
 				mes "["+strcharinfo(0)+"]";
 				mes "I agree. There's so much to see around here!";
 				next;
@@ -4400,7 +4400,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "[Botanist]";
 			mes "Oh...? Isn't this?!";
 			next;
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			mes "[Botanist]";
 			mes "...Well, I've got a ton of samples of this specimen. Sorry.";
 			next;
@@ -9829,7 +9829,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 		mes "[Expedition Messenger]";
 		mes "You, head to Schwaltzval Republic.";
 		mes "And you, take Arunafeltz. I'll visit Prontera Palace.";
-		emotion ET_OK, UNITTYPE_NPC, "Expedition Messenger#2";
+		emotion ET_OK, getnpcid(0, "Expedition Messenger#2");
 		next;
 		mes "[Expedition Messenger]";
 		mes "I'll see you guys later.";
@@ -9859,7 +9859,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Give it to me, now!";
 			next;
 			donpcevent "Expedition Messenger#2::OnEnable";
-			emotion ET_SURPRISE, UNITTYPE_NPC, "Expedition Messenger#3";
+			emotion ET_SURPRISE, getnpcid(0, "Expedition Messenger#3");
 			cutin "ep13_shadow_edq",2;
 			mes "[???]";
 			mes "Argh...";
@@ -9913,7 +9913,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Oh, yeah? Then I'll have to use force!";
 			next;
 			donpcevent "Expedition Messenger#2::OnEnable";
-			emotion ET_SURPRISE, UNITTYPE_NPC, "Expedition Messenger#3";
+			emotion ET_SURPRISE, getnpcid(0, "Expedition Messenger#3");
 			mes "[???]";
 			mes "Argh!";
 			next;
@@ -13527,8 +13527,8 @@ OnTouch_:
 	next;
 	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_1";
 	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_2";
-	emotion ET_SURPRISE, UNITTYPE_NPC, "Rin#moc2_bt_rin01";
-	emotion ET_SURPRISE, UNITTYPE_PC;
+	emotion ET_SURPRISE, getnpcid(0, "Rin#moc2_bt_rin01");
+	emotion ET_SURPRISE, getcharid(2);
 	mes "[Rin]";
 	mes "You're not alone. So what?";
 	mes "You're still coming with me!";

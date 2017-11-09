@@ -78,7 +78,7 @@ YOUPULL:
 	if ( .@pull == 1 ) {
 		if ( .@win ) goto KILL;
 		specialeffect2 EF_SUI_EXPLOSION;
-		emotion ET_KIK;
+		emotion ET_KEK;
 		percentheal -100,-100;
 		mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
 		mes "You're dead!";

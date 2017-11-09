@@ -239,7 +239,7 @@ lighthalzen,66,94,3	script	Elmer Keays#li_03	866,{
 	mes "precious sight to these";
 	mes "old eyes, my dear. I'm";
 	mes "really lucky to be with you.";
-	emotion ET_CHUP, UNITTYPE_NPC, "Margie Keays#li_02";
+	emotion ET_CHUP, getnpcid(0, "Margie Keays#li_02");
 	emotion ET_CHUPCHUP;
 	close;
 }
@@ -959,7 +959,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "[Berru]";
 		mes "Daddy...! Waaaaah~!";
 		mes "I wanna see my Daddy!";
-		emotion ET_CRY, UNITTYPE_NPC, "Berru#lhz_01";
+		emotion ET_CRY, getnpcid(0, "Berru#lhz_01");
 		next;
 		mes "[Pilia]";
 		mes "Berru, I don't ";
@@ -973,7 +973,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "home! He said he'll";
 		mes "bring us candy tonight!";
 		mes "You go sleep first, Pilia!";
-		emotion ET_ANGER, UNITTYPE_NPC, "Berru#lhz_01";
+		emotion ET_ANGER, getnpcid(0, "Berru#lhz_01");
 		next;
 		mes "[Pilia]";
 		mes "^333333*Sigh...*^000000";
@@ -981,7 +981,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "He said he found a";
 		mes "good job, but we haven't";
 		mes "heard from him since then...";
-		emotion ET_THINK, UNITTYPE_NPC, "Pilia#lhz_01";
+		emotion ET_THINK, getnpcid(0, "Pilia#lhz_01");
 		close;
 	case 2:
 		mes "[Pilia]";
@@ -989,7 +989,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "so long? I hope Daddy";
 		mes "comes back home soon.";
 		mes "Come on, Berru, don't cry.";
-		emotion ET_THINK, UNITTYPE_NPC, "Pilia#lhz_01";
+		emotion ET_THINK, getnpcid(0, "Pilia#lhz_01");
 		next;
 		mes "[Berru]";
 		mes "^333333*Sob...*^000000";
@@ -1007,7 +1007,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "but my little brother";
 		mes "just won't stop crying.";
 		mes "I'm sorry if we're loud...";
-		emotion ET_QUESTION, UNITTYPE_NPC, "Pilia#lhz_01";
+		emotion ET_QUESTION, getnpcid(0, "Pilia#lhz_01");
 		next;
 		mes "[Pilia]";
 		mes "Our daddy goes to work";
@@ -1022,7 +1022,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "misses him a lot. I don't";
 		mes "know how to make him";
 		mes "stop crying! What do I do?";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Pilia#lhz_01";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Pilia#lhz_01");
 		close;
 	}
 }
@@ -1089,16 +1089,16 @@ OnTouch_:
 			mes "during the day, we'll always have hope, even if we can't see it.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
@@ -1140,16 +1140,16 @@ OnTouch_:
 			mes "miracle. Isn't that wonderful?";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
@@ -1208,16 +1208,16 @@ OnTouch_:
 			mes "born of frustration will make you a bully. Know the difference.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
@@ -2468,7 +2468,7 @@ lighthalzen,162,304,7	script	Rekenber Guard Drew#li	868,{
 	mes "even got the glasses chick";
 	mes "to wear 'em too? That's the";
 	mes "best news I've heard all day!";
-	emotion ET_HUK, UNITTYPE_NPC, "Rekenber Guard Tan#li";
+	emotion ET_HUK, getnpcid(0, "Rekenber Guard Tan#li");
 	next;
 	mes "[Rekenber Guard Drew]";
 	mes "Okay man, you know these";

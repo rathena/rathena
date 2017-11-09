@@ -30,7 +30,7 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 
 	mes "[Aperture]";
 	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
-	emotion ET_THINK, UNITTYPE_PC;
+	emotion ET_THINK, getcharid(2);
 	next;
 	mes "[Aperture]";
 	mes "That's right! And...";

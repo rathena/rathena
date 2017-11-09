@@ -967,7 +967,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							mes "Anybody can enroll, so take advantage of it.";
 							next;
-							emotion ET_SURPRISE, UNITTYPE_NPC, "Information Staff#"+strnpcinfo(2);
+							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
 							mes "Sorry to interrupt.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -989,7 +989,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "If there are more adventurers like you, the future will be brighter.";
 							mes "Hahahaha.";
 							next;
-							emotion ET_SURPRISE, UNITTYPE_NPC, "Information Staff#"+strnpcinfo(2);
+							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
 							mes "Sorry to interrupt.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -1008,7 +1008,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							mes "What is well, is well- isn't it?";
 							next;
-							emotion ET_SURPRISE, UNITTYPE_NPC, "Information Staff#"+strnpcinfo(2);
+							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
 							mes "You are correct.";
 							mes "Preperation is the key.";
@@ -1043,7 +1043,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						mes "Anybody can enroll, so take advantage of it.";
 						next;
-						emotion ET_SURPRISE, UNITTYPE_NPC, "Information Staff#"+strnpcinfo(2);
+						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
 						mes "Sorry to interrupt.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -1065,7 +1065,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "If there are more adventurers like you, the future will be brighter.";
 						mes "Hahahaha.";
 						next;
-						emotion ET_SURPRISE, UNITTYPE_NPC, "Information Staff#"+strnpcinfo(2);
+						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
 						mes "Sorry to interrupt.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -1084,7 +1084,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						mes "What is well, is well- isn't it?";
 						next;
-						emotion ET_SURPRISE, UNITTYPE_NPC, "Information Staff#"+strnpcinfo(2);
+						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
 						mes "You are correct.";
 						mes "Preperation is the key.";
@@ -2293,8 +2293,8 @@ izlude,141,251,0	script	Cultivated Red Plant#0	1078,3,3,{
 OnTouch:
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
 		specialeffect EF_STEAL;
-		emotion ET_SMILE, UNITTYPE_NPC, "Academy Student#"+strnpcinfo(2);
-		emotion ET_SURPRISE, UNITTYPE_PC;
+		emotion ET_SMILE, getnpcid(0, "Academy Student#"+strnpcinfo(2));
+		emotion ET_SURPRISE, getcharid(2);
 		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
 	}
 	end;
@@ -2326,7 +2326,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
 		specialeffect EF_STEAL, AREA, "Cultivated Red Plant#"+strnpcinfo(2);
 		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
-		emotion ET_SURPRISE, UNITTYPE_PC;
+		emotion ET_SURPRISE, getcharid(2);
 		emotion ET_SMILE;
 		mes "[Lumin]";
 		mes "Hey there Turtle";
@@ -2461,7 +2461,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "Yawn. Who are you making so much noise next to me...";
 		next;
 		select("You aren't dead?");
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		mes "[Instructor Argos]";
 		mes "Dead?! Who....?";
 		mes "me? Pu ha ha ha!!";
@@ -3907,11 +3907,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "[Dacquoise]";
 			mes "I am Dacquoise, the pupil of the legendary chef of Rune Midgard, ^0000cdCharles Orleans^000000.";
 			next;
-			emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
 			mes "And we are also club members of Sir Orleans' ^0000cdfan club- Loverleans^000000.";
 			next;
-			emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "Orlean belongs to all of us!";
 			next;
@@ -3934,7 +3934,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "[Eclaire]";
 			mes "You, do you want to know more about cooking?";
 			next;
-			emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "Will you exeprience the various spectrums of cooking?";
 			next;
@@ -3953,11 +3953,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "[Dacquoise]";
 			mes "Ok, we will be kind guides to the journey of cooking!!";
 			next;
-			emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
 			mes "It's ok with me, asking me everthing you want to know.";
 			next;
-			emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "Kindness is our spice~";
 			next;
@@ -4017,18 +4017,18 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Dacquoise]";
 				mes "Right, cooking needs some preparation. This can also be divided into two catagories.";
 				next;
-				emotion ET_SURPRISE, UNITTYPE_NPC, "Dacquoise#"+strnpcinfo(2);
+				emotion ET_SURPRISE, getnpcid(0, "Dacquoise#"+strnpcinfo(2));
 				break;
 			case 3:
 				emotion ET_FRET;
 				mes "[Dacquoise]";
 				mes "What is this? What a waste of time!";
 				next;
-				emotion ET_ANGER, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+				emotion ET_ANGER, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
 				mes "I thought we were going to get more members!";
 				next;
-				emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+				emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
 				mes "Never show up again!!";
 				close;
@@ -4093,11 +4093,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					next;
 					mes "[Eclaire]";
 					mes "You have insulted us!";
-					emotion ET_ANGER, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+					emotion ET_ANGER, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "Come back again, if you want to learn later~ I guess...";
-					emotion ET_THINK, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THINK, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					if (isbegin_quest(14154) == 1)
 						erasequest 14154;
@@ -4120,12 +4120,12 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					next;
 					mes "[Eclaire]";
 					mes "Go hunting after eating this. You will feel your power enhanced.";
-					emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!!";
 					mes "Kya... Sir Orleans!!";
-					emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 705,1;// Clover
 					delitem 511,1;// Green_Herb
@@ -4142,11 +4142,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					next;
 					mes "[Eclaire]";
 					mes "Try this. It will make you run like you are a flying bee.";
-					emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
-					emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 512,1;// Apple
 					delitem 515,2;// Carrot
@@ -4162,11 +4162,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					next;
 					mes "[Eclaire]";
 					mes "Can you feel unknown power coursing through your veins? You're eating it!";
-					emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "If you are really curious about the cooking, go seek Sir. Charles Orleans at the basement of Prontera Castle.";
-					emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 909,1;// Jellopy
 					delitem 914,1;// Fluff
@@ -4184,12 +4184,12 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "[Eclaire]";
 					mes "If you eat this. You will never miss your target!";
 					mes "In fact, never miss the target for level 1!";
-					emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "Go and see Sir. Charles Orleans at the basement of Prontera castle!!";
 					mes "You can learn real cooking from him!";
-					emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 512,1;// Apple
 					delitem 705,1;// Clover
@@ -4225,14 +4225,14 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Dacquoise]";
 				mes "Why are you saying you will make them?";
 				next;
-				emotion ET_SCRATCH, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+				emotion ET_SCRATCH, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
 				mes "Ah, Why not?";
 				next;
 				mes "[Dacquoise]";
 				mes "I am the leader of this flame cooking trio chefs!";
 				next;
-				emotion ET_HUK, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+				emotion ET_HUK, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
 				mes "What?!! When was that decided?";
 				next;
@@ -4240,11 +4240,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Dacquoise]";
 				mes "Is there anyone who is older than me?";
 				next;
-				emotion ET_HUK, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+				emotion ET_HUK, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
 				mes "Age! There is nothing I can do with it.";
 				next;
-				emotion ET_OK, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+				emotion ET_OK, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
 				mes "Just because you're one year older, you want to automatically be rejected. Anyone have an objection?";
 				next;
@@ -4371,11 +4371,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "[Dacquoise]";
 			mes "I am Dacquoise, the pupil of the legendary chef of Rune Midgard, ^0000cdCharles Orleans^000000.";
 			next;
-			emotion ET_BEST, UNITTYPE_NPC, "Eclaire#"+strnpcinfo(2);
+			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
 			mes "Steaks not only increase stats but also recover both your HP and SP.";
 			next;
-			emotion ET_THROB, UNITTYPE_NPC, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "If you really want to cook, go and see^0000cd Sir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
 			close;
@@ -5132,29 +5132,29 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		next;
 		mes "[Ghostring]";
 		mes "Oi you lot! Tell me wot I want to hear!";
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Ghostring#cupet";
+		emotion ET_SURPRISE, getnpcid(0, "Ghostring#cupet");
 		next;
 		mes "[Unskilled Poring]";
 		mes "Ghostring's the strongest in the world!";
-		emotion ET_WRAP, UNITTYPE_NPC, "Cowardly Poring#pet_1";
-		emotion ET_WRAP, UNITTYPE_NPC, "Unskilled Poring#pet_2";
-		emotion ET_WRAP, UNITTYPE_NPC, "Foolish Poring#pet_3";
+		emotion ET_WRAP, getnpcid(0, "Cowardly Poring#pet_1");
+		emotion ET_WRAP, getnpcid(0, "Unskilled Poring#pet_2");
+		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Ghostring]";
 		mes "What kind of monster I am?";
-		emotion ET_SURPRISE, UNITTYPE_NPC, "Ghostring#cupet";
+		emotion ET_SURPRISE, getnpcid(0, "Ghostring#cupet");
 		next;
 		mes "[Unskilled Poring]";
 		mes "Ghostring's da Boss!";
-		emotion ET_WRAP, UNITTYPE_NPC, "Cowardly Poring#pet_1";
-		emotion ET_WRAP, UNITTYPE_NPC, "Unskilled Poring#pet_2";
-		emotion ET_WRAP, UNITTYPE_NPC, "Foolish Poring#pet_3";
+		emotion ET_WRAP, getnpcid(0, "Cowardly Poring#pet_1");
+		emotion ET_WRAP, getnpcid(0, "Unskilled Poring#pet_2");
+		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Ghostring]";
 		mes "Bwa ha ha ha~";
-		emotion ET_SMILE, UNITTYPE_NPC, "Ghostring#cupet";
+		emotion ET_SMILE, getnpcid(0, "Ghostring#cupet");
 		next;
-		emotion ET_CRY, UNITTYPE_NPC, "Friendly Poring#ac";
+		emotion ET_CRY;
 		mes "[Poring]";
 		mes "Bleedin' shame...";
 		mes "Little Porings takin' up with a git like that and not bein' cute anymore.";
@@ -5176,14 +5176,14 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "[Unskilled Poring]";
 		mes "Wot's Dat? Onna them Poring's talkin' to a huumie.";
 		mes "Shall we beat him up?";
-		emotion ET_WRAP, UNITTYPE_NPC, "Cowardly Poring#pet_1";
-		emotion ET_WRAP, UNITTYPE_NPC, "Unskilled Poring#pet_2";
-		emotion ET_WRAP, UNITTYPE_NPC, "Foolish Poring#pet_3";
+		emotion ET_WRAP, getnpcid(0, "Cowardly Poring#pet_1");
+		emotion ET_WRAP, getnpcid(0, "Unskilled Poring#pet_2");
+		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Poring]";
 		mes "Blimey!";
 		mes "Help me! Save me!";
-		emotion ET_HUK, UNITTYPE_NPC, "Friendly Poring#ac";
+		emotion ET_HUK;
 		next;
 		select("What can I do to help?");
 		mes "[Poring]";
@@ -5228,7 +5228,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 			mes "["+strcharinfo(0)+"]";
 			mes "I used the unripe apples that you gave me, then they turned into eggs.";
 			next;
-			emotion ET_CRY, UNITTYPE_NPC, "Friendly Poring#ac";
+			emotion ET_CRY;
 			mes "[Poring]";
 			mes "Oh, guess I didn't expect they'd be turned into pets so easily!";
 			next;
@@ -5682,7 +5682,7 @@ izlude,95,146,5	script	Mom#iz	4_F_CAVE1,{
 	mes "[Mom]";
 	mes "Here!";
 	next;
-	emotion ET_ANGER, UNITTYPE_NPC, "Etinifni#"+strnpcinfo(2);
+	emotion ET_ANGER, getnpcid(0, "Etinifni#"+strnpcinfo(2));
 	mes "[Etinifni]";
 	mes "Ah... Again!! I have been out hunting Orcs.";
 	next;
@@ -5695,12 +5695,12 @@ izlude,95,146,5	script	Mom#iz	4_F_CAVE1,{
 	mes "[Mom]";
 	mes "What? This moron?!";
 	next;
-	emotion ET_OHNO, UNITTYPE_NPC, "Etinifni#"+strnpcinfo(2);
+	emotion ET_OHNO, getnpcid(0, "Etinifni#"+strnpcinfo(2));
 	mes "[Etinifni]";
 	mes "OK. I will do it.";
 	next;
 	disablenpc "Etinifni#"+strnpcinfo(2);
-	emotion ET_CRY, UNITTYPE_NPC, "Dad#"+strnpcinfo(2);
+	emotion ET_CRY, getnpcid(0, "Dad#"+strnpcinfo(2));
 	mes "[Dad]";
 	mes "I am sorry... Dad has no power over your mom.";
 	close;
@@ -5765,7 +5765,7 @@ izlude,99,138,3	script	Romantic Male#iz	4_M_SITDOWN,{
 	mes "Are you lifting up our good old memories renting my wedding dress and your tuxedo!! It will strenghthen our relationship, won't it?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Female#"+strnpcinfo(2);
-	emotion ET_CHUP, UNITTYPE_NPC, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_CHUP, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Male]";
 	mes "Honey~~ I love you!! Sweetheart~";
 	next;
@@ -5786,7 +5786,7 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "[Romantic Female]";
 	mes "Shout like this when I miss you, honey!!";
 	next;
-	emotion ET_THROB, UNITTYPE_NPC, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_THROB, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "^0000cd[I miss you.]^000000";
 	next;
@@ -5800,7 +5800,7 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "You are tired of sitting, aren't you?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Female#"+strnpcinfo(2);
-	emotion ET_CHUP, UNITTYPE_NPC, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_CHUP, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "My sweetheart!!! I love you!!!";
 	next;
@@ -5808,11 +5808,11 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "Yes, thank you for sharing your SP! You are also tired, aren't you?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Male#"+strnpcinfo(2);
-	emotion ET_CHUPCHUP, UNITTYPE_NPC, "Romantic Male#"+strnpcinfo(2);
+	emotion ET_CHUPCHUP, getnpcid(0, "Romantic Male#"+strnpcinfo(2));
 	mes "[Romantic Male]";
 	mes "My sweetheart!! I love you!!!";
 	next;
-	emotion ET_THROB, UNITTYPE_NPC, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_THROB, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "Kia~ You are Coolest!!!";
 	close;
@@ -6351,7 +6351,7 @@ iz_ac01,159,32,3	script	Hungry Trainee#ac	4_M_SIT_NOVICE,{
 	mes "Wonder when my order will get taken... it's already been an hour...";
 	mes "Look at the helpers lingering on the side...";
 	next;
-	emotion ET_FRET, UNITTYPE_NPC, "Scholarship Trainee#"+strnpcinfo(2);
+	emotion ET_FRET, getnpcid(0, "Scholarship Trainee#"+strnpcinfo(2));
 	mes "[Scholarship Trainee]";
 	mes "Ugh... this guy...";
 	mes "I already told you eight hundred times! It's buffet style! Ah!";
@@ -8521,7 +8521,7 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 				next;
 				mes "Suddenly, you see Arang's foot flying towards you.";
 				specialeffect2 EF_TRIPLEATTACK;
-				emotion ET_KEK, UNITTYPE_PC;
+				emotion ET_KEK, getcharid(2);
 				next;
 				cutin "", 255;
 				mes "All you see are stars...";
@@ -12252,7 +12252,7 @@ iz_ac02,156,169,5	script	Acolyte Leader Alice#2	4_F_ACOLYTE,{
 				mes "[Alice Yisha]";
 				mes "Ask ^ff0000if you want to experience skills of an Acolyte, ask the sister next to you^000000.";
 				mes "Now I am reading an introductory skill.";
-				emotion ET_HUK, UNITTYPE_NPC, "A Nun#"+strnpcinfo(2);
+				emotion ET_HUK, getnpcid(0, "A Nun#"+strnpcinfo(2));
 				close2;
 				cutin "", 255;
 				end;

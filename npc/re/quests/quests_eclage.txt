@@ -203,7 +203,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		mes "This time it's all good, right?";
 		mes "Let me through quick!";
 		cutin "bu_du1",2;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		next;
 		cutin "",255;
 		mes "[Immigration Officer]";
@@ -329,7 +329,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		next;
 		mes "[Mark Esha]";
 		mes "My goodness......";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		ep14_2_oliver = 2;
 		changequest 11310,11311;
 		close2;
@@ -371,8 +371,8 @@ ecl_fild01,106,312,5	script	Tourist#ep14_2f3	4_F_RAFLE_VI,{
 	mes "[Tourist]";
 	mes "I'm just getting through the night with my sleeping bag!";
 	mes "It's alright as long as you can withstand the security guard's annoyance with you.";
-	emotion ET_SWEAT, UNITTYPE_NPC, "Security Guard#ep14_2";
-	emotion ET_SWEAT, UNITTYPE_NPC, "Security Guard#ep14_2_2";
+	emotion ET_SWEAT, getnpcid(0, "Security Guard#ep14_2");
+	emotion ET_SWEAT, getnpcid(0, "Security Guard#ep14_2_2");
 	close;
 }
 
@@ -475,7 +475,7 @@ OnTouch:
 			mes "[Fairy Carpenter]";
 			mes "Hey!!!!!!!";
 			mes "Be careful over there!!";
-			emotion ET_HUK, UNITTYPE_NPC, "Fairy Carpenter#ep14_2";
+			emotion ET_HUK, getnpcid(0, "Fairy Carpenter#ep14_2");
 			close;
 		}
 		if (ep14_2_oliver <= 6) {
@@ -591,7 +591,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "- It's probably just my imagination that smoke is coming out of his head, right? -";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		next;
 		mes "[Fairy Carpenter]";
 		mes "Oh ho!";
@@ -643,7 +643,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		mes "[Du Lian]";
 		mes "Ah!";
 		mes "Thank goodness!";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		emotion ET_HUK;
 		cutin "bu_du2",2;
 		next;
@@ -662,7 +662,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "...";
-		emotion ET_SWEAT, UNITTYPE_PC;
+		emotion ET_SWEAT, getcharid(2);
 		next;
 		mes "[Du Lian]";
 		mes "No way!";
@@ -695,7 +695,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		cutin "",255;
 		mes "- SNAP -";
 		emotion ET_HUK;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		next;
 		mes "[Carpenter Fon]";
 		mes "......";
@@ -909,11 +909,11 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "Um... This is sort of awkward for me...";
-		emotion ET_KEK, UNITTYPE_PC;
+		emotion ET_KEK, getcharid(2);
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "No, that's not what I mean...";
-		emotion ET_SWEAT, UNITTYPE_PC;
+		emotion ET_SWEAT, getcharid(2);
 		next;
 		mes "[Glaces]";
 		mes "Hmm...";
@@ -923,7 +923,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "[Glaces]";
 		mes "This is why I don't like to be kept waiting for long. My popularity just doesn't let me go anywhere without being noticed.";
 		emotion ET_FRET;
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "No, I mean... Mr. Fon told me to let you know that he won't be able to make it because of his work...";
@@ -968,7 +968,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "favor!";
 		mes "I will take care of it!";
 		emotion ET_HUK;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		cutin "bu_du1",2;
 		next;
 		cutin "",255;
@@ -1085,7 +1085,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "Baby girl!";
 		mes "I brought the guy named Yube!";
 		emotion ET_HUK;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		cutin "bu_du2",2;
 		next;
 		cutin "",255;
@@ -1095,7 +1095,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "...";
-		emotion ET_THINK, UNITTYPE_PC;
+		emotion ET_THINK, getcharid(2);
 		next;
 		mes "[Yube]";
 		mes "What, who is this fool?";
@@ -1121,7 +1121,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Two?";
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		next;
 		mes "[Du Lian]";
 		mes "What do you mean?";
@@ -1131,7 +1131,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Huh?!";
-		emotion ET_QUESTION, UNITTYPE_PC;
+		emotion ET_QUESTION, getcharid(2);
 		next;
 		mes "[Du Lian]";
 		mes "Sure, he's kind of cute too, but we have our cutest Maggi to beat them all!!!";
@@ -1147,7 +1147,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[???]";
 		mes "Can you see me?";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		cutin "bu_oliver3",0;
 		next;
 		mes "[Du Lian]";
@@ -1431,7 +1431,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 		mes "He's younger than me; 30 years age gap wtih both Glaces and Murah but Glaces and Murah are not the same age,";
 		mes "Shul's age is to add Moreng's age to my age of 100 years before; Shul is 2 years older than Glaces; the average age of me and Shul is Tato and Tato's age is 146, right?";
 		emotion ET_THINK;
-		emotion ET_THINK, UNITTYPE_PC;
+		emotion ET_THINK, getcharid(2);
 		cutin "war_y2",2;
 		next;
 		mes "[Yube]";
@@ -1603,7 +1603,7 @@ eclage,137,169,4	script	Tato#ep14_2	4_F_FAIRYKID4,{
 		select("What's Tato's age?");
 		mes "[Tato]";
 		mes "I am 146 years old.";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		next;
 		mes "- Although the exact information regarding Moreng's age is still unknown, let's return to Yube first.";
 		ep14_2_oliver = 13;
@@ -1715,7 +1715,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "If you are a real man, don't be so meek!";
 		mes "Face it head on! And if you must, you can crash and burn afterwards!";
 		emotion ET_HUK;
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		cutin "bu_du2",2;
 		next;
 		cutin "",255;
@@ -1771,7 +1771,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "I have to quickly pack my bags and leave for Midgard!";
 		if (ep14_2_oliver == 22) {
 			emotion ET_HUK;
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 		}
 		next;
 		mes "- Moreng seems like he's really about to leave soon. I should let Glaces know. -";
@@ -1853,11 +1853,11 @@ ecl_in01,60,71,4	script	Old Man#ep14_2	4_M_FAIRYKID2,{
 		next;
 		mes "[Du Lian]";
 		mes "But old man, would you happen to know anything about a legend regarding the great bird in Midgard? ";
-		emotion ET_HUK, UNITTYPE_PC;
+		emotion ET_HUK, getcharid(2);
 		cutin "bu_du1",2;
 		next;
 		cutin "",255;
-		emotion ET_SHY, UNITTYPE_PC;
+		emotion ET_SHY, getcharid(2);
 		next;
 		mes "[Old Man]";
 		mes "Oh!";
@@ -2042,7 +2042,7 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		next;
 		mes "[Du Lian]";
 		mes "Oh.... You bought it, didn't you?";
-		emotion ET_THINK, UNITTYPE_PC;
+		emotion ET_THINK, getcharid(2);
 		cutin "bu_du2",2;
 		next;
 		mes "[Oliver]";
@@ -2360,14 +2360,14 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "[Oliver]";
 		mes "Hmm...";
 		mes "I'm hungry.";
-		emotion ET_HUNGRY, UNITTYPE_NPC, "Oliver#ep14_2";
+		emotion ET_HUNGRY, getnpcid(0, "Oliver#ep14_2");
 		cutin "bu_oliver3",0;
 		next;
 		mes "[Oliver]";
 		mes "Acorns!";
 		mes "I saw many acorns just outside the city!";
 		mes "I want them!";
-		emotion ET_SEXY, UNITTYPE_NPC, "Oliver#ep14_2";
+		emotion ET_SEXY, getnpcid(0, "Oliver#ep14_2");
 		cutin "bu_oliver4",0;
 		next;
 		mes "[Du Lian]";
@@ -2383,7 +2383,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "[Oliver]";
 		mes "Hey hey hey!";
 		mes "I told you not to pull on my cheeks!!";
-		emotion ET_FRET, UNITTYPE_NPC, "Oliver#ep14_2";
+		emotion ET_FRET, getnpcid(0, "Oliver#ep14_2");
 		cutin "bu_oliver7",0;
 		next;
 		mes "[Mark Esha]";
@@ -2471,7 +2471,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 			next;
 			mes "[Oliver]";
 			mes "...";
-			emotion ET_THINK, UNITTYPE_PC;
+			emotion ET_THINK, getcharid(2);
 			cutin "bu_oliver86",0;
 			next;
 			mes "[Oliver]";
@@ -2484,7 +2484,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 			next;
 			mes "[Du Lian]";
 			mes "AHHHHHHHH!!!!!!!!!!";
-			emotion ET_HUK, UNITTYPE_PC;
+			emotion ET_HUK, getcharid(2);
 			cutin "bu_du5",2;
 			delitem 6558,1;// Pile_Of_Acorn
 			ep14_2_oliver = 28;
@@ -2545,7 +2545,7 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		mes "[Du Lian]";
 		mes "Hmm... Where did he go...?";
 		mes "Could he be... a ghost?!";
-		emotion ET_HUK, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+		emotion ET_HUK;
 		cutin "bu_du5",2;
 		next;
 		mes "[Maggi Steen]";
@@ -2554,36 +2554,36 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		next;
 		mes "[Maggi Steen]";
 		mes "Wait! Here's the hood that Oliver was wearing...";
-		emotion ET_HUK, UNITTYPE_NPC, "Maggi Steen#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Maggi Steen#ep14_2in2");
 		cutin "bu_maggi4",2;
 		next;
 		mes "[Maggi Steen]";
 		mes "And... doesn't it feel like this room is different from before?";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Mark Esha#ep14_2in2";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Mark Esha#ep14_2in2");
 		cutin "bu_mark4",0;
 		next;
 		mes "[Du Lian]";
 		mes "Hey stop that!!";
 		mes "It's scaring me!!!";
-		emotion ET_HUK, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+		emotion ET_HUK;
 		cutin "bu_du5",2;
 		next;
 		mes "[Maggi Steen]";
 		mes "Arrrrr~~";
-		emotion ET_CRY, UNITTYPE_NPC, "Maggi Steen#ep14_2in2";
+		emotion ET_CRY, getnpcid(0, "Maggi Steen#ep14_2in2");
 		cutin "bu_maggi4",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "Oh!!! I just remembered...";
 		mes "Oliver...";
-		emotion ET_SPARK, UNITTYPE_NPC, "Alp Ocart#ep14_2in2";
+		emotion ET_SPARK, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp2",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "...";
 		mes "Oliver Hilpert...";
 		mes ".........is also known as the dreaming novelist...";
-		emotion ET_THINK, UNITTYPE_NPC, "Alp Ocart#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp3",2;
 		next;
 		mes "[Alp Ocart]";
@@ -2594,23 +2594,23 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		mes "[Du Lian]";
 		mes "Hey...";
 		mes "Did you just take that book out from your bag?";
-		emotion ET_THINK, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+		emotion ET_THINK;
 		cutin "bu_du5",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "Yeah, that's because I'm a fan...";
-		emotion ET_SHY, UNITTYPE_NPC, "Alp Ocart#ep14_2in2";
+		emotion ET_SHY, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp4",2;
 		next;
 		mes "[Du Lian]";
 		mes "Why didn't you remember the book when you are such a fan..?";
 		mes "Not only that, do people usually carry books with them when they're fans?? Especially hardcover books?";
-		emotion ET_HUK, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+		emotion ET_HUK;
 		cutin "bu_du5",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "......";
-		emotion ET_SHY, UNITTYPE_NPC, "Alp Ocart#ep14_2in2";
+		emotion ET_SHY, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp4",2;
 		next;
 		mes "[Du Lian]";
@@ -2620,32 +2620,32 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		mes "[Mark Esha]";
 		mes "More importantly... The title of this book...";
 		mes "is [The City of Fairies]?";
-		emotion ET_HUK, UNITTYPE_NPC, "Mark Esha#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Mark Esha#ep14_2in2");
 		cutin "bu_mark4",0;
 		next;
 		mes "[Mark Esha]";
 		mes "And...";
 		mes "It's been many years since this book was published...";
-		emotion ET_HUK, UNITTYPE_NPC, "Mark Esha#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Mark Esha#ep14_2in2");
 		next;
 		mes "[Du Lian]";
 		mes "...This is getting kind of scary...?";
-		emotion ET_HUK, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+		emotion ET_HUK;
 		cutin "bu_du1",2;
 		next;
 		mes "[Mark Esha]";
 		mes "......";
-		emotion ET_THINK, UNITTYPE_NPC, "Mark Esha#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Mark Esha#ep14_2in2");
 		cutin "bu_mark4",0;
 		next;
 		mes "[Maggi Steen]";
 		mes "......";
-		emotion ET_THINK, UNITTYPE_NPC, "Maggi Steen#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Maggi Steen#ep14_2in2");
 		cutin "bu_maggi4",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "......";
-		emotion ET_THINK, UNITTYPE_NPC, "Alp Ocart#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp2",2;
 		ep14_2_oliver = 30;
 		getitem 19543,1;//Oliver_Wolf_Hood
@@ -2665,7 +2665,7 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 			next;
 			mes "[Alp Ocart]";
 			mes "It has a total of 3 volumes.";
-			emotion ET_BEST, UNITTYPE_NPC, "Alp Ocart#ep14_2in2";
+			emotion ET_BEST, getnpcid(0, "Alp Ocart#ep14_2in2");
 			cutin "bu_alp1",2;
 			next;
 			mes "[Du Lian]";
@@ -2679,19 +2679,18 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 			mes "Everybody calm down!!!";
 			mes "This has to be some kind of a dream!";
 			emotion ET_HUK;
-			emotion ET_HUK, UNITTYPE_NPC, "Du Lian#ep14_2in2";
 			cutin "bu_mark2",0;
 			next;
 			mes "[Du Lian]";
 			mes "Why are you hitting me, calling it a dream and all!";
 			mes "It hurts!";
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+			emotion ET_PROFUSELY_SWEAT;
 			cutin "bu_du4",2;
 			next;
 			mes "[Mark Esha]";
 			mes "Ahhhh maybe it really isn't a dream after all!!!";
 			emotion ET_HUK;
-			emotion ET_FRET, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+			emotion ET_FRET;
 			cutin "bu_mark3",0;
 			break;
 		case 2:
@@ -2702,7 +2701,7 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 			next;
 			mes "[Du Lian]";
 			mes "Don't cry, Maggi~";
-			emotion ET_PROFUSELY_SWEAT, UNITTYPE_NPC, "Du Lian#ep14_2in2";
+			emotion ET_PROFUSELY_SWEAT;
 			cutin "bu_du4",2;
 			break;
 		case 3:
@@ -2760,7 +2759,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 			mes "[Wuhari]";
 			mes "Wow! The name sure sounds like it has defeated many in the mountains, seas, and skies! It's amazing!";
 			next;
-			emotion ET_SHY, UNITTYPE_PC;
+			emotion ET_SHY, getcharid(2);
 			mes "["+ strcharinfo(0) +"]";
 			mes "It's not much.";
 			mes "I am not really all that great.";
@@ -4080,7 +4079,7 @@ ecl_in01,54,91,2	script	Dandy#eclbig	4_M_FAIRYKID2,{
 	mes "[Dandy]";
 	mes "A Laphine can freely change in between different clothes, but not any Laphine looks this great!";
 	next;
-	emotion ET_HNG, UNITTYPE_NPC, "Lafiki#eclbig";
+	emotion ET_HNG, getnpcid(0, "Lafiki#eclbig");
 	mes "[Lafiki]";
 	mes "What nonsensical nonsense are you saying? No matter who looks at it, this region's best looker is me!";
 	close;
@@ -4095,7 +4094,7 @@ ecl_in01,53,92,4	script	Lafiki#eclbig	4_M_FAIRYKID3,{
 	mes "Hello~ My beautiful body~";
 	mes "Every strand of hair is so beautiful!";
 	next;
-	emotion ET_KIK, UNITTYPE_NPC, "Dandy#eclbig";
+	emotion ET_KEK, getnpcid(0, "Dandy#eclbig");
 	mes "[Dandy]";
 	mes "Yes, it's definitely your garbage fashion sense that wreaks of trash as usual.";
 	close;
@@ -4173,7 +4172,7 @@ ecl_fild01,134,109,4	script	Warao#eclbig	4_M_FAIRYKID5,{
 	mes "[Warao]";
 	mes "Come to think of it, I wonder how this foreigner will taste?";
 	next;
-	emotion ET_KIK;
+	emotion ET_KEK;
 	mes "[Warao]";
 	mes "Hey hey, you know I'm kidding, right?";
 	close;
@@ -4247,25 +4246,25 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 	mes "[Choir]";
 	mes "Aaa~";
 	next;
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig01";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig01");
 	mes "[Choir]";
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig02";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig02");
 	mes "[Choir]";
 	mes "Aaa~~~";
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig03";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig03");
 	mes "[Choir]";
 	mes "Aaa~~~~";
 	mes "Aaa~~~";
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig04";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig04");
 	mes "[Choir]";
 	mes "Aaa~~~~~";
 	mes "Aaa~~~~";
@@ -4273,7 +4272,7 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig05";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig05");
 	mes "[Choir]";
 	mes "Aaa~~~~~~";
 	mes "Aaa~~~~~";
@@ -4283,11 +4282,11 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 	mes "Aaa~";
 	next;
 	emotion ET_DELIGHT;
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig01";
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig02";
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig03";
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig04";
-	emotion ET_DELIGHT, UNITTYPE_NPC, "Choir member#eclbig05";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig01");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig02");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig03");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig04");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig05");
 	mes "[Choir]";
 	mes "Uhhurukukuruhuuhhurukukuruhuuh";
 	mes "Try to feel this~ The melody that flows~";
@@ -12322,7 +12321,7 @@ ecl_tdun04,26,39,1	script	Professor Worm#worm	4_M_PROFESSORWORM,{
 		mes "Wait, there are no more spaces on the wall!";
 		mes "Who doodled so much on the walls?";
 		mes "Is it you, monster?";
-		emotion ET_SWEAT, UNITTYPE_PC;
+		emotion ET_SWEAT, getcharid(2);
 		next;
 		mes "[Professor Worm]";
 		mes "I guess I would have to write a diary then...";
@@ -12650,7 +12649,7 @@ ecl_tdun03,21,69,5	script	Diary Frog No.3#worm	4_FROG,{
 	case 3:
 		mes "I used to have more, but unfortunately, the fuel I need to live is the recordings themselves, so part of it got digested away.";
 		mes "It's the way I work so I can't do much about it.";
-		emotion ET_PROFUSELY_SWEAT, UNITTYPE_PC;
+		emotion ET_PROFUSELY_SWEAT, getcharid(2);
 		close;
 	}
 }
@@ -13140,8 +13139,8 @@ OnTouch:
 	if (ep14_2_mylord == 0 && BaseLevel > 98) {
 		mes "A group of travelers of Alpheim are having a conversation.";
 		emotion ET_BLABLA;
-		emotion ET_BLABLA, UNITTYPE_NPC, "Traveler Litrip#tl02";
-		emotion ET_BLABLA, UNITTYPE_NPC, "Traveler Chiba#tl03";
+		emotion ET_BLABLA, getnpcid(0, "Traveler Litrip#tl02");
+		emotion ET_BLABLA, getnpcid(0, "Traveler Chiba#tl03");
 		next;
 		switch( select("Avoid them.:Join the group.") ) {
 		case 1:
