@@ -6342,7 +6342,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "like this in the past, but...";
 		mes "Is this... How bad is this?";
 		next;
-		emotion ET_PROFUSELY_SWEAT, getcharid(2);
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh... Oh, no!";
 		mes "Yikes! I guess if it's";
@@ -6433,7 +6433,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "It'll be a disaster, just";
 		mes "like it happened in the past!";
 		next;
-		emotion ET_SPARK, getcharid(2);
+		emotion ET_SPARK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Yes, I agree. There's";
 		mes "a good chance of an...";
@@ -6445,7 +6445,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "How much time do we";
 		mes "have to evacuate?";
 		next;
-		emotion ET_SPARK, getcharid(2);
+		emotion ET_SPARK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Well... Uh...";
 		mes "According to my data...";
@@ -7113,7 +7113,7 @@ thor_camp,150,65,3	script	Dummy#1::VeinsDummy	111,{
 	else if (aru_vol == 20) {
 		mes "^3355FF*THUD*^000000";
 		specialeffect EF_HIT2;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		next;
 		mes "[Colonel Vito]";
 		mes "Soldier...";
@@ -7364,12 +7364,12 @@ ve_in,237,131,1	script	Female Customer#ve1	940,{
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "Meee?";
-	emotion ET_PROFUSELY_SWEAT, getcharid(2);
+	emotion ET_PROFUSELY_SWEAT, playerattached();
 	next;
 	mes "[Female Customer]";
 	mes "Mmm...";
 	mes "Not my style.";
-	emotion ET_THINK, getcharid(2);
+	emotion ET_THINK, playerattached();
 	close;
 }
 

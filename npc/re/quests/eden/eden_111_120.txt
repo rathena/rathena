@@ -43,7 +43,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "(What's this lady talking about?)";
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		next;
 		mes "[Mingmin]";
 		mes "Answer me!";
@@ -173,7 +173,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		cutin "min02",0;
 		mes "[Mingmin]";
 		mes " For some reason there aren't many people lining up to assist me yet.";
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		next;
 		mes "[Mingmin]";
 		mes "I think it requires ^ff0000bravery^000000 to take a new request.";

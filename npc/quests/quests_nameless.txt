@@ -1077,7 +1077,7 @@ OnTouch:
 		mes "turned into sand.";
 		next;
 		hideoffnpc "Creature#Monas";
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		emotion ET_HUK, getnpcid(0, "Larjes#Monastery");
 		mes "[Larjes]";
 		mes "?!?!?!!!!!";
@@ -1950,7 +1950,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "["+strcharinfo(0)+"]";
 				mes "Sure thing. You";
 				mes "can count on me!";
-				emotion ET_BEST, getcharid(2);
+				emotion ET_BEST, playerattached();
 				set aru_em,15;
 				changequest 2134,2135;
 				close2;
@@ -2298,7 +2298,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "tomorrow. Forget this desert!";
 			next;
 			emotion ET_CRY;
-			emotion ET_SWEAT, getcharid(2);
+			emotion ET_SWEAT, playerattached();
 			mes "[Foreign Merchant]";
 			mes "Ah, that's right. Don't they";
 			mes "sell some sweet, heavenly";
@@ -2376,7 +2376,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes " ";
 				mes " - Bekento^000000";
 				next;
-				emotion ET_HUK, getcharid(2);
+				emotion ET_HUK, playerattached();
 				mes "["+ strcharinfo(0) +"]";
 				mes "So... This means...";
 				mes "You're not really a";
@@ -2391,7 +2391,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes "So you asked me to get";
 				mes "you a drink as an excuse";
 				mes "just to talk to you?!";
-				emotion ET_CRY, getcharid(2);
+				emotion ET_CRY, playerattached();
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Oh well, thanks for";
@@ -2519,7 +2519,7 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Oh, no...";
-		emotion ET_OTL, getcharid(2);
+		emotion ET_OTL, playerattached();
 		next;
 		mes "[Foreign Merchant]";
 		mes "...............................";
@@ -2527,7 +2527,7 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		mes "...............................";
 		emotion ET_PROFUSELY_SWEAT;
 		next;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "[Foreign Merchant]";
 		mes "You know, I save a small";
 		mes "bottle of wine for myself";
@@ -5486,7 +5486,7 @@ geffen,128,153,3	script	Leblo	883,{
 		mes "been asking questions about";
 		mes "the Diamond of Destruction.";
 		next;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "[Leblo]";
 		mes "Don't be so suprised:";
 		mes "word travels fast in the";
@@ -7840,7 +7840,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 		mes "adventurer.";
 		mes "Um, was there";
 		mes "something you wanted?";
-		emotion ET_QUESTION, getcharid(2);
+		emotion ET_QUESTION, playerattached();
 		next;
 		switch(select("Rogue Guild's Decoding Request")) {
 		case 1:
@@ -7857,7 +7857,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 			mes "of heat and light, you can";
 			mes "read its contents. This is";
 			mes "some powerful encryption!";
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Gooho Ahn]";
 			mes "So far, I've only decrypted";
@@ -8271,7 +8271,7 @@ moc_fild17,209,235,0	script	Odd Slab	111,4,4,{
 		mes "^FF0000*Creak Creak*";
 		mes "Etner sspawrod.^000000";
 		next;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "[" + strcharinfo(0) + "]";
 		mes "This slab is speaking";
 		mes "to me! I... I think. Now";
@@ -8282,7 +8282,7 @@ moc_fild17,209,235,0	script	Odd Slab	111,4,4,{
 		mes "^FF0000*Creak Creak*";
 		mes "Etner sspawrod.^000000";
 		next;
-		emotion ET_AHA, getcharid(2);
+		emotion ET_AHA, playerattached();
 		mes "[" + strcharinfo(0) + "]";
 		mes "Oh, right! This is that";
 		mes "trashy language, Aegye,";
@@ -12503,7 +12503,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 			mes "You're a lifesaver!";
 			mes "Detrimindexta, huh?";
 			next;
-			emotion ET_KEK;
+			emotion ET_KIK;
 			mes "[Agent]";
 			mes "Don't worry, I got";
 			mes "that one too! All you";

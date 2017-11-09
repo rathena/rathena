@@ -449,7 +449,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 			mes "pretending to see me?";
 			mes "It's funny... haha~";
 			close2;
-			emotion ET_KEK;
+			emotion ET_KIK;
 			end;
 		case 3:
 			playbgm "23.mp3"; // Travel
@@ -504,7 +504,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 			mes "I'll be waiting for you.";
 			close2;
 			playbgm "08.mp3"; // Theme of Prontera
-			emotion ET_KEK;
+			emotion ET_KIK;
 			end;
 		}
 	}

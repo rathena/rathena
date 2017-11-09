@@ -32,13 +32,13 @@ OnTimer9000:
 	end;
 OnTimer18000:
 	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
-	emotion 0, getcharid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer21000:
-	emotion 0, getcharid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer24000:
-	emotion 0, getcharid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
 	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
@@ -2294,7 +2294,7 @@ OnTouch:
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
 		specialeffect EF_STEAL;
 		emotion ET_SMILE, getnpcid(0, "Academy Student#"+strnpcinfo(2));
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
 	}
 	end;
@@ -2326,7 +2326,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
 		specialeffect EF_STEAL, AREA, "Cultivated Red Plant#"+strnpcinfo(2);
 		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 		emotion ET_SMILE;
 		mes "[Lumin]";
 		mes "Hey there Turtle";
@@ -2461,7 +2461,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "Yawn. Who are you making so much noise next to me...";
 		next;
 		select("You aren't dead?");
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "[Instructor Argos]";
 		mes "Dead?! Who....?";
 		mes "me? Pu ha ha ha!!";
@@ -8521,7 +8521,7 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 				next;
 				mes "Suddenly, you see Arang's foot flying towards you.";
 				specialeffect2 EF_TRIPLEATTACK;
-				emotion ET_KEK, getcharid(2);
+				emotion ET_KEK, playerattached();
 				next;
 				cutin "", 255;
 				mes "All you see are stars...";

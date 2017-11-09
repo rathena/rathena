@@ -612,13 +612,13 @@ dicastes01,191,202,4	script	Complaining Galten#fihs	450,{
 			mes "Then, I don't know what to talk about with you.";
 			close; 
 		}
-		emotion ET_KEK, getnpcid(0, "Crazy Venknick#fihsing1");
+		emotion ET_KIK, getnpcid(0, "Crazy Venknick#fihsing1");
 		mes "[Complaining Galten]";
 		mes "You also fell for that crazy man.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes";
-		emotion ET_CRY, getcharid(2);
+		emotion ET_CRY, playerattached();
 		next;
 		mes "[Complaining Galten]";
 		mes "Just forget about it quickly for your own good.";
@@ -658,7 +658,7 @@ dicastes01,202,197,4	script	Crazy Venknick#fihsing1	449,{
 		set Zeny, Zeny-5000;
 		mes "[Crazy Venknick]";
 		mes "Thanks.";
-		emotion ET_KEK, getnpcid(0, "Complaining Galten#fihs");
+		emotion ET_KIK, getnpcid(0, "Complaining Galten#fihs");
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "What is the sad legend?";
@@ -670,7 +670,7 @@ dicastes01,202,197,4	script	Crazy Venknick#fihsing1	449,{
 		mes "[Crazy Venknick]";
 		mes "I don't believe in legends.";
 		next;
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Was I tricked?";
 		sc_start SC_Blind,20000,0;

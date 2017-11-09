@@ -954,7 +954,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 				mes "Of course!";
 				mes "That's a great idea! I'll wait here while you go and ask Alfrik. You're my only hope in completing this research!";
 				next;
-				emotion ET_SCRATCH, getcharid(2);
+				emotion ET_SCRATCH, playerattached();
 				mes "[" + strcharinfo(0) + "]";
 				mes "(^333333I shouldn't have said anything...^000000)";
 				next;
@@ -3662,7 +3662,7 @@ xmas,38,105,0	script	#brisindwarf1	111,3,3,{
 			close;
 		case 3:
 			mes "^3355FFYou use your finger to poke the pile of snow. However, you hurt your finger a little bit after hitting something really solid.^000000";
-			emotion ET_ANGER, getcharid(2);
+			emotion ET_ANGER, playerattached();
 			percentheal -20,0;
 			close;
 		case 4:
@@ -3678,7 +3678,7 @@ xmas,38,105,0	script	#brisindwarf1	111,3,3,{
 
 OnTouch_:
 	if (god_brising > 39) {
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 	}
 	end;
 }
@@ -4000,7 +4000,7 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 			end;
 		case 2:
 			mes "^3355FFAs you sweep away the moss with your hand, you scratch your palm from the sharp edges of the rock.^000000";
-			emotion ET_SURPRISE, getcharid(2);
+			emotion ET_SURPRISE, playerattached();
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "Damn...!";
@@ -4145,7 +4145,7 @@ prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 
 OnTouch_:
 	if (god_brising > 41) {
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 	}
 	end;
 }
@@ -4339,7 +4339,7 @@ mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
 
 OnTouch_:
 	if (god_brising > 42) {
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 	}
 	end;
 }
@@ -4589,7 +4589,7 @@ OnTouch_:
 		close;
 	}
 	if (god_brising == 44) {
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 		mes "[Male Voice]";
 		mes "Don't come any closer!";
 		mes "How the hell do I feel";

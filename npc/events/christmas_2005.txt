@@ -250,7 +250,7 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 			mes "5 branch of dead trees!!!";
 			mes "Must bring item to attack town~";
 			mes "hahahaha~~";
-			emotion ET_KEK;
+			emotion ET_KIK;
 			next;
 			mes "[Enjoy]";
 			mes "Get it?!!!!";
@@ -385,7 +385,7 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 			mes "[All]";
 			mes "Let's punish!!!!!";
 			emotion ET_GO;
-			emotion ET_GO, getcharid(2);
+			emotion ET_GO, playerattached();
 			donpcevent "Happymerry#happymerry02::OnCommandEmotion";
 			donpcevent "Christ#christ02::OnCommandEmotion";
 			donpcevent "Mas#mas02::OnCommandEmotion";
@@ -836,7 +836,7 @@ prontera,35,209,5	script	Event#event	881,{
 		next;
 		mes "[Event]";
 		mes "...I love you too~!!!";
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "(Oh,my..)";
@@ -847,7 +847,7 @@ prontera,35,209,5	script	Event#event	881,{
 		mes "Hahahaha~~~";
 		next;
 		mes "-He laughed talking to his right hand.-";
-		//Emotion "Event#event" ET_KEK
+		//Emotion "Event#event" ET_KIK
 		emotion ET_CHUP;
 		next;
 		mes "["+ strcharinfo(0) +"]";
@@ -900,7 +900,7 @@ prontera,35,209,5	script	Event#event	881,{
 		next;
 		mes "[Event]";
 		mes "...I love you too~!!!";
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "(Oh.my~)";
@@ -1393,7 +1393,7 @@ function	script	F_carol_devi	{
 			mes "Human?";
 			mes "Let go of me...right now!";
 			emotion ET_HUK;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi quickly ran away-";
 			mes "-^4d4dffWhere Deviruchi is gone,-";
@@ -1416,7 +1416,7 @@ function	script	F_carol_devi	{
 			mes "Human?";
 			mes "Let go of me...right now!";
 			emotion ET_HUK;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi ran away quickly-";
 			mes "-and mumbled something.-";
@@ -1425,7 +1425,7 @@ function	script	F_carol_devi	{
 			next;
 			mes "-You are now cursed!!!-";
 			sc_start SC_Curse,5000,0;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			close;
 		case 3:
 			mes "[Deviruchi]";
@@ -1433,7 +1433,7 @@ function	script	F_carol_devi	{
 			mes "Human?";
 			mes "Let go of me...right now!";
 			emotion ET_HUK;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi ran away quickly-";
 			mes "-and mumbled something.-";
@@ -1442,7 +1442,7 @@ function	script	F_carol_devi	{
 			next;
 			mes "-You are blinded!!!-";
 			sc_start SC_Blind,5000,0;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			close;
 		case 4:
 			mes "[Deviruchi]";
@@ -1450,7 +1450,7 @@ function	script	F_carol_devi	{
 			mes "Human?";
 			mes "Let go of me...right now!";
 			emotion ET_HUK;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi ran away quickly-";
 			mes "-and mumbled something.-";
@@ -1459,7 +1459,7 @@ function	script	F_carol_devi	{
 			next;
 			mes "-You are poisoned!!!-";
 			sc_start SC_Poison,5000,0;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			close;
 		}
 	}
@@ -1482,7 +1482,7 @@ function	script	F_carol_devi	{
 		mes "Human?";
 		mes "Let go of me...right now!";
 		emotion ET_HUK;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		next;
 		mes "-Deviruchi ran away quickly-";
 		mes "-and mumbled something.-";
@@ -1512,7 +1512,7 @@ function	script	F_carol_devi2	{
 	mes "Human?";
 	mes "Let go of me...right now!";
 	emotion ET_HUK;
-	emotion ET_HUK, getcharid(2);
+	emotion ET_HUK, playerattached();
 	next;
 	mes "-Deviruchi ran away quickly-";
 	mes "-and mumbled something.-";

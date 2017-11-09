@@ -65,7 +65,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "Now, you try!";
 		mes "Come on, make";
 		mes "up a joke~!";
-		emotion ET_KEK;
+		emotion ET_KIK;
 		next;
 		if (Sex == SEX_MALE) {
 			select("A joke, eh?");
@@ -428,7 +428,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "Kavaruk told you";
 				mes "to come to me, eh?";
 				mes "Alright. Okay.";
-				emotion ET_KEK;
+				emotion ET_KIK;
 				next;
 				break;
 			case 2:

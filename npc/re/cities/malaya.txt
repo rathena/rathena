@@ -354,7 +354,7 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 	mes "But I know that Bakonawa could also 'swallow people', too.";
 	next;
 	select("Huk! Then isn't it dangerous?");
-	emotion ET_KEK;
+	emotion ET_KIK;
 	mes "[Drumming Young Man]";
 	mes "Ha ha ha. There is a way to stop Bakonawa from swallowing a person.";
 	next;

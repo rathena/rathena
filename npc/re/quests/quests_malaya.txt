@@ -3892,7 +3892,7 @@ malaya,305,281,3	script	Guard#buwaya	570,7,7,{
 OnTouch:
 	if ((malaya_hi > 19) && (malaya_buwaya == 0)) {
 		emotion ET_SURPRISE;
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 	}
 	end;
 }
@@ -3901,7 +3901,7 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "- Look at you warily while whispering to each other. -";
 		close;
 	} else if (malaya_buwaya == 1) {
-		emotion ET_SURPRISE;
+		emotion ET_SURPRISE, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "No, I heard they got lost in the woods.";
 		mes "Who would hide such a treasure from a small village like ours?";
@@ -3918,7 +3918,7 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "You all know ^3131FFTotoy^000000? The kid living at the ^3131FFInn^000000.";
 		mes "Well, did you know Totoy came back from the woods recently?";
 		next;
-		emotion ET_HUK;
+		emotion ET_HUK, getnpcid(0, "buwaya_A");
 		emotion ET_HUK, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Really??? He came back alive?";
@@ -3935,7 +3935,7 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "[Port Malaya Villager]";
 		mes "Don't you get it? Totoy must have found the treasure.";
 		next;
-		emotion ET_HUK;
+		emotion ET_HUK, getnpcid(0, "buwaya_A");
 		emotion ET_HUK, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "What!!!! Then ^3131FFTotoy^000000 is rich now?";
@@ -3955,7 +3955,7 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "I think Totoy is making a plan to bring the treasure back without us knowing it.";
 		mes "To have the whole treasure for himself, that greedy kid.";
 		next;
-		emotion ET_QUESTION;
+		emotion ET_QUESTION, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "Is that true?";
 		next;
@@ -3968,11 +3968,11 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "[Port Malaya Villager]";
 		mes "Then how about we talk to ^3131FFTotoy^000000 to spill the beans on where the treasure is?";
 		next;
-		emotion ET_QUESTION;
+		emotion ET_QUESTION, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "Wow. That is an awesome idea. No wonder you're the leader!";
 		next;
-		emotion ET_THINK;
+		emotion ET_THINK, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "But will ^3131FFTotoy^000000 give up the information easily?";
 		mes "Because Totoy was sneaky enough to think of getting away with taking the whole treasure.";
@@ -4065,7 +4065,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "I can see!! My eyes work!!!";
 		mes "Yay! I feel better now!";
 		next;
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		emotion ET_BEST;
 		mes "[Totoy]";
 		mes "Wow! You look better than you sounded. Ha ha.";
@@ -4217,7 +4217,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "Um... hey!";
 		next;
 		select("You are a " + ((Sex == SEX_MALE) ? "boy" : "girl") + ", aren't you?");
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "[Totoy]";
 		mes "Huh?";
 		if (Sex == SEX_FEMALE) {
@@ -6371,7 +6371,7 @@ OnTouch_:
 		mes "[Cowardly Worker]";
 		mes "Go up and you will";
 		mes "find the Gloomy Worker.";
-		emotion ET_SWEAT, getcharid(2);
+		emotion ET_SWEAT, playerattached();
 		close;
 	}
 	end;
@@ -6467,7 +6467,7 @@ ma_scene01,175,170,5	script	Sentimental Worker#bako2	578,{
 		mes "I'm secretly guarding the trap!";
 		mes "I want to hear out loud.";
 		mes "I have a trap in front of me! Ha ha ha ha~";
-		emotion ET_PROFUSELY_SWEAT, getcharid(2);
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		close;
 	}
 	end;
@@ -7069,7 +7069,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 	} else if (malaya_bang == 4) {
 		mes "["+strcharinfo(0)+"]";
 		mes "We pushed and pulled, but it won't budge.";
-		emotion ET_PROFUSELY_SWEAT, getcharid(2);
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		next;
 		mes "[Nurse Las]";
 		mes "Strange~";
@@ -7216,7 +7216,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "How can this be?????";
 		mes "????";
 		emotion ET_QUESTION;
-		emotion ET_QUESTION, getcharid(2);
+		emotion ET_QUESTION, playerattached();
 		cutin "malaya_nurseA04",2;
 		next;
 		mes "[Nurse Las]";
@@ -7231,7 +7231,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		next;
 		mes "[???]";
 		mes "*Snigger*";
-		emotion ET_QUESTION, getcharid(2);
+		emotion ET_QUESTION, playerattached();
 		emotion ET_QUESTION;
 		next;
 		mes "[???]";
@@ -7786,7 +7786,7 @@ malaya,53,68,4	script	Bushes#ma	844,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I'm not old.";
-		emotion ET_FRET, getcharid(2);
+		emotion ET_FRET, playerattached();
 		next;
 		switch(select("About entering the hospital.:About its mom.:About ???.:Ask about the old lady.:Ask about the hospital grounds.:Quit.")) {
 		case 1:
@@ -7870,7 +7870,7 @@ malaya,53,68,4	script	Bushes#ma	844,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I'm not old.";
-		emotion ET_FRET, getcharid(2);
+		emotion ET_FRET, playerattached();
 		close;
 	} else {
 		mes "There's a trace of a young child.";

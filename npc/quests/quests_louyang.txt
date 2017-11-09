@@ -2347,7 +2347,7 @@ lou_in02,198,170,0	script	Supply Stack#3lou	111,{
 			mes "It's not too late for you";
 			mes "to do the favor I asked.";
 			mes "I'm only asking you once!";
-			emotion ET_KEK, getnpcid(0, "Storage Keeper#lou");
+			emotion ET_KIK, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";

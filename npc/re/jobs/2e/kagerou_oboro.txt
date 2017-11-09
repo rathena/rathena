@@ -1054,7 +1054,7 @@ function	script	F_KO_Survival_dice	{
 	}
 	set job_kagero_lp, job_kagero_lp - getarg(1,1);
 	set .@dice, rand(1,6);
-	emotion ET_OTL + .@dice, getcharid(2);
+	emotion ET_OTL + .@dice, playerattached();
 	mes "The dice came out as " + .@dice + ".";
 	if (getarg(2,0))
 		return .@dice;
@@ -1081,12 +1081,12 @@ function	script	F_KO_Survival_dice2	{
 	mes "< Used " + getarg(1,2) + " LP >";
 	next;
 	set @job_ko_dice1, rand(1,6);
-	emotion ET_OTL + @job_ko_dice1, getcharid(2);
+	emotion ET_OTL + @job_ko_dice1, playerattached();
 	mes "First dice result is " + @job_ko_dice1 + ". Do you want to roll the second dice?";
 	next;
 	select("Roll the second dice.");
 	set @job_ko_dice2, rand(1,6);
-	emotion ET_OTL + @job_ko_dice2, getcharid(2);
+	emotion ET_OTL + @job_ko_dice2, playerattached();
 	return;
 }
 
@@ -1099,7 +1099,7 @@ function	script	F_KO_Survival_rps	{
 	next;
 	set .@pc, select("Give scissors.:Give rock.:Give paper.");
 	set .@npc, rand(1,3);
-	emotion .@emote[.@pc], getcharid(2);
+	emotion .@emote[.@pc], playerattached();
 	emotion .@emote[.@npc];
 	mes "=Game Results=";
 	mes "Machine: " + .@rps$[.@npc] + ".";

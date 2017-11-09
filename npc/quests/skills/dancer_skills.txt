@@ -191,7 +191,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			next;
 			mes "^3355FFIt figures that she'd";
 			mes "keep your mirror.^000000";
-			emotion ET_ANGER, getcharid(2);
+			emotion ET_ANGER, playerattached();
 			set DANCER_SK,3;
 			close;
 		}
@@ -286,7 +286,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			case 3:
 				mes "["+ strcharinfo(0) +"]";
 				mes "Un, deux, trois~";
-				emotion ET_BEST, getcharid(2);
+				emotion ET_BEST, playerattached();
 				specialeffect2 EF_FLASHER;
 				next;
 				mes "[Canell]";
@@ -563,7 +563,7 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 				mes "maniacally to herself.^000000";
 				percentheal -10,0;
 				specialeffect2 EF_HIT2;
-				emotion ET_THINK, getcharid(2);
+				emotion ET_THINK, playerattached();
 				delitem 970,1; //Alchol
 				delitem 512,1; //Apple
 				delitem 513,3; //Banana

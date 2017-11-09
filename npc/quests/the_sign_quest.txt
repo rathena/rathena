@@ -3550,7 +3550,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 				next;
 				donpcevent "Aaron#sign::onSmile";
 				emotion ET_SURPRISE;
-				emotion ET_SURPRISE, getcharid(2);
+				emotion ET_SURPRISE, playerattached();
 				mes "[Aaron]";
 				mes "Did someone say";
 				mes "''Quiz Challenge?''";
@@ -3558,7 +3558,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 				mes "of assistance.";
 				next;
 				set sign_q,21;
-				emotion ET_KEK;
+				emotion ET_KIK;
 				mes "[Jesqurienne]";
 				mes "Professor Aaron?";
 				mes "Ho ho~ If he's asking";
@@ -3612,7 +3612,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 		mes "[Jesqurienne]";
 		mes "I'd insult you if it weren't for the fact that you embarassed yourself enough during the Quiz Challenge. As a matter of fact, I'll even forgive you for wounding my pride earlier.";
 		next;
-		emotion ET_KEK;
+		emotion ET_KIK;
 		mes "[Jesqurienne]";
 		mes "Can you believe it?";
 		mes "Even drunk I can beat";
@@ -4344,7 +4344,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		next;
 		if (.@npc_p > .@user_p) {
 			set sign_q,23;
-			emotion ET_KEK;
+			emotion ET_KIK;
 			mes "[Jesqurienne]";
 			mes "Bwahahaha!";
 			mes "I win! I knew it!";
@@ -4827,7 +4827,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "other, I'm borrowing some";
 			mes "cash. You know, for old";
 			mes "time's sake. ^FF0000Yoink!^000000";
-			emotion ET_KEK;
+			emotion ET_KIK;
 			set Zeny, Zeny-10000;
 		}
 		else {
@@ -4845,7 +4845,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		mes "It's over. Not get outta";
 		mes "here before I jack some";
 		mes "more of your cash!";
-		emotion ET_KEK;
+		emotion ET_KIK;
 		next;
 		switch(select("Okay.:I want to take Part Two again.")) {
 		case 1:
@@ -7836,7 +7836,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "then that and then...";
 		mes "Ooh, these calculations";
 		mes "are absolutely perfect!";
-		emotion ET_KEK;
+		emotion ET_KIK;
 		next;
 		mes "[Cyon]";
 		mes "Wh-what?!";
@@ -7856,7 +7856,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "then that and then...";
 		mes "Ooh, these calculations";
 		mes "are absolutely perfect!";
-		emotion ET_KEK;
+		emotion ET_KIK;
 		next;
 		mes "[Cyon]";
 		mes "Wh-what?!";
@@ -8550,7 +8550,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 			mes "I really don't want to fight you,";
 			mes "but I've come too far to give up now. If you insist on interfering, then you leave me no choice...";
 			next;
-			emotion ET_KEK, getnpcid(0, "Dark Lord#serin");
+			emotion ET_KIK, getnpcid(0, "Dark Lord#serin");
 			mes "[Dark Lord]";
 			mes "^330033Insolent mortal!";
 			mes "Do you really think";

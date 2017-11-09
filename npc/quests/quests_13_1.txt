@@ -2666,7 +2666,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			mes "Hehe, don't mention it.";
 			mes "And Otto said that he";
 			mes "would come to see you.";
-			emotion ET_SHY, getcharid(2);
+			emotion ET_SHY, playerattached();
 			next;
 			mes "[Instructor Lugen]";
 			mes "Did he?";
@@ -2960,7 +2960,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hah!! How did you know my name?!";
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Diego]";
 			mes "It's on your nameplate.";
@@ -3063,7 +3063,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			mes "No, I just...";
 			mes "I was assigned to stay";
 			mes "in these barracks.";
-			emotion ET_PROFUSELY_SWEAT, getcharid(2);
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			next;
 			mes "[Diego]";
 			mes "Oh!!!";
@@ -3202,7 +3202,7 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Yes...";
-			emotion ET_SWEAT, getcharid(2);
+			emotion ET_SWEAT, playerattached();
 			next;
 			mes "[Jan]";
 			mes "Ahhh, it's exciting~";
@@ -4363,7 +4363,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "Everything about this world excites me.";
 			next;
 			emotion ET_BIGTHROB;
-			emotion ET_THINK, getcharid(2);
+			emotion ET_THINK, playerattached();
 			mes "[Botanist]";
 			mes "Oh, okay... Ah-hah!";
 			mes "This is how it goes...";
@@ -4380,7 +4380,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			case 2:
-				emotion ET_BIGTHROB, getcharid(2);
+				emotion ET_BIGTHROB, playerattached();
 				mes "["+strcharinfo(0)+"]";
 				mes "I agree. There's so much to see around here!";
 				next;
@@ -4400,7 +4400,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "[Botanist]";
 			mes "Oh...? Isn't this?!";
 			next;
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			mes "[Botanist]";
 			mes "...Well, I've got a ton of samples of this specimen. Sorry.";
 			next;
@@ -13528,7 +13528,7 @@ OnTouch_:
 	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_1";
 	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_2";
 	emotion ET_SURPRISE, getnpcid(0, "Rin#moc2_bt_rin01");
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	mes "[Rin]";
 	mes "You're not alone. So what?";
 	mes "You're still coming with me!";

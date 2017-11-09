@@ -161,7 +161,7 @@ OnTouch:
 		sleep2 2000;
 		npctalk "You have no idea! DEX comes first if you want your attack to be successful!!", "Applicant MacCarnie#doramt13", bc_self;
 		sleep2 1000;
-		emotion ET_STARE;
+		emotion ET_STARE, getnpcid(0, "Applicant Paul#doramt13");
 		emotion ET_OHNO, getnpcid(0, "Applicant MacCarnie#doramt13");
 	}
 	end;
@@ -5343,7 +5343,7 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 		mes "In front of us.";
 		npctalk "Yes, there is.", "", bc_self;
 		next;
-		emotion ET_SWEAT, getcharid(2);
+		emotion ET_SWEAT, playerattached();
 		mes "[Stello]";
 		mes "Good. Consider it as the last training before sailing off.";
 		next;
@@ -5412,7 +5412,7 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 		mes "[Captain Gamberi]";
 		mes "We were wondering if we had to go down there to recover your dead body...";
 		emotion ET_HUK;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "What? Was it such a dangerous mission?";
@@ -6056,7 +6056,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		next;
 		mes "[Recorder]";
 		mes "It is consisted not only of the events which have happened on the ship but also of the history of almost every person who has anything to do with Con-Chliina.";
-		emotion ET_SWEAT, getcharid(2);
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Recorder]";
 		mes "The future can be seen through the past.";
@@ -6294,7 +6294,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Captain Gamberi]";
 		mes "As an experienced crew of Con-Chliina, one must be able to cope with any situation whenever they need to.";
 		next;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "[Recorder]";
 		mes "I see. ^0000cdIt must be the duty of the captain to tear and burn the document as well^000000, I guess.";
 		npctalk "Did you really think that I wouldn't find out? You have left a long trail od evidence after you.", "", bc_self;
@@ -6937,7 +6937,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I knew it!";
-		emotion ET_FRET, getcharid(2);
+		emotion ET_FRET, playerattached();
 		next;
 		mes "[Boatswain]";
 		mes "I will reward you handsomely. However, you haven't been able to solve the problem permanently so I don't have to keep the promise I have made.";
@@ -9603,7 +9603,7 @@ lasagna,195,235,3	script	Cute Baby#dorcon	4_F_KR_TIGER,{
 		mes "[Baby]";
 		mes "Waa. Waa!";
 		next;
-		emotion ET_SWEAT, getcharid(2);
+		emotion ET_SWEAT, playerattached();
 		mes "[" + strcharinfo(0) + "]";
 		mes "G-guys? didn't you want me to find you a babysitting job?";
 		next;

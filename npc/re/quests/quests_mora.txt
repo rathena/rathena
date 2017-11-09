@@ -1863,7 +1863,7 @@ dicastes02,125,192,0	script	#call_cheshir_ep14	139,0,3,{
 OnTouch_:
 	if (ep13_3_secret > 22) {
 		if (rand(2)) {
-			emotion ET_DELIGHT, getcharid(2);
+			emotion ET_DELIGHT, playerattached();
 			mes "..........?";
 			mes "You sense someone moving around.";
 			mes "There must be someone down there.";
@@ -2568,7 +2568,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 		mes "[Raffle Researcher]";
 		mes "You, come here for a minute.";
 		mes "It's a simple experiment, so there's no need to be afraid.";
-		emotion ET_KEK;
+		emotion ET_KIK;
 		next;
 		if(select("What a crazy Raffle. I must run away.:... ...") == 1) {
 			mes "[Raffle Researcher]";
@@ -2809,7 +2809,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 		mes "You can draw on his face,";
 		mes "pinch him, tickle him, or whatever.";
 		mes "Bully him 3 times.";
-		emotion ET_KEK;
+		emotion ET_KIK;
 		close;
 	} else if (ep14_1_muk == 6) {
 		mes "[Raffle Researcher]";
@@ -3033,7 +3033,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 			next;
 			mes "... ... ... ... ...";
 			emotion ET_THINK;
-			emotion ET_THINK, getcharid(2);
+			emotion ET_THINK, playerattached();
 			next;
 			mes "[Raffle Researcher]";
 			mes "The village elders say";
@@ -5359,6 +5359,6 @@ mora,112,161,5	script	Knights Leader#mo	523,{
 	mes "Huh! I said the Boss is the boss!";
 	mes "No, the Chief is the best!";
 	mes "How rude you all are! I'm the Head here!";
-	emotion ET_PROFUSELY_SWEAT, getcharid(2);
+	emotion ET_PROFUSELY_SWEAT, playerattached();
 	close;
 }

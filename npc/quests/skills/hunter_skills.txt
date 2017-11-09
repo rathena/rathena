@@ -39,7 +39,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "old man! You were";
 				mes "just scared! Me, on";
 				mes "the other hand...";
-				emotion ET_KEK, getnpcid(0, "Reidin Corse#tu");
+				emotion ET_KIK, getnpcid(0, "Reidin Corse#tu");
 				next;
 				mes "[Arpesto]";
 				mes "You little";
@@ -181,7 +181,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 				mes "*Bang!*^000000";
 				specialeffect EF_HIT2;
 				emotion ET_HUK;
-				emotion ET_HUK, getcharid(2);
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Arpesto]";
 				mes "^333333*Pant Pant*";
@@ -293,7 +293,7 @@ pay_arche,109,169,3	script	Arpesto	712,{
 					mes "skill when you were bored";
 					mes "and just messing around";
 					mes "with one of the Bows!";
-					emotion ET_KEK, getnpcid(0, "Reidin Corse#tu");
+					emotion ET_KIK, getnpcid(0, "Reidin Corse#tu");
 					next;
 					emotion ET_HUK;
 					mes "[Arpesto]";

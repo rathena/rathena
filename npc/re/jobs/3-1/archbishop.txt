@@ -1261,7 +1261,7 @@ OnTouch:
 	mes "- Shoooo -";
 	specialeffect EF_CLOAKING,AREA,"Valkyrie Anguhilde#end";
 	hideonnpc "Valkyrie Anguhilde#end";
-	emotion ET_HUK, getcharid(2);
+	emotion ET_HUK, playerattached();
 	next;
 	mes "[Valkyrie of the heavens]";
 	mes "Set your mind at ease.";

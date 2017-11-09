@@ -3421,7 +3421,7 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion ET_QUESTION, getcharid(2);
+			emotion ET_QUESTION, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "Those voices weren't";
 			mes "just in my head, were they?";
@@ -3499,7 +3499,7 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion ET_QUESTION, getcharid(2);
+			emotion ET_QUESTION, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "I'm hearing things";
 			mes "again! Where are all of";
@@ -5571,7 +5571,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 				mes "now that I would never";
 				mes "tell you why I neeeeed";
 				mes "these Beads. Bweh-heh!";
-				emotion ET_KEK;
+				emotion ET_KIK;
 				next;
 				break;
 			}
@@ -5675,7 +5675,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			mes "...........!";
 			emotion ET_SURPRISE;
 			next;
-			emotion ET_KEK;
+			emotion ET_KIK;
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
 			mes "something. Yes, bring me the";

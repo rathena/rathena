@@ -32,12 +32,12 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 				mes "Ah! Hey! Man!";
 				next;
 				select("What's up?");
-				emotion ET_QUESTION, getcharid(2);
+				emotion ET_QUESTION, playerattached();
 				mes "[Giacomo Girolamo]";
 				mes "Have you ever heard of horrific human experimentation committed in Rekenber Corporation whose head office is here in Lighthalzen?";
 				next;
 				select("Whaaat?! human experimentation?");
-				emotion ET_HUK, getcharid(2);
+				emotion ET_HUK, playerattached();
 				mes "[Giacomo Girolamo]";
 				mes "Yea! human experimentation!!";
 				mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
@@ -134,7 +134,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			mes "I just hope that the lady gets out of this town with dangerous rumors..";
 			next;
 			select("Dangerous rumors?");
-			emotion ET_QUESTION, getcharid(2);
+			emotion ET_QUESTION, playerattached();
 			mes "[Giacomo Girolamo]";
 			mes "Ah... Lady may not have heard of the rumor.";
 			next;
@@ -145,7 +145,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			mes "and then the rumor came up, since disappearance cases happen pretty often, that Rekenber is committing a horrible human experimentation in their secret lab.";
 			next;
 			select("Excuse me?! human experimentation?");
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			mes "[Giacomo Girolamo]";
 			mes "Yea! human experimentation!!";
 			mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
@@ -371,11 +371,11 @@ que_lhz,206,74,4	script	Researcher#02	4_LGTSCIENCE,3,3,{
 
 OnTouch:
 	if (lght_duk01 == 2) {
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "["+ strcharinfo(0) +"]";
 		mes "You!!!! are Wolfchev?";
 		next;
-		emotion ET_KEK;
+		emotion ET_KIK;
 		mes "[Wolfchev]";
 		mes "A Human! kaahaha. People tend to hate this place, why are you here?";
 		next;
@@ -385,7 +385,7 @@ OnTouch:
 		mes "["+ strcharinfo(0) +"]";
 		mes "And I see that you are still committing that!!!";
 		next;
-		emotion ET_KEK;
+		emotion ET_KIK;
 		mes "[Wolfchev]";
 		mes "Kihihihi. I can see that you know something about me. Is that you who accused me?";
 		mes "How dare you come back to me after you did that. Kihihih";
@@ -399,7 +399,7 @@ OnTouch:
 		erasequest 5109;
 		setquest 5110;
 		lght_duk01 = 3;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		mes "["+ strcharinfo(0) +"]";
 		mes "Whoa! Wolfchev, stop!";
 		close2;
@@ -427,7 +427,7 @@ que_lhz,94,119,4	script	Researcher#03	4_LGTSCIENCE,{
 		mes "["+ strcharinfo(0) +"]";
 		mes "But, your experiment seem really dangerous. How come this is what everybody wants?";
 		next;
-		emotion ET_KEK;
+		emotion ET_KIK;
 		mes "[Wolfchev]";
 		mes "Everyone has a desire to be stronger and wants to dominate others so those other people obey and admire you. Do you not have that desire?";
 		next;
@@ -688,7 +688,7 @@ lhz_dun04,151,276,3	script	Researcher#memo	4_LGTSCIENCE,{
 		mes "[Wolfchev]";
 		mes "Urr.. I think they will ruin my whole laboratory!";
 		next;
-		emotion ET_BLABLA, getcharid(2);
+		emotion ET_BLABLA, playerattached();
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hey! Wolfchev!!";
 		next;

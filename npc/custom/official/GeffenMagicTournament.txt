@@ -4449,7 +4449,7 @@ OnMobKilled:
 				case 45:
 					specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("Loki#3");
 					sleep2 500;
-					emotion ET_KEK, getnpcid(0, instance_npcname("Loki#3"));
+					emotion ET_KIK, getnpcid(0, instance_npcname("Loki#3"));
 					npctalk "Loki : 3... 2...", instance_npcname("Loki#3");
 					sleep2 500;
 					npctalk "Geffen Bully : What?! You went from from 9 to 3 seconds!!", instance_npcname("Geffen Bully#1");

@@ -429,7 +429,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		next;
 		switch(select("Oh....pardon?!", "Of course, I really wanna know.")) {
 		case 1:
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			emotion ET_FRET;
 			mes "[Pudding]";
 			mes "Oh my! You fell asleep after you asked me something? Well, anyway I feel lazy to explain again so I will just continue.";
@@ -463,7 +463,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "Since those materials can only be found from the monsters in the Lab., the special power also can be dwelt into certain equipments which can be obtained from the Lab.";
 		next;
 		select("So what's the conclusion?");
-		emotion ET_QUESTION, getcharid(2);
+		emotion ET_QUESTION, playerattached();
 		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that becuase that's important.";

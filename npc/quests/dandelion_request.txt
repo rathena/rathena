@@ -5490,7 +5490,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[Dandelion Member]";
 		mes "I still can't believe it...";
 		mes "Those poor, poor children...";
-		emotion ET_SCRATCH, getcharid(2);
+		emotion ET_SCRATCH, playerattached();
 		close2;
 	}
 	else if(mao_request > 102 && mao_request < 126)
@@ -7725,7 +7725,7 @@ moc_castle,40,20,3	script	Man	849,{
 	{
 		mes "^3355FFYou find the body";
 		mes "of a dead man.^000000";
-		emotion ET_SCRATCH, getcharid(2);
+		emotion ET_SCRATCH, playerattached();
 		close;
 	}
 	mes "^3355FFYou find a man lying";
@@ -8273,7 +8273,7 @@ OnStop2:
 
 OnTouch:
 	initnpctimer;
-	emotion ET_KEK, getcharid(2);
+	emotion ET_KEK, playerattached();
 	disablenpc "#maogate1_battle";
 	end;
 
@@ -8349,7 +8349,7 @@ que_job02,66,85,5	script	Dandelion Member#1_bt	880,{
 		mes "your strength while I go";
 		mes "in there and help him...";
 		close2;
-		emotion ET_SURPRISE, getcharid(2);
+		emotion ET_SURPRISE, playerattached();
 		set mao_request,27;
 		disablenpc "Dandelion Member#1_bt";
 		end;
@@ -8413,7 +8413,7 @@ OnTouch:
 	mes "on here? Kidd! Lin?";
 	mes "A-and who's that guy?";
 	mes "Could it possibly be...";
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	next;
 	cutin "mocseal_kid01.bmp",0;
 	mes "[Kidd]";
@@ -8473,7 +8473,7 @@ OnTouch:
 	mes "to revive Morroc Satan!";
 	donpcevent "R#maogate1::OnSpell";
 	emotion ET_SURPRISE, getnpcid(0, "Kidd#maogate1_1");
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	next;
 	mes "[Kidd]";
 	mes "Watch out!";
@@ -8503,7 +8503,7 @@ OnTouch:
 	mes "Fine, you leave me";
 	mes "no choice. Feel the";
 	mes "power of Morroc Satan!";
-	emotion ET_KEK, getnpcid(0, "R#maogate1");
+	emotion ET_KIK, getnpcid(0, "R#maogate1");
 	next;
 	donpcevent "R#maogate1::OnInit";
 	initnpctimer;
@@ -9256,7 +9256,7 @@ OnStop2:
 	
 OnTouch:
 	initnpctimer;
-	emotion ET_KEK, getcharid(2);
+	emotion ET_KEK, playerattached();
 	disablenpc "#maogate2_battle";
 	end;
 	
@@ -9406,7 +9406,7 @@ OnTouch:
 	mes "on here? Kidd! Lin?";
 	mes "A-and who's that guy?";
 	mes "Could it possibly be...";
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	next;
 	cutin "mocseal_kid01.bmp",0;
 	mes "[Kidd]";
@@ -9466,7 +9466,7 @@ OnTouch:
 	mes "to revive Morroc Satan!";
 	donpcevent "R#maogate2::OnSpell";
 	emotion ET_SURPRISE, getnpcid(0, "Kidd#maogate2_1");
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	next;
 	mes "[Kidd]";
 	mes "Watch out!";
@@ -9496,7 +9496,7 @@ OnTouch:
 	mes "Fine, you leave me";
 	mes "no choice. Feel the";
 	mes "power of Morroc Satan!";
-	emotion ET_KEK, getnpcid(0, "R#maogate2");
+	emotion ET_KIK, getnpcid(0, "R#maogate2");
 	next;
 	donpcevent "R#maogate2::OnInit";
 	initnpctimer;
@@ -10147,12 +10147,11 @@ OnMyMobDead:
 }
 
 que_job01,68,88,5	script	Simon#mao	881,{
-
 	mes "[Simon]";
 	mes "...No. How many";
 	mes "times must I tell you?";
 	mes "I'm not going back.";
-	emotion ET_SWEAT;
+	emotion ET_SWEAT, getnpcid(0, "Simon#mao");
 	next;
 	mes "[Kimmie]";
 	mes "Please...";
@@ -10197,7 +10196,7 @@ que_job01,68,88,5	script	Simon#mao	881,{
 	close;
 }
 
-que_job01,70,84,1	duplicate(Simon#mao)	Kimmie	882,0,0
+que_job01,70,84,1	duplicate(Simon#mao)	Kimmie	882
 
 sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
 	callfunc "F_GM_NPC";

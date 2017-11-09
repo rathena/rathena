@@ -596,7 +596,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			if (.@SantaCardP == .@SantaCardNpc) {
 				set .@SantaCardWins,.@SantaCardWins+1;
 				emotion ET_SURPRISE;
-				emotion ET_AHA, getcharid(2);
+				emotion ET_AHA, playerattached();
 				cutin "",255;
 				mes "[Santa Claus]";
 				mes "You're lucky.";
@@ -604,7 +604,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				next;
 			} else {
 				emotion ET_SURPRISE;
-				emotion ET_HUK, getcharid(2);
+				emotion ET_HUK, playerattached();
 				cutin "",255;
 				mes "[Santa Claus]";
 				mes "Aww maybe next time...";

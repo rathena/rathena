@@ -1333,7 +1333,7 @@ OnTouch:
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		sc_end SC_Blind;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		set ep13_3_secret, 14;
 		erasequest 7198;
 		close2;
@@ -1538,7 +1538,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		SC_End SC_Blind;
-		emotion ET_HUK, getcharid(2);
+		emotion ET_HUK, playerattached();
 		set ep13_3_secret, 14;
 		erasequest 7198;
 		close2;

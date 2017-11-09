@@ -2933,7 +2933,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "You're Maheo?";
 		next;
 		cutin "ra_magic1",2;
-		emotion ET_KEK;
+		emotion ET_KIK;
 		mes "[Maheo]";
 		mes "It's true. You're speaking to";
 		mes "Maheo, the greatest mage,";
@@ -3011,7 +3011,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "all the flame caused my";
 		mes "clothes to catch on fire!";
 		next;
-		emotion ET_SPARK, getcharid(2);
+		emotion ET_SPARK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "You...";
 		mes "you set fire";
@@ -3208,7 +3208,7 @@ OnTouch:
 
 OnTouchNPC: 
 	emotion ET_FRET;
-	emotion ET_KEK,getcharid(2);
+	emotion ET_KIK, getattachedrid();
 	end;
 
 OnMyMobDead:
@@ -5370,7 +5370,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "me like that! Saying";
 				mes "it like that is kind of";
 				mes "overdoing it, isn't it?";
-				emotion ET_OHNO, getcharid(2);
+				emotion ET_OHNO, playerattached();
 				next;
 				mes "[High Priest Zhed]";
 				mes "Not at all. In fact, I'm";
@@ -5907,7 +5907,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "before the other High";
 					mes "Priests ruin our nation.";
 					next;
-					emotion ET_HUK, getcharid(2);
+					emotion ET_HUK, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "Y-you're not thinking";
 					mes "of overthrowing the";
@@ -6034,7 +6034,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "I already have someone in";
 					mes "mind that might help us.";
 					next;
-					emotion ET_SPARK, getcharid(2);
+					emotion ET_SPARK, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "That sounds good.";
 					mes "Who is he?";
@@ -6047,7 +6047,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "may even think I deserve";
 					mes "to be excommunicated...";
 					next;
-					emotion ET_BEST, getcharid(2);
+					emotion ET_BEST, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "Come on, it wouldn't";
 					mes "hurt to try! Besides,";

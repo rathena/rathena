@@ -119,7 +119,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				mes "In the meantime, I'll think of how I'm gonna pay back Annon for leaving me in misery! So hurry and find Annon! Hoo ho ho ho ho!";
 				emotion ET_SMILE;
 				next;
-				emotion ET_THINK, getcharid(2);
+				emotion ET_THINK, playerattached();
 				mes "["+strcharinfo(0)+"]";
 				mes "(She's so scary!";
 				mes "Making me do stuff";
@@ -209,7 +209,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				mes "standing around for my";
 				mes "own amusement or something?!";
 				next;
-				emotion ET_KEK, getcharid(2);
+				emotion ET_KIK, playerattached();
 				mes "["+strcharinfo(0)+"]";
 				mes "No no no no...";
 				mes "I meant, I can't";
@@ -313,7 +313,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "^660000enslave^000000 him.";
 					mes "^666666*Grinds teeth*^000000";
 					next;
-					emotion ET_SURPRISE, getcharid(2);
+					emotion ET_SURPRISE, playerattached();
 					mes "[" +strcharinfo(0)+ "]";
 					mes "(...H-Horrifying!)";
 					next;
@@ -464,7 +464,7 @@ if (!$@annonactive) {
 				mes "...Awwww";
 				mes "Oh... Oh God...!";
 				next;
-				emotion ET_SURPRISE, getcharid(2);
+				emotion ET_SURPRISE, playerattached();
 				mes "[" +strcharinfo(0)+ "]";
 				mes "Huh...?";
 				mes "I heard something";
@@ -483,7 +483,7 @@ if (!$@annonactive) {
 				mes "Wh...who's there?";
 				mes "Shuda?! If that's you,";
 				mes "stay back, or I'll kill myself!";
-				emotion ET_HUK, getcharid(2);
+				emotion ET_HUK, playerattached();
 				next;
 				switch(select("What are you doing here?:I'm not Shuda!")) {
 				case 1:
@@ -547,7 +547,7 @@ if (!$@annonactive) {
 OnTouch_:
 	if (thai_find == 12) {
 		if (!rand(0,2)) {
-			emotion ET_SURPRISE, getcharid(2);
+			emotion ET_SURPRISE, playerattached();
 			mes "[" +strcharinfo(0)+ "]";
 			mes "Huh...?";
 			next;
@@ -789,7 +789,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				mes "My mission: Bring back an";
 				mes "ultra powerful potion for";
 				mes "this poor guy~";
-				emotion ET_BEST, getcharid(2);
+				emotion ET_BEST, playerattached();
 				close;
 			}
 		case 2:
@@ -970,7 +970,7 @@ ayo_dun01,255,62,0	script	AyoFootprint1	139,2,0,{
 OnTouch_:
 	if (thai_find == 4) {
 		if (rand(1,3) < 2) {
-			emotion ET_SURPRISE, getcharid(2);
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFYou find footprints heading to the ^5C3317North^3355FF. It looks like somebody was in quite a hurry, just like the villager said!^000000";
 			set thai_find,5;
 			changequest 12032,12033;
@@ -984,7 +984,7 @@ ayo_dun01,74,142,0	script	AyoFootprint2	139,2,0,{
 OnTouch_:
 	if (thai_find == 5) {
 		if (rand(1,3) < 2) {
-			emotion ET_THINK, getcharid(2);
+			emotion ET_THINK, playerattached();
 			mes "^3355FFYou find another set of footprints. It seems that somebody was running away from something. These prints are heading to the ^5C3317East^3355FF. You'd better follow them to see what";
 			mes "you can find.^000000";
 			set thai_find,6;
@@ -998,7 +998,7 @@ ayo_dun01,244,256,2	script	AyoFootprint3	139,2,0,{
 OnTouch_:
 	if (thai_find == 6) {
 		if (rand(1,3) < 2) {
-			emotion ET_STARE_ABOUT, getcharid(2);
+			emotion ET_STARE_ABOUT, playerattached();
 			mes "^3355FFThe footprints end around this area. Whoever was running must";
 			mes "have been exhausted and stumbled on something. Perhaps the owner of the footprints is nearby...^000000";
 			set thai_find,7;
@@ -1012,7 +1012,7 @@ ayo_dun01,17,257,0	script	AyoFootprint4	139,2,0,{
 OnTouch_:
 	if (thai_find == 7) {
 		if (rand(1,3) < 2) {
-			emotion ET_AHA, getcharid(2);
+			emotion ET_AHA, playerattached();
 			mes "^3355FFAs you follow the footprints,";
 			mes "you arrive at the '^5C3317Entrance of the Shrine^3355FF.' Whoever this person was, he just ran into the second level.^000000";
 			set thai_find,8;
@@ -1043,7 +1043,7 @@ ayo_dun02,135,168,0	script	AyoFootprint6	139,0,2,{
 OnTouch_:
 	if (thai_find == 9) {
 		if (rand(1,3) == 1) {
-			emotion ET_SURPRISE, getcharid(2);
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFThe trail of footprints";
 			mes "continue here, and seem";
 			mes "to look more freshly made.^000000.";
@@ -1091,7 +1091,7 @@ OnTouch_:
 					mes "[Rat]";
 					mes "^FF0000Squeak!";
 					mes "^FF0000Squeak Squeak!^000000";
-					emotion ET_HUK, getcharid(2);
+					emotion ET_HUK, playerattached();
 					next;
 					mes "["+strcharinfo(0)+"]";
 					mes "^8C1717Wah^000000!";
@@ -1117,7 +1117,7 @@ ayo_dun02,77,213,0	script	AyoFootprint7	139,1,1,{
 OnTouch_:
 	if (thai_find == 10) {
 		if (rand(1,3) < 2) {
-			emotion ET_SURPRISE, getcharid(2);
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFWhere is he...?";
 			mes "He seems to have gone";
 			mes "deep into the dungeon.";
@@ -1134,7 +1134,7 @@ ayo_dun02,86,254,0	script	AyoFootprint8	139,1,1,{
 OnTouch_:
 	if (thai_find == 11) {
 		if (rand(1,3) < 2) {
-			emotion ET_SURPRISE, getcharid(2);
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFYou find traces of blood. Whoever was running in this direction may have been wounded. The trail of blood leads to the ^5C3317North^3355FF.^000000";
 			changequest 12032,12033;
 			set thai_find,12;
@@ -2775,7 +2775,7 @@ OnTouch_:
 							case 1:
 								if (.@jun_mark == 1) {
 									emotion ET_SCISSOR;
-									emotion ET_SCISSOR, getcharid(2);
+									emotion ET_SCISSOR, playerattached();
 									mes "[Mr. Jun]";
 									mes "Hmpf.";
 									mes "It's a draw.";
@@ -2786,7 +2786,7 @@ OnTouch_:
 								}
 								else if (.@jun_mark == 2) {
 									emotion ET_ROCK;
-									emotion ET_SCISSOR, getcharid(2);
+									emotion ET_SCISSOR, playerattached();
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Yes...!";
@@ -2795,7 +2795,7 @@ OnTouch_:
 								}
 								else {
 									emotion ET_WRAP;
-									emotion ET_SCISSOR, getcharid(2);
+									emotion ET_SCISSOR, playerattached();
 									set @pc_score,@pc_score + 1;
 									set @user_score,@user_score + 1;
 									mes "[Mr. Jun]";
@@ -2808,7 +2808,7 @@ OnTouch_:
 							case 2:
 								if (.@jun_mark == 1) {
 									emotion ET_SCISSOR;
-									emotion ET_ROCK, getcharid(2);
+									emotion ET_ROCK, playerattached();
 									set @pc_score,@pc_score + 1;
 									set @user_score,@user_score + 1;
 									mes "[Mr. Jun]";
@@ -2818,7 +2818,7 @@ OnTouch_:
 								}
 								else if (.@jun_mark == 2) {
 									emotion ET_ROCK;
-									emotion ET_ROCK, getcharid(2);
+									emotion ET_ROCK, playerattached();
 									mes "[Mr. Jun]";
 									mes "Hmpf.";
 									mes "It's a draw.";
@@ -2829,7 +2829,7 @@ OnTouch_:
 								}
 								else {
 									emotion ET_WRAP;
-									emotion ET_ROCK, getcharid(2);
+									emotion ET_ROCK, playerattached();
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Bwahahaha!";
@@ -2840,7 +2840,7 @@ OnTouch_:
 							case 3:
 								if (.@jun_mark == 1) {
 									emotion ET_SCISSOR;
-									emotion ET_WRAP, getcharid(2);
+									emotion ET_WRAP, playerattached();
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Heh heh~";
@@ -2849,7 +2849,7 @@ OnTouch_:
 								}
 								else if (.@jun_mark == 2) {
 									emotion ET_ROCK;
-									emotion ET_WRAP, getcharid(2);
+									emotion ET_WRAP, playerattached();
 									set @user_score,@user_score + 1;
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
@@ -2859,7 +2859,7 @@ OnTouch_:
 								}
 								else {
 									emotion ET_WRAP;
-									emotion ET_WRAP, getcharid(2);
+									emotion ET_WRAP, playerattached();
 									mes "[Mr. Jun]";
 									mes "Hmpf.";
 									mes "It's a draw.";

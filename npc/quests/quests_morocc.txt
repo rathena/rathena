@@ -2197,7 +2197,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Huh?";
-				emotion ET_PROFUSELY_SWEAT, getcharid(2);
+				emotion ET_PROFUSELY_SWEAT, playerattached();
 				next;
 				mes "[Benjamin]";
 				mes "You look bored. You must be waiting for someone to give you something to do!";
@@ -2640,7 +2640,7 @@ yuno,333,210,5	script	Library Master#garas	57,{
 		mes "I gurantee you that you'll get better quickly.";
 		next;
 		mes "^660000He sounded sincere, but it doesn't sound like that kind of broth would even be effective...^000000";
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		set barmunt_crow,3;
 		close;
 	}
@@ -2739,7 +2739,7 @@ OnTouch:
 		mes "I gurantee you that you'll get better quickly.";
 		next;
 		mes "^660000He sounded sincere, but it doesn't sound like that kind of broth would even be effective...^000000";
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		set barmunt_crow,3;
 		close;
 	}
@@ -2767,7 +2767,7 @@ yuno_in04,111,57,3	script	Library Part-Timer#garas	862,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "I'm looking for a book called <The Crow of the Fate> written by Oliver Hilpert... Ahchoo!";
-		emotion ET_KEK, getcharid(2);
+		emotion ET_KEK, playerattached();
 		specialeffect2 EF_VENOMDUST;
 		next;
 		mes "[Library Part-Timer]";
@@ -3448,7 +3448,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		emotion ET_BIGTHROB;
 		next;
 		mes "^660000Yes, it was the picture book of Mammi, an idol whom Benjamin of Morroc insists to be one of the three greatest idols in the Rune-Midgart Kingdom. That must be why Oliver is squealing in delight.^000000";
-		emotion ET_THINK, getcharid(2);
+		emotion ET_THINK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Ahchoo! Are you also a Mammi fan?";
@@ -3499,7 +3499,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		mes "["+ strcharinfo(0) +"]";
 		mes "...............";
 		mes "I... I see...";
-		emotion ET_SWEAT, getcharid(2);
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Oliver Hilpert]";
 		mes "Umm...";

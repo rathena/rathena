@@ -230,14 +230,14 @@ OnTimer39000:
 	npctalk "Right.. I should have entered with another group!", "Party Member#SHADOW";
 	end;
 OnTimer40500:
-	emotion ET_KEK, getnpcid(0, "Party Member#CRU::OnChat24");
+	emotion ET_KIK, getnpcid(0, "Party Member#CRU::OnChat24");
 	npctalk "Hey. Are you pissed off?", "Party Member#CRU::OnChat24";
 	end;
 OnTimer42000:
 	npctalk "Not at all.", "Party Member#GUILL";
 	end;
 OnTimer43500:
-	emotion ET_KEK, getnpcid(0, "Party Member#MONK");
+	emotion ET_KIK, getnpcid(0, "Party Member#MONK");
 	npctalk "Look at him snoozing. Hehe.", "Party Member#MONK";
 	end;
 OnTimer45000:
@@ -245,7 +245,7 @@ OnTimer45000:
 	npctalk "Bah, I don't care. I'm gonna take a nap, so wake me up when we're ready.";
 	end;
 OnTimer46500:
-	emotion ET_KEK, getnpcid(0, "Party Member#CRU");
+	emotion ET_KIK, getnpcid(0, "Party Member#CRU");
 	npctalk "You are upset!!", "Party Member#CRU";
 	npctalk "Can I get back before I die...", "Party Member#WANDERER";
 	npctalk "What? You, we gotta talk! I've been too nice to you!", "Party Member#EINOLD";

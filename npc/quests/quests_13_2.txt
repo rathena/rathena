@@ -3454,7 +3454,7 @@ OnReset:
 	end;
 
 OnTouch_:
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	emotion ET_HUK;
 	disablenpc "Stranger#ep13_2_dan01";
 	donpcevent "Stranger#ep13_2_dan02::OnCall";
@@ -3482,7 +3482,7 @@ OnReset:
 	end;
 
 OnTouch_:
-	emotion ET_SURPRISE, getcharid(2);
+	emotion ET_SURPRISE, playerattached();
 	emotion ET_HUK;
 	disablenpc "Stranger#ep13_2_dan02";
 	donpcevent "Stranger#ep13_2_dan01::OnCall";
@@ -4904,7 +4904,7 @@ mjolnir_12,220,37,0	duplicate(mjo_no_find)	#mj12_find_3	-1,5,5
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion ET_AHA, getcharid(2);
+					emotion ET_AHA, playerattached();
 					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,1; //Rough_Mineral
@@ -5255,7 +5255,7 @@ OnTouch_:
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion ET_AHA, getcharid(2);
+					emotion ET_AHA, playerattached();
 					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
@@ -5388,7 +5388,7 @@ OnTouch_:
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion ET_AHA, getcharid(2);
+					emotion ET_AHA, playerattached();
 					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
@@ -5572,7 +5572,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 			else if (ep13_2_tre1 == 3) {
 				if (countitem(6079) == 1) {
 					emotion ET_SWEAT;
-					emotion ET_SWEAT, getcharid(2);
+					emotion ET_SWEAT, playerattached();
 					mes "[Grenouille]";
 					mes "Hoo, this is one of the";
 					mes "most common kinds of flowers.";
@@ -6292,7 +6292,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "See you~!!";
-			emotion ET_PROFUSELY_SWEAT, getcharid(2);
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			next;
 			mes "[Industrious Man]";
 			mes "Uh!! Wait!!";
@@ -6311,7 +6311,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			mes "["+strcharinfo(0)+"]";
 			mes "......";
 			mes "......What?!";
-			emotion ET_HUK, getcharid(2);
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Industrious Man]";
 			mes "Would you like to help me with my search?";
@@ -6660,7 +6660,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Yes, sorry to startle you.";
-				emotion ET_SMILE, getcharid(2);
+				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Haha, it's ok.";
@@ -6704,7 +6704,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				mes "Ugh!!!";
 				mes "**Sigh**";
 				emotion ET_CRY;
-				emotion ET_CRY, getcharid(2);
+				emotion ET_CRY, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Well that's that!";
@@ -6779,7 +6779,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Since I'm travelling here, so I thought I'd need it...";
-				emotion ET_SMILE, getcharid(2);
+				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Haha, is that so?";
@@ -6825,7 +6825,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				mes "[Worker]";
 				mes "Ah!!!";
 				emotion ET_CRY;
-				emotion ET_CRY, getcharid(2);
+				emotion ET_CRY, playerattached();
 				next;
 				mes "[Worker]";
 				mes "I can't just care about pride now.";
