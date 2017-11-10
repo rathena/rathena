@@ -11,58 +11,58 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="char.h">
+    <ClInclude Include="char.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="char_clif.h">
+    <ClInclude Include="char_clif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="char_cnslif.h">
+    <ClInclude Include="char_cnslif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="char_logif.h">
+    <ClInclude Include="char_logif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="char_mapif.h">
+    <ClInclude Include="char_mapif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_achievement.h">
+    <ClInclude Include="int_achievement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_auction.h">
+    <ClInclude Include="int_auction.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_elemental.h">
+    <ClInclude Include="int_elemental.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_guild.h">
+    <ClInclude Include="int_guild.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_homun.h">
+    <ClInclude Include="int_homun.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_mail.h">
+    <ClInclude Include="int_mail.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_mercenary.h">
+    <ClInclude Include="int_mercenary.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_party.h">
+    <ClInclude Include="int_party.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_pet.h">
+    <ClInclude Include="int_pet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_quest.h">
+    <ClInclude Include="int_quest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_storage.h">
+    <ClInclude Include="int_storage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inter.h">
+    <ClInclude Include="inter.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="int_clan.h">
+    <ClInclude Include="int_clan.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -70,46 +70,46 @@
     <ClCompile Include="char.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="char_clif.c">
+    <ClCompile Include="char_clif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="char_cnslif.c">
+    <ClCompile Include="char_cnslif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="char_logif.c">
+    <ClCompile Include="char_logif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="char_mapif.c">
+    <ClCompile Include="char_mapif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_achievement.c">
+    <ClCompile Include="int_achievement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_auction.c">
+    <ClCompile Include="int_auction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_elemental.c">
+    <ClCompile Include="int_elemental.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_guild.c">
+    <ClCompile Include="int_guild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_homun.c">
+    <ClCompile Include="int_homun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_mail.c">
+    <ClCompile Include="int_mail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_mercenary.c">
+    <ClCompile Include="int_mercenary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_party.c">
+    <ClCompile Include="int_party.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_pet.c">
+    <ClCompile Include="int_pet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_quest.c">
+    <ClCompile Include="int_quest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="int_storage.cpp">
@@ -118,7 +118,7 @@
     <ClCompile Include="inter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="int_clan.c">
+    <ClCompile Include="int_clan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

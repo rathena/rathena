@@ -78,6 +78,10 @@ map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
 
 
 # map object files
+#cause this one failling otherwise
+obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+	@echo "	CXX	$< (custom rule)"
+	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj/%.o: %.c $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CC	$<"

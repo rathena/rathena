@@ -72,5 +72,4 @@ int distance_client(int dx, int dy);
 void do_init_path();
 void do_final_path();
 
-
 #endif /* _PATH_HPP_ */
