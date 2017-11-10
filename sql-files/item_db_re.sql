@@ -11465,7 +11465,7 @@ REPLACE INTO `item_db_re` VALUES (27157,'Wood_Goblin_Card','Wood Goblin Card',6,
 REPLACE INTO `item_db_re` VALUES (27158,'Les_Card','Les Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Wind,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27159,'Uzhas_Card','Uzhas Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus2 bMagicAddRace,RC_Demon,(getrefine() >= 9 ? 15 : 10);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27160,'Vavayaga_Card','Vavayaga Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bFlee,getrefine()*2;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (27161,'Mavka_Card','Mavka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus2 bMagicAddEle,Ele_Fire,20; bonus2 bMagicAddEle,Ele_Earth,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27161,'Mavka_Card','Mavka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus2 bMagicAtkEle,Ele_Fire,20; bonus2 bMagicAtkEle,Ele_Earth,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27162,'Gopinich_Card','Gopinich Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bSPDrainValue,5; bonus bUseSPrate,50;',NULL,NULL);
 #===================================================================
 # New Katars
