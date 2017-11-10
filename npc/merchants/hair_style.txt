@@ -753,7 +753,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 					mes "you're an adventurer, I know";
 					mes "you can be more daring than";
 					mes "that! Be fashionably adventurous, you fashionable adventurer~";
-					emotion e_lv,"Hair Dresser#i";
+					emotion ET_THROB;
 					close;
 				}
 			}
@@ -805,7 +805,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 					mes "you're an adventurer, I know";
 					mes "you can be more daring than";
 					mes "that! Be fashionably adventurous, you fashionable adventurer~";
-					emotion e_lv,"Hair Dresser#li";
+					emotion ET_THROB;
 					close;
 				}
 			}
@@ -846,7 +846,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 					mes "you're an adventurer, I know";
 					mes "you can be more daring than";
 					mes "that! Be fashionably adventurous, you fashionable adventurer~";
-					emotion e_lv,"Hair Dresser#li";
+					emotion ET_THROB;
 					close;
 				}
 			}
@@ -886,7 +886,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 					mes "you're an adventurer, I know";
 					mes "you can be more daring than";
 					mes "that! Be fashionably adventurous, you fashionable adventurer~";
-					emotion e_lv,"Hair Dresser#li";
+					emotion ET_THROB;
 					close;
 				}
 			}
@@ -1068,7 +1068,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 					mes "how graceful and elegant you";
 					mes "look! Absolutely gorgeous!";
 				}
-				emotion e_kis,"Hair Dresser#li";
+				emotion ET_CHUP;
 				next;
 				mes "[Prince Shammi]";
 				mes "You love your new";
@@ -1076,7 +1076,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 				mes "free to come back anytime.";
 				mes "I'll make you the best looking";
 				mes "person in the entire world!";
-				emotion e_no1,"Hair Dresser#li";
+				emotion ET_BEST;
 				close;
 			case 2:
 				mes "[Prince Shammi]";
@@ -1104,7 +1104,7 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 	mes "Wah?! Sweet Jiminy,";
 	mes "you freaked me out!";
 	mes "What are you doing?!";
-	emotion e_omg,"Assistant Beautician#li";
+	emotion ET_HUK;
 	next;
 	mes "[Assistant Beautician]";
 	mes "Oh! Um, a customer!";
@@ -1273,7 +1273,7 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 				mes "sweetheart for helping";
 				mes "me! Thank you for using";
 				mes "my service and come again~";
-				emotion e_kis,"Assistant Beautician#li";
+				emotion ET_CHUP;
 				close;
 			case 2:
 				mes "[Assistant Beautician]";

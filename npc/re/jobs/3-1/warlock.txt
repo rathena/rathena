@@ -659,7 +659,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 		mes "[Yoop]";
 		mes "Yup, Master.";
 		mes "Please follow me.";
-		emotion e_ic,0,"Assistant#Warlock2";
+		emotion ET_AHA, getnpcid(0, "Assistant#Warlock2");
 		set job_wl,6;
 		changequest 11108,11109;
 		close;

@@ -114,7 +114,7 @@ geffen,103,42,5	script	Sponiac	99,{
 	mes "[Sponiac]";
 	mes "Wow, you must be a beginner, right?";
 	mes "What an innocent face! Ha~ hahaha.";
-	emotion e_gg;
+	emotion ET_KIK;
 	next;
 	mes "[Sponiac]";
 	mes "Why don't you do some hunting outside instead of walking around and wasting your time?";
@@ -667,7 +667,7 @@ L_Reward:
 	next;
 	mes "[Dashia]";
 	mes "Thank you very much. God bless you!";
-	emotion e_heh;
+	emotion ET_SMILE;
 	next;
 	mes "[Dashia]";
 	mes "Ha~! Ha~!";

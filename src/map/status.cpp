@@ -2141,7 +2141,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_WINKCHARM] && target && !flag) { // Prevents skill usage
 			if (unit_bl2ud(src) && (unit_bl2ud(src))->walktimer == INVALID_TIMER)
 				unit_walktobl(src, map_id2bl(sc->data[SC_WINKCHARM]->val2), 3, 1);
-			clif_emotion(src, E_LV);
+			clif_emotion(src, ET_THROB);
 			return false;
 		}
 
@@ -9376,7 +9376,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; // Def reduction
 			tick = -1;
-			clif_emotion(bl,E_SWT);
+			clif_emotion(bl, ET_SWEAT);
 			break;
 		case SC_MAXIMIZEPOWER:
 			tick_time = val2 = tick>0?tick:60000;
@@ -9625,7 +9625,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_CONFUSION:
 			if (!val4)
-				clif_emotion(bl,E_WHAT);
+				clif_emotion(bl,ET_QUESTION);
 			break;
 		case SC_S_LIFEPOTION:
 		case SC_L_LIFEPOTION:
@@ -10824,7 +10824,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_REBOUND:
 			tick_time = 2000;
 			val4 = tick / tick_time;
-			clif_emotion(bl, E_SWT);
+			clif_emotion(bl, ET_SWEAT);
 			break;
 		case SC_KINGS_GRACE:
 			val2 = 3 + val1; //HP Recover rate
@@ -12794,7 +12794,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 						break;
 					}
 				}
-				clif_emotion(bl, E_HEH);
+				clif_emotion(bl, ET_SMILE);
 			}
 		}
 		break;
@@ -13001,7 +13001,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_OBLIVIONCURSE:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl,E_WHAT);
+			clif_emotion(bl,ET_QUESTION);
 			sc_timer_next(3000 + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
@@ -13156,7 +13156,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_VOICEOFSIREN:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl,E_LV);
+			clif_emotion(bl,ET_THROB);
 			sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
@@ -13346,7 +13346,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_TEARGAS_SOB:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl, E_SOB);
+			clif_emotion(bl, ET_CRY);
 			sc_timer_next(3000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
@@ -13410,7 +13410,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_REBOUND:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl, E_SWT);
+			clif_emotion(bl, ET_SWEAT);
 			sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

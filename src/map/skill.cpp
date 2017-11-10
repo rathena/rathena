@@ -1126,7 +1126,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
 				sc_start2(src,bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 				if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY))
-					clif_emotion(bl,E_OMG);
+					clif_emotion(bl,ET_HUK);
 			}
 		}
 	}
@@ -1295,7 +1295,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case AM_ACIDTERROR:
 		sc_start2(src,bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 		if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY))
-			clif_emotion(bl,E_OMG);
+			clif_emotion(bl,ET_HUK);
 		break;
 
 	case AM_DEMONSTRATION:
@@ -5229,7 +5229,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case NPC_DARKBREATH:
-		clif_emotion(src,E_AG);
+		clif_emotion(src,ET_ANGER);
 	case SN_FALCONASSAULT:
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
@@ -6376,7 +6376,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		status_kill(src);
 		break;
 	case SA_QUESTION:
-		clif_emotion(src,E_WHAT);
+		clif_emotion(src,ET_QUESTION);
 	case SA_GRAVITY:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
@@ -16797,7 +16797,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				achievement_update_objective(sd, AG_REFINE_FAIL, 1, 1);
 				pc_delitem(sd,idx,1,0,2, LOG_TYPE_OTHER);
 				clif_misceffect(&sd->bl,2);
-				clif_emotion(&sd->bl, E_OMG);
+				clif_emotion(&sd->bl, ET_HUK);
 			}
 		}
 	}

@@ -38,7 +38,7 @@
 //----------------------------------------------------------------------------
 moscovia,171,71,3	script	Berbayeff#npc	4_M_RUSMAN2,{
 	if (!mos_whale_edq) {
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Berbayeff]";
 		mes "This..and..that...";
 		mes "All guys...are distrustful.";
@@ -70,7 +70,7 @@ moscovia,171,71,3	script	Berbayeff#npc	4_M_RUSMAN2,{
 			mes "you can talk to me whenever.";
 			close;
 		}
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Berbayeff]";
 		mes "Good, I have been thinking that";
 		mes "I would tell you this story from the start.";
@@ -228,12 +228,12 @@ moscovia,171,71,3	script	Berbayeff#npc	4_M_RUSMAN2,{
 		changequest 18101,18102;
 		close;
 	} else if (mos_whale_edq > 2 && mos_whale_edq < 42) {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Berbayeff]";
 		mes "Are you serious? Did you say";
 		mes "you've found The Moving Island?";
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Berbayeff]";
 		mes "The legend is true!!";
 		mes "I was right, wasn't I?";
@@ -456,7 +456,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			changequest 18104,18105;
 			close;
 		}
-		emotion e_ag;
+		emotion ET_ANGER;
 		mes "[Mr. Ibanoff]";
 		mes "You want to borrow";
 		mes "my ship so spontaneously??";
@@ -1698,7 +1698,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 S_AS_1:
 	if (rand(1,getarg(0)) == 2) {
 		soundeffect "mos_gusli1.wav",0;
-		emotion e_no1;
+		emotion ET_BEST;
 		specialeffect2 EF_EXIT;
 		mes "[Aged Stranger]";
 		mes "Oh! You are good at playing the";
@@ -2188,8 +2188,8 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	4_M_RUSKING,7,7,{
 				mes "Good, play it right away!";
 				next;
 				soundeffect "mos_gusli2.wav",0;
-				emotion e_ag,0,"Csar Alexsay III#npc";
-				emotion e_ag,0,"Prime Minister Dmitree#m";
+				emotion ET_ANGER;
+				emotion ET_ANGER, getnpcid(0, "Prime Minister Dmitree#m");
 				mes "[Csar Alexsay III]";
 				mes "Um... What is this? Do you mock me?";
 				mes "You are so impudent... You...!";
@@ -2208,7 +2208,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	4_M_RUSKING,7,7,{
 				mes "[Prime Minister Dmitree]";
 				mes "How can I re...reward...?";
 				next;
-				emotion e_pif;
+				emotion ET_HNG;
 				mes "[Csar Alexsay III]";
 				mes "I ordered you instead Prime";
 				mes "Minister, to make this poor player";
@@ -2309,8 +2309,8 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	4_M_RUSKING,7,7,{
 			mes "played, all the people in the";
 			mes "Csar's Palace fall in with the tune.-";
 			next;
-			emotion e_sob,0,"Csar Alexsay III#npc";
-			emotion e_sob,0,"Prime Minister Dmitree#m";
+			emotion ET_CRY;
+			emotion ET_CRY, getnpcid(0, "Prime Minister Dmitree#m");
 			mes "[Csar Alexsay III]";
 			mes "Oh! I can't hear without tears.";
 			mes "That's a sad tune.";
@@ -2751,7 +2751,7 @@ function	script	F_MOS_1	{
 	mes "[Gallina]";
 	mes "It's because you didn't look after your brother. So you clean the house, Anna?";
 	next;
-	emotion e_sob,0,"Anna#mos";
+	emotion ET_CRY, getnpcid(0, "Anna#mos");
 	mes "[Anna]";
 	mes "Oh, my................";
 	next;
@@ -2896,11 +2896,11 @@ mosk_in,148,274,1	script	Anna#mos	4_F_RUSCHILD,{
 					mes "Where is Mikhail?";
 					mes "Do you know where he is?";
 					next;
-					emotion e_meh;
+					emotion ET_MERONG;
 					mes "[Anna]";
 					mes "If I had known that, I would have already found him, you fool.";
 					next;
-					emotion e_swt,1;
+					emotion ET_SWEAT, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "Hahaha, you're right.";
 					break;
@@ -2964,7 +2964,7 @@ mosk_in,148,274,1	script	Anna#mos	4_F_RUSCHILD,{
 					mes "["+strcharinfo(0)+"]";
 					mes "Is there anyone who is close to him?";
 					next;
-					emotion e_pif;
+					emotion ET_HNG;
 					mes "[Anna]";
 					mes "(giggle) He's a fool and has no friends.";
 					mes "But among our villagers, the lady of ^3131FFInn 'Sticky Herb Tree'^000000 has held Mikhail dear.";
@@ -3043,7 +3043,7 @@ mosk_in,148,274,1	script	Anna#mos	4_F_RUSCHILD,{
 		mes "[Gallina]";
 		mes "Anna!";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Anna]";
 		mes "....I'm sorry.";
 		close;
@@ -3387,7 +3387,7 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 		close;
 	case 3:
 		mes "[Landlord]";
-		emotion e_lv;
+		emotion ET_THROB;
 		mes "Oh~! You look great! Look at the "+((Sex == SEX_MALE)?"solid muscle":"fair skin")+"!";
 		mes "But you look tired. Is it because of a long journey?";
 		next;
@@ -3399,7 +3399,7 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 		mes "Oh, I'm sorry but I didn't come to stay here.";
 		mes "I'm looking for a kid and I've got something to ask you...";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Landlord]";
 		mes "What!?!?";
 		next;
@@ -3412,7 +3412,7 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 		mes "If you promise me to stay overnight, I'll tell you about what you want to know. Deal?";
 		next;
 		if(select("Refuse.:Stay overnight and get the info. - 5000z") == 1) {
-			emotion e_ag;
+			emotion ET_ANGER;
 			mes "[Landlord]";
 			mes "Well, get the info by yourself then.";
 			close;
@@ -6443,7 +6443,7 @@ mosk_dun01,169,162,0	script	Mysterious Stone#rus02	HIDDEN_NPC,{
 				percentheal -50,-50;
 				specialeffect2 EF_DARKBREATH;
 				specialeffect2 EF_HIT2;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "- An unknown force has -";
 				mes "- drained your health -";
@@ -6458,7 +6458,7 @@ mosk_dun01,169,162,0	script	Mysterious Stone#rus02	HIDDEN_NPC,{
 					mes "- You decide to go to the left -";
 					next;
 					mes "- !!!!!! -";
-					emotion e_omg,1;
+					emotion ET_HUK, playerattached();
 					next;
 					mes "- An unknown force has -";
 					mes "- cursed your body -";
@@ -6469,7 +6469,7 @@ mosk_dun01,169,162,0	script	Mysterious Stone#rus02	HIDDEN_NPC,{
 					mes "- You decide to go to the left -";
 					next;
 					mes "- !!!!!! -";
-					emotion e_omg,1;
+					emotion ET_HUK, playerattached();
 					next;
 					mes "- Your trusty Pecopeco senses -";
 					mes "- an unknown force and tries -";
@@ -6488,7 +6488,7 @@ mosk_dun01,169,162,0	script	Mysterious Stone#rus02	HIDDEN_NPC,{
 				mes "- toward the middle -";
 				next;
 				mes "- !!!!!! -";
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				donpcevent "Gray Wolf#rus03::OnEnable";
 				rhea_rus_main = 2;
 				// if (isbegin_quest(8136))
@@ -6547,7 +6547,7 @@ mosk_dun01,167,160,3	script	Gray Wolf#rus03	4_RUS_DWOLF,{
 		mes "Unless you want to be killed, leave now.";
 		rhea_rus_main = 3;
 		// changequest 8137,8138;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		specialeffect2 EF_HIT2;
 		percentheal -50,0;
 		next;
@@ -6637,20 +6637,20 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 	if (rhea_rus_main < 5) {
 		mes "["+ strcharinfo(0) +"]";
 		mes "...?!";
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		close;
 	} else if (rhea_rus_main == 5) {
 		.@speak01 = rand(1,3);
 		if (.@speak01 == 3) {
 			mes "["+ strcharinfo(0) +"]";
 			mes "...?!";
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			donpcevent "Gray Wolf#rus05::OnEnable";
 			next;
 		} else {
 			mes "["+ strcharinfo(0) +"]";
 			mes "...?!";
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			close;
 		}
 		mes "[Girl's Voice]";
@@ -6819,7 +6819,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 			mes "["+ strcharinfo(0) +"]";
 			mes "Maria?! What happened?!";
 			sc_start SC_CURSE,60000,0;
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Koshei, the Immortal]";
 			mes "I really want to thank you, human. Maria was imprisoned in the wall so I couldn't do anything!";
@@ -6884,7 +6884,7 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 		next;
 		mes "[Gray Wolf]";
 		mes "No, it's not too late!";
-		emotion e_gasp,1;
+		emotion ET_SURPRISE, playerattached();
 		donpcevent "Gray Wolf#rus05::OnEnable";
 		next;
 		mes "[Gray Wolf]";
@@ -7569,8 +7569,8 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	4_M_05,{
 				mes "^ff0000Cold marsh swallowing my body^000000";
 				mes "^ff0000Red ring taken away^000000";
 				mes "^ff0000Red ring enchanted^000000";
-				emotion e_omg;
-				emotion e_dots,1;
+				emotion ET_HUK;
+				emotion ET_THINK, playerattached();
 				next;
 				mes "[Vassili Grandpapa]";
 				mes "...W, what is this? Ehh??";
@@ -7631,8 +7631,8 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	4_M_05,{
 				mes "^ff0000Cold marsh swallowing my body^000000";
 				mes "^ff0000Red ring taken away^000000";
 				mes "^ff0000Red ring enchanted^000000";
-				emotion e_dots;
-				emotion e_dots,1;
+				emotion ET_THINK;
+				emotion ET_THINK, playerattached();
 				next;
 				mes "[Vassili Grandpapa]";
 				mes "It is.. It is true...";
@@ -7694,7 +7694,7 @@ moscovia,206,81,0	script	Vassili Grandpapa#rus07	4_M_05,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Ehh?! This is weird. Where is the flute?!";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			close;
 		} else if (rhea_rus_ring == 9) {
 			mes "[Vassili Grandpapa]";
@@ -7726,7 +7726,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 		next;
 		mes "[Ryubaba]";
 		mes "Mmm, you must be an adventurer? What would you say? Have you seen somebody more beautiful than me? I doubt it. How can you find anyone more beautiful than me?";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 	else if (rhea_rus_main == 8) {
@@ -7736,7 +7736,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 			next;
 			mes "[Ryubaba]";
 			mes "Mmm, you must be an adventurer? What would you say? Have you seen somebody more beautiful than me? I doubt it. How can you find anyone more beautiful than me?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		} else if (rhea_rus_ring == 1) {
 			if (getequipid(EQI_SHOES) != 2429 && getequipid(EQI_SHOES) != 2430) {
@@ -7772,7 +7772,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 			}
 			mes "["+ strcharinfo(0) +"]";
 			mes "Yes, you are really beautiful.";
-			emotion e_heh,1;
+			emotion ET_SMILE, playerattached();
 			next;
 			mes "[Ryubaba]";
 			mes "Huhu, oh you jest. You know what you're talking about. Ah, this is a Choco drink that I have made. Give it a taste, isn't it good?";
@@ -7895,8 +7895,8 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 				mes "^ff0000Cold marsh swallowing my body^000000";
 				mes "^ff0000Red ring taken away^000000";
 				mes "^ff0000Red ring enchanted^000000";
-				emotion e_omg;
-				emotion e_dots,1;
+				emotion ET_HUK;
+				emotion ET_THINK, playerattached();
 				next;
 				mes "[Ryubaba]";
 				mes "S, stop! You'd better stop!?";
@@ -7923,7 +7923,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 				next;
 				mes "[Ryubaba]";
 				mes "Please, I am begging you... Don't tell my father...";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "- Suddenly, she sheds -";
 				mes "- tears and kneels down -";
@@ -8007,7 +8007,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 			}
 			mes "["+ strcharinfo(0) +"]";
 			mes "...!? Where is the flute!?";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			close;
 		} else if (rhea_rus_ring == 8) {
 			mes "[Ryubaba]";
@@ -8192,8 +8192,8 @@ mosk_fild02,157,233,0	script	Shepherdess#rus10	1_F_04,{
 				mes "^ff0000Cold marsh swallowing my body^000000";
 				mes "^ff0000Red ring taken away^000000";
 				mes "^ff0000Red ring enchanted^000000";
-				emotion e_omg;
-				emotion e_omg,1;
+				emotion ET_HUK;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Shepherdess]";
 				mes "W, what is this? Horrible! Why did this flute play a voice?";
@@ -8395,7 +8395,7 @@ mosk_fild02,116,202,3	script	Lusalka#07russai_22	-1,3,3,{
 	end;
 OnTouch_:
 	if (rhea_rus_main != 8 || rhea_rus_hair < 2) {
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		end;
 	}
 	if (rhea_rus_hair == 2) {
@@ -8559,7 +8559,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 					next;
 					mes "[Lusalka]";
 					mes "Ah... but...";
-					emotion e_sob;
+					emotion ET_CRY;
 					donpcevent "Lusalka#rus23::OnDisable";
 					close;
 				}
@@ -8633,7 +8633,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "Aaaaaaaah!??!?!";
 				sc_start SC_CURSE,60000,0;
 				specialeffect2 EF_LORD;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				percentheal -30,0;
 				next;
 				mes "["+ strcharinfo(0) +"]";
@@ -8757,7 +8757,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "Ah, oh yes! How could I forget?";
-			emotion e_ic;
+			emotion ET_AHA;
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "We came here from Moscovia together. He called himself Igg. I came here with him but parted with him quite a while ago. He was sad because he couldn't forget about his lost lover.";
@@ -9074,7 +9074,7 @@ OnTouch_:
 			close;
 		}
 	}
-	emotion e_what,1;
+	emotion ET_QUESTION, playerattached();
 	end;
 }
 
@@ -9107,7 +9107,7 @@ mosk_que,45,131,0	script	Stone Furnace#rus28	HIDDEN_NPC,{
 				mes "["+ strcharinfo(0) +"]";
 				mes "Oops, it's hot, hot!!!";
 				specialeffect2 EF_FIREHIT;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				percentheal -5,0;
 				close;
 			}
@@ -9123,7 +9123,7 @@ mosk_que,45,131,0	script	Stone Furnace#rus28	HIDDEN_NPC,{
 			close;
 		}
 	}
-	emotion e_what,1;
+	emotion ET_QUESTION, playerattached();
 	end;
 
 OnMyMobDead:
@@ -9163,7 +9163,7 @@ mosk_que,56,202,0	script	Occult Apple Tree#rus29	HIDDEN_NPC,{
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Ahhhhhhhh!!!";
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				close;
 			}
 			mes "- ^0000ff You get 100 Apples !!^000000 -";
@@ -9172,7 +9172,7 @@ mosk_que,56,202,0	script	Occult Apple Tree#rus29	HIDDEN_NPC,{
 			close;
 		}
 	}
-	emotion e_what,1;
+	emotion ET_QUESTION, playerattached();
 	end;
 }
 
@@ -9342,8 +9342,8 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 		mes "[Baba Yaga]";
 		mes "...........................";
 		mes "If you lotter around here any longer, I will make myself some tasty human soup! Hehehehehe.";
-		emotion e_gg;
-		emotion e_omg,1;
+		emotion ET_KIK;
+		emotion ET_HUK, playerattached();
 		close;
 	} else if (rhea_rus_main == 9) {
 		.@player_name$ = strcharinfo(0);
@@ -9361,7 +9361,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 		mes "'Presto Change-o!!'";
 		mes "'Turn into a pig!!'";
 		specialeffect2 EF_BARRIER;
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Baba Yaga]";
 		mes "Hmm? You are protected by a Protection Spell?";
@@ -9586,14 +9586,14 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hey, I am talking...";
-		emotion e_sob,1;
+		emotion ET_CRY, playerattached();
 		next;
 		mes "[Baba Yaga]";
 		mes "'In the corner...'";
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "!!!!!!!!!!!!!!!!!!!!!!!!!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Baba Yaga]";
 		mes "What, child? Do you feel bad?";
@@ -9991,7 +9991,7 @@ OnTouch_:
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "You! Go home now!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "- The cow seems surprised, jumps and tries to attack you !! -";
 		next;
@@ -10019,7 +10019,7 @@ OnTouch_:
 				next;
 				mes "[Cow]";
 				mes "...Moo...";
-				emotion e_dots;
+				emotion ET_THINK;
 				next;
 				mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
 				disablenpc strnpcinfo(0);
@@ -10191,7 +10191,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	4_NFCOFFIN,{
 		next;
 		mes "[Noisy Coffin]";
 		mes "................................";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hu, the job has been done.";
@@ -10205,7 +10205,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	4_NFCOFFIN,{
 		next;
 		mes "[Noisy Coffin]";
 		mes "................................";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hu, the job has been done.";
@@ -10218,7 +10218,7 @@ mosk_dun02,65,232,0	script	Noisy Coffin#rus36	4_NFCOFFIN,{
 		next;
 		mes "[Noisy Coffin]";
 		mes "................................";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hu, the job has been done.";
@@ -10347,7 +10347,7 @@ treasure01,24,39,0	script	Old Bed#rus38	HIDDEN_NPC,{
 		viewpoint 2,61,183,2,0x00FF00;
 		viewpoint 2,98,118,3,0x00FF00;
 		viewpoint 2,27,115,4,0x00FF00;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Eek, it would be best to run away now!";
@@ -10425,7 +10425,7 @@ treasure01,27,115,0	script	Opened Treasure Chest#41	HIDDEN_NPC,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "W, what is this!?";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			close;
 		}
 		mes "- ^0000ffYou find the handle of a broken key in the junk !!^000000 -";
@@ -10532,7 +10532,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	HIDDEN_NPC,{
 		mes "- You tap the jar -";
 		mes "- with your hand -";
 		specialeffect EF_SIGHTRASHER;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "- A voice laughs in the jar as -";
 		mes "- it shakes from right to left -";
@@ -10600,7 +10600,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	HIDDEN_NPC,{
 			mes "[House Ghost]";
 			mes "Ok, first let me shuffle these cards around.";
 			mes "Ready!";
-			emotion e_loud;
+			emotion ET_BLABLA;
 			next;
 			mes "[House Ghost]";
 			mes "One!";
@@ -10636,21 +10636,21 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	HIDDEN_NPC,{
 			cutin "",255;
 			switch( .@rucard_game01 ) {
 			case 1:
-				cutin "í¬ë§ì¹´ë“œ",4; // Poring Card
+				cutin "Æ÷¸µÄ«µå",4; // Poring Card
 				.@win_string$ = "You are good. Can you do it next time?";
 				break;
 			case 2:
-				cutin "ì—”ì ¤ë§ì¹´ë“œ",4; // Angeling Card
+				cutin "¿£Á©¸µÄ«µå",4; // Angeling Card
 				.@win_string$ = "You are pretty good at this. Ok, but can you do it again?";
 				break;
 			case 3:
-				cutin "ê³ ìŠ¤íŠ¸ë§ì¹´ë“œ",4; // Ghostring Card
+				cutin "°í½ºÆ®¸µÄ«µå",4; // Ghostring Card
 				.@win_string$ = "You are pretty good at this. Ok, but can you do it again?";
 				break;
 			}
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			if (.@rucard_game01 == .@s +1) {
-				emotion e_ic,1;
+				emotion ET_AHA, playerattached();
 				next;
 				mes "[House Ghost]";
 				mes "You got it right.";
@@ -10658,7 +10658,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	HIDDEN_NPC,{
 				.@ruuser_score01++;
 			}
 			else {
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[House Ghost]";
 				mes "Huuu...";
@@ -10963,7 +10963,7 @@ pay_dun04,163,186,0	script	Ghost Tree#rus45	HIDDEN_NPC,{
 		mes "["+ .@player_name$ +"]";
 		mes "Ok! I will do it!";
 		next;
-		setarray .@emo[1],58,59,60,61,62,63;
+		setarray .@emo[1], ET_DICE1, ET_DICE2, ET_DICE3, ET_DICE4, ET_DICE5, ET_DICE6;
 		while (.@rustree_turn01 < 3 && .@rususer_score01 == 0) {
 			mes "[Ghost Tree]";
 			mes "I cast first.";
@@ -10986,11 +10986,11 @@ pay_dun04,163,186,0	script	Ghost Tree#rus45	HIDDEN_NPC,{
 			mes "["+ .@player_name$ +"]";
 			mes "Let's see...";
 			next;
-			emotion .@emo[.@rus_dice01],1;
+			emotion .@emo[.@rus_dice01], playerattached();
 			mes "["+ .@player_name$ +"]";
 			if (.@rus_dice01 == .@tree_dice01) {
 				mes "Let's see... Wow, I got it! I've got ^0000ffNumber "+ .@rus_dice01 +"^000000!";
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				next;
 				mes "[Ghost Tree]";
 				mes "You seem lucky...";
@@ -10999,7 +10999,7 @@ pay_dun04,163,186,0	script	Ghost Tree#rus45	HIDDEN_NPC,{
 				mes "Let's see................... It is ^0000ff "+ .@rus_dice01 +" ^000000...";
 				mes "[Ghost Tree]";
 				mes "Huuu...";
-				emotion e_heh;
+				emotion ET_SMILE;
 			}
 			.@rustree_turn01++;
 			next;

@@ -2273,7 +2273,7 @@ S_Warp:
 	end;
 	
 OnTouch:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	end;
 }
 new_1-3,97,50,4	duplicate(NvEden)	Eden Group Officer#nv1	729,5,5

@@ -191,7 +191,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						if (select( "Take the request.", "Stop." ) == 1) {
 							mes "[Melody-Jack]";
 							mes "Dying flowers fall down by rain and wind. That is what you have to do.";
-							emotion e_no1;
+							emotion ET_BEST;
 							callsub S_Quest,13124,13123;
 						}
 					}
@@ -264,7 +264,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						if (select( "Take the request.", "Stop." ) == 1) {
 							mes "[Melody-Jack]";
 							mes "Clear all as quickly as you can.";
-							emotion e_flash;
+							emotion ET_SPARK;
 							callsub S_Quest,13128,13127;
 						}
 					}
@@ -554,7 +554,7 @@ S_Erasequest:
 	return;
 OnTouch_:
 	if (para_120lv01 == 1) {
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Melody-Jack]";
 		mes "Hey there! ... Wait.?";
 		close;
