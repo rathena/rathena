@@ -170,7 +170,7 @@ struct mob_db {
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
 	bool has_spawn() const;
-	SpawnInfos get_spawns() const;
+	const SpawnInfos get_spawns() const;
 	MobID get_mobid() const {return vd.class_; } // Simple wrapper. The MobID is saved in vd, noone wants to remind that
 };
 

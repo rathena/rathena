@@ -3131,13 +3131,17 @@ int mob_random_class (int *value, size_t count)
 /**
 * Returns the SpawnInfos of the mob_db entry
 */
-SpawnInfos mob_db::get_spawns() const
+const SpawnInfos mob_db::get_spawns() const
 {
+	// Returns an empty SpawnInfos if mob_id is not in mob_spawn_data
+	return mob_spawn_data[this->get_mobid()];
+/*
 	auto it_MobSpawn = mob_spawn_data.find(this->get_mobid());
 	if( it_MobSpawn == mob_spawn_data.end() )
 		return SpawnInfos(); // no spawns
 	
 	return it_MobSpawn->second;
+*/
 }
 
 /**
