@@ -3135,13 +3135,6 @@ const SpawnInfos mob_db::get_spawns() const
 {
 	// Returns an empty SpawnInfos if mob_id is not in mob_spawn_data
 	return mob_spawn_data[this->get_mobid()];
-/*
-	auto it_MobSpawn = mob_spawn_data.find(this->get_mobid());
-	if( it_MobSpawn == mob_spawn_data.end() )
-		return SpawnInfos(); // no spawns
-	
-	return it_MobSpawn->second;
-*/
 }
 
 /**
@@ -3163,27 +3156,13 @@ void mob_add_spawn(MobID mob_id, const struct spawn_info& new_spawn)
 {
 	if( new_spawn.qty <= 0 )
 		return; //ignore empty spawns
-
-	auto itSpawnData = mob_spawn_data.find(mob_id);
-	if( itSpawnData == mob_spawn_data.end() )
-	{ // adds the first spawn of the mob
-		SpawnInfos spawns;
-		spawns.push_back(new_spawn);
-		mob_spawn_data.insert({mob_id, spawns});
-	}
+	
+	SpawnInfos& spawns = mob_spawn_data[mob_id];
+	auto it = spawns.find(new_spawn.mapindex);
+	if (it == spawns.end())
+		spawns[new_spawn.mapindex] = new_spawn; // initialize SpawnInfos
 	else
-	{ // appends another spawn to the mob
-		unsigned short m = new_spawn.mapindex;
-		SpawnInfos &spawns = itSpawnData->second;
-
-		// Search if the map is already in spawns
-		auto it = std::find_if(spawns.begin(), spawns.end(), 
-			[&m] (const spawn_info &s) { return (s.mapindex == m); });
-		if( it != spawns.end() )
-			it->qty += new_spawn.qty; // add quantity, if map is found
-		else
-			spawns.push_back(new_spawn); // else, add the whole spawn info
-	}
+		it->second.qty += new_spawn.qty;
 }
 
 /*==========================================
