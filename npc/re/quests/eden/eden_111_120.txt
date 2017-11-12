@@ -25,7 +25,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 	else if (para_110lv01 == 0) {
 		cutin "min02",0;
 		mes "......";
-		emotion e_dot;
+		emotion ET_THINK;
 		next;
 		mes "[Mingmin]";
 		mes "(Wow...)";
@@ -43,17 +43,17 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "(What's this lady talking about?)";
-		emotion e_dot,1;
+		emotion ET_THINK, playerattached();
 		next;
 		mes "[Mingmin]";
 		mes "Answer me!";
 		mes "Art thou my servant?";
-		emotion e_dot;
+		emotion ET_THINK;
 		next;
 		select( "I am not.", "You be trippin'?" );
 		mes "[Mingmin]";
 		mes "Thou art not? Splendid...because I deigned that any servant of mine would have more dignity.";
-		emotion e_sigh;
+		emotion ET_OHNO;
 		next;
 		mes "[Mingmin]";
 		mes "Well, non-servant...What are you looking for here?";
@@ -61,7 +61,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		if (select( "Nothing in particular.", "Quests! Who are you?" ) == 1) {
 			mes "[Mingmin]";
 			mes "That is acceptable, I hope ye find what ye seek.";
-			emotion e_ok;
+			emotion ET_OK;
 		}
 		else {
 			mes "[Mingmin]";
@@ -85,11 +85,11 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		select("No~ I'm "+ strcharinfo(0) +" remember?");
 		mes "[Mingmin]";
 		mes "Oh I have met you before, living in a house full of fungus seems to cause memory loss.";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Mingmin]";
 		mes "Who were you again?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		select("Eden Group requests and research");
 		mes "[Mingmin]";
@@ -112,7 +112,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		next;
 		mes "[Mingmin]";
 		mes "Well, after all this talking I need to take a rest. My feet are rather tired.";
-		emotion e_yawn;
+		emotion ET_SLEEPY;
 		para_110lv01 = 2;
 	}
 	else if (para_110lv01 == 2) {
@@ -131,7 +131,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		select("Sounds dangerous... when can I start?");
 		mes "[Mingmin]";
 		mes "Talk to me in a second and we'll get going.";
-		emotion e_yawn;
+		emotion ET_SLEEPY;
 		para_110lv01 = 3;
 	}
 	else if (para_110lv01 == 3) {
@@ -142,7 +142,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		mes "[Mingmin]";
 		mes "Oh...sorry, I meant squire...";
 		mes "I mean adventurer...";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Mingmin]";
 		mes "Sorry, the fungus in my home has been getting quite rampant.";
@@ -173,7 +173,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		cutin "min02",0;
 		mes "[Mingmin]";
 		mes " For some reason there aren't many people lining up to assist me yet.";
-		emotion e_dot,1;
+		emotion ET_THINK, playerattached();
 		next;
 		mes "[Mingmin]";
 		mes "I think it requires ^ff0000bravery^000000 to take a new request.";
@@ -218,19 +218,19 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 					while(select( "Make a heart with two hands.", "Dance around like a crazy person", "Wink at her", "Whistle at her." ) != 2) {
 						mes "[Mingmin]";
 						mes "What's that for?";
-						emotion e_hmm;
+						emotion ET_SCRATCH;
 						next;
 						mes "Hmm, she didn't go for that.";
 						next;
 					}
 					mes "[Mingmin]";
 					mes "This signal!?";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					cutin "min01",0;
 					mes "[Mingmin]";
 					mes "^FF0000..................now?^000000";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					select("Say nothing and nod...");
 					mes "[Mingmin]";
@@ -279,7 +279,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 						cutin "min03",0;
 						mes "[Mingmin]";
 						mes "Haha! I feel much better now.";
-						emotion e_loud;
+						emotion ET_BLABLA;
 						next;
 						mes "[Mingmin]";
 						mes "Thank you for accepting the strange contract. Looking forward to working with thee.";
@@ -415,7 +415,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 								if (select( "Take the request.", "Quit" ) == 1) {
 									mes "[Mingmin]";
 									mes "Please tell me the story after dealing with them one by one. They will be important documents...";
-									emotion e_no1;
+									emotion ET_BEST;
 									callsub S_Quest,13072,13071;
 								}
 							}
@@ -456,7 +456,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 								if (select( "Take the request.", "Quit" ) == 1) {
 									mes "[Mingmin]";
 									mes "If you possibly get a good drop from them, you know right? Do not forget about me!";
-									emotion e_flash;
+									emotion ET_SPARK;
 									callsub S_Quest,13074,13073;
 								}
 							}
@@ -674,7 +674,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 								cutin "센티페데유충카드",3;  //centipede_larva_card
 								mes "Oh... No Lets take a deep breath. For me, I want to exterminate more than 20 for research.";
 								next;
-								emotion e_sob;
+								emotion ET_CRY;
 								mes "[Mingmin]";
 								mes "Be careful. And they're east of the expedition station.";
 								cutin "min02",0;
@@ -682,7 +682,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 							else if (checkquest(13087,HUNTING) == 2) {
 								cutin "min02",0;
 								mes "Oh. Okay. You do not need to explain.";
-								emotion e_otl;
+								emotion ET_OTL;
 								callsub S_Quest,13087,13088,700000,180000;
 							}
 							else {
@@ -738,7 +738,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 								if (countitem(6023) > 19) {// Mystic_Horn
 									cutin "min03",0;
 									mes "Yes this one! It is worth doing. Thank you for taking this request.";
-									emotion e_thx;
+									emotion ET_THANKS;
 									delitem 6023,20;
 									callsub S_Quest,13091,13092,700000,180000;
 								}
@@ -851,7 +851,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 							else if (checkquest(13097,HUNTING) == 2) {
 								cutin "min03",0;
 								mes "You are not confused? I still do not know yet. What is the difference? Anyway good job.";
-								emotion e_loud;
+								emotion ET_BLABLA;
 								callsub S_Quest,13097,13098,700000,300000;
 							}
 							else {
@@ -879,7 +879,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 								if (countitem(7094) > 9 && countitem(7317) > 19) {
 									cutin "min03",0;
 									mes "Thank you. You will appreciate me if my research is completed.";
-									emotion e_loud;
+									emotion ET_BLABLA;
 									delitem 7094,10;// Mystery_Piece
 									delitem 7317,20;// Screw
 									callsub S_Quest,13099,13100,700000,200000;
@@ -954,7 +954,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 				cutin "min03",0;
 				mes "[Mingmin]";
 				mes "Do not worry, I will treat you like a slave if we meet outside of Eden Group or if you tell anyone I was nice to you.";
-				emotion e_loud;
+				emotion ET_BLABLA;
 				next;
 				cutin "min01",0;
 				mes "[Mingmin]";
@@ -1056,7 +1056,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 						cutin "min03",0;
 						mes "[Mingmin]";
 						mes "...hee hee...";
-						emotion e_heh;
+						emotion ET_SMILE;
 						next;
 						mes "[Mingmin]";
 						mes "Hmmph, You are so naive. Did you believe it? Sticky.. some kind of mushroom is growing in your body? Hahaha";
@@ -1067,7 +1067,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 						mes "[Mingmin]";
 						mes "I am sorry if you are upset. You made it too easy...";
 						next;
-						emotion e_heh;
+						emotion ET_SMILE;
 						mes "[Mingmin]";
 						mes "You are funnier than I thought. Do not worry. That mushroom does not exist.";
 					}

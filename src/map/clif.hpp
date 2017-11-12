@@ -4,6 +4,8 @@
 #ifndef _CLIF_HPP_
 #define _CLIF_HPP_
 
+#include <stdarg.h>
+
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
 #include "../common/mmo.h"
@@ -33,7 +35,6 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
-#include <stdarg.h>
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -235,96 +236,96 @@ enum broadcast_flags : uint8_t {
 };
 
 enum emotion_type {
-	E_GASP = 0,     // /!
-	E_WHAT,         // /?
-	E_HO,
-	E_LV,
-	E_SWT,
-	E_IC,
-	E_AN,
-	E_AG,
-	E_CASH,         // /$
-	E_DOTS,         // /...
-	E_SCISSORS,     // /gawi --- 10
-	E_ROCK,         // /bawi
-	E_PAPER,        // /bo
-	E_KOREA,
-	E_LV2,
-	E_THX,
-	E_WAH,
-	E_SRY,
-	E_HEH,
-	E_SWT2,
-	E_HMM,          // --- 20
-	E_NO1,
-	E_NO,           // /??
-	E_OMG,
-	E_OH,
-	E_X,
-	E_HLP,
-	E_GO,
-	E_SOB,
-	E_GG,
-	E_KIS,          // --- 30
-	E_KIS2,
-	E_PIF,
-	E_OK,
-	E_MUTE,         // red /... used for muted characters
-	E_INDONESIA,
-	E_BZZ,          // /bzz, /stare
-	E_RICE,
-	E_AWSM,         // /awsm, /cool
-	E_MEH,
-	E_SHY,          // --- 40
-	E_PAT,          // /pat, /goodboy
-	E_MP,           // /mp, /sptime
-	E_SLUR,
-	E_COM,          // /com, /comeon
-	E_YAWN,         // /yawn, /sleepy
-	E_GRAT,         // /grat, /congrats
-	E_HP,           // /hp, /hptime
-	E_PHILIPPINES,
-	E_MALAYSIA,
-	E_SINGAPORE,    // --- 50
-	E_BRAZIL,
-	E_FLASH,        // /fsh
-	E_SPIN,         // /spin
-	E_SIGH,
-	E_DUM,          // /dum
-	E_LOUD,         // /crwd
-	E_OTL,          // /otl, /desp
-	E_DICE1,
-	E_DICE2,
-	E_DICE3,        // --- 60
-	E_DICE4,
-	E_DICE5,
-	E_DICE6,
-	E_INDIA,
-	E_LUV,          // /love
-	E_RUSSIA,
-	E_VIRGIN,
-	E_MOBILE,
-	E_MAIL,
-	E_CHINESE,      // --- 70
-	E_ANTENNA1,
-	E_ANTENNA2,
-	E_ANTENNA3,
-	E_HUM,
-	E_ABS,
-	E_OOPS,
-	E_SPIT,
-	E_ENE,
-	E_PANIC,
-	E_WHISP,        // --- 80
-	E_YUT1,
-	E_YUT2,
-	E_YUT3,
-	E_YUT4,
-	E_YUT5,
-	E_YUT6,
-	E_YUT7,
+	ET_SURPRISE = 0,	// /!
+	ET_QUESTION,		// /?
+	ET_DELIGHT,
+	ET_THROB,
+	ET_SWEAT,
+	ET_AHA,
+	ET_FRET,
+	ET_ANGER,
+	ET_MONEY,			// /$
+	ET_THINK,			// /...
+	ET_SCISSOR,     	// /gawi --- 10
+	ET_ROCK,        	// /bawi
+	ET_WRAP,       		// /bo
+	ET_FLAG,
+	ET_BIGTHROB,
+	ET_THANKS,
+	ET_KEK,
+	ET_SORRY,
+	ET_SMILE,
+	ET_PROFUSELY_SWEAT,
+	ET_SCRATCH,			// --- 20
+	ET_BEST,
+	ET_STARE_ABOUT,		// /??
+	ET_HUK,
+	ET_O,
+	ET_X,
+	ET_HELP,
+	ET_GO,
+	ET_CRY,
+	ET_KIK,
+	ET_CHUP,			// --- 30
+	ET_CHUPCHUP,
+	ET_HNG,
+	ET_OK,
+	ET_CHAT_PROHIBIT,	// red /... used for muted characters
+	ET_INDONESIA_FLAG,
+	ET_STARE,			// /bzz, /stare
+	ET_HUNGRY,
+	ET_COOL,			// /awsm, /cool
+	ET_MERONG,
+	ET_SHY,				// --- 40
+	ET_GOODBOY,			// /pat, /goodboy
+	ET_SPTIME,			// /mp, /sptime
+	ET_SEXY,
+	ET_COMEON,			// /com, /comeon
+	ET_SLEEPY,			// /yawn, /sleepy
+	ET_CONGRATULATION,	// /grat, /congrats
+	ET_HPTIME,			// /hp, /hptime
+	ET_PH_FLAG,
+	ET_MY_FLAG,
+	ET_SI_FLAG,			// --- 50
+	ET_BR_FLAG,
+	ET_SPARK,			// /fsh
+	ET_CONFUSE,			// /spin
+	ET_OHNO,
+	ET_HUM,				// /dum
+	ET_BLABLA,			// /crwd
+	ET_OTL,				// /otl, /desp
+	ET_DICE1,
+	ET_DICE2,
+	ET_DICE3,			// --- 60
+	ET_DICE4,
+	ET_DICE5,
+	ET_DICE6,
+	ET_INDIA_FLAG,
+	ET_LUV,				// /love
+	ET_FLAG8,
+	ET_FLAG9,
+	ET_MOBILE,
+	ET_MAIL,
+	ET_ANTENNA0,		// --- 70
+	ET_ANTENNA1,
+	ET_ANTENNA2,
+	ET_ANTENNA3,
+	ET_HUM2,
+	ET_ABS,
+	ET_OOPS,
+	ET_SPIT,
+	ET_ENE,
+	ET_PANIC,
+	ET_WHISP,			// --- 80
+	ET_YUT1,
+	ET_YUT2,
+	ET_YUT3,
+	ET_YUT4,
+	ET_YUT5,
+	ET_YUT6,
+	ET_YUT7,
 	//
-	E_MAX
+	ET_MAX
 };
 
 enum clr_type : uint8_t 

@@ -515,7 +515,7 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 			mes "[Test Instructor, Teardrop]";
 			mes "Aha... You've failed the middle!";
 			mes "You are such a fool.";
-			emotion e_gg;
+			emotion ET_KIK;
 			next;
 			mes "[Test Instructor, Teardrop]";
 			mes "So what are you going to do? Try again?";
@@ -1188,7 +1188,7 @@ job3_rang02,111,56,3	script	Staff Rust#jr_09	89,{
 				close;
 			}
 			next;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Staff Rust]";
 			mes "And the mission is.... to deliver these documents to the supervisor, Caution. He won't take what I give...";
 			setquest 8260;
@@ -1305,7 +1305,7 @@ OnTouch_:
 			next;
 			mes "[Test Supervisor, Caution]";
 			mes "What are those documents?";
-			emotion e_no;
+			emotion ET_STARE_ABOUT;
 			next;
 			select("Mr. Rust asked me to give this to you.");
 			mes "[Test Supervisor, Caution]";
@@ -1316,7 +1316,7 @@ OnTouch_:
 			next;
 			mes "[Test Supervisor, Caution]";
 			mes "I've never imagined this could be a test...";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Test Supervisor, Caution]";
 			mes "Anyway you've passed the 2nd test very well.";

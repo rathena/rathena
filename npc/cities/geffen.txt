@@ -102,7 +102,7 @@ geffen,147,26,0	script	Ralphie	97,{
 	mes "With that, anyone could be as strong as Hercules... Even a weakling like me! Hahahahahah,";
 	mes "I must have it!";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Ralphie]";
 	mes "...Good Heavens!";
 	mes "Since when were";
@@ -156,7 +156,7 @@ geffen,111,48,0	script	Stacey	101,{
 			mes "It's...";
 			mes "It's like you're surrounded by this incredibly masculine aura! Oooh~! You must be irresistable to all the girls!";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Stacey]";
 			mes "And I'm no exception.";
 		}
@@ -460,7 +460,7 @@ geffen_in,22,125,1	script	Crumpler	52,{
 			mes "[Crumpler]";
 			mes "Ooooooooh";
 			mes "crraaaap!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Crumpler]";
 			mes "Help meeeee!";
@@ -498,7 +498,7 @@ geffen_in,22,125,1	script	Crumpler	52,{
 		mes "[Crumpler]";
 		mes "A...";
 		mes "Sage?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Crumpler]";
 		mes "I don't know what that is. But I guess it can't be half as bad as a Mage.";
