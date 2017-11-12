@@ -6,6 +6,8 @@ import os
 
 convert_folders =  ["../npc", "../src"]
 wl_file_extensions = ['.hpp', '.h', '.cpp', '.c', '.txt' ]
+bl_files = ['script_constants.hpp']
+BACKUP_EXT = '.bak'
 emotion_dict = {
 'E_GASP': 'ET_SURPRISE',
 'E_WHAT': 'ET_QUESTION',
@@ -100,21 +102,31 @@ emotion_dict = {
 
 pattern = re.compile(r'\b(' + '|'.join(emotion_dict.keys()) + r')\b', re.IGNORECASE)
 
+def revert_to_backup(filename):
+   os.rename(filename+BACKUP_EXT, filename)
+
 def replace_emoticons_in_file(filename):
-    with fileinput.FileInput(filename, inplace=True, backup='.bak') as fiFile:
+    remove_backup = True # only keep backup if the original file changed
+    with fileinput.FileInput(filename, inplace=True, backup=BACKUP_EXT) as fiFile:
         try:
             for line in fiFile:
-                print(pattern.sub(lambda x: emotion_dict[x.group().upper()], line), end='')
+                new_line, rpl_cnt = pattern.subn(lambda x: emotion_dict[x.group().upper()], line)
+                print(new_line, end='')
+                if rpl_cnt > 0:
+                    remove_backup = False
+            if remove_backup:
+                os.remove(filename+BACKUP_EXT)
         except UnicodeDecodeError:
             # Encoding error, reapply the backup
-            os.rename(filename+'.bak', filename)
+            revert_to_backup(filename)
         
 
 fileiter = (os.path.join(root, f)
     for conv_folder in convert_folders 
     for root, _, files in os.walk(conv_folder)
     for f in files
-    if any(f.endswith(wl) for wl in wl_file_extensions)
+    if any([f.endswith(wl) for wl in wl_file_extensions])
+    if not any([bl in f for bl in bl_files])
     )
 
 for f in fileiter:
