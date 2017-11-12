@@ -1,5 +1,15 @@
 #!/bin/python3
 
+"""
+Simple scripts which replaces the old emotion script constants to the new
+script constants.
+The actual replacement list is in 'emotion_dict'.
+
+Related pull request: https://github.com/rathena/rathena/pull/2527
+Note: This only applies the constant changes. You still have to check your scripts
+for 'unitemote' (command was removed) and 'emotion' using the third parameter ('target name').
+"""
+
 import fileinput
 import re
 import os
