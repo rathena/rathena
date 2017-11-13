@@ -7831,7 +7831,6 @@ ACMD_FUNC(whereis)
 {
 	MobID mob_ids[MAX_SEARCH] = {0};
 	int count = 0;
-	const int MAX_SPAWN_DISP = 10;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
@@ -7866,10 +7865,9 @@ ACMD_FUNC(whereis)
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
-		SpawnInfos spawns = mob->get_spawns();
-		for(auto& spawn_map : spawns)
+		const SpawnInfos spawns = mob->get_spawns();
+		for(auto& spawn : spawns)
 		{
-			struct spawn_info& spawn = spawn_map.second;
 			int16 mapid = map_mapindex2mapid(spawn.mapindex);
 			if (mapid < 0)
 				continue;

@@ -9,7 +9,7 @@
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
-#include <map>
+#include <vector>
 
 struct guardian_data;
 
@@ -138,13 +138,10 @@ struct mob_chat {
 struct spawn_info {
 	unsigned short mapindex;
 	unsigned short qty;
-	bool operator<(const struct spawn_info & s) const {
-		return this->mapindex < s.mapindex;
-	}
 };
 
 // SpawnInfos - first: mapindex, second: quantity
-typedef std::map<unsigned short, struct spawn_info> SpawnInfos;
+typedef std::vector<struct spawn_info> SpawnInfos;
 
 /// Loooitem struct
 struct s_mob_lootitem {

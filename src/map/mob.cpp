@@ -3109,7 +3109,7 @@ int mob_guardian_guildchange(struct mob_data *md)
 /*==========================================
  * Pick a random class for the mob
  *------------------------------------------*/
-int mob_random_class (int *value, size_t count)
+int mob_random_class(int *value, size_t count)
 {
 	nullpo_ret(value);
 
@@ -3154,15 +3154,29 @@ bool mob_db::has_spawn() const
 */
 void mob_add_spawn(MobID mob_id, const struct spawn_info& new_spawn)
 {
+	unsigned short m = new_spawn.mapindex;
+
 	if( new_spawn.qty <= 0 )
 		return; //ignore empty spawns
-	
+
 	SpawnInfos& spawns = mob_spawn_data[mob_id];
-	auto it = spawns.find(new_spawn.mapindex);
-	if (it == spawns.end())
-		spawns[new_spawn.mapindex] = new_spawn; // initialize SpawnInfos
+	// Search if the map is already in spawns
+	auto itSameMap = std::find_if(spawns.begin(), spawns.end(), 
+		[&m] (const spawn_info &s) { return (s.mapindex == m); });
+	
+	if( itSameMap != spawns.end() )
+		itSameMap->qty += new_spawn.qty; // add quantity, if map is found
 	else
-		it->second.qty += new_spawn.qty;
+		spawns.push_back(new_spawn); // else, add the whole spawn info
+	
+	// sort spawns by spawn quantity
+	std::sort(spawns.begin(), spawns.end(),
+		[](const spawn_info & a, const spawn_info & b) -> bool
+		{ return a.qty > b.qty; });
+/** Note
+	Spawns are sorted after every addition. This makes reloadscript slower, but
+	some spawns may be added directly by loadscript or something similar.
+*/
 }
 
 /*==========================================
