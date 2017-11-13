@@ -1371,11 +1371,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if( (sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) )
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
 
-		if( damage > 0 && ((flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT)) && (sce = sc->data[SC_STONEHARDSKIN]) ) {
+		if( damage > 0 && (sce = sc->data[SC_STONEHARDSKIN]) ) {
 			sce->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);
 			if( src->type == BL_MOB ) //using explicit call instead break_equip for duration
 				sc_start(src,src, SC_STRIPWEAPON, 30, 0, skill_get_time2(RK_STONEHARDSKIN, sce->val1));
-			else
+			else if (flag&(BF_WEAPON|BF_SHORT))
 				skill_break_equip(src,src, EQP_WEAPON, 3000, BCT_SELF);
 			if( sce->val2 <= 0 )
 				status_change_end(bl, SC_STONEHARDSKIN, INVALID_TIMER);
@@ -2448,12 +2448,12 @@ static int is_attack_piercing(struct Damage wd, struct block_list *src, struct b
 	return 0;
 }
 
-static bool battle_skill_get_damage_properties(uint16 skill_id, int is_splash)
+static int battle_skill_get_damage_properties(uint16 skill_id, int is_splash)
 {
 	int nk = skill_get_nk(skill_id);
 	if( !skill_id && is_splash ) //If flag, this is splash damage from Baphomet Card and it always hits.
 		nk |= NK_NO_CARDFIX_ATK|NK_IGNORE_FLEE;
-	return nk > 0;
+	return nk;
 }
 
 /*=============================
@@ -2667,7 +2667,7 @@ static bool attack_ignores_def(struct Damage wd, struct block_list *src, struct 
 		}
 	}
 
-	return (nk&NK_IGNORE_DEF) > 0;
+	return (nk&NK_IGNORE_DEF) != 0;
 }
 
 /*================================================
@@ -3793,7 +3793,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				skillratio += 100 * skill_lv;
 			break;
 		case RK_STORMBLAST:
-			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + (status_get_str(src) / 8)) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's STR / 8)} x 100] %
+			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + status_get_str(src) / 8) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's STR / 8)} x 100] %
 			break;
 		case RK_PHANTOMTHRUST: // ATK = [{(Skill Level x 50) + (Spear Master Level x 10)} x Caster's Base Level / 150] %
 			skillratio += -100 + 50 * skill_lv + 10 * (sd ? pc_checkskill(sd,KN_SPEARMASTERY) : 5);
@@ -7264,7 +7264,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vanish_damage) {
 			wd.damage <<= 1; // Double Damage
-			if (!sc->data[SC_CRUSHSTRIKE]) { // Increase damage again if Crush Strike is not active
+			skill_break_equip(src, src, EQP_WEAPON, 10, BCT_SELF); // Break chance happens on successful damage increase
+			if (!sc->data[SC_CRUSHSTRIKE] && (sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT) { // Increase damage again if Crush Strike is not active
 				if (map_flag_vs(src->m)) // Only half of the 2.5x increase on versus-type maps
 					wd.damage += wd.damage * 125 / 100;
 				else
@@ -8151,22 +8152,22 @@ static const struct _battle_data {
 
 	// eAthena additions
 	{ "item_logarithmic_drops",             &battle_config.logarithmic_drops,               0,      0,      1,              },
-	{ "item_drop_common_min",               &battle_config.item_drop_common_min,            1,      1,      10000,          },
+	{ "item_drop_common_min",               &battle_config.item_drop_common_min,            1,      0,      10000,          },
 	{ "item_drop_common_max",               &battle_config.item_drop_common_max,            10000,  1,      10000,          },
-	{ "item_drop_equip_min",                &battle_config.item_drop_equip_min,             1,      1,      10000,          },
+	{ "item_drop_equip_min",                &battle_config.item_drop_equip_min,             1,      0,      10000,          },
 	{ "item_drop_equip_max",                &battle_config.item_drop_equip_max,             10000,  1,      10000,          },
-	{ "item_drop_card_min",                 &battle_config.item_drop_card_min,              1,      1,      10000,          },
+	{ "item_drop_card_min",                 &battle_config.item_drop_card_min,              1,      0,      10000,          },
 	{ "item_drop_card_max",                 &battle_config.item_drop_card_max,              10000,  1,      10000,          },
-	{ "item_drop_mvp_min",                  &battle_config.item_drop_mvp_min,               1,      1,      10000,          },
+	{ "item_drop_mvp_min",                  &battle_config.item_drop_mvp_min,               1,      0,      10000,          },
 	{ "item_drop_mvp_max",                  &battle_config.item_drop_mvp_max,               10000,  1,      10000,          },
 	{ "item_drop_mvp_mode",                 &battle_config.item_drop_mvp_mode,              0,      0,      2,              },
-	{ "item_drop_heal_min",                 &battle_config.item_drop_heal_min,              1,      1,      10000,          },
+	{ "item_drop_heal_min",                 &battle_config.item_drop_heal_min,              1,      0,      10000,          },
 	{ "item_drop_heal_max",                 &battle_config.item_drop_heal_max,              10000,  1,      10000,          },
-	{ "item_drop_use_min",                  &battle_config.item_drop_use_min,               1,      1,      10000,          },
+	{ "item_drop_use_min",                  &battle_config.item_drop_use_min,               1,      0,      10000,          },
 	{ "item_drop_use_max",                  &battle_config.item_drop_use_max,               10000,  1,      10000,          },
-	{ "item_drop_add_min",                  &battle_config.item_drop_adddrop_min,           1,      1,      10000,          },
+	{ "item_drop_add_min",                  &battle_config.item_drop_adddrop_min,           1,      0,      10000,          },
 	{ "item_drop_add_max",                  &battle_config.item_drop_adddrop_max,           10000,  1,      10000,          },
-	{ "item_drop_treasure_min",             &battle_config.item_drop_treasure_min,          1,      1,      10000,          },
+	{ "item_drop_treasure_min",             &battle_config.item_drop_treasure_min,          1,      0,      10000,          },
 	{ "item_drop_treasure_max",             &battle_config.item_drop_treasure_max,          10000,  1,      10000,          },
 	{ "item_rate_mvp",                      &battle_config.item_rate_mvp,                   100,    0,      1000000,        },
 	{ "item_rate_common",                   &battle_config.item_rate_common,                100,    0,      1000000,        },
@@ -8442,6 +8443,7 @@ static const struct _battle_data {
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0x3,            },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
+	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

@@ -22,7 +22,7 @@ dicastes01,194,159,5	script	Excited Galten#a	492,{
 	if (isequipped(2782)) {
 		mes "I can't get beautiful";
 		mes "Ahat's image out of my head.";
-		emotion e_lv;
+		emotion ET_THROB;
 		mes "As long as we have him,";
 		mes "it will only be a matter of time before Sapha";
 		mes "will rule this land.";
@@ -301,14 +301,14 @@ dic_in01,149,104,5	script	Tired Piom#b	455,{
 		mes "I will need another dose of Bradium.";
 		mes "I think the effects are weaker than before,";
 		mes "or is it just me?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		close; 
 	}
 	mes "¡ð¡Ð¡ú ¡ø ¢²";
 	mes "¡ö¡õ¡ó ¢¤ ¡ò¡ò¢³ ¡ô ¡ô¡ó¡ñ";
 	mes "¢£¡ñ¡þ ¡ü ¢²¡û¡ó ¡ò ¡ð¡þ";
 	mes "¡ö¡ú¡ñ ¢³";
-	emotion e_what;
+	emotion ET_QUESTION;
 	close;
 }
 
@@ -324,7 +324,7 @@ dic_in01,341,113,3	script	Tired Piom#a	491,{
 		mes "[Tired Piom]";
 		mes "...";
 		next;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Tired Piom]";
 		mes "I'll be rejected again, right?";
 		close; 
@@ -337,7 +337,7 @@ dic_in01,341,113,3	script	Tired Piom#a	491,{
 	mes "[Tired Piom]";
 	mes "¡þ";
 	next;
-	emotion e_swt;
+	emotion ET_SWEAT;
 	mes "[Tired Piom]";
 	mes "¡ø¡ú¡ø ¢± ¡ö¡ò";
 	close;
@@ -547,13 +547,13 @@ dicastes01,235,245,4	script	Excited Piom#a	490,{
 	if (isequipped(2782)) {
 		mes "[Excited Piom]";
 		mes "Have you seen Ahat?";
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "His popularity here in El Discastes is phenomenal!";
 		close; 
 	}
 	mes "[Excited Piom]";
 	mes "¡ú¡þ¡ó ¢³ ¡ü¢²¡ñ ¢±";
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "¢³¡ó¡ñ ¡õ ¡ð¡ô¡þ ¡÷ ¡ú¡ò¡õ ¡ø ¢² ¡ø";
 	close;
 }
@@ -584,7 +584,7 @@ dicastes01,164,180,4	script	Limpy Piom#a	489,{
 		mes "I hope everything goes well.";
 		mes "I hope it doesn't come all";
 		mes "the way to the capital city here.";
-		emotion e_dots;
+		emotion ET_THINK;
 		close; 
 	}
 	mes "¢²¡ô¡þ ¡ù ¡õ¡Ð";
@@ -592,7 +592,7 @@ dicastes01,164,180,4	script	Limpy Piom#a	489,{
 	mes "¢³¡þ¢¤ ¡ó ¡õ¡÷¡Ð";
 	mes "¡ñ¡ò¡ü ¡ü ¡ù¡þ¢±";
 	mes "¢¤¡ò¡þ ¢¤ ¢£¡ñ ¢¤ ¢£¡ñ";
-	emotion e_dots;
+	emotion ET_THINK;
 	close;
 }
 
@@ -612,13 +612,13 @@ dicastes01,191,202,4	script	Complaining Galten#fihs	450,{
 			mes "Then, I don't know what to talk about with you.";
 			close; 
 		}
-		emotion e_gg,0,"Crazy Venknick#fihsing1";
+		emotion ET_KIK, getnpcid(0, "Crazy Venknick#fihsing1");
 		mes "[Complaining Galten]";
 		mes "You also fell for that crazy man.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes";
-		emotion e_sob,1;
+		emotion ET_CRY, playerattached();
 		next;
 		mes "[Complaining Galten]";
 		mes "Just forget about it quickly for your own good.";
@@ -658,19 +658,19 @@ dicastes01,202,197,4	script	Crazy Venknick#fihsing1	449,{
 		set Zeny, Zeny-5000;
 		mes "[Crazy Venknick]";
 		mes "Thanks.";
-		emotion e_gg,0,"Complaining Galten#fihs";
+		emotion ET_KIK, getnpcid(0, "Complaining Galten#fihs");
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "What is the sad legend?";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "["+strcharinfo(0)+"]";
 		mes "I asked what the sad legend is about!";
 		next;
 		mes "[Crazy Venknick]";
 		mes "I don't believe in legends.";
 		next;
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Was I tricked?";
 		sc_start SC_Blind,20000,0;

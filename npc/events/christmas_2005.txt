@@ -49,7 +49,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 	mes "bring it to me.";
 	mes "I'll change it to brand new one.";
 	mes "Stylish Louise's hat.";
-	emotion e_lv;
+	emotion ET_THROB;
 	next;
 	if (countitem(2236) > 0) {
 		if (select("Here.:It's ok.") == 1) {
@@ -84,7 +84,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "I like your style~.";
 					mes "Ok!! If everything is ready, no need to hesitate.";
 					mes "I'll show you what Designer Louise Kim's power is.";
-					emotion e_no1;
+					emotion ET_BEST;
 					next;
 					mes "-She puts the hat in a bucket -";
 					mes "-filled with Holy Water.-";
@@ -94,7 +94,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "[Designer Louise Kim]";
 					mes "~With the number one designer, Louise Kim,~";
 					mes "~you are the most blessed soul.~";
-					emotion e_ho;
+					emotion ET_DELIGHT;
 					misceffect EF_BLESSING;
 					next;
 					mes "-Immediately, she puts Rosary in an-";
@@ -106,7 +106,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "[Designer Louise Kim]";
 					mes "~With the number one designer, Louise Kim,~";
 					mes "~you are the luckiest soul.~";
-					emotion e_ho;
+					emotion ET_DELIGHT;
 					misceffect EF_GLORIA;
 					next;
 					mes "-She starts sewing the hat with -";
@@ -117,7 +117,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "~This is called the Louise's miracle.~";
 					mes "~The most talented disigner,~";
 					mes "~L_O_U_I_S_E K_I_M~";
-					emotion e_lv;
+					emotion ET_THROB;
 					misceffect EF_BENEDICTIO;
 					next;
 					mes "[Designer Louise Kim]";
@@ -132,7 +132,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "It's a gift for you!";
 					mes "I won't charge anything.";
 					mes "Just tell many people how good it is.";
-					emotion e_heh;
+					emotion ET_SMILE;
 					next;
 					mes "[Designer Louise Kim]";
 					mes "Wherever you go,";
@@ -146,7 +146,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "Go brag yourself!";
 					mes "~Who would be happier than~";
 					mes "~being with Louise.~";
-					emotion e_ho;
+					emotion ET_DELIGHT;
 					delitem 2236,1; //Santa's_Hat
 					delitem 952,1; //Cactus_Needle
 					delitem 523,10; //Holy_Water
@@ -159,21 +159,21 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 					mes "Come on~If you just get me the materials,";
 					mes "I won't charge anything,";
 					mes "Call me if you change your mind.";
-					emotion e_lv;
+					emotion ET_THROB;
 					close;
 				}
 			}
 			mes "[Designer Louise Kim]";
 			mes "You'll regret!";
 			mes "Think again!";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 		mes "[Designer Louise Kim]";
 		mes "Ok~ whatever~";
 		mes "It's not me,";
 		mes "who's going to lose whose own luck.";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 	else {
@@ -182,7 +182,7 @@ xmas_in,89,92,5	script	Louise Kim#designer	714,{
 		mes "think about it carefully.";
 		mes "You can get the better designed hat,";
 		mes "and I can show off my talent.";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 }
@@ -250,7 +250,7 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 			mes "5 branch of dead trees!!!";
 			mes "Must bring item to attack town~";
 			mes "hahahaha~~";
-			emotion e_gg;
+			emotion ET_KIK;
 			next;
 			mes "[Enjoy]";
 			mes "Get it?!!!!";
@@ -384,8 +384,8 @@ prontera,155,285,3	script	Enjoy#enjoy	753,{
 			mes " ";
 			mes "[All]";
 			mes "Let's punish!!!!!";
-			emotion e_go;
-			emotion e_go,1;
+			emotion ET_GO;
+			emotion ET_GO, playerattached();
 			donpcevent "Happymerry#happymerry02::OnCommandEmotion";
 			donpcevent "Christ#christ02::OnCommandEmotion";
 			donpcevent "Mas#mas02::OnCommandEmotion";
@@ -512,7 +512,7 @@ OnCommandOn:
 	initnpctimer;
 	enablenpc "Happymerry#happymerry02";
 OnCommandEmotion:
-	emotion e_go;
+	emotion ET_GO;
 	end;
 
 OnCommandOff:
@@ -538,7 +538,7 @@ OnInit:
 OnCommandOn:
 	enablenpc "Christ#christ02";
 OnCommandEmotion:
-	emotion e_go;
+	emotion ET_GO;
 	end;
 
 OnCommandOff:
@@ -555,7 +555,7 @@ OnInit:
 OnCommandOn:
 	enablenpc "Mas#mas02";
 OnCommandEmotion:
-	emotion e_go;
+	emotion ET_GO;
 	end;
 
 OnCommandOff:
@@ -572,7 +572,7 @@ OnInit:
 OnCommandOn:
 	enablenpc "Event#event02";
 OnCommandEmotion:
-	emotion e_go;
+	emotion ET_GO;
 	end;
 
 OnCommandOff:
@@ -586,7 +586,7 @@ prontera,188,177,4	script	Happymerry#happymerry	869,{
 		mes "Holgren~~!!";
 		mes "I've never expected you betraying me! Don't wanna get refined~!!!";
 		mes "I hate christmas~!";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Are...you...?";
@@ -645,7 +645,7 @@ prontera,188,177,4	script	Happymerry#happymerry	869,{
 		mes "Holgren!!";
 		mes "I've never expected you betraying me! Don't wanna get refined~!!!";
 		mes "I hate christmas~!";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Happymerry]";
 		mes "What are you laughing at? huh~!";
@@ -836,7 +836,7 @@ prontera,35,209,5	script	Event#event	881,{
 		next;
 		mes "[Event]";
 		mes "...I love you too~!!!";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "(Oh,my..)";
@@ -848,7 +848,7 @@ prontera,35,209,5	script	Event#event	881,{
 		next;
 		mes "-He laughed talking to his right hand.-";
 		//Emotion "Event#event" ET_KIK
-		emotion e_kis;
+		emotion ET_CHUP;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Mas sent me here.";
@@ -900,7 +900,7 @@ prontera,35,209,5	script	Event#event	881,{
 		next;
 		mes "[Event]";
 		mes "...I love you too~!!!";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "(Oh.my~)";
@@ -911,7 +911,7 @@ prontera,35,209,5	script	Event#event	881,{
 		mes "Hahahaha~~~";
 		next;
 		mes "-He laughed talking to his right hand.-";
-		emotion e_kis;
+		emotion ET_CHUP;
 		close;
 	}
 }
@@ -955,7 +955,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "[Oholy]";
 			mes "The latest headline by Oholy";
 			mes "Isn't it amazing?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		case 2:
 			mes "[Oholy]";
@@ -979,7 +979,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "[Oholy]";
 			mes "The latest headline by Oholy";
 			mes "Isn't it amazing?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		case 3:
 			mes "[Oholy]";
@@ -1015,7 +1015,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "Good gracious! Are you for real?";
 			mes "Oh? Shee... Can you hear it?";
 			mes "Every kids appreciate your kindness.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "Don't be afraid. I will not";
 			mes "ask you to make a new christmas carol.";
 			next;
@@ -1035,7 +1035,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "you are dealing with devil.";
 			mes "Well then, hope you a good luck!!!";
 			mes " ";
-			emotion e_no1;
+			emotion ET_BEST;
 			set christ_carol05,1;
 			close;
 		case 4:
@@ -1066,7 +1066,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "[Oholy]";
 			mes "The latest headline by Oholy";
 			mes "Isn't it amazing?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		case 5:
 			mes "[Oholy]";
@@ -1084,7 +1084,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 			mes "[Oholy]";
 			mes "The latest headline by Oholy";
 			mes "Isn't it amazing?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 	}
@@ -1168,7 +1168,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "I wrapped those indivisually.";
 				mes "There are many sweets in them.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 12130,7;//Cookie_Bag
@@ -1180,7 +1180,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "Chief noun.";
 				mes "Very sweet and delicious.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 529,20;//Candy
@@ -1192,7 +1192,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "Chief noun.";
 				mes "Very sweet and delicious.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 530,15;//Candy_Striper
@@ -1204,7 +1204,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "Chief Acolyte.";
 				mes "Very soft and delicious.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 539,5;//Piece_of_Cake
@@ -1216,7 +1216,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "Chief Acolyte.";
 				mes "Very crispy and delicious.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 538,10;//Well_baked_Cookie
@@ -1228,7 +1228,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "Bishop, Tomas.";
 				mes "Very cute.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 743,1;//Spore_Doll
@@ -1240,7 +1240,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "How did it get in here..?!";
 				mes "Oops, oh well.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 750,1;//Baphomet_Doll
@@ -1252,7 +1252,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "How did it get in here..?!";
 				mes "Oops, oh well.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 751,1;//Osiris_Doll
@@ -1264,7 +1264,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "a knight, Lighten.";
 				mes "Very kind of him.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 752,1;//Grasshopper_Doll
@@ -1277,7 +1277,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "an assassin, Marzia.";
 				mes "Very kind of him.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 753,1;//Monkey_Doll
@@ -1289,7 +1289,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "a hunter, Raiden Kurs.";
 				mes "Very kind of him.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 754,1;//Raccoondog_Doll
@@ -1302,7 +1302,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "Very kind of her.";
 				mes "Hope she is doing okay.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 7206,1;//Black_Kitty_Doll
@@ -1313,7 +1313,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "I made this doll.";
 				mes "Isn't it adorable?!";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 7212,1;//Hanging_Doll
@@ -1326,7 +1326,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "An artisan made this doll";
 				mes "with his passion.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 7277,1;//Munak_Doll
@@ -1338,7 +1338,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 				mes "during Christmas season.";
 				mes "It is not a common hat.";
 				mes "Merry Christmas!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				delitem 1097,1;//Worn_Out_Page
 				set christ_carol05,3;
 				getitem 2236,1;//Santa's_Hat
@@ -1377,7 +1377,7 @@ function	script	F_carol_devi	{
 		mes "Heyhey, human!!";
 		mes "Don't ya wanna sell your";
 		mes "soul and be bound in a beneficial contract with me?";
-		emotion e_kis;
+		emotion ET_CHUP;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hey, you! Deviruchi!!!";
@@ -1392,8 +1392,8 @@ function	script	F_carol_devi	{
 			mes "What are you doing!?";
 			mes "Human?";
 			mes "Let go of me...right now!";
-			emotion e_omg;
-			emotion e_omg,1;
+			emotion ET_HUK;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi quickly ran away-";
 			mes "-^4d4dffWhere Deviruchi is gone,-";
@@ -1415,8 +1415,8 @@ function	script	F_carol_devi	{
 			mes "What are you doing!?";
 			mes "Human?";
 			mes "Let go of me...right now!";
-			emotion e_omg;
-			emotion e_omg,1;
+			emotion ET_HUK;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi ran away quickly-";
 			mes "-and mumbled something.-";
@@ -1425,15 +1425,15 @@ function	script	F_carol_devi	{
 			next;
 			mes "-You are now cursed!!!-";
 			sc_start SC_Curse,5000,0;
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			close;
 		case 3:
 			mes "[Deviruchi]";
 			mes "What are you doing!?";
 			mes "Human?";
 			mes "Let go of me...right now!";
-			emotion e_omg;
-			emotion e_omg,1;
+			emotion ET_HUK;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi ran away quickly-";
 			mes "-and mumbled something.-";
@@ -1442,15 +1442,15 @@ function	script	F_carol_devi	{
 			next;
 			mes "-You are blinded!!!-";
 			sc_start SC_Blind,5000,0;
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			close;
 		case 4:
 			mes "[Deviruchi]";
 			mes "What are you doing!?";
 			mes "Human?";
 			mes "Let go of me...right now!";
-			emotion e_omg;
-			emotion e_omg,1;
+			emotion ET_HUK;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "-Deviruchi ran away quickly-";
 			mes "-and mumbled something.-";
@@ -1459,7 +1459,7 @@ function	script	F_carol_devi	{
 			next;
 			mes "-You are poisoned!!!-";
 			sc_start SC_Poison,5000,0;
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			close;
 		}
 	}
@@ -1468,7 +1468,7 @@ function	script	F_carol_devi	{
 		mes "Heyhey, human!!";
 		mes "Don't ya wanna sell your";
 		mes "soul and be bound in a beneficial contract with me?";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hey, you! Deviruchi!!!";
@@ -1481,8 +1481,8 @@ function	script	F_carol_devi	{
 		mes "What are you doing!?";
 		mes "Human?";
 		mes "Let go of me...right now!";
-		emotion e_omg;
-		emotion e_omg,1;
+		emotion ET_HUK;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "-Deviruchi ran away quickly-";
 		mes "-and mumbled something.-";
@@ -1498,7 +1498,7 @@ function	script	F_carol_devi2	{
 	mes "Heyhey, human!!";
 	mes "Don't ya wanna sell your";
 	mes "soul and be bound in a beneficial contract with me?";
-	emotion e_omg;
+	emotion ET_HUK;
 	next;
 	mes "["+ strcharinfo(0) +"]";
 	mes "Hey, you! Deviruchi!!!";
@@ -1511,8 +1511,8 @@ function	script	F_carol_devi2	{
 	mes "What are you doing!?";
 	mes "Human?";
 	mes "Let go of me...right now!";
-	emotion e_omg;
-	emotion e_omg,1;
+	emotion ET_HUK;
+	emotion ET_HUK, playerattached();
 	next;
 	mes "-Deviruchi ran away quickly-";
 	mes "-and mumbled something.-";

@@ -5947,7 +5947,7 @@ Example:
 	// spawn 1 Shining Plant in the 5x5 area centered on (155,188)
 	areamonster "prontera",153,186,157,190,"Shining Plant",1083,1;
 	// make the plant cast level 10 Cold Bolt on a random target
-	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,e_gg,3;
+	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,ET_KEK,3;
 
 ---------------------------------------
 
@@ -7212,19 +7212,15 @@ must be used.
 
 ---------------------------------------
 
-*emotion <emotion number>{,<target>{,"<target name>"}};
+*emotion <emotion number>{,<target>};
 
 This command makes an object display an emotion sprite above their own as
 if they were doing that emotion. For a full list of emotion numbers,
-see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
-(a question mark) and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
+(a question mark) and 'ET_SURPRISE' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
-their head. If 0 (the default if omitted), the NPC in current use will show
-the emotion, if 1, the player that is running the script will display it.
-
-Target name parameter allows to display emotion on top of other NPC/PC without
-event labels. If specified name is not found, command does nothing.
+their head. Use the target Game ID (GID).
 
 ---------------------------------------
 
@@ -7469,13 +7465,6 @@ This command will make a <GID> say a message. The display name of the <GID> won'
 flag: Specify target
    bc_area - Message is sent to players in the vicinity of the source (default).
    bc_self - Message is sent only to player attached.
-
----------------------------------------
-
-*unitemote <GID>,<emotion number>;
-
-This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
 
 ---------------------------------------
 

@@ -191,7 +191,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			next;
 			mes "^3355FFIt figures that she'd";
 			mes "keep your mirror.^000000";
-			emotion e_ag,1;
+			emotion ET_ANGER, playerattached();
 			set DANCER_SK,3;
 			close;
 		}
@@ -203,7 +203,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "Oh! It's you. So did my";
 			mes "sister in Prontera Church";
 			mes "teach you anything yet?";
-			emotion e_go;
+			emotion ET_GO;
 			close;
 		}
 		else if (DANCER_SK == 7) {
@@ -266,7 +266,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "Look at me, do it";
 			mes "like this. Un, deux, trois~";
 			mes "Now, let me see you try it.";
-			emotion e_no1;
+			emotion ET_BEST;
 			next;
 			switch(select("Un deux trois~-:Un, doux trois~:Un, deux, trois~")) {
 			default:
@@ -286,7 +286,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			case 3:
 				mes "["+ strcharinfo(0) +"]";
 				mes "Un, deux, trois~";
-				emotion e_no1,1;
+				emotion ET_BEST, playerattached();
 				specialeffect2 EF_FLASHER;
 				next;
 				mes "[Canell]";
@@ -296,7 +296,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "of rhythm and naturalness";
 				mes "are absolutely essential to";
 				mes "this technique of enticement.";
-				emotion e_kis;
+				emotion ET_CHUP;
 				next;
 				mes "[Canell]";
 				mes "Now that you've mastered";
@@ -311,7 +311,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 				mes "have that drawback. Ho-ho~";
 				mes "Anyway, it's time for us to part now. I hope that you grow to";
 				mes "become a more glamorous and charming dancer in days to come.";
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
 				mes "^3355FFYou have finally learned";
 				mes "the Charming Wink skill.^000000";
@@ -329,7 +329,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "ask me? Ah, you must";
 			mes "be mesmerized by my";
 			mes "beauty, aren't you?";
-			emotion e_pif;
+			emotion ET_HNG;
 			next;
 			mes "[Canell]";
 			mes "Oh, to be so beautiful";
@@ -389,7 +389,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			mes "Hey there,";
 			mes "handsome~";
 			mes "^333333*Wink~*^000000";
-			emotion e_kis;
+			emotion ET_CHUP;
 			specialeffect2 EF_VALLENTINE2;
 			next;
 			mes "^3355FFStrangely enough,";
@@ -540,7 +540,7 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 				mes "I do it! Wink, j-just";
 				mes "like this, okay? Y' see?";
 				mes "^333333*Wiiiiiiiiiiiiiink*^000000";
-				emotion e_no1;
+				emotion ET_BEST;
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Wh-whoa...";
@@ -555,7 +555,7 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 				mes "*Urp* It'sh in the--";
 				mes "Bwahahahaahah!";
 				mes "It's all spinning!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
 				mes "^3355FFIn her drunken stupor,";
 				mes "Aelle pummels you with";
@@ -563,7 +563,7 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 				mes "maniacally to herself.^000000";
 				percentheal -10,0;
 				specialeffect2 EF_HIT2;
-				emotion e_dots,1;
+				emotion ET_THINK, playerattached();
 				delitem 970,1; //Alchol
 				delitem 512,1; //Apple
 				delitem 513,3; //Banana
@@ -644,7 +644,7 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 			mes "[Sober Aelle]";
 			mes "Ohhh...";
 			mes "H-headache...";
-			emotion e_an;
+			emotion ET_FRET;
 			next;
 			mes "[Aelle]";
 			mes "Oh, wow, look at you!";
@@ -681,14 +681,14 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 			mes "Oh crap, it's the pastor!";
 			mes "Shhh, if anybody asks you,";
 			mes "I wasn't doing anything!";
-			emotion e_omg;
+			emotion ET_HUK;
 			next;
 			mes "[Aelle]";
 			mes "Thanks, hon...";
 			mes "I know you can";
 			mes "keep my contraband";
 			mes "our little secret. ^333333*Wink*^000000";
-			emotion e_no1;
+			emotion ET_BEST;
 			close;
 		}
 	}
@@ -711,14 +711,14 @@ prontera,183,333,1	script	Aelle#qsk_dan02	79,{
 		mes "Oh crap, it's the pastor!";
 		mes "Shhh, if anybody asks you,";
 		mes "I wasn't doing anything!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Aelle]";
 		mes "Thanks, hon...";
 		mes "I know you can";
 		mes "keep my contraband";
 		mes "our little secret. ^333333*Wink*^000000";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 }

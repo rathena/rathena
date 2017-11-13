@@ -44,4 +44,5 @@ struct atcmd_binding_data {
 };
 extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
+
 #endif /* _ATCOMMAND_HPP_ */

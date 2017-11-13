@@ -1052,7 +1052,7 @@ yuno_in04,186,125,4	script	Bundle of Files	111,{
 					mes "less clear I am on what";
 					mes "the theory actually is.";
 					mes "I don't think there is one...";
-					emotion e_swt,1;
+					emotion ET_SWEAT, playerattached();
 					close;
 				}
 				mes "^8B6914What is most unsettling";

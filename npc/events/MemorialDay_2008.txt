@@ -29,7 +29,7 @@ prontera,182,214,4	script	Lauds#Memorial	58,{
 		next;
 		mes "[Mad Sago Lauds]";
 		mes "What is this!?";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Mad Sago Lauds]";
 		mes "Where is your towel!?";
@@ -166,7 +166,7 @@ prontera,182,214,4	script	Lauds#Memorial	58,{
 		if (.@RandomMsg == 1) {
 			mes "[Mad Sago Lauds]";
 			mes "Don't panic!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			close;
 		}
 		else if (.@RandomMsg == 2) {

@@ -99,4 +99,4 @@ void do_final_instance(void);
 	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
 #endif
 
-#endif
+#endif /* _INSTANCE_HPP_ */

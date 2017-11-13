@@ -37,12 +37,12 @@ mora,160,123,3	script	Nemnem#p	517,{
 	case 1:
 		mes "[Nemnem]";
 		mes "Bra~vo!";
-		emotion e_awsm;
+		emotion ET_COOL;
 		close;
 	case 2:
 		mes "[Nemnem]";
 		mes "If not, never mind!";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		close;
 	}
 }
@@ -71,7 +71,7 @@ mora,105,104,3	script	Boaster#podo	514,{
 	mes "So the situation got";
 	mes "more and more serious...";
 	mes "Now give me some more coins.";
-	emotion e_swt2,1;
+	emotion ET_PROFUSELY_SWEAT, playerattached();
 	close;
 }
 
@@ -232,7 +232,7 @@ mora,174,171,0	script	Warehouse Worker#mo1	518,{
 	mes "[Shortffle]";
 	mes "I want to climb the ladder,";
 	mes "but my legs are too short to do that.";
-	emotion e_sob;
+	emotion ET_CRY;
 	next;
 	mes "[Shortffle]";
 	mes "I wonder who brought it here.";
@@ -314,7 +314,7 @@ mora,113,185,4	script	Reading Raffle#ep14_1	516,{
 		mes "[Reading Rafflesia]";
 		mes "*gasp* Who are you? How long";
 		mes "were you standing there? How rude.";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "The Rafflesia closed the book hastily.";
 		mes "You're curious what will happen next,";
@@ -338,13 +338,13 @@ mora,99,65,6	script	Banana Rafflesia#ep14_1	516,{
 		mes "[Banana Rafflesia]";
 		mes "Take it if you can.";
 		mes "If you are successful, you can have it for free.";
-		emotion e_ok;
+		emotion ET_OK;
 		close;
 	case 2:
 		mes "[Banana Rafflesia]";
 		mes "Well, I was going to give it for free,";
 		mes "but if you don't want it, it's fine with me.";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 }
@@ -359,7 +359,7 @@ mora,30,128,4	script	Relaxing Traveler#ep14_1	514,{
 	select("... ... ...");
 	mes "[Traveler]";
 	mes "Sorry... maybe it's just me...";
-	emotion e_sry;
+	emotion ET_SORRY;
 	close;
 }
 
@@ -402,7 +402,7 @@ mora,168,161,4	script	Warehouse Worker#mo2	513,{
 	next;
 	mes "[Lively]";
 	mes "Ahhh... I'd like to make money...";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -415,12 +415,12 @@ mora,175,161,6	script	Warehouse Worker#mo3	518,{
 	mes "and the blush on its cheeks...";
 	mes "and its wings, ready to take off";
 	mes "any moment...";
-	emotion e_shy;
+	emotion ET_SHY;
 	next;
 	mes "[Kuorita]";
 	mes "I want to have it badly...";
 	mes "What would happen if I stole it?";
-	emotion e_rice;
+	emotion ET_HUNGRY;
 	close;
 }
 
@@ -911,17 +911,17 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 -	script	#mora_traveler	-1,{
 	mes "[Upset Traveler]";
 	mes "You... you dare play a game with me?";
-	emotion e_ag,0,"Traveler#ep14_1_1";
+	emotion ET_ANGER, getnpcid(0, "Traveler#ep14_1_1");
 	next;
 	mes "[Traveler That Posed the Question]";
 	mes "What...? Do you have proof?";
 	mes "Do you have proof?!!";
-	emotion e_an,0,"Traveler#ep14_1_2";
+	emotion ET_FRET, getnpcid(0, "Traveler#ep14_1_2");
 	next;
 	mes "[Traveler Trying to Stop the Fight]";
 	mes "Look, stop it, just stop it!";
 	mes "I'm afraid it will turn into a big fight...";
-	emotion e_swt2,0,"Traveler#ep14_1_3";
+	emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Traveler#ep14_1_3");
 	next;
 	mes "[Traveler Trying to Stop the Fight]";
 	mes "Oh! Why don't we ask";
@@ -931,7 +931,7 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 	mes "Oh, yes! That's a great idea.";
 	mes "Well~ Hello there~";
 	mes "You there, traveler!";
-	emotion e_ic,0,"Traveler#ep14_1_1";
+	emotion ET_AHA, getnpcid(0, "Traveler#ep14_1_1");
 	next;
 	mes "They seem to be calling out to you.";
 	next;
@@ -942,7 +942,7 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 	}
 	mes "["+strcharinfo(0)+"]";
 	mes "What's happening here?";
-	emotion e_what,1;
+	emotion ET_QUESTION, playerattached();
 	next;
 	mes "[Upset Traveler]";
 	mes "I'll tell you what.";
@@ -952,20 +952,20 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 	mes "the third Rosethree...";
 	mes "the ninth Rosenine...";
 	mes "you get how it works, right?";
-	emotion e_ag,0,"Traveler#ep14_1_1";
+	emotion ET_ANGER, getnpcid(0, "Traveler#ep14_1_1");
 	next;
 	mes "[Traveler That Posed the Question]";
 	mes "Right, that's how it works.";
 	mes "So I asked what the youngest one would be called,";
 	mes "and when I told him the answer,";
 	mes "he got all upset and started cursing me.";
-	emotion e_an,0,"Traveler#ep14_1_2";
+	emotion ET_FRET, getnpcid(0, "Traveler#ep14_1_2");
 	next;
 	mes "[Upset Traveler]";
 	mes "You... you bastard!";
 	mes "Hey there, what do you think";
 	mes "the answer to the question is?";
-	emotion e_ag,0,"Traveler#ep14_1_1";
+	emotion ET_ANGER, getnpcid(0, "Traveler#ep14_1_1");
 	next;
 	switch(select("Roseten.:Rose.:How would I know that?")) {
 	case 1:
@@ -977,11 +977,11 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 		mes "See? Even this traveler says";
 		mes "Roseten is the answer.";
 		mes "How dare you try to play tricks on me?";
-		emotion e_gg,0,"Traveler#ep14_1_1";
+		emotion ET_KIK, getnpcid(0, "Traveler#ep14_1_1");
 		next;
 		mes "[Traveler That Posed the Question]";
 		mes "You idiot... you don't have the slightest clue!";
-		emotion e_an,0,"Traveler#ep14_1_2";
+		emotion ET_FRET, getnpcid(0, "Traveler#ep14_1_2");
 		break;
 	case 2:
 		mes "["+strcharinfo(0)+"]";
@@ -996,12 +996,12 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 		mes "That's exactly what I mean!";
 		mes "I can't hang around with him.";
 		mes "I guess we live in two different worlds.";
-		emotion e_ok,0,"Traveler#ep14_1_2";
+		emotion ET_OK, getnpcid(0, "Traveler#ep14_1_2");
 		next;
 		mes "[Upset Traveler]";
 		mes "You bastard... What did you";
 		mes "get from this guy...?";
-		emotion e_ag,0,"Traveler#ep14_1_1";
+		emotion ET_ANGER, getnpcid(0, "Traveler#ep14_1_1");
 		break;
 	case 3:
 		mes "["+strcharinfo(0)+"]";
@@ -1011,7 +1011,7 @@ mora,140,186,3	script	Raffle Philosopher	517,{
 		mes "[Traveler Trying to Stop the Fight]";
 		mes "You good-for-nothing bastard,";
 		mes "you're trying to leave this mess to me?";
-		emotion e_an,0,"Traveler#ep14_1_3";
+		emotion ET_FRET, getnpcid(0, "Traveler#ep14_1_3");
 		break;
 	}
 	next;
@@ -1147,7 +1147,7 @@ mora,43,127,3	script	Innkeeper#mora_inn	522,{
 			mes "[Innkeeper]";
 			mes "What's worse is that whoever takes medicine made out of Savages will come back for more!";
 			mes "And he will wander around looking for the tower, and eventually turn into an enormous Savage!";
-			emotion e_no,1;
+			emotion ET_STARE_ABOUT, playerattached();
 			next;
 		} else {
 			mes "[Innkeeper]";

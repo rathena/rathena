@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef ACHIEVEMENT_HPP_
-#define ACHIEVEMENT_HPP_
+#ifndef _ACHIEVEMENT_HPP_
+#define _ACHIEVEMENT_HPP_
 
 #include "../common/mmo.h"
 #include "../common/db.h"
@@ -122,4 +122,4 @@ const char *av_parse_simpleexpr(const char *p, struct av_condition *parent);
 long long achievement_check_condition(struct av_condition *condition, struct map_session_data *sd, int *count);
 void achievement_script_free(struct av_condition *condition);
 
-#endif /* ACHIEVEMENT_HPP_ */
+#endif /* _ACHIEVEMENT_HPP_ */

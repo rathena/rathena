@@ -847,7 +847,7 @@ prt_are_in,25,84,3	script	Staff#70-2	67,{
 		donpcevent "Lv70 Waiting Room::OnStart";
 		end;
 	} else {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Staff]";
 		mes "Wow! You have renewed the record!";
 		mes "What a great job!";
