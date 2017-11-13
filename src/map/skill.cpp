@@ -432,11 +432,11 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 
 /**
  * Calculates heal value of skill's effect
- * @param src
- * @param target
- * @param skill_id
- * @param skill_lv
- * @param heal
+ * @param src: Unit casting heal
+ * @param target: Target of src
+ * @param skill_id: Skill ID used
+ * @param skill_lv: Skill Level used
+ * @param heal: True if it's the heal part or false if it's the damage part of the skill
  * @return modified heal value
  */
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal) {
