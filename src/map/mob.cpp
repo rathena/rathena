@@ -97,11 +97,6 @@ struct s_mob_skill {
 };
 static DBMap *mob_skill_db; /// Monster skill temporary db. s_mob_skill -> mobid
 
-// TODO: DROP
-struct mob_db *mobdb_exists(uint16 mob_id) {
-	return mob_db(mob_id);
-}
-
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
@@ -2940,7 +2935,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 
 		if (sd) {
-			struct mob_db *mission_mdb = mobdb_exists(sd->mission_mobid);
+			struct mob_db *mission_mdb = mob_db(sd->mission_mobid);
 
 			if ((sd->mission_mobid == md->mob_id) ||
 				(battle_config.taekwon_mission_mobname == 1 && mission_mdb && status_get_race2(&md->bl) == RC2_GOBLIN && mission_mdb->race2 == RC2_GOBLIN) ||

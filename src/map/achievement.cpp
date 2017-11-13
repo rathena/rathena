@@ -1027,7 +1027,7 @@ struct achievement_db *achievement_read_db_sub(yamlwrapper *wrapper, int n, cons
 		for (tt = yaml_iterator_first(it); yaml_iterator_has_next(it) && entry->target_count < MAX_ACHIEVEMENT_OBJECTIVES; tt = yaml_iterator_next(it)) {
 			int mobid = 0, count = 0;
 
-			if (yaml_node_is_defined(tt, "MobID") && (mobid = yaml_get_int(tt, "MobID")) && !mobdb_exists(mobid)) { // The mob ID field is not required
+			if (yaml_node_is_defined(tt, "MobID") && (mobid = yaml_get_int(tt, "MobID")) && mob_db(mobid) != NULL) { // The mob ID field is not required
 				ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source);
 				continue;
 			}
