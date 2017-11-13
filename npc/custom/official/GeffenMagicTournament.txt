@@ -160,9 +160,9 @@ OnTimer1000:
 			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef2"));
 			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef3"));
 			break;
-		case 111: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"); break);
-		case 113: emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"); break);
-		case 115: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"); break);
+		case 111: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef")); break;
+		case 113: emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef")); break;
+		case 115: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef")); break;
 		case 118:
 			hideonnpc instance_npcname("Male Adventurer#gef");
 			hideonnpc instance_npcname("Handsome Adventurer#gef");
