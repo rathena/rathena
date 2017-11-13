@@ -4574,6 +4574,9 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for all mobs\n", j);
 		else
 			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
+
+		if (!idb_get(mob_skill_db, mob_id))
+			aFree(skill);
 		return false;
 	}
 	ms->skill_id = j;
