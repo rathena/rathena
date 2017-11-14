@@ -71,7 +71,7 @@ struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant 
 struct mob_db *mob_db(int mob_id) { if (mob_id < 0 || mob_id > MAX_MOB_DB || mob_db_data[mob_id] == NULL) return mob_dummy; return mob_db_data[mob_id]; }
 
 // holds Monster Spawn informations
-std::unordered_map<MobID, SpawnInfos> mob_spawn_data;
+std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
 //Dynamic mob chat database
 struct mob_chat *mob_chat_db[MAX_MOB_CHAT+1];
@@ -286,7 +286,7 @@ void mvptomb_destroy(struct mob_data *md) {
 /**
  * Sub function for mob namesearch. Here is defined which are accepted.
 */
-static bool mobdb_searchname_sub(MobID mob_id, const char * const str, bool full_cmp)
+static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool full_cmp)
 {
 	const struct mob_db * const mob = mob_db(mob_id);
 	
@@ -313,26 +313,26 @@ static bool mobdb_searchname_sub(MobID mob_id, const char * const str, bool full
 /**
  * Searches for the Mobname
 */
-MobID mobdb_searchname_(const char * const str, bool full_cmp)
+uint16 mobdb_searchname_(const char * const str, bool full_cmp)
 {
-	for(MobID mob_id = 0; mob_id <= MAX_MOB_DB; mob_id++) {
+	for(uint16 mob_id = 0; mob_id <= MAX_MOB_DB; mob_id++) {
 		if( mobdb_searchname_sub(mob_id, str, full_cmp) )
 			return mob_id;
 	}
 	return 0;
 }
 
-MobID mobdb_searchname(const char * const str)
+uint16 mobdb_searchname(const char * const str)
 {
 	return mobdb_searchname_(str, true);
 }
 /*==========================================
  * Founds up to N matches. Returns number of matches [Skotlex]
  *------------------------------------------*/
-int mobdb_searchname_array_(const char *str, MobID * out, int size, bool full_cmp)
+int mobdb_searchname_array_(const char *str, uint16 * out, int size, bool full_cmp)
 {
 	unsigned short count = 0;
-	for(MobID mob_id = 0; mob_id <= MAX_MOB_DB && count < size; mob_id++) {
+	for(uint16 mob_id = 0; mob_id <= MAX_MOB_DB && count < size; mob_id++) {
 		if( mobdb_searchname_sub(mob_id, str, full_cmp) ) {
 			out[count] = mob_id;
 			count++;
@@ -341,7 +341,7 @@ int mobdb_searchname_array_(const char *str, MobID * out, int size, bool full_cm
 	return count;
 }
 
-int mobdb_searchname_array(const char *str, MobID * out, int size)
+int mobdb_searchname_array(const char *str, uint16 * out, int size)
 {
 	return mobdb_searchname_array_(str, out, size, false);
 }
@@ -3131,9 +3131,9 @@ int mob_random_class(int *value, size_t count)
 /**
 * Returns the SpawnInfos of the mob_db entry
 */
-const SpawnInfos mob_db::get_spawns() const
+const std::vector<spawn_info> mob_db::get_spawns() const
 {
-	// Returns an empty SpawnInfos if mob_id is not in mob_spawn_data
+	// Returns an empty std::vector<spawn_info> if mob_id is not in mob_spawn_data
 	return mob_spawn_data[this->get_mobid()];
 }
 
@@ -3152,14 +3152,14 @@ bool mob_db::has_spawn() const
  * @param mob_id - Monster ID spawned
  * @param new_spawn - spawn_info holding the map and quantity of the spawn
 */
-void mob_add_spawn(MobID mob_id, const struct spawn_info& new_spawn)
+void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn)
 {
 	unsigned short m = new_spawn.mapindex;
 
 	if( new_spawn.qty <= 0 )
 		return; //ignore empty spawns
 
-	SpawnInfos& spawns = mob_spawn_data[mob_id];
+	std::vector<spawn_info>& spawns = mob_spawn_data[mob_id];
 	// Search if the map is already in spawns
 	auto itSameMap = std::find_if(spawns.begin(), spawns.end(), 
 		[&m] (const spawn_info &s) { return (s.mapindex == m); });

@@ -7200,7 +7200,7 @@ ACMD_FUNC(mobinfo)
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
 	struct mob_db *mob;
-	MobID mob_ids[MAX_SEARCH];
+	uint16 mob_ids[MAX_SEARCH];
 	int count;
 	int i, k;
 
@@ -7829,7 +7829,7 @@ ACMD_FUNC(whodrops)
 
 ACMD_FUNC(whereis)
 {
-	MobID mob_ids[MAX_SEARCH] = {0};
+	uint16 mob_ids[MAX_SEARCH] = {0};
 	int count = 0;
 
 	if (!message || !*message) {
@@ -7859,13 +7859,13 @@ ACMD_FUNC(whereis)
 	}
 
 	for (int i = 0; i < count; i++) {
-		MobID mob_id = mob_ids[i];
+		uint16 mob_id = mob_ids[i];
 		struct mob_db * mob = mob_db(mob_id);
 
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
-		const SpawnInfos spawns = mob->get_spawns();
+		const std::vector<spawn_info> spawns = mob->get_spawns();
 		for(auto& spawn : spawns)
 		{
 			int16 mapid = map_mapindex2mapid(spawn.mapindex);
