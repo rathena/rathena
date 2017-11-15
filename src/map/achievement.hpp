@@ -4,8 +4,17 @@
 #ifndef _ACHIEVEMENT_HPP_
 #define _ACHIEVEMENT_HPP_
 
+#include <algorithm>
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "../common/mmo.h"
 #include "../common/db.h"
+
+struct map_session_data;
+struct block_list;
 
 enum e_achievement_group {
 	AG_NONE = 0,
@@ -54,17 +63,9 @@ enum e_achievement_info {
 	ACHIEVEINFO_MAX,
 };
 
-struct achievement_mob {
-	int mod_id;
-};
-
 struct achievement_target {
 	int mob;
 	int count;
-};
-
-struct achievement_dependent {
-	int achievement_id;
 };
 
 struct av_condition {
@@ -74,14 +75,12 @@ struct av_condition {
 	long long value;
 };
 
-struct achievement_db {
+struct s_achievement_db {
 	int achievement_id;
-	char name[ACHIEVEMENT_NAME_LENGTH];
+	std::string name;
 	enum e_achievement_group group;
-	uint8 target_count;
-	struct achievement_target *targets;
-	uint8 dependent_count;
-	struct achievement_dependent *dependents;
+	std::vector <achievement_target> targets;
+	std::vector <int> dependent_ids;
 	struct av_condition *condition;
 	int16 mapindex;
 	struct ach_reward {
@@ -93,12 +92,10 @@ struct achievement_db {
 	int has_dependent; // Used for quick updating of achievements that depend on others - this is their ID
 };
 
-struct map_session_data;
-struct block_list;
+extern std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
+extern std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
 
-extern struct achievement_db achievement_dummy;	///< Dummy entry for invalid achievement lookups
-
-struct achievement_db *achievement_search(int achievement_id);
+bool achievement_exists(int achievement_id);
 bool achievement_mobexists(int mob_id);
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
