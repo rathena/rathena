@@ -59,6 +59,16 @@
 // Disable this to make monsters not do any path search when looking for a target (old behavior).
 #define ACTIVEPATHSEARCH
 
+// Limits for the monster database
+#define MIN_MOB_DB 1000
+#define MAX_MOB_DB 3999
+#define MIN_MOB_DB2 20020
+#define MAX_MOB_DB2 31999
+
+// These define the range of available IDs for clones. [Valaris]
+#define MOB_CLONE_START MAX_MOB_DB
+#define MOB_CLONE_END MIN_MOB_DB2
+
 //Dynamic mob database
 std::map<uint16, struct mob_db> mob_db_data;
 
@@ -124,27 +134,14 @@ int mob_skill_id2skill_idx(int mob_id,uint16 skill_id);
  *------------------------------------------*/
 int mobdb_searchname(const char *str)
 {
-	int i;
-	for(i=0;i<=MAX_MOB_DB;i++){
-		struct mob_db *mob = mob_db(i);
-		if(mob == NULL)
+	for( auto const &pair : mob_db_data ){
+		if( mob_is_clone( pair.first ) )
 			continue;
-		if(strcmpi(mob->name,str)==0 || strcmpi(mob->jname,str)==0 || strcmpi(mob->sprite,str)==0)
-			return i;
+		if(strcmpi(pair.second.name,str)==0 || strcmpi(pair.second.jname,str)==0 || strcmpi(pair.second.sprite,str)==0)
+			return pair.first;
 	}
+
 	return 0;
-}
-static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
-{
-	if (mob == NULL)
-		return 1;
-	if(!mob->base_exp && !mob->job_exp && mob->spawn[0].qty < 1)
-		return 1; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
-	if(stristr(mob->jname,str))
-		return 0;
-	if(stristr(mob->name,str))
-		return 0;
-	return strcmpi(mob->jname,str);
 }
 
 /*========================================== [Playtester]
@@ -310,18 +307,27 @@ void mvptomb_destroy(struct mob_data *md) {
  *------------------------------------------*/
 int mobdb_searchname_array(struct mob_db** data, int size, const char *str)
 {
-	int count = 0, i;
-	struct mob_db* mob;
-	for(i=0;i<=MAX_MOB_DB;i++){
-		mob = mob_db(i);
-		if (mob == NULL || mob_is_clone(i) ) //keep clones out (or you leak player stats)
+	int count = 0;
+
+	for( auto &pair : mob_db_data ){
+		// keep clones out (or you leak player stats)
+		if( mob_is_clone( pair.first ) ){
 			continue;
-		if (!mobdb_searchname_array_sub(mob, str)) {
-			if (count < size)
-				data[count] = mob;
+		}
+
+		// Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
+		if( !pair.second.base_exp && !pair.second.job_exp && pair.second.spawn[0].qty < 1 ){
+			continue;
+		}
+
+		if( stristr(pair.second.jname,str) || stristr(pair.second.name,str) || strcmpi(pair.second.jname,str) == 0 ){
+			if( count < size ){
+				data[count] = &pair.second;
+			}
 			count++;
 		}
 	}
+
 	return count;
 }
 
@@ -4863,25 +4869,18 @@ static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
  * Adjust drop ratio for each monster
  **/
 static void mob_drop_ratio_adjust(void){
-	unsigned short i;
-
-	for( i = 0; i <= MAX_MOB_DB; i++ ){
-		struct mob_db *mob;
+	for( auto &pair : mob_db_data ){
 		struct item_data *id;
 		unsigned short nameid;
-		int j, rate, rate_adjust = 0, mob_id;
+		int j, rate, rate_adjust = 0;
 
-		mob = mob_db(i);
-
-		if( mob == NULL ){
+		if( mob_is_clone( pair.first ) ){
 			continue;
 		}
 
-		mob_id = i;
-
 		for( j = 0; j < MAX_MVP_DROP_TOTAL; j++ ){
-			nameid = mob->mvpitem[j].nameid;
-			rate = mob->mvpitem[j].p;
+			nameid = pair.second.mvpitem[j].nameid;
+			rate = pair.second.mvpitem[j].p;
 
 			if( nameid == 0 || rate == 0 ){
 				continue;
@@ -4890,7 +4889,7 @@ static void mob_drop_ratio_adjust(void){
 			rate_adjust = battle_config.item_rate_mvp;
 
 			// Adjust the rate if there is an entry in mob_item_ratio
-			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
+			item_dropratio_adjust( nameid, pair.first, &rate_adjust );
 
 			// Adjust rate with given algorithms
 			rate = mob_drop_adjust( rate, rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max );
@@ -4901,9 +4900,9 @@ static void mob_drop_ratio_adjust(void){
 
 				// Item is not known anymore(should never happen)
 				if( !id ){
-					ShowWarning( "Monster \"%s\"(id:%d) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
-					mob->mvpitem[j].nameid = 0;
-					mob->mvpitem[j].p = 0;
+					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", pair.second.name, pair.first, nameid );
+					pair.second.mvpitem[j].nameid = 0;
+					pair.second.mvpitem[j].p = 0;
 					continue;
 				}
 
@@ -4913,15 +4912,15 @@ static void mob_drop_ratio_adjust(void){
 				}
 			}
 
-			mob->mvpitem[j].p = rate;
+			pair.second.mvpitem[j].p = rate;
 		}
 
 		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
 			unsigned short ratemin, ratemax;
 			bool is_treasurechest;
 
-			nameid = mob->dropitem[j].nameid;
-			rate = mob->dropitem[j].p;
+			nameid = pair.second.dropitem[j].nameid;
+			rate = pair.second.dropitem[j].p;
 
 			if( nameid == 0 || rate == 0 ){
 				continue;
@@ -4931,9 +4930,9 @@ static void mob_drop_ratio_adjust(void){
 
 			// Item is not known anymore(should never happen)
 			if( !id ){
-				ShowWarning( "Monster \"%s\"(id:%d) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
-				mob->dropitem[j].nameid = 0;
-				mob->dropitem[j].p = 0;
+				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", pair.second.name, pair.first, nameid );
+				pair.second.dropitem[j].nameid = 0;
+				pair.second.dropitem[j].p = 0;
 				continue;
 			}
 
@@ -4942,15 +4941,15 @@ static void mob_drop_ratio_adjust(void){
 			}
 
 			// Treasure box drop rates [Skotlex]
-			if (mob->race2 == RC2_TREASURE) {
+			if (pair.second.race2 == RC2_TREASURE) {
 				is_treasurechest = true;
 
 				rate_adjust = battle_config.item_rate_treasure;
 				ratemin = battle_config.item_drop_treasure_min;
 				ratemax = battle_config.item_drop_treasure_max;
 			} else {
-				bool is_mvp = status_has_mode(&mob->status,MD_MVP);
-				bool is_boss = (mob->status.class_ == CLASS_BOSS);
+				bool is_mvp = status_has_mode(&pair.second.status,MD_MVP);
+				bool is_boss = (pair.second.status.class_ == CLASS_BOSS);
 
 				is_treasurechest = false;
 
@@ -4987,7 +4986,7 @@ static void mob_drop_ratio_adjust(void){
 				}
 			}
 
-			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
+			item_dropratio_adjust( nameid, pair.first, &rate_adjust );
 			rate = mob_drop_adjust( rate, rate_adjust, ratemin, ratemax );
 
 			// calculate and store Max available drop chance of the item
@@ -5006,16 +5005,16 @@ static void mob_drop_ratio_adjust(void){
 				}
 
 				if( k != MAX_SEARCH ){
-					if( id->mob[k].id != mob_id ){
+					if( id->mob[k].id != pair.first ){
 						memmove( &id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]) );
 					}
 
 					id->mob[k].chance = rate;
-					id->mob[k].id = mob_id;
+					id->mob[k].id = pair.first;
 				}
 			}
 
-			mob->dropitem[j].p = rate;
+			pair.second.dropitem[j].p = rate;
 		}
 	}
 
@@ -5047,30 +5046,27 @@ static void mob_skill_db_set_single_sub(struct mob_db *mob, struct s_mob_skill *
  * @param skill
  **/
 static void mob_skill_db_set_single(struct s_mob_skill *skill) {
-	struct mob_db *mob = NULL;
-
 	nullpo_retv(skill);
 
 	// Specific monster
 	if (skill->mob_id >= 0) {
-		mob = mob_db(skill->mob_id);
+		struct mob_db *mob = mob_db(skill->mob_id);
 		if (mob != NULL)
-			//memcpy(&mob->skill, skill, sizeof(skill));
 			mob_skill_db_set_single_sub(mob, skill);
 	}
 	// Global skill
 	else {
-		uint16 i, id = skill->mob_id;
+		uint16 id = skill->mob_id;
 		id *= -1;
-		for (i = 0; i < MAX_MOB_DB; i++) {
-			mob = mob_db(i);
-			if (mob == NULL)
+		for( auto &pair : mob_db_data ){
+			if ( mob_is_clone(pair.first) ){
 				continue;
-			if (   (!(id&1) && status_has_mode(&mob->status,MD_STATUS_IMMUNE)) // Bosses
-				|| (!(id&2) && !status_has_mode(&mob->status,MD_STATUS_IMMUNE)) // Normal monsters
+			}
+			if (   (!(id&1) && status_has_mode(&pair.second.status,MD_STATUS_IMMUNE)) // Bosses
+				|| (!(id&2) && !status_has_mode(&pair.second.status,MD_STATUS_IMMUNE)) // Normal monsters
 				)
 				continue;
-			mob_skill_db_set_single_sub(mob, skill);
+			mob_skill_db_set_single_sub(&pair.second, skill);
 		}
 	}
 	
@@ -5205,6 +5201,41 @@ void mob_db_load(bool is_reload){
 	mob_skill_db = idb_alloc(DB_OPT_BASE);
 	mob_summon_db = idb_alloc(DB_OPT_BASE);
 	mob_load();
+}
+
+/**
+ * Re-link monster drop data with item data
+ * Fixes the need of a @reloadmobdb after a @reloaditemdb
+ * @author Epoque
+ */
+void mob_reload_itemmob_data(void) {
+	for( auto const &pair : mob_db_data ){
+		int d, k;
+
+		if( mob_is_clone( pair.first ) ){
+			continue;
+		}
+
+		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
+			struct item_data *id;
+			if( !pair.second.dropitem[d].nameid )
+				continue;
+			id = itemdb_search(pair.second.dropitem[d].nameid);
+
+			for (k = 0; k < MAX_SEARCH; k++) {
+				if (id->mob[k].chance <= pair.second.dropitem[d].p)
+					break;
+			}
+
+			if (k == MAX_SEARCH)
+				continue;
+
+			if (id->mob[k].id != pair.first)
+				memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
+			id->mob[k].chance = pair.second.dropitem[d].p;
+			id->mob[k].id = pair.first;
+		}
+	}
 }
 
 /**
