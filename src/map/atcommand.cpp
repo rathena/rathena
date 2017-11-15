@@ -6712,7 +6712,7 @@ ACMD_FUNC(pettalk)
 		};
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
-		if( i == E_DICE1 ) i = rnd()%6 + E_DICE1; // randomize /dice
+		if( i == ET_DICE1 ) i = rnd()%6 + ET_DICE1; // randomize /dice
 		if( i < ARRAYLENGTH(emo) )
 		{
 			if (sd->emotionlasttime + 1 >= time(NULL)) { // not more than 1 per second
@@ -7476,7 +7476,7 @@ ACMD_FUNC(hommutate)
 	if (m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99) {
 		hom_mutate(sd->hd, homun_id);
 	} else {
-		clif_emotion(&sd->hd->bl, E_SWT);
+		clif_emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return 0;
 }

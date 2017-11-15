@@ -9898,7 +9898,7 @@ REPLACE INTO `item_db_re` VALUES (19092,'Machoman_Glasses_','Machoman\'s Glasses
 REPLACE INTO `item_db_re` VALUES (19093,'Spinning_Eyes_','Geek Glasses',4,20000,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,512,NULL,'0',0,27,'bonus2 bResEff,Eff_Blind,800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19094,'Mr_Smile_','Mr. Smile',4,60,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,513,NULL,'0',0,65,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19095,'Happy_Balloon','Happy Balloon',4,0,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',0,1289,'bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19109,'Valhalla_Idol','Valhalla Idol',4,0,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1423,'bonus bMaxSP,50; bonus3 bAutoSpell,"MG_SAFETYWALL",10,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19109,'Valhalla_Idol','Valhalla Idol',4,0,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1423,'bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19111,'Laser_Of_Eagle','Laser of Eagle',4,0,NULL,400,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'100',1,1424,'bonus bDex,2; bonus bLongAtkRate,10; bonus5 bAutoSpell,"PR_LEXAETERNA",1,50,BF_LONG,1; /*TODO: Chance to transform become Shechil while attacking.*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19116,'Red_Baby_Dragon','Red Baby Dragon',4,0,NULL,700,NULL,NULL,1,1,0xFFFFFFFF,63,2,256,NULL,'90',1,1463,'.@r=getrefine(); bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; if (.@r>=6) { bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; } if (.@r>=8) { bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19117,'Poring_Sunglasses_','Poring Sunglasses',4,0,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,63,2,512,NULL,'1',0,954,'bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5;',NULL,NULL);
@@ -11465,7 +11465,7 @@ REPLACE INTO `item_db_re` VALUES (27157,'Wood_Goblin_Card','Wood Goblin Card',6,
 REPLACE INTO `item_db_re` VALUES (27158,'Les_Card','Les Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Wind,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27159,'Uzhas_Card','Uzhas Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus2 bMagicAddRace,RC_Demon,(getrefine() >= 9 ? 15 : 10);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27160,'Vavayaga_Card','Vavayaga Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bFlee,getrefine()*2;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (27161,'Mavka_Card','Mavka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus2 bMagicAddEle,Ele_Fire,20; bonus2 bMagicAddEle,Ele_Earth,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27161,'Mavka_Card','Mavka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus2 bMagicAtkEle,Ele_Fire,20; bonus2 bMagicAtkEle,Ele_Earth,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27162,'Gopinich_Card','Gopinich Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bSPDrainValue,5; bonus bUseSPrate,50;',NULL,NULL);
 #===================================================================
 # New Katars

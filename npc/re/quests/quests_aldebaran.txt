@@ -62,7 +62,7 @@ c_tower1,232,222,5	script	Belljamin Button#ct	968,{
 				case 3:
 					mes "[Belljamin Button]";
 					mes "I am here all day for the safety of adventurers. I always alert them about the danger. That's why I need some form of payment.";
-					emotion e_swt;
+					emotion ET_SWEAT;
 					close;
 			}
 			break;

@@ -654,7 +654,7 @@ nif_fild01,167,113,3	script	Masta's chicken#06_hw01	800,{
 		next;
 		input .@inputstr$;
 		if( .@inputstr$ == "Return" ) {
-			emotion e_omg;
+			emotion ET_HUK;
 			specialeffect EF_TELEPORTATION;
 			mes "The magic spell has been casted.";
 			set halloween, 103;
@@ -1058,7 +1058,7 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	799,{
 				mes "You don't have the ticket!";
 				mes "I'll suck up all your blood, you liar!";
 				percentheal -20,0;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				close;
 			}
 		}

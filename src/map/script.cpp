@@ -11469,7 +11469,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, E_SWT);
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11504,9 +11504,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion(&sd->bl, E_SWT);
+			clif_emotion(&sd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, E_SWT);
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -11536,16 +11536,16 @@ BUILDIN_FUNC(morphembryo)
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
-				clif_emotion(&sd->bl, E_SWT); // Fail to avoid item drop exploit.
+				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion(&sd->hd->bl, E_SWT);
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, E_SWT);
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -12704,38 +12704,28 @@ BUILDIN_FUNC(gvgoff3)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- *	Shows an emoticon on top of the player/npc
- *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
- *------------------------------------------*/
-//Optional second parameter added by [Skotlex]
+/**
+ * Shows an emotion on top of a NPC by default or the given GID
+ * emotion <emotion ID>{,<target ID>};
+ */
 BUILDIN_FUNC(emotion)
 {
-	int type;
-	int player=0;
+	struct block_list *bl = NULL;
+	int type = script_getnum(st,2);
 
-	type=script_getnum(st,2);
-	if(type < 0 || type > 100)
-		return SCRIPT_CMD_SUCCESS;
+	if (type < ET_SURPRISE || type >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	if( script_hasdata(st,3) )
-		player=script_getnum(st,3);
+	if (script_hasdata(st, 3) && !script_rid2bl(3, bl)) {
+		ShowWarning("buildin_emotion: Unknown game ID supplied %d.\n", script_getnum(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (!bl)
+		bl = map_id2bl(st->oid);
 
-	if (player) {
-		TBL_PC *sd = NULL;
-
-		if( script_nick2sd(4,sd) ){
-			clif_emotion(&sd->bl, type);
-		}			
-	} else
-		if( script_hasdata(st,4) )
-		{
-			TBL_NPC *nd = npc_name2id(script_getstr(st,4));
-			if(nd)
-				clif_emotion(&nd->bl,type);
-		}
-		else
-			clif_emotion(map_id2bl(st->oid),type);
+	clif_emotion(bl, type);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18498,7 +18488,7 @@ BUILDIN_FUNC(unittalk)
 ///
 /// unitemote <unit_id>,<emotion>;
 ///
-/// @see e_* in db/const.txt
+/// @see ET_* in script_constants.h
 BUILDIN_FUNC(unitemote)
 {
 	int emotion;
@@ -18506,7 +18496,12 @@ BUILDIN_FUNC(unitemote)
 
 	emotion = script_getnum(st,3);
 
-	if(script_rid2bl(2,bl))
+	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_rid2bl(2,bl))
 		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -23932,7 +23927,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pvpoff,"s"),
 	BUILDIN_DEF(gvgon,"s"),
 	BUILDIN_DEF(gvgoff,"s"),
-	BUILDIN_DEF(emotion,"i??"),
+	BUILDIN_DEF(emotion,"i?"),
 	BUILDIN_DEF(maprespawnguildid,"sii"),
 	BUILDIN_DEF(agitstart,""),	// <Agit>
 	BUILDIN_DEF(agitend,""),
@@ -24108,7 +24103,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
-	BUILDIN_DEF(unitemote,"ii"),
+	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
 // <--- [zBuffer] List of unit control commands
