@@ -70,9 +70,16 @@ struct achievement_target {
 
 struct av_condition {
 	int op;
-	struct av_condition *left;
-	struct av_condition *right;
+	std::shared_ptr<struct av_condition> left;
+	std::shared_ptr<struct av_condition> right;
 	long long value;
+  
+  av_condition()
+  : op(0)
+  , left(nullptr)
+  , right(nullptr)
+  , value(0)
+  {}
 };
 
 struct s_achievement_db {
@@ -81,15 +88,18 @@ struct s_achievement_db {
 	enum e_achievement_group group;
 	std::vector <achievement_target> targets;
 	std::vector <int> dependent_ids;
-	struct av_condition *condition;
+	std::shared_ptr<struct av_condition> condition;
 	int16 mapindex;
 	struct ach_reward {
 		unsigned short nameid, amount;
 		struct script_code *script;
 		int title_id;
+		ach_reward();
 	} rewards;
 	int score;
 	int has_dependent; // Used for quick updating of achievements that depend on others - this is their ID
+  
+  s_achievement_db();
 };
 
 extern std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
@@ -114,9 +124,9 @@ void do_init_achievement(void);
 void do_final_achievement(void);
 
 // Parser
-const char *av_parse_subexpr(const char *p,int limit, struct av_condition *parent);
-const char *av_parse_simpleexpr(const char *p, struct av_condition *parent);
-long long achievement_check_condition(struct av_condition *condition, struct map_session_data *sd, int *count);
-void achievement_script_free(struct av_condition *condition);
+const char *av_parse_subexpr(const char *p,int limit, std::shared_ptr<struct av_condition> parent);
+const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent);
+long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, int *count);
+void achievement_script_free(std::shared_ptr<struct av_condition> condition);
 
 #endif /* _ACHIEVEMENT_HPP_ */

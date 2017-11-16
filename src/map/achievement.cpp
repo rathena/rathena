@@ -3,6 +3,7 @@
 
 #include "achievement.hpp"
 
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -682,7 +683,7 @@ static void disp_error_message2(const char *mes,const char *pos,int report)
  * @param count: Script arguments
  * @return The result of the condition.
  */
-long long achievement_check_condition(struct av_condition *condition, struct map_session_data *sd, int *count)
+long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, int *count)
 {
 	long long left = 0;
 	long long right = 0;
@@ -784,7 +785,7 @@ static const char *skip_word(const char *p)
 	return p;
 }
 
-const char *av_parse_simpleexpr(const char *p, struct av_condition *parent)
+const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent)
 {
 	long long i;
 
@@ -819,7 +820,6 @@ const char *av_parse_simpleexpr(const char *p, struct av_condition *parent)
 		p = np;
 	} else {
 		int v, len;
-		char * word;
 
 		if (skip_word(p) == p)
 			disp_error_message("av_parse_simpleexpr: unexpected character.", p);
@@ -829,13 +829,13 @@ const char *av_parse_simpleexpr(const char *p, struct av_condition *parent)
 		if (len == 0)
 			disp_error_message("av_parse_simpleexpr: invalid word. A word consists of undercores and/or alphanumeric characters.", p);
 
-		word = (char*)aMalloc(len + 1);
-		memcpy(word, p, len);
+		std::unique_ptr<char[]> word(new char[len + 1]); //or string ?
+		//word = (char*)aMalloc(len + 1);
 		word[len] = 0;
 
-		if (script_get_parameter(word, &v))
+		if (script_get_parameter((const char*)&word[0], &v))
 			parent->op = C_PARAM;
-		else if (script_get_constant(word, &v)) {
+		else if (script_get_constant(word.get(), &v)) {
 			if (word[0] == 'b' && ISUPPER(word[1])) // Consider b* variables as parameters (because they... are?)
 				parent->op = C_PARAM;
 			else
@@ -843,14 +843,14 @@ const char *av_parse_simpleexpr(const char *p, struct av_condition *parent)
 		} else {
 			if (word[0] == 'A' && word[1] == 'R' && word[2] == 'G' && ISDIGIT(word[3])) { // Special constants used to set temporary variables
 				parent->op = C_ARG;
-				v = atoi(word + 3);
+				v = atoi(&word[0] + 3);
 			} else {
-				aFree(word);
+				//aFree(word);
 				disp_error_message("av_parse_simpleexpr: invalid constant.", p);
 			}
 		}
 
-		aFree(word);
+		//aFree(word);
 		parent->value = v;
 		p = skip_word(p);
 	}
@@ -858,13 +858,14 @@ const char *av_parse_simpleexpr(const char *p, struct av_condition *parent)
 	return p;
 }
 
-const char* av_parse_subexpr(const char* p, int limit, struct av_condition *parent)
+const char* av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av_condition> parent)
 {
 	int op, opl, len;
 
 	p = skip_space(p);
 
-	CREATE(parent->left, struct av_condition, 1);
+	//CREATE(parent->left, struct av_condition, 1);
+    parent->left.reset(new av_condition());
 
 	if ((op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~')) { // Unary - ! ~ operators
 		p = av_parse_subexpr(p + 1, 11, parent->left);
@@ -896,22 +897,22 @@ const char* av_parse_subexpr(const char* p, int limit, struct av_condition *pare
 		p += len;
 
 		if (parent->right) { // Chain conditions
-			struct av_condition *condition = NULL;
-			CREATE(condition, struct av_condition, 1);
+			std::shared_ptr<struct av_condition> condition(new struct av_condition());
 			condition->op = parent->op;
 			condition->left = parent->left;
 			condition->right = parent->right;
 			parent->left = condition;
-			parent->right = NULL;
+			parent->right.reset();
 		}
 
-		CREATE(parent->right, struct av_condition, 1);
+		//CREATE(parent->right, struct av_condition, 1);
+		parent->right.reset(new av_condition());
 		p = av_parse_subexpr(p, opl, parent->right);
 		parent->op = op;
 		p = skip_space(p);
 	}
 
-	if (parent->op == C_NOP && parent->right == NULL) { // Move the node up
+	if (parent->op == C_NOP && !parent->right) { // Move the node up
 		parent->right = parent->left->right;
 		parent->op = parent->left->op;
 		parent->value = parent->left->value;
@@ -928,16 +929,15 @@ const char* av_parse_subexpr(const char* p, int limit, struct av_condition *pare
  * @param line: The current achievement line number.
  * @return The parsed achievement condition.
  */
-struct av_condition *parse_condition(const char *p, const char *file, int line)
+std::shared_ptr<struct av_condition> parse_condition(const char *p, const char *file, int line)
 {
-	struct av_condition *condition = NULL;
+	std::shared_ptr<struct av_condition> condition;
 
 	if (setjmp(av_error_jump) != 0) {
 		if (av_error_report)
 			script_error(p,file,line,av_error_msg,av_error_pos);
 		aFree(av_error_msg);
-		if (condition)
-			achievement_script_free(condition);
+		condition.reset();
 		return NULL;
 	}
 
@@ -946,7 +946,7 @@ struct av_condition *parse_condition(const char *p, const char *file, int line)
 			disp_error_message("parse_condition: unexpected character.", p);
 	}
 
-	condition = (struct av_condition *) aCalloc(1, sizeof(struct av_condition));
+	condition.reset(new av_condition()); //or makeshared doesn't matter
 	av_parse_subexpr(p, -1, condition);
 
 	return condition;
@@ -969,7 +969,7 @@ static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const 
 bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &source)
 {
 	enum e_achievement_group group = AG_NONE;
-	int score = 0, achievement_id = 0;
+	int achievement_id = 0;
 	std::string group_char, name, condition, mapname;
 	bool existing = false;
 
@@ -997,7 +997,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		}
 	}
 
-	auto &entry = existing ? achievements[achievement_id] : std::make_shared<s_achievement_db>();
+	auto &entry = achievements[achievement_id];
 
 	if (!node["Group"]) {
 		yaml_invalid_warning("achievement_read_db_sub: Missing group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -1161,7 +1161,7 @@ void achievement_read_db(void)
 			return;
 		}
 
-		for (auto &node : config["Achievements"]) {
+		for (const auto &node : config["Achievements"]) {
 			if (node.IsDefined() && achievement_read_db_sub(node, count, current_file))
 				count++;
 		}
@@ -1184,20 +1184,12 @@ void achievement_read_db(void)
 /**
  * Recursive method to free an achievement condition
  * @param condition: Condition to clear
+ * nb probably not needed anymore, but just in case
  */
-void achievement_script_free(struct av_condition *condition) 
+void achievement_script_free(std::shared_ptr<struct av_condition> condition) 
 {
-	if (condition->left) {
-		achievement_script_free(condition->left);
-		condition->left = NULL;
-	}
-
-	if (condition->right) {
-		achievement_script_free(condition->right);
-		condition->right = NULL;
-	}
-
-	aFree(condition);
+	condition->left.reset();
+	condition->right.reset();
 }
 
 void achievement_db_reload(void)
@@ -1217,14 +1209,26 @@ void do_init_achievement(void)
 
 void do_final_achievement(void)
 {
-	if (!battle_config.feature_achievement)
-		return;
-	for (auto &achit : achievements) {
-		if (achit.second.get()->condition) {
-			achievement_script_free(achit.second.get()->condition);
-			achit.second.get()->condition = NULL;
-		}
-	}
 	achievement_mobs.clear();
 	achievements.clear();
 }
+
+s_achievement_db::s_achievement_db()
+	: achievement_id(0)
+	, name("")
+	, group()
+	, targets()
+	, dependent_ids()
+	, condition(nullptr)
+	, mapindex(0)
+	, rewards()
+	, score(0)
+	, has_dependent(0)
+{}
+
+s_achievement_db::ach_reward::ach_reward()
+	: nameid(0)
+	, amount(0)
+	, script(nullptr)
+	, title_id(0)
+{}
