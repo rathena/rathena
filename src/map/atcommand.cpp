@@ -7199,7 +7199,8 @@ ACMD_FUNC(mobinfo)
 	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
-	struct mob_db *mob, *mob_array[MAX_SEARCH];
+	struct mob_db *mob;
+	uint16 mob_ids[MAX_SEARCH];
 	int count;
 	int i, k;
 
@@ -7214,10 +7215,10 @@ ACMD_FUNC(mobinfo)
 	// If monster identifier/name argument is a name
 	if ((i = mobdb_checkid(atoi(message))))
 	{
-		mob_array[0] = mob_db(i);
+		mob_ids[0] = i;
 		count = 1;
 	} else
-		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
+		count = mobdb_searchname_array(message, mob_ids, MAX_SEARCH);
 
 	if (!count) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
@@ -7231,7 +7232,7 @@ ACMD_FUNC(mobinfo)
 	}
 	for (k = 0; k < count; k++) {
 		unsigned int j,base_exp,job_exp;
-		mob = mob_array[k];
+		mob = mob_db(mob_ids[k]);
 		base_exp = mob->base_exp;
 		job_exp = mob->job_exp;
 
@@ -7828,24 +7829,25 @@ ACMD_FUNC(whodrops)
 
 ACMD_FUNC(whereis)
 {
-	struct mob_db *mob_array[MAX_SEARCH];
-	int count;
-	int i, j, k;
+	uint16 mob_ids[MAX_SEARCH] = {0};
+	int count = 0;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
 		return -1;
 	}
-
-	// If monster identifier/name argument is a name
-	if ((i = mobdb_checkid(atoi(message))))
-	{
-		mob_array[0] = mob_db(i);
+	
+	int i_message = atoi(message);
+	if (mobdb_checkid(i_message)) {
+		// ID given
+		mob_ids[0] = i_message;
 		count = 1;
-	} else
-		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
-
-	if (!count) {
+	} else {
+		// Name given, get all monster associated whith this name
+		count = mobdb_searchname_array(message, mob_ids, MAX_SEARCH);
+	}
+	
+	if (count <= 0) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
 		return -1;
 	}
@@ -7855,19 +7857,24 @@ ACMD_FUNC(whereis)
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
-	for (k = 0; k < count; k++) {
-		struct mob_db *mob = mob_array[k];
+
+	for (int i = 0; i < count; i++) {
+		uint16 mob_id = mob_ids[i];
+		struct mob_db * mob = mob_db(mob_id);
+
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
-
-		for (i = 0; i < ARRAYLENGTH(mob->spawn) && mob->spawn[i].qty; i++)
+		
+		const std::vector<spawn_info> spawns = mob->get_spawns();
+		for(auto& spawn : spawns)
 		{
-			j = map_mapindex2mapid(mob->spawn[i].mapindex);
-			if (j < 0) continue;
-			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[j].name, mob->spawn[i].qty);
+			int16 mapid = map_mapindex2mapid(spawn.mapindex);
+			if (mapid < 0)
+				continue;
+			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawn.qty);
 			clif_displaymessage(fd, atcmd_output);
 		}
-		if (i == 0)
+		if (spawns.size() <= 0)
 			clif_displaymessage(fd, msg_txt(sd,1290)); // This monster does not spawn normally.
 	}
 

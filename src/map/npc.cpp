@@ -3762,11 +3762,10 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int num, class_, i, j, mob_lv = -1, size = -1, w1count;
+	int num, mob_id, mob_lv = -1, size = -1, w1count;
 	short m,x,y,xs = -1, ys = -1;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
-	struct mob_db* db;
 	int ai; // mob_ai
 
 	memset(&mob, 0, sizeof(struct spawn_data));
@@ -3778,7 +3777,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	// w4=<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 	if( ( w1count = sscanf(w1, "%15[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) ) < 3
 	||	sscanf(w3, "%23[^,],%11d", mobname, &mob_lv) < 1
-	||	sscanf(w4, "%11d,%11d,%11u,%11u,%77[^,],%11d,%11d[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
+	||	sscanf(w4, "%11d,%11d,%11u,%11u,%77[^,],%11d,%11d[^\t\r\n]", &mob_id, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
 	{
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -3800,9 +3799,9 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	}
 
 	// check monster ID if exists!
-	if( mobdb_checkid(class_) == 0 )
+	if( mobdb_checkid(mob_id) == 0 )
 	{
-		ShowError("npc_parse_mob: Unknown mob ID %d (file '%s', line '%d').\n", class_, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Unknown mob ID %d (file '%s', line '%d').\n", mob_id, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
 
@@ -3814,25 +3813,25 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	if( mob.state.size > SZ_BIG && size != -1 )
 	{
-		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d (file '%s', line '%d').\n", mob.state.size, class_, filepath, strline(buffer, start - buffer));
+		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d (file '%s', line '%d').\n", mob.state.size, mob_id, filepath, strline(buffer, start - buffer));
 		return strchr(start, '\n');
 	}
 
 	if( (mob.state.ai < AI_NONE || mob.state.ai >= AI_MAX) && ai != -1 )
 	{
-		ShowError("npc_parse_mob: Invalid ai %d for mob ID %d (file '%s', line '%d').\n", mob.state.ai, class_, filepath, strline(buffer, start - buffer));
+		ShowError("npc_parse_mob: Invalid ai %d for mob ID %d (file '%s', line '%d').\n", mob.state.ai, mob_id, filepath, strline(buffer, start - buffer));
 		return strchr(start, '\n');
 	}
 
 	if( (mob_lv == 0 || mob_lv > MAX_LEVEL) && mob_lv != -1 )
 	{
-		ShowError("npc_parse_mob: Invalid level %d for mob ID %d (file '%s', line '%d').\n", mob_lv, class_, filepath, strline(buffer, start - buffer));
+		ShowError("npc_parse_mob: Invalid level %d for mob ID %d (file '%s', line '%d').\n", mob_lv, mob_id, filepath, strline(buffer, start - buffer));
 		return strchr(start, '\n');
 	}
 
 	mob.num = (unsigned short)num;
 	mob.active = 0;
-	mob.id = (short) class_;
+	mob.id = (short) mob_id;
 	mob.x = (unsigned short)x;
 	mob.y = (unsigned short)y;
 	mob.xs = (signed short)xs;
@@ -3846,14 +3845,14 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	if (mob.xs < 0) {
 		if (w1count > 3) {
-			ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d').\n", mob.xs, class_, filepath, strline(buffer, start - buffer));
+			ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d').\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
 		}
 		mob.xs = 0;
 	}
 
 	if (mob.ys < 0) {
 		if (w1count > 4) {
-			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d').\n", mob.ys, class_, filepath, strline(buffer, start - buffer));
+			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d').\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
 		}
 		mob.ys = 0;
 	}
@@ -3885,37 +3884,13 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	//Verify dataset.
 	if( !mob_parse_dataset(&mob) )
 	{
-		ShowError("npc_parse_mob: Invalid dataset for monster ID %d (file '%s', line '%d').\n", class_, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid dataset for monster ID %d (file '%s', line '%d').\n", mob_id, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
 
 	//Update mob spawn lookup database
-	db = mob_db(class_);
-	for( i = 0; i < ARRAYLENGTH(db->spawn); ++i )
-	{
-		if (map[mob.m].index == db->spawn[i].mapindex)
-		{	//Update total
-			db->spawn[i].qty += mob.num;
-			//Re-sort list
-			for( j = i; j > 0 && db->spawn[j-1].qty < db->spawn[i].qty; --j );
-			if( j != i )
-			{
-				xs = db->spawn[i].mapindex;
-				ys = db->spawn[i].qty;
-				memmove(&db->spawn[j+1], &db->spawn[j], (i-j)*sizeof(db->spawn[0]));
-				db->spawn[j].mapindex = xs;
-				db->spawn[j].qty = ys;
-			}
-			break;
-		}
-		if (mob.num > db->spawn[i].qty)
-		{	//Insert into list
-			memmove(&db->spawn[i+1], &db->spawn[i], sizeof(db->spawn) -(i+1)*sizeof(db->spawn[0]));
-			db->spawn[i].mapindex = map[mob.m].index;
-			db->spawn[i].qty = mob.num;
-			break;
-		}
-	}
+	struct spawn_info spawn = { map[mob.m].index, mob.num };
+	mob_add_spawn(mob_id, spawn);
 
 	//Now that all has been validated. We allocate the actual memory that the re-spawn data will use.
 	data = (struct spawn_data*)aMalloc(sizeof(struct spawn_data));
