@@ -3129,12 +3129,15 @@ int mob_random_class(int *value, size_t count)
 }
 
 /**
-* Returns the SpawnInfos of the mob_db entry
+* Returns the SpawnInfos of the mob_db entry (mob_spawn_data[mobid])
+* if mobid is not in mob_spawn_data returns empty spawn_info vector
 */
 const std::vector<spawn_info> mob_db::get_spawns() const
 {
-	// Returns an empty std::vector<spawn_info> if mob_id is not in mob_spawn_data
-	return mob_spawn_data[this->get_mobid()];
+	auto mob_spawn_it = mob_spawn_data.find(this->get_mobid());
+	if ( mob_spawn_it != mob_spawn_data.end() )
+		return mob_spawn_it->second;
+	return std::vector<spawn_info>();
 }
 
 /**
