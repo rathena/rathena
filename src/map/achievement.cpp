@@ -912,14 +912,10 @@ const char* av_parse_subexpr(const char* p, int limit, struct av_condition *pare
 	}
 
 	if (parent->op == C_NOP && parent->right == NULL) { // Move the node up
-		struct av_condition *temp = parent->left;
-
 		parent->right = parent->left->right;
 		parent->op = parent->left->op;
 		parent->value = parent->left->value;
 		parent->left = parent->left->left;
-
-		aFree(temp);
 	}
 
 	return p;
@@ -1223,6 +1219,12 @@ void do_final_achievement(void)
 {
 	if (!battle_config.feature_achievement)
 		return;
+	for (auto &achit : achievements) {
+		if (achit.second.get()->condition) {
+			achievement_script_free(achit.second.get()->condition);
+			achit.second.get()->condition = NULL;
+		}
+	}
 	achievement_mobs.clear();
 	achievements.clear();
 }
