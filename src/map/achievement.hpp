@@ -95,6 +95,7 @@ struct s_achievement_db {
 		struct script_code *script;
 		int title_id;
 		ach_reward();
+		~ach_reward();
 	} rewards;
 	int score;
 	int has_dependent; // Used for quick updating of achievements that depend on others - this is their ID

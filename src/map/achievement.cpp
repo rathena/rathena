@@ -835,7 +835,7 @@ const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_conditi
 
 		if (script_get_parameter((const char*)&word[0], &v))
 			parent->op = C_PARAM;
-		else if (script_get_constant(word.get(), &v)) {
+		else if (script_get_constant(&word[0], &v)) {
 			if (word[0] == 'b' && ISUPPER(word[1])) // Consider b* variables as parameters (because they... are?)
 				parent->op = C_PARAM;
 			else
@@ -984,7 +984,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		return false;
 	}
 	if (achievement_id < 1 || achievement_id > INT_MAX) {
-		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source, n, INT_MAX);
+		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source.c_str(), n, INT_MAX);
 		return false;
 	}
 
@@ -997,7 +997,10 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		}
 	}
 
+	if(!existing)
+		achievements[achievement_id] = std::make_shared<s_achievement_db>();
 	auto &entry = achievements[achievement_id];
+	entry->achievement_id = achievement_id;
 
 	if (!node["Group"]) {
 		yaml_invalid_warning("achievement_read_db_sub: Missing group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -1010,12 +1013,12 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		return false;
 	}
 	if (!script_get_constant(group_char.c_str(), (int *)&group)) {
-		ShowWarning("achievement_read_db_sub: Invalid group %s for achievement %d in \"%s\", skipping.\n", group_char, achievement_id, source);
+		ShowWarning("achievement_read_db_sub: Invalid group %s for achievement %d in \"%s\", skipping.\n", group_char.c_str(), achievement_id, source.c_str());
 		return false;
 	}
 
 	if (!node["Name"]) {
-		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", name, achievement_id, source);
+		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", achievement_id, source.c_str());
 		return false;
 	}
 	try {
@@ -1037,11 +1040,11 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 				int mobid = 0, count = 0;
 
 				if (target_list["MobID"] && (mobid = target_list["MobID"].as<int>()) && !mobdb_exists(mobid)) { // The mob ID field is not required
-					ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source);
+					ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source.c_str());
 					continue;
 				}
 				if (target_list["Count"] && (!(count = target_list["Count"].as<int>()) || count <= 0)) {
-					ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source);
+					ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source.c_str());
 					continue;
 				}
 				if (mobid && group == AG_BATTLE && !achievement_mobexists(mobid))
@@ -1073,12 +1076,12 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 			return false;
 		}
 		if (group != AG_CHAT)
-			ShowWarning("achievement_read_db_sub: The map argument can only be used with the group AG_CHATTING (achievement %d in \"%s\"), skipping.\n", achievement_id, source);
+			ShowWarning("achievement_read_db_sub: The map argument can only be used with the group AG_CHATTING (achievement %d in \"%s\"), skipping.\n", achievement_id, source.c_str());
 		else {
 			entry->mapindex = map_mapname2mapid(mapname.c_str());
 
 			if (entry->mapindex == -1)
-				ShowWarning("achievement_read_db_sub: Invalid map name %s for achievement %d in \"%s\".\n", mapname, achievement_id, source);
+				ShowWarning("achievement_read_db_sub: Invalid map name %s for achievement %d in \"%s\".\n", mapname.c_str(), achievement_id, source.c_str());
 		}
 	}
 
@@ -1090,7 +1093,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 				for (uint8 i = 0; i < dependent_list.size() && dependent_list.size() < MAX_ACHIEVEMENT_DEPENDENTS; i++)
 					entry->dependent_ids.push_back(dependent_list[i].as<int>());
 			} else
-				ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source);
+				ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source.c_str());
 		} catch (...) {
 			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid dependent field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
@@ -1107,7 +1110,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 					entry->rewards.nameid = nameid;
 					entry->rewards.amount = 1; // Default the amount to 1
 				} else if (nameid && !itemdb_exists(nameid)) {
-					ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source);
+					ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source.c_str());
 					entry->rewards.nameid = nameid = 0;
 				}
 
@@ -1131,11 +1134,6 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid score field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
-	}
-
-	if (!existing) {
-		entry->achievement_id = achievement_id;
-		achievements[achievement_id] = entry;
 	}
 
 	return true;
@@ -1232,3 +1230,9 @@ s_achievement_db::ach_reward::ach_reward()
 	, script(nullptr)
 	, title_id(0)
 {}
+
+s_achievement_db::ach_reward::~ach_reward()
+{
+  if(script)
+    script_free_code(script);
+}
