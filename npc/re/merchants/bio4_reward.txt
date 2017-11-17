@@ -370,7 +370,7 @@ L_Reward:
 			mes "Okay..";
 			close;
 		}
-		emotion e_swt2, "Weird old man#Bio4Reward";
+		emotion ET_PROFUSELY_SWEAT;
 		progressbar "FF00FF", 2;
 		delitem 6469, .@amount[0]; //Will_Of_Warrior
 		delitem 6470, .@amount[1]; //Blood_Thirst
@@ -396,7 +396,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	next;
 	switch(select("Umba umba humbaa", "What are you doing here?", "Which are the equipments found so far?", "Here you are, Sir.")) {
 	case 1:
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "Hey, excuse me, but I'm not from Umbala! You are so rude.";
 		close;
@@ -405,11 +405,11 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "As you can see, I'm a training Sorcerer, and my name is Pudding.";
 		next;
 		select("....?");
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "... What's that face? I'm starting to feel unpleasant..";
 		next;
-		emotion e_ok;
+		emotion ET_OK;
 		mes "[Pudding]";
 		mes "Couple of days ago, while I was undergoing discipline, I felt a strange, bizzare tinge. So I followed that and it brought me here.";
 		next;
@@ -423,20 +423,20 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "[Pudding]";
 		mes "From those monsters, I could find rare items like '^F2766EWill of Warrior^000000' '^952420Thirst for Blood^000000' '^88C6F7Chill of the Dead^000000' which you cannot find from any other place.";
 		next;
-		emotion e_what, "Sorcerer#Bio4Reward";
+		emotion ET_QUESTION;
 		mes "[Pudding]";
 		mes "And after many hours of research on my own, I finally figured out a way to use those items. Do you wanna know?";
 		next;
 		switch(select("Oh....pardon?!", "Of course, I really wanna know.")) {
 		case 1:
-			emotion e_omg, 1;
-			emotion e_an, "Sorcerer#Bio4Reward";
+			emotion ET_HUK, playerattached();
+			emotion ET_FRET;
 			mes "[Pudding]";
 			mes "Oh my! You fell asleep after you asked me something? Well, anyway I feel lazy to explain again so I will just continue.";
 			next;
 			break;
 		case 2:
-			emotion e_heh, "Sorcerer#Bio4Reward";
+			emotion ET_SMILE;
 			mes "[Pudding]";
 			mes "Good, I am content that you are listening to my story carefully. Then I will keep explaining.";
 			next;
@@ -463,8 +463,8 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "Since those materials can only be found from the monsters in the Lab., the special power also can be dwelt into certain equipments which can be obtained from the Lab.";
 		next;
 		select("So what's the conclusion?");
-		emotion e_what, 1;
-		emotion e_an;
+		emotion ET_QUESTION, playerattached();
+		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that becuase that's important.";
 		next;
@@ -536,7 +536,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		}
 		close;
 	case 4:
-		emotion e_flash;
+		emotion ET_SPARK;
 		mes "[Pudding]";
 		mes "Ohhhhh Have you brought them?";
 		next;
@@ -664,12 +664,12 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		specialeffect2 EF_SPHERE;
 		progressbar "ffff00", 2;
 		specialeffect2 EF_SUI_EXPLOSION;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Pudding]";
 		mes "Hm.... This equipment cannot accept the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000'.";
 		close;
 	}
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Pudding]";
 	mes "OHHH.. This equipment could accept the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000'.";
 	next;
@@ -969,14 +969,14 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		
 		if (.@enchant == 0){
 			specialeffect2 EF_SUI_EXPLOSION;
-			emotion e_otl;
+			emotion ET_OTL;
 			mes "[Pudding]";
 			mes "...Well....the equipment could not accept the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" and it got destroyed.";
 			close;
 		} else {
 			specialeffect2 EF_FIREHIT;
 			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Pudding]";
 			mes "Fortunately the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" has been dwelt well in your equipment...";
 			close;

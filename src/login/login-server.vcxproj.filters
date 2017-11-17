@@ -11,45 +11,45 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="account.h">
+    <ClInclude Include="account.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ipban.h">
+    <ClInclude Include="ipban.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="login.h">
+    <ClInclude Include="login.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loginchrif.h">
+    <ClInclude Include="loginchrif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loginclif.h">
+    <ClInclude Include="loginclif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="logincnslif.h">
+    <ClInclude Include="logincnslif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loginlog.h">
+    <ClInclude Include="loginlog.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="account.c">
+    <ClCompile Include="account.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ipban.c">
+    <ClCompile Include="ipban.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loginchrif.c">
+    <ClCompile Include="loginchrif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loginclif.c">
+    <ClCompile Include="loginclif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="logincnslif.c">
+    <ClCompile Include="logincnslif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loginlog.c">
+    <ClCompile Include="loginlog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="login.cpp">

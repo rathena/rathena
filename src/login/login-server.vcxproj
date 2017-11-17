@@ -155,24 +155,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="account.h" />
-    <ClInclude Include="ipban.h" />
-    <ClInclude Include="login.h" />
-    <ClInclude Include="loginchrif.h" />
-    <ClInclude Include="loginclif.h" />
-    <ClInclude Include="logincnslif.h" />
-    <ClInclude Include="loginlog.h" />
+    <ClInclude Include="account.hpp" />
+    <ClInclude Include="ipban.hpp" />
+    <ClInclude Include="login.hpp" />
+    <ClInclude Include="loginchrif.hpp" />
+    <ClInclude Include="loginclif.hpp" />
+    <ClInclude Include="logincnslif.hpp" />
+    <ClInclude Include="loginlog.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="account.c" />
-    <ClCompile Include="ipban.c" />
-    <ClCompile Include="login.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="loginchrif.c" />
-    <ClCompile Include="loginclif.c" />
-    <ClCompile Include="logincnslif.c" />
-    <ClCompile Include="loginlog.c" />
+    <ClCompile Include="account.cpp" />
+    <ClCompile Include="ipban.cpp" />
+    <ClCompile Include="login.cpp"/>
+    <ClCompile Include="loginchrif.cpp" />
+    <ClCompile Include="loginclif.cpp" />
+    <ClCompile Include="logincnslif.cpp" />
+    <ClCompile Include="loginlog.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

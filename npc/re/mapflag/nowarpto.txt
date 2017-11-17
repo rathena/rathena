@@ -8,7 +8,20 @@
 //===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added WOE:TE maps [Cydh]
+//= 1.2 Added Novice Island RE Maps. [mazvi]
 //============================================================
+
+// Novice Island ===================
+int_land	mapflag	nowarpto
+int_land01	mapflag	nowarpto
+int_land02	mapflag	nowarpto
+int_land03	mapflag	nowarpto
+int_land04	mapflag	nowarpto
+iz_int	mapflag	nowarpto
+iz_int01	mapflag	nowarpto
+iz_int02	mapflag	nowarpto
+iz_int03	mapflag	nowarpto
+iz_int04	mapflag	nowarpto
 
 // 14.1 Bifrost ==================
 1@mist	mapflag	nowarpto

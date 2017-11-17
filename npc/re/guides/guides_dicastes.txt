@@ -87,6 +87,6 @@ dicastes01,189,191,5	script	Traveler Ichack#info	481,2,2,{
 	}
 OnTouch:
 	if (ep13_3_invite == 6) 
-		emotion e_gasp,0;
+		emotion ET_SURPRISE;
 	end;
 }

@@ -565,7 +565,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -608,7 +608,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 				end;
 			}
 		case 3:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -648,7 +648,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 				end;
 			}
 		case 3:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -848,7 +848,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 				warp "new_1-2",28,178;
 				end;
 			case 3:
-				emotion e_omg;
+				emotion ET_HUK;
 				close;
 			}
 		case 2:
@@ -859,7 +859,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 	}
@@ -882,7 +882,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 	}
@@ -905,7 +905,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 	}
@@ -1926,7 +1926,7 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 	mes "[Leo Handerson]";
 	mes "I, Leo Handerson,";
 	mes "feel so responsible for your performance and will be teaching you to the best of my ability. Now, please select the subject you wish to learn.";
-	emotion e_kis;
+	emotion ET_CHUP;
 	next;
 	while(1) {
 		switch(select("Passive and Active skills:Basic Skills:Use of Emoticons:Cancel.")) {
@@ -2066,7 +2066,7 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 					mes "An adorable Novice";
 					mes "like you should pick";
 					mes "on this really quickly~";
-					emotion e_kis;
+					emotion ET_CHUP;
 					next;
 					break;
 				case 3:
@@ -2162,7 +2162,7 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 			next;
 			mes "[Leo Handerson]";
 			mes "To check out the commands for even more emoticons, type the command ^4d4dff//emotion^000000 into your Chat Window to see the list~";
-			emotion e_lv;
+			emotion ET_THROB;
 			next;
 			break;
 		case 4:

@@ -75,7 +75,7 @@ hu_fild05,168,304,0	script	Column#abyss1	111,{
 				mes "and the taste of these items";
 				mes "is surprisingly putrid.^000000";
 				next;
-				emotion e_rice,1;
+				emotion ET_HUNGRY, playerattached();
 				delitem 1035,1;
 				delitem 1036,1;
 				delitem 1037,1;

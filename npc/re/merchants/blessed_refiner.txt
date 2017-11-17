@@ -150,7 +150,7 @@
 	specialeffect EF_CURSEATTACK;
 	specialeffect2 EF_SUI_EXPLOSION;
 	next;
-	emotion (!rand(5))?e_ag:e_omg;
+	emotion (!rand(5))?ET_ANGER:ET_HUK;
 	mes "[Blacksmith Dister]";
 	mes "Oh my goodness!!!!";
 	next;
