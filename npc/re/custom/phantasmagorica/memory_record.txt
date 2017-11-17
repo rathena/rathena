@@ -81,7 +81,7 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 	case 1:
 		switch( recorder_quest_status ) {
 		case 0:
-			emotion 46;
+			emotion ET_CONGRATULATION;
 			mes "[Bunker Sayhu]";
 			mes "First congratulations on surviving. I'm glad you got into the air-raid shelter. If you were outside..";
 			next;
@@ -92,7 +92,7 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 			mes "Whew.. even thinking about it makes me dizzy. Both of us were lucky. Don't you think so?";
 			next;
 			select("I think so too.");
-			emotion 28;
+			emotion ET_CRY;
 			mes "[Bunker Sayhu]";
 			mes "I feel a lot of sympathy though. It looks like a lot of people are blaming this explosion on Fresa.";
 			next;
@@ -100,7 +100,7 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 			mes "The explosion can't be only Lona's responsibility.";
 			next;
 			select("Lona?");
-			emotion 1,1;
+			emotion ET_QUESTION,1;
 			mes "[Bunker Sayhu]";
 			mes "A great person for sure despite failing the experiment.";
 			next;
@@ -117,7 +117,7 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 			mes "Ugh- I guess even I should go and help. Want to help?";
 			next;
 			select("Agree to help.");
-			emotion 15;
+			emotion ET_THANKS;
 			mes "[Bunker Sayhu]";
 			mes "Really? You will help? What a relief because I wasn't confident about going by myself.";
 			next;
@@ -160,7 +160,7 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 		}
 		end;
 	case 2:
-		emotion 1;
+		emotion ET_QUESTION;
 		mes "[Bunker Sayhu]";
 		mes "Uh?! I don't think I've seen you before in the air-raid shelter?";
 		next;
@@ -216,17 +216,17 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 		switch( recorder_quest_status ) {
 		case 0:
 			mes "[Lona Fresa]";
-			emotion 17;
+			emotion ET_SORRY;
 			mes "I am sorry. Right now I am a little busy with several problems. Can we speak later?";
 			close;
 		case 1:
 			mes "[Lona Fresa]";
-			emotion 17;
+			emotion ET_SORRY;
 			mes "I am sorry. Right now I am a little busy with several problems. Can we speak later?";
 			next;
 			select("No! What I mean..");
-			emotion 0;
-			emotion 1;
+			emotion ET_SURPRISE;
+			emotion ET_QUESTION;
 			mes "[Lona Fresa]";
 			mes "What?! The Adventurer wants to help me?";
 			next;
@@ -240,14 +240,14 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 			mes "Good!! I approve. Just in time for a troublesome problem as well.";
 			next;
 			select("Troublesome problem?");
-			emotion 1,1;
+			emotion ET_QUESTION,1;
 			mes "[Lona Fresa]";
 			mes "The personnel with various specialties such as yourself have not changed their positions and are easy to grasp, but the other employees are the problem.";
 			next;
 			mes "[Lona Fresa]";
 			mes "Surely they are moving according to the Emergency Situation Guidelines of their respective teams.";
 			next;
-			emotion 20;
+			emotion ET_SCRATCH;
 			mes "[Lona Fresa]";
 			mes "I cannot figure out from here where they are and what they are doing.";
 			next;
@@ -294,13 +294,13 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 		}
 		end;
 	case 2:
-		emotion 17;
+		emotion ET_SORRY;
 		mes "[Lona Fresa]";
 		mes "I am sorry. Right now I am a little busy with several problems. It would be better if we speak later.";
 		close;
 	case 4:
 		if (recorder_quest_status == 2) {
-			emotion 17;
+			emotion ET_SORRY;
 			mes "[Lona Fresa]";
 			mes "I am sorry. Right now I am a little busy with several problems. It would be better if we speak later.";
 			next;
@@ -310,7 +310,7 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 			next;
 			mes "Explain current situation at the temporary clinic.";
 			next;
-			emotion 23;
+			emotion ET_HUK;
 			mes "[Lona Fresa]";
 			mes "Patients are convulsing simultaneously.. this is not good.";
 			next;
@@ -328,12 +328,12 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 			mes "Thank you for informing me.";
 			close;
 		}
-		emotion 19;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Lona Fresa]";
 		mes "This situation is grave so we need to quickly take measures.";
 		close;
 	case 5:
-		emotion 17;
+		emotion ET_SORRY;
 		mes "[Lona Fresa]";
 		mes "I am sorry. Right now I am a little busy with several problems. It would be better if we speak later.";
 		close;
@@ -349,7 +349,7 @@ S_Num:
 	if (.@headcount_complete > 0)
 		mes "Ah! You are here. Isn't the interior of the shelter a bit complicated? The favor I asked of you..";
 	else {
-		emotion 1;
+		emotion ET_QUESTION;
 		mes "Huh?! You're already back? You came back earlier than I thought.";
 		next;
 		mes "[Lona Fresa]";
@@ -364,7 +364,7 @@ S_Num:
 	if (.@num != .@bon_nombre || .@headcount_complete == 0) {
 		mes "" + .@num + " people you say?";
 		next;
-		emotion 20;
+		emotion ET_SCRATCH;
 		mes "[Lona Fresa]";
 		mes "That's strange? According to the list they have never been that number.";
 		next;
@@ -444,11 +444,11 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
 		if (recorder_quest_status == 17) {
 			if (isbegin_quest(5350) == 0) {
 				mes "[Chemical Substance Specialist Karsten]";
-				emotion 1;
+				emotion ET_QUESTION;
 				mes "Who are you?";
 				next;
 				select("I am...");
-				emotion 0;
+				emotion ET_SURPRISE;
 				mes "[Chemical Substance Specialist Karsten]";
 				mes "Ah! Ah! Fresa? I have met her a few times at plenary sessions.";
 				next;
@@ -461,7 +461,7 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
 				mes "[Chemical Substance Specialist Karsten]";
 				mes "Not everybody is fit to be director. A headcount in this hectic situation.";
 				next;
-				emotion 19;
+				emotion ET_PROFUSELY_SWEAT;
 				mes "[Chemical Substance Specialist Karsten]";
 				mes "Wait a minute. I did a headcount and wrote it down somewhere..";
 				next;
@@ -494,7 +494,7 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
 			mes "[Chemical Substance Specialist Karsten]";
 			mes "Is that the first grape harvested by the Bioengineers?";
 			next;
-			emotion 1,0,"Chemical Substance Spec (3)";
+			emotion ET_QUESTION, getnpcid(0, "Chemical Substance Spec (3)");
 			mes "[Chemical Substance Specialist Karsten]";
 			mes "The rumors say a grape tree got smashed because of the Mechanicians but it seems it hasn't affected the harvest.";
 			next;
@@ -508,7 +508,7 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
 			recorder_quest_status = 3;
 			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
 			next;
-			emotion 28;
+			emotion ET_CRY;
 			mes "[Chemical Substance Specialist Karsten]";
 			mes "I've been eating nothing but dried food for the past few days so it moves me to eat fresh grape.";
 			close;
@@ -519,7 +519,7 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
 	case 2:
 	case 4:
 	case 5:
-		emotion 18;
+		emotion ET_SMILE;
 		mes "[Chemical Substance Specialist Karsten]";
 		mes "Us Chemical Substance Specialists are living like we always do. It's not like we can do chemical experiments in a place like this.";
 		close;
@@ -979,7 +979,7 @@ un_bk_q,41,275,0	script	Machine Warehouse#J-0	WARPNPC,1,1,{
 OnTouch:
 	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 2 && recorder_quest_status == 0) {
-		emotion 24,0,"Mechanician Mugeosi#EP1";
+		emotion ET_O, getnpcid(0, "Mechanician Mugeosi#EP1");
 		mes "[Mechanician Mugeosi]";
 		mes "Ah! You're the adventurer send to deliver air cleaners. You are at the right place. Come this way.";
 		close;
@@ -998,7 +998,7 @@ un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
 		mes "[Mechanician Mugeosi]";
 		mes "It was originally a warehouse but it is now being used by Mechanicians to assemble machines for the air-raid shelter.";
 		next;
-		emotion 6;
+		emotion ET_FRET;
 		mes "[Mechanician Mugeosi]";
 		mes "You want to know the total number of Mechanicians? I don't think I know?";
 		next;
@@ -1022,7 +1022,7 @@ un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
 			mes "[Mechanician Mugeosi]";
 			mes "We should have made it in modular form. Made it as one solid piece by mistake.";
 			next;
-			emotion 18;
+			emotion ET_SMILE;
 			mes "[Mechanician Mugeosi]";
 			mes "Didn't think of it when we were making it!!";
 			next;
@@ -1042,7 +1042,7 @@ un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
 			mes "So we ended up asking the strong Adventurer.";
 			next;
 			select("Yes sir.");
-			emotion 18;
+			emotion ET_SMILE;
 			mes "[Mechanician Mugeosi]";
 			mes "Aren't you refreshing!!";
 			next;
@@ -1056,7 +1056,7 @@ un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
 		if (recorder_quest_status == 1) {
 			.@total = isbegin_quest(5353) + isbegin_quest(5354) + isbegin_quest(5355) + isbegin_quest(5356) + isbegin_quest(5357);
 			if (.@total < 5) {
-				emotion 1;
+				emotion ET_QUESTION;
 				mes "[Mechanician Mugeosi]";
 				mes "Are you ready to move heavy objects?";
 				next;
@@ -1071,7 +1071,7 @@ un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
 				mes "Deliver them to zones C-0, F-1, F-2, I-0, Z-0. The order doesn't matter and please be careful since they are precise machines.";
 				close;
 			}
-			emotion 21;
+			emotion ET_BEST;
 			mes "[Mechanician Mugeosi]";
 			mes "Good work. The air cleaning units are heavy, right?";
 			next;
@@ -1128,11 +1128,11 @@ un_bk_q,82,323,2	script	Mechanician Al#EP15.2MR	4_M_REPAIR,{
 		case 5:
 			if (isbegin_quest(5348) == 0) {
 				mes "[Mechanician Al]";
-				emotion 2;
+				emotion ET_DELIGHT;
 				mes "You are?";
 				next;
 				select("I am...");
-				emotion 20;
+				emotion ET_SCRATCH;
 				mes "[Mechanician Al]";
 				mes "Fresa? Hm? Who is Fresa?";
 				next;
@@ -1166,7 +1166,7 @@ un_bk_q,82,323,2	script	Mechanician Al#EP15.2MR	4_M_REPAIR,{
 			mes "[Mechanician Al]";
 			mes "The Mechanicians are checking for irregularities in the internal mechanical systems according to Emergency Situation Guidelines.";
 			next;
-			emotion 6;
+			emotion ET_FRET;
 			mes "[Mechanician Al]";
 			mes "Darn it- Why am I even explaining this? You're bothering me so go away.";
 			close;
@@ -1208,21 +1208,21 @@ un_bk_q,82,323,2	script	Mechanician Al#EP15.2MR	4_M_REPAIR,{
 			mes "[" + strcharinfo(0) + "]";
 			mes .@string$;
 			next;
-			emotion 57;
+			emotion ET_OTL;
 			mes "[Mechanician Al]";
 			mes "Huh.. uh.. buh.. buh..";
 			next;
 			mes "He seems shocked and out of it. Go back to Ernon since the message has been delivered.";
 			close;
 		case 3:
-			emotion 57;
+			emotion ET_OTL;
 			mes "[Mechanician Al]";
 			mes "Huh.. uh.. buh.. buh..";
 			next;
 			mes "He is out of it. Go back to Ernon since the message has been delivered.";
 			close;
 		case 4:
-			emotion 57;
+			emotion ET_OTL;
 			mes "[Mechanician Al]";
 			mes "Er.. non.. ar.. argh!!";
 			next;
@@ -1336,7 +1336,7 @@ un_bk_q,212,294,6	script	Zone C-0 Facilities man#1	4_M_EINMAN2,{
 		switch(.@npc_num) {
 		case 1:
 			if (isbegin_quest(5353) == 0 && recorder_quest_status == 1) {
-				emotion 2;
+				emotion ET_DELIGHT;
 				mes "[Facilities manager]";
 				mes "Oh- You're here? I was waiting.";
 				next;
@@ -1359,7 +1359,7 @@ un_bk_q,212,294,6	script	Zone C-0 Facilities man#1	4_M_EINMAN2,{
 			close;
 		case 2:
 			if (isbegin_quest(5354) == 0 && recorder_quest_status == 1) {
-				emotion 15;
+				emotion ET_THANKS;
 				mes "[Facilities manager]";
 				mes "Oh my you are working hard. You can place the item over here.";
 				next;
@@ -1385,7 +1385,7 @@ un_bk_q,212,294,6	script	Zone C-0 Facilities man#1	4_M_EINMAN2,{
 			close;
 		case 3:
 			if (isbegin_quest(5355) == 0 && recorder_quest_status == 1) {
-				emotion 1;
+				emotion ET_QUESTION;
 				mes "[Facilities manager]";
 				mes "Ah?! Are you the Adventurer who's delivering air cleaning units?";
 				next;
@@ -1405,7 +1405,7 @@ un_bk_q,212,294,6	script	Zone C-0 Facilities man#1	4_M_EINMAN2,{
 			close;
 		case 4:
 			if (isbegin_quest(5356) == 0 && recorder_quest_status == 1) {
-				emotion 1;
+				emotion ET_QUESTION;
 				mes "[Facilities manager]";
 				mes "Has the adventurer not delivered the air cleaning unit yet? Uh?! It's here. Hurry.. the air cleaning unit..";
 				next;
@@ -1425,7 +1425,7 @@ un_bk_q,212,294,6	script	Zone C-0 Facilities man#1	4_M_EINMAN2,{
 			close;
 		case 5:
 			if (isbegin_quest(5357) == 0 && recorder_quest_status == 1) {
-				emotion 21;
+				emotion ET_BEST;
 				mes "[Facilities manager]";
 				mes "Oh- You're here? I was waiting.";
 				next;
@@ -1479,11 +1479,11 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 		if (recorder_quest_status == 3) {
 			if (isbegin_quest(5347) == 0) {
 				mes "[Bioengineer Touring]";
-				emotion 1;
+				emotion ET_QUESTION;
 				mes "Huh?! Who are you?";
 				next;
 				select("I am...");
-				emotion 0;
+				emotion ET_SURPRISE;
 				mes "[Bioengineer Touring]";
 				mes "Ah! Dr. Fresa sent you to check the conditions of survivor assignments?";
 				next;
@@ -1497,7 +1497,7 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 				mes "[Bioengineer Touring]";
 				mes "Oh yeah! Tell Dr. Fresa that the Bioengineers are using growth acceleration technology for food production according to the Emergency Situation Guidelines.";
 				next;
-				emotion 15;
+				emotion ET_THANKS;
 				mes "[Bioengineer Touring]";
 				mes "I will count on you.";
 				close;
@@ -1508,7 +1508,7 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 			mes "[Bioengineer Touring]";
 			mes "Oh yeah! Tell Dr. Fresa that the Bioengineers are using growth acceleration technology for food production according to the Emergency Situation Guidelines.";
 			next;
-			emotion 15;
+			emotion ET_THANKS;
 			mes "[Bioengineer Touring]";
 			mes "I will count on you.";
 			close;
@@ -1524,7 +1524,7 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 		mes "[Bioengineer Touring]";
 		mes "We have just finished the last grape harvest and are getting ready for the next one.";
 		next;
-		emotion 17;
+		emotion ET_SORRY;
 		mes "[Bioengineer Touring]";
 		mes "If people come and go often, it may interfere with the work so access is prohibited.";
 		close;
@@ -1532,7 +1532,7 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 		mes "[Bioengineer Touring]";
 		mes "We Bioengineers are doing all we can to produce food for the people inside the air-raid shelter.";
 		next;
-		emotion 17;
+		emotion ET_SORRY;
 		mes "[Bioengineer Touring]";
 		mes "If people come and go often, it may interfere with the work for the next harvest so access will be prohibited.";
 		close;
@@ -1540,7 +1540,7 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 		mes "[Bioengineer Touring]";
 		mes "We Bioengineers are doing all we can to produce food for the people inside the air-raid shelter.";
 		next;
-		emotion 17;
+		emotion ET_SORRY;
 		mes "[Bioengineer Touring]";
 		mes "If people come and go often, it may interfere with the work for the next harvest so access will be prohibited.";
 		close;
@@ -1562,7 +1562,7 @@ un_bk_q,213,346,0	script	farm#C-0	WARPNPC,1,1,{
 OnTouch:
 	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 3 && recorder_quest_status == 0) {
-		emotion 14,0,"Bioengineer Ebrik#EP15.2MR";
+		emotion ET_BIGTHROB, getnpcid(0, "Bioengineer Ebrik#EP15.2MR");
 		mes "[Bioengineer Ebrik]";
 		mes "Are you the Adventurer here to help us with the grape harvest? Right here!!";
 		close;
@@ -1577,7 +1577,7 @@ un_bk_q,220,350,4	script	Bioengineer Ebrik#EP15.2MR	4_M_01,{
 		end;
 	switch( recorder_quest_status ) {
 	case 0:
-		emotion 1;
+		emotion ET_QUESTION;
 		mes "[Bioengineer Ebrik]";
 		mes "Are you the Adventurer here to help us with the grape harvest? Nice to meet you.";
 		next;
@@ -1591,7 +1591,7 @@ un_bk_q,220,350,4	script	Bioengineer Ebrik#EP15.2MR	4_M_01,{
 		mes "[Bioengineer Ebrik]";
 		mes "Don't even mention it. We gave the task of harvesting grapes to the meandering Mechanicians and..";
 		next;
-		emotion 16;
+		emotion ET_KEK;
 		mes "[Bioengineer Ebrik]";
 		mes "They ended up smashing one of the grape trees!!";
 		next;
@@ -1625,7 +1625,7 @@ un_bk_q,220,350,4	script	Bioengineer Ebrik#EP15.2MR	4_M_01,{
 			mes "One box can hold 30~32 bunches so collect accordingly.";
 			close;
 		}
-		emotion 21;
+		emotion ET_BEST;
 		mes "[Bioengineer Ebrik]";
 		mes "Whoa good job. As I thought Adventurers are so much more capable than Mechanicians.";
 		next;
@@ -1795,26 +1795,26 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 	case 4:
 		switch( recorder_quest_status ) {
 		case 0:
-			emotion 17;
+			emotion ET_SORRY;
 			mes "[Nurse Lapplad]";
 			mes "Sorry. Did you wait long? There are a lot of suspected infection patients as you can see..";
 			next;
 			select("Not really..");
-			emotion 23;
+			emotion ET_HUK;
 			mes "[Nurse Lapplad]";
 			mes "Eh?! You didn't wait? That's strange? Did you cut in line? Cutting is bad.";
 			next;
 			mes "[Nurse Lapplad]";
 			mes "As you know there are infectees who are suddenly showing strange phenomena..";
 			next;
-			emotion 10;
+			emotion ET_SCISSOR;
 			mes "[Nurse Lapplad]";
 			mes "Um...";
 			next;
 			mes "[Nurse Lapplad]";
 			mes "...Ah...";
 			next;
-			emotion 0;
+			emotion ET_SURPRISE;
 			mes "[Nurse Lapplad]";
 			mes "...Oh!!";
 			next;
@@ -1831,11 +1831,11 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 			if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) < 1)
 				callsub S_Random, 1;	// always starts on Patient 1
 			next;
-			emotion 18;
+			emotion ET_SMILE;
 			mes "[Nurse Lapplad]";
 			mes "Yes.. Just like that";
 			next;
-			emotion 10;
+			emotion ET_SCISSOR;
 			mes "[Nurse Lapplad]";
 			mes ". .";
 			next;
@@ -1853,11 +1853,11 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 			close;
 		case 1:
 			if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) > 0) {
-				emotion 28;
+				emotion ET_CRY;
 				mes "[Nurse Lapplad]";
 				mes "Ee~~ ee~ ek~~~~~~~~~!!";
 				next;
-				emotion 28;
+				emotion ET_CRY;
 				mes "[Nurse Lapplad]";
 				mes "Take those patients down quickly! You're an adventurer!!";
 				close;
@@ -1933,7 +1933,7 @@ OnTimer3000:
 // Patients
 un_bk_q,286,254,4	script	Patient#EP15.2MR_01	4_M_LIEMAN,{
 	callfunc("F_time_limit_recorder");
-	emotion 19;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Patient]";
 	mes "Hurts.. It hurts..";
 	close;
@@ -1948,14 +1948,14 @@ un_bk_q,296,252,4	script	Patient#EP15.2MR_02	4_M_DSTMANDEAD,{
 
 un_bk_q,316,231,4	script	Patient#EP15.2MR_03	4_M_DIEMAN,{
 	callfunc("F_time_limit_recorder");
-	emotion 45;
+	emotion ET_SLEEPY;
 	mes "[Patient]";
 	mes "I keep feeling sleepy for some reason. Is it because I'm sick?";
 	close;
 }
 un_bk_q,281,226,4	script	Patient#EP15.2MR_04	4_F_PATIENT,{
 	callfunc("F_time_limit_recorder");
-	emotion 54;
+	emotion ET_OHNO;
 	mes "[Patient]";
 	mes "My head feels blank.. Uh? Did you say something?";
 	close;
@@ -1963,7 +1963,7 @@ un_bk_q,281,226,4	script	Patient#EP15.2MR_04	4_F_PATIENT,{
 
 un_bk_q,320,249,4	script	Patient#EP15.2MR_05	4_M_PATIENT,{
 	callfunc("F_time_limit_recorder");
-	emotion 53;
+	emotion ET_CONFUSE;
 	mes "[Patient]";
 	mes "Ugh.. Feels like my whole body is cramped.";
 	close;
@@ -1971,7 +1971,7 @@ un_bk_q,320,249,4	script	Patient#EP15.2MR_05	4_M_PATIENT,{
 
 un_bk_q,306,233,4	script	Patient#EP15.2MR_06	4_M_DIEMAN,{
 	callfunc("F_time_limit_recorder");
-	emotion 43;
+	emotion ET_SEXY;
 	mes "[Patient]";
 	mes "Urk.. I feel sick even though I didn't drink.";
 	close;
@@ -1979,7 +1979,7 @@ un_bk_q,306,233,4	script	Patient#EP15.2MR_06	4_M_DIEMAN,{
 
 un_bk_q,310,261,4	script	Patient#EP15.2MR_07	4_M_LIEMAN,{
 	callfunc("F_time_limit_recorder");
-	emotion 57;
+	emotion ET_OTL;
 	mes "[Patient]";
 	mes "Oh no is there a transfectant found in me..";
 	close;
@@ -2016,7 +2016,7 @@ un_bk_q,304,233,4	script	Nurse#EP15.2MR4	4_F_NURSE,{
 
 un_bk_q,283,226,2	script	Nurse#EP15.2MR5	4_F_NURSE,{
 	callfunc("F_time_limit_recorder");
-	emotion 28;
+	emotion ET_CRY;
 	mes "[Nurse]";
 	mes "Ah geez! There is no other issues yet but why is he saying he's dizzy?";
 	close;
@@ -2031,7 +2031,7 @@ un_bk_q,284,255,4	script	Nurse#EP15.2MR6	4_F_NURSE,{
 
 un_bk_q,296,254,4	script	Nurse#EP15.2MR7	4_F_NURSE,{
 	callfunc("F_time_limit_recorder");
-	emotion 28;
+	emotion ET_CRY;
 	mes "[Nurse]";
 	mes "What do you mean nothing is wrong, your face has gone purple.";
 	close;
@@ -2043,7 +2043,7 @@ un_bk_q,271,290,0	script	Cafeteria#G-1	WARPNPC,1,1,{
 OnTouch:
 	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
-		emotion 6,0,"Transportation Executive Ernon";
+		emotion ET_FRET, getnpcid(0, "Transportation Executive Ernon");
 		mes "[Transportation Executive Ernon]";
 		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
 		close;
@@ -2076,12 +2076,12 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
 		mes "Work that involved going out to other places a lot more even as a staff member here.";
 		close;
 	case 2:
-		emotion 1;
+		emotion ET_QUESTION;
 		mes "[Transportation Executive Ernon]";
 		mes "What?! Is something going on? The Mechanicians and Facilities managers look busy.";
 		close;
 	case 3:
-		emotion 21;
+		emotion ET_BEST;
 		mes "[Transportation Executive Ernon]";
 		mes "Yaa~ Did you try the grapes?";
 		next;
@@ -2098,7 +2098,7 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
 	case 5:
 		switch( recorder_quest_status ) {
 		case 0:
-			emotion 1;
+			emotion ET_QUESTION;
 			mes "[Transportation Executive Ernon]";
 			mes "They were talking about it in the broadcast since yesterday so you know the gist of the situation, right?";
 			next;
@@ -2114,7 +2114,7 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
 			mes "[Transportation Executive Ernon]";
 			mes "If you go to the machine Warehouse on your way back there will a person called Al. Tell him";
 			next;
-			emotion 29;
+			emotion ET_KIK;
 			mes "[Transportation Executive Ernon]";
 			mes "^0000FF You idiots!! Stop wasting material with stupid machines!!^000000 for me and come back.";
 			next;
@@ -2122,7 +2122,7 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
 			mes "[Transportation Executive Ernon]";
 			mes "Don't understand? Tell Al in the machine Warehouse";
 			next;
-			emotion 29;
+			emotion ET_KIK;
 			mes "[Transportation Executive Ernon]";
 			mes "^0000FF You idiots!! Stop wasting material with stupid machines!!^000000 and come back.";
 			next;
@@ -2140,7 +2140,7 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
 			mes "[Transportation Executive Ernon]";
 			mes "On your way back go to the machine Warehouse and tell Al";
 			next;
-			emotion 29;
+			emotion ET_KIK;
 			mes "[Transportation Executive Ernon]";
 			mes "??^0000FF You idiots!! Stop wasting material with stupid machines!!^000000?? for me and come back.";
 			close;
@@ -2308,7 +2308,7 @@ un_bk_q,72,53,4	script	Distribution Chief Avrandi	4_M_TWTEAMAN,{
 	callfunc("F_time_limit_recorder");
 	switch( recorder_quest_type ) {
 	case 1:
-		emotion 54;
+		emotion ET_OHNO;
 		mes "[Distribution Chief Avrandi]";
 		mes "It is a relief we were able to evacuate to the air-raid shelter interior in advance.";
 		next;
@@ -2316,7 +2316,7 @@ un_bk_q,72,53,4	script	Distribution Chief Avrandi	4_M_TWTEAMAN,{
 		mes "If we weren't able to evacuate..? We probably won't be here.";
 		close;
 	case 2:
-		emotion 1;
+		emotion ET_QUESTION;
 		mes "[Distribution Chief Avrandi]";
 		mes "Is there something wrong?";
 		next;
@@ -2324,12 +2324,12 @@ un_bk_q,72,53,4	script	Distribution Chief Avrandi	4_M_TWTEAMAN,{
 		mes "A while ago the Facilities managers were running around in haste.";
 		close;
 	case 3:
-		emotion 23;
+		emotion ET_HUK;
 		mes "[Distribution Chief Avrandi]";
 		mes "What in the world?! You ate fresh grapes? Why didn't I get to eat them? Why?";
 		close;
 	case 4:
-		emotion 40;
+		emotion ET_SHY;
 		mes "[Distribution Chief Avrandi]";
 		mes "This place is sure quiet. Why you ask?";
 		next;
@@ -2408,7 +2408,7 @@ un_bk_q,347,217,4	script	Facilities manager Remodeling	4_M_EINMAN,{
 	case 1:
 		if (recorder_quest_status == 9) {
 			if (isbegin_quest(5349) == 0) {
-				emotion 1;
+				emotion ET_QUESTION;
 				mes "[Facilities manager Remodeling]";
 				mes "Uh?! Hello. First time meeting you. What brings you here?";
 				next;
@@ -2559,7 +2559,7 @@ un_bk_q,97,84,4	script	Dimension move Portal#E	PORTAL,{
 	mes "[Dimension-mover]";
 	mes "Do you want finish your travels and";
 	mes "go back to your original time?";
-	mes "^FF0000¡Ø All traces in this place will be erased if you go back to your original time.¡Ø^000000";
+	mes "^FF0000All traces in this place will be erased if you go back to your original time.^000000";
 	next;
 	if (select( "Stay here.", "Go back." ) == 2) {
 		mes "[Dimension-mover]";
