@@ -2136,7 +2136,7 @@ void intif_parse_achievements(int fd)
 				continue;
 			}
 
-			auto &adb = achievements[received[i].achievement_id];
+			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 

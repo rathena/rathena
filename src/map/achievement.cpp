@@ -4,6 +4,7 @@
 #include "achievement.hpp"
 
 #include <memory>
+#include <array>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,6 +45,16 @@ std::vector<int> achievement_mobs; // Avoids checking achievements on every mob 
 bool achievement_exists(int achievement_id)
 {
 	return achievements.find(achievement_id) != achievements.end();
+}
+
+/**
+ * Return an achievement by ID
+ * @param achievement_id: ID to lookup
+ * @return shared_ptr of achievement
+ */
+std::shared_ptr<s_achievement_db>& achievement_get(int achievement_id) 
+{
+	return achievements[achievement_id];
 }
 
 /**
@@ -505,11 +516,12 @@ int *achievement_level(struct map_session_data *sd, bool flag)
  * @param update_count: Objective values player has
  * @return 1 on success and false on failure
  */
-static int achievement_update_objectives(struct map_session_data *sd, struct s_achievement_db *ad, enum e_achievement_group group, int update_count[MAX_ACHIEVEMENT_OBJECTIVES])
+static int achievement_update_objectives(struct map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int,MAX_ACHIEVEMENT_OBJECTIVES>& update_count)
 {
 	struct achievement *entry = NULL;
 	bool isNew = false, changed = false, complete = false;
-	int i, k = 0, objective_count[MAX_ACHIEVEMENT_OBJECTIVES];
+	int i, k = 0;
+	std::array<int,MAX_ACHIEVEMENT_OBJECTIVES> objective_count;
 
 	if (ad == NULL || sd == NULL)
 		return 0;
@@ -519,8 +531,8 @@ static int achievement_update_objectives(struct map_session_data *sd, struct s_a
 
 	if (group != ad->group)
 		return 0;
-
-	memset(objective_count, 0, sizeof(objective_count)); // Current objectives count
+	
+	objective_count.fill(0); // Current objectives count 
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
 	if (i == sd->achievement_data.count) { // Achievement isn't in player's log
@@ -533,7 +545,7 @@ static int achievement_update_objectives(struct map_session_data *sd, struct s_a
 		if (entry->completed > 0) // Player has completed the achievement
 			return 0;
 
-		memcpy(objective_count, entry->count, sizeof(objective_count));
+		memcpy(objective_count.data(), entry->count, sizeof(objective_count));
 	}
 
 	switch (group) {
@@ -557,7 +569,7 @@ static int achievement_update_objectives(struct map_session_data *sd, struct s_a
 				changed = true;
 			}
 
-			if (!ad->condition || achievement_check_condition(ad->condition, sd, update_count)) {
+			if (!ad->condition || achievement_check_condition(ad->condition, sd, update_count.data())) {
 				changed = true;
 				complete = true;
 			}
@@ -574,7 +586,7 @@ static int achievement_update_objectives(struct map_session_data *sd, struct s_a
 			if (!ad->targets.size())
 				break;
 
-			if (ad->condition && !achievement_check_condition(ad->condition, sd, update_count)) // Parameters weren't met
+			if (ad->condition && !achievement_check_condition(ad->condition, sd, update_count.data())) // Parameters weren't met
 				break;
 
 			if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
@@ -598,8 +610,8 @@ static int achievement_update_objectives(struct map_session_data *sd, struct s_a
 			break;
 		case AG_BATTLE:
 		case AG_TAMING:
-			ARR_FIND(0, ad->targets.size(), k, ad->targets[k].mob == update_count[0]);
-			if (k == ad->targets.size())
+			auto it = std::find_if (ad->targets.begin(), ad->targets.end(), [&update_count](const achievement_target& curTarget)->bool { return curTarget.mob == update_count[0]; } );
+			if (it == ad->targets.end())
 				break; // Mob wasn't found
 
 			for (k = 0; k < ad->targets.size(); k++) {
@@ -621,7 +633,7 @@ static int achievement_update_objectives(struct map_session_data *sd, struct s_a
 	}
 
 	if (changed) {
-		memcpy(entry->count, objective_count, sizeof(objective_count));
+		memcpy(entry->count, objective_count.data(), sizeof(objective_count));
 		achievement_update_achievement(sd, ad->achievement_id, complete);
 	}
 
@@ -639,12 +651,13 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 {
 	if (sd) {
 		va_list ap;
-		int i, count[MAX_ACHIEVEMENT_OBJECTIVES];
+		int i;
+		std::array<int,MAX_ACHIEVEMENT_OBJECTIVES> count;
 
 		if (!battle_config.feature_achievement)
 			return;
 
-		memset(count, 0, sizeof(count)); // Clear out array before setting values
+		count.fill(0); // Clear out array before setting values
 
 		va_start(ap, arg_count);
 		for (i = 0; i < arg_count; i++)
@@ -658,7 +671,7 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 				break;
 			default:
 				for (auto &ach : achievements)
-					achievement_update_objectives(sd, ach.second.get(), group, count);
+					achievement_update_objectives(sd, ach.second, group, count);
 				break;
 		}
 	}
@@ -683,7 +696,7 @@ static void disp_error_message2(const char *mes,const char *pos,int report)
  * @param count: Script arguments
  * @return The result of the condition.
  */
-long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, int *count)
+long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count)
 {
 	long long left = 0;
 	long long right = 0;
@@ -831,6 +844,7 @@ const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_conditi
 
 		std::unique_ptr<char[]> word(new char[len + 1]); //or string ?
 		//word = (char*)aMalloc(len + 1);
+		memcpy(word.get(), p, len);
 		word[len] = 0;
 
 		if (script_get_parameter((const char*)&word[0], &v))
@@ -865,7 +879,7 @@ const char* av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av
 	p = skip_space(p);
 
 	//CREATE(parent->left, struct av_condition, 1);
-    parent->left.reset(new av_condition());
+	parent->left.reset(new av_condition());
 
 	if ((op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~')) { // Unary - ! ~ operators
 		p = av_parse_subexpr(p + 1, 11, parent->left);

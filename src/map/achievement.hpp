@@ -103,10 +103,8 @@ struct s_achievement_db {
   s_achievement_db();
 };
 
-extern std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
-extern std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
-
 bool achievement_exists(int achievement_id);
+std::shared_ptr<s_achievement_db>& achievement_get(int achievement_id);
 bool achievement_mobexists(int mob_id);
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
@@ -127,7 +125,7 @@ void do_final_achievement(void);
 // Parser
 const char *av_parse_subexpr(const char *p,int limit, std::shared_ptr<struct av_condition> parent);
 const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent);
-long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, int *count);
+long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count);
 void achievement_script_free(std::shared_ptr<struct av_condition> condition);
 
 #endif /* _ACHIEVEMENT_HPP_ */
