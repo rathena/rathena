@@ -4386,7 +4386,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 	mob_db_data[mob_id]->vd.class_ = sprite_id;
 
 	//Player sprites
-	if(pcdb_checkid(sprite_id) && columns==12) {
+	if(pcdb_checkid(sprite_id) && columns==13) {
 		mob_db_data[mob_id]->vd.sex=atoi(str[2]);
 		mob_db_data[mob_id]->vd.hair_style=atoi(str[3]);
 		mob_db_data[mob_id]->vd.hair_color=atoi(str[4]);
@@ -4394,9 +4394,10 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 		mob_db_data[mob_id]->vd.shield=atoi(str[6]);
 		mob_db_data[mob_id]->vd.head_top=atoi(str[7]);
 		mob_db_data[mob_id]->vd.head_mid=atoi(str[8]);
-		mob_db_data[mob_id]->vd.head_bottom=atoi(str[9]);
-		mob_db_data[mob_id]->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
-		mob_db_data[mob_id]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
+		mob_db_data[mob_id]->vd.head_bottom = atoi(str[9]);
+		mob_db_data[mob_id]->vd.robe = atoi(str[10]);
+		mob_db_data[mob_id]->option=atoi(str[11])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
+		mob_db_data[mob_id]->vd.cloth_color=atoi(str[12]); // Monster player dye option - Valaris
 
 #ifdef NEW_CARTS
 		if( mob_db_data[mob_id]->option & OPTION_CART ){
@@ -4406,7 +4407,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 #endif
 	}
 	else if(columns==3)
-		mob_db_data[mob_id]->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
+		mob_db_data[mob_id]->vd.robe = atoi(str[2]); // mob equipment [Valaris]
 	else if( columns != 2 )
 		return false;
 
