@@ -1197,7 +1197,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			erasequest 7645;// Piece of Memory Record
 			setquest 7646;// Play Memory Record
 			VER_MAIN = 24;
-			emotion ET_SURPRISE,getnpcid(0,"Record player#e152a01");
+			emotion ET_SURPRISE, getnpcid(0,"Record player#e152a01");
 		}
 		break;
 	case 24:
@@ -2061,7 +2061,7 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 		}
 		getexp 1500000,1000000;
 		next;
-		misceffect EF_SPELLBREAKER;
+		specialeffect EF_SPELLBREAKER;
 		mes "As you try to eject the Memory Record, the connecting part breaks with a cracking sound and returns to it's disassembled form.";
 		next;
 		cutin "Arquien_n_atnad01.bmp",2;
@@ -4119,7 +4119,7 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 	.@playtime_5318 = checkquest(5318,PLAYTIME);
 
 	if (.@quest_5309 != 1) {
-		misceffect EF_SLEEPATTACK;
+		specialeffect EF_SLEEPATTACK;
 		mes "[Police Officer Salgran]";
 		mes "Zzz... Zzz...";
 		next;
@@ -4139,7 +4139,7 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 		switch(.@quest_5314) {
 		case 0:
 			if (.@quest_5305 == 0) {
-				misceffect EF_SLEEPATTACK;
+				specialeffect EF_SLEEPATTACK;
 				select("Excuse me.");
 				emotion ET_HUK;
 				mes "[Police Officer Salgran]";
@@ -4479,7 +4479,7 @@ verus03,81,241,6	script	Police Officer Seiden#EP15_1	4_M_ORIENT02,{
 			if (.@quest_5307 == 0) {
 				mes "*Chuckle* The Chief sent you. I know because I've been waiting.";
 				next;
-				emotion ET_SURPRISE,1;
+				emotion ET_SURPRISE, playerattached();
 				mes "[" + strcharinfo(0) + "]";
 				mes "?!";
 				next;
@@ -7037,7 +7037,7 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
 				next;
 				mes "^FF0000- BEEP-! -";
 				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Elisha]";
 				mes "Um?";
@@ -7046,7 +7046,7 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
 				next;
 				mes "^FF0000- BEEP-! -";
 				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Elisha]";
 				mes "Um...";
@@ -7056,7 +7056,7 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
 				next;
 				mes "^FF0000- BEEP-! -";
 				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Elisha]";
 				mes "Uh-oh.";
@@ -7066,14 +7066,14 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
 				next;
 				mes "^FF0000- BEEP-! -";
 				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Elisha]";
 				mes "I'm sorry, " + strcharinfo(0) + ".";
 				mes "I know you're registered for the service, but it's out of order at this moment.";
 				mes "I'm sorry for this inconvenience.";
 				emotion ET_PROFUSELY_SWEAT;
-				emotion ET_HUK,1;
+				emotion ET_HUK, playerattached();
 				next;
 				mes "[Elisha]";
 				mes "It was working fine just a moment ago.";

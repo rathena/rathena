@@ -100,7 +100,7 @@ un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 			mes "The explosion can't be only Lona's responsibility.";
 			next;
 			select("Lona?");
-			emotion ET_QUESTION,1;
+			emotion ET_QUESTION, playerattached();
 			mes "[Bunker Sayhu]";
 			mes "A great person for sure despite failing the experiment.";
 			next;
@@ -240,7 +240,7 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 			mes "Good!! I approve. Just in time for a troublesome problem as well.";
 			next;
 			select("Troublesome problem?");
-			emotion ET_QUESTION,1;
+			emotion ET_QUESTION, playerattached();
 			mes "[Lona Fresa]";
 			mes "The personnel with various specialties such as yourself have not changed their positions and are easy to grasp, but the other employees are the problem.";
 			next;
@@ -494,7 +494,7 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
 			mes "[Chemical Substance Specialist Karsten]";
 			mes "Is that the first grape harvested by the Bioengineers?";
 			next;
-			emotion ET_QUESTION, getnpcid(0, "Chemical Substance Spec (3)");
+			emotion ET_QUESTION;
 			mes "[Chemical Substance Specialist Karsten]";
 			mes "The rumors say a grape tree got smashed because of the Mechanicians but it seems it hasn't affected the harvest.";
 			next;
