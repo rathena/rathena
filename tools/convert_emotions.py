@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/env python3
 
 """
 Simple scripts which replaces the old emotion script constants to the new
