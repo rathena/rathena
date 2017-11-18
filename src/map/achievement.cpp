@@ -3,7 +3,6 @@
 
 #include "achievement.hpp"
 
-#include <memory>
 #include <array>
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,7 +51,7 @@ bool achievement_exists(int achievement_id)
  * @param achievement_id: ID to lookup
  * @return shared_ptr of achievement
  */
-std::shared_ptr<s_achievement_db>& achievement_get(int achievement_id) 
+std::shared_ptr<s_achievement_db> &achievement_get(int achievement_id) 
 {
 	return achievements[achievement_id];
 }
@@ -175,7 +174,7 @@ static bool achievement_done(struct map_session_data *sd, int achievement_id) {
 	auto &adb = achievements[achievement_id];
 	struct achievement *ach_data = sd->achievement_data.achievements;
 
-	return (std::find_if(adb->dependent_ids.begin(), adb->dependent_ids.end(), [achievement_id, ach_data]
+	return (std::find_if(adb->dependent_ids.begin(), adb->dependent_ids.end(), [&achievement_id, &ach_data]
 	(const int &d) {
 		return (ach_data[d].achievement_id == achievement_id && ach_data[d].completed > 0);
 	}) != adb->dependent_ids.end());
@@ -516,7 +515,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
  * @param update_count: Objective values player has
  * @return 1 on success and false on failure
  */
-static int achievement_update_objectives(struct map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int,MAX_ACHIEVEMENT_OBJECTIVES>& update_count)
+static int achievement_update_objectives(struct map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int,MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
 {
 	struct achievement *entry = NULL;
 	bool isNew = false, changed = false, complete = false;
@@ -531,8 +530,8 @@ static int achievement_update_objectives(struct map_session_data *sd, std::share
 
 	if (group != ad->group)
 		return 0;
-	
-	objective_count.fill(0); // Current objectives count 
+
+	objective_count.fill(0); // Current objectives count
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
 	if (i == sd->achievement_data.count) { // Achievement isn't in player's log
@@ -610,7 +609,10 @@ static int achievement_update_objectives(struct map_session_data *sd, std::share
 			break;
 		case AG_BATTLE:
 		case AG_TAMING:
-			auto it = std::find_if (ad->targets.begin(), ad->targets.end(), [&update_count](const achievement_target& curTarget)->bool { return curTarget.mob == update_count[0]; } );
+			auto it = std::find_if(ad->targets.begin(), ad->targets.end(), [&update_count]
+			(const achievement_target &curTarget) {
+				return curTarget.mob == update_count[0];
+			});
 			if (it == ad->targets.end())
 				break; // Mob wasn't found
 
@@ -787,6 +789,11 @@ long long achievement_check_condition(std::shared_ptr<struct av_condition> condi
 	return false;
 }
 
+/**
+ * Skips a word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.
+ * @param p: Word
+ * @return Next word
+ */
 static const char *skip_word(const char *p)
 {
 	while (ISALNUM(*p) || *p == '_')
@@ -798,6 +805,12 @@ static const char *skip_word(const char *p)
 	return p;
 }
 
+/**
+ * Analyze an achievement's condition script
+ * @param p: Word
+ * @param parent: Parent node
+ * @return Word
+ */
 const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent)
 {
 	long long i;
@@ -842,8 +855,7 @@ const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_conditi
 		if (len == 0)
 			disp_error_message("av_parse_simpleexpr: invalid word. A word consists of undercores and/or alphanumeric characters.", p);
 
-		std::unique_ptr<char[]> word(new char[len + 1]); //or string ?
-		//word = (char*)aMalloc(len + 1);
+		std::unique_ptr<char[]> word(new char[len + 1]);
 		memcpy(word.get(), p, len);
 		word[len] = 0;
 
@@ -859,12 +871,10 @@ const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_conditi
 				parent->op = C_ARG;
 				v = atoi(&word[0] + 3);
 			} else {
-				//aFree(word);
 				disp_error_message("av_parse_simpleexpr: invalid constant.", p);
 			}
 		}
 
-		//aFree(word);
 		parent->value = v;
 		p = skip_word(p);
 	}
@@ -872,13 +882,18 @@ const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_conditi
 	return p;
 }
 
-const char* av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av_condition> parent)
+/**
+ * Analysis of an achievement's expression
+ * @param p: Word
+ * @param parent: Parent node
+ * @return Word
+ */
+const char *av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av_condition> parent)
 {
 	int op, opl, len;
 
 	p = skip_space(p);
 
-	//CREATE(parent->left, struct av_condition, 1);
 	parent->left.reset(new av_condition());
 
 	if ((op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~')) { // Unary - ! ~ operators
@@ -912,6 +927,7 @@ const char* av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av
 
 		if (parent->right) { // Chain conditions
 			std::shared_ptr<struct av_condition> condition(new struct av_condition());
+
 			condition->op = parent->op;
 			condition->left = parent->left;
 			condition->right = parent->right;
@@ -919,7 +935,6 @@ const char* av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av
 			parent->right.reset();
 		}
 
-		//CREATE(parent->right, struct av_condition, 1);
 		parent->right.reset(new av_condition());
 		p = av_parse_subexpr(p, opl, parent->right);
 		parent->op = op;
@@ -960,7 +975,7 @@ std::shared_ptr<struct av_condition> parse_condition(const char *p, const char *
 			disp_error_message("parse_condition: unexpected character.", p);
 	}
 
-	condition.reset(new av_condition()); //or makeshared doesn't matter
+	condition.reset(new av_condition());
 	av_parse_subexpr(p, -1, condition);
 
 	return condition;
@@ -1050,14 +1065,15 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		try {
 			const YAML::Node &target_list = node["Target"];
 
-			for (uint8 i = 0; i < target_list.size() && target_list.size() < MAX_ACHIEVEMENT_OBJECTIVES; i++) {
+			for (auto targetit = target_list.begin(); targetit != target_list.end() && target_list.size() < MAX_ACHIEVEMENT_OBJECTIVES; ++targetit) {
+				const YAML::Node &target = *targetit;
 				int mobid = 0, count = 0;
 
-				if (target_list["MobID"] && (mobid = target_list["MobID"].as<int>()) && !mobdb_exists(mobid)) { // The mob ID field is not required
+				if (target["MobID"] && (mobid = target["MobID"].as<int>()) && !mobdb_exists(mobid)) { // The mob ID field is not required
 					ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source.c_str());
 					continue;
 				}
-				if (target_list["Count"] && (!(count = target_list["Count"].as<int>()) || count <= 0)) {
+				if (target["Count"] && (!(count = target["Count"].as<int>()) || count <= 0)) {
 					ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source.c_str());
 					continue;
 				}
@@ -1178,7 +1194,7 @@ void achievement_read_db(void)
 				count++;
 		}
 		for (auto &achit : achievements) {
-			const auto ach = achit.second.get();
+			const auto ach = achit.second;
 
 			for (int i = 0; i < ach->dependent_ids.size(); i++) {
 				if (!achievement_exists(ach->dependent_ids[i])) {
@@ -1194,9 +1210,8 @@ void achievement_read_db(void)
 }
 
 /**
- * Recursive method to free an achievement condition
+ * Recursive method to free an achievement condition (probably not needed anymore, but just in case)
  * @param condition: Condition to clear
- * nb probably not needed anymore, but just in case
  */
 void achievement_script_free(std::shared_ptr<struct av_condition> condition) 
 {
@@ -1204,6 +1219,9 @@ void achievement_script_free(std::shared_ptr<struct av_condition> condition)
 	condition->right.reset();
 }
 
+/**
+ * Reloads the achievement database
+ */
 void achievement_db_reload(void)
 {
 	if (!battle_config.feature_achievement)
@@ -1212,6 +1230,9 @@ void achievement_db_reload(void)
 	do_init_achievement();
 }
 
+/**
+ * Initializes the achievement database
+ */
 void do_init_achievement(void)
 {
 	if (!battle_config.feature_achievement)
@@ -1219,12 +1240,18 @@ void do_init_achievement(void)
 	achievement_read_db();
 }
 
+/**
+ * Finalizes the achievement database
+ */
 void do_final_achievement(void)
 {
 	achievement_mobs.clear();
 	achievements.clear();
 }
 
+/**
+ * Achievement constructor
+ */
 s_achievement_db::s_achievement_db()
 	: achievement_id(0)
 	, name("")
@@ -1238,6 +1265,9 @@ s_achievement_db::s_achievement_db()
 	, has_dependent(0)
 {}
 
+/**
+ * Achievement reward constructor
+ */
 s_achievement_db::ach_reward::ach_reward()
 	: nameid(0)
 	, amount(0)
@@ -1245,8 +1275,11 @@ s_achievement_db::ach_reward::ach_reward()
 	, title_id(0)
 {}
 
+/**
+ * Achievement reward deconstructor
+ */
 s_achievement_db::ach_reward::~ach_reward()
 {
-  if(script)
-    script_free_code(script);
+	if (script)
+		script_free_code(script);
 }

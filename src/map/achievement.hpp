@@ -73,13 +73,8 @@ struct av_condition {
 	std::shared_ptr<struct av_condition> left;
 	std::shared_ptr<struct av_condition> right;
 	long long value;
-  
-  av_condition()
-  : op(0)
-  , left(nullptr)
-  , right(nullptr)
-  , value(0)
-  {}
+
+	av_condition() : op(0), left(nullptr), right(nullptr), value(0) {}
 };
 
 struct s_achievement_db {
@@ -99,8 +94,8 @@ struct s_achievement_db {
 	} rewards;
 	int score;
 	int has_dependent; // Used for quick updating of achievements that depend on others - this is their ID
-  
-  s_achievement_db();
+
+	s_achievement_db();
 };
 
 bool achievement_exists(int achievement_id);
