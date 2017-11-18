@@ -6,8 +6,6 @@ script constants.
 The actual replacement list is in 'emotion_dict'.
 
 Related pull request: https://github.com/rathena/rathena/pull/2527
-Note: This only applies the constant changes. You still have to check your scripts
-for 'unitemote' (command was removed) and 'emotion' using the third parameter ('target name').
 """
 
 import fileinput
@@ -16,11 +14,14 @@ import os
 import collections
 
 convert_folders =  ["../npc", "../src"]
+parse_dict_file = '../src/map/script_constants.hpp'
 wl_file_extensions = ['.hpp', '.h', '.cpp', '.c', '.txt' ]
 script_file_extensions = ['.txt']
 bl_files = ['script_constants.hpp']
 BACKUP_EXT = '.bak'
-emotion_dict = collections.OrderedDict([
+"""
+This is the old emotion_dict, which is now parsed from script_constants.hpp.
+emotion_dict_old = collections.OrderedDict([
 ('E_GASP', 'ET_SURPRISE'),
 ('E_WHAT', 'ET_QUESTION'),
 ('E_HO', 'ET_DELIGHT'),
@@ -108,17 +109,23 @@ emotion_dict = collections.OrderedDict([
 ('E_YUT4', 'ET_YUT4'),
 ('E_YUT5', 'ET_YUT5'),
 ('E_YUT6', 'ET_YUT6'),
-('E_YUT7', 'ET_YUT7'),
-('E_MAX', 'ET_MAX')
+('E_YUT7', 'ET_YUT7')
 ])
+"""
+def parse_emotion_dict(filepath):
+    ret_list = []
+    with fileinput.FileInput(filepath) as fiFile:
+        for line in fiFile:
+            found = re.search('"(E_[A-Z_0-9]+)"\s*,\s*(ET_[A-Z_0-9]+)\s*', line)
+            if found:
+                ret_list.append((found.group(1), found.group(2)))
+    return ret_list
+
+emotion_dict = collections.OrderedDict(parse_emotion_dict(parse_dict_file))
 
 emotion_array = [val for val in emotion_dict.values()]
-
 pattern_oldconst = re.compile(r'\b(' + '|'.join(emotion_dict.keys()) + r')\b', re.IGNORECASE)
-
 pattern_value = re.compile(r'\b(' + '|'.join(["emotion\s+%d+"%i for i in range(len(emotion_array))]) + r')\b', re.IGNORECASE)
-# print('\b(' + '|'.join(["emotion\s+%d"%i for i in range(len(emotion_array))]) + r')\b')
-
 
 def revert_to_backup(filename):
    os.rename(filename+BACKUP_EXT, filename)
@@ -150,10 +157,13 @@ def apply_substitutions(new_line, is_script):
 
 def replace_emoticons_in_file(filename):
     is_script = True if any([filename.endswith(script_ext) for script_ext in script_file_extensions]) else False
+    remove_backup = True
     with fileinput.FileInput(filename, inplace=True, backup=BACKUP_EXT) as fiFile:
         try:
             for line in fiFile:
-                new_line, remove_backup = apply_substitutions(line, is_script)
+                new_line, rm_backup = apply_substitutions(line, is_script)
+                if not rm_backup:
+                    remove_backup = False
                 print(new_line, end='')
             if remove_backup:
                 os.remove(filename+BACKUP_EXT)
@@ -173,4 +183,4 @@ fileiter = (os.path.join(root, f)
 for f in fileiter:
     print("Updating file", f)
     replace_emoticons_in_file(f)
- 
+    
