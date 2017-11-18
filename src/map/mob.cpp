@@ -3848,10 +3848,16 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		return 0;
 
 	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, mob_id, mob_db(mob_id) == NULL );
-	if(mob_id == MOB_CLONE_END)
+	if(mob_id >= MOB_CLONE_END)
 		return 0;
 
-	db = &mob_db_data[mob_id];
+	try{
+		db = &mob_db_data[mob_id];
+	}catch( std::bad_alloc ){
+		ShowError( "mob_clone_spawn: Memory allocation for clone %hu failed.\n", mob_id );
+		return 0;
+	}
+
 	status = &db->status;
 	strcpy(db->sprite,sd->status.name);
 	strcpy(db->name,sd->status.name);
@@ -4258,8 +4264,14 @@ static bool mob_parse_dbrow(char** str)
 	db = mob_db(mob_id);
 
 	// Finally insert monster's data into the database.
-	if (db == NULL)
-		db = &mob_db_data[mob_id];
+	if (db == NULL) {
+		try{
+			db = &mob_db_data[mob_id];
+		}catch( std::bad_alloc ){
+			ShowError( "Memory allocation for monster %hu failed.\n", mob_id );
+			return false;
+		}
+	}
 
 	memcpy(db, &entry, sizeof(struct mob_db));
 	return true;
@@ -4443,8 +4455,14 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 
 	ms = mob_chat(msg_id);
 
-	if( ms == NULL )
-		ms = &mob_chat_db[msg_id];
+	if( ms == NULL ){
+		try{
+			ms = &mob_chat_db[msg_id];
+		}catch( std::bad_alloc ){
+			ShowError( "mob_parse_row_chatdb: Memory allocation for chat ID '%d' failed.\n", msg_id );
+			return false;
+		}
+	}
 	
 	//MSG ID
 	ms->msg_id=msg_id;
@@ -4953,17 +4971,21 @@ static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
  **/
 static void mob_drop_ratio_adjust(void){
 	for( auto &pair : mob_db_data ){
+		struct mob_db *mob;
 		struct item_data *id;
 		unsigned short nameid;
-		int j, rate, rate_adjust = 0;
+		int j, rate, rate_adjust = 0, mob_id;
 
-		if( mob_is_clone( pair.first ) ){
+		mob_id = pair.first;
+		mob = &pair.second;
+
+		if( mob_is_clone( mob_id ) ){
 			continue;
 		}
 
 		for( j = 0; j < MAX_MVP_DROP_TOTAL; j++ ){
-			nameid = pair.second.mvpitem[j].nameid;
-			rate = pair.second.mvpitem[j].p;
+			nameid = mob->mvpitem[j].nameid;
+			rate = mob->mvpitem[j].p;
 
 			if( nameid == 0 || rate == 0 ){
 				continue;
@@ -4972,7 +4994,7 @@ static void mob_drop_ratio_adjust(void){
 			rate_adjust = battle_config.item_rate_mvp;
 
 			// Adjust the rate if there is an entry in mob_item_ratio
-			item_dropratio_adjust( nameid, pair.first, &rate_adjust );
+			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
 
 			// Adjust rate with given algorithms
 			rate = mob_drop_adjust( rate, rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max );
@@ -4983,9 +5005,9 @@ static void mob_drop_ratio_adjust(void){
 
 				// Item is not known anymore(should never happen)
 				if( !id ){
-					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", pair.second.name, pair.first, nameid );
-					pair.second.mvpitem[j].nameid = 0;
-					pair.second.mvpitem[j].p = 0;
+					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
+					mob->mvpitem[j].nameid = 0;
+					mob->mvpitem[j].p = 0;
 					continue;
 				}
 
@@ -4995,15 +5017,15 @@ static void mob_drop_ratio_adjust(void){
 				}
 			}
 
-			pair.second.mvpitem[j].p = rate;
+			mob->mvpitem[j].p = rate;
 		}
 
 		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
 			unsigned short ratemin, ratemax;
 			bool is_treasurechest;
 
-			nameid = pair.second.dropitem[j].nameid;
-			rate = pair.second.dropitem[j].p;
+			nameid = mob->dropitem[j].nameid;
+			rate = mob->dropitem[j].p;
 
 			if( nameid == 0 || rate == 0 ){
 				continue;
@@ -5013,9 +5035,9 @@ static void mob_drop_ratio_adjust(void){
 
 			// Item is not known anymore(should never happen)
 			if( !id ){
-				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", pair.second.name, pair.first, nameid );
-				pair.second.dropitem[j].nameid = 0;
-				pair.second.dropitem[j].p = 0;
+				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
+				mob->dropitem[j].nameid = 0;
+				mob->dropitem[j].p = 0;
 				continue;
 			}
 
@@ -5024,15 +5046,15 @@ static void mob_drop_ratio_adjust(void){
 			}
 
 			// Treasure box drop rates [Skotlex]
-			if (pair.second.race2 == RC2_TREASURE) {
+			if (mob->race2 == RC2_TREASURE) {
 				is_treasurechest = true;
 
 				rate_adjust = battle_config.item_rate_treasure;
 				ratemin = battle_config.item_drop_treasure_min;
 				ratemax = battle_config.item_drop_treasure_max;
 			} else {
-				bool is_mvp = status_has_mode(&pair.second.status,MD_MVP);
-				bool is_boss = (pair.second.status.class_ == CLASS_BOSS);
+				bool is_mvp = status_has_mode(&mob->status,MD_MVP);
+				bool is_boss = (mob->status.class_ == CLASS_BOSS);
 
 				is_treasurechest = false;
 
@@ -5069,7 +5091,7 @@ static void mob_drop_ratio_adjust(void){
 				}
 			}
 
-			item_dropratio_adjust( nameid, pair.first, &rate_adjust );
+			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
 			rate = mob_drop_adjust( rate, rate_adjust, ratemin, ratemax );
 
 			// calculate and store Max available drop chance of the item
@@ -5088,16 +5110,16 @@ static void mob_drop_ratio_adjust(void){
 				}
 
 				if( k != MAX_SEARCH ){
-					if( id->mob[k].id != pair.first ){
+					if( id->mob[k].id != mob_id ){
 						memmove( &id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]) );
 					}
 
 					id->mob[k].chance = rate;
-					id->mob[k].id = pair.first;
+					id->mob[k].id = mob_id;
 				}
 			}
 
-			pair.second.dropitem[j].p = rate;
+			mob->dropitem[j].p = rate;
 		}
 	}
 
