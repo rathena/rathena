@@ -363,4 +363,8 @@ void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 
+#if MAX_MOB_DB > 51000
+	#error MAX_MOB_DB cannot be that high! Please adjust MAX_MOB_DB to a lower value.
+#endif
+
 #endif /* _MOB_HPP_ */
