@@ -954,7 +954,6 @@ bool itemdb_parse_roulette_db(void);
 struct s_random_opt_data *itemdb_randomopt_exists(short id);
 struct s_random_opt_group *itemdb_randomopt_group_exists(int id);
 
-void itemdb_reload_itemmob_data(void);
 void itemdb_reload(void);
 
 void do_final_itemdb(void);

@@ -9,12 +9,9 @@
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
-struct guardian_data;
+#include <vector>
 
-// Change this to increase the table size in your mob_db to accomodate a larger mob database.
-// Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
-// Notice that the last 1000 entries are used for player clones, so always set this to desired value +1000
-#define MAX_MOB_DB 5000
+struct guardian_data;
 
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
@@ -36,10 +33,6 @@ struct guardian_data;
 
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
-
-// These define the range of available IDs for clones. [Valaris]
-#define MOB_CLONE_START (MAX_MOB_DB-999)
-#define MOB_CLONE_END MAX_MOB_DB
 
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
 #define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
@@ -162,7 +155,9 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
-	struct spawn_info spawn[10];
+	bool has_spawn() const;
+	const std::vector<spawn_info> get_spawns() const;
+	uint16 get_mobid() const {return vd.class_; } // Simple wrapper. The MobID is saved in vd, noone wants to remind that
 };
 
 struct mob_data {
@@ -290,9 +285,8 @@ struct item_drop_list {
 };
 
 struct mob_db *mob_db(int mob_id);
-struct mob_db *mobdb_exists(uint16 mob_id);
-int mobdb_searchname(const char *str);
-int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
+uint16 mobdb_searchname(const char * const str);
+int mobdb_searchname_array(const char *str, uint16 * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
@@ -355,7 +349,9 @@ int mob_is_clone(int mob_id);
 int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration);
 int mob_clone_delete(struct mob_data *md);
 
+void mob_reload_itemmob_data(void);
 void mob_reload(void);
+void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
