@@ -1069,7 +1069,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 				const YAML::Node &target = *targetit;
 				int mobid = 0, count = 0;
 
-				if (target["MobID"] && (mobid = target["MobID"].as<int>()) && !mobdb_exists(mobid)) { // The mob ID field is not required
+				if (target["MobID"] && (mobid = target["MobID"].as<int>()) && mob_db(mobid) == NULL) { // The mob ID field is not required
 					ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source.c_str());
 					continue;
 				}
