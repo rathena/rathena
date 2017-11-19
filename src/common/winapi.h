@@ -1,11 +1,21 @@
 #pragma once
 
+#include <sdkddkver.h>
+
+#ifndef NTDDI_VERSION
+	#define NTDDI_VERSION 	0x05000000 // Windows 2000
+#endif
+#ifndef _WIN32_WINNT
+	#define _WIN32_WINNT  0x0500 // Windows 2000
+#endif
+#ifndef WINVER
+	#define WINVER 0x0500 // Windows 2000
+#endif
+#ifndef _WIN32_IE
+	#define _WIN32_IE 	0x0600 // Internet Explorer 6.0
+#endif
 
 #define STRICT
-#define NTDDI_VERSION 	NTDDI_WIN2K
-#define _WIN32_WINNT  0x0500
-#define WINVER 0x0500
-#define _WIN32_IE 	0x0600
 #define WIN32_LEAN_AND_MEAN
 #define NOCOMM 
 #define NOKANJI
@@ -21,7 +31,9 @@
 #define NOSOUND
 #define NOTEXTMETRIC
 
-#define WINVER_VISTA 0x0600
+#ifndef _WIN32_WINNT_VISTA
+	#define _WIN32_WINNT_VISTA 0x0600
+#endif
 
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_NONSTDC_NO_WARNINGS

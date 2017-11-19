@@ -20,7 +20,7 @@
 #include "winapi.h"
 
 // This checks if C/C++ Compiler Version is 18.00 or Windows is older than Vista
-#if _MSC_VER < 1800 || WINVER < WINVER_VISTA
+#if _MSC_VER < 1800 || WINVER < _WIN32_WINNT_VISTA
 
 #if !defined(_M_X64)
 // When compiling for windows 32bit, the 8byte interlocked operations are not provided by microsoft
