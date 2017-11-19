@@ -380,10 +380,14 @@
 		packet_keys(0x15624100,0x0CE1463E,0x0E5D6534);
 	#elif PACKETVER == 20171002 // 2017-10-02cRagexeRE
 		packet_keys(0x15E1716C,0x4E765B63,0x357D2370);
-	#elif PACKETVER == 20171011 // 2017-10-11aRagexeREor 2017-10-11bRagexeRE
+	#elif PACKETVER == 20171011 // 2017-10-11aRagexeRE or 2017-10-11bRagexeRE
 		packet_keys(0x4F121B3E,0x12670E17,0x19896C11);
 	#elif PACKETVER == 20171018 // 2017-10-18aRagexeRE
 		packet_keys(0x2CAA109C,0x158C1EC2,0x7A5E58F3);
+	#elif PACKETVER == 20171025 // 2017-10-25bRagexeRE or 2017-10-25cRagexeRE or 2017-10-25dRagexeRE or 2017-10-25eRagexeRE
+		packet_keys(0x165C565C,0x565C565C,0x565C565C);
+	#elif PACKETVER == 20171101 // 2017-11-01bRagexeRE
+		packet_keys(0x7056317F,0x7EEE0589,0x02672373);
 	#elif PACKETVER > 20110817
 		#error Unsupported packet version.
 	#endif

@@ -3486,7 +3486,7 @@
 5357,Wings_Of_Victory,Wings Of Victory,4,20,,200,,10,,0,0xFFFFFFFF,63,2,768,,0,0,365,{ bonus bMdef,10; bonus bUnbreakableHelm,1; },{},{}
 5358,Pecopeco_Wing_Ears,Peco Ears,4,20,,100,,2,,0,0xFFFFFFFF,63,2,512,,70,0,366,{ bonus bAgi,1; bonus bMdef,2; bonus bUnbreakableHelm,1; },{},{}
 5359,J_Captain_Hat,Ship Captain Hat,4,20,,300,,3,,1,0xFFFFFFFF,63,2,256,,60,1,367,{ bonus bDex,1; bonus bMaxHP,100; bonus bLongAtkRate,7; },{},{}
-5360,Whikebain_Ears,Hyuke's Black Cat Ears,4,20,,200,,4,,0,0xFFFFFFFF,63,2,256,,45,1,368,{ bonus bFlee,10; bonus bCritical,3; bonus bCritAtkRate,10; bonus bDefRate,-50; bonus bDef2Rate,-50; },{},{}
+5360,Whikebain_Ears,Hyuke's Black Cat Ears,4,20,,200,,4,,0,0xFFFFFFFE,63,2,256,,45,1,368,{ bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_ALL,25; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_AGIUP; }"; },{},{}
 5361,Gang_Scarf,Gangster Scarf,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,369,{ bonus bBaseAtk,5; if(BaseJob==Job_Rogue) skill "RG_GANGSTER",1; },{},{}
 5362,Ninja_Scroll,Ninja Scroll,4,20,,200,,0,,0,0xFFFFFFFF,63,2,1,,0,0,370,{ bonus bMatkRate,1; },{},{}
 5363,Helm_Of_Abyss,Helm Of Abyss,4,20,,1000,,9,,1,0x000654E2,63,2,256,,70,1,371,{ bonus2 bSubClass,Class_Normal,-5; bonus2 bSubClass,Class_Boss,10; },{},{}
@@ -9866,7 +9866,7 @@
 19093,Spinning_Eyes_,Geek Glasses,4,20000,,100,,1,,1,0xFFFFFFFF,63,2,512,,0,0,27,{ bonus2 bResEff,Eff_Blind,800; },{},{}
 19094,Mr_Smile_,Mr. Smile,4,60,,100,,1,,1,0xFFFFFFFF,63,2,513,,0,0,65,{},{},{}
 19095,Happy_Balloon,Happy Balloon,4,0,,10,,0,,0,0xFFFFFFFF,63,2,1,,1,0,1289,{ bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; },{},{}
-19109,Valhalla_Idol,Valhalla Idol,4,0,,300,,2,,0,0xFFFFFFFF,63,2,512,,70,0,1423,{ bonus bMaxSP,50; bonus3 bAutoSpell,"MG_SAFETYWALL",10,50; },{},{}
+19109,Valhalla_Idol,Valhalla Idol,4,0,,300,,2,,0,0xFFFFFFFF,63,2,512,,70,0,1423,{ bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0; },{},{}
 19111,Laser_Of_Eagle,Laser of Eagle,4,0,,400,,5,,1,0xFFFFFFFF,63,2,256,,100,1,1424,{ bonus bDex,2; bonus bLongAtkRate,10; bonus5 bAutoSpell,"PR_LEXAETERNA",1,50,BF_LONG,1; /*TODO: Chance to transform become Shechil while attacking.*/ },{},{}
 19116,Red_Baby_Dragon,Red Baby Dragon,4,0,,700,,,1,1,0xFFFFFFFF,63,2,256,,90,1,1463,{ .@r=getrefine(); bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; if (.@r>=6) { bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; } if (.@r>=8) { bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; } },{},{}
 19117,Poring_Sunglasses_,Poring Sunglasses,4,0,,10,,0,,0,0xFFFFFFFF,63,2,512,,1,0,954,{ bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; },{},{}
@@ -9878,7 +9878,7 @@
 19131,Radio_Antenna_,Radio Antenna,4,0,,1500,,2,,1,0xFFFFFFFF,63,2,256,,1,1,347,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; skill "MG_LIGHTNINGBOLT",1; bonus4 bAutoSpellWhenHit,"MG_THUNDERSTORM",5,30,1; },{},{}
 19132,Masquerade_,Masquerade,4,20,,100,,0,,1,0xFFFFFFFE,63,2,512,,0,0,78,{ bonus2 bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; },{},{}
 19133,Odin_Mask_,Odin's Mask,4,20,,100,,1,,1,0xFFFFFFFF,63,2,513,,1,0,480,{ bonus2 bSubClass,Class_Boss,2; },{},{}
-19134,Wickebines_Black_Cat_Ears,Wickebine's Black Cat Ears,4,20,,200,,4,,1,0xFFFFFFFF,63,2,256,,1,1,368,{},{},{}
+19134,Wickebines_Black_Cat_Ears,Wickebine's Black Cat Ears,4,20,,200,,4,,1,0xFFFFFFFE,63,2,256,,45,1,368,{ bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_ALL,25; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_AGIUP; }"; },{},{}
 19138,Seraphim_Coronet,Seraphim Coronet,4,20,,300,,0,,0,0xFFFFFFFF,63,2,512,,70,0,1487,{ bonus bStr,2; .@int = readparam(bInt); bonus bBaseAtk,(.@int/8)*5; bonus bHealPower,.@int/8; bonus bVariableCastrate,.@int/8; if ((.@int>108)) { bonus bBaseAtk,50; bonus bHealPower,5; bonus bVariableCastrate,4; } if ((.@int>120)) { bonus bBaseAtk,75; bonus bHealPower,5; bonus bVariableCastrate,2; } },{},{}
 19139,SurviveOrb,Survive Orb,4,0,,300,,,,0,0xFFFFFFFF,63,2,1,,50,0,1488,{ skill "TF_HIDING",1; bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; bonus bVariableCastrate,-3; },{},{}
 19140,Squirrel_Ear_Hat,Squirrel Ear Hat,4,0,,200,,10,,1,0xFFFFFFFF,63,2,256,,100,1,1486,{ .@r = getrefine(); bonus bAspd,1; bonus bCriticalLong,5; bonus bCritAtkRate,10; bonus2 bIgnoreDefRaceRate,RC_All,10; if (.@r > 4) { bonus bAspd,1; bonus bCriticalLong,10; bonus bCritAtkRate,2; bonus2 bIgnoreDefRaceRate,RC_All,20; } if (.@r > 6) { bonus bAspd,1; bonus bCriticalLong,15; bonus bCritAtkRate,6; bonus2 bIgnoreDefRaceRate,RC_All,30; } if (.@r > 8) { bonus bAspd,1; bonus bCriticalLong,20; bonus bCritAtkRate,12; bonus2 bIgnoreDefRaceRate,RC_All,40; autobonus "{ bonus bCritAtkRate,100; }",70,5000; } },{},{}
