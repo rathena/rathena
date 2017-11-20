@@ -97,6 +97,22 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 }
 
 /**
+ * Calculates taxes for vending
+ * @param sd: Vender
+ * @param zeny: Amount of zeny to tax
+ * @return Taxed total amount
+ */
+static void vending_calc_tax(struct map_session_data *sd, double &zeny)
+{
+	if (battle_config.vending_tax) // Use custom value
+		zeny -= zeny * (battle_config.vending_tax / 10000.);
+	else { // Official servers incur a 5% tax on 100+ million
+		if (zeny >= 100000000)
+			zeny -= zeny * (5 / 100.);
+	}
+}
+
+/**
  * Purchase item(s) from a shop
  * @param sd : buyer player session
  * @param aid : account id of vender
@@ -200,8 +216,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 	pc_payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd);
 	achievement_update_objective(sd, AG_SPEND_ZENY, 1, (int)z);
-	if( battle_config.vending_tax )
-		z -= z * (battle_config.vending_tax/10000.);
+	vending_calc_tax(sd, z);
 	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd);
 
 	for( i = 0; i < count; i++ ) {
@@ -226,8 +241,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		}
 
 		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
-		if( battle_config.vending_tax )
-			z -= z * (battle_config.vending_tax/10000.);
+		vending_calc_tax(sd, z);
 		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z);
 
 		//print buyer's name
