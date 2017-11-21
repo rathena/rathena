@@ -104,12 +104,8 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
  */
 static double vending_calc_tax(struct map_session_data *sd, double zeny)
 {
-	if (battle_config.vending_tax > 0) // Use custom value
+	if (battle_config.vending_tax && zeny >= battle_config.vending_tax_min)
 		zeny -= zeny * (battle_config.vending_tax / 10000.);
-	else if (battle_config.vending_tax == -1) { // Official servers incur a 5% tax on 100+ million
-		if (zeny >= 100000000)
-			zeny -= zeny * (5 / 100.);
-	}
 
 	return zeny;
 }
