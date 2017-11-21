@@ -155,9 +155,6 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
-	bool has_spawn() const;
-	const std::vector<spawn_info> get_spawns() const;
-	uint16 get_mobid() const {return vd.class_; } // Simple wrapper. The MobID is saved in vd, noone wants to remind that
 };
 
 struct mob_data {
@@ -352,6 +349,8 @@ int mob_clone_delete(struct mob_data *md);
 void mob_reload_itemmob_data(void);
 void mob_reload(void);
 void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
+const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
+bool mob_has_spawn(uint16 mob_id);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);

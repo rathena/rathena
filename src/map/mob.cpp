@@ -303,7 +303,7 @@ static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool ful
 	
 	if( mobdb_checkid(mob_id) <= 0 )
 		return false; // invalid mob_id (includes clone check)
-	if(!mob->base_exp && !mob->job_exp && !mob->has_spawn())
+	if(!mob->base_exp && !mob->job_exp && !mob_has_spawn(mob_id))
 		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if( full_cmp ) {
 		// str must equal the db value
@@ -531,7 +531,7 @@ int mob_get_random_id(int type, int flag, int lv)
 		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
 		(flag&0x02 && lv < mob->lv) ||
 		(flag&0x04 && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
-		(flag&0x08 && !mob->has_spawn()) ||
+		(flag&0x08 && !mob_has_spawn(mob_id)) ||
 		(flag&0x10 && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
 	) && (i++) < MAX_MOB_DB && msummon->count > 1);
 
@@ -3150,10 +3150,11 @@ int mob_random_class(int *value, size_t count)
 /**
 * Returns the SpawnInfos of the mob_db entry (mob_spawn_data[mobid])
 * if mobid is not in mob_spawn_data returns empty spawn_info vector
+* @param mob_id - Looking for spawns of this Monster ID
 */
-const std::vector<spawn_info> mob_db::get_spawns() const
+const std::vector<spawn_info> mob_get_spawns(uint16 mob_id)
 {
-	auto mob_spawn_it = mob_spawn_data.find(this->get_mobid());
+	auto mob_spawn_it = mob_spawn_data.find(mob_id);
 	if ( mob_spawn_it != mob_spawn_data.end() )
 		return mob_spawn_it->second;
 	return std::vector<spawn_info>();
@@ -3161,12 +3162,13 @@ const std::vector<spawn_info> mob_db::get_spawns() const
 
 /**
  * Checks if a monster is spawned. Returns true if yes, false otherwise.
+ * @param mob_id - Monster ID which is checked
 */
-bool mob_db::has_spawn() const
+bool mob_has_spawn(uint16 mob_id)
 {
 	// It's enough to check if the monster is in mob_spawn_data, because
 	// none or empty spawns are ignored. Thus the monster is spawned.
-	return mob_spawn_data.find(this->get_mobid()) != mob_spawn_data.end();
+	return mob_spawn_data.find(mob_id) != mob_spawn_data.end();
 }
 
 /**

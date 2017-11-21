@@ -7865,17 +7865,20 @@ ACMD_FUNC(whereis)
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
-		const std::vector<spawn_info> spawns = mob->get_spawns();
-		for(auto& spawn : spawns)
-		{
-			int16 mapid = map_mapindex2mapid(spawn.mapindex);
-			if (mapid < 0)
-				continue;
-			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawn.qty);
-			clif_displaymessage(fd, atcmd_output);
+		const std::vector<spawn_info> spawns = mob_get_spawns(mob_id);
+		if (spawns.size() <= 0) {
+			 // This monster does not spawn normally.
+			clif_displaymessage(fd, msg_txt(sd,1290));
+		} else {
+			for(auto& spawn : spawns)
+			{
+				int16 mapid = map_mapindex2mapid(spawn.mapindex);
+				if (mapid < 0)
+					continue;
+				snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawn.qty);
+				clif_displaymessage(fd, atcmd_output);
+			}
 		}
-		if (spawns.size() <= 0)
-			clif_displaymessage(fd, msg_txt(sd,1290)); // This monster does not spawn normally.
 	}
 
 	return 0;
