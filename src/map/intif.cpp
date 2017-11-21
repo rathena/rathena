@@ -2130,12 +2130,13 @@ void intif_parse_achievements(int fd)
 			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
 
 		for (i = 0; i < num_received; i++) {
-			struct achievement_db *adb = achievement_search(received[i].achievement_id);
 
-			if (!adb) {
+			if (!achievement_exists(received[i].achievement_id)) {
 				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
 				continue;
 			}
+
+			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 
@@ -2220,7 +2221,7 @@ void intif_parse_achievementreward(int fd){
 /**
  * Request the achievement rewards from the inter server.
  */
-int intif_achievement_reward(struct map_session_data *sd, struct achievement_db *adb){
+int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_db *adb){
 	if( CheckForCharServer() ){
 		return 0;
 	}
@@ -2232,7 +2233,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct achievement_db 
 	WFIFOW(inter_fd, 10) = adb->rewards.nameid;
 	WFIFOL(inter_fd, 12) = adb->rewards.amount;
 	safestrncpy(WFIFOCP(inter_fd, 16), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name, ACHIEVEMENT_NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
 	WFIFOSET(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 
 	return 1;
