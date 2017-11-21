@@ -6318,20 +6318,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	//Apply DAMAGE_DIV_FIX and check for min damage
 	ad = battle_apply_div_fix(ad, skill_id);
 
-	switch(skill_id) { // These skills will do a GVG fix later
 #ifdef RENEWAL
+	switch(skill_id) {
 		case ASC_BREAKER:
 		case CR_ACIDDEMONSTRATION:
 			return ad; //These skills will do a GVG fix later
-#endif
-		default:
-			ad.damage = battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
-			if (map_flag_gvg2(target->m))
-				ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
-			else if (map[target->m].flag.battleground)
-				ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
-			break;
 	}
+#endif
+
+	ad.damage = battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
+	if (map_flag_gvg2(target->m))
+		ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
+	else if (map[target->m].flag.battleground)
+		ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
 
 	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
