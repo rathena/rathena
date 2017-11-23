@@ -7,6 +7,13 @@
 //#define DEBUG_HASH
 //#define DEBUG_DUMP_STACK
 
+#include "script.hpp"
+
+#include <math.h>
+#include <stdlib.h> // atoi, strtol, strtoll, exit
+#include <setjmp.h>
+#include <errno.h>
+
 #ifdef PCRE_SUPPORT
 #include "../../3rdparty/pcre/include/pcre.h" // preg_match
 #endif
@@ -21,6 +28,7 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
+#include "../common/ers.h"  // ers_destroy
 #ifdef BETA_THREAD_TEST
 	#include "../common/atomic.h"
 	#include "../common/spinlock.h"
@@ -28,38 +36,36 @@
 	#include "../common/mutex.h"
 #endif
 
-#include "map.h"
-#include "path.h"
-#include "clan.h"
-#include "clif.h"
-#include "chrif.h"
-#include "date.h" // date type enum, date_get()
-#include "itemdb.h"
-#include "pc.h"
-#include "storage.h"
-#include "pet.h"
-#include "mapreg.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "mercenary.h"
-#include "intif.h"
-#include "chat.h"
-#include "battleground.h"
-#include "party.h"
-#include "mail.h"
-#include "quest.h"
-#include "elemental.h"
-#include "channel.h"
-#include "achievement.h"
-
-#include <math.h>
-#include <stdlib.h> // atoi, strtol, strtoll, exit
-#include <setjmp.h>
-#include <errno.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "map.hpp"
+#include "path.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
+#include "chrif.hpp"
+#include "date.hpp" // date type enum, date_get()
+#include "itemdb.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "storage.hpp"
+#include "pet.hpp"
+#include "mapreg.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "mercenary.hpp"
+#include "intif.hpp"
+#include "chat.hpp"
+#include "battleground.hpp"
+#include "party.hpp"
+#include "mail.hpp"
+#include "quest.hpp"
+#include "elemental.hpp"
+#include "npc.hpp"
+#include "guild.hpp"
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "log.hpp"
+#include "mob.hpp"
+#include "channel.hpp"
+#include "achievement.hpp"
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -2403,7 +2409,7 @@ static void read_constdb(void)
  * Sets source-end constants for NPC scripts to access.
  **/
 void script_hardcoded_constants(void) {
-	#include "script_constants.h"
+	#include "script_constants.hpp"
 }
 
 /*==========================================
@@ -3112,7 +3118,7 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
  *
  * TODO: return values are screwed up, have been for some time (reaad: years), e.g. some functions return 1 failure and success.
  *------------------------------------------*/
-int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
+int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
 
@@ -3238,7 +3244,7 @@ int set_var(struct map_session_data* sd, char* name, void* val)
 	return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
 }
 
-void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem, void *value, struct reg_db *ref)
+void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref)
 {
 	set_reg(st, sd, reference_uid(add_str(varname),elem), varname, value, ref);
 }
@@ -11463,7 +11469,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, E_SWT);
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11498,9 +11504,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion(&sd->bl, E_SWT);
+			clif_emotion(&sd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, E_SWT);
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -11530,16 +11536,16 @@ BUILDIN_FUNC(morphembryo)
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
-				clif_emotion(&sd->bl, E_SWT); // Fail to avoid item drop exploit.
+				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion(&sd->hd->bl, E_SWT);
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, E_SWT);
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -12698,38 +12704,28 @@ BUILDIN_FUNC(gvgoff3)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- *	Shows an emoticon on top of the player/npc
- *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
- *------------------------------------------*/
-//Optional second parameter added by [Skotlex]
+/**
+ * Shows an emotion on top of a NPC by default or the given GID
+ * emotion <emotion ID>{,<target ID>};
+ */
 BUILDIN_FUNC(emotion)
 {
-	int type;
-	int player=0;
+	struct block_list *bl = NULL;
+	int type = script_getnum(st,2);
 
-	type=script_getnum(st,2);
-	if(type < 0 || type > 100)
-		return SCRIPT_CMD_SUCCESS;
+	if (type < ET_SURPRISE || type >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	if( script_hasdata(st,3) )
-		player=script_getnum(st,3);
+	if (script_hasdata(st, 3) && !script_rid2bl(3, bl)) {
+		ShowWarning("buildin_emotion: Unknown game ID supplied %d.\n", script_getnum(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (!bl)
+		bl = map_id2bl(st->oid);
 
-	if (player) {
-		TBL_PC *sd = NULL;
-
-		if( script_nick2sd(4,sd) ){
-			clif_emotion(&sd->bl, type);
-		}			
-	} else
-		if( script_hasdata(st,4) )
-		{
-			TBL_NPC *nd = npc_name2id(script_getstr(st,4));
-			if(nd)
-				clif_emotion(&nd->bl,type);
-		}
-		else
-			clif_emotion(map_id2bl(st->oid),type);
+	clif_emotion(bl, type);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17073,7 +17069,7 @@ BUILDIN_FUNC(addmonsterdrop)
 		if(c) { //Fill in the slot with the item and rate
 			mob->dropitem[c].nameid = item_id;
 			mob->dropitem[c].p = (rate > 10000)?10000:rate;
-			itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+			mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 			script_pushint(st,1);
 		} else //No place to put the new drop
 			script_pushint(st,0);
@@ -17119,7 +17115,7 @@ BUILDIN_FUNC(delmonsterdrop)
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
-				itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+				mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
 			}
@@ -18492,7 +18488,7 @@ BUILDIN_FUNC(unittalk)
 ///
 /// unitemote <unit_id>,<emotion>;
 ///
-/// @see e_* in db/const.txt
+/// @see ET_* in script_constants.h
 BUILDIN_FUNC(unitemote)
 {
 	int emotion;
@@ -18500,7 +18496,12 @@ BUILDIN_FUNC(unitemote)
 
 	emotion = script_getnum(st,3);
 
-	if(script_rid2bl(2,bl))
+	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_rid2bl(2,bl))
 		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -23373,7 +23374,7 @@ BUILDIN_FUNC(achievementadd) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementadd: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23410,7 +23411,7 @@ BUILDIN_FUNC(achievementremove) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementremove: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
@@ -23446,7 +23447,7 @@ BUILDIN_FUNC(achievementinfo) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementinfo: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23480,7 +23481,7 @@ BUILDIN_FUNC(achievementcomplete) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementcomplete: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23517,7 +23518,7 @@ BUILDIN_FUNC(achievementexists) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementexists: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
@@ -23556,7 +23557,7 @@ BUILDIN_FUNC(achievementupdate) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementupdate: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23926,7 +23927,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pvpoff,"s"),
 	BUILDIN_DEF(gvgon,"s"),
 	BUILDIN_DEF(gvgoff,"s"),
-	BUILDIN_DEF(emotion,"i??"),
+	BUILDIN_DEF(emotion,"i?"),
 	BUILDIN_DEF(maprespawnguildid,"sii"),
 	BUILDIN_DEF(agitstart,""),	// <Agit>
 	BUILDIN_DEF(agitend,""),
@@ -24102,7 +24103,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
-	BUILDIN_DEF(unitemote,"ii"),
+	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
 // <--- [zBuffer] List of unit control commands
@@ -24321,7 +24322,3 @@ struct script_function buildin_func[] = {
 
 	{NULL,NULL,NULL},
 };
-
-#ifdef __cplusplus
-}
-#endif

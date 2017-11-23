@@ -23,7 +23,7 @@ prontera,114,81,5	script	RWC2011 Agent#2	407,{
 	if (oversea_event == 0) {
 		mes "[New Agent]";
 		mes "Wow~ Finally!! It's the season we've all been waiting for!";
-		emotion e_lv2;
+		emotion ET_BIGTHROB;
 		next;
 		mes "[New Agent]";
 		mes "It's RWC time!";
@@ -134,7 +134,7 @@ prontera,114,81,5	script	RWC2011 Agent#2	407,{
 		mes "[New Agent]";
 		mes "If you see the Golden Poring, could you please find the precious blue cards for me?";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "- He looks at you with imploring eyes. -";
 		next;
 		if(select("Ok, I will help you!:How much money can you offer me?") == 2) {

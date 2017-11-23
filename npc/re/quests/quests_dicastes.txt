@@ -1333,7 +1333,7 @@ OnTouch:
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		sc_end SC_Blind;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		set ep13_3_secret, 14;
 		erasequest 7198;
 		close2;
@@ -1538,7 +1538,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		SC_End SC_Blind;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		set ep13_3_secret, 14;
 		erasequest 7198;
 		close2;
@@ -4594,7 +4594,7 @@ dic_fild01,231,174,5	script	BK#ep133_18	496,{
 			mes "What do you want.";
 			mes "Why are you harassing me.";
 			mes "Bully... sob";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[BK]";
 			mes "Okay. I will cooperate.";
@@ -5073,7 +5073,7 @@ dic_in01,165,104,0	script	Frede#13_3_in	454,{
 			mes "[Frede]";
 			mes "Oh my!! Why are you sweating so much!";
 			mes "You look a little pale too......";
-			emotion e_omg;
+			emotion ET_HUK;
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "No, it's nothing.";
@@ -6424,7 +6424,7 @@ function	script	eldicastes_c	{
 			mes "Commander!";
 			mes "You've come at such short notice.";
 			mes "Is there a situation?";
-			emotion e_omg,0,"Hound#ep133_is06";
+			emotion ET_HUK, getnpcid(0, "Hound#ep133_is06");
 			next;
 			mes "[Hibba Agip]";
 			mes "Huh? Nothing.";
@@ -6489,8 +6489,8 @@ function	script	eldicastes_c	{
 			setquest 7185;
 			next;
 			disablenpc "Hibba Agip#ep133_is07";
-			emotion e_swt2,0,"Hound#ep133_is06";
-			emotion e_swt2,0,"Sapha from Manuk";
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Hound#ep133_is06");
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Sapha from Manuk");
 			mes "Commander Hibba Agip quickly left the room after saying what he wanted to say.";
 			mes "First, let's listen to Vyhannus's story.";
 			close;
@@ -7471,7 +7471,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 		mes "It breaks my heart to think my colleagues will be shivering in the blizzard. I hope I don't get into trouble since I can't do anything about it, right?";
 		next;
 		if (select ("Why don't you collect it yourself?:I'm sorry to hear that.") == 1) {
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Cat Hand Agent]";
 				mes "Human!! You're a genius!!";
 				mes "How did you come up with that?";
@@ -7598,7 +7598,7 @@ moc_fild20,368,197,3	script	Cat#to22	876,{
 		mes "The small body isn't as tall as your ankle and its small but thick paws look like little cushions. The ears that bent backwards when it looked at how big you were stirred up your protective instinct.";
 		next;
 		mes "You don't seem to have the nerve to step on the Cat Hand Agent.";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	mes "You look at the Cat Hand Agent's small back and climb over the wall as quick as possible so that it wouldn't notice your weight.";

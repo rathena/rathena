@@ -110,7 +110,7 @@
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Blacksmith Mighty Hammer]";
 		mes "The sound refreshes my mind everytime I hear it.";
 		mes "Here, have it. Refine succeeded flawlessly!";
@@ -118,7 +118,7 @@
 	}
 	downrefitem .@part;
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Blacksmith Mighty Hammer]";
 	mes "Oops!!";
 	next;
@@ -257,7 +257,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Basta]";
 		mes "Great! Nicely done!!";
 		mes "I really am the best blacksmith in the whole wide world!";
@@ -265,7 +265,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	}
 	downrefitem .@part;
 	next;
-	emotion (!rand(5))?e_cash:e_omg;
+	emotion (!rand(5))?ET_MONEY:ET_HUK;
 	mes "[Basta]";
 	mes "Aaaaaaaaaaak!!!";
 	next;

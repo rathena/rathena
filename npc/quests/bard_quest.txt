@@ -2908,7 +2908,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 	mes "What is it?";
 	next;
 	if (Sex == SEX_FEMALE) {
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Energetic Young Man]";
 		mes "Oh...!";
 		mes "A beautiful,";
@@ -2932,7 +2932,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 			next;
 			mes "[Energetic Young Man]";
 			mes "I shall remember your name, my lady. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
-			emotion e_kis;
+			emotion ET_CHUP;
 			close;
 
 		} else {
@@ -2940,7 +2940,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 			next;
 			mes "[Energetic Young Man]";
 			mes "Eh, whatever. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 
