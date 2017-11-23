@@ -749,3 +749,29 @@ function	script	F_GetPlatinumSkills	{
 	}
 	return;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+// if Return then it's true.
+// Example: callfunc("F_InstanceEnter","Endless Tower","e_tower");
+//this text will be edited after replacing all the enter code in the instences files
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_InstanceEnter	{
+.@instance_name$ = getarg(0);
+.@map_name$ = getarg(1);
+	switch(instance_enter(.@instance_name$)){
+	case IE_OTHER:
+		mes "An unknown error has occurred.";
+		close;
+	case IE_NOINSTANCE:
+		mes "The memorial dungeon " + .@instance_name$ + " does not exist.";
+		mes "The party leader did not generate the dungeon yet.";
+		close;
+	case IE_NOMEMBER:
+		mes "You can enter the dungeon after making the party.";
+		close;
+	case IE_OK:
+		mapannounce .@map_name$, strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, " + .@instance_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+		return;
+	}
+}
+
