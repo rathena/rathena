@@ -171,13 +171,12 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
  * @return True on completed, false if not
  */
 static bool achievement_done(struct map_session_data *sd, int achievement_id) {
-	auto &adb = achievements[achievement_id];
-	struct achievement *ach_data = sd->achievement_data.achievements;
+	for (int i = 0; i < sd->achievement_data.count; i++) {
+		if (sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0)
+			return true;
+	}
 
-	return (std::find_if(adb->dependent_ids.begin(), adb->dependent_ids.end(), [&achievement_id, &ach_data]
-	(const int &d) {
-		return (ach_data[d].achievement_id == achievement_id && ach_data[d].completed > 0);
-	}) != adb->dependent_ids.end());
+	return false;
 }
 
 /**
