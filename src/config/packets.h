@@ -14,6 +14,7 @@
 
 #ifndef PACKETVER_RE
 	/// From this point on only kRO RE clients are supported
+	/// Do not edit this unless you use Ragexe version 2016 and more not(RagexeRE)
 	#if PACKETVER > 20151104
 		#define PACKETVER_RE
 	#endif
