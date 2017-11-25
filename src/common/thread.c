@@ -48,7 +48,7 @@ struct rAthread {
 
 
 #ifdef HAS_TLS
-__thread int g_rathread_ID = -1;
+__thread int g_rathread_ID = RA_INVALID_THID; //this must match rathena_saThreadInvalidID
 #endif
 
 
@@ -56,6 +56,12 @@ __thread int g_rathread_ID = -1;
 /// Subystem Code
 ///
 static struct rAthread l_threads[RA_THREADS_MAX];
+
+prAthread rathenat_getThread( int idx ) {
+  if(idx < RA_THREADS_MAX)
+    return &l_threads[idx];
+  return NULL;
+}
 
 void rathread_init(){
 	register unsigned int i;
@@ -70,7 +76,11 @@ void rathread_init(){
 	g_rathread_ID = 0;
 #endif
 	l_threads[0].prio = RAT_PRIO_NORMAL;
-	l_threads[0].proc = (rAthreadProc)0xDEADCAFE;
+#if defined(_WIN64) || defined(__x86_64__) || defined(__ppc64__)
+	l_threads[0].proc = (rAthreadProc)0xDEADCAFEDEADCAFE;
+#else
+  l_threads[0].proc = (rAthreadProc)0xDEADCAFE;
+#endif
 
 }//end: rathread_init()
 
