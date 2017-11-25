@@ -755,30 +755,33 @@ function	script	F_GetPlatinumSkills	{
 //	if Return then it's true.
 //	this text will be edited after replacing all the enter code in the instences files
 //	Example: 
-//	callfunc("F_InstanceEnter","Endless Tower");
-//	callfunc("F_InstanceEnter","Endless Tower","e_tower");
-//	callfunc("F_InstanceEnter","Endless Tower","e_tower","Tower Protection Stone");
+//	callfunc("F_GenericInstanceEnter","Endless Tower");
+//	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
+//	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower","[Tower Protection Stone]");
 //////////////////////////////////////////////////////////////////////////////////
-function	script	F_InstanceEnter	{
-.@instance_name$ = getarg(0);
-.@map_name$ = getarg(1);
-.@npc_name$ = getarg(2);
-	switch(instance_enter(.@instance_name$)){
+function	script	F_GenericInstanceEnter	{
+	if(getargcount() == 0){
+		debugmes "NPC Name " + strnpcinfo(3) + " Blind callfunc F_GenericInstanceEnter";
+		debugmes "F_GenericInstanceEnter Function have 0 Argument";
+		mes "An unknown error has occurred.";
+		end;
+	}
+	switch(instance_enter(getarg(0))){
 	case IE_OTHER:
-		if(.@npc_name$ != "null") mes getarg(2);
+		if(getargcount() >= 2) mes getarg(2);
 		mes "An unknown error has occurred.";
 		close;
 	case IE_NOINSTANCE:
-		if(.@npc_name$ != "null") mes getarg(2);
+		if(getargcount() >= 2) mes getarg(2);
 		mes "The memorial dungeon " + .@instance_name$ + " does not exist.";
 		mes "The party leader did not generate the dungeon yet.";
 		close;
 	case IE_NOMEMBER:
-		if(.@npc_name$ != "null") mes getarg(2);
+		if(getargcount() >= 2) mes getarg(2);
 		mes "You can enter the dungeon after making the party.";
 		close;
 	case IE_OK:
-		if(.@map_name$ != "null") mapannounce .@map_name$, strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, " + .@instance_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+		if(getargcount() >= 1) mapannounce getarg(1), strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, " + .@instance_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 		return;
 	}
 }

@@ -231,7 +231,12 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 				mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
 				close;
 			case 2:
-				callsub L_Enter,0,1;
+				callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
+				set etower_timer,gettimetick(2);
+				set etower_partyid, getcharid(1);
+				setquest 60200;
+				setquest 60201;
+				close;
 			case 3:
 				mes "I will move you to Alberta.";
 				close2;
@@ -243,7 +248,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		}
 		switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
 		case 1:
-			callfunc("F_InstanceEnter","Endless Tower","e_tower");
+			callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
 			set etower_timer,gettimetick(2);
 			set etower_partyid, getcharid(1);
 			setquest 60200;
@@ -264,7 +269,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			next;
 			switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
 			case 1:
-				callfunc("F_InstanceEnter","Endless Tower","e_tower");
+				callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
 				close;
 			case 2:
 				mes "I will move you to Alberta.";
