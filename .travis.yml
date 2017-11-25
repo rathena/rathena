@@ -36,7 +36,10 @@ script:
   - ./configure $CONFIGURE_FLAGS
   - make clean
   - make server
+  - ./login-server --run-once
+  - ./char-server --run-once
   - ./map-server --run-once
+  - ./athena-start start && sleep 60 && ./athena-start stop
 
 env:
   global:
