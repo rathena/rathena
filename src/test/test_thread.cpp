@@ -15,7 +15,7 @@ namespace ra
        ShowStatus( "Entering thread_test\n" );
        int lTHID = rathread_get_tid();
        ShowStatus( "test th id=%d\n",lTHID); 
-       std::this_thread::sleep_for(std::chrono::seconds(5));
+       std::this_thread::sleep_for(std::chrono::milliseconds(500));
        ShowStatus( "Leaving thread_test\n" );
        return nullptr;
     }
@@ -38,3 +38,11 @@ namespace ra
 
   }
 }
+
+/* Expected result
+[Status]: Testing thread_creation_and_wait
+[Status]: Entering thread_test
+[Status]: test th id=1
+[Status]: Continuing main th id=0
+[Status]: Leaving thread_test
+*/
