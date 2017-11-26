@@ -286,55 +286,29 @@ S_Enter:
 		mes "When you finish everything,";
 		mes "please talk to me again.";
 		mes "I really appreciate it.";
-		break;
+		close3;
 	case 2:
-		switch( instance_enter(.@md_name$) ) {
-		case IE_OTHER:
-			mes "[Nurse Maenne]";
-			mes "A critical situation has happened.";
-			mes "You can't go up to the 2nd floor.";
-			break;
-		case IE_NOINSTANCE:
-			mes "[Nurse Maenne]";
-			mes "You can't go up to";
-			mes "the 2nd floor now.";
-			break;
-		case IE_NOMEMBER:
-			mes "[Nurse Maenne]";
-			mes "It's too dangerous to go";
-			mes "up to the 2nd floor alone.";
-			mes "Please come here with";
-			mes "several people.";
-			break;
-		case IE_OK:
-			mapannounce "ma_dun01", getpartyname(getcharid(1)) + " party's " + strcharinfo(0) + " member entered " + .@md_name$ + ".",bc_map,"0x00ff99";
-			if (getarg(0) == true) {
-				if (checkquest(9223) > -1) {
-					completequest 9223;
-					erasequest 9223;
-				}
-				if (checkquest(9222) > -1)
-					erasequest 9222;
-				if (checkquest(9224) > -1)
-					erasequest 9224;
-				setquest 9222;
+		callfunc("F_GenericInstanceEnter","Bangungot Hospital 2F","ma_dun01","[Nurse Maenne]");
+		if (getarg(0) == true) {
+			if (checkquest(9223) > -1) {
+				completequest 9223;
+				erasequest 9223;
 			}
-			if (isbegin_quest(9224) == 0)
-				setquest 9224;
-			cutin "",255;
-			//warp "1@ma_h",40,157;
-			end;
+			if (checkquest(9222) > -1)
+				erasequest 9222;
+			if (checkquest(9224) > -1)
+				erasequest 9224;
+			setquest 9222;
 		}
-		break;
+		if (isbegin_quest(9224) == 0)
+			setquest 9224;
+		close3;
 	case 3:
 		mes "[Nurse Maenne]";
 		mes "Alright.";
 		mes "If you change mind, come back again.";
-		break;
+		close3;
 	}
-	close2;
-	cutin "",255;
-	end;
 }	
 
 // GM Management NPC :: ma_hos_enter_2
