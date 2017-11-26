@@ -4,6 +4,10 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 #include <stdio.h> // FILE*
 
@@ -46,8 +50,10 @@ extern uint32 GetULong(const unsigned char* buf);
 extern int32 GetLong(const unsigned char* buf);
 extern float GetFloat(const unsigned char* buf);
 
-uint32 date2version(int date);
-
 int levenshtein(const char *s1, const char *s2);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _UTILS_H_ */

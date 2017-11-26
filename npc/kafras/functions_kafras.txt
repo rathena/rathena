@@ -504,7 +504,7 @@ function	script	F_SetKafCode	{
 				set @code,callfunc("F_EntKafCode");
 				if(!@code || @code != #kafra_code) {
 					mes "Wrong password. You can't set a new password.";
-					emotion e_hmm;
+					emotion ET_SCRATCH;
 					break;
 				}
 				next;
@@ -516,14 +516,14 @@ function	script	F_SetKafCode	{
 				set @code,callfunc("F_EntKafCode");
 				if(!@code) {
 					mes "The password hasn't been removed.";
-					emotion e_hmm;
+					emotion ET_SCRATCH;
 					break;
 				}
 				next;
 				mes .@npc_name$;
 				if(Zeny < 1000) {
 					mes "You don't have enough zeny.";
-					emotion e_cash;
+					emotion ET_MONEY;
 					break;
 				}
 				set Zeny,Zeny-1000;
@@ -531,11 +531,11 @@ function	script	F_SetKafCode	{
 					set #kafra_code,0;
 					mes "You've successfully cleared your storage password.";
 					mes "Thank you for using "+.@comp_name$+".";
-					emotion e_thx;
+					emotion ET_THANKS;
 				} else {
 					mes "Wrong password. We won't return your 1000z.";
 					mes "Please, next time enter correct password.";
-					emotion e_sry;
+					emotion ET_SORRY;
 				}
 				break;
 			case 3:
@@ -560,21 +560,21 @@ S_SET:
 	set @code,callfunc("F_EntKafCode");
 	if(!@code) {
 		mes "The password hasn't been changed.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		return;
 	}
 	next;
 	mes .@npc_name$;
 	if(Zeny < 5000) {
 		mes "You don't have enough zeny.";
-		emotion e_cash;
+		emotion ET_MONEY;
 		return;
 	}
 	set Zeny,Zeny-5000;
 	set #kafra_code,@code;
 	mes "You've protected your storage with a secret password.";
 	mes "Thank you for using "+.@comp_name$+".";
-	emotion e_thx;
+	emotion ET_THANKS;
 	return;
 }
 
@@ -658,7 +658,7 @@ function	script	F_KafSet	{
 	}
 
 	// VIP pricing varies across the regional servers; this is most practical.
-	if (VIP_SCRIPT && !vip_status(1)) {
+	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
 		for (set .@i, 0; .@i < getarraysize(@wrpD$); set .@i, .@i + 1)
 			setd "@wrpP["+.@i+"]",getd("@wrpP["+.@i+"]") * 2;
 	}

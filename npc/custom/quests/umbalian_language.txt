@@ -79,7 +79,7 @@ M_DONE:
 	close;
 
 L_AGAIN:
-	emotion e_thx;
+	emotion ET_THANKS;
 	mes "Yay, I found her! Thank you very much for you help!";
 	close;
 
@@ -99,7 +99,7 @@ aldebaran,153,212,1	script	Mojo	740,{
 	if(umb_lang==1) set umb_mojo,1;
 	close;
 L_NOT_GOT_QUEST:
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "I lost my teacher's book!  What am I going to do...";
 	close;
 }
@@ -115,14 +115,14 @@ amatsu,267,189,4	script	Marie	744,{
 
 	mes "[Marie]";
 	mes "What does he want from me?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	mes "[Marie]";
 	mes "Oh wait, I see... he wants his reference scroll back am I right? Well, I'm kinda still using it buuut... I'll give it back if you can gimme a poring egg and an incubator. Those things are so cute!";
 	close;
 
 L_NOT_GOT_QUEST:
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "Hi! What do you want from me?";
 	close;
 
@@ -149,7 +149,7 @@ M_DOH:
 	close;
 
 L_AGAIN:
-	emotion e_thx;
+	emotion ET_THANKS;
 	mes "Yay! I love Porings!";
 	close;
 }
@@ -165,7 +165,7 @@ L_QUEST:
 	delitem 1006,1;	//Items: Old Magic Book,
 	delitem 7118,1;	//Items: Torn Scroll,
 	delitem 7117,1;//Items: Torn Spell Book,
-	emotion e_thx;
+	emotion ET_THANKS;
 	mes "Ah, you've done well in retrieving my references. These artifacts holds information about ruins around the world, from the burning hell of the Magma Dungeon, to the strange eerie Hidden Forest of Yggsadril.";
 	next;
 	mes "[Fabius]";

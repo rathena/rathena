@@ -4234,7 +4234,7 @@ einbech,165,105,7	script	Buender Hikeman#ein	847,{
 		mes "...";
 		mes "......";
 		mes "......You...";
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		next;
 		mes "[Buender Hikeman]";
 		mes "...";
@@ -4556,7 +4556,7 @@ einbech,165,105,7	script	Buender Hikeman#ein	847,{
 		next;
 		mes "[Buender Hikeman]";
 		mes "................";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Buender Hikeman]";
 		mes "Uhhhh......";
@@ -4851,12 +4851,12 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 		mes "[Shinokas]";
 		mes "...";
 		mes ".......";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I was right.";
 		mes "You're Shinokas!";
-		emotion e_gg,1;
+		emotion ET_KIK, playerattached();
 		next;
 		mes "[Shinokas]";
 		mes "Curses!";
@@ -4864,7 +4864,7 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 		mes "my cover!";
 		mes "W-wait! How much";
 		mes "do you know?!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Shinokas]";
 		mes "Did ^3131FFthey^000000 send you?";
@@ -4891,7 +4891,7 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 		mes "Errr....";
 		mes "You're not";
 		mes "here to kill me?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "No...!";
@@ -5401,7 +5401,7 @@ airplane,31,77,5	script	Drunken Man#ein	853,{
 		mes "Let's do it!";
 		mes "^3131FFYmir's Heart^000000 is";
 		mes "on my side! GO!";
-		emotion e_go;
+		emotion ET_GO;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Huh...?";
@@ -5410,7 +5410,7 @@ airplane,31,77,5	script	Drunken Man#ein	853,{
 		next;
 		mes "^3355FF*Rolling and rumbling*^000000";
 		next;
-		emotion e_kis;
+		emotion ET_CHUP;
 		mes "[Kaci]";
 		mes "I have a total of ^FF000011^000000";
 		mes "and you have total ^FF00005^000000.";
@@ -5462,7 +5462,7 @@ airplane,31,77,5	script	Drunken Man#ein	853,{
 			mes "^3355FF*Rolling and rumbling*^000000";
 			next;
 			if (rand(1,10) > 7) {
-				emotion e_kis;
+				emotion ET_CHUP;
 				mes "[Kaci]";
 				mes "I got a total of ^FF00008^000000,";
 				mes "and you have total ^FF000011^000000.";
@@ -5472,7 +5472,7 @@ airplane,31,77,5	script	Drunken Man#ein	853,{
 				next;
 			}
 			else {
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Kaci]";
 				mes "Oooh...";
 				mes "I got a total of ^FF000010^000000,";
@@ -5612,7 +5612,7 @@ airplane,31,77,5	script	Drunken Man#ein	853,{
 		mes "Let's do it!";
 		mes "^3131FFYmir's Heart^000000 is";
 		mes "on my side! GO!";
-		emotion e_go;
+		emotion ET_GO;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Huh...?";
@@ -5621,7 +5621,7 @@ airplane,31,77,5	script	Drunken Man#ein	853,{
 		next;
 		mes "^3355FF*Rolling and rumbling*^000000";
 		next;
-		emotion e_kis;
+		emotion ET_CHUP;
 		mes "[Kaci]";
 		mes "I have a total of ^FF00003^000000";
 		mes "and you have total ^FF00002^000000.";

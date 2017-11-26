@@ -14,6 +14,8 @@ Thumbs.db
 /*.exe
 /*.exe.*
 /*.ilk
+/*.iobj
+/*.ipdb
 /*.log
 /*.ncb
 /*.opensdf
@@ -25,7 +27,7 @@ Thumbs.db
 /*.suo
 *.o
 *.a
-*.yml
+*.vcxproj.user
 /char-server
 /config.log
 /config.status
@@ -48,15 +50,15 @@ Thumbs.db
 /3rdparty/mt19937ar/Makefile
 /3rdparty/mt19937ar/*.o
 
+# /3rdparty/yaml-cpp/
+/3rdparty/yaml-cpp/Makefile
+
 # /db/
 /db/import
 
 # /conf/
 /conf/import
 /conf/msg_conf/import
-
-# /doc/
-/doc/doxygen
 
 # /log/
 /log/*.log
@@ -150,4 +152,17 @@ Thumbs.db
 /.idea/vcs.xml
 /.idea/workspace.xml
 /build/
+/cbuild/
 
+# bat tools
+/charserv.bat
+/logserv.bat
+/mapcache.bat
+/mapserv.bat
+/runserver.bat
+/serv.bat
+
+# dlls
+/libmysql.dll
+/pcre8.dll
+/zlib.dll

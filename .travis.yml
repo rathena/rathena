@@ -1,7 +1,8 @@
-language: c
+language: cpp
 compiler:
   - clang
   - gcc
+dist: trusty
 
 before_script:
   - uname -a
@@ -24,12 +25,17 @@ before_script:
   - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db2_re.sql || aborterror "Unable to import renewal monster skill 2 table."
   - mysql -u $DB_ROOT $DB_NAME < sql-files/roulette_default_data.sql || aborterror "Unable to import roulette table."
   - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -q
+  - sudo apt-get install gcc-5 -y
+  - sudo apt-get install g++-5 -y
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 1
 
 script:
   - ./configure $CONFIGURE_FLAGS
   - make clean
   - make server
-  - 'echo packet_db_ver: $PACKETDBVER >> db/import/packet_db.txt'
   - ./map-server --run-once
 
 env:
@@ -39,7 +45,6 @@ env:
     - DB_NAME="ragnarok"
     - DB_USER="ragnarok"
     - DB_PASS="ragnarok"
-    - PACKETDBVER=45
   matrix:
     - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
     - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no --enable-buildbot=yes"

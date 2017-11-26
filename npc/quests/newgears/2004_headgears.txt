@@ -115,7 +115,7 @@ geffen,129,148,3	script	Argen#1	779,{
 		mes "You mind sharing them with me?";
 		close;
 	}
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	mes "[Argen]";
 	mes "Man, oh man~";
 	mes "Am I bored~!";
@@ -124,7 +124,7 @@ geffen,129,148,3	script	Argen#1	779,{
 	mes "[" + strcharinfo(0) + "]";
 	mes "Impress the ladies...?";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	if (Sex == SEX_MALE) {
 		mes "[Argen]";
 		mes "Yeah dude. There are two things chicks dig. Small, adorable presents. And suave dudes.";
@@ -153,7 +153,7 @@ geffen,129,148,3	script	Argen#1	779,{
 		mes "So go ahead and tell me what kinda hairpin you're interested in.";
 	}
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	switch(select("^3131FFX Hairpin^000000:^3131FFBand Aid^000000:^3131FFFlower Hairpin^000000:No thanks.")) {
 	case 1:
 		if (countitem(2294) > 0 && countitem(7220) > 399) {
@@ -161,7 +161,7 @@ geffen,129,148,3	script	Argen#1	779,{
 			mes "X Hairpin!";
 			mes "Nice choice~!";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Argen]";
 			mes "Ah... Right.";
 			mes "About the Stellar...";
@@ -175,7 +175,7 @@ geffen,129,148,3	script	Argen#1	779,{
 				mes "^3131FF * Scrape Scrape * ^000000";
 				mes "^3131FF * Scrape Scrape * ^000000";
 				next;
-				emotion e_no1;
+				emotion ET_BEST;
 				mes "[Argen]";
 				mes "Alright, I'm done!";
 				mes "So what do you think?";
@@ -215,7 +215,7 @@ geffen,129,148,3	script	Argen#1	779,{
 			mes "^3131FF * Scrape Scrape * ^000000";
 			mes "^3131FF * Scrape Scrape * ^000000";
 			next;
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Argen]";
 			mes "*Whew~!*";
 			mes "I'm finished!";
@@ -246,7 +246,7 @@ geffen,129,148,3	script	Argen#1	779,{
 			mes "^3131FF - Scrape Scrape - ^000000";
 			mes "^3131FF - Scrape Scrape - ^000000";
 			next;
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Argen]";
 			mes "Ah... It's done!";
 			mes "Hey, that looks pretty smooth! Oh, and uh, you can keep this leftover Stem.";
@@ -289,7 +289,7 @@ geffen,129,148,3	script	Argen#1	779,{
 		mes "If you want some kinda hairpin, just come back. I'll just be here, looking ^FF3333suaaave^000000 with this yo-yo.";
 		close;
 	}
-	emotion e_paper;
+	emotion ET_WRAP;
 	mes "[Argen]";
 	mes "Feel free to come ask me if you want more hairpins. Hey, I know I look lazy, but I do like to make things for the ladies. See ya later~!";
 	close;
@@ -979,7 +979,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 		close;
 	}
 	else if (countitem(5033) > 0 && countitem(5064) > 0) {
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Pretty Lindsay]";
 		mes "Whoa~";
 		mes "You brought everything!";
@@ -1014,7 +1014,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 		mes "Hello, there?";
 		mes "Mister...?";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Pretty Lindsay]";
 		mes "You look like you're freezing...";
 		mes "Um, I know! How about I make you a cute, warm and fuzzy Sea-Otter hat?";
@@ -1026,7 +1026,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 		mes "I have to put together ^0000FF1 Raccoon Hat^000000 and ^0000FF1 Smokie Leaf^000000 to make a ^4D4DFFSea-Otter Hat^000000 for you, though.";
 		next;
 		if (select("Okay, I will come back with the stuff.:Um... How come you need a Raccoon Hat?") == 1) {
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Pretty Lindsay]";
 			mes "Cool~! Come back soon as you can~!";
 			close;
@@ -1051,7 +1051,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 	mes "Hello, hello~!";
 	mes "You're such a pretty lady!";
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Pretty Lindsay]";
 	mes "Hey hey! Can I make you a Sea-Otter hat! It's really really really really cute!";
 	next;
@@ -1059,7 +1059,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 	mes "I need ^0000FF1 Raccoon Hat^000000 and ^0000FF1 Smokie Leaf^000000 so I can make a ^4D4DFFSea-Otter Hat^000000 for you.";
 	next;
 	if (select("Okay, I will come back with the stuff.:Um, why do you want to make hats so much?") == 1) {
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Pretty Lindsay]";
 		mes "Cool~!";
 		mes "Come back as";
@@ -1097,7 +1097,7 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 		mes "[Fuzzy Fuzz]";
 		mes "Excellent! You brought everything! Please make yourself comfortable while I make you your Teddybear Hat.";
 		next;
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "[Fuzzy Fuzz]";
 		mes "Hmm Hm Hmm...";
 		mes "Tear this off...";
@@ -1105,11 +1105,11 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 		mes "Okay, it's almost done...";
 		next;
 		mes "[Fuzzy Fuzz]";
-		emotion e_an;
+		emotion ET_FRET;
 		mes "There is an old saying, 'Everything comes to those who wait.' Oh, are you freezing? Why don't you rub your hands together?";
 		next;
 		mes "[Fuzzy Fuzz]";
-		emotion e_ic;
+		emotion ET_AHA;
 		mes "It's complete! There you go. I think this one will look really good on you! Please take good care of this hat.";
 		delitem 5030,1; //Panda_Cap
 		delitem 7213,100; //Needle_Pouch
@@ -1118,7 +1118,7 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 		getitem 5059,1; //Brown_Bear_Cap
 		close;
 	}
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Fuzzy Fuzz]";
 	mes "Hello there, young man.";
 	mes "What brings you to Lutie, town of goodwill and year round Christmas cheer?";
@@ -1159,7 +1159,7 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 	next;
 	mes "[Fuzzy Fuzz]";
 	mes "So, do you think you can get all of them? I will be here waiting for you.";
-	emotion e_heh;
+	emotion ET_SMILE;
 	close;
 }
 
@@ -1227,7 +1227,7 @@ payon_in03,8,193,4	script	Nanhyang#1	77,{
 	}
 	if (countitem(2285) > 0 && countitem(1550) > 0) {
 		mes "[Nanhyang]";
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "You brought the materials~";
 		next;
 		mes "[Nanhyang]";
@@ -1241,7 +1241,7 @@ payon_in03,8,193,4	script	Nanhyang#1	77,{
 		next;
 		if (select("Create:Cancel") == 1) {
 			mes "[Nanhyang]";
-			emotion e_ok;
+			emotion ET_OK;
 			mes "Thank you.";
 			mes "Let me create one for you right away. Please have a seat and make yourself comfortable.";
 			next;
@@ -1257,7 +1257,7 @@ payon_in03,8,193,4	script	Nanhyang#1	77,{
 			mes " . . . . . . . . . . . . . ";
 			next;
 			mes "[Nanhyang]";
-			emotion e_ic;
+			emotion ET_AHA;
 			mes "That wasn't too difficult. I hope you wear this hat everyday to improve your posture.";
 			next;
 			mes "[Nanhyang]";
@@ -1282,12 +1282,12 @@ payon_in03,8,193,4	script	Nanhyang#1	77,{
 			close;
 		}
 		mes "[Nanhyang]";
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "I see. You must have brought items with cards or upgrades that you didn't want to lose. Feel free to come back anytime when you are ready.";
 		close;
 	}
 	mes "[Nanhyang]";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "Hello~";
 	mes "Welcome to the Handsome Charm Modeling School. May I help you?";
 	next;
@@ -1307,7 +1307,7 @@ payon_in03,8,193,4	script	Nanhyang#1	77,{
 		mes "Although we can't offer any classes at this time, I can create a special 'Model Training Hat' for you. That way, you can practice the glamourous way of walking down the catwalk on your own.";
 		next;
 		mes "[Nanhyang]";
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "But since our director is gone, we can't really use our budget to give you a hat. If you want, please bring me the following items...";
 		next;
 		mes "[Nanhyang]";
@@ -1337,27 +1337,27 @@ geffen,83,189,5	script	Seth#1	716,{
 	mes " [Seth]";
 	mes "Hello, my name is Seth!";
 	mes "I like folding paper and making origami. I made my mommy a big paper boat, and she gave me a big smile and patted my head!";
-	emotion e_heh;
+	emotion ET_SMILE;
 	next;
 	mes "[Seth]";
 	mes "Today at school, I learned how to make a paper flower! The flower was sort of hard, but now I can do it! Then I made a tiny tiny flower and put in on my head~";
-	emotion e_lv;
+	emotion ET_THROB;
 	next;
 	if (countitem(2278) > 0 && countitem(975) > 0) {
 		mes "[Seth]";
 		mes "Hey~!";
 		mes "You have a Mr. Smile and Scarlet Dyestuffs! Yaaay~! I could use those and make you a paper flower. C'mon, lemme show you!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Seth]";
 		mes "Lemme make";
 		mes "one for you,";
 		mes "pwease pwease?";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		switch(select("Alright!:No thanks kid.:Boys aren't supposed to make flowers.")) {
 		case 1:
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Seth]";
 			mes "Yay~";
 			mes "You're the best!";
@@ -1368,7 +1368,7 @@ geffen,83,189,5	script	Seth#1	716,{
 			mes "*Snip Snip Snip~~*";
 			mes "*Snip...Snip...*";
 			mes "Yyyyyaaaeeep...";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			next;
 			mes "[Seth]";
 			mes "Tah dah~!";
@@ -1399,7 +1399,7 @@ geffen,83,189,5	script	Seth#1	716,{
 			mes "*Sniff sniff*";
 			mes "O-okay...";
 			mes "But I just wanted to show you how good I am...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		case 3:
 			mes "[" + strcharinfo(0) + "]";
@@ -1411,7 +1411,7 @@ geffen,83,189,5	script	Seth#1	716,{
 			mes "[Seth]";
 			mes "Waaaaaaah~!";
 			mes "But flowers are so nice and pweety!!!";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -1436,7 +1436,7 @@ geffen,83,189,5	script	Seth#1	716,{
 			mes "Seth will wait for you here. Promise me you'll come back?";
 			close;
 		}
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Seth]";
 		mes "Wah~~~~~!";
 		close;
@@ -2145,7 +2145,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 				delitem 7206,300; //Black_Kitty_Doll
 				delitem 7030,1; //Claw_Of_Desert_Wolf
 				getitem 5058,1; //Drooping_Kitty
-				emotion e_ho;
+				emotion ET_DELIGHT;
 				close;
 			}
 			else {
@@ -2215,7 +2215,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 				delitem 945,600; //Raccoon_Leaf
 				delitem 7030,1; //Claw_Of_Desert_Wolf
 				getitem 5064,1; //Leaf_Headgear
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				close;
 			}
 			else {
@@ -2292,7 +2292,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 				delitem 945,10; //Raccoon_Leaf
 				delitem 7030,1; //Claw_Of_Desert_Wolf
 				getitem 5084,1; //Lazy_Raccoon
-				emotion e_heh;
+				emotion ET_SMILE;
 				close;
 			}
 			else {
@@ -2379,7 +2379,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 				delitem 938,100; //Sticky_Mucus
 				delitem 7030,1; //Claw_Of_Desert_Wolf
 				getitem 5065,1; //Fish_On_Head
-				emotion e_ic;
+				emotion ET_AHA;
 				close;
 			}
 			else {
@@ -2448,7 +2448,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 		next;
 		mes "[Lee Hester]";
 		mes "I hope you're having a good time here in Morroc. If you ever question the special abilities of animals, just think of the majestic Desert Wolf that's able to thrive in the harsh Morroc deserts.";
-		emotion e_paper;
+		emotion ET_WRAP;
 		close;
 	}
 }

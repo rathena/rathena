@@ -880,7 +880,7 @@ que_job01,70,84,1	script	Girl#moc_ex002	882,{
 	mes "Oh, the world.. the world is doomed..";
 	mes "-sobbing-";
 	mes "Nothing seems to be working now..";
-	emotion e_sob;
+	emotion ET_CRY;
 	next;
 	mes "["+ strcharinfo(0) +"]";
 	mes "....Tsk..tsk...";
@@ -950,12 +950,10 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 				getpartymember(getcharid(1));
 				set .@partymembercount,$@partymembercount;
 				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-				while (.@partymembercount >= 0) {
-					set .@name$,.@partymembername$[.@partymembercount];
-					if (isloggedin(getcharid(3,.@name$))) {
+				for(.@i = 0; .@i < .@partymembercount; .@i++) {
+					if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
 						set .@onlinemembers,.@onlinemembers + 1;
 					}
-					set .@partymembercount,.@partymembercount - 1;
 				}
 				if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
 					mes "[Continental Guard]";
@@ -1013,12 +1011,10 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 		getpartymember(getcharid(1));
 		set .@partymembercount,$@partymembercount;
 		copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-		while (.@partymembercount >= 0) {
-			set .@name$,.@partymembername$[.@partymembercount];
-			if (isloggedin(getcharid(3,.@name$))) {
+		for(.@i = 0; .@i < .@partymembercount; .@i++) {
+			if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
 				set .@onlinemembers,.@onlinemembers + 1;
 			}
-			set .@partymembercount,.@partymembercount - 1;
 		}
 		switch(select("Enter the First Field to Investigate:Enter the Second Field to Investigate:Return to Morroc's Accident Site:Cancel Conversation")) {
 		case 1:
@@ -2119,14 +2115,14 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 			next;
 			mes "^660000Watching him makes you giggle, he looks no better than the dried corpses in the pyramid, but he is obviously alive and doesn't appear to be a monster. Somehow, you find yourself compelled to approach this interesting looking man.^000000";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Book-Touching Man]";
 			mes "Ah... Mammi...";
 			next;
 			mes "[Book-Touching Man]";
 			mes "Your healthy golden skin is glowing under the blessed sunlight of Morroc.";
 			next;
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Book-Touching Man]";
 			mes "Your smile outshines the aura of the gods of Valhalla. You are a living gospel. Your smile even makes Goddess Freya hide in the shadows in shame! Ah.... Mammi, my Mammi!";
 			next;
@@ -2137,7 +2133,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "["+ strcharinfo(0) +"]";
 				mes "Are you talking to yourself?";
 				next;
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Book-Touching Man]";
 				mes "Wah! Oh, my god, you must be a messenger of the devil trying to interrupt me from feeling Mammi!";
 				mes "I'm not afraid of you, so bring it on!";
@@ -2148,11 +2144,11 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "["+ strcharinfo(0) +"]";
 				mes "Who's Mammi?";
 				next;
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Book-Touching Man]";
 				mes "What? Don't you know Mammi, one of the three greatest Rune-Midgart's idols?";
 				next;
-				emotion e_sigh;
+				emotion ET_OHNO;
 				mes "[Book-Touching Man]";
 				mes "Man, you don't know anything, do you?! Well, judging by the stupid look on your face, I guess you're an adventurer running around on meaningless errands for others. Heh heh!";
 				next;
@@ -2165,7 +2161,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "[Book-Touching Man]";
 				mes "She even mentioned in an interview in 'Morroc Times' that she wants to meet a man that loves books.";
 				next;
-				emotion e_awsm;
+				emotion ET_COOL;
 				mes "[Book-Touching Man]";
 				mes "That means... She's waiting for someone like me. Hehehe!";
 				mes "You see, every book in Rune-Midgart's Library has the name Benjamin written on them... That's me!";
@@ -2186,7 +2182,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "[Benjamin]";
 				mes "I really need to read that book and tell her that I'm here for her, but I don't even have the time to regain my breath because of this situation in our hands!";
 				next;
-				emotion e_sob;
+				emotion ET_CRY;
 				mes "[Benjamin]";
 				mes "My Mammi pillow cover is buried under debris... Gasp!";
 				mes "Mammi, I'm coming! Don't you die yet!";
@@ -2195,13 +2191,13 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				next;
 				mes "^660000He inhaled deeply, and then suddenly turned his head toward you.^000000";
 				next;
-				emotion e_ic;
+				emotion ET_AHA;
 				mes "[Benjamin]";
 				mes "....Ye... Yes, you!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Huh?";
-				emotion e_swt2,1;
+				emotion ET_PROFUSELY_SWEAT, playerattached();
 				next;
 				mes "[Benjamin]";
 				mes "You look bored. You must be waiting for someone to give you something to do!";
@@ -2263,7 +2259,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 			next;
 			mes "^660000You carefully approached him, and then gave him a pat on the shoulder.^000000";
 			next;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Benjamin]";
 			mes "Grrrr! Who dares touch me?!";
 			next;
@@ -2295,12 +2291,12 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 			next;
 			mes "[Benjamin]";
 			mes "Grrrr... Mammi! Here I am, following your noble tastes to read such a rare book! Mammi...!";
-			emotion e_lv2;
+			emotion ET_BIGTHROB;
 			next;
 			mes "[Benjamin]";
 			mes "I feel so excited to think about having a deep conversation with Mammi about literature! Yay!";
 			mes "I should go read this book right away. Hehehe!";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			next;
 			mes "[Benjamin]";
 			mes "Oops, I must not forget to repay you. You know, I'm a polite man.";
@@ -2505,7 +2501,7 @@ prt_in,179,92,3	script	Library Curator#garas	57,{
 				}
 				break;
 			}
-			emotion e_ic;
+			emotion ET_AHA;
 			mes "[Curator Guys]";
 			mes "Oh, right! I think I know the book:";
 			next;
@@ -2644,7 +2640,7 @@ yuno,333,210,5	script	Library Master#garas	57,{
 		mes "I gurantee you that you'll get better quickly.";
 		next;
 		mes "^660000He sounded sincere, but it doesn't sound like that kind of broth would even be effective...^000000";
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		set barmunt_crow,3;
 		close;
 	}
@@ -2743,7 +2739,7 @@ OnTouch:
 		mes "I gurantee you that you'll get better quickly.";
 		next;
 		mes "^660000He sounded sincere, but it doesn't sound like that kind of broth would even be effective...^000000";
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		set barmunt_crow,3;
 		close;
 	}
@@ -2771,7 +2767,7 @@ yuno_in04,111,57,3	script	Library Part-Timer#garas	862,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "I'm looking for a book called <The Crow of the Fate> written by Oliver Hilpert... Ahchoo!";
-		emotion e_wah,1;
+		emotion ET_KEK, playerattached();
 		specialeffect2 EF_VENOMDUST;
 		next;
 		mes "[Library Part-Timer]";
@@ -3156,7 +3152,7 @@ yuno_in04,169,123,3	script	Suspicious Man#oliver_h	407,{
 		case 2:
 			mes "[Oliver Hilpert]";
 			mes "Okay... I see...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close2;
 			cutin "",255;
 			end;
@@ -3237,13 +3233,13 @@ yuno_in04,169,123,3	script	Suspicious Man#oliver_h	407,{
 		mes "What's happened to this feather?";
 		next;
 		mes "[Oliver Hilpert]";
-		emotion e_wah;
+		emotion ET_KEK;
 		mes "Wah! Did I do this?";
 		mes "Oh my god, I'm sorry! I'm so sorry!";
 		next;
 		mes "^660000He changed back to himself, and started apologizing to you for his sudden rage.^000000";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Oliver Hilpert]";
 		mes "I... I don't know how to apologize...";
 		mes "It's just that... I became so angry that I--! Argh, I'm sorry!";
@@ -3427,7 +3423,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		mes "[Oliver Hilpert]";
 		mes "Wah!";
 		mes "Isn't that over there?!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Huh?";
@@ -3449,10 +3445,10 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		cutin "oliver_smile",2;
 		mes "[Oliver Hilpert]";
 		mes "Lady Mammi!";
-		emotion e_lv2;
+		emotion ET_BIGTHROB;
 		next;
 		mes "^660000Yes, it was the picture book of Mammi, an idol whom Benjamin of Morroc insists to be one of the three greatest idols in the Rune-Midgart Kingdom. That must be why Oliver is squealing in delight.^000000";
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Ahchoo! Are you also a Mammi fan?";
@@ -3476,12 +3472,12 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		mes "[Oliver Hilpert]";
 		mes "...Oh!";
 		cutin "mami01",4;
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Oliver Hilpert]";
 		mes "...Ooooh!";
 		cutin "mami02",4;
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		cutin "oliver_smile",2;
 		mes "[Oliver Hilpert]";
@@ -3503,7 +3499,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		mes "["+ strcharinfo(0) +"]";
 		mes "...............";
 		mes "I... I see...";
-		emotion e_swt,1;
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Oliver Hilpert]";
 		mes "Umm...";
@@ -3525,7 +3521,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		case 2:
 			mes "[Oliver Hilpert]";
 			mes "Okay... I see...";
-			emotion e_sob;
+			emotion ET_CRY;
 			set barmunt_crow,13;
 			close2;
 			cutin "",255;
@@ -3930,7 +3926,7 @@ cave,82,97,3	script	Cave Settler#g1	996,3,3,{
 				mes "Hmm...";
 				mes "Wait here.";
 				next;
-				emotion e_com;
+				emotion ET_COMEON;
 				mes "[Cave Settler]";
 				mes "Hey, Jaeda!";
 				enablenpc "Jaeda#garas1";
@@ -4018,7 +4014,7 @@ OnTouch:
 				mes "Hmm...";
 				mes "Wait here.";
 				next;
-				emotion e_com;
+				emotion ET_COMEON;
 				mes "[Cave Settler]";
 				mes "Hey, Jaeda!";
 				enablenpc "Jaeda#garas1";
@@ -4337,7 +4333,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 				next;
 				switch(select("Passed away?:Came for a celebration again?")) {
 				case 1:
-					emotion e_gasp;
+					emotion ET_SURPRISE;
 					mes "[Messenger]";
 					mes "You already know about that...";
 					mes "Then, I don't need to give";
@@ -5461,7 +5457,7 @@ prt_castle,274,372,4	script	Servant#hans	48,{
 			mes "That's all I can say about this.";
 			mes "Huh...~";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Hans]";
 			mes "Ah, Prince!";
 			mes "You can cut your finger!";
@@ -6280,7 +6276,7 @@ prt_castle,314,373,4	script	Prince#eisen	983,{
 			mes "take it the wrong way.";
 			mes "I have been acting for Brother and Kingdom, and I will be the same ever after.";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Ahrum]";
 			mes "Ah, the appraiser has come.";
 			mes "How could you appear so suddenly? Ern and I were in the middle of conversation.";
@@ -6619,7 +6615,7 @@ prt_castle,314,373,4	script	Prince#eisen	983,{
 				mes "Although all these";
 				mes "status system fade away";
 				mes "I will be the king, with my sole capability and aptitude! Hahaha.";
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
 				mes "[Ahrum]";
 				mes "I know quite well about";
@@ -6935,7 +6931,7 @@ OnTouch:
 		mes "All the glory for Rune-Midgarts...";
 		mes "Hmm?";
 		next;
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[A man of Walter Family]";
 		mes "Quiet... Someone comes.";
 		mes "Ok... take care.";
@@ -7095,7 +7091,7 @@ prt_castle,314,371,0	script	Prince#another_ern	985,{
 		mes "take it the wrong way.";
 		mes "I have been acting for Brother and Kingdom, and I will be the same ever after.";
 		next;
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Ahrum]";
 		mes "Ah, the appraiser has come.";
 		mes "How could you appear so suddenly? Ern and I were in the middle of conversation.";

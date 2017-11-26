@@ -2920,7 +2920,7 @@ void* linkdb_search( struct linkdb_node** head, void *key)
 		if( node->key == key ) {
 			if( node->prev && n > 5 ) {
 				//Moving the head in order to improve processing efficiency
-				if(node->prev) node->prev->next = node->next;
+				node->prev->next = node->next;
 				if(node->next) node->next->prev = node->prev;
 				node->next = *head;
 				node->prev = (*head)->prev;

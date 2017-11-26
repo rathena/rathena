@@ -249,7 +249,9 @@ typedef uintptr_t uintptr;
 // keyword replacement
 #ifdef _MSC_VER
 // For MSVC (windows)
+#ifndef __cplusplus
 #define inline __inline
+#endif
 #define forceinline __forceinline
 #define ra_align(n) __declspec(align(n))
 #define _chdir chdir
@@ -277,16 +279,17 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // macro tools
 
-#ifdef swap // just to be sure
-#undef swap
+#ifdef SWAP // just to be sure
+#undef SWAP
 #endif
 // hmm only ints?
-//#define swap(a,b) { int temp=a; a=b; b=temp;}
+//#define SWAP(a,b) { int temp=a; a=b; b=temp;}
 // if using macros then something that is type independent
-//#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
+//#define SWAP(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
 // Avoid "value computed is not used" warning and generates the same assembly code
-#define swap(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
-#define swap_ptr(a,b) if ((a) != (b)) ((a) = (void*)((intptr_t)(a) ^ (intptr_t)(b)), (b) = (void*)((intptr_t)(a) ^ (intptr_t)(b)), (a) = (void*)((intptr_t)(a) ^ (intptr_t)(b)))
+#define SWAP(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
+#define swap_ptrcast(c,a,b) if ((a) != (b)) ((a) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))), (b) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))), (a) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))) )
+#define swap_ptr(a,b) swap_ptrcast(void*,a,b)
 
 //////////////////////////////////////////////////////////////////////////
 // should not happen
@@ -379,7 +382,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Set a pointer variable to a pointer value.
-#ifdef __cplusplus
+/*#ifdef __cplusplus
 template <typename T1, typename T2>
 void SET_POINTER(T1*&var, T2* p)
 {
@@ -396,7 +399,7 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #else
 #define SET_POINTER(var,p) (var) = (p)
 #define SET_FUNCPOINTER(var,p) (var) = (p)
-#endif
+#endif*/
 
 #ifdef max
 #undef max

@@ -34,7 +34,7 @@ yuno_in01,124,164,6	script	Guild Leader	108,{
 	set Event_THQS,1;
 	mes "[Keegan]";
 	mes "Congratulations!";
-	emotion e_grat;
+	emotion ET_CONGRATULATION;
 	next;
 	mes "[Keegan]";
 	mes "Welcome to the Guild of Treasure Hunters.";

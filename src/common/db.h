@@ -42,9 +42,13 @@
 #ifndef _DB_H_
 #define _DB_H_
 
+#include <stdarg.h>
+
 #include "cbasetypes.h"
 
-#include <stdarg.h>
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 /*****************************************************************************\
  *  (1) Section with public typedefs, enums, unions, structures and defines. *
@@ -1129,12 +1133,12 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __vec Vector
 /// @param __n Size
-#define VECTOR_RESIZE(__vec,__n) \
+#define VECTOR_RESIZE(__vec,__n,__cast) \
 	do{ \
 		if( (__n) > VECTOR_CAPACITY(__vec) ) \
 		{ /* increase size */ \
-			if( VECTOR_CAPACITY(__vec) == 0 ) VECTOR_DATA(__vec) = aMalloc((__n)*sizeof(VECTOR_FIRST(__vec))); /* allocate new */ \
-			else VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
+			if( VECTOR_CAPACITY(__vec) == 0 ) VECTOR_DATA(__vec) = (__cast)(aMalloc((__n)*sizeof(VECTOR_FIRST(__vec))) ); /* allocate new */ \
+			else VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))) ); /* reallocate */ \
 			memset(VECTOR_DATA(__vec)+VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec))*sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 		} \
@@ -1146,7 +1150,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 		} \
 		else if( (__n) < VECTOR_CAPACITY(__vec) ) \
 		{ /* reduce size */ \
-			VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
+			VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))) ); /* reallocate */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 			if( VECTOR_LENGTH(__vec) > (__n) ) VECTOR_LENGTH(__vec) = (__n); /* update length */ \
 		} \
@@ -1160,15 +1164,15 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __vec Vector
 /// @param __n Empty positions
 /// @param __step Increase
-#define VECTOR_ENSURE(__vec,__n,__step) \
+#define VECTOR_ENSURE2(__vec,__n,__step,__cast) \
 	do{ \
 		size_t _empty_ = VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec); \
 		if( (__n) > _empty_ ) { \
 			while( (__n) > _empty_ ) _empty_ += (__step); \
-			VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec)); \
+			VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec),__cast); \
 		} \
 	}while(0)
-
+#define VECTOR_ENSURE(__vec,__n,__step) VECTOR_ENSURE2(__vec,__n,__step,int*)
 
 
 /// Inserts a zeroed value in the target index.
@@ -1424,7 +1428,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __n Empty positions
 /// @param __step Increase
 #define BHEAP_ENSURE(__heap,__n,__step) VECTOR_ENSURE(__heap,__n,__step)
-
+#define BHEAP_ENSURE2(__heap,__n,__step,__cast) VECTOR_ENSURE2(__heap,__n,__step,__cast)
 
 
 /// Returns the top value of the heap.
@@ -1655,6 +1659,8 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @return negative if v1 is top, positive if v2 is top, 0 if equal
 #define BHEAP_MAXTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 > v2 ? -1 : 1 )
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _DB_H_ */
