@@ -1272,37 +1272,44 @@ int mapif_parse_Registry(int fd)
 
 	if( count ) {
 		int cursor = 14, i;
-		char key[32], sval[254];
 		bool isLoginActive = session_isActive(login_fd);
 
 		if( isLoginActive )
 			chlogif_upd_global_accreg(account_id,char_id);
 
 		for(i = 0; i < count; i++) {
-			unsigned int index;
-			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
-			cursor += RFIFOB(fd, cursor) + 1;
+      size_t lenkey = RFIFOB( fd, cursor );
+      const char* src_key= RFIFOCP(fd, cursor + 1);
+      std::string key( src_key, lenkey );
+			cursor += lenkey + 1;
 
-			index = RFIFOL(fd, cursor);
+			unsigned int  index = RFIFOL(fd, cursor);
 			cursor += 4;
 
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-					inter_savereg(account_id,char_id,key,index,RFIFOL(fd, cursor),false);
-					cursor += 4;
-					break;
+        {
+          intptr_t lVal = RFIFOL( fd, cursor );
+          inter_savereg( account_id, char_id, key.c_str(), index, lVal, false );
+          cursor += 4;
+          break;
+        }
 				case 1:
-					inter_savereg(account_id,char_id,key,index,0,false);
+					inter_savereg(account_id,char_id,key.c_str(),index,0,false);
 					break;
 				// str
 				case 2:
-					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
-					cursor += RFIFOB(fd, cursor) + 1;
-					inter_savereg(account_id,char_id,key,index,(intptr_t)sval,true);
-					break;
+        {
+          size_t len_val = RFIFOB( fd, cursor );
+          const char* src_val= RFIFOCP(fd, cursor + 1);
+          std::string sval( src_val, len_val );
+          cursor += len_val + 1;
+          inter_savereg( account_id, char_id, key.c_str(), index, (intptr_t)sval.c_str(), true );
+          break;
+        }
 				case 3:
-					inter_savereg(account_id,char_id,key,index,0,true);
+					inter_savereg(account_id,char_id,key.c_str(),index,0,true);
 					break;
 				default:
 					ShowError("mapif_parse_Registry: unknown type %d\n",RFIFOB(fd, cursor - 1));

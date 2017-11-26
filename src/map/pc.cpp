@@ -9235,6 +9235,18 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	return 1;
 }
 
+//maybe move this as intif or script ?
+bool pc_check_RegistryVariableLenght(struct map_session_data *sd, int pType, const char *val, size_t* vlen) 
+{
+  size_t len = strlen( val );
+  if ( vlen ) *vlen = len;
+  switch ( pType )
+  {
+    case 0: return (len < 33);//checking key
+    case 1: return (len < 255); //checking value
+    default: return false;
+  }
+}
 /**
  * Serves the following variable types:
  * - 'type$' (permanent str char reg)
@@ -9251,6 +9263,12 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 		ShowError("pc_setregistry_str : refusing to set %s until vars are received.\n", regname);
 		return 0;
 	}
+  size_t vlen=0;
+  if ( !pc_check_RegistryVariableLenght( sd, 1, val, &vlen ) )
+  {
+    ShowError("pc_check_RegistryVariableLenght: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%zu\n", sd->status.account_id, sd->status.char_id, val, vlen);
+    return 0;
+  }
 
 	if( (p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg) ) ) {
 		if( val[0] ) {

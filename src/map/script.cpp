@@ -3121,8 +3121,14 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
+  size_t vlen = strlen( name );
+  if ( vlen > 32 )
+  {
+    ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, name, vlen);
+    return 0;
+  }
 
-	if( is_string_variable(name) ) {// string variable
+	if( is_string_variable(name) ) {// string variable    
 		const char *str = (const char*)value;
 
 		switch (prefix) {
