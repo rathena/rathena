@@ -126,7 +126,10 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 					mes "If you are ready, I will allow you to enter.";
 					close;
 				case 2:
-					goto L_Enter;
+					callfunc("F_GenericInstanceEnter","Nidhoggur's Nest","nyd_dun02","[Yggdrasil Gatekeeper]");
+					if (checkquest(3135) == -1) setquest 3135;
+					if (checkquest(3136) == -1) setquest 3136;
+					close;
 				case 3:
 					close;
 				}
@@ -136,7 +139,10 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			next;
 			if(select("I want to go in.:I want to leave.") == 2)
 				close;
-			goto L_Enter;
+			callfunc("F_GenericInstanceEnter","Nidhoggur's Nest","nyd_dun02","[Yggdrasil Gatekeeper]");
+			if (checkquest(3135) == -1) setquest 3135;
+			if (checkquest(3136) == -1) setquest 3136;
+			close;
 		} else {
 			if (.@ins_nyd_check == 0 || .@ins_nyd_check == 1) {
 				if (ins_nyd2 == 3 || ins_nyd2 == 4) {
@@ -152,7 +158,10 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				next;
 				if(select("I want to go in.:I want to leave.") == 2)
 					close;
-				goto L_Enter;
+				callfunc("F_GenericInstanceEnter","Nidhoggur's Nest","nyd_dun02","[Yggdrasil Gatekeeper]");
+				if (checkquest(3135) == -1) setquest 3135;
+				if (checkquest(3136) == -1) setquest 3136;
+				close;
 			} else if (.@ins_nyd_check == 2) {
 				if (.@ins_nyd_check2 == 0 || .@ins_nyd_check2 == 1) {
 					mes "[Yggdrasil Gatekeeper]";
@@ -190,28 +199,6 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 		}
 	}
 	close;
-
-L_Enter:
-	switch(instance_enter("Nidhoggur's Nest")) {
-	case IE_OTHER:
-		mes "[Yggdrasil Gatekeeper]";
-		mes "An unknown error has occurred.";
-		close;
-	case IE_NOINSTANCE:
-		mes "[Yggdrasil Gatekeeper]";
-		mes "You didn't ask to be admitted... You should accept admission first before entering.";
-		close;
-	case IE_NOMEMBER:
-		mes "[Yggdrasil Gatekeeper]";
-		mes "Where are the other servants, so you can work together? Each servant cannot be admitted here individually...";
-		close;
-	case IE_OK:
-		mapannounce "nyd_dun02", getpartyname(getcharid(1))+"'s party member "+strcharinfo(0)+" has entered Nidhoggur's Nest.",bc_map,"0x00ff99";
-		if (checkquest(3135) == -1) setquest 3135;
-		if (checkquest(3136) == -1) setquest 3136;
-		//warp "1@nyd",32,36;
-		close;
-	}
 
 OnTouch_:
 	if (ins_nyd == 0) {
