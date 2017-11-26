@@ -778,16 +778,16 @@ function	script	F_GenericInstanceEnter	{
 	case IE_OTHER:
 		if(getargcount() >= 2) mes getarg(2);
 		mes "An unknown error has occurred.";
-		close;
+		close3;
 	case IE_NOINSTANCE:
 		if(getargcount() >= 2) mes getarg(2);
 		mes "The memorial dungeon " + .@instance_name$ + " does not exist.";
 		mes "The party leader did not generate the dungeon yet.";
-		close;
+		close3;
 	case IE_NOMEMBER:
 		if(getargcount() >= 2) mes getarg(2);
 		mes "You can enter the dungeon after making the party.";
-		close;
+		close3;
 	case IE_OK:
 		if(getargcount() >= 1) mapannounce getarg(1), strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, " + .@instance_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 		return;
