@@ -41,7 +41,7 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 			mes "Wear the ^0000FFTemporal Boots^000000 you want to upgrade, and then talk to me once again.";
 			close;
 		}
-		if (isequipped(2499) < 1) {
+		if (getequipid(EQI_SHOES) != 2499) {
 			mes "[Hugin's Buttler]";
 			mes "You are not wearing the Temporal Boots. Talk to me once you're wearing them.";
 			close;
@@ -55,7 +55,7 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 		mes "You can trade ^0000FF1 Temporal Boots and 5 Temporal Crystals^000000 for 1 of the following items. ^FF0000Previous refine rate will not be retained with these new ones^000000.";
 		next;
 		setarray .@type$[0],"Strength","Intelligence","Agility","Vitality","Dexterity","Lucky";
-		setarray .@equip_type[0],22000,22001,22002,22003,22004,22005;
+		setarray .@equip_type[0],22000,22001,22002,22003,22004,22005;// Temporal_STR_Boots,Temporal_INT_Boots,Temporal_AGI_Boots,Temporal_VIT_Boots,Temporal_DEX_Boots,Temporal_LUK_Boots
 		.@s = select("Cancel","Str Boots","Int Boots","Agi Boots","Vit Boots","Dex Boots","Luk Boots") - 2;
 		if (.@s == -1) {
 			mes "[Hugin's Buttler]";
@@ -65,16 +65,16 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 		mes "[Hugin's Buttler]";
 		mes "Are you sure about buying Temporal ^FF0000" + .@type$[.@s] + "^000000 Boots? There's no refunds.";
 		next;
-		if (select("Think again","Yes, I am sure.") == 2) {
+		if (select("Think again","Yes, I am sure.") == 1) {
 			mes "[Hugin's Buttler]";
-			mes "The boots have been upgraded as you want.";
-			delequip EQI_SHOES;
-			delitem 6607,5;// Temporal_Crystal
-			getitem .@equip_type[.@s],1;// Temporal_STR_Boots,Temporal_INT_Boots,Temporal_AGI_Boots,Temporal_VIT_Boots,Temporal_DEX_Boots,Temporal_LUK_Boots
+			mes "Ok, come back again when you are sure.";
 			close;
 		}
 		mes "[Hugin's Buttler]";
-		mes "Ok, come back again when you are sure.";
+		mes "The boots have been upgraded as you want.";
+		delequip EQI_SHOES;
+		delitem 6607,5;// Temporal_Crystal
+		getitem .@equip_type[.@s],1;
 		close;
 	}
 }
@@ -165,22 +165,27 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 			.@enchant = .@enchant_1[.@s];
 		}
 		else {
-			.@x = 6;
-			for ( .@y = 1; .@y < 5 && .@x == 6; .@y++ ) {
-				for ( .@x = 0; .@x < 6 && .@card3 != getd( ".@enchant_" + .@y + "[" + .@x + "]" ); .@x++ )
+			.@enchant_type = 6;
+			for ( .@enchant_num = 1; .@enchant_num < 5 && .@enchant_type == 6; .@enchant_num++ ) {
+				for ( .@enchant_type = 0; .@enchant_type < 6 && .@card3 != getd( ".@enchant_" + .@enchant_num + "[" + .@enchant_type + "]" ); .@enchant_type++ )
 					continue;
 			}
-			.@cost = .@enchant_cost[.@y];
+			if (.@enchant_num == 5) {
+				mes "[Hugin's Magic Master]";
+				mes "Something wrong happened.";
+				close;
+			}
+			.@cost = .@enchant_cost[.@enchant_num];
 
 			mes "[Hugin's Magic Master]";
-			if (.@y == 4) {
-				.@enchant = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power,Runaway_Magic,Speed_Of_Light,Muscle_Fool,Hawkeye,Lucky_Day
+			if (.@enchant_num == 4) {
+				.@special_enchant = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power,Runaway_Magic,Speed_Of_Light,Muscle_Fool,Hawkeye,Lucky_Day
 				.@string$ = "^990000Bonus effect ^000000 upgrade.";
 				mes "4th slot is already upgraded to the final option. Would you like a random bonus effect for the 3rd slot? You need ^0000ff10^000000 Coagulated Spell items.";
 			}
 			else {
-				.@number = .@y + 1;
-				.@enchant = getd( ".@enchant_" + (.@y+1) + "[" + .@x + "]" );
+				.@number = .@enchant_num + 1;
+				.@enchant = getd( ".@enchant_" + (.@enchant_num+1) + "[" + .@enchant_type + "]" );
 				.@string$ = "enchant number ^630000" + .@number + "^000000.";
 				mes "Enchanting ^0000FF" + .@equip_name$ + "^000000's 4th slot as ^0000FF" + .@number + "^000000 level effect. Requires ^0000FF" + .@cost + "^000000 Coagulated Spell items.";
 			}
@@ -201,7 +206,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		delequip EQI_SHOES;
 		mes "[Hugin's Magic Master]";
 		mes "Trying for " + .@string$;
-		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,0,.@enchant;
+		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@special_enchant,.@enchant;
 		close;
 	default:
 		mes "[Hugin's Magic Master]";
@@ -267,12 +272,12 @@ glast_01,210,270,8	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 			mes "You must bring ^0000FF5 Temporal Crystal items^000000. Nothing is free you know...";
 			close;
 		}
+		delitem 6607,5;// Temporal_Crystal
+		delequip EQI_SHOES;
 		if (rand(1,100) <= 80) { //Custom rates
 			mes "[Hugin's Craftsman]";
 			mes "Arrggg, we failed. Better luck next time.";
 			specialeffect2 EF_PHARMACY_FAIL;
-			delitem 6607,5;// Temporal_Crystal
-			delequip EQI_SHOES;
 			close;
 		}
 		mes "[Hugin's Craftsman]"; //Custom text
@@ -280,21 +285,12 @@ glast_01,210,270,8	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 		mes "A slot has been added to your advanced Temporal Boots.";
 		mes "Thank you for believing in me.";
 		specialeffect2 EF_PHARMACY_OK;
-		delitem 6607,5;// Temporal_Crystal
-		delequip EQI_SHOES;
-		if (.@equip_id == 22000) {
-			getitem 22006,1; //Temporal_STR_Boots_
-		} else if (.@equip_id == 22001) {
-			getitem 22009,1; //Temporal_INT_Boots_
-		} else if (.@equip_id == 22002) {
-			getitem 22010,1; //Temporal_AGI_Boots_
-		} else if (.@equip_id == 22003) {
-			getitem 22007,1; //Temporal_VIT_Boots_
-		} else if (.@equip_id == 22004) {
-			getitem 22008,1; //Temporal_DEX_Boots_
-		} else if (.@equip_id == 22005) {
-			getitem 22011,1; //Temporal_LUK_Boots_
-		}
+		if (.@equip_id == 22000) getitem 22006,1; //Temporal_STR_Boots_
+		else if (.@equip_id == 22001) getitem 22009,1; //Temporal_INT_Boots_
+		else if (.@equip_id == 22002) getitem 22010,1; //Temporal_AGI_Boots_
+		else if (.@equip_id == 22003) getitem 22007,1; //Temporal_VIT_Boots_
+		else if (.@equip_id == 22004) getitem 22008,1; //Temporal_DEX_Boots_
+		else if (.@equip_id == 22005) getitem 22011,1; //Temporal_LUK_Boots_
 		close;
 	default:
 		mes "[Hugin's Craftsman]";
