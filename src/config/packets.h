@@ -9,12 +9,14 @@
  **/
 
 #ifndef PACKETVER
+	///Do not edit this line. To set your client version, please do this instead.
+	///In Linux: run the following command: ./configure --enable-packetver=YYYYMMDD
+	///In Windows: add this line in your src\custom\defines_pre.h file: #define PACKETVER YYYYMMDD
 	#define PACKETVER 20151104
 #endif
 
 #ifndef PACKETVER_RE
-	/// From this point on only kRO RE clients are supported
-	/// Do not edit this unless you use Ragexe version 2016 and more not(RagexeRE)
+	/// From this point on only kRO RE clients are supported ,it's not where you set your client version .
 	#if PACKETVER > 20151104
 		#define PACKETVER_RE
 	#endif
