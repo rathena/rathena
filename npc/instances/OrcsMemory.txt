@@ -62,20 +62,26 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 				mes "After making a reservation, you have to select 'Enter the Dungeon' from the menu if you wish to enter the "+.@md_name$+".";
 				close;
 			case 2:
-				callsub L_Enter,0;
+				callfunc("F_GenericInstanceEnter","Orc's Memory","gef_fild10");
+				if (checkquest(12059) == -1) setquest 12059;
+				close;
 			case 3:
 				close;
 			}
 		}
 		if(select(.@md_name$ + " Enter the Memorial Dungeon:Cancel") == 2)
 			end;
-		callsub L_Enter,1;
+		callfunc("F_GenericInstanceEnter","Orc's Memory","gef_fild10");
+		if (checkquest(12059) == -1) setquest 12059;
+		end;
 	} else if (.@orctime == 0 || .@orctime == 1) {
 		mes "You can enter the Dungeon if it has been generated.";
 		next;
 		if(select("Enter the Dungeon "+.@md_name$+":Cancel") == 2)
 			close;
-		callsub L_Enter,0;
+		callfunc("F_GenericInstanceEnter","Orc's Memory","gef_fild10");
+		if (checkquest(12059) == -1) setquest 12059;
+		close;
 	} else if (.@orctime == 2) {
 		mes "^0000ffAll records and after-effects related to the Orc's Memory Dungeon are deleted. You can now regenerate or re-enter the dungeon.^000000";
 		erasequest 12059;
@@ -83,26 +89,6 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	}
 	mes "In order to generate a dungeon you must be the Party Leader and have at least 2 members in the party.";
 	close;
-L_Enter:
-	switch(instance_enter("Orc's Memory")) {
-	case IE_OTHER:
-		mes "An unknown error has occurred.";
-		close;
-	case IE_NOINSTANCE:
-		mes "Memorial Dungeon Orc's Memory does not exist.";
-		mes "Memorial Dungeon has been destroyed by the Party Leader, or because of the time limit. Please try again after 2 hours.";
-		close;
-	case IE_NOMEMBER:
-		mes "Only a member of the party can enter the Memorial Dungeon.";
-		close;
-	case IE_OK:
-		mapannounce "gef_fild10", getpartyname( getcharid(1) ) +" party's member "+strcharinfo(0)+" has entered the Orc's Memory.",bc_map,"0x00ff99";
-		if (checkquest(12059) == -1) setquest 12059;
-		//warp "1@orcs",179,15;
-		if (getarg(0) == 0) close;
-		else end;
-	}
-
 }
 
 gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
