@@ -294,7 +294,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		mes "^0000ffThe records and after effects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
 		close;
 	}
-	
+
 L_Enter:
 	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
 	set etower_timer,gettimetick(2);
