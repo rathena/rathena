@@ -754,9 +754,8 @@ function	script	F_GetPlatinumSkills	{
 //////////////////////////////////////////////////////////////////////////////////
 //	if Return then it's true.
 //	this text will be edited after replacing all the enter code in the instences files
-//	Example: 
-//	callfunc("F_GenericInstanceEnter","Endless Tower");
-//	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
+//	callfunc("F_GenericInstanceEnter",<Instance Name>,<Map Name>,<NPC Display Name>);
+//	Example:
 //	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower","[Tower Protection Stone]");
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GenericInstanceEnter	{
