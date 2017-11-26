@@ -1,4 +1,4 @@
-// basictest.cpp : Définit le point d'entrée pour l'application console.
+// basictest.cpp : Sets the entry point for the console application.
 //
 
 #include <stdio.h>
