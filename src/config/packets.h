@@ -15,13 +15,6 @@
 	#define PACKETVER 20151104
 #endif
 
-#ifndef PACKETVER_RE
-	/// From this point on only kRO RE clients are supported ,it's not where you set your client version .
-	#if PACKETVER > 20151104
-		#define PACKETVER_RE
-	#endif
-#endif
-
 #if PACKETVER >= 20110817
 	/// Comment to disable the official packet obfuscation support.
 	/// This requires PACKETVER 2011-08-17 or newer.
@@ -53,6 +46,13 @@
 /**
  * No settings past this point
  **/
+
+#ifndef PACKETVER_RE
+	/// From this point on only kRO RE clients are supported .
+	#if PACKETVER > 20151104
+		#define PACKETVER_RE
+	#endif
+#endif
 
 /// Check if the specified packetversion supports the pincode system
 #define PACKETVER_SUPPORTS_PINCODE PACKETVER >= 20110309
