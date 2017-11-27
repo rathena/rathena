@@ -101,7 +101,7 @@ sub Main {
 			CHAR_PORT => "6121",
 			LOGIN_PORT => "6900",
 			MD5_ENABLE => "yes",
-			PINCODE_ENABLE => "no",
+			PINCODE_ENABLE => "yes",
 			SQL_HOST => "localhost",
 			SQL_PORT => "3306",
 			SQL_UID => "ragnarok",

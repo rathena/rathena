@@ -20,6 +20,15 @@ typedef enum RATHREAD_PRIO {
 	RAT_PRIO_HIGH	
 } RATHREAD_PRIO;
 
+#define RA_INVALID_THID -1
+
+/**
+ * Get the handle of a specific thread 
+ *
+ * @param idx  -  The index of the thread
+ * @return not NULL if success
+ */
+prAthread rathenat_getThread( int idx );
 
 /**
  * Creates a new Thread
