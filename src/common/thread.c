@@ -231,7 +231,7 @@ void rathread_destroy ( prAthread handle ){
 		rat_thread_terminated(handle);
 	}
 #else
-	if( pthread_cancel( handle->hThread ) == 0){
+	if(handle->hThread && pthread_cancel( handle->hThread ) == 0){
 	
 		// We have to join it, otherwise pthread wont re-cycle its internal ressources assoc. with this thread.
 		// 
