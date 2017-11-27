@@ -25,7 +25,7 @@
 #include "thread.h"
 
 // When Compiling using MSC (on win32..) we know we have support in any case!
-#ifdef _MSC_VER 
+#if defined(_MSC_VER ) && !defined(HAS_TLS)
 #define HAS_TLS 
 #endif
 
@@ -48,7 +48,7 @@ struct rAthread {
 
 
 #ifdef HAS_TLS
-__thread int g_rathread_ID = RA_INVALID_THID; //this must match rathena_saThreadInvalidID
+__thread int g_rathread_ID = RA_INVALID_THID;
 #endif
 
 

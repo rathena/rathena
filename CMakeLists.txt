@@ -107,6 +107,7 @@ include( CheckFunctionExists )
 include( FindFunctionLibrary )
 include( TestBigEndian )
 
+
 #
 # PACKETVER
 #
@@ -148,6 +149,16 @@ if( CMAKE_THREAD_LIBS_INIT )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 endif()
 message( STATUS "Detecting threads library - done" )
+
+message( STATUS "Check if supporting Thread local storage (TLS)" )
+file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_TLS.c" _SOURCE )
+CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_TLS )
+if( HAVE_MONOTONIC_CLOCK )
+	message( STATUS "Check for TLS- yes" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_TLS" )
+else()
+	message( STATUS "Check for TLS - no" )
+endif()
 
 
 #

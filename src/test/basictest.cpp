@@ -27,3 +27,13 @@ void do_abort(void) {}
 void do_final(void) {}
 void set_server_type(void) {}
 
+//tmp tp avoid link issue in cmake
+#if defined(CMAKE) 
+#ifdef __cplusplus
+extern "C" {
+#endif
+ void Sql_Init(void) {}
+#ifdef __cplusplus
+}
+#endif
+#endif
