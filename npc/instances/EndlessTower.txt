@@ -231,7 +231,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 				mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
 				close;
 			case 2:
-				callsub L_Enter,0,1;
+				callsub L_Enter;
+				close;
 			case 3:
 				mes "I will move you to Alberta.";
 				close2;
@@ -243,7 +244,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		}
 		switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
 		case 1:
-			callsub L_Enter,1,1;
+			callsub L_Enter;
+			end;
 		case 2:
 			mes "I will move you to Alberta.";
 			close2;
@@ -259,7 +261,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			next;
 			switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
 			case 1:
-				callsub L_Enter,0,0;
+				callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
+				close;
 			case 2:
 				mes "I will move you to Alberta.";
 				close2;
@@ -293,29 +296,12 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	}
 
 L_Enter:
-	switch(instance_enter("Endless Tower")) {
-	case IE_OTHER:
-		mes "An unknown error has occurred.";
-		close;
-	case IE_NOINSTANCE:
-		mes "The memorial dungeon Endless Tower does not exist.";
-		mes "The party leader did not generate the dungeon yet.";
-		close;
-	case IE_NOMEMBER:
-		mes "You can enter the dungeon after making the party.";
-		close;
-	case IE_OK:
-		mapannounce "e_tower", strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
-		if (getarg(1)) {
-			set etower_timer,gettimetick(2);
-			set etower_partyid, getcharid(1);
-			setquest 60200;
-			setquest 60201;
-		}
-		//warp "1@tower",52,354;
-		if (getarg(0) == 0) close;
-		else end;
-	}
+	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower");
+	set etower_timer,gettimetick(2);
+	set etower_partyid, getcharid(1);
+	setquest 60200;
+	setquest 60201;
+	return;
 }
 
 e_tower,30,30,2	script	Huge Vortex	844,2,2,{

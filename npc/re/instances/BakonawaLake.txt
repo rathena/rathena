@@ -74,25 +74,9 @@ ma_scene01,174,179,4	script	Taho	541,{
 			mes "Now I'm weaving, so you can go down when I'm done.";
 			close;
 		case 2:
-			switch(instance_enter(.@md_name$)) {
-			case IE_OTHER:
-				mes "[Taho]";
-				mes "An unknown error occurred.";
-				close;
-			case IE_NOINSTANCE:
-				mes "[Taho]";
-				mes "The rope hasn't been weaved yet. Wait a little.";
-				close;
-			case IE_NOMEMBER:
-				mes "[Taho]";
-				mes "Civilians cannot enter.";
-				close;
-			case IE_OK:
-				mapannounce "ma_scene01","A party member, "+strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the dungeon, "+.@md_name$+".",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
-				setquest 12278;
-				//warp "1@ma_b",64,51;
-				close;
-			}
+			callfunc("F_GenericInstanceEnter","Bakonawa Lake","ma_scene01","[Taho]");
+			setquest 12278;
+			close;
 		case 3:
 			close;
 		}

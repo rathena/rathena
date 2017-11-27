@@ -759,3 +759,37 @@ function	script	close3	{
 	cutin "",255;
 	end;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+//	if Return then it's true.
+//	this text will be edited after replacing all the enter code in the instences files
+//	callfunc("F_GenericInstanceEnter",<Instance Name>,<Map Name>,<NPC Display Name>);
+//	Example:
+//	callfunc("F_GenericInstanceEnter","Endless Tower","e_tower","[Tower Protection Stone]");
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GenericInstanceEnter	{
+	if(getargcount() == 0){
+		debugmes "NPC Name " + strnpcinfo(3) + " Blind callfunc F_GenericInstanceEnter";
+		debugmes "F_GenericInstanceEnter Function have 0 Argument";
+		mes "An unknown error has occurred.";
+		end;
+	}
+	switch(instance_enter(getarg(0))){
+	case IE_OTHER:
+		if(getargcount() >= 2) mes getarg(2);
+		mes "An unknown error has occurred.";
+		close3;
+	case IE_NOINSTANCE:
+		if(getargcount() >= 2) mes getarg(2);
+		mes "The memorial dungeon " + .@instance_name$ + " does not exist.";
+		mes "The party leader did not generate the dungeon yet.";
+		close3;
+	case IE_NOMEMBER:
+		if(getargcount() >= 2) mes getarg(2);
+		mes "You can enter the dungeon after making the party.";
+		close3;
+	case IE_OK:
+		if(getargcount() >= 1) mapannounce getarg(1), strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, " + .@instance_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+		return;
+	}
+}
