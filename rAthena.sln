@@ -31,6 +31,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "classes", "classes", "{33B4
 		src\config\classes\general.h = src\config\classes\general.h
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{6513C8D3-D15F-45D4-9AD8-6286CBA7EE36}"
+	ProjectSection(SolutionItems) = preProject
+		src\custom\atcommand.inc = src\custom\atcommand.inc
+		src\custom\atcommand_def.inc = src\custom\atcommand_def.inc
+		src\custom\battle_config_init.inc = src\custom\battle_config_init.inc
+		src\custom\battle_config_struct.inc = src\custom\battle_config_struct.inc
+		src\custom\defines_post.h = src\custom\defines_post.h
+		src\custom\defines_pre.h = src\custom\defines_pre.h
+		src\custom\script.inc = src\custom\script.inc
+		src\custom\script_def.inc = src\custom\script_def.inc
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server-components", "server-components", "{6D9F5D00-2988-4812-844D-D155C4F588DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{C0A6FC9A-3A5C-48F8-A4B6-8D463C61C021}"
