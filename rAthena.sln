@@ -63,6 +63,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yaml-cpp", "3rdparty\yaml-cpp\yaml-cpp.vcxproj", "{61D6A599-6BED-4154-A9FC-40553BD972E0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basic_test", "src\test\basic_test.vcxproj", "{99B4DF6A-6180-4E7F-9227-F812FF30414A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F8FD7B1E-8E1C-4CC3-9CD1-2E28F77B6559} = {F8FD7B1E-8E1C-4CC3-9CD1-2E28F77B6559}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
