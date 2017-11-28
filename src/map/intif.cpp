@@ -420,9 +420,9 @@ int intif_saveregistry(struct map_session_data *sd)
 			continue;
 
 		src->update = false;
-
-		len = strlen(varname)+1;
-    if (len > 32) { //this is sql colum size, must be retrive from config
+		bool lValid = script_check_RegistryVariableLenght(0,varname,&len);
+		++len;
+		if (!lValid) { //this is sql colum size, must be retrive from config
 			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, varname, len);
 			continue;
 		}
@@ -442,12 +442,13 @@ int intif_saveregistry(struct map_session_data *sd)
 			plen += 1;
 
 			if( p->value ) {
-				len = strlen(p->value)+1;
-        if ( len > 254 ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
-          ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%d to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
-          len = 254;
-          p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
-        }
+				lValid = script_check_RegistryVariableLenght(1,p->value,&len);
+				++len;
+				if ( !lValid ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
+					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%d to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
+					len = 254;
+					p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
+				}
 
 				WFIFOB(inter_fd, plen) = len; 
 				plen += 1;

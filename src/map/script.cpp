@@ -748,6 +748,17 @@ static unsigned int calc_hash(const char* p)
 	return h % SCRIPT_HASH_SIZE;
 }
 
+bool script_check_RegistryVariableLenght(int pType, const char *val, size_t* vlen) 
+{
+	size_t len = strlen( val );
+	if ( vlen ) *vlen = len;
+	switch ( pType )
+	 {
+		case 0: return (len < 33);//checking key
+		case 1: return (len < 255); //checking value
+		default: return false;
+	}
+}
 
 /*==========================================
  * str_data manipulation functions
@@ -3121,12 +3132,12 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
-  size_t vlen = strlen( name );
-  if ( vlen > 32 )
-  {
-    ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, name, vlen);
-    return 0;
-  }
+	size_t vlen = 0;
+	if ( !script_check_RegistryVariableLenght(0,name,&vlen) )
+	{
+		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, name, vlen);
+		return 0;
+	}
 
 	if( is_string_variable(name) ) {// string variable    
 		const char *str = (const char*)value;

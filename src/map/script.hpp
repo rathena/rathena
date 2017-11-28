@@ -1945,4 +1945,6 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 void queryThread_log(char * entry, int length);
 #endif
 
+bool script_check_RegistryVariableLenght( int pType, const char *val, size_t* vlen );
+
 #endif /* _SCRIPT_HPP_ */

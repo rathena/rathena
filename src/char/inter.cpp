@@ -1278,9 +1278,9 @@ int mapif_parse_Registry(int fd)
 			chlogif_upd_global_accreg(account_id,char_id);
 
 		for(i = 0; i < count; i++) {
-      size_t lenkey = RFIFOB( fd, cursor );
-      const char* src_key= RFIFOCP(fd, cursor + 1);
-      std::string key( src_key, lenkey );
+			size_t lenkey = RFIFOB( fd, cursor );
+			const char* src_key= RFIFOCP(fd, cursor + 1);
+			std::string key( src_key, lenkey );
 			cursor += lenkey + 1;
 
 			unsigned int  index = RFIFOL(fd, cursor);
@@ -1289,25 +1289,25 @@ int mapif_parse_Registry(int fd)
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-        {
-          intptr_t lVal = RFIFOL( fd, cursor );
-          inter_savereg( account_id, char_id, key.c_str(), index, lVal, false );
-          cursor += 4;
-          break;
-        }
+				{
+					intptr_t lVal = RFIFOL( fd, cursor );
+					inter_savereg( account_id, char_id, key.c_str(), index, lVal, false );
+					cursor += 4;
+					break;
+				}
 				case 1:
 					inter_savereg(account_id,char_id,key.c_str(),index,0,false);
 					break;
 				// str
 				case 2:
-        {
-          size_t len_val = RFIFOB( fd, cursor );
-          const char* src_val= RFIFOCP(fd, cursor + 1);
-          std::string sval( src_val, len_val );
-          cursor += len_val + 1;
-          inter_savereg( account_id, char_id, key.c_str(), index, (intptr_t)sval.c_str(), true );
-          break;
-        }
+				{
+					size_t len_val = RFIFOB( fd, cursor );
+					const char* src_val= RFIFOCP(fd, cursor + 1);
+					std::string sval( src_val, len_val );
+					cursor += len_val + 1;
+					inter_savereg( account_id, char_id, key.c_str(), index, (intptr_t)sval.c_str(), true );
+					break;
+				}
 				case 3:
 					inter_savereg(account_id,char_id,key.c_str(),index,0,true);
 					break;
