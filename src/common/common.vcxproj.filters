@@ -98,6 +98,9 @@
     <ClInclude Include="yamlwrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.c">
@@ -170,6 +173,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="yamlwrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

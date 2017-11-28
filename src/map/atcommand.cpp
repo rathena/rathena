@@ -16,6 +16,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/utils2.hpp"
 #include "../common/conf.h"
 
 #include "map.hpp"
