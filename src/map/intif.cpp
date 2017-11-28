@@ -421,7 +421,7 @@ int intif_saveregistry(struct map_session_data *sd)
 			continue;
 
 		src->update = false;
-		script_check_RegistryVariableLength(0,varname,&len);
+		lValid = script_check_RegistryVariableLength(0,varname,&len);
 		++len;
 
 		if (!lValid) { //this is sql colum size, must be retrive from config
