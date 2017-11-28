@@ -13,11 +13,11 @@ prontera,155,176,3	script	Pront Test	77,{
 	mes "Testing to store long variable on char-serv";
 //test1 long value
 	test$ = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
-//test2 normal lenght
+//test2 normal length
 	test2$ = "anything really, doesn't matter at this point";
-//test3 longkey (41)
+//test3 long key (41)
         thisisareallylongkeyImeanReallyReallyLong$ = "gotcha";
-//test4 longkey 2 (with int)
+//test4 long key 2 (with int)
 	ReallyReallyReallyReallyReallyReallyLong = 42;
 	end;
 }

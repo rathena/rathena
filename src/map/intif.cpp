@@ -405,6 +405,7 @@ int intif_saveregistry(struct map_session_data *sd)
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
 		const char *varname = NULL;
 		struct script_reg_state *src = NULL;
+		bool lValid = false;
 
 		if( data->type != DB_DATA_PTR ) // it's a @number
 			continue;
@@ -420,8 +421,9 @@ int intif_saveregistry(struct map_session_data *sd)
 			continue;
 
 		src->update = false;
-		bool lValid = script_check_RegistryVariableLenght(0,varname,&len);
+		script_check_RegistryVariableLength(0,varname,&len);
 		++len;
+
 		if (!lValid) { //this is sql colum size, must be retrive from config
 			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, varname, len);
 			continue;
@@ -442,7 +444,7 @@ int intif_saveregistry(struct map_session_data *sd)
 			plen += 1;
 
 			if( p->value ) {
-				lValid = script_check_RegistryVariableLenght(1,p->value,&len);
+				lValid = script_check_RegistryVariableLength(1,p->value,&len);
 				++len;
 				if ( !lValid ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
 					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%d to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
@@ -3675,7 +3677,7 @@ int intif_parse_clan_onlinecount( int fd ){
  * @return
  *  0 (unknow packet).
  *  1 sucess (no error)
- *  2 invalid lenght of packet (not enough data yet)
+ *  2 invalid length of packet (not enough data yet)
  */
 int intif_parse(int fd)
 {
