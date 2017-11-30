@@ -1207,7 +1207,7 @@
 1930,Green_Whistle,Green Whistle,5,20,,800,170:50,,1,1,0x00080000,63,1,2,3,102,1,13,{ .@r = getrefine(); if(.@r>5) { bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",(.@r-5)*4; bonus2 bSkillUseSP,"WM_LULLABY_DEEPSLEEP",(.@r-5)*4; } bonus2 bSkillVariableCast,"MI_RUSH_WINDMILL",-2000; bonus2 bSkillVariableCast,"WM_LULLABY_DEEPSLEEP",-2000; },{},{}
 1931,P_String_Inst1,Eden Guitar I,5,0,,0,125,,1,0,0x00080000,63,1,2,3,60,0,13,{},{},{}
 1932,TE_Woe_Guitar,TE Woe Guitar,5,0,,0,100,,1,0,0x00080000,63,1,2,3,40,1,13,{ bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Poison,3000; },{},{}
-1933,Thanos_Violin,Thanatos Violin,5,10,,2000,200:130,,1,1,0x00080000,63,1,2,4,120,1,13,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
+1933,Thanos_Violin,Thanatos Violin,5,10,,2000,200:130,,1,1,0x00080000,56,1,2,4,120,1,13,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
 1934,Contabass,Contrabass,5,20,,250,180:120,,1,2,0x00080000,63,1,2,3,130,1,13,{ bonus2 bSkillCooldown,"WM_RANDOMIZESPELL",-20; },{},{}
 1935,Ukulele_Of_Newoz,Oz's New Ukulele,5,20,,2000,160,,1,2,0x00080000,63,1,2,4,130,1,13,{ bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",-20; },{},{}
 1936,Ru_Blue_Violin,Blue Violin,5,10,,1500,180,,2,1,0x00080000,63,1,2,3,100,1,13,{ bonus bDex,5; bonus bVit,5; },{},{}
@@ -1258,7 +1258,7 @@
 1985,Rosebine,Rosebine,5,20,,1000,100:130,,1,0,0x00080000,63,0,2,4,110,1,14,{ bonus bInt,2; bonus bAgi,-2; bonus3 bAutoSpell,"WM_VOICEOFSIREN",1,20; },{},{}
 1986,P_Tail1,Eden Tail I,5,0,,0,125,,2,0,0x00080000,63,0,2,3,60,0,14,{},{},{}
 1987,TE_Woe_Rope,TE Woe Rope,5,0,,0,100,,2,0,0x00080000,63,0,2,3,40,1,14,{ bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Blind,3000; },{},{}
-1988,Thanos_Whip,Thanatos Whip,5,10,,2200,200:130,,2,1,0x00080000,63,0,2,4,120,1,14,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
+1988,Thanos_Whip,Thanatos Whip,5,10,,2200,200:130,,2,1,0x00080000,56,0,2,4,120,1,14,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
 1989,Gymnastics_Ribbon,Rhythmic Gymnastics Ribbon,5,20,,300,150:120,,2,2,0x00080000,63,0,2,3,130,1,14,{ bonus bAspdRate,20; },{},{}
 1990,Floral_Mic_Of_Igu,Bloody Floral Decoration Microphone,5,20,,1000,160,,2,2,0x00080000,63,0,2,4,130,1,14,{ bonus2 bSkillUseSP,"CG_MOONLIT",-20; },{},{}
 1991,Ru_Blue_Whip,Blue Whip,5,10,,1500,180,,2,1,0x00080000,63,0,2,3,100,1,14,{ bonus bDex,5; bonus bVit,5; },{},{}
@@ -1293,7 +1293,7 @@
 2020,Jormungand,Jormungand,5,10,,3000,200:280,,,0,0x810200,63,2,34,4,1,0,23,{ bonus bInt,20; bonus bUnbreakableWeapon,1; },{},{}
 2021,Ganbantein,Ganbantein,5,0,,2000,100:320,,1,0,0x00000200,56,2,2,4,100,1,10,{ bonus bInt,25; bonus bDex,25; bonus3 bAddEff,Eff_Poison,1000,ATF_MAGIC; bonus3 bAutoSpell,"AB_SILENTIUM",1,100; bonus bUnbreakableWeapon,1; },{},{}
 2022,Staff_Of_Geffen,Staff of Geffen,5,20,,1000,100:300,,1,1,0x00000200,18,2,34,1,150,1,23,{ bonus bInt,20; },{},{}
-2023,Thanos_Rod,Thanatos Two-Handed Staff,5,10,,1400,120:250,,1,1,0x00018314,63,2,34,4,120,1,23,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bHealPower,18; bonus bMagicHPGainValue,500; bonus bMagicSPGainValue,50; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
+2023,Thanos_Rod,Thanatos Two-Handed Staff,5,10,,1400,120:250,,1,1,0x00018314,56,2,34,4,120,1,23,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bHealPower,18; bonus bMagicHPGainValue,500; bonus bMagicSPGainValue,50; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
 2024,Infinity_Two-handed_Stick,Infinity Two-handed Stick,5,10,,500,30:170,,,1,0x810200,56,2,34,4,100,1,23,{},{},{}
 2025,Crimson_Two-Handed_Staff,Crimson Two-Handed Staff,5,20,,1000,100,,1,2,0x800200,63,2,34,3,70,1,23,{ .@r = getrefine(); bonus bInt,5; bonus bMatk,150+((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 2026,Staff_of_Vicious_Mind,Staff of Vicious Mind,5,20,,1000,100:200,,1,1,0x00810204,63,2,34,4,160,1,23,{ bonus bMatk,pow(min(getrefine(),15),2); bonus bInt,6; bonus bUnbreakableWeapon,1; },{},{}
@@ -8623,7 +8623,7 @@
 15088,School_Uniform,School Uniform,4,20,,500,,25,,1,0xFFFFFFFF,63,2,16,,0,1,0,{ bonus bAgi,1; bonus bLuk,1; bonus bMaxHP,BaseLevel*3; bonus bMaxSP,BaseLevel/2; },{},{}
 15089,Menswear,Menswear,4,10,,300,,40,,0,0xFFFFFFFE,63,2,16,,80,1,,{ .@r = getrefine(); bonus bAspdRate,3+((.@r>=7)?2:0); bonus bDelayrate,-3-((.@r>=7)?2:0); bonus bVariableCastrate,-3-((.@r>=7)?2:0); },{},{}
 15090,Armor_Of_Gray,Armor of Gray,4,10,,2400,,90,,1,0x000654E2,63,2,16,,120,1,0,{ bonus bMdef,10; bonus2 bSubEle,Ele_Holy,10+getrefine()*2; },{},{}
-15091,Gray_Robe,Gray Robe,4,20,,1300,,55,,1,0x00018314,63,2,16,,120,1,0,{ bonus2 bSubEle,Ele_Holy,10+getrefine()*2; },{},{}
+15091,Gray_Robe,Gray Robe,4,20,,1300,,55,,1,0x00018314,56,2,16,,120,1,0,{ bonus2 bSubEle,Ele_Holy,10+getrefine()*2; },{},{}
 15093,Hero_Plate,Hero Plate,4,10,,4000,,120,,1,0x00004082,63,2,16,,160,1,,{ bonus bMdef,5; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bMatk,10; bonus bBaseAtk,10; bonus bHit,10; bonus bFlee,10; bonus2 bSkillAtk,"LG_BANISHINGPOINT",10; bonus2 bSkillAtk,"RK_HUNDREDSPEAR",10; .@r = getrefine(); bonus5 bAutoSpell,"AL_HEAL",10,50+.@r,BF_SHORT,0; bonus5 bAutoSpell,"WZ_STORMGUST",10,50+.@r,BF_SHORT,1; },{},{}
 15094,Hero_Magic_Coat,Hero Magic Coat,4,10,,800,,50,,1,0x00010204,63,2,16,,160,1,,{ bonus bMatk,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bFlee,10; bonus2 bSkillAtk,"WL_CRIMSONROCK",10; bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10; .@r = getrefine(); if (.@r) { bonus bFixedCastrate,21-.@r/2; bonus bNoCastCancel2,1; bonus bMdef,.@r/2; } },{},{}
 15095,Hero_Judgement_Shawl,Hero Judgement Shawl,4,10,,500,,77,,1,0x00008110,63,2,16,,160,1,,{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bMatk,10; bonus bBaseAtk,10; bonus bHit,10; bonus bFlee,10; bonus2 bSkillAtk,"AB_JUDEX",10; bonus2 bSkillAtk,"AB_ADORAMUS",10; bonus2 bSkillAtk,"SR_DRAGONCOMBO",10; bonus2 bSkillAtk,"SR_SKYNETBLOW",10; bonus2 bSkillAtk,"SR_EARTHSHAKER",10; .@r = getrefine(); bonus5 bAutoSpell,"PR_KYRIE",1,50+.@r,BF_SHORT,0; bonus5 bAutoSpell,"PR_LEXAETERNA",10,50+.@r,BF_MAGIC,1; },{},{}
@@ -11438,7 +11438,7 @@
 //===================================================================
 // New Katars
 //===================================================================
-28000,Thanos_Katar,Thanatos Katar,5,10,,1800,220:80,,1,1,0x00001000,63,2,34,4,120,1,16,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
+28000,Thanos_Katar,Thanatos Katar,5,10,,1800,220:80,,1,1,0x00001000,56,2,34,4,120,1,16,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
 28001,Katar_Of_Evil_Slayer,Katar Of Evil Slayer,5,10,,1200,120,,1,1,0x00001000,63,2,34,3,100,1,16,{ bonus2 bAddRace,RC_Demon,10; bonus2 bAddRace,RC_Undead,10; .@r = getrefine(); if(.@r>=9){ bonus2 bAddClass,Class_All,5; } if(.@r>=12){ bonus2 bAddClass,Class_All,7; } },{},{}
 28002,Half_BF_Katar2,Half BF Katar2,5,20,,0,130,,1,0,0x00001000,63,2,34,3,80,1,16,{ bonus bStr,1; bonus bDex,1; bonus bLuk,1; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player,35; bonus bCritAtkRate,10; bonus bAspdRate,3; bonus bUnbreakableWeapon,1; },{},{}
 28005,Ru_Blue_Katar,Blue Katar,5,10,,1200,190,,1,1,0x00001000,56,2,34,3,100,1,16,{ bonus bAgi,5; bonus bStr,5; },{},{}
