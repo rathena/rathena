@@ -20,7 +20,7 @@
 #ifndef _WIN32
 #include <unistd.h>
 #else
-#include "winapi.h" // Console close event handling
+#include "winapi.hpp" // Console close event handling
 #include <direct.h> // _chdir
 #endif
 
@@ -303,10 +303,14 @@ static void display_title(void) {
 // Warning if executed as superuser (root)
 void usercheck(void)
 {
-#ifndef _WIN32
-    if (geteuid() == 0) {
+#ifdef _WIN32
+	if (IsCurrentUserLocalAdministrator()) {
+		ShowWarning("You are running rAthena with admin privileges, it is not necessary.\n");
+	}
+#else
+	if (geteuid() == 0) {
 		ShowWarning ("You are running rAthena with root privileges, it is not necessary.\n");
-    }
+	}
 #endif
 }
 
