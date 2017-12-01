@@ -9,9 +9,9 @@
  **/
 
 #ifndef PACKETVER
-	///Do not edit this line. To set your client version, please do this instead.
-	///In Linux: run the following command: ./configure --enable-packetver=YYYYMMDD
-	///In Windows: add this line in your src\custom\defines_pre.h file: #define PACKETVER YYYYMMDD
+	///Do not edit this line. To set your client version, please do one of the folowing instead.
+	///for Windows and Linux: add this line in your src\custom\defines_pre.h file: #define PACKETVER YYYYMMDD
+	///for Linux Only: run the following command: ./configure --enable-packetver=YYYYMMDD
 	#define PACKETVER 20151104
 #endif
 
