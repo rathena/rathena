@@ -7,7 +7,7 @@
 // For more information, see LICENCE in the main folder
 
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #define getpagesize() 4096 // @TODO: implement this properly (GetSystemInfo .. dwPageSize..). (Atm as on all supported win platforms its 4k its static.)
 #define __thread __declspec( thread ) 
 #else

@@ -46,4 +46,6 @@
 #include <Mswsock.h>
 #include <MMSystem.h>
 
+#include "cbasetypes.h"
 
+bool IsCurrentUserLocalAdministrator(void);

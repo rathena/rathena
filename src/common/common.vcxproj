@@ -46,7 +46,7 @@
     <ClInclude Include="thread.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utils.h" />
-    <ClInclude Include="winapi.h" />
+    <ClInclude Include="winapi.hpp" />
     <ClInclude Include="yamlwrapper.h" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +75,7 @@
     <ClCompile Include="thread.c" />
     <ClCompile Include="timer.c" />
     <ClCompile Include="utils.c" />
+    <ClCompile Include="winapi.cpp" />
     <ClCompile Include="yamlwrapper.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
