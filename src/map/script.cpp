@@ -2362,46 +2362,49 @@ void script_set_constant(const char* name, int value, bool isparameter, bool dep
 	}
 }
 
+static bool read_constdb_sub( char* fields[], int columns, int current ){
+	char name[1024], val[1024];
+	int type = 0;
+
+	if( columns > 1 ){
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_]", name) != 1 ||
+			sscanf(fields[1], "%1023[A-Za-z0-9/_]", val) != 1 || 
+			( columns >= 2 && sscanf(fields[2], "%11d", &type) != 1 ) ){
+			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current);
+			return false;
+		}
+	}else{
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d", name, val, &type) < 2 ){
+			ShowWarning( "Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current );
+			return false;
+		}
+	}
+
+	script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
+
+	return true;
+}
+
 /*==========================================
  * Reading constant databases
  * const.txt
  *------------------------------------------*/
-static void read_constdb(void)
-{
-	FILE *fp;
-	char line[1024],name[1024],val[1024];
-	int type;
-	int entries=0, skipped=0, linenum=0;
+static void read_constdb(void){
+	const char* dbsubpath[] = {
+		"",
+		"/" DBIMPORT,
+	};
 
-	sprintf(line, "%s/const.txt", db_path);
-	fp=fopen(line, "r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", line);
-		return ;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		linenum++;
-		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r') //ignore empty line
-			continue;
-		if(line[0]=='/' && line[1]=='/') //ignore commented line
-			continue;
-		
-		type=0;
-		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%11d",name,val,&type)>=2 ||
-		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d",name,val,&type)>=2){
-			entries++;
-			script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
-		}
-		else {
-			skipped++;
-			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n",linenum);
-		}
-	}
-	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s/const.txt" CL_RESET "'.\n", entries, db_path);
-	if(skipped){
-		ShowWarning("Skipped '" CL_WHITE "%d" CL_RESET "', entries\n",skipped);
+	for( int i = 0; i < ARRAYLENGTH(dbsubpath); i++ ){
+		int n2 = strlen(db_path) + strlen(dbsubpath[i]) + 1;
+		char* dbsubpath2 = (char*)aMalloc(n2 + 1);
+		bool silent = i > 0;
+
+		safesnprintf(dbsubpath2, n2, "%s%s", db_path, dbsubpath[i]);
+
+		sv_readdb(dbsubpath2, "const.txt", ',', 1, 3, -1, &read_constdb_sub, silent);
+
+		aFree(dbsubpath2);
 	}
 }
 
@@ -2494,7 +2497,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	const char *p,*tmpp;
 	int i;
 	struct script_code* code = NULL;
-	static int first=1;
+	static bool first=true;
 	char end;
 	bool unresolved_names = false;
 
@@ -2510,7 +2513,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		add_buildin_func();
 		read_constdb();
 		script_hardcoded_constants();
-		first=0;
+		first=false;
 	}
 
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
