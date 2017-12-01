@@ -108,4 +108,8 @@ test_script:
     
     rem Start the map server
     
+    login-server.exe --run-once
+    
+    char-server.exe --run-once
+    
     map-server.exe --run-once

@@ -2,6 +2,10 @@
 IF "%1"=="" GOTO DIRECT
 IF "%2"=="" GOTO DIRECT
 IF NOT EXIST "%1" GOTO NOTFOUND
+
+IF "%3"=="" ( set "restart_mode=on"
+) else set "restart_mode=%~3"
+echo "restart_mode=%restart_mode%"
 GOTO START
 
 REM == How RESTART_9X and RESTART_NT works =========================
@@ -25,6 +29,7 @@ REM Windows 2000, XP, Vista, 7
 REM There is no CHOICE in 2000 and XP, but you get asked whether to
 REM abort the batch file, when pressing Ctrl+C in PING.
 IF "%1"=="mapcache.exe" GOTO END
+if "%restart_mode%" == "off" GOTO END
 ECHO Restarting in 15 seconds, press Ctrl+C to cancel.
 PING -n 15 127.0.0.1 > NUL
 
