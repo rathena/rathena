@@ -39,7 +39,6 @@ script:
   - ./login-server --run-once
   - ./char-server --run-once
   - ./map-server --run-once
-  - ./athena-start start && sleep 60 && ./athena-start stop
 
 env:
   global:
