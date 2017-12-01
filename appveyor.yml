@@ -102,6 +102,10 @@ test_script:
     
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% -e "GRANT ALL ON *.* TO '%DB_USER%'@'%DB_HOST%' IDENTIFIED BY '%DB_USERPW%';"
     
+    rem Activate all custom and test scripts
+    
+    start /d tools\ci npc.bat
+    
     rem Start the map server
     
     map-server.exe --run-once
