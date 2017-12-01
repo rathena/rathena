@@ -303,10 +303,12 @@ static void display_title(void) {
 // Warning if executed as superuser (root)
 void usercheck(void)
 {
+#if !defined(BUILDBOT)
 #ifndef _WIN32
     if (geteuid() == 0) {
 		ShowWarning ("You are running rAthena with root privileges, it is not necessary.\n");
     }
+#endif
 #endif
 }
 
