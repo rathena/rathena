@@ -169,7 +169,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		.@equip_refine = getequiprefinerycnt(EQI_SHOES);
 
 		if (.@card2 > 0) {
-			mes "[Hugin's magic master]";
+			mes "[Hugin's Magic master]";
 			mes "These boots have already passed the enchanting limit. We can't enchant them any more.";
 			close;
 		}
@@ -185,13 +185,15 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 				mes "Ok, come back when you are ready.";
 				close;
 			}
-			.@enchant = .@enchant_1[.@s];
+			.@card3 = .@enchant_1[.@s];
+			.@string$ = "enchant number ^6300001^000000.";
 		}
 		else {
-			.@enchant_type = 6;
-			for ( .@enchant_num = 1; .@enchant_num < 5 && .@enchant_type == 6; .@enchant_num++ ) {
+			for ( .@enchant_num = 1; .@enchant_num < 5; .@enchant_num++ ) {
 				for ( .@enchant_type = 0; .@enchant_type < 6 && .@card3 != getd( ".@enchant_" + .@enchant_num + "[" + .@enchant_type + "]" ); .@enchant_type++ )
 					continue;
+				if (.@enchant_type < 6)
+					break;
 			}
 			if (.@enchant_num == 5) {
 				mes "[Hugin's Magic Master]";
@@ -202,13 +204,13 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 
 			mes "[Hugin's Magic Master]";
 			if (.@enchant_num == 4) {
-				.@special_enchant = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power, Runaway_Magic, Speed_Of_Light, Muscle_Fool, Hawkeye, Lucky_Day
+				.@card2 = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power, Runaway_Magic, Speed_Of_Light, Muscle_Fool, Hawkeye, Lucky_Day
 				.@string$ = "^990000Bonus effect ^000000 upgrade.";
 				mes "4th slot is already upgraded to the final option. Would you like a random bonus effect for the 3rd slot? You need ^0000ff" + .@cost + "^000000 Coagulated Spell items.";
 			}
 			else {
 				.@number = .@enchant_num + 1;
-				.@enchant = getd( ".@enchant_" + (.@enchant_num+1) + "[" + .@enchant_type + "]" );
+				.@card3 = getd( ".@enchant_" + (.@enchant_num+1) + "[" + .@enchant_type + "]" );
 				.@string$ = "enchant number ^630000" + .@number + "^000000.";
 				mes "Enchanting ^0000FF" + .@equip_name$ + "^000000's 4th slot as ^0000FF" + .@number + "^000000 level effect. Requires ^0000FF" + .@cost + "^000000 Coagulated Spell items.";
 			}
@@ -229,7 +231,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		delequip EQI_SHOES;
 		mes "[Hugin's Magic Master]";
 		mes "Trying for " + .@string$;
-		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@special_enchant,.@enchant;
+		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card2,.@card3;
 		close;
 	default:
 		mes "[Hugin's Magic Master]";
@@ -239,7 +241,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	}
 }
 
-glast_01,210,270,8	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
+glast_01,210,270,0	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
