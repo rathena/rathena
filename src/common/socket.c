@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 #ifdef WIN32
-	#include "winapi.h"
+	#include "winapi.hpp"
 #else
 	#include <errno.h>
 #include <netinet/tcp.h>

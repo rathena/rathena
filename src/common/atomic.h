@@ -17,7 +17,7 @@
 #include "cbasetypes.h"
 
 #if defined(_MSC_VER)
-#include "winapi.h"
+#include "winapi.hpp"
 
 // This checks if C/C++ Compiler Version is 18.00 or Windows is older than Vista
 #if _MSC_VER < 1800 || WINVER < _WIN32_WINNT_VISTA

@@ -15,7 +15,7 @@
 #include <string.h>
 
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #else
 #include <unistd.h>
 #endif

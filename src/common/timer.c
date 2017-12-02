@@ -13,7 +13,7 @@
 #include <string.h>
 
 #ifdef WIN32
-#include "winapi.h" // GetTickCount()
+#include "winapi.hpp" // GetTickCount()
 #else
 #endif
 

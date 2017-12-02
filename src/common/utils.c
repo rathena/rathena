@@ -11,7 +11,7 @@
 #include <math.h> // floor()
 
 #ifdef WIN32
-	#include "winapi.h"
+	#include "winapi.hpp"
 	#ifndef F_OK
 		#define F_OK   0x0
 	#endif  /* F_OK */
