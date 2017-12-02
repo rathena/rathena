@@ -1,4 +1,4 @@
-#include "utils2.hpp"
+#include "utilities.hpp"
 
 #include <chrono>
 #include <string>
@@ -6,24 +6,18 @@
 #include <iostream>
 #include <numeric> //iota
 
-
-using Clock = std::chrono::steady_clock;
-using std::chrono::time_point;
-using std::chrono::duration_cast;
-using std::chrono::microseconds;
-
 struct cScopeTimer::sPimpl {
-    time_point<Clock> start;
-    time_point<Clock> end;
+    std::chrono::steady_clock::time_point start;
+    std::chrono::steady_clock::time_point end;
     
     sPimpl()
     {
-        start = Clock::now();
+        start = std::chrono::steady_clock::now();
     }
     
     ~sPimpl(){
-        end = Clock::now();
-        microseconds diff = duration_cast<microseconds>(end - start);
+        end = std::chrono::steady_clock::now();
+        std::chrono::microseconds diff = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout << " took=" << diff.count() << "ms !\n";
     }
 };
