@@ -11725,7 +11725,7 @@ REPLACE INTO `item_db_re` VALUES (31019,'Creepy_Demon_Card','Creepy Demon Card',
 REPLACE INTO `item_db_re` VALUES (31020,'Malicious_Baby_Ghost_Card','Malicious Baby Ghost Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,300,ATF_WEAPON; /* unofficial chance [Secret] */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31021,'Dancing_Marionette_Card','Dancing Marionette Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bAspdRate,10; bonus2 bAddClass,Class_All,-3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31022,'Abandoned_Teddy_Bear_Card','Abandoned Teddy Bear Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxSPRate,20; bonus2 bAddEff2,Eff_Curse,100; /* unofficial chance [Secret] */',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31023,'Celine_Kimi_Card','Celine Kimi Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",5,200+(50*getrefine()),BF_MAGIC,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31023,'Celine_Kimi_Card','Celine Kimi Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",3,200+(50*getrefine()),BF_MAGIC,1;',NULL,NULL);
 #===================================================================
 # More Costumes
 #===================================================================
