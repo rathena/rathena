@@ -5390,6 +5390,7 @@ perform a complete removal of all statuses (although permanent ones will re-appl
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
 skill on the invoking character. if job_id was given it will end the effect for that job.
+if the job was 0 it will return the <job_id> for the invoking character
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -5410,6 +5411,11 @@ Examples:
 	
 	//will end the effect of any learned skill for the invoking character.
 	sc_end_class;
+	
+	//will end the effect of any learned skill for the invoking character.
+	// val1: <job_id> (0 return the character <job_id>)
+	// val2: <char_id>
+	sc_end_class(0,150000);
 	
 	//will end the effect of any Arch Bishop skill for the invoking character.
 	// val1: job_id of Arch Bishop
