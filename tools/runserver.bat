@@ -44,7 +44,7 @@ goto :EOF
 :Watch
 REM this is to align terminology with athena-start, (start with restart mode)
 echo "Starting all serv"
-set "resart_mode=on"
+set "restart_mode=on"
 call :startLogin
 call :startChar
 call :startMap
@@ -52,7 +52,7 @@ goto :EOF
 
 :Start
 echo "Starting all serv"
-set "resart_mode=off"
+set "restart_mode=off"
 call :startLogin
 call :startChar
 call :startMap
@@ -98,19 +98,19 @@ goto :EOF
 REM start sub targets
 :startLogin
 call :getLoginStatus
-if "%login_running%" == "false" ( start cmd /k logserv.bat %resart_mode%
+if "%login_running%" == "false" ( start cmd /k logserv.bat %restart_mode%
 ) else echo "Login serv is already running pid=%LoginServPID%" 
 goto :EOF
 
 :startChar
 call :getCharStatus
-if "%char_running%" == "false" ( start cmd /k charserv.bat %resart_mode%
+if "%char_running%" == "false" ( start cmd /k charserv.bat %restart_mode%
 ) else echo "Char serv is already running, pid=%CharServPID%" 
 goto :EOF
 
 :startMap
 call :getMapStatus
-if "%map_running%" == "false" ( start cmd /k mapserv.bat %resart_mode%
+if "%map_running%" == "false" ( start cmd /k mapserv.bat %restart_mode%
 ) else echo "Map serv is already running, pid=%MapServPID%" 
 goto :EOF  
 
