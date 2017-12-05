@@ -5409,17 +5409,17 @@ Examples:
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
 	
-	//will end the effect of any learned skill for the invoking character.
+	// This will end the effect of any learned skill for the invoking character.
 	sc_end_class;
 	
-	//will end the effect of any learned skill for the invoking character.
+	// This will end the effect of any learned skill for the character with the <char_id> 150000.
 	// val1: <char_id>
 	sc_end_class(150000);
 	
-	//will end the effect of any Arch Bishop skill for the invoking character.
+	// This will end the effect of any Arch Bishop skill for the invoking character.
 	// val1: <char_id> (-1 return the <char_id> of the invoking character.)
 	// val2: <job_id> of Arch Bishop
-	sc_end_class(-1,4057);
+	sc_end_class(-1,Job_Arch_Bishop);
 
 Note: to use SC_NOCHAT you should alter Manner
 	set Manner, -5;	// Will mute a user for 5 minutes
