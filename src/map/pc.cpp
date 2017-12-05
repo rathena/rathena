@@ -9701,7 +9701,6 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	int i, pos, flag = 0, iflag;
 	struct item_data *id;
 	uint8 res = ITEM_EQUIP_ACK_OK;
-	bool status_calc = false;
 
 	nullpo_retr(false,sd);
 
@@ -9852,8 +9851,8 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	iflag = sd->npc_item_flag;
 
 	/* check for combos (MUST be before status_calc_pc) */
-	if( id->combos_count && pc_checkcombo(sd,id) )
-		status_calc = true;
+	if( id->combos_count )
+		pc_checkcombo(sd,id);
 	if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
 		; //No cards
 	else {
@@ -9862,14 +9861,13 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
 			if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-				if( data->combos_count && pc_checkcombo(sd,data) )
-					status_calc = true;
+				if( data->combos_count )
+					pc_checkcombo(sd,data);
 			}
 		}
 	}
 
-	if (status_calc)
-		status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_NONE);
 	if (flag) //Update skill data
 		clif_skillinfoblock(sd);
 
