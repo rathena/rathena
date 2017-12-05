@@ -2,7 +2,7 @@
 #include <memory>
 #include <string>
 
-//a small class to perform time mesurement
+// Class used to perform time measurement
 class cScopeTimer {
 	struct sPimpl; //this is to avoid long compilation time
 	std::unique_ptr<sPimpl> aPimpl;
