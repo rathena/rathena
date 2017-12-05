@@ -11337,25 +11337,26 @@ BUILDIN_FUNC(sc_end)
 
 /**
  * Ends all status effects from any learned skill on the attached player.
- * if <job_id> was given it will end all the effect for that job
- * if <job_id> is 0 it will return the job of the invoking character
- * sc_end_class {<job_id>{,<char_id>}};
+ * if <char_id> = -1 it will return the attached player
+ * if <class_id> was givin it will end the effect of that class for the attached player
+ * sc_end_class {<char_id>{,<job_id>}};
  */
 BUILDIN_FUNC(sc_end_class)
 {
 	struct map_session_data *sd;
 	uint16 skill_id;
-	int class_ = 0;
+	int class_;
 	struct block_list *bl = map_id2bl(st->rid);
 
-	if (!script_charid2sd(3, sd)) {
-		script_pushint(st, -1);
-		return SCRIPT_CMD_SUCCESS;
-	}
+	if (script_getnum(st, 2) == -1)
+		script_rid2sd(sd);
+	else
+		if (!script_charid2sd(2, sd))
+			return SCRIPT_CMD_FAILURE;
 
-	if (script_hasdata(st, 2))
-		class_ = script_getnum(st, 2);
-	if (class_ == 0)
+	if (script_hasdata(st, 3))
+		class_ = script_getnum(st, 3);
+	else
 		class_ = sd->status.class_;
 
 	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
