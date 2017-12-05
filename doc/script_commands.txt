@@ -5390,7 +5390,6 @@ perform a complete removal of all statuses (although permanent ones will re-appl
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
 skill on the invoking character. if <job_id> was given it will end the effect for that job.
-if the <char_id> was -1 it will return the <char_id> for the invoking character
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -5417,9 +5416,9 @@ Examples:
 	sc_end_class(150000);
 	
 	// This will end the effect of any Arch Bishop skill for the invoking character.
-	// val1: <char_id> (-1 return the <char_id> of the invoking character.)
+	// val1: <char_id>
 	// val2: <job_id> of Arch Bishop
-	sc_end_class(-1,Job_Arch_Bishop);
+	sc_end_class(getcharid(0),Job_Arch_Bishop);
 
 Note: to use SC_NOCHAT you should alter Manner
 	set Manner, -5;	// Will mute a user for 5 minutes

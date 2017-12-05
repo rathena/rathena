@@ -11337,7 +11337,6 @@ BUILDIN_FUNC(sc_end)
 
 /**
  * Ends all status effects from any learned skill on the attached player.
- * if <char_id> = -1 it will return the attached player
  * if <job_id> was given it will end the effect of that class for the attached player
  * sc_end_class {<char_id>{,<job_id>}};
  */
@@ -11347,12 +11346,8 @@ BUILDIN_FUNC(sc_end_class)
 	uint16 skill_id;
 	int class_;
 
-	if (script_getnum(st, 2) == -1) {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
-	else if (!script_charid2sd(2, sd))
-			return SCRIPT_CMD_FAILURE;
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	if (script_hasdata(st, 3))
 		class_ = script_getnum(st, 3);
