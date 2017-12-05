@@ -6024,7 +6024,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 400 + 100 * skill_lv;
 						RE_LVL_DMOD(100);
 						if (mflag > 0)
-							skillratio += 100 * (9 - mflag);
+							skillratio += 100 * mflag;
 						break;
 					case WL_EARTHSTRAIN:
 						skillratio += 1900 + 100 * skill_lv;
