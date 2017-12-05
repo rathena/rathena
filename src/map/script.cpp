@@ -11359,6 +11359,11 @@ BUILDIN_FUNC(sc_end_class)
 	else
 		class_ = sd->status.class_;
 
+	if (!pcdb_checkid(class_)) {
+		ShowError("sc_end_class: bad job id given ,[%s] is not a job id.\n", script_getstr(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
 		enum sc_type sc = status_skill2sc(skill_id);
 
