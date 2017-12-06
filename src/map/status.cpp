@@ -7903,6 +7903,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			case SC_QUAGMIRE:
 			case SC_SUITON:
 			case SC_SWINGDANCE:
+			case SC_FIRE_INSIGNIA:
+			case SC_WATER_INSIGNIA:
+			case SC_WIND_INSIGNIA:
+			case SC_EARTH_INSIGNIA:
 				return 0;
 		}
 	}
