@@ -377,7 +377,7 @@ OnTimer36000:
 	npctalk "Artie: No volunteers? Come on. Harness your motivational skills and find someone.", "Magic Scholar Artie#tnm";
 	end;
 OnTimer37000:
-	emotion 29,0,"Magic Scholar Artie#tnm";
+	emotion ET_KIK, getnpcid(0, "Magic Scholar Artie#tnm");
 	end;
 OnTimer39000:
 	npctalk "Shep: Hello!!! Now recruiting new members to exploring the Devil's Tower!", "Historian Shep#tnm01";
@@ -406,17 +406,17 @@ OnTimer5000:
 	npctalk "A tirailleur: Next floor is the highest one... but there are so many demons...", instance_npcname("A tirailleur#tnm01");
 	end;
 OnTimer6000:
-	emotion 9,0,instance_npcname("Officer Heim#heim0");
+	emotion ET_THINK, getnpcid(0, instance_npcname("Officer Heim#heim0"));
 	end;
 OnTimer8000:
 	npctalk "A tirailleur: It is impossible to break through with the number of our people.", instance_npcname("A tirailleur#tnm01");
-	emotion 19,0,instance_npcname("A tirailleur#tnm01");
+	emotion ET_PROFUSELY_SWEAT, getnpcid(0, instance_npcname("A tirailleur#tnm01"));
 	end;
 OnTimer11000:
 	npctalk "Officer Heim: How many soldiers have survived now? When is the support team arriving?", instance_npcname("Officer Heim#heim0");
 	end;
 OnTimer12000:
-	emotion 9,0,instance_npcname("An aide#tnm02");
+	emotion ET_THINK, getnpcid(0, instance_npcname("An aide#tnm02"));
 	end;
 OnTimer16000:
 	npctalk "An aide: There aren't enough to call in...", instance_npcname("An aide#tnm02");
@@ -658,11 +658,11 @@ OnTouch:
 		sleep2 3000;
 		npctalk "Lucile: Not at all. I really want to know. What's going on upstairs?", .@lucile$;
 		sleep2 2500;
-		emotion 54,0,.@heim$;
+		emotion ET_OHNO, getnpcid(0, .@heim$);
 		sleep2 1000;
 		npctalk "Officer Heim: How did you know that? Yes, the demons have stopped their attack from upstairs.", .@heim$;
 		sleep2 3000;
-		emotion 18,0,.@lucile$;
+		emotion ET_SMILE, getnpcid(0, .@lucile$);
 		npctalk "Lucile: What do you think about the situation Magic Swordman?", .@lucile$;
 		cutin "tnm_lucile01.bmp",0;
 		sleep2 3000;
@@ -693,7 +693,7 @@ OnTouch:
 		sleep2 2000;
 		npctalk "Officer Heim: They are so unpredictable. You know what is going on right? Back them up...", .@heim$;
 		sleep2 2500;
-		npctalk "Officer Heim: Help us take care of the demons coming down from upstairs.", instance_npcname("Officer Heim#heim");
+		npctalk "Officer Heim: Help us take care of the demons coming down from upstairs.", .@heim$;
 		end;
 	}
 }
