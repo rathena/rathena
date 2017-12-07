@@ -3394,16 +3394,25 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		if (sc->data[SC_CONCENTRATION] && (skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER))
 			skillratio += sc->data[SC_CONCENTRATION]->val2;
 #endif
-		if (sc->data[SC_CRUSHSTRIKE] && (!skill_id || skill_id == KN_AUTOCOUNTER)) {
-			if (sd) { //ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
-				short index = sd->equip_index[EQI_HAND_R];
+		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
+			if (sc->data[SC_CRUSHSTRIKE]) {
+				if (sd) { //ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
+					short index = sd->equip_index[EQI_HAND_R];
 
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
-					skillratio += -100 + sd->inventory_data[index]->weight / 10 + sstatus->rhw.atk +
-						100 * sd->inventory_data[index]->wlv * (sd->inventory.u.items_inventory[index].refine + 6);
+					if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
+						skillratio += -100 + sd->inventory_data[index]->weight / 10 + sd->inventory_data[index]->atk +
+							100 * sd->inventory_data[index]->wlv * (sd->inventory.u.items_inventory[index].refine + 6);
+				}
+				status_change_end(src,SC_CRUSHSTRIKE,INVALID_TIMER);
+				skill_break_equip(src,src,EQP_WEAPON,2000,BCT_SELF);
+			} else {
+				if (sc->data[SC_GIANTGROWTH] && (sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT) { // Increase damage again if Crush Strike is not active
+					if (map_flag_vs(src->m)) // Only half of the 2.5x increase on versus-type maps
+						skillratio += 125;
+					else
+						skillratio += 250;
+				}
 			}
-			status_change_end(src,SC_CRUSHSTRIKE,INVALID_TIMER);
-			skill_break_equip(src,src,EQP_WEAPON,2000,BCT_SELF);
 		}
 	}
 
@@ -7264,12 +7273,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vanish_damage) {
 			wd.damage <<= 1; // Double Damage
 			skill_break_equip(src, src, EQP_WEAPON, 10, BCT_SELF); // Break chance happens on successful damage increase
-			if (!sc->data[SC_CRUSHSTRIKE] && (sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT) { // Increase damage again if Crush Strike is not active
-				if (map_flag_vs(src->m)) // Only half of the 2.5x increase on versus-type maps
-					wd.damage += wd.damage * 125 / 100;
-				else
-					wd.damage += wd.damage * 250 / 100;
-			}
 		}
 
 		if( sd && battle_config.arrow_decrement && sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0) {
