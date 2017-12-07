@@ -1,11 +1,24 @@
 #pragma once
 
+#include <sdkddkver.h>
+
+#ifndef NTDDI_VERSION
+	#define NTDDI_VERSION 	0x05000000 // Windows 2000
+#endif
+#ifndef _WIN32_WINNT
+	#define _WIN32_WINNT  0x0500 // Windows 2000
+#endif
+#ifndef WINVER
+	#define WINVER 0x0500 // Windows 2000
+#endif
+#ifndef _WIN32_IE
+	#define _WIN32_IE 	0x0600 // Internet Explorer 6.0
+#endif
+#ifndef _WIN32_WINNT_VISTA
+	#define _WIN32_WINNT_VISTA 0x0600 // Windows Vista
+#endif
 
 #define STRICT
-#define NTDDI_VERSION 	NTDDI_WIN2K
-#define _WIN32_WINNT  0x0500
-#define WINVER 0x0500
-#define _WIN32_IE 	0x0600
 #define WIN32_LEAN_AND_MEAN
 #define NOCOMM 
 #define NOKANJI
@@ -33,4 +46,6 @@
 #include <Mswsock.h>
 #include <MMSystem.h>
 
+#include "cbasetypes.h"
 
+bool IsCurrentUserLocalAdministrator(void);

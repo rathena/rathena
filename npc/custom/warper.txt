@@ -13,6 +13,7 @@
 //= 1.4a Slight edits.
 //= 1.4b Added Wolfchev's Laboratory warp.
 //= 1.5 Added Lasagna ,Para Market ,WOE TE ,Instances and settings [sader1992].
+//= 1.5a Fix Bifrost Tower
 //============================================================
 
 -	script	Warper	-1,{
@@ -280,7 +281,7 @@ F29: Restrict("Pre-RE",5,10);
 // --------------------------------------------------
 @d = true;
 menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
-    	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D41,
+    	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D42,
     	"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
     	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
     	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,

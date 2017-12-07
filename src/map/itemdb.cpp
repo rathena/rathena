@@ -1914,40 +1914,6 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
- * Re-link monster drop data with item data
- * Fixes the need of a @reloadmobdb after a @reloaditemdb
- * @author Epoque
- */
-void itemdb_reload_itemmob_data(void) {
-	int i;
-
-	for( i = 0; i < MAX_MOB_DB; i++ ) {
-		struct mob_db *entry = mob_db(i);
-		int d, k;
-
-		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
-			struct item_data *id;
-			if( !entry->dropitem[d].nameid )
-				continue;
-			id = itemdb_search(entry->dropitem[d].nameid);
-
-			for (k = 0; k < MAX_SEARCH; k++) {
-				if (id->mob[k].chance <= entry->dropitem[d].p)
-					break;
-			}
-
-			if (k == MAX_SEARCH)
-				continue;
-
-			if (id->mob[k].id != i)
-				memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
-			id->mob[k].chance = entry->dropitem[d].p;
-			id->mob[k].id = i;
-		}
-	}
-}
-
-/**
 * Reload Item DB
 */
 void itemdb_reload(void) {
@@ -1969,7 +1935,7 @@ void itemdb_reload(void) {
 	if (battle_config.feature_roulette)
 		itemdb_parse_roulette_db();
 
-	itemdb_reload_itemmob_data();
+	mob_reload_itemmob_data();
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();

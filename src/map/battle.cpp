@@ -5672,7 +5672,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				s_ele = ELE_HOLY;
 			break;
 		case WL_HELLINFERNO:
-			if (ad.miscflag&ELE_DARK)
+			if (mflag&ELE_DARK)
 				s_ele = ELE_DARK;
 			break;
 		case SO_PSYCHIC_WAVE:
@@ -6318,20 +6318,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	//Apply DAMAGE_DIV_FIX and check for min damage
 	ad = battle_apply_div_fix(ad, skill_id);
 
-	switch(skill_id) { // These skills will do a GVG fix later
 #ifdef RENEWAL
+	switch(skill_id) {
 		case ASC_BREAKER:
 		case CR_ACIDDEMONSTRATION:
 			return ad; //These skills will do a GVG fix later
-#endif
-		default:
-			ad.damage = battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
-			if (map_flag_gvg2(target->m))
-				ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
-			else if (map[target->m].flag.battleground)
-				ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
-			break;
 	}
+#endif
+
+	ad.damage = battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
+	if (map_flag_gvg2(target->m))
+		ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
+	else if (map[target->m].flag.battleground)
+		ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
 
 	// Skill damage adjustment
 #ifdef ADJUST_SKILL_DAMAGE
@@ -8277,6 +8276,7 @@ static const struct _battle_data {
 	{ "homunculus_show_growth",             &battle_config.homunculus_show_growth,          0,      0,      1,              },
 	{ "homunculus_friendly_rate",           &battle_config.homunculus_friendly_rate,        100,    0,      INT_MAX,        },
 	{ "vending_tax",                        &battle_config.vending_tax,                     0,      0,      10000,          },
+	{ "vending_tax_min",                    &battle_config.vending_tax_min,                 0,      0,      MAX_ZENY,       },
 	{ "day_duration",                       &battle_config.day_duration,                    0,      0,      INT_MAX,        },
 	{ "night_duration",                     &battle_config.night_duration,                  0,      0,      INT_MAX,        },
 	{ "mob_remove_delay",                   &battle_config.mob_remove_delay,                60000,  1000,   INT_MAX,        },

@@ -19020,7 +19020,7 @@ void clif_change_title_ack(struct map_session_data *sd, unsigned char result, un
  */
 void clif_parse_change_title(int fd, struct map_session_data *sd)
 {
-	int title_id, i;
+	int title_id;
 
 	nullpo_retv(sd);
 
@@ -19032,8 +19032,7 @@ void clif_parse_change_title(int fd, struct map_session_data *sd)
 	}else if( title_id <= 0 ){
 		sd->status.title_id = 0;
 	}else{
-		ARR_FIND(0, sd->titleCount, i, sd->titles[i] == title_id);
-		if( i == sd->titleCount ){
+		if (std::find(sd->titles.begin(), sd->titles.end(), title_id) == sd->titles.end()) {
 			clif_change_title_ack(sd, 1, title_id);
 			return;
 		}

@@ -4,6 +4,8 @@
 #ifndef _PC_HPP_
 #define _PC_HPP_
 
+#include <vector>
+
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.h"// StringBuf
 
@@ -612,8 +614,7 @@ struct map_session_data {
 	} achievement_data;
 
 	// Title system
-	int *titles;
-	uint8 titleCount;
+	std::vector<int> titles;
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
