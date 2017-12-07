@@ -88,7 +88,7 @@ OnCount3000:
 	announce "[1]",1;
 	end;
 OnCount4000:
-	emotion e_go;
+	emotion ET_GO;
 	specialeffect EF_CHIMTO;
 	announce "[GO!]",1;
 	set $@race,1;

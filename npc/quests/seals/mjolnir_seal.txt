@@ -2041,7 +2041,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "^3355FF*Clang Clang!*^000000";
 					successrefitem .@part;
 					next;
-					emotion e_heh;
+					emotion ET_SMILE;
 					mes "[Vestri]";
 					mes "Mwahahaha~";
 					mes "I've still got it!";
@@ -2055,7 +2055,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "^3355FF*Clang Clang!*^000000";
 					failedrefitem .@part;
 					next;
-					emotion e_omg;
+					emotion ET_HUK;
 					mes "[Vestri]";
 					mes "Waaahhhhh!";
 					mes "Dear God, no!";
@@ -2252,7 +2252,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "^3355FF*Clang Clang!*^000000";
 					successrefitem .@part;
 					next;
-					emotion e_heh;
+					emotion ET_SMILE;
 					mes "[Vestri]";
 					mes "Mwahahaha~";
 					mes "I've still got it!";
@@ -2266,7 +2266,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "^3355FF*Clang Clang!*^000000";
 					failedrefitem .@part;
 					next;
-					emotion e_omg;
+					emotion ET_HUK;
 					mes "[Vestri]";
 					mes "Waaahhhhh!";
 					mes "Dear God, no!";

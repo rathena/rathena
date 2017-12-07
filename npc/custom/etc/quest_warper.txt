@@ -548,7 +548,7 @@ stampcard:
 	mes "You collected^00FF00 "+@Tstamp+" of "+@MaxTstamp+" ^000000Towns.";
 	if (@Tstamp == 15) {
 		mes "They say there is an island you can only get to when married...";
-		emotion e_heh;
+		emotion ET_SMILE;
 	}
 	next;
 	mes "Let me check what dungeons you have.";

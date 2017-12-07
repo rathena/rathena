@@ -5,7 +5,7 @@
 #include "timer.h" // gettick
 #include "random.h"
 #if defined(WIN32)
-	#include "winapi.h"
+	#include "winapi.hpp"
 #elif defined(HAVE_GETPID) || defined(HAVE_GETTID)
 	#include <sys/types.h>
 	#include <unistd.h>

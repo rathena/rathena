@@ -16,7 +16,7 @@
 //
  
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #endif
 
 #include "cbasetypes.h"
@@ -71,14 +71,11 @@ static forceinline void EnterSpinLock(PSPIN_LOCK lck){
 		
 		
 		// Spin until we've got it ! 
-		while(1){
-				
-				if(InterlockedCompareExchange(&lck->lock, tid, 0) == 0){
-						
+		while(1){			
+				if(InterlockedCompareExchange(&lck->lock, tid, RA_INVALID_THID) == RA_INVALID_THID){					
 						InterlockedIncrement(&lck->nest);
 						return; // Got Lock
 				}
-				
 				rathread_yield(); // Force ctxswitch to another thread.
 		}
 
@@ -92,13 +89,14 @@ static forceinline void LeaveSpinLock(PSPIN_LOCK lck){
 		
 		if(InterlockedCompareExchange(&lck->lock, tid, tid) == tid){ // this thread owns the lock.
 			if(InterlockedDecrement(&lck->nest) == 0)
-					InterlockedExchange(&lck->lock, 0); // Unlock!
+					InterlockedExchange(&lck->lock, RA_INVALID_THID); // Unlock!
 		}
 		
 		dropsynclock(&lck->sync_lock);
 }
 
 
-
+#undef getsynclock
+#undef dropsynclock
 
 #endif
