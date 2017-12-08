@@ -15,7 +15,7 @@
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
 //= 2.9 Added MC_CARTDECORATE for Merchant class. [mazvi]
 //= 3.0 Migrate/Integrate to Global Functions. [mazvi]
-//= 3.1 Traduzido para o PT-BR por Wlauton. [Award3d]
+//= 3.1 Traduzido para o PT-BR por Wlauton. [Award3d].
 //============================================================
 
 prontera,128,200,6	script	Habilidades de Platina	94,{
