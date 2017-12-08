@@ -24,7 +24,7 @@ prontera,128,200,6	script	Habilidades de Platina	94,{
 	next;
 	if (select("Yes Please:No") == 2) {
 		mes "[Platinum Skill NPC]";
-		mes "Have a nice day... >.>";
+		mes "Tenha um bom dia... >.>";
 		close;
 	}
 	callfunc "F_GetPlatinumSkills";
