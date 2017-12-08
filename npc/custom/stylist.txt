@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Stylist
+//= Stylist (Estilista)
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
@@ -11,9 +11,10 @@
 //===== Additional Comments: =================================
 //= 1.0 Initial script.
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
+//= 1.1 Traduzido para PT-BR por Wlauton. [Award3d]
 //============================================================
 
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
+prontera,170,180,1	script	Estilista#custom_stylist	122,{
 	setarray .@Styles[1],
 		getbattleflag("max_cloth_color"),
 		getbattleflag("max_hair_style"),
