@@ -19543,7 +19543,15 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 	WBUFB(buf, 4) = type;
 	WBUFW(buf, 5) = nameid;
 	WBUFB(buf, 7) = NAME_LENGTH;
-	safestrncpy(WBUFCP(buf, 8), char_name, NAME_LENGTH);
+
+	if (battle_config.broadcast_hide_name) {
+		std::string dispname = std::string(char_name);
+		int hide = (battle_config.broadcast_hide_name > dispname.length() - 1) ? dispname.length() - 1 : battle_config.broadcast_hide_name;
+		dispname.replace(dispname.length() - hide, hide, hide, '*');
+		safestrncpy(WBUFCP(buf, 8), dispname.c_str(), NAME_LENGTH);
+	}
+	else
+		safestrncpy(WBUFCP(buf, 8), char_name, NAME_LENGTH);
 
 	switch (type) {
 		case ITEMOBTAIN_TYPE_BOXITEM:

@@ -8444,6 +8444,7 @@ static const struct _battle_data {
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0x3,            },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
+	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 
 #include "../custom/battle_config_init.inc"
 };

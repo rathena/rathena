@@ -4864,7 +4864,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getrandgroupitem <group_id>{,<quantity>{,<sub_group>}};
+*getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}};
 
 Similar to the above example, this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
@@ -4879,7 +4879,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getgroupitem <group_id>{,<char_id>};
+*getgroupitem <group_id>{,<identify>{,<char_id>}};
 
 Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified

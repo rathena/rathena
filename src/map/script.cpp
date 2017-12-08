@@ -20972,16 +20972,16 @@ BUILDIN_FUNC(checkre)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/* getrandgroupitem <group_id>{,<quantity>{,<sub_group>}} */
+/* getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}} */
 BUILDIN_FUNC(getrandgroupitem) {
 	TBL_PC* sd;
-	int i, get_count = 0;
+	int i, get_count = 0, identify = 0;
 	uint16 group, qty = 0;
 	uint8 sub_group = 1;
 	struct item item_tmp;
 	struct s_item_group_entry *entry = NULL;
 
-	if (!script_rid2sd(sd))
+	if (!script_charid2sd(6, sd))
 		return SCRIPT_CMD_SUCCESS;
 
 	group = script_getnum(st,2);
@@ -20993,6 +20993,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 
 	FETCH(3, qty);
 	FETCH(4, sub_group);
+	FETCH(5, identify);
 
 	entry = itemdb_get_randgroupitem(group,sub_group);
 	if (!entry)
@@ -21000,7 +21001,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 
 	memset(&item_tmp,0,sizeof(item_tmp));
 	item_tmp.nameid   = entry->nameid;
-	item_tmp.identify = itemdb_isidentified(entry->nameid);
+	item_tmp.identify = identify ? 1 : itemdb_isidentified(entry->nameid);
 
 	if (!qty)
 		qty = entry->amount;
@@ -21030,17 +21031,17 @@ BUILDIN_FUNC(getrandgroupitem) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/* getgroupitem <group_id>{,<char_id>};
+/* getgroupitem <group_id>{,<identify>{,<char_id>}};
  * Gives item(s) to the attached player based on item group contents
  */
 BUILDIN_FUNC(getgroupitem) {
 	TBL_PC *sd;
 	int group_id = script_getnum(st,2);
 	
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (itemdb_pc_get_itemgroup(group_id,sd)) {
+	if (itemdb_pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : 0), sd)) {
 		ShowError("buildin_getgroupitem: Invalid group id '%d' specified.\n",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -24200,7 +24201,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(get_githash,""),
 	BUILDIN_DEF(freeloop,"?"),
-	BUILDIN_DEF(getrandgroupitem,"i??"),
+	BUILDIN_DEF(getrandgroupitem,"i????"),
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
@@ -24247,7 +24248,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_time,"i?"),
 	BUILDIN_DEF(bonus_script,"si????"),
 	BUILDIN_DEF(bonus_script_clear,"??"),
-	BUILDIN_DEF(getgroupitem,"i?"),
+	BUILDIN_DEF(getgroupitem,"i??"),
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),
 	BUILDIN_DEF(getguildmember,"i??"),

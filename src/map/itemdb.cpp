@@ -201,7 +201,7 @@ unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
 * @param group_id: The group ID of item that obtained by player
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_item_group_entry *data) {
+static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identify, struct s_item_group_entry *data) {
 	uint16 i, get_amt = 0;
 	struct item tmp;
 
@@ -211,7 +211,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
-	tmp.identify = 1;
+	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
 	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
@@ -245,7 +245,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 * @param nameid: The item that trigger this item group
 * @return val: 0:success, 1:no sd, 2:invalid item group
 */
-char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
+char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd) {
 	uint16 i = 0;
 	struct s_item_group_db *group;
 
@@ -260,7 +260,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	if (group->must_qty) {
 		for (i = 0; i < group->must_qty; i++)
 			if (&group->must[i])
-				itemdb_pc_get_itemgroup_sub(sd,&group->must[i]);
+				itemdb_pc_get_itemgroup_sub(sd, identify, &group->must[i]);
 	}
 
 	// Get the 'random' item each random group
@@ -271,7 +271,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 		rand = rnd()%group->random[i].data_qty;
 		if (!(&group->random[i].data[rand]) || !group->random[i].data[rand].nameid)
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd,&group->random[i].data[rand]);
+		itemdb_pc_get_itemgroup_sub(sd, identify, &group->random[i].data[rand]);
 	}
 
 	return 0;
@@ -548,10 +548,14 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 * @param nameid ID of item
 */
 char itemdb_isidentified(unsigned short nameid) {
-	int type=itemdb_type(nameid);
-	switch (type) {
+	struct item_data *id = itemdb_exists(nameid);
+	if (!id)
+		return 0;
+	switch (id->type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
+			if ((id->equip&EQP_COSTUME))
+				return 1;
 		case IT_PETARMOR:
 		case IT_SHADOWGEAR:
 			return 0;
