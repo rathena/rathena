@@ -28,7 +28,7 @@ prontera,128,200,6	script	Habilidades de Platina	94,{
 		close;
 	}
 	callfunc "F_GetPlatinumSkills";
-	mes "[Platinum Skill NPC]";
-	mes "There you go!";
+	mes "[Habilidades de Platina]";
+	mes "Aqui está, tenha um bom jogo !";
 	close;
 }
