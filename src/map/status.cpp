@@ -10230,7 +10230,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_GIANTGROWTH:
-			val2 = 15; // Triple damage success rate.
+			val2 = 15; // Double damage success rate.
 			break;
 
 		/* Arch Bishop */
