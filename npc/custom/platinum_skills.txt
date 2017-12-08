@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Platinum Skills
+//= Platinum Skills (Habilidades de Platina)
 //===== Description: =========================================
 //= Single NPC that assigns quests skills for all classes
 //===== Additional Comments: =================================
@@ -15,20 +15,21 @@
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
 //= 2.9 Added MC_CARTDECORATE for Merchant class. [mazvi]
 //= 3.0 Migrate/Integrate to Global Functions. [mazvi]
+//= 3.1 Traduzido para o PT-BR por Wlauton. [Award3d].
 //============================================================
 
-prontera,128,200,6	script	Platinum Skill NPC	94,{
-	mes "[Platinum Skill NPC]";
-	mes "I can give you the special skills available to your job.";
-	mes "Would you like these skills now?";
+prontera,128,200,6	script	Habilidades de Platina	94,{
+	mes "[Habilidades de Platina]";
+	mes "Eu posso habilitar para você suas Habilidades Extras (Especiais).";
+	mes "Você gostaria de recebe-las agora?";
 	next;
-	if (select("Yes Please:No") == 2) {
-		mes "[Platinum Skill NPC]";
-		mes "Have a nice day... >.>";
+	if (select("Sim, Por gentileza:Não") == 2) {
+		mes "[Habilidades de Platina]";
+		mes "Tenha um bom dia... >.>";
 		close;
 	}
 	callfunc "F_GetPlatinumSkills";
-	mes "[Platinum Skill NPC]";
-	mes "There you go!";
+	mes "[Habilidades de Platina]";
+	mes "Aqui está, tenha um bom jogo !";
 	close;
 }
