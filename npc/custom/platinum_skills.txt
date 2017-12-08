@@ -19,10 +19,10 @@
 
 prontera,128,200,6	script	Habilidades de Platina	94,{
 	mes "[Habilidades de Platina]";
-	mes "I can give you the special skills available to your job.";
-	mes "Would you like these skills now?";
+	mes "Eu posso habilitar para você suas Habilidades Extras (Especiais).";
+	mes "Você gostaria de recebe-las agora?";
 	next;
-	if (select("Sim Please:Não") == 2) {
+	if (select("Sim, Por gentileza:Não") == 2) {
 		mes "[Habilidades de Platina]";
 		mes "Tenha um bom dia... >.>";
 		close;
