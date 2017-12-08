@@ -28,7 +28,7 @@ prontera,170,180,1	script	Estilista#custom_stylist	122,{
 	set .@Style,1;
 	while(1) {
 		setlook .@Look[.@s], .@Style;
-		message strcharinfo(0),"This is style #"+.@Style+".";
+		message strcharinfo(0),"Esse é o estilo #"+.@Style+".";
 		set .@menu$, " ~ Próximo (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Anterior (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Pular para...: ~ Reverter para original (^0055FF"+.@Revert+"^000000)";
 		switch(select(.@menu$)) {
 		case 1:
