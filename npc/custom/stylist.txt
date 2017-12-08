@@ -13,7 +13,7 @@
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
 
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
+prontera,170,180,1	script	Estilista#custom_stylist	122,{
 	setarray .@Styles[1],
 		getbattleflag("max_cloth_color"),
 		getbattleflag("max_hair_style"),
@@ -22,7 +22,7 @@ prontera,170,180,1	script	Stylist#custom_stylist	122,{
 		LOOK_CLOTHES_COLOR,
 		LOOK_HAIR,
 		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
+	set .@s, select(" ~ Cor da Roupa: ~ Corte de Cabelo: ~ Cor de Cabelo");
 	set .@Revert, getlook(.@Look[.@s]);
 	set .@Style,1;
 	while(1) {
