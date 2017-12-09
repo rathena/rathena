@@ -22,7 +22,7 @@
 //= 1.4 Added a fix to make Lutie & Bard quests passable during this event [Lupus]
 //============================================================
 
-xmas_in,100,96,4	script	Father Christmas::Santa2	718,{
+xmas_in,100,96,4	script	Father Christmas::Santa1	718,{
 	mes "[Santa Claus]";
 	if(xmas_npc==0) set xmas_npc, 1; // For Lutie & Bard quest
 	if(#event_xmas > 0 && #event_xmas < 30 ) goto L_Start;
