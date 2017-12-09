@@ -12705,7 +12705,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
 			sc_timer_next(min(sce->val4, interval) + tick, status_change_timer, bl->id, data);
-			sce->val4 -= interval; //Remaining time
+			if (sce) // check due to sc_timer_next
+				sce->val4 -= interval; //Remaining time
 			status_calc_bl(bl, StatusChangeFlagTable[type]);
 			return 0;
 		}
@@ -13149,7 +13150,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			}
 			map_freeblock_unlock();
-			status_heal(src, damage*(5 + 5 * sce->val1)/100, 0, 0); // 5 + 5% per level
+			if (sce) // check due to sc_timer_next
+				status_heal(src, damage*(5 + 5 * sce->val1)/100, 0, 0); // 5 + 5% per level
 			return 0;
 		}
 		break;
@@ -13454,7 +13456,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				clif_fixpos(bl);
 			}
 			sc_timer_next(tick+sce->val4, status_change_timer, bl->id, data);
-			sce->val4 = 0;
+			if (sce) // check due to sc_timer_next
+				sce->val4 = 0;
 		}
 		break;
 	case SC_BITESCAR:
@@ -13492,7 +13495,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
 	if(interval > 0 && sc->data[type] && sce->val4 >= 100) {
 		sc_timer_next(min(sce->val4,interval)+tick, status_change_timer, bl->id, data);
-		sce->val4 -= interval;
+		if (sce) // check due to sc_timer_next
+			sce->val4 -= interval;
 		if (dounlock)
 			map_freeblock_unlock();
 		return 0;
