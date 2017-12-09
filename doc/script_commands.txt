@@ -4875,6 +4875,9 @@ If 'quantity' is not defined or 0, it will uses defined amount from Item Group l
 If 'sub_group' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
 'must' item group).
 
+For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
+as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp).
+
 More info, see doc/item_group.txt.
 
 ---------------------------------------
