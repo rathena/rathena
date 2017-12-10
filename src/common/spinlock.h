@@ -16,7 +16,7 @@
 //
  
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #endif
 
 #include "cbasetypes.h"

@@ -19032,7 +19032,7 @@ void clif_parse_change_title(int fd, struct map_session_data *sd)
 	}else if( title_id <= 0 ){
 		sd->status.title_id = 0;
 	}else{
-		if (std::find(sd->titles.begin(), sd->titles.end(), title_id) != sd->titles.end()) {
+		if (std::find(sd->titles.begin(), sd->titles.end(), title_id) == sd->titles.end()) {
 			clif_change_title_ack(sd, 1, title_id);
 			return;
 		}

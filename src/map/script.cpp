@@ -2362,46 +2362,49 @@ void script_set_constant(const char* name, int value, bool isparameter, bool dep
 	}
 }
 
+static bool read_constdb_sub( char* fields[], int columns, int current ){
+	char name[1024], val[1024];
+	int type = 0;
+
+	if( columns > 1 ){
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_]", name) != 1 ||
+			sscanf(fields[1], "%1023[A-Za-z0-9/_]", val) != 1 || 
+			( columns >= 2 && sscanf(fields[2], "%11d", &type) != 1 ) ){
+			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current);
+			return false;
+		}
+	}else{
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d", name, val, &type) < 2 ){
+			ShowWarning( "Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current );
+			return false;
+		}
+	}
+
+	script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
+
+	return true;
+}
+
 /*==========================================
  * Reading constant databases
  * const.txt
  *------------------------------------------*/
-static void read_constdb(void)
-{
-	FILE *fp;
-	char line[1024],name[1024],val[1024];
-	int type;
-	int entries=0, skipped=0, linenum=0;
+static void read_constdb(void){
+	const char* dbsubpath[] = {
+		"",
+		"/" DBIMPORT,
+	};
 
-	sprintf(line, "%s/const.txt", db_path);
-	fp=fopen(line, "r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", line);
-		return ;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		linenum++;
-		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r') //ignore empty line
-			continue;
-		if(line[0]=='/' && line[1]=='/') //ignore commented line
-			continue;
-		
-		type=0;
-		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%11d",name,val,&type)>=2 ||
-		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d",name,val,&type)>=2){
-			entries++;
-			script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
-		}
-		else {
-			skipped++;
-			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n",linenum);
-		}
-	}
-	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s/const.txt" CL_RESET "'.\n", entries, db_path);
-	if(skipped){
-		ShowWarning("Skipped '" CL_WHITE "%d" CL_RESET "', entries\n",skipped);
+	for( int i = 0; i < ARRAYLENGTH(dbsubpath); i++ ){
+		int n2 = strlen(db_path) + strlen(dbsubpath[i]) + 1;
+		char* dbsubpath2 = (char*)aMalloc(n2 + 1);
+		bool silent = i > 0;
+
+		safesnprintf(dbsubpath2, n2, "%s%s", db_path, dbsubpath[i]);
+
+		sv_readdb(dbsubpath2, "const.txt", ',', 1, 3, -1, &read_constdb_sub, silent);
+
+		aFree(dbsubpath2);
 	}
 }
 
@@ -2494,7 +2497,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	const char *p,*tmpp;
 	int i;
 	struct script_code* code = NULL;
-	static int first=1;
+	static bool first=true;
 	char end;
 	bool unresolved_names = false;
 
@@ -2510,7 +2513,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		add_buildin_func();
 		read_constdb();
 		script_hardcoded_constants();
-		first=0;
+		first=false;
 	}
 
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
@@ -6704,7 +6707,7 @@ BUILDIN_FUNC(viewpoint)
  * @param x First position of random option id array from the script
  **/
 static int script_getitem_randomoption(struct script_state *st, struct item *it, const char *funcname, int x) {
-	int i, opt_id_n, opt_val_n, opt_param_n;
+	int i, opt_id_n;
 	struct script_data *opt_id = script_getdata(st,x);
 	struct script_data *opt_val = script_getdata(st,x+1);
 	struct script_data *opt_param = script_getdata(st,x+2);
@@ -6716,17 +6719,17 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	int32 opt_param_id, opt_param_idx;
 	struct reg_db *opt_id_ref = NULL, *opt_val_ref = NULL, *opt_param_ref = NULL;
 
-	if (opt_id_var[strlen(opt_id_var)-1] == '$') {
+	if (is_string_variable(opt_id_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_id_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (opt_val_var[strlen(opt_val_var)-1] == '$') {
+	if (is_string_variable(opt_val_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_val_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (opt_param_var[strlen(opt_param_var)-1] == '$') {
+	if (is_string_variable(opt_param_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_param_var);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -6741,18 +6744,6 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 
 	opt_val_ref = reference_getref(opt_val);
 	opt_param_ref = reference_getref(opt_param);
-
-	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
-	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
-
-	if (opt_val_n < 1) {
-		ShowError("buildin_%s: No option value listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
-	if (opt_param_n < 1) {
-		ShowError("buildin_%s: No option parameter listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
 
 	opt_id_id = reference_getid(opt_id);
 	opt_val_id = reference_getid(opt_val);
