@@ -6587,12 +6587,12 @@
 12442,F_Kafra_Card,F Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12443,F_Neuralizer,F Neuralizer,2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12444,F_Dun_Tele_Scroll1,WoE Telport Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashSiegeTele"; },{},{}
-12445,F_Str_Dish10_,F Str Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12446,F_Agi_Dish10_,F Agi Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12447,F_Int_Dish10_,F Int Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12448,F_Dex_Dish10_,F Dex Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12449,F_Luk_Dish10_,F Luk Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12450,F_Vit_Dish10_,F Vit Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12445,F_Str_Dish10_,F Str Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_STRFOOD,1800000,10; },{},{}
+12446,F_Agi_Dish10_,F Agi Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_AGIFOOD,1800000,10; },{},{}
+12447,F_Int_Dish10_,F Int Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1800000,10; },{},{}
+12448,F_Dex_Dish10_,F Dex Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DEXFOOD,1800000,10; },{},{}
+12449,F_Luk_Dish10_,F Luk Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_LUKFOOD,1800000,10; },{},{}
+12450,F_Vit_Dish10_,F Vit Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_VITFOOD,1800000,10; },{},{}
 12451,F_WOB_Rune,F WOB Rune,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12452,F_WOB_Schwaltz,F WOB Schwaltz,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12453,F_WOB_Rachel,F WOB Rachel,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -8841,7 +8841,7 @@
 16415,FTurtle_Hat_Box,FTurtle Hat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5611,1; },{},{}
 16418,Giant_Fly_Wing_Box_500,Giant Fly Wing Box 500,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12212,500; },{},{}
 16419,Greed_Scroll_Box_30,Greed Scroll Box 30,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14529,30; },{},{}
-16420,Adventurer_Pack,Adventurer Pack,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12208,10; getitem 12210,10; getitem 12216,20; getitem 12215,20; getitem 7621,10; getitem 12209,10; getitem 12211,5; getitem 12450,10; getitem 12448,10; getitem 12446,10; getitem 12206,10; getitem 12445,10; getitem 12447,10; },{},{}
+16420,Adventurer_Pack,Adventurer Pack,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12208,10; getitem 12210,10; getitem 12216,20; getitem 12215,20; getitem 7621,10; getitem 12209,10; getitem 12211,5; getitem 12445,10; getitem 12446,10; getitem 12447,10; getitem 12448,10; getitem 12449,10; getitem 12450,10;},{},{}
 16421,Written_Oath_Of_Marriage_Box,Written Oath Of Marriage Box,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6026,1; },{},{}
 16422,Magestic_Goat_Box_,Magestic Goat Box,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 5280,604800; },{},{}
 16423,Episode_13.1_Key_Package,Episode 13.1 Key Package,2,20,10,1,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7782,1; getitem 12208,2; getitem 14582,10; },{},{}
