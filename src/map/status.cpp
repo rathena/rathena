@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string>
+#include <functional>
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.h"
