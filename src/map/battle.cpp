@@ -1908,11 +1908,16 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int64 battle_calc_base_damage(struct status_data *status, struct weapon_atk *wa, struct status_change *sc, unsigned short t_size, struct map_session_data *sd, int flag)
+static int64 battle_calc_base_damage(struct block_list *src, struct status_data *status, struct weapon_atk *wa, struct status_change *sc, unsigned short t_size, int flag)
 {
 	unsigned int atkmin = 0, atkmax = 0;
 	short type = 0;
 	int64 damage = 0;
+	struct map_session_data *sd = NULL;
+
+	nullpo_retr(damage, src);
+
+	sd = BL_CAST(BL_PC, src);
 
 	if (!sd) { //Mobs/Pets
 		if(flag&4) {
@@ -1962,6 +1967,38 @@ static int64 battle_calc_base_damage(struct status_data *status, struct weapon_a
 		// Size fix only for players
 		if (!(sd->special_state.no_sizefix || (flag&8)))
 			damage = damage * (type == EQI_HAND_L ? sd->left_weapon.atkmods[t_size] : sd->right_weapon.atkmods[t_size]) / 100;
+	} else if (src->type == BL_ELEM) {
+		struct status_change *ele_sc = status_get_sc(src);
+		int ele_class = status_get_class(src);
+
+		if (ele_sc) {
+			switch (ele_class) {
+			case ELEMENTALID_AGNI_S:
+			case ELEMENTALID_AGNI_M:
+			case ELEMENTALID_AGNI_L:
+				if (ele_sc->data[SC_FIRE_INSIGNIA] && ele_sc->data[SC_FIRE_INSIGNIA]->val1 == 1)
+					damage += damage * 20 / 100;
+				break;
+			case ELEMENTALID_AQUA_S:
+			case ELEMENTALID_AQUA_M:
+			case ELEMENTALID_AQUA_L:
+				if (ele_sc->data[SC_WATER_INSIGNIA] && ele_sc->data[SC_WATER_INSIGNIA]->val1 == 1)
+					damage += damage * 20 / 100;
+				break;
+			case ELEMENTALID_VENTUS_S:
+			case ELEMENTALID_VENTUS_M:
+			case ELEMENTALID_VENTUS_L:
+				if (ele_sc->data[SC_WIND_INSIGNIA] && ele_sc->data[SC_WIND_INSIGNIA]->val1 == 1)
+					damage += damage * 20 / 100;
+				break;
+			case ELEMENTALID_TERA_S:
+			case ELEMENTALID_TERA_M:
+			case ELEMENTALID_TERA_L:
+				if (ele_sc->data[SC_EARTH_INSIGNIA] && ele_sc->data[SC_EARTH_INSIGNIA]->val1 == 1)
+					damage += damage * 20 / 100;
+				break;
+			}
+		}
 	}
 
 	//Finally, add baseatk
@@ -2833,11 +2870,11 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 			wd.damage2 = battle_attr_fix(src, target, wd.damage2, left_element ,tstatus->def_ele, tstatus->ele_lv);
 		if (sc && sc->data[SC_WATK_ELEMENT] && (wd.damage || wd.damage2)) {
 			// Descriptions indicate this means adding a percent of a normal attack in another element. [Skotlex]
-			int64 damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
+			int64 damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
 
 			wd.damage += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
 			if (is_attack_left_handed(src, skill_id)) {
-				damage = battle_calc_base_damage(sstatus, &sstatus->lhw, sc, tstatus->size, sd, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
+				damage = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
 				wd.damage2 += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
 			}
 		}
@@ -3077,7 +3114,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 				wd = battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
 				wd.masteryAtk = 0; // weapon mastery is ignored for spiral
 			} else {
-				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, 0); //Monsters have no weight and use ATK instead
+				wd.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
 			}
 
 			switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
@@ -3108,7 +3145,7 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 
 				ATK_ADDRATE(wd.damage, wd.damage2, 50*skill_lv); //Skill modifier applies to weight only.
 			} else {
-				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, 0); //Monsters have no weight and use ATK instead
+				wd.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
 			}
 
 			i = sstatus->str/10;
@@ -3197,9 +3234,9 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 				i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
 					(!skill_id && sc && sc->data[SC_CHANGE]?4:0);
 
-				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
+				wd.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
 				if (is_attack_left_handed(src, skill_id))
-					wd.damage2 = battle_calc_base_damage(sstatus, &sstatus->lhw, sc, tstatus->size, sd, i);
+					wd.damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
 			}
 #else
 			i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
@@ -3221,9 +3258,9 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 						break;
 				}
 			}
-			wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
+			wd.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
 			if (is_attack_left_handed(src, skill_id))
-				wd.damage2 = battle_calc_base_damage(sstatus, &sstatus->lhw, sc, tstatus->size, sd, i);
+				wd.damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
 #endif
 			if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
 				if(wd.miscflag > 0) {
@@ -5064,7 +5101,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 		int64 rdamage = 0;
 		int ratio = (int64)(status_get_hp(src) / 100) * tsc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(target) / 125;
 		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
-		rdamage = battle_calc_base_damage(tstatus,&tstatus->rhw,tsc,sstatus->size,tsd,0);
+		rdamage = battle_calc_base_damage(target,tstatus,&tstatus->rhw,tsc,sstatus->size,0);
 		rdamage = (int64)rdamage * ratio / 100 + wd.damage * (10 + tsc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
 		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), BLOWN_NONE);
 		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
@@ -6175,6 +6212,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
 						break;
+				}
+
+				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
+					if ((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3 && s_ele == ELE_FIRE) ||
+						(sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && s_ele == ELE_WATER) ||
+						(sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && s_ele == ELE_WIND) ||
+						(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3 && s_ele == ELE_EARTH))
+						skillratio += 25;
 				}
 
 				MATK_RATE(skillratio);

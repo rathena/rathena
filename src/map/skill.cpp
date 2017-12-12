@@ -13344,6 +13344,10 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 		case UNT_VOLCANO:
 		case UNT_DELUGE:
 		case UNT_VIOLENTGALE:
+		case UNT_FIRE_INSIGNIA:
+		case UNT_WATER_INSIGNIA:
+		case UNT_WIND_INSIGNIA:
+		case UNT_EARTH_INSIGNIA:
 			if(!sce)
 				sc_start(ss, bl,type,100,sg->skill_lv,sg->limit);
 			break;
@@ -14138,29 +14142,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			if (ss == bl)
 				break; // Doesn't affect the Elemental
 			sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval);
-			break;
-
-		case UNT_FIRE_INSIGNIA:
-		case UNT_WATER_INSIGNIA:
-		case UNT_WIND_INSIGNIA:
-		case UNT_EARTH_INSIGNIA:
-			sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval);
-			if (!battle_check_undead(tstatus->race, tstatus->def_ele)) {
-				int hp = tstatus->max_hp / 100; //+1% each 5s
-				if ((sg->val3) % 5) { //each 5s
-					if (tstatus->def_ele == skill_get_ele(sg->skill_id,sg->skill_lv)){
-						status_heal(bl, hp, 0, 2);
-					} else if((sg->unit_id ==  UNT_FIRE_INSIGNIA && tstatus->def_ele == ELE_EARTH)
-						||(sg->unit_id ==  UNT_WATER_INSIGNIA && tstatus->def_ele == ELE_FIRE)
-						||(sg->unit_id ==  UNT_WIND_INSIGNIA && tstatus->def_ele == ELE_WATER)
-						||(sg->unit_id ==  UNT_EARTH_INSIGNIA && tstatus->def_ele == ELE_WIND)
-					){
-						status_heal(bl, -hp, 0, 0);
-					}
-				}
-				sg->val3++; //timer
-				if (sg->val3 > 5) sg->val3 = 0;
-			}
 			break;
 
 		case UNT_VACUUM_EXTREME:
