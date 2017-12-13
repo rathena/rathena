@@ -9020,7 +9020,8 @@ command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It
 will still work outside an item script.
 if the <pet id> is 0 it will return the monster target id as long as it's in
-the pet_db.txt and it's not a boss monster.
+the pet_db.txt and it's not a boss monster and any monster with MD_STATUS_IMMUNE monster mode.
+see 'doc/mob_db_mode_list.txt' for more info about the monster mode.
 
 A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
