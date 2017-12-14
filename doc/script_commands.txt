@@ -9019,8 +9019,13 @@ This command is used in all the item scripts for taming items. Running this
 command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It
 will still work outside an item script.
+if the <pet id> is 0 it will return the monster target id as long as it's in
+the pet_db.txt and not MD_STATUS_IMMUNE monster mode.
+all bosses use MD_STATUS_IMMUNE monster mode so it wont work on bosses.
+see 'doc/mob_db_mode_list.txt' for more info about the monster mode.
+if <pet id> is -1 it will catch the monster that require the item used to catch.
 
-A full list of pet IDs can be found inside 'db/pet_db.txt'.
+A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
 ---------------------------------------
 
@@ -9028,7 +9033,7 @@ A full list of pet IDs can be found inside 'db/pet_db.txt'.
 
 This command will create a pet egg and put it in the invoking character's
 inventory. The kind of pet is specified by pet ID numbers listed in
-'db/pet_db.txt'. The egg is created exactly as if the character just successfully
+'db/(pre-)re/pet_db.txt'. The egg is created exactly as if the character just successfully
 caught a pet in the normal way.
 
 	// This will make you a poring:
@@ -9046,7 +9051,7 @@ This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
  PETINFO_ID - Pet ID
- PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it
+ PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.txt' - will tell you what kind of a pet it
      is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
