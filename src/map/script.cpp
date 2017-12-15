@@ -11355,7 +11355,7 @@ BUILDIN_FUNC(sc_end_class)
 		class_ = sd->status.class_;
 
 	if (!pcdb_checkid(class_)) {
-		ShowError("sc_end_class: bad job id given ,[%s] is not a job id.\n", script_getstr(st, 3));
+		ShowError("buildin_sc_end_class: Invalid job ID '%d' given.\n", script_getnum(st, 3));
 		return SCRIPT_CMD_FAILURE;
 	}
 
