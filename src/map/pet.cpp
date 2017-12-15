@@ -663,7 +663,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	
 	//catch_target_class == -1 for catching any mob required the item used
 	if (sd->catch_target_class == -1 && sd->itemid == pet_db[i].itemID)
-			sd->catch_target_class = md->mob_id;
+		sd->catch_target_class = md->mob_id;
 
 	if(i < 0 || sd->catch_target_class != md->mob_id) {
 		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
