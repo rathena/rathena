@@ -21041,7 +21041,7 @@ BUILDIN_FUNC(getgroupitem) {
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (itemdb_pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : 0), sd)) {
+	if (itemdb_pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : false), sd)) {
 		ShowError("buildin_getgroupitem: Invalid group id '%d' specified.\n",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}

@@ -548,14 +548,10 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 * @param nameid ID of item
 */
 char itemdb_isidentified(unsigned short nameid) {
-	struct item_data *id = itemdb_exists(nameid);
-	if (!id)
-		return 0;
-	switch (id->type) {
+	int type=itemdb_type(nameid);
+	switch (type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
-			if ((id->equip&EQP_COSTUME))
-				return 1;
 		case IT_PETARMOR:
 		case IT_SHADOWGEAR:
 			return 0;
