@@ -12655,10 +12655,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	sd = BL_CAST(BL_PC, bl);
 
-    std::function<void (unsigned int)> sc_timer_next = [&sce, &bl, &data](unsigned int t) {
-    	sce->timer = add_timer(t, status_change_timer, bl->id, data);
-    };
-    
+	std::function<void (unsigned int)> sc_timer_next = [&sce, &bl, &data](unsigned int t) {
+		sce->timer = add_timer(t, status_change_timer, bl->id, data);
+	};
+	
 	switch(type) {
 	case SC_MAXIMIZEPOWER:
 	case SC_CLOAKING:
@@ -13488,7 +13488,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				status_heal(bl, status->max_hp / 100, 0, 1);
 			else if (status->def_ele == ELE_EARTH)
 				status_zap(bl, status->max_hp / 100, 0);
-			sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+			sc_timer_next(5000 + tick);
 			return 0;
 		}
 		break;
@@ -13499,7 +13499,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				status_heal(bl, status->max_hp / 100, 0, 1);
 			else if (status->def_ele == ELE_FIRE)
 				status_zap(bl, status->max_hp / 100, 0);
-			sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+			sc_timer_next(5000 + tick);
 			return 0;
 		}
 		break;
@@ -13510,7 +13510,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				status_heal(bl, status->max_hp / 100, 0, 1);
 			else if (status->def_ele == ELE_WATER)
 				status_zap(bl, status->max_hp / 100, 0);
-			sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+			sc_timer_next(5000 + tick);
 			return 0;
 		}
 		break;
@@ -13521,7 +13521,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				status_heal(bl, status->max_hp / 100, 0, 1);
 			else if (status->def_ele == ELE_WIND)
 				status_zap(bl, status->max_hp / 100, 0);
-			sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+			sc_timer_next(5000 + tick);
 			return 0;
 		}
 		break;
