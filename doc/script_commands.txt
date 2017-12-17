@@ -5389,7 +5389,7 @@ and theirs val1, val2, val3, and val4 usage in source.
 perform a complete removal of all statuses (although permanent ones will re-apply).
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
-skill on the invoking character. If <job_id> is provided it will end the effect for the that job.
+skill on the invoking character. If <job_id> is provided it will end the effect for that job.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
