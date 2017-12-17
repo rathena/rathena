@@ -5350,7 +5350,7 @@ Used in reset NPC's (duh!)
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
 *sc_end <effect type>{,<GID>};
-*sc_end_class {<char_id>};
+*sc_end_class {<char_id>{,<job_id>}};
 
 These commands will bestow a status effect on a character.
 
@@ -5389,7 +5389,7 @@ and theirs val1, val2, val3, and val4 usage in source.
 perform a complete removal of all statuses (although permanent ones will re-apply).
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
-skill on the invoking character.
+skill on the invoking character. If <job_id> is provided it will end the effect for that job.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -5407,6 +5407,18 @@ Examples:
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
+	
+	// This will end the effect of any learned skill for the invoking character.
+	sc_end_class;
+	
+	// This will end the effect of any learned skill for the character with the <char_id> 150000.
+	// val1: <char_id>
+	sc_end_class(150000);
+	
+	// This will end the effect of any Arch Bishop skill for the invoking character.
+	// val1: <char_id>
+	// val2: <job_id> of Arch Bishop
+	sc_end_class(getcharid(0),Job_Arch_Bishop);
 
 Note: to use SC_NOCHAT you should alter Manner
 	set Manner, -5;	// Will mute a user for 5 minutes
