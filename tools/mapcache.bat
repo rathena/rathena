@@ -1,2 +1,2 @@
 @ECHO OFF
-CALL serv.bat mapcache.exe Map-Cache
+CALL serv.bat map-cache.exe Map-Cache
