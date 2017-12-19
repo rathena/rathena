@@ -11221,6 +11221,9 @@ BUILDIN_FUNC(sc_start)
 		bl = map_id2bl(script_getnum(st,(6+start_type)));
 	else
 		bl = map_id2bl(st->rid);
+	
+	if(tick < 0)//it the timer is negative number it will fail
+		return SCRIPT_CMD_FAILURE;
 
 	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0)
 	{// When there isn't a duration specified, try to get it from the skill_db
