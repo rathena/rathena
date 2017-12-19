@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#pragma once
 #ifndef _PC_HPP_
 #define _PC_HPP_
 

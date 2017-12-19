@@ -9246,9 +9246,16 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 	struct script_reg_str *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
+	size_t vlen = 0;
 
 	if (!reg_load && !sd->vars_ok) {
 		ShowError("pc_setregistry_str : refusing to set %s until vars are received.\n", regname);
+		return 0;
+	}
+
+	if ( !script_check_RegistryVariableLength(1, val, &vlen ) )
+	{
+		ShowError("pc_check_RegistryVariableLength: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%zu\n", sd->status.account_id, sd->status.char_id, val, vlen);
 		return 0;
 	}
 
