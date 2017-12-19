@@ -5059,8 +5059,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	sd->itemid = item.nameid;
 	sd->itemindex = n;
-	if(sd->catch_target_class != -1) //Abort pet catching.
-		sd->catch_target_class = -1;
+	if(sd->catch_target_class != PET_CATCH_FAIL) //Abort pet catching.
+		sd->catch_target_class = PET_CATCH_FAIL;
 
 	amount = item.amount;
 	script = id->script;
