@@ -1637,11 +1637,7 @@ void read_petdb()
 				continue;
 			}
 
-			struct s_pet_db* pet = pet_db(nameid);
-
-			if( !pet ){
-				pet = &pet_db_data[nameid];
-			}
+			struct s_pet_db* pet = &pet_db_data[nameid];
 
 			pet->class_ = nameid;
 			safestrncpy(pet->name,str[1],NAME_LENGTH);
