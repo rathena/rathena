@@ -22,7 +22,6 @@
     <ProjectGuid>{FC4C071B-2C26-4B03-948A-335C94A88B5E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>mapcache</RootNamespace>
-    <ProjectName>mapcache</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
