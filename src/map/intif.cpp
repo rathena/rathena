@@ -452,7 +452,7 @@ int intif_saveregistry(struct map_session_data *sd)
 					p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
 				}
 
-				WFIFOB(inter_fd, plen) = len; 
+				WFIFOB(inter_fd, plen) = (uint8)len; 
 				plen += 1;
 
 				safestrncpy(WFIFOCP(inter_fd,plen), p->value, len);
