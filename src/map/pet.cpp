@@ -112,7 +112,7 @@ bool pet_create_egg(struct map_session_data *sd, unsigned short item_id)
  */
 void pet_unlocktarget(struct pet_data *pd)
 {
-	nullpo_ret(pd);
+	nullpo_retv(pd);
 
 	pd->target_id = 0;
 	pet_stop_attack(pd);
