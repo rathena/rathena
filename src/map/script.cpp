@@ -10096,22 +10096,23 @@ BUILDIN_FUNC(cooking)
  *------------------------------------------*/
 BUILDIN_FUNC(makepet)
 {
-	TBL_PC* sd;
-	int id,pet_id;
+	struct map_session_data* sd;
+	uint16 mob_id;
+	struct s_pet_db* pet;
 
 	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
-	id=script_getnum(st,2);
+	mob_id = script_getnum(st,2);
+	pet = pet_db(mob_id);
 
-	pet_id = search_petDB_index(id, PET_CLASS);
-
-	if (pet_id < 0)
-		pet_id = search_petDB_index(id, PET_EGG);
-	if (pet_id >= 0 && sd) {
-		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
+	if( !pet ){
+		ShowError( "buildin_makepet: failed to create a pet with mob id %hu\n", mob_id);
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	sd->catch_target_class = mob_id;
+	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname );
 
 	return SCRIPT_CMD_SUCCESS;
 }
