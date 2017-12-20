@@ -6557,13 +6557,12 @@ ACMD_FUNC(mobsearch)
 
 	if ((mob_id = atoi(mob_name)) == 0)
 		 mob_id = mobdb_searchname(mob_name);
-	if(mob_id > 0 && mobdb_checkid(mob_id) == 0){
+	if( mobdb_checkid(mob_id) == 0){
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1219),mob_name); // Invalid mob ID %s!
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname)
-				strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
+	strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
 //				strcpy(mob_name,mob_db(mob_id)->name);	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
