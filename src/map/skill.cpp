@@ -18112,9 +18112,13 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		case NC_NEUTRALBARRIER:
 			{
 				struct status_change *sc = NULL;
-				if( (sc = status_get_sc(src)) != NULL && sc->data[SC_NEUTRALBARRIER_MASTER] ) {
-					sc->data[SC_NEUTRALBARRIER_MASTER]->val2 = 0;
-					status_change_end(src,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+				if( (sc = status_get_sc(src)) != NULL ) {
+					if ( sc->data[SC_NEUTRALBARRIER_MASTER] )
+					{
+						sc->data[SC_NEUTRALBARRIER_MASTER]->val2 = 0;
+						status_change_end(src,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+					}
+					status_change_end(src,SC_NEUTRALBARRIER,INVALID_TIMER);
 				}
 			}
 			break;

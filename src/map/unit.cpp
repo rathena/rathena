@@ -2878,11 +2878,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 	}
 
-	if (bl->type&(BL_CHAR|BL_PET)) {
-		skill_unit_move(bl,gettick(),4);
-		skill_cleartimerskill(bl);
-	}
-
 	switch( bl->type ) {
 		case BL_PC: {
 			struct map_session_data *sd = (struct map_session_data*)bl;
@@ -3066,6 +3061,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;// do nothing
 	}
 
+	if (bl->type&(BL_CHAR|BL_PET)) {
+		skill_unit_move(bl,gettick(),4);
+		skill_cleartimerskill(bl);
+	}
 	// /BL_MOB is handled by mob_dead unless the monster is not dead.
 	if( bl->type != BL_MOB || !status_isdead(bl) )
 		clif_clearunit_area(bl,clrtype);
