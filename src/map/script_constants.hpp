@@ -6099,6 +6099,9 @@
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
 
+	/* pet catch */
+	export_constant(PET_CATCH_UNIVERSAL);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
