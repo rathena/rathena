@@ -12256,6 +12256,8 @@ void pc_show_questinfo(struct map_session_data *sd) {
 		return;
 	if (!map[sd->bl.m].qi_count || !map[sd->bl.m].qi_data)
 		return;
+	if (map[sd->bl.m].qi_count != sd->qi_count)
+		return; // init was not called yet
 
 	for(i = 0; i < map[sd->bl.m].qi_count; i++) {
 		qi = &map[sd->bl.m].qi_data[i];
