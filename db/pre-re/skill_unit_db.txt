@@ -114,7 +114,6 @@
 2032,0xe1,    ,  2, 0,1000,enemy, 0x8018	//GC_POISONSMOKE
 
 2213,0x86,    ,  0, 9,1000,enemy, 0x018	//WL_COMET
-2214,0x86,    ,  0, 5, 100,enemy, 0x080	//WL_CHAINLIGHTNING
 2216,0xcb,    , -1, 2,2000,enemy, 0x018	//WL_EARTHSTRAIN
 
 2238,0xd8,    ,  0, 1,1000,enemy, 0x9006	//RA_ELECTRICSHOCKER

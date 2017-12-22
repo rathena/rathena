@@ -748,6 +748,21 @@ static unsigned int calc_hash(const char* p)
 	return h % SCRIPT_HASH_SIZE;
 }
 
+bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen) 
+{
+	size_t len = strlen(val);
+
+	if (vlen)
+		*vlen = len;
+	switch (pType) {
+		case 0:
+			return (len < 33); // key check
+		case 1:
+			return (len < 255); // value check
+		default:
+			return false;
+	}
+}
 
 /*==========================================
  * str_data manipulation functions
@@ -3124,6 +3139,12 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
+	size_t vlen = 0;
+	if ( !script_check_RegistryVariableLength(0,name,&vlen) )
+	{
+		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd?sd->status.account_id:-1, sd?sd->status.char_id:-1, name, vlen);
+		return 0;
+	}
 
 	if( is_string_variable(name) ) {// string variable
 		const char *str = (const char*)value;
@@ -11325,18 +11346,29 @@ BUILDIN_FUNC(sc_end)
 
 /**
  * Ends all status effects from any learned skill on the attached player.
- * sc_end_class {<char_id>};
+ * if <job_id> was given it will end the effect of that class for the attached player
+ * sc_end_class {<char_id>{,<job_id>}};
  */
 BUILDIN_FUNC(sc_end_class)
 {
 	struct map_session_data *sd;
 	uint16 skill_id;
-	int i;
+	int class_;
 
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	for (i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0; i++) { // Remove status specific to your current tree skills.
+	if (script_hasdata(st, 3))
+		class_ = script_getnum(st, 3);
+	else
+		class_ = sd->status.class_;
+
+	if (!pcdb_checkid(class_)) {
+		ShowError("buildin_sc_end_class: Invalid job ID '%d' given.\n", script_getnum(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
 		enum sc_type sc = status_skill2sc(skill_id);
 
 		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
@@ -23882,7 +23914,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 	BUILDIN_DEF(sc_end,"i?"),
-	BUILDIN_DEF(sc_end_class,"?"),
+	BUILDIN_DEF(sc_end_class,"??"),
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
