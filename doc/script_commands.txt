@@ -9015,6 +9015,7 @@ mapflag	<map name>	battleground	2
 ====================
 ---------------------------------------
 
+*bpet;
 *birthpet;
 
 This command opens up a pet hatching window on the client connected to the
@@ -9025,6 +9026,7 @@ This is still usable outside item scripts.
 
 ---------------------------------------
 
+*pet <pet id>;
 *catchpet <pet id>;
 
 This command is used in all the item scripts for taming items. Running this
