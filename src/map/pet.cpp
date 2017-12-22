@@ -661,7 +661,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		sd->catch_target_class = md->mob_id;
 	
-	//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any mob required the item used
+	//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
 	if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet_db[i].itemID)
 		sd->catch_target_class = md->mob_id;
 
