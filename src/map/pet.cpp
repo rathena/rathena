@@ -662,7 +662,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		sd->catch_target_class = md->mob_id;
 	
 	//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any mob required the item used
-	if (sd->catch_target_class == -1 && sd->itemid == pet_db[i].itemID)
+	if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet_db[i].itemID)
 		sd->catch_target_class = md->mob_id;
 
 	if(i < 0 || sd->catch_target_class != md->mob_id) {
