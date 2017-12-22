@@ -5412,18 +5412,12 @@ ACMD_FUNC(npcmove)
 		return -1;
 	}
 
-	if ((m=nd->bl.m) < 0 || nd->bl.prev == NULL)
-	{
+	if ( npc_movenpc( nd, x, y ) ) 
+	{ //actually failed to move
 		clif_displaymessage(fd, msg_txt(sd,1154)); // NPC is not on this map.
 		return -1;	//Not on a map.
-	}
-
-	x = cap_value(x, 0, map[m].xs-1);
-	y = cap_value(y, 0, map[m].ys-1);
-	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved.
+	} else
+		clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved
 
 	return 0;
 }
@@ -8307,14 +8301,12 @@ ACMD_FUNC(invite)
 		return -1;
 	}
 
-	if(did == 0) {
+	if(did == 0 || !duel_exist(did) ) {
 		clif_displaymessage(fd, msg_txt(sd,350)); // "Duel: @invite without @duel."
 		return 0;
 	}
 
-	if(duel_list[did].max_players_limit > 0 &&
-		duel_list[did].members_count >= duel_list[did].max_players_limit) {
-
+	if( !duel_check_player_limit( duel_GetDuelId(did) ) ){
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;
 	}
@@ -8426,12 +8418,12 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
-	if(sd->duel_invite <= 0) {
+	if(sd->duel_invite <= 0 || !duel_exist(sd->duel_invite) ) {
 		clif_displaymessage(fd, msg_txt(sd,360)); // "Duel: @accept without invititation."
 		return 0;
 	}
 
-	if( duel_list[sd->duel_invite].max_players_limit > 0 && duel_list[sd->duel_invite].members_count >= duel_list[sd->duel_invite].max_players_limit )
+	if( duel_check_player_limit( duel_GetDuelId( sd->duel_invite ) ) )
 	{
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;
