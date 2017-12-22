@@ -6101,6 +6101,7 @@
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
+	export_constant(PET_CATCH_UNIVERSAL_ITEM);
 
 	#undef export_constant
 	#undef export_constant2

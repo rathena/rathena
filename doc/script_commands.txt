@@ -9031,11 +9031,11 @@ This command is used in all the item scripts for taming items. Running this
 command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It
 will still work outside an item script.
-if the <pet id> is 0 it will return the monster target id as long as it's in
-the pet_db.txt and not MD_STATUS_IMMUNE monster mode.
-all bosses use MD_STATUS_IMMUNE monster mode so it wont work on bosses.
-see 'doc/mob_db_mode_list.txt' for more info about the monster mode.
-if <pet id> is -1 it will catch the monster that require the item used to catch.
+If the <pet id> is PET_CATCH_UNIVERSAL it will return the monster target ID
+as long as it is in the pet_db.txt and does not have the MD_STATUS_IMMUNE monster mode.
+If the <pet id> is PET_CATCH_UNIVERSAL_ITEM it will return the monster target
+ID as long as it is in the pet_db.txt and the targeted monster requires the lure item used.
+See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
 A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
