@@ -659,6 +659,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
 	if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
+
 		sd->catch_target_class = md->mob_id;
 	
 	//catch_target_class == -1 for catching any mob required the item used
