@@ -406,7 +406,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	y += dy;
 	map_moveblock(bl, x, y, tick);
 	ud->walk_count++; // Walked cell counter, to be used for walk-triggered skills. [Skotlex]
-	status_change_end(bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 
 	if (bl->x != x || bl->y != y || ud->walktimer != INVALID_TIMER)
 		return 0; // map_moveblock has altered the object beyond what we expected (moved/warped it)
@@ -2878,11 +2877,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 	}
 
-	if (bl->type&(BL_CHAR|BL_PET)) {
-		skill_unit_move(bl,gettick(),4);
-		skill_cleartimerskill(bl);
-	}
-
 	switch( bl->type ) {
 		case BL_PC: {
 			struct map_session_data *sd = (struct map_session_data*)bl;
@@ -3066,6 +3060,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;// do nothing
 	}
 
+	if (bl->type&(BL_CHAR|BL_PET)) {
+		skill_unit_move(bl,gettick(),4);
+		skill_cleartimerskill(bl);
+	}
 	// /BL_MOB is handled by mob_dead unless the monster is not dead.
 	if( bl->type != BL_MOB || !status_isdead(bl) )
 		clif_clearunit_area(bl,clrtype);
