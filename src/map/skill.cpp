@@ -4105,18 +4105,18 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					}
 					break;
 				case WL_CHAINLIGHTNING_ATK: {
-						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag); // Hit a Lightning on the current Target
+						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,9 - skl->type); // Hit a Lightning on the current Target
 						skill_toggle_magicpower(src, skl->skill_id); // Only the first hit will be amplified
 						if( skl->type < (4 + skl->skill_lv - 1) && skl->x < 3  )
 						{ // Remaining Chains Hit
 							struct block_list *nbl = NULL; // Next Target of Chain
 							nbl = battle_getenemyarea(src, target->x, target->y, (skl->type>2)?2:3, // After 2 bounces, it will bounce to other targets in 7x7 range.
-									BL_CHAR|BL_SKILL, target->id); // Search for a new Target around current one...
+									splash_target(src), target->id); // Search for a new Target around current one...
 							if( nbl == NULL )
 								skl->x++;
 							else
-								skl->x = 0;							
-							skill_addtimerskill(src, tick + 651, (nbl?nbl:target)->id, skl->x, 0, WL_CHAINLIGHTNING_ATK, skl->skill_lv, skl->type + 1, skl->flag);
+								skl->x = 0;
+							skill_addtimerskill(src, tick + 650, (nbl?nbl:target)->id, skl->x, 0, WL_CHAINLIGHTNING_ATK, skl->skill_lv, skl->type + 1, 0);
 						}
 					}
 					break;
@@ -5445,10 +5445,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		sc_start(src, bl, status_skill2sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv)); // Should be applied even on miss
 		break;
 
-	case WL_CHAINLIGHTNING:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		skill_addtimerskill(src,tick + status_get_amotion(src),bl->id,0,0,WL_CHAINLIGHTNING_ATK,skill_lv,0,flag);
-		break;
 	case WL_DRAINLIFE:
 		{
 			int heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -9460,6 +9456,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
+	case WL_CHAINLIGHTNING:
+		skill_addtimerskill(src, tick + status_get_amotion(src), bl->id, 0, 0, WL_CHAINLIGHTNING_ATK, skill_lv, 0, 0);
+		break;
+
 	case WL_WHITEIMPRISON:
 		if( (src == bl || battle_check_target(src, bl, BCT_ENEMY)>0) && status_get_class_(bl) != CLASS_BOSS && !status_isimmune(bl) ) // Should not work with Bosses.
 		{
@@ -11325,11 +11325,11 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		else
 			skill_castend_damage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
 
-		if (ud->skill_id != RA_CAMOUFLAGE)
-			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER); // Applies to the first skill if active
-
 		sc = status_get_sc(src);
 		if(sc && sc->count) {
+			if (ud->skill_id != RA_CAMOUFLAGE)
+				status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER); // Applies to the first skill if active
+
 			if(sc->data[SC_SPIRIT] &&
 				sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 				sc->data[SC_SPIRIT]->val3 == ud->skill_id &&
@@ -13344,6 +13344,10 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 		case UNT_VOLCANO:
 		case UNT_DELUGE:
 		case UNT_VIOLENTGALE:
+		case UNT_FIRE_INSIGNIA:
+		case UNT_WATER_INSIGNIA:
+		case UNT_WIND_INSIGNIA:
+		case UNT_EARTH_INSIGNIA:
 			if(!sce)
 				sc_start(ss, bl,type,100,sg->skill_lv,sg->limit);
 			break;
@@ -14138,29 +14142,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			if (ss == bl)
 				break; // Doesn't affect the Elemental
 			sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval);
-			break;
-
-		case UNT_FIRE_INSIGNIA:
-		case UNT_WATER_INSIGNIA:
-		case UNT_WIND_INSIGNIA:
-		case UNT_EARTH_INSIGNIA:
-			sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval);
-			if (!battle_check_undead(tstatus->race, tstatus->def_ele)) {
-				int hp = tstatus->max_hp / 100; //+1% each 5s
-				if ((sg->val3) % 5) { //each 5s
-					if (tstatus->def_ele == skill_get_ele(sg->skill_id,sg->skill_lv)){
-						status_heal(bl, hp, 0, 2);
-					} else if((sg->unit_id ==  UNT_FIRE_INSIGNIA && tstatus->def_ele == ELE_EARTH)
-						||(sg->unit_id ==  UNT_WATER_INSIGNIA && tstatus->def_ele == ELE_FIRE)
-						||(sg->unit_id ==  UNT_WIND_INSIGNIA && tstatus->def_ele == ELE_WATER)
-						||(sg->unit_id ==  UNT_EARTH_INSIGNIA && tstatus->def_ele == ELE_WIND)
-					){
-						status_heal(bl, -hp, 0, 0);
-					}
-				}
-				sg->val3++; //timer
-				if (sg->val3 > 5) sg->val3 = 0;
-			}
 			break;
 
 		case UNT_VACUUM_EXTREME:
@@ -18131,9 +18112,13 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		case NC_NEUTRALBARRIER:
 			{
 				struct status_change *sc = NULL;
-				if( (sc = status_get_sc(src)) != NULL && sc->data[SC_NEUTRALBARRIER_MASTER] ) {
-					sc->data[SC_NEUTRALBARRIER_MASTER]->val2 = 0;
-					status_change_end(src,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+				if( (sc = status_get_sc(src)) != NULL ) {
+					if ( sc->data[SC_NEUTRALBARRIER_MASTER] )
+					{
+						sc->data[SC_NEUTRALBARRIER_MASTER]->val2 = 0;
+						status_change_end(src,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+					}
+					status_change_end(src,SC_NEUTRALBARRIER,INVALID_TIMER);
 				}
 			}
 			break;
@@ -21604,8 +21589,8 @@ void do_init_skill(void)
 	skillunit_db = idb_alloc(DB_OPT_BASE);
 	skillusave_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	bowling_db = idb_alloc(DB_OPT_BASE);
-	skill_unit_ers = ers_new(sizeof(struct skill_unit_group),"skill.c::skill_unit_ers",ERS_CACHE_OPTIONS);
-	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill),"skill.c::skill_timer_ers",ERS_CACHE_OPTIONS);
+	skill_unit_ers = ers_new(sizeof(struct skill_unit_group),"skill.cpp::skill_unit_ers",ERS_CACHE_OPTIONS);
+	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill),"skill.cpp::skill_timer_ers",ERS_CACHE_OPTIONS);
 
 	ers_chunk_size(skill_unit_ers, 150);
 	ers_chunk_size(skill_timer_ers, 150);

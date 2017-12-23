@@ -405,6 +405,7 @@ int intif_saveregistry(struct map_session_data *sd)
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
 		const char *varname = NULL;
 		struct script_reg_state *src = NULL;
+		bool lValid = false;
 
 		if( data->type != DB_DATA_PTR ) // it's a @number
 			continue;
@@ -420,13 +421,17 @@ int intif_saveregistry(struct map_session_data *sd)
 			continue;
 
 		src->update = false;
+		lValid = script_check_RegistryVariableLength(0,varname,&len);
+		++len;
 
-		len = strlen(varname)+1;
-
+		if (!lValid) { //this is sql colum size, must be retrive from config
+			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, varname, len);
+			continue;
+		}
 		WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy(WFIFOCP(inter_fd,plen), varname, len);
+		safestrncpy(WFIFOCP(inter_fd,plen), varname, len); //the key
 		plen += len;
 
 		WFIFOL(inter_fd, plen) = script_getvaridx(key.i64);
@@ -435,13 +440,19 @@ int intif_saveregistry(struct map_session_data *sd)
 		if( src->type ) {
 			struct script_reg_str *p = (struct script_reg_str *)src;
 
-			WFIFOB(inter_fd, plen) = p->value ? 2 : 3;
+			WFIFOB(inter_fd, plen) = p->value ? 2 : 3; //var type
 			plen += 1;
 
 			if( p->value ) {
-				len = strlen(p->value)+1;
+				lValid = script_check_RegistryVariableLength(1,p->value,&len);
+				++len;
+				if ( !lValid ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
+					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%d to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
+					len = 254;
+					p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
+				}
 
-				WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
+				WFIFOB(inter_fd, plen) = (uint8)len; 
 				plen += 1;
 
 				safestrncpy(WFIFOCP(inter_fd,plen), p->value, len);
@@ -2130,12 +2141,13 @@ void intif_parse_achievements(int fd)
 			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
 
 		for (i = 0; i < num_received; i++) {
-			struct achievement_db *adb = achievement_search(received[i].achievement_id);
 
-			if (!adb) {
+			if (!achievement_exists(received[i].achievement_id)) {
 				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
 				continue;
 			}
+
+			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 
@@ -2220,7 +2232,7 @@ void intif_parse_achievementreward(int fd){
 /**
  * Request the achievement rewards from the inter server.
  */
-int intif_achievement_reward(struct map_session_data *sd, struct achievement_db *adb){
+int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_db *adb){
 	if( CheckForCharServer() ){
 		return 0;
 	}
@@ -2232,7 +2244,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct achievement_db 
 	WFIFOW(inter_fd, 10) = adb->rewards.nameid;
 	WFIFOL(inter_fd, 12) = adb->rewards.amount;
 	safestrncpy(WFIFOCP(inter_fd, 16), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name, ACHIEVEMENT_NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
 	WFIFOSET(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 
 	return 1;
@@ -3665,7 +3677,7 @@ int intif_parse_clan_onlinecount( int fd ){
  * @return
  *  0 (unknow packet).
  *  1 sucess (no error)
- *  2 invalid lenght of packet (not enough data yet)
+ *  2 invalid length of packet (not enough data yet)
  */
 int intif_parse(int fd)
 {

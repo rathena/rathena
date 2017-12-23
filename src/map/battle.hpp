@@ -316,6 +316,7 @@ struct Battle_Config
 	int vending_max_value;
 	int vending_over_max;
 	int vending_tax;
+	int vending_tax_min;
 	int show_steal_in_same_party;
 	int party_share_type;
 	int party_hp_mode;

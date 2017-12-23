@@ -1,8 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#pragma once
 #ifndef _PC_HPP_
 #define _PC_HPP_
+
+#include <vector>
 
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.h"// StringBuf
@@ -496,7 +498,7 @@ struct map_session_data {
 	int itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
+	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
@@ -612,8 +614,7 @@ struct map_session_data {
 	} achievement_data;
 
 	// Title system
-	int *titles;
-	uint8 titleCount;
+	std::vector<int> titles;
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;

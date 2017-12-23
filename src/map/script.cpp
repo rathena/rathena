@@ -748,6 +748,21 @@ static unsigned int calc_hash(const char* p)
 	return h % SCRIPT_HASH_SIZE;
 }
 
+bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen) 
+{
+	size_t len = strlen(val);
+
+	if (vlen)
+		*vlen = len;
+	switch (pType) {
+		case 0:
+			return (len < 33); // key check
+		case 1:
+			return (len < 255); // value check
+		default:
+			return false;
+	}
+}
 
 /*==========================================
  * str_data manipulation functions
@@ -2362,46 +2377,49 @@ void script_set_constant(const char* name, int value, bool isparameter, bool dep
 	}
 }
 
+static bool read_constdb_sub( char* fields[], int columns, int current ){
+	char name[1024], val[1024];
+	int type = 0;
+
+	if( columns > 1 ){
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_]", name) != 1 ||
+			sscanf(fields[1], "%1023[A-Za-z0-9/_]", val) != 1 || 
+			( columns >= 2 && sscanf(fields[2], "%11d", &type) != 1 ) ){
+			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current);
+			return false;
+		}
+	}else{
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d", name, val, &type) < 2 ){
+			ShowWarning( "Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current );
+			return false;
+		}
+	}
+
+	script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
+
+	return true;
+}
+
 /*==========================================
  * Reading constant databases
  * const.txt
  *------------------------------------------*/
-static void read_constdb(void)
-{
-	FILE *fp;
-	char line[1024],name[1024],val[1024];
-	int type;
-	int entries=0, skipped=0, linenum=0;
+static void read_constdb(void){
+	const char* dbsubpath[] = {
+		"",
+		"/" DBIMPORT,
+	};
 
-	sprintf(line, "%s/const.txt", db_path);
-	fp=fopen(line, "r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", line);
-		return ;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		linenum++;
-		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r') //ignore empty line
-			continue;
-		if(line[0]=='/' && line[1]=='/') //ignore commented line
-			continue;
-		
-		type=0;
-		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%11d",name,val,&type)>=2 ||
-		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d",name,val,&type)>=2){
-			entries++;
-			script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
-		}
-		else {
-			skipped++;
-			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n",linenum);
-		}
-	}
-	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s/const.txt" CL_RESET "'.\n", entries, db_path);
-	if(skipped){
-		ShowWarning("Skipped '" CL_WHITE "%d" CL_RESET "', entries\n",skipped);
+	for( int i = 0; i < ARRAYLENGTH(dbsubpath); i++ ){
+		int n2 = strlen(db_path) + strlen(dbsubpath[i]) + 1;
+		char* dbsubpath2 = (char*)aMalloc(n2 + 1);
+		bool silent = i > 0;
+
+		safesnprintf(dbsubpath2, n2, "%s%s", db_path, dbsubpath[i]);
+
+		sv_readdb(dbsubpath2, "const.txt", ',', 1, 3, -1, &read_constdb_sub, silent);
+
+		aFree(dbsubpath2);
 	}
 }
 
@@ -2494,7 +2512,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	const char *p,*tmpp;
 	int i;
 	struct script_code* code = NULL;
-	static int first=1;
+	static bool first=true;
 	char end;
 	bool unresolved_names = false;
 
@@ -2510,7 +2528,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		add_buildin_func();
 		read_constdb();
 		script_hardcoded_constants();
-		first=0;
+		first=false;
 	}
 
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
@@ -3121,6 +3139,12 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
+	size_t vlen = 0;
+	if ( !script_check_RegistryVariableLength(0,name,&vlen) )
+	{
+		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd?sd->status.account_id:-1, sd?sd->status.char_id:-1, name, vlen);
+		return 0;
+	}
 
 	if( is_string_variable(name) ) {// string variable
 		const char *str = (const char*)value;
@@ -6704,7 +6728,7 @@ BUILDIN_FUNC(viewpoint)
  * @param x First position of random option id array from the script
  **/
 static int script_getitem_randomoption(struct script_state *st, struct item *it, const char *funcname, int x) {
-	int i, opt_id_n, opt_val_n, opt_param_n;
+	int i, opt_id_n;
 	struct script_data *opt_id = script_getdata(st,x);
 	struct script_data *opt_val = script_getdata(st,x+1);
 	struct script_data *opt_param = script_getdata(st,x+2);
@@ -6716,17 +6740,17 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	int32 opt_param_id, opt_param_idx;
 	struct reg_db *opt_id_ref = NULL, *opt_val_ref = NULL, *opt_param_ref = NULL;
 
-	if (opt_id_var[strlen(opt_id_var)-1] == '$') {
+	if (is_string_variable(opt_id_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_id_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (opt_val_var[strlen(opt_val_var)-1] == '$') {
+	if (is_string_variable(opt_val_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_val_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (opt_param_var[strlen(opt_param_var)-1] == '$') {
+	if (is_string_variable(opt_param_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_param_var);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -6741,18 +6765,6 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 
 	opt_val_ref = reference_getref(opt_val);
 	opt_param_ref = reference_getref(opt_param);
-
-	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
-	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
-
-	if (opt_val_n < 1) {
-		ShowError("buildin_%s: No option value listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
-	if (opt_param_n < 1) {
-		ShowError("buildin_%s: No option parameter listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
 
 	opt_id_id = reference_getid(opt_id);
 	opt_val_id = reference_getid(opt_val);
@@ -11334,18 +11346,29 @@ BUILDIN_FUNC(sc_end)
 
 /**
  * Ends all status effects from any learned skill on the attached player.
- * sc_end_class {<char_id>};
+ * if <job_id> was given it will end the effect of that class for the attached player
+ * sc_end_class {<char_id>{,<job_id>}};
  */
 BUILDIN_FUNC(sc_end_class)
 {
 	struct map_session_data *sd;
 	uint16 skill_id;
-	int i;
+	int class_;
 
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	for (i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0; i++) { // Remove status specific to your current tree skills.
+	if (script_hasdata(st, 3))
+		class_ = script_getnum(st, 3);
+	else
+		class_ = sd->status.class_;
+
+	if (!pcdb_checkid(class_)) {
+		ShowError("buildin_sc_end_class: Invalid job ID '%d' given.\n", script_getnum(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
 		enum sc_type sc = status_skill2sc(skill_id);
 
 		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
@@ -23374,7 +23397,7 @@ BUILDIN_FUNC(achievementadd) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementadd: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23411,7 +23434,7 @@ BUILDIN_FUNC(achievementremove) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementremove: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
@@ -23447,7 +23470,7 @@ BUILDIN_FUNC(achievementinfo) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementinfo: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23481,7 +23504,7 @@ BUILDIN_FUNC(achievementcomplete) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementcomplete: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23518,7 +23541,7 @@ BUILDIN_FUNC(achievementexists) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementexists: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
@@ -23557,7 +23580,7 @@ BUILDIN_FUNC(achievementupdate) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (achievement_search(achievement_id) == &achievement_dummy) {
+	if (achievement_exists(achievement_id) == false) {
 		ShowWarning("buildin_achievementupdate: Achievement '%d' doesn't exist.\n", achievement_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -23891,7 +23914,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 	BUILDIN_DEF(sc_end,"i?"),
-	BUILDIN_DEF(sc_end_class,"?"),
+	BUILDIN_DEF(sc_end_class,"??"),
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),

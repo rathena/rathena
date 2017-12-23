@@ -34,8 +34,11 @@ before_script:
 
 script:
   - ./configure $CONFIGURE_FLAGS
+  - ./tools/ci/npc.sh
   - make clean
   - make server
+  - ./login-server --run-once
+  - ./char-server --run-once
   - ./map-server --run-once
 
 env:

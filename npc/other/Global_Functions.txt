@@ -45,6 +45,7 @@
 //= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
 //= 2.26 Added "F_getpositionname". [Capuche]
 //= 2.27 Added "F_GetPlatinumSkills". [mazvi]
+//= 2.28 Added "close3". [Capuche]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -748,4 +749,13 @@ function	script	F_GetPlatinumSkills	{
 		break;
 	}
 	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Shortcut : close button and clear cutin.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	close3	{
+	close2;
+	cutin "",255;
+	end;
 }

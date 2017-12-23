@@ -106,7 +106,7 @@ L_Start:
 		close;
 
 OnInit:
-	disablenpc "Santa1";
+	disablenpc "Santa Claus";
 	end;
 }
 

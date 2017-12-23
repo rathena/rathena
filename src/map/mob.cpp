@@ -75,12 +75,11 @@
 
 //Dynamic mob database
 std::map<uint16, struct mob_db> mob_db_data;
-
-struct mob_db *mob_db( int mob_id ){ 
-	try{
+struct mob_db *mob_db( int mob_id ){
+	if( mob_db_data.find( mob_id ) != mob_db_data.end() ){
 		return &mob_db_data.at(mob_id);
-	}catch( std::out_of_range ){
-		return NULL;
+	}else{
+		return nullptr;
 	}
 }
 
@@ -90,10 +89,10 @@ std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 //Dynamic mob chat database
 std::map<short,struct mob_chat> mob_chat_db;
 struct mob_chat *mob_chat(short id) {
-	try{
+	if( mob_chat_db.find(id) != mob_chat_db.end() ){
 		return &mob_chat_db.at(id);
-	}catch( std::out_of_range ){
-		return NULL;
+	}else{
+		return nullptr;
 	}
 }
 
@@ -303,7 +302,7 @@ static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool ful
 	
 	if( mobdb_checkid(mob_id) <= 0 )
 		return false; // invalid mob_id (includes clone check)
-	if(!mob->base_exp && !mob->job_exp && !mob->has_spawn())
+	if(!mob->base_exp && !mob->job_exp && !mob_has_spawn(mob_id))
 		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if( full_cmp ) {
 		// str must equal the db value
@@ -380,9 +379,7 @@ struct view_data * mob_get_viewdata(int mob_id)
 {
 	struct mob_db* db = mob_db(mob_id);
 
-	if( db == NULL ){
-		return NULL;
-	}
+	if( !db ) return nullptr;
 
 	return &db->vd;
 }
@@ -506,7 +503,7 @@ int mob_get_random_id(int type, int flag, int lv)
 	struct mob_db *mob;
 	int i = 0, mob_id = 0, rand = 0;
 	struct s_randomsummon_group *msummon = (struct s_randomsummon_group *)idb_get(mob_summon_db, type);
-	struct s_randomsummon_entry *entry = NULL;
+	struct s_randomsummon_entry *entry = nullptr;
 
 	if (type == MOBG_Bloody_Dead_Branch)
 		flag &= ~4;
@@ -526,12 +523,12 @@ int mob_get_random_id(int type, int flag, int lv)
 		mob_id = entry->mob_id;
 		mob = mob_db(mob_id);
 	} while ((rand == 0 || // Skip default first
-		mob == NULL ||
+		mob == nullptr ||
 		mob_is_clone(mob_id) ||
 		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
 		(flag&0x02 && lv < mob->lv) ||
 		(flag&0x04 && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
-		(flag&0x08 && !mob->has_spawn()) ||
+		(flag&0x08 && !mob_has_spawn(mob_id)) ||
 		(flag&0x10 && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
 	) && (i++) < MAX_MOB_DB && msummon->count > 1);
 
@@ -560,14 +557,14 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	if( !(md = BL_CAST(BL_MOB,target)) )
 		return false; // Tarjet is not MOB
 
-	if( (s_bl = battle_get_master(src)) == NULL )
+	if( (s_bl = battle_get_master(src)) == nullptr )
 		s_bl = src;
 
 	if( !(sd = BL_CAST(BL_PC,s_bl)) )
 		return false; // Master is not PC
 
 	t_bl = map_id2bl(md->target_id);
-	if( !t_bl || (s_bl = battle_get_master(t_bl)) == NULL )
+	if( !t_bl || (s_bl = battle_get_master(t_bl)) == nullptr )
 		s_bl = t_bl;
 
 	t_sd = BL_CAST(BL_PC,s_bl);
@@ -583,7 +580,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		if( md->db->mexp || md->master_id )
 			return false; // MVP, Slaves mobs ignores KS
 
-		if( (sce = md->sc.data[SC_KSPROTECTED]) == NULL )
+		if( (sce = md->sc.data[SC_KSPROTECTED]) == nullptr )
 			break; // No KS Protected
 
 		if( sd->bl.id == sce->val1 || // Same Owner
@@ -633,7 +630,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 {
 	struct spawn_data data;
 
-	memset(&data, 0, sizeof(struct spawn_data));
+	memset(&data, 0, sizeof(struct spawn_data)); //why ? this might screw attribute object and cause leak..
 	data.m = m;
 	data.num = 1;
 	data.id = mob_id;
@@ -663,7 +660,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 	data.y = y;
 
 	if (!mob_parse_dataset(&data))
-		return NULL;
+		return nullptr;
 
 	return mob_spawn_dataset(&data);
 }
@@ -673,7 +670,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
  *------------------------------------------*/
 int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
 {
-	struct mob_data* md = NULL;
+	struct mob_data* md = nullptr;
 	int count, lv;
 
 	if (m < 0 || amount <= 0)
@@ -692,7 +689,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 		if (mob_id == MOBID_EMPERIUM)
 		{
 			struct guild_castle* gc = guild_mapindex2gc(map[m].index);
-			struct guild* g = (gc) ? guild_search(gc->guild_id) : NULL;
+			struct guild* g = (gc) ? guild_search(gc->guild_id) : nullptr;
 			if (gc)
 			{
 				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
@@ -784,7 +781,7 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t d
 	struct guild* g;
 	int guardup_lv;
 
-	if (bl == NULL) //It is possible mob was already removed from map when the castle has no owner. [Skotlex]
+	if (bl == nullptr) //It is possible mob was already removed from map when the castle has no owner. [Skotlex]
 		return 0;
 
 	if (bl->type != BL_MOB)
@@ -797,7 +794,7 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t d
 	nullpo_ret(md->guardian_data);
 	g = guild_search((int)data);
 
-	if (g == NULL)
+	if (g == nullptr)
 	{	//Liberate castle, if the guild is not found this is an error! [Skotlex]
 		ShowError("mob_spawn_guardian_sub: Couldn't load guild %d!\n", (int)data);
 		if (md->mob_id == MOBID_EMPERIUM)
@@ -829,12 +826,12 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t d
  *------------------------------------------*/
 int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, int guardian, bool has_index)
 {
-	struct mob_data *md=NULL;
+	struct mob_data *md=nullptr;
 	struct spawn_data data;
-	struct guild *g=NULL;
+	struct guild *g=nullptr;
 	struct guild_castle *gc;
 	int16 m;
-	memset(&data, 0, sizeof(struct spawn_data));
+	memset(&data, 0, sizeof(struct spawn_data)); //fixme
 	data.num = 1;
 
 	m=map_mapname2mapid(mapname);
@@ -934,7 +931,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
  *------------------------------------------*/
 int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, unsigned int bg_id)
 {
-	struct mob_data *md = NULL;
+	struct mob_data *md = nullptr;
 	struct spawn_data data;
 	int16 m;
 
@@ -1384,7 +1381,7 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 
 	dist = distance_bl(&md->bl, bl);
 	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && (
-		(*target) == NULL ||
+		(*target) == nullptr ||
 		(battle_config.monster_loot_search_type && md->target_id > bl->id) ||
 		(!battle_config.monster_loot_search_type && !check_distance_bl(&md->bl, *target, dist)) // New target closer than previous one.
 		))
@@ -1439,7 +1436,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		status_kill(&md->bl);
 		return 1;
 	}
-	if (bl->prev == NULL)
+	if (bl->prev == nullptr)
 		return 0; //Master not on a map? Could be warping, do not process.
 
 	if(status_has_mode(&md->status,MD_CANMOVE))
@@ -1486,7 +1483,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		md->last_linktime = tick;
 
 		if (ud) {
-			struct block_list *tbl=NULL;
+			struct block_list *tbl=nullptr;
 			if (ud->target && ud->state.attack_continue)
 				tbl = map_id2bl(ud->target);
 			else if (ud->target_to && ud->state.attack_continue)
@@ -1495,7 +1492,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 				tbl = map_id2bl(ud->skilltarget);
 				//Required check as skilltarget is not always an enemy. [Skotlex]
 				if (tbl && battle_check_target(&md->bl, tbl, BCT_ENEMY) <= 0)
-					tbl = NULL;
+					tbl = nullptr;
 			}
 			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
 				md->target_id=tbl->id;
@@ -1661,7 +1658,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 
 int mob_warpchase(struct mob_data *md, struct block_list *target)
 {
-	struct npc_data *warp = NULL;
+	struct npc_data *warp = nullptr;
 	int distance = AREA_SIZE;
 	if (!(target && battle_config.mob_ai&0x40 && battle_config.mob_warp&1))
 		return 0; //Can't warp chase.
@@ -1687,11 +1684,11 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
  *------------------------------------------*/
 static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 {
-	struct block_list *tbl = NULL, *abl = NULL;
+	struct block_list *tbl = nullptr, *abl = nullptr;
 	enum e_mode mode;
 	int view_range, can_move;
 
-	if(md->bl.prev == NULL || md->status.hp == 0)
+	if(md->bl.prev == nullptr || md->status.hp == 0)
 		return false;
 
 	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
@@ -3150,10 +3147,11 @@ int mob_random_class(int *value, size_t count)
 /**
 * Returns the SpawnInfos of the mob_db entry (mob_spawn_data[mobid])
 * if mobid is not in mob_spawn_data returns empty spawn_info vector
+* @param mob_id - Looking for spawns of this Monster ID
 */
-const std::vector<spawn_info> mob_db::get_spawns() const
+const std::vector<spawn_info> mob_get_spawns(uint16 mob_id)
 {
-	auto mob_spawn_it = mob_spawn_data.find(this->get_mobid());
+	auto mob_spawn_it = mob_spawn_data.find(mob_id);
 	if ( mob_spawn_it != mob_spawn_data.end() )
 		return mob_spawn_it->second;
 	return std::vector<spawn_info>();
@@ -3161,12 +3159,13 @@ const std::vector<spawn_info> mob_db::get_spawns() const
 
 /**
  * Checks if a monster is spawned. Returns true if yes, false otherwise.
+ * @param mob_id - Monster ID which is checked
 */
-bool mob_db::has_spawn() const
+bool mob_has_spawn(uint16 mob_id)
 {
 	// It's enough to check if the monster is in mob_spawn_data, because
 	// none or empty spawns are ignored. Thus the monster is spawned.
-	return mob_spawn_data.find(this->get_mobid()) != mob_spawn_data.end();
+	return mob_spawn_data.find(mob_id) != mob_spawn_data.end();
 }
 
 /**
@@ -4102,7 +4101,7 @@ static bool mob_parse_dbrow(char** str)
 	mob_id = atoi(str[0]);
 
 	if (!((mob_id > MIN_MOB_DB && mob_id < MAX_MOB_DB) || (mob_id > MIN_MOB_DB2 && mob_id < MAX_MOB_DB2))) {
-		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d or %d-%d.\n", mob_id, MIN_MOB_DB, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d or %d-%d.\n", mob_id, MIN_MOB_DB, MAX_MOB_DB, MIN_MOB_DB2, MAX_MOB_DB2);
 		return false;
 	}
 
