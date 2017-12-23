@@ -53,7 +53,7 @@ static struct {
 	struct refine_cost cost[REFINE_COST_MAX];
 } refine_info[REFINE_TYPE_MAX];
 
-static int atkmods[3][MAX_SINGLE_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
+static int atkmods[3][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
 
 static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
@@ -2352,10 +2352,10 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	float temp_aspd = 0;
 
 	amotion = job_info[classidx].aspd_base[sd->weapontype1]; // Single weapon
-	if (sd->status.weapon > MAX_SINGLE_WEAPON_TYPE)
+	if (sd->status.weapon > MAX_WEAPON_TYPE)
 		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
 	if (sd->status.shield)
-		amotion += job_info[classidx].aspd_base[MAX_SINGLE_WEAPON_TYPE];
+		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
 
 	switch(sd->status.weapon) {
 		case W_BOW:
@@ -2384,7 +2384,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 		return 0;
 
 	// Base weapon delay
-	amotion = (sd->status.weapon < MAX_SINGLE_WEAPON_TYPE)
+	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (job_info[classidx].aspd_base[sd->status.weapon]) // Single weapon
 	 : (job_info[classidx].aspd_base[sd->weapontype1] + job_info[classidx].aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
 
@@ -3814,7 +3814,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Base batk value is set in status_calc_misc
 #ifndef RENEWAL
 	// !FIXME: Weapon-type bonus (Why is the weapon_atk bonus applied to base attack?)
-	if (sd->status.weapon < MAX_SINGLE_WEAPON_TYPE && sd->weapon_atk[sd->status.weapon])
+	if (sd->status.weapon < MAX_WEAPON_TYPE && sd->weapon_atk[sd->status.weapon])
 		base_status->batk += sd->weapon_atk[sd->status.weapon];
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
@@ -14313,7 +14313,7 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
 {
 	unsigned int i;
 
-	for(i = 0; i < MAX_SINGLE_WEAPON_TYPE; i++)
+	for(i = 0; i < MAX_WEAPON_TYPE; i++)
 		atkmods[current][i] = atoi(fields[i]);
 
 	return true;
@@ -14503,7 +14503,7 @@ int status_readdb(void)
 	memset(SCDisabled, 0, sizeof(SCDisabled));
 	// size_fix.txt
 	for(i=0;i<ARRAYLENGTH(atkmods);i++)
-		for(j=0;j<MAX_SINGLE_WEAPON_TYPE;j++)
+		for(j=0;j<MAX_WEAPON_TYPE;j++)
 			atkmods[i][j]=100;
 	// refine_db.yml
 	for(i=0;i<ARRAYLENGTH(refine_info);i++)
@@ -14542,7 +14542,7 @@ int status_readdb(void)
 
 		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
-		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_SINGLE_WEAPON_TYPE,MAX_SINGLE_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i > 0);
+		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i > 0);
 
 		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 		aFree(dbsubpath1);

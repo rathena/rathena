@@ -2878,14 +2878,14 @@
 	export_constant(W_GRENADE);
 	export_constant(W_HUUMA);
 	export_constant(W_2HSTAFF);
-	export_constant(MAX_SINGLE_WEAPON_TYPE);
+	export_constant(MAX_WEAPON_TYPE);
 	export_constant(W_DOUBLE_DD);
 	export_constant(W_DOUBLE_SS);
 	export_constant(W_DOUBLE_AA);
 	export_constant(W_DOUBLE_DS);
 	export_constant(W_DOUBLE_DA);
 	export_constant(W_DOUBLE_SA);
-	export_constant(MAX_WEAPON_TYPE);
+	export_constant(MAX_WEAPON_TYPE_ALL);
 
 	/* ammunition types */
 	export_constant(A_ARROW);

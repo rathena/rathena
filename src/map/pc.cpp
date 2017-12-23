@@ -11033,9 +11033,9 @@ static bool pc_readdb_job1(char* fields[], int columns, int current){
 	job_info[idx].sp_factor  = atoi(fields[4]);
 
 #ifdef RENEWAL_ASPD
-	for(i = 0; i <= MAX_SINGLE_WEAPON_TYPE; i++)
+	for(i = 0; i <= MAX_WEAPON_TYPE; i++)
 #else
-	for(i = 0; i < MAX_SINGLE_WEAPON_TYPE; i++)
+	for(i = 0; i < MAX_WEAPON_TYPE; i++)
 #endif
 	{
 		job_info[idx].aspd_base[i] = atoi(fields[i+5]);
@@ -11359,12 +11359,12 @@ void pc_readdb(void) {
 		s = pc_read_statsdb(dbsubpath2,s,i > 0);
 		if (i == 0)
 #ifdef RENEWAL_ASPD
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_SINGLE_WEAPON_TYPE,6+MAX_SINGLE_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
 #else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_SINGLE_WEAPON_TYPE,5+MAX_SINGLE_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
 #endif
 		else
-			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_SINGLE_WEAPON_TYPE,6+MAX_SINGLE_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
 		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i > 0);
 		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i > 0); //support till 1000lvl
 #ifdef HP_SP_TABLES
