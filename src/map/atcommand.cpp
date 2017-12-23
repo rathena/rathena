@@ -8306,7 +8306,7 @@ ACMD_FUNC(invite)
 		return 0;
 	}
 
-	if( !duel_check_player_limit( duel_GetDuelId(did) ) ){
+	if( !duel_check_player_limit( duel_get_duelId(did) ) ){
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;
 	}
@@ -8423,7 +8423,7 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
-	if( duel_check_player_limit( duel_GetDuelId( sd->duel_invite ) ) )
+	if( duel_check_player_limit( duel_get_duelId( sd->duel_invite ) ) )
 	{
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;

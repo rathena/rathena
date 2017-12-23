@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#pragma once
 #ifndef _DUEL_HPP_
 #define _DUEL_HPP_
 
@@ -12,13 +12,10 @@ struct duel {
 	int max_players_limit;
 };
 
-//#define MAX_DUEL 1024 //max number of duels on server
-//extern struct duel duel_list[MAX_DUEL]; //list of current duel
-//extern int duel_count; //current number of duel on server
-
-duel& duel_GetDuelId( size_t did );
+duel& duel_get_duelId( size_t did );
 bool duel_exist( size_t did );
-size_t duel_Getcount();
+size_t duel_counttotal();
+size_t duel_countactives();
 
 //Duel functions // [LuzZza]
 size_t duel_create(struct map_session_data* sd, const unsigned int maxpl);

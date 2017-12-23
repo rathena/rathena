@@ -16,17 +16,26 @@
 #include "pc.hpp"
 #include "battle.hpp"
 
-//global var (extern)
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
-//struct duel duel_list[MAX_DUEL]; //list of current duel
-//int duel_count = 0; //number of duel active
 
-std::unordered_map<size_t,struct duel> duel_GetList() { return duel_list;  } //this could be exposed but not really necessarly, (hiden impl)
-
+std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list;  } //this could be exposed but not really necessarly, (hiden impl)
 bool duel_exist( size_t did ) { return duel_list.find( did ) != duel_list.end(); }
-duel& duel_GetDuelId(size_t did) { return duel_list.at(did);  }
-size_t duel_Getcount() { return duel_list.size();  }
+duel& duel_get_duelId(size_t did) { return duel_list.at(did);  }
+
+ //number of duel created
+size_t duel_counttotal() {
+	return duel_list.size();  
+}
+
+//number of duel active (player has accepted the duel)
+size_t duel_countactives() 
+{ 
+	size_t count = 0;
+	for ( const auto& lcur : duel_list )
+		if ( lcur.second.members_count > 1 ) ++count;
+	return count; 
+} 
 
 static void duel_set(const size_t did, struct map_session_data* sd);
 
@@ -105,13 +114,13 @@ void duel_showinfo(const size_t did, struct map_session_data* sd)
 
 	if(duel_list[did].max_players_limit > 0)
 		sprintf(output, msg_txt(sd,370), //" -- Duels: %d/%d, Members: %d/%d, Max players: %d --"
-			did, duel_Getcount(),
+			did, duel_counttotal(),
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count,
 			duel_list[did].max_players_limit);
 	else
 		sprintf(output, msg_txt(sd,371), //" -- Duels: %d/%d, Members: %d/%d --"
-			did, duel_Getcount(),
+			did, duel_counttotal(),
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count);
 
