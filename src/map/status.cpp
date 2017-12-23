@@ -5116,9 +5116,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			amotion = (1000 - 4 * status->agi - status->dex) * ((TBL_HOM*)bl)->homunculusDB->baseASPD / 1000;
 
 			amotion = status_calc_aspd_rate(bl, sc, amotion);
-
-			if (status->aspd_rate != 1000)
-				amotion = amotion * status->aspd_rate / 1000;
+			amotion = amotion * status->aspd_rate / 1000;
 #endif
 
 			amotion = status_calc_fix_aspd(bl, sc, amotion);
@@ -5133,8 +5131,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
 #endif
 			// Absolute ASPD % modifier
-			if (status->aspd_rate != 1000)
-				amotion = amotion * status->aspd_rate / 1000;
+			amotion = amotion * status->aspd_rate / 1000;
 			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
 				amotion = amotion * 5 * (skill_lv + 10) / 100;
 #ifdef RENEWAL_ASPD
@@ -5151,9 +5148,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		} else { // Mercenary and mobs
 			amotion = b_status->amotion;
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
-
-			if(status->aspd_rate != 1000)
-				amotion = amotion*status->aspd_rate/1000;
+			amotion = amotion*status->aspd_rate/1000;
 
 			amotion = status_calc_fix_aspd(bl, sc, amotion);
 			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 2000);
