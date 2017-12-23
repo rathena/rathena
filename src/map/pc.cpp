@@ -1098,6 +1098,10 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return ITEM_EQUIP_ACK_FAIL;
 
+	//fail to equip if item is restricted
+	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
+		return ITEM_EQUIP_ACK_FAIL;
+
 	if (sd->sc.count) {
 		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]
 			return ITEM_EQUIP_ACK_FAIL;
@@ -1130,15 +1134,11 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 		}
 	}
 
-	//fail to equip if item is restricted
-	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
+	//Not equipable by class. [Skotlex]
+	if (!(1ULL << (sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1) ? 1 : ((sd->class_&JOBL_2_2) ? 2 : 0)]))
 		return ITEM_EQUIP_ACK_FAIL;
 
-	//Not equipable by class. [Skotlex]
-	if (!(1ULL<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
-		return ITEM_EQUIP_ACK_FAIL;
-	
-	if (!pc_isItemClass(sd,item))
+	if (!pc_isItemClass(sd, item))
 		return ITEM_EQUIP_ACK_FAIL;
 
 	return ITEM_EQUIP_ACK_OK;
