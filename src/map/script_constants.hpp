@@ -2885,6 +2885,7 @@
 	export_constant(W_DOUBLE_DS);
 	export_constant(W_DOUBLE_DA);
 	export_constant(W_DOUBLE_SA);
+	export_constant(MAX_WEAPON_TYPE_ALL);
 
 	/* ammunition types */
 	export_constant(A_ARROW);
