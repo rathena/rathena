@@ -405,6 +405,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
  * Load initial pet data when hatching/creating.
  * @param sd : player requesting
  * @param pet : pet requesting
+ * @return True on success or false otherwise
  */
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 {
@@ -412,7 +413,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	struct s_pet_db *pet_db_ptr;
 	int interval = 0;
 
-	nullpo_retr(1, sd);
+	nullpo_retr(false, sd);
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
@@ -665,7 +666,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		sd->catch_target_class = md->mob_id;
 
-	if(sd->catch_target_class != md->mob_id) {
+	if(sd->catch_target_class != md->mob_id || !pet) {
 		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
@@ -1661,8 +1662,8 @@ void read_petdb()
 			pet->attack_rate=atoi(str[17]);
 			pet->defence_attack_rate=atoi(str[18]);
 			pet->change_target_rate=atoi(str[19]);
-			pet->pet_script = NULL;
-			pet->pet_loyal_script = NULL;
+			pet->pet_script = nullptr;
+			pet->pet_loyal_script = nullptr;
 
 			if( *str[20] )
 				pet->pet_script = parse_script(str[20], filename[i], lines, 0);
