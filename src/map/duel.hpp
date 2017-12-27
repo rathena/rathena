@@ -12,7 +12,7 @@ struct duel {
 	int max_players_limit;
 };
 
-duel& duel_get_duelId( size_t did );
+duel& duel_get_duelid( size_t did );
 bool duel_exist( size_t did );
 size_t duel_counttotal();
 size_t duel_countactives();

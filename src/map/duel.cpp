@@ -19,16 +19,22 @@
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
 
-std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list;  } //this could be exposed but not really necessarly, (hiden impl)
+std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarly, (hiden impl)
 bool duel_exist( size_t did ) { return duel_list.find( did ) != duel_list.end(); }
-duel& duel_get_duelId(size_t did) { return duel_list.at(did);  }
+duel& duel_get_duelid(size_t did) { return duel_list.at(did); }
 
- //number of duel created
+/**
+ * Number of duels created
+ * @return duel_list size
+ */
 size_t duel_counttotal() {
 	return duel_list.size();  
 }
 
-//number of duel active (player has accepted the duel)
+/**
+ * Number of active duels (player has accepted the duel)
+ * @return active duels
+ */
 size_t duel_countactives() 
 { 
 	size_t count = 0;
