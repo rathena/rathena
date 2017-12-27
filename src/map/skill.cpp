@@ -11153,7 +11153,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		if( sd && ud->skilltimer != INVALID_TIMER && (pc_checkskill(sd,SA_FREECAST) > 0 || ud->skill_id == LG_EXEEDBREAK) )
 		{// restore original walk speed
 			ud->skilltimer = INVALID_TIMER;
-			status_calc_bl(&sd->bl, SCB_SPEED);
+			status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
 		} else
 			ud->skilltimer = INVALID_TIMER;
 	}
@@ -11323,11 +11323,11 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		else
 			skill_castend_damage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
 
-		if (ud->skill_id != RA_CAMOUFLAGE)
-			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER); // Applies to the first skill if active
-
 		sc = status_get_sc(src);
 		if(sc && sc->count) {
+			if (ud->skill_id != RA_CAMOUFLAGE)
+				status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER); // Applies to the first skill if active
+
 			if(sc->data[SC_SPIRIT] &&
 				sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 				sc->data[SC_SPIRIT]->val3 == ud->skill_id &&
@@ -11433,7 +11433,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 	if( sd && ud->skilltimer != INVALID_TIMER && ( pc_checkskill(sd,SA_FREECAST) > 0 || ud->skill_id == LG_EXEEDBREAK ) )
 	{// restore original walk speed
 		ud->skilltimer = INVALID_TIMER;
-		status_calc_bl(&sd->bl, SCB_SPEED);
+		status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
 	} else
 		ud->skilltimer = INVALID_TIMER;
 
@@ -18110,9 +18110,13 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		case NC_NEUTRALBARRIER:
 			{
 				struct status_change *sc = NULL;
-				if( (sc = status_get_sc(src)) != NULL && sc->data[SC_NEUTRALBARRIER_MASTER] ) {
-					sc->data[SC_NEUTRALBARRIER_MASTER]->val2 = 0;
-					status_change_end(src,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+				if( (sc = status_get_sc(src)) != NULL ) {
+					if ( sc->data[SC_NEUTRALBARRIER_MASTER] )
+					{
+						sc->data[SC_NEUTRALBARRIER_MASTER]->val2 = 0;
+						status_change_end(src,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+					}
+					status_change_end(src,SC_NEUTRALBARRIER,INVALID_TIMER);
 				}
 			}
 			break;

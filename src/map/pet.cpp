@@ -652,7 +652,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette(sd,0);
-		sd->catch_target_class = -1;
+		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = sd->itemindex = -1;
 		return 1;
 	}
@@ -661,14 +661,14 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	pet = pet_db(md->mob_id);
 
-	//catch_target_class == 0 is used for universal lures (except bosses for now). [Skotlex]
-	if (sd->catch_target_class == 0 && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
+	//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
+	if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		sd->catch_target_class = md->mob_id;
 
 	if(sd->catch_target_class != md->mob_id) {
 		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_roulette(sd,0);
-		sd->catch_target_class = -1;
+		sd->catch_target_class = PET_CATCH_FAIL;
 
 		return 1;
 	}
@@ -689,7 +689,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {
 		clif_pet_roulette(sd,0);
-		sd->catch_target_class = -1;
+		sd->catch_target_class = PET_CATCH_FAIL;
 	}
 
 	return 0;
@@ -724,7 +724,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	// period of time it wasn't possible to know which kind of egg was being requested after
 	// the first request. [Panikon]
 	pet = pet_db(pet_class);
-	sd->catch_target_class = -1;
+	sd->catch_target_class = PET_CATCH_FAIL;
 
 	if(!pet) {
 		intif_delete_petdata(pet_id);

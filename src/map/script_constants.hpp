@@ -2885,6 +2885,7 @@
 	export_constant(W_DOUBLE_DS);
 	export_constant(W_DOUBLE_DA);
 	export_constant(W_DOUBLE_SA);
+	export_constant(MAX_WEAPON_TYPE_ALL);
 
 	/* ammunition types */
 	export_constant(A_ARROW);
@@ -6098,6 +6099,9 @@
 	export_constant(HAT_EF_QSCARABA);
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
+
+	/* pet catch */
+	export_constant(PET_CATCH_UNIVERSAL);
 
 	#undef export_constant
 	#undef export_constant2

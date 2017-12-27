@@ -53,6 +53,11 @@ struct s_pet_db {
 
 enum e_pet_itemtype : uint8 { PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
 
+enum e_pet_catch : uint16 {
+	PET_CATCH_FAIL = 0, ///< A catch attempt failed
+	PET_CATCH_UNIVERSAL = 1, ///< The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
+};
+
 struct pet_recovery { //Stat recovery
 	enum sc_type type;	//Status Change id
 	unsigned short delay; //How long before curing (secs).

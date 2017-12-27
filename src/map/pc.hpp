@@ -498,7 +498,7 @@ struct map_session_data {
 	int itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
+	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
@@ -781,6 +781,7 @@ enum weapon_type {
 	W_DOUBLE_DS, // dagger + sword
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
+	MAX_WEAPON_TYPE_ALL,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
