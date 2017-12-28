@@ -21520,8 +21520,8 @@ static void skill_readdb(void)
 		skill_changematerial_count = skill_spellbook_count = skill_magicmushroom_count = 0;
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		size_t n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		size_t n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
 

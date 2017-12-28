@@ -3595,10 +3595,11 @@ void npc_unsetcells(struct npc_data* nd)
 	map_foreachinallarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
 }
 
-void npc_movenpc(struct npc_data* nd, int16 x, int16 y)
+bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 {
 	const int16 m = nd->bl.m;
-	if (m < 0 || nd->bl.prev == NULL) return;	//Not on a map.
+	if (m < 0 || nd->bl.prev == NULL) 
+		return false;	//Not on a map.
 
 	x = cap_value(x, 0, map[m].xs-1);
 	y = cap_value(y, 0, map[m].ys-1);
@@ -3606,6 +3607,7 @@ void npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
 	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	return true;
 }
 
 /// Changes the display name of the npc.

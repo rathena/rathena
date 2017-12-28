@@ -572,8 +572,8 @@ struct map_session_data {
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
-	int duel_group; // duel vars [LuzZza]
-	int duel_invite;
+	size_t duel_group; // duel vars [LuzZza]
+	size_t duel_invite;
 
 	int killerrid, killedrid;
 
