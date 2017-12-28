@@ -2720,7 +2720,7 @@ int map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 	if( i < MAX_MOB_LIST_PER_MAP )
 	{
 		map[m].moblist[i] = spawn;
-		return i;
+		return static_cast<int>(i);
 	}
 	return -1;
 }
