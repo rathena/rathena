@@ -667,7 +667,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		sd->catch_target_class = md->mob_id;
 
 	//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
-	else if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet_db[i].itemID)
+	else if (pet && sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID)
 		sd->catch_target_class = md->mob_id;
 
 	if(sd->catch_target_class != md->mob_id || !pet) {
