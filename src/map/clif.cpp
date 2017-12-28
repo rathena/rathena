@@ -6210,7 +6210,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 	std::unique_ptr<char> buf(new char[8+len]);
 
 	WBUFW(buf.get(),0)=0x8d;
-	WBUFW(buf.get(),2)=static_cast<int>(len+8);
+	WBUFW(buf.get(),2)=static_cast<uint16>(len+8);
 	WBUFL(buf.get(),4)=bl->id;
 	safestrncpy(WBUFCP(buf.get(),8),message,len);
 
