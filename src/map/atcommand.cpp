@@ -2778,7 +2778,7 @@ ACMD_FUNC(makeegg) {
 	pet = pet_db(id);
 	if (!pet)
 		pet = pet_db_search(id, PET_EGG);
-	if (pet != NULL) {
+	if (pet != nullptr) {
 		sd->catch_target_class = pet->class_;
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {

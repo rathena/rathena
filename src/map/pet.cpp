@@ -35,7 +35,7 @@ struct s_pet_db *pet_db( uint16 pet_id ){
 	if( pet_db_data.find(pet_id) != pet_db_data.end() ){
 		return &pet_db_data.at(pet_id);
 	}else{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -319,11 +319,11 @@ struct s_pet_db* pet_db_search( int key, enum e_pet_itemtype type ){
 			case PET_FOOD:  if(pet->FoodID == key) return pet; break;
 			default:
 				ShowError( "pet_db_search: Unsupported type %d\n", type );
-				return NULL;
+				return nullptr;
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -662,13 +662,16 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	pet = pet_db(md->mob_id);
 
-	//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
-	if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
-		sd->catch_target_class = md->mob_id;
-
-	//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
-	else if (pet && sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID)
-		sd->catch_target_class = md->mob_id;
+	// If the target is a valid pet, we have a few exceptions
+	if( pet ){
+		//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
+		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE)){
+			sd->catch_target_class = md->mob_id;
+		//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
+		}else if (pet && sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
+			sd->catch_target_class = md->mob_id;
+		}
+	}
 
 	if(sd->catch_target_class != md->mob_id || !pet) {
 		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
