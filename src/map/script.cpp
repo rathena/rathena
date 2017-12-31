@@ -23696,6 +23696,27 @@ BUILDIN_FUNC(round) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(getequiptradability) {
+	int i = -1, num;
+	TBL_PC *sd;
+
+	num = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (equip_index_check(num))
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	if (i >= 0)
+		script_pushint(st, !(sd->inventory.u.items_inventory[i].expire_time || (sd->inventory.u.items_inventory[i].bound && !pc_can_give_bounded_items(sd))));
+	else
+		script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24343,6 +24364,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "round", "i"),
 	BUILDIN_DEF2(round, "ceil", "i"),
 	BUILDIN_DEF2(round, "floor", "i"),
+	BUILDIN_DEF(getequiptradability, "i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
