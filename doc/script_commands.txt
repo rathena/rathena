@@ -5358,7 +5358,7 @@ Used in reset NPC's (duh!)
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
 *sc_end <effect type>{,<GID>};
-*sc_end_class {<char_id>};
+*sc_end_class {<char_id>{,<job_id>}};
 
 These commands will bestow a status effect on a character.
 
@@ -5397,7 +5397,7 @@ and theirs val1, val2, val3, and val4 usage in source.
 perform a complete removal of all statuses (although permanent ones will re-apply).
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
-skill on the invoking character.
+skill on the invoking character. If <job_id> is provided it will end the effect for that job.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -5415,6 +5415,18 @@ Examples:
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
+	
+	// This will end the effect of any learned skill for the invoking character.
+	sc_end_class;
+	
+	// This will end the effect of any learned skill for the character with the <char_id> 150000.
+	// val1: <char_id>
+	sc_end_class(150000);
+	
+	// This will end the effect of any Arch Bishop skill for the invoking character.
+	// val1: <char_id>
+	// val2: <job_id> of Arch Bishop
+	sc_end_class(getcharid(0),Job_Arch_Bishop);
 
 Note: to use SC_NOCHAT you should alter Manner
 	set Manner, -5;	// Will mute a user for 5 minutes
@@ -7867,6 +7879,11 @@ and "NPC level" is the temporary level of the NPC (used in some skills).
 Neither value can be greater than the max level defined in config, and will
 not work properly if the NPC has a mob sprite.
 
+Before using skills, NPCs must have basic stats applied to them depending on the
+skill being used: UNPC_ATKMIN, UNPC_ATKMAX, UNPC_MATKMIN, UNPC_MATKMAX, UNPC_STR,
+UNPC_AGI, UNPC_VIT, UNPC_INT, UNPC_DEX, UNPC_LUK.
+See 'setunitdata' for more information on usage.
+
     // Casts Level 10 Heal on the attached player, calculated with
     // all stats 99 and base level 60.
     npcskill "AL_HEAL",10,99,60;
@@ -9007,6 +9024,7 @@ mapflag	<map name>	battleground	2
 ---------------------------------------
 
 *bpet;
+*birthpet;
 
 This command opens up a pet hatching window on the client connected to the
 invoking character. It is used in item script for the pet incubators and will
@@ -9017,13 +9035,21 @@ This is still usable outside item scripts.
 ---------------------------------------
 
 *pet <pet id>;
+*catchpet <pet id>;
 
 This command is used in all the item scripts for taming items. Running this
 command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It
 will still work outside an item script.
+If the <pet id> is PET_CATCH_UNIVERSAL the item will attempt to catch the targeted
+monster as long as it is in the pet database and does not have the MD_STATUS_IMMUNE
+monster mode.
+If the <pet id> is PET_CATCH_UNIVERSAL_ITEM the item will attempt to catch the targeted
+monster as long as it is in the pet database and the targeted monster requires the lure
+item used.
+See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
-A full list of pet IDs can be found inside 'db/pet_db.txt'.
+A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
 ---------------------------------------
 
@@ -9031,7 +9057,7 @@ A full list of pet IDs can be found inside 'db/pet_db.txt'.
 
 This command will create a pet egg and put it in the invoking character's
 inventory. The kind of pet is specified by pet ID numbers listed in
-'db/pet_db.txt'. The egg is created exactly as if the character just successfully
+'db/(pre-)re/pet_db.txt'. The egg is created exactly as if the character just successfully
 caught a pet in the normal way.
 
 	// This will make you a poring:
@@ -9049,7 +9075,7 @@ This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
  PETINFO_ID - Pet ID
- PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it
+ PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.txt' - will tell you what kind of a pet it
      is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.

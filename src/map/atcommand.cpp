@@ -1767,13 +1767,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	// Limit body styles to certain jobs since not all of them are released yet.
-	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK || (sd->class_&MAPID_THIRDMASK) == MAPID_SHADOW_CHASER
-	    || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER || (sd->class_&MAPID_THIRDMASK) == MAPID_SORCERER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_SURA)) {
+	if (!(sd->class_&JOBL_THIRD)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -5394,7 +5388,7 @@ ACMD_FUNC(skilloff)
  *------------------------------------------*/
 ACMD_FUNC(npcmove)
 {
-	short x = 0, y = 0, m;
+	short x = 0, y = 0;
 	struct npc_data *nd = 0;
 	char npc_name[NPC_NAME_LENGTH];
 
@@ -5412,18 +5406,12 @@ ACMD_FUNC(npcmove)
 		return -1;
 	}
 
-	if ((m=nd->bl.m) < 0 || nd->bl.prev == NULL)
-	{
+	if ( npc_movenpc( nd, x, y ) ) 
+	{ //actually failed to move
 		clif_displaymessage(fd, msg_txt(sd,1154)); // NPC is not on this map.
 		return -1;	//Not on a map.
-	}
-
-	x = cap_value(x, 0, map[m].xs-1);
-	y = cap_value(y, 0, map[m].ys-1);
-	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved.
+	} else
+		clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved
 
 	return 0;
 }
@@ -6557,14 +6545,13 @@ ACMD_FUNC(mobsearch)
 
 	if ((mob_id = atoi(mob_name)) == 0)
 		 mob_id = mobdb_searchname(mob_name);
-	if(mob_id > 0 && mobdb_checkid(mob_id) == 0){
+	if( mobdb_checkid(mob_id) == 0){
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1219),mob_name); // Invalid mob ID %s!
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname)
-				strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
-//				strcpy(mob_name,mob_db(mob_id)->name);	// --en--
+	strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
+//	strcpy(mob_name,mob_db(mob_id)->name);	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif_displaymessage(fd, atcmd_output);
@@ -6578,7 +6565,7 @@ ACMD_FUNC(mobsearch)
 
 		if( md->bl.m != sd->bl.m )
 			continue;
-		if( mob_id != -1 && md->mob_id != mob_id )
+		if( md->mob_id != mob_id )
 			continue;
 
 		++number;
@@ -8308,14 +8295,12 @@ ACMD_FUNC(invite)
 		return -1;
 	}
 
-	if(did == 0) {
+	if(did == 0 || !duel_exist(did) ) {
 		clif_displaymessage(fd, msg_txt(sd,350)); // "Duel: @invite without @duel."
 		return 0;
 	}
 
-	if(duel_list[did].max_players_limit > 0 &&
-		duel_list[did].members_count >= duel_list[did].max_players_limit) {
-
+	if( !duel_check_player_limit( duel_get_duelid(did) ) ){
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;
 	}
@@ -8427,12 +8412,12 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
-	if(sd->duel_invite <= 0) {
+	if(sd->duel_invite <= 0 || !duel_exist(sd->duel_invite) ) {
 		clif_displaymessage(fd, msg_txt(sd,360)); // "Duel: @accept without invititation."
 		return 0;
 	}
 
-	if( duel_list[sd->duel_invite].max_players_limit > 0 && duel_list[sd->duel_invite].members_count >= duel_list[sd->duel_invite].max_players_limit )
+	if( duel_check_player_limit( duel_get_duelid( sd->duel_invite ) ) )
 	{
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;

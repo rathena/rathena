@@ -161,7 +161,7 @@ bool IsCurrentUserLocalAdministrator(void){
 		if (hToken) CloseHandle(hToken);
 	}
 
-	return fReturn;
+	return fReturn == TRUE;
 #else
 	return false;
 #endif
