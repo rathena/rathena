@@ -2937,7 +2937,7 @@ If no item ID/name given, all possible items in player's inventory will be merge
 
 ---------------------------------------
 
-*gettradability(<equipment slot>{,<char id>});
+*getequiptradability(<equipment slot>{,<char id>});
 
 Returns true if the item in <equipment slot> is tradable.
 Returns false otherwise.
