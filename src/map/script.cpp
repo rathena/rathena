@@ -23709,8 +23709,11 @@ BUILDIN_FUNC(getequiptradability) {
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
-	if (i >= 0)
-		script_pushint(st, !(sd->inventory.u.items_inventory[i].expire_time || (sd->inventory.u.items_inventory[i].bound && !pc_can_give_bounded_items(sd))));
+	if (i >= 0) {
+		bool tradable = (sd->inventory.u.items_inventory[i].expire_time == 0 &&
+			(!sd->inventory.u.items_inventory[i].bound || pc_can_give_bounded_items(sd)));
+		script_pushint(st, tradable);
+	}
 	else
 		script_pushint(st, 1);
 
