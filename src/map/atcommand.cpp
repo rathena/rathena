@@ -2751,7 +2751,9 @@ ACMD_FUNC(guildlevelup) {
  *------------------------------------------*/
 ACMD_FUNC(makeegg) {
 	struct item_data *item_data;
-	int id, pet_id;
+	int id;
+	struct s_pet_db* pet;
+
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -2767,12 +2769,12 @@ ACMD_FUNC(makeegg) {
 	else
 		id = atoi(message);
 
-	pet_id = search_petDB_index(id, PET_CLASS);
-	if (pet_id < 0)
-		pet_id = search_petDB_index(id, PET_EGG);
-	if (pet_id >= 0) {
-		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
+	pet = pet_db(id);
+	if (!pet)
+		pet = pet_db_search(id, PET_EGG);
+	if (pet != nullptr) {
+		sd->catch_target_class = pet->class_;
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 		return -1;
