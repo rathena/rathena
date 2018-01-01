@@ -44,7 +44,7 @@
 1615:18539,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bVariableCastrate,-10; }
 1616:2515,{ bonus bSpeedRate,25; }
 1617:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-1618:2509,{ bonus bMaxHP,300; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5; if(getequiprefinerycnt(EQI_GARMENT) > 10) { bonus2 bSubEle,Ele_Neutral,30; } else { bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3; } }
+1618:2509,{ bonus bMaxHP,300; bonus bMatkRate,min(5, getequiprefinerycnt(EQI_HAND_R)-5); bonus2 bSubEle,Ele_Neutral,min(30, getequiprefinerycnt(EQI_GARMENT)*3); }
 1618:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1618:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
 1619:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
