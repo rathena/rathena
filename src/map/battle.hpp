@@ -637,6 +637,7 @@ struct Battle_Config
 	int allow_bound_sell;
 	int event_refine_chance;
 	int autoloot_adjust;
+	int display_tax_info;
 
 #include "../custom/battle_config_struct.inc"
 };

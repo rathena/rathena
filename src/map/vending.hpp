@@ -5,7 +5,6 @@
 #define	_VENDING_HPP_
 
 #include "../common/cbasetypes.h"
-
 #include "../common/db.h"
 
 struct map_session_data;
@@ -13,9 +12,10 @@ struct s_search_store_search;
 struct s_autotrader;
 
 struct s_vending {
-	short index; /// cart index (return item data)
-	short amount; ///amout of the item for vending
-	unsigned int value; ///at wich price
+	short index; ///< Cart index (return item data)
+	short amount; ///< Amout of the item for vending
+	unsigned int value; ///< Price
+	size_t value_vat; ///< Value after tax
 };
 
 DBMap * vending_getdb();

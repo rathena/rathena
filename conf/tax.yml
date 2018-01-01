@@ -1,0 +1,52 @@
+# Taxes for selling something (vending)
+# The zeny that you received will be reduced after tax
+Selling:
+  # Tax applies in total transaction
+  In_Total:
+  - Minimal_Value: 0
+    Tax: 0
+
+  # Tax by selling entry
+  Each_Entry:
+  # 10% if >= 100,000,001
+  - Minimal_Value: 100000001
+    Tax: 1000
+  # 8% if >= 10,000,001
+  - Minimal_Value: 10000001
+    Tax: 800
+  # 6% if >= 1,000,001
+  - Minimal_Value: 1000001
+    Tax: 600
+  # 4% if >= 100,001
+  - Minimal_Value: 100001
+    Tax: 400
+  # 2% if >= 10,001
+  - Minimal_Value: 10001
+    Tax: 200
+
+# Taxes for buying something (buyingstore)
+# The zeny that you must be paid will be increased after tax
+# but player who sells still get the value without tax
+Buying:
+  # Tax applies in total transaction
+  In_Total:
+  - Minimal_Value: 0
+    Tax: 0
+
+  # Tax by buying entry
+  Each_Entry:
+  # 10% if >= 100,000,001
+  - Minimal_Value: 100000001
+    Tax: 1000
+  # 8% if >= 10,000,001
+  - Minimal_Value: 10000001
+    Tax: 800
+  # 6% if >= 1,000,001
+  - Minimal_Value: 1000001
+    Tax: 600
+  # 4% if >= 100,001
+  - Minimal_Value: 100001
+    Tax: 400
+  # 2% if >= 10,001
+  - Minimal_Value: 10001
+    Tax: 200

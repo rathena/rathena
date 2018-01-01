@@ -7199,7 +7199,7 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 ///     5 = "cannot use an npc shop while in a trade"
 ///     6 = Because the store information was incorrect the item was not purchased.
 ///     7 = No sales information.
-void clif_buyvending(struct map_session_data* sd, int index, int amount, int fail)
+void clif_buyvending(struct map_session_data* sd, int index, int amount, enum e_vending_ack ack)
 {
 	int fd;
 
@@ -7210,7 +7210,7 @@ void clif_buyvending(struct map_session_data* sd, int index, int amount, int fai
 	WFIFOW(fd,0) = 0x135;
 	WFIFOW(fd,2) = index+2;
 	WFIFOW(fd,4) = amount;
-	WFIFOB(fd,6) = fail;
+	WFIFOB(fd,6) = ack;
 	WFIFOSET(fd,packet_len(0x135));
 }
 

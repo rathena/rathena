@@ -204,6 +204,7 @@
     <ClInclude Include="skill.hpp" />
     <ClInclude Include="status.hpp" />
     <ClInclude Include="storage.hpp" />
+    <ClInclude Include="tax.hpp" />
     <ClInclude Include="trade.hpp" />
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
@@ -249,6 +250,7 @@
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="status.cpp" />
     <ClCompile Include="storage.cpp" />
+    <ClCompile Include="tax.cpp" />
     <ClCompile Include="trade.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="vending.cpp" />
@@ -280,6 +282,7 @@
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\map_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\map_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\packet_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\packet_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\script_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\script_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\tax.yml" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\tax.yml')" />
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_chn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_chn_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_eng_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_eng_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_frn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_frn_conf.txt')" />

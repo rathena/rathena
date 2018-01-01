@@ -48,6 +48,7 @@
 #include "battle.hpp"
 #include "log.hpp"
 #include "mob.hpp"
+#include "tax.hpp"
 
 char default_codepage[32] = "";
 
@@ -3885,6 +3886,8 @@ int map_config_read(const char *cfgName)
 			console_msg_log = atoi(w2);//[Ind]
 		else if (strcmpi(w1, "console_log_filepath") == 0)
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
+		else if (strcmpi(w1, "tax_conf") == 0)
+			tax_set_conf(w2);
 		else if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else
@@ -4425,6 +4428,7 @@ void do_final(void)
 	do_final_vending();
 	do_final_buyingstore();
 	do_final_path();
+	do_final_tax();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -4757,6 +4761,7 @@ int do_init(int argc, char *argv[])
 	do_init_elemental();
 	do_init_quest();
 	do_init_achievement();
+	do_init_tax();
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();

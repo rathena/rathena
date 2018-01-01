@@ -18,6 +18,7 @@ struct s_buyingstore_item
 	int price;
 	unsigned short amount;
 	unsigned short nameid;
+	size_t price_vat;
 };
 
 struct s_buyingstore

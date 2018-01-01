@@ -174,6 +174,16 @@ enum e_bossmap_info {
 	BOSS_INFO_DEAD,
 };
 
+enum e_vending_ack : uint8_t {
+	VENDING_ACK_OK = 0,
+	VENDING_ACK_NOZENY = 1,
+	VENDING_ACK_OVERWEIGHT = 2,
+	VENDING_ACK_NOSTOCK = 4,
+	VENDING_ACK_NOTALKNPC = 5,
+	VENDING_ACK_INVALID = 6,
+	VENDING_ACK_NOITEM = 7,
+};
+
 #define packet_len(cmd) packet_db[cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
 extern int packet_db_ack[MAX_ACK_FUNC + 1];
@@ -730,7 +740,7 @@ void clif_openvendingreq(struct map_session_data* sd, int num);
 void clif_showvendingboard(struct block_list* bl, const char* message, int fd);
 void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* vending);
-void clif_buyvending(struct map_session_data* sd, int index, int amount, int fail);
+void clif_buyvending(struct map_session_data* sd, int index, int amount, enum e_vending_ack ack);
 void clif_openvending(struct map_session_data* sd, int id, struct s_vending* vending);
 void clif_vendingreport(struct map_session_data* sd, int index, int amount, uint32 char_id, int zeny);
 

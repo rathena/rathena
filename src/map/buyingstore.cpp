@@ -20,6 +20,7 @@
 #include "pc.hpp"  // struct map_session_data
 #include "chrif.hpp"
 #include "npc.hpp"
+#include "tax.hpp"
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
@@ -117,7 +118,9 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 {
 	unsigned int i, weight, listidx;
 	char message_sql[MESSAGE_SIZE*2];
+	char msg[CHAT_SIZE_MAX];
 	StringBuf buf;
+	s_tax *taxdata;
 
 	nullpo_retr(1, sd);
 
@@ -160,10 +163,16 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	weight = sd->weight;
 
+	taxdata = tax_get(TAX_BUYING);
+	if (battle_config.display_tax_info) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 773)); // [ Tax Information ]
+	}
+
 	// check item list
 	for( i = 0; i < count; i++ )
 	{// itemlist: <name id>.W <amount>.W <price>.L
 		unsigned short nameid, amount;
+		unsigned short tax;
 		int price, idx;
 		struct item_data* id;
 
@@ -205,6 +214,14 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		sd->buyingstore.items[i].nameid = nameid;
 		sd->buyingstore.items[i].amount = amount;
 		sd->buyingstore.items[i].price  = price;
+		tax = taxdata->get_tax(taxdata->each, price);
+		sd->buyingstore.items[i].price_vat = (size_t)(price + price / 10000. * tax);
+
+		if (battle_config.display_tax_info) {
+			memset(msg, '\0', CHAT_SIZE_MAX);
+			sprintf(msg, msg_txt(sd, 774), itemdb_jname(nameid), price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
+			clif_displaymessage(sd->fd, msg);
+		}
 	}
 
 	if( i != count )
@@ -219,6 +236,15 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE_OVERWEIGHT, weight);
 		return 7;
+	}
+
+	if (battle_config.display_tax_info && taxdata->total.size()) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 775)); // [ Total Transaction Tax ]
+		for (const auto &tax : taxdata->total) {
+			memset(msg, '\0', CHAT_SIZE_MAX);
+			sprintf(msg, msg_txt(sd, 776), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
+			clif_displaymessage(sd->fd, msg);
+		}
 	}
 
 	// success
@@ -315,6 +341,36 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 	clif_buyingstore_itemlist(sd, pl_sd);
 }
 
+static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const uint8* itemlist, int count) {
+	s_tax *tax = tax_get(TAX_BUYING);
+
+	double total = 0;
+	int i;
+
+	if (tax->total.size() == 0)
+		return 0;
+
+	for (i = 0; i < count; i++) {
+		unsigned short nameid, amount, listidx;
+		int index;
+
+		index = RBUFW(itemlist, i * 6 + 0) - 2;
+		nameid = RBUFW(itemlist, i * 6 + 2);
+		amount = RBUFW(itemlist, i * 6 + 4);
+
+		if (amount <= 0)
+			continue;
+
+		ARR_FIND(0, sd->buyingstore.slots, listidx, sd->buyingstore.items[listidx].nameid == nameid);
+		if (listidx == sd->buyingstore.slots || sd->buyingstore.items[listidx].amount == 0)
+			continue;
+
+		total += ((double)sd->buyingstore.items[listidx].price * amount);
+	}
+
+	return tax->get_tax(tax->total, total);
+}
+
 /**
 * Start transaction
 * @param sd Player/Seller
@@ -324,7 +380,7 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 */
 void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count)
 {
-	int zeny = 0;
+	size_t zeny = 0, zeny_paid = 0;
 	unsigned int i, weight, listidx, k;
 	struct map_session_data* pl_sd;
 
@@ -367,6 +423,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		pl_sd->buyingstore.zenylimit = pl_sd->status.zeny;
 	}
 	weight = pl_sd->weight;
+	int tax_total = buyinstore_tax_intotal(pl_sd, itemlist, count);
 
 	// check item list
 	for( i = 0; i < count; i++ )
@@ -429,7 +486,9 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		}
 		weight+= amount*sd->inventory_data[index]->weight;
 
-		if( amount*pl_sd->buyingstore.items[listidx].price > pl_sd->buyingstore.zenylimit-zeny )
+		zeny_paid += amount * pl_sd->buyingstore.items[listidx].price_vat;
+		zeny_paid += (size_t)(zeny_paid / 10000. * tax_total);
+		if( amount*pl_sd->buyingstore.items[listidx].price > pl_sd->buyingstore.zenylimit - zeny_paid)
 		{// buyer does not have enough zeny
 			clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_ZENY, nameid);
 			return;
@@ -449,6 +508,8 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 
 		ARR_FIND( 0, pl_sd->buyingstore.slots, listidx, pl_sd->buyingstore.items[listidx].nameid == nameid );
 		zeny = amount*pl_sd->buyingstore.items[listidx].price;
+		zeny_paid = amount*pl_sd->buyingstore.items[listidx].price_vat;
+		zeny_paid = zeny_paid + (size_t)(zeny_paid / 10000. * tax_total);
 
 		// move item
 		pc_additem(pl_sd, &sd->inventory.u.items_inventory[index], amount, LOG_TYPE_BUYING_STORE);
@@ -466,13 +527,19 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		}
 
 		// pay up
-		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd);
+		pc_payzeny(pl_sd, zeny_paid, LOG_TYPE_BUYING_STORE, sd);
 		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd);
-		pl_sd->buyingstore.zenylimit-= zeny;
+		pl_sd->buyingstore.zenylimit-= zeny_paid;
+
+		if (battle_config.display_tax_info) {
+			char msg[CHAT_SIZE_MAX];
+			sprintf(msg, msg_txt(sd, 777), itemdb_jname(nameid), (double)zeny, (double)zeny_paid);
+			clif_displaymessage(pl_sd->fd, msg);
+		}
 
 		// notify clients
 		clif_buyingstore_delete_item(sd, index, amount, pl_sd->buyingstore.items[listidx].price);
-		clif_buyingstore_update_item(pl_sd, nameid, amount, sd->status.char_id, zeny);
+		clif_buyingstore_update_item(pl_sd, nameid, amount, sd->status.char_id, zeny_paid);
 	}
 
 	if( save_settings&CHARSAVE_VENDING ) {
