@@ -3,6 +3,7 @@
 
 #include "tax.hpp"
 
+#include <algorithm>
 #include <string.h>
 #include <yaml-cpp/yaml.h>
 
