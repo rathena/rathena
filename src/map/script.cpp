@@ -23703,19 +23703,21 @@ BUILDIN_FUNC(getequiptradability) {
 	num = script_getnum(st, 2);
 
 	if (!script_charid2sd(3, sd)) {
-		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
+	else
+		return SCRIPT_CMD_FAILURE;
+
 	if (i >= 0) {
 		bool tradable = (sd->inventory.u.items_inventory[i].expire_time == 0 &&
 			(!sd->inventory.u.items_inventory[i].bound || pc_can_give_bounded_items(sd)));
 		script_pushint(st, tradable);
 	}
 	else
-		script_pushint(st, 1);
+		script_pushint(st, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
