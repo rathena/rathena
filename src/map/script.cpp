@@ -23713,7 +23713,9 @@ BUILDIN_FUNC(getequiptradability) {
 
 	if (i >= 0) {
 		bool tradable = (sd->inventory.u.items_inventory[i].expire_time == 0 &&
-			(!sd->inventory.u.items_inventory[i].bound || pc_can_give_bounded_items(sd)));
+			(!sd->inventory.u.items_inventory[i].bound || pc_can_give_bounded_items(sd)) &&
+			itemdb_cantrade(&sd->inventory.u.items_inventory[i], pc_get_group_level(sd), pc_get_group_level(sd))
+			);
 		script_pushint(st, tradable);
 	}
 	else
