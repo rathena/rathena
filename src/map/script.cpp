@@ -23697,7 +23697,7 @@ BUILDIN_FUNC(round) {
 }
 
 BUILDIN_FUNC(getequiptradability) {
-	int i = -1, num;
+	int i, num;
 	TBL_PC *sd;
 
 	num = script_getnum(st, 2);
@@ -23708,8 +23708,10 @@ BUILDIN_FUNC(getequiptradability) {
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
-	else
+	else{
+		ShowError("buildin_getequiptradability: Unknown equip index '%d'\n",num);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (i >= 0) {
 		bool tradable = (sd->inventory.u.items_inventory[i].expire_time == 0 &&
