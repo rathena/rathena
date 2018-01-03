@@ -5459,24 +5459,26 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.warping = 1;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
-	if(map[sd->bl.m].instance_id && sd->state.changemap && !map[m].instance_id) {
-		bool instance_found = false;
-		struct party_data *p = NULL;
-		struct guild *g = NULL;
-
-		if (sd->instance_id) {
-			instance_delusers(sd->instance_id);
-			instance_found = true;
-		}
-		if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
-			instance_delusers(p->instance_id);
-			instance_found = true;
-		}
-		if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
-			instance_delusers(g->instance_id);
-	}
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
+
+		if(map[sd->bl.m].instance_id && !map[m].instance_id) {
+			bool instance_found = false;
+			struct party_data *p = NULL;
+			struct guild *g = NULL;
+
+			if (sd->instance_id) {
+				instance_delusers(sd->instance_id);
+				instance_found = true;
+			}
+			if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
+				instance_delusers(p->instance_id);
+				instance_found = true;
+			}
+			if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+				instance_delusers(g->instance_id);
+		}
+
 		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
