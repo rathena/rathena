@@ -2936,6 +2936,13 @@ Merge all stackable items that separated by GUID flags
 If no item ID/name given, all possible items in player's inventory will be merged.
 
 ---------------------------------------
+
+*getequiptradability(<equipment slot>{,<char id>});
+
+Returns true if the item in <equipment slot> is tradable.
+Returns false otherwise.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
