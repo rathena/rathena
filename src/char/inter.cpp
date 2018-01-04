@@ -1061,18 +1061,6 @@ int mapif_wis_message(struct WisData *wd)
 	return 0;
 }
 
-// Wis sending result
-int mapif_wis_end(struct WisData *wd, int flag)
-{
-	unsigned char buf[27];
-
-	WBUFW(buf, 0)=0x3802;
-	memcpy(WBUFP(buf, 2),wd->src,24);
-	WBUFB(buf,26)=flag;
-	chmapif_send(wd->fd,buf,27);
-	return 0;
-}
-
 // Send the requested account_reg
 int mapif_account_reg_reply(int fd, uint32 account_id, uint32 char_id, int type)
 {
@@ -1125,7 +1113,7 @@ int check_ttl_wisdata(void)
 			struct WisData *wd = (struct WisData*)idb_get(wis_db, wis_dellist[i]);
 			ShowWarning("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
 			// removed. not send information after a timeout. Just no answer for the player
-			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
+			//mapif_wis_reply(wd->fd, wd->src, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 			idb_remove(wis_db, wd->id);
 		}
 	} while(wis_delnum >= WISDELLIST_MAX);
@@ -1159,6 +1147,7 @@ int mapif_parse_broadcast_item(int fd) {
 	return 0;
 }
 
+// Wis sending result
 // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 int mapif_wis_reply( int mapserver_fd, char* target, uint8 flag ){
 	unsigned char buf[27];
@@ -1243,7 +1232,8 @@ int mapif_parse_WisRequest(int fd)
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd)
 {
-	int id, flag;
+	int id;
+	uint8 flag;
 	struct WisData *wd;
 
 	id = RFIFOL(fd,2);
@@ -1253,7 +1243,7 @@ int mapif_parse_WisReply(int fd)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
 
 	if ((--wd->count) <= 0 || flag != 1) {
-		mapif_wis_end(wd, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
+		mapif_wis_reply(wd->fd, wd->src, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 		idb_remove(wis_db, id);
 	}
 
