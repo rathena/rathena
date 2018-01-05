@@ -251,7 +251,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				mes "Every year, adventurers challenge to attack Antonio the fake Santa, but there's no way to catch up to him due to his hat and costume!";
 				next;
 				mes "[Caroller]";
-				mes "Are there some spcial abilities within them?";
+				mes "Are there some special abilities within them?";
 				mes "There's still the designer in the Christmas village... How about asking her to make that costume?";
 				next;
 				emotion ET_SMILE;
