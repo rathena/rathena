@@ -1308,10 +1308,12 @@ S_Sealdead:
 	'seal_id[ getarg(0) ] = 0;
 	'seal_dead[ getarg(0) ] = 1;
 	.@total_seal = 'seal_dead[0] + 'seal_dead[1] + 'seal_dead[2] + 'seal_dead[3] + 'seal_dead[4];
-	if (.@total_seal == 3)
-		mapannounce 'map_tnm2$, "Lucile: It is too early to feel easy! There are Magic Seals that haven't been destroyed yet.", bc_map,0xFF00;
-	else if (.@total_seal != 5)
-		mapannounce 'map_tnm2$, "There are still Magic Seals to destroy.", bc_map,0xFF00;
+	if (.@total_seal != 5) {
+		if (getarg(0) == 0)// north west
+			mapannounce 'map_tnm2$, "Lucile: It is too early to feel easy! There are Magic Seals that haven't been destroyed yet.", bc_map,0xFF00;
+		else
+			mapannounce 'map_tnm2$, "There are still Magic Seals to destroy.", bc_map,0xFF00;
+	}
 	else {
 		donpcevent instance_npcname("#devil_seal_spawn_global") + "::OnStop";
 		donpcevent instance_npcname("#devil_seal_timer") + "::OnStop";	// stop timer of npc #devil_flamecross as well
