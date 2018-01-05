@@ -8826,7 +8826,7 @@ REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_DRAGONFEAR','attack',6
 REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_HELLJUDGEMENT','attack',662,5,10000,4000,5000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'7',NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_GRANDDARKNESS','attack',339,10,10000,2000,1000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'9',NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_POWERUP','attack',349,5,10000,0,50000,'no','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_VAMPIRE_GIFT','attack',679,5,100000,0,0,'no','self','skillused','490',NULL,NULL,NULL,NULL,NULL,'42',NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_VAMPIRE_GIFT','attack',679,5,10000,0,0,'no','self','skillused','490',NULL,NULL,NULL,NULL,NULL,'42',NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_CRITICALWOUND','attack',673,4,500,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_CHANGEUNDEAD','attack',348,1,500,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'44',NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2476,'Amdarias@NPC_MENTALBREAKER','attack',159,4,500,1500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'42',NULL);
