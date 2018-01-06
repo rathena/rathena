@@ -434,10 +434,6 @@ OnTimer26000:
 	disablenpc instance_npcname("Officer Heim#heim0");
 	enablenpc instance_npcname("Officer Heim#heim");
 	npctalk "Officer Heim: Who are you?", instance_npcname("Officer Heim#heim");
-		'devil_tower = 6;
-	enablenpc instance_npcname("Assassin Louie#tnm02");
-	enablenpc instance_npcname("Lucile#tnm02");
-			donpcevent instance_npcname("Huey#hui02") + "::OnEnable";
 	stopnpctimer;
 	end;
 }
