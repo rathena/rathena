@@ -434,6 +434,10 @@ OnTimer26000:
 	disablenpc instance_npcname("Officer Heim#heim0");
 	enablenpc instance_npcname("Officer Heim#heim");
 	npctalk "Officer Heim: Who are you?", instance_npcname("Officer Heim#heim");
+		'devil_tower = 6;
+	enablenpc instance_npcname("Assassin Louie#tnm02");
+	enablenpc instance_npcname("Lucile#tnm02");
+			donpcevent instance_npcname("Huey#hui02") + "::OnEnable";
 	stopnpctimer;
 	end;
 }
@@ -1091,9 +1095,10 @@ OnFlameDead:
 OnStart:
 	enablenpc instance_npcname("#devil_seal_timer");
 	enablenpc instance_npcname("#devil_flamecross");
-	for ( .@i = 1; .@i < 6; .@i++ ) {
-		enablenpc instance_npcname("devil_seal_spawn#" + .@i);
-		enablenpc instance_npcname("devil_seal_reach_center#" + .@i);
+	setarray .@direction$[0], "DIR_NORTHWEST", "DIR_SOUTHWEST", "DIR_SOUTHEAST", "DIR_NORTHEAST", "DIR_NORTH";
+	for ( .@i = 0; .@i < 5; .@i++ ) {
+		enablenpc instance_npcname("devil_seal_spawn#" + .@direction$[.@i]);
+		enablenpc instance_npcname("seal_reach_center#" + .@direction$[.@i]);
 	}
 	enablenpc instance_npcname("#devil_seal_dead");
 	donpcevent instance_npcname("#devil_seal_spawn_global") + "::OnCoord";
@@ -1134,11 +1139,9 @@ OnTimer191000:
 OnTimer193000:
 	specialeffect EF_MAGNUMBREAK,AREA, 'thanatos$;
 	specialeffect EF_LORD,AREA, 'thanatos$;
-	donpcevent instance_npcname("devil_seal_spawn#1") + "::OnStop";
-	donpcevent instance_npcname("devil_seal_spawn#2") + "::OnStop";
-	donpcevent instance_npcname("devil_seal_spawn#3") + "::OnStop";
-	donpcevent instance_npcname("devil_seal_spawn#4") + "::OnStop";
-	donpcevent instance_npcname("devil_seal_spawn#5") + "::OnStop";
+	setarray .@direction$[0], "DIR_NORTHWEST", "DIR_SOUTHWEST", "DIR_SOUTHEAST", "DIR_NORTHEAST", "DIR_NORTH";
+	for ( .@i = 0; .@i < 5; .@i++ )
+		donpcevent instance_npcname("devil_seal_spawn#" + .@direction$[.@i]) + "::OnStop";
 	end;
 OnTimer195000:
 	npctalk "Demon Morocc: Are you going to keep disturbing me!!!", 'demon$;
@@ -1165,37 +1168,37 @@ OnStop:
 	end;
 OnCoord:
 	enablenpc instance_npcname("#devil_seal_spawn_global");
-	// setarray 'coord_seal_1[0],  68,167,	 78,165,	88,163,		98,160,		108,156,	118,152,	127,147;
-	setarray 'coord_seal_1[0],  68,167,	 78,165,	88,163,		98,160,		108,156,	118,152,	118,152;// officially
-	setarray 'coord_seal_2[0],  90, 86,	 96, 95,	103,103,	110,110,	116,116,	122,122,	129,130;
-	setarray 'coord_seal_3[0], 191,86,	183, 94,	174,103,	165,112,	156,120,	147,128,	143,131;
-	setarray 'coord_seal_4[0], 197,162,	188,161,	179,158,	170,155,	161,152,	152,149,	144,148;
-	setarray 'coord_seal_5[0], 142,214,	140,205,	140,195,	140,185,	140,173,	139,161,	138,150;
+	// setarray 'coord_seal_DIR_NORTHWEST[0],  68,167,	 78,165,	88,163,		98,160,		108,156,	118,152,	127,147;
+	setarray 'coord_seal_DIR_NORTHWEST[0],  68,167,	 78,165,	88,163,		98,160,		108,156,	118,152,	118,152;// officially
+	setarray 'coord_seal_DIR_SOUTHWEST[0],  90, 86,	 96, 95,	103,103,	110,110,	116,116,	122,122,	129,130;
+	setarray 'coord_seal_DIR_SOUTHEAST[0], 191,86,	183, 94,	174,103,	165,112,	156,120,	147,128,	143,131;
+	setarray 'coord_seal_DIR_NORTHEAST[0], 197,162,	188,161,	179,158,	170,155,	161,152,	152,149,	144,148;
+	setarray 'coord_seal_DIR_NORTH[0], 142,214,	140,205,	140,195,	140,185,	140,173,	139,161,	138,150;
 	end;
 OnFirstSpawn:
-	'round[0] = 'round[1] = 'round[2] = 'round[3] = 'round[4] = 0;
-	donpcevent instance_npcname("devil_seal_spawn#1") + "::OnFirstSpawn";
-	donpcevent instance_npcname("devil_seal_spawn#2") + "::OnFirstSpawn";
-	donpcevent instance_npcname("devil_seal_spawn#3") + "::OnFirstSpawn";
-	donpcevent instance_npcname("devil_seal_spawn#4") + "::OnFirstSpawn";
-	donpcevent instance_npcname("devil_seal_spawn#5") + "::OnFirstSpawn";
+	'round[DIR_NORTHWEST] = 'round[DIR_SOUTHWEST] = 'round[DIR_SOUTHEAST] = 'round[DIR_NORTHEAST] = 'round[DIR_NORTH] = 0;
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHWEST") + "::OnFirstSpawn";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHWEST") + "::OnFirstSpawn";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHEAST") + "::OnFirstSpawn";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHEAST") + "::OnFirstSpawn";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTH") + "::OnFirstSpawn";
 	initnpctimer;
 	end;
 OnTimer2000:
-	donpcevent instance_npcname("devil_seal_spawn#1") + "::OnSlaves";
-	donpcevent instance_npcname("devil_seal_spawn#2") + "::OnSlaves";
-	donpcevent instance_npcname("devil_seal_spawn#3") + "::OnSlaves";
-	donpcevent instance_npcname("devil_seal_spawn#4") + "::OnSlaves";
-	donpcevent instance_npcname("devil_seal_spawn#5") + "::OnSlaves";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHWEST") + "::OnSlaves";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHWEST") + "::OnSlaves";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHEAST") + "::OnSlaves";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHEAST") + "::OnSlaves";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTH") + "::OnSlaves";
 	end;
 OnTimer20000:
-	donpcevent instance_npcname("devil_seal_spawn#1") + "::OnStart";// upper left
-	donpcevent instance_npcname("devil_seal_spawn#3") + "::OnStart";// bottom right
-	donpcevent instance_npcname("devil_seal_spawn#5") + "::OnStart";// upper
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHWEST") + "::OnStart";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHEAST") + "::OnStart";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTH") + "::OnStart";
 	end;
 OnTimer30000:
-	donpcevent instance_npcname("devil_seal_spawn#2") + "::OnStart";// bottom left
-	donpcevent instance_npcname("devil_seal_spawn#4") + "::OnStart";// upper right
+	donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHWEST") + "::OnStart";
+	donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHEAST") + "::OnStart";
 	end;
 OnStop:
 	stopnpctimer;
@@ -1203,28 +1206,29 @@ OnStop:
 	end;
 }
 
-1@tnm2,1,1,0	script	devil_seal_spawn#1	HIDDEN_WARP_NPC,{
+1@tnm2,1,1,0	script	devil_seal_spawn#DIR_NORTHWEST	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	.@num = atoi(strnpcinfo(2)) - 1;
+	.@num = getd( strnpcinfo(2) );
 	if ('seal_id[.@num] == 0 || unitexists('seal_id[.@num]) == 0)
 		stopnpctimer;
 	else {
 		getunitdata 'seal_id[.@num], .@data;
 		'seal_hp[.@num] = .@data[UMOB_HP];
-		killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSealDead" + strnpcinfo(2);
+		killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSeal_" + strnpcinfo(2);
 		initnpctimer;
 	}
 	end;
 OnFirstSpawn:
 OnTimer5000:
-	.@num = atoi(strnpcinfo(2)) - 1;
+	.@num = getd( strnpcinfo(2) );
 	.@index = 'round[.@num] * 2;
 	if (.@index == 0 || 'seal_id[.@num]) {
-		.@x = getd( "'coord_seal_" + (.@num+1) + "[" + .@index + "]" );
-		.@y = getd( "'coord_seal_" + (.@num+1) + "[" + (.@index+1) + "]" );
+		.@direction$ = strnpcinfo(2);
+		.@x = getd( "'coord_seal_" + .@direction$ + "[" + .@index + "]" );
+		.@y = getd( "'coord_seal_" + .@direction$ + "[" + (.@index+1) + "]" );
 
-		monster 'map_tnm2$,.@x,.@y,"Magic Seal",2938,1, instance_npcname("#devil_seal_dead") + "::OnSealDead" + (.@num+1);	// MM_MAGIC_SEAL
+		monster 'map_tnm2$,.@x,.@y,"Magic Seal",2938,1, instance_npcname("#devil_seal_dead") + "::OnSeal_" + .@direction$;	// MM_MAGIC_SEAL
 		'seal_id[.@num] = $@mobid[0];
 		if (.@index == 0)
 			setunitdata 'seal_id[.@num], UMOB_HP, 3000000;
@@ -1234,17 +1238,18 @@ OnTimer5000:
 			stopnpctimer;
 		'round[.@num]++;
 		if ('round[.@num] == 7)
-			donpcevent instance_npcname("devil_seal_reach_center#" + (.@num+1)) + "::OnStart";
+			donpcevent instance_npcname("seal_reach_center#" + .@direction$) + "::OnStart";
 	}
 	end;
 OnSlaves:
 OnTimer7000:
 	killmonster 'map_tnm2$, instance_npcname(strnpcinfo(0)) + "::OnMobDead";
-	.@num = atoi(strnpcinfo(2)) - 1;
+	.@num = getd( strnpcinfo(2) );
 	if ('seal_id[.@num] && unitexists('seal_id[.@num])) {
+		.@direction$ = strnpcinfo(2);
 		.@index = ('round[.@num] - 1) * 2;
-		.@x = getd( "'coord_seal_" + (.@num+1) + "[" + .@index + "]" );
-		.@y = getd( "'coord_seal_" + (.@num+1) + "[" + (.@index+1) + "]" );
+		.@x = getd( "'coord_seal_" + .@direction$ + "[" + .@index + "]" );
+		.@y = getd( "'coord_seal_" + .@direction$ + "[" + (.@index+1) + "]" );
 		areamonster 'map_tnm2$,(.@x-1),(.@y-1),(.@x+1),(.@y+1),"Evil Shadow",2939,2, instance_npcname(strnpcinfo(0)) + "::OnMobDead";	// MM_EVIL_SHADOW1
 		areamonster 'map_tnm2$,(.@x-1),(.@y-1),(.@x+1),(.@y+1),"Evil Shadow",2940,2, instance_npcname(strnpcinfo(0)) + "::OnMobDead";	// MM_EVIL_SHADOW2
 		if ('round[.@num] == 7)
@@ -1258,23 +1263,23 @@ OnTimer30000:
 OnDisable:
 	stopnpctimer;
 	killmonster 'map_tnm2$, instance_npcname(strnpcinfo(0)) + "::OnMobDead";	// note : officially still alive
-	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSealDead" + strnpcinfo(2);	// note : officially still alive
+	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSeal_" + strnpcinfo(2);	// note : officially still alive
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 OnStop:
 	stopnpctimer;
 	killmonster 'map_tnm2$, instance_npcname(strnpcinfo(0)) + "::OnMobDead";
-	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSealDead" + strnpcinfo(2);
+	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSeal_" + strnpcinfo(2);
 	end;
 OnMobDead:
 	end;
 }
-1@tnm2,1,1,0	duplicate(devil_seal_spawn#1)	devil_seal_spawn#2	HIDDEN_WARP_NPC
-1@tnm2,1,1,0	duplicate(devil_seal_spawn#1)	devil_seal_spawn#3	HIDDEN_WARP_NPC
-1@tnm2,1,1,0	duplicate(devil_seal_spawn#1)	devil_seal_spawn#4	HIDDEN_WARP_NPC
-1@tnm2,1,1,0	duplicate(devil_seal_spawn#1)	devil_seal_spawn#5	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(devil_seal_spawn#DIR_NORTHWEST)	devil_seal_spawn#DIR_SOUTHWEST	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(devil_seal_spawn#DIR_NORTHWEST)	devil_seal_spawn#DIR_SOUTHEAST	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(devil_seal_spawn#DIR_NORTHWEST)	devil_seal_spawn#DIR_NORTHEAST	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(devil_seal_spawn#DIR_NORTHWEST)	devil_seal_spawn#DIR_NORTH	HIDDEN_WARP_NPC
 
-1@tnm2,1,1,0	script	devil_seal_reach_center#1	HIDDEN_WARP_NPC,{
+1@tnm2,1,1,0	script	seal_reach_center#DIR_NORTHWEST	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
 	enablenpc instance_npcname(strnpcinfo(0));
@@ -1291,25 +1296,25 @@ OnTimer4000:
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 }
-1@tnm2,1,1,0	duplicate(devil_seal_reach_center#1)	devil_seal_reach_center#2	HIDDEN_WARP_NPC
-1@tnm2,1,1,0	duplicate(devil_seal_reach_center#1)	devil_seal_reach_center#3	HIDDEN_WARP_NPC
-1@tnm2,1,1,0	duplicate(devil_seal_reach_center#1)	devil_seal_reach_center#4	HIDDEN_WARP_NPC
-1@tnm2,1,1,0	duplicate(devil_seal_reach_center#1)	devil_seal_reach_center#5	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(seal_reach_center#DIR_NORTHWEST)	seal_reach_center#DIR_SOUTHWEST	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(seal_reach_center#DIR_NORTHWEST)	seal_reach_center#DIR_SOUTHEAST	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(seal_reach_center#DIR_NORTHWEST)	seal_reach_center#DIR_NORTHEAST	HIDDEN_WARP_NPC
+1@tnm2,1,1,0	duplicate(seal_reach_center#DIR_NORTHWEST)	seal_reach_center#DIR_NORTH	HIDDEN_WARP_NPC
 
 1@tnm2,1,1,0	script	#devil_seal_dead	HIDDEN_WARP_NPC,{
 	end;
-OnSealDead1: callsub S_Sealdead,0;
-OnSealDead2: callsub S_Sealdead,1;
-OnSealDead3: callsub S_Sealdead,2;
-OnSealDead4: callsub S_Sealdead,3;
-OnSealDead5: callsub S_Sealdead,4;
+OnSeal_DIR_NORTHWEST: callsub( S_Sealdead, DIR_NORTHWEST );
+OnSeal_DIR_SOUTHWEST: callsub( S_Sealdead, DIR_SOUTHWEST );
+OnSeal_DIR_SOUTHEAST: callsub( S_Sealdead, DIR_SOUTHEAST );
+OnSeal_DIR_NORTHEAST: callsub( S_Sealdead, DIR_NORTHEAST );
+OnSeal_DIR_NORTH: callsub( S_Sealdead, DIR_NORTH );
 
 S_Sealdead:
 	'seal_id[ getarg(0) ] = 0;
 	'seal_dead[ getarg(0) ] = 1;
-	.@total_seal = 'seal_dead[0] + 'seal_dead[1] + 'seal_dead[2] + 'seal_dead[3] + 'seal_dead[4];
+	.@total_seal = 'seal_dead[DIR_NORTHWEST] + 'seal_dead[DIR_SOUTHWEST] + 'seal_dead[DIR_SOUTHEAST] + 'seal_dead[DIR_NORTHEAST] + 'seal_dead[DIR_NORTH];
 	if (.@total_seal != 5) {
-		if (getarg(0) == 0)// north west
+		if (getarg(0) == DIR_NORTHWEST)
 			mapannounce 'map_tnm2$, "Lucile: It is too early to feel easy! There are Magic Seals that haven't been destroyed yet.", bc_map,0xFF00;
 		else
 			mapannounce 'map_tnm2$, "There are still Magic Seals to destroy.", bc_map,0xFF00;
@@ -1317,8 +1322,11 @@ S_Sealdead:
 	else {
 		donpcevent instance_npcname("#devil_seal_spawn_global") + "::OnStop";
 		donpcevent instance_npcname("#devil_seal_timer") + "::OnStop";	// stop timer of npc #devil_flamecross as well
-		for ( .@i = 0; .@i < 5; .@i++ )
-			donpcevent instance_npcname("devil_seal_spawn#" + (.@i+1)) + "::OnDisable";// note: on official seals and slaves are alive
+		donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHWEST") + "::OnDisable";// note: on official seals and slaves are alive
+		donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHWEST") + "::OnDisable";
+		donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHEAST") + "::OnDisable";
+		donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHEAST") + "::OnDisable";
+		donpcevent instance_npcname("devil_seal_spawn#DIR_NORTH") + "::OnDisable";
 		mapannounce 'map_tnm2$, "Demon Morocc: No.. This can't be.. Who the hell.. are you!", bc_map,0xFF0000;
 		npctalk "Demon Morocc: No.. This can't be.. Who the hell.. are you!", 'demon$;
 		initnpctimer;
@@ -1342,15 +1350,15 @@ OnTimer7000:
 	'devil_tower = 9;
 
 	'demon$ = 'thanatos$ = "";
-	'round[0] = 'round[1] = 'round[2] = 'round[3] = 'round[4] = 0;
-	'seal_id[0] = 'seal_id[1] = 'seal_id[2] = 'seal_id[3] = 'seal_id[4] = 0;
-	'seal_hp[0] = 'seal_hp[1] = 'seal_hp[2] = 'seal_hp[3] = 'seal_hp[4] = 0;
-	'seal_dead[0] = 'seal_dead[1] = 'seal_dead[2] = 'seal_dead[3] = 'seal_dead[4] = 0;
-	deletearray 'coord_seal_1[0],14;
-	deletearray 'coord_seal_2[0],14;
-	deletearray 'coord_seal_3[0],14;
-	deletearray 'coord_seal_4[0],14;
-	deletearray 'coord_seal_5[0],14;
+	'round[DIR_NORTHWEST] = 'round[DIR_SOUTHWEST] = 'round[DIR_SOUTHEAST] = 'round[DIR_NORTHEAST] = 'round[DIR_NORTH] = 0;
+	'seal_id[DIR_NORTHWEST] = 'seal_id[DIR_SOUTHWEST] = 'seal_id[DIR_SOUTHEAST] = 'seal_id[DIR_NORTHEAST] = 'seal_id[DIR_NORTH] = 0;
+	'seal_hp[DIR_NORTHWEST] = 'seal_hp[DIR_SOUTHWEST] = 'seal_hp[DIR_SOUTHEAST] = 'seal_hp[DIR_NORTHEAST] = 'seal_hp[DIR_NORTH] = 0;
+	'seal_dead[DIR_NORTHWEST] = 'seal_dead[DIR_SOUTHWEST] = 'seal_dead[DIR_SOUTHEAST] = 'seal_dead[DIR_NORTHEAST] = 'seal_dead[DIR_NORTH] = 0;
+	deletearray 'coord_seal_DIR_NORTHWEST[0],14;
+	deletearray 'coord_seal_DIR_SOUTHWEST[0],14;
+	deletearray 'coord_seal_DIR_SOUTHEAST[0],14;
+	deletearray 'coord_seal_DIR_NORTHEAST[0],14;
+	deletearray 'coord_seal_DIR_NORTH[0],14;
 	end;
 }
 
@@ -2131,22 +2139,23 @@ OnInstanceInit:
 	disablenpc instance_npcname("#devil_flamecross");
 	disablenpc instance_npcname("#devil_seal_timer");
 	disablenpc instance_npcname("#devil_seal_spawn_global");
-	for ( .@i = 1; .@i < 6; .@i++ ) {
-		disablenpc instance_npcname("devil_seal_spawn#" + .@i);
-		disablenpc instance_npcname("devil_seal_reach_center#" + .@i);
+	setarray .@direction$[0], "DIR_NORTHWEST", "DIR_SOUTHWEST", "DIR_SOUTHEAST", "DIR_NORTHEAST", "DIR_NORTH";
+	for ( .@i = 0; .@i < 5; .@i++ ) {
+		disablenpc instance_npcname("devil_seal_spawn#" + .@direction$[.@i]);
+		disablenpc instance_npcname("seal_reach_center#" + .@direction$[.@i]);
 	}
 	disablenpc instance_npcname("#devil_seal_dead");
 
 	'demon$ = 'thanatos$ = "";
-	'round[0] = 'round[1] = 'round[2] = 'round[3] = 'round[4] = 0;
-	'seal_id[0] = 'seal_id[1] = 'seal_id[2] = 'seal_id[3] = 'seal_id[4] = 0;
-	'seal_hp[0] = 'seal_hp[1] = 'seal_hp[2] = 'seal_hp[3] = 'seal_hp[4] = 0;
-	'seal_dead[0] = 'seal_dead[1] = 'seal_dead[2] = 'seal_dead[3] = 'seal_dead[4] = 0;
-	deletearray 'coord_seal_1[0],14;
-	deletearray 'coord_seal_2[0],14;
-	deletearray 'coord_seal_3[0],14;
-	deletearray 'coord_seal_4[0],14;
-	deletearray 'coord_seal_5[0],14;
+	'round[DIR_NORTHWEST] = 'round[DIR_SOUTHWEST] = 'round[DIR_SOUTHEAST] = 'round[DIR_NORTHEAST] = 'round[DIR_NORTH] = 0;
+	'seal_id[DIR_NORTHWEST] = 'seal_id[DIR_SOUTHWEST] = 'seal_id[DIR_SOUTHEAST] = 'seal_id[DIR_NORTHEAST] = 'seal_id[DIR_NORTH] = 0;
+	'seal_hp[DIR_NORTHWEST] = 'seal_hp[DIR_SOUTHWEST] = 'seal_hp[DIR_SOUTHEAST] = 'seal_hp[DIR_NORTHEAST] = 'seal_hp[DIR_NORTH] = 0;
+	'seal_dead[DIR_NORTHWEST] = 'seal_dead[DIR_SOUTHWEST] = 'seal_dead[DIR_SOUTHEAST] = 'seal_dead[DIR_NORTHEAST] = 'seal_dead[DIR_NORTH] = 0;
+	deletearray 'coord_seal_DIR_NORTHWEST[0],14;
+	deletearray 'coord_seal_DIR_SOUTHWEST[0],14;
+	deletearray 'coord_seal_DIR_SOUTHEAST[0],14;
+	deletearray 'coord_seal_DIR_NORTHEAST[0],14;
+	deletearray 'coord_seal_DIR_NORTH[0],14;
 
 	// tnm3 Stairs 1
 	disablenpc instance_npcname("#tnm3event01");
