@@ -1285,7 +1285,7 @@ ecl_in01,35,89,6	script	Magic Scholar Armandi#1	4_M_FAIRYKID6,{
 moro_cav,64,13,0	warp	#flame_cave_out	3,3,moro_vol,198,176
 
 // Merchants
-moro_vol,95,96,6	shop	Tool Merchant	4_CAT_DOWN,,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
+moro_vol,95,96,6	shop	Tool Merchant	4_CAT_DOWN,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
 
 // Placeholder (unknown scripts)
 // ecl_in01,47,92,0	script	#ecl_buff_N	HIDDEN_WARP_NPC
