@@ -1082,6 +1082,11 @@ enum e_job_types
 	JT_4_M_SNOWMAN_R,
 	JT_4_M_SNOWMAN_G,
 	JT_WARPEFFECTNPC,
+
+	JT_4_F_DANGDANG = 10286,
+	JT_4_M_DANGDANG,
+	JT_4_F_DANGDANG1,
+	JT_4_LEAFCAT,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1138,7 +1143,7 @@ const char *npc_get_script_event_name(int npce_index);
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
-void npc_movenpc(struct npc_data* nd, int16 x, int16 y);
+bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
 int npc_enable(const char* name, int flag);
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);

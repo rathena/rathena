@@ -748,6 +748,21 @@ static unsigned int calc_hash(const char* p)
 	return h % SCRIPT_HASH_SIZE;
 }
 
+bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen) 
+{
+	size_t len = strlen(val);
+
+	if (vlen)
+		*vlen = len;
+	switch (pType) {
+		case 0:
+			return (len < 33); // key check
+		case 1:
+			return (len < 255); // value check
+		default:
+			return false;
+	}
+}
 
 /*==========================================
  * str_data manipulation functions
@@ -3124,6 +3139,12 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
 {
 	char prefix = name[0];
+	size_t vlen = 0;
+	if ( !script_check_RegistryVariableLength(0,name,&vlen) )
+	{
+		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd?sd->status.account_id:-1, sd?sd->status.char_id:-1, name, vlen);
+		return 0;
+	}
 
 	if( is_string_variable(name) ) {// string variable
 		const char *str = (const char*)value;
@@ -6707,7 +6728,7 @@ BUILDIN_FUNC(viewpoint)
  * @param x First position of random option id array from the script
  **/
 static int script_getitem_randomoption(struct script_state *st, struct item *it, const char *funcname, int x) {
-	int i, opt_id_n, opt_val_n, opt_param_n;
+	int i, opt_id_n;
 	struct script_data *opt_id = script_getdata(st,x);
 	struct script_data *opt_val = script_getdata(st,x+1);
 	struct script_data *opt_param = script_getdata(st,x+2);
@@ -6719,17 +6740,17 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	int32 opt_param_id, opt_param_idx;
 	struct reg_db *opt_id_ref = NULL, *opt_val_ref = NULL, *opt_param_ref = NULL;
 
-	if (opt_id_var[strlen(opt_id_var)-1] == '$') {
+	if (is_string_variable(opt_id_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_id_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (opt_val_var[strlen(opt_val_var)-1] == '$') {
+	if (is_string_variable(opt_val_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_val_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (opt_param_var[strlen(opt_param_var)-1] == '$') {
+	if (is_string_variable(opt_param_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_param_var);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -6744,18 +6765,6 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 
 	opt_val_ref = reference_getref(opt_val);
 	opt_param_ref = reference_getref(opt_param);
-
-	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
-	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
-
-	if (opt_val_n < 1) {
-		ShowError("buildin_%s: No option value listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
-	if (opt_param_n < 1) {
-		ShowError("buildin_%s: No option parameter listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
 
 	opt_id_id = reference_getid(opt_id);
 	opt_val_id = reference_getid(opt_val);
@@ -10087,22 +10096,23 @@ BUILDIN_FUNC(cooking)
  *------------------------------------------*/
 BUILDIN_FUNC(makepet)
 {
-	TBL_PC* sd;
-	int id,pet_id;
+	struct map_session_data* sd;
+	uint16 mob_id;
+	struct s_pet_db* pet;
 
 	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
-	id=script_getnum(st,2);
+	mob_id = script_getnum(st,2);
+	pet = pet_db(mob_id);
 
-	pet_id = search_petDB_index(id, PET_CLASS);
-
-	if (pet_id < 0)
-		pet_id = search_petDB_index(id, PET_EGG);
-	if (pet_id >= 0 && sd) {
-		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
+	if( !pet ){
+		ShowError( "buildin_makepet: failed to create a pet with mob id %hu\n", mob_id);
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	sd->catch_target_class = mob_id;
+	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11337,18 +11347,29 @@ BUILDIN_FUNC(sc_end)
 
 /**
  * Ends all status effects from any learned skill on the attached player.
- * sc_end_class {<char_id>};
+ * if <job_id> was given it will end the effect of that class for the attached player
+ * sc_end_class {<char_id>{,<job_id>}};
  */
 BUILDIN_FUNC(sc_end_class)
 {
 	struct map_session_data *sd;
 	uint16 skill_id;
-	int i;
+	int class_;
 
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	for (i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0; i++) { // Remove status specific to your current tree skills.
+	if (script_hasdata(st, 3))
+		class_ = script_getnum(st, 3);
+	else
+		class_ = sd->status.class_;
+
+	if (!pcdb_checkid(class_)) {
+		ShowError("buildin_sc_end_class: Invalid job ID '%d' given.\n", script_getnum(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
 		enum sc_type sc = status_skill2sc(skill_id);
 
 		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
@@ -20972,16 +20993,16 @@ BUILDIN_FUNC(checkre)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/* getrandgroupitem <group_id>{,<quantity>{,<sub_group>}} */
+/* getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}} */
 BUILDIN_FUNC(getrandgroupitem) {
 	TBL_PC* sd;
-	int i, get_count = 0;
+	int i, get_count = 0, identify = 0;
 	uint16 group, qty = 0;
 	uint8 sub_group = 1;
 	struct item item_tmp;
 	struct s_item_group_entry *entry = NULL;
 
-	if (!script_rid2sd(sd))
+	if (!script_charid2sd(6, sd))
 		return SCRIPT_CMD_SUCCESS;
 
 	group = script_getnum(st,2);
@@ -20993,6 +21014,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 
 	FETCH(3, qty);
 	FETCH(4, sub_group);
+	FETCH(5, identify);
 
 	entry = itemdb_get_randgroupitem(group,sub_group);
 	if (!entry)
@@ -21000,7 +21022,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 
 	memset(&item_tmp,0,sizeof(item_tmp));
 	item_tmp.nameid   = entry->nameid;
-	item_tmp.identify = itemdb_isidentified(entry->nameid);
+	item_tmp.identify = identify ? 1 : itemdb_isidentified(entry->nameid);
 
 	if (!qty)
 		qty = entry->amount;
@@ -21030,17 +21052,17 @@ BUILDIN_FUNC(getrandgroupitem) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/* getgroupitem <group_id>{,<char_id>};
+/* getgroupitem <group_id>{,<identify>{,<char_id>}};
  * Gives item(s) to the attached player based on item group contents
  */
 BUILDIN_FUNC(getgroupitem) {
 	TBL_PC *sd;
 	int group_id = script_getnum(st,2);
 	
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (itemdb_pc_get_itemgroup(group_id,sd)) {
+	if (itemdb_pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : false), sd)) {
 		ShowError("buildin_getgroupitem: Invalid group id '%d' specified.\n",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -23676,6 +23698,36 @@ BUILDIN_FUNC(round) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(getequiptradability) {
+	int i, num;
+	TBL_PC *sd;
+
+	num = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (equip_index_check(num))
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	else{
+		ShowError("buildin_getequiptradability: Unknown equip index '%d'\n",num);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (i >= 0) {
+		bool tradable = (sd->inventory.u.items_inventory[i].expire_time == 0 &&
+			(!sd->inventory.u.items_inventory[i].bound || pc_can_give_bounded_items(sd)) &&
+			itemdb_cantrade(&sd->inventory.u.items_inventory[i], pc_get_group_level(sd), pc_get_group_level(sd))
+			);
+		script_pushint(st, tradable);
+	}
+	else
+		script_pushint(st, false);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -23894,12 +23946,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 	BUILDIN_DEF(sc_end,"i?"),
-	BUILDIN_DEF(sc_end_class,"?"),
+	BUILDIN_DEF(sc_end_class,"??"),
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
+	BUILDIN_DEF(catchpet,"i"),
+	BUILDIN_DEF(birthpet,""),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),
 	BUILDIN_DEF(resetskill,"?"),
@@ -24200,7 +24254,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(get_githash,""),
 	BUILDIN_DEF(freeloop,"?"),
-	BUILDIN_DEF(getrandgroupitem,"i??"),
+	BUILDIN_DEF(getrandgroupitem,"i????"),
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
@@ -24247,7 +24301,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(vip_time,"i?"),
 	BUILDIN_DEF(bonus_script,"si????"),
 	BUILDIN_DEF(bonus_script_clear,"??"),
-	BUILDIN_DEF(getgroupitem,"i?"),
+	BUILDIN_DEF(getgroupitem,"i??"),
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),
 	BUILDIN_DEF(getguildmember,"i??"),
@@ -24321,6 +24375,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "round", "i"),
 	BUILDIN_DEF2(round, "ceil", "i"),
 	BUILDIN_DEF2(round, "floor", "i"),
+	BUILDIN_DEF(getequiptradability, "i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

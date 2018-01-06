@@ -25,3 +25,5 @@
 18,Ghost Palace,3600,300,1@spa,42,196
 19,Devil's Tower,3600,300,1@tnm1,50,104,1@tnm2,1@tnm3
 21,Fenrir and Sarah,3600,300,1@glast,367,304
+26,Central Laboratory,3600,300,1@lab,120,30
+27,Last room,3600,300,1@uns,142,30

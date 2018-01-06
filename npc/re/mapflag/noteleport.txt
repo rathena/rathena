@@ -183,3 +183,13 @@ te_aldecas2	mapflag	monster_noteleport
 te_aldecas3	mapflag	monster_noteleport
 te_aldecas4	mapflag	monster_noteleport
 te_aldecas5	mapflag	monster_noteleport
+
+// Episode 15
+1@lab	mapflag	noteleport
+1@uns	mapflag	noteleport
+un_bk_q	mapflag	noteleport
+un_myst	mapflag	noteleport
+verus04	mapflag	noteleport
+1@lab	mapflag	monster_noteleport
+1@uns	mapflag	monster_noteleport
+un_bk_q	mapflag	monster_noteleport

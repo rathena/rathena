@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#pragma once
 #ifndef _PC_HPP_
 #define _PC_HPP_
 
@@ -498,7 +498,7 @@ struct map_session_data {
 	int itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
+	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
@@ -572,8 +572,8 @@ struct map_session_data {
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
-	int duel_group; // duel vars [LuzZza]
-	int duel_invite;
+	size_t duel_group; // duel vars [LuzZza]
+	size_t duel_invite;
 
 	int killerrid, killedrid;
 
@@ -781,6 +781,7 @@ enum weapon_type {
 	W_DOUBLE_DS, // dagger + sword
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
+	MAX_WEAPON_TYPE_ALL,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)

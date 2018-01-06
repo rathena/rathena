@@ -79,3 +79,7 @@ te_aldecas2	mapflag	noicewall
 te_aldecas3	mapflag	noicewall
 te_aldecas4	mapflag	noicewall
 te_aldecas5	mapflag	noicewall
+
+// Episode 15
+1@lab	mapflag	noicewall
+1@uns	mapflag	noicewall
