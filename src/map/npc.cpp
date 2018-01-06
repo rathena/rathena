@@ -2026,7 +2026,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 
 		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->inventory.u.items_inventory[idx].card[0] == CARD0_PET )
 		{
-			if( search_petDB_index(sd->inventory.u.items_inventory[idx].nameid, PET_EGG) >= 0 )
+			if( pet_db_search(sd->inventory.u.items_inventory[idx].nameid, PET_EGG) )
 			{
 				intif_delete_petdata(MakeDWord(sd->inventory.u.items_inventory[idx].card[1], sd->inventory.u.items_inventory[idx].card[2]));
 			}
@@ -3595,10 +3595,11 @@ void npc_unsetcells(struct npc_data* nd)
 	map_foreachinallarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
 }
 
-void npc_movenpc(struct npc_data* nd, int16 x, int16 y)
+bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 {
 	const int16 m = nd->bl.m;
-	if (m < 0 || nd->bl.prev == NULL) return;	//Not on a map.
+	if (m < 0 || nd->bl.prev == NULL) 
+		return false;	//Not on a map.
 
 	x = cap_value(x, 0, map[m].xs-1);
 	y = cap_value(y, 0, map[m].ys-1);
@@ -3606,6 +3607,7 @@ void npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
 	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	return true;
 }
 
 /// Changes the display name of the npc.
@@ -4752,8 +4754,8 @@ void do_init_npc(void){
 	npc_market_fromsql();
 #endif
 
-	timer_event_ers = ers_new(sizeof(struct timer_event_data),"npc.c::timer_event_ers",ERS_OPT_NONE);
-	npc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "npc.c:npc_sc_display_ers", ERS_OPT_NONE);
+	timer_event_ers = ers_new(sizeof(struct timer_event_data),"npc.cpp::timer_event_ers",ERS_OPT_NONE);
+	npc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "npc.cpp:npc_sc_display_ers", ERS_OPT_NONE);
 
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");

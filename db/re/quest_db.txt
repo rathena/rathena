@@ -2821,13 +2821,6 @@
 12344,0,3170,3,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
 12345,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
 
-12340,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
-12341,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
-12342,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
-12343,0,3169,10,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
-12344,0,3170,3,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
-12345,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rebellion Job Change Quest"
-
 // Episode 15.2: Central Laboratory
 12346,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Strange Ancient Science"
 12347,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Laboratory Access"
