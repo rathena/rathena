@@ -1,3 +1,11 @@
+//===== rAthena Script =======================================
+//= Verus Monster Spawn Script
+//===== Description: =========================================
+//= Spawns monsters around Verus.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
 // ver_eju
 ver_eju,0,0,0,0	monster	Recon Robot	3154,80,0,0,0
 ver_eju,0,0,0,0	monster	Excavator Robot	3153,25,0,0,0

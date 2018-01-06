@@ -1,20 +1,26 @@
-moc_para01,47,38,0	warp2	#warp_2_pass_2_2	1,1,moc_para01,106,14
-moc_para01,17,187,0	warp2	#warp_2_bossroom	1,1,moc_para01,132,159
-moc_para01,132,156,0	warp2	#warp_2_2fhall_1	1,1,moc_para01,17,185
-moc_para01,29,187,0	warp2	#warp_2_room1	1,1,moc_para01,180,159
-moc_para01,180,156,0	warp2	#warp_2_2fhall_2	1,1,moc_para01,29,185
+//===== rAthena Script =======================================
+//= Verus warps
+//===== Description: =========================================
+//= Warp Points for episodes 15.1 & 15.2
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+verus04,204,163,0	warp2	fr_ver04_to_tun	1,1,ver_tunn,13,35
+verus04,121,267,0	warp2	fr_ver04_to_ver03_1	1,1,verus03,121,20
+verus04,44,267,0	warp2	fr_ver04_to_ver03_2	1,1,verus03,44,20
+
+verus01,247,58,0	warp2	verus01_to_verus03	1,1,verus03,55,251
+verus02,72,16,0	warp2	verus02_to_verus03	1,1,verus03,169,255
+verus03,122,17,0	warp2	fr_ver03_to_ver04_1	1,1,verus04,121,264
+verus03,44,17,0	warp2	fr_ver03_to_ver04_2	1,1,verus04,44,264
+
 juperos_01,245,87,0	warp2	fr_ju_to_eju	1,1,ver_eju,13,148
 ver_eju,10,148,0	warp2	fr_eju_to_ju	1,1,juperos_01,242,87
 ver_eju,107,36,0	warp2	fr_eju_to_tun	2,2,ver_tunn,84,82
 ver_tunn,84,86,0	warp2	fr_tun_to_eju	1,1,ver_eju,113,38
 ver_tunn,10,36,0	warp2	fr_tun_to_ver04	1,1,verus04,202,165
-verus04,204,163,0	warp2	fr_ver04_to_tun	1,1,ver_tunn,13,35
-verus04,121,267,0	warp2	fr_ver04_to_ver03_1	1,1,verus03,121,20
-verus03,122,17,0	warp2	fr_ver03_to_ver04_1	1,1,verus04,121,264
-verus04,44,267,0	warp2	fr_ver04_to_ver03_2	1,1,verus03,44,20
-verus03,44,17,0	warp2	fr_ver03_to_ver04_2	1,1,verus04,44,264
-verus01,247,58,0	warp2	verus01_to_verus03	1,1,verus03,55,251
-verus02,72,16,0	warp2	verus02_to_verus03	1,1,verus03,169,255
+
 lhz_in01,276,238,0	warp2	in_to_out#e152i02	1,1,lhz_in01,276,230
 
 // Bunker

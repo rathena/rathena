@@ -9066,3 +9066,5 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entrance	4_M_TAMARIN,{
 	}
 	end;
 }
+
+verus04,144,239,3	shop	Tool Merchant#verus	4_M_DEWMAN,611:-1,504:-1,656:-1,601:-1,602:-1,610:-1
