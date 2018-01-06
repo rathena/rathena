@@ -9898,7 +9898,7 @@
 19153,Ghostring_Balloon,Ghostring Balloon,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1,,1,0,1436,{ bonus3 bAutoSpell,"MG_SOULSTRIKE",5,10; bonus2 bExpAddRace,RC_All,5; bonus2 bDropAddRace,RC_All,5; },{},{}
 19154,Arch_Angelring_Balloon,Arch Angelring Balloon,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1,,1,0,1437,{ skill "ALL_RESURRECTION",1; bonus2 bExpAddRace,RC_All,5; bonus2 bDropAddRace,RC_All,5; },{},{}
 19155,Demons_Eyes,Demon's Eyes,4,20,,10,,0,,0,0xFFFFFFFF,63,2,512,,60,0,1490,{ bonus2 bSubRace,RC_Player,3; bonus bFlee2,2; },{},{}
-19156,Lunar_Rainbow,Lunar Rainbow,4,20,,200,,10,,1,0xFFFFFFFF,63,2,256,,80,1,704,{ bonus bAgi,3; bonus bMdef,10; bonus bMatk,getrefine(); },{},{}
+19156,Lunar_Rainbow,Lunar Rainbow,4,20,,200,,10,,1,0xFFFFFFFF,63,2,256,,80,1,704,{ bonus bAgi,3; bonus bMdef,10; bonus bMatk,(10*getrefine()); },{},{}
 19157,Drooping_Rebellion_,Drooping Rebellion,4,20,,200,,1,,1,0xFFFFFFFF,63,2,256,,1,1,1444,{ bonus bAllStats,1; bonus bUseSPrate,-10; .@r = getrefine(); if (.@r >= 9) { bonus bAspd,1; } if (.@r >= 12) { bonus bSpeedRate,25; } bonus2 bExpAddRace,RC_All,5; bonus2 bDropAddRace,RC_All,5; },{},{}
 19158,C_GeminiS58_Eyes_Blue,Costume GeminiS58 Eyes Blue,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,0,0,1456,{},{},{}
 19159,Barrel_Helm,Barrel Helm,4,20,,420,,59,,1,0xFFFFFFFF,63,2,769,,60,1,1498,{ bonus bVit,5; bonus bHPrecovRate,-10; .@r = getrefine(); if (.@r >= 7) { bonus bDef,100; skill "CR_AUTOGUARD",1; } if (.@r >= 8) { bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; if(BaseJob==Job_SuperNovice) { skill "CR_AUTOGUARD",5; } } },{},{}

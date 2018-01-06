@@ -264,7 +264,7 @@
 2779:2780:5577,{ bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; }
 2779:2827:5482,{ autobonus "{ bonus bAspdRate,2; }",50,10000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; bonus bMaxHP,BaseLevel*15; bonus bMaxSP,(BaseLevel*12)/10; bonus2 bAddClass,Class_All,3; }
 2780:2826:5577,{ autobonus "{ bonus bAspdRate,2; }",50,10000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; bonus bMaxHP,BaseLevel*15; bonus bMaxSP,(BaseLevel*12)/10; bonus2 bAddClass,Class_All,3; }
-2782:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus3 bAutoSpell,"WZ_WATERBALL",min(4+.@r,10),min(4+.@r,10); }
+2782:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if (.@r < 4) { .@a = 4; } else { .@a = min(.@r,10); } bonus3 bAutoSpell,"WZ_WATERBALL",.@a,(.@a*10); }
 2826:2827:5577,{ autobonus "{ bonus bAspdRate,2; }",50,10000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; bonus bMaxHP,BaseLevel*15; bonus bMaxSP,(BaseLevel*12)/10; bonus2 bAddClass,Class_All,3; }
 2855:5360,{ bonus bCritAtkRate,10; if(getequiprefinerycnt(EQI_HEAD_TOP)>5) bonus bCritical,5; }
 2913:2710,{ bonus bBaseAtk,10; }
@@ -356,10 +356,10 @@
 4311:4319:4331:4371,{ bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,"PA_SHIELDCHAIN",10; bonus2 bSkillAtk,"PA_SACRIFICE",10; bonus bVariableCastrate,-10; if(BaseJob==Job_Crusader) bonus bDefEle,Ele_Holy; }
 4323:4324,{ bonus3 bAutoSpell,"MG_FROSTDIVER",3,250; }
 4435:4436,{ bonus2 bSPGainRace,RC_DemiHuman,2; bonus2 bSPGainRace,RC_Player,2; }
-4335:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus3 bAutoSpell,"WZ_EARTHSPIKE",min(4+.@r,10),min(4+.@r,10); bonus3 bAutoSpell,"WZ_HEAVENDRIVE",min(4+.@r,10),min(4+.@r,10); }
-4345:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",min(4+.@r,10),min(4+.@r,10); bonus3 bAutoSpell,"MG_THUNDERSTORM",min(4+.@r,10),min(4+.@r,10); }
-4350:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus3 bAutoSpell,"MG_COLDBOLT",min(4+.@r,10),min(4+.@r,10); bonus3 bAutoSpell,"WZ_FROSTNOVA",min(4+.@r,10),min(4+.@r,10); }
-4380:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus3 bAutoSpell,"MG_FIREBOLT",min(4+.@r,10),min(4+.@r,10); bonus3 bAutoSpell,"MG_FIREBALL",min(4+.@r,10),min(4+.@r,10); }
+4335:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if (.@r < 4) { .@a = 4; } else { .@a = min(.@r,10); } bonus3 bAutoSpell,"WZ_EARTHSPIKE",.@a,(.@a*10); bonus3 bAutoSpell,"WZ_HEAVENDRIVE",.@a,(.@a*10); }
+4345:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if (.@r < 4) { .@a = 4; } else { .@a = min(.@r,10); } bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",.@a,(.@a*10); bonus3 bAutoSpell,"MG_THUNDERSTORM",.@a,(.@a*10); }
+4350:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if (.@r < 4) { .@a = 4; } else { .@a = min(.@r,10); } bonus3 bAutoSpell,"MG_COLDBOLT",.@a,(.@a*10); bonus3 bAutoSpell,"WZ_FROSTNOVA",.@a,(.@a*10); }
+4380:19156,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if (.@r < 4) { .@a = 4; } else { .@a = min(.@r,10); } bonus3 bAutoSpell,"MG_FIREBOLT",.@a,(.@a*10); bonus3 bAutoSpell,"MG_FIREBALL",.@a,(.@a*10); }
 4335:21012,{ bonus5 bAutoSpell,"WZ_EARTHSPIKE",5,10+(getequiprefinerycnt(EQI_HAND_R)*10),BF_NORMAL|BF_WEAPON,1; /* Confirm: Success rate */ }
 4345:21012,{ bonus5 bAutoSpell,"MG_LIGHTNINGBOLT",5,10+(getequiprefinerycnt(EQI_HAND_R)*10),BF_NORMAL|BF_WEAPON,1; /* Confirm: Success rate */ }
 4350:21012,{ bonus5 bAutoSpell,"MG_COLDBOLT",5,10+(getequiprefinerycnt(EQI_HAND_R)*10),BF_NORMAL|BF_WEAPON,1; /* Confirm: Success rate */ }
