@@ -58,7 +58,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		next;
 		select("I couldn't even imagine, seeing this mood...");
 		mes "[Catherine Jet Johnson]";
-		mes "Yes, because we couldn't earn a livng by packaging toys forever. The situations got tough after the villagers left in ones and twos.";
+		mes "Yes, because we couldn't earn a living by packaging toys forever. The situations got tough after the villagers left in ones and twos.";
 		next;
 		mes "[Catherine Jet Johnson]";
 		mes "I was the one who worked as an assistant beside the doll craftsman who made dolls to the end.";
@@ -220,7 +220,7 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 1@xm_d,112,20,6	script	Catherine Jet Johnson#0	4_F_SKULL06GIRL,{
 	if (getstatus(SC_MONSTER_TRANSFORM,1) > 0) {
 		mes "[Catherine Jet Johnson]";
-		mes "You cannot come to here if you are under the effect of a monstre transformation.";
+		mes "You cannot come to here if you are under the effect of a monster transformation.";
 		next;
 		mes "[Catherine Jet Johnson]";
 		mes "Please wait until the transformation is finished. You cannot move to another area before you become normal.";
@@ -269,7 +269,7 @@ OnStart:
 	sleep 5000;
 	npctalk "Catherine Jet Johnson: I think other spirits have inhabited the empty factory for too long.";
 	sleep 3000;
-	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debries should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
+	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debris should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
 	sleep 3000;
 	npctalk "Catherine Jet Johnson: It's just like when humans worked here.";
 	sleep 3000;
@@ -311,7 +311,7 @@ OnStart2:
 	enablenpc instance_npcname("Employees' Uniform Box#3");
 	mapannounce 'xm_d_map$, "Factory announcement: Wake up, toy factory working time has come...", bc_map, "0x00ff44";
 	sleep 6000;
-	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debries should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
+	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debris should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
 	sleep 6000;
 	mapannounce 'xm_d_map$, "Factory announcement: Let's make presents for every child's dream today.", bc_map, "0x00ff44";
 	donpcevent instance_npcname("#fac1ct") + "::OnStart";
@@ -446,7 +446,7 @@ OnInstanceInit:
 		transform 1249,180000;// MYSTCASE
 	}
 	else if (.@mob_id_transform == 1249)
-		mes "^009900The box is in your hands. You cannot carry more than one boxe.^000000";
+		mes "^009900The box is in your hands. You cannot carry more than one box.^000000";
 	else
 		mes "^ff0000You are not in uniform. The Coordinator won't let you pick it up.^000000";
 	close;
@@ -599,7 +599,7 @@ OnMyMobDead:
 		mes "[Catherine Jet Johnson]";
 		mes "Lucky you got here safely.";
 		next;
-		switch( select( "Quit the story", "Listen to her tatics.", "I know what to do. Proceed quickly!" ) ) {
+		switch( select( "Quit the story", "Listen to her tactics.", "I know what to do. Proceed quickly!" ) ) {
 		case 1:
 			mes "[Catherine Jet Johnson]";
 			mes "Oh, dear. Let me know when you are ready.";
@@ -758,7 +758,7 @@ OnInstanceInit:
 			npctalk "Worker: I wish he wouldn't pass away. Ah... Ahah... I feel better.";
 			break;
 		case 2:
-			npctalk "Worker: Did Kimi kill the craftman grandpa? Who said that? That's not true. Kimi was going to save him!";
+			npctalk "Worker: Did Kimi kill the craftsman grandpa? Who said that? That's not true. Kimi was going to save him!";
 			sleep2 3000;
 			npctalk "Worker: Ah... B.. By the way, why my body becomes...";
 			break;
@@ -788,7 +788,7 @@ OnInstanceInit:
 			npctalk "Worker: Perhaps Grandpa's affection made her move and become alive. Ahah.. I'm sleepy..";
 			break;
 		case 8:
-			npctalk "Worker: Grandpa good man! Kimi pity! Kimi loves Grandpa! Granpa died. I'm sad!";
+			npctalk "Worker: Grandpa good man! Kimi pity! Kimi loves Grandpa! Grandpa died. I'm sad!";
 			sleep2 3000;
 			break;
 		case 9:
@@ -797,7 +797,7 @@ OnInstanceInit:
 			npctalk "Worker: Anyhow, why my body... It's likely to float in the air.... Something strange.";
 			break;
 		case 10:
-			npctalk "Worker: Kimi didn't hurt Grandpa! Kimi's wanted to save Grandpa! People are scared of Kimi Kimi is kind! Kimi is a good girl!";
+			npctalk "Worker: Kimi didn't hurt Grandpa! Kimi's wanted to save Grandpa! People are scared of Kimi, but Kimi is kind! Kimi is a good girl!";
 			sleep2 3000;
 			npctalk "Worker: Grandpa... I miss him. Grandpa, Grandpa...";
 			break;
@@ -920,7 +920,7 @@ OnStart:
 	sleep 5000;
 	mapannounce 'xm_d_map$, "Factory announcement: Delivery employees, please stand by.", bc_map, "0x00ff44";
 	sleep 3000;
-	npctalk "Antonio: Oh! Wohuhu! A bunch of presents are dealayed. Let's have a party today?!", .@antonio$;
+	npctalk "Antonio: Oh! Wohuhu! A bunch of presents are delayed. Let's have a party today?!", .@antonio$;
 	sleep 4000;
 	npctalk "Antonio: Hey, human. You can follow me if you'd like to help. I'm okay unless you disturb me!", .@antonio$;
 	sleep 4000;
@@ -1128,7 +1128,7 @@ OnStart:
 	sleep 1000;
 	mapannounce 'xm_d_map$, "Phantom's yell: Don't you agree you are frightening? No one loves you, Kimi~", bc_map, "0xff8800";
 	sleep 3000;
-	npctalk "Celine Kimi: Because of me, granpa was dead...", .@kimi$;
+	npctalk "Celine Kimi: Because of me, grandpa was dead...", .@kimi$;
 	specialeffect EF_MAPPILLAR2, AREA, .@kimi$;
 	sleep 3000;
 	npctalk "Catherine Jet Johnson: It became serious. Kimi is suffering. It would be dangerous under this condition!";
