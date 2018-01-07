@@ -1847,6 +1847,7 @@ OnTimer55500:
 	initnpctimer;
 	close;
 OnTimer500:
+	enablenpc instance_npcname("#boss_skills_timer");
 	monster 'map_tnm3$,93,52,"Evil Believer",2942,1, instance_npcname("#boss_skills_timer") + "::OnBossDead";// MM_EVIL_FANATICS
 	'boss_id = $@mobid[0];
 	end;
@@ -1862,7 +1863,6 @@ OnTimer12000:
 1@tnm3,1,1,0	script	#boss_skills_timer	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	enablenpc instance_npcname("#boss_skills_timer");
 	'label$ = instance_npcname("#boss_skills_timer") + "::OnMobDead";
 	initnpctimer;
 	end;
