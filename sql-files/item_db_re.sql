@@ -3984,7 +3984,7 @@ REPLACE INTO `item_db_re` VALUES (5821,'Gold_Tulip_Hairpin','Gold Tulip Hairpin'
 REPLACE INTO `item_db_re` VALUES (5822,'Love_Chick_Hat','Love Chick Hat',4,10000,NULL,100,NULL,4,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,500,'bonus bLuk,4; bonus bMaxHP,100; bonus bMaxSP,100; bonus2 bSubRace,RC_Brute,7; bonus2 bSubRace,RC_DemiHuman,7; bonus2 bSubRace,RC_Player,7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5823,'Love_Arrow','Love Arrow',4,5000,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bDex,5; bonus bAgi,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5824,'Fools_Day_Hat','Fools Day Hat',4,20,NULL,300,NULL,6,NULL,0,0xFFFFFFFF,63,2,256,NULL,'30',1,265,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5825,'Badge_Of_Order_Grace','Badge Of Order Grace',4,0,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bMdef,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5825,'Badge_Of_Order_Grace','Badge Of Order Grace',4,0,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,63,2,136,NULL,'0',0,0,'bonus bMdef,1; bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHP,1500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5826,'Valkyrie_Helmet','Valkyrie Helmet',4,0,NULL,0,NULL,10,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',0,225,'bonus bStr,2; bonus bInt,2; bonus bDex,2; bonus bAgi,2; bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5827,'Book_File_Hat','Book File Hat',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,63,2,256,NULL,'1',1,423,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5828,'Honor_Gold_Ring','Honor Gold Ring',4,0,NULL,50,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',1,0,'bonus bAllStats,1; bonus bMdef,5;',NULL,NULL);
