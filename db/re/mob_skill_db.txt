@@ -1,4 +1,4 @@
-﻿// Mob Skill Database
+// Mob Skill Database
 // Based on Aegis Episode 11.3
 //
 // Structure of Database:
@@ -11157,13 +11157,13 @@
 3254,T_W_O@MG_THUNDERSTORM,attack,21,20,2000,1000,5000,no,target,always,0,,,,,,,
 3254,T_W_O@SM_MAGNUM,attack,7,25,1500,0,3000,no,target,always,0,,,,,,,
 3254,T_W_O@SM_ENDURE,chase,8,1,5000,0,10000,yes,self,longrangeattacked,0,,,,,,,
-3254,T_W_O@NPC_CALLSLAVE,attack,352,1,10000,0,5000,no,around2,onspawn,,3253,3253,3253,,,,
+3254,T_W_O@NPC_CALLSLAVE,attack,352,1,10000,0,5000,no,self,onspawn,,3253,3253,,,,,
 3254,T_W_O@KN_BRANDISHSPEAR,any,57,10,2000,200,5000,no,target,always,0,,,,,,,
 3254,T_W_O@NPC_PULSESTRIKE,attack,661,5,10000,0,30000,no,target,myhpltmaxrate,80,,,,,,,
 3254,T_W_O@NPC_WIDESLEEP,chase,668,1,10000,1000,20000,no,target,always,0,,,,,,,
 3254,T_W_O@NPC_DARKBREATH,attack,202,5,10000,0,30000,no,target,always,0,,,,,,,
-3254,T_W_O@NPC_CALLSLAVE,attack,352,1,10000,0,5000,no,target,slavele,2,3253,3253,3253,,,,
+3254,T_W_O@NPC_CALLSLAVE,attack,352,1,10000,0,5000,no,self,slavele,1,3253,3253,,,,,
 3254,T_W_O@SM_MAGNUM,chase,7,25,1500,0,3000,no,target,always,0,,,,,,,
-3254,T_W_O@NPC_SUMMONSLAVE,attack,196,5,10000,0,5000,no,around2,always,,3253,3253,,,,,
+3254,T_W_O@NPC_SUMMONSLAVE,attack,196,5,10000,0,5000,no,randomtarget,always,,3253,3253,,,,,
 3254,T_W_O@NPC_PULSESTRIKE,chase,661,5,10000,0,30000,no,target,myhpltmaxrate,80,,,,,,,
 3254,T_W_O@SM_ENDURE,attack,8,1,5000,0,10000,no,target,longrangeattacked,0,,,,,,,
