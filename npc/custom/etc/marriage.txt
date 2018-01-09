@@ -658,7 +658,7 @@ OnTimer60000:
 	else
 		set $@msg$, $wed_groom$;
 
-	npctalk @name$ +" : Registration timed out. Is it that noone wants to marry "+$@msg$+"..?";
+	npctalk @name$ +" : Registration timed out. Is there no one who wants to marry "+$@msg$+"..?";
 	emotion ET_SCRATCH;
 	
 	set $wed_groom$,"";
@@ -748,7 +748,7 @@ function SF_Principles {
 	next;
 	mes "["+@name$+"]";
 	if ($@wed_allow == 1)
-		mes "Altough normally only males can wed females (and viceversa), our local Priest is more open-minded than that and he permits all pairings regardless of gender.";
+		mes "Although normally only males can wed females (and vice versa), our local Priest is more open-minded than that and he permits all pairings regardless of gender.";
 	else
 		mes "Males may only wed with females, and females only with males, the church will not consent any other kind of partnerships.";
 	next;
@@ -791,10 +791,10 @@ function SF_Procedure {
 	next;
 	mes "["+@name$+"]";
 	mes "I shouldn't need to mention this, but adopted kids are too young to get married.";
-	mes "Both groom and bride must register within a minute of each other, or the wedding will be cancelled. So be sure you both are ready and meet the registration requirements beforehand.";
+	mes "Both groom and bride must register within a minute of each other, or the wedding will be canceled. So be sure you both are ready and meet the registration requirements beforehand.";
 	next;
 	mes "["+@name$+"]";
-	mes "After both have registered with me, you have to go pledge your vows to the Priest and accept your registered partner. If for some reason you reject your registered partner, the wedding will be cancelled...";
+	mes "After both have registered with me, you have to go pledge your vows to the Priest and accept your registered partner. If for some reason you reject your registered partner, the wedding will be canceled...";
 	next;
 	mes "["+@name$+"]";
 	mes "If you both accept each other, then the wedding has been decided and the ceremony will begin.";

@@ -289,7 +289,7 @@ L_Shield:
 			mes "There are two types of Rings are available for exchange.";
 			next;
 L_Ring:
-				switch(select("Phyisical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
+				switch(select("Physical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
 					case 1:
 						.@item = 2963;
 						.@cost = 1350;
@@ -555,7 +555,7 @@ OnTouch_:
 	input .@amount;
 	mes "[ Point Merchant ]";
 	if (.@amount == 0) {
-		mes "You've cancelled the trade.";
+		mes "You've canceled the trade.";
 		close;
 	}
 	if (Zeny < .@amount*200) {
@@ -2525,7 +2525,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm so relieved!";
 	sleep 3000;
-	npctalk "I was able to beat a weak competitior.";
+	npctalk "I was able to beat a weak competitor.";
 	sleep 3000;
 	npctalk "Yahoo!";
 	sleep 5000;
@@ -2685,7 +2685,7 @@ OnDefeat:
 OnVictory:
 	hideoffnpc instance_npcname("Geffen Bully#n1");
 	sleep 1000;
-	npctalk "You! Hou much zeny do you have left?";
+	npctalk "You! How much zeny do you have left?";
 	sleep 3000;
 	npctalk "You messed with me once before!";
 	sleep 3000;
@@ -4189,7 +4189,7 @@ OnTimer1000:
 				cutin "", 255;
 				mes "[Kafra]", "Thanks for helping me out.", "Who are you?"; next;
 				cutin "hero_iris_01.bmp", 2;
-				mes "[Iris]", "I am Iris~", "I am travelling with my good friend Chaos~!"; next;
+				mes "[Iris]", "I am Iris~", "I am traveling with my good friend Chaos~!"; next;
 				mes "[Iris]", "I am not the one you should thank.", "Thank that adventurer, " + strcharinfo(0) + ".", "It could have been much worse."; next;
 				cutin "", 255;
 				mes "[Kafra]", "Thank you " + strcharinfo(0) + ".", "You saved me."; next;
