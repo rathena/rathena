@@ -11610,7 +11610,7 @@ REPLACE INTO `item_db_re` VALUES (28606,'Unity_Bible','Unity Bible',5,20,NULL,22
 REPLACE INTO `item_db_re` VALUES (28700,'Ru_Gold_Dagger','Ru Gold Dagger',5,0,NULL,1000,'160',NULL,1,2,0x00020000,56,2,2,3,'120',1,1,'bonus bStr,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28701,'Ru_Gold_Knife','Ru Gold Knife',5,0,NULL,500,'160',NULL,1,2,0x00010000,56,2,2,3,'120',1,1,'bonus bVit,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28702,'Ru_Gold_Ashura','Ru Gold Ashura',5,0,NULL,1000,'150:150',NULL,1,2,0x2000000,63,2,2,3,'120',1,1,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (28703,'Infinity_Dagger','Infinity Dagger',5,10,NULL,500,'125',NULL,1,1,0x028F5EEF,56,2,2,4,'100',1,1,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28703,'Infinity_Dagger','Infinity Dagger',5,10,NULL,500,'125:100',NULL,1,1,0x028F5EEF,56,2,2,4,'100',1,1,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28705,'Crimson_Dagger','Crimson Dagger',5,20,NULL,550,'55',NULL,1,2,0x028F5EEF,63,2,2,3,'70',1,1,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28706,'Dagger_of_Vicious_Mind','Dagger of Vicious Mind',5,20,NULL,1050,'105:50',NULL,1,1,0x028F5EEF,63,2,2,4,'160',1,1,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;',NULL,NULL);
 #===================================================================
