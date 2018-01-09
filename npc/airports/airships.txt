@@ -413,7 +413,7 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		mes "last time I had a real vacation";
 		mes "or even a day off. Yeap, some";
 		mes "booze, some chips, some TV";
-		mes "and serius R&R is in order.";
+		mes "and serious R&R is in order.";
 		emotion ET_CRY;
 		close;
 	case 2:
@@ -452,7 +452,7 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		emotion ET_HUK;
 		mes "[Pilot]";
 		mes "Still, they where real";
-		mes "serius, really thought";
+		mes "serious, really thought";
 		mes "ahead. I mean, they had us";
 		mes "training while the Airships";
 		mes "were still being invented.";
@@ -502,7 +502,7 @@ airplane,50,66,5	script	Apple Merchant#airplane	86,{
 			else {
 				mes "[Fruitz]";
 				mes "A total of ^FF0000" + .@input + "^000000 Apples";
-				mes "will cost you ^FF0000" + .@pay + " Zeny^000000 zeny.";
+				mes "will cost you ^FF0000" + .@pay + "^000000 zeny.";
 				mes "Would you like to continue?";
 				next;
 				if (select("Yes:No") == 2) {
