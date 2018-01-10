@@ -9,6 +9,8 @@
 
 #include "script.hpp"
 
+#include <stack>
+
 #include <math.h>
 #include <stdlib.h> // atoi, strtol, strtoll, exit
 #include <setjmp.h>
@@ -23728,6 +23730,124 @@ BUILDIN_FUNC(getequiptradability) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Swaps position of two array elements.
+ * This function does not guarantee that the array is accessible, so the burden fall to the caller.
+ * @param st Current script state
+ * @param sd The player owning the variable, can be nullptr
+ * @param array_ The array containing elements to be swapped
+ * @param idx1 index of first element
+ * @param idx2 index of second element 
+ */
+void swap_array_element(script_state *st, map_session_data *sd, script_data* array_, int idx1, int idx2) {
+	void *v1, *v2;
+	auto id = reference_getid(array_);
+	auto name = reference_getname(array_);
+	auto ref = reference_getref(array_);
+
+	v1 = get_val2(st, reference_uid(id, idx1), ref);
+	v2 = get_val2(st, reference_uid(id, idx2), ref);
+	set_reg(st, sd, reference_uid(id, idx2), name, v1, ref);
+	set_reg(st, sd, reference_uid(id, idx1), name, v2, ref);
+	script_removetop(st, -2, 0);
+}
+
+/**
+ * Partition an array to be used in quick sort with Hoare's partitioning
+ * This function does not guarantee that the array is accessible, so the burden fall to the caller.
+ * @param st Current script state
+ * @param sd The player owning the variable, can be nullptr
+ * @param array_ The array to be partitioned
+ * @param start Starting index
+ * @param end Ending index
+ */
+int partition_array(script_state *st, map_session_data *sd, script_data *array_, int start, int end) {
+	auto ref = reference_getref(array_);
+	auto id = reference_getid(array_);
+	int i = start, j = end;
+	int pivotidx = rnd() % (end - start);
+	int pivot = reinterpret_cast<int>(__64BPRTSIZE(get_val2(st, reference_uid(id, start + pivotidx), ref)));
+	script_removetop(st, -1, 0);
+
+	while (i < j) {
+		while (true) {
+			int tmp = reinterpret_cast<int>(__64BPRTSIZE(get_val2(st, reference_uid(id, i), ref)));
+			script_removetop(st, -1, 0);
+			if (tmp >= pivot)
+				break;
+			i++;
+		}
+
+		while (true) {
+			int tmp = reinterpret_cast<int>(__64BPRTSIZE(get_val2(st, reference_uid(id, j), ref)));
+			script_removetop(st, -1, 0);
+			if (tmp <= pivot)
+				break;
+			j--;
+		}
+
+		swap_array_element(st, sd, array_, i, j);
+	}
+
+	return j;
+}
+
+/**
+ * Sort an array
+ * sortarray(<array>);
+ */
+BUILDIN_FUNC(sortarray) {
+	map_session_data *sd = nullptr;
+	script_data *array_ = script_getdata(st, 2);
+	reg_db *ref;
+	char* name;
+
+	if (!data_isreference(array_)) {
+		ShowError("buildin_sortarray: Not a variable!\n");
+		script_reportdata(array_);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	name = reference_getname(array_);
+	ref = reference_getref(array_);
+
+	if (not_server_variable(name[0])) {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	std::stack<int> stack;
+	auto size = script_array_highest_key(st, sd, name, ref);
+
+	// Push initial indices
+	stack.push(0);
+	stack.push(size - 1);
+
+	while (!stack.empty()) {
+		int end, start, p;
+
+		end = stack.top();
+		stack.pop();
+		start = stack.top();
+		stack.pop();
+
+		p = partition_array(st, sd, array_, start, end);
+
+		if(p - 1 > start) {
+			stack.push(start);
+			stack.push(p - 1);
+		}
+
+		if(p + 1 < end)	{
+			stack.push(p + 1);
+			stack.push(end);
+		}
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24376,6 +24496,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "ceil", "i"),
 	BUILDIN_DEF2(round, "floor", "i"),
 	BUILDIN_DEF(getequiptradability, "i?"),
+	BUILDIN_DEF(sortarray, "r"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
