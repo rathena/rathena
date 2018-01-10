@@ -144,7 +144,7 @@
 		next;
 		set .@menu$,"";
 		.@num_charm_slots = 4 - getiteminfo(.@equip_num,10);
-		for ( .@i = 0; .@i < 4; .@i++ )
+		for ( .@i = 0; .@i < 4; .@i++ ) {
 			if (.@equip_card[.@i] && .@i < .@num_charm_slots) // Armor Enchant System
 				set .@menu$, .@menu$+"Socket "+(.@i+1)+" - "+getitemname(.@equip_card[.@i])+":";
 			else
