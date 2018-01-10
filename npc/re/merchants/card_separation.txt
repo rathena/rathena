@@ -118,9 +118,8 @@
 		"|4363|4324|4361|4330|4342|"; //B_Magaleta_Card, Garm_Card, B_Harword_Card, Dark_Snake_Lord_Card, Rsx_0806_Card
 
 	if (.@Jeremy) {
-		.@num_charm_slots = 4 - getiteminfo(.@equip_num,10); // Armor Enchant System
-		for ( .@i = 0; .@i < .@num_charm_slots; .@i++ )
-			.@equip_card[.@i] = 0;
+		for ( .@i = getiteminfo(.@equip_num,10); .@i < MAX_SLOTS; .@i++ )
+			.@equip_card[.@i] = 0;// Armor Enchant System
 		if (!getarraysize(.@equip_card)) {
 			mes .@n$;
 			mes "The card is not equipped. Do you want to check again?";
@@ -143,9 +142,9 @@
 		mes "Which number socket do you want to separate the card? From the left socket, they are sorted 1,2,3,4.";
 		next;
 		set .@menu$,"";
-		.@num_charm_slots = 4 - getiteminfo(.@equip_num,10);
-		for ( .@i = 0; .@i < 4; .@i++ ) {
-			if (.@equip_card[.@i] && .@i < .@num_charm_slots) // Armor Enchant System
+		.@num_charm_slots = getiteminfo(.@equip_num,10);
+		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
+			if (.@equip_card[.@i] && .@i >= .@num_charm_slots) // Armor Enchant System
 				set .@menu$, .@menu$+"Socket "+(.@i+1)+" - "+getitemname(.@equip_card[.@i])+":";
 			else
 				set .@menu$, .@menu$+"^777777Socket "+(.@i+1)+" - No card^000000:";
