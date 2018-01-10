@@ -23764,31 +23764,55 @@ void swap_array_element(script_state *st, map_session_data *sd, script_data* arr
 int partition_array(script_state *st, map_session_data *sd, script_data *array_, int start, int end) {
 	auto ref = reference_getref(array_);
 	auto id = reference_getid(array_);
+	auto name = reference_getname(array_);
 	int i = start, j = end;
 	int pivotidx = rnd() % (end - start);
-	int pivot = reinterpret_cast<int>(__64BPRTSIZE(get_val2(st, reference_uid(id, start + pivotidx), ref)));
-	script_removetop(st, -1, 0);
+	void* pivot = get_val2(st, reference_uid(id, start + pivotidx), ref);
+	bool is_string = is_string_variable(name);
 
 	while (i < j) {
 		while (true) {
-			int tmp = reinterpret_cast<int>(__64BPRTSIZE(get_val2(st, reference_uid(id, i), ref)));
+			void* tmp = get_val2(st, reference_uid(id, i), ref);
+
+			if (is_string) {
+				if (strcmp((char*)(tmp), (char*)(pivot)) >= 0)
+					break;
+			} else {
+				if ((int)__64BPRTSIZE(tmp) >= (int)__64BPRTSIZE(pivot))
+					break;
+			}
+
+			// Pop tmp
 			script_removetop(st, -1, 0);
-			if (tmp >= pivot)
-				break;
 			i++;
 		}
+		// Pop tmp
+		script_removetop(st, -1, 0);
 
 		while (true) {
-			int tmp = reinterpret_cast<int>(__64BPRTSIZE(get_val2(st, reference_uid(id, j), ref)));
+			void* tmp = get_val2(st, reference_uid(id, j), ref);
+
+			if(is_string) {
+				if (strcmp((char*)(tmp), (char*)(pivot)) <= 0)
+					break;
+			}
+			else {
+				if ((int)__64BPRTSIZE(tmp) <= (int)__64BPRTSIZE(pivot))
+					break;
+			}
+
+			// Pop tmp
 			script_removetop(st, -1, 0);
-			if (tmp <= pivot)
-				break;
 			j--;
 		}
+		// Pop tmp
+		script_removetop(st, -1, 0);
 
 		swap_array_element(st, sd, array_, i, j);
 	}
 
+	// Pop pivot
+	script_removetop(st, -1, 0);
 	return j;
 }
 

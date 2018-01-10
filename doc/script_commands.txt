@@ -2260,6 +2260,15 @@ Example:
 	debugmes(.@msg$);
 	
 	Output: 2 5 8 9 12 13 14 17 18 19 20 21 22 23 24 25 30 31 34 35 36 37 38 39 41 42 44 45 47 48
+	
+	setarray .@text$, "Lemongrass", "Atemo", "Jey", "Lighta", "Nova", "MasterOfMuppets", "Aleos", "Cydh", "Playtester", "Stolao", "Nanakiwurtz", "Akkarin", "Secret";
+	sortarray(.@text$);
+	for(.@i = 0; .@i < getarraysize(.@text$); .@i++) {
+		.@msg$ = .@msg$ + .@text$[.@i] + " ";
+	}
+	debugmes(.@msg$);
+	
+	Output: Akkarin Aleos Atemo Cydh Jey Lemongrass Lighta MasterOfMuppets Nanakiwurtz Nova Playtester Secret Stolao 
 
 ---------------------------------------
 
