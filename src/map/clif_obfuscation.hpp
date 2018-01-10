@@ -400,6 +400,12 @@
 		packet_keys(0x39D54BD3,0x577A0C21,0x4C1C316E);
 	#elif PACKETVER == 20171213 // 2017-12-13bRagexeRE
 		packet_keys(0x44E41107,0x3B126921,0x00E06AAC);
+	#elif PACKETVER == 20171220 // 2017-12-20aRagexeRE
+		packet_keys(0x6EFE009A,0x440B7BFA,0x052339C8);
+	#elif PACKETVER == 20171227 // 2017-12-27aRagexeRE
+		packet_keys(0x257A2F6E,0x51140EEE,0x00FA4452);
+	#elif PACKETVER == 20180103 // 2018-01-03aRagexeRE or 2018-01-03bRagexeRE
+		packet_keys(0x348F4BD7,0x7A425A54,0x628F589A);
 	#elif PACKETVER > 20110817
 		#error Unsupported packet version.
 	#endif
