@@ -297,7 +297,8 @@
 2968:18821,{ bonus bMatkRate,getequiprefinerycnt(EQI_HEAD_TOP)/2; }
 2969:13092,{ bonus bBaseAtk,getequiprefinerycnt(EQI_HAND_R)*10; }
 2969:18821,{ bonus bMatkRate,getequiprefinerycnt(EQI_HEAD_TOP)/2; }
-2979:18852,{ bonus2 bSubEle,Ele_Fire,10; bonus bLongAtkRate,30; }
+2979:18852,{ bonus bMaxHPrate,15; bonus2 bSubEle,Ele_Fire,10; bonus bLongAtkRate,30; }
+2979:18853,{ bonus bMaxHPrate,15; bonus2 bSubEle,Ele_Fire,10; bonus bLongAtkRate,30; }
 2983:4218,{ bonus bVit,-3; bonus bHPrecovRate,-20; bonus bMaxHP,1000; }
 2983:4218:4269,{ bonus bVit,-3; bonus bHPrecovRate,-20; bonus bMaxHP,1000; bonus bInt,-3; bonus bSPrecovRate,-20; bonus bMaxSP,150; }
 2983:4269,{ bonus bInt,-3; bonus bSPrecovRate,-20; bonus bMaxSP,150; }
