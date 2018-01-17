@@ -485,7 +485,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			 * Renewal Heal Formula
 			 * Formula: ( [(Base Level + INT) / 5] x 30 ) x (Heal Level / 10) x (Modifiers) + MATK
 			 */
-			hp = (status_get_lv(src) + status_get_int(src)) / 5 * 30 * skill_lv / 10;
+			hp = (status_get_lv(src) + status_get_int(src)) * 6 * skill_lv / 10;
 #else
 			hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + (skill_lv * 8));
 #endif
