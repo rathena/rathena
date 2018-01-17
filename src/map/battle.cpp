@@ -2924,6 +2924,7 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 		skill_id != CR_GRANDCROSS)
 	{	//Add mastery damage
 		uint16 skill;
+		uint8 i = 0;
 
 		wd.damage = battle_addmastery(sd,target,wd.damage,0);
 #ifdef RENEWAL
@@ -2973,8 +2974,6 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 		}
 
 		if (sc) { // Status change considered as masteries
-			uint8 i;
-
 #ifdef RENEWAL
 			if (sc->data[SC_NIBELUNGEN]) // With renewal, the level 4 weapon limitation has been removed
 				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_NIBELUNGEN]->val2);
@@ -2982,21 +2981,6 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 
 			if (sc->data[SC_MIRACLE])
 				i = 2; //Star anger
-			else
-				ARR_FIND(0, MAX_PC_FEELHATE, i, t_class == sd->hate_mob[i]);
-
-			if (i < MAX_PC_FEELHATE && (skill=pc_checkskill(sd,sg_info[i].anger_id))) {
-				int skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
-
-				if (i == 2)
-					skillratio += sstatus->str; //Star Anger
-				if (skill < 4)
-					skillratio /= 12 - 3 * skill;
-				ATK_ADDRATE(wd.damage, wd.damage2, skillratio);
-#ifdef RENEWAL
-				ATK_ADDRATE(wd.masteryAtk, wd.masteryAtk2, skillratio);
-#endif
-			}
 
 			if(sc->data[SC_CAMOUFLAGE]) {
 				ATK_ADD(wd.damage, wd.damage2, 30 * min(10, sc->data[SC_CAMOUFLAGE]->val3));
@@ -3016,6 +3000,22 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_P_ALTER]->val2);
 #endif
 			}
+		}
+
+		if (!i)
+			ARR_FIND(0, MAX_PC_FEELHATE, i, t_class == sd->hate_mob[i]);
+
+		if (i < MAX_PC_FEELHATE && (skill = pc_checkskill(sd, sg_info[i].anger_id))) {
+			int skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
+			
+			if (i == 2)
+				skillratio += sstatus->str; //Star Anger
+			if (skill < 4)
+				skillratio /= 12 - 3 * skill;
+			ATK_ADDRATE(wd.damage, wd.damage2, skillratio);
+#ifdef RENEWAL
+			ATK_ADDRATE(wd.masteryAtk, wd.masteryAtk2, skillratio);
+#endif
 		}
 	}
 
