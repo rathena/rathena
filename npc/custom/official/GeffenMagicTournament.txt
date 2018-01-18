@@ -148,9 +148,9 @@ OnTimer1000:
 		case 106:
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef3");
 			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
-			sleep2 500;
+			sleep 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef1");
-			sleep2 500;
+			sleep 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef2");
 			'm1_timer++;
 			break;
