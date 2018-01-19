@@ -7,11 +7,17 @@
 1166:2527:5467,{ bonus2 bAddRace,RC_Dragon,25; }
 1180:2527,{ bonus2 bAddRace,RC_Dragon,5; }
 1180:2527:5467,{ bonus2 bAddRace,RC_Dragon,25; }
+1219:5782,{ bonus2 bAddClass,Class_All,3; }
+1220:5782,{ bonus2 bAddClass,Class_All,3; }
+1221:5782,{ bonus2 bAddClass,Class_All,3; }
 1269:5467,{ bonus bAspd,1; bonus bFlee2,3; }
 1284:2892,{ bonus2 bSkillAtk,"AS_SONICBLOW",50; bonus bBaseAtk,50; bonus bFlee,-30; }
 1285:2892,{ bonus bCritical,4; bonus bCritAtkRate,40; bonus bMaxHPRate,-10; }
 1287:15123,{ if (getequiprefinerycnt(EQI_HAND_R) >= 7) { autobonus "{ bonus bIgnoreDefClass,Class_Normal; }",1000,3000,BF_SHORT,BF_NORMAL; } /* Confirm: Success rate */ }
 1387:19021,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",15+(getequiprefinerycnt(EQI_HAND_R))*5; }
+1407:5782,{ bonus2 bAddClass,Class_All,3; }
+1408:5782,{ bonus2 bAddClass,Class_All,3; }
+1409:5782,{ bonus2 bAddClass,Class_All,3; }
 1420:2115,{ bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",2,5; }
 1420:2133,{ bonus2 bAddClass,Class_All,4; bonus bDef,2; }
 1421:2133,{ bonus2 bAddClass,Class_All,4; bonus bDef,2; }
@@ -110,6 +116,7 @@
 2123:2881,{ bonus bMatkRate,getequiprefinerycnt(EQI_HAND_L)*2; }
 2124:2702,{ bonus bAspdRate,10; bonus bShortWeaponDamageReturn,5; }
 2124:22064,{ bonus bAspd,getequiprefinerycnt(EQI_HAND_L)/3; }
+2125:5782,{ bonus bDef,2; bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Dark,5; bonus2 bSubEle,Ele_Holy,5; bonus2 bSubEle,Ele_Ghost,5; }
 2135:2426,{ bonus2 bAddEff,Eff_Blind,500; autobonus "{ bonus bFlee,20; }",200,10000,BF_WEAPON,"{ specialeffect2 EF_INCAGILITY; }"; }
 2137:2353:5124,{ bonus bDef,2-getequiprefinerycnt(EQI_HAND_L)-getequiprefinerycnt(EQI_HEAD_TOP); bonus bMdef,5+getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HEAD_TOP); }
 2153:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R)/6*8; bonus2 bSkillAtk,"LG_SHIELDPRESS",.@r; }
