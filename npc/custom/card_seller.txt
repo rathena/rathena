@@ -26,17 +26,19 @@ prontera,155,177,5	script	Card Seller	100,{
 	end;
 OnInit:
 	if (checkre(0)) {
-		.@mob_db$  = "mob_db_re";
-		.@item_db$ = "item_db_re";
+		.@mob_db$  = "`mob_db_re`";
+		.@mob_drop$ = "`mob_drop_re`";
+		.@item_db$ = "`item_db_re`";
 	} else {
-		.@mob_db$  = "mob_db";
-		.@item_db$ = "item_db";
+		.@mob_db$  = "`mob_db`";
+		.@mob_drop$ = "`mob_drop`";
+		.@item_db$ = "`item_db`";
 	}
 	freeloop 1;
-	.@total = query_sql( "SELECT DISTINCT LEFT( `name_japanese`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` RIGHT JOIN `"+ .@mob_db$ +"` ON `"+ .@item_db$ +"`.`id` = `"+ .@mob_db$ +"`.`dropcardid` WHERE ~(`MODE`) & 32 AND `type` = 6 GROUP BY `name_japanese` ORDER BY alphabets;", .alphabet$ );
+	.@total = query_sql("SELECT DISTINCT LEFT(`name_japanese`, 1) AS alphabets FROM `item_db_re` RIGHT JOIN `mob_drop_re` ON `mob_drop_re`.`nameid` = `item_db_re`.`id` RIGHT JOIN `mob_db_re` ON `mob_db_re`.`ID` = `mob_drop_re`.`mobid` WHERE `item_db_re`.`type` = 6 AND `name_english` LIKE '%_Card' AND ~(`MODE`) &0x4000000 ORDER BY alphabets;", .alphabet$);
 	for ( .@i = 0; .@i < .@total; .@i++ ) {
 		.alphabet_menu$ = .alphabet_menu$ + .alphabet$[.@i] +" Cards:";
-		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` RIGHT JOIN `"+ .@mob_db$ +"` ON `"+ .@item_db$ +"`.`id` = `"+ .@mob_db$ +"`.`dropcardid` WHERE ~(`MODE`) & 32 AND `type` = 6 AND LEFT( `name_japanese`, 1 ) = '"+ .alphabet$[.@i] +"' GROUP BY `name_japanese` ORDER BY `name_japanese` LIMIT 128;", .@id );
+		.@nb = query_sql("SELECT "+.@item_db$ +".`id` FROM "+ .@item_db$ +" RIGHT JOIN "+ .@mob_drop$ +" ON "+ .@mob_drop$ +".`nameid` = "+ .@item_db$ +".`id` RIGHT JOIN "+.@mob_db$ +" ON "+ .@mob_db$ +".`ID` = "+ .@mob_drop$ +".`mobid` WHERE "+ .@item_db$ +".`type` = 6 AND `name_english` LIKE '%_Card' AND ~(`MODE`) & 0x4000000 AND LEFT(`name_japanese`, 1) = '"+ .alphabet$[.@i]+"' GROUP BY `name_japanese` ORDER BY `name_japanese` LIMIT 128;", .@id);
 		npcshopdelitem "card_mob#"+ .alphabet$[.@i], 501;
 		for ( .@j = 0; .@j < .@nb; .@j++ )
 			npcshopadditem "card_mob#"+ .alphabet$[.@i], .@id[.@j], 1000000;

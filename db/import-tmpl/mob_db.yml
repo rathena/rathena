@@ -1,0 +1,1377 @@
+
+# For a full explanation of this format, check doc/mob_db.txt
+#  -
+#    MobId: <int>
+#    Name: <string>
+#    kROName: <string>
+#    Sprite: <string>
+#    LV: <int>
+#    HP: <int>
+#    SP: <int>
+#    EXP: <int>
+#    JEXP: <int>
+#    Range: <int>~<int>~<int>
+#    ATK: <int>{~<int>}
+#    DEF: <int>
+#    MDEF: <int>
+#    Stats:
+#        Str: <int>
+#        Agi: <int>
+#        Vit: <int>
+#        Int: <int>
+#        Dex: <int>
+#        Luk: <int>
+#    Size: <string>
+#    Race: <string>
+#    Element: <string> <int>
+#    Mode:
+#        [MD_EXAMPLE: <bool | ~ | null>]
+#    Speed: <int>
+#    aDelay: <int>
+#    aMotion: <int>
+#    dMotion: <int>
+#    MEXP: <int>
+#    NormalDrop:
+#      -
+#        ItemId: <int>
+#        AegisName: <string>
+#        Index: <int>
+#        Rate: <int>
+#        StealProtected: <bool>
+#        RandomOptionGroup: <string>
+#    MvPDrop:
+#      -
+#        ItemId: <int>
+#        AegisName: <string>
+#        Index: <int>
+#        Rate: <int>
+#        StealProtected: <bool>
+#        RandomOptionGroup: <string>
+
+Mobs:
+#  -
+#    MobId: 1900
+#    Name: Valaris
+#    Sprite: VALARIS
+#    LV: 99
+#    HP: 668000
+#    SP: 0
+#    EXP: 107250
+#    JEXP: 37895
+#    Range: 2~10~10
+#    ATK: 3220~4040
+#    DEF: 35
+#    MDEF: 45
+#    Stats:
+#        Str: 1
+#        Agi: 152
+#        Vit: 96
+#        Int: 85
+#        Dex: 120
+#        Luk: 95
+#    Size: SZ_LARGE
+#    Race: RC_DEMON
+#    Element: ELE_DARK 3
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_LOOTER: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_NORANDOM_WALK: on
+#        MD_NOCAST_SKILL: on
+#        MD_NONE: on
+#        MD_ANGRY: on
+#        MD_CHANGETARGET_MELEE: on
+#    Speed: 100
+#    aDelay: 1068
+#    aMotion: 768
+#    dMotion: 576
+#    MEXP: 13000
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Crescent_Scythe
+#        Rate: 200
+#      -
+#        AegisName: Magestic_Goat
+#        Rate: 200
+#      -
+#        AegisName: Clip
+#        Rate: 800
+#      -
+#        AegisName: Emperium
+#        Rate: 500
+#      -
+#        AegisName: Old_Violet_Box
+#        Rate: 3000
+#      -
+#        AegisName: Oridecon
+#        Rate: 4300
+#      -
+#        AegisName: Elunium
+#        Rate: 5600
+#      -
+#        AegisName: Baphomet_Card
+#        Rate: 1
+#        StealProtected: true
+#    MvPDrop:
+#      -
+#        AegisName: Seed_Of_Yggdrasil
+#        Rate: 1000
+#      -
+#        AegisName: Baphomet_Doll
+#        Rate: 400
+#      -
+#        AegisName: Evil_Horn
+#        Rate: 3800
+#  -
+#    MobId: 1901
+#    Name: Valaris's Worshipper
+#    Sprite: VALARIS_WORSHIPPER
+#    LV: 50
+#    HP: 8578
+#    SP: 0
+#    EXP: 2706
+#    JEXP: 1480
+#    Range: 1~10~12
+#    ATK: 487~590
+#    DEF: 15
+#    MDEF: 25
+#    Stats:
+#        Str: 1
+#        Agi: 75
+#        Vit: 55
+#        Int: 1
+#        Dex: 93
+#        Luk: 45
+#    Size: SZ_SMALL
+#    Race: RC_DEMON
+#    Element: ELE_DARK 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CANATTACK: on
+#        MD_CASTSENSOR_CHASE: on
+#        MD_CHANGECHASE: on
+#        MD_CHANGETARGET_MELEE: on
+#    Speed: 100
+#    aDelay: 868
+#    aMotion: 480
+#    dMotion: 120
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Evil_Horn
+#        Rate: 500
+#      -
+#        AegisName: Oridecon
+#        Rate: 63
+#      -
+#        AegisName: Halberd_
+#        Rate: 2
+#      -
+#        AegisName: Yggdrasilberry
+#        Rate: 50
+#      -
+#        AegisName: Leaf_Of_Yggdrasil
+#        Rate: 100
+#      -
+#        AegisName: Yellow_Potion
+#        Rate: 300
+#      -
+#        AegisName: Boots
+#        Rate: 50
+#      -
+#        AegisName: Baphomet__Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 1902
+#    Name: MC Cameri
+#    Sprite: MC_CAMERI
+#    LV: 99
+#    HP: 668000
+#    SP: 0
+#    EXP: 107250
+#    JEXP: 37895
+#    Range: 2~10~10
+#    ATK: 3220~4040
+#    DEF: 35
+#    MDEF: 45
+#    Stats:
+#        Str: 1
+#        Agi: 152
+#        Vit: 96
+#        Int: 85
+#        Dex: 120
+#        Luk: 95
+#    Size: SZ_LARGE
+#    Race: RC_DEMON
+#    Element: ELE_DARK 3
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_LOOTER: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_NORANDOM_WALK: on
+#        MD_NOCAST_SKILL: on
+#        MD_NONE: on
+#        MD_ANGRY: on
+#        MD_CHANGETARGET_MELEE: on
+#    Speed: 100
+#    aDelay: 1068
+#    aMotion: 768
+#    dMotion: 576
+#    MEXP: 13000
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Crescent_Scythe
+#        Rate: 200
+#      -
+#        AegisName: Magestic_Goat
+#        Rate: 200
+#      -
+#        AegisName: Clip
+#        Rate: 800
+#      -
+#        AegisName: Emperium
+#        Rate: 500
+#      -
+#        AegisName: Old_Violet_Box
+#        Rate: 3000
+#      -
+#        AegisName: Oridecon
+#        Rate: 4300
+#      -
+#        AegisName: Elunium
+#        Rate: 5600
+#      -
+#        AegisName: Baphomet_Card
+#        Rate: 1
+#        StealProtected: true
+#    MvPDrop:
+#      -
+#        AegisName: Seed_Of_Yggdrasil
+#        Rate: 1000
+#      -
+#        AegisName: Baphomet_Doll
+#        Rate: 400
+#      -
+#        AegisName: Evil_Horn
+#        Rate: 3800
+#  -
+#    MobId: 1903
+#    Name: Poki#3
+#    Sprite: POKI
+#    LV: 99
+#    HP: 1349000
+#    SP: 0
+#    EXP: 4093000
+#    JEXP: 1526000
+#    Range: 9~10~12
+#    ATK: 4892~9113
+#    DEF: 22
+#    MDEF: 35
+#    Stats:
+#        Str: 1
+#        Agi: 180
+#        Vit: 39
+#        Int: 67
+#        Dex: 193
+#        Luk: 130
+#    Size: SZ_MEDIUM
+#    Race: RC_DEMIHUMAN
+#    Element: ELE_WIND 3
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_LOOTER: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_NORANDOM_WALK: on
+#        MD_NOCAST_SKILL: on
+#        MD_NONE: on
+#        MD_ANGRY: on
+#        MD_CHANGETARGET_MELEE: on
+#    Speed: 120
+#    aDelay: 500
+#    aMotion: 672
+#    dMotion: 480
+#    MEXP: 92100
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Combat_Knife
+#        Rate: 100
+#      -
+#        AegisName: Sucsamad
+#        Rate: 500
+#      -
+#        AegisName: Old_Violet_Box
+#        Rate: 2500
+#      -
+#        AegisName: Moonlight_Sword
+#        Rate: 75
+#      -
+#        AegisName: Grimtooth_
+#        Rate: 125
+#      -
+#        AegisName: Balistar
+#        Rate: 250
+#      -
+#        AegisName: Dragon_Wing
+#        Rate: 100
+#      -
+#        AegisName: Bow_Of_Rudra
+#        Rate: 50
+#        StealProtected: true
+#    MvPDrop:
+#      -
+#        AegisName: Old_Blue_Box
+#        Rate: 5500
+#      -
+#        AegisName: Old_Violet_Box
+#        Rate: 3000
+#      -
+#        AegisName: Luna_Bow
+#        Rate: 1000
+#  -
+#    MobId: 1904
+#    Name: Sentry
+#    Sprite: SENTRY
+#    LV: 99
+#    HP: 668000
+#    SP: 0
+#    EXP: 107250
+#    JEXP: 37895
+#    Range: 2~10~10
+#    ATK: 3220~4040
+#    DEF: 35
+#    MDEF: 45
+#    Stats:
+#        Str: 1
+#        Agi: 152
+#        Vit: 96
+#        Int: 85
+#        Dex: 120
+#        Luk: 95
+#    Size: SZ_LARGE
+#    Race: RC_DEMON
+#    Element: ELE_DARK 3
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_LOOTER: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_NORANDOM_WALK: on
+#        MD_NOCAST_SKILL: on
+#        MD_NONE: on
+#        MD_ANGRY: on
+#        MD_CHANGETARGET_MELEE: on
+#    Speed: 100
+#    aDelay: 1068
+#    aMotion: 768
+#    dMotion: 576
+#    MEXP: 13000
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Crescent_Scythe
+#        Rate: 200
+#      -
+#        AegisName: Magestic_Goat
+#        Rate: 200
+#      -
+#        AegisName: Clip
+#        Rate: 800
+#      -
+#        AegisName: Emperium
+#        Rate: 500
+#      -
+#        AegisName: Old_Violet_Box
+#        Rate: 3000
+#      -
+#        AegisName: Oridecon
+#        Rate: 4300
+#      -
+#        AegisName: Elunium
+#        Rate: 5600
+#      -
+#        AegisName: Baphomet_Card
+#        Rate: 1
+#        StealProtected: true
+#    MvPDrop:
+#      -
+#        AegisName: Seed_Of_Yggdrasil
+#        Rate: 1000
+#      -
+#        AegisName: Baphomet_Doll
+#        Rate: 400
+#      -
+#        AegisName: Evil_Horn
+#        Rate: 3800
+#  -
+#    MobId: 1237
+#    Name: Hollow Poring
+#    Sprite: HOLLOW_PORING
+#    LV: 1
+#    HP: 50
+#    SP: 0
+#    EXP: 2
+#    JEXP: 1
+#    Range: 1~10~12
+#    ATK: 7~10
+#    DEF: 0
+#    MDEF: 5
+#    Stats:
+#        Str: 1
+#        Agi: 1
+#        Vit: 1
+#        Int: 0
+#        Dex: 6
+#        Luk: 30
+#    Size: SZ_MEDIUM
+#    Race: RC_PLANT
+#    Element: ELE_WATER 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_LOOTER: on
+#        MD_CANATTACK: on
+#    Speed: 400
+#    aDelay: 1872
+#    aMotion: 672
+#    dMotion: 480
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Jellopy
+#        Rate: 7000
+#      -
+#        AegisName: Knife_
+#        Rate: 100
+#      -
+#        AegisName: Sticky_Mucus
+#        Rate: 400
+#      -
+#        AegisName: Apple
+#        Rate: 1000
+#      -
+#        AegisName: Empty_Bottle
+#        Rate: 1500
+#      -
+#        AegisName: Apple
+#        Rate: 150
+#      -
+#        AegisName: Unripe_Apple
+#        Rate: 20
+#      -
+#        AegisName: Poring_Card
+#        Rate: 10
+#        StealProtected: true
+#  -
+#    MobId: 1239
+#    Name: Fire Poring
+#    Sprite: FIRE_PORING
+#    LV: 1
+#    HP: 50
+#    SP: 0
+#    EXP: 2
+#    JEXP: 1
+#    Range: 1~10~12
+#    ATK: 7~10
+#    DEF: 0
+#    MDEF: 5
+#    Stats:
+#        Str: 1
+#        Agi: 1
+#        Vit: 1
+#        Int: 1
+#        Dex: 6
+#        Luk: 30
+#    Size: SZ_MEDIUM
+#    Race: RC_PLANT
+#    Element: ELE_WATER 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_NORANDOM_WALK: on
+#        MD_NONE: on
+#    Speed: 400
+#    aDelay: 1872
+#    aMotion: 672
+#    dMotion: 480
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Jellopy
+#        Rate: 7000
+#      -
+#        AegisName: Knife_
+#        Rate: 100
+#      -
+#        AegisName: Sticky_Mucus
+#        Rate: 400
+#      -
+#        AegisName: Apple
+#        Rate: 1000
+#      -
+#        AegisName: Empty_Bottle
+#        Rate: 1500
+#      -
+#        AegisName: Poring_Doll
+#        Rate: 5
+#      -
+#        AegisName: Unripe_Apple
+#        Rate: 20
+#      -
+#        AegisName: Poring_Card
+#        Rate: 20
+#        StealProtected: true
+#  -
+#    MobId: 1145
+#    Name: Martin
+#    Sprite: MARTIN
+#    LV: 18
+#    HP: 1109
+#    SP: 0
+#    EXP: 134
+#    JEXP: 86
+#    Range: 1~10~12
+#    ATK: 52~63
+#    DEF: 0
+#    MDEF: 5
+#    Stats:
+#        Str: 12
+#        Agi: 18
+#        Vit: 30
+#        Int: 15
+#        Dex: 15
+#        Luk: 5
+#    Size: SZ_SMALL
+#    Race: RC_BRUTE
+#    Element: ELE_EARTH 2
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CANATTACK: on
+#    Speed: 300
+#    aDelay: 1480
+#    aMotion: 480
+#    dMotion: 480
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Moustache_Of_Mole
+#        Rate: 9000
+#      -
+#        AegisName: Nail_Of_Mole
+#        Rate: 500
+#      -
+#        AegisName: Jur_
+#        Rate: 10
+#      -
+#        AegisName: Goggle_
+#        Rate: 5
+#      -
+#        AegisName: Safety_Helmet
+#        Rate: 1
+#      -
+#        AegisName: Battered_Pot
+#        Rate: 10
+#      -
+#        AegisName: Goggle
+#        Rate: 15
+#      -
+#        AegisName: RicePouch
+#        Rate: 1500
+#        StealProtected: true
+#      -
+#        AegisName: Martin_Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 1175
+#    Name: Tarou
+#    Sprite: TAROU
+#    LV: 11
+#    HP: 284
+#    SP: 0
+#    EXP: 57
+#    JEXP: 28
+#    Range: 1~10~12
+#    ATK: 34~45
+#    DEF: 0
+#    MDEF: 0
+#    Stats:
+#        Str: 1
+#        Agi: 20
+#        Vit: 11
+#        Int: 10
+#        Dex: 24
+#        Luk: 5
+#    Size: SZ_SMALL
+#    Race: RC_BRUTE
+#    Element: ELE_DARK 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#    Speed: 150
+#    aDelay: 1744
+#    aMotion: 1044
+#    dMotion: 684
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Rat_Tail
+#        Rate: 9000
+#      -
+#        AegisName: Animal's_Skin
+#        Rate: 3000
+#      -
+#        AegisName: Feather
+#        Rate: 800
+#      -
+#        AegisName: Monster's_Feed
+#        Rate: 1000
+#      -
+#        AegisName: Ora_Ora
+#        Rate: 2
+#      -
+#        AegisName: RicePouch
+#        Rate: 2500
+#      -
+#        AegisName: Tarou_Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 1209
+#    Name: Cramp
+#    Sprite: CRAMP
+#    LV: 56
+#    HP: 4720
+#    SP: 0
+#    EXP: 2300
+#    JEXP: 1513
+#    Range: 1~10~12
+#    ATK: 395~465
+#    DEF: 0
+#    MDEF: 5
+#    Stats:
+#        Str: 1
+#        Agi: 85
+#        Vit: 35
+#        Int: 5
+#        Dex: 65
+#        Luk: 60
+#    Size: SZ_SMALL
+#    Race: RC_BRUTE
+#    Element: ELE_POISON 2
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#        MD_CHANGETARGET_MELEE: on
+#        MD_CHANGETARGET_CHASE: on
+#    Speed: 100
+#    aDelay: 1000
+#    aMotion: 500
+#    dMotion: 1000
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Claw_Of_Rat
+#        Rate: 4656
+#      -
+#        AegisName: Monster's_Feed
+#        Rate: 1000
+#      -
+#        AegisName: Blue_Jewel
+#        Rate: 80
+#      -
+#        AegisName: Glass_Bead
+#        Rate: 110
+#      -
+#        AegisName: Lemon
+#        Rate: 250
+#      -
+#        AegisName: Blue_Herb
+#        Rate: 70
+#      -
+#        AegisName: Oridecon
+#        Rate: 95
+#      -
+#        AegisName: RicePouch
+#        Rate: 1500
+#        StealProtected: true
+#      -
+#        AegisName: Cramp_Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 1841
+#    Name: Snake Lord's Minon
+#    Sprite: G_SNAKE_
+#    LV: 15
+#    HP: 471
+#    SP: 0
+#    EXP: 72
+#    JEXP: 48
+#    Range: 1~10~12
+#    ATK: 46~55
+#    DEF: 0
+#    MDEF: 0
+#    Stats:
+#        Str: 1
+#        Agi: 15
+#        Vit: 15
+#        Int: 10
+#        Dex: 35
+#        Luk: 5
+#    Size: SZ_MEDIUM
+#    Race: RC_BRUTE
+#    Element: ELE_EARTH 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CANATTACK: on
+#    Speed: 200
+#    aDelay: 1576
+#    aMotion: 576
+#    dMotion: 576
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Copper_Coin_
+#        Rate: 1000
+#      -
+#        AegisName: Silver_Coin_
+#        Rate: 100
+#      -
+#        AegisName: Gold_Coin_US
+#        Rate: 30
+#      -
+#        AegisName: Black_Treasure_Box
+#        Rate: 7
+#  -
+#    MobId: 1842
+#    Name: Snake Lord's Minon
+#    Sprite: G_ANACONDAQ_
+#    LV: 23
+#    HP: 1109
+#    SP: 0
+#    EXP: 300
+#    JEXP: 149
+#    Range: 1~10~12
+#    ATK: 124~157
+#    DEF: 0
+#    MDEF: 0
+#    Stats:
+#        Str: 1
+#        Agi: 23
+#        Vit: 28
+#        Int: 10
+#        Dex: 36
+#        Luk: 5
+#    Size: SZ_MEDIUM
+#    Race: RC_BRUTE
+#    Element: ELE_POISON 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#    Speed: 200
+#    aDelay: 1576
+#    aMotion: 576
+#    dMotion: 576
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Copper_Coin_
+#        Rate: 1000
+#      -
+#        AegisName: Silver_Coin_
+#        Rate: 100
+#      -
+#        AegisName: Gold_Coin_US
+#        Rate: 30
+#      -
+#        AegisName: Black_Treasure_Box
+#        Rate: 7
+#  -
+#    MobId: 1843
+#    Name: Snake Lord's Minon
+#    Sprite: SIDE_WINDER_
+#    LV: 43
+#    HP: 4929
+#    SP: 0
+#    EXP: 1996
+#    JEXP: 993
+#    Range: 1~10~12
+#    ATK: 240~320
+#    DEF: 5
+#    MDEF: 10
+#    Stats:
+#        Str: 38
+#        Agi: 43
+#        Vit: 40
+#        Int: 15
+#        Dex: 115
+#        Luk: 20
+#    Size: SZ_MEDIUM
+#    Race: RC_BRUTE
+#    Element: ELE_POISON 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#        MD_CHANGETARGET_MELEE: on
+#        MD_CHANGETARGET_CHASE: on
+#    Speed: 200
+#    aDelay: 1576
+#    aMotion: 576
+#    dMotion: 576
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Copper_Coin_
+#        Rate: 1000
+#      -
+#        AegisName: Silver_Coin_
+#        Rate: 100
+#      -
+#        AegisName: Gold_Coin_US
+#        Rate: 30
+#      -
+#        AegisName: Black_Treasure_Box
+#        Rate: 7
+#  -
+#    MobId: 1844
+#    Name: Snake Lord's Minon
+#    Sprite: G_ISIS_
+#    LV: 47
+#    HP: 7003
+#    SP: 0
+#    EXP: 3709
+#    JEXP: 1550
+#    Range: 1~10~12
+#    ATK: 423~507
+#    DEF: 10
+#    MDEF: 35
+#    Stats:
+#        Str: 38
+#        Agi: 65
+#        Vit: 43
+#        Int: 50
+#        Dex: 66
+#        Luk: 15
+#    Size: SZ_LARGE
+#    Race: RC_DEMON
+#    Element: ELE_DARK 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#        MD_NONE: on
+#        MD_CHANGETARGET_MELEE: on
+#        MD_CHANGETARGET_CHASE: on
+#    Speed: 200
+#    aDelay: 1384
+#    aMotion: 768
+#    dMotion: 336
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Copper_Coin_
+#        Rate: 1000
+#      -
+#        AegisName: Silver_Coin_
+#        Rate: 100
+#      -
+#        AegisName: Gold_Coin_US
+#        Rate: 30
+#      -
+#        AegisName: Black_Treasure_Box
+#        Rate: 8
+#  -
+#    MobId: 1244
+#    Name: Christmas Jakk
+#    Sprite: JAKK_XMAS
+#    LV: 38
+#    HP: 3581
+#    SP: 0
+#    EXP: 1113
+#    JEXP: 688
+#    Range: 1~10~12
+#    ATK: 315~382
+#    DEF: 5
+#    MDEF: 30
+#    Stats:
+#        Str: 1
+#        Agi: 38
+#        Vit: 38
+#        Int: 43
+#        Dex: 75
+#        Luk: 45
+#    Size: SZ_MEDIUM
+#    Race: RC_FORMLESS
+#    Element: ELE_FIRE 2
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CANATTACK: on
+#    Speed: 200
+#    aDelay: 1180
+#    aMotion: 480
+#    dMotion: 648
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Candy
+#        Rate: 1000
+#      -
+#        AegisName: Candy_Striper
+#        Rate: 1000
+#      -
+#        AegisName: Fire_Cracker_Love
+#        Rate: 1000
+#      -
+#        AegisName: Fire_Cracker_Xmas
+#        Rate: 1000
+#      -
+#        AegisName: Packing_Ribbon
+#        Rate: 1000
+#      -
+#        AegisName: Packing_Paper
+#        Rate: 1000
+#      -
+#        AegisName: Singing_Crystal_Piece
+#        Rate: 1000
+#      -
+#        AegisName: Xmas_Gift
+#        Rate: 1250
+#        StealProtected: true
+#  -
+#    MobId: 1245
+#    Name: Christmas Goblin
+#    Sprite: GOBLINE_XMAS
+#    LV: 25
+#    HP: 1176
+#    SP: 0
+#    EXP: 282
+#    JEXP: 171
+#    Range: 1~10~12
+#    ATK: 118~140
+#    DEF: 10
+#    MDEF: 5
+#    Stats:
+#        Str: 1
+#        Agi: 53
+#        Vit: 25
+#        Int: 20
+#        Dex: 38
+#        Luk: 45
+#    Size: SZ_MEDIUM
+#    Race: RC_DEMIHUMAN
+#    Element: ELE_WIND 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CANATTACK: on
+#    Speed: 100
+#    aDelay: 1120
+#    aMotion: 620
+#    dMotion: 240
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Candy
+#        Rate: 1000
+#      -
+#        AegisName: Candy_Striper
+#        Rate: 1000
+#      -
+#        AegisName: Fire_Cracker_Love
+#        Rate: 1000
+#      -
+#        AegisName: Fire_Cracker_Xmas
+#        Rate: 1000
+#      -
+#        AegisName: Packing_Ribbon
+#        Rate: 1000
+#      -
+#        AegisName: Packing_Paper
+#        Rate: 1000
+#      -
+#        AegisName: Singing_Crystal_Piece
+#        Rate: 1000
+#      -
+#        AegisName: Xmas_Gift
+#        Rate: 1250
+#        StealProtected: true
+#  -
+#    MobId: 1246
+#    Name: Christmas Cookie
+#    Sprite: COOKIE_XMAS
+#    LV: 28
+#    HP: 2090
+#    SP: 0
+#    EXP: 461
+#    JEXP: 284
+#    Range: 1~10~12
+#    ATK: 140~170
+#    DEF: 0
+#    MDEF: 50
+#    Stats:
+#        Str: 1
+#        Agi: 24
+#        Vit: 30
+#        Int: 53
+#        Dex: 45
+#        Luk: 100
+#    Size: SZ_SMALL
+#    Race: RC_DEMIHUMAN
+#    Element: ELE_HOLY 2
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#    Speed: 400
+#    aDelay: 1248
+#    aMotion: 1248
+#    dMotion: 240
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Candy
+#        Rate: 1000
+#      -
+#        AegisName: Candy_Striper
+#        Rate: 1000
+#      -
+#        AegisName: Fire_Cracker_Love
+#        Rate: 1000
+#      -
+#        AegisName: Fire_Cracker_Xmas
+#        Rate: 1000
+#      -
+#        AegisName: Packing_Ribbon
+#        Rate: 1000
+#      -
+#        AegisName: Packing_Paper
+#        Rate: 1000
+#      -
+#        AegisName: Singing_Crystal_Piece
+#        Rate: 1000
+#      -
+#        AegisName: Xmas_Gift
+#        Rate: 1250
+#        StealProtected: true
+#  -
+#    MobId: 1247
+#    Name: Antonio
+#    Sprite: ANTONIO
+#    LV: 10
+#    HP: 10
+#    SP: 0
+#    EXP: 3
+#    JEXP: 2
+#    Range: 1~10~12
+#    ATK: 13~20
+#    DEF: 100
+#    MDEF: 0
+#    Stats:
+#        Str: 1
+#        Agi: 1
+#        Vit: 1
+#        Int: 50
+#        Dex: 100
+#        Luk: 100
+#    Size: SZ_MEDIUM
+#    Race: RC_PLANT
+#    Element: ELE_HOLY 3
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_NOCAST_SKILL: on
+#        MD_CANATTACK: on
+#    Speed: 100
+#    aDelay: 720
+#    aMotion: 720
+#    dMotion: 432
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Branch_Of_Dead_Tree
+#        Rate: 500
+#      -
+#        AegisName: Buche_De_Noel
+#        Rate: 500
+#      -
+#        AegisName: Fire_Cracker_Xmas
+#        Rate: 500
+#      -
+#        AegisName: Santa's_Hat_
+#        Rate: 500
+#      -
+#        AegisName: Red_Bag
+#        Rate: 500
+#      -
+#        AegisName: Sweet_Candy_Striper
+#        Rate: 500
+#      -
+#        AegisName: Santa_Beard
+#        Rate: 500
+#      -
+#        AegisName: Antonio_Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 3014
+#    Name: Halloween Whisper
+#    Sprite: HALLOWEEN_WHISPER
+#    LV: 1
+#    HP: 800
+#    SP: 0
+#    EXP: 0
+#    JEXP: 0
+#    Range: 1~10~12
+#    ATK: 10~13
+#    DEF: 0
+#    MDEF: 45
+#    Stats:
+#        Str: 1
+#        Agi: 51
+#        Vit: 14
+#        Int: 0
+#        Dex: 60
+#        Luk: 0
+#    Size: SZ_SMALL
+#    Race: RC_DEMON
+#    Element: ELE_GHOST 3
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CANATTACK: on
+#    Speed: 150
+#    aDelay: 1960
+#    aMotion: 960
+#    dMotion: 504
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Fools_Day_Box
+#        Rate: 150
+#      -
+#        AegisName: Worn_Cloth_Piece
+#        Rate: 5335
+#  -
+#    MobId: 3015
+#    Name: Halloween Dark Lord
+#    Sprite: HALLOWEEN_DARK_LORD
+#    LV: 1
+#    HP: 45
+#    SP: 0
+#    EXP: 0
+#    JEXP: 0
+#    Range: 1~10~12
+#    ATK: 10~13
+#    DEF: 0
+#    MDEF: 45
+#    Stats:
+#        Str: 1
+#        Agi: 51
+#        Vit: 14
+#        Int: 0
+#        Dex: 60
+#        Luk: 0
+#    Size: SZ_LARGE
+#    Race: RC_DEMON
+#    Element: ELE_UNDEAD 4
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_CANATTACK: on
+#    Speed: 100
+#    aDelay: 868
+#    aMotion: 768
+#    dMotion: 480
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Fools_Day_Box
+#        Rate: 800
+#      -
+#        AegisName: Fools_Day_Box2
+#        Rate: 5335
+#  -
+#    MobId: 3000
+#    Name: Zombie
+#    Sprite: ZOMBIE
+#    LV: 15
+#    HP: 534
+#    SP: 0
+#    EXP: 50
+#    JEXP: 33
+#    Range: 1~10~12
+#    ATK: 67~79
+#    DEF: 0
+#    MDEF: 10
+#    Stats:
+#        Str: 1
+#        Agi: 8
+#        Vit: 7
+#        Int: 0
+#        Dex: 15
+#        Luk: 0
+#    Size: SZ_MEDIUM
+#    Race: RC_UNDEAD
+#    Element: ELE_UNDEAD 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CANATTACK: on
+#        MD_ANGRY: on
+#        MD_CHANGETARGET_MELEE: on
+#        MD_CHANGETARGET_CHASE: on
+#    Speed: 400
+#    aDelay: 2612
+#    aMotion: 912
+#    dMotion: 288
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Decayed_Nail
+#        Rate: 9000
+#      -
+#        AegisName: Cardinal_Jewel_
+#        Rate: 5
+#      -
+#        AegisName: Sticky_Mucus
+#        Rate: 1000
+#      -
+#        AegisName: Horrendous_Mouth
+#        Rate: 50
+#      -
+#        AegisName: White_Jewel
+#        Rate: 70
+#      -
+#        AegisName: Zombie_Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 3001
+#    Name: Ghoul
+#    Sprite: GHOUL
+#    LV: 40
+#    HP: 5418
+#    SP: 0
+#    EXP: 1088
+#    JEXP: 622
+#    Range: 1~10~12
+#    ATK: 420~500
+#    DEF: 5
+#    MDEF: 20
+#    Stats:
+#        Str: 1
+#        Agi: 20
+#        Vit: 29
+#        Int: 0
+#        Dex: 45
+#        Luk: 20
+#    Size: SZ_MEDIUM
+#    Race: RC_UNDEAD
+#    Element: ELE_UNDEAD 2
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CANATTACK: on
+#        MD_ANGRY: on
+#        MD_CHANGETARGET_MELEE: on
+#        MD_CHANGETARGET_CHASE: on
+#    Speed: 250
+#    aDelay: 2456
+#    aMotion: 912
+#    dMotion: 504
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Horrendous_Mouth
+#        Rate: 6000
+#      -
+#        AegisName: Oridecon_Stone
+#        Rate: 110
+#      -
+#        AegisName: White_Herb
+#        Rate: 700
+#      -
+#        AegisName: Green_Herb
+#        Rate: 800
+#      -
+#        AegisName: Skul_Ring
+#        Rate: 60
+#      -
+#        AegisName: Mementos
+#        Rate: 150
+#      -
+#        AegisName: Ghoul_Leg
+#        Rate: 1
+#      -
+#        AegisName: Ghoul_Card
+#        Rate: 1
+#        StealProtected: true
+#  -
+#    MobId: 3002
+#    Name: Zombie Master
+#    Sprite: ZOMBIE_MASTER
+#    LV: 62
+#    HP: 14211
+#    SP: 0
+#    EXP: 7610
+#    JEXP: 2826
+#    Range: 1~10~12
+#    ATK: 824~1084
+#    DEF: 37
+#    MDEF: 26
+#    Stats:
+#        Str: 25
+#        Agi: 20
+#        Vit: 30
+#        Int: 5
+#        Dex: 77
+#        Luk: 35
+#    Size: SZ_MEDIUM
+#    Race: RC_UNDEAD
+#    Element: ELE_UNDEAD 1
+#    Mode:
+#        MD_CANMOVE: on
+#        MD_AGGRESSIVE: on
+#        MD_CASTSENSOR_IDLE: on
+#        MD_CANATTACK: on
+#        MD_CASTSENSOR_CHASE: on
+#        MD_CHANGECHASE: on
+#        MD_CHANGETARGET_MELEE: on
+#        MD_CHANGETARGET_CHASE: on
+#    Speed: 175
+#    aDelay: 2612
+#    aMotion: 912
+#    dMotion: 288
+#    Overwrite: true
+#    NormalDrop:
+#      -
+#        AegisName: Tatters_Clothes
+#        Rate: 4413
+#      -
+#        AegisName: Sticky_Mucus
+#        Rate: 1500
+#      -
+#        AegisName: Horrendous_Mouth
+#        Rate: 1500
+#      -
+#        AegisName: Cardinal_Jewel
+#        Rate: 200
+#      -
+#        AegisName: White_Jewel
+#        Rate: 100
+#      -
+#        AegisName: Ghoul_Leg
+#        Rate: 1
+#      -
+#        AegisName: Scapulare_
+#        Rate: 2
+#      -
+#        AegisName: Zombie_Master_Card
+#        Rate: 1
+#        StealProtected: true

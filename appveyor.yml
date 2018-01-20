@@ -86,9 +86,17 @@ test_script:
     
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_db2.sql"
     
+    %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_drop.sql"
+    
+    %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_drop2.sql"
+    
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_db_re.sql"
     
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_db2_re.sql"
+    
+    %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_drop_re.sql"
+    
+    %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_drop2_re.sql"
     
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\mob_skill_db.sql"
     

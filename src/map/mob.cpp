@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <map>
 #include <math.h>
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
@@ -134,6 +135,8 @@ static DBMap *mob_summon_db; /// Random Summon DB. struct s_randomsummon_group -
  *------------------------------------------*/
 static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data);
 int mob_skill_id2skill_idx(int mob_id,uint16 skill_id);
+static bool mob_read_yaml_db_sub(const YAML::Node &node, const std::string &source);
+static bool mob_add_drop(struct mob_db *entry, unsigned short nameid, int dtype, int index, int rate, bool steal_protected, int rog);
 
 /*========================================== [Playtester]
 * Removes all characters that spotted the monster but are no longer online
@@ -2696,7 +2699,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = NULL;
 
-		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		for (i = 0; i < MAX_MOB_DROP; i++) {
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
@@ -2878,15 +2881,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( !(map[m].flag.nomvploot || type&1) ) {
 			//Order might be random depending on item_drop_mvp_mode config setting
-			struct s_mob_drop mdrop[MAX_MVP_DROP_TOTAL];
+			struct s_mob_drop mdrop[MAX_MVP_DROP];
 
 			memset(&mdrop,0,sizeof(mdrop));
 
 			if(battle_config.item_drop_mvp_mode == 1) {
 				//Random order
-				for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+				for(i = 0; i < MAX_MVP_DROP; i++) {
 					while( 1 ) {
-						uint8 va = rnd()%MAX_MVP_DROP_TOTAL;
+						uint8 va = rnd()%MAX_MVP_DROP;
 						if (mdrop[va].nameid == 0) {
 							if (md->db->mvpitem[i].nameid > 0)
 								memcpy(&mdrop[va],&md->db->mvpitem[i],sizeof(mdrop[va]));
@@ -2896,13 +2899,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				}
 			} else {
 				//Normal order
-				for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+				for(i = 0; i < MAX_MVP_DROP; i++) {
 					if (md->db->mvpitem[i].nameid > 0)
 						memcpy(&mdrop[i],&md->db->mvpitem[i],sizeof(mdrop[i]));
 				}
 			}
 
-			for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+			for(i = 0; i < MAX_MVP_DROP; i++) {
 				struct item_data *i_data;
 
 				if(mdrop[i].nameid <= 0 || !(i_data = itemdb_exists(mdrop[i].nameid)))
@@ -4090,198 +4093,71 @@ static void item_dropratio_adjust(unsigned short nameid, int mob_id, int *rate_a
 /*==========================================
  * processes one mobdb entry
  *------------------------------------------*/
-static bool mob_parse_dbrow(char** str)
+static bool mob_db_parse_dbrow(char** str, char* table)
 {
-	struct mob_db *db, entry;
-	struct status_data *status;
-	int mob_id, i;
-	double exp, maxhp;
-	struct mob_data data;
+	YAML::Node node, stats;
 
-	mob_id = atoi(str[0]);
+	node["MobId"] = str[0];
+	node["Name"] = str[1];
+	node["kROName"] = str[2];
+	node["Sprite"] = str[3];
+	node["LV"] = str[4];
+	node["HP"] = str[5];
+	node["SP"] = str[6];
+	node["EXP"] = str[7];
+	node["JEXP"] = str[8];
+	node["Range"] = std::string(str[9]) + "~" + std::string(str[20]) + "~" + std::string(str[21]);
+	if (str[11][0])
+		node["ATK"] = std::string(str[10]) + "~" + std::string(str[11]);
+	else
+		node["ATK"] = std::string(str[10]);
+	node["DEF"] = str[12];
+	node["MDEF"] = str[13];
+	stats["Str"] = str[14];
+	stats["Agi"] = str[15];
+	stats["Vit"] = str[16];
+	stats["Int"] = str[17];
+	stats["Dex"] = str[18];
+	stats["Luk"] = str[19];
+	node["Stats"] = stats;
+	node["Scale"] = str[22];
+	node["Race"] = str[23];
+	node["Element"] = str[24];
+	node["Mode"] = str[25];
+	node["Speed"] = str[26];
+	node["aDelay"] = str[27];
+	node["aMotion"] = str[28];
+	node["dMotion"] = str[29];
+	node["MEXP"] = str[30];
 
-	if (!((mob_id > MIN_MOB_DB && mob_id < MAX_MOB_DB) || (mob_id > MIN_MOB_DB2 && mob_id < MAX_MOB_DB2))) {
-		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d or %d-%d.\n", mob_id, MIN_MOB_DB, MAX_MOB_DB, MIN_MOB_DB2, MAX_MOB_DB2);
-		return false;
-	}
 
-	memset(&entry, 0, sizeof(entry));
-
-	status = &entry.status;
-
-	entry.vd.class_ = mob_id;
-	safestrncpy(entry.sprite, str[1], sizeof(entry.sprite));
-	safestrncpy(entry.jname, str[2], sizeof(entry.jname));
-	safestrncpy(entry.name, str[3], sizeof(entry.name));
-	entry.lv = atoi(str[4]);
-	entry.lv = cap_value(entry.lv, 1, USHRT_MAX);
-	status->max_hp = atoi(str[5]);
-	status->max_sp = atoi(str[6]);
-
-	exp = (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
-	entry.base_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
-
-	exp = (double)atoi(str[8]) * (double)battle_config.job_exp_rate / 100.;
-	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
-
-	status->rhw.range = atoi(str[9]);
-	status->rhw.atk = atoi(str[10]);
-	status->rhw.atk2 = atoi(str[11]);
-	status->def = atoi(str[12]);
-	status->mdef = atoi(str[13]);
-	status->str = atoi(str[14]);
-	status->agi = atoi(str[15]);
-	status->vit = atoi(str[16]);
-	status->int_ = atoi(str[17]);
-	status->dex = atoi(str[18]);
-	status->luk = atoi(str[19]);
-	//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
-	if (status->str < 1) status->str = 1;
-	if (status->agi < 1) status->agi = 1;
-	if (status->vit < 1) status->vit = 1;
-	if (status->int_< 1) status->int_= 1;
-	if (status->dex < 1) status->dex = 1;
-	if (status->luk < 1) status->luk = 1;
-
-	entry.range2 = atoi(str[20]);
-	entry.range3 = atoi(str[21]);
-	if (battle_config.view_range_rate != 100) {
-		entry.range2 = entry.range2 * battle_config.view_range_rate / 100;
-		if (entry.range2 < 1)
-			entry.range2 = 1;
-	}
-	if (battle_config.chase_range_rate != 100) {
-		entry.range3 = entry.range3 * battle_config.chase_range_rate / 100;
-		if (entry.range3 < entry.range2)
-			entry.range3 = entry.range2;
-	}
-	//Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
-	entry.range3 += 2;
-
-	status->size = atoi(str[22]);
-	status->race = atoi(str[23]);
-
-	i = atoi(str[24]); //Element
-	status->def_ele = i%20;
-	status->ele_lv = (unsigned char)floor(i/20.);
-	if (!CHK_ELEMENT(status->def_ele)) {
-		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
-		return false;
-	}
-	if (!CHK_ELEMENT_LEVEL(status->ele_lv)) {
-		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-%d.\n", status->ele_lv, mob_id, MAX_ELE_LEVEL);
-		return false;
-	}
-
-	status->mode = static_cast<enum e_mode>(strtol(str[25], NULL, 0));
-	if (!battle_config.monster_active_enable)
-		status->mode = static_cast<enum e_mode>(status->mode&(~MD_AGGRESSIVE));
-
-	if (status_has_mode(status,MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
-		status->class_ = CLASS_BOSS;
-	else // Store as Normal and overwrite in mob_race2_db for special Class
-		status->class_ = CLASS_NORMAL;
-
-	status->speed = atoi(str[26]);
-	status->aspd_rate = 1000;
-	i = atoi(str[27]);
-	status->adelay = cap_value(i, battle_config.monster_max_aspd*2, 4000);
-	i = atoi(str[28]);
-	status->amotion = cap_value(i, battle_config.monster_max_aspd, 2000);
-	//If the attack animation is longer than the delay, the client crops the attack animation!
-	//On aegis there is no real visible effect of having a recharge-time less than amotion anyway.
-	if (status->adelay < status->amotion)
-		status->adelay = status->amotion;
-	status->dmotion = atoi(str[29]);
-	if(battle_config.monster_damage_delay_rate != 100)
-		status->dmotion = status->dmotion * battle_config.monster_damage_delay_rate / 100;
-
-	// Fill in remaining status data by using a dummy monster.
-	data.bl.type = BL_MOB;
-	data.level = entry.lv;
-	memcpy(&data.status, status, sizeof(struct status_data));
-	status_calc_misc(&data.bl, status, entry.lv);
-
-	// MVP EXP Bonus: MEXP
-	// Some new MVP's MEXP multipled by high exp-rate cause overflow. [LuzZza]
-	exp = (double)atoi(str[30]) * (double)battle_config.mvp_exp_rate / 100.;
-	entry.mexp = (unsigned int)cap_value(exp, 0, UINT_MAX);
-
-	//Now that we know if it is an mvp or not, apply battle_config modifiers [Skotlex]
-	maxhp = (double)status->max_hp;
-	if (entry.mexp > 0) { //Mvp
-		if (battle_config.mvp_hp_rate != 100)
-			maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
-	} else //Normal mob
-		if (battle_config.monster_hp_rate != 100)
-			maxhp = maxhp * (double)battle_config.monster_hp_rate / 100.;
-
-	status->max_hp = (unsigned int)cap_value(maxhp, 1, UINT_MAX);
-	if(status->max_sp < 1) status->max_sp = 1;
-
-	//Since mobs always respawn with full life...
-	status->hp = status->max_hp;
-	status->sp = status->max_sp;
-
-	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
-	for(i = 0; i < MAX_MVP_DROP; i++) {
-		entry.mvpitem[i].nameid = atoi(str[31+i*2]);
-
-		if( entry.mvpitem[i].nameid ){
-			if( itemdb_search(entry.mvpitem[i].nameid) ){
-				entry.mvpitem[i].p = atoi(str[32+i*2]);
-				continue;
-			}else{
-				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(MVP-Drop %d)\n", entry.name, mob_id, str[31+i*2], ( i / 2 ) + 1 );
-			}
-		}
-
-		// Delete the item
-		entry.mvpitem[i].nameid = 0;
-		entry.mvpitem[i].p = 0;
-	}
-
-	for(i = 0; i < MAX_MOB_DROP; i++) {
-		int k = 31 + MAX_MVP_DROP*2 + i*2;
-
-		entry.dropitem[i].nameid = atoi(str[k]);
-
-		if( entry.dropitem[i].nameid ){
-			if( itemdb_search( entry.dropitem[i].nameid ) ){
-				entry.dropitem[i].p = atoi(str[k+1]);
-				continue;
-			}else{
-				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(Drop %d)\n", entry.name, mob_id, str[k], ( i / 2 ) + 1 );
-			}
-		}
-
-		// Delete the item
-		entry.dropitem[i].nameid = 0;
-		entry.dropitem[i].p = 0;
-	}
-
-	db = mob_db(mob_id);
-
-	// Finally insert monster's data into the database.
-	if (db == NULL) {
-		try{
-			db = &mob_db_data[mob_id];
-		}catch( std::bad_alloc ){
-			ShowError( "Memory allocation for monster %hu failed.\n", mob_id );
-			return false;
-		}
-	}
-
-	memcpy(db, &entry, sizeof(struct mob_db));
-	return true;
+	return mob_read_yaml_db_sub(node, table);
 }
 
+
 /*==========================================
- * mob_db.txt reading
- *------------------------------------------*/
-static bool mob_readdb_sub(char* fields[], int columns, int current)
+* processes one mobdb entry
+*------------------------------------------*/
+static bool mob_drop_parse_dbrow(char** str, char* table)
 {
-	return mob_parse_dbrow(fields);
+	int mob_id, nameid, dtype, index, rate, rog, max;
+	bool steal_protected;
+	struct mob_db *db;
+	mob_id = atoi(str[0]);
+	if ((db = mob_db(mob_id)) == NULL)	// invalid class (probably undefined in db)
+	{
+		ShowWarning("mob_drop_parse_dbrow: Unknown mob id %d.\n", mob_id);
+		return false;
+	}
+
+	dtype = atoi(str[1]);
+	index = atoi(str[2]);
+	nameid = atoi(str[3]);
+	rate = atoi(str[4]);
+	steal_protected = atoi(str[5]) > 0;
+	rog = atoi(str[5]);
+
+	return mob_add_drop(db, nameid, dtype, index, rate, steal_protected, rog);
 }
 
 /*==========================================
@@ -4289,51 +4165,71 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
  *------------------------------------------*/
 static int mob_read_sqldb(void)
 {
-	const char* mob_db_name[] = {
-		mob_table,
-		mob2_table };
-	int fi;
+	uint32 lines = 0, count = 0;
 
-	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
-		uint32 lines = 0, count = 0;
-
-		// retrieve all rows from the mob database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_db_name[fi]) ) {
-			Sql_ShowDebug(mmysql_handle);
-			continue;
-		}
-
-		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-			// wrap the result into a TXT-compatible format
-			char line[1024];
-			char* str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
-			char* p;
-			int i;
-
-			lines++;
-			for(i = 0, p = line; i < 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP; i++)
-			{
-				char* data;
-				size_t len;
-				Sql_GetData(mmysql_handle, i, &data, &len);
-
-				strcpy(p, data);
-				str[i] = p;
-				p+= len + 1;
-			}
-
-			if (!mob_parse_dbrow(str))
-				continue;
-
-			count++;
-		}
-
-		// free the query result
-		Sql_FreeResult(mmysql_handle);
-
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
+	// retrieve all rows from the mob database
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_table) ) {
+		Sql_ShowDebug(mmysql_handle);
+		return 1;
 	}
+
+	// process rows one by one
+	while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
+		// wrap the result into a TXT-compatible format
+		char* str[31];
+		int i;
+		char dummy[255] = "";
+		lines++;
+		for(i = 0; i < 31; i++)
+		{
+			Sql_GetData(mmysql_handle, i, &str[i], NULL);
+			if (str[i] == NULL)
+				str[i] = dummy; // get rid of NULL columns
+		}
+
+		if (!mob_db_parse_dbrow(str, mob_table))
+			continue;
+
+		count++;
+	}
+
+	// free the query result
+	Sql_FreeResult(mmysql_handle);
+
+	ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_table);
+
+
+	// retrieve all rows from the mob database
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_drop_table)) {
+		Sql_ShowDebug(mmysql_handle);
+		return 1;
+	}
+
+	// process rows one by one
+	while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+		// wrap the result into a TXT-compatible format
+		char* str[7];
+		int i;
+		char dummy[255] = "";
+		lines++;
+		for (i = 0; i < 7; i++)
+		{
+			Sql_GetData(mmysql_handle, i, &str[i], NULL);
+			if (str[i] == NULL)
+				str[i] = dummy; // get rid of NULL columns
+		}
+
+		if (!mob_drop_parse_dbrow(str, mob_drop_table))
+			continue;
+
+		count++;
+	}
+
+	// free the query result
+	Sql_FreeResult(mmysql_handle);
+
+	ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_drop_table);
+
 	return 0;
 }
 
@@ -4751,6 +4647,10 @@ static void mob_readskilldb(const char* basedir, bool silent) {
 	sv_readdb(basedir, "mob_skill_db.txt", ',', 19, 19, -1, &mob_parse_row_mobskilldb, silent);
 }
 
+static void mob_db_data_clearskill(std::pair<uint16, struct mob_db> mdb) {
+	memset(&mdb.second.skill, 0, sizeof(mdb.second.skill));
+}
+
 /**
  * mob_skill_db table reading [CalciumKid]
  * not overly sure if this is all correct
@@ -4767,6 +4667,8 @@ static int mob_read_sqlskilldb(void)
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
 		return 0;
 	}
+
+	std::for_each(mob_db_data.begin(), mob_db_data.end(), &mob_db_data_clearskill);
 
 	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
 		uint32 lines = 0, count = 0;
@@ -4956,6 +4858,557 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 	return true;
 }
 
+static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
+	YAML::Emitter out;
+	out << node;
+	ShowWarning(fmt, file.c_str());
+	ShowMessage("%s\n", out.c_str());
+}
+
+static bool yaml_assert_exists(const YAML::Node &node, const std::string &key, const std::string &source, const char * func) {
+	if (!node[key]) {
+		std::string msg = std::string(func) + ": Missing " + key + " field in '" CL_WHITE "%s" CL_RESET "', skipping.\n";
+		yaml_invalid_warning(msg.c_str(), node, source);
+		return false;
+	}
+	return true;
+}
+
+static bool mob_validate(struct mob_db *entry) {
+	//validate mob
+	struct status_data * status;
+	std::string err_msg;
+	std::vector<std::string> errs = {};
+
+	status = &entry->status;
+	if (entry->sprite[0] == 0)
+		errs.push_back("SpriteName");
+	if (entry->jname[0] == 0)
+		errs.push_back("kROName");
+	if (entry->name[0] == 0)
+		errs.push_back("Name");
+	if (!CHK_ELEMENT(status->def_ele) || !CHK_ELEMENT_LEVEL(status->ele_lv))
+		errs.push_back("Element [" + std::to_string(status->def_ele) + " - " + std::to_string(status->ele_lv) + "]");
+
+	if (errs.size() > 0) {
+		err_msg = "Monster %hu is not valid! Errors: ";
+		for (std::string err : errs) {
+			err_msg += err + " | ";
+		}
+		ShowError(err_msg.c_str(), entry->vd.class_);
+		return false;
+	}
+	struct mob_data data;
+	// Fill in remaining status data by using a dummy monster.
+
+	entry->lv = cap_value(entry->lv, 1, USHRT_MAX);
+	entry->base_exp = cap_value(entry->base_exp, 0, UINT_MAX);
+	entry->job_exp = cap_value(entry->job_exp, 0, UINT_MAX);
+	if (status->str < 1) status->str = 1;
+	if (status->agi < 1) status->agi = 1;
+	if (status->vit < 1) status->vit = 1;
+	if (status->int_ < 1) status->int_ = 1;
+	if (status->dex < 1) status->dex = 1;
+	if (status->luk < 1) status->luk = 1;
+
+	status->adelay = cap_value(status->adelay, battle_config.monster_max_aspd * 2, 4000);
+	status->amotion = cap_value(status->amotion, battle_config.monster_max_aspd, 2000);
+	if (status->adelay < status->amotion)
+		status->adelay = status->amotion;
+
+	data.bl.type = BL_MOB;
+	data.level = entry->lv;
+	memcpy(&data.status, status, sizeof(struct status_data));
+	status_calc_misc(&data.bl, status, entry->lv);
+
+	entry->mexp = cap_value(entry->mexp, 0, UINT_MAX);
+	int maxhp = status->max_hp;
+
+	if (entry->mexp > 0) { //Mvp
+		if (battle_config.mvp_hp_rate != 100)
+			maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
+	}
+	else { //Normal mob
+		if (battle_config.monster_hp_rate != 100)
+			maxhp = maxhp * (double)battle_config.monster_hp_rate / 100.;
+	}
+	status->max_hp = cap_value(maxhp, 1, UINT_MAX);
+	if (status->max_sp < 1) status->max_sp = 1;
+
+	status->hp = status->max_hp;
+	status->sp = status->max_sp;
+	return true;
+}
+
+static bool mob_add_drop(struct mob_db *entry, unsigned short nameid, int dtype, int index, int rate, bool steal_protected, int rog) {
+	int max, i;
+	struct s_mob_drop *drop = NULL;
+	bool overwrite = false;
+	if (dtype == DTYPE_NORMAL) {
+		drop = entry->dropitem;
+		max = MAX_MOB_DROP;
+	}
+	else if (dtype == DTYPE_MVP) {
+		drop = entry->mvpitem;
+		max = MAX_MVP_DROP;
+	}
+	else {
+		ShowWarning("mob_add_drop: Monster (%s) is dropping an unknown drop type (type: %d)\n", entry->sprite, dtype);
+		return false;
+	}
+
+	if (!itemdb_search(nameid)) {
+		ShowWarning("mob_add_drop: Monster (%s) is dropping an unknown item (id: %d)\n", entry->sprite, nameid);
+		return false;
+	}
+
+	if (rog && !itemdb_randomopt_group_exists(rog)) {
+		ShowError("mob_add_drop: 'RandomOptionGroup' '%d' cannot be found in DB for monster '%s'.\n", rog, entry->sprite);
+		return false;
+	}
+
+	if (index) {
+		if (index > max) {
+			ShowWarning("mob_add_drop: Monster (%s) is dropping too many items, max %d\n", entry->sprite, max);
+			return false;
+		}
+
+		drop = &(drop[index]);
+		if (rate == 0) {
+			memset(drop, 0, sizeof(s_mob_drop));
+		}
+		else {
+			drop->nameid = nameid;
+			drop->p = rate;
+			drop->randomopt_group = rog;
+			drop->steal_protected = steal_protected;
+		}
+	}
+	else {
+		for (i = 0; i < max; i++) {
+			if (rate == 0 && overwrite) {
+				if (!drop[i].nameid || drop[i].nameid != nameid)
+					continue;
+				memset(&drop[i], 0, sizeof(s_mob_drop));
+				overwrite = false;
+				break;
+			}
+			else if (overwrite) {
+				if (!drop[i].nameid || drop[i].nameid != nameid)
+					continue;
+				drop[i].nameid = nameid;
+				drop[i].p = rate;
+				drop[i].steal_protected = steal_protected;
+				drop[i].randomopt_group = rog;
+				overwrite = false;
+				break;
+			}
+			else {
+				if (drop[i].nameid)
+					continue;
+				drop[i].nameid = nameid;
+				drop[i].p = rate;
+				drop[i].steal_protected = steal_protected;
+				drop[i].randomopt_group = rog;
+				break;
+			}
+		}
+		if (overwrite) {
+			for (i = 0; i < max; i++) {
+				if (drop[i].nameid)
+					continue;
+				drop[i].nameid = nameid;
+				drop[i].p = rate;
+				drop[i].steal_protected = steal_protected;
+				drop[i].randomopt_group = rog;
+				break;
+			}
+		}
+		if (i == max) {
+			ShowWarning("mob_add_drop: Monster (%s) is dropping too many items, max %d\n", entry->sprite, max);
+			return false;
+		}
+	}
+	return true;
+}
+
+static bool mob_read_yaml_drop(const YAML::Node &node, struct mob_db * entry, int type, const std::string &source) {
+	unsigned short nameid;
+	int rate, max, index = 0, steal_protected = 0, rog = 0, i;
+	struct s_mob_drop *drop = NULL;
+	bool overwrite = false;
+
+	if (!yaml_assert_exists(node, "Rate", source, "mob_read_yaml_drop")) {
+		return false;
+	}
+
+	if (!node["ItemId"] && !node["AegisName"]) {
+		ShowError("mob_read_yaml_drops_sub: Monster '%s' dropping item without ItemId or AegisName.\n", entry->sprite);
+		return false;
+	}
+
+
+	try {
+		if (node["ItemId"]) {
+			nameid = node["ItemId"].as<unsigned short>();
+		}
+		else if (node["AegisName"]) {
+			item_data * id;
+			if (!(id = itemdb_searchname(node["AegisName"].as<std::string>().c_str()))) {
+				ShowError("mob_read_yaml_drops_sub: Monster '%s' dropping item with invalid AegisName.\n", entry->sprite);
+				return false;
+			}
+			nameid = id->nameid;
+		}
+
+		rate = node["Rate"].as<int>();
+		if (node["Index"])
+			index = node["Index"].as<int>();
+		if (node["StealProtected"])
+			steal_protected = node["StealProtected"].as<bool>();
+		if (node["Replace"])
+			overwrite = node["Replace"].as<bool>();
+		if (node["RandomOptionGroup"]) {
+			std::string str = node["RandomOptionGroup"].as<std::string>();
+			if (!script_get_constant(str.c_str(), &rog)) {
+				ShowError("mob_read_yaml_drops_sub: Invalid 'RandomOptionGroup' '%s' for monster '%s'.\n", str.c_str(), entry->sprite);
+				return false;
+			}
+		}
+	}
+	catch (...) {
+		yaml_invalid_warning("mob_read_yaml_drops_sub: Drop definition with invalid value in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
+	}
+
+	return mob_add_drop(entry, nameid, type, index, rate, steal_protected, rog);
+}
+
+static bool mob_read_yaml_db_sub(const YAML::Node &node, const std::string &source) {
+	int mob_id = 0;
+	int ret = 0;
+	bool overwrite = false;
+	struct mob_db *db, entry;
+	struct status_data *status;
+	std::string field;
+
+	if (!yaml_assert_exists(node, "MobId", source, "mob_read_yaml_db_sub"))
+		return false;
+
+	try {
+		mob_id = node["MobId"].as<unsigned int>();
+	}
+	catch (...) {
+		yaml_invalid_warning("mob_read_yaml_db_sub: Mob db definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
+	}
+
+	if (!((mob_id > MIN_MOB_DB && mob_id < MAX_MOB_DB) || (mob_id > MIN_MOB_DB2 && mob_id < MAX_MOB_DB2))) {
+		ShowError("mob_read_yaml_db_sub: Invalid monster ID %hu, must be in range %d-%d or %d-%d.\n", mob_id, MIN_MOB_DB, MAX_MOB_DB, MIN_MOB_DB2, MAX_MOB_DB2);
+		return false;
+	}
+
+	if (node["Overwrite"]) {
+		try {
+			overwrite = node["Overwrite"].as<bool>();
+		}
+		catch (...) {
+			yaml_invalid_warning("mob_read_yaml_db_sub: Mob db definition with invalid Overwrite option in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			return false;
+		}
+	}
+
+	db = mob_db(mob_id);
+
+	if (db == NULL || overwrite) {
+		try {
+			db = &mob_db_data[mob_id];
+			memset(&entry, 0, sizeof(entry) - sizeof(entry.skill));
+		}
+		catch (std::bad_alloc) {
+			ShowError("Memory allocation for monster %hu failed.\n", mob_id);
+			return false;
+		}
+	}
+	else {
+		memcpy(&entry, db, sizeof(entry));
+	}
+	status = &entry.status;
+	entry.vd.class_ = mob_id;
+
+	try {
+
+		field = "Name";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			str.copy(entry.name, NAME_LENGTH);
+			str.copy(entry.jname, NAME_LENGTH);
+		}
+
+		field = "Sprite";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			str.copy(entry.sprite, NAME_LENGTH);
+		}
+
+		field = "kROName";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			str.copy(entry.jname, NAME_LENGTH);
+		}
+
+		field = "Range";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			size_t idx = 0;
+			status->rhw.range = std::stoi(str, &idx);
+			str = str.substr(idx + 1);
+			entry.range2 = std::stoi(str, &idx);
+			str = str.substr(idx + 1);
+			entry.range3 = std::stoi(str);
+
+			if (battle_config.view_range_rate != 100) {
+				entry.range2 = entry.range2 * battle_config.view_range_rate / 100;
+				if (entry.range2 < 1)
+					entry.range2 = 1;
+			}
+
+			if (battle_config.chase_range_rate != 100) {
+				entry.range3 = entry.range3 * battle_config.chase_range_rate / 100;
+				if (entry.range3 < entry.range2)
+					entry.range3 = entry.range2;
+			}
+			entry.range3 += 2;
+		}
+		field = "ATK";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			// 100~150 | 100
+			size_t idx = 0;
+			status->rhw.atk = std::stoi(str, &idx);
+			if (idx != str.length()) {
+				//then there's variance
+				str = str.substr(idx + 1);
+				status->rhw.atk2 = std::stoi(str);
+			}
+			else {
+				status->rhw.atk2 = status->rhw.atk;
+			}
+		}
+		field = "Race";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			size_t idx = 0;
+			int race = std::stoi(str, &idx);
+			if (idx == 0 && !script_get_constant(str.c_str(), &race))
+				throw;
+			status->race = race;
+		}
+		field = "Element";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			size_t idx = 0;
+			int element = std::stoi(str, &idx);
+			int def_ele;
+			int ele_lv;
+			if (idx == 0) {
+				idx = str.find(" ");
+				if (!script_get_constant(str.substr(0, idx).c_str(), &def_ele))
+					throw;
+				ele_lv = std::stoi(str.substr(idx));
+			}
+			else {
+				def_ele = element % 20;
+				ele_lv = (unsigned char)floor(element / 20.);
+			}
+			status->def_ele = def_ele;
+			status->ele_lv = ele_lv;
+		}
+		field = "Size";
+		if (node[field] && !node[field].IsNull()) {
+			std::string str = node[field].as<std::string>();
+			size_t idx = 0;
+			int size = std::stoi(str, &idx);
+			if (idx == 0 && !script_get_constant(str.c_str(), &size))
+				throw;
+			status->size = size;
+		}
+		field = "LV";
+		if (node[field] && !node[field].IsNull()) {
+			entry.lv = node[field].as<int>();
+		}
+		field = "HP";
+		if (node[field] && !node[field].IsNull()) {
+			status->max_hp = node[field].as<int>();
+		}
+		field = "SP";
+		if (node[field] && !node[field].IsNull()) {
+			status->max_sp = node[field].as<int>();
+		}
+		field = "EXP";
+		if (node[field] && !node[field].IsNull()) {
+			int exp = node[field].as<int>();
+			entry.base_exp = (double)exp * (double)battle_config.base_exp_rate / 100.;
+		}
+		field = "JEXP";
+		if (node[field] && !node[field].IsNull()) {
+			int exp = node[field].as<int>();
+			entry.job_exp = (double)exp * (double)battle_config.job_exp_rate / 100.;
+		}
+		field = "DEF";
+		if (node[field] && !node[field].IsNull()) {
+			status->def = node[field].as<int>();
+		}
+		field = "MDEF";
+		if (node[field] && !node[field].IsNull()) {
+			status->mdef = node[field].as<int>();
+		}
+		field = "Speed";
+		if (node[field] && !node[field].IsNull()) {
+			status->speed = node[field].as<int>();
+		}
+		field = "aDelay";
+		if (node[field] && !node[field].IsNull()) {
+			status->adelay = node[field].as<int>();
+		}
+		field = "aMotion";
+		if (node[field] && !node[field].IsNull()) {
+			status->amotion = node[field].as<int>();
+		}
+		field = "dMotion";
+		if (node[field] && !node[field].IsNull()) {
+			int val = node[field].as<int>();
+			if (battle_config.monster_damage_delay_rate != 100)
+				status->dmotion = val * battle_config.monster_damage_delay_rate / 100;
+			else
+				status->dmotion = val;
+		}
+		field = "MEXP";
+		if (node[field] && !node[field].IsNull()) {
+			int exp = node[field].as<int>();
+			entry.mexp = (double)exp * (double)battle_config.mvp_exp_rate / 100.;
+		}
+		field = "Mode";
+		if (node[field] && !node[field].IsNull()) {
+			if (node[field].IsSequence()) {
+				const YAML::Node &modes = node[field];
+				std::string err_msg;
+				for (YAML::const_iterator it = modes.begin(); it != modes.end(); ++it) {
+					std::string mode = it->first.as<std::string>();
+					int em;
+					bool on = true;
+
+					if (!it->second.IsNull())
+						on = it->second.as<bool>();
+
+					if (!script_get_constant(mode.c_str(), &em)) {
+						err_msg = "mob_read_yaml_db_sub: Mode " + mode + " is invalid for monster (%hu) in '" CL_WHITE "%s" CL_RESET "', skipping.\n";
+						yaml_invalid_warning(err_msg.c_str(), node, source);
+					}
+
+					if (on) {
+						status->mode = static_cast<enum e_mode>(status->mode | em);
+					}
+					else {
+						status->mode = static_cast<enum e_mode>(status->mode & ~em);
+					}
+				}
+			}
+			else {
+				status->mode = static_cast<enum e_mode>(node[field].as<int>());
+			}
+			if (!battle_config.monster_active_enable)
+				status->mode = static_cast<enum e_mode>(status->mode&(~MD_AGGRESSIVE));
+			if (status_has_mode(status, MD_STATUS_IMMUNE | MD_KNOCKBACK_IMMUNE | MD_DETECTOR))
+				status->class_ = CLASS_BOSS;
+			else // Store as Normal and overwrite in mob_race2_db for special Class
+				status->class_ = CLASS_NORMAL;
+		}
+
+		field = "Stats";
+		if (node[field] && !node[field].IsNull()) {
+			const YAML::Node &stats = node[field];
+			try {
+				if (stats["Str"]) {
+					status->str = stats["Str"].as<int>();
+				}
+				if (stats["Agi"]) {
+					status->agi = stats["Agi"].as<int>();
+				}
+				if (stats["Vit"]) {
+					status->vit = stats["Vit"].as<int>();
+				}
+				if (stats["Int"]) {
+					status->int_ = stats["Int"].as<int>();
+				}
+				if (stats["Dex"]) {
+					status->dex = stats["Dex"].as<int>();
+				}
+				if (stats["Luk"]) {
+					status->luk = stats["Luk"].as<int>();
+				}
+			}
+			catch (...) {
+				std::string err_msg = "mob_read_yaml_db_sub: Invalid Stats for monster (" + std::to_string(mob_id) + ") in '" CL_WHITE "%s" CL_RESET "', skipping.\n";
+				yaml_invalid_warning(err_msg.c_str(), stats, source);
+				return false;
+			}
+		}
+	}
+	catch (...) {
+		std::string err_msg;
+		err_msg = "mob_read_yaml_db_sub: " + field + " is incorrect for monster (" + entry.name + ") in '" CL_WHITE "%s" CL_RESET "', skipping.\n";
+		yaml_invalid_warning(err_msg.c_str(), node, source);
+		return false;
+	}
+
+	if (node["NormalDrop"]) {
+		const YAML::Node &dlist = node["NormalDrop"];
+		for (auto dropit = dlist.begin(); dropit != dlist.end() && dlist.size() < MAX_MOB_DROP; ++dropit) {
+			mob_read_yaml_drop((YAML::Node) *dropit, &entry, DTYPE_NORMAL, source);
+		}
+	}
+
+	if (node["MvPDrop"]) {
+		const YAML::Node &dlist = node["MvPDrop"];
+#if 0
+		if (!(entry.mexp > 0)) { //Not MvP
+			ShowWarning("Monster (%s) is dropping an item in MvP table, not actually MvP!\n", entry.sprite);
+		}
+#endif //0
+		for (auto dropit = dlist.begin(); dropit != dlist.end() && dlist.size() < MAX_MVP_DROP; ++dropit) {
+			mob_read_yaml_drop((YAML::Node) *dropit, &entry, DTYPE_MVP, source);
+		}
+	}
+
+	if (!mob_validate(&entry))
+		return false;
+
+	memcpy(db, &entry, sizeof(entry));
+
+	return true;
+}
+
+static void mob_read_yaml_db(char * path, const char * filename) {
+	YAML::Node config;
+	int count = 0;
+	std::string current_file = std::string(path) + "/" + std::string(filename);
+	try {
+		config = YAML::LoadFile(current_file);
+	}
+	catch (const std::runtime_error e) {
+		ShowError("Cannot read '" CL_WHITE "%s" CL_RESET "': %s.\n", current_file.c_str(), e.what());
+		return;
+	}
+
+	for (const auto &node : config["Mobs"]) {
+		if (node.IsDefined() && mob_read_yaml_db_sub(node, current_file))
+			count++;
+	}
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
+	return;
+}
+
 /**
  * Free drop ratio data
  **/
@@ -4982,7 +5435,7 @@ static void mob_drop_ratio_adjust(void){
 			continue;
 		}
 
-		for( j = 0; j < MAX_MVP_DROP_TOTAL; j++ ){
+		for( j = 0; j < MAX_MVP_DROP; j++ ){
 			nameid = mob->mvpitem[j].nameid;
 			rate = mob->mvpitem[j].p;
 
@@ -5019,7 +5472,7 @@ static void mob_drop_ratio_adjust(void){
 			mob->mvpitem[j].p = rate;
 		}
 
-		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
+		for( j = 0; j < MAX_MOB_DROP; j++ ){
 			unsigned short ratemin, ratemax;
 			bool is_treasurechest;
 
@@ -5245,7 +5698,8 @@ static void mob_load(void)
 				safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
 			}
 
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, silent);
+			mob_read_yaml_db(dbsubpath2, "mob_db.yml");
+			//sv_readdb(dbsubpath2, "mob_db.txt", ',', 31, 31, -1, &mob_readdb_sub, silent);
 
 			aFree(dbsubpath2);
 		}
@@ -5281,7 +5735,6 @@ static void mob_load(void)
 		sv_readdb(dbsubpath2, "mob_boss.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_pouch.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_classchange.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
-		sv_readdb(dbsubpath2, "mob_drop.txt", ',', 3, 5, -1, &mob_readdb_drop, silent);
 		
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
@@ -5320,7 +5773,7 @@ void mob_reload_itemmob_data(void) {
 			continue;
 		}
 
-		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
+		for (d = 0; d < MAX_MOB_DROP; d++) {
 			struct item_data *id;
 			if( !pair.second.dropitem[d].nameid )
 				continue;

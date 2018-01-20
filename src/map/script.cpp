@@ -10268,7 +10268,7 @@ BUILDIN_FUNC(getmobdrops)
 
 	mob = mob_db(class_);
 
-	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
+	for( i = 0; i < MAX_MOB_DROP; i++ )
 	{
 		if( mob->dropitem[i].nameid < 1 )
 			continue;
@@ -17079,7 +17079,7 @@ BUILDIN_FUNC(addmonsterdrop)
 
 	if(mob) { //We got a valid monster, check for available drop slot
 		unsigned char i, c = 0;
-		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		for(i = 0; i < MAX_MOB_DROP; i++) {
 			if(mob->dropitem[i].nameid) {
 				if(mob->dropitem[i].nameid == item_id) { //If it equals item_id we update that drop
 					c = i;
@@ -17135,7 +17135,7 @@ BUILDIN_FUNC(delmonsterdrop)
 
 	if(mob) { //We got a valid monster, check for item drop on monster
 		unsigned char i;
-		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		for(i = 0; i < MAX_MOB_DROP; i++) {
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
