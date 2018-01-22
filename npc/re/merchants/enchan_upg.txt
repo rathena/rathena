@@ -209,7 +209,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			close;
 		}
 		mes "[Devil Enchant Master]";
-		if (.@equip_card[3]) {
+		if (callfunc("F_IsCharm",.@equip_card[3]) == true) {
 			mes "This item has been enchanted!";
 			close;
 		}
@@ -250,7 +250,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			mes "You need to bring some money to initialize!!";
 			close;
 		}
-		if (.@equip_card[3] < 4700) { // Armor Enchant System
+		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
 			mes "This item is not enchanted!";
 			close;
 		}
