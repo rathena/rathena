@@ -154,7 +154,7 @@ moc_para01,48,177,3	script	91-99 Mission Board	857,{
 			case 2: callsub L_Quest,4193,"Mineral",138000,"미네랄","There is a monster only found in ^8B4513Einbech Dungeon^000000.";
 			case 3: callsub L_Quest,4194,"Kaho",118000,"카호카드","There is a monster found in ^8B4513Nogg Road Magma 1^000000.";
 			case 4: callsub L_Quest,4195,"Neraid",96000,"네레이드카드","There is a monster only found in ^8B4513Comodo Dungeon^000000.";
-			case 5: callsub L_Quest,4196,"Disguise",134000,"디스가이즈카드","There is a monster only found in ^8B4513Nifflheim^000000.";
+			case 5: callsub L_Quest,4196,"Disguise",134000,"디스가이즈카드","There is a monster only found in ^8B4513Niflheim^000000.";
 		}
 	}
 	end;
