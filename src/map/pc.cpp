@@ -5524,12 +5524,19 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	{
 		uint32 ip;
 		uint16 port;
+		struct script_state *st;
+
 		//if can't find any map-servers, just abort setting position.
 		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
 			return SETPOS_NO_MAPSERVER;
 
-		if (sd->npc_id)
-			npc_event_dequeue(sd);
+		if (sd->npc_id){
+			npc_event_dequeue(sd,false);
+			st = sd->st;
+		}else{
+			st = nullptr;
+		}
+
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
@@ -5542,6 +5549,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		//Free session data from this map server [Kevin]
 		unit_free_pc(sd);
+
+		if( st ){
+			// Has to be done here, because otherwise unit_free_pc will free the stack already
+			st->state = END;
+		}
 
 		return SETPOS_OK;
 	}
