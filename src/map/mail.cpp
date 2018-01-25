@@ -429,6 +429,10 @@ void npc_mail_send(struct npc_data *nd, const char *dest_name, const char *title
 	msg.zeny = zeny;
 	//msg.item[1].nameid = 502;
 	//msg.item[1].amount = 1;
+	for (int i = 0; i < MAIL_MAX_ITEM; i++) {
+		msg.item[i].nameid = 0;
+		msg.item[i].amount = 0;
+	}
 	msg.id = 0; // id will be assigned by charserver
 	msg.send_id = nd->bl.id;
 	msg.dest_id = 0; // will attempt to resolve name
