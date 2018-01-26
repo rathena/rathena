@@ -60,7 +60,7 @@ moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 				mes "The trade has been stopped!";
 				mes "I don't know what to do next...";
 				mes "What should I do?";
-				emotion e_swt2,1;
+				emotion ET_PROFUSELY_SWEAT, playerattached();
 				close;
 			} else if (.@input < 1 || .@input > 50) {
 				mes "It should be less than 50 pieces.";
@@ -88,7 +88,7 @@ moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
 		mes "explain again? I don't know";
 		mes "what to do next...";
 		mes "What should I do?";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		close;
 	case 3:
 		mes "[Catalog Magician]";

@@ -91,7 +91,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 				mes "in you! I might look";
 				mes "like a kid, but I'm over";
 				mes "three hundred years old!";
-				emotion e_pif;
+				emotion ET_HNG;
 				next;
 				mes "[Kid]";
 				mes "Now listen...";
@@ -100,7 +100,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 				mes "It's a respectable art, but";
 				mes "I've got a proposition for";
 				mes "you if you want to hear it.";
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
 				mes "[Kid]";
 				mes "I'm looking at you, and I can";
@@ -229,7 +229,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 					mes "go back and bring";
 					mes "everything that I ask";
 					mes "for this time, okay?";
-					emotion e_pif;
+					emotion ET_HNG;
 					next;
 					mes "[Kid]";
 					mes "I know I just told you";

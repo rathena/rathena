@@ -2,7 +2,11 @@
 IF "%1"=="" GOTO DIRECT
 IF "%2"=="" GOTO DIRECT
 IF NOT EXIST "%1" GOTO NOTFOUND
-GOTO START
+
+IF "%3"=="" ( set "restart_mode=on"
+) else set "restart_mode=%~3"
+echo "restart_mode=%restart_mode%"
+GOTO START_RA
 
 REM == How RESTART_9X and RESTART_NT works =========================
 REM On Windows 9x only the first 8 characters are significant for
@@ -17,7 +21,7 @@ REM Windows 95, 98, ME
 REM Old Ctrl+C in PING does not work, because that only stops ping,
 REM not the batch file.
 CHOICE /C:rc /N /T:R,15 Restarting in 15 seconds, press 'C' to cancel.
-IF NOT ERRORLEVEL 2 GOTO START
+IF NOT ERRORLEVEL 2 GOTO START_RA
 GOTO END
 
 REM Windows 2000, XP, Vista, 7
@@ -25,10 +29,11 @@ REM Windows 2000, XP, Vista, 7
 REM There is no CHOICE in 2000 and XP, but you get asked whether to
 REM abort the batch file, when pressing Ctrl+C in PING.
 IF "%1"=="mapcache.exe" GOTO END
+if "%restart_mode%" == "off" GOTO END
 ECHO Restarting in 15 seconds, press Ctrl+C to cancel.
 PING -n 15 127.0.0.1 > NUL
 
-:START
+:START_RA
 %1
 ECHO.
 REM Return value > 1 is exception&~0xC0000000

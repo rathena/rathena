@@ -207,7 +207,7 @@ OnInit:
 
 -	script	Runner_main	-1,{
 OnEnable:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	enablenpc strnpcinfo(0);
 	getmapxy(.@m$,.@x,.@y,UNITTYPE_NPC);
 	setarray .@mob[1], 1725,1726,1727,1728,1730,1729;
@@ -381,7 +381,7 @@ p_track01,67,45,5	script	Medal Distributor#single	845,{
 
 OnEnable:
 	enablenpc "Medal Distributor#single";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	initnpctimer;
 	end;
 
@@ -1352,7 +1352,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 						mes "to win this race. Good luck!";
 						mes "I really hope that the odds";
 						mes "work out in your favor~";
-						emotion e_kis;
+						emotion ET_CHUP;
 						monster_race_2_1 = .@m1;
 						monster_race_2_2 = .@m;
 						getitem 7514,1; //Monster_Ticket
@@ -1700,13 +1700,13 @@ OnEnable:
 OnTouchNPC:
 	.@i = MN;
 	if (!$@mon_race_2_1) {
-		emotion e_lv;
+		emotion ET_THROB;
 		specialeffect EF_MVP;
 		mapannounce "p_track02","Monster "+.@i+" has reached the Finish Line!",bc_map,"0x66FFCC";
 		$@mon_race_2_1 = .@i;
 		donpcevent strnpcinfo(0)+"::OnDisable";
 	} else {
-		emotion e_lv;
+		emotion ET_THROB;
 		specialeffect EF_MVP;
 		mapannounce "p_track02","The race is over! Monster "+.@i+" has reached the Finish Line!",bc_map,"0x66FFCC";
 		$@mon_race_2_2 = .@i;
@@ -2223,7 +2223,7 @@ S_Reward:
 		mes "those medals, so if you";
 		mes "change your mind, please";
 		mes "come back as soon as you can.";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	mes "[Ei'felle]";
@@ -2250,8 +2250,8 @@ S_Reward:
 			mes "becoming what you want";
 			mes "to be! B-believe... with";
 			mes "all of your freakin' heart!";
-			emotion e_omg,1;
-			emotion e_omg;
+			emotion ET_HUK, playerattached();
+			emotion ET_HUK;
 			next;
 			mes "[Ei'felle]";
 			mes "*Phew* How's that?";
@@ -2310,8 +2310,8 @@ S_Reward:
 			mes "You've gotta see it, and";
 			mes "you've gotta feel it in your";
 			mes "freakin' heart and mind!";
-			emotion e_omg,1;
-			emotion e_omg;
+			emotion ET_HUK, playerattached();
+			emotion ET_HUK;
 			next;
 			mes "[Ei'felle]";
 			mes "Yeap, it doesn't matter";
@@ -2482,7 +2482,7 @@ S_Reward:
 					mes "medals with you. Make sure";
 					mes "that you offer me an amount of";
 					mes "medals that you actually have.";
-					emotion e_heh;
+					emotion ET_SMILE;
 					close;
 				} else {
 					mes "[Ei'felle]";
@@ -2808,7 +2808,7 @@ p_track02,32,45,5	script	Eccentric Scholar#double	755,{
 	mes "my calculations!";
 	mes "Now, where was I...?";
 	specialeffect EF_CLAYMORE;
-	emotion e_an;
+	emotion ET_FRET;
 	close;
 }
 
@@ -2820,7 +2820,7 @@ p_track02,69,31,1	script	Blacksmith Guildsman#dou	726,{
 		mes "I haven't won even once!";
 		mes "Oh, I must have the worst";
 		mes "luck in wagering history!";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Blacksmith Guildsman]";
 		mes "I've been assigned by my";
@@ -2829,7 +2829,7 @@ p_track02,69,31,1	script	Blacksmith Guildsman#dou	726,{
 		mes "They're apparently made";
 		mes "with some rare metal, but...";
 		mes "It's too hard for me to win~!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	} 
 	mes "[Blacksmith Guildsman]";
@@ -2838,7 +2838,7 @@ p_track02,69,31,1	script	Blacksmith Guildsman#dou	726,{
 	mes "medals! Otherwise, I'll";
 	mes "be too ashamed to return";
 	mes "home to Einbroch! F-faster!";
-	emotion e_korea;
+	emotion ET_FLAG;
 	close;
 }
 
@@ -2862,7 +2862,7 @@ p_track02,53,45,3	script	Valiant Knight#double	733,{
 	mes "You too...!";
 	mes "Always bet";
 	mes "on Deviruchi!";
-	emotion e_no1;
+	emotion ET_BEST;
 	close;
 }
 

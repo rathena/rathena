@@ -1,9 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#pragma warning(disable:4800)
+#pragma warning(disable:4800) //forcing value to bool
+#include "int_storage.hpp"
 
-#include "int_storage.h"
+#include <stdlib.h>
+#include <string.h>
 
 #include "../common/malloc.h"
 #include "../common/mmo.h"
@@ -11,10 +13,8 @@
 #include "../common/socket.h"
 #include "../common/strlib.h" // StringBuf
 #include "../common/sql.h"
-#include "char.h"
-#include "inter.h"
-
-#include <stdlib.h>
+#include "char.hpp"
+#include "inter.hpp"
 
 /**
  * Check if storage ID is valid
@@ -64,7 +64,7 @@ const char *inter_premiumStorage_getPrintableName(uint8 id) {
  * @param p: Inventory entries
  * @return 0 if success, or error count
  */
-static int inventory_tosql(uint32 char_id, struct s_storage* p)
+int inventory_tosql(uint32 char_id, struct s_storage* p)
 {
 	return char_memitemdata_to_sql(p->u.items_inventory, MAX_INVENTORY, char_id, TABLE_INVENTORY, p->stor_id);
 }
@@ -75,7 +75,7 @@ static int inventory_tosql(uint32 char_id, struct s_storage* p)
  * @param p: Storage entries
  * @return 0 if success, or error count
  */
-static int storage_tosql(uint32 account_id, struct s_storage* p)
+int storage_tosql(uint32 account_id, struct s_storage* p)
 {
 	return char_memitemdata_to_sql(p->u.items_storage, MAX_STORAGE, account_id, TABLE_STORAGE, p->stor_id);
 }
@@ -86,7 +86,7 @@ static int storage_tosql(uint32 account_id, struct s_storage* p)
  * @param p: Cart entries
  * @return 0 if success, or error count
  */
-static int cart_tosql(uint32 char_id, struct s_storage* p)
+int cart_tosql(uint32 char_id, struct s_storage* p)
 {
 	return char_memitemdata_to_sql(p->u.items_cart, MAX_CART, char_id, TABLE_CART, p->stor_id);
 }
@@ -97,7 +97,7 @@ static int cart_tosql(uint32 char_id, struct s_storage* p)
  * @param p: Inventory list to save the entries
  * @return True if success, False if failed
  */
-static bool inventory_fromsql(uint32 char_id, struct s_storage* p)
+bool inventory_fromsql(uint32 char_id, struct s_storage* p)
 {
 	return char_memitemdata_from_sql( p, MAX_INVENTORY, char_id, TABLE_INVENTORY, p->stor_id );
 }
@@ -108,7 +108,7 @@ static bool inventory_fromsql(uint32 char_id, struct s_storage* p)
  * @param p: Cart list to save the entries
  * @return True if success, False if failed
  */
-static bool cart_fromsql(uint32 char_id, struct s_storage* p)
+bool cart_fromsql(uint32 char_id, struct s_storage* p)
 {
 	return char_memitemdata_from_sql( p, MAX_CART, char_id, TABLE_CART, p->stor_id );
 }
@@ -120,7 +120,7 @@ static bool cart_fromsql(uint32 char_id, struct s_storage* p)
  * @param stor_id: Storage ID
  * @return True if success, False if failed
  */
-static bool storage_fromsql(uint32 account_id, struct s_storage* p)
+bool storage_fromsql(uint32 account_id, struct s_storage* p)
 {
 	return char_memitemdata_from_sql( p, MAX_STORAGE, account_id, TABLE_STORAGE, p->stor_id );
 }
@@ -148,7 +148,7 @@ bool guild_storage_fromsql(int guild_id, struct s_storage* p)
 	return char_memitemdata_from_sql( p, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE, p->stor_id );
 }
 
-static void inter_storage_checkDB(void) {
+void inter_storage_checkDB(void) {
 	// Checking storage tables
 	for (auto storage_table : interserv_config.storages) {
 		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
@@ -261,7 +261,7 @@ bool mapif_parse_SaveGuildStorage(int fd)
  * IZ 0x3856 <account_id>.L <guild_id>.W
  * Tells map-server if the process if complete, unlock the guild storage
  */
-static void mapif_itembound_ack(int fd, int account_id, int guild_id)
+void mapif_itembound_ack(int fd, int account_id, int guild_id)
 {
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd,0) = 0x3856;
@@ -283,7 +283,7 @@ static void mapif_itembound_ack(int fd, int account_id, int guild_id)
  * @param count
  * @author [Cydh]
  */
-static void mapif_itembound_store2gstorage(int fd, int guild_id, struct item items[], unsigned short count) {
+void mapif_itembound_store2gstorage(int fd, int guild_id, struct item items[], unsigned short count) {
 	int size = 8 + sizeof(struct item) * MAX_INVENTORY, i;
 
 	WFIFOHEAD(fd, size);
@@ -450,7 +450,7 @@ bool mapif_parse_itembound_retrieve(int fd)
  * @param entries Inventory/cart/storage entries
  * @param result
  */
-static void mapif_storage_data_loaded(int fd, uint32 account_id, char type, struct s_storage entries, bool result) {
+void mapif_storage_data_loaded(int fd, uint32 account_id, char type, struct s_storage entries, bool result) {
 	uint16 size = sizeof(struct s_storage) + 10;
 	
 	WFIFOHEAD(fd, size);

@@ -376,7 +376,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 			mes "process, both of you should";
 			mes "speak to the Bishop to begin";
 			mes "the wedding ceremony.";
-			emotion e_lv;
+			emotion ET_THROB;
 			next;
 			mes "[Marry Happy]";
 			if (Sex == SEX_FEMALE) {
@@ -425,47 +425,47 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		donpcevent "Single Army#Payon::OnEnable";
 		donpcevent "Single Army#Amatsu::OnEnable";
 		donpcevent "Single Army#Gonryun::OnEnable";
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Single Army]";
 		mes "^CC9933You have to refine";
 		mes "items on your own to";
 		mes "make great equipment!^000000";
-		emotion e_rock,0,"Single Army#Prontera";
+		emotion ET_ROCK, getnpcid(0, "Single Army#Prontera");
 		next;
 		mes "[Single Army]";
 		mes "^330099It's a waste to";
 		mes "form parties in";
 		mes "dungeons! I can";
 		mes "make it on my own!^000000";
-		emotion e_rock,0,"Single Army#Geffen";
+		emotion ET_ROCK, getnpcid(0, "Single Army#Geffen");
 		next;
 		mes "[Single Army]";
 		mes "^666666Hell, I've trained";
 		mes "all by myself since";
 		mes "birth, all the way";
 		mes "to my job change!^000000";
-		emotion e_rock,0,"Single Army#Morocc";
+		emotion ET_ROCK, getnpcid(0, "Single Army#Morocc");
 		next;
 		mes "[Single Army]";
 		mes "^666600I CHOOSE to spend";
 		mes "Christmas alone...";
 		mes "playing Solitaire and";
 		mes "doing crossword puzzles!^000000";
-		emotion e_rock,0,"Single Army#Payon";
+		emotion ET_ROCK, getnpcid(0, "Single Army#Payon");
 		next;
 		mes "[Single Army]";
 		mes "^CC9966Women may break my";
 		mes "spirit, but they'll never";
 		mes "take... my FREEDOM!^000000";
-		emotion e_rock,0,"Single Army#Amatsu";
+		emotion ET_ROCK, getnpcid(0, "Single Army#Amatsu");
 		next;
 		mes "[Single Army]";
 		mes "^669900...We're the free! We're";
 		mes "the Invincible Single Army!^000000";
-		emotion e_rock,0,"Single Army#Gonryun";
+		emotion ET_ROCK, getnpcid(0, "Single Army#Gonryun");
 		close2;
 		cutin "wedding_marry01",255;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		donpcevent "Single Army#Prontera::OnInit";
 		donpcevent "Single Army#Geffen::OnInit";
 		donpcevent "Single Army#Morocc::OnInit";
@@ -497,7 +497,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Prontera";
-	emotion e_go;
+	emotion ET_GO;
 	end;
 }
 
@@ -515,7 +515,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Geffen";
-	emotion e_go;
+	emotion ET_GO;
 	end;
 }
 
@@ -533,7 +533,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Morocc";
-	emotion e_go;
+	emotion ET_GO;
 	end;
 }
 
@@ -551,7 +551,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Payon";
-	emotion e_go;
+	emotion ET_GO;
 	end;
 }
 
@@ -568,7 +568,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Amatsu";
-	emotion e_go;
+	emotion ET_GO;
 	end;
 }
 
@@ -584,7 +584,7 @@ OnInit:
 
 OnEnable:
 	hideoffnpc "Single Army#Gonryun";
-	emotion e_go;
+	emotion ET_GO;
 	end;
 }
 

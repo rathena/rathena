@@ -25,7 +25,7 @@
 
 // Common NPCs :: lv_tre
 //============================================================
-moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
+moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -96,7 +96,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 					mes "Your name is ^3131FFBo"+.@input$+"Ba^000000...? Is that right?";
 					mes "Huh? Isn't it??";
 					next;
-					emotion e_swt;
+					emotion ET_SWEAT;
 					mes "[Lime Evenor]";
 					mes "Hmm, that isn't what you wrote?";
 					mes "Ok, hmm, it seems a bit hard to read.";
@@ -109,7 +109,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 					mes "Ah~ ha. You are ^3131FF"+strcharinfo(0)+"^000000.";
 					mes "I got it right this time.";
 					next;
-					emotion e_no1;
+					emotion ET_BEST;
 					mes "[Lime Evenor]";
 					mes "We already put your name on the list.";
 					mes "Welcome to Eden's group new member!";
@@ -168,11 +168,11 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 				mes "[Lime Evenor]";
 				mes "Hum.. huh??..................";
 				next;
-				emotion e_dots;
+				emotion ET_THINK;
 				mes "[Lime Evenor]";
 				mes "I think you should complete one of our missions first before you take up a new mission.";
 				next;
-				emotion e_pif;
+				emotion ET_HNG;
 				mes "[Lime Evenor]";
 				mes "^3131FFClient: Lime Evenor^000000";
 				mes "^3131FFMission: Practice your handwriting for one month.^000000";
@@ -274,6 +274,7 @@ izlude_c,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_c	729
 izlude_d,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_d	729
 umbala,105,158,3	duplicate(eto)	Eden Teleport Officer#31	729
 malaya,238,206,6	duplicate(eto)	Eden Teleport Officer#32	729
+verus04,116,243,0	duplicate(eto)	Eden Teleport Officer#33	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
 OnTouch:
@@ -310,6 +311,7 @@ OnTouch:
 		case 30: warp "izlude",134,118; end;	// Old coordinates: (127,142)
 		case 31: warp "umbala",94,154; end;
 		case 32: warp "malaya",234,199; end;
+		case 33: warp "verus04",115,243; end;
 		default: warp "prontera",116,72; end;
 	}
 	end;
@@ -357,16 +359,16 @@ moc_para01,182,48,3	script	Eden's Chief#eden	886,{
 	mes "[Eden's Chief]";
 	mes ""+.@eggf+".. "+.@eggf_1+"... "+.@eggf_2+".... "+.@eggf_6+"..?";
 	next;
-	emotion e_sob;
+	emotion ET_CRY;
 	mes "[Eden's Chief]";
 	mes "Oh, Shoot! How many eggs have I done?";
 	mes "Aww!!! I totally forgot! I have to count again!";
 	next;
-	emotion e_sob;
+	emotion ET_CRY;
 	mes "[Eden's Chief]";
 	mes "Why have you asked me to do this? What kind of mission is that?";
 	next;
-	emotion e_sob;
+	emotion ET_CRY;
 	mes "[Eden's Chief]";
 	mes "What are you going to with all of those fried eggs? I am sure you can't eat all of them. You just want to bother me, right?";
 	close;
@@ -402,7 +404,7 @@ moc_para01,20,35,5	script	Office Assistant Neede	814,{
 	mes "[Neede]";
 	mes "And, do you see the ^3131FFgymnasium^000000 on the cross of ^3131FFthe north side of the lobby^000000? They always shout when they exercise, I can even hear them from here!";
 	next;
-	emotion e_ag;
+	emotion ET_ANGER;
 	mes "[Neede]";
 	mes "Besides, the weird girl from ^3131FFthe second floor^000000 is crying all the time. Her cries drive me crazy.";
 	next;
@@ -412,20 +414,20 @@ moc_para01,20,35,5	script	Office Assistant Neede	814,{
 	mes "[Neede]";
 	mes "I don't know what she has been up to. But she cries and shouts all the time. Oh, sometimes I hear 'Bang!', loud booming sounds... I don't know where it came from.";
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Neede]";
 	mes "Wait!";
 	mes "Shh! It is a secret, you can't tell anybody!";
 	next;
 	mes "[Neede]";
-	emotion e_sigh;
+	emotion ET_OHNO;
 	mes "I don't trust Evenor. She never shows her feelings... she's going to snitch on me to my boss.";
 	next;
-	emotion e_pif,0,"Secretary Lime Evenor";
+	emotion ET_HNG, getnpcid(0, "Secretary Lime Evenor");
 	mes "[Lime Evenor]";
 	mes "I am not that kind of guy.";
 	next;
-	emotion e_wah;
+	emotion ET_KEK;
 	mes "[Neede]";
 	mes "Huh? Did you hear that? Gosh~!";
 	close;

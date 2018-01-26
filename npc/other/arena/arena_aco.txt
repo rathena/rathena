@@ -1096,7 +1096,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 	set .@record_minaco, ((.@record_timeaco % 3600) / 60);
 	set .@record_secaco, .@record_timeaco % 60;
 	if ((.@record_timeaco < 0 ) || (.@record_houraco < 0) || (.@record_minaco < 0 ) || (.@record_secaco < 0)) {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Staff]";
 		mes "How did you...?";
 		mes "According to these re-";
@@ -1122,7 +1122,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 		percentheal 100,100;
 		next;
 		mes "[Staff]";
-		emotion e_korea;
+		emotion ET_FLAG;
 		mes "Thank you.";
 		mes "I hope you enjoy";
 		mes "your time in the Arena~";
@@ -1178,7 +1178,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 		mes "of ^3131FF"+.@topbunaco+"^000000 minutes, ^3131FF"+.@topchoaco+"^000000 seconds, of the Acolyte Class Time Force Battle.";
 		next;
 		if ((.@acotop_t < 0) || (.@topbunaco < 0 ) || (.@topchoaco < 0)) {
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Staff]";
 			mes "Wait a second...";
 			mes "Your time is better";
@@ -1186,7 +1186,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 			mes "It's time I made a little";
 			mes "correction to the records.";
 			next;
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Staff]";
 			mes "Wow! A new record!";
 			mes "Excellent!";
@@ -1344,7 +1344,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 			end;
 		}
 		else {
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Staff]";
 			mes "Wow! A new record!";
 			mes "This is awsome!";

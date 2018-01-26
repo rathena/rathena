@@ -1077,8 +1077,8 @@ OnTouch:
 		mes "turned into sand.";
 		next;
 		hideoffnpc "Creature#Monas";
-		emotion e_omg,1;
-		emotion e_omg,0,"Larjes#Monastery";
+		emotion ET_HUK, playerattached();
+		emotion ET_HUK, getnpcid(0, "Larjes#Monastery");
 		mes "[Larjes]";
 		mes "?!?!?!!!!!";
 		next;
@@ -1874,13 +1874,13 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "...................";
 				mes "...................";
 				mes "...................";
-				emotion e_dots;
+				emotion ET_THINK;
 				next;
 				mes "[Sippie]";
 				mes "High Priestess Niren,";
 				mes "you must be really tired.";
 				mes "You look pale for some reason.";
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				next;
 				mes "[High Priestess Niren]";
 				mes "I do feel rather drained.";
@@ -1950,7 +1950,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "["+strcharinfo(0)+"]";
 				mes "Sure thing. You";
 				mes "can count on me!";
-				emotion e_no1,1;
+				emotion ET_BEST, playerattached();
 				set aru_em,15;
 				changequest 2134,2135;
 				close2;
@@ -1991,7 +1991,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "side twenty-fours a day.";
 			mes "It's been like that for years.";
 			next;
-			emotion e_wah;
+			emotion ET_KEK;
 			mes "[Sippie]";
 			mes "Oh, High Priestess Niren,";
 			mes "I love working for you, but";
@@ -1999,13 +1999,13 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "just to see my family. Even";
 			mes "just once a year would be nice.";
 			next;
-			emotion e_ic;
+			emotion ET_AHA;
 			mes "[High Priestess Niren]";
 			mes "...............................";
 			mes "You're absolutely right.";
 			mes "That gives me an idea.";
 			next;
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Sippie]";
 			mes "Huh? What is it?";
 			next;
@@ -2086,7 +2086,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "^3355FFYou handed Niren the";
 				mes "file forged by Ishmael.^000000";
 				next;
-				emotion e_bzz;
+				emotion ET_STARE;
 				mes "[High Priestess Niren]";
 				mes "Perfect! This forgery is";
 				mes "so well done, I'm sure";
@@ -2262,7 +2262,7 @@ ra_temple,168,54,3	script	Sippie#ss	917,{
 moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 	if (aru_vol == 27) {
 		if (aru_em == 0) {
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Foreign Merchant]";
 			mes "I never thought the desert";
 			mes "would be this hot! They built";
@@ -2271,7 +2271,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "more, the crowds make things";
 			mes "around here so much hotter!";
 			next;
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Foreign Merchant]";
 			mes "I heard that I could make";
 			mes "a killing in Morroc, which is";
@@ -2280,7 +2280,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "is going to kill me first!";
 			next;
 			select("How did you hear of Morroc?");
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Foreign Merchant]";
 			mes "I... I just told you.";
 			mes "I heard that Morroc is";
@@ -2288,7 +2288,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "buy things at premium prices.";
 			mes "Ugh, but it's a burning hell!";
 			next;
-			emotion e_swt;
+			emotion ET_SWEAT;
 			mes "[Foreign Merchant]";
 			mes "I don't even care about making";
 			mes "money anymore! I just want to";
@@ -2297,8 +2297,8 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "I might just leave this town";
 			mes "tomorrow. Forget this desert!";
 			next;
-			emotion e_sob;
-			emotion e_swt,1;
+			emotion ET_CRY;
+			emotion ET_SWEAT, playerattached();
 			mes "[Foreign Merchant]";
 			mes "Ah, that's right. Don't they";
 			mes "sell some sweet, heavenly";
@@ -2344,7 +2344,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes "^3355FF*Gulp Gulp Gulp Gulp*^000000";
 				mes "^3355FF*Gulp Gulp Gulp Gulp*^000000";
 				next;
-				emotion e_lv;
+				emotion ET_THROB;
 				mes "[Foreign Merchant]";
 				mes "Ahhh! That hit the spot!";
 				mes "It's so refreshing and so";
@@ -2376,13 +2376,13 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes " ";
 				mes " - Bekento^000000";
 				next;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				mes "["+ strcharinfo(0) +"]";
 				mes "So... This means...";
 				mes "You're not really a";
 				mes "merchant, are you?";
 				next;
-				emotion e_meh;
+				emotion ET_MERONG;
 				mes "^3355FFThe merchant quietly";
 				mes "looks at you with a";
 				mes "mischievous grin.^000000";
@@ -2391,7 +2391,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 				mes "So you asked me to get";
 				mes "you a drink as an excuse";
 				mes "just to talk to you?!";
-				emotion e_sob,1;
+				emotion ET_CRY, playerattached();
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "Oh well, thanks for";
@@ -2519,15 +2519,15 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Oh, no...";
-		emotion e_otl,1;
+		emotion ET_OTL, playerattached();
 		next;
 		mes "[Foreign Merchant]";
 		mes "...............................";
 		mes "...............................";
 		mes "...............................";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		mes "[Foreign Merchant]";
 		mes "You know, I save a small";
 		mes "bottle of wine for myself";
@@ -2548,7 +2548,7 @@ moc_ruins,101,133,7	script	Foreign Merchant#aru2	929,{
 		mes "keep an extra bottle in case";
 		mes "you want more next time. Take";
 		mes "care, and I'll see you later!";
-		emotion e_korea;
+		emotion ET_FLAG;
 		next;
 		mes "^3355FFYou received a bottle";
 		mes "of the famous fruit wine";
@@ -2685,7 +2685,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 		mes "just step away? I... I don't";
 		mes "like being too close to";
 		mes "other people. Please!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	else if (aru_em == 17) {
@@ -2695,7 +2695,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 		mes "just step away? Wait, you";
 		mes "don't have something you";
 		mes "need from me, do you?";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		switch(select("Give Her Niren's File:Leave Her Alone")) {
 		case 1:
@@ -2709,7 +2709,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 				mes "Just toss the file over";
 				mes "to me. I-I don't want";
 				mes "you coming any closer.";
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				next;
 				mes "[Ishmael]";
 				mes "I'll be glad to help out";
@@ -2725,13 +2725,13 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 				mes "expert at forging writing!";
 				mes "Just give me a moment and--";
 				next;
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Ishmael]";
 				mes "Dang it! I completely forgot!";
 				mes "Someone stole my pen yesterday!";
 				mes "Now how am I gonna do this...?";
 				next;
-				emotion e_sob;
+				emotion ET_CRY;
 				mes "[Ishmael]";
 				mes "My pen was made of a very";
 				mes "rare gemstone called ^FF0000Sardonyx^000000.";
@@ -2783,7 +2783,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 			mes "I still... Uh... I don't mean";
 			mes "to be rude... It's just...";
 			mes "I'm just not good with...";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "[Ishmael]";
 			mes "If you just toss the";
@@ -2818,7 +2818,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 				mes "*Scribble*^000000";
 				specialeffect EF_COMBOATTACK4;
 				specialeffect EF_STEAL;
-				emotion e_ic;
+				emotion ET_AHA;
 				next;
 				mes "[Ishmael]";
 				mes "There you go! I made the";
@@ -2840,7 +2840,7 @@ ra_fild03,139,355,5	script	Ishmael#em	914,{
 			}
 		}
 		else {
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Ishmael]";
 			mes "If only I only had";
 			mes "my precious pen made";
@@ -5486,7 +5486,7 @@ geffen,128,153,3	script	Leblo	883,{
 		mes "been asking questions about";
 		mes "the Diamond of Destruction.";
 		next;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		mes "[Leblo]";
 		mes "Don't be so suprised:";
 		mes "word travels fast in the";
@@ -7840,7 +7840,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 		mes "adventurer.";
 		mes "Um, was there";
 		mes "something you wanted?";
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		next;
 		switch(select("Rogue Guild's Decoding Request")) {
 		case 1:
@@ -7857,7 +7857,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 			mes "of heat and light, you can";
 			mes "read its contents. This is";
 			mes "some powerful encryption!";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Gooho Ahn]";
 			mes "So far, I've only decrypted";
@@ -7913,7 +7913,7 @@ payon,192,176,3	script	Gooho Ahn	903,{
 			delitem 970,2; //Alchol
 			delitem 7035,1; //Matchstick
 			delitem 7097,10; //Burning_Heart
-			emotion e_ic;
+			emotion ET_AHA;
 			mes "[Gooho Ahn]";
 			mes "Oh, what? This language...";
 			mes "It's ancient! Aegye hasn't";
@@ -8271,7 +8271,7 @@ moc_fild17,209,235,0	script	Odd Slab	111,4,4,{
 		mes "^FF0000*Creak Creak*";
 		mes "Etner sspawrod.^000000";
 		next;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		mes "[" + strcharinfo(0) + "]";
 		mes "This slab is speaking";
 		mes "to me! I... I think. Now";
@@ -8282,7 +8282,7 @@ moc_fild17,209,235,0	script	Odd Slab	111,4,4,{
 		mes "^FF0000*Creak Creak*";
 		mes "Etner sspawrod.^000000";
 		next;
-		emotion e_ic,1;
+		emotion ET_AHA, playerattached();
 		mes "[" + strcharinfo(0) + "]";
 		mes "Oh, right! This is that";
 		mes "trashy language, Aegye,";
@@ -9058,7 +9058,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 				mes "to finding that treasure.";
 				mes "I... I don't even have enough";
 				mes "money to go back home!";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "[Ragged Man]";
 				mes "Won't you spare some";
@@ -9276,7 +9276,7 @@ morocc,102,298,3	script	Man#zgang	98,{
 		next;
 		switch(select("Tell me about the treasure.")) {
 		case 1:
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Man]";
 			mes "What? So you're the one";
 			mes "I was warned about! I've";
@@ -9746,7 +9746,7 @@ comodo,339,224,3	script	Man in Hiding#nd	881,{
 			mes "for information";
 			mes "about the treasure.";
 			next;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Man in Hiding]";
 			mes "You... You've come";
 			mes "looking for me?!";
@@ -10177,7 +10177,7 @@ alberta_in,70,109,5	script	Shaman	788,{
 		mes "mind if I take a look at it?";
 		next;
 		if (countitem(7725) > 0) {
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Shaman]";
 			mes "So this bauble's the";
 			mes "Unlucky Emerald? Yes,";
@@ -10305,7 +10305,7 @@ alberta_in,70,109,5	script	Shaman	788,{
 		next;
 		mes "[Shaman]";
 		mes "Hhhkkk... Arrrgh...!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[" + strcharinfo(0) +"]";
 		mes ".....?";
@@ -10581,7 +10581,7 @@ yuno_in04,38,48,3	script	Archeologist	55,{
 			next;
 			switch(select("Ask About the Jewel's Curse:Show Off Jewel")) {
 			case 1:
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Archeologist]";
 				mes "The jewel's curse?";
 				mes "Hah! You believe in that";
@@ -11205,7 +11205,7 @@ gef_fild08,182,185,0	script	The Wanderer	739,{
 		mes "When I came back to my";
 		mes "senses, they were all...";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[The Wanderer]";
 		mes "I'm not sure what";
 		mes "happened. There was";
@@ -11287,7 +11287,7 @@ gef_fild08,182,185,0	script	The Wanderer	739,{
 		mes "When I came back to my";
 		mes "senses, they were all...";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[The Wanderer]";
 		mes "I'm not sure what";
 		mes "happened. There was";
@@ -11324,7 +11324,7 @@ gef_fild08,182,185,0	script	The Wanderer	739,{
 		mes "When I came back to my";
 		mes "senses, they were all...";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[The Wanderer]";
 		mes "I'm not sure what";
 		mes "happened. There was";
@@ -12213,7 +12213,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 		mes "be talking a Rogue";
 		mes "agent in one of the";
 		mes "other towns.";
-		emotion e_ag;
+		emotion ET_ANGER;
 		close;
 	}
 	else if (rumour_nd == 6) {
@@ -12248,7 +12248,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 		next;
 		mes "[Agent]";
 		mes "Awwww, man!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Agent]";
 		mes "I keep telling that";
@@ -12503,7 +12503,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 			mes "You're a lifesaver!";
 			mes "Detrimindexta, huh?";
 			next;
-			emotion e_gg;
+			emotion ET_KIK;
 			mes "[Agent]";
 			mes "Don't worry, I got";
 			mes "that one too! All you";
@@ -12592,7 +12592,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 		close;
 	}
 	else if (rumour_nd == 15) {
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Agent]";
 		mes "Heh heh! Looks like";
 		mes "we solved the case!";
@@ -12629,7 +12629,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 			mes "communicates solely";
 			mes "through doodles.^000000";
 			set rumour_nd,16;
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 	}
@@ -12720,7 +12720,7 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 		next;
 		switch(select("Yes, Sir!:...")) {
 		case 1:
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Agent]";
 			mes "Right on, right on.";
 			mes "Hm. Let's try that again...";
@@ -12823,9 +12823,9 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 				mes "I thought you were";
 				mes "here to take the Job";
 				mes "change test for Rogues!";
-				emotion e_omg;
+				emotion ET_HUK;
 				next;
-				emotion e_sry;
+				emotion ET_SORRY;
 				mes "[Agent]";
 				mes "Aw man, you came all this";
 				mes "way to help me out, and";
@@ -12840,7 +12840,7 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 				mes "Consider this... I dunno,";
 				mes "an insider look into the";
 				mes "Rogue world if you would.";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				switch(select("Yes, sir!:I won't tell anyone.")) {
 				case 1:

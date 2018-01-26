@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "../config/renewal.h"
+#include "../common/mmo.h"
 
 #define MAX_MAPINDEX 2000
 

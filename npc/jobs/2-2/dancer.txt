@@ -1328,14 +1328,14 @@ job_duncer,63,110,4	script	Backdancer#1	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	donpcevent "Backdancer#2::OnSmile";
 	donpcevent "Backdancer#3::OnSmile";
 	donpcevent "Backdancer#4::OnSmile";
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	donpcevent "Backdancer#2::OnOmg";
 	donpcevent "Backdancer#3::OnOmg";
 	donpcevent "Backdancer#4::OnOmg";
@@ -1346,11 +1346,11 @@ job_duncer,66,113,4	script	Backdancer#2	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -1358,11 +1358,11 @@ job_duncer,72,113,4	script	Backdancer#3	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -1370,11 +1370,11 @@ job_duncer,75,110,4	script	Backdancer#4	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 

@@ -1,0 +1,12 @@
+//===== rAthena Script =======================================
+//= Beginner Area Monster Spawn Script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Ridley]
+//= 1.1 Export from Hercules to rAthena. [Jenkijo]
+//============================================================
+
+int_land,0,0	monster	Poring	2401,30,5000
+int_land01,0,0	monster	Poring	2401,30,5000
+int_land02,0,0	monster	Poring	2401,30,5000
+int_land03,0,0	monster	Poring	2401,30,5000
+int_land04,0,0	monster	Poring	2401,30,5000
