@@ -209,7 +209,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			close;
 		}
 		mes "[Devil Enchant Master]";
-		if (callfunc("F_IsCharm",.@equip_card[3]) == true) {
+		if (.@equip_card[3]) {
 			mes "This item has been enchanted!";
 			close;
 		}

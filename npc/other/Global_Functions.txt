@@ -764,5 +764,6 @@ function	script	close3	{
 // Return true if the card is a charm (enchant card), false otherwise.
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_IsCharm	{
-	return (getarg(0) >= 4700 && getarg(0) < 5000);
+	.@id = getarg(0);
+	return ((.@id >= 4700 && .@id < 5000) || (.@id >= 29000 && .@id <= 29126));
 }
