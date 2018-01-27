@@ -1150,6 +1150,20 @@ will terminate.
 
 ---------------------------------------
 
+*clear;
+
+This command will clear the dialog text and continues the script without player interaction.
+
+	mes"This how clear command work .";
+	sleep2 3000;
+	clear;	//this will clear what in the dialog and move to the next one.
+	mes"i will show you again .";
+	sleep2 3000;
+	clear;
+	mes"see you latter my friend";
+
+---------------------------------------
+
 *close;
 
 This command will create a 'close' button in the message window for the invoking

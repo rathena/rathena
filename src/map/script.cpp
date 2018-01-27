@@ -5087,6 +5087,21 @@ BUILDIN_FUNC(next)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Clear The dialog text and continues the script without Next button.
+///
+/// clear;
+BUILDIN_FUNC(clear)
+{
+	TBL_PC* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;
+
+	st->state = RUN;
+	clif_scriptclear(sd, st->oid);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Ends the script and displays the button 'close' on the npc dialog.
 /// The dialog is closed when the button is pressed.
 ///
@@ -23782,6 +23797,7 @@ struct script_function buildin_func[] = {
 	// NPC interaction
 	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),
+	BUILDIN_DEF(clear,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
 	BUILDIN_DEF(menu,"sl*"),
