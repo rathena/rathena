@@ -4621,11 +4621,11 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		}
 	}
 
-	if (!anger_id)
+	if (sd != nullptr && !anger_id)
 		ARR_FIND(0, MAX_PC_FEELHATE, anger_id, status_get_class(target) == sd->hate_mob[anger_id]);
 
 	uint16 anger_level;
-	if (anger_id < MAX_PC_FEELHATE && (anger_level = pc_checkskill(sd, sg_info[anger_id].anger_id))) {
+	if (sd != nullptr && anger_id < MAX_PC_FEELHATE && (anger_level = pc_checkskill(sd, sg_info[anger_id].anger_id))) {
 		int skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
 
 		if (anger_id == 2)
