@@ -4359,7 +4359,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 	db->vd.class_ = sprite_id;
 
 	//Player sprites
-	if(pcdb_checkid(sprite_id) && columns==12) {
+	if(pcdb_checkid(sprite_id) && columns==13) {
 		db->vd.sex=atoi(str[2]);
 		db->vd.hair_style=atoi(str[3]);
 		db->vd.hair_color=atoi(str[4]);
@@ -4370,7 +4370,8 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 		db->vd.head_bottom=atoi(str[9]);
 		db->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
 		db->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
-
+		db->vd.body_style=atoi(str[12]);
+		
 #ifdef NEW_CARTS
 		if( db->option & OPTION_CART ){
 			ShowWarning("mob_readdb_mobavail: You tried to use a cart for mob id %d. This does not work with setting an option anymore.\n", mob_id );
@@ -5271,7 +5272,7 @@ static void mob_load(void)
 			mob_readskilldb(dbsubpath2, silent);
 		}
 
-		sv_readdb(dbsubpath1, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail,silent);
+		sv_readdb(dbsubpath1, "mob_avail.txt", ',', 2, 13, -1, &mob_readdb_mobavail,silent);
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, MAX_RACE2_MOBS, -1, &mob_readdb_race2, silent);
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, silent);
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
