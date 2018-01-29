@@ -42,7 +42,7 @@ test_script:
     
     set MYSQL="C:\Program Files\MySql\MySQL Server 5.7\bin\mysql.exe"
     
-    start /d tools\ci sql.bat
+    start tools\ci\sql.bat
     
     rem Activate all custom and test scripts
     
