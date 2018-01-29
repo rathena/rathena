@@ -451,7 +451,7 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		next;
 		emotion ET_HUK;
 		mes "[Pilot]";
-		mes "Still, they where real";
+		mes "Still, they were real";
 		mes "serious, really thought";
 		mes "ahead. I mean, they had us";
 		mes "training while the Airships";
