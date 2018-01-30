@@ -5198,8 +5198,8 @@ static bool mob_read_yaml_db_sub(const YAML::Node &node, const std::string &sour
 		field = "Race";
 		if (node[field] && !node[field].IsNull()) {
 			std::string str = node[field].as<std::string>();
-			size_t idx = 0;
-			int race = std::stoi(str, &idx);
+			int race = 0;
+			size_t idx = sscanf(str.c_str(), "%d", &race);
 			if (idx == 0 && !script_get_constant(str.c_str(), &race))
 				throw;
 			status->race = race;
@@ -5207,8 +5207,8 @@ static bool mob_read_yaml_db_sub(const YAML::Node &node, const std::string &sour
 		field = "Element";
 		if (node[field] && !node[field].IsNull()) {
 			std::string str = node[field].as<std::string>();
-			size_t idx = 0;
-			int element = std::stoi(str, &idx);
+			int element = 0;
+			size_t idx = sscanf(str.c_str(), "%d", &element);
 			int def_ele;
 			int ele_lv;
 			if (idx == 0) {
@@ -5226,9 +5226,9 @@ static bool mob_read_yaml_db_sub(const YAML::Node &node, const std::string &sour
 		}
 		field = "Size";
 		if (node[field] && !node[field].IsNull()) {
-			std::string str = node[field].as<std::string>();
-			size_t idx = 0;
-			int size = std::stoi(str, &idx);
+			std::string str = node[field].as<std::string>(); 
+			int size = 0;
+			size_t idx = sscanf(str.c_str(), "%d", &size);
 			if (idx == 0 && !script_get_constant(str.c_str(), &size))
 				throw;
 			status->size = size;
@@ -5290,7 +5290,7 @@ static bool mob_read_yaml_db_sub(const YAML::Node &node, const std::string &sour
 		}
 		field = "Mode";
 		if (node[field] && !node[field].IsNull()) {
-			if (node[field].IsSequence()) {
+			if (node[field].IsMap()) {
 				const YAML::Node &modes = node[field];
 				std::string err_msg;
 				for (YAML::const_iterator it = modes.begin(); it != modes.end(); ++it) {
