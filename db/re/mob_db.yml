@@ -73358,6 +73358,10 @@ Mobs:
         AegisName: Karvodailnirol
         Rate: 100
         StealProtected: true
+      -
+        AegisName: Faceworm_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2529
     Name: Faceworm Queen
@@ -73409,6 +73413,10 @@ Mobs:
       -
         AegisName: Broken_Horn
         Rate: 5000
+        StealProtected: true
+      -
+        AegisName: Faceworm_Queen_Card
+        Rate: 1
         StealProtected: true
     MvPDrop:
       -
@@ -73465,6 +73473,10 @@ Mobs:
       -
         AegisName: ShabbyOldScroll
         Rate: 100
+      -
+        AegisName: Dark_Faceworm_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2531
     Name: Venom Bug
@@ -73893,6 +73905,10 @@ Mobs:
       -
         AegisName: Sticky_Mucus
         Rate: 5000
+      -
+        AegisName: Faceworm_Egg_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2541
     Name: Faceworm Larva
@@ -73939,6 +73955,10 @@ Mobs:
       -
         AegisName: Sticky_Mucus
         Rate: 1500
+        StealProtected: true
+      -
+        AegisName: Faceworm_Larva_Card
+        Rate: 1
         StealProtected: true
   -
     MobId: 2542
@@ -74006,6 +74026,10 @@ Mobs:
         AegisName: Fantastic_Cooking_Kits
         Rate: 1
         StealProtected: true
+      -
+        AegisName: Irene_High_Elder_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2543
     Name: 1st Payon Soldier
@@ -74066,6 +74090,10 @@ Mobs:
         AegisName: Cookbook08
         Rate: 1
         StealProtected: true
+      -
+        AegisName: Payon_Soldier_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2544
     Name: 2nd Payon Soldier
@@ -74124,6 +74152,10 @@ Mobs:
         Rate: 133
       -
         AegisName: Cookbook09
+        Rate: 1
+        StealProtected: true
+      -
+        AegisName: Payon_Soldier_Card
         Rate: 1
         StealProtected: true
   -
@@ -74276,6 +74308,11 @@ Mobs:
     aDelay: 1000
     aMotion: 864
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Arhi_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2550
     Name: Dio Anemos
@@ -74311,6 +74348,10 @@ Mobs:
       -
         AegisName: Needle_Of_Alarm
         Rate: 10000
+      -
+        AegisName: Dio_Anemos_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2551
     Name: Geffen Shoplifter
@@ -74342,6 +74383,11 @@ Mobs:
     aDelay: 800
     aMotion: 672
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Geffen_Shoplifter_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2552
     Name: Geffen Bully
@@ -74373,6 +74419,11 @@ Mobs:
     aDelay: 900
     aMotion: 672
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Geffen_Bully_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2553
     Name: Geffen Gang Member
@@ -74404,6 +74455,11 @@ Mobs:
     aDelay: 950
     aMotion: 864
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Geffen_Gang_Member_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2554
     Name: Faymont
@@ -74435,6 +74491,11 @@ Mobs:
     aDelay: 672
     aMotion: 648
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Faymont_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2555
     Name: Ordre
@@ -74466,6 +74527,11 @@ Mobs:
     aDelay: 768
     aMotion: 672
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Ordre_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2556
     Name: Blut Hase
@@ -74497,6 +74563,11 @@ Mobs:
     aDelay: 800
     aMotion: 768
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Blut_Hase_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2557
     Name: Kuro Akuma
@@ -74528,6 +74599,11 @@ Mobs:
     aDelay: 1000
     aMotion: 864
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Kuro_Akuma_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2558
     Name: Ifodes
@@ -74559,6 +74635,11 @@ Mobs:
     aDelay: 800
     aMotion: 768
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Ifodes_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2559
     Name: Licheniyes
@@ -74590,6 +74671,11 @@ Mobs:
     aDelay: 864
     aMotion: 768
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Licheniyes_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2560
     Name: Odoric
@@ -74621,6 +74707,11 @@ Mobs:
     aDelay: 800
     aMotion: 672
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Odoric_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2561
     Name: Ju
@@ -74652,6 +74743,11 @@ Mobs:
     aDelay: 800
     aMotion: 672
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Ju_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2562
     Name: Dwigh
@@ -74686,6 +74782,11 @@ Mobs:
     aDelay: 800
     aMotion: 768
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Dwigh_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2563
     Name: Fay Kanavian
@@ -74721,6 +74822,11 @@ Mobs:
     aDelay: 720
     aMotion: 672
     dMotion: 480
+    NormalDrop:
+      -
+        AegisName: Fay_Kanavian_Card
+        Rate: 1
+        StealProtected: true
   -
     MobId: 2564
     Name: Fenrir

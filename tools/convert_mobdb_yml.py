@@ -293,7 +293,7 @@ def main():
                 c = raw_input("Overwrite {0}? (y/n): ".format(file))
                 if c[0] != 'y' and c[0] != 'Y':
                     exit(0)
-                shutil.copy2(file, file + ".old" + curtime)
+                shutil.copy2(file, file + ".old." + curtime)
         read_item_db(path)
         db = read_mob_db(path)
         print(str(len(db)) + " entries read in path " + path)

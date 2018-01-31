@@ -26726,6 +26726,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2528, 0, 5, 27163, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2529, 0, 0, 607, 1000, FALSE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
@@ -26735,6 +26739,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2529, 0, 2, 6649, 5000, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2529, 0, 3, 27164, 1, TRUE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
@@ -26751,6 +26759,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2530, 0, 1, 22507, 100, FALSE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2530, 0, 2, 27165, 1, TRUE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
@@ -26850,6 +26862,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2540, 0, 2, 27166, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2541, 0, 0, 912, 225, FALSE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
@@ -26863,6 +26879,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2541, 0, 3, 938, 1500, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2541, 0, 4, 27167, 1, TRUE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
@@ -26898,6 +26918,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2542, 0, 8, 27168, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2543, 0, 0, 12054, 533, FALSE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
@@ -26930,6 +26954,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2543, 0, 8, 27169, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2544, 0, 0, 12071, 400, FALSE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
@@ -26959,6 +26987,10 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2544, 0, 7, 7480, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2544, 0, 8, 27169, 1, TRUE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
@@ -27026,7 +27058,67 @@ INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProte
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2549, 0, 0, 27249, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
 	(2550, 0, 0, 1095, 10000, FALSE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2550, 0, 1, 27250, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2551, 0, 0, 27253, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2552, 0, 0, 27252, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2553, 0, 0, 27251, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2554, 0, 0, 27254, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2555, 0, 0, 27255, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2556, 0, 0, 27256, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2557, 0, 0, 27257, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2558, 0, 0, 27258, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2559, 0, 0, 27259, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2560, 0, 0, 27260, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2561, 0, 0, 27261, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2562, 0, 0, 27262, 1, TRUE, NULL) 
+	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
+
+INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 
+	(2563, 0, 0, 27263, 1, TRUE, NULL) 
 	ON DUPLICATE KEY UPDATE `mobid`=VALUES(`mobid`), `dtype`=VALUES(`dtype`), `index`=VALUES(`index`), `nameid`=VALUES(`nameid`), `rate`=VALUES(`rate`), `stealProtected`=VALUES(`stealProtected`), `randomOptionGroup`=VALUES(`randomOptionGroup`);
 
 INSERT INTO mob_drop_re(`mobid`, `dtype`, `index`, `nameid`, `rate`, `stealProtected`, `randomOptionGroup`) VALUES 

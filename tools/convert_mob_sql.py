@@ -3,6 +3,7 @@ import os
 import sys
 import re
 import shutil
+import datetime
 
 MOB_DB_YML = "mob_db.yml"
 MOB_DB_SQL = "mob_db"
@@ -232,6 +233,7 @@ def main():
 
     sql_path = sys.argv[2]
     is_renewal = "pre" not in sys.argv[1]
+    curtime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
     for path in sys.argv[3:]:
         is_import = "import" in path
@@ -252,7 +254,7 @@ def main():
                 c = raw_input("Overwrite {0}? (y/n): ".format(file))
                 if c[0] != 'Y' and c[0] != 'y':
                     exit(0)
-                #shutil.copy2(file, file + ".old")
+                shutil.copy2(file, file + ".old." + curtime)
         read_item_db(path)
         db = read_mob_yml(path)['Mobs']
         if db is None:
