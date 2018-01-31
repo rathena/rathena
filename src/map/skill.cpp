@@ -7568,8 +7568,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					skill_delunit(su);
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			}
-			else
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 
@@ -11090,7 +11088,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 			case AB_CLEARANCE:
 				return USESKILL_FAIL_TOTARGET;
 			default:
-				return USESKILL_FAIL_LEVEL;
+				return USESKILL_FAIL_MAX;
 		}
 	}
 
@@ -14967,6 +14965,9 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
+		case AL_HOLYWATER:
+			if(pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE) < 0)
+				return false;
 		case MO_CALLSPIRITS:
 			if(sc && sc->data[SC_RAISINGDRAGON])
 				skill_lv += sc->data[SC_RAISINGDRAGON]->val1;
@@ -15571,7 +15572,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				break;
 			if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER) && !map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKLANDPROTECTOR))
 				break;
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
 		case ST_RIDINGDRAGON:
 			if( !pc_isridingdragon(sd) ) {
