@@ -30,7 +30,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	switch(rand(1,2)) {
 	case 1:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgarts. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
 		mes "those young people...so noisy.... I was standing but non of them offered me a seat..and they were just talking in loud voices which bothered everyone.";
@@ -50,7 +50,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 		break;
 	case 2:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgarts. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
 		mes "those young people...so noisy.... I was standing but non of them offered me a seat..and they were just talking in loud voices which bothered everyone.";
@@ -160,7 +160,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 				switch(select(
 					"Show me other items.",
 					""+.@armor$[1]+"Giant Shield^000000",
-					""+.@armor$[2]+"Acient Book of Geffenia-Water^000000",
+					""+.@armor$[2]+"Ancient Book of Geffenia-Water^000000",
 					""+.@armor$[3]+"Bible of Promise(2nd Vol.)^000000",
 					""+.@armor$[4]+"Salvage Cape^000000",
 					""+.@armor$[5]+"Assassin's Handcuffs^000000",
@@ -180,7 +180,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					callsub L_Reward, 2160, 100, 50, 35; //Giant_Shield
 					break;
 				case 3:
-					mes "<<Acient Book of Geffenia-Water[1]>>";
+					mes "<<Ancient Book of Geffenia-Water[1]>>";
 					mes "INT + 1, MDEF + 2. If Original INT point is 120, MATK + 10, MHP + 800.";
 					mes "When equipping with Lacryma Stick, the casting % from Storm Gust, Frost Misty and Jack frost will discount equivalent to 4 times Refine Lv.";
 					mes "Shield / Def 30 / Weight 100 / Required Lv 100 / Socket 1 / for Warlock";
@@ -194,7 +194,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					break;
 				case 5:
 					mes "<<Salvage Cape[0]>>";
-					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool time for this skill will be 30 seconds. When equiping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
+					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool time for this skill will be 30 seconds. When equipping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
 					mes "Garment / Def 1 / Weight 40 / Required Lv 130 / Socket 0 / for Archbishop";
 					callsub L_Reward, 2582, 300, 300, 400; //Salvage_Cape
 					break;
@@ -316,13 +316,13 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 				case 10:
 					mes "<<Aztoe Nail[0]>>";
 					mes "MATK + 80. For Physical Melee Attack, cast Freezing to the target with a certain chance. The chance is affected by Refine Lv.";
-					mes "Dagger / ATK 160 / Weight 50 / Wind Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Theif Classes";
+					mes "Dagger / ATK 160 / Weight 50 / Wind Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Thief Classes";
 					callsub L_Reward, 13069, 50, 100, 35; //Aztoe_Nail
 					break;
 				case 11:
 					mes "<<Scarletto Nail[0]>>";
 					mes "MATK + 80. For Physical Melee Attack, cast Stone curse to the target with a certain chance. The chance is affected by Refine Lv.";
-					mes "Dagger / ATK 160 / Weight 50 / Fire Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Theif Classes";
+					mes "Dagger / ATK 160 / Weight 50 / Fire Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Thief Classes";
 					callsub L_Reward, 13070, 50, 100, 35; //Scarletto_Nail
 					break;
 				case 12:
@@ -411,7 +411,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		next;
 		emotion ET_OK;
 		mes "[Pudding]";
-		mes "Couple of days ago, while I was undergoing discipline, I felt a strange, bizzare tinge. So I followed that and it brought me here.";
+		mes "Couple of days ago, while I was undergoing discipline, I felt a strange, bizarre tinge. So I followed that and it brought me here.";
 		next;
 		select("I see.");
 		mes "[Pudding]";
@@ -443,7 +443,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			break;
 		}
 		mes "[Pudding]";
-		mes "Those '^F2766EWill of Warrior^000000' and '^952420Thirst for Blood^000000'..... are aggresive but warm materials.";
+		mes "Those '^F2766EWill of Warrior^000000' and '^952420Thirst for Blood^000000'..... are aggressive but warm materials.";
 		next;
 		mes "[Pudding]";
 		mes "So '^F2766EWill of Warrior^000000' can dwell a special power to the 4th slot of an equipment,";
@@ -466,7 +466,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		emotion ET_QUESTION, playerattached();
 		emotion ET_FRET;
 		mes "[Pudding]";
-		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that becuase that's important.";
+		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that because that's important.";
 		next;
 		mes "[Pudding]";
 		mes "If you bring me 10 '^F2766EWill of Warrior^000000' or 10 '^952420Thirst for Blood^000000', I will dwell some power to certain equipments that you can find in the Lab..";
@@ -475,7 +475,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "And if you are not satisfied with the power you got, bring me 10 '^88C6F7Chill of the Dead^000000', and I will take off that power.";
 		next;
 		mes "[Pudding]";
-		mes "WHat do you say? Having both options.....quite nice, huh?";
+		mes "What do you say? Having both options.....quite nice, huh?";
 		next;
 		mes "[Pudding]";
 		mes "If you obtain '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', and obtain also equipment which is capable to accept their power, bring them to me. I will be waiting.";
@@ -500,7 +500,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			case 2:
 				mes "< Armor List >";
 				mes "Giant Shield[1]";
-				mes "Acient Book of Geffenia-Water[1]";
+				mes "Ancient Book of Geffenia-Water[1]";
 				mes "Bible of Promise(2nd Vol.)[1]";
 				mes "Salvage Cape[0]";
 				mes "Assassin's Handcuffs[1]";
@@ -747,7 +747,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "[Pudding]";
 		mes "Alright, which power do you want to remove?";
 		next;
-		.@menu = select("No, I don't wannna remove any.", .@menu_clear$[1], .@menu_clear$[2]);
+		.@menu = select("No, I don't wanna remove any.", .@menu_clear$[1], .@menu_clear$[2]);
 		switch(.@menu){
 		case 1:
 			mes "[Pudding]";
@@ -789,7 +789,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	mes "Before I dwell the power, let me explain to you cautions.";
 	next;
 	mes "[Pudding]";
-	mes "While dwelling the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', the equipment would be not capable to accept that and will be destryed..";
+	mes "While dwelling the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', the equipment would be not capable to accept that and will be destroyed..";
 	next;
 	mes "[Pudding]";
 	mes "^9D2628If the equipment is destroyed, you will also lose the cards you inserted in it, and the refine Lv will be removed too.^000000";
