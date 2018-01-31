@@ -4140,7 +4140,7 @@ static bool mob_db_parse_dbrow(char** str, char* table)
 *------------------------------------------*/
 static bool mob_drop_parse_dbrow(char** str, char* table)
 {
-	int mob_id, nameid, dtype, index, rate, rog, max;
+	int mob_id, nameid, dtype, index, rate, rog;
 	bool steal_protected;
 	struct mob_db *db;
 	mob_id = atoi(str[0]);
@@ -4967,7 +4967,7 @@ static bool mob_add_drop(struct mob_db *entry, unsigned short nameid, int dtype,
 		return false;
 	}
 
-	if (index) {
+	if (index >= 0) {
 		if (index > max) {
 			ShowWarning("mob_add_drop: Monster (%s) is dropping too many items, max %d\n", entry->sprite, max);
 			return false;
@@ -5034,7 +5034,7 @@ static bool mob_add_drop(struct mob_db *entry, unsigned short nameid, int dtype,
 
 static bool mob_read_yaml_drop(const YAML::Node &node, struct mob_db * entry, int type, const std::string &source) {
 	unsigned short nameid;
-	int rate, max, index = 0, steal_protected = 0, rog = 0, i;
+	int rate, index = -1, steal_protected = 0, rog = 0;
 	struct s_mob_drop *drop = NULL;
 	bool overwrite = false;
 
