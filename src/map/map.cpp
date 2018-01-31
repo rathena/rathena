@@ -419,7 +419,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		skill_unit_move(bl,tick,2);
 		if ( sc && sc->count ) //at least one to cancel
 		{
-			status_change_end(bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 			status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 			status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
