@@ -214,7 +214,7 @@ lou_in02,61,175,3	script	Employee#3	818,2,2,{
 			mes "you go upstairs?";
 			mes "Ha ha ha!";
 			next;
-			emotion e_swt;
+			emotion ET_SWEAT;
 			mes "[Ya Hua]";
 			mes "Oh, if by any chance you came to try the Dragon Soup, I'm sorry, but it's no longer availalbe.";
 			next;
@@ -609,7 +609,7 @@ lou_fild01,195,177,5	script	Jiu Lian Bu#1-1	819,{
 }
 
 lou_fild01,175,173,3	script	Jiu Lian Bu#1-2	819,{
-	emotion e_heh;
+	emotion ET_SMILE;
 	if (ch_tre == 4) {
 		mes "[Jiu Lian Bu]";
 		mes "So...";
@@ -627,7 +627,7 @@ lou_fild01,175,173,3	script	Jiu Lian Bu#1-2	819,{
 		mes "[Jiu Lian Bu]";
 		mes "Why don't you sit down and close your eyes, and feel that soothing wind. It's pretty refreshing...";
 		next;
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Jiu Lian Bu]";
 		mes "Also...";
 		mes "I'm a little";
@@ -888,7 +888,7 @@ lou_in02,58,183,5	script	Chef Assistant#lou1	823,5,5,{
 	specialeffect EF_SONICBLOWHIT;
 	mes "^3355FF* Chop chop chop chop chop *^000000";
 	next;
-	emotion e_no1;
+	emotion ET_BEST;
 	mes "[Jin Wei Ling]";
 	mes "Hahahaha! Look these perfect vergetable slices! Muhahahaha!!";
 	mes "I will continue to hone my martial arts through cooking!";
@@ -984,7 +984,7 @@ lou_in02,42,186,5	script	Liu Jia Lim#lou	816,{
 		mes "[Liu Jia Lim]";
 		mes "Do you know what was this restaurant's best dish throughout all of its history? Dragon Soup!";
 		next;
-		emotion e_lv;
+		emotion ET_THROB;
 		mes "[Liu Jia Lim]";
 		mes "Its delicate taste comes from";
 		mes "a broth extracted from pure meat that does not contain any fat. So it's also a very popular diet food for the ladies.";
@@ -1034,7 +1034,7 @@ louyang,261,123,3	script	Chi Wu Ping#lou	824,{
 	mes "All my muscles are sore...";
 	mes "There's only one thing that could cure all of this agonizing... pain...";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Chi Wu Ping]";
 	mes "Hey kid~!";
 	mes "You don't look like a local!";
@@ -1103,7 +1103,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 		mes "[Hua Tuo]";
 		mes "However, as I studied and experimented with every pressure point, I came to the conclusion that the use of pressure points, depending on the circumstances,";
 		mes "can produce different results.";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Hua Tuo]";
 		mes "Few pressure points tend to show the same symptoms, regardless of the problem. Most of the time, the effects of pressure points will differ depending on the body's health or the time of day.";
@@ -1145,7 +1145,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 		mes "I cannot do anything without my medicine. But one my patients";
 		mes "needs immediate treatment and";
 		mes "I can't leave the office...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		if (select("I can help you.:What a shame!") == 1) {
 			mes "[Hua Tuo]";
@@ -1166,7 +1166,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 				mes "However, I will ask you";
 				mes "if we meet another time.";
 				mes "Now, if you'll excuse me...";
-				emotion e_thx;
+				emotion ET_THANKS;
 				close;
 			}
 			mes "[Hua Tuo]";
@@ -1507,7 +1507,7 @@ lou_in02,272,55,0	script	Familiar-Looking Patient	798,{
 		mes "Awwww.....";
 		mes "Ummm....";
 		mes "^666666*Cough...cough...*^000000";
-		emotion e_omg;
+		emotion ET_HUK;
 		set ch_par,1;
 		close;
 	}
@@ -1516,7 +1516,7 @@ lou_in02,272,55,0	script	Familiar-Looking Patient	798,{
 		mes "^666666*Cough cough...*^000000";
 		mes "Aww......www...";
 		mes "Aww...wwww..";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else {
@@ -1544,7 +1544,7 @@ lou_in02,248,166,2	script	Tool Shop Master#lou	824,{
 		mes "[Wang Chuiyi]";
 		mes "Um? Can I help";
 		mes "you with anything?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		if (select("I'm here to get something for the doctor...:I agree, the weather really is bad.") == 1) {
 			mes "[Wang Chuiyi]";
@@ -1632,7 +1632,7 @@ lou_in02,201,166,4	script	Storage Keeper#lou	819,{
 			mes "say so? Let's see.";
 			mes "Hmmm...";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Jiang Xiayou]";
 			mes "Actually, could you help me";
@@ -1696,7 +1696,7 @@ lou_in02,201,166,4	script	Storage Keeper#lou	819,{
 			next;
 			mes "[Jiang Xiayou]";
 			mes "The medicines you're looking for might be around here, so look around. If it weren't for the doctor, I wouldn't even let you hang around, you know that?";
-			emotion e_pif;
+			emotion ET_HNG;
 			set ch_par,4;
 			changequest 11045,11050;
 			close;
@@ -1874,7 +1874,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 				mes "[Jin Chiyuan]";
 				mes "I mean...";
 				mes "How dare you bribe an officer of the law! I hope other outsiders are not like you! Please leave immediately!";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			}
 			else {
@@ -1913,7 +1913,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 					mes "[Jin Chiyuan]";
 					mes "I mean...";
 					mes "How dare you bribe an officer of the law! I hope other outsiders are not like you! Please leave immediately!";
-					emotion e_pif;
+					emotion ET_HNG;
 					close;
 				}
 			}
@@ -1970,7 +1970,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 		mes "Hahaha...";
 		mes "Enjoy your stay";
 		mes "in Louyang!";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 	mes "[Jin Chiyuan]";
@@ -1980,7 +1980,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 	mes "[Jin Chiyuan]";
 	mes "If you have nothing to ask of me, please leave. This place is not";
 	mes "a playground for adventurers.";
-	emotion e_pif;
+	emotion ET_HNG;
 	close;
 }
 
@@ -2066,7 +2066,7 @@ lou_in02,156,38,0	script	Studying Officer#lou	822,{
 			next;
 			mes "^3355FF*Rummage rummage...*";
 			mes ".........^000000";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			close;
 		}
 		mes "[Huang Zhishu]";
@@ -2147,7 +2147,7 @@ lou_in02,156,38,0	script	Studying Officer#lou	822,{
 	mes "[Huang Zhishu]";
 	mes "Hmmm...?";
 	mes "Do you think I need to go outside more often? Well, I guess for some reason, I don't feel well. I guess I really should get some fresh air. ^666666*Yawn...*^000000";
-	emotion e_ok;
+	emotion ET_OK;
 	next;
 	mes "[Huang Zhishu]";
 	mes "But you should get out more often yourself! It's not a good idea to always stay home. If you don't get some exercise when you're young,";
@@ -2191,7 +2191,7 @@ lou_in02,204,169,0	script	Supply Stack#1lou	111,{
 			mes "[Jiang Xiayou]";
 			mes "Hey, hey...";
 			mes "I told you! It's not too late, why don't you do me the favor I asked? I'm only asking you once!";
-			emotion e_an,0,"Storage Keeper#lou";
+			emotion ET_FRET, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -2253,7 +2253,7 @@ lou_in02,207,168,0	script	Supply Stack#5lou	111,{
 	next;
 	mes "[Jiang Xiayou]";
 	mes "Hey, don't touch anything! If you mess anything up, you've gotta pile it up again, got it? If you don't want to clean up after yourself, don't make a mess!";
-	emotion e_rock,0,"Storage Keeper#lou";
+	emotion ET_ROCK, getnpcid(0, "Storage Keeper#lou");
 	close;
 }
 
@@ -2282,7 +2282,7 @@ lou_in02,206,163,0	script	Supply Stack#4lou	111,{
 				mes "You found it...?!";
 				mes "I can't believe it!";
 				mes "You just lucked out.";
-				emotion e_wah,0,"Storage Keeper#lou";
+				emotion ET_KEK, getnpcid(0, "Storage Keeper#lou");
 				close;
 			}
 			mes "^3355FF*Rummage rummage*";
@@ -2347,7 +2347,7 @@ lou_in02,198,170,0	script	Supply Stack#3lou	111,{
 			mes "It's not too late for you";
 			mes "to do the favor I asked.";
 			mes "I'm only asking you once!";
-			emotion e_gg,0,"Storage Keeper#lou";
+			emotion ET_KIK, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -2395,7 +2395,7 @@ lou_in02,192,170,0	script	Supply Stack#2	111,{
 			next;
 			mes "[Jiang Xiayou]";
 			mes "I told you! Now stop bugging me and leave now! I don't wanna deal with someone who won't trust me.";
-			emotion e_pif,0,"Storage Keeper#lou";
+			emotion ET_HNG, getnpcid(0, "Storage Keeper#lou");
 			close;
 		}
 		mes "^3355FF*Rummage rummage*";
@@ -3303,7 +3303,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "You did?!";
 		mes "Oh~ thank you,";
 		mes "thank you so much!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Nagash Arses]";
 		mes "Thank God I've";
@@ -3709,7 +3709,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		close;
 	}
 	else if (ch_par > 9 && ch_poison == 8) {
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Song Zhi Du]";
 		mes "Ah, hello.";
 		mes "Please give me a minute,";
@@ -3754,14 +3754,14 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			mes "Now, I've got to do this just right. This is a very delicate procedure...";
 			next;
 			specialeffect EF_MAGNUMBREAK;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Song Zhi Du]";
 			mes "No!! I failed again! ^666666*Sigh...*^000000 And I spent a long time preparing all of those materials...";
 			set ch_poison,10;
 			changequest 11074,11075;
 			close;
 		}
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Song Zhi Du]";
 		mes "Ah, hello.";
 		mes "Please give me a minute,";
@@ -3826,7 +3826,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 				next;
 				specialeffect EF_PATTACK;
 				specialeffect EF_POISONHIT; 
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Song Zhi Du]";
 				mes "Hahaha~!";
 				mes "Success! ";
@@ -3872,7 +3872,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			mes "Did I make it?";
 			next;
 			specialeffect EF_MAGNUMBREAK;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Song Zhi Du]";
 			mes "NO! I... I've failed again! And I spent a long time getting everything ready...";
 			close;
@@ -4110,7 +4110,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 			mes "entrance of Louyang.";
 			mes "I hope you enjoy";
 			mes "your stay here~";
-			emotion e_kis;
+			emotion ET_CHUP;
 			close;
 		}
 		mes "[Lady]";
@@ -4133,7 +4133,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 		}
 		mes "[Lady]";
 		mes "Hmpf...!";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (ch_poison == 8) {
@@ -4192,7 +4192,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 				mes "[Lady]";
 				mes "Errr...";
 				mes "You don't have enough zeny for the fee. I can't give you the package unless the delivery fee is paid!";
-				emotion e_an;
+				emotion ET_FRET;
 				close;
 			}
 			mes "[Lady]";
@@ -4217,7 +4217,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 			mes "You're at the";
 			mes "entrance of Louyang.";
 			mes "I hope you have a good time~";
-			emotion e_kis;
+			emotion ET_CHUP;
 			close;
 		}
 		mes "[Lady]";
@@ -4243,7 +4243,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 		}
 		mes "[Lady]";
 		mes "Hmpf...!";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 }

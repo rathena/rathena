@@ -10,7 +10,7 @@
 #include <stdlib.h> // atexit
 
 #ifdef WIN32
-	#include "winapi.h"
+	#include "winapi.hpp"
 
 	#ifdef DEBUGLOGMAP
 		#define DEBUGLOGPATH "log\\map-server.log"

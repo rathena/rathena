@@ -14,9 +14,9 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 COMMON_OBJ = ../common/obj/sql.o
 COMMON_H = ../common/sql.h
 
-CHAR_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g") $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+CHAR_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 CHAR_DIR_OBJ = $(CHAR_OBJ:%=obj/%)
-CHAR_H = $(shell ls ../char/*.h)
+CHAR_H = $(shell ls ../char/*.hpp)
 
 YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
 YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)

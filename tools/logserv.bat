@@ -1,2 +1,2 @@
 @ECHO OFF
-CALL serv.bat login-server.exe Login-Server
+CALL serv.bat login-server.exe Login-Server %*

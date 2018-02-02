@@ -1863,6 +1863,8 @@ enum e_hat_effects {
 	HAT_EF_RETURN_TW_1ST_HAT,
 	HAT_EF_C_FLUTTERBUTTERFLY_BL,
 	HAT_EF_QSCARABA,
+	HAT_EF_FSTONE,
+	HAT_EF_MAGICCIRCLE,
 	HAT_EF_MAX
 };
 
@@ -1944,5 +1946,7 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
 #endif
+
+bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
 #endif /* _SCRIPT_HPP_ */

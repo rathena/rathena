@@ -927,6 +927,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 			aFree(db->maplist);
 			db->maplist = NULL;
 		}
+		db->maplist_count = 0;
 	}
 
 	StringBuf_AppendStr(db->name, str[1]);

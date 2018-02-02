@@ -6177,19 +6177,16 @@ void clif_displaymessage(const int fd, const char* mes)
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
-	unsigned char *buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
+	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
 
-	WBUFW(buf,0) = 0x9a;
-	WBUFW(buf,2) = 4 + lp + len;
+	WBUFW(buf.get(),0) = 0x9a;
+	WBUFW(buf.get(),2) = 4 + lp + len;
 	if (type&BC_BLUE)
-		WBUFL(buf,4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
+		WBUFL(buf.get(),4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
 	else if (type&BC_WOE)
-		WBUFL(buf,4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
-	memcpy(WBUFP(buf, 4 + lp), mes, len);
-	clif_send(buf, WBUFW(buf,2), bl, target);
-
-	if (buf)
-		aFree(buf);
+		WBUFL(buf.get(),4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
+	memcpy(WBUFP(buf.get(), 4 + lp), mes, len);
+	clif_send(buf.get(), WBUFW(buf.get(),2), bl, target);
 }
 
 /*==========================================
@@ -6197,8 +6194,7 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
  * 008d <PacketLength>.W <GID>.L <message>.?B (ZC_NOTIFY_CHAT)
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_target target) {
-	char buf[8+CHAT_SIZE_MAX];
-	int len;
+	size_t len;
 	nullpo_retv(bl);
 
 	if(!message)
@@ -6206,16 +6202,19 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 
 	len = strlen(message)+1;
 
-	if( len > sizeof(buf)-8 ) {
+	static_assert(CHAT_SIZE_MAX > 8, "CHAT_SIZE_MAX too small for packet");
+	if( len > CHAT_SIZE_MAX ) {
 		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
-		len = sizeof(buf)-8;
+		len = CHAT_SIZE_MAX;
 	}
+	std::unique_ptr<char> buf(new char[8+len]);
 
-	WBUFW(buf,0)=0x8d;
-	WBUFW(buf,2)=len+8;
-	WBUFL(buf,4)=bl->id;
-	safestrncpy(WBUFCP(buf,8),message,len);
-	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,target);
+	WBUFW(buf.get(),0)=0x8d;
+	WBUFW(buf.get(),2)=static_cast<uint16>(len+8);
+	WBUFL(buf.get(),4)=bl->id;
+	safestrncpy(WBUFCP(buf.get(),8),message,len);
+
+	clif_send((unsigned char *)buf.get(),WBUFW(buf.get(),2),bl,target);
 }
 
 
@@ -6223,20 +6222,17 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
-	unsigned char *buf = (unsigned char*)aMalloc((16 + len)*sizeof(unsigned char));
+	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
 
-	WBUFW(buf,0)  = 0x1c3;
-	WBUFW(buf,2)  = len + 16;
-	WBUFL(buf,4)  = fontColor;
-	WBUFW(buf,8)  = fontType;
-	WBUFW(buf,10) = fontSize;
-	WBUFW(buf,12) = fontAlign;
-	WBUFW(buf,14) = fontY;
-	memcpy(WBUFP(buf,16), mes, len);
-	clif_send(buf, WBUFW(buf,2), bl, target);
-
-	if (buf)
-		aFree(buf);
+	WBUFW(buf.get(),0)  = 0x1c3;
+	WBUFW(buf.get(),2)  = len + 16;
+	WBUFL(buf.get(),4)  = fontColor;
+	WBUFW(buf.get(),8)  = fontType;
+	WBUFW(buf.get(),10) = fontSize;
+	WBUFW(buf.get(),12) = fontAlign;
+	WBUFW(buf.get(),14) = fontY;
+	memcpy(WBUFP(buf.get(),16), mes, len);
+	clif_send(buf.get(), WBUFW(buf.get(),2), bl, target);
 }
 
 /*
@@ -6449,8 +6445,13 @@ void clif_upgrademessage(int fd, int result, unsigned short item_id)
 /// Whisper is transmitted to the destination player (ZC_WHISPER).
 /// 0097 <packet len>.W <nick>.24B <message>.?B
 /// 0097 <packet len>.W <nick>.24B <isAdmin>.L <message>.?B (PACKETVER >= 20091104)
-void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
-{
+void clif_wis_message(struct map_session_data* sd, const char* nick, const char* mes, int mes_len, int gmlvl){
+	int fd;
+
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+
 #if PACKETVER < 20091104
 	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 4);
 	WFIFOW(fd,0) = 0x97;
@@ -6465,7 +6466,11 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
 	safestrncpy(WFIFOCP(fd,4), nick, NAME_LENGTH);
-	WFIFOL(fd,28) = (ssd && pc_get_group_level(ssd) == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
+	// If it is not a message from the server or a player from another map-server
+	if( ssd ){
+		gmlvl = pc_get_group_level(ssd);
+	}
+	WFIFOL(fd, 28) = (gmlvl == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
 	safestrncpy(WFIFOCP(fd,32), mes, mes_len);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #endif
@@ -10745,6 +10750,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	// not when you move each cell.  This is official behaviour.
 	if (sd->sc.data[SC_CLOAKING])
 		skill_check_cloaking(&sd->bl, sd->sc.data[SC_CLOAKING]);
+	status_change_end(&sd->bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 
 	pc_delinvincibletimer(sd);
 
@@ -10951,7 +10957,7 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 	int emoticon = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
-		if (emoticon == E_MUTE) {// prevent use of the mute emote [Valaris]
+		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
 			clif_skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 1);
 			return;
 		}
@@ -10966,8 +10972,8 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 		if (battle_config.idletime_option&IDLE_EMOTION)
 			sd->idletime = last_tick;
 
-		if(battle_config.client_reshuffle_dice && emoticon>=E_DICE1 && emoticon<=E_DICE6) {// re-roll dice
-			emoticon = rnd()%6+E_DICE1;
+		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
+			emoticon = rnd()%6+ET_DICE1;
 		}
 
 		clif_emotion(&sd->bl, emoticon);
@@ -11226,7 +11232,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		// if there are 'Test' player on an other map-server and 'test' player on this map-server,
 		// and if we ask for 'Test', we must not contact 'test' player
 		// so, we send information to inter-server, which is the only one which decide (and copy correct name).
-		intif_wis_message(sd, target, message, strlen(message));
+		intif_wis_message(sd, target, message, strlen(message) + 1);
 		return;
 	}
 
@@ -11242,7 +11248,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	// if player is autotrading
 	if (dstsd->state.autotrade == 1){
 		safesnprintf(output,sizeof(output),"%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
-		clif_wis_message(fd, wisp_server_name, output, strlen(output) + 1);
+		clif_wis_message(sd, wisp_server_name, output, strlen(output) + 1, 0);
 		return;
 	}
 
@@ -11259,7 +11265,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	clif_wis_end(fd, 0); // 0: success to send wisper
 
 	// Normal message
-	clif_wis_message(dstsd->fd, sd->status.name, message, strlen(message)+1 );
+	clif_wis_message(dstsd, sd->status.name, message, strlen(message)+1, 0);
 }
 
 
@@ -11973,7 +11979,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 	if( !hd )
 		return;
 	if( skill_isNotOk_hom(hd, skill_id, skill_lv) ) {
-		clif_emotion(&hd->bl, E_DOTS);
+		clif_emotion(&hd->bl, ET_THINK);
 		return;
 	}
 	if( hd->bl.id != target_id && skill_get_inf(skill_id)&INF_SELF_SKILL )
@@ -11981,7 +11987,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
 	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 ) {
-		clif_emotion(&hd->bl, E_DOTS);
+		clif_emotion(&hd->bl, ET_THINK);
 		if (hd->master)
 			clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_SKILLINTERVAL, 0);
 		return;
@@ -12000,13 +12006,13 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 	if( !hd )
 		return;
 	if( skill_isNotOk_hom(hd, skill_id, skill_lv) ) {
-		clif_emotion(&hd->bl, E_DOTS);
+		clif_emotion(&hd->bl, ET_THINK);
 		return;
 	}
 	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
 	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 ) {
-		clif_emotion(&hd->bl, E_DOTS);
+		clif_emotion(&hd->bl, ET_THINK);
 		if (hd->master)
 			clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_SKILLINTERVAL, 0);
 		return;
@@ -19020,7 +19026,7 @@ void clif_change_title_ack(struct map_session_data *sd, unsigned char result, un
  */
 void clif_parse_change_title(int fd, struct map_session_data *sd)
 {
-	int title_id, i;
+	int title_id;
 
 	nullpo_retv(sd);
 
@@ -19032,8 +19038,7 @@ void clif_parse_change_title(int fd, struct map_session_data *sd)
 	}else if( title_id <= 0 ){
 		sd->status.title_id = 0;
 	}else{
-		ARR_FIND(0, sd->titleCount, i, sd->titles[i] == title_id);
-		if( i == sd->titleCount ){
+		if (std::find(sd->titles.begin(), sd->titles.end(), title_id) == sd->titles.end()) {
 			clif_change_title_ack(sd, 1, title_id);
 			return;
 		}
@@ -19526,7 +19531,7 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
 /**
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <containerid>.W (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
  * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
- * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [surcename] ... [itemname]" -> MsgStringTable[1629]
+ * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
 void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname) {
@@ -19544,7 +19549,15 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 	WBUFB(buf, 4) = type;
 	WBUFW(buf, 5) = nameid;
 	WBUFB(buf, 7) = NAME_LENGTH;
-	safestrncpy(WBUFCP(buf, 8), char_name, NAME_LENGTH);
+
+	if (battle_config.broadcast_hide_name) {
+		std::string dispname = std::string(char_name);
+		int hide = min(battle_config.broadcast_hide_name, dispname.length() - 1);
+		dispname.replace(dispname.length() - hide, hide, hide, '*');
+		safestrncpy(WBUFCP(buf, 8), dispname.c_str(), NAME_LENGTH);
+	}
+	else
+		safestrncpy(WBUFCP(buf, 8), char_name, NAME_LENGTH);
 
 	switch (type) {
 		case ITEMOBTAIN_TYPE_BOXITEM:

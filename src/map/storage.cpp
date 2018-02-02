@@ -98,7 +98,7 @@ void storage_sortitem(struct item* items, unsigned int size)
 
 /**
  * Initiate storage module
- * Called from map.c::do_init()
+ * Called from map.cpp::do_init()
  */
 void do_init_storage(void)
 {
@@ -110,7 +110,7 @@ void do_init_storage(void)
 /**
  * Destroy storage module
  * @author : [MC Cameri]
- * Called from map.c::do_final()
+ * Called from map.cpp::do_final()
  */
 void do_final_storage(void)
 {
