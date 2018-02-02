@@ -27,26 +27,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -94,6 +94,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -110,6 +111,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -128,6 +130,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -148,6 +151,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -159,99 +163,95 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="achievement.h" />
-    <ClInclude Include="atcommand.h" />
-    <ClInclude Include="battle.h" />
-    <ClInclude Include="battleground.h" />
-    <ClInclude Include="buyingstore.h" />
-    <ClInclude Include="cashshop.h" />
-    <ClInclude Include="channel.h" />
-    <ClInclude Include="chat.h" />
-    <ClInclude Include="chrif.h" />
-    <ClInclude Include="clan.h" />
-    <ClInclude Include="clif.h" />
-    <ClInclude Include="clif_obfuscation.h" />
-    <ClInclude Include="clif_packetdb.h" />
-    <ClInclude Include="clif_shuffle.h" />
-    <ClInclude Include="date.h" />
-    <ClInclude Include="duel.h" />
-    <ClInclude Include="elemental.h" />
-    <ClInclude Include="guild.h" />
-    <ClInclude Include="homunculus.h" />
-    <ClInclude Include="instance.h" />
-    <ClInclude Include="intif.h" />
-    <ClInclude Include="itemdb.h" />
-    <ClInclude Include="log.h" />
-    <ClInclude Include="mail.h" />
-    <ClInclude Include="map.h" />
-    <ClInclude Include="mapreg.h" />
-    <ClInclude Include="mercenary.h" />
-    <ClInclude Include="mob.h" />
-    <ClInclude Include="npc.h" />
-    <ClInclude Include="party.h" />
-    <ClInclude Include="path.h" />
-    <ClInclude Include="pc.h" />
-    <ClInclude Include="pc_groups.h" />
-    <ClInclude Include="pet.h" />
-    <ClInclude Include="quest.h" />
-    <ClInclude Include="script.h" />
-    <ClInclude Include="script_constants.h" />
-    <ClInclude Include="searchstore.h" />
-    <ClInclude Include="skill.h" />
-    <ClInclude Include="status.h" />
-    <ClInclude Include="storage.h" />
-    <ClInclude Include="trade.h" />
-    <ClInclude Include="unit.h" />
-    <ClInclude Include="vending.h" />
+    <ClInclude Include="achievement.hpp" />
+    <ClInclude Include="atcommand.hpp" />
+    <ClInclude Include="battle.hpp" />
+    <ClInclude Include="battleground.hpp" />
+    <ClInclude Include="buyingstore.hpp" />
+    <ClInclude Include="cashshop.hpp" />
+    <ClInclude Include="channel.hpp" />
+    <ClInclude Include="chat.hpp" />
+    <ClInclude Include="chrif.hpp" />
+    <ClInclude Include="clan.hpp" />
+    <ClInclude Include="clif.hpp" />
+    <ClInclude Include="clif_obfuscation.hpp" />
+    <ClInclude Include="clif_packetdb.hpp" />
+    <ClInclude Include="clif_shuffle.hpp" />
+    <ClInclude Include="date.hpp" />
+    <ClInclude Include="duel.hpp" />
+    <ClInclude Include="elemental.hpp" />
+    <ClInclude Include="guild.hpp" />
+    <ClInclude Include="homunculus.hpp" />
+    <ClInclude Include="instance.hpp" />
+    <ClInclude Include="intif.hpp" />
+    <ClInclude Include="itemdb.hpp" />
+    <ClInclude Include="log.hpp" />
+    <ClInclude Include="mail.hpp" />
+    <ClInclude Include="map.hpp" />
+    <ClInclude Include="mapreg.hpp" />
+    <ClInclude Include="mercenary.hpp" />
+    <ClInclude Include="mob.hpp" />
+    <ClInclude Include="npc.hpp" />
+    <ClInclude Include="party.hpp" />
+    <ClInclude Include="path.hpp" />
+    <ClInclude Include="pc.hpp" />
+    <ClInclude Include="pc_groups.hpp" />
+    <ClInclude Include="pet.hpp" />
+    <ClInclude Include="quest.hpp" />
+    <ClInclude Include="script.hpp" />
+    <ClInclude Include="script_constants.hpp" />
+    <ClInclude Include="searchstore.hpp" />
+    <ClInclude Include="skill.hpp" />
+    <ClInclude Include="status.hpp" />
+    <ClInclude Include="storage.hpp" />
+    <ClInclude Include="trade.hpp" />
+    <ClInclude Include="unit.hpp" />
+    <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="achievement.c" />
-    <ClCompile Include="atcommand.c" />
-    <ClCompile Include="battle.c" />
-    <ClCompile Include="battleground.c" />
-    <ClCompile Include="buyingstore.c" />
-    <ClCompile Include="cashshop.c" />
-    <ClCompile Include="channel.c" />
-    <ClCompile Include="chat.c" />
-    <ClCompile Include="chrif.c" />
-    <ClCompile Include="clan.c" />
-    <ClCompile Include="clif.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
+    <ClCompile Include="achievement.cpp" />
+    <ClCompile Include="atcommand.cpp" />
+    <ClCompile Include="battle.cpp" />
+    <ClCompile Include="battleground.cpp" />
+    <ClCompile Include="buyingstore.cpp" />
+    <ClCompile Include="cashshop.cpp" />
+    <ClCompile Include="channel.cpp" />
+    <ClCompile Include="chat.cpp" />
+    <ClCompile Include="chrif.cpp" />
+    <ClCompile Include="clan.cpp" />
+    <ClCompile Include="clif.cpp" />
+    <ClCompile Include="date.cpp" />
+    <ClCompile Include="duel.cpp" />
+    <ClCompile Include="elemental.cpp" />
+    <ClCompile Include="guild.cpp" />
+    <ClCompile Include="homunculus.cpp" />
+    <ClCompile Include="instance.cpp" />
+    <ClCompile Include="intif.cpp" />
+    <ClCompile Include="itemdb.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="mail.cpp" />
+    <ClCompile Include="map.cpp" />
+    <ClCompile Include="mapreg.cpp" />
+    <ClCompile Include="mercenary.cpp" />
+    <ClCompile Include="mob.cpp">
+      <Optimization Condition="'$(Configuration)'=='Release'">Disabled</Optimization>
     </ClCompile>
-    <ClCompile Include="date.c" />
-    <ClCompile Include="duel.c" />
-    <ClCompile Include="elemental.c" />
-    <ClCompile Include="guild.c" />
-    <ClCompile Include="homunculus.c" />
-    <ClCompile Include="instance.c" />
-    <ClCompile Include="intif.c" />
-    <ClCompile Include="itemdb.c" />
-    <ClCompile Include="log.c" />
-    <ClCompile Include="mail.c" />
-    <ClCompile Include="map.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="mapreg.c" />
-    <ClCompile Include="mercenary.c" />
-    <ClCompile Include="mob.c" />
-    <ClCompile Include="npc.c" />
-    <ClCompile Include="npc_chat.c" />
-    <ClCompile Include="party.c" />
-    <ClCompile Include="path.c" />
-    <ClCompile Include="pc.c" />
-    <ClCompile Include="pc_groups.c" />
-    <ClCompile Include="pet.c" />
-    <ClCompile Include="quest.c" />
-    <ClCompile Include="script.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="searchstore.c" />
-    <ClCompile Include="skill.c" />
-    <ClCompile Include="status.c" />
-    <ClCompile Include="storage.c" />
-    <ClCompile Include="trade.c" />
-    <ClCompile Include="unit.c" />
-    <ClCompile Include="vending.c" />
+    <ClCompile Include="npc.cpp" />
+    <ClCompile Include="npc_chat.cpp" />
+    <ClCompile Include="party.cpp" />
+    <ClCompile Include="path.cpp" />
+    <ClCompile Include="pc.cpp" />
+    <ClCompile Include="pc_groups.cpp" />
+    <ClCompile Include="pet.cpp" />
+    <ClCompile Include="quest.cpp" />
+    <ClCompile Include="script.cpp" />
+    <ClCompile Include="searchstore.cpp" />
+    <ClCompile Include="skill.cpp" />
+    <ClCompile Include="status.cpp" />
+    <ClCompile Include="storage.cpp" />
+    <ClCompile Include="trade.cpp" />
+    <ClCompile Include="unit.cpp" />
+    <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -294,6 +294,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\const.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\const.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\create_arrow_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\create_arrow_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\elemental_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\elemental_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\elemental_skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\elemental_skill_db.txt')" />
@@ -370,3 +371,4 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />
   </Target>
 </Project>
+

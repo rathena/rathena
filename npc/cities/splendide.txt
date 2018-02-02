@@ -381,13 +381,13 @@ splendide,210,95,3	script	Middle-Ranked Laphine#2	442,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		mes "[Middle-Ranked Laphine]";
 		mes "Wow~ Great!!";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 	else {
 		mes "[Middle-Ranked Laphine]";
 		mes "MushIyazTur Ee YurDana";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 }

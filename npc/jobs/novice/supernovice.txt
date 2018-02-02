@@ -117,7 +117,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		mes ".....";
 		mes ".......";
 		mes ".........";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Tzerero]";
 		mes "I see that the light";

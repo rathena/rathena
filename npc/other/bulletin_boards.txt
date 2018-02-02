@@ -360,23 +360,23 @@ xmas_fild01,75,80,5	script	Bulletin Board#22	837,{
 }
 
 niflheim,200,191,5	script	Bulletin Board#25	837,{
-	mes "[City of the Dead, Nifflheim]";
-	mes "Welcome to Nifflheim, the City of the Dead.";
-	mes "Nifflheim was known as the other world where";
+	mes "[City of the Dead, Niflheim]";
+	mes "Welcome to Niflheim, the City of the Dead.";
+	mes "Niflheim was known as the other world where";
 	mes "you come after the death.";
 	mes "However, recently people found out a secret path behind of a mysterious tree.";
 	mes "So, you will find many other people travelling around this area.";
 	next;
-	mes "[City of the Dead, Nifflheim]";
+	mes "[City of the Dead, Niflheim]";
 	mes "As a tourist attraction, The Witch's castle is suggested.";
 	mes "Unlike normal towns, it is prohibited to save respawn point or";
-	mes "warp point inside Nifflheim. Also monsters spawn within the town as well.";
+	mes "warp point inside Niflheim. Also monsters spawn within the town as well.";
 	next;
-	mes "[City of the Dead, Nifflheim]";
+	mes "[City of the Dead, Niflheim]";
 	mes "Especially, please be attentive with a boss monster";
 	mes "called ^6B1312Lord of the Death^000000.";
 	next;
-	mes "[City of the Dead, Nifflheim]";
+	mes "[City of the Dead, Niflheim]";
 	mes "When you go ahead west, you will arrive at ^6B1312Valley of Gyoll^000000";
 	mes "where all the powerful and fearful monsters dwell upon.";
 	mes "It is suggested to leave the area immediately in case of a new solo adventurer.";

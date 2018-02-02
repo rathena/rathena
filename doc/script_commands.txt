@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20161206
+//= 20171011
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -2760,6 +2760,9 @@ Valid information types are:
 REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
 
+This function will return -1 on failure. The function fails if the cost type
+is invalid or if there is no item in the equipment slot. 
+
 ---------------------------------------
 
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
@@ -2931,6 +2934,13 @@ Examples
 Merge all stackable items that separated by GUID flags
 (either by flag 4 item_flag.txt or GUID  in item_group).
 If no item ID/name given, all possible items in player's inventory will be merged.
+
+---------------------------------------
+
+*getequiptradability(<equipment slot>{,<char id>});
+
+Returns true if the item in <equipment slot> is tradable.
+Returns false otherwise.
 
 ---------------------------------------
 //
@@ -3868,10 +3878,13 @@ by default green
 
 ---------------------------------------
 
-*showscript "<message>"{,<GID>};
+*showscript "<message>"{,<GID>, <flag>};
 
 Makes attached player or GID says a message like shouting a skill name, the message
 will be seen to everyone around but not in chat window.
+flag: Specify target
+   AREA - Message is sent to players in the vicinity of the source (default).
+   SELF - Message is sent only to player attached.
 
 ---------------------------------------
 
@@ -4858,7 +4871,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getrandgroupitem <group_id>{,<quantity>{,<sub_group>}};
+*getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}};
 
 Similar to the above example, this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
@@ -4869,15 +4882,23 @@ If 'quantity' is not defined or 0, it will uses defined amount from Item Group l
 If 'sub_group' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
 'must' item group).
 
+For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
+as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
+if 'identify' is defined with value 1.
+
 More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getgroupitem <group_id>{,<char_id>};
+*getgroupitem <group_id>{,<identify>{,<char_id>}};
 
 Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified
 item group & sub_group.
+
+For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
+as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
+if 'identify' is defined with value 1.
 
 More info, see doc/item_group.txt.
 
@@ -5344,7 +5365,7 @@ Used in reset NPC's (duh!)
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
 *sc_end <effect type>{,<GID>};
-*sc_end_class {<char_id>};
+*sc_end_class {<char_id>{,<job_id>}};
 
 These commands will bestow a status effect on a character.
 
@@ -5383,7 +5404,7 @@ and theirs val1, val2, val3, and val4 usage in source.
 perform a complete removal of all statuses (although permanent ones will re-apply).
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
-skill on the invoking character.
+skill on the invoking character. If <job_id> is provided it will end the effect for that job.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -5401,6 +5422,18 @@ Examples:
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
+	
+	// This will end the effect of any learned skill for the invoking character.
+	sc_end_class;
+	
+	// This will end the effect of any learned skill for the character with the <char_id> 150000.
+	// val1: <char_id>
+	sc_end_class(150000);
+	
+	// This will end the effect of any Arch Bishop skill for the invoking character.
+	// val1: <char_id>
+	// val2: <job_id> of Arch Bishop
+	sc_end_class(getcharid(0),Job_Arch_Bishop);
 
 Note: to use SC_NOCHAT you should alter Manner
 	set Manner, -5;	// Will mute a user for 5 minutes
@@ -5941,7 +5974,7 @@ Example:
 	// spawn 1 Shining Plant in the 5x5 area centered on (155,188)
 	areamonster "prontera",153,186,157,190,"Shining Plant",1083,1;
 	// make the plant cast level 10 Cold Bolt on a random target
-	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,e_gg,3;
+	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,ET_KEK,3;
 
 ---------------------------------------
 
@@ -6531,6 +6564,8 @@ The options are:
 	1 = The buy window
 	2 = The sell window
 
+Note: The <option> parameter only works on the 'shop' type NPC.
+
 A shop called with this command will trigger the labels "OnBuyItem" and "OnSellItem"
 (as long as an npcshop* command is executed from that NPC, see note below). These
 labels, if used, will replace how the shop handles the buying and selling of items,
@@ -6541,15 +6576,30 @@ The label "OnBuyItem" sets the following arrays:
 	@bought_quantity - amount bought
 
 The label "OnSellItem" sets the following arrays:
-	@sold_nameid     - item ID sold
-	@sold_quantity   - amount sold
-	@sold_refine     - refine count
-	@sold_attribute  - if the item is broken (1) or not (0)
-	@sold_identify   - if the item is identified (1) or not (0)
-	@sold_card1      - card slot 1
-	@sold_card2      - card slot 2
-	@sold_card3      - card slot 3
-	@sold_card4      - card slot 4
+	@sold_nameid        - item ID sold
+	@sold_quantity      - amount sold
+	@sold_refine        - refine count
+	@sold_attribute     - if the item is broken (1) or not (0)
+	@sold_identify      - if the item is identified (1) or not (0)
+	@sold_card1         - card slot 1
+	@sold_card2         - card slot 2
+	@sold_card3         - card slot 3
+	@sold_card4         - card slot 4
+	@sold_option_id1    - random option ID 1
+	@sold_option_val1   - random option value 1
+	@sold_option_param1 - random option param 1
+	@sold_option_id2    - random option ID 2
+	@sold_option_val2   - random option value 2
+	@sold_option_param2 - random option param 2
+	@sold_option_id3    - random option ID 3
+	@sold_option_val3   - random option value 3
+	@sold_option_param3 - random option param 3
+	@sold_option_id4    - random option ID 4
+	@sold_option_val4   - random option value 4
+	@sold_option_param4 - random option param 4
+	@sold_option_id5    - random option ID 5
+	@sold_option_val5   - random option value 5
+	@sold_option_param5 - random option param 5
 
 Note: These labels will only be triggered if an npcshop* command is executed because these
 commands set a special data on the shop NPC, named master_nd in the source. The above labels
@@ -7186,19 +7236,15 @@ must be used.
 
 ---------------------------------------
 
-*emotion <emotion number>{,<target>{,"<target name>"}};
+*emotion <emotion number>{,<target>};
 
 This command makes an object display an emotion sprite above their own as
 if they were doing that emotion. For a full list of emotion numbers,
-see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
-(a question mark) and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
+(a question mark) and 'ET_SURPRISE' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
-their head. If 0 (the default if omitted), the NPC in current use will show
-the emotion, if 1, the player that is running the script will display it.
-
-Target name parameter allows to display emotion on top of other NPC/PC without
-event labels. If specified name is not found, command does nothing.
+their head. Use the target Game ID (GID).
 
 ---------------------------------------
 
@@ -7302,6 +7348,7 @@ The commands can also run without an attached rid.
 This command will bind a NPC event label to an atcommand. Upon execution of the
 atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
 one binding. If you rebind, it will override the original binding.
+Note: The default level for atcommand is 0 while the default level for charcommand is 100.
 
 The following variables are set upon execution:
 	.@atcmd_command$       =  The name of the @command used.
@@ -7317,7 +7364,7 @@ Example:
 		bindatcmd "test",strnpcinfo(3) + "::OnAtcommand";
 		end;
 	OnAtcommand:
-		specialeffect2 338;
+		specialeffect2 EF_ANGEL2;
 		end;
 	}
 
@@ -7442,13 +7489,6 @@ This command will make a <GID> say a message. The display name of the <GID> won'
 flag: Specify target
    bc_area - Message is sent to players in the vicinity of the source (default).
    bc_self - Message is sent only to player attached.
-
----------------------------------------
-
-*unitemote <GID>,<emotion number>;
-
-This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
 
 ---------------------------------------
 
@@ -7843,6 +7883,11 @@ and "NPC level" is the temporary level of the NPC (used in some skills).
 Neither value can be greater than the max level defined in config, and will
 not work properly if the NPC has a mob sprite.
 
+Before using skills, NPCs must have basic stats applied to them depending on the
+skill being used: UNPC_ATKMIN, UNPC_ATKMAX, UNPC_MATKMIN, UNPC_MATKMAX, UNPC_STR,
+UNPC_AGI, UNPC_VIT, UNPC_INT, UNPC_DEX, UNPC_LUK.
+See 'setunitdata' for more information on usage.
+
     // Casts Level 10 Heal on the attached player, calculated with
     // all stats 99 and base level 60.
     npcskill "AL_HEAL",10,99,60;
@@ -7969,6 +8014,19 @@ Example:
 
 	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
 	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
+
+---------------------------------------
+
+*round(<number>,<precision>);
+*ceil(<number>,<precision>);
+*floor(<number>,<precision>);
+
+Returns <number> rounded to multiple of <precision>.
+
+`round` function will round the <number> up if its division with <precision> yield a remainder
+with a value equals to or more than half of <precision>. Otherwise, it rounds the <number> down.
+`ceil` always round the <number> up.
+`floor` always round the <number> down.
 
 ---------------------------------------
 
@@ -8970,6 +9028,7 @@ mapflag	<map name>	battleground	2
 ---------------------------------------
 
 *bpet;
+*birthpet;
 
 This command opens up a pet hatching window on the client connected to the
 invoking character. It is used in item script for the pet incubators and will
@@ -8980,13 +9039,21 @@ This is still usable outside item scripts.
 ---------------------------------------
 
 *pet <pet id>;
+*catchpet <pet id>;
 
 This command is used in all the item scripts for taming items. Running this
 command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It
 will still work outside an item script.
+If the <pet id> is PET_CATCH_UNIVERSAL the item will attempt to catch the targeted
+monster as long as it is in the pet database and does not have the MD_STATUS_IMMUNE
+monster mode.
+If the <pet id> is PET_CATCH_UNIVERSAL_ITEM the item will attempt to catch the targeted
+monster as long as it is in the pet database and the targeted monster requires the lure
+item used.
+See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
-A full list of pet IDs can be found inside 'db/pet_db.txt'.
+A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
 ---------------------------------------
 
@@ -8994,7 +9061,7 @@ A full list of pet IDs can be found inside 'db/pet_db.txt'.
 
 This command will create a pet egg and put it in the invoking character's
 inventory. The kind of pet is specified by pet ID numbers listed in
-'db/pet_db.txt'. The egg is created exactly as if the character just successfully
+'db/(pre-)re/pet_db.txt'. The egg is created exactly as if the character just successfully
 caught a pet in the normal way.
 
 	// This will make you a poring:
@@ -9012,7 +9079,7 @@ This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
  PETINFO_ID - Pet ID
- PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it
+ PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.txt' - will tell you what kind of a pet it
      is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
@@ -9551,7 +9618,8 @@ solution rather than sending the map and the monster_id.
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+The Hat Effect constants can be found in 'src/map/script_constants.h' starting
+with HAT_EF_*.
 
 Requires client 2015-05-13aRagEXE or newer.
 

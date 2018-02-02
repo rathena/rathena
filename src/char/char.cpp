@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
+#include "char.hpp"
 
 #include <time.h>
 #include <stdarg.h>
@@ -21,18 +22,19 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/cli.h"
-#include "int_guild.h"
-#include "int_homun.h"
-#include "int_mail.h"
-#include "int_mercenary.h"
-#include "int_elemental.h"
-#include "int_party.h"
-#include "int_storage.h"
-#include "inter.h"
-#include "char_logif.h"
-#include "char_mapif.h"
-#include "char_cnslif.h"
-#include "char_clif.h"
+
+#include "int_guild.hpp"
+#include "int_homun.hpp"
+#include "int_mail.hpp"
+#include "int_mercenary.hpp"
+#include "int_elemental.hpp"
+#include "int_party.hpp"
+#include "int_storage.hpp"
+#include "inter.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "char_cnslif.hpp"
+#include "char_clif.hpp"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor
@@ -215,7 +217,7 @@ int char_db_setoffline(DBKey key, DBData *data, va_list ap) {
 /**
  * @see DBApply
  */
-static int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
+int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
 	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int server_id = va_arg(ap, int);
 
@@ -259,7 +261,7 @@ void char_set_all_offline_sql(void){
 /**
  * @see DBCreateData
  */
-static DBData char_create_charstatus(DBKey key, va_list args) {
+DBData char_create_charstatus(DBKey key, va_list args) {
 	struct mmo_charstatus *cp;
 	cp = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 	cp->char_id = key.i;
@@ -1533,7 +1535,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	time_t delete_date;
 	char *data;
 	size_t len;
-	int i, k;
+	int i;
 
 	ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == char_id);
 
@@ -1725,10 +1727,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 		inter_guild_leave(guild_id, account_id, char_id);// Leave your guild.
 
 	// refresh character list cache
-	for(k = i; k < MAX_CHARS-1; k++){
-		sd->found_char[k] = sd->found_char[k+1];
-	}
-	sd->found_char[MAX_CHARS-1] = -1;
+	sd->found_char[i] = -1;
 
 	return CHAR_DELETE_OK;
 }
@@ -1763,9 +1762,21 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 
 	buf = WBUFP(buffer,0);
 	WBUFL(buf,0) = p->char_id;
+#if PACKETVER >= 20170830
+	WBUFQ(buf,4) = u64min((uint64)p->base_exp, INT64_MAX);
+	offset += 4;
+	buf = WBUFP(buffer, offset);
+#else
 	WBUFL(buf,4) = umin(p->base_exp, INT32_MAX);
+#endif
 	WBUFL(buf,8) = p->zeny;
+#if PACKETVER >= 20170830
+	WBUFQ(buf,12) = u64min((uint64)p->job_exp, INT64_MAX);
+	offset += 4;
+	buf = WBUFP(buffer, offset);
+#else
 	WBUFL(buf,12) = umin(p->job_exp, INT32_MAX);
+#endif
 	WBUFL(buf,16) = p->job_level;
 	WBUFL(buf,20) = 0; // probably opt1
 	WBUFL(buf,24) = 0; // probably opt2
@@ -2169,7 +2180,7 @@ int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t 
 /**
  * @see DBApply
  */
-static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
+int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct online_char_data *character= (struct online_char_data *)db_data2ptr(data);
 	if (character->fd != -1)
@@ -2182,12 +2193,12 @@ static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-static int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
-static int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;
@@ -2773,7 +2784,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
-static void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
+void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -2818,7 +2829,7 @@ static void char_config_split_startpoint(char *w1_value, char *w2_value, struct 
  * @param w2_value: Value from w2
  * @param start: Start item reference
  */
-static void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
+void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -3055,7 +3066,7 @@ bool char_config_read(const char* cfgName, bool normal){
 /**
  * Checks for values out of range.
  */
-static void char_config_adjust() {
+void char_config_adjust() {
 #if PACKETVER < 20100803
 	if (charserv_config.char_config.char_del_option&CHAR_DEL_BIRTHDATE) {
 		ShowWarning("conf/char_athena.conf:char_del_option birthdate is enabled but it requires PACKETVER 2010-08-03 or newer, defaulting to email...\n");

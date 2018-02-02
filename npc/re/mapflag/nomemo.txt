@@ -68,6 +68,7 @@ gld2_gef	mapflag	nomemo
 gld2_pay	mapflag	nomemo
 gld2_prt	mapflag	nomemo
 job_ko	mapflag	nomemo
+job_gun	mapflag	nomemo
 ma_scene01	mapflag	nomemo
 ma_in01	mapflag	nomemo
 ma_dun01	mapflag	nomemo
@@ -129,6 +130,7 @@ gl_cas02_	mapflag	nomemo
 1@face	mapflag	nomemo
 1@sara	mapflag	nomemo
 1@gef_in	mapflag	nomemo
+1@glast	mapflag	nomemo
 dali	mapflag	nomemo
 dali02	mapflag	nomemo
 
@@ -145,3 +147,9 @@ te_aldecas4	mapflag	nomemo
 te_aldecas5	mapflag	nomemo
 teg_dun01	mapflag	nomemo
 teg_dun02	mapflag	nomemo
+
+// Episode 15
+1@lab	mapflag	nomemo
+1@uns	mapflag	nomemo
+un_bk_q	mapflag	nomemo
+un_myst	mapflag	nomemo

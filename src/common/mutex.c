@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #else
 #include <pthread.h>
 

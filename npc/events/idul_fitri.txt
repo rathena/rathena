@@ -62,12 +62,12 @@ prontera,146,92,3	script	Cellerb	58,{
 		next;
 		mes "[Staff Idul Fitri]";
 		mes "We appreciate your participation in this special event.";
-		emotion e_thx;
+		emotion ET_THANKS;
 		close;
 	case 2:
 		mes "[Staff Idul Fitri]";
 		mes "Oh well, maybe you will participate in tommorow's quest.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		close;
 	}
 }
