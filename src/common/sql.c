@@ -9,7 +9,7 @@
 #include "sql.h"
 
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #endif
 #include <mysql.h>
 #include <stdlib.h>// strtoul

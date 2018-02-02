@@ -101,7 +101,9 @@ OnTouch:
 	close2;
 	if (isbegin_quest(21001) == 1)
 		completequest 21001;
-	warp "izlude" + replacestr( strnpcinfo(2), "intro_to_izlude", "" ),196,209;
+	.@map$ = "izlude" + replacestr( strnpcinfo(2), "intro_to_izlude", "" );
+	warp .@map$,196,209;
+	savepoint .@map$,128,142,1,1;
 	end;
 }
 int_land01,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a	WARPNPC,2,2

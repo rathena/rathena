@@ -43,7 +43,7 @@ OnStart:
 prt_are_in,76,87,3	script	Helper#party	 67,4,4,{
 	if($arn_partywait == 0) {
 		set $arn_partywait,1;
-		emotion e_gasp,0;
+		emotion ET_SURPRISE;
 		mes "[Helper Iriff]";
 		mes "Good day, challengers!";
 		mes "You are in the party arena waiting room.";
@@ -1044,7 +1044,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 		warp "arena_room",100,75;
 		end;
 	} else {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Staff]";
 		mes "Wow! You have renewed the record!";
 		mes "What a great job!";

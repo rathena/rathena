@@ -44,7 +44,7 @@ prontera,184,177,6	script	Refine Master	851,{
 			close;
 		}
 	}
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Refine Master]";
 	mes "Greetings!";
 	mes "I can refine an item up to the ^006400same level as your ticket^000000.";
@@ -70,7 +70,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		close;
 	}
 	if (!getequipisenableref(.@part)) {
-		emotion e_otl;
+		emotion ET_OTL;
 		mes "[Refine Master]";
 		mes "Oh, I'm sorry.";
 		mes "This item is impossible to refine.";
@@ -95,7 +95,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		break;
 	}
 	if (!.@check) {
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Refine Master]";
 		mes "If you want to refine this ^006400"+.@type$+"^000000, please come along with ^006400"+.@type$+" Refine Ticket^000000.";
 		mes "See you later!";
@@ -111,7 +111,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	set .@ticket_lv, .@levels[.@select];
 	set .@ticket_id, .@tickets[.@select];
 	if (countitem(.@ticket_id) == 0) {
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Refine Master]";
 		mes getitemname(.@ticket_id)+" is not in your inventory. Did you put it in your storage?";
 		mes "Please check again.";
@@ -119,7 +119,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		close;
 	}
 	if (getequiprefinerycnt(.@part) >= .@ticket_lv) {
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Refine Master]";
 		mes "^8B4513This item is already refined as much as your deed.^000000";
 		mes "Please come along with an item refined less than your ticket.";
@@ -130,7 +130,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	mes "May I proceed?";
 	next;
 	if(select("No.:Yes.") == 1) {
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Refine Master]";
 		mes "Oh, you changed your mind.";
 		mes "Ok.";
@@ -153,7 +153,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	}
 	successrefitem .@part, .@ticket_lv - getequiprefinerycnt(.@part);
 	next;
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Refine Master]";
 	mes "Alright, here it is~";
 	mes "Well, ^0000FF"+strcharinfo(0)+"^000000!";

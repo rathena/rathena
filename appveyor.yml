@@ -42,26 +42,9 @@ test_script:
     
     set MYSQL="C:\Program Files\MySql\MySQL Server 5.7\bin\mysql.exe"
     
-    rem Setting creation
-    
     cd C:\projects\rathena
     
-    echo map_server_ip: %DB_HOST%>> conf\import\inter_conf.txt
-    
-    echo map_server_id: %DB_USER%>> conf\import\inter_conf.txt
-    
-    echo map_server_pw: %DB_PASS%>> conf\import\inter_conf.txt
-    
-    echo map_server_db: %DB_NAME%>> conf\import\inter_conf.txt
-    
-    echo log_db_ip: %DB_HOST%>> conf\import\inter_conf.txt
-    
-    echo log_db_id: %DB_USER%>> conf\import\inter_conf.txt
-    
-    echo log_db_pw: %DB_USERPW%>> conf\import\inter_conf.txt
-    
-    echo log_db_db: %DB_NAME%>> conf\import\inter_conf.txt
-    
+    rem TODO should be replace with tools\ci\sql.bat as soon as possible
     rem MySQL database setup
     
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% -e "CREATE DATABASE %DB_NAME%;"
@@ -100,8 +83,16 @@ test_script:
     
     %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% %DB_NAME% -e "source sql-files\roulette_default_data.sql"
     
-    %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% -e "GRANT ALL ON *.* TO '%DB_USER%'@'%DB_HOST%' IDENTIFIED BY '%DB_USERPW%';"
+    %MYSQL% -u %DB_ROOT% -p%DB_ROOTPW% -e "GRANT SELECT,INSERT,UPDATE,DELETE ON %DB_NAME%.* TO '%DB_USER%'@'%DB_HOST%' IDENTIFIED BY '%DB_USERPW%';"
+    
+    rem Activate all custom and test scripts
+    
+    start /d tools\ci npc.bat
     
     rem Start the map server
+    
+    login-server.exe --run-once
+    
+    char-server.exe --run-once
     
     map-server.exe --run-once

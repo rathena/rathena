@@ -79,17 +79,17 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "Why are you disrupting my fishing?";
 		next;
 		select("I have a delivery from Esseray...");
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Fishing Novice]";
 		mes "What? Esseray? Esseray?";
 		mes "Hmm! I know him...";
 		mes "Esseray... Esseray... hmm.";
 		next;
-		emotion e_dots,1;
-		emotion e_dots;
+		emotion ET_THINK, playerattached();
+		emotion ET_THINK;
 		mes "..................";
 		next;
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Fishing Novice]";
 		mes "Ahhhh --- !! ----- Ahhhh ---!!";
 		mes "Got it! --- Got it!";
@@ -108,8 +108,8 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 			mes "What?! He isn't?";
 			mes "Then where is Esseray from?";
 			next;
-			emotion e_dots,1;
-			emotion e_dots;
+			emotion ET_THINK, playerattached();
+			emotion ET_THINK;
 			mes ".... .... .... ....";
 			next;
 			mes "[Fishing Novice]";
@@ -123,13 +123,13 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		next;
 		mes "- You explain why you're here. -";
 		next;
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Fishing Novice]";
 		mes "Hmm... it is an easy and hard question at the same time.";
 		next;
 		mes "- You hear a voice complaining about something. -";
 		next;
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Fishing Novice]";
 		mes "Esseray! Such a son of a %@&$# spoiling my vacation...";
 		next;
@@ -138,7 +138,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "My poor life~";
 		mes "Ahhh~ so many problems.";
 		next;
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Fishing Novice]";
 		mes "Too ~ hard. Hey, little kid!";
 		mes "What's your name?";
@@ -216,7 +216,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "You don't know how to be stronger. Right?";
 		next;
 		select("Yes, I can't get stronger.");
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Nodor]";
 		mes "Hhhmmm ~!";
 		mes "There's a way to do it...";
@@ -237,7 +237,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 			mes "I will give you a tip.";
 			mes "You can't always be right.";
 			mes "Sometimes you need to check your ego and listen to others.";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 		mes "[Nodor]";
@@ -274,7 +274,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "["+strcharinfo(0)+"]";
 		mes "Hey, Nodor!";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Nodor]";
 		mes "Oh my god!";
 		mes "So frightened... let me see?";
@@ -307,7 +307,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 			close;
 		}
 		changequest 5094+.@i,5098;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Nodor]";
 		mes "keheheheheheh~";
 		next;
@@ -332,7 +332,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 			mes "you need to learn patience.";
 			close;
 		}
-		emotion e_gg;
+		emotion ET_KIK;
 		mes "[Nodor]";
 		mes "Hhhhhhhhhh~";
 		next;
@@ -440,17 +440,17 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "[Nodor]";
 		mes "Eh-hem! I was not just killing time after I sent you!!";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Nodor]";
 		mes "What the? --- ah? --- !!";
 		next;
 		select("??????");
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Nodor]";
 		mes "Watch out!! A bunch of Golems are running after us!";
 		mes "We... have to run...!!!";
 		next;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		if(select("What?!:Um?") == 2) {
 			mes "- You look around, and -";
 			mes "- there is nothing behind you. -";
@@ -480,14 +480,14 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		callfunc "F_ClearJobVar"; // -- Clears all job variables for the current player
 		jobchange roclass(eaclass()|EAJL_THIRD);
 		set EXSUPNOV_Q,5;	
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Nodor]";
 		mes "Puhahahahahahahahahahah!!";
 		mes "Good! You scared yet?";
 		next;
 		select("... ... ...");
-		emotion e_dots,1;
-		emotion e_sry;
+		emotion ET_THINK, playerattached();
+		emotion ET_SORRY;
 		mes "[Nodor]";
 		mes "Sorry for scaring you!";
 		mes "I think our duty and mission as Novices is to make days joyful.";
@@ -498,11 +498,11 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "Or more powerful?";
 		next;
 		select("...? ...? ...?");
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		mes "[Nodor]";
 		mes "Oh--- My--- (tut,tut,tut)!!";
 		next;
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Nodor]";
 		mes "Mr. Sieu Ngu --";
 		mes "Not to be mean, but";

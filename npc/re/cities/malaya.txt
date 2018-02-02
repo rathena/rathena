@@ -325,11 +325,11 @@ malaya,227,311,4	script	Grandma#ma01	575,{
 
 malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 	if (malaya_hi < 10) {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Drumming Young Man]";
 		mes "Ugh... it's just like that time before...";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Drumming Young Man]";
 		mes "When the moon was swallowed. Argh!";
 		close;
@@ -337,7 +337,7 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 		mes "[Drumming Young Man]";
 		mes "I think the village was saved by a nameless adventurer.";
 		next;
-		emotion e_sigh;
+		emotion ET_OHNO;
 		mes "[Drumming Young Man]";
 		mes "Phew... I thought Bakonawa appeared again.";
 		close;
@@ -354,7 +354,7 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 	mes "But I know that Bakonawa could also 'swallow people', too.";
 	next;
 	select("Huk! Then isn't it dangerous?");
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Drumming Young Man]";
 	mes "Ha ha ha. There is a way to stop Bakonawa from swallowing a person.";
 	next;
@@ -378,12 +378,12 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 
 malaya,270,59,4	script	Port Guard#ma03	570,{
 	if (malaya_hi < 10) {
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Port Guard]";
 		mes "The village is chaotic these days. Is it okay for me to be off like this?";
 		close;
 	} else if (malaya_hi < 20) {
-		emotion e_no;
+		emotion ET_STARE_ABOUT;
 		mes "[Port Guard]";
 		mes "The village is somewhat stable now but you should still be careful walking around at night.";
 		close;
@@ -393,7 +393,7 @@ malaya,270,59,4	script	Port Guard#ma03	570,{
 		mes getd("$ma_name0"+rand(1,6)+"$")+" is said to escape from Buwaya alive after being captured. This person must be powerful.";
 		close;
 	}
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Port Guard]";
 	mes "What!! Port all clear!!";
 	next;
@@ -422,7 +422,7 @@ malaya,270,59,4	script	Port Guard#ma03	570,{
 		mes "[Port Guard]";
 		mes "And you should run into the nearest building when you hear Wokwoks wings fluttering from afar.";
 		next;
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Port Guard]";
 		mes "But if the fluttering sound is small or if you don't hear anything, let's just say you should prepare for attack and wish for luck.";
 		close;

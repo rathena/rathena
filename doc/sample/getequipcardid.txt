@@ -22,6 +22,6 @@ prontera,155,177,4	script	Check My Hat	810,{
 		close;
 	}
 	mes "Nothing?";
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	close;
 }

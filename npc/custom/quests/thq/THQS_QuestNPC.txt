@@ -50,7 +50,7 @@ N_PayZeny:
 	mes "[Guy]";
 	mes "Its sad to see someone give a quest up...";
 	mes "Shame on you.";
-	emotion e_ag;
+	emotion ET_ANGER;
 	close;
 
 N_ZenyFail:
@@ -74,7 +74,7 @@ N_NewQuest:
 	mes "The quest names in ^FF0000This Colour^000000 mean that they are more challanging then the rest, but have better rewards.";
 	next;
 	set #THQ_DELAY,(GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR) + 1); //you can get another quest after 1 hour [Lupus]
-	emotion e_no1;
+	emotion ET_BEST;
 	if(@treasure_job==0) set @treasure_job,rand(1,10); //doesn't allow cheaters to pick any quest they want
 	if(@treasure_job==2) goto N_JobList2;
 	if(@treasure_job==3) goto N_JobList3;
@@ -90,20 +90,20 @@ N_NewQuest:
 N_NoTime:
 	mes "[Guy]";
 	mes "Alright maybe next time "+strcharinfo(0)+".";
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	close;
 
 N_Signup:
 	mes "[Guy]";
 	mes "I'm afraid you must sign up for the guild before you can go on a quest!";
-	emotion e_sry;
+	emotion ET_SORRY;
 	close;
 
 L_NoQuestsForYet:
 	mes "[Guy]";
 	mes "I'm afraid there aren't any Quests for you yet.";
 	mes "Call in "+ (#THQ_DELAY - (GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR)) )+" hours later.";
-	emotion e_sry;
+	emotion ET_SORRY;
 	close;
 
 L_QuestGiven:

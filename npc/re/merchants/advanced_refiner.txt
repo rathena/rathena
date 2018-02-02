@@ -153,7 +153,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		mes "[Holink]";
 		mes "Me~ Me~ Meow! Fun fun refining~";
 		next;
-		emotion e_kis;
+		emotion ET_CHUP;
 		mes "[Holink]";
 		mes "Perfect!! Perfect, meow!!";
 		mes "I am the disciple of the refining wizard Aragam~";
@@ -166,11 +166,11 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "Meo~ Meow~ Kyaaak!!";
 	next;
 	switch(rand(1,5)) {
-		case 1: emotion e_sob; break;
-		case 2: emotion e_swt2; break;
-		case 3: emotion e_wah; break;
-		case 4: emotion e_hmm; break;
-		case 5: emotion e_lv2; break;
+		case 1: emotion ET_CRY; break;
+		case 2: emotion ET_PROFUSELY_SWEAT; break;
+		case 3: emotion ET_KEK; break;
+		case 4: emotion ET_SCRATCH; break;
+		case 5: emotion ET_BIGTHROB; break;
 	}
 	mes "[Holink]";
 	mes "Meow!! Aaaaakk~~!!!!";
