@@ -41,7 +41,7 @@ alberta,83,96,5	script	Necko	98,7,7,{
 			mes "Ppyakikakikakakakakakakaka!!";
 			close;
 		}
-		else if (JobLevel < 15) {
+		else if (JobLevel < 15 && Class == Job_Merchant ) {
 			mes "[Necko]";
 			mes "Oh, did you come because";
 			mes "you are infatuated with my voice?";

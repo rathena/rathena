@@ -303,6 +303,8 @@ int intif_main_message(struct map_session_data* sd, const char* message)
  */
 int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int mes_len)
 {
+	int headersize = 8 + 2 * NAME_LENGTH;
+
 	nullpo_ret(sd);
 	if (CheckForCharServer())
 		return 0;
@@ -313,12 +315,13 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
 		return 0;
 	}
 
-	WFIFOHEAD(inter_fd,mes_len + 52);
+	WFIFOHEAD(inter_fd,mes_len + headersize);
 	WFIFOW(inter_fd,0) = 0x3001;
-	WFIFOW(inter_fd,2) = mes_len + 52;
-	memcpy(WFIFOP(inter_fd,4), sd->status.name, NAME_LENGTH);
-	memcpy(WFIFOP(inter_fd,4+NAME_LENGTH), nick, NAME_LENGTH);
-	memcpy(WFIFOP(inter_fd,4+2*NAME_LENGTH), mes, mes_len);
+	WFIFOW(inter_fd,2) = mes_len + headersize;
+	WFIFOL(inter_fd,4) = pc_get_group_level(sd);
+	safestrncpy(WFIFOCP(inter_fd,8), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,8+NAME_LENGTH), nick, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,8+2*NAME_LENGTH), mes, mes_len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 
 	if (battle_config.etc_log)
@@ -333,7 +336,7 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
  * @param flag : 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
  * @return 0=no char-serv connected, 1=msg sent
  */
-int intif_wis_replay(int id, int flag)
+int intif_wis_reply(int id, int flag)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -344,7 +347,7 @@ int intif_wis_replay(int id, int flag)
 	WFIFOSET(inter_fd,7);
 
 	if (battle_config.etc_log)
-		ShowInfo("intif_wis_replay: id: %d, flag:%d\n", id, flag);
+		ShowInfo("intif_wis_reply: id: %d, flag:%d\n", id, flag);
 
 	return 1;
 }
@@ -365,9 +368,9 @@ int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
 	WFIFOHEAD(inter_fd, mes_len + 8 + NAME_LENGTH);
 	WFIFOW(inter_fd,0) = 0x3003;
 	WFIFOW(inter_fd,2) = mes_len + 32;
-	memcpy(WFIFOP(inter_fd,4), wisp_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,4), wisp_name, NAME_LENGTH);
 	WFIFOL(inter_fd,4+NAME_LENGTH) = permission;
-	memcpy(WFIFOP(inter_fd,8+NAME_LENGTH), mes, mes_len);
+	safestrncpy(WFIFOCP(inter_fd,8+NAME_LENGTH), mes, mes_len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 
 	if (battle_config.etc_log)
@@ -1245,22 +1248,23 @@ int intif_parse_WisMessage(int fd)
 	struct map_session_data* sd;
 	char *wisp_source;
 	char name[NAME_LENGTH];
-	int id, i;
+	int id, i, gmlvl;
 
 	id=RFIFOL(fd,4);
+	gmlvl=RFIFOL(fd,8);
 
-	safestrncpy(name, RFIFOCP(fd,32), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd,12+NAME_LENGTH), NAME_LENGTH);
 	sd = map_nick2sd(name,false);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
-		intif_wis_replay(id,1);
+		intif_wis_reply(id,1);
 		return 0;
 	}
 	if(sd->state.ignoreAll) {
-		intif_wis_replay(id, 2);
+		intif_wis_reply(id, 2);
 		return 0;
 	}
-	wisp_source = RFIFOCP(fd,8); // speed up [Yor]
+	wisp_source = RFIFOCP(fd,12); // speed up [Yor]
 	for(i=0; i < MAX_IGNORE_LIST &&
 		sd->ignore[i].name[0] != '\0' &&
 		strcmp(sd->ignore[i].name, wisp_source) != 0
@@ -1268,12 +1272,12 @@ int intif_parse_WisMessage(int fd)
 
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
-		intif_wis_replay(id, 2);
+		intif_wis_reply(id, 2);
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd->fd, wisp_source, RFIFOCP(fd,56),RFIFOW(fd,2)-56);
-	intif_wis_replay(id,0);   // success
+	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
+	intif_wis_reply(id,0);   // success
 	return 1;
 }
 
@@ -1313,7 +1317,7 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 	wisp_name = va_arg(va, char*);
 	message = va_arg(va, char*);
 	len = va_arg(va, int);
-	clif_wis_message(sd->fd, wisp_name, message, len);
+	clif_wis_message(sd, wisp_name, message, len,0);
 	return 1;
 }
 
@@ -1334,8 +1338,8 @@ int mapif_parse_WisToGM(int fd)
 	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
 	message = (char *) aMalloc(mes_len+1);
 
-	permission = RFIFOL(fd,4+NAME_LENGTH);
 	safestrncpy(Wisp_name, RFIFOCP(fd,4), NAME_LENGTH);
+	permission = RFIFOL(fd, 4 + NAME_LENGTH);
 	safestrncpy(message, RFIFOCP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
