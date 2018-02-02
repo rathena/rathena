@@ -11,7 +11,7 @@
 //= 1.1 Dialogue cleanup [Aleos]
 //============================================================
 
-glast_01,195,273,4	script	Hugin's Follower#n_gh	123,{
+glast_01,195,273,3	script	Hugin's follower#1	2_F_MAGICMASTER,{
 	mes "[Hugin's Follower]";
 	mes "I can't move between time and dimensions like master Hugin but I can pretend to.";
 	next;

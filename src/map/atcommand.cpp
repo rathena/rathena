@@ -1767,13 +1767,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	// Limit body styles to certain jobs since not all of them are released yet.
-	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK || (sd->class_&MAPID_THIRDMASK) == MAPID_SHADOW_CHASER
-	    || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER || (sd->class_&MAPID_THIRDMASK) == MAPID_SORCERER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_SURA)) {
+	if (!(sd->class_&JOBL_THIRD)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -2757,7 +2751,9 @@ ACMD_FUNC(guildlevelup) {
  *------------------------------------------*/
 ACMD_FUNC(makeegg) {
 	struct item_data *item_data;
-	int id, pet_id;
+	int id;
+	struct s_pet_db* pet;
+
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -2773,12 +2769,12 @@ ACMD_FUNC(makeegg) {
 	else
 		id = atoi(message);
 
-	pet_id = search_petDB_index(id, PET_CLASS);
-	if (pet_id < 0)
-		pet_id = search_petDB_index(id, PET_EGG);
-	if (pet_id >= 0) {
-		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
+	pet = pet_db(id);
+	if (!pet)
+		pet = pet_db_search(id, PET_EGG);
+	if (pet != nullptr) {
+		sd->catch_target_class = pet->class_;
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 		return -1;
@@ -8423,7 +8419,7 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
-	if( duel_check_player_limit( duel_get_duelid( sd->duel_invite ) ) )
+	if( !duel_check_player_limit( duel_get_duelid( sd->duel_invite ) ) )
 	{
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;

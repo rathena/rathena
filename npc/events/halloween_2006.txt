@@ -1035,11 +1035,11 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	799,{
 	mes "Hello.";
 	mes "I'm Loli Ruri's faithful and cute Familiar.";
 	mes "Do you have an invitation from Loli Ruri?";
-	mes "That's a kind of^4d4dffa special ticket to Nifflheim^000000..";
+	mes "That's a kind of^4d4dffa special ticket to Niflheim^000000..";
 	next;
 	if (select( "Yes, I do.:No, I don't.") == 1) {
 		mes "[Familiar]";
-		mes "Do you want to go to Nifflheim?";
+		mes "Do you want to go to Niflheim?";
 		mes "It's available during Halloween.";
 		next;
 		if (select( "Yes, I do:No, I don't.") == 1) {
@@ -1064,7 +1064,7 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	799,{
 		}
 		mes "[Familiar]";
 		mes "Ok.";
-		mes "Actually, it's useless to have a special ticket to Nifflheim.";
+		mes "Actually, it's useless to have a special ticket to Niflheim.";
 		close;
 	}
 	mes "[Familiar]";

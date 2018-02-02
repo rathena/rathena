@@ -5459,24 +5459,26 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.warping = 1;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
-	if(map[sd->bl.m].instance_id && sd->state.changemap && !map[m].instance_id) {
-		bool instance_found = false;
-		struct party_data *p = NULL;
-		struct guild *g = NULL;
-
-		if (sd->instance_id) {
-			instance_delusers(sd->instance_id);
-			instance_found = true;
-		}
-		if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
-			instance_delusers(p->instance_id);
-			instance_found = true;
-		}
-		if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
-			instance_delusers(g->instance_id);
-	}
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
+
+		if(map[sd->bl.m].instance_id && !map[m].instance_id) {
+			bool instance_found = false;
+			struct party_data *p = NULL;
+			struct guild *g = NULL;
+
+			if (sd->instance_id) {
+				instance_delusers(sd->instance_id);
+				instance_found = true;
+			}
+			if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
+				instance_delusers(p->instance_id);
+				instance_found = true;
+			}
+			if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+				instance_delusers(g->instance_id);
+		}
+
 		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
@@ -5522,12 +5524,19 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	{
 		uint32 ip;
 		uint16 port;
+		struct script_state *st;
+
 		//if can't find any map-servers, just abort setting position.
 		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
 			return SETPOS_NO_MAPSERVER;
 
-		if (sd->npc_id)
-			npc_event_dequeue(sd);
+		if (sd->npc_id){
+			npc_event_dequeue(sd,false);
+			st = sd->st;
+		}else{
+			st = nullptr;
+		}
+
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
@@ -5540,6 +5549,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		//Free session data from this map server [Kevin]
 		unit_free_pc(sd);
+
+		if( st ){
+			// Has to be done here, because otherwise unit_free_pc will free the stack already
+			st->state = END;
+		}
 
 		return SETPOS_OK;
 	}
@@ -11676,7 +11690,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 		char tmpstr[1024];
 
 		strftime(tmpstr,sizeof(tmpstr) - 1,msg_txt(sd,501),localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-		clif_wis_message(sd->fd,wisp_server_name,tmpstr,strlen(tmpstr) + 1);
+		clif_wis_message(sd,wisp_server_name,tmpstr,strlen(tmpstr) + 1,0);
 
 		pc_expire_check(sd);
 	}

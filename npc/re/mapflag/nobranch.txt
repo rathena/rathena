@@ -146,3 +146,7 @@ te_aldecas2	mapflag	nobranch
 te_aldecas3	mapflag	nobranch
 te_aldecas4	mapflag	nobranch
 te_aldecas5	mapflag	nobranch
+
+// Episode 15
+1@lab	mapflag	nobranch
+1@uns	mapflag	nobranch
