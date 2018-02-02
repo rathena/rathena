@@ -12,6 +12,7 @@
 #include "itemdb.hpp"
 #include "clif.hpp"
 #include "pc.hpp"
+#include "npc.hpp"
 #include "intif.hpp"
 #include "date.hpp" // date_get_dayofyear
 #include "log.hpp"
@@ -417,4 +418,40 @@ void mail_refresh_remaining_amount( struct map_session_data* sd ){
 	if( sd->sc.data[SC_DAILYSENDMAILCNT] == NULL || sd->sc.data[SC_DAILYSENDMAILCNT]->val1 != doy ){
 		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, -1 );
 	}
+}
+
+void npc_mail_send(struct npc_data *nd, const char *dest_name, const char *title, const char *body_msg, int body_len, int zeny) {
+	struct mail_message msg;
+
+	if (body_len > MAIL_BODY_LENGTH)
+		body_len = MAIL_BODY_LENGTH;
+
+	msg.zeny = zeny;
+	//msg.item[1].nameid = 502;
+	//msg.item[1].amount = 1;
+	for (int i = 0; i < MAIL_MAX_ITEM; i++) {
+		msg.item[i].nameid = 0;
+		msg.item[i].amount = 0;
+	}
+	msg.id = 0; // id will be assigned by charserver
+	msg.send_id = nd->bl.id;
+	msg.dest_id = 0; // will attempt to resolve name
+	safestrncpy(msg.send_name, nd->name, NAME_LENGTH);
+	safestrncpy(msg.dest_name, (char*)dest_name, NAME_LENGTH);
+	safestrncpy(msg.title, (char*)title, MAIL_TITLE_LENGTH);
+	msg.type = MAIL_INBOX_NORMAL;
+
+	if (msg.title[0] == '\0') {
+		return; // Message has no length and somehow client verification was skipped.
+	}
+
+	if (body_len)
+		safestrncpy(msg.body, (char*)body_msg, body_len + 1);
+	else
+		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
+
+	msg.timestamp = time(NULL);
+
+	if (!intif_Mail_send(nd->bl.id, &msg))
+		ShowWarning("clif_parse_Mail: Fail to send a Mail NPC Name : '%s' .\n", nd->name);
 }

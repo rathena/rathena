@@ -23728,6 +23728,22 @@ BUILDIN_FUNC(getequiptradability) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(sendmail) {
+
+	struct block_list *bl = map_id2bl(st->oid);
+	struct npc_data *nd = (struct npc_data *)bl;
+
+	const char *dest_name = script_getstr(st, 2);
+	const char *title = script_getstr(st, 3);
+	const char *body_msg = script_getstr(st, 4);
+	int body_len = script_getnum(st, 5);
+	int zeny = script_getnum(st, 6);
+
+	npc_mail_send(nd, dest_name, title, body_msg, body_len,zeny);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24376,6 +24392,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "ceil", "i"),
 	BUILDIN_DEF2(round, "floor", "i"),
 	BUILDIN_DEF(getequiptradability, "i?"),
+	
+	BUILDIN_DEF(sendmail, "?????"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
