@@ -4939,6 +4939,10 @@
 	export_constant_npc(JT_4_M_SNOWMAN_R);
 	export_constant_npc(JT_4_M_SNOWMAN_G);
 	export_constant_npc(JT_WARPEFFECTNPC);
+	export_constant_npc(JT_4_F_DANGDANG);
+	export_constant_npc(JT_4_M_DANGDANG);
+	export_constant_npc(JT_4_F_DANGDANG1);
+	export_constant_npc(JT_4_LEAFCAT);
 	#undef export_constant_npc
 
 	/* special effects */

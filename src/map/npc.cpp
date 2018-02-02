@@ -304,7 +304,7 @@ int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t dat
 /*==========================================
  * Dequeue event and add timer for execution (100ms)
  *------------------------------------------*/
-int npc_event_dequeue(struct map_session_data* sd)
+int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack)
 {
 	nullpo_ret(sd);
 
@@ -314,7 +314,7 @@ int npc_event_dequeue(struct map_session_data* sd)
 			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 			sd->state.using_fake_npc = 0;
 		}
-		if (sd->st) {
+		if (free_script_stack&&sd->st) {
 			script_free_state(sd->st);
 			sd->st = NULL;
 		}
@@ -2026,7 +2026,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 
 		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->inventory.u.items_inventory[idx].card[0] == CARD0_PET )
 		{
-			if( search_petDB_index(sd->inventory.u.items_inventory[idx].nameid, PET_EGG) >= 0 )
+			if( pet_db_search(sd->inventory.u.items_inventory[idx].nameid, PET_EGG) )
 			{
 				intif_delete_petdata(MakeDWord(sd->inventory.u.items_inventory[idx].card[1], sd->inventory.u.items_inventory[idx].card[2]));
 			}

@@ -595,7 +595,7 @@ niflheim,153,215,3	script	Feylin	794,{
 		mes "come to the wrong person.";
 		next;
 		mes "[Feylin]";
-		mes "Nobody in Niffelheim can";
+		mes "Nobody in Niflheim can";
 		mes "perform that kind of miracle...";
 		next;
 		mes "[Feylin]";

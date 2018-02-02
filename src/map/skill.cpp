@@ -3427,10 +3427,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WM_SEVERE_RAINSTORM_MELEE:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,WM_SEVERE_RAINSTORM,-2,DMG_SPLASH);
 			break;
-		case WM_REVERBERATION_MELEE:
-		case WM_REVERBERATION_MAGIC:
-			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,WM_REVERBERATION,-2,DMG_SKILL);
-			break;
 		case SR_TIGERCANNON:
 			dmg.dmotion = clif_skill_damage(src, bl, tick, status_get_amotion(bl), dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SKILL);
 			break;
@@ -4151,7 +4147,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					break;
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
-					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_LEVEL|SD_ANIMATION);
 					break;
 				case SC_FATALMENACE:
 					unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
@@ -6443,10 +6439,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if (sd && dstmd) {
-			ARR_FIND( 0, MAX_PET_DB, i, dstmd->mob_id == pet_db[i].class_ );
-			if( i < MAX_PET_DB )
-				pet_catch_process1(sd, dstmd->mob_id);
+		if (sd && dstmd && pet_db(dstmd->mob_id)) {
+			pet_catch_process1(sd, dstmd->mob_id);
 		}
 		break;
 
@@ -15678,18 +15672,26 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			case RA_AIMEDBOLT:
 				break;
 			default:
-				if (require.weapon&(1<<W_REVOLVER))
-					clif_msg(sd, SKILL_NEED_REVOLVER);
-				else if (require.weapon&(1<<W_RIFLE))
-					clif_msg(sd, SKILL_NEED_RIFLE);
-				else if (require.weapon&(1<<W_GATLING))
-					clif_msg(sd, SKILL_NEED_GATLING);
-				else if (require.weapon&(1<<W_SHOTGUN))
-					clif_msg(sd, SKILL_NEED_SHOTGUN);
-				else if (require.weapon&(1<<W_GRENADE))
-					clif_msg(sd, SKILL_NEED_GRENADE);
-				else
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_THIS_WEAPON, 0);
+				switch((unsigned int)log2(require.weapon)) {
+					case W_REVOLVER:
+						clif_msg(sd, SKILL_NEED_REVOLVER);
+						break;
+					case W_RIFLE:
+						clif_msg(sd, SKILL_NEED_RIFLE);
+						break;
+					case W_GATLING:
+						clif_msg(sd, SKILL_NEED_GATLING);
+						break;
+					case W_SHOTGUN:
+						clif_msg(sd, SKILL_NEED_SHOTGUN);
+						break;
+					case W_GRENADE:
+						clif_msg(sd, SKILL_NEED_GRENADE);
+						break;
+					default:
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_THIS_WEAPON, 0);
+						break;
+				}
 				return false;
 		}
 	}
@@ -15780,7 +15782,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		case AM_CANNIBALIZE:
 		case AM_SPHEREMINE: {
 			int c=0;
-			int summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_MANDRAGORA };
+			int summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_GEOGRAPHER };
 			int maxcount = (skill_id==AM_CANNIBALIZE)? 6-skill_lv : skill_get_maxcount(skill_id,skill_lv);
 			int mob_class = (skill_id==AM_CANNIBALIZE)? summons[skill_lv-1] :MOBID_MARINE_SPHERE;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {

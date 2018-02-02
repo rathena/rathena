@@ -416,7 +416,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		skill_unit_move(bl,tick,2);
 		if ( sc && sc->count ) //at least one to cancel
 		{
-			status_change_end(bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 			status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 			status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
@@ -1518,7 +1517,7 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 
-	if (search_petDB_index(fitem->item.nameid, PET_EGG) >= 0)
+	if (pet_db_search(fitem->item.nameid, PET_EGG))
 		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
 
 	clif_clearflooritem(fitem, 0);

@@ -4205,7 +4205,7 @@ hugel,198,169,0	script	#HugelTree	139,2,2,{
 			mes "feeling of dread?";
 			mes "This peculiar chill...";
 			mes "It's almost as if you";
-			mes "were in Nifflheim...^000000";
+			mes "were in Niflheim...^000000";
 			close;
 		} else {
 			mes "^3355FFFor some reason, you";
@@ -4302,7 +4302,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		mes "What? That's...";
 		mes "That's an incredible";
 		mes "story. You met my dead";
-		mes "sister in Nifflheim?! You";
+		mes "sister in Niflheim?! You";
 		mes "must be lying to me!";
 		next;
 		mes "[Manainne]";
@@ -4316,7 +4316,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		set hg_memory,8;
 		mes "[Manainne]";
 		mes "Gosh, all that talk";
-		mes "about Nifflheim is...";
+		mes "about Niflheim is...";
 		mes "It's giving me the chills!";
 		mes "A-aren't you cold?";
 		close;
@@ -4357,7 +4357,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		mes "long! Hello, adventurer,";
 		mes "remember me? I'm Kanainne,";
 		mes "the spirit you saw down in";
-		mes "Nifflheim. Let me explain...";
+		mes "Niflheim. Let me explain...";
 		next;
 		mes "[Manainne]";
 		mes "My spirit was able to follow";
@@ -4561,7 +4561,7 @@ niflheim,90,106,3	script	A Spirit#HQuest	802,{
 	} else {
 		mes "[Spirit]";
 		mes "The living shouldn't";
-		mes "be here in Nifflheim...";
+		mes "be here in Niflheim...";
 		mes "Go back! Go back to your";
 		mes "own world before it's too late!";
 		next;
