@@ -248,7 +248,7 @@ airplane,71,91,7	script	Umbala Man#ein_p	789,{
 		mes "Some of them couldn't";
 		mes "overcome their fear of";
 		mes "heights. And a few even";
-		mes "ended up, um, ^333333in Nifflheim^000000.";
+		mes "ended up, um, ^333333in Niflheim^000000.";
 	}
 	else {
 		mes "[Chrmlim]";
