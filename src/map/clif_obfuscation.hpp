@@ -110,7 +110,7 @@
 	#elif PACKETVER == 20130618 // 2013-06-18Ragexe
 		packet_keys(0x434115DE,0x34A10FE9,0x6791428E);
 	#elif PACKETVER == 20130626 // 2013-06-26Ragexe
-		packet_keys(0x38F453EF,0x6A040FD8,0X65BD6668);
+		packet_keys(0x38F453EF,0x6A040FD8,0x65BD6668);
 	#elif PACKETVER == 20130703 // 2013-07-03Ragexe
 		packet_keys(0x4FF90E23,0x0F1432F2,0x4CFA1EDA);
 	#elif PACKETVER == 20130710 // 2013-07-10Ragexe
@@ -406,6 +406,8 @@
 		packet_keys(0x257A2F6E,0x51140EEE,0x00FA4452);
 	#elif PACKETVER == 20180103 // 2018-01-03aRagexeRE or 2018-01-03bRagexeRE
 		packet_keys(0x348F4BD7,0x7A425A54,0x628F589A);
+	#elif PACKETVER == 20180117 // 2018-01-17aRagexeRE
+		packet_keys(0x21F477F4,0x37F437F4,0x37F437F4);
 	#elif PACKETVER > 20110817
 		#error Unsupported packet version.
 	#endif
