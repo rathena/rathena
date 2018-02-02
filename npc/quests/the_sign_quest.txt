@@ -9993,7 +9993,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 			next;
 			mes "[Kirkena]";
 			mes "Serin's already hid herself";
-			mes "deep within Niffleim, but I'm";
+			mes "deep within Niflheim, but I'm";
 			mes "sure you can find something";
 			mes "if you can find any remaining";
 			mes "trace of her.";

@@ -117,7 +117,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "marriage as a contract...a";
 	mes "contract that ends with 'till";
 	mes "death do we part.' Here in";
-	mes "Nifleheim, it's easy to use";
+	mes "Niflheim, it's easy to use";
 	mes "that little loophole...";
 	next;
 	mes "[Deviruchi]";
