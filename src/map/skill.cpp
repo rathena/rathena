@@ -15672,18 +15672,26 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			case RA_AIMEDBOLT:
 				break;
 			default:
-				if (require.weapon&(1<<W_REVOLVER))
-					clif_msg(sd, SKILL_NEED_REVOLVER);
-				else if (require.weapon&(1<<W_RIFLE))
-					clif_msg(sd, SKILL_NEED_RIFLE);
-				else if (require.weapon&(1<<W_GATLING))
-					clif_msg(sd, SKILL_NEED_GATLING);
-				else if (require.weapon&(1<<W_SHOTGUN))
-					clif_msg(sd, SKILL_NEED_SHOTGUN);
-				else if (require.weapon&(1<<W_GRENADE))
-					clif_msg(sd, SKILL_NEED_GRENADE);
-				else
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_THIS_WEAPON, 0);
+				switch((unsigned int)log2(require.weapon)) {
+					case W_REVOLVER:
+						clif_msg(sd, SKILL_NEED_REVOLVER);
+						break;
+					case W_RIFLE:
+						clif_msg(sd, SKILL_NEED_RIFLE);
+						break;
+					case W_GATLING:
+						clif_msg(sd, SKILL_NEED_GATLING);
+						break;
+					case W_SHOTGUN:
+						clif_msg(sd, SKILL_NEED_SHOTGUN);
+						break;
+					case W_GRENADE:
+						clif_msg(sd, SKILL_NEED_GRENADE);
+						break;
+					default:
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_THIS_WEAPON, 0);
+						break;
+				}
 				return false;
 		}
 	}
