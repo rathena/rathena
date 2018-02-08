@@ -18967,7 +18967,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		data = itemdb_search(nameid);
 
 		if (runemastery_skill_lv >= 10) temp_qty = 1 + rnd()%3;
-		else if (runemastery_skill_lv > 5) temp_qty = 1 + rnd()%2;
+		else if (runemastery_skill_lv > 4) temp_qty = 1 + rnd()%2;
 		else temp_qty = 1;
 
 		if (data->stack.inventory) {
