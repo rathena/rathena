@@ -5398,22 +5398,24 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
  *------------------------------------------*/
 int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 {
-	int rate,skill;
+	int rate, target_lv;
 	struct mob_data *md;
+	struct status_data *tstatus;
+
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
 
 	md = (TBL_MOB*)target;
+	tstatus = status_get_status_data(target);
+	target_lv = status_get_lv(target);
 
 	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
 		return 0;
 
-	// FIXME: This formula is either custom or outdated.
-	skill = pc_checkskill(sd,RG_STEALCOIN)*10;
-	rate = skill + (sd->status.base_level - md->level)*3 + sd->battle_status.dex*2 + sd->battle_status.luk*2;
+	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
 	if(rnd()%1000 < rate)
 	{
-		int amount = md->level*10 + rnd()%100;
+		int amount = rnd()% ((10 * target_lv) + 1 - (8 * target_lv)) + (8 * target_lv);
 
 		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
 		md->state.steal_coin_flag = 1;
