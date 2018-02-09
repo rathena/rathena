@@ -142,8 +142,9 @@ function	script	F_Kafra	{
 			default: setarray .@K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","Cancel"; break;
 		}
 	}
-	.@j = select( implode(.@K_Menu0$[.@i],":") ) - 1;
+	.@menu$ = implode(.@K_Menu0$,":");
 	while (true) {
+		.@j = select(.@menu$) - 1;
 		if (.@K_Menu0$[.@j] == "Save")
 			return;
 		else if (.@K_Menu0$[.@j] == "Use Storage") {
@@ -404,8 +405,9 @@ function	script	F_KafInfo	{
 		setarray .@menu$[0], "Check Special Reserve Points.", "", "Kafra Employee Locations", "Cancel";
 	else
 		setarray .@menu$[0], "Check Special Reserve Points.", "Storage Password Service", "Kafra Employee Locations", "Cancel";
-	.@j = select( implode(.@menu$,":") ) - 1;
+	.@menu_list$ = implode(.@menu$,":");
 	while (true) {
+		.@j = select(.@menu_list$) - 1;
 		switch(.@j) {
 		case 0:// Check Special Reserve Points.
 			mes "[Kafra Employee]";
@@ -419,9 +421,9 @@ function	script	F_KafInfo	{
 			mes "Special Reserve Points for";
 			mes "rewards at the Kafra Main Office in Al De Baran. Please use our";
 			mes "convenient services to see the benefits of our rewards program.";
-			next;
 			if (getarg(0) == 1)
 				return;
+			next;
 			break;
 		case 1:// Storage Password Service
 			callfunc("F_SetKafCode","[Kafra Employee]","Kafra Services");
@@ -653,7 +655,7 @@ function	script	F_KafSet	{
 		setarray @wrpP[0], 600, 1200, 1200, 1200, 1800;
 	}
 
-	.@warp_size = getarraysize(@wrpP$);
+	.@warp_size = getarraysize(@wrpD$);
 
 	// VIP pricing varies across the regional servers; this is most practical.
 	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
