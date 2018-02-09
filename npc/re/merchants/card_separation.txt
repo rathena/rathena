@@ -105,7 +105,8 @@
 		break;
 	}
 
-	setarray .@equip_card[0], getequipcardid(.@equip_num,0),getequipcardid(.@equip_num,1),getequipcardid(.@equip_num,2),getequipcardid(.@equip_num,3);
+	setarray .@check_equip_card[0], getequipcardid(.@equip_num,0),getequipcardid(.@equip_num,1),getequipcardid(.@equip_num,2),getequipcardid(.@equip_num,3);
+	setarray .@equip_card[0], .@check_equip_card[0], .@check_equip_card[1], .@check_equip_card[2], .@check_equip_card[3];
 	set .@mvp_list$,
 		"|4408|4128|4456|4168|4142"+  //Gloom_Under_Night_Card, Golden_Bug_Card, Nidhogg_Shadow_Card, Dark_Lord_Card, Doppelganger_Card
 		"|4134|4137|4386|4407|4357"+  //Dracula_Card, Drake_Card, Detale_Card, Randgris_Card, B_Seyren_Card
@@ -288,7 +289,7 @@
 	set .@equip_refine, getequiprefinerycnt(.@equip_num);
 
 	// anti-hack
-	if (callfunc("F_IsEquipCardHack", .@equip_num, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+	if (callfunc("F_IsEquipCardHack", .@equip_num, .@check_equip_card[0], .@check_equip_card[1], .@check_equip_card[2], .@check_equip_card[3]))
 		close;
 
 	delequip .@equip_num;
@@ -315,12 +316,12 @@
 		}
 	} else {
 		set .@card, .@equip_card[.@slot];
-		set .@equip_card[.@slot],0;
+		set .@check_equip_card[.@slot],0;
 
-		// Chance of retaining equipment.
+		// Chance of retaining equipment (all enchantments are preserved).
 		if (rand(1,.@sf_w_num) < 61) {
 			set .@equip_safe,1;
-			getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+			getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
 		}
 
 		// Chance of retaining card.
