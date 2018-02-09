@@ -1150,7 +1150,7 @@ yuno_in04,33,106,4	script	Pile of Books#qsk_al	111,{
 
 // Start Bioethics quest
 lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
-	if (BaseJob == Job_Alchemist && bioeth == 13) {
+	if (getskilllv("AM_BIOETHICS") != 0 && BaseJob == Job_Alchemist && bioeth == 13) {
 		mes "[Kellasus]";
 		mes "Keep up the";
 		mes "good work. I get";
@@ -1159,7 +1159,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "be depending on you...";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 12) {
+	if (BaseJob == Job_Alchemist && bioeth >= 12) {
 		mes "[Kellasus]";
 		mes "Alright then, I'll begin";
 		mes "by teaching you ^FF0000Bioethics^000000,";
