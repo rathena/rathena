@@ -724,6 +724,8 @@ struct map_session_data {
 	unsigned short instance_id;
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
+	bool pet_auto_feed;
+
 #if PACKETVER >= 20150513
 	uint32* hatEffectIDs;
 	uint8 hatEffectCount;

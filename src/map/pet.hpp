@@ -12,7 +12,15 @@
 #include "status.hpp"
 #include "unit.hpp"
 
+#include <map>
+#include <vector>
+
 #define MAX_PETLOOT_SIZE	30
+
+struct s_pet_evo_data {
+	short target_mob_id;
+	std::map<unsigned short, int> requirements;
+};
 
 /// Pet DB
 struct s_pet_db {
@@ -25,29 +33,33 @@ struct s_pet_db {
 	unsigned short FoodID; ///< Food ID
 	int fullness; ///< Amount of hunger decresed each hungry_delay interval
 	int hungry_delay; ///< Hunger value decrease each x seconds
+	int hunger_increase; ///< Hunger increased every time the pet is fed.
 	int r_hungry; ///< Intimacy increased after feeding
-	int r_full; ///< Intimacy reduced when over-fed
+	int r_full; ///< Intimacy increased when over-fed
 	int intimate; ///< Initial intimacy value
-	int die; ///< Intimacy decreased when die
-	int capture; ///< Capture success rate 1000 = 100%
+	int die; ///< Intimacy increased when die
+	int hungry_intimacy_dec; ///< Intimacy increased when hungry
+	int capture; ///< Capture success rate 10000 = 100%
 	int speed; ///< Walk speed
-	char s_perfor; ///< Special performance
+	bool s_perfor; ///< Special performance
 	int talk_convert_class; ///< Disables pet talk (instead of talking they emote  with /!.) (?)
 	int attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 	int defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 	int change_target_rate; ///< Rate of which the pet will change its attack target.
+	bool allow_autofeed; ///< Can this pet use auto feeding mechanic.
+	std::map<short, s_pet_evo_data> evolution_data; ///< Data for evolving the pet.
 	struct script_code
-		*pet_script, ///< Script since pet hatched
-		*pet_loyal_script; ///< Script when pet is loyal
-
+		*pet_support_script, ///< Script since pet hatched. For pet* script commands only.
+		*pet_bonus_script; ///< Bonus script for this pet.
+	
 	~s_pet_db()
 	{
-		if( this->pet_script ){
-			script_free_code(this->pet_script);
+		if( this->pet_support_script ){
+			script_free_code(this->pet_support_script);
 		}
 
-		if( this->pet_loyal_script ){
-			script_free_code(this->pet_loyal_script);
+		if( this->pet_bonus_script ){
+			script_free_code(this->pet_bonus_script);
 		}
 	}
 };
@@ -58,6 +70,25 @@ enum e_pet_catch : uint16 {
 	PET_CATCH_FAIL = 0, ///< A catch attempt failed
 	PET_CATCH_UNIVERSAL = 1, ///< The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
 	PET_CATCH_UNIVERSAL_ITEM = 2,
+};
+
+enum e_pet_intimate_level : int16 {
+	PET_INTIMATE_NONE = 0,
+	PET_INTIMATE_AWKWARD = 1,
+	PET_INTIMATE_SHY = 100,
+	PET_INTIMATE_NEUTRAL = 250,
+	PET_INTIMATE_CORDIAL = 750,
+	PET_INTIMATE_LOYAL = 910,
+	PET_INTIMATE_MAX = 1000
+};
+
+enum e_pet_hungry {
+	PETHUNGRY_NONE = 0,
+	PETHUNGRY_VERY_HUNGRY = 10,
+	PETHUNGRY_HUNGRY = 25,
+	PETHUNGRY_NEUTRAL = 75,
+	PETHUNGRY_SATISFIED = 90,
+	PETHUNGRY_STUFFED = 100
 };
 
 struct pet_recovery { //Stat recovery
@@ -156,6 +187,10 @@ TIMER_FUNC(pet_skill_support_timer); // [Skotlex]
 TIMER_FUNC(pet_skill_bonus_timer); // [Valaris]
 TIMER_FUNC(pet_recovery_timer); // [Valaris]
 TIMER_FUNC(pet_heal_timer); // [Valaris]
+int pet_egg_search(struct map_session_data *sd, int pet_id);
+void pet_evolution(struct map_session_data *sd, int16 pet_id);
+bool pet_autofeed(struct map_session_data *sd, bool flag);
+int pet_food(struct map_session_data *sd, struct pet_data *pd);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)

@@ -8512,6 +8512,8 @@ static const struct _battle_data {
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0xF,            },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
+    { "feature.petevolution",               &battle_config.feature_petevolution,            1,      0,      1,              },
+	{ "feature.petautofeed",                &battle_config.feature_pet_auto_feed,           1,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "switch_remove_edp",                  &battle_config.switch_remove_edp,               2,      0,      3,              },
@@ -8652,6 +8654,17 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20141008
+	if (battle_config.feature_petevolution) {
+		ShowWarning("conf/battle/feature.conf petevolution is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
+		battle_config.feature_petevolution = 0;
+	}
+	if (battle_config.feature_petevolution) {
+		ShowWarning("conf/battle/feature.conf pet auto feed is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
+		battle_config.feature_petevolution = 0;
 	}
 #endif
 

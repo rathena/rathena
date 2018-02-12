@@ -1,0 +1,39 @@
+###########################################################################
+# Pet Database
+###########################################################################
+#
+# Pet Settings
+#
+###########################################################################
+# - MobID                    Monster ID of the pet
+#   Name                     the monster as defined in the database.
+#   JName                    The display name of the monster when hatched.
+#   TameWithID               Pet Tame Item ID.
+#   EggItemID                Pet Egg ID.
+#   EquipItemID              Pet Accessory ID.
+#   FoodItemID               Pet Food ID.
+#   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
+#   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
+#   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
+#   Intimacy:                Intimacy settings
+#     Fed                    Amount of Intimacy that is increased when fed.
+#     Overfed                Amount of Intimacy that is increased when over-fed.
+#     Hungry                 Amount of Intimacy that is increased when the pet is hungry.
+#     Start                  Amount of Intimacy the pet starts with.
+#     OwnerDie               Amount of Intimacy that is increased when the pet owner dies.
+#   CaptureRate              Capture succes rate (10000 = 100%)
+#   Speed                    Pet's walk speed. (Default: 150)
+#   SpecialPerformance       Special Performance. (true/false)
+#   TalkConvertClass         Disables pet talk (instead of talking they emote  with /!.)
+#   AttackRate               Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
+#   RetaliateRate            Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
+#   ChangeTargetRate         Rate of which the pet will change its attack target.
+#   AllowAutoFeed            Allows turning automatic pet feeding on.
+#   Script                   Bonus script to execute when the pet is alive.
+#   SupportScript            Legacy pet script for pet* script commands.
+#   Evolution:               Pet evolution settings
+#     - TargetID               Mob ID this pet evolves to	
+#       ItemsRequirement:      Item requirements for evolving this pet
+#         - ItemID             Self-explanatory
+#           Amount
+###########################################################################

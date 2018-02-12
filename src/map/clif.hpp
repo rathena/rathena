@@ -549,6 +549,16 @@ enum e_damage_type : uint8_t {
 	DMG_TOUCH,				/// (touch skill?)
 };
 
+enum class e_pet_evolution_result : uint32 {
+	FAIL_UNKNOWN = 0x0,
+	FAIL_NOTEXIST_CALLPET = 0x1,
+	FAIL_NOT_PETEGG = 0x2,
+	FAIL_RECIPE = 0x3,
+	FAIL_MATERIAL = 0x4,
+	FAIL_RG_FAMILIAR = 0x5,
+	SUCCESS = 0x6
+};
+
 enum e_config_type : uint32 {
 	CONFIG_OPEN_EQUIPMENT_WINDOW = 0,
 	// Unknown
@@ -1112,5 +1122,9 @@ void clif_equipswitch_list( struct map_session_data* sd );
 void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, bool failed );
 void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed );
 void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
+
+/// Pet evolution
+void clif_parse_pet_evolution(int fd, struct map_session_data *sd);
+void clif_pet_evolution_result(int fd, e_pet_evolution_result result);
 
 #endif /* CLIF_HPP */

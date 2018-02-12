@@ -2783,6 +2783,18 @@ void clif_inventorylist(struct map_session_data *sd) {
 			n++;
 		}
 	}
+
+	// Send fake egg data
+	if (battle_config.feature_petevolution && sd->pd) {
+		int pos = ne * se + 4;
+		memset(bufe + pos, 0, se);
+		WBUFW(bufe, pos) = pet_egg_search(sd, sd->pd->pet.pet_id) + 2; //index
+		WBUFW(bufe, pos+ 2) = sd->pd->pet.egg_id;
+		WBUFB(bufe, pos + 4) = IT_WEAPON;
+		WBUFB(bufe, pos + 56) = 3;
+		ne++;
+	}
+
 	if( n )
 	{
 #if PACKETVER < 5
@@ -16676,7 +16688,7 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			sd->status.show_equip = flag;
 			break;
 		case CONFIG_PET_AUTOFEED:
-			// TODO: Implement with pet evolution system
+			pet_autofeed(sd, flag);
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
@@ -20351,6 +20363,34 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOB(fd, 2) = result;
 	WFIFOL(fd, 3) = achievement_id;
 	WFIFOSET(fd, packet_len(0xa26));
+}
+
+/**
+ * Process the pet evolution request (CZ_PET_EVOLUTION)
+ * 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W
+ */
+void clif_parse_pet_evolution(int fd, struct map_session_data *sd)
+{
+#if PACKETVER > 20141008
+	uint16 egg_id = RFIFOW(fd, packet_db[0x9fb].pos[1]);
+	auto pet = pet_db_search(egg_id, PET_EGG);
+
+	if (!pet) {
+		clif_pet_evolution_result(fd, e_pet_evolution_result::FAIL_NOT_PETEGG);
+		return;
+	}
+
+	pet_evolution(sd, pet->class_);
+#endif
+}
+
+void clif_pet_evolution_result(int fd, e_pet_evolution_result result) {
+#if PACKETVER >= 20141008
+	WFIFOHEAD(fd, packet_len(0x9fc));
+	WFIFOW(fd, 0) = 0x9fc;
+	WFIFOL(fd, 2) = static_cast<uint32>(result);
+	WFIFOSET(fd, packet_len(0x9fc));
+#endif
 }
 
 /*

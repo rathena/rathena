@@ -3818,11 +3818,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
-		s_pet_db *pet_db_ptr = pd->get_pet_db();
-
-		if( pet_db_ptr != nullptr && pet_db_ptr->pet_loyal_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
-			run_script(pd->get_pet_db()->pet_loyal_script,0,sd->bl.id,0);
-		if( pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus )
+		s_pet_db* pet_db_ptr = pd->get_pet_db();
+		if( pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
+			run_script(pet_db_ptr->pet_bonus_script,0,sd->bl.id,0);
+		if( pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus )
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
 
