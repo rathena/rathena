@@ -2762,7 +2762,7 @@
 4578,Pyuriel_Card,Angry Student Pyuriel Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,30; bonus2 bSubRace,RC_All,-10; bonus2 bSubRace,RC_Player,10; },{},{}
 4579,Lora_Card,Warrior Lola Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),11) == W_MACE) { bonus bBaseAtk,20; bonus bCritical,10; } .@r = getrefine(); bonus bBaseAtk,.@r; bonus bCritical,.@r; },{},{}
 4580,Kades_Card,Dark Guardian Kades Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Water,50; bonus2 bSubEle,Ele_Earth,50; bonus2 bSubEle,Ele_Fire,50; bonus2 bSubEle,Ele_Wind,50; bonus2 bSubEle,Ele_Dark,50; bonus2 bSubEle,Ele_Undead,50; bonus2 bSubEle,Ele_Holy,-100; bonus2 bSubEle,Ele_Ghost,-100; },{},{}
-4581,Rudo_Card,Rudo Card,6,20,,10,,,,,,,,64,,,,,{ autobonus "{ sc_start SC_SPEEDUP1,3000,50; bonus bAgi,44; heal 0,-40; }",3,3000,0; },{},{}
+4581,Rudo_Card,Rudo Card,6,20,,10,,,,,,,,64,,,,,{ autobonus "{ bonus bAgi,44; heal 0,-40; }",500,3000,0,"{ sc_start SC_SPEEDUP1,3000,50; }"; },{},{}
 4582,Bungisngis_Card,Bungisngis Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHPrate,(getrefine()/2); },{},{}
 4583,Engkanto_Card,Engkanto Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bAddEle,Ele_Poison,30; bonus2 bMagicAddEle,Ele_Poison,30; bonus2 bIgnoreDefRaceRate,RC_Plant,30; },{},{}
 4584,Manananggal_Card,Manananggal Card,6,20,,10,,,,,,,,2,,,,,{ bonus bSPDrainValue,1; bonus bMaxSPrate,-1; },{},{}
@@ -3897,7 +3897,7 @@
 5767,Samurai_Mask,Samurai Mask,4,20,,300,,1,,0,0xFFFFFFFF,63,2,1,,50,0,644,{ bonus2 bAddClass,Class_All,1; },{},{}
 5768,Sakura_Coronet,Sakura Coronet,4,20,,800,,1,,1,0xFFFFFFFF,63,2,256,,1,1,645,{ bonus bMdef,3; bonus bMaxSP,25; },{},{}
 5769,Gold_Angel_Sculpture,Gold Angel Sculpture,4,100,,0,,2,,0,0xFFFFFFFF,63,2,256,,70,0,646,{ skill "RG_GRAFFITI",1; },{},{}
-5770,Splash_Hat,Splash Hat,4,20,,100,,3,,1,0xFFFFFFFF,63,2,256,,1,1,649,{ autobonus "{ sc_start SC_WINDWEAPON,180000,1; }",3,180000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
+5770,Splash_Hat,Splash Hat,4,20,,100,,3,,1,0xFFFFFFFF,63,2,256,,1,1,649,{ autobonus "{}",3,180000,BF_WEAPON,"{ sc_start SC_WINDWEAPON,180000,1; specialeffect2 EF_ENHANCE; }"; },{},{}
 5771,Family_Hat,Family Hat,4,20,,100,,3,,1,0xFFFFFFFF,63,2,256,,1,1,650,{ bonus bDex,1; bonus bMdef,1; bonus bMaxHPrate,2; bonus bMaxSPrate,2; skill "PR_MAGNIFICAT",1; },{},{}
 5772,Red_Navy_Hat,Red Navy Hat,4,3000,,500,,1,,0,0xFFFFFFFF,63,2,256,,95,1,651,{ bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; },{},{}
 5773,Navy_Beret,Navy Beret,4,3000,,500,,1,,0,0xFFFFFFFF,63,2,256,,95,1,652,{ bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; },{},{}
