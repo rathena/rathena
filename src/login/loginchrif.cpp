@@ -725,7 +725,7 @@ int logchrif_parse_accinfo(int fd) {
 
 		// Send back the result to char-server
 		if (accounts->load_num(accounts, &acc, account_id)) {
-			int len = 155 + PINCODE_LENGTH + NAME_LENGTH;
+			int len = 122 + NAME_LENGTH;
 			//ShowInfo("Found account info for %d, requested by %d\n", account_id, u_aid);
 			WFIFOHEAD(fd, len);
 			WFIFOW(fd, 0) = 0x2721;
@@ -741,15 +741,7 @@ int logchrif_parse_accinfo(int fd) {
 			safestrncpy(WFIFOCP(fd, 71), acc.last_ip, 16);
 			safestrncpy(WFIFOCP(fd, 87), acc.lastlogin, 24);
 			safestrncpy(WFIFOCP(fd, 111), acc.birthdate, 11);
-			if ((unsigned int)u_group >= acc.group_id) {
-				safestrncpy(WFIFOCP(fd, 122), acc.pass, 33);
-				safestrncpy(WFIFOCP(fd, 155), acc.pincode, PINCODE_LENGTH);
-			}
-			else {
-				memset(WFIFOP(fd, 122), '\0', 33);
-				memset(WFIFOP(fd, 155), '\0', PINCODE_LENGTH);
-			}
-			safestrncpy(WFIFOCP(fd, 155 + PINCODE_LENGTH), acc.userid, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd, 122), acc.userid, NAME_LENGTH);
 			WFIFOSET(fd, len);
 		}
 		else {

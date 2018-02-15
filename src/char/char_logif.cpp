@@ -686,16 +686,16 @@ int chlogif_parse_AccInfoAck(int fd) {
 		return 0;
 	else {
 		int8 type = RFIFOB(fd, 18);
-		if (type == 0 || RFIFOREST(fd) < 155+PINCODE_LENGTH+NAME_LENGTH) {
-			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+		if (type == 0 || RFIFOREST(fd) < 122+NAME_LENGTH) {
+			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL);
 			RFIFOSKIP(fd,19);
 			return 1;
 		}
 		type>>=1;
 		mapif_accinfo_ack(true, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), type, RFIFOL(fd,19), RFIFOL(fd,23), RFIFOL(fd,27),
 			RFIFOCP(fd,31), RFIFOCP(fd,71), RFIFOCP(fd,87), RFIFOCP(fd,111),
-			RFIFOCP(fd,122), RFIFOCP(fd,155), RFIFOCP(fd,155+PINCODE_LENGTH));
-		RFIFOSKIP(fd,155+PINCODE_LENGTH+NAME_LENGTH);
+			RFIFOCP(fd,122));
+		RFIFOSKIP(fd,122+NAME_LENGTH);
 	}
 	return 1;
 }
