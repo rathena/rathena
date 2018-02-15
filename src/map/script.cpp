@@ -22123,7 +22123,6 @@ BUILDIN_FUNC(getvar) {
 	else
 		script_pushstrcopy(st, conv_str_(st, data, sd));
 
-	push_val2(st->stack, C_NAME, reference_getuid(data), reference_getref(data));
 	return SCRIPT_CMD_SUCCESS;
 }
 
