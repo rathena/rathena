@@ -416,8 +416,19 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0]){
-			npc_event_do_id(ud->walk_done_event,bl->id);
-			ud->walk_done_event[0] = 0;
+			char walk_done_event[EVENT_NAME_LENGTH];
+
+			// Copying is required in case someone uses unitwalkto inside the event code
+			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
+
+			// Execute the event
+			npc_event_do_id(walk_done_event,bl->id);
+
+			// Check if another event was set
+			if( !strcmp(ud->walk_done_event,walk_done_event) ){
+				// If not remove it
+				ud->walk_done_event[0] = 0;
+			}
 		}
 		if (ud->state.walk_script)
 			ud->state.walk_script = 0;
