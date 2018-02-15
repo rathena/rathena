@@ -2787,22 +2787,21 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 			ShowError("status_calc_mob: No castle set at map %s\n", map[md->bl.m].name);
 		else if(gc->castle_id < 24 || md->mob_id == MOBID_EMPERIUM) {
 #ifdef RENEWAL
-			status->max_hp += 50 * gc->defense;
-			status->max_sp += 70 * gc->defense;
+			status->max_hp += 50 * (gc->defense / 5);
 #else
 			status->max_hp += 1000 * gc->defense;
-			status->max_sp += 200 * gc->defense;
 #endif
 			status->hp = status->max_hp;
-			status->sp = status->max_sp;
 			status->def += (gc->defense+2)/3;
 			status->mdef += (gc->defense+2)/3;
 		}
 		if(md->mob_id != MOBID_EMPERIUM) {
-			status->batk += status->batk * 10*md->guardian_data->guardup_lv/100;
-			status->rhw.atk += status->rhw.atk * 10*md->guardian_data->guardup_lv/100;
-			status->rhw.atk2 += status->rhw.atk2 * 10*md->guardian_data->guardup_lv/100;
-			status->aspd_rate -= 100*md->guardian_data->guardup_lv;
+			status->max_hp += 1000 * gc->defense;
+			status->hp = status->max_hp;
+			status->batk += 2 * md->guardian_data->guardup_lv + 8;
+			status->rhw.atk += 2 * md->guardian_data->guardup_lv + 8;
+			status->rhw.atk2 += 2 * md->guardian_data->guardup_lv + 8;
+			status->aspd_rate -= 2 * md->guardian_data->guardup_lv + 3;
 		}
 	}
 
