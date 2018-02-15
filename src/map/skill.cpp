@@ -11981,16 +11981,38 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (rnd()%100 < 50) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			} else {
-				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skill_lv < 2 ? MOBID_BLACK_MUSHROOM + rnd()%2 : MOBID_RED_PLANT + rnd()%6),"", SZ_SMALL, AI_NONE);
-				int t;
-				if (!md) break;
+				TBL_MOB* md = NULL;
+				int t, mob_id;
+
+				if (skill_lv == 1)
+					mob_id = MOBID_BLACK_MUSHROOM + rnd() % 2;
+				else {
+					int rand_val = rnd() % 100;
+
+					if (rand_val < 30)
+						mob_id = MOBID_GREEN_PLANT;
+					else if (rand_val < 55)
+						mob_id = MOBID_RED_PLANT;
+					else if (rand_val < 80)
+						mob_id = MOBID_YELLOW_PLANT;
+					else if (rand_val < 90)
+						mob_id = MOBID_WHITE_PLANT;
+					else if (rand_val < 98)
+						mob_id = MOBID_BLUE_PLANT;
+					else
+						mob_id = MOBID_SHINING_PLANT;
+				}
+
+				md = mob_once_spawn_sub(src, src->m, x, y, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
+				if (!md)
+					break;
 				if ((t = skill_get_time(skill_id, skill_lv)) > 0)
 				{
 					if( md->deletetimer != INVALID_TIMER )
 						delete_timer(md->deletetimer, mob_timer_delete);
 					md->deletetimer = add_timer (tick + t, mob_timer_delete, md->bl.id, 0);
 				}
-				mob_spawn (md);
+				mob_spawn(md);
 			}
 		}
 		break;
