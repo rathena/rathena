@@ -421,8 +421,23 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			// Copying is required in case someone uses unitwalkto inside the event code
 			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
 
+			ud->state.walk_script = true;
+
 			// Execute the event
 			npc_event_do_id(walk_done_event,bl->id);
+
+			ud->state.walk_script = false;
+
+			// Check if the unit was killed
+			if( status_isdead(bl) ){
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+				if( md && !md->spawn ){
+					unit_free(bl, CLR_OUTSIGHT);
+				}
+
+				return 0;
+			}
 
 			// Check if another event was set
 			if( !strcmp(ud->walk_done_event,walk_done_event) ){
@@ -430,8 +445,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				ud->walk_done_event[0] = 0;
 			}
 		}
-		if (ud->state.walk_script)
-			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
