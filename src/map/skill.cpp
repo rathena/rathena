@@ -1421,8 +1421,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		skill_break_equip(src,bl, EQP_SHIELD, 150*skill_lv, BCT_ENEMY);
 		break;
 
-	case CH_TIGERFIST:
-		sc_start(src,bl,SC_STOP,(10+skill_lv*10),0,skill_get_time2(skill_id,skill_lv));
+	case CH_TIGERFIST: {
+		uint16 basetime = skill_get_time(skill_id, skill_lv);
+		uint16 mintime = 30 * (status_get_lv(src) + 100);
+
+		if (status_get_class_(bl) == CLASS_BOSS)
+			basetime /= 5;
+		basetime = min((basetime * status_get_agi(bl)) / -200 + basetime, mintime) / 2;
+		sc_start(src, bl, SC_STOP, (1 + skill_lv * 10), 0, basetime);
+	}
 		break;
 
 	case LK_SPIRALPIERCE:
