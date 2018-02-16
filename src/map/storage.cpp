@@ -537,7 +537,7 @@ struct s_storage *guild2storage(int guild_id)
 	if (guild_search(guild_id) == nullptr)
 		return nullptr;
 
-	gs = guild2storage(guild_id);
+	gs = guild2storage2(guild_id);
 	
 	if( gs == nullptr ){
 		gs = &guild_storage_db[guild_id];
