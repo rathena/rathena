@@ -3,6 +3,8 @@
 
 #include "storage.hpp"
 
+#include <map>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,9 +24,8 @@
 #include "log.hpp"
 #include "battle.hpp"
 
-#include <map>
-
-std::map<int, struct s_storage*> guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
+///Databases of guild_storage : int guild_id -> struct guild_storage
+std::map<int, struct s_storage> guild_storage_db;
 
 struct s_storage_table *storage_db;
 int storage_count;
@@ -123,28 +124,17 @@ void do_final_storage(void)
 }
 
 /**
- * Parses storage and saves 'dirty' ones upon reconnect.
- * @author [Skotlex]
- * @see DBApply
- * @return 0
- */
-static int storage_reconnect_sub(struct s_storage *stor)
-{
-	if (stor->dirty && stor->status == 0) //Save closed storages.
-		storage_guild_storagesave(0, stor->id, 0);
-
-	return 0;
-}
-
-/**
  * Function to be invoked upon server reconnection to char. To save all 'dirty' storages
  * @author [Skotlex]
  */
-void do_reconnect_storage(void)
-{
-	for (auto it = guild_storage_db.begin(); it != guild_storage_db.end(); ++it)
-	{
-		storage_reconnect_sub(it->second);
+void do_reconnect_storage(void){
+	for( auto entry : guild_storage_db ){
+		struct s_storage stor = entry.second;
+
+		// Save closed storages.
+		if( stor.dirty && stor.status == 0 ){
+			storage_guild_storagesave(0, stor.id, 0);
+		}
 	}
 }
 
@@ -535,22 +525,6 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 }
 
 /**
- * Create a guild_storage stucture and add it into the db
- * @see DBCreateData
- * @param key
- * @param args
- * @return 
- */
-s_storage* create_guildstorage(int guild_id)
-{
-	auto *stor = new s_storage();
-	stor->id = guild_id;
-	stor->type = TABLE_GUILD_STORAGE;
-	guild_storage_db[guild_id] = stor;
-	return stor;
-}
-
-/**
  * Retrieve the guild_storage of a guild
  * will create a new storage if none found for the guild
  * @param guild_id : id of the guild
@@ -558,13 +532,18 @@ s_storage* create_guildstorage(int guild_id)
  */
 struct s_storage *guild2storage(int guild_id)
 {
-	struct s_storage *gs = guild_storage_db[guild_id];
+	struct s_storage *gs;
 
-	if (guild_search(guild_id) == NULL)
-		return NULL;
+	if (guild_search(guild_id) == nullptr)
+		return nullptr;
 
-	if (gs == NULL)
-		gs = create_guildstorage(guild_id);
+	gs = guild2storage(guild_id);
+	
+	if( gs == nullptr ){
+		gs = &guild_storage_db[guild_id];
+		gs->id = guild_id;
+		gs->type = TABLE_GUILD_STORAGE;
+	}
 
 	return gs;
 }
@@ -573,17 +552,19 @@ struct s_storage *guild2storage(int guild_id)
  * See if the guild_storage exist in db and fetch it if it's the case
  * @author : [Skotlex]
  * @param guild_id : guild_id to search the storage
- * @return s_storage or NULL
+ * @return s_storage or nullptr
  */
-struct s_storage *guild2storage2(int guild_id)
-{
-	return guild_storage_db[guild_id];
+struct s_storage *guild2storage2(int guild_id){
+	if( guild_storage_db.find(guild_id) != guild_storage_db.end() ){
+		return &guild_storage_db[guild_id];
+	}else{
+		return nullptr;
+	}
 }
 
 /**
  * Delete a guild_storage and remove it from db
  * @param guild_id : guild to remove the storage from
- * @return 0
  */
 void storage_guild_delete(int guild_id)
 {
