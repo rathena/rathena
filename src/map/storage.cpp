@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/db.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
@@ -23,7 +22,10 @@
 #include "log.hpp"
 #include "battle.hpp"
 
-static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
+#include <map>
+
+std::map<int, struct s_storage*> guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
+
 struct s_storage_table *storage_db;
 int storage_count;
 
@@ -102,7 +104,6 @@ void storage_sortitem(struct item* items, unsigned int size)
  */
 void do_init_storage(void)
 {
-	guild_storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	storage_db = NULL;
 	storage_count = 0;
 }
@@ -114,7 +115,7 @@ void do_init_storage(void)
  */
 void do_final_storage(void)
 {
-	guild_storage_db->destroy(guild_storage_db,NULL);
+	guild_storage_db.clear();
 	if (storage_db)
 		aFree(storage_db);
 	storage_db = NULL;
@@ -127,10 +128,8 @@ void do_final_storage(void)
  * @see DBApply
  * @return 0
  */
-static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
+static int storage_reconnect_sub(struct s_storage *stor)
 {
-	struct s_storage *stor = static_cast<s_storage *>(db_data2ptr(data));
-
 	if (stor->dirty && stor->status == 0) //Save closed storages.
 		storage_guild_storagesave(0, stor->id, 0);
 
@@ -143,7 +142,10 @@ static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
  */
 void do_reconnect_storage(void)
 {
-	guild_storage_db->foreach(guild_storage_db, storage_reconnect_sub);
+	for (auto it = guild_storage_db.begin(); it != guild_storage_db.end(); ++it)
+	{
+		storage_reconnect_sub(it->second);
+	}
 }
 
 /**
@@ -539,15 +541,13 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
  * @param args
  * @return 
  */
-static DBData create_guildstorage(DBKey key, va_list args)
+s_storage* create_guildstorage(int guild_id)
 {
-	struct s_storage *gs = NULL;
-
-	gs = (struct s_storage *) aCalloc(sizeof(struct s_storage), 1);
-	gs->type = TABLE_GUILD_STORAGE;
-	gs->id = key.i;
-
-	return db_ptr2data(gs);
+	auto *stor = new s_storage();
+	stor->id = guild_id;
+	stor->type = TABLE_GUILD_STORAGE;
+	guild_storage_db[guild_id] = stor;
+	return stor;
 }
 
 /**
@@ -558,10 +558,13 @@ static DBData create_guildstorage(DBKey key, va_list args)
  */
 struct s_storage *guild2storage(int guild_id)
 {
-	struct s_storage *gs = NULL;
+	struct s_storage *gs = guild_storage_db[guild_id];
 
-	if (guild_search(guild_id) != NULL)
-		gs = (struct s_storage *)idb_ensure(guild_storage_db,guild_id,create_guildstorage);
+	if (guild_search(guild_id) == NULL)
+		return NULL;
+
+	if (gs == NULL)
+		gs = create_guildstorage(guild_id);
 
 	return gs;
 }
@@ -574,7 +577,7 @@ struct s_storage *guild2storage(int guild_id)
  */
 struct s_storage *guild2storage2(int guild_id)
 {
-	return (struct s_storage*)idb_get(guild_storage_db,guild_id);
+	return guild_storage_db[guild_id];
 }
 
 /**
@@ -584,7 +587,7 @@ struct s_storage *guild2storage2(int guild_id)
  */
 void storage_guild_delete(int guild_id)
 {
-	idb_remove(guild_storage_db,guild_id);
+	guild_storage_db.erase(guild_id);
 }
 
 /**
