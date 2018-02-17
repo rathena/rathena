@@ -5087,7 +5087,7 @@ BUILDIN_FUNC(next)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Clear The dialog text and continues the script without Next button.
+/// Clears the dialog and continues the script without a next button.
 ///
 /// clear;
 BUILDIN_FUNC(clear)
@@ -5095,9 +5095,8 @@ BUILDIN_FUNC(clear)
 	TBL_PC* sd;
 
 	if (!script_rid2sd(sd))
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
-	st->state = RUN;
 	clif_scriptclear(sd, st->oid);
 	return SCRIPT_CMD_SUCCESS;
 }
