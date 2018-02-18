@@ -10955,10 +10955,10 @@
 2923,Owl Marquees@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,2922,,,,,,
 
 // Devil Tower Memorial
-2943,Icemine@NPC_INVISIBLE,idle,353,1,10000,0,30000,no,self,always,0,,,,,,,
-// 2943,Icemine@NPC_ICEMINE,idle,709,1,10000,0,30000,no,self,always,,,,,,,,
-2960,Flamecross@NPC_INVISIBLE,idle,353,1,10000,0,30000,no,self,always,0,,,,,,,
-// 2960,Flamecross@NPC_FLAMECROSS,idle,711,1,10000,0,30000,no,self,always,,,,,,,,
+2943,Icemine@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
+// 2943,Icemine@NPC_ICEMINE,idle,709,1,10000,0,300000,no,self,always,,,,,,,,
+2960,Flamecross@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
+2960,Flamecross@NPC_FLAMECROSS,idle,711,1,10000,0,300000,no,self,always,,,,,,,,
 
 // Ghost Palace Memorial
 2948,Cursed Soldier@NPC_BLINDATTACK,attack,177,5,500,0,5000,no,target,always,0,,,,,,,

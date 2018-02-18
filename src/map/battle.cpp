@@ -5835,6 +5835,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					ad.damage >>= 1;
 #endif
 				break;
+			case NPC_FLAMECROSS:
+				ad.damage = sstatus->matk_min;	// Fix me : base damage seems to be matk
+				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
