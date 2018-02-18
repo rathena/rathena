@@ -4101,8 +4101,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					}
 					break;
 				case WL_CHAINLIGHTNING_ATK: {
-						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,9 - skl->type); // Hit a Lightning on the current Target
 						skill_toggle_magicpower(src, skl->skill_id); // Only the first hit will be amplified
+						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,9 - skl->type); // Hit a Lightning on the current Target
 						if( skl->type < (4 + skl->skill_lv - 1) && skl->x < 3  )
 						{ // Remaining Chains Hit
 							struct block_list *nbl = NULL; // Next Target of Chain
@@ -9098,7 +9098,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
  		break;
 
 	case RK_FIGHTINGSPIRIT: {
-			// val1: ATKBonus: Caster: 70 + 7 * PartyMember. Member: 70 + 7 * PartyMember / 2
+			// val1: ATKBonus: Caster: 70 + 7 * PartyMember. Member: (70 + 7 * PartyMember) / 2
 			// val2: ASPD boost: [RK_RUNEMASTERYlevel * 4 / 10] * 10 ==> RK_RUNEMASTERYlevel * 4
 			if( flag&1 ) {
 				if( skill_area_temp[1] == bl->id )
@@ -9109,7 +9109,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( sd && sd->status.party_id ) {
 					skill_area_temp[0] = party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,BCT_PARTY,skill_area_sub_count);
 					skill_area_temp[1] = src->id;
-					skill_area_temp[3] = 70 + 7 * skill_area_temp[0] / 2;
+					skill_area_temp[3] = (70 + 7 * skill_area_temp[0]) / 2;
 					skill_area_temp[4] = skill_get_time(skill_id,skill_lv);
 					party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
 				}
@@ -11981,16 +11981,38 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (rnd()%100 < 50) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			} else {
-				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skill_lv < 2 ? MOBID_BLACK_MUSHROOM + rnd()%2 : MOBID_RED_PLANT + rnd()%6),"", SZ_SMALL, AI_NONE);
-				int t;
-				if (!md) break;
+				TBL_MOB* md = NULL;
+				int t, mob_id;
+
+				if (skill_lv == 1)
+					mob_id = MOBID_BLACK_MUSHROOM + rnd() % 2;
+				else {
+					int rand_val = rnd() % 100;
+
+					if (rand_val < 30)
+						mob_id = MOBID_GREEN_PLANT;
+					else if (rand_val < 55)
+						mob_id = MOBID_RED_PLANT;
+					else if (rand_val < 80)
+						mob_id = MOBID_YELLOW_PLANT;
+					else if (rand_val < 90)
+						mob_id = MOBID_WHITE_PLANT;
+					else if (rand_val < 98)
+						mob_id = MOBID_BLUE_PLANT;
+					else
+						mob_id = MOBID_SHINING_PLANT;
+				}
+
+				md = mob_once_spawn_sub(src, src->m, x, y, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
+				if (!md)
+					break;
 				if ((t = skill_get_time(skill_id, skill_lv)) > 0)
 				{
 					if( md->deletetimer != INVALID_TIMER )
 						delete_timer(md->deletetimer, mob_timer_delete);
 					md->deletetimer = add_timer (tick + t, mob_timer_delete, md->bl.id, 0);
 				}
-				mob_spawn (md);
+				mob_spawn(md);
 			}
 		}
 		break;
@@ -14964,6 +14986,12 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
 				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(AL_WARP));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
+				return false;
+			}
+			break;
+		case AL_HOLYWATER:
+			if(pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE) < 0) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
 			break;
@@ -18967,7 +18995,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		data = itemdb_search(nameid);
 
 		if (runemastery_skill_lv >= 10) temp_qty = 1 + rnd()%3;
-		else if (runemastery_skill_lv > 5) temp_qty = 1 + rnd()%2;
+		else if (runemastery_skill_lv > 4) temp_qty = 1 + rnd()%2;
 		else temp_qty = 1;
 
 		if (data->stack.inventory) {
