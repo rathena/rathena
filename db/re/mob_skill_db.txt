@@ -11076,6 +11076,9 @@
 2997,Kimi's Phantom@NPC_WIDESOULDRAIN,attack,680,3,10000,5000,50000,no,self,myhpltmaxrate,10,,,,,,42,
 2997,Kimi's Phantom@NPC_MAXPAIN,attack,716,3,10000,3000,50000,no,self,myhpltmaxrate,10,,,,,,,
 2997,Kimi's Phantom@NPC_POWERUP,attack,349,1,10000,0,50000,no,self,myhpltmaxrate,5,,,,,,6,
+
+3026,Fire Pit@NPC_DEATHSUMMON,dead,718,3,10000,0,10000,no,self,always,0,3027,3027,3027,,,,
+
 3038,Hidden Mob 7@NPC_INVISIBLE,idle,353,1,10000,0,30000,yes,self,always,0,,,,,,,
 3038,Hidden Mob 7@NPC_INVISIBLE,attack,353,1,10000,0,30000,yes,self,always,0,,,,,,,
 // 3038,Hidden Mob 7@NPC_HELLBURNING,idle,719,1,10000,0,3000,yes,self,always,0,,,,,,,
