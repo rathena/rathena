@@ -10956,7 +10956,7 @@
 
 // Devil Tower Memorial
 2943,Icemine@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
-// 2943,Icemine@NPC_ICEMINE,idle,709,1,10000,0,300000,no,self,always,,,,,,,,
+2943,Icemine@NPC_ICEMINE,idle,709,1,10000,0,300000,no,self,always,,,,,,,,
 2960,Flamecross@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
 2960,Flamecross@NPC_FLAMECROSS,idle,711,1,10000,0,300000,no,self,always,,,,,,,,
 

@@ -1045,6 +1045,8 @@
 //===== New Monster Skills (12.1) ==========
 //-- NPC_VENOMFOG
 706,0,0,0,3000,0,0,-1
+//-- NPC_ICEMINE
+709,0,0,0,10000,0,0,-1
 //-- NPC_FLAMECROSS
 711,0,0,0,3000,0,0,-1
 //-- NPC_MAXPAIN
