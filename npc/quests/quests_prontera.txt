@@ -287,7 +287,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 				mes "all of those books earlier!";
 				mes "Wait, you ditched me before,";
 				mes "so why act all concerned now?";
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 			}
 			else {
 				mes "[Busy-Looking Boy]";
@@ -325,10 +325,10 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "it was a natural reflex!^000000";
 			next;
 			Specialeffect EF_HITDARK;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "^3355FF*BAM!*^000000";
 			next;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Busy-Looking Boy]";
 			mes "Ack! Those books...!";
 			mes "It took me so long to";
@@ -340,13 +340,13 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "arrange these nicely";
 			mes "out of the bottom of";
 			mes "my freakin' heart.";
-			emotion e_lv,1;
+			emotion ET_THROB, playerattached();
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "...";
 			mes "......";
 			mes ".........";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "Huh...?";
@@ -368,7 +368,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "easily, so it scares me to";
 			mes "death to ride the Airship";
 			mes "all the way to Juno.";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "Now I'm in trouble!";
@@ -376,7 +376,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "time I just can't help it.";
 			mes "There's nothing I can do!";
 			mes "Oh, I'm gonna lose this job!";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "Wait... You adventurers";
@@ -392,7 +392,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "It's none of your ";
 			mes "business, I know, but";
 			mes "I'm just so desperate...";
-			emotion e_sob;
+			emotion ET_CRY;
 			set prt_curse,2;
 			close;
 		}
@@ -404,7 +404,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "Summon all my courage...";
 			mes "and b-board that Airship!";
 			mes "Argh! No, I can't do it!";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			callsub S_GetBooks;
 			mes "[Busy-Looking Boy]";
@@ -413,7 +413,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			mes "That guy's been waiting";
 			mes "for me to deliver his books";
 			mes "for quite a while now...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		else if (prt_curse == 3) {
@@ -453,7 +453,7 @@ OnTouch:
 			mes "Hey, look out!";
 			mes "Can't you be more";
 			mes "careful?! Geeeeez!";
-			emotion e_ag;
+			emotion ET_ANGER;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Oops, I'm so sorry.";
@@ -502,7 +502,7 @@ OnTouch:
 			mes "easily, so it scares me to";
 			mes "death to ride the Airship";
 			mes "all the way to Juno.";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "Now I'm in trouble!";
@@ -510,7 +510,7 @@ OnTouch:
 			mes "time I just can't help it.";
 			mes "There's nothing I can do!";
 			mes "Oh, I'm gonna lose this job!";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "Wait... You adventurers";
@@ -526,7 +526,7 @@ OnTouch:
 			mes "It's none of your ";
 			mes "business, I know, but";
 			mes "I'm just so desperate...";
-			emotion e_sob;
+			emotion ET_CRY;
 			set prt_curse,2;
 			close;
 		}
@@ -621,7 +621,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "[Historian]";
 		mes "GRRRRRRRRR!";
 		mes "Where are my books?!";
-		emotion e_ag;
+		emotion ET_ANGER;
 		next;
 		select("Are you alright?");
 		mes "[Historian]";
@@ -652,7 +652,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		}
 		else {
 			select("Oh, I'm delivering the books for him.");
-			emotion e_what;
+			emotion ET_QUESTION;
 			mes "[Historian]";
 			mes "Ah, really?";
 			mes "Great, you're here!";
@@ -809,7 +809,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "ruling the kingdom, the 7 warriors agreed to hold a contest amongst";
 		mes "their families each generation to prevent royal corruption.";
 		next;
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Historian]";
 		mes "Oh... Not too excited";
 		mes "about history, huh? Well,";
@@ -955,7 +955,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "can't be good for my skin...";
 		mes "Ooh, I wish I were back home";
 		mes "in the Schwaltzvalt Republic~";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Historian Rodafrian]";
 		mes "Hello there.";
@@ -1206,11 +1206,11 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 			mes "that you have learned to";
 			mes "Rodafrian, choosing not";
 			mes "to withhold any secrets.^000000";
-			emotion e_ic;
+			emotion ET_AHA;
 			next;
 			mes "[Historian Rodafrian]";
 			mes ".....................!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Historian Rodafrian]";
 			mes "Thank you for sharing that";
@@ -1298,7 +1298,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		close;
 	}
 	else if (prt_curse == 56) {
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Historian Rodafrian]";
 		mes "I just paid a visit to";
 		mes "Karlomoff and gave him";
@@ -1309,7 +1309,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		close;
 	}
 	else if (prt_curse == 60) {
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Historian Rodafrian]";
 		mes "I just aid a visit to";
 		mes "Karlomoff and gave him";
@@ -1995,7 +1995,7 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 		mes "with death. But the royal family and the Prontera Church took";
 		mes "mercy on me, and allowed";
 		mes "me to live here in exile.";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "I began to sing this song";
@@ -2010,7 +2010,7 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 		mes "a maid found a fragment of a";
 		mes "Red Gemstone while cleaning";
 		mes "the secret ceremonial grounds.";
-		emotion e_gasp,1;
+		emotion ET_SURPRISE, playerattached();
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "I always thought it";
@@ -2312,7 +2312,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "at a young age^000000. That is";
 		mes "Jormungand's curse and";
 		mes "the royal family's secret.";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "What...?!";
@@ -2375,7 +2375,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "complicated. Please";
 		mes "listen to what we have";
 		mes "to ask from here on...";
-		emotion e_dots;
+		emotion ET_THINK;
 		set prt_curse,15;
 		close;
 	}
@@ -2387,7 +2387,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "looking marks on their bodies.";
 		mes "It almost looked as if they";
 		mes "were growing snake scales.";
-		emotion e_gasp,1;
+		emotion ET_SURPRISE, playerattached();
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Wait, they grew snake";
@@ -3205,7 +3205,7 @@ prt_church,21,111,5	script	#prince2	887,{
 		mes "curse, we all failed. Those";
 		mes "involved have begun to believe";
 		mes "that Odin may have abandoned us... ";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "^3355FFYou examine the body of";
 		mes "the second prince and notice";

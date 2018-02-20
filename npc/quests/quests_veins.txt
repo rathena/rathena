@@ -5132,7 +5132,7 @@ ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 		mes "["+strcharinfo(0)+"]";
 		mes "You know ^3131FFLamir^000000, right?";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Guard Karlum]";
 		mes "Lamir? Oh... My.";
 		mes "Oh no! Did something";
@@ -5626,8 +5626,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "Hahahaha! Guess I look";
 		mes "pretty tough, don't I?";
 		next;
-		emotion e_lv,0,"Drunken Lady#1";
-		emotion e_lv,0,"Drunken Lady#2";
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#1");
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#2");
 		mes "[Ladies]";
 		mes "Oh, my God!";
 		mes "You're so cool~!";
@@ -5656,8 +5656,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "Hahahaha! Guess I look";
 		mes "pretty tough, don't I?";
 		next;
-		emotion e_lv,0,"Drunken Lady#1";
-		emotion e_lv,0,"Drunken Lady#2";
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#1");
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#2");
 		mes "[Ladies]";
 		mes "Oh, my God!";
 		mes "You're so cool~!";
@@ -5724,8 +5724,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "but duty calls.";
 		mes "Hahahahahahha~";
 		next;
-		emotion e_lv,0,"Drunken Lady#1";
-		emotion e_lv,0,"Drunken Lady#2";
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#1");
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#2");
 		mes "[Ladies]";
 		mes "Please don't go~";
 		next;
@@ -5748,7 +5748,7 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "["+strcharinfo(0)+"]";
 		mes "Yes?";
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Drunken Man]";
 		mes "I hereby promote you as";
 		mes "chief researcher of the";
@@ -5809,8 +5809,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 		mes "I should stay here and";
 		mes "entreat them to a lecture.";
 		next;
-		emotion e_lv,0,"Drunken Lady#1";
-		emotion e_lv,0,"Drunken Lady#2";
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#1");
+		emotion ET_THROB, getnpcid(0, "Drunken Lady#2");
 		mes "[Ladies]";
 		mes "Oh~! You'll really";
 		mes "teach us geology?";
@@ -5982,8 +5982,8 @@ ve_in,233,116,3	script	Drunken Man#vol	901,{
 	mes "Hahahaha! Guess I look";
 	mes "pretty tough, don't I?";
 	next;
-	emotion e_lv,0,"Drunken Lady#1";
-	emotion e_lv,0,"Drunken Lady#2";
+	emotion ET_THROB, getnpcid(0, "Drunken Lady#1");
+	emotion ET_THROB, getnpcid(0, "Drunken Lady#2");
 	mes "[Ladies]";
 	mes "Oh, my God!";
 	mes "You're so cool~!";
@@ -6334,7 +6334,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "[Sahedi]";
 		mes "Let's see...";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Sahedi]";
 		mes "Oh God! Why is the";
 		mes "temperature so high?!";
@@ -6342,7 +6342,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "like this in the past, but...";
 		mes "Is this... How bad is this?";
 		next;
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh... Oh, no!";
 		mes "Yikes! I guess if it's";
@@ -6424,7 +6424,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 				next;
 			}
 		}
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Sahedi]";
 		mes "Huh? Are you serious?";
 		mes "Thor Volcano's gonna";
@@ -6433,7 +6433,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "It'll be a disaster, just";
 		mes "like it happened in the past!";
 		next;
-		emotion e_flash,1;
+		emotion ET_SPARK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Yes, I agree. There's";
 		mes "a good chance of an...";
@@ -6445,7 +6445,7 @@ thor_camp,250,104,3	script	Sahedi#vol	934,{
 		mes "How much time do we";
 		mes "have to evacuate?";
 		next;
-		emotion e_flash,1;
+		emotion ET_SPARK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "Well... Uh...";
 		mes "According to my data...";
@@ -7113,7 +7113,7 @@ thor_camp,150,65,3	script	Dummy#1::VeinsDummy	111,{
 	else if (aru_vol == 20) {
 		mes "^3355FF*THUD*^000000";
 		specialeffect EF_HIT2;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "[Colonel Vito]";
 		mes "Soldier...";
@@ -7188,7 +7188,7 @@ thor_camp,59,79,1	script	Thor Volcano Soldier#vo3	939,{
 }
 
 thor_camp,143,114,1	script	Thor Volcano Soldier#vo4	939,{
-	emotion e_sob;
+	emotion ET_CRY;
 	mes "[Soldier]";
 	mes "Oh Freya...";
 	mes "Bless this Old Blue Box";
@@ -7353,7 +7353,7 @@ ve_in,237,131,1	script	Female Customer#ve1	940,{
 		mes "[Bartender]";
 		mes "Oh, come on!";
 		mes "I was kidding~";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	mes "[Bartender]";
@@ -7364,12 +7364,12 @@ ve_in,237,131,1	script	Female Customer#ve1	940,{
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "Meee?";
-	emotion e_swt2,1;
+	emotion ET_PROFUSELY_SWEAT, playerattached();
 	next;
 	mes "[Female Customer]";
 	mes "Mmm...";
 	mes "Not my style.";
-	emotion e_dots,1;
+	emotion ET_THINK, playerattached();
 	close;
 }
 

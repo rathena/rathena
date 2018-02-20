@@ -193,7 +193,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "Is that... right?";
 		mes "Hmm... so...";
 		mes "Um...ma? Umau...ma?";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "[Utan Boy]";
 		mes "...............";
@@ -1261,7 +1261,7 @@ OnTouch:
 	mes "- Shoooo -";
 	specialeffect EF_CLOAKING,AREA,"Valkyrie Anguhilde#end";
 	hideonnpc "Valkyrie Anguhilde#end";
-	emotion e_omg,1;
+	emotion ET_HUK, playerattached();
 	next;
 	mes "[Valkyrie of the heavens]";
 	mes "Set your mind at ease.";

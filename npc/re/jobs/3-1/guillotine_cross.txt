@@ -2439,7 +2439,7 @@ OnTouch_:
 	mes "May the goddess bless you eternally...";
 	npcskill "AL_BLESSING",10,0,0;
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[A man with black clothes]";
 	mes "Who... who are you?!";
 	mes "A... Assassin Guild?!";

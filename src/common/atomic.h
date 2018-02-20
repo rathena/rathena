@@ -17,10 +17,10 @@
 #include "cbasetypes.h"
 
 #if defined(_MSC_VER)
-#include "winapi.h"
+#include "winapi.hpp"
 
-// This checks if C/C++ Compiler Version is 18.00
-#if _MSC_VER < 1800
+// This checks if C/C++ Compiler Version is 18.00 or Windows is older than Vista
+#if _MSC_VER < 1800 || WINVER < _WIN32_WINNT_VISTA
 
 #if !defined(_M_X64)
 // When compiling for windows 32bit, the 8byte interlocked operations are not provided by microsoft

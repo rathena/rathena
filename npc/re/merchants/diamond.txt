@@ -36,7 +36,7 @@
 	mes "You can give the diamond as a gift to your lover.";
 	mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
 	mes "and treasure you in their heart.";
-	emotion e_loud;
+	emotion ET_BLABLA;
 	next;
 	
 	mes .@npc$;
@@ -63,7 +63,7 @@
 		mes "is one of the highest quality 17 carat diamonds.";
 		mes "Comparing it to any pea-sized, colorless rock you may have";
 		mes "dug up from Morroc is unspeakable!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		
 		mes .@npc$;
@@ -143,7 +143,7 @@
 					mes "Calculating the price and service fee..";
 					mes "501,000,000 zeny.";
 					mes "Amount has been confirmed.";
-					emotion e_loud;
+					emotion ET_BLABLA;
 					set Zeny, Zeny - 501000000;
 					getitem 6024, 1;
 					next;
@@ -152,7 +152,7 @@
 					mes "You may exchange the diamond back for zeny at any time.";
 					mes "However, there will be a 1,000,000z service fee.";
 					mes "Thank you for your business.";
-					emotion e_thx;
+					emotion ET_THANKS;
 					close;
 				}
 				else {
@@ -161,7 +161,7 @@
 					mes "I'm sorry, but you don't have sufficient funds.";
 					mes "Including the service fee, a total of 501,000,000z is required.";
 					mes "Please check your zeny balance and try again.";
-					emotion e_hmm;
+					emotion ET_SCRATCH;
 					close;
 				}
 			}
@@ -175,13 +175,13 @@
 	case 2:
 		mes .@npc$;
 		mes "AAH. You would like to exchange your ^FF82FF'17 Carat Diamond'^000000 for zeny?";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		if (select("Yes:No") == 2) {
 			mes .@npc$;
 			mes "Then, what is it you desire?..";
 			mes ". . . . . ....";
-			emotion e_dots;
+			emotion ET_THINK;
 			close;
 		}
 
@@ -222,7 +222,7 @@
 				mes "Thank you for your business.";
 				mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";
 				mes "come back anytime with 500 million zeny.";
-				emotion e_thx;
+				emotion ET_THANKS;
 				delitem 6024, 1;
 				set Zeny, Zeny + 499000000;
 				close;

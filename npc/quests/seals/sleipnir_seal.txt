@@ -74,7 +74,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 		mes "Wait...!";
 		mes "I can't even remember the last";
 		mes "time I went out with a guy! At this rate, I might retire before I can find a boyfriend. Noooo, I'm still in my prime~!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	if ($God1 < $@god_check2) {
@@ -86,7 +86,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 			mes "Wait...!";
 			mes "I can't even remember the last";
 			mes "time I went out with a guy! At this rate, I might retire before I can find a boyfriend. Noooo, I'm still in my prime~!";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 		else if (god_sl_1 == 1) {
@@ -472,7 +472,7 @@ que_god01,98,98,4	script	Manager#G	69,{
 			mes "Wait...!";
 			mes "I can't even remember the last";
 			mes "time I went out with a guy! At this rate, I might retire before I can find a boyfriend. Noooo, I'm still in my prime~!";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close2;
 		}
 		else if (god_sl_1 < 51) {
@@ -567,12 +567,12 @@ que_god01,66,125,6	script	Researcher#G1	89,{
 					mes "[Hallandaute]";
 					mes "A mad scientist?";
 					mes "That doesn't sound right. In my wildest dreams, I never would have suspected Metto of turning out that way...";
-					emotion e_hmm;
+					emotion ET_SCRATCH;
 					next;
 					mes "[Hallandaute]";
 					mes "Huh. That's...";
 					mes "That's too bad. I don't know what to say. We used to go watch movies and celebrate our birthdays together. P-please give me a moment...";
-					emotion e_dots;
+					emotion ET_THINK;
 					set god_sl_2,2;
 					close;
 				}

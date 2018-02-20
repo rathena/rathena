@@ -11,12 +11,6 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
-function	script	close3	{
-	close2;
-	cutin "",255;
-	end;
-}
-
 lasa_fild01,47,297,0	script	#doint_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
@@ -161,8 +155,8 @@ OnTouch:
 		sleep2 2000;
 		npctalk "You have no idea! DEX comes first if you want your attack to be successful!!", "Applicant MacCarnie#doramt13", bc_self;
 		sleep2 1000;
-		emotion 36,0,"Applicant Paul#doramt13";
-		emotion 54,0,"Applicant MacCarnie#doramt13";
+		emotion ET_STARE, getnpcid(0, "Applicant Paul#doramt13");
+		emotion ET_OHNO, getnpcid(0, "Applicant MacCarnie#doramt13");
 	}
 	end;
 OnInit:
@@ -1675,11 +1669,11 @@ OnInit:
 }
 
 lasagna,171,105,5	script	Emergency Patient#dorco	4_M_DIEMAN,5,5,{
-	emotion 26;
+	emotion ET_HELP;
 	npctalk "S-someone help me... Dorams, they're so cute I'm going to die...", "", bc_self;
 	end;
 OnTouch:
-	emotion 26;
+	emotion ET_HELP;
 	end;
 }
 
@@ -1907,7 +1901,7 @@ lasagna,184,234,5	script	Youngster meow#dorcon04	4_M_BABYCAT,{
 }
 
 lasagna,186,231,3	script	Youngster meow#dorcon05	4_DR_KID_01,{
-	emotion 28;
+	emotion ET_CRY;
 	npctalk "Why Isn't this rolling- Make it roll-", "", bc_self;
 	end;
 }
@@ -1987,10 +1981,10 @@ lasagna,230,192,3	script	Perky Doram#do_hint03	4_CAT_ADV2,{
 lasagna,235,193,3	script	Customer#dorcon02	4_DR_TORTEL,{
 	npctalk "Always right-click when it comes to information! Right-click a human, item and cat to know more about them!", "", bc_self;
 	sleep2 1000;
-	emotion 3;
+	emotion ET_THROB;
 	npctalk "Ha- ppi- ness-", "", bc_self;
 	sleep2 2000;
-	emotion 45;
+	emotion ET_SLEEPY;
 	npctalk "We're full, so there's only one thing to do. Sleep.", "", bc_self;
 	end;
 }
@@ -2052,7 +2046,7 @@ lasagna,236,179,5	script	Meow goon#dorcon01	4_DR_M_01,{
 	mes "Right! They're Aglio and Oligo!";
 	npctalk "Aglio and Oligo!", "", bc_self;
 	next;
-	emotion 4,0,"Goon meow#dorcon01";
+	emotion ET_SWEAT, getnpcid(0, "Goon meow#dorcon01");
 	mes "[Goon meow]";
 	mes "Hey, That's not it... No...";
 	next;
@@ -2083,8 +2077,8 @@ lasagna,235,178,5	script	Goon meow#dorcon01	4_DR_M_02,{
 	mes "[Meow goon]";
 	mes "Kah... The poltergeist that had been sleeping inside my bag is raging!";
 	next;
-	emotion 21;
-	emotion 21,0,"Meow goon#dorcon01";
+	emotion ET_BEST;
+	emotion ET_BEST, getnpcid(0, "Meow goon#dorcon01");
 	mes "[Goon meow]";
 	mes "Good! This should be enough to keep me from getting snubbed in the new world.";
 	npctalk "We're thoroughly prepared all right!", "Meow goon#dorcon01";
@@ -2123,32 +2117,32 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 		mes "[Yota Chara]";
 		mes "...My parents keep going out into the dangerous areas. I'm still a child to help them, so what I do is to make these amulets for them.";
 		next;
-		emotion 19;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Yota Chara]";
 		mes "What if some bad news reach us even if I try hard making these amulets for their safety?";
 		next;
 		mes "[Yota Chara]";
 		mes "I get startled each time some mail arrives...";
 		next;
-		emotion 28,0,"The skittish fourth#wea";
+		emotion ET_CRY, getnpcid(0, "The skittish fourth#wea");
 		mes "[Dandi Chara]";
 		mes "Whatever happened to our parents? ~Bursting into crying~";
 		next;
-		emotion 21,0,"The brave third#weapon";
+		emotion ET_BEST, getnpcid(0, "The brave third#weapon");
 		mes "[Jogi Chara]";
 		mes "Well, then. I'll be your dad!!";
 		next;
-		emotion 28,0,"The skittish fourth#wea";
-		emotion 19;
+		emotion ET_CRY, getnpcid(0, "The skittish fourth#wea");
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Dandi Chara]";
 		mes "~Keeps crying uncontrollably~ No way!! Mom!! Dad!!";
 		next;
 		mes "[Goma Chara]";
-		emotion 6,0,"The sensitive-minded ela";
-		emotion 19;
+		emotion ET_FRET, getnpcid(0, "The sensitive-minded ela");
+		emotion ET_PROFUSELY_SWEAT;
 		mes "Both will be totally fine and return to us soon. So quit it! Did you really have to make him cry, huh?!";
 		next;
-		emotion 9;
+		emotion ET_THINK;
 		mes "- Yota became disheartened and started making another amulet, quietly. -";
 		close;
 	}
@@ -2232,30 +2226,30 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 	mes "What should we do next?";
 	next;
 	if (select( "Exchange tokens for a weapon.", "About the Family" ) == 2) {
-		emotion 21;
+		emotion ET_BEST;
 		mes "[Jogi Chara]";
 		mes "My sister told me my parents are warriors! They left for a huge adventure!!";
 		next;
-		emotion 21;
+		emotion ET_BEST;
 		mes "[Jogi Chara]";
 		mes "I'll join the Militia and become great like my parents!";
 		mes "I'm still too young to join the Militia, but, I'm positive that I can be the ace of the band once I join it because I'm committed to training myself.";
 		next;
-		emotion 32;
+		emotion ET_HNG;
 		mes "[Jogi Chara]";
 		mes "My family members are very lazy. Unless I train them based on my strong belief, they can never become warriors.";
 		mes "Most notoriously, my elder and younger brother can be a real pain in my neck!";
 		next;
-		emotion 18;
+		emotion ET_SMILE;
 		mes "[Jogi Chara]";
 		mes "Dandi! Today's training is to <put 10 earthworms on the head!> Get over here!";
 		next;
-		emotion 28,0,"The skittish fourth#wea";
+		emotion ET_CRY, getnpcid(0, "The skittish fourth#wea");
 		mes "[Dandi Chara]";
 		mes "~Bursting into crying~ Goma Chara!!";
 		close;
 	}
-	emotion 52;
+	emotion ET_SPARK;
 	mes "[Jogi Chara]";
 	mes "Whoa, a new weapon! New power!";
 	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for <ITEM>Doram Token <INFO>25142</INFO></ITEM>?";
@@ -2317,7 +2311,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 		mes "- and try again. -";
 		close;
 	}
-	emotion 23;
+	emotion ET_HUK;
 	mes "[Dandi Chara]";
 	mes "~Shrieks~ Hi...Hiya...";
 	mes "You really startled me...I thought it was Jogi.";
@@ -2327,20 +2321,20 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 		mes "She gets angry easily but makes new clothes for me, saying I deserve pretty ones.";
 		mes "I like her...";
 		next;
-		emotion 28;
+		emotion ET_CRY;
 		mes "[Dandi Chara]";
 		mes "My brothers can be pretty mean. So I try my best to obey what Dandi tells me to.";
 		mes "Still, Yota would never show his smiles, while Jogi would bring me hideous stuff like an earthworm, saying I should be tougher. ~Makes a sobbing sound~";
 		next;
-		emotion 28;
+		emotion ET_CRY;
 		mes "[Dandi Chara]";
 		mes "What's more, Jogi keeps wandering near the forest, saying He's going for the Militia. Mom said it's dangerous...";
 		next;
-		emotion 28;
+		emotion ET_CRY;
 		mes "[Dandi Chara]";
 		mes "What if a monster takes my brother away? That monster's gotta hurt a lot...";
 		next;
-		emotion 0;
+		emotion ET_SURPRISE;
 		mes "[Dandi Chara]";
 		mes "Do you happen to have any piece of armor to spare for my brother? Would you give it to me? I'll pay for it...";
 		close;
@@ -2436,15 +2430,15 @@ lasagna,140,245,3	script	The sensitive-minded el	4_CAT_SAILOR3,{
 		mes "[Goma Chara]";
 		mes "So taking care of these bratty brothers has become my responsibility! I wonder why I was born the eldest! I've almost had it!";
 		next;
-		emotion 6;
+		emotion ET_FRET;
 		mes "[Goma Chara]";
 		mes "Yota! Tidy up your place after making amulets! Pick up the scales of horse mackerels there. Oh, my days...";
 		next;
-		emotion 6;
+		emotion ET_FRET;
 		mes "[Goma Chara]";
 		mes "Jogi, Dandi is about to burst into crying. Please behave yourself, will you?";
 		next;
-		emotion 7;
+		emotion ET_ANGER;
 		mes "[Goma Chara]";
 		mes "~Signs deeply~ My head is spinning!";
 		mes "I'm sorry but our chit-chat ends here. Time flies when you're busy taking care of little brothers.";
@@ -3800,7 +3794,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Uh, that boatswain is the person who had asked for my help.";
 		next;
-		emotion 23;
+		emotion ET_HUK;
 		mes "[Shaman meow]";
 		mes "Indeed, who else would do such an idiotic thing? I can't help him, so please leave.";
 		next;
@@ -5328,8 +5322,8 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well... The Purser has sent me to take care of the problem.";
 		next;
-		emotion 0;
-		emotion 0,0,"Captain Gamberi#dorcon0";
+		emotion ET_SURPRISE;
+		emotion ET_SURPRISE, getnpcid(0, "Captain Gamberi#dorcon0");
 		mes "[Stello]";
 		mes "There is.";
 		next;
@@ -5343,7 +5337,7 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 		mes "In front of us.";
 		npctalk "Yes, there is.", "", bc_self;
 		next;
-		emotion 4,1;
+		emotion ET_SWEAT, playerattached();
 		mes "[Stello]";
 		mes "Good. Consider it as the last training before sailing off.";
 		next;
@@ -5411,8 +5405,8 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 		next;
 		mes "[Captain Gamberi]";
 		mes "We were wondering if we had to go down there to recover your dead body...";
-		emotion 23;
-		emotion 23,1;
+		emotion ET_HUK;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "What? Was it such a dangerous mission?";
@@ -5475,7 +5469,7 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 			next;
 			mes "[Stello]";
 			mes "Oh! How did you know?";
-			emotion 23;
+			emotion ET_HUK;
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "I have received a handful. I don't need more.";
@@ -5509,7 +5503,7 @@ conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
 			next;
 			mes "[Stello]";
 			mes "I'll give you some ^0000cdKahlugna Milk^000000 which all Dorams who have ever visited Lasagna crave. Thank you so much for your effort.";
-			emotion 2;
+			emotion ET_DELIGHT;
 			next;
 			mes "[Captain Gamberi]";
 			mes "Well then. It is the time to issue the sailing signal.";
@@ -5565,7 +5559,7 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 			mes "[Captain Gamberi]";
 			mes "You need to overcome the inconvenience to have a correct posture. The correct posture is your first step to become a gentleman. Do you get it, Stello?";
 			next;
-			emotion 33;
+			emotion ET_OK;
 			mes "[Captain Gamberi]";
 			mes "Stello, say it again.";
 			npctalk "Stello?", "", bc_self;
@@ -5670,7 +5664,7 @@ conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
 		mes "[Captain Gamberi]";
 		mes "You need to overcome the inconvenience to have a correct posture. The correct posture is your first step to become a gentleman. Do you get it, Stello?";
 		next;
-		emotion 33,0,"Stello#dorcon";
+		emotion ET_OK, getnpcid(0, "Stello#dorcon");
 		mes "[Captain Gamberi]";
 		mes "Stello, say it again.";
 		npctalk "Stello?", "", bc_self;
@@ -5932,7 +5926,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Recorder]";
 		mes "The dirt and grass on your feet... You are not a neat person... Oh, never mind. I am not writing down your faults... This is enough.";
 		next;
-		emotion 23;
+		emotion ET_HUK;
 		mes "[" + strcharinfo(0) + "]";
 		mes "How do you know such things in detail?";
 		next;
@@ -5942,7 +5936,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Recorder]";
 		mes "Let's see, you must have met the Captain and the Chief Officer. This place must be your second stop.";
 		next;
-		emotion 23;
+		emotion ET_HUK;
 		mes "[" + strcharinfo(0) + "]";
 		mes "That's right!";
 		next;
@@ -6056,7 +6050,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		next;
 		mes "[Recorder]";
 		mes "It is consisted not only of the events which have happened on the ship but also of the history of almost every person who has anything to do with Con-Chliina.";
-		emotion 4,1;
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Recorder]";
 		mes "The future can be seen through the past.";
@@ -6156,7 +6150,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		next;
 		mes "[When you told the story you heard from Captain Gamberi and about how Stello interrupted, the Recorder started writing it down.]";
 		next;
-		emotion 20;
+		emotion ET_SCRATCH;
 		mes "[Recorder]";
 		mes "That is strange. I cannot remember all the records, but the story told by Captain Gamberi ^0000cdis different^000000 from the part of the record I do remember.";
 		npctalk "It wasn't supposed to be lengthy like this.", "", bc_self;
@@ -6283,7 +6277,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Recorder]";
 		mes "Dear captain, what are you doing here?";
 		next;
-		emotion 23,0,"Captain Gamberi#dorcon0";
+		emotion ET_HUK, getnpcid(0, "Captain Gamberi#dorcon0");
 		mes "[Captain Gamberi]";
 		mes "You were in place. I am just checking if everyone is in the right place prior to the voyage.";
 		npctalk "Hum! Hum! I thought there was no one around here.", "Captain Gamberi#dorcon0_2", bc_self;
@@ -6294,7 +6288,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Captain Gamberi]";
 		mes "As an experienced crew of Con-Chliina, one must be able to cope with any situation whenever they need to.";
 		next;
-		emotion 23,1;
+		emotion ET_HUK, playerattached();
 		mes "[Recorder]";
 		mes "I see. ^0000cdIt must be the duty of the captain to tear and burn the document as well^000000, I guess.";
 		npctalk "Did you really think that I wouldn't find out? You have left a long trail od evidence after you.", "", bc_self;
@@ -6937,7 +6931,7 @@ conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I knew it!";
-		emotion 6,1;
+		emotion ET_FRET, playerattached();
 		next;
 		mes "[Boatswain]";
 		mes "I will reward you handsomely. However, you haven't been able to solve the problem permanently so I don't have to keep the promise I have made.";
@@ -7118,9 +7112,9 @@ conch_in,179,64,5	script	Cow#dorcon01_bis	4_WHITE_COW,{
 	mes "[Boatswain]";
 	mes "So? What! I won her on a bet. Every time I call her name, it reminds me of that moment of victory. It's beautiful.";
 	npctalk "Moo -", "", bc_self;
-	emotion 14;
+	emotion ET_BIGTHROB;
 	npctalk "Right?", "Boatswain#dorcon", bc_self;
-	emotion 3;
+	emotion ET_THROB;
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Anyway, why is there a cow on this ship?";
@@ -7144,7 +7138,7 @@ conch_in,179,64,5	script	Cow#dorcon01_bis	4_WHITE_COW,{
 }
 
 conch_in,189,63,3	script	Head Chef#dorcon	4_DR_TORTEL,{
-	emotion 45;
+	emotion ET_SLEEPY;
 	mes "[Head Chef]";
 	mes "*Snore*";
 	npctalk "*Snore*", "", bc_self;
@@ -7218,8 +7212,8 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I mean, ^0000cdhere comes the newbie!^000000";
-		emotion 23,0,"Boatswain#dorcon";
-		emotion 23,0,"Helmsman#dorcon";
+		emotion ET_HUK, getnpcid(0, "Boatswain#dorcon");
+		emotion ET_HUK, getnpcid(0, "Helmsman#dorcon");
 		next;
 		mes "[Sous Chef]";
 		mes "What are you doing? Is it a new way to get yourself killed? I am not afraid of challenges. Draw your weapon.";
@@ -7313,14 +7307,14 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 			mes "[Sous Chef]";
 			mes "There are two main functions of cooking.";
 			next;
-			emotion 0;
+			emotion ET_SURPRISE;
 			mes "[Sous Chef]";
 			mes "Firstly, it ^0000cdenhances status^000000.";
 			next;
 			mes "[Sous Chef]";
 			mes "There are six types of cooking. Each enhances ^0000cdStr, Agi, Vit, Int, Dex or Luk^000000. The amount of status enhancement depends on the level of cooking.";
 			next;
-			emotion 0;
+			emotion ET_SURPRISE;
 			mes "[Sous Chef]";
 			mes "Secondly, it ^0000cdrecovers HP and SP^000000. The amount of recovery also depends on the level of cooking, and some food only recovers HP.";
 			next;
@@ -7330,14 +7324,14 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 			mes "[Sous Chef]";
 			mes "There are two steps for the preparation.";
 			next;
-			emotion 0;
+			emotion ET_SURPRISE;
 			mes "[Sous Chef]";
 			mes "First! You need a ^0000cdCookbook^000000.";
 			next;
 			mes "[Sous Chef]";
 			mes "You need a Cookbook to learn how to prepare the ingredients and cook. You can get this Cookbook from a ^0000cdquest^000000 or a ^0000cdmonster^000000.";
 			next;
-			emotion 0;
+			emotion ET_SURPRISE;
 			mes "[Sous Chef]";
 			mes "Once you get a Cookbook, you need to collect the ^0000cdingredients^000000. It doesn't help to lick the pages if the Cookbook without preparing the ingredients. Even the eggrings know better than that.";
 			next;
@@ -7555,7 +7549,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		next;
 		mes "[Sous Chef]";
 		mes "Look over there. The man sleeping on the floor who seems so far from being a gentleman. ^0000cdHe is our Head Chef^000000. The captain has always said how we have to do our best at what we do. But no use.";
-		emotion 45,0,"Head Chef#dorcon";
+		emotion ET_SLEEPY, getnpcid(0, "Head Chef#dorcon");
 		npctalk "*Snore*","Head Chef#dorcon", bc_self;
 		next;
 		mes "[Sous Chef]";
@@ -7769,7 +7763,7 @@ S_Check:
 		mes "Bring me " + .@string$ + " now!";
 		close;
 	}
-	emotion 52;
+	emotion ET_SPARK;
 	mes "Oh, you have brought them all! Let me cook them for you right away.";
 	next;
 	mes "[Sous Chef]";
@@ -8022,7 +8016,7 @@ lasa_dun01,153,103,3	script	Vigilante#dorcon02	4_DR_SOLDIER,{
 			next;
 			mes "[Vigilante]";
 			mes "I think the adventurer knows what the problem is already.";
-			emotion 4;
+			emotion ET_SWEAT;
 			next;
 			mes "[Machie]";
 			mes "You don't have to say it like that.";
@@ -9584,26 +9578,26 @@ lasagna,195,235,3	script	Cute Baby#dorcon	4_F_KR_TIGER,{
 		mes "Okay, I'm sitting now.";
 		npctalk "Sitting now.", "Daldal#dorcon02", bc_self;
 		next;
-		emotion 1,0,"Cute Baby#dorcon";
+		emotion ET_QUESTION;
 		mes "[Daldal]";
 		mes "Sitting.";
 		npctalk "Sitting.", "Gopara#dorcon02", bc_self;
 		next;
-		emotion 1,0,"Cute Baby#dorcon";
+		emotion ET_QUESTION;
 		mes "[Gopara]";
 		mes "Patiently sitting.";
 		npctalk "Patiently -", "Daldal#dorcon02", bc_self;
 		next;
-		emotion 1,0,"Cute Baby#dorcon";
+		emotion ET_QUESTION;
 		mes "[Daldal]";
 		mes "Sitting.";
 		npctalk "Sitting.", "Daldal#dorcon02", bc_self;
 		next;
-		emotion 28,0,"Cute Baby#dorcon";
+		emotion ET_CRY;
 		mes "[Baby]";
 		mes "Waa. Waa!";
 		next;
-		emotion 4,1;
+		emotion ET_SWEAT, playerattached();
 		mes "[" + strcharinfo(0) + "]";
 		mes "G-guys? didn't you want me to find you a babysitting job?";
 		next;
@@ -9624,7 +9618,7 @@ lasagna,195,235,3	script	Cute Baby#dorcon	4_F_KR_TIGER,{
 		mes "[Daldal]";
 		mes "That was what babysitting was about? I didn't know. If I did, I wouldn't have done it.";
 		next;
-		emotion 28,0,"Cute Baby#dorcon";
+		emotion ET_CRY;
 		mes "[Baby]";
 		mes "Waa. Waa.";
 		next;
@@ -9842,11 +9836,11 @@ lasagna,139,299,3	script	Captain of Anchovy Fish	4_CAT_SAILOR5,{
 		mes "Captain of Anchovy Fishing Boat";
 		mes "No need to know about your past. I just need you to do a good job on the ship. Since this is the first time on a boat for both of you, looks like there's a long bumpy road ahead.";
 		next;
-		emotion 28,0,"Daldal#dorcon04";
+		emotion ET_CRY, getnpcid(0, "Daldal#dorcon04");
 		mes "[Daldal]";
 		mes "So mean. I shared my painful past and you couldn't care any less.";
 		next;
-		emotion 33,0,"Gopara#dorcon04";
+		emotion ET_OK, getnpcid(0, "Gopara#dorcon04");
 		mes "[Gopara]";
 		mes "It's okay. I care.";
 		next;
@@ -9860,7 +9854,7 @@ lasagna,139,299,3	script	Captain of Anchovy Fish	4_CAT_SAILOR5,{
 		mes "[Daldal]";
 		mes "Not really interested.";
 		next;
-		emotion 7,0,"Gopara#dorcon04";
+		emotion ET_ANGER, getnpcid(0, "Gopara#dorcon04");
 		mes "[Gopara]";
 		mes "Let's fight!";
 		next;
@@ -10101,10 +10095,10 @@ conch_in,59,29,5	script	Engineer#dorcon01	4_CAT_SAILOR5,{
 	sleep2 2000;
 	npctalk "Hundreds of hamsters are running on treadmills on the bottom of this ship. The ship moves forward because this area is connected to the main part of the engine.", "", bc_self;
 	sleep2 1000;
-	emotion 23;
+	emotion ET_HUK;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Pardon???", bc_self;
 	sleep2 1000;
-	emotion 4;
+	emotion ET_SWEAT;
 	npctalk "Oh, wait. You're not taking me seriously, are you? It's a joke, a joke!", "", bc_self;
 	end;
 }

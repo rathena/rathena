@@ -7,7 +7,7 @@
 // For more information, see LICENCE in the main folder
 
 #ifdef WIN32
-#include "winapi.h"
+#include "winapi.hpp"
 #define getpagesize() 4096 // @TODO: implement this properly (GetSystemInfo .. dwPageSize..). (Atm as on all supported win platforms its 4k its static.)
 #define __thread __declspec( thread ) 
 #else
@@ -25,7 +25,7 @@
 #include "thread.h"
 
 // When Compiling using MSC (on win32..) we know we have support in any case!
-#ifdef _MSC_VER 
+#if defined(_MSC_VER ) && !defined(HAS_TLS)
 #define HAS_TLS 
 #endif
 
@@ -48,7 +48,7 @@ struct rAthread {
 
 
 #ifdef HAS_TLS
-__thread int g_rathread_ID = -1;
+__thread int g_rathread_ID = RA_INVALID_THID;
 #endif
 
 
@@ -56,6 +56,12 @@ __thread int g_rathread_ID = -1;
 /// Subystem Code
 ///
 static struct rAthread l_threads[RA_THREADS_MAX];
+
+prAthread rathenat_getThread( int idx ) {
+  if(idx < RA_THREADS_MAX)
+    return &l_threads[idx];
+  return NULL;
+}
 
 void rathread_init(){
 	register unsigned int i;
@@ -70,7 +76,11 @@ void rathread_init(){
 	g_rathread_ID = 0;
 #endif
 	l_threads[0].prio = RAT_PRIO_NORMAL;
-	l_threads[0].proc = (rAthreadProc)0xDEADCAFE;
+#if defined(_WIN64) || defined(__x86_64__) || defined(__ppc64__)
+	l_threads[0].proc = (rAthreadProc)0xDEADCAFEDEADCAFE;
+#else
+  l_threads[0].proc = (rAthreadProc)0xDEADCAFE;
+#endif
 
 }//end: rathread_init()
 
@@ -221,7 +231,7 @@ void rathread_destroy ( prAthread handle ){
 		rat_thread_terminated(handle);
 	}
 #else
-	if( pthread_cancel( handle->hThread ) == 0){
+	if(handle->hThread && pthread_cancel( handle->hThread ) == 0){
 	
 		// We have to join it, otherwise pthread wont re-cycle its internal ressources assoc. with this thread.
 		// 

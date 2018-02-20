@@ -600,7 +600,7 @@ function	script	refinemain	{
 		mes "You're not wearing";
 		mes "anything there that";
 		mes "I can refine.";
-		emotion e_an;
+		emotion ET_FRET;
 		close;
 	}
 	//Check if the item is refinable...
@@ -701,7 +701,7 @@ function	script	refinemain	{
 		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
 		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 			mes "["+ .@npc_name$ +"]";
-			emotion e_an;
+			emotion ET_FRET;
 			mes "Wait a second...";
 			mes "Do you think I'm stupid?!";
 			mes "You switched the item while I wasn't looking! Get out of here!";
@@ -711,7 +711,7 @@ function	script	refinemain	{
 		if(getequippercentrefinery(.@part) <= rand(100)) {
 			failedrefitem .@part;
 			mes "["+ .@npc_name$ +"]";
-			emotion (!rand(5))?e_cash:e_omg;
+			emotion (!rand(5))?ET_MONEY:ET_HUK;
 			.@lose = rand(1,3);
 			if (.@lose == 1) {
 				mes "OH! MY GOD!";
@@ -732,7 +732,7 @@ function	script	refinemain	{
 		}
 		mes "["+getarg(0)+"]";
 		successrefitem .@part;
-		emotion e_heh;
+		emotion ET_SMILE;
 		.@win = rand(1,3);
 		if (.@win == 1) {
 			mes "Perfect!";
@@ -829,7 +829,7 @@ function	script	refinemain	{
 		mes "Clang, clang!!!";
 		if(.@menu2 == 2 && getequippercentrefinery(.@part) <= rand(100)) {
 			failedrefitem .@part;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "["+ .@npc_name$ +"]";
 			mes "WAHHHH!!! I'm so sorry... I warned you this could happen...";
 			.@refinecnt = .@refinecnt - 1;
@@ -841,7 +841,7 @@ function	script	refinemain	{
 			close;
 		}
 		successrefitem .@part;
-		emotion e_no1;
+		emotion ET_BEST;
 		.@refinecnt = .@refinecnt - 1;
 		next;
 	}

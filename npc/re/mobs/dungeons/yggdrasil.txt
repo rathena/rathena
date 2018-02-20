@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
-//= 1.0 Splitted from Nifflheim fields [DracoRPG]
+//= 1.0 Splitted from Niflheim fields [DracoRPG]
 //= 1.1 Official kRO 10.1 spawns [Playtester]
 //============================================================
 

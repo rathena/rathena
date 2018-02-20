@@ -144,7 +144,7 @@ louyang,297,167,2	script	Muscular Woman#lou	815,{
 		next;
 		mes "[Zhi Ching Li]";
 		mes "Recently we've had a hard time recruiting new members, so I came here to check if there's any woman who wishes to join us.";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	mes "[Zhi Ching Li]";

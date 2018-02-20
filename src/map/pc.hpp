@@ -1,8 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#pragma once
 #ifndef _PC_HPP_
 #define _PC_HPP_
+
+#include <vector>
 
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.h"// StringBuf
@@ -497,7 +499,7 @@ struct map_session_data {
 	int itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
+	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
@@ -571,8 +573,8 @@ struct map_session_data {
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
-	int duel_group; // duel vars [LuzZza]
-	int duel_invite;
+	size_t duel_group; // duel vars [LuzZza]
+	size_t duel_invite;
 
 	int killerrid, killedrid;
 
@@ -613,8 +615,7 @@ struct map_session_data {
 	} achievement_data;
 
 	// Title system
-	int *titles;
-	uint8 titleCount;
+	std::vector<int> titles;
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
@@ -781,6 +782,7 @@ enum weapon_type {
 	W_DOUBLE_DS, // dagger + sword
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
+	MAX_WEAPON_TYPE_ALL,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
@@ -1330,4 +1332,5 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
+
 #endif /* _PC_HPP_ */

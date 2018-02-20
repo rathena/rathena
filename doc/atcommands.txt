@@ -1318,7 +1318,7 @@ Bans or unbans a player for a limited time.
 Time elements: y/a, m, d/j, h, mn, s
 
 Example:
-@ban +2d Char2
+@charban +2d Char2
 -> bans Char2's for 2 days.
 
 ---------------------------------------

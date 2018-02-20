@@ -27,26 +27,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -159,45 +159,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="char.h" />
-    <ClInclude Include="char_clif.h" />
-    <ClInclude Include="char_cnslif.h" />
-    <ClInclude Include="char_logif.h" />
-    <ClInclude Include="char_mapif.h" />
-    <ClInclude Include="inter.h" />
-    <ClInclude Include="int_achievement.h" />
-    <ClInclude Include="int_auction.h" />
-    <ClInclude Include="int_clan.h" />
-    <ClInclude Include="int_elemental.h" />
-    <ClInclude Include="int_guild.h" />
-    <ClInclude Include="int_homun.h" />
-    <ClInclude Include="int_mail.h" />
-    <ClInclude Include="int_mercenary.h" />
-    <ClInclude Include="int_party.h" />
-    <ClInclude Include="int_pet.h" />
-    <ClInclude Include="int_quest.h" />
-    <ClInclude Include="int_storage.h" />
+    <ClInclude Include="char.hpp" />
+    <ClInclude Include="char_clif.hpp" />
+    <ClInclude Include="char_cnslif.hpp" />
+    <ClInclude Include="char_logif.hpp" />
+    <ClInclude Include="char_mapif.hpp" />
+    <ClInclude Include="inter.hpp" />
+    <ClInclude Include="int_achievement.hpp" />
+    <ClInclude Include="int_auction.hpp" />
+    <ClInclude Include="int_clan.hpp" />
+    <ClInclude Include="int_elemental.hpp" />
+    <ClInclude Include="int_guild.hpp" />
+    <ClInclude Include="int_homun.hpp" />
+    <ClInclude Include="int_mail.hpp" />
+    <ClInclude Include="int_mercenary.hpp" />
+    <ClInclude Include="int_party.hpp" />
+    <ClInclude Include="int_pet.hpp" />
+    <ClInclude Include="int_quest.hpp" />
+    <ClInclude Include="int_storage.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="char.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="char_clif.c" />
-    <ClCompile Include="char_cnslif.c" />
-    <ClCompile Include="char_logif.c" />
-    <ClCompile Include="char_mapif.c" />
+    <ClCompile Include="char.cpp" />
+    <ClCompile Include="char_clif.cpp" />
+    <ClCompile Include="char_cnslif.cpp" />
+    <ClCompile Include="char_logif.cpp" />
+    <ClCompile Include="char_mapif.cpp" />
     <ClCompile Include="inter.cpp" />
-    <ClCompile Include="int_achievement.c" />
-    <ClCompile Include="int_auction.c" />
-    <ClCompile Include="int_clan.c" />
-    <ClCompile Include="int_elemental.c" />
-    <ClCompile Include="int_guild.c" />
-    <ClCompile Include="int_homun.c" />
-    <ClCompile Include="int_mail.c" />
-    <ClCompile Include="int_mercenary.c" />
-    <ClCompile Include="int_party.c" />
-    <ClCompile Include="int_pet.c" />
-    <ClCompile Include="int_quest.c" />
+    <ClCompile Include="int_achievement.cpp" />
+    <ClCompile Include="int_auction.cpp" />
+    <ClCompile Include="int_clan.cpp" />
+    <ClCompile Include="int_elemental.cpp" />
+    <ClCompile Include="int_guild.cpp" />
+    <ClCompile Include="int_homun.cpp" />
+    <ClCompile Include="int_mail.cpp" />
+    <ClCompile Include="int_mercenary.cpp" />
+    <ClCompile Include="int_party.cpp" />
+    <ClCompile Include="int_pet.cpp" />
+    <ClCompile Include="int_quest.cpp" />
     <ClCompile Include="int_storage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
