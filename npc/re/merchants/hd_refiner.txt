@@ -153,7 +153,7 @@
 	if (.@bless_who == 1) {
 		specialeffect EF_HOLYHIT;
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Blacksmith Mighty Hammer]";
 		mes "What?!!";
 		next;
