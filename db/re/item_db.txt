@@ -1964,7 +1964,7 @@
 2757,Insecticide_Ring,Insecticide Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_Insect,15; },{},{}
 2758,Fisher_Ring,Fischer Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_Fish,15; },{},{}
 2759,Decussate_Ring,Decussate Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_Demon,15; },{},{}
-2760,Bloody_Ring,Bloody Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_DemiHuman,15; bonus2 bExpAddRace,RC_Player,15; },{},{}
+2760,Bloody_Ring,Bloody Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_DemiHuman,15; },{},{}
 2761,Satanic_Ring,Satanic Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_Angel,15; },{},{}
 2762,Dragoon_Ring,Dragon Ring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bExpAddRace,RC_Dragon,15; },{},{}
 2763,Skul_Ring_C,Neo Skull Ring,4,0,,0,,0,,0,0xFFFFFFFE,18,2,136,,95,0,0,{ bonus2 bAddClass,Class_All,5; bonus bMatkrate,5; bonus bMaxHPrate,5; skill "MG_SIGHT",1; },{},{}
@@ -2337,7 +2337,7 @@
 4151,Gajomart_Card,Gajomart Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Plant,-20; bonus2 bExpAddRace,RC_Plant,10; },{},{}
 4152,Galapago_Card,Galapago Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddItemGroupHealRate,IG_Juice,50; bonus3 bAddMonsterDropItem,531,RC_Insect,300; bonus3 bAddMonsterDropItem,532,RC_Insect,300; bonus3 bAddMonsterDropItem,534,RC_Insect,300; },{},{}
 4153,Crab_Card,Crab Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus2 bAddDamageClass,1266,30; },{},{}
-4154,Rice_Cake_Boy_Card,Dumpling Child Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddItemGroupHealRate,IG_Candy,50; bonus3 bAddMonsterDropItem,529,RC_DemiHuman,300; bonus3 bAddMonsterDropItem,530,RC_DemiHuman,100; bonus3 bAddMonsterDropItem,529,RC_Player,300; bonus3 bAddMonsterDropItem,530,RC_Player,100; },{},{}
+4154,Rice_Cake_Boy_Card,Dumpling Child Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddItemGroupHealRate,IG_Candy,50; bonus3 bAddMonsterDropItem,529,RC_DemiHuman,300; bonus3 bAddMonsterDropItem,530,RC_DemiHuman,100; },{},{}
 4155,Goblin_Leader_Card,Goblin Leader Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace2,RC2_Goblin,30; },{},{}
 4156,Steam_Goblin_Card,Goblin Steamrider Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Formless,7; },{},{}
 4157,Goblin_Archer_Card,Goblin Archer Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Undead,7; },{},{}
@@ -2428,7 +2428,7 @@
 4242,Apocalips_Card,Apocalipse Card,6,20,,10,,,,,,,,16,,,,,{ bonus bVit,2; if(getrefine()>8) bonus bMaxHP,800; },{},{}
 4243,Antonio_Card,Antonio Card,6,20,,10,,,,,,,,16,,,,,{ bonus3 bAutoSpellWhenHit,"AL_TELEPORT",1,500; },{},{}
 4244,Alarm_Card,Alarm Card,6,20,,10,,,,,,,,64,,,,,{ bonus3 bAutoSpellWhenHit,"MG_SIGHT",1,200; bonus bMaxHP,300; bonus bVit,1; },{},{}
-4245,Am_Mut_Card,Am Mut Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_DemiHuman,-20; bonus2 bSubRace,RC_Player,-20; bonus2 bExpAddRace,RC_DemiHuman,10; bonus2 bExpAddRace,RC_Player,10; },{},{}
+4245,Am_Mut_Card,Am Mut Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_DemiHuman,-20; bonus2 bSubRace,RC_Player,-20; bonus2 bExpAddRace,RC_DemiHuman,10; },{},{}
 4246,Assulter_Card,Assaulter Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_DemiHuman,7; bonus2 bCriticalAddRace,RC_Player,7; },{},{}
 4247,Aster_Card,Aster Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus2 bAddDamageClass,1074,30; },{},{}
 4248,Ancient_Mummy_Card,Ancient Mummy Card,6,20,,10,,,,,,,,32,,,,,{ bonus3 bAutoSpellWhenHit,"AL_CRUCIS",5,30; },{},{}
@@ -2439,7 +2439,7 @@
 4253,Alice_Card,Alice Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubClass,Class_Boss,40; bonus2 bSubClass,Class_Normal,-40; },{},{}
 4254,Tirfing_Card,Ogretooth Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubSize,Size_Medium,25; bonus bDef,1; },{},{}
 4255,Orc_Lady_Card,Orc Lady Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace2,RC2_Orc,30; },{},{}
-4256,Orc_Archer_Card,Orc Archer Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12034,RC_DemiHuman,100; bonus3 bAddMonsterDropItem,12034,RC_Player,100; },{},{}
+4256,Orc_Archer_Card,Orc Archer Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12034,RC_DemiHuman,100; },{},{}
 4257,Wild_Rose_Card,Wild Rose Card,6,20,,10,,,,,,,,64,,,,,{ bonus bAgi,1; if(BaseClass==Job_Thief) bonus bFlee2,5; },{},{}
 4258,Wicked_Nymph_Card,Evil Nymph Card,6,20,,10,,,,,,,,769,,,,,{ bonus bInt,1; bonus bMaxSP,50; },{},{}
 4259,Wooden_Golem_Card,Wooden Golem Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDef,1; bonus bHPrecovRate,30; },{},{}
@@ -3329,7 +3329,7 @@
 5199,Baseball_Cap_I,Baseball Cap,4,0,,200,,3,,0,0xFFFFFFFF,63,2,256,,0,1,216,{},{},{}
 5200,Coppola,Coppola,4,10,,300,,0,,0,0xFFFFFFFF,63,2,256,,0,1,252,{},{},{}
 5201,Party_Hat_B,Party Hat,4,20,,300,,4,,0,0xFFFFFFFF,63,2,256,,0,1,144,{ bonus bAllStats,3; },{},{}
-5202,Pumpkin_Hat_,Fantastic Pumpkin-Head,4,20,,200,,3,,0,0xFFFFFFFF,63,2,256,,0,1,206,{ bonus2 bSubRace,RC_Demon,5; bonus3 bAddMonsterDropItem,529,RC_DemiHuman,1500; bonus3 bAddMonsterDropItem,529,RC_Player,1500; },{},{}
+5202,Pumpkin_Hat_,Fantastic Pumpkin-Head,4,20,,200,,3,,0,0xFFFFFFFF,63,2,256,,0,1,206,{ bonus2 bSubRace,RC_Demon,5; bonus3 bAddMonsterDropItem,529,RC_DemiHuman,1500; },{},{}
 5203,Tongue_Mask,Smiling Mask,4,20,,200,,2,,0,0xFFFFFFFF,63,2,513,,0,0,253,{ bonus bSpeedRate,25; },{},{}
 5204,Event_Pierrot_Nose,Rudolph's Nose,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,49,{ bonus2 bResEff,Eff_Blind,3000; bonus2 bAddMonsterDropItem,12130,30; },{},{}
 5205,Wreath,Emperor's Laurel Crown,4,20,,1000,,3,,0,0xFFFFFFFF,63,2,768,,0,1,261,{ bonus bAllStats,1; bonus bMdef,3; },{},{}
@@ -3599,7 +3599,7 @@
 5469,Noble_Hat,Musketeer Hat,4,20,,300,,4,,1,0xFFFFFFFF,63,2,256,,60,1,466,{ bonus bDex,3; bonus bFlee,3; .@r = getrefine(); if(.@r>=7){ bonus bFlee,3; bonus bLongAtkRate,3; } if(.@r>=9){ bonus bFlee,4; bonus bLongAtkRate,2; } },{},{}
 5470,Eyes_Of_Darkness,Eye Of Darkness,4,20,,100,,1,,0,0xFFFFFFFF,63,2,512,,50,0,467,{ bonus bDex,1; bonus2 bResEff,Eff_Blind,10000; },{},{}
 5471,Hairband_Of_Reginleif,Hairband Of Reginleif,4,20,,800,,2,,0,0xFFFFFFFF,63,2,512,,50,0,468,{ bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Undead,3; bonus2 bSubEle,Ele_Ghost,3; },{},{}
-5472,Red_White_Hat,Red Hat,4,20,,100,,0,,0,0xFFFFFFFF,63,2,256,,0,1,469,{ bonus3 bAddMonsterDropItem,554,RC_DemiHuman,200; bonus3 bAddMonsterDropItem,554,RC_Player,200; },{},{}
+5472,Red_White_Hat,Red Hat,4,20,,100,,0,,0,0xFFFFFFFF,63,2,256,,0,1,469,{ bonus3 bAddMonsterDropItem,554,RC_DemiHuman,200; },{},{}
 5473,Forceps_Hairpin,Nipper Crab Hairpin,4,20,,500,,8,,0,0xFFFFFFFF,63,2,256,,30,1,470,{ bonus3 bAutoSpellWhenHit,"MG_COLDBOLT",1,30; bonus3 bAddMonsterDropItem,991,RC_Fish,100; },{},{}
 5474,Notice_Board,AFK Hat,4,20,,700,,2,,0,0xFFFFFFFF,63,2,256,,10,0,471,{},{},{}
 5475,Cube_Mask,Mask Cube,4,20,,100,,1,,0,0xFFFFFFFF,63,2,513,,0,0,472,{ bonus bAllStats,1; },{},{}
