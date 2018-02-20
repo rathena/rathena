@@ -1428,7 +1428,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if (status_get_class_(bl) == CLASS_BOSS)
 			basetime /= 5;
 		basetime = min((basetime * status_get_agi(bl)) / -200 + basetime, mintime) / 2;
-		sc_start(src, bl, SC_STOP, (1 + skill_lv * 10), 0, basetime);
+		sc_start(src, bl, SC_STOP, (1 + skill_lv) * 10, 0, basetime);
 	}
 		break;
 
