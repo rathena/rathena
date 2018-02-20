@@ -2352,10 +2352,10 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	float temp_aspd = 0;
 
 	amotion = job_info[classidx].aspd_base[sd->weapontype1]; // Single weapon
-	if (sd->status.weapon > MAX_WEAPON_TYPE)
-		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
 	if (sd->status.shield)
 		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
+	else if (sd->status.weapon2)
+		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
 		case W_BOW:
