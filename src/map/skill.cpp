@@ -8201,6 +8201,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_SUMMONSLAVE:
 	case NPC_SUMMONMONSTER:
+	case NPC_DEATHSUMMON:
 		if(md && md->skill_idx >= 0)
 			mob_summonslave(md,md->db->skill[md->skill_idx].val,skill_lv,skill_id);
 		break;
