@@ -1520,9 +1520,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_FLING,100, sd?sd->spiritball_old:5,skill_get_time(skill_id,skill_lv));
 		break;
 	case GS_DISARM:
-		rate = 3*skill_lv;
-		if (sstatus->dex > tstatus->dex)
-			rate += (sstatus->dex - tstatus->dex)/5; //TODO: Made up formula
+		rate = sstatus->dex / (4 * (7 - skill_lv)) + sstatus->luk / (4 * (6 - skill_lv));
+		rate = rate + status_get_lv(src) - (tstatus->agi * rate / 100) - tstatus->luk - status_get_lv(bl);
 		skill_strip_equip(src,bl, EQP_WEAPON, rate, skill_lv, skill_get_time(skill_id,skill_lv));
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
