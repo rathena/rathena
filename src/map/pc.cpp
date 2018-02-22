@@ -5413,7 +5413,8 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
 	if(rnd()%1000 < rate)
 	{
-		int amount = rnd()% ((10 * target_lv) + 1 - (8 * target_lv)) + (8 * target_lv);
+		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
+		int amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
 
 		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
 		md->state.steal_coin_flag = 1;
