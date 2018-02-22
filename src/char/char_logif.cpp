@@ -665,7 +665,7 @@ int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
 int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type) {
 	loginif_check(-1);
 	//ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
-	WFIFOHEAD(login_fd,23);
+	WFIFOHEAD(login_fd,19);
 	WFIFOW(login_fd,0) = 0x2720;
 	WFIFOL(login_fd,2) = fd;
 	WFIFOL(login_fd,6) = u_fd;
