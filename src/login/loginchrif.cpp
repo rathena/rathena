@@ -717,11 +717,11 @@ int logchrif_parse_accinfo(int fd) {
 	if( RFIFOREST(fd) < 23 )
 		return 0;
 	else {
-		int map_fd = RFIFOL(fd, 2), u_fd = RFIFOL(fd, 6), u_aid = RFIFOL(fd, 10), u_group = RFIFOL(fd, 14), account_id = RFIFOL(fd, 18);
-		int8 type = RFIFOB(fd, 22);
+		int map_fd = RFIFOL(fd, 2), u_fd = RFIFOL(fd, 6), u_aid = RFIFOL(fd, 10), account_id = RFIFOL(fd, 14);
+		int8 type = RFIFOB(fd, 18);
 		AccountDB* accounts = login_get_accounts_db();
 		struct mmo_account acc;
-		RFIFOSKIP(fd,23);
+		RFIFOSKIP(fd,19);
 
 		// Send back the result to char-server
 		if (accounts->load_num(accounts, &acc, account_id)) {

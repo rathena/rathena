@@ -662,7 +662,7 @@ int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
 * HA 0x2720
 * Request account info to login-server
 */
-int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id, int8 type) {
+int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type) {
 	loginif_check(-1);
 	//ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
 	WFIFOHEAD(login_fd,23);
@@ -670,10 +670,9 @@ int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id
 	WFIFOL(login_fd,2) = fd;
 	WFIFOL(login_fd,6) = u_fd;
 	WFIFOL(login_fd,10) = u_aid;
-	WFIFOL(login_fd,14) = u_group;
-	WFIFOL(login_fd,18) = account_id;
-	WFIFOB(login_fd,22) = type;
-	WFIFOSET(login_fd,23);
+	WFIFOL(login_fd,14) = account_id;
+	WFIFOB(login_fd,18) = type;
+	WFIFOSET(login_fd,19);
 	return 1;
 }
 
