@@ -478,7 +478,7 @@ void mapif_parse_accinfo(int fd) {
 	}
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
-	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, u_group, account_id, type) != 1) {
+	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id, type) != 1) {
 		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
 	}
 	return;
