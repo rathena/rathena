@@ -6509,30 +6509,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SA_FROSTWEAPON:
 	case SA_LIGHTNINGLOADER:
 	case SA_SEISMICWEAPON:
-		if (dstsd) {
-			if(dstsd->status.weapon == W_FIST ||
-				(dstsd->sc.count && !dstsd->sc.data[type] &&
-				(	//Allow re-enchanting to lenghten time. [Skotlex]
-					dstsd->sc.data[SC_FIREWEAPON] ||
-					dstsd->sc.data[SC_WATERWEAPON] ||
-					dstsd->sc.data[SC_WINDWEAPON] ||
-					dstsd->sc.data[SC_EARTHWEAPON] ||
-					dstsd->sc.data[SC_SHADOWWEAPON] ||
-					dstsd->sc.data[SC_GHOSTWEAPON] ||
-					dstsd->sc.data[SC_ENCPOISON]
-				))
-				) {
-				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
-				break;
-			}
+		if (dstsd && dstsd->status.weapon == W_FIST) {
+			if (sd)
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
+			break;
 		}
 		// 100% success rate at lv4 & 5, but lasts longer at lv5
 		if(!clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,type,(60+skill_lv*10),skill_lv, skill_get_time(skill_id,skill_lv)))) {
+			if (dstsd){
+				short index = dstsd->equip_index[EQI_HAND_R];
+				if (index&EQP_WEAPON && dstsd->inventory_data[index]->type == IT_WEAPON)
+					pc_unequipitem(dstsd, index, 3); //Must unequip the weapon instead of breaking it [Daegaladh]
+			}
 			if (sd)
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			if (skill_break_equip(src,bl, EQP_WEAPON, 10000, BCT_PARTY) && sd && sd != dstsd)
-				clif_displaymessage(sd->fd, msg_txt(sd,669));
 		}
 		break;
 
