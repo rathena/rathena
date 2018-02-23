@@ -3126,14 +3126,14 @@
 4955,Holy_Drop,Holy Drop,6,0,,,,,,,,,,,,,,,{ bonus2 bAddEle,Ele_Holy,2; bonus2 bMagicAtkEle,Ele_Holy,2; bonus2 bSubEle,Ele_Holy,1; },{},{}
 4956,Recovery_Drop,Recovery Drop,6,0,,,,,,,,,,,,,,,{ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],2; bonus2 bSkillHeal2,.@skills$[.@i],2; } /* TODO: Depending on some recovery items HP recovery amount + 2% */ },{},{}
 4957,Famitsus_Power,Famitsu's Power,6,0,,,,,,,,,,,,,,,{ bonus bMaxHP,832; },{},{}
-4958,Gemini,Gemini,6,0,,,,,,,,,,,,,,,{ bonus bDelayrate,1; },{},{}
+4958,Gemini,Gemini,6,0,,,,,,,,,,,,,,,{ bonus bDelayrate,-1; },{},{}
 4959,Sagittarius,Sagittarius,6,0,,,,,,,,,,,,,,,{ bonus bLongAtkRate,1; },{},{}
 4960,Aquarius,Aquarius,6,0,,,,,,,,,,,,,,,{ bonus bUseSPrate,-2; },{},{}
 4961,Aries,Aries,6,0,,,,,,,,,,,,,,,{ bonus bMatk,10; },{},{}
 4962,Cancer,Cancer,6,0,,,,,,,,,,,,,,,{ bonus bAtk,3; },{},{}
 4963,Taurus,Taurus,6,0,,,,,,,,,,,,,,,{ bonus bAtk,4; bonus bHit,1; },{},{}
 4964,Capricorn,Capricorn,6,0,,,,,,,,,,,,,,,{ bonus2 bMagicAddRace,RC_All,3; },{},{}
-4965,Pisces,Pisces,6,0,,,,,,,,,,,,,,,{ bonus bCastrate,-2; },{},{}
+4965,Pisces,Pisces,6,0,,,,,,,,,,,,,,,{ bonus bVariableCastrate,-2; },{},{}
 4966,Scorpio,Scorpio,6,0,,,,,,,,,,,,,,,{ bonus2 bAddRace,RC_All,1; },{},{}
 4967,Leo,Leo,6,0,,,,,,,,,,,,,,,{ bonus bAspdRate,3; },{},{}
 4968,Virgo,Virgo,6,0,,,,,,,,,,,,,,,{ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],1; } },{},{}
