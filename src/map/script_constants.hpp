@@ -4943,6 +4943,11 @@
 	export_constant_npc(JT_4_M_DANGDANG);
 	export_constant_npc(JT_4_F_DANGDANG1);
 	export_constant_npc(JT_4_LEAFCAT);
+	export_constant_npc(JT_4_NASARIAN);
+	export_constant_npc(JT_4_NASARIAN_EM);
+	export_constant_npc(JT_4_TEDDY_BEAR_W);
+	export_constant_npc(JT_4_TEDDY_BEAR_B);
+	export_constant_npc(JT_4_TEDDY_BEAR_B_L);
 	#undef export_constant_npc
 
 	/* special effects */
