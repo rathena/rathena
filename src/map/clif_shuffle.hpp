@@ -4625,6 +4625,37 @@
 	parseable_packet(0x0940,6,clif_parse_TickSend,2);
 	parseable_packet(0x0950,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
+// 2018-02-13aRagexeRE
+#elif PACKETVER == 20180213
+	parseable_packet(0x0369,36,clif_parse_StoragePassword,0);
+	parseable_packet(0x0802,6,clif_parse_DropItem,2,4);
+	parseable_packet(0x0817,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+	parseable_packet(0x085A,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x086F,26,clif_parse_PartyInvite2,2);
+	parseable_packet(0x0874,6,clif_parse_TickSend,2);
+	parseable_packet(0x0875,8,clif_parse_MoveFromKafra,2,4);
+	parseable_packet(0x0878,5,clif_parse_ChangeDir,2,4);
+	parseable_packet(0x087B,6,clif_parse_ReqClickBuyingStore,2);
+	parseable_packet(0x0882,10,clif_parse_UseSkillToId,2,4,6);
+	parseable_packet(0x088C,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
+	parseable_packet(0x0892,6,clif_parse_TakeItem,2);
+	parseable_packet(0x0898,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
+	//parseable_packet(0x089C,4,NULL,0); // CZ_GANGSI_RANK
+	parseable_packet(0x08A3,19,clif_parse_WantToConnection,2,6,10,14,18);
+	parseable_packet(0x08A5,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
+	parseable_packet(0x08A9,2,clif_parse_ReqCloseBuyingStore,0);
+	parseable_packet(0x08AD,6,clif_parse_SolveCharName,2);
+	parseable_packet(0x0917,26,clif_parse_FriendsListAdd,2);
+	parseable_packet(0x0922,5,clif_parse_WalkToXY,2);
+	parseable_packet(0x0924,10,clif_parse_UseSkillToPos,2,4,6,8);
+	//parseable_packet(0x0926,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
+	parseable_packet(0x0933,7,clif_parse_ActionRequest,2,6);
+	parseable_packet(0x0936,2,clif_parse_SearchStoreInfoNextPage,0);
+	parseable_packet(0x093C,6,clif_parse_GetCharNameRequest,2);
+	parseable_packet(0x0943,18,clif_parse_PartyBookingRegisterReq,2,4);
+	parseable_packet(0x0955,8,clif_parse_MoveToKafra,2,4);
+	parseable_packet(0x095A,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
+	parseable_packet(0x0962,5,clif_parse_HomMenu,2,4);
 #endif
 
 #endif /* _CLIF_SHUFFLE_HPP_ */
