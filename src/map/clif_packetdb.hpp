@@ -2326,6 +2326,8 @@
 	parseable_packet(0x0A97,8,clif_parse_dull,0);
 	parseable_packet(0x0A99,4,clif_parse_dull,0);
 	parseable_packet(0x0A9C,2,clif_parse_dull,0);
+	// TODO: Confirm packet introduction date. Should be after 20170906, but add it here just to be safe. [Secret]
+	parseable_packet(0x0ACE,4,clif_parse_dull,0);
 #endif
 
 // 2016-10-26bRagexeRE
