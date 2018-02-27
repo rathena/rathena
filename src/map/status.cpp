@@ -2354,7 +2354,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	amotion = job_info[classidx].aspd_base[sd->weapontype1]; // Single weapon
 	if (sd->status.shield)
 		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
-	else if (sd->weapontype2)
+	else if (sd->weapontype2 && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
 		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
