@@ -405,7 +405,8 @@
 	export_constant(MF_NOMVPLOOT);
 	export_constant(MF_NORETURN);
 	export_constant(MF_NOWARPTO);
-	export_constant(MF_NIGHTMAREDROP);
+	export_constant(MF_PVP_NIGHTMAREDROP);
+	script_set_constant("mf_nightmaredrop",MF_PVP_NIGHTMAREDROP,false,true);
 	export_constant(MF_RESTRICTED);
 	export_constant(MF_NOCOMMAND);
 	export_constant(MF_NODROP);
@@ -423,12 +424,11 @@
 	export_constant(MF_PVP_NOCALCRANK);
 	export_constant(MF_BATTLEGROUND);
 	export_constant(MF_RESET);
-	// TODO: Check why it is called differently on source and const
-	//export_constant(MF_CHANNELAUTOJOIN);
-	export_constant2("mf_nomapchannelautojoin",MF_CHANNELAUTOJOIN);
+	export_constant(MF_NOMAPCHANNELAUTOJOIN);
 	export_constant(MF_NOUSECART);
 	export_constant(MF_NOITEMCONSUMPTION);
-	export_constant(MF_SUMSTARTMIRACLE);
+	export_constant(MF_NOSUNMOONSTARMIRACLE);
+	script_set_constant("mf_sumstarmiracle",MF_NOSUNMOONSTARMIRACLE,false,true);
 	export_constant(MF_NOMINEEFFECT);
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
@@ -437,6 +437,7 @@
 	export_constant(MF_GVG_TE_CASTLE);
 	export_constant(MF_GVG_TE);
 	export_constant(MF_HIDEMOBHPBAR);
+	export_constant(MF_NOLOOT);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -6141,6 +6142,14 @@
 	export_constant(MD_DETECTOR);
 	export_constant(MD_STATUS_IMMUNE);
 	export_constant(MD_SKILL_IMMUNE);
+
+	/* block list types */
+	export_constant(BL_PC);
+	export_constant(BL_MOB);
+	export_constant(BL_PET);
+	export_constant(BL_HOM);
+	export_constant(BL_MER);
+	export_constant(BL_ELEM);
 
 	#undef export_constant
 	#undef export_constant2

@@ -78,7 +78,7 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map[sd->bl.m].flag.novending )
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -146,7 +146,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return 2;
 	}
 
-	if( map[sd->bl.m].flag.novending )
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;

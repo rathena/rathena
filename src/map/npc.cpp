@@ -3933,327 +3933,192 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 {
 	int16 m;
 	char mapname[32];
-	int state = 1;
+	bool state = true;
+	enum e_mapflag mapflag;
 
 	// w1=<mapname>
-	if( sscanf(w1, "%31[^,]", mapname) != 1 )
-	{
+	if (sscanf(w1, "%31[^,]", mapname) != 1) {
 		ShowError("npc_parse_mapflag: Invalid mapflag definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
 	m = map_mapname2mapid(mapname);
-	if( m < 0 )
-	{
+	if (m < 0) {
 		ShowWarning("npc_parse_mapflag: Unknown map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
 
 	if (w4 && !strcmpi(w4, "off"))
-		state = 0;	//Disable mapflag rather than enable it. [Skotlex]
+		state = false;	//Disable mapflag rather than enable it. [Skotlex]
 
-	if (!strcmpi(w3, "nosave")) {
-		char savemap[MAP_NAME_LENGTH_EXT];
-		short savex, savey;
-		if (state == 0)
-			; //Map flag disabled.
-		else if (!strcmpi(w4, "SavePoint")) {
-			map[m].save.map = 0;
-			map[m].save.x = -1;
-			map[m].save.y = -1;
-		} else if (sscanf(w4, "%15[^,],%6hd,%6hd", savemap, &savex, &savey) == 3) {
-			map[m].save.map = mapindex_name2id(savemap);
-			map[m].save.x = savex;
-			map[m].save.y = savey;
-			if (!map[m].save.map) {
-				ShowWarning("npc_parse_mapflag: Specified save point map '%s' for mapflag 'nosave' not found (file '%s', line '%d'), using 'SavePoint'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", savemap, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
-				map[m].save.x = -1;
-				map[m].save.y = -1;
+	mapflag = map_getmapflag_by_name(w3);
+
+	switch( mapflag ){
+		case MF_INVALID:
+			ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
+			break;
+		case MF_NOSAVE: {
+			char savemap[MAP_NAME_LENGTH_EXT];
+			union u_mapflag_args args;
+
+			memset(&args, 0, sizeof(args));
+
+			if (state && !strcmpi(w4, "SavePoint")) {
+				args.nosave.map = 0;
+				args.nosave.x = -1;
+				args.nosave.y = -1;
+			} else if (state && sscanf(w4, "%15[^,],%6hd,%6hd", savemap, &args.nosave.x, &args.nosave.y) == 3) {
+				args.nosave.map = mapindex_name2id(savemap);
+				if (!args.nosave.map) {
+					ShowWarning("npc_parse_mapflag: Specified save point map '%s' for mapflag 'nosave' not found (file '%s', line '%d'), using 'SavePoint'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", savemap, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+					args.nosave.x = -1;
+					args.nosave.y = -1;
+				}
 			}
+			map_setmapflag_sub(m, MF_NOSAVE, state, &args);
+			break;
 		}
-		map[m].flag.nosave = state;
-	}
-	else if (!strcmpi(w3,"autotrade"))
-		map[m].flag.autotrade=state;
-	else if (!strcmpi(w3,"allowks"))
-		map[m].flag.allowks=state; // [Kill Steal Protection]
-	else if (!strcmpi(w3,"town"))
-		map[m].flag.town=state;
-	else if (!strcmpi(w3,"nomemo"))
-		map[m].flag.nomemo=state;
-	else if (!strcmpi(w3,"noteleport"))
-		map[m].flag.noteleport=state;
-	else if (!strcmpi(w3,"nowarp"))
-		map[m].flag.nowarp=state;
-	else if (!strcmpi(w3,"nowarpto"))
-		map[m].flag.nowarpto=state;
-	else if (!strcmpi(w3,"noreturn"))
-		map[m].flag.noreturn=state;
-	else if (!strcmpi(w3,"monster_noteleport"))
-		map[m].flag.monster_noteleport=state;
-	else if (!strcmpi(w3,"nobranch"))
-		map[m].flag.nobranch=state;
-	else if (!strcmpi(w3,"nopenalty")) {
-		map[m].flag.noexppenalty=state;
-		map[m].flag.nozenypenalty=state;
-	}
-	else if (!strcmpi(w3,"pvp")) {
-		map[m].flag.pvp = state;
-		if( state && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) ) {
-			map[m].flag.gvg = 0;
-			map[m].flag.gvg_dungeon = 0;
-			map[m].flag.gvg_castle = 0;
-			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing GvG flags from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-		if( state && map[m].flag.battleground ) {
-			map[m].flag.battleground = 0;
-			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-	}
-	else if (!strcmpi(w3,"pvp_noparty"))
-		map[m].flag.pvp_noparty=state;
-	else if (!strcmpi(w3,"pvp_noguild"))
-		map[m].flag.pvp_noguild=state;
-	else if (!strcmpi(w3, "pvp_nightmaredrop")) {
-		char drop_arg1[16], drop_arg2[16];
-		int drop_per = 0;
-		if (sscanf(w4, "%15[^,],%15[^,],%11d", drop_arg1, drop_arg2, &drop_per) == 3) {
-			int drop_id = 0, drop_type = 0;
-			if (!strcmpi(drop_arg1, "random"))
-				drop_id = -1;
-			else if (itemdb_exists((drop_id = atoi(drop_arg1))) == NULL)
-				drop_id = 0;
-			if (!strcmpi(drop_arg2, "inventory"))
-				drop_type = 1;
-			else if (!strcmpi(drop_arg2,"equip"))
-				drop_type = 2;
-			else if (!strcmpi(drop_arg2,"all"))
-				drop_type = 3;
 
-			if (drop_id != 0){
-				int i;
-				for (i = 0; i < MAX_DROP_PER_MAP; i++) {
-					if (map[m].drop_list[i].drop_id == 0){
-						map[m].drop_list[i].drop_id = drop_id;
-						map[m].drop_list[i].drop_type = drop_type;
-						map[m].drop_list[i].drop_per = drop_per;
-						break;
+		case MF_PVP_NIGHTMAREDROP: {
+			char drop_arg1[16], drop_arg2[16];
+			union u_mapflag_args args;
+
+			memset(&args, 0, sizeof(args));
+
+			if (sscanf(w4, "%15[^,],%15[^,],%11d", drop_arg1, drop_arg2, &args.nightmaredrop.drop_per) == 3) {
+
+				if (!strcmpi(drop_arg1, "random"))
+					args.nightmaredrop.drop_id = -1;
+				else if (itemdb_exists((args.nightmaredrop.drop_id = atoi(drop_arg1))) == NULL) {
+					args.nightmaredrop.drop_id = 0;
+					ShowWarning("npc_parse_mapflag: Invalid item ID '%d' supplied for mapflag 'pvp_nightmaredrop' (file '%s', line '%d'), removing.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", args.nightmaredrop.drop_id, filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
+					break;
+				}
+				if (!strcmpi(drop_arg2, "inventory"))
+					args.nightmaredrop.drop_type = 1;
+				else if (!strcmpi(drop_arg2, "equip"))
+					args.nightmaredrop.drop_type = 2;
+				else if (!strcmpi(drop_arg2, "all"))
+					args.nightmaredrop.drop_type = 3;
+
+				if (args.nightmaredrop.drop_id != 0)
+					map_setmapflag_sub(m, MF_PVP_NIGHTMAREDROP, true, &args);
+			} else if (!state)
+				map_setmapflag(m, MF_PVP_NIGHTMAREDROP, false);
+			break;
+		}
+
+		case MF_BATTLEGROUND:
+			if (state) {
+				union u_mapflag_args args;
+
+				memset(&args, 0, sizeof(args));
+
+				if (sscanf(w4, "%11d", &args.flag_val) < 1)
+					args.flag_val = 1; // Default value
+
+				map_setmapflag_sub(m, MF_BATTLEGROUND, true, &args);
+			} else
+				map_setmapflag(m, MF_BATTLEGROUND, false);
+			break;
+
+		case MF_NOCOMMAND:
+			if (state) {
+				union u_mapflag_args args;
+
+				memset(&args, 0, sizeof(args));
+
+				if (sscanf(w4, "%11d", &args.flag_val) < 1)
+					args.flag_val = 100; // No level specified, block everyone.
+
+				map_setmapflag_sub(m, MF_NOCOMMAND, true, &args);
+			} else
+				map_setmapflag(m, MF_NOCOMMAND, false);
+			break;
+
+		case MF_RESTRICTED:
+			if (state) {
+				union u_mapflag_args args;
+
+				memset(&args, 0, sizeof(args));
+
+				if (sscanf(w4, "%11d", &args.flag_val) == 1)
+					map_setmapflag_sub(m, MF_RESTRICTED, true, &args);
+				else // Could not be read, no value defined; don't remove as other restrictions may be set on the map
+					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+			} else
+				map_setmapflag(m, MF_RESTRICTED, false);
+			break;
+
+		case MF_JEXP:
+		case MF_BEXP: {
+				union u_mapflag_args args;
+
+				memset(&args, 0, sizeof(args));
+
+				if (sscanf(w4, "%11d", &args.flag_val) < 1)
+					args.flag_val = 0;
+
+				map_setmapflag_sub(m, mapflag, state, &args);
+			}
+			break;
+
+		case MF_SKILL_DAMAGE: {
+#ifdef ADJUST_SKILL_DAMAGE
+			char skill_name[SKILL_NAME_LENGTH];
+			char caster_constant[NAME_LENGTH];
+
+			memset(skill_name, 0, sizeof(skill_name));
+
+			if (!state)
+				map_setmapflag(m, MF_SKILL_DAMAGE, false);
+			else {
+				union u_mapflag_args args;
+
+				memset(&args, 0, sizeof(args));
+
+				if (sscanf(w4, "%30[^,],%23[^,],%11d,%11d,%11d,%11d[^\n]", skill_name, caster_constant, &args.skill_damage.rate[SKILLDMG_PC], &args.skill_damage.rate[SKILLDMG_MOB], &args.skill_damage.rate[SKILLDMG_BOSS], &args.skill_damage.rate[SKILLDMG_OTHER]) >= 3) {
+					if( ISDIGIT(caster_constant[0]) ){
+						args.skill_damage.caster = atoi(caster_constant);
+					}else{
+						int val;
+
+						if( !script_get_constant(caster_constant, &val ) ){
+							ShowError( "npc_parse_mapflag: Unknown constant '%s'. Skipping (file '%s', line '%d').\n", caster_constant, filepath, strline(buffer, start - buffer) );
+							break;
+						}
+
+						args.skill_damage.caster = val;
+					}
+					
+					if( !args.skill_damage.caster ){
+						args.skill_damage.caster = BL_ALL;
+					}
+
+					for( int i = 0; i < SKILLDMG_MAX; i++ ){
+						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, INT_MAX);
+					}
+
+					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
+						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
+					else if (skill_name2id(skill_name) <= 0)
+						ShowWarning("npc_parse_mapflag: Invalid skill name '%s' for Skill Damage mapflag. Skipping (file '%s', line '%d').\n", skill_name, filepath, strline(buffer, start - buffer));
+					else { // Adjusted damage for specified skill
+						map_setmapflag(m, MF_SKILL_DAMAGE, true);
+						map_skill_damage_add(&map[m], skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
 					}
 				}
-				map[m].flag.pvp_nightmaredrop = 1;
 			}
-		} else if (!state) //Disable
-			map[m].flag.pvp_nightmaredrop = 0;
-	}
-	else if (!strcmpi(w3,"pvp_nocalcrank"))
-		map[m].flag.pvp_nocalcrank=state;
-	else if (!strcmpi(w3,"gvg")) {
-		map[m].flag.gvg = state;
-		if( state && map[m].flag.pvp ) {
-			map[m].flag.pvp = 0;
-			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-		if( state && map[m].flag.battleground ) {
-			map[m].flag.battleground = 0;
-			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-	}
-	else if (!strcmpi(w3,"gvg_noparty"))
-		map[m].flag.gvg_noparty=state;
-	else if (!strcmpi(w3,"gvg_dungeon")) {
-		map[m].flag.gvg_dungeon=state;
-		if (state) map[m].flag.pvp=0;
-	}
-	else if (!strcmpi(w3,"gvg_castle")) {
-		map[m].flag.gvg_castle=state;
-		if (state) map[m].flag.pvp=0;
-	}
-	else if (!strcmpi(w3,"gvg_te")) {
-		map[m].flag.gvg_te = state;
-		if( state && map[m].flag.pvp ) {
-			map[m].flag.pvp = 0;
-			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-		if( state && map[m].flag.battleground ) {
-			map[m].flag.battleground = 0;
-			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-	}
-	else if (!strcmpi(w3,"gvg_te_castle")) {
-		map[m].flag.gvg_te_castle = state;
-		if (state) {
-			map[m].flag.gvg_castle = 0;
-			map[m].flag.pvp = 0;
-		}
-	}
-	else if (!strcmpi(w3,"battleground")) {
-		if( state ) {
-			if( sscanf(w4, "%11d", &state) == 1 )
-				map[m].flag.battleground = state;
-			else
-				map[m].flag.battleground = 1; // Default value
-		} else
-			map[m].flag.battleground = 0;
-
-		if( map[m].flag.battleground && map[m].flag.pvp ) {
-			map[m].flag.pvp = 0;
-			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-		if( map[m].flag.battleground && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) ) {
-			map[m].flag.gvg = 0;
-			map[m].flag.gvg_dungeon = 0;
-			map[m].flag.gvg_castle = 0;
-			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing GvG flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-		}
-	}
-	else if (!strcmpi(w3,"noexppenalty"))
-		map[m].flag.noexppenalty=state;
-	else if (!strcmpi(w3,"nozenypenalty"))
-		map[m].flag.nozenypenalty=state;
-	else if (!strcmpi(w3,"notrade"))
-		map[m].flag.notrade=state;
-	else if (!strcmpi(w3,"novending"))
-		map[m].flag.novending=state;
-	else if (!strcmpi(w3,"nodrop"))
-		map[m].flag.nodrop=state;
-	else if (!strcmpi(w3,"noskill"))
-		map[m].flag.noskill=state;
-	else if (!strcmpi(w3,"noicewall"))
-		map[m].flag.noicewall=state;
-	else if (!strcmpi(w3,"snow"))
-		map[m].flag.snow=state;
-	else if (!strcmpi(w3,"clouds"))
-		map[m].flag.clouds=state;
-	else if (!strcmpi(w3,"clouds2"))
-		map[m].flag.clouds2=state;
-	else if (!strcmpi(w3,"fog"))
-		map[m].flag.fog=state;
-	else if (!strcmpi(w3,"fireworks"))
-		map[m].flag.fireworks=state;
-	else if (!strcmpi(w3,"sakura"))
-		map[m].flag.sakura=state;
-	else if (!strcmpi(w3,"leaves"))
-		map[m].flag.leaves=state;
-	else if (!strcmpi(w3,"nightenabled"))
-		map[m].flag.nightenabled=state;
-	else if (!strcmpi(w3,"nogo"))
-		map[m].flag.nogo=state;
-	else if (!strcmpi(w3,"noexp")) {
-		map[m].flag.nobaseexp=state;
-		map[m].flag.nojobexp=state;
-	}
-	else if (!strcmpi(w3,"nobaseexp"))
-		map[m].flag.nobaseexp=state;
-	else if (!strcmpi(w3,"nojobexp"))
-		map[m].flag.nojobexp=state;
-	else if (!strcmpi(w3,"noloot")) {
-		map[m].flag.nomobloot=state;
-		map[m].flag.nomvploot=state;
-	}
-	else if (!strcmpi(w3,"nomobloot"))
-		map[m].flag.nomobloot=state;
-	else if (!strcmpi(w3,"nomvploot"))
-		map[m].flag.nomvploot=state;
-	else if (!strcmpi(w3,"nocommand")) {
-		if (state) {
-			if (sscanf(w4, "%11d", &state) == 1)
-				map[m].nocommand =state;
-			else //No level specified, block everyone.
-				map[m].nocommand =100;
-		} else
-			map[m].nocommand=0;
-	}
-	else if (!strcmpi(w3,"restricted")) {
-		if (state) {
-			if (sscanf(w4, "%11d", &state) == 1) {
-				map[m].flag.restricted = 1;
-				map[m].zone |= 1<<(state+1);
-			} else { // Could not be read, no value defined
-                                //we don't remove has other restricted may be set on the map
-				ShowWarning("npc_parse_mapflag: You did not set a zone value for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
-			}
-		} else {
-			map[m].flag.restricted=0;
-			map[m].zone = 0;
-		}
-	}
-	else if (!strcmpi(w3,"jexp")) {
-		map[m].adjust.jexp = (state) ? atoi(w4) : 100;
-		if( map[m].adjust.jexp < 0 ) map[m].adjust.jexp = 100;
-		map[m].flag.nojobexp = (map[m].adjust.jexp==0)?1:0;
-	}
-	else if (!strcmpi(w3,"bexp")) {
-		map[m].adjust.bexp = (state) ? atoi(w4) : 100;
-		if( map[m].adjust.bexp < 0 ) map[m].adjust.bexp = 100;
-		 map[m].flag.nobaseexp = (map[m].adjust.bexp==0)?1:0;
-	}
-	else if (!strcmpi(w3,"loadevent"))
-		map[m].flag.loadevent=state;
-	else if (!strcmpi(w3,"nochat"))
-		map[m].flag.nochat=state;
-	else if (!strcmpi(w3,"partylock"))
-		map[m].flag.partylock=state;
-	else if (!strcmpi(w3,"guildlock"))
-		map[m].flag.guildlock=state;
-	else if (!strcmpi(w3,"reset"))
-		map[m].flag.reset=state;
-	else if (!strcmpi(w3,"nomapchannelautojoin"))
-		map[m].flag.chmautojoin = state;
-	else if (!strcmpi(w3,"nousecart"))
-		map[m].flag.nousecart = state;
-	else if (!strcmpi(w3,"noitemconsumption"))
-		map[m].flag.noitemconsumption = state;
-	else if (!strcmpi(w3,"summonstarmiracle"))
-		map[m].flag.nosumstarmiracle = state;
-	else if (!strcmpi(w3,"nomineeffect"))
-		map[m].flag.nomineeffect = state;
-	else if (!strcmpi(w3,"nolockon"))
-		map[m].flag.nolockon = state;
-	else if (!strcmpi(w3,"notomb"))
-		map[m].flag.notomb = state;
-	else if (!strcmpi(w3,"nocostume"))
-		map[m].flag.nocostume = state;
-	else if (!strcmpi(w3,"hidemobhpbar"))
-		map[m].flag.hidemobhpbar = state;
-	else if (!strcmpi(w3,"skill_damage")) {
-#ifdef ADJUST_SKILL_DAMAGE
-		char skill[SKILL_NAME_LENGTH];
-		int pc = 0, mob = 0, boss = 0, other = 0, caster = 0;
-
-		memset(skill, 0, sizeof(skill));
-		map[m].flag.skill_damage = state;	// Set the mapflag
-
-		if (!state) {
-			memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
-			if (map[m].skill_damage.count)
-				map_skill_damage_free(&map[m]);
-		}
-		else {
-			if (sscanf(w4, "%30[^,],%11d,%11d,%11d,%11d,%11d[^\n]", skill, &caster, &pc, &mob, &boss, &other) >= 3) {
-				caster = (!caster) ? SDC_ALL : caster;
-				pc = cap_value(pc, -100, INT_MAX);
-				mob = cap_value(mob, -100, INT_MAX);
-				boss = cap_value(boss, -100, INT_MAX);
-				other = cap_value(other, -100, INT_MAX);
-
-				if (strcmp(skill,"all") == 0) { // Adjust damages for all skills
-					map[m].adjust.damage.caster = caster;
-					map[m].adjust.damage.pc = pc;
-					map[m].adjust.damage.mob = mob;
-					map[m].adjust.damage.boss = boss;
-					map[m].adjust.damage.other = other;
-				}
-				else if (skill_name2id(skill) <= 0)
-					ShowWarning("npc_parse_mapflag: skill_damage: Invalid skill name '%s'. Skipping (file '%s', line '%d')\n", skill, filepath, strline(buffer,start-buffer));
-				else //Damages for specified skill
-					map_skill_damage_add(&map[m], skill_name2id(skill), pc, mob, boss, other, caster);
-			}
-		}
 #else
-		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
+			ShowWarning("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
 #endif
+			break;
+		}
+
+		// All others do not need special treatment
+		default:
+			map_setmapflag(m, mapflag, state);
+			break;
 	}
-	else
-		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 
 	return strchr(start,'\n');// continue
 }

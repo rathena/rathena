@@ -6873,14 +6873,6 @@ mf_fireworks) and whether night will be in effect on this map (mf_nightenabled).
 
 The optional parameter 'zone' is used to set the zone for restricted mapflags.
 
-For the 'skill_damage' mapflag, 'zone' functions as 'value' (-100 to 100000) and
-'type' can be:
- 1: damage against players
- 2: damage against mobs
- 3: damage against bosses
- 4: damage against other
- 5: caster type
-
 ---------------------------------------
 
 *removemapflag "<map name>",<flag>{,<zone>};

@@ -86,7 +86,7 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 	if( sd->state.vending || sd->state.buyingstore ) // not chat, when you already have a store open
 		return 0;
 
-	if( map[sd->bl.m].flag.nochat ) {
+	if( map_getmapflag(sd->bl.m, MF_NOCHAT) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,281));
 		return 0; //Can't create chatrooms on this map.
 	}

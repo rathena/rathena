@@ -235,20 +235,20 @@ enum e_mapid {
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
 /// Specifies maps where players may hit each other
-#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle) || map[m].flag.battleground)
+#define map_flag_vs(m) (map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG_DUNGEON) ||map_getmapflag(m, MF_GVG) || ((agit_flag || agit2_flag) && map_getmapflag(m, MF_GVG_CASTLE)) || map_getmapflag(m, MF_GVG_TE) || (agit3_flag && map_getmapflag(m, MF_GVG_TE_CASTLE)) || map_getmapflag(m, MF_BATTLEGROUND))
 /// Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
-#define map_flag_vs2(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || map[m].flag.gvg_castle || map[m].flag.gvg_te || map[m].flag.gvg_te_castle || map[m].flag.battleground)
+#define map_flag_vs2(m) (map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG_DUNGEON) || map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_CASTLE) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_TE_CASTLE) || map_getmapflag(m, MF_BATTLEGROUND))
 /// Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle))
+#define map_flag_gvg(m) (map_getmapflag(m, MF_GVG) || ((agit_flag || agit2_flag) && map_getmapflag(m, MF_GVG_CASTLE)) || map_getmapflag(m, MF_GVG_TE) || (agit3_flag && map_getmapflag(m, MF_GVG_TE_CASTLE)))
 /// Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
-#define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.gvg_castle || map[m].flag.gvg_te_castle)
+#define map_flag_gvg2(m) (map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_CASTLE) || map_getmapflag(m, MF_GVG_TE_CASTLE))
 /// No Kill Steal Protection
-#define map_flag_ks(m) (map[m].flag.town || map[m].flag.pvp || map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.battleground)
+#define map_flag_ks(m) (map_getmapflag(m, MF_TOWN) || map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_BATTLEGROUND))
 
 /// WOE:TE Maps (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_te(m) (map[m].flag.gvg_te || map[m].flag.gvg_te_castle)
+#define map_flag_gvg2_te(m) (map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_TE_CASTLE))
 /// Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_no_te(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
+#define map_flag_gvg2_no_te(m) (map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_CASTLE))
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
@@ -516,6 +516,102 @@ enum _look {
 	LOOK_BODY2
 };
 
+enum e_mapflag {
+	MF_INVALID = -1,
+	MF_MIN = 0,
+	MF_NOMEMO = 0,
+	MF_NOTELEPORT,
+	MF_NOSAVE,
+	MF_NOBRANCH,
+	MF_NOPENALTY,
+	MF_NOZENYPENALTY,
+	MF_PVP,
+	MF_PVP_NOPARTY,
+	MF_PVP_NOGUILD,
+	MF_GVG,
+	MF_GVG_NOPARTY,	//10
+	MF_NOTRADE,
+	MF_NOSKILL,
+	MF_NOWARP,
+	MF_PARTYLOCK,
+	MF_NOICEWALL,
+	MF_SNOW,
+	MF_FOG,
+	MF_SAKURA,
+	MF_LEAVES,
+	//MF_RAIN,	//20 - No longer available, keeping here just in case it's back someday. [Ind]
+	// 21 free
+	MF_NOGO = 22,
+	MF_CLOUDS,
+	MF_CLOUDS2,
+	MF_FIREWORKS,
+	MF_GVG_CASTLE,
+	MF_GVG_DUNGEON,
+	MF_NIGHTENABLED,
+	MF_NOBASEEXP,
+	MF_NOJOBEXP,	//30
+	MF_NOMOBLOOT,
+	MF_NOMVPLOOT,
+	MF_NORETURN,
+	MF_NOWARPTO,
+	MF_PVP_NIGHTMAREDROP,
+	MF_RESTRICTED,
+	MF_NOCOMMAND,
+	MF_NODROP,
+	MF_JEXP,
+	MF_BEXP,	//40
+	MF_NOVENDING,
+	MF_LOADEVENT,
+	MF_NOCHAT,
+	MF_NOEXPPENALTY,
+	MF_GUILDLOCK,
+	MF_TOWN,
+	MF_AUTOTRADE,
+	MF_ALLOWKS,
+	MF_MONSTER_NOTELEPORT,
+	MF_PVP_NOCALCRANK,	//50
+	MF_BATTLEGROUND,
+	MF_RESET,
+	MF_NOMAPCHANNELAUTOJOIN,
+	MF_NOUSECART,
+	MF_NOITEMCONSUMPTION,
+	MF_NOSUNMOONSTARMIRACLE,
+	MF_NOMINEEFFECT,
+	MF_NOLOCKON,
+	MF_NOTOMB,
+	MF_SKILL_DAMAGE,	//60
+	MF_NOCOSTUME,
+	MF_GVG_TE_CASTLE,
+	MF_GVG_TE,
+	MF_HIDEMOBHPBAR,
+	MF_NOLOOT,
+	MF_MAX
+};
+
+/// Enum of damage types
+enum e_skill_damage_type {
+	SKILLDMG_PC,
+	SKILLDMG_MOB,
+	SKILLDMG_BOSS,
+	SKILLDMG_OTHER,
+	SKILLDMG_MAX
+};
+
+union u_mapflag_args {
+	struct point nosave;
+
+	struct {
+		int drop_id, drop_type, drop_per;
+	} nightmaredrop;
+
+	struct {
+		int rate[SKILLDMG_MAX];
+		uint16 caster;
+	} skill_damage;
+
+	int flag_val;
+};
+
 // used by map_setcell()
 enum cell_t{
 	CELL_WALKABLE,
@@ -592,11 +688,8 @@ struct s_skill_damage {
 	unsigned int map; ///< Maps (used for skill_damage_db.txt)
 	uint16 skill_id; ///< Skill ID (used for mapflag)
 	// Additional rates
-	int pc, ///< Rate to Player
-		mob, ///< Rate to Monster
-		boss, ///< Rate to Boss-Monster
-		other; ///< Rate to Other target
-	uint8 caster; ///< Caster type
+	int rate[SKILLDMG_MAX];
+	uint16 caster; ///< Caster type
 };
 extern struct eri *map_skill_damage_ers;
 #endif
@@ -684,7 +777,7 @@ struct map_data {
 		unsigned chmautojoin : 1; //prevent to auto join map channel
 		unsigned nousecart : 1;	//prevent open up cart @FIXME client side only atm
 		unsigned noitemconsumption : 1; //prevent item usage
-		unsigned nosumstarmiracle : 1; //allow SG miracle to happen ?
+		unsigned nosunmoonstarmiracle : 1; //allow SG miracle to happen ?
 		unsigned nomineeffect : 1; //allow /mineeffect
 		unsigned nolockon : 1;
 		unsigned notomb : 1;
@@ -929,8 +1022,15 @@ void map_removemapdb(struct map_data *m);
 
 #ifdef ADJUST_SKILL_DAMAGE
 void map_skill_damage_free(struct map_data *m);
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
 #endif
+
+enum e_mapflag map_getmapflag_by_name(char* name);
+bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
+int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
+int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
+#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
+#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level

@@ -1144,7 +1144,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
-		&& (map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)
+		&& (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
 		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
 
@@ -1210,14 +1210,14 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 
 	switch (bl->type) {
 		case BL_MOB:
-			if (map[bl->m].flag.monster_noteleport && ((TBL_MOB*)bl)->master_id == 0)
+			if (map_getmapflag(bl->m, MF_MONSTER_NOTELEPORT) && ((TBL_MOB*)bl)->master_id == 0)
 				return 1;
 
-			if (m != bl->m && map[m].flag.nobranch && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
+			if (m != bl->m && map_getmapflag(m, MF_NOBRANCH) && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
 				return 1;
 			break;
 		case BL_PC:
-			if (map[bl->m].flag.noteleport)
+			if (map_getmapflag(bl->m, MF_NOTELEPORT))
 				return 1;
 			break;
 	}
@@ -2714,7 +2714,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND)))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 
