@@ -11099,6 +11099,7 @@
 22812,Sealed_Dracula_Scroll,Sealed Dracula Scroll,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",6228,6232,22813,19937,17314, 6635),1; },{},{}
 22813,Bearer's_Shadow_Box,Bearer's Shadow Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",24180,24181,24182,24183,24184,24185),1; },{},{}
 22814,Cat_Hand_Ticket,Cat Hand Ticket,3,10,,0,,,,,,,,,,,,,{},{},{}
+22822,Summer_Vacation_Costumes,Summer Vacation Costumes,2,,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ sc_start SC_DRESSUP,600000,1; },{},{}
 22823,Sealed_Sniper_Scroll,Sealed Sniper Scroll,2,10,,10,,,,,,,,,,,,,{ /*getitem callfunc("F_Rand",4491,6228,6232,24196, Hasty Shadow Armor, 19882, 17474, 6635),1;*/ },{},{}
 22826,Enchant_Stone_Box4,Costume Enchantment Stone Box 4,2,10,,10,,,,,,,,,,,,,{},{},{}
 22827,Shadow_Cube,Shadow Cube,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
