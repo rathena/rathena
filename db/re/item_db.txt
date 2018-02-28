@@ -11483,7 +11483,7 @@
 27166,Faceworm_Egg_Card,Faceworm Egg Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); .@sub = 2+(.@r >= 9 ? 3 : .@r >= 7 ? 1 : 0); bonus bNearAtkDef,.@sub; bonus bMagicAtkDef,.@sub; },{},{}
 27167,Faceworm_Larva_Card,Faceworm Larva Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,15; bonus2 bMagicAddSize,Size_All,getrefine()*3; },{},{}
 27168,Irene_High_Elder_Card,Irene High Elder Card,6,20,,10,,,,,,,,4,,,,,{ bonus bHit,10 + 5 * (getrefine()/3); },{},{}
-27169,Payon_Soldier_Card,Payon Soldier Card,6,20,,10,,,,,,,,2,,,,,{ .@atk = 5; .@r = getrefine(); if(getiteminfo(getequipid(EQI_HAND_R),11) == W_SPEAR && .@r >= 10){ .@atk += 20; if(.@r >= 14){ .@atk += 20; } } } bonus bAtk,.@atk; bonus bMatk,.@atk; },{},{}
+27169,Payon_Soldier_Card,Payon Soldier Card,6,20,,10,,,,,,,,2,,,,,{ .@atk = 5; .@r = getrefine(); if(getiteminfo(getequipid(EQI_HAND_R),11) == W_SPEAR && .@r >= 10){ .@atk += 20; if(.@r >= 14){ .@atk += 20; } } bonus bAtk,.@atk; bonus bMatk,.@atk; },{},{}
 27181,Airship_Raid_Card,Airship Raid Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus bLongAtkRate,1 + .@r/2; bonus bCritical,.@r/2; },{},{}
 27182,Captain_Felock_Card,Captain Felock Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,30; .@r = getrefine(); bonus2 bSkillAtk,"RL_AM_BLAST",.@r >= 10 ? 60 : 30; bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",.@r >= 10 ? 60 : 30; },{},{}
 27183,Gigantes_Card,Gigantes Card,6,20,,10,,,,,,,,128,,,,,{ bonus bAtk,20; if(readparam(bStr) >= 120) { bonus bAtk,20; bonus bAspdRate,-3; } },{},{}
