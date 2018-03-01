@@ -12288,7 +12288,7 @@ BUILDIN_FUNC(getmapflag)
 
 	mf = script_getnum(st, 3);
 
-	if( mf <= MF_MIN || mf > MF_MAX ){
+	if( mf < MF_MIN || mf > MF_MAX ){
 		ShowError( "buildin_getmapflag: Unsupported mapflag '%d'.\n", mf );
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12321,7 +12321,7 @@ BUILDIN_FUNC(setmapflag)
 
 	mf = script_getnum(st, 3);
 
-	if( mf <= MF_MIN || mf > MF_MAX ){
+	if( mf < MF_MIN || mf > MF_MAX ){
 		ShowError( "buildin_setmapflag: Unsupported mapflag '%d'.\n", mf );
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12351,14 +12351,14 @@ BUILDIN_FUNC(removemapflag)
 
 	m = map_mapname2mapid(str);
 	if (m < 0) {
-		ShowWarning("buildin_getmapflag: Invalid map name %s.\n", str);
+		ShowWarning("buildin_removemapflag: Invalid map name %s.\n", str);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	mf = script_getnum(st, 3);
 
-	if( mf <= MF_MIN || mf > MF_MAX ){
-		ShowError( "buildin_setmapflag: Unsupported mapflag '%d'.\n", mf );
+	if( mf < MF_MIN || mf > MF_MAX ){
+		ShowError( "buildin_removemapflag: Unsupported mapflag '%d'.\n", mf );
 		return SCRIPT_CMD_FAILURE;
 	}
 

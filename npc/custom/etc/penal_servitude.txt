@@ -175,7 +175,8 @@ sec_in02	mapflag	noteleport
 sec_in02	mapflag	nobranch
 sec_in02	mapflag	nowarp
 sec_in02	mapflag	nowarpto
-sec_in02	mapflag	noexp
+sec_in02	mapflag	nobaseexp
+sec_in02	mapflag	nojobexp
 sec_in02	mapflag	noskill
 //sec_in02	mapflag	pvp
 //sec_in02	mapflag	pvp_noparty
