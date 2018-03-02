@@ -10875,9 +10875,14 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		baselv = (uint32)atoi(fields[3]);
 		joblv = (uint32)atoi(fields[4]);
 		offset = 5;
-	} else {
+	}
+	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
 		baselv = joblv = 0;
 		offset = 3;
+	}
+	else {
+		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
+		return false;
 	}
 
 	if(!pcdb_checkid(class_))
