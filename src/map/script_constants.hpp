@@ -1481,6 +1481,7 @@
 	export_constant(SC_DORAM_SVSP);
 	export_constant(SC_FALLEN_ANGEL);
 	export_constant(SC_CHEERUP);
+	export_constant(SC_DRESSUP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
