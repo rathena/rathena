@@ -1534,7 +1534,6 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->achievement_data.total_score = 0;
 		sd->achievement_data.level = 0;
 		sd->achievement_data.save = false;
-		sd->achievement_data.sendlist = false;
 		sd->achievement_data.count = 0;
 		sd->achievement_data.incompleteCount = 0;
 		sd->achievement_data.achievements = NULL;
