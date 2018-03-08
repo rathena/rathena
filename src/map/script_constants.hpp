@@ -6109,6 +6109,29 @@
 	export_constant(HAT_EF_QSCARABA);
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
+	export_constant(HAT_EF_GODCLASS);
+	export_constant(HAT_EF_GODCLASS2);
+	export_constant(HAT_EF_LEVEL99_RED);
+	export_constant(HAT_EF_LEVEL99_ULTRAMARINE);
+	export_constant(HAT_EF_LEVEL99_CYAN);
+	export_constant(HAT_EF_LEVEL99_LIME);
+	export_constant(HAT_EF_LEVEL99_VIOLET);
+	export_constant(HAT_EF_LEVEL99_LILAC);
+	export_constant(HAT_EF_LEVEL99_SUN_ORANGE);
+	export_constant(HAT_EF_LEVEL99_DEEP_PINK);
+	export_constant(HAT_EF_LEVEL99_BLACK);
+	export_constant(HAT_EF_LEVEL99_WHITE);
+	export_constant(HAT_EF_LEVEL160_RED);
+	export_constant(HAT_EF_LEVEL160_ULTRAMARINE);
+	export_constant(HAT_EF_LEVEL160_CYAN);
+	export_constant(HAT_EF_LEVEL160_LIME);
+	export_constant(HAT_EF_LEVEL160_VIOLET);
+	export_constant(HAT_EF_LEVEL160_LILAC);
+	export_constant(HAT_EF_LEVEL160_SUN_ORANGE);
+	export_constant(HAT_EF_LEVEL160_DEEP_PINK);
+	export_constant(HAT_EF_LEVEL160_BLACK);
+	export_constant(HAT_EF_LEVEL160_WHITE);
+	export_constant(HAT_EF_FULL_BLOOMCHERRY_TREE);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
