@@ -3119,6 +3119,25 @@
 4948,Skill_Delay1,After Skill Delay Lv1,6,10,,,,,,,,,,,,,,,{ bonus bDelayrate,-2; },{},{}
 4949,Skill_Delay2,After Skill Delay Lv2,6,10,,,,,,,,,,,,,,,{ bonus bDelayrate,-4; },{},{}
 4950,Skill_Delay3,After Skill Delay Lv3,6,10,,,,,,,,,,,,,,,{ bonus bDelayrate,-6; },{},{}
+4951,Darkness_Drop,Darkness Drop,6,0,,,,,,,,,,,,,,,{ bonus2 bAddEle,Ele_Dark,2; bonus2 bMagicAtkEle,Ele_Dark,2; bonus2 bSubEle,Ele_Dark,1; },{},{}
+4952,Fire_Drop,Fire Drop,6,0,,,,,,,,,,,,,,,{ bonus2 bAddEle,Ele_Fire,2; bonus2 bMagicAtkEle,Ele_Fire,2; bonus2 bSubEle,Ele_Fire,1; },{},{}
+4953,Water_Drop,Water Drop,6,0,,,,,,,,,,,,,,,{ bonus2 bAddEle,Ele_Water,2; bonus2 bMagicAtkEle,Ele_Water,2; bonus2 bSubEle,Ele_Water,1; },{},{}
+4954,Earth_Drop,Earth Drop,6,0,,,,,,,,,,,,,,,{ bonus2 bAddEle,Ele_Earth,2; bonus2 bMagicAtkEle,Ele_Earth,2; bonus2 bSubEle,Ele_Earth,1; },{},{}
+4955,Holy_Drop,Holy Drop,6,0,,,,,,,,,,,,,,,{ bonus2 bAddEle,Ele_Holy,2; bonus2 bMagicAtkEle,Ele_Holy,2; bonus2 bSubEle,Ele_Holy,1; },{},{}
+4956,Recovery_Drop,Recovery Drop,6,0,,,,,,,,,,,,,,,{ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],2; bonus2 bSkillHeal2,.@skills$[.@i],2; } /* TODO: Depending on some recovery items HP recovery amount + 2% */ },{},{}
+4957,Famitsus_Power,Famitsu's Power,6,0,,,,,,,,,,,,,,,{ bonus bMaxHP,832; },{},{}
+4958,Gemini,Gemini,6,0,,,,,,,,,,,,,,,{ bonus bDelayrate,-1; },{},{}
+4959,Sagittarius,Sagittarius,6,0,,,,,,,,,,,,,,,{ bonus bLongAtkRate,1; },{},{}
+4960,Aquarius,Aquarius,6,0,,,,,,,,,,,,,,,{ bonus bUseSPrate,-2; },{},{}
+4961,Aries,Aries,6,0,,,,,,,,,,,,,,,{ bonus bMatk,10; },{},{}
+4962,Cancer,Cancer,6,0,,,,,,,,,,,,,,,{ bonus bAtk,3; },{},{}
+4963,Taurus,Taurus,6,0,,,,,,,,,,,,,,,{ bonus bAtk,4; bonus bHit,1; },{},{}
+4964,Capricorn,Capricorn,6,0,,,,,,,,,,,,,,,{ bonus2 bMagicAddRace,RC_All,3; },{},{}
+4965,Pisces,Pisces,6,0,,,,,,,,,,,,,,,{ bonus bVariableCastrate,-2; },{},{}
+4966,Scorpio,Scorpio,6,0,,,,,,,,,,,,,,,{ bonus2 bAddRace,RC_All,1; },{},{}
+4967,Leo,Leo,6,0,,,,,,,,,,,,,,,{ bonus bAspdRate,3; },{},{}
+4968,Virgo,Virgo,6,0,,,,,,,,,,,,,,,{ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],1; } },{},{}
+4969,Libra,Libra,6,0,,,,,,,,,,,,,,,{ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal2,.@skills$[.@i],1; } /* TODO: Depending on some recovery items HP recovery amount + 1% */ },{},{}
 4970,Fire_Property_Reactor,Fire Property Reactor,6,0,,,,,,,,,,,,,,,{ bonus bDefEle,Ele_Fire; },{},{}
 4971,Water_Property_Reactor,Water Property Reactor,6,0,,,,,,,,,,,,,,,{ bonus bDefEle,Ele_Water; },{},{}
 4972,Earth_Property_Reactor,Earth Property Reactor,6,0,,,,,,,,,,,,,,,{ bonus bDefEle,Ele_Earth; },{},{}
@@ -9878,6 +9897,7 @@
 19039,12_Anniversary_Elf_Ears,12 Anniversary Elf Ears,4,10,,120,,0,,0,0xFFFFFFFF,63,2,512,,0,1,875,{ bonus2 bSubRace,RC_All,4; bonus2 bSubRace,RC_Player,-4; },{},{}
 19047,Angeling_KnitCap,Angeling KnitCap,4,0,,300,,5,,1,0xFFFFFFFF,63,2,256,,20,1,953,{ bonus2 bSPGainRace,RC_Angel,5; bonus bHPGainValue,100; .@r = getrefine(); if (.@r >= 5) { bonus2 bSubRace,RC_Angel,5+((.@r >= 7) ? 5 : 0); } },{},{}
 19048,Elemental_Clothe,Elemental Clothes,4,0,,500,,45,,1,0xFFFFFFFF,63,2,16,,80,1,,{ .@r = getrefine(); bonus bLongAtkRate,2+((.@r >= 9) ? 3 : 0)+((.@r >= 7) ? 2 : 0); if (.@r >= 7) bonus bUnbreakableArmor,1; },{},{}
+19050,Loki_Nidhogg_Hat,Loki & Nidhoggur's Hat,4,0,,100,,0,,1,0xFFFFFFFF,63,2,256,,1,1,1304,{},{},{}
 19051,Warrior_Moon_Cat,Warrior Moon Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ bonus bAllStats,3; bonus2 bHPDrainRate,40,5; bonus2 bSPDrainRate,10,2; },{},{}
 19052,Sigruns_Wing,Rental Sigrun's Wing,4,10,,0,,2,,0,0xFFFFFFFF,63,2,512,,1,0,568,{ if (Class == Job_Swordman || Class == Job_Thief || Class == Job_Merchant || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) bonus bAspd,1; else if (Class == Job_Mage || Class == Job_Acolyte || Class == Job_Ninja || Class == Job_Soul_Linker) { bonus bMatk,5; bonus bHealPower,2; } else if (Class == Job_Archer || Class == Job_Gunslinger) bonus bLongAtkRate,2; else if (Class == Job_Novice || Class == Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; } },{},{}
 19053,Fighter_Moon_Cat,Fighter Moon Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ .@r = getrefine(); bonus bAllStats,3; bonus2 bAddEff,Eff_Stun,500+(.@r*100); },{},{}
