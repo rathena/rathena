@@ -12030,7 +12030,7 @@
 31300,C_Warm_Cat_Muffler,C Warm Cat Muffler,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1657,{},{},{}
 31301,C_Blinking_Eyes,C Blinking Eyes,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1658,{},{},{}
 31302,C_Black_Magenta_Ribbon,C Black Magenta Ribbon,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1659,{},{},{}
-31303,C_Black_Ramen_Hat,C Black Ramen Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1338,{},{},{}
+31303,C_Black_Ramen_Hat_,C Black Ramen Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1338,{},{},{}
 31304,C_Summer_Fan,C Summer Fan,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1051,{},{},{}
 31306,C_Toucan_Hat,C Toucan Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,528,{},{},{}
 31307,C_Violet_Macaw,C Violet Macaw,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,656,{},{},{}
@@ -12045,7 +12045,7 @@
 31316,C_Black_Fluttering_Butterfly,C Black Fluttering Butterfly,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1665,{},{},{}
 31317,C_15th_Anniversary_Wing,C 15th Anniversary Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1660,{},{},{}
 31318,C_Gerhard_Von_Devi,Costume Gerhard Von Devi,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1092,{},{},{}
-31319,C_Summer_Fan,C Summer Fan,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1051,{},{},{}
+31319,C_Summer_Fan_,C Summer Fan,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1051,{},{},{}
 31320,C_Pinwheel_Hat,C Pinwheel Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,456,{},{},{}
 31321,C_Shining_Sunflower,C Shining Sunflower,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,681,{},{},{}
 31322,C_Candy_Hat,C Candy Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,853,{},{},{}
@@ -12126,7 +12126,7 @@
 31451,C_Blue_Frill_Ribbon,C Blue Frill Ribbon,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1714,{},{},{}
 31452,C_White_Cat,C White Cat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1715,{},{},{}
 31453,C_Large_Ribbon_Muffler_Black,C Large Ribbon Muffler Black,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1716,{},{},{}
-31455,C_Super_Cute_Dog,C Super Cute Dog,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,1718,{},{},{}
+31455,C_Super_Cute_Dog,C Super Cute Dog,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,0,1718,{},{},{}
 31457,C_Laughing_Wonderful_Wolf_Hat,C Laughing Wonderful Wolf Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1016,{},{},{}
 31464,C_Bloom_Afro,C Bloom Afro,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,837,{},{},{}
 31468,C_Stripe_Hat,C Stripe Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1728,{},{},{}
