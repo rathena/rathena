@@ -11920,7 +11920,7 @@
 31186,C_Black_Cat,Costume Black Cat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1582,{},{},{}
 31187,C_War_Princess_Ribbon,Costume War Princess Ribbon,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1583,{},{},{}
 31188,C_Mono_Gothic_Bonnet,Costume Mono Gothic Bonnet,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1584,{},{},{}
-31189,C_Cat_Ears_Cape_Red,Costume Red Cat Ears Cape,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1585,{},{},{}
+31189,C_Cat_Ears_Cape_Red,Costume Red Cat Ears Cape,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1591,{},{},{}
 31190,C_Angel_Mini_Silk_Hat_B,Costume Black Angel Mini Silk Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1586,{},{},{}
 31191,C_Whikebain_Ears_Gold,Vibrant Cat Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1588,{},{},{}
 31192,C_Bluecat_Ears,Blue Cat Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1589,{},{},{}
@@ -11934,7 +11934,7 @@
 31200,C_Wrapping_Ribbon,C Wrapping Ribbon,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1599,{},{},{}
 31201,C_Royal_Rabbit_Crown,C Royal Rabbit Crown,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1600,{},{},{}
 31202,C_Dog_Officer,C Dog Officer,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1601,{},{},{}
-31203,C_Charcoal_Stove,C Charcoal Stove,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1601,{},{},{}
+31203,C_Charcoal_Stove,C Charcoal Stove,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1602,{},{},{}
 31204,C_Drooping_White_Cat,C Drooping White Cat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,378,{},{},{}
 31205,C_Large_Orc_Hero_Helm,C Large Orc Hero Helm,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,381,{},{},{}
 31206,C_Rune_Hairband,C Rune Hairband,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,564,{},{},{}
