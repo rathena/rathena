@@ -2581,16 +2581,14 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_min = status->matk_max = status_base_matk(bl, status, level);
 
 	///! TODO: Confirm these RENEWAL calculations. Currently is using previous calculation before 083cf5d9 (issue: #321) and until re/mob_db.txt is updated.
-	//switch (bl->type) {
-	//	case BL_MOB:
-	//		status->matk_min += 70 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-	//		status->matk_max += 130 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-	//		break;
+	switch (bl->type) {
+			status->matk_min += 70 * (((TBL_MOB*)bl)->status.rhw.atk2 - ((TBL_MOB*)bl)->status.rhw.atk) / 100;
+			status->matk_max += 130 * (((TBL_MOB*)bl)->status.rhw.atk2 - ((TBL_MOB*)bl)->status.rhw.atk) / 100;
 	//	case BL_MER:
 	//		status->matk_min += 70 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
 	//		status->matk_max += 130 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
 	//		break;
-	//}
+	}
 #else
 	// Matk
 	status->matk_min = status_base_matk_min(status);
