@@ -11967,11 +11967,11 @@
 31233,C_Long_Twin_Purple,C Long Twin Yellow,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1628,{},{},{}
 31234,C_Persica,C Persica,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,659,{},{},{}
 31235,C_Large_Ribbon_Muffler_Mid,C Large Ribbon Muffler Mid,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1312,{},{},{}
-31236,C_Vicious_Mind_Aura_Mid,C Vicious Mind Aura Mid,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1418,{},{},{}
+31236,C_Vicious_Mind_Aura_Mid,C Vicious Mind Aura Mid,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1267,{},{},{}
 31237,C_Pale_Yellow_Ribbon_Lower,C Pale Yellow Ribbon Lower,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1474,{},{},{}
 31238,C_True_Love_Upper,C True Love Upper,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,489,{},{},{}
 31239,C_Love_Rabbit_Hood_Upper,C Love Rabbit Hood Upper,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,549,{},{},{}
-31240,C_Whisper_Mask_Upper,C Whisper Mask Upper,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,458,{},{},{}
+31240,C_Whisper_Mask_Upper,C Whisper Mask Upper,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,321,{},{},{}
 31241,C_Burning_Sun_Lower,C Burning Sun Lower,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,654,{},{},{}
 31242,C_Anubis_Hat_Upper,C Anubis Hat Upper,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,485,{},{},{}
 31243,C_Tongue_Mask_Mid,C Tongue Mask Mid,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,253,{},{},{}
@@ -12037,7 +12037,7 @@
 31308,C_Protect_Feathers,C Protect Feathers,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1232,{},{},{}
 31309,C_Pure_White_Marching_Hat,C Pure White Marching Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1470,{},{},{}
 31310,C_666_Black_Elven_Ears,C 666 Black_ Elven Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,498,{},{},{}
-31311,C_Dolor_Thanatos_Mask,C Dolor Thanatos Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,6144,{},{},{}
+31311,C_Dolor_Thanatos_Mask,C Dolor Thanatos Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,0,666,{},{},{}
 31312,C_Hades_Helm,C Hades Helm,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,523,{},{},{}
 31313,C_Fallen_Angel_Wing_Ears,C Fallen Angel Wing Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1662,{},{},{}
 31314,C_Ghost_Holiday,C Ghost Holiday,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1663,{},{},{}
@@ -12049,7 +12049,7 @@
 31320,C_Pinwheel_Hat,C Pinwheel Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,456,{},{},{}
 31321,C_Shining_Sunflower,C Shining Sunflower,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,681,{},{},{}
 31322,C_Candy_Hat,C Candy Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,853,{},{},{}
-31323,C_Yellow_Hunting_Cap,C Yellow Hunting Cap,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,611,{},{},{}
+31323,C_Yellow_Hunting_Cap,C Yellow Hunting Cap,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,484,{},{},{}
 31325,C_Queen_Scarabas_Helmet,C Queen Scarabas Helmet,4,0,,0,,0,,0,0xFFFFFFFF,63,2,5120,,1,0,1231,{},{},{}
 31326,C_Rolf_Von_Ziege_666_II,C Rolf Von Ziege 666 II,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,946,{},{},{}
 31327,C_Wood_Goblins_Nose,C Wood Goblins Nose,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,737,{},{},{}
