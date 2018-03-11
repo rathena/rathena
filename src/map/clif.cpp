@@ -6509,13 +6509,23 @@ void clif_wis_end(int fd, int result)
 
 /// Returns character name requested by char_id (ZC_ACK_REQNAME_BYGID).
 /// 0194 <char id>.L <name>.24B
+/// 0af7 <flag>.W <char id>.L <name>.24B
 void clif_solved_charname(int fd, int charid, const char* name)
 {
+#if PACKETVER >= 20180221
+	WFIFOHEAD(fd,packet_len(0xaf7));
+	WFIFOW(fd,0) = 0xaf7;
+	WFIFOW(fd,2) = name[0] ? 3 : 2;
+	WFIFOL(fd,4) = charid;
+	safestrncpy(WFIFOCP(fd, 8), name, NAME_LENGTH);
+	WFIFOSET(fd,packet_len(0x0af7));
+#else
 	WFIFOHEAD(fd,packet_len(0x194));
 	WFIFOW(fd,0)=0x194;
 	WFIFOL(fd,2)=charid;
 	safestrncpy(WFIFOCP(fd,6), name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x194));
+#endif
 }
 
 
@@ -14303,6 +14313,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 
 /// Toggles a single friend online/offline [Skotlex] (ZC_FRIENDS_STATE).
 /// 0206 <account id>.L <char id>.L <state>.B
+/// 0206 <account id>.L <char id>.L <state>.B <name>.24B >= 20180221
 /// state:
 ///     0 = online
 ///     1 = offline
@@ -14322,6 +14333,9 @@ void clif_friendslist_toggle(struct map_session_data *sd,uint32 account_id, uint
 	WFIFOL(fd, 2) = sd->status.friends[i].account_id;
 	WFIFOL(fd, 6) = sd->status.friends[i].char_id;
 	WFIFOB(fd,10) = !online; //Yeah, a 1 here means "logged off", go figure...
+#if PACKETVER >= 20180221
+	safestrncpy(WFIFOCP(fd, 11), sd->status.friends[i].name, NAME_LENGTH);
+#endif
 	WFIFOSET(fd, packet_len(0x206));
 }
 
@@ -14340,21 +14354,29 @@ int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap)
 
 /// Sends the whole friends list (ZC_FRIENDS_LIST).
 /// 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }*
+/// 0201 <packet len>.W { <account id>.L <char id>.L }* >= 20180221
 void clif_friendslist_send(struct map_session_data *sd)
 {
 	int i = 0, n, fd = sd->fd;
+#if PACKETVER >= 20180221
+	const int size = 8;
+#else
+	const int size = 8 + NAME_LENGTH;
+#endif
 
 	// Send friends list
-	WFIFOHEAD(fd, MAX_FRIENDS * 32 + 4);
+	WFIFOHEAD(fd, MAX_FRIENDS * size + 4);
 	WFIFOW(fd, 0) = 0x201;
 	for(i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id; i++) {
-		WFIFOL(fd, 4 + 32 * i + 0) = sd->status.friends[i].account_id;
-		WFIFOL(fd, 4 + 32 * i + 4) = sd->status.friends[i].char_id;
-		safestrncpy(WFIFOCP(fd, 4 + 32 * i + 8), sd->status.friends[i].name, NAME_LENGTH);
+		WFIFOL(fd, 4 + size * i + 0) = sd->status.friends[i].account_id;
+		WFIFOL(fd, 4 + size * i + 4) = sd->status.friends[i].char_id;
+#if PACKETVER < 20180221
+		safestrncpy(WFIFOCP(fd, 4 + size * i + 8), sd->status.friends[i].name, NAME_LENGTH);
+#endif
 	}
 
 	if (i) {
-		WFIFOW(fd,2) = 4 + 32 * i;
+		WFIFOW(fd,2) = 4 + size * i;
 		WFIFOSET(fd, WFIFOW(fd,2));
 	}
 

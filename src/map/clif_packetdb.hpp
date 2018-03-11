@@ -2353,4 +2353,10 @@
 	packet(0x0ACC,18);
 #endif
 
+// 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
+#if PACKETVER >= 20180221
+	packet(0x0206,35); // ZC_FRIENDS_STATE
+	packet(0x0af7,32);
+#endif
+
 #endif /* _CLIF_PACKETDB_HPP_ */
