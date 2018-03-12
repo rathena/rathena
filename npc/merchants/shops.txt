@@ -301,10 +301,6 @@ ve_in,252,313,0	shop	Magical Item Seller#ve	942,717:-1,1601:-1,1604:-1,1607:-1,1
 //=======================================================
 // Cooking Addition
 //=======================================================
-prontera,156,212,1	shop	Chef Assistant#prt	700,7454:-1,7456:-1,7482:-1,580:-1
-payon,206,119,5	shop	Chef Assistant#pay	89,7455:-1
-geffen,196,111,3	shop	Chef Assistant#gef	85,7482:-1
-alberta,167,135,5	shop	Chef Assistant#alb	712,579:-1
 aldebaran,165,107,2	shop	Chef Assistant#alde	97,7456:-1,7452:-1,580:-1
 comodo,225,164,3	shop	Chef Assistant#cmd	83,7455:-1,7453:-1,7454:-1,579:-1
 umbala,102,154,3	shop	Chef Assistant#um	83,7456:-1,577:-1
