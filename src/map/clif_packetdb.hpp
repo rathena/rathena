@@ -2358,6 +2358,11 @@
 	packet(0x0ACC,18);
 #endif
 
+// 2018-02-07bRagexeRE
+#if PACKETVER >= 20180207
+	parseable_packet(0x0AF4,11,clif_parse_UseSkillToPos,2,4,6,8,10);
+#endif
+
 // 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
 #if PACKETVER >= 20180221
 	packet(0x0206,35); // ZC_FRIENDS_STATE
