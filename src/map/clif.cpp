@@ -16712,6 +16712,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 
 /// Notification about a new quest
 /// 02b3 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST)
+/// 08fe <packet len>.W  { <quest id>.L <mob id>.L <total count>.W <current count>.W }*3 (ZC_HUNTING_QUEST_INFO)
 /// 09f9 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <hunt identification>.L <mob type>.L <mob id>.L <min level>.W <max level>.W <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST_EX)
 void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 {
@@ -16756,6 +16757,24 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 	}
 
 	WFIFOSET(fd, packet_len(cmd));
+
+#if PACKETVER >= 20150513
+	int len = 4 + qi->objectives_count * 12;
+
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = 0x8fe;
+	WFIFOW(fd, 2) = len;
+
+	for( i = 0, offset = 4; i < qi->objectives_count; i++, offset += 12 ){
+		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
+		WFIFOL(fd, offset+4) = qi->objectives[i].mob;
+		WFIFOW(fd, offset + 10) = qi->objectives[i].count;
+		WFIFOW(fd, offset + 12) = qd->count[i];
+	}
+
+	WFIFOSET(fd, len);
+
+#endif
 }
 
 
