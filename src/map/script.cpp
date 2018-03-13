@@ -18613,7 +18613,7 @@ BUILDIN_FUNC(unitskillusepos)
 
 /// Pauses the execution of the script, detaching the player
 ///
-/// sleep <mili seconds>;
+/// sleep <milli seconds>;
 BUILDIN_FUNC(sleep)
 {
 	// First call(by function call)
@@ -18623,7 +18623,7 @@ BUILDIN_FUNC(sleep)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError("buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks);
+			ShowError("buildin_sleep: negative or zero amount('%d') of milli seconds is not supported\n", ticks);
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18656,7 +18656,7 @@ BUILDIN_FUNC(sleep2)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError( "buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks );
+			ShowError( "buildin_sleep2: negative or zero amount('%d') of milli seconds is not supported\n", ticks );
 			return SCRIPT_CMD_FAILURE;
 		}
 

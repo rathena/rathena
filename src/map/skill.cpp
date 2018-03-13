@@ -1421,8 +1421,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		skill_break_equip(src,bl, EQP_SHIELD, 150*skill_lv, BCT_ENEMY);
 		break;
 
-	case CH_TIGERFIST:
-		sc_start(src,bl,SC_STOP,(10+skill_lv*10),0,skill_get_time2(skill_id,skill_lv));
+	case CH_TIGERFIST: {
+		uint16 basetime = skill_get_time(skill_id, skill_lv);
+		uint16 mintime = 30 * (status_get_lv(src) + 100);
+
+		if (status_get_class_(bl) == CLASS_BOSS)
+			basetime /= 5;
+		basetime = min((basetime * status_get_agi(bl)) / -200 + basetime, mintime) / 2;
+		sc_start(src, bl, SC_STOP, (1 + skill_lv) * 10, 0, basetime);
+	}
 		break;
 
 	case LK_SPIRALPIERCE:
@@ -1513,9 +1520,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_FLING,100, sd?sd->spiritball_old:5,skill_get_time(skill_id,skill_lv));
 		break;
 	case GS_DISARM:
-		rate = 3*skill_lv;
-		if (sstatus->dex > tstatus->dex)
-			rate += (sstatus->dex - tstatus->dex)/5; //TODO: Made up formula
+		rate = sstatus->dex / (4 * (7 - skill_lv)) + sstatus->luk / (4 * (6 - skill_lv));
+		rate = rate + status_get_lv(src) - (tstatus->agi * rate / 100) - tstatus->luk - status_get_lv(bl);
 		skill_strip_equip(src,bl, EQP_WEAPON, rate, skill_lv, skill_get_time(skill_id,skill_lv));
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
@@ -1909,6 +1915,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_CLAN_INFO:		case SC_SWORDCLAN:		case SC_ARCWANDCLAN:
 					case SC_GOLDENMACECLAN:	case SC_CROSSBOWCLAN:
 					case SC_DAILYSENDMAILCNT:
+					case SC_WEDDING:		case SC_XMAS:			case SC_SUMMER:
+					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 						continue;
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
@@ -6502,30 +6510,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SA_FROSTWEAPON:
 	case SA_LIGHTNINGLOADER:
 	case SA_SEISMICWEAPON:
-		if (dstsd) {
-			if(dstsd->status.weapon == W_FIST ||
-				(dstsd->sc.count && !dstsd->sc.data[type] &&
-				(	//Allow re-enchanting to lenghten time. [Skotlex]
-					dstsd->sc.data[SC_FIREWEAPON] ||
-					dstsd->sc.data[SC_WATERWEAPON] ||
-					dstsd->sc.data[SC_WINDWEAPON] ||
-					dstsd->sc.data[SC_EARTHWEAPON] ||
-					dstsd->sc.data[SC_SHADOWWEAPON] ||
-					dstsd->sc.data[SC_GHOSTWEAPON] ||
-					dstsd->sc.data[SC_ENCPOISON]
-				))
-				) {
-				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
-				break;
-			}
+		if (dstsd && dstsd->status.weapon == W_FIST) {
+			if (sd)
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
+			break;
 		}
 		// 100% success rate at lv4 & 5, but lasts longer at lv5
 		if(!clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,type,(60+skill_lv*10),skill_lv, skill_get_time(skill_id,skill_lv)))) {
+			if (dstsd){
+				short index = dstsd->equip_index[EQI_HAND_R];
+				if (index&EQP_WEAPON && dstsd->inventory_data[index]->type == IT_WEAPON)
+					pc_unequipitem(dstsd, index, 3); //Must unequip the weapon instead of breaking it [Daegaladh]
+			}
 			if (sd)
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			if (skill_break_equip(src,bl, EQP_WEAPON, 10000, BCT_PARTY) && sd && sd != dstsd)
-				clif_displaymessage(sd->fd, msg_txt(sd,669));
 		}
 		break;
 
@@ -7951,6 +7950,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_CROSSBOWCLAN:
 					case SC_JUMPINGCLAN:
 					case SC_DAILYSENDMAILCNT:
+					case SC_WEDDING:		case SC_XMAS:			case SC_SUMMER:
+					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 						continue;
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
@@ -8194,6 +8195,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_SUMMONSLAVE:
 	case NPC_SUMMONMONSTER:
+	case NPC_DEATHSUMMON:
 		if(md && md->skill_idx >= 0)
 			mob_summonslave(md,md->db->skill[md->skill_idx].val,skill_lv,skill_id);
 		break;
@@ -9419,6 +9421,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_CLAN_INFO:		case SC_SWORDCLAN:		case SC_ARCWANDCLAN:
 					case SC_GOLDENMACECLAN:	case SC_CROSSBOWCLAN:
 					case SC_DAILYSENDMAILCNT:
+					case SC_WEDDING:		case SC_XMAS:			case SC_SUMMER:
+					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -11443,7 +11447,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv)
 		  )
 		{
-			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_DUPLICATE_RANGEIN,0);
+			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
 			break;
 		}
 		if( skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
@@ -19443,7 +19447,9 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 							for (l = 0; l < total_qty; l += tmp_item.amount) {
 								if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 									clif_additem(sd,0,0,flag);
-									map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+									if( battle_config.skill_drop_items_full ){
+										map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+									}
 								}
 							}
 							k++;
@@ -19461,7 +19467,9 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		} else if (tmp_item.amount) { //Success
 			if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 				clif_additem(sd,0,0,flag);
-				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				if( battle_config.skill_drop_items_full ){
+					map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				}
 			}
 			if (skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY) {
 				clif_produceeffect(sd,6,nameid);
@@ -19518,7 +19526,9 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					tmp_item.identify = 1;
 					if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 						clif_additem(sd,0,0,flag);
-						map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+						if( battle_config.skill_drop_items_full ){
+							map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+						}
 					}
 					clif_produceeffect(sd,7,nameid);
 					clif_misceffect(&sd->bl,6);

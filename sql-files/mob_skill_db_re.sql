@@ -11103,6 +11103,9 @@ REPLACE INTO `mob_skill_db_re` VALUES (2997,'Kimi\'s Phantom@NPC_WIDESLEEP','att
 REPLACE INTO `mob_skill_db_re` VALUES (2997,'Kimi\'s Phantom@NPC_WIDESOULDRAIN','attack',680,3,10000,5000,50000,'no','self','myhpltmaxrate','10',NULL,NULL,NULL,NULL,NULL,'42',NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2997,'Kimi\'s Phantom@NPC_MAXPAIN','attack',716,3,10000,3000,50000,'no','self','myhpltmaxrate','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2997,'Kimi\'s Phantom@NPC_POWERUP','attack',349,1,10000,0,50000,'no','self','myhpltmaxrate','5',NULL,NULL,NULL,NULL,NULL,'6',NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3026,'Fire Pit@NPC_DEATHSUMMON','dead',718,3,10000,0,10000,'no','self','always','0',3027,3027,3027,NULL,NULL,NULL,NULL);
+
 REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_INVISIBLE','idle',353,1,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_INVISIBLE','attack',353,1,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #REPLACE INTO `mob_skill_db_re` VALUES ( 3038,'Hidden Mob 7@NPC_HELLBURNING','idle',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);

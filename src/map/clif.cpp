@@ -78,7 +78,7 @@ enum mail_type {
 
 /** Converts item type to display it on client if necessary.
 * @param nameid: Item ID
-* @return item type. For IT_PETEGG will be displayed as IT_WEAPON. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
+* @return item type. For IT_PETEGG will be displayed as IT_ARMOR. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
 */
 static inline int itemtype(unsigned short nameid) {
 	struct item_data* id = itemdb_search(nameid); //Use itemdb_search, so non-existance item will use dummy data and won't crash the server. bugreport:8468
@@ -89,7 +89,7 @@ static inline int itemtype(unsigned short nameid) {
 		else
 			return IT_ARMOR;
 	}
-	return ( type == IT_PETEGG ) ? IT_WEAPON : type;
+	return ( type == IT_PETEGG ) ? IT_ARMOR : type;
 }
 
 
@@ -4519,7 +4519,7 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 	WFIFOL(fd, 4) = amount; // amount
 	WFIFOW(fd, 8) = ( view > 0 ) ? view : i->nameid; // id
 #if PACKETVER >= 5
-	WFIFOB(fd,10) = itemdb_type(i->nameid); //type
+	WFIFOB(fd,10) = itemtype(i->nameid); //type
 	offset += 1;
 #endif
 	WFIFOB(fd,10+offset) = i->identify; //identify flag
@@ -7902,20 +7902,23 @@ void clif_send_petstatus(struct map_session_data *sd)
 void clif_pet_emotion(struct pet_data *pd,int param)
 {
 	unsigned char buf[16];
+	s_pet_db *pet_db_ptr;
 
 	nullpo_retv(pd);
+
+	pet_db_ptr = pd->get_pet_db();
 
 	memset(buf,0,packet_len(0x1aa));
 
 	WBUFW(buf,0)=0x1aa;
 	WBUFL(buf,2)=pd->bl.id;
-	if(param >= 100 && pd->petDB->talk_convert_class) {
-		if(pd->petDB->talk_convert_class < 0)
+	if(param >= 100 && pet_db_ptr->talk_convert_class) {
+		if(pet_db_ptr->talk_convert_class < 0)
 			return;
-		else if(pd->petDB->talk_convert_class > 0) {
+		else if(pet_db_ptr->talk_convert_class > 0) {
 			// replace mob_id component of talk/act data
 			param -= (pd->pet.class_ - 100)*100;
-			param += (pd->petDB->talk_convert_class - 100)*100;
+			param += (pet_db_ptr->talk_convert_class - 100)*100;
 		}
 	}
 	WBUFL(buf,6)=param;
