@@ -5381,7 +5381,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	// crit check is next since crits always hit on official [helvetica]
 	if (is_attack_critical(wd, src, target, skill_id, skill_lv, true)) {
-#if PACKETVER >= 20171207
+#if PACKETVER >= 20161207
 		if (wd.type&DMG_MULTI_HIT)
 			wd.type = DMG_MULTI_HIT_CRITICAL;
 		else
