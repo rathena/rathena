@@ -1360,6 +1360,10 @@ izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
 	end;
 }
 malangdo,218,81,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#dom	4_M_MERCAT1
+izlude_a,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doia	4_M_MERCAT1
+izlude_b,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doib	4_M_MERCAT1
+izlude_c,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doic	4_M_MERCAT1
+izlude_d,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doid	4_M_MERCAT1
 
 izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 	if (Class == Job_Summoner) {
@@ -1434,6 +1438,11 @@ izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 		close;
 	}
 }
+
+izlude_a,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_a	4_M_MERCAT1
+izlude_b,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_b	4_M_MERCAT1
+izlude_c,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_c	4_M_MERCAT1
+izlude_d,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_d	4_M_MERCAT1
 
 lasagna,209,301,3	script	Mustachi#dorcon01	4_DR_KID_01,{
 	mes "[Mustachi]";
