@@ -1975,7 +1975,7 @@ REPLACE INTO `item_db` VALUES (4305,'Turtle_General_Card','Turtle General Card',
 REPLACE INTO `item_db` VALUES (4306,'Toad_Card','Toad Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee2,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4307,'Kind_Of_Beetle_Card','Beetle King Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bSPGainRace,RC_Fish,5;',NULL,'heal 0,-5;');
 REPLACE INTO `item_db` VALUES (4308,'Tri_Joint_Card','Tri Joint Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bSPGainRace,RC_Formless,5;',NULL,'heal 0,-5;');
-REPLACE INTO `item_db` VALUES (4309,'Parasite_Card','Parasite Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus bDef,1; bonus2 bSubEle,Ele_Neutral,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (4309,'Parasite_Card','Parasite Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus bDef,1; bonus2 bSubRace,RC_Formless,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4310,'Panzer_Goblin_Card','Panzer Goblin Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Demon,7;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4311,'Permeter_Card','Permeter Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Dark,15; bonus2 bSubEle,Ele_Undead,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4312,'Fur_Seal_Card','Seal Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bFlee,3; bonus bHit,10; if(BaseClass==Job_Acolyte) { bonus2 bCriticalAddRace,RC_Undead,9; bonus2 bCriticalAddRace,RC_Demon,9; }',NULL,NULL);
