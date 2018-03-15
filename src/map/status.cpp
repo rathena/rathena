@@ -2582,12 +2582,14 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 
 	///! TODO: Confirm these RENEWAL calculations. Currently is using previous calculation before 083cf5d9 (issue: #321) and until re/mob_db.txt is updated.
 	switch (bl->type) {
+		case BL_MOB:
 			status->matk_min += 70 * (((TBL_MOB*)bl)->status.rhw.atk2 - ((TBL_MOB*)bl)->status.rhw.atk) / 100;
 			status->matk_max += 130 * (((TBL_MOB*)bl)->status.rhw.atk2 - ((TBL_MOB*)bl)->status.rhw.atk) / 100;
-	//	case BL_MER:
-	//		status->matk_min += 70 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
-	//		status->matk_max += 130 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
-	//		break;
+			break;
+		case BL_MER:
+			status->matk_min += 70 * (((TBL_MER*)bl)->status.rhw.atk2 - ((TBL_MOB*)bl)->status.rhw.atk) / 100;
+			status->matk_max += 130 * (((TBL_MER*)bl)->status.rhw.atk2 - ((TBL_MOB*)bl)->status.rhw.atk) / 100;
+			break;
 	}
 #else
 	// Matk
