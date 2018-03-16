@@ -908,7 +908,7 @@ bool storage_guild_storagesave(uint32 account_id, int guild_id, int flag)
 	struct s_storage *stor = guild2storage2(guild_id);
 
 	if (stor) {
-		if (flag) //Char quitting, close it.
+		if (flag&CSAVE_QUIT) //Char quitting, close it.
 			stor->status = false;
 
 		if (stor->dirty)
