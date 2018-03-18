@@ -1484,7 +1484,7 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[21] = p + 1;
+			str[21] = p;
 			p = &str[21][strlen(str[21]) - 2];
 
 			if ( *p != '}' ) {
@@ -1494,8 +1494,10 @@ static int itemdb_readdb(void){
 				for( v = 0; v < strlen(str[21]); v++ ) {
 					if( str[21][v] == '{' )
 						lcurly++;
-					else if ( str[21][v] == '}' )
+					else if (str[21][v] == '}') {
 						rcurly++;
+						p = &str[21][v];
+					}
 				}
 
 				if( lcurly != rcurly ) {
@@ -1503,7 +1505,8 @@ static int itemdb_readdb(void){
 					continue;
 				}
 			}
-			*p = '\0';
+			str[21] = str[21] + 1;  //skip the first left curly
+			*p = '\0';              //null the last right curly
 
 			if (!itemdb_parse_dbrow(str, path, lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
