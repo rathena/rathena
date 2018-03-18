@@ -9731,9 +9731,9 @@ ACMD_FUNC(costume) {
 		"Wedding",
 		"Xmas",
 		"Summer",
-		"Summer2"
+		"Summer2",
 		"Hanbok",
-		"Oktoberfest",
+		"Oktoberfest"
 	};
 	const int name2id[] = {
 		SC_WEDDING,
