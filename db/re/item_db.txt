@@ -4719,13 +4719,13 @@
 6705,Warrior_Certificate,Warrior Certificate,3,10,,0,,,,,,,,,,,,,{},{},{}
 6706,Guardian_Flowers,Guardian Flowers,3,10,,0,,,,,,,,,,,,,{},{},{}
 6707,Jeremy_Beauty_Coupon,Jeremy Beauty Coupon,3,10,,10,,,,,,,,,,,,,{},{},{}
-6708,Mana_crystal,Magic Crystal,3,10,,,,,,,,,,,,,,,{},{},{}
+6708,Mana_crystal,Mana Crystal,3,10,,,,,,,,,,,,,,,{},{},{}
 6709,Crisp_Silk,Crisp Silk,3,10,,0,,,,,,,,,,,,,{},{},{}
 6710,Tied_Snake,Tied Snake,3,10,,0,,,,,,,,,,,,,{},{},{}
 6712,Lovely_Stick,Lovely Stick,3,0,,0,,,,,,,,,,,,,{},{},{}
 6713,Heart_of_Soul,Heart of Soul,3,0,,0,,,,,,,,,,,,,{},{},{}
 6714,Sheenas_Soul,Sheena's Soul,3,20,,0,,,,,,,,,,,,,{},{},{}
-6715,P_Of_Evil_Soul,God's Soul Piece,3,20,,0,,,,,,,,,,,,,{},{},{}
+6715,P_Of_Evil_Soul,Darklord Soulpiece,3,20,,0,,,,,,,,,,,,,{},{},{}
 6716,Cri_Stone,Critical Stone(Upper),6,10,,100,,,,,,,,,,,,,{ bonus bCritical,1; },{},{}
 6717,MHPStone_Middle,Fitness Stone(Middle),6,10,,100,,,,,,,,,,,,,{ bonus bMaxHP,50; },{},{}
 6718,MSPStone_Bottom,Magical Stone(Lower),6,10,,100,,,,,,,,,,,,,{ bonus bMaxSP,10; },{},{}
