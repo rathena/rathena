@@ -1985,7 +1985,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 					next;
 					select("Or Frenemies!");
 					mes "[Lumin]";
-					mes "Frene-what? Oh well I'm done with the mission.";
+					mes "Frene-what? Oh well, I'm done with the mission.";
 					mes "Take care.";
 					cutin "nov_lumin02.bmp", 2;
 					next;
@@ -2446,20 +2446,20 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "- Is this maybe...?!";
 		next;
 		mes "- an accident...";
-		mes "- yes, this is a murder!";
-		mes "- There's a murderer here!";
+		mes "- no, this is a murder!";
+		mes "- There is a murderer here!";
 		next;
 		mes "- I swear on some old person's grave";
 		mes "- I will solve this case!";
 		next;
 		mes "[Instructor Argos]";
-		mes "Yawn. Who are you making so much noise next to me...";
+		mes "Yawn. Why are you making so much noise next to me...";
 		next;
 		select("You aren't dead?");
 		emotion ET_HUK, playerattached();
 		mes "[Instructor Argos]";
 		mes "Dead?! Who....?";
-		mes "me? Pu ha ha ha!!";
+		mes "Me? Pu ha ha ha!!";
 		next;
 		emotion ET_SMILE;
 		mes "[Instructor Argos]";
@@ -2469,7 +2469,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		select("But you weren't breathing...");
 		mes "[Instructor Argos]";
 		mes "Ahh...... that?";
-		mes "Right it makes sense that you misunderstood.";
+		mes "Right, it makes sense that you misunderstood.";
 		next;
 		mes "[Instructor Argos]";
 		mes "I used the skill<^ff0000Play Dead^000000> because I didn't want to be disturbed by monsters or someone else.";
@@ -2481,54 +2481,54 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "Oh, I see... you are a new novice who just has arrived here?";
 		next;
 		mes "[Instructor Argos]";
-		mes "I guess it is unexpected and surprising but do you want to learn <^ff0000Play Dead^000000>?";
+		mes "I guess it is unexpected and surprising, but do you want to learn <^ff0000Play Dead^000000>?";
 		next;
 		mes "[Instructor Argos]";
-		mes "I am sure that it will help you. How do you think about it?";
+		mes "I am sure that it will help you. What do you think?";
 		next;
-		if (select("I am sorry but I am busy.", "I want to learn it!") == 1) {
+		if (select("I am sorry but I am busy.", "I want to learn!") == 1) {
 			mes "[Instructor Argos]";
 			mes "Really ? If you are busy then fine by me.";
 			mes "I should keep sleeping.";
-			mes "yawning...";
+			mes "yawn...";
 			close;
 		}
 		mes "[Instructor Argos]";
-		mes "You made a right decision!";
-		mes "I want to teach you for good.";
+		mes "You made the right decision!";
+		mes "I want to teach you well.";
 		emotion ET_BEST;
 		next;
 		mes "[Instructor Argos]";
-		mes "A novice does not know the potential power of himself nor how strong the enemy is.";
+		mes "A novice does not know their own power nor how strong the enemy is.";
 		next;
 		mes "[Instructor Argos]";
-		mes "There is a studious type of novice who studies well..but i guess we are not.";
+		mes "There are some knowledgable novices who study well..but I guess we are not like that.";
 		next;
 		mes "[Instructor Argos]";
-		mes "Just take prompt action.";
-		mes "And sometimes you'll be defeated by stong enemies...";
+		mes "We would just rush into new places head first.";
+		mes "And sometimes be sorely defeated by stong enemies...";
 		next;
 		mes "[Instructor Argos]";
-		mes "Huh? You're right this is my story.";
+		mes "What's that? You're right, I was talking mostly about myself.";
 		mes "I was getting sick of being defeated.";
 		next;
 		mes "[Instructor Argos]";
-		mes "One day, a good idea came to my mind. If I pretend to be dead when I find a strong enemy...";
+		mes "One day, a good idea came to mind. If I pretend to be dead when I run into a strong enemy...";
 		next;
 		mes "[Instructor Argos]";
-		mes "I was faced with the risk of death, because I was not good at pretending to be dead.";
-		mes "Even when I look back at that time. it is still thrilling...";
+		mes "But I was faced with the risk of death, because I was not good at pretending to be dead.";
+		mes "Even now when I look back at that time, it is still thrilling...";
 		emotion ET_KEK;
 		next;
 		mes "[Instructor Argos]";
-		mes "let's continue to talk";
-		mes "So ever since then, Playing Dead started working out for me!";
+		mes "Anyway, as I was saying.";
+		mes "Ever since I figured that out, Playing Dead started working out well for me!";
 		next;
 		mes "[Instructor Argos]";
-		mes "And then...";
-		mes "I could not hold a breath for a long time.";
+		mes "At first...";
+		mes "I could not hold my breath for a long time.";
 		mes "That was a problem!";
-		mes "Clever monsters were checking out my breath!";
+		mes "Clever monsters were checking for my breath!";
 		next;
 		mes "[Instructor Argos]";
 		mes "So I had to train myself to hold my breath for a long time.";
@@ -2537,13 +2537,13 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "Sounds complicated.. but it is quite simple.";
 		next;
 		mes "[Instructor Argos]";
-		mes "If you feel like you can not beat the enemy, when a strong one appears, just fall down on the ground and pretend to be dead.";
+		mes "If you feel like you cannot beat an enemy when a strong one appears, just fall down on the ground and pretend to be dead.";
 		next;
 		mes "[Instructor Argos]";
-		mes "I will put you on a brief test whether you hold you breathe or not.";
+		mes "I will put you to the test to see whether you can hold your breath or not.";
 		next;
 		mes "[Instructor Argos]";
-		mes "Hold a breath for 20 seconds, then talk to me later. I won't admit you if you talk to me before that time is over!";
+		mes "Hold your breath for 20 seconds, then talk to me again. I won't accept it if you talk to me before time is up!";
 		next;
 		mes "[Instructor Argos]";
 		mes "Start!";
@@ -2556,7 +2556,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "You can't learn this skill until you are able to hold it!";
 		next;
 		mes "[Instructor Argos]";
-		mes "Hold breath for 20 seconds again!";
+		mes "Hold your breath for 20 seconds again!";
 		mes "Then talk to me.";
 		close2;
 		erasequest 15001;
@@ -2570,16 +2570,16 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		next;
 		mes "[Instructor Argos]";
 		mes "Okay, good job.";
-		mes "If you have strong patience like that, it will save you. There will be no monsters that can hurt you.";
+		mes "If you have patience like that, it may save your life. Even powerful monsters will not be able to hurt you.";
 		next;
 		mes "[Instructor Argos]";
-		mes "The <^ff0000Play Dead^000000> skill is in your skill list which you can open by pressing <Alt + S>, Please do not forget to use it, it will save you when you are in a danger.";
+		mes "The <^ff0000Play Dead^000000> skill is in your skill list, which you can open by pressing <Alt + S>. Please do not forget to use it, as it could save you when you are in a danger.";
 		next;
 		mes "[Instructor Argos]";
-		mes "If you grow up and get another job, then you do not need this skill so do not spare it! Wse it when you need to and don't hesitate.";
+		mes "If you grow stronger and get another job, then you may not always need it. But use it when you do need to, and don't hesitate.";
 		next;
 		mes "[Instructor Argos]";
-		mes "I need to get some sleep, do not wake me up. Yawn.";
+		mes "Now I need to get some sleep, do not wake me up. Yawn.";
 		close;
 	}
 
@@ -2612,10 +2612,10 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 		mes "[Receptionist]";
 		mes "Hello, " + strcharinfo(0) +".";
 		mes "How are you today?";
-		mes "I am in charge guiding you here in the Academy.";
+		mes "I am in charge of guiding you here in the Academy.";
 	} else {
 		mes "[Receptionist]";
-		mes "Welcome to our Academy. I am in charge with the guide and registration for Novice education courses.";
+		mes "Welcome to our Academy. I am in charge of guidance and registration for Novice education courses.";
 	}
 	next;
 	while(1) {
@@ -2623,25 +2623,25 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 		mes "What can I do for you?";
 		next;
 		if (isbegin_quest(4269) == 2)
-			.@menu$ = ":What's inside and outside the Academy.:Trainer location guide.:End Coversation.";
+			.@menu$ = ":What is inside this Academy:Trainer location guide.:End Coversation.";
 		else
 			.@menu$ = "Register for the Academy:Explanation about the Academy:Location for trainers:Coversation finished";
 		switch(select(.@menu$)) {
 		case 1:
 			if (Class == Job_Novice) {
 				if (!checkweight(1301,10)) {
-					mes "- As you are overloaded with too many items, quest can't be continued.-";
+					mes "- As you are overloaded with too many items, the quest can't be continued.-";
 					close;
 				}
 				mes "[Receptionist]";
 				mes "Let me see... Your name is... " + strcharinfo(0) + ".";
-				mes "I will make a new registration for you.";
-				mes "You can choose the course freely and each course has individual features.";
+				mes "I will add you to the registration.";
+				mes "You can choose your course of education freely, though keep in mind each course is very different from the other.";
 				next;
 				mes "[Receptionist]";
-				mes "And this is the the basic equipment for the educational course.";
+				mes "Here is the basic equipment for an educational course.";
 				mes "Please make a good use of it.";
-				mes "Be careful with it as it won't be provided again.";
+				mes "Be careful with it, as it won't be provided again.";
 				setquest 4269;
 				completequest 4269;
 				getitem 2352,1;// Novice_Plate
@@ -2655,56 +2655,56 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 				getitem 569,300;// Novice_Potion
 				next;
 				mes "[Receptionist]";
-				mes "It is your first step to be an adventurer that you have made a visit to us.";
+				mes "This visit is your first step into becoming an adventurer.";
 				getexp 100,100;
 				next;
 				mes "[Receptionist]";
-				mes "On our next meeting, I anticipate you will grow up a bit more.";
+				mes "Speak to me again soon, I have more to tell you.";
 				//ConsumeSpecialItem Inspector_Certificate_
 				close;
 			} else {
 				mes "[Receptionist]";
-				mes "One who is not a Novice can't attend the educational course.";
+				mes "One who is not a Novice cannot attend these educational courses.";
 				next;
 				mes "[Receptionist]";
-				mes "However, a part of the educational course except the character cultivation can be freely attended. So, you may look around the Academy and neighboring places.";
+				mes "However, character cultivation can be freely attended by anyone. So, you may look around the Academy and our surrounding areas.";
 				close;
 			}
 		case 2:
 			switch(select("What's on the 1st floor", "What's on the 2nd floor", "Explanation about towns", "End Conversation")) {
 			case 1:
 				mes "[Receptionist]";
-				mes "The first floor is equipped with instructors that give you lessons on how the world works here in Rune Midgard.";
+				mes "The first floor is full of instructors that give you lessons on how the world works here in Rune Midgard. I'll tell you a little about these lessons.";
 				next;
 				mes "[Receptionist]";
-				mes "First of all, at the dispensary, you can learn how to recover your physical strength and learn a skill to heal your HP";
+				mes "First, at the dispensary, you can learn how to recover your physical strength and learn a skill to heal your HP";
 				next;
 				mes "[Receptionist]";
 				mes "At the armory, you can get simple training about battling monsters in Rune Midgard.";
 				next;
 				mes "[Receptionist]";
-				mes "At the cafeteria, you can practice cooking and and will learn its many benefits.";
+				mes "At the cafeteria, you can practice cooking and and learn its many benefits.";
 				next;
 				break;
 			case 2:
 				mes "[Receptionist]";
-				mes "At the 2nd floor, there are trainers that will teach you about the different job classes in the world.";
+				mes "On the 2nd floor, there are trainers that will teach you about the different job classes in the world.";
 				next;
 				mes "[Receptionist]";
-				mes "Listen to the trainers and decide for yourself which job suits your personal style.";
+				mes "Listen to what the trainers have to say and decide for yourself which job you want to pursue. The trainers can get you started on the path you choose.";
 				next;
 				break;
 			case 3:
 				mes "[Receptionist]";
-				mes "This town is called 'Izlude' the satellite and port city of the Capital City of the Rune-Midgarts Kingdom Prontera.";
+				mes "This town is called 'Izlude', the satellite and port city of the Capital City of the Kingdom of Rune-Midgarts, Prontera.";
 				next;
 				mes "[Receptionist]";
-				mes "This town was re-organized to suit the education of Novices.";
+				mes "This town was re-organized to better suit the education of Novices.";
 				next;
 				break;
 			case 4:
 				mes "[Receptionist]";
-				mes "Please find me, if you need anything else.";
+				mes "Please come back and find me, if you need anything else.";
 				//if (Class == Job_Novice)
 					//ConsumeSpecialItem Inspector_Certificate_
 				close;
@@ -2715,14 +2715,14 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 				switch(select("Game Mechanic Tutorial Instructors", "1st job trainers", "Return to the previous menu", "End Conversation")) {
 				case 1:
 					mes "[Receptionist]";
-					mes "Left-Click your mouse on the name of the trainer you are looking for and I will give guide you to them.";
+					mes "Left-Click your mouse on the name of the trainer you are looking for and I will guide you to them.";
 					next;
 					mes "<NAVI>[Therapist]<INFO>iz_ac01,59,43</INFO></NAVI>, status recovery trainer";
 					mes "<NAVI>[Subino]<INFO>iz_ac01,59,83</INFO></NAVI>, battle trainer";
 					mes "<NAVI>[Mainz]<INFO>iz_ac01,134,47</INFO></NAVI>, abnormal stats trainer";
-					mes "<NAVI>[Dakuwazu]<INFO>iz_ac01,147,47</INFO></NAVI>, Cooking Trainer.";
-					mes "<NAVI>[Han]<INFO>izlude,153,126</INFO></NAVI>, Refining Trainer.";
-					mes "<NAVI>[Mounds]<INFO>izlude,96,125</INFO></NAVI> Enchanting Trainer.";
+					mes "<NAVI>[Dakuwazu]<INFO>iz_ac01,147,47</INFO></NAVI>, cooking trainer.";
+					mes "<NAVI>[Han]<INFO>izlude,153,126</INFO></NAVI>, refining trainer.";
+					mes "<NAVI>[Mounds]<INFO>izlude,96,125</INFO></NAVI> Enchanting trainer.";
 					mes "<NAVI>[Cream Puff]<INFO>iz_ac02,143,55</INFO></NAVI>, Class Aptitude Test.";
 					next;
 					mes "[Receptionist]";
@@ -2733,18 +2733,18 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					} else {
 						if (Class == Job_Novice) {
 							mes "[Receptionist]";
-							mes "I believe you'll become nicer on our next meeting. Try your best~~~";
+							mes "I believe you'll be even better by our next meeting. Do your best~~~";
 							//ConsumeSpecialItem Inspector_Certificate_
 							close;
 						} else {
 							mes "[Receptionist]";
-							mes "Please find me, if you need anything else.";
+							mes "Please come back and find me, if you need anything else.";
 							close;
 						}
 					}
 				case 2:
 					mes "[Receptionist]";
-					mes "Left-Click your mouse on the name of the trainer you are looking for and I will give guide you to them.";
+					mes "Left-Click your mouse on the name of the trainer you are looking for and I will guide you to them.";
 					next;
 					mes "Swordman Instructor <NAVI>[Adric]<INFO>iz_ac02,62,51</INFO></NAVI>";
 					mes "Acolyte Instructor <NAVI>[Alice]<INFO>iz_ac02,156,169</INFO></NAVI>";
@@ -2764,12 +2764,12 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					} else {
 						if (Class == Job_Novice) {
 							mes "[Receptionist]";
-							mes "I believe you'll become nicer on our next meeting. Try your best~~~";
+							mes "I believe you'll be even better by our next meeting. Do your best~~~";
 							//ConsumeSpecialItem Inspector_Certificate_
 							close;
 						} else {
 							mes "[Receptionist]";
-							mes "Please find me, if you need anything else.";
+							mes "Please come back and find me, if you need anything else.";
 							close;
 						}
 					}
@@ -2777,7 +2777,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					break;
 				case 4:
 					mes "[Receptionist]";
-					mes "Please find me, if you need anything else.";
+					mes "Please come back and find me, if you need anything else.";
 					// if (Class == Job_Novice)
 						//ConsumeSpecialItem Inspector_Certificate_
 					close;
@@ -2787,7 +2787,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 			break;
 		case 4:
 			mes "[Receptionist]";
-			mes "Please find me, if you need anything else.";
+			mes "Please come back and find me, if you need anything else.";
 			// if (Class == Job_Novice)
 				//ConsumeSpecialItem Inspector_Certificate_
 			close;
