@@ -8936,28 +8936,28 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 			mes "Great decision.";
 			next;
 			mes "[Trainer Adric]";
-			mes "Fight on the frontline with large swords,";
-			mes "Bringing victory and with a high defense to protect your comrades.";
+			mes "We fight on the frontline with large swords,";
+			mes "bringing victory with stellar defense to protect your comrades.";
 			mes "Simply put, we're the best.";
 			next;
 			mes "[Trainer Adric]";
 			mes "What do you think?";
 			mes "You want to become a Swordsman here?";
 			next;
-			switch(select("No thanks", "I want to test Swordsman Skills!", "Change me right now!")) {
+			switch(select("No thanks", "I want to test Swordsman Skills!", "Change me to Swordsman right now!")) {
 			case 1:
 				mes "[Trainer Adric]";
-				mes "Since you're not interested in this opportunity,";
+				mes "Since you're not interested in this opportunity...";
 				next;
 				mes "[Trainer Adric]";
-				mes "Go hunt Porings and stay";
+				mes "go hunt Porings and stay";
 				mes "as a novice forever!";
 				cutin "", 255;
 				close;
 			case 2:
 				mes "[Trainer Adric]";
-				mes "Calm down, lets's start over.";
-				mes "First, I'll give you a ^FF0000Swordman Manual^000000";
+				mes "Calm down, lets's start from the beginning.";
+				mes "First, I'll give you a ^FF0000Swordman Manual^000000".;
 				mes "Read it carefuly before asking any questions.";
 				getitem 2819,1;// Swordman_Manual
 				nov_3_swordman = 1;
@@ -8968,11 +8968,11 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 				if (JobLevel < 10) {
 					mes "[Trainer Adric]";
 					mes "If you want to become a Swordman,";
-					mes "You should reach over ^006400Base level 10^000000,";
-					mes "And become more than ^006400beginner's skill level 9^000000.";
+					mes "You should reach at least ^006400Base level 10^000000,";
+					mes "And get your ^006400beginner's skill level to 9^000000.";
 					next;
 					mes "[Trainer Adric]";
-					mes "Get taught here and follow the steps.";
+					mes "Then you can follow the steps here.";
 					cutin "", 255;
 					close;
 				} else {
@@ -8994,28 +8994,28 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 		} else if (nov_3_swordman == 1) {
 			mes "[Trainer Adric]";
 			mes "If you are equipped with a ^FF0000Swordman Manual^000000";
-			mes "You'll be able to experience the basic skills of the swordsman.";
-			mes "Now let's study the basics of Swordsman skills.";
+			mes "You'll be able to try out the basic skills of a swordsman.";
+			mes "Now, let's study the basics of Swordsman skills.";
 			next;
 			while(1) {
-				switch(select("Swordman key points", "Heightened Attack and defense.", "Related stats", "Additional Swordman classes?", "I learned enough already.")) {
+				switch(select("Swordman key points", "Heightened attack and defense.", "Related stats", "Additional Swordman classes?", "I learned enough already.")) {
 				case 1:
 					mes "[Trainer Adric]";
-					mes "Swordsman uses strong constitution; shrugs off damage easily from foes and when in a party, is a leader and the protector of others.";
+					mes "Swordsman has a strong constitution. We shrug off damage from foes easily, and when in a party, are a leader and protector of others.";
 					next;
 					continue;
 				case 2:
 					mes "[Trainer Adric]";
-					mes "Swordsman prefer to use spears, two-handed swords or combination sword and shield.";
+					mes "Swordsman prefer to use spears, two-handed swords or a combination of sword and shield.";
 					next;
 					mes "[Trainer Adric]";
-					mes "Also the swordsman's vitality is normally high making them able to carry massive amounts of weight.";
+					mes "Also the swordsman's vitality is normally high, making them able to carry around massive amounts of weight.";
 					next;
 					continue;
 				case 3:
 					mes "[Trainer Adric]";
-					mes "Desired stats are usually ^0000FFStr^000000, ^0000FFAgi^000000, ^0000FFVit^000000, ^0000FFDex^000000";
-					mes "Of course this is all up to you";
+					mes "Desired stats are usually ^0000FFStr^000000, ^0000FFAgi^000000, ^0000FFVit^000000, and ^0000FFDex^000000".;
+					mes "But of course it's all up to you in the end.";
 					next;
 					mes "[Trainer Adric]";
 					mes "^0000FFVit^000000 affects ^FF0000HP recovery rate^000000.";
@@ -9024,16 +9024,16 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 					next;
 					mes "[Trainer Adric]";
 					mes "^0000FFAgi^000000 increases ^FF0000attacking speed^000000 and ^FF0000evasion rate^000000,";
-					mes "^0000FFLuk^000000 affects ^FF0000probability of critical^000000.";
+					mes "^0000FFLuk^000000 affects ^FF0000probability of critical hit^000000.";
 					next;
 					continue;
 				case 4:
 					mes "[Trainer Adric]";
-					mes "After changing to a Swordsman you can change to a ^0000FFKnight^000000 or ^0000FFCrusader^000000.";
+					mes "After powering up a Swordsman enough, you can change to a ^0000FFKnight^000000 or ^0000FFCrusader^000000.";
 					next;
 					mes "[Trainer Adric]";
-					mes "Go raise your strength while figuring out if you're offensive or defensive.";
-					mes "This is something you should do.";
+					mes "You should raise your strength while considering if you prefer offense or defense.";
+					mes "This is something that will be important.";
 					next;
 					continue;
 				case 5:
@@ -9042,8 +9042,8 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 				break;
 			}
 			mes "[Trainer Adric]";
-			mes "The study material can be retaught by Neals the assitant trainer.";
-			mes "Remember this.";
+			mes "The study material can be retaught by Neals, the assitant trainer.";
+			mes "Remember him.";
 			nov_3_swordman = 2;
 			if (isbegin_quest(1229))
 				erasequest 1229;
@@ -9053,11 +9053,11 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 		} else if (nov_3_swordman == 2) {
 			if (JobLevel < 10) {
 				mes "[Trainer Adric]";
-				mes "Using the Swordman Manual I gave you train by hunting monsters.";
-				mes "Go to the Battle Instructor Subino on the first floor Armory room.";
+				mes "Using the Swordman Manual I gave you, train by hunting monsters.";
+				mes "Go to the Battle Instructor Subino on the 1st floor Armory room.";
 				next;
 				mes "[Trainer Adric]";
-				mes "Raise your level to ^006400job level 10^000000 and get to ^006400beginner's skill level 9^000000, come back here again.";
+				mes "When you raise yourself to ^006400job level 10^000000 and get to ^006400beginner's skill level 9^000000, come back here again.";
 				nov_3_swordman = 3;
 				if (isbegin_quest(1230))
 					erasequest 1230;
@@ -9065,13 +9065,13 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 				close;
 			} else {
 				mes "[Trainer Adric]";
-				mes "Since you have enough job levels,";
-				mes "you don't need any more lecturing.";
+				mes "Since you have enough job levels already,";
+				mes "you don't need any more lessons.";
 				next;
 				switch(select("Then I will stop.", "But I want to listen more.", "I want to be a Swordsman right away!")) {
 				case 1:
 					mes "[Trainer Adric]";
-					mes "You surpassed the study material to raise your level.";
+					mes "You surpassed the study material needed to raise your level.";
 					next;
 					mes "[Trainer Adric]";
 					mes "Impressive.";
@@ -9079,25 +9079,25 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 					close;
 				case 2:
 					mes "[Trainer Adric]";
-					mes "There's nothing else special to teach you.";
-					mes "Everything I taught you if you remember them well, that's all you need.";
+					mes "There's nothing else I can teach you.";
+					mes "If you remember everything I taught you well, that's all you need for now.";
 					next;
 					mes "[Trainer Adric]";
-					mes "If you need additional training,";
+					mes "If you desire additional training,";
 					mes "Go to the Battle Instructor Subino";
-					mes "on the first floor Armory room.";
+					mes "on the 1st floor Armory room.";
 					next;
 					switch(select("This is very tedious.", "I need more training.", "I want to be a Swordsman right away!")) {
 					case 1:
 						mes "[Trainer Adric]";
-						mes "A simple No would've sufficed.";
+						mes "A simple 'No' would've sufficed.";
 						cutin "", 255;
 						close;
 					case 2:
 						mes "[Trainer Adric]";
-						mes "Go to the Battle Instructor Subino on the first floor Armory room.";
+						mes "Go to the Battle Instructor Subino on the 1st floor Armory room.";
 						mes "If you think you're ready, come back here.";
-						mes "You need to change to a Swordsman job soon!";
+						mes "You should be able to change to a Swordsman job soon!";
 						nov_3_swordman = 3;
 						if (isbegin_quest(1230))
 							erasequest 1230;
@@ -9141,7 +9141,7 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 				mes "You still don't have enough to become a Swordman.";
 				next;
 				mes "[Trainer Adric]";
-				mes "If you need some battle training find Subino on the first floor Armory of the Academy.";
+				mes "If you need some battle training, find Subino on the 1st floor Armory of the Academy.";
 				cutin "", 255;
 				close;
 			} else {
@@ -9165,7 +9165,7 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 			mes "During this period, you must train really hard.";
 			next;
 			mes "[Trainer Adric]";
-			mes "Continue to improve your abilities to change to an amazing job!";
+			mes "Continue to improve your abilities to change to this admirable job!";
 			cutin "", 255;
 			close;
 		}
@@ -9174,7 +9174,7 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 		mes "You're already a Swordsman!";
 		next;
 		mes "[Trainer Adric]";
-		mes "There's nothing else special to teach you.";
+		mes "There's nothing else to teach you.";
 		cutin "", 255;
 		close;
 	} else {
@@ -9204,20 +9204,20 @@ iz_ac02,53,48,5	script	Swordman Assistant#ac	4_M_KY_KNT,{
 	}
 	if (Class == Job_Novice && JobLevel >= 10) {
 		mes "[Assitant Trainer Neals]";
-		mes "As you are at the enough job level, you don't need any more lecturing.";
+		mes "As you have reached the needed job level, you don't need any more lessons.";
 		next;
 		if (select("Then I will stop.", "Become a swordsman right away!") == 1) {
 			mes "[Assitant Trainer Neals]";
-			mes "Before the training starts, you already raised your level.";
+			mes "Before the training starts, you already reached the right level.";
 			mes "Impressive.";
 			close;
 		}
 		mes "[Assitant Trainer Neals]";
-		mes "It seems that you have fully grown.";
+		mes "It seems that you have met the full needs.";
 		mes "Head to the Swordsman Guild to become a swordsman!";
 		next;
 		mes "[Assitant Trainer Neals]";
-		mes "The Swordsman Guild is located in Izlude square";
+		mes "The Swordsman Guild is located in Izlude square.";
 		mes "From the center, go west.";
 		mes "It should be easy to find.";
 		cutin "", 255;
@@ -9228,7 +9228,7 @@ iz_ac02,53,48,5	script	Swordman Assistant#ac	4_M_KY_KNT,{
 		if (Class == Job_Swordman) {
 			mes "[Assitant Trainer Neals]";
 			mes "You are now a swordsman!";
-			mes "There's nothing else special to teach you.";
+			mes "There's nothing else to teach you.";
 			close;
 		} else if (Class != Job_Novice) {
 			mes "[Assitant Trainer Neals]";
@@ -9238,26 +9238,26 @@ iz_ac02,53,48,5	script	Swordman Assistant#ac	4_M_KY_KNT,{
 		} else {
 			if (isbegin_quest(1229) == 2) {
 				mes "[Assitant Trainer Neals]";
-				mes "Let's repeat the prerequisite of Swordsmanhood, this is a review study!";
+				mes "Let's repeat the prerequisite of Swordsmanhood. This is a review!";
 				next;
 				while(1) {
-					switch(select("Swordman key points", "Heightened Attack and defense.", "Related stats","Additional Swordman classes?", "I learned enough already.")) {
+					switch(select("Swordman key points", "Heightened attack and defense.", "Related stats","Additional Swordman classes?", "I learned enough already.")) {
 					case 1:
 						mes "[Assitant Trainer Neals]";
-						mes "Swordsman uses strong constitution; shrugs off damage easily from foes and when in a party, is a leader and the protector of others.";
+						mes "Swordsman has a strong constitution. We shrug off damage from foes easily, and when in a party, are a leader and protector of others.";
 						next;
 						break;
 					case 2:
 						mes "[Assitant Trainer Neals]";
-						mes "Swordsman prefer to use spears, two-handed swords or combination sword and shield.";
+						mes "Swordsman prefer to use spears, two-handed swords or a combination of sword and shield.";
 						next;
 						mes "[Assitant Trainer Neals]";
-						mes "Also the swordsman's vitality is normally high making them able to carry massive amounts of weight.";
+						mes "Also the swordsman's vitality is normally high, making them able to carry around massive amounts of weight.";
 						next;
 						break;
 					case 3:
 						mes "[Assitant Trainer Neals]";
-						mes "Desired stats are usually ^0000FFStr^000000, ^0000FFAgi^000000, ^0000FFVit^000000, ^0000FFDex^000000 Of course this is all up to you";
+						mes "Desired stats are usually ^0000FFStr^000000, ^0000FFAgi^000000, ^0000FFVit^000000, and ^0000FFDex^000000. But of course, this is all up to you in the end.";
 						next;
 						mes "[Assitant Trainer Neals]";
 						mes "^0000FFVit^000000 affects^FF0000HP recovery rate^000000.";
@@ -9266,16 +9266,16 @@ iz_ac02,53,48,5	script	Swordman Assistant#ac	4_M_KY_KNT,{
 						next;
 						mes "[Trainer Adric]";
 						mes "^0000FFAgi^000000 increases ^FF0000attacking speed^000000 and ^FF0000evasion rate^000000.";
-						mes "^0000FFLuk^000000 affects ^FF0000probability of critical ^000000.";
+						mes "^0000FFLuk^000000 affects ^FF0000probability of critical hit^000000.";
 						next;
 						break;
 					case 4:
 						mes "[Assitant Trainer Neals]";
-						mes "After changing to a Swordsman you can change to a ^0000FFKnight ^000000or ^0000FFCrusader^000000.";
+						mes "After powering up a Swordsman enough, you can change to a ^0000FFKnight ^000000or ^0000FFCrusader^000000.";
 						next;
 						mes "[Assitant Trainer Neals]";
-						mes "Go raise your strength while figuring out if you're offensive or defensive.";
-						mes "This is something you should do.";
+						mes "You should raise your strength while considering if you prefer offense or defense.";
+						mes "This is something that will be important.";
 						break;
 					case 5:
 						mes "[Assitant Trainer Neals]";
@@ -9284,13 +9284,13 @@ iz_ac02,53,48,5	script	Swordman Assistant#ac	4_M_KY_KNT,{
 						close;
 					}
 					mes "[Assitant Trainer Neals]";
-					mes "Let's repeat the prequisite of swordsmanhood,";
-					mes "this is a review study!";
+					mes "Let's repeat the prequisite of swordsmanhood.";
+					mes "This is a review!";
 					next;
 				}
 			} else {
 				mes "[Assitant Trainer Neals]";
-				mes "Feeble people like you can become a gallant Swordsman soon.";
+				mes "Even feeble people like you can become a gallant Swordsman soon enough.";
 				mes "Yes, you can. Be ambitious.";
 				close;
 			}
