@@ -6269,19 +6269,19 @@ iz_ac01_d,69,36,3	duplicate(Otter Samssoon#ac)	Otter Samssoon#ac_d	4W_SAILOR
 // -----------------------------------------------------------------------------
 iz_ac01,138,69,3	script	Lady#ac	1_F_ORIENT_02,{
 	mes "[Lady]";
-	mes "^3377FF Is the east window enlightened? Pecopeco is singing.^000000";
+	mes "^3377FF Is the east window full of light? Pecopeco is singing.^000000";
 	next;
 	mes "[Lady]";
-	mes "^3377FF Haven't the kids feeding Picky awaken yet?^000000";
+	mes "^3377FF Haven't the kids woken up to feed Picky yet?^000000";
 	next;
 	mes "[Lady]";
-	mes "^3377FF When are you going to Morocc over the dessert?^000000";
+	mes "^3377FF When are you going across the dessert to Morocc?^000000";
 	next;
 	mes "[Lady]";
 	mes "... Anonymous...";
 	next;
 	mes "[Lady]";
-	mes "You have a pretty name... Anonymous... I am attacted by your work.";
+	mes "You have a pretty name... Anonymous... I adore your work.";
 	emotion ET_THROB;
 	close;
 }
@@ -6309,7 +6309,7 @@ iz_ac01_d,149,46,3	duplicate(Eclaire#ac)	Eclaire#ac_d	4_F_KAFRA7
 iz_ac01,150,50,3	script	Mille Feuille#ac	4_F_KAFRA8,{
 	emotion ET_THROB;
 	mes "[Mille Feuille]";
-	mes "Ahh. Hey is Sir. Orleons doing well?";
+	mes "Ahh. Hey, is Sir. Orleans doing well?";
 	close;
 }
 
@@ -6327,7 +6327,7 @@ iz_ac01,160,50,3	script	Chef#ac	4_F_GODEMOM,{
 	next;
 	mes "[Chef]";
 	mes "I also learned from Sir. Charles Orleans.";
-	mes "Everyone became happy from eating my meals.";
+	mes "Everyone is delighted to eat the meals I cook.";
 	next;
 	mes "[Chef]";
 	mes "Now it is my pleasure to feed the newbies of the Academy....";
@@ -6357,7 +6357,7 @@ iz_ac01,159,32,3	script	Hungry Trainee#ac	4_M_SIT_NOVICE,{
 	next;
 	emotion ET_ANGER;
 	mes "[Hungry Trainee]";
-	mes "Don't tell me it's not difficult to understand! Explain it to me!";
+	mes "Don't say that, it's not difficult to understand! Explain yourself!";
 	close;
 }
 
@@ -6370,7 +6370,7 @@ iz_ac01_d,159,32,3	duplicate(Hungry Trainee#ac)	Hungry Trainee#ac_d	4_M_SIT_NOVI
 // -----------------------------------------------------------------------------
 iz_ac01,164,36,3	script	Scholarship Trainee#ac	1_F_PUBGIRL,{
 	mes "[Scholarship Trainee]";
-	mes "I've worked at many different places, but this place is the strangest.";
+	mes "I've worked at many different places, but this one is the strangest.";
 	close;
 }
 
@@ -6383,15 +6383,15 @@ iz_ac01_d,164,36,3	duplicate(Scholarship Trainee#ac)	Scholarship Trainee#ac_d	1_
 // -----------------------------------------------------------------------------
 iz_ac01,133,34,5	script	Broke Trainee#ac	4_M_SITDOWN,{
 	mes "[Broke Trainee]";
-	mes "Since the prices have risen I try to get my belly full at every chance I get.";
+	mes "Since prices have risen, I try to get my belly full every chance I get.";
 	next;
 	mes "[Broke Trainee]";
 	mes "It's been 21 hours since I've been here.";
-	mes "It's a buffet so you can eat without time limit.";
+	mes "It's a buffet, so you can eat without a time limit.";
 	next;
 	mes "[Broke Trainee]";
 	mes "Eat and digest, eat and digest, heh.";
-	mes "Do you want to join?";
+	mes "Do you want to join me?";
 	close;
 }
 
@@ -6405,7 +6405,7 @@ iz_ac01_d,133,34,5	duplicate(Broke Trainee#ac)	Broke Trainee#ac_d	4_M_SITDOWN
 iz_ac02,152,79,3	script	Noisy Trainee#ac	4_M_HUBOY,{
 	if (Class == Job_Novice) {
 		mes "[Noisy Trainee]";
-		mes "Hey, do you know about the gunslinger's own weapon?";
+		mes "Hey, do you know about Gunslinger weapons?";
 		next;
 		if (select("Don't know", "Know") == 2) {
 			mes "[Noisy Trainee]";
@@ -6413,25 +6413,25 @@ iz_ac02,152,79,3	script	Noisy Trainee#ac	4_M_HUBOY,{
 			close;
 		}
 		mes "[Noisy Trainee]";
-		mes "I guessed you were.";
+		mes "I thought so.";
 		next;
 		mes "[Noisy Trainee]";
-		mes "Gunslinger handles 5 kinds of guns and each gun has its own character.";
+		mes "Gunslinger handles 5 kinds of guns, and each gun has its own characteristics.";
 		next;
 		select("What character?");
 		mes "[Noisy Trainee]";
-		mes "Hahahaha~ I am also taking the lesson, but I don't know the details as I haven't become a gunslinger.";
+		mes "Hahahaha~ I am taking lessons, but I don't know the full details as I haven't become a gunslinger yet.";
 		next;
 		mes "[Noisy Trainee]";
-		mes "I heard that as it was a dangerous weapon they don't let us use them yet!";
+		mes "I heard that there is a dangerous weapon they don't let us use yet!";
 		close;
 	} else if (Class == Job_Gunslinger) {
 		mes "[Noisy Trainee]";
-		mes "Oh Mr. gunslinger!! Nice.";
+		mes "Oh, Mr. gunslinger!! Nice.";
 		close;
 	} else {
 		mes "[Noisy Trainee]";
-		mes "What? Why did you take the other job rather than being a nice gunslinger?";
+		mes "What? Why did you take the another job rather than becoming a great gunslinger?";
 		close;
 	}
 }
@@ -6448,25 +6448,25 @@ iz_ac02,143,77,3	script	Quite Trainee#ac	4_F_KID2,{
 		mes "[Quiet Trainee]";
 		switch(rand(1,5)) {
 		case 1:
-			mes "Are you coming to take the lesson for gunslinger?";
+			mes "Are here to take lessons for Gunslinger?";
 			break;
 		case 2:
-			mes "Ms. Lusa really looks pretty.";
+			mes "Ms. Lusa looks really pretty.";
 			break;
 		case 3:
-			mes "I wish to be a gunslinger, like her.";
+			mes "I want to be a gunslinger, like her.";
 			break;
 		case 4:
 			mes "I hope I finish my lessons soon!";
 			break;
 		case 5:
-			mes "Learning is too difficult...";
+			mes "Learning is way too difficult...";
 			break;
 		}
 		close;
 	} else if (Class == Job_Gunslinger) {
 		mes "[Quiet Trainee]";
-		mes "You are a gunslinger? You look great! I want to become a gunslinger......";
+		mes "You're a gunslinger? You look great! I want to become a gunslinger......";
 		close;
 	} else {
 		mes "[Quiet Trainee]";
@@ -6503,10 +6503,10 @@ iz_ac02,149,43,3	script	Ragie#ac	1_M_BARD,{
 	mes "A sudden poetic inspiration hit me!";
 	next;
 	mes "[Ragie]";
-	mes "^3377FFIn the night of the Byalan Island under the moonlight, sitting alone in Izlude^000000";
+	mes "^3377FFBy night on Byalan Island under the moonlight, sitting alone in Izlude^000000";
 	next;
 	mes "[Ragie]";
-	mes "^3377FFWearing Tzurugie on my belly, in the deep anxiety,^000000";
+	mes "^3377FFWearing Tzurugie on my belly, with deep anxiety,^000000";
 	next;
 	mes "[Ragie]";
 	mes "^3377FFHearing I made a fortune from somewhere, killing me softly.^000000";
@@ -6515,10 +6515,10 @@ iz_ac02,149,43,3	script	Ragie#ac	1_M_BARD,{
 	mes "........";
 	next;
 	mes "[Ragie]";
-	mes "How about it? It is excellent, isn't it?";
+	mes "What do you think? It's excellent, isn't it?";
 	next;
 	mes "[Ragie]";
-	mes "I will ^FF0000transcend ^000000and ^FF00003rd job change^000000. Become a nice Minstrel, I can play with a famous Wanderer like Mr. Igoo.";
+	mes "I will ^FF0000transcend ^000000to ^FF00003rd job change^000000. I'll become a nice Minstrel, so I can play with a famous Wanderer like Mr. Igoo.";
 	next;
 	while (1) {
 		switch(select("What is transcending?", "What is the 3rd job change?", "Who is Igoo?", "End Conversation")) {
@@ -6529,25 +6529,25 @@ iz_ac02,149,43,3	script	Ragie#ac	1_M_BARD,{
 				next;
 			} else {
 				mes "[Ragie]";
-				mes "Transcending is great. Very great.";
+				mes "Transcending is great. Wonderful.";
 				next;
 				mes "[Ragie]";
-				mes "Basically the 2nd job adventurer gains the base level 99 and job level 50, on then can that person transcend.";
+				mes "Basically the 2nd job adventurer gets to base level 99 and job level 50, on then they can transcend.";
 				next;
 				mes "[Ragie]";
-				mes "Once you transcend, you can go back to the base level Novice.";
+				mes "Once you transcend, you go back to the base level Novice.";
 				next;
 				mes "[Ragie]";
-				mes "It is very hard to start your adventure again. However, there is a merit to the hardship.";
+				mes "It is difficult to start as an adventure again. However, there is a merit to the hardship.";
 				next;
 				mes "[Ragie]";
-				mes "The most important merit is to learn new skills at a new upgraded level. In my case, I could transfer to not an ordinary Bard but a Minstrel.";
+				mes "The most important merit is to learn new skills at a new upgraded level. In my case, I would transfer not to an ordinary Bard, but to a Minstrel.";
 				next;
 				mes "[Ragie]";
-				mes "Indeed, be careful as you can only follow the way of the job you chose before transcending.";
+				mes "But be careful, as you can only follow the path of the job you chose before transcending.";
 				next;
 				mes "[Ragie]";
-				mes "If you are interested in transcending, recommend you visit the Sage castle in ^FF0000Juno^000000. I may be far behind for it.";
+				mes "If you are interested in transcending, I recommend you visit the Sage castle in ^FF0000Juno^000000. I may not have reached that point myself.";
 				next;
 			}
 			break;
@@ -6558,51 +6558,51 @@ iz_ac02,149,43,3	script	Ragie#ac	1_M_BARD,{
 				next;
 			} else {
 				mes "[Ragie]";
-				mes "The 3rd job change is obviously a new job.";
+				mes "The 3rd job change is, of course, a new job.";
 				next;
 				mes "[Ragie]";
-				mes "Adventurers with the 2nd job or can be transferred to the 3rd job class once gaining the base level 99 and the job level more than 50.";
+				mes "Adventurers with a 2nd job can transcend to a 3rd job class once they've attained a base level of 99 and job level of 50.";
 				next;
 				mes "[Ragie]";
-				mes "For example, a Bard like me was an Archer in the beginning. Now I became a Bard. As I am diligently adventuring, I may be able to change jobs to a third job.";
+				mes "For example, a Bard like me was an Archer in the beginning for the 1st job. Now I became a Bard, my 2nd job. As I am diligently adventuring, I may be able to change to a 3rd job.";
 				next;
 				mes "[Ragie]";
-				mes "Ah, of course, though I don't make transfer, I could be Minstrel as my final target. However, I won't compromise with the reality. Someday I will be the best Minstrel.";
+				mes "Ah, of course, though I haven't transcended yet, my goal is to become a Minstrel. And I won't stop just there. Someday I will become the best Minstrel.";
 				next;
 				mes "[Ragie]";
-				mes "So, if you transfer, you could first be Novice and be a Bard. But someday I could be Minstrel, couldn't I?";
+				mes "If I transcend, I would first be a Novice and then a Bard again. But someday I could be Minstrel, couldn't I?";
 				next;
 				mes "[Ragie]";
-				mes "Choice is always on you. Be ambitious, adventurer. Someday I will sing an encouraging song for you.";
+				mes "The choice is up to you. Be ambitious, adventurer. Someday I will sing an encouraging song for you.";
 				next;
 			}
 			break;
 		case 3:
 			mes "[Ragie]";
-			mes "No! You don't know the most beautiful girl Wanderer Igoo in this era?";
+			mes "No! You don't know the most beautiful Wanderer of this era, Igoo?";
 			next;
 			mes "[Ragie]";
 			mes "Haven't you heard about [Volume 1 - Lost Poring] or [Volume 2 : Poring my love]?";
 			next;
 			mes "[Ragie]";
-			mes "Then, have you never heard the songs like [It's a Good day for an OCA] or [Baphomet I hardly knew you]";
+			mes "Then, have you never heard songs like [It's a Good day for an OCA] or [Baphomet I hardly knew you]";
 			next;
 			mes "[Ragie]";
-			mes "A beautiful Wanderer from Comodo at the age of 20. Not only Midgard but also wherever her wandering troupe goes, a fan club follows.";
+			mes "All from the lovely Wanderer from Comodo, a legend at the age of 20. Not just in Rune Midgard, but wherever her wandering troupe goes, a fan club follows.";
 			next;
 			mes "[Ragie]";
-			mes "I am ^FF0000Ragie^000000 in charge with the Rune Midgard branch head of Igoo's informal fan club! As Igoo has gone to the 2nd world, I am taking a rest for a while. But she will be back soon.";
+			mes "I am ^FF0000Ragie^000000 head of the Rune Midgard branch of Igoo's informal fan club! As Igoo has gone to the 2nd world, I am taking a rest for a while. But she will be back soon.";
 			next;
 			mes "[Ragie]";
-			mes "As I am still a low level of adventurer, I haven't followed her to the 2nd world... See! I will make great efforts and follow her everywhere.";
+			mes "As I am still a lower level adventurer, I haven't followed her to the 2nd world... But you see! I will make great efforts so I can follow her everywhere one day.";
 			next;
 			mes "[Ragie]";
-			mes "Ahaa. No sweat no sweat. It is useless to tell such a story to those ignorant.";
+			mes "Ahaa. No sweat, no sweat. It is useless to tell such a story to those that are ignorant.";
 			next;
 			break;
 		case 4:
 			mes "[Ragie]";
-			mes "Ah! I happened to come up with another great poetic inspiration.. Take a memo.. Memo..";
+			mes "Ah! I've just had another great poetic inspiration.. I must make a note.. make a note..";
 			close;
 		}
 	}
@@ -6617,10 +6617,10 @@ iz_ac02_d,149,43,3	duplicate(Ragie#ac)	Ragie#ac_d	1_M_BARD
 // -----------------------------------------------------------------------------
 pay_fild08,153,83,1	script	Lady Harvesting Herbs#2	1_F_ORIENT_02,{
 	mes "[Lady]";
-	mes "There is a town called Payon to the east. Taking a long way to the south, you can even reach Alberta.";
+	mes "There is a town called Payon to the east. If you take a long journey to the south, you can even reach Alberta.";
 	next;
 	mes "[Lady]";
-	mes "Payon is the wonderful city. There you can be transferred to an Archer or to a Taekwon. And a nice Dungeon there. If you have time, please make a visit.";
+	mes "Payon is a wonderful city. There you can be become an Archer or a Taekwon. There's also a nice Dungeon there. If you have time, please do visit.";
 	emotion ET_SMILE;
 	close;
 }
