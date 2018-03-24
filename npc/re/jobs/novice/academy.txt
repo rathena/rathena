@@ -6740,12 +6740,12 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	if (Class == Job_Novice) {
 		emotion ET_QUESTION;
 		mes "[Cream Puff]";
-		mes "You are a novice? right?";
+		mes "You are a novice, right?";
 		next;
 	} else {
 		emotion ET_OHNO;
 		mes "[Cream Puff]";
-		mes "Class aptitude test is nonsense for those who already have a job.";
+		mes "Class aptitude tests are useless for those who already have a job.";
 		close2;
 		cutin "", 255;
 		end;
@@ -6757,10 +6757,10 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		cutin "choucream_d.bmp",2;
 		emotion ET_OHNO;
 		mes "[Cream Puff]";
-		mes "Have you already decided? Ok then.";
+		mes "You've already decided? Ok then.";
 		next;
 		mes "[Cream Puff]";
-		mes "I wanted you to take the Class aptitude test for fun...";
+		mes "I wanted you to take the Class aptitude test for fun, though...";
 		close2;
 		cutin "", 255;
 		end;
@@ -6768,23 +6768,23 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	cutin "choucream_e.bmp",2;
 	emotion ET_SPARK;
 	mes "[Cream Puff]";
-	mes "Oh, that is good.";
-	mes "What is the ^0000FFClass aptitude test^000000.";
-	mes "I have one book left. Do you want to try? I won't say it will be help for sure but it will be fun.";
+	mes "Oh, tha's good.";
+	mes "Perhaps you would be interested in the ^0000FFClass aptitude test^000000.";
+	mes "I have one book left. Do you want to try? I can't guarantee it will help you decide, but at least it will be fun.";
 	next;
 	while(1) {
-		switch(select("Class aptitude test?", "Take the Class aptitude test.", "stop.")) {
+		switch(select("Class aptitude test?", "Take the Class aptitude test.", "Stop.")) {
 		case 1:
 			cutin "choucream_n.bmp",2;
 			mes "[Cream Puff]";
-			mes "The Class aptitude test is a test for recommending jobs by reviewing your personality and capability with the answers.";
+			mes "The Class aptitude test is a test that recommends jobs by reviewing your personality and capability, as judged by your answers.";
 			next;
 			mes "[Cream Puff]";
-			mes "It has 3 types of test and each one give 30 minutes to finish.";
+			mes "It has 3 types of test and each one gives you 30 minutes to finish.";
 			next;
 			emotion ET_QUESTION;
 			mes "[Cream Puff]";
-			mes "If you have free time and have not decided your job... how about taking this test?";
+			mes "If you have free time and have not decided your job... how about taking the test?";
 			next;
 			continue;
 		case 2:
@@ -6805,9 +6805,9 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	mes "Shall we start?";
 	next;
 	mes "[Cream Puff]";
-	mes "The first type of question is about taking an action for a given situation.";
+	mes "The first questions are about what you would do based on a given situation.";
 	next;
-	mes "In the middle of the dark, you're walking on the street of Prontera when suddenly you hear someone scream.";
+	mes "In the middle of the dark, you're walking in the streets of Prontera when suddenly you hear someone scream.";
 	next;
 	mes "'Aaaahh!! Don't hurt me ~'";
 	next;
@@ -6831,14 +6831,14 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@acolyte_p = .@acolyte_p + 1;
 		break;
 	case 4:
-		.@question_01$ = "You skillfully throw rocks at the punks.";
+		.@question_01$ = "You skillfully throw rocks at them.";
 		.@archer_p = .@archer_p + 1;
 		.@gunslinger_p = .@gunslinger_p + 1;
 		break;
 	}
 	mes ""+.@question_01$+"";
 	next;
-	mes "After clear up the mess, you approach the person who was being attacked.";
+	mes "After clearing up the mess, you approach the person who was being attacked.";
 	mes "Do you think the person who was surrounded by punks is a man or a woman?";
 	next;
 	if (select("Man", "Woman") == 1) {
@@ -6848,13 +6848,13 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@question_02_01$ = "she";
 		.@question_02_02$ = "daughter";
 	}
-	mes "The situation of encountering the gangs were like this";
+	mes "From talking, you find out the encounter happened like this...";
 	next;
-	mes "You find out that "+.@question_02_01$+" is the "+.@question_02_02$+" of very rich family in Alberta and Punks attacked while "+.@question_02_01$+" was on an errand for the family";
+	mes "Turns out that "+.@question_02_01$+" is the "+.@question_02_02$+" of a very rich family in Alberta and the punks attacked while "+.@question_02_01$+" was on an errand for the family.";
 	next;
-	mes "What kind of errand was he doing?";
+	mes "What kind of errand was it?";
 	next;
-	switch(select("Delivering an important object", "Deliver a small souvenir", "Deliver a message")) {
+	switch(select("Delivering an important object", "Delivering a small souvenir", "Delivering a message")) {
 	case 1:
 		.@swordman_p = .@swordman_p + 1;
 		.@archer_p = .@archer_p + 1;
@@ -6868,10 +6868,10 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@acolyte_p = .@acolyte_p + 1;
 		break;
 	}
-	mes "For your bravery, "+.@question_02_01+" becomes your friend and decides to go on a trip.";
-	mes "Where is "+.@question_02_01+" going?";
+	mes "Because of your bravery, "+.@question_02_01+" becomes your friend and decides to go on a trip with you.";
+	mes "Where has "+.@question_02_01+" decided to go?";
 	next;
-	switch(select("Capital city, Prontera", "Mountain city, Payon", "Port city, Alberta", "Magic city, Geffen", "Satelite city, Izlude", "Desert city, Morocc", "Industrial city, Einbroch", "World of natural life, Amatsu", "Garden city, Hugel")) {
+	switch(select("Capital city, Prontera", "Mountain city, Payon", "Port city, Alberta", "Magic city, Geffen", "Satelite city, Izlude", "Desert city, Morocc", "Industrial city, Einbroch", "City of natural life, Amatsu", "Garden city, Hugel")) {
 	case 1:
 		.@acolyte_p = .@acolyte_p + 1;
 		break;
@@ -6915,10 +6915,10 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@gunslinger_p = .@gunslinger_p + 1;
 	}
 	mes "[Cream Puff]";
-	mes "Now for the second test. Choose the best answer in your own opinion.";
+	mes "Now for the 2nd part of the test. Choose the best answer, in your opinion.";
 	next;
 	mes "[Cream Puff]";
-	mes "2nd type of question is to select a word or sentence which is closest to yourself.";
+	mes "For this 2nd type of question you select a word or sentence that matches you most.";
 	next;
 	switch(select("Study", "Exercise", "Service", "Violence")) {
 	case 1:
@@ -6937,7 +6937,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@ninja_p = .@ninja_p + 1;
 		break;
 	}
-	if (select("Change", "Preservation") == 1) {
+	if (select("Change", "Preserve") == 1) {
 		.@magician_p = .@magician_p + 1;
 	} else {
 		.@acolyte_p = .@acolyte_p + 1;
@@ -6971,10 +6971,10 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@taekwon_p = .@taekwon_p + 1;
 	}
 	mes "[Cream Puff]";
-	mes "2nd type of question is done. It was simple. Right ? Let's move to next.";
+	mes "The 2nd type of question is done. It was simple, right? Let's move on to the next.";
 	next;
 	mes "[Cream Puff]";
-	mes "Now for the third test. Please choose (Yes) or (No) to each question.";
+	mes "Now for the 3rd part. Please choose (Yes) or (No) for each question.";
 	next;
 	mes "Do you always pick up money that you find on the ground?";
 	next;
@@ -6984,7 +6984,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	} else {
 		.@acolyte_p = .@acolyte_p + 1;
 	}
-	mes "If you had the same name as someone of the opposite sex, would that make you less attracted to them?";
+	mes "If you had the same name as someone of your preferred sex, would that make you less attracted to them?";
 	next;
 	if (select("Yes", "No") == 1) {
 		.@ninja_p = .@ninja_p + 1;
@@ -7011,7 +7011,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@ninja_p = ninja_p + 1;
 		.@merchant_p = .@merchant_p + 1;
 	}
-	mes "You read everything in a magazine?";
+	mes "Do you read everything in a magazine?";
 	next;
 	if (select("Yes", "No") == 1) {
 		.@magician_p = .@magician_p + 1;
@@ -7037,7 +7037,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@acolyte_p = .@acolyte_p + 1;
 		.@taekwon_p = .@taekwon_p + 1;
 	}
-	mes "Do you write things down in a notebook often?";
+	mes "Do you write things down in notebooks often?";
 	next;
 	if (select("Yes", "No") == 1) {
 		.@magician_p = .@magician_p + 1;
@@ -7134,7 +7134,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@acolyte_p = .@acolyte_p + 1;
 		.@gunslinger_p = .@gunslinger_p + 1;
 	}
-	mes "Do you always have a plan B for various situations?";
+	mes "Do you always have a plan B for various circumstances?";
 	next;
 	if (select("Yes", "No") == 1) {
 		.@thief_p = .@thief_p + 1;
@@ -7143,7 +7143,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@gunslinger_p = .@gunslinger_p + 1;
 		.@merchant_p = .@merchant_p + 1;
 	}
-	mes "I think about something else while talking to others.";
+	mes "Does your mind wander while talking to others?";
 	next;
 	if (select("Yes", "No") == 1) {
 		.@magician_p = .@agician_p + 1;
@@ -7152,11 +7152,11 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		.@archer_p = .@archer_p + 1;
 	}
 	mes "[Cream Puff]";
-	mes "Class aptitude test is finished with 1,2 and 3rd test. Please wait for a moment.";
+	mes "The Class aptitude test is finished with 1st, 2nd and 3rd parts complete. Please wait a moment.";
 	next;
 	cutin "choucream_d.bmp",2;
 	mes "[Cream Puff]";
-	mes "It requires to manually calculate as you know.";
+	mes "Some manual calculation is required, you know.";
 	next;
 	setarray .@points[0],.@swordman_p,.@magician_p,.@archer_p,.@merchant_p,.@thief_p,.@acolyte_p,.@taekwon_p,.@gunslinger_p,.@ninja_p;
 	.@max = .@points[0];
@@ -7172,66 +7172,66 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	next;
 	cutin "choucream_e.bmp", 2;
 	mes "[Cream Puff]";
-	mes "Finished calculating. Math is always difficult.";
+	mes "I've finished calculating. Math is always difficult.";
 	next;
 	mes "[Cream Puff]";
-	mes "According to the Class aptitude test!";
+	mes "Here are the results according to the Class aptitude test..!";
 	next;
 	mes "[Cream Puff]";
 	if (.@who_job == 1) {
 		.@job_name$ = "Swordman";
-		mes "The one who wants to be a hero with stong belief and wants to influence on the world.";
+		mes "The one who wants to be a hero with stong beliefs, wants to have an influence on the world.";
 		next;
 		mes "[Cream Puff]";
-		mes "The one who wants to protect the weak.";
+		mes "The one who wants to protect the vulnerable.";
 	} else if (.@who_job == 2) {
 		.@job_name$ = "Mage";
-		mes "The one who is curious about knowing everything and independently work alone.";
+		mes "The one who is curious about knowing everything, wants to be independent and work alone.";
 		next;
 		mes "[Cream Puff]";
-		mes "the one who has good judgement, not out-going, analyzing and insightful and likes to observe...";
+		mes "The one who has good judgement, is analytical and insightful and likes to observe...";
 	} else if (.@who_job == 3) {
 		.@job_name$ = "Archer";
-		mes "The one who is romantic and understands the feeling of others and tries to be understood by others as well.";
+		mes "The one who is romantic, understands the feelings of others and tries to be understood by others as well.";
 		next;
 		mes "[Cream Puff]";
 		mes "The one who wants to spend time finding out who they are.";
 	} else if (.@who_job == 4) {
 		.@job_name$ = "Merchant";
-		mes "the one who is good at reading the mind of others and is decisive.";
+		mes "The one who is good at reading the mind of others and is decisive.";
 		next;
 		mes "[Cream Puff]";
-		mes "the one who is strongly interested in achieving and target-driving and responsible.";
+		mes "The one who is strongly interested in achieving, is target-driven and responsible.";
 	} else if (.@who_job == 5) {
 		.@job_name$ = "Thief";
-		mes "The one who wants to have fun is optimistic who loves adventure.";
+		mes "The one who wants to have fun, is an optimist who loves adventure.";
 		next;
 		mes "[Cream Puff]";
-		mes "The one who wants to find out something exciting and wants to donate to the world in his own way.";
+		mes "The one who wants to find out something exciting and wants to contribute to the world in their own way.";
 	} else if (.@who_job == 6) {
 		.@job_name$ = "Acolyte";
-		mes "The one who has a great heart to help others and understand.";
+		mes "The one who has a great heart, wants to help others and understand thems.";
 		next;
 		mes "[Cream Puff]";
 		mes "The one who wants to be loved and wants to care for others.";
 	} else if (.@who_job == 7) {
 		.@job_name$ = "Taekwon boy/girl";
-		mes "the one who has sound mind from right training.";
+		mes "The one who has a sound mind starting even from training.";
 		next;
 		mes "[Cream Puff]";
-		mes "The one who tries hard everyday with certain belief and tries to make people understand.";
+		mes "The one who tries hard everyday with a certain belief and tries to make people understand.";
 	} else if (.@who_job == 8) {
 		.@job_name$ = "Gunslinger";
-		mes "The one who is called as a justice giver but also gives chaos and fear.";
+		mes "The one who is called a justice-giver, but also gives chaos and fear.";
 		next;
 		mes "[Cream Puff]";
 		mes "The one who tries to balance between justice and chaos.";
 	} else if (.@who_job == 9) {
 		.@job_name$ = "Ninja";
-		mes "The one who does not want to get attention.";
+		mes "The one who does not want to get a lot of attention.";
 		next;
 		mes "[Cream Puff]";
-		mes "and who is persistant without giving up until reaching the target.";
+		mes "Who is persistant without giving up until reaching their goal.";
 	} else {
 		mes "An error occurred.";
 		close2;
@@ -7241,18 +7241,18 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	next;
 	emotion ET_BEST;
 	mes "[Cream Puff]";
-	mes "^8014EB"+.@job_name$+"^000000 is a good matching job for you.";
+	mes "^8014EB"+.@job_name$+"^000000 is a good match for you.";
 	next;
 	cutin "choucream_n.bmp", 2;
 	mes "[Cream Puff]";
-	mes "Hmm, it says.";
+	mes "However...";
 	next;
 	mes "[Cream Puff]";
-	mes "You do not have to choose the job from Class aptitude test. That is only just for fun.";
+	mes "You do not have to choose the job from Class aptitude test. This was just for fun.";
 	next;
 	emotion ET_QUESTION;
 	mes "[Cream Puff]";
-	mes "If you want, I will send it to the class that was recommended by the aptitude result.";
+	mes "But if you want, I will send you to the class that was recommended by the aptitude result.";
 	next;
 	if (select("Send me now.", "It's okay, I'm still deciding.") == 2) {
 		mes "[Cream Puff]";
@@ -7262,7 +7262,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		end;
 	}
 	mes "[Cream Puff]";
-	mes "Your recommended job is "+.@job_name$+". I will send you to where you can talk to that job professional.";
+	mes "Your recommended job is "+.@job_name$+". I will send you to where you can talk to the corresponding job professional.";
 	close2;
 	switch(.@who_job) {
 	case 1:
@@ -7313,14 +7313,14 @@ iz_ac02_d,143,55,3	duplicate(Cream Puff#ac)	Cream Puff#ac_d	4_M_KID1
 // -----------------------------------------------------------------------------
 iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 	if (!checkweight(1301,1)) {
-		mes "- Quest can't be continued as your overloaded items. -";
+		mes "- Quest can't be continued as you are overloaded with items. -";
 		close;
 	}
 	cutin "aca_gung_01.bmp", 2;
 	if (Class == Job_Novice) {
 		if (isbegin_quest(4269) != 2) {
 			mes "[Lusa]";
-			mes "Oh! I am sorry but in order to take the class, y'all have to register first. Ya come back here after registration at that there counter on the 1st floor, ya hear?";
+			mes "Oh! I am sorry but in order to take this class, y'all have to register first. Ya come back here after registration at that there counter on the 1st floor, ya hear?";
 			close2;
 			// ConsumeSpecialItem Inspector_Certificate_
 			cutin "", 255;
@@ -7333,48 +7333,48 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 		}
 		emotion ET_COOL;
 		mes "[Lusa]";
-		mes "Gosh Darnit! You are cuter then a piglet! Are ya trying ta learn to be a ^ff0000Gunslinger^000000?";
+		mes "Gosh darnit! You are cuter than a piglet! Are ya trying ta learn to be a ^ff0000Gunslinger^000000?";
 		next;
 		if (.@has_manual == 1) {
-			.@menu$ = "What is a Gunslinger?:Can I try out the skills?:Becoming a Gunslinger?:How can I try out the skills?:Cancel";
+			.@menu$ = "What is a Gunslinger?:Can I try out the skills?:Becoming a Gunslinger:How can I try out the skills?:Cancel";
 		} else {
-			.@menu$ = "What is a Gunslinger?:Can I try out the skills?:Becoming a Gunslinger?::Cancel";
+			.@menu$ = "What is a Gunslinger?:Can I try out the skills?:Becoming a Gunslinger::Cancel";
 		}
 		switch(select(.@menu$)) {
 		case 1:
 			emotion ET_THROB;
 			mes "[Lusa]";
-			mes "You're so cute! A ^ff0000Gunslinger^000000 who has true grit wield his weapons bringing justice in these wild times.";
+			mes "You're so cute! A ^ff0000Gunslinger^000000 has true grit and wields their weapons to bring justice in these wild times.";
 			next;
 			mes "[Lusa]";
 			if (Sex == SEX_MALE)
-				mes "Ya, know you remind me of my little brother, that varmint couldn't shoot the broadside of a barn.. at least not until I taught him.";
+				mes "Ya know you remind me of my little brother, that varmint couldn't shoot the broadside of a barn.. at least not until I taught him.";
 			else
-				mes "Ya, know you remind me of my little sister, that scamp couldn't shoot the broadside of barn.. At least not until I taught her.";
+				mes "Ya know you remind me of my little sister, that scamp couldn't shoot the broadside of barn.. at least not until I taught her.";
 			next;
 			mes "[Lusa]";
-			mes "Now y'all need to understand, guns aren't some little thing that you just swing at an animal, you don't wiggle those there fingers and shock them to death.";
+			mes "Now y'all need to understand, guns aren't some little thing that you just swing at an animal. You don't wiggle those there fingers and shock them to death.";
 			next;
 			mes "[Lusa]";
 			mes "No! You shoot things, which means ya need to aim straight. This takes alot of ^ff0000dexterity^000000 on the part of the gunslinger.";
 			next;
 			mes "[Lusa]";
-			mes "Now before ya go running off shooting dem guns in the air, all high fallootin and dancing around. Ya need to understand that this isn't an easy job!";
+			mes "Now before ya go running off shooting dem guns in the air, all high fallooti'n and dancing around. Ya need to understand that this isn't an easy job!";
 			next;
 			mes "[Lusa]";
-			mes "Bullets cost zeny so you need to be sure that everything you shoot is worth the price! We attack at range so that nasty cur with the pig sticker doesn't rustle your jimmies!";
+			mes "Bullets cost zeny so you need to be sure that everything you shoot is worth the price! We attack at a range so that nasty cur with the pig sticker doesn't rustle your jimmies!";
 			next;
 			mes "[Lusa]";
 			mes "Y'all understand?";
 			next;
 			while(1) {
-				switch(select("Ranged attack?", "Why is ammo expensive?", "Job Change Test?", "Yes~!!")) {
+				switch(select("Ranged attack?", "Why is ammo expensive?", "What's the Job Change Test?", "Yes~!!")) {
 				case 1:
 					mes "[Lusa]";
-					mes "Those low tech barbarians need both Strength and Dexterity in order to fight properly. This isn't true for gunslingers.";
+					mes "Some low tech barbarians need both Strength and Dexterity in order to fight properly. This isn't true for gunslingers.";
 					next;
 					mes "[Lusa]";
-					mes "Why our dexterity influences both attack power and accuracy! Remember, Talk slowly but think quickly!";
+					mes "Why our dexterity influences both attack power and accuracy! Remember, talk slowly but think quickly!";
 					next;
 					break;
 				case 2:
@@ -7398,14 +7398,14 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				break;
 			}
 			mes "[Lusa]";
-			mes "Y'all can come back now if you gets any more questions.";
+			mes "Y'all can come back now if you gots any more questions.";
 			close2;
 			//ConsumeSpecialItem Inspector_Certificate_
 			cutin "", 255;
 			end;
 		case 2:
 			mes "[Lusa]";
-			mes "They tell me Criatura Academy is for the novices not yet decided what job to take.";
+			mes "They tell me Criatura Academy is for the novices not yet decided on what job to take.";
 			next;
 			mes "[Lusa]";
 			mes "They hired me, gun and all, to show you how to be a gunslinger!";
@@ -7413,7 +7413,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			mes "[Lusa]";
 			mes "Would you like me to show you how?";
 			next;
-			if (select("Yes mam!", "No, thanks.") == 2) {
+			if (select("Yes, mam!", "No, thanks.") == 2) {
 				mes "[Lusa]";
 				mes "Hrmm, you didn't look like you had the grit any how.";
 				close2;
@@ -7426,7 +7426,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				mes "Hey! What kind of con is this?! You already had a manual!";
 			} else {
 				getitem 2941,1;// Gunslinger_Manual
-				mes "Here take this manual, I ain't too good at that there book learnin' but I can answer your questions.";
+				mes "Here, take this manual. I ain't too good at that there book learnin' but I can answer your questions.";
 			}
 			next;
 			mes "[Lusa]";
@@ -7456,26 +7456,26 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				mes "Wooo doggy! You aren't ready for the big city yet!";
 				next;
 				mes "[Lusa]";
-				mes "Get to ^ff0000Job Level: ^0000ff10^000000 and come back here and I will help ya!";
+				mes "Get to ^ff0000Job Level: ^0000ff10^000000 and come back here so I can help ya!";
 				close2;
 				//ConsumeSpecialItem Inspector_Certificate_
 				cutin "", 255;
 				end;
 			} else {
 				mes "[Lusa]";
-				mes "Y'all ready to take the test to become a gunslinger?";
+				mes "Then are ya ready to take the test to become a gunslinger?";
 				next;
 			}
 			if (select("Wait a moment.", "Send me.") == 1) {
 				cutin "aca_gung_02.bmp", 2;
 				mes "[Lusa]";
-				mes "When ya are ready, come to me!";
+				mes "When yer ready, come to me!";
 				close2;
 				cutin "", 255;
 				end;
 			}
 			mes "[Lusa]";
-			mes "Okay then, you should find a^ff0000 Mr. Master Miller^000000 and ask him about the test.";
+			mes "Okay then, you should find one^ff0000 Mr. Master Miller^000000 and ask him about the test.";
 			next;
 			mes "[Lusa]";
 			mes "Remember, if you find yourself in a hole, the first thing to do is stop digging!";
@@ -7493,10 +7493,10 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					mes "Oh.. I think I know what the problem is,";
 					next;
 					mes "[Lusa]";
-					mes "Ta use the guide, first ya need to equip it. ^ff0000To open the equipment window the Shortcut key is Alt + E.^000000";
+					mes "Ta use the guide, first ya need to equip it. ^ff0000To open the equipment window, the Shortcut key is Alt + E.^000000";
 					next;
 					mes "[Lusa]";
-					mes "Sometimes I forget ta do that too! ^ff0000Drag the item from your inventory to the appropriate slot in the equipment window. Alternatively you can double click the item in inventory.^000000";
+					mes "Sometimes I forget ta do that too! ^ff0000Drag the item from your inventory to the appropriate slot in the equipment window. Alternately you can double click the item in yer inventory.^000000";
 					next;
 					mes "[Lusa]";
 					mes "Do ya have any other questions?";
@@ -7506,20 +7506,20 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					mes "Y'all need ta learn how to use the skill?";
 					next;
 					mes "[Lusa]";
-					mes "^ff0000To open the skill window use the short cut Alt + S. The skill will be located in the ETC tab.^000000";
+					mes "^ff0000To open the skill window, use the short cut Alt + S. The skill will be located in the ETC tab.^000000";
 					next;
 					mes "[Lusa]";
-					mes "^ff0000You can then drag the skill to your hot bar for easy use!.^000000";
+					mes "^ff0000You can then drag the skill to your hot bar for easy use!^000000";
 					next;
 					mes "[Lusa]";
-					mes "... and thats how I learned that When in doubt, let your peco do the thinkin'.";
+					mes "... and thats how I learned that when in doubt, let your Peco do the thinkin'.";
 					next;
 					mes "[Lusa]";
 					mes "Do ya have any other questions?";
 					continue;
 				case 3:
 					mes "[Lusa]";
-					mes "Well, I don't think that you are quite ready to get a shootin iron. So the training book only shows ya skills that don't need guns.";
+					mes "Well, I don't think that you are quite ready to get a shootin' iron. So the training book only shows ya skills that don't need guns.";
 					next;
 					mes "[Lusa]";
 					mes "Do ya have any other questions?";
@@ -7545,14 +7545,14 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			mes "Oh! Are you just darling, a newly minted gunslinger!";
 			next;
 			mes "[Lusa]";
-			mes "Why your shootin iron looks shinier then a silver zeny! Do ya need anything?";
+			mes "Why your shootin iron looks shinier than a silver zeny! Do ya need anything?";
 			next;
 			if (select("Can you help me get to Einbroch?", "No, thanks.") == 1) {
 				mes "[Lusa]";
-				mes "Sure, why not? Make sure to spend some time trainin!";
+				mes "Sure, why not? Make sure to spend some time trainin'!";
 				next;
 				mes "[Lusa]";
-				mes "Get over there ya scamp!";
+				mes "Get over there, ya scamp!";
 				close2;
 				warp "que_ng", 150, 167;
 				end;
@@ -7571,10 +7571,10 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			next;
 			if (select("Can you help me get to Einbroch?", "No, I have other things to do.") == 1) {
 				mes "[Lusa]";
-				mes "Sure, why not? Make sure to spend some time trainin!";
+				mes "Sure, why not? Make sure to spend some time trainin'!";
 				next;
 				mes "[Lusa]";
-				mes "Get over there ya scamp!";
+				mes "Get over there, ya scamp!";
 				close2;
 				warp "que_ng", 150, 167;
 				end;
@@ -7596,7 +7596,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			select("Brother?");
 			cutin "aca_gung_02.bmp", 2;
 			mes "[Lusa]";
-			mes "Huh? My brother did not tell you? My brother is the one in charge of Basic Training.";
+			mes "Huh? My brother didn't tell you? He is the one in charge of Basic Training.";
 			next;
 			mes "[Lusa]";
 			mes "Louie and Lusa are very similar names, right?";
@@ -7604,7 +7604,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			select("I guess so...");
 			cutin "aca_gung_01.bmp", 2;
 			mes "[Lusa]";
-			mes "Ha ha~ Well, our relationship is not really that important.";
+			mes "Ha ha~ well, our relationship is not really that important.";
 			next;
 			mes "[Lusa]";
 			mes "I have been assigned to conduct Combat Training for the Gunslinger guild.";
@@ -7635,7 +7635,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			nov_3_guns = 8;
 			erasequest 5148;
 			mes "[Lusa]";
-			mes "Well that's all! If a task proves to be too difficult you can cancel at any time, so please don't worry.";
+			mes "Well, that's all! If a task proves to be too difficult you can cancel at any time, so please don't worry.";
 			close2;
 			cutin "", 255;
 			end;
@@ -7647,7 +7647,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 
 			if (.@gun_quest_01 == -1 && .@gun_quest_02 == -1 && .@gun_quest_03 == -1 && .@gun_quest_04 == -1) {
 				mes "[Lusa]";
-				mes "Haven't started your basic combat training yet have you? What do you want to know about training?";
+				mes "Haven't started your basic combat training yet, have you? What do you want to know about training?";
 				next;
 				switch(select("How long can I train for?", "Where do I receive tasks for training?", "Why do combat training?", "Cancel")) {
 				case 1:
@@ -7671,7 +7671,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				case 3:
 					cutin "aca_gung_02.bmp", 2;
 					mes "[Lusa]";
-					mes "Right, ah, why? Well, The Gunslinger guild didn't have any combat training in the beginning.";
+					mes "Ah, why? Well, The Gunslinger guild didn't have any combat training in the beginning.";
 					next;
 					mes "[Lusa]";
 					mes "So they suddenly asked me to perform combat training for new recruits.";
@@ -7708,10 +7708,10 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					if (.@gun_tok == 0)
 						mes "You finished <Assignment B>?";
 					else
-						mes "You finished <Assignment B> too?";
+						mes "You finished <Assignment B>, too?";
 					next;
 					mes "[Lusa]";
-					mes "Wow! You did perfect! I have confirmed the 10 Roda Frogs. Tonight I should get a good sleep.";
+					mes "Wow! You did perfect! I have confirmed the 10 Roda Frogs. Tonight I shall sleep well.";
 					next;
 					erasequest 5150;
 					getexp 950,590;
@@ -7725,10 +7725,10 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					if (.@gun_tok == 0)
 						mes "You finished <Assignment C>?";
 					else
-						mes "You finished <Assignment C> too?";
+						mes "You finished <Assignment C> also?";
 					next;
 					mes "[Lusa]";
-					mes "Wow! You did perfect! I have confirm the 10 Savage Babes. Students who want to develop specialist pets must be very happy.";
+					mes "Wow! You did perfect! I have confirmed the 10 Savage Babes. Students who want cute pets must be very happy.";
 					next;
 					erasequest 5151;
 					getexp 850,540;
@@ -7742,7 +7742,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					if (.@gun_tok == 0)
 						mes "You finished <Assignment D>?";
 					else
-						mes "You finished <Assignment D> too?";
+						mes "You finished <Assignment D> as well?";
 					next;
 					mes "[Lusa]";
 					mes "Wow! You did perfect! I have confirmed the 10 Rockers. Were they hard to catch?";
@@ -7754,7 +7754,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					next;
 				}
 				mes "[Lusa]";
-				mes "I have finished processing your completed tasks. Would you like to cancel any existing tasks?";
+				mes "I finished processing your completed tasks. Would you like to cancel any existing tasks?";
 				next;
 				if (select("Yes", "No") == 2) {
 					mes "[Lusa]";
@@ -7769,7 +7769,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				.@gun_quest_04 = checkquest(5152,HUNTING);
 				if (.@gun_quest_01 == -1 || .@gun_quest_02 == -1 || .@gun_quest_03 == -1 || .@gun_quest_04 == -1) {
 					mes "[Lusa]";
-					mes "Huh? You do not have any assignments to cancel. Are you sure you have them?";
+					mes "Huh? You do not have any assignments to cancel. Are you sure you have any?";
 					close2;
 					cutin "", 255;
 					end;
@@ -7795,7 +7795,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					mes "Hornets are not easy to deal with, huh? Do you want to cancel the assignment?";
 					next;
 					mes "[Lusa]";
-					mes "If you do cancel the assignment, you will be unable to receive the reward you know?";
+					mes "If you do cancel the assignment you will be unable to receive the reward, you know?";
 					next;
 					if (select("Cancel Assignment", "Nevermind") == 1) {
 						erasequest 5149;
@@ -7819,7 +7819,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					mes "Roda Frogs are not easy to deal with, huh? Do you want to cancel the assignment?";
 					next;
 					mes "[Lusa]";
-					mes "If you do cancel the assignment, you will be unable to receive the reward you know?";
+					mes "If you do cancel the assignment you will be unable to receive the reward, you know?";
 					next;
 					if (select("Cancel Assignment", "Nevermind") == 1) {
 						erasequest 5150;
@@ -7840,15 +7840,15 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 						mes "You are also currently doing <Assignment C>.";
 					next;
 					mes "[Lusa]";
-					mes "Savage Babe are not easy to deal with, huh? Do you want to cancel the assignment?";
+					mes "Savage Babes are not easy to deal with, huh? Do you want to cancel the assignment?";
 					next;
 					mes "[Lusa]";
-					mes "If you do cancel the assignment, you will be unable to receive the reward you know?";
+					mes "If you do cancel the assignment you will be unable to receive the reward, you know?";
 					next;
 					if (select("Cancel Assignment", "Nevermind") == 1) {
 						erasequest 5151;
 						mes "[Lusa]";
-						mes "Oh... Savage Babe are too tough?";
+						mes "Oh... Savage Babes are too tough?";
 						next;
 						mes "[Lusa]";
 						mes "I have cancelled <Assignment C>. Now you don't have to worry about it.";
@@ -7866,7 +7866,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					mes "Rockers are not easy to deal with, huh? Do you want to cancel the assignment?";
 					next;
 					mes "[Lusa]";
-					mes "If you do cancel the assignment, you will be unable to receive the reward you know?";
+					mes "If you do cancel the assignment you will be unable to receive the reward, you know?";
 					next;
 					if (select("Cancel Assignment", "Nevermind") == 1) {
 						erasequest 5152;
@@ -7891,7 +7891,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			.@gun_quest_04 = checkquest(5152,HUNTING);
 			.@gun_quest_all = .@gun_quest_01 + .@gun_quest_02 + .@gun_quest_03 + .@gun_quest_04;
 			mes "[Lusa]";
-			mes "Times flies, your basic training is coming to an end!";
+			mes "Times sure flies, your basic training is coming to an end!";
 			next;
 			mes "[Lusa]";
 			mes "You have worked hard during this period! You have become a good marksman.";
@@ -7962,7 +7962,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 	} else {
 		mes "[Lusa]";
 		mes "Howdy!";
-		mes "Huh! You seem to have transferred into a different class, why have you come here?";
+		mes "Huh! You seem to have transferred into a different class. Why have you come here?";
 		next;
 		if (select("To become a Gunslinger", "Leave") == 2) {
 			cutin "aca_gung_02.bmp", 2;
@@ -7979,7 +7979,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 		mes "Since this is my job, and because it's no trouble, I will give you a simple explaination!";
 		next;
 		mes "[Lusa]";
-		mes "Gunslingers is a class with long-range attacks. However, unlike arrows, bullets are expensive. This tends to give beginners some reason for concern.";
+		mes "Gunslinger is a class with long-range attacks. However, unlike arrows, bullets are expensive. This tends to give beginners some reason for concern.";
 		next;
 		mes "[Lusa]";
 		mes "Is that enough?";
@@ -7992,15 +7992,15 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			switch(select("Stats", "Skills", "Weapons", "Nevermind.")) {
 			case 1:
 				mes "[Lusa]";
-				mes "Gunslingers is a long-range attack class, so hand agility (DEX) will be very important.";
+				mes "Gunslinger is a long-range attack class, so hand agility (DEX) will be very important.";
 				next;
 				mes "[Lusa]";
-				mes "If you want to increase your attack power, then you must strengthen your hands.";
+				mes "If you want to increase your attack power, then you must use this stat to strengthen your hands.";
 				next;
 				break;
 			case 2:
 				mes "[Lusa]";
-				mes "Gunslinger skills are not like other classes. Each weapon type has skills that can be specifically used with them.";
+				mes "Gunslinger skills are not like other classes. Each weapon type has skills that can be used only with that weapon type.";
 				next;
 				mes "[Lusa]";
 				mes "Like with other classes, there is no standard toward which skills you should learn.";
@@ -8117,7 +8117,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 			if (!.@gun_quest_01) {
 				mes "This is the <Assignment A> information.";
 				mes "Client: Children";
-				mes "On the outskirts of the village is a very bad Hornet, because of this, the children cannot play outside. Please get rid of 10 Hornets.";
+				mes "On the outskirts of the village are very bad Hornet. Because of this, the children cannot play outside. Please get rid of 10 Hornets.";
 				next;
 				if (select("Take Assignment", "Look at Other Assignments", "Cancel") == 1) {
 					setquest 5149;
@@ -8126,7 +8126,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 				}
 			} else if (.@gun_quest_01 == 1) {
 				mes "["+strcharinfo(0)+"]";
-				mes "I am already doing this task currently. Lusa said if I ever wanted to abondon the assignment that I should talk to her.";
+				mes "I am already doing this task. Lusa said if I ever wanted to abondon the assignment, I should talk to her.";
 				next;
 			} else if (.@gun_quest_01 == 2) {
 				mes "["+strcharinfo(0)+"]";
@@ -8138,7 +8138,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 			if (!.@gun_quest_02) {
 				mes "This is the <Assignment B> information.";
 				mes "Client: Resident H";
-				mes "Recently, Roda Frogs have been keeping me awake at night. Get rid of 10 Roda Frogs so I can get a good nights rest.";
+				mes "Recently, Roda Frogs have been keeping me awake at night. Get rid of 10 Roda Frogs so I can get a good night's rest.";
 				next;
 				if (select("Take Assignment", "Look at Other Assignments", "Cancel") == 1) {
 					setquest 5150;
@@ -8147,7 +8147,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 				}
 			} else if (.@gun_quest_02 == 1) {
 				mes "["+strcharinfo(0)+"]";
-				mes "I am already doing this task currently. Lusa said if I ever wanted to abondon the assignment that I should talk to her.";
+				mes "I am already doing this task. Lusa said if I ever wanted to abondon the assignment, I should talk to her.";
 				next;
 			} else if (.@gun_quest_02 == 2) {
 				mes "["+strcharinfo(0)+"]";
@@ -8168,7 +8168,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 				}
 			} else if (.@gun_quest_03 == 1) {
 				mes "["+strcharinfo(0)+"]";
-				mes "I am already doing this task currently. Lusa said if I ever wanted to abondon the assignment that I should talk to her.";
+				mes "I am already doing this task. Lusa said if I ever wanted to abondon the assignment, I should talk to her.";
 				next;
 			} else if (.@gun_quest_03 == 2) {
 				mes "["+strcharinfo(0)+"]";
@@ -8180,7 +8180,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 			if (!.@gun_quest_04) {
 				mes "This is the <Assignment D> information.";
 				mes "Client: Volunteer Bards";
-				mes "I heard some Rockers were having a singing contest, but I got lost, can you help me catch 10 Rockers? One day Rockers will disappear from the world!";
+				mes "I heard some Rockers were having a singing contest, but I got lost. Can you help me catch 10 Rockers? One day Rockers will disappear from the world!";
 				next;
 				if (select("Take Assignment", "Look at Other Assignments", "Cancel") == 1) {
 					setquest 5152;
@@ -8189,7 +8189,7 @@ iz_ac02,131,82,4	script	Lusa's Desk#ac	CLEAR_NPC,{
 				}
 			} else if (.@gun_quest_04 == 1) {
 				mes "["+strcharinfo(0)+"]";
-				mes "I am already doing this task currently. Lusa said if I ever wanted to abondon the assignment that I should talk to her.";
+				mes "I am already doing this task. Lusa said if I ever wanted to abondon the assignment, I should talk to her.";
 				next;
 			} else if (.@gun_quest_04 == 2) {
 				mes "["+strcharinfo(0)+"]";
@@ -8288,7 +8288,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 		next;
 	} else {
 		mes "[Sharp Snake's Fang]";
-		mes "The gun you are using is was not provided by the guild.";
+		mes "The gun you are using was not provided by the guild.";
 		close;
 	}
 	mes "[Sharp Snake's Fang]";
