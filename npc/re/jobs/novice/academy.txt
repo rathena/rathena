@@ -8398,49 +8398,49 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 				if (JobLevel >= 10) {
 					cutin "arang01.bmp", 0;
 					mes "[Arang]";
-					mes "It's time to choose your job? How about Taekwon "+(Sex == SEX_MALE ? "boy" : "girl")+"? You may be a nice adult like me.";
+					mes "It's time to choose your job? How about Taekwon "+(Sex == SEX_MALE ? "boy" : "girl")+"? You could turn out nicely, like me.";
 					next;
 				}
 				while (1) {
-					switch(select("People following the Taekwon way", "I want to follow the Taekwon way!!!", "Good morning! Now it is...", "End Conversation")) {
+					switch(select("Tell me about the Taekwon way", "I want to follow the Taekwon way!!!", "Good morning? It's not morning..", "End Conversation")) {
 					case 1:
 						mes "[Arang]";
-						mes "Do you want to know about taekwon boy/girl? You want to be a cool guy like me right?";
+						mes "Do you want to know about taekwon boy/girl? You want to be cool like me, right?";
 						next;
 						mes "[Arang]";
-						mes "Make the world wonderful by making a strong body with the right spirit. That's the Taekwondo motto!";
+						mes "Make the world wonderful by training a strong body with the right spirit. That's the Taekwondo motto!";
 						next;
 						mes "[Arang]";
-						mes "Later if you are trained to be a stronger body, you can change your job to ^FF0000Taekwon Master^000000 or a ^FF0000Soul Linker ^000000.";
+						mes "Later on, if you have trained yourself to be stronger, you can level up to a ^FF0000Taekwon Master^000000 or a ^FF0000Soul Linker ^000000.";
 						next;
 						mes "[Arang]";
-						mes "It is not an easy way. So I don't like to recommend it to you if you aren't fully prepared. But it is definitely a nice and great way to follow!!";
+						mes "But it is not an easy way. So I wouldn't like to recommend it to you if you aren't fully prepared. That said, it is definitely a great journey to follow!!";
 						next;
 						if (isequipped(2942) > 0 || countitem(2942) > 0) {
 							mes "[Arang]";
-							mes "Introduction to the class may let you know about what Taekwon in more detail.";
+							mes "An introduction to the class may let you know about Taekwon in more detail.";
 							next;
 						} else {
 							mes "[Arang]";
-							mes "If you are really anxious about Taekown, I would like to recommend you a brief introduction. Will you use it?";
+							mes "If you are really anxious about Taekown, I would recommend a brief introduction. Will you hear it?";
 							next;
 							if (select("After I look around more.", "Yes, let's do this!") == 1) {
 								mes "[Arang]";
-								mes "Every adventurer may have their own job! Hope you can find what you want!";
+								mes "Every adventurer takes their own path! Hope you can find your calling!";
 								next;
 							} else {
 								getitem 2942,1;// Taekwon_Manual
 								mes "[Arang]";
-								mes "Go to the [Misc] tab on Skill Window after equipping the Manual and there you will see some skills.";
+								mes "After equipping the Manual, go to the [Misc] tab on Skill Window to view the skills.";
 								next;
 								mes "[Arang]";
-								mes "^FF0000Flying Kick^000000 is the skill to approach rapidly and attack the enemy! It fully contains the typical feature of Taekwon!";
+								mes "^FF0000Flying Kick^000000 is the skill to approach rapidly and attack the enemy! It fully represents the style of Taekwon!";
 								next;
 								mes "[Arang]";
-								mes "^FF0000Warm Wind^000000 is the skill to change the feature of attacks. This is the essential skill for ^FF0000Taekwon unable to use weapons^000000.";
+								mes "^FF0000Warm Wind^000000 is the skill to change the aspect of attacks. This is an essential skill as ^FF0000Taekwon is unable to use weapons^000000.";
 								next;
 								mes "[Arang]";
-								mes "While taking the Quest, experience the skills of a Taekwon! You could meet an adept trainer on the 1st floor.";
+								mes "Take a Quest to experience the skills of a Taekwon! You can find an adept trainer on the 1st floor.";
 								next;
 							}
 						}
@@ -8451,18 +8451,18 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 						next;
 						if (JobLevel >= 10) {
 							mes "[Arang]";
-							mes "Taekwon is the tough way training himself rather than learning from somebody. However, if you want to follow, I will recommend you to a trainer.";
+							mes "Taekwon has a tough approach of training yourself, rather than learning from someone else. However if you want to follow, I would recommend you to a trainer.";
 							next;
 							mes "[Arang]";
-							mes "Training is on you, but he will give you the direction for training. I can take you about there. Want to go now?";
+							mes "Training is on you, but he will give you direction for training. I can send you into a near vacinity. Want to go now?";
 							next;
 							if (select("Let me think a little more.", "Let's go!!") == 1) {
 								mes "[Arang]";
-								mes "Choose it with discretion. It is a matter of your future adventure.";
+								mes "Choose with discretion. Your future adventures are whats at stake.";
 								next;
 							} else {
 								mes "[Arang]";
-								mes "You can find a boy with the same appearance as me, when you get in the town through ^FF0000the west entrance^000000, and continue follow the way ^FF0000to the north^000000 after passing the pub house but just before the archer town.";
+								mes "You should see someone with the same appearance as me when you get in the town through ^FF0000the west entrance^000000. Continue following the way ^FF0000to the north^000000. The location is after passing the pub house, but just before the archer town.";
 								next;
 								setquest 13101;
 								cutin "", 255;
@@ -8471,16 +8471,16 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 							}
 						} else {
 							mes "[Arang]";
-							mes "To follow the Taekwon way, you have to get to job level 10. To be a Taekwon, train yourself until you get to job level 10!";
+							mes "To follow the Taekwon way, you have to get to job level 10. Train yourself until you get to job level 10 to become a Taekwon!";
 							next;
 							mes "[Arang]";
-							mes "If you feel difficult in training alone, make a visit to the trainer on the 1st floor.";
+							mes "If you feel difficulty in training alone, make a visit to the trainer on the 1st floor.";
 							next;
 						}
 						break;
 					case 3:
 						mes "[Arang]";
-						mes "Ahahaha.. It is already time? While I am inside... Don't worry.";
+						mes "Ahahaha.. Is it that late already? I've been inside... oh well.";
 						next;
 						break;
 					case 4:
@@ -8494,13 +8494,13 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 			} else {
 				cutin "arang01.bmp", 0;
 				mes "[Arang]";
-				mes "If you are interested in being a Taekwon making a healthy body with strong sprit, you can learn a lot here.";
+				mes "If you are interested in being a Taekwon working toward a healthy body with a strong sprit, you can learn a lot here.";
 				next;
 				mes "[Arang]";
-				mes "What do you think? Are you interested in being a Taekwon? I don't push you to do! But if you do, I may become your trainer.. So..";
+				mes "What do you think? Are you interested in being a Taekwon? I won't push you to! But if you're interested, I may become your trainer.. so..";
 				cutin "arang02.bmp", 0;
 				next;
-				if (select("I have interest!", "I have interest in you!") == 1) {
+				if (select("I am interested!", "I have interest in you!") == 1) {
 					mes "[Arang]";
 					mes "Is that so!? You are!? Yaho! Now I am a teacher! Now, ask me whatever!";
 					nov_3_taekwon = 1;
@@ -8530,7 +8530,7 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 			}
 		} else {
 			mes "[Arang]";
-			mes "You look like a naive beginner? If you want to get in the class, come after registering on the 1st floor.";
+			mes "You look like a naive beginner. If you want to take the class, come back after registering on the 1st floor.";
 			close2;
 			cutin "", 255;
 			end;
@@ -8543,15 +8543,15 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 				close2;
 			} else if (Class == Job_Star_Gladiator) {
 				mes "[Arang]";
-				mes "You became a nice Taekwon Master!? Please keep in mind power is followed by responsibility.";
+				mes "You became a Taekwon Master!? Please keep in mind, power is followed by responsibility.";
 				close2;
 			} else if (Class == Job_Soul_Linker) {
 				mes "[Arang]";
-				mes "Handling spirits is a very delicate job to do, I heard. Excellent! The adventurer led by me has grown up like this.";
+				mes "Handling spirits is a very delicate job to do, I heard. How exciting! An adventurer led by me has grown all the way up to this point.";
 				close2;
 			} else {
 				mes "[Arang]";
-				mes "Ehra! I thought you followed the Taekwon way~~ it is regretful but everyone has their own life, hehe.";
+				mes "Ehra! I thought you followed the Taekwon way~~ it's too bad, but everyone has their own life. hehe";
 				close2;
 			}
 		} else {
@@ -8574,7 +8574,7 @@ iz_ac01,54,49,0	script	#acKick	HIDDEN_NPC,5,5,{
 
 OnTouch:
 	if (isbegin_quest(13102) == 1) {
-		mes "As I can't recall, I feel the shock that something hit me on my head.";
+		mes "Although I can't remember, I feel the shock that something hit me on my head.";
 		mes "^FF0000I should look for somebody to heal me nearby.^000000.";
 		erasequest 13102;
 		close;
@@ -8604,11 +8604,11 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 		if (nov_3_archer == 0) {
 			cutin "gnor.bmp", 2;
 			mes "[Marlbron]";
-			mes "Emmm. This is?";
+			mes "Emmm. You are?";
 			next;
 			mes "[Marlbron]";
 			mes "You were never trained by me.";
-			mes "Then, I have no interest in you.";
+			mes "Therefore I have no interest in you.";
 			close2;
 			cutin "", 255;
 			end;
@@ -8644,13 +8644,13 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 			if (nov_3_archer == 0) {
 				cutin "gsmi.bmp", 2;
 				mes "[Marlbron]";
-				mes "Sniff sniff! It is the smell of a novice!";
+				mes "Sniff sniff! It's the smell of a novice!";
 				mes "Nice to meet you!!!";
 				mes "What brought you here?";
 				next;
 				mes "[Marlbron]";
-				mes "I can guess most, but hehehehe~~";
-				mes "Please feel comfortable and tell me everything you want!";
+				mes "I can probably guess, but hehehehe~~";
+				mes "Please feel comfortable to tell me what you want!";
 				next;
 				cutin "", 255;
 				if (select("I get bored! Play with me!", "Tell me about Archers.") == 1) {
@@ -8670,30 +8670,30 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 				mes "Oh dear~ another sheep here to get a free lesson from me.";
 				next;
 				mes "[Marlbron]";
-				mes "The main point of Archers is to use bows to attack enemies quickly from a long distance.";
+				mes "The focus of Archers is to use bows and arrows to attack enemies quickly, from a long distance.";
 				next;
 				mes "[Marlbron]";
 				mes "Only problem is they are physically weak.";
-				mes "But, it doesn't matter if they are trained correctly.";
+				mes "But that doesn't matter if they are trained correctly.";
 				next;
 				while(1) {
 					cutin "gnor.bmp", 2;
 					mes "[Marlbron]";
-					mes "What do you want to know about an Archer? I will tell you everything~";
-					mes "With my full explanation~, you can be an excellent one.";
+					mes "What do you want to know about an Archer? I'll tell you everything~";
+					mes "With my full teachings~, you can be an excellent one.";
 					next;
 					switch(select("Archer's stats", "Archer's skills", "I want to become an Archer.", "Nevermind")) {
 					case 1:
 						cutin "gnor.bmp", 2;
 						mes "[Marlbron]";
-						mes "Are you curious about the Archer's stats?";
+						mes "You're curious about an Archer's stats?";
 						mes "Do you know the most necessary stats for Archers?";
 						next;
 						mes "[Marlbron]";
-						mes "That is ^0000cdDex^000000.";
+						mes "That would be ^0000cdDex^000000.";
 						next;
 						mes "[Marlbron]";
-						mes "To raise up the attacking power in other jobs, Str should be raised but Archers vary in accordance with their Dex figures.";
+						mes "To raise the attacking power in other jobs, Str should be raised. But Archers get stronger in accordance with their Dex figures.";
 						next;
 						mes "[Marlbron]";
 						mes "Here is a simple question! What is the name of the stat determining the Archer's attacking power?";
@@ -8708,46 +8708,46 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 						mes "If you want to know more about the role of other stats, ^0000cdopen the status window by pressing ALT+Q.^000000";
 						next;
 						mes "[Marlbron]";
-						mes "If you are curious about stats except Dex, you can check it out.";
-						mes "If you have a job later, you can reset the stats anyway.";
+						mes "If you are curious about stats other than Dex, you can check them out.";
+						mes "If you decide on a different direction, you can reset the stats anyway.";
 						next;
 						mes "[Marlbron]";
-						mes "Hey, just click this and that!";
+						mes "So just click this and that!";
 						next;
 						cutin "", 255;
 						break;
 					case 2:
 						cutin "gnor.bmp", 2;
 						mes "[Marlbron]";
-						mes "Hmm. You are interested in skills? Then, let's study ^0000cdskill^000000s.";
+						mes "Hmm. You are interested in skills? Then, let's talk truly study ^0000cdskill^000000s.";
 						next;
 						mes "[Marlbron]";
-						mes "I thought you would better experience the skill than talking, so I prepared the experience of the archer's skill in a manual.";
+						mes "I thought you would do better to experience the skill than talk about it, so I prepared the experience of an archer's skill in a manual.";
 						next;
 						mes "[Marlbron]";
-						mes "Archer have a lot of very useful skills.";
-						mes "But regretfully as most of them are skills useful only with arrows and bows, you can't experience them.";
+						mes "Archers have a lot of very useful skills.";
+						mes "Unfortunately as most of them can only be used with arrows and bows, you can't experience them yet.";
 						next;
 						mes "[Marlbron]";
-						mes "There is a useful skill without a bow... Called ^0000cdImprove Concentration^000000";
+						mes "But there is a useful skill that doesn't require a bow... it's called ^0000cdImprove Concentration^000000";
 						next;
 						mes "[Marlbron]";
-						mes "At the same time, it will reveal hidden enemies nearby.";
+						mes "It will reveal any hidden enemies nearby.";
 						next;
 						mes "[Marlbron]";
-						mes "If you want to know more anout skill, then open the skill window by pressing the key  ^0000cdALT+S^000000";
+						mes "If you want to know more about skills, then open the skill window by pressing the key  ^0000cdALT+S^000000";
 						next;
 						mes "[Marlbron]";
-						mes "When you scoll the mouse on the skill icon, there pops up the details about the skill. Please read it.";
+						mes "When you hover the mouse on the skill icon, further details about the skill pop up. Please read those details.";
 						next;
 						mes "[Marlbron]";
-						mes "To use skills, click the skill icon on the skill window. Then drag and register it on the ^0000cdshortcut window^000000 to use conveniently.";
+						mes "To use skills, click and drag a skill over to the ^0000cdshortcut window^000000 to register it in a slot in order to to conveniently use it with a shortcut.";
 						next;
 						mes "[Marlbron]";
-						mes "Will you go and find a hunting teacher on the 1st floor? if you do not want, then no need.";
+						mes "You should also find the hunting teacher on the 1st floor. If you prefer not to, you don't need to.";
 						next;
 						mes "[Marlbron]";
-						mes "But he may train you with a lot of useful hunting skills for you.";
+						mes "But he may be able to train you in a lot of useful hunting skills.";
 						mes "<NAVI>^4D4DFF[Battle Trainer Subino]^000000<INFO>iz_ac01,59,83,</INFO></NAVI>";
 						mes "You may visit him.";
 						// next;
@@ -8763,10 +8763,10 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 						cutin "gnor.bmp", 2;
 						mes "[Marlbron]";
 						mes "Do you want to become an^0000cd Archer^000000?";
-						mes "It hasn't been a long time since we met together. But I am sad about saying good bye to you.";
+						mes "It hasn't been long since we met, but I'd be sad to say good bye to you.";
 						next;
 						mes "[Marlbron]";
-						mes "Let me check a little while, before you change your job you have to be at job level 10.";
+						mes "Let me check something first. Before you change your job you have to have reached job level 10.";
 						next;
 						if (JobLevel == 10) {
 							mes "[Marlbron]";
@@ -8775,12 +8775,12 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 							mes "[Marlbron]";
 							mes "Do you really want to become an Archer?";
 							next;
-							if (select("Yes, change me to an Archer.", "Let me think of it a little while.") == 1) {
+							if (select("Yes, change me to an Archer.", "Let me think about it a little.") == 1) {
 								mes "[Marlbron]";
 								mes "First, let me explain some things to you about the Job Change.";
 								next;
 								mes "[Marlbron]";
-								mes "An Archer's hometown is ^0000cdPayon^000000; Which has a very long history.";
+								mes "An Archer's hometown is ^0000cdPayon^000000, which has a very long history.";
 								next;
 								mes "[Marlbron]";
 								mes "When you are feeling fatigued, you can go there.";
@@ -8790,19 +8790,19 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 								mes "The Archers Guild is located to the ^0000cdNorth of Payon Archer Village^000000.";
 								next;
 								mes "[Marlbron]";
-								mes "I will take you to the gates of Payon.";
-								mes "I would love to accompany you the rest of the way, but you must do this alone.";
-								mes "I'll give you the directions which you must remember.";
+								mes "I will send you to the gates of Payon.";
+								mes "I would love to accompany you the whole way, but you must do this alone.";
+								mes "I'll give you directions, which you really must remember.";
 								next;
 								cutin "paymap1.bmp", 3;
 								mes "[Marlbron]";
-								mes "Here is where I will send you to.";
-								mes "Once you arrive, you will see the area marked by this ^0000cdRed Circle^000000. Go through there, then...";
+								mes "Here is where I will send you.";
+								mes "Once you arrive, you will see the area marked by this ^0000cdRed Circle^000000. Go there, then...";
 								next;
 								cutin "paymap2.bmp", 3;
 								mes "[Marlbron]";
 								mes "You will reach the village of Payon.";
-								mes "Follow the direction of the ^0000cdRed Arrow^000000, you will enter ^0000cdArcher Village^000000.";
+								mes "If you follow the direction of the ^0000cdRed Arrow^000000, you will enter ^0000cdArcher Village^000000.";
 								next;
 								cutin "paymap3.bmp", 3;
 								mes "[Marlbron]";
@@ -8811,11 +8811,11 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 								next;
 								cutin "gnor.bmp", 2;
 								mes "[Marlbron]";
-								mes "Due to satellite navigation, you shouldn't worry about getting lost.";
+								mes "Due to map navigation, you shouldn't worry about getting lost.";
 								mes "However, if you are still worried, you can ask the local ^0000cdGuide^000000 where to go.";
 								next;
 								mes "[Marlbron]";
-								mes "You can find me after your visit to the guild.";
+								mes "Come back to find me after your visit to the guild.";
 								next;
 								mes "[Marlbron]";
 								mes "Now then, I wish you success in becoming an Archer. Until next time!";
@@ -8828,7 +8828,7 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 							}
 							cutin "gnor.bmp", 2;
 							mes "[Marlbron]";
-							mes "Yes, come back and see me after reconsideration.";
+							mes "Yes, come back and see me after reconsidering.";
 							close2;
 							cutin "", 255;
 							end;
@@ -8836,11 +8836,11 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 							cutin "gnor.bmp", 2;
 							mes "[Marlbron]";
 							mes "Hmmm. You are a little bit short of Job Level.";
-							mes "Are you coming back after more training?";
+							mes "Perhaps you can come back after more training?";
 							next;
 							mes "[Marlbron]";
 							mes "Visit <NAVI>^4D4DFF[Battle Trainer Subino]^000000<INFO>iz_ac01,59,83,</INFO></NAVI>";
-							mes "at Armory on the 1st floor.";
+							mes "at the Armory on the 1st floor.";
 							close2;
 							cutin "", 255;
 							end;
@@ -8865,8 +8865,8 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 			} else {
 				cutin "gnor.bmp", 2;
 				mes "[Marlbron]";
-				mes "Well? How is it being an Archer?";
-				mes "The student has surpassed the teacher, as the saying goes.";
+				mes "So how is it being an Archer?";
+				mes "It seems the student has surpassed the teacher, as the saying goes.";
 				close2;
 				cutin "", 255;
 				end;
@@ -8875,15 +8875,15 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 			cutin "gnor.bmp", 2;
 			mes "[Marlbron]";
 			mes "You don't seem to be fully registered at the Academy yet.";
-			mes "Hurry and complete your registration.";
+			mes "Hurry and complete your registration first.";
 			close2;
 			cutin "", 255;
 			end;
 		} else {
 			cutin "gnor.bmp", 2;
 			mes "[Marlbron]";
-			mes "Did you directly come here without the entrance application for Critura Academy yet?";
-			mes "You are too in a hurry. Rush to go to the 1st floor for application, and come back to me.";
+			mes "Did you come here without the entrance application for Criatura Academy yet?";
+			mes "You are in too much of a hurry. Hurry to the 1st floor to apply, then come back to me.";
 			close2;
 			cutin "", 255;
 			end;
@@ -8891,7 +8891,7 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 	} else {
 		cutin "gbad.bmp", 2;
 		mes "[Marlbron]";
-		mes "Why are you of a different job snooping around here?";
+		mes "Why are is a different job snooping around here?";
 		next;
 		mes "[Marlbron]";
 		mes "Don't snoop around and get out of here!!";
