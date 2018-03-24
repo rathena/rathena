@@ -853,7 +853,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			cutin "", 255;
 			mes "[Hun]";
 			mes "For detailed info on individual items,^4d4dff right click ^000000on that item.";
-			mes "You read expanded item info that way.";
+			mes "You can read expanded item info that way.";
 			next;
 			cutin "tutorial04.bmp", 4;
 			mes "!- Information -!";
@@ -890,8 +890,8 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 				mes "or drag it onto^4d4dff the equipment window.^000000;
 				next;
 				mes "[Hun]";
-				mes "For detailed info on individual items^4d4dff, right-click ^000000on the item.";
-				mes "You read expanded item info that way.";
+				mes "For detailed info on individual items,^4d4dff right-click ^000000on the item.";
+				mes "You can read expanded item info that way.";
 				next;
 				cutin "tutorial04.bmp", 3;
 				mes "!- Information -!";
@@ -1162,7 +1162,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			mes "Now then, should we play a simple game?";
 			next;
 			mes "[Information Staff]";
-			mes "I will ^4d4dffmark three specific locations of bulletin boards on the mini-map.^000000";
+			mes "I will ^4d4dffmark three specific locations of signboards on the mini-map.^000000";
 			mes "Please ^4d4dffvisit those locations ^000000using the waypoints as reference.";
 			next;
 			mes "[Information Staff]";
@@ -1657,24 +1657,24 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 			next;
 			if (.@total == 1) {
-				mes "Except the signboard of the free airship, nothing can be found.";
+				mes "You find nothing except the signboard for the free airship.";
 				next;
 				select("Where's the hidden treasure?");
 				mes "[Lumin]";
 				mes "Yo.";
-				mes "Sorry pal I got here first.";
-				mes "Should've used a Fly wing like I did.";
+				mes "Sorry pal, I got here first.";
+				mes "Should've used a Fly Wing like I did.";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Why do these wings teleport?";
+				mes "How come Fly Wings teleport you around a map?";
 				mes "I guess because they're from Creamy monsters...";
 				next;
 				mes "[Lumin]";
 				mes "As the captain said, seeing is believing. The world is full of mysteries.";
 				next;
 				cutin "", 255;
-				mes "Seems like Lumin beat you again.";
+				mes "Seems like Lumin beat you.";
 				mes "Better get to the next location before Lumin does.";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
@@ -1692,12 +1692,12 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 					mes "[Lumin]";
 					mes "No...";
 					mes "Meeting three times in one day must be destiny.";
-					mes "You and I can be friends.";
+					mes "You and I should be friends.";
 					cutin "nov_lumin05.bmp", 2;
 					next;
 					select("Or Frenemies!");
 					mes "[Lumin]";
-					mes "Frene-what? Oh well I'm done with the mission.";
+					mes "Frene-what? Oh well, I'm done with the mission.";
 					mes "Take care.";
 					cutin "nov_lumin02.bmp", 2;
 					next;
@@ -1707,34 +1707,34 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 					setquest 7475;
 					viewpoint 2,179,75,1,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff...I have to report the result to the Information Staff guy...^000000.";
 					close;
 				}
 				mes "[Lumin]";
-				mes "Ooo Butterfly Wings.";
-				mes "If I hand it over to you, you'll just waste 'em so I'll just keep them.";
+				mes "Ooh, I got Butterfly Wings.";
+				mes "But if I hand them over you'll waste 'em, so I'll keep them.";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Come on this is just friendly competition.";
+				mes "Come on, this is just friendly competition.";
 				cutin "nov_lumin05.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "I am doing this for you to make you stronger.";
-				mes "Now, so long.";
+				mes "I am doing this to help make you stronger.";
+				mes "So long, now.";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report the result to the Information staff...^000000.";
+				mes "^4d4dff...I have to report the result to the Information Staff guy...^000000.";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
 				close;
 			} else {
-				mes "Except for the signboard of the free airship, nothing particular was found.";
+				mes "Except for the signboard for the free airship, nothing particular was found.";
 				next;
 				select("Why is there nothing here?");
 				mes "[Lumin]";
-				mes "Of course.";
+				mes "Because.";
 				mes "I already packed it in my bag.";
 				mes "There were Butterfly Wings here.";
 				cutin "nov_lumin01.bmp", 2;
@@ -1750,7 +1750,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "Lumin disappeared with his long hair in the air.";
+				mes "Lumin disappeared with his long hair flowing in the air.";
 				mes "......";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
@@ -1792,25 +1792,25 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7476)) {
 			mes "== Challenge! Arena! ==";
-			mes "Breath taking battle with monsters!";
-			mes "Where is your limit?";
-			mes "PvE party with your comrad!";
-			mes "All these at Arena!!";
+			mes "Breathtaking battles with monsters!";
+			mes "What is your limit?";
+			mes "PvE party with your comrads!";
+			mes "All this can be found at the Arena!!";
 			next;
 			if (.@total == 1) {
-				mes "Except for the Arena promtional board, nothing can be found here.";
+				mes "Except for the Arena promtional board, there's nothing here.";
 				next;
 				select("Nothing again?");
 				mes "[Lumin]";
-				mes "Hmmm. Its not nothing....";
+				mes "Hmmm. It wasn't not nothing....";
 				mes "There were potions here...";
-				mes "I was tired of waiting for you so I took it too.";
+				mes "I was tired of waiting for you so I took those, too.";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
 				mes "But why does this potion never make me full?";
 				mes "*gulp*";
-				mes "Oh well looks like it's all gone.";
+				mes "Oops, looks like it's all gone.";
 				next;
 				cutin "", 255;
 				mes "Lumin beat you again.";
@@ -1831,12 +1831,12 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 					mes "[Lumin]";
 					mes "No...";
 					mes "Meeting three times in one day must be destiny.";
-					mes "You and I can be friends.";
+					mes "You and I should be friends.";
 					cutin "nov_lumin05.bmp", 2;
 					next;
 					select("Or Frenemies!");
 					mes "[Lumin]";
-					mes "Frene-what? Oh well I'm done with the mission.";
+					mes "Frene-what? Oh well, I'm done with the mission.";
 					mes "Take care.";
 					cutin "nov_lumin02.bmp", 2;
 					next;
@@ -1846,34 +1846,34 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 					setquest 7476;
 					viewpoint 2,207,167,3,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff...I have to report the result to the Information Staff guy...^000000.";
 					close;
 				}
 				mes "[Lumin]";
 				mes "Red potions.";
-				mes "If I hand it over to you, you'll just waste 'em so I'll just keep them.";
+				mes "If I them over you'll just waste 'em, so I'll keep them.";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Come on this is just friendly competition.";
+				mes "Come on, this is just friendly competition.";
 				cutin "nov_lumin05.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "I am doing this for you to make you stronger.";
-				mes "Now, so long.";
+				mes "I am doing this to help make you stronger.";
+				mes "So long, now.";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report of the result to Information staff...^000000.";
+				mes "^4d4dff...I have to report of the result to Information Staff guy...^000000.";
 				setquest 7476;
 				viewpoint 2,207,167,3,0xFF0000;
 				close;
 			} else {
-				mes "Except for the Arena promotion signboard, nothing can be found.";
+				mes "Except for the Arena promotion signboard, there's nothing here.";
 				next;
 				select("Why is there nothing?");
 				mes "[Lumin]";
-				mes "Of course.";
+				mes "Because.";
 				mes "I already packed it.";
 				mes "There were Red Potion hidden here.";
 				cutin "nov_lumin01.bmp", 2;
@@ -1889,7 +1889,7 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "Lumin disappeared with his long hair in the air.";
+				mes "Lumin disappeared with his long hair flowing in the air.";
 				mes "This guy...";
 				setquest 7476;
 				viewpoint 2,207,167,3,0xFF0000;
@@ -1897,18 +1897,18 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 			}
 		} else {
 			mes "== Challenge! Arena! ==";
-			mes "Breath taking battle with monsters!";
-			mes "Where is your limit?";
+			mes "Breathtaking battle with monsters!";
+			mes "What is your limit?";
 			mes "PvE party with your comrad!";
-			mes "All these at Arena!!";
+			mes "All this can be found at the Arena!!";
 			close;
 		}
 	} else {
 		mes "== Challenge! Arena! ==";
-		mes "Breath taking battle with monsters!";
-		mes "Where is your limit?";
+		mes "Breathtaking battle with monsters!";
+		mes "What is your limit?";
 		mes "PvE party with your comrad!";
-		mes "All these at Arena!!";
+		mes "All this can be found at the Arena!!";
 		close;
 	}
 
@@ -1939,7 +1939,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 			mes "The city of Prontera is located to the north.";
 			next;
 			if (.@total == 1) {
-				mes "Except for the simple signboard, nothing can be found here.";
+				mes "Except for the simple signboard, there's nothing here.";
 				next;
 				select("Where's the treasure?");
 				mes "[Lumin]";
@@ -1949,12 +1949,12 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "In fact, I don't like Fly's wings.";
+				mes "Actually, I don't like Fly Wings.";
 				mes "Flies are so dirty.";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "By the way, why is one of the convenient transportations fly wing shaped?";
+				mes "By the way, why is such a convenient transportation item shaped like fly wing?";
 				mes "Perhaps you know?";
 				next;
 				mes "[Lumin]";
@@ -1980,7 +1980,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 					mes "[Lumin]";
 					mes "No...";
 					mes "Meeting three times in one day must be destiny.";
-					mes "You and I can be friends.";
+					mes "You and I should be friends.";
 					cutin "nov_lumin05.bmp", 2;
 					next;
 					select("Or Frenemies!");
@@ -1995,12 +1995,12 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 					setquest 7477;
 					viewpoint 2,45,94,2,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff...I have to report the result to the Information Staff guy...^000000.";
 					close;
 				}
 				mes "[Lumin]";
 				mes "Fly Wings.";
-				mes "If I hand them over to you, you'll just waste 'em so I think I'll keep them.";
+				mes "If I hand them over you'll just waste 'em, so I think I'll keep them.";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
@@ -2008,22 +2008,22 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 				cutin "nov_lumin05.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "I am doing this for you to make you stronger.";
-				mes "Now, so long.";
+				mes "I am doing this to help make you stronger.";
+				mes "So long, now.";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report of the result to Information staff...^000000.";
+				mes "^4d4dff...I have to report of the result to Information Staff guy...^000000.";
 				setquest 7477;
 				viewpoint 2,45,94,2,0xFF0000;
 				close;
 			} else {
-				mes "Except for the simple signboard, nothing can be found.";
+				mes "Except for the simple signboard, there's nothing here.";
 				next;
 				select("Why is there nothing?");
 				mes "[Lumin]";
-				mes "Of course.";
-				mes "Fly's wings were here so I already packed them in my bag.";
+				mes "Because.";
+				mes "Fly Wings were here so I already packed them in my bag.";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				select("So can I have some?");
@@ -2036,7 +2036,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 				mes "Well, then.....";
 				next;
 				cutin "", 255;
-				mes "Lumin disappeared with his long hair in the air.";
+				mes "Lumin disappeared with his long hair flowing in the air.";
 				mes "This guy....";
 				setquest 7477;
 				viewpoint 2,45,94,2,0xFF0000;
@@ -2083,9 +2083,9 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 	mes "[Therapist]";
 	if (isbegin_quest(4269) == 2) {
 		mes "Are you a student?";
-		mes "Do you have any problem in your body?";
+		mes "Is something wrong?";
 		next;
-		.@menu$ = "Help me!:Teach me the First Aid Skill:^ff0000Red Herb Quest^000000:Save Location";
+		.@menu$ = "Help me!:Teach me the First Aid skill:^ff0000Red Herb Quest^000000:Save Location";
 	} else {
 		mes "This is the dispensary of the Royal Criatura Academy.";
 		mes "How can I help you?";
@@ -2104,7 +2104,7 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 			mes "[Therapist]";
 			mes "Is that good enough?";
 			mes "Have you recovered?";
-			mes "If you are sane, go to bed and rest before you go.";
+			mes "If you have any sense, get some rest before you go back out.";
 			close;
 		} else {
 			mes "[Therapist]";
@@ -2122,21 +2122,21 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 		if (getskilllv("NV_FIRSTAID")) {
 			mes "[Therapist]";
 			mes "You already know about First Aid.";
-			mes "We both are busy. Don't bother me.";
+			mes "There's too much work to do. Don't bother me.";
 			close;
 		} else {
 			mes "[Therapist]";
-			mes "You are commendable!";
+			mes "How commendable!";
 			mes "First Aid is a skill that transfers SP to HP during emergency situations.";
 			next;
 			mes "[Therapist]";
-			mes "Recovery ratio is very minimal...";
-			mes "It can help you avoid dying but won't give you much HP.";
+			mes "The recovery ratio is very minimal...";
+			mes "It can help you avoid dying but it won't give you much HP.";
 			specialeffect2 EF_BEGINSPELL6;
 			specialeffect2 EF_SPELLBREAKER;
 			next;
 			mes "[Therapist]";
-			mes "Press ^4d4dffALT + S^000000 to open your Skill window to see your skills.";
+			mes "Press ^4d4dffALT + S^000000 to open your Skill window and see your skills.";
 			skill "NV_FIRSTAID", 1, 0;
 			skill_nov = 3;
 			getexp 1000,40;
@@ -2146,24 +2146,24 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 			mes "The shortcut window will open up with nine small compartments to register your skills to.";
 			next;
 			mes "[Therapist]";
-			mes "Dragging the right hand corner at the shortcut window, you can open up more skill shortcut pages.";
+			mes "Dragging the right hand corner on the shortcut window, you can expand more skill shortcut lines.";
 			next;
 			mes "[Therapist]";
-			mes "It is a simple use.. ^4d4dffEach slot responds to individual keys from F1 to F9^000000.";
-			mes "Needed skills or items can be immediately used after registering on the corresponding slots.";
+			mes "It's simple to use.. ^4d4dffEach slot responds to individual keys from F1 to F9^000000.";
+			mes "Needed skills or items can be quickly accessed after using the shortcuts.";
 			next;
 			cutin "tutorial05.bmp", 4;
 			mes "!- Information -!";
-			mes "You can register needed items or skills at ^4d4dffshortcut slots by dragging the icons.";
+			mes "You can register needed items or skills to ^4d4dffshortcut slots by dragging the icons to the slot.";
 			next;
 			mes "!- Information -!";
-			mes "^4d4dff The registered items and equipment at^4d4dff the slots can be immediately used or armed by pressing the reponding F1 - F9 keys.";
+			mes "^4d4dff The registered items and equipment at^4d4dff the slots can be immediately used or armed by pressing the correponding F1 - F9 keys.";
 			next;
 			mes "!- Information -!";
-			mes "By setting the ^4d4dffshortcut keys as you want, you can use the responding shortcut key.";
+			mes "After setting the ^4d4dffshortcut keys as you want, you can use the corresponding shortcut key.";
 			next;
 			mes "!- Information -!";
-			mes "^4d4dffyou may register the frequently using items and skills, and use them at your convenience.";
+			mes "^4d4dffYou should register your most frequently used items and skills, to access them at your convenience.";
 			cutin "", 255;
 			next;
 			mes "[Therapist]";
@@ -2179,41 +2179,41 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 			next;
 			mes "[Therapist]";
 			mes "You can get different colored herbs from the various plants.";
-			mes "Processing herbs turns to be a various useful potions.";
+			mes "Processing herbs can turn them into various useful potions.";
 			next;
 			mes "[Therapist]";
-			mes "Now, shall we collect the Red Herb with your hands?";
+			mes "Now, shall we collect the Red Herb by hand?";
 			next;
 			mes "[Therapist]";
-			mes "A ^4d4dffRed Plant is growing near the academy building.^000000.";
+			mes "There should be a ^4d4dffRed Plant growing near the academy building.^000000.";
 			mes "I secretly planted it for today.";
-			mes "Go and get ^4d4dff1 Red Herb^000000.";
+			mes "Go and get the ^4d4dff1 Red Herb^000000.";
 			setquest 7478;
 			close;
 		} else if (isbegin_quest(7478) == 1) {
 			if (countitem(507) > 0) {
 				mes "[Therapist]";
 				mes "You got it.";
-				mes "^4d4dffYou could eat this herb and get the benefit of it immediately but it will be more efficient if you make it into a potion.^000000.";
+				mes "^4d4dffYou could eat this herb and get the benefit of it immediately, but it will be more potent if you make it into a potion.^000000.";
 				next;
 				mes "[Therapist]";
-				mes "Herbs vary their virtues according to their color.";
+				mes "Herbs benefits vary depending on their color.";
 				mes "^4d4dffGreen Herbs^000000 detox you.";
 				mes "^4d4dffBlue Herbs^000000 recover your SP.";
 				next;
 				mes "[Therapist]";
 				mes "Any other?";
-				mes "Well, HP is recovering like this red herb.";
-				mes "This like this... Make a nectar and put it into a bottle....";
+				mes "Yes, this Red Herb is for HP recovery.";
+				mes "It goes like this... make it into a nectar... put it into a bottle....";
 				next;
 				mes "[Therapist]";
-				mes "This becomes the recovering potion possible to take anywhere, anytime.";
+				mes "And it becomes the recovery potion that's possible to take anywhere, anytime.";
 				mes "I will give it to you as souvenir.";
-				mes "And also give you the recipe to make potions easily.";
+				mes "I'll also give you the recipe to make potions easily.";
 				next;
 				mes "[Therapist]";
-				mes "This is the book for the simple combination of potion use.";
-				mes "You can make it easily by ^4d4dffusing the combination kit or cooking tool^000000.";
+				mes "This is the recipe book for the simple creation of potion use.";
+				mes "You can make it easily by ^4d4dffusing with combination kit or cooking tool^000000.";
 				completequest 7478;
 				getexp 2000,50;
 				getitem 569,30;// Novice_Potion
@@ -2223,19 +2223,19 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 				getitem 512,1;// Apple
 				next;
 				mes "[Therapist]";
-				mes "Not only potions but also other easily attainable things can be turned to various tools. Please make use of them.";
+				mes "It's not only potions, there's also other easily attainable items that can be turned into various tools. Please make use of them.";
 				next;
 				mes "[Therapist]";
-				mes "For your trial to make it, I gave you a Red Herb and one Apple,";
-				mes "How about making it with the combination kit?";
+				mes "For your trial, I gave you a Red Herb and one Apple,";
+				mes "How about making it with your combination kit?";
 				next;
 				mes "[Therapist]";
-				mes "Read the combination kit by ^4d4dffright-clicking^000000, and ^4d4dffclick the book shaped icon^000000 which will open up the explanation window.";
+				mes "Read the combination kit by ^4d4dffright-clicking^000000, and then ^4d4dffclick the book shaped icon^000000 which will open up the explanation window.";
 				close;
 			} else {
 				mes "[Therapist]";
-				mes "Why don't you learn about the virtues of herbs?";
-				mes "Bring one Red Herb by beating the growing Red Herb near the academy building.";
+				mes "Why don't you learn about the benefits of herbs?";
+				mes "Bring one Red Herb by defeating Red Herb growing near the academy building.";
 				next;
 				mes "[Therapist]";
 				mes "You can find it near the entrance of the academy.";
@@ -2243,28 +2243,28 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 			}
 		} else {
 			mes "[Therapist]";
-			mes "I already let you know about the basic medical botany.";
+			mes "I already let you know about basic medical botany.";
 			mes "By the way, there is something called a ^4d4dffShining Plant^000000 here on Rune Midgard.";
 			next;
 			mes "[Therapist]";
-			mes "Nobody knows which herb comes out from this plant.";
-			mes "Once I got the fruit of Yggdrasil.";
+			mes "You never know which herb will come from this plant.";
+			mes "Once, I got a fruit of Yggdrasil.";
 			next;
 			mes "[Therapist]";
-			mes "And, in the Alberta merchant guild, there is an old man making potions.";
+			mes "Also, in the Merchant guild in Alberta, there is an old man that makes potions.";
 			mes "You can ask him for help.";
 			next;
 			mes "[Therapist]";
-			mes "^4d4dffAlchemist^000000 or ^4d4dffBiochemist^000000 or the higher class job ^4d4dffGeneticist^000000 are all good at creating potions.";
+			mes "The higher class jobs of ^4d4dffAlchemist^000000, ^4d4dffBiochemist^000000 and ^4d4dffGeneticist^000000 are all good at creating potions.";
 			next;
 			mes "[Therapist]";
-			mes "If you want to have a well-made potion, it may be a good idea to ask for a specialist.";
+			mes "If you want to have a well-made potion, it may be a good idea to ask one of them, as they are specialists.";
 			close;
 		}
 	case 4:
 		mes "[Therapist]";
 		mes "I see...";
-		mes "For emergency situations, in case you've fainted and want to be brought back here, I will save your current location.";
+		mes "In case of emergency situations, like if you've fainted, I will save your current location so you'll be brought back here.";
 		savepoint "iz_ac01",45,46,1,1;
 		close;
 	}
@@ -2324,7 +2324,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		emotion ET_SURPRISE, playerattached();
 		emotion ET_SMILE;
 		mes "[Lumin]";
-		mes "Hey there Turtle";
+		mes "Hey there, Turtle";
 		mes "You are really slow.";
 		mes "This Red Plant is no longer useful for you.";
 		cutin "nov_lumin01.bmp", 2;
@@ -2332,7 +2332,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		if (select("What are you talking about?", "Who're you?") == 1) {
 			mes "[Lumin]";
 			mes "You heard me.";
-			mes "Aren't you here to collect the Red Plant for the Academy Therapist.";
+			mes "Aren't you here to collect the Red Plant for the Academy Therapist?";
 			next;
 			mes "[Lumin]";
 			mes "But, But something weird just happened.";
@@ -2342,28 +2342,28 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 			if (isbegin_quest(7472) > 0 || isbegin_quest(7474) > 1) {
 				mes "[Lumin]";
 				mes "Did you lose your memory?";
-				mes "If the captain hears about it, he'll cry.";
-				mes "It is still ok as long as I remember you.";
+				mes "If the captain hears about this, he'll cry.";
+				mes "I guess it's still ok as long as I remember you.";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 			} else {
 				mes "[Lumin]";
 				mes "Lumin.";
 				mes ".......";
-				mes "How about being happy?";
+				mes "How about cheering up?";
 				cutin "nov_lumin04.bmp", 2;
 				next;
 			}
 		}
 		mes "[Lumin]";
-		mes "Anyway, let me explain it to you, I have just cut all the leaves of this Red Plant.";
-		mes "You can't collect the Red Plant anymore.";
+		mes "Anyway, I should explain, I have just cut all the leaves off this Red Plant.";
+		mes "So, you can't collect from the Red Plant anymore.";
 		cutin "nov_lumin02.bmp", 2;
 		next;
 		select("Ok so give me a ^ff0000Red Herb^000000");
 		mes "[Lumin]";
 		mes "OK... then...";
-		mes "I don't even need it anyways. I already know all about basic medical botany.";
+		mes "I don't even need it anyway. I already know all about basic medical botany.";
 		cutin "nov_lumin03.bmp", 2;
 		next;
 		select("Then, why did you do it?");
@@ -2373,14 +2373,14 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		cutin "nov_lumin05.bmp", 2;
 		next;
 		mes "[Lumin]";
-		mes "Here take this Red Herb.";
+		mes "Here, take this Red Herb.";
 		cutin "nov_lumin01.bmp", 2;
 		setquest 7479;
 		completequest 7479;
 		getitem 507,1;// Red_Herb
 		next;
 		mes "[Lumin]";
-		mes "Ah... see it's growing back.";
+		mes "Ah... see, it's growing back.";
 		enablenpc "Cultivated Red Plant#"+strnpcinfo(2);
 		close2;
 	} else {
@@ -2392,8 +2392,8 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 				cutin "nov_lumin01.bmp", 2;
 				close2;
 			} else {
-				mes "He seems to think of something deeply.";
-				mes "Disregard it.";
+				mes "He seems to be thinking of something deeply.";
+				mes "Move along.";
 				close;
 			}
 		} else {
