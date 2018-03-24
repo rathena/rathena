@@ -3274,17 +3274,17 @@ iz_ac01_d,134,47,5	duplicate(Trainer Mainz#ac)	Trainer Mainz#ac_d	4_M_KY_KNT,4,4
 // -----------------------------------------------------------------------------
 iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 	mes "[Odd Novice]";
-	mes "Ahaaa~~ sticking at the dispensary.";
+	mes "Ahaaa~~ here at the dispensary.";
 	mes "Playing hooky is cool and awesome.";
 	if (Class == Job_Novice) {
-		mes "while XXXXXX, but what are you?";
-		mes "Are you the same kind of XXXXX?";
+		mes "A novice, but what are you?";
+		mes "Are you the same kind of novice?";
 		next;
 		.@choice = rand(1,10);
 		if (.@choice < 3) {
 			mes "[Odd Novice]";
 			mes "Hmmm... you look like you have some talent.";
-			mes "Being in a good mood, shall I show you something newfangled?";
+			mes "Being in a good mood, shall I show you this newfangled thing?";
 			next;
 			.@message = select("Newfangled?", "Who are you..?", "Why are you here?", "End Conversation");
 		} else {
@@ -3295,7 +3295,7 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 		case 1:
 			mes "[Odd Novice]";
 			mes "I may look ordinary to you but I have a newfangled talent.";
-			mes "Not my fault, if you are shocked at seeing it.";
+			mes "Not my fault if you are shocked when you see it.";
 			next;
 			mes "[Odd Novice]";
 			mes "OK. Where should I start?";
@@ -3312,34 +3312,34 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 			specialeffect2 EF_BLESSING;
 			next;
 			mes "[Odd Novice]";
-			mes "Just keep calm";
-			mes "and have a potion";
+			mes "Just keep calm,";
+			mes "and have a potion.";
 			mes "But that's not the last of it.";
 			specialeffect2 EF_STEAL;
 			next;
 			mes "[Odd Novice]";
-			mes "I have stolen one thread of your hair.";
-			mes "I don't believe in Voodooism.";
-			mes "Regard it as your luck.";
+			mes "I have stolen one thread of your hair!";
+			mes "Good thing I don't believe in Voodooism.";
+			mes "Count yourself lucky.";
 			next;
 			mes "[Odd Novice]";
-			mes "The last one is a flame, to say the least!";
-			mes "How about it? Newfangled.";
-			mes "Idling away too long,";
-			mes "All the skills learnt over your shoulder could be used.";
+			mes "The last one is a doozey, to say the least!";
+			mes "Shall I? it's newfangled, I tell ya.";
+			mes "Hmm, idling away too long,";
+			mes "Coulda used all the skills by now.";
 			specialeffect EF_SIGHT, AREA, "Odd Novice#nk1";
 			next;
 			mes "[Odd Novice]";
 			mes "Ugh, all my SP is gone...";
-			mes "and wasted... I am tired.";
-			mes "I am going back to rest.";
-			mes "So long, Bye-bye~~ Don't bother me anymore.";
+			mes "such a waste... I am tired.";
+			mes "I am gonna head back to rest.";
+			mes "So long, bye-bye~~ Don't bother me anymore.";
 			close;
 		case 2:
 			if (.@choice == 10) {
 				mes "[Odd Novice]";
-				mes "What? You, disturbing me.";
-				mes "Get away from me kid you're botherin' me.";
+				mes "What? You're disturbing me.";
+				mes "Get away from me kid, you're botherin' me.";
 				close;
 			} else {
 				switch(rand(1,3)) {
@@ -3349,25 +3349,25 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 						mes "What? Strange? You seein' me for the first time?";
 						next;
 						mes "[Odd Novice]";
-						mes "If I look shabby, you should go find a mirror.";
-						mes "You and I are wearing the same thing pal.";
+						mes "If I look shabby to you, you should go find a mirror.";
+						mes "You and I are wearing the same thing, pal.";
 						close;
 					case 2:
 						mes "[Odd Novice]";
 						mes "I'm what you call a Novice of all Novices.";
-						mes "A Jack of all trades but a master of none.";
+						mes "A Jack of all trades, but a master of none.";
 						next;
 						mes "[Odd Novice]";
-						mes "If you don't graduate from school and hang around and only mimic other's lifesstyles you'll end up like me.";
+						mes "If you don't graduate from school, hang around, and only mimic the lifestyle of others, you'll end up like me.";
 						next;
 						mes "[Odd Novice]";
-						mes "Genius and idiot has a paper thin difference.";
-						mes "Those of versatility but of no special capability, that is the Super Novice.";
+						mes "There's a paper thin difference between genius and idiot.";
+						mes "Those of versatility but of no specialty, that is the Super Novice.";
 						mes "That's what everyone calls us.";
 						close;
 					case 3:
 						mes "[Odd Novice]";
-						mes "A rose by any other name...";
+						mes "A rose by any other name, as they say...";
 						mes "I am what I am. A Super Novice!";
 						close;
 				}
@@ -3375,20 +3375,20 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 		case 3:
 			if (.@choice == 10) {
 				mes "[Odd Novice]";
-				mes "What? You, disturbing me.";
-				mes "Get away from me kid you're botherin' me.";
+				mes "What? You're disturbing me.";
+				mes "Get away from me kid, you're botherin' me.";
 				close;
 			} else {
 				if (!callfunc("F_CanChangeJob")) {
 					mes "[Odd Novice]";
-					mes "You, talking like this, why don't you go and change your job already instead of hanging around here?";
-					mes "Hmm, did you want to be like me maybe?";
+					mes "Hanging here talking like this, why don't you go and change your job already instead of sticking around?";
+					mes "Hmm did you want to be like me, maybe?";
 					next;
 					mes "[Odd Novice]";
-					mes "Aha~ If you want all the different skills...";
+					mes "Ahh~ If you want all the different skills...";
 					next;
 					mes "[Odd Novice]";
-					mes "If you do like I do, then you will be a great Super Novice.";
+					mes "Do like I do, then you will be a great Super Novice.";
 					close;
 				} else {
 					switch(rand(1,3)) {
@@ -3396,44 +3396,44 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 						mes "[Odd Novice]";
 						mes "Hmmm. Dirty mouth!";
 						mes "When I was at your age,";
-						mes "If I recklessly spoke like you, I was dragged to the backside mountain, and then...";
+						mes "if I recklessly spoke like you, I was dragged to the backside mountain, and then...";
 						next;
 						mes "[Odd Novice]";
 						mes "OK... that's enough..";
-						mes "Now I am in a good mood?";
-						mes "When I am using good words,";
-						mes "go away silently, yes?";
+						mes "When I'm in a good mood?";
+						mes "I am using good words now,";
+						mes "so go away silently, yes?";
 						close;
 					case 2:
 						mes "[Odd Novice]";
 						mes "Are you idling around at school?";
-						mes "I don't need to tell you about it.";
+						mes "I don't need to tell you.";
 						mes "If you are loafing around here,";
-						mes "Once grown up, you will be a man like me.";
+						mes "once you grown a little more, you will be a man like me.";
 						mes "Scary, isn't it?";
 						next;
 						mes "[Odd Novice]";
-						mes "I know, I know, before we are found by a teacher or even worse the principal.";
-						mes "Go away, gooooooawaaaaaayyyyyyyyy~";
+						mes "Okay now, before we are found by a teacher or even worse the principal.";
+						mes "Go away, goooooo awaaaaaayyyyyyyyy~";
 						close;
 					case 3:
 						mes "[Odd Novice]";
 						mes "Well,";
-						mes "What am I doing?";
+						mes "how did I get here?";
 						mes "I became like this, in the blink of an eye.";
 						next;
 						mes "[Odd Novice]";
-						mes "By nature, I had a great dream...";
-						mes "Haaaa~~ Because I dreamt of too many things to do?";
+						mes "At first, I had a great dream...";
+						mes "Haaaa~~ But I guess I dreamt of too many things?";
 						close;
 					}
 				}
 			}
 		case 4:
 			mes "[Odd Novice]";
-			mes "Yes, yes, take your way...";
-			mes "I am the Novice of pride and loneliness.";
-			mes "I can enjoy myself.";
+			mes "Yes, yes, on your way...";
+			mes "I am the proud Novice of loneliness.";
+			mes "I can enjoy by myself.";
 			close;
 		}
 	}
@@ -3458,17 +3458,17 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 		if (!isbegin_quest(1237)) {
 			mes "[Shop Helper Leonie]";
 			mes "How are you doing with your basic studies?";
-			mes "You need to learn about the shop information.";
+			mes "You should hear some information about shops.";
 			next;
-			if (select("I'm doing fine myself!", "Ok I'll listen!") == 1) {
+			if (select("I'm doing fine by myself!", "Ok I'll listen!") == 1) {
 				mes "[Shop Helper Leonie]";
 				mes "If you listen carefully, I will give you a souvenir.";
 				close;
 			}
 			mes "[Shop Helper Leonie]";
-			mes "Wise choise.";
-			mes "Rune Midgard has many shops and many variety of currencies.";
-			mes "So you need to listen to me well to use them accordingly.";
+			mes "Wise choice.";
+			mes "Rune Midgard has many shops and some varieties of currencies.";
+			mes "So you need to listen to me well to understand how use them accordingly.";
 			setquest 1237;
 			close;
 		}
@@ -3478,9 +3478,9 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 		} else if (isbegin_quest(1238) == 1) {
 			if (countitem(501) > 0) {
 				mes "[Shop Helper Leonie]";
-				mes "Ok 1 ^0000ffRed Potion^000000.";
-				mes "For now on you can use them at a field in a dungeon.";
-				mes "As a reward I'll give you a couple of ^ff0000Fly Wing^000000s.";
+				mes "Ok, here's 1 ^0000ffRed Potion^000000.";
+				mes "You can use this on a field or in a dungeon.";
+				mes "As a reward, I'll give you a couple of ^ff0000Fly Wing^000000s as well.";
 				completequest 1238;
 				setquest 1239;
 				getitem 12323,50;// N_Fly_Wing
@@ -3488,15 +3488,15 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				close;
 			}
 			mes "[Shop Helper Leonie]";
-			mes "Go to the shop and buy one ^0000ffRed Potion^000000 and bring it back.";
+			mes "Go to the shop, buy one ^0000ffRed Potion^000000, and bring it back.";
 			mes "You have that much money, right?";
 			next;
 			mes "[Shop Helper Leonie]";
-			mes "If not, go hunt monsters in the vicnity and then when you sell their loot you should make enough money.";
+			mes "If not, go hunt monsters in the vicnity and then when you sell their loot, you should make enough money.";
 			next;
 			if (select("I will do it.", "Question about the shop.") == 1) {
 				mes "[Shop Helper Leonie]";
-				mes "Let's go into the next lesson.";
+				mes "When you return we can move on to the next lesson.";
 				mes "Hurry back.";
 				close;
 			}
@@ -3504,17 +3504,17 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 		} else {
 			if (!isbegin_quest(1240)) {
 				mes "[Shop Helper Leonie]";
-				mes "We'll do the next lesson.";
-				mes "In your future travels.";
-				mes "You will acquire many items in your inventory.";
+				mes "On to the next lesson.";
+				mes "In your future travels,";
+				mes "you will acquire many items in your inventory.";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "Among those items, there will be ones that you can't drop or trade, these are for quests. These are important items but often times you will also find them to be a burden.";
+				mes "Among those items, there will be ones that you can't drop or trade... these are for quests. All items are important sometimes you will also find them to be a burden.";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "In those times, sell what you can to shops in order to decrease your inventory.";
+				mes "When that happens, sell what you can to shops in order to decrease your inventory.";
 				mes "I'll give you an example.";
-				mes "Go to a shop to unload it.";
+				mes "Go to a shop to unload this.";
 				next;
 				switch(select("I don't want to do it.", "I will do it.", "Question about the shop.")) {
 					case 1:
@@ -3523,9 +3523,9 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 						close;
 					case 2:
 						mes "[Shop Helper Leonie]";
-						mes "About shop variety.";
-						mes "You can buy these items everywhere in the world.";
-						mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
+						mes "About shop variety,";
+						mes "you can buy some items anywhere in the world. Good to know, right?";
+						mes "Now go to the shop to sell one ^ff0000Poor Can^000000 that I gave you.";
 						completequest 1239;
 						setquest 1240;
 						getitem 6426,1;// Bad_Can
@@ -3537,23 +3537,23 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 			} else if (isbegin_quest(1240) == 1) {
 				if (!countitem(6426)) {
 					mes "[Shop Helper Leonie]";
-					mes "You went and sold the ^ff0000Poor Can^000000.";
-					mes "Good work, here's the reward for it.";
-					mes "The things I haven't told you, you will learn throughout your travels.";
+					mes "You went and sold the ^ff0000Poor Can^000000?";
+					mes "Good work, here's you reward for it.";
+					mes "There are things I haven't told you, which you will learn throughout your travels.";
 					completequest 1240;
 					getitem 12324,10;// N_Butterfly_Wing
 					getexp 1000,50;
 					close;
 				}
 				mes "[Shop Helper Leonie]";
-				mes "You are now in trial period.";
-				mes "Go sell the Poor Can and come back after selling it.";
+				mes "You are in the middle of a tutorial.";
+				mes "Go on, sell the Poor Can and come back after selling it.";
 				next;
 				if (select("I will do it.", "Question about the shop.") == 1) {
 					mes "[Shop Helper Leonie]";
-					mes "About shop variety.";
-					mes "You can buy these items everywhere in the world.";
-					mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
+					mes "About shop variety,";
+					mes "you can buy some items anywhere in the world. Good to know, right?";
+					mes "Now go to the shop to sell one ^ff0000Poor Can^000000 that I gave you.";
 					close;
 				}
 				mes "[Shop Helper Leonie]";
@@ -3564,10 +3564,10 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 		mes "[Shop Helper Leonie]";
 		mes "Anything else?";
 		next;
-		if (select("No", "Yes, there are lot.") == 1) {
+		if (select("No", "Yes, there is lot.") == 1) {
 			mes "[Shop Helper Leonie]";
 			mes "Goodbye.";
-			mes "The things I haven't told you, you will learn throughout your travels.";
+			mes "The are things I haven't told you, which you will learn throughout your travels.";
 			close;
 		}
 		mes "[Shop Helper Leonie]";
@@ -3596,14 +3596,14 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				break;
 			case 2:
 				mes "[Shop Helper Leonie]";
-				mes "Kafras and most NPC merchants use ^ff0000Zeny^000000 but Malangdo and some of the Ash Vacuum worlds use different types of currency.";
+				mes "Kafras and most NPC merchants use ^ff0000Zeny^000000, but Malangdo and some of the Ash Vacuum worlds use different types of currency.";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "They are ^ff0000Silvervine Fruit^000000, ^ff0000Splendide Coins^000000, they can be bought at Cash Shop or acquired through quests. The fruits and coins that are collected this way.";
+				mes "They are ^ff0000Silvervine Fruit^000000, ^ff0000Splendide Coins^000000, and they can be bought at Cash Shop or acquired through quests.";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "They can be exchanged with unique equipments or gears.";
-				mes "So, if you have plans to venture out to these areas, be sure to collect them.";
+				mes "Fruits and coins can be exchanged for unique equipment or gear.";
+				mes "So, if you have plans to venture out to areas that have them, be sure to seek them out.";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3611,10 +3611,10 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				break;
 			case 3:
 				mes "[Shop Helper Leonie]";
-				mes "The icon on the right side called Cash Shop, if you click on it, whether you're in a town, dungeon, or field, you can still buy items anywhere you want.";
+				mes "There is an icon on the right side called Cash Shop. If you click on it, whether you're in a town, dungeon, or field, you can still buy items anywhere you want.";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "The cash you need to buy the items can be charged on the website.";
+				mes "You'll need cash, which you can charge to your account from the website.";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3624,20 +3624,20 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				if (Class == Job_Novice && !isbegin_quest(1238)) {
 					mes "[Shop Helper Leonie]";
 					mes "Let's do a simple tutorial.";
-					mes "Go to the shop and buy one ^0000ffRed Potion^000000 and bring it back.";
+					mes "o to the shop, buy one ^0000ffRed Potion^000000, and bring it back.";
 					mes "You have that much money, right?";
 					next;
 					mes "[Shop Helper Leonie]";
-					mes "If not, go hunt monsters in the vicnity and then when you sell their loot you should make enough money.";
+					mes "If not, go hunt monsters in the vicnity and then when you sell their loot, you should make enough money.";
 					next;
 					if (select("That's too tedious.", "I will do it.") == 1) {
 						mes "[Shop Helper Leonie]";
 						mes "Are you that lazy?";
-						mes "I am watching!";
+						mes "I'm watching!";
 						close;
 					}
 					mes "[Shop Helper Leonie]";
-					mes "Let's go into the next lesson.";
+					mes "When you return we can move on to the next lesson.";
 					mes "Hurry back.";
 					if (isbegin_quest(1237) == 1)
 						completequest 1237;
@@ -3645,7 +3645,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 					close;
 				}
 				mes "[Shop Helper Leonie]";
-				mes "That's a relief that you know enough.";
+				mes "Glad to hear that you know enough.";
 				mes "If you have more questions, please ask me again.";
 				close;
 		}
