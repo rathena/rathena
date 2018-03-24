@@ -5535,7 +5535,7 @@ iz_ac02_d,101,176,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_d	4
 izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 	if (Class == Job_Novice) {
 		mes "[Wedding Secretary]";
-		mes "You are the just a beginner.";
+		mes "You are t just a beginner.";
 		next;
 		mes "[Wedding Secretary]";
 		mes "Everything looks new and unfamiliar, doesn't it? Isn't it all exiciting?";
@@ -5549,11 +5549,11 @@ izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 		next;
 	}
 	mes "[Wedding Secretary]";
-	mes "I am the Wedding Secretary sent here for those people wanting to join their lives to another.";
+	mes "I am the Wedding Secretary sent here for those people wanting to join their lives to one another.";
 	next;
 	while(1) {
 		mes "[Wedding Secretary]";
-		mes "Please ask anything you are concerned with about marriage!";
+		mes "Please, ask about anything concerning marriage!";
 		next;
 		switch(select("How to get married.", "Benefits of marriage", "Adoption", "Shut up!")) {
 		case 1:
@@ -5561,13 +5561,13 @@ izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 			mes "Concluding the ceremony between two lovers is really the most beautiful and special event in one's life.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "However, being together requires several procedures.";
+			mes "However, binding together requires several procedures.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "First, the two of you wishing to get married have to be at least base level ^0000cd45^000000 or higher, meaning  you should be at the level responsible for your life and your finances.";
+			mes "First, the two wishing to get married must be at least base level ^0000cd45^000000 or higher, meaning  you should be at a level where you are responsible for your life and your finances.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "Next, you need to prepare some tokens of appreciation. Men need a ^0000cdTuxedo^000000 Ladies need a ^0000cdWedding Dress^000000 and both need to have ^0000cdDiamond Ring^000000s as the symbol of everlasting love.";
+			mes "Next, you need to prepare some tokens of appreciation. Men need a ^0000cdTuxedo^000000, Ladies need a ^0000cdWedding Dress^000000 and both need to have ^0000cdDiamond Ring^000000s as the symbol of everlasting love.";
 			next;
 			mes "[Wedding Secretary]";
 			mes "You will also need to provide a fee of ^0000cd1 million Zeny^000000.";
@@ -5576,7 +5576,7 @@ izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 			mes "Having prepared all of these things, you must create a party with just the two of you and go to the ^0000cdProntera Cathedral^000000.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "There, another  ^0000cdWedding Secretary^000000 like me is wating for you. When you speak to her, she will give more details of what to do.";
+			mes "There, another  ^0000cdWedding Secretary^000000 like me is wating for you. When you speak to her, she will give more details about what to do.";
 			next;
 			mes "[Wedding Secretary]";
 			mes "I hope that you will meet a great fiance and enjoy a happy marriage!";
@@ -5587,16 +5587,16 @@ izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 			mes "To say the least, the benefit of marriage is being together forever!";
 			next;
 			mes "[Wedding Secretary]";
-			mes "After the wedding ceremony, you can enjoy a sweet honeymoon at the ^0000cdJawaii^000000 resort only for you.";
+			mes "After the wedding ceremony, you can enjoy a sweet honeymoon at the ^0000cdJawaii^000000 resort special for the happy couple.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "And, upon marriage you will both get a ^0000cdspecial skill^000000.";
+			mes "And, upon marriage you will both receive ^0000cdspecial skill^000000s.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "Two of these skills are called ^0000cdLoving Touch^000000 and ^0000cdUndying Love^000000 which are used to sacrifice HP or SP and send it to your partner.";
+			mes "Two of these skills are ^0000cdLoving Touch^000000 and ^0000cdUndying Love^000000, which are used to sacrifice HP or SP and send it to your partner.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "But among them, the skill called ^0000cdRomantic Rendezvous^000000 is the most romantic one, enabling you to summon your partner to you from anywhere in the world.";
+			mes "In addition, the skill called ^0000cdRomantic Rendezvous^000000 is the most romantic one, enabling you to summon your partner to you from anywhere in the world.";
 			next;
 			mes "[Wedding Secretary]";
 			mes "Aren't these skill great? Don't you want to get married right now?";
@@ -5604,31 +5604,31 @@ izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 			break;
 		case 3:
 			mes "[Wedding Secretary]";
-			mes "Being together is wonderful but people without experience of it in the past couldn't understand the full Euphoria of being a parent.";
+			mes "Being together is wonderful, but people without experience might not know the Euphoria of being a parent.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "Married couple can adopt other characters as their children.";
+			mes "Married couples can adopt other characters as their children.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "^0000cdKids of extended jobs such as Taekwon boy/girl, Gunslinger or Ninja can't be adopted^000000.";
+			mes "^0000cdHowever kids of extended jobs such as Taekwon boy/girl, Gunslinger, or Ninja can't be adopted^000000.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "And any prospecting parents need to be at least base level  ^0000cd70^000000, meaning you should be at the level responsible enough to be parents.";
+			mes "And any prospecting parents need to be at least base level  ^0000cd70^000000, meaning you should be at a level responsible enough to be parents.";
 			next;
 			mes "[Wedding Secretary]";
 			mes "Having made a family, ^0000cdaSkill to be used among the family^000000 will be earned.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "There is another skill enables you to concrete your bond such as being able to summon your child when you miss them or not losing your earned level if you die during battle.";
+			mes "There is another skill that enables you to concrete your bond such as being able to summon your child when you miss them, or not losing your earned level if you die during battle.";
 			next;
 			mes "[Wedding Secretary]";
-			mes "Cute charms coming from your kid is a bonus~";
+			mes "Cute charms coming from your kid will be a bonus~";
 			next;
 			break;
 		case 4:
 			emotion ET_HUK;
 			mes "[Wedding Secretary]";
-			mes "Your mother didn't teach you right?";
+			mes "Your mother didn't teach you, right?";
 			mes "Mercy on you. You are ignorant of the beauty of love!!!";
 			close;
 		}
@@ -5679,20 +5679,20 @@ izlude,95,146,5	script	Mom#iz	4_F_CAVE1,{
 	next;
 	emotion ET_ANGER, getnpcid(0, "Etinifni#"+strnpcinfo(2));
 	mes "[Etinifni]";
-	mes "Ah... Again!! I have been out hunting Orcs.";
+	mes "Ah... Again!! I was out hunting Orcs.";
 	next;
 	mes "[Mom]";
-	mes "I told you stop hunting! Go and buy us milk!";
+	mes "I told you to stop hunting! Go and buy us milk!";
 	next;
 	mes "[Etinifni]";
-	mes "Why am I just your errand boy? Go, get me a brother!";
+	mes "Am I just your errand boy? Go and get me a brother!";
 	next;
 	mes "[Mom]";
-	mes "What? This moron?!";
+	mes "What? Are you a moron?!";
 	next;
 	emotion ET_OHNO, getnpcid(0, "Etinifni#"+strnpcinfo(2));
 	mes "[Etinifni]";
-	mes "OK. I will do it.";
+	mes "Fine. I will do it.";
 	next;
 	disablenpc "Etinifni#"+strnpcinfo(2);
 	emotion ET_CRY, getnpcid(0, "Dad#"+strnpcinfo(2));
@@ -5710,13 +5710,13 @@ izlude_d,95,146,5	duplicate(Mom#iz)	Mom#iz_d	4_F_CAVE1
 // -----------------------------------------------------------------------------
 izlude,97,147,3	script	Dad#iz	1_M_JOBGUIDER,{
 	mes "[Dad]";
-	mes "Got this boy ten years ago after years of childlessness.";
+	mes "I got this boy ten years ago after years of being childless.";
 	next;
 	mes "[Dad]";
 	mes "He is the apple of my eyes to me, but my wife is too strict on him.";
 	next;
 	mes "[Dad]";
-	mes "So, I am always worrying if the only son might be spoiled.";
+	mes "So I am always worrying if as the only son, he might be spoiled.";
 	next;
 	mes "[Dad]";
 	mes "Maybe all parents worry?";
@@ -5753,15 +5753,15 @@ izlude,99,138,3	script	Romantic Male#iz	4_M_SITDOWN,{
 	mes "Let's go~~ together hand in hand~~ Put everything aside ~~ in the dark blue night of Jawaii~~ under the stars~~";
 	next;
 	mes "[Romantic Male]";
-	mes "We are leaving for Jawaii-the place of our honeymoon to celebrate our 10th wedding anniversary!";
+	mes "We are leaving for Jawaii- where we had our honeymoon- to celebrate our 10th wedding anniversary!";
 	next;
 	emotion ET_THROB;
-	mes "[Romantic Male]";
-	mes "Are you lifting up our good old memories renting my wedding dress and your tuxedo!! It will strenghthen our relationship, won't it?";
+	mes "[Romantic Female]";
+	mes "Bringing back good old memories by renting my wedding dress and your tuxedo!! It will strenghthen our relationship, won't it?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Female#"+strnpcinfo(2);
 	emotion ET_CHUP, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
-	mes "[Romantic Male]";
+	mes "[Romantic Female]";
 	mes "Honey~~ I love you!! Sweetheart~";
 	next;
 	emotion ET_CHUPCHUP;
@@ -5779,20 +5779,20 @@ izlude_d,99,138,3	duplicate(Romantic Male#iz)	Romantic Male#iz_d	4_M_SITDOWN
 // -----------------------------------------------------------------------------
 izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "[Romantic Female]";
-	mes "Shout like this when I miss you, honey!!";
+	mes "I shout like this when I miss you, honey!!";
 	next;
 	emotion ET_THROB, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "^0000cd[I miss you.]^000000";
 	next;
 	mes "[Romantic Female]";
-	mes "Then, you run towards me leaving everything behind,~ don't you?";
+	mes "Then, you'll run towards me leaving everything behind,~ won't you?";
+	next;
+	mes "[Romantic Male]";
+	mes "I will definitely come running if you call me!!";
 	next;
 	mes "[Romantic Female]";
-	mes "I will definitely do as you call me!!";
-	next;
-	mes "[Romantic Female]";
-	mes "You are tired of sitting, aren't you?";
+	mes "Aren't you tired of sitting?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Female#"+strnpcinfo(2);
 	emotion ET_CHUP, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
@@ -5809,7 +5809,7 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	next;
 	emotion ET_THROB, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
-	mes "Kia~ You are Coolest!!!";
+	mes "Kya~ You are Coolest!!!";
 	close;
 }
 
@@ -5823,11 +5823,11 @@ izlude_d,97,138,5	duplicate(Romantic Female#iz)	Romantic Female#iz_d	4_F_SITDOWN
 izlude,93,143,3	script	Manufacturing Maniac#0	-1,{
 	mes "[Manufacturing Maniac]";
 	mes "Hi~! I am an Alchemist.";
-	mes "It's one of the second jobs after Merchant.";
+	mes "It's one of the second job options after Merchant.";
 	next;
 	mes "[Manufacturing Maniac]";
-	mes "I am making a potion.";
-	mes "I came to izlude to make potions at a quiet place.";
+	mes "I'm making a potion.";
+	mes "I came to Izlude to make potions in a quiet place.";
 	mes "I feel that quiet places help to increase the rate of success.";
 	mes "I am feeling good!";
 	close;
@@ -5857,10 +5857,10 @@ izlude_d,93,143,3	duplicate(Manufacturing Maniac#0)	Manufacturing Maniac#d	2_M_A
 // -----------------------------------------------------------------------------
 izlude,147,131,5	script	Repairing Blacksmith#0	4_F_JOB_BLACKSMITH,5,7,{
 	mes "[Working Blacksmith]";
-	mes "The guy sitting over there has been staring at Wagzak. I was told that only one knife is left after losing all weapons?";
+	mes "The guy sitting over there has been staring at Wagzak. I was told he has only one knife left after losing all weapons?";
 	next;
 	mes "[Working Blacksmith]";
-	mes "He can use safe refining... I don't understand why he takes such risks.";
+	mes "He can use safe refining... I don't understand why he'd take such risks.";
 	close;
 
 OnTouch:
@@ -5886,20 +5886,20 @@ izlude,148,122,5	script	Refining Maniac#iz	4_M_SITDOWN,{
 		close;
 	}
 	mes "[Refining Maniac]";
-	mes "Some equipment except some specific ones can be enhanced by ^3131FFrefining^000000.";
+	mes "Some equipment, with a few exceptions, can be enhanced by ^3131FFrefining^000000.";
 	next;
 	mes "[Refining Maniac]";
-	mes "Weapons get increased ^3131FFAttack Power^000000, so the more you refine them the stronger they become.";
+	mes "Weapons get increased ^3131FFAttack Power^000000, so the more you refine them, the stronger they become.";
 	next;
 	mes "[Refining Maniac]";
-	mes "Each weapon level has a different refining safe point. So it's important to pay attention when refining.";
-	mes "If you break it you lose it.";
+	mes "Each weapon level has a different refining safe point. So it's important to pay attention to safety when refining.";
+	mes "If you break it, you lose it.";
 	next;
 	mes "[Refining Maniac]";
-	mes "I'm trying to get to +10 right now... All my training is for this!";
+	mes "I'm trying to get to +10 right now... All my training has been for this!";
 	next;
 	mes "[Refining Maniac]";
-	mes "Please ask to the owner of refining, I have a important mission +10!";
+	mes "Please speak to the owner of refining, I have an important mission to get to +10!";
 	close;
 }
 
@@ -5914,22 +5914,22 @@ izlude_d,148,122,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_d	4_M_SITDOW
 iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 	mes "[Otter Samssoon]";
 	mes "Welcome~";
-	mes "I am Samssoon~! I am a royal hair designer otter sent to academy.";
+	mes "I am Samssoon~! I am a royal hair designer otter sent to the Academy.";
 	next;
 	mes "[Otter Samssoon]";
-	mes "If you take ^ff0000Criatura Hair Coupon^000000, they change your hairstyle for free! So do not miss this ^ff0000once in a lifetime^000000 chance~";
+	mes "If you take this ^ff0000Criatura Hair Coupon^000000, you change your hairstyle once for free! So do not miss this ^ff0000once in a lifetime^000000 chance~";
 	next;
 	switch(select("Read style book.", "Change hair style.", "How to get a coupon", "Stop.")) {
 		case 1:
 			mes "[Otter Samssoon]";
-			mes "Oh my~ I am sure any hair style will suit you! You really have a good style~";
-			mes "There are many styles so pick ^ff0000from page 1 to 19^000000.";
+			mes "Oh my~ I am sure any hair style will suit you! You have great style~";
+			mes "There are many styles, so pick ^ff0000from page 1 to 19^000000.";
 			mes "If you want to stop, say 0.";
 			next;
 			input .@style;
 			if (.@style > 19) {
 				mes "[Otter Samssoon]";
-				mes "Oh my!!? Honey~ You can use a coupon for the hair style in here~";
+				mes "Oh my!!? Honey~ You can use coupons for a hair style in here~";
 				close;
 			} else if (!.@style) {
 				mes "[Otter Samssoon]";
@@ -5943,11 +5943,11 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 				case 1:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Play Dead' cut?";
-						mes "This looks neat and relaxed.. So popular style.";
+						mes "This looks neat and relaxed.. very popular style.";
 					} else {
 						mes "Oh my!!? 'First Aid' cut?";
-						mes "This is and adorable style.";
-						mes "I guess it looks good on you too!!";
+						mes "This is an adorable style.";
+						mes "I guess it looks good on you, too!!";
 					}
 					break;
 				case 2:
@@ -5956,108 +5956,108 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 						mes "You... You know the famous D..? He has exactly the same style!";
 					} else {
 						mes "Oh my!!? 'Bash' cut?";
-						mes "This style gives strong curls on both side hair.";
+						mes "This style gives strong curls on both sides.";
 					}
 					break;
 				case 3:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Napalm Beat' cut?";
-						mes "It has well arranges hair line that makes feel charisma.";
+						mes "It has a well arranged hair line that exudes charisma.";
 					} else {
 						mes "Oh my!!? 'Frost Diver' cut?";
-						mes "It is mysterious style that gives cold and warm feeling at the same time.";
+						mes "It's mysterious style that gives cool and warm feeling at the same time.";
 					}
 					break;
 				case 4:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Double Strafe' cut?";
-						mes "Natural hair is shaking by wind.. Clean and good feeling.";
+						mes "Natural hair shaken by wind.. Feeling clean and good.";
 					} else {
 						mes "Oh my!!? 'Arrow Shower' cut?";
-						mes "Cool and nice shaggy cut makes good style.";
+						mes "Nice shaggy and cool cut for great style.";
 					}
 					break;
 				case 5:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Angelus' cut?";
-						mes "Calm and piety feeling.. Not boring style.";
+						mes "Has a calm and piety feeling.. Not a boring style.";
 					} else {
 						mes "Oh my!!? 'Heal' cut?";
-						mes "Feminine style give healing feeling.";
+						mes "Feminine style to give that healing feeling.";
 					}
 					break;
 				case 6:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Push Cart' cut?";
-						mes "Big Kar is motivated for this style with a romance of a man.";
+						mes "Big Kar is motivated by the a romance of a man for this style.";
 					} else {
 						mes "Oh my!!? 'Vending' cut?";
-						mes "Royal ladies like this style. Make good money style.";
+						mes "Royal ladies like this style. It's fitting for those that bring the money in.";
 					}
 					break;
 				case 7:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Envenom' cut?";
-						mes "Tough style makes addicted.";
+						mes "Edgy and addicting style.";
 					} else {
 						mes "Oh my!!? 'Double Attack' cut?";
-						mes "Whoever will dash twice for this style.";
-						mes "Ponytail is important.";
+						mes "People will dash twice for this style.";
+						mes "The ponytail is important.";
 					}
 					break;
 				case 8:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Bowling Bash' cut?";
-						mes "This style makes a nice guy to challenge.";
-						mes "Just a giving a glance can steal the heart.";
+						mes "This style the key to a nice guys.";
+						mes "Just a a glance may steal a heart.";
 					} else {
 						mes "Oh my!!? 'Gloria' cut?";
-						mes "This style is ultimately gorgeous and graceful.";
+						mes "This style is spectacularly gorgeous and graceful.";
 					}
 					break;
 				case 9:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Venom Dust' cut?";
-						mes "This style has special ending line that looks fatal.";
+						mes "This style has special edge that looks fatal.";
 					} else {
 						mes "Oh my!!? 'SP Recovery' cut?";
-						mes "This style has neat cutting that inspires.";
+						mes "This style has a neat edge that inspires.";
 					}
 					break;
 				case 10:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Turn Undead' cut?";
-						mes "This style is like a cold city man who is strong enough to kill a monster.";
+						mes "This style is like a cool city man who is strong enough to kill a monster.";
 					} else {
 						mes "Oh my!!? 'Prepare Potion' cut?";
-						mes "This style has a liquid medicine motive so it makes feel cure.";
+						mes "This style has a liquid medicine quality that is wonderfully healing.";
 					}
 					break;
 				case 11:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Dragonology' cut?";
-						mes "This style is intelligent style of mysterious dragon.";
+						mes "This evokes the intelligent style of mysterious dragon.";
 					} else {
 						mes "Oh my!!? 'Grand Cross' cut?";
-						mes "Well trimmed hair cut line gives trust.";
+						mes "A well-trimmed hair cut that begets trust.";
 					}
 					break;
 				case 12:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Mace Mastery' cut?";
-						mes "Look fresh and look neat with wax treatment.";
+						mes "Looks fresh and neat with a wax treatment.";
 					} else {
 						mes "Oh my!!? 'Intimidate' cut?";
-						mes "This style is very familiar.";
+						mes "This style is very familiar and inviting.";
 					}
 					break;
 				case 13:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Thunder Storm' cut?";
-						mes "This style has natural attractive perm which is like hitting by thunder storm.";
+						mes "This style has a naturally attractive perm, like getting hit by a lighting storm.";
 					} else {
 						mes "Oh my!!? 'Spiritual Sphere";
-						mes "Calm and a little bit looks like a boy cut draw attention.";
+						mes "Calm and looks a little bit like a boy cut to draw attention.";
 					}
 					break;
 				case 14:
@@ -6066,53 +6066,53 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 						mes "Rocker's favorite style.. Even the name itself..";
 					} else {
 						mes "Oh my!!? 'Gypsy's Kiss' cut?";
-						mes "The hair.. Kind to everyone.. Neat and round hair line is very soft and charming.";
+						mes "A style that's kind to everyone.. Neat and round hair line is very soft and charming.";
 					}
 					break;
 				case 15:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Grimtooth' cut?";
-						mes "The style with edge.";
+						mes "The style with the sharpest edge.";
 					} else {
 						mes "Oh my!!? 'Counter Attack' cut?";
-						mes "It is the style that looks cold and arrogant. Hard to talk to..";
-						mes "But might be nice to boyfriend..?";
+						mes "It is a style that looks cool and haughty. Hard to talk to..";
+						mes "but a special someone might like it..?";
 					}
 					break;
 				case 16:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Blitz Beat' cut?";
-						mes "It is the style my senior invented after he broke up with his girlfriends 5 times.";
+						mes "It is invented by my senior after he broke up with his girlfriend 5 times.";
 					} else {
-						mes "Oh my!!? 'Anke Snare' cut?";
-						mes "It is killing style.. No one can take eyes off!";
+						mes "Oh my!!? 'Ankel Snare' cut?";
+						mes "It is a killing style.. No one can take their eyes off!";
 					}
 					break;
 				case 17:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Find Ore' cut?";
-						mes "This style seems to bring encounter or find unexpected things while walking on the street.";
+						mes "This style brings lucky encounters or unexpected findings while walking down the street.";
 					} else {
 						mes "Oh my!!? 'Hammer Fall' cut?";
-						mes "Stunning hair with attraction.";
+						mes "Stunning hair with attraction aplenty.";
 					}
 					break;
 				case 18:
 					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Fire Pillar' cut?";
-						mes "Everyone used to have this hair style.. Which means that was a trend of an era.";
+						mes "Everyone used to have this hair style.. Which means it was the trend of an era.";
 					} else {
-						mes "Oh my!!? 'Jupitel Thunder'";
-						mes "Fresh style by giving light waves on both side hairs.";
+						mes "Oh my!!? 'Jupitel Thunder' cut?";
+						mes "A fresh style that gives light waves from many angles.";
 					}
 					break;
 				case 19:
 					if (Sex == SEX_MALE) {
-						mes "Oh my!!? 'Guillotine Fist'";
-						mes "It is like one-shot style.. Like a real man. Right?";
+						mes "Oh my!!? 'Guillotine Fist' cut?";
+						mes "It is a one-shot victory style.. just like a real man. Right?";
 					} else {
 						mes "Oh my!!? 'Whirlwind' cut?";
-						mes "It is cool style which flows with wind. Lah, lah, lah, lah ~";
+						mes "It's a cool style that flows with the wind. Lah, lah, lah, lah ~";
 					}
 					break;
 				}
@@ -6125,18 +6125,18 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 			if (!countitem(6593)) {
 				mes "[Otter Samssoon]";
 				mes "Come on.. Honey~";
-				mes "You should bring ^ff0000'Criatura Hair Coupon'^000000 for changing hair...";
+				mes "You should bring ^ff0000'Criatura Hair Coupon'^000000 to change your hair...";
 				close;
 			}
 			mes "[Otter Samssoon]";
 			mes "Honey~ What style do you want?";
 			mes "You are totally my style. So I am very excited~~";
-			mes "Pick the style from page 1 to 19.";
+			mes "Pick a style from page 1 to 19.";
 			next;
 			input .@style;
 			if (.@style > 19) {
 				mes "[Otter Samssoon]";
-				mes "Come on.. Honey~ You can use a coupon for the hair style in here~";
+				mes "Come on.. Honey~ You can use coupons for a hair style in here~";
 				close;
 			} else if (!.@style) {
 				mes "[Otter Samssoon]";
@@ -6144,21 +6144,21 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 				close;
 			} else if (getlook(1) == .@style) {
 				mes "[Otter Samssoon]";
-				mes "Come on.. Honey~ That is the same style you have.";
+				mes "Come on, Honey~ That is the same style you have now.";
 				mes "Do you want to try something new?";
 				close;
 			}
 			callsub L_cutin, .@style;
 			mes "[Otter Samssoon]";
 			mes "Style ("+.@style+")?";
-			mes "It feels like this.. How is it?";
+			mes "It look like this.. what do you think?";
 			next;
 			if (select("Good.", "No.") == 1) {
 				if (!getlook(6)) {
 					mes "[Otter Samssoon]";
 					mes "Right!";
 					mes "Honey! What about dying hair as well?";
-					mes "Dying hair also included in this service.";
+					mes "Dying hair is also included in this service.";
 					next;
 					switch(select("Passionate Red:Sweet Yellow:Fatal Purple:Glamourous Orange:Comfortable Green:Clear Blue:Transparent White:Dark Black:Stop.")) {
 						case 1:
@@ -6188,7 +6188,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 						case 9:
 							mes "[Otter Samssoon]";
 							mes "No?";
-							mes "Do you need more time? If you want to keep the same color, then select the same one.";
+							mes "Do you need more time? If you want to keep the same color, then select the one you already have.";
 							close2;
 							cutin "", 255;
 							end;
@@ -6207,18 +6207,18 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 				cutin "", 255;
 				mes "[Otter Samssoon]";
 				mes "Oh my! Oh my! Oh my!";
-				mes "This hair style no.("+.@style+") suits to you looks good~";
+				mes "This hair style no.("+.@style+") suits you so welld~";
 				mes "What do you think?";
 				setlook 1, .@style;
 				setlook 6, .@pallete;
 				next;
 				mes "[Otter Samssoon]";
-				mes "I want to take care of your style..";
-				mes "But I have no choice to select customers because I belong to here.";
+				mes "I want to take care of your style always..";
+				mes "But I have no choice when you go off because I belong here.";
 				next;
 				mes "[Otter Samssoon]";
-				mes "For changing to new style, ^ff0000Alberta or Lighthalzen^000000.";
-				mes "For dying hair, ^ff0000Prontera or Lighthalzen^000000.";
+				mes "To change hair styles, you can go to ^ff0000Alberta or Lighthalzen^000000.";
+				mes "For dying hair, you can go to ^ff0000Prontera or Lighthalzen^000000.";
 				close;
 			}
 			mes "[Otter Samssoon]";
@@ -6228,20 +6228,20 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 			close;
 		case 3:
 			mes "[Otter Samssoon]";
-			mes "You can receive ^ff0000criatura hair coupon^000000 from ^ff0000academy receptionist for novice at academy front desk or eden group^000000";
+			mes "You can receive a ^ff0000Criatura Hair Coupon^000000 from the ^ff0000Academy receptionist for novices at the Academy front desk or Eden Group^000000";
 			next;
 			mes "[Otter Samssoon]";
-			mes "They don't give you for free.. Well..";
-			mes "The equipment you had received when you arrived at academy?";
-			mes "They change ^ff0000egg shell for novice^000000 to coupon?";
+			mes "You didn't get a free coupon? Well...";
+			mes "You know the equipment youd received when you arrived at Academy?";
+			mes "They can trade the ^ff0000egg shell for novice^000000 to a coupon.";
 			next;
 			mes "[Otter Samssoon]";
-			mes "This service has started since I came here. So.. No free service if you have no coupon~";
+			mes "This service has been the same since I came here. So.. no free service if you have no coupon~";
 			close;
 		case 4:
 			mes "[Otter Samssoon]";
 			mes "Oh my!!? Honey, you are not going to change hair?";
-			mes "You look nice now rough style.";
+			mes "You look nice as you are now, though.";
 			close;
 	}
 
