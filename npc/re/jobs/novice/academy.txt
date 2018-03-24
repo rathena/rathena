@@ -831,19 +831,19 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			getitem 531,1;// Apple_Juice
 			next;
 			mes "[Hun]";
-			mes "You can open the Item window by clicking on the 'item' icon on top left portion of the screen.";
+			mes "You can open the Item window by clicking on the 'item' icon on the top left portion of the screen.";
 			next;
 			mes "[Hun]";
-			mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
-			mes "It will do the automatic sorting per indiviaul useage to";
+			mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal', as suited.";
+			mes "It will do the sorting automatically depending on use.";
 			next;
 			mes "[Hun]";
-			mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
-			mes "or drag it onto^4d4dff the equipment window and use it^000000";
+			mes "To equip gear, either ^4d4dffdouble click on the item^000000";
+			mes "or drag it onto^4d4dff the equipment window.^000000";
 			next;
 			cutin "tutorial03.bmp", 4;
 			mes "!- Information -!";
-			mes "^4d4dffItems can be used or equipped with simply double-clicking.";
+			mes "^4d4dffItems can be used or equipped simply by right-clicking.";
 			mes "Item window can be opened with shortcut key Alt+E";
 			next;
 			mes "!- Information -!";
@@ -852,15 +852,15 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			next;
 			cutin "", 255;
 			mes "[Hun]";
-			mes "For detailed info on individual items^4d4dff, right click ^000000on that item.";
-			mes "You can check the detailed info on the item.";
+			mes "For detailed info on individual items,^4d4dff right click ^000000on that item.";
+			mes "You read expanded item info that way.";
 			next;
 			cutin "tutorial04.bmp", 4;
 			mes "!- Information -!";
 			mes "^4d4dffRight-clicking on the item icon^4d4dff  brings up detailed info on the item.";
 			next;
 			mes "!- Information -!";
-			mes "^4d4dffWhen you select other players, you can trade, party up with them with the community window that pops up.";
+			mes "^4d4dffWhen you right-click other players, you can trade, or party up with them with the community window that pops up.";
 			next;
 			cutin "", 255;
 			mes "[Hun]";
@@ -870,35 +870,35 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			if (!isbegin_quest(7473)) {
 				mes "[Hun]";
 				mes "Hey there.";
-				mes "Rest up for a bit.";
+				mes "You should rest up for a bit.";
 				next;
 				mes "[Hun]";
-				mes "It's joyous to see new adventurers starting out.";
+				mes "It's wonderful to see new adventurers starting out.";
 				mes "You want something to drink while you are resting?";
 				setquest 7473;
 				getitem 531,1;// Apple_Juice
 				next;
 				mes "[Hun]";
-				mes "Right clicking on the item icon ^4d4dffon the basic item window at the upper left corner brings up the detailed info on the item";
+				mes "You can open the Item window by clicking on the 'item' icon on the top left portion of the screen.";
 				next;
 				mes "[Hun]";
-				mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
-				mes "It will do the automatic sorting per indiviaul useage to";
+				mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal', as suited.";
+				mes "It will do the sorting automatically depending on use.";
 				next;
 				mes "[Hun]";
-				mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
-				mes "or drag it onto^4d4dff the equipment window and use it^000000";
+				mes "To equip gear, ^4d4dffdouble click on the item^000000 you intend to use";
+				mes "or drag it onto^4d4dff the equipment window.^000000;
 				next;
 				mes "[Hun]";
 				mes "For detailed info on individual items^4d4dff, right-click ^000000on the item.";
-				mes "You can check the detailed info on the item.";
+				mes "You read expanded item info that way.";
 				next;
 				cutin "tutorial04.bmp", 3;
 				mes "!- Information -!";
-				mes "Right clicking on the item icon ^4d4dffbrings up the detailed info on the item";
+				mes "Right-clicking on the item icon ^4d4dffbrings up detailed info on the item.";
 				next;
 				mes "!- Information -!";
-				mes "When you select on other players^4d4dff you can trade, party up with them with the community window that pops up.";
+				mes "When you right-click on other players^4d4dff you can trade, or party up with them with the community window that pops up.";
 				next;
 				cutin "", 255;
 				mes "[Hun]";
@@ -914,53 +914,53 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 					if (isbegin_quest(4269) > 0) {
 						mes "[Hun]";
 						mes "How's the taste?";
-						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
+						mes "Pretty good taste of sweet and sour, right? It might not be much but it also has healing properties.";
 						next;
 						mes "[Hun]";
-						mes "I want to give you more but that was the last of it";
-						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
+						mes "I would give you more but that was the last of it.";
+						mes "Anyway, here's some potions. They'll come in handy when you start fighting.";
 						completequest 7473;
 						getitem 569,30;// Novice_Potion
 						getexp 200,0;
 						next;
 						mes "[Hun]";
 						mes "Criatura Academy is a good place to build up experience for the future.";
-						mes "And I'm not just saying this because I work here.";
+						mes "And I'm not just saying that because I work here.";
 						next;
 						mes "[Hun]";
-						mes "I'm for real... haha";
+						mes "I'm for real... haha.";
 						close;
 					} else {
 						mes "[Hun]";
 						mes "How's the taste?";
-						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
+						mes "Pretty good taste of sweet and sour, right? It might not be much but it also has healing properties.";
 						next;
 						mes "[Hun]";
-						mes "I want to give you more but that was the last of it";
-						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
+						mes "I would give you more but that was the last of it";
+						mes "Anyway, here's some potions. They'll come in handy when you start fighting.";
 						completequest 7473;
 						getitem 569,30;// Novice_Potion
 						getexp 200,0;
 						next;
 						mes "[Hun]";
 						mes "What do you plan to do from now on?";
-						mes "Have you found a place to stay?";
+						mes "Have you figured out where to go next?";
 						next;
-						switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
+						switch(select("I need help with that", "I'll find something", "Don't worry, I've got a plan")) {
 						case 1:
 							mes "[Hun]";
-							mes "But still, though.";
+							mes "Yes, of course.";
 							mes "It's tough to be out alone in a new place.";
-							mes "That's why Criatura Academy is there.";
+							mes "That's why Criatura Academy is here.";
 							next;
 							mes "[Hun]";
 							mes "Carocc sent you to me probably for the same reason.";
 							mes "Even though I'm just a work-hand here, I could show you around.";
 							next;
 							mes "[Hun]";
-							mes "If you follow this road up to north, you can see";
+							mes "If you follow this road up to north, you'll find";
 							mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-							mes "Anybody can enroll, so take advantage of it.";
+							mes "Anybody can enroll, so take advantage.";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
@@ -981,7 +981,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							next;
 							mes "[Hun]";
-							mes "If there are more adventurers like you, the future will be brighter.";
+							mes "If there are more adventurers like you, the future will be bright indeed.";
 							mes "Hahahaha.";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
@@ -1001,7 +1001,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "[Hun]";
 							mes "When you go through this way to the north, you'll find";
 							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-							mes "What is well, is well- isn't it?";
+							mes "Explore all options, right?";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
@@ -1020,23 +1020,23 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 					mes "[Hun]";
 					mes "It's you..";
 					mes "What do you plan to do from now on?";
-					mes "Have you found a place to stay?";
+					mes "Have you figured out where to go next?";
 					next;
-					switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
+					switch(select("I need help with that", "I'll find something", "Don't worry, I've got a plan")) {
 					case 1:
 						mes "[Hun]";
-						mes "But still, though.";
+						mes "Yes, of course.";
 						mes "It's tough to be out alone in a new place.";
-						mes "That's why Criatura Academy is there.";
+						mes "That's why Criatura Academy is here.";
 						next;
 						mes "[Hun]";
 						mes "Carocc sent you to me probably for the same reason.";
 						mes "Even though I'm just a work-hand here, I could show you around.";
 						next;
 						mes "[Hun]";
-						mes "If you follow this road up to north, you can see";
+						mes "If you follow this road up to north, you'll find";
 						mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-						mes "Anybody can enroll, so take advantage of it.";
+						mes "Anybody can enroll, so take advantage.";
 						next;
 						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
@@ -1057,7 +1057,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						next;
 						mes "[Hun]";
-						mes "If there are more adventurers like you, the future will be brighter.";
+						mes "If there are more adventurers like you, the future will be bright indeed.";
 						mes "Hahahaha.";
 						next;
 						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
@@ -1077,7 +1077,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "[Hun]";
 						mes "When you go through this way to the north, you'll find";
 						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-						mes "What is well, is well- isn't it?";
+						mes "Explore all options, right?";
 						next;
 						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
@@ -1092,10 +1092,10 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 				} else {
 					mes "[Hun]";
 					mes "Criatura Academy is a good place to build up experience for the future.";
-					mes "I'm not saying this just because I work here.";
+					mes "And I'm not saying that just because I work here.";
 					next;
 					mes "[Hun]";
-					mes "For real... hahahaha";
+					mes "For real... hahahaha.";
 					close;
 				}
 			}
@@ -1105,7 +1105,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 		mes "The Royal Criatura Academy was founded to help budding adventurers on their initial journey.";
 		next;
 		mes "[Hun]";
-		mes "Although I'm but a work-hand here, it makes me happy to see students graduate here and become fine members of society.";
+		mes "Although I'm just a work-hand, it makes me happy to see students graduate here and become fine members of society.";
 		close;
 	}
 
@@ -1141,15 +1141,15 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 		mes "[Information Staff]";
 		mes "Hi, how are you?";
 		mes "I am in charge of navigation directions for Izlude's key locations";
-		mes "I wish to propose a simple game along with the navigation, would that be ok?";
+		mes "I wish to propose a simple game along with the navigation, what do you say?";
 		next;
 		if (select("Sure, let's play!", "I already know them all.") == 1) {
 			mes "[Information Staff]";
 			mes "First of all, how to check the mini-map.";
-			mes "You can check your location through the mini-map at the top right of the screen";
+			mes "You can check your location through the mini-map at the top right of the screen.";
 			next;
 			mes "[Information Staff]";
-			mes "If you receive information on a town or a city, a waypoint ^4d4dff+^000000 can be marked on the map.";
+			mes "If you receive information within a town or a city, a waypoint ^4d4dff+^000000 will be marked on the map.";
 			next;
 			mes "[Information Staff]";
 			mes "Press ^4d4dff[Ctrl] and [ ~ ] on your keyboard and you can see the world map^000000.";
@@ -1162,12 +1162,12 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			mes "Now then, should we play a simple game?";
 			next;
 			mes "[Information Staff]";
-			mes "I will ^4d4dffmark three specific locations on the mini-map.^000000";
+			mes "I will ^4d4dffmark three specific locations of bulletin boards on the mini-map.^000000";
 			mes "Please ^4d4dffvisit those locations ^000000using the waypoints as reference.";
 			next;
 			mes "[Information Staff]";
 			mes "Think of it as a treasure hunt and go.";
-			mes "I've hidden some useful items there.";
+			mes "I've hidden some useful items at the points.";
 			viewpoint 1,179,75,1,0xCCFFFF;
 			viewpoint 1,45,94,2,0x00FF00;
 			viewpoint 1,207,167,3,0xFFEB46;
@@ -1175,18 +1175,18 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			next;
 			mes "[Information Staff]";
 			mes "Vist me again after going by all three locations.";
-			mes "I will check up on it.";
+			mes "I'll know if you didn't.";
 			next;
 			mes "[Information Staff]";
-			mes "Ah, there' somebody who started out right before you!";
-			mes "If you don't hurry that person will take all the items!";
+			mes "Ah, someone started right before you!";
+			mes "If you don't hurry that person will get all the items!";
 			mes "So, run!";
 			npcskill "AL_INCAGI", 10, 10, 10;
 			close;
 		}
 		mes "[Information Staff]";
-		mes "Do you need information on all the locations of Izlude?";
-		mes "By clicking on the introduced ^B9062F[base camp name]^000000, I will offer you guidance so follow the ^B9062FRed Arrows^000000.";
+		mes "Do you need information on a location of Izlude?";
+		mes "By clicking on the introduced ^B9062F[area name]^000000, I will offer you guidance to follow the ^B9062FRed Arrows^000000.";
 		next;
 		while(1) {
 			switch(select("[ Main facilities ]", "[ Guide & Helper ]", "Mini map marking removal", "End Conversation")) {
@@ -1206,10 +1206,10 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						mes "[Information Staff]";
 						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
 						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
-						mes "you can go.";
+						mes "Great places to go.";
 						next;
 						mes "[Information Staff]";
-						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
+						mes "Byalan Island is the scary area with ^8B4513Izlude dungeon^000000 in it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
@@ -1217,7 +1217,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					case 3:
 						mes "[Information Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
+						mes "connects to the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
@@ -1306,9 +1306,9 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						continue;
 					case 4:
 						mes "[Information Staff]";
-						mes "If you want to visit ^8B4513Jawaii^000000 - the resort place for a couple,";
+						mes "If you want to visit ^8B4513Jawaii^000000 - a romantic resort destination,";
 						mes "talk to the <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
-						mes "Just ask the question about it.";
+						mes "You can ask her questions about it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 180, 224, 11, 0xFFFF00;
 						next;
@@ -1338,7 +1338,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				break;
 			case 3:
 				mes "[Information Staff]";
-				mes "I will erase the marks.";
+				mes "I will erase the waymarks.";
 				mes "Do you need additional directions?";
 				viewpoint 2, 197, 205, 1, 0xFF0000;
 				viewpoint 2, 210, 73, 2, 0xFF0000;
@@ -1365,64 +1365,64 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 	} else if (isbegin_quest(7474) == 1) {
 		if ((isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477)) > 2) {
 			mes "[Information Staff]";
-			mes "What's with the long face?";
+			mes "You did good. What's with the long face?";
 			mes "It looks like you found all the locations I marked.";
 			next;
 			mes "[Lumin]";
-			mes "Turtle...";
+			mes "What a turtle...";
 			cutin "nov_lumin01.bmp", 2;
 			next;
 			select("What'd you call me?");
 			mes "[Lumin]";
 			mes "Because you are too slow.";
-			mes "Yes, it is. I have been waiting for you for what seems like forever.";
+			mes "I have been waiting for you for what seems like forever.";
 			next;
 			mes "[Lumin]";
-			mes ".......Shall I share with you?";
+			mes ".......Shall I share the loot with you?";
 			cutin "nov_lumin03.bmp", 2;
 			next;
 			if (select("I don't need your sympathy.", "!!!!!") == 1) {
 				mes "[Lumin]";
 				mes "Is that so?";
-				mes "Captain always told me to help the poor people.";
-				mes "But you get rid of my chance to help.";
+				mes "Captain always told me to help poor people.";
+				mes "But you rejected my offering of help.";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Ahhh. Irritating.";
+				mes "Sigh. Irritating.";
 				next;
 			} else {
 				mes "[Lumin]";
-				mes "Well, now we can divide 7 to 3?";
-				mes "I am OK with 6 to 4.";
+				mes "Well, shall we divide 7 to 3?";
+				mes "I guess I can do 6 to 4.";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[" + strcharinfo(0) + "]";
-				mes "This guy...";
+				mes "Why, you...";
 				next;
 			}
 			cutin "", 255;
 			mes "[Information Staff]";
-			mes "Ahhh, you two calm down.";
+			mes "Hey, you two, calm down.";
 			mes "Lumin took them all.";
-			mes ""+ strcharinfo(0) + " I will give you one set separately.";
+			mes ""+ strcharinfo(0) + " I will give you your own set.";
 			next;
 			mes "[Information Staff]";
-			mes "Think of the reason, it was my fault to leave one person's but sent both of you.";
+			mes "It was my fault to leave one person's worth but sent both of you.";
 			next;
 			cutin "nov_lumin03.bmp", 2;
 			mes "[Lumin]";
 			mes "Simple and fair decision.";
-			mes "OK. Now I am going.";
+			mes "I'll be taking off now.";
 			mes "See you again, my friend.";
 			next;
 			cutin "", 255;
 			mes "[Information Staff]";
 			mes "Aren't you two friends?";
-			mes "You guys both seemed friendly enough right?";
+			mes "You guys both seemed friendly enough, I thought.";
 			next;
 			mes "[Information Staff]";
-			mes "Well, this is my present for you.";
+			mes "Well, this is what I have for you.";
 			mes "Hope it will be useful.";
 			completequest 7474;
 			erasequest 7475;
@@ -1438,8 +1438,8 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			close;
 		} else {
 			mes "[Information Staff]";
-			mes "You have not found the treasure I hid.";
-			mes "Here are the locations again.";
+			mes "You have not found the treasures I hid.";
+			mes "I'll mark locations again. Come back to me when you've found them all.";
 			mes "Hurry up!";
 			viewpoint 1,179,75,1,0xccffff;
 			viewpoint 1,45,94,2,0x00ff00;
@@ -1472,10 +1472,10 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						mes "[Information Staff]";
 						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
 						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
-						mes "you can go.";
+						mes "Great places to go.";
 						next;
 						mes "[Information Staff]";
-						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
+						mes "Byalan Island is the scary area with ^8B4513Izlude dungeon^000000 in it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
@@ -1483,7 +1483,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					case 3:
 						mes "[Information Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
+						mes "connects to the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
@@ -1572,9 +1572,9 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						continue;
 					case 4:
 						mes "[Information Staff]";
-						mes "If you want to visit ^8B4513Jawaii^000000 - the resort place for a couple,";
+						mes "If you want to visit ^8B4513Jawaii^000000 - a romantic resort destination,";
 						mes "talk to the <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
-						mes "Just ask the question about it.";
+						mes "You can ask her questions about it.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 180, 224, 11, 0xFFFF00;
 						next;
