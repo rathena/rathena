@@ -4763,7 +4763,7 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 			switch(select("Taming a monster", "Hatching the egg", "Monitoring pet's status", "Feeding", "Performances", "Removing the accessory", "Transforming back to egg", "End Conversation")) {
 			case 1:
 				mes "[Adept Adventurer]";
-				mes "Only some monsters can become pets and they all have different things to tame them.";
+				mes "Only some monsters can become pets, and they all need different things to tame them.";
 				next;
 				mes "[Adept Adventurer]";
 				mes "Each monster that can be tamed requires a specific ^3131FFtaming item^000000.";
@@ -4774,7 +4774,7 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 				cutin "pet_ex_01.bmp", 3;
 				next;
 				mes "[Adept Adventurer]";
-				mes "Press ^3131FFClick^000000 in the center of the pop-up slot machine to tame the monster..";
+				mes "Press ^3131FFClick^000000 in the center of the pop-up slot machine to try to tame the monster...";
 				cutin "pet_ex_02.bmp", 3;
 				next;
 				cutin "", 255;
@@ -4796,34 +4796,34 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 				mes "^3131FFRight-click^000000 on your pet and select ^3131ffCheck the Pet Status^000000 to check on its status. Or you can press ^3131FF<Alt+J>^000000.";
 				next;
 				mes "[Adept Adventurer]";
-				mes "This will open up the Status Window. Here you can change the pet's ^3131FFname^000000 as well as check their ^3131FFHunter^000000 and ^3131FFIntimacy^000000.";
+				mes "This will open up their Status Window. Here you can change the pet's ^3131FFname^000000 as well as check their ^3131FFHunter^000000 and ^3131FFIntimacy^000000 level.";
 				next;
 				mes "[Adept Adventurer]";
-				mes "There are some special pets that gives special skills when their ^3131FFIntimacy^000000 level becomes Loyal. Most pets start off as shy and time and food changes that.";
+				mes "There are some special pets that gives special skills when their ^3131FFIntimacy^000000 level becomes Loyal. Most pets start off as shy, which can be improved with time and food.";
 				next;
 				break;
 			case 4:
 				mes "[Adept Adventurer]";
-				mes "<Pet Food> is normal food for pets but some pets prefer other foods. You should keep enough with you so your pet doesn't get hungry.";
+				mes "<Pet Food> is normal food for most pets, but some pets prefer other foods. You should keep enough with you so your pet doesn't get hungry.";
 				next;
 				mes "[Adept Adventurer]";
-				mes "Pets will ^3131FFrun away^000000 if they are too full or too hungry. So make sure you check your pets hunger status frequently!";
+				mes "Pets will ^3131FFrun away^000000 if they are too full or too hungry. So make sure you check your pet's hunger status frequently!";
 				next;
 				break;
 			case 5:
 				mes "[Adept Adventurer]";
-				mes "Some pets will show a special performance when they are in a good mood.";
+				mes "Some pets will do a special performance when they are in a good mood.";
 				next;
 				break;
 			case 6:
 				mes "[Adept Adventurer]";
 				mes "Some pets can even wear accessory items.";
-				mes "^3131FF<Pet Groomer>^000000 will sell some pet accessory items but some monsters will also drop pet accessory items as well.";
+				mes "^3131FF<Pet Groomer>^000000s will sell some pet accessory items, but some accessories are dropped by monsters as well.";
 				next;
 				break;
 			case 7:
 				mes "[Adept Adventurer]";
-				mes "I think it is better off experiencing more together than transforming back to the eggs?";
+				mes "Isn't it better experiencing things together than by yourself?";
 				next;
 				break;
 			case 8:
@@ -4841,7 +4841,7 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 		mes "Calm down now, here you go!";
 		next;
 		mes "[Adventurer's Pet]";
-		mes "Phew, it was good. I'm full.";
+		mes "Mmm, that was good. I'm full.";
 		next;
 		if (select("A talking monster!", "Ignore it.") == 2) {
 			mes "[Adept Adventurer]";
@@ -4849,7 +4849,7 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 			close;
 		}
 		mes "[Adept Adventurer]";
-		mes "Once it was a dangerous monster, now it is my closest friend. This is my ^3131FFpet^000000 which is called as Debbie Ruchi.";
+		mes "Once this was a dangerous monster, now it is my closest friend. This is my ^3131FFpet^000000 which is called Debbie Ruchi.";
 		next;
 		if (select("What is a pet?", "End Conversation") == 2) {
 			mes "[Adventurer's Pet]";
@@ -4857,17 +4857,17 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 			close;
 		}
 		mes "[Adept Adventurer]";
-		mes "Well they're loyal ^3131FFmonster^000000s that stand by your side.";
+		mes "Pets are loyal ^3131FFmonster^000000s that stand by your side.";
 		next;
 		select("Does it help you fight?");
 		mes "[Adept Adventurer]";
-		mes "It doesn't help me battle but it helps by giving me bonus ^3131FFstats^000000 and other bonus effects.";
+		mes "It doesn't help me battle, but it helps by giving me bonus ^3131FFstats^000000 and other bonus effects.";
 		next;
 		mes "[Adept Adventurer]";
-		mes "All these things are possible when ^3131FFIntimacy^000000 with your pet is very high.";
+		mes "Many things are possible when ^3131FFIntimacy^000000 with your pet is very high.";
 		next;
 		mes "[Adept Adventurer]";
-		mes "Intimacy requires a time commitment and a lot of food. Food is the way to any being's loyalty right? ha ha";
+		mes "Intimacy requires a time commitment and a lot of food. Food is the way to any being's loyalty, right? ha ha";
 		next;
 		if (select("How do I get a pet?", "End Conversation") == 2) {
 			mes "[Adept Adventurer]";
@@ -4875,10 +4875,10 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 			close;
 		}
 		mes "[Adept Adventurer]";
-		mes "Do you need a pet?";
+		mes "Would you like a pet?";
 		next;
 		mes "[Adept Adventurer]";
-		mes "Hmm then let's go to the Academy Gardens together!";
+		mes "Hmm, then let's go to the Academy Gardens together!";
 		mes "I'll show you how it's done.";
 		next;
 		mes "[Adept Adventurer]";
@@ -4897,7 +4897,7 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 			end;
 		}
 		mes "[Adept Adventurer]";
-		mes "If you want, I will guide you anytime.";
+		mes "If you change your mind, I will guide you anytime.";
 		close;
 	}
 
@@ -4928,7 +4928,7 @@ OnTimer60000:
 		npctalk "Adventurer's Pet : Ha. You are lucky to have this Devi.";
 		break;
 	case 4:
-		npctalk "Adventurer's Pet : Isn't the floor cold? Well.. For me, Undead is more familiar.";
+		npctalk "Adventurer's Pet : Isn't the floor cold? Well.. I'm more familiar with Undead.";
 		break;
 	}
 
@@ -4958,7 +4958,7 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 			switch(select("Taming a monster", "Hatching the egg", "Monitoring pet's status", "Feeding", "Performances", "Removing the accessory", "Transforming back to egg", "End Conversation")) {
 			case 1:
 				mes "[Adept Adventurer]";
-				mes "Only some monsters can become pets and they all have different things to tame them.";
+				mes "Only some monsters can become pets, and they all need different things to tame them.";
 				next;
 				mes "[Adept Adventurer]";
 				mes "Each monster that can be tamed requires a specific ^3131FFtaming item^000000.";
@@ -4969,7 +4969,7 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 				cutin "pet_ex_01.bmp", 3;
 				next;
 				mes "[Adept Adventurer]";
-				mes "Press ^3131FFClick^000000 in the center of the pop-up slot machine to tame the monster..";
+				mes "Press ^3131FFClick^000000 in the center of the pop-up slot machine to tame the monster...";
 				cutin "pet_ex_02.bmp", 3;
 				next;
 				cutin "", 255;
@@ -4991,15 +4991,15 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 				mes "^3131FFRight-click^000000 on your pet and select ^3131ffCheck the Pet Status^000000 to check on its status. Or you can press ^3131FF<Alt+J>^000000.";
 				next;
 				mes "[Adept Adventurer]";
-				mes "This will open up the Status Window. Here you can change the pet's ^3131FFname^000000 as well as check their ^3131FFHunter^000000 and ^3131FFIntimacy^000000.";
+				mes "This will open up their Status Window. Here you can change the pet's ^3131FFname^000000 as well as check their ^3131FFHunter^000000 and ^3131FFIntimacy^000000 level.";
 				next;
 				mes "[Adept Adventurer]";
-				mes "There are some special pets that gives special skills when their ^3131FFIntimacy^000000 level becomes Loyal. Most pets start off as shy and time and food changes that.";
+				mes "There are some special pets that gives special skills when their ^3131FFIntimacy^000000 level becomes Loyal. Most pets start off as shy, which can be improved with time and food.";
 				next;
 				break;
 			case 4:
 				mes "[Adept Adventurer]";
-				mes "<Pet Food> is normal food for pets but some pets prefer other foods. You should keep enough with you so your pet doesn't get hungry.";
+				mes "<Pet Food> is normal food for most pets, but some pets prefer other foods. You should keep enough with you so your pet doesn't get hungry.";
 				next;
 				mes "[Adept Adventurer]";
 				mes "Pets will ^3131FFrun away^000000 if they are too full or too hungry. So make sure you check your pets hunger status frequently!";
@@ -5007,18 +5007,18 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 				break;
 			case 5:
 				mes "[Adept Adventurer]";
-				mes "Some pets will show a special performance when they are in a good mood.";
+				mes "Some pets will do a special performance when they are in a good mood.";
 				next;
 				break;
 			case 6:
 				mes "[Adept Adventurer]";
 				mes "Some pets can even wear accessory items.";
-				mes "^3131FF<Pet Groomer>^000000 will sell some pet accessory items but some monsters will also drop pet accessory items as well.";
+				mes "^3131FF<Pet Groomer>^000000s will sell some pet accessory items, but some accessories are dropped by monsters as wel";
 				next;
 				break;
 			case 7:
 				mes "[Adept Adventurer]";
-				mes "I think it is better off experiencing more together than transforming back to the eggs?";
+				mes "Isn't it better experiencing things together than by yourself?";
 				next;
 				break;
 			case 8:
@@ -5034,27 +5034,27 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 		close;
 	} else if (isbegin_quest(2293) == 1) {
 		mes "[Adept Adventurer]";
-		mes "Would you look at that...Porings growing in the garden of the closed Criatura Academy like little Jelly Babies.";
+		mes "Would you look at that...Porings growing in the garden of the closed Criatura Academy like little jelly babies.";
 		next;
 		mes "[Adept Adventurer]";
-		mes "Not all monsters in Rune Midgards are our for your blood, just most of them.";
+		mes "Not all monsters in Rune Midgards are out for your blood, just most of them.";
 		next;
 		mes "[Adept Adventurer]";
-		mes "Take a look at that, looks like that ^3131FFPoring^000000 has something to say to you";
+		mes "Take a look, looks like that ^3131FFPoring^000000 has something to say to you.";
 		completequest 2293;
 		setquest 2294;
 		close;
 	} else {
 		if (isbegin_quest(2296) == 1) {
 			mes "[Adept Adventurer]";
-			mes "If you are confused, Please check the quest status by pressing ^3131FF<Alt+U>^000000 anytime.";
+			mes "If you get confused, please check the quest status by pressing ^3131FF<Alt+U>^000000 anytime.";
 			next;
 			if (select("How to gain Unripe Apples", "End Conversation") == 1) {
 				mes "[Adept Adventurer]";
-				mes "You'd want to go to the Dispensary to learn how to make ^3131FFUnripe Apple^000000s.";
+				mes "You should go to the Dispensary to learn how to make ^3131FFUnripe Apple^000000s.";
 				next;
 				mes "[Adept Adventurer]";
-				mes "One of the staff there should have a ^3131FFItem compounding book^000000 for novices, ^3131FFHow to make Unripe Apples^000000 is one of the subjects.";
+				mes "One of the staff there should have an ^3131FFItem compounding book^000000 for novices, with ^3131FFHow to make Unripe Apples^000000 as one of the subjects.";
 				close;
 			}
 		}
@@ -5068,17 +5068,17 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 			next;
 			select("Taming?");
 			mes "[Adept Adventurer]";
-			mes "Yep, it means you are ready to be a friend like me and Debbie Ruchi.";
+			mes "Yep, it means you are ready to be friends like me and Debbie Ruchi.";
 			next;
 			mes "[Adept Adventurer]";
-			mes "There are lots of different monsters and tames out there.";
+			mes "There are lots of different monsters and taming items out there.";
 			next;
 			mes "[Adept Adventurer]";
-			mes "If you successfully tame it you end up with a little egg.";
+			mes "If you successfully tame it, you end up with a little egg.";
 			next;
 			mes "[Adept Adventurer]";
-			mes "So congratulations again for passing the test, the friendship test!";
-			mes "Ask anytime whenever you have a question about cute pets.";
+			mes "So congratulations again for passing the test... the friendship test!";
+			mes "Come to me anytime whenever you have a question about cute pets.";
 			next;
 			mes "[Adept Adventurer]";
 			mes "Do you see the shivering poring over there? Go easy on the lil' blighter, okay?";
@@ -5087,7 +5087,7 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 			close;
 		}
 		mes "[Adept Adventurer]";
-		mes "If you are confused, Please check the quest status by clicking ^3131FF<Alt+U>^000000 anytime.";
+		mes "If you are confused, please check the quest status by clicking ^3131FF<Alt+U>^000000 anytime.";
 		close;
 	}
 }
@@ -5100,12 +5100,12 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "You have too many items to continue the quest.";
 		next;
 		mes "[Poring]";
-		mes "Open inventory with ^3131FFAlt+E^000000 key, if you find unnecessaty items, sell them to ^3131FFmerchant^000000 or put into ^3131FFwarehouse^000000 by using kafra service~.";
+		mes "Open inventory with ^3131FFAlt+E^000000 key. If you find unnecessaty items, sell them to a ^3131FFmerchant^000000 or put them into ^3131FFwarehouse^000000 by using Kafra services~.";
 		close;
 	}
 	if (!isbegin_quest(2294)) {
 		mes "[Poring]";
-		mes "Help me novice...";
+		mes "Help me, novice...";
 		close;
 	} else if (isbegin_quest(2294) == 1) {
 		mes "[Poring]";
@@ -5120,7 +5120,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "Wot a sad state of affairs.";
 		next;
 		mes "[Poring]";
-		mes "That geeza' ghostring got defeated out in his dungeon and came here to pick on other monsters like me.";
+		mes "That geeza' ghostring got defeated out in his dungeon and came here to pick on otha' monsters like me.";
 		next;
 		mes "[Poring]";
 		mes "I'm too low level to stop 'im, you can hear them cheering now...";
@@ -5136,7 +5136,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Ghostring]";
-		mes "What kind of monster I am?";
+		mes "What kind of monster am I?";
 		emotion ET_SURPRISE, getnpcid(0, "Ghostring#cupet");
 		next;
 		mes "[Unskilled Poring]";
@@ -5152,7 +5152,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		emotion ET_CRY;
 		mes "[Poring]";
 		mes "Bleedin' shame...";
-		mes "Little Porings takin' up with a git like that and not bein' cute anymore.";
+		mes "Little Porings takin' up with a git like that and not bein' cute no more.";
 		next;
 		mes "[Poring]";
 		mes "The Little Porings aren't bad'uns, they've just not been to the outside world.";
@@ -5182,7 +5182,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		next;
 		select("What can I do to help?");
 		mes "[Poring]";
-		mes "I do have a good idea!";
+		mes "I have a good idea!";
 		mes "Come over here!";
 		completequest 2294;
 		setquest 2295;
@@ -5193,18 +5193,18 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "The favorite items for Little Poring to eat.";
 		next;
 		mes "[Poring]";
-		mes "Maybe you can use it to tempt them away from listenin' to Ghostring.";
+		mes "Maybe you can use it to tempt 'em away from listenin' to Ghostring.";
 		next;
 		mes "[Poring]";
 		mes "^3131FFDouble click the unripe apple^000000 that I gave you and ^3131FFselect^000000 a ^3131FFLittle Poring^000000 that you fancy.";
 		cutin "pet_ex_01.bmp", 3;
 		next;
 		mes "[Poring]";
-		mes "TThe click the centre of the slot machine.";
+		mes "Then click the centre of the slot machine.";
 		cutin "pet_ex_02.bmp", 3;
 		next;
 		mes "[Poring]";
-		mes "That'll lure them from out of Ghostring's influence.";
+		mes "That'll lure 'em from out of Ghostring's influence.";
 		cutin "", 255;
 		completequest 2295;
 		setquest 2296;
@@ -5229,7 +5229,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Yeah, don't worry, I'll make sure to";
-			mes "give them a good home.";
+			mes "give 'em a good home.";
 			completequest 2296;
 			setquest 2297;
 			close;
@@ -5239,11 +5239,11 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 			cutin "pet_ex_01.bmp", 3;
 			next;
 			mes "[Poring]";
-			mes "The all you have to do is ^3131FFclick ^0000 the middle of the slot machine.";
+			mes "Then all you have to do is ^3131FFclick ^0000 the middle of the slot machine.";
 			cutin "pet_ex_02.bmp", 3;
 			next;
 			mes "[Poring]";
-			mes "It may fail, but keep trying to lure way those Little Porings!";
+			mes "It may fail, but keep trying to lure away those Little Porings!";
 			close;
 		}
 	} else if (isbegin_quest(2297) == 1) {
@@ -5261,13 +5261,13 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		next;
 		select("What?");
 		mes "[Poring]";
-		mes "Even before that Ghostring came here, the Little Porings were kind of cowardly.";
+		mes "Even before that Ghostring came 'ere, the Little Porings were kind of cowardly.";
 		next;
 		mes "[Poring]";
 		mes "Since they've never been out in the real world, sort of like human novices.";
 		next;
 		mes "[Poring]";
-		mes "You're just starting out on your adventure, right? You will visit many towns and meet many people and encounter the frightful Boss Monsters.";
+		mes "You're just starting out on your adventure, right? You will visit many towns and meet many people and encounter frightful Boss Monsters.";
 		next;
 		mes "[Poring]";
 		mes "Won't you consider taking one of these chavs with you?";
@@ -5279,7 +5279,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "I'd say that the ^31311FAdept adventurer ^000000knows lots of things about pets, so you can ask him about your new Little Poring Friend.";
 		next;
 		mes "[Poring]";
-		mes "By the way, you should have a ^3131FFportable egg incubator ^000000.";
+		mes "By the way, you should have this ^3131FFportable egg incubator^000000.";
 		mes "It was dropped by a careless ^3131FFPet Groomer^000000 traveling through.";
 		next;
 		mes "[Poring]";
@@ -5297,7 +5297,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		close;
 	} else {
 		mes "[Poring]";
-		mes "Take good care of your Little Poring. Ask the adept adventurer if you have any questions about cute pets!";
+		mes "Take good care of your Little Poring. Ask the Adept Adventurer if you have any questions about cute pets!";
 		close;
 	}
 }
@@ -5323,11 +5323,11 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 	cutin "kafra_01.bmp", 2;
 	if (isbegin_quest(4269) == 2) {
 		mes "[Kafra Guide Trainer]";
-		mes "Welcome, Kafra service is always close to your heart";
+		mes "Welcome! Kafra service is always close to your heart.";
 		next;
 		mes "[Kafra Guide Trainer]";
-		mes "For those who are using the Kafra service for the first time.";
-		mes "Kafra service offers thorough information rundown~!";
+		mes "For those who are using the Kafra service for the first time,";
+		mes "Kafra service offers a thorough information rundown~!";
 		while(1) {
 			next;
 			mes "[Kafra Guide Trainer]";
@@ -5337,7 +5337,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 			switch(select("Saving", "Storage Service", "Teleport Service", "Use of Pushcart Service", "Check Other Information", "Cancel")) {
 			case 1:
 				mes "[Kafra Guide Trainer]";
-				mes "Save service is for when you ^8B4513die in battle^000000 or use an item like ^8B4513Butterfly Wings^000000, you will be sent back to your Save Location.";
+				mes "Save service is for when you ^8B4513die in battle^000000 or use an item like ^8B4513Butterfly Wings^000000. You will be sent back to your Save Location.";
 				next;
 				mes "[Kafra Guide Trainer]";
 				mes "Easy to understand~?";
@@ -5347,7 +5347,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					mes "[Kafra Guide Trainer]";
 					mes "Don't be afraid of it~!";
 					mes "Save service doesn't swallow you.";
-					mes "If you change your mind, you would better try it definitely~!";
+					mes "If you change your mind, you can definitely come back and try~!";
 				} else {
 					mes "[Kafra Guide Trainer]";
 					mes "Well~ then, for now, ^8B4513Izlude Square^000000 where the Criatura Academy is located will be saved as your save point~!.";
@@ -5366,23 +5366,23 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 			case 2:
 				mes "[Kafra Guide Trainer]";
 				mes "Storage service is a place where you can safely store your items.";
-				mes "Your items can be accessed by all characters in your account.";
+				mes "Stored items can be accessed by all characters in your account.";
 				next;
 				mes "[Kafra Guide Trainer]";
-				mes "To use the storage, you need to be over Novice Job Level 6 and higher.";
+				mes "To use storage, you need to be Novice Job Level 6 or higher.";
 				next;
 				mes "[Kafra Guide Trainer]";
 				mes "For a small fee, most Kafra Employees will let you open your storage.";
-				mes "You can even buy Kafra Cards from the Item Mall to open storage from anywhere!";
-				mes "Do you want to use the storage?";
+				mes "You can even buy Kafra Cards from the Item Mall and use them to open storage from anywhere!";
+				mes "Do you want to try using storage?";
 				next;
 				if (select("No", "Yes") == 1) {
 					mes "[Kafra Guide Trainer]";
-					mes "Storage is necessary for you to survive so use it regularly.";
+					mes "Storage is necessary for you to survive, so use it regularly.";
 				} else {
 					if (!callfunc("F_CanOpenStorage")) {
 						mes "[Kafra Guide Trainer]";
-						mes "To use the storage, you need to be raised the beginner level 6 and higher.";
+						mes "To use storage, you need to be beginner level 6 or higher.";
 					} else if (countitem(7059) || Zeny >= 500) {
 						if (countitem(7059)) {
 							delitem 7059,1;// Cargo_Free_Ticket
@@ -5392,7 +5392,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 						}
 						mes "[Kafra Guide Trainer]";
 						mes "I'll open the storage~.";
-						mes "Thanks for using~!";
+						mes "Thanks for using our service~!";
 						close2;
 						cutin "", 255;
 						openstorage;
@@ -5400,7 +5400,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					} else {
 						mes "[Kafra Guide Trainer]";
 						mes "Dear customer, you don't have enough money~!";
-						mes "You need 500 zeny to use the storage~!";
+						mes "You need 500 zeny to use storage~!";
 					}
 				}
 				break;
@@ -5409,7 +5409,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 				mes "Teleport service is a service that sends you to various locations throughout Rune Midgard.";
 				next;
 				mes "[Kafra Guide Trainer]";
-				mes "Different Kafra Employees have different teleport locations to send you to so you need to talk to them to find out where they're teleporting to.";
+				mes "Different Kafra Employees have different teleport locations they can send you to, so you need to talk to them to find out where they're teleporting to.";
 				next;
 				mes "[Kafra Guide Trainer]";
 				mes "Ok, so for educational purposes I'm offering a free teleport service here at the Academy.";
@@ -5417,9 +5417,9 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 				next;
 				if (select("No", "Yes") == 1) {
 					mes "[Kafra Guide Trainer]";
-					mes "You afraid of having your cells spliced or something? Don't worry this is perfectly safe~!";
+					mes "You afraid of having your cells spliced or something? Don't worry, this is perfectly safe~!";
 					mes "This is an essential service~";
-					mes "So, you better get used to it ok?";
+					mes "So it's better to get used to it, ok?";
 					break;
 				} else {
 					switch(select("Academy 1st floor Great Hall", "Academy 2nd floor Principal's Office", "Izlude southern entrance", "Use later")) {
@@ -5438,7 +5438,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 						next;
 						if (select("No", "Yes") == 1) {
 							mes "[Kafra Guide Trainer]";
-							mes "You afraid of having your cells spliced or something? Don't worry this is perfectly safe~!";
+							mes "You afraid of having your cells spliced or something? Don't worry, this is perfectly safe~!";
 							break;
 						} else {
 							cutin "", 255;
@@ -5448,7 +5448,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 						break;
 					case 4:
 						mes "[Kafra Guide Trainer]";
-						mes "You afraid of having your cells spliced or something? Don't worry this is perfectly safe~!";
+						mes "You afraid of having your cells spliced or something? Don't worry, this is perfectly safe~!";
 						break;
 					}
 				}
@@ -5456,17 +5456,17 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 			case 4:
 				mes "[Kafra Guide Trainer]";
 				mes "Pushcart service is used for those who have the job ^8B4513Merchant^000000.";
-				mes "To rent a Pushcart Merchants pay a small zeny fee and that's it.";
+				mes "To rent a Pushcart, Merchants pay a small zeny fee and that's it.";
 				next;
 				mes "[Kafra Guide Trainer]";
-				mes "If you aren't a Merchant class or if you haven't learned the Cart Skill then you can't use this Kafra service.";
+				mes "If you aren't a Merchant class or if you haven't learned the Cart skill, then you can't use this Kafra service.";
 				break;
 			case 5:
 				mes "[Kafra Guide Trainer]";
 				mes "Among the other services we provide, there is a Customer point service system from Kafra!";
 				next;
 				mes "[Kafra Guide Trainer]";
-				mes "Every time you use a Kafra Service you get Special Reserve Points~";
+				mes "Every time you use a Kafra Service, you get Special Reserve Points~";
 				mes "You can use these points at the Kafra Headquarters in Aldebaran to trade for certain items.";
 				next;
 				mes "[Kafra Guide Trainer]";
@@ -5474,8 +5474,8 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 				next;
 				if (select("Check Special Reserve Points.", "Cancel") == 2) {
 					mes "[Kafra Guide Trainer]";
-					mes "Even later~~!!";
-					mes "Please check your accumulated customer points~!";
+					mes "Come back later~~!!";
+					mes "That way you can check your accumulated customer points~!";
 				} else {
 					mes "[Kafra Guide Trainer]";
 					mes ""+strcharinfo(0)+", your accummulated points are "+RESRVPTS+" points.";
@@ -5483,13 +5483,13 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					mes "[Kafra Guide Trainer]";
 					mes "You can exchange your";
 					mes "Special Reserve Points for";
-					mes "rewards at the Kafra Main Office in Al De Baran. Please use our";
+					mes "rewards at the Kafra Main Office in Aldebaran. Please use our";
 					mes "convenient services to see the benefits of our rewards program.";
 				}
 				break;
 			case 6:
 				mes "[Kafra Guide Trainer]";
-				mes "Our Kafra service is doing our best to give you the best satisfaction that you deserve as a customer.";
+				mes "Kafra service is doing our best to give you the highest satisfaction that you deserve as a customer.";
 				mes "Thanks for using us.";
 				close2;
 				cutin "", 255;
