@@ -3666,23 +3666,23 @@ izlude_d,115,181,5	duplicate(Shop Helper#iz)	Shop Helper#iz_d	4_F_KHELLISIA
 // -----------------------------------------------------------------------------
 iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 	mes "[Attribute Expert]";
-	mes "Are you a new student? Ask me anything if you have questions about atttribute. I am an attribute expert.";
+	mes "Are you a new student? Ask me anything if you have questions about atttributes. I am an attribute expert.";
 	next;
 	while(1) {
-		switch(select("What are attributes?", "Harmony of attributes", "Experience of attribute", "End Conversation")) {
+		switch(select("What are attributes?", "Harmony of attributes", "Experience of attributes", "End Conversation")) {
 		case 1:
 			mes "[Attribute Expert]";
 			mes "All materials in the world have their own attributes.";
 			next;
 			mes "[Attribute Expert]";
-			mes "There are many types of attributes. There are 4 elemental attributes ^0D6EF2Water^000000, ^006600Wind^000000, ^FF0000Fire^000000, ^B97246Earth^000000.";
+			mes "There are many types of attributes. There are 4 elemental attributes... ^0D6EF2Water^000000, ^006600Wind^000000, ^FF0000Fire^000000, ^B97246Earth^000000.";
 			next;
 			mes "[Attribute Expert]";
-			mes "There are more uncommon ones like... Neutral, Poison, Holy, Dark, Angel, Undead.";
-			mes "There are more types than you think right?";
+			mes "There are also more uncommon ones like... Neutral, Poison, Holy, Dark, Angel, Undead.";
+			mes "There are more types than you would think, right?";
 			next;
 			mes "[Attribute Expert]";
-			mes "All right, here's the question which attribute do we belong to?";
+			mes "All right, here's the question. Which attribute do we belong to?";
 			next;
 			if (select("Water", "Wind", "Fire", "Earth", "Neutral", "Poison", "Holy", "Dark", "Angel", "Undead") == 5) {
 				mes "[Attribute Expert]";
@@ -3691,8 +3691,8 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 				break;
 			} else {
 				mes "[Attribute Expert]";
-				mes "Do you think so?";
-				mes "We belong to the Neutral.";
+				mes "Is that what you think?";
+				mes "Actually, we belong to the Neutral attribute.";
 				next;
 				break;
 			}
@@ -3703,25 +3703,25 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 			break;
 		case 2:
 			mes "[Attribute Expert]";
-			mes "Everything needs to balance with something srong and something weak. So ^3131FFbalance and harmony^000000 comes along all the time.";
+			mes "Everything needs to balance with something srong and something weak. So ^3131FFbalance and harmony^000000 comes can always be achieved.";
 			next;
 			mes "[Attribute Expert]";
-			mes "Balance and harmony is strongly related to your power as well. So remember well.";
+			mes "Balance and harmony are strongly related to your power, too. So pay attention.";
 			next;
 			while(1) {
 				switch(select("Water", "Fire", "Earth", "Wind", "Etc...", "I already know")) {
 				case 1:
 					mes "[Attribute Expert]";
-					mes "^0D6EF2Water^000000 is stronger than ^FF0000Fire^000000, so they give bonus damage to anything with Fire attribute!";
+					mes "^0D6EF2Water^000000 is stronger than ^FF0000Fire^000000, so Water gives bonus damage to anything with Fire attribute!";
 					mes "But it is weak to ^006600Wind^000000.";
 					next;
 					mes "[Attribute Expert]";
-					mes "Examples of monsters with the Water Attribute are Poring and Roda Frog... have you heard of those monsters?";
+					mes "Examples of monsters with the Water Attribute are Poring and Roda Frog... have you heard of them?";
 					next;
 					continue;
 				case 2:
 					mes "[Attribute Expert]";
-					mes "^FF0000Fire^000000 is stronger than ^B97246Earth^000000, so they give bonus damage to anything with Earth attribute!";
+					mes "^FF0000Fire^000000 is stronger than ^B97246Earth^000000, so Water gives bonus damage to anything with Earth attribute!";
 					mes "Examples of monsters with the Fire Attribute are Drops and Picky.";
 					next;
 					mes "[Attribute Expert]";
@@ -3730,7 +3730,7 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 					continue;
 				case 3:
 					mes "[Attribute Expert]";
-					mes "^B97246Earth^000000 is stronger than  ^006600Wind^000000, so they give bonus damage to anything with Wind attribute!";
+					mes "^B97246Earth^000000 is stronger than ^006600Wind^000000, so Earth gives bonus damage to anything with Wind attribute!";
 					mes "But it is weak to ^FF0000Fire^000000.";
 					next;
 					mes "[Attribute Expert]";
@@ -3739,7 +3739,7 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 					continue;
 				case 4:
 					mes "[Attribute Expert]";
-					mes "^006600Wind^000000 is stronger than ^0D6EF2Water^000000, so they give bonus damage to anything with Water attribute!";
+					mes "^006600Wind^000000 is stronger than ^0D6EF2Water^000000, so Wind gives bonus damage to anything with Water attribute!";
 					mes "But it is weak to ^B97246Earth^000000.";
 					next;
 					mes "[Attribute Expert]";
@@ -3748,12 +3748,12 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 					continue;
 				case 5:
 					mes "[Attribute Expert]";
-					mes "^3131FFPoison^000000 is stronger than Fire, Wind, and Earth, but weak at Undead attribute.";
+					mes "^3131FFPoison^000000 is stronger than Fire, Wind, and Earth, but it is weak to the Undead attribute.";
 					next;
 					continue;
 				case 6:
 					mes "[Attribute Expert]";
-					mes "It is important.. Isn't it?";
+					mes "Super important to know.. isn't it?";
 					next;
 					break;
 				}
@@ -3768,12 +3768,12 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 				mes "[Attribute Expert]";
 				mes "All right, do you see those ^3131FFFire Eggs^000000 over there?";
 				mes "Go over there and smack one of them.";
-				mes "Don't worry about destroying it either.";
+				mes "Don't worry about destroying it.";
 				setquest 2299;
 				close;
 			} else if (isbegin_quest(2299) == 1) {
 				mes "[Attribute Expert]";
-				mes "How is it? Have you ever attacked to Fire Eggs?";
+				mes "How is it? Have you ever attacked Fire Eggs before?";
 				next;
 				switch(select("Yes", "No", "I want to quit.")) {
 				case 1:
@@ -3788,26 +3788,26 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 						next;
 					} else if (.@input > 9 && .@input < 100001) {
 						mes "[Attribute Expert]";
-						mes "You are good I guess...";
+						mes "You're good I guess...";
 						next;
 					} else {
 						mes "[Attribute Expert]";
-						mes "But wait that's impossible.";
+						mes "But wait, that's impossible.";
 						close;
 					}
 					mes "[Attribute Expert]";
-					mes "All right. Class is over.";
+					mes "All right. Lesson over.";
 					next;
 					mes "[Attribute Expert]";
-					mes "I am not sure if you remember monsters with ^FF0000Fire^000000 are weak against ^0D6EF2Water^000000.";
+					mes "I am not sure if you remember, monsters with ^FF0000Fire^000000 are weak against ^0D6EF2Water^000000.";
 					next;
 					mes "[Attribute Expert]";
-					mes "I will give the ^0D6EF2Water^000000 attribute to you as a present.";
+					mes "I will inbue you the ^0D6EF2Water^000000 attribute temporarily.";
 					mes "If you attack the Fire Eggs again you should do more damage now.";
 					next;
 					mes "[Attribute Expert]";
-					mes "There is only one more chance!";
-					mes "Hurry up, the attribute magic will be gone if you take more time thanks for joining to my class.";
+					mes "This is the last chance!";
+					mes "Hurry up, the attribute magic will be gone if you take too much time.";
 					completequest 2299;
 					// ConsumeSpecialItem 12115
 					if (Class == Job_Novice)
@@ -3816,23 +3816,23 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 				case 2:
 					mes "[Attribute Expert]";
 					mes "Go and smack those eggs over there.";
-					mes "The egg of an ant is strong so don't worry about destroying them too much.";
+					mes "The egg of an ant is strong, so don't worry too much about destroying them.";
 					close;
 				case 3:
 					mes "[Attribute Expert]";
-					mes "There is nothing I can do. But I will help you anytime if you need.";
+					mes "There is nothing I can do. But I will help you if you need anything else.";
 					erasequest 2299;
 					close;
 				}
 			} else {
 				mes "[Attribute Expert]";
-				mes "Magic basically consists of different attribute attacks. There is another way of giving the attribute to your weapon by using skill or item. You will learn more the longer you play. Good luck!";
+				mes "Magic basically consists of different attribute attacks. You can also give attributes to your weapon by using a skill or item. You will learn more the longer you play. Good luck!";
 				close;
 			}
 			break;
 		case 4:
 			mes "[Attribute Expert]";
-			mes "Are you getting interested in the depth of the different attributes?";
+			mes "Are you interested in the depth of different attributes yet?";
 			close;
 		}
 	}
@@ -3887,13 +3887,13 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "What an alluring smell!";
 			next;
 			mes "[Eclaire]";
-			mes "Various dishes to stimulate the five senses. Oh, its heaven!";
+			mes "Various dishes to stimulate the five senses. Oh, it's heaven!";
 			next;
 			mes "[Mille Feuille]";
 			mes "It's not an accident that you came here!";
 			next;
 			mes "[Dacquoise]";
-			mes "What's your name stranger?";
+			mes "What's your name, stranger?";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes ""+strcharinfo(0)+", hello.";
@@ -3908,14 +3908,14 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			next;
 			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
-			mes "Orlean belongs to all of us!";
+			mes "Orleans belongs to all of us!";
 			next;
 			emotion ET_CRY;
 			mes "[Dacquoise]";
-			mes "Ah, what do all the fools of the land eat?";
+			mes "Do you know what the fools of the land eat?";
 			next;
 			mes "[Dacquoise]";
-			mes "Fruits? Of course you can eat it raw, but isn't it art when you see the red strawberries laying on top of a creampie?";
+			mes "Fruits? Of course you can eat them on their own, but isn't it art when you see the red strawberries laying on top of a creampie?";
 			next;
 			mes "[Eclaire]";
 			mes "Bread? Of course you can eat it plain, but can you resist the fantastic harmony of meat and cheese and vegetables in a perfect sandwich?";
@@ -3924,7 +3924,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "I like the steamed horse feet of Minourus!";
 			next;
 			mes "[Dacquoise]";
-			mes "If you eat a dedicated meal, you can ^0000cdraise a specific stats^000000 and additionally, ^0000cdrecover your health^000000, so what's the reason not to cook?";
+			mes "If you eat a dedicated meal, you can ^0000cdraise a specific status^000000 and additionally, ^0000cdrecover your health^000000, so why would you not cook?";
 			next;
 			mes "[Eclaire]";
 			mes "You, do you want to know more about cooking?";
@@ -3946,11 +3946,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			}
 			emotion ET_BEST;
 			mes "[Dacquoise]";
-			mes "Ok, we will be kind guides to the journey of cooking!!";
+			mes "Great, we will be kind guides to the journey of cooking!!";
 			next;
 			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
-			mes "It's ok with me, asking me everthing you want to know.";
+			mes "Feel free to ask everthing you want to know.";
 			next;
 			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
@@ -3966,14 +3966,14 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "First, ^0000cdincreased stats!^000000 Baaam!!";
 				next;
 				mes "[Eclaire]";
-				mes "Cooking is divided into 6 catagories. Each will raise up ^0000cdStr, Agi, Vit, Int, Dex, Luk^000000.";
+				mes "Cooking is divided into 6 catagories. Each will raise up ^0000cdStr, Agi, Vit, Int, Dex, or Luk^000000.";
 				next;
 				mes "[Mille Feuille]";
-				mes "The amount of the stat increase changes depending on the level of cooking.";
+				mes "The amount of the stat increase varies depending on the level of cooking.";
 				next;
 				emotion ET_SURPRISE;
 				mes "[Dacquoise]";
-				mes "And the next benefit? Babam!";
+				mes "And the next benefit? Ba-bam!";
 				next;
 				mes "[Eclaire]";
 				mes "^0000cdHP and SP recovery^000000 effect!";
@@ -3982,13 +3982,13 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "This also differs with cooking levels, and some only recover HP.";
 				next;
 				mes "[Dacquoise]";
-				mes "How is it? Sounds yummy right?";
+				mes "What do you think? Sounds yummy, right?";
 				next;
 				mes "[Eclaire]";
-				mes "Your level is too low to experience the effects right now. If you level up more you will experience and cry for the effect of cooking.";
+				mes "Your level is too low to experience the effects right now. If you level up more you will experience and cry tears of joy at the effect of cooking.";
 				next;
 				mes "[Mille Feuille]";
-				mes "Prepare lace handkerchief.";
+				mes "Have a lace handkerchief on hand.";
 				next;
 				select("How can I cook?");
 				mes "[Dacquoise]";
@@ -3998,7 +3998,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "But haste is waste in cooking! Proper cooking requires preparation.";
 				next;
 				mes "[Eclaire]";
-				mes "Only the one who is well prepared can enter the world of cooking!";
+				mes "Only one who is well prepared can enter the world of cooking!";
 				next;
 				mes "[Mille Feuille]";
 				mes "Preparation, it's not hard!";
@@ -4021,18 +4021,18 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				emotion ET_ANGER, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
-				mes "I thought we were going to get more members!";
+				mes "I thought we were going to get more fan club members!";
 				next;
 				emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
-				mes "Never show up again!!";
+				mes "I never want to see you again!!";
 				close;
 			}
 			mes "[Dacquoise]";
 			mes "First, you need a ^0000cdCookbook.^000000";
 			next;
 			mes "[Eclaire]";
-			mes "Let's say you have a mountain of ingredients, but you don't know what to do with them?";
+			mes "Let's say you have a mountain of ingredients, but you don't know what to do with them.";
 			next;
 			mes "[Mille Feuille]";
 			mes "That's when you open the Cookbook.";
@@ -4041,24 +4041,24 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "You need a Cookbook to know how to prepare the ingredients for cooking.";
 			next;
 			mes "[Eclaire]";
-			mes "So how can I get these Cookbooks?";
+			mes "So how can you get these Cookbooks?";
 			next;
 			mes "[Mille Feuille]";
-			mes "Cookbook can be earned ^0000cdthrough Quest^000000s or can be found by hunting ^0000cdmonster^000000s.";
+			mes "Cookbooks can be earned ^0000cdthrough Quest^000000s or can be found by hunting ^0000cdmonster^000000s.";
 			next;
 			emotion ET_SURPRISE;
 			mes "[Dacquoise]";
-			mes "After getting the Cookbook, next preperation is!";
+			mes "After getting the Cookbook, the next part of preperation is!";
 			mes "The ^0000cdingredients!^000000.";
 			next;
 			mes "[Eclaire]";
 			mes "You can't cook without ingredients! Even a novice knows that!";
 			next;
 			mes "[Mille Feuille]";
-			mes "You can get ingredients by beating or smashing ^0000cdmonster^000000 or you can buy them from a ^0000cdCooking Ingredient Merchant^000000.";
+			mes "You can get ingredients by beating or smashing ^0000cdmonster^000000s or you can buy them from a ^0000cdCooking Ingredient Merchant^000000.";
 			next;
 			mes "[Dacquoise]";
-			mes "Cooking requires some preparation but the benefits are well worth it.";
+			mes "Cooking requires some preparation, but the benefits are well worth it.";
 			next;
 			mes "[Dacquoise]";
 			mes "And one thing to remember, there is ^0000cda potential to fail in cooking^000000.  Be careful as it depends on your cookwares and cooking level.";
@@ -4078,7 +4078,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 		} else if (new_cook >= 1) {
 			if (isbegin_quest(14154) == 1 || isbegin_quest(14155) == 1 || isbegin_quest(14156) == 1 || isbegin_quest(14157) == 1) {
 				mes "[Dacquoise]";
-				mes "Did you bring them all?";
+				mes "Did you bring everything?";
 				next;
 				if (select("Yes! I did!", "No, I gave up.") == 2) {
 					mes "[Dacquoise]";
@@ -4109,7 +4109,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				if (isbegin_quest(14154) == 1 && countitem(705) > 0 && countitem(511) > 0 && countitem(507) > 0) {
 					mes "[Dacquoise]";
-					mes "You brough what I need! Okay, then I will cook for you as I promised.";
+					mes "You brought what I need! Okay, then I will cook for you as I promised.";
 					mes "Time to move like greased lightning!!!!";
 					emotion ET_SPARK;
 					next;
@@ -4118,7 +4118,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
-					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!!";
+					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans in the basement of Prontera castle^000000!!";
 					mes "Kya... Sir Orleans!!";
 					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
@@ -4140,7 +4140,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
-					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
+					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans in the basement of Prontera castle^000000!! You will come to love him!!";
 					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 512,1;// Apple
@@ -4160,7 +4160,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
-					mes "If you are really curious about the cooking, go seek Sir. Charles Orleans at the basement of Prontera Castle.";
+					mes "If you are really curious about the cooking, go seek ^0000ffSir. Charles Orleans in the basement of Prontera castle^000000.";
 					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 909,1;// Jellopy
@@ -4177,12 +4177,12 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					emotion ET_SPARK;
 					next;
 					mes "[Eclaire]";
-					mes "If you eat this. You will never miss your target!";
-					mes "In fact, never miss the target for level 1!";
+					mes "If you eat this, you will never miss your target!";
+					mes "You should really never miss the target for level 1!";
 					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
-					mes "Go and see Sir. Charles Orleans at the basement of Prontera castle!!";
+					mes "Go and see ^0000ffSir. Charles Orleans in the basement of Prontera castle^000000!!";
 					mes "You can learn real cooking from him!";
 					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
@@ -4204,7 +4204,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "So what do you want to cook?";
 				next;
 				mes "[Mille Feuille]";
-				mes "Oh? That kid is back again. "+strcharinfo(0)+" right? So what do you want?";
+				mes "Oh? That kid is back again. "+strcharinfo(0)+", right? What do you want?";
 				next;
 			} else {
 				mes "[Dacquoise]";
@@ -4214,7 +4214,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "For this demonstration the duration of the cooking will be shortened.";
 				next;
 				mes "[Mille Feuille]";
-				mes "The cooking we are about to show you requires a recipe and cooking equipment but it is difficult for novices so I will cook for you.";
+				mes "The cooking we are about to show you requires cooking equipment and a recipe, but it is difficult for novices so I will cook for you.";
 				next;
 				emotion ET_STARE;
 				mes "[Dacquoise]";
@@ -4222,10 +4222,10 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				emotion ET_SCRATCH, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
-				mes "Ah, Why not?";
+				mes "Ah, why not?";
 				next;
 				mes "[Dacquoise]";
-				mes "I am the leader of this flame cooking trio chefs!";
+				mes "I am the leader of the flame cooking trio of chefs!";
 				next;
 				emotion ET_HUK, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
@@ -4237,11 +4237,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				emotion ET_HUK, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
-				mes "Age! There is nothing I can do with it.";
+				mes "Age! That has nothing to do with it.";
 				next;
 				emotion ET_OK, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
-				mes "Just because you're one year older, you want to automatically be rejected. Anyone have an objection?";
+				mes "Just because you're one year older, you want to automatically be selected. Anyone have an objection?";
 				next;
 				emotion ET_FRET;
 				mes "[Dacquoise]";
@@ -4258,14 +4258,14 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "^0000cdFragrant Herb Mix^000000. It increases ^0000cdStr^000000.";
 				next;
 				mes "[Equazu]";
-				mes "It's usually eaten by people of strength.";
+				mes "It's usually eaten by people for strength.";
 				next;
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
 				cutin "루나틱카드.bmp", 3;
 				mes "[Dacquoise]";
-				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
+				mes "Clover and Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
 				cutin "파브르카드.bmp", 3;
 				mes "[Eclaire]";
@@ -4291,7 +4291,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				cutin "포링카드.bmp", 3;
 				mes "[Dacquoise]";
-				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
+				mes "Apples are dropped by Porings, found bouncing around the field outside of Izlude.";
 				next;
 				cutin "루나틱카드.bmp", 3;
 				mes "[Eclaire]";
@@ -4299,7 +4299,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				cutin "", 255;
 				mes "[Mille Feuille]";
-				mes "If you bring all the ingredients we can cook.";
+				mes "If you bring all the ingredients, we can cook.";
 				close2;
 				new_cook = 2;
 				setquest 14155;
@@ -4307,17 +4307,17 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			case 3:
 				// Mixed Shabu Shabu
 				mes "[Dacquoise]";
-				mes "Scary ^0000cdAnything ShabuShabu!^000000 This raises ^0000cdVit^000000. Even a small portion makes you full.";
+				mes "Scary, ^0000cdAnything ShabuShabu!^000000 This raises ^0000cdVit^000000. Even a small portion makes you full.";
 				next;
 				mes "[Eclaire]";
-				mes "If you eat this, you can feel less pain from monsters.";
+				mes "If you eat this, you will feel less pain from monsters.";
 				next;
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
 				cutin "포링카드.bmp", 3;
 				mes "[Dacquoise]";
-				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
+				mes "Jellopy are dropped by Porings, found bouncing around the field of Izlude.";
 				next;
 				cutin "파브르카드.bmp", 3;
 				mes "[Eclaire]";
@@ -4329,7 +4329,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				cutin "", 255;
 				mes "[Dacquoise]";
-				mes "When you bring all the ingredients I'll make them for you.";
+				mes "When you bring all the ingredients, I'll make the dish for you.";
 				close2;
 				new_cook = 2;
 				setquest 14156;
@@ -4340,14 +4340,14 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "^0000cdGolden Apple Toast~^000000 shiny golden glaze...  It tastes as good as it looks.";
 				next;
 				mes "[Eclaire]";
-				mes "This raises ^0000cdDex^000000. It is mainly enjoyed by Archers who want to increase his attacking power or by people to increase their hit rate.";
+				mes "This raises ^0000cdDex^000000. It is mainly enjoyed by Archers who want to increase their attack power, or by others to increase their hit rate.";
 				next;
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
 				cutin "포링카드.bmp", 3;
 				mes "[Dacquoise]";
-				mes "Apple can be found in Porings in the field outside of Izlude.";
+				mes "Apple can be gotten from Porings in the field outside of Izlude.";
 				next;
 				cutin "루나틱카드.bmp", 3;
 				mes "[Eclaire]";
@@ -4355,7 +4355,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				next;
 				cutin "", 255;
 				mes "[Mille Feuille]";
-				mes "When you bring all the ingredients I'll make them for you.";
+				mes "When you bring all the ingredients, I'll cook for you.";
 				close2;
 				new_cook = 2;
 				setquest 14157;
@@ -4368,11 +4368,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			next;
 			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
-			mes "Steaks not only increase stats but also recover both your HP and SP.";
+			mes "Steaks not only increase stats, but also recover both your HP and SP.";
 			next;
 			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
-			mes "If you really want to cook, go and see^0000cd Sir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
+			mes "If you really want to cook, go and see^0000cd Sir. Charles Orleans in the basement of Prontera castle^000000!! You will come to love him!!";
 			close;
 		}
 	} else {
@@ -4380,13 +4380,13 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 		mes "Looks like you're no longer a beginner. Are you cooking these days?";
 		next;
 		mes "[Eclaire]";
-		mes "If not why don't we start?";
+		mes "If not, why don't we start?";
 		next;
 		mes "[Mille Feuille]";
-		mes "Steaks not only increase stats but also recover both your HP and SP.";
+		mes "Steaks not only increase stats, but also recover both your HP and SP.";
 		next;
 		mes "[Flame Cook Trio Chefs]";
-		mes "If you really want to cook, go and meet ^0000cdSir. Charles Olreans at the basement of the Prontera castle^000000! You must be attracted by him.";
+		mes "If you really want to cook, go and meet ^0000cdSir. Charles Olreans in the basement of the Prontera castle^000000! You will come to love him.";
 		close;
 	}
 
