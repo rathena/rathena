@@ -4417,7 +4417,7 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 	mes "I am selling Combination books and kits.";
 	next;
 	mes "[Querrie]";
-	mes "To the Criatura students below level 20, a special sale is going on. Hope you to buy a lot!!!";
+	mes "For the Criatura students below level 20, a special sale is going on. Hope you to buy a lot!!!";
 	next;
 	switch(select("Novice Combination Book", "Combination Kit", "Cancel.")) {
 	case 1:
@@ -4428,7 +4428,7 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 			next;
 			if (select("Ah... is that so?", "I lost it.") == 1) {
 				mes "[Querrie]";
-				mes "Later, buy a lot of the guild combination kits~~~";
+				mes "Come back later to buy a lot of the guild combination kits~~~";
 				mes "I am selling them at a jaw dropping price to students below base level 20.";
 				close;
 			}
@@ -4442,18 +4442,18 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 		next;
 		if (select("Buy", "Don't buy.") == 2) {
 			mes "[Querrie]";
-			mes "Use it next time.";
+			mes "You can get one next time.";
 		} else {
 			if (Zeny >= 1000) {
 				mes "[Querrie]";
 				mes "Here you are.";
-				mes "This book is for the beginners. But it will allow you combine the useful tools together, if you use it correctly.";
+				mes "This book is for beginners. But it will allow you combine useful tools together, if you use it correctly.";
 				Zeny -= 1000;
 				getitem 11058,1;// Novice_Combi_Book
 			} else {
 				mes "[Querrie]";
 				mes "The book price is 1000 zeny.";
-				mes "You seem to be short of zeny.";
+				mes "You seem to be short on zeny.";
 			}
 		}
 		close;
@@ -4461,20 +4461,20 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 		if (BaseLevel <= 20) {
 			mes "[Querrie]";
 			mes "Breaking news! Special sale for you only!";
-			mes "One combination kit only for 30z!";
+			mes "One combination kit for only 30z!";
 			mes "How many do you need?";
 		} else {
 			mes "[Querrie]";
-			mes "No sales today.";
+			mes "No sales today, but fair prices.";
 			mes "One combination kit costs you 500z.";
-			mes "Tell me how many pieces you need?";
+			mes "How many pieces do you need?";
 		}
 		next;
 		input .@input;
 		if (!.@input) {
 			mes "[Querrie]";
-			mes "Well, you don't need to buy it now.";
-			mes "Use it next time.";
+			mes "Well, you don't need to buy one now.";
+			mes "Come back and get one next time.";
 			close;
 		}
 		if (.@input > 99) {
@@ -4517,11 +4517,11 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 		if (isbegin_quest(4269) == 2) {
 			if (JobLevel == 10) {
 				mes "[Battle Instructor Subino]";
-				mes "You shouldn't be like this, you are high enough to change your job.";
-				mes "I won't stop you even if you stay still...";
+				mes "You shouldn't still be novice, you are high enough to change your job.";
+				mes "But I won't stop you, even if you stay like this...";
 				next;
 				mes "[Battle Instructor Subino]";
-				mes "Try to talk to ^ff0000each job instructor^000000 on the 2nd floor of the Academy if you aren't sure what job you want still.";
+				mes "Try talking to to ^ff0000each job instructor^000000 on the 2nd floor of the Academy if you aren't sure what job you want yet.";
 				for (set .@i,0; .@i < 6; set .@i,.@i+1) {
 					set .@quest_id,11339+.@i;
 					setarray .@bexp[0],90,90,135,200,0,120;
@@ -4547,7 +4547,7 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 			mes "[Battle Instructor Subino]";
 			mes "Welcome!";
 			mes "I am ^ff0000Battle Instructor Subino^000000.";
-			mes "I ^ff0000provice a simple request^000000 to help you to grow up as good a soldier as fast as you can, so look around.";
+			mes "I ^ff0000offer simple challenges^000000 to help you to grow to be as good a soldier as fast as possible, so please, take a look...";
 			next;
 			switch(select("Check requests", "Warp me to the Field", "End Conversation")) {
 				case 1:
@@ -4562,7 +4562,7 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 								mes "^ff0000Poring^000000s are very cute monsters when you see them.";
 								next;
 								mes "[Battle Instructor Subino]";
-								mes "They drop Jellopy which are regarded as a main cooking material in Criatura Academy so we always need to hunt Porings.";
+								mes "They drop Jellopy, which are regarded as a important cooking materials in Criatura Academy, so we always need to hunt Porings.";
 								next;
 							}
 							callsub L_Quest,11339,90,50,909,5,"Poring","can easily be found","Hunt","Jellopies";
@@ -4574,13 +4574,13 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 							if (checkquest(11340,HUNTING) < 2) {
 								mes "[Battle Instructor Subino]";
 								mes "^ff0000Lunatic^000000s are very cute animal that live near Prontera.";
-								mes "Tender...Soft...Very cute... It is very cute........";
+								mes "Tender...soft...very cute... They are very cute........";
 								next;
 								mes "[Battle Instructor Subino]";
-								mes "It always bring ^ff0000Carrot^000000s with it, so it is easy to get a delicious carrot by hunting them.";
+								mes "They always have a ^ff0000Carrot^000000s with them, so it is easy to obtain a delicious carrot by hunting them.";
 								next;
 								mes "[Battle Instructor Subino]";
-								mes "A carrot has lots of fibrous cells and contains vitamin A and carotin so it is good for eyes!";
+								mes "Carrots lots of fibrous cells and contains vitamin A and carotin, so they are good for eyes!";
 								next;
 							}
 							callsub L_Quest,11340,90,50,515,1,"Lunatic","is easily found","Catch","Carrot";
@@ -4591,8 +4591,8 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 							}
 							if (checkquest(11341,HUNTING) < 2) {
 								mes "[Battle Instructor Subino]";
-								mes "^ff0000Fabre^000000 is the most common bug which is usually seen in Rune Midgard Kingdom..";
-								mes "It is a worm but it is very popular because it looks cute.";
+								mes "^ff0000Fabre^000000 is the most common bug found in Rune Midgard Kingdom..";
+								mes "It's a worm, but a very popular one because it looks cute.";
 								next;
 								mes "[Battle Instructor Subino]";
 								mes "Most of the clothes provided by Criatura Academy are made from ^ff0000Fluff^000000 from Fabres. It makes very strong and warm fabric.";
@@ -4610,7 +4610,7 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 								mes "The process of a larva turning into a buttefly is mysterious.";
 								next;
 								mes "[Battle Instructor Subino]";
-								mes "As a Fabre transforms to a Creamy I hope that all Novices turn to be great adventurers! So ^ff0000Chrysalis^000000.";
+								mes "Just as a Fabre transforms into a Creamy, I hope that all Novices turn out to be great adventurers! A ^ff0000Chrysalis^000000 of their own.";
 								next;
 							}
 							callsub L_Quest,11344,120,90,915,2,"Pupa","is easily found","Hunt","Chrysalises";
@@ -4621,11 +4621,11 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 							}
 							if (checkquest(11342,HUNTING) < 2) {
 								mes "[Battle Instructor Subino]";
-								mes "^ff0000Hornet^000000s are a group of bees that live near Prontera under control of the Queen bee Mistress.";
-								mes "Not aggressive... They only attack with their stingers when they are in danger.";
+								mes "^ff0000Hornet^000000s are a group of bees that live near Prontera under control of the Queen Bee Mistress.";
+								mes "They are not aggressive... They only attack with their stingers when they are in danger.";
 								next;
 								mes "[Battle Instructor Subino]";
-								mes "There is a study about using the poison extracted from their stingers to make an antidote in Criatura Academy.";
+								mes "There is a study in Criatura Academy on using the poison extracted from their stingers to make an antidote.";
 								next;
 							}
 							callsub L_Quest,11342,200,175,939,3,"Hornet","are found","Hunt","Bee Stings";
@@ -4651,23 +4651,23 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 		}
 		mes "[Battle Instructor Subino]";
 		mes "You didn't register with the ^ff0000Criatura Academy^000000 yet?";
-		mes "It requires a simple procedure so go and register.";
+		mes "Its simple and quick to do, you should go and register right away.";
 		mes "You can register at the ^ff0000information center of academy^000000.";
 		close;
 	} else {
 		mes "[Battle Instructor Subino]";
 		mes "You don't seem to need my help.";
-		mes "You'd better look around somewhere else or go to the wider world.";
+		mes "You'd be better off talking to someone else, or venturing into the wider world.";
 		next;
 		mes "[Battle Instructor Subino]";
 		mes "Visit the ^ff0000support of the class guild (Lv. 10~20) or check out the Eden Group (Lv. 15~100)^000000.";
 		next;
 		mes "[Battle Instructor Subino]";
-		mes "^ff0000Ask the staff of each job on the second floor about the location of each class guild^000000 and you will find the ^ff0000Eden Group Headquarters^000000 where you can find easy hunt quests.";
+		mes "^ff0000Talk to the staff of each job on the 2nd floor about the location of each class guild^000000. As for ^ff0000Eden Group Headquarters^000000, you will find them in the same areas where there are easy hunt quests.";
 		next;
 		mes "[Battle Instructor Subino]";
-		mes "It is ^ff0000displayed in the map of right screen^000000, so search for it.";
-		mes "If you do not know, then you should get a help from a ^ff0000Town Guide^000000.";
+		mes "It is ^ff0000displayed in the map on the top right of screen^000000.";
+		mes "If you are unable to find it, you can get a help from a ^ff0000Town Guide^000000.";
 		close;
 	}
 
@@ -4683,7 +4683,7 @@ L_Quest:
 		mes "[Battle Instructor Subino]";
 		if (.@quest_id == 11342) {
 			mes getarg(5)+"s "+getarg(6)+" in ^ff0000West field of Prontera^000000.";
-			mes getarg(5)+"s are difficult to catch for a Novice... But if you gather more Novices, you can do it.";
+			mes getarg(5)+"s are difficult to catch for a Novice... but if you gather more Novices, you can do it.";
 			next;
 			mes "[Battle Instructor Subino]";
 		} else
@@ -4699,7 +4699,7 @@ L_Quest:
 			next;
 			if (select("End Conversation", "Give up for sure.") == 2) {
 				mes "[Battle Instructor Subino]";
-				mes "You can challenge the quest as long as you need my help so come to me anytime.";
+				mes "You can try the quest again for as long as you need my help, so come back anytime.";
 				erasequest .@quest_id;
 			}
 		}
@@ -4716,7 +4716,7 @@ L_Quest:
 				next;
 				if (select("End Conversation", "Yes, give up.") == 2) {
 					mes "[Battle Instructor Subino]";
-					mes "You can challenge the quest as long as you need my help so come to me anytime.";
+					mes "You can try the quest again for as long as you need my help, so come back anytime.";
 					erasequest .@quest_id;
 				}
 			}
