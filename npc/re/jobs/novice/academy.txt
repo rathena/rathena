@@ -887,7 +887,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 				next;
 				mes "[Hun]";
 				mes "To equip gear, ^4d4dffdouble click on the item^000000 you intend to use";
-				mes "or drag it onto^4d4dff the equipment window.^000000;
+				mes "or drag it onto^4d4dff the equipment window.^000000";
 				next;
 				mes "[Hun]";
 				mes "For detailed info on individual items,^4d4dff right-click ^000000on the item.";
