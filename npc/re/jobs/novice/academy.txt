@@ -8957,7 +8957,7 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 			case 2:
 				mes "[Trainer Adric]";
 				mes "Calm down, lets's start from the beginning.";
-				mes "First, I'll give you a ^FF0000Swordman Manual^000000".;
+				mes "First, I'll give you a ^FF0000Swordman Manual^000000.";
 				mes "Read it carefuly before asking any questions.";
 				getitem 2819,1;// Swordman_Manual
 				nov_3_swordman = 1;
