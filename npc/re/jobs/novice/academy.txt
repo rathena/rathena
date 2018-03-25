@@ -95,7 +95,7 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Wounded]";
 		mes "Wow! Thanks a lot!";
-		mes "I don't know how our ship got wrecked;
+		mes "I don't know how our ship got wrecked";
 		mes "but we should find the captain.";
 		next;
 		mes "[Wounded]";
