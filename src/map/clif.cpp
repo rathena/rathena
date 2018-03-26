@@ -10447,6 +10447,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
+#if PACKETVER >= 20170920
+		if( sd->hd ){
+			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+		}
+#endif
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1)
 			clif_guild_notice(sd); // Displays after VIP
