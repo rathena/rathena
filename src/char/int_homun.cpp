@@ -93,10 +93,10 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 	if( hd->hom_id == 0 )
 	{// new homunculus
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
-			"(`char_id`, `class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
-			"VALUES ('%d', '%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%d')",
+			"(`char_id`, `class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`, `autofeed`) "
+			"VALUES ('%d', '%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%d', '%d')",
 			schema_config.homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
-			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
+			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->autofeed) )
 		{
 			Sql_ShowDebug(sql_handle);
 			flag = false;
@@ -108,9 +108,9 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 	}
 	else
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_id`='%d', `class`='%d',`prev_class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%u',`max_hp`='%u',`sp`='%u',`max_sp`='%u',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_id`='%d', `class`='%d',`prev_class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%u',`max_hp`='%u',`sp`='%u',`max_sp`='%u',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d', `autofeed`='%d' WHERE `homun_id`='%d'",
 			schema_config.homunculus_db, hd->char_id, hd->class_, hd->prev_class, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
-			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
+			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->autofeed, hd->hom_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			flag = false;
@@ -155,7 +155,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 
 	memset(hd, 0, sizeof(*hd));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `%s` WHERE `homun_id`='%u'",
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize`, `autofeed` FROM `%s` WHERE `homun_id`='%u'",
 		schema_config.homunculus_db, homun_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -196,6 +196,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle, 19, &data, NULL); hd->skillpts = atoi(data);
 	Sql_GetData(sql_handle, 20, &data, NULL); hd->rename_flag = atoi(data);
 	Sql_GetData(sql_handle, 21, &data, NULL); hd->vaporize = atoi(data);
+	Sql_GetData(sql_handle, 22, &data, NULL); hd->autofeed = atoi(data);
 	Sql_FreeResult(sql_handle);
 
 	hd->intimacy = umin(hd->intimacy,100000);

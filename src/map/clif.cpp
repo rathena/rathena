@@ -9765,23 +9765,21 @@ void clif_feel_hate_reset(struct map_session_data *sd)
 }
 
 
-/// Equip window (un)tick ack (ZC_CONFIG).
-/// 02d9 <type>.L <value>.L
-/// type:
-///     0 = open equip window
-///     value:
-///         0 = disabled
-///         1 = enabled
-void clif_equiptickack(struct map_session_data* sd, int flag)
-{
+/// Send out reply to configuration change
+/// 02d9 <type>.L <value>.L (ZC_CONFIG)
+/// type: see enum e_config_type
+/// value:
+///		false = disabled
+///		true = enabled
+void clif_configuration( struct map_session_data* sd, enum e_config_type type, bool enabled ){
 	int fd;
 	nullpo_retv(sd);
 	fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x2d9));
 	WFIFOW(fd, 0) = 0x2d9;
-	WFIFOL(fd, 2) = 0;
-	WFIFOL(fd, 6) = flag;
+	WFIFOL(fd, 2) = type;
+	WFIFOL(fd, 6) = enabled;
 	WFIFOSET(fd, packet_len(0x2d9));
 }
 
@@ -16543,19 +16541,38 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 }
 
 
-/// Request to change equip window tick (CZ_CONFIG).
-/// 02d8 <type>.L <flag>.L
-/// type:
-///     0 = open equip window
+/// Request to a configuration.
+/// 02d8 <type>.L <flag>.L (CZ_CONFIG)
+/// type: see enum e_config_type
 /// flag:
-///     0 = disabled
-///     1 = enabled
-void clif_parse_EquipTick(int fd, struct map_session_data* sd)
-{
-	//int type = RFIFOL(fd,packet_db[cmd].pos[0]);
-	bool flag = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[1]) != 0;
-	sd->status.show_equip = flag;
-	clif_equiptickack(sd, flag);
+///     false = disabled
+///     true = enabled
+void clif_parse_configuration( int fd, struct map_session_data* sd ){
+	int cmd = RFIFOW(fd,0);
+	int type = RFIFOL(fd,packet_db[cmd].pos[0]);
+	bool flag = RFIFOL(fd,packet_db[cmd].pos[1]) != 0;
+
+	switch( type ){
+		case CONFIG_OPEN_EQUIPMENT_WINDOW:
+			sd->status.show_equip = flag;
+			break;
+		case CONFIG_PET_AUTOFEED:
+			// TODO: Implement with pet evolution system
+			break;
+		case CONFIG_HOMUNCULUS_AUTOFEED:
+			// Player can not click this if he does not have a homunculus or it is vaporized
+			if( sd->hd == nullptr || sd->hd->homunculus.vaporize ){
+				return;
+			}
+
+			sd->hd->homunculus.autofeed = flag;
+			break;
+		default:
+			ShowWarning( "clif_parse_configuration: received unknown configuration type '%d'...\n", type );
+			return;
+	}
+
+	clif_configuration( sd, static_cast<e_config_type>(type), flag );
 }
 
 /// Request to change party invitation tick.

@@ -4008,6 +4008,7 @@
 	parseable_packet(0x0281,6,clif_parse_GetCharNameRequest,2);
 // 2017-09-13bRagexeRE
 #elif PACKETVER == 20170913
+	parseable_packet(0x0281,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x035F,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0437,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x07E4,8,clif_parse_MoveFromKafra,2,4);
