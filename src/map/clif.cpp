@@ -10450,6 +10450,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #if PACKETVER >= 20170920
 		if( sd->hd ){
 			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+		}else{
+			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
 		}
 #endif
 
