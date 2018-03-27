@@ -1456,8 +1456,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if((start_job == JOB_NOVICE && !(charserv_config.allowed_job_flag&1)) || 
-		(start_job == JOB_SUMMONER && !(charserv_config.allowed_job_flag&2)))
+	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) && 
+		!(start_job == JOB_SUMMONER && (charserv_config.allowed_job_flag&2)))
 		return -2; // Invalid job
 
 	// Check for Doram based information.
