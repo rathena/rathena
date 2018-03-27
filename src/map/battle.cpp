@@ -4472,10 +4472,12 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		if (sc->data[SC_MADNESSCANCEL])
 			ATK_ADD(wd.equipAtk, wd.equipAtk2, 100);
 		if (sc->data[SC_MAGICALBULLET]) {
-			if (sstatus->matk_max > sstatus->matk_min) {
-				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max((sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min)) - (tstatus->mdef + tstatus->mdef2), 0));
+			short tmdef = tstatus->mdef + tstatus->mdef2;
+
+			if (sstatus->matk_min > tmdef && matk_max > sstatus->matk_min) {
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max((sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min)) - tmdef, 0));
 			} else {
-				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max(sstatus->matk_min - (tstatus->mdef + tstatus->mdef2), 0));
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max(sstatus->matk_min - tmdef, 0));
 			}
 		}
 		if (sc->data[SC_GATLINGFEVER]) {
