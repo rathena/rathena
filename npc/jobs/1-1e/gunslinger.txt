@@ -183,11 +183,14 @@ que_ng,152,167,3	script	Master Miller	901,{
 			callfunc "Job_Change",Job_Gunslinger;
 			set GUNS_Q,6;
 			completequest 6024;
-			if (rand(1,2) == 1) {
-				getitem 13100,1; // Six_Shooter
-			} else {
-				getitem 13150,1; // Branch
-			}
+			getitem 13180,1; // 1 Novice_Rifle
+			getitem 12149,2; // 2 Catridge Cases
+			getitem 12151,1; // 1 Silver Catridge Case
+			//if (rand(1,2) == 1) {
+			//	getitem 13100,1; // Six_Shooter
+			//} else {
+			//	getitem 13150,1; // Branch
+			//}
 			close;
 		}
 	} else {
@@ -248,12 +251,12 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "I shall need these items...";
 		next;
 		mes "[Wise Bull Horn]";
-		mes "^3355FF1 Trunk^000000,";
-		mes "^3355FF3 Fluffs^000000,";
-		mes "^3355FF3 Zargons^000000,";
-		mes "^3355FF10 Shells^000000,";
+		//mes "^3355FF1 Trunk^000000,";
+		//mes "^3355FF3 Fluffs^000000,";
+		//mes "^3355FF3 Zargons^000000,";
+		//mes "^3355FF10 Shells^000000,";
 		mes "^3355FF3 Green Herbs^000000, and";
-		mes "^3355FF3 Rainbow Shells^000000.";
+		mes "^3355FF3 Mushroom Spores^000000.";
 		next;
 		mes "[Wise Bull Horn]";
 		mes "After I complete the";
@@ -267,7 +270,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		close;
 	}
 	else if (GUNS_Q == 2) {
-		if (countitem(912) < 3 || countitem(914) < 3 || countitem(1019) < 1 || countitem(935) < 10 || countitem(511) < 3 || countitem(1013) < 3) {
+		if (countitem(921) < 3 || countitem(511) < 3) {
 			mes "[Wise Bull Horn]";
 			mes "I can make a voucher that";
 			mes "will demonstrate your desire";
@@ -277,12 +280,12 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 			mes "I shall need these items...";
 			next;
 			mes "[Wise Bull Horn]";
-			mes "^3355FF1 Trunk^000000,";
-			mes "^3355FF3 Fluffs^000000,";
-			mes "^3355FF3 Zargons^000000,";
-			mes "^3355FF10 Shells^000000,";
+			//mes "^3355FF1 Trunk^000000,";
+			//mes "^3355FF3 Fluffs^000000,";
+			//mes "^3355FF3 Zargons^000000,";
+			//mes "^3355FF10 Shells^000000,";
 			mes "^3355FF3 Green Herbs^000000, and";
-			mes "^3355FF3 Rainbow Shells^000000.";
+			mes "^3355FF3 Mushroom Spores^000000.";
 			next;
 			mes "[Wise Bull Horn]";
 			mes "After I complete the";
@@ -293,12 +296,12 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 			mes "a Gunslinger.";
 			close;
 		}
-		delitem 912,3; // Zargon
-		delitem 914,3; // Fluff
-		delitem 1019,1; // Wooden_Block
-		delitem 935,10; // Shell
+		delitem 921,3; // Mushroom Spore
+		//delitem 914,3; // Fluff
+		//delitem 1019,1; // Wooden_Block
+		//delitem 935,10; // Shell
 		delitem 511,3; // Green_Herb
-		delitem 1013,3; // Colorful_Shell
+		//delitem 1013,3; // Colorful_Shell
 		set GUNS_Q,3;
 		changequest 6021,6022;
 		mes "[Wise Bull Horn]";
