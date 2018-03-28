@@ -8503,6 +8503,7 @@ static const struct _battle_data {
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
+	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };

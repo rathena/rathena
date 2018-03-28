@@ -639,6 +639,7 @@ struct Battle_Config
 	int autoloot_adjust;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
+	int summoner_trait;
 
 #include "../custom/battle_config_struct.inc"
 };
