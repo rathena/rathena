@@ -16122,7 +16122,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 		req.sp -= sd->skillusesp[i].val;
 
 	if (skill_id == sd->status.skill[sd->reproduceskill_idx].id)
-		require.sp += require.sp * 30 / 100;
+		req.sp += req.sp * 30 / 100;
 
 	req.sp = cap_value(req.sp * sp_skill_rate_bonus / 100, 0, SHRT_MAX);
 
