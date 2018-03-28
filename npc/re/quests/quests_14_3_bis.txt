@@ -214,7 +214,7 @@ moro_vol,98,107,3	script	Magic Scholar#143avt01	4_M_FAIRYAVANT,{
 			next;
 			mes "[Avant]";
 			mes "Three Reincarnations, thus three Mana Crystallines.";
-			mes "Bring them at least for Cardui of Eclage.";
+			mes "Bring them at least for Kardui of Eclage.";
 			setquest 7583;// Collecting Mana
 			close3;
 		}
