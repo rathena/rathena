@@ -39,7 +39,7 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd);
 
 int chlogif_parse_vipack(int fd);
 int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd);
-int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id, int8 type);
+int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type);
 
 int chlogif_parse(int fd);
 

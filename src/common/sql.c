@@ -78,7 +78,8 @@ Sql* Sql_Malloc(void)
 	self->lengths = NULL;
 	self->result = NULL;
 	self->keepalive = INVALID_TIMER;
-	self->handle.reconnect = 1;
+	my_bool reconnect = 1;
+	mysql_options(&self->handle, MYSQL_OPT_RECONNECT, &reconnect);
 	return self;
 }
 
