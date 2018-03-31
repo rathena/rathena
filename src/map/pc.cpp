@@ -8254,7 +8254,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		else if (sd->status.base_level < 151)
 			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv150);
 		else
-			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv175);
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
 
 		if( sd->battle_status.max_hp < sd->battle_status.hp )
 		{

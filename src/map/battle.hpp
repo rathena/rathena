@@ -267,7 +267,7 @@ struct Battle_Config
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
 	int max_hp_lv99;
 	int max_hp_lv150;
-	int max_hp_lv175;
+	int max_hp;
 	int max_sp;
 	int max_lv, aura_lv;
 	int max_parameter, max_baby_parameter;
