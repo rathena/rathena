@@ -10955,6 +10955,25 @@
 2923,Owl Marquees@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,2922,,,,,,
 
 // Devil Tower Memorial
+2939,Evil Shadow@NPC_PIERCINGATT,chase,158,1,4000,0,5000,yes,target,always,0,,,,,,,
+2939,Evil Shadow@NPC_CURSEATTACK,attack,181,5,3500,0,20000,yes,target,always,0,,,,,,,
+2940,Evil Shadow@NPC_DARKSTRIKE,attack,340,1,3000,0,5000,yes,target,always,0,,,,,,,
+2941,Evil Shadow@NPC_CRITICALSLASH,chase,170,1,3000,0,5000,yes,target,always,0,,,,,,,
+2941,Evil Shadow@NPC_PETRIFYATTACK,attack,180,5,3500,0,5000,yes,target,always,0,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,idle,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,90,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,80,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,70,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,60,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,50,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,40,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,30,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,20,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,10,,,,,,,42
+// 2942,Evil Fanatics@NPC_DANCINGBLADE,attack,713,1,1000,0,15000,yes,self,always,0,,,,,,,
+// 2942,Evil Fanatics@NPC_PULSESTRIKE2,attack,712,1,800,0,15000,yes,self,always,0,,,,,,,
+// 2942,Evil Fanatics@NPC_DARKPIERCING,attack,715,1,2500,0,60000,yes,self,always,0,,,,,,,
 2943,Icemine@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
 2943,Icemine@NPC_ICEMINE,idle,709,1,10000,0,300000,no,self,always,,,,,,,,
 2960,Flamecross@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
