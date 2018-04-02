@@ -470,6 +470,7 @@ enum unitdata_mobtypes {
 	UMOB_AMOTION,
 	UMOB_ADELAY,
 	UMOB_DMOTION,
+	UMOB_TARGETID,
 };
 
 enum unitdata_homuntypes {

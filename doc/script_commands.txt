@@ -7632,6 +7632,7 @@ Parameters (indexes) for monsters are:
 	UMOB_AMOTION
 	UMOB_ADELAY
 	UMOB_DMOTION
+	UMOB_TARGETID
 
 -----
 

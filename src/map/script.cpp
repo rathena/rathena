@@ -17562,6 +17562,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_AMOTION, md->status.amotion);
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
+			getunitdata_sub(UMOB_TARGETID, md->target_id);
 			break;
 
 		case BL_HOM:
@@ -17935,6 +17936,15 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_AMOTION: md->base_status->amotion = (short)value; calc_status = true; break;
 			case UMOB_ADELAY: md->base_status->adelay = (short)value; calc_status = true; break;
 			case UMOB_DMOTION: md->base_status->dmotion = (short)value; calc_status = true; break;
+			case UMOB_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				mob_target(md,target,0);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;

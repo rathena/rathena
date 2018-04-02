@@ -3095,6 +3095,7 @@
 	export_constant(UMOB_AMOTION);
 	export_constant(UMOB_ADELAY);
 	export_constant(UMOB_DMOTION);
+	export_constant(UMOB_TARGETID);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
