@@ -478,7 +478,7 @@ void mapif_parse_accinfo(int fd) {
 	}
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
-	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, u_group, account_id, type) != 1) {
+	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id, type) != 1) {
 		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
 	}
 	return;
@@ -489,7 +489,7 @@ void mapif_parse_accinfo(int fd) {
  */
 void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int account_id, int8 type,
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
-	const char *birthdate, const char *user_pass, const char *pincode, const char *userid)
+	const char *birthdate, const char *userid)
 {
 	
 	if (map_fd <= 0 || !session_isActive(map_fd))
@@ -507,7 +507,6 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(217), account_id);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(218), userid, group_id, state);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(219), user_pass[0] != '\0' ? user_pass : msg_txt(220), pincode[0] != '\0' ? msg_txt(220) : pincode);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(221), email, birthdate);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(222), last_ip, geoip_getcountry(str2ip(last_ip)));
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(223), logincount, lastlogin);

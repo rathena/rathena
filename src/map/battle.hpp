@@ -638,6 +638,7 @@ struct Battle_Config
 	int event_refine_chance;
 	int autoloot_adjust;
 	int broadcast_hide_name;
+	int skill_drop_items_full;
 	int display_tax_info;
 
 #include "../custom/battle_config_struct.inc"

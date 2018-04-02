@@ -51,12 +51,12 @@ OnStartArena:
 OnInit:
 	if (compare(strnpcinfo(0),"main")) end;
 	if (compare(strnpcinfo(2),"n1")) {
-		waitingroom "Solo Mode",60,"Solo Mode#n1::OnStartArena",1;
+		waitingroom "Solo Mode",60,"Solo Mode#n1::OnStartArena",1,1000,10;
 	} else {
 		if (compare(strnpcinfo(1),"4")) set .@in, 4;
 		if (compare(strnpcinfo(1),"8")) set .@in, 8;
 		if (compare(strnpcinfo(1),"16")) set .@in, 16;
-		waitingroom strnpcinfo(1),60,strnpcinfo(0)+"::OnStartArena",.@in,1000,10,99;
+		waitingroom strnpcinfo(1),60,strnpcinfo(0)+"::OnStartArena",.@in,1000,10;
 	}
 	enablewaitingroomevent strnpcinfo(0);
 	end;

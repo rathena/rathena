@@ -3043,8 +3043,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	}
 
-	if(!md->spawn) //Tell status_damage to remove it from memory.
-		return 5; // Note: Actually, it's 4. Oh well...
+	if(!md->spawn){ //Tell status_damage to remove it from memory.
+		struct unit_data *ud = unit_bl2ud(&md->bl);
+
+		// If the unit is currently in a walk script, it will be removed there
+		return ud->state.walk_script ? 3 : 5; // Note: Actually, it's 4. Oh well...
+	}
 
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map[md->bl.m].flag.notomb != 1)
@@ -3390,7 +3394,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 		if (mobdb_checkid(data.id) == 0)
 			continue;
 
-		if (map_search_freecell(&md2->bl, 0, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 0)) {
+		if (skill_id != NPC_DEATHSUMMON && map_search_freecell(&md2->bl, 0, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 0)) {
 			data.x = x;
 			data.y = y;
 		} else {
