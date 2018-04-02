@@ -16,18 +16,36 @@
 static struct s_tax TaxDB[TAX_MAX];
 std::string tax_conf = "conf/store_tax.yml";
 
+/**
+ * Returns the tax rate of a given amount.
+ * @param entry: Tax data.
+ * @param price: Value of item.
+ * @return Tax rate
+ */
 unsigned short s_tax::get_tax(const std::vector <struct s_tax_entry> entry, double price) {
 	const auto &tax = std::find_if(entry.begin(), entry.end(),
 		[&price](const s_tax_entry &e) { return price >= e.minimal; });
 	return tax != entry.end() ? tax->tax : 0;
 }
 
+/**
+ * Returns the tax type based on selling or buying.
+ * @param type: Tax type.
+ * @return Tax data.
+ */
 struct s_tax *tax_get(enum e_tax_type type) {
 	if (type < TAX_SELLING || type >= TAX_MAX)
 		return NULL;
 	return &TaxDB[type];
 }
 
+/**
+ * Reads and parses an entry from the tax database.
+ * @param node: YAML node containing the entry.
+ * @param taxdata: Tax data.
+ * @param count: The sequential index of the current entry.
+ * @param source: The source YAML file.
+ */
 static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *count, const std::string &source) {
 	if (node["In_Total"].IsDefined()) {
 		for (const auto &tax : node["In_Total"]) {
@@ -57,6 +75,9 @@ static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *c
 	}
 }
 
+/**
+ * Loads taxes from the tax database.
+ */
 void tax_readdb(void) {
 	YAML::Node config;
 
@@ -77,18 +98,30 @@ void tax_readdb(void) {
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, tax_conf.c_str());
 }
 
+/**
+ * Reload tax values for autotrade players (unused)
+ */
 void tax_reload_vendors(void) {
 	// reload VAT price on vendors
 }
 
-void tax_set_conf(const std::string filename) {
+/**
+ * Sets the tax database file name from the map_athena.conf
+ */
+ void tax_set_conf(const std::string filename) {
 	tax_conf = filename;
 }
 
+/**
+ * Initializes the tax database
+ */
 void do_init_tax(void) {
 	tax_readdb();
 }
 
+/**
+ * Finalizes the tax database
+ */
 void do_final_tax(void) {
 
 }

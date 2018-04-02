@@ -1,7 +1,7 @@
 # Taxes for selling something (vending)
-# The zeny that you received will be reduced after tax
+# Zeny received for the seller will be reduced after taxes from the total selling price but the buyer pays just the total selling price
 Selling:
-  # Tax applies in total transaction
+  # Tax applied for total transaction
   In_Total:
   - Minimal_Value: 0
     Tax: 0
@@ -25,10 +25,9 @@ Selling:
     Tax: 200
 
 # Taxes for buying something (buyingstore)
-# The zeny that you must be paid will be increased after tax
-# but player who sells still get the value without tax
+# Zeny received for the seller will be the total selling price but the buyer must pay taxes for the total selling price
 Buying:
-  # Tax applies in total transaction
+  # Tax applied for total transaction
   In_Total:
   - Minimal_Value: 0
     Tax: 0

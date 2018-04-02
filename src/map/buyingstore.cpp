@@ -341,6 +341,13 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 	clif_buyingstore_itemlist(sd, pl_sd);
 }
 
+/**
+ * Calculates taxes for Buyingstore purchases.
+ * @param sd: Player data.
+ * @param itemlist: List of sold items { <index>.W, <nameid>.W, <amount>.W }*.
+ * @param count: Item list count.
+ * @return Taxed price
+ */
 static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const uint8* itemlist, int count) {
 	s_tax *tax = tax_get(TAX_BUYING);
 
