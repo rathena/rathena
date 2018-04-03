@@ -7676,6 +7676,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_AMOTION
 	UHOM_ADELAY
 	UHOM_DMOTION
+	UHOM_TARGETID
 
 -----
 
@@ -7757,6 +7758,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_AMOTION
 	UMER_ADELAY
 	UMER_DMOTION
+	UMER_TARGETID
 
 -----
 
@@ -7799,6 +7801,7 @@ Parameter (indexes) for elementals are:
 	UELE_AMOTION
 	UELE_ADELAY
 	UELE_DMOTION
+	UELE_TARGETID
 
 -----
 

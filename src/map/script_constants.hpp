@@ -3137,6 +3137,7 @@
 	export_constant(UHOM_AMOTION);
 	export_constant(UHOM_ADELAY);
 	export_constant(UHOM_DMOTION);
+	export_constant(UHOM_TARGETID);
 
 	/* unit control - pet */
 	export_constant(UPET_SIZE);
@@ -3214,6 +3215,7 @@
 	export_constant(UMER_AMOTION);
 	export_constant(UMER_ADELAY);
 	export_constant(UMER_DMOTION);
+	export_constant(UMER_TARGETID);
 
 	/* unit control - elemental */
 	export_constant(UELE_SIZE);
@@ -3254,6 +3256,7 @@
 	export_constant(UELE_AMOTION);
 	export_constant(UELE_ADELAY);
 	export_constant(UELE_DMOTION);
+	export_constant(UELE_TARGETID);
 
 	/* unit control - NPC */
 	export_constant(UNPC_DISPLAY);
