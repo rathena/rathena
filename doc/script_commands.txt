@@ -2836,6 +2836,9 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id4[]        - fourth array of random option IDs
 @inventorylist_option_value4[]     - fourth array of random option values
 @inventorylist_option_parameter4[] - fourth array of random option parameters
+@inventorylist_option_id5[]        - fifth array of random option IDs
+@inventorylist_option_value5[]     - fifth array of random option values
+@inventorylist_option_parameter5[] - fifth array of random option parameters
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
