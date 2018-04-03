@@ -6226,6 +6226,17 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
 						break;
+					case NPC_COMET:// TODO adjust skillratio
+						i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8);
+						if (i <= 3)
+							skillratio += 2400 + 500 * skill_lv; // 7 x 7 cell
+						else if (i <= 5)
+							skillratio += 1900 + 500 * skill_lv; // 11 x 11 cell
+						else if (i <= 7)
+							skillratio += 1400 + 500 * skill_lv; // 15 x 15 cell
+						else
+							skillratio += 900 + 500 * skill_lv; // 19 x 19 cell
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
