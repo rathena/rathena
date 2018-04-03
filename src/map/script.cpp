@@ -17609,7 +17609,6 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UHOM_AMOTION, hd->battle_status.amotion);
 			getunitdata_sub(UHOM_ADELAY, hd->battle_status.adelay);
 			getunitdata_sub(UHOM_DMOTION, hd->battle_status.dmotion);
-			getunitdata_sub(UHOM_TARGETID, hd->target_id);
 			break;
 
 		case BL_PET:
@@ -17654,7 +17653,6 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UPET_AMOTION, pd->status.amotion);
 			getunitdata_sub(UPET_ADELAY, pd->status.adelay);
 			getunitdata_sub(UPET_DMOTION, pd->status.dmotion);
-			getunitdata_sub(UPET_TARGETID, pd->target_id);
 			break;
 
 		case BL_MER:
@@ -17698,7 +17696,6 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMER_AMOTION, mc->base_status.amotion);
 			getunitdata_sub(UMER_ADELAY, mc->base_status.adelay);
 			getunitdata_sub(UMER_DMOTION, mc->base_status.dmotion);
-			getunitdata_sub(UMER_TARGETID, mc->target_id);
 			break;
 
 		case BL_ELEM:
@@ -17744,7 +17741,6 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UELE_AMOTION, ed->base_status.amotion);
 			getunitdata_sub(UELE_ADELAY, ed->base_status.adelay);
 			getunitdata_sub(UELE_DMOTION, ed->base_status.dmotion);
-			getunitdata_sub(UELE_TARGETID, ed->target_id);
 			break;
 
 		case BL_NPC:
@@ -17943,7 +17939,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_TARGETID: {
 				struct block_list* target = map_id2bl(value);
 				if (!target) {
-					ShowWarning("buildin_setunitdata: Error in finding target for BL_MOB!\n");
+					ShowWarning("buildin_setunitdata: Error in finding target!\n");
 					return SCRIPT_CMD_FAILURE;
 				}
 				mob_target(md,target,0);
@@ -18002,15 +17998,6 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_AMOTION: hd->base_status.amotion = (short)value; calc_status = true; break;
 			case UHOM_ADELAY: hd->base_status.adelay = (short)value; calc_status = true; break;
 			case UHOM_DMOTION: hd->base_status.dmotion = (short)value; calc_status = true; break;
-			case UHOM_TARGETID: {
-				struct block_list* target = map_id2bl(value);
-				if (!target) {
-					ShowWarning("buildin_setunitdata: Error in finding target for BL_HOM!\n");
-					return SCRIPT_CMD_FAILURE;
-				}
-				mob_target(hd,target,0);
-				break;
-			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18062,15 +18049,6 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_AMOTION: pd->status.amotion = (short)value; break;
 			case UPET_ADELAY: pd->status.adelay = (short)value; break;
 			case UPET_DMOTION: pd->status.dmotion = (short)value; break;
-			case UPET_TARGETID: {
-				struct block_list* target = map_id2bl(value);
-				if (!target) {
-					ShowWarning("buildin_setunitdata: Error in finding target for BL_PET!\n");
-					return SCRIPT_CMD_FAILURE;
-				}
-				mob_target(pd,target,0);
-				break;
-			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_PET.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18119,15 +18097,6 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_AMOTION: mc->base_status.amotion = (short)value; calc_status = true; break;
 			case UMER_ADELAY: mc->base_status.adelay = (short)value; calc_status = true; break;
 			case UMER_DMOTION: mc->base_status.dmotion = (short)value; calc_status = true; break;
-			case UMER_TARGETID: {
-				struct block_list* target = map_id2bl(value);
-				if (!target) {
-					ShowWarning("buildin_setunitdata: Error in finding target for BL_MER!\n");
-					return SCRIPT_CMD_FAILURE;
-				}
-				mob_target(mc,target,0);
-				break;
-			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18180,15 +18149,6 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_AMOTION: ed->base_status.amotion = (short)value; calc_status = true; break;
 			case UELE_ADELAY: ed->base_status.adelay = (short)value; calc_status = true; break;
 			case UELE_DMOTION: ed->base_status.dmotion = (short)value; calc_status = true; break;
-			case UELE_TARGETID: {
-				struct block_list* target = map_id2bl(value);
-				if (!target) {
-					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
-					return SCRIPT_CMD_FAILURE;
-				}
-				mob_target(ed,target,0);
-				break;
-			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
 				return SCRIPT_CMD_FAILURE;
