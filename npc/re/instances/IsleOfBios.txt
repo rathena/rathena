@@ -222,9 +222,15 @@ OnTimer61000:
 	end;
 OnTimer66000:
 	stopnpctimer;
-	enablenpc instance_npcname("mobs#bios1");
-	.@label$ = instance_npcname("mobs#bios1") + "::OnMyMobDead";
 	mapannounce 'map_dth1$, "System: Eliminate all the enemies on the island and exit through the door on the other side to move on to the next area.",bc_map,"0xFFFF00";
+	'zeith$ = 'vrid$ = 'reaper$ = "";
+	end;
+}
+
+1@dth1,1,1,0	script	mobs#bios1	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	.@label$ = instance_npcname("mobs#bios1") + "::OnMyMobDead";
 	for ( .@mob_id = 3010; .@mob_id < 3013; .@mob_id++ ) {
 		switch(.@mob_id) {
 		case 3010:		// Corrupt Orc Baby
@@ -250,12 +256,8 @@ OnTimer66000:
 		for ( .@i = 0; .@i < .@size; .@i += 2 )
 			monster 'map_dth1$, .@coord[.@i], .@coord[.@i+1], "--ja--", .@mob_id,1, .@label$;
 	}
-	'zeith$ = 'vrid$ = 'reaper$ = "";
 	end;
-}
 
-1@dth1,1,1,0	script	mobs#bios1	HIDDEN_WARP_NPC,{
-	end;
 OnMyMobDead:
 	initnpctimer;
 	end;
@@ -270,6 +272,7 @@ OnTimer1000:
 		disablenpc instance_npcname("mobs#bios1");
 		enablenpc instance_npcname("warp1#bios1");
 		enablenpc instance_npcname("start1#bios2");
+		donpcevent instance_npcname("mobs#bios2") + "::OnStart";	// spawn at entrance
 	}
 	stopnpctimer;
 	end;
@@ -280,7 +283,7 @@ OnTimer1000:
 	end;
 OnTouch_:
 	disablenpc instance_npcname("start1#bios2");
-	donpcevent instance_npcname("mobs#bios2") + "::OnStart";
+	mapannounce 'map_dth2$, "System: Eliminate all the enemies on the island and exit through the door on the other side to move on to the next area.",bc_map,"0xFFFF00";
 	end;
 }
 
@@ -289,7 +292,6 @@ OnTouch_:
 OnStart:
 	enablenpc instance_npcname("mobs#bios2");
 	.@label$ = instance_npcname("mobs#bios2") + "::OnMyMobDead";
-	mapannounce 'map_dth2$, "System: Eliminate all the enemies on the island and exit through the door on the other side to move on to the next area.",bc_map,"0xFFFF00";
 	for ( .@mob_id = 3013; .@mob_id < 3016; ++.@mob_id ) {
 		switch(.@mob_id) {
 		case 3013:		// Corrupt Orc Warrior
@@ -435,24 +437,21 @@ OnTimer40000:
 	}
 	end;
 OnTimer42000:
-	// todo text
-	end;
-OnTimer44500:
 	npctalk "Vrid: Shut up, you fiend! We don't have time for your lackeys!", 'vrid3$;
 	end;
-OnTimer47000:
+OnTimer45000:
 	npctalk "Vrid: I'll get rid of you myself!", 'vrid3$;
 	end;
-OnTimer49500:
+OnTimer47500:
 	npctalk "Reaper Yanku: Right back at you, bigmouth.", 'reaper3$;
 	end;
-OnTimer52000:
+OnTimer50000:
 	npctalk "Reaper Yanku: I'll teach you how terrifying it is to be helpless in the face of horror!", 'reaper3$;
 	end;
-OnTimer54500:
+OnTimer52500:
 	specialeffect EF_STORMGUST,AREA,'reaper3$;
 	end;
-OnTimer54700:
+OnTimer52700:
 	specialeffect EF_FREEZED,AREA,'zeith3$;
 	specialeffect EF_FREEZED,AREA,'vrid3$;
 	specialeffect EF_FIREHIT,AREA,'zeith3$;
@@ -471,41 +470,41 @@ OnTimer54700:
 		}
 	}
 	end;
-OnTimer57000:
+OnTimer55000:
 	npctalk "Vrid: Ugh! W-what's going on?! I-I can't move!", 'vrid3$;
 	end;
-OnTimer59500:
+OnTimer57500:
 	npctalk "Zeith: N-neither can I! I can't move my feet!", 'zeith3$;
 	end;
-OnTimer62000:
+OnTimer60000:
 	npctalk "Reaper Yanku: On the Isle of Bios, each day is a lifetime.", 'reaper3$;
 	end;
-OnTimer64500:
+OnTimer62500:
 	npctalk "Reaper Yanku: You must have noticed my soldiers have grown up before the sunset.", 'reaper3$;
 	end;
-OnTimer67000:
+OnTimer65000:
 	npctalk "Reaper Yanku: After nightfall, they've reached the final stage of their development: life beyond death.", 'reaper3$;
 	end;
-OnTimer69500:
+OnTimer67500:
 	npctalk "Reaper Yanku: That's right. It's time for you to experience death.", 'reaper3$;
 	end;
-OnTimer72000:
+OnTimer70000:
 	npctalk "Reaper Yanku: Get ready to feel the fear of death! *Chuckle*", 'reaper3$;
 	// note: unfreeze player
 	end;
-OnTimer74000:
+OnTimer72000:
 	disablenpc 'reaper3$;
 	end;
-OnTimer74500:
+OnTimer72500:
 	npctalk "Vrid: Damn it, the undead are coming, but I can't fight because I can't move my feet!", 'vrid3$;
 	end;
-OnTimer77000:
+OnTimer75000:
 	npctalk "Vrid: Ack, I don't want to die!", 'vrid3$;
 	end;
-OnTimer79500:
+OnTimer77500:
 	npctalk "Zeith: ...Ugh...", 'zeith3$;
 	end;
-OnTimer82000:
+OnTimer80000:
 	stopnpctimer;
 	for ( .@i = 1; .@i <= 3; ++.@i ) {
 		for ( .@j = 1; .@j <= 8; ++.@j )
@@ -617,35 +616,35 @@ OnMyBossDead:
 	enablenpc 'vrid3$;
 	initnpctimer;
 	end;
-OnTimer8500:
+OnTimer3000:
 	npctalk "Reaper Yanku: You're strong...", 'reaper3$;
 	end;
-OnTimer11000:
+OnTimer6500:
 	npctalk "Reaper Yanku: But my goal has been accomplished... Don't think this is over.", 'reaper3$;
 	end;
-OnTimer13500:
+OnTimer8000:
 	npctalk "Reaper Yanku: Soon Lord Morroc will return. *Chuckle* The fear of death will follow you wherever you go.", 'reaper3$;
 	end;
-OnTimer16000:
+OnTimer10500:
 	disablenpc 'reaper3$;
 	specialeffect EF_ICECRASH,AREA,'vrid3$;
 	specialeffect EF_ICECRASH,AREA,'zeith3$;
 	setnpcdisplay( 'vrid3$, 4_M_KNIGHT_BLACK );
 	setnpcdisplay( 'zeith3$, 4_M_GUILLOTINE );
 	end;
-OnTimer18500:
+OnTimer13000:
 	npctalk "Vrid: Ah, finally I can move!", 'vrid3$;
 	end;
-OnTimer21000:
+OnTimer16500:
 	npctalk "Zeith: Hmpf, I'm ashamed of myself for being so weak...", 'zeith3$;
 	end;
-OnTimer23500:
+OnTimer18000:
 	npctalk "Vrid: Whew, that reaper was much stronger than me and Zeith combined.", 'vrid3$;
 	end;
-OnTimer26000:
+OnTimer20500:
 	npctalk "Vrid: We could have died if it weren't for you.", 'vrid3$;
 	end;
-OnTimer28500:
+OnTimer23000:
 	stopnpctimer;
 	npctalk "Vrid: I want to give you something for saving our lives. Talk to me again when you're ready to accept it.", 'vrid3$;
 	'reward = 1;
@@ -710,7 +709,7 @@ OnInstanceInit:
 
 	// zone 1
 	disablenpc instance_npcname("Reaper Yanku#bios1");
-	disablenpc instance_npcname("mobs#bios1");
+	donpcevent instance_npcname("mobs#bios1") + "::OnStart";	// spawn at entrance
 
 	// zone 2
 	disablenpc instance_npcname("start1#bios2");
