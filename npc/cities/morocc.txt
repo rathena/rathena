@@ -86,7 +86,7 @@ morocc,268,287,3	script	Volunteer - Morroc#04	727,{
 	mes "This sure must be the worst thing ever happened in Rune-Midgard's history.";
 	next;
 	mes "[Morroc Volunteer]";
-	mes "I wish I knew how bad the damage is, but we can't even estimate it. It's like shoveling sand against the tide..";
+	mes "I wish I knew how bad the damage is, but we can't even estimate it. It's like shovelling sand against the tide..";
 	close;
 }
 
@@ -388,7 +388,7 @@ moc_ruins,155,107,4	script	Ant Man#moc	47,{
 		mes "There's also an old man called Guias, the spirit of the earth. He's pretty hard to deal with.";
 		next;
 		mes "[Akira]";
-		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shoveling skills of that old grandpa is very strong that you should watch out.";
+		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shovelling skills of that old grandpa is very strong that you should watch out.";
 		next;
 		mes "[Akira]";
 		mes "...Well, what am I talking about? What is left to be afraid when the Satan of Morroc is revived? Huh..huhhuh...";

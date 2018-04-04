@@ -555,7 +555,7 @@ OnTouch_:
 	input .@amount;
 	mes "[ Point Merchant ]";
 	if (.@amount == 0) {
-		mes "You've canceled the trade.";
+		mes "You've cancelled the trade.";
 		close;
 	}
 	if (Zeny < .@amount*200) {
@@ -4189,7 +4189,7 @@ OnTimer1000:
 				cutin "", 255;
 				mes "[Kafra]", "Thanks for helping me out.", "Who are you?"; next;
 				cutin "hero_iris_01.bmp", 2;
-				mes "[Iris]", "I am Iris~", "I am traveling with my good friend Chaos~!"; next;
+				mes "[Iris]", "I am Iris~", "I am travelling with my good friend Chaos~!"; next;
 				mes "[Iris]", "I am not the one you should thank.", "Thank that adventurer, " + strcharinfo(0) + ".", "It could have been much worse."; next;
 				cutin "", 255;
 				mes "[Kafra]", "Thank you " + strcharinfo(0) + ".", "You saved me."; next;

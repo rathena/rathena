@@ -791,10 +791,10 @@ function SF_Procedure {
 	next;
 	mes "["+@name$+"]";
 	mes "I shouldn't need to mention this, but adopted kids are too young to get married.";
-	mes "Both groom and bride must register within a minute of each other, or the wedding will be canceled. So be sure you both are ready and meet the registration requirements beforehand.";
+	mes "Both groom and bride must register within a minute of each other, or the wedding will be cancelled. So be sure you both are ready and meet the registration requirements beforehand.";
 	next;
 	mes "["+@name$+"]";
-	mes "After both have registered with me, you have to go pledge your vows to the Priest and accept your registered partner. If for some reason you reject your registered partner, the wedding will be canceled...";
+	mes "After both have registered with me, you have to go pledge your vows to the Priest and accept your registered partner. If for some reason you reject your registered partner, the wedding will be cancelled...";
 	next;
 	mes "["+@name$+"]";
 	mes "If you both accept each other, then the wedding has been decided and the ceremony will begin.";
