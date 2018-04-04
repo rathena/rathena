@@ -196,7 +196,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle, 19, &data, NULL); hd->skillpts = atoi(data);
 	Sql_GetData(sql_handle, 20, &data, NULL); hd->rename_flag = atoi(data);
 	Sql_GetData(sql_handle, 21, &data, NULL); hd->vaporize = atoi(data);
-	Sql_GetData(sql_handle, 22, &data, NULL); hd->autofeed = atoi(data);
+	Sql_GetData(sql_handle, 22, &data, NULL); hd->autofeed = atoi(data) != 0;
 	Sql_FreeResult(sql_handle);
 
 	hd->intimacy = umin(hd->intimacy,100000);
