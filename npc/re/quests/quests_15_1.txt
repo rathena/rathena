@@ -471,7 +471,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 			cutin "Arquien_n_atnad04.bmp",2;
 			mes "[Nile]";
 			mes "What.. was.. the name. Ah.. I don't know.";
-			mes "It is commonly being referred to as the 'Fantasmagorica' plan.";
+			mes "It is commonly being referred to as the 'Phantasmagorika' plan.";
 			mes "Rekenber of Lighthalzen is the sponser of the excavation recruitment and support.";
 			next;
 			select("So?");
@@ -494,7 +494,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 			}
 			cutin "Arquien_n_atnad01.bmp",2;
 			mes "[Nile]";
-			mes "Sure. We also wanted to participate in the Fantasmagorica.";
+			mes "Sure. We also wanted to participate in the Phantasmagorika.";
 		}
 		else {
 			cutin "Arquien_n_atnad02.bmp",2;
@@ -510,7 +510,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 			cutin "Arquien_n_atnad01.bmp",2;
 			mes "[Nile]";
 			mes "Should I continue talking?";
-			mes "We also wanted to participate in the Fantasmagorica.";
+			mes "We also wanted to participate in the Phantasmagorika.";
 		}
 		mes "Of course under the name of Paradise Squad.";
 		next;
@@ -535,7 +535,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		mes "Not a bad proposition. Honestly it's a good opportunity.";
 		mes "We introduce people and get paid, you work and get paid.";
 		next;
-		select("Wanting to participate in Fantasmagorica?");
+		select("Wanting to participate in Phantasmagorika?");
 		mes "[Nile]";
 		mes "It can be summarized as such.";
 		mes "Basically you're participating in the site excavation work but";
@@ -547,7 +547,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		next;
 		mes "[Nile]";
 		mes "I want one thing.";
-		mes "There are several excavation teams and organizations currently participating in the Fantasmagorica excavation.";
+		mes "There are several excavation teams and organizations currently participating in the Phantasmagorika excavation.";
 		mes "I would like you to work in an excavation team Rahim introduces.";
 		next;
 		cutin "Arquien_n_atnad02.bmp",2;

@@ -291,7 +291,7 @@ xmas,117,304,4	script	Poze	713,{
 		mes "Oh, there is someone who knows how Snowysnow came to be able to speak. That person would be ^3355FFUncle Hairy Cantata^000000...";
 		next;
 		mes "[Poze]";
-		mes "One day when apprentice of the great alchemist visted Lutie, I came to listen in on a conversation between him and Uncle Hairy.";
+		mes "One day when apprentice of the great alchemist visited Lutie, I came to listen in on a conversation between him and Uncle Hairy.";
 		next;
 		mes "[Poze]";
 		mes "Long ago, a great alchemist came by Snowysnow's hometown and happened to meet Snowysnow dying, melting down into water. However, Snowysnow was miraculously revived by that Alchemist.";
