@@ -13880,7 +13880,7 @@ BUILDIN_FUNC(petloot)
 BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd;
-	char card_var[NAME_LENGTH], randopt_var[NAME_LENGTH];
+	char card_var[NAME_LENGTH], randopt_var[50];
 	int i,j=0,k;
 
 	if (!script_charid2sd(2,sd))
