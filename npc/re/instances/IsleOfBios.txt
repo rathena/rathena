@@ -30,10 +30,22 @@ moro_cav,50,64,5	script	Yellow Seed#bios	CLEAR_NPC,{
 			mes "^ff0000This Memorial Dungeon cannot be accessed for 23 hours after your last visit.^000000";
 			close;
 		}
+		switch( checkquest(15008,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "^0000ffThis Memorial Dungeon cannot be accessed for 23 hours after your last visit.^000000";
+			close;
+		case 2:
+			break;
+		}
 		break;
 	case 2:
 		erasequest 15005;// Memorial Dungeon: Isle of Bios
 		erasequest 15007;// Memorial Dungeon: Isle of Bios
+		if (isbegin_quest(15008) > 0)
+			erasequest 15008;// Memorial Dungeon: Isle of Bios
 		break;
 	}
 	if (getpartyleader(.@party_id,2) == getcharid(0))
@@ -353,7 +365,10 @@ OnTimer1000:
 		mes "Let's get out of this creepy place!";
 		close2;
 		getitem 6684,1;// Token Of Hero
-		ep14_3_isle = 1;
+		if (ep14_3_isle == 0)
+			ep14_3_isle = 1;
+		if (checkquest(15007,PLAYTIME) == 0 || checkquest(15007,PLAYTIME) == 1)
+			setquest 15008;// Memorial Dungeon: Isle of Bios
 		warp "moro_cav",45,63;
 	}
 	end;
