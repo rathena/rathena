@@ -3835,7 +3835,12 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if(battle_config.hp_rate != 100)
 		base_status->max_hp = (unsigned int)(battle_config.hp_rate * (base_status->max_hp/100.));
 
-	base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp);
+	if (sd->status.base_level < 100)
+		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv99);
+	else if (sd->status.base_level < 151)
+		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv150);
+	else
+		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp);
 
 // ----- SP MAX CALCULATION -----
 	base_status->max_sp = sd->status.max_sp = status_calc_maxhpsp_pc(sd,base_status->int_,false);
@@ -4993,7 +4998,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			if(battle_config.hp_rate != 100)
 				status->max_hp = (unsigned int)(battle_config.hp_rate * (status->max_hp/100.));
 
-			status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
+			if (sd->status.base_level < 100)
+				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv99);
+			else if (sd->status.base_level < 151)
+				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv150);
+			else
+				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
 		}
 		else
 			status->max_hp = status_calc_maxhp(bl, b_status->max_hp);
