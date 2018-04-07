@@ -3415,7 +3415,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Give them all modes except these (useful for clones)
 	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUS_IMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
-	base_status->size = (sd->class_&JOBL_BABY || (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? SZ_SMALL : SZ_MEDIUM;
+	base_status->size = (sd->class_&JOBL_BABY || ((battle_config.summoner_trait&2) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER)) ? SZ_SMALL : SZ_MEDIUM;
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
 		if (sd->class_&JOBL_BABY) {
 			if (battle_config.character_size&SZ_BIG)
@@ -3426,7 +3426,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	base_status->aspd_rate = 1000;
 	base_status->ele_lv = 1;
-	base_status->race = ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? RC_BRUTE : RC_PLAYER;
+	base_status->race = ((battle_config.summoner_trait&1) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? RC_BRUTE : RC_PLAYER;
 	base_status->class_ = CLASS_NORMAL;
 
 	// Zero up structures...
@@ -3835,7 +3835,12 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if(battle_config.hp_rate != 100)
 		base_status->max_hp = (unsigned int)(battle_config.hp_rate * (base_status->max_hp/100.));
 
-	base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp);
+	if (sd->status.base_level < 100)
+		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv99);
+	else if (sd->status.base_level < 151)
+		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv150);
+	else
+		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp);
 
 // ----- SP MAX CALCULATION -----
 	base_status->max_sp = sd->status.max_sp = status_calc_maxhpsp_pc(sd,base_status->int_,false);
@@ -4993,7 +4998,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			if(battle_config.hp_rate != 100)
 				status->max_hp = (unsigned int)(battle_config.hp_rate * (status->max_hp/100.));
 
-			status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
+			if (sd->status.base_level < 100)
+				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv99);
+			else if (sd->status.base_level < 151)
+				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv150);
+			else
+				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
 		}
 		else
 			status->max_hp = status_calc_maxhp(bl, b_status->max_hp);
