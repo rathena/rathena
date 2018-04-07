@@ -17992,7 +17992,7 @@ static void clif_parse_SearchStoreInfo(int fd, struct map_session_data* sd)
 void clif_search_store_info_ack(struct map_session_data* sd)
 {
 #if PACKETVER >= 20150225
-	const unsigned int blocksize = MESSAGE_SIZE+26+5*MAX_ITEM_RDM_OPT;
+	const unsigned int blocksize = MESSAGE_SIZE+26+5*5;
 #else
 	const unsigned int blocksize = MESSAGE_SIZE+26;
 #endif
