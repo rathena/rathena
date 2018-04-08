@@ -584,8 +584,10 @@ OnTimer5000:
 	end;
 
 OnMyMobDead:
-	if (mobcount( 'map_dth3$,instance_npcname("megalodon#bios3") + "::OnMyMobDead" ) == 0)
+	if (mobcount( 'map_dth3$,instance_npcname("megalodon#bios3") + "::OnMyMobDead" ) == 0) {
+		disablenpc instance_npcname("megalodon#bios3");
 		donpcevent instance_npcname("boss_prelude#bios3") + "::OnStart";
+	}
 	end;
 }
 
