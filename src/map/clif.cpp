@@ -15393,7 +15393,7 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 
 		msg_len += 1; // Zero Termination
 
-		itemsize = 24 + 5 * MAX_ITEM_RDM_OPT;
+		itemsize = 24 + 5 * 5;
 		len = 24 + msg_len+1 + itemsize * count;
 
 		WFIFOHEAD(fd, len);
@@ -17992,7 +17992,7 @@ static void clif_parse_SearchStoreInfo(int fd, struct map_session_data* sd)
 void clif_search_store_info_ack(struct map_session_data* sd)
 {
 #if PACKETVER >= 20150225
-	const unsigned int blocksize = MESSAGE_SIZE+26+5*MAX_ITEM_RDM_OPT;
+	const unsigned int blocksize = MESSAGE_SIZE+26+5*5;
 #else
 	const unsigned int blocksize = MESSAGE_SIZE+26;
 #endif
