@@ -3450,7 +3450,7 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 	}
 	mes "Nothing special is found.";
 	close;
-OnTimer60000:
+OnTimer30000:
 	stopnpctimer;
 	enablenpc strnpcinfo(0);
 	end;
@@ -4424,12 +4424,13 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				close;
 			case 3:
 				erasequest 5315;// Gerev's Request
-				// setquest 5311;	// note: official can redo
 				trap_doom_prayers = 0;
 				if (isbegin_quest(5306) == 0) {
 					setquest 5306;
 					completequest 5306;
 				}
+				// note: officially 'setquest 5311;' is commented
+				setquest 5311;
 				close;
 			case 4:
 				emotion ET_OTL;
