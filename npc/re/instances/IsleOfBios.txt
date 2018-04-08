@@ -9,7 +9,7 @@
 
 moro_cav,50,64,5	script	Yellow Seed#bios	CLEAR_NPC,{
 	if (BaseLevel < 160) {
-		mes "^ff0000Characters below Level 159 cannot enter this dungeon.^000000";
+		mes "^ff0000Characters below Level 160 cannot enter this dungeon.^000000";
 		close;
 	}
 	if (isbegin_quest(15006) == 0) {
@@ -105,16 +105,16 @@ moro_cav,45,60,5	script	Wandering Old Man#sara	4_M_EINOLD,{
 		mes "The same nightmare has been plaguing me for a long time.";
 		next;
 		mes "[Wandering Old Man]";
-		mes "In my nightmare, Demon King Morroc awakens from his century-long slumber and fills the world with darkness and horror.";
+		mes "In my nightmare, Demon King Morocc awakens from his century-long slumber and fills the world with darkness and horror.";
 		next;
 		mes "[Wandering Old Man]";
 		mes "I couldn't shake off the vivid images I saw in that nightmare. I've wandered off and around like a madman and finally arrived here.";
 		next;
 		mes "[Wandering Old Man]";
-		mes "I saw this place in my dream. It's where Demon God Morroc awakens from his slumber. My dream was showing me a possible future.";
+		mes "I saw this place in my dream. It's where Demon God Morocc awakens from his slumber. My dream was showing me a possible future.";
 		next;
 		mes "[Wandering Old Man]";
-		mes "If my dream really is a premonition, the forces of Demon God Morroc's are within that yellow seed.";
+		mes "If my dream really is a premonition, the forces of Demon God Morocc's are within that yellow seed.";
 		next;
 		mes "[Wandering Old Man]";
 		mes "I tried to enter the seed, but to no avail: I'm just too old and weak. But perhaps you can.";
@@ -137,9 +137,9 @@ moro_cav,45,60,5	script	Wandering Old Man#sara	4_M_EINOLD,{
 1@dth2,291,102,0	warp2	warp1#bios2	2,2,1@dth3,45,68
 
 // zone 1
-1@dth1,74,94,3	script	Reaper Yanku#bios1	3029,{ end; }
-1@dth1,71,97,3	duplicate(Reaper Yanku#bios1)	Zeith#bios1	4_M_GUILLOTINE
-1@dth1,67,97,5	duplicate(Reaper Yanku#bios1)	Vrid#bios1	4_M_KNIGHT_BLACK
+1@dth1,74,94,3	script	Grim Reaper Ankou#bios1	3029,{ end; }
+1@dth1,71,97,3	duplicate(Grim Reaper Ankou#bios1)	Zeith#bios1	4_M_GUILLOTINE
+1@dth1,67,97,5	duplicate(Grim Reaper Ankou#bios1)	Vrid#bios1	4_M_KNIGHT_BLACK
 // 1@dth1,67,97,5	script	Vrid#bios1	4_M_KNIGHT_BLACK,5,7,{// official
 
 // 1@dth1,67,97,5	script	start1#bios1	HIDDEN_WARP_NPC,{// official
@@ -149,12 +149,12 @@ OnTouch_:
 	disablenpc instance_npcname("start1#bios1");
 	'zeith$ = instance_npcname("Zeith#bios1");
 	'vrid$ = instance_npcname("Vrid#bios1");
-	'reaper$ = instance_npcname("Reaper Yanku#bios1");
+	'reaper$ = instance_npcname("Grim Reaper Ankou#bios1");
 	initnpctimer;
 	npctalk "Vrid: Ah, someone else has come to join us.", 'vrid$;
 	end;
 OnTimer2500:
-	npctalk "Vrid: Did you also come to stop Morroc's resurrection?", 'vrid$;
+	npctalk "Vrid: Did you also come to stop Morocc's resurrection?", 'vrid$;
 	end;
 OnTimer5000:
 	npctalk "Vrid: I'm Vrid and this is Zeith, from Prontera. We've been traveling around the world, fighting for justice.", 'vrid$;
@@ -178,7 +178,7 @@ OnTimer19500:
 	npctalk "Zeith: ...You talk enough for both of us.", 'zeith$;
 	end;
 OnTimer21000:
-	npctalk "Vrid: We only came because the old geezer down below kept rambling about Morroc's resurrection.", 'vrid$;
+	npctalk "Vrid: We only came because the old geezer down below kept rambling about Morocc's resurrection.", 'vrid$;
 	end;
 OnTimer23500:
 	npctalk "Vrid: Err, what's this place? I just touched the seed, and suddenly the scenery changed.", 'vrid$;
@@ -194,10 +194,10 @@ OnTimer31000:
 	end;
 OnTimer33500:
 	enablenpc 'reaper$;
-	npctalk "Reaper Yanku: *Chuckle* This is the Isle of Bios, a place I conjured up in my mind.", 'reaper$;
+	npctalk "Grim Reaper Ankou: *Chuckle* This is the Isle of Bios, a place I conjured up in my mind.", 'reaper$;
 	end;
 OnTimer36000:
-	npctalk "Reaper Yanku: You've walked into the trap, making yourself willing sacrifices for my Lord Morroc. Aren't you afraid of dying?", 'reaper$;
+	npctalk "Grim Reaper Ankou: You've walked into the trap, making yourself willing sacrifices for my Lord Morocc. Aren't you afraid of dying?", 'reaper$;
 	end;
 OnTimer38500:
 	npctalk "Vrid: Pah! If I was I wouldn't have come willingly, would I?", 'vrid$;
@@ -206,16 +206,16 @@ OnTimer41000:
 	npctalk "Vrid: Whoever you are, we'll kill you before you do!", 'vrid$;
 	end;
 OnTimer43500:
-	npctalk "Reaper Yanku: Don't tempt me, human.", 'reaper$;
+	npctalk "Grim Reaper Ankou: Don't tempt me, human.", 'reaper$;
 	end;
 OnTimer46000:
-	npctalk "Reaper Yanku: I want to watch you die slowly and painfully. *Chuckle*", 'reaper$;
+	npctalk "Grim Reaper Ankou: I want to watch you die slowly and painfully. *Chuckle*", 'reaper$;
 	end;
 OnTimer48500:
 	disablenpc 'reaper$;
 	end;
 OnTimer51000:
-	npctalk "Vrid: Who's he? Is he trying to resurrect Morroc? ", 'vrid$;
+	npctalk "Vrid: Who's he? Is he trying to resurrect Morocc? ", 'vrid$;
 	end;
 OnTimer53500:
 	npctalk "Vrid: Let's chase him! Zeith, hurry!", 'vrid$;
@@ -388,7 +388,7 @@ OnTouch_:
 	end;
 OnStart:
 	enablenpc instance_npcname("freeze#bios3");
-	'reaper3$ = instance_npcname("Reaper Yanku#bios3");
+	'reaper3$ = instance_npcname("Grim Reaper Ankou#bios3");
 	'zeith3$ = instance_npcname("Zeith#bios3");
 	'vrid3$ = instance_npcname("Vrid#bios3");
 	initnpctimer;
@@ -428,19 +428,19 @@ OnTimer27000:
 	enablenpc 'reaper3$;
 	end;
 OnTimer27500:
-	npctalk "Reaper Yanku: *Chuckle* At least one of you has a good head on his shoulders.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: *Chuckle* At least one of you has a good head on his shoulders.", 'reaper3$;
 	end;
 OnTimer30000:
 	npctalk "Vrid: You again?", 'vrid3$;
 	end;
 OnTimer32500:
-	npctalk "Reaper Yanku: Are you curious about your next adversaries?", 'reaper3$;
+	npctalk "Grim Reaper Ankou: Are you curious about your next adversaries?", 'reaper3$;
 	end;
 OnTimer35000:
-	npctalk "Reaper Yanku: Ahead of you is an army of the immortal.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: Ahead of you is an army of the immortal.", 'reaper3$;
 	end;
 OnTimer37500:
-	npctalk "Reaper Yanku: *Chuckle* Come out, my soldiers!", 'reaper3$;
+	npctalk "Grim Reaper Ankou: *Chuckle* Come out, my soldiers!", 'reaper3$;
 	end;
 OnTimer37700:
 	specialeffect EF_READYPORTAL,AREA,'reaper3$;
@@ -458,10 +458,10 @@ OnTimer45000:
 	npctalk "Vrid: I'll get rid of you myself!", 'vrid3$;
 	end;
 OnTimer47500:
-	npctalk "Reaper Yanku: Right back at you, bigmouth.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: Right back at you, bigmouth.", 'reaper3$;
 	end;
 OnTimer50000:
-	npctalk "Reaper Yanku: I'll teach you how terrifying it is to be helpless in the face of horror!", 'reaper3$;
+	npctalk "Grim Reaper Ankou: I'll teach you how terrifying it is to be helpless in the face of horror!", 'reaper3$;
 	end;
 OnTimer52500:
 	specialeffect EF_STORMGUST,AREA,'reaper3$;
@@ -492,19 +492,19 @@ OnTimer57500:
 	npctalk "Zeith: N-neither can I! I can't move my feet!", 'zeith3$;
 	end;
 OnTimer60000:
-	npctalk "Reaper Yanku: On the Isle of Bios, each day is a lifetime.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: On the Isle of Bios, each day is a lifetime.", 'reaper3$;
 	end;
 OnTimer62500:
-	npctalk "Reaper Yanku: You must have noticed my soldiers have grown up before the sunset.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: You must have noticed my soldiers have grown up before the sunset.", 'reaper3$;
 	end;
 OnTimer65000:
-	npctalk "Reaper Yanku: After nightfall, they've reached the final stage of their development: life beyond death.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: After nightfall, they've reached the final stage of their development: life beyond death.", 'reaper3$;
 	end;
 OnTimer67500:
-	npctalk "Reaper Yanku: That's right. It's time for you to experience death.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: That's right. It's time for you to experience death.", 'reaper3$;
 	end;
 OnTimer70000:
-	npctalk "Reaper Yanku: Get ready to feel the fear of death! *Chuckle*", 'reaper3$;
+	npctalk "Grim Reaper Ankou: Get ready to feel the fear of death! *Chuckle*", 'reaper3$;
 	// note: unfreeze player
 	end;
 OnTimer72000:
@@ -598,13 +598,13 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer500:
-	npctalk "Reaper Yanku: I underestimated you, or my soldiers aren't as strong as I thought.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: I underestimated you, or my soldiers aren't as strong as I thought.", 'reaper3$;
 	end;
 OnTimer3000:
 	npctalk "Vrid: You're cheating! Release us and fight fairly!", 'vrid3$;
 	end;
 OnTimer5500:
-	npctalk "Reaper Yanku: You're still talking. I'll just kill you myself and get it over with!", 'reaper3$;
+	npctalk "Grim Reaper Ankou: You're still talking. I'll just kill you myself and get it over with!", 'reaper3$;
 	end;
 OnTimer7500:
 	disablenpc 'reaper3$;
@@ -619,7 +619,7 @@ OnTimer8000:
 	end;
 OnStart:
 	enablenpc instance_npcname("boss#bios3");
-	monster 'map_dth3$,70,67,"Reaper Yanku",3029,1, instance_npcname("boss#bios3") + "::OnMyBossDead";
+	monster 'map_dth3$,70,67,"Grim Reaper Ankou",3029,1, instance_npcname("boss#bios3") + "::OnMyBossDead";
 	'boss_id = $@mobid[0];
 	donpcevent instance_npcname("talk_friends#bios3") + "::OnStart";
 	donpcevent instance_npcname("talk_boss#bios3") + "::OnStart";
@@ -634,13 +634,13 @@ OnMyBossDead:
 	initnpctimer;
 	end;
 OnTimer3000:
-	npctalk "Reaper Yanku: You're strong...", 'reaper3$;
+	npctalk "Grim Reaper Ankou: You're strong...", 'reaper3$;
 	end;
 OnTimer6500:
-	npctalk "Reaper Yanku: But my goal has been accomplished... Don't think this is over.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: But my goal has been accomplished... Don't think this is over.", 'reaper3$;
 	end;
 OnTimer8000:
-	npctalk "Reaper Yanku: Soon Lord Morroc will return. *Chuckle* The fear of death will follow you wherever you go.", 'reaper3$;
+	npctalk "Grim Reaper Ankou: Soon Lord Morocc will return. *Chuckle* The fear of death will follow you wherever you go.", 'reaper3$;
 	end;
 OnTimer10500:
 	disablenpc 'reaper3$;
@@ -679,7 +679,7 @@ OnTimer15000:
 	if (.@r == 0)
 		npctalk "Zeith: Ugh... I feel so helpless...", 'zeith3$;
 	else if (.@r == 1)
-		npctalk "Zeith: That guy Yanku smells dangerous. You better move once he starts using a skill.", 'zeith3$;
+		npctalk "Zeith: That guy Ankou smells dangerous. You better move once he starts using a skill.", 'zeith3$;
 	else if (.@r == 2)
 		npctalk "Vrid: Ack, I'm sorry we can't help.", 'vrid3$;
 	else if (.@r == 3)
@@ -701,13 +701,13 @@ OnStart:
 OnTimer13000:
 	.@r = rand(6);
 	if (.@r == 0)
-		unittalk 'boss_id, "Reaper Yanku: *Chuckle*";
+		unittalk 'boss_id, "Grim Reaper Ankou: *Chuckle*";
 	else if (.@r == 1)
-		unittalk 'boss_id, "Reaper Yanku: Feel the fear of death!";
+		unittalk 'boss_id, "Grim Reaper Ankou: Feel the fear of death!";
 	else if (.@r == 2)
-		unittalk 'boss_id, "Reaper Yanku: Lord Morroc will return soon.";
+		unittalk 'boss_id, "Grim Reaper Ankou: Lord Morocc will return soon.";
 	else if (.@r == 3)
-		unittalk 'boss_id, "Reaper Yanku: Is this the best you can do? Such weak creatures, you humans.";
+		unittalk 'boss_id, "Grim Reaper Ankou: Is this the best you can do? Such weak creatures, you humans.";
 	initnpctimer;
 	end;;
 OnStop:
@@ -725,7 +725,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("warp1#bios2");
 
 	// zone 1
-	disablenpc instance_npcname("Reaper Yanku#bios1");
+	disablenpc instance_npcname("Grim Reaper Ankou#bios1");
 	donpcevent instance_npcname("mobs#bios1") + "::OnStart";	// spawn at entrance
 
 	// zone 2
@@ -743,7 +743,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("talk_boss#bios3");
 	disablenpc instance_npcname("Vrid#bios3");
 	disablenpc instance_npcname("Zeith#bios3");
-	disablenpc instance_npcname("Reaper Yanku#bios3");
+	disablenpc instance_npcname("Grim Reaper Ankou#bios3");
 	for ( .@i = 1; .@i <= 3; ++.@i ) {
 		for ( .@j = 1; .@j <= 8; ++.@j )
 			disablenpc instance_npcname( "Corrupt Orc Zombie#" + .@j + "bio" + .@i );
@@ -751,30 +751,30 @@ OnInstanceInit:
 	end;
 }
 
-1@dth3,72,74,3	duplicate(Reaper Yanku#bios1)	Zeith#bios3	4_M_GUILLOTINE
-1@dth3,70,67,3	duplicate(Reaper Yanku#bios1)	Reaper Yanku#bios3	3029
+1@dth3,72,74,3	duplicate(Grim Reaper Ankou#bios1)	Zeith#bios3	4_M_GUILLOTINE
+1@dth3,70,67,3	duplicate(Grim Reaper Ankou#bios1)	Grim Reaper Ankou#bios3	3029
 
-1@dth3,62,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#1bio1	3016
-1@dth3,64,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#2bio1	3016
-1@dth3,66,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#3bio1	3016
-1@dth3,68,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#4bio1	3016
-1@dth3,72,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#5bio1	3016
-1@dth3,74,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#6bio1	3016
-1@dth3,76,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#7bio1	3016
-1@dth3,78,80,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#8bio1	3016
-1@dth3,62,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#1bio2	3016
-1@dth3,64,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#2bio2	3016
-1@dth3,66,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#3bio2	3016
-1@dth3,68,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#4bio2	3016
-1@dth3,72,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#5bio2	3016
-1@dth3,74,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#6bio2	3016
-1@dth3,76,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#7bio2	3016
-1@dth3,78,86,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#8bio2	3016
-1@dth3,62,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#1bio3	3016
-1@dth3,64,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#2bio3	3016
-1@dth3,66,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#3bio3	3016
-1@dth3,68,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#4bio3	3016
-1@dth3,72,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#5bio3	3016
-1@dth3,74,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#6bio3	3016
-1@dth3,76,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#7bio3	3016
-1@dth3,78,92,3	duplicate(Reaper Yanku#bios1)	Corrupt Orc Zombie#8bio3	3016
+1@dth3,62,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#1bio1	3016
+1@dth3,64,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#2bio1	3016
+1@dth3,66,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#3bio1	3016
+1@dth3,68,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#4bio1	3016
+1@dth3,72,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#5bio1	3016
+1@dth3,74,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#6bio1	3016
+1@dth3,76,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#7bio1	3016
+1@dth3,78,80,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#8bio1	3016
+1@dth3,62,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#1bio2	3016
+1@dth3,64,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#2bio2	3016
+1@dth3,66,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#3bio2	3016
+1@dth3,68,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#4bio2	3016
+1@dth3,72,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#5bio2	3016
+1@dth3,74,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#6bio2	3016
+1@dth3,76,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#7bio2	3016
+1@dth3,78,86,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#8bio2	3016
+1@dth3,62,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#1bio3	3016
+1@dth3,64,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#2bio3	3016
+1@dth3,66,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#3bio3	3016
+1@dth3,68,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#4bio3	3016
+1@dth3,72,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#5bio3	3016
+1@dth3,74,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#6bio3	3016
+1@dth3,76,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#7bio3	3016
+1@dth3,78,92,3	duplicate(Grim Reaper Ankou#bios1)	Corrupt Orc Zombie#8bio3	3016
