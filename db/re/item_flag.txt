@@ -426,6 +426,7 @@
 22558,2 //Lucky_Bag
 22669,2 //HALLOWEEN_G_BOX
 22685,2 //Solo_Christmas_Gift
+22876,2 //Old_Money_Pocket
 23196,2 // Shining_Blue_Lucky_Egg
 
 // GUID

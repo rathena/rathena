@@ -2154,22 +2154,22 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "[Yota Chara]";
 	switch(.@s) {
 	case 1:
-		mes "<ITEM>Low-grade Horse Mackerel Amulet <INFO>28413</INFO></ITEM> is for my father who is far out to the sea.";
+		mes "<ITEM>Lesser Mackerel Talisman <INFO>28413</INFO></ITEM> is for my father who is far out to the sea.";
 		break;
 	case 2:
-		mes "<ITEM>Low-grade Leaf Amulet <INFO>28416</INFO></ITEM> is for my mother who should be wandering about the deep side of the forest.";
+		mes "<ITEM>Lesser Leaf Talisman <INFO>28416</INFO></ITEM> is for my mother who should be wandering about the deep side of the forest.";
 		break;
 	case 3:
-		mes "<ITEM>Low-grade Rabbit Amulet <INFO>28419</INFO></ITEM> is for my brothers' health and wellness.";
+		mes "<ITEM>Lesser Rabbit Talisman <INFO>28419</INFO></ITEM> is for my brothers' health and wellness.";
 		break;
 	case 4:
-		mes "<ITEM>Shining Twig Charm <INFO>28422</INFO></ITEM> is to wish for my mother to return home safely from anywhere in the world.";
+		mes "<ITEM>Shiny Branch Talisman <INFO>28422</INFO></ITEM> is to wish for my mother to return home safely from anywhere in the world.";
 		break;
 	case 5:
-		mes "<ITEM>Fresh Tuna Amulet <INFO>28423</INFO></ITEM> is to wish for my father to return home quick with his ship full of tunas.";
+		mes "<ITEM>Fresh Tuna Talisman <INFO>28423</INFO></ITEM> is to wish for my father to return home quick with his ship full of tunas.";
 		break;
 	case 6:
-		mes "<ITEM>Plump Earthworm Amulet <INFO>28424</INFO></ITEM> is to wish for easy fishing so that my family won't be starved.";
+		mes "<ITEM>Chubby Worm Talisman <INFO>28424</INFO></ITEM> is to wish for easy fishing so that my family won't be starved.";
 		break;
 	}
 	if (.@s < 4) {
@@ -2348,12 +2348,12 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 			15156, 4,	// Elegant Doram Suit [1]
 			20790, 4,	// Elegant Doram Manteau [1]
 			22085, 4,	// Elegant Doram Shoes [1]
-			28415, 4,	// Advanced Saurel Charm [1]
-			28418, 4,	// Advanced Leaf Charm [1]
-			28421, 4,	// Advanced Bunny Charm [1]
-			28414, 3,	// Fair Saurel Charm [1]
-			28417, 3,	// Fair Leaf Charm [1]
-			28420, 3,	// Fair Bunny Charm [1]
+			28415, 4,	// Greater Mackerel Talisman [1]
+			28418, 4,	// Greater Leaf Talisman [1]
+			28421, 4,	// Greater Rabbit Talisman [1]
+			28414, 3,	// Intermediate Mackerel Talisman [1]
+			28417, 3,	// Intermediate Leaf Talisman [1]
+			28420, 3,	// Intermediate Rabbit Talisman [1]
 			15129, 3,	// Luxurious Doram Suit [1]
 			20789, 3,	// Luxurious Doram Manteau [1]
 			22084, 3,	// Luxurious Doram Shoes [1]

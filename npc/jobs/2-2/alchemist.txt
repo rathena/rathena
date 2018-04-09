@@ -197,7 +197,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 				case 3:
 					set ALCH_Q,3;
 					setquest 2030;
-					mes "^551A8B7,500 Fire Arrows^000000.";
+					mes "^551A8B7,7500 Fire Arrows^000000.";
 				}
 				next;
 				mes "[Parmy Gianino]";
