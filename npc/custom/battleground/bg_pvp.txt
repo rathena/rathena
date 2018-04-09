@@ -108,6 +108,7 @@ OnStart:
 	end;
 }
 
+guild_vs3	mapflag	gvg	off
 guild_vs3	mapflag	battleground	2
 guild_vs3	mapflag	nosave	SavePoint
 guild_vs3	mapflag	nowarp
