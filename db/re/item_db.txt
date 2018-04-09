@@ -11157,7 +11157,7 @@
 22873,Sealed_Beelzebub_Scroll_II,Sealed Beelzebub Scroll II,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1; },{},{}
 22874,Sealed_Beelzebub_Card_Album,Sealed Beelzebub Card Album,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{/*No Info*/},{},{}
 22875,Sealed_Beelzebub_Card,Sealed Beelzebub Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVariableCastrate,-15; /*Item removed on 2014-12-17*/ },{},{}
-22876,Old_Money_Pocket,Old Money Pocket,3,0,,0,,,,,,,,,,,,,{ Zeny += rand(500,550); },{},{}
+22876,Old_Money_Pocket,Old Money Pocket,2,0,,0,,,,,,,,,,,,,{ Zeny += rand(500,550); },{},{}
 22881,Binding_Rope,Rope Gallows,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{/*Used to catch a Lost Sheep*/},{},{}
 22882,Choco_Tteokguk,Chocolate Rice Cake Soup,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 10,10; },{},{}
 22883,September_Gift_Box_,September Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{/*2 Lucky Eggs*/},{},{}
