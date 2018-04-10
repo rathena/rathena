@@ -5087,6 +5087,20 @@ BUILDIN_FUNC(next)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Clears the dialog and continues the script without a next button.
+///
+/// clear;
+BUILDIN_FUNC(clear)
+{
+	TBL_PC* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	clif_scriptclear(sd, st->oid);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Ends the script and displays the button 'close' on the npc dialog.
 /// The dialog is closed when the button is pressed.
 ///
@@ -13867,7 +13881,7 @@ BUILDIN_FUNC(petloot)
 BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd;
-	char card_var[NAME_LENGTH];
+	char card_var[NAME_LENGTH], randopt_var[50];
 	int i,j=0,k;
 
 	if (!script_charid2sd(2,sd))
@@ -13887,6 +13901,15 @@ BUILDIN_FUNC(getinventorylist)
 			}
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
+			{
+				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].id);
+				sprintf(randopt_var, "@inventorylist_option_value%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].value);
+				sprintf(randopt_var, "@inventorylist_option_parameter%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
+			}
 			j++;
 		}
 	}
@@ -18600,7 +18623,7 @@ BUILDIN_FUNC(unitskillusepos)
 
 /// Pauses the execution of the script, detaching the player
 ///
-/// sleep <mili seconds>;
+/// sleep <milli seconds>;
 BUILDIN_FUNC(sleep)
 {
 	// First call(by function call)
@@ -18610,7 +18633,7 @@ BUILDIN_FUNC(sleep)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError("buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks);
+			ShowError("buildin_sleep: negative or zero amount('%d') of milli seconds is not supported\n", ticks);
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18643,7 +18666,7 @@ BUILDIN_FUNC(sleep2)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError( "buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks );
+			ShowError( "buildin_sleep2: negative or zero amount('%d') of milli seconds is not supported\n", ticks );
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18981,7 +19004,7 @@ BUILDIN_FUNC(mercenary_create)
 
 	class_ = script_getnum(st,2);
 
-	if( !mercenary_class(class_) )
+	if( !mercenary_db(class_) )
 		return SCRIPT_CMD_SUCCESS;
 
 	contract_time = script_getnum(st,3);
@@ -23378,6 +23401,10 @@ BUILDIN_FUNC(unloadnpc) {
 	if( nd == NULL ){
 		ShowError( "buildin_unloadnpc: npc '%s' was not found.\n", name );
 		return SCRIPT_CMD_FAILURE;
+	} else if ( nd->bl.id == st->oid ) {
+		// Supporting self-unload isn't worth the problem it may cause. [Secret]
+		ShowError("buildin_unloadnpc: You cannot self-unload NPC '%s'.\n.", name);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	npc_unload_duplicates(nd);
@@ -23783,6 +23810,7 @@ struct script_function buildin_func[] = {
 	// NPC interaction
 	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),
+	BUILDIN_DEF(clear,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
 	BUILDIN_DEF(menu,"sl*"),

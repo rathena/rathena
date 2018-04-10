@@ -1031,7 +1031,7 @@ OnTouch:
 2@pump,1,1,4	duplicate(Monster Hole#n)	Monster Hole#h	-1
 2@pump,1,1,4	duplicate(Boss Creation#n)	Boss Creation#h	-1
 2@pump,39,88,4	duplicate(Missing, the Cleaner#no)	Missing, the Cleaner#ho	545
-2@pump,38,100,0	duplicate(Culvert Entrance#n)	Culvert Entrance#h	45,3,3
+2@pump,38,100,0	duplicate(Culvert Entrance#n)	Culvert Entrance#h	3,3
 
 //MD_Putmob "2@pump" 0 0 0 0 20 HYDRA 0 0 2
 2@pump,1,1,4	duplicate(Hydra#n)	Hydra#h	-1

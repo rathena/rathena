@@ -1114,6 +1114,8 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
 			return ITEM_EQUIP_ACK_FAIL;
+		if (item->equip & EQP_ARMS && sd->sc.data[SC__WEAKNESS])
+			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
 			return ITEM_EQUIP_ACK_FAIL;
 
@@ -1532,7 +1534,6 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->achievement_data.total_score = 0;
 		sd->achievement_data.level = 0;
 		sd->achievement_data.save = false;
-		sd->achievement_data.sendlist = false;
 		sd->achievement_data.count = 0;
 		sd->achievement_data.incompleteCount = 0;
 		sd->achievement_data.achievements = NULL;
@@ -5398,22 +5399,23 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
  *------------------------------------------*/
 int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 {
-	int rate,skill;
+	int rate, target_lv;
 	struct mob_data *md;
+
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
 
 	md = (TBL_MOB*)target;
+	target_lv = status_get_lv(target);
 
 	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
 		return 0;
 
-	// FIXME: This formula is either custom or outdated.
-	skill = pc_checkskill(sd,RG_STEALCOIN)*10;
-	rate = skill + (sd->status.base_level - md->level)*3 + sd->battle_status.dex*2 + sd->battle_status.luk*2;
+	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
 	if(rnd()%1000 < rate)
 	{
-		int amount = md->level*10 + rnd()%100;
+		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
+		int amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
 
 		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
 		md->state.steal_coin_flag = 1;
@@ -7714,7 +7716,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
 		if( !map[sd->bl.m].flag.noexppenalty ) {
-			pet_set_intimate(pd, pd->pet.intimate - pd->petDB->die);
+			pet_set_intimate(pd, pd->pet.intimate - pd->get_pet_db()->die);
 			if( pd->pet.intimate < 0 )
 				pd->pet.intimate = 0;
 			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
@@ -8247,7 +8249,12 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+		if (sd->status.base_level < 100)
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv99);
+		else if (sd->status.base_level < 151)
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv150);
+		else
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
 
 		if( sd->battle_status.max_hp < sd->battle_status.hp )
 		{
@@ -8886,6 +8893,9 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		}
 	}
@@ -10872,9 +10882,14 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		baselv = (uint32)atoi(fields[3]);
 		joblv = (uint32)atoi(fields[4]);
 		offset = 5;
-	} else {
+	}
+	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
 		baselv = joblv = 0;
 		offset = 3;
+	}
+	else {
+		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
+		return false;
 	}
 
 	if(!pcdb_checkid(class_))

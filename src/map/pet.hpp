@@ -98,6 +98,8 @@ struct pet_loot {
 	unsigned short max;
 };
 
+struct s_pet_db *pet_db(uint16 pet_id);
+
 struct pet_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -105,7 +107,6 @@ struct pet_data {
 	struct s_pet pet;
 	struct status_data status;
 	struct mob_db *db;
-	struct s_pet_db *petDB;
 	int pet_hungry_timer;
 	int target_id;
 	struct {
@@ -123,9 +124,11 @@ struct pet_data {
 
 	int masterteleport_timer;
 	struct map_session_data *master;
-};
 
-struct s_pet_db *pet_db(uint16 pet_id);
+	s_pet_db* get_pet_db() {
+		return pet_db(this->pet.class_);
+	}
+};
 
 bool pet_create_egg(struct map_session_data *sd, unsigned short item_id);
 int pet_hungry_val(struct pet_data *pd);

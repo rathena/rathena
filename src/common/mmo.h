@@ -47,7 +47,7 @@
 * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
 #define MAX_SLOTS 4
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
-#define MAX_ZENY 1000000000 ///Max zeny
+#define MAX_ZENY INT_MAX ///Max zeny
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
@@ -139,7 +139,6 @@
 //Mercenary System
 #define MC_SKILLBASE 8201
 #define MAX_MERCSKILL 40
-#define MAX_MERCENARY_CLASS 61
 
 //Elemental System
 #define MAX_ELEMENTALSKILL 42
@@ -435,6 +434,7 @@ struct s_homunculus {	//[orn]
 	int luk_value;
 
 	char spiritball; //for homun S [lighta]
+	bool autofeed;
 };
 
 struct s_mercenary {
