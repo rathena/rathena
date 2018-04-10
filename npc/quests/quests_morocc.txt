@@ -95,7 +95,7 @@
 
 // Binoculars Quest
 // ============================================================
-moc_ruins,118,176,4	script	Alchemist	64,{
+-	script	Alchemist	64,{
 	mes "[Marius]";
 	mes "Howdy, new customer!!";
 	mes "I know what you're gonna talk about. You want the Magic Glasses from me, riiiiight?";

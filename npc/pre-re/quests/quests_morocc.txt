@@ -19,6 +19,10 @@
 // ============================================================
 moc_ruins,113,181,4	duplicate(William)	William#moc	89
 
+// Binoculars Quest
+// ============================================================
+moc_ruins,118,176,4	duplicate(Alchemist)	Alchemist#moc	64
+
 // Resurrection of Satan Morroc
 // ============================================================
 
