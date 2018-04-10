@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Morroc Quest NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quest NPCs related to Morroc.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.0a Gathered remaining dialogues. [Euphy]
+//= 1.1 Added new warpers for Satan Morroc maps. [Euphy]
+//============================================================
+
+// Resurrection of Satan Morroc
+// ============================================================
+
+morocc,176,103,3	duplicate(Continental Official)	Continental Official#mor	754
