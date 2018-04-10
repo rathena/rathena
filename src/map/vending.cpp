@@ -258,7 +258,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 		if (battle_config.display_tax_info) {
 			char msg[CHAT_SIZE_MAX];
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(vsd->cart.u.items_cart[idx].nameid), (double)vsd->vending[vend_list[i]].value * amount, z_gained);
+			sprintf(msg, msg_txt(sd, 780), itemdb_jname(vsd->cart.u.items_cart[idx].nameid), (double)vsd->vending[vend_list[i]].value * amount, z_gained); // %s : %.0f => %.0f
 			clif_displaymessage(vsd->fd, msg);
 		}
 
@@ -361,7 +361,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 
 	taxdata = tax_get(TAX_SELLING);
 	if (battle_config.display_tax_info) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 773)); // [ Tax Information ]
+		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 	}
 
 	// filter out invalid items
@@ -393,7 +393,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 
 		if (battle_config.display_tax_info) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 774), itemdb_jname(sd->cart.u.items_cart[index].nameid), sd->vending[i].value, '-', tax / 100., sd->vending[i].value_vat); // // %s : %u %c %.2f%% => %u
+			sprintf(msg, msg_txt(sd, 777), itemdb_jname(sd->cart.u.items_cart[index].nameid), sd->vending[i].value, '-', tax / 100., sd->vending[i].value_vat); // %s : %u %c %.2f%% => %u
 			clif_displaymessage(sd->fd, msg);
 		}
 
@@ -409,10 +409,10 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	}
 
 	if (battle_config.display_tax_info && taxdata->total.size()) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 775)); // [ Total Transaction Tax ]
+		clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
 		for (const auto &tax : taxdata->total) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 776), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
+			sprintf(msg, msg_txt(sd, 779), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
 			clif_displaymessage(sd->fd, msg);
 		}
 	}
