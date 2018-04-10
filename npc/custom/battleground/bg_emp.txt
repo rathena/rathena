@@ -20,7 +20,6 @@ OnInit:
 	.eventlasting    = 20*60;  // event duration before auto-reset (20 minutes * seconds)
 	setarray .rewarditem[0],   // rewards for the winning team: <item>,<amount>,...
 		501, 10;
-
 	end;
 OnStart:
 	if ( getwaitingroomstate( 0, .rednpcname$ ) < .minplayer2start || getwaitingroomstate( 0, .bluenpcname$ ) < .minplayer2start )
@@ -70,8 +69,6 @@ OnStart:
 	bg_warp .blue, "prontera", 158,182;
 	bg_destroy .red;
 	bg_destroy .blue;
-	delwall "bg_emp_town_red";
-	delwall "bg_emp_town_blue";
 	.winside = 0;
 	donpcevent .rednpcname$ +"::OnStart";
 	donpcevent .bluenpcname$ +"::OnStart";
