@@ -5836,10 +5836,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 				break;
 			case NPC_ICEMINE:
-				ad.damage = 4000;
-				break;
 			case NPC_FLAMECROSS:
-				ad.damage = sstatus->matk_min;	// Fix me : base damage seems to be matk
+				ad.damage = sstatus->rhw.atk * 20 * skill_lv;
 				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
