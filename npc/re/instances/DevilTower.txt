@@ -1638,7 +1638,7 @@ OnTouch_:// possibility to skip this step
 		sleep2 2000;
 		npctalk "Demonic Shade: Tsk, You couldn't even manage to protect..?.whatever.. you will all die here.";
 		sleep2 3000;
-		npctalk "Demonic Shade: The eternal truth is I will turn your deaths into Masin's life with your hearts' blood!!!";
+		npctalk "Demonic Shade: The eternal truth is I will turn your deaths into the Demon's life with your hearts' blood!!!";
 		disablenpc instance_npcname("Demonic Shade#mobmaster");
 		donpcevent instance_npcname("#mobmaster_kill") + "::OnSummon";
 	}
@@ -1722,7 +1722,7 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer3000:
-	npctalk "Loki: What will you accomplish by waking the Masin in the Wall?", 'loki$;
+	npctalk "Loki: What will you accomplish by waking the Demon in the Wall?", 'loki$;
 	end;
 OnTimer6000:
 	npctalk "Loki: My mission brought me here to bury it again.", 'loki$;
@@ -1852,7 +1852,7 @@ OnTimer500:
 	'boss_id = $@mobid[0];
 	end;
 OnTimer2000:
-	mapannounce 'map_tnm3$, "Demon Worshipper's Voice: You will all be sacrificed to awaken Masin!!!", bc_map,0xFF00;
+	mapannounce 'map_tnm3$, "Demon Worshipper's Voice: You will all be sacrificed to awaken the Demon!!!", bc_map,0xFF00;
 	end;
 OnTimer12000:
 	donpcevent instance_npcname("#boss_skills_timer") + "::OnStart";
