@@ -165,7 +165,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	taxdata = tax_get(TAX_BUYING);
 	if (battle_config.display_tax_info) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 773)); // [ Tax Information ]
+		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 	}
 
 	// check item list
@@ -219,7 +219,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 		if (battle_config.display_tax_info) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 774), itemdb_jname(nameid), price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
+			sprintf(msg, msg_txt(sd, 777), itemdb_jname(nameid), price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
 			clif_displaymessage(sd->fd, msg);
 		}
 	}
@@ -239,10 +239,10 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	}
 
 	if (battle_config.display_tax_info && taxdata->total.size()) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 775)); // [ Total Transaction Tax ]
+		clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
 		for (const auto &tax : taxdata->total) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 776), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
+			sprintf(msg, msg_txt(sd, 779), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
 			clif_displaymessage(sd->fd, msg);
 		}
 	}
@@ -540,7 +540,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 
 		if (battle_config.display_tax_info) {
 			char msg[CHAT_SIZE_MAX];
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(nameid), (double)zeny, (double)zeny_paid);
+			sprintf(msg, msg_txt(sd, 780), itemdb_jname(nameid), (double)zeny, (double)zeny_paid); // %s : %.0f => %.0f
 			clif_displaymessage(pl_sd->fd, msg);
 		}
 

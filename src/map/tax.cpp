@@ -47,11 +47,11 @@ struct s_tax *tax_get(enum e_tax_type type) {
  * @param source: The source YAML file.
  */
 static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *count, const std::string &source) {
-	if (node["In_Total"].IsDefined()) {
-		for (const auto &tax : node["In_Total"]) {
-			if (tax["Minimal_Value"].IsDefined() && tax["Tax"].IsDefined()) {
+	if (node["InTotal"].IsDefined()) {
+		for (const auto &tax : node["InTotal"]) {
+			if (tax["MinimalValue"].IsDefined() && tax["Tax"].IsDefined()) {
 				struct s_tax_entry entry;
-				entry.minimal = tax["Minimal_Value"].as<size_t>();
+				entry.minimal = tax["MinimalValue"].as<size_t>();
 				entry.tax = tax["Tax"].as<unsigned short>();
 				taxdata->total.push_back(entry);
 				std::sort(taxdata->total.begin(), taxdata->total.end(),
@@ -60,11 +60,11 @@ static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *c
 			}
 		}
 	}
-	if (node["Each_Entry"].IsDefined()) {
-		for (const auto &tax : node["Each_Entry"]) {
-			if (tax["Minimal_Value"].IsDefined() && tax["Tax"].IsDefined()) {
+	if (node["EachEntry"].IsDefined()) {
+		for (const auto &tax : node["EachEntry"]) {
+			if (tax["MinimalValue"].IsDefined() && tax["Tax"].IsDefined()) {
 				struct s_tax_entry entry;
-				entry.minimal = tax["Minimal_Value"].as<size_t>();
+				entry.minimal = tax["MinimalValue"].as<size_t>();
 				entry.tax = tax["Tax"].as<unsigned short>();
 				taxdata->each.push_back(entry);
 				std::sort(taxdata->each.begin(), taxdata->each.end(),

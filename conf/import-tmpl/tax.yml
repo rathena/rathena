@@ -1,27 +1,7 @@
-## Taxes for selling something (vending)
-## Zeny received for the seller will be reduced after taxes from the total selling price but the buyer pays just the total selling price
-#Selling:
-#  # Tax applied for total transaction
-#  In_Total:
-#  - Minimal_Value: 0
-#    Tax: 0
-#
-#  # Tax by selling entry
-#  Each_Entry:
-#  # 10% if >= 100,000,001
-#  - Minimal_Value: 100000001
-#    Tax: 1000
-#
-## Taxes for buying something (buyingstore)
-## Zeny received for the seller will be the total selling price but the buyer must pay taxes for the total selling price
-#Buying:
-#  # Tax applied for total transaction
-#  In_Total:
-#  - Minimal_Value: 0
-#    Tax: 0
-#
-#  # Tax by buying entry
-#  Each_Entry:
-#  # 10% if >= 100,000,001
-#  - Minimal_Value: 100000001
-#    Tax: 1000
+# Taxes for selling something (Vending)
+# Zeny received for the seller will be reduced after taxes from the total selling price but the buyer pays just the total selling price
+Selling:
+
+# Taxes for buying something (Buyingstore)
+# Zeny received for the seller will be the total selling price but the buyer must pay taxes for the total selling price
+Buying:
