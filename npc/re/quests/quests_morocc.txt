@@ -15,6 +15,10 @@
 //= 1.1 Added new warpers for Satan Morroc maps. [Euphy]
 //============================================================
 
+// Stop Post Quest
+// ============================================================
+morocc,152,167,4	duplicate(William)	William#moc	89
+
 // Resurrection of Satan Morroc
 // ============================================================
 -	script	Continental Guard#man	-1,{

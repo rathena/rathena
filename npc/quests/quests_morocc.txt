@@ -50,7 +50,7 @@
 
 // Stop Post Quest
 // ============================================================
-moc_ruins,113,181,4	script	William	89,{
+-	script	William	89,{
 	mes "[William]";
 	mes "Welcome to";
 	mes "MacMillan's ^3355FFPost^000000 Workshop.";
