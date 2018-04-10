@@ -3207,9 +3207,11 @@
 //15041,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 //15043,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 //15045,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
-15050,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
-15051,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
-15052,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
+
+// Episode 15.1 : Airship Assault instance
+15050,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
+15051,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
+// 15052,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
 
 // 2013 Christmas Event
 15055,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Christmas : We are the great Single Union Army!"

@@ -23,6 +23,7 @@
 16,Horror Toy Factory,3600,300,1@xm_d,111,22
 17,Faceworm's Nest,3600,300,1@face,112,374
 18,Ghost Palace,3600,300,1@spa,42,196
+20,Assault on the Airship,3600,300,1@air1,244,73,1@air2
 21,Fenrir and Sarah,3600,300,1@glast,367,304
 26,Central Laboratory,3600,300,1@lab,120,30
 27,Last room,3600,300,1@uns,142,30
