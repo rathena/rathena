@@ -546,6 +546,13 @@ enum e_damage_type : uint8_t {
 	DMG_TOUCH,				/// (touch skill?)
 };
 
+enum e_config_type : uint32 {
+	CONFIG_OPEN_EQUIPMENT_WINDOW = 0,
+	// Unknown
+	CONFIG_PET_AUTOFEED = 2,
+	CONFIG_HOMUNCULUS_AUTOFEED
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -872,7 +879,7 @@ void clif_homskillup(struct map_session_data *sd, uint16 skill_id);	//[orn]
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
 
-void clif_equiptickack(struct map_session_data* sd, int flag);
+void clif_configuration( struct map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_partytickack(struct map_session_data* sd, bool flag);
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd);
 void clif_equipcheckbox(struct map_session_data* sd);
@@ -1075,7 +1082,6 @@ void clif_SelectCart(struct map_session_data *sd);
 /// Achievement System
 void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
-void clif_pAchievementCheckReward(int fd, struct map_session_data *sd);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
 #endif /* _CLIF_HPP_ */

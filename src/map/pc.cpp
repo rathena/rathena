@@ -8249,7 +8249,12 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+		if (sd->status.base_level < 100)
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv99);
+		else if (sd->status.base_level < 151)
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv150);
+		else
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
 
 		if( sd->battle_status.max_hp < sd->battle_status.hp )
 		{
@@ -8888,6 +8893,9 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		}
 	}
