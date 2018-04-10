@@ -271,11 +271,8 @@ OnStart:
 	end;
 
 OnMyMobDead:
-	initnpctimer;
-	end;
-OnTimer1000:
 	.@count = mobcount( 'map_dth1$,instance_npcname("mobs#bios1") + "::OnMyMobDead" );
-	if (.@count > 1 && .@count < 10)
+	if (.@count == 10 || .@count == 5)
 		mapannounce 'map_dth1$, "System: " + .@count + " monsters remain on the island.",bc_map,"0xFFFF00";
 	else if (.@count == 1)
 		mapannounce 'map_dth1$, "System: 1 last monster remains on the island.",bc_map,"0xFFFF00";
@@ -286,7 +283,6 @@ OnTimer1000:
 		enablenpc instance_npcname("start1#bios2");
 		donpcevent instance_npcname("mobs#bios2") + "::OnStart";	// spawn at entrance
 	}
-	stopnpctimer;
 	end;
 }
 
@@ -332,11 +328,8 @@ OnStart:
 	end;
 
 OnMyMobDead:
-	initnpctimer;
-	end;
-OnTimer1000:
 	.@count = mobcount( 'map_dth2$,instance_npcname("mobs#bios2") + "::OnMyMobDead" );
-	if (.@count > 1 && .@count < 10)
+	if (.@count == 10 || .@count == 5)
 		mapannounce 'map_dth2$, "System: " + .@count + " monsters remain on the island.",bc_map,"0xFFFF00";
 	else if (.@count == 1)
 		mapannounce 'map_dth2$, "System: 1 last monster remains on the island.",bc_map,"0xFFFF00";
@@ -348,7 +341,6 @@ OnTimer1000:
 		enablenpc instance_npcname("Vrid#bios3");
 		enablenpc instance_npcname("event_boss#bios3");
 	}
-	stopnpctimer;
 	end;
 }
 
