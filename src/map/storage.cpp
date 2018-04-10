@@ -478,6 +478,7 @@ void storage_storagesaved(struct map_session_data *sd)
 
 	if (&sd->storage)
 		sd->storage.dirty = false;
+
 	if (sd->state.storage_flag == 1) {
 		sd->state.storage_flag = 0;
 		clif_storageclose(sd);
@@ -497,7 +498,10 @@ void storage_storageclose(struct map_session_data *sd)
 		return;
 
 	if (sd->storage.dirty) {
-		storage_storagesave(sd);
+		if (save_settings&CHARSAVE_STORAGE)
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+		else
+			storage_storagesave(sd);
 		if (sd->state.storage_flag == 1) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -521,7 +525,10 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 	if (!&sd->storage)
 		return;
 
-	storage_storagesave(sd);
+	if (save_settings&CHARSAVE_STORAGE)
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+	else
+		storage_storagesave(sd);
 }
 
 /**
@@ -1086,7 +1093,10 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 		return;
 
 	if (sd->premiumStorage.dirty) {
-		storage_premiumStorage_save(sd);
+		if (save_settings&CHARSAVE_STORAGE)
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+		else
+			storage_premiumStorage_save(sd);
 		if (sd->state.storage_flag == 3) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -1107,5 +1117,8 @@ void storage_premiumStorage_quit(struct map_session_data *sd) {
 	if (!&sd->premiumStorage)
 		return;
 
-	storage_premiumStorage_save(sd);
+	if (save_settings&CHARSAVE_STORAGE)
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+	else
+		storage_premiumStorage_save(sd);
 }
