@@ -1439,11 +1439,6 @@ izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 	}
 }
 
-izlude_a,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_a	4_M_MERCAT1
-izlude_b,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_b	4_M_MERCAT1
-izlude_c,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_c	4_M_MERCAT1
-izlude_d,138,183,3	duplicate(Vigilante Penne#doect01)	Vigilante Penne#doect01_d	4_M_MERCAT1
-
 lasagna,209,301,3	script	Mustachi#dorcon01	4_DR_KID_01,{
 	mes "[Mustachi]";
 	mes "We trim your beards. We comb your tails. Be sure to groom yourselves before setting out to the new world.";
