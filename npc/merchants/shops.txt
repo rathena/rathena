@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 3.5
+//= 3.6
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 3.3 Moved more shops to Renewal file. [Euphy]
 //= 3.4 Moved Izlude shops to pre-re/re paths. [Streusel]
 //= 3.5 Moved Ninja shops to Pre-RE/RE paths. [Euphy]
+//= 3.6 Moved Morocc shops to Pre-RE/RE paths. [zackdreaver]
 //============================================================ 
 
 //=======================================================

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.7 Added Izlude duplicates. [Euphy]
 //= 1.8 Added Rebellion Machines. [Rekiem]
 //= 1.9 Added Renewal Ninja shops. [Euphy]
+//= 2.0 Moved and updated Morocc merchants. [zackdreaver]
 //============================================================ 
 
 //=======================================================
