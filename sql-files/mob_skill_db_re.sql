@@ -11128,3 +11128,73 @@ REPLACE INTO `mob_skill_db_re` VALUES (3200,'Wicked Chimera@WZ_HEAVENDRIVE','cha
 REPLACE INTO `mob_skill_db_re` VALUES (3200,'Wicked Chimera@CR_AUTOGUARD','attack',249,5,500,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3200,'Wicked Chimera@CR_AUTOGUARD','chase',249,5,2000,0,300000,'yes','self','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
+#=================================================================
+# Phantasmagorika 15.2 Mob Skills Placeholder (Gathered from jRO)
+#=================================================================
+
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_BLOODDRAIN','angry',199,1,1000,0,3000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_STONESKIN','attack',675,3,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_STUNATTACK','attack',179,5,800,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_ARMORBRAKE','attack',344,10,500,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_STONESKIN','chase',675,3,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_BLOODDRAIN','attack',199,1,500,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@NPC_STONESKIN','idle',675,3,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3153,'Excavator Robot@AL_TELEPORT','idle',26,1,10000,0,0,'no','target','rudeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3154,'Recon Robot@NPC_GUIDEDATTACK','attack',172,5,500,0,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3154,'Recon Robot@NPC_STUNATTACK','attack',179,5,800,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3155,'Repair Robot@NPC_STUNATTACK','any',179,5,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3155,'Repair Robot@NPC_GUIDEDATTACK','attack',172,5,1000,0,15000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3156,'Exploration Rover@NPC_SUMMONSLAVE','idle',196,5,10000,700,10000,'no','self','casttargeted','1',3157,3158,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3156,'Exploration Rover@NPC_GUIDEDATTACK','attack',172,5,1000,0,10000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3156,'Exploration Rover@NPC_SUMMONSLAVE','attack',196,5,10000,700,10000,'no','target','attackpcge','10',3157,3158,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3247,'Cenere G@NPC_PETRIFYATTACK','attack',180,3,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3247,'Cenere G@MG_THUNDERSTORM','chase',21,10,3000,1000,10000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3247,'Cenere G@NPC_POISONATTACK','any',188,1,5000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3247,'Cenere G@NPC_BLINDATTACK','attack',177,3,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3247,'Cenere G@MG_THUNDERSTORM','attack',21,10,3000,1000,10000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@AL_PNEUMA','attack',25,1,2000,0,5000,'yes','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@AL_TELEPORT','idle',26,1,10000,0,0,'no','target','rudeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@NPC_CRITICALSLASH','attack',170,1,2000,0,2000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@NPC_GUIDEDATTACK','attack',172,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@KN_TWOHANDQUICKEN','attack',60,30,10000,0,120000,'yes','target','myhpltmaxrate','40',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@NPC_STUNATTACK','attack',179,5,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3248,'Repair Robot T@AL_PNEUMA','chase',25,1,2000,0,5000,'no','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3249,'Exploration Rover T@KN_TWOHANDQUICKEN','attack',60,30,10000,0,120000,'yes','self','myhpltmaxrate','40',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3249,'Exploration Rover T@AL_PNEUMA','chase',25,1,2000,0,5000,'no','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3249,'Exploration Rover T@AL_TELEPORT','walk',26,1,10000,0,0,'no','target','rudeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3249,'Exploration Rover T@NPC_CRITICALWOUND','attack',673,2,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3249,'Exploration Rover T@NPC_GUIDEDATTACK','attack',172,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3249,'Exploration Rover T@AL_PNEUMA','attack',25,1,2000,0,5000,'no','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3253,'Sys Msg@AL_HEAL','walk',28,11,10000,0,5000,'no','friend','myhpltmaxrate','99',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3253,'Sys Msg@AL_HEAL','idle',28,11,10000,0,5000,'yes','friend','myhpltmaxrate','99',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_STUNATTACK','attack',179,5,500,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@AL_PNEUMA','chase',25,1,2000,0,5000,'no','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_CHANGEWIND','attack',165,1,10000,0,1200000,'no','self','myhpltmaxrate','80',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_WIDECONFUSE','chase',667,2,10000,0,10000,'no','target','myhpltmaxrate','80',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_CRITICALSLASH','any',170,1,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_SPLASHATTACK','attack',174,1,2000,0,5000,'no','target','attackpcgt','1',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_WIDECONFUSE','attack',667,2,10000,0,10000,'yes','target','myhpltmaxrate','80',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_WIDESLEEP','attack',668,1,10000,1000,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@AL_PNEUMA','attack',25,1,2000,0,6000,'no','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@MG_THUNDERSTORM','attack',21,20,2000,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@SM_MAGNUM','attack',7,25,1500,0,3000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@SM_ENDURE','chase',8,1,5000,0,10000,'yes','self','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_CALLSLAVE','attack',352,1,10000,0,5000,'no','self','onspawn',NULL,3253,3253,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@KN_BRANDISHSPEAR','any',57,10,2000,200,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_PULSESTRIKE','attack',661,5,10000,0,30000,'no','target','myhpltmaxrate','80',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_WIDESLEEP','chase',668,1,10000,1000,20000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_DARKBREATH','attack',202,5,10000,0,30000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_CALLSLAVE','attack',352,1,10000,0,5000,'no','self','slavele','1',3253,3253,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@SM_MAGNUM','chase',7,25,1500,0,3000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_SUMMONSLAVE','attack',196,5,10000,0,5000,'no','randomtarget','always',NULL,3253,3253,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@NPC_PULSESTRIKE','chase',661,5,10000,0,30000,'no','target','myhpltmaxrate','80',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3254,'T_W_O@SM_ENDURE','attack',8,1,5000,0,10000,'no','target','longrangeattacked','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
