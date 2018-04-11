@@ -707,7 +707,7 @@ ve_in,318,121,3	script	Towner#ve23	943,{
 	mes "[Towner]";
 	mes "Veins is famous for its";
 	mes "wide variety of delicious,";
-	mes "irresistable liquor. Just one";
+	mes "irresistible liquor. Just one";
 	mes "sip's enough to hook you.";
 	next;
 	mes "[Towner]";

@@ -1481,6 +1481,7 @@
 	export_constant(SC_DORAM_SVSP);
 	export_constant(SC_FALLEN_ANGEL);
 	export_constant(SC_CHEERUP);
+	export_constant(SC_DRESSUP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3094,6 +3095,7 @@
 	export_constant(UMOB_AMOTION);
 	export_constant(UMOB_ADELAY);
 	export_constant(UMOB_DMOTION);
+	export_constant(UMOB_TARGETID);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -3135,6 +3137,7 @@
 	export_constant(UHOM_AMOTION);
 	export_constant(UHOM_ADELAY);
 	export_constant(UHOM_DMOTION);
+	export_constant(UHOM_TARGETID);
 
 	/* unit control - pet */
 	export_constant(UPET_SIZE);
@@ -3212,6 +3215,7 @@
 	export_constant(UMER_AMOTION);
 	export_constant(UMER_ADELAY);
 	export_constant(UMER_DMOTION);
+	export_constant(UMER_TARGETID);
 
 	/* unit control - elemental */
 	export_constant(UELE_SIZE);
@@ -3252,6 +3256,7 @@
 	export_constant(UELE_AMOTION);
 	export_constant(UELE_ADELAY);
 	export_constant(UELE_DMOTION);
+	export_constant(UELE_TARGETID);
 
 	/* unit control - NPC */
 	export_constant(UNPC_DISPLAY);
@@ -4943,6 +4948,11 @@
 	export_constant_npc(JT_4_M_DANGDANG);
 	export_constant_npc(JT_4_F_DANGDANG1);
 	export_constant_npc(JT_4_LEAFCAT);
+	export_constant_npc(JT_4_NASARIAN);
+	export_constant_npc(JT_4_NASARIAN_EM);
+	export_constant_npc(JT_4_TEDDY_BEAR_W);
+	export_constant_npc(JT_4_TEDDY_BEAR_B);
+	export_constant_npc(JT_4_TEDDY_BEAR_B_L);
 	#undef export_constant_npc
 
 	/* special effects */
@@ -6103,6 +6113,29 @@
 	export_constant(HAT_EF_QSCARABA);
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
+	export_constant(HAT_EF_GODCLASS);
+	export_constant(HAT_EF_GODCLASS2);
+	export_constant(HAT_EF_LEVEL99_RED);
+	export_constant(HAT_EF_LEVEL99_ULTRAMARINE);
+	export_constant(HAT_EF_LEVEL99_CYAN);
+	export_constant(HAT_EF_LEVEL99_LIME);
+	export_constant(HAT_EF_LEVEL99_VIOLET);
+	export_constant(HAT_EF_LEVEL99_LILAC);
+	export_constant(HAT_EF_LEVEL99_SUN_ORANGE);
+	export_constant(HAT_EF_LEVEL99_DEEP_PINK);
+	export_constant(HAT_EF_LEVEL99_BLACK);
+	export_constant(HAT_EF_LEVEL99_WHITE);
+	export_constant(HAT_EF_LEVEL160_RED);
+	export_constant(HAT_EF_LEVEL160_ULTRAMARINE);
+	export_constant(HAT_EF_LEVEL160_CYAN);
+	export_constant(HAT_EF_LEVEL160_LIME);
+	export_constant(HAT_EF_LEVEL160_VIOLET);
+	export_constant(HAT_EF_LEVEL160_LILAC);
+	export_constant(HAT_EF_LEVEL160_SUN_ORANGE);
+	export_constant(HAT_EF_LEVEL160_DEEP_PINK);
+	export_constant(HAT_EF_LEVEL160_BLACK);
+	export_constant(HAT_EF_LEVEL160_WHITE);
+	export_constant(HAT_EF_FULL_BLOOMCHERRY_TREE);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);

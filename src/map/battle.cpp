@@ -3322,12 +3322,16 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
-			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) //Will fail bare-handed
-			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Need confirmation
+			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
+			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Will fail bare-handed
 		{	//Success chance is not added, the higher one is used [Skotlex]
-                        int max_rate = max(5*skill_lv,sd->bonus.double_rate);
-                        if(sc && sc->data[SC_KAGEMUSYA]) max_rate= max(max_rate,sc->data[SC_KAGEMUSYA]->val1*3);
-                        
+			int max_rate = 0;
+
+			if (sc && sc->data[SC_KAGEMUSYA])
+				max_rate = sc->data[SC_KAGEMUSYA]->val1 * 10; // Same rate as even levels of TF_DOUBLE
+			else
+				max_rate = max(5 * skill_lv, sd->bonus.double_rate);
+
 			if( rnd()%100 < max_rate ) {
 				wd.div_ = skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				wd.type = DMG_MULTI_HIT;
@@ -4468,10 +4472,12 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		if (sc->data[SC_MADNESSCANCEL])
 			ATK_ADD(wd.equipAtk, wd.equipAtk2, 100);
 		if (sc->data[SC_MAGICALBULLET]) {
-			if (sstatus->matk_max > sstatus->matk_min) {
-				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max((sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min)) - (tstatus->mdef + tstatus->mdef2), 0));
+			short tmdef = tstatus->mdef + tstatus->mdef2;
+
+			if (sstatus->matk_min > tmdef && sstatus->matk_max > sstatus->matk_min) {
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max((sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min)) - tmdef, 0));
 			} else {
-				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max(sstatus->matk_min - (tstatus->mdef + tstatus->mdef2), 0));
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max(sstatus->matk_min - tmdef, 0));
 			}
 		}
 		if (sc->data[SC_GATLINGFEVER]) {
@@ -6851,7 +6857,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	ssc = status_get_sc(src);
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if ( !status_reflect && sd && sd->bonus.short_weapon_damage_return ) {
+		if ( sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			rdamage = i64max(rdamage,1);
 		} else if( status_reflect && sc && sc->count ) {
@@ -7450,7 +7456,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 	if (sd) {
 		uint16 r_skill = 0, sk_idx = 0;
-		if( wd.flag&BF_SHORT && sc && sc->data[SC__AUTOSHADOWSPELL] && rnd()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
+		if( wd.flag&BF_WEAPON && sc && sc->data[SC__AUTOSHADOWSPELL] && rnd()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
 			(r_skill = (uint16)sc->data[SC__AUTOSHADOWSPELL]->val1) && (sk_idx = skill_get_index(r_skill)) &&
 			sd->status.skill[sk_idx].id != 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PLAGIARIZED )
 		{
@@ -8013,7 +8019,11 @@ static const struct _battle_data {
 	{ "player_damage_delay_rate",           &battle_config.pc_damage_delay_rate,            100,    0,      INT_MAX,        },
 	{ "defunit_not_enemy",                  &battle_config.defnotenemy,                     0,      0,      1,              },
 	{ "gvg_traps_target_all",               &battle_config.vs_traps_bctall,                 BL_PC,  BL_NUL, BL_ALL,         },
+#ifdef RENEWAL
+	{ "traps_setting",                      &battle_config.traps_setting,                   2,      0,      2,              },
+#else
 	{ "traps_setting",                      &battle_config.traps_setting,                   0,      0,      2,              },
+#endif
 	{ "summon_flora_setting",               &battle_config.summon_flora,                    1|2,    0,      1|2,            },
 	{ "clear_skills_on_death",              &battle_config.clear_unit_ondeath,              BL_NUL, BL_NUL, BL_ALL,         },
 	{ "clear_skills_on_warp",               &battle_config.clear_unit_onwarp,               BL_ALL, BL_NUL, BL_ALL,         },
@@ -8127,7 +8137,9 @@ static const struct _battle_data {
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
 	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,      },
 	{ "aura_lv",                            &battle_config.aura_lv,                         99,     0,      INT_MAX,        },
-	{ "max_hp",                             &battle_config.max_hp,                          32500,  100,    1000000000,     },
+	{ "max_hp_lv99",                        &battle_config.max_hp_lv99,                    330000,  100,    1000000000,     },
+	{ "max_hp_lv150",                       &battle_config.max_hp_lv150,                   660000,  100,    1000000000,     },
+	{ "max_hp",                             &battle_config.max_hp,                        1100000,  100,    1000000000,     },
 	{ "max_sp",                             &battle_config.max_sp,                          32500,  100,    1000000000,     },
 	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
 	{ "max_parameter",                      &battle_config.max_parameter,                   99,     10,     SHRT_MAX,       },
@@ -8498,6 +8510,10 @@ static const struct _battle_data {
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
+	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
+	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
+	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
+    { "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8625,6 +8641,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20170920
+	if( battle_config.feature_homunculus_autofeed ){
+		ShowWarning("conf/battle/feature.conf homunculus autofeeding is enabled but it requires PACKETVER 2017-09-20 or newer, disabling...\n");
+		battle_config.feature_homunculus_autofeed = 0;
 	}
 #endif
 

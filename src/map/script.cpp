@@ -9204,7 +9204,7 @@ BUILDIN_FUNC(statusup2)
 BUILDIN_FUNC(bonus)
 {
 	int type;
-	int val1;
+	int val1 = 0;
 	int val2 = 0;
 	int val3 = 0;
 	int val4 = 0;
@@ -9240,11 +9240,13 @@ BUILDIN_FUNC(bonus)
 			val1 = ( data_isstring(data) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 			break;
 		default:
-			val1 = script_getnum(st,3);
+			if (script_hasdata(st, 3))
+				val1 = script_getnum(st, 3);
 			break;
 	}
 
 	switch( script_lastdata(st)-2 ) {
+		case 0:
 		case 1:
 			pc_bonus(sd, type, val1);
 			break;
@@ -13580,7 +13582,12 @@ BUILDIN_FUNC(setwall)
 BUILDIN_FUNC(delwall)
 {
 	const char *name = script_getstr(st,2);
-	map_iwall_remove(name);
+
+	if( !map_iwall_remove(name) ){
+		ShowError( "buildin_delwall: wall \"%s\" does not exist.\n", name );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13880,7 +13887,7 @@ BUILDIN_FUNC(petloot)
 BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd;
-	char card_var[NAME_LENGTH];
+	char card_var[NAME_LENGTH], randopt_var[50];
 	int i,j=0,k;
 
 	if (!script_charid2sd(2,sd))
@@ -13900,6 +13907,15 @@ BUILDIN_FUNC(getinventorylist)
 			}
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
+			{
+				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].id);
+				sprintf(randopt_var, "@inventorylist_option_value%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].value);
+				sprintf(randopt_var, "@inventorylist_option_parameter%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
+			}
 			j++;
 		}
 	}
@@ -17562,6 +17578,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_AMOTION, md->status.amotion);
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
+			getunitdata_sub(UMOB_TARGETID, md->target_id);
 			break;
 
 		case BL_HOM:
@@ -17608,6 +17625,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UHOM_AMOTION, hd->battle_status.amotion);
 			getunitdata_sub(UHOM_ADELAY, hd->battle_status.adelay);
 			getunitdata_sub(UHOM_DMOTION, hd->battle_status.dmotion);
+			getunitdata_sub(UHOM_TARGETID, hd->ud.target);
 			break;
 
 		case BL_PET:
@@ -17695,6 +17713,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMER_AMOTION, mc->base_status.amotion);
 			getunitdata_sub(UMER_ADELAY, mc->base_status.adelay);
 			getunitdata_sub(UMER_DMOTION, mc->base_status.dmotion);
+			getunitdata_sub(UMER_TARGETID, mc->ud.target);
 			break;
 
 		case BL_ELEM:
@@ -17740,6 +17759,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UELE_AMOTION, ed->base_status.amotion);
 			getunitdata_sub(UELE_ADELAY, ed->base_status.adelay);
 			getunitdata_sub(UELE_DMOTION, ed->base_status.dmotion);
+			getunitdata_sub(UELE_TARGETID, ed->ud.target);
 			break;
 
 		case BL_NPC:
@@ -17935,6 +17955,15 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_AMOTION: md->base_status->amotion = (short)value; calc_status = true; break;
 			case UMOB_ADELAY: md->base_status->adelay = (short)value; calc_status = true; break;
 			case UMOB_DMOTION: md->base_status->dmotion = (short)value; calc_status = true; break;
+			case UMOB_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_MOB!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				mob_target(md,target,0);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -17988,6 +18017,15 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_AMOTION: hd->base_status.amotion = (short)value; calc_status = true; break;
 			case UHOM_ADELAY: hd->base_status.adelay = (short)value; calc_status = true; break;
 			case UHOM_DMOTION: hd->base_status.dmotion = (short)value; calc_status = true; break;
+			case UHOM_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_HOM!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				unit_attack(&hd->bl, target->id, 1);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18087,6 +18125,15 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_AMOTION: mc->base_status.amotion = (short)value; calc_status = true; break;
 			case UMER_ADELAY: mc->base_status.adelay = (short)value; calc_status = true; break;
 			case UMER_DMOTION: mc->base_status.dmotion = (short)value; calc_status = true; break;
+			case UMER_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_MER!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				unit_attack(&mc->bl, target->id, 1);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18139,6 +18186,16 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_AMOTION: ed->base_status.amotion = (short)value; calc_status = true; break;
 			case UELE_ADELAY: ed->base_status.adelay = (short)value; calc_status = true; break;
 			case UELE_DMOTION: ed->base_status.dmotion = (short)value; calc_status = true; break;
+			case UELE_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				elemental_change_mode(ed, static_cast<e_mode>(EL_MODE_AGGRESSIVE));
+				unit_attack(&ed->bl, target->id, 1);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18613,7 +18670,7 @@ BUILDIN_FUNC(unitskillusepos)
 
 /// Pauses the execution of the script, detaching the player
 ///
-/// sleep <mili seconds>;
+/// sleep <milli seconds>;
 BUILDIN_FUNC(sleep)
 {
 	// First call(by function call)
@@ -18623,7 +18680,7 @@ BUILDIN_FUNC(sleep)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError("buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks);
+			ShowError("buildin_sleep: negative or zero amount('%d') of milli seconds is not supported\n", ticks);
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18656,7 +18713,7 @@ BUILDIN_FUNC(sleep2)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError( "buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks );
+			ShowError( "buildin_sleep2: negative or zero amount('%d') of milli seconds is not supported\n", ticks );
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -22137,7 +22194,6 @@ BUILDIN_FUNC(getvar) {
 	else
 		script_pushstrcopy(st, conv_str_(st, data, sd));
 
-	push_val2(st->stack, C_NAME, reference_getuid(data), reference_getref(data));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23391,6 +23447,10 @@ BUILDIN_FUNC(unloadnpc) {
 	if( nd == NULL ){
 		ShowError( "buildin_unloadnpc: npc '%s' was not found.\n", name );
 		return SCRIPT_CMD_FAILURE;
+	} else if ( nd->bl.id == st->oid ) {
+		// Supporting self-unload isn't worth the problem it may cause. [Secret]
+		ShowError("buildin_unloadnpc: You cannot self-unload NPC '%s'.\n.", name);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	npc_unload_duplicates(nd);
@@ -23887,7 +23947,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(downrefitem,"i??"),
 	BUILDIN_DEF(statusup,"i?"),
 	BUILDIN_DEF(statusup2,"ii?"),
-	BUILDIN_DEF(bonus,"iv"),
+	BUILDIN_DEF(bonus,"i?"),
 	BUILDIN_DEF2(bonus,"bonus2","ivi"),
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
 	BUILDIN_DEF2(bonus,"bonus4","ivvii"),
