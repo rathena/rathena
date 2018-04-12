@@ -1045,7 +1045,6 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
-	status_percent_heal(&hd->bl, 100, 100);
 
 	hd->hungry_timer = INVALID_TIMER;
 	hd->masterteleport_timer = INVALID_TIMER;
@@ -1121,6 +1120,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;
+	bool created = false;
 
 	sd = map_id2sd(account_id);
 	if(!sd)
@@ -1137,14 +1137,19 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		return 0;
 	}
 
-	if (!sd->status.hom_id) //Hom just created.
+	if (!sd->status.hom_id) { //Hom just created.
 		sd->status.hom_id = sh->hom_id;
+		created = true;
+	}
 	if (sd->hd) //uh? Overwrite the data.
 		memcpy(&sd->hd->homunculus, sh, sizeof(struct s_homunculus));
 	else
 		hom_alloc(sd, sh);
 
 	hd = sd->hd;
+	if (created)
+		status_percent_heal(&hd->bl, 100, 100);
+
 	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
 	{
 		if(map_addblock(&hd->bl))
