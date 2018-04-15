@@ -165,16 +165,12 @@ int guild_check_skill_require(struct guild *g,int id) {
 static bool guild_read_castledb(char* str[], int columns, int current) {// <castle id>,<map name>,<castle name>,<castle event>[,<reserved/unused switch flag>]
 	struct guild_castle *gc;
 	int mapindex = mapindex_name2id(str[1]);
-	const int castle_id = atoi(str[0]);
-	
+
 	if (map_mapindex2mapid(mapindex) < 0) // Map not found or on another map-server
 		return false;
 
-	if ((gc = static_cast<guild_castle*>(idb_get(castle_db, castle_id))) == nullptr) {
-		CREATE(gc, struct guild_castle, 1);
-	}
-	
-	gc->castle_id = castle_id;
+	CREATE(gc, struct guild_castle, 1);
+	gc->castle_id = atoi(str[0]);
 	gc->mapindex = mapindex;
 	safestrncpy(gc->castle_name, trim(str[2]), sizeof(gc->castle_name));
 	safestrncpy(gc->castle_event, trim(str[3]), sizeof(gc->castle_event));

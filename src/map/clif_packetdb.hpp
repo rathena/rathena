@@ -1123,7 +1123,7 @@
 	packet(0x02d5,2);
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
 	packet(0x02d7,-1);
-	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
+	parseable_packet(0x02d8,10,clif_parse_EquipTick,2,6);
 	packet(0x02d9,10);
 	packet(0x02da,3);
 	parseable_packet(0x02db,-1,clif_parse_BattleChat,2,4);
@@ -2222,6 +2222,7 @@
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
 	packet(0x09FE,-1); // ZC_NOTIFY_NEWENTRY11
 	packet(0x09FF,-1); // ZC_NOTIFY_STANDENTRY11
+	//packet(0x09F8,-1); // ZC_ALL_QUEST_LIST3
 #endif
 
 // 2015-02-25aRagexeRE
@@ -2281,12 +2282,6 @@
 	// Pet Evolution System
 	parseable_packet(0x09FB,-1,clif_parse_dull,0); // CZ_PET_EVOLUTION
 	packet(0x09FC,6); // ZC_PET_EVOLUTION_RESULT
-
-	// Quest UI
-	packet(0x08FE,-1); // ZC_HUNTING_QUEST_INFO
-	packet(0x09F8,-1); // ZC_ALL_QUEST_LIST3
-	packet(0x09F9,143); // ZC_ADD_QUEST_EX
-	packet(0x09FA,-1); // ZC_UPDATE_MISSION_HUNT_EX
 #endif
 
 // 2015-05-20aRagexe
@@ -2349,32 +2344,12 @@
 	packet(0x0A43,85);
 	packet(0x0A44,-1);
 	packet(0x0ABD,10);
-	parseable_packet(0x0ACE,4,clif_parse_dull,0);
 #endif
 
 // 2017-08-30bRagexeRE
 #if PACKETVER >= 20170830
 	packet(0x0ACB,12);
 	packet(0x0ACC,18);
-#endif
-
-// 2018-02-07bRagexeRE
-#if PACKETVER >= 20180207
-	parseable_packet(0x0AF4,11,clif_parse_UseSkillToPos,2,4,6,8,10);
-#endif
-
-// 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
-#if PACKETVER >= 20180221
-	packet(0x0206,35); // ZC_FRIENDS_STATE
-	packet(0x0af7,32);
-#endif
-
-// 2018-03-07bRagexeRE
-#if PACKETVER >= 20180307
-	parseable_packet(0x0A68,3,clif_parse_dull,0);
-	packet(0x0AE2,7);
-	parseable_packet(0x0AEF,2,clif_parse_dull,0);
-	packet(0x0AF0,10);
 #endif
 
 #endif /* _CLIF_PACKETDB_HPP_ */

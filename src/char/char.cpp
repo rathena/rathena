@@ -1456,8 +1456,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) && 
-		!(start_job == JOB_SUMMONER && (charserv_config.allowed_job_flag&2)))
+	if (start_job != JOB_NOVICE && start_job != JOB_SUMMONER)
 		return -2; // Invalid job
 
 	// Check for Doram based information.
@@ -2065,14 +2064,10 @@ int char_loadName(uint32 char_id, char* name){
 		safestrncpy(name, data, NAME_LENGTH);
 		return 1;
 	}
-#if PACKETVER < 20180221
 	else
 	{
 		safestrncpy(name, charserv_config.char_config.unknown_char_name, NAME_LENGTH);
 	}
-#else
-	name[0] = '\0';
-#endif
 	return 0;
 }
 
@@ -2454,7 +2449,7 @@ bool char_checkdb(void){
 	}
 	//checking homunculus_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize`,`autofeed` "
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
 		" FROM `%s` LIMIT 1;", schema_config.homunculus_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2780,12 +2775,6 @@ void char_set_defaults(){
 	charserv_config.clan_remove_inactive_days = 14;
 	charserv_config.mail_return_days = 14;
 	charserv_config.mail_delete_days = 14;
-
-#if defined(RENEWAL) && PACKETVER >= 20151001
-	charserv_config.allowed_job_flag = 3;
-#else
-	charserv_config.allowed_job_flag = 1;
-#endif
 }
 
 /**
@@ -3064,8 +3053,6 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_delete_days") == 0) {
 			charserv_config.mail_delete_days = atoi(w2);
-		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
-			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}

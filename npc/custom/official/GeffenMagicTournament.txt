@@ -148,9 +148,9 @@ OnTimer1000:
 		case 106:
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef3");
 			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
-			sleep 500;
+			sleep2 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef1");
-			sleep 500;
+			sleep2 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef2");
 			'm1_timer++;
 			break;
@@ -289,7 +289,7 @@ L_Shield:
 			mes "There are two types of Rings are available for exchange.";
 			next;
 L_Ring:
-				switch(select("Physical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
+				switch(select("Phyisical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
 					case 1:
 						.@item = 2963;
 						.@cost = 1350;
@@ -2525,7 +2525,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm so relieved!";
 	sleep 3000;
-	npctalk "I was able to beat a weak competitor.";
+	npctalk "I was able to beat a weak competitior.";
 	sleep 3000;
 	npctalk "Yahoo!";
 	sleep 5000;
@@ -2685,7 +2685,7 @@ OnDefeat:
 OnVictory:
 	hideoffnpc instance_npcname("Geffen Bully#n1");
 	sleep 1000;
-	npctalk "You! How much zeny do you have left?";
+	npctalk "You! Hou much zeny do you have left?";
 	sleep 3000;
 	npctalk "You messed with me once before!";
 	sleep 3000;

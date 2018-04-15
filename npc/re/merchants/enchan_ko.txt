@@ -258,15 +258,15 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 
 	// Initialization
 	if (.@select == 2) {
-		if (.@sot03_ck) {// reset only 3rd slot
-			if (callfunc("F_IsCharm",.@equip_card[2]) == false) { // Armor Enchant System
+		if (.@sot03_ck) {
+			if (.@equip_card[2] < 4700) { // Armor Enchant System
 				mes "[Artisan Tene]";
 				mes "The third slot is is not enchanted. Please check again."; //custom translation
 				close;
 			}
 			set .@equip_card[2],0;
 		} else {
-			if (callfunc("F_IsCharm",.@equip_card[3]) == false) { // Armor Enchant System
+			if (.@equip_card[3] < 4700) { // Armor Enchant System
 				mes "[Artisan Tene]";
 				mes "This equipment is is not enchanted. Please check again."; //custom translation
 				close;
@@ -294,8 +294,8 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	else                           set .@ko_type01,5;
 
 	//custom translations
-	if (callfunc("F_IsCharm",.@equip_card[3]) == true) { // Armor Enchant System
-		if (callfunc("F_IsCharm",.@equip_card[2]) == true) {
+	if (.@equip_card[3] >= 4700) { // Armor Enchant System
+		if (.@equip_card[2] >= 4700) {
 			mes "[Artisan Tene]";
 			mes "This equipment cannot be further enchanted.";
 			next;

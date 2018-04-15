@@ -964,7 +964,6 @@ int party_skill_check(struct map_session_data *sd, int party_id, uint16 skill_id
 
 	if(!party_id || (p = party_search(party_id)) == NULL)
 		return 0;
-	party_check_state(p);
 	switch(skill_id) {
 		case TK_COUNTER: //Increase Triple Attack rate of Monks.
 			if (!p->state.monk) return 0;

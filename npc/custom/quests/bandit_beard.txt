@@ -112,15 +112,15 @@ izlude_in,123,175,4	script	Master Tailor#bandit	50,{
 	mes "What? A Bearded Man sent you...";
 	mes "Well I'm sorry to say that I am out of ^8080FFThread^000000.";
 	mes "But I have the address to where I get the shipments.";
-	mes "It is in Al de Baran Kafra Inc. warehouse area.";
+	mes "It is in Al de Baran Karfa Inc. warehouse area.";
 	mes "The address is: Al de Baran 59, 221";
 	mes "See you later.";
 	set BEARD_QUEST, 2;
 	close;
 }
-// Kafra Thread Clerk---
-aldeba_in,70,179,5	script	Kafra Clerk#bandit	113,{
-	mes "[Kafra Clerk]";
+// Karfa Thread Clerk---
+aldeba_in,70,179,5	script	Karfa Clerk#bandit	113,{
+	mes "[Karfa Clerk]";
 	if(BEARD_QUEST == 3 ) goto L_REPEAT;
 	if(BEARD_QUEST > 3 ) goto L_DONE;
 
@@ -130,25 +130,25 @@ aldeba_in,70,179,5	script	Kafra Clerk#bandit	113,{
 
 	menu "What's in the boxes?",-,"Nothing.",M_NOPE;
 
-	mes "[Kafra Clerk]";
+	mes "[Karfa Clerk]";
 	mes "They're empty.";
 M_NOPE:
 	close;
 
 L_DELIVERY:
 
-	mes "[Kafra Clerk]";
+	mes "[Karfa Clerk]";
 	mes "Sorry but we have not received any ^8080FFThread^000000.";
 	mes "Our shipments have been put off until its safe.";
 	mes "You see we get our ^8080FFThread^000000 from Alberta and a monsters keeps attacking our merchants.";
 	next;
-	mes "[Kafra Clerk]";
+	mes "[Karfa Clerk]";
 	mes "Now this monsters has not been doing this before.";
 	mes "It may have to do with the warmer months.";
 	mes "Please help us out!";
 	set BEARD_QUEST,3;
 	next;
-	mes "[Kafra Clerk]";
+	mes "[Karfa Clerk]";
 L_REPEAT:
 	mes "Oh by the way, that Thread Merchant is somewhere around Alberta 60 and 100...";
 L_DONE:
@@ -213,16 +213,16 @@ alberta,1,1,1	script	BRDQ_MOBS	-1,{
 OnStart:
 	set $@beardMob,10;
 	set $@beardMobD,0;
-	monster "alberta",65,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",66,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",67,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",68,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",66,121,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",67,121,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",68,121,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",66,122,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",67,122,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",68,122,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",65,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
 	end;
 OnDie:
 	set $@beardmob, $@beardmob - 1;

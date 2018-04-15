@@ -521,7 +521,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 				case 5:
 					mes "Here is a list of other requests from all over Rune Midgard.";
 					next;
-					switch( select( "Loli Ruri Hunting - Niflheim", "Medusa Hunting - Comodo", "Anubis Hunting - Sphinx" ) ) {
+					switch( select( "Loli Ruri Hunting - Nifflheim", "Medusa Hunting - Comodo", "Anubis Hunting - Sphinx" ) ) {
 						mes "[Gelkah]";
 					case 1:
 						if (checkquest(13041,PLAYTIME) == 0)
@@ -534,7 +534,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							mes "I wonder why they are scheming this kind of ^FF0000nonsense^000000... makes me wonder if they even know anything about adventuring.";
 							next;
 							mes "[Gelkah]";
-							mes "We should accept this simple request before we start getting even more nonsense ones. Please clear ^FF000030 Loli Ruri^000000 in Niflheim.";
+							mes "We should accept this simple request before we start getting even more nonsense ones. Please clear ^FF000030 Loli Ruri^000000 in Nifflheim.";
 							next;
 							cutin "gelca02",2;
 							mes "[Gelkah]";
@@ -553,7 +553,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							mes "They said that they would heal Eden Group adventurers who are exhausted in exchange for the request but we're not sure they'll follow through.";
 							next;
 							mes "[Gelkah]";
-							mes "We should accept the simple request anyways. Please clear ^FF000030 Loli Ruri^000000 in Niflheim.";
+							mes "We should accept the simple request anyways. Please clear ^FF000030 Loli Ruri^000000 in Nifflheim.";
 							callsub S_Quest,13041,13040;
 						}
 						break;

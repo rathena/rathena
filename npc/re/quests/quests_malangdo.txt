@@ -10662,7 +10662,6 @@ mal_in01,15,16,3	script	Fallen Angel#mal	403,{
 		}
 		specialeffect2 EF_REPAIRWEAPON;
 		progressbar "ffff00",2;
-		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2),getequipcardid(EQI_GARMENT,3);
 		if (getequipisequiped(EQI_GARMENT) == 0) {
 			mes "[Fallen Angel]";
 			mes "The Archangel Wing has been taken out!";
@@ -10678,12 +10677,13 @@ mal_in01,15,16,3	script	Fallen Angel#mal	403,{
 			mes "I can't do it if you can't pay!";
 			close;
 		}
-		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
+		if (getequipcardid(EQI_GARMENT,3) < 4700) { // Armor Enchant System
 			mes "[Fallen Angel]";
 			mes "This equipment has not been enchanted, please check it again!";
 			close;
 		}
 		set .@equip_refine, getequiprefinerycnt(EQI_GARMENT);
+		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2);
 		delitem 6417,3; //Silvervine
 		delequip EQI_GARMENT;
 		getitem2 2573,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],0; //Archangel_Wing

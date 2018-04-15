@@ -415,6 +415,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		skill_unit_move(bl,tick,2);
 		if ( sc && sc->count ) //at least one to cancel
 		{
+			status_change_end(bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 			status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 			status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
@@ -3237,13 +3238,13 @@ void map_iwall_get(struct map_session_data *sd) {
 	dbi_destroy(iter);
 }
 
-bool map_iwall_remove(const char *wall_name)
+void map_iwall_remove(const char *wall_name)
 {
 	struct iwall_data *iwall;
 	int16 i, x1, y1;
 
 	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) == NULL )
-		return false; // Nothing to do
+		return; // Nothing to do
 
 	for( i = 0; i < iwall->size; i++ ) {
 		map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
@@ -3256,7 +3257,6 @@ bool map_iwall_remove(const char *wall_name)
 
 	map[iwall->m].iwall_num--;
 	strdb_remove(iwall_db, iwall->wall_name);
-	return true;
 }
 
 /**

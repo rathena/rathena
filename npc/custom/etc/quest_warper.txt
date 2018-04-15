@@ -271,7 +271,7 @@ SpecialWarpMenu:
 	case 2:
 		next;
 		mes "Set the map in the ^0000FFmapname^000000 format.";
-		mes "When this warpmap is set the option for players will show once they meet the requirements.";
+		mes "When this warpmap is set the option for players will show once they meet the requirments.";
 		mes "To disable Special Warp Menu option, clear this!";
 		input $QW_SP_WarpMap$;
 		goto SpecialWarpMenu;
@@ -541,7 +541,7 @@ L_Short_on_zeny:
 	
 //===========================Stamp=Card============================
 stampcard:
-// Counting of the amount of places you have unlocked
+// Counting of the ammount of places you have unlocked
 	next;
 	mes "Let me check what Towns you have.";
 	callfunc "QWS_TownStamps";

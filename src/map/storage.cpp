@@ -3,12 +3,11 @@
 
 #include "storage.hpp"
 
-#include <map>
-
 #include <stdlib.h>
 #include <string.h>
 
 #include "../common/cbasetypes.h"
+#include "../common/db.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
@@ -24,9 +23,7 @@
 #include "log.hpp"
 #include "battle.hpp"
 
-///Databases of guild_storage : int guild_id -> struct guild_storage
-std::map<int, struct s_storage> guild_storage_db;
-
+static DBMap* guild_storage_db; ///Databases of guild_storage : int guild_id -> struct guild_storage*
 struct s_storage_table *storage_db;
 int storage_count;
 
@@ -105,6 +102,7 @@ void storage_sortitem(struct item* items, unsigned int size)
  */
 void do_init_storage(void)
 {
+	guild_storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	storage_db = NULL;
 	storage_count = 0;
 }
@@ -116,7 +114,7 @@ void do_init_storage(void)
  */
 void do_final_storage(void)
 {
-	guild_storage_db.clear();
+	guild_storage_db->destroy(guild_storage_db,NULL);
 	if (storage_db)
 		aFree(storage_db);
 	storage_db = NULL;
@@ -124,18 +122,28 @@ void do_final_storage(void)
 }
 
 /**
+ * Parses storage and saves 'dirty' ones upon reconnect.
+ * @author [Skotlex]
+ * @see DBApply
+ * @return 0
+ */
+static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
+{
+	struct s_storage *stor = static_cast<s_storage *>(db_data2ptr(data));
+
+	if (stor->dirty && stor->status == 0) //Save closed storages.
+		storage_guild_storagesave(0, stor->id, 0);
+
+	return 0;
+}
+
+/**
  * Function to be invoked upon server reconnection to char. To save all 'dirty' storages
  * @author [Skotlex]
  */
-void do_reconnect_storage(void){
-	for( auto entry : guild_storage_db ){
-		struct s_storage stor = entry.second;
-
-		// Save closed storages.
-		if( stor.dirty && stor.status == 0 ){
-			storage_guild_storagesave(0, stor.id, 0);
-		}
-	}
+void do_reconnect_storage(void)
+{
+	guild_storage_db->foreach(guild_storage_db, storage_reconnect_sub);
 }
 
 /**
@@ -478,7 +486,6 @@ void storage_storagesaved(struct map_session_data *sd)
 
 	if (&sd->storage)
 		sd->storage.dirty = false;
-
 	if (sd->state.storage_flag == 1) {
 		sd->state.storage_flag = 0;
 		clif_storageclose(sd);
@@ -498,10 +505,7 @@ void storage_storageclose(struct map_session_data *sd)
 		return;
 
 	if (sd->storage.dirty) {
-		if (save_settings&CHARSAVE_STORAGE)
-			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
-		else
-			storage_storagesave(sd);
+		storage_storagesave(sd);
 		if (sd->state.storage_flag == 1) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -525,10 +529,25 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 	if (!&sd->storage)
 		return;
 
-	if (save_settings&CHARSAVE_STORAGE)
-		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
-	else
-		storage_storagesave(sd);
+	storage_storagesave(sd);
+}
+
+/**
+ * Create a guild_storage stucture and add it into the db
+ * @see DBCreateData
+ * @param key
+ * @param args
+ * @return 
+ */
+static DBData create_guildstorage(DBKey key, va_list args)
+{
+	struct s_storage *gs = NULL;
+
+	gs = (struct s_storage *) aCalloc(sizeof(struct s_storage), 1);
+	gs->type = TABLE_GUILD_STORAGE;
+	gs->id = key.i;
+
+	return db_ptr2data(gs);
 }
 
 /**
@@ -539,18 +558,10 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
  */
 struct s_storage *guild2storage(int guild_id)
 {
-	struct s_storage *gs;
+	struct s_storage *gs = NULL;
 
-	if (guild_search(guild_id) == nullptr)
-		return nullptr;
-
-	gs = guild2storage2(guild_id);
-	
-	if( gs == nullptr ){
-		gs = &guild_storage_db[guild_id];
-		gs->id = guild_id;
-		gs->type = TABLE_GUILD_STORAGE;
-	}
+	if (guild_search(guild_id) != NULL)
+		gs = (struct s_storage *)idb_ensure(guild_storage_db,guild_id,create_guildstorage);
 
 	return gs;
 }
@@ -559,23 +570,21 @@ struct s_storage *guild2storage(int guild_id)
  * See if the guild_storage exist in db and fetch it if it's the case
  * @author : [Skotlex]
  * @param guild_id : guild_id to search the storage
- * @return s_storage or nullptr
+ * @return s_storage or NULL
  */
-struct s_storage *guild2storage2(int guild_id){
-	if( guild_storage_db.find(guild_id) != guild_storage_db.end() ){
-		return &guild_storage_db[guild_id];
-	}else{
-		return nullptr;
-	}
+struct s_storage *guild2storage2(int guild_id)
+{
+	return (struct s_storage*)idb_get(guild_storage_db,guild_id);
 }
 
 /**
  * Delete a guild_storage and remove it from db
  * @param guild_id : guild to remove the storage from
+ * @return 0
  */
 void storage_guild_delete(int guild_id)
 {
-	guild_storage_db.erase(guild_id);
+	idb_remove(guild_storage_db,guild_id);
 }
 
 /**
@@ -915,7 +924,7 @@ bool storage_guild_storagesave(uint32 account_id, int guild_id, int flag)
 	struct s_storage *stor = guild2storage2(guild_id);
 
 	if (stor) {
-		if (flag&CSAVE_QUIT) //Char quitting, close it.
+		if (flag) //Char quitting, close it.
 			stor->status = false;
 
 		if (stor->dirty)
@@ -1093,10 +1102,7 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 		return;
 
 	if (sd->premiumStorage.dirty) {
-		if (save_settings&CHARSAVE_STORAGE)
-			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
-		else
-			storage_premiumStorage_save(sd);
+		storage_premiumStorage_save(sd);
 		if (sd->state.storage_flag == 3) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -1117,8 +1123,5 @@ void storage_premiumStorage_quit(struct map_session_data *sd) {
 	if (!&sd->premiumStorage)
 		return;
 
-	if (save_settings&CHARSAVE_STORAGE)
-		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
-	else
-		storage_premiumStorage_save(sd);
+	storage_premiumStorage_save(sd);
 }

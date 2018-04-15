@@ -1114,8 +1114,6 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
 			return ITEM_EQUIP_ACK_FAIL;
-		if (item->equip & EQP_ARMS && sd->sc.data[SC__WEAKNESS])
-			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
 			return ITEM_EQUIP_ACK_FAIL;
 
@@ -1534,6 +1532,7 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->achievement_data.total_score = 0;
 		sd->achievement_data.level = 0;
 		sd->achievement_data.save = false;
+		sd->achievement_data.sendlist = false;
 		sd->achievement_data.count = 0;
 		sd->achievement_data.incompleteCount = 0;
 		sd->achievement_data.achievements = NULL;
@@ -5399,23 +5398,22 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
  *------------------------------------------*/
 int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 {
-	int rate, target_lv;
+	int rate,skill;
 	struct mob_data *md;
-
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
 
 	md = (TBL_MOB*)target;
-	target_lv = status_get_lv(target);
 
 	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
 		return 0;
 
-	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
+	// FIXME: This formula is either custom or outdated.
+	skill = pc_checkskill(sd,RG_STEALCOIN)*10;
+	rate = skill + (sd->status.base_level - md->level)*3 + sd->battle_status.dex*2 + sd->battle_status.luk*2;
 	if(rnd()%1000 < rate)
 	{
-		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
-		int amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
+		int amount = md->level*10 + rnd()%100;
 
 		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
 		md->state.steal_coin_flag = 1;
@@ -5526,19 +5524,12 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	{
 		uint32 ip;
 		uint16 port;
-		struct script_state *st;
-
 		//if can't find any map-servers, just abort setting position.
 		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
 			return SETPOS_NO_MAPSERVER;
 
-		if (sd->npc_id){
-			npc_event_dequeue(sd,false);
-			st = sd->st;
-		}else{
-			st = nullptr;
-		}
-
+		if (sd->npc_id)
+			npc_event_dequeue(sd);
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
@@ -5551,11 +5542,6 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		//Free session data from this map server [Kevin]
 		unit_free_pc(sd);
-
-		if( st ){
-			// Has to be done here, because otherwise unit_free_pc will free the stack already
-			st->state = END;
-		}
 
 		return SETPOS_OK;
 	}
@@ -7716,7 +7702,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
 		if( !map[sd->bl.m].flag.noexppenalty ) {
-			pet_set_intimate(pd, pd->pet.intimate - pd->get_pet_db()->die);
+			pet_set_intimate(pd, pd->pet.intimate - pd->petDB->die);
 			if( pd->pet.intimate < 0 )
 				pd->pet.intimate = 0;
 			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
@@ -8249,12 +8235,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		if (sd->status.base_level < 100)
-			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv99);
-		else if (sd->status.base_level < 151)
-			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv150);
-		else
-			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
 
 		if( sd->battle_status.max_hp < sd->battle_status.hp )
 		{
@@ -8893,9 +8874,6 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		}
 	}
@@ -10882,14 +10860,9 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		baselv = (uint32)atoi(fields[3]);
 		joblv = (uint32)atoi(fields[4]);
 		offset = 5;
-	}
-	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
+	} else {
 		baselv = joblv = 0;
 		offset = 3;
-	}
-	else {
-		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
-		return false;
 	}
 
 	if(!pcdb_checkid(class_))
@@ -11705,7 +11678,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 		char tmpstr[1024];
 
 		strftime(tmpstr,sizeof(tmpstr) - 1,msg_txt(sd,501),localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-		clif_wis_message(sd,wisp_server_name,tmpstr,strlen(tmpstr) + 1,0);
+		clif_wis_message(sd->fd,wisp_server_name,tmpstr,strlen(tmpstr) + 1);
 
 		pc_expire_check(sd);
 	}
