@@ -101,7 +101,12 @@ enum pincode_state : uint8 {
 #if 0
 	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
 #endif
+#if PACKETVER >= 20180124
+	// The button for pin code access was removed
+	PINCODE_PASSED  = PINCODE_OK,
+#else
 	PINCODE_PASSED	= 7,
+#endif
 	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
 };
@@ -180,6 +185,8 @@ struct CharServ_Config {
 	int clan_remove_inactive_days;
 	int mail_return_days;
 	int mail_delete_days;
+
+	int allowed_job_flag;
 };
 extern struct CharServ_Config charserv_config;
 

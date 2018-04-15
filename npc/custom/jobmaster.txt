@@ -282,8 +282,8 @@ function	Job_Menu	{
 		if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) &&
 				BaseLevel < .SNovice) {
 			// Special Level Requirement because Super Novice and
-			// Supber Baby can both be selected in one of the first class
-			// changes. That's why the Levelrequirement is after and not before
+			// Super Baby can both be selected in one of the first class
+			// changes. That's why the Level Requirement is after and not before
 			// the selection.
 			mes "A base level of " + .SNovice +
 				" is required to turn into a " + jobname(.@class) + ".";
@@ -328,7 +328,7 @@ function	Confirm_Change	{
 	.@class = getarg(0, -1);
 	.@back = getarg(1, false);
 	if( .@class < 0 ) {
-		mes "Unknow Class Error.";
+		mes "Unknown Class Error.";
 		close;
 	}
 	mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";

@@ -359,7 +359,7 @@ while(1) {
 						set .Size, getarraysize($WOE_CONTROL);
 					case 3:
 						mes "[New Session]";
-						mes ((.@d)?"Session added.":"Cancelled.");
+						mes ((.@d)?"Session added.":"cancelled.");
 						next;
 						set .@d,1;
 					case 2:
@@ -391,7 +391,7 @@ while(1) {
 			set .@j, select(" ~ ^FF0000Delete session...^000000: ~ ^777777Cancel^000000");
 			mes "[Remove Session]";
 			if (.@j == 2)
-				mes "Cancelled.";
+				mes "cancelled.";
 			else {
 				deletearray $WOE_CONTROL[.@i*4],4;
 				set .Size, getarraysize($WOE_CONTROL);
@@ -409,7 +409,7 @@ while(1) {
 			next;
 			set .@i, select(" ~ ^0055FFReload settings...^000000: ~ ^777777Cancel^000000");
 			mes "[Reload Settings]";
-			if (.@i == 2) mes "Cancelled.";
+			if (.@i == 2) mes "cancelled.";
 			else {
 				set .Init,1;
 				donpcevent "WOE_CONTROL::OnMinute00";
@@ -431,7 +431,7 @@ while(1) {
 			set .@i, select(" ~ ^FF0000End session...^000000:"+((.Options&1)?" ~ ^FF0000End session without rewards...^000000":"")+": ~ ^777777Cancel^000000");
 			mes "[Force Agit End]";
 			if (.@i == 3)
-				mes "Cancelled.";
+				mes "cancelled.";
 			else {
 				set .ForceEnd, .@i;
 				donpcevent "WOE_CONTROL::OnWOEEnd";

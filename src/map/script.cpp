@@ -5087,6 +5087,20 @@ BUILDIN_FUNC(next)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Clears the dialog and continues the script without a next button.
+///
+/// clear;
+BUILDIN_FUNC(clear)
+{
+	TBL_PC* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	clif_scriptclear(sd, st->oid);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Ends the script and displays the button 'close' on the npc dialog.
 /// The dialog is closed when the button is pressed.
 ///
@@ -9190,7 +9204,7 @@ BUILDIN_FUNC(statusup2)
 BUILDIN_FUNC(bonus)
 {
 	int type;
-	int val1;
+	int val1 = 0;
 	int val2 = 0;
 	int val3 = 0;
 	int val4 = 0;
@@ -9226,11 +9240,13 @@ BUILDIN_FUNC(bonus)
 			val1 = ( data_isstring(data) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
 			break;
 		default:
-			val1 = script_getnum(st,3);
+			if (script_hasdata(st, 3))
+				val1 = script_getnum(st, 3);
 			break;
 	}
 
 	switch( script_lastdata(st)-2 ) {
+		case 0:
 		case 1:
 			pc_bonus(sd, type, val1);
 			break;
@@ -13566,7 +13582,12 @@ BUILDIN_FUNC(setwall)
 BUILDIN_FUNC(delwall)
 {
 	const char *name = script_getstr(st,2);
-	map_iwall_remove(name);
+
+	if( !map_iwall_remove(name) ){
+		ShowError( "buildin_delwall: wall \"%s\" does not exist.\n", name );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13866,7 +13887,7 @@ BUILDIN_FUNC(petloot)
 BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd;
-	char card_var[NAME_LENGTH];
+	char card_var[NAME_LENGTH], randopt_var[50];
 	int i,j=0,k;
 
 	if (!script_charid2sd(2,sd))
@@ -13886,6 +13907,15 @@ BUILDIN_FUNC(getinventorylist)
 			}
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
+			{
+				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].id);
+				sprintf(randopt_var, "@inventorylist_option_value%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].value);
+				sprintf(randopt_var, "@inventorylist_option_parameter%d",k+1);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
+			}
 			j++;
 		}
 	}
@@ -17548,6 +17578,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_AMOTION, md->status.amotion);
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
+			getunitdata_sub(UMOB_TARGETID, md->target_id);
 			break;
 
 		case BL_HOM:
@@ -17594,6 +17625,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UHOM_AMOTION, hd->battle_status.amotion);
 			getunitdata_sub(UHOM_ADELAY, hd->battle_status.adelay);
 			getunitdata_sub(UHOM_DMOTION, hd->battle_status.dmotion);
+			getunitdata_sub(UHOM_TARGETID, hd->ud.target);
 			break;
 
 		case BL_PET:
@@ -17681,6 +17713,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMER_AMOTION, mc->base_status.amotion);
 			getunitdata_sub(UMER_ADELAY, mc->base_status.adelay);
 			getunitdata_sub(UMER_DMOTION, mc->base_status.dmotion);
+			getunitdata_sub(UMER_TARGETID, mc->ud.target);
 			break;
 
 		case BL_ELEM:
@@ -17726,6 +17759,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UELE_AMOTION, ed->base_status.amotion);
 			getunitdata_sub(UELE_ADELAY, ed->base_status.adelay);
 			getunitdata_sub(UELE_DMOTION, ed->base_status.dmotion);
+			getunitdata_sub(UELE_TARGETID, ed->ud.target);
 			break;
 
 		case BL_NPC:
@@ -17921,6 +17955,15 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_AMOTION: md->base_status->amotion = (short)value; calc_status = true; break;
 			case UMOB_ADELAY: md->base_status->adelay = (short)value; calc_status = true; break;
 			case UMOB_DMOTION: md->base_status->dmotion = (short)value; calc_status = true; break;
+			case UMOB_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_MOB!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				mob_target(md,target,0);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -17974,6 +18017,15 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_AMOTION: hd->base_status.amotion = (short)value; calc_status = true; break;
 			case UHOM_ADELAY: hd->base_status.adelay = (short)value; calc_status = true; break;
 			case UHOM_DMOTION: hd->base_status.dmotion = (short)value; calc_status = true; break;
+			case UHOM_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_HOM!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				unit_attack(&hd->bl, target->id, 1);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18073,6 +18125,15 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_AMOTION: mc->base_status.amotion = (short)value; calc_status = true; break;
 			case UMER_ADELAY: mc->base_status.adelay = (short)value; calc_status = true; break;
 			case UMER_DMOTION: mc->base_status.dmotion = (short)value; calc_status = true; break;
+			case UMER_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_MER!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				unit_attack(&mc->bl, target->id, 1);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18125,6 +18186,16 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_AMOTION: ed->base_status.amotion = (short)value; calc_status = true; break;
 			case UELE_ADELAY: ed->base_status.adelay = (short)value; calc_status = true; break;
 			case UELE_DMOTION: ed->base_status.dmotion = (short)value; calc_status = true; break;
+			case UELE_TARGETID: {
+				struct block_list* target = map_id2bl(value);
+				if (!target) {
+					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
+					return SCRIPT_CMD_FAILURE;
+				}
+				elemental_change_mode(ed, static_cast<e_mode>(EL_MODE_AGGRESSIVE));
+				unit_attack(&ed->bl, target->id, 1);
+				break;
+			}
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18599,7 +18670,7 @@ BUILDIN_FUNC(unitskillusepos)
 
 /// Pauses the execution of the script, detaching the player
 ///
-/// sleep <mili seconds>;
+/// sleep <milli seconds>;
 BUILDIN_FUNC(sleep)
 {
 	// First call(by function call)
@@ -18609,7 +18680,7 @@ BUILDIN_FUNC(sleep)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError("buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks);
+			ShowError("buildin_sleep: negative or zero amount('%d') of milli seconds is not supported\n", ticks);
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18642,7 +18713,7 @@ BUILDIN_FUNC(sleep2)
 		ticks = script_getnum(st, 2);
 
 		if (ticks <= 0) {
-			ShowError( "buildin_sleep2: negative amount('%d') of milli seconds is not supported\n", ticks );
+			ShowError( "buildin_sleep2: negative or zero amount('%d') of milli seconds is not supported\n", ticks );
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18980,7 +19051,7 @@ BUILDIN_FUNC(mercenary_create)
 
 	class_ = script_getnum(st,2);
 
-	if( !mercenary_class(class_) )
+	if( !mercenary_db(class_) )
 		return SCRIPT_CMD_SUCCESS;
 
 	contract_time = script_getnum(st,3);
@@ -22123,7 +22194,6 @@ BUILDIN_FUNC(getvar) {
 	else
 		script_pushstrcopy(st, conv_str_(st, data, sd));
 
-	push_val2(st->stack, C_NAME, reference_getuid(data), reference_getref(data));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23377,6 +23447,10 @@ BUILDIN_FUNC(unloadnpc) {
 	if( nd == NULL ){
 		ShowError( "buildin_unloadnpc: npc '%s' was not found.\n", name );
 		return SCRIPT_CMD_FAILURE;
+	} else if ( nd->bl.id == st->oid ) {
+		// Supporting self-unload isn't worth the problem it may cause. [Secret]
+		ShowError("buildin_unloadnpc: You cannot self-unload NPC '%s'.\n.", name);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	npc_unload_duplicates(nd);
@@ -23728,6 +23802,260 @@ BUILDIN_FUNC(getequiptradability) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+static inline bool mail_sub( struct script_state *st, struct script_data *data, struct map_session_data *sd, int i, const char **out_name, unsigned int *start, unsigned int *end, int32 *id ){
+	const char *name;
+
+	// Check if it is a variable
+	if( !data_isreference(data) ){
+		ShowError("buildin_mail: argument %d is not a variable.\n", i );
+		return false;
+	}
+
+	name = reference_getname(data);
+
+	if( is_string_variable(name) ){
+		ShowError( "buildin_mail: variable \"%s\" is a string variable.\n", name );
+		return false;
+	}
+
+	// Check if the variable requires a player
+	if( not_server_variable(*name) && sd == NULL ){
+		// If no player is attached
+		if( !script_rid2sd(sd) ){
+			ShowError( "buildin_mail: variable \"%s\" was not a server variable, but no player was attached.\n", name );
+			return false;
+		}
+	}
+
+	// Try to find the array's source pointer
+	if( !script_array_src( st, sd, name, reference_getref(data) ) ){
+		ShowError( "buildin_mail: variable \"%s\" is not an array.\n" );
+		return false;
+	}
+
+	// Store the name for later usage
+	*out_name = name;
+
+	// Get the start and end indices of the array
+	*start = reference_getindex(data);
+	*end = script_array_highest_key( st, sd, name, reference_getref(data) );
+
+	// For getting the values we need the id of the array
+	*id = reference_getid(data);
+
+	return true;
+}
+
+BUILDIN_FUNC(mail){
+	const char *sender, *title, *body, *name;
+	struct mail_message msg;
+	struct script_data *data;
+	struct map_session_data *sd = NULL;
+	unsigned int i, j, k, num_items, start, end;
+	int32 id;
+
+	memset(&msg, 0, sizeof(struct mail_message));
+
+	msg.dest_id = script_getnum(st,2);
+
+	sender = script_getstr(st, 3);
+
+	if( strlen(sender) > NAME_LENGTH ){
+		ShowError( "buildin_mail: sender name can not be longer than %d characters.\n", NAME_LENGTH );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	safestrncpy(msg.send_name, sender, NAME_LENGTH);
+
+	title = script_getstr(st, 4);
+
+	if( strlen(title) > MAIL_TITLE_LENGTH ){
+		ShowError( "buildin_mail: title can not be longer than %d characters.\n", MAIL_TITLE_LENGTH );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	safestrncpy(msg.title, title, MAIL_TITLE_LENGTH);
+
+	body = script_getstr(st, 5);
+
+	if( strlen(body) > MAIL_BODY_LENGTH ){
+		ShowError( "buildin_mail: body can not be longer than %d characters.\n", MAIL_BODY_LENGTH );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	safestrncpy(msg.body, body, MAIL_BODY_LENGTH);
+
+	if( script_hasdata(st,6) ){
+		int zeny = script_getnum(st, 6);
+
+		if( zeny < 0 ){
+			ShowError( "buildin_mail: a negative amount of zeny can not be sent.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}else if( zeny > MAX_ZENY ){
+			ShowError( "buildin_mail: amount of zeny %u is exceeding maximum of %u. Capping...\n", zeny, MAX_ZENY );
+			zeny = MAX_ZENY;
+		}
+
+		msg.zeny = zeny;
+	}
+
+	// Items
+	num_items = 0;
+	while( script_hasdata(st,7) ){
+		data = script_getdata(st,7);
+
+		if( !mail_sub( st, data, sd, 7, &name, &start, &end, &id ) ){
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		num_items = end - start;
+
+		if( num_items == 0 ){
+			ShowWarning( "buildin_mail: array \"%s\" contained no items.\n", name );
+			break;
+		}
+
+		if( num_items > MAIL_MAX_ITEM ){
+			ShowWarning( "buildin_mail: array \"%s\" contained %d items, capping to maximum of %d...\n", name, num_items, MAIL_MAX_ITEM );
+			num_items = MAIL_MAX_ITEM;
+		}
+
+		for( i = 0; i < num_items && start < end; i++, start++ ){
+			msg.item[i].nameid = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+			msg.item[i].identify = 1;
+
+			script_removetop(st, -1, 0);
+
+			if( !itemdb_exists(msg.item[i].nameid) ){
+				ShowError( "buildin_mail: invalid item id %hu.\n", msg.item[i].nameid );
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+
+		// Amounts
+		if( !script_hasdata(st,8) ){
+			ShowError("buildin_mail: missing item count variable at position %d.\n", 8);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		data = script_getdata(st,8);
+
+		if( !mail_sub( st, data, sd, 8, &name, &start, &end, &id ) ){
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		for( i = 0; i < num_items && start < end; i++, start++ ){
+			struct item_data *item = itemdb_exists(msg.item[i].nameid);
+
+			msg.item[i].amount = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+			script_removetop(st, -1, 0);
+
+			if( msg.item[i].amount <= 0 ){
+				ShowError( "buildin_mail: amount %d for item %hu is invalid.\n", msg.item[i].amount, msg.item[i].nameid );
+				return SCRIPT_CMD_FAILURE;
+			}else if( itemdb_isstackable2(item) ){
+				uint16 max = item->stack.amount > 0 ? item->stack.amount : MAX_AMOUNT;
+
+				if( msg.item[i].amount > max ){
+					ShowWarning( "buildin_mail: amount %d for item %hu is exceeding the maximum of %d. Capping...\n", msg.item[i].amount, msg.item[i].nameid, max );
+					msg.item[i].amount = max;
+				}
+			}else{
+				if( msg.item[i].amount > 1 ){
+					ShowWarning( "buildin_mail: amount %d is invalid for non-stackable item %hu.\n", msg.item[i].amount, msg.item[i].nameid );
+					msg.item[i].amount = 1;
+				}
+			}
+		}
+
+		// Cards
+		if( !script_hasdata(st,9) ){
+			break;
+		}
+
+		for( i = 0, j = 9; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
+			data = script_getdata(st,j);
+
+			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			for( k = 0; k < num_items && start < end; k++, start++ ){
+				msg.item[k].card[i] = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+				script_removetop(st, -1, 0);
+
+				if( msg.item[k].card[i] != 0 && !itemdb_exists(msg.item[k].card[i]) ){
+					ShowError( "buildin_mail: invalid card id %hu.\n", msg.item[k].card[i] );
+					return SCRIPT_CMD_FAILURE;
+				}
+			}
+		}
+	
+		// Random Options
+		if( !script_hasdata(st,9 + MAX_SLOTS) ){
+			break;
+		}
+
+		for( i = 0, j = 9 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
+			// Option IDs
+			data = script_getdata(st, j);
+
+			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			for( k = 0; k < num_items && start < end; k++, start++ ){
+				msg.item[k].option[i].id = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+				script_removetop(st, -1, 0);
+			}
+
+			j++;
+
+			// Option values
+			data = script_getdata(st, j);
+
+			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			for( k = 0; k < num_items && start < end; k++, start++ ){
+				msg.item[k].option[i].value = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+				script_removetop(st, -1, 0);
+			}
+
+			j++;
+
+			// Option parameters
+			data = script_getdata(st, j);
+
+			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			for( k = 0; k < num_items && start < end; k++, start++ ){
+				msg.item[k].option[i].param = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+				script_removetop(st, -1, 0);
+			}
+		}
+
+		// Break the pseudo scope
+		break;
+	}
+
+	msg.status = MAIL_NEW;
+	msg.type = MAIL_INBOX_NORMAL;
+	msg.timestamp = time(NULL);
+
+	intif_Mail_send(0, &msg);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -23782,6 +24110,7 @@ struct script_function buildin_func[] = {
 	// NPC interaction
 	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),
+	BUILDIN_DEF(clear,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
 	BUILDIN_DEF(menu,"sl*"),
@@ -23872,7 +24201,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(downrefitem,"i??"),
 	BUILDIN_DEF(statusup,"i?"),
 	BUILDIN_DEF(statusup2,"ii?"),
-	BUILDIN_DEF(bonus,"iv"),
+	BUILDIN_DEF(bonus,"i?"),
 	BUILDIN_DEF2(bonus,"bonus2","ivi"),
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
 	BUILDIN_DEF2(bonus,"bonus4","ivvii"),
@@ -24376,6 +24705,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "ceil", "i"),
 	BUILDIN_DEF2(round, "floor", "i"),
 	BUILDIN_DEF(getequiptradability, "i?"),
+	BUILDIN_DEF(mail, "isss*"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
