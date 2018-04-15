@@ -4,7 +4,6 @@
 #include "mercenary.hpp"
 
 #include <stdlib.h>
-#include <map>
 #include <math.h>
 
 #include "../common/cbasetypes.h"
@@ -26,19 +25,27 @@
 #include "trade.hpp"
 #include "npc.hpp"
 
-std::map<uint16, struct s_mercenary_db> mercenary_db_data;
+struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS]; // Mercenary Database
+static uint16 mercenary_count;
 
 /**
- * Search Mercenary by class
- * @param class_ Class ID of Mercenary
- * @return A pointer to the mercenary db entry or nullptr if not found
- **/
-struct s_mercenary_db *mercenary_db( uint16 class_ ){
-	if( mercenary_db_data.find(class_) != mercenary_db_data.end() ){
-		return &mercenary_db_data.at(class_);
-	}else{
-		return nullptr;
-	}
+* Search Mercenary by class
+* @param class_ Class ID of Mercenary
+* @return The index of mercenary on mercenary_db, or -1 if not found
+**/
+static int16 mercenary_search_index(int class_) {
+	int16 i;
+	ARR_FIND(0, mercenary_count, i, mercenary_db[i].class_ == class_);
+	return (i == mercenary_count)?-1:i;
+}
+
+/**
+* Check if the Class ID is a Mercenary
+* @param class_ The Class ID
+* @return true if Class ID is a Mercenary, false otherwise
+**/
+bool mercenary_class(int class_){
+	return (bool)(mercenary_search_index(class_) > -1);
 }
 
 /**
@@ -46,14 +53,12 @@ struct s_mercenary_db *mercenary_db( uint16 class_ ){
 * @param class_ The Class ID
 * @return View Data of Mercenary
 **/
-struct view_data *mercenary_get_viewdata( uint16 class_ ){
-	struct s_mercenary_db *db = mercenary_db(class_);
+struct view_data * mercenary_get_viewdata(int class_){
+	int i = mercenary_search_index(class_);
+	if( i < 0 )
+		return 0;
 
-	if( db ){
-		return &db->vd;
-	}else{
-		return nullptr;
-	}
+	return &mercenary_db[i].vd;
 }
 
 /**
@@ -77,17 +82,16 @@ short mercenary_skill_get_index(uint16 skill_id) {
 * @param lifetime Contract duration
 * @return false if failed, true otherwise
 **/
-bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime) {
+bool mercenary_create(struct map_session_data *sd, int class_, unsigned int lifetime) {
 	struct s_mercenary merc;
 	struct s_mercenary_db *db;
+	int16 i;
 	nullpo_retr(false,sd);
 
-	db = mercenary_db(class_);
-
-	if( !db ){
+	if( (i = mercenary_search_index(class_)) < 0 )
 		return false;
-	}
 
+	db = &mercenary_db[i];
 	memset(&merc,0,sizeof(struct s_mercenary));
 
 	merc.char_id = sd->status.char_id;
@@ -119,24 +123,24 @@ int mercenary_get_lifetime(struct mercenary_data *md) {
 /**
 * Get Guild type of Mercenary
 * @param md Mercenary
-* @return enum e_MercGuildType
+* @return -1 if not found, 0 - ARCH_MERC_GUILD, 1 - SPEAR_MERC_GUILD, or 2 - SWORD_MERC_GUILD
 **/
-enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md){
+int mercenary_get_guild(struct mercenary_data *md){
 	uint16 class_;
 
 	if( md == NULL || md->db == NULL )
-		return NONE_MERC_GUILD;
+		return -1;
 
 	class_ = md->db->class_;
 
-	if( class_ >= MERID_MER_ARCHER01 && class_ <= MERID_MER_ARCHER10 )
+	if( class_ >= 6017 && class_ <= 6026 )
 		return ARCH_MERC_GUILD;
-	if( class_ >= MERID_MER_LANCER01 && class_ <= MERID_MER_LANCER10 )
+	if( class_ >= 6027 && class_ <= 6036 )
 		return SPEAR_MERC_GUILD;
-	if( class_ >= MERID_MER_SWORDMAN01 && class_ <= MERID_MER_SWORDMAN10 )
+	if( class_ >= 6037 && class_ <= 6046 )
 		return SWORD_MERC_GUILD;
 
-	return NONE_MERC_GUILD;
+	return -1;
 }
 
 /**
@@ -146,24 +150,21 @@ enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md){
 **/
 int mercenary_get_faith(struct mercenary_data *md) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
+	uint16 class_;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return 0;
 
-	guild = mercenary_get_guild(md);
+	class_ = md->db->class_;
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			return sd->status.arch_faith;
-		case SPEAR_MERC_GUILD:
-			return sd->status.spear_faith;
-		case SWORD_MERC_GUILD:
-			return sd->status.sword_faith;
-		case NONE_MERC_GUILD:
-		default:
-			return 0;
-	}
+	if( class_ >= 6017 && class_ <= 6026 )
+		return sd->status.arch_faith;
+	if( class_ >= 6027 && class_ <= 6036 )
+		return sd->status.spear_faith;
+	if( class_ >= 6037 && class_ <= 6046 )
+		return sd->status.sword_faith;
+
+	return 0;
 }
 
 /**
@@ -173,27 +174,22 @@ int mercenary_get_faith(struct mercenary_data *md) {
 **/
 void mercenary_set_faith(struct mercenary_data *md, int value) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
+	uint16 class_;
 	int *faith;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return;
 
-	guild = mercenary_get_guild(md);
+	class_ = md->db->class_;
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			faith = &sd->status.arch_faith;
-			break;
-		case SPEAR_MERC_GUILD:
-			faith = &sd->status.spear_faith;
-			break;
-		case SWORD_MERC_GUILD:
-			faith = &sd->status.sword_faith;
-			break;
-		case NONE_MERC_GUILD:
-			return;
-	}
+	if( class_ >= 6017 && class_ <= 6026 )
+		faith = &sd->status.arch_faith;
+	else if( class_ >= 6027 && class_ <= 6036 )
+		faith = &sd->status.spear_faith;
+	else if( class_ >= 6037 && class_ <= 6046 )
+		faith = &sd->status.sword_faith;
+	else
+		return;
 
 	*faith += value;
 	*faith = cap_value(*faith, 0, SHRT_MAX);
@@ -207,24 +203,21 @@ void mercenary_set_faith(struct mercenary_data *md, int value) {
 **/
 int mercenary_get_calls(struct mercenary_data *md) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
+	uint16 class_;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return 0;
 
-	guild = mercenary_get_guild(md);
+	class_ = md->db->class_;
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			return sd->status.arch_calls;
-		case SPEAR_MERC_GUILD:
-			return sd->status.spear_calls;
-		case SWORD_MERC_GUILD:
-			return sd->status.sword_calls;
-		case NONE_MERC_GUILD:
-		default:
-			return 0;
-	}
+	if( class_ >= 6017 && class_ <= 6026 )
+		return sd->status.arch_calls;
+	if( class_ >= 6027 && class_ <= 6036 )
+		return sd->status.spear_calls;
+	if( class_ >= 6037 && class_ <= 6046 )
+		return sd->status.sword_calls;
+
+	return 0;
 }
 
 /**
@@ -234,27 +227,22 @@ int mercenary_get_calls(struct mercenary_data *md) {
 **/
 void mercenary_set_calls(struct mercenary_data *md, int value) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
+	uint16 class_;
 	int *calls;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return;
 
-	guild = mercenary_get_guild(md);
+	class_ = md->db->class_;
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			calls = &sd->status.arch_calls;
-			break;
-		case SPEAR_MERC_GUILD:
-			calls = &sd->status.spear_calls;
-			break;
-		case SWORD_MERC_GUILD:
-			calls = &sd->status.sword_calls;
-			break;
-		case NONE_MERC_GUILD:
-			return;
-	}
+	if( class_ >= 6017 && class_ <= 6026 )
+		calls = &sd->status.arch_calls;
+	else if( class_ >= 6027 && class_ <= 6036 )
+		calls = &sd->status.spear_calls;
+	else if( class_ >= 6037 && class_ <= 6046 )
+		calls = &sd->status.sword_calls;
+	else
+		return;
 
 	*calls += value;
 	*calls = cap_value(*calls, 0, INT_MAX);
@@ -359,16 +347,16 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 	struct map_session_data *sd;
 	struct mercenary_data *md;
 	struct s_mercenary_db *db;
-
-	db = mercenary_db(merc->class_);
+	int i = mercenary_search_index(merc->class_);
 
 	if( (sd = map_charid2sd(merc->char_id)) == NULL )
 		return false;
-	if( !flag || !db ){ // Not created - loaded - DB info
+	if( !flag || i < 0 ) { // Not created - loaded - DB info
 		sd->status.mer_id = 0;
 		return false;
 	}
 
+	db = &mercenary_db[i];
 	if( !sd->md ) {
 		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
 		md->bl.type = BL_MER;
@@ -489,11 +477,16 @@ int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id) {
 static bool mercenary_readdb_sub(char* str[], int columns, int current)
 {
 	int ele;
-	uint16 class_ = atoi(str[0]);
+	uint16 i, class_ = atoi(str[0]);
 	struct s_mercenary_db *db;
 	struct status_data *status;
 
-	db = &mercenary_db_data[class_];
+	//Find the ID, already exist or not in mercenary_db
+	ARR_FIND(0,mercenary_count,i,mercenary_db[i].class_ == class_);
+	if (i >= mercenary_count)
+		db = &mercenary_db[mercenary_count];
+	else
+		db = &mercenary_db[i];
 
 	db->class_ = class_;
 	safestrncpy(db->sprite, str[1], NAME_LENGTH);
@@ -541,6 +534,8 @@ static bool mercenary_readdb_sub(char* str[], int columns, int current)
 	status->amotion = atoi(str[24]);
 	status->dmotion = atoi(str[25]);
 	
+	if (i >= mercenary_count)
+		mercenary_count++;
 	return true;
 }
 
@@ -551,10 +546,10 @@ void mercenary_readdb(void) {
 	const char *filename[]={ "mercenary_db.txt",DBIMPORT"/mercenary_db.txt"};
 	uint8 i;
 
-	mercenary_db_data.clear();
-
+	mercenary_count = 0; //Reset the counter
+	memset(mercenary_db,0,sizeof(mercenary_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &mercenary_readdb_sub, i > 0);
+		sv_readdb(db_path, filename[i], ',', 26, 26, MAX_MERCENARY_CLASS, &mercenary_readdb_sub, i > 0);
 	}
 }
 
@@ -565,11 +560,13 @@ static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 {// <merc id>,<skill id>,<skill level>
 	struct s_mercenary_db *db;
 	uint16 class_, skill_id, skill_lv;
+	uint8 i = 0;
 	short idx = -1;
 
 	class_ = atoi(str[0]);
-	db = mercenary_db(class_);
-	if( !db ){
+	ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary_db[i].class_);
+	if( i == MAX_MERCENARY_CLASS )
+	{
 		ShowError("read_mercenary_skilldb : Class %d not found in mercenary_db for skill entry.\n", class_);
 		return false;
 	}
@@ -580,6 +577,7 @@ static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 		return false;
 	}
 
+	db = &mercenary_db[i];
 	skill_lv = atoi(str[2]);
 
 	db->skill[idx].id = skill_id;
@@ -614,5 +612,5 @@ void do_init_mercenary(void){
 * Do Final Mercenary datas
 **/
 void do_final_mercenary(void){
-	mercenary_db_data.clear();
+	//Nothing to do yet
 }

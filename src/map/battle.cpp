@@ -2973,10 +2973,30 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 		}
 
 		if (sc) { // Status change considered as masteries
+			uint8 i;
+
 #ifdef RENEWAL
 			if (sc->data[SC_NIBELUNGEN]) // With renewal, the level 4 weapon limitation has been removed
 				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_NIBELUNGEN]->val2);
 #endif
+
+			if (sc->data[SC_MIRACLE])
+				i = 2; //Star anger
+			else
+				ARR_FIND(0, MAX_PC_FEELHATE, i, t_class == sd->hate_mob[i]);
+
+			if (i < MAX_PC_FEELHATE && (skill=pc_checkskill(sd,sg_info[i].anger_id))) {
+				int skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
+
+				if (i == 2)
+					skillratio += sstatus->str; //Star Anger
+				if (skill < 4)
+					skillratio /= 12 - 3 * skill;
+				ATK_ADDRATE(wd.damage, wd.damage2, skillratio);
+#ifdef RENEWAL
+				ATK_ADDRATE(wd.masteryAtk, wd.masteryAtk2, skillratio);
+#endif
+			}
 
 			if(sc->data[SC_CAMOUFLAGE]) {
 				ATK_ADD(wd.damage, wd.damage2, 30 * min(10, sc->data[SC_CAMOUFLAGE]->val3));
@@ -3322,16 +3342,12 @@ static struct Damage battle_calc_multi_attack(struct Damage wd, struct block_lis
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
-			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
-			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Will fail bare-handed
+			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) //Will fail bare-handed
+			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Need confirmation
 		{	//Success chance is not added, the higher one is used [Skotlex]
-			int max_rate = 0;
-
-			if (sc && sc->data[SC_KAGEMUSYA])
-				max_rate = sc->data[SC_KAGEMUSYA]->val1 * 10; // Same rate as even levels of TF_DOUBLE
-			else
-				max_rate = max(5 * skill_lv, sd->bonus.double_rate);
-
+                        int max_rate = max(5*skill_lv,sd->bonus.double_rate);
+                        if(sc && sc->data[SC_KAGEMUSYA]) max_rate= max(max_rate,sc->data[SC_KAGEMUSYA]->val1*3);
+                        
 			if( rnd()%100 < max_rate ) {
 				wd.div_ = skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				wd.type = DMG_MULTI_HIT;
@@ -4448,7 +4464,6 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	int inf3 = skill_get_inf3(skill_id);
-	uint8 anger_id = 0; // SLS Anger
 
 	// Kagerou/Oboro Earth Charm effect +15% wATK
 	if(sd && sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > 0) {
@@ -4472,12 +4487,10 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		if (sc->data[SC_MADNESSCANCEL])
 			ATK_ADD(wd.equipAtk, wd.equipAtk2, 100);
 		if (sc->data[SC_MAGICALBULLET]) {
-			short tmdef = tstatus->mdef + tstatus->mdef2;
-
-			if (sstatus->matk_min > tmdef && sstatus->matk_max > sstatus->matk_min) {
-				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max((sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min)) - tmdef, 0));
+			if (sstatus->matk_max > sstatus->matk_min) {
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max((sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min)) - (tstatus->mdef + tstatus->mdef2), 0));
 			} else {
-				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max(sstatus->matk_min - tmdef, 0));
+				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, i64max(sstatus->matk_min - (tstatus->mdef + tstatus->mdef2), 0));
 			}
 		}
 		if (sc->data[SC_GATLINGFEVER]) {
@@ -4612,9 +4625,6 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GVG_GIANT]->val3);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GVG_GIANT]->val3);
 		}
-
-		if (sc->data[SC_MIRACLE])
-			anger_id = 2; // Always treat all monsters as star flagged monster when in miracle state
 	}
 
 	if ((wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
@@ -4625,23 +4635,6 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 					RE_ALLATK_ADDRATE(wd, 20);
 			}
 		}
-	}
-
-	if (sd != nullptr && !anger_id)
-		ARR_FIND(0, MAX_PC_FEELHATE, anger_id, status_get_class(target) == sd->hate_mob[anger_id]);
-
-	uint16 anger_level;
-	if (sd != nullptr && anger_id < MAX_PC_FEELHATE && (anger_level = pc_checkskill(sd, sg_info[anger_id].anger_id))) {
-		int skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
-
-		if (anger_id == 2)
-			skillratio += sstatus->str; // SG_STAR_ANGER additionally has STR added in its formula.
-		if (anger_level < 4)
-			skillratio /= 12 - 3 * anger_level;
-		ATK_ADDRATE(wd.damage, wd.damage2, skillratio);
-#ifdef RENEWAL
-		RE_ALLATK_ADDRATE(wd, skillratio);
-#endif
 	}
 
 	return wd;
@@ -6853,7 +6846,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	ssc = status_get_sc(src);
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if ( sd && sd->bonus.short_weapon_damage_return ) {
+		if ( !status_reflect && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			rdamage = i64max(rdamage,1);
 		} else if( status_reflect && sc && sc->count ) {
@@ -7452,7 +7445,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 	if (sd) {
 		uint16 r_skill = 0, sk_idx = 0;
-		if( wd.flag&BF_WEAPON && sc && sc->data[SC__AUTOSHADOWSPELL] && rnd()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
+		if( wd.flag&BF_SHORT && sc && sc->data[SC__AUTOSHADOWSPELL] && rnd()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
 			(r_skill = (uint16)sc->data[SC__AUTOSHADOWSPELL]->val1) && (sk_idx = skill_get_index(r_skill)) &&
 			sd->status.skill[sk_idx].id != 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PLAGIARIZED )
 		{
@@ -8015,11 +8008,7 @@ static const struct _battle_data {
 	{ "player_damage_delay_rate",           &battle_config.pc_damage_delay_rate,            100,    0,      INT_MAX,        },
 	{ "defunit_not_enemy",                  &battle_config.defnotenemy,                     0,      0,      1,              },
 	{ "gvg_traps_target_all",               &battle_config.vs_traps_bctall,                 BL_PC,  BL_NUL, BL_ALL,         },
-#ifdef RENEWAL
-	{ "traps_setting",                      &battle_config.traps_setting,                   2,      0,      2,              },
-#else
 	{ "traps_setting",                      &battle_config.traps_setting,                   0,      0,      2,              },
-#endif
 	{ "summon_flora_setting",               &battle_config.summon_flora,                    1|2,    0,      1|2,            },
 	{ "clear_skills_on_death",              &battle_config.clear_unit_ondeath,              BL_NUL, BL_NUL, BL_ALL,         },
 	{ "clear_skills_on_warp",               &battle_config.clear_unit_onwarp,               BL_ALL, BL_NUL, BL_ALL,         },
@@ -8133,9 +8122,7 @@ static const struct _battle_data {
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
 	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,      },
 	{ "aura_lv",                            &battle_config.aura_lv,                         99,     0,      INT_MAX,        },
-	{ "max_hp_lv99",                        &battle_config.max_hp_lv99,                    330000,  100,    1000000000,     },
-	{ "max_hp_lv150",                       &battle_config.max_hp_lv150,                   660000,  100,    1000000000,     },
-	{ "max_hp",                             &battle_config.max_hp,                        1100000,  100,    1000000000,     },
+	{ "max_hp",                             &battle_config.max_hp,                          32500,  100,    1000000000,     },
 	{ "max_sp",                             &battle_config.max_sp,                          32500,  100,    1000000000,     },
 	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
 	{ "max_parameter",                      &battle_config.max_parameter,                   99,     10,     SHRT_MAX,       },
@@ -8506,10 +8493,6 @@ static const struct _battle_data {
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
-	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
-	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
-	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
-    { "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8637,13 +8620,6 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
-	}
-#endif
-
-#if PACKETVER < 20170920
-	if( battle_config.feature_homunculus_autofeed ){
-		ShowWarning("conf/battle/feature.conf homunculus autofeeding is enabled but it requires PACKETVER 2017-09-20 or newer, disabling...\n");
-		battle_config.feature_homunculus_autofeed = 0;
 	}
 #endif
 

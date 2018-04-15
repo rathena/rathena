@@ -416,35 +416,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0]){
-			char walk_done_event[EVENT_NAME_LENGTH];
-
-			// Copying is required in case someone uses unitwalkto inside the event code
-			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
-
-			ud->state.walk_script = true;
-
-			// Execute the event
-			npc_event_do_id(walk_done_event,bl->id);
-
-			ud->state.walk_script = false;
-
-			// Check if the unit was killed
-			if( status_isdead(bl) ){
-				struct mob_data* md = BL_CAST(BL_MOB, bl);
-
-				if( md && !md->spawn ){
-					unit_free(bl, CLR_OUTSIGHT);
-				}
-
-				return 0;
-			}
-
-			// Check if another event was set
-			if( !strcmp(ud->walk_done_event,walk_done_event) ){
-				// If not remove it
-				ud->walk_done_event[0] = 0;
-			}
+			npc_event_do_id(ud->walk_done_event,bl->id);
+			ud->walk_done_event[0] = 0;
 		}
+		if (ud->state.walk_script)
+			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
@@ -1719,7 +1695,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		switch( skill_id ) {
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
-			case NPC_DEATHSUMMON:
 			case AL_TELEPORT:
 				if( ((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai )
 					return 0;

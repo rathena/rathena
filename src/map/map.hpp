@@ -919,7 +919,7 @@ void map_flags_init(void);
 
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);
-bool map_iwall_remove(const char *wall_name);
+void map_iwall_remove(const char *wall_name);
 
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int16 m); // [Wizputer]

@@ -832,7 +832,7 @@
 4008,356,10,3,10,6,5,60,3,0,0,0,0 //LK_PARRYING#Parrying#
 4008,357,5,4,5,55,5,63,1,0,0,0,0 //LK_CONCENTRATION#Concentration#
 4008,358,1,4,10,6,5,8,3,0,0,0,0 //LK_TENSIONRELAX#Relax#
-4008,359,1,0,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has 2 extra columns after "MaxLevel" for Job Level 50 requirement
+4008,359,1,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has an extra column after "MaxLevel" for Job Level 50 requirement
 4008,397,5,55,5,56,5,58,5,63,1,0,0 //LK_SPIRALPIERCE#Spiral Pierce#
 4008,398,5,55,9,63,1,0,0,0,0,0,0 //LK_HEADCRUSH#Traumatic Blow#
 4008,399,10,64,3,398,3,0,0,0,0,0,0 //LK_JOINTBEAT#Vital Strike#
@@ -1059,7 +1059,7 @@
 4014,356,10,3,10,6,5,60,3,0,0,0,0 //LK_PARRYING#Parrying#
 4014,357,5,4,5,55,5,63,1,0,0,0,0 //LK_CONCENTRATION#Concentration#
 4014,358,1,4,10,6,5,8,3,0,0,0,0 //LK_TENSIONRELAX#Relax#
-4014,359,1,0,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has 2 extra columns after "MaxLevel" for Job Level 50 requirement
+4014,359,1,50,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //It has an extra column after "MaxLevel" for Job Level 50 requirement
 4014,397,5,55,5,56,5,58,5,63,1,0,0 //LK_SPIRALPIERCE#Spiral Pierce#
 4014,398,5,55,9,63,1,0,0,0,0,0,0 //LK_HEADCRUSH#Traumatic Blow#
 4014,399,10,64,3,398,3,0,0,0,0,0,0 //LK_JOINTBEAT#Vital Strike#
@@ -1304,7 +1304,7 @@
 4020,313,5,321,10,0,0,0,0,0,0,0,0 //BD_SIEGFRIED#Acoustic Rhythm#
 4020,1010,1,0,0,0,0,0,0,0,0,0,0 //BA_PANGVOICE#Pang Voice#
 4020,394,10,47,5,316,1,46,5,0,0,0,0 //CG_ARROWVULCAN#Vulcan Arrow#
-4020,395,5,45,5,315,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
+4020,395,1,45,5,315,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
 4020,396,1,45,10,315,5,0,0,0,0,0,0 //CG_MARIONETTE#Marionette Control#
 4020,487,5,315,10,396,1,317,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom#
 4020,488,5,45,10,315,10,0,0,0,0,0,0 //CG_HERMODE#Wand of Hermod#
@@ -1340,7 +1340,7 @@
 4021,313,5,329,10,0,0,0,0,0,0,0,0 //BD_SIEGFRIED#Acoustic Rhythm#
 4021,1011,1,0,0,0,0,0,0,0,0,0,0 //DC_WINKCHARM#Wink of Charm#
 4021,394,10,47,5,324,1,46,5,0,0,0,0 //CG_ARROWVULCAN#Vulcan Arrow#
-4021,395,5,45,5,323,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
+4021,395,1,45,5,323,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
 4021,396,1,45,10,323,5,0,0,0,0,0,0 //CG_MARIONETTE#Marionette Control#
 4021,487,5,323,10,396,1,325,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom#
 4021,488,5,45,10,323,10,0,0,0,0,0,0 //CG_HERMODE#Wand of Hermod#
@@ -2756,7 +2756,7 @@
 4060,356,10,3,10,6,5,60,3,0,0,0,0 //LK_PARRYING#Parrying#
 4060,357,5,4,5,55,5,63,1,0,0,0,0 //LK_CONCENTRATION#Concentration#
 4060,358,1,4,10,6,5,8,3,0,0,0,0 //LK_TENSIONRELAX#Relax#
-4060,359,1,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //Extra columns removed. Rune Knights dont require job level 50 to use Berserk.
+4060,359,1,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //Extra column removed. Rune Knights dont require job level 50 to use Berserk.
 4060,397,5,55,5,56,5,58,5,63,1,0,0 //LK_SPIRALPIERCE#Spiral Pierce#
 4060,398,5,55,9,63,1,0,0,0,0,0,0 //LK_HEADCRUSH#Traumatic Blow#
 4060,399,10,64,3,398,3,0,0,0,0,0,0 //LK_JOINTBEAT#Vital Strike#
@@ -3664,7 +3664,7 @@
 4075,313,5,321,10,0,0,0,0,0,0,0,0 //BD_SIEGFRIED#Acoustic Rhythm#
 4075,1010,1,0,0,0,0,0,0,0,0,0,0 //BA_PANGVOICE#Pang Voice#
 4075,394,10,47,5,316,1,46,5,0,0,0,0 //CG_ARROWVULCAN#Vulcan Arrow#
-4075,395,5,45,5,315,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
+4075,395,1,45,5,315,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
 4075,396,1,45,10,315,5,0,0,0,0,0,0 //CG_MARIONETTE#Marionette Control#
 4075,487,5,315,10,396,1,317,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom#
 4075,488,5,45,10,315,10,0,0,0,0,0,0 //CG_HERMODE#Wand of Hermod#
@@ -3726,7 +3726,7 @@
 4076,313,5,329,10,0,0,0,0,0,0,0,0 //BD_SIEGFRIED#Acoustic Rhythm#
 4076,1011,1,0,0,0,0,0,0,0,0,0,0 //DC_WINKCHARM#Wink of Charm#
 4076,394,10,47,5,324,1,46,5,0,0,0,0 //CG_ARROWVULCAN#Vulcan Arrow#
-4076,395,5,45,5,323,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
+4076,395,1,45,5,323,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
 4076,396,1,45,10,323,5,0,0,0,0,0,0 //CG_MARIONETTE#Marionette Control#
 4076,487,5,323,10,396,1,325,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom#
 4076,488,5,45,10,323,10,0,0,0,0,0,0 //CG_HERMODE#Wand of Hermod#
@@ -4012,7 +4012,7 @@
 4081,356,10,3,10,6,5,60,3,0,0,0,0 //LK_PARRYING#Parrying#
 4081,357,5,4,5,55,5,63,1,0,0,0,0 //LK_CONCENTRATION#Concentration#
 4081,358,1,4,10,6,5,8,3,0,0,0,0 //LK_TENSIONRELAX#Relax#
-4081,359,1,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //Extra columns removed. Rune Knights dont require job level 50 to use Berserk.
+4081,359,1,0,0,0,0,0,0,0,0,0,0 //LK_BERSERK#Frenzy# //Extra column removed. Rune Knights dont require job level 50 to use Berserk.
 4081,397,5,55,5,56,5,58,5,63,1,0,0 //LK_SPIRALPIERCE#Spiral Pierce#
 4081,398,5,55,9,63,1,0,0,0,0,0,0 //LK_HEADCRUSH#Traumatic Blow#
 4081,399,10,64,3,398,3,0,0,0,0,0,0 //LK_JOINTBEAT#Vital Strike#

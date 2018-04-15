@@ -63,7 +63,7 @@ Suggesting Enhancements
 #### How to create Pull Requests :pencil:
 
 1. Make sure you have a [GitHub account](https://github.com/signup/free).
-2. Next, you will need to [fork rAthena](https://help.github.com/articles/fork-a-repo/#fork-an-example-repository) to your account.
+2. Next, you will need to [fork rAthena](https://help.github.com/articles/fork-a-repo/#step-3-configure-git-to-sync-your-fork-with-the-original-spoon-knife-repository) to your account.
 3. Before making changes, make sure you [create a new branch](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) for your working tree.
 4. After completing your changes, commit and push it to your branch.
 5. Now you are ready to [create a Pull Request](https://help.github.com/articles/creating-a-pull-request/) for rAthena!

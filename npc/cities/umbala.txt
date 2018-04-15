@@ -266,7 +266,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "Can donate some money for";
 		mes "re-constructing my parents' house?";
 		mes "You Rune-Midgardians are all";
-		mes "richer than Utans! I beg you!";
+		mes "richier than Utans! I beg you!";
 		emotion ET_SMILE;
 		next;
 		if (select("(Nod head):(Shake head)") == 1) {

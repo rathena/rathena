@@ -1150,22 +1150,6 @@ will terminate.
 
 ---------------------------------------
 
-*clear;
-
-This command will clear the dialog text and continue the script without player interaction.
-
-Example:
-	mes "This is how the 'clear' script command works.";
-	sleep2 3000;
-	clear; // This will clear the dialog and continue to the next one.
-	mes "I will show you again.";
-	sleep2 3000;
-	clear;
-	mes "Bye!";
-	close;
-
----------------------------------------
-
 *close;
 
 This command will create a 'close' button in the message window for the invoking
@@ -2809,36 +2793,21 @@ This command sets a bunch of arrays with a complete list of whatever the
 invoking character has in their inventory, including all the data needed to
 recreate these items perfectly if they are destroyed. Here's what you get:
 
-@inventorylist_id[]                - array of item ids.
-@inventorylist_amount[]            - their corresponding item amounts.
-@inventorylist_equip[]             - on which position the item is equipped (see EQP_* constants)
-                                     It will contain 0 if the item is not equipped.
-@inventorylist_refine[]            - for how much it is refined.
-@inventorylist_identify[]          - whether it is identified.
-@inventorylist_attribute[]         - whether it is broken.
-@inventorylist_card1[]             - These four arrays contain card data for the items.
-@inventorylist_card2[]               These data slots are also used to store names
-@inventorylist_card3[]               inscribed on the items, so you can explicitly check
-@inventorylist_card4[]               if the character owns an item made by a specific
-                                     craftsman.
-@inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
-@inventorylist_count               - the number of items in these lists.
-@inventorylist_option_id1[]        - first array of random option IDs
-@inventorylist_option_value1[]     - first array of random option values
-@inventorylist_option_parameter1[] - first array of random option parameters
-@inventorylist_option_id2[]        - second array of random option IDs
-@inventorylist_option_value2[]     - second array of random option values
-@inventorylist_option_parameter2[] - second array of random option parameters
-@inventorylist_option_id3[]        - third array of random option IDs
-@inventorylist_option_value3[]     - third array of random option values
-@inventorylist_option_parameter3[] - third array of random option parameters
-@inventorylist_option_id4[]        - fourth array of random option IDs
-@inventorylist_option_value4[]     - fourth array of random option values
-@inventorylist_option_parameter4[] - fourth array of random option parameters
-@inventorylist_option_id5[]        - fifth array of random option IDs
-@inventorylist_option_value5[]     - fifth array of random option values
-@inventorylist_option_parameter5[] - fifth array of random option parameters
+@inventorylist_id[]        - array of item ids.
+@inventorylist_amount[]    - their corresponding item amounts.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
+@inventorylist_refine[]    - for how much it is refined.
+@inventorylist_identify[]  - whether it is identified.
+@inventorylist_attribute[] - whether it is broken.
+@inventorylist_card1[]     - These four arrays contain card data for the items.
+@inventorylist_card2[]       These data slots are also used to store names
+@inventorylist_card3[]       inscribed on the items, so you can explicitly check
+@inventorylist_card4[]       if the character owns an item made by a specific
+                             craftsman.
+@inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
+@inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -5274,66 +5243,6 @@ invoking character.
 
 ---------------------------------------
 
-*mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>
-		{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>
-		{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>
-		{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}};
-
-This command will send mail to the <destination id> which is a character ID.
-A <sender name> can be specified but does not have to be from the direct creator
-of the mail and is limited to NAME_LENGTH (24) characters. Mail <title> is limited
-to MAIL_TITLE_LENGTH (40) characters. Mail <body> is limited to MAIL_BODY_LENGTH
-(200) characters for PACKETVER < 20150513 or 500 characters for later clients.
-
-Optional <zeny> and item data can be added to the mail as well. PACKETVER < 20150513
-is limited to 1 item while later clients are limited to MAIL_MAX_ITEM (5).
-
-The <item id array>, <item amount array>, <item card0 array>, <item card1 array>,
-<item card2 array>, and <item card3 array> should all be integer arrays.
-
-For random options there can be 5 arrays in pairs of 3 (ids, values, parameters) right after the cards.
-All of these arrays shall be integer arrays as well.
-
-Example of sending mail with zeny:
-	.@charid = getcharid(0);
-	.@sender$ = "Poring";
-	.@title$ = "Welcome";
-	.@body$ = "Hi! I'm a simple Poring from the Prontera fields! Welcome to Ragnarok!";
-	.@zeny = 5000;
-	mail .@charid, .@sender$, .@title$, .@body$, .@zeny;
-
-Example of sending mail with items:
-	.@charid = getcharid(0);
-	.@sender$ = "Angeling";
-	.@title$ = "Welcome";
-	.@body$ = "Hi! I'm a simple Angeling from the Prontera fields! Welcome to Ragnarok!";
-	.@zeny = 0;
-	setarray .@mailitem[0], 504, 505, 2220, 1214; // White Potion, Blue Potion, Hat, Dagger
-	setarray .@mailamount[0], 10, 5, 1, 1; // 10 White Potions, 5 Blue Potions, 1 Hat, 1 Dagger
-	setarray .@mailcard0[0], 0, 0, 4198, 4092; // Attach Maya Purple Card to the Hat, Attach Skeleton Worker Card to Dagger
-	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
-	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
-	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2;
-	
-Example of sending mail with items and random options:
-	.@charid = getcharid(0);
-	.@sender$ = "Angeling";
-	.@title$ = "Welcome";
-	.@body$ = "Hi! I'm a simple Angeling from the Prontera fields! Welcome to Ragnarok!";
-	.@zeny = 0;
-	setarray .@mailitem[0], 504, 505, 2220, 1214; // White Potion, Blue Potion, Hat, Dagger
-	setarray .@mailamount[0], 10, 5, 1, 1; // 10 White Potions, 5 Blue Potions, 1 Hat, 1 Dagger
-	setarray .@mailcard0[0], 0, 0, 4198, 4092; // Attach Maya Purple Card to the Hat, Attach Skeleton Worker Card to Dagger
-	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
-	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
-	setarray .@mailcard3[0], 0, 0, 0, 0; // Empty last slot
-	setarray .@mailrndopt_id0[0], 0, 0, 0, 0, RDMOPT_VAR_MAXHPAMOUNT; // Enchant the Dagger with increased HP option
-	setarray .@mailrndopt_val0[0], 0, 0, 0, 0, 1000; // Enchant the Dagger with increased HP option by 1000 points
-	setarray .@mailrndopt_prm0[0], 0, 0, 0, 0, 0; // Enchant the Dagger with increased HP option - does not need any parameter
-	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2, .@mailcard3, .@mailrndopt_id0, .@mailrndopt_val0, .@mailrndopt_prm0;
-
----------------------------------------
-
 *openauction({<char_id>});
 
 This will open the Auction window on the client connected to the invoking character.
@@ -7707,7 +7616,6 @@ Parameters (indexes) for monsters are:
 	UMOB_AMOTION
 	UMOB_ADELAY
 	UMOB_DMOTION
-	UMOB_TARGETID
 
 -----
 
@@ -7751,7 +7659,6 @@ Parameter (indexes) for homunculi are:
 	UHOM_AMOTION
 	UHOM_ADELAY
 	UHOM_DMOTION
-	UHOM_TARGETID
 
 -----
 
@@ -7833,7 +7740,6 @@ Parameter (indexes) for mercenaries are:
 	UMER_AMOTION
 	UMER_ADELAY
 	UMER_DMOTION
-	UMER_TARGETID
 
 -----
 
@@ -7876,7 +7782,6 @@ Parameter (indexes) for elementals are:
 	UELE_AMOTION
 	UELE_ADELAY
 	UELE_DMOTION
-	UELE_TARGETID
 
 -----
 

@@ -181,7 +181,7 @@ amatsu,179,107,4	script	John#ama	86,{
 	mes "business here...";
 	next;
 	mes "[John]";
-	mes "At first, I thought, 'What";
+	mes "Af first, I thought, 'What";
 	mes "a great chance!' when the";
 	mes "trade between the Rune-Midgard";
 	mes "Kingdom and Amatsu started.";
@@ -545,9 +545,9 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 	}
 	else if (jap_tree == 3) {
 		mes "^3355FFUnlike other cherry trees,";
-		mes "this tree has a strong fragrance.";
+		mes "this tree has a strong fragnance.";
 		mes "I just fell into a relaxed";
-		mes "mood. The fragrance eased";
+		mes "mood. The fragnance eased";
 		mes "my burdens and I felt";
 		mes "very comfortable.^000000";
 		next;
@@ -559,7 +559,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		close;
 	}
 	else if (jap_tree == 4) {
-		mes "^3355FFThis strong fragrance";
+		mes "^3355FFThis strong fragnance";
 		mes "is making me dizzy. Not like";
 		mes "other cherry trees, this tree's";
 		mes "shimmering white petals";
@@ -569,7 +569,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		mes "being drained if I stay here";
 		mes "longer. After a glimpse of";
 		mes "the cherry tree, I thought to";
-		mes "myself, 'I must get out of here quickly.'^000000";
+		mes "mayself, 'I must get out of here quickly.'^000000";
 		close;
 	}
 	mes "^3355FFThere was a cherry tree";

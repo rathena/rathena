@@ -658,7 +658,7 @@ OnTimer60000:
 	else
 		set $@msg$, $wed_groom$;
 
-	npctalk @name$ +" : Registration timed out. Is there no one who wants to marry "+$@msg$+"..?";
+	npctalk @name$ +" : Registration timed out. Is it that noone wants to marry "+$@msg$+"..?";
 	emotion ET_SCRATCH;
 	
 	set $wed_groom$,"";
@@ -748,7 +748,7 @@ function SF_Principles {
 	next;
 	mes "["+@name$+"]";
 	if ($@wed_allow == 1)
-		mes "Although normally only males can wed females (and vice versa), our local Priest is more open-minded than that and he permits all pairings regardless of gender.";
+		mes "Altough normally only males can wed females (and viceversa), our local Priest is more open-minded than that and he permits all pairings regardless of gender.";
 	else
 		mes "Males may only wed with females, and females only with males, the church will not consent any other kind of partnerships.";
 	next;

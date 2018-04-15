@@ -196,8 +196,6 @@ Disables usage of monster-spawning items on a map:
  - Poring Box (ID 12109)
  - Red Pouch (ID 12024)
 
-Items listed above can be modified under db/(pre-)re/item_flag.txt
-
 Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
 also prevent mobs from being warped onto the map (except slave mobs).
 

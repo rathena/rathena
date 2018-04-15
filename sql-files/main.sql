@@ -608,7 +608,6 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `alive` tinyint(2) NOT NULL default '1',
   `rename_flag` tinyint(2) NOT NULL default '0',
   `vaporize` tinyint(2) NOT NULL default '0',
-  `autofeed` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`homun_id`)
 ) ENGINE=MyISAM;
 

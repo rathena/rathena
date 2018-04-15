@@ -304,7 +304,7 @@ int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t dat
 /*==========================================
  * Dequeue event and add timer for execution (100ms)
  *------------------------------------------*/
-int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack)
+int npc_event_dequeue(struct map_session_data* sd)
 {
 	nullpo_ret(sd);
 
@@ -314,7 +314,7 @@ int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack)
 			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 			sd->state.using_fake_npc = 0;
 		}
-		if (free_script_stack&&sd->st) {
+		if (sd->st) {
 			script_free_state(sd->st);
 			sd->st = NULL;
 		}

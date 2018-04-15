@@ -1778,7 +1778,7 @@ Achievements:
   - ID: 200031
     Group: "AG_JOB_CHANGE"
     Name: "Reborn in Valhalla!"
-    Condition: " Class == JOB_NOVICE_HIGH "
+    Condition: " BaseLevel == 99 && Class == JOB_NOVICE_HIGH "
     Reward:
     #  ItemID: 22808
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
