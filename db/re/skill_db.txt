@@ -581,7 +581,7 @@
 //****
 // Clown & Gypsy
 394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0,0x0,	CG_ARROWVULCAN,Vulcan Arrow
-395,0,0,4,0,0x1,3,5,1,yes,0,0x40,0,misc,2,0x0,	CG_MOONLIT,Sheltering Bliss
+395,0,0,4,0,0x1,3,1,1,yes,0,0x40,0,misc,2,0x0,	CG_MOONLIT,Sheltering Bliss
 396,7,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0,0x40,	CG_MARIONETTE,Marionette Control
 
 //****
@@ -710,7 +710,7 @@
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,		PF_DOUBLECASTING,Double Casting
 483,18,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,0x0,	HW_GANBANTEIN,Ganbantein
 484,18,6,2,2,0xD1,0,5,1,yes,0,0x18000,0,misc,0,0x11010,		HW_GRAVITATION,Gravitation Field
-485,-2,6,1,-1,0x0,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_CARTTERMINATION,Cart Termination
+485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_CARTTERMINATION,Cart Termination
 486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x4000,		WS_OVERTHRUSTMAX,Maximum Power Thrust
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x8,		CG_LONGINGFREEDOM,Longing for Freedom
 488,0,6,4,0,0x1,1,5,1,no,0,0x20,0,misc,0,0x1,	CG_HERMODE,Wand of Hermode
@@ -861,7 +861,7 @@
 //715,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DARKPIERCING,Dark Piercing
 716,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
 717,0,6,1,0,0xD2,18,10,1,no,0,0x2,0,misc,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
-718,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_DEATHSUMMON,Death Summon
+//718,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DEATHSUMMON,Death Summon
 //719,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HELLBURNING,Hell Burning
 //720,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_JACKFROST,Jack Frost 2
 //721,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDEWEB,Wide Web

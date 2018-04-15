@@ -1087,11 +1087,6 @@ enum e_job_types
 	JT_4_M_DANGDANG,
 	JT_4_F_DANGDANG1,
 	JT_4_LEAFCAT,
-	JT_4_NASARIAN,
-	JT_4_NASARIAN_EM,
-	JT_4_TEDDY_BEAR_W,
-	JT_4_TEDDY_BEAR_B,
-	JT_4_TEDDY_BEAR_B_L,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1128,7 +1123,7 @@ enum npce_event : uint8 {
 };
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
-int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack=true);
+int npc_event_dequeue(struct map_session_data* sd);
 int npc_event(struct map_session_data* sd, const char* eventname, int ontouch);
 int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y);
 int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]

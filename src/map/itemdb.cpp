@@ -1419,12 +1419,6 @@ static int itemdb_readdb(void){
 				continue;
 			memset(str, 0, sizeof(str));
 
-			p = strstr(line,"//");
-
-			if( p != nullptr ){
-				*p = '\0';
-			}
-
 			p = line;
 			while( ISSPACE(*p) )
 				++p;
@@ -1452,14 +1446,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[19] = p + 1;
+			str[19] = p;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			*p = '\0';
+			p[1] = '\0';
 			p += 2;
 
 			// OnEquip_Script
@@ -1468,14 +1462,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[20] = p + 1;
+			str[20] = p;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			*p = '\0';
+			p[1] = '\0';
 			p += 2;
 
 			// OnUnequip_Script (last column)
@@ -1485,19 +1479,16 @@ static int itemdb_readdb(void){
 				continue;
 			}
 			str[21] = p;
-			p = &str[21][strlen(str[21]) - 2];
 
-			if ( *p != '}' ) {
+			if ( str[21][strlen(str[21])-2] != '}' ) {
 				/* lets count to ensure it's not something silly e.g. a extra space at line ending */
 				int v, lcurly = 0, rcurly = 0;
 
 				for( v = 0; v < strlen(str[21]); v++ ) {
 					if( str[21][v] == '{' )
 						lcurly++;
-					else if (str[21][v] == '}') {
+					else if ( str[21][v] == '}' )
 						rcurly++;
-						p = &str[21][v];
-					}
 				}
 
 				if( lcurly != rcurly ) {
@@ -1505,10 +1496,8 @@ static int itemdb_readdb(void){
 					continue;
 				}
 			}
-			str[21] = str[21] + 1;  //skip the first left curly
-			*p = '\0';              //null the last right curly
 
-			if (!itemdb_parse_dbrow(str, path, lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
+			if (!itemdb_parse_dbrow(str, path, lines, 0))
 				continue;
 
 			count++;

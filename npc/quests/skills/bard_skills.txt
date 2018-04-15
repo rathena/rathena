@@ -544,7 +544,7 @@ morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
 				mes "some fresh eggs laid by";
 				mes "Yhelle, just like I asked.";
 				mes "I'm sure it was dangerous";
-				mes "going to Niflheim, but the flavor of these eggs is worth it.";
+				mes "going to Nifflheim, but the flavor of these eggs is worth it.";
 				next;
 				next;
 				mes "[Riott]";

@@ -156,7 +156,7 @@ L_AGAIN:
 
 yuno,157,366,2	script	Wise Man Fabius	743,{
 	mes "[Fabius]";
-	if(event_umbala >= 3) set umb_lang,2; //You already learned Umbalian language from Umbalian Chief. So this Quest is disabled
+	if(event_umbala >= 3) set umb_lang,2; //You already learnt Umbalian language from Umbalian Chief. So this Quest is disabled
 	if(umb_lang<2) goto L_QUEST;
 	mes "You speak Umbalian fluently! So you will never forget the language of Umbalians!";
 	close;
@@ -166,13 +166,13 @@ L_QUEST:
 	delitem 7118,1;	//Items: Torn Scroll,
 	delitem 7117,1;//Items: Torn Spell Book,
 	emotion ET_THANKS;
-	mes "Ah, you've done well in retrieving my references. These artifacts holds information about ruins around the world, from the burning hell of the Magma Dungeon, to the strange eerie Hidden Forest of Yggdrasil.";
+	mes "Ah, you've done well in retrieving my references. These artifacts holds information about ruins around the world, from the burning hell of the Magma Dungeon, to the strange eerie Hidden Forest of Yggsadril.";
 	next;
 	mes "[Fabius]";
 	mes "But enough talk, you're just eager to get your reward aren't you?  Well it may not sound much, but my reward for you is knowledge...";
 	next;
 	mes "[Fabius]";
-	mes "Actually it is knowledge of the Umbalian people. They are connected to this world of Midgard in some special way, we just can't confirm it yet. There is a theory that they may be like the elves and protect the ancient tree of Yggdrasil.";
+	mes "Actually it is knowledge of the Umbalian people. They are connected to this world of Midgard in some special way, we just can't confirm it yet. There is a theory that they may be like the elves and protect the ancient tree of Yggsadril.";
 	next;
 	mes "[Fabius]";
 	mes "And I, a great wise man of Yuno, will teach you their language!";
@@ -192,7 +192,7 @@ L_DONE:
 	mes "Argh! My three students ran off with my references! Hey you! Can you get them back for me? I'll gladly reward you.";
 	next;
 	mes "[Fabius]";
-	mes "From what I know, they're in different separate towns making something out of themselves.";
+	mes "From what I know, they're in different seperate towns making something out of themselves.";
 	if(umb_marie==0 && umb_mason==0 && umb_mojo==0) goto L_NOT_MET;
 	if(umb_marie==1) mes "Oh... You found Marie in Amatsu.";
 	if(umb_mojo==1) mes "You saw Mojo in Aldebaran?";

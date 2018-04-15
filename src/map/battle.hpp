@@ -265,8 +265,6 @@ struct Battle_Config
 	int arrow_decrement;
 	int max_aspd;
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
-	int max_hp_lv99;
-	int max_hp_lv150;
 	int max_hp;
 	int max_sp;
 	int max_lv, aura_lv;
@@ -640,10 +638,6 @@ struct Battle_Config
 	int event_refine_chance;
 	int autoloot_adjust;
 	int broadcast_hide_name;
-	int skill_drop_items_full;
-    int feature_homunculus_autofeed;
-	int feature_homunculus_autofeed_rate;
-	int summoner_trait;
 
 #include "../custom/battle_config_struct.inc"
 };
