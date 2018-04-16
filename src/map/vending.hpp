@@ -13,7 +13,7 @@ struct s_autotrader;
 
 struct s_vending {
 	short index; ///< Cart index (return item data)
-	short amount; ///< Amout of the item for vending
+	short amount; ///< Amount of the item for vending
 	unsigned int value; ///< Price
 	size_t value_vat; ///< Value after tax
 };

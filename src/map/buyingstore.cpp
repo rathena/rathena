@@ -163,11 +163,6 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	weight = sd->weight;
 
-	taxdata = tax_get(TAX_BUYING);
-	if (battle_config.display_tax_info) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
-	}
-
 	// check item list
 	for( i = 0; i < count; i++ )
 	{// itemlist: <name id>.W <amount>.W <price>.L
@@ -214,14 +209,6 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		sd->buyingstore.items[i].nameid = nameid;
 		sd->buyingstore.items[i].amount = amount;
 		sd->buyingstore.items[i].price  = price;
-		tax = taxdata->get_tax(taxdata->each, price);
-		sd->buyingstore.items[i].price_vat = (size_t)(price + price / 10000. * tax);
-
-		if (battle_config.display_tax_info) {
-			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(nameid), price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
-			clif_displaymessage(sd->fd, msg);
-		}
 	}
 
 	if( i != count )
@@ -237,6 +224,9 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE_OVERWEIGHT, weight);
 		return 7;
 	}
+
+	taxdata = tax_get(TAX_BUYING);
+	tax_buyingstore_vat(sd); // Calculate value after taxes
 
 	if (battle_config.display_tax_info && taxdata->total.size()) {
 		clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]

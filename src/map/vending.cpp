@@ -98,6 +98,13 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 	clif_vendinglist(sd, id, vsd->vending);
 }
 
+/**
+ * Return the total amount after taxes
+ * @param vsd: Vendor player
+ * @param data: Item data
+ * @param count: Number of different items
+ * @return Total price after taxes
+ */
 static unsigned short vending_tax_intotal(struct map_session_data* vsd, const uint8* data, int count) {
 	s_tax *tax = tax_get(TAX_SELLING);
 	double total = 0;
@@ -359,11 +366,6 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	if (save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 
-	taxdata = tax_get(TAX_SELLING);
-	if (battle_config.display_tax_info) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
-	}
-
 	// filter out invalid items
 	i = 0;
 	for( j = 0; j < count; j++ ) {
@@ -388,15 +390,6 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		sd->vending[i].amount = amount;
 		sd->vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
 
-		tax = taxdata->get_tax(taxdata->each, sd->vending[i].value);
-		sd->vending[i].value_vat = tax ? (size_t)(sd->vending[i].value - sd->vending[i].value / 10000. * tax) : sd->vending[i].value;
-
-		if (battle_config.display_tax_info) {
-			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(sd->cart.u.items_cart[index].nameid), sd->vending[i].value, '-', tax / 100., sd->vending[i].value_vat); // %s : %u %c %.2f%% => %u
-			clif_displaymessage(sd->fd, msg);
-		}
-
 		i++; // item successfully added
 	}
 
@@ -407,6 +400,9 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
 		return 5;
 	}
+
+	taxdata = tax_get(TAX_SELLING);
+	tax_vending_vat(sd); // Calculate value after taxes
 
 	if (battle_config.display_tax_info && taxdata->total.size()) {
 		clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
@@ -747,7 +743,7 @@ static int vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
- * Initialise the vending module
+ * Destroy the vending module
  * called in map::do_init
  */
 void do_final_vending(void)
@@ -757,7 +753,7 @@ void do_final_vending(void)
 }
 
 /**
- * Destory the vending module
+ * Initialize the vending module
  * called in map::do_final
  */
 void do_init_vending(void)

@@ -40,6 +40,64 @@ struct s_tax *tax_get(enum e_tax_type type) {
 }
 
 /**
+ * Calculates the value after tax for Vendors.
+ * @param sd: Player data
+ */
+static inline void tax_vending_vat(struct map_session_data *sd) {
+	int i;
+
+	nullpo_retv(sd);
+
+	if (battle_config.display_tax_info)
+		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
+
+	for (i = 0; i < ARRAYLENGTH(sd->vending); i++) {
+		char msg[CHAT_SIZE_MAX];
+		unsigned short tax;
+		s_tax *taxdata;
+
+		taxdata = tax_get(TAX_SELLING);
+		tax = taxdata->get_tax(taxdata->each, sd->vending[i].value);
+		sd->vending[i].value_vat = tax ? (size_t)(sd->vending[i].value - sd->vending[i].value / 10000. * tax) : sd->vending[i].value;
+
+		if (battle_config.display_tax_info) {
+			memset(msg, '\0', CHAT_SIZE_MAX);
+			sprintf(msg, msg_txt(sd, 777), itemdb_jname(sd->cart.u.items_cart[sd->vending[i].index].nameid), sd->vending[i].value, '-', tax / 100., sd->vending[i].value_vat); // %s : %u %c %.2f%% => %u
+			clif_displaymessage(sd->fd, msg);
+		}
+	}
+}
+
+/**
+ * Calculates the value after tax for Buyingstores.
+ * @param sd: Player data
+ */
+static inline void tax_buyingstore_vat(struct map_session_data *sd) {
+	int i;
+
+	nullpo_retv(sd);
+
+	if (battle_config.display_tax_info)
+		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
+
+	for (i = 0; i < ARRAYLENGTH(sd->buyingstore.items); i++) {
+		char msg[CHAT_SIZE_MAX];
+		unsigned short tax;
+		s_tax *taxdata;
+
+		taxdata = tax_get(TAX_BUYING);
+		tax = taxdata->get_tax(taxdata->each, sd->buyingstore.items[i].price);
+		sd->buyingstore.items[i].price_vat = (size_t)(sd->buyingstore.items[i].price + sd->buyingstore.items[i].price / 10000. * tax);
+
+		if (battle_config.display_tax_info) {
+			memset(msg, '\0', CHAT_SIZE_MAX);
+			sprintf(msg, msg_txt(sd, 777), itemdb_jname(nameid), sd->buyingstore.items[i].price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
+			clif_displaymessage(sd->fd, msg);
+		}
+	}
+}
+
+/**
  * Reads and parses an entry from the tax database.
  * @param node: YAML node containing the entry.
  * @param taxdata: Tax data.
@@ -51,6 +109,7 @@ static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *c
 		for (const auto &tax : node["InTotal"]) {
 			if (tax["MinimalValue"].IsDefined() && tax["Tax"].IsDefined()) {
 				struct s_tax_entry entry;
+
 				entry.minimal = tax["MinimalValue"].as<size_t>();
 				entry.tax = tax["Tax"].as<unsigned short>();
 				taxdata->total.push_back(entry);
@@ -64,6 +123,7 @@ static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *c
 		for (const auto &tax : node["EachEntry"]) {
 			if (tax["MinimalValue"].IsDefined() && tax["Tax"].IsDefined()) {
 				struct s_tax_entry entry;
+
 				entry.minimal = tax["MinimalValue"].as<size_t>();
 				entry.tax = tax["Tax"].as<unsigned short>();
 				taxdata->each.push_back(entry);
@@ -99,10 +159,20 @@ void tax_readdb(void) {
 }
 
 /**
- * Reload tax values for autotrade players (unused)
+ * Reload value after taxes for players with a Vending/Buyingstore shop.
  */
-void tax_reload_vendors(void) {
-	// reload VAT price on vendors
+void tax_reload_vat(void) {
+	struct map_session_data *sd = NULL;
+	struct s_mapiterator *iter = NULL;
+
+	iter = mapit_getallusers();
+	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+		if (sd->state.vending)
+			tax_vending_vat(sd);
+		else if (sd->state.buyingstore)
+			tax_buyingstore_vat(sd);
+	}
+	mapit_free(iter);
 }
 
 /**
@@ -110,6 +180,15 @@ void tax_reload_vendors(void) {
  */
  void tax_set_conf(const std::string filename) {
 	tax_conf = filename;
+}
+
+/**
+ * Reloads the tax database
+ */
+void tax_db_reload(void) {
+	do_final_tax();
+	do_init_tax();
+	tax_reload_vat();
 }
 
 /**
@@ -123,5 +202,6 @@ void do_init_tax(void) {
  * Finalizes the tax database
  */
 void do_final_tax(void) {
-
+	TaxDB[TAX_SELLING].clear();
+	TaxDB[TAX_BUYING].clear();
 }

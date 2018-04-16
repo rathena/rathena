@@ -23,19 +23,20 @@ struct s_tax_entry {
 };
 
 struct s_tax {
-	std::vector <struct s_tax_entry> each;
-	std::vector <struct s_tax_entry> total;
+	std::vector <s_tax_entry> each;
+	std::vector <s_tax_entry> total;
 
-	unsigned short get_tax(const std::vector <struct s_tax_entry>, double);
+	unsigned short get_tax(const std::vector <s_tax_entry>, double);
 };
 
 struct s_tax *tax_get(enum e_tax_type type);
 void tax_reloadall(void);
 
 void tax_readdb(void);
-void tax_reload_vendors(void);
+void tax_reload_vat(void);
 void tax_set_conf(const std::string filename);
 
+void tax_db_reload(void);
 void do_init_tax(void);
 void do_final_tax(void);
 
