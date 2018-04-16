@@ -1949,7 +1949,7 @@ OnTouch_:
 
 lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
+	if ((MISC_QUEST&512) && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
