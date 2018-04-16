@@ -91,7 +91,7 @@ static inline void tax_buyingstore_vat(struct map_session_data *sd) {
 
 		if (battle_config.display_tax_info) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(nameid), sd->buyingstore.items[i].price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
+			sprintf(msg, msg_txt(sd, 777), itemdb_jname(sd->buyingstore.items[i].nameid), sd->buyingstore.items[i].price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
 			clif_displaymessage(sd->fd, msg);
 		}
 	}
