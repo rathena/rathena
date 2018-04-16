@@ -30,7 +30,9 @@ struct s_tax {
 };
 
 struct s_tax *tax_get(enum e_tax_type type);
-void tax_reloadall(void);
+
+void tax_vending_vat(struct map_session_data *sd);
+void tax_buyingstore_vat(struct map_session_data *sd);
 
 void tax_readdb(void);
 void tax_reload_vat(void);

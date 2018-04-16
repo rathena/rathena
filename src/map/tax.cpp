@@ -43,7 +43,7 @@ struct s_tax *tax_get(enum e_tax_type type) {
  * Calculates the value after tax for Vendors.
  * @param sd: Player data
  */
-static inline void tax_vending_vat(struct map_session_data *sd) {
+void tax_vending_vat(struct map_session_data *sd) {
 	int i;
 
 	nullpo_retv(sd);
@@ -72,7 +72,7 @@ static inline void tax_vending_vat(struct map_session_data *sd) {
  * Calculates the value after tax for Buyingstores.
  * @param sd: Player data
  */
-static inline void tax_buyingstore_vat(struct map_session_data *sd) {
+void tax_buyingstore_vat(struct map_session_data *sd) {
 	int i;
 
 	nullpo_retv(sd);
