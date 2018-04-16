@@ -48,14 +48,12 @@ struct s_tax *tax_get(enum e_tax_type type) {
  * @param sd: Player data
  */
 void tax_vending_vat(struct map_session_data *sd) {
-	int i;
-
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
-	for (i = 0; i < ARRAYLENGTH(sd->vending); i++) {
+	for (int i = 0; i < ARRAYLENGTH(sd->vending); i++) {
 		char msg[CHAT_SIZE_MAX];
 		unsigned short tax;
 		s_tax *taxdata;
@@ -77,14 +75,12 @@ void tax_vending_vat(struct map_session_data *sd) {
  * @param sd: Player data
  */
 void tax_buyingstore_vat(struct map_session_data *sd) {
-	int i;
-
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
-	for (i = 0; i < ARRAYLENGTH(sd->buyingstore.items); i++) {
+	for (int i = 0; i < ARRAYLENGTH(sd->buyingstore.items); i++) {
 		char msg[CHAT_SIZE_MAX];
 		unsigned short tax;
 		s_tax *taxdata;
@@ -206,6 +202,8 @@ void do_init_tax(void) {
  * Finalizes the tax database
  */
 void do_final_tax(void) {
-	TaxDB[TAX_SELLING].clear();
-	TaxDB[TAX_BUYING].clear();
+	for (int i = 0; i < TAX_MAX; i++) {
+		TaxDB[i]->total.clear();
+		TaxDB[i]->each.clear();
+	}
 }
