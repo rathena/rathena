@@ -3183,11 +3183,11 @@
 15002,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial dungeon: Sara's Memory"
 15003,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Adventurer leon"
 
-// Episode 14.3: Bios Island
-15005,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Bios Island"
-15006,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bios Island Exploration"
-15007,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Bios Island"
-15008,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Bios Island"
+// Episode 14.3: Isle of Bios
+15005,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
+15006,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Isle of Bios Exploration"
+15007,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
+15008,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
 //15025,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 //15026,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 //15027,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
