@@ -372,7 +372,6 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		short index        = *(uint16*)(data + 8*j + 0);
 		short amount       = *(uint16*)(data + 8*j + 2);
 		unsigned int value = *(uint32*)(data + 8*j + 4);
-		unsigned short tax;
 
 		index -= 2; // offset adjustment (client says that the first cart position is 2)
 

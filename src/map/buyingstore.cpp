@@ -167,7 +167,6 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	for( i = 0; i < count; i++ )
 	{// itemlist: <name id>.W <amount>.W <price>.L
 		unsigned short nameid, amount;
-		unsigned short tax;
 		int price, idx;
 		struct item_data* id;
 

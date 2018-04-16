@@ -8,9 +8,13 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.h"
+#include "../common/nullpo.h"
 #include "../common/showmsg.h"
 
+#include "battle.hpp"
 #include "buyingstore.hpp"
+#include "clif.hpp"
+#include "pc.hpp"
 #include "vending.hpp"
 
 static struct s_tax TaxDB[TAX_MAX];
