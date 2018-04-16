@@ -203,7 +203,7 @@ void do_init_tax(void) {
  */
 void do_final_tax(void) {
 	for (int i = 0; i < TAX_MAX; i++) {
-		TaxDB[i]->total.clear();
-		TaxDB[i]->each.clear();
+		TaxDB[i].total.clear();
+		TaxDB[i].each.clear();
 	}
 }
