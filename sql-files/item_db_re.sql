@@ -4105,7 +4105,7 @@ REPLACE INTO `item_db_re` VALUES (5973,'Ancient_Elven_Ear_J','Ancient Elven Ear 
 REPLACE INTO `item_db_re` VALUES (5978,'Syringe_Toy','Toy Syringe',4,0,NULL,100,NULL,3,NULL,0,0xFFFFFFFF,63,2,1,NULL,'70',0,842,'bonus bMdef,3; bonus2 bAddItemHealRate,545,150; bonus2 bAddItemHealRate,546,150; bonus2 bAddItemHealRate,547,150;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5979,'C_Angel_Fluttering','C Angel Fluttering',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1380,'hateffect HAT_EF_ANGEL_FLUTTERING,true;',NULL,'hateffect HAT_EF_ANGEL_FLUTTERING,false;');
 REPLACE INTO `item_db_re` VALUES (5980,'C_Classical_Fhat','C Classical Fhat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1381,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5985,'Noble_Mask','Noble Mask',4,0,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,256,NULL,'30',0,1409,'bonus2 bSkillAtk,"PA_SACRIFICE",BaseLevel*2; bonus2 bSkillVariableCast,"PA_PRESSURE",-2000; bonus2 bSkillVariableCast,"CR_DEVOTION",-2000; if (BaseLevel > 149) { bonus bMaxHPrate,3; bonus bAspdRate,3; } else if (BaseLevel > 99) { bonus bMaxHPrate,2; bonus bAspdRate,2; } else { bonus bMaxHPrate,1; bonus bAspdRate,1; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5985,'Noble_Mask','Noble Mask',4,0,NULL,200,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,512,NULL,'30',1,1409,'bonus2 bSkillAtk,"PA_SACRIFICE",BaseLevel*2; bonus2 bSkillVariableCast,"PA_PRESSURE",-2000; bonus2 bSkillVariableCast,"CR_DEVOTION",-2000; if (BaseLevel > 149) { bonus bMaxHPrate,3; bonus bAspdRate,3; } else if (BaseLevel > 99) { bonus bMaxHPrate,2; bonus bAspdRate,2; } else { bonus bMaxHPrate,1; bonus bAspdRate,1; }',NULL,NULL);
 #===================================================================
 # More Etc Items
 #===================================================================
@@ -6756,12 +6756,12 @@ REPLACE INTO `item_db_re` VALUES (12526,'E_Wind_Walk_10_Scroll','Wind Walk Scrol
 REPLACE INTO `item_db_re` VALUES (12527,'E_Adrenaline_Scroll','Adrenaline Scroll',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "BS_ADRENALINE",5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12528,'E_Convex_Mirror','Convex Mirror',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_BOSSMAPINFO,600000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12529,'White_Slim_Potion_Box','White Slim Potion Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 11573,100;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12530,'Mastela_Fruit_Box','Mastela Fruit Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12530,'Mastela_Fruit_Box','Mastela Fruit Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 522,200;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12531,'White_Potion_Box','White Potion Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 504,100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12532,'Royal_Jelly_Box2','Royal Jelly Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 526,100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12533,'Blue_Herb_Box2','Blue Herb Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 510,100;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12534,'Yggdrasil_Seed_Box','Yggdrasil Seed Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12535,'Iggdrasilberry_Box','Iggdrasilberry Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12534,'Yggdrasil_Seed_Box','Yggdrasil Seed Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 608,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12535,'Iggdrasilberry_Box','Iggdrasilberry Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 607,15;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12536,'NY_Rice_Cake_Soup','NY Rice Cake Soup',2,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12537,'Solo_Gift_Basket','Solo Gift Basket',2,1000,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Solo_Gift_Basket);*/ getitem 597,5; getitem 596,3; getitem 561,3; getitem 573,4; getitem 559,10; getitem 560,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12538,'Couple_Event_Basket','Couple Event Basket',2,2000,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*getgroupitem(IG_Couple_Event_Basket);*/ getitem 14546,10; getitem 14547,10; getitem 14548,10; getitem 14549,10; getitem 14550,10;',NULL,NULL);
@@ -11017,6 +11017,7 @@ REPLACE INTO `item_db_re` VALUES (22533,'New_Year_Gift_Box','New Year Gift Box',
 REPLACE INTO `item_db_re` VALUES (22534,'Closedmind_Box','Closed Mind Box',18,10,NULL,1000,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,'getgroupitem(IG_Sealed_Mind_Box);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22535,'WorkerScroll_A','Scroll Summoning Workers(Male)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22536,'WorkerScroll_B','Scroll Summoning Workers(Female)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22537,'PrizeOfHero','Prize Of Hero',2,0,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,'getrandgroupitem(IG_PrizeOfHero,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22538,'Hanbok_bag','Hanbok bag',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22540,'Runstone_Lux','Lux Anima Runestone',11,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,56,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_LUXANIMA",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22541,'PC_Room_Coupon_Box_VI','PC Room Coupon Box VI',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
