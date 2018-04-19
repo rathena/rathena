@@ -65,8 +65,6 @@ bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
-unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
-
 sc_type SkillStatusChangeTable[MAX_SKILL];
 int StatusIconChangeTable[SC_MAX];
 unsigned int StatusChangeFlagTable[SC_MAX];
@@ -81,17 +79,17 @@ static unsigned short status_calc_vit(struct block_list *,struct status_change *
 static unsigned short status_calc_int(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_dex(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_luk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_batk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_watk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_matk(struct block_list *,struct status_change *,int);
-static signed short status_calc_hit(struct block_list *,struct status_change *,int);
-static signed short status_calc_critical(struct block_list *,struct status_change *,int);
-static signed short status_calc_flee(struct block_list *,struct status_change *,int);
-static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-static defType status_calc_def(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
+static unsigned short status_calc_batk(struct block_list *,struct status_change *,int,bool);
+static unsigned short status_calc_watk(struct block_list *,struct status_change *,int,bool);
+static unsigned short status_calc_matk(struct block_list *,struct status_change *,int,bool);
+static signed short status_calc_hit(struct block_list *,struct status_change *,int,bool);
+static signed short status_calc_critical(struct block_list *,struct status_change *,int,bool);
+static signed short status_calc_flee(struct block_list *,struct status_change *,int,bool);
+static signed short status_calc_flee2(struct block_list *,struct status_change *,int,bool);
+static defType status_calc_def(struct block_list *bl, struct status_change *sc, int,bool);
+static signed short status_calc_def2(struct block_list *,struct status_change *,int,bool);
+static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int,bool);
+static signed short status_calc_mdef2(struct block_list *,struct status_change *,int,bool);
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
@@ -105,12 +103,15 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
 static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode);
 #ifdef RENEWAL
-static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
+static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int,bool);
 #endif
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 static int status_get_sc_interval(enum sc_type type);
+struct status_data *status_get_display_status(struct block_list *bl);
+
+unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp != 0, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground != 0, (map[(m)].zone << 3) != 0, map_flag_gvg2_te((m))) )
@@ -426,10 +427,11 @@ void initChangeTables(void)
 	set_sc( LK_BERSERK		, SC_BERSERK		, SI_BERSERK		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2|SCB_FLEE|SCB_SPEED|SCB_ASPD|SCB_MAXHP|SCB_REGEN );
 	set_sc( HP_ASSUMPTIO		, SC_ASSUMPTIO		,
 #ifndef RENEWAL
-			SI_ASSUMPTIO		, SCB_NONE );
+			SI_ASSUMPTIO		,
 #else
-			SI_ASSUMPTIO2		, SCB_NONE );
+			SI_ASSUMPTIO2		,
 #endif
+			SCB_NONE );
 	add_sc( HP_BASILICA		, SC_BASILICA		);
 	set_sc( HW_MAGICPOWER		, SC_MAGICPOWER		, SI_MAGICPOWER		, SCB_MATK );
 	add_sc( PA_SACRIFICE		, SC_SACRIFICE		);
@@ -554,7 +556,13 @@ void initChangeTables(void)
 
 	set_sc( CASH_BLESSING		, SC_BLESSING		, SI_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI		, SC_INCREASEAGI	, SI_INCREASEAGI	, SCB_AGI|SCB_SPEED );
-	set_sc( CASH_ASSUMPTIO		, SC_ASSUMPTIO		, SI_ASSUMPTIO		, SCB_NONE );
+	set_sc( CASH_ASSUMPTIO		, SC_ASSUMPTIO		,
+#ifndef RENEWAL
+			SI_ASSUMPTIO		,
+#else
+			SI_ASSUMPTIO2		,
+#endif
+			SCB_NONE );
 
 	set_sc( ALL_PARTYFLEE		, SC_PARTYFLEE		, SI_PARTYFLEE		, SCB_NONE );
 	set_sc( ALL_ODINS_POWER		, SC_ODINS_POWER	, SI_ODINS_POWER	, SCB_WATK|SCB_MATK|SCB_MDEF|SCB_DEF );
@@ -1264,13 +1272,13 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_WEDDING] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ALL_RIDING] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_PUSH_CART] |= SCB_SPEED;
-	StatusChangeFlagTable[SC_MTF_ASPD] |= SCB_ASPD|SCB_HIT;
+	StatusChangeFlagTable[SC_MTF_ASPD] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_MTF_MATK] |= SCB_MATK;
 	StatusChangeFlagTable[SC_MTF_MLEATKED] |= SCB_ALL;
 	StatusChangeFlagTable[SC_QUEST_BUFF1] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF2] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF3] |= SCB_BATK|SCB_MATK;
-	StatusChangeFlagTable[SC_MTF_ASPD2] |= SCB_ASPD|SCB_HIT;
+	StatusChangeFlagTable[SC_MTF_ASPD2] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_MTF_MATK2] |= SCB_MATK;
 	StatusChangeFlagTable[SC_2011RWC_SCROLL] |= SCB_BATK|SCB_MATK|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
 	StatusChangeFlagTable[SC_MTF_HITFLEE] |= SCB_HIT|SCB_FLEE;
@@ -3080,7 +3088,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
  * @return bonus: total bonus for SP
  * @author [Cydh]
  */
-static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
+int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 	int bonus = 0;
 
 	if (type == STATUS_BONUS_FIX) {
@@ -3174,7 +3182,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
  * @param isHP true - calculates Max HP, false - calculated Max SP
  * @return max The max value of HP or SP
  */
-static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP) {
+unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP) {
 	double dmax = 0;
 	uint16 idx, level, job_id;
 
@@ -4732,6 +4740,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 {
 	const struct status_data *b_status = status_get_base_status(bl); // Base Status
 	struct status_data *status = status_get_status_data(bl); // Battle Status
+	struct status_data *display_status = status_get_display_status(bl); // Display Status
 	struct status_change *sc = status_get_sc(bl);
 	TBL_PC *sd = BL_CAST(BL_PC,bl);
 	int temp;
@@ -4818,118 +4827,161 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	}
 
 	if(flag&SCB_BATK && b_status->batk) {
-		status->batk = status_base_atk(bl,status);
+		unsigned short batk;
+		batk = status_base_atk(bl,status);
 		temp = b_status->batk - status_base_atk(bl,b_status);
 		if (temp) {
-			temp += status->batk;
-			status->batk = cap_value(temp, 0, USHRT_MAX);
+			temp += batk;
+			batk = cap_value(temp, 0, USHRT_MAX);
 		}
-		status->batk = status_calc_batk(bl, sc, status->batk);
+		status->batk = status_calc_batk(bl, sc, batk, false);
+		display_status->batk = status_calc_batk(bl, sc, batk, true);
 	}
 
 	if(flag&SCB_WATK) {
 #ifndef RENEWAL
-		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk);
-		if (!sd) // Should not affect weapon refine bonus
-			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2);
-
-		if (sd && sd->bonus.weapon_atk_rate)
+		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk, false);
+		display_status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk, true);
+		if (!sd) { // Should not affect weapon refine bonus
+			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2, false);
+			display_status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2, true);
+		}
+		if (sd && sd->bonus.weapon_atk_rate) {
 			status->rhw.atk += status->rhw.atk * sd->bonus.weapon_atk_rate / 100;
+			display_status->rhw.atk += status->rhw.atk * sd->bonus.weapon_atk_rate / 100;
+		}
 		if(b_status->lhw.atk) {
 			if (sd) {
 				sd->state.lr_flag = 1;
-				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk);
+				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, false);
+				display_status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, true);
 				sd->state.lr_flag = 0;
 			} else {
-				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk);
-				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2);
+				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, false);
+				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2, false);
+				display_status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, true);
+				display_status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2, true);
 			}
 		}
 #else
 		if(!b_status->watk) { // We only have left-hand weapon
 			status->watk = 0;
-			status->watk2 = status_calc_watk(bl, sc, b_status->watk2);
+			status->watk2 = status_calc_watk(bl, sc, b_status->watk2, false);
+			display_status->watk2 = status_calc_watk(bl, sc, b_status->watk2, true);
+		} else {
+			status->watk = status_calc_watk(bl, sc, b_status->watk, false);
+			display_status->watk = status_calc_watk(bl, sc, b_status->watk, true);
 		}
-		else status->watk = status_calc_watk(bl, sc, b_status->watk);
 #endif
 	}
 
 	if(flag&SCB_HIT) {
-		if (status->dex == b_status->dex
+		signed short hit;
 #ifdef RENEWAL
-			&& status->luk == b_status->luk
+		if (status->dex == b_status->dex && status->luk == b_status->luk ) {
+			status->hit = status_calc_hit(bl, sc, b_status->hit, false);
+			display_status->hit = status_calc_hit(bl, sc, b_status->hit, true);
+		} else {
+			hit = b_status->hit + (status->dex - b_status->dex) + (status->luk/3 - b_status->luk/3);
+			status->hit = status_calc_hit(bl, sc, hit, false);
+			display_status->hit = status_calc_hit(bl, sc, hit, true);
+		}
+#else
+		if (status->dex == b_status->dex ) {
+			status->hit = status_calc_hit(bl, sc, b_status->hit, false);
+			display_status->hit = status_calc_hit(bl, sc, b_status->hit, true);
+		} else {
+			hit = b_status->hit + (status->dex - b_status->dex);
+			status->hit = status_calc_hit(bl, sc, hit, false);
+			display_status->hit = status_calc_hit(bl, sc, hit, true);
+		}
 #endif
-			)
-			status->hit = status_calc_hit(bl, sc, b_status->hit);
-		else
-			status->hit = status_calc_hit(bl, sc, b_status->hit + (status->dex - b_status->dex)
-#ifdef RENEWAL
-			 + (status->luk/3 - b_status->luk/3)
-#endif
-			 );
 	}
 
 	if(flag&SCB_FLEE) {
-		if (status->agi == b_status->agi
+		signed short flee;
 #ifdef RENEWAL
-			&& status->luk == b_status->luk
+		if (status->agi == b_status->agi && status->luk == b_status->luk) {
+			status->flee = status_calc_flee(bl, sc, b_status->flee, false);
+			display_status->flee = status_calc_flee(bl, sc, b_status->flee, true);
+		} else {
+			flee = b_status->flee +(status->agi - b_status->agi)+ (status->luk/5 - b_status->luk/5);
+			status->flee = status_calc_flee(bl, sc, flee, false);
+			display_status->flee = status_calc_flee(bl, sc, flee, true);
+		}
+#else
+		if (status->agi == b_status->agi) {
+			status->flee = status_calc_flee(bl, sc, b_status->flee, false);
+			display_status->flee = status_calc_flee(bl, sc, b_status->flee, true);
+		} else {
+			flee = b_status->flee +(status->agi - b_status->agi);
+			status->flee = status_calc_flee(bl, sc, flee, false);
+			display_status->flee = status_calc_flee(bl, sc, flee, true);
+		}
 #endif
-			)
-			status->flee = status_calc_flee(bl, sc, b_status->flee);
-		else
-			status->flee = status_calc_flee(bl, sc, b_status->flee +(status->agi - b_status->agi)
-#ifdef RENEWAL
-			+ (status->luk/5 - b_status->luk/5)
-#endif
-			);
 	}
 
 	if(flag&SCB_DEF) {
-		status->def = status_calc_def(bl, sc, b_status->def);
-
-		if( bl->type&BL_HOM )
-			status->def += (status->vit/5 - b_status->vit/5);
+		status->def = status_calc_def(bl, sc, b_status->def, false);
+		display_status->def = status_calc_def(bl, sc, b_status->def, true);
 	}
 
 	if(flag&SCB_DEF2) {
-		if (status->vit == b_status->vit
+		signed short def2;
 #ifdef RENEWAL
-			&& status->agi == b_status->agi
-#endif
-			)
-			status->def2 = status_calc_def2(bl, sc, b_status->def2);
-		else
-			status->def2 = status_calc_def2(bl, sc, b_status->def2
-#ifdef RENEWAL
-			+ (int)( ((float)status->vit/2 - (float)b_status->vit/2) + ((float)status->agi/5 - (float)b_status->agi/5) )
+		if (status->vit == b_status->vit && status->agi == b_status->agi ) {
+			status->def2 = status_calc_def2(bl, sc, b_status->def2, false);
+			display_status->def2 = status_calc_def2(bl, sc, b_status->def2, true);
+		} else {
+			def2 = b_status->def2 + (int)( ((float)status->vit/2 - (float)b_status->vit/2)
+				   + ((float)status->agi/5 - (float)b_status->agi/5) );
+			status->def2 = status_calc_def2(bl, sc, def2, false);
+			display_status->def2 = status_calc_def2(bl, sc, def2, true);
+		}
 #else
-			+ (status->vit - b_status->vit)
+		if (status->vit == b_status->vit ) {
+			status->def2 = status_calc_def2(bl, sc, b_status->def2, false);
+			display_status->def2 = status_calc_def2(bl, sc, b_status->def2, true);
+		} else {
+			def2 = b_status->def2 + (status->vit - b_status->vit);
+			status->def2 = status_calc_def2(bl, sc, def2, false);
+			display_status->def2 = status_calc_def2(bl, sc, def2, true);
+		}
 #endif
-		);
 	}
 
 	if(flag&SCB_MDEF) {
-		status->mdef = status_calc_mdef(bl, sc, b_status->mdef);
-
-		if( bl->type&BL_HOM )
-			status->mdef += (status->int_/5 - b_status->int_/5);
+		status->mdef = status_calc_mdef(bl, sc, b_status->mdef, false);
+		display_status->mdef = status_calc_mdef(bl, sc, b_status->mdef, true);
 	}
 
 	if(flag&SCB_MDEF2) {
-		if (status->int_ == b_status->int_ && status->vit == b_status->vit
+		signed short mdef2;
 #ifdef RENEWAL
-			&& status->dex == b_status->dex
-#endif
-			)
-			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2);
-		else
-			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2 +(status->int_ - b_status->int_)
-#ifdef RENEWAL
-			+ (int)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 - (float)b_status->vit/5) )
+		if (status->int_ == b_status->int_ && 
+			status->vit == b_status->vit &&
+			status->dex == b_status->dex ) {
+			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2, false);
+			display_status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2, true);
+		} else {
+			mdef2 = b_status->mdef2 +(status->int_ - b_status->int_)
+					+ (int)( ((float)status->dex/5 - (float)b_status->dex/5) 
+					+ ((float)status->vit/5 - (float)b_status->vit/5) );
+			status->mdef2 = status_calc_mdef2(bl, sc, mdef2, false);
+			display_status->mdef2 = status_calc_mdef2(bl, sc, mdef2, true);
+		}
 #else
-			+ ((status->vit - b_status->vit)>>1)
+		if (status->int_ == b_status->int_ && 
+			status->vit == b_status->vit ) {
+			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2, false);
+			display_status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2, true);
+		} else {
+			mdef2 = b_status->mdef2 +(status->int_ - b_status->int_)
+					+ ((status->vit - b_status->vit)>>1);
+			status->mdef2 = status_calc_mdef2(bl, sc, mdef2, false);
+			display_status->mdef2 = status_calc_mdef2(bl, sc, mdef2, true);
+		}
 #endif
-			);
 	}
 
 	if(flag&SCB_SPEED) {
@@ -4947,21 +4999,23 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	}
 
 	if(flag&SCB_CRI && b_status->cri) {
-		if (status->luk == b_status->luk)
-			status->cri = status_calc_critical(bl, sc, b_status->cri);
-		else
-			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
-
-		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
-		if( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR )
-			status->cri <<= 1;
+		if (status->luk == b_status->luk) {
+			status->cri = status_calc_critical(bl, sc, b_status->cri, false);
+			display_status->cri = status_calc_critical(bl, sc, b_status->cri, true);
+		} else {
+			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk), false);
+			display_status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk), true);
+		}
 	}
 
 	if(flag&SCB_FLEE2 && b_status->flee2) {
-		if (status->luk == b_status->luk)
-			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2);
-		else
-			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2 +(status->luk - b_status->luk));
+		if (status->luk == b_status->luk) {
+			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2, false);
+			display_status->flee2 = status_calc_flee2(bl, sc, b_status->flee2, true);
+		} else {
+			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2 +(status->luk - b_status->luk), false);
+			display_status->flee2 = status_calc_flee2(bl, sc, b_status->flee2 +(status->luk - b_status->luk), true);
+		}
 	}
 
 	if(flag&SCB_ATK_ELE) {
@@ -5034,15 +5088,16 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	}
 
 	if(flag&SCB_MATK) {
+		unsigned short matk_min = 0, matk_max = 0;
 #ifndef RENEWAL
-		status->matk_min = status_base_matk_min(status) + (sd?sd->bonus.ematk:0);
-		status->matk_max = status_base_matk_max(status) + (sd?sd->bonus.ematk:0);
+		matk_min = status_base_matk_min(status) + (sd?sd->bonus.ematk:0);
+		matk_max = status_base_matk_max(status) + (sd?sd->bonus.ematk:0);
 #else
 		/**
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
 		 * MATK = (sMATK + wMATK + eMATK) * Multiplicative Modifiers
 		 **/
-		status->matk_min = status->matk_max = status_base_matk(bl, status, status_get_lv(bl));
+		matk_min = matk_max = status_base_matk(bl, status, status_get_lv(bl));
 
 		switch( bl->type ) {
 			case BL_PC: {
@@ -5052,16 +5107,16 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				// Any +MATK you get from skills and cards, including cards in weapon, is added here.
 				if (sd) {
 					if (sd->bonus.ematk > 0)
-						status->matk_min += sd->bonus.ematk;
+						matk_min += sd->bonus.ematk;
 					if (pc_checkskill(sd, SU_POWEROFLAND) > 0) {
 						if ((pc_checkskill(sd, SU_SV_STEMSPEAR) + pc_checkskill(sd, SU_CN_POWDERING) + pc_checkskill(sd, SU_CN_METEOR) + pc_checkskill(sd, SU_SV_ROOTTWIST) +
 						pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS)) > 19)
-							status->matk_min += status->matk_min * 20 / 100;
+							matk_min += matk_min * 20 / 100;
 					}
 				}
 
-				status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
-				status->matk_max = status->matk_min;
+				matk_min = status_calc_ematk(bl, sc, matk_min, false);
+				matk_max = matk_min;
 
 				// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
 				if (b_status->lhw.matk) {
@@ -5088,35 +5143,40 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 					variance += status->lhw.matk * status->lhw.wlv / 10;
 				}
 
-				status->matk_min += wMatk - variance;
-				status->matk_max += wMatk + variance;
+				if (sc && sc->data[SC_CATNIPPOWDER])
+					wMatk -= wMatk * sc->data[SC_CATNIPPOWDER]->val2 / 100;
+
+				matk_min += wMatk - variance;
+				matk_max += wMatk + variance;
 				}
 				break;
 			case BL_HOM:
-				status->matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
-				status->matk_max += (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
+				matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
+				matk_max += (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
 				break;
 		}
 #endif
 
 		if (bl->type&BL_PC && sd->matk_rate != 100) {
-			status->matk_max = status->matk_max * sd->matk_rate/100;
-			status->matk_min = status->matk_min * sd->matk_rate/100;
+			matk_max = matk_max * sd->matk_rate/100;
+			matk_min = matk_min * sd->matk_rate/100;
 		}
 
 		if ((bl->type&BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK)  /// Hom Min Matk is always the same as Max Matk
 				|| (sc && sc->data[SC_RECOGNIZEDSPELL]))
-			status->matk_min = status->matk_max;
+			matk_min = matk_max;
 
 #ifdef RENEWAL
 		if( sd && sd->right_weapon.overrefine > 0) {
-			status->matk_min++;
-			status->matk_max += sd->right_weapon.overrefine - 1;
+			matk_min++;
+			matk_max += sd->right_weapon.overrefine - 1;
 		}
 #endif
 
-		status->matk_max = status_calc_matk(bl, sc, status->matk_max);
-		status->matk_min = status_calc_matk(bl, sc, status->matk_min);
+		status->matk_max = status_calc_matk(bl, sc, matk_max, false);
+		status->matk_min = status_calc_matk(bl, sc, matk_min, false);
+		display_status->matk_max = status_calc_matk(bl, sc, matk_max, true);
+		display_status->matk_min = status_calc_matk(bl, sc, matk_min, true);
 	}
 
 	if(flag&SCB_ASPD) {
@@ -5401,7 +5461,7 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
  * @param str: Initial str
  * @return modified str with cap_value(str,0,USHRT_MAX)
  */
-static unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, int str)
+unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, int str)
 {
 	if(!sc || !sc->count)
 		return cap_value(str,0,USHRT_MAX);
@@ -5477,7 +5537,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
  * @param agi: Initial agi
  * @return modified agi with cap_value(agi,0,USHRT_MAX)
  */
-static unsigned short status_calc_agi(struct block_list *bl, struct status_change *sc, int agi)
+unsigned short status_calc_agi(struct block_list *bl, struct status_change *sc, int agi)
 {
 	if(!sc || !sc->count)
 		return cap_value(agi,0,USHRT_MAX);
@@ -5551,7 +5611,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
  * @param vit: Initial vit
  * @return modified vit with cap_value(vit,0,USHRT_MAX)
  */
-static unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, int vit)
+unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, int vit)
 {
 	if(!sc || !sc->count)
 		return cap_value(vit,0,USHRT_MAX);
@@ -5617,7 +5677,7 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
  * @param int_: Initial int
  * @return modified int with cap_value(int_,0,USHRT_MAX)
  */
-static unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, int int_)
+unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, int int_)
 {
 	if(!sc || !sc->count)
 		return cap_value(int_,0,USHRT_MAX);
@@ -5696,7 +5756,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
  * @param dex: Initial dex
  * @return modified dex with cap_value(dex,0,USHRT_MAX)
  */
-static unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, int dex)
+unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, int dex)
 {
 	if(!sc || !sc->count)
 		return cap_value(dex,0,USHRT_MAX);
@@ -5772,7 +5832,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
  * @param luk: Initial luk
  * @return modified luk with cap_value(luk,0,USHRT_MAX)
  */
-static unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, int luk)
+unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, int luk)
 {
 	if(!sc || !sc->count)
 		return cap_value(luk,0,USHRT_MAX);
@@ -5834,15 +5894,17 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
  * @param bl: Object to change batk [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param batk: Initial batk
+ * @param display: If the status change is displayed in the status window
  * @return modified batk with cap_value(batk,0,USHRT_MAX)
  */
-static unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk)
+unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
 		return cap_value(batk,0,USHRT_MAX);
-
-	if(sc->data[SC_ATKPOTION])
-		batk += sc->data[SC_ATKPOTION]->val1;
+	
 	if(sc->data[SC_BATKFOOD])
 		batk += sc->data[SC_BATKFOOD]->val1;
 #ifndef RENEWAL
@@ -5897,6 +5959,13 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_SHRIMP])
 		batk += batk * sc->data[SC_SHRIMP]->val2 / 100;
 
+	if(display)
+		return (unsigned short)cap_value(batk,0,USHRT_MAX);
+	
+	// Status Changes that are hidden in the status window.
+	if(sc->data[SC_ATKPOTION])
+		batk += sc->data[SC_ATKPOTION]->val1;
+	
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
 
@@ -5905,12 +5974,16 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
  * @param bl: Object to change watk [PC]
  * @param sc: Object's status change information
  * @param watk: Initial watk
+ * @param display: If the status change is displayed in the status window
  * @return modified watk with cap_value(watk,0,USHRT_MAX)
  */
-static unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk)
+unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
-		return cap_value(watk,0,USHRT_MAX);
+		return (unsigned short)cap_value(watk,0,USHRT_MAX);
 
 #ifndef RENEWAL
 	if(sc->data[SC_IMPOSITIO])
@@ -5924,8 +5997,6 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += sc->data[SC_VOLCANO]->val2;
 	if(sc->data[SC_MERC_ATKUP])
 		watk += sc->data[SC_MERC_ATKUP]->val2;
-	if(sc->data[SC_WATER_BARRIER])
-		watk -= sc->data[SC_WATER_BARRIER]->val2;
 #ifndef RENEWAL
 	if(sc->data[SC_NIBELUNGEN]) {
 		if (bl->type != BL_PC)
@@ -5961,8 +6032,6 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += (10 + 10 * sc->data[SC_BANDING]->val1) * sc->data[SC_BANDING]->val2;
 	if(sc->data[SC_INSPIRATION])
 		watk += 40 * sc->data[SC_INSPIRATION]->val1 + 3 * sc->data[SC_INSPIRATION]->val2;
-	if(sc->data[SC_GT_CHANGE])
-		watk += sc->data[SC_GT_CHANGE]->val2;
 	if(sc->data[SC__ENERVATION])
 		watk -= watk * sc->data[SC__ENERVATION]->val2 / 100;
 	if(sc->data[SC_STRIKING])
@@ -5997,6 +6066,15 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_CHATTERING])
 		watk += sc->data[SC_CHATTERING]->val2;
 
+	if(display)
+		return (unsigned short)cap_value(watk,0,USHRT_MAX);
+	
+	// Status Changes that are hidden in the status window.
+	if(sc->data[SC_WATER_BARRIER])
+		watk -= sc->data[SC_WATER_BARRIER]->val2;
+	if(sc->data[SC_GT_CHANGE])
+		watk += sc->data[SC_GT_CHANGE]->val2;
+	
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
 
@@ -6008,10 +6086,13 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc, int matk)
+unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc, int matk, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if (!sc || !sc->count)
-		return cap_value(matk,0,USHRT_MAX);
+		return (unsigned short)cap_value(matk,0,USHRT_MAX);
 
 	if (sc->data[SC_MATKPOTION])
 		matk += sc->data[SC_MATKPOTION]->val1;
@@ -6061,12 +6142,17 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
  * @param bl: Object to change matk [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param matk: Initial matk
+ * @param display: If the status change is displayed in the status window
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
+unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
-		return cap_value(matk,0,USHRT_MAX);
+		return (unsigned short)cap_value(matk,0,USHRT_MAX);
+
 #ifndef RENEWAL
 	/// Take note fixed value first before % modifiers [PRE-RENEWAL]
 	if (sc->data[SC_MATKPOTION])
@@ -6100,10 +6186,6 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += sc->data[SC_QUEST_BUFF2]->val1;
 	if (sc->data[SC_QUEST_BUFF3])
 		matk += sc->data[SC_QUEST_BUFF3]->val1;
-	if (sc->data[SC_MAGICPOWER] && sc->data[SC_MAGICPOWER]->val4)
-		matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
-	if (sc->data[SC_MINDBREAKER])
-		matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
 	if (sc->data[SC_INCMATKRATE])
 		matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
 	if (sc->data[SC_MOONLITSERENADE])
@@ -6115,6 +6197,16 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_SHRIMP])
 		matk += matk * sc->data[SC_SHRIMP]->val2 / 100;
 
+	if(display) 
+		return (unsigned short)cap_value(matk,0,USHRT_MAX);
+
+	// Status Changes that are hidden in the status window.
+	if(sc->data[SC_MINDBREAKER])
+		matk += matk * sc->data[SC_MINDBREAKER]->val2 / 100;
+
+	if (sc->data[SC_MAGICPOWER] && sc->data[SC_MAGICPOWER]->val4)
+		matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
+	
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
 
@@ -6123,15 +6215,25 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
  * @param bl: Object to change critical [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param critical: Initial critical
+ * @param display: If the status change is displayed in the status window
  * @return modified critical with cap_value(critical,10,USHRT_MAX)
  */
-static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
+signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, bool display)
 {
-	if(!sc || !sc->count)
-		return cap_value(critical,10,SHRT_MAX);
+	bool katar_bonus = false;
 
-	if (sc->data[SC_INCCRI])
-		critical += sc->data[SC_INCCRI]->val2;
+	if(battle_config.show_status_sc)
+		display = false;
+	
+	if ( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR && !display )
+		katar_bonus = true;
+	
+	if(!sc || !sc->count) {
+		if( katar_bonus )
+			critical <<= 1;
+		return (short)cap_value(critical,10,SHRT_MAX);
+	}
+
 	if (sc->data[SC_CRIFOOD])
 		critical += sc->data[SC_CRIFOOD]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
@@ -6155,6 +6257,26 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 	if(sc->data[SC_BEYONDOFWARCRY])
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
 
+	if(display) {
+		// katar_bonus should be always false here.
+		// Just kept it for future changes like
+		// a show_status_katar_crit-config.
+		if( katar_bonus )
+			critical <<= 1;
+		return (short)cap_value(critical,10,SHRT_MAX);
+	}
+
+	// Status Changes that are hidden in the status window.
+	if (sc->data[SC_INCCRI]) {
+		if (bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR) // Gives double critical rate when using Katar weapons [Limestone]
+			critical += sc->data[SC_INCCRI]->val2 * 2;
+		else
+			critical += sc->data[SC_INCCRI]->val2;
+	}
+
+	if( katar_bonus )
+		critical <<= 1;
+	
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
 
@@ -6163,12 +6285,16 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
  * @param bl: Object to change hit [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param hit: Initial hit
+ * @param display: If the status change is displayed in the status window
  * @return modified hit with cap_value(hit,1,USHRT_MAX)
  */
-static signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit)
+signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
-		return cap_value(hit,1,SHRT_MAX);
+		return (short)cap_value(hit,1,SHRT_MAX);
 
 	if(sc->data[SC_INCHIT])
 		hit += sc->data[SC_INCHIT]->val1;
@@ -6206,8 +6332,11 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit -= hit * 50 / 100;
 	if(sc->data[SC_ILLUSIONDOPING])
 		hit -= sc->data[SC_ILLUSIONDOPING]->val2;
-	if (sc->data[SC_MTF_ASPD])
-		hit += sc->data[SC_MTF_ASPD]->val2;
+
+	if(display)
+		return (short)cap_value(hit,1,SHRT_MAX);
+	
+	// Status Changes that are hidden in the status window.
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -6217,10 +6346,14 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
  * @param bl: Object to change flee [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param flee: Initial flee
+ * @param display: If the status change is displayed in the status window
  * @return modified flee with cap_value(flee,1,USHRT_MAX)
  */
-static signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
+signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if( bl->type == BL_PC ) {
 		if( map_flag_gvg(bl->m) )
 			flee -= flee * battle_config.gvg_flee_penalty/100;
@@ -6229,7 +6362,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	}
 
 	if(!sc || !sc->count)
-		return cap_value(flee,1,SHRT_MAX);
+		return (short)cap_value(flee,1,SHRT_MAX);
+
 	if(sc->data[SC_OVERED_BOOST]) //Should be final and unmodifiable by any means
 		return sc->data[SC_OVERED_BOOST]->val2;
 	if(sc->data[SC_TINDER_BREAKER] || sc->data[SC_TINDER_BREAKER2])
@@ -6313,6 +6447,11 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if (sc->data[SC_GROOMING])
 		flee += sc->data[SC_GROOMING]->val2;
 
+	if(display)
+		return (short)cap_value(flee,1,SHRT_MAX);
+	
+	// Status Changes that are hidden in the status window.
+
 	return (short)cap_value(flee,1,SHRT_MAX);
 }
 
@@ -6321,12 +6460,16 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
  * @param bl: Object to change flee2 [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param flee2: Initial flee2
+ * @param display: If the status change is displayed in the status window
  * @return modified flee2 with cap_value(flee2,10,USHRT_MAX)
  */
-static signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2)
+signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2, bool display)
 {
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
-		return cap_value(flee2,10,SHRT_MAX);
+		return (short)cap_value(flee2,10,SHRT_MAX);
 
 	if(sc->data[SC_INCFLEE2])
 		flee2 += sc->data[SC_INCFLEE2]->val2;
@@ -6339,6 +6482,11 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 	if (sc->data[SC_DORAM_FLEE2])
 		flee2 += sc->data[SC_DORAM_FLEE2]->val1;
 
+	if(display) 
+		return (short)cap_value(flee2,10,SHRT_MAX);
+	
+	// Status Changes that are hidden in the status window.
+
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
 
@@ -6347,10 +6495,17 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
  * @param bl: Object to change def [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param def: Initial def
+ * @param display: If the status change is displayed in the status window
  * @return modified def with cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX)
  */
-static defType status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+defType status_calc_def(struct block_list *bl, struct status_change *sc, int def, bool display)
 {
+	struct status_data * status = status_get_status_data(bl);
+	struct status_data * b_status = status_get_base_status(bl);
+
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
@@ -6409,8 +6564,6 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * 10 / 100;
 	if( sc->data[SC_ANALYZE] )
 		def -= def * (14 * sc->data[SC_ANALYZE]->val1) / 100;
-	if( sc->data[SC_NEUTRALBARRIER] )
-		def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
 	if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 2 )
 		def += sc->data[SC_SHIELDSPELL_REF]->val2;
 	if( sc->data[SC_PRESTIGE] )
@@ -6423,8 +6576,6 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * (10 + 10 * sc->data[SC_SATURDAYNIGHTFEVER]->val1) / 100;
 	if( sc->data[SC_EARTHDRIVE] )
 		def -= def * 25 / 100;
-	if( sc->data[SC_CAMOUFLAGE] )
-		def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
 	if( sc->data[SC_SOLID_SKIN_OPTION] )
 		def += def * sc->data[SC_SOLID_SKIN_OPTION]->val2 / 100;
 	if( sc->data[SC_ROCK_CRUSHER] )
@@ -6433,10 +6584,28 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def += def * sc->data[SC_POWER_OF_GAIA]->val2 / 100;
 	if(sc->data[SC_ASH])
 		def -= def * sc->data[SC_ASH]->val3/100;
-	if( sc->data[SC_OVERED_BOOST] && bl->type == BL_HOM )
+
+	if(display)
+		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
+	
+	// Status Changes that are hidden in the status window.
+#ifdef RENEWAL
+	if(sc->data[SC_ASSUMPTIO])
+		def <<= 1; // only eDEF is doubled
+#endif
+	if(sc->data[SC_NEUTRALBARRIER])
+		def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
+	if(sc->data[SC_FORCEOFVANGUARD])
+		def += def * 2 * sc->data[SC_FORCEOFVANGUARD]->val1 / 100;
+	if(sc->data[SC_CAMOUFLAGE])
+		def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
+	if(sc->data[SC_OVERED_BOOST] && bl->type == BL_PC)
 		def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
 
-	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
+	if( bl->type&BL_HOM )
+		def += (status->vit/5 - b_status->vit/5);
+
+	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
 /**
@@ -6444,16 +6613,22 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
  * @param bl: Object to change def2 [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param def2: Initial def2
+ * @param display: If the status change is displayed in the status window
  * @return modified def2 with cap_value(def2,SHRT_MIN,SHRT_MAX)
  */
-static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
+signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2, bool display)
 {
-	if(!sc || !sc->count)
 #ifdef RENEWAL
-		return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
+	const short CAP_MIN = SHRT_MIN, CAP_MAX = SHRT_MAX;
 #else
-		return (short)cap_value(def2,1,SHRT_MAX);
+	const short CAP_MIN = 1, CAP_MAX = SHRT_MAX;
 #endif
+	if(battle_config.show_status_sc)
+		display = false;
+	
+	if(!sc || !sc->count) {
+		return (short)cap_value(def2,CAP_MIN,CAP_MAX);
+	}
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -6501,14 +6676,17 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * sc->data[SC_PARALYSIS]->val2 / 100;
 	if(sc->data[SC_EQC])
 		def2 -= def2 * sc->data[SC_EQC]->val2 / 100;
-	if( sc->data[SC_CAMOUFLAGE] )
-		def2 -= def2 * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
 
-#ifdef RENEWAL
-	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
-#else
-	return (short)cap_value(def2,1,SHRT_MAX);
-#endif
+	if(display) 
+		return (short)cap_value(def2,CAP_MIN,CAP_MAX);
+	
+	// Status Changes that are hidden in the status window.
+	if(sc->data[SC_CAMOUFLAGE])
+		def2 -= def2 * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
+	if(sc->data[SC_GT_REVITALIZE])
+		def2 += sc->data[SC_GT_REVITALIZE]->val4;
+
+	return (short)cap_value(def2,CAP_MIN,CAP_MAX);
 }
 
 /**
@@ -6516,10 +6694,17 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
  * @param bl: Object to change mdef [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param mdef: Initial mdef
+ * @param display: If the status change is displayed in the status window
  * @return modified mdef with cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX)
  */
-static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef, bool display)
 {
+	struct status_data * status = status_get_status_data(bl);
+	struct status_data * b_status = status_get_base_status(bl);
+
+	if(battle_config.show_status_sc)
+		display = false;
+	
 	if(!sc || !sc->count)
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
@@ -6553,8 +6738,6 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef += 25 * mdef / 100;
 	if(sc->data[SC_BURNING])
 		mdef -= 25 * mdef / 100;
-	if( sc->data[SC_NEUTRALBARRIER] )
-		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
 	if(sc->data[SC_ANALYZE])
 		mdef -= mdef * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if(sc->data[SC_SYMPHONYOFLOVER])
@@ -6567,6 +6750,20 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
 
+	if(display)
+		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
+
+	// Status Changes that are hidden in the status window.
+#ifdef RENEWAL
+	if(sc->data[SC_ASSUMPTIO])
+		mdef <<= 1; // only eMDEF is doubled
+#endif
+	if(sc->data[SC_NEUTRALBARRIER])
+		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
+	
+	if( bl->type&BL_HOM )
+		status->mdef += (status->int_/5 - b_status->int_/5);
+	
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
@@ -6575,16 +6772,22 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
  * @param bl: Object to change mdef2 [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param mdef2: Initial mdef2
+ * @param display: If the status change is displayed in the status window
  * @return modified mdef2 with cap_value(mdef2,SHRT_MIN,SHRT_MAX)
  */
-static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
+signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2, bool display)
 {
-	if(!sc || !sc->count)
 #ifdef RENEWAL
-		return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
+	const short CAP_MIN = SHRT_MIN, CAP_MAX = SHRT_MAX;
 #else
-		return (short)cap_value(mdef2,1,SHRT_MAX);
+	const short CAP_MIN = SHRT_MIN, CAP_MAX = SHRT_MAX;
 #endif
+	if(battle_config.show_status_sc)
+		display = false;
+	
+	if(!sc || !sc->count) {
+		return (short)cap_value(mdef2,CAP_MIN,CAP_MAX);
+	}
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -6593,18 +6796,20 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 	if(sc->data[SC_MDEFSET])
 		return sc->data[SC_MDEFSET]->val1;
 
-	if(sc->data[SC_MINDBREAKER])
-		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
 	if(sc->data[SC_BURNING])
 		mdef2 -= mdef2 * 25 / 100;
 	if(sc->data[SC_ANALYZE])
 		mdef2 -= mdef2 * (14 * sc->data[SC_ANALYZE]->val1) / 100;
 
-#ifdef RENEWAL
-	return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
-#else
-	return (short)cap_value(mdef2,1,SHRT_MAX);
-#endif
+
+	if(display)
+		return (short)cap_value(mdef2,CAP_MIN,CAP_MAX);
+	
+	// Status Changes that are hidden in the status window.
+	if(sc->data[SC_MINDBREAKER])
+		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3 / 100;
+
+	return (short)cap_value(mdef2,CAP_MIN,CAP_MAX);
 }
 
 /**
@@ -6614,7 +6819,7 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
  * @param speed: Initial speed
  * @return modified speed with cap_value(speed,10,USHRT_MAX)
  */
-static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
+unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
 	TBL_PC* sd = BL_CAST(BL_PC, bl);
 	int speed_rate = 100;
@@ -6801,7 +7006,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
  *               False - percentage value
  * @return modified aspd
  */
-static short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed)
+short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed)
 {
 	int bonus = 0;
 
@@ -6926,7 +7131,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
  * @param aspd: Object's current ASPD
  * @return modified aspd
  */
-static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int aspd)
+short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int aspd)
 {
 	if (!sc || !sc->count)
 		return cap_value(aspd, 0, 2000);
@@ -6954,7 +7159,7 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
  * @param aspd_rate: Object's current ASPD
  * @return modified aspd_rate
  */
-static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
+short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
 {
 	int i;
 
@@ -7099,7 +7304,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
  * @param dmotion: Object's current damage delay
  * @return modified delay rate
  */
-static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion)
+unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion)
 {
 	if( !sc || !sc->count || map_flag_gvg2(bl->m) || map[bl->m].flag.battleground )
 		return cap_value(dmotion,0,USHRT_MAX);
@@ -7120,7 +7325,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
  * @param maxhp: Object's current max HP
  * @return modified maxhp
  */
-static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
+unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
 {
 	int rate = 100;
 
@@ -7139,7 +7344,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
  * @param maxsp: Object's current max SP
  * @return modified maxsp
  */
-static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
+unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 {
 	int rate = 100;
 
@@ -7158,7 +7363,7 @@ static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
  * @param element: Object's current element
  * @return new element
  */
-static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element)
+unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element)
 {
 	if(!sc || !sc->count)
 		return cap_value(element, 0, UCHAR_MAX);
@@ -7186,7 +7391,7 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
  * @param lv: Object's current element level
  * @return new element level
  */
-static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv)
+unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv)
 {
 	if(!sc || !sc->count)
 		return cap_value(lv, 1, 4);
@@ -7256,7 +7461,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
  * @param mode: Original mode
  * @return mode with cap_value(mode, 0, INT_MAX)
  */
-static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode)
+enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode)
 {
 	if(!sc || !sc->count)
 		return cap_value(mode, MD_NONE, static_cast<e_mode>(INT_MAX));
@@ -7417,6 +7622,23 @@ struct status_data *status_get_base_status(struct block_list *bl)
 		case BL_NPC:	return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : NULL);
 		default:
 			return NULL;
+	}
+}
+
+/**
+ * Gets the display status data of the given bl
+ * @param bl: Object whose status to get [PC]
+ * @return status or "dummy_status" if any other bl->type than noted above
+ */
+struct status_data *status_get_display_status(struct block_list *bl)
+{
+	nullpo_retr(&dummy_status, bl);
+
+	switch (bl->type) {
+		case BL_PC:
+			return &((TBL_PC*)bl)->display_status;
+		default:
+			return &dummy_status;
 	}
 }
 
@@ -7846,7 +8068,7 @@ void status_change_init(struct block_list *bl)
 * through the timer (e.g. those that deal damage in regular intervals)
 * @param type: Status change (SC_*)
 *------------------------------------------*/
-static int status_get_sc_interval(enum sc_type type)
+int status_get_sc_interval(enum sc_type type)
 {
 	switch (type) {
 		case SC_POISON:
