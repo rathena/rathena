@@ -10448,7 +10448,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 #if PACKETVER >= 20170920
-		if( sd->hd ){
+		if( sd->hd && battle_config.feature_homunculus_autofeed ){
 			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
 		}else{
 			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
@@ -16568,7 +16568,7 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
-			if( sd->hd == nullptr || sd->hd->homunculus.vaporize ){
+			if( sd->hd == nullptr || sd->hd->homunculus.vaporize || !battle_config.feature_homunculus_autofeed ){
 				return;
 			}
 
