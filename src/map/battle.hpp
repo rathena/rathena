@@ -641,8 +641,7 @@ struct Battle_Config
 	int autoloot_adjust;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
-    int feature_homunculus_autofeed;
-	int feature_homunculus_autofeed_rate;
+	int feature_homunculus_autofeed;
 	int summoner_trait;
 
 #include "../custom/battle_config_struct.inc"
