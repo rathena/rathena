@@ -5957,7 +5957,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
 /// @param bl Sends packet to clients around this object
 /// @param id ID of object that has this effect
-/// @param type Status icon see enum si_type
+/// @param type Status icon see enum efst_types
 /// @param flag 1:Active, 0:Deactive
 /// @param tick Duration in ms
 /// @param val1
@@ -6015,7 +6015,7 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 
 /* Sends status effect to clients around the bl
  * @param bl Object that has the effect
- * @param type Status icon see enum si_type
+ * @param type Status icon see enum efst_types
  * @param flag 1:Active, 0:Deactive
  * @param tick Duration in ms
  * @param val1

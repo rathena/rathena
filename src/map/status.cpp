@@ -163,12 +163,12 @@ unsigned int status_sc2scb_flag(sc_type sc)
 
 /**
  * Returns the bl types which require a status change packet to be sent for a given client status identifier.
- * @param type The client-side status identifier to look up (see enum si_type)
+ * @param type The client-side status identifier to look up (see enum efst_types)
  * @return The bl types relevant to the type (see enum bl_type)
  */
 int status_type2relevant_bl_types(int type)
 {
-	if( type < 0 || type >= EFST_MAX ) {
+	if( type < EFST_BLANK || type >= EFST_MAX ) {
 		ShowError("status_type2relevant_bl_types: Unsupported type %d\n", type);
 		return EFST_BLANK;
 	}
@@ -11313,7 +11313,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd && val2 != EFST_BLANK)
-				clif_status_change(bl, (enum si_type)val2, 1, tick, 0, 0, 0);
+				clif_status_change(bl, (enum efst_types)val2, 1, tick, 0, 0, 0);
 			break;
 	}
 
@@ -12373,7 +12373,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd && sce->val2 != EFST_BLANK)
-				clif_status_load(bl, (enum si_type)sce->val2, 0);
+				clif_status_load(bl, (enum efst_types)sce->val2, 0);
 			break;
 		case SC_C_MARKER:
 			{
