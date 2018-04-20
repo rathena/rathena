@@ -3693,7 +3693,7 @@ void clif_arrowequip(struct map_session_data *sd,int val) {
 	nullpo_retv(sd);
 
 #if PACKETVER >= 20121128
-	clif_status_change(&sd->bl, SI_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
+	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
 #endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
@@ -5958,10 +5958,10 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 {
 	unsigned char buf[32];
 
-	if (type == SI_BLANK)  //It shows nothing on the client...
+	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
-	if (type == SI_ACTIONDELAY && tick == 0)
+	if (type == EFST_POSTDELAY && tick == 0)
 		return;
 
 	nullpo_retv(bl);
@@ -6016,13 +6016,13 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3) {
 	struct map_session_data *sd = NULL;
 
-	if (type == SI_BLANK)  //It shows nothing on the client...
+	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
-	if (type == SI_ACTIONDELAY && tick == 0)
+	if (type == EFST_POSTDELAY && tick == 0)
 		return;
 
-	if (type == SI_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
+	if (type == EFST_ILLUSION && !battle_config.display_hallucination) // Disable Hallucination.
 		return;
 
 	nullpo_retv(bl);
@@ -6096,7 +6096,7 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 #endif
 	int offset = 0;
 
-	if (type == SI_BLANK)
+	if (type == EFST_BLANK)
 		return;
 
 	nullpo_retv(bl);
@@ -10387,13 +10387,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_initialstatus(sd);
 
 		if (sd->sc.option&OPTION_FALCON)
-			clif_status_load(&sd->bl, SI_FALCON, 1);
+			clif_status_load(&sd->bl, EFST_FALCON, 1);
 		else if (sd->sc.option&(OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR))
-			clif_status_load(&sd->bl, SI_RIDING, 1);
+			clif_status_load(&sd->bl, EFST_RIDING, 1);
 		else if (sd->sc.option&OPTION_WUGRIDER)
-			clif_status_load(&sd->bl, SI_WUGRIDER, 1);
+			clif_status_load(&sd->bl, EFST_WUGRIDER, 1);
 		else if (sd->sc.data[SC_ALL_RIDING])
-			clif_status_load(&sd->bl, SI_ALL_RIDING, 1);
+			clif_status_load(&sd->bl, EFST_ALL_RIDING, 1);
 
 		if(sd->status.manner < 0)
 			sc_start(&sd->bl,&sd->bl,SC_NOCHAT,100,0,0);
@@ -10414,7 +10414,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if (night_flag && map[sd->bl.m].flag.nightenabled) {
 			sd->state.night = 1;
-			clif_status_load(&sd->bl, SI_NIGHT, 1);
+			clif_status_load(&sd->bl, EFST_SKE, 1);
 		}
 
 		// Notify everyone that this char logged in [Skotlex].
@@ -10467,13 +10467,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			if( !sd->state.night )
 			{
 				sd->state.night = 1;
-				clif_status_load(&sd->bl, SI_NIGHT, 1);
+				clif_status_load(&sd->bl, EFST_SKE, 1);
 			}
 		}
 		else if( sd->state.night )
 		{ //Clear night display.
 			sd->state.night = 0;
-			clif_status_load(&sd->bl, SI_NIGHT, 0);
+			clif_status_load(&sd->bl, EFST_SKE, 0);
 		}
 
 		if( map[sd->bl.m].flag.battleground )
@@ -10540,7 +10540,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		npc_script_event(sd, NPCE_LOADMAP);
 
 	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd))
-		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
+		clif_status_load(&sd->bl, EFST_DEVIL1, 1);  //blindness [Komurka]
 
 	if (sd->sc.opt2) //Client loses these on warp.
 		clif_changeoption(&sd->bl);

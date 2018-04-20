@@ -6550,7 +6550,7 @@
 12351,Shout_Megaphone,Scream Megaphone,11,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "MC_LOUD",1; },{},{}
 12352,Dun_Tele_Scroll3,Dungeon Teleport Scroll 3,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashDungeon",3; },{},{}
 12353,Tiny_Waterbottle,Small Bottle,2,800,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_WATERWEAPON,90000,1; },{},{}
-12354,Buche_De_Noel,Buche De Noel,2,2,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_ANGELUS; bonus_script "{ bonus bHPrecovRate,3; bonus bSPrecovRate,3; bonus bHit,3; bonus bCritical,7; }",600,0,0,SI_BUCHEDENOEL; },{},{}
+12354,Buche_De_Noel,Buche De Noel,2,2,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_ANGELUS; bonus_script "{ bonus bHPrecovRate,3; bonus bSPrecovRate,3; bonus bHit,3; bonus bCritical,7; }",600,0,0,EFST_BUCHEDENOEL; },{},{}
 12355,Xmas_Gift,Xmas Gift,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Xmas_Gift,1); },{},{}
 12356,Louise_Costume_Box,Louise Costume Box,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Louise_Costume_Box,1); },{},{}
 12357,Shiny_Wing_Gown,Shiny Wing Gown,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1630; },{},{}
@@ -6571,7 +6571,7 @@
 12372,Hell_Contract,Hell Contract,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1379; },{},{}
 12373,Boy's_Naivety,Boy's Pure Heart,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1370; },{},{}
 12374,Flaming_Ice,Ice Fireworks,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1837; },{},{}
-12375,Acaraje,Akaraje,2,0,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",120,0,0,SI_ACARAJE; },{},{}
+12375,Acaraje,Akaraje,2,0,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",120,0,0,EFST_ACARAJE; },{},{}
 12376,Mysterious_Can2,Mysterious Can2,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 3,0; itemskill "PR_GLORIA",2; },{},{}
 12377,Mysterious_PET_Bottle2,Mysterious PET Bottle2,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,3; itemskill "PR_MAGNIFICAT",1; },{},{}
 12378,2009_Rice_Cake_Soup,Rice Cake Soup,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; },{},{}
@@ -6600,7 +6600,7 @@
 12401,Rune_Kn_Test_Int,Rune Kn Test Int,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCINT,300000,40; },{},{}
 12402,29Fruit,29Fruit,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 12403,Lucky_Egg_C2,Lucky Egg C2,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Egg_C2); },{},{}
-12404,Acti_Potion,Acti Potion,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus2 bAddDamageClass,Class_All,3; bonus bMatkRate,3; bonus2 bSubEle,Ele_All,3; }",120,0,0,SI_POPECOOKIE; },{},{}
+12404,Acti_Potion,Acti Potion,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus2 bAddDamageClass,Class_All,3; bonus bMatkRate,3; bonus2 bSubEle,Ele_All,3; }",120,0,0,EFST_POPECOOKIE; },{},{}
 12405,Underripe_Yggseed,Underripe Yggseed,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 30,30; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,140000,5; },{},{}
 12406,Psychic_ArmorS,Psychic ArmorS,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_ENERGYCOAT; sc_start4 SC_ELEMENTALCHANGE,10000,1,Ele_Ghost,1,0; },{},{}
 12407,PCBang_Coupon_Box,PC Cafe Coupon Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -6657,10 +6657,10 @@
 12459,F_Med_Life_Potion,F Med Life Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HEAL3; sc_start2 SC_L_LIFEPOTION,600000,-7,4; },{},{}
 12460,F_Small_Life_Potion,F Small Life Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HEAL3; sc_start2 SC_S_LIFEPOTION,600000,-5,5; },{},{}
 12461,F_Regeneration_Potion,F Regeneration Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12462,F_B_Mdef_Potion,F B Mdef Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_SPELLBREAKER; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",180,0,0,SI_PROTECT_MDEF; },{},{}
-12463,F_S_Mdef_Potion,F S Mdef Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_SPELLBREAKER; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",60,0,0,SI_PROTECT_MDEF; },{},{}
-12464,F_B_Def_Potion,F B Def Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_GUARD; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",180,0,0,SI_PROTECT_DEF; },{},{}
-12465,F_S_Def_Potion,F S Def Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_GUARD; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",60,0,0,SI_PROTECT_DEF; },{},{}
+12462,F_B_Mdef_Potion,F B Mdef Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_SPELLBREAKER; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",180,0,0,EFST_PROTECT_MDEF; },{},{}
+12463,F_S_Mdef_Potion,F S Mdef Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_SPELLBREAKER; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",60,0,0,EFST_PROTECT_MDEF; },{},{}
+12464,F_B_Def_Potion,F B Def Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_GUARD; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",180,0,0,EFST_PROTECT_DEF; },{},{}
+12465,F_S_Def_Potion,F S Def Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect EF_GUARD; bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",60,0,0,EFST_PROTECT_DEF; },{},{}
 12466,F_Blessing_10_Scroll,F Blessing 10 Scroll,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12467,F_Inc_Agi_10_Scroll,F Inc Agi 10 Scroll,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12468,F_Aspersio_5_Scroll,F Aspersio 5 Scroll,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -6789,7 +6789,7 @@
 12593,Cyclops_Box2,Cyclops Box2,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12594,Cyclops_Box3,Cyclops Box3,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12595,Lucky_Egg_C7,Lucky Egg C7,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Egg_C7); },{},{}
-12596,Magic_Candy,Magic Candy,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HASTEUP; bonus_script "{ bonus bMatk,30; bonus bFixedCastrate,-70; bonus bNoCastCancel; bonus2 bSPLossRate,90,10000; }",60,0,0,SI_MAGIC_CANDY; },{},{}
+12596,Magic_Candy,Magic Candy,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HASTEUP; bonus_script "{ bonus bMatk,30; bonus bFixedCastrate,-70; bonus bNoCastCancel; bonus2 bSPLossRate,90,10000; }",60,0,0,EFST_MAGIC_CANDY; },{},{}
 12597,Opor_Ayam,Opor Ayam,11,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12598,Dendeng_Balado,Dendeng Balado,11,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12599,Kurma,Kurma,11,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -6824,7 +6824,7 @@
 12630,Teddy_Bear_Scroll,Teddy Bear Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ mercenary_create 2217,1800000; },{},{}
 12631,Macro_Stone_A,Macro Stone A,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12632,Macro_Stone_B,Macro Stone B,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12633,Malang_Cat_Can,Malangdo Cat Can,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus2 bExpAddRace,RC_All,10; bonus2 bDropAddRace,RC_All,20; }",1200,1,0,SI_OVERLAPEXPUP; },{},{}
+12633,Malang_Cat_Can,Malangdo Cat Can,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus2 bExpAddRace,RC_All,10; bonus2 bDropAddRace,RC_All,20; }",1200,1,0,EFST_OVERLAPEXPUP; },{},{}
 12634,Macro_Stone_A1,Macro Stone A1,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12635,Macro_Stone_A2,Macro Stone A2,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12636,Malang_Sp_Can,Malangdo Canned Specialties,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "malangdo",140,114; },{},{}
@@ -6857,10 +6857,10 @@
 12663,Trans_Scroll_Poring,Transformation Scroll(Poring),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1002,1200000,SC_MTF_CRIDAMAGE,25; showscript "Traaaansformation-!! Poring form!!"; },{},{}
 12664,Trans_Scroll_Golem,Transformation Scroll(Golem),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1040,1200000,SC_MTF_MLEATKED,5,20,2; showscript "Traaaansformation-!! Golem form!!"; },{},{}
 12665,Grovel_Buff,Grovel Buff,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12666,Thai_Perfume_MATK,Thai Perfume MATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bMatk,24; }",600,0,0,SI_SKF_MATK; },{},{}
-12667,Thai_Perfume_ATK,Thai Perfume ATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bBaseAtk,24; }",600,0,0,SI_SKF_ATK; },{},{}
-12668,Thai_Perfume_ASPD,Thai Perfume ASPD,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bAspdRate,3; }",600,0,0,SI_SKF_ASPD; },{},{}
-12669,Thai_Perfume_CAST,Thai Perfume CAST,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bVariableCastrate,-5; }",600,0,0,SI_SKF_CAST; },{},{}
+12666,Thai_Perfume_MATK,Thai Perfume MATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bMatk,24; }",600,0,0,EFST_SKF_MATK; },{},{}
+12667,Thai_Perfume_ATK,Thai Perfume ATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bBaseAtk,24; }",600,0,0,EFST_SKF_ATK; },{},{}
+12668,Thai_Perfume_ASPD,Thai Perfume ASPD,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bAspdRate,3; }",600,0,0,EFST_SKF_ASPD; },{},{}
+12669,Thai_Perfume_CAST,Thai Perfume CAST,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bVariableCastrate,-5; }",600,0,0,EFST_SKF_CAST; },{},{}
 12670,Beast_Powder,Beast Powder,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12671,99lv_Battle_Manual,99lv Battle Manual,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12672,Start_New_Box,Start New Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 617,2; getitem 12263,2; getitem 12329,3; getitem 12330,2; },{},{}
@@ -6887,8 +6887,8 @@
 12693,Old_C_Album_Garment,Garment Card Album,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_CardAlbum_Garment,1); },{},{}
 12694,Old_C_Album_Shoes,Shoes Card Album,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_CardAlbum_Shoes,1); },{},{}
 12695,Old_C_Album_Acc,Accessory Card Album,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_CardAlbum_Acc,1); },{},{}
-12696,RWC_Cele_Fire,RWC Celebration Firecracker,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAllStats,3; bonus2 bAddClass,Class_All,5; bonus2 bMagicAddClass,Class_All,5; bonus bMatkRate,5; }",10,0,0,SI_2011RWC; },{},{}
-12697,RWC_Cele_Fire2,RWC Celebration Firecracker,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAllStats,3; bonus2 bAddClass,Class_All,5; bonus2 bMagicAddClass,Class_All,5; bonus bMatkRate,5; }",10,0,0,SI_2011RWC; },{},{}
+12696,RWC_Cele_Fire,RWC Celebration Firecracker,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAllStats,3; bonus2 bAddClass,Class_All,5; bonus2 bMagicAddClass,Class_All,5; bonus bMatkRate,5; }",10,0,0,EFST_2011RWC; },{},{}
+12697,RWC_Cele_Fire2,RWC Celebration Firecracker,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bAllStats,3; bonus2 bAddClass,Class_All,5; bonus2 bMagicAddClass,Class_All,5; bonus bMatkRate,5; }",10,0,0,EFST_2011RWC; },{},{}
 12698,Old_C_Album_Weapon,Weapon Card Album,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_CardAlbum_Weapon,1); },{},{}
 12699,Tikbalang_Belt,Tikbalang Harness,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2313; },{},{}
 12700,Insideout_Shirt,Inside-out Shirt,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "malaya",242,211; },{},{}
@@ -6943,8 +6943,8 @@
 // More usable items
 //===================================================================
 12739,Snow_Flower,Snow Flowers,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 10,10; },{},{}
-12740,Inc_Str_Scroll,Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus bStr,20; }",60,0,0,SI_STR_SCROLL; },{},{}
-12741,Inc_Int_Scroll,Intellect Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; bonus_script "{ bonus bInt,20; }",60,0,0,SI_INT_SCROLL; },{},{}
+12740,Inc_Str_Scroll,Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus bStr,20; }",60,0,0,EFST_STR_SCROLL; },{},{}
+12741,Inc_Int_Scroll,Intellect Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; bonus_script "{ bonus bInt,20; }",60,0,0,EFST_INT_SCROLL; },{},{}
 12742,Valentine_Gift_Box1,Valentine Gift Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7946,1; },{},{}
 12743,Valentine_Gift_Box2,Valentine Gift Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7947,1; },{},{}
 12744,Chocotate_Box,Chocolate Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 558,1; },{},{}
@@ -6994,8 +6994,8 @@
 12788,No100_Firecracker,No100 Firecracker,2,2,,20,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12789,Juicy_Fruit,Juicy Fruit,2,2,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12790,Change_Name_Card,Character Name Change Coupon,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ CharRename++; },{},{}
-12791,Combat_Pill,Combat Pill,2,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,SI_GM_BATTLE; /* showscript */ },{},{}
-12792,P_Combat_Pill,P Combat Pill,2,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }",60,0,0,SI_GM_BATTLE2; },{},{}
+12791,Combat_Pill,Combat Pill,2,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,EFST_GM_BATTLE; /* showscript */ },{},{}
+12792,P_Combat_Pill,P Combat Pill,2,20,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }",60,0,0,EFST_GM_BATTLE; },{},{}
 12793,Combat_Pill_Box10,Combat Pill Box10,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12791,10; },{},{}
 12794,P_Combat_Pill_Box10,P Combat Pill Box10,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12792,10; },{},{}
 12795,2011_RWC_Scroll_Kr,2011 RWC Scroll Kr,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -8515,7 +8515,7 @@
 14583,WOB_Schwaltz,Green Butterfly Wing,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashCity",2; },{},{}
 14584,WOB_Rachel,Red Butterfly Wing,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashCity",3; },{},{}
 14585,WOB_Local,Blue Butterfly Wing,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashCity",4; },{},{}
-14586,Spark_Candy,Jumping Candy,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HASTEUP; bonus_script "{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; /*EFFECTEndure 9999 100*/ }",60,0,0,SI_STEAMPACK; itemskill "SM_ENDURE",10; },{},{}
+14586,Spark_Candy,Jumping Candy,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HASTEUP; bonus_script "{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; /*EFFECTEndure 9999 100*/ }",60,0,0,EFST_STEAMPACK; itemskill "SM_ENDURE",10; },{},{}
 14587,Repair_Scroll_,Equipment Repair Spell Book,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "BS_REPAIRWEAPON",1; },{},{}
 14588,Pty_Blessing_Scroll,Party Blessing 10 Scroll,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "CASH_BLESSING",10; },{},{}
 14589,Pty_Inc_Agi_Scroll,Party Increase Agi 10 Scroll,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "CASH_INCAGI",10; },{},{}
@@ -8526,15 +8526,15 @@
 14594,Quagmire_Scroll,Quagmire Scroll,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}
 14595,Unsealed_Magic_Spell,Unsealed Magic Spell,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "yuno_fild09",255,127; },{},{}
 14596,Pierre_Treasurebox,Pierre's Treasure Box,2,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Pierre_Treasurebox,1); getrandgroupitem(IG_Pierre_Treasurebox,1); getrandgroupitem(IG_Pierre_Treasurebox,1); getrandgroupitem(IG_Pierre_Treasurebox,1); getrandgroupitem(IG_Pierre_Treasurebox,1); getrandgroupitem(IG_Pierre_Treasurebox,1); },{},{}
-14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,SI_FOODHIT; },{},{}
-14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,SI_ARMOR_PROPERTY; },{},{}
+14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,EFST_FOOD_BASICHIT; },{},{}
+14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,EFST_ARMOR_PROPERTY; },{},{}
 14599,Greed_Scroll_C,Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "BS_GREED",1; },{},{}
 14600,Mental_Potion,Mental Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; bonus_script "{ bonus bUseSPrate,-10; bonus bMaxSPrate,10; }",1800; },{},{}
 14601,Tyr's_Blessing,Tyr's Blessing,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
-14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_LIGHTSPHERE; bonus_script "{ bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50; }",180,0,0,SI_MVPCARD_TAOGUNKA; },{},{}
-14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; bonus_script "{ bonus bNoGemStone; bonus bUseSPrate,25; }",180,0,0,SI_MVPCARD_MISTRESS; },{},{}
-14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_LIGHTSPHERE; bonus_script "{ bonus2 bResEff,Eff_Stun,10000; }",180,0,0,SI_MVPCARD_ORCHERO; },{},{}
-14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_LIGHTSPHERE; bonus_script "{ bonus bShortWeaponDamageReturn,30; }",180,0,0,SI_MVPCARD_ORCLORD; },{},{}
+14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_LIGHTSPHERE; bonus_script "{ bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50; }",180,0,0,EFST_MVPCARD_TAOGUNKA; },{},{}
+14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; bonus_script "{ bonus bNoGemStone; bonus bUseSPrate,25; }",180,0,0,EFST_MVPCARD_MISTRESS; },{},{}
+14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_LIGHTSPHERE; bonus_script "{ bonus2 bResEff,Eff_Stun,10000; }",180,0,0,EFST_MVPCARD_ORCHERO; },{},{}
+14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_LIGHTSPHERE; bonus_script "{ bonus bShortWeaponDamageReturn,30; }",180,0,0,EFST_MVPCARD_ORCLORD; },{},{}
 14606,Job_Manual25,JOB Battle Manual,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 14607,Luxurious_Dinner_W,Luxurious Western Food,2,10000,,600,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,3; },{},{}
 14608,Luxurious_Dinner_E,Manchu-Han Imperial Feast,2,20000,,1200,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,6; },{},{}

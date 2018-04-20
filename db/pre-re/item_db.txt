@@ -6427,15 +6427,15 @@
 14594,Quagmire_Scroll,Quagmire Scroll,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}
 14595,Unsealed_Magic_Spell,Unsealed Magic Spell,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "yuno_fild09",255,127; },{},{}
 14596,Pierre_Treasurebox,Pierre's Treasure Box,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; },{},{}
-14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,SI_FOODHIT; },{},{}
-14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,SI_ARMOR_PROPERTY; },{},{}
+14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,EFST_FOOD_BASICHIT; },{},{}
+14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,EFST_ARMOR_PROPERTY; },{},{}
 14599,Greed_Scroll_C,Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14600,Mental_Potion,Mental Potion,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14601,Tyr's_Blessing,Tyr's Blessing,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,300000,30; sc_start SC_INCHIT,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
-14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4302,SI_MVPCARD_TAOGUNKA; },{},{}
-14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4132,SI_MVPCARD_MISTRESS; },{},{}
-14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4143,SI_MVPCARD_ORCHERO; },{},{}
-14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4135,SI_MVPCARD_ORCLORD; },{},{}
+14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4302,EFST_MVPCARD_TAOGUNKA; },{},{}
+14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4132,EFST_MVPCARD_MISTRESS; },{},{}
+14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4143,EFST_MVPCARD_ORCHERO; },{},{}
+14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4135,EFST_MVPCARD_ORCLORD; },{},{}
 14606,Job_Manual25,JOB Battle Manual,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14607,Luxurious_Dinner_W,Luxurious Western Food,2,10000,,600,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,3; },{},{}
 14608,Luxurious_Dinner_E,Manchu-Han Imperial Feast,2,20000,,1200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,6; },{},{}
