@@ -1550,6 +1550,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl, SC_STUN, 40, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case WL_COMET:
+	case NPC_COMET:
 		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
 		break;
 	case WL_EARTHSTRAIN:
@@ -3382,6 +3383,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			break;
 		case WL_SOULEXPANSION:
 		case WL_COMET:
+		case NPC_COMET:
 		case KO_MUCHANAGE:
 		case NJ_HUUMA:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,skill_lv,DMG_MULTI_HIT);
@@ -5040,6 +5042,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case WL_COMET:
+	case NPC_COMET:
 		if(!map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR)) // Nothing should happen if the target is on Land Protector
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -12102,6 +12105,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case WL_COMET:
+	case NPC_COMET:
 		if( sc ) {
 			sc->comet_x = x;
 			sc->comet_y = y;
@@ -16121,6 +16125,9 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	if( i < ARRAYLENGTH(sd->skillusesp) )
 		req.sp -= sd->skillusesp[i].val;
 
+	if (skill_id == sd->status.skill[sd->reproduceskill_idx].id)
+		req.sp += req.sp * 30 / 100;
+
 	req.sp = cap_value(req.sp * sp_skill_rate_bonus / 100, 0, SHRT_MAX);
 
 	if( sc ) {
@@ -19800,7 +19807,7 @@ int skill_select_menu(struct map_session_data *sd,uint16 skill_id) {
 		return 0;
 	}
 
-	lv = (aslvl + 1) / 2; // The level the skill will be autocasted
+	lv = (aslvl + 5) / 2; // The level the skill will be autocasted
 	lv = min(lv,sd->status.skill[sk_idx].lv);
 	prob = (aslvl >= 10) ? 15 : (30 - 2 * aslvl); // Probability at level 10 was increased to 15.
 	sc_start4(&sd->bl,&sd->bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,0,skill_get_time(SC_AUTOSHADOWSPELL,aslvl));

@@ -5318,7 +5318,7 @@ new_1-3,108,165,3	script	Ghostring#cupet	4_GHOSTRING,{
 // - Little Porings
 // -----------------------------------------------------------------------------
 new_1-3,105,165,5	script	Cowardly Poring#pet_1	2398,{ end; }
-new_1-3,105,164,5	script	Unskillful Poring#pet_2	2398,{ end; }
+new_1-3,105,164,5	script	Unskilled Poring#pet_2	2398,{ end; }
 new_1-3,105,163,5	script	Foolish Poring#pet_3	2398,{ end; }
 
 // - Kafra Guide Trainer
