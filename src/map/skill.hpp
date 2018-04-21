@@ -37,7 +37,7 @@ extern DBMap* skilldb_name2id;
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
 /// when determining skill castend function to invoke.
-enum e_skill_nk {
+enum e_skill_nk : uint16 {
 	NK_NO_DAMAGE      = 0x01,
 	NK_SPLASH         = 0x02|0x04, // 0x4 = splash & split
 	NK_SPLASHSPLIT    = 0x04,
@@ -179,7 +179,7 @@ struct s_skill_db {
 	int8 hit;									 ///< Hit type
 	uint8 inf;									 ///< Inf: 0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap
 	int element[MAX_SKILL_LEVEL];				 ///< Element
-	uint8 nk;									 ///< Damage properties
+	uint16 nk;									 ///< Damage properties
 	int splash[MAX_SKILL_LEVEL];				 ///< Splash effect
 	uint8 max;									 ///< Max level
 	int num[MAX_SKILL_LEVEL];					 ///< Number of hit
