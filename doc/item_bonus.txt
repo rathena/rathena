@@ -383,9 +383,9 @@ bonus3 bStateNoRecoverRace,r,x,t;	Set a no recovery state of an enemy of race r 
 
 HP/SP gain
 ------------
-bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a physical attack
-bonus bSPGainValue,n;     		Heals +n SP when killing an enemy with a physical attack
-bonus2 bSPGainRace,r,n;   		Heals +n SP when killing an enemy of race r with a physical attack
+bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a melee-physical attack
+bonus bSPGainValue,n;     		Heals +n SP when killing an enemy with a melee-physical attack
+bonus2 bSPGainRace,r,n;   		Heals +n SP when killing an enemy of race r with a melee-physical attack
 bonus bMagicHPGainValue,n;		Heals +n HP when killing an enemy with a magical attack
 bonus bMagicSPGainValue,n;		Heals +n SP when killing an enemy with a magical attack
 
