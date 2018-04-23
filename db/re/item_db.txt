@@ -1124,7 +1124,7 @@
 1771,Venom_Knife,Venom Knife,10,50,,5,30,,,,0x00001000,63,2,32768,,1,,2,{},{},{}
 1772,Holy_Arrow,Holy Arrow,10,3,,2,50,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; bonus2 bAddRace,RC_Demon,5; },{},{}
 1773,Arrow_Of_Elf,Elven Arrow,10,5,,1,45,,,,0x000A1848,63,2,32768,,100,,1,{},{},{}
-1774,Hunting_Arrow,Hunting Arrow,10,5,,1,35,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bLongAtkRate,50; },{},{}
+1774,Hunting_Arrow,Hunting Arrow,10,5,,1,35,,,,0x000A1848,63,2,32768,,1,,1,{},{},{}
 1775,Siege_Arrow_S,Siege Arrow S,10,10,,1,45,,,,0x000A1848,63,2,32768,,130,,1,{},{},{}
 1776,Siege_Arrow_A,Siege Arrow A,10,10,,1,30,,,,0x000A1848,63,2,32768,,95,,1,{},{},{}
 //===================================================================
