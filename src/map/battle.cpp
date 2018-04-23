@@ -6228,6 +6228,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
 						break;
+					case NPC_COMET:
+						i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8) / 2;
+						i = cap_value(i, 1, 4);
+						skillratio = 2500 + ((skill_lv - i) * 500);
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -7445,7 +7450,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
 					ud->canact_tick = max(tick + autospell_tick, ud->canact_tick);
 					if (battle_config.display_status_timers && sd)
-						clif_status_change(src, SI_ACTIONDELAY, 1, autospell_tick, 0, 0, 0);
+						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
 				}
 			}
 		}
@@ -7508,7 +7513,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				sd->state.autocast = 0;
 
 				sd->ud.canact_tick = max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
-				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
+				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
 		}
 
@@ -8508,8 +8513,7 @@ static const struct _battle_data {
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
-	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
-    { "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
+	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };
