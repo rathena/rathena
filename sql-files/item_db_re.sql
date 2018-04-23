@@ -1156,7 +1156,7 @@ REPLACE INTO `item_db_re` VALUES (1770,'Iron_Arrow','Iron Arrow',10,2,NULL,1,'30
 REPLACE INTO `item_db_re` VALUES (1771,'Venom_Knife','Venom Knife',10,50,NULL,5,'30',NULL,NULL,NULL,0x00001000,63,2,32768,NULL,'1',NULL,2,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1772,'Holy_Arrow','Holy Arrow',10,3,NULL,2,'50',NULL,NULL,NULL,0x000A1848,63,2,32768,NULL,'1',NULL,1,'bonus bAtkEle,Ele_Holy; bonus2 bAddRace,RC_Demon,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1773,'Arrow_Of_Elf','Elven Arrow',10,5,NULL,1,'45',NULL,NULL,NULL,0x000A1848,63,2,32768,NULL,'100',NULL,1,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1774,'Hunting_Arrow','Hunting Arrow',10,5,NULL,1,'35',NULL,NULL,NULL,0x000A1848,63,2,32768,NULL,'1',NULL,1,'bonus bLongAtkRate,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1774,'Hunting_Arrow','Hunting Arrow',10,5,NULL,1,'35',NULL,NULL,NULL,0x000A1848,63,2,32768,NULL,'1',NULL,1,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1775,'Siege_Arrow_S','Siege Arrow S',10,10,NULL,1,'45',NULL,NULL,NULL,0x000A1848,63,2,32768,NULL,'130',NULL,1,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1776,'Siege_Arrow_A','Siege Arrow A',10,10,NULL,1,'30',NULL,NULL,NULL,0x000A1848,63,2,32768,NULL,'95',NULL,1,NULL,NULL,NULL);
 #===================================================================
