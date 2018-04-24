@@ -2260,6 +2260,31 @@ array, shifting all the elements beyond this towards the beginning.
 
 ---------------------------------------
 
+*searcharray <array name>[<first value>],<value>{,<value>...<value>};
+
+This command will check for the match cases between the array elements and
+the values, and return the number of matches.
+
+    setarray @array[0], 100, 200, 300, 400, 500, 600;
+	// So we have made @array[]
+	
+	if(searcharray(@array, 100))
+		mes "The number 100 was found in the array @array";
+	
+	searcharray(@array, 100);
+	//return 1 because the number 100 is an element of the array @array
+	
+	searcharray(@array, 100, 500);
+	//return 2 because the numbers 100 and 500 is elements of the array @array
+	
+	searcharray(@array, 100, 700);
+	//return 1 because the number 100 is an element of the array @array
+	//but the number 700 is not an element of the array @array
+
+See the sample in 'doc/sample/searcharray.txt' to Learn more.
+
+---------------------------------------
+
 ======================================
 |2.- Information-retrieving commands.|
 ======================================
