@@ -6659,6 +6659,88 @@ BUILDIN_FUNC(getelementofarray)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// return the matches of an array, from the starting index.
+/// ex: searcharray arr,1,2,3;
+///
+/// searcharray <array variable>,<value1>{,<value2>...};
+BUILDIN_FUNC(searcharray)
+{
+	struct script_data *data;
+	const char* name;
+	int id , i, j, array_size , case_count = 0;
+	struct map_session_data* sd = NULL;
+	data = script_getdata(st, 2);
+	
+	if (!data_isreference(data))
+	{
+		ShowError("script:searcharray: not a variable\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	id = reference_getid(data);
+	name = reference_getname(data);
+
+	if (not_server_variable(*name)) {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_SUCCESS;
+	}
+
+	array_size = script_array_highest_key(st, sd, name, reference_getref(data)) - 1;
+
+	if (array_size > SCRIPT_MAX_ARRAYSIZE)
+	{
+		ShowError("script:searcharray: The array is to large.\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(name)) 
+	{
+		const char* temp;
+		const char* value_list;
+		for (i = 0; i <= array_size; ++i) {
+			temp = (char*)get_val2(st, reference_uid(id, i), reference_getref(data));
+			j = 3;
+			while (script_hasdata(st, j))
+			{
+				value_list = script_getstr(st, j);
+				if (!strcmp(temp, value_list))
+				{
+					case_count++;
+				}
+				j++;
+			}
+			script_removetop(st, -1, 0);
+		}
+	}
+	else 
+	{
+		int temp , value_list;
+		for (i = 0; i <= array_size; ++i) {
+			temp = (int)get_val2(st, reference_uid(id, i), reference_getref(data));
+			j = 3;
+			while (script_hasdata(st, j)) 
+			{
+				value_list = script_getnum(st, j);
+				if (temp == value_list)
+				{
+					case_count++;
+				}
+				j++;
+			}
+			script_removetop(st, -1, 0);
+		}
+	}
+	
+	push_val(st->stack, C_INT, case_count);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /////////////////////////////////////////////////////////////////////
 /// ...
 ///
@@ -24140,6 +24222,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getarraysize,"r"),
 	BUILDIN_DEF(deletearray,"r?"),
 	BUILDIN_DEF(getelementofarray,"ri"),
+	BUILDIN_DEF(searcharray,"rv*"),
 	BUILDIN_DEF(getitem,"vi?"),
 	BUILDIN_DEF(rentitem,"vi?"),
 	BUILDIN_DEF(rentitem2,"viiiiiiii?"),
