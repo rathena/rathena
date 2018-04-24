@@ -1,15 +1,15 @@
 //===== rAthena Script =======================================
-//= Sample: searcharray
+//= Sample: countinarray
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
 //= 20180424
 //===== Description: ========================================= 
-//= Demonstrates the 'searcharray' command.
+//= Demonstrates the 'countinarray' command.
 //============================================================
 
-prontera,160,190,3	script	searcharray sample	847,{
-	mes "[searcharray Test]";
+prontera,160,190,3	script	countinarray sample	847,{
+	mes "[countinarray Test]";
 	switch(select("basic:more")){
 		case 1:
 			setarray .@array$,"rathena","ragnarok","poring","script";
@@ -20,13 +20,13 @@ prontera,160,190,3	script	searcharray sample	847,{
 			input .@element$;
 			clear;
 			
-			//using searcharray command
-			if(searcharray(.@array$, .@element$) == 1)
+			//using countinarray command
+			if(countinarray(.@array$, .@element$) == 1)
 				mes "we found " + .@element$ + " inside the array";
 			else
 				mes .@element$ + " is not an element of the array";
 			/*
-			without using searcharray command
+			without using countinarray command
 			------------------------------------------
 			for(.@i=0;.@i<getarraysize(.@array$);.@i++){
 				if(.@array$[.@i] == .@element$){
@@ -46,37 +46,37 @@ prontera,160,190,3	script	searcharray sample	847,{
 			mes "open the script and read to know what's going on";
 			mes " ";
 			
-			//50 and 70 is an elements of the array
-			//2 cases true so the command return 2
+			//50 and 70 are elements of the array
+			//2 cases true, so the command returns 2
 			mes "searching for 50 and 70";
-			mes "return " + searcharray(.@array, 50, 70);
+			mes "return " + countinarray(.@array, 50, 70);
 			mes " ";
 			
 			//50 is an element of the array
 			//100 is not an element of the array
-			//1 case true , so the command return 1
+			//1 case true, so the command returns 1
 			mes "searching for 50 and 100";
-			mes "return " + searcharray(.@array, 50, 100);
+			mes "return " + countinarray(.@array, 50, 100);
 			mes " ";
 			
-			//586 and 100 is not an elements of the array
-			//0 case true , so the command return 0
+			//586 and 100 are not elements of the array
+			//0 case true, so the command returns 0
 			mes "searching for 586 and 100";
-			mes "return " + searcharray(.@array, 586, 100);
+			mes "return " + countinarray(.@array, 586, 100);
 			mes " ";
 			
-			//1 and 1 is an elements of the array
-			//2 case true , so the command return 2
+			//1 and 1 are elements of the array
+			//2 cases true, so the command returns 2
 			mes "searching for 1 and 1";
-			mes "return " + searcharray(.@array, 1, 1);
+			mes "return " + countinarray(.@array, 1, 1);
 			mes " ";
 			
-			//2 is an element of the array , but it's in four indexs
-			//the command return the number of true cases
-			//so here if we pass 2 once return 4
+			//2 is an element of the array, but it's in four indexes
+			//the command will return the number valid cases
+			//so here the command returns 4
 			//this can be used to know the count of an element inside an array
 			mes "searching for 2";
-			mes "return " + searcharray(.@array, 2);
+			mes "return " + countinarray(.@array, 2);
 			
 			close;
 	}	

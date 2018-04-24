@@ -6659,11 +6659,11 @@ BUILDIN_FUNC(getelementofarray)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// return the matches count of an array, from the starting index.
-/// ex: searcharray arr,1,2,3;
+/// Return the number of matches in an array.
+/// ex: countinarray arr,1,2,3;
 ///
-/// searcharray <array variable>,<value1>{,<value2>...};
-BUILDIN_FUNC(searcharray)
+/// countinarray <array variable>,<value1>{,<value2>...};
+BUILDIN_FUNC(countinarray)
 {
 	struct script_data *data;
 	const char* name;
@@ -6674,7 +6674,7 @@ BUILDIN_FUNC(searcharray)
 
 	if (!data_isreference(data))
 	{
-		ShowError("buildin_searcharray: not a variable\n");
+		ShowError("buildin_countinarray: not a variable\n");
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -6684,13 +6684,13 @@ BUILDIN_FUNC(searcharray)
 	ref = reference_getref(data);
 
 	if (not_server_variable(*name) && !script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_FAILURE;
 
 	array_size = script_array_highest_key(st, sd, name, ref) - 1;
 
 	if (array_size > SCRIPT_MAX_ARRAYSIZE)
 	{
-		ShowError("buildin_searcharray: The array is too large.\n");
+		ShowError("buildin_countinarray: The array is too large.\n");
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -24218,7 +24218,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getarraysize,"r"),
 	BUILDIN_DEF(deletearray,"r?"),
 	BUILDIN_DEF(getelementofarray,"ri"),
-	BUILDIN_DEF(searcharray,"rv*"),
+	BUILDIN_DEF(countinarray,"rv*"),
 	BUILDIN_DEF(getitem,"vi?"),
 	BUILDIN_DEF(rentitem,"vi?"),
 	BUILDIN_DEF(rentitem2,"viiiiiiii?"),
