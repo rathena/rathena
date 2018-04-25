@@ -1,0 +1,98 @@
+//===== rAthena Script =======================================
+//= Sample: inarray
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20180424
+//===== Description: ========================================= 
+//= Demonstrates the 'inarray' and 'countinarray' commands.
+//============================================================
+
+prontera,160,190,3	script	countinarray sample	847,{
+	switch(select("inarray:countinarray")){
+		case 1:	//inarray command test
+			mes "[inarray Test]";
+			setarray .@array1,100,200,300,400,500,600,700;
+			setarray .@array2$,"One Hundred","Two Hundreds","Three Hundreds","Four Hundreds","Five Hundreds","Six Hundreds","Seven Hundreds";
+			
+			mes .@array2$[inarray(.@array1,100)];	//return One Hundred
+			mes .@array2$[inarray(.@array1,300)];	//return Three Hundreds
+			
+			if(.@array2$[inarray(.@array1,800)] == "null")//this return true
+				mes "800 is not an element of the array .@array1";
+				
+			close;
+		case 2:	//countinarray command test
+			mes "[countinarray Test]";
+			switch(select("basic:more")){
+				case 1:
+					setarray .@array$,"rathena","ragnarok","poring","script";
+					mes "the array elements: ";
+					for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+						mes .@array$[.@i];
+					
+					input .@element$;
+					clear;
+					
+					//using countinarray command
+					if(countinarray(.@array$, .@element$) == 1)
+						mes "we found " + .@element$ + " inside the array";
+					else
+						mes .@element$ + " is not an element of the array";
+					/*
+					without using countinarray command
+					------------------------------------------
+					for(.@i=0;.@i<getarraysize(.@array$);.@i++){
+						if(.@array$[.@i] == .@element$){
+							.@count ++;
+						}
+					}
+					if(.@count == 1)
+						mes "we found " + .@element$ + " inside the array";
+					else
+						mes .@element$ + " is not an element of the array";
+					------------------------------------------
+					*/
+					close;
+					
+				case 2:
+					setarray .@array,50,40,80,90,70,500,60,400,700,1,2,2,2,2;
+					mes "open the script and read to know what's going on";
+					mes " ";
+					
+					//50 and 70 are elements of the array
+					//2 cases true, so the command returns 2
+					mes "searching for 50 and 70";
+					mes "return " + countinarray(.@array, 50, 70);
+					mes " ";
+					
+					//50 is an element of the array
+					//100 is not an element of the array
+					//1 case true, so the command returns 1
+					mes "searching for 50 and 100";
+					mes "return " + countinarray(.@array, 50, 100);
+					mes " ";
+					
+					//586 and 100 are not elements of the array
+					//0 case true, so the command returns 0
+					mes "searching for 586 and 100";
+					mes "return " + countinarray(.@array, 586, 100);
+					mes " ";
+					
+					//1 and 1 are elements of the array
+					//2 cases true, so the command returns 2
+					mes "searching for 1 and 1";
+					mes "return " + countinarray(.@array, 1, 1);
+					mes " ";
+					
+					//2 is an element of the array, but it's in four indexes
+					//the command will return the number valid cases
+					//so here the command returns 4
+					//this can be used to know the count of an element inside an array
+					mes "searching for 2";
+					mes "return " + countinarray(.@array, 2);
+					
+					close;
+			}	
+	}
+}
