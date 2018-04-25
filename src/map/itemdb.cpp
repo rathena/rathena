@@ -633,6 +633,11 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		}
 	}
 
+	if( columns < 3 ){
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
+	}
+
 	// Checking sub group
 	prob = atoi(str[2]);
 
@@ -1812,15 +1817,15 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i > 0);
 		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i > 0);
 		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i > 0);
-		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 3, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 3, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_violetbox.txt",		',', 3, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_cardalbum.txt",		',', 3, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath1, "item_findingore.txt",	',', 3, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_giftbox.txt",		',', 3, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_misc.txt",			',', 3, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_violetbox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_cardalbum.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath1, "item_findingore.txt",	',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_giftbox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_misc.txt",			',', 2, 10, -1, &itemdb_read_group, i > 0);
 #ifdef RENEWAL
-		sv_readdb(dbsubpath2, "item_package.txt",		',', 3, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
 #endif
 		itemdb_read_combos(dbsubpath2,i > 0); //TODO change this to sv_read ? id#script ?
 		itemdb_read_randomopt(dbsubpath2, i > 0);
