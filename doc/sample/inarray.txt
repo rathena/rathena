@@ -8,7 +8,7 @@
 //= Demonstrates the 'inarray' and 'countinarray' commands.
 //============================================================
 
-prontera,160,190,3	script	narray sample	847,{
+prontera,160,190,3	script	inarray sample	847,{
 	switch(select("inarray:countinarray")){
 		case 1:	//inarray command test
 			mes "[inarray Test]";
