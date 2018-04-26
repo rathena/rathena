@@ -1235,11 +1235,11 @@
 2482,11,6,2,0,0x8,0,5,1,yes,0,0,1,weapon,2,0x0,	GN_WALLOFTHORN,Wall of Thorns
 2483,11,6,2,0,0x3,4,10,1,yes,0,0x0,0,weapon,0,0x1,	GN_CRAZYWEED,Crazy Weed
 2484,0,6,2,2,0x2,2,10,1,no,0,0x40000,0,weapon,0,0x1,	GN_CRAZYWEED_ATK,Crazy Weed Attack
-2485,9,6,2,3,0,0,5,1,yes,0,0,0,magic,0,0x0,		GN_DEMONIC_FIRE,Demonic Fire
+2485,9,6,2,3,0,0,5,1,yes,0,0,1,magic,0,0x0,		GN_DEMONIC_FIRE,Demonic Fire
 2486,9,6,2,0,0,0,5,1,yes,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION,Fire Expansion
 2487,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_SMOKE_POWDER,Fire Expansion Smoke Powder
 2488,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_TEAR_GAS,Fire Expansion Tear Gas
-2489,11,8,1,-1,0x28,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0,0,magic,0,0x0,		GN_FIRE_EXPANSION_ACID,Fire Expansion Acid
+2489,11,8,1,0,0x60,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0x18000,0,misc,0,0x0,		GN_FIRE_EXPANSION_ACID,Fire Expansion Acid
 2490,9,6,2,0,0x3,1,5,1,yes,0,0x80,2:3:4:5:6,misc,0,0x0,	GN_HELLS_PLANT,Hell's Plant
 2491,0,6,1,0,0x90,0,5,1,no,0,0,0,misc,0,0x0,	GN_HELLS_PLANT_ATK,Hell's Plant Attack
 2492,0,6,4,0,0x3,5:6:6:7:7,5,1,yes,0,0,0,none,0,0x0,	GN_MANDRAGORA,Howling of Mandragora

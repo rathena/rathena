@@ -1270,7 +1270,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			{
 				struct status_change *d_sc = status_get_sc(d_bl);
 
-				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE )
+				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != GN_FIRE_EXPANSION_ACID && skill_id != KO_MUCHANAGE )
 					damage -= damage * d_sc->data[SC_DEFENDER]->val2 / 100;
 			}
 		}
@@ -1289,7 +1289,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (sc->data[SC_DEFENDER] &&
 			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
 #ifdef RENEWAL
-			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == CR_ACIDDEMONSTRATION))
+			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == CR_ACIDDEMONSTRATION || skill_id == GN_FIRE_EXPANSION_ACID))
 #else
 			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 #endif
@@ -5825,22 +5825,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case AB_RENOVATIO:
 				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
 				break;
-			case GN_FIRE_EXPANSION_ACID:
-#ifdef RENEWAL
-				{
-					struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
-
-					ad.damage = (int64)(7 * ((wd.damage / skill_lv + ad.damage / skill_lv) * tstatus->vit / 100));
-				}
-#else
-				if(tstatus->vit + sstatus->int_)
-					ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
-				else
-					ad.damage = 0;
-				if(tsd)
-					ad.damage >>= 1;
-#endif
-				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -6584,6 +6568,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			}
 			break;
 		case CR_ACIDDEMONSTRATION:
+		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
 			// Official Renewal formula [helvetica]
 			// damage = 7 * ((atk + matk)/skill level) * (target vit/100)
