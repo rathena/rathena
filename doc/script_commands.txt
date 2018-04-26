@@ -2285,10 +2285,10 @@ For more details, see the sample in 'doc/sample/inarray.txt'.
 
 ---------------------------------------
 
-*countinarray <array name>,<value1>{,<value2>...<valueN>};
+*countinarray <array name>{[<start index>]},<value1>{,<value2>...<valueN>};
 
 This command will check for matches between the array values and return the number of matches.
-While being optional.
+While being optional, if [<start index>] is supplied, the search will begin from the given index value.
 
 	setarray @array[0], 100, 200, 300, 400, 500, 600;
 	// So we have made @array[]

@@ -6736,7 +6736,7 @@ BUILDIN_FUNC(inarray)
 }
 
 /// Return the number of matches in an array.
-/// ex: countinarray arr,1,2,3;
+/// ex: countinarray arr[0],1,2,3;
 ///
 /// countinarray <array variable>,<value1>{,<value2>...};
 BUILDIN_FUNC(countinarray)
@@ -6773,11 +6773,13 @@ BUILDIN_FUNC(countinarray)
 	}
 
 	id = reference_getid(data);
+	i = reference_getindex(data);
+	
 	if (is_string_variable(name))
 	{
 		const char* temp;
 		const char* value_list;
-		for (i = 0; i <= array_size; ++i)
+		for ( ; i <= array_size; ++i)
 		{
 			temp = (char*)get_val2(st, reference_uid(id, i), ref);
 			for (j = 3; script_hasdata(st, j); j++)
@@ -6794,7 +6796,7 @@ BUILDIN_FUNC(countinarray)
 	else
 	{
 		int temp, value_list;
-		for (i = 0; i <= array_size; ++i)
+		for ( ; i <= array_size; ++i)
 		{
 			temp = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, i), ref));
 			for (j = 3; script_hasdata(st, j); j++)
