@@ -6775,6 +6775,14 @@ BUILDIN_FUNC(countinarray)
 	id = reference_getid(data);
 	i = reference_getindex(data);
 	
+	if (array_size < i)
+	{	//To prevent unintended behavior
+		ShowError("buildin_countinarray: The given index of the array is higher than the array size.\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	
 	if (is_string_variable(name))
 	{
 		const char* temp;
