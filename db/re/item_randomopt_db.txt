@@ -1,4 +1,4 @@
-// Items Random Option Database	
+﻿// Items Random Option Database	
 //
 // Structure of Database:
 // ID,{ Bonus Script }
@@ -198,3 +198,15 @@ RDMOPT_MDAMAGE_SIZE_LARGE_TARGET,{ bonus2 bMagicAddSize,Size_Large,getrandomopti
 //RDMOPT_MDAMAGE_SIZE_LARGE_USER,{}
 //redefined?
 //RDMOPT_ATTR_TOLERACE_ALL,{}
+RDMOPT_RACE_WEAPON_TOLERACE_NOTHING,{ bonus2 bSubRace,RC_Formless,getrandomoptinfo(ROA_VALUE); } // Do we not have a sub race with BF type?
+RDMOPT_RACE_WEAPON_TOLERACE_UNDEAD,{ bonus2 bSubRace,RC_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_ANIMAL,{ bonus2 bSubRace,RC_Brute,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_PLANT,{ bonus2 bSubRace,RC_Plant,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_INSECT,{ bonus2 bSubRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_FISHS,{ bonus2 bSubRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_DEVIL,{ bonus2 bSubRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_HUMAN,{ bonus2 bSubRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bSubRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_ANGEL,{ bonus2 bSubRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_WEAPON_TOLERACE_DRAGON,{ bonus2 bSubRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RANGE_WEAPON_ATTACK_DAMAGE_TARGET,{ bonus bLongAtkRate,getrandomoptinfo(ROA_VALUE); },
+RDMOPT_RANGE_WEAPON_ATTACK_DAMAGE_USER,{ bonus bLongAtkDef,getrandomoptinfo(ROA_VALUE); },
