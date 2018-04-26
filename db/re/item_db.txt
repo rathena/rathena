@@ -6571,7 +6571,7 @@
 12372,Hell_Contract,Hell Contract,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1379; },{},{}
 12373,Boy's_Naivety,Boy's Pure Heart,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1370; },{},{}
 12374,Flaming_Ice,Ice Fireworks,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1837; },{},{}
-12375,Acaraje,Akaraje,2,0,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",120,0,0,EFST_ACARAJE; },{},{}
+12375,Acaraje,Akaraje,2,0,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE; },{},{}
 12376,Mysterious_Can2,Mysterious Can2,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 3,0; itemskill "PR_GLORIA",2; },{},{}
 12377,Mysterious_PET_Bottle2,Mysterious PET Bottle2,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,3; itemskill "PR_MAGNIFICAT",1; },{},{}
 12378,2009_Rice_Cake_Soup,Rice Cake Soup,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; },{},{}
