@@ -6735,87 +6735,107 @@ BUILDIN_FUNC(inarray)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Return the number of matches in an array.
-/// ex: countinarray arr[0],1,2,3;
+/// Return the number of matches in two arrays.
+/// ex: countinarray arr[0],arr1[0];
 ///
-/// countinarray <array variable>,<value1>{,<value2>...};
+/// countinarray <array variable>,<array variable>;
 BUILDIN_FUNC(countinarray)
 {
-	struct script_data *data;
-	const char* name;
-	int id, i, j, array_size, case_count = 0;
+	struct script_data *data1 , *data2;
+	const char* name1;
+	const char* name2;
+	int id1, id2, i, j, array_size1, array_size2, case_count = 0;
 	struct map_session_data* sd = NULL;
-	struct reg_db *ref = NULL;
-	data = script_getdata(st, 2);
+	struct reg_db *ref1 = NULL, *ref2 = NULL;
+	data1 = script_getdata(st, 2);
+	data2 = script_getdata(st, 3);
 
-	if (!data_isreference(data))
+	if (!data_isreference(data1) || !data_isreference(data2))
 	{
 		ShowError("buildin_countinarray: not a variable\n");
-		script_reportdata(data);
+		script_reportdata(data1);
+		script_reportdata(data2);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	name = reference_getname(data);
-	ref = reference_getref(data);
+	name1 = reference_getname(data1);
+	name2 = reference_getname(data2);
+	ref1 = reference_getref(data1);
+	ref2 = reference_getref(data2);
 
-	if (not_server_variable(*name) && !script_rid2sd(sd))
+	if (not_server_variable(*name1) && not_server_variable(*name2) && !script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	array_size = script_array_highest_key(st, sd, name, ref) - 1;
+	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
+	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
 
-	if (array_size > SCRIPT_MAX_ARRAYSIZE)
+	if (array_size1 > SCRIPT_MAX_ARRAYSIZE || array_size2 > SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_countinarray: The array is too large.\n");
-		script_reportdata(data);
+		script_reportdata(data1);
+		script_reportdata(data2);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	i = reference_getindex(data);
-	if (array_size < i)
+	i = reference_getindex(data1);
+	j = reference_getindex(data2);
+	if (array_size1 < i || array_size2 < j)
 	{	//To prevent unintended behavior
 		ShowError("buildin_countinarray: The given index of the array is higher than the array size.\n");
-		script_reportdata(data);
+		script_reportdata(data1);
+		script_reportdata(data2);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
-	
-	id = reference_getid(data);
-	if (is_string_variable(name))
+
+	id1 = reference_getid(data1);
+	id2 = reference_getid(data2);
+	if (is_string_variable(name1) && is_string_variable(name2))
 	{
-		const char* temp;
-		const char* value_list;
-		for ( ; i <= array_size; ++i)
+		const char* temp1;
+		const char* temp2;
+		for (; i <= array_size1; ++i)
 		{
-			temp = (char*)get_val2(st, reference_uid(id, i), ref);
-			for (j = 3; script_hasdata(st, j); j++)
+			temp1 = (char*)get_val2(st, reference_uid(id1, i), ref1);
+			for (j = reference_getindex(data2); j <= array_size2; j++)
 			{
-				value_list = script_getstr(st, j);
-				if (!strcmp(temp, value_list))
+				temp2 = (char*)get_val2(st, reference_uid(id2, j), ref2);
+				if (!strcmp(temp1, temp2))
 				{
 					case_count++;
 				}
+				script_removetop(st, -1, 0);
+			}
+			script_removetop(st, -1, 0);
+		}
+	}
+	else if (!is_string_variable(name1) && !is_string_variable(name2))
+	{
+		int temp1, temp2;
+		for (; i <= array_size1; ++i)
+		{
+			temp1 = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id1, i), ref1));
+			for (j = reference_getindex(data2); j <= array_size2; j++)
+			{
+				temp2 = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id2, j), ref2));
+				if (temp1 == temp2)
+				{
+					case_count++;
+				}
+				script_removetop(st, -1, 0);
 			}
 			script_removetop(st, -1, 0);
 		}
 	}
 	else
 	{
-		int temp, value_list;
-		for ( ; i <= array_size; ++i)
-		{
-			temp = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, i), ref));
-			for (j = 3; script_hasdata(st, j); j++)
-			{
-				value_list = script_getnum(st, j);
-				if (temp == value_list)
-				{
-					case_count++;
-				}
-			}
-			script_removetop(st, -1, 0);
-		}
+		ShowError("buildin_countinarray: Arrays does not match , You can't compare int array to string array.\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	script_pushint(st, case_count);
