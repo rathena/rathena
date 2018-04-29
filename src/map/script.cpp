@@ -24324,7 +24324,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(deletearray,"r?"),
 	BUILDIN_DEF(getelementofarray,"ri"),
 	BUILDIN_DEF(inarray,"rv"),
-	BUILDIN_DEF(countinarray,"rv*"),
+	BUILDIN_DEF(countinarray,"rr"),
 	BUILDIN_DEF(getitem,"vi?"),
 	BUILDIN_DEF(rentitem,"vi?"),
 	BUILDIN_DEF(rentitem2,"viiiiiiii?"),
