@@ -2262,49 +2262,55 @@ array, shifting all the elements beyond this towards the beginning.
 
 *inarray <array name>,<value>;
 
-This command will return the index of the value inside the array.
+This command return the index of the first value found in the array
 It will return -1 if the value not found.
 
-	setarray @array[0], 100, 200, 300, 400, 500, 600;
-	// So we have made @array[]
+	setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
 	
-	inarray(@array, 200);
+	inarray(.@array[0], 200);
 	//return 1 because the number 200 is the index 1 for the array
-	//another way to say it that @array[1] == 200
+	//another way to say it that .@array[1] == 200
 	
-	.@index = inarray(@array, 600);
-	//.@index is now 5 because @array[5] == 600
+	.@index = inarray(.@array[0], 600);
+	//.@index is now 5 because .@array[5] == 600
 	
-	inarray(@array, 100);
-	//return 0 because @array[0] == 100
-	
-	inarray(@array, 800);
-	//return -1 because 800 is not an element of the array @array
+	inarray(.@array[0], 100);
+	//while .@array[6] == 100 but the command will return the first index it found.
+	//return 0 because .@array[0] == 100
+
+	inarray(.@array[0], 800);
+	//return -1 because 800 is not an element of the array .@array
 
 For more details, see the sample in 'doc/sample/inarray.txt'.
 
 ---------------------------------------
 
-*countinarray <array name>{[<start index>]},<value1>{,<value2>...<valueN>};
+*countinarray <array name>{[<start index>]},<array name>{[<start index>]};
 
 This command will check for matches between the array values and return the number of matches.
 While being optional, if [<start index>] is supplied, the search will begin from the given index value.
 
-	setarray @array[0], 100, 200, 300, 400, 500, 600;
-	// So we have made @array[]
+	setarray .@array[0], 100, 200, 300, 400, 500, 600;
 	
-	if(countinarray(@array, 100))
+	.@variable = 100;
+	if(countinarray(.@array[0], .@variable))
 		mes "The number 100 was found in the array @array";
 	
-	countinarray(@array, 100);
-	//return 1 because the number 100 is an element of the array @array
+	countinarray(.@array[0], .@variable);
+	//return 1 because the number 100 is an element of the array .@array
 	
-	countinarray(@array, 100, 500);
-	//return 2 because the numbers 100 and 500 are elements of the array @array
+	setarray .@array2[0],100,500;
+	countinarray(.@array[0], .@array2[0]);
+	//return 2 because the numbers 100 and 500 are elements of the array .@array
 	
-	countinarray(@array, 100, 700);
-	//return 1 because the number 100 is an element of the array @array
-	//but the number 700 is not an element of the array @array
+	setarray .@array3[0],100,700;
+	countinarray(.@array[0], .@array3[0]);
+	//return 1 because the number 100 is an element of the array .@array
+	//but the number 700 is not an element of the array .@array
+
+	//also you can change the position between the arrays in the command
+	if(countinarray(.@array[0], .@array3[0]) == countinarray(.@array3[0], .@array[0]))
+		//This is true
 
 For more details, see the sample in 'doc/sample/inarray.txt'.
 
