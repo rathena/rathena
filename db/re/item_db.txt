@@ -6723,7 +6723,7 @@
 12526,E_Wind_Walk_10_Scroll,Wind Walk Scroll Lv 10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "SN_WINDWALK",10; },{},{}
 12527,E_Adrenaline_Scroll,Adrenaline Scroll,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "BS_ADRENALINE",5; },{},{}
 12528,E_Convex_Mirror,Convex Mirror,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_BOSSMAPINFO,600000,0; },{},{}
-12529,White_Slim_Potion_Box,White Slim Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11573,100; },{},{}
+12529,White_Slim_Potion_Box,White Slim Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 547,200; },{},{}
 12530,Mastela_Fruit_Box,Mastela Fruit Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 522,200; },{},{}
 12531,White_Potion_Box,White Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 504,100; },{},{}
 12532,Royal_Jelly_Box2,Royal Jelly Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 526,100; },{},{}
@@ -6743,7 +6743,7 @@
 12546,Suspicious_Dish,Suspicious Dish,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_POISON,50000,0; },{},{}
 12547,Chalcenodny_Box,Chalcenodny Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12548,Buy_Market_Permit2,Shabby Purchase Street Stall License,2,500,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ buyingstore 2; },{},{}
-12549,White_Slim_Pot_Box2,White Slim Pot Box2,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 547,200; },{},{}
+12549,White_Slim_Pot_Box2,White Slim Pot Box2,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 547,100; },{},{}
 12550,Poison_Bottle_Box2,Deadly Poison Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 678,30; },{},{}
 12551,MVP_Tele_Scroll,MVP Tele Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12552,Quest_Tele_Scroll,Quest Tele Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
