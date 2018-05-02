@@ -15,7 +15,7 @@
 //=     Optimized.
 //============================================================ 
 
-prontera,154,187,4	script	Guide#01prontera::GuideProntera	105,{
+prontera,154,187,4	script	Guia#01prontera::GuideProntera	105,{
 	cutin "prt_soldier",2;
 	mes "[Prontera Guide]";
 	mes "Welcome to ^8B4513Prontera^000000,";
