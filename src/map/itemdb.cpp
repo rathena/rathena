@@ -633,6 +633,11 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		}
 	}
 
+	if( columns < 3 ){
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
+	}
+
 	// Checking sub group
 	prob = atoi(str[2]);
 
