@@ -20382,6 +20382,27 @@ BUILDIN_FUNC(instance_info)
 }
 
 /*==========================================
+* instance_name {<instance_id>};
+*------------------------------------------*/
+BUILDIN_FUNC(instance_name)
+{
+	int id = script_hasdata(st,2) ? script_getnum(st,2) : script_instancegetid(st);
+	struct instance_data *im = NULL;
+	struct instance_db *db = NULL;
+
+	if( id ) {
+		im = &instance_data[id];
+		db = instance_searchtype_db(im->type);
+	}
+
+	if( !db )
+		script_pushconststr(st, "");
+	else
+		script_pushstrcopy(st, StringBuf_Value(db->name));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Custom Fonts
  *------------------------------------------*/
 BUILDIN_FUNC(setfont)
@@ -24565,6 +24586,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_guild,"i???"),
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
+	BUILDIN_DEF(instance_name,"?"),
 	/**
 	 * 3rd-related
 	 **/

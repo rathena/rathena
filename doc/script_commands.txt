@@ -8792,6 +8792,14 @@ mes .@name$ + " will be destroyed if no one is in the instance for " + instance_
 
 ---------------------------------------
 
+*instance_name {<instance id>};
+
+Returns the name of the instance from the instance database.
+If no ID is specified, the instance the script is attached to is used.
+If that fails, the function will return an empty string.
+
+---------------------------------------
+
 =========================
 |8.- Quest Log commands.|
 =========================
