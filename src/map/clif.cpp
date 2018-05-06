@@ -15242,7 +15242,9 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		}
 
 		// If it came from an npc?
-		//mailType |= MAIL_TYPE_NPC;
+		if( !msg->send_id ){
+			mailType |= MAIL_TYPE_NPC;
+		}
 
 		WFIFOB(fd, offset + 9) = mailType;
 		safestrncpy(WFIFOCP(fd, offset + 10), msg->send_name, NAME_LENGTH);
