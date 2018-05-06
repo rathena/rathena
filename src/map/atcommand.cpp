@@ -9994,10 +9994,6 @@ ACMD_FUNC(adopt)
 ACMD_FUNC(limitedsale){
 	nullpo_retr(-1, sd);
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
-		return -1;
-	}
-
 	clif_sale_open(sd);
 
 	return 0;
