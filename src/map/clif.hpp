@@ -1031,6 +1031,7 @@ void clif_clan_leave( struct map_session_data* sd );
 void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_open(struct map_session_data* sd);
 
 /**
  * Color Table
