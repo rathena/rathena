@@ -5348,7 +5348,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 			case 1:
 				mes "[Krotzel]";
 				mes "They all have a professional mindset so if they haven't finished working just see if they are safe.";
-				if (isbegin_quest(13198) > 0)
+				if (isbegin_quest(13199) > 0)
 					erasequest 13199;// Krotzel's Request - Complete
 				setquest 13195;// Monthly Brigan
 				setquest 13196;// Monthly Brigan
