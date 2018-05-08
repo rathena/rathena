@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../common/utilities.hpp"
+
 #include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
@@ -562,11 +564,7 @@ struct s_storage *guild2storage(int guild_id)
  * @return s_storage or nullptr
  */
 struct s_storage *guild2storage2(int guild_id){
-	if( guild_storage_db.find(guild_id) != guild_storage_db.end() ){
-		return &guild_storage_db[guild_id];
-	}else{
-		return nullptr;
-	}
+	return map_find( guild_storage_db, guild_id );
 }
 
 /**
