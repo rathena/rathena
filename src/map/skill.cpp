@@ -17363,7 +17363,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			}
 			//It deletes everything except traps and barriers
 			if ((!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP))) || unit->group->skill_id == WZ_FIREPILLAR || unit->group->skill_id == GN_HELLS_PLANT) {
-				skill_delunit(unit);
+				if (skill_get_unit_flag(unit->group->skill_id)&UF_RANGEDSINGLEUNIT) {
+					if (unit->val2&UF_RANGEDSINGLEUNIT)
+						skill_delunitgroup(unit->group);
+				} else
+					skill_delunit(unit);
 				return 1;
 			}
 			break;
@@ -17373,7 +17377,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
 			// Officially songs/dances are removed
-			skill_delunit(unit);
+			if (skill_get_unit_flag(unit->group->skill_id)&UF_RANGEDSINGLEUNIT) {
+				if (unit->val2&UF_RANGEDSINGLEUNIT)
+					skill_delunitgroup(unit->group);
+			} else
+				skill_delunit(unit);
 			return 1;
 		case SA_VOLCANO:
 		case SA_DELUGE:
@@ -17431,7 +17439,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			break;
 		case RL_FIRE_RAIN:
 			if (skill_get_unit_flag(unit->group->skill_id)&UF_REM_FIRERAIN) {
-				skill_delunit(unit);
+				if (skill_get_unit_flag(unit->group->skill_id)&UF_RANGEDSINGLEUNIT) {
+					if (unit->val2&UF_RANGEDSINGLEUNIT)
+						skill_delunitgroup(unit->group);
+				} else
+					skill_delunit(unit);
 				return 1;
 			}
 			break;
