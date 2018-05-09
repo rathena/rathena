@@ -9991,6 +9991,18 @@ ACMD_FUNC(adopt)
 	return -1;
 }
 
+/**
+ * Opens the limited sale window.
+ * Usage: @limitedsale or client command /limitedsale on supported clients
+ */
+ACMD_FUNC(limitedsale){
+	nullpo_retr(-1, sd);
+
+	clif_sale_open(sd);
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10289,6 +10301,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(adopt),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
+		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

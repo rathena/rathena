@@ -423,6 +423,7 @@
 17681,2 //Midgard_Lucky_Scroll
 17692,2 //Blessing_Scarlet_Egg
 22514,2 //Candy_Holder
+22537,2 //PrizeOfHero
 22558,2 //Lucky_Bag
 22669,2 //HALLOWEEN_G_BOX
 22685,2 //Solo_Christmas_Gift

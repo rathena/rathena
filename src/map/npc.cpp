@@ -3770,7 +3770,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	short m,x,y,xs = -1, ys = -1;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
-	int ai; // mob_ai
+	int ai = AI_NONE; // mob_ai
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
