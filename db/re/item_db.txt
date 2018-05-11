@@ -8696,6 +8696,7 @@
 15121,Robe_Of_Sarah,Sarah Combat Robe,4,10,,800,,35,,1,0xFFFFFFFF,63,2,16,,145,1,,{ /*TODO: Confirm the real rate and additional MAtk*/ .@r = getrefine(); autobonus "{ bonus bMatk,20; }",100,(10+((.@r) ? .@r*8 : 0))*1000,BF_MAGIC;},{},{}
 15123,Whikebain_Suit,Whikebain Suit,4,0,,900,,56,,1,0x00001000,56,2,16,,105,1,,{ .@r = getrefine(); bonus bCritAtkRate,(.@r>=7)?(6):((.@r>=5)?(4):(0)); bonus3 bAutoSpell,"DC_WINKCHARM",1,10; /* Confirm: Success rate */ },{},{}
 15126,Female_Poring_Balloon,Private Doram Suits,4,20,,700,,80,,1,0x80000000,7,2,16,,100,1,,{ bonus bMaxHP,500; bonus bMaxSP,100; .@r = getrefine()/3; bonus bDex,.@r; bonus bInt,.@r; },{},{}
+15128,Excelion_Suit,Excelion Suit,4,20,,1000,,100,,0,0xFFFFFFFF,63,2,16,,99,1,,{ bonus bVit,6 + (BaseLevel > 129 ? 4 : 0); bonus bMaxHPrate,(getrefine() / 3) * 4; bonus bUnbreakableArmor; },{},{}
 15129,Blue_Bellflower_Hat,Luxury Doram Suit,4,20,,800,,100,,1,0x80000000,7,2,16,,140,1,,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; .@r = getrefine()/2; bonus bDex,.@r; bonus bInt,.@r; },{},{}
 15138,Aegir_Armor,Aegir Armor,4,10,,1600,,25,,1,0xFFFFFFFF,63,2,16,,40,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bUnbreakableArmor; },{},{}
 15141,Rift_Ancient_Armor,Rift Ancient Armor,4,10,,500,,30,,1,0xFFFFFFFF,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMaxHP,(.@r >= 9 ? 1500 : .@r >= 7 ? 900 : 500); bonus bMaxSP,-100; },{},{}
@@ -10848,6 +10849,7 @@
 20762,C_GreatDevilWing,Costume Great Devil Wings,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,10,{},{},{}
 20763,C_Amistr_Bag,Costume Amistr Bag,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,4,{},{},{}
 20764,C_Fallen_Angel_Wing,Costume Fallen Angel Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,3,{},{},{}
+20773,Excelion_Wing,Excelion Wing,4,20,,900,,40,,0,0xFFFFFFFF,63,2,4,,99,1,,{ bonus bFlee,getrefine() * 2; bonus bFlee2,8 + (BaseLevel > 129 ? 2 : 0); },{},{}
 20779,Rift_Manteau,Rift Manteau,4,20,,500,,16,,1,0xFFFFFFFF,63,2,4,,100,1,,{ .@r = getrefine(); bonus bMaxHP,(.@r >= 9 ? 1300 : .@r >= 7 ? 700 : 300); bonus bMaxSP,-50; },{},{}
 20780,Unity_STR_Manteau,Unity STR Manteau,4,32000,,300,,20,,1,0xFFFFFFFF,63,2,4,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bMaxHPrate,2*(.@r/2); } },{},{}
 20781,Unity_AGI_Manteau,Unity AGI Manteau,4,32000,,300,,20,,1,0xFFFFFFFF,63,2,4,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bFlee,3*(.@r/2); } },{},{}
