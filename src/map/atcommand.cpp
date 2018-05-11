@@ -9726,6 +9726,27 @@ ACMD_FUNC(fullstrip) {
 	return 0;
 }
 
+ACMD_FUNC(changedress){
+	sc_type name2id[] = {
+		SC_WEDDING,
+		SC_XMAS,
+		SC_SUMMER,
+		SC_DRESSUP,
+		SC_HANBOK,
+		SC_OKTOBERFEST
+	};
+
+	for( sc_type type : name2id ) {
+		if( sd->sc.data[type] ) {
+			status_change_end( &sd->bl, type, INVALID_TIMER );
+			// You should only be able to have one - so we cancel here
+			return 0;
+		}
+	}
+
+	return -1;
+}
+
 ACMD_FUNC(costume) {
 	const char* names[] = {
 		"Wedding",
@@ -10297,6 +10318,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;
