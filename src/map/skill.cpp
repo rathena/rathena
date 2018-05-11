@@ -4933,6 +4933,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SO_VARETYR_SPEAR:
 	case GN_CART_TORNADO:
 	case GN_CARTCANNON:
+	case GN_DEMONIC_FIRE:
+	case GN_FIRE_EXPANSION_ACID:
 	case KO_HAPPOKUNAI:
 	case KO_HUUMARANKA:
 	case KO_MUCHANAGE:
@@ -5796,12 +5798,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			skill_addtimerskill(src, gettick() + skill_get_time(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, 0, 0);
 		}
-		break;
-
-	case GN_DEMONIC_FIRE:
-	case GN_FIRE_EXPANSION_ACID:
-		if (flag&1)
-			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	case KO_JYUMONJIKIRI: {
@@ -11752,7 +11748,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SO_PSYCHIC_WAVE:
 	case SO_VACUUM_EXTREME:
 	case GN_THORNS_TRAP:
-	case GN_DEMONIC_FIRE:
 	case GN_HELLS_PLANT:
 	case SO_EARTHGRAVE:
 	case SO_DIAMONDDUST:
@@ -11773,6 +11768,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 	case GN_WALLOFTHORN:
+	case GN_DEMONIC_FIRE:
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 	case WZ_ICEWALL:
@@ -12255,40 +12251,43 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 		if( !ud ) break;
 
-		for( i_su = 0; i_su < MAX_SKILLUNITGROUP && ud->skillunit[i_su]; i_su ++ ) {
-			if( ud->skillunit[i_su]->skill_id == GN_DEMONIC_FIRE &&
-			   distance_xy(x, y, ud->skillunit[i_su]->unit->bl.x, ud->skillunit[i_su]->unit->bl.y) < 4 ) {
-				switch( skill_lv ) {
-					case 1:
-						ud->skillunit[i_su]->unit->val2 = skill_lv;
-						ud->skillunit[i_su]->unit->group->val2 = skill_lv;
+		for(i_su = 0; i_su < MAX_SKILLUNITGROUP && ud->skillunit[i_su]; i_su++) {
+			struct skill_unit *su = ud->skillunit[i_su]->unit;
+			struct skill_unit_group *sg = ud->skillunit[i_su]->unit->group;
+
+			if (ud->skillunit[i_su]->skill_id == GN_DEMONIC_FIRE && distance_xy(x, y, su->bl.x, su->bl.y) < 4) {
+				switch (skill_lv) {
+					case 1: {
+							int duration = sg->limit - DIFF_TICK(tick, sg->tick);
+
+							skill_delunit(su);
+							skill_unitsetting(src, GN_DEMONIC_FIRE, 1, x, y, duration);
+							flag |= 1;
+						}
 						break;
 					case 2:
-						map_foreachinallarea(skill_area_sub,src->m,
-							ud->skillunit[i_su]->unit->bl.x - 2,ud->skillunit[i_su]->unit->bl.y - 2,
-							ud->skillunit[i_su]->unit->bl.x + 2,ud->skillunit[i_su]->unit->bl.y + 2, BL_CHAR,
-							src, GN_DEMONIC_FIRE, skill_lv + 20, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
-						skill_delunit(ud->skillunit[i_su]->unit);
+						map_foreachinallarea(skill_area_sub, src->m, su->bl.x - 2, su->bl.y - 2, su->bl.x + 2, su->bl.y + 2, BL_CHAR, src, GN_DEMONIC_FIRE, skill_lv + 20, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
+						if (su != NULL)
+							skill_delunit(su);
 						break;
 					case 3:
-						skill_delunit(ud->skillunit[i_su]->unit);
+						skill_delunit(su);
 						skill_unitsetting(src, GN_FIRE_EXPANSION_SMOKE_POWDER, 1, x, y, 0);
 						flag |= 1;
 						break;
 					case 4:
-						skill_delunit(ud->skillunit[i_su]->unit);
+						skill_delunit(su);
 						skill_unitsetting(src, GN_FIRE_EXPANSION_TEAR_GAS, 1, x, y, 0);
 						flag |= 1;
 						break;
 					case 5: {
-						int acid_lv = 5; // Cast at Acid Demonstration at level 5 unless the user has a higher level learned.
-						if( sd && pc_checkskill(sd, CR_ACIDDEMONSTRATION) > 5 )
-							acid_lv = pc_checkskill(sd, CR_ACIDDEMONSTRATION);
-						map_foreachinallarea(skill_area_sub, src->m,
-										  ud->skillunit[i_su]->unit->bl.x - 2, ud->skillunit[i_su]->unit->bl.y - 2,
-										  ud->skillunit[i_su]->unit->bl.x + 2, ud->skillunit[i_su]->unit->bl.y + 2, BL_CHAR,
-										  src, GN_FIRE_EXPANSION_ACID, acid_lv, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
-						skill_delunit(ud->skillunit[i_su]->unit);
+							uint16 acid_lv = 5; // Cast at Acid Demonstration at level 5 unless the user has a higher level learned.
+
+							if (sd && pc_checkskill(sd, CR_ACIDDEMONSTRATION) > 5)
+								acid_lv = pc_checkskill(sd, CR_ACIDDEMONSTRATION);
+							map_foreachinallarea(skill_area_sub, src->m, su->bl.x - 2, su->bl.y - 2, su->bl.x + 2, su->bl.y + 2, BL_CHAR, src, GN_FIRE_EXPANSION_ACID, acid_lv, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
+							if (su != NULL)
+								skill_delunit(su);
 						}
 						break;
 					}
@@ -12998,6 +12997,12 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			limit = 3000;
 		val3 = (x<<16)|y;
 		break;
+	case GN_DEMONIC_FIRE:
+		if (flag) { // Fire Expansion level 1
+			limit = flag + 10000;
+			flag = 0;
+		}
+		break;
 	case GN_FIRE_EXPANSION_SMOKE_POWDER:
 	case GN_FIRE_EXPANSION_TEAR_GAS:
 		limit = ((sd ? pc_checkskill(sd,GN_DEMONIC_FIRE) : 1) + 1) * limit;
@@ -13487,7 +13492,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 			break;
 
 		case UNT_FIRE_EXPANSION_TEAR_GAS:
-			if (!sce && battle_check_target(&unit->bl, bl, sg->target_flag) > 0)
+			if (!sce && battle_check_target(&unit->bl, bl, sg->target_flag) > 0 && map_flag_vs(bl->m))
 				if( sc_start4(ss, bl, type, 100, sg->skill_lv, 0, ss->id,0, sg->limit) )
 					sc_start(ss, bl, SC_TEARGAS_SOB, 100, sg->skill_lv, sg->limit);
 			break;
@@ -17358,7 +17363,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			}
 			//It deletes everything except traps and barriers
 			if ((!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP))) || unit->group->skill_id == WZ_FIREPILLAR || unit->group->skill_id == GN_HELLS_PLANT) {
-				skill_delunit(unit);
+				if (skill_get_unit_flag(unit->group->skill_id)&UF_RANGEDSINGLEUNIT) {
+					if (unit->val2&UF_RANGEDSINGLEUNIT)
+						skill_delunitgroup(unit->group);
+				} else
+					skill_delunit(unit);
 				return 1;
 			}
 			break;
@@ -17368,7 +17377,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
 			// Officially songs/dances are removed
-			skill_delunit(unit);
+			if (skill_get_unit_flag(unit->group->skill_id)&UF_RANGEDSINGLEUNIT) {
+				if (unit->val2&UF_RANGEDSINGLEUNIT)
+					skill_delunitgroup(unit->group);
+			} else
+				skill_delunit(unit);
 			return 1;
 		case SA_VOLCANO:
 		case SA_DELUGE:
@@ -17426,7 +17439,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			break;
 		case RL_FIRE_RAIN:
 			if (skill_get_unit_flag(unit->group->skill_id)&UF_REM_FIRERAIN) {
-				skill_delunit(unit);
+				if (skill_get_unit_flag(unit->group->skill_id)&UF_RANGEDSINGLEUNIT) {
+					if (unit->val2&UF_RANGEDSINGLEUNIT)
+						skill_delunitgroup(unit->group);
+				} else
+					skill_delunit(unit);
 				return 1;
 			}
 			break;

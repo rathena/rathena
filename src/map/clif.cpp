@@ -15242,7 +15242,9 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		}
 
 		// If it came from an npc?
-		//mailType |= MAIL_TYPE_NPC;
+		if( !msg->send_id ){
+			mailType |= MAIL_TYPE_NPC;
+		}
 
 		WFIFOB(fd, offset + 9) = mailType;
 		safestrncpy(WFIFOCP(fd, offset + 10), msg->send_name, NAME_LENGTH);
@@ -19922,9 +19924,15 @@ void clif_parse_sale_refresh( int fd, struct map_session_data* sd ){
 /// 09b5 (ZC_OPEN_BARGAIN_SALE_TOOL)
 void clif_sale_open( struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
-	int fd = sd->fd;
+	nullpo_retv(sd);
 
-	// TODO: do we want state tracking?
+	if( sd->state.sale_open ){
+		return;
+	}
+
+	sd->state.sale_open = true;
+
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd, 2);
 	WFIFOW(fd, 0) = 0x9b5;
@@ -19943,11 +19951,11 @@ void clif_parse_sale_open( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
-		return;
-	}
+	char command[CHAT_SIZE_MAX];
 
-	clif_sale_open(sd);
+	safesnprintf( command, sizeof(command), "%climitedsale", atcommand_symbol );
+
+	is_atcommand(fd, sd, command, 1);
 #endif
 }
 
@@ -19955,6 +19963,14 @@ void clif_parse_sale_open( int fd, struct map_session_data* sd ){
 /// 09bd (ZC_CLOSE_BARGAIN_SALE_TOOL)
 void clif_sale_close(struct map_session_data* sd) {
 #if PACKETVER_SUPPORTS_SALES
+	nullpo_retv(sd);
+
+	if( !sd->state.sale_open ){
+		return;
+	}
+
+	sd->state.sale_open = false;
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, 2);
@@ -19972,8 +19988,6 @@ void clif_parse_sale_close(int fd, struct map_session_data* sd) {
 	if( RFIFOL(fd, 2) != sd->status.account_id ){
 		return;
 	}
-
-	// TODO: do we want state tracking?
 
 	clif_sale_close(sd);
 #endif
@@ -20013,7 +20027,7 @@ void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+	if( !sd->state.sale_open ){
 		return;
 	}
 
@@ -20067,7 +20081,7 @@ void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+	if( !sd->state.sale_open ){
 		return;
 	}
 
@@ -20110,7 +20124,7 @@ void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+	if( !sd->state.sale_open ){
 		return;
 	}
 
