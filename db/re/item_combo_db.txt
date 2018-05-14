@@ -463,6 +463,7 @@
 15126:20788:22083:28382:28416,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus2 bSkillAtk,"SU_CN_METEOR",100; }
 15126:20788:22083:28380:28419,{ bonus bMaxHPrate,20; bonus bMaxSPrate,3; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",100; }
 15126:20788:22083:28381:28413,{ bonus bMaxHPrate,15; bonus bMaxSPrate,5; bonus bHealPower,10; skill "AL_HEAL",5,1; }
+15128:20773,{ bonus bFlee2,6; bonus bDelayrate,-10 - (BaseLevel > 129 ? 10 : 0); }
 15129:20789:22084,{ bonus bMaxHP,3000; bonus bNoCastCancel; bonus bFixedCastrate,-20-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
 15129:20789:22084:28382:28417,{ bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bSkillAtk,"SU_CN_METEOR",150; }
 15129:20789:22084:28380:28420,{ bonus bMaxHPrate,25; bonus bMaxSPrate,6; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",150; }
