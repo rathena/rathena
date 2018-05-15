@@ -26,7 +26,7 @@
 #include "log.hpp"
 #include "battle.hpp"
 
-using namespace rathena::util;
+using namespace rathena;
 
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
@@ -566,7 +566,7 @@ struct s_storage *guild2storage(int guild_id)
  * @return s_storage or nullptr
  */
 struct s_storage *guild2storage2(int guild_id){
-	return map_find( guild_storage_db, guild_id );
+	return util::map_find( guild_storage_db, guild_id );
 }
 
 /**

@@ -42,7 +42,7 @@
 #include <unordered_map>
 #include <algorithm>
 
-using namespace rathena::util;
+using namespace rathena;
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
@@ -80,7 +80,7 @@ using namespace rathena::util;
 //Dynamic mob database
 std::map<uint16, struct mob_db> mob_db_data;
 struct mob_db *mob_db( int mob_id ){
-	return map_find( mob_db_data, (uint16)mob_id );
+	return util::map_find( mob_db_data, (uint16)mob_id );
 }
 
 // holds Monster Spawn informations
@@ -89,7 +89,7 @@ std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 //Dynamic mob chat database
 std::map<short,struct mob_chat> mob_chat_db;
 struct mob_chat *mob_chat(short id) {
-	return map_find( mob_chat_db, id );
+	return util::map_find( mob_chat_db, id );
 }
 
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.

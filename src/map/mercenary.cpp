@@ -28,7 +28,7 @@
 #include "trade.hpp"
 #include "npc.hpp"
 
-using namespace rathena::util;
+using namespace rathena;
 
 std::map<uint16, struct s_mercenary_db> mercenary_db_data;
 
@@ -38,7 +38,7 @@ std::map<uint16, struct s_mercenary_db> mercenary_db_data;
  * @return A pointer to the mercenary db entry or nullptr if not found
  **/
 struct s_mercenary_db *mercenary_db( uint16 class_ ){
-	return map_find( mercenary_db_data, class_ );
+	return util::map_find( mercenary_db_data, class_ );
 }
 
 /**
