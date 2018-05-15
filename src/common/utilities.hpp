@@ -13,12 +13,16 @@ class cScopeTimer {
 
 int levenshtein( const std::string &s1, const std::string &s2 );
 
-template <typename K, typename V> V* map_find( std::map<K,V>& map, K key ){
-	auto it = map.find( key );
+namespace rathena {
+	namespace util {
+		template <typename K, typename V> V* map_find( std::map<K,V>& map, K key ){
+			auto it = map.find( key );
 
-	if( it != map.end() ){
-		return &it->second;
-	}else{
-		return nullptr;
+			if( it != map.end() ){
+				return &it->second;
+			}else{
+				return nullptr;
+			}
+		}
 	}
 }

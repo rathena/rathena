@@ -28,6 +28,8 @@
 #include "trade.hpp"
 #include "npc.hpp"
 
+using namespace rathena::util;
+
 std::map<uint16, struct s_mercenary_db> mercenary_db_data;
 
 /**

@@ -29,6 +29,8 @@
 #include "log.hpp"
 #include "achievement.hpp"
 
+using namespace rathena::util;
+
 #define MIN_PETTHINKTIME 100
 
 //Dynamic pet database

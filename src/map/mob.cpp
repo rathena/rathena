@@ -42,6 +42,8 @@
 #include <unordered_map>
 #include <algorithm>
 
+using namespace rathena::util;
+
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
 #define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)

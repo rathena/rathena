@@ -26,6 +26,8 @@
 #include "log.hpp"
 #include "battle.hpp"
 
+using namespace rathena::util;
+
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
 
