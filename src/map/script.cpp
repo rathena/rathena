@@ -6741,7 +6741,7 @@ BUILDIN_FUNC(viewpoint)
  * @param funcname Function name
  * @param x First position of random option id array from the script
  **/
-static int script_getitem_randomoption(struct script_state *st, struct item *it, const char *funcname, int x) {
+static int script_getitem_randomoption(struct script_state *st, struct map_session_data* sd, struct item *it, const char *funcname, int x) {
 	int i, opt_id_n;
 	struct script_data *opt_id = script_getdata(st,x);
 	struct script_data *opt_val = script_getdata(st,x+1);
@@ -6754,13 +6754,55 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	int32 opt_param_id, opt_param_idx;
 	struct reg_db *opt_id_ref = NULL, *opt_val_ref = NULL, *opt_param_ref = NULL;
 
+	// Check if the variable requires a player
+	if( not_server_variable(opt_id_var[0]) && sd == nullptr ){
+		// If no player is attached
+		if( !script_rid2sd(sd) ){
+			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_id_var );
+			return false;
+		}
+	}
+
+	if( !data_isreference(opt_id) || !script_array_src( st, sd, opt_id_var, reference_getref(opt_id) ) ){
+		ShowError( "buildin_%s: The option id parameter is not an array.\n", funcname );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (is_string_variable(opt_id_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_id_var);
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	// Check if the variable requires a player
+	if( not_server_variable(opt_val_var[0]) && sd == nullptr ){
+		// If no player is attached
+		if( !script_rid2sd(sd) ){
+			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_val_var );
+			return false;
+		}
+	}
+
+	if( !data_isreference(opt_val) || !script_array_src( st, sd, opt_val_var, reference_getref(opt_val) ) ){
+		ShowError( "buildin_%s: The option value parameter is not an array.\n", funcname );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (is_string_variable(opt_val_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_val_var);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// Check if the variable requires a player
+	if( not_server_variable(opt_param_var[0]) && sd == nullptr ){
+		// If no player is attached
+		if( !script_rid2sd(sd) ){
+			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_param_var );
+			return false;
+		}
+	}
+
+	if( !data_isreference(opt_param) || !script_array_src( st, sd, opt_param_var, reference_getref(opt_param) ) ){
+		ShowError( "buildin_%s: The option param parameter is not an array.\n", funcname );
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -6770,7 +6812,7 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	}
 
 	opt_id_ref = reference_getref(opt_id);
-	opt_id_n = script_array_highest_key(st, NULL, opt_id_var, opt_id_ref);
+	opt_id_n = script_array_highest_key(st, sd, opt_id_var, opt_id_ref);
 
 	if (opt_id_n < 1) {
 		ShowError("buildin_%s: No option id listed.\n", funcname);
@@ -6914,7 +6956,7 @@ BUILDIN_FUNC(countitem)
 		it.card[3] = script_getnum(st,9);
 
 		if (command[strlen(command)-1] == '3') {
-			int res = script_getitem_randomoption(st, &it, command, 10);
+			int res = script_getitem_randomoption(st, sd, &it, command, 10);
 			if (res != SCRIPT_CMD_SUCCESS)
 				return SCRIPT_CMD_FAILURE;
 			check_randomopt = true;
@@ -7336,7 +7378,7 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.bound = bound;
 
 		if (offset != 0) {
-			int res = script_getitem_randomoption(st, &item_tmp, command, offset);
+			int res = script_getitem_randomoption(st, sd, &item_tmp, command, offset);
 			if (res == SCRIPT_CMD_FAILURE)
 				return SCRIPT_CMD_FAILURE;
 		}
@@ -7507,7 +7549,7 @@ BUILDIN_FUNC(rentitem2) {
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
 
 	if (funcname[strlen(funcname)-1] == '3') {
-		int res = script_getitem_randomoption(st, &it, funcname, 11);
+		int res = script_getitem_randomoption(st, sd, &it, funcname, 11);
 		if (res != SCRIPT_CMD_SUCCESS)
 			return res;
 	}
@@ -7735,7 +7777,7 @@ BUILDIN_FUNC(makeitem2) {
 		item_tmp.card[3] = script_getnum(st,13);
 
 		if (funcname[strlen(funcname)-1] == '3') {
-			int res = script_getitem_randomoption(st, &item_tmp, funcname, 14);
+			int res = script_getitem_randomoption(st, nullptr, &item_tmp, funcname, 14);
 			if (res != SCRIPT_CMD_SUCCESS)
 				return res;
 		}
@@ -8147,7 +8189,7 @@ BUILDIN_FUNC(delitem2)
 	it.card[3]=(short)script_getnum(st,10);
 
 	if (command[strlen(command)-1] == '3') {
-		int res = script_getitem_randomoption(st, &it, command, 11);
+		int res = script_getitem_randomoption(st, sd, &it, command, 11);
 		if (res != SCRIPT_CMD_SUCCESS)
 			return SCRIPT_CMD_FAILURE;
 		flag |= 0x2;
