@@ -643,6 +643,7 @@ struct Battle_Config
 	int skill_drop_items_full;
 	int feature_homunculus_autofeed;
 	int summoner_trait;
+	int homunculus_autofeed_always;
 
 #include "../custom/battle_config_struct.inc"
 };

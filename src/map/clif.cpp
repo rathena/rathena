@@ -10457,10 +10457,18 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 #if PACKETVER >= 20170920
-		if( sd->hd && battle_config.feature_homunculus_autofeed ){
-			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+		if( battle_config.homunculus_autofeed_always ){
+			// Always send ON or OFF
+			if( sd->hd && battle_config.feature_homunculus_autofeed ){
+				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+			}else{
+				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
+			}
 		}else{
-			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
+			// Only send when enabled
+			if( sd->hd && battle_config.feature_homunculus_autofeed && sd->hd->homunculus.autofeed ){
+				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, true );
+			}
 		}
 #endif
 
