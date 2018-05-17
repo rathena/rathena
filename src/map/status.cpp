@@ -1438,7 +1438,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__IGNORANCE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOCAST;
-	StatusChangeStateTable[SC__FEINTBOMB]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
