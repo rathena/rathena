@@ -3222,12 +3222,12 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 
 	// Should not be here!
 	if (type == ITEMOBTAIN_TYPE_NPC) {
-		intif_broadcast_obtain_special_item_npc(sd, nameid, NULL /*wisp_server_name*/);
+		intif_broadcast_obtain_special_item_npc(sd, nameid);
 		return 0;
 	}
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, NULL);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3256,11 +3256,11 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, srcname);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3275,7 +3275,6 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	WFIFOW(inter_fd, 6) = 0;
 	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
 	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3288,13 +3287,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
 	int type = RFIFOB(fd, 8);
-	char name[NAME_LENGTH], srcname[NAME_LENGTH];
+	char name[NAME_LENGTH];
 
 	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
 		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
+	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================
