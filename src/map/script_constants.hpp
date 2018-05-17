@@ -1437,7 +1437,7 @@
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
 	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
-	export_constant(SC_CLOUD_KILL);
+	//export_constant(SC_CLOUD_KILL);
 	export_constant(SC_LJOSALFAR);
 	export_constant(SC_MERMAID_LONGING);
 	export_constant(SC_HAT_EFFECT);
