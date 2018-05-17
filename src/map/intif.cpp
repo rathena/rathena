@@ -2309,11 +2309,12 @@ int intif_parse_Mail_inboxreceived(int fd)
 	memcpy(&sd->mail.inbox, RFIFOP(fd,10), sizeof(struct mail_data));
 	sd->mail.changed = false; // cache is now in sync
 
-	if (flag){
 #if PACKETVER >= 20150513
-		// Refresh top right icon
-		clif_Mail_new(sd, 0, NULL, NULL);
+	// Refresh top right icon
+	clif_Mail_new(sd, 0, NULL, NULL);
 #endif
+
+	if (flag){
 		clif_Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
 	}else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
