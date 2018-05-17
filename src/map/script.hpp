@@ -693,6 +693,7 @@ enum random_option_attribute {
 
 enum instance_info_type {
 	IIT_ID,
+	IIT_NAME,
 	IIT_TIME_LIMIT,
 	IIT_IDLE_TIMEOUT,
 	IIT_ENTER_MAP,

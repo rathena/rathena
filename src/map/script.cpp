@@ -20309,26 +20309,61 @@ BUILDIN_FUNC(instance_check_clan)
 /*==========================================
 * instance_info
 * Values:
-* name : name of the instance you want to look up. [Required Parameter]
 * type : type of information you want to look up for the specified instance. [Required Parameter]
+* name/ID : name or instance ID of the instance you want to look up. [Optional Parameter]
 * index : index of the map in the instance. [Optional Parameter]
 *------------------------------------------*/
 BUILDIN_FUNC(instance_info)
 {
-	const char* name = script_getstr(st, 2);
-	int type = script_getnum(st, 3);
-	int index = 0;
-	struct instance_db *db = instance_searchname_db(name);
+	struct script_data *data;
+	struct instance_db *db = NULL;
+	struct instance_data *im = NULL;
+	const char* name = NULL;
 
+	int type = script_getnum(st, 2);
+	int index = 0, id = 0;
+
+	if( !script_hasdata(st, 3) ) {
+		id = script_instancegetid(st);
+		if( id ) {
+			im = &instance_data[id];
+			db = instance_searchtype_db(im->type);
+		}
+	}
+	else {
+		data = script_getdata(st, 3);
+		get_val(st, data);
+		if( data_isstring(data) ) {
+			name = script_getstr(st, 3);
+			db = instance_searchname_db(name);
+		}
+		else if( data_isint(data) || script_getnum(st, 3) ) {
+			id = script_getnum(st, 3);
+			if( id ) {
+				im = &instance_data[id];
+				db = instance_searchtype_db(im->type);
+			}
+		}
+	}
+	
 	if( !db ){
-		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
-		script_pushint(st, -1);
+		if( name != NULL ) {
+			ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
+			script_pushconststr(st, "");
+		}
+		else {
+			ShowError( "buildin_instance_info: Unknown instance ID \"%d\".\n", id );
+			script_pushint(st, -1);
+		}
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	switch( type ){
 		case IIT_ID:
 			script_pushint(st, db->id);
+			break;
+		case IIT_NAME:
+			script_pushstrcopy(st, StringBuf_Value(db->name));
 			break;
 		case IIT_TIME_LIMIT:
 			script_pushint(st, db->limit);
@@ -20378,27 +20413,6 @@ BUILDIN_FUNC(instance_info)
 			return SCRIPT_CMD_FAILURE;
 	}
 
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/*==========================================
-* instance_name {<instance_id>};
-*------------------------------------------*/
-BUILDIN_FUNC(instance_name)
-{
-	int id = script_hasdata(st,2) ? script_getnum(st,2) : script_instancegetid(st);
-	struct instance_data *im = NULL;
-	struct instance_db *db = NULL;
-
-	if( id ) {
-		im = &instance_data[id];
-		db = instance_searchtype_db(im->type);
-	}
-
-	if( !db )
-		script_pushconststr(st, "");
-	else
-		script_pushstrcopy(st, StringBuf_Value(db->name));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24585,8 +24599,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_party,"i???"),
 	BUILDIN_DEF(instance_check_guild,"i???"),
 	BUILDIN_DEF(instance_check_clan,"i???"),
-	BUILDIN_DEF(instance_info,"si?"),
-	BUILDIN_DEF(instance_name,"?"),
+	BUILDIN_DEF(instance_info,"i??"),
 	/**
 	 * 3rd-related
 	 **/
