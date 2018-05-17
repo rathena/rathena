@@ -4460,9 +4460,9 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 		return 0;
 	}
 
-	std::vector<struct script_event_s> vector = script_event[type];
+	std::vector<struct script_event_s>& vector = script_event[type];
 
-	for( struct script_event_s evt : vector ){
+	for( struct script_event_s& evt : vector ){
 		npc_event_sub( sd, evt.event, evt.event_name );
 	}
 
