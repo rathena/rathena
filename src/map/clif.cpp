@@ -20251,6 +20251,21 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOSET(fd, packet_len(0xa26));
 }
 
+/*
+ * This packet is sent by /changedress or /nocosplay
+ *
+ * 0ae8
+ */
+void clif_parse_changedress( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20180103
+	char command[CHAT_SIZE_MAX];
+
+	safesnprintf( command, sizeof(command), "%cchangedress", atcommand_symbol );
+	
+	is_atcommand( fd, sd, command, 1 );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
