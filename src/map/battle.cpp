@@ -1560,23 +1560,21 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (skill_id)
 			mobskill_event((TBL_MOB*)bl,src,gettick(),MSC_SKILLUSED|(skill_id<<16));
 	}
-	if( sd ) {
-		if( pc_ismadogear(sd) && rnd()%100 < 50 ) {
-			short element = skill_get_ele(skill_id, skill_lv);
-			if( !skill_id || element == -1 ) { //Take weapon's element
-				struct status_data *sstatus = NULL;
-				if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
-					element = ((TBL_PC*)src)->bonus.arrow_ele;
-				else if( (sstatus = status_get_status_data(src)) ) {
-					element = sstatus->rhw.ele;
-				}
-			} else if( element == -2 ) //Use enchantment's element
-				element = status_get_attack_sc_element(src,status_get_sc(src));
-			else if( element == -3 ) //Use random element
-				element = rnd()%ELE_ALL;
-			if( element == ELE_FIRE || element == ELE_WATER )
-				pc_overheat(sd,element == ELE_FIRE ? 1 : -1);
-		}
+	if (sd && pc_ismadogear(sd)) {
+		short element = skill_get_ele(skill_id, skill_lv);
+
+		if( !skill_id || element == -1 ) { //Take weapon's element
+			struct status_data *sstatus = NULL;
+			if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
+				element = ((TBL_PC*)src)->bonus.arrow_ele;
+			else if( (sstatus = status_get_status_data(src)) ) {
+				element = sstatus->rhw.ele;
+			}
+		} else if( element == -2 ) //Use enchantment's element
+			element = status_get_attack_sc_element(src,status_get_sc(src));
+		else if( element == -3 ) //Use random element
+			element = rnd()%ELE_ALL;
+		pc_overheat(sd, (element == ELE_FIRE ? 3 : 1));
 	}
 
 	return damage;
