@@ -12691,10 +12691,9 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		val3 = 300 * skill_lv + 65 * ( status->int_ +  status_get_lv(src) ) + status->max_sp; //nb hp
 		break;
 	case MG_SAFETYWALL:
+		val2 = skill_lv + 1;
 #ifdef RENEWAL
-		val2 = status_get_max_hp(src) * 3;
-#else
-		val2 = skill_lv+1;
+		val3 = 300 * skill_lv + 65 * (status->int_ + status_get_lv(src)) + status->max_sp;
 #endif
 		break;
 	case MG_FIREWALL:
