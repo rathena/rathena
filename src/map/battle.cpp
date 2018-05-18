@@ -4607,6 +4607,11 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GVG_GIANT]->val3);
 		}
 
+		if (sc->data[SC_EXEEDBREAK]) {
+			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_EXEEDBREAK]->val2);
+			RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
+		}
+
 		if (sc->data[SC_MIRACLE])
 			anger_id = 2; // Always treat all monsters as star flagged monster when in miracle state
 	}
@@ -7287,11 +7292,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		vanish_damage = battle_vanish(sd, target, &wd);
 
 	if( sc && sc->count ) {
-		if (sc->data[SC_EXEEDBREAK]) {
-			if (!is_infinite_defense(target, wd.flag) && !vanish_damage)
-				wd.damage *= sc->data[SC_EXEEDBREAK]->val2 / 100;
+		if (sc->data[SC_EXEEDBREAK])
 			status_change_end(src, SC_EXEEDBREAK, INVALID_TIMER);
-		}
 		if( sc->data[SC_SPELLFIST] ) {
 			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 && !vanish_damage ){
 				if (!is_infinite_defense(target, wd.flag)) {
