@@ -1,0 +1,156 @@
+//===== rAthena Script =======================================
+//= Verus warps
+//===== Description: =========================================
+//= Warp Points for episodes 15.1 & 15.2
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+verus04,204,163,0	warp2	fr_ver04_to_tun	1,1,ver_tunn,13,35
+verus04,121,267,0	warp2	fr_ver04_to_ver03_1	1,1,verus03,121,20
+verus04,44,267,0	warp2	fr_ver04_to_ver03_2	1,1,verus03,44,20
+
+verus01,247,58,0	warp2	verus01_to_verus03	1,1,verus03,55,251
+verus02,72,16,0	warp2	verus02_to_verus03	1,1,verus03,169,255
+verus03,122,17,0	warp2	fr_ver03_to_ver04_1	1,1,verus04,121,264
+verus03,44,17,0	warp2	fr_ver03_to_ver04_2	1,1,verus04,44,264
+
+juperos_01,245,87,0	warp2	fr_ju_to_eju	1,1,ver_eju,13,148
+ver_eju,10,148,0	warp2	fr_eju_to_ju	1,1,juperos_01,242,87
+ver_eju,107,36,0	warp2	fr_eju_to_tun	2,2,ver_tunn,84,82
+ver_tunn,84,86,0	warp2	fr_tun_to_eju	1,1,ver_eju,113,38
+ver_tunn,10,36,0	warp2	fr_tun_to_ver04	1,1,verus04,202,165
+
+lhz_in01,276,238,0	warp2	in_to_out#e152i02	1,1,lhz_in01,276,230
+
+// Bunker
+un_bunker,41,275,0	warp2	A_0#A_1	1,1,un_bunker,21,276
+un_bunker,98,85,0	warp2	#bunker_out	1,1,verus01,115,190
+un_bunker,24,276,0	warp2	A_1#A_0	1,1,un_bunker,45,275
+un_bunker,24,256,0	warp2	A_2#A_3	1,1,un_bunker,26,190
+un_bunker,23,190,0	warp2	A_3#A_2	1,1,un_bunker,21,256
+un_bunker,31,196,0	warp2	A_4#A_5	1,1,un_bunker,22,378
+un_bunker,21,375,0	warp2	A_5#A_4	1,1,un_bunker,32,193
+un_bunker,51,196,0	warp2	A_6#A_7	1,1,un_bunker,68,378
+un_bunker,67,375,0	warp2	A_7#A_6	1,1,un_bunker,52,193
+un_bunker,60,183,0	warp2	A_8#A_9	1,1,un_bunker,75,235
+un_bunker,71,236,0	warp2	A_9#A_8	1,1,un_bunker,57,182
+un_bunker,60,169,0	warp2	A_10#A_11	1,1,un_bunker,72,168
+un_bunker,69,167,0	warp2	A_11#A_10	1,1,un_bunker,57,168
+un_bunker,47,135,0	warp2	A_12#A_13	1,1,un_bunker,37,134
+un_bunker,40,135,0	warp2	A_13#A_12	1,1,un_bunker,50,134
+un_bunker,57,118,0	warp2	A_14#A_15	1,1,un_bunker,72,117
+un_bunker,69,118,0	warp2	A_15#A_14	1,1,un_bunker,53,117
+un_bunker,97,124,0	warp2	A_16#A_17	1,1,un_bunker,100,144
+un_bunker,97,141,0	warp2	A_17#A_16	1,1,un_bunker,98,121
+un_bunker,128,118,0	warp2	A_18#A_19	1,1,un_bunker,144,117
+un_bunker,140,118,0	warp2	A_19#A_18	1,1,un_bunker,125,117
+un_bunker,137,168,0	warp2	A_20#A_21	1,1,un_bunker,122,167
+un_bunker,126,168,0	warp2	A_21#A_20	1,1,un_bunker,140,167
+un_bunker,137,185,0	warp2	A_22#A_23	1,1,un_bunker,120,235
+un_bunker,124,236,0	warp2	A_23#A_22	1,1,un_bunker,140,184
+un_bunker,147,196,0	warp2	A_24#A_25	1,1,un_bunker,106,378
+un_bunker,105,375,0	warp2	A_25#A_24	1,1,un_bunker,148,193
+un_bunker,167,196,0	warp2	A_26#A_27	1,1,un_bunker,152,378
+un_bunker,151,375,0	warp2	A_27#A_26	1,1,un_bunker,168,193
+un_bunker,174,190,0	warp2	A_28#A_29	1,1,un_bunker,172,229
+un_bunker,169,230,0	warp2	A_29#A_28	1,1,un_bunker,171,189
+un_bunker,213,346,0	warp2	A_30#A_31	1,1,un_bunker,213,299
+un_bunker,216,300,0	warp2	A_31#A_30	1,1,un_bunker,216,345
+un_bunker,216,280,0	warp2	A_32#A_33	1,1,un_bunker,220,261
+un_bunker,217,262,0	warp2	A_33#A_32	1,1,un_bunker,213,279
+un_bunker,249,268,0	warp2	A_34#A_35	1,1,un_bunker,390,380
+un_bunker,389,377,0	warp2	A_35#A_34	1,1,un_bunker,250,265
+un_bunker,258,262,0	warp2	A_36#A_37	1,1,un_bunker,274,289
+un_bunker,271,290,0	warp2	A_37#A_36	1,1,un_bunker,255,261
+un_bunker,258,236,0	warp2	A_38#A_39	1,1,un_bunker,272,235
+un_bunker,269,236,0	warp2	A_39#A_38	1,1,un_bunker,255,235
+un_bunker,245,214,0	warp2	A_40#A_41	1,1,un_bunker,226,213
+un_bunker,230,214,0	warp2	A_41#A_40	1,1,un_bunker,248,213
+un_bunker,262,200,0	warp2	A_42#A_43	1,1,un_bunker,274,199
+un_bunker,271,200,0	warp2	A_43#A_42	1,1,un_bunker,258,199
+un_bunker,75,128,0	warp2	A_44#B_1	1,1,un_bunker,276,196
+un_bunker,275,191,0	warp2	B_1#A_44	1,1,un_bunker,76,121
+un_bunker,119,128,0	warp2	A_45#B_2	1,1,un_bunker,319,196
+un_bunker,320,191,0	warp2	B_2#A_45	1,1,un_bunker,120,121
+un_bunker,297,206,0	warp2	B_3#B_4	1,1,un_bunker,298,224
+un_bunker,297,221,0	warp2	B_4#B_3	1,1,un_bunker,298,203
+un_bunker,324,200,0	warp2	B_5#B_6	1,1,un_bunker,344,199
+un_bunker,339,200,0	warp2	B_6#B_5	1,1,un_bunker,321,199
+un_bunker,350,214,0	warp2	B_7#B_8	1,1,un_bunker,368,213
+un_bunker,365,214,0	warp2	B_8#B_7	1,1,un_bunker,347,213
+un_bunker,337,236,0	warp2	B_9#B_10	1,1,un_bunker,323,235
+un_bunker,326,236,0	warp2	B_10#B_9	1,1,un_bunker,340,235
+un_bunker,281,266,0	warp2	B_11#B_12	1,1,un_bunker,282,282
+un_bunker,281,279,0	warp2	B_12#B_11	1,1,un_bunker,282,263
+un_bunker,313,266,0	warp2	B_13#B_14	1,1,un_bunker,314,282
+un_bunker,313,279,0	warp2	B_14#B_13	1,1,un_bunker,314,262
+un_bunker,324,290,0	warp2	B_15#B_16	1,1,un_bunker,340,261
+un_bunker,337,262,0	warp2	B_16#B_15	1,1,un_bunker,321,289
+un_bunker,343,270,0	warp2	B_17#B_18	1,1,un_bunker,382,328
+un_bunker,381,325,0	warp2	B_18#B_17	1,1,un_bunker,344,267
+un_bunker,370,264,0	warp2	B_19#B_20	1,1,un_bunker,388,263
+un_bunker,385,264,0	warp2	B_20#B_19	1,1,un_bunker,367,263
+un_bunker,297,192,0	warp2	B_21#B_22	1,1,un_bunker,298,181
+un_bunker,297,186,0	warp2	B_22#B_21	1,1,un_bunker,298,196
+un_bunker,229,163,0	warp2	B_23#B_24	1,1,un_bunker,159,52
+un_bunker,164,51,0	warp2	B_24#B_23	1,1,un_bunker,233,164
+un_bunker,366,164,0	warp2	B_25#B_26	1,1,un_bunker,31,51
+un_bunker,27,52,0	warp2	B_26#B_25	1,1,un_bunker,361,163
+un_bunker,387,79,0	warp2	alp2#out	1,1,un_bunker,366,164
+
+// Memory bunker
+un_bk_q,69,118,0	warp2	A-0#L-1	1,1,un_bk_q,53,117
+un_bk_q,128,118,0	warp2	A-0#L-2	1,1,un_bk_q,144,117
+un_bk_q,97,124,0	warp2	A-0#Monitoring room	1,1,un_bk_q,100,144
+un_bk_q,40,135,0	warp2	B-1#L-1	1,1,un_bk_q,50,134
+un_bk_q,71,236,0	warp2	Control room#L-1	1,1,un_bk_q,57,182
+un_bk_q,124,236,0	warp2	Control room#L-2	1,1,un_bk_q,140,184
+un_bk_q,216,280,0	warp2	C-0#G-1	1,1,un_bk_q,220,261
+un_bk_q,21,375,0	warp2	D-1#L-1	1,1,un_bk_q,32,193
+un_bk_q,67,375,0	warp2	D-2#L-1	1,1,un_bk_q,52,193
+un_bk_q,105,375,0	warp2	E-1#L-2	1,1,un_bk_q,148,193
+un_bk_q,151,375,0	warp2	E-2#L-2	1,1,un_bk_q,168,193
+un_bk_q,230,214,0	warp2	F-1#G-1	1,1,un_bk_q,248,213
+un_bk_q,365,214,0	warp2	F-2#G-2	1,1,un_bk_q,347,213
+un_bk_q,258,262,0	warp2	G-1#Cafeteria	1,1,un_bk_q,274,289
+un_bk_q,217,262,0	warp2	G-1#C-0	1,1,un_bk_q,213,279
+un_bk_q,245,214,0	warp2	G-1#F-1	1,1,un_bk_q,226,213
+un_bk_q,262,200,0	warp2	G-1#H-0	1,1,un_bk_q,274,199
+un_bk_q,249,268,0	warp2	G-1#M-0	1,1,un_bk_q,390,380
+un_bk_q,350,214,0	warp2	G-2#F-2	1,1,un_bk_q,368,213
+un_bk_q,324,200,0	warp2	G-2#H-0	1,1,un_bk_q,344,199
+un_bk_q,370,264,0	warp2	G-2#I-0	1,1,un_bk_q,388,263
+un_bk_q,343,270,0	warp2	G-2#N-0	1,1,un_bk_q,382,328
+un_bk_q,337,262,0	warp2	H-0#Cafeteria	1,1,un_bk_q,321,289
+un_bk_q,271,200,0	warp2	H-0#G-1	1,1,un_bk_q,258,199
+un_bk_q,339,200,0	warp2	H-0#G-2	1,1,un_bk_q,321,199
+un_bk_q,297,192,0	warp2	H-0#Z-0	1,1,un_bk_q,298,181
+un_bk_q,385,264,0	warp2	I-0#G-2	1,1,un_bk_q,367,263
+un_bk_q,24,256,0	warp2	J-0#L-1	1,1,un_bk_q,26,190
+un_bk_q,24,276,0	warp2	J-0#Machine Warehouse	1,1,un_bk_q,45,275
+un_bk_q,169,230,0	warp2	K-0#L-2	1,1,un_bk_q,171,189
+un_bk_q,60,183,0	warp2	L-1#Control room	1,1,un_bk_q,75,235
+un_bk_q,60,169,0	warp2	L-1#Monitoring room	1,1,un_bk_q,72,168
+un_bk_q,137,168,0	warp2	L-2#Monitoring room	1,1,un_bk_q,122,167
+un_bk_q,57,118,0	warp2	L-1#A-0	1,1,un_bk_q,72,117
+un_bk_q,47,135,0	warp2	L-1#B-1	1,1,un_bk_q,37,134
+un_bk_q,31,196,0	warp2	L-1#D-1	1,1,un_bk_q,22,378
+un_bk_q,51,196,0	warp2	L-1#D-2	1,1,un_bk_q,68,378
+un_bk_q,23,190,0	warp2	L-1#J-0	1,1,un_bk_q,21,256
+un_bk_q,137,185,0	warp2	L-2#Control room	1,1,un_bk_q,120,235
+un_bk_q,140,118,0	warp2	L-2#A-0	1,1,un_bk_q,125,117
+un_bk_q,147,196,0	warp2	L-2#E-1	1,1,un_bk_q,106,378
+un_bk_q,167,196,0	warp2	L-2#E-2	1,1,un_bk_q,152,378
+un_bk_q,174,190,0	warp2	L-2#K-0	1,1,un_bk_q,172,229
+un_bk_q,389,377,0	warp2	M-0#G-1	1,1,un_bk_q,250,265
+un_bk_q,381,325,0	warp2	N-0#G-2	1,1,un_bk_q,344,267
+un_bk_q,297,186,0	warp2	Z-0#H-0	1,1,un_bk_q,298,196
+un_bk_q,164,51,0	warp2	Z-1#Z-0	1,1,un_bk_q,233,164
+un_bk_q,27,52,0	warp2	Z-2#Z-0	1,1,un_bk_q,361,163
+un_bk_q,229,163,0	warp2	Z-0#Z-1	1,1,un_bk_q,159,52
+un_bk_q,366,164,0	warp2	Z-0#Z-2	1,1,un_bk_q,31,51
+un_bk_q,75,128,0	warp2	LA-0#LH-0	1,1,un_bk_q,276,196
+un_bk_q,275,191,0	warp2	LH-0#LA-0	1,1,un_bk_q,76,121
+un_bk_q,119,128,0	warp2	RA-0#RH-0	1,1,un_bk_q,319,196
+un_bk_q,320,191,0	warp2	RH-0#RA-0	1,1,un_bk_q,120,121

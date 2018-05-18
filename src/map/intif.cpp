@@ -303,6 +303,8 @@ int intif_main_message(struct map_session_data* sd, const char* message)
  */
 int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int mes_len)
 {
+	int headersize = 8 + 2 * NAME_LENGTH;
+
 	nullpo_ret(sd);
 	if (CheckForCharServer())
 		return 0;
@@ -313,12 +315,13 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
 		return 0;
 	}
 
-	WFIFOHEAD(inter_fd,mes_len + 52);
+	WFIFOHEAD(inter_fd,mes_len + headersize);
 	WFIFOW(inter_fd,0) = 0x3001;
-	WFIFOW(inter_fd,2) = mes_len + 52;
-	memcpy(WFIFOP(inter_fd,4), sd->status.name, NAME_LENGTH);
-	memcpy(WFIFOP(inter_fd,4+NAME_LENGTH), nick, NAME_LENGTH);
-	memcpy(WFIFOP(inter_fd,4+2*NAME_LENGTH), mes, mes_len);
+	WFIFOW(inter_fd,2) = mes_len + headersize;
+	WFIFOL(inter_fd,4) = pc_get_group_level(sd);
+	safestrncpy(WFIFOCP(inter_fd,8), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,8+NAME_LENGTH), nick, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,8+2*NAME_LENGTH), mes, mes_len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 
 	if (battle_config.etc_log)
@@ -333,7 +336,7 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
  * @param flag : 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
  * @return 0=no char-serv connected, 1=msg sent
  */
-int intif_wis_replay(int id, int flag)
+int intif_wis_reply(int id, int flag)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -344,7 +347,7 @@ int intif_wis_replay(int id, int flag)
 	WFIFOSET(inter_fd,7);
 
 	if (battle_config.etc_log)
-		ShowInfo("intif_wis_replay: id: %d, flag:%d\n", id, flag);
+		ShowInfo("intif_wis_reply: id: %d, flag:%d\n", id, flag);
 
 	return 1;
 }
@@ -365,9 +368,9 @@ int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
 	WFIFOHEAD(inter_fd, mes_len + 8 + NAME_LENGTH);
 	WFIFOW(inter_fd,0) = 0x3003;
 	WFIFOW(inter_fd,2) = mes_len + 32;
-	memcpy(WFIFOP(inter_fd,4), wisp_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,4), wisp_name, NAME_LENGTH);
 	WFIFOL(inter_fd,4+NAME_LENGTH) = permission;
-	memcpy(WFIFOP(inter_fd,8+NAME_LENGTH), mes, mes_len);
+	safestrncpy(WFIFOCP(inter_fd,8+NAME_LENGTH), mes, mes_len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 
 	if (battle_config.etc_log)
@@ -405,6 +408,7 @@ int intif_saveregistry(struct map_session_data *sd)
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
 		const char *varname = NULL;
 		struct script_reg_state *src = NULL;
+		bool lValid = false;
 
 		if( data->type != DB_DATA_PTR ) // it's a @number
 			continue;
@@ -420,13 +424,17 @@ int intif_saveregistry(struct map_session_data *sd)
 			continue;
 
 		src->update = false;
+		lValid = script_check_RegistryVariableLength(0,varname,&len);
+		++len;
 
-		len = strlen(varname)+1;
-
+		if (!lValid) { //this is sql colum size, must be retrive from config
+			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, varname, len);
+			continue;
+		}
 		WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy(WFIFOCP(inter_fd,plen), varname, len);
+		safestrncpy(WFIFOCP(inter_fd,plen), varname, len); //the key
 		plen += len;
 
 		WFIFOL(inter_fd, plen) = script_getvaridx(key.i64);
@@ -435,13 +443,19 @@ int intif_saveregistry(struct map_session_data *sd)
 		if( src->type ) {
 			struct script_reg_str *p = (struct script_reg_str *)src;
 
-			WFIFOB(inter_fd, plen) = p->value ? 2 : 3;
+			WFIFOB(inter_fd, plen) = p->value ? 2 : 3; //var type
 			plen += 1;
 
 			if( p->value ) {
-				len = strlen(p->value)+1;
+				lValid = script_check_RegistryVariableLength(1,p->value,&len);
+				++len;
+				if ( !lValid ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
+					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%d to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
+					len = 254;
+					p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
+				}
 
-				WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
+				WFIFOB(inter_fd, plen) = (uint8)len; 
 				plen += 1;
 
 				safestrncpy(WFIFOCP(inter_fd,plen), p->value, len);
@@ -1234,22 +1248,23 @@ int intif_parse_WisMessage(int fd)
 	struct map_session_data* sd;
 	char *wisp_source;
 	char name[NAME_LENGTH];
-	int id, i;
+	int id, i, gmlvl;
 
 	id=RFIFOL(fd,4);
+	gmlvl=RFIFOL(fd,8);
 
-	safestrncpy(name, RFIFOCP(fd,32), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd,12+NAME_LENGTH), NAME_LENGTH);
 	sd = map_nick2sd(name,false);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
-		intif_wis_replay(id,1);
+		intif_wis_reply(id,1);
 		return 0;
 	}
 	if(sd->state.ignoreAll) {
-		intif_wis_replay(id, 2);
+		intif_wis_reply(id, 2);
 		return 0;
 	}
-	wisp_source = RFIFOCP(fd,8); // speed up [Yor]
+	wisp_source = RFIFOCP(fd,12); // speed up [Yor]
 	for(i=0; i < MAX_IGNORE_LIST &&
 		sd->ignore[i].name[0] != '\0' &&
 		strcmp(sd->ignore[i].name, wisp_source) != 0
@@ -1257,12 +1272,12 @@ int intif_parse_WisMessage(int fd)
 
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
-		intif_wis_replay(id, 2);
+		intif_wis_reply(id, 2);
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd->fd, wisp_source, RFIFOCP(fd,56),RFIFOW(fd,2)-56);
-	intif_wis_replay(id,0);   // success
+	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
+	intif_wis_reply(id,0);   // success
 	return 1;
 }
 
@@ -1302,7 +1317,7 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 	wisp_name = va_arg(va, char*);
 	message = va_arg(va, char*);
 	len = va_arg(va, int);
-	clif_wis_message(sd->fd, wisp_name, message, len);
+	clif_wis_message(sd, wisp_name, message, len,0);
 	return 1;
 }
 
@@ -1323,8 +1338,8 @@ int mapif_parse_WisToGM(int fd)
 	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
 	message = (char *) aMalloc(mes_len+1);
 
-	permission = RFIFOL(fd,4+NAME_LENGTH);
 	safestrncpy(Wisp_name, RFIFOCP(fd,4), NAME_LENGTH);
+	permission = RFIFOL(fd, 4 + NAME_LENGTH);
 	safestrncpy(message, RFIFOCP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
@@ -2130,12 +2145,13 @@ void intif_parse_achievements(int fd)
 			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
 
 		for (i = 0; i < num_received; i++) {
-			struct achievement_db *adb = achievement_search(received[i].achievement_id);
 
-			if (!adb) {
+			if (!achievement_exists(received[i].achievement_id)) {
 				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
 				continue;
 			}
+
+			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 
@@ -2220,7 +2236,7 @@ void intif_parse_achievementreward(int fd){
 /**
  * Request the achievement rewards from the inter server.
  */
-int intif_achievement_reward(struct map_session_data *sd, struct achievement_db *adb){
+int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_db *adb){
 	if( CheckForCharServer() ){
 		return 0;
 	}
@@ -2232,7 +2248,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct achievement_db 
 	WFIFOW(inter_fd, 10) = adb->rewards.nameid;
 	WFIFOL(inter_fd, 12) = adb->rewards.amount;
 	safestrncpy(WFIFOCP(inter_fd, 16), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name, ACHIEVEMENT_NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
 	WFIFOSET(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 
 	return 1;
@@ -2293,11 +2309,12 @@ int intif_parse_Mail_inboxreceived(int fd)
 	memcpy(&sd->mail.inbox, RFIFOP(fd,10), sizeof(struct mail_data));
 	sd->mail.changed = false; // cache is now in sync
 
-	if (flag){
 #if PACKETVER >= 20150513
-		// Refresh top right icon
-		clif_Mail_new(sd, 0, NULL, NULL);
+	// Refresh top right icon
+	clif_Mail_new(sd, 0, NULL, NULL);
 #endif
+
+	if (flag){
 		clif_Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
 	}else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
@@ -3205,12 +3222,12 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 
 	// Should not be here!
 	if (type == ITEMOBTAIN_TYPE_NPC) {
-		intif_broadcast_obtain_special_item_npc(sd, nameid, NULL /*wisp_server_name*/);
+		intif_broadcast_obtain_special_item_npc(sd, nameid);
 		return 0;
 	}
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, NULL);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3239,11 +3256,11 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, srcname);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3258,7 +3275,6 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	WFIFOW(inter_fd, 6) = 0;
 	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
 	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3271,13 +3287,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
 	int type = RFIFOB(fd, 8);
-	char name[NAME_LENGTH], srcname[NAME_LENGTH];
+	char name[NAME_LENGTH];
 
 	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
 		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
+	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================
@@ -3665,7 +3681,7 @@ int intif_parse_clan_onlinecount( int fd ){
  * @return
  *  0 (unknow packet).
  *  1 sucess (no error)
- *  2 invalid lenght of packet (not enough data yet)
+ *  2 invalid length of packet (not enough data yet)
  */
 int intif_parse(int fd)
 {

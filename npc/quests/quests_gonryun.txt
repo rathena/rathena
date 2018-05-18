@@ -521,7 +521,7 @@ gon_in,165,16,4	script	Man in hangover#gon	748,{
 		mes "Ahhh.. my stomach.. my head..";
 		mes "I shouldn't drink so much..";
 		mes "Ehhhh....";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	else if (b_sword < 6) {
@@ -532,7 +532,7 @@ gon_in,165,16,4	script	Man in hangover#gon	748,{
 				mes "*Urk!* I feel sick...";
 				mes "Can somebody bring me a potion?";
 				mes "*Groan*....";
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				close;
 			}
 			mes "[Xue Bong]";
@@ -603,7 +603,7 @@ gon_in,165,16,4	script	Man in hangover#gon	748,{
 			case 2:
 				delitem 506,1; //Green_Potion
 				set b_sword,5;
-				emotion e_thx;
+				emotion ET_THANKS;
 				mes "[Xue Bong]";
 				mes "Whew, Thanks!";
 				mes "I feel much better now.";
@@ -754,7 +754,7 @@ gon_in,165,16,4	script	Man in hangover#gon	748,{
 			mes "Ahhh.. my stomach.. my head..";
 			mes "I shouldn't drink so much..";
 			mes "ughh....";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		case 12:
 			mes "[Xue Bong]";
@@ -764,7 +764,7 @@ gon_in,165,16,4	script	Man in hangover#gon	748,{
 			mes "blind eye to a";
 			mes "boozer's suffering?";
 			mes "Urk...!";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		case 13:
 			mes "[Xue Bong]";
@@ -773,7 +773,7 @@ gon_in,165,16,4	script	Man in hangover#gon	748,{
 			mes "How could you turn away";
 			mes "a drunk in need...?";
 			mes "*Groan*...";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 	}
@@ -2088,7 +2088,7 @@ gon_in,18,27,5	script	Madam#gnbs	771,{
 	mes "My~! Aren't you a darling young";
 	mes "man. But still, not nearly as handsome as my husband~";
 	mes "Tee hee~";
-	emotion e_lv;
+	emotion ET_THROB;
 	close;
 }
 
@@ -2149,7 +2149,7 @@ gonryun,139,142,7	script	Girl##gnbs1	772,{
 		mes "I was happy meeting visitors";
 		mes "from outside the village,";
 		mes "but because of the thief, I feel terrible now...";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	mes "[Shi Ying Xiao]";
@@ -2172,7 +2172,7 @@ gonryun,139,142,7	script	Girl##gnbs1	772,{
 	mes "[ ^6699FF" + strcharinfo(0) + "^000000 ]";
 	mes "I AM YOUR HERO!";
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Shi Ying Xiao]";
 	mes "Thank you so much for bringing hope to our village, hero~";
 	close;
@@ -2183,7 +2183,7 @@ gonryun,100,241,0	script	Stranger#gnbs	733,{
 		mes "[Zuo Hei]";
 		mes "Hmm...";
 		mes "I'm pretty busy right now, come back later.";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (b_sword < 17) {
@@ -2234,7 +2234,7 @@ gonryun,100,241,0	script	Stranger#gnbs	733,{
 				mes "That's none of your business.";
 				mes "Take a look in the mirror first";
 				mes "before you say things like that.";
-				emotion e_ag;
+				emotion ET_ANGER;
 				close;
 			case 1:
 				mes "[Zuo Hei]";
@@ -2290,7 +2290,7 @@ gonryun,100,241,0	script	Stranger#gnbs	733,{
 				mes "That's none of your business.";
 				mes "Take a look in the mirror first";
 				mes "before you say things like that.";
-				emotion e_ag;
+				emotion ET_ANGER;
 				close;
 			case 4:
 				mes "[Zuo Hei]";
@@ -2312,7 +2312,7 @@ gonryun,100,241,0	script	Stranger#gnbs	733,{
 			mes "[Zuo Hei]";
 			mes "Sorry, I'm busy right now.";
 			mes "Why don't you come back later.";
-			emotion e_dots;
+			emotion ET_THINK;
 			close;
 		case 16:
 			switch(nakha) {
@@ -2374,7 +2374,7 @@ gonryun,100,241,0	script	Stranger#gnbs	733,{
 				mes "That's none of your business.";
 				mes "Take a look in the mirror first";
 				mes "before you say things like that.";
-				emotion e_ag;
+				emotion ET_ANGER;
 				close;
 			case 4:
 				mes "[Zuo Hei]";
@@ -2487,7 +2487,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 				mes "granddaughter all of a sudden!?";
 				mes "Get the hell out of here!";
 				mes "Don't ever come back here again!";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			case 2:
 				mes "[Aumgarl]";
@@ -2511,7 +2511,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 					mes "granddaughter all of a sudden!?";
 					mes "Get out of here you pervert!";
 					mes "Don't ever come back here again!";
-					emotion e_pif;
+					emotion ET_HNG;
 					close;
 				case 2:
 					mes "[Aumgarl]";
@@ -2573,7 +2573,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 						mes "as her fate. I just feel";
 						mes "so sorry for Lyroo.";
 						mes "...";
-						emotion e_dots;
+						emotion ET_THINK;
 						close;
 					case 2:
 						mes "[Aumgarl]";
@@ -2678,7 +2678,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 								mes "I hate people who lie like that. Get out of my sight.";
 								mes "Get out of my sight.";
 								mes " ";
-								emotion e_pif;
+								emotion ET_HNG;
 								close2;
 								warp "geffen",173,169;
 								end;
@@ -2758,7 +2758,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 			mes "[Aumgarl]";
 			mes "Thank you so much...";
 			mes "Without your help...";
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "it would have been hopeless.";
 			next;
 			mes "[Aumgarl]";
@@ -3237,7 +3237,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 								mes "Ah...I'm sorry..";
 								mes "I haven't seen a guy like you";
 								mes "for a long time.";
-								emotion e_heh;
+								emotion ET_SMILE;
 								next;
 								mes "[Cylrnel]";
 								mes "You make me laugh...";
@@ -3671,7 +3671,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 	mes "[Cylrnel]";
 	mes "But I found a treatment...";
 	mes "And...it's..a...secret! Haha~!";
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	close;
 }
 

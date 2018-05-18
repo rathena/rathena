@@ -1711,7 +1711,7 @@ ama_in02,115,177,7	script	Soldier#ama10	767,{
 	mes "[Jyuro]";
 	mes "What gate are you talking about?";
 	mes "A gate? On the top floor of the building??? Surely, you must been be mistaken.";
-	emotion e_swt;
+	emotion ET_SWEAT;
 	next;
 	if (countitem(7160) > 0) {
 		if (select("Show him the ticket:Cancel") == 1) {

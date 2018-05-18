@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
+#include "char.hpp"
 
 #include <time.h>
 #include <stdarg.h>
@@ -21,18 +22,19 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/cli.h"
-#include "int_guild.h"
-#include "int_homun.h"
-#include "int_mail.h"
-#include "int_mercenary.h"
-#include "int_elemental.h"
-#include "int_party.h"
-#include "int_storage.h"
-#include "inter.h"
-#include "char_logif.h"
-#include "char_mapif.h"
-#include "char_cnslif.h"
-#include "char_clif.h"
+
+#include "int_guild.hpp"
+#include "int_homun.hpp"
+#include "int_mail.hpp"
+#include "int_mercenary.hpp"
+#include "int_elemental.hpp"
+#include "int_party.hpp"
+#include "int_storage.hpp"
+#include "inter.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "char_cnslif.hpp"
+#include "char_clif.hpp"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor
@@ -215,7 +217,7 @@ int char_db_setoffline(DBKey key, DBData *data, va_list ap) {
 /**
  * @see DBApply
  */
-static int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
+int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
 	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int server_id = va_arg(ap, int);
 
@@ -259,7 +261,7 @@ void char_set_all_offline_sql(void){
 /**
  * @see DBCreateData
  */
-static DBData char_create_charstatus(DBKey key, va_list args) {
+DBData char_create_charstatus(DBKey key, va_list args) {
 	struct mmo_charstatus *cp;
 	cp = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 	cp->char_id = key.i;
@@ -1454,7 +1456,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if (start_job != JOB_NOVICE && start_job != JOB_SUMMONER)
+	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) && 
+		!(start_job == JOB_SUMMONER && (charserv_config.allowed_job_flag&2)))
 		return -2; // Invalid job
 
 	// Check for Doram based information.
@@ -2062,10 +2065,14 @@ int char_loadName(uint32 char_id, char* name){
 		safestrncpy(name, data, NAME_LENGTH);
 		return 1;
 	}
+#if PACKETVER < 20180221
 	else
 	{
 		safestrncpy(name, charserv_config.char_config.unknown_char_name, NAME_LENGTH);
 	}
+#else
+	name[0] = '\0';
+#endif
 	return 0;
 }
 
@@ -2178,7 +2185,7 @@ int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t 
 /**
  * @see DBApply
  */
-static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
+int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct online_char_data *character= (struct online_char_data *)db_data2ptr(data);
 	if (character->fd != -1)
@@ -2191,12 +2198,12 @@ static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-static int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
-static int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;
@@ -2447,7 +2454,7 @@ bool char_checkdb(void){
 	}
 	//checking homunculus_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize`,`autofeed` "
 		" FROM `%s` LIMIT 1;", schema_config.homunculus_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2773,6 +2780,12 @@ void char_set_defaults(){
 	charserv_config.clan_remove_inactive_days = 14;
 	charserv_config.mail_return_days = 14;
 	charserv_config.mail_delete_days = 14;
+
+#if defined(RENEWAL) && PACKETVER >= 20151001
+	charserv_config.allowed_job_flag = 3;
+#else
+	charserv_config.allowed_job_flag = 1;
+#endif
 }
 
 /**
@@ -2782,7 +2795,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
-static void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
+void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -2827,7 +2840,7 @@ static void char_config_split_startpoint(char *w1_value, char *w2_value, struct 
  * @param w2_value: Value from w2
  * @param start: Start item reference
  */
-static void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
+void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -3051,6 +3064,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_delete_days") == 0) {
 			charserv_config.mail_delete_days = atoi(w2);
+		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
+			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -3064,7 +3079,7 @@ bool char_config_read(const char* cfgName, bool normal){
 /**
  * Checks for values out of range.
  */
-static void char_config_adjust() {
+void char_config_adjust() {
 #if PACKETVER < 20100803
 	if (charserv_config.char_config.char_del_option&CHAR_DEL_BIRTHDATE) {
 		ShowWarning("conf/char_athena.conf:char_del_option birthdate is enabled but it requires PACKETVER 2010-08-03 or newer, defaulting to email...\n");

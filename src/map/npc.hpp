@@ -1082,6 +1082,16 @@ enum e_job_types
 	JT_4_M_SNOWMAN_R,
 	JT_4_M_SNOWMAN_G,
 	JT_WARPEFFECTNPC,
+	JT_4_HEN,
+	JT_4_F_DANGDANG,
+	JT_4_M_DANGDANG,
+	JT_4_F_DANGDANG1,
+	JT_4_LEAFCAT,
+	JT_4_NASARIAN,
+	JT_4_NASARIAN_EM,
+	JT_4_TEDDY_BEAR_W,
+	JT_4_TEDDY_BEAR_B,
+	JT_4_TEDDY_BEAR_B_L,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1097,7 +1107,7 @@ enum e_job_types
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
-#define npcdb_checkid(id) ( ( (id) > NPC_RANGE1_START && (id) < NPC_RANGE1_END ) || (id) == JT_HIDDEN_WARP_NPC || ( (id) > NPC_RANGE2_START && (id) < NPC_RANGE2_END ) || (id) == JT_INVISIBLE || ( id > NPC_RANGE3_START && id < NPC_RANGE3_END ) )
+#define npcdb_checkid(id) ( ( (id) > NPC_RANGE1_START && (id) < NPC_RANGE1_END ) || (id) == JT_HIDDEN_WARP_NPC || ( (id) > NPC_RANGE2_START && (id) < NPC_RANGE2_END ) || (id) == JT_INVISIBLE || ( (id) > NPC_RANGE3_START && (id) < NPC_RANGE3_END ) )
 
 #ifdef PCRE_SUPPORT
 void npc_chat_finalize(struct npc_data* nd);
@@ -1118,7 +1128,7 @@ enum npce_event : uint8 {
 };
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
-int npc_event_dequeue(struct map_session_data* sd);
+int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack=true);
 int npc_event(struct map_session_data* sd, const char* eventname, int ontouch);
 int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y);
 int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
@@ -1138,7 +1148,7 @@ const char *npc_get_script_event_name(int npce_index);
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
-void npc_movenpc(struct npc_data* nd, int16 x, int16 y);
+bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
 int npc_enable(const char* name, int flag);
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);

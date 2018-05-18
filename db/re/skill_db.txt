@@ -581,7 +581,7 @@
 //****
 // Clown & Gypsy
 394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0,0x0,	CG_ARROWVULCAN,Vulcan Arrow
-395,0,0,4,0,0x1,3,1,1,yes,0,0x40,0,misc,2,0x0,	CG_MOONLIT,Sheltering Bliss
+395,0,0,4,0,0x1,3,5,1,yes,0,0x40,0,misc,2,0x0,	CG_MOONLIT,Sheltering Bliss
 396,7,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0,0x40,	CG_MARIONETTE,Marionette Control
 
 //****
@@ -710,7 +710,7 @@
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,		PF_DOUBLECASTING,Double Casting
 483,18,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,0x0,	HW_GANBANTEIN,Ganbantein
 484,18,6,2,2,0xD1,0,5,1,yes,0,0x18000,0,misc,0,0x11010,		HW_GRAVITATION,Gravitation Field
-485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0,0x0,	WS_CARTTERMINATION,Cart Termination
+485,-2,6,1,-1,0x0,0,10,1,no,0,0,0,weapon,0,0x0,	WS_CARTTERMINATION,Cart Termination
 486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		WS_OVERTHRUSTMAX,Maximum Power Thrust
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x8,		CG_LONGINGFREEDOM,Longing for Freedom
 488,0,6,4,0,0x1,1,5,1,no,0,0x20,0,misc,0,0x1,	CG_HERMODE,Wand of Hermode
@@ -851,7 +851,7 @@
 //705,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDESIREN,Wide Siren's Voice
 706,0,6,4,5,0,0,10,1,no,0,0x2,0,magic,0,0x1,	NPC_VENOMFOG,Venom Fog
 //707,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MILLENNIUMSHIELD,Millenium Shield 2
-//708,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_COMET,Comet 2
+708,11,8,2,0,0x2,9,5,-20,yes,0,0,0,magic,2,0x400,	NPC_COMET,Comet 2
 //709,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ICEMINE,Ice Mine
 //710,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ICEEXPLO,Ice Explosion
 //711,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FLAMECROSS,Flame Cross
@@ -861,7 +861,7 @@
 //715,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DARKPIERCING,Dark Piercing
 716,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
 717,0,6,1,0,0xD2,18,10,1,no,0,0x2,0,misc,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
-//718,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DEATHSUMMON,Death Summon
+718,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_DEATHSUMMON,Death Summon
 //719,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HELLBURNING,Hell Burning
 //720,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_JACKFROST,Jack Frost 2
 //721,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDEWEB,Wide Web
@@ -954,7 +954,7 @@
 2211,11,8,1,3,0x2,3,5,-7,yes,0,0,0,magic,3,0x400,	WL_CRIMSONROCK,Crimson Rock
 2212,11,6,1,3,0,0,5,1,yes,0,0,0,magic,0,0x400,	WL_HELLINFERNO,Hell Inferno
 2213,11,8,2,0,0x2,9,5,-20,yes,0,0,0,magic,2,0x400,	WL_COMET,Comet
-2214,11,6,1,0,0x2,3,5,1,yes,0,0,0,magic,0,0x400,		WL_CHAINLIGHTNING,Chain Lightning //CHECK Is the splash being used for the target search?
+2214,11,6,1,0,0x1,0,5,1,yes,0,0,0,magic,0,0x400,		WL_CHAINLIGHTNING,Chain Lightning
 2215,11,6,1,4,0,0,5,1,no,0,0,0,magic,0,0x0,		WL_CHAINLIGHTNING_ATK,Chain Lightning Attack
 2216,6,8,2,2,0,0,5,-6:-7:-8:-9:-10,yes,0,0,0,magic,0,0x10000,	WL_EARTHSTRAIN,Earth Strain
 2217,11,6,1,0,0,0,5,1,yes,0,0,0,magic,0,0x400,	WL_TETRAVORTEX,Tetra Vortex
@@ -1235,11 +1235,11 @@
 2482,11,6,2,0,0x8,0,5,1,yes,0,0,1,weapon,2,0x0,	GN_WALLOFTHORN,Wall of Thorns
 2483,11,6,2,0,0x3,4,10,1,yes,0,0x0,0,weapon,0,0x1,	GN_CRAZYWEED,Crazy Weed
 2484,0,6,2,2,0x2,2,10,1,no,0,0x40000,0,weapon,0,0x1,	GN_CRAZYWEED_ATK,Crazy Weed Attack
-2485,9,6,2,3,0,0,5,1,yes,0,0,0,magic,0,0x0,		GN_DEMONIC_FIRE,Demonic Fire
+2485,9,6,2,3,0,0,5,1,yes,0,0,1,magic,0,0x0,		GN_DEMONIC_FIRE,Demonic Fire
 2486,9,6,2,0,0,0,5,1,yes,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION,Fire Expansion
 2487,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_SMOKE_POWDER,Fire Expansion Smoke Powder
 2488,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		GN_FIRE_EXPANSION_TEAR_GAS,Fire Expansion Tear Gas
-2489,11,8,1,-1,0x28,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0,0,magic,0,0x0,		GN_FIRE_EXPANSION_ACID,Fire Expansion Acid
+2489,11,8,1,0,0x60,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0x18000,0,misc,0,0x0,		GN_FIRE_EXPANSION_ACID,Fire Expansion Acid
 2490,9,6,2,0,0x3,1,5,1,yes,0,0x80,2:3:4:5:6,misc,0,0x0,	GN_HELLS_PLANT,Hell's Plant
 2491,0,6,1,0,0x90,0,5,1,no,0,0,0,misc,0,0x0,	GN_HELLS_PLANT_ATK,Hell's Plant Attack
 2492,0,6,4,0,0x3,5:6:6:7:7,5,1,yes,0,0,0,none,0,0x0,	GN_MANDRAGORA,Howling of Mandragora

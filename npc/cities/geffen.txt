@@ -102,7 +102,7 @@ geffen,147,26,0	script	Ralphie	97,{
 	mes "With that, anyone could be as strong as Hercules... Even a weakling like me! Hahahahahah,";
 	mes "I must have it!";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Ralphie]";
 	mes "...Good Heavens!";
 	mes "Since when were";
@@ -154,9 +154,9 @@ geffen,111,48,0	script	Stacey	101,{
 		mes "[Stacey]";
 		if (Sex == SEX_MALE) {
 			mes "It's...";
-			mes "It's like you're surrounded by this incredibly masculine aura! Oooh~! You must be irresistable to all the girls!";
+			mes "It's like you're surrounded by this incredibly masculine aura! Oooh~! You must be irresistible to all the girls!";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Stacey]";
 			mes "And I'm no exception.";
 		}
@@ -460,7 +460,7 @@ geffen_in,22,125,1	script	Crumpler	52,{
 			mes "[Crumpler]";
 			mes "Ooooooooh";
 			mes "crraaaap!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Crumpler]";
 			mes "Help meeeee!";
@@ -498,7 +498,7 @@ geffen_in,22,125,1	script	Crumpler	52,{
 		mes "[Crumpler]";
 		mes "A...";
 		mes "Sage?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Crumpler]";
 		mes "I don't know what that is. But I guess it can't be half as bad as a Mage.";
@@ -1129,7 +1129,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 			mes "So you want to know about money, eh? Let me commune with the spirits of the supernatural realm...";
 			next;
 			mes "[Psychic Advisor]";
-			mes "Ah yes. They are telling me that it's best to be moderate in all things. Certainly, you must make sure that your expeditures don't exceed your budget.";
+			mes "Ah yes. They are telling me that it's best to be moderate in all things. Certainly, you must make sure that your expenditures don't exceed your budget.";
 			next;
 			mes "[Psychic Advisor]";
 			mes "However, you should also avoid gambling with your money. By that, I mean you should save and invest carefully. Don't be tempted into risky get-rich-quick schemes!";
@@ -1359,7 +1359,7 @@ geffen_in,109,72,2	script	Monster Scholar	90,{
 	case 2:
 		mes "[Estheres]";
 		mes "Recent news?";
-		mes "Well, the Juno Monster Musuem is now open to the public. They have a fascinating exhibit and various monsters are now on display!";
+		mes "Well, the Juno Monster Museum is now open to the public. They have a fascinating exhibit and various monsters are now on display!";
 		next;
 		mes "[Estheres]";
 		mes "I mean, I've read about all sorts of monsters in the Prontera and Juno Libraries, and encountered a few in the wild, but now I get a chance to see some strong monsters in real life!";
@@ -1408,7 +1408,7 @@ geffen_in,109,72,2	script	Monster Scholar	90,{
 
 geffen,203,146,5	script	Citizen	97,{
 	mes "[Citizen]";
-	mes "There was a skillful weaponsmith";
+	mes "There was a skillful weapon smith";
 	mes "in Al De Baran who had 4 sons.";
 	mes "Unfortunately he lost all of his sons";
 	mes "while developing a powerful weapon.";
@@ -1416,7 +1416,7 @@ geffen,203,146,5	script	Citizen	97,{
 	next;
 	mes "[Citizen]";
 	mes "How sad it will be for the father...";
-	mes "Because of the incident, the weaponsmith";
+	mes "Because of the incident, the weapon smith";
 	mes "retired from his work and hid himself somewhere.";
 	mes "After that, no one could ever see";
 	mes "the powerful weapon that he and his sons were developing.";

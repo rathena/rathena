@@ -470,6 +470,7 @@ enum unitdata_mobtypes {
 	UMOB_AMOTION,
 	UMOB_ADELAY,
 	UMOB_DMOTION,
+	UMOB_TARGETID,
 };
 
 enum unitdata_homuntypes {
@@ -512,6 +513,7 @@ enum unitdata_homuntypes {
 	UHOM_AMOTION,
 	UHOM_ADELAY,
 	UHOM_DMOTION,
+	UHOM_TARGETID,
 };
 
 enum unitdata_pettypes {
@@ -591,6 +593,7 @@ enum unitdata_merctypes {
 	UMER_AMOTION,
 	UMER_ADELAY,
 	UMER_DMOTION,
+	UMER_TARGETID,
 };
 
 enum unitdata_elemtypes {
@@ -632,6 +635,7 @@ enum unitdata_elemtypes {
 	UELE_AMOTION,
 	UELE_ADELAY,
 	UELE_DMOTION,
+	UELE_TARGETID,
 };
 
 enum unitdata_npctypes {
@@ -1863,6 +1867,32 @@ enum e_hat_effects {
 	HAT_EF_RETURN_TW_1ST_HAT,
 	HAT_EF_C_FLUTTERBUTTERFLY_BL,
 	HAT_EF_QSCARABA,
+	HAT_EF_FSTONE,
+	HAT_EF_MAGICCIRCLE,
+	HAT_EF_GODCLASS,
+	HAT_EF_GODCLASS2,
+	HAT_EF_LEVEL99_RED,
+	HAT_EF_LEVEL99_ULTRAMARINE,
+	HAT_EF_LEVEL99_CYAN,
+	HAT_EF_LEVEL99_LIME,
+	HAT_EF_LEVEL99_VIOLET,
+	HAT_EF_LEVEL99_LILAC,
+	HAT_EF_LEVEL99_SUN_ORANGE,
+	HAT_EF_LEVEL99_DEEP_PINK,
+	HAT_EF_LEVEL99_BLACK,
+	HAT_EF_LEVEL99_WHITE,
+	HAT_EF_LEVEL160_RED,
+	HAT_EF_LEVEL160_ULTRAMARINE,
+	HAT_EF_LEVEL160_CYAN,
+	HAT_EF_LEVEL160_LIME,
+	HAT_EF_LEVEL160_VIOLET,
+	HAT_EF_LEVEL160_LILAC,
+	HAT_EF_LEVEL160_SUN_ORANGE,
+	HAT_EF_LEVEL160_DEEP_PINK,
+	HAT_EF_LEVEL160_BLACK,
+	HAT_EF_LEVEL160_WHITE,
+	HAT_EF_FULL_BLOOMCHERRY_TREE,
+	HAT_EF_C_BLESSINGS_OF_SOUL,
 	HAT_EF_MAX
 };
 
@@ -1944,5 +1974,7 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 #ifdef BETA_THREAD_TEST
 void queryThread_log(char * entry, int length);
 #endif
+
+bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
 #endif /* _SCRIPT_HPP_ */

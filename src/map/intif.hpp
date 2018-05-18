@@ -16,7 +16,7 @@ struct s_mercenary;
 struct s_elemental;
 struct mail_message;
 struct auction_data;
-struct achievement_db;
+struct s_achievement_db;
 struct map_session_data;
 
 int intif_parse(int fd);
@@ -24,7 +24,7 @@ int intif_parse(int fd);
 int intif_broadcast(const char* mes, int len, int type);
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
 int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type);
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname);
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid);
 int intif_main_message(struct map_session_data* sd, const char* message);
 
 int intif_wis_message(struct map_session_data *sd,char *nick,char *mes,int mes_len);
@@ -119,7 +119,7 @@ int intif_clan_member_left( int clan_id );
 // ACHIEVEMENT SYSTEM
 void intif_request_achievements(uint32 char_id);
 int intif_achievement_save(struct map_session_data *sd);
-int intif_achievement_reward(struct map_session_data *sd, struct achievement_db *adb);
+int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_db *adb);
 
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
 

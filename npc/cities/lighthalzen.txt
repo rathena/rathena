@@ -202,7 +202,7 @@ lighthalzen,89,73,3	script	Sameer#zen15	854,{
 	mes "of morality. In fact, I have";
 	mes "no need for a woman. All";
 	mes "I need are my ship models,";
-	mes "teen novels and dominos.";
+	mes "teen novels and dominoes.";
 	next;
 	mes "[Sameer]";
 	mes "I'm a completely well";
@@ -239,8 +239,8 @@ lighthalzen,66,94,3	script	Elmer Keays#li_03	866,{
 	mes "precious sight to these";
 	mes "old eyes, my dear. I'm";
 	mes "really lucky to be with you.";
-	emotion e_kis,0,"Margie Keays#li_02";
-	emotion e_kis2;
+	emotion ET_CHUP, getnpcid(0, "Margie Keays#li_02");
+	emotion ET_CHUPCHUP;
 	close;
 }
 
@@ -450,7 +450,7 @@ lighthalzen,138,50,7	script	Mauro#zen3	847,{
 	mes "[Mauro]";
 	mes "Bah! If it weren't for";
 	mes "us, Lighthalzen wouldn't";
-	mes "be as properous as it is";
+	mes "be as prosperous as it is";
 	mes "today! Those kids don't";
 	mes "know that they owe their";
 	mes "lives of luxury to us...";
@@ -462,7 +462,7 @@ lighthalzen,132,103,5	script	Sefith#li_01	734,{
 	mes "Good looks. Intelligence.";
 	mes "Excellent manners. A strong,";
 	mes "manly chin and overpowering,";
-	mes "piercing eyes. Perfectly balanced passion and charimsma. All the";
+	mes "piercing eyes. Perfectly balanced passion and charisma. All the";
 	mes "good things that ladies want.";
 	next;
 	mes "[Sefith]";
@@ -525,7 +525,7 @@ lhz_in02,34,212,4	script	Maggie#05	91,{
 	mes "amount for the lease and the";
 	mes "laws here won't let me raise";
 	mes "the price of my flowers. Why";
-	mes "are the city officals so greedy?";
+	mes "are the city officials so greedy?";
 	close;
 }
 
@@ -633,7 +633,7 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 	mes "You seem to be fairly";
 	mes "well-off. Money is good";
 	mes "to have, but be careful not";
-	mes "to become obssessed with it.";
+	mes "to become obsessed with it.";
 	next;
 	mes "[Lucius]";
 	mes "When you have the chance,";
@@ -877,7 +877,7 @@ lhz_in02,287,273,3	script	Customer#amano11	50,{
 	mes "[Terry]";
 	mes "Yeah, this is a real cozy";
 	mes "joint. I recommend it to";
-	mes "all you tourists, acutally.";
+	mes "all you tourists, actually.";
 	mes "Now why don't you kick";
 	mes "back and chill with me?";
 	close;
@@ -959,7 +959,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "[Berru]";
 		mes "Daddy...! Waaaaah~!";
 		mes "I wanna see my Daddy!";
-		emotion e_sob,0,"Berru#lhz_01";
+		emotion ET_CRY, getnpcid(0, "Berru#lhz_01");
 		next;
 		mes "[Pilia]";
 		mes "Berru, I don't ";
@@ -973,7 +973,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "home! He said he'll";
 		mes "bring us candy tonight!";
 		mes "You go sleep first, Pilia!";
-		emotion e_ag,0,"Berru#lhz_01";
+		emotion ET_ANGER, getnpcid(0, "Berru#lhz_01");
 		next;
 		mes "[Pilia]";
 		mes "^333333*Sigh...*^000000";
@@ -981,7 +981,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "He said he found a";
 		mes "good job, but we haven't";
 		mes "heard from him since then...";
-		emotion e_dots,0,"Pilia#lhz_01";
+		emotion ET_THINK, getnpcid(0, "Pilia#lhz_01");
 		close;
 	case 2:
 		mes "[Pilia]";
@@ -989,7 +989,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "so long? I hope Daddy";
 		mes "comes back home soon.";
 		mes "Come on, Berru, don't cry.";
-		emotion e_dots,0,"Pilia#lhz_01";
+		emotion ET_THINK, getnpcid(0, "Pilia#lhz_01");
 		next;
 		mes "[Berru]";
 		mes "^333333*Sob...*^000000";
@@ -1007,7 +1007,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "but my little brother";
 		mes "just won't stop crying.";
 		mes "I'm sorry if we're loud...";
-		emotion e_what,0,"Pilia#lhz_01";
+		emotion ET_QUESTION, getnpcid(0, "Pilia#lhz_01");
 		next;
 		mes "[Pilia]";
 		mes "Our daddy goes to work";
@@ -1022,7 +1022,7 @@ lighthalzen,296,239,3	script	Berru#lhz_01	706,{
 		mes "misses him a lot. I don't";
 		mes "know how to make him";
 		mes "stop crying! What do I do?";
-		emotion e_swt2,0,"Pilia#lhz_01";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Pilia#lhz_01");
 		close;
 	}
 }
@@ -1047,7 +1047,7 @@ OnTouch_:
 			mes "looks like you're in need";
 			mes "of zeny, too. Would you";
 			mes "like to join me?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 		mes "[" + strcharinfo(0) + "]";
@@ -1062,7 +1062,7 @@ OnTouch_:
 		mes "a story with you and impart";
 		mes "some of the wisdom I've";
 		mes "learned over the years.";
-		emotion e_thx;
+		emotion ET_THANKS;
 		next;
 		switch(rand(1,3)) {
 		case 1:
@@ -1089,22 +1089,22 @@ OnTouch_:
 			mes "during the day, we'll always have hope, even if we can't see it.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[Beggar]";
-			emotion e_what;
+			emotion ET_QUESTION;
 			mes "Hmm...?";
 			mes "You seem surprised~";
 			close;
@@ -1140,22 +1140,22 @@ OnTouch_:
 			mes "miracle. Isn't that wonderful?";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[Beggar]";
-			emotion e_what;
+			emotion ET_QUESTION;
 			mes "Don't believe me?";
 			mes "Well, you'll see for";
 			mes "yourself, youngster.";
@@ -1208,22 +1208,22 @@ OnTouch_:
 			mes "born of frustration will make you a bully. Know the difference.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			mes ". . . . . . . . . . . .";
 			next;
 			mes "[Beggar]";
-			emotion e_what;
+			emotion ET_QUESTION;
 			mes "What's wrong?";
 			mes "It might be a lot";
 			mes "to take in, I know.";
@@ -1244,14 +1244,14 @@ lighthalzen,311,194,3	script	Reuben#lhz_02	870,{
 		mes "become a train conductor";
 		mes "and just get outta here!";
 		mes "I really hate this place!";
-		emotion e_ag;
+		emotion ET_ANGER;
 		next;
 		mes "[Reuben]]";
 		mes "Wh-whoa...!";
 		mes "Did you just hear";
 		mes "me talk to myself?";
 		mes "Crud! Don't be so nosy!";
-		emotion e_an;
+		emotion ET_FRET;
 		close;
 	}
 	mes "[Reuben]";
@@ -1260,7 +1260,7 @@ lighthalzen,311,194,3	script	Reuben#lhz_02	870,{
 	mes "looking at me?";
 	mes "I don't know you";
 	mes "from Adam, so get lost~";
-	emotion e_rock;
+	emotion ET_ROCK;
 	close;
 }
 
@@ -1427,7 +1427,7 @@ lhz_in01,125,40,3	script	Dowbow Ryuei#ryusei	843,{
 		mes "outlook on life. If you don't";
 		mes "mind, I'd like to shake";
 		mes "your hand, adventurer.";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 	mes "[Dowbow Ryuei]";
@@ -1499,7 +1499,7 @@ lhz_in01,116,45,7	script	Joshua#aya	704,{
 	mes "complexion and smooth";
 	mes "skin. That's right. Come";
 	mes "right to Joshua, babes.";
-	mes "I got my pheremone spray";
+	mes "I got my pheromone spray";
 	mes "on and I'm ready to cruise~";
 	close;
 }
@@ -1864,7 +1864,7 @@ lhz_in01,217,121,3	script	Repairman#li_01	851,{
 		mes "Hey, you don't work--";
 		mes "G-guards! Hurry! There's";
 		mes "somebody over here!";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		close2;
 		warp "lhz_in01",33,224;
 		end;
@@ -1895,7 +1895,7 @@ lhz_in01,203,123,3	script	Scientist#li_02	750,{
 	mes "replace th--hey. You're";
 	mes "not Ralphie. Wait. Guaaards!";
 	mes "Help me, there's some weirdo!";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	close2;
 	warp "lhz_in01",33,224;
 	end;
@@ -1917,7 +1917,7 @@ lhz_in01,199,137,3	script	Scientist#li_03	865,{
 	mes "here, and I think";
 	mes "it's one of those crazy";
 	mes "stalkers! Why, why me?!";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	close2;
 	warp "lhz_in01",33,224;
 	end;
@@ -1932,7 +1932,7 @@ OnTouch_:
 		if (select("Nice day, huh?:Cancel") == 1) {
 			mes "[Rekenber Guard]";
 			mes "...";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 		mes "[Rekenber Guard]";
@@ -1941,7 +1941,7 @@ OnTouch_:
 	}
 	mes "[Rekenber Guard]";
 	mes "...!";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	close2;
 	warp "lhz_in01",33,224;
 	end;
@@ -1949,7 +1949,7 @@ OnTouch_:
 
 lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
+	if ((MISC_QUEST&512) && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
@@ -2326,7 +2326,7 @@ lhz_in01,157,47,1	script	Mareth#seram	797,{
 	mes "Yoo hoo hoo~";
 	mes "Oh, how I love";
 	mes "love love chocolate!";
-	emotion e_lv;
+	emotion ET_THROB;
 	next;
 	mes "[Mareth]";
 	mes "Eat it up...";
@@ -2459,7 +2459,7 @@ lighthalzen,162,304,7	script	Rekenber Guard Drew#li	868,{
 	mes "Official glossy photos";
 	mes "of the Kafra Ladies. Now...";
 	mes "With 20% more garter belts!";
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	next;
 	mes "[Rekenber Guard Tan]";
 	mes "So they're all wearing";
@@ -2468,7 +2468,7 @@ lighthalzen,162,304,7	script	Rekenber Guard Drew#li	868,{
 	mes "even got the glasses chick";
 	mes "to wear 'em too? That's the";
 	mes "best news I've heard all day!";
-	emotion e_omg,0,"Rekenber Guard Tan#li";
+	emotion ET_HUK, getnpcid(0, "Rekenber Guard Tan#li");
 	next;
 	mes "[Rekenber Guard Drew]";
 	mes "Okay man, you know these";
@@ -2494,7 +2494,7 @@ lighthalzen,163,306,3	script	Rekenber Guard Tan#li	867,{
 	mes "This is art. The lighting,";
 	mes "the angle, the... the...";
 	mes "subject matter. Oh yes.";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Rekenber Guard Drew]";
 	mes "Man, these officially licensed";
@@ -2612,7 +2612,7 @@ lighthalzen,176,65,5	script	Kimmy#zen3	862,{
 	mes "beautiful clothing and";
 	mes "accessory shops. This";
 	mes "place is heaven to a";
-	mes "trendsetter like me~!";
+	mes "trend-setter like me~!";
 	next;
 	mes "[Kimmy]";
 	mes "I don't know if you";
@@ -2688,7 +2688,7 @@ lhz_in02,267,25,4	script	Diana#npc	747,{
 	mes "good taste. Now, this Stiletto";
 	mes "is a steal at 39,800 zeny...";
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Diana]";
 	mes "Huh...?!";
 	mes "That's ridiculous!";
@@ -2812,7 +2812,7 @@ lighthalzen,77,203,3	script	Victor Perfecto#zen9	869,{
 	mes "Still, it's pretty";
 	mes "depressing to think";
 	mes "that the beauty of nature";
-	mes "can be manmade and";
+	mes "can be man-made and";
 	mes "equated to zeny, you know?";
 	close;
 }
@@ -2947,7 +2947,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 	mes "Oh...!";
 	mes "Good heavens!";
 	mes "Um, may I help you?";
-	emotion e_omg;
+	emotion ET_HUK;
 	if (BaseJob == Job_Assassin) {
 		if (Sex == SEX_MALE) {
 			next;
@@ -3144,7 +3144,7 @@ lighthalzen,337,296,3	script	Rekenber Employee#li_2	868,{
 		mes "professional positions. This";
 		mes "is a great chance to make a";
 		mes "difference... and some money~";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 }
@@ -3171,7 +3171,7 @@ lhz_in01,221,131,7	script	Scientist#li_01	865,{
 		mes "What?! Guards!";
 		mes "Hurry, there's an";
 		mes "intruder right here!";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		close2;
 		warp "lhz_in01",33,224;
 		end;

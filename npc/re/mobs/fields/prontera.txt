@@ -90,29 +90,34 @@ prt_fild07,225,110,5,5	monster	Black Mushroom	1084,3,360000,180000
 // prt_fild08 - Prontera Field
 //==================================================
 prt_fild08,0,0	monster	Poring	1002,110,5000
-prt_fild08,0,0	monster	Lunatic	1063,100,5000
-prt_fild08,0,0	monster	Fabre	1007,100,5000
-prt_fild08,0,0	monster	Little Poring	2398,30,50000
+prt_fild08,0,0	monster	Lunatic	1063,110,5000
+prt_fild08,0,0	monster	Fabre	1007,88,5000
+prt_fild08,0,0	monster	Little Poring	2398,33,50000
+prt_fild08,0,0	monster	Pupa	1008,66,5000
 
 //==================================================
 // prt_fild08 - Duplicates
 //==================================================
 prt_fild08a,0,0	monster	Poring	1002,110,5000
-prt_fild08a,0,0	monster	Lunatic	1063,100,5000
-prt_fild08a,0,0	monster	Fabre	1007,100,5000
-prt_fild08a,0,0	monster	Little Poring	2398,30,50000
+prt_fild08a,0,0	monster	Lunatic	1063,110,5000
+prt_fild08a,0,0	monster	Fabre	1007,88,5000
+prt_fild08a,0,0	monster	Little Poring	2398,33,50000
+prt_fild08a,0,0	monster	Pupa	1008,66,5000
 prt_fild08b,0,0	monster	Poring	1002,110,5000
-prt_fild08b,0,0	monster	Lunatic	1063,100,5000
-prt_fild08b,0,0	monster	Fabre	1007,100,5000
-prt_fild08b,0,0	monster	Little Poring	2398,30,50000
+prt_fild08b,0,0	monster	Lunatic	1063,110,5000
+prt_fild08b,0,0	monster	Fabre	1007,88,5000
+prt_fild08b,0,0	monster	Little Poring	2398,33,50000
+prt_fild08b,0,0	monster	Pupa	1008,66,5000
 prt_fild08c,0,0	monster	Poring	1002,110,5000
-prt_fild08c,0,0	monster	Lunatic	1063,100,5000
-prt_fild08c,0,0	monster	Fabre	1007,100,5000
-prt_fild08c,0,0	monster	Little Poring	2398,30,50000
+prt_fild08c,0,0	monster	Lunatic	1063,110,5000
+prt_fild08c,0,0	monster	Fabre	1007,88,5000
+prt_fild08c,0,0	monster	Little Poring	2398,33,50000
+prt_fild08c,0,0	monster	Pupa	1008,66,5000
 prt_fild08d,0,0	monster	Poring	1002,110,5000
-prt_fild08d,0,0	monster	Lunatic	1063,100,5000
-prt_fild08d,0,0	monster	Fabre	1007,100,5000
-prt_fild08d,0,0	monster	Little Poring	2398,30,50000
+prt_fild08d,0,0	monster	Lunatic	1063,110,5000
+prt_fild08d,0,0	monster	Fabre	1007,88,5000
+prt_fild08d,0,0	monster	Little Poring	2398,33,50000
+prt_fild08d,0,0	monster	Pupa	1008,66,5000
 
 
 //==================================================

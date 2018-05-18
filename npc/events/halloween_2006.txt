@@ -654,7 +654,7 @@ nif_fild01,167,113,3	script	Masta's chicken#06_hw01	800,{
 		next;
 		input .@inputstr$;
 		if( .@inputstr$ == "Return" ) {
-			emotion e_omg;
+			emotion ET_HUK;
 			specialeffect EF_TELEPORTATION;
 			mes "The magic spell has been casted.";
 			set halloween, 103;
@@ -1035,11 +1035,11 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	799,{
 	mes "Hello.";
 	mes "I'm Loli Ruri's faithful and cute Familiar.";
 	mes "Do you have an invitation from Loli Ruri?";
-	mes "That's a kind of^4d4dffa special ticket to Nifflheim^000000..";
+	mes "That's a kind of^4d4dffa special ticket to Niflheim^000000..";
 	next;
 	if (select( "Yes, I do.:No, I don't.") == 1) {
 		mes "[Familiar]";
-		mes "Do you want to go to Nifflheim?";
+		mes "Do you want to go to Niflheim?";
 		mes "It's available during Halloween.";
 		next;
 		if (select( "Yes, I do:No, I don't.") == 1) {
@@ -1058,13 +1058,13 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	799,{
 				mes "You don't have the ticket!";
 				mes "I'll suck up all your blood, you liar!";
 				percentheal -20,0;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				close;
 			}
 		}
 		mes "[Familiar]";
 		mes "Ok.";
-		mes "Actually, it's useless to have a special ticket to Nifflheim.";
+		mes "Actually, it's useless to have a special ticket to Niflheim.";
 		close;
 	}
 	mes "[Familiar]";

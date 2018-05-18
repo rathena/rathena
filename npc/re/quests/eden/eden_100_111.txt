@@ -42,7 +42,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 	else if (BaseLevel < 111) {
 		if (para_100lv01 == 0) {
 			mes "Adventurers!";
-			emotion e_heh;
+			emotion ET_SMILE;
 			next;
 			cutin "gelca03",2;
 			mes "[Gelkah]";
@@ -117,7 +117,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 				cutin "rote01",2;
 				mes "[Rohtert]";
 				mes "Hmm...";
-				emotion e_pif,0,"Rohtert#12";
+				emotion ET_HNG, getnpcid(0, "Rohtert#12");
 				next;
 				cutin "gelca01",2;
 				mes "[Gelkah]";
@@ -199,7 +199,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						}
 						else if (checkquest(13005,HUNTING) == 2) {
 							mes "You did a great job.";
-							emotion e_no1;
+							emotion ET_BEST;
 							callsub S_Quest,13005,13006,106000,148000;
 						}
 						else {
@@ -521,7 +521,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 				case 5:
 					mes "Here is a list of other requests from all over Rune Midgard.";
 					next;
-					switch( select( "Loli Ruri Hunting - Nifflheim", "Medusa Hunting - Comodo", "Anubis Hunting - Sphinx" ) ) {
+					switch( select( "Loli Ruri Hunting - Niflheim", "Medusa Hunting - Comodo", "Anubis Hunting - Sphinx" ) ) {
 						mes "[Gelkah]";
 					case 1:
 						if (checkquest(13041,PLAYTIME) == 0)
@@ -534,7 +534,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							mes "I wonder why they are scheming this kind of ^FF0000nonsense^000000... makes me wonder if they even know anything about adventuring.";
 							next;
 							mes "[Gelkah]";
-							mes "We should accept this simple request before we start getting even more nonsense ones. Please clear ^FF000030 Loli Ruri^000000 in Nifflheim.";
+							mes "We should accept this simple request before we start getting even more nonsense ones. Please clear ^FF000030 Loli Ruri^000000 in Niflheim.";
 							next;
 							cutin "gelca02",2;
 							mes "[Gelkah]";
@@ -553,7 +553,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							mes "They said that they would heal Eden Group adventurers who are exhausted in exchange for the request but we're not sure they'll follow through.";
 							next;
 							mes "[Gelkah]";
-							mes "We should accept the simple request anyways. Please clear ^FF000030 Loli Ruri^000000 in Nifflheim.";
+							mes "We should accept the simple request anyways. Please clear ^FF000030 Loli Ruri^000000 in Niflheim.";
 							callsub S_Quest,13041,13040;
 						}
 						break;
@@ -679,7 +679,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						next;
 						mes "[Gelkah]";
 						mes "He was almost crying when I first met him. It was difficult to pretend to lose to him. Please keep it a secret.";
-						emotion e_heh;
+						emotion ET_SMILE;
 						break;
 					case 2:
 						if (Sex == SEX_MALE)
@@ -690,7 +690,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 					case 3:
 						cutin "gelca04",2;
 						mes "Oh no... Please don't do that. I am sorry please keep it as a secret to a master. I was careless.";
-						emotion e_shy;
+						emotion ET_SHY;
 						break;
 					}
 					next;
@@ -719,7 +719,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							cutin "gelca02",2;
 							mes "[Gelkah]";
 							mes "I am sorry... It must be popular only in our village. Throw, heat and let it fly it.";
-							emotion e_sry;
+							emotion ET_SORRY;
 							next;
 						}
 						cutin "gelca01",2;
@@ -824,8 +824,8 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										mes "One time, master and I went to the cave west of Comodo and when we saw the Medusa monster...";
 										next;
 										mes "Oh boy the look on his face was priceless!";
-										emotion e_lv2;
-										emotion e_dots,1;
+										emotion ET_BIGTHROB;
+										emotion ET_THINK, playerattached();
 										.@exp = 180000;
 										.@jexp = 168000;
 									}
@@ -853,7 +853,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										mes "Once I found a secret route to get to Jawaii... It's only for couples but some of us know how to get there still.";
 										next;
 										mes "Kind of useless to be there without a partner but oh well.";
-										emotion e_lv;
+										emotion ET_THROB;
 										.@exp = 550000;
 										.@jexp = 340000;
 									}
@@ -1165,7 +1165,7 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 					cutin "rote04",2;
 					mes "[Rohtert]";
 					mes "Yeah yeah potato po-tah-toh!";
-					emotion e_pif;
+					emotion ET_HNG;
 					next;
 					cutin "gelca02",2;
 					mes "[^FF0000Gelkah^000000]";
@@ -1174,7 +1174,7 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 					cutin "rote04",2;
 					mes "[Rohtert]";
 					mes "We realized when we faced the eyes of the beast that it looked like a lion but it isn't any normal animal.";
-					emotion e_pif;
+					emotion ET_HNG;
 					next;
 					mes "[Rohtert]";
 					mes "^8008F8I knew that it was kill or be killed.^000000";

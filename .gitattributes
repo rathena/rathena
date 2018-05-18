@@ -5,6 +5,7 @@
 *.vcxproj merge=union
 *.sln text eol=crlf
 *.bat text eol=crlf
+athena-start text eol=lf
 configure text eol=lf
 configure.in text eol=lf
 Makefile text eol=lf

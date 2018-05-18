@@ -2031,7 +2031,7 @@ in_rogue,243,61,0	script	Suspicious Man#megin	748,{
 					else if (countitem(743) > 0) {
 						set .@toy$,"Spore Doll";
 					}
-					else if (countitem(744) > 0) {
+					else if (countitem(750) > 0) {
 						set .@toy$,"Baphomet Doll";
 					}
 					else if (countitem(751) > 0) {

@@ -16,6 +16,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/utilities.hpp"
 #include "../common/conf.h"
 
 #include "map.hpp"
@@ -513,7 +514,7 @@ ACMD_FUNC(where)
 	nullpo_retr(-1, sd);
 	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
-	if (!message || !*message || sscanf(message, "%23s[^\n]", atcmd_player_name) < 1) {
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,910)); // Please enter a player name (usage: @where <char name>).
 		return -1;
 	}
@@ -1766,13 +1767,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	// Limit body styles to certain jobs since not all of them are released yet.
-	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK || (sd->class_&MAPID_THIRDMASK) == MAPID_SHADOW_CHASER
-	    || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER || (sd->class_&MAPID_THIRDMASK) == MAPID_SORCERER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_SURA)) {
+	if (!(sd->class_&JOBL_THIRD)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -2756,7 +2751,9 @@ ACMD_FUNC(guildlevelup) {
  *------------------------------------------*/
 ACMD_FUNC(makeegg) {
 	struct item_data *item_data;
-	int id, pet_id;
+	int id;
+	struct s_pet_db* pet;
+
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -2772,12 +2769,12 @@ ACMD_FUNC(makeegg) {
 	else
 		id = atoi(message);
 
-	pet_id = search_petDB_index(id, PET_CLASS);
-	if (pet_id < 0)
-		pet_id = search_petDB_index(id, PET_EGG);
-	if (pet_id >= 0) {
-		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
+	pet = pet_db(id);
+	if (!pet)
+		pet = pet_db_search(id, PET_EGG);
+	if (pet != nullptr) {
+		sd->catch_target_class = pet->class_;
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 		return -1;
@@ -5393,7 +5390,7 @@ ACMD_FUNC(skilloff)
  *------------------------------------------*/
 ACMD_FUNC(npcmove)
 {
-	short x = 0, y = 0, m;
+	short x = 0, y = 0;
 	struct npc_data *nd = 0;
 	char npc_name[NPC_NAME_LENGTH];
 
@@ -5411,18 +5408,12 @@ ACMD_FUNC(npcmove)
 		return -1;
 	}
 
-	if ((m=nd->bl.m) < 0 || nd->bl.prev == NULL)
-	{
+	if ( npc_movenpc( nd, x, y ) ) 
+	{ //actually failed to move
 		clif_displaymessage(fd, msg_txt(sd,1154)); // NPC is not on this map.
 		return -1;	//Not on a map.
-	}
-
-	x = cap_value(x, 0, map[m].xs-1);
-	y = cap_value(y, 0, map[m].ys-1);
-	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved.
+	} else
+		clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved
 
 	return 0;
 }
@@ -6556,14 +6547,13 @@ ACMD_FUNC(mobsearch)
 
 	if ((mob_id = atoi(mob_name)) == 0)
 		 mob_id = mobdb_searchname(mob_name);
-	if(mob_id > 0 && mobdb_checkid(mob_id) == 0){
+	if( mobdb_checkid(mob_id) == 0){
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1219),mob_name); // Invalid mob ID %s!
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname)
-				strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
-//				strcpy(mob_name,mob_db(mob_id)->name);	// --en--
+	strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
+//	strcpy(mob_name,mob_db(mob_id)->name);	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif_displaymessage(fd, atcmd_output);
@@ -6577,7 +6567,7 @@ ACMD_FUNC(mobsearch)
 
 		if( md->bl.m != sd->bl.m )
 			continue;
-		if( mob_id != -1 && md->mob_id != mob_id )
+		if( md->mob_id != mob_id )
 			continue;
 
 		++number;
@@ -6712,7 +6702,7 @@ ACMD_FUNC(pettalk)
 		};
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
-		if( i == E_DICE1 ) i = rnd()%6 + E_DICE1; // randomize /dice
+		if( i == ET_DICE1 ) i = rnd()%6 + ET_DICE1; // randomize /dice
 		if( i < ARRAYLENGTH(emo) )
 		{
 			if (sd->emotionlasttime + 1 >= time(NULL)) { // not more than 1 per second
@@ -7199,7 +7189,8 @@ ACMD_FUNC(mobinfo)
 	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
-	struct mob_db *mob, *mob_array[MAX_SEARCH];
+	struct mob_db *mob;
+	uint16 mob_ids[MAX_SEARCH];
 	int count;
 	int i, k;
 
@@ -7214,10 +7205,10 @@ ACMD_FUNC(mobinfo)
 	// If monster identifier/name argument is a name
 	if ((i = mobdb_checkid(atoi(message))))
 	{
-		mob_array[0] = mob_db(i);
+		mob_ids[0] = i;
 		count = 1;
 	} else
-		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
+		count = mobdb_searchname_array(message, mob_ids, MAX_SEARCH);
 
 	if (!count) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
@@ -7231,7 +7222,7 @@ ACMD_FUNC(mobinfo)
 	}
 	for (k = 0; k < count; k++) {
 		unsigned int j,base_exp,job_exp;
-		mob = mob_array[k];
+		mob = mob_db(mob_ids[k]);
 		base_exp = mob->base_exp;
 		job_exp = mob->job_exp;
 
@@ -7355,7 +7346,7 @@ ACMD_FUNC(showmobs)
 
 	if((mob_id = atoi(mob_name)) == 0)
 		mob_id = mobdb_searchname(mob_name);
-	if(mob_id > 0 && mobdb_checkid(mob_id) == 0){
+	if(mobdb_checkid(mob_id) == 0){
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1250),mob_name); // Invalid mob id %s!
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
@@ -7475,7 +7466,7 @@ ACMD_FUNC(hommutate)
 	if (m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99) {
 		hom_mutate(sd->hd, homun_id);
 	} else {
-		clif_emotion(&sd->hd->bl, E_SWT);
+		clif_emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return 0;
 }
@@ -7828,24 +7819,25 @@ ACMD_FUNC(whodrops)
 
 ACMD_FUNC(whereis)
 {
-	struct mob_db *mob_array[MAX_SEARCH];
-	int count;
-	int i, j, k;
+	uint16 mob_ids[MAX_SEARCH] = {0};
+	int count = 0;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
 		return -1;
 	}
-
-	// If monster identifier/name argument is a name
-	if ((i = mobdb_checkid(atoi(message))))
-	{
-		mob_array[0] = mob_db(i);
+	
+	int i_message = atoi(message);
+	if (mobdb_checkid(i_message)) {
+		// ID given
+		mob_ids[0] = i_message;
 		count = 1;
-	} else
-		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
-
-	if (!count) {
+	} else {
+		// Name given, get all monster associated whith this name
+		count = mobdb_searchname_array(message, mob_ids, MAX_SEARCH);
+	}
+	
+	if (count <= 0) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
 		return -1;
 	}
@@ -7855,20 +7847,28 @@ ACMD_FUNC(whereis)
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
-	for (k = 0; k < count; k++) {
-		struct mob_db *mob = mob_array[k];
+
+	for (int i = 0; i < count; i++) {
+		uint16 mob_id = mob_ids[i];
+		struct mob_db * mob = mob_db(mob_id);
+
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
-
-		for (i = 0; i < ARRAYLENGTH(mob->spawn) && mob->spawn[i].qty; i++)
-		{
-			j = map_mapindex2mapid(mob->spawn[i].mapindex);
-			if (j < 0) continue;
-			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[j].name, mob->spawn[i].qty);
-			clif_displaymessage(fd, atcmd_output);
+		
+		const std::vector<spawn_info> spawns = mob_get_spawns(mob_id);
+		if (spawns.size() <= 0) {
+			 // This monster does not spawn normally.
+			clif_displaymessage(fd, msg_txt(sd,1290));
+		} else {
+			for(auto& spawn : spawns)
+			{
+				int16 mapid = map_mapindex2mapid(spawn.mapindex);
+				if (mapid < 0)
+					continue;
+				snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawn.qty);
+				clif_displaymessage(fd, atcmd_output);
+			}
 		}
-		if (i == 0)
-			clif_displaymessage(fd, msg_txt(sd,1290)); // This monster does not spawn normally.
 	}
 
 	return 0;
@@ -8297,14 +8297,12 @@ ACMD_FUNC(invite)
 		return -1;
 	}
 
-	if(did == 0) {
+	if(did == 0 || !duel_exist(did) ) {
 		clif_displaymessage(fd, msg_txt(sd,350)); // "Duel: @invite without @duel."
 		return 0;
 	}
 
-	if(duel_list[did].max_players_limit > 0 &&
-		duel_list[did].members_count >= duel_list[did].max_players_limit) {
-
+	if( !duel_check_player_limit( duel_get_duelid(did) ) ){
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;
 	}
@@ -8416,12 +8414,12 @@ ACMD_FUNC(accept)
 		return 0;
 	}
 
-	if(sd->duel_invite <= 0) {
+	if(sd->duel_invite <= 0 || !duel_exist(sd->duel_invite) ) {
 		clif_displaymessage(fd, msg_txt(sd,360)); // "Duel: @accept without invititation."
 		return 0;
 	}
 
-	if( duel_list[sd->duel_invite].max_players_limit > 0 && duel_list[sd->duel_invite].members_count >= duel_list[sd->duel_invite].max_players_limit )
+	if( !duel_check_player_limit( duel_get_duelid( sd->duel_invite ) ) )
 	{
 		clif_displaymessage(fd, msg_txt(sd,351)); // "Duel: Limit of players is reached."
 		return 0;
@@ -9733,13 +9731,15 @@ ACMD_FUNC(costume) {
 		"Wedding",
 		"Xmas",
 		"Summer",
+		"Summer2",
 		"Hanbok",
-		"Oktoberfest",
+		"Oktoberfest"
 	};
 	const int name2id[] = {
 		SC_WEDDING,
 		SC_XMAS,
 		SC_SUMMER,
+		SC_DRESSUP,
 		SC_HANBOK,
 		SC_OKTOBERFEST
 	};
@@ -9781,7 +9781,7 @@ ACMD_FUNC(costume) {
 		return -1;
 	}
 
-	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, 0, -1);
+	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, name2id[k] == SC_DRESSUP ? 1 : 0, -1);
 
 	return 0;
 }
@@ -9985,6 +9985,18 @@ ACMD_FUNC(adopt)
 	if (response < ADOPT_MORE_CHILDREN) // No displaymessage for client-type responses
 		clif_displaymessage(fd, msg_txt(sd, 744 + response - 1));
 	return -1;
+}
+
+/**
+ * Opens the limited sale window.
+ * Usage: @limitedsale or client command /limitedsale on supported clients
+ */
+ACMD_FUNC(limitedsale){
+	nullpo_retr(-1, sd);
+
+	clif_sale_open(sd);
+
+	return 0;
 }
 
 #include "../custom/atcommand.inc"
@@ -10284,6 +10296,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(adopt),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
+		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

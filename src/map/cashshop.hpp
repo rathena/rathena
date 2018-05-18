@@ -7,7 +7,7 @@
 #include "../common/cbasetypes.h" // uint16, uint32
 #include "../common/timer.h" // ShowWarning, ShowStatus
 
-#include "../config/packets.h"
+#include "../config/core.h"
 
 struct map_session_data;
 

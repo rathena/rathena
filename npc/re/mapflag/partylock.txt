@@ -56,3 +56,7 @@
 
 // Horror Toy Factory
 1@xm_d	mapflag	partylock
+
+// Central Laboratory Memorial ====
+1@lab	mapflag	partylock
+1@uns	mapflag	partylock

@@ -23,7 +23,7 @@ OnInit:
 
 OnTouch:
 	getmapxy(.map$, .x, .y, 1);
-	emotion e_scissors;
+	emotion ET_SCISSOR;
 	end;
 }
 

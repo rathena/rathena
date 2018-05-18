@@ -1677,11 +1677,11 @@ OnTouch:
 	next;
 	mes "[Porings]";
 	mes "Let's go! Let's fight! Let's win, win, win!!!";
-	emotion e_go,0,"Angeling Side Poring#wa1";
-	emotion e_go,0,"Angeling Side Poring#wa2";
-	emotion e_go,0,"Angeling Side Poring#wa3";
-	emotion e_go,0,"Angeling Side Poring#wa4";
-	emotion e_go,0,"Angeling Side Poring#wa5";
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa1");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa2");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa3");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa4");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa5");
 	next;
 	if (wop_team == 1) {
 		mes "[Porings]";
@@ -1695,20 +1695,20 @@ OnTouch:
 		mes "Wait, YOU! Aren't you on the side of the Devilings?!";
 		mes "Get out now! Leave!!";
 		mes "Booooo~ Boo~ Boooo~";
-		emotion e_omg,0,"Angeling Side Poring#wa1";
-		emotion e_an,0,"Angeling Side Poring#wa2";
-		emotion e_omg,0,"Angeling Side Poring#wa3";
-		emotion e_an,0,"Angeling Side Poring#wa4";
-		emotion e_gasp,0,"Angeling Side Poring#wa5";
+		emotion ET_HUK, getnpcid(0, "Angeling Side Poring#wa1");
+		emotion ET_FRET, getnpcid(0, "Angeling Side Poring#wa2");
+		emotion ET_HUK, getnpcid(0, "Angeling Side Poring#wa3");
+		emotion ET_FRET, getnpcid(0, "Angeling Side Poring#wa4");
+		emotion ET_SURPRISE, getnpcid(0, "Angeling Side Poring#wa5");
 	}
 	else {
 		mes "[Porings]";
 		mes "Hey, human. How about fighting for us Porings on Angeling's side??!";
-		emotion e_hlp,0,"Angeling Side Poring#wa1";
-		emotion e_go,0,"Angeling Side Poring#wa2";
-		emotion e_hlp,0,"Angeling Side Poring#wa3";
-		emotion e_go,0,"Angeling Side Poring#wa4";
-		emotion e_go,0,"Angeling Side Poring#wa5";
+		emotion ET_HELP, getnpcid(0, "Angeling Side Poring#wa1");
+		emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa2");
+		emotion ET_HELP, getnpcid(0, "Angeling Side Poring#wa3");
+		emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa4");
+		emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa5");
 	}
 	next;
 	mes "[Porings]";
@@ -1730,11 +1730,11 @@ OnTouch:
 	next;
 	mes "[Marins]";
 	mes "Let's go! Let's fight! Fight for Triumph!!!!";
-	emotion e_go,0,"Deviling Side Marin#wd1";
-	emotion e_go,0,"Deviling Side Marin#wd2";
-	emotion e_go,0,"Deviling Side Marin#wd3";
-	emotion e_go,0,"Deviling Side Marin#wd4";
-	emotion e_go,0,"Deviling Side Marin#wd5";
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd1");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd2");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd3");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd4");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd5");
 	next;
 	if (wop_team == 2) {
 		mes "[Marins]";
@@ -1747,20 +1747,20 @@ OnTouch:
 		mes "Wait, YOU! Aren't you on the side of the Angelings?!";
 		mes "Get out now! Leave!!";
 		mes "Booooo~ Boo~ Boooo~";
-		emotion e_omg,0,"Deviling Side Marin#wd1";
-		emotion e_an,0,"Deviling Side Marin#wd2";
-		emotion e_omg,0,"Deviling Side Marin#wd3";
-		emotion e_an,0,"Deviling Side Marin#wd4";
-		emotion e_gasp,0,"Deviling Side Marin#wd5";
+		emotion ET_HUK, getnpcid(0, "Deviling Side Marin#wd1");
+		emotion ET_FRET, getnpcid(0, "Deviling Side Marin#wd2");
+		emotion ET_HUK, getnpcid(0, "Deviling Side Marin#wd3");
+		emotion ET_FRET, getnpcid(0, "Deviling Side Marin#wd4");
+		emotion ET_SURPRISE, getnpcid(0, "Deviling Side Marin#wd5");
 	}
 	else {
 		mes "[Marins]";
 		mes "Hey, human. Don't you wanna fight for Deviling, the noble of darkness? What do you say?!";
-		emotion e_hlp,0,"Deviling Side Marin#wd1";
-		emotion e_go,0,"Deviling Side Marin#wd2";
-		emotion e_hlp,0,"Deviling Side Marin#wd3";
-		emotion e_go,0,"Deviling Side Marin#wd4";
-		emotion e_go,0,"Deviling Side Marin#wd5";
+		emotion ET_HELP, getnpcid(0, "Deviling Side Marin#wd1");
+		emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd2");
+		emotion ET_HELP, getnpcid(0, "Deviling Side Marin#wd3");
+		emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd4");
+		emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd5");
 	}
 	next;
 	mes "[Marins]";

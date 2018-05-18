@@ -96,7 +96,7 @@ prt_church,179,15,1	script	Priest Praupin	4_M_MINISTER,{
 		close;
 	case 22:
 		if(countitem(7181) > 0){// Receipt_01
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "Oh my, you seem";
 			mes "to be growing quickly";
 			mes "into your role as an Acolyte.";
@@ -370,7 +370,7 @@ prt_monk,230,106,3	script	Asthe#tu	1_F_PRIEST,{
 				mes "[Asthe]";
 				mes "Thank you so much.";
 				mes "You have returned the Mace.";
-				emotion e_heh;
+				emotion ET_SMILE;
 				tu_acolyte01 = 5;
 				delitem 1504,1; //Mace
 				if(Class == Job_Acolyte_High)
@@ -796,7 +796,7 @@ monk_in,18,38,6	script	Priest Gardron#tu	4_M_MINISTER,{
 			mes "What's that?";
 			mes "You have something for me?";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Priest Gardron]";
 			mes "Oh! This is a letter from my mother back home. Thank you for bringing this to me, young Acolyte.";
 			next;
@@ -863,7 +863,7 @@ monk_in,18,38,6	script	Priest Gardron#tu	4_M_MINISTER,{
 				next;
 				mes "[Priest Gardron]";
 				mes "....!";
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				next;
 				mes "[Priest Gardron]";
 				mes "May I entrust you, acolyte "+strcharinfo(0)+",";
@@ -897,7 +897,7 @@ monk_in,18,38,6	script	Priest Gardron#tu	4_M_MINISTER,{
 				next;
 				mes "[Priest Gardron]";
 				mes "....!";
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				next;
 				mes "[Priest Gardron]";
 				mes ""+strcharinfo(0)+",";
@@ -952,7 +952,7 @@ prt_monk,235,245,5	script	Dog#tu	4_DOG01,{
 				if(.@dog_food > 4){
 					mes "[Dog]";
 					mes "^CDB79EGrrrrrr...!^000000";
-					emotion e_an;
+					emotion ET_FRET;
 					next;
 					mes "^3355FFThe dog grinds";
 					mes "its teeth and glares";
@@ -960,13 +960,13 @@ prt_monk,235,245,5	script	Dog#tu	4_DOG01,{
 				} else {
 					mes "[Dog]";
 					mes "^CDB79ERoof roof!^000000";
-					emotion e_lv;
+					emotion ET_THROB;
 				}
 				break;
 			case 2:
 				mes "[Dog]";
 				mes "^CDB79ERoof roof~^000000";
-				emotion e_lv;
+				emotion ET_THROB;
 				break;
 			case 3:
 				mes "[Dog]";
@@ -1000,7 +1000,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	4_F_04,{
 		mes "Thanks for helping me.";
 		mes "I'm sad my older sister is no longer with me, but I oughta";
 		mes "cheer up, right? I'll try my best!";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 	mes "Sister, don't go...";
@@ -1059,7 +1059,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	4_F_04,{
 		next;
 		specialeffect EF_CURSEATTACK;
 		soundeffectall "_curse.wav",0;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "["+strcharinfo(0)+"]";
 		mes "This is....!";
 		mes "A cursed spirit";
@@ -1216,7 +1216,7 @@ prt_monk,197,228,3	script	Veiner	4_M_ORIENT02,{
 		mes "[Veiner]";
 		mes "Oh right!";
 		mes "Thank you very much for delivering this to me. Sorry, but I'm always excited to hear from my cutie pie~";
-		emotion e_thx;
+		emotion ET_THANKS;
 		tu_acolyte01 = 19;
 		delitem 1081,1; //Merchant_Box_1
 	}
@@ -1224,7 +1224,7 @@ prt_monk,197,228,3	script	Veiner	4_M_ORIENT02,{
 		mes "I can't wait";
 		mes "to see her again!";
 		mes "Bibi...! I loooove you!";
-		emotion e_kis2;
+		emotion ET_CHUPCHUP;
 	}
 	else {
 		mes "So very";
@@ -1378,7 +1378,7 @@ prt_monk,219,164,3	script	Gloria#tu	4_F_SISTER,{
 			mes "one ^3131FFBlue Gemstone^000000.";
 			mes "Is this to help me?";
 			mes "Wow, I'm touched!";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		case 2:
 			mes "[Gloria]";
@@ -1440,7 +1440,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 				mes "[Cleope Verce]";
 				mes "You'll have to go through a lot until you reach the point where I'm at right now. Ho ho ho! You still have a looong way to go~";
 				next;
-				emotion e_gg;
+				emotion ET_KIK;
 				mes "[Cleope Verce]";
 				mes "Good luck...";
 				mes "Rookie.";
@@ -1491,7 +1491,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 				mes "until you become a well";
 				mes "experienced Acolyte. Ho ho~";
 				next;
-				emotion e_gg;
+				emotion ET_KIK;
 				mes "[Cleope Verce]";
 				mes "Good luck,";
 				mes "young friend.";
@@ -1549,7 +1549,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 				mes "memories when you're";
 				mes "still an Acolyte.";
 				next;
-				emotion e_gg;
+				emotion ET_KIK;
 				mes "[Cleope Verce]";
 				mes "Good luck,";
 				mes "young friend~";
