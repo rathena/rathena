@@ -83,7 +83,7 @@ struct Damage {
 };
 
 //(Used in read pc.c,) attribute table (battle_attr_fix)
-extern int attr_fix_table[4][ELE_MAX][ELE_MAX];
+extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 // Damage Calculation
 

@@ -53,7 +53,7 @@ static struct {
 	struct refine_cost cost[REFINE_COST_MAX];
 } refine_info[REFINE_TYPE_MAX];
 
-static int atkmods[3][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
+static int atkmods[SZ_ALL][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
 
 static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
@@ -187,7 +187,7 @@ static void set_sc(uint16 skill_id, sc_type sc, int icon, unsigned int flag)
 		ShowError("set_sc: Unsupported skill id %d (SC: %d. Icon: %d)\n", skill_id, sc, icon);
 		return;
 	}
-	if( sc < 0 || sc >= SC_MAX ) {
+	if( sc <= SC_NONE || sc >= SC_MAX ) {
 		ShowError("set_sc: Unsupported status change id %d (Skill: %d. Icon: %d)\n", sc, skill_id, icon);
 		return;
 	}
@@ -3745,19 +3745,19 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->bonus.splash_range += sd->bonus.splash_add_range;
 
 	// Damage modifiers from weapon type
-	sd->right_weapon.atkmods[0] = atkmods[0][sd->weapontype1];
-	sd->right_weapon.atkmods[1] = atkmods[1][sd->weapontype1];
-	sd->right_weapon.atkmods[2] = atkmods[2][sd->weapontype1];
-	sd->left_weapon.atkmods[0] = atkmods[0][sd->weapontype2];
-	sd->left_weapon.atkmods[1] = atkmods[1][sd->weapontype2];
-	sd->left_weapon.atkmods[2] = atkmods[2][sd->weapontype2];
+	sd->right_weapon.atkmods[SZ_SMALL] = atkmods[SZ_SMALL][sd->weapontype1];
+	sd->right_weapon.atkmods[SZ_MEDIUM] = atkmods[SZ_MEDIUM][sd->weapontype1];
+	sd->right_weapon.atkmods[SZ_BIG] = atkmods[SZ_BIG][sd->weapontype1];
+	sd->left_weapon.atkmods[SZ_SMALL] = atkmods[SZ_SMALL][sd->weapontype2];
+	sd->left_weapon.atkmods[SZ_MEDIUM] = atkmods[SZ_MEDIUM][sd->weapontype2];
+	sd->left_weapon.atkmods[SZ_BIG] = atkmods[SZ_BIG][sd->weapontype2];
 
 	if((pc_isriding(sd) || pc_isridingdragon(sd)) &&
 		(sd->status.weapon==W_1HSPEAR || sd->status.weapon==W_2HSPEAR))
 	{	// When Riding with spear, damage modifier to mid-class becomes
 		// same as versus large size.
-		sd->right_weapon.atkmods[1] = sd->right_weapon.atkmods[2];
-		sd->left_weapon.atkmods[1] = sd->left_weapon.atkmods[2];
+		sd->right_weapon.atkmods[SZ_MEDIUM] = sd->right_weapon.atkmods[SZ_BIG];
+		sd->left_weapon.atkmods[SZ_MEDIUM] = sd->left_weapon.atkmods[SZ_BIG];
 	}
 
 // ----- STATS CALCULATION -----
@@ -14540,7 +14540,7 @@ int status_readdb(void)
 			}
 	}
 	// attr_fix.txt
-	for(i=0;i<4;i++)
+	for(i=0;i<MAX_ELE_LEVEL;i++)
 		for(j=0;j<ELE_ALL;j++)
 			for(k=0;k<ELE_ALL;k++)
 				attr_fix_table[i][j][k]=100;

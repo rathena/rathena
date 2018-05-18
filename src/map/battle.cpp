@@ -33,7 +33,7 @@
 #include "log.hpp"
 #include "pc_groups.hpp"
 
-int attr_fix_table[4][ELE_MAX][ELE_MAX];
+int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
