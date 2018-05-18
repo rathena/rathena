@@ -447,6 +447,7 @@
 5917:1525,{ bonus bLongAtkDef,10; }
 5920:18542,{ bonus bHealPower,2*getequiprefinerycnt(EQI_HEAD_TOP); }
 5967:28321,{ bonus2 bSubSkill,"HT_BLITZBEAT",200; }
+5918:19306,{ bonus bAspd,1; bonus bCritAtkRate,2 + 2 * (readparam(bDex) / 10); bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; .@luk = readparam(bLuk); if (.@luk > 119) { bonus bAspd,2; bonus bCritAtkRate,4; bonus2 bSubRace,RC_DemiHuman,4; bonus bSplashRange,1; } else if (.@luk > 107) { bonus bAspd,1; bonus bCritAtkRate,2; bonus2 bSubRace,RC_DemiHuman,2; } }
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
 13027:15044,{ .@r = max(getequiprefinerycnt(EQI_ARMOR),1); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,70*.@r; bonus3 bAddMonsterDropItem,970,RC_DemiHuman,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Brute,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Brute,50*.@r; }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,Size_Large,30; autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
