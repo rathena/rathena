@@ -2739,7 +2739,7 @@ REPLACE INTO `item_db` VALUES (5527,'Lunatic_Hat','Lunatic Hat',4,20,NULL,300,NU
 REPLACE INTO `item_db` VALUES (5528,'King_Frog_Hat','Frog King Hat',4,20,NULL,500,NULL,4,NULL,1,0xFFFFFFFE,7,2,256,NULL,30,0,522,'bonus bAgi,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5529,'Evil\'s_Bone_Hat','Satanic Bone Helm',4,20,NULL,600,NULL,6,NULL,1,0xFFFFFFFF,7,2,768,NULL,70,1,523,'bonus bDex,3; bonus2 bSubEle,Ele_Neutral,5; skill "WZ_FROSTNOVA",1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5530,'Raven_Cap','Raven Cap',4,20,NULL,100,NULL,6,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,1,524,NULL,NULL,NULL);
-#REPLACE INTO `item_db` VALUES (5531,'B_Dragon_Hat','Baby Dragon Hat',4,20,NULL,100,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,525,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (5531,'B_Dragon_Hat','Baby Dragon Hat',4,45000,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,525,'bonus bDex,2; .@bonus = max(getskilllv("TF_DOUBLE"), 5); skill "TF_DOUBLE",.@bonus; bonus bDoubleRate,.@bonus * 5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5532,'Pirate_Dagger_J','Pirate Dagger',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,0,1,327,'bonus bShortWeaponDamageReturn,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5533,'Emperor_Wreath_J','Emperor Wreath',4,20,NULL,800,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,80,1,261,'bonus bAllStats,1;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5534,'Fox_Hat_J','Fox Hat',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,513,NULL,70,0,403,'bonus bAgi,1; bonus bFlee2,2;',NULL,NULL);
