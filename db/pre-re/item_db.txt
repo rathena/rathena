@@ -1006,7 +1006,7 @@
 1910,Harp_,Harp,5,62000,,900,114,,1,2,0x00080000,7,1,2,3,27,1,13,{ bonus bInt,2; },{},{}
 1911,Guh_Moon_Goh,Gumoongoh,5,54000,,1300,126,,1,1,0x00080000,7,1,2,3,27,1,13,{},{},{}
 1912,Guh_Moon_Goh_,Gumoongoh,5,54000,,1300,126,,1,2,0x00080000,7,1,2,3,27,1,13,{},{},{}
-1913,Electronic_Guitar,Electric Guitar,5,20,,1800,110,,1,0,0x00080000,7,1,2,4,70,1,13,{ skill "WZ_JUPITEL",1; bonus3 bAutoSpell,"WZ_JUPITEL",1,100; bonus bAtkEle,Ele_Wind; bonus bInt,2; bonus bAgi,1; bonus bUnbreakableWeapon; },{},{}
+1913,Electronic_Guitar,Electric Guitar,5,20,,1800,110,,1,0,0x00080000,63,1,2,4,70,1,13,{ skill "WZ_JUPITEL",1; bonus3 bAutoSpell,"WZ_JUPITEL",1,100; bonus bAtkEle,Ele_Wind; bonus bInt,2; bonus bAgi,1; },{},{}
 1914,Guitar_Of_Passion,Burning Passion Guitar,5,20,,900,110,,1,0,0x00080000,7,1,2,3,27,1,13,{ bonus bAtkEle,Ele_Fire; },{},{}
 1915,Guitar_Of_Blue_Solo,Loner's Guitar,5,20,,900,110,,1,0,0x00080000,7,1,2,3,27,1,13,{ bonus bAtkEle,Ele_Water; },{},{}
 1916,Guitar_Of_Vast_Land,Green Acre Guitar,5,20,,900,110,,1,0,0x00080000,7,1,2,3,27,1,13,{ bonus bAtkEle,Ele_Earth; },{},{}
@@ -1101,7 +1101,7 @@
 2131,Magic_Study_Vol1,Magic Bible Vol1,4,20,,1000,,2,,1,0x00810204,2,2,32,,70,1,5,{ bonus bMdef,3; bonus bInt,2; bonus2 bAddEffWhenHit,Eff_Stun,1000; },{},{}
 2132,Shelter_Resistance,Shell Of Resistance,4,20,,0,,9,,0,0xFFFFFFFF,2,2,32,,0,0,2,{ bonus2 bSubEle,Ele_Neutral,20; bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Earth,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Wind,20; bonus2 bSubEle,Ele_Poison,20; bonus2 bSubEle,Ele_Holy,20; bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Ghost,20; bonus2 bSubEle,Ele_Undead,20; bonus bShortWeaponDamageReturn,1; },{},{}
 2133,Tournament_Shield,Tournament Shield,4,20,,1000,,5,,1,0x00004082,2,2,32,,50,1,4,{ bonus2 bAddClass,Class_All,1; if( Class==Job_Lord_Knight ) bonus bAspdRate,-5; },{},{}
-2134,Shield_Of_Naga,Shield of Naga,4,20,,500,,3,,1,0x00CFFF80,2,2,32,,70,1,2,{ bonus bMdef,3; autobonus2 "{ bonus bShortWeaponDamageReturn,(getrefine()*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }"; },{},{}
+2134,Shield_Of_Naga,Shield of Naga,4,20,,500,,35,,1,0x00CFFF80,18,2,32,,70,1,2,{ .@r = getrefine(); bonus bMdef,3; if(.@r<11) { autobonus2 "{ bonus bShortWeaponDamageReturn,(.@r*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }"; } else { autobonus2 "{ bonus bShortWeaponDamageReturn,(.@r*3); }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }"; } },{},{}
 2135,Shadow_Guard,Shadow Guard,4,20,,800,,4,,1,0x00020000,2,2,32,,70,1,2,{},{},{}
 2136,Cracked_Buckler,Cracked Buckler,4,0,,0,,5,,0,0xFFFFFFFF,7,2,32,,0,0,2,{ bonus bAgi,2; bonus2 bAddEle,Ele_Neutral,-10; bonus3 bAutoSpellWhenHit,"PR_KYRIE",1,50; bonus bMdef,1; },{},{}
 2137,Valkyrja's_Shield_C,Neo Valkyrja's Shield,4,0,,0,,5,,0,0xFFFFFFFE,2,2,32,,95,0,4,{ bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Undead,20; bonus bMdef,5; },{},{}
@@ -2674,7 +2674,7 @@
 5495,Power_Of_Thor,Power Of Thor,4,20,,100,,6,,1,0xFFFFFFFF,7,2,256,,75,1,493,{ bonus bInt,1; bonus bDex,1; bonus bMdef,3; bonus bFlee,5; },{},{}
 5496,Dice_Hat,Dice Hat,4,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,50,0,494,{ bonus bLuk,4; },{},{}
 5497,King_Tiger_Doll_Hat,King Tiger Doll Hat,4,20,,400,,3,,1,0xFFFFFFFE,7,2,256,,30,1,495,{ bonus bStr,2; },{},{}
-5498,Wondering_Wolf_Helm,Wandering Wolf Helm,4,20,,600,,5,,0,0xFFFFFFFE,7,2,768,,50,0,490,{ bonus bVit,5; bonus bFlee,10; },{},{}
+5498,Wondering_Wolf_Helm,Wandering Wolf Helm,4,20,,600,,5,,0,0xFFFFFFFE,7,2,768,,50,1,490,{ bonus bVit,5; bonus bFlee,10; },{},{}
 5499,Pizza_Hat,Pizza Hat,4,20,,600,,0,,0,0xFFFFFFFF,7,2,256,,0,0,487,{ skill "SM_PROVOKE", 1; },{},{}
 5500,Icecream_Hat,Icecream Hat,4,0,,300,,6,,0,0xFFFFFFFF,7,2,256,,30,1,488,{ bonus bMdef,3; skill "MG_FROSTDIVER",3; },{},{}
 5501,Pirate's_Pride,Pirate's Pride,4,0,,100,,6,,0,0xFFFFFFFF,7,2,256,,10,0,496,{ bonus2 bAddRace2,RC2_Ninja,5; bonus2 bSubRace2,RC2_Ninja,5; },{},{}
@@ -5143,7 +5143,7 @@
 12581,Vending_Search_Scroll2,Universal Catalog Gold,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,1; },{},{}
 12591,Uni_Catalog_Bz,Universal Catalog Bronze,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,1; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1; },{},{}
+12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox,1); },{},{}
 12703,Holy_Egg_2,Holy Egg,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12704,Elixir_Of_Life,Elixir of Life,0,0,,10,,,,,0xFFFFFFFF,7,2,,,85,,,{ percentheal 100,0; },{},{}
 12705,Noble_Nameplate,Noble Nameplate,2,0,,100,,,,,0xFFFFFFFF,7,2,,,90,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
@@ -6229,7 +6229,7 @@
 14217,F_Megaphone_Box1,Megaphone Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,1; },{},{}
 14218,F_Megaphone_Box5,Megaphone 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,5; },{},{}
 14219,F_Enriched_Elunium_Box5,Enriched Elunium 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7619,5; },{},{}
-14220,FEnriched_Oridecon_Box5,Enriched Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7620,5; },{},{}
+14220,F_Enriched_Oridecon_Box5,Enriched Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7620,5; },{},{}
 14221,MP_Scroll_Box,Mystical Amplification Scroll 10 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,10; },{},{}
 14222,MP_Scroll_Box30,Mystical Amplification Scroll 30 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,30; },{},{}
 14223,MP_Scroll_Box50,Mystical Amplification Scroll 50 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,50; },{},{}
