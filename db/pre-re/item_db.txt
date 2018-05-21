@@ -2707,7 +2707,7 @@
 5528,King_Frog_Hat,Frog King Hat,4,20,,500,,4,,1,0xFFFFFFFE,7,2,256,,30,0,522,{ bonus bAgi,1; },{},{}
 5529,Evil's_Bone_Hat,Satanic Bone Helm,4,20,,600,,6,,1,0xFFFFFFFF,7,2,768,,70,1,523,{ bonus bDex,3; bonus2 bSubEle,Ele_Neutral,5; skill "WZ_FROSTNOVA",1; },{},{}
 5530,Raven_Cap,Raven Cap,4,20,,100,,6,,1,0xFFFFFFFF,7,2,256,,30,1,524,{},{},{}
-//5531,B_Dragon_Hat,Baby Dragon Hat,4,20,,100,,3,,1,0xFFFFFFFF,7,2,256,,0,1,525,{},{},{}
+5531,B_Dragon_Hat,Baby Dragon Hat,4,45000,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,525,{ bonus bDex,2; .@bonus = max(getskilllv("TF_DOUBLE"), 5); skill "TF_DOUBLE",.@bonus; bonus bDoubleRate,.@bonus * 5; },{},{}
 5532,Pirate_Dagger_J,Pirate Dagger,4,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,1,327,{ bonus bShortWeaponDamageReturn,1; },{},{}
 5533,Emperor_Wreath_J,Emperor Wreath,4,20,,800,,3,,1,0xFFFFFFFF,7,2,256,,80,1,261,{ bonus bAllStats,1; },{},{}
 //5534,Fox_Hat_J,Fox Hat,4,20,,100,,1,,0,0xFFFFFFFF,7,2,513,,70,0,403,{ bonus bAgi,1; bonus bFlee2,2; },{},{}
@@ -4936,7 +4936,7 @@
 12372,Hell_Contract,Hell Contract,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1379; },{},{}
 12373,Boy's_Naivety,Boy's Pure Heart,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1370; },{},{}
 12374,Flaming_Ice,Ice Fireworks,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1837; },{},{}
-12375,Acaraje,Akaraje,2,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_STEAL; sc_start SC_INCHITRATE,120000,5; },{},{}
+12375,Acaraje,Akaraje,2,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_STEAL; bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE; },{},{}
 12376,Mysterious_Can2,Mysterious Can2,2,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 3,0; itemskill "PR_GLORIA",2; },{},{}
 12377,Mysterious_PET_Bottle2,Mysterious PET Bottle2,2,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,3; itemskill "PR_MAGNIFICAT",1; },{},{}
 12378,2009_Rice_Cake_Soup,Rice Cake Soup,2,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ /* percentheal 50,50; */ },{},{}
@@ -6427,15 +6427,15 @@
 14594,Quagmire_Scroll,Quagmire Scroll,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "WZ_QUAGMIRE",5; },{},{}
 14595,Unsealed_Magic_Spell,Unsealed Magic Spell,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "yuno_fild09",255,127; },{},{}
 14596,Pierre_Treasurebox,Pierre's Treasure Box,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; },{},{}
-14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,SI_FOODHIT; },{},{}
-14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,SI_ARMOR_PROPERTY; },{},{}
+14597,PhreeoniS,Phreeoni Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4121,EFST_FOOD_BASICHIT; },{},{}
+14598,GhostringS,Ghostring Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4047,EFST_ARMOR_PROPERTY; },{},{}
 14599,Greed_Scroll_C,Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14600,Mental_Potion,Mental Potion,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14601,Tyr's_Blessing,Tyr's Blessing,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,300000,30; sc_start SC_INCHIT,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
-14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4302,SI_MVPCARD_TAOGUNKA; },{},{}
-14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4132,SI_MVPCARD_MISTRESS; },{},{}
-14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4143,SI_MVPCARD_ORCHERO; },{},{}
-14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4135,SI_MVPCARD_ORCLORD; },{},{}
+14602,TaogunkaS,Tao Gunka Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4302,EFST_MVPCARD_TAOGUNKA; },{},{}
+14603,MistressS,Mistress Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4132,EFST_MVPCARD_MISTRESS; },{},{}
+14604,Orc_HeroS,Orc Hero Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,60000,4143,EFST_MVPCARD_ORCHERO; },{},{}
+14605,Orc_LoadS,Orc Lord Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_ITEMSCRIPT,180000,4135,EFST_MVPCARD_ORCLORD; },{},{}
 14606,Job_Manual25,JOB Battle Manual,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14607,Luxurious_Dinner_W,Luxurious Western Food,2,10000,,600,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,3; },{},{}
 14608,Luxurious_Dinner_E,Manchu-Han Imperial Feast,2,20000,,1200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,6; },{},{}

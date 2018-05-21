@@ -828,7 +828,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if (type == SC_RUN)
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 1, 0, 0, 0, 0);
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
@@ -836,7 +836,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
 		clif_fixpos(bl);
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);

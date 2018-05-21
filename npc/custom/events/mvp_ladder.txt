@@ -160,6 +160,8 @@ prontera,164,171,3	script	MvP Ladder Warper	56,{
 	end;
 
 OnMvpDead:
+	getpartymember .party_id, 1;
+	getpartymember .party_id, 2;
 	.round++;
 	if ( .round >= 2 && .round != .totalround +1 && .round_item_amount ) {
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {

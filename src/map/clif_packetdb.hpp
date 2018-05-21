@@ -2338,6 +2338,11 @@
 	packet(0x0AA5,-1);
 #endif
 
+// 2017-03-15cRagexeRE
+#if PACKETVER >= 20170315
+	packet(0xac7,156);
+#endif
+
 // 2017-04-19bRagexeRE
 #if PACKETVER >= 20170419
 	parseable_packet(0x0AC0,26,clif_parse_Mail_refreshinbox,2,10);
@@ -2356,6 +2361,11 @@
 #if PACKETVER >= 20170830
 	packet(0x0ACB,12);
 	packet(0x0ACC,18);
+#endif
+
+// 2018-01-03aRagexeRE or 2018-01-03bRagexeRE
+#if PACKETVER >= 20180103
+	parseable_packet(0x0ae8,2,clif_parse_changedress,0);
 #endif
 
 // 2018-02-07bRagexeRE

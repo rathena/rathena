@@ -33,7 +33,7 @@
 #include "log.hpp"
 #include "pc_groups.hpp"
 
-int attr_fix_table[4][ELE_MAX][ELE_MAX];
+int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
@@ -1270,7 +1270,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			{
 				struct status_change *d_sc = status_get_sc(d_bl);
 
-				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE )
+				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != GN_FIRE_EXPANSION_ACID && skill_id != KO_MUCHANAGE )
 					damage -= damage * d_sc->data[SC_DEFENDER]->val2 / 100;
 			}
 		}
@@ -1289,7 +1289,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (sc->data[SC_DEFENDER] &&
 			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
 #ifdef RENEWAL
-			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == CR_ACIDDEMONSTRATION))
+			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == CR_ACIDDEMONSTRATION || skill_id == GN_FIRE_EXPANSION_ACID))
 #else
 			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 #endif
@@ -5825,22 +5825,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case AB_RENOVATIO:
 				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
 				break;
-			case GN_FIRE_EXPANSION_ACID:
-#ifdef RENEWAL
-				{
-					struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
-
-					ad.damage = (int64)(7 * ((wd.damage / skill_lv + ad.damage / skill_lv) * tstatus->vit / 100));
-				}
-#else
-				if(tstatus->vit + sstatus->int_)
-					ad.damage = (int64)(7 * tstatus->vit * sstatus->int_ * sstatus->int_ / (10 * (tstatus->vit + sstatus->int_)));
-				else
-					ad.damage = 0;
-				if(tsd)
-					ad.damage >>= 1;
-#endif
-				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -6228,6 +6212,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
 						break;
+					case NPC_COMET:
+						i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8) / 2;
+						i = cap_value(i, 1, 4);
+						skillratio = 2500 + ((skill_lv - i + 1) * 500);
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -6579,6 +6568,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			}
 			break;
 		case CR_ACIDDEMONSTRATION:
+		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
 			// Official Renewal formula [helvetica]
 			// damage = 7 * ((atk + matk)/skill level) * (target vit/100)
@@ -6853,7 +6843,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	ssc = status_get_sc(src);
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if ( sd && sd->bonus.short_weapon_damage_return ) {
+		if ( (skill_get_inf2(skill_id)&INF2_TRAP || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			rdamage = i64max(rdamage,1);
 		} else if( status_reflect && sc && sc->count ) {
@@ -7445,7 +7435,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
 					ud->canact_tick = max(tick + autospell_tick, ud->canact_tick);
 					if (battle_config.display_status_timers && sd)
-						clif_status_change(src, SI_ACTIONDELAY, 1, autospell_tick, 0, 0, 0);
+						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
 				}
 			}
 		}
@@ -7508,7 +7498,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				sd->state.autocast = 0;
 
 				sd->ud.canact_tick = max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
-				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
+				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
 		}
 
@@ -8508,8 +8498,8 @@ static const struct _battle_data {
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
-	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
-    { "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
+	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
+	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

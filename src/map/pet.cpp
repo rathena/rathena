@@ -7,6 +7,8 @@
 
 #include <stdlib.h>
 
+#include "../common/utilities.hpp"
+
 #include "../common/db.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -27,16 +29,14 @@
 #include "log.hpp"
 #include "achievement.hpp"
 
+using namespace rathena;
+
 #define MIN_PETTHINKTIME 100
 
 //Dynamic pet database
 std::map<uint16, struct s_pet_db> pet_db_data;
 struct s_pet_db *pet_db( uint16 pet_id ){
-	if( pet_db_data.find(pet_id) != pet_db_data.end() ){
-		return &pet_db_data.at(pet_id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( pet_db_data, pet_id );
 }
 
 static struct eri *item_drop_ers; //For loot drops delay structures.

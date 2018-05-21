@@ -1851,22 +1851,31 @@ void clif_changemap(struct map_session_data *sd, short m, int x, int y)
 }
 
 
-/// Notifies the client of a position change to coordinates on given map, which is on another map-server (ZC_NPCACK_SERVERMOVE).
-/// 0092 <map name>.16B <x>.W <y>.W <ip>.L <port>.W
+/// Notifies the client of a position change to coordinates on given map, which is on another map-server.
+/// 0092 <map name>.16B <x>.W <y>.W <ip>.L <port>.W (ZC_NPCACK_SERVERMOVE)
+/// 0ac7 <map name>.16B <x>.W <y>.W <ip>.L <port>.W <unknown>.128B (ZC_NPCACK_SERVERMOVE2)
 void clif_changemapserver(struct map_session_data* sd, unsigned short map_index, int x, int y, uint32 ip, uint16 port)
 {
 	int fd;
+#if PACKETVER >= 20170315
+	int cmd = 0xac7;
+#else
+	int cmd = 0x92;
+#endif
 	nullpo_retv(sd);
 	fd = sd->fd;
 
-	WFIFOHEAD(fd,packet_len(0x92));
-	WFIFOW(fd,0) = 0x92;
+	WFIFOHEAD(fd,packet_len(cmd));
+	WFIFOW(fd,0) = cmd;
 	mapindex_getmapname_ext(mapindex_id2name(map_index), WFIFOCP(fd,2));
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOL(fd,22) = htonl(ip);
 	WFIFOW(fd,26) = ntows(htons(port)); // [!] LE byte order here [!]
-	WFIFOSET(fd,packet_len(0x92));
+#if PACKETVER >= 20170315
+	memset(WFIFOP(fd, 28), 0, 128); // Unknown
+#endif
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 
@@ -2477,8 +2486,8 @@ void clif_add_random_options(unsigned char* buf, struct item *it) {
 /// 029a <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L (ZC_ITEM_PICKUP_ACK2)
 /// 02d4 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK3)
 /// 0990 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V5)
-/// 0a0c <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V6)
-/// 0a37 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W <favorite>.B <view id>.W (ZC_ITEM_PICKUP_ACK_V7)
+/// 0a0c <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ITEM_PICKUP_ACK_V6)
+/// 0a37 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 <favorite>.B <view id>.W (ZC_ITEM_PICKUP_ACK_V7)
 void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char fail)
 {
 	int fd, header, offs=0;
@@ -3693,7 +3702,7 @@ void clif_arrowequip(struct map_session_data *sd,int val) {
 	nullpo_retv(sd);
 
 #if PACKETVER >= 20121128
-	clif_status_change(&sd->bl, SI_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
+	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
 #endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
@@ -4320,7 +4329,7 @@ void clif_tradestart(struct map_session_data* sd, uint8 type)
 /// Notifies the client about an item from other player in current trade.
 /// 00e9 <amount>.L <nameid>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_EXCHANGE_ITEM)
 /// 080f <nameid>.W <item type>.B <amount>.L <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_EXCHANGE_ITEM2)
-/// 0a09 <nameid>.W <item type>.B <amount>.L <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_EXCHANGE_ITEM3)
+/// 0a09 <nameid>.W <item type>.B <amount>.L <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_EXCHANGE_ITEM3)
 void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd, int index, int amount)
 {
 	int fd;
@@ -4495,7 +4504,7 @@ void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_a
 /// Notifies the client of an item being added to the storage.
 /// 00f4 <index>.W <amount>.L <nameid>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_STORE)
 /// 01c4 <index>.W <amount>.L <nameid>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_STORE2)
-/// 0a0a <index>.W <amount>.L <nameid>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_STORE3)
+/// 0a0a <index>.W <amount>.L <nameid>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_ITEM_TO_STORE3)
 void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount)
 {
 #if PACKETVER < 5
@@ -5948,7 +5957,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
 /// @param bl Sends packet to clients around this object
 /// @param id ID of object that has this effect
-/// @param type Status icon see enum si_type
+/// @param type Status icon see enum efst_types
 /// @param flag 1:Active, 0:Deactive
 /// @param tick Duration in ms
 /// @param val1
@@ -5958,10 +5967,10 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 {
 	unsigned char buf[32];
 
-	if (type == SI_BLANK)  //It shows nothing on the client...
+	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
-	if (type == SI_ACTIONDELAY && tick == 0)
+	if (type == EFST_POSTDELAY && tick == 0)
 		return;
 
 	nullpo_retv(bl);
@@ -6006,7 +6015,7 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 
 /* Sends status effect to clients around the bl
  * @param bl Object that has the effect
- * @param type Status icon see enum si_type
+ * @param type Status icon see enum efst_types
  * @param flag 1:Active, 0:Deactive
  * @param tick Duration in ms
  * @param val1
@@ -6016,13 +6025,13 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3) {
 	struct map_session_data *sd = NULL;
 
-	if (type == SI_BLANK)  //It shows nothing on the client...
+	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
-	if (type == SI_ACTIONDELAY && tick == 0)
+	if (type == EFST_POSTDELAY && tick == 0)
 		return;
 
-	if (type == SI_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
+	if (type == EFST_ILLUSION && !battle_config.display_hallucination) // Disable Hallucination.
 		return;
 
 	nullpo_retv(bl);
@@ -6096,7 +6105,7 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 #endif
 	int offset = 0;
 
-	if (type == SI_BLANK)
+	if (type == EFST_BLANK)
 		return;
 
 	nullpo_retv(bl);
@@ -6793,7 +6802,7 @@ void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv
 /// Adds an item to character's cart.
 /// 0124 <index>.W <amount>.L <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_CART)
 /// 01c5 <index>.W <amount>.L <name id>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_CART2)
-/// 0a0b <index>.W <amount>.L <name id>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_CART3)
+/// 0a0b <index>.W <amount>.L <name id>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_ITEM_TO_CART3)
 void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail)
 {
 #if PACKETVER < 5
@@ -8399,7 +8408,7 @@ void clif_guild_allianceinfo(struct map_session_data *sd)
 ///     1 = online
 /// memo:
 ///     probably member's self-introduction (unused, no client UI/packets for editing it)
-/// 0aa5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L }* (ZC_MEMBERMGR_INFO2)
+/// 0aa5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <lastlogin>.L }* (ZC_MEMBERMGR_INFO2)
 void clif_guild_memberlist(struct map_session_data *sd)
 {
 	int fd;
@@ -10387,13 +10396,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_initialstatus(sd);
 
 		if (sd->sc.option&OPTION_FALCON)
-			clif_status_load(&sd->bl, SI_FALCON, 1);
+			clif_status_load(&sd->bl, EFST_FALCON, 1);
 		else if (sd->sc.option&(OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR))
-			clif_status_load(&sd->bl, SI_RIDING, 1);
+			clif_status_load(&sd->bl, EFST_RIDING, 1);
 		else if (sd->sc.option&OPTION_WUGRIDER)
-			clif_status_load(&sd->bl, SI_WUGRIDER, 1);
+			clif_status_load(&sd->bl, EFST_WUGRIDER, 1);
 		else if (sd->sc.data[SC_ALL_RIDING])
-			clif_status_load(&sd->bl, SI_ALL_RIDING, 1);
+			clif_status_load(&sd->bl, EFST_ALL_RIDING, 1);
 
 		if(sd->status.manner < 0)
 			sc_start(&sd->bl,&sd->bl,SC_NOCHAT,100,0,0);
@@ -10414,7 +10423,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if (night_flag && map[sd->bl.m].flag.nightenabled) {
 			sd->state.night = 1;
-			clif_status_load(&sd->bl, SI_NIGHT, 1);
+			clif_status_load(&sd->bl, EFST_SKE, 1);
 		}
 
 		// Notify everyone that this char logged in [Skotlex].
@@ -10448,10 +10457,18 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 #if PACKETVER >= 20170920
-		if( sd->hd ){
-			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+		if( battle_config.homunculus_autofeed_always ){
+			// Always send ON or OFF
+			if( sd->hd && battle_config.feature_homunculus_autofeed ){
+				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+			}else{
+				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
+			}
 		}else{
-			clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
+			// Only send when enabled
+			if( sd->hd && battle_config.feature_homunculus_autofeed && sd->hd->homunculus.autofeed ){
+				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, true );
+			}
 		}
 #endif
 
@@ -10467,13 +10484,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			if( !sd->state.night )
 			{
 				sd->state.night = 1;
-				clif_status_load(&sd->bl, SI_NIGHT, 1);
+				clif_status_load(&sd->bl, EFST_SKE, 1);
 			}
 		}
 		else if( sd->state.night )
 		{ //Clear night display.
 			sd->state.night = 0;
-			clif_status_load(&sd->bl, SI_NIGHT, 0);
+			clif_status_load(&sd->bl, EFST_SKE, 0);
 		}
 
 		if( map[sd->bl.m].flag.battleground )
@@ -10540,7 +10557,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		npc_script_event(sd, NPCE_LOADMAP);
 
 	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd))
-		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
+		clif_status_load(&sd->bl, EFST_DEVIL1, 1);  //blindness [Komurka]
 
 	if (sd->sc.opt2) //Client loses these on warp.
 		clif_changeoption(&sd->bl);
@@ -15233,7 +15250,9 @@ void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type typ
 		}
 
 		// If it came from an npc?
-		//mailType |= MAIL_TYPE_NPC;
+		if( !msg->send_id ){
+			mailType |= MAIL_TYPE_NPC;
+		}
 
 		WFIFOB(fd, offset + 9) = mailType;
 		safestrncpy(WFIFOCP(fd, offset + 10), msg->send_name, NAME_LENGTH);
@@ -16568,7 +16587,7 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
-			if( sd->hd == nullptr || sd->hd->homunculus.vaporize ){
+			if( sd->hd == nullptr || sd->hd->homunculus.vaporize || !battle_config.feature_homunculus_autofeed ){
 				return;
 			}
 
@@ -19663,7 +19682,7 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
-void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname) {
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type) {
 	unsigned char buf[9 + NAME_LENGTH * 2];
 	unsigned short cmd = 0;
 	struct s_packet_db *info = NULL;
@@ -19913,9 +19932,15 @@ void clif_parse_sale_refresh( int fd, struct map_session_data* sd ){
 /// 09b5 (ZC_OPEN_BARGAIN_SALE_TOOL)
 void clif_sale_open( struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
-	int fd = sd->fd;
+	nullpo_retv(sd);
 
-	// TODO: do we want state tracking?
+	if( sd->state.sale_open ){
+		return;
+	}
+
+	sd->state.sale_open = true;
+
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd, 2);
 	WFIFOW(fd, 0) = 0x9b5;
@@ -19934,11 +19959,11 @@ void clif_parse_sale_open( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
-		return;
-	}
+	char command[CHAT_SIZE_MAX];
 
-	clif_sale_open(sd);
+	safesnprintf( command, sizeof(command), "%climitedsale", atcommand_symbol );
+
+	is_atcommand(fd, sd, command, 1);
 #endif
 }
 
@@ -19946,6 +19971,14 @@ void clif_parse_sale_open( int fd, struct map_session_data* sd ){
 /// 09bd (ZC_CLOSE_BARGAIN_SALE_TOOL)
 void clif_sale_close(struct map_session_data* sd) {
 #if PACKETVER_SUPPORTS_SALES
+	nullpo_retv(sd);
+
+	if( !sd->state.sale_open ){
+		return;
+	}
+
+	sd->state.sale_open = false;
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, 2);
@@ -19963,8 +19996,6 @@ void clif_parse_sale_close(int fd, struct map_session_data* sd) {
 	if( RFIFOL(fd, 2) != sd->status.account_id ){
 		return;
 	}
-
-	// TODO: do we want state tracking?
 
 	clif_sale_close(sd);
 #endif
@@ -20004,7 +20035,7 @@ void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+	if( !sd->state.sale_open ){
 		return;
 	}
 
@@ -20058,7 +20089,7 @@ void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+	if( !sd->state.sale_open ){
 		return;
 	}
 
@@ -20101,7 +20132,7 @@ void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+	if( !sd->state.sale_open ){
 		return;
 	}
 
@@ -20218,6 +20249,21 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOB(fd, 2) = result;
 	WFIFOL(fd, 3) = achievement_id;
 	WFIFOSET(fd, packet_len(0xa26));
+}
+
+/*
+ * This packet is sent by /changedress or /nocosplay
+ *
+ * 0ae8
+ */
+void clif_parse_changedress( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20180103
+	char command[CHAT_SIZE_MAX];
+
+	safesnprintf( command, sizeof(command), "%cchangedress", atcommand_symbol );
+	
+	is_atcommand( fd, sd, command, 1 );
+#endif
 }
 
 /*==========================================

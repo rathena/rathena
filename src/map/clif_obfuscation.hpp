@@ -418,6 +418,8 @@
 		packet_keys(0x6E2F6233,0x193B0A66,0x0D1D2CA5);
 	#elif PACKETVER == 20180307 // 2018-03-07bRagexeRE
 		packet_keys(0x47DA10EB,0x4B922CCF,0x765C5055);
+	#elif PACKETVER > 20180307 // Clients after 2018-03-07bRagexeRE do not obfuscate packets anymore
+		packet_keys(0x00000000,0x00000000,0x00000000);
 	#elif PACKETVER > 20110817
 		#error Unsupported packet version.
 	#endif

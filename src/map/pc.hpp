@@ -24,7 +24,6 @@ enum AtCommandType : uint8;
 //enum e_log_chat_type : uint8;
 enum e_log_pick_type : uint32;
 enum sc_type : int16;
-enum si_type : short;
 
 #define MAX_PC_BONUS 10 /// Max bonus, usually used by item bonus
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
@@ -195,7 +194,7 @@ struct s_bonus_script_entry {
 	StringBuf *script_buf; //Used for comparing and storing on table
 	uint32 tick;
 	uint16 flag;
-	enum si_type icon;
+	enum efst_types icon;
 	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
@@ -267,6 +266,7 @@ struct map_session_data {
 		bool keepshop; // Whether shop data should be removed when the player disconnects
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
+		bool sale_open;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -1305,7 +1305,7 @@ void pc_show_version(struct map_session_data *sd);
 
 int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_bonus_script(struct map_session_data *sd);
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
