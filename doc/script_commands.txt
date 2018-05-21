@@ -2262,20 +2262,20 @@ array, shifting all the elements beyond this towards the beginning.
 
 *inarray <array name>,<value>;
 
-This command return the index of the first value found in the array
-It will return -1 if the value not found.
+This command returns the index of the first matching value found in the array.
+It will return -1 if the value is not found.
 
 	setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
 	
 	inarray(.@array[0], 200);
-	//return 1 because the number 200 is the index 1 for the array
+	//return 1 because 200 is in index 1
 	//another way to say it that .@array[1] == 200
 	
 	.@index = inarray(.@array[0], 600);
 	//.@index is now 5 because .@array[5] == 600
 	
 	inarray(.@array[0], 100);
-	//while .@array[6] == 100 but the command will return the first index it found.
+	//while index 6 is also 100, the command will return the first instance it finds
 	//return 0 because .@array[0] == 100
 
 	inarray(.@array[0], 800);

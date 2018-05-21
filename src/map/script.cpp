@@ -6659,7 +6659,7 @@ BUILDIN_FUNC(getelementofarray)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Return the index number of the value in an array.
+/// Return the index number of the first matching value in an array.
 /// ex: inarray arr,1;
 ///
 /// inarray <array variable>,<value>;

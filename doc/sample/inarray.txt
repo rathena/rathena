@@ -13,12 +13,12 @@ prontera,160,190,3	script	inarray sample	847,{
 		case 1:	//inarray command test
 			mes "[inarray Test]";
 			setarray .@array1[0],100,200,300,400,500,600,700;
-			setarray .@array2$[0],"One Hundred","Two Hundreds","Three Hundreds","Four Hundreds","Five Hundreds","Six Hundreds","Seven Hundreds";
+			setarray .@array2$[0],"One Hundred","Two Hundred","Three Hundred","Four Hundred","Five Hundred","Six Hundred","Seven Hundred";
 			
 			mes .@array2$[inarray(.@array1,100)];	//return One Hundred
-			mes .@array2$[inarray(.@array1,300)];	//return Three Hundreds
+			mes .@array2$[inarray(.@array1,300)];	//return Three Hundred
 			
-			//mes .@array2$[inarray(.@array1,800)];	//this give error
+			//mes .@array2$[inarray(.@array1,800)];	//this will return with an error
 				//800 is not an element of the array .@array1
 				
 			mes "" + inarray(.@array1,800);	//this return -1
