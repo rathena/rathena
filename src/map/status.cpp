@@ -6148,7 +6148,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += 3*sc->data[SC_SPEARQUICKEN]->val1*10;
 #endif
 	if (sc->data[SC__INVISIBILITY])
-		critical += critical * sc->data[SC__INVISIBILITY]->val3 / 100;
+		critical += sc->data[SC__INVISIBILITY]->val3 * 10;
 	if (sc->data[SC__UNLUCKY])
 		critical -= sc->data[SC__UNLUCKY]->val2;
 	if(sc->data[SC_BEYONDOFWARCRY])
