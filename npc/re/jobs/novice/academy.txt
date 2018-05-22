@@ -12969,33 +12969,17 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 			}
 		}
 	}
-	switch(getequipweaponlv(.@part)) {
-	case 0:
+
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	.@price = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_MATERIAL_ID);
+
+	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4))
+		.@type$ = "Weapon";
+	else
 		.@type$ = "Armor";
-		.@material = 985;// Elunium
-		.@price = 20000;
-		break;
-	case 1:
-		.@type$ = "Level 1 weapon";
-		.@material = 1010;// Phracon
-		.@price = 1000;
-		break;
-	case 2:
-		.@type$ = "Level 2 weapon";
-		.@material = 1011;// Emveretarcon
-		.@price = 2000;
-		break;
-	case 3:
-		.@type$ = "Level 3 weapon";
-		.@material = 984;// Oridecon
-		.@price = 10000;
-		break;
-	case 4:
-		.@type$ = "Level 4 weapon";
-		.@material = 984;// Oridecon
-		.@price = 20000;
-		break;
-	}
+
 	mes "[Refining Machine Wagjak]";
 	mes "Type : "+ .@type$ +"";
 	mes "Charge : "+ getitemname(.@material) +", "+ .@price +" zeny";
@@ -13025,6 +13009,17 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	if (countitem(.@material) > 0 && Zeny >= .@price) {
 		delitem .@material, 1;
 		Zeny -= .@price;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+			mes "[Refining Machine Wagjak]";
+			emotion ET_FRET;
+			mes "Wait a second...";
+			mes "Do you think I'm stupid?!";
+			mes "You switched the item while I wasn't looking! Get out of here!";
+			close;
+		}
 	} else {
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 8282 -^000000";

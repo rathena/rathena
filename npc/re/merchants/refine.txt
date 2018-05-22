@@ -439,6 +439,8 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		close;
 	}
 	
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 	
@@ -502,6 +504,18 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 	}
 	delitem .@material,1;
 	Zeny = Zeny-.@price;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+		mes "[Clink]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Do you think I'm stupid?!";
+		mes "You switched the item while I wasn't looking! Get out of here!";
+		close;
+	}
+
 	if (getequippercentrefinery(.@part) <= rand(100)) {
 		failedrefitem .@part;
 		mes "[Clink]";
