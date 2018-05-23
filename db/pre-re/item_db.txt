@@ -5143,7 +5143,7 @@
 12581,Vending_Search_Scroll2,Universal Catalog Gold,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,1; },{},{}
 12591,Uni_Catalog_Bz,Universal Catalog Bronze,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,1; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox,1); },{},{}
+12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_BleuBox,1); },{},{}
 12703,Holy_Egg_2,Holy Egg,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12704,Elixir_Of_Life,Elixir of Life,0,0,,10,,,,,0xFFFFFFFF,7,2,,,85,,,{ percentheal 100,0; },{},{}
 12705,Noble_Nameplate,Noble Nameplate,2,0,,100,,,,,0xFFFFFFFF,7,2,,,90,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
@@ -6229,7 +6229,7 @@
 14217,F_Megaphone_Box1,Megaphone Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,1; },{},{}
 14218,F_Megaphone_Box5,Megaphone 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,5; },{},{}
 14219,F_Enriched_Elunium_Box5,Enriched Elunium 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7619,5; },{},{}
-14220,F_Enriched_Oridecon_Box5,Enriched Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 7620,5; },{},{}
+14220,F_Enriched_Oridecon_Box5,Enriched Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7620,5; },{},{}
 14221,MP_Scroll_Box,Mystical Amplification Scroll 10 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,10; },{},{}
 14222,MP_Scroll_Box30,Mystical Amplification Scroll 30 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,30; },{},{}
 14223,MP_Scroll_Box50,Mystical Amplification Scroll 50 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,50; },{},{}
