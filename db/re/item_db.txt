@@ -3162,9 +3162,9 @@
 4991,ASPD_Supplement_Reactor,ASPD Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus bAspd,1; },{},{}
 4992,HPAbsorb1_Supplement_Reactor,HP Absorb Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus2 bHPDrainRate,10,1; },{},{}
 4993,SPAbsorb1_Supplement_Reactor,SP Absorb Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
-4994,Rune_of_Strength_Lv_1,Rune of Strength Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,5; } if (.@r>=10) { bonus bAtkRate,5; } },{},{}
-4995,Rune_of_Strength_Lv_2,Rune of Strength Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,6; } if (.@r>=11) { bonus bStr,1; bonus bAtkRate,7; } },{},{}
-4996,Rune_of_Strength_Lv_3,Rune of Strength_Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,7; } if (.@r>=12) { bonus bStr,1; bonus bAtkRate,8; } if (.@r>=13) { bonus bStr,1; bonus bAtkRate,2; } },{},{}
+4994,Rune_of_Strength_Lv_1,Rune of Strength Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,5; } if (.@r>=10) { bonus2 bAddClass,Class_All,5; } },{},{}
+4995,Rune_of_Strength_Lv_2,Rune of Strength Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,6; } if (.@r>=11) { bonus bStr,1; bonus2 bAddClass,Class_All,7; } },{},{}
+4996,Rune_of_Strength_Lv_3,Rune of Strength_Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,7; } if (.@r>=12) { bonus bStr,1; bonus2 bAddClass,Class_All,8; } if (.@r>=13) { bonus bStr,1; bonus2 bAddClass,Class_All,2; } },{},{}
 4997,Rune_of_Agility_Lv_1,Rune of Agility Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bAgi,5; } if (.@r>=10) { bonus bFlee2,5; } },{},{}
 4998,Rune_of_Agility_Lv_2,Rune of Agility Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bAgi,6; } if (.@r>=11) { bonus bAgi,1; bonus bFlee2,7; } },{},{}
 4999,Rune_of_Agility_Lv_3,Rune of Agility Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bAgi,7; } if (.@r>=12) { bonus bAgi,1; bonus bFlee2,5; } if (.@r>=13) { bonus bAgi,1; bonus bFlee2,5; } },{},{}
@@ -11562,9 +11562,9 @@
 27253,Geffen_Shoplifter_Card,Geffen Shoplifter Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMatkRate,3; bonus2 bMagicAtkEle,Ele_Fire,5; bonus2 bMagicAtkEle,Ele_Holy,5; },{},{}
 27254,Faymont_Card,Faymont Card,6,20,,10,,,,,,,,64,,,,,{ bonus bSPrecovRate,10; bonus3 bAutoSpellWhenHit,"CH_SOULCOLLECT",1,10; },{},{}
 27255,Ordre_Card,Ordre Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMatkRate,3; bonus2 bMagicAtkEle,Ele_Wind,5; bonus2 bMagicAtkEle,Ele_Water,5; },{},{}
-27256,Blut_Hase_Card,Blut Hase Card,6,20,,10,,,,,,,,64,,,,,{ bonus bAtkRate,3; bonus bLongAtkRate,5; },{},{}
+27256,Blut_Hase_Card,Blut Hase Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bAddClass,Class_All,3; bonus bLongAtkRate,5; },{},{}
 27257,Kuro_Akuma_Card,Kuro Akuma Card,6,20,,10,,,,,,,,64,,,,,{ bonus bCastrate,3; bonus bLongAtkRate,5; bonus2 bSkillAtk,"NJ_HUUJIN",5; bonus2 bSkillAtk,"NJ_HYOUSENSOU",5; bonus2 bSkillAtk,"NJ_KOUENKA",5; },{},{}
-27258,Ifodes_Card,Ifodes Card,6,20,,10,,,,,,,,64,,,,,{ bonus bAtkRate,3; bonus bAspdRate,5; },{},{}
+27258,Ifodes_Card,Ifodes Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bAddClass,Class_All,3; bonus bAspdRate,5; },{},{}
 27259,Licheniyes_Card,Licheniyes Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMatkRate,3; bonus2 bMagicAtkEle,Ele_Holy,5; bonus bHealPower,5; },{},{}
 27260,Odoric_Card,Odoric Card,6,20,,10,,,,,,,,64,,,,,{ bonus bAspdRate,3; bonus bLongAtkRate,5; },{},{}
 27261,Ju_Card,Ju Card,6,20,,10,,,,,,,,2,,,,,{ .@rate = 10 + (getiteminfo(getequipid(EQI_HAND_R),11) == W_BOOK ? 20 : 0) + (getrefine() >= 14 ? 20 : 0); bonus2 bSkillAtk,"MG_FIREBOLT",.@rate; bonus2 bSkillAtk,"MG_COLDBOLT",.@rate; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",.@rate; },{},{}
