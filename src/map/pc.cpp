@@ -3663,6 +3663,21 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillusesprate[i].val = val;
 		}
 		break;
+	case SP_SKILL_DELAY:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skilldelay), i, sd->skilldelay[i].id == 0 || sd->skilldelay[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skilldelay)) {
+			ShowError("pc_bonus2: SP_SKILL_DELAY: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", ARRAYLENGTH(sd->skilldelay), type2, val);
+			break;
+		}
+		if (sd->skilldelay[i].id == type2)
+			sd->skilldelay[i].val += val;
+		else {
+			sd->skilldelay[i].id = type2;
+			sd->skilldelay[i].val = val;
+		}
+		break;
 	case SP_SKILL_COOLDOWN: // bonus2 bSkillCooldown,sk,t;
 		if(sd->state.lr_flag == 2)
 			break;

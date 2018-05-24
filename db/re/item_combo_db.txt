@@ -121,7 +121,7 @@
 2125:5782,{ bonus bDef,2; bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Dark,5; bonus2 bSubEle,Ele_Holy,5; bonus2 bSubEle,Ele_Ghost,5; }
 2135:2426,{ bonus2 bAddEff,Eff_Blind,500; autobonus "{ bonus bFlee,20; }",200,10000,BF_WEAPON,"{ specialeffect2 EF_INCAGILITY; }"; }
 2137:2353:5124,{ bonus bDef,2-getequiprefinerycnt(EQI_HAND_L)-getequiprefinerycnt(EQI_HEAD_TOP); bonus bMdef,5+getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HEAD_TOP); }
-2153:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R)/6*8; bonus2 bSkillAtk,"LG_SHIELDPRESS",.@r; }
+2153:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"LG_SHIELDPRESS",.@r > 5 ? (.@r - 5) * 8 : 0; }
 2160:19021,{ bonus2 bSubSize,Size_Large,5+(getequiprefinerycnt(EQI_HAND_L)*2); }
 2169:2491:2590:15051,{ bonus2 bAddDefMonster,2311,30; bonus2 bAddDefMonster,2312,30; bonus2 bAddDefMonster,2320,30; bonus2 bAddDefMonster,2321,30; bonus2 bAddDefMonster,2322,30; bonus2 bAddDefMonster,2317,30; bonus2 bAddDefMonster,2318,30; bonus2 bAddDefMonster,2327,30; bonus2 bAddDefMonster,2319,30; bonus2 bAddDefMonster,2330,30; bonus2 bAddDefMonster,2329,30; bonus2 bAddDefMonster,2333,30; bonus2 bAddDefMonster,2332,30; bonus2 bAddDefMonster,2309,30; bonus2 bAddDefMonster,2310,30; bonus2 bAddDefMonster,2315,30; bonus2 bAddDefMonster,2316,30; bonus2 bAddDefMonster,2314,30; bonus2 bAddDefMonster,2313,30; bonus bMaxHPrate,20; bonus bMaxSPrate,10; }
 2171:15053,{ bonus bAgi,2; }
@@ -510,8 +510,8 @@
 18776:20710,{ bonus bBaseAtk,10; }
 18776:22015,{ bonus bMatk,20; }
 18823:19246,{ .@atk = 40; .@aspd = 3; .@dmg = 2; .@agi = readparam(bAgi); if (.@agi > 107) { .@atk += 60; .@aspd += 5; .@dmg += 2; } if (.@agi > 119) { .@atk += 80; .@aspd += 7; .@dmg += 4; } bonus bBaseAtk,.@atk; bonus bAspdRate,.@aspd; bonus2 bSubRace,RC_Player,.@dmg; bonus2 bResEff,Eff_Blind,100; bonus2 bResEff,Eff_Silence,100; }
-18823:28372,{ bonus2 bVariableCastrate,"CR_GRANDCROSS",-100; bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/30 + BaseLevel; bonus2 bSkillUseSP,"LG_RAYOFGENESIS",-10; }
-18823:28551,{ bonus bLongAtkRate,getskilllv("LG_CANNONSPEAR") * 2; bonus bLongAtkRate,getskilllv("LG_OVERBRAND") * 2; bonus2 bSkillAtk,"LG_CANNONSPEAR",30; bonus2 bSkillAtk,"LG_OVERBRAND",20; }
+18823:28372,{ bonus2 bSkillVariableCast,"CR_GRANDCROSS",-2000; bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/30 + BaseLevel; bonus2 bSkillUseSP,"LG_RAYOFGENESIS",-10; }
+18823:28551,{ bonus2 bSkillDelay,"LG_OVERBRAND",-2000; bonus bLongAtkRate,getskilllv("LG_CANNONSPEAR") * 2; bonus bLongAtkRate,getskilllv("LG_OVERBRAND") * 2; bonus2 bSkillAtk,"LG_CANNONSPEAR",30; bonus2 bSkillAtk,"LG_OVERBRAND",20; }
 18867:1720,{ bonus bLongAtkRate,3+(getequiprefinerycnt(EQI_HAND_R) > 6 ? 5:0); }
 18937:28302,{ bonus bInt,8; bonus bMaxSPrate,5;}
 18937:28303,{ bonus bInt,8; bonus bBaseAtk,20;}
