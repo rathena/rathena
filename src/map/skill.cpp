@@ -5248,7 +5248,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		//Should attack undead and demons. [Skotlex]
 		if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON)
 			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-	break;
+		break;
 
 	case SL_SMA:
 		status_change_end(src, SC_SMA, INVALID_TIMER);
@@ -6592,6 +6592,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
 		break;
 
+	case PR_BENEDICTIO:
+		if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		break;
 	case AL_INCAGI:
 	case AL_BLESSING:
 	case MER_INCAGI:
@@ -6604,7 +6608,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case PR_IMPOSITIO:
 	case PR_LEXAETERNA:
 	case PR_SUFFRAGIUM:
-	case PR_BENEDICTIO:
 	case LK_BERSERK:
 	case MS_BERSERK:
 	case KN_TWOHANDQUICKEN:
