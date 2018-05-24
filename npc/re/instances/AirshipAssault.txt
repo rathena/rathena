@@ -46,7 +46,12 @@ dali02,142,81,3	script	Dimensional Device#air1	PORTAL,{
 		mes "^ff0000This Memorial Dungeon is only for 1 person. Only the party leader can enter.^000000";
 		close;
 	}
-	switch( select( "Power Up the Device", "Use the Device", "Cancel" ) ) {
+	.@s = select( "Power Up the Device", "Use the Device", "Cancel" );
+	if (getcharid(0) != getpartyleader(.@party_id,2)) {
+		mes "^ff0000This Memorial Dungeon is only for 1 person. Only the party leader can enter.^000000";
+		close;
+	}
+	switch(.@s) {
 	case 1:
 		if (instance_create(.@md_name$) < 0) {
 			mes "Party name: " + getpartyname( getcharid(1) );

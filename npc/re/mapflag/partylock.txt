@@ -47,16 +47,43 @@
 1@def02	mapflag	partylock
 1@def03	mapflag	partylock
 
-// Heroes' Trails - Part 1 ========
-1@gef	mapflag	partylock
-1@face	mapflag	partylock
-1@sara	mapflag	partylock
-1@gef_in	mapflag	partylock
-1@glast	mapflag	partylock
-
-// Horror Toy Factory
-1@xm_d	mapflag	partylock
-
 // Central Laboratory Memorial ====
 1@lab	mapflag	partylock
 1@uns	mapflag	partylock
+
+
+// Heroes' Trail - Part 1 ========
+1@face	mapflag	partylock
+1@sara	mapflag	partylock
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	partylock
+1@gef	mapflag	partylock
+1@gef_in	mapflag	partylock
+1@spa	mapflag	partylock
+1@tnm1	mapflag	partylock
+1@tnm2	mapflag	partylock
+1@tnm3	mapflag	partylock
+
+// Horror Toy Factory Memorial Dungeon
+1@xm_d	mapflag	partylock
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	partylock
+1@air1	mapflag	partylock
+1@air2	mapflag	partylock
+
+// Decisive Battle - Part 1 ======
+1@dth1	mapflag	partylock
+1@dth2	mapflag	partylock
+1@dth3	mapflag	partylock
+1@rev	mapflag	partylock
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	partylock
+1@jtb	mapflag	partylock
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	partylock
+1@uns	mapflag	partylock
+1@mcd	mapflag	partylock
