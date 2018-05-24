@@ -23,7 +23,9 @@
 1421:2133,{ bonus2 bAddClass,Class_All,4; bonus bDef,2; }
 1422:2133,{ bonus2 bAddClass,Class_All,4; bonus bDef,2; }
 1428:2115,{ bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",2,5; }
-1433:2153,{ bonus2 bSkillAtk,"CR_GRANDCROSS",10; bonus2 bSkillAtk,"LG_RAYOFGENESIS",10; }
+1433:2153,{ bonus2 bSkillAtk,"LG_RAYOFGENESIS",10; bonus2 bSkillAtk,"CR_GRANDCROSS",10; }
+1433:2153:18823,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",20; bonus2 bSkillAtk,"LG_CANNONSPEAR",20; bonus2 bSkillAtk,"LG_SHIELDPRESS",20; }
+1433:2153:18823:28372,{ bonus2 bSkillUseSP,"LG_BANISHINGPOINT",-15; bonus2 bSkillUseSP,"LG_CANNONSPEAR",-10; bonus2 bSkillUseSP,"CR_GRANDCROSS",-30; bonus2 bSkillUseSP,"LG_SHIELDPRESS",-5; }
 1433:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R)/2*7; bonus2 bSkillAtk,"LG_CANNONSPEAR",.@r; bonus2 bSkillAtk,"LG_BANISHINGPOINT",.@r; }
 1472:2677,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HEAD_TOP); }
 1472:2711,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HAND_R); }
@@ -507,7 +509,9 @@
 18563:18564,{ bonus bFixedCastrate,-10; }
 18776:20710,{ bonus bBaseAtk,10; }
 18776:22015,{ bonus bMatk,20; }
-18823:28372,{ bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel; bonus2 bVariableCastrate,"CR_GRANDCROSS",-BaseLevel*2; bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel/30; bonus2 bSkillUseSP,"CR_GRANDCROSS",-(BaseLevel/30)*10; }
+18823:19246,{ .@atk = 40; .@aspd = 3; .@dmg = 2; .@agi = readparam(bAgi); if (.@agi > 107) { .@atk += 60; .@aspd += 5; .@dmg += 2; } if (.@agi > 119) { .@atk += 80; .@aspd += 7; .@dmg += 4; } bonus bBaseAtk,.@atk; bonus bAspdRate,.@aspd; bonus2 bSubRace,RC_Player,.@dmg; bonus2 bResEff,Eff_Blind,100; bonus2 bResEff,Eff_Silence,100; }
+18823:28372,{ bonus2 bVariableCastrate,"CR_GRANDCROSS",-100; bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/30 + BaseLevel; bonus2 bSkillUseSP,"LG_RAYOFGENESIS",-10; }
+18823:28551,{ bonus bLongAtkRate,getskilllv("LG_CANNONSPEAR") * 2; bonus bLongAtkRate,getskilllv("LG_OVERBRAND") * 2; bonus2 bSkillAtk,"LG_CANNONSPEAR",30; bonus2 bSkillAtk,"LG_OVERBRAND",20; }
 18867:1720,{ bonus bLongAtkRate,3+(getequiprefinerycnt(EQI_HAND_R) > 6 ? 5:0); }
 18937:28302,{ bonus bInt,8; bonus bMaxSPrate,5;}
 18937:28303,{ bonus bInt,8; bonus bBaseAtk,20;}
