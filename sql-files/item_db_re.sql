@@ -10026,6 +10026,7 @@ REPLACE INTO `item_db_re` VALUES (19179,'Rabbit_Magic_Hat_','Magic Rabit Hat',4,
 REPLACE INTO `item_db_re` VALUES (19180,'Anubis_Helm_','Anubis Helm',4,20,NULL,0,NULL,8,NULL,1,0xFFFFFFFF,63,2,768,NULL,'65',0,485,'bonus bMdef,5; bonus2 bSubClass,Class_Boss,10; bonus bHealpower2,10; bonus bAddItemHealRate,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19181,'New_Wave_Sunglasses_','New Wave Sunglasses',4,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,512,NULL,'30',0,856,'bonus bDelayRate,-5;',NULL,NULL);
 #
+REPLACE INTO `item_db_re` VALUES (19246,'Royal_Guard_Necklace','Royal Guard Necklace',4,20,NULL,300,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'80',0,1629,'bonus bAspd,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19306,'Gambler_Card','Heart Card in Mouth',4,20,NULL,300,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'80',0,1679,'bonus bCritAtkRate,5;',NULL,NULL);
 #===================================================================
 # Costume System
@@ -11716,6 +11717,7 @@ REPLACE INTO `item_db_re` VALUES (28471,'Para_Team_Agi_Ring160','Awakened Eden G
 REPLACE INTO `item_db_re` VALUES (28472,'Para_Team_Agi_Necklace160','Awakened Eden Group Necklace of Agility V',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'160',NULL,NULL,'bonus bDex,4; skill "AL_TELEPORT",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28483,'Royal_Guardian_Ring','Royal Guardian Ring',4,0,NULL,10,NULL,1,NULL,1,0xFFFFFFFF,63,2,136,NULL,'99',NULL,NULL,'.@b = min(BaseLevel/25,7); bonus bMaxHPrate,.@b; bonus bMaxSPrate,.@b;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28499,'Proof_of_Glory','Proof of Glory',4,0,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,136,NULL,'100',NULL,NULL,'bonus bAllStats,1; bonus2 bAddRace,RC_All,2; bonus2 bMagicAddRace,RC_All,2; if(BaseLevel>=150) { bonus bAllStats,1; bonus2 bAddRace,RC_All,2; bonus2 bMagicAddRace,RC_All,2; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28551,'Imperial_Glove','Imperial Glove',4,20,NULL,400,NULL,0,NULL,1,0xFFFFFFFF,63,2,136,NULL,'100',0,0,'bonus2 bAddClass,Class_All,5; bonus bVariableCastrate,-10; bonus bNoCastCancel;',NULL,NULL);
 #===================================================================
 # More books
 #===================================================================
