@@ -412,7 +412,7 @@ struct map_session_data {
 	struct s_skill_bonus_i32 {
 		uint16 id;
 		int32 val;
-	} skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS];
+	} skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skilldelay[MAX_PC_BONUS];
 	struct s_regen {
 		short value;
 		int rate;

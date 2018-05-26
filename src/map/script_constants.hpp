@@ -709,6 +709,7 @@
 	export_constant2("bIgnoreDefClassRate", SP_IGNORE_DEF_CLASS_RATE);
 	export_constant2("bRegenPercentHP", SP_REGEN_PERCENT_HP);
 	export_constant2("bRegenPercentSP", SP_REGEN_PERCENT_SP);
+	export_constant2("bSkillDelay",SP_SKILL_DELAY);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);

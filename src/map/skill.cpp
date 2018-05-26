@@ -16690,8 +16690,18 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		}
 	}
 
-	if (!(delaynodex&4) && sd && sd->delayrate != 100)
-		time = time * sd->delayrate / 100;
+	if (!(delaynodex&4) && sd) {
+		uint8 i, len = ARRAYLENGTH(sd->skilldelay);
+
+		if (sd->delayrate != 100)
+			time = time * sd->delayrate / 100;
+
+		if (len) {
+			ARR_FIND(0, len, i, sd->skilldelay[i].id == skill_id);
+			if (i < len)
+				time += sd->skilldelay[i].val;
+		}
+	}
 
 	if (battle_config.delay_rate != 100)
 		time = time * battle_config.delay_rate / 100;
