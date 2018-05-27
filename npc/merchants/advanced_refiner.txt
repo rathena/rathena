@@ -92,6 +92,7 @@ S_RefineValidate:
 	.@weapon_lvl = getarg(0);
 	.@item_req = getarg(1);
 	.@price = getarg(2);
+	.@part = getarg(3)
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
 	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
@@ -111,7 +112,7 @@ S_RefineValidate:
 	mes "Would you like to continue?";
 	next;
 	if(select("Yes:No") == 1) {
-		if (getequippercentrefinery(getarg(3)) < 100) {
+		if (getequippercentrefinery(.@part) < 100) {
 			if (.@weapon_lvl) {
 				mes "[Suhnbi]";
 				mes "Wow!!";

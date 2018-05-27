@@ -12921,7 +12921,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	if (isbegin_quest(5153) == 1) {
 		if (getequipweaponlv(.@part) == 1) {
 			mes "[Refining Machine Wagjak]";
-			mes "Type : 1 level weapon";
+			mes "Type : Level 1 weapon";
 			mes "Charge : Phracon, 1000 zeny";
 			mes "Service usage coupon sensed. No charge to be requested. Will you refine?";
 			next;
@@ -12976,7 +12976,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	.@material = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_MATERIAL_ID);
 
 	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4))
-		.@type$ = "Weapon";
+		.@type$ = "Level " + getequipweaponlv(.@part) + " weapon";
 	else
 		.@type$ = "Armor";
 
