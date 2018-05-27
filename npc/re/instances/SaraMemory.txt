@@ -1083,6 +1083,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("#MobsSara01", instance_id());
 	set .@map$, instance_mapname("1@sara");
+	killmonster .@map$, instance_npcname("#MobsSara01")+"::OnMyMobDead";
 	monster .@map$,107,325,"Payon Soldier",2543,1,instance_npcname("#MobsSara01")+"::OnMyMobDead";
 	monster .@map$,115,325,"Payon Soldier",2543,1,instance_npcname("#MobsSara01")+"::OnMyMobDead";
 	monster .@map$,116,317,"Payon Soldier",2543,1,instance_npcname("#MobsSara01")+"::OnMyMobDead";
@@ -1183,6 +1184,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("#MobsSara02", instance_id());
 	set .@map$, instance_mapname("1@sara");
+	killmonster .@map$, instance_npcname("#MobsSara02")+"::OnMyMobDead";
 	monster .@map$,228,312,"Guard Dog",2546,1,instance_npcname("#MobsSara02")+"::OnMyMobDead";
 	monster .@map$,227,312,"Guard Dog",2546,1,instance_npcname("#MobsSara02")+"::OnMyMobDead";
 	monster .@map$,229,315,"Guard Dog",2546,1,instance_npcname("#MobsSara02")+"::OnMyMobDead";
@@ -1229,6 +1231,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("#MobsSara03", instance_id());
 	set .@map$, instance_mapname("1@sara");
+	killmonster .@map$, instance_npcname("#MobsSara03")+"::OnMyMobDead";
 	monster .@map$,255,91,"Guard Dog",2545,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 	monster .@map$,255,92,"Guard Dog",2545,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 	monster .@map$,255,93,"Guard Dog",2545,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
@@ -1307,6 +1310,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("#MobsSara04", instance_id());
 	set .@map$, instance_mapname("1@sara");
+	killmonster .@map$, instance_npcname("#MobsSara04")+"::OnMyMobDead";
 	monster .@map$,155,97,"Payon Soldier",2543,1,instance_npcname("#MobsSara04")+"::OnMyMobDead";
 	monster .@map$,157,97,"Payon Soldier",2543,1,instance_npcname("#MobsSara04")+"::OnMyMobDead";
 	monster .@map$,159,97,"Payon Soldier",2543,1,instance_npcname("#MobsSara04")+"::OnMyMobDead";
@@ -1398,6 +1402,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("#BossSara01", instance_id());
 	set .@map$, instance_mapname("1@sara");
+	killmonster .@map$, instance_npcname("#BossSara01")+"::OnMyMobDead";
 	monster .@map$,150,232,"Payon Soldier",2544,1,instance_npcname("#BossSara01")+"::OnMyMobDead";
 	unittalk $@mobid[0],"I am getting too old for this sh-";
 	monster .@map$,150,227,"Payon Soldier",2544,1,instance_npcname("#BossSara01")+"::OnMyMobDead";
@@ -1437,6 +1442,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("#BossSara02", instance_id());
 	set .@map$, instance_mapname("1@sara");
+	killmonster .@map$, instance_npcname("#BossSara02")+"::OnMyMobDead";
 	monster .@map$,155,226,"Doyen Irene",2542,1,instance_npcname("#BossSara02")+"::OnMyMobDead";
 	unittalk $@mobid[0],"I will have revenge for Sara's mom !!";
 	end;
