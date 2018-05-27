@@ -101,50 +101,11 @@ Thumbs.db
 /tools/*.ilk
 /tools/*.pdb
 
-# /vcproj-15/
-/vcproj-15/char-server
-/vcproj-15/login-server
-/vcproj-15/mapcache
-/vcproj-15/map-server
-/vcproj-15/*.user
-
-# /vcproj-14/
+# Visual Studio
 .vs
 *.VC.db
 *.VC.opendb
-/vcproj-14/char-server
-/vcproj-14/login-server
-/vcproj-14/mapcache
-/vcproj-14/map-server
-/vcproj-14/*.user
 
-# /vcproj-13/
-/vcproj-13/char-server
-/vcproj-13/login-server
-/vcproj-13/mapcache
-/vcproj-13/map-server
-/vcproj-13/*.user
-
-# /vcproj-12/
-/vcproj-12/char-server
-/vcproj-12/login-server
-/vcproj-12/mapcache
-/vcproj-12/map-server
-/vcproj-12/*.user
-
-# /vcproj-10/
-/vcproj-10/char-server
-/vcproj-10/login-server
-/vcproj-10/mapcache
-/vcproj-10/map-server
-/vcproj-10/*.user
-
-# /vcproj-9/
-/vcproj-9/*.user
-/vcproj-9/char-server
-/vcproj-9/login-server
-/vcproj-9/map-server
-/vcproj-9/mapcache
 /.idea/.name
 /.idea/misc.xml
 /.idea/modules.xml

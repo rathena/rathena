@@ -1729,7 +1729,7 @@ Achievements:
     Name: "Magic Insanity"
     Condition: " bInt >= 125 "
     Reward:
-      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,SI_STEAMPACK; "
+      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,EFST_STEAMPACK; "
     Score: 20
   - ID: 200025
     Group: "AG_GOAL_STATUS"

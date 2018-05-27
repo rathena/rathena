@@ -9232,6 +9232,7 @@ BUILDIN_FUNC(bonus)
 		case SP_SKILL_VARIABLECAST:
 		case SP_VARCASTRATE:
 		case SP_FIXCASTRATE:
+		case SP_SKILL_DELAY:
 		case SP_SKILL_USE_SP:
 		case SP_SUB_SKILL:
 			// these bonuses support skill names
@@ -21724,7 +21725,7 @@ BUILDIN_FUNC(montransform) {
  **/
 BUILDIN_FUNC(bonus_script) {
 	uint16 flag = 0;
-	int16 icon = SI_BLANK;
+	int16 icon = EFST_BLANK;
 	uint32 dur;
 	uint8 type = 0;
 	TBL_PC* sd;
@@ -21751,10 +21752,10 @@ BUILDIN_FUNC(bonus_script) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (icon <= SI_BLANK || icon >= SI_MAX)
-		icon = SI_BLANK;
+	if (icon <= EFST_BLANK || icon >= EFST_MAX)
+		icon = EFST_BLANK;
 
-	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum si_type)icon, flag, type))) {
+	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum efst_types)icon, flag, type))) {
 		linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
 		status_calc_pc(sd,SCO_NONE);
 	}
