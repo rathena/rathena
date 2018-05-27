@@ -325,6 +325,8 @@ enum e_race2 : uint8{
 	RC2_MANUK,
 	RC2_SPLENDIDE,
 	RC2_SCARABA,
+	RC2_OGH_ATK_DEF,
+	RC2_OGH_HIDDEN,
 	RC2_MAX
 };
 

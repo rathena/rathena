@@ -3566,6 +3566,8 @@
 	export_constant(RC2_MANUK);
 	export_constant(RC2_SPLENDIDE);
 	export_constant(RC2_SCARABA);
+	export_constant(RC2_OGH_ATK_DEF);
+	export_constant(RC2_OGH_HIDDEN);
 	export_constant(RC2_MAX);
 
 	/* classes */

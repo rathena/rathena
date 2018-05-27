@@ -1156,6 +1156,15 @@ void initChangeTables(void)
 
 	StatusIconChangeTable[SC_DRESSUP] = EFST_DRESS_UP;
 
+	// Old Glastheim
+	StatusIconChangeTable[SC_GLASTHEIM_ATK] = EFST_GLASTHEIM_ATK;
+	StatusIconChangeTable[SC_GLASTHEIM_DEF] = EFST_GLASTHEIM_DEF;
+	StatusIconChangeTable[SC_GLASTHEIM_HEAL] = EFST_GLASTHEIM_HEAL;
+	StatusIconChangeTable[SC_GLASTHEIM_HIDDEN] = EFST_GLASTHEIM_HIDDEN;
+	StatusIconChangeTable[SC_GLASTHEIM_STATE] = EFST_GLASTHEIM_STATE;
+	StatusIconChangeTable[SC_GLASTHEIM_ITEMDEF] = EFST_GLASTHEIM_ITEMDEF;
+	StatusIconChangeTable[SC_GLASTHEIM_HPSP] = EFST_GLASTHEIM_HPSP;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1302,6 +1311,12 @@ void initChangeTables(void)
 
 	// RODEX
 	StatusChangeFlagTable[SC_DAILYSENDMAILCNT] |= SCB_NONE;
+
+	// Old Glastheim
+	StatusChangeFlagTable[SC_GLASTHEIM_ATK] |= SCB_ALL;
+	StatusChangeFlagTable[SC_GLASTHEIM_STATE] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX|SCB_INT|SCB_LUK;
+	StatusChangeFlagTable[SC_GLASTHEIM_ITEMDEF] |= SCB_DEF|SCB_MDEF;
+	StatusChangeFlagTable[SC_GLASTHEIM_HPSP] |= SCB_MAXHP|SCB_MAXSP;
 
 	// Summoner
 	StatusChangeFlagTable[SC_SHRIMPBLESSING] |= SCB_REGEN;
@@ -3002,6 +3017,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 30;
 			if(sc->data[SC_CROSSBOWCLAN])
 				bonus += 30;
+			if(sc->data[SC_GLASTHEIM_HPSP])
+				bonus += 10000;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -3123,6 +3140,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 10;
 			if(sc->data[SC_CROSSBOWCLAN])
 				bonus += 10;
+			if(sc->data[SC_GLASTHEIM_HPSP])
+				bonus += 1000;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -4185,6 +4204,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->subele[ELE_NEUTRAL] += sc->data[SC_MTF_MLEATKED]->val3;
 		if (sc->data[SC_MTF_CRIDAMAGE])
 			sd->bonus.crit_atk_rate += sc->data[SC_MTF_CRIDAMAGE]->val1;
+		if (sc->data[SC_GLASTHEIM_ATK]) {
+			sd->ignore_mdef_by_race[RC_UNDEAD] += 100;
+			sd->ignore_mdef_by_race[RC_DEMON] += 100;
+		}
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -5466,6 +5489,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += str * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if(sc->data[SC_CHEERUP])
 		str += 3;
+	if(sc->data[SC_GLASTHEIM_STATE])
+		str += 20;
 
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
 }
@@ -5540,6 +5565,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += sc->data[SC_ARCLOUSEDASH]->val2;
 	if(sc->data[SC_CHEERUP])
 		agi += 3;
+	if(sc->data[SC_GLASTHEIM_STATE])
+		agi += 20;
 
 	return (unsigned short)cap_value(agi,0,USHRT_MAX);
 }
@@ -5606,6 +5633,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 #endif
 	if(sc->data[SC_CHEERUP])
 		vit += 3;
+	if(sc->data[SC_GLASTHEIM_STATE])
+		vit += 20;
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
@@ -5678,6 +5707,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += int_ * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if(sc->data[SC_CHEERUP])
 		int_ += 3;
+	if(sc->data[SC_GLASTHEIM_STATE])
+		int_ += 20;
 
 	if(bl->type != BL_PC) {
 		if(sc->data[SC_STRIPHELM])
@@ -5761,6 +5792,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += dex * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if(sc->data[SC_CHEERUP])
 		dex += 3;
+	if(sc->data[SC_GLASTHEIM_STATE])
+		dex += 20;
 
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
 }
@@ -5825,6 +5858,8 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk += luk * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if(sc->data[SC_CHEERUP])
 		luk += 3;
+	if(sc->data[SC_GLASTHEIM_STATE])
+		luk += 20;
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
@@ -6435,6 +6470,8 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * sc->data[SC_ASH]->val3/100;
 	if( sc->data[SC_OVERED_BOOST] && bl->type == BL_HOM )
 		def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
+	if(sc->data[SC_GLASTHEIM_ITEMDEF])
+		def += 200;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
 }
@@ -6566,6 +6603,8 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	}
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
+	if(sc->data[SC_GLASTHEIM_ITEMDEF])
+		mdef += 50;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
