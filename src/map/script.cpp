@@ -9232,6 +9232,7 @@ BUILDIN_FUNC(bonus)
 		case SP_SKILL_VARIABLECAST:
 		case SP_VARCASTRATE:
 		case SP_FIXCASTRATE:
+		case SP_SKILL_DELAY:
 		case SP_SKILL_USE_SP:
 		case SP_SUB_SKILL:
 			// these bonuses support skill names

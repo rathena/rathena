@@ -47,11 +47,6 @@
 1@def02	mapflag	partylock
 1@def03	mapflag	partylock
 
-// Central Laboratory Memorial ====
-1@lab	mapflag	partylock
-1@uns	mapflag	partylock
-
-
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	partylock
 1@sara	mapflag	partylock

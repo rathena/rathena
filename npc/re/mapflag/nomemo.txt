@@ -117,8 +117,6 @@ gl_cas02_	mapflag	nomemo
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	nomemo
 2@gl_k	mapflag	nomemo
-gl_chyard_	mapflag	nomemo
-gl_cas02_	mapflag	nomemo
 
 // Wave Mode Memorial Dungeon ====
 1@def01	mapflag	nomemo
@@ -128,6 +126,8 @@ gl_cas02_	mapflag	nomemo
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	nomemo
 1@sara	mapflag	nomemo
+dali	mapflag	nomemo
+dali02	mapflag	nomemo
 
 // Heroes' Trail - Part 2 ========
 1@ge_st	mapflag	nomemo
