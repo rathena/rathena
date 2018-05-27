@@ -1783,6 +1783,13 @@ Achievements:
     #  ItemID: 22808
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 10
+  - ID: 200032
+    Group: "AG_GOAL_LEVEL"
+    Name: "The start of another adventure!"
+    Condition: " BaseLevel == 100 "
+    #Reward:
+    #  ItemID: 23585
+    Score: 10
   - ID: 230100
     Group: "AG_TAMING"
     Name: "Poring is Love"
@@ -2220,7 +2227,7 @@ Achievements:
         Count: 1
       - MobID: 1120
         Count: 1
-    Score: 15
+    Score: 20
   - ID: 230203
     Group: "AG_BATTLE"
     Name: "Exploring Poring's life (3)"
