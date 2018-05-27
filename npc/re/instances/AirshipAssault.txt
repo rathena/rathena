@@ -304,7 +304,8 @@ dali02,142,81,3	script	Dimensional Device#air1	PORTAL,{
 		mes "Oh...okay! Alright... Let's go!!";
 		close2;
 		cutin "",255;
-		donpcevent instance_npcname("#airshipputmob1") + "::OnStart";
+		if ('airship_status == 1)
+			donpcevent instance_npcname("#airshipputmob1") + "::OnStart";
 		end;
 	}
 }
@@ -553,10 +554,12 @@ OnMyMobDead:
 		cutin "",255;
 		mes "[Gremlin]";
 		mes "Squeak..!!";
-		disablenpc instance_npcname("Gremlin#2aair1");
-		donpcevent instance_npcname("#airshipputmob3") + "::OnStart";
-		donpcevent instance_npcname("firecontrol#air2") + "::OnStart";
-		'airship_status = 5;
+		if ('airship_status == 4) {
+			disablenpc instance_npcname("Gremlin#2aair1");
+			donpcevent instance_npcname("#airshipputmob3") + "::OnStart";
+			donpcevent instance_npcname("firecontrol#air2") + "::OnStart";
+			'airship_status = 5;
+		}
 		next;
 	}
 	if ('airship_status == 5) {
@@ -882,7 +885,8 @@ OnExplosion2:
 	mes "You! I will face one while you face the other...";
 	close2;
 	cutin "",255;
-	donpcevent instance_npcname("calla#air2") + "::OnStart";
+	if ('airship_status == 6)
+		donpcevent instance_npcname("calla#air2") + "::OnStart";
 	end;
 }
 
@@ -986,7 +990,8 @@ OnMyMobDead:
 	mes "How can we stop him? ...Maybe he will regain his senses if you beat him just enough to not die... I'm counting on you!!";
 	close2;
 	cutin "",255;
-	donpcevent instance_npcname("callb#air2") + "::OnStart";
+	if ('airship_status == 8)
+		donpcevent instance_npcname("callb#air2") + "::OnStart";
 	end;
 }
 
@@ -1165,10 +1170,12 @@ OnTimer6000:
 	mes "[Chaos]";
 	mes "You get out of here now!! This ship is in danger!!";
 	close2;
-	'airship_status = 11;
-	enablenpc instance_npcname("warp5a#air2");
-	cutin "",255;
-	getexp 100000,65000;
+	if ('airship_status == 10)
+		'airship_status = 11;
+		enablenpc instance_npcname("warp5a#air2");
+		cutin "",255;
+		getexp 100000,65000;
+	}
 	end;
 }
 
