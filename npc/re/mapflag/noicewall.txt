@@ -32,6 +32,15 @@
 // Inside Eclage ===========
 1@ecl	mapflag	noicewall
 
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	noicewall
+2@gl_k	mapflag	noicewall
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	noicewall
+1@def02	mapflag	noicewall
+1@def03	mapflag	noicewall
+
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	noicewall
 1@sara	mapflag	noicewall
@@ -79,7 +88,3 @@ te_aldecas2	mapflag	noicewall
 te_aldecas3	mapflag	noicewall
 te_aldecas4	mapflag	noicewall
 te_aldecas5	mapflag	noicewall
-
-// Episode 15
-1@lab	mapflag	noicewall
-1@uns	mapflag	noicewall
