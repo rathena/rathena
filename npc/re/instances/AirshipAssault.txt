@@ -1170,7 +1170,7 @@ OnTimer6000:
 	mes "[Chaos]";
 	mes "You get out of here now!! This ship is in danger!!";
 	close2;
-	if ('airship_status == 10)
+	if ('airship_status == 10){
 		'airship_status = 11;
 		enablenpc instance_npcname("warp5a#air2");
 		cutin "",255;
