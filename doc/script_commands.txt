@@ -2768,6 +2768,8 @@ REFINE_COST_OVER10     - For refining over +10
 REFINE_COST_HD         - For refining with HD ores
 REFINE_COST_ENRICHED   - For refining with enriched ores
 REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
+REFINE_COST_HOLINK     - For refining at Holink in Malangdo
+REFINE_COST_WAGJAK     - For refining at Refining Machine Wagjak in the Novice Academy
 
 This function will return required cost for refining based on <information> argument.
 
