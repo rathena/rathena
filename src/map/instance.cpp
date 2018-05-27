@@ -507,7 +507,7 @@ int instance_addmap(uint16 instance_id) {
 
 	// Add initial map
 	if ((m = map_addinstancemap(db->enter.map, instance_id)) < 0) {
-		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%hu).\n", db->name, instance_id);
+		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%hu).\n", db->name.c_str(), instance_id);
 		return 0;
 	}
 
@@ -518,7 +518,7 @@ int instance_addmap(uint16 instance_id) {
 	// Add extra maps (if any)
 	for (int i = 0; i < db->maplist.size(); i++) {
 		if ((m = map_addinstancemap(db->maplist[i], instance_id)) < 0) { // An error occured adding a map
-			ShowError("instance_addmap: No maps added to instance '%s' (%hu).\n", db->name, instance_id);
+			ShowError("instance_addmap: No maps added to instance '%s' (%hu).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
 			entry.m = m;
@@ -1179,14 +1179,14 @@ void do_reload_instance(void)
 				instance_id = cd->instance_id;
 				break;
 			default:
-				ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? db->name : "Unknown", map[sd->bl.m].instance_id, (uint8)idata->mode);
+				ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? db->name.c_str() : "Unknown", map[sd->bl.m].instance_id, (uint8)idata->mode);
 				continue;
 			}
 			if (db != nullptr && !instance_enter(sd, instance_id, db->name.c_str(), -1, -1)) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd, 515)); // Instance has been reloaded
 				instance_reqinfo(sd, instance_id);
 			} else // Something went wrong
-				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n", sd->status.char_id, db->name);
+				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n", sd->status.char_id, db->name.c_str());
 		}
 	}
 	mapit_free(iter);
