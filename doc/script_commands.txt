@@ -9243,6 +9243,8 @@ currently has active. Valid types are:
  PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
  PETINFO_LEVEL - Pet level
  PETINFO_BLOCKID - Pet Game ID
+ PETINFO_EGGID - Pet egg item id
+ PETINFO_FOODID - Pet food item id
 
 ---------------------------------------
 
