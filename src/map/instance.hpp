@@ -4,27 +4,30 @@
 #ifndef _INSTANCE_HPP_
 #define _INSTANCE_HPP_
 
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // struct point
-#include "../common/strlib.h"
 
 #include "script.hpp" // struct reg_db
 
 enum send_target : uint8;
 struct block_list;
 
-#define MAX_INSTANCE_DATA		300	// Essentially how many instances we can create, but instance creation is primarily decided by MAX_MAP_PER_SERVER
-#define MAX_MAP_PER_INSTANCE	255	// Max number of maps per instance (Enter map is counted as one) - Supports up to 255 maps
+#define MAX_INSTANCE_DATA 300 // Maximum amount of instancese; instance creation is primarily decided by MAX_MAP_PER_SERVER
 
 #define INSTANCE_NAME_LENGTH (60+1)
 
-enum instance_state {
+enum e_instance_state : uint8 {
 	INSTANCE_FREE,
 	INSTANCE_IDLE,
 	INSTANCE_BUSY
 };
 
-enum instance_mode {
+enum e_instance_mode : uint8 {
 	IM_NONE,
 	IM_CHAR,
 	IM_PARTY,
@@ -33,7 +36,7 @@ enum instance_mode {
 	IM_MAX,
 };
 
-enum e_instance_enter {
+enum e_instance_enter : uint8 {
 	IE_OK = 0,
 	IE_NOMEMBER,
 	IE_NOINSTANCE,
@@ -44,59 +47,61 @@ struct s_instance_map {
 	int16 m, src_m;
 };
 
-struct instance_data {
-	unsigned short type; ///< Instance DB ID
-	enum instance_state state; ///< State of instance
-	enum instance_mode mode; ///< Mode of instance
+/// Instance data
+struct s_instance_data {
+	uint16 id; ///< Instance DB ID
+	enum e_instance_state state; ///< State of instance
+	enum e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
 	unsigned int keep_limit; ///< Life time of instance
 	int keep_timer; ///< Remaining life time of instance
 	unsigned int idle_limit; ///< Idle time of instance
 	int idle_timer; ///< Remaining idle time of instance
 	struct reg_db regs; ///< Instance variables for scripts
-	struct s_instance_map **map; ///< Dynamic array of maps in instance
-	uint8 cnt_map; ///< Number of maps in an instance
+	std::vector<s_instance_map> map; ///< Array of maps in instance
 };
 
-/// Instance DB entry struct
-struct instance_db {
-	unsigned short id; ///< Instance ID
-	StringBuf *name; ///< Instance name
+/// Instance Idle Queue data
+static struct s_instance_wait {
+	int id[MAX_INSTANCE_DATA];
+	int count;
+	int timer;
+} instance_wait;
+
+/// Instance DB entry
+struct s_instance_db {
+	uint16 id; ///< Instance ID
+	std::string name; ///< Instance name
 	unsigned int limit, ///< Duration limit
 		timeout; ///< Timeout limit
-	struct s_MapInfo {
-		StringBuf *mapname; ///< Mapname, the limit should be MAP_NAME_LENGTH_EXT
-		short x, y; ///< Map coordinates
-	} enter;
-	StringBuf **maplist; ///< Used maps in instance, the limit should be MAP_NAME_LENGTH_EXT
-	uint8 maplist_count; ///< Number of used maps
+	//bool destroyable; ///< Destroyable flag
+	struct point enter; ///< Instance entry point
+	std::vector<int16> maplist; ///< Maps in instance
 };
 
+extern std::unordered_map<uint16, std::shared_ptr<s_instance_data>> instances;
+extern std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
+
 extern int instance_start;
-extern struct instance_data instance_data[MAX_INSTANCE_DATA];
 
-struct instance_db *instance_searchtype_db(unsigned short instance_id);
-struct instance_db *instance_searchname_db(const char* name);
-void instance_getsd(unsigned short instance_id, struct map_session_data **sd, enum send_target *target);
+std::shared_ptr<s_instance_db> &instance_searchtype_db(uint16 instance_id);
+std::shared_ptr<s_instance_db> &instance_searchname_db(const char* name);
+void instance_getsd(uint16 instance_id, struct map_session_data **sd, enum send_target *target);
 
-int instance_create(int owner_id, const char *name, enum instance_mode mode);
-int instance_destroy(unsigned short instance_id);
-enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y);
-int instance_reqinfo(struct map_session_data *sd, unsigned short instance_id);
-int instance_addusers(unsigned short instance_id);
-int instance_delusers(unsigned short instance_id);
-int16 instance_mapname2mapid(const char *name, unsigned short instance_id);
-int instance_addmap(unsigned short instance_id);
+uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode);
+bool instance_destroy(uint16 instance_id);
+enum e_instance_enter instance_enter(struct map_session_data *sd, uint16 instance_id, const char *name, short x, short y);
+bool instance_reqinfo(struct map_session_data *sd, uint16 instance_id);
+bool instance_addusers(uint16 instance_id);
+bool instance_delusers(uint16 instance_id);
+int16 instance_mapid(int16 m, uint16 instance_id);
+int instance_addmap(uint16 instance_id);
 
-void instance_addnpc(struct instance_data *im);
+void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 void instance_readdb(void);
-void instance_reload(void);
+void instance_db_reload(void);
 void do_reload_instance(void);
 void do_init_instance(void);
 void do_final_instance(void);
-
-#if MAX_MAP_PER_INSTANCE > 255
-	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
-#endif
 
 #endif /* _INSTANCE_HPP_ */

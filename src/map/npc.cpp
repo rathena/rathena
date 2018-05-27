@@ -3269,13 +3269,13 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 	if( snd->subtype == NPCTYPE_WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
-		struct instance_data *im = &instance_data[map[m].instance_id];
+		auto &idata = instances[map[m].instance_id];
 		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
 		if( dm < 0 ) return 1;
 
-		for(i = 0; i < im->cnt_map; i++)
-			if(im->map[i]->m && map_mapname2mapid(map[im->map[i]->src_m].name) == dm) {
-				imap = map_mapname2mapid(map[im->map[i]->m].name);
+		for(i = 0; i < idata->map.size(); i++)
+			if(idata->map[i].m && map_mapname2mapid(map[idata->map[i].src_m].name) == dm) {
+				imap = map_mapname2mapid(map[idata->map[i].m].name);
 				break; // Instance map matches destination, update to instance map
 			}
 

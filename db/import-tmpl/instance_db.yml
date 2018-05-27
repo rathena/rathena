@@ -1,0 +1,40 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2017 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Custom Instance Database
+###########################################################################
+#
+# Instance Settings
+#
+###########################################################################
+# ID - Unique Instance ID.
+###########################################################################
+# Name - Instance Name.
+###########################################################################
+# LimitTime - Total lifetime of instance in seconds.
+###########################################################################
+# IdleTimeOut - Time before an idle instance is destroyed in seconds.
+# 300 seconds by default.
+###########################################################################
+# EnterAt - Location where players start.
+#   Map: Map Name
+#   X: X Coordinate
+#   Y: Y Coordinate
+###########################################################################
+# Maps - List of maps that are part of an instance.
+###########################################################################

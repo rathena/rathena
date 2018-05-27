@@ -17332,7 +17332,6 @@ void clif_font(struct map_session_data *sd)
 void clif_instance_create(unsigned short instance_id, int num)
 {
 #if PACKETVER >= 20071128
-	struct instance_db *db = NULL;
 	struct map_session_data *sd = NULL;
 	enum send_target target = PARTY;
 	unsigned char buf[65];
@@ -17342,13 +17341,14 @@ void clif_instance_create(unsigned short instance_id, int num)
 	if (!sd)
 		return;
 
-	db = instance_searchtype_db(instance_data[instance_id].type);
+	auto &idata = instances[instance_id];
+	auto &db = instance_searchtype_db(idata->id);
 
-	if (!db)
+	if (db == nullptr)
 		return;
 
 	WBUFW(buf,0) = 0x2cb;
-	safestrncpy(WBUFCP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,2), db->name.c_str(), INSTANCE_NAME_LENGTH);
 	WBUFW(buf,63) = num;
 	clif_send(buf,packet_len(0x2cb),&sd->bl,target);
 #endif
@@ -17383,7 +17383,6 @@ void clif_instance_changewait(unsigned short instance_id, int num)
 void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2)
 {
 #if PACKETVER >= 20071128
-	struct instance_db *db = NULL;
 	struct map_session_data *sd = NULL;
 	enum send_target target = PARTY;
 	unsigned char buf[71];
@@ -17393,13 +17392,14 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 	if (!sd)
 		return;
 
-	db = instance_searchtype_db(instance_data[instance_id].type);
+	auto &idata = instances[instance_id];
+	auto &db = instance_searchtype_db(idata->id);
 
-	if (!db)
+	if (db == nullptr)
 		return;
 
 	WBUFW(buf,0) = 0x2cd;
-	safestrncpy(WBUFCP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,2), db->name.c_str(), INSTANCE_NAME_LENGTH);
 	WBUFL(buf,63) = limit1;
 	WBUFL(buf,67) = limit2;
 	clif_send(buf,packet_len(0x2cd),&sd->bl,target);

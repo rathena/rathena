@@ -840,7 +840,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
 
 // instances
-int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_addinstancemap(int src_m, unsigned short instance_id);
 int map_delinstancemap(int m);
 
 // player to map session

@@ -2784,9 +2784,12 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 			case '\'':
 				{
 					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id )
-						data->u.str = (char*)i64db_get(instance_data[instance_id].regs.vars,reference_getuid(data));
-					else {
+
+					if (instance_id) {
+						auto &idata = instances[instance_id];
+
+						data->u.str = (char*)i64db_get(idata->regs.vars, reference_getuid(data));
+					} else {
 						ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to \"\"\n", name);
 						data->u.str = NULL;
 					}
@@ -2842,9 +2845,12 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 				case '\'':
 					{
 						unsigned short instance_id = script_instancegetid(st);
-						if( instance_id )
-							data->u.num = (int)i64db_iget(instance_data[instance_id].regs.vars,reference_getuid(data));
-						else {
+
+						if (instance_id) {
+							auto &idata = instances[instance_id];
+
+							data->u.num = (int)i64db_iget(idata->regs.vars, reference_getuid(data));
+						} else {
 							ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 							data->u.num = 0;
 						}
@@ -3059,8 +3065,10 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 			{
 				unsigned short instance_id = script_instancegetid(st);
 
-				if( instance_id ) {
-					src = &instance_data[instance_id].regs;
+				if (instance_id) {
+					auto &idata = instances[instance_id];
+
+					src = &idata->regs;
 				}
 				break;
 			}
@@ -3178,15 +3186,18 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 			case '\'':
 				{
 					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id ) {
-						if( str[0] ) {
-							i64db_put(instance_data[instance_id].regs.vars, num, aStrdup(str));
+
+					if (instance_id) {
+						auto &idata = instances[instance_id];
+
+						if (str[0]) {
+							i64db_put(idata->regs.vars, num, aStrdup(str));
 							if( script_getvaridx(num) )
-								script_array_update(&instance_data[instance_id].regs, num, false);
+								script_array_update(&idata->regs, num, false);
 						} else {
-							i64db_remove(instance_data[instance_id].regs.vars, num);
+							i64db_remove(idata->regs.vars, num);
 							if (script_getvaridx(num))
-								script_array_update(&instance_data[instance_id].regs, num, true);
+								script_array_update(&idata->regs, num, true);
 						}
 					} else {
 						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
@@ -3241,15 +3252,18 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 			case '\'':
 				{
 					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id ) {
-						if( val != 0 ) {
-							i64db_iput(instance_data[instance_id].regs.vars, num, val);
+
+					if (instance_id) {
+						auto &idata = instances[instance_id];
+
+						if (val != 0) {
+							i64db_iput(idata->regs.vars, num, val);
 							if( script_getvaridx(num) )
-								script_array_update(&instance_data[instance_id].regs, num, false);
+								script_array_update(&idata->regs, num, false);
 						} else {
-							i64db_remove(instance_data[instance_id].regs.vars, num);
+							i64db_remove(idata->regs.vars, num);
 							if (script_getvaridx(num))
-								script_array_update(&instance_data[instance_id].regs, num, true);
+								script_array_update(&idata->regs, num, true);
 						}
 					} else {
 						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
@@ -19856,11 +19870,11 @@ unsigned short script_instancegetid(struct script_state* st)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_create)
 {
-	enum instance_mode mode = IM_PARTY;
+	enum e_instance_mode mode = IM_PARTY;
 	int owner_id = 0;
 
 	if (script_hasdata(st, 3)) {
-		mode = static_cast<instance_mode>(script_getnum(st, 3));
+		mode = static_cast<e_instance_mode>(script_getnum(st, 3));
 
 		if (mode < IM_NONE || mode >= IM_MAX) {
 			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
@@ -20005,7 +20019,7 @@ BUILDIN_FUNC(instance_mapname)
 		instance_id = script_instancegetid(st);
 
 	// Check that instance mapname is a valid map
-	if(!instance_id || (m = instance_mapname2mapid(str,instance_id)) < 0)
+	if(!instance_id || (m = instance_mapid(map_mapname2mapid(str), instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
 		script_pushconststr(st, map[m].name);
@@ -20042,8 +20056,10 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	sd = (TBL_PC *)bl;
-	owner_id = instance_data[instance_id].owner_id;
-	switch(instance_data[instance_id].mode) {
+	auto &idata = instances[instance_id];
+	owner_id = idata->owner_id;
+
+	switch(idata->mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
@@ -20069,7 +20085,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 BUILDIN_FUNC(instance_warpall)
 {
-	int16 m, i;
+	int16 m;
 	unsigned short instance_id;
 	const char *mapn;
 	int x, y;
@@ -20082,11 +20098,13 @@ BUILDIN_FUNC(instance_warpall)
 	else
 		instance_id = script_instancegetid(st);
 
-	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapname2mapid(map[m].name,instance_id)) < 0)
+	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	for(i = 0; i < instance_data[instance_id].cnt_map; i++)
-		map_foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i]->m, BL_PC, map_id2index(m), x, y, instance_id);
+	auto &idata = instances[instance_id];
+
+	for(uint16 i = 0; i < idata->map.size(); i++)
+		map_foreachinmap(buildin_instance_warpall_sub, idata->map[i].m, BL_PC, map_id2index(m), x, y, instance_id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20106,20 +20124,19 @@ BUILDIN_FUNC(instance_announce) {
 	int            fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int            fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int            fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
-	int i;
 
-	if( instance_id == 0 ) {
+	if (instance_id == 0)
 		instance_id = script_instancegetid(st);
-	}
 
-	if( !instance_id && &instance_data[instance_id] != NULL) {
+	auto &idata = instances[instance_id];
+
+	if (!instance_id && idata != nullptr) {
 		ShowError("buildin_instance_announce: Intance is not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for( i = 0; i < instance_data[instance_id].cnt_map; i++ )
-		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i]->m, BL_PC,
-						 mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
+	for (uint16 i = 0; i < idata->map.size(); i++)
+		map_foreachinmap(buildin_announce_sub, idata->map[i].m, BL_PC, mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20319,9 +20336,9 @@ BUILDIN_FUNC(instance_info)
 	const char* name = script_getstr(st, 2);
 	int type = script_getnum(st, 3);
 	int index = 0;
-	struct instance_db *db = instance_searchname_db(name);
+	auto &db = instance_searchname_db(name);
 
-	if( !db ){
+	if (!db) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
@@ -20338,7 +20355,7 @@ BUILDIN_FUNC(instance_info)
 			script_pushint(st, db->timeout);
 			break;
 		case IIT_ENTER_MAP:
-			script_pushstrcopy(st, StringBuf_Value(db->enter.mapname));
+			script_pushstrcopy(st, map_mapid2mapname(db->enter.map));
 			break;
 		case IIT_ENTER_X:
 			script_pushint(st, db->enter.x);
@@ -20347,7 +20364,7 @@ BUILDIN_FUNC(instance_info)
 			script_pushint(st, db->enter.y);
 			break;
 		case IIT_MAPCOUNT:
-			script_pushint(st, db->maplist_count);
+			script_pushint(st, db->maplist.size());
 			break;
 		case IIT_MAP:
 			if( !script_hasdata(st, 4) || script_isstring(st, 4) ){
@@ -20370,7 +20387,7 @@ BUILDIN_FUNC(instance_info)
 				return SCRIPT_CMD_FAILURE;
 			}
 
-			script_pushstrcopy(st, StringBuf_Value(db->maplist[index]));
+			script_pushstrcopy(st, map_mapid2mapname(db->maplist[index]));
 			break;
 
 		default:

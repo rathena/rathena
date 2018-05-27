@@ -1,0 +1,288 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2017 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Renewal Instance Database
+###########################################################################
+#
+# Instance Settings
+#
+###########################################################################
+# ID - Unique Instance ID.
+###########################################################################
+# Name - Instance Name.
+###########################################################################
+# LimitTime - Total lifetime of instance in seconds.
+###########################################################################
+# IdleTimeOut - Time before an idle instance is destroyed in seconds.
+# 300 seconds by default.
+###########################################################################
+# EnterAt - Location where players start.
+#   Map: Map Name
+#   X: X Coordinate
+#   Y: Y Coordinate
+###########################################################################
+# Maps - List of maps that are part of an instance.
+###########################################################################
+
+Header:
+  Version: 1
+  Type: INSTANCE_CONFIG
+
+Instances:
+  - ID: 1
+    Name: "Endless Tower"
+    LimitTime: 14400
+    EnterAt:
+      Map: "1@tower"
+      X: 50
+      Y: 355
+    Maps: ["2@tower", "3@tower", "4@tower", "5@tower", "6@tower"]
+  - ID: 2
+    Name: "Sealed Catacomb"
+    LimitTime: 7200
+    EnterAt:
+      Map: "1@cata"
+      X: 100
+      Y: 224
+    Maps: ["2@cata"]
+  - ID: 3
+    Name: "Orc's Memory"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@orcs" 
+      X: 179
+      Y: 15
+    Maps: ["2@orcs"]
+  - ID: 4
+    Name: "Nidhoggur's Nest"
+    LimitTime: 14400
+    EnterAt:
+      Map: "1@nyd"
+      X: 32
+      Y: 36
+    Maps: ["2@nyd"]
+  - ID: 5
+    Name: "Mistwood Maze"
+    LimitTime: 7200
+    EnterAt:
+      Map: "1@mist"
+      X: 89
+      Y: 29
+  - ID: 6
+    Name: "Culvert"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@pump"
+      X: 63
+      Y: 98
+    Maps: ["2@pump"]
+  - ID: 7
+    Name: "Octopus Cave"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@cash"
+      X: 199
+      Y: 99
+  - ID: 8
+    Name: "Bangungot Hospital 2F"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@ma_h"
+      X: 40
+      Y: 157
+  - ID: 9
+    Name: "Buwaya Cave"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@ma_c"
+      X: 35
+      Y: 57
+  - ID: 10
+    Name: "Bakonawa Lake"
+    LimitTime: 7200
+    EnterAt:
+      Map: "1@ma_b"
+      X: 64
+      Y: 51
+  - ID: 11
+    Name: "Wolfchev's Laboratory"
+    LimitTime: 14400
+    EnterAt:
+      Map: "1@lhz"
+      X: 45
+      Y: 148
+  - ID: 12
+    Name: "Old Glast Heim"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@gl_k"
+      X: 150
+      Y: 20
+    Maps: ["2@gl_k"]
+  - ID: 13
+    Name: "Eclage Interior"
+    LimitTime: 1200
+    EnterAt:
+      Map: "1@ecl"
+      X: 60
+      Y: 50
+  - ID: 14
+    Name: "Sara's Memories"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@sara"
+      X: 250
+      Y: 155
+  - ID: 15
+    Name: "Geffen Magic Tournament"
+    LimitTime: 7200
+    EnterAt:
+      Map: "1@gef"
+      X: 119
+      Y: 209
+    Maps: ["1@gef_in", "1@ge_st"]
+  - ID: 16
+    Name: "Horror Toy Factory"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@xm_d"
+      X: 111
+      Y: 22
+  - ID: 17
+    Name: "Faceworm's Nest"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@face"
+      X: 112
+      Y: 370
+  - ID: 18
+    Name: "Ghost Palace"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@spa"
+      X: 42
+      Y: 196
+#  - ID: 19
+#    Name: "Devil's Tower"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@tnm1"
+#      X: 50
+#      Y: 104
+#    Maps: ["1@tnm2", "1@tnm3"]
+#  - ID: 20
+#    Name: "Assault on the Airship"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@air1"
+#      X: 244
+#      Y: 73
+#    Maps: ["1@air2"]
+  - ID: 21
+    Name: "Fenrir and Sarah"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@glast"
+      X: 367
+      Y: 304
+#  - ID: 22
+#    Name: "Wave Mode - Forest"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@def01"
+#      X: 50
+#      Y: 21
+#  - ID: 23
+#    Name: "Wave Mode - Sky"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@def02"
+#      X: 29
+#      Y: 35
+#  - ID: 24
+#    Name: "Nightmarish Jitterbug"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@jtb"
+#      X: 16
+#      Y: 17
+  - ID: 25
+    Name: "Isle of Bios"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@dth1"
+      X: 17
+      Y: 93
+    Maps: ["1@dth2", "1@dth3"]
+#  - ID: 26
+#    Name: "Morse's Cave"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@rev"
+#      X: 26
+#      Y: 181
+#  - ID: 27
+#    Name: "Temple of the Demon God"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@eom"
+#      X: 101
+#      Y: 16
+  - ID: 28
+    Name: "Central Laboratory"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@lab"
+      X: 120
+      Y: 30
+  - ID: 29
+    Name: "Last room"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@uns"
+      X: 145
+      Y: 35
+#  - ID: 30
+#    Name: "Charleston in Distress"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@mcd"
+#      X: 127
+#      Y: 282
+#  - ID: 31
+#    Name: "Ritual of Blessing"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "2@mir"
+#      X: 101
+#      Y: 12
+#  - ID: 32
+#    Name: "Room of Consciousness"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@mir"
+#      X: 101
+#      Y: 10
+#  - ID: 33
+#    Name: "Sky Fortress Invasion"
+#    LimitTime: 3600
+#    EnterAt:
+#      Map: "1@sthb"
+#      X: 54
+#      Y: 67
+#    Maps: ["1@sthc", "1@sthd"]

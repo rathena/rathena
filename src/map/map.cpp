@@ -2554,19 +2554,19 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, unsigned short instance_id)
+int map_addinstancemap(int src_m, unsigned short instance_id)
 {
-	int src_m = map_mapname2mapid(name);
 	int dst_m = -1, i;
-	char iname[MAP_NAME_LENGTH];
+	const char *iname;
 	size_t num_cell, size;
 
 	if(src_m < 0)
 		return -1;
 
-	if(strlen(name) > 20) {
+	iname = map_mapid2mapname(src_m);
+	if(strlen(iname) > 20) {
 		// against buffer overflow
-		ShowError("map_addisntancemap: can't add long map name \"%s\"\n", name);
+		ShowError("map_addisntancemap: can't add long map name \"%s\"\n", iname);
 		return -2;
 	}
 
@@ -2587,13 +2587,11 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	// Copy the map
 	memcpy(&map[dst_m], &map[src_m], sizeof(struct map_data));
 
-	strcpy(iname,name);
-
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
 	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
-		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
+		memmove((void*)iname, iname+(strlen(iname)-9), strlen(iname));
 		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%hu#%s", instance_id, iname);
 	} else
 		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3hu%s", instance_id, iname);
@@ -2818,16 +2816,16 @@ void map_removemobs(int16 m)
 const char* map_mapid2mapname(int m)
 {
 	if (map[m].instance_id) { // Instance map check
-		struct instance_data *im = &instance_data[map[m].instance_id];
+		auto &idata = instances[map[m].instance_id];
 
-		if (!im) // This shouldn't happen but if it does give them the map we intended to give
+		if (idata == nullptr) // This shouldn't happen but if it does give them the map we intended to give
 			return map[m].name;
 		else {
-			uint8 i;
+			uint16 i;
 
-			for (i = 0; i < im->cnt_map; i++) { // Loop to find the src map we want
-				if (im->map[i]->m == m)
-					return map[im->map[i]->src_m].name;
+			for (i = 0; i < idata->map.size(); i++) { // Loop to find the src map we want
+				if (idata->map[i].m == m)
+					return map[idata->map[i].src_m].name;
 			}
 		}
 	}
