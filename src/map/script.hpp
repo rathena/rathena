@@ -4,9 +4,6 @@
 #ifndef _SCRIPT_HPP_
 #define _SCRIPT_HPP_
 
-#include <unordered_map>
-#include <vector>
-
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
 #include "../common/mmo.h"

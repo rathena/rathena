@@ -303,7 +303,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\guild_skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\guild_skill_tree.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homun_skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homun_skill_tree.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homunculus_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homunculus_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\instance_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\instance_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\instance_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\instance_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_avail.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_avail.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_bluebox.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_bluebox.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_buyingstore.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_buyingstore.txt')" />

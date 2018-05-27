@@ -84,8 +84,8 @@ extern std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
 
 extern int instance_start;
 
-std::shared_ptr<s_instance_db> &instance_searchtype_db(uint16 instance_id);
-std::shared_ptr<s_instance_db> &instance_searchname_db(const char* name);
+std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id);
+std::shared_ptr<s_instance_db> instance_searchname_db(const char* name);
 void instance_getsd(uint16 instance_id, struct map_session_data **sd, enum send_target *target);
 
 uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode);

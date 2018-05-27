@@ -20338,7 +20338,7 @@ BUILDIN_FUNC(instance_info)
 	int index = 0;
 	auto &db = instance_searchname_db(name);
 
-	if (!db) {
+	if (db == nullptr) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;

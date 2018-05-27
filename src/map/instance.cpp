@@ -45,7 +45,7 @@ bool instance_exists(uint16 instance_id)
  * @param instance_id: Instance to search for
  * @return shared_ptr of instance
  */
-std::shared_ptr<s_instance_db> &instance_searchtype_db(uint16 instance_id)
+std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id)
 {
 	return instance_db[instance_id];
 }
@@ -55,11 +55,14 @@ std::shared_ptr<s_instance_db> &instance_searchtype_db(uint16 instance_id)
  * @param instance_name: Instance to search for
  * @return shared_ptr of instance
  */
-std::shared_ptr<s_instance_db> &instance_searchname_db(const char *instance_name)
+std::shared_ptr<s_instance_db> instance_searchname_db(const char *instance_name)
 {
-	auto it = std::find_if(instance_db.begin(), instance_db.end(), [&instance_name](auto &vt) { return strcmp(vt.second->name.c_str(), instance_name) == 0; });
+	for (uint16 i = 0; i < instance_db.size(); i++) {
+		if (!strcmp(instance_db[i]->name.c_str(), instance_name))
+			return instance_db[i];
+	}
 
-	return it->second;
+	return nullptr;
 }
 
 /**
@@ -387,7 +390,10 @@ uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode
 	struct clan* cd = NULL;
 	uint16 instance_id;
 
-	nullpo_retr(-1, &db);
+	if (db == nullptr) {
+		ShowError("instance_create: Unknown instance %s creation was attempted.\n", name);
+		return -1;
+	}
 
 	switch(mode) {
 		case IM_NONE:
