@@ -144,7 +144,7 @@ matrix:
          - mkdir cbuild
          - cd cbuild
          - cmake -G "Unix Makefiles" ..
-         - make
+         - make || travis_terminate 1
 
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -156,8 +156,8 @@ before_script:
 script:
   - ./configure $CONFIGURE_FLAGS
   - ./tools/ci/npc.sh
-  - make clean
-  - make server
+  - make clean || travis_terminate 1
+  - make server || travis_terminate 1
   - ./login-server --run-once
   - ./char-server --run-once
   - ./map-server --run-once
