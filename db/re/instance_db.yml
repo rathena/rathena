@@ -36,7 +36,7 @@
 #   X: X Coordinate
 #   Y: Y Coordinate
 ###########################################################################
-# Maps - List of maps that are part of an instance.
+# AdditionalMaps - List of maps that are part of an instance.
 ###########################################################################
 
 Header:
@@ -51,7 +51,7 @@ Instances:
       Map: "1@tower"
       X: 50
       Y: 355
-    Maps: ["2@tower", "3@tower", "4@tower", "5@tower", "6@tower"]
+    AdditionalMaps: ["2@tower", "3@tower", "4@tower", "5@tower", "6@tower"]
   - ID: 2
     Name: "Sealed Catacomb"
     LimitTime: 7200
@@ -59,7 +59,7 @@ Instances:
       Map: "1@cata"
       X: 100
       Y: 224
-    Maps: ["2@cata"]
+    AdditionalMaps: ["2@cata"]
   - ID: 3
     Name: "Orc's Memory"
     LimitTime: 3600
@@ -67,7 +67,7 @@ Instances:
       Map: "1@orcs" 
       X: 179
       Y: 15
-    Maps: ["2@orcs"]
+    AdditionalMaps: ["2@orcs"]
   - ID: 4
     Name: "Nidhoggur's Nest"
     LimitTime: 14400
@@ -75,7 +75,7 @@ Instances:
       Map: "1@nyd"
       X: 32
       Y: 36
-    Maps: ["2@nyd"]
+    AdditionalMaps: ["2@nyd"]
   - ID: 5
     Name: "Mistwood Maze"
     LimitTime: 7200
@@ -90,7 +90,7 @@ Instances:
       Map: "1@pump"
       X: 63
       Y: 98
-    Maps: ["2@pump"]
+    AdditionalMaps: ["2@pump"]
   - ID: 7
     Name: "Octopus Cave"
     LimitTime: 3600
@@ -133,7 +133,7 @@ Instances:
       Map: "1@gl_k"
       X: 150
       Y: 20
-    Maps: ["2@gl_k"]
+    AdditionalMaps: ["2@gl_k"]
   - ID: 13
     Name: "Eclage Interior"
     LimitTime: 1200
@@ -155,7 +155,7 @@ Instances:
       Map: "1@gef"
       X: 119
       Y: 209
-    Maps: ["1@gef_in", "1@ge_st"]
+    AdditionalMaps: ["1@gef_in", "1@ge_st"]
   - ID: 16
     Name: "Horror Toy Factory"
     LimitTime: 3600
@@ -184,7 +184,7 @@ Instances:
 #      Map: "1@tnm1"
 #      X: 50
 #      Y: 104
-#    Maps: ["1@tnm2", "1@tnm3"]
+#    AdditionalMaps: ["1@tnm2", "1@tnm3"]
 #  - ID: 20
 #    Name: "Assault on the Airship"
 #    LimitTime: 3600
@@ -192,7 +192,7 @@ Instances:
 #      Map: "1@air1"
 #      X: 244
 #      Y: 73
-#    Maps: ["1@air2"]
+#    AdditionalMaps: ["1@air2"]
   - ID: 21
     Name: "Fenrir and Sarah"
     LimitTime: 3600
@@ -228,7 +228,7 @@ Instances:
       Map: "1@dth1"
       X: 17
       Y: 93
-    Maps: ["1@dth2", "1@dth3"]
+    AdditionalMaps: ["1@dth2", "1@dth3"]
 #  - ID: 26
 #    Name: "Morse's Cave"
 #    LimitTime: 3600
@@ -285,4 +285,4 @@ Instances:
 #      Map: "1@sthb"
 #      X: 54
 #      Y: 67
-#    Maps: ["1@sthc", "1@sthd"]
+#    AdditionalMaps: ["1@sthc", "1@sthd"]

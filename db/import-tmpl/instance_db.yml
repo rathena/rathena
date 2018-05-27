@@ -36,5 +36,5 @@
 #   X: X Coordinate
 #   Y: Y Coordinate
 ###########################################################################
-# Maps - List of maps that are part of an instance.
+# AdditionalMaps - List of maps that are part of an instance.
 ###########################################################################

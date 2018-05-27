@@ -36,7 +36,7 @@
 #   X: X Coordinate
 #   Y: Y Coordinate
 ###########################################################################
-# Maps - List of maps that are part of an instance.
+# AdditionalMaps - List of maps that are part of an instance.
 ###########################################################################
 
 
@@ -52,7 +52,7 @@ Instances:
       Map: "1@tower"
       X: 50
       Y: 355
-    Maps: ["2@tower", "3@tower", "4@tower", "5@tower", "6@tower"]
+    AdditionalMaps: ["2@tower", "3@tower", "4@tower", "5@tower", "6@tower"]
   - ID: 2
     Name: "Sealed Catacomb"
     LimitTime: 7200
@@ -60,7 +60,7 @@ Instances:
       Map: "1@cata"
       X: 100
       Y: 224
-    Maps: ["2@cata"]
+    AdditionalMaps: ["2@cata"]
   - ID: 3
     Name: "Orc's Memory"
     LimitTime: 3600
@@ -68,7 +68,7 @@ Instances:
       Map: "1@orcs" 
       X: 179
       Y: 15
-    Maps: ["2@orcs"]
+    AdditionalMaps: ["2@orcs"]
   - ID: 4
     Name: "Nidhoggur's Nest"
     LimitTime: 14400
@@ -76,4 +76,4 @@ Instances:
       Map: "1@nyd"
       X: 32
       Y: 36
-    Maps: ["2@nyd"]
+    AdditionalMaps: ["2@nyd"]

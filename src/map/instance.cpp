@@ -234,7 +234,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, uint16 inst
 	if(idata->idle_timer != INVALID_TIMER)
 		return false;
 
-	auto &db = instance_searchtype_db(idata->id);
+	auto db = instance_searchtype_db(idata->id);
 
 	if (db == nullptr)
 		return false;
