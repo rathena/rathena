@@ -17342,7 +17342,7 @@ void clif_instance_create(unsigned short instance_id, int num)
 		return;
 
 	auto &idata = instances[instance_id];
-	auto &db = instance_searchtype_db(idata->id);
+	auto db = instance_searchtype_db(idata->id);
 
 	if (db == nullptr)
 		return;
@@ -17393,7 +17393,7 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 		return;
 
 	auto &idata = instances[instance_id];
-	auto &db = instance_searchtype_db(idata->id);
+	auto db = instance_searchtype_db(idata->id);
 
 	if (db == nullptr)
 		return;

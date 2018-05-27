@@ -57,9 +57,9 @@ std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id)
  */
 std::shared_ptr<s_instance_db> instance_searchname_db(const char *instance_name)
 {
-	for (uint16 i = 0; i < instance_db.size(); i++) {
-		if (!strcmp(instance_db[i]->name.c_str(), instance_name))
-			return instance_db[i];
+	for (const auto &it : instance_db) {
+		if (!strcmp(it.second->name.c_str(), instance_name))
+			return it.second;
 	}
 
 	return nullptr;
@@ -184,7 +184,7 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, uint16 inst
 	if(idata->keep_timer != INVALID_TIMER)
 		return false;
 
-	auto &db = instance_searchtype_db(idata->id);
+	auto db = instance_searchtype_db(idata->id);
 
 	if(db == nullptr)
 		return false;
@@ -383,7 +383,7 @@ void instance_addnpc(std::shared_ptr<s_instance_data> idata)
  * @return -4 = no free instances | -3 = already exists | -2 = character/party/guild not found | -1 = invalid type | On success return instance_id
  */
 uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
-	auto &db = instance_searchname_db(name);
+	auto db = instance_searchname_db(name);
 	struct map_session_data *sd = NULL;
 	struct party_data *pd = NULL;
 	struct guild *gd = NULL;
@@ -495,7 +495,7 @@ int instance_addmap(uint16 instance_id) {
 	if (idata->state != INSTANCE_IDLE)
 		return 0;
 
-	auto &db = instance_searchtype_db(idata->id);
+	auto db = instance_searchtype_db(idata->id);
 
 	if (db == nullptr)
 		return 0;
@@ -736,7 +736,7 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, uint16 instanc
 
 	nullpo_retr(IE_OTHER, sd);
 	
-	auto &db = instance_searchname_db(name);
+	auto db = instance_searchname_db(name);
 
 	if (db == nullptr) {
 		ShowError("instance_enter: Unknown instance \"%s\".\n", name);
@@ -834,7 +834,7 @@ bool instance_reqinfo(struct map_session_data *sd, uint16 instance_id)
 
 	auto &idata = instances[instance_id];
 
-	if(instance_searchtype_db(idata->id) == NULL)
+	if(instance_searchtype_db(idata->id) == nullptr)
 		return false;
 
 	// Say it's created if instance is not busy
@@ -1050,9 +1050,9 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 		}
 	}
 
-	if (node["Maps"]) {
+	if (node["AdditionalMaps"]) {
 		try {
-			const YAML::Node map_list = node["Maps"];
+			const YAML::Node map_list = node["AdditionalMaps"];
 
 			if (map_list.IsSequence()) {
 				for (uint16 i = 0; i < map_list.size(); i++) {
@@ -1063,15 +1063,15 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 					m = map_mapname2mapid(mapname.c_str());
 
 					if (!m) {
-						ShowWarning("instance_read_db_sub: Invalid map for instance %d in \"%s\".\n", instance_id, source.c_str());
+						ShowWarning("instance_read_db_sub: Invalid additional map for instance %d in \"%s\".\n", instance_id, source.c_str());
 						return false;
 					}
 					entry->maplist.push_back(m);
 				}
 			} else
-				ShowWarning("instance_read_db_sub: Invalid map format for instance %d in \"%s\".\n", instance_id, source.c_str());
+				ShowWarning("instance_read_db_sub: Invalid additional map format for instance %d in \"%s\".\n", instance_id, source.c_str());
 		} catch (...) {
-			yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid additional map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	}
@@ -1086,15 +1086,14 @@ void instance_readdb(void) {
 	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH),  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
 	static const std::string file_name("instance_db.yml");
 
-	for (auto &directory : directories) {
+	for (const auto &directory : directories) {
 		std::string current_file = directory + file_name;
 		YAML::Node config;
 		int count = 0;
 
 		try {
 			config = YAML::LoadFile(current_file);
-		}
-		catch (...) {
+		} catch (...) {
 			ShowError("Cannot read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
 			return;
 		}

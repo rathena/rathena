@@ -20336,7 +20336,7 @@ BUILDIN_FUNC(instance_info)
 	const char* name = script_getstr(st, 2);
 	int type = script_getnum(st, 3);
 	int index = 0;
-	auto &db = instance_searchname_db(name);
+	auto db = instance_searchname_db(name);
 
 	if (db == nullptr) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
