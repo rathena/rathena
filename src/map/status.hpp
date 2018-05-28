@@ -778,7 +778,7 @@ enum sc_type : int16 {
 
 	SC_ACTIVE_MONSTER_TRANSFORM,
 
-	//SC_CLOUD_KILL, // Unused
+	SC_CLOUD_KILL, // Deprecated
 
 	SC_LJOSALFAR,
 	SC_MERMAID_LONGING,
