@@ -843,7 +843,7 @@ enum sc_type : int16 {
 	SC_CHEERUP,
 	SC_DRESSUP,
 
-	// Old Glastheim Buffs
+	// Old Glast Heim Buffs
 	SC_GLASTHEIM_ATK,
 	SC_GLASTHEIM_DEF,
 	SC_GLASTHEIM_HEAL,

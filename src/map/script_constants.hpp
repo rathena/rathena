@@ -1485,6 +1485,13 @@
 	export_constant(SC_FALLEN_ANGEL);
 	export_constant(SC_CHEERUP);
 	export_constant(SC_DRESSUP);
+	export_constant(SC_GLASTHEIM_ATK);
+	export_constant(SC_GLASTHEIM_DEF);
+	export_constant(SC_GLASTHEIM_HEAL);
+	export_constant(SC_GLASTHEIM_HIDDEN);
+	export_constant(SC_GLASTHEIM_STATE);
+	export_constant(SC_GLASTHEIM_ITEMDEF);
+	export_constant(SC_GLASTHEIM_HPSP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

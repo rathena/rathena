@@ -517,7 +517,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		if (sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL || skill_id == PR_SANCTUARY || skill_id == AL_HEAL))
 			hp_bonus += sc->data[SC_OFFERTORIUM]->val2;
 		if (sc->data[SC_GLASTHEIM_HEAL] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN)
-			hp_bonus += 100;
+			hp_bonus += sc->data[SC_GLASTHEIM_HEAL]->val1;
 	}
 
 	if (tsc && tsc->count) {
@@ -527,7 +527,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			if (tsc->data[SC_EXTRACT_WHITE_POTION_Z])
 				hp_bonus += tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1;
 			if (tsc->data[SC_GLASTHEIM_HEAL])
-				hp_bonus += 50;
+				hp_bonus += sc->data[SC_GLASTHEIM_HEAL]->val2;
 		}
 	}
 
