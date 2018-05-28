@@ -9817,7 +9817,7 @@
 18819,Blue_Pencil_In_Mouth,Blue Pencil In Mouth,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,932,{ bonus bUnbreakableHelm; bonus bHit,3; },{},{}
 18820,Gray_Helmet,Gray Helmet,4,20,,450,,35,,1,0xFFFFFFFF,56,2,256,,120,1,941,{ bonus2 bSubEle,Ele_Holy,3+getrefine()/2; },{},{}
 18821,Rainbow_Feather_Deco,Rainbow Feather Deco,4,20,,300,,5,,1,0xFFFFFFFF,63,2,256,,1,1,934,{ bonus2 bAddClass,Class_All,1; bonus bMatkRate,1; },{},{}
-18823,Imperial_Feather,Imperial Feather,4,10,,500,,,,0,0xFFFFFFFF,63,2,512,,70,1,935,{ bonus bAspdRate,1; bonus2 bSubEle,Ele_Wind,5; if(readparam(bAgi)>108){ bonus bAspd,1; bonus bAspdRate,1; } },{},{}
+18823,Imperial_Feather,Imperial Feather,4,10,,500,,,,0,0xFFFFFFFF,63,2,512,,70,1,935,{ bonus bAspdRate,1; bonus2 bSubEle,Ele_Wind,5; if(readparam(bAgi)>107){ bonus bAspd,1; bonus bAspdRate,1; } },{},{}
 18827,Valkyrie_Circlet,Valkyrie Circlet,4,0,,300,,10,,1,0xFFFFFFFF,63,2,256,,,1,940,{ bonus bStr,3; bonus2 bAddEle,Ele_Dark,10; bonus2 bAddRace,RC_Demon,10; },{},{}
 18828,2012RMSCNO1,2012 RWC Winners Helmet,4,1000,,1000,,20,,1,0xFFFFFFFF,63,2,256,,60,1,942,{ bonus bAllStats,5; bonus bMdef,5; bonus bSpeedAddRate,10; skill "AL_TELEPORT",1; bonus bUnbreakableHelm; },{},{}
 18829,2012RMSCNO2,2012 RWC Runners-Up Helmet,4,1000,,1000,,20,,1,0xFFFFFFFF,63,2,256,,60,1,943,{ bonus bAllStats,4; bonus bMdef,5; bonus bSpeedAddRate,10; skill "AL_TELEPORT",1; bonus bUnbreakableHelm; },{},{}
