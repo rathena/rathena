@@ -1780,7 +1780,7 @@ Achievements:
     Name: "Reborn in Valhalla!"
     Condition: " Class == JOB_NOVICE_HIGH "
     Reward:
-      ItemID: 22808
+    #  ItemID: 23575
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
     Score: 10
   - ID: 200032
@@ -2404,11 +2404,3 @@ Achievements:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1024
     Score: 10
-  - ID: 220036
-    Group: "AG_EAT"
-    Name: "The beginning of outdoor"
-    Score: 20
-  - ID: 220037
-    Group: "AG_EAT"
-    Name: "The first step becoming a chef"
-    Score: 20
