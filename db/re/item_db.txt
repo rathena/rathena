@@ -6917,7 +6917,7 @@
 12699,Tikbalang_Belt,Tikbalang Harness,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2313; },{},{}
 12700,Insideout_Shirt,Inside-out Shirt,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "malaya",242,211; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox,1); },{},{}
+12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1; },{},{}
 12703,Holy_Egg_2,Holy Egg,2,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Holy_Egg_2,1); },{},{}
 12704,Elixir_Of_Life,Elixir of Life,0,0,,10,,,,,0xFFFFFFFF,63,2,,,85,,,{ percentheal 100,0; },{},{}
 12705,Noble_Nameplate,Noble Nameplate,2,0,,100,,,,,0xFFFFFFFF,63,2,,,90,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
@@ -8764,11 +8764,11 @@
 16013,Mace_Of_Judgement,Mace Of Judgement,5,20,,1200,140:180,,1,2,0x00000100,56,2,2,3,100,1,8,{ bonus bAtkEle,Ele_Holy; bonus bStr,1; bonus bInt,1; autobonus "{ bonus2 bMagicAddRace,RC_Demon,20; }",30,7000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; autobonus "{ bonus2 bAddRace,RC_Demon,20; }",5,7000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 16014,P_Mace3,Eden Mace III,5,0,,0,172,,1,0,0x0004C5B3,63,2,2,3,60,0,8,{},{},{}
 16015,Cat_Club,Cat Club,5,20,,700,88,,1,3,0x0004C5B3,63,2,2,1,1,1,8,{ bonus2 bAddRace,RC_Brute,15; },{},{}
-16016,Tuna,Tuna,5,0,,0,180,,1,0,0x0004C5B3,63,2,2,1,50,0,8,{ bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Stun,150; bonus3 bAutoSpell,"SM_BASH",5,20; bonus2 bAddEff2,Eff_Freeze,100; if(BaseLevel>99) bonus bBaseAtk,20; },{},{}
+16016,Tuna,Tuna,5,0,,0,180,,1,0,0x0004C5B3,63,2,2,1,50,0,8,{ bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Stun,1500; bonus3 bAutoSpell,"SM_BASH",max(getskilllv("SM_BASH"),5),20; bonus2 bAddEff2,Eff_Freeze,100; if(BaseLevel>99) bonus bBaseAtk,20; },{},{}
 16017,Bloody_Cross,Bloody Cross,5,20,,1500,170,,1,0,0x00008110,63,2,2,4,100,1,8,{ bonus bAtkEle,Ele_Dark; .@r = getrefine(); bonus3 bAutoSpell,"WL_HELLINFERNO",1,(.@r?.@r*20:20); },{},{}
 16018,Mace_Of_Judgement2,Empowered Mace Of Judgement,5,20,,1200,170:180,,1,1,0x00000100,56,2,2,3,130,1,8,{ bonus bAtkEle,Ele_Holy; bonus bStr,2; bonus bInt,2; autobonus "{ bonus2 bMagicAddRace,RC_Demon,40; }",60,7000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; autobonus "{ bonus2 bAddRace,RC_Demon,40; }",10,7000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 16019,Upg_Mace,Upg Mace,5,20,,800,80,,1,1,0x0004C5B3,63,2,2,3,1,1,8,{ .@r = getrefine(); bonus bBaseAtk,(.@r*10); bonus bHealPower,.@r; if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*5); },{},{}
-16020,Velum_Stunner,Vellum Stunner,5,20,,1500,170,,1,0,0x0004C5B3,63,2,2,4,95,1,8,{ bonus bUnbreakableWeapon; .@r = getrefine(); bonus2 bAddEff,Eff_Stun,1000; bonus4 bSetDefRace,RC_Player,10000,5000,1; bonus4 bSetMDefRace,RC_Player,10000,5000,1; bonus bAspdRate,.@r; },{},{}
+16020,Velum_Stunner,Vellum Stunner,5,20,,1500,170,,1,0,0x0004C5B3,63,2,2,4,95,1,8,{ bonus bUnbreakableWeapon; .@r = getrefine(); bonus2 bAddEff,Eff_Stun,1000+.@r; bonus4 bSetDefRace,RC_Player,10000,5000,1; bonus4 bSetMDefRace,RC_Player,10000,5000,1; bonus bAspdRate,.@r; },{},{}
 16021,Velum_Flail,Vellum Flail,5,20,,1500,170,,1,0,0x0004C5B3,63,2,2,4,95,1,8,{ bonus bUnbreakableWeapon; bonus3 bStateNoRecoverRace,RC_DemiHuman,10000,10000; .@r = getrefine(); bonus bHit,.@r; bonus bCritical,.@r; },{},{}
 16022,Nemesis_,Nemesis,5,20,,900,120,,1,2,0x00008110,63,2,2,4,60,1,8,{ bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Holy; },{},{}
 16023,Metal_Mace,Metal Mace,5,20,,0,80,,1,1,0x0004C5B3,63,2,2,3,1,1,8,{ bonus bUnbreakableWeapon; bonus bBaseAtk,(getrefine()*5); .@i = min(BaseLevel/10,12); if(.@i>2) bonus bBaseAtk,((.@i-2)*5); },{},{}
