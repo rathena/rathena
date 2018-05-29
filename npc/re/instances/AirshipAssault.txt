@@ -306,8 +306,8 @@ dali02,142,81,3	script	Dimensional Device#air1	PORTAL,{
 		cutin "",255;
 		if ('airship_status == 1)
 			donpcevent instance_npcname("#airshipputmob1") + "::OnStart";
-		end;
 	}
+	end;
 }
 
 1@air1,236,57,3	duplicate(Iris#air1)	Gremlin#1air1	3176
@@ -555,7 +555,7 @@ OnMyMobDead:
 		mes "[Gremlin]";
 		mes "Squeak..!!";
 		if ('airship_status == 4) {
-			disablenpc instance_npcname("Gremlin#2aair1");
+			hideonnpc instance_npcname("Gremlin#2aair1");
 			donpcevent instance_npcname("#airshipputmob3") + "::OnStart";
 			donpcevent instance_npcname("firecontrol#air2") + "::OnStart";
 			'airship_status = 5;
@@ -1284,6 +1284,8 @@ OnTimer3400:
 	end;
 
 OnInstanceInit:
+	'airship_status = 0;
+
 	'map_air1$ = instance_mapname("1@air1");
 	'map_air2$ = instance_mapname("1@air2");
 
