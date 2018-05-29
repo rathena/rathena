@@ -8715,8 +8715,8 @@
 15105,Kaftan,Kaftan,4,20,,400,,13,,1,0xFFFFFFFF,63,2,16,,0,1,0,{ bonus bMdef,3; bonus2 bSubRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,5; },{},{}
 15110,Supplement_Part_Str,Supplement Part Str,4,25000,,2000,,80,,,0x00000400,56,2,16,,100,1,0,{ bonus2 bAddClass,Class_All,5+getrefine()/4; },{},{}
 15111,Upgrade_Part_Plate,Reinforced Parts - Gloves,4,10,,3000,,110,,,0x00000400,56,2,16,,100,1,,{ bonus bUnbreakableArmor; bonus2 bSubSize,0,10; bonus2 bSubSize,1,10; .@r = getrefine(); if(.@r>=7){ bonus2 bSubSize,2,10; }; if(.@r>=9){ bonus2 bSubSize,0,5; bonus2 bSubSize,1,5; } },{},{}
-15116,Airship_Armor,Armor Of Airship,4,10,,700,,100,,0,0xFFFFFFFF,63,2,16,,125,1,,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus bMdef,10; bonus bAllStats,1; },{},{}
-15117,Felock_Armor,Tarlock's Armor,4,10,,750,,70,,0,0xFFFFFFFF,63,2,16,,125,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bMdef,10; bonus bAllStats,1; .@r = getrefine(); if(.@r>=7) { bonus bMaxHP,500; bonus bMaxSP,50; } if(.@r>=9) { bonus bMaxHP,200; bonus bMaxSP,20; } if(.@r>=12) { bonus bMaxHP,300; bonus bMaxSP,30; } },{},{}
+15116,Airship_Armor,Airship's Armor,4,10,,700,,100,,0,0xFFFFFFFF,63,2,16,,125,0,,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus bMdef,10; bonus bAllStats,1; },{},{}
+15117,Felock_Armor,Felrock's Armor,4,10,,750,,70,,0,0xFFFFFFFF,63,2,16,,125,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bMdef,10; bonus bAllStats,1; .@r = getrefine(); if(.@r>=7) { bonus bMaxHP,500; bonus bMaxSP,50; } if(.@r>=9) { bonus bMaxHP,200; bonus bMaxSP,20; } if(.@r>=12) { bonus bMaxHP,300; bonus bMaxSP,30; } },{},{}
 15121,Robe_Of_Sarah,Sarah Combat Robe,4,10,,800,,35,,1,0xFFFFFFFF,63,2,16,,145,1,,{ /*TODO: Confirm the real rate and additional MAtk*/ .@r = getrefine(); autobonus "{ bonus bMatk,20; }",100,(10+((.@r) ? .@r*8 : 0))*1000,BF_MAGIC;},{},{}
 15123,Whikebain_Suit,Whikebain Suit,4,0,,900,,56,,1,0x00001000,56,2,16,,105,1,,{ .@r = getrefine(); bonus bCritAtkRate,(.@r>=7)?(6):((.@r>=5)?(4):(0)); bonus3 bAutoSpell,"DC_WINKCHARM",1,10; /* Confirm: Success rate */ },{},{}
 15126,Female_Poring_Balloon,Private Doram Suits,4,20,,700,,80,,1,0x80000000,7,2,16,,100,1,,{ bonus bMaxHP,500; bonus bMaxSP,100; .@r = getrefine()/3; bonus bDex,.@r; bonus bInt,.@r; },{},{}
@@ -10323,7 +10323,7 @@
 19903,C_Witchs_Hat,Costume Witch's Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,717,{ bonus bVariableCastrate,-10; },{},{}
 19910,C_Halloween_Hat,Costume Halloween Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,1098,{},{},{}
 19913,C_Poo_Poo_Hat,Costume Poo Poo Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,76,{},{},{}
-19914,Felock_Cap,Costume Tarlock's Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1101,{},{},{}
+19914,Felock_Cap,Felrock's Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1101,{},{},{}
 19916,C_Black_Cat_Hat,Costume Black Cat Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1105,{},{},{}
 19917,C_Gloomy_Pumpkin_Hat,Costume Pumpkin Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,691,{ bonus bSpeedRate,25; },{},{}
 19918,C_Lude_Mask,Costume Lude Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,1,0,802,{ bonus bAddItemHealRate,20; },{},{}
@@ -10865,8 +10865,8 @@
 20732,Supplement_Part_Con,Supplement Part Con,4,25000,,500,,20,,1,0x00000400,56,2,4,,100,1,,{ .@r = getrefine(); bonus bMaxHPrate,6+(.@r/2); if(.@r>=9){bonus bHPrecovRate,50;} },{},{}
 20733,Upgrade_Part_Engine,Reinforced Parts - Engine,4,10,,1500,,25,,1,0x00000400,56,2,4,,100,1,,{ bonus bDelayrate,-10; .@r = getrefine(); if(.@r>=7) {bonus2 bSubEle,0,10;}; if(.@r>=9) {bonus bDelayrate,-10;} },{},{}
 20737,C_Kirin_Wing,Costume Kirin Wing,4,10,,0,,,,0,0xFFFFFFFF,63,2,8192,,1,0,6,{},{},{}
-20743,Airship_Cape,Cloak Of Airship,4,10,,0,,25,,1,0xFFFFFFFF,63,2,4,,125,0,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-20; },{},{}
-20744,Felock_Cape,Tarlock's Cloak,4,10,,400,,12,,1,0xFFFFFFFF,63,2,4,,125,1,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-10; .@r = getrefine(); if(.@r>=7) { bonus bVariableCastrate,-10; } if(.@r>=9) { bonus bVariableCastrate,-10;} if(.@r>=12) { bonus bVariableCastrate,-5; } },{},{}
+20743,Airship_Cape,Airship's Cloak,4,10,,0,,25,,1,0xFFFFFFFF,63,2,4,,125,0,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-20; },{},{}
+20744,Felock_Cape,Felrock's Cloak,4,10,,400,,12,,1,0xFFFFFFFF,63,2,4,,125,1,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-10; .@r = getrefine(); if(.@r>=7) { bonus bVariableCastrate,-10; } if(.@r>=9) { bonus bVariableCastrate,-10;} if(.@r>=12) { bonus bVariableCastrate,-5; } },{},{}
 20746,C_Rudra_Wing,Costume Rudra Wings,4,10,,0,,,,0,0xFFFFFFFF,63,2,8192,,1,0,8,{},{},{}
 20748,Manteau_Of_Fallen,Cloak Of Casualties,4,10,,600,,20,,0,0xFFFFFFFF,63,2,4,,120,1,,{ .@r = getrefine(); bonus bAgi,5; bonus bFlee,10; if(readparam(bStr)>=90) bonus bBaseAtk,10+(.@r*2); if(readparam(bInt)>=90) bonus bMatk,20+(.@r*3); if(readparam(bVit)>=90) bonus2 bSubEle,Ele_Neutral,3+((.@r>=8)?3:0)+((.@r>=10)?4:0); if(readparam(bAgi)>=90){ bonus bAspdRate,3+(.@r/2); bonus bAspd,((.@r>=10)?1:0); } if(readparam(bDex)>=90) bonus bLongAtkRate,3+(.@r/2); if(readparam(bLuk)>=90) bonus bCriticalRate,5+.@r; },{},{}
 20749,Manteau_Of_Fallen_,Cloak Of Casualties,4,10,,600,,30,,1,0xFFFFFFFF,63,2,4,,170,1,,{ .@r = getrefine(); bonus bMaxHPrate,.@r/2; bonus bMaxSPrate,.@r/2; bonus bAgi,5; bonus bFlee,10; if(readparam(bStr)>=90) bonus bBaseAtk,10+(.@r*2); if(readparam(bInt)>=90) bonus bMatk,20+(.@r*3); if(readparam(bVit)>=90) bonus2 bSubEle,Ele_Neutral,3+((.@r>=8)?3:0)+((.@r>=10)?4:0); if(readparam(bAgi)>=90){ bonus bAspdRate,3+(.@r/2); bonus bAspd,((.@r>=10)?1:0); } if(readparam(bDex)>=90) bonus bLongAtkRate,3+(.@r/2); if(readparam(bLuk)>=90) bonus bCriticalRate,5+.@r; },{},{}
@@ -10945,8 +10945,8 @@
 22043,Supplement_Part_Agi,Supplement Part Agi,4,25000,,350,,25,,1,0x00000400,56,2,64,,100,1,,{ bonus bAspdRate,5+(getrefine()/4); },{},{}
 22044,Upgrade_Part_Booster,Reinforced Parts - Booster,4,10,,1000,,23,,1,0x00000400,56,2,64,,100,1,,{ bonus2 bSkillUseSP,"NC_HOVERING",15; if(getrefine()>=7){bonus2 bSkillUseSP,"NC_HOVERING",-20;} },{},{}
 22045,Beach_Sandals,Summer Sandals,4,10,,200,,5,,0,0xFFFFFFFF,63,2,64,,0,1,0,{ bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AL_INCAGI",10,300; },{},{}
-22046,Airship_Boots,Boots Of Airship,4,10,,0,,26,,0,0xFFFFFFFF,63,2,64,,125,1,,{ bonus bAgi,1; bonus bSpeedRate,10; },{},{}
-22047,Felock_Boots,Tarlock's Boots,4,10,,250,,13,,0,0xFFFFFFFF,63,2,64,,125,1,,{ bonus bAgi,1; .@r = getrefine(); bonus bAspdRate,5; if(.@r>=7) { bonus bAgi,1; bonus bAspdRate,5; } if(.@r>=9) { bonus bAgi,1; bonus bAspdRate,5; } if(.@r>=12) { bonus bAspd,1; } },{},{}
+22046,Airship_Boots,Airship's Boots,4,10,,0,,26,,0,0xFFFFFFFF,63,2,64,,125,0,,{ bonus bAgi,1; bonus bSpeedRate,10; },{},{}
+22047,Felock_Boots,Felrock's Boots,4,10,,250,,13,,0,0xFFFFFFFF,63,2,64,,125,1,,{ bonus bAgi,1; .@r = getrefine(); bonus bAspdRate,5; if(.@r>=7) { bonus bAgi,1; bonus bAspdRate,5; } if(.@r>=9) { bonus bAgi,1; bonus bAspdRate,5; } if(.@r>=12) { bonus bAspd,1; } },{},{}
 22059,Aegir_Shoes,Aegir Shoes,4,10,,300,,13,,1,0xFFFFFFFF,63,2,64,,40,1,,{ bonus bUnbreakableShoes; bonus bMaxHP,500; bonus bMaxSP,50; },{},{}
 22064,Thorny_Shoes,Thorny Shoes,4,0,,1000,,25,,1,0xFFFFFFFF,63,2,64,,,1,,{ bonus bShortWeaponDamageReturn,getrefine()/2; },{},{}
 22067,Witch_Shoes,Shoe of Witch,4,10,,400,,10,,0,0xFFFFFFFE,63,2,64,,1,1,,{ skill "ALL_CATCRY",1; },{},{}
