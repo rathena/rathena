@@ -551,6 +551,7 @@ void initChangeTables(void)
 	set_sc( NPC_INVINCIBLEOFF	, SC_INVINCIBLEOFF	, SI_BLANK		, SCB_SPEED );
 	set_sc( NPC_COMET            , SC_BURNING         , SI_BURNT           , SCB_MDEF );
 	set_sc_with_vfx( NPC_MAXPAIN	,	 SC_MAXPAIN	, SI_MAXPAIN	, SCB_NONE );
+	add_sc( NPC_JACKFROST        , SC_FREEZE		  );
 
 	set_sc( CASH_BLESSING		, SC_BLESSING		, SI_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI		, SC_INCREASEAGI	, SI_INCREASEAGI	, SCB_AGI|SCB_SPEED );
