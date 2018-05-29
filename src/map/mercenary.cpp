@@ -7,6 +7,8 @@
 #include <map>
 #include <math.h>
 
+#include "../common/utilities.hpp"
+
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/timer.h"
@@ -26,6 +28,8 @@
 #include "trade.hpp"
 #include "npc.hpp"
 
+using namespace rathena;
+
 std::map<uint16, struct s_mercenary_db> mercenary_db_data;
 
 /**
@@ -34,11 +38,7 @@ std::map<uint16, struct s_mercenary_db> mercenary_db_data;
  * @return A pointer to the mercenary db entry or nullptr if not found
  **/
 struct s_mercenary_db *mercenary_db( uint16 class_ ){
-	if( mercenary_db_data.find(class_) != mercenary_db_data.end() ){
-		return &mercenary_db_data.at(class_);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( mercenary_db_data, class_ );
 }
 
 /**

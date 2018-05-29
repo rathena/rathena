@@ -31,9 +31,9 @@ is broken down into Windows and Linux prerequisites.
 * Windows
 	* MySQL ( http://www.mysql.com/downloads/mysql/ )
 	* MySQL Workbench ( http://www.mysql.com/downloads/workbench/ )
-	* MS Visual C++ ( http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express )
+	* MS Visual Studio ( https://www.visualstudio.com/downloads/ )
 	* TortoiseGIT ( http://code.google.com/p/tortoisegit/ )
-	* MSysGit ( http://msysgit.github.io/ or https://github.com/msysgit/git/releases )
+	* git for Windows ( https://gitforwindows.org/ )
 
 * Linux (names of packages may require specific version numbers on certain distributions)
 	* gcc
@@ -181,13 +181,9 @@ Examples:
 	* [CentOS](https://github.com/rathena/rathena/wiki/Install-on-Centos)
 	* [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
 	* [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
-	
-* rAthena IRC Channel
-	* irc://irc.rizon.net/rathena
-	* Web Chat: https://rathena.org/board/page/chat.html
 
 * rAthena Discord Chat
-	http://discord.rathena.org
+	https://rathena.org/discord
 
 * rAthena Wiki
 	https://github.com/rathena/rathena/wiki

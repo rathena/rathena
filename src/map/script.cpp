@@ -6659,6 +6659,189 @@ BUILDIN_FUNC(getelementofarray)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Return the index number of the first matching value in an array.
+/// ex: inarray arr,1;
+///
+/// inarray <array variable>,<value>;
+BUILDIN_FUNC(inarray)
+{
+	struct script_data *data;
+	const char* name;
+	int id, i, array_size;
+	struct map_session_data* sd = NULL;
+	struct reg_db *ref = NULL;
+	data = script_getdata(st, 2);
+
+	if (!data_isreference(data))
+	{
+		ShowError("buildin_inarray: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	name = reference_getname(data);
+	ref = reference_getref(data);
+
+	if (not_server_variable(*name) && !script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	array_size = script_array_highest_key(st, sd, name, ref) - 1;
+
+	if (array_size > SCRIPT_MAX_ARRAYSIZE)
+	{
+		ShowError("buildin_inarray: The array is too large.\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	id = reference_getid(data);
+	if (is_string_variable(name))
+	{
+		const char* temp;
+		const char* value;
+		value = script_getstr(st, 3);
+		for (i = 0; i <= array_size; ++i)
+		{
+			temp = (char*)get_val2(st, reference_uid(id, i), ref);
+			script_removetop(st, -1, 0);
+			if (!strcmp(temp, value))
+			{
+				script_pushint(st, i);
+				return SCRIPT_CMD_SUCCESS;
+			}
+			
+		}
+	}
+	else
+	{
+		int temp, value;
+		value = script_getnum(st, 3);
+		for (i = 0; i <= array_size; ++i)
+		{
+			temp = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, i), ref));
+			script_removetop(st, -1, 0);
+			if (temp == value)
+			{
+				script_pushint(st, i);
+				return SCRIPT_CMD_SUCCESS;
+			}
+			
+		}
+	}
+
+	script_pushint(st, -1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Return the number of matches in two arrays.
+/// ex: countinarray arr[0],arr1[0];
+///
+/// countinarray <array variable>,<array variable>;
+BUILDIN_FUNC(countinarray)
+{
+	struct script_data *data1 , *data2;
+	const char* name1;
+	const char* name2;
+	int id1, id2, i, j, array_size1, array_size2, case_count = 0;
+	struct map_session_data* sd = NULL;
+	struct reg_db *ref1 = NULL, *ref2 = NULL;
+	data1 = script_getdata(st, 2);
+	data2 = script_getdata(st, 3);
+
+	if (!data_isreference(data1) || !data_isreference(data2))
+	{
+		ShowError("buildin_countinarray: not a variable\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	name1 = reference_getname(data1);
+	name2 = reference_getname(data2);
+	ref1 = reference_getref(data1);
+	ref2 = reference_getref(data2);
+
+	if (not_server_variable(*name1) && not_server_variable(*name2) && !script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
+	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
+
+	if (array_size1 > SCRIPT_MAX_ARRAYSIZE || array_size2 > SCRIPT_MAX_ARRAYSIZE)
+	{
+		ShowError("buildin_countinarray: The array is too large.\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	i = reference_getindex(data1);
+	j = reference_getindex(data2);
+	if (array_size1 < i || array_size2 < j)
+	{	//To prevent unintended behavior
+		ShowError("buildin_countinarray: The given index of the array is higher than the array size.\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	id1 = reference_getid(data1);
+	id2 = reference_getid(data2);
+	if (is_string_variable(name1) && is_string_variable(name2))
+	{
+		const char* temp1;
+		const char* temp2;
+		for (; i <= array_size1; ++i)
+		{
+			temp1 = (char*)get_val2(st, reference_uid(id1, i), ref1);
+			for (j = reference_getindex(data2); j <= array_size2; j++)
+			{
+				temp2 = (char*)get_val2(st, reference_uid(id2, j), ref2);
+				if (!strcmp(temp1, temp2))
+				{
+					case_count++;
+				}
+				script_removetop(st, -1, 0);
+			}
+			script_removetop(st, -1, 0);
+		}
+	}
+	else if (!is_string_variable(name1) && !is_string_variable(name2))
+	{
+		int temp1, temp2;
+		for (; i <= array_size1; ++i)
+		{
+			temp1 = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id1, i), ref1));
+			for (j = reference_getindex(data2); j <= array_size2; j++)
+			{
+				temp2 = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id2, j), ref2));
+				if (temp1 == temp2)
+				{
+					case_count++;
+				}
+				script_removetop(st, -1, 0);
+			}
+			script_removetop(st, -1, 0);
+		}
+	}
+	else
+	{
+		ShowError("buildin_countinarray: Arrays does not match , You can't compare int array to string array.\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, case_count);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /////////////////////////////////////////////////////////////////////
 /// ...
 ///
@@ -9232,6 +9415,7 @@ BUILDIN_FUNC(bonus)
 		case SP_SKILL_VARIABLECAST:
 		case SP_VARCASTRATE:
 		case SP_FIXCASTRATE:
+		case SP_SKILL_DELAY:
 		case SP_SKILL_USE_SP:
 		case SP_SUB_SKILL:
 			// these bonuses support skill names
@@ -14732,6 +14916,8 @@ BUILDIN_FUNC(getpetinfo)
 		case PETINFO_RENAMED:	script_pushint(st,pd->pet.rename_flag); break;
 		case PETINFO_LEVEL:		script_pushint(st,(int)pd->pet.level); break;
 		case PETINFO_BLOCKID:	script_pushint(st,pd->bl.id); break;
+		case PETINFO_EGGID:		script_pushint(st,pd->pet.egg_id); break;
+		case PETINFO_FOODID:	script_pushint(st,pd->get_pet_db()->FoodID); break;
 		default:
 			script_pushint(st,0);
 			break;
@@ -21724,7 +21910,7 @@ BUILDIN_FUNC(montransform) {
  **/
 BUILDIN_FUNC(bonus_script) {
 	uint16 flag = 0;
-	int16 icon = SI_BLANK;
+	int16 icon = EFST_BLANK;
 	uint32 dur;
 	uint8 type = 0;
 	TBL_PC* sd;
@@ -21751,10 +21937,10 @@ BUILDIN_FUNC(bonus_script) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (icon <= SI_BLANK || icon >= SI_MAX)
-		icon = SI_BLANK;
+	if (icon <= EFST_BLANK || icon >= EFST_MAX)
+		icon = EFST_BLANK;
 
-	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum si_type)icon, flag, type))) {
+	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum efst_types)icon, flag, type))) {
 		linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
 		status_calc_pc(sd,SCO_NONE);
 	}
@@ -24140,6 +24326,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getarraysize,"r"),
 	BUILDIN_DEF(deletearray,"r?"),
 	BUILDIN_DEF(getelementofarray,"ri"),
+	BUILDIN_DEF(inarray,"rv"),
+	BUILDIN_DEF(countinarray,"rr"),
 	BUILDIN_DEF(getitem,"vi?"),
 	BUILDIN_DEF(rentitem,"vi?"),
 	BUILDIN_DEF(rentitem2,"viiiiiiii?"),

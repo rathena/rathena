@@ -76,6 +76,8 @@ prontera,184,177,6	script	Refine Master	851,{
 		mes "This item is impossible to refine.";
 		close;
 	}
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:
@@ -143,9 +145,20 @@ prontera,184,177,6	script	Refine Master	851,{
 	mes "I have my own special way to refine...";
 	mes ".......ka boom!";
 	specialeffect EF_SUI_EXPLOSION;
-	if (countitem(.@ticket_id))
+	if (countitem(.@ticket_id)) {
 		delitem .@ticket_id,1;
-	else {
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+			callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+			mes "[Refine Master]";
+			emotion ET_FRET;
+			mes "Wait a second...";
+			mes "Do you think I'm stupid?!";
+			mes "You switched the item while I wasn't looking! Get out of here!";
+			close;
+		}
+	} else {
 		next;
 		mes "Error!";
 		mes "Please report this.";
