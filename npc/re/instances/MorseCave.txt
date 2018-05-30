@@ -352,8 +352,8 @@ OnTalk2:
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		enablenpc instance_npcname( "#RZ Debuff_" + .@i );
 
-	getpartymember 'party_id, PARTY_TYPE_CHAR, .@char_id;
-	getpartymember 'party_id, PARTY_TYPE_ACCOUNT, .@account_id;
+	getpartymember 'party_id, 1, .@char_id;
+	getpartymember 'party_id, 2, .@account_id;
 	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
 		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$) {
 			if ((.@count % 2) == 0)	// Right
@@ -489,8 +489,8 @@ OnStart:
 		enablenpc instance_npcname("#RZ Move_11a");
 		enablenpc instance_npcname("#RZ Move_12a");
 		*/
-		getpartymember 'party_id, PARTY_TYPE_CHAR, .@char_id;
-		getpartymember 'party_id, PARTY_TYPE_ACCOUNT, .@account_id;
+		getpartymember 'party_id, 1, .@char_id;
+		getpartymember 'party_id, 2, .@account_id;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
 				pcblockmove .@account_id[.@i], false;
@@ -822,8 +822,8 @@ OnStart:
 		enablenpc instance_npcname("#Move_15a");
 		enablenpc instance_npcname("#Move_16a");
 		*/
-		getpartymember 'party_id, PARTY_TYPE_CHAR, .@char_id;
-		getpartymember 'party_id, PARTY_TYPE_ACCOUNT, .@account_id;
+		getpartymember 'party_id, 1, .@char_id;
+		getpartymember 'party_id, 2, .@account_id;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
 				pcblockmove .@account_id[.@i], false;
@@ -837,8 +837,8 @@ OnStart:
 		sleep 3000;
 		for ( .@i = 9; .@i <= 15; .@i++ )
 			disablenpc instance_npcname( "#RZ Debuff_" + .@i );
-		getpartymember 'party_id, PARTY_TYPE_CHAR, .@char_id;
-		getpartymember 'party_id, PARTY_TYPE_ACCOUNT, .@account_id;
+		getpartymember 'party_id, 1, .@char_id;
+		getpartymember 'party_id, 2, .@account_id;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
 				pcblockmove .@account_id[.@i], false;
