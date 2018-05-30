@@ -5949,6 +5949,10 @@
 	export_constant_npc(JT_4_TEDDY_BEAR_W);
 	export_constant_npc(JT_4_TEDDY_BEAR_B);
 	export_constant_npc(JT_4_TEDDY_BEAR_B_L);
+	export_constant_npc(JT_4_M_SOULREAPER);
+	export_constant_npc(JT_4_F_SE_SUN);
+	export_constant_npc(JT_4_M_SE_MOON);
+	export_constant_npc(JT_4_M_SE_STAR);
 	#undef export_constant_npc
 
 	/* special effects */
