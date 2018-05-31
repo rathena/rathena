@@ -355,7 +355,9 @@ OnTalk2:
 	getpartymember 'party_id, 1, .@char_id;
 	getpartymember 'party_id, 2, .@account_id;
 	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
-		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$) {
+		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+			continue;
+		if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$) {
 			if ((.@count % 2) == 0)	// Right
 				warp 'map_rev$, rand(33,36), rand(117,118), .@char_id[.@i];
 			else	// Left
@@ -492,7 +494,9 @@ OnStart:
 		getpartymember 'party_id, 1, .@char_id;
 		getpartymember 'party_id, 2, .@account_id;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
-			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
+			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+				continue;
+			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
 				pcblockmove .@account_id[.@i], false;
 		}
 		mapwarp 'map_rev$,"prontera",97,167;
@@ -825,7 +829,9 @@ OnStart:
 		getpartymember 'party_id, 1, .@char_id;
 		getpartymember 'party_id, 2, .@account_id;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
-			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
+			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+				continue;
+			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
 				pcblockmove .@account_id[.@i], false;
 		}
 		mapwarp 'map_rev$,"prontera",97,167;
@@ -840,7 +846,9 @@ OnStart:
 		getpartymember 'party_id, 1, .@char_id;
 		getpartymember 'party_id, 2, .@account_id;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
-			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true && strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
+			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+				continue;
+			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
 				pcblockmove .@account_id[.@i], false;
 		}
 		// enablenpc instance_npcname("#RZ Debuff Recovery_1");
@@ -1145,6 +1153,18 @@ OnInstanceInit:
 	// Debuff - Battle 1 & 2
 	for ( .@i = 1; .@i <= 15; .@i++ )
 		disablenpc instance_npcname( "#RZ Debuff_" + .@i );
+
+	// reload
+	if ('party_id > 0) {
+		getpartymember 'party_id, 1, .@char_id;
+		getpartymember 'party_id, 2, .@account_id;
+		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+				continue;
+			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
+				pcblockmove .@account_id[.@i], false;
+		}
+	}
 	end;
 }
 
