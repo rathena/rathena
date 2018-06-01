@@ -18,6 +18,7 @@
 #include "inter.hpp"
 
 struct s_pet *pet_pt;
+int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id);
 
 //---------------------------------------------------------
 int inter_pet_tosql(int pet_id, struct s_pet* p)
@@ -211,9 +212,13 @@ int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class,
 		pet_pt->intimate = 1000;
 
 	pet_pt->pet_id = -1; //Signal NEW pet.
-	if (inter_pet_tosql(pet_pt->pet_id,pet_pt))
-		mapif_pet_created(fd, account_id, pet_pt);
-	else	//Failed...
+	if (inter_pet_tosql(pet_pt->pet_id,pet_pt)){
+		if( pet_pt->incubate ){
+			mapif_pet_created(fd, account_id, pet_pt);
+		}else{
+			mapif_load_pet(fd, account_id, char_id, pet_pt->pet_id);
+		}
+	}else	//Failed...
 		mapif_pet_created(fd, account_id, NULL);
 
 	return 0;

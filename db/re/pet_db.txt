@@ -49,11 +49,11 @@
 1057,YOYO,Yoyo,634,9016,10018,532,80,60,20,100,250,20,1000,150,1,0,300,800,400,{ petloot 20; },{ bonus bCritical,3; bonus bLuk,-1; }
 1023,ORK_WARRIOR,Orc Warrior,635,9017,10009,537,80,60,20,100,250,20,500,150,1,0,600,200,300,{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; },{ bonus bAtk,10; bonus bDef,-3; }
 1026,MUNAK,Munak,636,9018,10008,537,80,60,20,100,250,20,500,150,0,0,300,750,300,{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; },{ bonus bInt,1; bonus bDef,1; }
-1110,DOKEBI,Dokebi,637,9019,10005,537,80,60,20,100,250,20,500,150,0,0,300,300,800,{ petskillattack "BS_HAMMERFALL",1,0,10; },{ bonus bMatkRate,1; bonus bAtkRate,-1; }
+1110,DOKEBI,Dokebi,637,9019,10005,537,80,60,20,100,250,20,500,150,0,0,300,300,800,{ petskillattack "BS_HAMMERFALL",1,0,10; },{ bonus bMatkRate,1; bonus2 bAddClass,Class_All,-1; }
 1170,SOHEE,Sohee,638,9020,10016,537,80,60,10,100,250,20,500,150,0,0,100,1000,200,{ petskillsupport "AL_HEAL",5,60,33,100; },{ bonus bStr,1; bonus bDex,1; }
-1029,ISIS,Isis,639,9021,10006,537,80,60,10,100,250,20,500,150,0,0,650,450,150,{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; },{ bonus bMatkRate,-1; bonus bAtkRate,1; }
+1029,ISIS,Isis,639,9021,10006,537,80,60,10,100,250,20,500,150,0,0,650,450,150,{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; },{ bonus bMatkRate,-1; bonus2 bAddClass,Class_All,1; }
 1155,PETIT,Petite,640,9022,10011,537,80,60,20,100,250,20,500,150,0,0,800,400,100,{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; },{ bonus bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; }
-1109,DEVIRUCHI,Deviruchi,641,9023,10004,711,80,60,10,100,250,20,500,150,0,0,800,200,100,{ petskillbonus bAgiDexStr,6,20,40; },{ bonus bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }
+1109,DEVIRUCHI,Deviruchi,641,9023,10004,711,80,60,10,100,250,20,500,150,0,0,800,200,100,{ petskillbonus bAgiDexStr,6,20,40; },{ bonus bMatkRate,1; bonus2 bAddClass,Class_All,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }
 1101,BAPHOMET_,Baphomet Jr.,642,9024,10001,518,80,60,10,100,250,20,200,150,0,0,1000,100,200,{ petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5; },{ bonus bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; }
 1188,BON_GUN,Bon Gun,659,9025,10020,537,80,60,30,100,250,20,500,150,1,0,600,200,400,{ petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1; },{ bonus bVit,1; bonus2 bResEff,Eff_Stun,100; }
 1200,ZHERLTHSH,Zealotus,660,9026,0,929,80,60,10,100,250,20,300,150,0,0,1000,100,500,{ petskillattack "AS_SONICBLOW",1,0,3; },{ bonus2 bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; }

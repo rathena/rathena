@@ -378,7 +378,9 @@ enum petinfo_types {
 	PETINFO_HUNGRY,
 	PETINFO_RENAMED,
 	PETINFO_LEVEL,
-	PETINFO_BLOCKID
+	PETINFO_BLOCKID,
+	PETINFO_EGGID,
+	PETINFO_FOODID
 };
 
 enum questinfo_types {
@@ -470,6 +472,7 @@ enum unitdata_mobtypes {
 	UMOB_AMOTION,
 	UMOB_ADELAY,
 	UMOB_DMOTION,
+	UMOB_TARGETID,
 };
 
 enum unitdata_homuntypes {
@@ -512,6 +515,7 @@ enum unitdata_homuntypes {
 	UHOM_AMOTION,
 	UHOM_ADELAY,
 	UHOM_DMOTION,
+	UHOM_TARGETID,
 };
 
 enum unitdata_pettypes {
@@ -591,6 +595,7 @@ enum unitdata_merctypes {
 	UMER_AMOTION,
 	UMER_ADELAY,
 	UMER_DMOTION,
+	UMER_TARGETID,
 };
 
 enum unitdata_elemtypes {
@@ -632,6 +637,7 @@ enum unitdata_elemtypes {
 	UELE_AMOTION,
 	UELE_ADELAY,
 	UELE_DMOTION,
+	UELE_TARGETID,
 };
 
 enum unitdata_npctypes {
@@ -1888,6 +1894,7 @@ enum e_hat_effects {
 	HAT_EF_LEVEL160_BLACK,
 	HAT_EF_LEVEL160_WHITE,
 	HAT_EF_FULL_BLOOMCHERRY_TREE,
+	HAT_EF_C_BLESSINGS_OF_SOUL,
 	HAT_EF_MAX
 };
 

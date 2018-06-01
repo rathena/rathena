@@ -95,6 +95,15 @@ izlude_b	mapflag	nobranch
 izlude_c	mapflag	nobranch
 izlude_d	mapflag	nobranch
 
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	nobranch
+2@gl_k	mapflag	nobranch
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	nobranch
+1@def02	mapflag	nobranch
+1@def03	mapflag	nobranch
+
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	nobranch
 1@sara	mapflag	nobranch
@@ -146,7 +155,3 @@ te_aldecas2	mapflag	nobranch
 te_aldecas3	mapflag	nobranch
 te_aldecas4	mapflag	nobranch
 te_aldecas5	mapflag	nobranch
-
-// Episode 15
-1@lab	mapflag	nobranch
-1@uns	mapflag	nobranch

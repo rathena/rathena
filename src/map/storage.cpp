@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../common/utilities.hpp"
+
 #include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
@@ -23,6 +25,8 @@
 #include "guild.hpp"
 #include "log.hpp"
 #include "battle.hpp"
+
+using namespace rathena;
 
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
@@ -478,6 +482,7 @@ void storage_storagesaved(struct map_session_data *sd)
 
 	if (&sd->storage)
 		sd->storage.dirty = false;
+
 	if (sd->state.storage_flag == 1) {
 		sd->state.storage_flag = 0;
 		clif_storageclose(sd);
@@ -497,7 +502,10 @@ void storage_storageclose(struct map_session_data *sd)
 		return;
 
 	if (sd->storage.dirty) {
-		storage_storagesave(sd);
+		if (save_settings&CHARSAVE_STORAGE)
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+		else
+			storage_storagesave(sd);
 		if (sd->state.storage_flag == 1) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -521,7 +529,10 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 	if (!&sd->storage)
 		return;
 
-	storage_storagesave(sd);
+	if (save_settings&CHARSAVE_STORAGE)
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+	else
+		storage_storagesave(sd);
 }
 
 /**
@@ -555,11 +566,7 @@ struct s_storage *guild2storage(int guild_id)
  * @return s_storage or nullptr
  */
 struct s_storage *guild2storage2(int guild_id){
-	if( guild_storage_db.find(guild_id) != guild_storage_db.end() ){
-		return &guild_storage_db[guild_id];
-	}else{
-		return nullptr;
-	}
+	return util::map_find( guild_storage_db, guild_id );
 }
 
 /**
@@ -908,7 +915,7 @@ bool storage_guild_storagesave(uint32 account_id, int guild_id, int flag)
 	struct s_storage *stor = guild2storage2(guild_id);
 
 	if (stor) {
-		if (flag) //Char quitting, close it.
+		if (flag&CSAVE_QUIT) //Char quitting, close it.
 			stor->status = false;
 
 		if (stor->dirty)
@@ -1086,7 +1093,10 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 		return;
 
 	if (sd->premiumStorage.dirty) {
-		storage_premiumStorage_save(sd);
+		if (save_settings&CHARSAVE_STORAGE)
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+		else
+			storage_premiumStorage_save(sd);
 		if (sd->state.storage_flag == 3) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -1107,5 +1117,8 @@ void storage_premiumStorage_quit(struct map_session_data *sd) {
 	if (!&sd->premiumStorage)
 		return;
 
-	storage_premiumStorage_save(sd);
+	if (save_settings&CHARSAVE_STORAGE)
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+	else
+		storage_premiumStorage_save(sd);
 }
