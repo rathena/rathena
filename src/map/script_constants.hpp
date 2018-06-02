@@ -211,6 +211,13 @@
 
 	export_constant(JOB_BABY_STAR_GLADIATOR2);
 
+	export_constant(JOB_STAR_EMPEROR);
+	export_constant(JOB_SOUL_REAPER);
+	export_constant(JOB_BABY_STAR_EMPEROR);
+	export_constant(JOB_BABY_SOUL_REAPER);
+	export_constant(JOB_STAR_EMPEROR2);
+	export_constant(JOB_BABY_STAR_EMPEROR2);
+
 	/* EA jobs */
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
@@ -313,6 +320,7 @@
 	export_constant2("EAJ_ARCH_BISHOP",MAPID_ARCH_BISHOP);
 	export_constant2("EAJ_MECHANIC",MAPID_MECHANIC);
 	export_constant2("EAJ_GUILLOTINE_CROSS",MAPID_GUILLOTINE_CROSS);
+	export_constant2("EAJ_STAR_EMPEROR",MAPID_STAR_EMPEROR);
 
 	export_constant2("EAJ_ROYAL_GUARD",MAPID_ROYAL_GUARD);
 	export_constant2("EAJ_SORCERER",MAPID_SORCERER);
@@ -320,6 +328,7 @@
 	export_constant2("EAJ_SURA",MAPID_SURA);
 	export_constant2("EAJ_GENETIC",MAPID_GENETIC);
 	export_constant2("EAJ_SHADOW_CHASER",MAPID_SHADOW_CHASER);
+	export_constant2("EAJ_SOUL_REAPER",MAPID_SOUL_REAPER);
 
 	export_constant2("EAJ_RUNE_KNIGHT_T",MAPID_RUNE_KNIGHT_T);
 	export_constant2("EAJ_WARLOCK_T",MAPID_WARLOCK_T);
@@ -341,6 +350,7 @@
 	export_constant2("EAJ_BABY_BISHOP",MAPID_BABY_BISHOP);
 	export_constant2("EAJ_BABY_MECHANIC",MAPID_BABY_MECHANIC);
 	export_constant2("EAJ_BABY_CROSS",MAPID_BABY_CROSS);
+	export_constant2("EAJ_BABY_STAR_EMPEROR",MAPID_BABY_STAR_EMPEROR);
 
 	export_constant2("EAJ_BABY_GUARD",MAPID_BABY_GUARD);
 	export_constant2("EAJ_BABY_SORCERER",MAPID_BABY_SORCERER);
@@ -348,6 +358,7 @@
 	export_constant2("EAJ_BABY_SURA",MAPID_BABY_SURA);
 	export_constant2("EAJ_BABY_GENETIC",MAPID_BABY_GENETIC);
 	export_constant2("EAJ_BABY_CHASER",MAPID_BABY_CHASER);
+	export_constant2("EAJ_BABY_SOUL_REAPER",MAPID_BABY_SOUL_REAPER);
 
 	export_constant2("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE);
 	export_constant2("EAJ_SUPER_BABY",MAPID_SUPER_BABY);
