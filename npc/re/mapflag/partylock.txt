@@ -82,3 +82,12 @@
 1@lab	mapflag	partylock
 1@uns	mapflag	partylock
 1@mcd	mapflag	partylock
+
+// Ep 16
+1@mir	mapflag	partylock
+2@mir	mapflag	partylock
+1@sthb	mapflag	partylock
+1@sthc	mapflag	partylock
+1@sthd	mapflag	partylock
+1@slw	mapflag	partylock
+1@swat	mapflag	partylock
