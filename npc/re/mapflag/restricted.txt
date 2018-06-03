@@ -65,6 +65,15 @@
 1@uns	mapflag	restricted	6
 1@mcd	mapflag	restricted	6
 
+// Ep 16
+1@mir	mapflag	restricted	6
+2@mir	mapflag	restricted	6
+1@sthb	mapflag	restricted	6
+1@sthc	mapflag	restricted	6
+1@sthd	mapflag	restricted	6
+1@slw	mapflag	restricted	6
+1@swat	mapflag	restricted	6
+
 // Towns =========================
 brasilis	mapflag	restricted	7
 dewata	mapflag	restricted	7
@@ -77,6 +86,7 @@ izlude_d	mapflag	restricted	7
 malangdo	mapflag	restricted	7
 malaya	mapflag	restricted	7
 mora	mapflag	restricted	7
+lasagna	mapflag	restricted	7
 
 // Restricted maps for WOE:TE Items ==
 teg_dun01	mapflag	restricted	8

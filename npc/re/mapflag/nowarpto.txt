@@ -113,3 +113,28 @@ te_aldecas5	mapflag	nowarpto
 
 // Rebellion Job Change Map
 job_gun	mapflag	nowarpto
+
+// Ep 16
+prt_cas	mapflag	nowarpto
+prt_cas_q	mapflag	nowarpto
+prt_pri00	mapflag	nowarpto
+prt_lib	mapflag	nowarpto
+prt_lib_q	mapflag	nowarpto
+rebel_in	mapflag	nowarpto
+que_swat	mapflag	nowarpto
+1@mir	mapflag	nowarpto
+2@mir	mapflag	nowarpto
+1@sthb	mapflag	nowarpto
+1@sthc	mapflag	nowarpto
+1@sthd	mapflag	nowarpto
+1@slw	mapflag	nowarpto
+1@swat	mapflag	nowarpto
+
+// Rockridge
+har_in01	mapflag	nowarpto
+rockmi2	mapflag	nowarpto
+
+// Lasagna
+lasa_in01	mapflag	nowarpto
+conch_in	mapflag	nowarpto
+lasa_dun_q	mapflag	nowarpto

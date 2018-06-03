@@ -88,3 +88,12 @@ te_aldecas2	mapflag	noicewall
 te_aldecas3	mapflag	noicewall
 te_aldecas4	mapflag	noicewall
 te_aldecas5	mapflag	noicewall
+
+// Ep 16
+1@mir	mapflag	noicewall
+2@mir	mapflag	noicewall
+1@sthb	mapflag	noicewall
+1@sthc	mapflag	noicewall
+1@sthd	mapflag	noicewall
+1@slw	mapflag	noicewall
+1@swat	mapflag	noicewall
