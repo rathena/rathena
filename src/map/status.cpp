@@ -6471,7 +6471,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if( sc->data[SC_OVERED_BOOST] && bl->type == BL_HOM )
 		def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
 	if(sc->data[SC_GLASTHEIM_ITEMDEF])
-		def += sc->data[EFST_GLASTHEIM_ITEMDEF]->val1;
+		def += sc->data[SC_GLASTHEIM_ITEMDEF]->val1;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
 }
@@ -6604,7 +6604,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if(sc->data[SC_GLASTHEIM_ITEMDEF])
-		mdef += sc->data[EFST_GLASTHEIM_ITEMDEF]->val2;
+		mdef += sc->data[SC_GLASTHEIM_ITEMDEF]->val2;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
