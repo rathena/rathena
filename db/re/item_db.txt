@@ -8634,7 +8634,7 @@
 15005,Freyja_SRobe60,Freyja Soul Robe60,4,0,,300,,7,,0,0xFFFFFFFF,63,2,16,,20,0,0,{ bonus bMaxHP,700; },{},{}
 15006,Freyja_SRobe90,Freyja Soul Robe90,4,0,,300,,7,,0,0xFFFFFFFF,63,2,16,,20,0,0,{ bonus bMaxHP,700; },{},{}
 15007,Time_Keepr_Robe,Time Keeper Robe,4,30000,,0,,62,,0,0xFFFFFFFF,63,2,16,,1,1,0,{ bonus bMdef,1; bonus bStr,2; bonus bMaxHP,200; },{},{}
-15008,Flame_Sprits_Armor__,Flame Sprits Armor,4,20,,1000,,25,,0,0xFFFFFFFF,63,2,16,,1,1,0,{ bonus bMdef,1; bonus bDefEle,Ele_Fire; bonus2 bSubDefEle,Ele_Earth,5; },{},{}
+15008,Flame_Sprits_Armor__,Flame Sprits Armor,4,20,,1000,,25,,0,0xFFFFFFFF,63,2,16,,1,1,0,{ bonus bMdef,1; bonus bDefEle,Ele_Fire; bonus2 bSubDefEle,Ele_Earth,4; },{},{}
 15009,Para_Team_Uniform1,Eden Team Uniform I,4,0,,0,,35,,0,0xFFFFFFFF,63,2,16,,12,0,0,{ bonus bMaxHP,100; bonus bMaxSP,10; },{},{}
 15010,Para_Team_Uniform2,Eden Team Uniform II,4,0,,0,,46,,0,0xFFFFFFFF,63,2,16,,26,0,0,{ bonus bMaxHP,200; bonus bMaxSP,20; },{},{}
 15011,Para_Team_Uniform3,Eden Team Uniform III,4,0,,0,,58,,0,0xFFFFFFFF,63,2,16,,40,0,0,{ bonus bMaxHP,300; bonus bMaxSP,30; bonus bMdef,5; },{},{}
