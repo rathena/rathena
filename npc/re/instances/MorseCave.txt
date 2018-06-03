@@ -205,7 +205,7 @@ moro_cav,57,69,3	script	Red Flower#a1	CLEAR_NPC,{
 			erasequest 9318;
 		setquest 9318;// Pursuing Hiding Morroc
 		// warp "1@rev",26,181;
-		close;
+		end;
 	}
 	end;
 
@@ -1106,7 +1106,7 @@ OnMobDead:
 		warp "moro_cav",59,63;
 		end;
 	}
-	close;
+	end;
 
 OnInstanceInit:
 	'map_rev$ = instance_mapname("1@rev");
