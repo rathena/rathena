@@ -6917,7 +6917,7 @@
 12699,Tikbalang_Belt,Tikbalang Harness,2,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2313; },{},{}
 12700,Insideout_Shirt,Inside-out Shirt,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "malaya",242,211; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1; },{},{}
+12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_BleuBox,1); getrandgroupitem(IG_BleuBox,1); },{},{}
 12703,Holy_Egg_2,Holy Egg,2,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Holy_Egg_2,1); },{},{}
 12704,Elixir_Of_Life,Elixir of Life,0,0,,10,,,,,0xFFFFFFFF,63,2,,,85,,,{ percentheal 100,0; },{},{}
 12705,Noble_Nameplate,Noble Nameplate,2,0,,100,,,,,0xFFFFFFFF,63,2,,,90,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
@@ -9542,7 +9542,7 @@
 18510,Blood_Angel_Hair_Band,Blood Angel Hair Band,4,0,,0,,1,,0,0xFFFFFFFF,63,2,256,,60,0,679,{ bonus2 bSubRace,RC_Player,10; bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 18511,Blood_Angel_Wing_Ear,Blood Angel Wing Ear,4,0,,0,,1,,0,0xFFFFFFFF,63,2,512,,60,0,680,{},{},{}
 18512,Juho_Necktie,Juho Necktie,4,0,,0,,1,,1,0xFFFFFFFF,63,2,256,,20,1,443,{},{},{}
-18513,Shining_Sunflower,Shining Sunflower,4,20,,300,,0,,0,0xFFFFFFFE,63,2,256,,0,0,681,{ bonus bLuk,2; },{},{}
+18513,Shining_Sunflower,Shining Sunflower,4,20,,300,,0,,0,0xFFFFFFFE,63,2,256,,0,0,681,{ bonus bLuk,2; bonus3 bAutoSpellWhenHit,"SM_ENDURE",1,10; },{},{}
 18514,Para_Team_Hat2,Eden Team Hat II,4,0,,0,,5,,1,0xFFFFFFFF,63,2,256,,60,1,682,{ autobonus "{ bonus bBaseAtk,10; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,10; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; },{},{}
 18515,RTC_Winner_Headgear,RTC Winner Hat,4,20,,100,,2,,1,0xFFFFFFFF,63,2,512,,1,0,683,{ bonus bAllStats,5; bonus bIntravision; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; bonus2 bAddEff,Eff_Curse,50; },{},{}
 18516,RTC_2nd_Headgear,RTC 2nd Winner Hat,4,20,,100,,2,,1,0xFFFFFFFF,63,2,512,,1,0,684,{ bonus bAllStats,3; bonus bIntravision; bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; bonus2 bAddEff,Eff_Curse,50; },{},{}
