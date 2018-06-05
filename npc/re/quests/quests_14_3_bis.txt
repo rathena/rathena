@@ -79,27 +79,27 @@ moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
 	close3;
 
 OnEventOn:
-	initnpctimer;
+	if ($@ep143_3_expbuff == 1) {
+		$@ep143_3_exptime = 0;
+		initnpctimer;
+	}
 	end;
 OnTimer60000:
 	if ($@ep143_3_exptime < 60) {
 		$@ep143_3_exptime++;
 		initnpctimer;
 	}
-	else if ($@ep143_3_exptime == 60) {
-		$@ep143_3_expbuff = 0;
-		$@ep143_3_exptime = 0;
-		stopnpctimer;
-	}
-	else {
-		$@ep143_3_exptime = 0;
-		stopnpctimer;
-	}
+	donpcevent "Guardian Nidhogg#143nyd01::OnStop";
 	end;
 OnStop:
-	$@ep143_3_expbuff = 0;
-	$@ep143_3_exptime = 0;
 	stopnpctimer;
+	if ($@ep143_3_expbuff == 1) {
+		$@ep143_3_expbuff = 0;
+		$@ep143_3_exptime = 0;
+		setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") - 10 );
+		setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") - 10 );
+		setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") - 10 );
+	}
 	end;
 OnInit:
 	if ($@ep143_3_expbuff == 1)
@@ -124,8 +124,9 @@ OnTimer11500:
 	announce " ", bc_all, "0xFF0000";
 	end;
 OnTimer12000:
-	// todo 10% Server EXP reward for 1 hour
-	$@ep143_3_exptime = 0;
+	setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") + 10 );
+	setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") + 10 );
+	setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") + 10 );
 	donpcevent "Guardian Nidhogg#143nyd01::OnEventOn";
 	stopnpctimer;
 	end;
@@ -2067,16 +2068,14 @@ moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
 		close;
 	case 2:
 		mes "Timer in pause.";
-		donpcevent "Guardian Nidhogg#143nyd01::OnStop";
+		stopnpctimer "Guardian Nidhogg#143nyd01";
 		close;
 	case 3:
 		mes "Restart the clock.";
-		donpcevent "Guardian Nidhogg#143nyd01::OnEventOn";
+		initnpctimer "Guardian Nidhogg#143nyd01";
 		close;
 	case 4:
 		mes "Clock initialized.";
-		$@ep143_3_exptime = 0;
-		$@ep143_3_expbuff = 0;
 		donpcevent "Guardian Nidhogg#143nyd01::OnStop";
 		close;
 	}
