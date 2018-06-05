@@ -230,7 +230,7 @@ OnTouch:
 	unittalk getcharid(3), "" + strcharinfo(0) + " : We came to the right place!";
 	sleep2 3000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Wait! There's something ahead of us!";
-	sleep2 6000;
+	sleep2 3000;
 	specialeffect2 EF_LOCKON;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Are these hideous monsters Morroc's lackeys?";
 	donpcevent instance_npcname("#RZ Event_1") + "::OnStart";
