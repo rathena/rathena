@@ -7165,6 +7165,11 @@
 	export_constant(HAT_EF_LEVEL160_WHITE);
 	export_constant(HAT_EF_FULL_BLOOMCHERRY_TREE);
 	export_constant(HAT_EF_C_BLESSINGS_OF_SOUL);
+	export_constant(HAT_EF_MANYSTARS);
+	export_constant(HAT_EF_SUBJECT_AURA_GOLD);
+	export_constant(HAT_EF_SUBJECT_AURA_WHITE);
+	export_constant(HAT_EF_SUBJECT_AURA_RED);
+	export_constant(HAT_EF_C_SHINING_ANGEL_WING);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
