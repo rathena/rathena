@@ -13817,6 +13817,8 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
 			case SC_BITESCAR:
+			case SC_DORAM_BUF_01:
+			case SC_DORAM_BUF_02:
 			case SC_GEFFEN_MAGIC1:
 			case SC_GEFFEN_MAGIC2:
 			case SC_GEFFEN_MAGIC3:
@@ -13827,6 +13829,8 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
 			case SC_JUMPINGCLAN:
+			// RODEX
+			case SC_DAILYSENDMAILCNT:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
