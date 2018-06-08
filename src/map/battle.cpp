@@ -970,9 +970,9 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		return false;
 	}
 
-	if (sc->data[SC_WEAPONBLOCKING] && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sc->data[SC_WEAPONBLOCKING]->val2) {
-		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sc->data[SC_WEAPONBLOCKING]->val1, 1);
-		sc_start2(src, target, SC_COMBO, 100, GC_WEAPONBLOCKING, src->id, skill_get_time2(GC_WEAPONBLOCKING, sc->data[SC_WEAPONBLOCKING]->val1));
+	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
+		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
+		sc_start2(src, target, SC_COMBO, 100, GC_WEAPONBLOCKING, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
 		d->dmg_lv = ATK_BLOCK;
 		return false;
 	}
@@ -993,16 +993,18 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		}
 	}
 
-	if (sc->data[SC_SAFETYWALL] && (d->flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
-		struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
+	if ((sce = sc->data[SC_SAFETYWALL]) && (d->flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
+		struct skill_unit_group* group = skill_id2group(sce->val3);
 
 		if (group) {
+			uint16 skill_id = sce->val2;
+
 			d->dmg_lv = ATK_BLOCK;
 
 			if (--group->val2 <= 0)
 				skill_delunitgroup(group);
 
-			switch (sc->data[SC_SAFETYWALL]->val2) {
+			switch (sce->val2) {
 				case MG_SAFETYWALL:
 #ifdef RENEWAL
 					if ((group->val3 - damage) > 0)
@@ -1143,6 +1145,9 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		return false;
 	}
 
+	if (sc->data[SC_MEIKYOUSISUI] && rnd()%100 < 40) // custom value
+		return false;
+
 	return true;
 }
 
@@ -1207,12 +1212,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (!battle_check_sc(src, bl, sc, d, damage, skill_id, skill_lv))
 			return 0;
 
+		// Damage increasing effects
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (sc->data[SC_KAITE] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
 			damage <<= 2;
 #endif
 
-		//Now damage increasing effects
 		if (sc->data[SC_AETERNA] && skill_id != PF_SOULBURN) {
 			if (src->type != BL_MER || !skill_id)
 				damage <<= 1; // Lex Aeterna only doubles damage of regular attacks from mercenaries
@@ -1283,9 +1288,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		// Damage reductions
-		// Assumptio doubles the def & mdef on RE mode, otherwise gives a reduction on the final damage. [Igniz]
-#ifndef RENEWAL
+		// Damage reduction effects
+#ifndef RENEWAL // Assumptio doubles the DEF & MDEF in renewal, otherwise gives a reduction on the final damage. [Igniz]
 		if( sc->data[SC_ASSUMPTIO] ) {
 			if( map_flag_vs(bl->m) )
 				damage = (int64)damage*2/3; //Receive 66% damage
@@ -1442,9 +1446,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if (sce->val2 <= 0)
 				status_change_end(bl, SC_TUNAPARTY, INVALID_TIMER);
 		}
-
-		if( sc->data[SC_MEIKYOUSISUI] && rnd()%100 < 40 ) // custom value
-			damage = 0;
 
 		if (!damage)
 			return 0;
