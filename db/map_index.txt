@@ -1009,7 +1009,6 @@ ice_d03_i
 tur_d03_i
 tur_d04_i
 1@crd
-mjolnir_04_1
 ordeal_a00
 ordeal_a02
 pprontera

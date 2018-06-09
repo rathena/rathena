@@ -74,6 +74,28 @@
 1@slw	mapflag	restricted	6
 1@swat	mapflag	restricted	6
 
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	restricted	6
+2@gl_k2	mapflag	restricted	6
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	restricted	6
+
+// Suspicious shipwreck
+1@tre	mapflag	restricted	6
+
+// Poring Town
+1@begi	mapflag	restricted	6
+
+// Volcanic island Korodo
+1@crd	mapflag	restricted	6
+
+// Noodles Festival July
+1@drdo	mapflag	restricted	6
+
+// Soul Reaper Job Change
+1@soul	mapflag	restricted	6
+
 // Towns =========================
 brasilis	mapflag	restricted	7
 dewata	mapflag	restricted	7

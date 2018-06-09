@@ -216,3 +216,48 @@ lasa_dun01	mapflag	nomemo
 lasa_dun02	mapflag	nomemo
 lasa_dun03	mapflag	nomemo
 lasa_dun_q	mapflag	nomemo
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	nomemo
+2@gl_k2	mapflag	nomemo
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	nomemo
+
+// Illusion Payon (Moonlight)
+pay_d03_i	mapflag	nomemo
+
+// Illusion Geffen (Vampire)
+gef_d01_i	mapflag	nomemo
+
+// Illusion Ice (Frozen)
+ice_d03_i	mapflag	nomemo
+
+// Suspicious shipwreck
+1@tre	mapflag	nomemo
+
+// Poring Town
+1@begi	mapflag	nomemo
+
+// Illusion Turtle island (Archery)
+tur_d03_i	mapflag	nomemo
+tur_d04_i	mapflag	nomemo
+
+// Volcanic island Korodo
+1@crd	mapflag	nomemo
+
+// Noodles Festival July
+1@drdo	mapflag	nomemo
+
+// Illusion Teddy Bear Nasarian Empire
+ein_d02_i	mapflag	nomemo
+
+// Illusion Ruande
+com_d02_i	mapflag	nomemo
+
+// Soul Reaper Job Change
+1@soul	mapflag	nomemo
+
+// Star Emperor Job Change
+star_frst	mapflag	nomemo
+star_in	mapflag	nomemo
