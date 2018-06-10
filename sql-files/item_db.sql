@@ -1038,7 +1038,7 @@ REPLACE INTO `item_db` VALUES (1909,'Harp','Harp',5,62000,NULL,900,114,NULL,1,1,
 REPLACE INTO `item_db` VALUES (1910,'Harp_','Harp',5,62000,NULL,900,114,NULL,1,2,0x00080000,7,1,2,3,27,1,13,'bonus bInt,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1911,'Guh_Moon_Goh','Gumoongoh',5,54000,NULL,1300,126,NULL,1,1,0x00080000,7,1,2,3,27,1,13,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (1912,'Guh_Moon_Goh_','Gumoongoh',5,54000,NULL,1300,126,NULL,1,2,0x00080000,7,1,2,3,27,1,13,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (1913,'Electronic_Guitar','Electric Guitar',5,20,NULL,1800,110,NULL,1,0,0x00080000,7,1,2,4,70,1,13,'skill "WZ_JUPITEL",1; bonus3 bAutoSpell,"WZ_JUPITEL",1,100; bonus bAtkEle,Ele_Wind; bonus bInt,2; bonus bAgi,1; bonus bUnbreakableWeapon;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1913,'Electronic_Guitar','Electric Guitar',5,20,NULL,1800,110,NULL,1,0,0x00080000,7,1,2,4,70,1,13,'skill "WZ_JUPITEL",1; bonus3 bAutoSpell,"WZ_JUPITEL",1,100; bonus bAtkEle,Ele_Wind; bonus bInt,2; bonus bAgi,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1914,'Guitar_Of_Passion','Burning Passion Guitar',5,20,NULL,900,110,NULL,1,0,0x00080000,7,1,2,3,27,1,13,'bonus bAtkEle,Ele_Fire;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1915,'Guitar_Of_Blue_Solo','Loner\'s Guitar',5,20,NULL,900,110,NULL,1,0,0x00080000,7,1,2,3,27,1,13,'bonus bAtkEle,Ele_Water;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1916,'Guitar_Of_Vast_Land','Green Acre Guitar',5,20,NULL,900,110,NULL,1,0,0x00080000,7,1,2,3,27,1,13,'bonus bAtkEle,Ele_Earth;',NULL,NULL);
@@ -2706,7 +2706,7 @@ REPLACE INTO `item_db` VALUES (5494,'Spinx_Helm_I','Sphinx Hat',4,0,NULL,0,NULL,
 REPLACE INTO `item_db` VALUES (5495,'Power_Of_Thor','Power Of Thor',4,20,NULL,100,NULL,6,NULL,1,0xFFFFFFFF,7,2,256,NULL,75,1,493,'bonus bInt,1; bonus bDex,1; bonus bMdef,3; bonus bFlee,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5496,'Dice_Hat','Dice Hat',4,20,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,0,494,'bonus bLuk,4;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5497,'King_Tiger_Doll_Hat','King Tiger Doll Hat',4,20,NULL,400,NULL,3,NULL,1,0xFFFFFFFE,7,2,256,NULL,30,1,495,'bonus bStr,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5498,'Wondering_Wolf_Helm','Wandering Wolf Helm',4,20,NULL,600,NULL,5,NULL,0,0xFFFFFFFE,7,2,768,NULL,50,0,490,'bonus bVit,5; bonus bFlee,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5498,'Wondering_Wolf_Helm','Wandering Wolf Helm',4,20,NULL,600,NULL,5,NULL,0,0xFFFFFFFE,7,2,768,NULL,50,1,490,'bonus bVit,5; bonus bFlee,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5499,'Pizza_Hat','Pizza Hat',4,20,NULL,600,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,487,'skill "SM_PROVOKE", 1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5500,'Icecream_Hat','Icecream Hat',4,0,NULL,300,NULL,6,NULL,0,0xFFFFFFFF,7,2,256,NULL,30,1,488,'bonus bMdef,3; skill "MG_FROSTDIVER",3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5501,'Pirate\'s_Pride','Pirate\'s Pride',4,0,NULL,100,NULL,6,NULL,0,0xFFFFFFFF,7,2,256,NULL,10,0,496,'bonus2 bAddRace2,RC2_Ninja,5; bonus2 bSubRace2,RC2_Ninja,5;',NULL,NULL);
@@ -6261,7 +6261,7 @@ REPLACE INTO `item_db` VALUES (14216,'F_Bubble_Gum_Box5','Bubble Gum 5 Box',18,2
 REPLACE INTO `item_db` VALUES (14217,'F_Megaphone_Box1','Megaphone Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 12221,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (14218,'F_Megaphone_Box5','Megaphone 5 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 12221,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (14219,'F_Enriched_Elunium_Box5','Enriched Elunium 5 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 7619,5;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (14220,'FEnriched_Oridecon_Box5','Enriched Oridecon 5 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 7620,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (14220,'F_Enriched_Oridecon_Box5','Enriched Oridecon 5 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 7620,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (14221,'MP_Scroll_Box','Mystical Amplification Scroll 10 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 14593,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (14222,'MP_Scroll_Box30','Mystical Amplification Scroll 30 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 14593,30;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (14223,'MP_Scroll_Box50','Mystical Amplification Scroll 50 Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 14593,50;',NULL,NULL);
