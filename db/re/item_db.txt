@@ -8697,7 +8697,7 @@
 15069,Suit_Of_Sid,Suit Of Sid,4,20,,1000,,30,,0,0xFFFFFFFF,63,2,16,,0,1,0,{},{},{}
 15070,Clothes_of_Happiness,Clothes of Happiness,4,10,,1000,,5,,1,0xFFFFFFFF,63,2,16,,1,1,,{ bonus bMdef,5; bonus bLuk,getrefine(); },{},{}
 15073,Anti_Magic_Suit,Anti-Magic Suits,4,10,,1500,,50,,1,0xFFFFFFFF,63,2,16,,99,1,0,{ .@r = getrefine(); bonus bMaxHPrate,5+((.@r >= 9) ? 2 : 0); bonus bMdef,10+((.@r >= 7) ? 5 : 0); },{},{}
-15074,Geffen_Mage_Robe,Geffen Magic Robe,4,10,,1000,,40,,1,0xFFFFFFFF,63,2,16,,99,1,0,{ .@r = getrefine(); bonus bUseSPrate,-10-((.@r>=7) ? 5: 0); bonus bVariableCastrate,-15-((.@r>=9) ? 5: 0); bonus bNoCastCancel2; },{},{}
+15074,Geffen_Mage_Robe,Geffen Magic Robe,4,10,,1000,,40,,1,0xFFFFFFFF,63,2,16,,99,1,0,{ .@r = getrefine(); bonus bUseSPrate,-10-((.@r>=7) ? 5: 0); bonus bVariableCastrate,15-((.@r>=9) ? 5: 0); bonus bNoCastCancel2; },{},{}
 15088,School_Uniform,School Uniform,4,20,,500,,25,,1,0xFFFFFFFF,63,2,16,,0,1,0,{ bonus bAgi,1; bonus bLuk,1; bonus bMaxHP,BaseLevel*3; bonus bMaxSP,BaseLevel/2; },{},{}
 15089,Menswear,Menswear,4,10,,300,,40,,0,0xFFFFFFFE,63,2,16,,80,1,,{ .@r = getrefine(); bonus bAspdRate,3+((.@r>=7)?2:0); bonus bDelayrate,-3-((.@r>=7)?2:0); bonus bVariableCastrate,-3-((.@r>=7)?2:0); },{},{}
 15090,Armor_Of_Gray,Armor of Gray,4,10,,2400,,90,,1,0x000654E2,56,2,16,,120,1,0,{ bonus bMdef,10; bonus2 bSubEle,Ele_Holy,10+getrefine()*2; },{},{}
