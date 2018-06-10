@@ -95,6 +95,15 @@ izlude_b	mapflag	nobranch
 izlude_c	mapflag	nobranch
 izlude_d	mapflag	nobranch
 
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	nobranch
+2@gl_k	mapflag	nobranch
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	nobranch
+1@def02	mapflag	nobranch
+1@def03	mapflag	nobranch
+
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	nobranch
 1@sara	mapflag	nobranch
@@ -132,6 +141,11 @@ dali02	mapflag	nobranch
 1@lab	mapflag	nobranch
 1@uns	mapflag	nobranch
 1@mcd	mapflag	nobranch
+un_myst	mapflag	nobranch
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	nobranch
+lhz_d_n2	mapflag	nobranch
 
 // WOE:TE Maps ===================
 te_alde_gld	mapflag	nobranch
@@ -147,6 +161,35 @@ te_aldecas3	mapflag	nobranch
 te_aldecas4	mapflag	nobranch
 te_aldecas5	mapflag	nobranch
 
-// Episode 15
-1@lab	mapflag	nobranch
-1@uns	mapflag	nobranch
+// Novice training
+int_land	mapflag	nobranch
+int_land01	mapflag	nobranch
+int_land02	mapflag	nobranch
+int_land03	mapflag	nobranch
+int_land04	mapflag	nobranch
+
+// Ep 16
+prt_lib	mapflag	nobranch
+prt_lib_q	mapflag	nobranch
+prt_cas	mapflag	nobranch
+prt_cas_q	mapflag	nobranch
+prt_pri00	mapflag	nobranch
+rebel_in	mapflag	nobranch
+que_swat	mapflag	nobranch
+1@mir	mapflag	nobranch
+2@mir	mapflag	nobranch
+1@sthb	mapflag	nobranch
+1@sthc	mapflag	nobranch
+1@sthd	mapflag	nobranch
+1@slw	mapflag	nobranch
+1@swat	mapflag	nobranch
+
+// Rockridge
+har_in01	mapflag	nobranch
+rockmi2	mapflag	nobranch
+
+// Lasagna
+lasagna	mapflag	nobranch
+lasa_in01	mapflag	nobranch
+conch_in	mapflag	nobranch
+lasa_dun_q	mapflag	nobranch

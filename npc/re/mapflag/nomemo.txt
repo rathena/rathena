@@ -117,22 +117,52 @@ gl_cas02_	mapflag	nomemo
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	nomemo
 2@gl_k	mapflag	nomemo
-gl_chyard_	mapflag	nomemo
-gl_cas02_	mapflag	nomemo
 
 // Wave Mode Memorial Dungeon ====
 1@def01	mapflag	nomemo
 1@def02	mapflag	nomemo
 1@def03	mapflag	nomemo
 
-// Heroes' Trails - Part 1 =======
-1@gef	mapflag	nomemo
+// Heroes' Trail - Part 1 ========
 1@face	mapflag	nomemo
 1@sara	mapflag	nomemo
-1@gef_in	mapflag	nomemo
-1@glast	mapflag	nomemo
 dali	mapflag	nomemo
 dali02	mapflag	nomemo
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	nomemo
+1@gef	mapflag	nomemo
+1@gef_in	mapflag	nomemo
+1@spa	mapflag	nomemo
+1@tnm1	mapflag	nomemo
+1@tnm2	mapflag	nomemo
+1@tnm3	mapflag	nomemo
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	nomemo
+1@air1	mapflag	nomemo
+1@air2	mapflag	nomemo
+
+// Decisive Battle - Part 1 ======
+moro_cav	mapflag	nomemo
+1@dth1	mapflag	nomemo
+1@dth2	mapflag	nomemo
+1@dth3	mapflag	nomemo
+1@rev	mapflag	nomemo
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	nomemo
+1@jtb	mapflag	nomemo
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	nomemo
+1@uns	mapflag	nomemo
+1@mcd	mapflag	nomemo
+un_myst	mapflag	nomemo
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	nomemo
+lhz_d_n2	mapflag	nomemo
 
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	nomemo
@@ -148,8 +178,41 @@ te_aldecas5	mapflag	nomemo
 teg_dun01	mapflag	nomemo
 teg_dun02	mapflag	nomemo
 
-// Episode 15
-1@lab	mapflag	nomemo
-1@uns	mapflag	nomemo
-un_bk_q	mapflag	nomemo
-un_myst	mapflag	nomemo
+// Novice training
+int_land	mapflag	nomemo
+int_land01	mapflag	nomemo
+int_land02	mapflag	nomemo
+int_land03	mapflag	nomemo
+int_land04	mapflag	nomemo
+
+// Ep 16
+prt_cas	mapflag	nomemo
+prt_cas_q	mapflag	nomemo
+prt_pri00	mapflag	nomemo
+prt_lib	mapflag	nomemo
+prt_lib_q	mapflag	nomemo
+prt_q	mapflag	nomemo
+prt_prison	mapflag	nomemo
+rebel_in	mapflag	nomemo
+slabw01	mapflag	nomemo
+que_swat	mapflag	nomemo
+1@mir	mapflag	nomemo
+2@mir	mapflag	nomemo
+1@sthb	mapflag	nomemo
+1@sthc	mapflag	nomemo
+1@sthd	mapflag	nomemo
+1@slw	mapflag	nomemo
+1@swat	mapflag	nomemo
+
+// Rockridge
+har_in01	mapflag	nomemo
+rockmi1	mapflag	nomemo
+rockmi2	mapflag	nomemo
+
+// Lasagna
+lasa_in01	mapflag	nomemo
+conch_in	mapflag	nomemo
+lasa_dun01	mapflag	nomemo
+lasa_dun02	mapflag	nomemo
+lasa_dun03	mapflag	nomemo
+lasa_dun_q	mapflag	nomemo

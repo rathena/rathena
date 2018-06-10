@@ -5248,7 +5248,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		//Should attack undead and demons. [Skotlex]
 		if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON)
 			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-	break;
+		break;
 
 	case SL_SMA:
 		status_change_end(src, SC_SMA, INVALID_TIMER);
@@ -6518,7 +6518,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(!clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start(src,bl,type,(60+skill_lv*10),skill_lv, skill_get_time(skill_id,skill_lv)))) {
 			if (dstsd){
 				short index = dstsd->equip_index[EQI_HAND_R];
-				if (index&EQP_WEAPON && dstsd->inventory_data[index]->type == IT_WEAPON)
+				if (index != -1 && dstsd->inventory_data[index] && dstsd->inventory_data[index]->type == IT_WEAPON)
 					pc_unequipitem(dstsd, index, 3); //Must unequip the weapon instead of breaking it [Daegaladh]
 			}
 			if (sd)
@@ -6592,6 +6592,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
 		break;
 
+	case PR_BENEDICTIO:
+		if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		break;
 	case AL_INCAGI:
 	case AL_BLESSING:
 	case MER_INCAGI:
@@ -6604,7 +6608,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case PR_IMPOSITIO:
 	case PR_LEXAETERNA:
 	case PR_SUFFRAGIUM:
-	case PR_BENEDICTIO:
 	case LK_BERSERK:
 	case MS_BERSERK:
 	case KN_TWOHANDQUICKEN:
@@ -10816,8 +10819,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			// Main target always receives damage
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_LEVEL);
-			if (tsc && tsc->data[SC_C_MARKER])
-				status_change_end(bl, SC_C_MARKER, INVALID_TIMER);
 		}
 		else {
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
@@ -16692,8 +16693,18 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		}
 	}
 
-	if (!(delaynodex&4) && sd && sd->delayrate != 100)
-		time = time * sd->delayrate / 100;
+	if (!(delaynodex&4) && sd) {
+		uint8 i, len = ARRAYLENGTH(sd->skilldelay);
+
+		if (sd->delayrate != 100)
+			time = time * sd->delayrate / 100;
+
+		if (len) {
+			ARR_FIND(0, len, i, sd->skilldelay[i].id == skill_id);
+			if (i < len)
+				time += sd->skilldelay[i].val;
+		}
+	}
 
 	if (battle_config.delay_rate != 100)
 		time = time * battle_config.delay_rate / 100;

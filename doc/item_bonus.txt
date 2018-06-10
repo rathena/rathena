@@ -108,7 +108,7 @@ Atk/Def
 bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
-bonus bAtkRate,n;  			Attack power + n%
+bonus bAtkRate,n;  			Attack power + n% (unofficial)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%
@@ -210,6 +210,7 @@ bonus bNoCastCancel; 			Prevents casting from being interrupted when hit (does n
 bonus bNoCastCancel2;			Prevents casting from being interrupted when hit (works even in GvG)
 
 bonus bDelayrate,n;        		Increases skill delay by n%
+bonus2 bSkillDelay,sk,t;		Increases delay of skill sk by t milliseconds
 bonus2 bSkillCooldown,sk,t;		Increases cooldown of skill sk by t milliseconds
 
 =============================

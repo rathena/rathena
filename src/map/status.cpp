@@ -3465,6 +3465,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
 		+ sizeof(sd->sp_vanish_race)
+		+ sizeof(sd->skilldelay)
 	);
 
 	memset (&sd->bonus, 0, sizeof(sd->bonus));
@@ -6148,7 +6149,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += 3*sc->data[SC_SPEARQUICKEN]->val1*10;
 #endif
 	if (sc->data[SC__INVISIBILITY])
-		critical += critical * sc->data[SC__INVISIBILITY]->val3 / 100;
+		critical += sc->data[SC__INVISIBILITY]->val3 * 10;
 	if (sc->data[SC__UNLUCKY])
 		critical -= sc->data[SC__UNLUCKY]->val2;
 	if(sc->data[SC_BEYONDOFWARCRY])
@@ -13816,9 +13817,20 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
 			case SC_BITESCAR:
-            case SC_GEFFEN_MAGIC1:
-            case SC_GEFFEN_MAGIC2:
-            case SC_GEFFEN_MAGIC3:
+			case SC_DORAM_BUF_01:
+			case SC_DORAM_BUF_02:
+			case SC_GEFFEN_MAGIC1:
+			case SC_GEFFEN_MAGIC2:
+			case SC_GEFFEN_MAGIC3:
+			// Clans
+			case SC_CLAN_INFO:
+			case SC_SWORDCLAN:
+			case SC_ARCWANDCLAN:
+			case SC_GOLDENMACECLAN:
+			case SC_CROSSBOWCLAN:
+			case SC_JUMPINGCLAN:
+			// RODEX
+			case SC_DAILYSENDMAILCNT:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -14355,6 +14367,12 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 	int bonus_per_level = node["StatsPerLevel"].as<int>();
 	int random_bonus_start_level = node["RandomBonusStartLevel"].as<int>();
 	int random_bonus = node["RandomBonusValue"].as<int>();
+
+	if (file_name.find("import") != std::string::npos) { // Import file, reset refine bonus before calculation
+		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
+			refine_info[refine_info_index].bonus[refine_level] = 0;
+	}
+
 	const YAML::Node &costs = node["Costs"];
 
 	for (const auto costit : costs) {
@@ -14431,7 +14449,7 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
 	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
 		const YAML::Node &node = config[labels[i]];
 
-		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, file))
+		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, current_file))
 			count++;
 	}
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
