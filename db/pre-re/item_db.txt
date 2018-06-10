@@ -1006,7 +1006,7 @@
 1910,Harp_,Harp,5,62000,,900,114,,1,2,0x00080000,7,1,2,3,27,1,13,{ bonus bInt,2; },{},{}
 1911,Guh_Moon_Goh,Gumoongoh,5,54000,,1300,126,,1,1,0x00080000,7,1,2,3,27,1,13,{},{},{}
 1912,Guh_Moon_Goh_,Gumoongoh,5,54000,,1300,126,,1,2,0x00080000,7,1,2,3,27,1,13,{},{},{}
-1913,Electronic_Guitar,Electric Guitar,5,20,,1800,110,,1,0,0x00080000,7,1,2,4,70,1,13,{ skill "WZ_JUPITEL",1; bonus3 bAutoSpell,"WZ_JUPITEL",1,100; bonus bAtkEle,Ele_Wind; bonus bInt,2; bonus bAgi,1; bonus bUnbreakableWeapon; },{},{}
+1913,Electronic_Guitar,Electric Guitar,5,20,,1800,110,,1,0,0x00080000,7,1,2,4,70,1,13,{ skill "WZ_JUPITEL",1; bonus3 bAutoSpell,"WZ_JUPITEL",1,100; bonus bAtkEle,Ele_Wind; bonus bInt,2; bonus bAgi,1; },{},{}
 1914,Guitar_Of_Passion,Burning Passion Guitar,5,20,,900,110,,1,0,0x00080000,7,1,2,3,27,1,13,{ bonus bAtkEle,Ele_Fire; },{},{}
 1915,Guitar_Of_Blue_Solo,Loner's Guitar,5,20,,900,110,,1,0,0x00080000,7,1,2,3,27,1,13,{ bonus bAtkEle,Ele_Water; },{},{}
 1916,Guitar_Of_Vast_Land,Green Acre Guitar,5,20,,900,110,,1,0,0x00080000,7,1,2,3,27,1,13,{ bonus bAtkEle,Ele_Earth; },{},{}
@@ -2674,7 +2674,7 @@
 5495,Power_Of_Thor,Power Of Thor,4,20,,100,,6,,1,0xFFFFFFFF,7,2,256,,75,1,493,{ bonus bInt,1; bonus bDex,1; bonus bMdef,3; bonus bFlee,5; },{},{}
 5496,Dice_Hat,Dice Hat,4,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,50,0,494,{ bonus bLuk,4; },{},{}
 5497,King_Tiger_Doll_Hat,King Tiger Doll Hat,4,20,,400,,3,,1,0xFFFFFFFE,7,2,256,,30,1,495,{ bonus bStr,2; },{},{}
-5498,Wondering_Wolf_Helm,Wandering Wolf Helm,4,20,,600,,5,,0,0xFFFFFFFE,7,2,768,,50,0,490,{ bonus bVit,5; bonus bFlee,10; },{},{}
+5498,Wondering_Wolf_Helm,Wandering Wolf Helm,4,20,,600,,5,,0,0xFFFFFFFE,7,2,768,,50,1,490,{ bonus bVit,5; bonus bFlee,10; },{},{}
 5499,Pizza_Hat,Pizza Hat,4,20,,600,,0,,0,0xFFFFFFFF,7,2,256,,0,0,487,{ skill "SM_PROVOKE", 1; },{},{}
 5500,Icecream_Hat,Icecream Hat,4,0,,300,,6,,0,0xFFFFFFFF,7,2,256,,30,1,488,{ bonus bMdef,3; skill "MG_FROSTDIVER",3; },{},{}
 5501,Pirate's_Pride,Pirate's Pride,4,0,,100,,6,,0,0xFFFFFFFF,7,2,256,,10,0,496,{ bonus2 bAddRace2,RC2_Ninja,5; bonus2 bSubRace2,RC2_Ninja,5; },{},{}
@@ -6229,7 +6229,7 @@
 14217,F_Megaphone_Box1,Megaphone Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,1; },{},{}
 14218,F_Megaphone_Box5,Megaphone 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,5; },{},{}
 14219,F_Enriched_Elunium_Box5,Enriched Elunium 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7619,5; },{},{}
-14220,FEnriched_Oridecon_Box5,Enriched Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7620,5; },{},{}
+14220,F_Enriched_Oridecon_Box5,Enriched Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7620,5; },{},{}
 14221,MP_Scroll_Box,Mystical Amplification Scroll 10 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,10; },{},{}
 14222,MP_Scroll_Box30,Mystical Amplification Scroll 30 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,30; },{},{}
 14223,MP_Scroll_Box50,Mystical Amplification Scroll 50 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14593,50; },{},{}
