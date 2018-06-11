@@ -9631,7 +9631,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		if (sd) {
 			struct skill_condition req = skill_get_requirement(sd, skill_id, skill_lv);
-			int limit[] = { -45, -75, -105 };
+			int16 limit[] = { -45, -75, -105 };
 			uint8 i;
 
 			for (i = 0; i < req.eqItem_count; i++) {
