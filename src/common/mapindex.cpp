@@ -3,7 +3,7 @@
 
 #include "mmo.h"
 #include "core.h"
-#include "mapindex.h"
+#include "mapindex.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
 

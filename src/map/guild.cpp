@@ -9,7 +9,7 @@
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/malloc.h"
-#include "../common/mapindex.h"
+#include "../common/mapindex.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/ers.h"
 #include "../common/strlib.hpp"

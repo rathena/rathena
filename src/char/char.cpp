@@ -14,7 +14,7 @@
 #include "../common/core.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
-#include "../common/mapindex.h"
+#include "../common/mapindex.hpp"
 #include "../common/mmo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

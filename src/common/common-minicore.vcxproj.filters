@@ -32,7 +32,7 @@
     <ClInclude Include="malloc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapindex.h">
+    <ClInclude Include="mapindex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="md5calc.hpp">
@@ -82,7 +82,7 @@
     <ClCompile Include="malloc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mapindex.c">
+    <ClCompile Include="mapindex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="md5calc.cpp">

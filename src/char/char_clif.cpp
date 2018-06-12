@@ -11,7 +11,7 @@
 #include "../common/sql.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/mapindex.h"
+#include "../common/mapindex.hpp"
 #include "../common/malloc.h"
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"

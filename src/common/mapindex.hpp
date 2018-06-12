@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAPINDEX_H_
-#define _MAPINDEX_H_
+#ifndef _MAPINDEX_HPP_
+#define _MAPINDEX_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,4 +77,4 @@ void mapindex_final(void);
 }
 #endif
 
-#endif /* _MAPINDEX_H_ */
+#endif /* _MAPINDEX_HPP_ */
