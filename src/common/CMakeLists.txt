@@ -89,7 +89,6 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/utils.hpp"
 	"${COMMON_SOURCE_DIR}/msg_conf.hpp"
 	"${COMMON_SOURCE_DIR}/cli.hpp"
-	"${COMMON_SOURCE_DIR}/yamlwrapper.h"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
 	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
 	CACHE INTERNAL "common_base headers" )
@@ -112,7 +111,6 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/utils.cpp"
 	"${COMMON_SOURCE_DIR}/msg_conf.cpp"
 	"${COMMON_SOURCE_DIR}/cli.cpp"
-	"${COMMON_SOURCE_DIR}/yamlwrapper.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
 	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
 	CACHE INTERNAL "common_base sources" )
