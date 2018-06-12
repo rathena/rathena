@@ -2379,6 +2379,9 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	if (!sd || !autobonus)
 		return;
 
+	if (autobonus->active != INVALID_TIMER)
+		delete_timer(autobonus->active, pc_endautobonus);
+
 	if( autobonus->other_script )
 	{
 		int j;
