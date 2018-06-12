@@ -55,8 +55,7 @@ obj:
 
 login-server: obj $(LOGIN_DIR_OBJ) $(COMMON_AR)
 	@echo "	LD	@OLOG@@EXEEXT@"
-	@@CC@ @LDFLAGS@ -o ../../@OLOG@@EXEEXT@ $(LOGIN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) @LIBS@ @MYSQL_LIBS@
-	    
+	@@CXX@ @LDFLAGS@ -o ../../@OLOG@@EXEEXT@ $(LOGIN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) @LIBS@ @MYSQL_LIBS@
 
 # login object files
 
