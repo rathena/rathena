@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef _CONFIG_GENERAL_H_
-#define _CONFIG_GENERAL_H_
+#ifndef _CONFIG_GENERAL_HPP_
+#define _CONFIG_GENERAL_HPP_
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -20,4 +20,4 @@
  * No settings past this point
  **/
 
-#endif // _CONFIG_GENERAL_H_
+#endif // _CONFIG_GENERAL_HPP_

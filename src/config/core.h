@@ -78,7 +78,7 @@
 #include "./packets.h"
 #include "./renewal.h"
 #include "./secure.h"
-#include "./classes/general.h"
+#include "./classes/general.hpp"
 
 /**
  * Constants come last; so they process anything that could've been modified in early includes
