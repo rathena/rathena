@@ -9,7 +9,7 @@
 #include <cstdarg>
 #include <ctime>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/socket.hpp"
 #include "../common/timer.hpp"
 #include "../common/grfio.hpp"

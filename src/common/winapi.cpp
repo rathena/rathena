@@ -3,7 +3,7 @@
 
 #include "winapi.hpp"
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 // Taken from https://support.microsoft.com/de-de/help/118626/how-to-determine-whether-a-thread-is-running-in-user-context-of-local
 bool IsCurrentUserLocalAdministrator(void){

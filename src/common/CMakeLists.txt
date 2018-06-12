@@ -41,7 +41,7 @@ mark_as_advanced( COMMON_SOURCE_DIR )
 
 set( COMMON_ALL_HEADERS
 	"${CMAKE_CURRENT_BINARY_DIR}/svnversion.h"
-	"${COMMON_SOURCE_DIR}/cbasetypes.h"
+	"${COMMON_SOURCE_DIR}/cbasetypes.hpp"
 	"${COMMON_SOURCE_DIR}/mmo.h"
 	)
 

@@ -11,7 +11,7 @@
 #ifndef _ACCOUNT_HPP_
 #define _ACCOUNT_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h" // ACCOUNT_REG2_NUM
 #include "../config/core.h"
 

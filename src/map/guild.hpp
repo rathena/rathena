@@ -4,7 +4,7 @@
 #ifndef _GUILD_HPP_
 #define _GUILD_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h"
 
 #include "map.hpp" // NAME_LENGTH

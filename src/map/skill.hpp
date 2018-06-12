@@ -4,7 +4,7 @@
 #ifndef _SKILL_HPP_
 #define _SKILL_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h" // MAX_SKILL, struct square
 #include "../common/db.hpp"
 

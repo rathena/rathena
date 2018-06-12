@@ -4,7 +4,7 @@
 #ifndef _MAPREG_HPP_
 #define _MAPREG_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 
 struct mapreg_save {

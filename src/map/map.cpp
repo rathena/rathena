@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
 #include "../common/timer.hpp"
 #include "../common/grfio.hpp"

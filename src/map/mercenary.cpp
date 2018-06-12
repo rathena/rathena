@@ -9,7 +9,7 @@
 
 #include "../common/utilities.hpp"
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"

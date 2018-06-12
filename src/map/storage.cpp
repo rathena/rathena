@@ -10,7 +10,7 @@
 
 #include "../common/utilities.hpp"
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"

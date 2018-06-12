@@ -4,7 +4,7 @@
 #ifndef	_SOCKET_HPP_
 #define _SOCKET_HPP_
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 #ifdef WIN32
 	#include "winapi.hpp"

@@ -44,7 +44,7 @@
 
 #include <stdarg.h>
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 #ifdef	__cplusplus
 extern "C" {

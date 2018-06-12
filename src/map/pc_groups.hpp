@@ -4,7 +4,7 @@
 #ifndef _PC_GROUPS_HPP_
 #define _PC_GROUPS_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 enum AtCommandType : uint8;
 

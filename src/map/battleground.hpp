@@ -4,7 +4,7 @@
 #ifndef _BATTLEGROUND_HPP_
 #define _BATTLEGROUND_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h" // struct party
 
 #define MAX_BG_MEMBERS 30

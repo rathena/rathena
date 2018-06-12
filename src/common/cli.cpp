@@ -16,7 +16,7 @@
 	#include <sys/poll.h>
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 #include "showmsg.hpp"
 #include "core.hpp"
 #include "cli.hpp"

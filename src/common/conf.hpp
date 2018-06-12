@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 #include "../../3rdparty/libconfig/libconfig.h"
 
 int conf_read_file(config_t *config, const char *config_filename);

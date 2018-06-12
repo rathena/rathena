@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/ers.hpp"
 #include "../common/malloc.hpp"

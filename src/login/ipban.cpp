@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"

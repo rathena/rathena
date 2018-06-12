@@ -1,5 +1,5 @@
-#ifndef _CBASETYPES_H_
-#define _CBASETYPES_H_
+#ifndef _CBASETYPES_HPP_
+#define _CBASETYPES_HPP_
 
 /*              +--------+-----------+--------+---------+
  *              | ILP32  |   LP64    |  ILP64 | (LL)P64 |
@@ -437,4 +437,4 @@ static inline uint32 u32min(uint32 a, uint32 b){ return (a < b) ? a : b; }
 static inline uint64 u64min(uint64 a, uint64 b){ return (a < b) ? a : b; }
 static inline size_t zmin(size_t a, size_t b){ return (a < b) ? a : b; }
 
-#endif /* _CBASETYPES_H_ */
+#endif /* _CBASETYPES_HPP_ */

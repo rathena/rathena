@@ -6,7 +6,7 @@
 
 #include <time.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/socket.hpp" // enum chrif_req_op
 
 //fwd declaration

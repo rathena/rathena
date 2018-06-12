@@ -4,7 +4,7 @@
 #ifndef _COMMON_SQL_HPP_
 #define _COMMON_SQL_HPP_
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 #include <stdarg.h>// va_list
 
 #ifdef __cplusplus

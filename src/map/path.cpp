@@ -8,7 +8,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"

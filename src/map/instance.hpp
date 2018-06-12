@@ -4,7 +4,7 @@
 #ifndef _INSTANCE_HPP_
 #define _INSTANCE_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h" // struct point
 #include "../common/strlib.hpp"
 

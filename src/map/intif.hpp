@@ -4,7 +4,7 @@
 #ifndef _INTIF_HPP_
 #define _INTIF_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h"
 
 struct party_member;

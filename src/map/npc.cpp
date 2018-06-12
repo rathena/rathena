@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"

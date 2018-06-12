@@ -5,7 +5,7 @@
 
 #include <string.h> //memset
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"

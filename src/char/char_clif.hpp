@@ -4,7 +4,7 @@
 #ifndef _CHAR_CLIF_HPP_
 #define _CHAR_CLIF_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp" //time_t
 
 struct char_session_data;

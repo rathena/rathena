@@ -18,7 +18,7 @@
 #include "../../3rdparty/pcre/include/pcre.h" // preg_match
 #endif
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/nullpo.hpp"

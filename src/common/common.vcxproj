@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cbasetypes.h" />
+    <ClInclude Include="cbasetypes.hpp" />
     <ClInclude Include="cli.hpp" />
     <ClInclude Include="conf.hpp" />
     <ClInclude Include="core.hpp" />

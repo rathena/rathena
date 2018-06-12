@@ -4,7 +4,7 @@
 #ifndef _QUEST_HPP_
 #define _QUEST_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/strlib.hpp"
 
 #include "map.hpp"

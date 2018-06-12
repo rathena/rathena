@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 #include <time.h>
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))

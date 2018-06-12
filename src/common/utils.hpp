@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 #include <stdio.h> // FILE*
 
 // generate a hex dump of the first 'length' bytes of 'buffer'

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"

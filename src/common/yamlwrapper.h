@@ -35,7 +35,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 #ifdef __cplusplus
 class yamliterator {

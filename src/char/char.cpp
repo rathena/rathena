@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"

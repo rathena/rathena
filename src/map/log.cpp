@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/sql.hpp" // SQL_INNODB
 #include "../common/strlib.hpp"
 #include "../common/nullpo.hpp"

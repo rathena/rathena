@@ -4,7 +4,7 @@
 #ifndef _STRLIB_HPP_
 #define _STRLIB_HPP_
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 #include <stdarg.h>
 
 #if !defined(__USE_GNU)

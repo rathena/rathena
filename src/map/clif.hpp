@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/db.hpp" //dbmap
 #include "../common/mmo.h"
 

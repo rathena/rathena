@@ -4,7 +4,7 @@
 #ifndef _LOG_HPP_
 #define _LOG_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct block_list;
 struct map_session_data;

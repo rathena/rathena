@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp"
 #include "../common/socket.hpp" // last_tick
 #include "../common/nullpo.hpp"

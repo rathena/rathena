@@ -12,7 +12,7 @@
 #include <stdlib.h> // exit
 #include <string.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h"
 #include "../common/socket.hpp"
 #include "../common/sql.hpp"

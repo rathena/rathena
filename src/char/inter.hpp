@@ -4,7 +4,7 @@
 #ifndef _INTER_HPP_
 #define _INTER_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/sql.hpp"
 
 #include <memory>

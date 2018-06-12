@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 void rnd_init(void);
 

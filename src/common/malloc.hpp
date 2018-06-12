@@ -4,7 +4,7 @@
 #ifndef _MALLOC_HPP_
 #define _MALLOC_HPP_
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 #ifdef __cplusplus
 extern "C" {

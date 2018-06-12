@@ -4,7 +4,7 @@
 #ifndef _CASHSHOP_HPP_
 #define _CASHSHOP_HPP_
 
-#include "../common/cbasetypes.h" // uint16, uint32
+#include "../common/cbasetypes.hpp" // uint16, uint32
 #include "../common/timer.hpp" // ShowWarning, ShowStatus
 
 #include "../config/core.h"

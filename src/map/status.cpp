@@ -9,7 +9,7 @@
 #include <functional>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"

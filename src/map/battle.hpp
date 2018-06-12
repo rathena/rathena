@@ -4,7 +4,7 @@
 #ifndef _BATTLE_HPP_
 #define _BATTLE_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h"
 
 #include "../config/core.h"

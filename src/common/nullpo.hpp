@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 #define NLP_MARK __FILE__, __LINE__, __func__
 

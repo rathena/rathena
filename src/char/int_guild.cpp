@@ -7,7 +7,7 @@
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h"
 #include "../common/malloc.hpp"
 #include "../common/socket.hpp"

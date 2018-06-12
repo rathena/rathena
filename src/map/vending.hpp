@@ -4,7 +4,7 @@
 #ifndef	_VENDING_HPP_
 #define	_VENDING_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "../common/db.hpp"
 

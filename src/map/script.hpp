@@ -4,7 +4,7 @@
 #ifndef _SCRIPT_HPP_
 #define _SCRIPT_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.h"
 

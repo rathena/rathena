@@ -44,7 +44,7 @@
 extern "C" {
 #endif
 
-#include "cbasetypes.h"
+#include "cbasetypes.hpp"
 
 /*****************************************************************************\
  *  (1) All public parts of the Entry Reusage System.                        *

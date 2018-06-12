@@ -15,7 +15,7 @@
 #include <memory>
 
 #include "../config/core.h"
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/mmo.h" // NAME_LENGTH,SEX_*
 #include "../common/core.hpp" // CORE_ST_LAST
 

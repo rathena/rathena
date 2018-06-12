@@ -6,7 +6,7 @@
 #include <string.h> // memset
 #include <stdlib.h> // atoi
 
-#include "../common/cbasetypes.h" // uint16, uint32
+#include "../common/cbasetypes.hpp" // uint16, uint32
 #include "../common/malloc.hpp" // CREATE, RECREATE, aFree
 #include "../common/showmsg.hpp" // ShowWarning, ShowStatus
 

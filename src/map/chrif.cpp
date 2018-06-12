@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
 #include "../common/socket.hpp"
 #include "../common/timer.hpp"

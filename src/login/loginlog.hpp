@@ -13,7 +13,7 @@
 
 #include <memory>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 /**
  * Get the number of failed login attempts by the ip in the last minutes.

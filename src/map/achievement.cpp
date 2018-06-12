@@ -10,7 +10,7 @@
 #include <setjmp.h>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
