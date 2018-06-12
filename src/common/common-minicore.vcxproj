@@ -34,7 +34,7 @@
     <ClInclude Include="random.hpp" />
     <ClInclude Include="showmsg.hpp" />
     <ClInclude Include="strlib.h" />
-    <ClInclude Include="utils.h" />
+    <ClInclude Include="utils.hpp" />
     <ClInclude Include="winapi.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +55,7 @@
     </ClCompile>
     <ClCompile Include="showmsg.cpp" />
     <ClCompile Include="strlib.c" />
-    <ClCompile Include="utils.c" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="winapi.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

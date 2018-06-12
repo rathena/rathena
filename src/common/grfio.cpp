@@ -6,7 +6,7 @@
 #include "malloc.h"
 #include "showmsg.hpp"
 #include "strlib.h"
-#include "utils.h"
+#include "utils.hpp"
 #include "grfio.hpp"
 
 #include <stdlib.h>

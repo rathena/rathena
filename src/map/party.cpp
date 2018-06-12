@@ -12,7 +12,7 @@
 #include "../common/malloc.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/strlib.h"
 
 #include "atcommand.hpp"	//msg_txt()

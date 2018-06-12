@@ -14,7 +14,7 @@
 #include "../common/mapindex.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/timer.hpp"
 #include "inter.hpp"
 #include "char.hpp"

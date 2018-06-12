@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UTILS_H_
-#define _UTILS_H_
+#ifndef _UTILS_HPP_
+#define _UTILS_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,4 +54,4 @@ extern float GetFloat(const unsigned char* buf);
 }
 #endif
 
-#endif /* _UTILS_H_ */
+#endif /* _UTILS_HPP_ */

@@ -15,7 +15,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
 #include "chrif.hpp"

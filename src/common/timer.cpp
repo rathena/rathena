@@ -5,7 +5,7 @@
 #include "db.h"
 #include "malloc.h"
 #include "showmsg.hpp"
-#include "utils.h"
+#include "utils.hpp"
 #include "nullpo.h"
 #include "timer.hpp"
 

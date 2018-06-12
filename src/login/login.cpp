@@ -26,7 +26,7 @@
 #include "../common/timer.hpp"
 #include "../common/msg_conf.h"
 #include "../common/cli.hpp"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/mmo.h"
 #include "../config/core.h"
 #include "account.hpp"

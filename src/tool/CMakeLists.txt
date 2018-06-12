@@ -13,13 +13,13 @@ set( COMMON_HEADERS
 	${COMMON_MINI_HEADERS}
 	"${COMMON_SOURCE_DIR}/des.hpp"
 	"${COMMON_SOURCE_DIR}/grfio.hpp"
-	"${COMMON_SOURCE_DIR}/utils.h"
+	"${COMMON_SOURCE_DIR}/utils.hpp"
 	)
 set( COMMON_SOURCES
 	${COMMON_MINI_SOURCES}
 	"${COMMON_SOURCE_DIR}/des.cpp"
 	"${COMMON_SOURCE_DIR}/grfio.cpp"
-	"${COMMON_SOURCE_DIR}/utils.c"
+	"${COMMON_SOURCE_DIR}/utils.cpp"
 	)
 set( MAPCACHE_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/mapcache.c"

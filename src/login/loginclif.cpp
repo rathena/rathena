@@ -17,7 +17,7 @@
 #include "../common/showmsg.hpp" //show notice
 #include "../common/socket.h" //wfifo session
 #include "../common/malloc.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/random.hpp"
 

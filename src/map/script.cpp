@@ -27,7 +27,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.hpp"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/ers.h"  // ers_destroy
 
 #include "map.hpp"

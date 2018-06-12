@@ -16,7 +16,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/random.hpp"
 #include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 
 #include "log.hpp"
 #include "clif.hpp"

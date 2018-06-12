@@ -10,7 +10,7 @@
 #include "../common/strlib.h"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/sql.hpp"
 
 #include "char.hpp"

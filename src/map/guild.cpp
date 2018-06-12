@@ -13,7 +13,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/ers.h"
 #include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 
 #include "map.hpp"
 #include "storage.hpp"

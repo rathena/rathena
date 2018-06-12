@@ -10,7 +10,7 @@
 #include "../common/timer.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/strlib.h"
 
 #include "inter.hpp"

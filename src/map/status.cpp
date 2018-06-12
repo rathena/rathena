@@ -15,7 +15,7 @@
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/malloc.h"
-#include "../common/utils.h"
+#include "../common/utils.hpp"
 #include "../common/ers.h"
 #include "../common/strlib.h"
 
