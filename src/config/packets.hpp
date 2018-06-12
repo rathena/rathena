@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef _CONFIG_PACKETS_H_
-#define _CONFIG_PACKETS_H_
+#ifndef _CONFIG_PACKETS_HPP_
+#define _CONFIG_PACKETS_HPP_
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -63,4 +63,4 @@
 /// Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
 
-#endif // _CONFIG_PACKETS_H_
+#endif // _CONFIG_PACKETS_HPP_

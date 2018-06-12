@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{60D331
 		src\config\const.hpp = src\config\const.hpp
 		src\config\core.h = src\config\core.h
 		src\config\classes\general.hpp = src\config\classes\general.hpp
-		src\config\packets.h = src\config\packets.h
+		src\config\packets.hpp = src\config\packets.hpp
 		src\config\renewal.hpp = src\config\renewal.hpp
 		src\config\secure.hpp = src\config\secure.hpp
 	EndProjectSection
