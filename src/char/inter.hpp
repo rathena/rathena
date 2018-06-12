@@ -5,7 +5,7 @@
 #define _INTER_HPP_
 
 #include "../common/cbasetypes.h"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 #include <memory>
 #include <string>

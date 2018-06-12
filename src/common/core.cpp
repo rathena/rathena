@@ -11,7 +11,7 @@
 #include "ers.h"
 #include "socket.h"
 #include "timer.h"
-#include "sql.h"
+#include "sql.hpp"
 #endif
 #include <stdlib.h>
 #include <signal.h>

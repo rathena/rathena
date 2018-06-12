@@ -11,7 +11,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/utils.h"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 #include "char.hpp"
 #include "inter.hpp"

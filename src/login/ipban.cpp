@@ -15,7 +15,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/showmsg.hpp"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "login.hpp"

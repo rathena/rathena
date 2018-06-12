@@ -6,7 +6,7 @@
 #include "showmsg.hpp"
 #include "strlib.h"
 #include "timer.h"
-#include "sql.h"
+#include "sql.hpp"
 
 #ifdef WIN32
 #include "winapi.hpp"

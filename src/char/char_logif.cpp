@@ -9,7 +9,7 @@
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/showmsg.hpp"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 #include "../common/utils.h"
 #include "../common/strlib.h"
 

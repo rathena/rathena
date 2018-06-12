@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _COMMON_SQL_H_
-#define _COMMON_SQL_H_
+#ifndef _COMMON_SQL_HPP_
+#define _COMMON_SQL_HPP_
 
 #include "cbasetypes.h"
 #include <stdarg.h>// va_list
@@ -354,4 +354,4 @@ void Sql_Init(void);
 }
 #endif
 
-#endif /* _COMMON_SQL_H_ */
+#endif /* _COMMON_SQL_HPP_ */

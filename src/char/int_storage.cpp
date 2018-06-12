@@ -12,7 +12,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/strlib.h" // StringBuf
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 #include "char.hpp"
 #include "inter.hpp"
 

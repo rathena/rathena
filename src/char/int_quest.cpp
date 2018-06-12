@@ -10,7 +10,7 @@
 #include "../common/malloc.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 #include "char.hpp"
 #include "inter.hpp"

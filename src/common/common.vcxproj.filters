@@ -62,7 +62,7 @@
     <ClInclude Include="socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sql.h">
+    <ClInclude Include="sql.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="strlib.h">
@@ -130,7 +130,7 @@
     <ClCompile Include="socket.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sql.c">
+    <ClCompile Include="sql.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="strlib.c">

@@ -17,7 +17,7 @@
 #include "../common/mmo.h"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 #include "../common/strlib.h"
 
 /// global defines

@@ -13,7 +13,7 @@
 #include "../common/socket.h"
 #include "../common/showmsg.hpp"
 #include "../common/mapindex.h"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"

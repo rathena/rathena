@@ -10,7 +10,7 @@
 #include "../common/ers.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 

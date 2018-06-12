@@ -12,7 +12,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/strlib.h"
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 #include "../common/timer.h"
 
 #include "char.hpp"
