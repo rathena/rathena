@@ -10,7 +10,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"

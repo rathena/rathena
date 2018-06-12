@@ -6,7 +6,7 @@
  *
  ***********************************************************/
 
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "md5calc.h"
 #include <string.h>
 #include <stdio.h>

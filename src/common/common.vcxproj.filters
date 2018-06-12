@@ -53,7 +53,7 @@
     <ClInclude Include="nullpo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="random.h">
+    <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="showmsg.h">
@@ -121,7 +121,7 @@
     <ClCompile Include="nullpo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="random.c">
+    <ClCompile Include="random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="showmsg.c">

@@ -19,7 +19,7 @@
 #include "../common/malloc.h"
 #include "../common/utils.h"
 #include "../common/md5calc.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 
 #include "account.hpp"
 #include "ipban.hpp" //ipban_check

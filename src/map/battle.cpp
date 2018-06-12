@@ -12,7 +12,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"

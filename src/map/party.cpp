@@ -10,7 +10,7 @@
 #include "../common/socket.h" // last_tick
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
 #include "../common/strlib.h"

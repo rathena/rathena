@@ -9,7 +9,7 @@
 #include "../common/mmo.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/showmsg.h"
 #include "../common/mapindex.h"
 #include "../common/malloc.h"

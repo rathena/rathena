@@ -15,7 +15,7 @@
 #include "../common/grfio.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"

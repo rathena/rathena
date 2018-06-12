@@ -10,7 +10,7 @@
 #include "../common/core.h" // get_svn_revision()
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/showmsg.h"
 #include "../common/socket.h" // session[]
 #include "../common/strlib.h" // safestrncpy()

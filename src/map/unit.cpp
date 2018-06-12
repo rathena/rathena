@@ -11,7 +11,7 @@
 #include "../common/nullpo.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/socket.h"
 #include "../common/ers.h"  // ers_destroy
 

@@ -46,10 +46,6 @@ Thumbs.db
 /3rdparty/libconfig/*.o
 /3rdparty/libconfig/obj
 
-# /3rdparty/mt19937ar/
-/3rdparty/mt19937ar/Makefile
-/3rdparty/mt19937ar/*.o
-
 # /3rdparty/yaml-cpp/
 /3rdparty/yaml-cpp/Makefile
 

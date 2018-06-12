@@ -16,7 +16,7 @@
 #include "../common/malloc.h"
 #include "../common/mapindex.h"
 #include "../common/mmo.h"
-#include "../common/random.h"
+#include "../common/random.hpp"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
