@@ -15,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libconfig", "3rdparty\libco
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{60D3315D-FBF4-4FBF-8D44-99D5BED11D32}"
 	ProjectSection(SolutionItems) = preProject
-		src\config\const.h = src\config\const.h
+		src\config\const.hpp = src\config\const.hpp
 		src\config\core.h = src\config\core.h
 		src\config\classes\general.h = src\config\classes\general.h
 		src\config\packets.h = src\config\packets.h
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{60D331
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "classes", "classes", "{33B49CB8-CBE3-4ED2-86DD-C9A351AC9026}"
 	ProjectSection(SolutionItems) = preProject
-		src\config\classes\general.h = src\config\classes\general.h
+		src\config\classes\general.hpp = src\config\classes\general.hpp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Custom", "Custom", "{6513C8D3-D15F-45D4-9AD8-6286CBA7EE36}"

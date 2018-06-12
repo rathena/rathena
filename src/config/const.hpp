@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef _RRCONFIGS_CONST_
-#define _RRCONFIGS_CONST_
+#ifndef _CONFIG_CONST_H_
+#define _CONFIG_CONST_H_
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -111,4 +111,4 @@
 /**
  * End of File
  **/
-#endif
+#endif // _CONFIG_CONST_H_

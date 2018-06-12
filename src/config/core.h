@@ -83,7 +83,7 @@
 /**
  * Constants come last; so they process anything that could've been modified in early includes
  **/
-#include "./const.h"
+#include "./const.hpp"
 
 #include "../custom/defines_post.h"
 
