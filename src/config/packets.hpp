@@ -28,7 +28,7 @@
 	#ifndef PACKET_OBFUSCATION
 		#define PACKET_OBFUSCATION
 
-		// Define these inside src/custom/defines_pre.h or src/custom/defines_post.h
+		// Define these inside src/custom/defines_pre.h or src/custom/defines_post.hpp
 		//#define PACKET_OBFUSCATION_KEY1 <key1>
 		//#define PACKET_OBFUSCATION_KEY2 <key2>
 		//#define PACKET_OBFUSCATION_KEY3 <key3>

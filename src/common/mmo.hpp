@@ -10,7 +10,7 @@
 #include <time.h>
 
 #ifndef PACKETVER
-	#error Please define PACKETVER in src/config/packets.h
+	#error Please define PACKETVER in src/config/packets.hpp
 #endif
 
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]

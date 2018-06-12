@@ -85,6 +85,6 @@
  **/
 #include "./const.hpp"
 
-#include "../custom/defines_post.h"
+#include "../custom/defines_post.hpp"
 
 #endif // _CONFIG_CORE_H_
