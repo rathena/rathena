@@ -23,7 +23,7 @@
     <ClInclude Include="cli.hpp" />
     <ClInclude Include="conf.h" />
     <ClInclude Include="core.h" />
-    <ClInclude Include="db.h" />
+    <ClInclude Include="db.hpp" />
     <ClInclude Include="des.hpp" />
     <ClInclude Include="ers.hpp" />
     <ClInclude Include="grfio.hpp" />
@@ -50,7 +50,7 @@
     <ClCompile Include="core.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
-    <ClCompile Include="db.c" />
+    <ClCompile Include="db.cpp" />
     <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.cpp" />
     <ClCompile Include="grfio.cpp" />

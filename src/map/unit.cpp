@@ -9,7 +9,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/random.hpp"
 #include "../common/socket.hpp"

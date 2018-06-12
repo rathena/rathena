@@ -11,7 +11,7 @@
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/ers.hpp"  // ers_destroy
 

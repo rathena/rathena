@@ -12,7 +12,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mapindex.hpp"
 #include "../common/mmo.h"

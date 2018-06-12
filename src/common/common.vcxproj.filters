@@ -23,7 +23,7 @@
     <ClInclude Include="core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="db.h">
+    <ClInclude Include="db.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="des.hpp">
@@ -94,7 +94,7 @@
     <ClCompile Include="core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="db.c">
+    <ClCompile Include="db.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="des.cpp">

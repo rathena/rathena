@@ -6,7 +6,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // MAX_SKILL, struct square
-#include "../common/db.h"
+#include "../common/db.hpp"
 
 #include "map.hpp" // struct block_list
 

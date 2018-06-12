@@ -6,7 +6,7 @@
 #include <stdlib.h> // atoi
 
 #include "../common/nullpo.hpp"
-#include "../common/db.h"  // ARR_FIND
+#include "../common/db.hpp"  // ARR_FIND
 #include "../common/malloc.hpp" // aMalloc, aFree
 #include "../common/showmsg.hpp"  // ShowWarning
 #include "../common/socket.hpp"  // RBUF*

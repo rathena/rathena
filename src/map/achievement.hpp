@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "../common/mmo.h"
-#include "../common/db.h"
+#include "../common/db.hpp"
 
 struct map_session_data;
 struct block_list;

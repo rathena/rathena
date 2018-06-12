@@ -17,7 +17,7 @@
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/ers.hpp"
-#include "../common/db.h"
+#include "../common/db.hpp"
 
 #include "map.hpp"
 #include "log.hpp"

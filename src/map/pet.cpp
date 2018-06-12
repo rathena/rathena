@@ -9,7 +9,7 @@
 
 #include "../common/utilities.hpp"
 
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"

@@ -6,7 +6,7 @@
 
 #include "../common/cbasetypes.h"
 
-#include "../common/db.h"
+#include "../common/db.hpp"
 
 struct map_session_data;
 struct s_search_store_search;

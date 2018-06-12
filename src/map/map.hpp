@@ -10,7 +10,7 @@
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/mmo.h"
 #include "../common/mapindex.hpp"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/msg_conf.hpp"
 
 #include "../config/core.h"

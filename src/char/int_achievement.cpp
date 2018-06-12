@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.h"
 #include "../common/showmsg.hpp"

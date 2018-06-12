@@ -37,10 +37,10 @@
  * @author (Athena build 4859) Flavio @ Amazon Project                       *
  * @author (up to Athena build 4706) Athena Dev Teams                        *
  * @encoding US-ASCII                                                        *
- * @see common#db.c                                                          *
+ * @see common#db.cpp                                                        *
 \*****************************************************************************/
-#ifndef _DB_H_
-#define _DB_H_
+#ifndef _DB_HPP_
+#define _DB_HPP_
 
 #include <stdarg.h>
 
@@ -1663,4 +1663,4 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 }
 #endif
 
-#endif /* _DB_H_ */
+#endif /* _DB_HPP_ */

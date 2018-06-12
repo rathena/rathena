@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/ers.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"

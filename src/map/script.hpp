@@ -5,7 +5,7 @@
 #define _SCRIPT_HPP_
 
 #include "../common/cbasetypes.h"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/mmo.h"
 
 #define NUM_WHISPER_VAR 10

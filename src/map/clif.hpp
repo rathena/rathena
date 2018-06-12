@@ -7,7 +7,7 @@
 #include <stdarg.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/db.h" //dbmap
+#include "../common/db.hpp" //dbmap
 #include "../common/mmo.h"
 
 struct Channel;

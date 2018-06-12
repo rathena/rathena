@@ -6,7 +6,7 @@
 
 #include "cbasetypes.h"
 #include "../config/core.h"
-#include "db.h"
+#include "db.hpp"
 #include <time.h>
 
 #ifndef PACKETVER

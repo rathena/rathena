@@ -4,7 +4,7 @@
 #include "pc_groups.hpp"
 
 #include "../common/conf.h"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp" // strcmp

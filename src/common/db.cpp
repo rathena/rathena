@@ -65,10 +65,10 @@
  * @version 2006/12/21
  * @author Athena Dev team
  * @encoding US-ASCII
- * @see #db.h
+ * @see #db.hpp
 \*****************************************************************************/
 
-#include "db.h"
+#include "db.hpp"
 
 #include "ers.hpp"
 #include "malloc.hpp"
@@ -2565,7 +2565,7 @@ DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOpt
 	db->free_lock = 0;
 	/* Other */
 	snprintf(ers_name, 50, "db_alloc:nodes:%s:%s:%d",func,file,line);
-	db->nodes = ers_new(sizeof(struct dbn),ers_name,ERS_OPT_WAIT|ERS_OPT_FREE_NAME|ERS_OPT_CLEAN);
+	db->nodes = ers_new(sizeof(struct dbn),ers_name,ERS_DBN_OPTIONS);
 	db->cmp = db_default_cmp(type);
 	db->hash = db_default_hash(type);
 	db->release = db_default_release(type, options);
@@ -2758,8 +2758,8 @@ void* db_data2ptr(DBData *data)
  * @see #db_final(void)
  */
 void db_init(void) {
-	db_iterator_ers = ers_new(sizeof(struct DBIterator_impl),"db.c::db_iterator_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
-	db_alloc_ers = ers_new(sizeof(struct DBMap_impl),"db.c::db_alloc_ers",ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	db_iterator_ers = ers_new(sizeof(struct DBIterator_impl),"db.cpp::db_iterator_ers",ERS_CACHE_OPTIONS);
+	db_alloc_ers = ers_new(sizeof(struct DBMap_impl),"db.cpp::db_alloc_ers",ERS_CACHE_OPTIONS);
 	ers_chunk_size(db_alloc_ers, 50);
 	ers_chunk_size(db_iterator_ers, 10);
 	DB_COUNTSTAT(db_init);

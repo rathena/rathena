@@ -11,7 +11,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.hpp"
-#include "../common/db.h"
+#include "../common/db.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
