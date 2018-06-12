@@ -32,7 +32,7 @@
     <ClInclude Include="ers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="grfio.h">
+    <ClInclude Include="grfio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="malloc.h">
@@ -103,7 +103,7 @@
     <ClCompile Include="ers.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="grfio.c">
+    <ClCompile Include="grfio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="malloc.c">

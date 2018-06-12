@@ -12,7 +12,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
-#include "../common/grfio.h"
+#include "../common/grfio.hpp"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/random.hpp"

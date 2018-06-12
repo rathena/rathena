@@ -10,7 +10,7 @@
 #endif
 
 #include "../common/mmo.h"
-#include "../common/grfio.h"
+#include "../common/grfio.hpp"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"

@@ -9,7 +9,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/timer.h"
-#include "../common/grfio.h"
+#include "../common/grfio.hpp"
 #include "../common/malloc.h"
 #include "../common/socket.h" // WFIFO*()
 #include "../common/showmsg.h"

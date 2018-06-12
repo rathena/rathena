@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_GRFIO_H_
-#define	_GRFIO_H_
+#ifndef	_GRFIO_HPP_
+#define	_GRFIO_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,4 +22,4 @@ int encode_zip(void* dest, unsigned long* destLen, const void* source, unsigned 
 }
 #endif
 
-#endif /* _GRFIO_H_ */
+#endif /* _GRFIO_HPP_ */

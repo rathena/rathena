@@ -26,7 +26,7 @@
     <ClInclude Include="db.h" />
     <ClInclude Include="des.hpp" />
     <ClInclude Include="ers.h" />
-    <ClInclude Include="grfio.h" />
+    <ClInclude Include="grfio.hpp" />
     <ClInclude Include="malloc.h" />
     <ClInclude Include="mapindex.h" />
     <ClInclude Include="md5calc.h" />
@@ -53,7 +53,7 @@
     <ClCompile Include="db.c" />
     <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.c" />
-    <ClCompile Include="grfio.c" />
+    <ClCompile Include="grfio.cpp" />
     <ClCompile Include="malloc.c" />
     <ClCompile Include="mapindex.c" />
     <ClCompile Include="md5calc.c" />
