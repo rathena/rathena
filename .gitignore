@@ -82,10 +82,6 @@ Thumbs.db
 /src/map/obj_sql
 /src/map/pcre.h
 
-# /src/test/
-/src/test/Makefile
-/src/test/obj
-
 # /src/tool/
 /src/tool/Makefile
 /src/tool/obj_all
