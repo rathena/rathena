@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef _CONFIG_RENEWAL_H_
-#define _CONFIG_RENEWAL_H_
+#ifndef _CONFIG_RENEWAL_HPP_
+#define _CONFIG_RENEWAL_HPP_
 
 //quick option to disable all renewal option, used by ./configure
 //#define PRERE
@@ -74,4 +74,4 @@
 
 #endif
 
-#endif // _CONFIG_RENEWAL_H_
+#endif // _CONFIG_RENEWAL_HPP_

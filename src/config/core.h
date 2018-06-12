@@ -76,7 +76,7 @@
  * No settings past this point
  **/
 #include "./packets.h"
-#include "./renewal.h"
+#include "./renewal.hpp"
 #include "./secure.hpp"
 #include "./classes/general.hpp"
 
