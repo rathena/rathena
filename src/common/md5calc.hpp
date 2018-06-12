@@ -1,5 +1,5 @@
-#ifndef _MD5CALC_H_
-#define _MD5CALC_H_
+#ifndef _MD5CALC_HPP_
+#define _MD5CALC_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,4 +13,4 @@ void MD5_Salt(unsigned int len, char * output);
 }
 #endif
 
-#endif /* _MD5CALC_H_ */
+#endif /* _MD5CALC_HPP_ */

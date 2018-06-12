@@ -20,7 +20,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/md5calc.h"
+#include "../common/md5calc.hpp"
 #include "../common/nullpo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.h"

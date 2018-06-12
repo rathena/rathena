@@ -18,7 +18,7 @@
 #include "../common/socket.h" //wfifo session
 #include "../common/malloc.h"
 #include "../common/utils.h"
-#include "../common/md5calc.h"
+#include "../common/md5calc.hpp"
 #include "../common/random.hpp"
 
 #include "account.hpp"

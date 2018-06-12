@@ -41,7 +41,7 @@
     <ClInclude Include="mapindex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="md5calc.h">
+    <ClInclude Include="md5calc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mmo.h">
@@ -112,7 +112,7 @@
     <ClCompile Include="mapindex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="md5calc.c">
+    <ClCompile Include="md5calc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="msg_conf.c">

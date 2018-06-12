@@ -7,7 +7,7 @@
  ***********************************************************/
 
 #include "../common/random.hpp"
-#include "md5calc.h"
+#include "md5calc.hpp"
 #include <string.h>
 #include <stdio.h>
 
