@@ -1859,8 +1859,37 @@ static int battle_calc_status_attack(struct status_data *status, short hand)
 		return 2 * status->batk;
 }
 
+/** Calculates overrefine damage bonus and weapon related bonuses (unofficial)
+* @param sd Player
+* @param damage Current damage
+* @param lr_type EQI_HAND_L:left-hand weapon, EQI_HAND_R:right-hand weapon
+*/
+static void battle_add_weapon_damage(struct map_session_data *sd, int64 *damage, int lr_type) {
+	if (!sd)
+		return;
+	//rodatazone says that Overrefine bonuses are part of baseatk
+	//Here we also apply the weapon_damage_rate bonus so it is correctly applied on left/right hands.
+	if (lr_type == EQI_HAND_L) {
+		if (sd->left_weapon.overrefine)
+			(*damage) = (*damage) + rnd() % sd->left_weapon.overrefine + 1;
+		if (sd->weapon_damage_rate[sd->weapontype2])
+			(*damage) += (*damage) * sd->weapon_damage_rate[sd->weapontype2] / 100;
+	}
+	else if (lr_type == EQI_HAND_R) {
+		if (sd->right_weapon.overrefine)
+			(*damage) = (*damage) + rnd() % sd->right_weapon.overrefine + 1;
+		if (sd->weapon_damage_rate[sd->weapontype1])
+			(*damage) += (*damage) * sd->weapon_damage_rate[sd->weapontype1] / 100;
+	}
+}
+
 /**
- * This section calculates Variance, OverUpgradeBonus, and SizePenaltyMultiplier of weapon damage parts.
+ * Calculates renewal Variance, OverUpgradeBonus, and SizePenaltyMultiplier of weapon damage parts for player
+ * @param src Block list of attacker
+ * @param tstatus Target's status data
+ * @param wa Weapon attack data
+ * @param sd Player
+ * @return Base weapon damage
  */
 static int battle_calc_base_weapon_attack(struct block_list *src, struct status_data *tstatus, struct weapon_atk *wa, struct map_session_data *sd)
 {
@@ -1873,21 +1902,10 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 	struct status_change *sc = status_get_sc(src);
 
 	if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]]) {
-		int refine = 0;
 		int variance =   wa->atk * (sd->inventory_data[sd->equip_index[type]]->wlv*5)/100;
 
 		atkmin = max(0, (int)(atkmin - variance));
 		atkmax = min(UINT16_MAX, (int)(atkmax + variance));
-
-		//rodatazone says that Overrefine bonuses are part of baseatk
-		//Here we also apply the weapon_damage_rate bonus so it is correctly applied on left/right hands.
-		if (type == EQI_HAND_L && sd->left_weapon.overrefine)
-			refine = rnd() % sd->left_weapon.overrefine + 1;
-		else if (type == EQI_HAND_R && sd->right_weapon.overrefine)
-			refine = rnd() % sd->right_weapon.overrefine + 1;
-
-		atkmin += refine;
-		atkmax += refine;
 
 		if (sc && sc->data[SC_MAXIMIZEPOWER])
 			damage = atkmax;
@@ -1897,6 +1915,8 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 
 	if (sc && sc->data[SC_WEAPONPERFECTION])
 		weapon_perfection = 1;
+
+	battle_add_weapon_damage(sd, &damage, type);
 
 	damage = battle_calc_sizefix(damage, sd, tstatus->size, type, weapon_perfection);
 
@@ -2021,21 +2041,8 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 	else
 		damage += status->batk;
 
-	//rodatazone says that Overrefine bonuses are part of baseatk
-	//Here we also apply the weapon_damage_rate bonus so it is correctly applied on left/right hands.
-	if(sd) {
-		if (type == EQI_HAND_L) {
-			if(sd->left_weapon.overrefine)
-				damage += rnd()%sd->left_weapon.overrefine+1;
-			if (sd->weapon_damage_rate[sd->weapontype2])
-				damage += damage * sd->weapon_damage_rate[sd->weapontype2] / 100;
-		} else { //Right hand
-			if(sd->right_weapon.overrefine)
-				damage += rnd()%sd->right_weapon.overrefine+1;
-			if (sd->weapon_damage_rate[sd->weapontype1])
-				damage += damage * sd->weapon_damage_rate[sd->weapontype1] / 100;
-		}
-	}
+	if (sd)
+		battle_add_weapon_damage(sd, &damage, type);
 
 #ifdef RENEWAL
 	if (flag&1)
