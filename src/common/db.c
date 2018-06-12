@@ -73,7 +73,7 @@
 #include "ers.h"
 #include "malloc.h"
 #include "mmo.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "strlib.h"
 
 #include <stdio.h>

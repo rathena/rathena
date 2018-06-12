@@ -12,7 +12,7 @@
 #include "../common/mmo.h"
 #include "../common/grfio.hpp"
 #include "../common/malloc.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/utils.h"
 
 #define NO_WATER 1000000

@@ -11,7 +11,7 @@
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/socket.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/mapindex.h"
 #include "../common/sql.h"
 

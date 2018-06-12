@@ -9,7 +9,7 @@
 #include "../common/sql.h" // SQL_INNODB
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"

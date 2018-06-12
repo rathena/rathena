@@ -17,7 +17,7 @@
 #include "../common/socket.h"
 #include "../common/sql.h"
 #include "../common/strlib.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 
 // global sql settings (in ipban_sql.c)
 static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f

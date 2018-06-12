@@ -13,7 +13,7 @@
 #include <string.h>
 
 #include "../common/mmo.h" //cbasetype + NAME_LENGTH
-#include "../common/showmsg.h" //show notice
+#include "../common/showmsg.hpp" //show notice
 #include "../common/md5calc.hpp"
 #include "../common/ers.h"
 #include "../common/cli.hpp"

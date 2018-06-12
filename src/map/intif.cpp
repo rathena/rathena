@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/db.h"

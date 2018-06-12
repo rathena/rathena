@@ -8,7 +8,7 @@
 
 #include "../common/cbasetypes.h" // uint16, uint32
 #include "../common/malloc.h" // CREATE, RECREATE, aFree
-#include "../common/showmsg.h" // ShowWarning, ShowStatus
+#include "../common/showmsg.hpp" // ShowWarning, ShowStatus
 
 #include "pc.hpp" // s_map_session_data
 #include "pet.hpp" // pet_create_egg

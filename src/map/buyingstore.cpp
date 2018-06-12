@@ -8,7 +8,7 @@
 #include "../common/nullpo.h"
 #include "../common/db.h"  // ARR_FIND
 #include "../common/malloc.h" // aMalloc, aFree
-#include "../common/showmsg.h"  // ShowWarning
+#include "../common/showmsg.hpp"  // ShowWarning
 #include "../common/socket.h"  // RBUF*
 #include "../common/strlib.h"  // safestrncpy
 #include "../common/timer.h"  // gettick

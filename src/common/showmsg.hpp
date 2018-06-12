@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SHOWMSG_H_
-#define _SHOWMSG_H_
+#ifndef _SHOWMSG_HPP_
+#define _SHOWMSG_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -105,4 +105,4 @@ extern void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 }
 #endif
 
-#endif /* _SHOWMSG_H_ */
+#endif /* _SHOWMSG_HPP_ */

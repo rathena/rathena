@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "cbasetypes.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "socket.h"
 #include "utils.h"
 

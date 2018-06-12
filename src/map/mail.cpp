@@ -4,7 +4,7 @@
 #include "mail.hpp"
 
 #include "../common/nullpo.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 

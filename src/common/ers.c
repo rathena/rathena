@@ -45,7 +45,7 @@
 #include "ers.h"
 #include "malloc.h" // CREATE, RECREATE, aMalloc, aFree
 #include "nullpo.h"
-#include "showmsg.h" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
+#include "showmsg.hpp" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
 
 #include <stdlib.h>
 #include <string.h>

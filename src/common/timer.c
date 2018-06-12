@@ -4,7 +4,7 @@
 #include "cbasetypes.h"
 #include "db.h"
 #include "malloc.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "utils.h"
 #include "nullpo.h"
 #include "timer.h"

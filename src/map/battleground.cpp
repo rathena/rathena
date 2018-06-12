@@ -7,7 +7,7 @@
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/strlib.h"
 
 #include "battle.hpp"

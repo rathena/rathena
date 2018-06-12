@@ -49,16 +49,16 @@ set( COMMON_MINI_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${COMMON_SOURCE_DIR}/core.h"
 	"${COMMON_SOURCE_DIR}/malloc.h"
-	"${COMMON_SOURCE_DIR}/showmsg.h"
+	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/strlib.h"
-	${LIBCONFIG_HEADERS} # needed by showmsg.h
+	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
 	CACHE INTERNAL "" )
 set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.c"
-	"${COMMON_SOURCE_DIR}/showmsg.c"
+	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.c"
-	${LIBCONFIG_SOURCES} # needed by showmsg.c
+	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	CACHE INTERNAL "" )
 set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
 set( COMMON_MINI_DEFINITIONS "-DMINICORE ${LIBCONFIG_DEFINITIONS}" CACHE INTERNAL "" )
@@ -82,7 +82,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/md5calc.hpp"
 	"${COMMON_SOURCE_DIR}/nullpo.h"
 	"${COMMON_SOURCE_DIR}/random.hpp"
-	"${COMMON_SOURCE_DIR}/showmsg.h"
+	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/socket.h"
 	"${COMMON_SOURCE_DIR}/strlib.h"
 	"${COMMON_SOURCE_DIR}/timer.h"
@@ -91,7 +91,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/yamlwrapper.h"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
-	${LIBCONFIG_HEADERS} # needed by conf.h/showmsg.h
+	${LIBCONFIG_HEADERS} # needed by conf.h/showmsg.hpp
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/conf.c"
@@ -105,7 +105,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/md5calc.cpp"
 	"${COMMON_SOURCE_DIR}/nullpo.c"
 	"${COMMON_SOURCE_DIR}/random.cpp"
-	"${COMMON_SOURCE_DIR}/showmsg.c"
+	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/socket.c"
 	"${COMMON_SOURCE_DIR}/strlib.c"
 	"${COMMON_SOURCE_DIR}/timer.c"
@@ -114,7 +114,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/yamlwrapper.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
-	${LIBCONFIG_SOURCES} # needed by conf.c/showmsg.c
+	${LIBCONFIG_SOURCES} # needed by conf.c/showmsg.cpp
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}

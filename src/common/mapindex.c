@@ -4,7 +4,7 @@
 #include "mmo.h"
 #include "core.h"
 #include "mapindex.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "strlib.h"
 
 #include <stdlib.h>

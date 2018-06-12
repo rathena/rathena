@@ -5,7 +5,7 @@
 #include "mmo.h"
 #include "timer.h"
 #include "malloc.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "strlib.h"
 #include "socket.h"
 

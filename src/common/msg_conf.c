@@ -4,7 +4,7 @@
 
 #include "malloc.h"
 #include "msg_conf.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 
 /*
  * Return the message string of the specified number by [Yor]

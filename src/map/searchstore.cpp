@@ -5,7 +5,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"  // aMalloc, aRealloc, aFree
-#include "../common/showmsg.h"  // ShowError, ShowWarning
+#include "../common/showmsg.hpp"  // ShowError, ShowWarning
 #include "../common/strlib.h"  // safestrncpy
 
 #include "battle.hpp"  // battle_config.*

@@ -14,7 +14,7 @@
 #include <string.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/sql.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"

@@ -3,7 +3,7 @@
 
 #include "malloc.h"
 #include "core.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 
 #include <stdlib.h>
 #include <string.h>

@@ -17,7 +17,7 @@
 #endif
 
 #include "cbasetypes.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "core.h"
 #include "cli.hpp"
 

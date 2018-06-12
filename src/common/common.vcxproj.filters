@@ -56,7 +56,7 @@
     <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="showmsg.h">
+    <ClInclude Include="showmsg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="socket.h">
@@ -124,7 +124,7 @@
     <ClCompile Include="random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="showmsg.c">
+    <ClCompile Include="showmsg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="socket.c">

@@ -3,7 +3,7 @@
 
 #include "cbasetypes.h"
 #include "malloc.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "strlib.h"
 
 #include <stdlib.h>

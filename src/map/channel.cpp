@@ -8,7 +8,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/conf.h" //libconfig
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/strlib.h" //safestrncpy
 #include "../common/socket.h" //set_eof
 #include "../common/timer.h"  // DIFF_TICK

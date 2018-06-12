@@ -4,7 +4,7 @@
 #include "cbasetypes.h"
 #include "des.hpp"
 #include "malloc.h"
-#include "showmsg.h"
+#include "showmsg.hpp"
 #include "strlib.h"
 #include "utils.h"
 #include "grfio.hpp"

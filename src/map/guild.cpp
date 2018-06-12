@@ -10,7 +10,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/mapindex.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/ers.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"

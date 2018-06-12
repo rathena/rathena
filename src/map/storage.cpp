@@ -13,7 +13,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 
 #include "map.hpp" // struct map_session_data
 #include "chrif.hpp"

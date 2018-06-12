@@ -20,7 +20,7 @@
 #include "../common/malloc.h"
 #include "../common/md5calc.hpp"
 #include "../common/random.hpp"
-#include "../common/showmsg.h"
+#include "../common/showmsg.hpp"
 #include "../common/socket.h" //ip2str
 #include "../common/strlib.h"
 #include "../common/timer.h"
