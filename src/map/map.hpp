@@ -15,18 +15,6 @@
 
 #include "../config/core.h"
 
-extern "C" {
-	//Options read in cli (c-linkage for now)
-	extern const char*INTER_CONF_NAME;
-	extern const char*LOG_CONF_NAME;
-	extern const char*MAP_CONF_NAME;
-	extern const char*BATTLE_CONF_FILENAME;
-	extern const char*ATCOMMAND_CONF_FILENAME;
-	extern const char*SCRIPT_CONF_NAME;
-	extern const char*MSG_CONF_NAME_EN;
-	extern const char*GRF_PATH_FILENAME;
-}
-
 struct npc_data;
 struct item_data;
 struct Channel;

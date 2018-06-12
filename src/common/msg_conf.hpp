@@ -6,10 +6,6 @@
 
 #include "../config/core.h"
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 enum lang_types {
 	LANG_RUS = 0x01,
 	LANG_SPN = 0x02,
@@ -41,10 +37,6 @@ int msg_langstr2langtype(char * langtype);
 const char* msg_langtype2langstr(int langtype);
 // Verify that the choosen langtype is enabled.
 int msg_checklangtype(int lang, bool display);
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* MSG_CONF_HPP */
 

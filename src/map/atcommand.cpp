@@ -8,6 +8,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
+#include "../common/cli.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"

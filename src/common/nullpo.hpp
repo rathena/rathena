@@ -4,10 +4,6 @@
 #ifndef _NULLPO_HPP_
 #define _NULLPO_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.hpp"
 
 #define NLP_MARK __FILE__, __LINE__, __func__
@@ -210,9 +206,5 @@ void nullpo_info(const char *file, int line, const char *func);
 void nullpo_info_f(const char *file, int line, const char *func, 
                    const char *fmt, ...)
                    __attribute__((format(printf,4,5)));
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _NULLPO_HPP_ */

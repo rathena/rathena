@@ -11,14 +11,6 @@
 #ifndef _LOGINCNSLIF_HPP_
 #define _LOGINCNSLIF_HPP_
 
-extern "C" {
-/**
- * Login-server console help: starting option info.
- *  Do not rename function used as extern.
- * @param do_exit: terminate program execution ?
- */
-void display_helpscreen(bool do_exit);
-}
 
 /**
  * Console Command Parser

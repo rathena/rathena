@@ -4,10 +4,6 @@
 #ifndef _SHOWMSG_HPP_
 #define _SHOWMSG_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../../3rdparty/libconfig/libconfig.h"
 
 // for help with the console colors look here:
@@ -100,9 +96,5 @@ extern void ShowDebug(const char *, ...);
 extern void ShowError(const char *, ...);
 extern void ShowFatalError(const char *, ...);
 extern void ShowConfigWarning(config_setting_t *config, const char *string, ...);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _SHOWMSG_HPP_ */

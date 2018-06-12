@@ -17,10 +17,6 @@
 #undef __USED_GNU
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt, const char* spt, int size);
@@ -161,9 +157,5 @@ char* StringBuf_Value(StringBuf* self);
 void StringBuf_Clear(StringBuf* self);
 void StringBuf_Destroy(StringBuf* self);
 void StringBuf_Free(StringBuf* self);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _STRLIB_HPP_ */

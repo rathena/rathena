@@ -10,10 +10,6 @@
 #ifndef CLI_HPP
 #define	CLI_HPP
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 #define MAX_CONSOLE_IN 200 //max is map...
 #define MIN_CONSOLE_IN 4 //min is help
 //map
@@ -40,10 +36,6 @@ bool opt_has_next_value(const char* option, int i, int argc);
 int cli_get_options(int argc, char ** argv);
 int parse_console_timer(int tid, unsigned int tick, int id, intptr_t data);
 extern int parse_console(const char* buf); //particular for each serv
-
-#ifdef	__cplusplus
-}
-#endif
 
 #endif	/* CLI_HPP */
 

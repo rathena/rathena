@@ -4,10 +4,6 @@
 #ifndef _UTILS_HPP_
 #define _UTILS_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.hpp"
 #include <stdio.h> // FILE*
 
@@ -49,9 +45,5 @@ extern uint16 GetUShort(const unsigned char* buf);
 extern uint32 GetULong(const unsigned char* buf);
 extern int32 GetLong(const unsigned char* buf);
 extern float GetFloat(const unsigned char* buf);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _UTILS_HPP_ */

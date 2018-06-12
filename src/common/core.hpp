@@ -4,10 +4,6 @@
 #ifndef	_CORE_HPP_
 #define	_CORE_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* so that developers with --enable-debug can raise signals from any section of the code they'd like */
 #ifdef DEBUG
 	#include <signal.h>
@@ -56,9 +52,5 @@ enum E_CORE_ST
 /// Called when a terminate signal is received. (Ctrl+C pressed)
 /// If NULL, runflag is set to CORE_ST_STOP instead.
 extern void (*shutdown_callback)(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _CORE_HPP_ */

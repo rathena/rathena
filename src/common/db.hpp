@@ -46,10 +46,6 @@
 
 #include "cbasetypes.hpp"
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 /*****************************************************************************\
  *  (1) Section with public typedefs, enums, unions, structures and defines. *
  *  DBRelease    - Enumeration of release options.                           *
@@ -1658,9 +1654,5 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param v2 Second value
 /// @return negative if v1 is top, positive if v2 is top, 0 if equal
 #define BHEAP_MAXTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 > v2 ? -1 : 1 )
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _DB_HPP_ */

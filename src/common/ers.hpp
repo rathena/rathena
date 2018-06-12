@@ -40,10 +40,6 @@
 #ifndef _ERS_HPP_
 #define _ERS_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.hpp"
 
 /*****************************************************************************\
@@ -180,9 +176,5 @@ void ers_report(void);
  **/
 void ers_final(void);
 #endif /* DISABLE_ERS / not DISABLE_ERS */
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _ERS_HPP_ */

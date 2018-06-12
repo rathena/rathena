@@ -17,10 +17,6 @@
 
 #include <time.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
@@ -184,10 +180,6 @@ void set_eof(int fd);
 void send_shortlist_add_fd(int fd);
 // Do pending network sends (and eof handling) from the shortlist.
 void send_shortlist_do_sends();
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 #endif /* _SOCKET_HPP_ */

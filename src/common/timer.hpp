@@ -4,10 +4,6 @@
 #ifndef	_TIMER_HPP_
 #define	_TIMER_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "cbasetypes.hpp"
 #include <time.h>
 
@@ -63,9 +59,5 @@ double solve_time(char* modif_p);
 int do_timer(unsigned int tick);
 void timer_init(void);
 void timer_final(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _TIMER_HPP_ */

@@ -7,10 +7,6 @@
 #include "cbasetypes.hpp"
 #include <stdarg.h>// va_list
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Return codes
 #define SQL_ERROR -1
 #define SQL_SUCCESS 0
@@ -349,9 +345,5 @@ void SqlStmt_ShowDebug_(SqlStmt* self, const char* debug_file, const unsigned lo
 void SqlStmt_Free(SqlStmt* self);
 
 void Sql_Init(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _COMMON_SQL_HPP_ */
