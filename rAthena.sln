@@ -16,7 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{60D3315D-FBF4-4FBF-8D44-99D5BED11D32}"
 	ProjectSection(SolutionItems) = preProject
 		src\config\const.hpp = src\config\const.hpp
-		src\config\core.h = src\config\core.h
+		src\config\core.hpp = src\config\core.hpp
 		src\config\classes\general.hpp = src\config\classes\general.hpp
 		src\config\packets.hpp = src\config\packets.hpp
 		src\config\renewal.hpp = src\config\renewal.hpp

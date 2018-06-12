@@ -5,7 +5,7 @@
 #define	_MMO_HPP_
 
 #include "cbasetypes.hpp"
-#include "../config/core.h"
+#include "../config/core.hpp"
 #include "db.hpp"
 #include <time.h>
 

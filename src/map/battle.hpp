@@ -7,7 +7,7 @@
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
 
-#include "../config/core.h"
+#include "../config/core.hpp"
 
 #include "map.hpp" //ELE_MAX
 

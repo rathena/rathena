@@ -13,7 +13,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
-#include "../config/core.h"
+#include "../config/core.hpp"
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;

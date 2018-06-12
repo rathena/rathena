@@ -13,7 +13,7 @@
 #include "../common/db.hpp"
 #include "../common/msg_conf.hpp"
 
-#include "../config/core.h"
+#include "../config/core.hpp"
 
 struct npc_data;
 struct item_data;

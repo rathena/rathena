@@ -4253,7 +4253,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			}
 		}
 #else
-		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
+		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.hpp). Skipping this mapflag..\n");
 #endif
 	}
 	else

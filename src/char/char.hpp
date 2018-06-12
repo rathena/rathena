@@ -4,7 +4,7 @@
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
-#include "../config/core.h"
+#include "../config/core.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
 #include "../common/msg_conf.hpp"
 #include "../common/mmo.hpp"

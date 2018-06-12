@@ -28,7 +28,7 @@
 #include "../common/cli.hpp"
 #include "../common/utils.hpp"
 #include "../common/mmo.hpp"
-#include "../config/core.h"
+#include "../config/core.hpp"
 #include "account.hpp"
 #include "ipban.hpp"
 #include "loginlog.hpp"
