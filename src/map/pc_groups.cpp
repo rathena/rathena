@@ -7,7 +7,7 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h" // strcmp
+#include "../common/strlib.hpp" // strcmp
 #include "../common/socket.h"
 
 #include "atcommand.hpp" // AtCommandType

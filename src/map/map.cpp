@@ -15,7 +15,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/nullpo.h"
 #include "../common/random.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/cli.hpp"
 #include "../common/ers.h"

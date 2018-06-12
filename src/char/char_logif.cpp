@@ -11,7 +11,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
 #include "../common/utils.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "inter.hpp"
 #include "int_guild.hpp"

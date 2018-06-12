@@ -74,7 +74,7 @@
 #include "malloc.h"
 #include "mmo.h"
 #include "showmsg.hpp"
-#include "strlib.h"
+#include "strlib.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>

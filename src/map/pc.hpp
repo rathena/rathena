@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
-#include "../common/strlib.h"// StringBuf
+#include "../common/strlib.hpp"// StringBuf
 
 #include "map.hpp" // RC_ALL
 #include "itemdb.hpp" // MAX_ITEMGROUP

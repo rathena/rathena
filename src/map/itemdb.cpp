@@ -9,7 +9,7 @@
 #include "../common/malloc.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp" // struct battle_config

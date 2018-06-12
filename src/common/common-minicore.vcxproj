@@ -33,7 +33,7 @@
     <ClInclude Include="nullpo.h" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="showmsg.hpp" />
-    <ClInclude Include="strlib.h" />
+    <ClInclude Include="strlib.hpp" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="winapi.hpp" />
   </ItemGroup>
@@ -54,7 +54,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="showmsg.cpp" />
-    <ClCompile Include="strlib.c" />
+    <ClCompile Include="strlib.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="winapi.cpp" />
   </ItemGroup>

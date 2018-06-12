@@ -16,7 +16,7 @@
 #include "../common/sql.hpp"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "inter.hpp"
 #include "char.hpp"

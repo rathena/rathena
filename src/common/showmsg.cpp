@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "cbasetypes.h"
-#include "strlib.h" // StringBuf
+#include "strlib.hpp" // StringBuf
 #include "showmsg.hpp"
 #include "core.h" //[Ind] - For SERVER_TYPE
 

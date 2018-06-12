@@ -17,7 +17,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/ers.h"
 #include "../common/random.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/socket.h"
 

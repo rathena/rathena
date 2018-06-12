@@ -12,7 +12,7 @@
 #include "../common/mapindex.h"
 #include "../common/showmsg.hpp"
 #include "../common/ers.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 
 #include "map.hpp"

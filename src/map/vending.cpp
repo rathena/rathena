@@ -5,7 +5,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.hpp" // ShowInfo
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/timer.hpp"  // DIFF_TICK
 
 #include "buyingstore.hpp"

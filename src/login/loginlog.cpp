@@ -16,7 +16,7 @@
 #include "../common/mmo.h"
 #include "../common/socket.h"
 #include "../common/sql.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/showmsg.hpp"
 
 // global sql settings (in ipban_sql.c)

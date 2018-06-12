@@ -6,7 +6,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"  // aMalloc, aRealloc, aFree
 #include "../common/showmsg.hpp"  // ShowError, ShowWarning
-#include "../common/strlib.h"  // safestrncpy
+#include "../common/strlib.hpp"  // safestrncpy
 
 #include "battle.hpp"  // battle_config.*
 #include "clif.hpp"  // clif_open_search_store_info, clif_search_store_info_*

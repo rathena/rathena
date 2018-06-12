@@ -18,7 +18,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/sql.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 /// global defines
 

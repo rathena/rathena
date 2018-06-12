@@ -14,7 +14,7 @@
 #include "../common/malloc.h"
 #include "../common/random.hpp"
 #include "../common/socket.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/utilities.hpp"
 #include "../common/conf.h"

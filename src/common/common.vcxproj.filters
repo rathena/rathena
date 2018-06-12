@@ -65,7 +65,7 @@
     <ClInclude Include="sql.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="strlib.h">
+    <ClInclude Include="strlib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="timer.hpp">
@@ -133,7 +133,7 @@
     <ClCompile Include="sql.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="strlib.c">
+    <ClCompile Include="strlib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="timer.cpp">

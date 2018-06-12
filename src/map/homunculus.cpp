@@ -12,7 +12,7 @@
 #include "../common/mmo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 
 #include "log.hpp"

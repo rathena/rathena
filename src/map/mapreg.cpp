@@ -11,7 +11,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 
 #include "map.hpp" // mmysql_handle

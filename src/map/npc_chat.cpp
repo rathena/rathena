@@ -10,7 +10,7 @@
 #include "../common/timer.hpp"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "mob.hpp" // struct mob_data
 #include "pc.hpp" // struct map_session_data

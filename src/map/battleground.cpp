@@ -8,7 +8,7 @@
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "battle.hpp"
 #include "clif.hpp"

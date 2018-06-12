@@ -53,7 +53,7 @@
     <ClInclude Include="showmsg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="strlib.h">
+    <ClInclude Include="strlib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils.hpp">
@@ -100,7 +100,7 @@
     <ClCompile Include="showmsg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="strlib.c">
+    <ClCompile Include="strlib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utils.cpp">

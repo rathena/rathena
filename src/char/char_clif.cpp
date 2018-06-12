@@ -13,7 +13,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/mapindex.h"
 #include "../common/malloc.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/timer.hpp"
 #include "inter.hpp"

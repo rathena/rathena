@@ -5,7 +5,7 @@
 #include "des.hpp"
 #include "malloc.h"
 #include "showmsg.hpp"
-#include "strlib.h"
+#include "strlib.hpp"
 #include "utils.hpp"
 #include "grfio.hpp"
 

@@ -11,7 +11,7 @@
 #include "../common/nullpo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "itemdb.hpp"
 #include "map.hpp"

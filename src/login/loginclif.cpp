@@ -13,7 +13,7 @@
 #include <string.h>
 
 #include "../common/timer.hpp" //difftick
-#include "../common/strlib.h" //safeprint
+#include "../common/strlib.hpp" //safeprint
 #include "../common/showmsg.hpp" //show notice
 #include "../common/socket.h" //wfifo session
 #include "../common/malloc.h"

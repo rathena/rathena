@@ -6,7 +6,7 @@
 #include "showmsg.hpp"
 #include "malloc.h"
 #include "core.h"
-#include "strlib.h"
+#include "strlib.hpp"
 #ifndef MINICORE
 #include "ers.h"
 #include "socket.h"

@@ -10,7 +10,7 @@
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.hpp"  // ShowWarning
 #include "../common/socket.h"  // RBUF*
-#include "../common/strlib.h"  // safestrncpy
+#include "../common/strlib.hpp"  // safestrncpy
 #include "../common/timer.hpp"  // gettick
 
 #include "atcommand.hpp"  // msg_txt

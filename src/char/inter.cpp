@@ -13,7 +13,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/timer.hpp"

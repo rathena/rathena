@@ -17,7 +17,7 @@
 #include "../common/malloc.h"
 #include "../common/utils.hpp"
 #include "../common/ers.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "battle.hpp"
 #include "itemdb.hpp"

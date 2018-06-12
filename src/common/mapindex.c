@@ -5,7 +5,7 @@
 #include "core.h"
 #include "mapindex.h"
 #include "showmsg.hpp"
-#include "strlib.h"
+#include "strlib.hpp"
 
 #include <stdlib.h>
 

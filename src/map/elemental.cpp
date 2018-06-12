@@ -15,7 +15,7 @@
 #include "../common/mmo.h"
 #include "../common/showmsg.hpp"
 #include "../common/random.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 
 #include "log.hpp"

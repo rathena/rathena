@@ -50,14 +50,14 @@ set( COMMON_MINI_HEADERS
 	"${COMMON_SOURCE_DIR}/core.h"
 	"${COMMON_SOURCE_DIR}/malloc.h"
 	"${COMMON_SOURCE_DIR}/showmsg.hpp"
-	"${COMMON_SOURCE_DIR}/strlib.h"
+	"${COMMON_SOURCE_DIR}/strlib.hpp"
 	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
 	CACHE INTERNAL "" )
 set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.c"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
-	"${COMMON_SOURCE_DIR}/strlib.c"
+	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	CACHE INTERNAL "" )
 set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
@@ -84,7 +84,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/random.hpp"
 	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/socket.h"
-	"${COMMON_SOURCE_DIR}/strlib.h"
+	"${COMMON_SOURCE_DIR}/strlib.hpp"
 	"${COMMON_SOURCE_DIR}/timer.hpp"
 	"${COMMON_SOURCE_DIR}/utils.hpp"
 	"${COMMON_SOURCE_DIR}/msg_conf.h"
@@ -107,7 +107,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/random.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/socket.c"
-	"${COMMON_SOURCE_DIR}/strlib.c"
+	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	"${COMMON_SOURCE_DIR}/timer.cpp"
 	"${COMMON_SOURCE_DIR}/utils.cpp"
 	"${COMMON_SOURCE_DIR}/msg_conf.c"

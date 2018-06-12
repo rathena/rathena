@@ -18,7 +18,7 @@
 #include "../common/ers.h"
 #include "../common/cli.hpp"
 #include "../common/timer.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "login.hpp"
 

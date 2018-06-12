@@ -6,7 +6,7 @@
 #include "timer.hpp"
 #include "malloc.h"
 #include "showmsg.hpp"
-#include "strlib.h"
+#include "strlib.hpp"
 #include "socket.h"
 
 #include <stdlib.h>

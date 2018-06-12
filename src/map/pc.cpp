@@ -13,7 +13,7 @@
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h" // session[]
-#include "../common/strlib.h" // safestrncpy()
+#include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
 #include "../common/mmo.h" //NAME_LENGTH

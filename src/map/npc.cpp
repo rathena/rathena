@@ -14,7 +14,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/ers.h"
 #include "../common/db.h"

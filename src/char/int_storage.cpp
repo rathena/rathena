@@ -11,7 +11,7 @@
 #include "../common/mmo.h"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
-#include "../common/strlib.h" // StringBuf
+#include "../common/strlib.hpp" // StringBuf
 #include "../common/sql.hpp"
 #include "char.hpp"
 #include "inter.hpp"

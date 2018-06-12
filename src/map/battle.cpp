@@ -14,7 +14,7 @@
 #include "../common/ers.h"
 #include "../common/random.hpp"
 #include "../common/socket.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 
 #include "map.hpp"

@@ -12,7 +12,7 @@
 #include "../common/malloc.h"
 #include "../common/socket.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 
 #include "char.hpp"

@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _STRLIB_H_
-#define _STRLIB_H_
+#ifndef _STRLIB_HPP_
+#define _STRLIB_HPP_
 
 #include "cbasetypes.h"
 #include <stdarg.h>
@@ -166,4 +166,4 @@ void StringBuf_Free(StringBuf* self);
 }
 #endif
 
-#endif /* _STRLIB_H_ */
+#endif /* _STRLIB_HPP_ */

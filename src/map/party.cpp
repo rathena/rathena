@@ -13,7 +13,7 @@
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/utils.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 
 #include "atcommand.hpp"	//msg_txt()
 #include "pc.hpp"

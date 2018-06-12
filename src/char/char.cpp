@@ -19,7 +19,7 @@
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 #include "../common/cli.hpp"
 

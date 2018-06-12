@@ -10,7 +10,7 @@
 #include "../common/timer.hpp"
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.h"
+#include "../common/strlib.hpp"
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/ers.h"  // ers_destroy
