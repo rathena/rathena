@@ -11,7 +11,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.h" //safestrncpy
 #include "../common/socket.h" //set_eof
-#include "../common/timer.h"  // DIFF_TICK
+#include "../common/timer.hpp"  // DIFF_TICK
 #include "../common/nullpo.h"
 
 #include "map.hpp" //msg_conf

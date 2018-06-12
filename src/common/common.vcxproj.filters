@@ -68,7 +68,7 @@
     <ClInclude Include="strlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="timer.h">
+    <ClInclude Include="timer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
@@ -136,7 +136,7 @@
     <ClCompile Include="strlib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="timer.c">
+    <ClCompile Include="timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utils.c">

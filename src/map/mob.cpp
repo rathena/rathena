@@ -10,7 +10,7 @@
 #include "../common/utilities.hpp"
 
 #include "../common/cbasetypes.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/db.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"

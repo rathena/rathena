@@ -5,7 +5,7 @@
 #define _CASHSHOP_HPP_
 
 #include "../common/cbasetypes.h" // uint16, uint32
-#include "../common/timer.h" // ShowWarning, ShowStatus
+#include "../common/timer.hpp" // ShowWarning, ShowStatus
 
 #include "../config/core.h"
 

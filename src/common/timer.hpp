@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_TIMER_H_
-#define	_TIMER_H_
+#ifndef	_TIMER_HPP_
+#define	_TIMER_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,4 +68,4 @@ void timer_final(void);
 }
 #endif
 
-#endif /* _TIMER_H_ */
+#endif /* _TIMER_HPP_ */

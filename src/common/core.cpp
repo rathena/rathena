@@ -10,7 +10,7 @@
 #ifndef MINICORE
 #include "ers.h"
 #include "socket.h"
-#include "timer.h"
+#include "timer.hpp"
 #include "sql.hpp"
 #endif
 #include <stdlib.h>

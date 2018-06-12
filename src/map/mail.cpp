@@ -6,7 +6,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 
 #include "atcommand.hpp"
 #include "itemdb.hpp"

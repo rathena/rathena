@@ -8,7 +8,7 @@
 
 #include "../common/socket.h"
 #include "../common/showmsg.hpp"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/ers.h"
 #include "../common/cli.hpp"
 

@@ -17,7 +17,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "login.hpp"
 #include "loginlog.hpp"
 

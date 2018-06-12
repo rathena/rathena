@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/mapindex.h"

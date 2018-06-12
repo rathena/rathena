@@ -38,7 +38,7 @@
     <ClInclude Include="socket.h" />
     <ClInclude Include="sql.hpp" />
     <ClInclude Include="strlib.h" />
-    <ClInclude Include="timer.h" />
+    <ClInclude Include="timer.hpp" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="winapi.hpp" />
     <ClInclude Include="yamlwrapper.h" />
@@ -66,7 +66,7 @@
     <ClCompile Include="socket.c" />
     <ClCompile Include="sql.cpp" />
     <ClCompile Include="strlib.c" />
-    <ClCompile Include="timer.c" />
+    <ClCompile Include="timer.cpp" />
     <ClCompile Include="utils.c" />
     <ClCompile Include="winapi.cpp" />
     <ClCompile Include="yamlwrapper.cpp" />

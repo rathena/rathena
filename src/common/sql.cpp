@@ -5,7 +5,7 @@
 #include "malloc.h"
 #include "showmsg.hpp"
 #include "strlib.h"
-#include "timer.h"
+#include "timer.hpp"
 #include "sql.hpp"
 
 #ifdef WIN32

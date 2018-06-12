@@ -16,7 +16,7 @@
 #include "../common/strlib.h"
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_logif.hpp"

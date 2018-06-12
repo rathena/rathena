@@ -14,7 +14,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.h" // session[]
 #include "../common/strlib.h" // safestrncpy()
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/utils.h"
 #include "../common/mmo.h" //NAME_LENGTH
 #include "../common/ers.h"  // ers_destroy

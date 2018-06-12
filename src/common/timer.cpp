@@ -7,7 +7,7 @@
 #include "showmsg.hpp"
 #include "utils.h"
 #include "nullpo.h"
-#include "timer.h"
+#include "timer.hpp"
 
 #include <stdlib.h>
 #include <string.h>

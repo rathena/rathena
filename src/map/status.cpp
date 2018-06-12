@@ -10,7 +10,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/nullpo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

@@ -13,7 +13,7 @@
 #include "../common/socket.h"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"

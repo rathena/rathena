@@ -9,7 +9,7 @@
 #include <unordered_map>
 
 #include "../common/cbasetypes.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 
 #include "atcommand.hpp"  // msg_txt
 #include "clif.hpp"

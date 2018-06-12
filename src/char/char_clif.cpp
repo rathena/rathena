@@ -15,7 +15,7 @@
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "inter.hpp"
 #include "char.hpp"
 #include "char_logif.hpp"

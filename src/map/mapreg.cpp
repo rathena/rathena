@@ -12,7 +12,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 
 #include "map.hpp" // mmysql_handle
 #include "script.hpp"

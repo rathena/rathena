@@ -6,7 +6,7 @@
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.hpp" // ShowInfo
 #include "../common/strlib.h"
-#include "../common/timer.h"  // DIFF_TICK
+#include "../common/timer.hpp"  // DIFF_TICK
 
 #include "buyingstore.hpp"
 #include "clif.hpp"

@@ -17,7 +17,7 @@
 #include "../common/md5calc.hpp"
 #include "../common/ers.h"
 #include "../common/cli.hpp"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/strlib.h"
 
 #include "login.hpp"

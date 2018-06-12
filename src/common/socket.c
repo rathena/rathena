@@ -3,7 +3,7 @@
 
 #include "cbasetypes.h"
 #include "mmo.h"
-#include "timer.h"
+#include "timer.hpp"
 #include "malloc.h"
 #include "showmsg.hpp"
 #include "strlib.h"

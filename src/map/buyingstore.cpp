@@ -11,7 +11,7 @@
 #include "../common/showmsg.hpp"  // ShowWarning
 #include "../common/socket.h"  // RBUF*
 #include "../common/strlib.h"  // safestrncpy
-#include "../common/timer.h"  // gettick
+#include "../common/timer.hpp"  // gettick
 
 #include "atcommand.hpp"  // msg_txt
 #include "battle.hpp"  // battle_config.*

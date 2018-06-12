@@ -4,7 +4,7 @@
 #include "battleground.hpp"
 
 #include "../common/cbasetypes.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"

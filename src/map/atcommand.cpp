@@ -8,7 +8,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"
 #include "../common/malloc.h"
@@ -2969,7 +2969,7 @@ ACMD_FUNC(char_block)
 /*==========================================
  * accountban command (usage: ban <%time> <player_name>)
  * charban command (usage: charban <%time> <player_name>)
- * %time see common/timer.c::solve_time()
+ * %time see common/timer.cpp::solve_time()
  *------------------------------------------*/
 ACMD_FUNC(char_ban)
 {

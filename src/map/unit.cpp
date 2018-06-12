@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "../common/showmsg.hpp"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/nullpo.h"
 #include "../common/db.h"
 #include "../common/malloc.h"

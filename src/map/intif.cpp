@@ -11,7 +11,7 @@
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/mmo.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"

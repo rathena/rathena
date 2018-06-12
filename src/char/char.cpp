@@ -20,7 +20,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.h"
 #include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/timer.hpp"
 #include "../common/cli.hpp"
 
 #include "int_guild.hpp"
