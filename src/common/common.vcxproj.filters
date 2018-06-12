@@ -11,9 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="atomic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cbasetypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -47,22 +44,13 @@
     <ClInclude Include="md5calc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mempool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="mmo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="msg_conf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mutex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="nullpo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="raconf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="random.h">
@@ -74,16 +62,10 @@
     <ClInclude Include="socket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spinlock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sql.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="strlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="thread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="timer.h">
@@ -133,19 +115,10 @@
     <ClCompile Include="md5calc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mempool.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="msg_conf.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mutex.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="nullpo.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="raconf.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="random.c">
@@ -161,9 +134,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="strlib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="thread.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="timer.c">

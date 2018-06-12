@@ -1978,10 +1978,6 @@ int script_reg_destroy(DBKey key, DBData *data, va_list ap);
 void script_generic_ui_array_expand(unsigned int plus);
 unsigned int *script_array_cpy_list(struct script_array *sa);
 
-#ifdef BETA_THREAD_TEST
-void queryThread_log(char * entry, int length);
-#endif
-
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
 #endif /* _SCRIPT_HPP_ */

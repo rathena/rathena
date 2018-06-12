@@ -31,7 +31,6 @@
     <ClInclude Include="mmo.h" />
     <ClInclude Include="msg_conf.h" />
     <ClInclude Include="nullpo.h" />
-    <ClInclude Include="raconf.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="showmsg.h" />
     <ClInclude Include="strlib.h" />
@@ -51,7 +50,6 @@
     <ClCompile Include="md5calc.c" />
     <ClCompile Include="msg_conf.c" />
     <ClCompile Include="nullpo.c" />
-    <ClCompile Include="raconf.c" />
     <ClCompile Include="random.c" />
     <ClCompile Include="showmsg.c" />
     <ClCompile Include="strlib.c" />

@@ -11,8 +11,6 @@
 #include "ers.h"
 #include "socket.h"
 #include "timer.h"
-#include "thread.h"
-#include "mempool.h"
 #include "sql.h"
 #endif
 #include <stdlib.h>
@@ -351,8 +349,6 @@ int main (int argc, char **argv)
 	usercheck();
 
 	Sql_Init();
-	rathread_init();
-	mempool_init();
 	db_init();
 	signals_init();
 
@@ -376,8 +372,6 @@ int main (int argc, char **argv)
 	timer_final();
 	socket_final();
 	db_final();
-	mempool_final();
-	rathread_final();
 	ers_final();
 #endif
 

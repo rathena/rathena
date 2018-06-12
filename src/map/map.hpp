@@ -964,24 +964,6 @@ typedef struct elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-
-#ifdef BETA_THREAD_TEST
-
-extern char default_codepage[32];
-extern int map_server_port;
-extern char map_server_ip[32];
-extern char map_server_id[32];
-extern char map_server_pw[32];
-extern char map_server_db[32];
-
-extern char log_db_ip[32];
-extern int log_db_port;
-extern char log_db_id[32];
-extern char log_db_pw[32];
-extern char log_db_db[32];
-
-#endif
-
 #include "../common/sql.h"
 
 extern int db_use_sqldbs;

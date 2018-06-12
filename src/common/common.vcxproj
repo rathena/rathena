@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="atomic.h" />
     <ClInclude Include="cbasetypes.h" />
     <ClInclude Include="cli.h" />
     <ClInclude Include="conf.h" />
@@ -31,19 +30,14 @@
     <ClInclude Include="malloc.h" />
     <ClInclude Include="mapindex.h" />
     <ClInclude Include="md5calc.h" />
-    <ClInclude Include="mempool.h" />
     <ClInclude Include="mmo.h" />
     <ClInclude Include="msg_conf.h" />
-    <ClInclude Include="mutex.h" />
     <ClInclude Include="nullpo.h" />
-    <ClInclude Include="raconf.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="showmsg.h" />
     <ClInclude Include="socket.h" />
-    <ClInclude Include="spinlock.h" />
     <ClInclude Include="sql.h" />
     <ClInclude Include="strlib.h" />
-    <ClInclude Include="thread.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="winapi.hpp" />
@@ -63,17 +57,13 @@
     <ClCompile Include="malloc.c" />
     <ClCompile Include="mapindex.c" />
     <ClCompile Include="md5calc.c" />
-    <ClCompile Include="mempool.c" />
     <ClCompile Include="msg_conf.c" />
-    <ClCompile Include="mutex.c" />
     <ClCompile Include="nullpo.c" />
-    <ClCompile Include="raconf.c" />
     <ClCompile Include="random.c" />
     <ClCompile Include="showmsg.c" />
     <ClCompile Include="socket.c" />
     <ClCompile Include="sql.c" />
     <ClCompile Include="strlib.c" />
-    <ClCompile Include="thread.c" />
     <ClCompile Include="timer.c" />
     <ClCompile Include="utils.c" />
     <ClCompile Include="winapi.cpp" />

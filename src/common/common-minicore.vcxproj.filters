@@ -47,9 +47,6 @@
     <ClInclude Include="nullpo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="raconf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -95,9 +92,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nullpo.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="raconf.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="random.c">
