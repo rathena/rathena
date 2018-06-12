@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{60D331
 		src\config\classes\general.h = src\config\classes\general.h
 		src\config\packets.h = src\config\packets.h
 		src\config\renewal.h = src\config\renewal.h
-		src\config\secure.h = src\config\secure.h
+		src\config\secure.hpp = src\config\secure.hpp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "classes", "classes", "{33B49CB8-CBE3-4ED2-86DD-C9A351AC9026}"

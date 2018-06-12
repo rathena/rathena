@@ -267,7 +267,7 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 /**
- * For the Secure NPC Timeout option (check config/Secure.h) [RR]
+ * For the Secure NPC Timeout option (check src/config/secure.hpp) [RR]
  **/
 #ifdef SECURE_NPCTIMEOUT
 /**

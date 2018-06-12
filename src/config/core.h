@@ -77,7 +77,7 @@
  **/
 #include "./packets.h"
 #include "./renewal.h"
-#include "./secure.h"
+#include "./secure.hpp"
 #include "./classes/general.hpp"
 
 /**
