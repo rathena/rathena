@@ -1841,24 +1841,6 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 	return damage;
 }
 
-#ifdef RENEWAL
-static int battle_calc_sizefix(int64 damage, struct map_session_data *sd, unsigned char t_size, unsigned char weapon_type, short flag)
-{
-	if (sd && !sd->special_state.no_sizefix && !flag) // Size fix only for players
-		damage = damage * (weapon_type == EQI_HAND_L ? sd->left_weapon.atkmods[t_size] : sd->right_weapon.atkmods[t_size]) / 100;
-
-	return (int)cap_value(damage, INT_MIN, INT_MAX);
-}
-
-static int battle_calc_status_attack(struct status_data *status, short hand)
-{
-	//left-hand penalty on sATK is always 50% [Baalberith]
-	if (hand == EQI_HAND_L)
-		return status->batk;
-	else
-		return 2 * status->batk;
-}
-
 /** Calculates overrefine damage bonus and weapon related bonuses (unofficial)
 * @param sd Player
 * @param damage Current damage
@@ -1881,6 +1863,24 @@ static void battle_add_weapon_damage(struct map_session_data *sd, int64 *damage,
 		if (sd->weapon_damage_rate[sd->weapontype1])
 			(*damage) += (*damage) * sd->weapon_damage_rate[sd->weapontype1] / 100;
 	}
+}
+
+#ifdef RENEWAL
+static int battle_calc_sizefix(int64 damage, struct map_session_data *sd, unsigned char t_size, unsigned char weapon_type, short flag)
+{
+	if (sd && !sd->special_state.no_sizefix && !flag) // Size fix only for players
+		damage = damage * (weapon_type == EQI_HAND_L ? sd->left_weapon.atkmods[t_size] : sd->right_weapon.atkmods[t_size]) / 100;
+
+	return (int)cap_value(damage, INT_MIN, INT_MAX);
+}
+
+static int battle_calc_status_attack(struct status_data *status, short hand)
+{
+	//left-hand penalty on sATK is always 50% [Baalberith]
+	if (hand == EQI_HAND_L)
+		return status->batk;
+	else
+		return 2 * status->batk;
 }
 
 /**
