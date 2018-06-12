@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../common/db.hpp"
 
 struct map_session_data;

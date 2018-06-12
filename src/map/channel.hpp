@@ -5,7 +5,7 @@
 #define	CHANNEL_H
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 //namespace rA {
 

@@ -4,7 +4,7 @@
 #ifndef _STATUS_HPP_
 #define _STATUS_HPP_
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 enum e_race2 : uint8;
 struct block_list;

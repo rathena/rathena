@@ -6,7 +6,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 #define NUM_WHISPER_VAR 10
 

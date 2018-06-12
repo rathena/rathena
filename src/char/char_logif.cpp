@@ -349,7 +349,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		sd->group_id = RFIFOB(fd,50);
 		sd->char_slots = RFIFOB(fd,51);
 		if( sd->char_slots > MAX_CHARS ) {
-			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.h! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
+			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.hpp! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
 			sd->char_slots = MAX_CHARS;/* cap to maximum */
 		} else if ( !sd->char_slots )/* no value aka 0 in sql */
 			sd->char_slots = MIN_CHARS;/* cap to minimum */

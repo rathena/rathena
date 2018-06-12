@@ -1705,7 +1705,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 		}
 
 		if (i != sd->bonus_script.count && sd->bonus_script.count > MAX_PC_BONUS_SCRIPT)
-			ShowWarning("Only allowed to save %d (mmo.h::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
+			ShowWarning("Only allowed to save %d (mmo.hpp::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
 	}
 
 	WFIFOB(char_fd, 8) = i;

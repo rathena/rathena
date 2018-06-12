@@ -5,7 +5,7 @@
 #define _PET_HPP_
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 #include "script.hpp"
 #include "status.hpp"

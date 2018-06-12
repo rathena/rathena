@@ -28,7 +28,7 @@
     <ClInclude Include="malloc.hpp" />
     <ClInclude Include="mapindex.hpp" />
     <ClInclude Include="md5calc.hpp" />
-    <ClInclude Include="mmo.h" />
+    <ClInclude Include="mmo.hpp" />
     <ClInclude Include="msg_conf.hpp" />
     <ClInclude Include="nullpo.hpp" />
     <ClInclude Include="random.hpp" />

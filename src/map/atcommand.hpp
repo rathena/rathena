@@ -5,7 +5,7 @@
 #define _ATCOMMAND_HPP_
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 struct map_session_data;
 

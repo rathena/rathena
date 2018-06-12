@@ -38,7 +38,7 @@
     <ClInclude Include="md5calc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mmo.h">
+    <ClInclude Include="mmo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="msg_conf.hpp">

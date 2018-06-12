@@ -16,7 +16,7 @@
 
 #include "../config/core.h"
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.h" // NAME_LENGTH,SEX_*
+#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
 #include "../common/core.hpp" // CORE_ST_LAST
 
 #include "account.hpp"

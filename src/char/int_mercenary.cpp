@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../common/strlib.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"

@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "cbasetypes.hpp"
-#include "mmo.h"
+#include "mmo.hpp"
 #include "timer.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"

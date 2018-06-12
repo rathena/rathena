@@ -16,7 +16,7 @@
 #include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/mmo.h" //NAME_LENGTH
+#include "../common/mmo.hpp" //NAME_LENGTH
 #include "../common/ers.hpp"  // ers_destroy
 
 #include "atcommand.hpp" // get_atcommand_level()

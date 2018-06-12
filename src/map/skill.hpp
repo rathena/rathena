@@ -5,7 +5,7 @@
 #define _SKILL_HPP_
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.h" // MAX_SKILL, struct square
+#include "../common/mmo.hpp" // MAX_SKILL, struct square
 #include "../common/db.hpp"
 
 #include "map.hpp" // struct block_list

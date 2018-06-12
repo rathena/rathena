@@ -9,7 +9,7 @@
 #include <unistd.h>
 #endif
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../common/grfio.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"

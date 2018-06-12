@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_MMO_H_
-#define	_MMO_H_
+#ifndef	_MMO_HPP_
+#define	_MMO_HPP_
 
 #include "cbasetypes.hpp"
 #include "../config/core.h"
@@ -1024,4 +1024,4 @@ struct clan{
 	#define MAX_CARTS 5
 #endif
 
-#endif /* _MMO_H_ */
+#endif /* _MMO_HPP_ */

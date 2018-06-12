@@ -72,7 +72,7 @@
 
 #include "ers.hpp"
 #include "malloc.hpp"
-#include "mmo.h"
+#include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
 

@@ -27,7 +27,7 @@
 #include "../common/msg_conf.hpp"
 #include "../common/cli.hpp"
 #include "../common/utils.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../config/core.h"
 #include "account.hpp"
 #include "ipban.hpp"

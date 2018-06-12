@@ -20817,7 +20817,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 
 	if (!idx) {
 		if (SKILL_MAX_DB() >= MAX_SKILL) {
-			ShowError("Cannot add new skill. Limit is reached '%d' (mmo.h::MAX_SKILL).\n", MAX_SKILL);
+			ShowError("Cannot add new skill. Limit is reached '%d' (mmo.hpp::MAX_SKILL).\n", MAX_SKILL);
 			return false;
 		}
 		idx = skill_db_create(skill_id);
@@ -21493,7 +21493,7 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
  **/
 static uint16 skill_db_create(uint16 skill_id) {
 	if (skill_num >= MAX_SKILL) {
-		ShowError("Cannot add more skill. Limit is reached '%d'. Change 'MAX_SKILL' in mmo.h\n", MAX_SKILL);
+		ShowError("Cannot add more skill. Limit is reached '%d'. Change 'MAX_SKILL' in mmo.hpp\n", MAX_SKILL);
 		return 0;
 	}
 	if (!skill_num)

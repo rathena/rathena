@@ -9,7 +9,7 @@
 #include "../common/malloc.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"

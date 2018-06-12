@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 #define MAX_MAPINDEX 2000
 

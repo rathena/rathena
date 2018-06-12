@@ -8,7 +8,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp" //dbmap
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 struct Channel;
 struct clan;

@@ -10,7 +10,7 @@
 #include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
 #include "../common/strlib.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
 #include "map.hpp"

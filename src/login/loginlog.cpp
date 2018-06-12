@@ -13,7 +13,7 @@
 #include <string.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 #include "../common/socket.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
