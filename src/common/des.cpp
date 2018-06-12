@@ -1,7 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 #include "cbasetypes.h"
-#include "des.h"
+#include "des.hpp"
 
 
 /// DES (Data Encryption Standard) algorithm, modified version.

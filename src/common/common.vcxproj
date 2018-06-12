@@ -24,7 +24,7 @@
     <ClInclude Include="conf.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="db.h" />
-    <ClInclude Include="des.h" />
+    <ClInclude Include="des.hpp" />
     <ClInclude Include="ers.h" />
     <ClInclude Include="grfio.h" />
     <ClInclude Include="malloc.h" />
@@ -51,7 +51,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="db.c" />
-    <ClCompile Include="des.c" />
+    <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.c" />
     <ClCompile Include="grfio.c" />
     <ClCompile Include="malloc.c" />

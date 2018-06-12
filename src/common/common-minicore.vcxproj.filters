@@ -23,7 +23,7 @@
     <ClInclude Include="core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="des.h">
+    <ClInclude Include="des.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="grfio.h">
@@ -73,7 +73,7 @@
     <ClCompile Include="core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="des.c">
+    <ClCompile Include="des.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="grfio.c">

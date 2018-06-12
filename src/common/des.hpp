@@ -1,7 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef	_DES_H_
-#define	_DES_H_
+#ifndef	_DES_HPP_
+#define	_DES_HPP_
 
 
 /// One 64-bit block.
@@ -12,4 +12,4 @@ void des_decrypt_block(BIT64* block);
 void des_decrypt(unsigned char* data, size_t size);
 
 
-#endif // _DES_H_
+#endif // _DES_HPP_

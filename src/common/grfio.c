@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "cbasetypes.h"
-#include "des.h"
+#include "des.hpp"
 #include "malloc.h"
 #include "showmsg.h"
 #include "strlib.h"
