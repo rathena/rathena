@@ -19,8 +19,13 @@ prontera,142,228,6	script	Find the Mushroom	1084,{
 	if (!.status)
 		mes "There is no event at the moment!";
 	else {
-		mes "There are " + mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" ) + " Mushrooms left in " + .event_map$ + "!";
+		.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+		mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
 		mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
+		if (.@count < 1) {
+			.event_map$ = "";
+			.status = 0;
+		}
 	}
 	if (.status || getgmlevel() < .GM) close;
 	mes "Start the event?";
