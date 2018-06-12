@@ -266,12 +266,12 @@ int do_init(int argc, char** argv)
 		name[MAP_NAME_LENGTH_EXT-1] = '\0';
 		remove_extension(name);
 		if(find_map(name))
-			ShowInfo("Map '"CL_WHITE"%s"CL_RESET"' already in cache.\n", name);
+			ShowInfo("Map '" CL_WHITE "%s" CL_RESET "' already in cache.\n", name);
 		else if(read_map(name, &map)) {
 			cache_map(name, &map);
-			ShowInfo("Map '"CL_WHITE"%s"CL_RESET"' successfully cached.\n", name);
+			ShowInfo("Map '" CL_WHITE "%s" CL_RESET "' successfully cached.\n", name);
 		} else
-			ShowError("Map '"CL_WHITE"%s"CL_RESET"' not found!\n", name);
+			ShowError("Map '" CL_WHITE "%s" CL_RESET "' not found!\n", name);
 
 	}
 
