@@ -75,7 +75,6 @@
 
 //////////////////////////////////////////////////////////////////////////
 // portable printf/scanf format macros and integer definitions
-// NOTE: Visual C++ uses <inttypes.h> and <stdint.h> provided in /3rdparty
 //////////////////////////////////////////////////////////////////////////
 #ifdef __cplusplus
 #define __STDC_CONSTANT_MACROS
@@ -83,8 +82,7 @@
 #define __STDC_LIMIT_MACROS
 #endif
 
-#include <inttypes.h>
-#include <stdint.h>
+#include <cinttypes>
 #include <limits.h>
 
 // temporary fix for bugreport:4961 (unintended conversion from signed to unsigned)
