@@ -48,14 +48,14 @@ set( COMMON_ALL_HEADERS
 set( COMMON_MINI_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${COMMON_SOURCE_DIR}/core.h"
-	"${COMMON_SOURCE_DIR}/malloc.h"
+	"${COMMON_SOURCE_DIR}/malloc.hpp"
 	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/strlib.hpp"
 	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
 	CACHE INTERNAL "" )
 set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/core.cpp"
-	"${COMMON_SOURCE_DIR}/malloc.c"
+	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
@@ -77,7 +77,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/des.hpp"
 	"${COMMON_SOURCE_DIR}/ers.h"
 	"${COMMON_SOURCE_DIR}/grfio.hpp"
-	"${COMMON_SOURCE_DIR}/malloc.h"
+	"${COMMON_SOURCE_DIR}/malloc.hpp"
 	"${COMMON_SOURCE_DIR}/mapindex.hpp"
 	"${COMMON_SOURCE_DIR}/md5calc.hpp"
 	"${COMMON_SOURCE_DIR}/nullpo.hpp"
@@ -100,7 +100,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/des.cpp"
 	"${COMMON_SOURCE_DIR}/ers.c"
 	"${COMMON_SOURCE_DIR}/grfio.cpp"
-	"${COMMON_SOURCE_DIR}/malloc.c"
+	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/mapindex.cpp"
 	"${COMMON_SOURCE_DIR}/md5calc.cpp"
 	"${COMMON_SOURCE_DIR}/nullpo.cpp"

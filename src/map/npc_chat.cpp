@@ -8,7 +8,7 @@
 #include "../../3rdparty/pcre/include/pcre.h"
 
 #include "../common/timer.hpp"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 

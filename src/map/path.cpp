@@ -10,7 +10,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

@@ -71,7 +71,7 @@
 #include "db.h"
 
 #include "ers.h"
-#include "malloc.h"
+#include "malloc.hpp"
 #include "mmo.h"
 #include "showmsg.hpp"
 #include "strlib.hpp"

@@ -13,7 +13,7 @@
 #include "../common/socket.hpp"
 #include "../common/timer.hpp"
 #include "../common/grfio.hpp"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

@@ -11,7 +11,7 @@
 
 #include "../common/mmo.h"
 #include "../common/grfio.hpp"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/utils.hpp"
 

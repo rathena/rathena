@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MALLOC_H_
-#define _MALLOC_H_
+#ifndef _MALLOC_HPP_
+#define _MALLOC_HPP_
 
 #include "cbasetypes.h"
 
@@ -97,4 +97,4 @@ void malloc_final (void);
 }
 #endif
 
-#endif /* _MALLOC_H_ */
+#endif /* _MALLOC_HPP_ */

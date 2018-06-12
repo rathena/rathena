@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/conf.h" //libconfig
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp" //safestrncpy

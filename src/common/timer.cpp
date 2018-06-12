@@ -3,7 +3,7 @@
 
 #include "cbasetypes.h"
 #include "db.h"
-#include "malloc.h"
+#include "malloc.hpp"
 #include "showmsg.hpp"
 #include "utils.hpp"
 #include "nullpo.hpp"

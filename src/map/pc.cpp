@@ -8,7 +8,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/core.h" // get_svn_revision()
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

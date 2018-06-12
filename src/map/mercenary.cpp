@@ -10,7 +10,7 @@
 #include "../common/utilities.hpp"
 
 #include "../common/cbasetypes.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/mmo.h"

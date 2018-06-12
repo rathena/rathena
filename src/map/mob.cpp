@@ -13,7 +13,7 @@
 #include "../common/timer.hpp"
 #include "../common/db.h"
 #include "../common/nullpo.hpp"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/ers.h"
 #include "../common/random.hpp"

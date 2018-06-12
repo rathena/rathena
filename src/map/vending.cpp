@@ -3,7 +3,7 @@
 
 #include "vending.hpp"
 #include "../common/nullpo.hpp"
-#include "../common/malloc.h" // aMalloc, aFree
+#include "../common/malloc.hpp" // aMalloc, aFree
 #include "../common/showmsg.hpp" // ShowInfo
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"  // DIFF_TICK

@@ -35,7 +35,7 @@
     <ClInclude Include="grfio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="malloc.h">
+    <ClInclude Include="malloc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mapindex.hpp">
@@ -106,7 +106,7 @@
     <ClCompile Include="grfio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="malloc.c">
+    <ClCompile Include="malloc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mapindex.cpp">

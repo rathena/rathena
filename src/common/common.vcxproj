@@ -27,7 +27,7 @@
     <ClInclude Include="des.hpp" />
     <ClInclude Include="ers.h" />
     <ClInclude Include="grfio.hpp" />
-    <ClInclude Include="malloc.h" />
+    <ClInclude Include="malloc.hpp" />
     <ClInclude Include="mapindex.hpp" />
     <ClInclude Include="md5calc.hpp" />
     <ClInclude Include="mmo.h" />
@@ -54,7 +54,7 @@
     <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.c" />
     <ClCompile Include="grfio.cpp" />
-    <ClCompile Include="malloc.c" />
+    <ClCompile Include="malloc.cpp" />
     <ClCompile Include="mapindex.cpp" />
     <ClCompile Include="md5calc.cpp" />
     <ClCompile Include="msg_conf.cpp" />

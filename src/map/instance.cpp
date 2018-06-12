@@ -12,7 +12,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/db.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/ers.h"  // ers_destroy
 
 #include "clan.hpp"

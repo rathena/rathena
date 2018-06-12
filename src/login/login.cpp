@@ -17,7 +17,7 @@
 
 #include "../common/core.h"
 #include "../common/db.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

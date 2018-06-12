@@ -12,7 +12,7 @@
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/mapindex.hpp"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/timer.hpp"

@@ -43,7 +43,7 @@
 
 #include "cbasetypes.h"
 #include "ers.h"
-#include "malloc.h" // CREATE, RECREATE, aMalloc, aFree
+#include "malloc.hpp" // CREATE, RECREATE, aMalloc, aFree
 #include "nullpo.hpp"
 #include "showmsg.hpp" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
 

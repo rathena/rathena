@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 #include "../common/mmo.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"

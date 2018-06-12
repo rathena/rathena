@@ -16,7 +16,7 @@
 #include "../common/strlib.hpp" //safeprint
 #include "../common/showmsg.hpp" //show notice
 #include "../common/socket.hpp" //wfifo session
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/utils.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/random.hpp"

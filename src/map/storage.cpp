@@ -12,7 +12,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/nullpo.hpp"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 
 #include "map.hpp" // struct map_session_data

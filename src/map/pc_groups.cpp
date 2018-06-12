@@ -5,7 +5,7 @@
 
 #include "../common/conf.h"
 #include "../common/db.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp" // strcmp
 #include "../common/socket.hpp"

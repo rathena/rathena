@@ -7,7 +7,7 @@
 #include <string.h> //memset
 
 #include "../common/cbasetypes.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/mmo.h"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"

@@ -4,7 +4,7 @@
 #include "mmo.h"
 #include "cbasetypes.h"
 #include "showmsg.hpp"
-#include "malloc.h"
+#include "malloc.hpp"
 #include "core.h"
 #include "strlib.hpp"
 #ifndef MINICORE

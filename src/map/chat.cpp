@@ -6,7 +6,7 @@
 #include <cstring>
 
 #include "../common/cbasetypes.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"

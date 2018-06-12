@@ -8,7 +8,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
 #include "../common/ers.h"
-#include "../common/malloc.h"
+#include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"

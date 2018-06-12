@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "malloc.h"
+#include "malloc.hpp"
 #include "msg_conf.hpp"
 #include "showmsg.hpp"
 

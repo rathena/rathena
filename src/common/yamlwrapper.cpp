@@ -22,7 +22,7 @@
 
 #include "yamlwrapper.h"
 #include <cstring>
-#include "malloc.h"
+#include "malloc.hpp"
 #include "showmsg.hpp"
 
 extern "C" {
