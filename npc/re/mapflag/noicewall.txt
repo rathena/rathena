@@ -97,3 +97,25 @@ te_aldecas5	mapflag	noicewall
 1@sthd	mapflag	noicewall
 1@slw	mapflag	noicewall
 1@swat	mapflag	noicewall
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	noicewall
+2@gl_k2	mapflag	noicewall
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	noicewall
+
+// Suspicious shipwreck
+1@tre	mapflag	noicewall
+
+// Poring Town
+1@begi	mapflag	noicewall
+
+// Volcanic island Korodo
+1@crd	mapflag	noicewall
+
+// Noodles Festival July
+1@drdo	mapflag	noicewall
+
+// Soul Reaper Job Change
+1@soul	mapflag	noicewall

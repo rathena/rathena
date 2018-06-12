@@ -138,3 +138,25 @@ rockmi2	mapflag	nowarpto
 lasa_in01	mapflag	nowarpto
 conch_in	mapflag	nowarpto
 lasa_dun_q	mapflag	nowarpto
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	nowarpto
+2@gl_k2	mapflag	nowarpto
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	nowarpto
+
+// Suspicious shipwreck
+1@tre	mapflag	nowarpto
+
+// Poring Town
+1@begi	mapflag	nowarpto
+
+// Volcanic island Korodo
+1@crd	mapflag	nowarpto
+
+// Noodles Festival July
+1@drdo	mapflag	nowarpto
+
+// Soul Reaper Job Change
+1@soul	mapflag	nowarpto

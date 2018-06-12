@@ -193,3 +193,25 @@ lasagna	mapflag	nobranch
 lasa_in01	mapflag	nobranch
 conch_in	mapflag	nobranch
 lasa_dun_q	mapflag	nobranch
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	nobranch
+2@gl_k2	mapflag	nobranch
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	nobranch
+
+// Suspicious shipwreck
+1@tre	mapflag	nobranch
+
+// Poring Town
+1@begi	mapflag	nobranch
+
+// Volcanic island Korodo
+1@crd	mapflag	nobranch
+
+// Noodles Festival July
+1@drdo	mapflag	nobranch
+
+// Soul Reaper Job Change
+1@soul	mapflag	nobranch
