@@ -13,7 +13,7 @@
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"

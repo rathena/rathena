@@ -37,8 +37,8 @@
  * @author Flavio @ Amazon Project                                           *
  * @encoding US-ASCII                                                        *
 \*****************************************************************************/
-#ifndef _ERS_H_
-#define _ERS_H_
+#ifndef _ERS_HPP_
+#define _ERS_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -184,4 +184,4 @@ void ers_final(void);
 }
 #endif
 
-#endif /* _ERS_H_ */
+#endif /* _ERS_HPP_ */

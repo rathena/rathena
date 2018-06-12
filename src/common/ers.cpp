@@ -37,12 +37,12 @@
  * @version 1.0 - ERS Rework                                                 *
  * @author GreenBox @ rAthena Project                                        *
  * @encoding US-ASCII                                                        *
- * @see common#ers.h                                                         *
+ * @see common#ers.hpp                                                         *
 \*****************************************************************************/
 
 
 #include "cbasetypes.h"
-#include "ers.h"
+#include "ers.hpp"
 #include "malloc.hpp" // CREATE, RECREATE, aMalloc, aFree
 #include "nullpo.hpp"
 #include "showmsg.hpp" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
@@ -141,7 +141,7 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	cache->UsedObjs = 0;
 	cache->Max = 0;
 	cache->ChunkSize = ERS_BLOCK_ENTRIES;
-	cache->Options = (Options & ERS_CACHE_OPTIONS);
+	cache->Options = (enum ERSOptions)(Options & ERS_CACHE_OPTIONS);
 
 	if (CacheList == NULL)
 	{
@@ -335,7 +335,7 @@ void ers_report(void) {
 
 	for (cache = CacheList; cache; cache = cache->Next) {
 		cache_c++;
-		ShowMessage(CL_BOLD"[ERS Cache of size '"CL_NORMAL""CL_WHITE"%u"CL_NORMAL""CL_BOLD"' report]\n"CL_NORMAL, cache->ObjectSize);
+		ShowMessage(CL_BOLD"[ERS Cache of size '" CL_NORMAL "" CL_WHITE "%u" CL_NORMAL "" CL_BOLD "' report]\n" CL_NORMAL, cache->ObjectSize);
 		ShowMessage("\tinstances          : %u\n", cache->ReferenceCount);
 		ShowMessage("\tblocks in use      : %u/%u\n", cache->UsedObjs, cache->UsedObjs+cache->Free);
 		ShowMessage("\tblocks unused      : %u\n", cache->Free);
@@ -346,9 +346,9 @@ void ers_report(void) {
 		memory_b += cache->UsedObjs * cache->ObjectSize;
 		memory_t += (cache->UsedObjs+cache->Free) * cache->ObjectSize;
 	}
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' caches in use\n",cache_c);
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' blocks in use, consuming '"CL_WHITE"%.2f MB"CL_NORMAL"'\n",blocks_u,(double)((memory_b)/1024)/1024);
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' blocks total, consuming '"CL_WHITE"%.2f MB"CL_NORMAL"' \n",blocks_a,(double)((memory_t)/1024)/1024);
+	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' caches in use\n",cache_c);
+	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' blocks in use, consuming '" CL_WHITE "%.2f MB" CL_NORMAL "'\n",blocks_u,(double)((memory_b)/1024)/1024);
+	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' blocks total, consuming '" CL_WHITE "%.2f MB" CL_NORMAL "' \n",blocks_a,(double)((memory_t)/1024)/1024);
 }
 
 /**

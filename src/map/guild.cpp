@@ -11,7 +11,7 @@
 #include "../common/malloc.hpp"
 #include "../common/mapindex.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 

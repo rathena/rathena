@@ -9,7 +9,7 @@
 #include "../common/socket.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/timer.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/cli.hpp"
 
 #include "char.hpp"

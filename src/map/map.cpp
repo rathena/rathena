@@ -18,7 +18,7 @@
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/cli.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 
 #include "path.hpp"
 #include "chrif.hpp"

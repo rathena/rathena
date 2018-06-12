@@ -7,7 +7,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"

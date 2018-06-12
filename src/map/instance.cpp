@@ -13,7 +13,7 @@
 #include "../common/strlib.hpp"
 #include "../common/db.h"
 #include "../common/malloc.hpp"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "clan.hpp"
 #include "clif.hpp"

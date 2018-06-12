@@ -13,7 +13,7 @@
 #include "../common/malloc.hpp"
 #include "../common/random.hpp"
 #include "../common/socket.hpp"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "achievement.hpp"
 #include "map.hpp"

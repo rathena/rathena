@@ -29,7 +29,7 @@
     <ClInclude Include="des.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ers.h">
+    <ClInclude Include="ers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="grfio.hpp">
@@ -100,7 +100,7 @@
     <ClCompile Include="des.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ers.c">
+    <ClCompile Include="ers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="grfio.cpp">

@@ -8,7 +8,7 @@
 #include "core.h"
 #include "strlib.hpp"
 #ifndef MINICORE
-#include "ers.h"
+#include "ers.hpp"
 #include "socket.hpp"
 #include "timer.hpp"
 #include "sql.hpp"

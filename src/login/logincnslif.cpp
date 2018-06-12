@@ -15,7 +15,7 @@
 #include "../common/mmo.h" //cbasetype + NAME_LENGTH
 #include "../common/showmsg.hpp" //show notice
 #include "../common/md5calc.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/cli.hpp"
 #include "../common/timer.hpp"
 #include "../common/strlib.hpp"

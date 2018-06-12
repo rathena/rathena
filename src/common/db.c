@@ -70,7 +70,7 @@
 
 #include "db.h"
 
-#include "ers.h"
+#include "ers.hpp"
 #include "malloc.hpp"
 #include "mmo.h"
 #include "showmsg.hpp"

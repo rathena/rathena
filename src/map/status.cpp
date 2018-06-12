@@ -16,7 +16,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/malloc.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/strlib.hpp"
 
 #include "battle.hpp"

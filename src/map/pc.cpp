@@ -17,7 +17,7 @@
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
 #include "../common/mmo.h" //NAME_LENGTH
-#include "../common/ers.h"  // ers_destroy
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "atcommand.hpp" // get_atcommand_level()
 #include "map.hpp"

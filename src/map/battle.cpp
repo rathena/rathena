@@ -11,7 +11,7 @@
 #include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/random.hpp"
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"

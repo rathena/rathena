@@ -19,7 +19,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.h"
+#include "../common/ers.hpp"
 #include "../common/conf.h"
 
 #include "map.hpp"
