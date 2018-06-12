@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="cbasetypes.h" />
     <ClInclude Include="cli.hpp" />
-    <ClInclude Include="conf.h" />
+    <ClInclude Include="conf.hpp" />
     <ClInclude Include="core.h" />
     <ClInclude Include="db.hpp" />
     <ClInclude Include="des.hpp" />
@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.cpp" />
-    <ClCompile Include="conf.c" />
+    <ClCompile Include="conf.cpp" />
     <ClCompile Include="core.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>

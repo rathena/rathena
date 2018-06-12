@@ -17,7 +17,7 @@
     <ClInclude Include="cli.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="conf.h">
+    <ClInclude Include="conf.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core.h">
@@ -88,7 +88,7 @@
     <ClCompile Include="cli.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="conf.c">
+    <ClCompile Include="conf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="core.cpp">

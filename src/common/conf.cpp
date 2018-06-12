@@ -1,7 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "conf.h"
+#include "conf.hpp"
 #include "showmsg.hpp" // ShowError
 
 int conf_read_file(config_t *config, const char *config_filename)

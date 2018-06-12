@@ -71,7 +71,7 @@ if( WITH_ZLIB )
 message( STATUS "Creating target common_base" )
 set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
-	"${COMMON_SOURCE_DIR}/conf.h"
+	"${COMMON_SOURCE_DIR}/conf.hpp"
 	"${COMMON_SOURCE_DIR}/core.h"
 	"${COMMON_SOURCE_DIR}/db.hpp"
 	"${COMMON_SOURCE_DIR}/des.hpp"
@@ -91,10 +91,10 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/yamlwrapper.h"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
-	${LIBCONFIG_HEADERS} # needed by conf.h/showmsg.hpp
+	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
-	"${COMMON_SOURCE_DIR}/conf.c"
+	"${COMMON_SOURCE_DIR}/conf.cpp"
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/db.cpp"
 	"${COMMON_SOURCE_DIR}/des.cpp"
@@ -114,7 +114,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/yamlwrapper.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
-	${LIBCONFIG_SOURCES} # needed by conf.c/showmsg.cpp
+	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}

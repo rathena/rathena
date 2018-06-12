@@ -20,7 +20,7 @@
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
 #include "../common/ers.hpp"
-#include "../common/conf.h"
+#include "../common/conf.hpp"
 
 #include "map.hpp"
 #include "chrif.hpp"

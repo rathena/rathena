@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CONF_H_
-#define _CONF_H_
+#ifndef _CONF_HPP_
+#define _CONF_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,4 +18,4 @@ int config_setting_copy(config_setting_t *parent, const config_setting_t *src);
 }
 #endif
 
-#endif // _CONF_H_
+#endif // _CONF_HPP_

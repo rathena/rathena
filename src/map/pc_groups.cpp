@@ -3,7 +3,7 @@
 
 #include "pc_groups.hpp"
 
-#include "../common/conf.h"
+#include "../common/conf.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"

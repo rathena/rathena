@@ -7,7 +7,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.hpp"
-#include "../common/conf.h" //libconfig
+#include "../common/conf.hpp" //libconfig
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp" //safestrncpy
 #include "../common/socket.hpp" //set_eof
