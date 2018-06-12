@@ -6,7 +6,7 @@ AC_REVISION($Revision$)
 AC_PREREQ([2.59])
 AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
-AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
+AC_CONFIG_SRCDIR([src/common/cbasetypes.hpp])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
