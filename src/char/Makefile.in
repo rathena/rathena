@@ -1,5 +1,5 @@
 
-COMMON_H = $(shell ls ../common/*.h)
+COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_AR = ../common/obj/common.a
 COMMON_INCLUDE = -I../common/
 
