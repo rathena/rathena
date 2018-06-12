@@ -4,7 +4,7 @@
 #include "cbasetypes.h"
 #include "strlib.hpp" // StringBuf
 #include "showmsg.hpp"
-#include "core.h" //[Ind] - For SERVER_TYPE
+#include "core.hpp" //[Ind] - For SERVER_TYPE
 
 #include <time.h>
 #include <stdlib.h> // atexit

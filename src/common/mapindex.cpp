@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "mmo.h"
-#include "core.h"
+#include "core.hpp"
 #include "mapindex.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"

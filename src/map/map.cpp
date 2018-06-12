@@ -7,7 +7,7 @@
 #include <math.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/core.h"
+#include "../common/core.hpp"
 #include "../common/timer.hpp"
 #include "../common/grfio.hpp"
 #include "../common/malloc.hpp"

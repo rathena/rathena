@@ -7,7 +7,7 @@
 #include <stdarg.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/core.h" // CORE_ST_LAST
+#include "../common/core.hpp" // CORE_ST_LAST
 #include "../common/mmo.h"
 #include "../common/mapindex.hpp"
 #include "../common/db.hpp"

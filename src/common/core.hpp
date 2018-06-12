@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_CORE_H_
-#define	_CORE_H_
+#ifndef	_CORE_HPP_
+#define	_CORE_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,4 +61,4 @@ extern void (*shutdown_callback)(void);
 }
 #endif
 
-#endif /* _CORE_H_ */
+#endif /* _CORE_HPP_ */

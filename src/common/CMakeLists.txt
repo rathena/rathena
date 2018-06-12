@@ -47,7 +47,7 @@ set( COMMON_ALL_HEADERS
 
 set( COMMON_MINI_HEADERS
 	${COMMON_ALL_HEADERS}
-	"${COMMON_SOURCE_DIR}/core.h"
+	"${COMMON_SOURCE_DIR}/core.hpp"
 	"${COMMON_SOURCE_DIR}/malloc.hpp"
 	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/strlib.hpp"
@@ -72,7 +72,7 @@ message( STATUS "Creating target common_base" )
 set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${COMMON_SOURCE_DIR}/conf.hpp"
-	"${COMMON_SOURCE_DIR}/core.h"
+	"${COMMON_SOURCE_DIR}/core.hpp"
 	"${COMMON_SOURCE_DIR}/db.hpp"
 	"${COMMON_SOURCE_DIR}/des.hpp"
 	"${COMMON_SOURCE_DIR}/ers.hpp"

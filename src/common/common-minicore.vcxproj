@@ -22,7 +22,7 @@
     <ClInclude Include="cbasetypes.h" />
     <ClInclude Include="cli.hpp" />
     <ClInclude Include="conf.hpp" />
-    <ClInclude Include="core.h" />
+    <ClInclude Include="core.hpp" />
     <ClInclude Include="des.hpp" />
     <ClInclude Include="grfio.hpp" />
     <ClInclude Include="malloc.hpp" />

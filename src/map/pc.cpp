@@ -7,7 +7,7 @@
 #include <math.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/core.h" // get_svn_revision()
+#include "../common/core.hpp" // get_svn_revision()
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"

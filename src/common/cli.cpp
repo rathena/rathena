@@ -18,7 +18,7 @@
 
 #include "cbasetypes.h"
 #include "showmsg.hpp"
-#include "core.h"
+#include "core.hpp"
 #include "cli.hpp"
 
 //map confs

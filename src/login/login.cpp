@@ -15,7 +15,7 @@
 #include <string.h>
 #include <string>
 
-#include "../common/core.h"
+#include "../common/core.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/md5calc.hpp"

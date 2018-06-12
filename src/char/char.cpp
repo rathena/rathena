@@ -11,7 +11,7 @@
 #include <string.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/core.h"
+#include "../common/core.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mapindex.hpp"

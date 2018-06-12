@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "malloc.hpp"
-#include "core.h"
+#include "core.hpp"
 #include "showmsg.hpp"
 
 #include <stdlib.h>

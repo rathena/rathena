@@ -5,7 +5,7 @@
 #include "cbasetypes.h"
 #include "showmsg.hpp"
 #include "malloc.hpp"
-#include "core.h"
+#include "core.hpp"
 #include "strlib.hpp"
 #ifndef MINICORE
 #include "ers.hpp"
