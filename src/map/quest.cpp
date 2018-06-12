@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/random.hpp"

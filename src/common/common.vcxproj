@@ -35,7 +35,7 @@
     <ClInclude Include="nullpo.h" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="showmsg.hpp" />
-    <ClInclude Include="socket.h" />
+    <ClInclude Include="socket.hpp" />
     <ClInclude Include="sql.hpp" />
     <ClInclude Include="strlib.hpp" />
     <ClInclude Include="timer.hpp" />
@@ -63,7 +63,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="showmsg.cpp" />
-    <ClCompile Include="socket.c" />
+    <ClCompile Include="socket.cpp" />
     <ClCompile Include="sql.cpp" />
     <ClCompile Include="strlib.cpp" />
     <ClCompile Include="timer.cpp" />

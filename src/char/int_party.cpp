@@ -10,7 +10,7 @@
 #include "../common/mmo.h"
 #include "../common/malloc.h"
 #include "../common/strlib.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/mapindex.h"
 #include "../common/sql.hpp"

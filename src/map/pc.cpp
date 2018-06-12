@@ -12,7 +12,7 @@
 #include "../common/nullpo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/socket.h" // session[]
+#include "../common/socket.hpp" // session[]
 #include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"

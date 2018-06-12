@@ -10,7 +10,7 @@
 #include "../common/conf.h" //libconfig
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp" //safestrncpy
-#include "../common/socket.h" //set_eof
+#include "../common/socket.hpp" //set_eof
 #include "../common/timer.hpp"  // DIFF_TICK
 #include "../common/nullpo.h"
 

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/timer.hpp"
 #include "../common/ers.h"

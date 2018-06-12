@@ -15,7 +15,7 @@
 #include "../common/timer.hpp" //difftick
 #include "../common/strlib.hpp" //safeprint
 #include "../common/showmsg.hpp" //show notice
-#include "../common/socket.h" //wfifo session
+#include "../common/socket.hpp" //wfifo session
 
 #include "account.hpp"
 #include "login.hpp"

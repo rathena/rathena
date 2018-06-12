@@ -15,7 +15,7 @@
 #include "../common/malloc.h"
 #include "../common/strlib.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/timer.hpp"
 
 #include "char.hpp"

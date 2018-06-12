@@ -19,7 +19,7 @@
 #include "../common/random.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 
 #include "map.hpp"
 #include "path.hpp"

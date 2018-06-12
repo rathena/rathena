@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_SOCKET_H_
-#define _SOCKET_H_
+#ifndef	_SOCKET_HPP_
+#define _SOCKET_HPP_
 
 #include "cbasetypes.h"
 
@@ -11,7 +11,7 @@
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>
-	#include <sys/socket.h>
+	#include <sys/socket.hpp>
 	#include <netinet/in.h>
 #endif
 
@@ -190,4 +190,4 @@ void send_shortlist_do_sends();
 }
 #endif
 
-#endif /* _SOCKET_H_ */
+#endif /* _SOCKET_HPP_ */

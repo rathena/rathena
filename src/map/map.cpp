@@ -11,7 +11,7 @@
 #include "../common/timer.hpp"
 #include "../common/grfio.hpp"
 #include "../common/malloc.h"
-#include "../common/socket.h" // WFIFO*()
+#include "../common/socket.hpp" // WFIFO*()
 #include "../common/showmsg.hpp"
 #include "../common/nullpo.h"
 #include "../common/random.hpp"

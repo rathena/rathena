@@ -9,7 +9,7 @@
 #include "strlib.hpp"
 #ifndef MINICORE
 #include "ers.h"
-#include "socket.h"
+#include "socket.hpp"
 #include "timer.hpp"
 #include "sql.hpp"
 #endif
@@ -123,7 +123,7 @@ static void sig_proc(int sn) {
 		//run_flag = 0;	// should we quit?
 		break;
 	case SIGPIPE:
-		//ShowInfo ("Broken pipe found... closing socket\n");	// set to eof in socket.c
+		//ShowInfo ("Broken pipe found... closing socket\n");	// set to eof in socket.cpp
 		break;	// does nothing here
 #endif
 	}

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #include "../common/showmsg.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/strlib.hpp"

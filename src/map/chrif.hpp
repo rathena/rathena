@@ -7,7 +7,7 @@
 #include <time.h>
 
 #include "../common/cbasetypes.h"
-#include "../common/socket.h" // enum chrif_req_op
+#include "../common/socket.hpp" // enum chrif_req_op
 
 //fwd declaration
 struct map_session_data;

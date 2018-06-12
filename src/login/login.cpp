@@ -21,7 +21,7 @@
 #include "../common/md5calc.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/socket.h" //ip2str
+#include "../common/socket.hpp" //ip2str
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 #include "../common/msg_conf.h"

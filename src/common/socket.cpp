@@ -7,7 +7,7 @@
 #include "malloc.h"
 #include "showmsg.hpp"
 #include "strlib.hpp"
-#include "socket.h"
+#include "socket.hpp"
 
 #include <stdlib.h>
 
@@ -1463,7 +1463,7 @@ void socket_init(void)
 	add_timer_interval(gettick()+1000, connect_check_clear, 0, 0, 5*60*1000);
 #endif
 
-	ShowInfo("Server supports up to '"CL_WHITE"%u"CL_RESET"' concurrent connections.\n", rlim_cur);
+	ShowInfo("Server supports up to '" CL_WHITE "%u" CL_RESET "' concurrent connections.\n", rlim_cur);
 }
 
 

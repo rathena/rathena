@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h> //memcpy
 
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/sql.hpp"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"

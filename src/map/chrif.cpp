@@ -8,7 +8,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/timer.hpp"
 #include "../common/nullpo.h"
 #include "../common/showmsg.hpp"

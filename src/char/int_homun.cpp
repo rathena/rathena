@@ -9,7 +9,7 @@
 #include "../common/mmo.h"
 #include "../common/strlib.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/utils.hpp"
 #include "../common/sql.hpp"
 

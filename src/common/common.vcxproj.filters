@@ -59,7 +59,7 @@
     <ClInclude Include="showmsg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="socket.h">
+    <ClInclude Include="socket.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sql.hpp">
@@ -127,7 +127,7 @@
     <ClCompile Include="showmsg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="socket.c">
+    <ClCompile Include="socket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sql.cpp">

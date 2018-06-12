@@ -24,7 +24,7 @@
 #include "../common/nullpo.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"

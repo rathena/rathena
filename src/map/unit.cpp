@@ -12,7 +12,7 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/random.hpp"
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 #include "../common/ers.h"  // ers_destroy
 
 #include "achievement.hpp"

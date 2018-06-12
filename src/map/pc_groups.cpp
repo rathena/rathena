@@ -8,7 +8,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp" // strcmp
-#include "../common/socket.h"
+#include "../common/socket.hpp"
 
 #include "atcommand.hpp" // AtCommandType
 #include "pc.hpp" // e_pc_permission
