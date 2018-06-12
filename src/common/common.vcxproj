@@ -31,7 +31,7 @@
     <ClInclude Include="mapindex.h" />
     <ClInclude Include="md5calc.hpp" />
     <ClInclude Include="mmo.h" />
-    <ClInclude Include="msg_conf.h" />
+    <ClInclude Include="msg_conf.hpp" />
     <ClInclude Include="nullpo.hpp" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="showmsg.hpp" />
@@ -57,7 +57,7 @@
     <ClCompile Include="malloc.c" />
     <ClCompile Include="mapindex.c" />
     <ClCompile Include="md5calc.cpp" />
-    <ClCompile Include="msg_conf.c" />
+    <ClCompile Include="msg_conf.cpp" />
     <ClCompile Include="nullpo.cpp" />
     <ClCompile Include="random.cpp">
       <CompileAs>CompileAsCpp</CompileAs>

@@ -24,7 +24,7 @@
 #include "../common/socket.hpp" //ip2str
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
-#include "../common/msg_conf.h"
+#include "../common/msg_conf.hpp"
 #include "../common/cli.hpp"
 #include "../common/utils.hpp"
 #include "../common/mmo.h"

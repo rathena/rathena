@@ -6,7 +6,7 @@
 
 #include "../config/core.h"
 #include "../common/core.h" // CORE_ST_LAST
-#include "../common/msg_conf.h"
+#include "../common/msg_conf.hpp"
 #include "../common/mmo.h"
 
 extern int login_fd; //login file descriptor

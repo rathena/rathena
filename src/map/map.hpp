@@ -11,7 +11,7 @@
 #include "../common/mmo.h"
 #include "../common/mapindex.h"
 #include "../common/db.h"
-#include "../common/msg_conf.h"
+#include "../common/msg_conf.hpp"
 
 #include "../config/core.h"
 
