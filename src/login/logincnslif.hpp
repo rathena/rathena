@@ -22,7 +22,7 @@ void display_helpscreen(bool do_exit);
 
 /**
  * Console Command Parser
- * Transmited from command cli.c
+ * Transmited from command cli.cpp
  * note common name for all serv do not rename (extern in cli)
  * @author [Wizputer]
  * @param buf: buffer to parse, (from console)

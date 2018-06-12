@@ -14,7 +14,7 @@
     <ClInclude Include="cbasetypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cli.h">
+    <ClInclude Include="cli.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="conf.h">
@@ -85,7 +85,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cli.c">
+    <ClCompile Include="cli.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="conf.c">

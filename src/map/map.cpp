@@ -17,7 +17,7 @@
 #include "../common/random.hpp"
 #include "../common/strlib.h"
 #include "../common/utils.h"
-#include "../common/cli.h"
+#include "../common/cli.hpp"
 #include "../common/ers.h"
 
 #include "path.hpp"

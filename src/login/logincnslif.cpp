@@ -16,7 +16,7 @@
 #include "../common/showmsg.h" //show notice
 #include "../common/md5calc.h"
 #include "../common/ers.h"
-#include "../common/cli.h"
+#include "../common/cli.hpp"
 #include "../common/timer.h"
 #include "../common/strlib.h"
 
@@ -97,7 +97,7 @@ int logcnslif_get_options(int argc, char ** argv) {
 
 /**
  * Console Command Parser
- * Transmited from command cli.c
+ * Transmited from command cli.cpp
  * note common name for all serv do not rename (extern in cli)
  * @author [Wizputer]
  * @param buf: buffer to parse, (from console)

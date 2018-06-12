@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cbasetypes.h" />
-    <ClInclude Include="cli.h" />
+    <ClInclude Include="cli.hpp" />
     <ClInclude Include="conf.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="db.h" />
@@ -45,7 +45,7 @@
     <ClInclude Include="utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cli.c" />
+    <ClCompile Include="cli.cpp" />
     <ClCompile Include="conf.c" />
     <ClCompile Include="core.cpp">
       <CompileAs>CompileAsCpp</CompileAs>

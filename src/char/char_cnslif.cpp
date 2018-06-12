@@ -10,7 +10,7 @@
 #include "../common/showmsg.h"
 #include "../common/timer.h"
 #include "../common/ers.h"
-#include "../common/cli.h"
+#include "../common/cli.hpp"
 
 #include "char.hpp"
 

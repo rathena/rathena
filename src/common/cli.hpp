@@ -1,5 +1,5 @@
 /**
- * @file cli.h
+ * @file cli.hpp
  * Module purpose is to handle the console (cli=console line input) while the servers launch and run.
  *  This contains functions common to all servers, but then dispatches them to a specific parser on each server.
  * Licensed under GNU GPL.
@@ -7,8 +7,8 @@
  * @author rAthena Dev Team
  */
 
-#ifndef CLI_H
-#define	CLI_H
+#ifndef CLI_HPP
+#define	CLI_HPP
 
 #ifdef	__cplusplus
 extern "C" {
@@ -45,5 +45,5 @@ extern int parse_console(const char* buf); //particular for each serv
 }
 #endif
 
-#endif	/* CLI_H */
+#endif	/* CLI_HPP */
 

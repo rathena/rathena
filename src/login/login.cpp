@@ -25,7 +25,7 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/msg_conf.h"
-#include "../common/cli.h"
+#include "../common/cli.hpp"
 #include "../common/utils.h"
 #include "../common/mmo.h"
 #include "../config/core.h"

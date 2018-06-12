@@ -21,7 +21,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
-#include "../common/cli.h"
+#include "../common/cli.hpp"
 
 #include "int_guild.hpp"
 #include "int_homun.hpp"
