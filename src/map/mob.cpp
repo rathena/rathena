@@ -12,7 +12,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/timer.hpp"
 #include "../common/db.h"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
 #include "../common/ers.h"

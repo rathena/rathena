@@ -6,7 +6,7 @@
 #include "malloc.h"
 #include "showmsg.hpp"
 #include "utils.hpp"
-#include "nullpo.h"
+#include "nullpo.hpp"
 #include "timer.hpp"
 
 #include <stdlib.h>

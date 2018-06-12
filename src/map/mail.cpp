@@ -3,7 +3,7 @@
 
 #include "mail.hpp"
 
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"

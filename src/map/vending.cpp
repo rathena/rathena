@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "vending.hpp"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.hpp" // ShowInfo
 #include "../common/strlib.hpp"

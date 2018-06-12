@@ -8,7 +8,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/malloc.h"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 
 #include "clif.hpp"

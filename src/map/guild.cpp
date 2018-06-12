@@ -7,7 +7,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/timer.hpp"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h"
 #include "../common/mapindex.h"
 #include "../common/showmsg.hpp"

@@ -11,7 +11,7 @@
 
 #include "../common/db.h"
 #include "../common/timer.hpp"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

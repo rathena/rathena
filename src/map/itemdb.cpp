@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

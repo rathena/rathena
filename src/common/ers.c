@@ -44,7 +44,7 @@
 #include "cbasetypes.h"
 #include "ers.h"
 #include "malloc.h" // CREATE, RECREATE, aMalloc, aFree
-#include "nullpo.h"
+#include "nullpo.hpp"
 #include "showmsg.hpp" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
 
 #include <stdlib.h>

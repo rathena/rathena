@@ -12,7 +12,7 @@
 #include "../common/strlib.hpp" //safestrncpy
 #include "../common/socket.hpp" //set_eof
 #include "../common/timer.hpp"  // DIFF_TICK
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 
 #include "map.hpp" //msg_conf
 #include "clif.hpp" //clif_chsys_msg

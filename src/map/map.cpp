@@ -13,7 +13,7 @@
 #include "../common/malloc.h"
 #include "../common/socket.hpp" // WFIFO*()
 #include "../common/showmsg.hpp"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utils.hpp"

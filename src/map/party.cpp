@@ -8,7 +8,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/timer.hpp"
 #include "../common/socket.hpp" // last_tick
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"

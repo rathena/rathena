@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/socket.hpp"
 
 #include "clif.hpp"

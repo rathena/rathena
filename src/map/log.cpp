@@ -8,7 +8,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/sql.hpp" // SQL_INNODB
 #include "../common/strlib.hpp"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 
 #include "map.hpp"

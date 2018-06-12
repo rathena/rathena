@@ -5,7 +5,7 @@
 
 #include <stdlib.h> // atoi
 
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/db.h"  // ARR_FIND
 #include "../common/malloc.h" // aMalloc, aFree
 #include "../common/showmsg.hpp"  // ShowWarning

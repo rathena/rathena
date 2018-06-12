@@ -7,7 +7,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/mmo.h"

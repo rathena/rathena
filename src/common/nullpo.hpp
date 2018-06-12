@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _NULLPO_H_
-#define _NULLPO_H_
+#ifndef _NULLPO_HPP_
+#define _NULLPO_HPP_
 
 #ifdef __cplusplus
 extern "C" {
@@ -215,4 +215,4 @@ void nullpo_info_f(const char *file, int line, const char *func,
 }
 #endif
 
-#endif /* _NULLPO_H_ */
+#endif /* _NULLPO_HPP_ */

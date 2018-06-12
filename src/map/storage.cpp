@@ -11,7 +11,7 @@
 #include "../common/utilities.hpp"
 
 #include "../common/cbasetypes.h"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/malloc.h"
 #include "../common/showmsg.hpp"
 

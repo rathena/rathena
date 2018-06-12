@@ -14,7 +14,7 @@
 #include "../common/timer.hpp"
 #include "../common/grfio.hpp"
 #include "../common/malloc.h"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"

@@ -10,7 +10,7 @@
 #include "../common/malloc.h"
 #include "../common/socket.hpp"
 #include "../common/timer.hpp"
-#include "../common/nullpo.h"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/ers.h"
