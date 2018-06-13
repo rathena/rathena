@@ -521,7 +521,7 @@ OnStart:
 		enablenpc instance_npcname("#Battle_2RZ1");
 		for ( .@i = 1; .@i <= 12; .@i++ )
 			enablenpc instance_npcname( "#Pause Effecto RZ" + .@i );
-		mapwarp 'map_rev$,'map_rev$,31,50;
+		warpparty 'map_rev$,31,50, 'party_id, 'map_rev$,1,1;
 	}
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		disablenpc instance_npcname( "#RZ Debuff_" + .@i );
@@ -695,7 +695,7 @@ OnTouch:
 1@rev,112,126,0	duplicate(#RZ Debuff_1)	#RZ Debuff_8	HIDDEN_WARP_NPC,4,3
 
 // Battle 2 - waves - debuff
-1@rev,33,47,0	duplicate(#RZ Debuff_1)	#RZ Debuff_9	HIDDEN_WARP_NPC,1,1
+1@rev,32,47,0	duplicate(#RZ Debuff_1)	#RZ Debuff_9	HIDDEN_WARP_NPC,1,1
 1@rev,24,48,0	duplicate(#RZ Debuff_1)	#RZ Debuff_10	HIDDEN_WARP_NPC,3,5
 1@rev,27,56,0	duplicate(#RZ Debuff_1)	#RZ Debuff_11	HIDDEN_WARP_NPC,4,4
 1@rev,43,47,0	duplicate(#RZ Debuff_1)	#RZ Debuff_12	HIDDEN_WARP_NPC,3,4
