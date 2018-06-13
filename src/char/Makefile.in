@@ -62,10 +62,6 @@ needs_mysql:
 obj:
 	@echo "	MKDIR	obj"
 	@-mkdir obj
-
-obj/%.o: %.c $(CHAR_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
-	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
 obj/%.o: %.cpp $(CHAR_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"

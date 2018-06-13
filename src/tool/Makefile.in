@@ -8,7 +8,7 @@ LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
-OTHER_H = ../config/renewal.h
+OTHER_H = ../config/renewal.hpp
 
 MAPCACHE_OBJ = obj_all/mapcache.o
 
