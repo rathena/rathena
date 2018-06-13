@@ -843,6 +843,15 @@ enum sc_type : int16 {
 	SC_CHEERUP,
 	SC_DRESSUP,
 
+	// Old Glast Heim Buffs
+	SC_GLASTHEIM_ATK,
+	SC_GLASTHEIM_DEF,
+	SC_GLASTHEIM_HEAL,
+	SC_GLASTHEIM_HIDDEN,
+	SC_GLASTHEIM_STATE,
+	SC_GLASTHEIM_ITEMDEF,
+	SC_GLASTHEIM_HPSP,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

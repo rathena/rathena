@@ -2053,6 +2053,13 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_E_CHAIN, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SIGHTBLASTER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_ATK, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_DEF, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_HEAL, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_HIDDEN, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
 		}
 	}
 

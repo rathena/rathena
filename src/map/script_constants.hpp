@@ -1485,6 +1485,13 @@
 	export_constant(SC_FALLEN_ANGEL);
 	export_constant(SC_CHEERUP);
 	export_constant(SC_DRESSUP);
+	export_constant(SC_GLASTHEIM_ATK);
+	export_constant(SC_GLASTHEIM_DEF);
+	export_constant(SC_GLASTHEIM_HEAL);
+	export_constant(SC_GLASTHEIM_HIDDEN);
+	export_constant(SC_GLASTHEIM_STATE);
+	export_constant(SC_GLASTHEIM_ITEMDEF);
+	export_constant(SC_GLASTHEIM_HPSP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3594,6 +3601,8 @@
 	export_constant(RC2_MANUK);
 	export_constant(RC2_SPLENDIDE);
 	export_constant(RC2_SCARABA);
+	export_constant(RC2_OGH_ATK_DEF);
+	export_constant(RC2_OGH_HIDDEN);
 	export_constant(RC2_MAX);
 
 	/* classes */
