@@ -9,7 +9,6 @@
 void rnd_init(void);
 
 int32 rnd(void);// [0, SINT32_MAX]
-uint32 rnd_roll(uint32 dice_faces);// [0, dice_faces)
 int32 rnd_value(int32 min, int32 max);// [min, max]
 
 #endif /* _RANDOM_HPP_ */
