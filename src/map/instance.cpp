@@ -121,7 +121,7 @@ static int instance_subscription_timer(int tid, unsigned int tick, int id, intpt
 	struct clan *cd = NULL;
 	enum e_instance_mode mode;
 
-	if(instance_wait.count == 0 || instance_id == 0)
+	if (instance_wait.id.size() == 0 || instance_id == 0)
 		return 0;
 
 	// Check that maps have been added
@@ -152,16 +152,14 @@ static int instance_subscription_timer(int tid, unsigned int tick, int id, intpt
 			return 0;
 	}
 
-	instance_wait.count--;
-	memmove(&instance_wait.id[0],&instance_wait.id[1],sizeof(instance_wait.id[0])*instance_wait.count);
-	memset(&instance_wait.id[instance_wait.count], 0, sizeof(instance_wait.id[0]));
+	instance_wait.id.pop_front();
 
-	for(uint16 i = 0; i < instance_wait.count; i++) {
+	for(uint16 i = 0; i < instance_wait.id.size(); i++) {
 		if (idata->state == INSTANCE_IDLE && ((mode == IM_CHAR && sd != NULL) || (mode == IM_GUILD && gd != NULL) || (mode == IM_PARTY && pd != NULL) || (mode == IM_CLAN && cd != NULL)))
 			clif_instance_changewait(instance_id, i + 1);
 	}
 
-	if(instance_wait.count)
+	if (instance_wait.id.size())
 		instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 	else
 		instance_wait.timer = INVALID_TIMER;
@@ -468,8 +466,8 @@ uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode
 			break;
 	}
 
-	instance_wait.id[instance_wait.count++] = instance_id;
-	clif_instance_create(instance_id, instance_wait.count);
+	instance_wait.id.push_back(instance_id);
+	clif_instance_create(instance_id, instance_wait.id.size());
 	instance_subscription_timer(0,0,0,0);
 
 	ShowInfo("[Instance] Created: %s (%hu).\n", name, instance_id);
@@ -639,13 +637,11 @@ bool instance_destroy(uint16 instance_id)
 	}
 
 	if(idata->state == INSTANCE_IDLE) {
-		for(i = 0; i < instance_wait.count; i++) {
+		for(i = 0; i < instance_wait.id.size(); i++) {
 			if(instance_wait.id[i] == instance_id) {
-				instance_wait.count--;
-				memmove(&instance_wait.id[i],&instance_wait.id[i+1],sizeof(instance_wait.id[0])*(instance_wait.count-i));
-				memset(&instance_wait.id[instance_wait.count], 0, sizeof(instance_wait.id[0]));
+				instance_wait.id.pop_front();
 
-				for (i = 0; i < instance_wait.count; i++) {
+				for (i = 0; i < instance_wait.id.size(); i++) {
 					auto &tmp = instances[instance_wait.id[i]];
 
 					if (tmp->state == INSTANCE_IDLE)
@@ -653,7 +649,7 @@ bool instance_destroy(uint16 instance_id)
 							clif_instance_changewait(instance_id, i + 1);
 				}
 
-				if(instance_wait.count)
+				if (instance_wait.id.size())
 					instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 				else
 					instance_wait.timer = INVALID_TIMER;
@@ -839,10 +835,8 @@ bool instance_reqinfo(struct map_session_data *sd, uint16 instance_id)
 
 	// Say it's created if instance is not busy
 	if(idata->state == INSTANCE_IDLE) {
-		int i;
-
-		for(i = 0; i < instance_wait.count; i++) {
-			if(instance_wait.id[i] == instance_id) {
+		for (uint16 i = 0; i < instance_wait.id.size(); i++) {
+			if (instance_wait.id[i] == instance_id) {
 				clif_instance_create(instance_id, i + 1);
 				break;
 			}
@@ -1197,7 +1191,6 @@ void do_reload_instance(void)
  */
 void do_init_instance(void) {
 	instance_readdb();
-	memset(&instance_wait, 0, sizeof(instance_wait));
 	instance_wait.timer = -1;
 
 	add_timer_func_list(instance_delete_timer,"instance_delete_timer");

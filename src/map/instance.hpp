@@ -4,6 +4,7 @@
 #ifndef _INSTANCE_HPP_
 #define _INSTANCE_HPP_
 
+#include <deque>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -63,8 +64,7 @@ struct s_instance_data {
 
 /// Instance Idle Queue data
 static struct s_instance_wait {
-	int id[MAX_INSTANCE_DATA];
-	int count;
+	std::deque<uint16> id;
 	int timer;
 } instance_wait;
 
