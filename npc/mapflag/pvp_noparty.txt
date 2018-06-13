@@ -11,29 +11,3 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Initial script.
 //============================================================
-
-// GvG Arenas =================
-guild_vs1	mapflag	pvp_noparty
-guild_vs2	mapflag	pvp_noparty
-guild_vs3	mapflag	pvp_noparty
-guild_vs4	mapflag	pvp_noparty
-guild_vs5	mapflag	pvp_noparty
-
-// RWC Maps ===============
-2009rwc_01	mapflag	pvp_noparty
-2009rwc_02	mapflag	pvp_noparty
-2009rwc_03	mapflag	pvp_noparty
-2009rwc_04	mapflag	pvp_noparty
-2009rwc_05	mapflag	pvp_noparty
-2009rwc_06	mapflag	pvp_noparty
-2009rwc_07	mapflag	pvp_noparty
-2009rwc_08	mapflag	pvp_noparty
-2009rwc_f01	mapflag	pvp_noparty
-2012rwc_01	mapflag	pvp_noparty
-2012rwc_02	mapflag	pvp_noparty
-2012rwc_03	mapflag	pvp_noparty
-2012rwc_04	mapflag	pvp_noparty
-2012rwc_05	mapflag	pvp_noparty
-2012rwc_06	mapflag	pvp_noparty
-2012rwc_07	mapflag	pvp_noparty
-2012rwc_08	mapflag	pvp_noparty
