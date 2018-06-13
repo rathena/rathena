@@ -185,14 +185,14 @@ Instances:
 #      X: 50
 #      Y: 104
 #    AdditionalMaps: ["1@tnm2", "1@tnm3"]
-#  - ID: 20
-#    Name: "Assault on the Airship"
-#    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@air1"
-#      X: 244
-#      Y: 73
-#    AdditionalMaps: ["1@air2"]
+  - ID: 20
+    Name: "Assault on the Airship"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@air1"
+      X: 244
+      Y: 73
+    AdditionalMaps: ["1@air2"]
   - ID: 21
     Name: "Fenrir and Sarah"
     LimitTime: 3600
@@ -229,13 +229,13 @@ Instances:
       X: 17
       Y: 93
     AdditionalMaps: ["1@dth2", "1@dth3"]
-#  - ID: 26
-#    Name: "Morse's Cave"
-#    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@rev"
-#      X: 26
-#      Y: 181
+  - ID: 26
+    Name: "Morse's Cave"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@rev"
+      X: 26
+      Y: 181
 #  - ID: 27
 #    Name: "Temple of the Demon God"
 #    LimitTime: 3600
