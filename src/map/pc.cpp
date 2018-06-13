@@ -6450,13 +6450,13 @@ const char* job_name(int class_)
 	case JOB_SOUL_REAPER:
 	case JOB_BABY_STAR_EMPEROR:
 	case JOB_BABY_SOUL_REAPER:
-		return msg_txt(NULL,773 - JOB_STAR_EMPEROR + class_);
+		return msg_txt(NULL,782 - JOB_STAR_EMPEROR + class_);
 
 	case JOB_STAR_EMPEROR2:
-		return msg_txt(NULL,773);
+		return msg_txt(NULL,782);
 
 	case JOB_BABY_STAR_EMPEROR2:
-		return msg_txt(NULL,775);
+		return msg_txt(NULL,784);
 
 	default:
 		return msg_txt(NULL,655);
