@@ -6474,7 +6474,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_GLASTHEIM_ITEMDEF])
 		def += sc->data[SC_GLASTHEIM_ITEMDEF]->val1;
 
-	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
+	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
 /**
