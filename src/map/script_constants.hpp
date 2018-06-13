@@ -1485,6 +1485,13 @@
 	export_constant(SC_FALLEN_ANGEL);
 	export_constant(SC_CHEERUP);
 	export_constant(SC_DRESSUP);
+	export_constant(SC_GLASTHEIM_ATK);
+	export_constant(SC_GLASTHEIM_DEF);
+	export_constant(SC_GLASTHEIM_HEAL);
+	export_constant(SC_GLASTHEIM_HIDDEN);
+	export_constant(SC_GLASTHEIM_STATE);
+	export_constant(SC_GLASTHEIM_ITEMDEF);
+	export_constant(SC_GLASTHEIM_HPSP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3505,6 +3512,34 @@
 	export_constant(EFST_MATK_POPCORN);
 	export_constant(EFST_ASPD_POPCORN);
 	export_constant(EFST_ULTIMATECOOK);
+	export_constant(EFST_LIGHTOFMOON);
+	export_constant(EFST_LIGHTOFSUN);
+	export_constant(EFST_LIGHTOFSTAR);
+	export_constant(EFST_LUNARSTANCE);
+	export_constant(EFST_UNIVERSESTANCE);
+	export_constant(EFST_SUNSTANCE);
+	export_constant(EFST_FLASHKICK);
+	export_constant(EFST_NEWMOON);
+	export_constant(EFST_STARSTANCE);
+	export_constant(EFST_DIMENSION);
+	export_constant(EFST_DIMENSION1);
+	export_constant(EFST_DIMENSION2);
+	export_constant(EFST_CREATINGSTAR);
+	export_constant(EFST_FALLINGSTAR);
+	export_constant(EFST_NOVAEXPLOSING);
+	export_constant(EFST_GRAVITYCONTROL);
+	export_constant(EFST_SOULCOLLECT);
+	export_constant(EFST_SOULREAPER);
+	export_constant(EFST_SOULUNITY);
+	export_constant(EFST_SOULSHADOW);
+	export_constant(EFST_SOULFAIRY);
+	export_constant(EFST_SOULFALCON);
+	export_constant(EFST_SOULGOLEM);
+	export_constant(EFST_SOULDIVISION);
+	export_constant(EFST_SOULENERGY);
+	export_constant(EFST_USE_SKILL_SP_SPA);
+	export_constant(EFST_USE_SKILL_SP_SHA);
+	export_constant(EFST_SP_SHA);
 	export_constant(EFST_INFINITY_DRINK);
 	export_constant(EFST_ABYSS_001);
 	export_constant(EFST_ABYSS_002);
@@ -3566,6 +3601,8 @@
 	export_constant(RC2_MANUK);
 	export_constant(RC2_SPLENDIDE);
 	export_constant(RC2_SCARABA);
+	export_constant(RC2_OGH_ATK_DEF);
+	export_constant(RC2_OGH_HIDDEN);
 	export_constant(RC2_MAX);
 
 	/* classes */
@@ -3922,6 +3959,8 @@
 	export_constant(PETINFO_RENAMED);
 	export_constant(PETINFO_LEVEL);
 	export_constant(PETINFO_BLOCKID);
+	export_constant(PETINFO_EGGID);
+	export_constant(PETINFO_FOODID);
 
 	// For backwards compatability - might be removed in the near future
 	export_constant2("PET_ID",PETINFO_ID);
@@ -4334,6 +4373,7 @@
 	export_constant(ROA_VALUE);
 	export_constant(ROA_PARAM);
 
+	/* special card flags */
 	export_constant(CARD0_FORGE);
 	export_constant(CARD0_CREATE);
 	export_constant(CARD0_PET);
@@ -4960,6 +5000,8 @@
 	export_constant(REFINE_COST_HD);
 	export_constant(REFINE_COST_ENRICHED);
 	export_constant(REFINE_COST_OVER10_HD);
+	export_constant(REFINE_COST_HOLINK);
+	export_constant(REFINE_COST_WAGJAK);
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
@@ -5944,6 +5986,10 @@
 	export_constant_npc(JT_4_TEDDY_BEAR_W);
 	export_constant_npc(JT_4_TEDDY_BEAR_B);
 	export_constant_npc(JT_4_TEDDY_BEAR_B_L);
+	export_constant_npc(JT_4_M_SOULREAPER);
+	export_constant_npc(JT_4_F_SE_SUN);
+	export_constant_npc(JT_4_M_SE_MOON);
+	export_constant_npc(JT_4_M_SE_STAR);
 	#undef export_constant_npc
 
 	/* special effects */
@@ -7128,6 +7174,11 @@
 	export_constant(HAT_EF_LEVEL160_WHITE);
 	export_constant(HAT_EF_FULL_BLOOMCHERRY_TREE);
 	export_constant(HAT_EF_C_BLESSINGS_OF_SOUL);
+	export_constant(HAT_EF_MANYSTARS);
+	export_constant(HAT_EF_SUBJECT_AURA_GOLD);
+	export_constant(HAT_EF_SUBJECT_AURA_WHITE);
+	export_constant(HAT_EF_SUBJECT_AURA_RED);
+	export_constant(HAT_EF_C_SHINING_ANGEL_WING);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);

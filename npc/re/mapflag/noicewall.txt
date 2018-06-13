@@ -32,6 +32,15 @@
 // Inside Eclage ===========
 1@ecl	mapflag	noicewall
 
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	noicewall
+2@gl_k	mapflag	noicewall
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	noicewall
+1@def02	mapflag	noicewall
+1@def03	mapflag	noicewall
+
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	noicewall
 1@sara	mapflag	noicewall
@@ -80,6 +89,33 @@ te_aldecas3	mapflag	noicewall
 te_aldecas4	mapflag	noicewall
 te_aldecas5	mapflag	noicewall
 
-// Episode 15
-1@lab	mapflag	noicewall
-1@uns	mapflag	noicewall
+// Ep 16
+1@mir	mapflag	noicewall
+2@mir	mapflag	noicewall
+1@sthb	mapflag	noicewall
+1@sthc	mapflag	noicewall
+1@sthd	mapflag	noicewall
+1@slw	mapflag	noicewall
+1@swat	mapflag	noicewall
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	noicewall
+2@gl_k2	mapflag	noicewall
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	noicewall
+
+// Suspicious shipwreck
+1@tre	mapflag	noicewall
+
+// Poring Town
+1@begi	mapflag	noicewall
+
+// Volcanic island Korodo
+1@crd	mapflag	noicewall
+
+// Noodles Festival July
+1@drdo	mapflag	noicewall
+
+// Soul Reaper Job Change
+1@soul	mapflag	noicewall
