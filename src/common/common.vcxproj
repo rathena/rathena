@@ -46,9 +46,7 @@
   <ItemGroup>
     <ClCompile Include="cli.cpp" />
     <ClCompile Include="conf.cpp" />
-    <ClCompile Include="core.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
+    <ClCompile Include="core.cpp" />
     <ClCompile Include="db.cpp" />
     <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.cpp" />
@@ -58,9 +56,7 @@
     <ClCompile Include="md5calc.cpp" />
     <ClCompile Include="msg_conf.cpp" />
     <ClCompile Include="nullpo.cpp" />
-    <ClCompile Include="random.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
+    <ClCompile Include="random.cpp" />
     <ClCompile Include="showmsg.cpp" />
     <ClCompile Include="socket.cpp" />
     <ClCompile Include="sql.cpp" />
