@@ -4,7 +4,7 @@
 #ifndef _LOG_HPP_
 #define _LOG_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct block_list;
 struct map_session_data;
@@ -96,12 +96,5 @@ extern struct Log_Config
 	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64], log_cash[64];
 	char log_feeding[64];
 } log_config;
-
-#ifdef BETA_THREAD_TEST
-	struct {
-		char** entry;
-		int count;
-	} logThreadData;
-#endif
 
 #endif /* _LOG_HPP_ */

@@ -152,3 +152,22 @@ bat_b01	mapflag	hidemobhpbar
 bat_b02	mapflag	hidemobhpbar
 bat_a01	mapflag	hidemobhpbar
 bat_a02	mapflag	hidemobhpbar
+
+// RWC Maps ===============
+2009rwc_01	mapflag	hidemobhpbar
+2009rwc_02	mapflag	hidemobhpbar
+2009rwc_03	mapflag	hidemobhpbar
+2009rwc_04	mapflag	hidemobhpbar
+2009rwc_05	mapflag	hidemobhpbar
+2009rwc_06	mapflag	hidemobhpbar
+2009rwc_07	mapflag	hidemobhpbar
+2009rwc_08	mapflag	hidemobhpbar
+2009rwc_f01	mapflag	hidemobhpbar
+2012rwc_01	mapflag	hidemobhpbar
+2012rwc_02	mapflag	hidemobhpbar
+2012rwc_03	mapflag	hidemobhpbar
+2012rwc_04	mapflag	hidemobhpbar
+2012rwc_05	mapflag	hidemobhpbar
+2012rwc_06	mapflag	hidemobhpbar
+2012rwc_07	mapflag	hidemobhpbar
+2012rwc_08	mapflag	hidemobhpbar

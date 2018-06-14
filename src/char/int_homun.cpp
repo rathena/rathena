@@ -6,12 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/utils.h"
-#include "../common/sql.h"
+#include "../common/mmo.hpp"
+#include "../common/strlib.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/utils.hpp"
+#include "../common/sql.hpp"
 
 #include "char.hpp"
 #include "inter.hpp"

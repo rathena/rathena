@@ -4,9 +4,9 @@
 #ifndef _SCRIPT_HPP_
 #define _SCRIPT_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/mmo.hpp"
 
 #define NUM_WHISPER_VAR 10
 
@@ -1895,6 +1895,11 @@ enum e_hat_effects {
 	HAT_EF_LEVEL160_WHITE,
 	HAT_EF_FULL_BLOOMCHERRY_TREE,
 	HAT_EF_C_BLESSINGS_OF_SOUL,
+	HAT_EF_MANYSTARS,
+	HAT_EF_SUBJECT_AURA_GOLD,
+	HAT_EF_SUBJECT_AURA_WHITE,
+	HAT_EF_SUBJECT_AURA_RED,
+	HAT_EF_C_SHINING_ANGEL_WING,
 	HAT_EF_MAX
 };
 
@@ -1972,10 +1977,6 @@ int script_reg_destroy(DBKey key, DBData *data, va_list ap);
 /* */
 void script_generic_ui_array_expand(unsigned int plus);
 unsigned int *script_array_cpy_list(struct script_array *sa);
-
-#ifdef BETA_THREAD_TEST
-void queryThread_log(char * entry, int length);
-#endif
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 

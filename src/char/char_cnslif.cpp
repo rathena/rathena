@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/socket.h"
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/ers.h"
-#include "../common/cli.h"
+#include "../common/socket.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/timer.hpp"
+#include "../common/ers.hpp"
+#include "../common/cli.hpp"
 
 #include "char.hpp"
 

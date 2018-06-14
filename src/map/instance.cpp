@@ -5,15 +5,15 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/cbasetypes.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "clan.hpp"
 #include "clif.hpp"

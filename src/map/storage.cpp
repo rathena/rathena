@@ -10,10 +10,10 @@
 
 #include "../common/utilities.hpp"
 
-#include "../common/cbasetypes.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
 
 #include "map.hpp" // struct map_session_data
 #include "chrif.hpp"

@@ -137,3 +137,38 @@ que_avan01	mapflag	nosave	SavePoint
 1@uns	mapflag	nosave	SavePoint
 un_myst	mapflag	nosave	SavePoint
 1@mcd	mapflag	nosave	SavePoint
+
+// Ep 16
+que_swat	mapflag	nosave	SavePoint
+1@mir	mapflag	nosave	SavePoint
+2@mir	mapflag	nosave	SavePoint
+1@sthb	mapflag	nosave	SavePoint
+1@sthc	mapflag	nosave	SavePoint
+1@sthd	mapflag	nosave	SavePoint
+1@slw	mapflag	nosave	SavePoint
+1@swat	mapflag	nosave	SavePoint
+
+// Rockridge
+rockmi2	mapflag	nosave	SavePoint
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	nosave	SavePoint
+2@gl_k2	mapflag	nosave	SavePoint
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	nosave	SavePoint
+
+// Suspicious shipwreck
+1@tre	mapflag	nosave	SavePoint
+
+// Poring Town
+1@begi	mapflag	nosave	SavePoint
+
+// Volcanic island Korodo
+1@crd	mapflag	nosave	SavePoint
+
+// Noodles Festival July
+1@drdo	mapflag	nosave	SavePoint
+
+// Soul Reaper Job Change
+1@soul	mapflag	nosave	SavePoint

@@ -82,3 +82,34 @@
 1@lab	mapflag	partylock
 1@uns	mapflag	partylock
 1@mcd	mapflag	partylock
+
+// Ep 16
+1@mir	mapflag	partylock
+2@mir	mapflag	partylock
+1@sthb	mapflag	partylock
+1@sthc	mapflag	partylock
+1@sthd	mapflag	partylock
+1@slw	mapflag	partylock
+1@swat	mapflag	partylock
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	partylock
+2@gl_k2	mapflag	partylock
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	partylock
+
+// Suspicious shipwreck
+1@tre	mapflag	partylock
+
+// Poring Town
+1@begi	mapflag	partylock
+
+// Volcanic island Korodo
+1@crd	mapflag	partylock
+
+// Noodles Festival July
+1@drdo	mapflag	partylock
+
+// Soul Reaper Job Change
+1@soul	mapflag	partylock

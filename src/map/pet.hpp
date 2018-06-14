@@ -4,8 +4,8 @@
 #ifndef _PET_HPP_
 #define _PET_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 #include "script.hpp"
 #include "status.hpp"

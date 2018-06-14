@@ -11,12 +11,12 @@
 #include <vector>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/strlib.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_logif.hpp"
@@ -307,10 +307,20 @@ const char* job_name(int class_) {
 			return msg_txt(110 - JOB_BABY_NINJA+class_);
 
 		case JOB_BABY_STAR_GLADIATOR2:
-			return msg_txt(114);
+		case JOB_STAR_EMPEROR:
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_BABY_SOUL_REAPER:
+			return msg_txt(114 - JOB_BABY_STAR_GLADIATOR2 + class_);
+
+		case JOB_STAR_EMPEROR2:
+			return msg_txt(118);
+
+		case JOB_BABY_STAR_EMPEROR2:
+			return msg_txt(120);
 
 		default:
-			return msg_txt(118);
+			return msg_txt(199);
 	}
 }
 

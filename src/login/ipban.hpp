@@ -12,7 +12,7 @@
 #ifndef _IPBAN_HPP_
 #define _IPBAN_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 /**
  * Check if ip is in the active bans list.
