@@ -5,13 +5,13 @@
 
 #include <stdlib.h> // atoi
 
-#include "../common/nullpo.h"
-#include "../common/db.h"  // ARR_FIND
-#include "../common/malloc.h" // aMalloc, aFree
-#include "../common/showmsg.h"  // ShowWarning
-#include "../common/socket.h"  // RBUF*
-#include "../common/strlib.h"  // safestrncpy
-#include "../common/timer.h"  // gettick
+#include "../common/nullpo.hpp"
+#include "../common/db.hpp"  // ARR_FIND
+#include "../common/malloc.hpp" // aMalloc, aFree
+#include "../common/showmsg.hpp"  // ShowWarning
+#include "../common/socket.hpp"  // RBUF*
+#include "../common/strlib.hpp"  // safestrncpy
+#include "../common/timer.hpp"  // gettick
 
 #include "atcommand.hpp"  // msg_txt
 #include "battle.hpp"  // battle_config.*

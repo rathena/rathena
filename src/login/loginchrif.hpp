@@ -11,7 +11,7 @@
 #ifndef _LOGINCHRIF_HPP_
 #define _LOGINCHRIF_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 /**
  * Entry point from char-server to log-server.

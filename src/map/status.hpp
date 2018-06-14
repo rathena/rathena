@@ -4,7 +4,7 @@
 #ifndef _STATUS_HPP_
 #define _STATUS_HPP_
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 enum e_race2 : uint8;
 struct block_list;
@@ -3162,7 +3162,7 @@ struct status_data {
 #endif
 		aspd_rate;
 	/**
-	 * defType is RENEWAL dependent and defined in src/map/config/data/const.h
+	 * defType is RENEWAL dependent and defined in src/config/const.hpp
 	 **/
 	defType def,mdef;
 

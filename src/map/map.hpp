@@ -6,26 +6,14 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/mmo.h"
-#include "../common/mapindex.h"
-#include "../common/db.h"
-#include "../common/msg_conf.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/mmo.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/db.hpp"
+#include "../common/msg_conf.hpp"
 
-#include "../config/core.h"
-
-extern "C" {
-	//Options read in cli (c-linkage for now)
-	extern const char*INTER_CONF_NAME;
-	extern const char*LOG_CONF_NAME;
-	extern const char*MAP_CONF_NAME;
-	extern const char*BATTLE_CONF_FILENAME;
-	extern const char*ATCOMMAND_CONF_FILENAME;
-	extern const char*SCRIPT_CONF_NAME;
-	extern const char*MSG_CONF_NAME_EN;
-	extern const char*GRF_PATH_FILENAME;
-}
+#include "../config/core.hpp"
 
 struct npc_data;
 struct item_data;
@@ -970,25 +958,7 @@ typedef struct elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-
-#ifdef BETA_THREAD_TEST
-
-extern char default_codepage[32];
-extern int map_server_port;
-extern char map_server_ip[32];
-extern char map_server_id[32];
-extern char map_server_pw[32];
-extern char map_server_db[32];
-
-extern char log_db_ip[32];
-extern int log_db_port;
-extern char log_db_id[32];
-extern char log_db_pw[32];
-extern char log_db_db[32];
-
-#endif
-
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 extern int db_use_sqldbs;
 

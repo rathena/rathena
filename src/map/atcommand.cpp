@@ -6,18 +6,19 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
+#include "../common/cli.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 #include "../common/utilities.hpp"
-#include "../common/conf.h"
+#include "../common/conf.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"
@@ -2970,7 +2971,7 @@ ACMD_FUNC(char_block)
 /*==========================================
  * accountban command (usage: ban <%time> <player_name>)
  * charban command (usage: charban <%time> <player_name>)
- * %time see common/timer.c::solve_time()
+ * %time see common/timer.cpp::solve_time()
  *------------------------------------------*/
 ACMD_FUNC(char_ban)
 {

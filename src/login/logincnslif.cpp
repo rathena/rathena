@@ -12,13 +12,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h" //cbasetype + NAME_LENGTH
-#include "../common/showmsg.h" //show notice
-#include "../common/md5calc.h"
-#include "../common/ers.h"
-#include "../common/cli.h"
-#include "../common/timer.h"
-#include "../common/strlib.h"
+#include "../common/mmo.hpp" //cbasetype + NAME_LENGTH
+#include "../common/showmsg.hpp" //show notice
+#include "../common/md5calc.hpp"
+#include "../common/ers.hpp"
+#include "../common/cli.hpp"
+#include "../common/timer.hpp"
+#include "../common/strlib.hpp"
 
 #include "login.hpp"
 
@@ -97,7 +97,7 @@ int logcnslif_get_options(int argc, char ** argv) {
 
 /**
  * Console Command Parser
- * Transmited from command cli.c
+ * Transmited from command cli.cpp
  * note common name for all serv do not rename (extern in cli)
  * @author [Wizputer]
  * @param buf: buffer to parse, (from console)

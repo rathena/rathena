@@ -5,15 +5,15 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/socket.h" // last_tick
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/utils.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/socket.hpp" // last_tick
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/utils.hpp"
+#include "../common/strlib.hpp"
 
 #include "atcommand.hpp"	//msg_txt()
 #include "pc.hpp"

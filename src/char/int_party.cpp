@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/socket.h"
-#include "../common/showmsg.h"
-#include "../common/mapindex.h"
-#include "../common/sql.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/strlib.hpp"
+#include "../common/socket.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/sql.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"

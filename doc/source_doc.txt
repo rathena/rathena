@@ -180,7 +180,6 @@ The following list describes each module and its purpose.
 
   Module         Description
   ------         -----------
-  atomic         adapter to atomic operations for Windows API
   cbasetypes     adapter to OS and arch specification (function name, bit representation)
   cli            console Line Interface handling (get arguments from terminal at beginning and runtime) 
   conf           facade of libconfig api
@@ -188,26 +187,18 @@ The following list describes each module and its purpose.
   db             database module (create, parse, and destroy databases)
   des            Data Encryption Standard algorithm modified for rAthena
   ers            Entry Reusage System to help memory allocation
-  evdp           handles events
   grfio          handles *.grf files (searches for files in them and decodes them)
   malloc         handles runtime memory allocation (so that memory manager could check for leaks)
   mapindex       handles the processing and reading of the mapcache.dat
   md5calc        offers md5 encryption
-  mempool        handles shared memory pool for thread support
   mmo.h          common structures and defines across serv
   msg_conf       handles msg in src from configuration
-  mutex          handles Mutual exclusion (Mutex) for thread support
-  netbuffer      iobuffer initialisation for thread support
-  network        updated socket module, with ipv6 and thread support
   nullpo         checks and dumps info for debug mode
-  raconf         processes the conf files
   random         generation of random numbers
   showmsg        display messages in console with a certain color
   socket         handling of sockets (listening, close, open, etc.)
-  spinlock       handles synchronization (waiting loop) for thread support
   sql.c          MySQL database proxy
   strlib.c       string handling
-  thread.c       thread creation and destruction
   timer.c        timer-related functions
   utils.c        misc functions
   winapi.h       Windows redefine and include

@@ -7,9 +7,6 @@
 int cnslif_parse(const char* buf);
 void do_init_chcnslif(void);
 
-extern "C" {
-void display_helpscreen(bool do_exit);
-}
 
 #endif	/* _CHAR_CNSLIF_HPP_ */
 

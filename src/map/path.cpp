@@ -8,12 +8,12 @@
 #include <string.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"

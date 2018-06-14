@@ -12,10 +12,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/timer.h" //difftick
-#include "../common/strlib.h" //safeprint
-#include "../common/showmsg.h" //show notice
-#include "../common/socket.h" //wfifo session
+#include "../common/timer.hpp" //difftick
+#include "../common/strlib.hpp" //safeprint
+#include "../common/showmsg.hpp" //show notice
+#include "../common/socket.hpp" //wfifo session
 
 #include "account.hpp"
 #include "login.hpp"

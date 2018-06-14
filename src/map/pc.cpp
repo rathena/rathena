@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h" // get_svn_revision()
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h" // session[]
-#include "../common/strlib.h" // safestrncpy()
-#include "../common/timer.h"
-#include "../common/utils.h"
-#include "../common/mmo.h" //NAME_LENGTH
-#include "../common/ers.h"  // ers_destroy
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // get_svn_revision()
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp" // session[]
+#include "../common/strlib.hpp" // safestrncpy()
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
+#include "../common/mmo.hpp" //NAME_LENGTH
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "atcommand.hpp" // get_atcommand_level()
 #include "map.hpp"

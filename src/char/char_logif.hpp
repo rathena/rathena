@@ -4,7 +4,7 @@
 #ifndef _CHAR_LOGIF_HPP_
 #define _CHAR_LOGIF_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct char_session_data;
 

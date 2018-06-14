@@ -4,7 +4,7 @@
 #ifndef _MOB_HPP_
 #define _MOB_HPP_
 
-#include "../common/mmo.h" // struct item
+#include "../common/mmo.hpp" // struct item
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
