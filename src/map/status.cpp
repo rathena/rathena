@@ -6623,6 +6623,20 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if (sc == NULL || (sd && sd->state.permanent_speed))
 		return (unsigned short)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 
+	if (sd && pc_ismadogear(sd)) { // Mado speed is not affected by other statuses
+		int val = 0;
+
+		if (pc_checkskill(sd, NC_MADOLICENCE) < 5)
+			val = 50 - 10 * pc_checkskill(sd, NC_MADOLICENCE);
+		else
+			val -= 25;
+		if (sc->data[SC_ACCELERATION])
+			val -= 25;
+		speed += speed * val / 100;
+
+		return (unsigned short)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+	}
+
 	if( sd && sd->ud.skilltimer != INVALID_TIMER && (pc_checkskill(sd,SA_FREECAST) > 0 || sd->ud.skill_id == LG_EXEEDBREAK) ) {
 		if( sd->ud.skill_id == LG_EXEEDBREAK )
 			speed_rate = 160 - 10 * sd->ud.skill_lv;
@@ -6639,12 +6653,6 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = 25; // Same bonus
 			else if( pc_isridingwug(sd) )
 				val = 15 + 5 * pc_checkskill(sd, RA_WUGRIDER);
-			else if( pc_ismadogear(sd) ) {
-				val = -(50 - 10 * pc_checkskill(sd,NC_MADOLICENCE));
-				val += (pc_checkskill(sd, NC_MADOLICENCE) > 4 ? 25 : 0);
-				if( sc->data[SC_ACCELERATION] )
-					val += 25;
-			}
 			else if( sc->data[SC_ALL_RIDING] )
 				val = battle_config.rental_mount_speed_boost;
 		}
