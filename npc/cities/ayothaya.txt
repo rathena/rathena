@@ -32,7 +32,7 @@
 		mes "We Ayotayans are a pious people who value peace and sincerity. We endeavor to lead simple, yet noble, lives in harmony with nature.";
 		next;
 		mes "[Aibakthing]";
-		mes "Our traditional cuisine is world famous. It's no surprise when we serve dishes like Tom Yum Goong, made of Shrimp, Lemon and Chillis, which has a tantalizing aroma and flavor beyond imagining.";
+		mes "Our traditional cuisine is world famous. It's no surprise when we serve dishes like Tom Yum Goong, made of Shrimp, Lemon and Chillies, which has a tantalizing aroma and flavor beyond imagining.";
 		next;
 		mes "[Aibakthing]";
 		mes "For those who crave adventure, there is an age old story about the Sa-mhing Tiger, an evil creature that haunts our temple ruins.";

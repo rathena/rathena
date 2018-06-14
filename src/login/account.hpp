@@ -11,9 +11,9 @@
 #ifndef _ACCOUNT_HPP_
 #define _ACCOUNT_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // ACCOUNT_REG2_NUM
-#include "../config/core.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
+#include "../config/core.hpp"
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;

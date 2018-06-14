@@ -7,15 +7,17 @@
 
 #include <stdlib.h>
 
-#include "../common/db.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
+#include "../common/utilities.hpp"
+
+#include "../common/db.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
+#include "../common/ers.hpp"
 
 #include "pc.hpp"
 #include "intif.hpp"
@@ -27,16 +29,14 @@
 #include "log.hpp"
 #include "achievement.hpp"
 
+using namespace rathena;
+
 #define MIN_PETTHINKTIME 100
 
 //Dynamic pet database
 std::map<uint16, struct s_pet_db> pet_db_data;
 struct s_pet_db *pet_db( uint16 pet_id ){
-	if( pet_db_data.find(pet_id) != pet_db_data.end() ){
-		return &pet_db_data.at(pet_id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( pet_db_data, pet_id );
 }
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
@@ -167,10 +167,13 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 {
 	int rate;
+	s_pet_db* pet_db_ptr;
 
 	nullpo_ret(pd);
 
 	Assert((pd->master == 0) || (pd->master->pd == pd));
+
+	pet_db_ptr = pd->get_pet_db();
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
 		pd->pet.intimate < battle_config.pet_support_min_friendly ||
@@ -191,21 +194,21 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 		return 0;
 
 	if(!type) {
-		rate = pd->petDB->attack_rate;
+		rate = pet_db_ptr->attack_rate;
 		rate = rate * pd->rate_fix / 1000;
 
-		if(pd->petDB->attack_rate > 0 && rate <= 0)
+		if(pet_db_ptr->attack_rate > 0 && rate <= 0)
 			rate = 1;
 	} else {
-		rate = pd->petDB->defence_attack_rate;
+		rate = pet_db_ptr->defence_attack_rate;
 		rate = rate * pd->rate_fix / 1000;
 
-		if(pd->petDB->defence_attack_rate > 0 && rate <= 0)
+		if(pet_db_ptr->defence_attack_rate > 0 && rate <= 0)
 			rate = 1;
 	}
 
 	if(rnd()%10000 < rate) {
-		if(pd->target_id == 0 || rnd()%10000 < pd->petDB->change_target_rate)
+		if(pd->target_id == 0 || rnd()%10000 < pet_db_ptr->change_target_rate)
 			pd->target_id = bl->id;
 	}
 
@@ -249,6 +252,7 @@ static int pet_hungry(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;
 	struct pet_data *pd;
+	s_pet_db *pet_db_ptr;
 	int interval;
 
 	sd = map_id2sd(id);
@@ -260,6 +264,7 @@ static int pet_hungry(int tid, unsigned int tick, int id, intptr_t data)
 		return 1;
 
 	pd = sd->pd;
+	pet_db_ptr = pd->get_pet_db();
 
 	if(pd->pet_hungry_timer != tid) {
 		ShowError("pet_hungry_timer %d != %d\n",pd->pet_hungry_timer,tid);
@@ -290,9 +295,9 @@ static int pet_hungry(int tid, unsigned int tick, int id, intptr_t data)
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 
 	if(battle_config.pet_hungry_delay_rate != 100)
-		interval = (pd->petDB->hungry_delay*battle_config.pet_hungry_delay_rate)/100;
+		interval = (pet_db_ptr->hungry_delay*battle_config.pet_hungry_delay_rate)/100;
 	else
-		interval = pd->petDB->hungry_delay;
+		interval = pet_db_ptr->hungry_delay;
 
 	if(interval <= 0)
 		interval = 1;
@@ -354,7 +359,7 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
 	int val;
 
 	if (pd->pet.intimate > 900)
-		val = (pd->petDB->s_perfor > 0) ? 4 : 3;
+		val = (pd->get_pet_db()->s_perfor > 0) ? 4 : 3;
 	else if(pd->pet.intimate > 750) //TODO: this is way too high
 		val = 2;
 	else
@@ -380,7 +385,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 
 	pet_lootitem_drop(pd,sd);
 	memset(&tmp_item,0,sizeof(tmp_item));
-	tmp_item.nameid = pd->petDB->EggID;
+	tmp_item.nameid = pd->get_pet_db()->EggID;
 	tmp_item.identify = 1;
 	tmp_item.card[0] = CARD0_PET;
 	tmp_item.card[1] = GetWord(pd->pet.pet_id,0);
@@ -450,7 +455,6 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.id = npc_get_new_npc_id();
 
 	pd->master = sd;
-	pd->petDB = pet_db_ptr;
 	pd->db = mob_db(pet->class_);
 	memcpy(&pd->pet, pet, sizeof(struct s_pet));
 	status_set_viewdata(&pd->bl, pet->class_);
@@ -473,7 +477,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	if( battle_config.pet_status_support )
 		run_script(pet_db_ptr->pet_script,0,sd->bl.id,0);
 
-	if( pd->petDB ) {
+	if( pd->get_pet_db() ) {
 		if( pet_db_ptr->pet_loyal_script )
 			status_calc_pc(sd,SCO_NONE);
 
@@ -778,7 +782,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0 || sd->pd->pet.incubate)
 		return 1;
 
-	egg_id = itemdb_exists(sd->pd->petDB->EggID);
+	egg_id = itemdb_exists(sd->pd->get_pet_db()->EggID);
 
 	if (egg_id) {
 		if ((egg_id->flag.trade_restriction&0x01) && !pc_inventoryblank(sd)) {
@@ -874,6 +878,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
+	s_pet_db *pet_db_ptr;
 	unsigned short nameid;
 
 	nullpo_retr(1, sd);
@@ -882,10 +887,13 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	if (!pd)
 		return 1;
+	
+	if((pet_db_ptr = pd->get_pet_db()) == nullptr)
+		return 1;
 
 	nameid = sd->inventory.u.items_inventory[index].nameid;
 
-	if(pd->petDB->AcceID == 0 || nameid != pd->petDB->AcceID || pd->pet.equip != 0) {
+	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
 		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
 		return 1;
 	}
@@ -971,9 +979,13 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
  */
 static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 {
+	nullpo_retr(1, sd);
+	nullpo_retr(1, pd);
+
+	s_pet_db *pet_db_ptr = pd->get_pet_db();
 	int i,k;
 
-	k = pd->petDB->FoodID;
+	k = pet_db_ptr->FoodID;
 	i = pc_search_inventory(sd,k);
 
 	if( i < 0 ) {
@@ -985,12 +997,12 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
 
 	if( pd->pet.hungry > 90 )
-		pet_set_intimate(pd, pd->pet.intimate - pd->petDB->r_full);
+		pet_set_intimate(pd, pd->pet.intimate - pet_db_ptr->r_full);
 	else {
 		if( battle_config.pet_friendly_rate != 100 )
-			k = (pd->petDB->r_hungry * battle_config.pet_friendly_rate) / 100;
+			k = (pet_db_ptr->r_hungry * battle_config.pet_friendly_rate) / 100;
 		else
-			k = pd->petDB->r_hungry;
+			k = pet_db_ptr->r_hungry;
 
 		if( pd->pet.hungry > 75 ) {
 			k = k >> 1;
@@ -1009,16 +1021,16 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 		pd->pet.intimate = 1000;
 
 	status_calc_pet(pd,SCO_NONE);
-	pd->pet.hungry += pd->petDB->fullness;
+	pd->pet.hungry += pet_db_ptr->fullness;
 
 	if( pd->pet.hungry > 100 )
 		pd->pet.hungry = 100;
 
-	log_feeding(sd, LOG_FEED_PET, pd->petDB->FoodID);
+	log_feeding(sd, LOG_FEED_PET, pet_db_ptr->FoodID);
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);
-	clif_pet_food(sd,pd->petDB->FoodID,1);
+	clif_pet_food(sd, pet_db_ptr->FoodID,1);
 
 	return 0;
 }
@@ -1136,11 +1148,11 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 	}
 
 	// Return speed to normal.
-	if (pd->status.speed != pd->petDB->speed) {
+	if (pd->status.speed != pd->get_pet_db()->speed) {
 		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; // Wait until the pet finishes walking back to master.
 
-		pd->status.speed = pd->petDB->speed;
+		pd->status.speed = pd->get_pet_db()->speed;
 		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
 

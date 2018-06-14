@@ -508,6 +508,14 @@
 5823,467,100	// Love_Arrow
 5855,499,100	// Fishing_Rod
 5864,475,100	// Shadow_Booster
+5900,467,100	// Divine Guard Hat
+5901,467,100	// Focus Beret
+5902,467,100	// Harvester Hat
+5903,467,100	// Deadman Bandana
+5904,467,100	// Inconspicuous Hat
+5905,467,100	// Lyrica Hat
+5906,467,100	// Oni Horns
+5907,467,100	// Sea Captain Hat
 6000,475,100	// Dark_Ashes
 6005,467,100	// New_Year_Rice_Cake
 6006,499,100	// Rice_Cake_Delivery_Box

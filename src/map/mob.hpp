@@ -4,7 +4,7 @@
 #ifndef _MOB_HPP_
 #define _MOB_HPP_
 
-#include "../common/mmo.h" // struct item
+#include "../common/mmo.hpp" // struct item
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
@@ -44,6 +44,11 @@ struct guardian_data;
 enum MOBID {
 	MOBID_PORING			= 1002,
 	MOBID_RED_PLANT			= 1078,
+	MOBID_BLUE_PLANT,
+	MOBID_GREEN_PLANT,
+	MOBID_YELLOW_PLANT,
+	MOBID_WHITE_PLANT,
+	MOBID_SHINING_PLANT,
 	MOBID_BLACK_MUSHROOM	= 1084,
 	MOBID_MARINE_SPHERE		= 1142,
 	MOBID_EMPERIUM			= 1288,

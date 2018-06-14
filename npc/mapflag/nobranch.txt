@@ -334,4 +334,23 @@ splendide	mapflag	nobranch
 spl_in01	mapflag	nobranch
 spl_in02	mapflag	nobranch
 
+// RWC Maps ===============
+2009rwc_01	mapflag	nobranch
+2009rwc_02	mapflag	nobranch
+2009rwc_03	mapflag	nobranch
+2009rwc_04	mapflag	nobranch
+2009rwc_05	mapflag	nobranch
+2009rwc_06	mapflag	nobranch
+2009rwc_07	mapflag	nobranch
+2009rwc_08	mapflag	nobranch
+2009rwc_f01	mapflag	nobranch
+2012rwc_01	mapflag	nobranch
+2012rwc_02	mapflag	nobranch
+2012rwc_03	mapflag	nobranch
+2012rwc_04	mapflag	nobranch
+2012rwc_05	mapflag	nobranch
+2012rwc_06	mapflag	nobranch
+2012rwc_07	mapflag	nobranch
+2012rwc_08	mapflag	nobranch
+
 //evt_zombie	mapflag	nobranch

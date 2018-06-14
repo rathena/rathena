@@ -5,12 +5,12 @@
 
 #include <stdlib.h>
 
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
@@ -631,6 +631,11 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 			ShowWarning( "itemdb_read_group: Item Group '%s' has not been cleared, because it did not exist.\n", str[0] );
 			return false;
 		}
+	}
+
+	if( columns < 3 ){
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
 	}
 
 	// Checking sub group
@@ -1419,6 +1424,12 @@ static int itemdb_readdb(void){
 				continue;
 			memset(str, 0, sizeof(str));
 
+			p = strstr(line,"//");
+
+			if( p != nullptr ){
+				*p = '\0';
+			}
+
 			p = line;
 			while( ISSPACE(*p) )
 				++p;
@@ -1446,14 +1457,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[19] = p;
+			str[19] = p + 1;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			p[1] = '\0';
+			*p = '\0';
 			p += 2;
 
 			// OnEquip_Script
@@ -1462,14 +1473,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[20] = p;
+			str[20] = p + 1;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			p[1] = '\0';
+			*p = '\0';
 			p += 2;
 
 			// OnUnequip_Script (last column)
@@ -1479,16 +1490,19 @@ static int itemdb_readdb(void){
 				continue;
 			}
 			str[21] = p;
+			p = &str[21][strlen(str[21]) - 2];
 
-			if ( str[21][strlen(str[21])-2] != '}' ) {
+			if ( *p != '}' ) {
 				/* lets count to ensure it's not something silly e.g. a extra space at line ending */
 				int v, lcurly = 0, rcurly = 0;
 
 				for( v = 0; v < strlen(str[21]); v++ ) {
 					if( str[21][v] == '{' )
 						lcurly++;
-					else if ( str[21][v] == '}' )
+					else if (str[21][v] == '}') {
 						rcurly++;
+						p = &str[21][v];
+					}
 				}
 
 				if( lcurly != rcurly ) {
@@ -1496,8 +1510,10 @@ static int itemdb_readdb(void){
 					continue;
 				}
 			}
+			str[21] = str[21] + 1;  //skip the first left curly
+			*p = '\0';              //null the last right curly
 
-			if (!itemdb_parse_dbrow(str, path, lines, 0))
+			if (!itemdb_parse_dbrow(str, path, lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
 
 			count++;

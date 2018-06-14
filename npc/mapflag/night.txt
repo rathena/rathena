@@ -259,9 +259,6 @@ mosk_dun02	mapflag	nightenabled
 mosk_dun03	mapflag	nightenabled
 que_temsky	mapflag	nightenabled
 sch_gld	mapflag	nightenabled
-moc_fild20	mapflag	nightenabled
-moc_fild21	mapflag	nightenabled
-moc_fild22	mapflag	nightenabled
 aru_gld	mapflag	nightenabled
 que_qsch01	mapflag	nightenabled
 que_qsch02	mapflag	nightenabled

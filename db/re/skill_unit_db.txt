@@ -109,6 +109,7 @@
 670,0xc7,    ,  1, 5:5:5:5:5:5:5:5:5:13,1000,all,0x008	//NPC_EVILLAND
 
 706,0xfd,     ,  2, 0,1000,enemy, 0x018	//NPC_VENOMFOG
+708,0x86,     ,  0, 9,1000,enemy, 0x018	//NPC_COMET
 
 2044,0xca,    ,  0, 2,1000,all,   0x018	//AB_EPICLESIS
 

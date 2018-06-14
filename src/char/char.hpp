@@ -4,10 +4,10 @@
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
-#include "../config/core.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/msg_conf.h"
-#include "../common/mmo.h"
+#include "../config/core.hpp"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/msg_conf.hpp"
+#include "../common/mmo.hpp"
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
@@ -101,7 +101,12 @@ enum pincode_state : uint8 {
 #if 0
 	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
 #endif
+#if PACKETVER >= 20180124
+	// The button for pin code access was removed
+	PINCODE_PASSED  = PINCODE_OK,
+#else
 	PINCODE_PASSED	= 7,
+#endif
 	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
 };
@@ -180,6 +185,8 @@ struct CharServ_Config {
 	int clan_remove_inactive_days;
 	int mail_return_days;
 	int mail_delete_days;
+
+	int allowed_job_flag;
 };
 extern struct CharServ_Config charserv_config;
 

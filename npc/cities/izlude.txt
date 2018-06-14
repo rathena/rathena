@@ -99,7 +99,7 @@
 		mes "Some people may think Izlude is just a satellite city of Prontera, and not really that important...";
 		next;
 		mes "[Charfri]";
-		mes "But Izlude is a beautiful town right next to the ocean, as well as beautiful Bylan Island.";
+		mes "But Izlude is a beautiful town right next to the ocean, as well as beautiful Byalan Island.";
 		next;
 		mes "[Charfri]";
 		mes "You'll have to board on a ship at the port to get to Byalan Island. There are dangerous dungeons on that island, so don't go snooping around just anywhere.";
@@ -130,7 +130,7 @@
 		mes "The Arena here is THE place for capable young people from all over the Rune-Midgarts Kingdom to challenge themselves and test their skills.";
 		next;
 		mes "[Cuskoal]";
-		mes "You can battle with monsters of differing levels. So, the number of stages you survive will be a testiment to your battle prowess.";
+		mes "You can battle with monsters of differing levels. So, the number of stages you survive will be a testament to your battle prowess.";
 		next;
 		mes "[Cuskoal]";
 		mes "So, whaddya say?";
@@ -243,7 +243,7 @@
 		mes "Here in Izlude, we are responsible for maintaining peace not only on land but also at sea. That's why this city has a huge telescope.";
 		next;
 		mes "[Kylick]";
-		mes "This telecope constantly watches over the sea, so that we can prevent any serious trouble from happening. You know...";
+		mes "This telescope constantly watches over the sea, so that we can prevent any serious trouble from happening. You know...";
 		next;
 		mes "[Kylick]";
 		mes "An ounce of";

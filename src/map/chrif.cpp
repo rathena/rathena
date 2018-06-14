@@ -6,14 +6,14 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/ers.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/ers.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"
@@ -1705,7 +1705,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 		}
 
 		if (i != sd->bonus_script.count && sd->bonus_script.count > MAX_PC_BONUS_SCRIPT)
-			ShowWarning("Only allowed to save %d (mmo.h::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
+			ShowWarning("Only allowed to save %d (mmo.hpp::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
 	}
 
 	WFIFOB(char_fd, 8) = i;
@@ -1746,7 +1746,7 @@ int chrif_bsdata_received(int fd) {
 			if (bs->script_str[0] == '\0' || !bs->tick)
 				continue;
 
-			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type)))
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_types)bs->icon, bs->flag, bs->type)))
 				continue;
 
 			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);

@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h" // get_svn_revision()
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h" // session[]
-#include "../common/strlib.h" // safestrncpy()
-#include "../common/timer.h"
-#include "../common/utils.h"
-#include "../common/mmo.h" //NAME_LENGTH
-#include "../common/ers.h"  // ers_destroy
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // get_svn_revision()
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp" // session[]
+#include "../common/strlib.hpp" // safestrncpy()
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
+#include "../common/mmo.hpp" //NAME_LENGTH
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "atcommand.hpp" // get_atcommand_level()
 #include "map.hpp"
@@ -1114,6 +1114,8 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
 			return ITEM_EQUIP_ACK_FAIL;
+		if (item->equip & EQP_ARMS && sd->sc.data[SC__WEAKNESS])
+			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
 			return ITEM_EQUIP_ACK_FAIL;
 
@@ -1532,7 +1534,6 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->achievement_data.total_score = 0;
 		sd->achievement_data.level = 0;
 		sd->achievement_data.save = false;
-		sd->achievement_data.sendlist = false;
 		sd->achievement_data.count = 0;
 		sd->achievement_data.incompleteCount = 0;
 		sd->achievement_data.achievements = NULL;
@@ -2911,7 +2912,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
 			if(sd->state.lr_flag != 2) {
 				sd->special_state.intravision = 1;
-				clif_status_load(&sd->bl, SI_INTRAVISION, 1);
+				clif_status_load(&sd->bl, EFST_CLAIRVOYANCE, 1);
 			}
 			break;
 		case SP_NO_KNOCKBACK:
@@ -3660,6 +3661,21 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else {
 			sd->skillusesprate[i].id = type2;
 			sd->skillusesprate[i].val = val;
+		}
+		break;
+	case SP_SKILL_DELAY:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skilldelay), i, sd->skilldelay[i].id == 0 || sd->skilldelay[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skilldelay)) {
+			ShowError("pc_bonus2: SP_SKILL_DELAY: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", ARRAYLENGTH(sd->skilldelay), type2, val);
+			break;
+		}
+		if (sd->skilldelay[i].id == type2)
+			sd->skilldelay[i].val += val;
+		else {
+			sd->skilldelay[i].id = type2;
+			sd->skilldelay[i].val = val;
 		}
 		break;
 	case SP_SKILL_COOLDOWN: // bonus2 bSkillCooldown,sk,t;
@@ -5398,22 +5414,23 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
  *------------------------------------------*/
 int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 {
-	int rate,skill;
+	int rate, target_lv;
 	struct mob_data *md;
+
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
 
 	md = (TBL_MOB*)target;
+	target_lv = status_get_lv(target);
 
 	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
 		return 0;
 
-	// FIXME: This formula is either custom or outdated.
-	skill = pc_checkskill(sd,RG_STEALCOIN)*10;
-	rate = skill + (sd->status.base_level - md->level)*3 + sd->battle_status.dex*2 + sd->battle_status.luk*2;
+	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
 	if(rnd()%1000 < rate)
 	{
-		int amount = md->level*10 + rnd()%100;
+		// Zeny Steal Amount: (rnd() % (10 * target_lv + 1 - 8 * target_lv)) + 8 * target_lv
+		int amount = (rnd() % (2 * target_lv + 1)) + 8 * target_lv; // Reduced formula
 
 		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
 		md->state.steal_coin_flag = 1;
@@ -5988,6 +6005,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_ARCH_BISHOP:           return MAPID_ARCH_BISHOP;
 		case JOB_MECHANIC:              return MAPID_MECHANIC;
 		case JOB_GUILLOTINE_CROSS:      return MAPID_GUILLOTINE_CROSS;
+		case JOB_STAR_EMPEROR:          return MAPID_STAR_EMPEROR;
 	//3-2 Jobs
 		case JOB_ROYAL_GUARD:           return MAPID_ROYAL_GUARD;
 		case JOB_SORCERER:              return MAPID_SORCERER;
@@ -5996,6 +6014,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_SURA:                  return MAPID_SURA;
 		case JOB_GENETIC:               return MAPID_GENETIC;
 		case JOB_SHADOW_CHASER:         return MAPID_SHADOW_CHASER;
+		case JOB_SOUL_REAPER:           return MAPID_SOUL_REAPER;
 	//Trans 3-1 Jobs
 		case JOB_RUNE_KNIGHT_T:         return MAPID_RUNE_KNIGHT_T;
 		case JOB_WARLOCK_T:             return MAPID_WARLOCK_T;
@@ -6019,6 +6038,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_BISHOP:           return MAPID_BABY_BISHOP;
 		case JOB_BABY_MECHANIC:         return MAPID_BABY_MECHANIC;
 		case JOB_BABY_CROSS:            return MAPID_BABY_CROSS;
+		case JOB_BABY_STAR_EMPEROR:     return MAPID_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
 		case JOB_BABY_GUARD:            return MAPID_BABY_GUARD;
 		case JOB_BABY_SORCERER:         return MAPID_BABY_SORCERER;
@@ -6027,6 +6047,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_SURA:             return MAPID_BABY_SURA;
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
 		case JOB_BABY_CHASER:           return MAPID_BABY_CHASER;
+		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
 		default:
@@ -6137,6 +6158,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_ARCH_BISHOP:           return JOB_ARCH_BISHOP;
 		case MAPID_MECHANIC:              return JOB_MECHANIC;
 		case MAPID_GUILLOTINE_CROSS:      return JOB_GUILLOTINE_CROSS;
+		case MAPID_STAR_EMPEROR:          return JOB_STAR_EMPEROR;
 	//3-2 Jobs
 		case MAPID_ROYAL_GUARD:           return JOB_ROYAL_GUARD;
 		case MAPID_SORCERER:              return JOB_SORCERER;
@@ -6144,6 +6166,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_SURA:                  return JOB_SURA;
 		case MAPID_GENETIC:               return JOB_GENETIC;
 		case MAPID_SHADOW_CHASER:         return JOB_SHADOW_CHASER;
+		case MAPID_SOUL_REAPER:           return JOB_SOUL_REAPER;
 	//Trans 3-1 Jobs
 		case MAPID_RUNE_KNIGHT_T:         return JOB_RUNE_KNIGHT_T;
 		case MAPID_WARLOCK_T:             return JOB_WARLOCK_T;
@@ -6166,6 +6189,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_BISHOP:           return JOB_BABY_BISHOP;
 		case MAPID_BABY_MECHANIC:         return JOB_BABY_MECHANIC;
 		case MAPID_BABY_CROSS:            return JOB_BABY_CROSS;
+		case MAPID_BABY_STAR_EMPEROR:     return JOB_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
 		case MAPID_BABY_GUARD:            return JOB_BABY_GUARD;
 		case MAPID_BABY_SORCERER:         return JOB_BABY_SORCERER;
@@ -6173,6 +6197,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_SURA:             return JOB_BABY_SURA;
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
 		case MAPID_BABY_CHASER:           return JOB_BABY_CHASER;
+		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
 		default:
@@ -6421,6 +6446,18 @@ const char* job_name(int class_)
 	case JOB_BABY_STAR_GLADIATOR2:
 		return msg_txt(NULL,756);
 
+	case JOB_STAR_EMPEROR:
+	case JOB_SOUL_REAPER:
+	case JOB_BABY_STAR_EMPEROR:
+	case JOB_BABY_SOUL_REAPER:
+		return msg_txt(NULL,782 - JOB_STAR_EMPEROR + class_);
+
+	case JOB_STAR_EMPEROR2:
+		return msg_txt(NULL,782);
+
+	case JOB_BABY_STAR_EMPEROR2:
+		return msg_txt(NULL,784);
+
 	default:
 		return msg_txt(NULL,655);
 	}
@@ -6599,7 +6636,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	status_calc_pc(sd,SCO_FORCE);
 	clif_misceffect(&sd->bl,1);
 	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxbaselv(sd))
-		clif_status_change(&sd->bl,SI_DEVIL, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
+		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
 	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
@@ -7379,7 +7416,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			return 0;
 
 		if( pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd) )
-			clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
+			clif_status_load(&sd->bl, EFST_DEVIL1, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 		i = sd->sc.option;
 		if( i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING) )
 			i &= ~OPTION_RIDING;
@@ -7714,7 +7751,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
 		if( !map[sd->bl.m].flag.noexppenalty ) {
-			pet_set_intimate(pd, pd->pet.intimate - pd->petDB->die);
+			pet_set_intimate(pd, pd->pet.intimate - pd->get_pet_db()->die);
 			if( pd->pet.intimate < 0 )
 				pd->pet.intimate = 0;
 			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
@@ -7744,7 +7781,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	/* e.g. not killed thru pc_damage */
 	if( pc_issit(sd) ) {
-		clif_status_load(&sd->bl,SI_SIT,0);
+		clif_status_load(&sd->bl,EFST_SIT,0);
 	}
 
 	pc_setdead(sd);
@@ -8247,7 +8284,12 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+		if (sd->status.base_level < 100)
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv99);
+		else if (sd->status.base_level < 151)
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_lv150);
+		else
+			sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
 
 		if( sd->battle_status.max_hp < sd->battle_status.hp )
 		{
@@ -8832,12 +8874,12 @@ void pc_setoption(struct map_session_data *sd,int type)
 
 	if( (type&OPTION_RIDING && !(p_type&OPTION_RIDING)) || (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON) && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
 	{ // Mounting
-		clif_status_load(&sd->bl,SI_RIDING,1);
+		clif_status_load(&sd->bl,EFST_RIDING,1);
 		status_calc_pc(sd,SCO_NONE);
 	}
 	else if( (!(type&OPTION_RIDING) && p_type&OPTION_RIDING) || (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
 	{ // Dismount
-		clif_status_load(&sd->bl,SI_RIDING,0);
+		clif_status_load(&sd->bl,EFST_RIDING,0);
 		status_calc_pc(sd,SCO_NONE);
 	}
 
@@ -8855,16 +8897,16 @@ void pc_setoption(struct map_session_data *sd,int type)
 #endif
 
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
-		clif_status_load(&sd->bl,SI_FALCON,1);
+		clif_status_load(&sd->bl,EFST_FALCON,1);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
-		clif_status_load(&sd->bl,SI_FALCON,0);
+		clif_status_load(&sd->bl,EFST_FALCON,0);
 
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER ) {
 		if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
-			clif_status_load(&sd->bl,SI_WUGRIDER,1);
+			clif_status_load(&sd->bl,EFST_WUGRIDER,1);
 			status_calc_pc(sd,SCO_NONE);
 		} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
-			clif_status_load(&sd->bl,SI_WUGRIDER,0);
+			clif_status_load(&sd->bl,EFST_WUGRIDER,0);
 			status_calc_pc(sd,SCO_NONE);
 		}
 	}
@@ -8886,6 +8928,9 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		}
 	}
@@ -10500,7 +10545,7 @@ static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
 {
 	if (sd->state.night != night_flag && map[sd->bl.m].flag.nightenabled)
 	{	//Night/day state does not match.
-		clif_status_load(&sd->bl, SI_NIGHT, night_flag); //New night effect by dynamix [Skotlex]
+		clif_status_load(&sd->bl, EFST_SKE, night_flag); //New night effect by dynamix [Skotlex]
 		sd->state.night = night_flag;
 		return 1;
 	}
@@ -10563,7 +10608,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
-	clif_status_load(&sd->bl,SI_SIT,0);
+	clif_status_load(&sd->bl,EFST_SIT,0);
 	clif_standing(&sd->bl); //Inform area PC is standing
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
@@ -10872,9 +10917,14 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		baselv = (uint32)atoi(fields[3]);
 		joblv = (uint32)atoi(fields[4]);
 		offset = 5;
-	} else {
+	}
+	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
 		baselv = joblv = 0;
 		offset = 3;
+	}
+	else {
+		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
+		return false;
 	}
 
 	if(!pcdb_checkid(class_))
@@ -11876,7 +11926,7 @@ void pc_bonus_script(struct map_session_data *sd) {
 		if ((entry = (struct s_bonus_script_entry *)node->data)) {
 			// Only start timer for new bonus_script
 			if (entry->tid == INVALID_TIMER) {
-				if (entry->icon != SI_BLANK) // Gives status icon if exist
+				if (entry->icon != EFST_BLANK) // Gives status icon if exist
 					clif_status_change(&sd->bl, entry->icon, 1, entry->tick, 1, 0, 0);
 
 				entry->tick += now;
@@ -11898,13 +11948,13 @@ void pc_bonus_script(struct map_session_data *sd) {
  * @param sd Player
  * @param script_str Script string
  * @param dur Duration in ms
- * @param icon SI
+ * @param icon EFST
  * @param flag Flags @see enum e_bonus_script_flags
  * @param type 0 - None, 1 - Buff, 2 - Debuff
  * @return New created entry pointer or NULL if failed or NULL if duplicate fail
  * @author [Cydh]
  **/
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum si_type icon, uint16 flag, uint8 type) {
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type) {
 	struct script_code *script = NULL;
 	struct linkdb_node *node = NULL;
 	struct s_bonus_script_entry *entry = NULL;
@@ -11970,7 +12020,7 @@ void pc_bonus_script_free_entry(struct map_session_data *sd, struct s_bonus_scri
 		StringBuf_Free(entry->script_buf);
 
 	if (sd) {
-		if (entry->icon != SI_BLANK)
+		if (entry->icon != EFST_BLANK)
 			clif_status_load(&sd->bl, entry->icon, 0);
 		if (sd->bonus_script.count > 0)
 			sd->bonus_script.count--;

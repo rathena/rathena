@@ -196,6 +196,8 @@ Disables usage of monster-spawning items on a map:
  - Poring Box (ID 12109)
  - Red Pouch (ID 12024)
 
+Items listed above can be modified under db/(pre-)re/item_flag.txt
+
 Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
 also prevent mobs from being warped onto the map (except slave mobs).
 
@@ -318,7 +320,7 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 	4 = against other (homunculus, mercenary, pet, elemental)
 
 Notes:
- - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.h' for this mapflag to take effect.
+ - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.hpp' for this mapflag to take effect.
  - Each map can contain up to 5 adjustments (MAX_MAP_SKILL_MODIFIER in 'src/map/map.h').
 
 ---------------------------------------

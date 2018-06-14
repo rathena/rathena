@@ -6,19 +6,19 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h"
-#include "../common/timer.h"
-#include "../common/grfio.h"
-#include "../common/malloc.h"
-#include "../common/socket.h" // WFIFO*()
-#include "../common/showmsg.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/cli.h"
-#include "../common/ers.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp"
+#include "../common/timer.hpp"
+#include "../common/grfio.hpp"
+#include "../common/malloc.hpp"
+#include "../common/socket.hpp" // WFIFO*()
+#include "../common/showmsg.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
+#include "../common/cli.hpp"
+#include "../common/ers.hpp"
 
 #include "path.hpp"
 #include "chrif.hpp"
@@ -2052,6 +2052,14 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_E_CHAIN, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SIGHTBLASTER, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_ATK, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_DEF, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_HEAL, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_HIDDEN, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
 		}
 	}
 
@@ -3237,13 +3245,13 @@ void map_iwall_get(struct map_session_data *sd) {
 	dbi_destroy(iter);
 }
 
-void map_iwall_remove(const char *wall_name)
+bool map_iwall_remove(const char *wall_name)
 {
 	struct iwall_data *iwall;
 	int16 i, x1, y1;
 
 	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) == NULL )
-		return; // Nothing to do
+		return false; // Nothing to do
 
 	for( i = 0; i < iwall->size; i++ ) {
 		map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
@@ -3256,6 +3264,7 @@ void map_iwall_remove(const char *wall_name)
 
 	map[iwall->m].iwall_num--;
 	strdb_remove(iwall_db, iwall->wall_name);
+	return true;
 }
 
 /**
@@ -4097,20 +4106,19 @@ int map_sql_close(void)
 	Sql_Free(qsmysql_handle);
 	mmysql_handle = NULL;
 	qsmysql_handle = NULL;
-#ifndef BETA_THREAD_TEST
+
 	if (log_config.sql_logs)
 	{
 		ShowStatus("Close Log DB Connection....\n");
 		Sql_Free(logmysql_handle);
 		logmysql_handle = NULL;
 	}
-#endif
+
 	return 0;
 }
 
 int log_sql_init(void)
 {
-#ifndef BETA_THREAD_TEST
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
@@ -4127,7 +4135,7 @@ int log_sql_init(void)
 	if( strlen(default_codepage) > 0 )
 		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
 			Sql_ShowDebug(logmysql_handle);
-#endif
+
 	return 0;
 }
 

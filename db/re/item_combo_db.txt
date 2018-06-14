@@ -23,7 +23,9 @@
 1421:2133,{ bonus2 bAddClass,Class_All,4; bonus bDef,2; }
 1422:2133,{ bonus2 bAddClass,Class_All,4; bonus bDef,2; }
 1428:2115,{ bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",2,5; }
-1433:2153,{ bonus2 bSkillAtk,"CR_GRANDCROSS",10; bonus2 bSkillAtk,"LG_RAYOFGENESIS",10; }
+1433:2153,{ bonus2 bSkillAtk,"LG_RAYOFGENESIS",10; bonus2 bSkillAtk,"CR_GRANDCROSS",10; }
+1433:2153:18823,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",20; bonus2 bSkillAtk,"LG_CANNONSPEAR",20; bonus2 bSkillAtk,"LG_SHIELDPRESS",20; }
+1433:2153:18823:28372,{ bonus2 bSkillUseSP,"LG_BANISHINGPOINT",-15; bonus2 bSkillUseSP,"LG_CANNONSPEAR",-10; bonus2 bSkillUseSP,"CR_GRANDCROSS",-30; bonus2 bSkillUseSP,"LG_SHIELDPRESS",-5; }
 1433:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R)/2*7; bonus2 bSkillAtk,"LG_CANNONSPEAR",.@r; bonus2 bSkillAtk,"LG_BANISHINGPOINT",.@r; }
 1472:2677,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HEAD_TOP); }
 1472:2711,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HAND_R); }
@@ -36,7 +38,7 @@
 1480:2527,{ bonus2 bAddRace,RC_Dragon,5; }
 1480:2527:5467,{ bonus2 bAddRace,RC_Dragon,25; }
 1490:19021,{ bonus2 bSkillAtk,"LK_SPIRALPIERCE",getequiprefinerycnt(EQI_HAND_R)*5; bonus4 bAutoSpellOnSkill,"LK_JOINTBEAT","LK_SPIRALPIERCE",max(getskilllv("LK_SPIRALPIERCE"),1),50+(getskilllv("LK_JOINTBEAT")*10); /* Confirm: Success rate */ }
-15141:19033,{ bonus bMaxSP,100; bonus bNoCastCancel,1; }
+15141:19033,{ bonus bMaxSP,100; bonus bNoCastCancel; }
 15141:20779:22075,{ .@r = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES); bonus bMaxHP,1000; bonus bHealPower,min(5+.@r,30); bonus bHealPower2,min(5+.@r,30); }
 15186:19168,{ bonus2 bExpAddClass,Class_All,5; bonus2 bDropAddClass,Class_All,5; }
 1535:4361,{ bonus bBreakArmorRate,900; bonus bBreakWeaponRate,900; }
@@ -119,7 +121,7 @@
 2125:5782,{ bonus bDef,2; bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Dark,5; bonus2 bSubEle,Ele_Holy,5; bonus2 bSubEle,Ele_Ghost,5; }
 2135:2426,{ bonus2 bAddEff,Eff_Blind,500; autobonus "{ bonus bFlee,20; }",200,10000,BF_WEAPON,"{ specialeffect2 EF_INCAGILITY; }"; }
 2137:2353:5124,{ bonus bDef,2-getequiprefinerycnt(EQI_HAND_L)-getequiprefinerycnt(EQI_HEAD_TOP); bonus bMdef,5+getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HEAD_TOP); }
-2153:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R)/6*8; bonus2 bSkillAtk,"LG_SHIELDPRESS",.@r; }
+2153:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"LG_SHIELDPRESS",.@r > 5 ? (.@r - 5) * 8 : 0; }
 2160:19021,{ bonus2 bSubSize,Size_Large,5+(getequiprefinerycnt(EQI_HAND_L)*2); }
 2169:2491:2590:15051,{ bonus2 bAddDefMonster,2311,30; bonus2 bAddDefMonster,2312,30; bonus2 bAddDefMonster,2320,30; bonus2 bAddDefMonster,2321,30; bonus2 bAddDefMonster,2322,30; bonus2 bAddDefMonster,2317,30; bonus2 bAddDefMonster,2318,30; bonus2 bAddDefMonster,2327,30; bonus2 bAddDefMonster,2319,30; bonus2 bAddDefMonster,2330,30; bonus2 bAddDefMonster,2329,30; bonus2 bAddDefMonster,2333,30; bonus2 bAddDefMonster,2332,30; bonus2 bAddDefMonster,2309,30; bonus2 bAddDefMonster,2310,30; bonus2 bAddDefMonster,2315,30; bonus2 bAddDefMonster,2316,30; bonus2 bAddDefMonster,2314,30; bonus2 bAddDefMonster,2313,30; bonus bMaxHPrate,20; bonus bMaxSPrate,10; }
 2171:15053,{ bonus bAgi,2; }
@@ -167,7 +169,7 @@
 2374:2729,{ bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; }
 2375:2729,{ bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; }
 2376:2435:2538,{ bonus2 bSubRace,RC_All,-200; bonus2 bSubRace,RC_DemiHuman,200; bonus2 bSubRace,RC_Player,200; bonus bVit,3; bonus bMaxHPRate,12; bonus bHealpower2,10; bonus bAddItemHealRate,10; autobonus2 "{ bonus2 bHPRegenRate,600,1000; }",5,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }
-2377:2435:2538,{ bonus2 bSubRace,RC_All,-200; bonus2 bSubRace,RC_DemiHuman,200; bonus2 bSubRace,RC_Player,200; bonus bStr,3; bonus bMaxHPRate,12; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AL_HEAL",10; bonus bUnbreakableArmor,1; }
+2377:2435:2538,{ bonus2 bSubRace,RC_All,-200; bonus2 bSubRace,RC_DemiHuman,200; bonus2 bSubRace,RC_Player,200; bonus bStr,3; bonus bMaxHPRate,12; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AL_HEAL",10; bonus bUnbreakableArmor; }
 2378:2435:2538,{ bonus2 bSubRace,RC_All,-200; bonus2 bSubRace,RC_DemiHuman,200; bonus2 bSubRace,RC_Player,200; bonus bAgi,3; bonus bMaxHPRate,12; bonus bCritical,5; bonus bAspdRate,5; autobonus "{ bonus2 bHPRegenRate,300,1000; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }
 2379:2436:2539,{ bonus2 bSubRace,RC_All,-200; bonus2 bSubRace,RC_DemiHuman,200; bonus2 bSubRace,RC_Player,200; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bResEff,Eff_Stun,2000; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }
 2380:2436:2539,{ bonus2 bSubRace,RC_All,-200; bonus2 bSubRace,RC_DemiHuman,200; bonus2 bSubRace,RC_Player,200; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bVariableCastrate,"AL_HOLYLIGHT",-50; bonus bHealPower,6; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }
@@ -208,7 +210,7 @@
 2485:2587:15048,{ bonus bInt,5; bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; }
 2507:15146,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus bMaxSPrate,10+.@r; bonus bFlee,10+.@r; }
 2509:15146,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus bMaxHPrate,10+.@r; bonus bMatkRate,2+.@r; }
-2518:2648:2649:5126,{ bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bVariableCastrate,25; }
+2518:2648:2649:5126,{ bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel; bonus bVariableCastrate,25; }
 2519:2650:2651:5127,{ bonus bStr,2; bonus bLuk,9; bonus bCritical,13; bonus bBaseAtk,18; bonus bFlee2,13; }
 2519:15147,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,15; bonus2 bIgnoreDefRaceRate,RC_Demon,15; bonus2 bIgnoreDefRaceRate,RC_Undead,15; bonus bLuk,3+.@r; bonus bCritical,10+.@r; }
 2524:15147,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,15; bonus2 bIgnoreDefRaceRate,RC_Demon,15; bonus2 bIgnoreDefRaceRate,RC_Undead,15; bonus bMaxHPrate,10+.@r; bonus2 bAddClass,Class_All,2+.@r; }
@@ -239,7 +241,7 @@
 2701:2881,{ bonus bMatkRate,20; }
 2702:2874,{ bonus bAspd,1; }
 2702:22064,{ if (readparam(bAgi) > 120) bonus bAspd,2; /* Confirm: Bonus value */ }
-27013:27012,{ bonus bNoMadoFuel,1; }
+27013:27012,{ bonus bNoMadoFuel; }
 27015:27016,{ bonus bCritAtkRate,10; }
 27018:27019,{ autobonus "{ bonus bAspd,5; }",30,5000; }
 2720:2772,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
@@ -266,7 +268,7 @@
 2733:2774,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
 2747:13061,{ bonus bHit,5; bonus bMatk,5; bonus2 bSkillUseSP,"SC_ENERVATION",20; bonus2 bSkillUseSP,"SC_GROOMY",20; }
 2751:2888,{ bonus bAspdRate,3; bonus bVariableCastrate,-3; }
-2777:2778:5479,{ bonus bMaxHP,10*getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxSP,2*getequiprefinerycnt(EQI_ACC_L); bonus bNoCastCancel,1; bonus bCastrate,15; }
+2777:2778:5479,{ bonus bMaxHP,10*getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxSP,2*getequiprefinerycnt(EQI_ACC_L); bonus bNoCastCancel; bonus bCastrate,15; }
 2777:2825:5479,{ bonus bMaxHP,BaseLevel*10; bonus bMaxSP,BaseLevel*2; bonus bHealPower,10; }
 2779:2780:5482,{ bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; }
 2779:2780:5577,{ bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; }
@@ -343,11 +345,11 @@
 4168:4169,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bVariableCastrate,-10; }
 4169:4488,{ if(getequiprefinerycnt(EQI_SHOES) >= 15) { bonus bMaxHPrate,15; bonus bMaxSPrate,15; } else { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } }
 4169:4488,{ if(getequiprefinerycnt(EQI_SHOES) >= 15) { bonus bMaxHPrate,15; bonus bMaxSPrate,15; } else { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } }
-4172:4210:4230:4257:4272,{ bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,25; bonus bSPDrainValue,1; if(BaseClass==Job_Thief) bonus bNoGemStone,0; }
+4172:4210:4230:4257:4272,{ bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,25; bonus bSPDrainValue,1; if(BaseClass==Job_Thief) bonus bNoGemStone; }
 4178:4199:4234:4252:4297,{ bonus bAgi,5; bonus bDex,3; bonus bLongAtkRate,20; bonus bPerfectHitAddRate,20; if(BaseClass==Job_Archer) { bonus2 bExpAddRace,RC_Brute,5; bonus2 bComaRace,RC_Brute,100; } }
 4178:4234:4252:4297:4381,{ bonus bDex,5; bonus2 bSkillAtk,"CG_ARROWVULCAN",5; bonus2 bSkillAtk,"DC_THROWARROW",10; bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10; if(BaseJob==Job_Bard||BaseJob==Job_Dancer) bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50; }
 4185:4217:4280:4293:4312,{ bonus bVit,10; bonus bVariableCastrate,-10; bonus bUseSPRate,-10; if(BaseClass==Job_Acolyte) { bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,30; bonus2 bSubRace,RC_Demon,30; } }
-4185:4293:4312:4332,{ bonus bStr,3; bonus bMaxSP,80; bonus bBaseAtk,25; bonus3 bAutoSpell,"AL_CRUCIS",5,10; bonus2 bSkillAtk,"MO_EXTREMITYFIST",10; if(BaseJob==Job_Monk) { bonus bUseSPrate,-10; bonus bNoCastCancel,0; } }
+4185:4293:4312:4332,{ bonus bStr,3; bonus bMaxSP,80; bonus bBaseAtk,25; bonus3 bAutoSpell,"AL_CRUCIS",5,10; bonus2 bSkillAtk,"MO_EXTREMITYFIST",10; if(BaseJob==Job_Monk) { bonus bUseSPrate,-10; bonus bNoCastCancel; } }
 4186:4206:4233:4281:4321,{ bonus bLuk,10; bonus bSPDrainValue,2; bonus2 bSkillAtk,42,20; if(BaseClass==Job_Merchant) { bonus2 bAddMonsterDropItem,617,5; bonus bMagicDamageReturn,20; } }
 4191:4208:4258:4309:4325:4327,{ bonus bMaxHP,500; bonus bDef,5; bonus bMdef,5; bonus2 bSkillAtk,14,10; bonus2 bSkillAtk,19,10; bonus2 bSkillAtk,20,10; if(BaseClass==Job_Mage) { bonus bMatkRate,3; bonus bVariableCastrate,-15; } }
 4193:4294,{ bonus bMaxHP,300; bonus bMaxSP,60; }
@@ -404,9 +406,21 @@
 4681:4691,{ autobonus "{ active_transform 3241,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
 4682:4694,{ autobonus "{ active_transform 3244,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
 4683:4695,{ autobonus "{ active_transform 3246,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4697:27012,{ bonus bNoMadoFuel; }
+4699:27012,{ bonus bNoMadoFuel; }
+4958:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bDelayrate,-1 - ( .@r > 9 ) ? 1 : 0; } }
+4959:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bLongAtkRate,2 + ( .@r > 9 ) ? 1 : 0; } }
+4960:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bUseSPrate,-2 - ( .@r > 9 ) ? 1 : 0; } }
+4961:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bMatk,10 + ( .@r > 9 ) ? 10 : 0; } }
+4962:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAtk,2 + ( .@r > 9 ) ? 5 : 0; } }
+4963:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAtk,4 + ( .@r > 9 ) ? 2 : 0; bonus bHit,3 + ( .@r > 9 ) ? 1 : 0; } }
+4964:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus2 bMagicAddRace,RC_All,1 + ( .@r > 9 ) ? 1 : 0; } }
+4965:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bVariableCastrate,-1 - ( .@r > 9 ) ? 1 : 0; } }
+4966:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus2 bAddRace,RC_All,1 + ( .@r > 9 ) ? 1 : 0; } }
+4967:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAspdRate,1 + ( .@r > 9 ) ? 1 : 0; } }
+4968:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],2 + ( .@r > 9 ) ? 2 : 0; } } }
+4969:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal2,.@skills$[.@i],2 + ( .@r > 9 ) ? 2 : 0; } /* TODO: Depending on some recovery items HP recovery amount + 1% or if refine >= 9 + 2% */ } }
 5040:5442,{ bonus bAspdRate,3; bonus bVariableCastrate,3; }
-4697:27012,{ bonus bNoMadoFuel,1; }
-4699:27012,{ bonus bNoMadoFuel,1; }
 5040:18673,{ bonus bSPrecovRate,3; }
 5041:18538,{ bonus2 bSubRace,RC_Angel,9; }
 5043:18656,{ bonus bFlee,10; bonus2 bAddEff,Eff_Stun,1000; }
@@ -435,8 +449,9 @@
 5917:1525,{ bonus bLongAtkDef,10; }
 5920:18542,{ bonus bHealPower,2*getequiprefinerycnt(EQI_HEAD_TOP); }
 5967:28321,{ bonus2 bSubSkill,"HT_BLITZBEAT",200; }
+5918:19306,{ .@aspd = 1; .@crit_dmg = 2 + 2 * (readparam(bDex) / 10); .@sub_demi = 2; .@luk = readparam(bLuk); if (.@luk > 107) { .@aspd += 1; .@crit_dmg += 2; .@sub_demi += 2; } if (.@luk > 119) { .@aspd += 2; .@crit_dmg += 4; .@sub_demi += 4; bonus bSplashRange,1; } bonus bAspd,.@aspd; bonus bCritAtkRate,.@crit_dmg; bonus2 bSubRace,RC_DemiHuman,.@sub_demi; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; }
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
-13027:15044,{ .@r = max(getequiprefinerycnt(EQI_ARMOR),1); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,70*.@r; bonus3 bAddMonsterDropItem,970,RC_DemiHuman,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Player,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Player,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Brute,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Brute,50*.@r; }
+13027:15044,{ .@r = max(getequiprefinerycnt(EQI_ARMOR),1); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,70*.@r; bonus3 bAddMonsterDropItem,970,RC_DemiHuman,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Brute,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Brute,50*.@r; }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,Size_Large,30; autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
 15041:18659,{ bonus bInt,3; bonus bStr,3; bonus bMdef,10; bonus bDefEle,Ele_Fire; bonus2 bAddEle,Ele_Earth,10; }
 15068:20710,{ bonus bAgi,5; bonus bFlee,10; }
@@ -446,18 +461,20 @@
 15091:18820:20721:22033,{ bonus2 bSubEle,Ele_Neutral,15; bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bMatkRate,10; }
 15110:20732,{ bonus2 bSkillAtk,"NC_AXETORNADO",25; }
 15110:22043,{ bonus bBaseAtk,30; }
-15116:20743:22046,{ bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bSpeedAddRate,10; }
-15126:20788:22083,{ bonus bMaxHP,2000; bonus bNoCastCancel,1; bonus bFixedCastrate,-15-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
+15116:20743:22046,{ bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bSpeedAddRate,40; }
+15117:20744:22047,{ bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bSpeedAddRate,40; if (getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES) >= 30) { bonus bMaxHPrate,5; bonus bMaxSPrate,5; } }
+15126:20788:22083,{ bonus bMaxHP,2000; bonus bNoCastCancel; bonus bFixedCastrate,-15-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
 15126:20788:22083:28382:28416,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus2 bSkillAtk,"SU_CN_METEOR",100; }
 15126:20788:22083:28380:28419,{ bonus bMaxHPrate,20; bonus bMaxSPrate,3; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",100; }
 15126:20788:22083:28381:28413,{ bonus bMaxHPrate,15; bonus bMaxSPrate,5; bonus bHealPower,10; skill "AL_HEAL",5,1; }
-15129:20789:22084,{ bonus bMaxHP,3000; bonus bNoCastCancel,1; bonus bFixedCastrate,-20-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
+15128:20773,{ bonus bFlee2,6; bonus bDelayrate,-10 - (BaseLevel > 129 ? 10 : 0); }
+15129:20789:22084,{ bonus bMaxHP,3000; bonus bNoCastCancel; bonus bFixedCastrate,-20-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
 15129:20789:22084:28382:28417,{ bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bSkillAtk,"SU_CN_METEOR",150; }
 15129:20789:22084:28380:28420,{ bonus bMaxHPrate,25; bonus bMaxSPrate,6; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",150; }
 15129:20789:22084:28381:28414,{ bonus bMaxHPrate,20; bonus bMaxSPrate,10; bonus bHealPower,20; skill "AL_HEAL",7,1; }
 15138:19026,{ bonus2 bSubRace,RC_Fish,(10+getequiprefinerycnt(EQI_ARMOR)); }
 15138:19026:20756:22059,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus2 bExpAddRace,RC_Fish,20; bonus2 bMagicAddRace,RC_Fish,50; bonus2 bSubEle,Ele_Water,50; }
-15156:20790:22085,{ bonus bMaxHP,4000; bonus bNoCastCancel,1; bonus bFixedCastrate,-25-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
+15156:20790:22085,{ bonus bMaxHP,4000; bonus bNoCastCancel; bonus bFixedCastrate,-25-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
 15156:20790:22085:28382:28418,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus2 bSkillAtk,"SU_CN_METEOR",200; }
 15156:20790:22085:28380:28421,{ bonus bMaxHPrate,30; bonus bMaxSPrate,9; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",200; }
 15156:20790:22085:28381:28415,{ bonus bMaxHPrate,25; bonus bMaxSPrate,15; bonus bHealPower,30; skill "AL_HEAL",9,1; }
@@ -465,17 +482,17 @@
 15182:28445:28446,{ bonus bAtk,40; bonus2 bSubEle,Ele_All,4; bonus2 bSubEle,Ele_Neutral,-4; }
 15183:28447:28448,{ bonus bAtk,40; bonus2 bSubEle,Ele_All,4; bonus2 bSubEle,Ele_Neutral,-4; bonus2 bExpAddClass,Class_All,2; }
 15184:28449:28450,{ bonus bAtk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; }
-15185:28451:28452,{ bonus bAtk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; bonus bNoCastCancel,1; }
+15185:28451:28452,{ bonus bAtk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; bonus bNoCastCancel; }
 15181:28453:28454,{ bonus bMatk,20; bonus2 bSubEle,Ele_All,2; bonus2 bSubEle,Ele_Neutral,-2; }
 15182:28455:28456,{ bonus bMatk,40; bonus2 bSubEle,Ele_All,4; bonus2 bSubEle,Ele_Neutral,-4; }
 15183:28457:28458,{ bonus bMatk,40; bonus2 bSubEle,Ele_All,4; bonus2 bSubEle,Ele_Neutral,-4; bonus2 bExpAddClass,Class_All,2; }
 15184:28459:28460,{ bonus bMatk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; }
-15185:28461:28462,{ bonus bMatk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; bonus bNoCastCancel,1; }
+15185:28461:28462,{ bonus bMatk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; bonus bNoCastCancel; }
 15181:28463:28464,{ bonus bAtk,20; bonus2 bSubEle,Ele_All,2; bonus2 bSubEle,Ele_Neutral,-2; }
 15182:28465:28466,{ bonus bAtk,40; bonus2 bSubEle,Ele_All,4; bonus2 bSubEle,Ele_Neutral,-4; }
 15183:28467:28468,{ bonus bAtk,40; bonus2 bSubEle,Ele_All,4; bonus2 bSubEle,Ele_Neutral,-4; bonus2 bExpAddClass,Class_All,2; }
 15184:28469:28470,{ bonus bAtk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; }
-15185:28471:28472,{ bonus bAtk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; bonus bNoCastCancel,1; }
+15185:28471:28472,{ bonus bAtk,50; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; bonus2 bExpAddClass,Class_All,2; bonus bNoCastCancel; }
 18137:1752,{ bonus bLongAtkRate,25; }
 18137:1752:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 18137:19019,{ bonus bLongAtkRate,45; }
@@ -493,7 +510,9 @@
 18563:18564,{ bonus bFixedCastrate,-10; }
 18776:20710,{ bonus bBaseAtk,10; }
 18776:22015,{ bonus bMatk,20; }
-18823:28372,{ bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel; bonus2 bVariableCastrate,"CR_GRANDCROSS",-BaseLevel*2; bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel/30; bonus2 bSkillUseSP,"CR_GRANDCROSS",-(BaseLevel/30)*10; }
+18823:19246,{ .@atk = 40; .@aspd = 3; .@dmg = 2; .@agi = readparam(bAgi); if (.@agi > 107) { .@atk += 60; .@aspd += 5; .@dmg += 2; } if (.@agi > 119) { .@atk += 80; .@aspd += 7; .@dmg += 4; } bonus bBaseAtk,.@atk; bonus bAspdRate,.@aspd; bonus2 bSubRace,RC_Player,.@dmg; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Silence,10000; }
+18823:28372,{ bonus2 bSkillVariableCast,"CR_GRANDCROSS",-1500; bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/30 + BaseLevel; bonus2 bSkillUseSP,"LG_RAYOFGENESIS",-10; }
+18823:28551,{ bonus2 bSkillDelay,"LG_OVERBRAND",-2000; bonus bLongAtkRate,getskilllv("LG_CANNONSPEAR") * 2; bonus bLongAtkRate,getskilllv("LG_OVERBRAND") * 2; bonus2 bSkillAtk,"LG_CANNONSPEAR",30; bonus2 bSkillAtk,"LG_OVERBRAND",20; }
 18867:1720,{ bonus bLongAtkRate,3+(getequiprefinerycnt(EQI_HAND_R) > 6 ? 5:0); }
 18937:28302,{ bonus bInt,8; bonus bMaxSPrate,5;}
 18937:28303,{ bonus bInt,8; bonus bBaseAtk,20;}
@@ -557,7 +576,7 @@
 20718:22116,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20718:22117,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20718:22118,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
-20797:2339,{ bonus bInt,15; bonus bMaxHPrate,5; bonus bMaxSPrate,5; if (getequiprefinerycnt(EQI_ARMOR) > 6) bonus bNoCastCancel,1; }
+20797:2339,{ bonus bInt,15; bonus bMaxHPrate,5; bonus bMaxSPrate,5; if (getequiprefinerycnt(EQI_ARMOR) > 6) bonus bNoCastCancel; }
 20797:4174,{ bonus2 bSubEle,Ele_All,50; bonus2 bSubEle,Ele_Neutral,-50; }
 22069:2195,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bAddEle,Ele_Neutral,getequiprefinerycnt(EQI_HAND_L); }
 22069:20753,{ bonus2 bAddEle,Ele_Neutral,5; .@r = getequiprefinerycnt(EQI_GARMENT); bonus bMaxHPrate,.@r; bonus bMaxSPrate,.@r; }
@@ -597,7 +616,7 @@
 24038:24044,{ bonus bVit,1; }
 24039:24045,{ bonus bAgi,1; }
 24046:24051,{ bonus2 bSubEle,Ele_Neutral,1; if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15) { bonus2 bSubEle,Ele_Neutral,1; } }
-24052:24062,{ bonus2 bExpAddRace,RC_DemiHuman,3; bonus2 bExpAddRace,RC_Player,3; }
+24052:24062,{ bonus2 bExpAddRace,RC_DemiHuman,3; }
 24053:24063,{ bonus2 bAddRace,10,5; bonus2 bMagicAddRace,10,5; }
 24054:24065,{ bonus2 bExpAddRace,RC_Brute,3; }
 24055:24066,{ bonus2 bExpAddRace,RC_Insect,3; }
@@ -612,7 +631,7 @@
 24074:24077,{ bonus bMaxHPrate,1; bonus bMaxSPrate,1; }
 24078:24079:24080,{ bonus2 bSPDrainRate,10,1+(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)/10); }
 24081:24082:24083,{ bonus2 bHPDrainRate,40,2+(getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)/5); }
-24084:24085:24086:24087:24088:24089,{ bonus bAllStats,1; .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if (.@r >= 45) { bonus bNoGemStone,1; } bonus bUseSPrate,100-.@r; }
+24084:24085:24086:24087:24088:24089,{ bonus bAllStats,1; .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if (.@r >= 45) { bonus bNoGemStone; } bonus bUseSPrate,100-.@r; }
 24090:24091:24092,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Stone,10000; }
 24090:24093:24094,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Sleep,10000; }
 24090:24095:24096,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Silence,10000; }
@@ -621,11 +640,11 @@
 24090:24102:24103,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Bleeding,10000; }
 24090:24104:24105:24106,{ bonus bDef,4; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 30) bonus2 bResEff,Eff_Stun,10000; }
 24090:24107:24108,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Curse,10000; }
-24048:24109:24110,{ bonus bNoCastCancel2,1; bonus bVariableCastrate,40-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)); }
-24111:24112:24113,{ bonus bNoCastCancel,1; bonus bUseSPrate,40-getequiprefinerycnt(EQI_SHADOW_SHIELD)-getequiprefinerycnt(EQI_SHADOW_ARMOR)-getequiprefinerycnt(EQI_SHADOW_SHOES); }
-24150:24151,{ bonus2 bAddClass,Class_All,1; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15) bonus bNoSizeFix,1; }
-24152:24153,{ bonus bAtk,getequiprefinerycnt(EQI_SHADOW_WEAPON); if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 15) bonus bUnbreakableWeapon,1; }
-24154:24155,{ bonus bDef,getequiprefinerycnt(EQI_SHADOW_ARMOR); if (getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15) bonus bUnbreakableArmor,1; }
+24048:24109:24110,{ bonus bNoCastCancel2; bonus bVariableCastrate,40-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)); }
+24111:24112:24113,{ bonus bNoCastCancel; bonus bUseSPrate,40-getequiprefinerycnt(EQI_SHADOW_SHIELD)-getequiprefinerycnt(EQI_SHADOW_ARMOR)-getequiprefinerycnt(EQI_SHADOW_SHOES); }
+24150:24151,{ bonus2 bAddClass,Class_All,1; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15) bonus bNoSizeFix; }
+24152:24153,{ bonus bAtk,getequiprefinerycnt(EQI_SHADOW_WEAPON); if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 15) bonus bUnbreakableWeapon; }
+24154:24155,{ bonus bDef,getequiprefinerycnt(EQI_SHADOW_ARMOR); if (getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15) bonus bUnbreakableArmor; }
 24156:24166:24167,{ bonus bBaseAtk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreDefRace,RC_DemiHuman; }
 24157:24166:24167,{ bonus bBaseAtk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreDefRace,RC_Demon; }
 24158:24166:24167,{ bonus bBaseAtk,5; if(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=25) bonus bIgnoreDefRace,RC_Brute; }

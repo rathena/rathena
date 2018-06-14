@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/showmsg.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/socket.hpp"
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "achievement.hpp"
 #include "map.hpp"
@@ -416,11 +416,35 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0]){
-			npc_event_do_id(ud->walk_done_event,bl->id);
-			ud->walk_done_event[0] = 0;
+			char walk_done_event[EVENT_NAME_LENGTH];
+
+			// Copying is required in case someone uses unitwalkto inside the event code
+			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
+
+			ud->state.walk_script = true;
+
+			// Execute the event
+			npc_event_do_id(walk_done_event,bl->id);
+
+			ud->state.walk_script = false;
+
+			// Check if the unit was killed
+			if( status_isdead(bl) ){
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+				if( md && !md->spawn ){
+					unit_free(bl, CLR_OUTSIGHT);
+				}
+
+				return 0;
+			}
+
+			// Check if another event was set
+			if( !strcmp(ud->walk_done_event,walk_done_event) ){
+				// If not remove it
+				ud->walk_done_event[0] = 0;
+			}
 		}
-		if (ud->state.walk_script)
-			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
@@ -804,7 +828,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if (type == SC_RUN)
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 1, 0, 0, 0, 0);
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
@@ -812,7 +836,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
 		clif_fixpos(bl);
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
@@ -1695,6 +1719,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		switch( skill_id ) {
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
+			case NPC_DEATHSUMMON:
 			case AL_TELEPORT:
 				if( ((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai )
 					return 0;
