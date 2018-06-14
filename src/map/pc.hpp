@@ -948,7 +948,7 @@ short pc_maxaspd(struct map_session_data *sd);
 	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER         || \
 	  (class_) == JOB_BABY_SUMMONER 				     || \
 	( (class_) >= JOB_BABY_NINJA     && (class_) <= JOB_BABY_REBELLION ) || \
-	  (class_) == JOB_BABY_STAR_GLADIATOR2 \
+	( (class_) >= JOB_BABY_STAR_GLADIATOR2 && (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
