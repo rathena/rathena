@@ -11,165 +11,138 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="atomic.h">
+    <ClInclude Include="cbasetypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cbasetypes.h">
+    <ClInclude Include="cli.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cli.h">
+    <ClInclude Include="conf.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="conf.h">
+    <ClInclude Include="core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core.h">
+    <ClInclude Include="db.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="db.h">
+    <ClInclude Include="des.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="des.h">
+    <ClInclude Include="ers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ers.h">
+    <ClInclude Include="grfio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="grfio.h">
+    <ClInclude Include="malloc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="malloc.h">
+    <ClInclude Include="mapindex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapindex.h">
+    <ClInclude Include="md5calc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="md5calc.h">
+    <ClInclude Include="mmo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mempool.h">
+    <ClInclude Include="msg_conf.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mmo.h">
+    <ClInclude Include="nullpo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="msg_conf.h">
+    <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mutex.h">
+    <ClInclude Include="showmsg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nullpo.h">
+    <ClInclude Include="socket.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="raconf.h">
+    <ClInclude Include="sql.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="random.h">
+    <ClInclude Include="strlib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="showmsg.h">
+    <ClInclude Include="timer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="socket.h">
+    <ClInclude Include="utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spinlock.h">
+    <ClInclude Include="winapi.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sql.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="strlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="thread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="winapi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="yamlwrapper.h">
+    <ClInclude Include="utilities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cli.c">
+    <ClCompile Include="cli.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="conf.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="db.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="des.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ers.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="grfio.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="malloc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mapindex.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="md5calc.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mempool.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="msg_conf.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mutex.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nullpo.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="raconf.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="random.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="showmsg.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="socket.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sql.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="strlib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="thread.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="timer.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils.c">
+    <ClCompile Include="conf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="yamlwrapper.cpp">
+    <ClCompile Include="db.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="des.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grfio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="malloc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapindex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="md5calc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="msg_conf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nullpo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="showmsg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sql.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="strlib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="winapi.cpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClCompile Include="utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

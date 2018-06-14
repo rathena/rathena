@@ -4,7 +4,7 @@
 #ifndef _UNIT_HPP_
 #define _UNIT_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "path.hpp" // struct walkpath_data
 #include "skill.hpp" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
@@ -168,6 +168,5 @@ int unit_changetarget(struct block_list *bl,va_list ap);
 
 void do_init_unit(void);
 void do_final_unit(void);
-
 
 #endif /* _UNIT_HPP_ */

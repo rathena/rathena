@@ -4,8 +4,8 @@
 #ifndef _SEARCHSTORE_HPP_
 #define _SEARCHSTORE_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 #include "map.hpp"
 
@@ -56,4 +56,4 @@ bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id);
 void searchstore_clearremote(struct map_session_data* sd);
 bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine);
 
-#endif  // _SEARCHSTORE_HPP_
+#endif /* _SEARCHSTORE_HPP_ */

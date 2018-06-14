@@ -4116,6 +4116,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		1831,	// P_Knuckle1
 		13310,	// P_Huuma_Shuriken1
 		26101;	// P_Foxtail III
+	.@wplist_size = getarraysize(.@wplist);
+
 	.@menu$ = "Eden Group Slayer III:" +
 		"Eden Group Saber III:" +
 		"Eden Group Dagger III:" +
@@ -4253,7 +4255,7 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 				setarray .@arg[0],4805,4805,161;// Heal_Amount2
 			}
 			mes "[BK]";
-			for ( .@i = 0; .@i < 15; .@i++ ) {
+			for ( .@i = 0; .@i < .@wplist_size; .@i++ ) {
 				if (countitem(.@wplist[.@i]) > 0) {
 					if (.@arg[0] == 4805)
 						mes "Good. Your weapon will now increase Heal effectiveness.";

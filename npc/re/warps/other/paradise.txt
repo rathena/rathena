@@ -23,3 +23,9 @@ moc_para01,113,32,0	warp2	#warp_2_ware	1,1,moc_para01,105,92
 moc_para01,102,92,0	warp2	#warp_2_pass_2	1,1,moc_para01,109,33
 moc_para01,41,187,0	warp2	#warp_2_room2	1,1,moc_para01,179,93
 moc_para01,179,90,0	warp2	#warp_2_2fhall_3	1,1,moc_para01,41,185
+
+// moc_para01,47,38,0	warp2	#warp_2_pass_2_2	1,1,moc_para01,106,14
+moc_para01,17,187,0	warp2	#warp_2_bossroom	1,1,moc_para01,132,159
+moc_para01,132,156,0	warp2	#warp_2_2fhall_1	1,1,moc_para01,17,185
+moc_para01,29,187,0	warp2	#warp_2_room1	1,1,moc_para01,180,159
+moc_para01,180,156,0	warp2	#warp_2_2fhall_2	1,1,moc_para01,29,185

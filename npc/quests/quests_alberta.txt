@@ -2074,7 +2074,7 @@ tur_dun03,105,74,4	script	Mudasamu#tur	119,{
 	mes "[Mudasamu]";
 	mes "Basically, our leader was so distracted by the idea of finding treasure himself that we've lost our men. It's bad enough that he's a fat slob, but he's a greedy slob too!";
 	next;
-	emotion e_ag;
+	emotion ET_ANGER;
 	mes "[Takuyaka]";
 	mes "Hey, Mudasamu!";
 	mes "Are you talking";

@@ -953,13 +953,13 @@ ecl_in01,64,97,5	script	Slot Expert Nattuer#ecl	436,{
 	delitem 6081,5; //Splendide_Coin
 	.@luckyday = rand(1,100);
 	if (.@luckyday % 20){
-		emotion e_dots;
+		emotion ET_THINK;
 		delitem .@choice,1;
 		mes "Shoot, I'm sorry. It failed.";
 		mes "But I'm sure it will work next time. I have a feeling.";
 		close;
 	}
-	emotion e_no1;
+	emotion ET_BEST;
 	delitem .@choice,1;
 	getitem (.@choice+6),1;
 	mes "My eyes feel like they're gonna pop out.";
@@ -1038,13 +1038,13 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "You have too many items to continue.";
 		close;
 	}
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Paltu]";
 	mes "Woohoo- Greetings. What are you looking for? Lots of goods here.";
 	next;
 	switch (select("No thanks.:Replication?:I know you got lots up your sleeve!")) {
 	case 1:
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Paltu]";
 		mes "Really? Hmm?";
 		close;
@@ -1056,20 +1056,20 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "I'll give you a good price whatever it is. Just trust me.";
 		next;
 		select("Could you do something for me?");
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Paltu]";
 		mes "Hey, I like your attitude.";
 		next;
 		mes "[Paltu]";
 		mes "Ah- you know the hat you're wearing?";
 		next;
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Paltu]";
 		mes "Don't you have any of those hats lying around in storage that are solid but too ugly to wear? You do, right?";
 		next;
 		select(".........");
-		emotion e_dots,1;
-		emotion e_heh;
+		emotion ET_THINK, playerattached();
+		emotion ET_SMILE;
 		mes "[Paltu]";
 		mes "See! I knew it. I knew it from the first minute.";
 		next;
@@ -1085,7 +1085,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "I need 1 ^0571B0hat to replicate^000000 and";
 		mes "I need ^E1281E 4 Crystal Mirrors^000000 for magic resistance, ^E1281E 1 Fairy Magic Powder^000000 as the catalyst, and ^E1281E Emerald, Ruby, Sapphire, Topaz, and Zircon, 10 of each^000000, to be used for amplifying the magic power.";
 		next;
-		emotion e_no;
+		emotion ET_STARE_ABOUT;
 		mes "[Paltu]";
 		mes "There's quite a lot of ingredients, right? Well, I can't do anything about that. Dealing with magic power is not a joke.";
 		next;
@@ -1102,7 +1102,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "What do you think? I'll make it happen as long as I have the ingredients and the compensation.";
 		next;
 		if (select("I'll do it later.:Show me what you got!") == 1) {
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Paltu]";
 			mes "What? Are you kidding me? Please tell me you are!";
 			close;
@@ -1110,7 +1110,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		break;
 	}
 	disable_items;
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	mes "[Paltu]";
 	mes "Oh wow.";
 	mes "You made the right call. I thought I was going to starve to death because the Laphines have no interest in pretty hats.";
@@ -1136,7 +1136,7 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 	mes "Is ^0571B0"+getitemname(.@items[.@i])+"^000000 what you wanted?";
 	next;
 	if (.@item_check == 0 || countitem(.@items[.@i]) == 0) {
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Paltu]";
 		mes "Ay... Credit purchases are difficult for me.";
 		next;
@@ -1148,17 +1148,17 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "I'm in a tight spot myself. Please consider my situation also.";
 		close;
 	}
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "[Paltu]";
 	mes "Yes, this is more than enough. Should I make it now?";
 	next;
 	if (select("Please make it now.:Oops, I have to take care of something...") == 2) {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Paltu]";
 		mes "Hey.. Hey! Hey! Where you going?";
 		close;
 	}
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Paltu]";
 	mes "I got it. Oh right! Almost forgot again.";
 	next;
@@ -1176,17 +1176,17 @@ ecl_in01,67,39,4	script	Replication Expert Paltu	445,{
 		mes "Yeah, please make sure!";
 		close;
 	}
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Paltu]";
 	mes "Woohoo- Got it.";
 	mes "It's finally time for me to use my skills again.";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Paltu]";
 	mes "Do this thing here, and do that thing there, and then do this thing here again...";
 	next;
-	emotion e_dots;
-	emotion e_swt2;
+	emotion ET_THINK;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Paltu]";
 	mes "... .. ...";
 	specialeffect EF_BEGINSPELL;

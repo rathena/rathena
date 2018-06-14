@@ -4,17 +4,13 @@
 #ifndef _PET_HPP_
 #define _PET_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
-#include "unit.hpp"
+#include "script.hpp"
 #include "status.hpp"
+#include "unit.hpp"
 
-//fwd declaration
-struct s_map_session_data;
-enum e_sc_type : int16;
-
-#define MAX_PET_DB	300
 #define MAX_PETLOOT_SIZE	30
 
 /// Pet DB
@@ -42,10 +38,26 @@ struct s_pet_db {
 	struct script_code
 		*pet_script, ///< Script since pet hatched
 		*pet_loyal_script; ///< Script when pet is loyal
-};
-extern struct s_pet_db pet_db[MAX_PET_DB];
 
-enum e_pet_itemtype : uint8 { PET_CLASS,PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
+	~s_pet_db()
+	{
+		if( this->pet_script ){
+			script_free_code(this->pet_script);
+		}
+
+		if( this->pet_loyal_script ){
+			script_free_code(this->pet_loyal_script);
+		}
+	}
+};
+
+enum e_pet_itemtype : uint8 { PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
+
+enum e_pet_catch : uint16 {
+	PET_CATCH_FAIL = 0, ///< A catch attempt failed
+	PET_CATCH_UNIVERSAL = 1, ///< The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
+	PET_CATCH_UNIVERSAL_ITEM = 2,
+};
 
 struct pet_recovery { //Stat recovery
 	enum sc_type type;	//Status Change id
@@ -86,6 +98,8 @@ struct pet_loot {
 	unsigned short max;
 };
 
+struct s_pet_db *pet_db(uint16 pet_id);
+
 struct pet_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -93,7 +107,6 @@ struct pet_data {
 	struct s_pet pet;
 	struct status_data status;
 	struct mob_db *db;
-	struct s_pet_db *petDB;
 	int pet_hungry_timer;
 	int target_id;
 	struct {
@@ -111,19 +124,21 @@ struct pet_data {
 
 	int masterteleport_timer;
 	struct map_session_data *master;
+
+	s_pet_db* get_pet_db() {
+		return pet_db(this->pet.class_);
+	}
 };
 
-
-
-int pet_create_egg(struct map_session_data *sd, unsigned short item_id);
+bool pet_create_egg(struct map_session_data *sd, unsigned short item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
-int pet_unlocktarget(struct pet_data *pd);
+void pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
-int search_petDB_index(int key,int type);
+struct s_pet_db* pet_db_search(int key, enum e_pet_itemtype type);
 int pet_hungry_timer_delete(struct pet_data *pd);
-int pet_data_init(struct map_session_data *sd, struct s_pet *pet);
+bool pet_data_init(struct map_session_data *sd, struct s_pet *pet);
 int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
 int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag);
 int pet_select_egg(struct map_session_data *sd,short egg_index);

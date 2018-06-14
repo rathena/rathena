@@ -2679,7 +2679,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 		mes "foreigners, leading them here!";
 		next;
 		if (select("Freya? I'd like to know more.:That's crazy talk!") == 1) {
-			emotion e_ok;
+			emotion ET_OK;
 			mes "[Urstialla]";
 			mes "The day is coming when";
 			mes "Freya will resurrect and";
@@ -2884,7 +2884,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 	}
 	if (ice_necklace_q == 1) {
 		cutin "ra_magic3",2;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Man Stuck in Ice]";
 		mes "H-hello?";
 		mes "Hey! Hey, you!";
@@ -2921,7 +2921,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "I can't even scratch it";
 		mes "Do you have any ideas?";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Man Stuck in Ice]";
 		mes "This is so humiliating...";
 		mes "Me, the greatest mage";
@@ -2933,7 +2933,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "You're Maheo?";
 		next;
 		cutin "ra_magic1",2;
-		emotion e_gg;
+		emotion ET_KIK;
 		mes "[Maheo]";
 		mes "It's true. You're speaking to";
 		mes "Maheo, the greatest mage,";
@@ -3003,7 +3003,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "It has the power of a million";
 		mes "exploding suns! But then...";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Maheo]";
 		mes "It was too powerful!";
 		mes "There were tremors, and";
@@ -3011,7 +3011,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "all the flame caused my";
 		mes "clothes to catch on fire!";
 		next;
-		emotion e_flash,1;
+		emotion ET_SPARK, playerattached();
 		mes "["+strcharinfo(0)+"]";
 		mes "You...";
 		mes "you set fire";
@@ -3100,7 +3100,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 				next;
 				mes "[Maheo]";
 				mes "Hey, hey! Can't you just release me first?";
-				emotion e_sob;
+				emotion ET_CRY;
 				close;
 			}
 		}
@@ -3138,7 +3138,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "*CRASH!*^000000";
 		next;
 		setnpcdisplay "Man Stuck in Ice#cave",937;
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Maheo]";
 		mes "Finally...!";
 		mes "After all of this";
@@ -3207,8 +3207,8 @@ OnTouch:
 	end;
 
 OnTouchNPC: 
-	emotion e_an;
-	//emotion e_gg,1; //Emote on monster - unsupported
+	emotion ET_FRET;
+	emotion ET_KIK, getattachedrid();
 	end;
 
 OnMyMobDead:
@@ -3405,7 +3405,7 @@ rachel,113,97,5	script	Mohadian	929,10,10,{
 		mes "If you are, I've got a bit of a";
 		mes "business proposition for you.";
 		next;
-		emotion e_ic;
+		emotion ET_AHA;
 		mes "[Mohadian]";
 		mes "The weather around here";
 		mes "is naturally hot and humid,";
@@ -3787,7 +3787,7 @@ OnTouch:
 			mes "entrance is locked.^000000";
 			next;
 			select("Kick Door.:Smash Door with Weapon.");
-			emotion e_omg,0,"Nemma#ra_temple";
+			emotion ET_HUK, getnpcid(0, "Nemma#ra_temple");
 			mes "[Priestess Nemma]";
 			mes "Please don't do that!";
 			close;
@@ -3834,7 +3834,7 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 			mes "a contribution. Regardless,";
 			mes "we invite you to celebrate the";
 			mes "grace of the goddess with us.";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			next;
 			mes "[Priestess Nemma]";
 			mes "There's one High Priest that";
@@ -4053,7 +4053,7 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 			goto L_End;
 		}
 		else if (ra_tem_q == 11) {
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			cutin "ra_nemma03",2;
 			mes "[Priestess Nemma]";
 			mes "Hey, "+strcharinfo(0)+"~!";
@@ -5370,7 +5370,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "me like that! Saying";
 				mes "it like that is kind of";
 				mes "overdoing it, isn't it?";
-				emotion e_sigh,1;
+				emotion ET_OHNO, playerattached();
 				next;
 				mes "[High Priest Zhed]";
 				mes "Not at all. In fact, I'm";
@@ -5907,7 +5907,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "before the other High";
 					mes "Priests ruin our nation.";
 					next;
-					emotion e_omg,1;
+					emotion ET_HUK, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "Y-you're not thinking";
 					mes "of overthrowing the";
@@ -5915,7 +5915,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "that a bit extreme?";
 					next;
 					cutin "ra_gman2",2;
-					emotion e_swt;
+					emotion ET_SWEAT;
 					mes "[High Priest Zhed]";
 					mes "What? No, no!";
 					mes "Don't jump to conclusions";
@@ -6034,7 +6034,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "I already have someone in";
 					mes "mind that might help us.";
 					next;
-					emotion e_flash,1;
+					emotion ET_SPARK, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "That sounds good.";
 					mes "Who is he?";
@@ -6047,7 +6047,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "may even think I deserve";
 					mes "to be excommunicated...";
 					next;
-					emotion e_no1,1;
+					emotion ET_BEST, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "Come on, it wouldn't";
 					mes "hurt to try! Besides,";

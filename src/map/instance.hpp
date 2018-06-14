@@ -4,9 +4,9 @@
 #ifndef _INSTANCE_HPP_
 #define _INSTANCE_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // struct point
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // struct point
+#include "../common/strlib.hpp"
 
 #include "script.hpp" // struct reg_db
 
@@ -99,4 +99,4 @@ void do_final_instance(void);
 	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
 #endif
 
-#endif
+#endif /* _INSTANCE_HPP_ */

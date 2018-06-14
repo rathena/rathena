@@ -45,6 +45,7 @@
 //= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
 //= 2.26 Added "F_getpositionname". [Capuche]
 //= 2.27 Added "F_GetPlatinumSkills". [mazvi]
+//= 2.28 Added "close3". [Capuche]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -161,9 +162,9 @@ function	script	F_Rand	{
 
 //////////////////////////////////////////////////////////////////////////////////
 // Returns 1st argument if female, 2nd argument if male.
-// -- callfunc "F_Sex",argFemale,argMale
+// -- callfunc "F_SexMes",argFemale,argMale
 // Example:
-//     mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
+//     mes callfunc("F_SexMes","What a beautiful lady!","What a handsome man!");
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_SexMes	{
 	return getarg(Sex);
@@ -748,4 +749,21 @@ function	script	F_GetPlatinumSkills	{
 		break;
 	}
 	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Shortcut : close button and clear cutin.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	close3	{
+	close2;
+	cutin "",255;
+	end;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Return true if the card is a charm (enchant card), false otherwise.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsCharm	{
+	.@id = getarg(0);
+	return ((.@id >= 4700 && .@id < 5000) || (.@id >= 29000 && .@id <= 29162));
 }

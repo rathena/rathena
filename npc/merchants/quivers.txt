@@ -42,7 +42,7 @@ payon_in01,5,134,5	script	Inventor Jaax	89,{
 	mes "created something";
 	mes "truly extraordinary. I call them... ^663300Magic Quivers^000000 !! This will be remembered in history as an";
 	mes "arrow revolution!";
-	emotion e_no1;
+	emotion ET_BEST;
 	next;
 	mes "[Inventor Jaax]";
 	mes "I've studied magic and quivers for years, working night and day until I finally figured how to condense arrows with magic! With magic quivers, you'll be carrying more arrows, but with less weight!";

@@ -4,7 +4,7 @@
 #ifndef _PATH_HPP_
 #define _PATH_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 enum cell_chk : uint8;
 
@@ -71,6 +71,5 @@ int distance_client(int dx, int dy);
 //
 void do_init_path();
 void do_final_path();
-
 
 #endif /* _PATH_HPP_ */

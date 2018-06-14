@@ -8,15 +8,15 @@
 #include <ctgmath> //floor
 #include <cstring>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/random.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/random.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "log.hpp"
 #include "clif.hpp"

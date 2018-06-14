@@ -173,7 +173,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 			case 2:
 				set $@gdeventv_s1,0;
 				set $@gdevents_s$,"";
-				emotion e_sob;
+				emotion ET_CRY;
 				mes "[Dwarf]";
 				mes "Ahhh...";
 				close;
@@ -306,7 +306,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 				case 2:
 					set $@gdeventv_s1,0;
 					set $@gdevents_s$,"";
-					emotion e_sob;
+					emotion ET_CRY;
 					mes "[Dwarf]";
 					mes "Ah....";
 					close;
@@ -449,7 +449,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 				case 2:
 					set $@gdeventv_s1,0;
 					set $@gdevents_s$,"";
-					emotion e_sob;
+					emotion ET_CRY;
 					mes "[Dwarf]";
 					mes "Ah....";
 					close;
@@ -538,22 +538,22 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 					mes "Let me see...";
 					mapannounce "schg_que01", "Pierrot Pier: Let me see...",bc_map,"0x99CC00";
 					next;
-					emotion e_dots;
+					emotion ET_THINK;
 					mes "[Pierrot Pier]";
 					mes "Hm...";
 					mapannounce "schg_que01", "Pierrot Pier: Hm...",bc_map,"0x99CC00";
 					next;
-					emotion e_dots;
+					emotion ET_THINK;
 					mes "[Pierrot Pier]";
 					mes "Okay, I see...";
 					mapannounce "schg_que01", "Pierrot Pier: Okay, I see...",bc_map,"0x99CC00";
 					next;
-					emotion e_dots;
+					emotion ET_THINK;
 					mes "[Pierrot Pier]";
 					mes "Indeed...";
 					mapannounce "schg_que01", "Pierrot Pier: Indeed...",bc_map,"0x99CC00";
 					next;
-					emotion e_bzz;
+					emotion ET_STARE;
 					mes "[Pierrot Pier]";
 					mes "Verification completed!";
 					mapannounce "schg_que01", "Pierrot Pier: Verification completed!",bc_map,"0x99CC00";
@@ -569,12 +569,12 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 				mes "^3131FF<You're someone who can only think about nonsense everyday, you have no focus at all.>^000000";
 				mapannounce "schg_que01", "Pierrot Pier: <You're someone who can only think about nonsense everyday, you have no focus at all.>",bc_map,"0x99CC00";
 				next;
-				emotion e_ho;
+				emotion ET_DELIGHT;
 				mes "[Pierrot Pier]";
 				mes "Hm? You don't think so?";
 				mapannounce "schg_que01", "Pierrot Pier: Hm? You don't think so?",bc_map,"0x99CC00";
 				next;
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Pierrot Pier]";
 				mes "Haha, I'm just kidding. Beep beep.";
 				mes "Ah, you are the one my master speaks of.";
@@ -627,7 +627,7 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 				case 2:
 					break;
 				case 3:
-					emotion e_sob;
+					emotion ET_CRY;
 					mes "[Pierrot Pier]";
 					mes "Oh, you don't want to play?";
 					close;
@@ -877,22 +877,22 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 				mes "Let me see...";
 				mapannounce "schg_que01", "Pierrot Pier: Let me see...",bc_map,"0x99CC00";
 				next;
-				emotion e_dots;
+				emotion ET_THINK;
 				mes "[Pierrot Pier]";
 				mes "Hm...";
 				mapannounce "schg_que01", "Pierrot Pier: Hm...",bc_map,"0x99CC00";
 				next;
-				emotion e_dots;
+				emotion ET_THINK;
 				mes "[Pierrot Pier]";
 				mes "Okay, I see...";
 				mapannounce "schg_que01", "Pierrot Pier: Okay, I see...",bc_map,"0x99CC00";
 				next;
-				emotion e_dots;
+				emotion ET_THINK;
 				mes "[Pierrot Pier]";
 				mes "Indeed...";
 				mapannounce "schg_que01", "Pierrot Pier: Indeed...",bc_map,"0x99CC00";
 				next;
-				emotion e_bzz;
+				emotion ET_STARE;
 				mes "[Pierrot Pier]";
 				mes "Verification completed!";
 				mapannounce "schg_que01", "Pierrot Pier: Verification completed!",bc_map,"0x99CC00";
@@ -904,11 +904,11 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 				mes "When is that person coming? I am very bored~!";
 				close;
 			}
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Pierrot Pier]";
 			mes "^3131FF<Although you're a weirdo, you seem to be very dedicated>^000000. Beep beep.";
 			next;
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			mes "[Pierrot Pier]";
 			mes "Hm? You don't think so?";
 			next;

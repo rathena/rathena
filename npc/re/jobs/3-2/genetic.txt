@@ -132,7 +132,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "My village is very big, everyone there speaks like this.";
 			break;
 		case 2:
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Devries]";
 			mes "Really! That's why I felt some kind of familiar atmosphere around you.";
 			mes "Meeting a hometown person in Schwaltzvalt, it's my pleasure to meet you!";
@@ -141,7 +141,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		next;
 		mes "- Thump!! -";
 		next;
-		emotion e_ag;
+		emotion ET_ANGER;
 		mes "[Devries]";
 		mes "Ughhhhh! That woman started again!";
 		next;
@@ -150,7 +150,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		mes "That's the sound of an experiment being carried out by my roommate, Demi Calberine..";
 		mes "Demi's a fire shell technician so she's always noisy like that.";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Devries]";
 		mes "Look at that!";
 		mes "My spores and plants are all freaked out!";
@@ -226,13 +226,13 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		mes "Ah, The sweet buttery taste remains at the end of my tongue.";
 		mes "This really gives me peace of mind.";
 		next;
-		emotion e_pif;
+		emotion ET_HNG;
 		mes "[Devries]";
 		mes "Demi is studying hard today as well";
 		mes "Huhuhu. She's really a hard worker.";
 		next;
 		mes "- That cookie changed her mood quick. -";
-		emotion e_no1,1;
+		emotion ET_BEST, playerattached();
 		next;
 		mes "[Devries]";
 		mes "You came here with a love for Alchemy?";
@@ -323,7 +323,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		next;
 		mes "- Boom, Boom, Boom -";
 		next;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Devries]";
 		mes "Ah, please tell me Demi Calberine is not starting again?";
 		mes "Please let my expectation be wrong ... Please... Demi, please...";
@@ -337,17 +337,17 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		next;
 		mes "- Boom!! Boom!! Boom!! Boom!! -";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Devries]";
 		mes ".......................";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Devries]";
 		mes "Techniques, plants are relatively easy to...";
 		next;
 		mes "- Boom!!!!!! -";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Devries]";
 		mes "Crossbreed...";
 		next;
@@ -356,15 +356,15 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		mes "- Boooooooooooooom!!!! -";
 		mes "- Boom!! Boom!! Boom!! -";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Devries]";
 		mes ".......................";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Devries]";
 		mes "Popo.";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Devries]";
 		mes "I'll give you the test to become a Geneticist.";
 		next;
@@ -881,13 +881,13 @@ job3_gen01,91,48,3	script	Demi Calberine#gen	982,{
 		mes "[Demi Calberine]";
 		mes "Miss Devries seems to be studying childish experiments downstairs.";
 		mes "I don't understand why those research papers get so popular.";
-		emotion e_pif;
+		emotion ET_HNG;
 		next;
 		mes "[Demi Calberine]";
 		mes "See this mini-mini cannon.";
 		mes "This is the smallest and the lightest cannon in the world.";
 		mes "This is what I made but isn?t this so cute? Yipee~";
-		emotion e_awsm;
+		emotion ET_COOL;
 		next;
 		select("Can I get my cart remodeled?");
 		mes "[Demi Calberine]";
@@ -1028,7 +1028,7 @@ job3_gen01,24,32,0	script	The gaze of Devries	139,2,2,{
 OnTouch:
 	if (checkquest(2223,HUNTING) == 2) {
 		mapannounce "job3_gen01","Devries: Whoa? Was there a lost kitty in the spore pen?",bc_map,"0x99CC00"; //FW_NORMAL 12 0 0
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		warp "job3_gen01",21,38;
 	}
 	end;

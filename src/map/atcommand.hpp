@@ -4,8 +4,8 @@
 #ifndef _ATCOMMAND_HPP_
 #define _ATCOMMAND_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 struct map_session_data;
 
@@ -44,4 +44,5 @@ struct atcmd_binding_data {
 };
 extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
+
 #endif /* _ATCOMMAND_HPP_ */

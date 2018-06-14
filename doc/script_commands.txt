@@ -1150,6 +1150,22 @@ will terminate.
 
 ---------------------------------------
 
+*clear;
+
+This command will clear the dialog text and continue the script without player interaction.
+
+Example:
+	mes "This is how the 'clear' script command works.";
+	sleep2 3000;
+	clear; // This will clear the dialog and continue to the next one.
+	mes "I will show you again.";
+	sleep2 3000;
+	clear;
+	mes "Bye!";
+	close;
+
+---------------------------------------
+
 *close;
 
 This command will create a 'close' button in the message window for the invoking
@@ -2244,6 +2260,62 @@ array, shifting all the elements beyond this towards the beginning.
 
 ---------------------------------------
 
+*inarray <array name>,<value>;
+
+This command returns the index of the first matching value found in the array.
+It will return -1 if the value is not found.
+
+	setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
+	
+	inarray(.@array[0], 200);
+	//return 1 because 200 is in index 1
+	//another way to say it that .@array[1] == 200
+	
+	.@index = inarray(.@array[0], 600);
+	//.@index is now 5 because .@array[5] == 600
+	
+	inarray(.@array[0], 100);
+	//while index 6 is also 100, the command will return the first instance it finds
+	//return 0 because .@array[0] == 100
+
+	inarray(.@array[0], 800);
+	//return -1 because 800 is not an element of the array .@array
+
+For more details, see the sample in 'doc/sample/inarray.txt'.
+
+---------------------------------------
+
+*countinarray <array name>{[<start index>]},<array name>{[<start index>]};
+
+This command will check for matches between the array values and return the number of matches.
+While being optional, if [<start index>] is supplied, the search will begin from the given index value.
+
+	setarray .@array[0], 100, 200, 300, 400, 500, 600;
+	
+	.@variable = 100;
+	if(countinarray(.@array[0], .@variable))
+		mes "The number 100 was found in the array @array";
+	
+	countinarray(.@array[0], .@variable);
+	//return 1 because the number 100 is an element of the array .@array
+	
+	setarray .@array2[0],100,500;
+	countinarray(.@array[0], .@array2[0]);
+	//return 2 because the numbers 100 and 500 are elements of the array .@array
+	
+	setarray .@array3[0],100,700;
+	countinarray(.@array[0], .@array3[0]);
+	//return 1 because the number 100 is an element of the array .@array
+	//but the number 700 is not an element of the array .@array
+
+	//also you can change the position between the arrays in the command
+	if(countinarray(.@array[0], .@array3[0]) == countinarray(.@array3[0], .@array[0]))
+		//This is true
+
+For more details, see the sample in 'doc/sample/inarray.txt'.
+
+---------------------------------------
+
 ======================================
 |2.- Information-retrieving commands.|
 ======================================
@@ -2752,6 +2824,8 @@ REFINE_COST_OVER10     - For refining over +10
 REFINE_COST_HD         - For refining with HD ores
 REFINE_COST_ENRICHED   - For refining with enriched ores
 REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
+REFINE_COST_HOLINK     - For refining at Holink in Malangdo
+REFINE_COST_WAGJAK     - For refining at Refining Machine Wagjak in the Novice Academy
 
 This function will return required cost for refining based on <information> argument.
 
@@ -2793,21 +2867,36 @@ This command sets a bunch of arrays with a complete list of whatever the
 invoking character has in their inventory, including all the data needed to
 recreate these items perfectly if they are destroyed. Here's what you get:
 
-@inventorylist_id[]        - array of item ids.
-@inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
-                             It will contain 0 if the item is not equipped.
-@inventorylist_refine[]    - for how much it is refined.
-@inventorylist_identify[]  - whether it is identified.
-@inventorylist_attribute[] - whether it is broken.
-@inventorylist_card1[]     - These four arrays contain card data for the items.
-@inventorylist_card2[]       These data slots are also used to store names
-@inventorylist_card3[]       inscribed on the items, so you can explicitly check
-@inventorylist_card4[]       if the character owns an item made by a specific
-                             craftsman.
-@inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
-@inventorylist_count       - the number of items in these lists.
+@inventorylist_id[]                - array of item ids.
+@inventorylist_amount[]            - their corresponding item amounts.
+@inventorylist_equip[]             - on which position the item is equipped (see EQP_* constants)
+                                     It will contain 0 if the item is not equipped.
+@inventorylist_refine[]            - for how much it is refined.
+@inventorylist_identify[]          - whether it is identified.
+@inventorylist_attribute[]         - whether it is broken.
+@inventorylist_card1[]             - These four arrays contain card data for the items.
+@inventorylist_card2[]               These data slots are also used to store names
+@inventorylist_card3[]               inscribed on the items, so you can explicitly check
+@inventorylist_card4[]               if the character owns an item made by a specific
+                                     craftsman.
+@inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
+@inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
+@inventorylist_count               - the number of items in these lists.
+@inventorylist_option_id1[]        - first array of random option IDs
+@inventorylist_option_value1[]     - first array of random option values
+@inventorylist_option_parameter1[] - first array of random option parameters
+@inventorylist_option_id2[]        - second array of random option IDs
+@inventorylist_option_value2[]     - second array of random option values
+@inventorylist_option_parameter2[] - second array of random option parameters
+@inventorylist_option_id3[]        - third array of random option IDs
+@inventorylist_option_value3[]     - third array of random option values
+@inventorylist_option_parameter3[] - third array of random option parameters
+@inventorylist_option_id4[]        - fourth array of random option IDs
+@inventorylist_option_value4[]     - fourth array of random option values
+@inventorylist_option_parameter4[] - fourth array of random option parameters
+@inventorylist_option_id5[]        - fifth array of random option IDs
+@inventorylist_option_value5[]     - fifth array of random option values
+@inventorylist_option_parameter5[] - fifth array of random option parameters
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -2934,6 +3023,13 @@ Examples
 Merge all stackable items that separated by GUID flags
 (either by flag 4 item_flag.txt or GUID  in item_group).
 If no item ID/name given, all possible items in player's inventory will be merged.
+
+---------------------------------------
+
+*getequiptradability(<equipment slot>{,<char id>});
+
+Returns true if the item in <equipment slot> is tradable.
+Returns false otherwise.
 
 ---------------------------------------
 //
@@ -4875,7 +4971,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getrandgroupitem <group_id>{,<quantity>{,<sub_group>}};
+*getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}};
 
 Similar to the above example, this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
@@ -4886,15 +4982,23 @@ If 'quantity' is not defined or 0, it will uses defined amount from Item Group l
 If 'sub_group' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
 'must' item group).
 
+For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
+as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
+if 'identify' is defined with value 1.
+
 More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getgroupitem <group_id>{,<char_id>};
+*getgroupitem <group_id>{,<identify>{,<char_id>}};
 
 Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified
 item group & sub_group.
+
+For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
+as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
+if 'identify' is defined with value 1.
 
 More info, see doc/item_group.txt.
 
@@ -5239,6 +5343,66 @@ invoking character.
 
 ---------------------------------------
 
+*mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>
+		{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>
+		{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>
+		{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}};
+
+This command will send mail to the <destination id> which is a character ID.
+A <sender name> can be specified but does not have to be from the direct creator
+of the mail and is limited to NAME_LENGTH (24) characters. Mail <title> is limited
+to MAIL_TITLE_LENGTH (40) characters. Mail <body> is limited to MAIL_BODY_LENGTH
+(200) characters for PACKETVER < 20150513 or 500 characters for later clients.
+
+Optional <zeny> and item data can be added to the mail as well. PACKETVER < 20150513
+is limited to 1 item while later clients are limited to MAIL_MAX_ITEM (5).
+
+The <item id array>, <item amount array>, <item card0 array>, <item card1 array>,
+<item card2 array>, and <item card3 array> should all be integer arrays.
+
+For random options there can be 5 arrays in pairs of 3 (ids, values, parameters) right after the cards.
+All of these arrays shall be integer arrays as well.
+
+Example of sending mail with zeny:
+	.@charid = getcharid(0);
+	.@sender$ = "Poring";
+	.@title$ = "Welcome";
+	.@body$ = "Hi! I'm a simple Poring from the Prontera fields! Welcome to Ragnarok!";
+	.@zeny = 5000;
+	mail .@charid, .@sender$, .@title$, .@body$, .@zeny;
+
+Example of sending mail with items:
+	.@charid = getcharid(0);
+	.@sender$ = "Angeling";
+	.@title$ = "Welcome";
+	.@body$ = "Hi! I'm a simple Angeling from the Prontera fields! Welcome to Ragnarok!";
+	.@zeny = 0;
+	setarray .@mailitem[0], 504, 505, 2220, 1214; // White Potion, Blue Potion, Hat, Dagger
+	setarray .@mailamount[0], 10, 5, 1, 1; // 10 White Potions, 5 Blue Potions, 1 Hat, 1 Dagger
+	setarray .@mailcard0[0], 0, 0, 4198, 4092; // Attach Maya Purple Card to the Hat, Attach Skeleton Worker Card to Dagger
+	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
+	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
+	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2;
+	
+Example of sending mail with items and random options:
+	.@charid = getcharid(0);
+	.@sender$ = "Angeling";
+	.@title$ = "Welcome";
+	.@body$ = "Hi! I'm a simple Angeling from the Prontera fields! Welcome to Ragnarok!";
+	.@zeny = 0;
+	setarray .@mailitem[0], 504, 505, 2220, 1214; // White Potion, Blue Potion, Hat, Dagger
+	setarray .@mailamount[0], 10, 5, 1, 1; // 10 White Potions, 5 Blue Potions, 1 Hat, 1 Dagger
+	setarray .@mailcard0[0], 0, 0, 4198, 4092; // Attach Maya Purple Card to the Hat, Attach Skeleton Worker Card to Dagger
+	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
+	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
+	setarray .@mailcard3[0], 0, 0, 0, 0; // Empty last slot
+	setarray .@mailrndopt_id0[0], 0, 0, 0, 0, RDMOPT_VAR_MAXHPAMOUNT; // Enchant the Dagger with increased HP option
+	setarray .@mailrndopt_val0[0], 0, 0, 0, 0, 1000; // Enchant the Dagger with increased HP option by 1000 points
+	setarray .@mailrndopt_prm0[0], 0, 0, 0, 0, 0; // Enchant the Dagger with increased HP option - does not need any parameter
+	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2, .@mailcard3, .@mailrndopt_id0, .@mailrndopt_val0, .@mailrndopt_prm0;
+
+---------------------------------------
+
 *openauction({<char_id>});
 
 This will open the Auction window on the client connected to the invoking character.
@@ -5361,7 +5525,7 @@ Used in reset NPC's (duh!)
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
 *sc_end <effect type>{,<GID>};
-*sc_end_class {<char_id>};
+*sc_end_class {<char_id>{,<job_id>}};
 
 These commands will bestow a status effect on a character.
 
@@ -5400,7 +5564,7 @@ and theirs val1, val2, val3, and val4 usage in source.
 perform a complete removal of all statuses (although permanent ones will re-apply).
 
 'sc_end_class' works like 'sc_end' but will remove all status effects from any learned
-skill on the invoking character.
+skill on the invoking character. If <job_id> is provided it will end the effect for that job.
 
 Examples:
 	// This will poison the invoking character for 10 minutes at 50% chance.
@@ -5418,6 +5582,18 @@ Examples:
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
+	
+	// This will end the effect of any learned skill for the invoking character.
+	sc_end_class;
+	
+	// This will end the effect of any learned skill for the character with the <char_id> 150000.
+	// val1: <char_id>
+	sc_end_class(150000);
+	
+	// This will end the effect of any Arch Bishop skill for the invoking character.
+	// val1: <char_id>
+	// val2: <job_id> of Arch Bishop
+	sc_end_class(getcharid(0),Job_Arch_Bishop);
 
 Note: to use SC_NOCHAT you should alter Manner
 	set Manner, -5;	// Will mute a user for 5 minutes
@@ -5958,7 +6134,7 @@ Example:
 	// spawn 1 Shining Plant in the 5x5 area centered on (155,188)
 	areamonster "prontera",153,186,157,190,"Shining Plant",1083,1;
 	// make the plant cast level 10 Cold Bolt on a random target
-	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,e_gg,3;
+	areamobuseskill "prontera",155,188,2,1083,"MG_COLDBOLT",10,3000,1,ET_KEK,3;
 
 ---------------------------------------
 
@@ -7236,19 +7412,15 @@ must be used.
 
 ---------------------------------------
 
-*emotion <emotion number>{,<target>{,"<target name>"}};
+*emotion <emotion number>{,<target>};
 
 This command makes an object display an emotion sprite above their own as
 if they were doing that emotion. For a full list of emotion numbers,
-see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
-(a question mark) and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
+(a question mark) and 'ET_SURPRISE' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
-their head. If 0 (the default if omitted), the NPC in current use will show
-the emotion, if 1, the player that is running the script will display it.
-
-Target name parameter allows to display emotion on top of other NPC/PC without
-event labels. If specified name is not found, command does nothing.
+their head. Use the target Game ID (GID).
 
 ---------------------------------------
 
@@ -7496,13 +7668,6 @@ flag: Specify target
 
 ---------------------------------------
 
-*unitemote <GID>,<emotion number>;
-
-This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
-
----------------------------------------
-
 *unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>};
 *unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>};
 *unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>};
@@ -7624,6 +7789,7 @@ Parameters (indexes) for monsters are:
 	UMOB_AMOTION
 	UMOB_ADELAY
 	UMOB_DMOTION
+	UMOB_TARGETID
 
 -----
 
@@ -7667,6 +7833,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_AMOTION
 	UHOM_ADELAY
 	UHOM_DMOTION
+	UHOM_TARGETID
 
 -----
 
@@ -7748,6 +7915,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_AMOTION
 	UMER_ADELAY
 	UMER_DMOTION
+	UMER_TARGETID
 
 -----
 
@@ -7790,6 +7958,7 @@ Parameter (indexes) for elementals are:
 	UELE_AMOTION
 	UELE_ADELAY
 	UELE_DMOTION
+	UELE_TARGETID
 
 -----
 
@@ -7893,6 +8062,11 @@ The "stat point" parameter temporarily sets all NPC stats to the given value,
 and "NPC level" is the temporary level of the NPC (used in some skills).
 Neither value can be greater than the max level defined in config, and will
 not work properly if the NPC has a mob sprite.
+
+Before using skills, NPCs must have basic stats applied to them depending on the
+skill being used: UNPC_ATKMIN, UNPC_ATKMAX, UNPC_MATKMIN, UNPC_MATKMAX, UNPC_STR,
+UNPC_AGI, UNPC_VIT, UNPC_INT, UNPC_DEX, UNPC_LUK.
+See 'setunitdata' for more information on usage.
 
     // Casts Level 10 Heal on the attached player, calculated with
     // all stats 99 and base level 60.
@@ -9034,6 +9208,7 @@ mapflag	<map name>	battleground	2
 ---------------------------------------
 
 *bpet;
+*birthpet;
 
 This command opens up a pet hatching window on the client connected to the
 invoking character. It is used in item script for the pet incubators and will
@@ -9044,13 +9219,21 @@ This is still usable outside item scripts.
 ---------------------------------------
 
 *pet <pet id>;
+*catchpet <pet id>;
 
 This command is used in all the item scripts for taming items. Running this
 command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It
 will still work outside an item script.
+If the <pet id> is PET_CATCH_UNIVERSAL the item will attempt to catch the targeted
+monster as long as it is in the pet database and does not have the MD_STATUS_IMMUNE
+monster mode.
+If the <pet id> is PET_CATCH_UNIVERSAL_ITEM the item will attempt to catch the targeted
+monster as long as it is in the pet database and the targeted monster requires the lure
+item used.
+See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
-A full list of pet IDs can be found inside 'db/pet_db.txt'.
+A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
 ---------------------------------------
 
@@ -9058,7 +9241,7 @@ A full list of pet IDs can be found inside 'db/pet_db.txt'.
 
 This command will create a pet egg and put it in the invoking character's
 inventory. The kind of pet is specified by pet ID numbers listed in
-'db/pet_db.txt'. The egg is created exactly as if the character just successfully
+'db/(pre-)re/pet_db.txt'. The egg is created exactly as if the character just successfully
 caught a pet in the normal way.
 
 	// This will make you a poring:
@@ -9076,7 +9259,7 @@ This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
  PETINFO_ID - Pet ID
- PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it
+ PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.txt' - will tell you what kind of a pet it
      is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
@@ -9084,6 +9267,8 @@ currently has active. Valid types are:
  PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
  PETINFO_LEVEL - Pet level
  PETINFO_BLOCKID - Pet Game ID
+ PETINFO_EGGID - Pet egg item id
+ PETINFO_FOODID - Pet food item id
 
 ---------------------------------------
 

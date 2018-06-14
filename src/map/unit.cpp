@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/showmsg.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/socket.hpp"
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "achievement.hpp"
 #include "map.hpp"
@@ -406,7 +406,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	y += dy;
 	map_moveblock(bl, x, y, tick);
 	ud->walk_count++; // Walked cell counter, to be used for walk-triggered skills. [Skotlex]
-	status_change_end(bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 
 	if (bl->x != x || bl->y != y || ud->walktimer != INVALID_TIMER)
 		return 0; // map_moveblock has altered the object beyond what we expected (moved/warped it)
@@ -417,11 +416,35 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0]){
-			npc_event_do_id(ud->walk_done_event,bl->id);
-			ud->walk_done_event[0] = 0;
+			char walk_done_event[EVENT_NAME_LENGTH];
+
+			// Copying is required in case someone uses unitwalkto inside the event code
+			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
+
+			ud->state.walk_script = true;
+
+			// Execute the event
+			npc_event_do_id(walk_done_event,bl->id);
+
+			ud->state.walk_script = false;
+
+			// Check if the unit was killed
+			if( status_isdead(bl) ){
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+				if( md && !md->spawn ){
+					unit_free(bl, CLR_OUTSIGHT);
+				}
+
+				return 0;
+			}
+
+			// Check if another event was set
+			if( !strcmp(ud->walk_done_event,walk_done_event) ){
+				// If not remove it
+				ud->walk_done_event[0] = 0;
+			}
 		}
-		if (ud->state.walk_script)
-			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
@@ -805,7 +828,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if (type == SC_RUN)
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 1, 0, 0, 0, 0);
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
@@ -813,7 +836,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
 		clif_fixpos(bl);
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
@@ -1696,6 +1719,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		switch( skill_id ) {
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
+			case NPC_DEATHSUMMON:
 			case AL_TELEPORT:
 				if( ((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai )
 					return 0;
@@ -1907,7 +1931,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
 
 		if( sd && (pc_checkskill(sd,SA_FREECAST) > 0 || skill_id == LG_EXEEDBREAK) )
-			status_calc_bl(&sd->bl, SCB_SPEED);
+			status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
 	} else
 		skill_castend_id(ud->skilltimer,tick,src->id,0);
 
@@ -2087,7 +2111,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
 
 		if( (sd && pc_checkskill(sd,SA_FREECAST) > 0) || skill_id == LG_EXEEDBREAK)
-			status_calc_bl(&sd->bl, SCB_SPEED);
+			status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
 	} else {
 		ud->skilltimer = INVALID_TIMER;
 		skill_castend_pos(ud->skilltimer,tick,src->id,0);
@@ -2712,7 +2736,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 	ud->skilltimer = INVALID_TIMER;
 
 	if( sd && (pc_checkskill(sd,SA_FREECAST) > 0 || skill_id == LG_EXEEDBREAK) )
-		status_calc_bl(&sd->bl, SCB_SPEED);
+		status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
 
 	if( sd ) {
 		switch( skill_id ) {
@@ -2878,11 +2902,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 	}
 
-	if (bl->type&(BL_CHAR|BL_PET)) {
-		skill_unit_move(bl,gettick(),4);
-		skill_cleartimerskill(bl);
-	}
-
 	switch( bl->type ) {
 		case BL_PC: {
 			struct map_session_data *sd = (struct map_session_data*)bl;
@@ -3022,7 +3041,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
-				clif_emotion(bl, E_SOB);
+				clif_emotion(bl, ET_CRY);
 				clif_clearunit_area(bl,clrtype);
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
@@ -3066,6 +3085,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;// do nothing
 	}
 
+	if (bl->type&(BL_CHAR|BL_PET)) {
+		skill_unit_move(bl,gettick(),4);
+		skill_cleartimerskill(bl);
+	}
 	// /BL_MOB is handled by mob_dead unless the monster is not dead.
 	if( bl->type != BL_MOB || !status_isdead(bl) )
 		clif_clearunit_area(bl,clrtype);

@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Custom Achievement Database
+# Renewal Achievement Database
 ###########################################################################
 #
 # Achievement Settings
@@ -967,63 +967,63 @@ Achievements:
     Name: "Prontera Contribution"
     Map: "prontera"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127002
     Group: "AG_CHATTING"
     Name: "Geffen Contribution"
     Map: "geffen"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127003
     Group: "AG_CHATTING"
     Name: "Morocc Contribution"
     Map: "morocc"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127004
     Group: "AG_CHATTING"
     Name: "Payon Contribution"
     Map: "payon"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127005
     Group: "AG_CHATTING"
     Name: "Yuno Contribution"
     Map: "yuno"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127006
     Group: "AG_CHATTING"
     Name: "Lighthalzen Contribution"
     Map: "lighthalzen"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127007
     Group: "AG_CHATTING"
     Name: "Einbroch Contribution"
     Map: "einbroch"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127008
     Group: "AG_CHATTING"
     Name: "Rachel Contribution"
     Map: "rachel"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 127009
     Group: "AG_CHATTING"
     Name: "Veins Contribution"
     Map: "veins"
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 10
   - ID: 128000
     Group: "AG_BATTLE"
@@ -1729,7 +1729,7 @@ Achievements:
     Name: "Magic Insanity"
     Condition: " bInt >= 125 "
     Reward:
-      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,SI_STEAMPACK; "
+      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,EFST_STEAMPACK; "
     Score: 20
   - ID: 200025
     Group: "AG_GOAL_STATUS"
@@ -1778,10 +1778,17 @@ Achievements:
   - ID: 200031
     Group: "AG_JOB_CHANGE"
     Name: "Reborn in Valhalla!"
-    Condition: " BaseLevel == 99 && Class == JOB_NOVICE_HIGH "
+    Condition: " Class == JOB_NOVICE_HIGH "
     Reward:
-      ItemID: 22808
+    #  ItemID: 23575
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - ID: 200032
+    Group: "AG_GOAL_LEVEL"
+    Name: "The start of another adventure!"
+    Condition: " BaseLevel == 100 "
+    #Reward:
+    #  ItemID: 23585
     Score: 10
   - ID: 230100
     Group: "AG_TAMING"
@@ -2046,35 +2053,35 @@ Achievements:
     Name: "Activating the market economy (1)"
     Condition: " ARG0 >= 10000 "
     Target:
-      Count: 10000
+      - Count: 10000
     Score: 10
   - ID: 220010
     Group: "AG_SPEND_ZENY"
     Name: "Activating the market economy (2)"
     Condition: " ARG0 >= 100000 "
     Target:
-      Count: 100000
+      - Count: 100000
     Score: 15
   - ID: 220011
     Group: "AG_SPEND_ZENY"
     Name: "Activating the market economy (3)"
     Condition: " ARG0 >= 500000 "
     Target:
-      Count: 500000
+      - Count: 500000
     Score: 20
   - ID: 220012
     Group: "AG_SPEND_ZENY"
     Name: "Activating the market economy (4)"
     Condition: " ARG0 >= 1000000 "
     Target:
-      Count: 1000000
+      - Count: 1000000
     Score: 30
   - ID: 220013
     Group: "AG_SPEND_ZENY"
     Name: "Activating the market economy (5)"
     Condition: " ARG0 >= 5000000 "
     Target:
-      Count: 5000000
+      - Count: 5000000
     Score: 50
   - ID: 220014
     Group: "AG_ENCHANT_SUCCESS"
@@ -2220,7 +2227,7 @@ Achievements:
         Count: 1
       - MobID: 1120
         Count: 1
-    Score: 15
+    Score: 20
   - ID: 230203
     Group: "AG_BATTLE"
     Name: "Exploring Poring's life (3)"
@@ -2397,11 +2404,3 @@ Achievements:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1024
     Score: 10
-  - ID: 220036
-    Group: "AG_EAT"
-    Name: "The beginning of outdoor"
-    Score: 20
-  - ID: 220037
-    Group: "AG_EAT"
-    Name: "The first step becoming a chef"
-    Score: 20

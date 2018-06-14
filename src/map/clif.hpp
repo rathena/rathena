@@ -4,9 +4,11 @@
 #ifndef _CLIF_HPP_
 #define _CLIF_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h" //dbmap
-#include "../common/mmo.h"
+#include <stdarg.h>
+
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp" //dbmap
+#include "../common/mmo.hpp"
 
 struct Channel;
 struct clan;
@@ -33,7 +35,6 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
-#include <stdarg.h>
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -235,96 +236,96 @@ enum broadcast_flags : uint8_t {
 };
 
 enum emotion_type {
-	E_GASP = 0,     // /!
-	E_WHAT,         // /?
-	E_HO,
-	E_LV,
-	E_SWT,
-	E_IC,
-	E_AN,
-	E_AG,
-	E_CASH,         // /$
-	E_DOTS,         // /...
-	E_SCISSORS,     // /gawi --- 10
-	E_ROCK,         // /bawi
-	E_PAPER,        // /bo
-	E_KOREA,
-	E_LV2,
-	E_THX,
-	E_WAH,
-	E_SRY,
-	E_HEH,
-	E_SWT2,
-	E_HMM,          // --- 20
-	E_NO1,
-	E_NO,           // /??
-	E_OMG,
-	E_OH,
-	E_X,
-	E_HLP,
-	E_GO,
-	E_SOB,
-	E_GG,
-	E_KIS,          // --- 30
-	E_KIS2,
-	E_PIF,
-	E_OK,
-	E_MUTE,         // red /... used for muted characters
-	E_INDONESIA,
-	E_BZZ,          // /bzz, /stare
-	E_RICE,
-	E_AWSM,         // /awsm, /cool
-	E_MEH,
-	E_SHY,          // --- 40
-	E_PAT,          // /pat, /goodboy
-	E_MP,           // /mp, /sptime
-	E_SLUR,
-	E_COM,          // /com, /comeon
-	E_YAWN,         // /yawn, /sleepy
-	E_GRAT,         // /grat, /congrats
-	E_HP,           // /hp, /hptime
-	E_PHILIPPINES,
-	E_MALAYSIA,
-	E_SINGAPORE,    // --- 50
-	E_BRAZIL,
-	E_FLASH,        // /fsh
-	E_SPIN,         // /spin
-	E_SIGH,
-	E_DUM,          // /dum
-	E_LOUD,         // /crwd
-	E_OTL,          // /otl, /desp
-	E_DICE1,
-	E_DICE2,
-	E_DICE3,        // --- 60
-	E_DICE4,
-	E_DICE5,
-	E_DICE6,
-	E_INDIA,
-	E_LUV,          // /love
-	E_RUSSIA,
-	E_VIRGIN,
-	E_MOBILE,
-	E_MAIL,
-	E_CHINESE,      // --- 70
-	E_ANTENNA1,
-	E_ANTENNA2,
-	E_ANTENNA3,
-	E_HUM,
-	E_ABS,
-	E_OOPS,
-	E_SPIT,
-	E_ENE,
-	E_PANIC,
-	E_WHISP,        // --- 80
-	E_YUT1,
-	E_YUT2,
-	E_YUT3,
-	E_YUT4,
-	E_YUT5,
-	E_YUT6,
-	E_YUT7,
+	ET_SURPRISE = 0,	// /!
+	ET_QUESTION,		// /?
+	ET_DELIGHT,
+	ET_THROB,
+	ET_SWEAT,
+	ET_AHA,
+	ET_FRET,
+	ET_ANGER,
+	ET_MONEY,			// /$
+	ET_THINK,			// /...
+	ET_SCISSOR,     	// /gawi --- 10
+	ET_ROCK,        	// /bawi
+	ET_WRAP,       		// /bo
+	ET_FLAG,
+	ET_BIGTHROB,
+	ET_THANKS,
+	ET_KEK,
+	ET_SORRY,
+	ET_SMILE,
+	ET_PROFUSELY_SWEAT,
+	ET_SCRATCH,			// --- 20
+	ET_BEST,
+	ET_STARE_ABOUT,		// /??
+	ET_HUK,
+	ET_O,
+	ET_X,
+	ET_HELP,
+	ET_GO,
+	ET_CRY,
+	ET_KIK,
+	ET_CHUP,			// --- 30
+	ET_CHUPCHUP,
+	ET_HNG,
+	ET_OK,
+	ET_CHAT_PROHIBIT,	// red /... used for muted characters
+	ET_INDONESIA_FLAG,
+	ET_STARE,			// /bzz, /stare
+	ET_HUNGRY,
+	ET_COOL,			// /awsm, /cool
+	ET_MERONG,
+	ET_SHY,				// --- 40
+	ET_GOODBOY,			// /pat, /goodboy
+	ET_SPTIME,			// /mp, /sptime
+	ET_SEXY,
+	ET_COMEON,			// /com, /comeon
+	ET_SLEEPY,			// /yawn, /sleepy
+	ET_CONGRATULATION,	// /grat, /congrats
+	ET_HPTIME,			// /hp, /hptime
+	ET_PH_FLAG,
+	ET_MY_FLAG,
+	ET_SI_FLAG,			// --- 50
+	ET_BR_FLAG,
+	ET_SPARK,			// /fsh
+	ET_CONFUSE,			// /spin
+	ET_OHNO,
+	ET_HUM,				// /dum
+	ET_BLABLA,			// /crwd
+	ET_OTL,				// /otl, /desp
+	ET_DICE1,
+	ET_DICE2,
+	ET_DICE3,			// --- 60
+	ET_DICE4,
+	ET_DICE5,
+	ET_DICE6,
+	ET_INDIA_FLAG,
+	ET_LUV,				// /love
+	ET_FLAG8,
+	ET_FLAG9,
+	ET_MOBILE,
+	ET_MAIL,
+	ET_ANTENNA0,		// --- 70
+	ET_ANTENNA1,
+	ET_ANTENNA2,
+	ET_ANTENNA3,
+	ET_HUM2,
+	ET_ABS,
+	ET_OOPS,
+	ET_SPIT,
+	ET_ENE,
+	ET_PANIC,
+	ET_WHISP,			// --- 80
+	ET_YUT1,
+	ET_YUT2,
+	ET_YUT3,
+	ET_YUT4,
+	ET_YUT5,
+	ET_YUT6,
+	ET_YUT7,
 	//
-	E_MAX
+	ET_MAX
 };
 
 enum clr_type : uint8_t 
@@ -535,6 +536,13 @@ enum e_damage_type : uint8_t {
 	DMG_TOUCH,				/// (touch skill?)
 };
 
+enum e_config_type : uint32 {
+	CONFIG_OPEN_EQUIPMENT_WINDOW = 0,
+	// Unknown
+	CONFIG_PET_AUTOFEED = 2,
+	CONFIG_HOMUNCULUS_AUTOFEED
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -687,7 +695,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3);
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
-void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
+void clif_wis_message(struct map_session_data* sd, const char* nick, const char* mes, int mes_len, int gmlvl);
 void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
@@ -861,7 +869,7 @@ void clif_homskillup(struct map_session_data *sd, uint16 skill_id);	//[orn]
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
 
-void clif_equiptickack(struct map_session_data* sd, int flag);
+void clif_configuration( struct map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_partytickack(struct map_session_data* sd, bool flag);
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd);
 void clif_equipcheckbox(struct map_session_data* sd);
@@ -1023,6 +1031,7 @@ void clif_clan_leave( struct map_session_data* sd );
 void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_open(struct map_session_data* sd);
 
 /**
  * Color Table
@@ -1055,7 +1064,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 void clif_merge_item_open(struct map_session_data *sd);
 
-void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
@@ -1064,7 +1073,6 @@ void clif_SelectCart(struct map_session_data *sd);
 /// Achievement System
 void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
-void clif_pAchievementCheckReward(int fd, struct map_session_data *sd);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
 #endif /* _CLIF_HPP_ */

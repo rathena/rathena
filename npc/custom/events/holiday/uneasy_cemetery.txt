@@ -63,7 +63,7 @@ L_Start_Undead:
 	monster "prontera",268,349,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
 	monster "prontera",269,350,"Ghoul",1036,5,"Uneasy_Check::OnZombieDead";
 //announce
-	mapannounce "prontera","[Mother Mathana]: The cememtery has become restless!  In the name of Odin, hurry to the Sanctuary! Save the city of Prontera!",0;
+	mapannounce "prontera","[Mother Mathana]: The cemetery has become restless!  In the name of Odin, hurry to the Sanctuary! Save the city of Prontera!",0;
 }
 
 prontera,257,313,5	script	Mother Mathana	79,{
@@ -72,14 +72,14 @@ prontera,257,313,5	script	Mother Mathana	79,{
 	mes "I'm afraid there's something wrong with our old cemetery...";
 	if ($UNEASY_H$==strcharinfo(0)) mes "But thanks to you, "+$UNEASY_H$+", we'll be able to sleep " + $UNEASY_DL + " nights!";
 	if ($UNEASY_H$!=strcharinfo(0)) mes "But thanks to "+$UNEASY_H$+"'s support, we've got " + $UNEASY_DL + " easy nights!";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	close;
 
 L_Undead_Walk:
 	if ($UNEASY_DL == 0) mes "THEY could return tomorrow's night again!";
 	if ($UNEASY_DL == 0 && $UNEASY_H$==strcharinfo(0)) mes "Thank you, "+$UNEASY_H$+"! Now we'll manage to rest till the next midnight!";
 	if ($UNEASY_DL == 0 && $UNEASY_H$!=strcharinfo(0)) mes "But due to "+$UNEASY_H$+"'s help we'll manage to rest till the next midnight!";
-	mes "To calm down the restless cemetery, we should pour all these graves with the Holy Water. But our sisters and broters have run out of it.";
+	mes "To calm down the restless cemetery, we should pour all these graves with the Holy Water. But our sisters and brothers have run out of it.";
 	mes "Could you supply us with Holy Water?";
 	next;
 	menu "Yes, have all my Holy Water!",-, "Nope, I need it.",M_NO, "I don't have any.",M_DONT_HAVE;
@@ -105,7 +105,7 @@ L_Undead_Walk:
 	mes "[Mother Mathana]";
 	mes "Our Church is going to thank you personally...";
 	next;
-	if (Sex==SEX_MALE) mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare handsom "+$UNEASY_H$+" as a Prontera savior!",0;
+	if (Sex==SEX_MALE) mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare handsome "+$UNEASY_H$+" as a Prontera savior!",0;
 	else mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare beautiful "+$UNEASY_H$+" as a Prontera savior!",0;
 	mes "[Mother Mathana]";
 	mes "In the name of Odin we bless you and decently present a modest gift just from Mareusis' wine-cellar.";

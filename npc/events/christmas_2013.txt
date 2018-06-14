@@ -399,20 +399,20 @@ xmas,108,149,5	script	Drop Machine#xmas	562,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Drop Machine]";
 		mes "Dingding dong Ding!~";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Slot Machine]";
 		mes "!~";
-		emotion e_lv,0,"Slot Machine#xmas";
+		emotion ET_THROB, getnpcid(0, "Slot Machine#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Drop Machine]";
 		mes "Dingdingding ding!~";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Slot Machine]";
 		mes "Charrrrr Sharrrrrrrr Ding!~";
-		emotion e_lv,0,"Slot Machine#xmas";
+		emotion ET_THROB, getnpcid(0, "Slot Machine#xmas");
 		next;
 		mes "- Oh no, another couple!";
 		mes "- Even though they're just machines...";
@@ -469,20 +469,20 @@ xmas,181,150,5	script	Frightened Man#xmas	711,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Frightened Man]";
 		mes "It's my fault, I'm sorry. Please don't be mad.";
-		emotion e_sry;
+		emotion ET_SORRY;
 		next;
 		mes "[Angry Woman]";
 		mes "You're sorry? Do you know what you did? Do you have any idea why I'm mad?";
-		emotion e_an,0,"Angry Woman#xmas";
+		emotion ET_FRET, getnpcid(0, "Angry Woman#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Frightened Man]";
 		mes "It's my bad, I'm sorry. Please don't be mad";
-		emotion e_sry;
+		emotion ET_SORRY;
 		next;
 		mes "[Angry Woman]";
 		mes "You're sorry? Do you know what you did? Do you have any idea why I'm mad?";
-		emotion e_an,0,"Angry Woman#xmas";
+		emotion ET_FRET, getnpcid(0, "Angry Woman#xmas");
 		next;
 		mes "[Frightened Man]";
 		mes "Well, I just feel like everything's my fault";
@@ -580,20 +580,20 @@ xmas_in,32,99,5	script	Singles Union Kwami	10089,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Singles Union Kwami]";
 		mes "Rinka. It's a huge mystery how such a pretty girl like you ended up in this Singles Union Army.";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Singles Union Rinka]";
 		mes "You think I'm pretty? hoho... It's mystery for me too, that a handsome man like you joined the Singles Union Army.";
-		emotion e_lv,0,"Singles Union Rinka";
+		emotion ET_THROB, getnpcid(0, "Singles Union Rinka");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Singles Union Kwami]";
 		mes "Rinka. It's a huge mystery how such a pretty girl like you ended up in this Singles Union Army.";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Singles Union Rinka]";
 		mes "You think I'm pretty? hoho... It's mystery for me too, that a handsome man like you joined the Singles Union Army.";
-		emotion e_lv,0,"Singles Union Rinka";
+		emotion ET_THROB, getnpcid(0, "Singles Union Rinka");
 		next;
 		mes "[Singles Union Kwami]";
 		mes "Well, isn't it a shame we should spend Christmas alone? What do you say, Rinka, you and me...";
@@ -640,22 +640,22 @@ xmas,156,109,5	script	Poor Alchemist#xmas	749,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Poor Alchemist]";
 		mes "Oh, hello.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Florist]";
 		mes "Hello, Mr. Alchemist.";
 		mes "Are you working today, too?";
-		emotion e_ho,0,"Florist#xmas";
+		emotion ET_DELIGHT, getnpcid(0, "Florist#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Poor Alchemist]";
 		mes "Oh, hello.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Florist]";
 		mes "Hello, Mr. Alchemist.";
 		mes "Are you working today, too?";
-		emotion e_ho,0,"Florist#xmas";
+		emotion ET_DELIGHT, getnpcid(0, "Florist#xmas");
 		next;
 		mes "[Poor Alchemist]";
 		mes "Actually, I have something to tell you.";
@@ -768,22 +768,22 @@ xmas,166,164,5	script	Raffini Boy#xmas	443,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Raffini Boy]";
 		mes "This is Lutie village...";
-		emotion e_no;
+		emotion ET_STARE_ABOUT;
 		next;
 		mes "[Raffini Girl]";
 		mes "So much beautiful white snow flakes.";
 		mes "But it's too cold here...";
-		emotion e_sob,0,"Raffini Girl#xmas";
+		emotion ET_CRY, getnpcid(0, "Raffini Girl#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Raffini Boy]";
 		mes "This is Lutie village...";
-		emotion e_no;
+		emotion ET_STARE_ABOUT;
 		next;
 		mes "[Raffini Girl]";
 		mes "So much beautiful white snow flakes.";
 		mes "But it's too cold here...";
-		emotion e_sob,0,"Raffini Girl#xmas";
+		emotion ET_CRY, getnpcid(0, "Raffini Girl#xmas");
 		next;
 		mes "[Raffini Boy]";
 		mes "But it's you who wanted to see the snow this Christmas.";
@@ -865,20 +865,20 @@ xmas,147,123,5	script	Angeling#xmas	948,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Angeling]";
 		mes "Kkuing~";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Arc Angeling]";
 		mes "Kkuing Kkuing~";
-		emotion e_lv,0,"Arc Angeling#xmas";
+		emotion ET_THROB, getnpcid(0, "Arc Angeling#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Angeling]";
 		mes "Kkuing~";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Arc Angeling]";
 		mes "Kkuing Kkuing~";
-		emotion e_lv,0,"Arc Angeling#xmas";
+		emotion ET_THROB, getnpcid(0, "Arc Angeling#xmas");
 		next;
 		mes "- I cannot bother them though.";
 		mes "- Can't even talk to them,";
@@ -905,11 +905,11 @@ xmas,129,115,5	script	Prenetan#xmas	783,{
 		next;
 		mes "[Prenetan]";
 		mes "Finally got you, huh? You are cheating on me until now and even made me chase after you? I'll kill you boy!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Umpoucoriotan]";
 		mes "Ooohh... my wife is too violent. Ohh...it hurts!";
-		emotion e_sob,0,"Umpoucoriotan#xmas";
+		emotion ET_CRY, getnpcid(0, "Umpoucoriotan#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Prenetan]";
@@ -918,11 +918,11 @@ xmas,129,115,5	script	Prenetan#xmas	783,{
 		next;
 		mes "[Prenetan]";
 		mes "Finally got you, huh? You are cheating on me until now and even made me chase after you? I'll kill you boy!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Umpoucoriotan]";
 		mes "Ooohh... my wife is too violent. Ohh...it hurts!";
-		emotion e_sob,0,"Umpoucoriotan#xmas";
+		emotion ET_CRY, getnpcid(0, "Umpoucoriotan#xmas");
 		next;
 		mes "[Umpoucoriotan]";
 		mes "Wenathan, berzthan, Chabimathan";
@@ -985,20 +985,20 @@ xmas,138,174,5	script	Dark Lord#xmas	737,{
 	if (isbegin_quest(15056) == 0) {
 		mes "[Dark Lord]";
 		mes "Whahahahaha the world will turn into darkness soon and everyone will kneel down before me!!";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Succubus]";
 		mes "My master. All worlds will follow your will.";
-		emotion e_lv,0,"Succubus#xmas";
+		emotion ET_THROB, getnpcid(0, "Succubus#xmas");
 		close;
 	} else if (isbegin_quest(15056) == 1 && xmas2013_01 < 5) {
 		mes "[Dark Lord]";
 		mes "Whahahahaha the world will turn into darkness soon and everyone will kneel down before me!!";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Succubus]";
 		mes "My master. All worlds will follow your will.";
-		emotion e_lv,0,"Succubus#xmas";
+		emotion ET_THROB, getnpcid(0, "Succubus#xmas");
 		next;
 		mes "[Dark Lord]";
 		mes "You've been loyal to me even though I've been giving difficult orders. You deserve a reward. What do you want for now? I'll definitely make it for you. I can even give you more power!";

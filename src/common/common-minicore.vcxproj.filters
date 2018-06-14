@@ -11,106 +11,103 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cbasetypes.h">
+    <ClInclude Include="cbasetypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cli.h">
+    <ClInclude Include="cli.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="conf.h">
+    <ClInclude Include="conf.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core.h">
+    <ClInclude Include="core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="des.h">
+    <ClInclude Include="des.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="grfio.h">
+    <ClInclude Include="grfio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="malloc.h">
+    <ClInclude Include="malloc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mapindex.h">
+    <ClInclude Include="mapindex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="md5calc.h">
+    <ClInclude Include="md5calc.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mmo.h">
+    <ClInclude Include="mmo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="msg_conf.h">
+    <ClInclude Include="msg_conf.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="nullpo.h">
+    <ClInclude Include="nullpo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="raconf.h">
+    <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="random.h">
+    <ClInclude Include="showmsg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="showmsg.h">
+    <ClInclude Include="strlib.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="strlib.h">
+    <ClInclude Include="utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="winapi.h">
+    <ClInclude Include="winapi.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cli.c">
+    <ClCompile Include="cli.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="conf.c">
+    <ClCompile Include="conf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="des.c">
+    <ClCompile Include="des.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="grfio.c">
+    <ClCompile Include="grfio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="malloc.c">
+    <ClCompile Include="malloc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mapindex.c">
+    <ClCompile Include="mapindex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="md5calc.c">
+    <ClCompile Include="md5calc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="msg_conf.c">
+    <ClCompile Include="msg_conf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nullpo.c">
+    <ClCompile Include="nullpo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="raconf.c">
+    <ClCompile Include="random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="random.c">
+    <ClCompile Include="showmsg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="showmsg.c">
+    <ClCompile Include="strlib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="strlib.c">
+    <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utils.c">
+    <ClInclude Include="winapi.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
+    </ClInclude>
   </ItemGroup>
 </Project>
