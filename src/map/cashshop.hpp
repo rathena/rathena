@@ -4,10 +4,10 @@
 #ifndef _CASHSHOP_HPP_
 #define _CASHSHOP_HPP_
 
-#include "../common/cbasetypes.h" // uint16, uint32
-#include "../common/timer.h" // ShowWarning, ShowStatus
+#include "../common/cbasetypes.hpp" // uint16, uint32
+#include "../common/timer.hpp" // ShowWarning, ShowStatus
 
-#include "../config/core.h"
+#include "../config/core.hpp"
 
 struct map_session_data;
 

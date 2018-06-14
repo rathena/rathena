@@ -5,11 +5,11 @@
 
 #include <stdlib.h> // atoi
 
-#include "../common/nullpo.h"
-#include "../common/malloc.h" // aMalloc, aFree
-#include "../common/showmsg.h" // ShowInfo
-#include "../common/strlib.h"
-#include "../common/timer.h"  // DIFF_TICK
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp" // aMalloc, aFree
+#include "../common/showmsg.hpp" // ShowInfo
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"  // DIFF_TICK
 
 #include "buyingstore.hpp"
 #include "clif.hpp"

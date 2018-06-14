@@ -3,18 +3,21 @@
 
 #include "npc.hpp"
 
+#include <map>
+#include <vector>
+
 #include <stdlib.h>
 #include <errno.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
-#include "../common/db.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
+#include "../common/ers.hpp"
+#include "../common/db.hpp"
 
 #include "map.hpp"
 #include "log.hpp"
@@ -108,12 +111,13 @@ static DBMap *npc_path_db;
 static struct view_data npc_viewdb[MAX_NPC_CLASS];
 static struct view_data npc_viewdb2[MAX_NPC_CLASS2_END-MAX_NPC_CLASS2_START];
 
-static struct script_event_s
-{	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
-	struct event_data *event[UCHAR_MAX];
-	const char *event_name[EVENT_NAME_LENGTH];
-	uint8 event_count;
-} script_event[NPCE_MAX];
+struct script_event_s{
+	struct event_data *event;
+	const char *event_name;
+};
+
+// Holds pointers to the commonly executed scripts for speedup. [Skotlex]
+std::map<enum npce_event, std::vector<struct script_event_s>> script_event;
 
 struct view_data* npc_get_viewdata(int class_)
 {	//Returns the viewdata for normal npc classes.
@@ -263,7 +267,7 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 /**
- * For the Secure NPC Timeout option (check config/Secure.h) [RR]
+ * For the Secure NPC Timeout option (check src/config/secure.hpp) [RR]
  **/
 #ifdef SECURE_NPCTIMEOUT
 /**
@@ -4249,7 +4253,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			}
 		}
 #else
-		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
+		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.hpp). Skipping this mapflag..\n");
 #endif
 	}
 	else
@@ -4448,18 +4452,21 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 	return 1;
 }
 
-int npc_script_event(struct map_session_data* sd, enum npce_event type)
-{
-	int i;
+int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	if (type == NPCE_MAX)
 		return 0;
 	if (!sd) {
 		ShowError("npc_script_event: NULL sd. Event Type %d\n", type);
 		return 0;
 	}
-	for (i = 0; i<script_event[type].event_count; i++)
-		npc_event_sub(sd,script_event[type].event[i],script_event[type].event_name[i]);
-	return i;
+
+	std::vector<struct script_event_s>& vector = script_event[type];
+
+	for( struct script_event_s& evt : vector ){
+		npc_event_sub( sd, evt.event, evt.event_name );
+	}
+
+	return vector.size();
 }
 
 const char *npc_get_script_event_name(int npce_index)
@@ -4493,6 +4500,8 @@ void npc_read_event_script(void)
 {
 	int i;
 
+	script_event.clear();
+
 	for (i = 0; i < NPCE_MAX; i++)
 	{
 		DBIterator* iter;
@@ -4502,25 +4511,19 @@ void npc_read_event_script(void)
 
 		safesnprintf(name,EVENT_NAME_LENGTH,"::%s", npc_get_script_event_name(i));
 
-		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);
 		for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 		{
 			const char* p = key.str;
 			struct event_data* ed = (struct event_data*)db_data2ptr(data);
-			unsigned char count = script_event[i].event_count;
 
-			if( count >= ARRAYLENGTH(script_event[i].event) )
-			{
-				ShowWarning("npc_read_event_script: too many occurences of event '%s'!\n", npc_get_script_event_name(i));
-				break;
-			}
+			if( (p=strchr(p,':')) && strcmpi(name,p)==0 ){
+				struct script_event_s evt;
 
-			if( (p=strchr(p,':')) && p && strcmpi(name,p)==0 )
-			{
-				script_event[i].event[count] = ed;
-				script_event[i].event_name[count] = key.str;
-				script_event[i].event_count++;
+				evt.event = ed;
+				evt.event_name = key.str;
+
+				script_event[static_cast<enum npce_event>(i)].push_back(evt);
 			}
 		}
 		dbi_destroy(iter);
@@ -4529,7 +4532,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%d '%s' events.\n", script_event[i].event_count, npc_get_script_event_name(i));
+			ShowInfo("%d '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
 	}
 }
 
@@ -4686,6 +4689,7 @@ void do_clear_npc(void) {
  *------------------------------------------*/
 void do_final_npc(void) {
 	npc_clear_pathlist();
+	script_event.clear();
 	ev_db->destroy(ev_db, NULL);
 	npcname_db->destroy(npcname_db, NULL);
 	npc_path_db->destroy(npc_path_db, NULL);
@@ -4773,7 +4777,6 @@ void do_init_npc(void){
 		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	// set up the events cache
-	memset(script_event, 0, sizeof(script_event));
 	npc_read_event_script();
 
 #if PACKETVER >= 20131223

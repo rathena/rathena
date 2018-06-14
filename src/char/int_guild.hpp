@@ -4,7 +4,7 @@
 #ifndef _INT_GUILD_HPP_
 #define _INT_GUILD_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,

@@ -7,15 +7,17 @@
 #include <map>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/mmo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/utilities.hpp"
+
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/mmo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "log.hpp"
 #include "clif.hpp"
@@ -26,6 +28,8 @@
 #include "trade.hpp"
 #include "npc.hpp"
 
+using namespace rathena;
+
 std::map<uint16, struct s_mercenary_db> mercenary_db_data;
 
 /**
@@ -34,11 +38,7 @@ std::map<uint16, struct s_mercenary_db> mercenary_db_data;
  * @return A pointer to the mercenary db entry or nullptr if not found
  **/
 struct s_mercenary_db *mercenary_db( uint16 class_ ){
-	if( mercenary_db_data.find(class_) != mercenary_db_data.end() ){
-		return &mercenary_db_data.at(class_);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( mercenary_db_data, class_ );
 }
 
 /**

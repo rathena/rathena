@@ -6,16 +6,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/ers.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/ers.hpp"
+#include "../common/random.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "map.hpp"
 #include "path.hpp"
@@ -33,7 +33,7 @@
 #include "log.hpp"
 #include "pc_groups.hpp"
 
-int attr_fix_table[4][ELE_MAX][ELE_MAX];
+int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
@@ -1334,6 +1334,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if( sc->data[SC_SPL_DEF] && status_get_race2(src) == RC2_SPLENDIDE ){
 				damage -= damage * sc->data[SC_SPL_DEF]->val1 / 100;
 			}
+			if (sc->data[SC_GLASTHEIM_DEF] && status_get_race2(src) == RC2_OGH_ATK_DEF)
+				return 0;
+			if (sc->data[SC_GLASTHEIM_HIDDEN] && status_get_race2(src) == RC2_OGH_HIDDEN)
+				damage -= damage * sc->data[SC_GLASTHEIM_HIDDEN]->val1 / 100;
 		}
 
 		if((sce=sc->data[SC_ARMOR]) && //NPC_DEFENDER
@@ -1506,6 +1510,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				) {
 				damage += damage * sce->val1 / 100;
 			}
+			if (sc->data[SC_GLASTHEIM_ATK] && status_get_race2(bl) == RC2_OGH_ATK_DEF)
+				damage <<= 1;
 		}
 		/* Self Buff that destroys the armor of any target hit with melee or ranged physical attacks */
 		if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 1 && flag&BF_WEAPON ) {
@@ -6004,6 +6010,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case WL_JACKFROST:
+					case NPC_JACKFROST:
 						if (tsc && tsc->data[SC_FREEZING]) {
 							skillratio += 900 + 300 * skill_lv;
 							RE_LVL_DMOD(100);
@@ -6843,7 +6850,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	ssc = status_get_sc(src);
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if ( sd && sd->bonus.short_weapon_damage_return ) {
+		if ( (skill_get_inf2(skill_id)&INF2_TRAP || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			rdamage = i64max(rdamage,1);
 		} else if( status_reflect && sc && sc->count ) {
@@ -8499,6 +8506,7 @@ static const struct _battle_data {
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
+	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
 	{ "display_tax_info",                   &battle_config.display_tax_info,                0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"

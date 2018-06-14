@@ -8,10 +8,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
+#include "../common/utilities.hpp"
+
+#include "../common/cbasetypes.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
 
 #include "map.hpp" // struct map_session_data
 #include "chrif.hpp"
@@ -23,6 +25,8 @@
 #include "guild.hpp"
 #include "log.hpp"
 #include "battle.hpp"
+
+using namespace rathena;
 
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
@@ -562,11 +566,7 @@ struct s_storage *guild2storage(int guild_id)
  * @return s_storage or nullptr
  */
 struct s_storage *guild2storage2(int guild_id){
-	if( guild_storage_db.find(guild_id) != guild_storage_db.end() ){
-		return &guild_storage_db[guild_id];
-	}else{
-		return nullptr;
-	}
+	return util::map_find( guild_storage_db, guild_id );
 }
 
 /**

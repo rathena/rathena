@@ -4,8 +4,8 @@
 #ifndef	_VENDING_HPP_
 #define	_VENDING_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
 
 struct map_session_data;
 struct s_search_store_search;

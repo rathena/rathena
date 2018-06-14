@@ -164,7 +164,8 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 		cutin "ep143_tahuk.bmp",2;
 		npctalk "Tamarin: Then I will stay with Verity until she recovers so you can go on ahead.";
 		close2;
-		'protocole = 1;
+		if ('protocole == 0)
+			'protocole = 1;
 		cutin "",255;
 	}
 	end;

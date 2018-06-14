@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 
-#include "../common/mmo.h" // struct party
+#include "../common/mmo.hpp" // struct party
 
 struct block_list;
 struct map_session_data;

@@ -4,7 +4,7 @@
 #ifndef _STATUS_HPP_
 #define _STATUS_HPP_
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 enum e_race2 : uint8;
 struct block_list;
@@ -44,6 +44,8 @@ enum refine_cost_type {
 	REFINE_COST_HD,
 	REFINE_COST_ENRICHED,
 	REFINE_COST_OVER10_HD,
+	REFINE_COST_HOLINK,
+	REFINE_COST_WAGJAK,
 	REFINE_COST_MAX
 };
 
@@ -840,6 +842,15 @@ enum sc_type : int16 {
 
 	SC_CHEERUP,
 	SC_DRESSUP,
+
+	// Old Glast Heim Buffs
+	SC_GLASTHEIM_ATK,
+	SC_GLASTHEIM_DEF,
+	SC_GLASTHEIM_HEAL,
+	SC_GLASTHEIM_HIDDEN,
+	SC_GLASTHEIM_STATE,
+	SC_GLASTHEIM_ITEMDEF,
+	SC_GLASTHEIM_HPSP,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -2799,8 +2810,36 @@ enum efst_types : short{
 	EFST_MATK_POPCORN,
 	EFST_ASPD_POPCORN,
 	EFST_ULTIMATECOOK,
+	EFST_LIGHTOFMOON,
+	EFST_LIGHTOFSUN,
+	EFST_LIGHTOFSTAR,
+	EFST_LUNARSTANCE,
+	EFST_UNIVERSESTANCE,
+	EFST_SUNSTANCE,
+	EFST_FLASHKICK,
+	EFST_NEWMOON,
+	EFST_STARSTANCE,
+	EFST_DIMENSION,
+	EFST_DIMENSION1,
+	EFST_DIMENSION2,
+	EFST_CREATINGSTAR,
+	EFST_FALLINGSTAR,
+	EFST_NOVAEXPLOSING,
+	EFST_GRAVITYCONTROL,
 
-	EFST_INFINITY_DRINK = 1065,
+	EFST_SOULCOLLECT = 1053,
+	EFST_SOULREAPER,
+	EFST_SOULUNITY,
+	EFST_SOULSHADOW,
+	EFST_SOULFAIRY,
+	EFST_SOULFALCON,
+	EFST_SOULGOLEM,
+	EFST_SOULDIVISION,
+	EFST_SOULENERGY,
+	EFST_USE_SKILL_SP_SPA,
+	EFST_USE_SKILL_SP_SHA,
+	EFST_SP_SHA,
+	EFST_INFINITY_DRINK,
 	EFST_ABYSS_001,
 	EFST_ABYSS_002,
 	EFST_ABYSS_003,
@@ -3123,7 +3162,7 @@ struct status_data {
 #endif
 		aspd_rate;
 	/**
-	 * defType is RENEWAL dependent and defined in src/map/config/data/const.h
+	 * defType is RENEWAL dependent and defined in src/config/const.hpp
 	 **/
 	defType def,mdef;
 

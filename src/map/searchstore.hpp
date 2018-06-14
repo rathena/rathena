@@ -4,8 +4,8 @@
 #ifndef _SEARCHSTORE_HPP_
 #define _SEARCHSTORE_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 #include "map.hpp"
 

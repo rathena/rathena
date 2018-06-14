@@ -4654,7 +4654,7 @@ mora,119,103,4	script	Bow-wow#pa0829	513,{
 	close;
 }
 
-mora,119,118,4	script	General Good Dealer#pa0	516,{
+mora,119,118,4	script	General Goods Dealer#pa0	516,{
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;
@@ -4664,18 +4664,18 @@ mora,119,118,4	script	General Good Dealer#pa0	516,{
 		close;
 	}
 	if (ep14_1_mistwoods < 10) {
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "Hmm, you don't look reliable enough for Bow-wow's tasks.";
 		close;
 	}
 	if (BaseLevel < 97) {
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "What could you do with that fragile body? Go get some exercise.";
 		close;
 	}
 	set .@playtime, checkquest(12241,PLAYTIME);
 	if (.@playtime == -1) {
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "I see you haven't received";
 		mes "any tasks yet.";
 		mes "Go talk to Bow-wow,";
@@ -4683,13 +4683,13 @@ mora,119,118,4	script	General Good Dealer#pa0	516,{
 		mes "one of the countless tasks.";
 		close;
 	} else if (.@playtime == 2) {
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "The time is up to complete the existing tasks.";
 		next;
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "If you have any unfinished tasks in your quest log, they are considered 'failed' and removed from the log.";
 		next;
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "Once they are removed, go talk to Bow-wow and you can receive new tasks.";
 		for(set .@i,12231; .@i<=12235; set .@i,.@i+1) {
 			if (checkquest(.@i) > -1)
@@ -4698,12 +4698,12 @@ mora,119,118,4	script	General Good Dealer#pa0	516,{
 		erasequest 12241;
 		close;
 	}
-	mes "[General Good Dealer]";
+	mes "[General Goods Dealer]";
 	mes "Welcome.";
 	mes "How may I help you?";
 	next;
 	select("I have completed a task.");
-	mes "[General Good Dealer]";
+	mes "[General Goods Dealer]";
 	mes "Oh.";
 	mes "Have you?";
 	mes "Please wait a minute while I check the documents.";
@@ -4715,7 +4715,7 @@ mora,119,118,4	script	General Good Dealer#pa0	516,{
 	callsub L_CheckQuest,12234,931,3; //Orcish_Voucher
 	callsub L_CheckQuest,12235,932,3; //Skel_Bone
 
-	mes "[General Good Dealer]";
+	mes "[General Goods Dealer]";
 	mes "Hmm... "+strcharinfo(0)+".";
 	mes "It may be a documentation error, but according to the documents, you have nothing to do with the tasks.";
 	close;
@@ -4723,11 +4723,11 @@ mora,119,118,4	script	General Good Dealer#pa0	516,{
 L_CheckQuest:
 	if (checkquest(getarg(0)) > -1) {
 		if (countitem(getarg(1)) < getarg(2)) {
-			mes "[General Good Dealer]";
+			mes "[General Goods Dealer]";
 			mes "The amount is not enough...";
 			close;
 		}
-		mes "[General Good Dealer]";
+		mes "[General Goods Dealer]";
 		mes "I've received the items all right. It will be some time before I have another task for you, so why don't you visit the hot spring and relax?";
 		delitem getarg(1),getarg(2);
 		erasequest getarg(0);

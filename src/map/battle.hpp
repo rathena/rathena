@@ -4,10 +4,10 @@
 #ifndef _BATTLE_HPP_
 #define _BATTLE_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
-#include "../config/core.h"
+#include "../config/core.hpp"
 
 #include "map.hpp" //ELE_MAX
 
@@ -83,7 +83,7 @@ struct Damage {
 };
 
 //(Used in read pc.c,) attribute table (battle_attr_fix)
-extern int attr_fix_table[4][ELE_MAX][ELE_MAX];
+extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 // Damage Calculation
 
@@ -643,6 +643,7 @@ struct Battle_Config
 	int skill_drop_items_full;
 	int feature_homunculus_autofeed;
 	int summoner_trait;
+	int homunculus_autofeed_always;
 	int display_tax_info;
 
 #include "../custom/battle_config_struct.inc"

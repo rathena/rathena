@@ -6,9 +6,9 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h" //dbmap
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp" //dbmap
+#include "../common/mmo.hpp"
 
 struct Channel;
 struct clan;
@@ -1074,7 +1074,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 void clif_merge_item_open(struct map_session_data *sd);
 
-void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );

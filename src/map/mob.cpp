@@ -7,17 +7,19 @@
 #include <map>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/db.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/ers.h"
-#include "../common/random.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/socket.h"
+#include "../common/utilities.hpp"
+
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/db.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/ers.hpp"
+#include "../common/random.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
+#include "../common/socket.hpp"
 
 #include "map.hpp"
 #include "path.hpp"
@@ -39,6 +41,8 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+
+using namespace rathena;
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
@@ -76,11 +80,7 @@
 //Dynamic mob database
 std::map<uint16, struct mob_db> mob_db_data;
 struct mob_db *mob_db( int mob_id ){
-	if( mob_db_data.find( mob_id ) != mob_db_data.end() ){
-		return &mob_db_data.at(mob_id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( mob_db_data, (uint16)mob_id );
 }
 
 // holds Monster Spawn informations
@@ -89,11 +89,7 @@ std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 //Dynamic mob chat database
 std::map<short,struct mob_chat> mob_chat_db;
 struct mob_chat *mob_chat(short id) {
-	if( mob_chat_db.find(id) != mob_chat_db.end() ){
-		return &mob_chat_db.at(id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( mob_chat_db, id );
 }
 
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
