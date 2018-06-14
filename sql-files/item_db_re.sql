@@ -11257,6 +11257,8 @@ REPLACE INTO `item_db_re` VALUES (23192,'Diamond_Dust_Scroll_1_5','Level 5 Diamo
 REPLACE INTO `item_db_re` VALUES (23193,'Crimson_Rock_Scroll_1_5','Level 5 Crimson Rock',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "WL_CRIMSONROCK",5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (23194,'Sienna_Execrate_Scroll_1_5','Level 5 Sienna Execrate',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "WL_SIENNAEXECRATE",5,true;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (23196,'Agust_Lucky_Scroll','Shining Blue Lucky Egg',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,'getgroupitem(IG_Agust_Lucky_Scroll);',NULL,NULL);
+#
+REPLACE INTO `item_db_re` VALUES (23277,'Mado_Box','Emergency Magic Gear',2,10000,NULL,3000,NULL,NULL,NULL,NULL,0x00000400,56,2,NULL,NULL,'100',NULL,NULL,'setmadogear 1;',NULL,NULL);
 #===================================================================
 # Shadow Equipments
 #===================================================================
