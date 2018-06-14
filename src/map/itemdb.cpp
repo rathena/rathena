@@ -5,12 +5,12 @@
 
 #include <stdlib.h>
 
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"

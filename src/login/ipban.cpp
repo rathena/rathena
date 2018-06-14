@@ -13,11 +13,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
-#include "../common/sql.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 #include "login.hpp"
 #include "loginlog.hpp"
 

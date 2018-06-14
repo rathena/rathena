@@ -4,10 +4,10 @@
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
-#include "../config/core.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/msg_conf.h"
-#include "../common/mmo.h"
+#include "../config/core.hpp"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/msg_conf.hpp"
+#include "../common/mmo.hpp"
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor

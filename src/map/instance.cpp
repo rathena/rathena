@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
 
 #include "clan.hpp"
 #include "clif.hpp"

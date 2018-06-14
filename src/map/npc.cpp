@@ -9,15 +9,15 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
-#include "../common/db.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
+#include "../common/ers.hpp"
+#include "../common/db.hpp"
 
 #include "map.hpp"
 #include "log.hpp"
@@ -267,7 +267,7 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 /**
- * For the Secure NPC Timeout option (check config/Secure.h) [RR]
+ * For the Secure NPC Timeout option (check src/config/secure.hpp) [RR]
  **/
 #ifdef SECURE_NPCTIMEOUT
 /**
@@ -4253,7 +4253,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			}
 		}
 #else
-		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
+		ShowInfo("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.hpp). Skipping this mapflag..\n");
 #endif
 	}
 	else

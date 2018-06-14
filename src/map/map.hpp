@@ -6,26 +6,14 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/mmo.h"
-#include "../common/mapindex.h"
-#include "../common/db.h"
-#include "../common/msg_conf.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/mmo.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/db.hpp"
+#include "../common/msg_conf.hpp"
 
-#include "../config/core.h"
-
-extern "C" {
-	//Options read in cli (c-linkage for now)
-	extern const char*INTER_CONF_NAME;
-	extern const char*LOG_CONF_NAME;
-	extern const char*MAP_CONF_NAME;
-	extern const char*BATTLE_CONF_FILENAME;
-	extern const char*ATCOMMAND_CONF_FILENAME;
-	extern const char*SCRIPT_CONF_NAME;
-	extern const char*MSG_CONF_NAME_EN;
-	extern const char*GRF_PATH_FILENAME;
-}
+#include "../config/core.hpp"
 
 struct npc_data;
 struct item_data;
@@ -184,6 +172,7 @@ enum e_mapid {
 	MAPID_ARCH_BISHOP,
 	MAPID_MECHANIC,
 	MAPID_GUILLOTINE_CROSS,
+	MAPID_STAR_EMPEROR,
 //3-2 Jobs
 	MAPID_ROYAL_GUARD = JOBL_THIRD|MAPID_CRUSADER,
 	MAPID_SORCERER,
@@ -191,6 +180,7 @@ enum e_mapid {
 	MAPID_SURA,
 	MAPID_GENETIC,
 	MAPID_SHADOW_CHASER,
+	MAPID_SOUL_REAPER,
 //Trans 3-1 Jobs
 	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|MAPID_LORD_KNIGHT,
 	MAPID_WARLOCK_T,
@@ -213,6 +203,7 @@ enum e_mapid {
 	MAPID_BABY_BISHOP,
 	MAPID_BABY_MECHANIC,
 	MAPID_BABY_CROSS,
+	MAPID_BABY_STAR_EMPEROR,
 //Baby 3-2 Jobs
 	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
@@ -220,6 +211,7 @@ enum e_mapid {
 	MAPID_BABY_SURA,
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_CHASER,
+	MAPID_BABY_SOUL_REAPER,
 };
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
@@ -966,25 +958,7 @@ typedef struct elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-
-#ifdef BETA_THREAD_TEST
-
-extern char default_codepage[32];
-extern int map_server_port;
-extern char map_server_ip[32];
-extern char map_server_id[32];
-extern char map_server_pw[32];
-extern char map_server_db[32];
-
-extern char log_db_ip[32];
-extern int log_db_port;
-extern char log_db_id[32];
-extern char log_db_pw[32];
-extern char log_db_db[32];
-
-#endif
-
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 extern int db_use_sqldbs;
 

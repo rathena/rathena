@@ -10,12 +10,12 @@
 #include <setjmp.h>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
 #include "chrif.hpp"

@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/showmsg.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/socket.hpp"
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "achievement.hpp"
 #include "map.hpp"

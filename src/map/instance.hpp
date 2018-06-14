@@ -10,8 +10,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // struct point
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // struct point
 
 #include "script.hpp" // struct reg_db
 

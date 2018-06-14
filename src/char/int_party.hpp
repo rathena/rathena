@@ -4,7 +4,7 @@
 #ifndef _INT_PARTY_HPP_
 #define _INT_PARTY_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 //Party Flags on what to save/delete.
 enum e_PartySaveWhatFlag {

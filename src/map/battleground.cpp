@@ -3,12 +3,12 @@
 
 #include "battleground.hpp"
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
 
 #include "battle.hpp"
 #include "clif.hpp"

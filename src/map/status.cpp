@@ -9,15 +9,15 @@
 #include <functional>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/malloc.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/malloc.hpp"
+#include "../common/utils.hpp"
+#include "../common/ers.hpp"
+#include "../common/strlib.hpp"
 
 #include "battle.hpp"
 #include "itemdb.hpp"
@@ -6474,7 +6474,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_GLASTHEIM_ITEMDEF])
 		def += sc->data[SC_GLASTHEIM_ITEMDEF]->val1;
 
-	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
+	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
 /**

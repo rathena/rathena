@@ -4,7 +4,7 @@
 #ifndef _PATH_HPP_
 #define _PATH_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 enum cell_chk : uint8;
 

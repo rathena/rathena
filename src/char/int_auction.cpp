@@ -7,13 +7,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "../common/mmo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/sql.h"
-#include "../common/timer.h"
+#include "../common/mmo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/sql.hpp"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
