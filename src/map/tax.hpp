@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #pragma once
 

@@ -7,9 +7,9 @@
 #include <string.h>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
 
 #include "battle.hpp"
 #include "buyingstore.hpp"
