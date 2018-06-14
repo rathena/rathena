@@ -9,6 +9,8 @@
 #include <string.h>
 #include <time.h>
 
+#define FREED_POINTER 0xdeadbeafL
+
 ////////////// Memory Libraries //////////////////
 
 #if defined(MEMWATCH)
@@ -255,7 +257,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 				p->next = unit_head_large_first;
 			}
 			unit_head_large_first = p;
-			*(long*)((char*)p + sizeof(struct unit_head_large) - sizeof(long) + size) = 0xdeadbeaf;
+			*(long*)((char*)p + sizeof(struct unit_head_large) - sizeof(long) + size) = FREED_POINTER;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(long);
 		} else {
 			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %d+%d bytes at %s:%d).\n", sizeof(struct unit_head_large), size, file, line);
@@ -322,7 +324,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	head->file  = file;
 	head->line  = line;
 	head->size  = (unsigned short)size;
-	*(long*)((char*)head + sizeof(struct unit_head) - sizeof(long) + size) = 0xdeadbeaf;
+	*(long*)((char*)head + sizeof(struct unit_head) - sizeof(long) + size) = FREED_POINTER;
 	return (char *)head + sizeof(struct unit_head) - sizeof(long);
 }
 
@@ -382,8 +384,8 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 		/* area that is directly secured by malloc () */
 		struct unit_head_large *head_large = (struct unit_head_large *)((char *)ptr - sizeof(struct unit_head_large) + sizeof(long));
 		if(
-			*(size_t*)((char*)head_large + sizeof(struct unit_head_large) - sizeof(long) + head_large->size)
-			!= 0xdeadbeaf)
+			*(long*)((char*)head_large + sizeof(struct unit_head_large) - sizeof(long) + head_large->size)
+			!= FREED_POINTER)
 		{
 			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
 		} else {
@@ -410,7 +412,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			ShowError("Memory manager: args of aFree 0x%p is invalid pointer %s line %d\n", ptr, file, line);
 		} else if(head->block == NULL) {
 			ShowError("Memory manager: args of aFree 0x%p is freed pointer %s:%d@%s\n", ptr, file, line, func);
-		} else if(*(size_t*)((char*)head + sizeof(struct unit_head) - sizeof(long) + head->size) != 0xdeadbeaf) {
+		} else if(*(long*)((char*)head + sizeof(struct unit_head) - sizeof(long) + head->size) != FREED_POINTER) {
 			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
 		} else {
 			memmgr_usage_bytes -= head->size;
