@@ -137,12 +137,11 @@ void mapindex_init(void) {
 		"map_index.txt",
 		DBIMPORT"/map_index.txt"
 	};
-	int i;
 
 	memset (&indexes, 0, sizeof (indexes));
 	mapindex_db = strdb_alloc(DB_OPT_DUP_KEY, MAP_NAME_LENGTH);
 
-	for( i = 0; i < ARRAYLENGTH(mapindex_cfgfile); i++ ){
+	for( size_t i = 0; i < ARRAYLENGTH(mapindex_cfgfile); i++ ){
 		sprintf( path, "%s/%s", db_path, mapindex_cfgfile[i] );
 
 		if( ( fp = fopen( path, "r" ) ) == NULL ){

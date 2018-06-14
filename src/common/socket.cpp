@@ -239,7 +239,7 @@ struct socket_data* session[FD_SETSIZE];
 
 #ifdef SEND_SHORTLIST
 int send_shortlist_array[FD_SETSIZE];// we only support FD_SETSIZE sockets, limit the array to that
-int send_shortlist_count = 0;// how many fd's are in the shortlist
+size_t send_shortlist_count = 0;// how many fd's are in the shortlist
 uint32 send_shortlist_set[(FD_SETSIZE+31)/32];// to know if specific fd's are already in the shortlist
 #endif
 
@@ -1391,7 +1391,7 @@ int socket_getips(uint32* ips, int max)
 
 void socket_init(void)
 {
-	char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
+	const char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
 	unsigned int rlim_cur = FD_SETSIZE;
 
 #ifdef WIN32

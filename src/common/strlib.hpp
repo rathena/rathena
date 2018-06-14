@@ -116,7 +116,7 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// out_fields[0] is the start of the next line.
 /// Other entries are the start of fields (nul-teminated).
 /// Returns the number of fields found or -1 if an error occurs.
-int sv_split(char* str, int len, int startoff, char delim, char** out_fields, int nfields, enum e_svopt opt);
+int sv_split(char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt);
 
 /// Escapes src to out_dest according to the format of the C compiler.
 /// Returns the length of the escaped string.

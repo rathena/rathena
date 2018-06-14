@@ -395,9 +395,8 @@ void* grfio_reads(const char* fname, int* size)
 
 		in = fopen(lfname, "rb");
 		if( in != NULL ) {
-			int declen;
 			fseek(in,0,SEEK_END);
-			declen = ftell(in);
+			size_t declen = ftell(in);
 			fseek(in,0,SEEK_SET);
 			buf2 = (unsigned char *)aMalloc(declen+1);  // +1 for resnametable zero-termination
 			if(fread(buf2, 1, declen, in) != declen) ShowError("An error occured in fread grfio_reads, fname=%s \n",fname);
@@ -419,7 +418,7 @@ void* grfio_reads(const char* fname, int* size)
 		char* grfname = gentry_table[entry->gentry - 1];
 		FILE* in = fopen(grfname, "rb");
 		if( in != NULL ) {
-			int fsize = entry->srclen_aligned;
+			size_t fsize = entry->srclen_aligned;
 			unsigned char *buf = (unsigned char *)aMalloc(fsize);
 			fseek(in, entry->srcpos, 0);
 			if(fread(buf, 1, fsize, in) != fsize) ShowError("An error occured in fread in grfio_reads, grfname=%s\n",grfname);
@@ -515,8 +514,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 	grf_version = getlong(grf_header+0x2a) >> 8;
 
 	if( grf_version == 0x01 ) {// ****** Grf version 01xx ******
-		long list_size;
-		list_size = grf_size - ftell(fp);
+		size_t list_size = grf_size - ftell(fp);
 		grf_filelist = (unsigned char *) aMalloc(list_size);
 		if(fread(grf_filelist,1,list_size,fp) != list_size) { ShowError("Couldn't read all grf_filelist element of %s \n", grfname); }
 		fclose(fp);
