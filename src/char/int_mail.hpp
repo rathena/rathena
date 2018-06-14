@@ -4,7 +4,7 @@
 #ifndef _INT_MAIL_HPP_
 #define _INT_MAIL_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct mail_message;
 

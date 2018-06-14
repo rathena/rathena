@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h" // get_svn_revision()
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h" // session[]
-#include "../common/strlib.h" // safestrncpy()
-#include "../common/timer.h"
-#include "../common/utils.h"
-#include "../common/mmo.h" //NAME_LENGTH
-#include "../common/ers.h"  // ers_destroy
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // get_svn_revision()
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp" // session[]
+#include "../common/strlib.hpp" // safestrncpy()
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
+#include "../common/mmo.hpp" //NAME_LENGTH
+#include "../common/ers.hpp"  // ers_destroy
 
 #include "atcommand.hpp" // get_atcommand_level()
 #include "map.hpp"
@@ -6005,6 +6005,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_ARCH_BISHOP:           return MAPID_ARCH_BISHOP;
 		case JOB_MECHANIC:              return MAPID_MECHANIC;
 		case JOB_GUILLOTINE_CROSS:      return MAPID_GUILLOTINE_CROSS;
+		case JOB_STAR_EMPEROR:          return MAPID_STAR_EMPEROR;
 	//3-2 Jobs
 		case JOB_ROYAL_GUARD:           return MAPID_ROYAL_GUARD;
 		case JOB_SORCERER:              return MAPID_SORCERER;
@@ -6013,6 +6014,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_SURA:                  return MAPID_SURA;
 		case JOB_GENETIC:               return MAPID_GENETIC;
 		case JOB_SHADOW_CHASER:         return MAPID_SHADOW_CHASER;
+		case JOB_SOUL_REAPER:           return MAPID_SOUL_REAPER;
 	//Trans 3-1 Jobs
 		case JOB_RUNE_KNIGHT_T:         return MAPID_RUNE_KNIGHT_T;
 		case JOB_WARLOCK_T:             return MAPID_WARLOCK_T;
@@ -6036,6 +6038,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_BISHOP:           return MAPID_BABY_BISHOP;
 		case JOB_BABY_MECHANIC:         return MAPID_BABY_MECHANIC;
 		case JOB_BABY_CROSS:            return MAPID_BABY_CROSS;
+		case JOB_BABY_STAR_EMPEROR:     return MAPID_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
 		case JOB_BABY_GUARD:            return MAPID_BABY_GUARD;
 		case JOB_BABY_SORCERER:         return MAPID_BABY_SORCERER;
@@ -6044,6 +6047,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_SURA:             return MAPID_BABY_SURA;
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
 		case JOB_BABY_CHASER:           return MAPID_BABY_CHASER;
+		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
 		default:
@@ -6154,6 +6158,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_ARCH_BISHOP:           return JOB_ARCH_BISHOP;
 		case MAPID_MECHANIC:              return JOB_MECHANIC;
 		case MAPID_GUILLOTINE_CROSS:      return JOB_GUILLOTINE_CROSS;
+		case MAPID_STAR_EMPEROR:          return JOB_STAR_EMPEROR;
 	//3-2 Jobs
 		case MAPID_ROYAL_GUARD:           return JOB_ROYAL_GUARD;
 		case MAPID_SORCERER:              return JOB_SORCERER;
@@ -6161,6 +6166,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_SURA:                  return JOB_SURA;
 		case MAPID_GENETIC:               return JOB_GENETIC;
 		case MAPID_SHADOW_CHASER:         return JOB_SHADOW_CHASER;
+		case MAPID_SOUL_REAPER:           return JOB_SOUL_REAPER;
 	//Trans 3-1 Jobs
 		case MAPID_RUNE_KNIGHT_T:         return JOB_RUNE_KNIGHT_T;
 		case MAPID_WARLOCK_T:             return JOB_WARLOCK_T;
@@ -6183,6 +6189,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_BISHOP:           return JOB_BABY_BISHOP;
 		case MAPID_BABY_MECHANIC:         return JOB_BABY_MECHANIC;
 		case MAPID_BABY_CROSS:            return JOB_BABY_CROSS;
+		case MAPID_BABY_STAR_EMPEROR:     return JOB_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
 		case MAPID_BABY_GUARD:            return JOB_BABY_GUARD;
 		case MAPID_BABY_SORCERER:         return JOB_BABY_SORCERER;
@@ -6190,6 +6197,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_SURA:             return JOB_BABY_SURA;
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
 		case MAPID_BABY_CHASER:           return JOB_BABY_CHASER;
+		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
 		default:
@@ -6437,6 +6445,18 @@ const char* job_name(int class_)
 
 	case JOB_BABY_STAR_GLADIATOR2:
 		return msg_txt(NULL,756);
+
+	case JOB_STAR_EMPEROR:
+	case JOB_SOUL_REAPER:
+	case JOB_BABY_STAR_EMPEROR:
+	case JOB_BABY_SOUL_REAPER:
+		return msg_txt(NULL,782 - JOB_STAR_EMPEROR + class_);
+
+	case JOB_STAR_EMPEROR2:
+		return msg_txt(NULL,782);
+
+	case JOB_BABY_STAR_EMPEROR2:
+		return msg_txt(NULL,784);
 
 	default:
 		return msg_txt(NULL,655);

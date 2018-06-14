@@ -5,15 +5,15 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/mapindex.h"
-#include "../common/showmsg.h"
-#include "../common/ers.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/ers.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "map.hpp"
 #include "storage.hpp"

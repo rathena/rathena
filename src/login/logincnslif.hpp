@@ -11,18 +11,10 @@
 #ifndef _LOGINCNSLIF_HPP_
 #define _LOGINCNSLIF_HPP_
 
-extern "C" {
-/**
- * Login-server console help: starting option info.
- *  Do not rename function used as extern.
- * @param do_exit: terminate program execution ?
- */
-void display_helpscreen(bool do_exit);
-}
 
 /**
  * Console Command Parser
- * Transmited from command cli.c
+ * Transmited from command cli.cpp
  * note common name for all serv do not rename (extern in cli)
  * @author [Wizputer]
  * @param buf: buffer to parse, (from console)

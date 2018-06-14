@@ -1,19 +1,17 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "mmo.h"
-#include "cbasetypes.h"
-#include "showmsg.h"
-#include "malloc.h"
-#include "core.h"
-#include "strlib.h"
+#include "mmo.hpp"
+#include "cbasetypes.hpp"
+#include "showmsg.hpp"
+#include "malloc.hpp"
+#include "core.hpp"
+#include "strlib.hpp"
 #ifndef MINICORE
-#include "ers.h"
-#include "socket.h"
-#include "timer.h"
-#include "thread.h"
-#include "mempool.h"
-#include "sql.h"
+#include "ers.hpp"
+#include "socket.hpp"
+#include "timer.hpp"
+#include "sql.hpp"
 #endif
 #include <stdlib.h>
 #include <signal.h>
@@ -125,7 +123,7 @@ static void sig_proc(int sn) {
 		//run_flag = 0;	// should we quit?
 		break;
 	case SIGPIPE:
-		//ShowInfo ("Broken pipe found... closing socket\n");	// set to eof in socket.c
+		//ShowInfo ("Broken pipe found... closing socket\n");	// set to eof in socket.cpp
 		break;	// does nothing here
 #endif
 	}
@@ -351,8 +349,6 @@ int main (int argc, char **argv)
 	usercheck();
 
 	Sql_Init();
-	rathread_init();
-	mempool_init();
 	db_init();
 	signals_init();
 
@@ -376,8 +372,6 @@ int main (int argc, char **argv)
 	timer_final();
 	socket_final();
 	db_final();
-	mempool_final();
-	rathread_final();
 	ers_final();
 #endif
 

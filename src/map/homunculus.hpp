@@ -4,7 +4,7 @@
 #ifndef _HOMUNCULUS_HPP_
 #define _HOMUNCULUS_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data

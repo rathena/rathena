@@ -9,15 +9,15 @@
 #include <time.h>
 #include <math.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
+#include "../common/ers.hpp"
 
 #include "map.hpp"
 #include "path.hpp"
@@ -513,8 +513,12 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
 		hp_bonus += skill;
 
-	if( sc && sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL || skill_id == PR_SANCTUARY || skill_id == AL_HEAL) )
-		hp_bonus += sc->data[SC_OFFERTORIUM]->val2;
+	if (sc && sc->count) {
+		if (sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL || skill_id == PR_SANCTUARY || skill_id == AL_HEAL))
+			hp_bonus += sc->data[SC_OFFERTORIUM]->val2;
+		if (sc->data[SC_GLASTHEIM_HEAL] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN)
+			hp_bonus += sc->data[SC_GLASTHEIM_HEAL]->val1;
+	}
 
 	if (tsc && tsc->count) {
 		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
@@ -522,6 +526,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp_bonus += tsc->data[SC_INCHEALRATE]->val1; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
 			if (tsc->data[SC_EXTRACT_WHITE_POTION_Z])
 				hp_bonus += tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1;
+			if (tsc->data[SC_GLASTHEIM_HEAL])
+				hp_bonus += sc->data[SC_GLASTHEIM_HEAL]->val2;
 		}
 	}
 
@@ -1564,6 +1570,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		break;
 	case WL_JACKFROST:
+	case NPC_JACKFROST:
 		sc_start(src,bl,SC_FREEZE,200,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 	case RA_WUGBITE: {
@@ -4909,6 +4916,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_HELLJUDGEMENT:
 	case NPC_VAMPIRE_GIFT:
 	case NPC_MAXPAIN_ATK:
+	case NPC_JACKFROST:
 	case RK_IGNITIONBREAK:
 	case AB_JUDEX:
 	case WL_SOULEXPANSION:
@@ -5248,7 +5256,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		//Should attack undead and demons. [Skotlex]
 		if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON)
 			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-	break;
+		break;
 
 	case SL_SMA:
 		status_change_end(src, SC_SMA, INVALID_TIMER);
@@ -6592,6 +6600,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
 		break;
 
+	case PR_BENEDICTIO:
+		if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		break;
 	case AL_INCAGI:
 	case AL_BLESSING:
 	case MER_INCAGI:
@@ -6604,7 +6616,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case PR_IMPOSITIO:
 	case PR_LEXAETERNA:
 	case PR_SUFFRAGIUM:
-	case PR_BENEDICTIO:
 	case LK_BERSERK:
 	case MS_BERSERK:
 	case KN_TWOHANDQUICKEN:
@@ -9486,6 +9497,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WL_JACKFROST:
+	case NPC_JACKFROST:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
@@ -20828,7 +20840,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 
 	if (!idx) {
 		if (SKILL_MAX_DB() >= MAX_SKILL) {
-			ShowError("Cannot add new skill. Limit is reached '%d' (mmo.h::MAX_SKILL).\n", MAX_SKILL);
+			ShowError("Cannot add new skill. Limit is reached '%d' (mmo.hpp::MAX_SKILL).\n", MAX_SKILL);
 			return false;
 		}
 		idx = skill_db_create(skill_id);
@@ -21504,7 +21516,7 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
  **/
 static uint16 skill_db_create(uint16 skill_id) {
 	if (skill_num >= MAX_SKILL) {
-		ShowError("Cannot add more skill. Limit is reached '%d'. Change 'MAX_SKILL' in mmo.h\n", MAX_SKILL);
+		ShowError("Cannot add more skill. Limit is reached '%d'. Change 'MAX_SKILL' in mmo.hpp\n", MAX_SKILL);
 		return 0;
 	}
 	if (!skill_num)
