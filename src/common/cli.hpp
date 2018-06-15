@@ -4,6 +4,8 @@
 #ifndef _CLI_HPP_
 #define	_CLI_HPP_
 
+#include "cbasetypes.hpp"
+
 #define MAX_CONSOLE_IN 200 //max is map...
 #define MIN_CONSOLE_IN 4 //min is help
 //map

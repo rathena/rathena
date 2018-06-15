@@ -4,6 +4,8 @@
 #ifndef	_DES_HPP_
 #define	_DES_HPP_
 
+#include "cbasetypes.hpp"
+
 /// One 64-bit block.
 typedef struct BIT64 { uint8_t b[8]; } BIT64;
 

@@ -3,8 +3,6 @@
 
 #include "des.hpp"
 
-#include "cbasetypes.hpp"
-
 /// DES (Data Encryption Standard) algorithm, modified version.
 /// @see http://www.eathena.ws/board/index.php?autocom=bugtracker&showbug=5099.
 /// @see http://en.wikipedia.org/wiki/Data_Encryption_Standard
