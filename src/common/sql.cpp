@@ -78,7 +78,7 @@ Sql* Sql_Malloc(void)
 	self->lengths = NULL;
 	self->result = NULL;
 	self->keepalive = INVALID_TIMER;
-	my_bool reconnect = 1;
+	bool reconnect = true;
 	mysql_options(&self->handle, MYSQL_OPT_RECONNECT, &reconnect);
 	return self;
 }
@@ -540,7 +540,7 @@ static int Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type,
 	bind->buffer = buffer;
 	bind->buffer_length = (unsigned long)buffer_len;
 	bind->length = out_length;
-	bind->is_null = (my_bool*)out_is_null;
+	bind->is_null = (bool*)out_is_null;
 	return SQL_SUCCESS;
 }
 
@@ -869,7 +869,7 @@ int SqlStmt_NextRow(SqlStmt* self)
 	// MySQL 5.0/5.1 defines and returns MYSQL_DATA_TRUNCATED [FlavioJS]
 	if( err == MYSQL_DATA_TRUNCATED )
 	{
-		my_bool truncated;
+		bool truncated;
 
 		if( !self->bind_columns )
 		{
