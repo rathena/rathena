@@ -4703,7 +4703,7 @@
 6681,XMAS_Cookie,Christmas Cookie,3,20,,10,,,,,,,,,,,,,{},{},{}
 6682,Bag_Of_Selling_Goods,Bag Of Selling Goods,3,20,,10,,,,,,,,,,,,,{},{},{}
 6683,Dried_Flower,Dried Flower,3,10,,10,,,,,,,,,,,,,{},{},{}
-6684,Proof_of_The_Heroic,Proof of The Heroic,3,10,,0,,,,,,,,,,,,,{},{},{}
+6684,TokenOfHero,Token Of Hero,3,10,,0,,,,,,,,,,,,,{},{},{}
 6685,Morocc_Certification,Morocc Certification,3,10,,0,,,,,,,,,,,,,{},{},{}
 6686,Brick,Brick,3,10,,2000,,,,,,,,,,,,,{},{},{}
 6687,Rope__,Rope,3,10,,2000,,,,,,,,,,,,,{},{},{}
