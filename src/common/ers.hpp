@@ -37,7 +37,6 @@
  * @author Flavio @ Amazon Project                                           *
  * @encoding US-ASCII                                                        *
 \*****************************************************************************/
-#pragma once
 #ifndef _ERS_HPP_
 #define _ERS_HPP_
 

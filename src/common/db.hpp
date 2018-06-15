@@ -39,7 +39,6 @@
  * @encoding US-ASCII                                                        *
  * @see common#db.cpp                                                        *
 \*****************************************************************************/
-#pragma once
 #ifndef _DB_HPP_
 #define _DB_HPP_
 

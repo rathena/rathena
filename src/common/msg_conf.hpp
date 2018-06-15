@@ -1,7 +1,6 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#pragma once
 #ifndef MSG_CONF_HPP
 #define	MSG_CONF_HPP
 
