@@ -1,18 +1,20 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
+#include "sql.hpp"
+
+#include <mysql.h>
+#include <stdlib.h>// strtoul
+
+#ifdef WIN32
+#include "winapi.hpp"
+#endif
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "timer.hpp"
-#include "sql.hpp"
-
-#ifdef WIN32
-#include "winapi.hpp"
-#endif
-#include <mysql.h>
-#include <stdlib.h>// strtoul
 
 #define SQL_CONF_NAME "conf/inter_athena.conf"
 

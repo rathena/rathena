@@ -1,3 +1,7 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#pragma once
 #ifndef _CBASETYPES_HPP_
 #define _CBASETYPES_HPP_
 

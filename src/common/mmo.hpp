@@ -1,13 +1,16 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#pragma once
 #ifndef	_MMO_HPP_
 #define	_MMO_HPP_
 
-#include "cbasetypes.hpp"
-#include "../config/core.hpp"
-#include "db.hpp"
 #include <time.h>
+
+#include "../config/core.hpp"
+
+#include "cbasetypes.hpp"
+#include "db.hpp"
 
 #ifndef PACKETVER
 	#error Please define PACKETVER in src/config/packets.hpp

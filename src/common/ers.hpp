@@ -1,5 +1,5 @@
 /*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL                  *
+ *  Copyright (c) rAthena Dev Teams - Licensed under GNU GPL                 *
  *  For more information, see LICENCE in the main folder                     *
  *                                                                           *
  *  <H1>Entry Reusage System</H1>                                            *
@@ -37,6 +37,7 @@
  * @author Flavio @ Amazon Project                                           *
  * @encoding US-ASCII                                                        *
 \*****************************************************************************/
+#pragma once
 #ifndef _ERS_HPP_
 #define _ERS_HPP_
 

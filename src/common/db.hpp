@@ -1,5 +1,5 @@
 /*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL                  *
+ *  Copyright (c) rAthena Dev Teams - Licensed under GNU GPL                 *
  *  For more information, see LICENCE in the main folder                     *
  *                                                                           *
  *  This file is separated in two sections:                                  *
@@ -39,6 +39,7 @@
  * @encoding US-ASCII                                                        *
  * @see common#db.cpp                                                        *
 \*****************************************************************************/
+#pragma once
 #ifndef _DB_HPP_
 #define _DB_HPP_
 

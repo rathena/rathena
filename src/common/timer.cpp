@@ -1,12 +1,6 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.hpp"
-#include "db.hpp"
-#include "malloc.hpp"
-#include "showmsg.hpp"
-#include "utils.hpp"
-#include "nullpo.hpp"
 #include "timer.hpp"
 
 #include <stdlib.h>
@@ -16,6 +10,13 @@
 #include "winapi.hpp" // GetTickCount()
 #else
 #endif
+
+#include "cbasetypes.hpp"
+#include "db.hpp"
+#include "malloc.hpp"
+#include "nullpo.hpp"
+#include "showmsg.hpp"
+#include "utils.hpp"
 
 // If the server can't handle processing thousands of monsters
 // or many connected clients, please increase TIMER_MIN_INTERVAL.

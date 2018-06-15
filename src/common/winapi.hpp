@@ -1,4 +1,9 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #pragma once
+#ifndef _WINAPI_HPP_
+#define _WINAPI_HPP_
 
 #include <sdkddkver.h>
 
@@ -49,3 +54,5 @@
 #include "cbasetypes.hpp"
 
 bool IsCurrentUserLocalAdministrator(void);
+
+#endif /* _WINAPI_HPP_ */

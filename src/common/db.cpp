@@ -1,5 +1,5 @@
 /*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+ *  Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
  *  For more information, see LICENCE in the main folder
  *
  *  This file is separated in five sections:
@@ -70,14 +70,14 @@
 
 #include "db.hpp"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "ers.hpp"
 #include "malloc.hpp"
 #include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
