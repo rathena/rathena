@@ -1,18 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#pragma once
-
-#include <In6addr.h>
-#include <io.h>
-#include <MMSystem.h>
-#include <Mswsock.h>
-#include <sdkddkver.h>
-#include <Windows.h>
-#include <WinSock2.h>
-#include <Ws2tcpip.h>
-
-#include "cbasetypes.hpp"
+#ifndef _WINAPI_HPP_
+#define _WINAPI_HPP_
 
 #ifndef NTDDI_VERSION
 	#define NTDDI_VERSION 	0x05000000 // Windows 2000
@@ -49,4 +39,16 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_NONSTDC_NO_WARNINGS
 
+#include <io.h>
+#include <Windows.h>
+#include <WinSock2.h>
+#include <In6addr.h>
+#include <Ws2tcpip.h>
+#include <Mswsock.h>
+#include <MMSystem.h>
+
+#include "cbasetypes.hpp"
+
 bool IsCurrentUserLocalAdministrator(void);
+
+#endif /* _WINAPI_HPP_ */

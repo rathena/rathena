@@ -3,12 +3,12 @@
 
 #include "sql.hpp"
 
-#include <mysql.h>
-#include <stdlib.h>// strtoul
-
 #ifdef WIN32
 #include "winapi.hpp"
 #endif
+
+#include <mysql.h>
+#include <stdlib.h>// strtoul
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
