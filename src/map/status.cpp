@@ -8243,7 +8243,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			break;
 		case SC_FREEZING:
 			tick = max(tick, 6000); // Minimum duration 6s
-            // NEED AEGIS CHECK: might need to be 10s (http://ro.gnjoy.com/news/notice/View.asp?seq=5352)
+			// NEED AEGIS CHECK: might need to be 10s (http://ro.gnjoy.com/news/notice/View.asp?seq=5352)
 			break;
 		case SC_BURNING:
 		case SC_STASIS:
