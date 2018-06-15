@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800) //forcing value to bool
@@ -11,8 +11,9 @@
 #include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
-#include "../common/strlib.hpp" // StringBuf
 #include "../common/sql.hpp"
+#include "../common/strlib.hpp" // StringBuf
+
 #include "char.hpp"
 #include "inter.hpp"
 

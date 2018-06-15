@@ -6,20 +6,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../common/malloc.hpp"
+#include "../common/mapindex.hpp"
 #include "../common/mmo.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/mapindex.hpp"
-#include "../common/malloc.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
 #include "../common/strlib.hpp"
-#include "../common/utils.hpp"
 #include "../common/timer.hpp"
-#include "inter.hpp"
+#include "../common/utils.hpp"
+
 #include "char.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
+#include "inter.hpp"
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );

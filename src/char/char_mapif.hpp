@@ -1,12 +1,7 @@
-/**
- * @file char_mapif.h
- * Module purpose is to handle incoming and outgoing requests with map-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
+#pragma once
 #ifndef _CHAR_MAPIF_HPP_
 #define _CHAR_MAPIF_HPP_
 
