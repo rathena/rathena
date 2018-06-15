@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include <stdio.h>
@@ -9,9 +9,9 @@
 #include <unistd.h>
 #endif
 
-#include "../common/mmo.hpp"
 #include "../common/grfio.hpp"
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/utils.hpp"
 
