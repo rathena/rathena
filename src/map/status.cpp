@@ -6742,7 +6742,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			if( sc->data[SC_SKA] )
 				val = max( val, 25 );
 			if( sc->data[SC_FREEZING] )
-				val = max( val, 50 );
+				val = max( val, 30 );
 			if( sc->data[SC_MARSHOFABYSS] )
 				val = max( val, sc->data[SC_MARSHOFABYSS]->val3 );
 			if( sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 > 2 )
@@ -6923,7 +6923,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 				bonus -= 10;
 		}
 		if (sc->data[SC_FREEZING])
-			bonus -= 15;
+			bonus -= 30;
 		if (sc->data[SC_HALLUCINATIONWALK_POSTDELAY])
 			bonus -= 50;
 		if (sc->data[SC_PARALYSE])
@@ -7103,7 +7103,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			aspd_rate += 100;
 	}
 	if( sc->data[SC_FREEZING] )
-		aspd_rate += 150;
+		aspd_rate += 300;
 	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
 		aspd_rate += 500;
 	if( sc->data[SC_PARALYSE] )
@@ -8243,6 +8243,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			break;
 		case SC_FREEZING:
 			tick = max(tick, 6000); // Minimum duration 6s
+            // NEED AEGIS CHECK: might need to be 10s (http://ro.gnjoy.com/news/notice/View.asp?seq=5352)
 			break;
 		case SC_BURNING:
 		case SC_STASIS:
