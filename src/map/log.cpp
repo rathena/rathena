@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "log.hpp"
@@ -6,18 +6,18 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/sql.hpp" // SQL_INNODB
-#include "../common/strlib.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/sql.hpp" // SQL_INNODB
+#include "../common/strlib.hpp"
 
-#include "map.hpp"
 #include "battle.hpp"
-#include "itemdb.hpp"
 #include "homunculus.hpp"
+#include "itemdb.hpp"
+#include "map.hpp"
 #include "mob.hpp"
-#include "pet.hpp"
 #include "pc.hpp"
+#include "pet.hpp"
 
 static char log_timestamp_format[20];
 

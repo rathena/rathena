@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 //#define DEBUG_DISP
@@ -9,16 +9,17 @@
 
 #include "script.hpp"
 
-#include <math.h>
-#include <stdlib.h> // atoi, strtol, strtoll, exit
-#include <setjmp.h>
 #include <errno.h>
+#include <math.h>
+#include <setjmp.h>
+#include <stdlib.h> // atoi, strtol, strtoll, exit
 
 #ifdef PCRE_SUPPORT
 #include "../../3rdparty/pcre/include/pcre.h" // preg_match
 #endif
 
 #include "../common/cbasetypes.hpp"
+#include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/nullpo.hpp"
@@ -28,38 +29,37 @@
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.hpp"  // ers_destroy
 
-#include "map.hpp"
-#include "path.hpp"
-#include "clan.hpp"
-#include "clif.hpp"
-#include "chrif.hpp"
-#include "date.hpp" // date type enum, date_get()
-#include "itemdb.hpp"
-#include "pc.hpp"
-#include "pc_groups.hpp"
-#include "storage.hpp"
-#include "pet.hpp"
-#include "mapreg.hpp"
-#include "homunculus.hpp"
-#include "instance.hpp"
-#include "mercenary.hpp"
-#include "intif.hpp"
-#include "chat.hpp"
-#include "battleground.hpp"
-#include "party.hpp"
-#include "mail.hpp"
-#include "quest.hpp"
-#include "elemental.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
+#include "achievement.hpp"
 #include "atcommand.hpp"
 #include "battle.hpp"
-#include "log.hpp"
-#include "mob.hpp"
+#include "battleground.hpp"
 #include "channel.hpp"
-#include "achievement.hpp"
+#include "chat.hpp"
+#include "chrif.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
+#include "date.hpp" // date type enum, date_get()
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "mail.hpp"
+#include "map.hpp"
+#include "mapreg.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "path.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "pet.hpp"
+#include "quest.hpp"
+#include "storage.hpp"
 
 struct eri *array_ers;
 DBMap *st_db;

@@ -1,40 +1,40 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "status.hpp"
 
-#include <stdlib.h>
-#include <math.h>
-#include <string>
 #include <functional>
+#include <math.h>
+#include <stdlib.h>
+#include <string>
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/malloc.hpp"
-#include "../common/utils.hpp"
-#include "../common/ers.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
+#include "battleground.hpp"
+#include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
 #include "path.hpp"
 #include "pc.hpp"
-#include "pet.hpp"
-#include "battleground.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "script.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
 #include "pc_groups.hpp"
+#include "pet.hpp"
+#include "script.hpp"
 
 // Regen related flags.
 enum e_regen {

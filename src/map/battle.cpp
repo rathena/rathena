@@ -1,37 +1,37 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "battle.hpp"
 
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
 #include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
+#include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 #include "../common/utils.hpp"
 
-#include "map.hpp"
-#include "path.hpp"
-#include "pc.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "pet.hpp"
-#include "party.hpp"
 #include "battleground.hpp"
 #include "chrif.hpp"
-#include "guild.hpp"
 #include "clif.hpp"
-#include "mob.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
 #include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "party.hpp"
+#include "path.hpp"
+#include "pc.hpp"
 #include "pc_groups.hpp"
+#include "pet.hpp"
 
 int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 

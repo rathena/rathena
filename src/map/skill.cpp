@@ -1,48 +1,48 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "skill.hpp"
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <math.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.hpp"
 
-#include "map.hpp"
-#include "path.hpp"
-#include "clif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
-#include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "mob.hpp"
-#include "npc.hpp"
+#include "achievement.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
-#include "party.hpp"
-#include "itemdb.hpp"
-#include "script.hpp"
-#include "intif.hpp"
-#include "log.hpp"
 #include "chrif.hpp"
-#include "guild.hpp"
+#include "clif.hpp"
 #include "date.hpp"
-#include "unit.hpp"
-#include "achievement.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "path.hpp"
+#include "pc.hpp"
 #include "pc_groups.hpp"
+#include "pet.hpp"
+#include "script.hpp"
+#include "status.hpp"
+#include "unit.hpp"
 
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
