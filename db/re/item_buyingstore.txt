@@ -14,7 +14,6 @@
 //25129
 //25130
 //25131
-22687	//Fragments_Vicious_Mind
 //23016
 //23080
 4671	//V_B_Celia_Card
@@ -742,7 +741,7 @@
 11597	//Iron_Worm
 22699	//Test_Reagent
 22679	//Death_Bin
-22687	//Fragments_Vicious_Mind
+22687	//Pieces_Of_Sentiment
 6615	//Siege_Guild_Coin
 //--- 2013 / 08 / 02
 6750	//Failed_Engine
