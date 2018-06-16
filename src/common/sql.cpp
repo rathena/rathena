@@ -72,6 +72,8 @@ struct SqlStmt
 // Sql Handle
 ///////////////////////////////////////////////////////////////////////////////
 
+
+
 /// Allocates and initializes a new Sql handle.
 Sql* Sql_Malloc(void)
 {
@@ -87,6 +89,8 @@ Sql* Sql_Malloc(void)
 	mysql_options(&self->handle, MYSQL_OPT_RECONNECT, &reconnect);
 	return self;
 }
+
+
 
 static int Sql_P_Keepalive(Sql* self);
 
