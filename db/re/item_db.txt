@@ -730,8 +730,8 @@
 1389,E_Tomahawk_C,Tomahawk,5,2,,0,200,,1,0,0x000444A2,63,2,34,4,0,0,7,{ bonus bAtkEle,Ele_Wind; },{},{}
 1390,E_Right_Epsilon_C,Light Epsilon,5,1,,0,229,,1,0,0x000444A2,63,2,34,4,1,0,7,{ bonus bAtkEle,Ele_Holy; bonus bStr,10; },{},{}
 1391,P_Two_Handed_Axe1,Eden Two-Handed Axe I,5,0,,0,195,,1,0,0x000444A2,63,2,34,3,60,0,7,{},{},{}
-1392,Ygnus_Stale,Ignus Steel,5,56000,,1900,250,,1,1,0x000444A2,63,2,34,4,95,1,7,{ bonus bAtkEle,Ele_Fire; bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Burning,300; bonus2 bAddEff2,Eff_Burning,300; },{},{}
-1393,End_Sektura,End Sectora,5,56000,,1900,250,,1,1,0x000444A2,63,2,34,4,95,1,7,{ bonus bAtkEle,Ele_Water; bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Freeze,300; bonus2 bAddEff2,Eff_Freeze,300; },{},{}
+1392,Ygnus_Stale,Ignus Steel,5,56000,,1900,250,,1,1,0x000444A2,63,2,34,4,95,1,7,{ bonus bAtkEle,Ele_Fire; bonus2 bAddEff,Eff_Burning,300; bonus2 bAddEff2,Eff_Burning,300; },{},{}
+1393,End_Sektura,End Sectora,5,56000,,1900,250,,1,1,0x000444A2,63,2,34,4,95,1,7,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freezing,300; bonus2 bAddEff2,Eff_Freezing,300; },{},{}
 1394,Upg_Two_Handed_Axe,Upg Two Handed Axe,5,20,,2000,110,,1,1,0x000444A2,63,2,34,3,1,1,7,{ bonus bBaseAtk,(getrefine()*14); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10); },{},{}
 1395,Velum_Buster,Vellum Buster,5,20,,2500,50,,1,0,0x000444A2,63,2,34,4,95,1,7,{ bonus bUnbreakableWeapon; bonus3 bSPVanishRaceRate,RC_Player,10000,10; },{},{}
 1396,Velum_Guillotine,Vellum Guillotine,5,20,,5500,300,,1,0,0x000444A2,63,2,34,4,95,1,7,{ bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bIgnoreDefRaceRate,RC_Player,30; .@r = getrefine(); if(.@r>=6) { bonus2 bSkillAtk,"NC_AXEBOOMERANG",80; bonus2 bSkillAtk,"NC_POWERSWING",80; } if(.@r>=9) { bonus2 bAddRace,RC_Player,60; } },{},{}
