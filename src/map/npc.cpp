@@ -1265,8 +1265,14 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
  *------------------------------------------*/
 int npc_click(struct map_session_data* sd, struct npc_data* nd)
 {
+	struct unit_data *ud;
 	nullpo_retr(1, sd);
+	
+	ud = unit_bl2ud(&sd->bl);
 
+	if (ud && ud->state.blockedall)
+		return 1;	
+	
 	if (sd->npc_id != 0) {
 		ShowError("npc_click: npc_id != 0\n");
 		return 1;

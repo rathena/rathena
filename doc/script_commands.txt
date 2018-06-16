@@ -6017,6 +6017,22 @@ Examples:
 
 ---------------------------------------
 
+*pcblockall <id>,<option>;
+
+Prevents the given GID from moving when the option is 1, and enables the ID to
+move again when the option is 0. This command will run for the attached unit
+if the given GID is zero.
+
+Examples:
+	// Prevents the current char from moving away/attacking/casting skills/using items/clicking npcs.
+	pcblockall getcharid(3),1;
+
+	// Enables the current char to move/attack/cast skills/use items/click npcs again.
+	pcblockall getcharid(3),0;
+
+---------------------------------------
+
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================
