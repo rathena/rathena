@@ -10868,8 +10868,8 @@
 20743,Airship_Cape,Airship's Cloak,4,10,,0,,25,,1,0xFFFFFFFF,63,2,4,,125,0,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-20; },{},{}
 20744,Felock_Cape,Felrock's Cloak,4,10,,400,,12,,1,0xFFFFFFFF,63,2,4,,125,1,,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,20; bonus bVariableCastrate,-10; .@r = getrefine(); if(.@r>=7) { bonus bVariableCastrate,-10; } if(.@r>=9) { bonus bVariableCastrate,-10;} if(.@r>=12) { bonus bVariableCastrate,-5; } },{},{}
 20746,C_Rudra_Wing,Costume Rudra Wings,4,10,,0,,,,0,0xFFFFFFFF,63,2,8192,,1,0,8,{},{},{}
-20748,Manteau_Of_Fallen,Cloak Of Casualties,4,10,,600,,20,,0,0xFFFFFFFF,63,2,4,,120,1,,{ .@r = getrefine(); bonus bAgi,5; bonus bFlee,10; if(readparam(bStr)>=90) bonus bBaseAtk,10+(.@r*2); if(readparam(bInt)>=90) bonus bMatk,20+(.@r*3); if(readparam(bVit)>=90) bonus2 bSubEle,Ele_Neutral,3+((.@r>=8)?3:0)+((.@r>=10)?4:0); if(readparam(bAgi)>=90){ bonus bAspdRate,3+(.@r/2); bonus bAspd,((.@r>=10)?1:0); } if(readparam(bDex)>=90) bonus bLongAtkRate,3+(.@r/2); if(readparam(bLuk)>=90) bonus bCriticalRate,5+.@r; },{},{}
-20749,Manteau_Of_Fallen_,Cloak Of Casualties,4,10,,600,,30,,1,0xFFFFFFFF,63,2,4,,170,1,,{ .@r = getrefine(); bonus bMaxHPrate,.@r/2; bonus bMaxSPrate,.@r/2; bonus bAgi,5; bonus bFlee,10; if(readparam(bStr)>=90) bonus bBaseAtk,10+(.@r*2); if(readparam(bInt)>=90) bonus bMatk,20+(.@r*3); if(readparam(bVit)>=90) bonus2 bSubEle,Ele_Neutral,3+((.@r>=8)?3:0)+((.@r>=10)?4:0); if(readparam(bAgi)>=90){ bonus bAspdRate,3+(.@r/2); bonus bAspd,((.@r>=10)?1:0); } if(readparam(bDex)>=90) bonus bLongAtkRate,3+(.@r/2); if(readparam(bLuk)>=90) bonus bCriticalRate,5+.@r; },{},{}
+20748,Manteau_Of_Fallen,Fallen Warrior Manteau,4,10,,600,,20,,0,0xFFFFFFFF,63,2,4,,120,1,,{ .@r = getrefine(); bonus bAgi,5; bonus bFlee,10; if(readparam(bStr)>=90) bonus bBaseAtk,10+(.@r*2); if(readparam(bInt)>=90) bonus bMatk,20+(.@r*3); if(readparam(bVit)>=90) bonus2 bSubEle,Ele_Neutral,3+((.@r>=8)?3:0)+((.@r>=10)?4:0); if(readparam(bAgi)>=90){ bonus bAspdRate,3+(.@r/2); bonus bAspd,((.@r>=10)?1:0); } if(readparam(bDex)>=90) bonus bLongAtkRate,3+(.@r/2); if(readparam(bLuk)>=90) bonus bCriticalRate,5+.@r; },{},{}
+20749,Manteau_Of_Fallen_,Fallen Warrior Manteau,4,10,,600,,30,,1,0xFFFFFFFF,63,2,4,,170,1,,{ .@r = getrefine(); bonus bMaxHPrate,.@r/2; bonus bMaxSPrate,.@r/2; bonus bAgi,5; bonus bFlee,10; if(readparam(bStr)>=90) bonus bBaseAtk,10+(.@r*2); if(readparam(bInt)>=90) bonus bMatk,20+(.@r*3); if(readparam(bVit)>=90) bonus2 bSubEle,Ele_Neutral,3+((.@r>=8)?3:0)+((.@r>=10)?4:0); if(readparam(bAgi)>=90){ bonus bAspdRate,3+(.@r/2); bonus bAspd,((.@r>=10)?1:0); } if(readparam(bDex)>=90) bonus bLongAtkRate,3+(.@r/2); if(readparam(bLuk)>=90) bonus bCriticalRate,5+.@r; },{},{}
 20753,Lian_Robe,Lian Robe,4,0,,700,,20,1,1,0xFFFFFFFF,63,2,4,,65,1,,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubRace,RC_Formless,-5; },{},{}
 20756,Aegir_Cloak,Aegir Cloak,4,10,,300,,10,,1,0xFFFFFFFF,63,2,4,,40,1,,{ bonus bUnbreakableGarment; bonus bMaxHP,500; bonus bMaxSP,50; },{},{}
 20761,C_Wing_Of_Happiness,Costume Happiness Wings,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,9,{},{},{}
@@ -11213,8 +11213,8 @@
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
 //
-23016,Cursed_Fragment,Cursed Fragment,11,1,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Fragment"); },{},{}
-23080,Cursed_Crystal,Cursed Crystal,11,1,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Crystal"); },{},{}
+23016,Cursed_Fragment,Cursed Fragment,2,1,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Fragment"); },{},{}
+23080,Cursed_Crystal,Cursed Crystal,2,1,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Crystal"); },{},{}
 //
 23123,Bullet_Case_Flare,Flare Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13228,500; },{},{}
 23124,Bullet_Case_Lighting,Lightning Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13229,500; },{},{}
@@ -11745,66 +11745,66 @@
 29009,Rune_of_Vitality_Lv_1,Rune of Vitality Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,5; } if (.@r>=10) { bonus bMaxHPrate,5; } },{},{}
 29010,Rune_of_Vitality_Lv_2,Rune of Vitality Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,6; } if (.@r>=11) { bonus bVit,1; bonus bMaxHPrate,7; } },{},{}
 29011,Rune_of_Vitality_Lv_3,Rune of Vitality Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,7; } if (.@r>=12) { bonus bVit,1; bonus bMaxHPrate,8; } if (.@r>=13) { bonus bVit,1; bonus bMaxHPrate,2; } },{},{}
-29061,Ambition1Lv,Ambition1Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,3; bonus bHit,3; },{},{}
-29062,Ambition2Lv,Ambition2Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,6; bonus bHit,6; },{},{}
-29063,Ambition3Lv,Ambition3Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,9; bonus bHit,9; },{},{}
-29064,Ambition4Lv,Ambition4Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,12; bonus bHit,12; },{},{}
-29065,Ambition5Lv,Ambition5Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,15; bonus bHit,15; },{},{}
-29066,Ambition6Lv,Ambition6Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,18; bonus bHit,18; },{},{}
-29067,Ambition7Lv,Ambition7Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,21; bonus bHit,21; },{},{}
-29068,Ambition8Lv,Ambition8Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,24; bonus bHit,24; },{},{}
-29069,Ambition9Lv,Ambition9Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,27; bonus bHit,27; },{},{}
-29070,Ambition10Lv,Ambition10Lv,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,33; bonus bHit,30; },{},{}
-29071,Tab1Lv,Tab1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,3; bonus bFixedCast,-100; },{},{}
-29072,Tab2Lv,Tab2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,6; bonus bFixedCast,-200; },{},{}
-29073,Tab3Lv,Tab3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,9; bonus bFixedCast,-300; },{},{}
-29074,Tab4Lv,Tab4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,12; bonus bFixedCast,-400; },{},{}
-29075,Tab5Lv,Tab5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,15; bonus bFixedCast,-500; },{},{}
-29076,Tab6Lv,Tab6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,18; bonus bFixedCast,-600; },{},{}
-29077,Tab7Lv,Tab7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,21; bonus bFixedCast,-700; },{},{}
-29078,Tab8Lv,Tab8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,24; bonus bFixedCast,-800; },{},{}
-29079,Tab9Lv,Tab9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,27; bonus bFixedCast,-900; },{},{}
-29080,Tab10Lv,Tab10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,33; bonus bFixedCast,-1000; },{},{}
-29081,Expect1Lv,Expect1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,10; bonus bCritical,3; },{},{}
-29082,Expect2Lv,Expect2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,20; bonus bCritical,6; },{},{}
-29083,Expect3Lv,Expect3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,30; bonus bCritical,9; },{},{}
-29084,Expect4Lv,Expect4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,40; bonus bCritical,12; },{},{}
-29085,Expect5Lv,Expect5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,50; bonus bCritical,15; },{},{}
-29086,Expect6Lv,Expect6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,60; bonus bCritical,18; },{},{}
-29087,Expect7Lv,Expect7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,70; bonus bCritical,21; },{},{}
-29088,Expect8Lv,Expect8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,80; bonus bCritical,24; },{},{}
-29089,Expect9Lv,Expect9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,90; bonus bCritical,27; },{},{}
-29090,Expect10Lv,Expect10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,110; bonus bCritical,30; },{},{}
-29091,ArchLine1Lv,ArchLine1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,4; bonus bAspdRate,1; },{},{}
-29092,ArchLine2Lv,ArchLine2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,8; bonus bAspdRate,2; },{},{}
-29093,ArchLine3Lv,ArchLine3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,12; bonus bAspdRate,3; },{},{}
-29094,ArchLine4Lv,ArchLine4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,16; bonus bAspdRate,4; },{},{}
-29095,ArchLine5Lv,ArchLine5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,20; bonus bAspdRate,5; },{},{}
-29096,ArchLine6Lv,ArchLine6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,24; bonus bAspdRate,6; },{},{}
-29097,ArchLine7Lv,ArchLine7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,28; bonus bAspdRate,7; },{},{}
-29098,ArchLine8Lv,ArchLine8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,32; bonus bAspdRate,8; },{},{}
-29099,ArchLine9Lv,ArchLine9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,36; bonus bAspdRate,9; },{},{}
-29100,ArchLine10Lv,ArchLine10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,44; bonus bAspdRate,10; },{},{}
-29101,Steel1Lv,Steel1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,5; bonus bDef,15; },{},{}
-29102,Steel2Lv,Steel2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,10; bonus bDef,30; },{},{}
-29103,Steel3Lv,Steel3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,15; bonus bDef,45; },{},{}
-29104,Steel4Lv,Steel4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,20; bonus bDef,60; },{},{}
-29105,Steel5Lv,Steel5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,25; bonus bDef,75; },{},{}
-29106,Steel6Lv,Steel6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,30; bonus bDef,90; },{},{}
-29107,Steel7Lv,Steel7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,35; bonus bDef,105; },{},{}
-29108,Steel8Lv,Steel8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,40; bonus bDef,120; },{},{}
-29109,Steel9Lv,Steel9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,45; bonus bDef,135; },{},{}
-29110,Steel10Lv,Steel10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,55; bonus bDef,150; },{},{}
-29111,Mercy1Lv,Mercy1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,5; bonus bMdef,3; },{},{}
-29112,Mercy2Lv,Mercy2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,10; bonus bMdef,6; },{},{}
-29113,Mercy3Lv,Mercy3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,15; bonus bMdef,9; },{},{}
-29114,Mercy4Lv,Mercy4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,20; bonus bMdef,12; },{},{}
-29115,Mercy5Lv,Mercy5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,25; bonus bMdef,15; },{},{}
-29116,Mercy6Lv,Mercy6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,30; bonus bMdef,18; },{},{}
-29117,Mercy7Lv,Mercy7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,35; bonus bMdef,21; },{},{}
-29118,Mercy8Lv,Mercy8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,40; bonus bMdef,24; },{},{}
-29119,Mercy9Lv,Mercy9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,45; bonus bMdef,27; },{},{}
-29120,Mercy10Lv,Mercy10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,55; bonus bMdef,30; },{},{}
+29061,Ambition1Lv,Mettle Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,3; bonus bHit,3; },{},{}
+29062,Ambition2Lv,Mettle Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,6; bonus bHit,6; },{},{}
+29063,Ambition3Lv,Mettle Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,9; bonus bHit,9; },{},{}
+29064,Ambition4Lv,Mettle Lv. 4,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,12; bonus bHit,12; },{},{}
+29065,Ambition5Lv,Mettle Lv. 5,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,15; bonus bHit,15; },{},{}
+29066,Ambition6Lv,Mettle Lv. 6,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,18; bonus bHit,18; },{},{}
+29067,Ambition7Lv,Mettle Lv. 7,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,21; bonus bHit,21; },{},{}
+29068,Ambition8Lv,Mettle Lv. 8,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,24; bonus bHit,24; },{},{}
+29069,Ambition9Lv,Mettle Lv. 9,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,27; bonus bHit,27; },{},{}
+29070,Ambition10Lv,Mettle Lv. 10,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,33; bonus bHit,30; },{},{}
+29071,Tab1Lv,Magic Essence Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,3; bonus bFixedCast,-100; },{},{}
+29072,Tab2Lv,Magic Essence Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,6; bonus bFixedCast,-200; },{},{}
+29073,Tab3Lv,Magic Essence Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,9; bonus bFixedCast,-300; },{},{}
+29074,Tab4Lv,Magic Essence Lv. 4,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,12; bonus bFixedCast,-400; },{},{}
+29075,Tab5Lv,Magic Essence Lv. 5,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,15; bonus bFixedCast,-500; },{},{}
+29076,Tab6Lv,Magic Essence Lv. 6,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,18; bonus bFixedCast,-600; },{},{}
+29077,Tab7Lv,Magic Essence Lv. 7,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,21; bonus bFixedCast,-700; },{},{}
+29078,Tab8Lv,Magic Essence Lv. 8,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,24; bonus bFixedCast,-800; },{},{}
+29079,Tab9Lv,Magic Essence Lv. 9,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,27; bonus bFixedCast,-900; },{},{}
+29080,Tab10Lv,Magic Essence Lv. 10,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,33; bonus bFixedCast,-1000; },{},{}
+29081,Expect1Lv,Acute Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,10; bonus bCritical,3; },{},{}
+29082,Expect2Lv,Acute Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,20; bonus bCritical,6; },{},{}
+29083,Expect3Lv,Acute Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,30; bonus bCritical,9; },{},{}
+29084,Expect4Lv,Acute Lv. 4,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,40; bonus bCritical,12; },{},{}
+29085,Expect5Lv,Acute Lv. 5,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,50; bonus bCritical,15; },{},{}
+29086,Expect6Lv,Acute Lv. 6,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,60; bonus bCritical,18; },{},{}
+29087,Expect7Lv,Acute Lv. 7,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,70; bonus bCritical,21; },{},{}
+29088,Expect8Lv,Acute Lv. 8,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,80; bonus bCritical,24; },{},{}
+29089,Expect9Lv,Acute Lv. 9,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,90; bonus bCritical,27; },{},{}
+29090,Expect10Lv,Acute Lv. 10,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,110; bonus bCritical,30; },{},{}
+29091,ArchLine1Lv,Master Archer Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,4; bonus bAspdRate,1; },{},{}
+29092,ArchLine2Lv,Master Archer Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,8; bonus bAspdRate,2; },{},{}
+29093,ArchLine3Lv,Master Archer Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,12; bonus bAspdRate,3; },{},{}
+29094,ArchLine4Lv,Master Archer Lv. 4,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,16; bonus bAspdRate,4; },{},{}
+29095,ArchLine5Lv,Master Archer Lv. 5,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,20; bonus bAspdRate,5; },{},{}
+29096,ArchLine6Lv,Master Archer Lv. 6,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,24; bonus bAspdRate,6; },{},{}
+29097,ArchLine7Lv,Master Archer Lv. 7,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,28; bonus bAspdRate,7; },{},{}
+29098,ArchLine8Lv,Master Archer Lv. 8,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,32; bonus bAspdRate,8; },{},{}
+29099,ArchLine9Lv,Master Archer Lv. 9,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,36; bonus bAspdRate,9; },{},{}
+29100,ArchLine10Lv,Master Archer Lv. 10,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,44; bonus bAspdRate,10; },{},{}
+29101,Steel1Lv,Adamantine Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,5; bonus bDef,15; },{},{}
+29102,Steel2Lv,Adamantine Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,10; bonus bDef,30; },{},{}
+29103,Steel3Lv,Adamantine Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,15; bonus bDef,45; },{},{}
+29104,Steel4Lv,Adamantine Lv. 4,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,20; bonus bDef,60; },{},{}
+29105,Steel5Lv,Adamantine Lv. 5,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,25; bonus bDef,75; },{},{}
+29106,Steel6Lv,Adamantine Lv. 6,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,30; bonus bDef,90; },{},{}
+29107,Steel7Lv,Adamantine Lv. 7,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,35; bonus bDef,105; },{},{}
+29108,Steel8Lv,Adamantine Lv. 8,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,40; bonus bDef,120; },{},{}
+29109,Steel9Lv,Adamantine Lv. 9,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,45; bonus bDef,135; },{},{}
+29110,Steel10Lv,Adamantine Lv. 10,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,55; bonus bDef,150; },{},{}
+29111,Mercy1Lv,Affection Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,5; bonus bMdef,3; },{},{}
+29112,Mercy2Lv,Affection Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,10; bonus bMdef,6; },{},{}
+29113,Mercy3Lv,Affection Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,15; bonus bMdef,9; },{},{}
+29114,Mercy4Lv,Affection Lv. 4,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,20; bonus bMdef,12; },{},{}
+29115,Mercy5Lv,Affection Lv. 5,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,25; bonus bMdef,15; },{},{}
+29116,Mercy6Lv,Affection Lv. 6,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,30; bonus bMdef,18; },{},{}
+29117,Mercy7Lv,Affection Lv. 7,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,35; bonus bMdef,21; },{},{}
+29118,Mercy8Lv,Affection Lv. 8,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,40; bonus bMdef,24; },{},{}
+29119,Mercy9Lv,Affection Lv. 9,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,45; bonus bMdef,27; },{},{}
+29120,Mercy10Lv,Affection Lv. 10,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,55; bonus bMdef,30; },{},{}
 29121,Goddess_of_Justice_A,Goddess of Justice A,6,10,,0,,,,,,,,,,,,,{ bonus bAtk,20; bonus bHit,2; bonus bMaxHP,300; },{},{}
 29122,Goddess_of_Justice_S,Goddess of Justice S,6,10,,0,,,,,,,,,,,,,{ bonus bAtk,40; bonus bHit,4; bonus bMaxHP,600; },{},{}
 29123,Goddess_of_Mercy_A,Goddess of Mercy A,6,10,,0,,,,,,,,,,,,,{ bonus bMatk,20; bonus bHealPower,4; bonus bMaxSP,20; },{},{}

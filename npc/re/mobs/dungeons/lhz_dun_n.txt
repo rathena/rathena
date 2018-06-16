@@ -1,0 +1,27 @@
+//===== rAthena Script =======================================
+//= Nightmare Biolabs
+//===== Description: =========================================
+//= Nightmare Biolabs Monster Spawn Script.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// lhz_dun_n,0,0	monster	Shecil Damon	3211,20
+// lhz_dun_n,0,0	monster	Eremes Guille	3208,20
+
+// lhz_dun_n,0,0	monster	Catherine Cheiron	3210,15
+// lhz_dun_n,0,0	monster	Celia Alde	3228,15
+// lhz_dun_n,0,0	monster	Chen Liu	3229,15
+// lhz_dun_n,0,0	monster	Gertie Wie	3230,15
+
+// lhz_dun_n,0,0	monster	Magaleta Sorin	3209,10
+// lhz_dun_n,0,0	monster	Harword Alt-Eisen	3212,10
+// lhz_dun_n,0,0	monster	Seyren Windsor	3213,10
+// lhz_dun_n,0,0	monster	Randel Lawrence	3226,10
+// lhz_dun_n,0,0	monster	Flamel Emule	3227,10
+// lhz_dun_n,0,0	monster	Alphoccio Basil	3231,10
+// lhz_dun_n,0,0	monster	Trentini	3232,10
+
+// lhz_dun_n,0,0	monster	Sorcerer Celia	3235,1
+// lhz_dun_n,0,0	monster	Sura Chen	3236,1
+// lhz_dun_n,0,0	monster	Minstrel Alphoccio	3238,1
