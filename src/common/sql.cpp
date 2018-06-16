@@ -17,7 +17,7 @@
 
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.
-#if MYSQL_VERSION_ID > 80000
+#if MYSQL_VERSION_ID >= 80000
 #define my_bool char
 #endif
 
