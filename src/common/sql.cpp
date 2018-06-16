@@ -18,7 +18,7 @@
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.
 #if MYSQL_VERSION_ID >= 80000
-#define my_bool char
+#define my_bool bool
 #endif
 
 #define SQL_CONF_NAME "conf/inter_athena.conf"
