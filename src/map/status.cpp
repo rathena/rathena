@@ -650,7 +650,7 @@ void initChangeTables(void)
 	set_sc( RK_FIGHTINGSPIRIT	, SC_FIGHTINGSPIRIT	, EFST_FIGHTINGSPIRIT		, SCB_WATK|SCB_ASPD );
 	set_sc( RK_ABUNDANCE		, SC_ABUNDANCE		, EFST_ABUNDANCE			, SCB_NONE );
 	set_sc( RK_CRUSHSTRIKE		, SC_CRUSHSTRIKE	, EFST_CRUSHSTRIKE		, SCB_NONE );
-	set_sc_with_vfx( RK_DRAGONBREATH_WATER	, SC_FREEZING	, EFST_FROSTMISTY			, SCB_ASPD|SCB_SPEED|SCB_DEF|SCB_DEF2 );
+	set_sc_with_vfx( RK_DRAGONBREATH_WATER	, SC_FREEZING	, EFST_FROSTMISTY			, SCB_ASPD|SCB_SPEED|SCB_DEF );
 	
 	/* GC Guillotine Cross */
 	set_sc_with_vfx( GC_VENOMIMPRESS, SC_VENOMIMPRESS	, EFST_VENOMIMPRESS	, SCB_NONE );
@@ -678,7 +678,7 @@ void initChangeTables(void)
 
 	/* Warlock */
 	add_sc( WL_WHITEIMPRISON	, SC_WHITEIMPRISON	);
-	set_sc_with_vfx( WL_FROSTMISTY	, SC_FREEZING		, EFST_FROSTMISTY		, SCB_ASPD|SCB_SPEED|SCB_DEF|SCB_DEF2 );
+	set_sc_with_vfx( WL_FROSTMISTY	, SC_FREEZING		, EFST_FROSTMISTY		, SCB_ASPD|SCB_SPEED|SCB_DEF );
 	add_sc( WL_JACKFROST        , SC_FREEZE		  );
 	set_sc( WL_MARSHOFABYSS		, SC_MARSHOFABYSS	, EFST_MARSHOFABYSS	, SCB_AGI|SCB_DEX|SCB_SPEED );
 	set_sc( WL_RECOGNIZEDSPELL	, SC_RECOGNIZEDSPELL	, EFST_RECOGNIZEDSPELL	, SCB_MATK);
@@ -696,7 +696,7 @@ void initChangeTables(void)
 	set_sc( RA_WUGBITE          , SC_BITE           , EFST_WUGBITE        , SCB_NONE );
 	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED|SCB_DEF|SCB_DEF2 );
 	set_sc( RA_FIRINGTRAP       , SC_BURNING        , EFST_BURNT          , SCB_MDEF );
-	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, EFST_FROSTMISTY		, SCB_SPEED|SCB_ASPD|SCB_DEF|SCB_DEF2 );
+	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, EFST_FROSTMISTY		, SCB_SPEED|SCB_ASPD|SCB_DEF );
 	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, EFST_UNLIMIT		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 
 	/* Mechanic */
@@ -6444,10 +6444,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if (sc->data[SC_FLING])
 		def -= def * (sc->data[SC_FLING]->val2)/100;
 	if( sc->data[SC_FREEZING] )
-		if (bl->type == BL_PC)
-			def -= def * 30 / 100;
-		else
-			def -= def * 10 / 100;
+		def -= def * (bl->type == BL_PC ? 30 : 10) / 100;
 	if( sc->data[SC_ANALYZE] )
 		def -= def * (14 * sc->data[SC_ANALYZE]->val1) / 100;
 	if( sc->data[SC_NEUTRALBARRIER] )
