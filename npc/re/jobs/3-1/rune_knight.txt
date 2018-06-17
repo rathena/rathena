@@ -10,7 +10,7 @@
 //= Job change Quest from Knight / Lord Knight -> Rune Knight.
 //===== Additional Comments: =================================
 //= 1.0 First version.
-//= 1.1 Added forgoten Header. [Masao]
+//= 1.1 Added forgotten Header. [Masao]
 //= 1.2 Added Energy Rune item reward. [Masao]
 //= 1.3 Updated script, optimized. [Euphy]
 //= 1.3a Added 'npcskill' command. [Euphy]
@@ -168,7 +168,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,2,2,{
 		mes "Are you a cursed ghost of this place? Or are you an ignorant adventurer?";
 		next;
 		mes "[Guide, Jungberg]";
-		mes "If you are a breathing human, then listen to me carefullly. I wouldn't risk my life here by hesitating to talk to just anyone.";
+		mes "If you are a breathing human, then listen to me carefully. I wouldn't risk my life here by hesitating to talk to just anyone.";
 		next;
 		if (job_rune_edq == 0) {
 			switch(select("Who are you?:What are you doing here?:Cancel.")) {
@@ -181,7 +181,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,2,2,{
 				close;
 			case 2:
 				mes "[Guide, Jungberg]";
-				mes "I am a man walking the way of the Sword. But I'm not exactly the same as the likes of you, Rune-Midgart knight.";
+				mes "I am a man walking the way of the Sword. But I'm not exactly the same as the likes of you, Rune-Midgarts knight.";
 				next;
 				mes "[Guide, Jungberg]";
 				mes "We are not like the other Knights who are absorbed with pomp and circumstance so you may not know of us yet.";
@@ -193,7 +193,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,2,2,{
 				mes "We have been living in secret here in the deep of Glast Heim for a half century but it's time to let the world know our purpose.";
 				next;
 				mes "[Guide, Jungberg]";
-				mes "Now there are many instructors who are looking for talented Sword wielders in various places of Rune-Midgard. They are looking for a people who will join the true way of the Sword.";
+				mes "Now there are many instructors who are looking for talented Sword wielders in various places of Rune-Midgarts. They are looking for a people who will join the true way of the Sword.";
 				next;
 				mes "[Guide, Jungberg]";
 				mes "If you wish to join the Rune Knights. Please get a recommendation from one of the guides and come to me again.";
@@ -924,10 +924,10 @@ job3_rune01,58,51,1	script	Rune Furnace	844,{
 		if(select("Use the Rune Heating Furnace:Stop.") == 2) close;
 		switch(rand(24)) {
 			case 0: setarray .@str$[0],"Ehwaz","This red hot spiral is..."; break;
-			case 1: setarray .@str$[0],"Osilla","The rune flashing with this violet oblique line shape is..."; break;
+			case 1: setarray .@str$[0],"Osilia","The rune flashing with this violet oblique line shape is..."; break;
 			case 2: setarray .@str$[0],"Mannaz","This live emerald diamond rune is..."; break;
 			case 3: setarray .@str$[0],"Ansuz","The rune flashing with an emerald round shape is..."; break;
-			case 4: setarray .@str$[0],"Hagalaz","The rune flashing with this sky-blue star shape is..."; break;
+			case 4: setarray .@str$[0],"Hagalas","The rune flashing with this sky-blue star shape is..."; break;
 			case 5: setarray .@str$[0],"Kano","The rune flashing with a red diamond shape is..."; break;
 			case 6: setarray .@str$[0],"Rhydo","The rune flashing with this sky-blue oblique line shape is..."; break;
 			case 7: setarray .@str$[0],"Turisus","The rune flashing with this yellow round shape is..."; break;
@@ -1031,7 +1031,7 @@ job3_rune01,40,54,1	script	Runes and Rune Knights	844,{
 			next;
 			mes "Unlike humans, the living things in the Ash-Vacuum preserve magical energy by holding it in their bodies.";
 			next;
-			mes "The discovery of transvering this magical power into runes was refined by Beljeve and Serpeone and shared with the Rune Knights.";
+			mes "The discovery of transferring this magical power into runes was refined by Beljeve and Serpeone and shared with the Rune Knights.";
 			next;
 			break;
 		case 3:
@@ -1123,7 +1123,7 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 			case 1:
 				mes "Ehwaz - This rune means the enhancement of luck and positive power. It shapes the source in the form of a red spiral in a Rune Furnace.";
 				next;
-				mes "Osilia - This rune is an equivalent exchangement which means that you lose one and you gain one, and it also means the power that needs a cost. This is shaped into the form of a violet oblique line in a Rune Furnace.";
+				mes "Osilia - This rune is an equivalent exchange which means that you lose one and you gain one, and it also means the power that needs a cost. This is shaped into the form of a violet oblique line in a Rune Furnace.";
 				next;
 				mes "Mannaz - This rune means hope and a new start and also the positive power that can reverse a desperate situation. This is shaped into the form of an emerald diamond in a Rune Furnace.";
 				next;
