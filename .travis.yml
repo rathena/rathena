@@ -156,7 +156,7 @@ matrix:
             - g++-5
       env:
          - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes --with-MYSQL_LIBS=/usr/lib/x86_64-linux-gnu/libmariadbclient.so"
 
 before_install:
     - eval "${MATRIX_EVAL}"
