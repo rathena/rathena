@@ -145,6 +145,18 @@ matrix:
          - cd cbuild
          - cmake -G "Unix Makefiles" ..
          - make
+# MariaDB
+    - os: linux
+      addons:
+        mariadb: '10.0'
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
 
 before_install:
     - eval "${MATRIX_EVAL}"
