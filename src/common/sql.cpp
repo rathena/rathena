@@ -12,7 +12,14 @@
 #include "winapi.hpp"
 #endif
 #include <mysql.h>
+#include <mysql_version.h>
 #include <stdlib.h>// strtoul
+
+// MySQL 8.0 or later removed my_bool typedef.
+// Reintroduce it as a bandaid fix.
+#if MYSQL_VERSION_ID >= 80000
+#define my_bool bool
+#endif
 
 #define SQL_CONF_NAME "conf/inter_athena.conf"
 
@@ -1040,3 +1047,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 void Sql_Init(void) {
 	Sql_inter_server_read(SQL_CONF_NAME,true);
 }
+
+#ifdef my_bool
+#undef my_bool
+#endif
