@@ -3012,3 +3012,3004 @@ S_Dish:
 	return;
 }
 
+prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
+	if (banquet_main_quest < 2) {
+		mes "[Oriental Oyster]";
+		mes "Hum... How savory!";
+		mes "The perfect combinations is just divine...";
+		close;
+	}
+	if (banquet_quest_cooking < 2) {
+		mes "[Oriental Oyster]";
+		mes "I hope you don't waste your talent.";
+		mes "Why don't you become a master sauce maker?";
+		close;
+	}
+	if (banquet_quest_cooking == 2) {
+		mes "[Oriental Oyster]";
+		mes "What?";
+		mes "The sauce ran out?";
+		emotion ET_SURPRISE;
+		next;
+		mes "[Oriental Oyster]";
+		mes "I am in trouble!";
+		mes "You don't know what the Head Chef would do if I am late...";
+		next;
+		mes "[Oriental Oyster]";
+		mes "Hum... I need to make the sauce fast.";
+		mes "I am sorry to ask but would you help me with this?";
+		next;
+		mes "[Oriental Oyster]";
+		mes "My apprentice was sent to the medical office because he slipped on the sauce...";
+		emotion ET_CRY;
+		next;
+		mes "[Oriental Oyster]";
+		mes "I cannot stop stirring the sauce. You can bring me the ingredient as I say the name.";
+		next;
+		erasequest 11395;// Why Should I Prepare for the Banquets?
+		setquest 11396;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 3;
+		callsub S_Result,1;
+		close;
+	}
+	if (banquet_quest_cooking == 3) {
+		callsub S_Result;
+		mes "[Oriental Oyster]";
+		mes "Oh!";
+		mes "Very good!";
+		mes "Thanks to you, I could make the perfect sauce!";
+		mes "Bring it to the Head Chef now!";
+		next;
+		mes "[Oriental Oyster]";
+		mes "You seem to be talented in sauce making.";
+		mes "Why don't you become a master sauce maker?";
+		erasequest 11396;// Why Should I Prepare for the Banquets?
+		setquest 11397;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 4;
+		close;
+	}
+	if (banquet_quest_cooking == 4) {
+		mes "[Oriental Oyster]";
+		mes "Oh!";
+		mes "Very good!";
+		mes "Thanks to you, I could make the perfect sauce!";
+		next;
+		mes "[Oriental Oyster]";
+		mes "You seem to be talented in sauce making.";
+		mes "Why don't you become a master sauce maker?";
+		close;
+	}
+	if (banquet_quest_cooking < 14) {
+		mes "[Oriental Oyster]";
+		mes "I hope you don't waste your talent.";
+		mes "Why don't you become a master sauce maker?";
+		close;
+	}
+
+	// daily
+	switch( checkquest(11422,PLAYTIME) ) {
+	case -1:
+		if (isbegin_quest(11421) == 0) {
+			mes "[Oriental Oyster]";
+			mes "I knew you would come again!";
+			mes "That is the magic of the sauce!";
+			next;
+			mes "[Oriental Oyster]";
+			mes "How about making a fabulous sauce today?";
+			next;
+			setquest 11421;// Banquet: Unexpected Sauce
+			callsub S_Result,1;
+			close;
+		}
+		callsub S_Result;
+		mes "[Oriental Oyster]";
+		mes "Oh!";
+		mes "Very good!";
+		mes "Thanks to you, I could make the perfect sauce!";
+		mes "Bring it to the Head Chef now!";
+		next;
+		mes "[Oriental Oyster]";
+		mes "You seem to be talented in sauce making.";
+		mes "Why don't you become a master sauce maker?";
+		erasequest 11421;// Banquet: Unexpected Sauce
+		setquest 11422;// Complete Today's Sauce
+		getitem 6919,4;// Honor Token
+		close;
+	case 0:
+	case 1:
+		mes "[Oriental Oyster]";
+		mes "Oh my!";
+		mes "The palate is very important for a chef.";
+		mes "When you are tired the palate doesn't work properly.";
+		next;
+		mes "[Oriental Oyster]";
+		mes "You seem very tired now.";
+		next;
+		mes "[Oriental Oyster]";
+		mes "If you want to make a perfect sauce, take some rest.";
+		close;
+	case 2:
+		mes "[Oriental Oyster]";
+		mes "Oh! You are here!";
+		mes "Did you take a rest? How about making the sauce again?";
+		erasequest 11422;// Complete Today's Sauce
+		close;
+	}
+
+S_Result:
+	if (getarg(0,0) == 0) {
+		for ( .@quest_id = 11428; .@quest_id < 11432; .@quest_id++ ) {
+			switch( isbegin_quest(.@quest_id) ) {
+			case 0:
+				continue;
+			case 1:
+				mes "[Oriental Oyster]";
+				mes "Bring me the ingredient!";
+				mes "The Head Chef is looking at me with the set of murderous eyes!";
+				close;
+			case 2:
+				break;
+			}
+			break;
+		}
+		if (.@quest_id == 11432) {
+			mes "[Oriental Oyster]";
+			mes "Oh my...";
+			mes "The ingredient is like the life for a sauce.";
+			mes "There shouldn't be a mistake.";
+			next;
+			mes "[Oriental Oyster]";
+			mes "Then, let's start over from the beginning!";
+			banquet_quest_sauce = 0;
+		}
+		else {
+			erasequest .@quest_id;
+			if (rand(100) < 30)	// finished
+				return;
+			mes "[Oriental Oyster]";
+			mes "Hum, very good!";
+		}
+		next;
+	}
+	callsub S_Sauce;
+
+S_Sauce:
+	mes "[Oriental Oyster]";
+	switch( rand(11428,11431) ) {
+	case 11428:
+		mes "First, bring me the ingredient for the refreshing flavor.";
+		setquest 11428;// Ingredient for the Sauce
+		break;
+	case 11429:
+		mes "Bring me the ingredient for the chewy texture.";
+		setquest 11429;// Ingredient for the Sauce
+		break;
+	case 11430:
+		mes "Bring me the ingredient that shines brightly.";
+		setquest 11430;// Ingredient for the Sauce
+		break;
+	case 11431:
+		mes "First, bring me the ingredient for the soft taste.";
+		setquest 11431;// Ingredient for the Sauce
+		break;
+	}
+	close;
+}
+
+function	script	check_sauce	{
+	.@right_quest_id = getarg(0);
+	for ( .@quest_id = 11428; .@quest_id < 11432 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
+		continue;
+	if (.@quest_id == 11432)
+		return;
+	if (.@quest_id != .@right_quest_id) {
+		mes "[Oriental Oyster]";
+		mes "Argh!";
+		mes "The sauce is ruined!";
+		next;
+		mes "[Oriental Oyster]";
+		mes "We cannot use this sauce now!";
+		mes "We should start again from the beginning!";
+		erasequest .@quest_id;
+		close;
+	}
+	mes "[Oriental Oyster]";
+	mes "Yes! That's it!";
+	mes "Bring it to me!";
+	emotion ET_SURPRISE, getnpcid(0, "Royal Sauce Master#ep16");
+	completequest .@quest_id;
+	close;
+}
+
+prt_cas,307,196,5	script	Poring Jelly#ep16_1	4_ENERGY_RED,{
+	check_sauce(11429);
+	mes "Jelly made of chewy Poring";
+	mes "It emphasizes the chewy texture...";
+	close;
+}
+
+prt_cas,330,211,5	script	Giantaurus Butter#ep16_	4_ENERGY_YELLOW,{
+	check_sauce(11431);
+	mes "Giantaurus Milk Butter";
+	mes "It tastes surprisingly soft.";
+	close;
+}
+
+prt_cas,338,206,5	script	Shining Plant#ep16_1	4_ENERGY_WHITE,{
+	check_sauce(11430);
+	mes "The powder made of Shining Plant";
+	mes "It adds some sparkles to the dish.";
+	close;
+}
+
+prt_cas,303,216,5	script	Muka Juice#ep16_1	4_ENERGY_BLUE,{
+	check_sauce(11428);
+	mes "The juice made of fresh Muka";
+	mes "It is refreshing.";
+	close;
+}
+
+prt_cas,302,205,5	script	Dishwasher#ep16_1	4_M_ALCHE_D,{
+	if (banquet_quest_cooking < 13) {
+		mes "[Dishwasher]";
+		mes "Argh!";
+		npctalk "Argh!", "Dishwasher#ep16_1", bc_self;
+		next;
+		mes "[Dishwasher]";
+		mes "The housewife's eczema is back in action in my right hand!";
+		npctalk "The housewife's eczema is back in action in my right hand!", "Dishwasher#ep16_1", bc_self;
+		next;
+		mes "[Dishwasher]";
+		mes "Hode Cream!";
+		mes "Please give me the Hode Cream!";
+		mes "Arghhhhh!";
+		npctalk "Please give me the Hode Cream!", "Dishwasher#ep16_1", bc_self;
+		close;
+	}
+	if (banquet_quest_cooking == 13) {
+		if (countitem(6935) < 15) {
+			mes "[Dishwasher]";
+			mes "I wash the dishes again... Again... Again...";
+			mes "And it never ends!";
+			next;
+			mes "[Dishwasher]";
+			mes "However, this is the fate of a Dishwasher!";
+			next;
+			mes "[Dishwasher]";
+			mes "It is a fate!";
+			mes "I have to endure it!";
+			next;
+			mes "[Dishwasher]";
+			mes "Please bring me!";
+			mes "More dishes to wash!";
+			next;
+			mes "[Dishwasher]";
+			mes "I'll get over it!";
+			mes "My fate!";
+			close;
+		}
+		mes "[Dishwasher]";
+		mes "Hahaha... It is a new plate.";
+		mes "I'll make it squeaky clean like this!";
+		next;
+		mes "[Dishwasher]";
+		mes "Oh... The Head Chef has been looking for you.";
+		mes "Is there any problem?";
+		delitem 6935,15;// High-Class Dish
+		erasequest 11419;// Why Should I Prepare for the Banquets?
+		setquest 11420;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 14;
+		close;
+	}
+	if (banquet_quest_cooking == 14) {
+		mes "[Dishwasher]";
+		mes "Oh... The Head Chef has been looking for you.";
+		mes "Is there any problem?";
+		close;
+	}
+
+	switch( checkquest(11427,PLAYTIME) ) {
+	case -1:
+		if (isbegin_quest(11426) == 0) {
+			mes "[Dishwasher]";
+			mes "Oh! Are you here to help me again?";
+			mes "Isn't a clean dish makes you feel clean?";
+			next;
+			mes "[Dishwasher]";
+			mes "Well, I guess it is just normal to feel that way!";
+			mes "With that spirit! Please bring me 15 more dishes to wash!";
+			next;
+			mes "[Dishwasher]";
+			mes "Please be careful with them, since those are some precious dishes!";
+			setquest 11426;// Banquet: Washing 15 Dishes
+			close;
+		}
+		if (countitem(6935) < 15) {
+			mes "[Dishwasher]";
+			mes "I wash the dishes again... Again... Again...";
+			mes "And it never ends!";
+			next;
+			mes "[Dishwasher]";
+			mes "However, this is the fate of a Dishwasher!";
+			next;
+			mes "[Dishwasher]";
+			mes "It is a fate!";
+			mes "I have to endure it!";
+			next;
+			mes "[Dishwasher]";
+			mes "Please bring me!";
+			mes "Please bring me about 15 more dishes to wash!";
+			next;
+			mes "[Dishwasher]";
+			mes "I'll get over it!";
+			mes "My fate!";
+			close;
+		}
+		mes "[Dishwasher]";
+		mes "Hahaha... It is a new plate.";
+		mes "I'll make it squeaky clean like this!";
+		delitem 6935,15;// High-Class Dish
+		erasequest 11426;// Banquet: Washing 15 Dishes
+		setquest 11427;// Complete Today's Dish Collecting
+		getitem 6919,4;// Honor Token
+		close;
+	case 0:
+	case 1:
+		mes "[Dishwasher]";
+		mes "Don't push yourself too hard.";
+		mes "Why don't you go take a rest and come back tomorrow?";
+		close;
+	case 2:
+		mes "[Dishwasher]";
+		mes "Thank you for helping me last time!";
+		mes "It is very important to take enough rest after work.";
+		erasequest 11427;// Complete Today's Dish Collecting
+		close;
+	}
+}
+
+prt_cas,315,204,1	script	Chef#ep16_1	4_COOK,{
+	mes "[Chef]";
+	mes "My cooking was perfect!";
+	close;
+}
+
+prt_cas,313,204,3	script	Chef#ep16_2	4_COOK,{
+	mes "[Chef]";
+	mes "I cannot believe that I am able to cook with the Head Chef!";
+	mes "It feels like I am dreaming!";
+	close;
+}
+
+prt_cas,313,202,3	script	Chef#ep16_3	4_COOK,{
+	mes "[Chef]";
+	mes "Delicious!";
+	close;
+}
+
+prt_cas,313,200,3	script	Chef#ep16_4	4_COOK,{
+	mes "[Chef]";
+	mes "I prefer to have it with salt than sugar!";
+	close;
+}
+
+prt_cas,313,196,3	script	Chef#ep16_5	4_COOK,{
+	mes "[Chef]";
+	mes "The best way to taste it is to taste it as it is! The best flavor is the flavor of the ingredient itself!";
+	close;
+}
+
+prt_cas,313,194,3	script	Chef#ep16_6	4_COOK,{
+	mes "[Chef]";
+	mes "Dear Head Chef! Please marry me!";
+	npctalk "Dear Head Chef! Please marry me!", "Chef#ep16_6", bc_self;
+	close;
+}
+
+// Hall
+prt_cas,82,268,5	script	Mark Ishar#ep16_1	4_EP16_MARK,{
+	if (banquet_quest_cooking == 10) {
+		mes "[Mark]";
+		mes "Hello." + strcharinfo(0) + ".";
+		mes "Are you having a good time?";
+		mes "May I help you?";
+		npctalk "Hello.", "Mark Ishar#ep16_1", bc_self;
+		emotion ET_DELIGHT;
+		cutin "mark_wt_4",0;
+		next;
+		select("Tell him about Tamarin.");
+		mes "[Mark]";
+		mes "Oh!";
+		mes "He...";
+		mes "He was making fun of me for working here! How great!";
+		emotion ET_FRET;
+		cutin "mark_wt_2",0;
+		next;
+		mes "[Mark]";
+		mes "Please tell him to work hard!";
+		mes "Hahahahaha!";
+		cutin "mark_wt_4",0;
+		next;
+		mes "[Alice]";
+		mes "Oh, Tamarin must be the friend who often goes missing, right?";
+		cutin "acact_03",2;
+		erasequest 11416;// Why Should I Prepare for the Banquets?
+		setquest 11417;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 11;
+		close3;
+	}
+	if (banquet_quest_cooking == 11) {
+		mes "[Mark]";
+		mes "Oh!";
+		mes "He...";
+		mes "He was making fun of me for working here! How great!";
+		cutin "mark_wt_2",0;
+		next;
+		mes "[Mark]";
+		mes "Please tell him to work hard!";
+		mes "Hahahahaha!";
+		cutin "mark_wt_4",0;
+		next;
+		mes "[Alice]";
+		mes "Oh, Tamarin must be the friend who often goes missing, right?";
+		cutin "acact_03",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 12) {
+		mes "[Mark]";
+		mes "" + strcharinfo(0) + ", please tell Tamarin that.";
+		mes "I hope to be able to get away from the preparation duty for the banquet.";
+		cutin "mark_wt_1",0;
+		close3;
+	}
+	mes "[Mark]";
+	mes "Hello. " + strcharinfo(0) + ".";
+	mes "Are you having a good time?";
+	mes "May I help you?";
+	npctalk "Hello.", "Mark Ishar#ep16_1", bc_self;
+	emotion ET_DELIGHT;
+	cutin "mark_wt_4",0;
+	close3;
+}
+
+prt_cas,83,270,3	script	Alice Ishar#ep16_1	4_F_ACOLYTE,{
+	if (banquet_quest_cooking < 11) {
+		mes "[Alice]";
+		mes "Mark! You shouldn't put it there. Put it here...";
+		mes "Since we are working at the palace, we shouldn't overlook even the tiniest thing!";
+		cutin "acact_01",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 11) {
+		mes "[Alice]";
+		mes "Hum... I know you are busy, but you shouldn't just make people work for no good reason since it is the business of the palace.";
+		cutin "acact_03",2;
+		next;
+		mes "[Alice]";
+		mes "I'll tell them about it. Would you let Tamarin know?";
+		mes "The preparation for the banquet doesn't end until the banquet is over.";
+		cutin "acact_01",2;
+		erasequest 11417;// Why Should I Prepare for the Banquets?
+		setquest 11418;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 12;
+		close3;
+	}
+	if (banquet_quest_cooking == 12) {
+		mes "[Alice]";
+		mes "I'll tell them about it. Would you let Tamarin know?";
+		mes "The preparation for the banquet doesn't end until the banquet is over.";
+		cutin "acact_01",2;
+		close3;
+	}
+	mes "[Alice]";
+	mes "Oh! How did it go?";
+	mes "Well, anything can happen when everyone is so busy.";
+	mes "Hahaha.";
+	cutin "acact_02",2;
+	close3;
+}
+
+prt_cas,111,234,3	script	Magi Steen#ep16_1	4_F_PINKWOMAN,{
+	if (banquet_quest_cooking <= 8) {
+		mes "[Magi]";
+		mes "He... Hello...";
+		cutin "bu_maggi2",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 9) {
+		mes "[Magi]";
+		mes "Ah...";
+		mes "Mark must be...";
+		cutin "bu_maggi1",2;
+		next;
+		mes "[Magi]";
+		mes "I met him on the stairs over there.";
+		mes "He... He was busy that I couldn't talk to him much...";
+		cutin "bu_maggi3",2;
+		next;
+		mes "[Magi]";
+		mes "It... It was great!";
+		mes "Whoa...";
+		emotion ET_COOL;
+		cutin "bu_maggi2",2;
+		erasequest 11415;// Why Should I Prepare for the Banquets?
+		setquest 11416;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 10;
+		close3;
+	}
+	if (banquet_quest_cooking == 10) {
+		mes "[Magi]";
+		mes "Ah...";
+		mes "Mark must be...";
+		cutin "bu_maggi1",2;
+		next;
+		mes "[Magi]";
+		mes "I met him on the stairs over there.";
+		mes "He... He was busy that I couldn't talk to him much...";
+		cutin "bu_maggi3",2;
+		close3;
+	}
+	mes "[Magi]";
+	mes "...I guess it was no accident; it was inevitable...";
+	cutin "bu_maggi2",2;
+	close3;
+}
+
+prt_cas,111,235,3	script	Dyu Rianne#ep16_1	4_M_REDMAN,{
+	if (banquet_quest_cooking < 8) {
+		mes "[Dyu]";
+		mes "Yo! Who's this!";
+		mes "" + strcharinfo(0) + "!";
+		mes "Nice to see you again!";
+		emotion ET_SMILE;
+		cutin "bu_du1",2;
+		next;
+		mes "[Dyu]";
+		mes "What a great banquet?";
+		mes "The food is delicious as well!";
+		mes "" + strcharinfo(0) + ", have you tried the Grilled Griffon!";
+		mes "It was awesome!";
+		cutin "bu_du2",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 8) {
+		mes "[Dyu]";
+		mes "Yo! Who's this!";
+		mes "" + strcharinfo(0) + "!";
+		mes "Nice to see you again!";
+		emotion ET_SMILE;
+		cutin "bu_du1",2;
+		next;
+		mes "[Dyu]";
+		mes "What a great banquet?";
+		mes "The food is delicious as well!";
+		mes "" + strcharinfo(0) + ", have you tried the Grilled Griffon!";
+		mes "It was awesome!";
+		cutin "bu_du2",2;
+		next;
+		select("Tell him about Tamarin.");
+		mes "[Dyu]";
+		mes "Eh?";
+		mes "No wonder he wasn't coming back!";
+		mes "Since he often goes missing, I didn't give it much thought.";
+		emotion ET_HUK;
+		cutin "bu_du5",2;
+		next;
+		mes "[Dyu]";
+		mes "Since Mark is working here as well. Why don't we ask him?";
+		cutin "bu_du3",2;
+		next;
+		mes "[Dyu]";
+		mes "Oh, I was caught by his brother.";
+		mes "I was dragged here by force...";
+		cutin "bu_du2",2;
+		next;
+		mes "[Dyu]";
+		mes "I think I have seen Mark...";
+		mes "Where.... Where was it?";
+		cutin "bu_du3",2;
+		next;
+		mes "[Dyu]";
+		mes "Magi, where did we see Mark?";
+		erasequest 11414;// Why Should I Prepare for the Banquets?
+		setquest 11415;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 9;
+		close3;
+	}
+	if (banquet_quest_cooking == 9) {
+		mes "[Dyu]";
+		mes "Since Mark is working here as well. Why don't we ask him?";
+		cutin "bu_du3",2;
+		next;
+		mes "[Dyu]";
+		mes "Oh, I was caught by his brother.";
+		mes "I was dragged here by force...";
+		cutin "bu_du2",2;
+		next;
+		mes "[Dyu]";
+		mes "I think I have seen Mark...";
+		mes "Where.... Where was it?";
+		cutin "bu_du3",2;
+		next;
+		mes "[Dyu]";
+		mes "Magi, where did we see Mark?";
+		close3;
+	}
+	if (banquet_quest_cooking == 10) {
+		mes "[Dyu]";
+		mes "Did you hear?";
+		mes "Mark is on the stairs. Go up there and see him.";
+		cutin "bu_du2",2;
+		close3;
+	}
+	mes "[Dyu]";
+	mes "Haha!";
+	mes "How unlucky is Mark for working in the banquet held for the heroes!";
+	cutin "bu_du2",2;
+	close3;
+}
+
+// Dinner room
+prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
+	if (banquet_quest_cooking < 7) {
+		mes "[Tamarin]";
+		mes "Haaaaaaa!";
+		mes "What is going on...";
+		emotion ET_HNG;
+		npctalk "Haaaaaaa!", "Tamarin#ep16_1", bc_self;
+		cutin "tama_cook_4",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 7) {
+		mes "[Tamarin]";
+		mes "Haaaaaaa!";
+		mes "What is going on...";
+		emotion ET_HNG;
+		npctalk "Haaaaaaa!", "Tamarin#ep16_1", bc_self;
+		cutin "tama_cook_4",2;
+		next;
+		mes "[Tamarin]";
+		mes "Oh..." + strcharinfo(0) + ", is that you?";
+		mes "I wondered if you would come since the heroes from all over the places were supposed to attend the banquet.";
+		emotion ET_SURPRISE;
+		cutin "tama_cook_2",2;
+		next;
+		mes "[Tamarin]";
+		mes "Are you enjoying the banquet...";
+		mes "...Wait! You appear to be...";
+		emotion ET_HUK;
+		cutin "tama_cook_4",2;
+		next;
+		mes "[Tamarin]";
+		mes "No way!";
+		mes "" + strcharinfo(0) + ", did that happen to you too?";
+		next;
+		mes "[Tamarin]";
+		mes "When I was looking around to find more food for Dyu, someone took me to the Head Chef and made me work there!";
+		cutin "tama_cook_1",2;
+		next;
+		mes "[Tamarin]";
+		mes "They were so busy preparing for the banquet that I had no time to explain... And I ended up...";
+		emotion ET_CRY;
+		cutin "tama_cook_4",2;
+		next;
+		mes "[Tamarin]";
+		mes "Haha... They were just so busy that I couldn't just quit working...";
+		mes "Haha... Hahahahaha...";
+		next;
+		mes "[Tamarin]";
+		mes "I think it is too late for me...";
+		mes "Hahahaha...";
+		next;
+		mes "[Tamarin]";
+		mes "If you find Dyu in the Banquet Hall, please tell him that I won't be able to go back with food since I am too busy.";
+		mes "Hahahahaha...";
+		cutin "tama_cook_3",2;
+		erasequest 11413;// Why Should I Prepare for the Banquets?
+		setquest 11414;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 8;
+		close3;
+	}
+	if (banquet_quest_cooking >= 8 && banquet_quest_cooking <= 11) {
+		mes "[Tamarin]";
+		mes "I think it is too late for me...";
+		mes "Hahahaha...";
+		cutin "tama_cook_4",2;
+		next;
+		mes "[Tamarin]";
+		mes "If you find Dyu in the Banquet Hall, please tell him that I won't be able to go back with food since I am too busy.";
+		mes "Hahahahaha...";
+		cutin "tama_cook_3",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 12) {
+		mes "[Tamarin]";
+		mes "...Phew, that is my sister.";
+		mes "Well then." + strcharinfo(0) + ", why don't you come with me to enjoy the banquet...";
+		emotion ET_DELIGHT;
+		cutin "tama_cook_3",2;
+		next;
+		mes "[Tamarin]";
+		mes "...I guess we should finish what we have been doing!";
+		cutin "tama_cook_1",2;
+		next;
+		mes "[Tamarin]";
+		mes "I should bring the used dishes to the kitchen.";
+		mes "It would take less time if we do it together. Let's finish it and go eat something delicious!";
+		cutin "tama_cook_3",2;
+		erasequest 11418;// Why Should I Prepare for the Banquets?
+		setquest 11419;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 13;
+		close3;
+	}
+	if (banquet_quest_cooking == 13) {
+		mes "[Tamarin]";
+		mes "I guess we should finish what we have been doing!";
+		cutin "tama_cook_1",2;
+		next;
+		mes "[Tamarin]";
+		mes "I should bring the used dishes to the kitchen.";
+		mes "It would take less time if we do it together. Let's finish it and go eat something delicious!";
+		cutin "tama_cook_3",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 14) {
+		mes "[Tamarin]";
+		mes "Hum... What am I supposed to do next...";
+		cutin "tama_cook_1",2;
+		close3;
+	}
+	if (banquet_quest_cooking == 15) {
+		mes "[Tamarin]";
+		mes "Whoa..." + strcharinfo(0) + ", thank you.";
+		mes "Now I have some room to breathe...";
+		cutin "tama_cook_3",2;
+		next;
+		mes "[Tamarin]";
+		mes "Oh... It was just impossible for me to quit...";
+		mes "When I was about to leave after reporting to the Head Chef, I was caught by Mark' brother.";
+		cutin "tama_cook_1",2;
+		next;
+		mes "[Tamarin]";
+		mes "I guess it would make my life much easier if I just give up.";
+		emotion ET_HNG;
+		cutin "tama_cook_3",2;
+		close3;
+	}
+}
+
+prt_cas,358,124,0	script	Grilled Griffon#ep16_1	4_EP16_FOOD,{
+	if (banquet_quest_cooking == 6) {
+		mes "Place the dish carefully on the surface.";
+		next;
+		mes "[Tamarin]";
+		mes "Haaaaaaa!";
+		mes "What is going on...";
+		npctalk "Haaaaaaa!", "Tamarin#ep16_1", bc_self;
+		cutin "tama_cook_4",2;
+		erasequest 11399;// Why Should I Prepare for the Banquets?
+		setquest 11413;// Why Should I Prepare for the Banquets?
+		banquet_quest_cooking = 7;
+		close3;
+	}
+	if (isbegin_quest(11424) == 1) {
+		mes "Place the dish carefully on the surface.";
+		erasequest 11424;// Banquet: Griffin Barbecue
+		setquest 11425;// Complete Today's Grilled Griffin
+		getitem 6919,4;// Honor Token
+	}
+	mes "A tasty-looking Grilled Griffon.";
+	close;
+}
+
+prt_cas_q,30,128,0	script	#ep16_evt_neriusroom	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	if (banquet_main_quest == 16 || banquet_main_quest == 17) {
+		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep16_room01", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep16_room01_a", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Bodyguard Crux#ep16_room01", bc_self );
+		classchange( 4_EP16_SPICA, "Spica Nerius#ep16_room01_b", bc_self );
+	}
+	if (banquet_main_quest > 17)
+		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep16_room01", bc_self );
+	end;
+}
+
+// Nerius
+prt_cas_q,18,136,5	script	Skia Nerius#ep16_room01	4_EP16_SKIA,{
+	cutin "ep16_skia_nerius03",0;
+	mes "[Skia]";
+	mes "Hello.";
+	mes "You must be the hero whom everyone talks about.";
+	mes "I am honored to meet you.";
+	close3;
+}
+
+prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
+	if (banquet_main_quest < 2) {
+		mes "[Spica]";
+		mes "Are you invited to the banquet?";
+		mes "This place is not the Banquet Hall.";
+		close3;
+	}
+	if (banquet_main_quest == 7) {
+		mes "[Spica]";
+		mes "I have heard the story briefly from Skia.";
+		mes "Lord Nyhill must have a constitutional weakness for alcohol.";
+		cutin "ep16_spica_nerius01",1;
+		next;
+		mes "[Spica]";
+		mes "You are not hiding anything, right?";
+		next;
+		if (select( "I saw someone suspicious.", "No." ) == 2) {
+			mes "[Spica]";
+			mes "You are lying.";
+			mes "I have to let the elders know about this anyway.";
+			cutin "ep16_spica_nerius02",1;
+			next;
+			mes "[Spica]";
+			mes "I wonder if the old folks would hear me out though.";
+			close;
+		}
+		mes "[Spica]";
+		mes "Skia told me something similar to that.";
+		mes "Crux didn't find out much.";
+		next;
+		mes "[Spica]";
+		mes "I guess some shady characters must have mixed in with the bunch of temporary employees hired for the banquet.";
+		next;
+		cutin "ep16_spica_nerius02",1;
+		mes "[Spica]";
+		mes "...Anyways, I guess we have to warn the elders about this.";
+		close3;
+	}
+	if (banquet_main_quest == 16 || banquet_main_quest == 17)
+		end;
+	if (banquet_main_quest > 17) {
+		mes "[Spica]";
+		mes "Sorry about all the trouble.";
+		mes "How unlucky of you to be involved in this mess.";
+		cutin "ep16_spica_nerius01",1;
+		next;
+		mes "[Spica]";
+		mes "Well, I am not doing well either.";
+		mes "The royal family is focusing on finding out who is pulling the strings.";
+		next;
+		mes "[Spica]";
+		mes "...All they can do is to sort out the puppets infiltrated into the palace.";
+		mes "But it is better than doing nothing.";
+		mes "Now... then.";
+		next;
+		select("Where is Skia?");
+		mes "[Spica]";
+		mes "She went to hang out with Lord Nyhill!";
+		mes "I don't know what she sees in the pretty boy with no substance.";
+		cutin "ep16_spica_nerius03",1;
+		next;
+		mes "[Spica]";
+		mes "Could it be...";
+		mes "Could it be that?";
+		mes "Is she enchanted by his looks?";
+		mes "Crux, you answer me!";
+		cutin "ep16_spica_nerius05",1;
+		next;
+		cutin "ep16_crux_findel03",2;
+		mes "[Crux]";
+		mes "Wha... What? Well...";
+		mes "It sounds plausible...";
+		mes "By the way, Lord Nyhill is under probation so he is not supposed to leave his room.";
+		next;
+		mes "[Spica]";
+		mes "Well, I stand corrected. She went to visit Nyhill in his room.";
+		mes "...Isn't it the same thing?";
+		cutin "ep16_spica_nerius06",1;
+		next;
+		select("Crux, cheer up...");
+		cutin "ep16_crux_findel03",2;
+		mes "[Crux]";
+		mes "Oh, are you leaving now?";
+		mes "It sure is wise of you to leave before the lady's head explodes.";
+		next;
+		cutin "ep16_crux_findel02",2;
+		mes "[Crux]";
+		mes "See you later.";
+		// close2;// player still talking
+		cutin "",255;
+		npctalk "Why are you letting the guest out?", "", bc_self;
+		sleep2 1000;
+		npctalk "Yes, yes, my lady. I am at your service. Where are you?", "Bodyguard Crux#ep16_room01", bc_self;
+		sleep2 3000;
+		npctalk "You are not the one I am looking for!", "", bc_self;
+		sleep2 3000;
+		npctalk "Shall I leave too?", "Bodyguard Crux#ep16_room01", bc_self;
+		sleep2 3000;
+		npctalk "I don't mean that!", "", bc_self;
+		sleep2 3000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : (Oh my, I'd better get out now.)", bc_self;
+		end;
+	}
+
+	if (banquet_nerius_quest == 0) {
+		mes "[Spica]";
+		mes "You must be " + strcharinfo(0) + " whom everyone talks about.";
+		mes "Thank you for visiting us.";
+		mes "I am Spica of the Nerius family.";
+		cutin "ep16_spica_nerius01",1;
+		next;
+		mes "[Skia]";
+		mes "I am Skia.";
+		mes "Nice to meet you.";
+		cutin "ep16_skia_nerius01",0;
+		next;
+		mes "[Spica]";
+		mes "And he is my bodyguard.";
+		cutin "ep16_spica_nerius01",1;
+		next;
+		mes "[Crux]";
+		mes "My name is Crux Findel.";
+		mes "I am learning swordsmanship in the Nerius family.";
+		cutin "ep16_crux_findel01",2;
+		next;
+		mes "[Spica]";
+		mes "Our mother, the current head of the family, is supposed to be here.";
+		mes "However, since many heroes like you," + strcharinfo(0) + ", are said to attend this banquet,";
+		cutin "ep16_spica_nerius01",1;
+		next;
+		mes "[Spica]";
+		mes "Our mother let us come here to meet and learn from them.";
+		next;
+		select("Where is the candidate for the throne?");
+		cutin "ep16_spica_nerius05",1;
+		mes "[Spica]";
+		mes "Oh, you must be invited as the observer to the ritual...";
+		mes "I see.";
+		npctalk "He must be in the library.", "Bodyguard Crux#ep16_room01", bc_self;
+		next;
+		cutin "ep16_spica_nerius01",1;
+		mes "[Spica]";
+		mes "Erich is in the royal library.";
+		mes "I guess he could be looking for blueprints of some sort which interest him.";
+		next;
+		cutin "ep16_spica_nerius02",1;
+		mes "[Spica]";
+		mes "Nerius is not interested in the throne.";
+		mes "Erich didn't have to participate in the Royal Assembly.";
+		next;
+		cutin "ep16_spica_nerius01",1;
+		mes "[Spica]";
+		mes "Since he is just a candidate merely for effect, he must be doing what he wants to do now.";
+		next;
+		select("Why aren't you interested in the throne?");
+		cutin "ep16_spica_nerius05",1;
+		mes "[Spica]";
+		mes "It is one of the characteristics of the Nerius.";
+		mes "The family is led by women for generations. Therefore, we turn out more queens than kings.";
+		next;
+		cutin "ep16_spica_nerius03",1;
+		mes "[Spica]";
+		mes "If Erich hasn't come forth, one of us, Skia and I would have been elected as a candidate for the queen.";
+		next;
+		cutin "ep16_spica_nerius02",1;
+		mes "[Spica]";
+		mes "Our mother didn't like it.";
+		mes "That's why Erich became a candidate for the throne. Poor cousin...";
+		next;
+		cutin "ep16_spica_nerius01",1;
+		mes "[Spica]";
+		mes "Well, I guess that's enough information about our family.";
+		mes "Have you exchanged greetings with all other families?";
+		next;
+		mes "[Spica]";
+		mes "Since freedom doesn't come often for us, I tend to enjoy it as much as possible.";
+		mes "So...";
+		next;
+		cutin "ep16_skia_nerius03",0;
+		mes "[Skia]";
+		mes "Why don't you enjoy it with us?";
+		mes "I believe the lord of the Heine family would make a good friend too.";
+		next;
+		cutin "ep16_spica_nerius06",1;
+		mes "[Spica]";
+		mes "Skia, my beloved twin.";
+		mes "You need to learn to speak more elegantly.";
+		npctalk "Gosh, stop nagging...", "Skia Nerius#ep16_room01", bc_self;
+		next;
+		npctalk "I can hear you.", "", bc_self;
+		cutin "ep16_spica_nerius07",1;
+		mes "[Spica]";
+		mes "Anyways, what I want to say is that";
+		mes "the Nerius family is always open to you," + strcharinfo(0) + ", so please visit us";
+		mes "anytime you want.";
+		npctalk "......", "Bodyguard Crux#ep16_room01", bc_self;
+		next;
+		setquest 7684;// Visit the Nerius
+		completequest 7684;// Visit the Nerius
+		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+		}
+		banquet_nerius_quest = 1;
+		cutin "ep16_spica_nerius01",1;
+		mes "[Spica]";
+		mes "We must get prepared for the Banquet now. We need some time to dress up.";
+		next;
+		mes "[Spica]";
+		mes "Why don't you go visit other families if you have not visited them all?";
+		next;
+		mes "[Spica]";
+		mes "I'll send you a formal invitation to make up for this.";
+		close3;
+	}
+	if (banquet_nerius_quest == 1) {
+		mes "[Spica]";
+		mes "Why don't you go visit other families if you have not visited them all?";
+		close;
+	}
+}
+
+prt_cas_q,21,140,3	script	Bodyguard Crux#ep16_room01	4_EP16_CRUX,{
+	cutin "ep16_crux_findel01",1;
+	mes "[Crux]";
+	mes "Don't mind me.";
+	close3;
+}
+
+prt_cas_q,23,133,2	script	Nyhill M. Heine#ep16_nr	HIDDEN_WARP_NPC,{
+	if (banquet_main_quest == 17) {
+		cutin "ep16_nihi_miseria_heine01",2;
+		mes "[Nyhill]";
+		mes "We'd better move now since the situation doesn't look good.";
+		close3;
+	}
+}
+
+prt_cas_q,18,136,3	script	Spica Nerius#ep16_room01_b	HIDDEN_WARP_NPC,{
+	if (banquet_main_quest == 16) {
+		mes "[Spica]";
+		mes "You are rather slow-footed.";
+		mes "It has been a while since I got the message that you came back.";
+		cutin "ep16_skia_shadow01",1;
+		next;
+		mes "[Spica]";
+		mes "I invited you for no special reason.";
+		mes "Since they keep calling for meetings to discuss what has happened during the ritual.";
+		next;
+		mes "[Spica]";
+		mes "There comes lord of the Heine family.";
+		mes "You seem to move around rather freely considering that you are under confinement.";
+		next;
+		classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_nr", bc_self );
+		mes "[Nyhill]";
+		mes "...?";
+		mes "" + strcharinfo(0) + ", I have something to tell you.";
+		mes "And about the confinement, it is OK as long as I stay in the western wing of the royal villa...";
+		cutin "ep16_nihi_miseria_heine01",2;
+		next;
+		mes "[Nyhill]";
+		mes "By the way, Skia? What are you doing?";
+		mes ".......";
+		next;
+		mes "[Spica]";
+		mes "Skia?";
+		mes "She is not here now.";
+		cutin "ep16_skia_shadow03",0;
+		next;
+		mes "[Nyhill]";
+		mes "Oh, this must be it.";
+		mes "The shadow duty.";
+		mes "What is going on?";
+		cutin "ep16_nihi_miseria_heine01",2;
+		next;
+		mes "[Skia]";
+		mes "...How could you tell at a glance?";
+		mes "I am busted.";
+		mes "Am I a bad actress?";
+		cutin "ep16_skia_shadow04",0;
+		next;
+		mes "[Nyhill]";
+		mes "Even if you are twins, you don't look exactly the same.";
+		mes "I just noticed certain differenced.";
+		cutin "ep16_nihi_miseria_heine02",2;
+		next;
+		mes "[Skia]";
+		mes "Really? I am flattered though.";
+		mes "I am glad that you have been looking at me, not Spica.";
+		cutin "ep16_skia_shadow05",0;
+		next;
+		select("Why are you in that outfit?");
+		mes "[Skia]";
+		mes "Hum... It is to protect Spica who will be the head of the Nerius family.";
+		mes "Sometimes, I stand forward instead of Spica.";
+		cutin "ep16_skia_shadow01",0;
+		next;
+		mes "[Skia]";
+		mes "While my sister learned what the head of the family must know from our mother,";
+		mes "I learned to hide and fight.";
+		cutin "ep16_skia_shadow02",0;
+		next;
+		mes "[Skia]";
+		mes "That is why people call me the shadow princess.";
+		mes "It is my first time attending an official event in the light.";
+		next;
+		mes "[Skia]";
+		mes "Anyways, I am filling in for Spica who has left to run some errands now.";
+		mes "I need to show how she is attending the royal banquet with grace.";
+		cutin "ep16_skia_shadow04",0;
+		next;
+		mes "[Nyhill]";
+		mes "Thanks to Lady Spica, I get to move around as much as I can now...";
+		cutin "ep16_nihi_miseria_heine01",2;
+		next;
+		mes "[Nyhill]";
+		mes "When will she come back?";
+		mes "The meeting of the representatives has been over...";
+		next;
+		select("What brought you here?");
+		mes "[Nyhill]";
+		mes "I have come to deliver you the message that there is a mission for you.";
+		next;
+		cutin "ep16_nihi_miseria_heine04",2;
+		mes "[Nyhill]";
+		mes "To be exact, I volunteered since I heard that you were visiting the Nerius family.";
+		npctalk "...The room was stuffy.", "Nyhill M. Heine#ep16_nr";
+		next;
+		cutin "ep16_skia_shadow03",0;
+		mes "[Skia]";
+		mes "It must be about the incident during the ritual, right?";
+		mes "What does the hero have to do with the royal family's business?";
+		next;
+		cutin "ep16_nihi_miseria_heine01",2;
+		mes "[Nyhill]";
+		mes "Well, you can ask Spica later.";
+		mes "She was there in the meeting, you know.";
+		next;
+		mes "[Nyhill]";
+		mes "This conversation is getting too long.";
+		mes "Please go meet my grandfather and father first.";
+		next;
+		mes "[Nyhill]";
+		mes "They must be waiting for you.";
+		next;
+		cutin "ep16_skia_shadow04",0;
+		mes "[Skia]";
+		mes "Hum... I see. I shall ask Spica to fill me in with the details when she comes back.";
+		next;
+		cutin "ep16_nihi_miseria_heine01",2;
+		mes "[Nyhill]";
+		mes "Then, let's go.";
+		next;
+		cutin "ep16_skia_shadow04",0;
+		mes "[Skia]";
+		mes "" + strcharinfo(0) + ", please come to see me again later!";
+		banquet_main_quest = 17;
+		setquest 7698;// Heine Now
+		erasequest 7697;// Invitation from the Nerius
+		close3;
+	}
+	if (banquet_main_quest == 17) {
+		mes "[Skia]";
+		mes "I have to wait for Spica's return and change clothes.";
+		mes "I cannot leave now.";
+		cutin "ep16_skia_shadow04",1;
+		next;
+		mes "[Skia]";
+		mes "What would happen when I get out like this and encounter Spica on the way?";
+		mes "We will be in trouble.";
+		close3;
+	}
+}
+
+prt_cas_q,130,56,0	script	prt_cas_30#prt_cas_31	WARPNPC,1,1,{
+OnTouch:
+	if (banquet_main_quest >= 3 && banquet_main_quest <= 14) {
+		mes "It is locked.";
+		close;
+	}
+	if (banquet_main_quest == 15) {
+		mes "Let's first reply to the servernt that the invitation will be accepted.";
+		close;
+	}
+	warp "prt_cas_q",30,128;
+	end;
+}
+
+prt_cas_q,23,187,3	script	Mysterious Person#ep16w	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	if (banquet_walther_quest == 1) {
+		classchange( 4_M_04, "Mysterious Person#ep16w", bc_self );
+		mes "[Man from the Richard]";
+		mes "Long time no see, Ian.";
+		next;
+		mes "[Ian]";
+		mes "Why are you here? I thought we agreed ^0000cdnot to see each other ever again after the previous Royal Assembly^000000.";
+		next;
+		mes "[Man from the Richard]";
+		mes "I remember that, but the heir of your family has been busy these days.";
+		next;
+		mes "[Man from the Richard]";
+		mes "He has been digging around so much that the story has reached me.";
+		mes "No one seems to pay much attention, but you never know.";
+		next;
+		mes "[Ian]";
+		mes "I told Isenhonor to ^0000cdstop investigating about his brother's death^000000.";
+		next;
+		mes "[Man from the Richard]";
+		mes "He should. It would get us both in trouble if the fact that ^0000cdwe were going to kill the imperial candidate of the Geoborg family^000000 leaks out.";
+		next;
+		mes "[Ian]";
+		mes "No one knows about it, you know.";
+		mes "The ^0000cdplan was ruined ^000000as Isenarm was killed while acting violently.";
+		next;
+		mes "[Man from the Richard]";
+		mes "I am sorry about your heir.";
+		next;
+		mes "[Ian]";
+		mes "I don't care who becomes the heir as long as he leads the family well.";
+		mes "I don't understand why Isenarm who has behaved so well acted that way though...";
+		next;
+		mes "[Ian]";
+		mes "He must have sensed something to act like than when he was about to be elected as the king... There is no way to find out now...";
+		mes "Geoborg has been silent as well ever since, I hear.";
+		next;
+		mes "[Man from the Richard]";
+		mes "Yes, the word has it.";
+		next;
+		mes "[Ian]";
+		mes "Since Isenarm was killed by Geoborg, ^0000cdthe Walther family has been excluded from the Royal Assembly^000000 this time.";
+		mes "He was a great boy. It is a shame since he was the perfect candidate for the throne.";
+		next;
+		mes "[Man from the Richard]";
+		mes "The important thing is that as long as we both keep silent, the truth will remain unknown forever.";
+		mes "Then, I guess we will never see each other again.";
+		next;
+		mes "[Man from the Richard]";
+		mes "Make sure to warn your heir not to dig around the incident, no more.";
+		mes "If it gets out, my family can deny it.";
+		next;
+		mes "[Man from the Richard]";
+		mes "However, you Ian will be in trouble as the same member of the family since there is no witness or proof left now.";
+		next;
+		mes "[Ian]";
+		mes "Are you threatening me?";
+		next;
+		mes "[Man from the Richard]";
+		mes "Shh... You'd better keep your voice down. Your heir may hear you.";
+		mes "I mean, we should be careful.";
+		next;
+		mes "[Man from the Richard]";
+		mes "Well, I cannot be absent for so long anyway. Let me head back now.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Mysterious Person#ep16w", bc_self );
+		mes "[Ian]";
+		mes "Argh... How dare...!";
+		mes "I shouldn't have worked with him in the first place. I lost my poor nephew for nothing.";
+		mes "[Ian]";
+		mes "Are you enjoying the banquet?";
+		mes "I hope you enjoy the banquet since it is held for you.";
+		banquet_walther_quest = 2;
+		setquest 14516;// Suspicious Shadow
+		completequest 14516;// Suspicious Shadow
+		close;
+	}
+}
+
+// Walther
+prt_cas_q,20,184,3	script	Ian Walther#ep16wal	1_M_JOBTESTER,{
+	if (banquet_main_quest < 2) {
+		mes "[Ian]";
+		mes "How did you get in here.";
+		mes "Only the people with permission are allowed to be here.";
+		next;
+		mes "[Ian]";
+		mes "Get out of here now before I call someone to drag you out!";
+		close;
+	}
+	if (banquet_walther_quest == 0) {
+		mes "[Ian]";
+		mes "Are you the hero invited to the banquet? The Royal Assembly to be exact.";
+		mes "Nice to meet you. I am ^0000cdIan Walther^000000.";
+		next;
+		mes "[Ian]";
+		mes "Although ^0000cdthe Walther family doesn't participate in the Royal Assembly^000000, we are attending the banquet as one of the seven royal families.";
+		next;
+		mes "[Ian]";
+		mes "This is the ^0000cdheir of the Walther family, Isenhonor^000000. He is my nephew.";
+		next;
+		mes "[Ian]";
+		mes "He will be the head of the family as he attains adulthood this year. As of now, I am in charge of the family business.";
+		next;
+		mes "[Isenhonor]";
+		mes "How do you do? I am ^0000cdIsenhonor Walther^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why aren't you participating in the Royal Assembly when there is the heir?";
+		next;
+		mes "[Ian]";
+		mes "I wonder of you know this, ^0000cdthe candidate from our family was involved in an unfortunate incident^000000 in the ^0000cdprevious Royal Assembly^000000.";
+		next;
+		mes "[Ian]";
+		mes "^0000cdIsenarm^000000 who was the candidate for the throne acted violently all of a sudden. ^0000cdHe ended up being killed by the heir of the Geoborg family^000000.";
+		next;
+		mes "[Ian]";
+		mes "After discussion, our family decided not to take part in the ^0000cdRoyal Assembly^000000 this time.";
+		next;
+		mes "[Isenhonor]";
+		mes "......";
+		next;
+		mes "[Ian]";
+		mes "Well then. I hope you enjoy the banquet. The banquet is held for you after all.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. Thank you for sparing me some time.";
+		setquest 14469;// Look around the Walther Family
+		banquet_walther_quest = 1;
+		close;
+	}
+	if (banquet_walther_quest == 1) {
+		mes "[Man from the Richard]";
+		mes "Long time no see, Ian.";
+		next;
+		mes "[Ian]";
+		mes "Why are you here? I thought we agreed ^0000cdnot to see each other ever again after the previous Royal Assembly^000000.";
+		next;
+		mes "[Man from the Richard]";
+		mes "I remember that, but the heir of your family has been busy these days.";
+		next;
+		mes "[Man from the Richard]";
+		mes "He has been digging around so much that the story has reached me.";
+		mes "No one seems to pay much attention, but you never know.";
+		next;
+		mes "[Ian]";
+		mes "I told Isenhonor to ^0000cdstop investigating about his brother's death^000000.";
+		next;
+		mes "[Man from the Richard]";
+		mes "He should. It would get us both in trouble if the fact that ^0000cdwe were going to kill the imperial candidate of the Geoborg family^000000 leaks out.";
+		next;
+		mes "[Ian]";
+		mes "No one knows about it, you know.";
+		mes "The ^0000cdplan was ruined ^000000as Isenarm was killed while acting violently.";
+		next;
+		mes "[Man from the Richard]";
+		mes "I am sorry about your heir.";
+		next;
+		mes "[Ian]";
+		mes "I don't care who becomes the heir as long as he leads the family well.";
+		mes "I don't understand why Isenarm who has behaved so well acted that way though...";
+		next;
+		mes "[Ian]";
+		mes "He must have sensed something to act like than when he was about to be elected as the king... There is no way to find out now...";
+		mes "Geoborg has been silent as well ever since, I hear.";
+		next;
+		mes "[Man from the Richard]";
+		mes "Yes, the word has it.";
+		next;
+		mes "[Ian]";
+		mes "Since Isenarm was killed by Geoborg, ^0000cdthe Walther family has been excluded from the Royal Assembly^000000 this time.";
+		mes "He was a great boy. It is a shame since he was the perfect candidate for the throne.";
+		next;
+		mes "[Man from the Richard]";
+		mes "The important thing is that as long as we both keep silent, the truth will remain unknown forever.";
+		mes "Then, I guess we will never see each other again.";
+		next;
+		mes "[Man from the Richard]";
+		mes "Make sure to warn your heir not to dig around the incident, no more.";
+		mes "If it gets out, my family can deny it.";
+		next;
+		mes "[Man from the Richard]";
+		mes "However, you Ian will be in trouble as the same member of the family since there is no witness or proof left now.";
+		next;
+		mes "[Ian]";
+		mes "Are you threatening me?";
+		next;
+		mes "[Man from the Richard]";
+		mes "Shh... You'd better keep your voice down. Your heir may hear you.";
+		mes "I mean, we should be careful.";
+		next;
+		mes "[Man from the Richard]";
+		mes "Well, I cannot be absent for so long anyway. Let me head back now.";
+		next;
+		mes "[Ian]";
+		mes "Argh... How dare...!";
+		mes "I shouldn't have worked with him in the first place. I lost my poor nephew for nothing.";
+		setquest 14516;// Suspicious Shadow
+		completequest 14516;// Suspicious Shadow
+		banquet_walther_quest = 2;
+		close;
+	}
+	if (banquet_walther_quest >= 2) {
+		mes "[Ian]";
+		mes "Are you enjoying the banquet?";
+		mes "I hope you enjoy the banquet since it is held for you.";
+		close;
+	}
+}
+
+prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
+	if (checkweight(501,1) == 0) {
+		mes "[Isenhonor Walther]";
+		mes "You seem to have a lot of luggage. Are you OK?";
+		mes "It looks a lot and large.";
+		next;
+		mes "[Isenhonor Walther]";
+		mes "How about cutting down some?";
+		close;
+	}
+	if (banquet_walther_quest == 0) {
+		mes "[Isenhonor]";
+		mes "You must be an adventurer. Thank you for visiting this gloomy place.";
+		next;
+		mes "[Isenhonor]";
+		mes "The representative of our family is over there. I hope you have a good time then.";
+		close;
+	}
+	if (banquet_walther_quest <= 2) {// can skip event in banquet_walther_quest == 1
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello?";
+		next;
+		mes "[Isenhonor]";
+		mes "What are you doing here? The Banquet Hall is over there.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I was sorry that I didn't get the time to talk to you then.";
+		next;
+		mes "[Isenhonor]";
+		mes "What story? You mean the story of my brother being killed for his violent behavior? You seemed to hear it so eagerly. I hope you don't believe that bullshit.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, well...";
+		next;
+		mes "[Isenhonor]";
+		mes "I cannot believe that my brother has acted violently. Even if he did, there must have been a ^0000cdreason.^000000";
+		next;
+		mes "[Isenhonor]";
+		mes "My brother, he must have done it for something. No one knows the truth, but people seem to believe the gossip.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If you want to clear the name of your brother, you can investigate on your own.";
+		next;
+		mes "[Isenhonor]";
+		mes "I am trying. But ^0000cdthe elders of my family don't want me to dig out the dishonorable incident^000000.";
+		next;
+		mes "[Isenhonor]";
+		mes "Also, it is impossible to meet ^0000cdErnst Geoborg^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wouldn't he meet you?";
+		next;
+		mes "[Isenhonor]";
+		mes "No. any access to him is blocked.";
+		next;
+		mes "[Isenhonor]";
+		mes "The ^0000cdGuardian Knight^000000 and ^0000cdErnst Geoborg^000000 are the only people who know what has happened that day. However it is impossible to meet them. I don't know where to begin...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "A Guardian Knight? Did your brother have a Guardian Knight?";
+		next;
+		mes "[Isenhonor]";
+		mes "Yes. Each member of the Walther family has a Guardian Knight. Our family is in overseas trade so that we often travel by ship.";
+		next;
+		mes "[Isenhonor]";
+		mes "As you know, the sailors are not a gentle bunch and we tend to carry money with us so that we are often threatened. We all have to bring Guardian Knights with us.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Where is your Guardian Knight then, Isenhonor?";
+		next;
+		mes "[Isenhonor]";
+		mes "I am sick of Guardian Knights since my brother's Guardian Knight abandoned my brother and ran away. I don't want to call them Guardian Knights.";
+		next;
+		mes "[Isenhonor]";
+		mes "What should I call a Guardian Knight who betrays the master and runs away?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I think it would be a good idea to start from your Guardian Knight. Since they worked together as Guardian Knight, he must know something.";
+		next;
+		mes "[Isenhonor]";
+		mes "Well, when I asked, he told me he knew nothing. If he did, he must have told me before I even asked.";
+		mes "They were pretty close and often exercised together.";
+		next;
+		mes "[Isenhonor]";
+		mes "Oh, well, since they were so close, he could have tried to defend his friend.";
+		mes "Why didn't I think of that...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Let me talk to him now. If I hear anything, it would be a good thing. Even if I don't get to hear anything it would still count as a try.";
+		next;
+		mes "[Isenhonor]";
+		mes "Why would you go through such trouble?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, I have a hunch. As an adventurer, my instinct says that there must be something going on.";
+		next;
+		mes "[Isenhonor]";
+		mes "Do all the adventurers count on their hunch like that? This could be dangerous. It is no matter to approach with a hunch.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That is why it is called an adventure. Adventurers where the adventures are.";
+		next;
+		mes "[Isenhonor]";
+		mes "I don't understand.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You may call it a needless meddling out of curiosity. However, I cannot neglect anyone in distress.";
+		next;
+		mes "[Isenhonor]";
+		mes "I appreciate your help though. I am desperate enough to accept your favor. However, I don't think you wouldn't hear much from the Guardian Knight though.";
+		next;
+		mes "[Isenhonor]";
+		mes "If you want to meet him anyway, go to ^0000cdour manor in the south of Alberta^000000. He must be there.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well then.";
+		erasequest 14469;// Look around the Walther Family
+		setquest 14470;// In Search of the Guardian Knight
+		banquet_walther_quest = 3;
+		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+		}
+		close;
+	}
+	if (banquet_walther_quest < 7) {
+		mes "[Isenhonor]";
+		mes "Adventurer, how did your meeting with the Guardian Knight in Alberta go? Not that I expect too much...";
+		next;
+		mes "[Isenhonor]";
+		mes "However, still, I have hoped to hear a good news from you...";
+		close;
+	}
+	if (banquet_walther_quest == 7) {
+		if (countitem(6929) < 1) {
+			mes "[Isenhonor]";
+			mes "Adventurer, you are back. How did it go?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Yes, I have something for you...";
+			mes "Oh? Where did it go?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I must have left it back. Let me go bring it for you.";
+			close;
+		}
+		mes "[Isenhonor]";
+		mes "You are back. How did it go?";
+		next;
+		mes "I told him the story of meeting the Guardian Knight of Isenarm and the conversation with him.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "This is the ^0000cdletter^000000.";
+		next;
+		mes "[Isenhonor]";
+		mes "Well, this indeed is the seal of our family, and it is my brother's handwriting.";
+		next;
+		mes "[Isenhonor]";
+		mes "As you said, my brother's Guardian Knight must have not betrayed my brother.";
+		next;
+		mes "[Isenhonor]";
+		mes "My brother indeed must have done such a thing for a reason.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I guess this is all I can do you now.";
+		next;
+		mes "[Isenhonor]";
+		mes "I understand. I should take on from here. Thank you for your help.";
+		next;
+		mes "[Isenhonor]";
+		mes "Please come back anytime when you need the help of the Walther family.";
+		next;
+		mes "[Isenhonor]";
+		mes "You are a valuable guest for us, the Walther family, from now on, dear adventurer. I'll help you anytime you want.";
+		delitem 6929,1;// Seal Stamped Letter
+		completequest 14474;// Report to Isenhonor
+		getitem 6919,10;// Honor Token
+		getexp 1000000,500000;
+		banquet_walther_quest = 8;
+		close;
+	}
+	if (banquet_walther_quest == 8) {
+		mes "[Isenhonor]";
+		mes "Based on the piece of information you have brought me, I am collecting other information too. It is not enough year, but I believe that I can unveil the truth someday.";
+		next;
+		mes "[Isenhonor]";
+		mes "I called Simon from Alberta. I need to gather all the help I can get now.";
+		next;
+		mes "[Isenhonor]";
+		mes "I will see you again when the truth is revealed.";
+		close;
+	}
+}
+
+alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
+	if (banquet_walther_quest == 3) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, I am looking for the Guardian Knight of Isenhonor. Where can I find him?";
+		next;
+		mes "[Simon]";
+		mes "I am his Guardian Knight. What's the matter? Has anything happened to him?";
+		next;
+		mes "[Simon]";
+		mes "I shouldn't have stayed behind. Is he all right?";
+		next;
+		mes "[Simon]";
+		mes "Kidnapping? Injury? Robbery? Fall? What is it? Oh, I should go there now...!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Calm down. Isenhonor is all right. Nothing happened. I am here to ask you something.";
+		next;
+		mes "[Simon]";
+		mes "Phew, I guess it wasn't my lord who called me. I am still glad that I is OK.";
+		next;
+		mes "[Simon]";
+		mes "What are you going to ask me? Well, who are you by the way?";
+		next;
+		mes "[I told him the conversation with Isenhonor in the palace briefly.]";
+		next;
+		mes "[Simon]";
+		mes "Oh, sorry about that. I am ^0000cdSimon Walther Marshall^000000.";
+		next;
+		mes "[Simon]";
+		mes "I don't know the whereabouts of ^0000cdKain Walther Walker^000000 who used to be the Guardian Knight of Isenarm, unfortunately.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You both have Walther in your names. Is there a special reason for it?";
+		next;
+		mes "[Simon]";
+		mes "Every knight belongs to the Walther who is assigned to a member of the Walther family is given the name, Walther.";
+		next;
+		mes "[Simon]";
+		mes "The name gives a sense of belonging. Also it gives us the pride to have been recognized as excellent knights.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Right. By the way, did you say that you know nothing about Kain Walther Walker?";
+		next;
+		mes "[Simon]";
+		mes "No, I don't.";
+		mes "However...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "However...?";
+		next;
+		mes "[Simon]";
+		mes "I heard a ^0000cdstrange gossip^000000 from some of the knights there when I escorted Isenhonor to the palace.";
+		next;
+		mes "[Simon]";
+		mes "They heard ^0000cda pickpocket locked in the basement of the palace^000000 babbling about how he had seen a person from the Walther family in a foreign country.";
+		next;
+		mes "[Simon]";
+		mes "However, no family member left the country due to the royal banquet. It was strange to hear that. I think that person could be ^0000cdKain^000000.";
+		next;
+		mes "[Simon]";
+		mes "I wanted to investigate myself considering the importance of the matter. But Isenhonor ordered me to go back to Alberta so I had to come back here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The pickpocket in the Underprison?";
+		next;
+		mes "[Simon]";
+		mes "Yes. I don't know his real name, but he is called ^0000cdBigfoot^000000 in the underworld.";
+		next;
+		mes "[Simon]";
+		mes "Minor offenders like pickpockets are usually locked in this other place. But that guy was caught pickpocketing in Arunafeltz.";
+		next;
+		mes "[Simon]";
+		mes "Due to diplomatic issues, we have taken his custody and locked him in the Underprison.";
+		next;
+		mes "[Simon]";
+		mes "That guy seems to have a lot of information from all over the continent. Even when his words about seen the person of the Walther family wasn't true, I felt that I could get useful information from him.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Whether the information he has is true or not, I would rather go visit him. Thank you for the information.";
+		next;
+		mes "[Simon]";
+		mes "Please say hello to my master when you get back to the palace. Tell him that I will be guarding this place well.";
+		next;
+		mes "[Simon]";
+		mes "And, let him know that he can call me anytime. I would gladly go there to guard him.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I'll let him know for sure.";
+		next;
+		mes "[Simon]";
+		mes "Have a safe trip then!";
+		erasequest 14470;// In Search of the Guardian Knight
+		setquest 14471;// To the Royal Prison
+		banquet_walther_quest = 4;
+		close;
+	}
+	if (banquet_walther_quest == 4) {
+		mes "[Simon]";
+		mes "How did your visit to the prison go?";
+		next;
+		mes "[Simon]";
+		mes "You can go see the convict called ^0000cdBigfoot^000000 locked in the ^0000cdUnderprison of the palace^000000.";
+		next;
+		mes "[Simon]";
+		mes "Didn't you hear anything else from Isenhonor? Please extend my greetings to him when you go to Prontera.";
+		close;
+	}
+	mes "[Guardian Knight]";
+	mes "What if anything happens to my master while I am gone...";
+	mes "Shall I leave for Prontera now?";
+	next;
+	mes "[Guardian Knight]";
+	mes "No, he will be mad at me.";
+	mes "He will call me someday. Let's wait here.";
+	next;
+	mes "[Guardian Knight]";
+	mes "Just a little more.";
+	close;
+}
+
+alberta,48,30,7	script	Butler for the Walthers	4_M_MANAGER,{
+	if (banquet_walther_quest == 3) {
+		mes "[Butler for the Walthers]";
+		mes "What a fine day. However, the house feels to empty and lonely.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello? Is this the manor of the Walther family?";
+		next;
+		mes "[Butler for the Walthers]";
+		mes "Yes, it is. What brought you here. Since everyone has left for Prontera, you cannot meet the master now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Isenhonor has sent me here to meet the Guardian Knight.";
+		next;
+		mes "[Butler for the Walthers]";
+		mes "Oh, really? He has been waiting for Isenhonor's call so much! I am happy for him.";
+		next;
+		mes "[Butler for the Walthers]";
+		mes "Simon, the Guardian Knight of Isenhonor is near the ^0000cddock^000000 where the ship leaving for ^0000cdIzlude^000000 is anchored.";
+		next;
+		mes "[Butler for the Walthers]";
+		mes "He is waiting there to go to Prontera as soon as possible when Isenhonor calls him.";
+		next;
+		mes "[Butler for the Walthers]";
+		mes "Go to where the ship to Izlude is anchored.";
+		close;
+	}
+	mes "[Butler for the Walthers]";
+	mes "Mahatra Mornen, the butler of the Alkish family, I cannot take his arrogance anymore.";
+	next;
+	mes "[Butler for the Walthers]";
+	mes "They only own a manor. And they call themselves as the best family in Alberta? What do they think of the Walther family!";
+	next;
+	mes "[Butler for the Walthers]";
+	mes "They cannot even make eye contact when they meet us.";
+	next;
+	mes "[Butler for the Walthers]";
+	mes "Our master is just too gentle to leave them alone. How classless.";
+	close;
+}
+
+prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
+	if (banquet_walther_quest < 4) {
+		mes "[Bigfoot]";
+		mes "Fried chicken, baked potato, beer, fresh cheese... Ha.... I crave those ordinary dishes now that I am locked in a place like this.";
+		mes "I would marry anyone who brings them to me.";
+		next;
+		emotion ET_HUK;
+		mes "[Bigfoot]";
+		mes "Argh! Not again! I am terrified!";
+		mes "But I would be safe as long as I am locked in here.";
+		close;
+	}
+	if (banquet_walther_quest == 4) {
+		mes "[Bigfoot]";
+		mes "Fried chicken, baked potato, beer, fresh cheese... Ha.... I crave those ordinary dishes now that I am locked in a place like this.";
+		next;
+		mes "[Bigfoot]";
+		mes "I would marry anyone who brings them to me.";
+		next;
+		emotion ET_HUK;
+		mes "[Bigfoot]";
+		mes "Argh! Not again! I am terrified! But I would be safe as long as I am locked in here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Bigfoot?";
+		next;
+		emotion ET_FRET;
+		mes "[Bigfoot]";
+		mes "Oh no! I won't eat that! I don't want to have another bite of that pigs feed! I may not be a gourmet, but my tongue hasn't been decomposed or anything!";
+		next;
+		mes "[Bigfoot]";
+		mes "Bring me something I can eat! I know that I am locked in the prison, but I deserve to eat something edible!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "There must have been a misunderstanding. I am not the warden here. I came here to meet you.";
+		next;
+		mes "[Bigfoot]";
+		mes "You are now? I am relieved to hear that. The food here just sucks.";
+		next;
+		mes "[Bigfoot]";
+		mes "Who are you by the way? You look like an adventurer.";
+		next;
+		mes "[Bigfoot]";
+		mes "Well, it is not important. You are here to ask me something, right? You know nothing in this world is free.";
+		next;
+		emotion ET_SWEAT, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "...What do you want?";
+		next;
+		mes "[Bigfoot]";
+		mes "Get me out of here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It would be beyond my ability.";
+		next;
+		mes "[Bigfoot]";
+		mes "Don't be such a precisionist. You must be of a high rank to come down here, aren't you?";
+		next;
+		mes "[Bigfoot]";
+		mes "Well, I understand. I knew it was a difficult favor to ask anyway.";
+		next;
+		mes "[Bigfoot]";
+		mes "I didn't think you would let me out. I just got it out loud.";
+		next;
+		mes "[Bigfoot]";
+		mes "However, you turned it down so firmly. You could at least pretend to consider or think about it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What do you really want then?";
+		next;
+		mes "[Bigfoot]";
+		mes "Money of course. The price depends on the information you want.";
+		next;
+		mes "[Bigfoot]";
+		mes "I don't offer a monthly installment plan. I only take cash. I only accept currencies older than 2 years. I'll spend it meaningfully when I get out here in the future.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't have much money, but I know where to spend it. I guess I should turn down the deal. Goodbye then.";
+		next;
+		emotion ET_HNG;
+		mes "[Bigfoot]";
+		mes "Hey! Don't take the joke too seriously. Don't your friends call you stubborn?";
+		next;
+		mes "[Bigfoot]";
+		mes "I knew it. You give up too easily. You are still young, you know.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Please get to the point.";
+		next;
+		mes "[Bigfoot]";
+		mes "Well, you remind me of something...";
+		next;
+		mes "[Bigfoot]";
+		mes "Yes! Bring me fried spicy dumplings and green salad! That's right! Bring me that.";
+		next;
+		mes "[Bigfoot]";
+		mes "I cannot eat the horrible food here much so I keep thinking about the food out there.";
+		next;
+		mes "[Bigfoot]";
+		mes "What I crave the most is that. Would you do this for me at least? ^0000cdThree fried spicy dumplings and one green salad!^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I can do that. Wait for me.";
+		next;
+		emotion ET_SMILE;
+		mes "[Bigfoot]";
+		mes "You don't have to tell me to wait. I cannot go anywhere.";
+		erasequest 14471;// To the Royal Prison
+		setquest 14472;// Gourmet Bigfoot
+		banquet_walther_quest = 5;
+		close;
+	}
+	if (banquet_walther_quest == 5) {
+		if (countitem(12055) < 3 || countitem(12065) < 1) {
+			mes "[Bigfoot]";
+			mes "Wait, you stop there for a moment.";
+			mes "I don't smell the greasy dumplings and fresh salad at all.";
+			next;
+			mes "[Bigfoot]";
+			mes "Did you bring the food? ^0000cdThree fried spicy dumplings and one green salad!^000000";
+			next;
+			mes "[Bigfoot]";
+			mes "I won't talk before you bring them to me! Check again and bring them!";
+			close;
+		}
+		mes "[Bigfoot]";
+		mes "I smell it! This smell! Take out what you have brought.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Here you are.";
+		next;
+		mes "[Bigfoot]";
+		mes "Oh, my love. I'll enjoy every bite of it. Well, ask me the question now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I heard that you saw a person of the Walther family in a foreign country. Where did you see him? How did you know that he was from the Walther family?";
+		next;
+		mes "[Bigfoot]";
+		mes "Oh, you wanted to know that. As you know, it is rare to see seafarer Walthers in other places of Rune Midgarts, except Alberta and Prontera.";
+		mes "They are good at hiding their identities other than those who are well known.";
+		next;
+		mes "[Bigfoot]";
+		mes "However, I saw the distinctive symbol of the family in ^0000cdVeins^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Veins? Who did you see there? And how?";
+		next;
+		mes "[Bigfoot]";
+		mes "I don't know who he is. I was working as always. You know you have to work to make ends meet.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You mean pickpocketing?";
+		next;
+		emotion ET_FRET;
+		mes "[Bigfoot]";
+		mes "You don't have to be so specific about it. Don't you want to hear the story? Well, don't worry. I do have a sense of honor. I'll keep my promise to you who has brought me the dumplings.";
+		next;
+		mes "[Bigfoot]";
+		mes "Anyways, I found a shabby man who seemed so defenseless in the market there. His wallet was fat. So I took it and went off.";
+		next;
+		mes "[Bigfoot]";
+		mes "I opened the wallet in a secluded corner of the market. He turned out to be quite loaded. And I found an ^0000cdold letter^000000 in there. The one stamped with the ^0000cdseal^000000, you know.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The fact that he had the letter doesn't prove that he was a person from the Walther family.";
+		next;
+		mes "[Bigfoot]";
+		mes "Hey, I am getting there. After checking what was in the wallet, I was going to call it a day. I had earned enough.";
+		next;
+		mes "[Bigfoot]";
+		mes "Then, that shabby man appeared.";
+		next;
+		mes "[Bigfoot]";
+		mes "I don't have to tell you the rest of the story, right? Whoa... I thought I was fighting three men at the same time. His fist was like...! Phew... When he was punching me, I saw it.";
+		next;
+		mes "[Bigfoot]";
+		mes "There was a hidden ^0000cdsword^000000 under his cloak. The ^0000cdhandle was engraved with the symbol^000000. You see, well. Do you believe my story now?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How did you manage to see that when you were beaten up so bad?";
+		next;
+		emotion ET_FRET;
+		mes "[Bigfoot]";
+		mes "Oh, have some faith. Don't you know what I do for living?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You mean pickpocketing?";
+		next;
+		emotion ET_ANGER;
+		mes "[Bigfoot]";
+		mes "Hey, don't be so specific, please!";
+		next;
+		mes "[Bigfoot]";
+		mes "Anyways, my profession required a sharp eye to catch whatever is significant at a glance. That's how I thrive in this field.";
+		next;
+		mes "[Bigfoot]";
+		mes "When I see a person, I need to identify the position of the wallet, any weapon in possession, the target's wits and how fast the target can run in a moment. This job required such a special quality.";
+		next;
+		mes "[Bigfoot]";
+		mes "You don't have to believe me, but you can trust my professional skill.";
+		mes "Well, you must have hidden your money inside the belt and your shoes. Nice work. Those are tough spots to steal from.";
+		next;
+		emotion ET_HUK, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK, I guess I can trust your skill.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Anyways, it sure seems suspicious. Thank you for your information.";
+		next;
+		mes "[Bigfoot]";
+		mes "Don't you need anything else? I want to have some dessert now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No. This is enough.";
+		next;
+		mes "[Bigfoot]";
+		mes "Oh, no! Dessert! My dessert!";
+		delitem 12055,3;// Spicy Fried Bao
+		delitem 12065,1;// Green Salad
+		erasequest 14472;// Gourmet Bigfoot
+		setquest 14473;// To Veins
+		banquet_walther_quest = 6;
+		close;
+	}
+	if (banquet_walther_quest >= 6) {
+		mes "[Bigfoot]";
+		mes "What is it? Did you change your mind?";
+		mes "Do you want more information? I'd really like to have some Mastela Fruit Wine.";
+		next;
+		mes "[Bigfoot]";
+		mes "Did you forget where to go?";
+		mes "You should go to ^0000cdVeins^000000.";
+		next;
+		mes "[Bigfoot]";
+		mes "Bring me some dessert when you come back!";
+		close;
+	}
+}
+
+veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
+	if (banquet_walther_quest < 6) {
+		mes "[K]";
+		mes "I want to go back...";
+		mes "There again...";
+		close;
+	}
+	if (banquet_walther_quest == 6) {
+		emotion ET_ANGER;
+		mes "[K]";
+		mes "Who are you? Why are you staring at me? Are you after my wallet too?";
+		mes "It hasn't been long since I sent a person who stole my wallet to the prison.";
+		next;
+		mes "[K]";
+		mes "I guess no such information is shared among the pickpockets. Get lost if you don't want to be sent to prison.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You are quite quick-tempered, aren't you.";
+		mes "^0000cdKain Walther Walker^000000.";
+		next;
+		mes "[K]";
+		mes "I don't know such name.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The one who betrayed his master.";
+		next;
+		mes "[K]";
+		mes "Who... Who are you? Reveal yourself!";
+		mes "Why are you telling me such a thing?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "People say that. I don't buy it though.";
+		next;
+		mes "[K]";
+		mes "Why don't you believe it? Why? Do you know anything about it?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You are the one who knows the truth, Kain Walther Walker.";
+		next;
+		mes "[K]";
+		mes "Tell me. Who are you? Do you know anything about the death of Isenarm?";
+		next;
+		mes "[K]";
+		mes "Your life depends on your answer. I have enough reason to kill you since you know who I am.";
+		next;
+		mes "[K]";
+		mes "Well, tell me.";
+		mes "Who are you? How did you find me? And what do you know about the death of Isenarm?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am asked to investigate the death of Isenarm by Isenhonor.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "While carrying out the investigation, I got the information that you would be here. I came here to meet you.";
+		next;
+		mes "[K]";
+		mes "Isenhonor? At last, he is in action!";
+		next;
+		mes "[K]";
+		mes "Oh, please excuse my bad manners. I am sorry. Please forgive my earlier behavior.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That's OK. It wouldn't hurt to be careful, Kain Walther Walker.";
+		next;
+		mes "[K]";
+		mes "I cannot use the name, Walther, anymore.";
+		mes "When a star disappears, its satellite shall lost its name too. Even worse, I am a sinner who haven't been able to my star.";
+		next;
+		mes "[K]";
+		mes "Is Isenhonor investigating the death of Isenarm? I will do my best to help him by his side.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Not yet. Isenhonor wants to know the truth behind his brother's death, but he is not in the position to carry out the investigation due to the circumstances.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That's why I, who is relatively free to move around, am is doing the research for him.";
+		next;
+		mes "[K]";
+		mes "Is that so... Then what can I do to help you? I'll do whatever I can do to reveal the truth.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You can tell me what happened when you were with Isenarm. Why you disappeared before Isenarm's death, why you are here and all.";
+		next;
+		mes "[K]";
+		mes "In fact I know nothing about his death myself. However, he ^0000cdsent me here with a mission^000000 before incident broke out.";
+		next;
+		mes "[K]";
+		mes "When I was going to go back after completing the mission, he sent me a lot of money and a ^0000cdletter^000000. It said ^0000cdnot to return to Rune Midgarts^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "And then?";
+		next;
+		mes "[K]";
+		mes "I heard the news of his death after few days. I wanted to go back, but I couldn't because of his last order. I couldn't even be there by his side...";
+		next;
+		mes "[K]";
+		mes "After a long time, I heard the rumor about the violent behavior which caused Isenarm to be killed.";
+		next;
+		mes "[K]";
+		mes "And also the story of the Guardian Knight who betrayed his master...";
+		next;
+		mes "[K]";
+		mes "When I became a wanted man, I wanted to back and tell the truth. However, the letter said ^0000cdnot to return no matter what^000000. I couldn't let down the last order given by my master.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I guess Isenarm didn't want you to be involved. If anything happened to him, you would have been the one in the biggest trouble.";
+		next;
+		mes "[K]";
+		mes "Ha... Perhaps... I did't think of that... Here are the ^0000cdletter and sword Isenarm^000000 has give me.";
+		next;
+		mes "[K]";
+		mes "Please give them to Isenhonor. I hope they help him recover his brother's honor.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Keep the sword. The sword is like the life of the knight. I believe Isenarm would want you to have it.";
+		next;
+		mes "[K]";
+		mes "Then, have a safe travel.";
+		erasequest 14473;// To Veins
+		setquest 14474;// Report to Isenhonor
+		getitem 6929,1;// Seal Stamped Letter
+		banquet_walther_quest = 7;
+		close;
+	}
+	if (banquet_walther_quest >= 7) {
+		mes "[K]";
+		mes "Did you deliver the letter and the words to Isenhonor well?";
+		next;
+		mes "[K]";
+		mes "Please let him know that I am ready to devote my life if he needs my help.";
+		close;
+	}
+}
+
+prt_cas_q,130,32,0	script	prt_cas_32#prt_cas_33	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (banquet_main_quest >= 8 && banquet_main_quest <= 16) {
+		mes "It is locked.";
+		close;
+	}
+	warp "prt_cas_q",30,78;
+	end;
+}
+
+prt_cas_q,30,78,0	script	#ep16_heine_evt01	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	if (banquet_main_quest < 17) {
+		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// known issue : npc not hidden, player not in range
+		classchange( 4_M_3RDPRIN1, "Peter Heine#ep16_01", bc_self );
+		if (banquet_heine_quest == 0)
+			classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_01", bc_self );
+	}
+	end;
+}
+
+prt_cas_q,9,90,3	script	Peter Heine#ep16_02	4_EP16_PETER,{
+	if (banquet_main_quest >= 17) {
+		mes "He is lying in bed, deeply wounded.";
+		mes "It doesn't seem that he is in the state to talk.";
+		close;
+	}
+}
+
+// Heine
+prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
+	if (banquet_main_quest < 2) {
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "How disrespectful of you to enter without permission.";
+		mes "Get out of here now.";
+		close3;
+	}
+	if (banquet_main_quest == 2) {
+		mes "[Friedrich]";
+		mes "Please, calm down.";
+		close;
+	}
+	if (banquet_main_quest < 17) {
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "Why don't you enjoy the banquet?";
+		mes "Nyhill went to the Banquet Hall too.";
+		next;
+		mes "[Friedrich]";
+		mes "He didn't make a good first impression, but he is not a bad kid...";
+		mes "He is just...";
+		next;
+		mes "[Friedrich]";
+		mes "Well, I guess I shouldn't talk more.";
+		close3;
+	}
+	if (banquet_main_quest == 17) {
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "You are here at last.";
+		mes "The archduke has been waiting for you.";
+		close3;
+	}
+	if (banquet_main_quest == 18) {
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "Nillem said he would visit your room after making all preparations. You may wait in your room.";
+		mes "We are counting on you.";
+		close3;
+	}
+	if (banquet_main_quest < 25)
+		end;
+	if (banquet_main_quest == 25) {
+		switch( checkquest(7706,PLAYTIME) ) {
+		case -1:
+			end;
+		case 0:
+		case 1:
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "[Friedrich]";
+			mes "I have heard the story from my father.";
+			mes "I have received the approval for you to access the Past Memories of the Royal Family freely.";
+			next;
+			mes "[Friedrich]";
+			mes "Let's talk about the Past Memories of the Royal Family tomorrow";
+			mes "Since you must be tired going through all the trouble today.";
+			close3;
+		case 2:
+			erasequest 7706;// Nillem Is Not Almighty
+			banquet_main_quest = 26;
+			break;
+		}
+	}
+	switch( checkquest(7706,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "Are you going back to that place?";
+		mes "Nillem has told me.";
+		next;
+		mes "[Friedrich]";
+		mes "That it is difficult for him to connect multiple times since he is just a human after all.";
+		next;
+		mes "[Friedrich]";
+		mes "I appreciate your efforts for the royal family.";
+		mes "But don't push yourself too hard.";
+		close3;
+	case 2:
+		erasequest 7706;// Nillem Is Not Almighty
+		break;
+	}
+	switch( checkquest(7705,HUNTING) ) {
+	case -1:
+		mes "[Friedrich]";
+		mes "You are here, just in time.";
+		mes "Are you going there again today?";
+		cutin "ep16_friedrich_stolz_heine",1;
+		next;
+		if (select( "Yes.", "No." ) == 2) {
+			mes "[Friedrich]";
+			mes "I see.";
+			mes "...Oh, do you know what Nyhill is doing?";
+			next;
+			mes "[Friedrich]";
+			mes ".....Never mind.";
+			mes "He must be staying quietly since he has been sentenced to disciplinary confinement.";
+			next;
+			mes "[Friedrich]";
+			mes "Then, good bye.";
+			close3;
+		}
+		mes "[Friedrich]";
+		mes "Sorry about all the trouble.";
+		mes "I hope it works this time.";
+		next;
+		mes "[Friedrich]";
+		mes "Please save the piece of Imir Heart from Valkyrie.";
+		setquest 7705;// Hope You Cannot Let Go
+		close3;
+	case 0:
+	case 1:
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "...I know it is almost impossible to change the past.";
+		mes "But there is no other way.";
+		next;
+		mes "[Friedrich]";
+		mes "We need to try everything we can do.";
+		next;
+		mes "[Friedrich]";
+		mes "While you are on a mission down there, we are proceeding with the investigation.";
+		next;
+		mes "[Friedrich]";
+		mes "We are searching for the lead to the intruders.";
+		mes "Let's play our parts well.";
+		next;
+		mes "[Friedrich]";
+		mes "Nillem must be waiting for you.";
+		mes "Please do your best as always.";
+		close3;
+	case 2:
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "You are back.";
+		mes "Is it the same this time?";
+		mes "I suppose so.";
+		mes "But, I really don't think all the efforts will go wasted.";
+		next;
+		mes "[Friedrich]";
+		mes "Thank you very much.";
+		mes "Someday, when you need the power of our family,";
+		mes "We will be on your side no matter what.";
+		next;
+		mes "[Friedrich]";
+		mes "That is all we can give you for now as the reward.";
+		mes "I am sorry that we cannot offer you more.";
+		mes "I'll make sure there is no inconvenience to you while living in the palace.";
+		next;
+		mes "[Friedrich]";
+		mes "See you tomorrow then.";
+		setquest 7706;// Nillem Is Not Almighty
+		erasequest 7705;// Hope You Cannot Let Go
+		getitem 6919,10;// Honor Token
+		getexp 400000,400000;
+		close3;
+	}
+}
+
+prt_cas_q,18,83,5	script	Peter Heine#ep16_01	HIDDEN_WARP_NPC,{
+	if (banquet_main_quest < 2) {
+		mes "[Peter]";
+		mes "You must be the returned hero invited to the banquet.";
+		mes "This banquet is for you. Please enjoy.";
+		close;
+	}
+	if (banquet_main_quest == 2) {
+		mes "[Peter]";
+		mes "Haha... The archduke must be very angry.";
+		close;
+	}
+	if (banquet_main_quest < 17) {
+		cutin "ep16_petter_heine01",0;
+		mes "[Peter]";
+		mes "I have participated in the Royal Assembly, but I wonder if it has been the right decision.";
+		next;
+		mes "[Peter]";
+		mes "I tried to do this for everyone, but it seems to cause trouble.";
+		next;
+		mes "[Peter]";
+		mes "People tells me that I am a strong candidate in this, but I cannot be so sure.";
+		next;
+		mes "[Peter]";
+		mes "I keep thinking about what a great responsibility it is, how harder I should try and all...";
+		next;
+		mes "[Peter]";
+		mes "Not that I can step back now. I guess all I can do is to do my best.";
+		close3;
+	}
+}
+
+prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
+	if (banquet_main_quest < 2) {
+		mes "[Kronecker]";
+		mes "I have never allowed your visit.";
+		close;
+	}
+	if (banquet_main_quest == 2) {
+		if (banquet_heine_quest == 0) {
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "I am busy.";
+			mes "Please come back later";
+			close2;
+			warp "prt_cas_q",134,32;
+			end;
+		}
+		if (banquet_heine_quest == 1) {
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "...It was a shame to cause such a scene";
+			mes "In front of a guest.";
+			mes "I apologize on the behalf of the Heine family.";
+			next;
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "[Friedrich]";
+			mes "Let me introduce myself.";
+			mes "I am the current head of the Heine family, Friedrich Stoltze Heine.";
+			next;
+			mes "[Friedrich]";
+			mes "This is the former head of the family, Archduke Grantz, my father.";
+			next;
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "My name is Kronecker Granz Heine.";
+			next;
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "[Friedrich Stoltze]";
+			mes "This is Peter Heine the candidate to the throne.";
+			next;
+			cutin "ep16_petter_heine01",0;
+			mes "[Peter]";
+			mes "Nice to meet you.";
+			mes "It has turned out this way.";
+			next;
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "[Friedrich]";
+			mes "The one who has left the room, making a fool of himself, is my son, Nyhill.";
+			next;
+			mes "[Friedrich]";
+			mes "He is a lineal family member of the Heine family.";
+			mes "But he still acts like a child like that.";
+			mes "Please excuse his bad manners.";
+			next;
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "Let him do whatever he pleases.";
+			mes "We cannot take care of him anymore.";
+			next;
+			cutin "ep16_petter_heine01",0;
+			mes "[Peter]";
+			mes "...Archduke, please don't be too harsh on Nyhill.";
+			mes "In fact, Nyhill was supposed to be the candidate to the throne.";
+			next;
+			mes "[Peter]";
+			mes "I am just a collateral member of the family after all...";
+			next;
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "Stop it there. There is no need for more words.";
+			mes "Nyhill doesn't have what it takes to be the king.";
+			next;
+			mes "[Kronecker]";
+			mes "He doesn't have any elements to meet the legitimacy of the family. He cannot be chosen as the candidate.";
+			mes "He doesn't even know where he stands but still seems so hungry for power.";
+			next;
+			cutin "ep16_petter_heine01",0;
+			mes "[Peter]";
+			mes "It doesn't seem that way...";
+			mes "He must have been disheartened since his right has been neglected.";
+			next;
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "The right of the Heine family is everything which comes with the name of Heine.";
+			mes "Nyhill has everything.";
+			next;
+			mes "[Kronecker]";
+			mes "Why doesn't that child realize it?";
+			mes "It is not appropriate to talk about the family matter in front of the guest.";
+			next;
+			mes "[Kronecker]";
+			mes "Sorry about that.";
+			mes "Phew... I wonder what we have done to deserve a punk like that in the family.";
+			next;
+			mes "[Kronecker]";
+			mes "I have heard that you are the one who would attend the ritual.";
+			mes "Gratefully enough, the next king might be from the Heine family.";
+			next;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : You mean Peter will...?", bc_self;
+			mes "[Kronecker]";
+			mes "In the Royal Assembly earlier in which the candidates for the throne were tested...";
+			next;
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "[Friedrich]";
+			mes "Isenarm of the Walther family who happened to be the strongest candidate of all threatened other candidates all of a sudden.";
+			mes "Ernst of the Geoborg family had to execute him.";
+			next;
+			mes "[Friedrich]";
+			mes "It seemed that Ernst was going to be named the next king, but he abruptly resigned.";
+			mes "...I guess he obeyed the will of the queen.";
+			next;
+			mes "[Friedrich]";
+			mes "Due to the course of events, the Royal Assembly would be held again.";
+			mes "This time, Peter will participate as the representative of the Heine family.";
+			next;
+			npctalk "I never meant to, but I'll do my best.", "Peter Heine#ep16_01", bc_self;
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Kronecker]";
+			mes "And that Nyhill is so jealous of him now.";
+			mes "How low can he be?";
+			next;
+			mes "[Friedrich]";
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "Hum... He actually is not a bad kid unlike his earlier words.";
+			mes "He has never acted to bring disgrace to the name of Heine.";
+			next;
+			mes "[Friedrich]";
+			mes "I am not trying to defend him because he is my son.";
+			mes "Nyhill, he is just...";
+			next;
+			mes "[Kronecker]";
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "Don't try to speak for him. His incompetence is a sin.";
+			mes "Great magical power runs in the Heine for generations.";
+			next;
+			mes "[Kronecker]";
+			mes "There is a reason that he is called Mijeria.";
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Mijeria? Misery?", bc_self;
+			next;
+			mes "[Friedrich]";
+			cutin "ep16_friedrich_stolz_heine",1;
+			mes "Don't be overly curious of our family matter.";
+			mes "Phew... I guess I will see you again later.";
+			completequest 7683;
+			if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+				completequest 7682;// Socializing Starts from an Eye Contact
+				setquest 7685;// What Is the Next Thing on the Schedule ?
+			}
+			banquet_heine_quest = 2;
+			next;
+			cutin "ep16_kronecker_granz_heine",2;
+			mes "[Friedrich]";
+			mes "It wouldn't long before Royal Assembly is over.";
+			mes "We have to prepare for it. Sorry that we cannot spend more time with you.";
+			next;
+			mes "[Friedrich]";
+			mes "Go visit other families if you have not visited them all.";
+			close3;
+		}
+		if (banquet_heine_quest == 2) {
+			npctalk "Go visit other families if you have not visited them all.";
+			end;
+		}
+	}
+	if (banquet_main_quest < 17) {
+		cutin "ep16_kronecker_granz_heine",2;
+		mes "[Kronecker]";
+		mes "The Royal Assembly will be over soon.";
+		mes "As we expected, Peter seems to be a strong candidate.";
+		next;
+		mes "[Kronecker]";
+		mes "How are you enjoying the banquet?";
+		mes "As soon as the Royal Assembly is completed, we will move to proceed with the final ritual...";
+		next;
+		mes "[Kronecker]";
+		mes "I'll send you a Court Mage.";
+		mes "Enjoy the banquet and go back to your room in time.";
+		close3;
+	}
+	if (banquet_main_quest == 17) {
+		cutin "ep16_kronecker_granz_heine",2;
+		mes "[Kronecker]";
+		mes "I have been waiting for you.";
+		mes "Although I feel reluctant to reveal somewhat embarrassing part of the royal family to you,";
+		next;
+		mes "[Kronecker]";
+		mes "It was the royal family of Rune Midgarts who let you observe the ritual anyway.";
+		mes "And you were the one who fought the intruders during the incident...";
+		next;
+		mes "[Kronecker]";
+		mes "Without preamble,";
+		mes "Those intruders must have been after the^4d4dff piece of Imir Heart^000000.";
+		next;
+		mes "[Kronecker]";
+		mes "We didn't know what was in the Room of Consciousness was ^4d4dffa fake piece of Imir Heart^000000.";
+		next;
+		mes "[Kronecker]";
+		mes "We searched through the records of ^4d4dffPast Memories of the Royal Family^000000 for the record of that part.";
+		next;
+		mes "[Kronecker]";
+		mes "We couldn't find any.";
+		mes "The only lead we got was a riddle.";
+		next;
+		select("You mean, the ones who know the truth?");
+		mes "[Kronecker]";
+		mes "You must have seen it in the Past Memories of the Royal Family.";
+		mes "You are more cunning than I have thought of you.";
+		next;
+		mes "[Kronecker]";
+		mes "What should we do to find out the truth?";
+		mes "We would have to go back in the time to the past.";
+		next;
+		mes "[Kronecker]";
+		mes "Frietz, how did it go?";
+		next;
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "I found a Court Mage who specialized in that field.";
+		mes "He said that ^4d4dffhe sensed a huge twist of magical force in the Past Memories of the Royal Family, and we could depend on him^000000.";
+		next;
+		mes "[Friedrich]";
+		mes "He will bring the result soon.";
+		mes "He said he would connect the crack of the dimension by force.";
+		next;
+		mes "[Friedrich]";
+		mes "He acts rather imprudently, but he is said to be quite skilled...";
+		mes "And you know him.";
+		next;
+		select("Is he Nillem?");
+		mes "[Friedrich]";
+		mes "You seem to know him too.";
+		mes "You're right.";
+		mes "I want you to pair up with Nillem for this mission.";
+		next;
+		select("Me? Why?");
+		mes "[Friedrich]";
+		mes "I'd like know that myself.";
+		mes "That Nillem pestered me to let him work with you.";
+		mes "...I tried my best not to slay him.";
+		next;
+		mes "[Friedrich]";
+		mes "The Past Memories of the Royal Family is a special place which can be accessed by the royal families and few other people.";
+		mes "We cannot risk getting more people involved in this to keep the secret.";
+		next;
+		mes "[Friedrich]";
+		mes "Sine you have already experienced the crack of dimension...";
+		next;
+		mes "[Friedrich]";
+		mes "We didn't have any other choices.";
+		mes "We will reward you handsomely. Please help us out.";
+		next;
+		select("If you say so...");
+		cutin "ep16_kronecker_granz_heine",2;
+		mes "[Kronecker]";
+		mes "Them, it's settled.";
+		mes "We will send Nillem to your room as soon as he is ready.";
+		mes "You may pair up with him for the mission.";
+		next;
+		mes "[Kronecker]";
+		mes "And this is what has been given to the ones contributed to the royal family.";
+		mes "You have received it once when you went down there right after you came to the palace. Do you remember?";
+		next;
+		mes "[Kronecker]";
+		mes "It must be useful to people like you.";
+		mes "I hope it helps.";
+		banquet_main_quest = 18;
+		setquest 7699;// To the Past
+		erasequest 7698;// Heine Now
+		getitem 6919,20;// Honor Token
+		getexp 400000,400000;
+		close3;
+	}
+	if (banquet_main_quest == 18) {
+		cutin "ep16_kronecker_granz_heine",2;
+		mes "[Kronecker]";
+		mes "The magician called Nillem will find you.";
+		mes "You may wait in your room.";
+		close3;
+	}
+	if (banquet_main_quest >= 19) {
+		cutin "ep16_kronecker_granz_heine",2;
+		mes "[Kronecker]";
+		mes "It is too early to lose our hope.";
+		mes "I believe you will do just fine.";
+		close3;
+	}
+}
+
+prt_cas_q,22,80,3	script	Nyhill M. Heine#ep16_01	HIDDEN_WARP_NPC,{ end; }
+
+prt_cas_q,22,77,0	script	#ep16_heine_evt02	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	if (banquet_heine_quest == 0 && banquet_main_quest == 2) {
+		mes "";
+		npctalk "You are in no place to say such a thing!", "Kronecker G. Heine#ep16", bc_self;
+		sleep2 3000;
+		npctalk "I'll go back to the head house. Please give me your permission.", "Nyhill M. Heine#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "Watch your manners. You are not a child anymore.", "Friedrich S. Heine#ep16", bc_self;
+		sleep2 3000;
+		npctalk "I have no reason to be here, you know.", "Nyhill M. Heine#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "It is your duty to stay here as a member of the family!", "Kronecker G. Heine#ep16", bc_self;
+		sleep2 3000;
+		npctalk "Member of the family? Since when have I been deemed as a member of the family?", "Nyhill M. Heine#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "Did you forget the name I received from the family?", "Nyhill M. Heine#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "Nyhill Mijeria, I am a miserable Heine who has nothing! You have given me such a name because I am useless!", "Nyhill M. Heine#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "Watch your words, Nyhill.", "Friedrich S. Heine#ep16", bc_self;
+		sleep2 3000;
+		classchange( HIDDEN_WARP_NPC, "Nyhill M. Heine#ep16_01", bc_self );
+		sleep2 7000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Oh, he left.", bc_self;
+		sleep2 2000;
+		npctalk "...That useless punk. He doesn't do any good!", "Kronecker G. Heine#ep16", bc_self;
+		if (banquet_heine_quest == 0) {
+			banquet_heine_quest = 1;
+			setquest 7683;// Visit the Heines
+		}
+	}
+	end;
+}
+
+prt_cas_q,144,38,3	script	Nyhill#ep16_7686	HIDDEN_WARP_NPC,{ end; }
+prt_cas_q,141,39,5	script	Skia#ep16_7686	HIDDEN_WARP_NPC,{ end; }
+
+prt_cas_q,141,36,0	script	#ep16_evt_7686	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	if (banquet_heine_quest >= 1 && isbegin_quest(7686) == 0) {
+		mes "";
+		classchange( 4_EP16_NIHIL, "Nyhill#ep16_7686", bc_self );
+		classchange( 4_EP16_SKIA, "Skia#ep16_7686", bc_self );
+		npctalk "Are you the shadow princess whom people talk about?", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "It must be difficult for you too. Is it your first time attending the official event?", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Oh, you must be the lord of the Heine family.", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Well, it is true that I am the shadow. However, I have never found it difficult.", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "I do what I can do.", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "You are not born in that way at your own will though, aren't you?", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "I have been raised as the shadow, but it has never made me sad.", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "I have questioned it before...", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "But I have chosen to be what I am. This is my way.", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Really. I am envious that you can think it that way.", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "I have always wanted to be free of the name, Mijeria.", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Do you know what happens when one keeps on hearing that he has nothing from his birth?", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "He loses himself, as if he is empty inside.", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk ".......", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "What am I talking about... Please excuse me.", "Nyhill#ep16_7686", bc_self;
+		sleep2 2000;
+		npctalk "You know, when you have nothing...", "Skia#ep16_7686", bc_self;
+		sleep2 2000;
+		npctalk ".......", "Nyhill#ep16_7686", bc_self;
+		sleep2 2000;
+		npctalk "You can fill it up with anything. There is no future destined for a person.", "Skia#ep16_7686", bc_self;
+		sleep2 6000;
+		npctalk "...Is that so.", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Well, I have not introduced myself to you yet. My name is Nyhill Mijeria Heine.", "Nyhill#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "I am Skia Nerius. You can call me Skia.", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Oh, right. I was on my way to meet the hero!", "Skia#ep16_7686", bc_self;
+		sleep2 3000;
+		npctalk "Please excuse me now.", "Skia#ep16_7686", bc_self;
+		classchange( HIDDEN_WARP_NPC, "Skia#ep16_7686", bc_self );
+		sleep2 3000;
+		npctalk "...Skia... There is an interesting lady in the Nerius family.", "Nyhill#ep16_7686", bc_self;
+		classchange( HIDDEN_WARP_NPC, "Nyhill#ep16_7686", bc_self );
+		if (isbegin_quest(7686) == 0) {
+			setquest 7686;// Nyhill and Skia
+			completequest 7686;// Nyhill and Skia
+		}
+	}
+	end;
+}
+
+// Right Side
+// Roegenburg
+prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
+	if (checkweight(501,1) == 0) {
+		mes "[Maximilian]";
+		mes "You seem to have a lot of luggage. Are you OK?";
+		mes "It looks a lot and large.";
+		next;
+		mes "[Maximilian]";
+		mes "How about cutting down some?";
+		close;
+	}
+	if (banquet_main_quest < 2) {// pre-req
+		mes "[Maximilian]";
+		mes "How could you come in here?";
+		mes "Nobody can come into this place if you are not a staff. Please go outside.";
+		close;
+	}
+
+	if (banquet_roegenburg_quest == 0) {
+		mes "[Maximilian]";
+		mes "Hello, adventurers. I am honnored you have visited the ^0000cdRoegenburg^000000. I am ^0000cdMaximilian Roegenburg^000000.";
+		next;
+		mes "[Maximilian]";
+		mes "We are one of seven royal families that found the kingdom and have work hard for Rune Midgarts.";
+		next;
+		mes "[Maximilian]";
+		mes "^0000cdHelmut Roegenburg^000000, the heir of our family, is supposed to participate in the royal assembly. How about seeing him?";
+		next;
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "Hellow, I am ^0000cdHelmut Roegenburg^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I'm invited to this banquet." + strcharinfo(0) + "It is nice to see you.";
+		next;
+		mes "[Helmut]";
+		mes "I am honored to see the hero who defeated Morocc. Please enjoy your time while you are in the Roegenburg.";
+		next;
+		mes "[Helmut]";
+		mes "If you have time, how about seeing the rest people of the Roegenburg?";
+		next;
+		mes "[Helmut]";
+		mes "Brother, it will be helpful to listen to the story of the family from^0000cdWolf Roegenburg^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, it is a good opportunity, of course.";
+		setquest 14495;// To Wolf
+		banquet_roegenburg_quest = 1;
+		close3;
+	}
+	if (banquet_roegenburg_quest == 1) {
+		mes "[Maximilian]";
+		mes "Did you see the children of the Roegenburg? They look like babies, but now when I see them in the palace, I am pleased that they are almost grown up.";
+		next;
+		mes "[Maximilian]";
+		mes "You met Helmut already. It will be helpful to you if you meet the second son, Wolf.";
+		next;
+		mes "[Maximilian]";
+		mes "He is in charge of all matters of the Roegenburg instead of the first son who is busy for participation in the royal assembly and protection of the border. You will hear lots of interesting stories.";
+		close;
+	}
+	if (banquet_roegenburg_quest >= 2 && banquet_roegenburg_quest <= 6) {
+		mes "[Maximilian]";
+		mes "The Roegenburg is proud that we are descents of Wilhelm, the national hero, and contributed to the foundation and development of Rune Midgarts Kingdom.";
+		next;
+		mes "[Maximilian]";
+		mes "Therefore, we hoped that the children could grow into decent adults, but they were raised without their parents' care and now they tend to behave rudely and act as they want.";
+		next;
+		mes "[Maximilian]";
+		mes "If you feel uncomfortable when you talk with them, please understand kindly.";
+		next;
+		mes "[Maximilian]";
+		mes "They are the children who will lead the family, but they are going different from what the Roegenburg aims for.";
+		next;
+		mes "[Maximilian]";
+		mes "The first son stays on the front, risking his life everyday and the second is doing business, which is against the family tradition.";
+		next;
+		mes "[Maximilian]";
+		mes "The third son would leave the house and hang out on the back street, but we cannot continue to employ some to monitor him all the times.";
+		next;
+		mes "[Maximilian]";
+		mes "But the youngest, Agnes, has grown as good girl and I am happy when I think of her.";
+		next;
+		mes "[Maximilian]";
+		mes "Ah, I am sorry to talk too much on our family. I have become talkative as I get old.";
+		next;
+		mes "[Maximilian]";
+		mes "Please forgive me grumbling and forget this old man's complaints.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 7 || banquet_roegenburg_quest == 8) {
+		mes "[Maximilian]";
+		mes "Myer, Myer...";
+		mes "I cannot believe that Myer did that.";
+		next;
+		mes "[Maximilian]";
+		mes "He spread the bad rumor about the family but I think he did it because he is desperate.";
+		next;
+		mes "[Maximilian]";
+		mes "I have let the children do as they want but I wanted to avoid a war.";
+		next;
+		mes "[Maximilian]";
+		mes "But I know it is unlikely that Helmut becomes a king and so leave them to do as they like.";
+		next;
+		mes "[Maximilian]";
+		mes "However, I would like to leverage this opportunity to collect the capabilities of the family members to protect the family.";
+		mes "Opportunities are found in times of crisis.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 9) {
+		mes "[Maximilian]";
+		mes "Please bring Helmut. He must be in the ^0000cdcheckpoint near the border with Schwaltzvalt^000000. He is responsible for the patrol party.";
+		mes "Please.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 10) {
+		mes "[Maximilian]";
+		mes "Welcome adventurer. Did you have a safe travel?";
+		next;
+		mes "[Maximilian]";
+		mes "I cannot see Helmut. Did he refuse to come?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, he left a message for two of you.";
+		next;
+		mes "[Told Maximilian and Wolf about Helmut's will and the successorship]";
+		next;
+		mes "[Maximilian]";
+		mes "I knew something when Helmut left, but I didn't expect that he would give up the successorship.";
+		mes "But if that is what Helmut wants, I don't object to it.";
+		next;
+		mes "[Maximilian]";
+		mes "This fact will be announced as soon as the royal assembly and banquet are finished. Wolf, now you should lead our family. I hope this will not be a burden to you.";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes ".......";
+		next;
+		cutin "",255;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You have taken a firm attitude that you never showed before.";
+		next;
+		mes "[Maximilian]";
+		mes "Once I tried to move the children as I want and failed. Since then I left them to do as they like. But now I know.";
+		next;
+		mes "[Maximilian]";
+		mes "I realized that a new age needs children. I will work for the family and country in the way the children wants to do.";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "I seem to have forced my way to Helmut and people in the family.";
+		next;
+		mes "[Wolf]";
+		mes "There is something rather than a war to have influence up to every corner in the continent.";
+		next;
+		mes "[Wolf]";
+		mes "As Myer said, I am looking for other approaches and I will.";
+		next;
+		mes "[Wolf]";
+		mes "Dear adventurer, if you don't mind, won't you deliver my will to ^0000cdMyer^000000?";
+		next;
+		mes "[Wolf]";
+		mes "That I have given up wars and am looking for better solution and that if he can, visit the family and see the people.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am willing to do so.";
+		erasequest 14505;// I Won't go Back
+		setquest 14506;// Things Turned out This Way
+		banquet_roegenburg_quest = 11;
+		close3;
+	}
+	if (banquet_roegenburg_quest == 11) {
+		mes "[Maximilian]";
+		mes "Please deliver the story of Helmut to Myer.";
+		mes "He must be somewhere in Prontera.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 12) {
+		mes "[Maximilian]";
+		mes "Dear adventurer, welcome.";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Dear adventurer, did you deliver the message to Myer? what did he say?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "He said it is good to give up wars. Myer has a lot of trust in you. He said he would help you as much as he can, if you need his help.";
+		next;
+		mes "[Wolf]";
+		mes "I want him to visit us more than to help me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ah, he also said he would come after the banquet is finished.";
+		next;
+		mes "[Wolf]";
+		mes "Well I am happy that our relationship will improve.";
+		next;
+		mes "[Wolf]";
+		mes "Once, we were the closest friends, but the relationship became awkward after he left the family.";
+		next;
+		mes "[Wolf]";
+		mes "Anyway, I think we have to make preparation to welcome him seriously.";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "I am glad that now everything has found its place. I have been worried a lot.";
+		next;
+		mes "[Maximilian]";
+		mes "All theses things are thanks to you. I feel safe now that everyone has their right places and will work hard for the family and country.";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Dear adventurer. Thank you very much for helping my family. I have been thinking how I can reward you for your contribution, but cannot find anything that is comparable to the magnitude of thank.";
+		next;
+		mes "[Wolf]";
+		mes "However at least to express my mind, I have prepare a small present. Please take it.";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "If you need a help from the Roegenburg, come to use anytime. The gate of the Roegenburg is always opened to you.";
+		completequest 14507;// To Maximilian
+		getitem 6919,10;// Honor Token
+		getexp 1000000,500000;
+		banquet_roegenburg_quest = 13;
+		close;
+	}
+	if (banquet_roegenburg_quest == 13) {
+		mes "[Maximilian]";
+		mes "Dear adventurer, welcome.";
+		mes "I wanted to thank you always. Thanks to your contribution, my family is returning to safety.";
+		next;
+		mes "[Maximilian]";
+		mes "It seems that my family had no problem, but inside the wall, we didn't have trust in one another and were not mixed.";
+		next;
+		mes "[Maximilian]";
+		mes "But now we are getting along. Thank you very much again.";
+		close;
+	}
+}
+
