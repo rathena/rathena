@@ -16596,6 +16596,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 			fixcast_r = max(fixcast_r, sc->data[SC_DANCEWITHWUG]->val4);
 		if (sc->data[SC_HEAT_BARREL])
 			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val2);
+		if (sc->data[SC_FREEZING])
+			fixcast_r -= 50;
 		// Additive Fixed CastTime values
 		if (sc->data[SC_MANDRAGORA])
 			fixed += sc->data[SC_MANDRAGORA]->val1 * 500;
