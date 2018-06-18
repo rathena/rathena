@@ -9112,3 +9112,3066 @@ prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
 	}
 }
 
+// Hall
+prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
+	if (banquet_geoborg_quest < 3) {
+		mes "[Scarlet Jaha]";
+		mes "Oh, what can I help you, dear adventurer?";
+		emotion ET_SMILE;
+		close;
+	}
+	if (banquet_geoborg_quest == 3) {
+		mes "[Scarlet Jaha]";
+		mes "Oh, what can I help you, dear adventurer?";
+		emotion ET_SMILE;
+		next;
+		select("Ask about the Geoborg family.");
+		mes "[Scarlet Jaha]";
+		mes "Heh!";
+		mes "Is there no one around here who is curious about me?";
+		mes "Everyone who ever talks to me talk about that!";
+		emotion ET_FRET;
+		next;
+		select("...");
+		mes "[Scarlet Jaha]";
+		mes "Oh!";
+		mes "Don't be startled.";
+		mes "It is a joke.";
+		mes "Hahaha.";
+		emotion ET_SMILE;
+		next;
+		mes "[Scarlet Jaha]";
+		mes "As you know, the Geoborg family is the descendant of...";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "Tristan I who have founded the kingdom!";
+		mes "Is there anyone who doesn't know the story in this kingdom?";
+		mes "Dear Lady Jaha.";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Oh, my!";
+		mes "Lidion Geoborg!";
+		mes "Why are you out here in the Banquet Hall? You must not be feeling so well.";
+		mes "You should have been taking a rest in your manor!";
+		emotion ET_FRET;
+		next;
+		mes "[Lidion Geoborg]";
+		mes "I couldn't risk letting a lady of the Jaha family pretend to know about the Geoborg family. I couldn't just take a rest.";
+		erasequest 11402;// The Geoborgs
+		setquest 11403;// The Geoborgs
+		banquet_geoborg_quest = 4;
+		close;
+	}
+	if (banquet_geoborg_quest == 4) {
+		mes "[Scarlet Jaha]";
+		mes "Oh, my!";
+		mes "Lidion Geoborg!";
+		mes "Why are you out here in the Banquet Hall? You must not be feeling so well.";
+		mes "You should have been taking a rest in your manor!";
+		emotion ET_FRET;
+		next;
+		mes "[Lidion Geoborg]";
+		mes "I couldn't risk letting a lady of the Jaha family pretend to know about the Geoborg family. I couldn't just take a rest.";
+		close;
+	}
+	if (banquet_geoborg_quest == 5) {
+		mes "[Scarlet Jaha]";
+		mes "Phew, that old jerk!";
+		mes "He is younger than me and always tries to preach!";
+		emotion ET_FRET;
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Oh!";
+		mes "Well... For that reason, the Geoborg family will retire to a quiet life for a while as soon as the Royal Assembly is over.";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "I really hope that Catherine doesn't suffer from sorrow anymore.";
+		mes "That's why I fully support such decision!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "However, Prince Ernst is nowhere to be found.";
+		mes "His aunt has come a long way to comfort her poor nephew, you know!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "My sister chased me away to the Banquet Hall, saying she was busy. And I cannot find my nephew either.";
+		mes "Eww...";
+		emotion ET_CRY;
+		next;
+		mes "[Scarlet Jaha]";
+		mes "If you run into Ernst in the Banquet Hall, please tell him to come this way.";
+		erasequest 11404;// The Geoborgs
+		setquest 11405;// The Geoborgs
+		banquet_geoborg_quest = 6;
+		close;
+	}
+	if (banquet_geoborg_quest >= 6 && banquet_geoborg_quest < 13) {
+		mes "[Scarlet Jaha]";
+		mes "However, Prince Ernst is nowhere to be found.";
+		mes "His aunt has come a long way to comfort her poor nephew, you know!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "My sister chased me away to the Banquet Hall, saying she was busy. And I cannot find my nephew either.";
+		mes "Eww...";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "If you run into Ernst in the Banquet Hall, please tell him to come this way.";
+		close;
+	}
+	if (banquet_geoborg_quest == 13) {
+		mes "[Scarlet Jaha]";
+		mes "Oh!";
+		mes "Haven't you found him yet?";
+		mes "Should I ask Catherine?";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "That expression on your face... You must have heard what people say.";
+		mes "There must have been no good stories in particular...";
+		mes "Please don't mind such stories much.";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Ernst must have been hiding from such whispers as well.";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Well, I guess he needs some rest.";
+		mes "You hero, cheer up and enjoy the banquet!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "What a waste to let the banquet end like this!";
+		getexp 700000,700000;
+		getitem 6919,10;// Honor Token
+		completequest 11412;// The Geoborgs
+		banquet_geoborg_quest = 14;
+		close;
+	}
+	if (banquet_geoborg_quest > 13) {
+		mes "[Scarlet Jaha]";
+		mes "Oh, hero!";
+		mes "Are you having a good time?";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "If you have some time to spare, please tell me some fun stories from your adventure.";
+		mes "I am sick of listening to Lidion's nitpicking.";
+		close;
+	}
+}
+
+prt_cas,82,240,3	script	Lidion Geoborg#ep16_1	4_M_DOCTOR,{
+	if (banquet_geoborg_quest < 4) {
+		mes "[Lidion Geoborg]";
+		mes "Tut...";
+		mes "Letting anybody in like this... The dignity of the palace has fallen down to the ground.";
+		close;
+	}
+	if (banquet_geoborg_quest == 4) {
+		mes "[Lidion Geoborg]";
+		mes "We, the Geoborg family, is one of the seven royal families, but we are the creme de la creme for producing the highest number of kings in the history.";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "In fact, we are settled in Prontera, the center of the Rune Midgarts.";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "Despite the series of unfortunate events regarding the princes after the death of King Tristan III,";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "Prince Ernst Geoborg was elected as the most regnant candidate in the last Royal Assembly. It shows just influential the Geoborg family is.";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "He has given up from the position.";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "What?";
+		npctalk "What?";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "I said!";
+		mes "Prince Ernst gave up his position as the candidate to the throne.";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "What a nonsense!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Oh!";
+		mes "You didn't know!";
+		mes "You must have been separated from the outside world for too long!";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "Arghhhh!";
+		mes "I won't let this punk... Ernst....!";
+		npctalk "Arghhhh!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Punk?";
+		mes "Even if you are an elder of the family, he is still a prince. You should extend him every courtesy.";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "Arghhhh!";
+		npctalk "Arghhhh!";
+		erasequest 11403;// The Geoborgs
+		setquest 11404;// The Geoborgs
+		banquet_geoborg_quest = 5;
+		close;
+	}
+	if (banquet_geoborg_quest >= 5 && banquet_geoborg_quest <= 13) {
+		mes "[Lidion Geoborg]";
+		mes "Arghhhh!";
+		mes "I won't let this punk... Ernst....!";
+		npctalk "Arghhhh!";
+		next;
+		mes "[Scarlet Jaha]";
+		mes "Punk?";
+		mes "Even if you are an elder of the family, he is still a prince. You should extend him every courtesy.";
+		next;
+		mes "[Lidion Geoborg]";
+		mes "Arghhhh!";
+		npctalk "Arghhhh!";
+		close;
+	}
+	if (banquet_geoborg_quest > 13) {
+		mes "[Lidion Geoborg]";
+		mes "Tut...";
+		mes "Letting anybody in like this... The dignity of the palace has fallen down to the ground.";
+		close;
+	}
+}
+
+prt_cas,76,258,0	script	#ep16_1Whisper1	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 6) {
+		mes "[Mumbling Sound]";
+		mes "Did you hear the story?";
+		mes "The skeleton of King Tristan III has been found.";
+		next;
+		mes "[Mumbling Sound]";
+		mes "Oh my!";
+		mes "Gosh!";
+		next;
+		mes "[Mumbling Sound]";
+		mes "It is a secret. Don't tell anyone.";
+		erasequest 11405;// The Geoborgs
+		setquest 11406;// The Geoborgs
+		banquet_geoborg_quest = 7;
+		close;
+	}
+}
+
+prt_cas,84,232,0	script	#ep16_1Whisper2	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 7) {
+		mes "[Mumbling Sound]";
+		mes "...So the princes must have been poisoned...";
+		next;
+		mes "[Mumbling Sound]";
+		mes "What on earth!";
+		mes "Well, in the last Royal Assembly...";
+		erasequest 11406;// The Geoborgs
+		setquest 11407;// The Geoborgs
+		banquet_geoborg_quest = 8;
+		close;
+	}
+}
+
+prt_cas,110,242,0	script	#ep16_1Whisper3	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 8) {
+		mes "[Mumbling Sound]";
+		mes "Ha!";
+		mes "He has given up the royal authority like that!";
+		next;
+		mes "[Mumbling Sound]";
+		mes "Doesn't he even care for the people of his family?";
+		next;
+		mes "[Mumbling Sound]";
+		mes "Your voice is too loud!";
+		next;
+		mes "[Mumbling Sound]";
+		mes "No...";
+		mes "I didn't say anything wrond.";
+		mes "Did I?";
+		next;
+		mes "[Mumbling Sound]";
+		mes "How can he decide such a major issue as he wants?";
+		erasequest 11407;// The Geoborgs
+		setquest 11408;// The Geoborgs
+		banquet_geoborg_quest = 9;
+		close;
+	}
+}
+
+prt_cas,111,218,0	script	#ep16_1Whisper4	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 9) {
+		mes "[Mumbling Sound]";
+		mes "I knew it. He has been hanging out with that punk from the third-rate family too long...";
+		erasequest 11408;// The Geoborgs
+		setquest 11409;// The Geoborgs
+		banquet_geoborg_quest = 10;
+		close;
+	}
+}
+
+prt_cas,92,224,0	script	#ep16_1Whisper5	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 10) {
+		mes "[Mumbling Sound]";
+		mes "So is the queen who is handling all the matters of the palace now?";
+		next;
+		mes "[Mumbling Sound]";
+		mes "She hasn't showed her presence to the public so far...";
+		erasequest 11409;// The Geoborgs
+		setquest 11410;// The Geoborgs
+		banquet_geoborg_quest = 11;
+		close;
+	}
+}
+
+prt_cas,77,223,0	script	#ep16_1Whisper6	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 11) {
+		mes "[Mumbling Sound]";
+		mes "How foolish it is to give up the regal power like that!";
+		next;
+		mes "[Mumbling Sound]";
+		mes "I won't ever let go of such power!";
+		next;
+		mes "[Mumbling Sound]";
+		mes "Hey, you!";
+		mes "Not anyone can have such power.";
+		next;
+		mes "[Mumbling Sound]";
+		mes "Why not?";
+		mes "I am free to dream!";
+		erasequest 11410;// The Geoborgs
+		setquest 11411;// The Geoborgs
+		banquet_geoborg_quest = 12;
+		close;
+	}
+}
+
+prt_cas,93,226,0	script	#ep16_1Whisper7	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_geoborg_quest == 12) {
+		mes "[Mumbling Sound]";
+		mes "Is the Geoborg family cursed?";
+		next;
+		mes "[Mumbling Sound]";
+		mes "Shh!";
+		mes "You shouldn't say such a thing so easily!";
+		erasequest 11411;// The Geoborgs
+		setquest 11412;// The Geoborgs
+		banquet_geoborg_quest = 13;
+		close;
+	}
+}
+
+// At room entrance
+prt_cas_q,146,121,4	script	Bachelor#ep16wig	1_M_ORIENT01,{
+	emotion ET_CRY;
+	mes "[Bachelor]";
+	mes "The women in the line here are so scary.";
+	mes "They curse, push and fight...";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Why don't you just go back then?";
+	next;
+	emotion ET_ANGER;
+	mes "[Bachelor]";
+	mes "Are you telling me to go back when Jurgen is right inside of the door?";
+	mes "I won't!";
+	next;
+	emotion ET_BIGTHROB;
+	mes "[Bachelor]";
+	mes "I won't go before seeing the elegant and luminous presence of him!";
+	mes "I have come here from Payon to meet Jurgen!";
+	close;
+}
+
+prt_cas_q,148,117,7	script	Miss#ep16wig	4_F_02,{
+	mes "[Miss]";
+	if (rand(2) == 0) {
+		mes "Jurgen treats us all the same. We should have a sense of fair play.";
+		mes "Who ever it was, turn yourself in!";
+		npctalk "Would she come out? She wouldn't have entered if she would turn herself in.", "Womenfolk#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Why are there only one Jurgen...", "Gyusoo#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Why isn't Jurgen coming out of the room...", "Bachelorette#ep16wig", bc_area;
+	}
+	else {
+		emotion ET_ANGER;
+		mes "Who was it? Who pretended to be close to Katrin and went along with her? Come out here! We have made a pact not to stand out!";
+		npctalk "It was not me. Don't look at me like that.", "Womenfolk#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Oh gosh! Who has done such a thing?", "Gyusoo#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Katrin is just too nice.", "Bachelorette#ep16wig", bc_area;
+	}
+	close;
+}
+
+prt_cas_q,148,122,4	script	Womenfolk#ep16wig	1_F_03,{
+	mes "[Womenfolk]";
+	if (rand(2) == 0) {
+		emotion ET_FRET;
+		mes "Jurgen belongs to all of us! No one should have him to oneself! I won't let anyone to do that!";
+		npctalk "Yes! He belongs to us all!", "Miss#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "I won't let it happen either!", "Gyusoo#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Oh, I don't agree with you guys. I am generous.", "Bachelorette#ep16wig", bc_area;
+	}
+	else {
+		mes "I won't let anyone monopolize Jurgen! The heaven may forgive, but I won't!";
+		npctalk "I won't either!", "Miss#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Well, if I am the one who gets to do that. I allow it.", "Gyusoo#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "It is a relief that the heaven would forgive at least.", "Bachelorette#ep16wig", bc_area;
+	}
+	close;
+}
+
+prt_cas_q,150,122,4	script	Gyusoo#ep16wig	1_F_LIBRARYGIRL,{
+	mes "[Gyusoo]";
+	if (rand(2) == 0) {
+		mes "It is no use getting a ticket number... It is just too difficult to wait for my turn.";
+		npctalk "Let's have a tea here.", "Miss#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "I shall take a nap before he comes out.", "Womenfolk#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Wait, do you hear anything from the inside?", "Bachelorette#ep16wig", bc_area;
+	}
+	else {
+		emotion ET_BIGTHROB;
+		mes "When will Jurgen come out?";
+		mes "When will be my turn to see him?";
+		npctalk "There are 22 people before me.", "Miss#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Will he come out today?", "Womenfolk#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "If you are in the 23rd place, you may not be able to see him today.", "Bachelorette#ep16wig", bc_area;
+	}
+	close;
+}
+
+prt_cas_q,150,117,7	script	Bachelorette#ep16wig	4_F_01,{
+	mes "[Bachelorette]";
+	if (rand(2) == 0) {
+		mes "There! If you are a newbie, don't be so naive and try to fit in here!";
+		npctalk "Yes! If you are slow-witted, just try to be quiet!", "Miss#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "You should grasp of the situation at least for three month.", "Gyusoo#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Everyone is just too kind, letting go of such a thing.", "Womenfolk#ep16wig", bc_area;
+	}
+	else {
+		emotion ET_ANGER;
+		mes "[Bachelorette]";
+		mes "Hey, don't you push me there! Stand in the line. Isn't it your first time here to see Jurgen?";
+		npctalk "If you are a newbie, you should go through the initiation!", "Miss#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Isn't standing in the line a common sense?", "Gyusoo#ep16wig", bc_area;
+		sleep2 1000;
+		npctalk "Where did the person who was supervising the lineup go?";
+	}
+	close;
+}
+
+prt_cas_q,153,123,3	script	Strong Guards#ep16wig01	8W_SOLDIER,{
+	emotion ET_OHNO;
+	mes "[Strong Guards]";
+	mes "Ha, I am already feeling tired as always.";
+	mes "I didn't know that women were so strong before.";
+	next;
+	mes "[Strong Guards]";
+	mes "I started yesterday and realized why the people who had worked here before quit.";
+	mes "Despite being with so many ladies here, I am not happy at all.";
+	close;
+}
+
+prt_cas_q,153,116,1	script	Strong Guards#ep16wig02	8W_SOLDIER,{
+	emotion ET_ANGER;
+	mes "[Strong Guards]";
+	mes "Oh, wait there! Stop there!";
+	mes "Aren't you the one who has infiltrated the room before? You don't have to run hiding your face! Come back here!";
+	next;
+	mes "[Strong Guards]";
+	mes "She went off again. She sure is fast.";
+	mes "I am glad that my own sister doesn't come to a place like this.";
+	close;
+}
+
+// Wigner
+prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
+	if (banquet_main_quest < 2) {// pre-req
+		mes "[Levuiere]";
+		mes "Who are you?";
+		mes "Only the people with permission can enter this place. Please leave.";
+		close;
+	}
+
+	if (banquet_wigner_quest == 0) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, welcome to the Wigner family. My name is^0000cdLevuiere Wigner^000000.";
+		next;
+		mes "[Levuiere]";
+		mes "I am honored by your visit while you are attending the banquet held for you, dear adventurer.";
+		next;
+		mes "[Levuiere]";
+		mes "This banquet carries more meaning than celebration since the Royal Assembly is conducted at the same time. Did you hear that?";
+		next;
+		mes "[Levuiere]";
+		mes "There is a candidate from our family who participates in the Royal Assembly as well. Would you like to meet him?";
+		next;
+		mes "[Levuiere]";
+		mes "She is the lady of the Wigner house, ^0000cdCatherine Wigner^000000.";
+		next;
+		mes "[Catherine]";
+		mes "How do you do? Please make yourself at home while you are staying with us, the Wigner family. Please let me know if you experience any inconvenience here.";
+		next;
+		mes "[Catherine]";
+		mes "We, Wigners, will support as much as possible for your convenience, dear adventurer.";
+		next;
+		mes "[Catherine]";
+		mes "Please visit our manor too if you have the time, dear adventurer. You are always welcome.";
+		mes "Where is ^0000cdJurgen^000000 now?";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Jurgen Wigner#ep16wig", bc_self );
+		classchange( 4_M_4THPRIN1, "Jurgen Wigner#ep16wig00", bc_self );
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Are you looking for me?";
+		next;
+		cutin "",255;
+		mes "[Levuiere]";
+		mes "There you are! Dear adventurer, this is the ^0000cdheir of the Wigner family^000000, and the ^0000cdcandidate for the throne^000000 participating in the Royal Assembly this time.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Hello. My name is ^0000cdJurgen Wigner^000000. It is very nice to meet you.";
+		next;
+		mes "[Jurgen]";
+		mes "Dear adventurer, please make yourself home here. If you need anything or find anything inconvenient, please let us know anytime.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Thank you for your hospitality.";
+		next;
+		mes "[Jurgen]";
+		mes "Then, please excuse me.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Jurgen Wigner#ep16wig00", bc_self );
+		classchange( 4_M_4THPRIN1, "Jurgen Wigner#ep16wig", bc_self );
+		cutin "",255;
+		mes "[Levuiere]";
+		mes "Tut, I am worried that he lacks sociability. He would have to meet a lot of people as the heir of the house, you know. Dear adventurer, please excuse my son's discourtesy.";
+		next;
+		mes "[Levuiere]";
+		mes "If time allows, would you like to meet our children? They have been excited to meet the hero who defeated Morocc in the banquet.";
+		setquest 14475;// To Jurgen
+		banquet_wigner_quest = 1;
+		next;
+		mes "[Levuiere]";
+		mes "Then please make yourself at home and take a look around, dear adventurer.";
+		close;
+	}
+	if (banquet_wigner_quest == 1) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, please make yourself home and take your time looking around here.";
+		next;
+		mes "[Levuiere]";
+		mes "If time allows, would you please tell our children the stories of your adventures? It would be an invaluable experience for them.";
+		next;
+		mes "[Levuiere]";
+		mes "Then, have a restful time.";
+		close;
+	}
+	if (banquet_wigner_quest == 2) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, did you meet the children? I would love to have some tea with you and listen to your stories if you are available.";
+		next;
+		mes "[Levuiere]";
+		mes "We like to hear the stories of adventurers very much.";
+		mes "Those adventures are valuable experiences that money cannot buy.";
+		next;
+		mes "[Catherine]";
+		mes "I wonder if our children have observed their manners though. We must have spoiled them for that they sometimes act so imprudently.";
+		next;
+		mes "[Catherine]";
+		mes "I am trying to warn them a little these days, Please excuse their behaviors if they have done anything rude to you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Not at all. Jurgen seemed to have grown since my last visit.";
+		mes "Katrin and Isaac impressed me as well.";
+		next;
+		mes "[Catherine]";
+		mes "We have been too easy on them.";
+		mes "We are ashamed that we were not prepared properly for the Royal Assembly last time.";
+		next;
+		mes "[Levuiere]";
+		mes "It is not important whether he becomes the king or not.";
+		mes "If he is a king material, he will be. If not, he doesn't have to be the king. I don't want to stress him out for that.";
+		next;
+		mes "[Catherine]";
+		mes "Don't you have any ambitions? What a glory would it be if we turn out a king from our family of our generation!";
+		mes "Since our ancestors founded this kingdom, we deserve to produce a king.";
+		next;
+		mes "[Levuiere]";
+		mes "The king is a hollow position. It only comes with resposibilities?";
+		mes "Haven't I told you before? Did you forget?";
+		next;
+		mes "[Levuiere]";
+		mes "If our family turns out a king, much of our fortune will be spent. Once, our family has really suffered from it.";
+		mes "Near the king, there are always a swarm of pesky flies.";
+		next;
+		mes "[Catherine]";
+		mes "You know, it could be the exact opposite.";
+		mes "It may reinforce our family.";
+		next;
+		mes "[Catherine]";
+		mes "Now there are Katrin and Isaac who can back up Jurgen.";
+		next;
+		mes "[Levuiere]";
+		mes "Hum... Isaac.";
+		mes "Thinking of him makes me confident.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You must trust Isaac quite a lot.";
+		next;
+		mes "[Levuiere]";
+		mes "Oh, we must have left you out of the conversation, dear adventurer.";
+		mes "I am sorry.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Not at all. I have been enjoying the conversation.";
+		next;
+		mes "[Levuiere]";
+		mes "Now that you mention it, how do you find our third child, Isaac?";
+		mes "He is the most Wigner-like one among the children.";
+		next;
+		mes "[Levuiere]";
+		mes "While Jurgen is interested in the looks, he doesn't really care for money or the throne...";
+		mes "If Katrin was a son, I would have gladly leave everything to her.";
+		next;
+		mes "[Levuiere]";
+		mes "Fortunately, the third child who used to be a mischievous boy has grown up to be suitable for the name of Wigner.";
+		mes "Not that the other two are inadequate.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I know what you mean.";
+		next;
+		mes "[Catherine]";
+		mes "Nevertheless, don't talk like that in front of the children. It is not good to favor a child.";
+		next;
+		mes "[Levuiere]";
+		mes "As a member of the Wigner family, one must be able to cope with criticism.";
+		mes "They should be able to determine what's right upon listening to the words of other people. Also, they need to be able to deal with the hard truths.";
+		next;
+		mes "[Catherine]";
+		mes "Please don't talk like that in front of the children.";
+		next;
+		mes "[Levuiere]";
+		mes "I never talk to them like this you know.";
+		next;
+		mes "[Catherine]";
+		mes "Anyways, Isaac seems busy doing something these days. Do you know what he is doing?";
+		next;
+		mes "[Levuiere]";
+		mes "I heard that he is doing something with the third son of the Roegenburg family. You don't need to worry about Isaac. He knows how to take care of himself.";
+		next;
+		mes "[Katrin]";
+		mes "Arghhhhhhhhh!";
+		next;
+		emotion ET_HUK;
+		mes "[Levuiere]";
+		mes "^0000cdKatrin?^000000";
+		next;
+		emotion ET_HUK, getnpcid(0, "Catherine Wigner#ep16wi");
+		mes "[Catherine]";
+		mes "^0000cdKatrin?^000000 Has something happened to my baby? I should get going...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You two stay here. It might be dangerous. Let me go take a look first.";
+		erasequest 14476;// To Levuiere and His Wife
+		setquest 14477;// What Is Going on?
+		banquet_wigner_quest = 3;
+		mes "[Levuiere]";
+		mes "Has something happened to our child, I mean, Katrin?";
+		mes "Shouldn't I go down there myself?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It could be dangerous. Please wait here for a minute.";
+		mes "I'll go.";
+		close;
+	}
+	if (banquet_wigner_quest == 3) {
+		mes "[Levuiere]";
+		mes "Has something happened to our child, I mean, Katrin?";
+		mes "Shouldn't I go down there myself?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It could be dangerous. Please wait here for a minute.";
+		mes "I'll go.";
+		close;
+	}
+	if (banquet_wigner_quest < 10) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, welcome.";
+		mes "I asked what had happened to the children, but they didn't tell me.";
+		next;
+		mes "[Catherine]";
+		mes "Are they hiding something bad from me...?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, they are not. You don't have to worry about it.";
+		next;
+		mes "[Catherine]";
+		mes "Then please tell me what it is about.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If they have decided not to tell you, it is not my story to tell.";
+		mes "Since I have to run some errands, I should get going now.";
+		close;
+	}
+	if (banquet_wigner_quest == 10) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, you seem busy.";
+		mes "Is it about what our children have asked you?";
+		next;
+		mes "[Catherine]";
+		mes "We have decided not to question it any more.";
+		mes "They have grown up, but we still tend to baby them too much...";
+		next;
+		mes "[Levuiere]";
+		mes "Anyways, if you need help, please let me know anytime.";
+		mes "And thank you for helping our children.";
+		close;
+	}
+	if (banquet_wigner_quest == 11) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, I have heard the story from the children.";
+		mes "They didn't go into all the details, but I heard that they owed you a huge favor.";
+		next;
+		mes "[Catherine]";
+		mes "The children are getting along so much better these days.";
+		mes "Not that they were on bad terms, but now they seen to care for one another more. I am so glad.";
+		next;
+		mes "[Levuiere]";
+		mes "You seem to be the messenger of luck to our family.";
+		mes "It is our family tradition to keep a person like you close and treat well.";
+		next;
+		mes "[Catherine]";
+		mes "Please visit our manor after the banquet is over.";
+		mes "We would be honored to have you as a guest to our home.";
+		close;
+	}
+}
+
+prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
+	if (banquet_wigner_quest == 0) {
+		mes "[Catherine]";
+		mes "Hello, dear adventurer. Welcome!";
+		mes "We are honored by your visit to the Wigner family.";
+		next;
+		mes "[Catherine]";
+		mes "Please let me know if you experience any inconvenience here.";
+		mes "As the lady of the house I would make your stay as pleasant as possible.";
+		next;
+		mes "[Catherine]";
+		mes "You may talk to the head of the family standing next to me. His name is Levuiere Wigner.";
+		close;
+	}
+	if (banquet_wigner_quest <= 2) {
+		mes "[Catherine]";
+		mes "Have you met our children? Having a conversation with you would be an invaluable experience for our children, dear adventurer.";
+		mes "They haven't been through any trouble growing up so we feel that they lack in various life experiences.";
+		next;
+		mes "[Catherine]";
+		mes "Since I am married to a man from the family which has founded this country, I want to raise my children worthy of the name. However, my husband is not interested in fame and power.";
+		next;
+		mes "[Catherine]";
+		mes "I feel very sorry about it.";
+		next;
+		mes "[Catherine]";
+		mes "However, I tend to let our children to whatever they want to do, which makes me wonder if I have spoiled them...";
+		next;
+		mes "[Catherine]";
+		mes "I'd like to hear your stories for that.";
+		mes "It is always a great joy to listen to the stories of the people who have gone through a lot of experiences.";
+		close;
+	}
+	if (banquet_wigner_quest == 3) {
+		mes "[Catherine]";
+		mes "What if anything has happened to my baby, Katrin?";
+		mes "I'd better I go down there myself.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It could be dangerous, please wait here for a minute.";
+		mes "Let me go down there and see what has happened.";
+		next;
+		mes "[Catherine]";
+		mes "I hope everything is OK.";
+		close;
+	}
+	if (banquet_wigner_quest < 10) {
+		mes "[Levuiere]";
+		mes "Dear adventurer, welcome.";
+		mes "I asked what had happened to the children, but they didn't tell me.";
+		next;
+		mes "[Catherine]";
+		mes "Are they hiding something bad from me...?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, they are not. You don't have to worry about it.";
+		next;
+		mes "[Catherine]";
+		mes "Then please tell me what it is about.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If they have decided not to tell you, it is not my story to tell.";
+		mes "Since I have to run some errands, I should get going now.";
+		close;
+	}
+	if (banquet_wigner_quest == 10) {
+		mes "[Catherine]";
+		mes "I wonder if our children haven't bothered you much. Although we are very curious, we have decided not to question it any more.";
+		mes "They have grown up, but we still tend to baby them too much...";
+		next;
+		mes "[Levuiere]";
+		mes "Anyways, if you need help, please let me know anytime.";
+		mes "And thank you for helping our children.";
+		close;
+	}
+	if (banquet_wigner_quest == 11) {
+		mes "[Catherine]";
+		mes "For some reason, our children have become very close to one another.";
+		mes "I think it is all thanks to you.";
+		next;
+		mes "[Catherine]";
+		mes "Please visit our manor after the banquet is over.";
+		mes "Please give us the opportunity to treat you, dear adventurer.";
+		close;
+	}
+}
+
+prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
+	if (checkweight(501,1) == 0) {
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "You seem to have a lot of luggage. Are you OK?";
+		mes "It looks a lot and large.";
+		next;
+		mes "[Jurgen]";
+		mes "How about cutting down some?";
+		close3;
+	}
+	if (banquet_wigner_quest == 0) {
+		mes "[Jurgen]";
+		mes "Are you a fan of mine? Did you make an appointment? If you are a guest of mine, why don't you go see my father over there?";
+		close;
+	}
+	if (banquet_wigner_quest == 1) {
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Dear adventurer, I am glad that you are still here. Sorry about my bad manners earlier. I wanted to have more conversation with you. However, if I make any mistakes while I talk in front of my mother, I get scolded.";
+		next;
+		mes "[Jurgen]";
+		mes "Not that she would be harsh on my, but it still kind of bothers me so I had to leave. I am sorry.";
+		next;
+		mes "[Jurgen]";
+		mes "Dear adventurer, since you are already here, may I introduce my family to you? This elegant lady here is my sister, ^0000cdKatrin Wigner^000000.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "You shouldn't call me your sister, but the first daughter of the Wigner family in this occasion.";
+		next;
+		mes "[Katrin]";
+		mes "Dear adventurer, I am honored to meet you. I hope you have a restful stay with the Wigners.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "This is my brother, ^0000cdIsaac Wigner^000000.";
+		next;
+		mes "[Jurgen]";
+		mes "He is the youngest child of the Wigner family. Unlike my sister and I who are not interested in the family business, he is a prodigy who will shine the name of the Wigner family.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Hello? I am Isaac Wigner. What a trouble you are going through to visit a boring family like this. I hope you have fun here if you can...";
+		next;
+		cutin "16kat_ang",2;
+		mes "[Katrin]";
+		mes "Isaac, I have warned you about such manner of speaking before.";
+		mes "You are also being disrespectful to Jurgen who has just introduced you. Are you going to put us all to shame?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "It is a joke, just a joke! Sister, you are so inflexible.";
+		mes "In a dreary atmosphere like this, this adventurer deserves to laugh a little, right?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "You are not being funny but disrespectful to the guest. Dear adventurer, please excuse the bad manners. I am sorry.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "By the way, I want to go home as soon as possible. This place is too narrow and gloomy.";
+		mes "I would like to be in the Banquet Hall at least.";
+		next;
+		mes "[Jurgen]";
+		mes "There must be a lot of people who want to see me. I am obliged to show my face.";
+		next;
+		mes "[Jurgen]";
+		mes "My presence will light up the dark palace, you know. I should entertain the bored people there.";
+		next;
+		cutin "16kat_ang",2;
+		mes "[Katrin]";
+		mes "You are insulting the Royal Assembly. You need to do your best. Royal Assembly is more sacred that you think.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "You shouldn't forget that you are one of the candidates for the throne who will lead the kingdom with the seven royal families.";
+		next;
+		mes "[Katrin]";
+		mes "It means that you shouldn't act like a child. I have told you not to take the weight of your responsibility and duty so lightly.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Of course, I know that well. That's why I have tidied up my looks and fixed my hair perfectly.";
+		mes "I tried not to loosen up, you know.";
+		next;
+		mes "[Jurgen]";
+		mes "You need to be able to groom yourself up well to take care of greater matters.";
+		mes "Of course, I am well-prepared.";
+		next;
+		mes "[Jurgen]";
+		mes "Would you like to see my new cape?";
+		mes "It goes with the color of my eyes. It would definitely brighten up the palace.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Oh, there he goes again. I should get going now. Dear adventurer, I would like to see you later.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Isaac Wigner#ep16wig", bc_self );
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Dear adventurer, I guess that is it for today. If you are not busy, ^0000cdwhy don't you go have a cup of tea with our parents^000000?";
+		next;
+		mes "[Katrin]";
+		mes "My parents love to hear the stories of adventurers.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is a good idea. Please excuse me then.";
+		erasequest 14475;// To Jurgen
+		setquest 14476;// To Levuiere and His Wife
+		banquet_wigner_quest = 2;
+		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+		}
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Our ^0000cdparents^000000 are over there. They'd like to talk to you.";
+		mes "By the way, are there many people waiting outside the door?";
+		next;
+		mes "[Jurgen]";
+		mes "They are waiting for me. However, it is a little tiring to meet them all one by one.";
+		mes "It is very demanding to guard the world's peace with my beauty.";
+		close3;
+	}
+	if (banquet_wigner_quest == 2) {
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Our ^0000cdparents^000000 are over there. They'd like to talk to you.";
+		mes "By the way, are there many people waiting outside the door?";
+		next;
+		mes "[Jurgen]";
+		mes "They are waiting for me. However, it is a little tiring to meet them all one by one.";
+		mes "It is very demanding to guard the world's peace with my beauty.";
+		close3;
+	}
+	if (banquet_wigner_quest == 3) {
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "It seems that my sister has lost something. I couldn't understand her words since she was in such a hurry.";
+		mes "Would you please ask her what it is about?";
+		close3;
+	}
+	if (banquet_wigner_quest >= 4 && banquet_wigner_quest < 9) {
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Whatever she has lost, it must be very valuable to her. I feel that she'd better get someone to help her to find it.";
+		mes "Well, then she would be scolded by our father though...";
+		next;
+		mes "[Jurgen]";
+		mes "I wonder if you can look into it as fast and quietly as possible.";
+		mes "My sister's fate depends on your hands.";
+		next;
+		mes "[Jurgen]";
+		mes "It seems that she may drop dead if she doesn't find whatever she has lost.";
+		close3;
+	}
+	if (banquet_wigner_quest == 9) {
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Dear adventurer, you are here. How did it go?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No. Everyone has seen it there, but no one has seen it taken.";
+		next;
+		mes "[Jurgen]";
+		mes "How about the one who has taken it? Oh, right, the one who has taken it wouldn't say so.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "By the way, people seem to have a strange prejudice about Katrin. I know the words they say are not true, but you'd better to something about it.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "What do you meant?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, please don't take it wrong. Some people have said that Katrin may have done it to draw attention or they cannot trust Katrin.";
+		next;
+		mes "[Jurgen]";
+		mes "What a nonesense! Phew... This is exactly why I have told her to open her heart to others and talk more...";
+		next;
+		classchange( 4_EP16_POE, "Katrin Wigner#ep16wig", bc_self );
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Why should I do that? I don't care about the people who don't know me well anyway.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Sister, when did you come back?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "I came here just a minute ago. However, I heard what you said. So, do you think it's my fault to hear such things?";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "You are to blame to a certain level. Look at me. I always to treat others with all my hearts. They all love me for that.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Do you think people like you for your attitude?";
+		mes "Don't you remember the trouble that all the family members have been through because of your attitude issue during the Royal Assembly?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "If it is not my attitude, then for what?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "What do you think?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Do you mean that it is for my looks?";
+		next;
+		cutin "16kat_ang",2;
+		mes "[Katrin]";
+		mes "Can you deny it? Since you were young, when you are doing nothing, no, even when you are rude, people have been nice to you.";
+		next;
+		mes "[Katrin]";
+		mes "They all smiled at you to please the pretty-looking heir of the Wigner family, the candidate to the throne.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "You say that is for my looks?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Looks have played an important role. You cannot deny it. Looks are part of your talent, right?";
+		mes "Especially, in our family. You should know it by now.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Even if it's all for my looks, have I ever wanted it to be that way?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Even when I am not doing anything wrong, I am always compared to my handsome brother, and bad rumors follow me. Do you think I have ever wanted it to be that way?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "That's why you need to open up to others and act nicey...";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "The best way not to cause misunderstanding is to be silent. When I don't talk, I don't make a mistake.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "That doesn't always work. About what happened today, you know. Even when you were silent...";
+		next;
+		cutin "16kat_ang",2;
+		mes "[Katrin]";
+		mes "I am already doing my best! You know what? The darkest shadow is always right next to the brightest light! It is just like me next to you! I have been trying!";
+		next;
+		mes "[Katrin]";
+		mes "However, people don't see who I really am! What else should I do now?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Both of you should calm down.";
+		next;
+		classchange( 4_EP16_ISAAC, "Isaac Wigner#ep16wig", bc_self );
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Yes. Whatever it is, you'd better calm down. I could hear you yelling at each other from the other end of the hallway.";
+		next;
+		mes "[Isaac]";
+		mes "Our family is supposed to have a reputation to keep, isn't it?";
+		next;
+		mes "[Isaac]";
+		mes "What you have ruined last time is about to be recovered now, brother.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "......";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "By the way, ^0000cdisn't it your box^000000, sister? It was on the table while there are a bunch of people hanging out. I kept it not to get it lost.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "This... ^0000cdWas it you who had taken it^000000?";
+		next;
+		cutin "16kat_ang",2;
+		mes "[Katrin]";
+		mes "You should have let me know when you were taking it. Do you know how much trouble I have been through for this?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Wait, this is unfair! No? I have taken it with me for your sake, sister.";
+		next;
+		mes "[Isaac]";
+		mes "You know how our father gets furious if anything goes missing in our house!";
+		next;
+		mes "[Isaac]";
+		mes "He would go on and on about how we don't need a person who cannot manage even a small thing in the Wigner family and how management skill is the greatest virtue of our family... Just think about it scares me.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "What is in there? Why did you fuss about it so much?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "There is nothing which is considered valuable by others in it. However, it is the most precious thing to me. Look.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "A note?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "A diary?";
+		next;
+		cutin "16kat_ang",2;
+		mes "[Katrin]";
+		mes "It is better to avoid a futile conversation. If you don't talk, you don't make mistakes. However, there are moments that you want to be honest with yourself.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "This diary has been capturing the moments that I want be true to myself.";
+		next;
+		mes "[Katrin]";
+		mes "Nevertheless, I still am mistaken by others even I stay quiet. I guess silence has not been the best policy after all. Since I have my diary back, I should get going.";
+		mes "Dear adventurer, please excuse me for all the trouble.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Sister, I...";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "That's all right now. I'll forget it all. You don't have to care about it either.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Katrin Wigner#ep16wig", bc_self );
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "She walks so fast. What was it all about?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "It's all because you have taken the box without a word... Phew... Well, long story short, our sister is upset.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Argh! Why is she upset?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "It is complicated. I guess there are some bad rumors about her out there.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Oh, I have heard about it before. However, I thought you would take care of it since it is mainly your fault.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "You knew about that? Why didn't you tell me about it?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Even if I did, you wouldn't have taken it seriously. It is true that you were born with that blessed looks.";
+		next;
+		mes "[Isaac]";
+		mes "That's why the people around you have looked up to you. Not that our parents have been hard on us. No wonder you have grown up to be so carefree.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Are you picking up a fight with me?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "No, listen to me. I am telling the truth here. No hard feelings.";
+		next;
+		mes "[Isaac]";
+		mes "Due to your superlative looks, we have been quite disadvantaged, growing up.";
+		next;
+		mes "[Isaac]";
+		mes "Do you remember what our sister has said? How the darkest shadow is always right next to the brightest light? It is true.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "I don't get it. Beauty is a good thing. Everyone likes it.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "The people who see it may appreciate it. However, the people right next to it are being compared to it.";
+		mes "Among the three of us, it must have been the hardest for our sister.";
+		next;
+		mes "[Isaac]";
+		mes "Imagine a plain person standing next to an angelic beauty. Despite looking completely normal, she or he would look unattractive and somber. We have been compared to you like that, all our lives.";
+		next;
+		mes "[Isaac]";
+		mes "Our sister must have suffered from the stress even more. She has managed to endure it with her extraordinary patience and generosity. In fact, I think she could be an angel.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "I didn't know that... At all..";
+		next;
+		mes "[Jurgen]";
+		mes "What should I do now?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I don't think it is entirely your fault. It was our parents who have created you like that.";
+		mes "Oh, well, you are to blame for your carefreeness though.";
+		next;
+		mes "[Isaac]";
+		mes "Anyway, who we need to worry about is our sister. Has she ever been mad at us? What should we do when she is upset?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Well, she has been mad at me once when I was young.";
+		mes "I guess it was somewhat similar to what has just happened. She said something about comparison then...";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I was too young to remember it. However, I do remember how our sister became very quiet after arguing with you.";
+		mes "You have been the main culprit of it after all.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "It is not the time to waste time to distinguish between right and wrong. What should we do, dear adventurer.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't know. Have you ever tried to countervail someone's anger?";
+		next;
+		mes "[Jurgen]";
+		mes "No. No one's ever been mad at me, except our sister.";
+		next;
+		mes "[Jurgen]";
+		mes "Dear adventurer, please help us out here.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Leave me out of it. I wasn't the one who got her mad.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "You were the cause of the problem.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I was trying to keep it safe... Please, dear adventurer, help us!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What can you do? You'd better wait until your sister lets off steam... Or, you could try giving her something she likes...";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "What doest she like? Do you know?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I know as much as you do.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Which means you know nothing, great!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "She seems to value experiences and memories. Don't you have any good memories with her? Trace back your memory back a little.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Hum... Hum... There's no such... Wait! Yes, I remember one!";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "What? Is there any?";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Do you remember how we walked around the Comodo beach together during the summer vacation? We picked up some pretty stones on the shore and in the cave.";
+		next;
+		mes "[Jurgen]";
+		mes "Our sister really liked...This clear stone containing some sea water and a piece of coral inside.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "The Sea Stone?";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Yes, that's it! She lined up those stones near the window and enjoyed looking at them glittering in the sun.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Oh, I remember now. I remember seeing them glittering in her room.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The ^0000cdSea Stone^000000? What is it?";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "It is a pretty stone which can only be found in Comodo. It is called the Sea Stone because it looks as if there is the sea captured inside of it, with the sea water and corals.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Some romantics call it, the gift from a mermaid.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "You may find them upon digging the ground on the Comodo beach once in a while. Our sister, Isaac and I used to dig them out whenever we are on summer vacation.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I have heard that it is not found on the beach these days. Instead, you can get it by killing the ^0000cdMedusa inside the cave in the west of Comodo^000000.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "What? Did the Medusa take them all?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Who knows? It is supposed to be the gift from a mermaid. Some say, the Mermen have given them to the Medusa. Well, this also sounds like a fairytale.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "How do you know it so well?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I have once tried to distribute them all over the continent. You used to be able to get them by just digging the ground. Tourists used to pick them up as souvenirs or gamblers used to use them as talismans for their prayers to the sea-god.";
+		next;
+		mes "[Isaac]";
+		mes "Since it bacame hard to get them, I have given up the plan. The game is not worth the candle, having to kill the Medusa on the way.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "I didn't know that. Anyway, I remember there was something else next to the stone.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "There were some flowers, a bunch of them. What flower was that? I lasted so long that it never seemed to wither at all.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Dear adventurer, do you have any idea what flower that would have been?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If it didn't whither for so long, it could have been a Witherless Rose.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Is there such a thing? Why do you need a Witherless Rose when you can just buy another flower before the older one whithers?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You want what you like to last long. If you replace it with another flower, it is not the same flower you liked anymore.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Hum... Well, I guess I can imagine myself being replaced with another person. I understand it now.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "So, when are you going to get them for us?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What?";
+		next;
+		mes "[Isaac]";
+		mes "You didn't think that we would go there to get them ourselves, did you?";
+		next;
+		mes "[Isaac]";
+		mes "I am busy with my business, and Jurgen attracts too many people around him.";
+		next;
+		mes "[Isaac]";
+		mes "We need someone else we can trust, who happens to be right in front of us.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "I was worried about it as well. Please, dear adventurer, help us. The loving relationship among us depends on you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If you say so... How many of them do you need? Where can I get the Sea Stone?";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Hum... I guess we need ^0000cd1 Witherless Rose^000000 and ^0000cd10 Sea Stones^000000 since we want to decorate the window with them.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "We are depending on you.";
+		erasequest 14486;// I Heard the Story
+		setquest 14487;// Please Find the Token of Memory
+		banquet_wigner_quest = 10;
+		close3;
+	}
+	if (banquet_wigner_quest == 10) {
+		if (countitem(748) < 1 || countitem(6927) < 10) {
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "Dear adventurer, you came! Did you bring what we asked you for? Please tell us that you did.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I wasn't able to bring them all.";
+			next;
+			mes "[Jurgen]";
+			mes "Why? Did you forget what to bring by any chance? Let me tell you once more.";
+			next;
+			mes "[Jurgen]";
+			mes "^0000cd10 Sea Stones^000000. You can get them while hunting Medusa in Comodo. They are valuable because it is difficult to kill Medusa.";
+			next;
+			mes "[Jurgen]";
+			mes "And ^0000cd1 Witherless Rose^000000.";
+			next;
+			mes "[Jurgen]";
+			mes "I know that's a lot of things to bring, but I believe we need them all to make our sister feel better.";
+			close3;
+		}
+		mes "[Jurgen]";
+		mes "Dear adventurer, did you bring what we asked you for? Please tell us that you did.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Yes, please tell us that you did. We tried our best to balance out her anger. However, she's been giving the cold shoulder to us.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I brought them. You'd better not to press an angry person so impatiently like that, you know.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Whoa, they are all here! You saved our lives. We should call our sister now. What if she is still mad at us...";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I have already called her.";
+		next;
+		classchange( 4_EP16_POE, "Katrin Wigner#ep16wig", bc_self );
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Why do you keep calling me? Please leave me alone for that I am not mad at you any more.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Sister, forgive us. Please stop being mad at us.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "...Do you know what you have done wrong?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "I don't think I am to blame, but I am sorry that I have taken your stuff without telling you.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Well, I am sorry about it all. I haven't been considerate of your feelings. However, it wouldn't have hurt you to open up to me a little, since we are family.";
+		next;
+		mes "[Jurgen]";
+		mes "If we don't be honest to each other, we will just grow away. We will get our wires crossed again.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "You are right. I have given it a thought as well. I think some part of it is my fault. I should have been honest with you, at least.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "When we were young, we used to talk a lot, and have some good times. Look at these. We used to run around looking for things like these. Do you remember this stone? You liked to watch them glitter in the sun.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "They are.. When did you get them...?";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "The adventurer helped us. I guess those were the times when we were the closest to one another. Look at this.";
+		mes "This stone is so clear that you can see the seawater and coral reef inside right through it.";
+		next;
+		mes "[Jurgen]";
+		mes "I think people are just the same. We don't need to show everything, but we do need to show some to let others know how pretty we are inside.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Yes, you are right. I think you have got the point. I'll try. I'll do it to avoid any more misunderstanding.";
+		next;
+		mes "[Katrin]";
+		mes "By the way, when did you learn to talk like that? I think I am finally able to talk with you guys now.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "You mean, you haven't been able to talk with us?";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Well, thanks to my effort, we brothers and sister have become close to one another again.";
+		mes "Thank you for your work, dear adventurer. This is not much, but I hope you take it. Sorry about all the trouble you have been through for us.";
+		next;
+		mes "[Isaac]";
+		mes "Material reward has never seems to small before.";
+		mes "I guess what you have done for us is just that priceless.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "I am sorry to cause such an embarrassing scene in front of you. If you have time, please come by again. We will make sure to receive you properly next time.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Dear adventurer, I have learned new lessons and earned many things, thanks to you. If you need our help, we will try to help you as much as we can. I wish you luck!";
+		completequest 14487;// Please Find the Token of Memory
+		delitem 6927,10;// Sea Stone
+		delitem 748,1;// Witherless Rose
+		getitem 6919,10;// Honor Token
+		getexp 1000000,500000;
+		banquet_wigner_quest = 11;
+		close3;
+	}
+	switch( checkquest(14492,PLAYTIME) ) {
+	case -1:
+		if (banquet_wigner_quest == 11) {	// first time (not repeatable)
+			mes "[" + strcharinfo(0) + "]";
+			mes "Jurgen, Hello?";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Oh, dear adventurer, welcome.";
+			mes "Are you enjoying the banquet? Do you need any help by any chance?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No. I just wanted to talk to you for a second.";
+			mes "I wonder how your sister is doing these days as well.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Thanks to your help, we have never been better than this.";
+			mes "I've been talking to my sister much more, and..";
+			next;
+			classchange( 1_F_04, "Maid#ep16wig01", bc_self );
+			cutin "",255;
+			mes "[Maid]";
+			mes "Excuse me.";
+			next;
+			emotion ET_HUK, getnpcid(0, "Maid#ep16wig01");
+			mes "[Maid]";
+			mes "I am sorry. I thought no one was here. I just wanted to clean the room, I am really sorry. I'll come back later.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Not at all. Please come in. It is a nonsense that you cannot clean the room because of the people inside.";
+			next;
+			cutin "",255;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hello, long time no see. Sorry about the trouble you went through last time. Fortunately, the box thing has been resolved well.";
+			next;
+			mes "[Maid]";
+			mes "Oh... Yes... I see...";
+			mes "Hello...";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Is this the person from the last time? Whom you asked about the box...?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Yes, she is.";
+			next;
+			mes "[Jurgen]";
+			mes "I am sorry about that. We were desperate and in a hurry. I apologize if you were upset by it.";
+			next;
+			cutin "",255;
+			mes "[Maid]";
+			mes "Thank you for telling me that. Since I am a maid, there are people who suspect me or treat me like a thief.";
+			next;
+			mes "[Maid]";
+			mes "However, you seem different, dear prince. I am a little surprised. I thought people who belong to the high society didn't know how to apologize.";
+			next;
+			mes "[Maid]";
+			mes "Oh, it was very presumptuous of me.";
+			mes "I am sorry.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "No, that's OK.";
+			next;
+			cutin "",255;
+			mes "[Maid]";
+			mes "Then, I should get going.";
+			mes "I am supposed to clean the room when there is no one inside anyway. Please excuse me.";
+			next;
+			classchange( HIDDEN_WARP_NPC, "Maid#ep16wig01", bc_self );
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "You shouldn't have to... Well, she's gone...";
+			next;
+			mes "[Jurgen]";
+			mes "Well, dear adventurer?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "What?";
+			next;
+			cutin "16jur_sim",0;
+			emotion ET_THROB;
+			mes "[Jurgen]";
+			mes "Well, I think ^0000cdI have fallen in love^000000 .";
+			next;
+			cutin "",255;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, you have.";
+			next;
+			emotion ET_HUK, playerattached();
+			mes "[" + strcharinfo(0) + "]";
+			mes "What?";
+			next;
+			cutin "16jur_nor",0;
+			emotion ET_THROB;
+			mes "[Jurgen]";
+			mes "I have never met anyone who looks directly into my eyes like that.";
+			next;
+			mes "[Jurgen]";
+			mes "I fell in love with her. I love her dignified and calm voice. Unaffected behaviors That tone of voice reflecting strong will...";
+			next;
+			mes "[Jurgen]";
+			mes "All the women I have seen so far are like flowers in the greenhouse. However, she resembles a wild flower in the field.";
+			next;
+			mes "[Jurgen]";
+			mes "She is totally different from the ladies I have met before.";
+			next;
+			mes "[Jurgen]";
+			mes "Dear adventurer! How can I tell someone I have fallen in love at first sight how I feel? Should I go take her hands and say I love her?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "What? You don't know anything about it?";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "She is my ^0000cdfirst love^000000. My life will never be the same since I have met her.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hum... Try to remember what all the people outside the door have done to you.";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "Well... Nothing that I can recall... Hum... There have been some impressive people though. There was this person who penetrated defense and hid behind the curtain in my room...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hum... That's impressive. However, it is a crime. You should forget it.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "There was this person who sent me a life-size golden statue. I sent it back since I didn't need it and it didn't look as good as real me.";
+			next;
+			mes "[Jurgen]";
+			mes "How about sending her a gold statue looking exactly like me?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "She will be repelled if you try too hard like that from the very beginning. How about sending her a ^0000cdletter^000000 with a small gift?";
+			next;
+			mes "[Jurgen]";
+			mes "It is a good idea! Please wait a moment!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "What? Wait for what?";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "Did you forget? If I take a step out of that door, I'll draw attention.";
+			next;
+			mes "[Jurgen]";
+			mes "It would cause her trouble, wouldn't it. By the way, I didn't even get the chance to ask her what her name was.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Please send this letter to her with this box containing jewelry.";
+			next;
+			if (select( "OK.", "It will be difficult." ) == 2) {
+				mes "[" + strcharinfo(0) + "]";
+				mes "It will be difficult. I have other things to do.";
+				next;
+				cutin "16jur_sim",0;
+				mes "[Jurgen]";
+				mes "Sorry about the difficult request. I guess I should go there myself. You may be able to see the news that the heir of the Wigner family has been crushed to death by his followers on Daily Rune Midgarts tomorrow morning.";
+				next;
+				mes "[Jurgen]";
+				mes "Or, the poor maid could be hospitalized by tomorrow. Anyway, I understand.";
+				close3;
+			}
+			cutin "",255;
+			mes "[" + strcharinfo(0) + "]";
+			mes "OK. I should get going then.";
+			setquest 14488;// Please Deliver My Love
+			banquet_wigner_quest = 12;
+			close;
+		}
+		if (banquet_wigner_quest == 12) {
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Dear adventurer! I've been waiting for you. How did it go? Has she said she loves me too?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No, I haven't been able to meet her yet. Let me go see her again.";
+			close3;
+		}
+		if (banquet_wigner_quest == 13) {
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Dear adventurer! I've been waiting for you.";
+			mes "How did it go? Has she said she loves me too?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No, actually... She ^0000cdturned it down^000000. She returned what you had sent her as well.";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "She turned me down?";
+			mes "Why? Did she say that she didn't like my looks? Or wasn't what I had sent her enough for her?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No, not that... She has said she is currently not in the situation to go out with someone. She seems to have a reason.";
+			next;
+			mes "[Jurgen]";
+			mes "Does she already have a boyfriend? I am not surprised. She is so attractive after all. No wonder I have fallen for her.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No, not that eiter... She just has said she is currently not in the situation to date someone.";
+			next;
+			mes "[Jurgen]";
+			mes "Whoa... ^0000cdIt is my first time to want something so badly in this life^000000. Never did I know that it would be so difficult to get.";
+			mes "Is living such a difficult thing?";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "However, my father has told me that I should always try at least three times.";
+			next;
+			mes "[Jurgen]";
+			mes "First try to begin, second try to confirm and the third try to give up since it is not meant to be.";
+			next;
+			mes "[Jurgen]";
+			mes "So, dear adventurer. Please do this one more time for me.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Well, I think you should write the letter again...";
+			next;
+			mes "[Jurgen]";
+			mes "I need something special. Something pretty and shiny which reflects my feelings...";
+			next;
+			mes "[Jurgen]";
+			mes "The Sea Stone! And flower!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "What?";
+			next;
+			mes "[Jurgen]";
+			mes "I want to send her ^0000cdthe heart that is as wide and beautiful as the sea^000000 and ^0000cdthe amaranthine heart for her^000000.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Should I go get them all myself as well?";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "Please, dear adventurer, be the messenger of love for me. Please send her my heart wider than the sea which never withers.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "If you say so, I'll do it.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Please send her my letter with ^0000cd15 Sea Stones and 1 Witherless Rose^000000.";
+			next;
+			mes "[Jurgen]";
+			mes "As I told you before, you can get the Sea Stone from killing Medusa.";
+			next;
+			mes "[Jurgen]";
+			mes "Dear adventurer, I will never forget this and make it up to you. We, Wigners, never forget any debt.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Not that I am doing it expecting something in return, but I will deliver them to her since you look so desperate.";
+			next;
+			mes "[Jurgen]";
+			mes "Thank you! Oh, do you happen to get her name by any chance?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Mary, her name is Mary.";
+			next;
+			mes "[Jurgen]";
+			mes "^0000cdMary^000000. It is a common but pretty name. What is common means that it is well loved by many people. I'll get all my things embroidered with this name from now on.";
+			next;
+			mes "[Jurgen]";
+			mes "Dear adventurer, you may set off now. Please deliver my feelings to her safely.";
+			erasequest 14489;// I Have to Turn It Down
+			setquest 14490;// My Love Once More
+			banquet_wigner_quest = 14;
+			close3;
+		}
+		if (banquet_wigner_quest == 14) {
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Did you deliver my heart to Mary safely? You have come back so early.";
+			next;
+			mes "[Jurgen]";
+			mes "Have you forgotten what you have to bring with you?";
+			next;
+			mes "[Jurgen]";
+			mes "You need to bring ^0000cd15 Sea Stones which you can get from killing Medusa and 1 Witherless Rose^000000.";
+			next;
+			mes "[Jurgen]";
+			mes "Mary wouldn't feel uncomfortable if I express my feelings with ordinary things like these, right? Please send her my heart wider than the sea which never withers.";
+			close3;
+		}
+		if (banquet_wigner_quest == 15) {
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Dear adventurer! You are back!";
+			mes "I couldn't stop thinking about her even while you were gone.";
+			next;
+			emotion ET_THROB;
+			mes "[Jurgen]";
+			mes "Even when I eat, drink a tea, look into the mirror and talking to other people! I though about her all day. It was painful but I was in a flutter.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "That's what falling in love is like.";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "Oh, then I must have been doing bad things to numerous people. There is nothing I can do for them.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "By the way, since your hands are empty, I guess she has accepted my heart at last!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Well, hum... She didn't react negatively, but you'd better be careful since you don't know each other yet.";
+			mes "Why don't you spare her some time?";
+			next;
+			mes "[Jurgen]";
+			mes "She must have not accepted my heart completely then. I am all right though! She hasn't turned me down yet!";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "I didn't know how painful it was to love someone. I did know how I would be fidgety about a word or gesture of her.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "It is true. Winning someone's heart is the hardest thing.";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "I guess I should be nicer to the people who like me.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I don't think that is a good idea...";
+			next;
+			mes "[Jurgen]";
+			mes "Dear adventurer, thank you again. Would you come by again tomorrow?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "What?";
+			next;
+			mes "[Jurgen]";
+			mes "It seems like a good sign. Paddle as the wave approaches. That's one of the many mottos of our family.";
+			next;
+			emotion ET_THROB;
+			mes "[Jurgen]";
+			mes "I want to let her know of my blazing heart every day.";
+			next;
+			mes "[Jurgen]";
+			mes "I have a feeling that everything will turn out great if you send it for me.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "How about allowing her some time?";
+			next;
+			cutin "16jur_sim",0;
+			mes "[Jurgen]";
+			mes "What if she forgets about me? Then, please send her my message once a day. You wouldn't say no, right?";
+			next;
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Oh, I almost forgot. It is not much, but please accept this as my token of gratitude for the messenger of my love.";
+			next;
+			mes "[Jurgen]";
+			mes "I'll see you tomorrow then!";
+			erasequest 14491;// I Have to Turn It Down Again
+			setquest 14492;// There Is a Silver Lining
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			banquet_wigner_quest = 16;
+			close3;
+		}
+		if (isbegin_quest(14493) == 1) {// daily
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Did you deliver my heart to Mary safely? You have come back so early.";
+			next;
+			mes "[Jurgen]";
+			mes "Have you forgotten what you have to bring with you?";
+			next;
+			mes "[Jurgen]";
+			mes "You need to bring ^0000cd15 Sea Stones which you can get from killing Medusa and 1 Witherless Rose^000000.";
+			next;
+			mes "[Jurgen]";
+			mes "Mary wouldn't feel uncomfortable if I express my feelings with ordinary things like these, right?";
+			next;
+			mes "[Jurgen]";
+			mes "Please send her my heart wider than the sea which never withers.";
+			close3;
+		}
+		if (isbegin_quest(14494) == 1) {
+			cutin "16jur_nor",0;
+			mes "[Jurgen]";
+			mes "Dear adventurer, I'd like to call you who has delivered my message of love to her, the ^0000cdMessenger of Love^000000.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Please don't...";
+			next;
+			mes "[Jurgen]";
+			mes "^0000cdCupid of Love^000000...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Please stop it.";
+			next;
+			mes "[Jurgen]";
+			mes "On the day Mary accepts my feelings, I would like to give you a huge pure gold statue.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "You really don't have to do that.";
+			next;
+			mes "[Jurgen]";
+			mes "However, this is the only thing I can offer you for now. Please visit our manor later. There are some real valuable things.";
+			next;
+			mes "[Jurgen]";
+			mes "Then dear adventurer, I'll see you again tomorrow.";
+			erasequest 14494;// I Have to Turn It Down Again
+			setquest 14492;// There Is a Silver Lining
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		}
+		end;
+	case 0:
+	case 1:
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Dear adventurer, what brought you here around this time? May I help you?";
+		next;
+		mes "[Jurgen]";
+		mes "Are you here to deliver my message of love to Mary?";
+		next;
+		mes "[Jurgen]";
+		mes "Oh, well, it was you who had said that she would be repelled by my impatience.";
+		next;
+		mes "[Jurgen]";
+		mes "I am trying hard not to send her my love letter every minute and second. Please comeback when the time comes.";
+		close3;
+	case 2:
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Dear adventurer, you came! It seems that something good may happen today.";
+		next;
+		mes "[Jurgen]";
+		mes "Please deliver her the message of my love with deliver my message of love with ^0000cd15 Sea Stones and 1 Witherless Rose^000000.";
+		next;
+		mes "[Jurgen]";
+		mes "Do you remember? You can get the Sea Stone by killing Medusa.";
+		next;
+		emotion ET_CRY;
+		mes "[Jurgen]";
+		mes "Please send them to her and tell me how Mary is doing today. I am sad that she doesn't come here to clean the room anymore.";
+		next;
+		mes "[Jurgen]";
+		mes "I want to go see her myself. However, I guess she will feel uncomfortable.";
+		next;
+		mes "[Jurgen]";
+		mes "Dear adventurer, I am depending on you!";
+		erasequest 14492;// There Is a Silver Lining
+		setquest 14493;// Today I Feel
+		close3;
+	}
+}
+
+prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
+	if (banquet_wigner_quest == 0) {
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Dear adventurer, we are honored to have you with us. Have you met our father who is the head of the Wigner family?";
+		next;
+		mes "[Katrin]";
+		mes "How about meeting Jurgen, the hair of the Wigner family who is participating in the Royal Assembly?";
+		next;
+		mes "[Katrin]";
+		mes "Then, have a comfortable time in the Wigner family.";
+		close3;
+	}
+	if (banquet_wigner_quest <= 2) {
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Dear adventurer, we are honored to have you with us. Have you met our father who is the head of the Wigner family?";
+		next;
+		mes "[Katrin]";
+		mes "How about meeting Jurgen, the hair of the Wigner family who is participating in the Royal Assembly?";
+		next;
+		mes "[Katrin]";
+		mes "Then, have a comfortable time in the Wigner family.";
+		close3;
+	}
+	if (banquet_wigner_quest == 3) {
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "I am over!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What is going on?";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "Sister, please calm down. Where did you put it? Are you sure you have left it here?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Here, I have left it right here! After talking to the adventurer, I put it here and... It was gone... Where did it go?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What did you lose?";
+		next;
+		mes "[Katrin]";
+		mes "My jewelry box... Well, it is technically not a jewelry box since it doesn't hold any jewelry in it, but anyways, ^0000cda small box containing something very important is missing.^000000";
+		next;
+		mes "[Katrin]";
+		mes "I took it out of my bag and out it here. Then it was gone. What should I do? I don't know what I should do without it... I cannot afford to let anyone see it...";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "It could be the ^0000cdmaid^000000 who came here earlier to clean the room. She may have taken it.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "You haven't seen her taking it. You shouldn't doubt other people without proof.";
+		next;
+		cutin "",255;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Not that I am suspicious of her, but it may help to ask her. If she saw it or when was the last time she saw it...";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Please don't. She would be upset if she feels that she is being suspected.";
+		next;
+		cutin "16jur_sim",0;
+		mes "[Jurgen]";
+		mes "But you are being so nervous. Isn't it an important thing to you?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "It is, but...";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "You really need to get it back, right?";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "You are right, but...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I'll make sure to ask her about it as politely as possible. Please relax and wait here.";
+		next;
+		mes "[Katrin]";
+		mes "I don't know if is the best idea. I don't want her to feel that we are suspecting her.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Just wait until the adventurer comes back. The adventurer is really experienced in this kind of stuff.";
+		next;
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Should I...";
+		mes "Then, please help me, dear adventurer. I'll go search other pleases then.";
+		next;
+		cutin "16jur_nor",0;
+		mes "[Jurgen]";
+		mes "Please, help her. I have heard that ^0000cdthe maids are in the kitchen^000000.";
+		erasequest 14477;// What Is Going on?
+		setquest 14478;// Searching for the Clue
+		banquet_wigner_quest = 4;
+		close3;
+	}
+	if (banquet_wigner_quest == 4 || banquet_wigner_quest == 5) {
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Oh, what should I do?";
+		mes "I should have taken better care of it...";
+		next;
+		mes "[Katrin]";
+		mes "Please make sure not to hurt other people's feelings.";
+		mes "I would like to go find it myself, but I am not in the situation to do that...";
+		next;
+		mes "[Katrin]";
+		mes "I don't even want to imagine anyone else sees it though...";
+		mes "I would be embarrassed to death.";
+		close3;
+	}
+	if (banquet_wigner_quest == 10) {
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Please leave me alone now!";
+		mes "Ah, it was you, dear adventurer. Please excuse me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Your feeling must have been hurt by your brothers.";
+		next;
+		mes "[Katrin]";
+		mes "It is not that.";
+		mes "I am... I am just angry at myself.";
+		next;
+		mes "[Katrin]";
+		mes "Something like this never would have happened if was more careful...";
+		mes "Moreover, I shouldn't have said such things to my brothers either.";
+		next;
+		mes "[Katrin]";
+		mes "However, I couldn't take it anymore when I heard the rumors and Jurgen's attitude...";
+		mes "I thought I was used to those things... I guess I am not.";
+		next;
+		mes "[Katrin]";
+		mes "I should have given it up by now...";
+		mes "Oh, I am sorry. I believe you haven't come here to listen to a story like this.";
+		next;
+		mes "[Katrin]";
+		mes "I am sorry, but I want to be alone for now.";
+		mes "Please.";
+		close3;
+	}
+	if (banquet_wigner_quest == 11) {
+		cutin "16kat_nor",2;
+		mes "[Katrin]";
+		mes "Thanks to you, we have become closer to one another now.";
+		mes "Now I can open up to my brothers more.";
+		next;
+		mes "[Katrin]";
+		mes "I have tried to hide my feelings and save my words. However, I have realized that It is not the best policy.";
+		mes "From now own, I am going to tell them how I feel to avoid any misunderstanding.";
+		next;
+		mes "[Katrin]";
+		mes "Dear adventurer, thank you.";
+		close3;
+	}
+	cutin "16kat_nor",2;
+	mes "[Katrin]";
+	mes "I believe I haven't met you before. Are you here to see my father?";
+	next;
+	mes "[Katrin]";
+	mes "My father is over there.";
+	close3;
+
+OnTouch:
+	if (banquet_wigner_quest >= 4 && banquet_wigner_quest <= 10)
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	end;
+}
+
+prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
+	if (checkweight(501,1) == 0) {
+		mes "[Isaac Wigner]";
+		mes "Dear adventurer, do you know the old saying that the emptier it is, the more you can fill it?";
+		mes "It is one of the many aphorisms passing down in our family.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 2) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, Isaac Wigner.";
+		next;
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Oh, welcome, dear adventurer, my brother is over there...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No. I am here to see you, Isaac.";
+		next;
+		mes "[Isaac]";
+		mes "Is it about Wolf?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. How did you know it...?";
+		next;
+		mes "[Isaac]";
+		mes "Wolf is not here even after the time he has promised. He is the man of his word. Something must have happened to him.";
+		next;
+		mes "[Isaac]";
+		mes "I never expected you would come here instead though. So is he cancelling the appointment today then?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, he is. And he asked me to get ^0000cda certain thing^000000 from you, Isaac.";
+		next;
+		mes "[Isaac]";
+		mes "That thing...? Wolf must trust you, dear adventurer. Or it could be...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Some kind of a test.";
+		next;
+		mes "[Isaac]";
+		mes "Don't take it the wrong way. I am just be careful. In order to do what I do, I need to know who I can trust first.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I understand.";
+		next;
+		mes "[Isaac]";
+		mes "You can bring it to Wolf. Please be careful with it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK.";
+		next;
+		mes "[Isaac]";
+		mes "May I ask you for one more thing? I have heard that there is ^0000cda strange rumor^000000 circulating in Prontera.";
+		next;
+		mes "[Isaac]";
+		mes "It is supposed to be about ^0000cdHelmut Roegenburg^000000. Would you investigate about the rumor and let me know the truth?";
+		next;
+		mes "[Isaac]";
+		mes "Since I have a reputation to keep. I cannot afford to have a scandal. Please help me.";
+		next;
+		mes "[Isaac]";
+		mes "Please excuse me then.";
+		erasequest 14496;// To Isaac
+		setquest 14497;// Delivery for Wolf
+		banquet_roegenburg_quest = 3;
+		getitem 6930,1;// Sample of New Business Item
+		close3;
+	}
+	if (banquet_roegenburg_quest == 3) {
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Have you deliver the thing to Wolf safely? You should be careful with it since it can be dangerous.";
+		next;
+		mes "[Isaac]";
+		mes "And, don't forget to ask about the rumor as well.";
+		next;
+		mes "[Isaac]";
+		mes "Please excuse me then.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 7) {
+		if (countitem(6931) < 1) {
+			cutin "16isa",1;
+			mes "[Isaac]";
+			mes "Dear adventurer, you are back. Did you deliver the thing safely? What did he say about the rumor?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Here is the document about that. Here... It was. Wait, I must have forget to bring it with me. I am sorry. I'll be back with it soon.";
+			next;
+			mes "[Isaac]";
+			mes "Such things happen. Take your time. I'll be waiting for you.";
+			close3;
+		}
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Dear adventurer, you are back. Did you deliver the thing safely? What did he say about the rumor?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Here is the ^0000cddocument^000000 about it. It is written by Wolf Roegenburg himself.";
+		next;
+		mes "[Isaac]";
+		mes "Let's see... Hum... So the new business will be delayed indefinitely. The direction of the business will be changed.";
+		next;
+		mes "[Isaac]";
+		mes "I'll see you again after taking care of the matters. - W. R.";
+		next;
+		mes "[Isaac]";
+		mes "It means that he would stop the deal about the war, right? The rumor must have been quite threatening.";
+		next;
+		mes "[Isaac]";
+		mes "I feel sorry. It would have been a great chance for me to impress my family.";
+		next;
+		mes "[Isaac]";
+		mes "Well, I believe Wolf would find a better direction to the business. Please tell Wolf that I support his decision. And that I am excited about his new business.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I will.";
+		delitem 6931,1;// Top Secret Document
+		erasequest 14502;// To Isaac
+		setquest 14503;// Report to Wolf
+		banquet_roegenburg_quest = 8;
+		close3;
+	}
+	if (banquet_roegenburg_quest == 8) {
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "It is a shame.";
+		mes "It was a great opportunity for me and Wolf.";
+		next;
+		mes "[Isaac]";
+		mes "However, since my partner wants to quit, I shouldn't force him to carry on with it.";
+		mes "I believe that Wolf must already have the plan about the next business item in his mind.";
+		next;
+		mes "[Isaac]";
+		mes "That's why I accepted his suggestion to be partners in business.";
+		close3;
+	}
+
+	if (banquet_wigner_quest == 0) {
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Is it your first time to visit the Wigner family?";
+		mes "Then, ^0000cdyou should meet our parents^000000 over there first.";
+		close3;
+	}
+	if (banquet_wigner_quest == 1) {
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Dear adventurer, since you are here to the Wigner family, why don't you go meet some other members of the family?";
+		mes "Like my parents, my brother who is the candidate to the throne or my sister who is the eldest child.";
+		next;
+		mes "[Isaac]";
+		mes "I believe that you would have more productive time with them.";
+		close3;
+	}
+	if (banquet_wigner_quest == 10) {
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Dear adventurer, did you bring what I had asked you?";
+		next;
+		mes "[Isaac]";
+		mes "I'd like to go get them myself or ask other people to do it. But, I feel a little uncomfortable since it is a family matter.";
+		next;
+		mes "[Isaac]";
+		mes "I know how it is troubling you, but please help us. You have not forgotten what to bring, have you?";
+		next;
+		mes "[Isaac]";
+		mes "You need to bring ^0000cd10 Sea Stones and 1 Witherless Rose^000000.";
+		next;
+		mes "[Isaac]";
+		mes "Our fate depends on you! We may be able to get along again or we may become distant.";
+		next;
+		mes "[Isaac]";
+		mes "Please bring them to us as soon as possible!";
+		close3;
+	}
+	if (banquet_wigner_quest == 11) {
+		cutin "16isa",1;
+		mes "[Isaac]";
+		mes "Thanks to you, my brother and sister have become close to each other again.";
+		mes "What would they do without me?";
+		next;
+		mes "[Isaac]";
+		mes "Dear adventurer, I'll see you around then.";
+		close3;
+	}
+	end;
+
+OnTouch:
+	if (banquet_wigner_quest < 2 || banquet_wigner_quest == 10 || banquet_wigner_quest == 11 || banquet_roegenburg_quest == 2 || banquet_roegenburg_quest == 3 || banquet_roegenburg_quest == 7 || banquet_roegenburg_quest == 8)
+		classchange( 4_EP16_ISAAC, "", bc_self );
+	end;
+}
+
+prt_cas_q,80,23,5	script	Jurgen Wigner#ep16wig00	HIDDEN_WARP_NPC,{ end; }
+prt_cas_q,93,10,4	script	Maid#ep16wig01	HIDDEN_WARP_NPC,{ end; }
+
+prt_cas_q,95,11,4	script	Womenfolk#ep16wig01	1_F_03,{ end; }
+prt_cas_q,94,12,4	script	Strong Guards#ep16wig03	8W_SOLDIER,{ end; }
+prt_cas_q,95,12,4	script	Strong Guards#ep16wig04	8W_SOLDIER,{ end; }
+
+prt_cas_q,98,23,1	script	Bachelor#ep16wig01	1_M_ORIENT01,{ end; }
+prt_cas_q,98,20,7	script	Strong Guards#ep16wig05	8W_SOLDIER,{ end; }
+prt_cas_q,96,22,7	script	Strong Guards#ep16wig06	8W_SOLDIER,{ end; }
+
+prt_cas_q,95,7,5	script	#ep16wig004	HIDDEN_WARP_NPC,{
+	end;
+OnInit:
+	donpcevent "#ep16wig004::OnEvent1";
+	donpcevent "#ep16wig004::OnEvent2";
+	end;
+
+OnEvent1:
+	while(true) {
+		disablenpc "Bachelor#ep16wig01";
+		disablenpc "Strong Guards#ep16wig05";
+		disablenpc "Strong Guards#ep16wig06";
+		sleep 480000;	// 8 mins
+		enablenpc "Bachelor#ep16wig01";
+		npctalk "Jurgen, argh! It is hot!", "Bachelor#ep16wig01";
+		sleep 2000;
+		npctalk "Why did I fall in this place?", "Bachelor#ep16wig01";
+		sleep 2000;
+		npctalk "That woman must have given me the wrong set of coordinates!", "Bachelor#ep16wig01";
+		sleep 2000;
+		npctalk "Oh, it is hot!", "Bachelor#ep16wig01";
+		sleep 10;
+		npctalk "Well, you didn't need to show me the blazing love for me with your entire body.", "Jurgen Wigner#ep16wig";
+		sleep 2000;
+		npctalk "Oh, it's hot! Jurgen, please save me... Argh!", "Bachelor#ep16wig01";
+		sleep 3000;
+		enablenpc "Strong Guards#ep16wig05";
+		enablenpc "Strong Guards#ep16wig06";
+		npctalk "Strong Guards at your service!", "Strong Guards#ep16wig05";
+		sleep 2000;
+		npctalk "Why is this person doing here?", "Strong Guards#ep16wig06";
+		sleep 2000;
+		npctalk "There are all kinds of people in the world.", "Strong Guards#ep16wig05";
+		sleep 2000;
+		npctalk "Get her out of here!", "Strong Guards#ep16wig06";
+		sleep 2000;
+		npctalk "Argh! Jurgen, my prince!", "Bachelor#ep16wig01";
+	}
+	end;
+
+OnEvent2:
+	while(true) {
+		disablenpc "Womenfolk#ep16wig01";
+		disablenpc "Strong Guards#ep16wig03";
+		disablenpc "Strong Guards#ep16wig04";
+		sleep 600000;	// 10 mins
+		enablenpc "Womenfolk#ep16wig01";
+		npctalk "Oh my! Jurgen! My prince! I love you! Please look this way!", "Womenfolk#ep16wig01";
+		emotion ET_CHUP, getnpcid(0, "Womenfolk#ep16wig01");
+		sleep 2000;
+		npctalk "Are you... I have seen you before... Well... Are you here to see me?", "Jurgen Wigner#ep16wig";
+		sleep 1500;
+		npctalk "Dear Jurgen! Please be with me together! Forever!", "Womenfolk#ep16wig01";
+		specialeffect EF_HEARTCASTING,AREA,"Womenfolk#ep16wig01";
+		sleep 2000;
+		npctalk "That's a bit difficult...", "Jurgen Wigner#ep16wig";
+		sleep 2000;
+		enablenpc "Strong Guards#ep16wig03";
+		enablenpc "Strong Guards#ep16wig04";
+		npctalk "Oh my! How did you get in here again?", "Strong Guards#ep16wig03";
+		sleep 1500;
+		npctalk "They keep getting in here through the guard. It is no use to tighten security!", "Strong Guards#ep16wig04";
+		sleep 2000;
+		npctalk "Get her out of here!", "Strong Guards#ep16wig03";
+		sleep 2000;
+		npctalk "Oh my! Jurgen! I love you!", "Womenfolk#ep16wig01";
+	}
+	end;
+}
+
+prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
+	if (checkweight(501,1) == 0) {
+		mes "[Maid]";
+		mes "Oh, you shouldn't bring too much stuff in here.";
+		mes "As you see there are a lot of fragile things.";
+		next;
+		mes "[Maid]";
+		mes "You need to leave some out. It would be a big problem if the bundle touches the dishes and breaks them.";
+		close;
+	}
+	if (banquet_wigner_quest == 4) {
+		mes "[Maid]";
+		mes "I am cleaning the kitchen now, which is the hardest place to clean. It is really difficult to get rid of all the dirt in here.";
+		mes "My arms are way too weak to handle it.";
+		next;
+		mes "[Maid]";
+		mes "I happen to see someone with a strong set of arms... Those arms... What brought you here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am the adventurer invited to the royal banquet. Are you the maid who have cleaned the Wigner residence this afternoon?";
+		next;
+		mes "[Maid]";
+		mes "Yes, I am. What can I do for you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Did you happen to see ^0000cda small box^000000 in the Wigner residence? It was supposed to be on the table next to the bed. The box belongs to Princess Katrin. Have you seen it?";
+		next;
+		mes "[Maid]";
+		mes "Yes, I have. It was the box which looked simple but classy. I held it up for a second to clean the table and put it down. I remember it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Did you see it there when you leave the room? Wasn't there anyone else in the room?";
+		next;
+		mes "[Maid]";
+		mes "Wait a moment. I know where you are getting with this. We, maids, often get into a situation like this.";
+		next;
+		emotion ET_FRET;
+		mes "[Maid]";
+		mes "Isn't the box missing and are you ^0000cdsuspecting the maid who has cleaned the room^000000? Am I right?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am not suspecting you. I am just ^0000cdasking you about the situation^000000 to track the box.";
+		next;
+		emotion ET_FRET;
+		mes "[Maid]";
+		mes "With an element of suspicion in your mind, right?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, I am not suspecting you. Please don't get me wrong. I am just asking you when you have seen it and if there haven't been anyone else there.";
+		next;
+		emotion ET_ANGER;
+		mes "[Maid]";
+		mes "Ha, you are not being honest with me. If I say that there was no one around, I would be suspected, right?";
+		next;
+		mes "[Maid]";
+		mes "I can tell you this one though. I didn't take it. If you ask me if there was anyone in the room, well...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "There was someone in the room, right?";
+		next;
+		mes "[Maid]";
+		mes "Was there? This kitchen is too messy that I cannot think straight. ^0000cdI may be able to recall if it is cleaned up^000000.";
+		next;
+		emotion ET_SLEEPY;
+		mes "[Maid]";
+		mes "Oh, the kitchen is messy and so are the thoughts inside my head. Oh, how dirty and messy!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "May I help you clean up?";
+		next;
+		emotion ET_SMILE;
+		mes "[Maid]";
+		mes "Oh, would you do that for me? I would be so grateful. Here is a ^0000cdPoring Scrub Sponge^000000, please scrub every inch of this place clean.";
+		next;
+		mes "[Maid]";
+		mes "Since it is a specially-maid Scrub Sponge, it serves multiple purposes. It coaches you on how to clean so make good use of it.";
+		next;
+		mes "[Maid]";
+		mes "You may be surprised by it, but it is a safe Scrub Sponge which doesn't hurt others. Don't worry.";
+		mes "It is a Scrub Sponge developed by a legendary figure.";
+		next;
+		mes "[Maid]";
+		mes "Oh, wait! You know, there is a certain protocol when it comes to cleaning. You first need to wipe off the mold on the wall. Then you have to clean up the grease. The last thing for you to do is cleaning the floor.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I... I see.";
+		erasequest 14478;// Searching for the Clue
+		setquest 14479;// Clean-up out of Apology
+		getitem 6928,3;// Poring Loofah
+		banquet_wigner_quest = 5;
+		close;
+	}
+	if (banquet_wigner_quest == 5) {
+		mes "[Maid]";
+		mes "Have you finished it already?";
+		mes "It doesn't seem so. The thoughts in my head haven't cleared up yet.";
+		next;
+		mes "[Maid]";
+		mes "I think I would be able to recall when you come back after cleaning the kitchen with the Scrub Sponge I have given you.";
+		close;
+	}
+	if (banquet_wigner_quest == 6) {
+		emotion ET_BEST;
+		mes "[Maid]";
+		mes "Wow... The kitchen has become so clean! You really need to clean the grease with a strong set of arms!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Argh... My arms... Was there anyone else in the room?";
+		next;
+		mes "[Maid]";
+		mes "You must know what kind of family that is. It is the wealthiest family in Rune Midgarts. Despite being a temporary residence, the room was decorated with so much care.";
+		next;
+		mes "[Maid]";
+		mes "All the gorgeous pieces of furniture and carpets... I have never seen tiger skin as white and huge as that one in there.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why are you talking about the furniture all of a sudden?";
+		next;
+		mes "[Maid]";
+		mes "Oh, my, how are you going to deal with the members of the royal families with such slow wit?";
+		mes "Think. Why would I ^0000cdtalk about the furniture^000000 ?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "...You ^0000cdcan ask the person who was delivering the furniture^000000 .";
+		next;
+		mes "[Maid]";
+		mes "I cannot point it out, but I think I have given you enough clues.";
+		mes "By the way, is the box really missing in the first place?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What do you mean?";
+		next;
+		mes "[Maid]";
+		mes "It is not my opinion, but there are these words people say. You know, the rumors.";
+		mes "Since the prince of the Wigner family looks so handsome...";
+		next;
+		mes "[Maid]";
+		mes "He has been the center of the attention since he was young. People say that the lady is stressed about it and does things to draw attention.";
+		next;
+		mes "[Maid]";
+		mes "This could be one of her tricks, they say.";
+		next;
+		mes "[Maid]";
+		mes "The words haven not been spread yet, but I am sure that everyone will be talking about it even before the teatime is over.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't think that is true. She is not that kind of person.";
+		next;
+		emotion ET_FRET;
+		mes "[Maid]";
+		mes "That's what people say. You don't have to reason with me. Anyways, I should get back to my cleaning duty. If you are not going to help me, please leave me alone now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you know where the man who have delivered the furniture is?";
+		next;
+		mes "[Maid]";
+		mes "He must be somewhere in Prontera. Why don't you try visiting the area ^0000cdnear the district office^000000. Most stores are located there.";
+		next;
+		mes "[Maid]";
+		mes "Oh, by the way, you didn't hear it from me. Not that I said anything to you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Of course. Thank you for your cooperation.";
+		erasequest 14483;// Report the Completion of the Clean-up
+		setquest 14484;// There Was a Furniture Delivery Man
+		banquet_wigner_quest = 7;
+		close;
+	}
+	if (banquet_wigner_quest == 7) {
+		mes "[Maid]";
+		mes "Dear adventurer, didn't you say that you were going to visit the delivery man?";
+		mes "He must be somewhere ^0000cdnear the district office^000000.";
+		next;
+		mes "[Maid]";
+		mes "Since I need to clean up. please leave now.";
+		mes "You are getting in the way.";
+		close;
+	}
+	if (banquet_wigner_quest < 12) {
+		mes "[Maid]";
+		mes "Oh, I am sick of cleaning! I have enough things to clean at home. I don't need to do more out here.";
+		mes "I should just give it all up and run away.";
+		close;
+	}
+	if (banquet_wigner_quest == 12) {
+		emotion ET_FRET;
+		mes "[Maid]";
+		mes "Oh, why can't I get it off easily? I guess I won't be able to go home early.";
+		mes "Why should I do this?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello. Do you have a moment?";
+		next;
+		mes "[Maid]";
+		mes "Yes... Well... Hum.. You are...";
+		mes "Aren't you the adventurer who was at the Wigner residence?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. And I have come here before, and I have helped you with cleaning.";
+		mes "^0000cdDon't you remember...?^000000";
+		next;
+		emotion ET_KEK;
+		mes "[Maid]";
+		mes "Oh, I am really sorry. ^0000cdI am not good at remembering faces.^000000";
+		mes "What brought you here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Jurgen of the Wigner family has asked me to give it to you.";
+		next;
+		mes "[Maid]";
+		mes "What is it? Why did he give it to me? Is it an invoice? Have I done anything wrong?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, it is not. Please just read it first.";
+		next;
+		emotion ET_BIGTHROB;
+		mes "[Maid]";
+		mes "Hum... I have fallen in love with you at first sight.";
+		mes "Well... Hum... Please accept my love for... Eh... Umm...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "He has used some really direct languages here. How very Wigner of him for that he values efficiency... Hahaha...";
+		next;
+		mes "[Maid]";
+		mes "Hum... It is... It is... Well, is it what I think it is?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, it is a love letter.";
+		next;
+		mes "[Maid]";
+		mes "Phew... I am sorry, but you should take it back.";
+		mes "Well... I appreciate his feelings for me... I really do... But please just take it back.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Really? He has just tried to express his feelings... You may as well just keep it...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, are you in a relationship or engaged? Or are you married?";
+		next;
+		mes "[Maid]";
+		mes "No, no, I am not. Just take it back with you.";
+		mes "I feel rather overwhelmed... And there is the social class issue as well...";
+		next;
+		mes "[Maid]";
+		mes "Most of all, I am not in the situation to date anyone. ^0000cdIt is for a personal reason.^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If you say so, I cannot force it. I'll deliver your words to him.";
+		next;
+		mes "[Maid]";
+		mes "Yes. I am really sorry.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "May I get your name at least?";
+		next;
+		mes "[Maid]";
+		mes "Mad... No, ^0000cdMary^000000. My name is Mary.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I see. Then let me deliver your words to Jurgen.";
+		erasequest 14488;// Please Deliver My Love
+		setquest 14489;// I Have to Turn It Down
+		banquet_wigner_quest = 13;
+		close;
+	}
+	if (banquet_wigner_quest == 13) {
+		mes "[Maid]";
+		mes "Well, have you told the prince about it? Please make sure not to hurt his feelings much.";
+		next;
+		mes "[Maid]";
+		mes "Please.";
+		close;
+	}
+	if (banquet_wigner_quest == 14) {
+		if (countitem(748) < 1 || countitem(6927) < 15) {
+			emotion ET_OHNO;
+			mes "[Mary]";
+			mes "Oh, when will it end.";
+			mes "I won't let go of this, really!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, I don't think it is the right time. May I come back later?";
+			next;
+			mes "[Mary]";
+			mes "No, not at all.";
+			mes "Dear adventurer, you have a hole in your pocket. Have you lost anything?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh! When did I get a hole in there? Where are the ^0000cd15 Sea Stones and 1 Witherless Rose...?^000000";
+			mes "They are gone! Let me come back later! I have forgotten to bring something!";
+			close;
+		}
+		emotion ET_ANGER;
+		mes "[Mary]";
+		mes "Oh, when will it end.";
+		mes "I won't let go of this, really!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, hello.";
+		mes "Is it a bad time? Should I just go?";
+		next;
+		mes "[Mary]";
+		mes "Oh, no.";
+		mes "By the way, you are back. Is it about the prince of the Wigner family again?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. Jurgen seems to be really serious about it.";
+		mes "He wants you to have these.";
+		next;
+		mes "[Mary]";
+		mes "I turned it down.";
+		mes "Oh, this really is... So pretty. There is water inside this glass-like thing...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. Jurgen wants me to let you know about his heart as wide and beautiful as the sea.";
+		next;
+		mes "[Mary]";
+		mes "Oh, I really cannot go out with him. Well, there really is a reason that I cannot accept this feelings. I wonder if I should tell you this.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Please tell me. If you have a good enough reason which Jurgen can understand, he would not bother you again, Mary.";
+		next;
+		mes "[Mary]";
+		mes "I don't think it would be a good idea. You shouldn't tell this to anyone. Please keep the secret.";
+		next;
+		mes "[Mary]";
+		mes "In fact, I am ^0000cdthe younger sibling of the maid who used to work here^000000. The maid you have met before.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, no wonder you couldn't remember my face. I found it a little strange. By the way, you two sisters must have worked here together.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "However, what would it matter since it is you whom he has fallen for?";
+		next;
+		mes "[Mary]";
+		mes "It matters. ^0000cdBecause, I am her brother^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, you are...";
+		next;
+		emotion ET_HUK, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wha... What? A brother?";
+		next;
+		mes "[Mary]";
+		mes "I am ashamed to work in this outfit since I am a man. However, there is a reason for me to stay here like this.";
+		next;
+		mes "[Mary]";
+		mes "My sister was very disheartened by what had happened to her and ran off with her lover saying that she couldn't work here anymore.";
+		next;
+		emotion ET_OHNO;
+		mes "[Mary]";
+		mes "When I told the person who is in charge of managing the maids at the palace, he said, he didn't care about my sister running off against the contract ^0000cdas long as I would bring someone to fill her position^000000.";
+		next;
+		mes "[Mary]";
+		mes "He added how ^0000cdan enormous indemnity would be imposed on us^000000 if we fail to do so.";
+		next;
+		mes "[Mary]";
+		mes "When I told him that I would fill her spot, he said there were enough male chamberlains and ^0000cdhe needed a maid^000000 who would work in the kitchen and run cleaning duries.";
+		next;
+		mes "[Mary]";
+		mes "I tried to find a replacement for her, but I couldn't. Everyone was already busy working at the palace or supplying the things for the banquet.";
+		next;
+		mes "[Mary]";
+		mes "After consulting my mother, I decided to work here pretending as if I was my sister. Since everyone was so busy, no one paid attention to me who was working quietly in this corner.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You have managed not to be busted so far.";
+		next;
+		mes "[Mary]";
+		mes "Since ^0000cdI look just like my sister^000000, no one seems to notice.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What should we do then? Jurgen really wants you to accept his love.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "He is in sorrow saying how difficult it is to get the first thing he has ever wanted in this entire life.";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Mary]";
+		mes "I feel sorry for that ^0000cdthe first thing he has ever wanted to get happens to be fake^000000.";
+		next;
+		mes "[Mary]";
+		mes "I assumed that the people who have all the money in the world and have seen all the good things in the world must have a keen eye. I stand corrected.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You get blinded when you are in love.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "And, you really are doing so remarkably at what you are doing now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I guess I should go back and tell him the truth.";
+		next;
+		emotion ET_HUK;
+		mes "[Mary]";
+		mes "Oh! No, you shouln't. I told you. You are the only one who knows about it.";
+		mes "^0000cdIf I get busted, I would be in trouble^000000. We don't have the money to pay the compensation.";
+		next;
+		mes "[Mary]";
+		mes "I am keep sending the message to my sister to comeback, but it seems difficult to reach her. Would you please keep it secret until the banquet is over?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Jurgen would keep sending me to earn your love, and this means that we are deceiving him.";
+		next;
+		mes "[Mary]";
+		mes "I am sorry for him, but my life depends on this.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hum, I don't feel comfortable doing this...";
+		next;
+		mes "[Mary]";
+		mes "It is not my fault to be here in this clothing... Please feel for me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, OK. Calm down. I'll tell Jurgen that you have held off the answer.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Please take good care of the stuff. If you return them, he will send me down here again.";
+		next;
+		mes "[Mary]";
+		mes "Really? Then let me return them at once on the last day of the banquet. Please explain him well so that it doesn't hurt his feelings.";
+		next;
+		mes "[Mary]";
+		mes "Oh, I guess I should change my cleaning area so that I don't bump into him.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I guess it would work.";
+		mes "Then, let me go tell him that.";
+		next;
+		mes "[Mary]";
+		mes "Thank you.";
+		delitem 6927, countitem(6927);// Sea Stone
+		delitem 748,1;// Witherless Rose
+		erasequest 14490;// My Love Once More
+		setquest 14491;// I Have to Turn It Down Again
+		banquet_wigner_quest = 15;
+		close;
+	}
+	if (banquet_wigner_quest == 15) {
+		mes "[Mary]";
+		mes "Did you tell the prince about it?";
+		mes "I am worried about the consequences if anything goes wrong.";
+		next;
+		mes "[Mary]";
+		mes "I may have to run off like my sister.";
+		close;
+	}
+
+	if (isbegin_quest(14493) == 1) {	// daily quest
+		if (countitem(748) < 1 || countitem(6927) < 15) {
+			emotion ET_OHNO;
+			mes "[Mary]";
+			mes "Oh, when will it end.";
+			mes "I won't let go of this, really!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, I don't think it is the right time. May I come back later?";
+			next;
+			mes "[Mary]";
+			mes "No, not at all.";
+			mes "Dear adventurer, you have a hole in your pocket. Have you lost anything?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh! When did I get a hole in there? Where are the ^0000cd15 Sea Stones and 1 Witherless Rose...?^000000";
+			mes "They are gone! Let me come back later! I have forgotten to bring something!";
+			close;
+		}
+		mes "[Maid]";
+		mes "Adventurer? What brought you here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Jurgen sent me here to deliver his love to you again.";
+		next;
+		emotion ET_CRY;
+		mes "[Maid]";
+		mes "Again... I really hoped he would have given up by today... I guess it must have been a vain hope.";
+		next;
+		mes "[Maid]";
+		mes "Please tell him I appreciate it.";
+		next;
+		mes "[Maid]";
+		mes "I really want the banquet to be over soon. Or my sister could just come back.";
+		next;
+		mes "[Maid]";
+		mes "Anyway, I am sorry to put you in the difficult situation again today.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well then, since I have delivered you what I have to deliver you, I should get going.";
+		next;
+		mes "[Maid]";
+		mes "Yes, please go back safely. I hope he gives up by tomorrow.";
+		delitem 6927,15;// Sea Stone
+		delitem 748,1;// Witherless Rose
+		erasequest 14493;// Today I Feel
+		setquest 14494;// I Have to Turn It Down Again
+		close;
+	}
+	mes "[Mary]";
+	mes "Did you tell the prince about it? I hope he gives up from tomorrow without sending you down here again.";
+	close;
+}
+
+prt_cas,339,212,5	script	Dark and Damp Wall#ep16	HIDDEN_NPC,5,5,{
+	callsub S_Talk;
+
+S_Talk:
+	if (banquet_wigner_quest == 5) {
+		switch( isbegin_quest(14481) ) {
+		case 0:
+			mes "[Scrub Sponge]";
+			mes "Dear human, are you the one who have waken me up?";
+			mes "After a long sleep, I am waken up before such a mess.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "I am the god of cleaning sealed in the Scrub Sponge.";
+			mes "You shall pay for your sin of interrupting my rest with cleaning.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Let's see. This must be ^0000cda cluster of mold^000000!";
+			mes "You cannot get this mold without borrowing strength from its own race and the god.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Bring ^0000cd1 Mold Powder and 1 Holy Water^000000!";
+			setquest 14481;// Conquer the Mold
+			close;
+		case 1:
+			if (countitem(6928) < 1 || countitem(7001) < 1 || countitem(523) < 1) {
+				mes "[Scrub Sponge]";
+				mes "Human, what are you doing now?";
+				mes "I told you! You need ^0000cd1 Mold Powder and 1 Holy Water^000000 to clean up the mold!";
+				next;
+				mes "[Scrub Sponge]";
+				mes "How can you clean up without them?";
+				mes "Go get them first.";
+				close;
+			}
+			mes "[Scrub Sponge]";
+			mes "Since you have the Mold Powder and alcohol with you, try getting rid of the mold now.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "This is not the proper way of wiping off the mold, but this is the only way to get rid of such severe mold.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Wipe the Mold Power over the mold which resembles demon's skin and sprinkle it with Holy Water.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "And wipe it as I tell you. I am not going to tell you again so pay attentention.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Tap it once gently and tap it three times more. You really need to soak the wall with the Holy Water and Mold Powder to wipe it off. This is very important.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Then, you need to scrub hard about ten times and wipe it off in circles about five times. Why don't you try now?";
+			next;
+			progressbar "ffff00",3;
+			mes "[Scrub Sponge]";
+			while( rand(100) < 50 ) {
+				mes "That's not it! Relax your arms a little!";
+				mes "Cleaning is not just about physical strength. You are still too far behind to reach the enlightenment. Ease your mind and body to try again.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "Tap it once gently and tap it three times more. You really need to soak the wall with the Holy Water and Mold Powder to wipe it off. This is very important.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "Then, you need to scrub hard about ten times and wipe it off in circles about five times. Why don't you try now?";
+				next;
+				progressbar "ffff00",3;
+				mes "[Scrub Sponge]";
+			}
+			specialeffect EF_RECOVERY;
+			mes "Well done. You have cleaned it so well.";
+			mes "As a Scrub Sponge, I am very contented.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Since I have fulfilled my duty, I shall go now!";
+			mes "Thank you, human... Thank you for being with me for this life...";
+			specialeffect2 EF_CURE;
+			delitem 6928,1;// Poring Loofah
+			delitem 7001,1;// Mould Powder
+			delitem 523,1;// Holy Water
+			completequest 14481;// Conquer the Mold
+			close;
+		case 2:
+			mes "[Wall Which Used to Be Moldy]";
+			mes "The clean wall reminds me of the Scrub Sponge which has been through the cleaning duty with me.";
+			close;
+		}
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(14481) == 0)
+		callsub S_Talk;
+	end;
+}
