@@ -14975,3 +14975,2230 @@ prt_pri00,46,130,7	script	Corrupt Warder#pa0829	4_M_KY_SOLD,{
 	getitem 22901,1;// Mysterious Blue Box
 	close;
 }
+
+prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
+	disable_items;
+	if ((MaxWeight - Weight) < 1000) {
+		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
+		close;
+	}
+	if (checkweight(501,1) == 0) {
+		mes "There are too many kinds of items in possession. Reduce the type of the items and try again.";
+		close;
+	}
+	if (isbegin_quest(12369) == 0) {
+		mes "[Dylan]";
+		mes "Are you a customer? I am not going to get more customers today because I am tired.";
+		next;
+		select("Are you running a business in the prison?");
+		mes "[Dylan]";
+		mes "Although I may look like this now, I used to be called the man with the hand of minus out there. It is quite dangerous stuff. You'd better stay away.";
+		next;
+		mes "^0000ffUnlike his words, he really seems eager to give an explanation.^000000";
+		next;
+		if (select( "I don't want to waste time here.", "What kind of business you are running here." ) == 1) {
+			mes "[Dylan]";
+			mes "Don't be a chicken...";
+			close;
+		}
+		mes "[Dylan]";
+		mes "Honor Mark, which is issued by the kingdom and not to be traded between individuals. I receive it and enhance people's equipment.";
+		next;
+		mes "[Dylan]";
+		mes "As you can tell, it is against the law. That's why I used to only work for through personal contacts. However, one guy whose equipment was broken while resetting the enhancement informed on me.";
+		next;
+		select("It really is a crime.");
+		mes "[Dylan]";
+		mes "I don't need to hear of some personal impression by you. Although I am caught, I am roaming the prison freely thanks to the warder over there.";
+		next;
+		mes "[Dylan]";
+		mes "Of course, I cannot get out to avoid causing the real problem. That's why I stay in the prison like this. Are you interested in the deal?";
+		next;
+		if (select( "The kingdom has poor public security.", "What is the deal?" ) == 1) {
+			mes "[Dylan]";
+			mes "What a nerd. I told you to back off if you didn't want to get involved.";
+			close;
+		}
+		mes "[Dylan]";
+		mes "You are a great fellow to deal with. I want to save enough money to bail myself out. Any customers are welcome here.";
+		next;
+		mes "[Dylan]";
+		mes "I enhance the three items, Flattery Robe, Invective Robe and Prontera Badge for Honor Mark.";
+		next;
+		mes "[Dylan]";
+		mes "I guess I don't need to explain about it anymore. Just bring the equipment you want to enhance to me.";
+		setquest 12369;// Secret Business Relation
+		completequest 12369;// Secret Business Relation
+		close;
+	}
+	mes "[Dylan]";
+	mes "Are you here to deal with me? Tell me what you need now.";
+	next;
+	.@s = select( "Tell me about the deal.", "Enhance Robe", "Enhance Badge", "Reset Enhanced Robe Stats", "Reset Enhanced Badge Stats" );
+	switch(.@s) {
+	case 1:
+		mes "[Dylan]";
+		mes "Listen carefully. I won't say twice.";
+		next;
+		mes "[Dylan]";
+		mes "I'll enhance one of the Flattery Robe or Invective Robe slot for 20 Honor Marks. I can enhance up to 2 slots. And I take 10 Honor Marks for the reset. Do you follow me so far?";
+		next;
+		mes "[Dylan]";
+		mes "Next, for the Prontera Badge. I'll take 5 Honor Marks to enhance 1 slot. I can enhance up to 2 slots. And I take 10 Honor Marks for the reset.";
+		next;
+		mes "[Dylan]";
+		mes "I don't perform the reset anytime. I'll do it when the 2 slots are enhanced for that you cannot enhance the item anymore. And... Then...";
+		next;
+		mes "[Dylan]";
+		mes "Oh, there is one problem though. There is a change that the badge can be destroyed while resetting it. The chance is about 20%. Since it is such a tiny thing, there is some side effect of removing the enhancement.";
+		next;
+		mes "[Dylan]";
+		mes "I hope the deal goes well, buddy.";
+		close;
+	case 2:
+		mes "[Dylan]";
+		mes "You need 20 Honor Marks for each slot of Flattery Robe or Invective Robe. Do you want to enhance it?";
+		break;
+	case 3:
+		mes "[Dylan]";
+		mes "You need 5 Honor Marks to enhance one slot of the Prontera Badge you are wearing in the left slot of your body. Would you enhance it?";
+		break;
+	case 4:
+		mes "[Dylan]";
+		mes "You need 10 Honor Marks to reset Invective Robe or Flattery Robe. The equipment won't be destroyed. The bound cards and the refinement level would remain the same as well.";
+		break;
+	case 5:
+		mes "[Dylan]";
+		mes "You need 10 Honor Marks to reset the Prontera Badge you are wearing in the left slot of your body.";
+		next;
+		mes "[Dylan]";
+		mes "As I told you, it is difficult to reset the badge, ^ff0000The chance of success is 80%.^000000 If it fails, everything will be gone. Would you reset it?";
+		break;
+	}
+	next;
+	if (select( "I quit.", "Let's do it now." ) == 1) {
+		mes "[Dylan]";
+		mes "I am busy so please don't waste my time by talking to me for no reason.";
+		close;
+	}
+	switch(.@s) {
+	case 2:
+		.@item_id = getequipid(EQI_ARMOR);
+		.@refine = getequiprefinerycnt(EQI_ARMOR);
+		.@card[0] = getequipcardid(EQI_ARMOR,0);
+		.@card[1] = getequipcardid(EQI_ARMOR,1);
+		.@card[2] = getequipcardid(EQI_ARMOR,2);
+		.@card[3] = getequipcardid(EQI_ARMOR,3);
+
+		if (.@item_id == -1) {
+			mes "[Dylan]";
+			mes "You are taking it off.";
+			close;
+		}
+		if (.@item_id != 15146 && .@item_id != 15147) {
+			mes "[Dylan]";
+			mes "Stop fooling around. If you want to enhance it, come to me wearing the equipment.";
+			close;
+		}
+		if (.@card[2] > 0 && .@card[3] > 0) {
+			mes "[Dylan]";
+			mes "It cannot be enhanced anymore. Do you have anything else to enhance?";
+			close;
+		}
+		if (countitem(6919) < 20) {
+			mes "[Dylan]";
+			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
+			close;
+		}
+
+		if (.@item_id == 15147) {// Abusive Robe
+			if (.@card[3] == 0) {
+				setarray .@enhance[0],
+					25,   4994,	// Rune of Strength Lv 1
+					105,  4997,	// Rune of Agility Lv 1
+					110, 29009,	// Rune of Vitality Lv 1
+					170, 29000,	// Rune of Intellect Lv 1
+					230, 29003,	// Rune of Dexterity Lv 1
+					255, 29006,	// Rune of Luck Lv 1
+					265,  4995,	// Rune of Strength Lv 2
+					315,  4998,	// Rune of Agility Lv 2
+					317, 29010,	// Rune of Vitality Lv 2
+					352, 29001,	// Rune of Intellect Lv 2
+					387, 29004,	// Rune of Dexterity Lv 2
+					407, 29007,	// Rune of Luck Lv 2
+					412,  4996,	// Rune of Strength Lv 3
+					432,  4999,	// Rune of Agility Lv 3
+					452, 29002,	// Rune of Intellect Lv 3
+					467, 29005,	// Rune of Dexterity Lv 3
+					477, 29008;	// Rune of Luck Lv 3
+				.@card_index = 3;
+			}
+			else {
+				setarray .@enhance[0],
+					60,   4994,	// Rune of Strength Lv 1
+					80,  29000,	// Rune of Intellect Lv 1
+					160, 29009,	// Rune of Vitality Lv 1
+					180, 29003,	// Rune of Dexterity Lv 1
+					220, 29006,	// Rune of Luck Lv 1
+					270,  4995,	// Rune of Strength Lv 2
+					275,  4998,	// Rune of Agility Lv 2
+					325, 29010,	// Rune of Vitality Lv 2
+					350, 29001,	// Rune of Intellect Lv 2
+					365, 29004,	// Rune of Dexterity Lv 2
+					405, 29007,	// Rune of Luck Lv 2
+					420,  4996,	// Rune of Strength Lv 3
+					425,  4999,	// Rune of Agility Lv 3
+					435, 29002,	// Rune of Intellect Lv 3
+					455, 29011,	// Rune of Vitality Lv 3
+					465, 29005,	// Rune of Dexterity Lv 3
+					480, 29008;	// Rune of Luck Lv 3
+				.@card_index = 2;
+			}
+		}
+		else {// Flattery Robe
+			if (.@card[3] == 0) {
+				setarray .@enhance[0],
+					50,   4994,	// Rune of Strength Lv 1
+					100,  4997,	// Rune of Agility Lv 1
+					150, 29009,	// Rune of Vitality Lv 1
+					190, 29000,	// Rune of Intellect Lv 1
+					230, 29003,	// Rune of Dexterity Lv 1
+					270, 29006,	// Rune of Luck Lv 1
+					305,  4995,	// Rune of Strength Lv 2
+					340,  4998,	// Rune of Agility Lv 2
+					390, 29010,	// Rune of Vitality Lv 2
+					425, 29001,	// Rune of Intellect Lv 2
+					460, 29004,	// Rune of Dexterity Lv 2
+					495, 29007,	// Rune of Luck Lv 2
+					505,  4996,	// Rune of Strength Lv 3
+					520,  4999,	// Rune of Agility Lv 3
+					530, 29011,	// Rune of Vitality Lv 3
+					545, 29002,	// Rune of Intellect Lv 3
+					555, 29005,	// Rune of Dexterity Lv 3
+					565, 29008;	// Rune of Luck Lv 3
+				.@card_index = 3;
+			}
+			else {
+				setarray .@enhance[0],
+					70,   4994,	// Rune of Strength Lv 1
+					72,   4997,	// Rune of Agility Lv 1
+					147, 29009,	// Rune of Vitality Lv 1
+					177, 29000,	// Rune of Intellect Lv 1
+					197, 29003,	// Rune of Dexterity Lv 1
+					247, 29006,	// Rune of Luck Lv 1
+					297,  4995,	// Rune of Strength Lv 2
+					307,  4998,	// Rune of Agility Lv 2
+					382, 29010,	// Rune of Vitality Lv 2
+					412, 29001,	// Rune of Intellect Lv 2
+					437, 29004,	// Rune of Dexterity Lv 2
+					487, 29007,	// Rune of Luck Lv 2
+					507,  4996,	// Rune of Strength Lv 3
+					510,  4999,	// Rune of Agility Lv 3
+					540, 29011,	// Rune of Vitality Lv 3
+					555, 29002,	// Rune of Intellect Lv 3
+					563, 29005,	// Rune of Dexterity Lv 3
+					573, 29008;	// Rune of Luck Lv 3
+				.@card_index = 2;
+			}
+		}
+		.@size = getarraysize(.@enhance);
+		.@r = rand( 1,.@enhance[.@size-2] );
+		for ( .@i = 0; .@i < .@size && .@enhance[.@i] < .@r; .@i += 2 )
+			continue;
+		.@card[ .@card_index ] = .@enhance[.@i+1];
+		delitem 6919,20;
+		delequip EQI_ARMOR;
+		getitem2 .@item_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+		break;
+	case 3:
+		if (getequipid(EQI_ACC_L) == -1) {
+			mes "[Dylan]";
+			mes "Oh, I have forgotten to mention it. I only enhance the item equipped in the left slot. Enhance it while equipping it in the left slot.";
+			close;
+		}
+		if (getequipid(EQI_ACC_L) != 28356) {
+			mes "[Dylan]";
+			mes "Stop fooling around. If you want to enhance it, come to me wearing the Prontera Badge.";
+			close;
+		}
+		.@card[2] = getequipcardid(EQI_ACC_L,2);
+		.@card[3] = getequipcardid(EQI_ACC_L,3);
+		if (.@card[2] > 0 && .@card[3] > 0) {// note: unslotted
+			mes "[Dylan]";
+			mes "It cannot be enhanced anymore. Do you have anything else to enhance?";
+			close;
+		}
+		if (countitem(6919) < 5) {
+			mes "[Dylan]";
+			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
+			close;
+		}
+		.@card[3] = getequipcardid(EQI_ACC_L,3);
+		if (.@card[3] == 0) {
+			setarray .@enhance[0],
+				 37, 4710,	// INT+1
+				 57, 4730,	// AGI+1
+				 76, 4740,	// VIT+1
+				 91, 4720,	// DEX+1
+				104, 4750,	// LUK+1
+				113, 4700,	// STR+1
+				120, 4711,	// INT+2
+				122, 4721,	// DEX+2
+				124, 4701,	// STR+2
+				126, 4731,	// AGI+2
+				128, 4751,	// LUK+2
+				129, 4741;	// VIT+2
+			.@card_index = 3;
+		}
+		else {
+			setarray .@enhance[0],
+				 37, 4740,	// VIT+1
+				 63, 4710,	// INT+1
+				 81, 4750,	// LUK+1
+				 96, 4700,	// STR+1
+				105, 4720,	// DEX+1
+				111, 4730,	// AGI+1
+				116, 4751,	// LUK+2
+				120, 4711,	// INT+2
+				122, 4721,	// DEX+2
+				124, 4741,	// VIT+2
+				126, 4742,	// VIT+3
+				128, 4701,	// STR+2
+				129, 4752;	// LUK+3
+			.@card_index = 2;
+		}
+		.@size = getarraysize(.@enhance);
+		.@r = rand( 1,.@enhance[.@size-2] );
+		for ( .@i = 0; .@i < .@size && .@enhance[.@i] < .@r; .@i += 2 )
+			continue;
+		.@card[ .@card_index ] = .@enhance[.@i+1];
+
+		delitem 6919,5;
+		delequip EQI_ACC_L;
+		getitem2 28356,1,1,0,0,0,0,.@card[2],.@card[3];
+		break;
+	case 4:
+		.@item_id = getequipid(EQI_ARMOR);
+		.@refine = getequiprefinerycnt(EQI_ARMOR);
+		.@card[0] = getequipcardid(EQI_ARMOR,0);
+		.@card[2] = getequipcardid(EQI_ARMOR,2);
+		.@card[3] = getequipcardid(EQI_ARMOR,3);
+		if (.@item_id == -1) {
+			mes "[Dylan]";
+			mes "You are taking it off.";
+			close;
+		}
+		if (.@item_id != 15146 && .@item_id != 15147) {
+			mes "[Dylan]";
+			mes "Stop fooling around. If you want to enhance it, come to me wearing the equipment.";
+			close;
+		}
+		if (.@card[2] == 0 || .@card[3] == 0) {
+			mes "[Dylan]";
+			mes "Oh, this item is not enhanced completely. I cannot reset it yet.";
+			close;
+		}
+		if (countitem(6919) < 10) {
+			mes "[Dylan]";
+			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
+			close;
+		}
+		delitem 6919,10;
+		delequip EQI_ARMOR;
+		getitem2 .@item_id,1,1,.@refine,0,.@card[0],0,0,0;
+		break;
+	case 5:
+		if (getequipid(EQI_ACC_L) == -1) {
+			mes "[Dylan]";
+			mes "Oh, I have forgotten to mention it. I only enhance the item equipped in the left slot. Enhance it while equipping it in the left slot.";
+			close;
+		}
+		.@card[2] = getequipcardid(EQI_ACC_L,2);
+		.@card[3] = getequipcardid(EQI_ACC_L,3);
+		if (.@card[2] == 0 || .@card[3] == 0) {// note: Prontera Badge unslotted
+			mes "[Dylan]";
+			mes "Oh, this item is not enhanced completely. I cannot reset it yet.";
+			close;
+		}
+		if (getequipid(EQI_ACC_L) != 28356) {
+			mes "[Dylan]";
+			mes "Stop fooling around. If you want to enhance it, come to me wearing the Prontera Badge.";
+			close;
+		}
+		if (countitem(6919) < 10) {
+			mes "[Dylan]";
+			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
+			close;
+		}
+		delequip EQI_ACC_L;
+		delitem 6919,10;
+		mes "[Dylan]";
+		if (rand(1,100) < 80) {
+			mes "Hum, it has been processed well. Check out the item.";
+			getitem 28356,1;// Prontera Badge
+			specialeffect2 EF_REPAIRWEAPON;
+		}
+		else {
+			mes "I guess you are out of luck. The equipment is broken. Tut tut.";
+			getitem 6920,14;// Rune_Magic_Powder
+			specialeffect2 EF_LORD;
+		}
+		close;
+	}
+	mes "[Dylan]";
+	mes "Hum, it has been processed well. Check out the item.";
+	specialeffect2 EF_REPAIRWEAPON;
+	close;
+}
+
+prt_pri00,51,116,8	script	Ellond Lawrence#EP161ER	4_M_CRU,1,1,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (banquet_main_quest < 3) {
+		emotion ET_SORRY;
+		mes "[Ellond Lawrence]";
+		mes "I am sorry, but unauthorized access to this place is restricted.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Sorry for the inconvenience and your cooperation will be appreciated.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		npctalk "Ellond Lawrence: If you were a bit stronger...What a shame.", "", bc_self;
+		mes "[Ellond Lawrence]";
+		mes "~Laughs~ You're an adventurer.";
+		mes "Unauthorized access to this area is restricted. Thank you for your cooperation.";
+		close;
+	}
+	switch( isbegin_quest(5415) ) {
+	case 0:
+		mes "[Ellond Lawrence]";
+		mes "Hello.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "I am sorry to say this but unauthorized access to the area you see in the front is restricted. Sorry for the inconvenience and your cooperation will be appreciated.";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Ellond Lawrence]";
+		mes "Come to think of it...Not everyone is allowed to enter this place. Whoa!";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "I heard the adventurer who made the significant contribution to defeating Devil King Morocc has been invited to the royal banquet.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Since you're here....You must be...!";
+		next;
+		emotion ET_HUK;
+		mes "[Ellond Lawrence]";
+		mes "Have you been invited, adventurer?";
+		next;
+		emotion ET_COOL;
+		mes "[Ellond Lawrence]";
+		mes "Whoa, this is unbelievable!";
+		mes "I heard so much about you. I'm a huge fan!";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Holy moly! I felt so bad having to guard here in the night of the banquet and I never expected to see you here, Adventurer. Amazing!";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Let me introduce myself then.";
+		mes "I am Ellond Lawrence from the Royal Crusaders. I have so much respect for you.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Oh, I almost forgot! Can I get your autograph?";
+		next;
+		if (select( "Give him your autograph.", "(Decline it.)" ) == 1) {
+			input .@string$;
+			emotion ET_BIGTHROB;
+			mes "[Ellond Lawrence]";
+			mes "Thank you so much! Now I have something to brag about to my fellows. What an honor to my family.";
+		}
+		else {
+			mes "[Ellond Lawrence]";
+			mes "I'm sorry to hear that, but I understand you have reasons.";
+		}
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Oh, right! I see, right!";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Some discussed the idea during the meeting to ask the famous adventurer to handle the problem at the restricted area. No approval was given to it, but I'll see what I can do with my authority.";
+		next;
+		select("Problem at the Restricted Area?");
+		mes "[Ellond Lawrence]";
+		mes "Oh, I knew this would pique your interest, Adventurer.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "No one will question your reputation and abilities. So I would love to cut to the chase and spill the beans, but...";
+		next;
+		emotion ET_SHY;
+		mes "[Ellond Lawrence]";
+		mes "I think I'll have to take a deep breath and drink a cup of water to calm myself down before I do.";
+		setquest 5415;// Restricted Sector
+		close;
+	case 1:
+		emotion ET_BEST;
+		mes "[Ellond Lawrence]";
+		mes "Now that my thirst has been quenched, let me tell you the story.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "This problem has long been a pain in the neck.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "There was zero monster in the beginning for sure, but, out of the total blue, they started to appear in the underground dungeons.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "It doesn't mean we're goofing off around here!";
+		next;
+		emotion ET_KEK;
+		mes "[Ellond Lawrence]";
+		mes "We crusaders are doing our best to eliminate the monsters in the underground dungeon as much as we can.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Unfortunately, the numbers kept growing to a degree that we can't handle them all by ourselves.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "I hate to admit, but we haven't even identified where these monsters come from.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "In the underground dungeon, they are...No. I don't think I should say it right here. You'll see once you get inside.";
+		next;
+		select("So, what can I do for you?");
+		mes "[Ellond Lawrence]";
+		mes "Oh, I'm sorry. I think I have said too much.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "There is no need to submit any investigation report. We've got ours, too.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "What I would like to ask you to do for us is to mop out the monsters in the underground dungeon as much as you can.";
+		next;
+		completequest 5415;// Restricted Sector
+		mes "[Ellond Lawrence]";
+		mes "While you're at it, I would much appreciate it if you can let me in on what goes on inside the underground dungeon.";
+		close;
+	case 2:
+		for ( .@quest_id = 5416; .@quest_id < 5424; .@quest_id++ ) {
+			if (isbegin_quest(.@quest_id) == 1)
+				break;
+			.@total_completed += isbegin_quest(.@quest_id);
+		}
+		switch(.@quest_id) {
+		case 5416:
+			select("I've been to the Sector A.");
+			emotion ET_HUK;
+			completequest 5416;// Restricted Sector A
+			mes "[Ellond Lawrence]";
+			mes "Whoa, what did you just say? You've been to Sector A?";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "I haven't met that bloke in that sector yet, but one of my fellows appointed to that area did say he can be pretty ferocious.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Anyway, it is a relief to hear he hasn't caused any trouble there.";
+			close;
+		case 5417:
+			select("I've been to the Sector B.");
+			emotion ET_SURPRISE;
+			completequest 5417;// Restricted Sector B
+			mes "[Ellond Lawrence]";
+			mes "Oh, have you?";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "~Laughs~ He had been my junior to me.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "He can be pretty annoying, I know. He would ask to make a lifelike doll, and even try to hit on his female fellows.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "So if he hasn't changed much, that means he's not going to make a problem. I'm relieved to hear that.";
+			close;
+		case 5418:
+			select("I've been to the Sector C.");
+			emotion ET_SMILE;
+			completequest 5418;// Restricted Sector C
+			mes "[Ellond Lawrence]";
+			mes "~Laughs~ Have you been to Sector C, eh?";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Oh, my days! Did he really say you'll be rewarded for those chores? What an improvement!";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "It's not uncommon for the Crusaders to lose something they are not supposed to...";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "I can see they have improved for some reason. They probably like you a lot.";
+			close;
+		case 5419:
+			select("I've been to the Sector D.");
+			emotion ET_HUK;
+			completequest 5419;// Restricted Sector D
+			mes "[Ellond Lawrence]";
+			mes "~Gasps~ D...Se...Sector...D...?! ~Gulps~";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Don't ever let his looks deceive you! He can be the most dangerous one in the prison.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "If he doesn't try to do anything to you, it must be the best that could ever happen.";
+			close;
+		case 5420:
+			select("I've been to the Sector E.");
+			emotion ET_SHY;
+			completequest 5420;// Restricted Sector E
+			mes "[Ellond Lawrence]";
+			mes "I know a few things about the Sector E, actually.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Unlike what he looks like, he has such a delicate and warm heart. Still, he can certainly go berserk if things go haywire.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Just make sure he doesn't see red. Otherwise, you're going to do fine, I guess.";
+			close;
+		case 5421:
+			select("I've been to the Sector F.");
+			emotion ET_OHNO;
+			completequest 5421;// Restricted Sector F
+			mes "[Ellond Lawrence]";
+			mes "Sector F, eh? ~Laughs~ The real troublemaker is locked in there.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "He would not even lift a finger, bossing everyone around. He thinks the world revolves around him.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "He can be a complainer but he's harmless. I think you'll be fine with him.";
+			close;
+		case 5422:
+			select("I've been to the Sector G.");
+			emotion ET_SCRATCH;
+			completequest 5422;// Restricted Sector G
+			mes "[Ellond Lawrence]";
+			mes "Oh, Sector G you say? Hmm, that zone must be...";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "That prisoner is often called as the sleeping beauty in the prison. I remember he's been sleeping for quite a while.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "I don't have much to say about him because all I saw about him was sleeping. Well, I think you can make good friends with him.";
+			close;
+		case 5423:
+			select("I've been to the Sector H.");
+			emotion ET_HUK;
+			completequest 5423;// Restricted Sector H
+			mes "[Ellond Lawrence]";
+			mes "Ah, Sector H! ~Bursts into laughter~ Is he still a whiner?";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "I was responsible for him when I first came here and his requests were endless!";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Anyway, he means well.";
+			close;
+		default:
+			break;
+		}
+		if (.@total_completed == 16 && isbegin_quest(5424) == 0) {
+			emotion ET_HUK;
+			mes "[Ellond Lawrence]";
+			mes "Oh, I almost forgot.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "In case you forgot, you took a full tour around the underground dungeon.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Phenomenal! You are indeed worthy to be invited to the royal banquet on behalf of other numerous adventurers.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "One more thing. I reported what I requested to you to the superiors.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "They provided the special reward money for your credibility.";
+			next;
+			setquest 5424;// [Complete]Restricted Sector
+			completequest 5424;// [Complete]Restricted Sector
+			getexp 2100000,5500000;
+			getitem 6919,2;// Honor Token
+			mes "[Ellond Lawrence]";
+			mes "Now that you received the special reward money, please keep up the good work.";
+			close;
+		}
+		mes "[Ellond Lawrence]";
+		if (isbegin_quest(5424) == 2)
+			mes "I appreciate what you do for us, adventurer.";
+		else
+			mes "I must say it's quite rare to see such a diligent adventurer like you.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Are you ready to enter the underground dungeon? Do you have anything you'd like to ask?";
+		next;
+		switch( select( "To the Underground Dungeon...", "About the Underground Dungeon", "About Them", "I think I saw a bunch like them..." ) ) {
+		case 1:
+			mes "[Ellond Lawrence]";
+			mes "I wish you godspeed.";
+			close2;
+			warp "prt_prison",160,290;
+			end;
+		case 2:
+			mes "[Ellond Lawrence]";
+			mes "Is there something you'd like to know about the underground dungeon?";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Nothing particular. What you can imagine about the dungeon of the kingdom is all there is.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "I was told it was made to lock up the menaces to peace and safety of Rune Midgarts.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Basically, it's strongly made, but...";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "The facility there is very old so it must need some mending works here and there.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "But, as you can see, we can't even find the time to fix anything.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "The situation here is getting worse, so please take good care of yourself so that you won't get hurt in the dungeon.";
+			close;
+		case 3:
+			mes "[Ellond Lawrence]";
+			mes "What you saw in the dungeon are monsters, for sure. What else could they be?";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "This facility is so old and there is no document written about it. We just pass down what people say about it.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "What's certain is that they were the culprit of the chaos created in Rune Midgarts in the past.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Anyway, there is no document left about them ? for what they were charged or sentences confirmed against them.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Although there is a document saying that some crusader lost the document containing the charge and the sentence made...";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Well, I guess those in the underground dungeon don't seem to care too much about him, so it'd be alright.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "Some of them must still be inside the prison even when they've done the time.";
+			close;
+		case 4:
+			mes "[Ellond Lawrence]";
+			mes "Oh, I heard about that story, too.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "The Crusaders are consisting of various bunches so some of them are adventurers like yourself.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "A friend of mine said he saw the monsters from the underground dungeon are going about the world outside of it.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "The Crusaders say he is bluffing a lot probably because he was an adventurer.";
+			next;
+			emotion ET_HUK;
+			mes "[Ellond Lawrence]";
+			mes "No offense, adventurer. This is not about you. He's just full of baloney...";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "I guarantee you that the monsters in the outer world and those in the dungeon must be different beings from each other.";
+			next;
+			mes "[Ellond Lawrence]";
+			mes "They must be remotely related or something.";
+			close;
+		}
+	}
+
+OnTouch:
+	if (isbegin_quest(5415) < 2) {
+		emotion ET_SORRY;
+		mes "[Ellond Lawrence]";
+		mes "I am sorry, but unauthorized access to this place is restricted.";
+		next;
+		mes "[Ellond Lawrence]";
+		mes "Sorry for the inconvenience and your cooperation will be appreciated.";
+		close;
+	}
+	end;
+}
+
+prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
+	if (banquet_main_quest < 13) {
+		npctalk "...Such a disturbance to my training.", "", bc_self;
+		end;
+	}
+	if (banquet_main_quest == 13) {
+		npctalk "Oh, my! What the...", "", bc_self;
+		mes "[Terketh]";
+		mes "You are out from the Past Memories of the Royal Family?";
+		mes "Since you know the way here, you must have got the permission to move.";
+		next;
+		mes "[Terketh]";
+		mes "Let me send you out.";
+		mes "If you move straight up the stairs, you'll find the Crusader's Office.";
+		mes "You must to where to go after that, right?";
+		erasequest 7695;// Escape from the Past Memories of the Royal Family
+		setquest 7696;// What's Next?
+		banquet_main_quest = 14;
+		warp "prt_pri00",53,128;
+		end;
+	}
+	mes "[Terketh]";
+	mes "What do you want?";
+	next;
+	if (select( "To the Past Memories of the Royal Family", "To the oudside" ) == 2) {
+		sleep2 2000;
+		npctalk "Well, sure.", "", bc_self;
+		sleep2 2000;
+		warp "prt_pri00",53,128;
+		end;
+	}
+	sleep2 2000;
+	npctalk "Take care. Do not snoop around too much!", "", bc_self;
+	sleep2 2000;
+	warp "prt_lib",9,28;
+	end;
+}
+
+
+// Sector A
+prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		emotion ET_BLABLA;
+		mes "[Prisoner 243AD265]";
+		mes "Who is it? Who's calling me?";
+		next;
+		mes "The prisoner is howling. Is something happening?";
+		close;
+	}
+	switch( isbegin_quest(5425) ) {
+	case 0:
+		emotion ET_SPARK;
+		mes "[Prisoner 243AD265]";
+		mes "Pleasure. It's been a while I saw a human around here.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "You don't seem like that crusader who put me in here. From what I see, I guess you're an adventurer...Is that so?";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "It's been a while I saw an adventurer. What brought you here?";
+		next;
+		mes "- I explained why I came here. -";
+		next;
+		emotion ET_FRET;
+		mes "[Prisoner 243AD265]";
+		mes "I thought the Crusaders released them all, no? I must've thought wrong, then.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "I just thought the Crusaders released them to disrupt the prisoners' peaceful break.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "Anyway, I am sorry that I can't be of any help to you.";
+		next;
+		emotion ET_QUESTION;
+		mes "[Prisoner 243AD265]";
+		mes "Human adventurer, I couldn't be of help, but do you mind if I ask you to do me a favor?";
+		next;
+		select("Let's hear what it is, shall we?");
+		mes "[Prisoner 243AD265]";
+		mes "Thank you. I was once a seaman, voyaging around the sea.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "I met a whole lot of fellow seamen as much as I had been on a voyage. Pleasing fellow, bluffing fellow, chicken-hearted fellow...";
+		next;
+		emotion ET_BLABLA;
+		mes "- The prisoner seems reminiscent of his past, pounding his left chest with his fist. -";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "Yes, I've had a lot of fellow seamen from all walks of life. But we had to part with each other after we got here...";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "I've been here for as long as I can remember but that sound...It's pretty recent around here.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "It's indistinct but...I can hear the sound from the very far into the darkness, calling me...";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "Can you find an old fellow of mine who must be locked somewhere in the prison for me?";
+		next;
+		select("Consider it done.");
+		setquest 5416;// Restricted Sector A
+		setquest 5425;// To My Beloved Fellow
+		mes "[Prisoner 243AD265]";
+		mes "Thank you. I hope it is the cry from that fellow.";
+		close;
+	case 1:
+		if (countitem(6925) < 1) {
+			mes "[Prisoner 243AD265]";
+			mes "Please. I hope it's one of my fellow men. You have no idea how long it's been.";
+			close;
+		}
+		emotion ET_SPARK;
+		mes "[Prisoner 243AD265]";
+		mes "You came, at last! So what was that sound? Did you meet my man?";
+		next;
+		mes "- I explained what happened to his fellow. -";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "So what I heard from darkness was indeed the voice from my fellow man. I hoped he'd be alright.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "So he is no longer alive...I know it's been quite a while since that happened, but it's still a shame.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "Thank you so much for finding that out for me. I'm much obliged.";
+		next;
+		mes "[Prisoner 243AD265]";
+		mes "By the way, I haven't even asked your name. What is your name?";
+		next;
+		select("Tell him your name.");
+		mes "[Prisoner 243AD265]";
+		mes "" + strcharinfo(0) + "....";
+		next;
+		emotion ET_BLABLA;
+		mes "- The prisoner grabs a fist and pounds his left chest. -";
+		next;
+		delitem 6925,1;// Prisoner's Letter
+		completequest 5425;// To My Beloved Fellow
+		setquest 5426;// [Stand by]To My Beloved Fellow
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 243AD265]";
+		mes "I'll inscribe your name right here. I hope you would continue to be the messenger for my fellow men.";
+		close;
+	case 2:
+		switch( checkquest(5426,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5427) == 0) {
+				emotion ET_SPARK;
+				mes "[Prisoner 243AD265]";
+				mes "Hello. " + strcharinfo(0) + " Howdy.";
+				mes "Can you locate an old fellow of mine, again, and deliver his story to me?";
+				next;
+				if (select( "You can count on me.", "I've got my hands full today." ) == 2) {
+					emotion ET_OTL;
+					mes "[Prisoner 243AD265]";
+					mes "Is that so? That's a shame. Be sure to come back again if you have the time...";
+					close;
+				}
+				setquest 5427;// [Repeat]To My Beloved Fellow
+				mes "[Prisoner 243AD265]";
+				mes "I sure am counting on you.";
+				close;
+			}
+			if (countitem(6925) < 1) {
+				mes "[Prisoner 243AD265]";
+				mes "I can't wait to hear it.";
+				close;
+			}
+			mes "[Prisoner 243AD265]";
+			mes "I owe you big time. You have no idea.";
+			next;
+			emotion ET_BLABLA;
+			mes "- The prisoner grabs a fist and pounds his left chest. -";
+			next;
+			delitem 6925,1;// Prisoner's Letter
+			erasequest 5427;// [Repeat]To My Beloved Fellow
+			setquest 5426;// [Stand by]To My Beloved Fellow
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			mes "[Prisoner 243AD265]";
+			mes "I'll inscribe your name right here. I hope you would continue to be the messenger for my fellow men.";
+			close;
+		case 0:
+		case 1:
+			mes "[Prisoner 243AD265]";
+			mes "Now that the fellow has become freer from death, I wonder what he's up to. I wonder what kind of memory he would write in his next letter.";
+			next;
+			mes "The prisoner started singing as if he was reminiscing about something.";
+			// close2;// still talk to npc
+			sleep2 30;
+			npctalk "Prisoner 243AD265: We're coming home~~ We're coming home~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: When we return home~~ When we do~~ We'll be good to our parents~~ We will~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: The lady here~~ is pretty~~ and amusing~~ She is~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Hard-earned money~~ Spend it~~ Spend it all~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Let's dance~~ Dance~~ Until~~ We return home~~ Dance away~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: When we go home~~ When we do~~ We will dance~~ with our fiancee", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Say farewell~~ to our loved ones~~ Say~~ farewell~~ Drink up~~ Dance away~~ Dance~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			sleep2 2000;
+			npctalk "Prisoner 243AD265: ... ... ...", "", bc_self;
+			sleep2 2000;
+			emotion ET_HNG;
+			npctalk "Prisoner 243AD265: It is far from amusing when there is no fellow sailor around.", "", bc_self;
+			end;
+		case 2:
+			erasequest 5426;// [Stand by]To My Beloved Fellow
+			mes "[Prisoner 243AD265]";
+			mes "Is it already that time to hear the news from the old fellow of mine?";
+			close;
+		}
+	}
+}
+
+prt_prison,205,139,4	script	Dark Shape#EP161A01	4_GHOST_STAND,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if ((isbegin_quest(5425) != 1 && isbegin_quest(5427) != 1) || countitem(6925) > 0)
+		mes "The Dark Shape is floating in the dark space. As soon as I showed an interest, it was gone nowhere.";
+	else if (isbegin_quest(5427) == 1) {
+		mes "The Dark Shape starts to sway when it saw me. Did it mean it's delighted to see me?";
+		next;
+		select("Anything else to give me?");
+		getitem 6925,1;// Prisoner's Letter
+		mes "The Dark Shape handed you the letter and was gone.";
+		next;
+		playBGM "148";
+		mes "The Dark Shape seems to be in a good mood, humming along.";
+	}
+	else {
+		mes "The Dark Shape is floating in the dark space. What should I do about it?";
+		next;
+		select("Ask if he's the fellow of 243AD265.");
+		mes "[Dark Shape]";
+		mes "That ... ... you ... ... fell ... ... scen ... ... wind ... ...";
+		next;
+		select("... ... ... ?");
+		mes "[Dark Shape]";
+		mes "... ... Is ... ... so ... ... who ... ... and ... ... it";
+		next;
+		select("... ... ... ?");
+		mes "[Dark Shape]";
+		mes "... I ... ... see ... ... the ... ... airr ... ... ough ...";
+		next;
+		mes "You have no idea what it's talking about, but get the impression, from its response to what you say, that it must be the one of the Prisoner 243AD265's fellows.";
+		next;
+		mes "What should you do?";
+		next;
+		if (select( "Just leave.", "Wait a little more." ) == 2) {
+			getitem 6925,1;// Prisoner's Letter
+			mes "The Dark Shape handed you the letter and left. Did it mean to ask you to deliver it?";
+		}
+		else {
+			mes "You are becoming increasingly agitated as you can't communicate with it effectively. So you decided to leave.";
+			next;
+			mes "The Dark Shape must've noticed it. It's gone nowhere, too.";
+		}
+	}
+	close2;
+	.@num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
+	setarray .@npc_num[1],1,2,3,4,5;
+	deletearray .@npc_num[.@num],1;
+	disablenpc strnpcinfo(0);
+	enablenpc "Dark Shape#EP161A0" + .@npc_num[ rand(1,4) ];// enable another npc randomly
+	end;
+
+OnInit:
+	.@npc_num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
+	if (.num_enabled == 0)
+		.num_enabled = rand(1,5);
+	if (.num_enabled != .@npc_num)
+		disablenpc strnpcinfo(0);// disable 4/5 npcs
+	end;
+}
+prt_prison,153,175,4	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A02	4_GHOST_STAND
+prt_prison,160,224,6	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A03	4_GHOST_STAND
+prt_prison,169,81,6	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A04	4_GHOST_STAND
+prt_prison,203,215,4	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A05	4_GHOST_STAND
+
+// Sector B
+prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		emotion ET_SLEEPY;
+		mes "The prisoner here is sitting with the extremely bored look. If you talk to him at this point, you may have to sit down to hang out with him.";
+		close;
+	}
+	switch( isbegin_quest(5428) ) {
+	case 0:
+		emotion ET_COOL;
+		mes "[Prisoner 267BD184]";
+		mes "Hey! Yes, you outside of the steel bars. You have such pretty eyes. My cup of tea.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "Please be nice and give me either of your eyes. I'll cherish them.";
+		next;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Whoa, you're being too forward.";
+		next;
+		emotion ET_CRY;
+		mes "[Prisoner 267BD184]";
+		mes "Am I? Because those eyes look so gorgeous.";
+		mes "Even if you give me one of those, you still have one left. How hard can it be?";
+		next;
+		emotion ET_HNG;
+		mes "[Prisoner 267BD184]";
+		mes "You're one greedy fella.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "Well, if you say so, can you just find the time to talk with me, then?";
+		next;
+		if (select( "I can do it.", "No." ) == 2) {
+			emotion ET_FRET;
+			mes "[Prisoner 267BD184]";
+			mes "You're pretty straightforward. If you say so...";
+			close;
+		}
+		mes "[Prisoner 267BD184]";
+		mes "Alright, then! What should we talk about first?";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "How about this? Do you know what charge people put against me? It's the marriage scam!";
+		next;
+		emotion ET_FRET;
+		mes "[Prisoner 267BD184]";
+		mes "Marriage scam? Ridiculous! Do I look like someone who would dupe anyone into marrying me?";
+		next;
+		emotion ET_THINK, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, uh...";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "Oh? You thought so, too?";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "Pretty eyes don't do any good, I guess! You should open your mind to match those pretty little eyes!";
+		next;
+		emotion ET_COOL;
+		mes "[Prisoner 267BD184]";
+		mes "I was merely attracted to the woman with pretty eyes. It was pure love. People don't get me.";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Prisoner 267BD184]";
+		mes "Oh, I remember. Yes, there is a bunch who's walking around the underground dungeon as freely as they desire.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "I thought that was weird and recently found the cheeky ones with the bat wings when they're not even bats.";
+		next;
+		emotion ET_OK;
+		mes "[Prisoner 267BD184]";
+		mes "They were cheeky indeed, but I thought they have pretty blue eyes.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "So I told them I would gracefully let them pass with their wings and, in return, they should give me that blue gems.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "But they wouldn't listen.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "But they might listen to you because you have pretty eyes.";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "Can you just go ask them to give their pretty gems? I'm not allowed to leave here.";
+		next;
+		setquest 5417;// Restricted Sector B
+		setquest 5428;// Lowly Standards
+		mes "[Prisoner 267BD184]";
+		mes "If they wouldn't listen, why don't you just take them? How about 20? I'm giving you the special grant.";
+		close;
+	case 1:
+		if (countitem(6924) < 20) {
+			mes "[Prisoner 267BD184]";
+			mes "It started off with a little chat, but ended up as a request. Haha!";
+			next;
+			emotion ET_SHY;
+			mes "[Prisoner 267BD184]";
+			mes "I believe someone with pretty eyes like you should forgive me. So...";
+			next;
+			mes "[Prisoner 267BD184]";
+			mes "Go and get those pretty gems from the cheeky bunch with the bat wings.";
+			next;
+			mes "[Prisoner 267BD184]";
+			mes "You should get me at least 20, alright?";
+			close;
+		}
+		mes "[Prisoner 267BD184]";
+		mes "No way! What I saw were blue eyes but these are red! That's odd!";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "I'll have to take a close look. Will you hand them to me?";
+		next;
+		mes "[Prisoner 267BD184]";
+		mes "Now that I have a job to do for today and you've done a good job. Maybe I should give you a present.";
+		next;
+		completequest 5428;// Lowly Standards
+		delitem 6924,20;// Red Eye
+		setquest 5429;// [Stand by]Lowly Standards
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 267BD184]";
+		mes "Humans who had been here before gave me this. I don't like this kind of design, so I'll give it to you.";
+		close;
+	case 2:
+		switch( checkquest(5429,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5430) == 0) {
+				mes "[Prisoner 267BD184]";
+				mes "This time, again, I took a close look at it.";
+				next;
+				emotion ET_OTL;
+				mes "[Prisoner 267BD184]";
+				mes "But I couldn't find what turned the blue eyes into the red ones.";
+				next;
+				mes "[Prisoner 267BD184]";
+				mes "So I'm asking you ? will you take the blue gems from them again?";
+				next;
+				if (select( "Give a hand.", "Refuse to help." ) == 2) {
+					emotion ET_HNG;
+					mes "[Prisoner 267BD184]";
+					mes "I thought you'd be different. So disappointing.";
+					close;
+				}
+				setquest 5430;// [Repeat]Lowly Standards
+				mes "[Prisoner 267BD184]";
+				mes "You should get me at least 20, alright?";
+				close;
+			}
+			if (countitem(6924) < 20) {
+				mes "[Prisoner 267BD184]";
+				mes "Oh~~ I wish I would get the pretty blue eyes this time~~";
+				close;
+			}
+			emotion ET_COOL;
+			mes "[Prisoner 267BD184]";
+			mes "Oh, you indeed brought them! I'll take a close look. Let me.";
+			next;
+			erasequest 5430;// [Repeat]Lowly Standards
+			delitem 6924,20;// Red Eye
+			setquest 5429;// [Stand by]Lowly Standards
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			mes "[Prisoner 267BD184]";
+			mes "Oh, I almost forgot. This is the thing I talked to you the last time. I don't like this kind of design, so I'll give it to you.";
+			close;
+		case 0:
+		case 1:
+			emotion ET_STARE;
+			mes "He's really taking the time looking closely at the red eyes you brought.";
+			next;
+			mes "He must not be responding to whatever you say to him now.";
+			close;
+		case 2:
+			emotion ET_SLEEPY;
+			erasequest 5429;// [Stand by]Lowly Standards
+			mes "[Prisoner 267BD184]";
+			mes "Oh, I have nothing else to do. I'm so bored. I should do something.";
+			next;
+			mes "[Prisoner 267BD184]";
+			mes "Oh! Human with pretty eyes! You've come at the right time.";
+			close;
+		}
+	}
+}
+
+// Sector C
+prt_prison,265,154,4	script	Prisoner 265CM154#EP161	4_MOONLIGHT,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		mes "The prisoner here is gazing around the corners like a hunting lion. You want to get away before you get caught.";
+		close;
+	}
+	switch( isbegin_quest(5431) ) {
+	case 0:
+		mes "[Prisoner 265CM154]";
+		mes "Whoa, this is human!";
+		mes "How did you get in here? You've got some skills!";
+		next;
+		emotion ET_SEXY;
+		mes "[Prisoner 265CM154]";
+		mes "Hehe-";
+		next;
+		emotion ET_GOODBOY, playerattached();
+		mes "~Stroking~";
+		next;
+		emotion ET_BEST;
+		mes "[Prisoner 265CM154]";
+		mes "Let me give you a compliment stamp. Here it is!";
+		next;
+		mes "[Prisoner 265CM154]";
+		mes "Hehe- I think it's all good since I don't have to see the menacing ones. Right?";
+		next;
+		emotion ET_QUESTION;
+		mes "[Prisoner 265CM154]";
+		mes "What I learned is that the humans would do anything for a reward. Am I right or what?";
+		next;
+		emotion ET_QUESTION;
+		mes "[Prisoner 265CM154]";
+		mes "Let me give you quite a good one. Just follow one of my 'orders.'";
+		next;
+		select("Just listen anyway.");
+		mes "[Prisoner 265CM154]";
+		mes "Oh, good! How nice!";
+		mes "You're such a good human. See? You'll know what I mean if you have eyes.";
+		next;
+		mes "[Prisoner 265CM154]";
+		mes "This underground dungeon used to be clean and neat. Once the humans came along a while ago, it got dirty probably because they haven't done the proper cleaning.";
+		next;
+		mes "[Prisoner 265CM154]";
+		mes "Watch this, human. Trust my detective instinct. Do you see them wandering around here?";
+		next;
+		emotion ET_STARE;
+		mes "[Prisoner 265CM154]";
+		mes "I have no idea how they got in, but I'm absolutely sure they're the cause of dirtiness in the prison.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you want me to attack them?";
+		next;
+		emotion ET_HUK;
+		mes "[Prisoner 265CM154]";
+		mes "What are you talking about, human? They're nice. I didn't know you'd be this violent. I'm disappointed.";
+		next;
+		setquest 5418;// Restricted Sector C
+		setquest 5431;// Clean Life
+		mes "[Prisoner 265CM154]";
+		mes "Stop harassing the innocent kids. Just go around the prison and clean up the mess.";
+		close;
+	case 1:
+		if (isbegin_quest(5432) == 0) {
+			mes "[Prisoner 265CM154]";
+			mes "Human! Don't try to cut corners ? wipe it all up here and there. Make it clean. Do it right.";
+			close;
+		}
+		emotion ET_BEST;
+		mes "[Prisoner 265CM154]";
+		mes "You've done your cleaning? Yay! Here's your compliment stamp!";
+		next;
+		emotion ET_BEST;
+		mes "[Prisoner 265CM154]";
+		mes "Now that the prison becomes clean, you must be feeling good, too, aren't you, human? We should do the cleaning more often.";
+		next;
+		mes "[Prisoner 265CM154]";
+		mes "Oh, right! I told you I'd give you a reward, didn't I?";
+		mes "This is what the human who worked here before gave me. You've been such a sport so let me give you this.";
+		next;
+		completequest 5431;// Clean Life
+		erasequest 5432;// Cleaning is complete.
+		setquest 5433;// [Stand by]Clean Life
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 265CM154]";
+		mes "If you come back again tomorrow and give me a hand, there will be more of this. Come back often!";
+		close;
+	case 2:
+		switch( checkquest(5433,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5434) == 0) {
+				mes "[Prisoner 265CM154]";
+				mes "Now that the prison has gotten messy as I intended. So it's finally the time for cleaning.";
+				next;
+				emotion ET_WRAP;
+				mes "[Prisoner 265CM154]";
+				mes "Cleaning will make the day rewarding!";
+				next;
+				if (select( "Let's go!", "No way! I will never do it. Over my dead body." ) == 2) {
+					emotion ET_OHNO;
+					mes "[Prisoner 265CM154]";
+					mes "Oh, you...! I knew you'd be better but I didn't know you were this lazy. Big letdown!";
+					close;
+				}
+				setquest 5434;// [Repeat]Clean Life
+				emotion ET_BEST;
+				mes "[Prisoner 265CM154]";
+				mes "Let the cleaning begin!";
+				close;
+			}
+			if (isbegin_quest(5435) == 0) {
+				mes "[Prisoner 265CM154]";
+				mes "Human! Don't try to cut corners ? wipe it all up here and there. Make it clean. Do it right.";
+				close;
+			}
+			emotion ET_BEST;
+			mes "[Prisoner 265CM154]";
+			mes "What a good human! You've earned another compliment stamp! Here it is!";
+			next;
+			erasequest 5434;// [Repeat]Clean Life
+			erasequest 5435;// [Repeat]Cleaning is complete.
+			setquest 5433;// [Stand by]Clean Life
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			mes "[Prisoner 265CM154]";
+			mes "Now that you finished cleaning for today, let me give you this. Come back tomorrow!";
+			close;
+		case 0:
+		case 1:
+			emotion ET_OHNO;
+			mes "[Prisoner 265CM154]";
+			mes "You don't seem to know the fun of messing things up. Messing is as fun as cleaning!";
+			next;
+			mes "[Prisoner 265CM154]";
+			mes "That's about enough now. You can do the rest tomorrow.";
+			close;
+		case 2:
+			erasequest 5433;// [Stand by]Clean Life
+			mes "[Prisoner 265CM154]";
+			mes "You've come at the right time. The prison has gotten properly messy, so it's time for cleaning.";
+			close;
+		}
+	}
+}
+
+// Rubbish heap
+prt_prison,118,247,4	script	Rubbish heap#EP161C01	4_ENERGY_BLACK,{
+	if (isbegin_quest(5432) > 0 || isbegin_quest(5435) > 0)
+		end;
+	if (isbegin_quest(5431) == 1 || (isbegin_quest(5431) == 2 && isbegin_quest(5434) == 1)) {
+		mes "Some stuff left around the floor are lumped together.";
+		next;
+		if (select( "Clean them.", "Just leave them." ) == 1) {
+			progressbar "ffff00",2;
+			if (rand(100) < 75)
+				mes "You're sad but there still are much to clean. Go find something to clean up.";
+			else {
+				mes "You finished cleaning. Report the result.";
+				if (isbegin_quest(5431) == 1)
+					setquest 5432;// [Repeat]Cleaning is complete.
+				else
+					setquest 5435;// [Repeat]Cleaning is complete.
+			}
+			initnpctimer;
+			disablenpc strnpcinfo(0);
+		}
+		close;
+	}
+	end;
+OnTimer30000:
+	stopnpctimer;
+	enablenpc strnpcinfo(0);
+	end;
+}
+prt_prison,171,247,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C02	4_ENERGY_BLACK
+prt_prison,181,230,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C03	4_ENERGY_BLACK
+prt_prison,238,165,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C04	4_ENERGY_BLACK
+//
+prt_prison,232,137,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C06	4_ENERGY_BLACK
+prt_prison,200,133,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C07	4_ENERGY_BLACK
+prt_prison,212,107,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C08	4_ENERGY_BLACK
+prt_prison,235,107,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C09	4_ENERGY_BLACK
+prt_prison,198,87,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C10	4_ENERGY_BLACK
+prt_prison,218,75,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C11	4_ENERGY_BLACK
+prt_prison,232,83,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C12	4_ENERGY_BLACK
+prt_prison,207,50,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C13	4_ENERGY_BLACK
+prt_prison,231,55,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C14	4_ENERGY_BLACK
+prt_prison,220,19,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C15	4_ENERGY_BLACK
+prt_prison,168,31,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C16	4_ENERGY_BLACK
+prt_prison,160,70,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C17	4_ENERGY_BLACK
+prt_prison,156,87,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C18	4_ENERGY_BLACK
+prt_prison,140,93,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C19	4_ENERGY_BLACK
+prt_prison,113,98,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C20	4_ENERGY_BLACK
+//
+prt_prison,112,79,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C22	4_ENERGY_BLACK
+prt_prison,122,42,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C23	4_ENERGY_BLACK
+prt_prison,135,127,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C24	4_ENERGY_BLACK
+prt_prison,67,149,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C25	4_ENERGY_BLACK
+prt_prison,251,259,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C26	4_ENERGY_BLACK
+prt_prison,220,255,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C27	4_ENERGY_BLACK
+prt_prison,243,239,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C28	4_ENERGY_BLACK
+prt_prison,276,195,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C29	4_ENERGY_BLACK
+prt_prison,188,186,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C30	4_ENERGY_BLACK
+
+// Sector D
+prt_prison,243,17,4	script	Prisoner 243DV17#EP161D	4_PORING,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		emotion ET_THINK, playerattached();
+		emotion ET_THINK;
+		mes "... ... ... ...";
+		close;
+	}
+	if (isbegin_quest(5419) == 0) {
+		mes "[Prisoner 243DV17]";
+		mes "What is it, human? Anything you want to say to me?";
+		next;
+		input .@string$;
+		setquest 5419;// Restricted Sector D
+		mes "[Prisoner 243DV17]";
+		mes "What are you talking about? I don't have time for this. Beat it.";
+		close2;
+		warp "prt_prison",160,290;
+		end;
+	}
+	.@r = rand(100);
+	if (.@r < 10) {
+		mes "[Prisoner 243DV17]";
+		mes "What?! Do you have anything to say to me? Spit it out, then!";
+		next;
+		input .@string$;
+		mes "[" + strcharinfo(0) + "]";
+		mes "" + .@string$ + "";
+		next;
+		mes "[Prisoner 243DV17]";
+		mes "" + .@string$ + " ? Is that it?";
+		next;
+		mapannounce "prt_prison", "Mysterious Shout: Idiot " + strcharinfo(0) + " says " + .@string$ + "", bc_map, 0x9CFF00;
+		sleep2 3000;
+		mapannounce "prt_prison", "Mysterious Laughter: Giggle", bc_map, 0x9CFF00;
+		mes "I was ridiculed for no reason and it really feels bad.";
+		next;
+		mes "[Prisoner 243DV17]";
+		mes "What?! Do you have a problem with me? Be gone now.";
+		close;
+	}
+	if (.@r < 20) {
+		emotion ET_KIK;
+		mes "[Prisoner 243DV17]";
+		mes "~Giggles~ I suddenly feel better now. Alright, what the heck. I'll send you to the sector you want for 1 Jellopy.";
+		next;
+		if (countitem(909) < 1) {
+			emotion ET_HUM;
+			mes "[Prisoner 243DV17]";
+			mes "What? You don't even have Jellopy with you? How useless are you?";
+			close;
+		}
+		delitem 909,1;// Jellopy
+		setarray .@sector$[0], "Prison Entrance", "Sector A", "Sector B", "Sector C", "Sector D", "Sector E", "Sector F", "Sector G", "Sector H";
+		.@s = select( implode(.@sector$,":") ) - 1;
+		mes "[Prisoner 243DV17]";
+		if (.@s == 4)	// Sector D
+			mes "What? Sector D is right here! Well, I've got my Jellopy so I don't care. Let me send you there.";
+		else
+			mes "Thank you for Jellopy! " + .@sector$[.@s] + " it is, then. Off you go!";
+		close2;
+		switch(.@s) {
+		case 0:
+			warp "prt_prison",160,290;	// Prison Entrance
+			break;
+		case 1:
+			warp "prt_prison",245,255;	// Sector A
+			break;
+		case 2:
+			warp "prt_prison",265,195;	// Sector B
+			break;
+		case 3:
+			warp "prt_prison",255,155;	// Sector C
+			break;
+		case 4:
+			warp "prt_prison",230,20;	// Sector D
+			break;
+		case 5:
+			warp "prt_prison",105,75;	// Sector E
+			break;
+		case 6:
+			warp "prt_prison",105,190;	// Sector F
+			break;
+		case 7:
+			warp "prt_prison",95,215;	// Sector G
+			break;
+		case 8:
+			warp "prt_prison",55,125;	// Sector H
+			break;
+		}
+		end;
+	}
+	emotion ET_OHNO;
+	mes "[Prisoner 243DV17]";
+	mes "Just leave me alone! Go away!";
+	close;
+}
+
+// Sector E
+prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		specialeffect EF_SLEEPATTACK;
+		mes "Zzzzzzzzz...~Snores~";
+		next;
+		mes "The prisoner is breathing calmly so he must be sleeping.";
+		close;
+	}
+	switch( isbegin_quest(5436) ) {
+	case 0:
+		emotion ET_SEXY;
+		mes "[Prisoner 95EB72]";
+		mes "~Sniffs~ This smell...Yes...It is human...";
+		next;
+		emotion ET_KIK;
+		mes "[Prisoner 95EB72]";
+		mes "~Giggles~ It's been such a while since any human came along in this dark underground. Get over here, human. It's been a while so I will show mercy and let you live.";
+		next;
+		select("Approach closer.");
+		npctalk "~Cringes~", "", bc_self;
+		emotion ET_SWEAT;
+		mes "[Prisoner 95EB72]";
+		mes "~Evil laughter~ You've got the courage, human!";
+		mes "I can't wait to let the dumb humans taste of my fist of terror!";
+		next;
+		mes "[Prisoner 95EB72]";
+		mes "Now I can't let myself out of this dark and damp place because of the chicken-hearted human. Once I get out of here, I will never forgive the humans.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well...there is particularly no need to...";
+		next;
+		npctalk "~Cringes~", "", bc_self;
+		emotion ET_KIK;
+		mes "[Prisoner 95EB72]";
+		mes "~Evil laughter~";
+		mes "Talking back to me? How dare you! But I like your audacity, too. You can be my underling, then.";
+		next;
+		select("By the way, didn't you just cringe?");
+		emotion ET_QUESTION, playerattached();
+		emotion ET_STARE;
+		mes "[Prisoner 95EB72]";
+		mes "Wa-hahaha! I think I've got myself a cocky underling.";
+		mes "Remember. A dark and humid place like this one is a match for a doppelganger who is blatantly wicked and doesn't even have its own face.";
+		next;
+		mes "[Prisoner 95EB72]";
+		mes "~Evil laughter~";
+		mes "Let me give a chance to this amusing underling to prove your sense of loyalty. I'll have to brighten up this place first.";
+		next;
+		emotion ET_BLABLA, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Haven't we just...met?";
+		next;
+		setquest 5420;// Restricted Sector E
+		setquest 5436;// Finding Lights
+		mes "[Prisoner 95EB72]";
+		mes "Underling. Get me the torch burning brightly in the prison. This place is too dark. I'll have to turn this place bright like my own hometown.";
+		close;
+	case 1:
+		if (countitem(6923) < 1) {// Bright Light
+			mes "[Prisoner 95EB72]";
+			mes "Underling. Get me the torch burning brightly in the prison. I'll have to turn this place bright like my own hometown.";
+			close;
+		}
+		mes "[Prisoner 95EB72]";
+		mes "~Evil laughter~";
+		mes "What a loyal subordinate! Now I can lead a bright life, at least for a while, thanks to your contribution.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I mean, I am not your under...";
+		next;
+		emotion ET_OHNO;
+		mes "[Prisoner 95EB72]";
+		mes "I would like to give you a reward, but I'm afraid I don't have much. I would've given you a world of treasures if it were my golden days.";
+		next;
+		mes "[Prisoner 95EB72]";
+		mes "Underling, this is a shame, but I'll give you something I took from the human who would come in here.";
+		next;
+		completequest 5436;// Finding Lights
+		setquest 5437;// [Stand by]Finding Lights
+		delitem 6923,1;// Bright Light
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 95EB72]";
+		mes "I promise you a lot more rewards the day when I stand tall in the world again.";
+		close;
+	case 2:
+		switch( checkquest(5437,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5438) == 0) {
+				mes "[Prisoner 95EB72]";
+				mes "It's time to demonstrate your sense of loyalty. Get me the torch burning brightly in the prison.";
+				next;
+				if (select( "Not so fast.", "Okay..." ) == 1) {
+					mes "[Prisoner 95EB72]";
+					mes "Is there anything you should do now? I'm perplexed to hear it but I will do my best to understand you.";
+					mes "Still, don't make me wait too long.";
+					close;
+				}
+				setquest 5438;// [Repeat]Finding Lights
+				mes "[Prisoner 95EB72]";
+				mes "~Laughter~ Go! Go and get the torch burning most brightly in the prison.";
+				close;
+			}
+			if (countitem(6923) < 1) {// Bright Light
+				mes "[Prisoner 95EB72]";
+				mes "Go and get the torch burning most brightly in the prison, again.";
+				close;
+			}
+			emotion ET_SMILE;
+			mes "[Prisoner 95EB72]";
+			mes "What an exemplary subordinate! Now I can lead a bright life, at least for a while, thanks to your contribution.";
+			next;
+			erasequest 5438;// [Repeat]Finding Lights
+			setquest 5437;// [Stand by]Finding Lights
+			delitem 6923,1;// Bright Light
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			mes "[Prisoner 95EB72]";
+			mes "Keep this in mind. I promise you a lot more rewards the day when I stand tall in the world again.";
+			close;
+		case 0:
+		case 1:
+			mes "[Prisoner 95EB72]";
+			mes "Things haven't changed much but it still feels good to see this place has gotten brighter.";
+			close;
+		case 2:
+			erasequest 5437;// [Stand by]Finding Lights
+			mes "[Prisoner 95EB72]";
+			mes "Just so you know, the torchlight you brought is waning. It's time to show me your sense of worth to me again.";
+			close;
+		}
+	}
+}
+
+// Torchs
+prt_prison,146,268,4	script	Torch#EP161EB01	CLEAR_NPC,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5436) == 0 && isbegin_quest(5438) == 0)
+		end;
+	mes "This is a large torch burning quite brightly.";
+	if (countitem(6923) < 1) {
+		next;
+		select("Collect the light.");
+		progressbar "ffff00",2;
+		if (rand(100) < 50)
+			mes "You carefully collected the light but it scattered.";
+		else {
+			getitem 6923,1;// Bright Light
+			specialeffect2 EF_LIGHTSPHERE;
+			mes "You carefully collected the light and obtained the bright light.";
+		}
+		initnpctimer;
+		disablenpc strnpcinfo(0);
+	}
+	close;
+
+OnTimer30000:
+	stopnpctimer;
+	enablenpc strnpcinfo(0);
+	end;
+}
+prt_prison,177,268,4	duplicate(Torch#EP161EB01)	Torch#EP161EB02	CLEAR_NPC
+prt_prison,170,286,4	duplicate(Torch#EP161EB01)	Torch#EP161EB03	CLEAR_NPC
+prt_prison,39,160,4	duplicate(Torch#EP161EB01)	Torch#EP161EB04	CLEAR_NPC
+prt_prison,72,160,4	duplicate(Torch#EP161EB01)	Torch#EP161EB05	CLEAR_NPC
+prt_prison,81,148,4	duplicate(Torch#EP161EB01)	Torch#EP161EB06	CLEAR_NPC
+prt_prison,81,138,4	duplicate(Torch#EP161EB01)	Torch#EP161EB07	CLEAR_NPC
+prt_prison,72,126,4	duplicate(Torch#EP161EB01)	Torch#EP161EB08	CLEAR_NPC
+prt_prison,38,126,4	duplicate(Torch#EP161EB01)	Torch#EP161EB09	CLEAR_NPC
+prt_prison,141,152,4	duplicate(Torch#EP161EB01)	Torch#EP161EB10	CLEAR_NPC
+prt_prison,159,153,4	duplicate(Torch#EP161EB01)	Torch#EP161EB11	CLEAR_NPC
+prt_prison,158,135,4	duplicate(Torch#EP161EB01)	Torch#EP161EB12	CLEAR_NPC
+prt_prison,141,135,4	duplicate(Torch#EP161EB01)	Torch#EP161EB13	CLEAR_NPC
+prt_prison,122,46,4	duplicate(Torch#EP161EB01)	Torch#EP161EB14	CLEAR_NPC
+prt_prison,129,46,4	duplicate(Torch#EP161EB01)	Torch#EP161EB15	CLEAR_NPC
+prt_prison,186,46,4	duplicate(Torch#EP161EB01)	Torch#EP161EB16	CLEAR_NPC
+prt_prison,186,37,4	duplicate(Torch#EP161EB01)	Torch#EP161EB17	CLEAR_NPC
+prt_prison,237,139,4	duplicate(Torch#EP161EB01)	Torch#EP161EB18	CLEAR_NPC
+prt_prison,246,140,4	duplicate(Torch#EP161EB01)	Torch#EP161EB19	CLEAR_NPC
+
+// Sector F
+prt_prison,117,188,4	script	Prisoner 117FM188#EP161	4_MISTRESS,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		emotion ET_BLABLA;
+		mes "[Prisoner 117FM188]";
+		mes "Hey, are you that new servant?";
+		next;
+		mes "The prisoner inside seems to be looking for a servant. I think he saw me but I'll just have to act like I didn't hear him.";
+		close;
+	}
+	switch( isbegin_quest(5439) ) {
+	case 0:
+		emotion ET_HNG;
+		mes "[Prisoner 117FM188]";
+		mes "Are you that new servant? I guess the prisoner keeper has sent another human servant, then.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "I didn't like the human servant last time. He was too weak. I don't know about you.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "I'm worried but there is nothing else I can do.";
+		next;
+		emotion ET_QUESTION;
+		mes "[Prisoner 117FM188]";
+		mes "Human servant. What is your name? What should I call you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "" + strcharinfo(0) + "..";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Prisoner 117FM188]";
+		mes "" + strcharinfo(0) + " What a weird and difficult name to pronounce! I wanted to call you by your name, but, I don't think I can.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "Oh, right, you're Noyel! I like the sound of the name. Your name is Noyel from now on.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "Noyel, I have a question! Are the other human prisoners living in this dire environment?";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "I know I'm a prisoner here, but I don't understand why they have to lock me in this place that is so dirty and humid.";
+		next;
+		emotion ET_FRET;
+		emotion ET_BLABLA;
+		mes "[Prisoner 117FM188]";
+		mes "Noyel, go ahead and bring that prisoner keeper. I have a bone to pick with him.";
+		next;
+		emotion ET_SCRATCH, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't think that's going to happen.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "I didn't know a servant has no right to meet with the prisoner keepers. My apology.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "But I can't go there myself. That means it's impossible to meet him then. We should come up with an alternative.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "... ... ... ... ...";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "Now I remember. The servant who used to serve me gave me that. I'm not sure it's still here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What item is it?";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "For what I remember, it was something that you humans use. It is called a dehumidifier removing humidity around you. Do you know what that is?";
+		next;
+		setquest 5421;// Restricted Sector F
+		setquest 5439;// Refreshing Prison Life
+		mes "[Prisoner 117FM188]";
+		mes "Maybe I should use it because I don't have any other option. Bring me about 20 of them.";
+		close;
+	case 1:
+		if (countitem(6921) < 20) {
+			mes "[Prisoner 117FM188]";
+			mes "Still no dehumidifiers for me, Noyel? I don't need many. 20 dehumidifiers will do.";
+			close;
+		}
+		emotion ET_DELIGHT;
+		mes "[Prisoner 117FM188]";
+		mes "I start to feel the damp and soggy place is getting freshened up, Noyel.";
+		next;
+		mes "[Prisoner 117FM188]";
+		mes "Good job. Go have a rest until I call you back up.";
+		next;
+		delitem 6921,20;// Dehumidifier
+		completequest 5439;// Refreshing Prison Life
+		setquest 5440;// [Stand by]Refreshing Prison Life
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 117FM188]";
+		mes "It's nothing. I don't need it so you take and use it.";
+		close;
+	case 2:
+		switch( checkquest(5440,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5441) == 0) {
+				emotion ET_SURPRISE;
+				mes "[Prisoner 117FM188]";
+				mes "Noyel, the humidifier you brought for me doesn't seem to work. Will you bring another new one?";
+				next;
+				if (select( "Will do right away.", "Ah...I've got other business to go about now." ) == 2) {
+					emotion ET_OTL;
+					mes "[Prisoner 117FM188]";
+					mes "Noyel! Where do you think you're going? Noel.";
+					close;
+				}
+				setquest 5441;// [Repeat]Refreshing Prison Life
+				mes "[Prisoner 117FM188]";
+				mes "Thank you, Noyel. I will wait for you to bring me 20 dehumidifiers.";
+				close;
+			}
+			if (countitem(6921) < 20) {
+				emotion ET_FRET;
+				mes "[Prisoner 117FM188]";
+				mes "Noyel, when can I get those 20 dehumidifiers? The air feels so soggy and it's starting to feel unpleasant.";
+				close;
+			}
+			emotion ET_FRET;
+			mes "[Prisoner 117FM188]";
+			mes "You're late, Noyel. Did you have a hard time getting the dehumidifier?";
+			next;
+			mes "[Prisoner 117FM188]";
+			mes "I was actually starting to feel displeased by the dampening air.";
+			next;
+			delitem 6921,20;// Dehumidifier
+			erasequest 5441;// [Repeat]Refreshing Prison Life
+			setquest 5440;// [Stand by]Refreshing Prison Life
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			mes "[Prisoner 117FM188]";
+			mes "You did a good job getting the humidifier, Noyel.";
+			close;
+		case 0:
+		case 1:
+			emotion ET_DELIGHT;
+			mes "[Prisoner 117FM188]";
+			mes "Noyel, the air I breathe couldn't be more fresh now!";
+			next;
+			mes "[Prisoner 117FM188]";
+			mes "Even the prisoners deserve the pleasant environment to live. Keep that in mind, Noyel. Just in case.";
+			close;
+		case 2:
+			emotion ET_FRET;
+			erasequest 5440;// [Stand by]Refreshing Prison Life
+			mes "[Prisoner 117FM188]";
+			mes "Welcome, Noyel.";
+			mes "The dehumidifier you brought doesn't seem to function well. It's time to replace it with a new one.";
+			close;
+		}
+	}
+}
+
+// Sector G
+prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		emotion ET_BLABLA;
+		mes "[Prisoner 103GD214]";
+		mes "~Keeps giggling~";
+		next;
+		mes "The prisoner here is smiling out of his pain. I don't think he's in normal condition. Should I pass him?";
+		close;
+	}
+	switch( isbegin_quest(5442) ) {
+	case 0:
+		emotion ET_BLABLA;
+		mes "[Prisoner 103GD214]";
+		mes "~Evil laughter continues~";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "~Giggles~ How long have I waited for a guest?";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Even if your fear of me binds me here in the land of darkness, you can never bind my will. Mark my word.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What are you talking about?";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Hahaha!! Now I remember.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Ever since the cowards stopped coming to this land of darkness, I took my last sleep out of boredom.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "B.U.T.!";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "That was my mistake. Darkness inside of me became greater during my sleep and the followers awaken by darkness changed a lot of things in this land.";
+		next;
+		emotion ET_BLABLA;
+		specialeffect EF_DEVIL4;
+		specialeffect EF_POISONSMOKE;
+		mes "[Prisoner 103GD214]";
+		mes "~Evil laughter~";
+		mes "I hate to admit this but darkness is stomping around. I need something to bring it under control.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "~Grunts~ Human...";
+		mes "It doesn't happen every day for a lard to ask you to do something. ~Grunts~ Bring me...some flowers...";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Flowers representing the world are what not only soothes down darkness but also brings the peace of mind.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "~Grunts~ It must be effective in calming down the growing darkness.";
+		next;
+		specialeffect EF_DEVIL4;
+		specialeffect EF_POISONSMOKE;
+		mes "[Prisoner 103GD214]";
+		mes "Aaarrgghh--!!";
+		next;
+		setquest 5422;// Restricted Sector G
+		setquest 5442;// Suppressing Darkness
+		mes "[Prisoner 103GD214]";
+		mes "Hurry. ~Grunts~ Darkness inside of me is trying to stomp around. If you don't want to see the world brought to ashes by this darkness, bring me...flowers...Now.";
+		close;
+	case 1:
+		if (countitem(712) < 1) {// todo search flowers
+			mes "[Prisoner 103GD214]";
+			mes "~Grunts~ I'll wait here for you. Any flowers would do. Bring me flowers.";
+			close;
+		}
+		mes "[Prisoner 103GD214]";
+		mes "You brought the flowers, human!";
+		mes "~Evil laughter~ Human! You saved the world against darkness. Be glad!";
+		next;
+		specialeffect EF_HEALSP;
+		mes "[Prisoner 103GD214]";
+		mes "I can feel darkness inside is getting under control.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "~Grunts~ How pathetic I have become, getting help from a human...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You don't need to thank me. But, why the flowers?";
+		next;
+		emotion ET_STARE;
+		mes "[Prisoner 103GD214]";
+		mes "Human! Don't be so nosy.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Wait. Maybe it's alright after all since you're my savior.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Alright, whatever. I'll let you in on it just this once.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "It was around the time when I was holding sway in the world. I was conquering one of the human towns with my followers.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "I met a girl in that village who was different from other humans.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "Humans who got scared silly were busy running away from me and my followers but that girl was different. She reached out to me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "So, what happened?";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "You, human! Don't people often say you can be a wet blanket?";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "This story doesn't deserve repetition.";
+		next;
+		mes "[Prisoner 103GD214]";
+		mes "It's true that you've been of help so let me give you one of the things that the followers left for me.";
+		next;
+		delitem 712,1;// Flower
+		completequest 5442;// Suppressing Darkness
+		setquest 5443;// [Stand by]Suppressing Darkness
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 103GD214]";
+		mes "~Grunts~ If you don't want to see my darkness drags down the whole world to ashes, you'd better come often and bring me flowers.";
+		close;
+	case 2:
+		switch( checkquest(5443,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5444) == 0) {
+				specialeffect EF_DEVIL4;
+				specialeffect EF_POISONSMOKE;
+				mes "[Prisoner 103GD214]";
+				mes "Aarghh!! Darkness is about to stomp around!";
+				next;
+				mes "[Prisoner 103GD214]";
+				mes "Darkness should be taken under control. Give me that flower...quick! Aargh!!";
+				next;
+				mes "[Prisoner 103GD214]";
+				mes "Please get me one flower to calm down darkness, human...";
+				next;
+				if (select( "Okay.", "I'm sorry, but now..." ) == 2) {
+					specialeffect EF_DEVIL4;
+					specialeffect EF_POISONSMOKE;
+					mes "[Prisoner 103GD214]";
+					mes "I'll hang in there. Just don't be too late...";
+					close;
+				}
+				setquest 5444;// [Repeat]Suppressing Darkness
+				mes "[Prisoner 103GD214]";
+				mes "Please...~Grunts~ Human...";
+				close;
+			}
+			if (countitem(712) < 1) {// todo search flowers
+				mes "[Prisoner 103GD214]";
+				mes "Oh, no. It's getting out of my hand. Before this darkness goes berserk, bring me...flowers...~Grunts~";
+				close;
+			}
+			mes "[Prisoner 103GD214]";
+			mes "Flower...? ~Grunts~ Darkness should be stabil...";
+			next;
+			delitem 712,1;// Flower
+			if (rand(2) == 0) {// todo chance
+				specialeffect EF_DEVIL4;
+				specialeffect EF_POISONSMOKE;
+				mes "[Prisoner 103GD214]";
+				mes "Aaarrgghhh--!!";
+				next;
+				mes "- The flower you just gave has withered. -";
+				next;
+				mes "[Prisoner 103GD214]";
+				mes "This flower isn't enough to calm down darkness. Bring in more...!";
+				close;
+			}
+			erasequest 5444;// [Repeat]Suppressing Darkness
+			setquest 5443;// [Stand by]Suppressing Darkness
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			specialeffect EF_HEALSP;
+			mes "[Prisoner 103GD214]";
+			mes "...It's working. Thank you, human. You've been a lot of help, too, this time.";
+			next;
+			mes "[Prisoner 103GD214]";
+			mes "Let me give you one of the things that the followers left for me.";
+			next;
+			mes "[Prisoner 103GD214]";
+			mes "I'll contact you again when the darkness inside of me starts to stomp around.";
+			close;
+		case 0:
+		case 1:
+			emotion ET_KIK;
+			mes "[Prisoner 103GD214]";
+			mes "~Grunts~ Pray, human. Pray if you don't want my darkness flail around. You don't want to see the end of the world.";
+			close;
+		case 2:
+			erasequest 5443;// [Stand by]Suppressing Darkness
+			mes "[Prisoner 103GD214]";
+			mes "Aarghh!! Darkness is about to stomp around!";
+			next;
+			mes "[Prisoner 103GD214]";
+			mes "Darkness should be taken under control. Give me that flower...quick! Aargh!!";
+			close;
+		}
+	}
+}
+
+// Sector H
+prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5415) < 2) {// Restricted Sector
+		mes "[Prisoner 55HK115]";
+		mes "Manager! Isn't there a manager?";
+		next;
+		mes "I wonder the prisoner here may think this prison as some kind of a hotel. He's looking for a manager. I'll just let this one pass.";
+		close;
+	}
+	switch( isbegin_quest(5445) ) {
+	case 0:
+		emotion ET_QUESTION;
+		mes "[Prisoner 55HK115]";
+		mes "You look like a manager to me. I have to tell you, the service here is downright poor. Don't you agree, manager? Huh?!";
+		next;
+		emotion ET_OK;
+		mes "[Prisoner 55HK115]";
+		mes "You've come at a good time, I guess. I haven't had the time to take care of my horn and it's still hanging in there.";
+		next;
+		mes "[Prisoner 55HK115]";
+		mes "My horn used to be praised by the horned bunch and...I hate to even imagine what they would say to me if they get to see this ugly horn now.";
+		next;
+		mes "[Prisoner 55HK115]";
+		mes "Before my horn gets really damaged, I need to get it taken care of. But I don't see proper materials around here.";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Prisoner 55HK115]";
+		mes "!!";
+		next;
+		mes "[Prisoner 55HK115]";
+		mes "Hey, manager. I think you're in luck. I think I've found something just right.";
+		next;
+		mes "[Prisoner 55HK115]";
+		mes "I see Taffy, the inferior species, walking around. I think their skin should make a good alternative to the Sandpaper to trim down this thingies at the end of my horn.";
+		next;
+		emotion ET_SHY;
+		mes "[Prisoner 55HK115]";
+		mes "Look at this. This protruded area at the end of my horn. If it gets trimmed down, I would definitely get a peace of mind.";
+		next;
+		setquest 5423;// Restricted Sector H
+		setquest 5445;// Bothersome Little Thing
+		mes "[Prisoner 55HK115]";
+		mes "What are you doing? I told you to skin that Taffy and bring me 20!";
+		close;
+	case 1:
+		if (countitem(6922) < 20) {
+			mes "[Prisoner 55HK115]";
+			mes "What are you doing? Still haven't left?";
+			next;
+			emotion ET_OK;
+			mes "[Prisoner 55HK115]";
+			mes "You see Taffy walking around there? I think their skin should make a good alternative to the Sandpaper. Bring 20 of them.";
+			close;
+		}
+		delitem 6922,20;// Sandpaper
+		completequest 5445;// Bothersome Little Thing
+		setquest 5446;// [Stand by]Bothersome Little Thing
+		getexp 700000,500000;
+		getitem 6919,4;// Honor Token
+		mes "[Prisoner 55HK115]";
+		mes "What in the world are they taking so long? They're slow with poor service...I know my manners as knight so I can't just pick a fight. Alright. Just take this tip.";
+		next;
+		mes "[Prisoner 55HK115]";
+		mes "~Sighs~ Given the condition of my horn, I don't think a couple of these won't do any good at all.";
+		close;
+	case 2:
+		switch( checkquest(5446,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(5447) == 0) {
+				mes "[Prisoner 55HK115]";
+				mes "You've come at the right time, manager.";
+				next;
+				mes "[Prisoner 55HK115]";
+				mes "I was putting on a cool pair of shoes but something happened and I broke my toenails.";
+				next;
+				mes "[Prisoner 55HK115]";
+				mes "In that spirit, why don't you bring me those 20 Sandpapers again?";
+				next;
+				if (select( "I'll be on my way.", "I'm tied up." ) == 2) {
+					emotion ET_HNG;
+					mes "[Prisoner 55HK115]";
+					mes "I knew it. Talk about poor service!";
+					close;
+				}
+				setquest 5447;// [Repeat]Bothersome Little Thing
+				mes "[Prisoner 55HK115]";
+				mes "I can't wait to see what you'll bring this time.";
+				close;
+			}
+			if (countitem(6922) < 20) {
+				mes "[Prisoner 55HK115]";
+				mes "You can't turn back time once it passes. Hurry up. You have no time to lose.";
+				close;
+			}
+			delitem 6922,20;// Sandpaper
+			erasequest 5447;// [Repeat]Bothersome Little Thing
+			setquest 5446;// [Stand by]Bothersome Little Thing
+			getexp 700000,500000;
+			getitem 6919,4;// Honor Token
+			mes "[Prisoner 55HK115]";
+			mes "This time, the service is acceptable.";
+			next;
+			mes "[Prisoner 55HK115]";
+			mes "Here's your tip for your satisfactory work. Come back again.";
+			close;
+		case 0:
+		case 1:
+			mes "[Prisoner 55HK115]";
+			mes "Oh, this alternative is better than I thought.";
+			close;
+		case 2:
+			erasequest 5446;// [Stand by]Bothersome Little Thing
+			mes "[Prisoner 55HK115]";
+			mes "You've come at the right time, manager.";
+			close;
+		}
+	}
+}
