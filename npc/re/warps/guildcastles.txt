@@ -11,7 +11,11 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //= 2.0 Added WoE:TE warps. [Capuche]
+//= 3.0 Prontera castle map changed in ep16.1 [Capuche]
 //============================================================
+
+// Prontera Castle Map
+prt_gld,159,24,0	warp	prt_cas_D#prt_cas_C	1,1,prt_cas,82,171
 
 // Hall of Abyss
 //============================================================
