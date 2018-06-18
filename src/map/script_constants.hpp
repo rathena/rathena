@@ -815,7 +815,6 @@
 	export_constant2("Eff_Fear",SC_FEAR);
 	export_constant2("Eff_Burning",SC_BURNING);
 	export_constant2("Eff_Crystalize",SC_CRYSTALIZE);
-	export_constant2("Eff_Freezing",SC_FREEZING);
 
 	export_constant2("SC_ALL",SC_NONE);
 
