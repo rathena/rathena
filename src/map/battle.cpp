@@ -529,7 +529,13 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #endif
 				break;
 			case ELE_WIND:
-				if (tsc->data[SC_WATER_INSIGNIA] || tsc->data[SC_CRYSTALIZE])
+				if (tsc->data[SC_WATER_INSIGNIA])
+#ifdef RENEWAL
+					ratio += 50;
+#else
+					damage += (int64)(damage * 50 / 100);
+#endif
+				if (tsc->data[SC_CRYSTALIZE])
 #ifdef RENEWAL
 					ratio += 50;
 #else
