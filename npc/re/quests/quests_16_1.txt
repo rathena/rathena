@@ -12175,3 +12175,2803 @@ OnTouch:
 		callsub S_Talk;
 	end;
 }
+
+prt_cas,339,198,5	script	Sticky Wall#ep16wig	HIDDEN_NPC,5,5,{
+	callsub S_Talk;
+
+S_Talk:
+	if (banquet_wigner_quest == 5 && isbegin_quest(14481) == 2) {
+		switch( isbegin_quest(14480) ) {
+		case 0:
+			mes "[Scrub Sponge]";
+			mes "Is it you...? Are you the one who has guided me to ^0000cdthe ingrained grease^000000?";
+			mes "Nice to meet you. I have been a sleep in this waiting for someone who would clean up something with me.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "I am the fairy of cleaning sealed in the Scrub Sponge.";
+			mes "I wake up when I am near somewhere dirty.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Thank you for choosing me to clean the grease.";
+			mes "I always wanted to clean grease in style.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Hum... For the ingrained grease, ^0000cdthe mixture of orange and alcohol^000000 works the best.";
+			mes "Would you bring ^0000cd1 orange and 1 alcohol^000000? Let's clean up with them!";
+			setquest 14480;// Conquer the Grease
+			close;
+		case 1:
+			if (countitem(6928) < 1 || countitem(582) < 1 || countitem(970) < 1) {
+				mes "[Scrub Sponge]";
+				mes "Oh, wait a moment!";
+				mes "You need ^0000cd1 orange and 1 alcohol^000000 to clean up the ingrained grease.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "I would like to prepare it myself but I am just a Scrub Sponge.";
+				mes "Please bring them with you.";
+				close;
+			}
+			mes "[Scrub Sponge]";
+			mes "Since we have the orange and alcohol, let's clean up together now!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Peel the orange and put the orange peels in the alcohol. Then wait a moment. You may eat the flesh of orange if you want. Yum!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Well, the essence of the orange peels must have been infused in the alcohol by now. Spray it over the grease and wipe with me.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "It takes some skills to wipe it off.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "First you need to scrub gently, gently once more and hard! Then scrub with medium strength and scrub harder.";
+			mes "You should then spray the mixture once more and keep wiping with medium strength.";
+			next;
+			progressbar "ffff00",3;
+			specialeffect EF_RECOVERY;
+			mes "[Scrub Sponge]";
+			mes "Whoa, good job! The grease is gone now!";
+			mes "Even better, the fresh scent remains after cleaning, making the passengers happy.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "However, I will disappear soon.";
+			mes "It is the fate of dirty Scrub Sponge.";
+			next;
+			mes "[Scrub Sponge]";
+			mes "However, I was happy to spend the short life of a Scrub Sponge with you.";
+			mes "I want to be born as a human in my next life to be a close... Friend of yours...";
+			specialeffect2 EF_CURE;
+			delitem 6928,1;// Poring Loofah
+			delitem 582,1;// Orange
+			delitem 970,1;// Alcohol
+			completequest 14480;// Conquer the Grease
+			close;
+		case 2:
+			mes "[Scrapped-off Wall]";
+			mes "The clean wall reminds me of the Scrub Sponge has been really kind to me.";
+			close;
+		}
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(14480) == 0)
+		callsub S_Talk;
+	end;
+}
+
+prt_cas,309,215,5	script	Pitch-black Floor#ep16w	HIDDEN_NPC,5,5,{
+	callsub S_Talk;
+
+S_Talk:
+	if (banquet_wigner_quest == 5 && isbegin_quest(14480) == 2) {
+		switch( isbegin_quest(14482) ) {
+		case 0:
+			mes "[Scrub Sponge]";
+			mes "Is it you? Are you the one in charge of the cleaning mission today?";
+			mes "Nice to meet you! I am the cleaning instructor sealed in the Scrub Sponge!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "If you follow my lead, you can get through the most difficult cleaning mission in this world!";
+			mes "Do you understand?";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Let's check today's target! It is ^0000cdthe black dirt of devil^000000 stuck in the gaps in the floor!";
+			mes "We have a Thor 3 situation here!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "In other words, we can resolve it as long as we have all the materials ready!";
+			mes "You need ^0000cd1 Powdery Fine Sand and 1 Lemon^000000 to get rid of the target!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Go get them now!";
+			mes "Go!";
+			setquest 14482;// Conquer the Dirt of Devil
+			close;
+		case 1:
+			if (countitem(6928) < 1 || countitem(7043) < 1 || countitem(568) < 1) {
+				mes "[Scrub Sponge]";
+				mes "What are you doing now?";
+				mes "You cannot get rid of the black dirt stuck in the gaps of tiles without the lemon and powdery find sand!";
+				next;
+				mes "[Scrub Sponge]";
+				mes "Prepare 1 Powdery Fine Sand and 1 Lemon now!";
+				mes "Go!";
+				close;
+			}
+			mes "[Scrub Sponge]";
+			mes "Good! It has all been prepared!";
+			mes "Let's start cleaning now!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Squeeze the lemon and sprinkle the juice over the floor. Then sprinkle the powdery fine sand over it!";
+			mes "This will whiten and polish the floor! Not to mention the fresh scent of lemon adding something extra!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Then you scrub briskly with me!";
+			mes "The method of scrubbing is as follows! It is not difficult if you follow me! Listen up!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
+			mes "Then twice to the left to wrap up! Start now!";
+			next;
+			progressbar "ffff00",3;
+			mes "[Scrub Sponge]";
+			mes "Wrong!";
+			mes "Try to keep it together! Repeat once again!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
+			mes "Then twice to the left to wrap up! Start now!";
+			next;
+			progressbar "ffff00",3;
+			mes "[Scrub Sponge]";
+			mes "Wrong!";
+			mes "Try to keep it together! Repeat once again!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
+			mes "Then twice to the left to wrap up! Start now!";
+			next;
+			progressbar "ffff00",3;
+			mes "[Scrub Sponge]";
+			mes "When did I teach you like that? Don't you dare say that you have learned it from me!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Try to keep it together! Listen up once more!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
+			mes "Then twice to the left to wrap up! Start now!";
+			next;
+			progressbar "ffff00",3;
+			specialeffect EF_RECOVERY;
+			mes "[Scrub Sponge]";
+			mes "Well done!";
+			mes "You have completed the cleaning mission beautifully!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "I believe that you can handle cleaning perfectly even without me!";
+			mes "Old soldiers never die! They just fade away! So save the tears!";
+			next;
+			mes "[Scrub Sponge]";
+			mes "You may think of me whenever you see and clean the black dirt stuck in the gaps of tiles!";
+			mes "Now disperse! Go!";
+			specialeffect2 EF_CURE;
+			delitem 6928,1;// Poring Loofah
+			delitem 7043,1;// Fine Sand
+			delitem 568,1;// Lemon
+			completequest 14482;// Conquer the Dirt of Devil
+			completequest 14479;// Clean-up out of Apology
+			setquest 14483;// Report the Completion of the Clean-up
+			banquet_wigner_quest = 6;
+			close;
+		case 2:
+			mes "[Shining Floor]";
+			mes "The clean floor reminds me of the Scrub Sponge who has been tough but soft inside.";
+			mes "Let's go back to the maid and report that the cleaning is completed.";
+			close;
+		}
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(14482) == 0)
+		callsub S_Talk;
+	end;
+}
+
+prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
+	if (banquet_wigner_quest == 7) {
+		mes "[Furniture Deliveryman]";
+		mes "Oh, my arms, legs, back and my entire body hurts. Well, I am just glad that today's work is done. I can take some rest now. I should go have some hot soup. Is it supposed to be the meat soup for today?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "May I ask you something?";
+		next;
+		emotion ET_CRY;
+		mes "[Furniture Deliveryman]";
+		mes "What is it? Is it about furniture delivery? I am off my duty today. Unless it is really urgent, would you please come back tomorrow?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "I am exhausted from today's work. I almost cannot stand with my back straight now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, it is not about that. You are the one who has delivered the furniture to the Wigner family, right?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Yes, I have... Is there any problem with the furniture? What should I do? I would never be able to afford the furniture!";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "What if there is a dent? Should I call James to fix it? Damage? Wrong delivery? What should I do? What is it about?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, nothing like that. Please relax.";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "What is it? Additional delivery? I really want to take some rest now... However, I guess I have no choice since it is the Wigners that I am dealing with. Oh, I really hate it... It is just too difficult to make ends meet.";
+		next;
+		emotion ET_OHNO;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, I just have a question for you. Have you seen a small box on the table in the room?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "What box? I was busy delivering the furniture... Wait, I remember it.";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "You mean the ^0000cdsmall box^000000 on the table next to the bed, right? The locked box with no particular decoration.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I believe so.";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Yes, I remember it. It was a simple box without any decoration, but it looked very classy.";
+		mes "The wood was of the finest quality and the locking device was exquisite. I could tell that it must have been made by a master artisan at a glance.";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Since I work with furniture, a piece like that really catches my eyes. It really was a work of art.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Was the box still there after you delivered the furniture?";
+		next;
+		emotion ET_FRET;
+		mes "[Furniture Deliveryman]";
+		mes "Yes, it was. The box cannot move itself, can it?";
+		next;
+		emotion ET_HUK;
+		mes "[Furniture Deliveryman]";
+		mes "Oh, wait? Are you telling me that it is missing? Are you implying that it has been carried out in my carriage?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No. Please calm down. I am not suspecting you. I just want to listen to your story. I am just tracking the whereabouts of the box based on the words of the people who have seen the box.";
+		next;
+		emotion ET_ANGER;
+		mes "[Furniture Deliveryman]";
+		mes "If anything goes missing, it is always us, the ordinary people, who are suspected. Do you know that it is just a prejudice?";
+		mes "The people who have less must be hungry for money. And they are unvirtuous...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is just a misunderstanding. Trust me, I am not suspecting you.... You know, you look for any witnesses when a person goes missing.";
+		next;
+		emotion ET_ANGER;
+		mes "[Furniture Deliveryman]";
+		mes "I don't want to hear it! Why are you scaring an innocent furniture delivery man for some missing box?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am sorry to make you uncomfortable. I am just asking everyone who has been in that room. I am not suspecting you.";
+		next;
+		emotion ET_HNG;
+		mes "[Furniture Deliveryman]";
+		mes "Heh, not that it makes me feel any better. I think I may be feeling even worse since I am hungry. Oh, my stomach is growling... I don't feel well...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you need something to eat?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "It doesn't change anything even if you say that...Well, I may be able to let it go if I have some Ox Head Slices... I cannot forget the taste from 10 years ago...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Would it make you feel better?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Well, not that it will... OK, good! I'll let it go for ^0000cd3 Ox Head Slices^000000! Fair is fair after all.";
+		emotion ET_KIK;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Would it be enough? OK, please wait for me then.";
+		close2;
+		erasequest 14484;// There Was a Furniture Delivery Man
+		setquest 14485;// I Am Upset
+		banquet_wigner_quest = 8;
+		end;
+	}
+	if (banquet_wigner_quest == 8) {
+		if (countitem(6254) < 3) {
+			mes "[Furniture Deliveryman]";
+			mes "You are here. If you came here any late, I would have been really upset as I get parched with thirst.";
+			next;
+			mes "[Furniture Deliveryman]";
+			mes "Your hands seem empty.";
+			mes "Did you forget? I said I would let it go with ^0000cd3 " + getitemname(6254) + "^000000.";
+			next;
+			emotion ET_HNG;
+			mes "[Furniture Deliveryman]";
+			mes "I wouldn't let it go without them! I won't! I'll tell people that there is an adventurer who frames an innocent person! He!";
+			close;
+		}
+		mes "[Furniture Deliveryman]";
+		mes "You are here. If you came here any late, I would have been really upset due to my raging stomach.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, it was very difficult to get them. Here you are.";
+		next;
+		emotion ET_SMILE;
+		mes "[Furniture Deliveryman]";
+		mes "Let's see! Oh, this is it! Have you had good wine with some Ox Head Slices? You will never get over this heavenly combination!";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "This tastes the same as it did 10 years ago! Now I feel fully recovered from the fatigue! I don't feel tired any more! All the stress is gone!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, it sure looks delicious. I should try some later. Anyways, do you know anything else about the box?";
+		next;
+		emotion ET_FRET;
+		mes "[Furniture Deliveryman]";
+		mes "Are we still talking about it? Let's not talk about such thing while I am enjoying some wine and meat. My carriage is heavy when I get in, but it is as light as a feather when I get out.";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "If you feel suspicious, ask the Gate Guard. He inspected my carriage.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hum...";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Oh, well. By the way...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "By the way?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Have you seen the princess of the family? You must have. Doesn't she appear suspicious to you? I can tell people's character by their faces. She seems to be hiding something. She may stab you in the back.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Isn't it called a prejudice to judge some based on the appearance?";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Furniture Deliveryman]";
+		mes "You are right. I feel sorry, However, there are people talking about it. There's no smoke without fire.";
+		mes "No? Well. Perhaps, there could be smoke without fire.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Katrin was not that kind of person as far as I observed.";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Well, if not, that's fine. Anyways, the box was there in its place when I left the room. You may go if you don't have any business left here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Excuse me.";
+		delitem 6254,3;// Beef Head
+		erasequest 14485;// I Am Upset
+		setquest 14486;// I Heard the Story
+		banquet_wigner_quest = 9;
+		close;
+	}
+	if (banquet_wigner_quest == 9) {
+		mes "[Furniture Deliveryman]";
+		mes "Dear adventurer, why are you here again? Didn't you say you were heading back to the palace?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "Do you have more things to as me? Or are you going to drink with me?";
+		next;
+		mes "[Furniture Deliveryman]";
+		mes "I wouldn't mind.";
+		close;
+	}
+	mes "[Furniture Deliveryman]";
+	mes "I should earn enough money to open a store of my own. The owner only lets me deliver the furniture and never teaches me how to make one.";
+	next;
+	mes "[Furniture Deliveryman]";
+	mes "All the cutting and delivery work will break my back.";
+	mes "Oh, my back hurts.";
+	close;
+}
+
+// Others npcs
+// Banquet upper right
+prt_cas,165,245,0	script	Investigator Ryosun#ep1	4_M_ALCHE_A,{
+	emotion ET_CRY;
+	mes "[Ryosun]";
+	mes "I finally have the strawberry cake no one has ever touched.";
+	mes "The things I have been through to keep the cake in the expedition camp... I am about to burst into tears... Aww...";
+	next;
+	mes "[Ryosun]";
+	mes "Strawberry! Strawberry! This strawberry cake belongs to Ryosun! I won't give it to anyone.";
+	close;
+}
+
+// Hall
+prt_cas,93,212,0	script	#vip_alimi	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	switch( BaseClass ) {
+	case JOB_SWORDMAN:
+		npctalk "Tough Sword of Protection " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	case JOB_MAGE:
+		npctalk "Seeker of Truth " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	case JOB_ARCHER:
+		if (BaseJob == Job_Hunter)
+			npctalk "Arrow through the Wind " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		else
+			npctalk "Evangelist of Pleasure " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	case JOB_ACOLYTE:
+		npctalk "Perfect Delegate of God " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	case JOB_MERCHANT:
+		npctalk "Invisible Hand of Gold " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	case JOB_THIEF:
+		npctalk "Quiet Ruler of Darkness " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	case JOB_NOVICE:
+		npctalk "The One Who Remembers the First Step " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		break;
+	default:
+		npctalk "Covenanter of Undying Faith " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
+		end;
+	}
+}
+
+prt_cas,97,216,2	script	Chamberlain#vip_alimi	4_M_RUSMAN2,{
+	mes "[Chamberlain]";
+	mes "Are you having a good time?";
+	mes "We have put a lot of efforts since it's a big event in the palace in a long while.";
+	mes "I hope you like it.";
+	close;
+}
+
+prt_cas,79,219,7	script	Banquet Hall Guest#ep16_1	4_F_MALAYA,{
+	mes "[Banquet Hall Guest]";
+	mes "Oh, aren't you the adventurer who has saved the world? Please visit Portmalaya someday. Everyone will welcome you there! Your story is known even to a far away place from here!";
+	close;
+}
+
+prt_cas,81,235,3	script	Banquet Hall Guest#ep16_2	4_F_BRZ_WOMAN,{
+	mes "[Banquet Hall Guest]";
+	mes "The Palace of Rune Midgarts is so big and glamourous. It somewhat feels exotic too. It's been a long way, but I am glad to be here.";
+	close;
+}
+
+prt_cas,87,231,5	script	Banquet Hall Guest#ep16_3	4_M_TWTEAMAN,{
+	mes "[Banquet Hall Guest]";
+	mes "I visited the Palace of Rune Midgarts long time ago. It has changed a lot ever since. It has become much more glamourous and magnificent that I really enjoy being guided around this place.";
+	close;
+}
+
+prt_cas,88,246,7	script	Banquet Hall Guest#ep16_4	4_F_THAIGIRL,{
+	mes "[Banquet Hall Guest]";
+	mes "The music played by the music makes me so emotional. It is worthwhile to come here for this music alone.";
+	close;
+}
+
+prt_cas,103,232,3	script	Banquet Hall Guest#ep16_5	4_M_CHNOLD,{
+	mes "[Banquet Hall Guest]";
+	mes "It is always tiring to attend a banquet. I am still tired from the trip, it is just too painful to mingle with people... Phew...";
+	close;
+}
+
+prt_cas,114,226,5	script	Banquet Hall Guest#ep16_6	4_M_DEWWOMAN,{
+	mes "[Banquet Hall Guest]";
+	mes "Wait, I have been looking at the flowers here. Are they blinking? How wonderful!";
+	close;
+}
+
+prt_cas,86,251,5	script	Banquet Hall Guest#ep16_7	4_M_RUSMAN1,{
+	mes "[Banquet Hall Guest]";
+	if (banquet_main_quest == 0)
+		mes "There are a long of people here. I almost feel dizzy. However, still, I like the lively atmosphere.";
+	else
+		mes "It is always my pleasure to attend a banquet. Traveling and learning about different cultures are always interesting. It just makes it better to have good music and delicious food.";
+	close;
+}
+
+
+prt_cas,72,227,5	script	Banquet Hall Guest#1	4_M_JPNOJI,{
+	mes "[Banquet Hall Guest]";
+	mes "I have come to Prontera to attend the banquet from Amatsu. It sure feels totally different from Amatsu. Hahaha.";
+	close;
+}
+
+prt_cas,71,227,5	script	Banquet Hall Guest#2	4_M_JPN,{
+	mes "[Banquet Hall Guest]";
+	mes "Grandfather, don't overtax your strength.";
+	close;
+}
+
+prt_cas,89,250,5	script	Banquet Hall Guest#5	4_F_KHELLY,{
+	mes "[Banquet Hall Guest]";
+	mes "I am an old fan of Orint of the band.";
+	mes "I have spent a lot of money and time not to miss any of his performance.";
+	next;
+	mes "[Banquet Hall Guest]";
+	mes "It was very difficult to get my hands on the invitation to this banquet.";
+	mes "It was so exclusive that I almost joined the expedition!";
+	close;
+}
+
+prt_cas,89,244,7	script	Banquet Hall Guest#6	4_M_NOV_HUNT,{
+	mes "[Banquet Hall Guest]";
+	mes "The twin sisters of the band are of completely different characters. However, they are good at imitate each other.";
+	mes "When they pretend to be one person, they really looks like Doppelgangers.";
+	close;
+}
+
+prt_cas,91,237,3	script	Ekinasia#ep16_etc01	1_F_SIGNZISK,{
+	// pcblocknpc
+	npctalk "It's been a while since the last time a royal banquet like this was held.", "Ekinasia#ep16_etc01", bc_self;
+	sleep2 3000;
+	npctalk "We need to blow off some steam like this from time to time.", "Ekinasia#ep16_etc01", bc_self;
+	end;
+}
+
+prt_cas,89,238,5	script	Lin#ep16_etc02	4_F_ACROSS,{
+	mes "[Lin]";
+	mes "Well, this is how the aristocrats spend their time!";
+	mes "Haha, let's see which lady is wearing the most beautiful dress.";
+	close;
+}
+
+prt_cas,78,255,3	script	Mayssel#ep16_etc05	4_F_MAYSEL,{
+	cutin "gc_mayssel01",1;
+	mes "[Mayssel]";
+	mes "You must have been invited to the banquet.";
+	mes "So are we.";
+	next;
+	mes "[Mayssel]";
+	mes "It is rare to see the palace open to public like this. Enjoy as much as you can.";
+	close3;
+}
+
+prt_cas,78,252,2	script	Verkhasel#ep_etc06	4_M_GUILLOTINE,{
+	// pcblocknpc
+	npctalk "I want to go back now.", "Verkhasel#ep_etc06", bc_self;
+	sleep2 3000;
+	npctalk "...You can't.", "Mayssel#ep16_etc05", bc_self;
+	sleep2 3000;
+	npctalk "You made that very clear, hahahaha!", "Vicente#ep16_etc07", bc_self;
+	end;
+}
+
+prt_cas,76,254,5	script	Vicente#ep16_etc07	4_M_HUMAN_02,{
+	cutin "sc_vicente01",2;
+	mes "[Vicente]";
+	mes "Hum... Did we meet at Criatura?";
+	next;
+	cutin "sc_vicente02",2;
+	mes "[Vicente]";
+	mes "I have dealt with too many people...";
+	mes "Your face seemed familiar...";
+	next;
+	cutin "sc_vicente03",2;
+	mes "[Vicente]";
+	mes "Well whatever.";
+	mes "Are you enjoying the banquet?";
+	close3;
+}
+
+prt_cas,113,243,3	script	Banquet Hall Aristocrat#1	4_F_01,{
+	mes "[Banquet Hall Aristocrat]";
+	mes "I really like banquets.";
+	mes "The drowsy music, the whispering people and the chamberlains carrying the refreshments. I think I am nobly born to see it.";
+	close;
+}
+
+prt_cas,73,232,5	script	Banquet Hall Aristocrat#2	4_M_RUSMAN1,{
+	mes "[Banquet Hall Aristocrat]";
+	mes "Everyone else seems to love the banquet, but I don't. I am forced by my parents to come here. I really want to go home and take a rest now.";
+	close;
+}
+
+prt_cas,70,239,5	script	Banquet Hall Aristocrat#3	4_M_04,{
+	mes "[Banquet Hall Aristocrat]";
+	mes "I know this banquet is held for someone else. However, it still is a great opportunity for me to meet someone I can spend my life with.";
+	close;
+}
+
+prt_cas,93,248,5	script	Court Musician#3	4_F_WANDERER,{
+	emotion ET_SMILE;
+	mes "[Court Musician Ellie]";
+	mes "Dwit! Look at the nobility over there. Aren't they beautiful?";
+	next;
+	emotion ET_OK, getnpcid(0, "Court Musician#4");
+	emotion ET_SHY;
+	mes "[Court Musician Dwit]";
+	mes "Hum, yes they are. I think you would fit in there perfectly though.";
+	mes "One day, I'll play the guitar next to you dancing and singing in a blue dress.";
+	next;
+	emotion ET_DELIGHT, getnpcid(0, "Court Musician#occi");
+	mes "[Court Musician Occi]";
+	mes "Haha, that woman in the blue dress, it could be me!";
+	next;
+	mes "[Court Musician Dwit]";
+	mes "You are mistaken if you think I cannot distinguish you twin sisters, Occi. I can tell your differences from the steps you take and the sound of your breath.";
+	emotion ET_HNG, getnpcid(0, "Court Musician#4");
+	close;
+}
+
+prt_cas,91,248,5	script	Court Musician#4	4_M_MINSTREL,{
+	mes "[Court Musician Dwit]";
+	mes "When I first met Orint, I thought he was stoic and unconcerned. However, he turned out to be a man of extraordinary concentration and possessiveness.";
+	next;
+	mes "[Court Musician Dwit]";
+	mes "He always tries to be the best. That's why he can play the tune like that.";
+	next;
+	mes "[Court Musician Dwit]";
+	mes "However, he doesn't know when to concentrate. His behavior is often misread.";
+	next;
+	mes "[Court Musician Dwit]";
+	mes "Anyways, we are invited to an honorable place like this thanks to Orint.";
+	mes "If you want to hear any song, ask him to play it for you.";
+	close;
+}
+
+prt_cas,95,248,5	script	Court Musician#occi	4_F_WANDERER,{
+	emotion ET_DELIGHT;
+	mes "[Court Musician Occi]";
+	mes "It has been our dream to ensemble in a place like this. Am I right, Orint?";
+	next;
+	emotion ET_THINK, getnpcid(0, "Court Musician#orint");
+	mes "[Court Musician Orint]";
+	mes "Chatting is forbidden while working.";
+	next;
+	emotion ET_HNG;
+	mes "[Court Musician Occi]";
+	mes "Yes, I see. You are so boring. But it is part of your charm, haha.";
+	close;
+}
+
+prt_cas,98,248,5	script	Cat#ep16bgm	4_CAT,{
+	mes "- That lazy-looking cat is sitting near the feet of the musician. It shows no interest in you. -";
+	close;
+}
+
+prt_cas,106,258,5	script	Bruno#ep16_1	4_F_SURA,{
+	mes "[Bruno]";
+	mes "Argh... I have never been to a place like this...";
+	mes "I am so nervous... I shouldn't have come...";
+	cutin "3rd_sura_bruno03",0;
+	next;
+	mes "[Bruno]";
+	mes "Everyone dresses so fancy...";
+	next;
+	mes "[Bruno]";
+	mes "By the way, where has the master gone leaving me alone?";
+	close3;
+}
+
+prt_cas,89,257,3	script	Karian#ep16_1	4_M_MINSTREL1,{
+	mes "[Karian]";
+	mes "Banquets are fun!";
+	mes "Good food! Beautiful music! People talking to one another!";
+	cutin "3rd_mins_song04",2;
+	close3;
+}
+
+prt_cas,85,223,1	script	Maximilian Roegenburg#e_hall	4_EP16_MAX,{
+	mes "[Maximilian]";
+	mes "I have heard that my grandson is under indebtedness to your son these days.";
+	next;
+	mes "[Levuiere]";
+	mes "Not at all. My son is supposed to be learning from your smart grandson. Haha.";
+	next;
+	mes "[Catherine]";
+	mes "Please take care of our son, Isaac.";
+	close;
+}
+
+prt_cas,85,225,4	script	Catherine Wigner#ep16wig_hall	1_F_LIBRARYGIRL,{
+	mes "[Catherine]";
+	mes "Many things have changed since the last time we were here in the palace. I want to come here more often, but we cannot find the excuse to come...";
+	next;
+	mes "[Levuiere]";
+	mes "You can come here with an invitation. It is not difficult visiting here.";
+	next;
+	mes "[Catherine]";
+	mes "You know that is not what I mean...";
+	close;
+}
+
+prt_cas,84,225,4	script	Levuiere Wigner#ep16wig_hall	4_EP16_LOUVIERE,{
+	mes "[Levuiere]";
+	mes "Dear Roegenburg, how are your children doing? I often hear about your third grandson from Isaac/";
+	next;
+	mes "[Maximilian]";
+	mes "Oh, they are doing fine. Please visit our home when you get the time.";
+	close;
+}
+
+prt_cas,76,236,3	script	Bagette Teeblack#ep16_1	4_M_ALCHE_D,{
+	mes "[Bagette Teeblack]";
+	mes "I have a lot of study to do... I feel terrible to be dragged to a banquet like this.";
+	next;
+	mes "[Bagette Teeblack]";
+	mes "I wonder if Theodor is handling the work well by himself.";
+	close;
+}
+
+prt_cas,105,221,1	script	Isabella#ep16wig	4_F_01,{
+	mes "[Isabella]";
+	mes "I really like banquets. Especially the ones hosted by the palace! Everything is so glamourous and sparkly!";
+	close;
+}
+
+prt_cas,105,224,4	script	Beatrice#ep16wig	4_F_02,{
+	mes "[Beatrice]";
+	mes "In a banquet like this, we, women, study other women. About who is wearing which dress and what kind of jewelry she is wearing...";
+	next;
+	mes "[Beatrice]";
+	mes "Those judging eyes are as sharp as those of ferocious beasts. If we find a lady who looks fabulous, we admire her looks with pure admiration.";
+	close;
+}
+
+prt_cas,107,225,5	script	Isaac Wigner#ep16wig01	4_EP16_ISAAC,{
+	mes "[Isaac]";
+	mes "Hahahahaha!";
+	mes "I should have seen the face! Please invite me to one of those events next time.";
+	next;
+	mes "[Isabella]";
+	mes "Oh, you are always so busy, Isaac. A banquet like this one is the only occasion I can see your face.";
+	next;
+	mes "[Beitrice]";
+	mes "Yes! You must be ranked in top 3 of the busiest people in Prontera these days, Isaac.";
+	next;
+	mes "[Sophia]";
+	mes "He also comes home late after discussing business with Isaac everyday. I really don't like it.";
+	next;
+	mes "[Bryan]";
+	mes "Don't you say such a thing!";
+	next;
+	mes "[Isaac]";
+	mes "Oh! I am sorry to keep Bryan with me. Please excuse me.";
+	next;
+	mes "[Isaac]";
+	mes "However, please understand. It is the most important time for our business. I'll tell him to devote his time to you after this time is over, dear Sophia.";
+	next;
+	mes "[Sophia]";
+	mes "Oh, you should keep those words!";
+	next;
+	mes "[Isaac]";
+	mes "I'll make sure of it. I swear in the name of Isaac Wigner.";
+	next;
+	mes "[Isabella]";
+	mes "Haha, since you have promised me in the name of your family, I guess I can trust you, Isaac.";
+	close;
+}
+
+prt_cas,108,223,3	script	Bryan#ep16wig	4_M_CASMAN1,{
+	mes "[Bryan]";
+	mes "Don't leave me alone today. I feel nervous if you are not next to me.";
+	next;
+	mes "[Sophia]";
+	mes "Oh dear, I want to catch up with the people whom I haven't been able to see for a long time. You may go talk to other people.";
+	next;
+	mes "[Bryan]";
+	mes "They only talk about business. I don't enjoy it at all. I don't want to feel like being at work when I am here.";
+	next;
+	mes "[Sophia]";
+	mes "Then, you should follow me.";
+	next;
+	mes "[Bryan]";
+	mes "Well.. I don't feel comfortable... With too many ladies around...";
+	close;
+}
+
+prt_cas,107,222,1	script	Sophia#ep16wig	1_F_LIBRARYGIRL,{
+	mes "[Sophia]";
+	mes "Oh, darling, I love to be here in the palace after a long time. There are so many friendly faces around here.";
+	mes "However...";
+	next;
+	mes "[Sophia]";
+	mes "Everyone else looks so nice, and I feel rather underdressed.";
+	next;
+	mes "[Bryan]";
+	mes "It is not true! You are the most beautiful person in this place. You are the only one I see here.";
+	next;
+	mes "[Sophia]";
+	mes "Oh, I am so embarrassed...";
+	close;
+}
+
+prt_cas,99,247,3	script	Banquet Hall Aristocrat	4_M_MAYOR,{
+	mes "[Banquet Hall Aristocrat]";
+	mes "This band is pretty good.";
+	mes "I'd like to invite them to the royal villa for my party.";
+	close;
+}
+
+// Library
+prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
+	if (checkweight(501,1) == 0) {
+		mes "[Uptight Librarian]";
+		mes "If you are going to borrow a book, you'd better reduce your luggage. It seems that there is no space for a book.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 5 && isbegin_quest(14500) == 0) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hey, I'm looking for a book. Would you please advice me where it is?";
+		next;
+		mes "[Uptight Librarian]";
+		mes "What kind of book are you looking for?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "A book about history of Rune Midgarts.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Hm... history of Rune Midgarts.";
+		mes "Are you going to borrow the book?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "May I see your library card, please?";
+		next;
+		emotion ET_HUK, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Library card? I don't have such a thing.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Then, I cannot borrow a book to you.";
+		next;
+		emotion ET_SWEAT, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "How can I have a library card?";
+		next;
+		mes "[Uptight Librarian]";
+		mes "If you present your identification card, we will make you one instantly.";
+		next;
+		emotion ET_SWEAT, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh... I don't have it. I left all my things to attend the banquet.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Banquet? You mean the banquet held in the palace? Are you the adventurer invited to it?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I am...";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Then you are a person guaranteed by the kingdom and I can borrow a book to you through a simple process.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "The kingdom circulated your details and ordered to provide maximum convenience to you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It's nice, but I feel that privacy is not protected.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "What is you name, sir?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "" + strcharinfo(0) + ".";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Let me see...";
+		mes "Yes, here it is." + strcharinfo(0) + "Sir...";
+		emotion ET_SURPRISE;
+		next;
+		mes "[Uptight Librarian]";
+		mes "But this book consists of 12 volumes. Only the first volume is here and the others are already borrowed.";
+		mes "Is it OK with you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, it is.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Hmm. Anyway, can I ask you some questions? I know nothing as I stay in the library all day long.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I tell you as long as I know.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "^0000cdWhat kind of banquet ^000000 is being held in the palace? Why are you and royal family members invited?";
+		next;
+		while( select( "Birth of prince.", "Birthday of king.", "In memory of defeating Morocc." ) != 3 ) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I am sorry, I said wrong as I thought of something else.";
+			mes "I made a mistake. What did you say?";
+			next;
+			mes "[Uptight Librarian]";
+			mes "^0000cdWhat kind of banquet ^000000 is being held in the palace? Why are you and royal family members invited?";
+			next;
+		}
+		mes "[Uptight Librarian]";
+		mes "Ah, I see.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Did ^0000cdall royal families^000000 attend the banquet?";
+		next;
+		while( select( "8 royal families attended it.", "7 royal families attended it.", "6 royal families attended it." ) != 2 ) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I am sorry, I said wrong as I thought of something else.";
+			mes "I made a mistake. What did you say?";
+			next;
+			mes "[Uptight Librarian]";
+			mes "Did ^0000cdall royal families^000000 attend the banquet?";
+			next;
+		}
+		mes "[Uptight Librarian]";
+		mes "The palace must be crowded. It is very rare that all royal families gather like this, but...";
+		next;
+		mes "[Uptight Librarian]";
+		mes "I heard that there are royal families ^0000cdwho do not attend the Royal Assembly^000000. Who's that?";
+		next;
+		while( select( "Wigner and Heine.", "Roegenburg and Richard.", "Geoborg and Walther." ) != 3 ) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I am sorry, I said wrong as I thought of something else.";
+			mes "I made a mistake. What did you say?";
+			next;
+			mes "[Uptight Librarian]";
+			mes "I heard that there are royal families ^0000cdwho do not attend the Royal Assembly^000000. Who's that?";
+			next;
+		}
+		mes "[Uptight Librarian]";
+		mes "Well, it is understandable that the Geoborg and the Walther do not attend the assembly.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "The family of the previous king ^0000cdbecame so due to the old curse^000000...";
+		next;
+		while( select( "You mean the Nerius?", "You mean the Geoborg?", "You mean the Richard?" ) != 2 ) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I am sorry, I said wrong as I thought of something else.";
+			mes "I made a mistake. What did you say?";
+			next;
+			mes "[Uptight Librarian]";
+			mes "The family of the previous king ^0000cdbecame so due to the old curse^000000...";
+			next;
+		}
+		mes "[Uptight Librarian]";
+		mes "Yes, you are right. it is ^0000cdthe Geoborg^000000. The queen must be lonely.";
+		mes "Thank you very much for advising me though you are busy.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "I have been alone these days as no one has visited the library due to the banquet.";
+		mes "History of Rune Midgarts.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "You can borrow it for one week. There is a fee for overdue books, but I was instructed to make you exempt from it";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Well, if you make much of honor, you will not be overdue.";
+		next;
+		mes "[Uptight Librarian]";
+		mes "Then, enjoy the book!";
+		setquest 14500;// Complete checking out the book
+		completequest 14500;// Complete checking out the book
+		getitem 6926,1;// Rune-Midgartz History Book
+		close;
+	}
+	mes "[Uptight Librarian]";
+	mes "Take the time to look around. Take out and read any book that comes into your favor.";
+	mes "The book always enriches mind.";
+	close;
+}
+
+prt_cas,321,25,1	script	Erich Nerius#ep16_erihi	4_M_SITDOWN,{
+	if (banquet_main_quest < 2) {
+		mes "[Erich]";
+		mes "There are so many guests attending the banquet.";
+		mes "However, since we are in the library, would you keep it down?";
+		close;
+	}
+	mes "[Erich]";
+	mes "I am treated like a prince since I was adopted against my will. However, Shedhar, the head of the family, has been nice to me.";
+	next;
+	mes "[Erich]";
+	mes "She told me to do whatever I wanted.";
+	mes "...She even let me decide whether I should attend the ritual or not,";
+	next;
+	mes "[Erich]";
+	mes "I think I will be forgiven whatever I do.";
+	mes "I seem to have gained freedom and negligence at the same time.";
+	next;
+	mes "[Erich]";
+	mes "I like the way it is now though.";
+	mes "I can do whatever I want to do.";
+	close;
+}
+prt_cas,373,57,8	script	Oliver#ep16_1	4_M_OLIVER,{
+	mes "[Oliver]";
+	mes "Oh! This! That! This!";
+	mes "And there it is!";
+	npctalk "Oh, the palace!", "Oliver#ep16_1", bc_self;
+	cutin "bu_oliver4",0;
+	next;
+	mes "[Oliver]";
+	mes "Oh, I don't have this book in my collection!";
+	next;
+	mes "[Oliver]";
+	mes "How great to be in the palace! There is everything!";
+	close3;
+}
+prt_cas,341,79,2	script	Alf Ocat#ep16_1	4_M_BLACKMAN,{
+	mes "[Alf]";
+	mes "Oh! This book must be the one from the legend...";
+	cutin "bu_alp4",2;
+	npctalk "Oh! This is marvelous!", "Alf Ocat#ep16_1", bc_self;
+	next;
+	mes "[Alf]";
+	mes "I wasn't interested in attending the royal banquet...";
+	mes "However, I am glad to be here!";
+	close3;
+}
+
+prt_cas,364,69,3	script	Nervous Man#ep16lug01	4_M_ALCHE_A,{
+	mes "[Nervous Man]";
+	mes "It is not here, either. How can I find it. There are so many books here.";
+	close;
+}
+prt_cas,365,68,3	script	Taunting Man#ep16lug01	4_M_HUMAN_01,{ end; }
+
+
+
+prt_cas,218,182,3	script	Royal Guardian Knight#0	4_M_CRU,{
+	mes "[Royal Guardian Knight]";
+	npctalk "Would you attend the Banquet?", "", bc_self;
+	mes "Would you enter the Banquet Hall?";
+	next;
+	if (select( "Enter.", "Do not enter." ) == 2) {
+		mes "[Royal Guardian Knight]";
+		mes "The Banquet Hall will be open at all times. Please honor the banquet with your presence.";
+		close;
+	}
+	mes "[Royal Guardian Knight]";
+	mes "Let me escort you inside.";
+	close2;
+	warp "prt_cas",93,212;
+	end;
+}
+
+prt_cas,97,248,5	script	Court Musician#orint	2_M_BARD_ORIENT,{
+	mes "[Court Musician Orint]";
+	mes "Chatting is forbidden while working.";
+	next;
+	if (select( "Please play a song", "Wrap up the conversation" ) == 1) {
+		if (rand(1000) < 15)
+			setarray .@musics$[0],111, "Good Morning";
+		else {
+			setarray .@musics$[0],
+				004, "I miss you",
+				015, "Theme of Alberta",
+				030, "Not so Far away",
+				030, "One Step Closer",
+				033, "Yuna Song",
+				109, "Alpen Rose",
+				115, "Tales of East",
+				117, "Dream of Whale",
+				128, "Splendide Dreams",
+				137, "Dazzling Snow",
+				145, "Marschmallow Waltz",
+				155, "Eclage",
+				160, "Jittering Nightmare";
+		}
+		.@r = rand( getarraysize(.@musics$) / 2 ) * 2;
+
+		specialeffect EF_CHEMICAL_ALLRANGE,AREA, "Court Musician#3";
+		mes "[Court Musician Orint]";
+		if (atoi(.@musics$[.@r]) != 111)
+			mes "I'll play <" + .@musics$[.@r+1] + ">.";
+		else {
+			mes "This is not a song in the program...";
+			mes "How about listening to a song I recommend?";
+			next;
+			mes "I'll play <Good Morning> which has a sad story behind it.";
+			npctalk "Oh, this music is!", "Banquet Hall Aristocrat", bc_self;
+			npctalk "Oh, this is the song of misfortune which has been forgotten despite its musical value.", "Banquet Hall Guest#6", bc_self;
+			npctalk "Isn't the song about the island where the former king has been found... Would it be OK?", "Banquet Hall Guest#6", bc_self;
+		}
+		playbgm .@musics$[.@r];
+		close;
+	}
+	close;
+}
+
+// Dinner Room
+prt_cas,375,124,7	script	Woman with Glasses#nir	4_F_MADAME,{
+	mes "- Unlike her gaze glaring at the table while being cautious about the surroundings, the speed of her eating the food on the table is so remarkable that it is almost artistic. -";
+	close;
+}
+
+prt_cas,379,124,3	script	Glamorous Girl#pop	4_F_ARUNA_POP,{
+	cutin "ra_bishop",2;
+	mes "[Glamorous Girl]";
+	mes "......";
+	mes "Ah....!";
+	next;
+	mes "[Glamorous Girl]";
+	mes "You... At Cheshrumnir...";
+	next;
+	cutin "ra_gwoman",2;
+	mes "[Woman with Glasses]";
+	mes "Hum hum!";
+	next;
+	cutin "ra_bishop",2;
+	mes "[Glamorous Girl]";
+	mes "...I am sorry Niren...";
+	next;
+	cutin "ra_gwoman",2;
+	mes "[Woman with Glasses]";
+	mes "Shh! Shh! Do not call me by the name, please. We are not officially invited to be here! Don't forget!";
+	next;
+	cutin "ra_bishop",2;
+	mes "[Glamorous Girl]";
+	mes "......";
+	mes "Eh...";
+	next;
+	select("How did you come here?");
+	mes "[" + strcharinfo(0) + "]";
+	mes "How did you come here?";
+	mes "Is it something dangerous? Is it about the international affairs or the international situation...";
+	next;
+	cutin "ra_bishop",2;
+	emotion ET_HUK, playerattached();
+	mes "[Glamorous Girl]";
+	mes ".....";
+	mes "In secret.";
+	next;
+	mes "[Glamorous Girl]";
+	mes "...The banquet... Something tasty.";
+	next;
+	cutin "ra_gwoman",2;
+	mes "[Woman with Glasses]";
+	mes "<Miss Lang>";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "What?";
+	next;
+	cutin "ra_gwoman",2;
+	mes "[Woman with Glasses]";
+	mes "In the <Miss Lang Guide> which is written by Miss Lang who is the most prominent gourmet in Midgards, there is Prontera Palace.";
+	next;
+	cutin "ra_gwoman2",2;
+	mes "[Woman with Glasses]";
+	mes "Good food and drink are the most enjoyable things in life. It is worth pursuing them. Isn't it?";
+	next;
+	cutin "ra_bishop",2;
+	mes "[Glamorous Girl]";
+	mes "....";
+	mes "...It tastes good.";
+	next;
+	cutin "ra_gwoman",2;
+	mes "[Woman with Glasses]";
+	mes "Anyways, we have managed to find this dining room where aren't many people. But we need to go back soon.";
+	next;
+	mes "[Woman with Glasses]";
+	mes "I have been telling people that we are in costumes. I guess our outfits are not very appropriate for this kind of occasion in Prontera.";
+	next;
+	mes "[Woman with Glasses]";
+	mes "Well, I guess you have looked around enough. Let's go back before anyone comes.";
+	next;
+	cutin "ra_bishop",2;
+	mes "[Glamorous Girl]";
+	mes "Yes...";
+	next;
+	cutin "",255;
+	mes "- However the cookie plate is held tightly by the right hand of the Pope. -";
+	close;
+}
+
+prt_cas,368,125,3	script	Dumk#ep16_etc03	4_M_SHADOWCHASER,{
+	mes "";
+	npctalk "Where is he?", "Dumk#ep16_etc03", bc_self;
+	sleep2 3000;
+	npctalk "I don't know.", "Kid#ep16_etc04", bc_self;
+	sleep2 3000;
+	npctalk "Find him! It's your specialty!", "Dumk#ep16_etc03", bc_self;
+	sleep2 3000;
+	npctalk "Why should I do that? You have been insufferable.", "Kid#ep16_etc04", bc_self;
+	sleep2 3000;
+	npctalk "Hey, I am of a higher rank than you. Where is Vicente!", "Dumk#ep16_etc03", bc_self;
+	sleep2 3000;
+	npctalk "...Look for your nanny at your own home!", "Kid#ep16_etc04", bc_self;
+	sleep2 3000;
+	npctalk "Watch whom you are talking to!!! Do you want to pick a trouble with me!", "Dumk#ep16_etc03", bc_self;
+	sleep2 1000;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : (Shaking the head from side to side)", bc_self;
+	emotion ET_STARE_ABOUT, playerattached();
+	end;
+}
+prt_cas,367,123,7	duplicate(Dumk#ep16_etc03)	Kid#ep16_etc04	4_M_ACROSS
+
+// Corridor left
+prt_cas,161,168,5	script	Royal Guardian Knight#0_left	4_M_CRU,{
+	mes "[Guardian Knight]";
+	mes "You are a visitor to the Prontera Palace.";
+	mes "Do you need a guide?";
+	next;
+	switch( select( "Valkyrie Realm", "Royal Villa", "Banquet Hall" ) ) {
+	case 1:
+		mes "[Guardian Knight]";
+		mes "You may move to the northern corridor from here.";
+		mes "There is the entrance to Valkyrie Realm in the middle of the northern corridor.";
+		close;
+	case 2:
+		mes "[Guardian Knight]";
+		mes "The door on the left is the entrance to the royal villa.";
+		mes "There are the residences for the Heine, Nerius and Walther families and a room reserved for a special guest.";
+		close;
+	case 3:
+		mes "[Guardian Knight]";
+		mes "You can enter the Banquet Hall through the big gate which appears when you go to the center by following the corridor on the right from here.";
+		close;
+	}
+}
+
+prt_cas,152,163,0	script	prt_cas_1#0_left	WARPNPC,1,1,{
+OnTouch:
+	if (banquet_main_quest == 0) {
+		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_left", bc_self;
+		sleep2 3000;
+		npctalk "If you are invited, a severnt should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_left", bc_self;
+		end;
+	}
+	warp "prt_cas_q",150,8;
+	end;
+}
+
+
+// Corridor right
+prt_cas,270,168,3	duplicate(Royal Guardian Knight#0_left)	Royal Guardian Knight#0_right	4_M_CRU
+
+prt_cas,278,163,0	script	prt_cas_2#0_right	WARPNPC,1,1,{
+OnTouch:
+	if (banquet_main_quest == 0) {
+		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_right", bc_self;
+		sleep2 3000;
+		npctalk "If you are invited, a severnt should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_right", bc_self;
+		end;
+	}
+	warp "prt_cas_q",135,119;
+	end;
+}
+
+// Exchanges and enchants npc
+prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
+	mes "[Commissary Arner]";
+	mes "You can exchange the Honor Marks given by the noble people of Run Midgartz as the token of trust with some valuable items of Prontera.";
+	next;
+	switch( select( "Consumables", "Armors", "View item description" ) ) {
+	case 1:
+		.@type$ = "Consumable";
+		setarray .@data[0],
+			22899,2,	// City Map
+			11600,6,	// Shining Holy Water
+			22848,6,	// Prison Key
+			22847,6;	// Prontera Badge
+		break;
+	case 2:
+		.@type$ = "Armor";
+		setarray .@data[0],
+			28354,300,	// City Map[1]
+			28355,800,	// Shining Holy Water [1]
+			28900,800,	// Royal Guard Shield
+			28356,300,	// Prontera Badge
+			15146,1200,	// Flattery Robe
+			15147,1200,	// Invective Robe
+			20246,2200,	// Costume Time Decor
+			20247,2200;	// Black Hand of Destiny
+		break;
+	case 3:
+		mes "[Commissary Arner]";
+		mes "Would you view the item description?";
+		close2;
+		readbook 11061,1;
+		end;
+	}
+	.@size = getarraysize(.@data);
+	for ( .@i = 0; .@i < .@size; .@i += 2 )
+		.@menu$ = .@menu$ + getitemname(.@data[.@i]) + ":";
+	mes "[Commissary Arner]";
+	mes "The ^3131FF" + .@type$ + "s^000000 you can exchange with the Honor Marks are as follows.";
+	next;
+	.@s = (select(.@menu$) - 1) * 2;
+	mes "[Commissary Arner]";
+	mes "^3131FF" + getitemname(.@data[.@s]) + "^000000... You've been looking at this.";
+	mes "It is a useful-looking " + .@type$ + ".";
+	mes "It can be exchanged for ^FF0000" + .@data[.@s+1] + " Honor Marks^000000.";
+	next;
+	if (select( "Exchange", "Cancel" ) == 2) {
+		mes "[Commissary Arner]";
+		mes "For the glory of Prontera!";
+		close;
+	}
+	if (countitem(6919) < .@data[.@s+1]) {
+		mes "[Commissary Arner]";
+		mes "You don't have enough Honor Marks.";
+		close;
+	}
+	mes "[Commissary Arner]";
+	mes "It is the symbol of honor in Prontera. Please take good care of it.";
+	delitem 6919,.@data[.@s+1];
+	getitem .@data[.@s],1;
+	close;
+}
+
+prt_cas,180,275,5	script	Logistics Manager#sin	4_M_JOB_KNIGHT1,{
+	mes "[Sin the Logistics Manager]";
+	mes "Are you the adventurer invited to the banquet every one is talking about?";
+	mes "Do you have any <Honor Marks>? Would you give them to me?";
+	next;
+	if (select( "Why do you need them?", "Give 30 Honor Marks." ) == 1) {
+		mes "[Sin the Logistics Manager]";
+		mes "Even if I work so hard here my entire life, I would always live in the shade.";
+		mes "If you are a man, you should dream big. I always say that to Arner, but he is just too priggery.";
+		next;
+		mes "[Sin the Logistics Manager]";
+		mes "I don't dream of becoming rich overnight, but I do want to have some honor since I am a man.";
+		next;
+		mes "[Sin the Logistics Manager]";
+		mes "The aristocrats would never let me handle some great opportunity though. However, you may have acquired some <Honor Marks>, right?";
+		next;
+		mes "[Sin the Logistics Manager]";
+		mes "If you give me ^FF0000 30 <Honor Marks>^000000, I'll give you something really useful.";
+		mes "For people like us, the <Honor Marks> mean rapid promotion.";
+		next;
+		mes "[Sin the Logistics Manager]";
+		mes "What I have is a wrapped box which is one of the items that Arner has.";
+		next;
+		mes "[Sin the Logistics Manager]";
+		mes "It is authentic for that it has been made to be distributed to the nobility. However, I don't know what's in there. It depends on your luck.";
+		next;
+		mes "[Sin the Logistics Manager]";
+		mes "After collecting all the Honor Marks, I'll take that build a castle on the shore and spend the rest of my life there with that stubborn Arner.";
+		mes "That stupid Arner. If it was not for me, he would stay in the palace exchanging things until he dies.";
+		close;
+	}
+	if (countitem(6919) < 30) {
+		mes "[Sin the Logistics Manager]";
+		mes "I have told you I need 30 of them.";
+		close;
+	}
+	mes "[Sin the Logistics Manager]";
+	mes "Thank you. This is the thing I have promised.";
+	delitem 6919,30;// Honor Marks
+	getitem 22901,1;// Mysterious_Blue_Box
+	close;
+}
+
+prt_cas,180,264,3	script	Guardian Knight#ep16_pr_1	4_M_CRU,{
+	npctalk "The Crusader's Office is at the end of the corridor.", "Guardian Knight#ep16_pr_1", bc_self;
+	end;
+}
+
+prt_cas,180,251,3	script	Guardian Knight#ep16_pr_2	4_M_CRU,{
+	// pcblocknpctalk
+	npctalk "...On duty. No problem...", "Guardian Knight#ep16_pr_2", bc_self;
+	sleep2 2000;
+	npctalk "I want to go home now.", "Guardian Knight#ep16_pr_2", bc_self;
+	end;
+}
+
+prt_cas,188,258,0	script	#cas_prison	WARPNPC,1,1,{
+OnTouch_:
+	if (banquet_main_quest >= 2)
+		warp "prt_pri00",54,134;
+	else {
+		// pcblocknpctalk
+		npctalk "You shouldn't enter the place like that.", "Guardian Knight#ep16_pr_1", bc_self;
+		sleep2 2000;
+		warp "prt_cas",182,258;
+	}
+	end;
+}
+
+// Prontera of the past
+prt_q,157,334,3	script	Nillem#ep16_pprt01	4_M_JOB_WIZARD,{
+	if (banquet_main_quest == 23) {
+		mes "[Nillem]";
+		mes "How terrifying.";
+		mes "This must be Prontera in the past?";
+		mes "I guess we have picked the right time to be here-";
+		next;
+		mes "[Nillem]";
+		mes "Shall we look around more?";
+		mes "Or go back?";
+		next;
+		select("It that possible?");
+		mes "[Nillem]";
+		mes "Whoa, don't you underestimate me.";
+		mes "I am a Court Mage.";
+		mes "I studied in Eclage.";
+		next;
+		mes "[Nillem]";
+		mes "I have also learned a lot of things at the Cat Hand Services!";
+		mes "I believe that I have the most thorough knowledge when it comes to the crack of dimension!";
+		next;
+		mes "[Nillem]";
+		mes "As long as it is from a place on the crack of dimension,";
+		mes "It is a piece of care to go back!";
+		next;
+		mes "[Nillem]";
+		mes "Since we don't belong to this time, it is much easier to get out than to enter.";
+		next;
+		mes "[Nillem]";
+		mes "So, what are you going to do?";
+		setquest 7703;// Who Knows the Truth
+		erasequest 7702;// Prontera at the Time
+		banquet_main_quest = 24;
+		next;
+		if (select( "Let's get in.", "Let's go back to our time." ) == 1) {
+			mes "[Nillem]";
+			mes "Do you remember the gate we got out?";
+			mes "It is supposed to be connected to the inside of the palace.";
+			next;
+			mes "[Nillem]";
+			mes "However, we arrived here. I guess the spaces are twisted a little so that they are connected.";
+			next;
+			mes "[Nillem]";
+			mes "I have already experimented this. If you enter the entrance to the palace,";
+			mes "It is connected to the ^4d4dffPast Memories of the Royal Family^000000 which we have just been to.";
+			next;
+			mes "[Nillem]";
+			mes "Then, shall we march in?";
+			close;
+		}
+		mes "[Nillem]";
+		mes "Whoa, shall we organize the thoughts now?";
+		next;
+		mes "[Nillem]";
+		mes "^4d4dffWhat was in the Room of Consciousness^000000 must have been...";
+		mes "Well, this must have something to do with ^4d4dffthe undead army attacking Prontera^000000 now.";
+		mes "Well, it must have been ^4d4dfftaken away by them^000000, am I right?";
+		next;
+		select("Right.");
+		mes "[Nillem]";
+		mes "Can we stop this?";
+		mes "Or, can we take it with us?";
+		next;
+		mes "[Nillem]";
+		mes "I believe our superiors will order us to do so.";
+		mes "Try whatever it takes to make it work.";
+		next;
+		select("I guess so.");
+		mes "[Nillem]";
+		mes "Perhaps, well it is just my imagination though.";
+		mes "Whatever was in the Room of Consciousness was taken, right?";
+		mes "However, the royal families have been performing the ritual without knowing that somehow.";
+		next;
+		mes "[Nillem]";
+		mes "They must have done something or it must have returned...";
+		mes "This could meet the condition to see the sealed part of the ^4d4dffPast Memories of the Royal Family^000000...";
+		next;
+		select("You mean, the ones who know the truth?");
+		mes "[Nillem]";
+		mes "Yes, I mean that. If this is the truth which is the key to open the seal,";
+		mes "We are bringing an important piece of information back with us.";
+		next;
+		mes "[Nillem]";
+		mes "We didn't protect or take the thing...";
+		mes "But we know the truth now. It will break the seal of the document...";
+		next;
+		mes "[Nillem]";
+		mes "As the secret of the royal family is revealed, we will get the missing pieces of the puzzle.";
+		mes "Hahahaha, and you are the one who would be the center of all that, my darling!";
+		next;
+		select("Don't call me that!");
+		mes "[Nillem]";
+		mes "What about it?";
+		mes "We will see each other everyday from now on, won't we?";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : ......Phew..", bc_self;
+		next;
+		mes "[Nillem]";
+		mes "Well, shall we go back then?";
+		mes "Our mission here is done for now!";
+		next;
+		mes "[Nillem]";
+		mes "Let's go back!";
+		mes "Nothing good can be done staying in a place which is not of our time too long";
+		next;
+		mes "[Nillem]";
+		mes "Well, then get ready!";
+		mes "Three!";
+		sleep2 1000;
+		mes "Two!";
+		sleep2 1000;
+		mes "One!";
+		sleep2 1000;
+		warp "prt_lib",88,80;
+		close;
+	}
+	mes "[Nillem]";
+	mes "Haha! This place is exciting...";
+	mes "...As always.";
+	next;
+	if (select( "Let's get out of here!", "I'll look around." ) == 2) {
+		mes "[Nillem]";
+		mes "Have a safe trip!";
+		close;
+	}
+	mes "[Nillem]";
+	mes "Let's go it!";
+	mes "Forget everything and let's get out-";
+	close2;
+	warp "prt_lib",89,43;
+	end;
+}
+
+prt_q,159,328,6	script	Medic#EP162PS18	4_F_ACOLYTE,{
+	specialeffect EF_HEAL3,AREA,"Wounded Soldier#EP161PS";
+	mes "[Soldier]";
+	mes "Hey, you need to be cured first.";
+	close;
+}
+
+prt_q,160,327,5	script	Wounded Soldier#EP161PS	8W_SOLDIER,{
+	emotion ET_STARE;
+	mes "[Soldier]";
+	mes "Argh... Those undead bastards... I'll kill them all...";
+	close;
+}
+
+prt_q,165,326,6	script	Soldier#EP162PS01	8W_SOLDIER,1,1,{
+	emotion ET_FRET;
+	mes "[Soldier]";
+	mes "Argh.... Those undead...";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Huh!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,167,324,6	script	Soldier#EP162PS02	8W_SOLDIER,1,1,{
+	emotion ET_CRY;
+	mes "[Soldier]";
+	mes "My colleague who had been laughing with me just... Aww...";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Hiya!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,165,322,6	script	Soldier#EP162PS03	8W_SOLDIER,1,1,{
+	mes "[Soldier]";
+	mes "Please. Don't get yourself killed by the enemy.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Heh...";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,167,320,6	script	Soldier#EP162PS04	8W_SOLDIER,1,1,{
+	emotion ET_CONFUSE;
+	mes "[Soldier]";
+	mes "What was it that had dropped from the sky? How could it bring the undead to the capital?";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Humph!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,165,318,6	script	Soldier#EP162PS05	8W_SOLDIER,1,1,{
+	emotion ET_STARE;
+	mes "[Soldier]";
+	mes "I'll... I'll make sure to defend this place.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Whoa!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,146,326,2	script	Soldier#EP162PS06	8W_SOLDIER,1,1,{
+	emotion ET_OTL;
+	mes "[Soldier]";
+	mes "The endless battle against the enemies...";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Argh!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,144,324,2	script	Soldier#EP162PS07	8W_SOLDIER,1,1,{
+	mes "[Soldier]";
+	mes "An eccentric scientist, Doyeon, went out there with soldiers, and there has been no message from them. I am getting worried.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Humph!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,146,322,2	script	Soldier#EP162PS08	8W_SOLDIER,1,1,{
+	emotion ET_PROFUSELY_SWEAT;
+	mes "[Soldier]";
+	mes "Damn it... Those undead...";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Huh!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,144,320,2	script	Soldier#EP162PS09	8W_SOLDIER,1,1,{
+	mes "[Soldier]";
+	mes "Scientist Doyeon... Would she be OK? How can she go out there to study in a situation like this?";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Hiya!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,146,318,2	script	Soldier#EP162PS10	8W_SOLDIER,1,1,{
+	mes "[Soldier]";
+	mes "The troops of immortality... They are really strong. Please be careful.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Humph!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,149,316,4	script	Soldier#EP162PS11	8W_SOLDIER,1,1,{
+	emotion ET_ROCK;
+	mes "[Soldier]";
+	mes "We will defend the palace of Prontera.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Huh!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,151,314,4	script	Soldier#EP162PS12	8W_SOLDIER,1,1,{
+	emotion ET_OHNO;
+	mes "[Soldier]";
+	mes "My family live in Prontera. I wonder if they have fled safely.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Whoa!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,153,316,4	script	Soldier#EP162PS13	8W_SOLDIER,1,1,{
+	emotion ET_HUM;
+	mes "[Soldier]";
+	mes "Thank god... The undead are not coming this way much. What a relief.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Argh!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,158,316,4	script	Soldier#EP162PS14	8W_SOLDIER,1,1,{
+	mes "[Soldier]";
+	mes "My friend has followed Scienties Doyeon. I am worried. I have heard that she really is an oddball.";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Hiya!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,160,314,4	script	Soldier#EP162PS15	8W_SOLDIER,1,1,{
+	emotion ET_OHNO;
+	mes "[Soldier]";
+	mes "Hahaha, I was supposed to have a romantic dinner with my girlfriend, damn it!";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Whoa!";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+prt_q,162,316,4	script	Soldier#EP162PS16	8W_SOLDIER,1,1,{
+	emotion ET_PROFUSELY_SWEAT;
+	mes "[Soldier]";
+	mes "Humph! Bring it on!";
+	close;
+OnTouchNPC:
+	npctalk "Soldier: Argh...";
+	specialeffect EF_ATTACKENERGY2;
+	unitwarp 0,"prt_q",-1,-1;
+	end;
+}
+
+prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Chief Guard Spiegel]";
+		mes "Are you an adventurer? I am sorry, but I am in the middle of something. Please leave me alone.";
+		close;
+	}
+
+	switch( checkquest(5452,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Chief Guard Spiegel]";
+		mes "I thank you on behalf of the Prontera Guards.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "We will make sure to end the battle with the undead as soon as possible.";
+		close;
+	case 2:
+		erasequest 5452;// [Stand by]Request from Chief Guard
+		break;
+	}
+
+	setarray .@completed_list[0],5456,5459,5462,5468;
+	setarray .@sub_quest_5456[0],5448,5453,5454,5455;
+	setarray .@sub_quest_5459[0],5449,5457,5458;
+	setarray .@sub_quest_5462[0],5450,5460,5461;
+	setarray .@sub_quest_5468[0],5451,5463,5464,5465,5466,5467;
+
+	for ( .@i = 0; .@i < 4; .@i++ ) {
+		if (isbegin_quest(.@completed_list[.@i]) == 1) {// quest completed
+			.@main_quest_id = .@completed_list[.@i];
+			break;
+		}
+		.@size = getarraysize( getd( ".@sub_quest_" + .@completed_list[.@i] ) );
+		for ( .@j = 0; .@j < .@size; .@j++ ) {
+			if (isbegin_quest( getd( ".@sub_quest_" + .@completed_list[.@i] + "[" + .@j + "]") ) == 1) {// sub quest started
+				.@sub_quest_id = getd( ".@sub_quest_" + .@completed_list[.@i] + "[0]");
+				break;
+			}
+		}
+		if (.@j < .@size)
+			break;
+	}
+
+	switch(.@main_quest_id) {
+	case 5456:
+		mes "[Chief Guard Spiegel]";
+		mes "I heard from the soldier dispatched to the area near the village office that you helped the villagers.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "He is a young man who has been hanging around in the village for a while. He seems to work diligently...";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "However, Mr. Quadro who runs Prontera Smelter seems to have lost an important document in the chaos.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "He is the one in charge of the weapons used by the guards. I am worried if it would cause any trouble in his work.";
+		next;
+		emotion ET_THANKS;
+		mes "[Chief Guard Spiegel]";
+		mes "Oh! Anyways, thank you for helping the villagers.";
+		next;
+		erasequest 5456;// Ungrateful(4)
+		setquest 5452;// [Stand by]Request from Chief Guard
+		getexp 800000,250000;
+		getitem 6919,4;// Honor Token
+		mes "[Chief Guard Spiegel]";
+		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
+		close;
+	case 5459:
+		mes "[Chief Guard Spiegel]";
+		mes "I heard from the soldiers dispatched to the Knights' building that you saved Lowen.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "Lowen is a spirited girl who claims that she likes the Crusaders to the Royal Lord Knights.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "Rosa who is the younger sister to the girl is also popular among our soldiers.";
+		next;
+		emotion ET_THANKS;
+		mes "[Chief Guard Spiegel]";
+		mes "I thank you on behalf of the Prontera Guards.";
+		next;
+		erasequest 5459;// Find My Sister(3)
+		setquest 5452;// [Stand by]Request from Chief Guard
+		getexp 800000,250000;
+		getitem 6919,4;// Honor Token
+		mes "[Chief Guard Spiegel]";
+		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
+		close;
+	case 5462:
+		mes "[Chief Guard Spiegel]";
+		mes "I heard from the soldier dispatched to the village office that a soldier on his vacation has been fled here.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "I guess there has been a soldier on vacation during such a difficult time. I had been ignorant of it before I got the report.";
+		next;
+		emotion ET_THANKS;
+		mes "[Chief Guard Spiegel]";
+		mes "I am faced with my inadequacies as the one in charge of the security of the capital.";
+		next;
+		erasequest 5462;// Blatant Bluff(3)
+		setquest 5452;// [Stand by]Request from Chief Guard
+		getexp 800000,250000;
+		getitem 6919,4;// Honor Token
+		mes "[Chief Guard Spiegel]";
+		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
+		close;
+	case 5468:
+		mes "[Chief Guard Spiegel]";
+		mes "I heard from the soldier in the cathedral that you saved the couple, Eryus and Ellie.";
+		next;
+		mes "[Chief Guard Spiegel]";
+		mes "I think I have heard of their names. I have heard that they irritate the minds of lonely soldiers with their endless public display of affection.";
+		next;
+		emotion ET_THANKS;
+		mes "[Chief Guard Spiegel]";
+		mes "Everyone in Prontera must know about it. Anyways, thank you for doing this for the Guards.";
+		next;
+		erasequest 5468;// Mad Love for Wife(6)
+		setquest 5452;// [Stand by]Request from Chief Guard
+		getexp 800000,250000;
+		getitem 6919,4;// Honor Token
+		mes "[Chief Guard Spiegel]";
+		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
+		close;
+	}
+
+	if (.@sub_quest_id > 0) {
+		mes "[Chief Guard Spiegel]";
+		mes "I'll mark the places to which the soldiers haven't been dispatched to due to circumstances on the map.";
+		next;
+		switch(.@sub_quest_id) {
+		case 5448:
+			viewpoint 1,221,193,1,0xFF0000;
+			break;
+		case 5449:
+			viewpoint 1,276,242,1,0xFF0000;
+			break;
+		case 5450:
+			viewpoint 1,140,304,1,0xFF0000;
+			break;
+		case 5451:
+			viewpoint 1,38,261,1,0xFF0000;
+			break;
+		}
+		mes "[Chief Guard Spiegel]";
+		mes "Please help any villagers in trouble if you find them.";
+		close;
+	}
+	emotion ET_STARE;
+	mes "[Chief Guard Spiegel]";
+	mes "Don't stand there in the middle of our line! Watch out!";
+	next;
+	emotion ET_COMEON;
+	mes "[Chief Guard Spiegel]";
+	mes "If you are hurt step back to get yourself cured. If you are recovered, get back in the line.";
+	next;
+	mes "[Chief Guard Spiegel]";
+	mes "Huh? I haven't seen you before. You seem like a civilian. Why are you coming from there?";
+	next;
+	emotion ET_HUK;
+	mes "[Chief Guard Spiegel]";
+	mes "What? Have the undead entered the palace already?";
+	next;
+	select("No... I don't think so... I am just...");
+	mes "[Chief Guard Spiegel]";
+	mes "So you are supposed to be an adventurer invited to the banquet, right?";
+	next;
+	emotion ET_QUESTION;
+	mes "[Chief Guard Spiegel]";
+	mes "Has there been a banquet in the palace lately? I don't remember.";
+	next;
+	mes "[Chief Guard Spiegel]";
+	mes "Well... Since we are busy dealing with";
+	mes "the undead invading the village, as long as the palace is safe from the undead, I won't make a big deal out of it.";
+	next;
+	mes "[Chief Guard Spiegel]";
+	mes "I won't stop you from moving around the town. I'll mark the places to which the soldiers haven't been dispatched to due to circumstances on the map.";
+	emotion ET_PROFUSELY_SWEAT;
+	.@quest_id = rand(5448,5451);
+	switch(.@quest_id) {
+	case 5448:
+		viewpoint 1,221,193,1,0xFF0000;
+		break;
+	case 5449:
+		viewpoint 1,276,242,1,0xFF0000;
+		break;
+	case 5450:
+		viewpoint 1,140,304,1,0xFF0000;
+		break;
+	case 5451:
+		viewpoint 1,38,261,1,0xFF0000;
+		break;
+	}
+	setquest .@quest_id;// Request from Chief Guard
+	mes "[Chief Guard Spiegel]";
+	mes "Please help any villagers in trouble if you find them.";
+	close;
+}
+
+
+// Request 1
+prt_q,221,193,4	script	Village Lad#EP161HO01	HIDDEN_WARP_NPC,6,6,{
+	if (isbegin_quest(5448) == 1) {
+		emotion ET_CRY;
+		mes "[Village Lad]";
+		mes "Whoa... You are not an undead, aren't you?";
+		next;
+		mes "[Village Lad]";
+		mes "Haha... I am alive now.";
+		next;
+		mes "[Village Lad]";
+		mes "Do you know how scare I have been? This place was packed with the undead, and I heard screams from everywhere.";
+		next;
+		erasequest 5448;// Request from Chief Guard
+		setquest 5453;// Ungrateful(1)
+		viewpoint 2,221,193,1,0xFF0000;
+		mes "[Village Lad]";
+		mes "Thank god... The shelter is supposed to be near the village office over there. Why don't we continue this conversation there?";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(5448) == 1) {
+		npctalk "Village Lad: Arghhhhhh!", "", bc_self;
+		classchange( 4_M_03, "", bc_self );
+	}
+	end;
+}
+
+// Office
+prt_q,79,96,7	script	Soldier#EP161HO02	8W_SOLDIER,5,5,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	mes "[Village Lad]";
+	mes "This the village office which is the third shelter in Prontera.";
+	close;
+
+OnTouch:
+	if (isbegin_quest(5453) == 1 || isbegin_quest(5455) == 1)
+		classchange( 4_M_03, "Village Lad#EP161HO03", bc_self );
+	if (isbegin_quest(5461) == 1)
+		classchange( 4_M_GEF_SOLDIER, "Soldier#EP161HU03", bc_self );
+	end;
+}
+
+prt_q,77,98,8	script	Village Lad#EP161HO03	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5453) == 1) {
+		emotion ET_DELIGHT;
+		mes "[Village Lad]";
+		mes "Whoa... I am saved. How fortunate. I guess I am a lucky man.";
+		next;
+		emotion ET_SURPRISE;
+		emotion ET_QUESTION;
+		emotion ET_HUK;
+		mes "[Village Lad]";
+		mes "Wait? Where did it go? I think I lost the Tool Bag while I was running.";
+		next;
+		mes "[Village Lad]";
+		mes "I can guess where it has been dropped...";
+		next;
+		emotion ET_SEXY;
+		mes "[Village Lad]";
+		mes "You must be pretty tough to roam the village in a situation like this. Please do me a favor.";
+		next;
+		mes "[Village Lad]";
+		mes "Do you know where the Prontera Smelter is?";
+		next;
+		mes "[Village Lad]";
+		mes "It is quite a famous store in Prontera. Someday, I will...";
+		next;
+		erasequest 5453;// Ungrateful(1)
+		setquest 5454;// Ungrateful(2)
+		mes "[Village Lad]";
+		mes "Oh! Never mind. I am counting on you.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
+	}
+	if (isbegin_quest(5455) == 1) {
+		emotion ET_CONGRATULATION;
+		mes "[Village Lad]";
+		mes "Whoa... I thought I have lost it. You really found it!";
+		next;
+		emotion ET_STARE_ABOUT;
+		mes "[Village Lad]";
+		mes "This is awesome. Thank you so much. You must be busy, right? I have to go take care of something now...";
+		next;
+		emotion ET_STARE_ABOUT;
+		mes "[Village Lad]";
+		mes "Oh! I know you are strong enough, but please be careful.";
+		next;
+		erasequest 5455;// Ungrateful(3)
+		setquest 5456;// Ungrateful(4)
+		mes "[Village Lad]";
+		mes "Thank you. Farewell.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
+	}
+}
+
+prt_q,178,185,0	script	Tool Bag#EP161HO04	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	if (isbegin_quest(5454) == 1) {
+		mes "In front of the Prontera Smelter";
+		mes "There a bag which would be full if you put some items.";
+		next;
+		if (select( "Pick up.", "Leave it." ) == 1) {
+			erasequest 5454;// Ungrateful(2)
+			setquest 5455;// Ungrateful(3)
+			mes "You have acquired a bag.";
+		}
+	}
+	end;
+}
+
+prt_q,85,90,7	script	Giant Beast Manager#EP1	8W_SOLDIER,{
+	emotion ET_PROFUSELY_SWEAT, getnpcid(0, strnpcinfo(1));
+	mes "[" + strnpcinfo(1) + "]";
+	mes "This the village office which is the third shelter in Prontera.";
+	close;
+}
+prt_q,74,101,7	duplicate(Giant Beast Manager#EP1)	Magical Gear Mechanic#E	8W_SOLDIER
+
+// Request 2
+prt_q,276,242,4	script	Girl#EP161GU01	HIDDEN_WARP_NPC,6,6,{
+	if (isbegin_quest(5449) == 1) {
+		select("Hey dear, are you OK?");
+		emotion ET_QUESTION, playerattached();
+		emotion ET_CRY;
+		mes "[Lowen]";
+		mes "I was running to the church with my sister, Rosa... And I lost her... Awww...";
+		next;
+		emotion ET_HNG;
+		mes "[Lowen]";
+		mes "Rosa should have held on to my hand tightly. How clumsy of her to be lost!";
+		next;
+		mes "[Lowen]";
+		mes "Would you take me to the cathedral?";
+		next;
+		erasequest 5449;// Request from Chief Guard
+		setquest 5457;// Find My Sister(1)
+		viewpoint 2,276,242,1,0xFF0000;
+		mes "[Lowen]";
+		mes "We promised to meet at the cathedral when we are lost. I believe she would be there in the church.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
+	}
+	mes "[Lowen]";
+	mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
+	close;
+
+OnTouch:
+	if (isbegin_quest(5449) == 1) {
+		classchange( 4_F_RUSCHILD, "", bc_self );
+		npctalk "Girl: Awwww...", "", bc_self;
+	}
+	end;
+}
+
+// Cathedral
+prt_q,235,315,4	script	Cathedral Knight#EP161G	4_F_CRU,5,5,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	mes "[Cathedral Knight]";
+	mes "This the cathedral which is the first shelter in Prontera.";
+	close;
+
+OnTouch:
+	if (isbegin_quest(5457) == 1)
+		classchange( 4_F_RUSCHILD, "Girl#EP161GU03", bc_self );
+	if (isbegin_quest(5463) == 1 || isbegin_quest(5464) == 1 || isbegin_quest(5466) == 1 || isbegin_quest(5467) == 1)
+		classchange( 4_F_03, "Eryus#EP161BU02", bc_self );
+	else if (isbegin_quest(5465) == 1) {
+		classchange( 4_F_03, "Eryus#EP161BU02", bc_self );
+		classchange( 4W_F_01, "Female#EP161BU04", bc_self );
+	}
+	end;
+}
+
+prt_q,232,318,3	script	PecoPeco Mechanic#EP161_2	8W_SOLDIER,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	emotion ET_SORRY;
+	mes "[PecoPeco Mechanic]";
+	mes "If you are here to borrow a Pecopeco, I have to say I am sorry.";
+	next;
+	mes "[PecoPeco Mechanic]";
+	mes "Due to the emergency situation, all troops of Prontera are deployed to protect the residents of Prontera.";
+	close;
+}
+
+prt_q,229,317,6	script	Girl#EP161GU03	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5457) == 1) {
+		mes "[Lowen]";
+		mes "Whoa, thank you so much!";
+		next;
+		npctalk "Girl: Rosa! Rosa!", "Girl#EP161GU03", bc_self;
+		emotion ET_BLABLA;
+		mes "[Lowen]";
+		mes "Rosa! Rosa!";
+		next;
+		emotion ET_SURPRISE;
+		emotion ET_QUESTION;
+		mes "[Lowen]";
+		mes "Oh, Uncle Peco, did you see my sister here?";
+		next;
+		emotion ET_HUK, getnpcid(0, "PecoPeco Mechanic#EP161_2");
+		mes "[PecoPeco Mechanic]";
+		mes "Cough... Uncle...";
+		next;
+		mes "[PecoPeco Mechanic]";
+		mes "You mean Rosa? Do you mean Rosa? I haven't seen Rosa here. Wasn't she coming with you?";
+		next;
+		emotion ET_BLABLA;
+		mes "[Lowen]";
+		mes "Aww... Rosa, where are you now?";
+		next;
+		emotion ET_SURPRISE;
+		emotion ET_QUESTION;
+		mes "[PecoPeco Mechanic]";
+		mes "She could have gone to the Knights' building. Weren't you sisters supposed to go to the shelter there?";
+		next;
+		emotion ET_HUK, getnpcid(0, "PecoPeco Mechanic#EP161_2");
+		mes "[Lowen]";
+		mes "Eh? It must have not been the cathedral then... Huh? What should I do?";
+		next;
+		mes "[PecoPeco Mechanic]";
+		mes "Dear adventurer, if you are not in a hurry, would you help Lowen flee to the Knights' building?";
+		next;
+		mes "[PecoPeco Mechanic]";
+		mes "Lowen's sister is a careful girl, unlike Lowen. She must have fled to the Knights' building.";
+		next;
+		npctalk "Girl: Phew... Uncle!", "Girl#EP161GU03", bc_self;
+		select("Since I am here already, let me keep helping her.");
+		erasequest 5457;// Find My Sister(1)
+		setquest 5458;// Find My Sister(2)
+		emotion ET_THANKS, getnpcid(0, "PecoPeco Mechanic#EP161_2");
+		mes "[PecoPeco Mechanic]";
+		mes "Thank you. Please take care of her.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "Girl#EP161GU03", bc_self);
+		end;
+	}
+}
+
+prt_q,55,350,5	script	PecoPeco Mechanic#EP161_1	8W_SOLDIER,{
+	emotion ET_SORRY;
+	mes "[PecoPeco Mechanic]";
+	mes "If you are here to borrow a Pecopeco, I have to say I am sorry.";
+	next;
+	mes "[PecoPeco Mechanic]";
+	mes "Due to the emergency situation, all troops of Prontera are deployed to protect the residents of Prontera.";
+	close;
+}
+
+prt_q,47,339,5	script	Soldier#EP161ETC01	8W_SOLDIER,{
+	emotion ET_PROFUSELY_SWEAT;
+	mes "[Soldier]";
+	mes "This the knight's building which is the second shelter in Prontera.";
+	close;
+}
+prt_q,52,344,5	duplicate(Soldier#EP161ETC01)	Soldier#EP161ETC02	8W_SOLDIER
+
+prt_q,52,340,6	script	Knight Gray#EP161GU05	2_M_SWORDMASTER,7,7,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	mes "[Knight Gray]";
+	mes "With the honor of the knight, I'll protect the villagers inside.";
+	close;
+
+OnTouch:
+	if (isbegin_quest(5458) == 1) {
+		classchange( 4_F_RUSCHILD, "Girl#EP161GU06", bc_self );
+		classchange( 4W_F_01, "Rosa Erinin#EP161GU07", bc_self );
+	}
+	if (isbegin_quest(5460) == 1) {
+		classchange( 4_M_GEF_SOLDIER, "Soldier#EP161HU02", bc_self );
+		npctalk "Soldier: Hey you! Here! This way...", "Soldier#EP161HU02", bc_self;
+	}
+	end;
+}
+
+prt_q,41,337,5	script	Mercenary Guild Admin#E	8W_SOLDIER,{
+	mes "[Mercenary Guild Admin]";
+	mes "Are you here to hire a mercenary?";
+	next;
+	mes "[Mercenary Guild Admin]";
+	mes "I am sorry, but all mercenaries dispatched in this area have been hired by the palace.";
+	next;
+	emotion ET_SORRY;
+	mes "[Mercenary Guild Admin]";
+	mes "I am sorry.";
+	close;
+}
+
+prt_q,55,347,6	script	Rosa Erinin#EP161GU07	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5458) == 1) {
+		emotion ET_STARE, getnpcid(0, "Rosa Erinin#EP161GU07");
+		mes "[Rosa Erinin]";
+		mes "Lowen, where did you go this time?";
+		next;
+		emotion ET_THANKS, getnpcid(0, "Girl#EP161GU06");
+		mes "[Lowen]";
+		mes "Hehe... Thank you, dear adventurer.";
+		next;
+		emotion ET_THANKS, getnpcid(0, "Rosa Erinin#EP161GU07");
+		mes "[Rosa Erinin]";
+		mes "Oh! Dear adventurer, thank you. She is so handful, you know.";
+		next;
+		mes "[Rosa Erinin]";
+		mes "She is so delicate, but she is reckless. I am worried about her.";
+		next;
+		mes "[Rosa Erinin]";
+		mes "Well, we shall go hide in there so that the knights here don't need to worry about us anymore.";
+		next;
+		erasequest 5458;// Find My Sister(2)
+		setquest 5459;// Find My Sister(3)
+		emotion ET_WRAP, getnpcid(0, "Girl#EP161GU06");
+		mes "[Lowen]";
+		mes "Thank you. Goodbye!";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "Rosa Erinin#EP161GU07", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Girl#EP161GU06", bc_self );
+		end;
+	}
+}
+prt_q,57,346,4	duplicate(Rosa Erinin#EP161GU07)	Girl#EP161GU06	HIDDEN_WARP_NPC,{ end; }
+
+// Request 3
+prt_q,140,304,6	script	Soldier#EP161HU01	HIDDEN_WARP_NPC,7,7,{
+	if (isbegin_quest(5450) == 1) {
+		emotion ET_KEK;
+		mes "[Soldier]";
+		mes "Argh! The undead! Bring it on!";
+		next;
+		emotion ET_SCRATCH, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hey, what would be the use of telling them to bring it on when you are hiding in there...";
+		next;
+		emotion ET_SWEAT;
+		mes "[Soldier]";
+		mes "You adventurer don't understand it. I am pushed to this corner after a long battle against the undead.";
+		next;
+		mes "[Soldier]";
+		mes "You must be quite courageous for walking around the town in a situation like this.";
+		next;
+		emotion ET_OK;
+		mes "[Soldier]";
+		mes "You must be as brave as I am... The hero who has subjugated the Kobolds in Geffen...";
+		next;
+		mes "[Soldier]";
+		mes "Hahahahaha";
+		mes "Just in time. I was getting exhausted by the attacks of the undead.";
+		next;
+		mes "[Soldier]";
+		mes "I am on the way to go hide in the shelter nearby. Would you come with me?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, sure.";
+		next;
+		erasequest 5450;// Request from Chief Guard
+		setquest 5460;// Blatant Bluff(1)
+		emotion ET_PROFUSELY_SWEAT;
+		viewpoint 2,140,304,1,0xFF0000;
+		mes "[Soldier]";
+		mes "Good. Since I am tired from the previous battle, please escort me to the Knight's building.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(5450) == 1) {
+		npctalk "Soldier: Argh! Don't come this way!", "", bc_self;
+		classchange( 4_M_GEF_SOLDIER, "", bc_self );
+	}
+	end;
+}
+
+prt_q,68,336,4	script	Soldier#EP161HU02	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5460) == 1) {
+		emotion ET_BEST;
+		mes "[Soldier]";
+		mes "Thank god, you heard my voice.";
+		next;
+		mes "[Soldier]";
+		mes "I was going to help the knights defending the knight's building since I heard that many residents had been fled there. However, there seem to be enough troops here.";
+		next;
+		emotion ET_OK;
+		mes "[Soldier]";
+		mes "If I show my face, it may just disturb their concentration. I'd rather go without seeing them.";
+		next;
+		mes "[Soldier]";
+		mes "I shall go join the defense on another place. I guess I can join the troops at the village office down there.";
+		next;
+		erasequest 5460;// Blatant Bluff(1)
+		setquest 5461;// Blatant Bluff(2)
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Soldier]";
+		mes "Since I want to save my energy for the battle, please escort me to the village office.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	}
+	end;
+}
+
+prt_q,79,102,8	script	Soldier#EP161HU03	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5461) == 1) {
+		emotion ET_OK;
+		mes "[Soldier]";
+		mes "There are not many people guarding this place.";
+		next;
+		mes "[Soldier]";
+		mes "I should go help them now.";
+		next;
+		emotion ET_QUESTION, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is such a secluded place, and there are 3 soldiers here.";
+		next;
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Soldier]";
+		mes "Dear adventurer, you know nothing.";
+		next;
+		mes "[Soldier]";
+		mes "Oh, I wasn't going to tell you this story, because I didn't want to boast...";
+		next;
+		mes "[Soldier]";
+		mes "Millions of Kobolds have invaded Geffen before.";
+		next;
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Soldier]";
+		mes "The endless march of the Kobolds...";
+		next;
+		mes "[Soldier]";
+		mes "Huh... Thinking about it makes me sweat...";
+		next;
+		emotion ET_QUESTION;
+		mes "[Soldier]";
+		mes "Well,, from my experience, a place like this is the toughest to guard when the enemies march in out of blue.";
+		next;
+		mes "[Soldier]";
+		mes "It is a secret that it is the greatest timing for the rise of a hero.";
+		next;
+		mes "[Soldier]";
+		mes "I'll take a rest inside, and come out to save these people when this place is in danger. You shall go save another place.";
+		next;
+		erasequest 5461;// Blatant Bluff(2)
+		setquest 5462;// Blatant Bluff(3)
+		emotion ET_WRAP;
+		mes "[Soldier]";
+		mes "Good luck.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	}
+}
+
+// Request 4
+prt_q,38,261,6	script	Eryus#EP161BU01	HIDDEN_WARP_NPC,6,6,{
+	if (isbegin_quest(5451) == 1) {
+		emotion ET_THANKS;
+		mes "[Eryus]";
+		mes "Are you an adventurer?";
+		mes "Oh, Odin... Thank you! Dear adventurer, please find my wife.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What happened here?";
+		next;
+		mes "[Eryus]";
+		mes "It happened in the evening, at dusk.";
+		mes "With a roaring sound, we heard that something dropped near the old swordsmen's guild.";
+		next;
+		mes "[Eryus]";
+		mes "Many residents gathered around the area to find out what had caused such a commotion.";
+		next;
+		mes "[Eryus]";
+		mes "I went down there with my wife Ellie.";
+		next;
+		emotion ET_OTL;
+		mes "[Eryus]";
+		mes "When the people gathered, and night fell, the undead which had been buried under the ground of Prontera started waking up.";
+		next;
+		mes "[Eryus]";
+		mes "People freaked. While running around, I lost hold of my wife's hand.";
+		next;
+		emotion ET_CRY;
+		mes "[Eryus]";
+		mes "Oh, Ellie... My wife is a very fragile woman. I hope she is all right.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Let me go find her. You should go hide in the cathedral. I'll take you there.";
+		next;
+		erasequest 5451;// Request from Chief Guard
+		setquest 5463;// Mad Love for Wife(1)
+		emotion ET_CRY;
+		viewpoint 2,38,261,1,0xFF0000;
+		mes "[Eryus]";
+		mes "Awww... Please help me. Please find my wife.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(5451) == 1) {
+		npctalk "Eryus: Ellie! Where are you? Honey! My love!", "", bc_self;
+		classchange( 4_F_03, "", bc_self );
+	}
+	end;
+}
+
+prt_q,231,310,4	script	Eryus#EP161BU02	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5463) == 1) {
+		emotion ET_CRY;
+		mes "[Eryus]";
+		mes "Awww... Please help me. Please find my wife... I am really worried about her.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wait in the cathedral. I'll look for your wife. Where did you lose her?";
+		next;
+		mes "[Eryus]";
+		mes "Aww... I must have forgotten to tell you.";
+		next;
+		mes "[Eryus]";
+		mes "I lost hold of her hand near the Prontera employment agency.";
+		next;
+		emotion ET_THINK;
+		mes "[Eryus]";
+		mes "I am not sure if she is still there...";
+		next;
+		erasequest 5463;// Mad Love for Wife(1)
+		setquest 5464;// Mad Love for Wife(2)
+		mes "[Eryus]";
+		mes "Aww... Please help me, dear adventurer.";
+		close;
+	}
+	if (isbegin_quest(5464) == 1) {
+		mes "[Eryus]";
+		mes "I lost hold of her hand near the Prontera employment agency.";
+		next;
+		mes "[Eryus]";
+		mes "Aww... Please help me, dear adventurer.";
+		close;
+	}
+	if (isbegin_quest(5465) == 1) {
+		emotion ET_THANKS, getnpcid(0, "Eryus#EP161BU02");
+		mes "[Eryus]";
+		mes "Oh! Thank god! Dear adventurer...";
+		next;
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		mes "[Ellie]";
+		mes "Oh, Eryus... Cough... Cough...";
+		next;
+		emotion ET_HUK, getnpcid(0, "Eryus#EP161BU02");
+		mes "[Eryus]";
+		mes "Ellie, what is going on? Are you ill again? Where is your medicine?";
+		next;
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		mes "[Ellie]";
+		mes "Cough... Cough... I must have dropped it while running...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Where did you drop the medicine?";
+		next;
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		mes "[Ellie]";
+		mes "Cough... Cough... I don't know. Cough, it could be there... Cough... Cough...";
+		next;
+		mes "[Eryus]";
+		mes "Where you were before? Wait a moment. Let me go get it for you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is dangerous out there. I'll go. You should stay here and take care of your wife.";
+		next;
+		erasequest 5465;// Mad Love for Wife(3)
+		setquest 5466;// Mad Love for WifeQuest(4)
+		mes "[Eryus]";
+		mes "Would you do that for us? Please. We are running out of time. Ellie. hold on...";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "Female#EP161BU04", bc_self );
+		end;
+	}
+	if (isbegin_quest(5466) == 1) {
+		mes "[Eryus]";
+		mes "Please. We are running out of time.";
+		close;
+	}
+	if (isbegin_quest(5467) == 1) {
+		mes "[Eryus]";
+		mes "Oh, you are here.";
+		mes "The priest of the cathedral is taking care of my wife in there.";
+		next;
+		mes "[Eryus]";
+		mes "Thank you for helping us. I guess I shall bring the medicine to her as fast as possible.";
+		next;
+		erasequest 5467;// Mad Love for WifeQuest(5)
+		setquest 5468;// Mad Love for Wife(6)
+		mes "[Eryus]";
+		mes "Thank you so much. God bless your journey...";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
+	}
+}
+
+prt_q,108,164,4	script	Female#EP161BU03	HIDDEN_WARP_NPC,4,4,{
+	if (isbegin_quest(5464) == 1) {
+		emotion ET_QUESTION;
+		mes "[Ellie]";
+		mes "Who are you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I have been asked by your husband.";
+		next;
+		emotion ET_CRY;
+		mes "[Ellie]";
+		mes "Oh... He is such a kind person... He must have been in danger as well, but he still cares about me...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "This place is dangerous. Let's move.";
+		next;
+		erasequest 5464;// Mad Love for Wife(2)
+		setquest 5465;// Mad Love for Wife(3)
+		mes "[Ellie]";
+		mes "Thank you, dear adventurer.";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+	}
+	end;
+
+OnTouch:
+	if (isbegin_quest(5464) == 1)
+		classchange( 4W_F_01, "", bc_self );
+	end;
+}
+
+prt_q,229,310,6	script	Female#EP161BU04	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(5465) == 1) {
+		emotion ET_THANKS, getnpcid(0, "Eryus#EP161BU02");
+		mes "[Eryus]";
+		mes "Oh! Thank god! Dear adventurer...";
+		next;
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		mes "[Ellie]";
+		mes "Oh, Eryus... Cough... Cough...";
+		next;
+		emotion ET_HUK, getnpcid(0, "Eryus#EP161BU02");
+		mes "[Eryus]";
+		mes "Ellie, what is going on? Are you ill again? Where is your medicine?";
+		next;
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		mes "[Ellie]";
+		mes "Cough... Cough... I must have dropped it while running...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Where did you drop the medicine?";
+		next;
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		mes "[Ellie]";
+		mes "Cough... Cough... I don't know. Cough, it could be there... Cough... Cough...";
+		next;
+		mes "[Eryus]";
+		mes "Where you were before? Wait a moment. Let me go get it for you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is dangerous out there. I'll go. You should stay here and take care of your wife.";
+		next;
+		erasequest 5465;// Mad Love for Wife(3)
+		setquest 5466;// Mad Love for WifeQuest(4)
+		mes "[Eryus]";
+		mes "Would you do that for us? Please. We are running out of time. Ellie. hold on...";
+		close2;
+		classchange( HIDDEN_WARP_NPC, "Female#EP161BU04", bc_self );
+	}
+}
+
+prt_q,111,166,0	script	Emergency Medicine#EP16	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	if (isbegin_quest(5466) == 1) {
+		mes "It seems to be the bundle of medicine dropped by Ellie while running.";
+		next;
+		if (select( "Pick up.", "Leave it." ) == 1) {
+			erasequest 5466;// Mad Love for WifeQuest(4)
+			setquest 5467;// Mad Love for WifeQuest(5)
+			mes "You picked up the bundle of medicine. Bring it to Ellie in pain.";
+			close;
+		}
+	}
+	end;
+}
+
+prt_q,146,252,6	script	Dead Villager#EP161DIE01	4_M_LIEMAN,2,2,{
+	mes "He seems to be dead.";
+	close;
+OnTouch_:
+	.@hidden_name$ = strnpcinfo(2);
+	if (getd(".mob_count_" + .@hidden_name$) > 0)
+		end;
+	.@num = atoi( replacestr( .@hidden_name$, "EP161DIE", "" ) );
+	switch(.@num) {
+	case 0:
+	case 12:
+		npctalk "Don't worry, it is not a ferocious dog... Let me go take a look...", "", bc_area;
+		break;
+	case 1:
+	case 11:
+		npctalk "Bon appetite", "", bc_area;
+		break;
+	case 2:
+		npctalk "This is my daughter. She will be 6 in 2 weeks.", "", bc_area;
+		break;
+	case 3:
+		npctalk "WUG is the best!", "", bc_area;
+		break;
+	case 5:
+		npctalk "I want to fo home...", "", bc_area;
+		break;
+	case 4:
+	case 6:
+	case 7:
+	case 13:
+	case 14:
+		npctalk "Argh...", "", bc_area;
+		break;
+	case 8:
+		npctalk "Oh, I love dogs!", "", bc_area;
+		break;
+	case 9:
+		npctalk "I want to have some beef stew.", "", bc_area;
+		break;
+	case 10:
+		npctalk "Haha, don't worry. It won't burst.", "", bc_area;
+		break;
+	case 15:
+		npctalk "For Himmelmez...", "", bc_area;
+		break;
+	case 16:
+		npctalk "I am hungey...", "", bc_area;
+		break;
+	case 17:
+		npctalk "I had a date...", "", bc_area;
+		break;
+	case 18:
+		npctalk "Help... Help me...", "", bc_area;
+		break;
+	case 19:
+		npctalk "My sister has given me this as a lucky charm...", "", bc_area;
+		break;
+	case 20:
+		npctalk "According to the monster's gourmet guide, humans are supposed to be very delicious, right?", "", bc_area;
+		break;
+	}
+	unittalk getcharid(3), "" + strcharinfo(0) + " : ?";
+	sleep2 1000;
+	specialeffect EF_POISONSMOKE;
+	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
+	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
+	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
+	setd ".mob_count_" + strnpcinfo(2), 1;
+	hideonnpc strnpcinfo(0);
+	end;
+OnMyMobDead:
+	.@hidden_name$ = strnpcinfo(2);
+	setd ".mob_count_" + .@hidden_name$, getd(".mob_count_" + .@hidden_name$) + 1;
+	if (getd(".mob_count_" + .@hidden_name$) == 4)
+		initnpctimer;
+	end;
+OnTimer180000:
+	setd ".mob_count_" + strnpcinfo(2), 0;
+	stopnpctimer;
+	hideoffnpc strnpcinfo(0);
+	end;
+}
+prt_q,108,318,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE02	4_M_LIEMAN,2,2
+prt_q,265,300,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE03	4_M_DSTMANDEAD,2,2
+prt_q,213,90,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE04	4_M_DSTMANDEAD,2,2
+prt_q,109,94,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE05	4_M_DSTMANDEAD,2,2
+prt_q,214,85,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE06	4_M_LIEMAN,2,2
+prt_q,222,87,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE07	4_M_DIEMAN,2,2
+prt_q,238,129,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE08	4_M_DIEMAN,2,2
+prt_q,200,139,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE09	4_M_DIEMAN,2,2
+prt_q,220,350,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE10	4_M_DIEMAN,2,2
+prt_q,156,275,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE11	4_M_DSTMANDEAD,2,2
+prt_q,104,114,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE12	4_M_DIEMAN,2,2
+prt_q,149,188,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE13	4_M_LIEMAN,2,2
+prt_q,188,207,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE14	4_M_DIEMAN,2,2
+prt_q,88,279,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE15	4_M_LIEMAN,2,2
+prt_q,89,207,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE16	4_M_DIEMAN,2,2
+prt_q,88,350,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE17	4_M_LIEMAN,2,2
+prt_q,227,219,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE18	4_M_DSTMANDEAD,2,2
+prt_q,74,227,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE19	4_M_DSTMANDEAD,2,2
+prt_q,45,146,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE20	4_M_DIEMAN,2,2
+
+prt_q,148,49,0	script	Sign#EP161ETC12	2_BULLETIN_BOARD,{
+	mes "[Prontera, the Capital of Rune Midgartz Kingdom]";
+	mes "Welcome to Prontera";
+	mes "in the heart of Rune Midgarts!";
+	mes "Prontera is located";
+	mes "in the center of the continent,";
+	mes "and it is famous as the busy city";
+	mes "of commerce and trade.";
+	next;
+	mes "[Prontera, the Capital of Rune Midgartz Kingdom]";
+	mes "There are major buildings including";
+	mes "the Prontera Palace where job change to Crusader is available;";
+	mes "Prontera Cathedral where job changes to Acolyte, Priest are available";
+	mes "and wedding ceremonies are held;";
+	mes "the Knight's Building, etc.";
+	next;
+	mes "[Prontera, the Capital of Rune Midgartz Kingdom]";
+	mes "There are many people and stores";
+	mes "as well so make sure to look around.";
+	next;
+	mes "[Prontera, the Capital of Rune Midgartz Kingdom]";
+	mes "Also, in the south east of the central fountain,";
+	mes "there is the historic Quadro Blacksmith's Workshop.";
+	mes "Drop by the place if you want to get";
+	mes "your equipment";
+	mes "repaired.";
+	next;
+	mes "[Prontera, the Capital of Rune Midgartz Kingdom]";
+	mes "There is Izlude in the south east, Payon in the south, Geffen in the west and Al De Baran in the north.";
+	close;
+}
+
+prt_q,155,190,4	script	Krimhilt	GUILD_FLAG,{ end; }
+prt_q,146,194,3	duplicate(Krimhilt)	Svanhilt	GUILD_FLAG
+prt_q,143,203,2	duplicate(Krimhilt)	Razriggs	GUILD_FLAG
+prt_q,167,203,6	duplicate(Krimhilt)	Skoegul	GUILD_FLAG
+prt_q,165,194,5	duplicate(Krimhilt)	Guindle	GUILD_FLAG
+
+// Prison quests
+
+prt_pri00,46,130,7	script	Corrupt Warder#pa0829	4_M_KY_SOLD,{
+	if ((MaxWeight - Weight) < 1000) {
+		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
+		close;
+	}
+	if (checkweight(501,1) == 0) {
+		mes "There are too many kinds of items in possession. Reduce the type of the items and try again.";
+		close;
+	}
+	mes "[Corrupt Warder]";
+	mes "What is it? Did Dylan send you here? If you are going to deal with me, don't waste any more time. There are a lot of people watching us.";
+	next;
+	if (select( "What's the deal?", "Let's deal." ) == 1) {
+		mes "[Corrupt Warder]";
+		mes "Isn't Dylan making some strange powder whenever he breaks a thing?";
+		next;
+		mes "[Corrupt Warder]";
+		mes "It is ^0000ffRune Magic Powder^000000 which the magicians use for their experiments. I don't think Dylan knows this.";
+		next;
+		mes "[Corrupt Warder]";
+		mes "I'll ^0000ffexchange 30 Rune Magic Powders for 1 Mysterious Blue Box^000000. How do you like that? It is such a sweet deal, isn't it?";
+		close;
+	}
+	if (countitem(6920) < 30) {
+		mes "[Corrupt Warder]";
+		mes "30 Rune Magic Powders for 1 Mysterious Blue Box. I remind you.";
+		close;
+	}
+	mes "[Corrupt Warder]";
+	mes "Good, it is a great deal.";
+	delitem 6920,30;// Rune_Magic_Powder
+	getitem 22901,1;// Mysterious Blue Box
+	close;
+}
