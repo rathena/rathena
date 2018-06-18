@@ -6013,3 +6013,3102 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 	}
 }
 
+prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
+	if (checkweight(501,1) == 0) {
+		mes "[Agnes Roegenburg]";
+		mes "Well, you seem to have lots of luggage. How about removing some?";
+		close;
+	}
+	if (banquet_roegenburg_quest == 0) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Hello, nice to meet you.";
+		mes "Did you visit to see my grandfather?";
+		next;
+		mes "[Agnes]";
+		mes "If so, he is over there. You can find him there.";
+		mes "Then, have a good time.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 1) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Did you see my brothers?";
+		mes "If you don't, make sure to see Wolf and have talk with him.";
+		next;
+		mes "[Agnes]";
+		mes "Nowadays, he shares many works with my grandfather and he has a lot to talk with you.";
+		mes "So the time for me to talk with him is quite reduced though.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 2 || banquet_roegenburg_quest == 3) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "The banquet has started but I haven't yet found any body who I go with.";
+		mes "Originally Wolf is supposed to go with me, but it is canceled as he became busy.";
+		next;
+		mes "[Agnes]";
+		mes "If he had told me earlier he cannot go, I wouldn't have refused all those proposals.";
+		mes "Myer said he would go with me, but I am afraid he may leave as wind anytime.";
+		next;
+		mes "[Agnes]";
+		mes "I don't want anything big...";
+		mes "When we were young, we played together. They read me books.";
+		next;
+		mes "[Agnes]";
+		mes "I still like the best the books that my brothers read me.";
+		mes "Those princes and princesses in those books were all my friend.";
+		next;
+		mes "[Agnes]";
+		mes "Recently I read a story on a knight who sacrifices himself for a lady.";
+		mes "In the story, the lady handed a pretty handkerchief to the knight.";
+		next;
+		mes "[Agnes]";
+		mes "Then, I realized that what I had lacked.";
+		mes "It was a pretty handkerchief.";
+		next;
+		mes "[Agnes]";
+		mes "So I carry lots of pretty handkerchiefs so that I can hand them to my knight anytime.";
+		mes "But there is no one for me to hand my handkerchiefs to...";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 4 || banquet_roegenburg_quest == 5) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Did you see him too?";
+		mes "He came with Myer.";
+		next;
+		mes "[Agnes]";
+		mes "He is so handsome. I wonder what family he is from.";
+		mes "I am sorry that I left so early that I couldn't talk with him at all. I asked Myer who he is, but he didn't tell me.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 6) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Dear adventurer?";
+		mes "Wolf is looking for you. Do you have an appointment with him?";
+		next;
+		mes "[Agnes]";
+		mes "Why don't you visit Wolf?";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 7) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "He is my brother, but he and other brothers are so childish.";
+		next;
+		mes "[Agnes]";
+		mes "Go out to the street in Prontera and ask 5-year old children, even they know the answer.";
+		next;
+		mes "[Agnes]";
+		mes "They are overlooking something bigger due to their personal desires. Of course, I also hate them and want to take revenge, but it does not solve the problem.";
+		next;
+		mes "[Agnes]";
+		mes "If they had thought about how the citizens of the kingdom can live more happily, they would not have acted like that.";
+		next;
+		mes "[Agnes]";
+		mes "Anyway, let's wait and see, as they are trying to think like adults.";
+		next;
+		mes "[Agnes]";
+		mes "But I feel safe that my grandfather stays with me.";
+		close3;
+	}
+	if (banquet_roegenburg_quest >= 8 && banquet_roegenburg_quest <= 12) {
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "You seem to have come to see my brothers? but there is no one in the house.";
+		next;
+		mes "[Agnes]";
+		mes "In a long time, we were together, but they left and I am lonely again. It is nice that they don't fight one another any more.";
+		close3;
+	}
+	// daily
+	switch( checkquest(14509,PLAYTIME) ) {
+	case -1:
+		for ( .@quest_id = 14508; .@quest_id <= 14515 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
+			continue;
+		switch( .@quest_id ) {
+		case 14508:
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back.";
+			mes "Pearls? soft hairs? Have you brought them?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			if (countitem(722) < 3 || countitem(949) < 50) {
+				mes "Ah, it is....";
+				next;
+				mes "[Agnes]";
+				mes "Not yet? OK. We have still time.";
+				next;
+				mes "[Agnes]";
+				mes "You forget what I asked didn't you? ^0000cdThey are three " + getitemname(722) + " and 50 strands of " + getitemname(949) + "^000000.";
+				next;
+				mes "[Agnes]";
+				mes "Please don't be late!";
+				close3;
+			}
+			mes "Here you are.";
+			mes "Am I too late?";
+			next;
+			mes "[Agnes]";
+			mes "No! you have brought all of them. I'm so happy!";
+			next;
+			mes "[Agnes]";
+			mes "I'll take pearls to the jewller, the best jeweler. They are so pretty!";
+			next;
+			mes "[Agnes]";
+			mes "I'll send soft hairs too. I wonder what they will turn into.";
+			next;
+			mes "[Agnes]";
+			mes "Ah, I need a handkerchief. There are so many things to do and I'm so busy.";
+			next;
+			mes "[Agnes]";
+			mes "Oh, I would like to thank you for working hard for me. Here you are.";
+			next;
+			mes "[Agnes]";
+			mes "And Can I ask you to get more? I am afraid that cloth is not sufficient.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I guess so. I will help you to the best of my ability.";
+			next;
+			mes "[Agnes]";
+			mes "You really understand me. I'm so happy.";
+			next;
+			mes "[Agnes]";
+			mes "See you tomorrow. Have a nice day.";
+			delitem 722,3;// Pearl
+			delitem 949,50;// Feather
+			erasequest 14508;// Jewel and Cloth
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		case 14510:
+			if (countitem(7166) < 15 || countitem(507) < 30 || countitem(509) < 10) {
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+				next;
+				mes "[Agnes]";
+				mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "I am sorry but I forgot what I should get.";
+				next;
+				cutin "16agn_ang",2;
+				mes "[Agnes]";
+				mes "Oh, it's disappointing! I thought you would have a good memory as an adventurer.";
+				next;
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Ah, I'm sorry. I got angry suddenly.";
+				next;
+				mes "[Agnes]";
+				mes "As I told you before. I didn't eat meals these days. Please forgive my misbehavior. Did yo get what I asked?";
+				next;
+				mes "[Agnes]";
+				mes "^0000cd15 pieces of " + getitemname(7166) + ", 30 " + getitemname(507) + ", and 10 " + getitemname(509) + "^000000. I'll make a pink dress that is softer than flower petal.";
+				next;
+				mes "[Agnes]";
+				mes "Then, please get them for me.";
+				close3;
+			}
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+			next;
+			mes "[Agnes]";
+			mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Are these what you want?";
+			next;
+			mes "[Agnes]";
+			mes "Let me see.... Yes! they are what I wanted. You are the best.";
+			next;
+			mes "[Agnes]";
+			mes "It is very soft. Softer than the pink flower petals. If I make a flower with theses, the dress will feel like a flower.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
+			next;
+			mes "[Agnes]";
+			mes "Can I ask you to bring more? I need lots of dresses.";
+			delitem 7166,15;// Soft Silk
+			delitem 507,30;// Red Herb
+			delitem 509,10;// White Herb
+			erasequest 14510;// Pink Petal-like Dress
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		case 14511:
+			if (countitem(6511) < 5 || countitem(6509) < 5 || countitem(6510) < 5) {
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+				next;
+				mes "[Agnes]";
+				mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "I am sorry but I forgot what I should get.";
+				next;
+				cutin "16agn_ang",2;
+				mes "[Agnes]";
+				mes "Oh, it's disappointing! I thought you would have a good memory as an adventurer.";
+				next;
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Ah, I'm sorry. I got angry suddenly.";
+				next;
+				mes "[Agnes]";
+				mes "As I told you before. I didn't eat meals these days. Please forgive my misbehavior. Did yo get what I asked?";
+				next;
+				mes "[Agnes]";
+				mes "^0000cd5 " + getitemname(6511) + ", 5 " + getitemname(6510) + " and 5 " + getitemname(6509) + "^000000. I will use them to make a plain but beautiful decoration.";
+				next;
+				mes "[Agnes]";
+				mes "Then, please get them for me.";
+				close3;
+			}
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+			next;
+			mes "[Agnes]";
+			mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Are these what you want?";
+			next;
+			mes "[Agnes]";
+			mes "Let me see.... Yes! they are what I wanted. You are the best.";
+			next;
+			mes "[Agnes]";
+			mes "I think I can use these to make a beautiful corsage. It will be fresh and beatiful.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
+			next;
+			mes "[Agnes]";
+			mes "Can I ask you to bring more? I need lots of dresses.";
+			delitem 6511,5;// Beautiful Flower
+			delitem 6509,5;// Mysterious Flower
+			delitem 6510,5;// Elegant Flower
+			erasequest 14511;// Beautiful Flower Decoration
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		case 14512:
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+			next;
+			mes "[Agnes]";
+			mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			if (countitem(7205) < 20) {
+				mes "I am sorry but I forgot what I should get.";
+				next;
+				cutin "16agn_ang",2;
+				mes "[Agnes]";
+				mes "Oh, it's disappointing! I thought you would have a good memory as an adventurer.";
+				next;
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Ah, I'm sorry. I got angry suddenly.";
+				next;
+				mes "[Agnes]";
+				mes "As I told you before. I didn't eat meals these days. Please forgive my misbehavior. Did yo get what I asked?";
+				next;
+				mes "[Agnes]";
+				mes "^0000cd20 " + getitemname(7205) + "^000000. I want to make a dress that is deeper and darker than the nigh sky.";
+				next;
+				mes "[Agnes]";
+				mes "Then, please get them for me.";
+				close3;
+			}
+			mes "Are these what you want?";
+			next;
+			mes "[Agnes]";
+			mes "Let me see.... Yes! they are what I wanted. You are the best.";
+			next;
+			mes "[Agnes]";
+			mes "I will use these materials to make an elegant dress as dark as nigh sky. Wearing this, I will give an image of a sleek cat.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
+			next;
+			mes "[Agnes]";
+			mes "Can I ask you to bring more? I need lots of dresses.";
+			delitem 7205,20;// Piece of Black Cloth
+			erasequest 14512;// Dress of the Night Sky
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		case 14513:
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+			next;
+			mes "[Agnes]";
+			mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			if (countitem(7122) < 20) {
+				mes "I am sorry but I forgot what I should get.";
+				next;
+				cutin "16agn_ang",2;
+				mes "[Agnes]";
+				mes "Oh, it's disappointing! I thought you would have a good memory as an adventurer.";
+				next;
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Ah, I'm sorry. I got angry suddenly.";
+				next;
+				mes "[Agnes]";
+				mes "As I told you before. I didn't eat meals these days. Please forgive my misbehavior. Did yo get what I asked?";
+				next;
+				mes "[Agnes]";
+				mes "^0000cd20 strands of " + getitemname(7122) + "^000000. I want to make a shawl of fire that is flaming more fiercely than the sun.";
+				next;
+				mes "[Agnes]";
+				mes "Then, please get them for me.";
+				close3;
+			}
+			mes "Are these what you want?";
+			next;
+			mes "[Agnes]";
+			mes "Let me see.... Yes! they are what I wanted. You are the best.";
+			next;
+			mes "[Agnes]";
+			mes "In the banquet, people will not be able to take their eyes from my flaming shawl, which is very nice.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
+			next;
+			mes "[Agnes]";
+			mes "Can I ask you to bring more? I need lots of dresses.";
+			delitem 7122,20;// Burning Hair
+			erasequest 14513;// Shawl of the Blazing Sun
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		case 14514:
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+			next;
+			mes "[Agnes]";
+			mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			if (countitem(6557) < 5) {
+				mes "I am sorry but I forgot what I should get.";
+				next;
+				cutin "16agn_ang",2;
+				mes "[Agnes]";
+				mes "Oh, it's disappointing! I thought you would have a good memory as an adventurer.";
+				next;
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Ah, I'm sorry. I got angry suddenly.";
+				next;
+				mes "[Agnes]";
+				mes "As I told you before. I didn't eat meals these days. Please forgive my misbehavior. Did yo get what I asked?";
+				next;
+				mes "[Agnes]";
+				mes "^0000cdFive " + getitemname(6557) + "^000000. I can use them to make the dress elegant and beautiful and I will look like a fairy.";
+				next;
+				mes "[Agnes]";
+				mes "Then, please get them for me.";
+				close3;
+			}
+			mes "Are these what you want?";
+			next;
+			mes "[Agnes]";
+			mes "Let me see.... Yes! they are what I wanted. You are the best.";
+			next;
+			mes "[Agnes]";
+			mes "Now I think I can use these things to make a beautiful and elegant dress. It will be fantastic.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
+			next;
+			mes "[Agnes]";
+			mes "Can I ask you to bring more? I need lots of dresses.";
+			delitem 6557,5;// Fancy Fairy Wing
+			erasequest 14514;// Step of the Fairy
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		case 14515:
+			cutin "16agn_nor",2;
+			mes "[Agnes]";
+			mes "Dear adventurer, welcome back. You are a great person. I think you have obtained all, I guess.";
+			next;
+			mes "[Agnes]";
+			mes "If not, I will be really sad. I'm skipping meals to wear the pretty dress. So I'm so sensitive now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			if (countitem(1001) < 5) {
+				mes "I am sorry but I forgot what I should get.";
+				next;
+				cutin "16agn_ang",2;
+				mes "[Agnes]";
+				mes "Oh, it's disappointing! I thought you would have a good memory as an adventurer.";
+				next;
+				cutin "16agn_nor",2;
+				mes "[Agnes]";
+				mes "Ah, I'm sorry. I got angry suddenly.";
+				next;
+				mes "[Agnes]";
+				mes "As I told you before. I didn't eat meals these days. Please forgive my misbehavior. Did yo get what I asked?";
+				next;
+				mes "[Agnes]";
+				mes "^0000cdFive " + getitemname(1001) + "^000000. I going to use the start dust to embroider the dress like starts in the night sky. It will be very pretty.";
+				next;
+				mes "[Agnes]";
+				mes "Then, please get them for me.";
+				close3;
+			}
+			mes "Are these what you want?";
+			next;
+			mes "[Agnes]";
+			mes "Let me see.... Yes! they are what I wanted. You are the best.";
+			next;
+			mes "[Agnes]";
+			mes "Now I can embroider my dress like stars shining in the night sky. It will be very pretty.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
+			next;
+			mes "[Agnes]";
+			mes "Can I ask you to bring more? I need lots of dresses.";
+			delitem 1001,5;// Star Dust
+			erasequest 14515;// Sparkling Star
+			setquest 14509;// Still Making It
+			getitem 6919,4;// Honor Token
+			getexp 200000,200000;
+			close3;
+		default:	// none quest
+		}
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Dear adventurer. You came at the perfect time";
+		mes "A serious thing happened!!!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What is it? Any threat to your safety?";
+		mes "Or your brother started fight again?";
+		next;
+		mes "[Agnes]";
+		mes "No, it's more serious.";
+		mes "I need your help desperately!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK, then I will prepare for fight.";
+		mes "Wait a second.";
+		next;
+		mes "[Agnes]";
+		mes "What ?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What..?";
+		next;
+		mes "[Agnes]";
+		mes "Why do you prepare to fight?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You said a serious thing happened. Then, is there anything serious other than a large war?";
+		next;
+		mes "[Agnes]";
+		mes "It is not light that.";
+		mes "Fighting is not all about living.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Then what is it?";
+		next;
+		mes "[Agnes]";
+		mes "I heard from Myer that he is sorry that he cannot come with me to the banquet. He said that he would send a handsome guy as my partner instead him.";
+		mes "and that I should prepare to go with him.";
+		next;
+		mes "[Agnes]";
+		mes "He said that the substitute is so good-looking that I would like him when I see him. I am sure that a very handsome, as Myer is choosy.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That sounds nice.";
+		mes "By the way, I don't understand the 'serious thing' you said.";
+		next;
+		mes "[Agnes]";
+		mes "I mean I prepared a dress that I choose thinking that I would go with Myer. And now the partner has changed and I have to prepare considering him.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, you shoud!!!";
+		next;
+		mes "[Agnes]";
+		mes "I expected you would agree as a woman like me.";
+		next;
+		mes "[Agnes]";
+		mes "There are so many things I have to consider, such as his hair color, eye color, clothes color and shape. I asked Myer about him, but he didn't tell me.";
+		next;
+		mes "[Agnes]";
+		mes "Once he visits, it will be late. So I have to finish preparation in advance, regardless of how he wears.";
+		next;
+		mes "[Agnes]";
+		mes "To prepare for different situations, such as hair colors and clothes color, I need ^0000cdlots of dresses^000000. Do you understand what I mean?";
+		next;
+		mes "[Agnes]";
+		mes "Therefore, I told my grandfather that I want to have some more dresses to prepare for all situations, but he said that what I have now is enough. Does it make sense?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That is nonsense!";
+		next;
+		mes "[Agnes]";
+		mes "Yes!!!";
+		next;
+		mes "[Agnes]";
+		mes "I talked with Wolf too but He said the same thing as grandfather. I should ask somebody to do me a favor unless he doesn't listen to me.";
+		next;
+		mes "[Agnes]";
+		mes "So I talked with Myer. He told me to talk with you. He also said that if you cannot get a dress, buy the materials and make one. He said that is how they on the street.";
+		next;
+		mes "[Agnes]";
+		mes "So I hired very skillful person who can make a dress and accessories, but the key is materials. I guess that you are very experienced and can get what I need.";
+		next;
+		mes "[Agnes]";
+		mes "If I go out to get a dress, I may be the first princess in Rune Midgarts who dies for a dress. So would you please save me from this situation?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Of course, I'll do my best to help you.";
+		mes "You need cloth, accessories and dyes don't you?";
+		next;
+		mes "[Agnes]";
+		mes "Yes, you are right!";
+		mes "You understand me very well! I like you very much.";
+		next;
+		mes "[Agnes]";
+		mes "Can you be my friend. I have wanted a woman who understands me very much.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Of course. What do you want?";
+		next;
+		mes "[Agnes]";
+		mes "There is an accessory I really want to have, but it is so rare that I couldn't get it.";
+		next;
+		mes "[Agnes]";
+		mes "Can you get it for me?...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why is it so rare?";
+		next;
+		mes "[Agnes]";
+		mes "it is a ^0000cdpearl^000000! elegant and gentle gloss! Valuable jewel coming from pains!";
+		next;
+		mes "[Agnes]";
+		mes "I would like to use pearls to make a necklace and bracelet. You can get pearls from monsters. Can you get them for me?";
+		next;
+		if (select( "Of course.", "It will be difficult." ) == 2) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I think it will be difficult to get pearls. It is really difficult. It is beyond my ability. I'm sorry.";
+			next;
+			mes "[Agnes]";
+			mes "Yes... I know it will be very difficult. If you change your mind, please come back.";
+			close3;
+		}
+		mes "[Agnes]";
+		mes "Thank god. I was afraid that you would refuse it.";
+		next;
+		mes "[Agnes]";
+		mes "I carry this to the banquet whatever I wear. And can ask you do me a favor one more?";
+		next;
+		mes "[Agnes]";
+		mes "To produce good cloth, good threads are necessary. To extract good threads, ^0000cdsoft hair^000000 is the best. Would you get soft fur for me too?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is not difficult.";
+		next;
+		mes "[Agnes]";
+		mes "I think ^0000cd3 " + getitemname(722) + " ^000000are enough and 50 strands of " + getitemname(949) + "^0000cdare required^000000.";
+		next;
+		mes "[Agnes]";
+		mes "The success of my banquet is in your hands. I will do my best to make it one of the best ever.";
+		setquest 14508;// Jewel and Cloth
+		close3;
+	case 0:
+	case 1:
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Dear adventurer, what are you doing here?";
+		mes "Did you come for my dress?";
+		next;
+		mes "[Agnes]";
+		mes "But I'm still making the dress using what you got for me.";
+		mes "I'll decide what to make next after completing this.";
+		next;
+		mes "[Agnes]";
+		mes "Thank you for visiting but I am sorry that I cannot help you.";
+		mes "Would you come back later in the afternoon?";
+		close3;
+	case 2:
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Dear adventurer. Thanks for coming. I thought all day of what dress to make. I cannot decide still.";
+		next;
+		mes "[Agnes]";
+		mes "A golden dress shining brighter than the sun? Or a sliver dress shining more gentile than the moon? Or a dress greener than tree leaves?";
+		next;
+		mes "[Agnes]";
+		mes "Ah, how can I fit the pearl necklace and look nice with my partner?";
+		next;
+		mes "[Agnes]";
+		mes "I have made a decision!!";
+		next;
+		mes "[Agnes]";
+		switch( rand(14510,14515) ) {
+		case 14510:
+			mes "I prefer the soft pink dress other than young flower petal blooming on a large field. To be like that, I think I need a very soft silk cloth.";
+			next;
+			mes "[Agnes]";
+			mes "In the banquet, if my soft dress widens like young flower petal, the place will be full with fragnance.";
+			next;
+			mes "[Agnes]";
+			mes "The width of the skirt should be as wider as possible. The dress will look like a flower petal shaking every time I move.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Would get me ^0000cd" + getitemname(7166) + "^000000? ^0000cd15 pieces^000000 will do.";
+			next;
+			mes "[Agnes]";
+			mes "I also need herbs used to dye the cloth. ^0000cd30 " + getitemname(507) + " and 10 " + getitemname(509) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "I see a dress in you hands that look like a flower petal.";
+			erasequest 14509;// Still Making It
+			setquest 14510;// Pink Petal-like Dress
+			close3;
+		case 14511:
+			mes "Flower! It a flower! Large and shining jewels are too common here in the palace.";
+			next;
+			mes "[Agnes]";
+			mes "I want to be a flower in the banquet hall. I want to make people to admire me like a flower that fascinates with delicate fragrance.";
+			next;
+			mes "[Agnes]";
+			mes "I'm going to use flowers to make a corsage. Please get me some flowers. No common flowers. I heard that rare flowers can be obtained in a far foreign country.";
+			next;
+			mes "[Agnes]";
+			mes "I saw those flowers once. They were so beautiful.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, please get me ^0000cd5 " + getitemname(6511) + ", 5 " + getitemname(6510) + " and 5 " + getitemname(6509) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "My beautiful corsage is up to you!";
+			erasequest 14509;// Still Making It
+			setquest 14511;// Beautiful Flower Decoration
+			close3;
+		case 14512:
+			mes "I like a black dress that reminds of dark night. A dress so elegant and beautiful that makes people to admire in silence.";
+			next;
+			mes "[Agnes]";
+			mes "I should make a dress that is as far and mysterious as a dark night.";
+			next;
+			mes "[Agnes]";
+			mes "I will go around the banquet hall like a sleek cat, concealing everything underneath the black dress.";
+			next;
+			mes "[Agnes]";
+			mes "To do so, I think I need ^0000cd20 " + getitemname(7205) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "This will be beautiful dress without a decoration.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, my black night-like dress is up to your hands.";
+			erasequest 14509;// Still Making It
+			setquest 14512;// Dress of the Night Sky
+			close3;
+		case 14513:
+			mes "Have you ever watch the burning sun directly. I am sure you haven't. The sun stabs the eyes of the people who watch it so that they cannot watch it.";
+			next;
+			mes "[Agnes]";
+			mes "But I wonder how many people lost their eyes after watching the sun directly. Why do people watch that burning fire? What is it?";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer. I want to have that burning fire.";
+			next;
+			mes "[Agnes]";
+			mes "I heard that there is the ^0000cdhot hair^000000 that looks burning but not hot at all, though the name sounds contradictory.";
+			next;
+			mes "[Agnes]";
+			mes "I will use it to make a beautiful shawl. As soon as I enter the banquet hall, I will be able to give a strong impression.";
+			next;
+			mes "[Agnes]";
+			mes "Please get me ^0000cd20 strands of " + getitemname(7122) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "My beautiful shawl burning like the sun is up to your hands.";
+			erasequest 14509;// Still Making It
+			setquest 14513;// Shawl of the Blazing Sun
+			close3;
+		case 14514:
+			mes "I would like to make a fairy dress! A dress so shining in golden light that anyone should admire it.";
+			next;
+			mes "[Agnes]";
+			mes "Cloth is sufficient, but the problem is decoration. I heard that there is something called ¢®¢çfairy's wing'.";
+			next;
+			mes "[Agnes]";
+			mes "It will make a dress as elegant as fairy and on which I can work lightly. The thought alone makes you fascinated?";
+			next;
+			mes "[Agnes]";
+			mes "Every time I step, the luxury lace will flutter, making people to imagine a fairy waling in the wood. The dress will make me better.";
+			next;
+			mes "[Agnes]";
+			mes "Of course, I will not attach them as they are. I know a person who will modify them properly.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Please get me ^0000cd5 " + getitemname(6557) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "My fairly-like dress is up to you hands.";
+			erasequest 14509;// Still Making It
+			setquest 14514;// Step of the Fairy
+			close3;
+		case 14515:
+			mes "I was thinking of how I can emphasize my pearl necklace.";
+			next;
+			mes "[Agnes]";
+			mes "Yesterday, when I was thinking watching the night sky, I found that stars were twinkling.";
+			next;
+			mes "[Agnes]";
+			mes "It was so beautiful that I couldn't take my eyes off them.";
+			next;
+			mes "[Agnes]";
+			mes "What I ask you today is....";
+			next;
+			mes "[Agnes]";
+			mes "Start dust.";
+			next;
+			mes "[Agnes]";
+			mes "Imagine that star dusts are gently scattered on a beautiful dress. You won't be able to take your eyes from them.";
+			next;
+			mes "[Agnes]";
+			mes "I will be the brightest star in the banquet.";
+			next;
+			mes "[Agnes]";
+			mes "So please get me ^0000cd5 " + getitemname(1001) + "^000000. I think that amount of star dusts can decorate the entire dress.";
+			next;
+			mes "[Agnes]";
+			mes "Don't forget. My shining dress is up to your hands.";
+			erasequest 14509;// Still Making It
+			setquest 14515;// Sparkling Star
+			close3;
+		}
+	}
+}
+
+prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16l	4_EP16_HELMUT,{
+	if (banquet_roegenburg_quest == 0) {
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "Hello.";
+		mes "I am Helmut Roegenburg.";
+		next;
+		mes "[Helmut]";
+		mes "If you want to listen to the story of my family, see my ^0000cdgrandfather^000000 who is over there.";
+		mes "He will explain better than me.";
+		close3;
+	}
+	if (banquet_roegenburg_quest <= 2) {
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "Did you see my brother, ^0000cdWolf Roegenburg^000000?";
+		mes "He is in charge of all household matters helping our grandfather while I am away here on the front.";
+		next;
+		mes "[Helmut]";
+		mes "If you want to know about the Roegenburg, it will be a quality time.";
+		close3;
+	}
+	if (banquet_roegenburg_quest >= 3 && banquet_roegenburg_quest <= 6) {
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "I am glad that I come back home and can see the family members.";
+		next;
+		mes "[Helmut]";
+		mes "But when I think of the front threatened by the monster, I feel heavy-hearted. Of course, I believe that my men are doing well to protect the territory.";
+		next;
+		mes "[Helmut]";
+		mes "I want to run back to them as soon as the banquet is finished.";
+		mes "This place is somewhat stuffy to me.";
+		close3;
+	}
+}
+
+prt_cas_q,86,180,7	script	Kalbern#ep16lug	4_M_RUSCHILD,{
+	if (banquet_roegenburg_quest <= 6) {
+		mes "[Kalbern]";
+		mes "Dear adventurer, hello.";
+		mes "I am ^0000cdKalbern^000000 and a chamberlain of Helmut.";
+		next;
+		mes "[Kalbern]";
+		mes "I served Helmut in a harsh front in the border area. Now I am in Prontera, the capital city of Rune Midgarts and I cannot adapt to this situation";
+		next;
+		mes "[Kalbern]";
+		mes "I also lose my nerve when I see noble people and royal family in the palace.";
+		next;
+		mes "[Kalbern]";
+		mes "I didn't recognize when I served Helmut on the front but here, he seems a little away as I feel that he is the heir of a royal family.";
+		next;
+		mes "[Kalbern]";
+		mes "He treated solders and working children equally. So everybody liked him and followed him.";
+		next;
+		mes "[Kalbern]";
+		mes "I also thank him for accepting me after my parents were killed by the monster.";
+		next;
+		mes "[Kalbern]";
+		mes "To repay his kindness, I begged him to serve him and I am staying with him...";
+		next;
+		mes "[Kalbern]";
+		mes "Here, I have nothing to do for Helmut except bring him some beer.";
+		next;
+		mes "[Kalbern]";
+		mes "I wish that the banquet is finished and go back early.";
+		next;
+		mes "[Kalbern]";
+		mes "But, I don't mean that I don't want him to become a king.";
+		mes "I am just uncomfortable to be here.";
+		close;
+	}
+}
+
+prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
+	if (checkweight(501,1) == 0) {
+		mes "[Wolf Roegenburg]";
+		mes "Well, you seem to have lots of luggage. How about removing some?";
+		close;
+	}
+	if (banquet_roegenburg_quest == 0) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Thank you for visiting the Roegenburg.";
+		mes "Won't you see my grandfather and patriarch of the Roegenburg, ^0000cdMaximilian Roegenburg^000000?";
+		next;
+		mes "[Wolf]";
+		mes "He enjoys talking with adventurers.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 1) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Dear adventurer, it is a honor to have you in the Roegenburg.";
+		mes "I am the second son of the Roegenburg, ^0000cdWolf Roegenburg^000000.";
+		next;
+		mes "[Wolf]";
+		mes "To carry on the will of Wilhelm Roegenburg, a national hero, we, at the Roegenburg, are making lots of efforts to protect honor, justice and traditions.";
+		next;
+		mes "[Wolf]";
+		mes "Since the foundation of Rune Midgarts, lots of people from the Roegenburg have made contribution to the country and this is our pride.";
+		next;
+		mes "[Wolf]";
+		mes "Currently ^0000cdHelmut Roegenburg^000000, who is an excellent candidate for the throne, is participating in the royal assembly. Did you see him?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. I saw him just before. Who is this?";
+		next;
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Dear adventurer, it is nice to see you. I am ^0000cdAgnes Roegenburg^000000 and the youngest of the four of the Roegenburg.";
+		next;
+		mes "[Agnes]";
+		mes "Do you have a partner to go with to the banquet? I have no one to go with. No one takes my fancy.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "Agnes, don't say that. it is not appropriate. We are telling the adventurer of the story of the Roegenburg...";
+		next;
+		classchange( 4_EP16_MEYER, "Myer Roegenburg#ep16lug", bc_self );
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Now, will my prince come with me?";
+		next;
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Ah, Myer, brother! brother!";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Thanks for coming at the right time. Dear adventurer,";
+		mes "This is ^0000cdMyer Roegenburg^000000 and he is the third son of the Roegenburg.";
+		next;
+		mes "[Wolf]";
+		mes "I was away for a long time and have just came back. It is right, isn't?";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Well, about half. I heard that ^0000cda war manic and a peddler would join hands and participate in the royal assembly^000000.";
+		next;
+		mes "[Myer]";
+		mes "So I came back for a short stay. I heard that the relationship between brothers was not close but has suddenly deeper. I cannot be out.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "What your language. ^0000cdEven though you go outside and hang out with low fellows,^000000 you don't have make the place where you live a dirty back street.";
+		mes "You didn't think that I am ignorant of the fellows that you hang out with, did you?";
+		next;
+		mes "[Myer]";
+		mes "Of course I know that grandfather and you sent people to monitor me. They were so awkward and all other fellow knew it.";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "My noble brother doesn't like my way of speaking?";
+		mes "If we join hands and ^0000cdHelmut becomes a king^000000,^0000cdthe whole country will ^000000turn into a back street except the palace. Isn't it better to hear it now to reduce the shock you will have later?";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Well, you may not hear as you will stay at home and calculate the money you will make from wars.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "You are unbelievably rude. I told you should call me politely.";
+		mes "Until when are you going to act like that?";
+		next;
+		cutin "16agn_ang",2;
+		mes "[Agnes]";
+		mes "Stop all of you! We have gathered here for fight. This is a banquet for the adventurer. We shouldn't do this in front of the adventurer.";
+		next;
+		mes "[Agnes]";
+		mes "Especially you lack dignity. What would the adventurer think of us?";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Yes, you are right. I think I am the unwelcome guest. I'd better leave. Agnes, I'll come back later.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Myer Roegenburg#ep16lug", bc_self );
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Oh my god, I forgot. I have to make preparations!";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Sorry for this unpleasant situation. I never meant to do so. Apologies if you feel uncomfortable. Myer made rude remarks as he came back in a long time.";
+		next;
+		mes "[Wolf]";
+		mes "I will tell him to make a polite apology to you later. Actually he is different from what you saw. Please understand kindly.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, it is ok with me.";
+		next;
+		mes "[Wolf]";
+		mes "By the way, dear adventurer, can you do me a favor if you have time?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, pleas go ahead.";
+		next;
+		mes "[Wolf]";
+		mes "I hope you will visit the Wigner and bring a thing from ^0000cdIsaac Wigner^000000.";
+		next;
+		mes "[Wolf]";
+		mes "Originally, I should do that, but I think I need to talk with Myer seriously. So I would like to do that for me...";
+		next;
+		mes "[Wolf]";
+		mes "So, please do it for me. Of course, you may refuse it. But I wonder I can find a reliable person like you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is a test to find that I am reliable.";
+		next;
+		mes "[Wolf]";
+		mes "Ah, no it is not. If you feel unpleasant, I am sorry. I just don't have reliable person.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ok. Go to the Wigner and ask Isaac Wigner for the thing that you requested. Is that right?";
+		next;
+		mes "[Wolf]";
+		mes "Yes. right.";
+		erasequest 14495;// To Wolf
+		setquest 14496;// To Isaac
+		banquet_roegenburg_quest = 2;
+		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+		}
+		close3;
+	}
+	if (banquet_roegenburg_quest == 2) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Walk along the ^0000cdcorridor. The Wigner is in the last room^000000.";
+		mes "Find Isaac and bring the thing I requested.";
+		next;
+		mes "[Wolf]";
+		mes "I am very sorry to cause inconvenience to you.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 3) {
+		if (countitem(6930) < 1) {
+			cutin "16wol_nor",2;
+			mes "[Wolf]";
+			mes "Dear adventurer, how is it going? I see you have nothing. It seem that you haven't brought it yet.";
+			mes "You just go to the ^0000cdWigner and bring a thing from Isaac^000000.";
+			close3;
+		}
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Dear adventurer, did you bring the thing? Oh, you have brought it. Thank you very much.";
+		next;
+		mes "[Wolf]";
+		mes "Oh, the box's lock is protected by ^0000cdpassword^000000.";
+		next;
+		mes "[Wolf]";
+		mes "The first cell has a number ^0000cd1^000000 and the next four cells are empty and you should enter numbers into them.";
+		next;
+		mes "[Wolf]";
+		mes "Hmm.. This is simple. This perfectly ^0000cdbeautiful box is a hint^000000... The answer is always included in the question.";
+		next;
+		mes "[Wolf]";
+		mes "Looking at the answer, it really seems that the Wigner people love ^0000cdnumers and gold^000000. Will you try to solve it too?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How come you ask me to dicipher the password. And isn't it a secret thing?";
+		next;
+		mes "[Wolf]";
+		mes "Because you are reliable person. Just do it for fun.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Then, I think the answer is this:";
+		next;
+		input .@string$;
+		mes "[" + strcharinfo(0) + "]";
+		if (.@string$ != "1618") {
+			mes "Hm... It is not the answer.";
+			mes "I think I need some time for contemplation.";
+			close3;
+		}
+		mes "1618. It stands for 1.618 which is the golden ratio.";
+		mes "Well it sounds too easy.";
+		next;
+		mes "[Wolf]";
+		mes "But what is inside is not easy.";
+		next;
+		mes "[Wolf]";
+		mes "The thing put in the smal bottle in the box will change the dynamics of combats and wars, though it is in a testing stage.";
+		next;
+		mes "[Wolf]";
+		mes "You are a reliable person as I expected.";
+		mes "I was sorry when I asked you to do me a favor. We will reward you genersouly.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is OK. there is message from Isaac.";
+		next;
+		mes "[Wolf]";
+		mes "What is that?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Recently, there is a ^0000cdrumor^000000 circulating in Prontera about the Roegenburg and Helmut Roegenburg.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It was not a good rumor. He asked me to inspect it and check if it is true.";
+		next;
+		mes "[Wolf]";
+		mes "A rumor about you? I didn't know about it... Rumor.....";
+		mes "I need to check it, but there is no person we count on...";
+		next;
+		mes "[Wolf]";
+		mes "Execuse me, dear adventurer?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes?";
+		next;
+		mes "[Wolf]";
+		mes "Can you do me a favor again? I cannot do it myself, as there could be a problem when I do it myself.";
+		next;
+		mes "[Wolf]";
+		mes "All staff I can have trust in are doing other jobs and I have no person except you.";
+		next;
+		mes "[Wolf]";
+		mes "You can get information easily traveling around and what is more important is that I can trust you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, it is not easy but....";
+		next;
+		mes "[Wolf]";
+		mes "If you are busy, you may refuse it. I am sorry that I ask you to do me a favor. My brother came back suddenly and it drives me out of my mind and busy.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, that is a thing I can do. Then see you soon.";
+		next;
+		mes "[Wolf]";
+		mes "I don't know how to thank you. It is the most acurate to hear the rumor from children. I heard that children gather in a ^0000cdlarge open space^000000 in Prontera..";
+		next;
+		mes "[Wolf]";
+		mes "Then, see you soon.";
+		delitem 6930,1;// Sample of New Business Item
+		erasequest 14497;// Delivery for Wolf
+		setquest 14498;// Which Rumor
+		banquet_roegenburg_quest = 4;
+		close3;
+	}
+	if (banquet_roegenburg_quest == 4 || banquet_roegenburg_quest == 5) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "What is the rumor about Roegenburg that is circulating in Prontera.";
+		mes "I didn't know there is a rumor about our family circulating";
+		next;
+		mes "[Wolf]";
+		mes "I had to start gather information earlier. I couldn't because I was busy due to others.";
+		mes "I didn't expect at all that a rumor will be circulating.";
+		next;
+		mes "[Wolf]";
+		mes "I cannot wait to know what rumor is circulating about our family.";
+		mes "Then see you soon.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 6) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Hi, you look a little tired.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ah, do I? I had to do some errands to find the rumor.";
+		next;
+		mes "[Wolf]";
+		mes "Oh, I am sorry about that. I should have done that.";
+		next;
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Rumor? what rumor? I like such thing very much.";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "I really want know about it too.";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "I am sorry to make you tired. Did you find anything?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I found the rumor and it was pretty specific. Can I tell about it here?";
+		next;
+		mes "[Wolf]";
+		mes "Yes, it is ok. If the rumor is about our family, everyone has to listen, so that we can gather and develop a solution.";
+		next;
+		mes "[I changed the rumor I got from children to a relatively softer version and told them.]";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "These days everybody talks about the rumor. I think it will spread throughout Rune Midgarts as well as Prontera.";
+		next;
+		mes "[Wolf]";
+		mes "The rumor is....very.... specific and malicious. It must be circulated on purpose by someone who knows the circumstances of my family.";
+		next;
+		cutin "16agn_nor",2;
+		mes "[Agnes]";
+		mes "Do yo mean the bad guy is one of us? OMG! this is very serious!";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "Yes. ^0000cdMyer^000000? How much are you going to disgrace our family?";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Well, as much as needed?";
+		next;
+		emotion ET_HUK, getnpcid(0, "Maximilian Roegenburg#e");
+		emotion ET_HUK;
+		emotion ET_HUK, getnpcid(0, "Agnes Roegenburg#ep16lu");
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "Myer, did you really do that?";
+		next;
+		cutin "16agn_ang",2;
+		mes "[Agnes]";
+		mes "Myer did that?";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "Myer, is this true? Did you spread the rumor?";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "You collected small kids and played a leader. Did you have lots of fun?";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Did you see what those little kids did for this time? You believe that only the upper class can exert influence on the common people, don't you? You must be so stupid.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "How far are you going to go?";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "Well, I asked for help church freinds, merchant frends and back street friends. Everyone said they would be willing to help me, when I told them I need help.";
+		next;
+		mes "[Myer]";
+		mes "I wonder how you can deal with invisible enemy.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "I don't understand why you spread such a rumor and do all these things.";
+		next;
+		mes "[Wolf]";
+		mes "No, in fact, I think I know very well. It is becaused of your immature sympathety and you want to spoil my plan!";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "Plan? what plan? war plan? the plan to drive innocent people to the battle field? A means that will realize your ambicous plan?";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "You are too young to understand why your brothers want to realize our plans.";
+		next;
+		mes "[Wolf]";
+		mes "^0000cd14 years ago^000000, we could do nothing though we were the top family. We felt a feeling of helplessness. Have you ever felt that?";
+		next;
+		mes "[Wolf]";
+		mes "^0000cdA noble family is not so good as it looks^000000. You are just playing a leader on the back street and spoiling our plan entirely!";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "Your plan is to delveop the power of the family and unify the contient. Then what? what will you have. Achievement? Revenge?";
+		next;
+		mes "[Myer]";
+		mes "As you know, such as thing causes another pain. We were raised without a parent. But we didn't fall becasue we had a family and we were rich.";
+		next;
+		mes "[Myer]";
+		mes "And we had brothers ^0000cdto depend on^000000. Think how we did to comfort one another? There are not many people that are so lucky as we were.";
+		next;
+		mes "[Myer]";
+		mes "There are so many people who has no one to depend on, no place to lie their bodies, or no money to buy a piece of bread. People are dying everywhere.";
+		next;
+		mes "[Myer]";
+		mes "The world you and Helmut are dreaming is only for ^0000cdthe satisfaction of a few persons^000000.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "Yo are too ideal. Small sacrifice is a must to achieve a bing goal.";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "Sacrifice for the goal? Do you think I don't know the reason you are helping Helmut.";
+		next;
+		mes "[Myer]";
+		mes "When Helmut participated in the Royal Assembly, I didn't care about it. Anyway he is naive and doesn't know how to acquire likeability and credibility from others.";
+		next;
+		mes "[Myer]";
+		mes "The wish that Helmut could end up as just a wish, but since you started to support Helmut ambiguously, everything has changed.";
+		next;
+		mes "[Myer]";
+		mes "Helmut and you look like a good brothers, but Wolf, I know that you want to make money from wars and";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "even though Helmut becomes a king, he is just a figurehead and you will exert power ^0000cdover our family and kingdom^000000. won't you?";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "What is our family proud of? Name? Fame? they are useless outside the country. And now they are not so high as before.";
+		next;
+		mes "[Wolf]";
+		mes "But look at the Wigner. Wherever they go whatever they do, people bow their heads in front of their gold.";
+		next;
+		mes "[Wolf]";
+		mes "To whoever has gold. I want that power. I want ^0000cdreal power^000000 rather powerless fame.";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "You want to build a kingdom that you want rule as you want. What if Helmut fails to be a king? What would you do then?";
+		next;
+		mes "[Myer]";
+		mes "You will run into a limit as the second son of the Roegenburg, can you give up your ambition?";
+		next;
+		mes "[Myer]";
+		mes "Anyway life is short. What moves people is heart, not money or power.";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "Heart? Does it work on ^0000cdthose guys^000000?";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "You didn't know you can approach them in a different way";
+		next;
+		cutin "16wol_ang",2;
+		mes "[Wolf]";
+		mes "You are better than I expected. You are grown up and I know you will not cry any more in front of me. So stop talking nonsense and play outside.";
+		next;
+		mes "[Wolf]";
+		mes "Watch your mouth. I cannot be nice to you forever.";
+		next;
+		cutin "16mye_ang",1;
+		mes "[Myer]";
+		mes "If you do nothing, I do nothing. I hope I will live on the back street as happy ^0000cdJonathan^000000.";
+		next;
+		mes "[Myer]";
+		mes "But you are developing a murder weapon as new business item with the Wigner.";
+		next;
+		mes "[Myer]";
+		mes "How can people trust you when your family does not trust you? I cannot trust you! And I told you to stop treating me as a child!";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "Both of you,";
+		next;
+		cutin "16agn_ang",2;
+		mes "[Agnes]";
+		mes "Stop! What the hell are you fighting? Didn't all of us want to live happier than anybody?";
+		next;
+		mes "[Agnes]";
+		mes "So, everybody pursues happiness in their own ways. Helmut had found it on the front. Wolf on the money. And Myer on the street.";
+		next;
+		mes "[Agnes]";
+		mes "Isn't it enough? Do you need something bigger? Cause? Revenge? War?";
+		mes "Everyone is fighting in this family and losing important thins. Still you want a war?";
+		next;
+		mes "[Agnes]";
+		mes "What do we really want? Well, if we can be happy by fighting, it is good!. But it is not. We have fought too long.";
+		next;
+		mes "[Agnes]";
+		mes "All of you, Helmut, Wolf and Myer.";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "Everybody calm down. It is not nice to raise our voices.";
+		next;
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "Agnes is right. Both of you, please stop fighting.";
+		next;
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "...Excuse me.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Myer Roegenburg#ep16lug", bc_self );
+		cutin "16agn_ang",2;
+		mes "[Agnes]";
+		mes "Myer! where are you going? Are going to leave the family again?";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "What do you think. I totally agree with Agnes. I think we have fought one another too long.";
+		next;
+		mes "[Maximilian]";
+		mes "But we have to keep in mind that revenge brings revenge in return and violence brings violence in return.";
+		next;
+		mes "[Maximilian]";
+		mes "Do you know why I have been quiet though I lost my son and daughter-in-law.";
+		next;
+		mes "[Maximilian]";
+		mes "Because revenges does not make a difference. Revenge is another type of violence that only gives a temporary satisfaction.";
+		next;
+		mes "[Maximilian]";
+		mes "The dead never comes back. Your parents would not want you to take revenge.";
+		next;
+		mes "[Maximilian]";
+		mes "I have let you do as you want to do, but this time I hope that you will follow what Agnes said. I want to avoid wars if possible.";
+		next;
+		cutin "16hel",0;
+		mes "[Helmut]";
+		mes "......";
+		mes "Excuse me too.";
+		next;
+		classchange( HIDDEN_WARP_NPC, "Helmut Roegenburg#ep16l", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Kalbern#ep16lug", bc_self );
+		cutin "",255;
+		mes "[Kalbern]";
+		mes "Lord Helmut! where are you going?";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "......";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't want to break in, but many people are afraid of wars,";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "including children. It would be better if a war didn't break out, but nothing is good if unrest and feat last long.";
+		next;
+		mes "[Maximilian]";
+		mes "Ah, I am sorry that you saw";
+		next;
+		mes "[Wolf]";
+		mes "Apologies for making you uncomfortable. I am sorry again but can you do me a favor?";
+		next;
+		mes "[Wolf]";
+		mes "I think we need to inform ^0000cdWigner^000000 of the rumor. Please wait a while.";
+		next;
+		cutin "",255;
+		mes "[Wolf prepares documents for a while and seal it in an envelope.]";
+		next;
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Please deliver this document. Sorry again. I cannot find time as I have much to do suddenly.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No. I'll come back soon.";
+		erasequest 14501;// Report to Wolf
+		setquest 14502;// To Isaac
+		getitem 6931,1;// Top Secret Document
+		banquet_roegenburg_quest = 7;
+		close3;
+	}
+	if (banquet_roegenburg_quest == 7) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Did you deliver the document to Isaac? I should have done it myself, but I got busy suddenly.";
+		next;
+		mes "[Wolf]";
+		mes "I thought about many thins after I heard from Agnes. To do those things, I cannot waste a minute.";
+		next;
+		mes "[Wolf]";
+		mes "Then see you soon.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 8) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Dear adventurer, thank you very much. Was Wigner offended?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "He understood everything. He believes that Wigner will find a new item as soon as possible.";
+		next;
+		mes "[Wolf]";
+		mes "It is very good that he understands what I want. I think I have to start a new business at least not to disappoint Wigner.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You will not give up the desire to do business huh?";
+		next;
+		mes "[Wolf]";
+		mes "It fits me surprisingly. Working is rewarding and enjoyable. Besides, I can show my only ability, not as Roegenburg's ability.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "By the way, your brothers must be busy. Myer and even Helmut....";
+		next;
+		cutin "",255;
+		mes "[Maximilian]";
+		mes "Helmut has left for the front without saying anything. Myer also has left home. I think they felt something from what Agnes said.";
+		next;
+		mes "[Maximilian]";
+		mes "If you allow, I would like ^0000cdclear up misunderstanding of my family^000000 in the rumor. Do you have time?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I do.";
+		next;
+		mes "[Maximilian]";
+		mes "The rumor is true, except the part that a war will break out.";
+		next;
+		mes "[Maximilian]";
+		mes "Let me tell you an old story. The parents of the four children gave a birth to Agnes and left for a neighboring country for resting.";
+		next;
+		mes "[Maximilian]";
+		mes "They were attacked by the monster there.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "In the holiday resort? Now the monster appears even in the holiday resort?";
+		next;
+		mes "[Maximilian]";
+		mes "It was a remote but safe place. But for an unknown reason, the monsters attacked in group.";
+		next;
+		mes "[Maximilian]";
+		mes "The reason remains unknown, but they guess that the monsters came down to the town, chased by subjugation.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I see.";
+		next;
+		mes "[Maximilian]";
+		mes "When we arrived at the site, the area was closed and no access was allowed, though my son and daughter-in-law was inside.";
+		next;
+		mes "[Maximilian]";
+		mes "We met with managers, but they blocked completely heavily armed foreigners like us.";
+		next;
+		mes "[Maximilian]";
+		mes "I understand that. An armed force of a foreign country was crossing the border and I was not sure what the armed force would do. They have no choice but stop them.";
+		next;
+		mes "[Maximilian]";
+		mes "So, we tried to get into the closed zone and contact many people while time passed.";
+		next;
+		mes "[Maximilian]";
+		mes "At the end, we had to provide lots of money as bribe before we can dispatch mercenaries into the resort, but my son and daughter-in-law had been already killed.";
+		next;
+		mes "[Maximilian]";
+		mes "Actually, they were alive just before they were found. But, the access was delayed and they had to die in pains.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am sorry to hear that.";
+		next;
+		mes "[Maximilian]";
+		mes "I didn't tell the children about the attack, but I had to confess the death of their parents.";
+		next;
+		mes "[Maximilian]";
+		mes "So losing beloved ones, my children and I came to live together.";
+		next;
+		mes "[Maximilian]";
+		mes "I grew the children to live up to the name of Roegenburg.";
+		mes "But actually what they need was education, but warm heart.";
+		next;
+		mes "[Maximilian]";
+		mes "I didn't know that and I was only strict on them.";
+		next;
+		mes "[Maximilian]";
+		mes "The children couldn't stand any more and one day they left as a token of resistance.";
+		next;
+		mes "[Maximilian]";
+		mes "The children are unwilling to talk about those days. But I am sure that what they heard and saw in those days affected them.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How?";
+		next;
+		mes "[Maximilian]";
+		mes "Helmut trained himself. When he was grown up, he left to the border. Wolf suddenly declared that he would make money.";
+		next;
+		mes "[Maximilian]";
+		mes "I tried to stop him saying that there should no merchant in my family, but he was so stubborn.";
+		next;
+		mes "[Maximilian]";
+		mes "After coming home, Myer was doing well for a while. But he left us with a note. Only Agnes has been growing well without a problem.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well. I see each of them has their own stories! The rumor is spread with something concealed.";
+		next;
+		mes "[Maximilian]";
+		mes "Yes, Myer said he would handle the rumor and so the rumor will disappear. Can I ask you to do me a favor?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Please go ahead.";
+		next;
+		mes "[Maximilian]";
+		mes "I am worried that ^0000cdHelmut left without a word^000000, as there are many eyes watching him. He is the heir of our family.";
+		next;
+		mes "[Maximilian]";
+		mes "I hoped that he would stay for the time being, but I am sad that he left all of sudden.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Then, my job is to bring him.";
+		next;
+		mes "[Maximilian]";
+		mes "Yes. He must be in the ^0000cdcheckpoint near the border with Schwaltzvalt^000000. He is responsible for the patrol party.";
+		next;
+		mes "[Maximilian]";
+		mes "And when you come back, use this. You can return to Prontera instantly.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. I'll come back soon.";
+		erasequest 14503;// Report to Wolf
+		setquest 14504;// In Search of Helmut
+		getitem 22847,1;// Prontera Badge
+		banquet_roegenburg_quest = 9;
+		close3;
+	}
+	if (banquet_roegenburg_quest >= 9 && banquet_roegenburg_quest < 13) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "I think I was closer to brothers than now, to Helmut and Myer.";
+		next;
+		mes "[Wolf]";
+		mes "Agnes was our favored child in the family. She was the only little sister.";
+		next;
+		mes "[Wolf]";
+		mes "But sometimes I wonder why we have become this estranged.";
+		next;
+		mes "[Wolf]";
+		mes "Well, I think it is because we have came to become different and we also have different ideas on what is right. I understand to some extent.";
+		next;
+		mes "[Wolf]";
+		mes "It was quite a shock when Myer left home. He just left without a word, though he was very close to me.";
+		next;
+		mes "[Wolf]";
+		mes "Since then, I think, I started to find what I can. I cannot stand the thought that I am the only one who are not developing.";
+		next;
+		mes "[Wolf]";
+		mes "When a human feels an empty space, he/she tends to fill it.";
+		next;
+		mes "[Wolf]";
+		mes "I think I am going to continue to go around to find it.";
+		close3;
+	}
+	if (banquet_roegenburg_quest == 13) {
+		cutin "16wol_nor",2;
+		mes "[Wolf]";
+		mes "Dear adventurer, thanks to you, I feel that my brothers and I have become closer.";
+		mes "My brothers and I didn't know how to be bent and were about to be broken.";
+		next;
+		mes "[Wolf]";
+		mes "I think these experiences make us more friendly and developing.";
+		mes "We were apart a long time and all have forgotten it.";
+		next;
+		mes "[Wolf]";
+		mes "From now, I am going to lead my family, helping my grandfather.";
+		mes "If you visit us from time to time, I will be happy.";
+		next;
+		mes "[Wolf]";
+		mes "Please come back to us, if you need a help.";
+		close3;
+	}
+}
+
+prt_cas_q,90,184,7	script	#ep16lug004	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	if (banquet_roegenburg_quest >= 3 && banquet_roegenburg_quest <= 6)
+		classchange( 4_EP16_MEYER, "Myer Roegenburg#ep16lug", bc_self );
+	else if (banquet_roegenburg_quest >= 7) {
+		classchange( HIDDEN_WARP_NPC, "Helmut Roegenburg#ep16l", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Kalbern#ep16lug", bc_self );
+	}
+	end;
+}
+
+prt_cas_q,92,182,7	script	Myer Roegenburg#ep16lug	HIDDEN_WARP_NPC,{
+	if (banquet_roegenburg_quest >= 3 && banquet_roegenburg_quest <= 6) {
+		cutin "16mye_nor",1;
+		mes "[Myer]";
+		mes "It feels good that I come home for a long time.";
+		mes "It is a little suffocating though.";
+		next;
+		mes "[Myer]";
+		mes "Anyway, this house goes well without me. I don't worry about the family, but I am only worried about my grandfather, as he is quite old.";
+		next;
+		mes "[Myer]";
+		mes "Now I am home and it seems that Helmut, Wolf, and Agnes have been all good.";
+		next;
+		mes "[Myer]";
+		mes "I think it is great, though a little disappointing.";
+		mes "It is stupid to think like this, as I left home.";
+		close3;
+	}
+}
+
+function	script	F_kids_roegenburg_quest	{
+	switch( banquet_roegenburg_quest ) {
+	case 4:
+		next;
+		emotion ET_FRET, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Harriet]";
+		mes "Stop! both of you. I feel dizzy when I am listening to what you are talking.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hi, I have a question. Do you have any fun story?";
+		next;
+		mes "[Allen]";
+		mes "Is this a quest?";
+		next;
+		mes "[Jin]";
+		mes "Fun story?";
+		next;
+		mes "[Harriet]";
+		mes "I have one.";
+		next;
+		mes "[Allen]";
+		mes "I will take the request. What's your question?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I mean War stories, royal family rumors, or something like that.";
+		mes "I guess that there are many stories about Royal Assembly or banquet. I am now in the capital city. To read the mood here, I think I should hear those stories.";
+		next;
+		mes "[Jin]";
+		mes "Ah!, I know that story! All of us know it!";
+		next;
+		mes "[Harriet]";
+		mes "Let me tell it!";
+		next;
+		mes "[Allen]";
+		mes "I know the story too. But I'm not sure that it is right or not to tell you the story.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why? If you want compensation, I can give it to you. Candies?";
+		next;
+		mes "[Jin]";
+		mes "You are giving me candies as compensation? It's so stupid. We are not children.";
+		next;
+		mes "[Harriet]";
+		mes "You'd better not mention about compensation. My mother told me not to receive anything from stranger.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Stranger? We are now talking with each other. Then what do you want? instead of candies.";
+		next;
+		mes "[Allen]";
+		mes "Compensation is not important to me. What is important is whether you have credentials to hear the story.";
+		next;
+		mes "[Harriet]";
+		mes "Credentials? WTH are talking about? He speaks strangely sometimes.";
+		next;
+		mes "[Jin]";
+		mes "I want compensation. If you give me adequate compensation, I can tell you anything. So show me your offer first.";
+		next;
+		emotion ET_SWEAT, playerattached();
+		mes "[" + strcharinfo(0) + "]";
+		mes "I didn't mean to cheat you. But you speak frankly of what you want. First I looked down on you as you are children.";
+		mes "OK, I'll give you compensation. And what credentials? Do I need credentials to hear a rumor?";
+		next;
+		mes "[Allen]";
+		mes "It depends on what rumor you want to hear. The higher the value is, the higher the risk is.";
+		next;
+		mes "[Harriet]";
+		mes "Is the rumor that risky? I didn't know at all while I was listening. Jin, did you know that?";
+		next;
+		mes "[Jin]";
+		mes "It's Allen. You can count on him only 30%. If he had been always right, the world would have been destroyed a score times.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Then, what should I do? Tell me. What do you want?";
+		next;
+		emotion ET_SMILE, getnpcid(0, "Kiddo#ep16lug02");
+		mes "[Jin]";
+		mes "At last, it is business time! Great! I like it!";
+		next;
+		emotion ET_SMILE, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Harriet]";
+		mes "I like anything pretty!";
+		next;
+		emotion ET_SURPRISE, getnpcid(0, "Kiddo#ep16lug01");
+		mes "[Allen]";
+		mes "Verification of credentials! That's all!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't know what you are talking about. Please tell me slowly and in detail?";
+		next;
+		mes "[Allen]";
+		mes "Simple. Prove your strength. You will know ^0000cdMajoruros^000000, I think.";
+		mes "It is a devil with strong muscles. Catch it to prove that you are strong. The number for strength for it is ^0000cd33^000000!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I see. Is that enough? I'll be back soon.";
+		next;
+		emotion ET_HUK, getnpcid(0, "Kiddo#ep16lug02");
+		emotion ET_HUK, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Jin]";
+		mes "Wait a minute. Don't you listen to us? You said you would give compensation.";
+		next;
+		mes "[Harriet]";
+		mes "You cannot just listen to Allen and leave. We are one team! Don't you know it whey you see three of use playing together?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do I have to do what you want too...?";
+		next;
+		mes "[Allen]";
+		mes "I don't leave my friends. Do what they want. If you don't, you will lose credentials.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, I see. Then what do you want?";
+		next;
+		mes "[Harriet]";
+		mes "I want pretty silk cloth! I heard Banquets are held in the palace and princesses were pretty dresses.";
+		next;
+		mes "[Harriet]";
+		mes "I want pretty clothes too! I want^0000cdpretty silk cloth^000000 too! I'll tell my mother to make them for me!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK, OK, how many do you want?";
+		next;
+		mes "[Harriet]";
+		mes "Considering my height, I want about ^0000cdtwelve^000000 ?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That is easy. Now you little one. What do you need?";
+		next;
+		mes "[Jin]";
+		mes "I want a history book, which includes all history of Rune Midgarts. It is in the royal library and I have never see it.";
+		next;
+		mes "[Jin]";
+		mes "I know no one around me who can access the palace and book stores do not sell it. Please get it for me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you want me to steal it?";
+		next;
+		mes "[Jin]";
+		mes "Are you crazy? What do you think I am? Borrow it for me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK. ^0000cdHunting 33 Majoruroses, Getting 12 pieces of soft sick cloth an borrowing the history book on Rune Midgarts from the royal library^000000. I'll be back soon.";
+		next;
+		mes "[Harriet]";
+		mes "I will be waiting for you!";
+		erasequest 14498;// Which Rumor
+		setquest 14499;// Prove Yourself
+		banquet_roegenburg_quest = 5;
+		close;
+	case 5:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hi, I am back. Are these what you want?";
+		next;
+		emotion ET_BIGTHROB, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Harriet]";
+		mes "Let me see it. Yes! they are. They are so pretty. So soft! May I really have these?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Of course, I have brought them because you wanted them. Then is what you said before just empty words?";
+		next;
+		emotion ET_CHUPCHUP, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Harriet]";
+		mes "No! No! I really have wanted them! Thank you!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "And this your book. It is really heavy and large. I borrowed only one volume. The other volumes had already been borrowed.";
+		next;
+		emotion ET_SMILE, getnpcid(0, "Kiddo#ep16lug02");
+		mes "[Jin]";
+		mes "Thank you. At last I can read it.";
+		next;
+		mes "[Allen]";
+		mes "You smell strongly of blood. Yes, you fell Majoruroses. You are a strong warrior.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. I fell all of them. Now let me listen to the story, that expensive story.";
+		next;
+		mes "[Allen]";
+		mes "War, Royal family. Helmut Roegenburg. If he becomes a king, the continent will be drawn into a vortex of war.";
+		next;
+		mes "[Allen]";
+		mes "Darkness will sweep the continent and painful groans will cover all the continent!!!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Is that rumor circulating? But I don't understand what it means. Anybody who can interpret for me?";
+		next;
+		mes "[Jin]";
+		mes "Simple. If Helmut Roegenburg becomes a king, a war will break out.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hmm.. It's too simple. Please explain more.";
+		next;
+		mes "[Harriet]";
+		mes "Errrrrr! What are you talking about? both of you. Let me explain. The rumor is as follows:";
+		next;
+		mes "[Harriet]";
+		mes "if Helmut Roegenburg becomes a king...., Ah by the way, do you know a rumor about the Roegenburg, especially the rumor on the ^0000cddeath of the four children^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, I don't know. Never heard before.";
+		next;
+		mes "[Harriet]";
+		mes "This is also only a rumor. I am sure it is true. Anyway I heard that they were murdered,";
+		next;
+		mes "[Harriet]";
+		mes "when they visit a foreign country. Helmut Roegenburg was shocked and since then he has been wandering around battle fields.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, it is true he has been wandering around battle field.";
+		next;
+		mes "[Harriet]";
+		mes "I think it is because of royal assembly. That is the rumor that is circulating now.";
+		next;
+		mes "[Harriet]";
+		mes "^0000cdThey say that ^000000if Helmut becomes a king, he will invade the country where his parents are killed and start a war to unify the continent^0000cd^000000.";
+		next;
+		mes "[Harriet]";
+		mes "And the second son of the Roegenburg is doing business to arrange the fund for the war.^0000cd^000000^0000cd^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You know pretty in details?";
+		next;
+		mes "[Harriet]";
+		mes "Everybody knows. It's noisy here with the story.";
+		next;
+		mes "[Jin]";
+		mes "My parents are worried. They are afraid that Helmut will becomes a king and start a war.";
+		mes "In fact, everybody is anxious. They don't like wars.";
+		next;
+		emotion ET_SURPRISE, getnpcid(0, "Kiddo#ep16lug01");
+		mes "[Allen]";
+		mes "The blood on the battle field calls me!";
+		next;
+		emotion ET_OHNO, getnpcid(0, "Kiddo#ep16lug02");
+		mes "[Jin]";
+		mes "Except him.";
+		next;
+		emotion ET_CRY, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Harriet]";
+		mes "I hate wars too.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Thank you for your stories. That's what I needed.";
+		next;
+		mes "[Harriet]";
+		mes "If you have a question again, come to me anytime!";
+		next;
+		mes "[Jin]";
+		mes "Thank you for the book!";
+		next;
+		mes "[Allen]";
+		mes "Men do not see anyone out.";
+		delitem 6926,1;// Rune-Midgartz History Book
+		delitem 7166,12;// Soft Silk
+		erasequest 14499;// Prove Yourself
+		setquest 14501;// Report to Wolf
+		banquet_roegenburg_quest = 6;
+		close;
+	case 11:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, kids?";
+		next;
+		mes "[Jin]";
+		mes "Huh? You came again. Do you need more? Anyway it is nice you came. I have to return the book.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I have a question about the rumor on the Roegenburg.";
+		next;
+		mes "[Allen]";
+		mes "There is no new story about the family. No story means death.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I didn't come here for any new rumor. I am looking for the person who told you the story.";
+		next;
+		mes "[Jin]";
+		mes "Why?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I want to know who circulated the rumor.";
+		next;
+		mes "[Harriet]";
+		mes "Why? Are you going to catch the person?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, the grandfather of him asked me to tell him a message.";
+		next;
+		mes "[Harriet]";
+		mes "Can't they meet each other though they are family?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, it's not like that.. Hmm.. Yes. similar to that.";
+		next;
+		mes "[Jin]";
+		mes "That is really strange.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, it is. but sometime even between family members it is difficult to see each other and they have to ask someone to send a message to one another.";
+		next;
+		mes "[Allen]";
+		mes "This time, you need stronger credentials...";
+		next;
+		mes "[Harriet]";
+		mes "Ah, there he comes!, Jonathan! We have a guest.";
+		next;
+		classchange( 4_M_04, "Ordinary Man#ep16lug02", bc_self );
+		mes "[Myer]";
+		mes "Dear adventurer. What has brought you here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "A way to find the first person who spreads a rumor is to find the source of rumor. but I didn't expect you are here.";
+		next;
+		mes "[Myer]";
+		mes "Did you come here to see me?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. your family asked me to send a message to you.";
+		next;
+		emotion ET_QUESTION, getnpcid(0, "Kiddo#ep16lug01");
+		mes "[Allen]";
+		mes "Myer?";
+		next;
+		emotion ET_QUESTION, getnpcid(0, "Kiddo#ep16lug02");
+		mes "[Jin]";
+		mes "Myer?";
+		next;
+		emotion ET_QUESTION, getnpcid(0, "Kiddo#ep16lug03");
+		mes "[Harriet]";
+		mes "Who is Myer? ^0000cdIs you name Myer^000000? Jonathan Myer? Myer Jonathan? You told me to call you just Jonathan.";
+		next;
+		mes "[Myer]";
+		mes "You saw these kids before, didn't you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. they are cute, but pretty difficult to handle them.";
+		next;
+		mes "[Harriet]";
+		mes "Are you Jonathan Myer? or Myer Jonathan? Let me know!";
+		next;
+		mes "[Myer]";
+		mes "Kids. I am going to have a very important talk with him. Will you close your ears or leave us alone?";
+		next;
+		mes "[Allen]";
+		mes "Ears cannot be closed.";
+		next;
+		mes "[Jin]";
+		mes "I want to hear it if it is important.";
+		next;
+		mes "[Harriet]";
+		mes "Come on! They are going to have an important talk. Everybody, close your ears.";
+		next;
+		mes "[Myer]";
+		mes "Good boys. After the talk I will give you liquorice.";
+		next;
+		mes "[Allen]";
+		mes "My ears are closed.";
+		next;
+		mes "[Jin]";
+		mes "Ah. have a talk then.";
+		next;
+		mes "[Harriet]";
+		mes "La la la la la -";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "They are cute and smart. I am curious how they will grow up.";
+		next;
+		mes "[Myer]";
+		mes "Yes. That's why I am here to check, teach and lead them.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You are doing a great jop.";
+		next;
+		mes "[Myer]";
+		mes "Well. it's just what I can do. By the way, what is the message?";
+		next;
+		mes "[He told Myer that Helmut had transferred heir-ship and his two brothers had gave up wars.]";
+		next;
+		mes "[Myer]";
+		mes "That is great. They are my brothers I am proud of. What is the most important and fortunate is that^0000cd Wolf has changed his mind^000000. It is very annoying to argue with him.";
+		next;
+		mes "[Myer]";
+		mes "Wolf has to see everything to finish. It is a good in a way, though.";
+		next;
+		mes "[Myer]";
+		mes "You may not believe, he is the one I like the most in the family.";
+		next;
+		mes "[Myer]";
+		mes "Ah, anyway, I am sorry that we showed you an unpleasant family affairs.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It is common for brothers to fight one another. I also....";
+		next;
+		mes "[Myer]";
+		mes "Anyway, I think I have to visit the house. The house has been annoying, but I think that it will be interesting. Please tell my family that I will help them here while I am doing my job.";
+		next;
+		mes "[Myer]";
+		mes "And tell them I will visit them after the banquet.";
+		next;
+		mes "[Myer]";
+		mes "And please tell Agnes that I am sorry that cannot go with her to the banquet.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I will.";
+		next;
+		mes "[Myer]";
+		mes "If you need my help, just find me. I will help you with all my efforts. Take care!";
+		erasequest 14506;// Things Turned out This Way
+		setquest 14507;// To Maximilian
+		banquet_roegenburg_quest = 12;
+		close;
+	}
+	return;
+}
+
+prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
+	if (banquet_roegenburg_quest < 4) {
+		mes "[Allen]";
+		mes "Do you want business with us? But we don't meet with anybody.";
+		next;
+		mes "[Allen]";
+		mes "We are not easy people anybody can speak to.";
+		mes "Go back.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 4) {
+		mes "[Allen]";
+		mes "Today, the wind is cold and smells rotten. I feel that something has happened.";
+		next;
+		emotion ET_SHY, getnpcid(0, "Kiddo#ep16lug02");
+		mes "[Jin]";
+		mes "Ah, sorry, I couldn't clean myself for a few days.";
+		next;
+		mes "[Allen]";
+		mes "Is it so? I feel that they are testing me.";
+		F_kids_roegenburg_quest();
+	}
+	if (banquet_roegenburg_quest == 5) {
+		if (countitem(6926) < 1 || countitem(7166) < 12 || checkquest(14499,HUNTING) < 2) {
+			mes "[Allen]";
+			mes "He has come with empty hands.";
+			next;
+			mes "[Allen]";
+			mes "Anyone without credentials cannot hear good stories. Go back.";
+			next;
+			mes "[Harriet]";
+			mes "How can you say that! You must have forgotten what you should bring.";
+			next;
+			mes "[Harriet]";
+			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune Midgarts ^000000";
+			next;
+			mes "[Harriet]";
+			mes "and hmm... ^0000cdkilling of 33 Majoruroses^000000 for Allen.";
+			next;
+			mes "[Harriet]";
+			mes "There is something strange included, but so what... He wants it.";
+			close;
+		}
+		F_kids_roegenburg_quest();
+	}
+	if (banquet_roegenburg_quest >= 6 && banquet_roegenburg_quest <= 10) {
+		mes "[Allen]";
+		mes "Do you hear more? If so, you need to prove you have stronger credentials.";
+		next;
+		mes "[Allen]";
+		mes "This is a ritual that calls blood! A ritual of destruction and darkness!!!!";
+		next;
+		mes "[Jin]";
+		mes "He started again.";
+		next;
+		mes "[Harriet]";
+		mes "Please go. We'll handle him.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 11)
+		F_kids_roegenburg_quest();
+	mes "[Allen]";
+	mes "The threat of war has disappeared. Hero in the time of turbulence is not born. Darkness calls me!";
+	next;
+	mes "[Jin]";
+	mes "He started again.";
+	next;
+	mes "[Harriet]";
+	mes "Please go. We'll handle him.";
+	close;
+}
+
+prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
+	if (banquet_roegenburg_quest < 4) {
+		mes "[Jin]";
+		mes "It is a good weather today.";
+		mes "The banquet is in full swing in the palace.";
+		next;
+		mes "[Jin]";
+		mes "My parents are happy as their business prospers when palace purchases lots of goods in large volumes. I will tell them to buy me a book tomorrow.";
+		next;
+		mes "[Jin]";
+		mes "End of today's diary.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 4) {
+		mes "[Jin]";
+		mes "It is a good weather today.";
+		mes "The banquet is in full swing in the palace.";
+		next;
+		mes "[Allen]";
+		mes "They will be all destroyed when a bloody day comes.";
+		mes "Why are we recording those vain things?";
+		next;
+		mes "[Jin]";
+		mes "Because records remains forever.";
+		mes "If you record today, someone in the future will read them and remember us.";
+		next;
+		mes "[Allen]";
+		mes "Human comes from nothing and goes to nothing.";
+		F_kids_roegenburg_quest();
+	}
+	if (banquet_roegenburg_quest == 5) {
+		if (countitem(6926) < 1 || countitem(7166) < 12) {
+			mes "[Jin]";
+			mes "Huh? why empty hands? I cannot see what we told you.";
+			next;
+			mes "[Jin]";
+			mes "Are you looking down on us, as we are children? I really hate such people.";
+			next;
+			mes "[Harriet]";
+			mes "Hey! You aren't, are you? You don't seem to be a such person. You forget what you should get, didn't you?";
+			next;
+			mes "[Harriet]";
+			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune Midgarts ^000000";
+			next;
+			mes "[Harriet]";
+			mes "and hmm... ^0000cdkilling of 33 Majoruroses^000000 for Allen.";
+			next;
+			mes "[Harriet]";
+			mes "There is something strange included, but so what... He wants it.";
+			close;
+		}
+		F_kids_roegenburg_quest();
+	}
+	if (banquet_roegenburg_quest >= 6 && banquet_roegenburg_quest <= 10) {
+		mes "[Jin]";
+		mes "I am enjoying reading the book you gave, though it is too large and heavy.";
+		next;
+		mes "[Jin]";
+		mes "My dream is to become a historian. I would like travel around Midgards and discover old hidden stories.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 11)
+		F_kids_roegenburg_quest();
+	mes "[Jin]";
+	mes "Jonathan returned the book you borrowed and he borrowed me other two volumes.";
+	next;
+	mes "[Jin]";
+	mes "Jonathan is great! I will become a man like Jonathan in the future.";
+	close;
+
+OnTouch:
+	if (banquet_roegenburg_quest >= 12)
+		classchange( 4_M_04, "Ordinary Man#ep16lug02", bc_self );
+	end;
+}
+
+prontera,269,69,5	script	Kiddo#ep16lug03	4_F_KID2,{
+	if (banquet_roegenburg_quest < 4) {
+		mes "[Harriet]";
+		mes "How beautiful and shining the dresses of princesses would be! I wish I could wear as many pretty dresses as possible.";
+		close;
+	}
+	if (banquet_roegenburg_quest == 4) {
+		emotion ET_SMILE;
+		mes "[Harriet]";
+		mes "Hello, singing birds and pretty flowers.";
+		mes "Are you having a beautiful day today too?";
+		next;
+		emotion ET_OHNO, getnpcid(0, "Kiddo#ep16lug02");
+		mes "[Jin]";
+		mes "He started again.";
+		mes "Why don't I have normal person around me?";
+		next;
+		mes "[Allen]";
+		mes "Are you talking to me?";
+		mes "If so, you are successful. I heard it very clearly.";
+		next;
+		mes "[Allen]";
+		mes "I refuse ordinariness.";
+		mes "I'm too big to be locked in it.";
+		F_kids_roegenburg_quest();
+	}
+	if (banquet_roegenburg_quest == 5) {
+		if (countitem(6926) < 1 || countitem(7166) < 12) {
+			mes "[Jin]";
+			mes "Huh? why empty hands? I cannot see what we told you.";
+			next;
+			mes "[Jin]";
+			mes "Are you looking down on us, as we are children? I really hate such people.";
+			next;
+			mes "[Harriet]";
+			mes "Hey! You aren't, are you? You don't seem to be a such person. You forget what you should get, didn't you?";
+			next;
+			mes "[Harriet]";
+			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune Midgarts ^000000";
+			next;
+			mes "[Harriet]";
+			mes "and hmm... ^0000cdkilling of 33 Majoruroses^000000 for Allen.";
+			next;
+			mes "[Harriet]";
+			mes "There is something strange included, but so what... He wants it.";
+			close;
+		}
+		F_kids_roegenburg_quest();
+	}
+	if (banquet_roegenburg_quest >= 6 && banquet_roegenburg_quest <= 10) {
+		mes "[Harriet]";
+		mes "Please ask my mother to use this cloth to make clothes";
+		mes "My mother makes pretty clothes!";
+		next;
+		mes "[Harriet]";
+		mes "Now I guess that she is in the palace to repair the dresses of princesses.";
+		mes "Ah, I wish that she was here!";
+		close;
+	}
+	if (banquet_roegenburg_quest == 11)
+		F_kids_roegenburg_quest();
+	mes "[Harriet]";
+	mes "Jonathan said that the threat of war is gone. What a relief that would be.";
+	close;
+}
+
+yuno_fild01,239,173,7	script	Border Guards#ep16lug01	4_M_JOB_KNIGHT2,{ end; }
+yuno_fild01,241,173,7	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug02	4_M_KNIGHT_GOLD
+yuno_fild01,243,173,1	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug03	4_M_KNIGHT_GOLD
+yuno_fild01,245,173,1	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug04	4_M_JOB_KNIGHT2
+yuno_fild01,239,171,7	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug05	4_M_PECOKNIGHT
+yuno_fild01,241,171,7	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug06	4_M_JOB_WIZARD
+yuno_fild01,243,171,1	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug07	4_M_JOB_WIZARD
+yuno_fild01,245,171,1	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug08	4_M_PECOKNIGHT
+
+yuno_fild01,242,175,5	script	Helmut Roegenburg#ep16lug01_b	4_EP16_HELMUT,5,5,{
+	if (banquet_roegenburg_quest == 9) {
+		mes "[Helmut]";
+		mes "Dear adventurer? What are you doing here? It is dangerous. The monster came down here just before. Please leave now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I'm OK. I'm accustomed to everyday life of being attacked by monsters.";
+		next;
+		mes "[Helmut]";
+		mes "I forgot you are a great warrior. Please forgive my rudeness.";
+		mes "By the way what has brought you here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I came here to bring Lord Helmut. Your grandfather is very worried about you. He said you are away from home in an important time.";
+		next;
+		mes "[Helmut]";
+		mes "I don't go back. ^0000cdI belong here, the front^000000. Please tell my grandfather so.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But everybody is worried about you.";
+		next;
+		mes "[Helmut]";
+		mes "I cannot go back. As a matter of fact, I resent the people who left my parents die since I became mature.";
+		next;
+		mes "[Helmut]";
+		mes "And I thought that it is the right way to develop the power that makes people to have no choice but to follow.";
+		next;
+		mes "[Helmut]";
+		mes "So, my goal was to unify the continent and make my power reached at every corner of the continent. So I trained and trained myslef.";
+		next;
+		mes "[Helmut]";
+		mes "However, when I listened to Myer and Agnes, I realized that the way I pursue could cause sadness and misfortune to someone.";
+		next;
+		mes "[Helmut]";
+		mes "So I decided to ^0000cdgive up the unification war ^000000that pushes people into a vortex of war.";
+		next;
+		mes "[Helmut]";
+		mes "This is where I should stay. Here I can ^0000cdprotect more people safely^000000.";
+		next;
+		mes "[Helmut]";
+		mes "Considering the position of our family, I will cooperate in what is needed for the Royal Assembly.";
+		next;
+		mes "[Helmut]";
+		mes "But I hope that Wolf will lead everything. When the Royal Assembly is closed, please tell Wolf that I will ^0000cdtransfer the position of heir to him^000000.";
+		next;
+		mes "[Helmut]";
+		mes "Wolf will need lots of power. I will stay here to protect our people.";
+		next;
+		mes "[Helmut]";
+		mes "If you do so, Wolf will not insist on wars and Myer will not sacrifice himself like that anymore.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "...I see. I will tell you message to your grandfather.";
+		next;
+		mes "[Helmut]";
+		mes "Yes. thank you. Please take care.";
+		erasequest 14504;// In Search of Helmut
+		setquest 14505;// I Won't go Back
+		banquet_roegenburg_quest = 10;
+		close;
+	}
+	if (banquet_roegenburg_quest == 10) {
+		mes "[Helmut]";
+		mes "This is where I should stay.";
+		mes "Please tell him '^0000cdI give up wars and transfer my position of heir to Wolf^000000'.";
+		next;
+		mes "[Helmut]";
+		mes "If you do so, Wolf will not insist on wars and Myer will not sacrifice himself like that anymore.";
+		next;
+		mes "[Helmut]";
+		mes "Then, good bye.";
+		close;
+	}
+	mes "[Helmut]";
+	mes "I can feel the earth is shaking.";
+	mes "An attack is expected soon. I have to make preparation.";
+	close;
+
+OnTouch:
+	if (banquet_roegenburg_quest == 9 || banquet_roegenburg_quest == 10) {
+		mes "[Helmut]";
+		mes "Give shout of concentration!!!";
+		for ( .@i = 1; .@i < 9; .@i++ )
+			npctalk "Hab!", "Border Guards#ep16lug0" + .@i, bc_area;
+		next;
+		mes "[Helmut]";
+		mes "Louder!!!!";
+		for ( .@i = 1; .@i < 9; .@i++ )
+			npctalk "Hab!", "Border Guards#ep16lug0" + .@i, bc_area;
+		next;
+		mes "[Helmut]";
+		mes "We!!!!!!";
+		next;
+		for ( .@i = 1; .@i < 9; .@i++ )
+			npctalk "protect our families and our country!!!", "Border Guards#ep16lug0" + .@i, bc_area;
+		close;
+	}
+	end;
+}
+
+yuno_fild01,244,176,3	script	Kalbern#ep16lug02	4_M_RUSCHILD,{
+	if (banquet_roegenburg_quest == 9 || banquet_roegenburg_quest == 10) {
+		mes "[Kalbern]";
+		mes "I am very happy that I came back here.";
+		mes "Now I've got something to do.";
+		next;
+		mes "[Kalbern]";
+		mes "And I think it is great that Lord Helmut has given up the unification war.";
+		mes "I knew nothing about unification, but I wished that no war would break out.";
+		next;
+		mes "[Kalbern]";
+		mes "Here, I would like to help Lord Helmut to protect people's safe and peaceful days.";
+		close;
+	}
+	mes "[Kalbern]";
+	mes "Now it is the time that Lord Helmut begins to feel thirsty.";
+	mes "I think I should prepare something to drink.";
+	close;
+}
+
+prontera,269,73,5	script	Ordinary Man#ep16lug02	HIDDEN_WARP_NPC,{
+	if (banquet_roegenburg_quest >= 12) {
+		mes "[Myer]";
+		mes "Thank you for coming here to deliver the message. Without you, I would not have listened to anything like the one I heard today.";
+		next;
+		mes "[Myer]";
+		mes "Fight, fight, and fight.... I don't want that either.";
+		next;
+		mes "[Myer]";
+		mes "They are my family who are closer to me than anyone.";
+		close;
+	}
+	mes "[Ordinary Man]";
+	mes "Shh! You'd better not speak to me.";
+	mes "There are may eyes around.";
+	close;
+}
+
+// Richard
+prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (banquet_main_quest < 2) {// pre-req
+		mes "[Butler]";
+		mes "This it the room of the Richard family.";
+		next;
+		mes "[Butler]";
+		mes "Po, the next head of the family, is taking a rest. Please come back later.";
+		close;
+	}
+	if (banquet_richard_quest == 0) {
+		mes "[Butler]";
+		mes "How do you do? I have been waiting for you after being informed by the Chamberlain.";
+		next;
+		mes "[Butler]";
+		mes "This it the room of the Richard family which has been controlling the military power of the kingdom.";
+		next;
+		mes "[Butler]";
+		mes "I have heard your name for that " + strcharinfo(0) + ", you are the hero in the subjugation of Morocc";
+		next;
+		mes "[Butler]";
+		mes "Oh! I am sorry to take too much of your time. Inside the room, there is Po, the next head of the family, waiting for you.";
+		next;
+		mes "[Butler]";
+		mes "Let me escort you inside.";
+		banquet_richard_quest = 1;
+		setquest 5402;// The Royal Richard
+		close;
+	}
+	if (banquet_richard_quest == 1) {
+		mes "[Butler]";
+		mes "Inside the room, there is Po, the next head of the family, waiting for you.";
+		close;
+	}
+	if (banquet_richard_quest == 2) {
+		mes "[Butler]";
+		mes "Have you met the next head of the family?";
+		next;
+		mes "[Butler]";
+		mes "If the next head of the family meets you " + strcharinfo(0) + ", please...";
+		next;
+		mes "[Butler]";
+		mes "Oh! I am sorry about my bad manners. It is nothing. Please never mind...";
+		close;
+	}
+	if (banquet_richard_quest == 3) {
+		if (BaseLevel < 140) {
+			mes "[Butler]";
+			mes "I heard from Po the next head of the family that you are going to try the Richard battle training program.";
+			next;
+			mes "[Butler]";
+			mes "For now, the training would be too overwhelming for you. You'd better learn the basics before proceeding with the training.";
+			close;
+		}
+
+		switch( checkquest(5414,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Butler]";
+			if (isbegin_quest(5403) == 2)
+				mes "The former heads oo the Richard family have also taken enough rest after training. Well, it's too common to mention, I guess.";
+			else
+				mes "The Richard family runs various ways of training. Taking a rest is one of the most important training.";
+			close;
+		case 2:
+			erasequest 5414;// [Stand by]Warrior Discipline
+			mes "[Butler]";
+			mes "I feel that you must be raring to get some action. I guess it is the time to proceed with the next training.";
+			close;
+		}
+
+		setarray .@quest_list[0],
+			5404,	// [Repeat]Warrior Discipline-Human
+			5405,	// [Repeat]Warrior Discipline-Animal
+			5406,	// [Repeat]Warrior Discipline-Insect
+			5407,	// [Repeat]Warrior Discipline-Fish
+			5408,	// [Repeat]Warrior Discipline-Plant
+			5409,	// [Repeat]Warrior Discipline-Devil
+			5410,	// [Repeat]Warrior Discipline-Angel
+			5411,	// [Repeat]Warrior Discipline-Immortal
+			5412,	// [Repeat]Warrior Discipline-Intangible
+			5413;	// [Repeat]Warrior Discipline-Dragon
+		setarray .@training_list$[0], "human","animal","insect","fish","plant","demon","angel","Immortal","nothing","dragon";
+		.@size = getarraysize( .@quest_list );
+		while( isbegin_quest(.@quest_list[.@i]) == 0 && .@i < .@size ) .@i++;
+
+		if (.@i == .@size) {
+			mes "[Butler]";
+			if (isbegin_quest(5403) == 2)
+				mes "Good. Are you ready now?";
+			else {
+				mes "I heard from Po the next head of the family that you are going to try the Richard battle training program.";
+				next;
+				mes "[Butler]";
+				mes "The training of the Richard family is differentiated from other training programs.";
+				next;
+				mes "[Butler]";
+				mes "You must have been getting yourself trained by hunting the monsters individually.";
+				next;
+				mes "[Butler]";
+				mes "From now on, you can be trained with hunting certain types of monsters such as human, animal, insect, fish, plant, demon, angel, nothing and dragon monsters.";
+				next;
+				mes "[Butler]";
+				mes "It is supposed to be more effective to swing a sword than to say 100 words.";
+			}
+			while( true ) {
+				next;
+				mes "[Butler]";
+				mes "Please select a training program to try.";
+				next;
+				.@s = select( "Warrior Discipline-Human", "Warrior Discipline-Animal", "Warrior Discipline-Insect", "Warrior Discipline-Fish", "Warrior Discipline-Plant", "Warrior Discipline-Devil", "Warrior Discipline-Angel", "Warrior Discipline-Immortal", "Warrior Discipline-Intangible", "Warrior Discipline-Dragon" ) - 1;
+				mes "[Butler]";
+				mes "This training involves hunting 50 " + .@training_list$[.@s] + " monsters of Level 140 or higher.";
+				next;
+				mes "[Butler]";
+				mes "Would you try this training?";
+				next;
+				if (select( "Try.", "Do not try." ) == 2) {
+					mes "[Butler]";
+					mes "Hum... You don't like the contents of the training? Well, it's OK. Why don't you choose another training?";
+					continue;
+				}
+				mes "[Butler]";
+				mes "You shouldn't let your guard down even when you feel that the training is too easy for your level. Good luck...";
+				setquest .@quest_list[.@s];
+				close;
+			}
+		}
+
+		if (isbegin_quest(5403) == 2) {
+			mes "[Butler]";
+			mes "Good. Are you ready now?";
+			next;
+		}
+		if (checkquest(.@quest_list[.@i],HUNTING) == 2) {
+			// todo src side
+			mes "This quest isn't enabled for now.";
+			close;
+
+			if (isbegin_quest(5403) == 1)
+				completequest 5403;// The Royal Richard
+			erasequest .@quest_list[.@i];
+			setquest 5414;// [Stand by]Warrior Discipline
+			getexp 500000,550000;
+			getitem 6919,4;// Honor Token
+			mes "[Butler]";
+			mes "Congratulations on completing the training.";
+			next;
+			mes "[Butler]";
+			mes "If you keep training, you'll achieve the goal you want.";
+			next;
+			mes "[Butler]";
+			mes "This is what I have prepared for the reward for completing training.";
+			next;
+			mes "[Butler]";
+			mes "We thank you for training with us since it benefits the Richard family. Don't feel pressured.";
+			close;
+		}
+		mes "[Butler]";
+		mes "You are participating in the training. Do you need anything?";
+		next;
+		switch( select( "No.", "About the way of training", "About the goal of training", "Give up the training." ) ) {
+		case 1:
+			mes "[Butler]";
+			mes "You should deal with the training like the actual fight! Do not let your guard down during the training.";
+			close;
+		case 2:
+			mes "[Butler]";
+			mes "The Richard family has always been concerned about the ways to produce more excellent warriors.";
+			next;
+			mes "[Butler]";
+			mes "One of the former heads of the family felt that the way to train with a certain monster had a limit.";
+			next;
+			mes "[Butler]";
+			mes "The former and former head of the family... Oh! Just to clear things out, he is retired, but he is not dead.";
+			next;
+			mes "[Butler]";
+			mes "Hum... Let's come back down to the business... He has come up with the method to train with the monster depending on the level of the trainee or the type of the monster.";
+			next;
+			mes "[Butler]";
+			mes "Well... The training began like that...";
+			close;
+		case 3:
+			mes "[Butler]";
+			mes "The goal of the training... It is an easy and difficult question.";
+			next;
+			mes "[Butler]";
+			mes "The most obvious goal must be getting stronger. I would have answered if I was younger.";
+			next;
+			mes "[Butler]";
+			mes "However, I would like to answer that it is to protect the people around me.";
+			next;
+			mes "[Butler]";
+			mes "The goal may be different for each warrior.";
+			close;
+		case 4:
+			mes "[Butler]";
+			mes "I won't stop you from giving up. However, you should know that the progress of your training so far won't be reflected in the next training.";
+			next;
+			if (select( "Do not give up.", "Give up." ) == 1) {
+				mes "[Butler]";
+				mes "Good decision. You should deal with the training like the actual fight! Do not let your guard down during the training.";
+				close;
+			}
+			erasequest .@quest_list[.@i];
+			mes "[Butler]";
+			mes "Too bad. If you finished the training, you must have been able to reap the benefit of hard work.";
+			close;
+		}
+	}
+}
+prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
+	if (checkweight(501,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (banquet_richard_quest == 0) {
+		cutin "richard_po02",2;
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Po Richard]";
+		mes "I'd like to take a rest now.";
+		next;
+		mes "[Po Richard]";
+		mes "You must be an adventurer invited to the palace. I am taking a rest now. Talk to the butler in front of the door to make an appointment.";
+		next;
+		mes "[Po Richard]";
+		mes "That is the way to do it in the palace.";
+		close3;
+	}
+	if (banquet_richard_quest == 1) {
+		cutin "richard_po01",2;
+		emotion ET_SPARK;
+		mes "[Po Richard]";
+		mes "You must be the adventurer who has made a great contribution in the subjugation of the dark lord. Your work is known in the palace as well.";
+		next;
+		mes "[Po Richard]";
+		mes "Especially, us, the Richard family, are interested in your work.";
+		next;
+		mes "[Po Richard]";
+		mes "Do you want to know why?";
+		next;
+		mes "[Po Richard]";
+		mes "Well, even if you don't want to know, I am going to say what I want to say anyway.";
+		next;
+		mes "[Po Richard]";
+		mes "In fact, it was not your will to come here. I am pretty sure that you must have come here since the his nibs called you. I understand that.";
+		next;
+		mes "[Po Richard]";
+		mes "Although the adventurers may care less about the palace affairs, the Richard family is in charge of the military force of Rune Midgarts.";
+		next;
+		emotion ET_QUESTION;
+		mes "[Po Richard]";
+		mes "We produce many excellent warriors as well. Hum! I am curious all of a sudden. Have you heard of the warrior from the Richard family?";
+		next;
+		switch( select( "Yes, I have.", "No, I haven't." ) ) {
+		case 1:
+			mes "[Po Richard]";
+			mes "Hahaha, I guess the name of Richard must be known to the adventurers as well.";
+			break;
+		case 2:
+			cutin "richard_po02",2;
+			emotion ET_SCRATCH;
+			mes "[Po Richard]";
+			mes "Oh, my. I must have been a braggart. The Richard family should try harder.";
+			break;
+		}
+		next;
+		mes "[Po Richard]";
+		mes "Well, since it is not important, I guess we should let it pass. It's been a long time since I say this much. I am thirsty.";
+		next;
+		completequest 5402;// The Royal Richard
+		banquet_richard_quest = 2;
+		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+		}
+		mes "[Po Richard]";
+		mes "Shall we take a rest before proceeding?";
+		close3;
+	}
+	if (banquet_richard_quest == 2) {
+		cutin "richard_po01",2;
+		mes "[Po Richard]";
+		mes "Well, let's talk about the reason that the Richard family has been interested in you then.";
+		next;
+		mes "[Po Richard]";
+		mes "As known, the Richard family is producing outstanding warriors. We run a systematic training system to support that.";
+		next;
+		mes "[Po Richard]";
+		mes "I am not fond of such training, but I believe that it is an effective training program based on the knowhow of the family.";
+		next;
+		mes "[Po Richard]";
+		mes "Please listen up since I am about to get to the point.";
+		next;
+		mes "[Po Richard]";
+		mes "I guess the adventurers were not that interested; however, there were many members of the royal family participating in the subjugation of the dark lord. I have been reported of your work from them.";
+		next;
+		mes "[Po Richard]";
+		mes "When I was reported of the contributions you made, a question came to my mind. What if a free roaming adventure take part in the strict training system? What would happen? I got curious.";
+		next;
+		emotion ET_COMEON;
+		mes "[Po Richard]";
+		mes "I would like to make a handsome payment if a renowned adventurer like you helps us.";
+		next;
+		mes "[Po Richard]";
+		mes "I feel that it is an attractive offer. Would you challenge the warrior training system of the Richard family?";
+		next;
+		if (select( "I'll try.", "I decline." ) == 2) {
+			emotion ET_OTL;
+			mes "[Po Richard]";
+			mes "I guess the offer hasn't been attractive to you. I am sorry, but come back later when you change your mind.";
+			close;
+		}
+		emotion ET_OK;
+		mes "[Po Richard]";
+		mes "Indeed! I like the quick decision. I value the spirit of challenge.";
+		next;
+		mes "[Po Richard]";
+		mes "Let me tell the butler about it. You can proceed with the training through him.";
+		banquet_richard_quest = 3;
+		setquest 5403;// The Royal Richard
+		close3;
+	}
+	if (banquet_richard_quest == 3) {
+		cutin "richard_po01",2;
+		mes "[Po Richard]";
+		mes "Don't underestimate the butler who would guide you through the training.";
+		next;
+		mes "[Po Richard]";
+		mes "He is a member of the Richard family himself. He is an outstanding warrior.";
+		close3;
+	}
+}
+
+
+prt_cas_q,81,131,0	script	#ep16_1Geoborg	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (banquet_main_quest >= 2 && banquet_geoborg_quest == 0) {
+		mes "[Bodyguard Martin]";
+		mes "There! Stop there!";
+		mes "Please go through the inspection for a security check.";
+		npctalk "There! Stop there!", "Bodyguard#ep16_1_g", bc_self;
+		emotion ET_SURPRISE, getnpcid(0, "Bodyguard#ep16_1_m");
+		emotion ET_SURPRISE;
+		next;
+		mes "[Bodyguard Martin]";
+		mes "Please place your identification and personal belongings on this table and stand facing the wall...";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "Martin! What are you doing?";
+		mes "Don't be rude to the guest to the room! I told you.";
+		emotion ET_HUK;
+		next;
+		mes "[Bodyguard Martin]";
+		mes "It is for the safety of the queen.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "You are near the queen for security, not to chase away the guests discourteously.";
+		emotion ET_ANGER;
+		next;
+		mes "[Bodyguard Martin]";
+		mes "The palace is so hectic like this. How can we guard the queen with such an easygoing way of thinking!";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "We cannot help it during the Imperial Ordinance!";
+		next;
+		mes "[Bodyguard Martin]";
+		mes "Now the Imperial Ordinance would just be...";
+		emotion ET_THINK, getnpcid(0, "Bodyguard#ep16_1_m");
+		next;
+		mes "[Queen]";
+		mes "It is noisy out here.";
+		cutin "ep16gao_1",2;
+		next;
+		cutin "",255;
+		mes "[Bodyguard Jerad]";
+		mes "Huh! Your majesty!";
+		mes "I am sorry.";
+		mes "We have a guest here.";
+		setquest 11400;// The Geoborgs
+		banquet_geoborg_quest = 1;
+		emotion ET_SURPRISE;
+		close;
+	}
+	end;
+}
+
+// Geoborg
+prt_cas_q,87,132,6	script	Bodyguard#ep16_1_m	4_M_JOB_KNIGHT1,{
+	if (banquet_geoborg_quest == 1) {
+		mes "[Bodyguard Jerad]";
+		mes "Extend the queen every courtesy.";
+		close;
+	}
+	if (banquet_geoborg_quest == 2) {
+		mes "[Bodyguard Martin]";
+		mes "I have something to you. Please talk to Jerad here.";
+		close;
+	}
+	if (banquet_geoborg_quest == 4 || banquet_geoborg_quest == 5) {
+		mes "[Bodyguard Martin]";
+		mes "I don't know why but Scarlet and Lidion have been on bad terms for a long time.";
+		next;
+		mes "[Bodyguard Martin]";
+		mes "They are similar in age so that it would have been nice if they are friends...";
+		mes "However, they both have such strong personalities.";
+		next;
+		mes "[Bodyguard Martin]";
+		mes "Of course, Scarlet looks several times younger.";
+		mes "It is supposed to be the characteristic of the Jahas.";
+		close;
+	}
+	if (banquet_geoborg_quest > 6 && banquet_geoborg_quest <= 13) {
+		mes "[Bodyguard Martin]";
+		mes "Ernst told me that he would go to the Banquet Hall.";
+		mes "I wonder if he is still there.";
+		close;
+	}
+	if (banquet_geoborg_quest == 14) {
+		mes "[Bodyguard Martin]";
+		mes "Ha...";
+		close;
+	}
+	mes "[Bodyguard Martin]";
+	mes "Do you have any business left here?";
+	close;
+}
+
+prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
+	if (banquet_main_quest < 2) {
+		mes "[Bodyguard Martin]";
+		mes "Do you have any business left here?";
+		close;
+	}
+	if (banquet_geoborg_quest == 1) {
+		mes "[Bodyguard Martin]";
+		mes "Extend the queen every courtesy.";
+		close;
+	}
+	if (banquet_geoborg_quest == 2) {
+		mes "[Bodyguard Jerad]";
+		mes "Please excuse me for all the trouble.";
+		next;
+		mes "[Bodyguard Martin]";
+		mes "I am sorry.";
+		mes "There was nothing suspicious found of your belongings.";
+		mes "Let me return your bag.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "Have you been going through it?";
+		next;
+		mes "[Bodyguard Martin]";
+		mes "It doesn't hurt to be careful when there are a lot of passengers around here.";
+		mes "I don't want to experience such thing again.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "Ha...";
+		mes "I am sorry.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "If you don't mind, how about talking to the members of the Geoborg family in the Banquet Hall?";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "She has been taking care of the state affairs alone. Not to mention the Royal Assembly...";
+		mes "She hasn't been able to sleep for days.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "Oh!";
+		mes "The queen's sister 'Scarlet Jaha' headed to the Banquet Hall a little while ago. You may be able to meet her there.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "She is not one of the members of the family, but she knows everything about the queen.";
+		erasequest 11401;// The Geoborgs
+		setquest 11402;// The Geoborgs
+		banquet_geoborg_quest = 3;
+		mes "[Bodyguard Jerad]";
+		mes "Oh!";
+		mes "The queen's sister 'Scarlet Jaha' headed to the Banquet Hall a little while ago. You may be able to meet her there.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "She is not one of the members of the family, but she knows everything about the queen.";
+		close;
+	}
+	if (banquet_geoborg_quest == 3) {
+		mes "[Bodyguard Jerad]";
+		mes "Oh!";
+		mes "The queen's sister 'Scarlet Jaha' headed to the Banquet Hall a little while ago. You may be able to meet her there.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "She is not one of the members of the family, but she knows everything about the queen.";
+		close;
+	}
+	if (banquet_geoborg_quest >= 4) {
+		mes "[Bodyguard Jerad]";
+		mes "Scarlet is much older than the queen, but she doesn't look that old at all.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "Of course, the queen is well along in years now as well...";
+		close;
+	}
+	if (banquet_geoborg_quest > 6 && banquet_geoborg_quest <= 13) {
+		mes "[Bodyguard Jerad]";
+		mes "I hope the queen and Ernst can take some rest now.";
+		close;
+	}
+	if (banquet_geoborg_quest == 14) {
+		mes "[Bodyguard Jerad]";
+		mes "After the Royal Assembly is over, the queen may turn over the throne to the new king, and go to the castle of Scarlet.";
+		next;
+		mes "[Bodyguard Jerad]";
+		mes "I am a little worried for that I have been serving under the queen my entire life.";
+		close;
+	}
+}
+
+prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
+	if (banquet_main_quest < 2) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "The ink pad of the highest quality to be used in the royal debate room?";
+		mes "It is the clerk who writes down everything. Why are they buying luxury item that no one will ever use...";
+		emotion ET_FRET;
+		cutin "ep16gao_3",2;
+		close3;
+	}
+	if (banquet_geoborg_quest == 1) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Welsome.";
+		mes "I am Queen Catherine D. Geoborg.";
+		cutin "ep16gao_2",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "I am sorry if my knights have caused you trouble.";
+		mes "They are a little sensitive these days. Please understand.";
+		emotion ET_SORRY;
+		cutin "ep16gao_1",2;
+		next;
+		cutin "",255;
+		if (select( "Ask about the Geoborg family.", "Leave the room." ) == 2) {
+			mes "[Queen Catherine D. Geoborg]";
+			mes "I see.";
+			mes "Come back anytime if you have any other questions.";
+			cutin "ep16gao_1",2;
+			next;
+			mes "[Queen Catherine D. Geoborg]";
+			mes "Since the banquet for you heroes is being held in the Banquet Hall, please enjoy your time here.";
+			cutin "ep16gao_2",2;
+			close3;
+		}
+		mes "[Queen Catherine D. Geoborg]";
+		mes "We, the Geoborg family, are the descendants of Tristan I who founded this world. Our family has produced numerous kings and knights for generations.";
+		cutin "ep16gao_1",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "In the first Royal Assembly which was held, the forth prince Ernst was elected as a candidate. However, he has given up his position in the Royal Assembly this time due to several incidents.";
+		next;
+		select("What do you mean by several incidents?");
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Oh... It slipped my tongue.";
+		mes "It is a little difficult to tell you about those incidents.";
+		mes "I'd rather you pretend I didn't say it.";
+		cutin "ep16gao_3",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "You have come here, but there isn't much that I can tell you.";
+		cutin "ep16gao_1",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "If you have more questions, you may ask Jerad and Martin here.";
+		mes "Please excuse me for not sharing more time with you due to some urgent duties.";
+		erasequest 11400;// The Geoborgs
+		setquest 11401;// The Geoborgs
+		banquet_geoborg_quest = 2;
+		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+		}
+		close3;
+	}
+	if (banquet_geoborg_quest == 2) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "You have come here, but there isn't much that I can tell you.";
+		cutin "ep16gao_1",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "If you have more questions, you may ask Jerad and Martin here.";
+		mes "Please excuse me for not sharing more time with you due to some urgent duties.";
+		close3;
+	}
+	if (banquet_geoborg_quest == 3) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "The ink pad of the highest quality to be used in the royal debate room?";
+		mes "It is the clerk who writes down everything. Why are they buying luxury item that no one will ever use...";
+		emotion ET_FRET;
+		cutin "ep16gao_3",2;
+		close3;
+	}
+	if (banquet_geoborg_quest == 4) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Hum.. Trade request from Marol Kingdom...";
+		mes "I should dispatch an envoy to take care of it soon...";
+		cutin "ep16gao_2",2;
+		close3;
+	}
+	if (banquet_geoborg_quest == 5) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "I have enough dresses to last my lifetime. Why do they keep making them...";
+		mes "A cutback!";
+		emotion ET_FRET;
+		cutin "ep16gao_1",2;
+		close3;
+	}
+	if (banquet_geoborg_quest >= 6 && banquet_geoborg_quest <= 13) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "You mean Prince Ernst?";
+		mes "Well?";
+		cutin "ep16gao_1",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "He comes here to say good morning and either helps me the work or does other things.";
+		cutin "ep16gao_2",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Ever since the banquet started, he has been carrying his work to somewhere else.";
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "He could be somewhere in the Banquet Hall.";
+		close3;
+	}
+	if (banquet_geoborg_quest == 14) {
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Haven't you met Prince Ernst yet?";
+		mes "He just stopped by and went out again...";
+		cutin "ep16gao_1",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "I am worried about the representative of our family wandering around like this.";
+		next;
+		select("Tell her about what you have heard.");
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Oh...";
+		mes "Dear hero, please don't mind such stories much.";
+		cutin "ep16gao_3",2;
+		next;
+		mes "[Queen Catherine D. Geoborg]";
+		mes "It is a problem that we, the Geoborg family, should get over ourselves.";
+		close3;
+	}
+}
+
