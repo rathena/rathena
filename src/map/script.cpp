@@ -20381,6 +20381,58 @@ BUILDIN_FUNC(instance_info)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*------------------------------------------
+*instance_live_info( <info type>{, <instance id>} );
+- ILI_NAME : Instance Name
+- ILI_MODE : Instance Mode options (IM_NONE, IM_CHAR etc..)
+- ILI_OWNER : owner id (if any)
+*------------------------------------------*/
+BUILDIN_FUNC(instance_live_info)
+{
+	struct instance_db *db = NULL;
+	struct instance_data *im = NULL;
+
+	int type = script_getnum(st, 2);
+	int id = 0;
+
+	if (script_hasdata(st, 3) == NULL)
+		id = script_instancegetid(st);
+	else
+		id = script_getnum(st, 3);
+
+	if (id) {
+		im = &instance_data[id];
+		db = instance_searchtype_db(im->type);
+	}
+	
+	if (db == NULL) {
+		ShowError( "buildin_instance_live_info: Unknown instance ID \"%d\".\n", id );
+		if (type == ILI_NAME)
+			script_pushconststr(st, "");
+		else
+			script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch( type ) {
+	case ILI_NAME:
+		script_pushstrcopy(st, StringBuf_Value(db->name));
+		break;
+	case ILI_MODE:
+		script_pushint(st, im->mode);
+		break;
+	case ILI_OWNER:
+		script_pushint(st, im->owner_id);
+		break;
+	default:
+		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type );
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Custom Fonts
  *------------------------------------------*/
@@ -24565,6 +24617,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_guild,"i???"),
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
+	BUILDIN_DEF(instance_live_info,"i?"),
 	/**
 	 * 3rd-related
 	 **/

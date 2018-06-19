@@ -3417,6 +3417,11 @@
 	export_constant(IIT_MAPCOUNT);
 	export_constant(IIT_MAP);
 
+	/* instance live info */
+	export_constant(ILI_NAME);
+	export_constant(ILI_MODE);
+	export_constant(ILI_OWNER);
+
 	/* VIP status */
 	export_constant(VIP_STATUS_ACTIVE);
 	export_constant(VIP_STATUS_EXPIRE);

@@ -8792,6 +8792,19 @@ mes .@name$ + " will be destroyed if no one is in the instance for " + instance_
 
 ---------------------------------------
 
+*instance_live_info(<info type>{,<instance id>});
+
+Returns the specified <info type> of the attached script. If the script is not
+attached to an instance, the instance of the currently attached player is
+used. If that fails, the function will return "" when <info type> is ILI_NAME, 0 otherwise.
+
+Valid info types:
+ ILI_NAME: Instance Name
+ ILI_MODE : Instance Mode (IM_NONE, IM_CHAR etc..)
+ ILI_OWNER : Owner ID (char ID when instance mode is IM_CHAR, party ID when IM_PARTY etc..)
+
+---------------------------------------
+
 =========================
 |8.- Quest Log commands.|
 =========================
