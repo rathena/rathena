@@ -5,13 +5,13 @@
 
 #include <stdlib.h>
 
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/strlib.hpp"
+#include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 #include "map.hpp"
 #include "battle.hpp"

@@ -4,7 +4,7 @@
 #ifndef _STATUS_HPP_
 #define _STATUS_HPP_
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 enum e_race2 : uint8;
 struct block_list;
@@ -780,7 +780,7 @@ enum sc_type : int16 {
 
 	SC_ACTIVE_MONSTER_TRANSFORM,
 
-	SC_CLOUD_KILL,
+	SC_CLOUD_KILL, // Deprecated
 
 	SC_LJOSALFAR,
 	SC_MERMAID_LONGING,
@@ -842,6 +842,15 @@ enum sc_type : int16 {
 
 	SC_CHEERUP,
 	SC_DRESSUP,
+
+	// Old Glast Heim Buffs
+	SC_GLASTHEIM_ATK,
+	SC_GLASTHEIM_DEF,
+	SC_GLASTHEIM_HEAL,
+	SC_GLASTHEIM_HIDDEN,
+	SC_GLASTHEIM_STATE,
+	SC_GLASTHEIM_ITEMDEF,
+	SC_GLASTHEIM_HPSP,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -3153,7 +3162,7 @@ struct status_data {
 #endif
 		aspd_rate;
 	/**
-	 * defType is RENEWAL dependent and defined in src/map/config/data/const.h
+	 * defType is RENEWAL dependent and defined in src/config/const.hpp
 	 **/
 	defType def,mdef;
 

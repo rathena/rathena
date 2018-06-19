@@ -4,7 +4,7 @@
 #ifndef _BUYINGSTORE_HPP_
 #define _BUYINGSTORE_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "map.hpp" //MESSAGE_SIZE
 

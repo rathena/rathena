@@ -68,7 +68,7 @@
 //    0x00800 - skill range affected by RA_RESEARCHTRAP
 //    0x01000 - skill that does not affect user that has NC_HOVERING active
 //    0x02000 - skill that can be using while riding warg
-//    0x04000 - skill that can't be used while in mado
+//    0x04000 - skill that can be used while on Madogear
 //    0x08000 - skill that can be used to target while under SC__MANHOLE effect
 //    0x10000 - skill that affects hidden targets
 //    0x20000 - skill that affects SC_GLOOMYDAY_SK

@@ -3,12 +3,12 @@
 
 #include "pc_groups.hpp"
 
-#include "../common/conf.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h" // strcmp
-#include "../common/socket.h"
+#include "../common/conf.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp" // strcmp
+#include "../common/socket.hpp"
 
 #include "atcommand.hpp" // AtCommandType
 #include "pc.hpp" // e_pc_permission

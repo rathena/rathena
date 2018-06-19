@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/socket.h"
-#include "../common/showmsg.h"
-#include "../common/mapindex.h"
-#include "../common/sql.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
+#include "../common/malloc.hpp"
+#include "../common/strlib.hpp"
+#include "../common/socket.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/sql.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -123,7 +123,7 @@ int inter_party_tosql(struct party *p, int flag, int index)
 	party_id = p->party_id;
 
 #ifdef NOISY
-	ShowInfo("Save party request ("CL_BOLD"%d"CL_RESET" - %s).\n", party_id, p->name);
+	ShowInfo("Save party request (" CL_BOLD "%d" CL_RESET " - %s).\n", party_id, p->name);
 #endif
 	Sql_EscapeStringLen(sql_handle, esc_name, p->name, strnlen(p->name, NAME_LENGTH));
 
@@ -197,7 +197,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	int i;
 
 #ifdef NOISY
-	ShowInfo("Load party request ("CL_BOLD"%d"CL_RESET")\n", party_id);
+	ShowInfo("Load party request (" CL_BOLD "%d" CL_RESET ")\n", party_id);
 #endif
 	if( party_id <= 0 )
 		return NULL;

@@ -12,11 +12,11 @@
 #include <stdlib.h>
 #include <string.h> //memcpy
 
-#include "../common/socket.h"
-#include "../common/sql.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
 
 #include "inter.hpp"
 #include "char.hpp"

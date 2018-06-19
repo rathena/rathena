@@ -4,9 +4,9 @@
 #ifndef _INSTANCE_HPP_
 #define _INSTANCE_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // struct point
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // struct point
+#include "../common/strlib.hpp"
 
 #include "script.hpp" // struct reg_db
 

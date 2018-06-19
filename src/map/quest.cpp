@@ -5,13 +5,13 @@
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/socket.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
 
 #include "itemdb.hpp"
 #include "map.hpp"
