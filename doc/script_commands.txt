@@ -8768,17 +8768,13 @@ if (instance_check_clan(getcharid(5),2,2,149)) {
 
 ---------------------------------------
 
-*instance_info(<info type>{,"<instance name>|<instance ID>"{,<instance_db map index>}});
+*instance_info("<instance name>",<info type>{,<instance_db map index>});
 
-Returns the specified <info type> from the instance database of the instance ID
-of the attached script or, if the instance name or the instance ID is specified, of that instance.
-
+Returns the specified <info type> of the given <instance name> from the instance database.
 If the <instance name> is unknown or an invalid <info type> is supplied -1 will be returned.
-A blank string is returned if the <instance name> is unknown and <info type> is IIT_NAME.
 
 Valid info types:
  IIT_ID: Instance database ID as integer.
- IIT_NAME: Instance database name as string.
  IIT_TIME_LIMIT: Instance database total life time as integer.
  IIT_IDLE_TIMEOUT: Instance database timeout time as integer.
  IIT_ENTER_MAP: Instance database enter map as string.
@@ -8791,7 +8787,7 @@ Valid info types:
 Example:
 
 .@name$ = "Endless Tower";
-mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(IIT_IDLETIMEOUT,.@name$) + " seconds.";
+mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
 // Endless Tower will be destroyed if no one is in the instance for 300 seconds.
 
 ---------------------------------------
