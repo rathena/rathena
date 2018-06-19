@@ -535,12 +535,16 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * 50 / 100);
 #endif
-				if (tsc->data[SC_CRYSTALIZE])
+				if (tsc->data[SC_CRYSTALIZE]) {
+					uint16 skill_id = battle_getcurrentskill(src);
+
+					if (skill_get_type(skill_id)&BF_MAGIC)
 #ifdef RENEWAL
-					ratio += 50;
+						ratio += 50;
 #else
-					damage += (int64)(damage * 50 / 100);
+						damage += (int64)(damage * 50 / 100);
 #endif
+				}
 				break;
 			case ELE_WATER:
 				if (tsc->data[SC_FIRE_INSIGNIA])
