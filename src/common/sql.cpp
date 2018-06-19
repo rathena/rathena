@@ -16,7 +16,8 @@
 
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.
-#if !defined(LIBMARIADB) && MYSQL_VERSION_ID >= 80000
+// See https://bugs.mysql.com/?id=87337
+#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 80001 && MYSQL_VERSION_ID != 80002
 #define my_bool bool
 #endif
 
