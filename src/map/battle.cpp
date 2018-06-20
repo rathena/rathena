@@ -492,9 +492,12 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if (tsc && tsc->count) { //increase dmg by target status
 		switch(atk_elem) {
 			case ELE_FIRE:
-				if (tsc->data[SC_SPIDERWEB]) {
-					//Double damage
+				if (tsc->data[SC_SPIDERWEB]) { //Double damage
+#ifdef RENEWAL
+					ratio += 100;
+#else
 					damage *= 2;
+#endif
 					//Remove a unit group or end whole status change
 					status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 				}
@@ -503,32 +506,70 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				if (tsc->data[SC_CRYSTALIZE])
 					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 				if (tsc->data[SC_EARTH_INSIGNIA])
+#ifdef RENEWAL
 					ratio += 50;
+#else
+					damage += (int64)(damage * 50 / 100);
+#endif
 				break;
 			case ELE_HOLY:
 				if (tsc->data[SC_ORATIO])
+#ifdef RENEWAL
 					ratio += tsc->data[SC_ORATIO]->val1 * 2;
+#else
+					damage += (int64)(damage * (tsc->data[SC_ORATIO]->val1 * 2) / 100);
+#endif
 				break;
 			case ELE_POISON:
 				if (tsc->data[SC_VENOMIMPRESS])
+#ifdef RENEWAL
 					ratio += tsc->data[SC_VENOMIMPRESS]->val2;
+#else
+					damage += (int64)(damage * tsc->data[SC_VENOMIMPRESS]->val2 / 100);
+#endif
 				break;
 			case ELE_WIND:
 				if (tsc->data[SC_WATER_INSIGNIA])
+#ifdef RENEWAL
 					ratio += 50;
+#else
+					damage += (int64)(damage * 50 / 100);
+#endif
+				if (tsc->data[SC_CRYSTALIZE]) {
+					uint16 skill_id = battle_getcurrentskill(src);
+
+					if (skill_get_type(skill_id)&BF_MAGIC)
+#ifdef RENEWAL
+						ratio += 50;
+#else
+						damage += (int64)(damage * 50 / 100);
+#endif
+				}
 				break;
 			case ELE_WATER:
 				if (tsc->data[SC_FIRE_INSIGNIA])
+#ifdef RENEWAL
 					ratio += 50;
+#else
+					damage += (int64)(damage * 50 / 100);
+#endif
 				break;
 			case ELE_EARTH:
 				if (tsc->data[SC_WIND_INSIGNIA])
+#ifdef RENEWAL
 					ratio += 50;
+#else
+					damage += (int64)(damage * 50 / 100);
+#endif
 				status_change_end(target, SC_MAGNETICFIELD, INVALID_TIMER); //freed if received earth dmg
 				break;
 			case ELE_NEUTRAL:
 				if (tsc->data[SC_ANTI_M_BLAST])
+#ifdef RENEWAL
 					ratio += tsc->data[SC_ANTI_M_BLAST]->val2;
+#else
+					damage += (int64)(damage * tsc->data[SC_ANTI_M_BLAST]->val2 / 100);
+#endif
 				break;
 		}
 	}
@@ -1240,7 +1281,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 						break;
 					case W_MUSICAL:
 					case W_WHIP:
-						if(!sd->state.arrow_atk)
+						if(!tsd->state.arrow_atk)
 							break;
 					case W_BOW:
 					case W_REVOLVER:
