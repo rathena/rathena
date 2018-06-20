@@ -11090,7 +11090,7 @@
 22674,June_Gift_Box,June Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{/*1 Potion Box*/},{},{}
 22676,Hangul_Day_Event_Box,Hangul Day Event Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,0,,,{ getitem 22675,10; getitem 607,9; },{},{}
 22675,Mysterious_Scroll,Mysterious Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,3600000,30; },{},{}
-22679,Chest_Of_Death,Death's Chest,11,0,,0,,,,0,0xFFFFFFFF,63,2,,,170,,,{ getitem rand(6814,6819),1; },{},{}
+22679,Chest_Of_Death,Death's Chest,2,0,,0,,,,0,0xFFFFFFFF,63,2,,,170,,,{ getitem rand(6814,6819),1; },{},{}
 22685,Solo_Christmas_Gift,Single Union Christmas Gift,2,0,,0,,,,,0xFFFFFFFF,63,2,,,0,,,{ getgroupitem(IG_Solo_Christmas_Gift); },{},{}
 22686,Solo_Cookie,Single Cookie,0,0,,50,,,,,0xFFFFFFFF,63,2,,,0,,,{ percentheal 5,5; },{},{}
 22687,Pieces_Of_Sentiment,Sentimental Fragment,11,0,,1,,,,0,0xFFFFFFFF,63,2,,,100,,,{ callfunc("F_Pieces_Of_Sentiment"); },{},{}
