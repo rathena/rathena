@@ -334,7 +334,7 @@
 211,1,6,1,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	RG_STEALCOIN,Mug
 212,-1,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,0x4,	RG_BACKSTAP,Back Stab
 213,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		RG_TUNNELDRIVE,Stalk
-214,0,6,4,-1,0x2,3,5,1,no,0,0x40000,0,weapon,0,0x4,	RG_RAID,Sightless Mind
+214,0,6,4,-1,0x2,4,5,1,no,0,0x40000,0,weapon,0,0x4,	RG_RAID,Sightless Mind
 215,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPWEAPON,Divest Weapon
 216,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPSHIELD,Divest Shield
 217,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPARMOR,Divest Armor
