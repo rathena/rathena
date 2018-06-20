@@ -1,15 +1,15 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _MOB_HPP_
 #define _MOB_HPP_
 
+#include <vector>
+
 #include "../common/mmo.hpp" // struct item
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
-
-#include <vector>
 
 struct guardian_data;
 

@@ -1,5 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
+#include "grfio.hpp"
+
+#include <stdlib.h>
+#include <zlib.h>
 
 #include "cbasetypes.hpp"
 #include "des.hpp"
@@ -7,10 +12,6 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "utils.hpp"
-#include "grfio.hpp"
-
-#include <stdlib.h>
-#include <zlib.h>
 
 //----------------------------
 //	file entry table struct

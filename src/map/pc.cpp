@@ -1,14 +1,16 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "pc.hpp"
 
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
+#include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp" //NAME_LENGTH
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
@@ -16,42 +18,40 @@
 #include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/mmo.hpp" //NAME_LENGTH
-#include "../common/ers.hpp"  // ers_destroy
 
+#include "achievement.hpp"
 #include "atcommand.hpp" // get_atcommand_level()
-#include "map.hpp"
 #include "battle.hpp" // battle_config
 #include "battleground.hpp"
+#include "buyingstore.hpp"  // struct s_buyingstore
 #include "channel.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
 #include "date.hpp" // is_day_of_*()
 #include "duel.hpp"
-#include "intif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "pet.hpp" // pet_unlocktarget()
-#include "party.hpp" // party_search()
-#include "storage.hpp"
-#include "quest.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "clif.hpp"
-#include "buyingstore.hpp"  // struct s_buyingstore
+#include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp" // party_search()
+#include "pc_groups.hpp"
+#include "pet.hpp" // pet_unlocktarget()
+#include "quest.hpp"
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // OPTION_*, struct weapon_atk
+#include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
-#include "mob.hpp"
-#include "log.hpp"
-#include "pc_groups.hpp"
-#include "achievement.hpp"
-#include "clan.hpp"
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 

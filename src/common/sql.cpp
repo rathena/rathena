@@ -1,18 +1,20 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
+#include "sql.hpp"
+
+#ifdef WIN32
+#include "winapi.hpp"
+#endif
+
+#include <mysql.h>
+#include <stdlib.h>// strtoul
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "timer.hpp"
-#include "sql.hpp"
-
-#ifdef WIN32
-#include "winapi.hpp"
-#endif
-#include <mysql.h>
-#include <stdlib.h>// strtoul
 
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.

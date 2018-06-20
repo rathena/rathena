@@ -1,28 +1,29 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "vending.hpp"
-#include "../common/nullpo.hpp"
+
+#include <stdlib.h> // atoi
+
 #include "../common/malloc.hpp" // aMalloc, aFree
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp" // ShowInfo
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"  // DIFF_TICK
 
+#include "achievement.hpp"
+#include "atcommand.hpp"
+#include "battle.hpp"
 #include "buyingstore.hpp"
+#include "buyingstore.hpp" // struct s_autotrade_entry, struct s_autotrader
+#include "chrif.hpp"
 #include "clif.hpp"
 #include "itemdb.hpp"
-#include "atcommand.hpp"
+#include "log.hpp"
+#include "npc.hpp"
 #include "path.hpp"
-#include "chrif.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
-#include "buyingstore.hpp" // struct s_autotrade_entry, struct s_autotrader
-#include "npc.hpp"
-#include "battle.hpp"
-#include "log.hpp"
-#include "achievement.hpp"
-
-#include <stdlib.h> // atoi
 
 static uint32 vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
