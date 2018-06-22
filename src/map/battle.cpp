@@ -2150,11 +2150,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 
 static int battle_blewcount_bonus(struct map_session_data *sd, uint16 skill_id)
 {
-	uint8 i;
-	if (!sd->skillblown.size())
+	if (sd->skillblown.empty())
 		return 0;
 	//Apply the bonus blewcount. [Skotlex]
-	for (i = 0; i < sd->skillblown.size(); i++) {
+	for (uint8 i = 0; i < sd->skillblown.size(); i++) {
 		if (sd->skillblown[i].id == skill_id)
 			return sd->skillblown[i].val;
 	}

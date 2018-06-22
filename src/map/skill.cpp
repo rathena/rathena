@@ -2076,7 +2076,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	}
 
 	// Autospell when attacking
-	if( sd && !status_isdead(bl) && sd->autospell.size() )
+	if( sd && !status_isdead(bl) && !sd->autospell.empty() )
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
@@ -2170,7 +2170,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	}
 
 	//Autobonus when attacking
-	if( sd && sd->autobonus.size() )
+	if( sd && !sd->autobonus.empty() )
 	{
 		for(uint8 i = 0; i < sd->autobonus.size(); i++ )
 		{
@@ -2276,7 +2276,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		sd->state.autocast = 0;
 	}
 
-	if( sd && sd->autobonus3.size() ) {
+	if( sd && !sd->autobonus3.empty() ) {
 		for( i = 0; i < sd->autobonus3.size(); i++ ) {
 			if( rnd()%1000 >= sd->autobonus3[i].rate )
 				continue;
@@ -2419,7 +2419,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	// Trigger counter-spells to retaliate against damage causing skills.
-	if(dstsd && !status_isdead(bl) && dstsd->autospell2.size() &&
+	if(dstsd && !status_isdead(bl) && !dstsd->autospell2.empty() &&
 		!(skill_id && skill_get_nk(skill_id)&NK_NO_DAMAGE))
 	{
 		struct block_list *tbl;
@@ -2510,7 +2510,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	//Autobonus when attacked
-	if( dstsd && !status_isdead(bl) && dstsd->autobonus2.size() && !(skill_id && skill_get_nk(skill_id)&NK_NO_DAMAGE) ) {
+	if( dstsd && !status_isdead(bl) && !dstsd->autobonus2.empty() && !(skill_id && skill_get_nk(skill_id)&NK_NO_DAMAGE) ) {
 		for( uint8 i = 0; i < dstsd->autobonus2.size(); i++ ) {
 			if( rnd()%1000 >= dstsd->autobonus2[i].rate )
 				continue;

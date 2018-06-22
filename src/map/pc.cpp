@@ -12085,7 +12085,7 @@ short pc_maxaspd(struct map_session_data *sd) {
 short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid) {
 	short bonus = 0;
 
-	if (!sd->itemgrouphealrate.size())
+	if (sd->itemgrouphealrate.empty())
 		return bonus;
 	for (uint8 i = 0; i < sd->itemgrouphealrate.size(); i++) {
 		uint16 group_id = sd->itemgrouphealrate[i].id, j;
@@ -12113,7 +12113,7 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid)
 short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id) {
 	short bonus = 0;
 
-	if (!sd->itemgrouphealrate.size())
+	if (sd->itemgrouphealrate.empty())
 		return bonus;
 	for (uint8 i = 0; i < sd->itemgrouphealrate.size(); i++) {
 		if (sd->itemgrouphealrate[i].id == group_id)
