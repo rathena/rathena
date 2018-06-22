@@ -11,5 +11,4 @@ prt_q,0,0	monster	Zombie Guard	3452,60
 prt_q,0,0	monster	Ghoul	1036,10
 prt_q,0,0	monster	Immortal Corps	3451,30
 prt_q,0,0	monster	Hunter Fly	1035,15
-// todo
-// prt_q,0,0	monster	Immortal Commander	3490,1
+prt_q,0,0	monster	Immortal Commander	3490,1
