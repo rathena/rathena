@@ -9602,7 +9602,7 @@ ACMD_FUNC(langtype)
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
-			pc_setaccountreg(sd, add_str("#langtype"), lang); //For login/char
+			pc_setaccountreg(sd, add_str(LANGTYPE_VAR), lang); //For login/char
 			sd->langtype = lang;
 			sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
 			clif_displaymessage(fd,output);
