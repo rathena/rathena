@@ -3177,9 +3177,38 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				pc_setrestartvalue(sd,2);
 
 			pc_delinvincibletimer(sd);
-			pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),false);
-			pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),false);
-			pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),false);
+
+			sd->autospell.clear();
+			sd->autospell2.clear();
+			sd->autospell3.clear();
+			sd->addeff.clear();
+			sd->addeff_atked.clear();
+			sd->addeff_onskill.clear();
+			sd->skillatk.clear();
+			sd->skillusesprate.clear();
+			sd->skillusesp.clear();
+			sd->skillheal.clear();
+			sd->skillheal2.clear();
+			sd->skillblown.clear();
+			sd->skillcastrate.clear();
+			sd->skillfixcastrate.clear();
+			sd->subskill.clear();
+			sd->skillcooldown.clear();
+			sd->skillfixcast.clear();
+			sd->skillvarcast.clear();
+			sd->add_def.clear();
+			sd->add_mdef.clear();
+			sd->add_mdmg.clear();
+			sd->reseff.clear();
+			sd->itemgrouphealrate.clear();
+			sd->add_drop.clear();
+			sd->itemhealrate.clear();
+			sd->subele2.clear();
+			sd->skilldelay.clear();
+
+			pc_delautobonus(sd, sd->autobonus, false);
+			pc_delautobonus(sd, sd->autobonus2, false);
+			pc_delautobonus(sd, sd->autobonus3, false);
 
 			if( sd->followtimer != INVALID_TIMER )
 				pc_stop_following(sd);
@@ -3247,8 +3276,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			// Clearing...
 			if (sd->bonus_script.head)
 				pc_bonus_script_clear(sd, BSF_REM_ALL);
-
-			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET: {

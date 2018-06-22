@@ -2788,7 +2788,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// process script-granted extra drop bonuses
 			uint16 dropid = 0;
 
-			for (i = 0; i < ARRAYLENGTH(sd->add_drop); i++) {
+			for (i = 0; i < sd->add_drop.size(); i++) {
 				struct s_mob_drop mobdrop;
 				if (!&sd->add_drop[i] || (!sd->add_drop[i].nameid && !sd->add_drop[i].group))
 					continue;
