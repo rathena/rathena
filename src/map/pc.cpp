@@ -3681,7 +3681,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
 		if(sd->state.lr_flag == 2)
 			break;
-		if (sd->skillcastrate == MAX_PC_BONUS) { //Better mention this so the array length can be updated. [Skotlex]
+		if (sd->skillcastrate.size() == MAX_PC_BONUS) { //Better mention this so the array length can be updated. [Skotlex]
 			ShowError("pc_bonus2: %s: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", (type == SP_CASTRATE) ? "SP_CASTRATE" : "SP_VARCASTRATE", MAX_PC_BONUS, type2, val);
 			break;
 		}
