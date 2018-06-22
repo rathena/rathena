@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef	_TIMER_HPP_
 #define	_TIMER_HPP_
 
-#include "cbasetypes.hpp"
 #include <time.h>
+
+#include "cbasetypes.hpp"
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 

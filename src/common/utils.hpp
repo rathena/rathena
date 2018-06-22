@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _UTILS_HPP_
 #define _UTILS_HPP_
 
-#include "cbasetypes.hpp"
 #include <stdio.h> // FILE*
+
+#include "cbasetypes.hpp"
 
 // generate a hex dump of the first 'length' bytes of 'buffer'
 void WriteDump(FILE* fp, const void* buffer, size_t length);

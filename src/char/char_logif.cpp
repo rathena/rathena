@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/sql.hpp"
-#include "../common/utils.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "inter.hpp"
-#include "int_guild.hpp"
 #include "char.hpp"
 #include "char_clif.hpp"
 #include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_guild.hpp"
 
 //early declaration
 void chlogif_on_ready(void);

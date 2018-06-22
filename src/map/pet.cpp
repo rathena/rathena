@@ -1,33 +1,31 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "pet.hpp"
 
 #include <map>
-
 #include <stdlib.h>
 
-#include "../common/utilities.hpp"
-
 #include "../common/db.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.hpp"
 
-#include "pc.hpp"
-#include "intif.hpp"
-#include "chrif.hpp"
-#include "npc.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
-#include "battle.hpp"
-#include "log.hpp"
 #include "achievement.hpp"
+#include "battle.hpp"
+#include "chrif.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "log.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "pc.hpp"
 
 using namespace rathena;
 

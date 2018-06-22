@@ -34,6 +34,18 @@ message( STATUS "Creating svnversion.h - done" )
 #####################################################################
 # setup
 #
+if( WIN32 )
+	set( PROJECT_LIBS Ws2_32.lib )
+
+	if( MSVC )
+		add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS)
+	endif()
+
+	set( COMMON_ADDITIONALL_CPP	"${COMMON_SOURCE_DIR}/winapi.cpp" )
+
+	set( COMMON_ADDITIONALL_HPP	"${COMMON_SOURCE_DIR}/winapi.hpp" )
+endif()
+
 set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
 	CACHE PATH "common source directory" )
 #message( STATUS "DEBUG COMMON_SOURCE_DIR=${COMMON_SOURCE_DIR}" )
@@ -52,6 +64,7 @@ set( COMMON_MINI_HEADERS
 	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/strlib.hpp"
 	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
+	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "" )
 set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/core.cpp"
@@ -59,6 +72,7 @@ set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
+	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "" )
 set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
 set( COMMON_MINI_DEFINITIONS "-DMINICORE ${LIBCONFIG_DEFINITIONS}" CACHE INTERNAL "" )
@@ -91,6 +105,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
 	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
+	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/conf.cpp"
@@ -113,6 +128,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
 	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
+	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}

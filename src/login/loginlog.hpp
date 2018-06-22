@@ -1,13 +1,6 @@
-/**
- * @file loginlog.h
- * Module purpose is to register (log) events into a file or sql database.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams rev < 15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
 #ifndef _LOGINLOG_HPP_
 #define _LOGINLOG_HPP_
 

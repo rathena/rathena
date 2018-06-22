@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _STATUS_HPP_
@@ -780,7 +780,7 @@ enum sc_type : int16 {
 
 	SC_ACTIVE_MONSTER_TRANSFORM,
 
-	SC_CLOUD_KILL,
+	SC_CLOUD_KILL, // Deprecated
 
 	SC_LJOSALFAR,
 	SC_MERMAID_LONGING,

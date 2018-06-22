@@ -1,14 +1,10 @@
-/**
- * @file cli.hpp
- * Module purpose is to handle the console (cli=console line input) while the servers launch and run.
- *  This contains functions common to all servers, but then dispatches them to a specific parser on each server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#ifndef CLI_HPP
-#define	CLI_HPP
+#ifndef _CLI_HPP_
+#define	_CLI_HPP_
+
+#include "cbasetypes.hpp"
 
 #define MAX_CONSOLE_IN 200 //max is map...
 #define MIN_CONSOLE_IN 4 //min is help
@@ -37,5 +33,5 @@ int cli_get_options(int argc, char ** argv);
 int parse_console_timer(int tid, unsigned int tick, int id, intptr_t data);
 extern int parse_console(const char* buf); //particular for each serv
 
-#endif	/* CLI_HPP */
+#endif /* _CLI_HPP_ */
 

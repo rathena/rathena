@@ -1,6 +1,6 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#pragma once
+
 #ifndef _PC_HPP_
 #define _PC_HPP_
 
@@ -9,16 +9,16 @@
 #include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.hpp"// StringBuf
 
-#include "map.hpp" // RC_ALL
-#include "itemdb.hpp" // MAX_ITEMGROUP
-#include "searchstore.hpp"  // struct s_search_store_info
-#include "vending.hpp" // struct s_vending
 #include "buyingstore.hpp" // struct s_buyingstore
-#include "unit.hpp" // unit_data
-#include "status.hpp" // unit_data
-#include "script.hpp" // struct script_reg, struct script_regstr
-#include "mob.hpp" //e_size
 #include "clif.hpp" //e_wip_block
+#include "itemdb.hpp" // MAX_ITEMGROUP
+#include "map.hpp" // RC_ALL
+#include "mob.hpp" //e_size
+#include "script.hpp" // struct script_reg, struct script_regstr
+#include "searchstore.hpp"  // struct s_search_store_info
+#include "status.hpp" // unit_data
+#include "unit.hpp" // unit_data
+#include "vending.hpp" // struct s_vending
 
 enum AtCommandType : uint8;
 //enum e_log_chat_type : uint8;
