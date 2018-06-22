@@ -12,4 +12,4 @@ prt_cas,329,206,3	duplicate(Madeleine Chu#cook_)	Madeleine Chu#cook	4_COOK
 prt_cas,329,194,3	duplicate(Child with Cat#cook_)	Child with Cat#cook	4_F_YUNYANG
 
 // inaccurate
-prt_cas,329,195,3	duplicate(Wickebine#cook_)	Wickebine#cook	4_F_JOB_ASSASSIN
+prt_cas,329,192,3	duplicate(Wickebine#cook_)	Wickebine#cook	4_F_JOB_ASSASSIN
