@@ -879,12 +879,3 @@ OnStop:
 1@mir,102,95,3	duplicate(Iris#1mir)	Bijou#6mir	4_F_BIJOU
 1@mir,104,95,3	duplicate(Iris#1mir)	Sarah#6mir	4_F_SARAH
 1@mir,103,90,1	duplicate(Iris#1mir)	Fenrir#6mir	4_F_FENRIR
-
-1@mir	mapflag	noicewall
-1@mir	mapflag	nomemo
-1@mir	mapflag	pvp	off
-1@mir	mapflag	nowarpto
-1@mir	mapflag	restricted	6
-1@mir	mapflag	noteleport
-1@mir	mapflag	monster_noteleport
-1@mir	mapflag	nosave	SavePoint

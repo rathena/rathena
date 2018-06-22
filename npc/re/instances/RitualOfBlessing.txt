@@ -783,12 +783,3 @@ OnInstanceInit:
 	mes "Don't get out now.";
 	close;
 }
-
-2@mir	mapflag	noicewall
-2@mir	mapflag	nomemo
-2@mir	mapflag	pvp	off
-2@mir	mapflag	nowarpto
-2@mir	mapflag	restricted	6
-2@mir	mapflag	noteleport
-2@mir	mapflag	monster_noteleport
-2@mir	mapflag	nosave	SavePoint
