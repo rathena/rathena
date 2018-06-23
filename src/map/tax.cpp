@@ -48,17 +48,22 @@ struct s_tax *tax_get(enum e_tax_type type) {
  * @param sd: Player data
  */
 void tax_vending_vat(struct map_session_data *sd) {
+	s_tax *taxdata;
+
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
+	taxdata = tax_get(TAX_SELLING);
+
 	for (int i = 0; i < ARRAYLENGTH(sd->vending); i++) {
 		char msg[CHAT_SIZE_MAX];
 		unsigned short tax;
-		s_tax *taxdata;
 
-		taxdata = tax_get(TAX_SELLING);
+		if (!sd->vending[i].amount)
+			continue;
+
 		tax = taxdata->get_tax(taxdata->each, sd->vending[i].value);
 		sd->vending[i].value_vat = tax ? (size_t)(sd->vending[i].value - sd->vending[i].value / 10000. * tax) : sd->vending[i].value;
 
@@ -75,17 +80,21 @@ void tax_vending_vat(struct map_session_data *sd) {
  * @param sd: Player data
  */
 void tax_buyingstore_vat(struct map_session_data *sd) {
+	s_tax *taxdata;
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
+	taxdata = tax_get(TAX_BUYING);
+
 	for (int i = 0; i < ARRAYLENGTH(sd->buyingstore.items); i++) {
 		char msg[CHAT_SIZE_MAX];
 		unsigned short tax;
-		s_tax *taxdata;
 
-		taxdata = tax_get(TAX_BUYING);
+		if (!sd->buyingstore.items[i].nameid)
+			continue;
+
 		tax = taxdata->get_tax(taxdata->each, sd->buyingstore.items[i].price);
 		sd->buyingstore.items[i].price_vat = (size_t)(sd->buyingstore.items[i].price + sd->buyingstore.items[i].price / 10000. * tax);
 

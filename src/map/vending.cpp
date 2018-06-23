@@ -299,6 +299,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 			vsd->vending[cursor].index = vsd->vending[i].index;
 			vsd->vending[cursor].amount = vsd->vending[i].amount;
 			vsd->vending[cursor].value = vsd->vending[i].value;
+			vsd->vending[cursor].value_vat = vsd->vending[i].value_vat;
 		}
 
 		cursor++;
