@@ -774,7 +774,7 @@
 1430,Pike_C,Pike,5,0,,0,74,,3,0,0x00004082,63,2,2,1,1,0,4,{ bonus2 bAddSize,Size_All,70; },{},{}
 1431,F_Pole_Axe_C,Pole Axe,5,1,,4800,195,,3,0,0x00004082,63,2,2,3,1,0,4,{ bonus bStr,1; bonus bInt,2; bonus bDex,1; },{},{}
 1432,E_Pole_Axe_C,Pole Axe,5,1,,4800,195,,3,0,0x00004082,63,2,2,3,1,0,4,{ bonus bStr,1; bonus bInt,2; bonus bDex,1; },{},{}
-1433,Imperial_Spear,Imperial Spear,5,20,,1800,180:40,,3,1,0x00004082,63,2,2,3,102,1,4,{ .@r = getrefine(); bonus2 bSkillAtk,"LG_CANNONSPEAR",20+(.@r/2); bonus2 bSkillAtk,"LG_BANISHINGPOINT",20+(.@r/2); },{},{}
+1433,Imperial_Spear,Imperial Spear,5,20,,1800,180:40,,3,1,0x00004082,63,2,2,3,102,1,4,{ .@r = getrefine(); bonus2 bSkillAtk,"LG_CANNONSPEAR",20+(.@r/2*3); bonus2 bSkillAtk,"LG_BANISHINGPOINT",20+(.@r/2*3); },{},{}
 1434,P_Sphere1,Eden Spear I,5,0,,0,165,,3,0,0x00004082,63,2,2,3,60,0,4,{},{},{}
 1435,Cannon_Spear,Cannon Spear,5,56000,,1600,180,,3,1,0x00004000,63,2,2,4,100,1,4,{ bonus bMaxSP,-100; bonus2 bSkillAtk,"LG_CANNONSPEAR",10; bonus bBaseAtk,(getrefine()/3); },{},{}
 1436,Velum_Spear,Vellum Spear,5,20,,850,150,,3,0,0x00004082,63,2,2,4,95,1,4,{ bonus2 bAddRace,RC_Player,60; .@r = getrefine(); if(.@r>=6) { bonus2 bSkillAtk,"RK_HUNDREDSPEAR",80; bonus2 bSkillAtk,"LG_PINPOINTATTACK",80; } if(.@r>=9) { bonus2 bAddRace,RC_Player,30; } },{},{}
