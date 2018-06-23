@@ -959,9 +959,9 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 	if (target->type == BL_PC)
 		sd = (struct map_session_data *)target;
 
-	if (sc->data[SC_PNEUMA] && (d->flag&(BF_MAGIC | BF_LONG)) == BF_LONG ||
-		sc->data[SC_BASILICA] && !status_bl_has_mode(src, MD_STATUS_IMMUNE) ||
-		sc->data[SC_ZEPHYR] && !(flag&BF_MAGIC && skill_id) && !(skill_get_inf(skill_id)&(INF_GROUND_SKILL | INF_SELF_SKILL)) ||
+	if ((sc->data[SC_PNEUMA] && (d->flag&(BF_MAGIC | BF_LONG)) == BF_LONG) ||
+		(sc->data[SC_BASILICA] && !status_bl_has_mode(src, MD_STATUS_IMMUNE)) ||
+		(sc->data[SC_ZEPHYR] && !(flag&BF_MAGIC && skill_id) && !(skill_get_inf(skill_id)&(INF_GROUND_SKILL | INF_SELF_SKILL))) ||
 		sc->data[SC__MANHOLE] ||
 		sc->data[SC_KINGS_GRACE]
 		)
