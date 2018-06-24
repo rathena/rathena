@@ -11648,64 +11648,6 @@ static void pc_clear_log_damage_sub(uint32 char_id, struct mob_data *md)
 }
 
 /**
-* Add log to player's dmglog
-* @param sd
-* @param id Monster's GID
-**/
-void pc_damage_log_add(struct map_session_data *sd, int id)
-{
-	uint8 i = 0;
-
-	if (!sd || !id)
-		return;
-
-	//Only store new data, don't need to renew the old one with same id
-	ARR_FIND(0, DAMAGELOG_SIZE_PC, i, sd->dmglog[i] == id);
-	if (i < DAMAGELOG_SIZE_PC)
-		return;
-
-	for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-		if (sd->dmglog[i] == 0) {
-			sd->dmglog[i] = id;
-			return;
-		}
-	}
-}
-
-/**
-* Clear dmglog data from player
-* @param sd
-* @param id Monster's id
-**/
-void pc_damage_log_clear(struct map_session_data *sd, int id)
-{
-	uint8 i;
-	struct mob_data *md = NULL;
-
-	if (!sd)
-		return;
-
-	if (!id) {
-		for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-			if( !sd->dmglog[i] )	//skip the empty value
-				continue;
-
-			if ((md = map_id2md(sd->dmglog[i])))
-				pc_clear_log_damage_sub(sd->status.char_id,md);
-			sd->dmglog[i] = 0;
-		}
-	}
-	else {
-		if ((md = map_id2md(id)))
-			pc_clear_log_damage_sub(sd->status.char_id,md);
-
-		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i] == id);	// find the id position
-		if (i < DAMAGELOG_SIZE_PC)
-			sd->dmglog[i] = 0;
-	}
-}
-
-/**
  * Status change data arrived from char-server
  * @param sd: Player data
  */
