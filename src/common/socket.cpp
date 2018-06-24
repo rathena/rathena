@@ -1,12 +1,6 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.hpp"
-#include "mmo.hpp"
-#include "timer.hpp"
-#include "malloc.hpp"
-#include "showmsg.hpp"
-#include "strlib.hpp"
 #include "socket.hpp"
 
 #include <stdlib.h>
@@ -33,6 +27,13 @@
 	#include <sys/resource.h>
 	#endif
 #endif
+
+#include "cbasetypes.hpp"
+#include "malloc.hpp"
+#include "mmo.hpp"
+#include "showmsg.hpp"
+#include "strlib.hpp"
+#include "timer.hpp"
 
 /////////////////////////////////////////////////////////////////////
 #if defined(WIN32)

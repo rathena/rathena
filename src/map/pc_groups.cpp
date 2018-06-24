@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "pc_groups.hpp"
@@ -7,8 +7,8 @@
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/strlib.hpp" // strcmp
 #include "../common/socket.hpp"
+#include "../common/strlib.hpp" // strcmp
 
 #include "atcommand.hpp" // AtCommandType
 #include "pc.hpp" // e_pc_permission

@@ -1,21 +1,15 @@
-/**
- * @file loginchrif.c
- * Module purpose is to handle incoming and outgoing requests with char-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "loginchrif.hpp"
 
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/timer.hpp" //difftick
-#include "../common/strlib.hpp" //safeprint
 #include "../common/showmsg.hpp" //show notice
 #include "../common/socket.hpp" //wfifo session
+#include "../common/strlib.hpp" //safeprint
+#include "../common/timer.hpp" //difftick
 
 #include "account.hpp"
 #include "login.hpp"

@@ -68,7 +68,7 @@
 //    0x00800 - skill range affected by RA_RESEARCHTRAP
 //    0x01000 - skill that does not affect user that has NC_HOVERING active
 //    0x02000 - skill that can be using while riding warg
-//    0x04000 - skill that can't be used while in mado
+//    0x04000 - skill that can be used while on Madogear
 //    0x08000 - skill that can be used to target while under SC__MANHOLE effect
 //    0x10000 - skill that affects hidden targets
 //    0x20000 - skill that affects SC_GLOOMYDAY_SK
@@ -91,7 +91,7 @@
 //****
 // Mage
 9,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		MG_SRECOVERY,Increase SP Recovery
-10,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0,0x4000,		MG_SIGHT,Sight
+10,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0,0x0,		MG_SIGHT,Sight
 11,9,6,1,8,0x6,1,10,1,yes,0,0x42000,0,magic,0,0x0,		MG_NAPALMBEAT,Napalm Beat
 12,9,8,2,8,0x1,0,10,1,yes,0,0,0,magic,0,0x0,		MG_SAFETYWALL,Safety Wall
 13,9,8,1,8,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0x2000,0,magic,0,0x0,		MG_SOULSTRIKE,Soul Strike
@@ -110,7 +110,7 @@
 23,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		AL_DEMONBANE,Demon Bane
 24,0,6,4,6,0x3,2,1,1,yes,0,0x0,0,magic,0,0x0,		AL_RUWACH,Ruwach
 25,9,6,2,0,0x1,0,1,1,yes,0,0,0,magic,0,0x0,		AL_PNEUMA,Pneuma
-26,0,6,4,0,0x1,0,2,1,yes,0,0,0,magic,0,0x40,		AL_TELEPORT,Teleport
+26,0,6,4,0,0x1,0,2,1,yes,0,0,0,magic,0,0x4040,		AL_TELEPORT,Teleport
 27,9,6,2,0,0x1,0,4,1,yes,0,0,3,magic,0,0x0,		AL_WARP,Warp Portal
 28,9,6,16,6,0x21,0,10,1,yes,0,0x2000,0,magic,0,0x0,	AL_HEAL,Heal
 29,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	AL_INCAGI,Increase AGI
@@ -144,7 +144,7 @@
 48,-1,8,0,-1,0,0,10,2,no,0,0,0,weapon,0,0x0,		TF_DOUBLE,Double Attack
 49,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		TF_MISS,Improve Dodge
 50,1,6,1,0,1,0,10,1,no,0,0,0,weapon,0,0x0,		TF_STEAL,Steal
-51,1,6,4,0,1,0,10,1,no,0,0,0,none,0,0x84044,		TF_HIDING,Hiding
+51,1,6,4,0,1,0,10,1,no,0,0,0,none,0,0x80044,		TF_HIDING,Hiding
 52,-2,6,1,5,0,0,10,1,no,0,0,0,weapon,0,0x0,		TF_POISON,Envenom
 53,9,6,16,5,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		TF_DETOXIFY,Detoxify
 //
@@ -213,13 +213,13 @@
 105,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,0x0,		BS_HILTBINDING,Hilt Binding
 106,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,0x0,		BS_FINDINGORE,Ore Discovery
 107,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		BS_WEAPONRESEARCH,Weaponry Research
-108,2,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,0x4000,	BS_REPAIRWEAPON,Weapon Repair
+108,2,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,0x0,	BS_REPAIRWEAPON,Weapon Repair
 109,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		BS_SKINTEMPER,Skin Tempering
-110,1,6,2,0,0x3,2:2:2:2:2:12,5,1,no,0,0,0,weapon,0,0x4000,	BS_HAMMERFALL,Hammer Fall
-111,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x4000,	BS_ADRENALINE,Adrenaline Rush
-112,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x4000,	BS_WEAPONPERFECT,Weapon Perfection
-113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x4000,	BS_OVERTHRUST,Power-Thrust
-114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x4000,		BS_MAXIMIZE,Maximize Power
+110,1,6,2,0,0x3,2:2:2:2:2:12,5,1,no,0,0,0,weapon,0,0x0,	BS_HAMMERFALL,Hammer Fall
+111,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	BS_ADRENALINE,Adrenaline Rush
+112,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	BS_WEAPONPERFECT,Weapon Perfection
+113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	BS_OVERTHRUST,Power-Thrust
+114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		BS_MAXIMIZE,Maximize Power
 
 //****
 // Hunter
@@ -334,7 +334,7 @@
 211,1,6,1,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	RG_STEALCOIN,Mug
 212,-1,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,0x4,	RG_BACKSTAP,Back Stab
 213,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		RG_TUNNELDRIVE,Stalk
-214,0,6,4,-1,0x2,3,5,1,no,0,0x40000,0,weapon,0,0x4,	RG_RAID,Sightless Mind
+214,0,6,4,-1,0x2,4,5,1,no,0,0x40000,0,weapon,0,0x4,	RG_RAID,Sightless Mind
 215,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPWEAPON,Divest Weapon
 216,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPSHIELD,Divest Shield
 217,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPARMOR,Divest Armor
@@ -561,10 +561,10 @@
 
 //****
 // Whitesmith
-384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0,0x4000,	WS_MELTDOWN,Shattering Strike
+384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0,0x0,	WS_MELTDOWN,Shattering Strike
 385,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	WS_CREATECOIN,Create Coins
 386,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	WS_CREATENUGGET,Create Nuggets
-387,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x4000,		WS_CARTBOOST,Cart Boost
+387,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		WS_CARTBOOST,Cart Boost
 388,9,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		WS_SYSTEMCREATE,Auto Attack System
 
 //****
@@ -678,7 +678,7 @@
 
 //****
 // Blacksmith
-459,0,6,4,0,0x3,-1,1,1,no,0,0x8,0,weapon,0,0x4000,		BS_ADRENALINE2,Advanced Adrenaline Rush
+459,0,6,4,0,0x3,-1,1,1,no,0,0x8,0,weapon,0,0x0,		BS_ADRENALINE2,Advanced Adrenaline Rush
 
 //****
 // Soul Linker
@@ -702,7 +702,7 @@
 474,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,0x0,	NPC_EMOTION_ON,Emotion ON
 475,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,		ST_PRESERVE,Preserve
 476,1,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x0,	ST_FULLSTRIP,Divest All
-477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_WEAPONREFINE,Upgrade Weapon
+477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	WS_WEAPONREFINE,Upgrade Weapon
 478,3,6,2,0,0x3,3,10,1,no,0,0,0,none,0,0x0,		CR_SLIMPITCHER,Aid Condensed Potion
 479,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x0,	CR_FULLPROTECTION,Full Protection
 480,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0,0x20000,		PA_SHIELDCHAIN,Shield Chain
@@ -710,8 +710,8 @@
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,		PF_DOUBLECASTING,Double Casting
 483,18,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,0x0,	HW_GANBANTEIN,Ganbantein
 484,18,6,2,2,0xD1,0,5,1,yes,0,0x18000,0,misc,0,0x11010,		HW_GRAVITATION,Gravitation Field
-485,-2,6,1,-1,0x0,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_CARTTERMINATION,Cart Termination
-486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x4000,		WS_OVERTHRUSTMAX,Maximum Power Thrust
+485,-2,6,1,-1,0x0,0,10,1,no,0,0,0,weapon,0,0x0,	WS_CARTTERMINATION,Cart Termination
+486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		WS_OVERTHRUSTMAX,Maximum Power Thrust
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x8,		CG_LONGINGFREEDOM,Longing for Freedom
 488,0,6,4,0,0x1,1,5,1,no,0,0x20,0,misc,0,0x1,	CG_HERMODE,Wand of Hermode
 489,9,6,1,0,0x41,0,5,1,no,0,0,0,misc,0,0x0,		CG_TAROTCARD,Tarot Card of Fate
@@ -913,8 +913,8 @@
 1009,-9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,3,0x0,	HT_PHANTASMIC,Phantasmic Arrow
 1010,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,0x0,	BA_PANGVOICE,Pang Voice
 1011,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,0x0,	DC_WINKCHARM,Wink of Charm
-1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,0x4000,	BS_UNFAIRLYTRICK,Unfair Trick
-1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,0x2000,	BS_GREED,Greed
+1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,0x0,	BS_UNFAIRLYTRICK,Unfair Trick
+1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,0x6000,	BS_GREED,Greed
 1014,0,6,4,6,0x3,14,1,0,yes,0,0x1,0,magic,0,0x0,	PR_REDEMPTIO,Redemptio
 1015,9,6,16,0,0x1,0,1,1,no,0,0x401,0,weapon,0,0x0,	MO_KITRANSLATION,Ki Translation
 1016,-1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,5,0x0,	MO_BALKYOUNG,Ki Explosion
@@ -1054,34 +1054,34 @@
 //****
 // NC Mechanic
 2255,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		NC_MADOLICENCE,Mado License
-2256,11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	NC_BOOSTKNUCKLE,Boost Knuckle
-2257,3,6,1,-1,0,0,3,1,no,0,0,0,weapon,0,0x0,	NC_PILEBUNKER,Pile Bunker
-2258,13,6,1,-1,0x2,1,3,1,no,0,0x40000,0,weapon,0,0x0,	NC_VULCANARM,Vulcan Arm
-2259,5,6,1,3,0,1,3,1,no,0,0,5,weapon,0,0x0,		NC_FLAMELAUNCHER,Flame Launcher
-2260,7,6,2,1,0x2,2:3:4,3,1,no,0,0x40000,0,weapon,0,0x0,	NC_COLDSLOWER,Cold Slower
-2261,9:11:13,6,1,-1,0x42,3:2:1,3,1,no,0,0,0,weapon,0,0x0,	NC_ARMSCANNON,Arm Cannon
-2262,0,6,4,0,0x1,0,3,1,no,0,0,0,none,0,0x0,		NC_ACCELERATION,Acceleration
-2263,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		NC_HOVERING,Hovering
-2264,0,6,4,0,0x1,0,1,1,no,0,0,0,none,7,0x0,		NC_F_SIDESLIDE,Front-Side Slide
-2265,0,6,4,0,0x1,0,1,1,no,0,0,0,none,7,0x0,		NC_B_SIDESLIDE,Back-Side Slide
+2256,11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x4000,	NC_BOOSTKNUCKLE,Boost Knuckle
+2257,3,6,1,-1,0,0,3,1,no,0,0,0,weapon,0,0x4000,	NC_PILEBUNKER,Pile Bunker
+2258,13,6,1,-1,0x2,1,3,1,no,0,0x40000,0,weapon,0,0x4000,	NC_VULCANARM,Vulcan Arm
+2259,5,6,1,3,0,1,3,1,no,0,0,5,weapon,0,0x4000,		NC_FLAMELAUNCHER,Flame Launcher
+2260,7,6,2,1,0x2,2:3:4,3,1,no,0,0x40000,0,weapon,0,0x4000,	NC_COLDSLOWER,Cold Slower
+2261,9:11:13,6,1,-1,0x42,3:2:1,3,1,no,0,0,0,weapon,0,0x4000,	NC_ARMSCANNON,Arm Cannon
+2262,0,6,4,0,0x1,0,3,1,no,0,0,0,none,0,0x4000,		NC_ACCELERATION,Acceleration
+2263,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x4000,		NC_HOVERING,Hovering
+2264,0,6,4,0,0x1,0,1,1,no,0,0,0,none,7,0x4000,		NC_F_SIDESLIDE,Front-Side Slide
+2265,0,6,4,0,0x1,0,1,1,no,0,0,0,none,7,0x4000,		NC_B_SIDESLIDE,Back-Side Slide
 2266,0,0,0,0,0,0,4,0,no,0,0,0,none,0,0x0,		NC_MAINFRAME,Mainframe Restructure
-2267,0,6,4,0,0xCA,2:3:4,3,1,no,0,0x40000,0,weapon,5,0x0,	NC_SELFDESTRUCTION,Self Destruction
-2268,0,6,4,0,0x1,0,4,1,yes,0,0,0,none,0,0x0,	NC_SHAPESHIFT,Shape Shift
-2269,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		NC_EMERGENCYCOOL,Emergency Cool
-2270,0,6,4,0,0x3,7,1,1,yes,0,0,0,none,0,0x0,	NC_INFRAREDSCAN,Infrared Scan
-2271,9,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	NC_ANALYZE,Analyze
-2272,0,6,4,0,0x3,2,3,1,no,0,0,0,none,0,0x0,	NC_MAGNETICFIELD,Magnetic Field
-2273,0,6,4,0,0x1,0,3,1,no,0,0,0,none,0,0x0,	NC_NEUTRALBARRIER,Neutral Barrier
-2274,0,6,4,0,0x1,0,3,1,no,0,0,0,none,0,0x0,	NC_STEALTHFIELD,Stealth Field
-2275,5:6:7:8:9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	NC_REPAIR,Repair
+2267,0,6,4,0,0xCA,2:3:4,3,1,no,0,0x40000,0,weapon,5,0x4000,	NC_SELFDESTRUCTION,Self Destruction
+2268,0,6,4,0,0x1,0,4,1,yes,0,0,0,none,0,0x4000,	NC_SHAPESHIFT,Shape Shift
+2269,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x4000,		NC_EMERGENCYCOOL,Emergency Cool
+2270,0,6,4,0,0x3,7,1,1,yes,0,0,0,none,0,0x4000,	NC_INFRAREDSCAN,Infrared Scan
+2271,9,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x4000,	NC_ANALYZE,Analyze
+2272,0,6,4,0,0x3,2,3,1,no,0,0,0,none,0,0x4000,	NC_MAGNETICFIELD,Magnetic Field
+2273,0,6,4,0,0x1,0,3,1,no,0,0,0,none,0,0x4000,	NC_NEUTRALBARRIER,Neutral Barrier
+2274,0,6,4,0,0x1,0,3,1,no,0,0,0,none,0,0x4000,	NC_STEALTHFIELD,Stealth Field
+2275,5:6:7:8:9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x4000,	NC_REPAIR,Repair
 2276,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		NC_TRAININGAXE,Axe Training
 2277,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		NC_RESEARCHFE,Research Fire/Earth
-2278,5:6:7:8:9,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:3:4:5:6,0x0,	NC_AXEBOOMERANG,Axe Boomerang
-2279,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	NC_POWERSWING,Power Swing
-2280,0,8,4,-1,0x2,2:2:3:3:3,5,-6,no,0,0x40000,0,weapon,0,0x0,	NC_AXETORNADO,Axe Tornado
-2281,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,0x0,	NC_SILVERSNIPER,FAW - Silver Sniper
-2282,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,0x0,	NC_MAGICDECOY,FAW - Magic Decoy
-2283,5,6,1,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		NC_DISJOINT,FAW Removal
+2278,5:6:7:8:9,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:3:4:5:6,0x4000,	NC_AXEBOOMERANG,Axe Boomerang
+2279,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x4000,	NC_POWERSWING,Power Swing
+2280,0,8,4,-1,0x2,2:2:3:3:3,5,-6,no,0,0x40000,0,weapon,0,0x4000,	NC_AXETORNADO,Axe Tornado
+2281,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,0x4000,	NC_SILVERSNIPER,FAW - Silver Sniper
+2282,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,0x4000,	NC_MAGICDECOY,FAW - Magic Decoy
+2283,5,6,1,0,0x1,0,1,1,no,0,0,0,none,0,0x4000,		NC_DISJOINT,FAW Removal
 
 //****
 // SC Shadow Chaser
@@ -1396,7 +1396,7 @@
 5003,7,6,1,-1,0x2,4:5:6:7:-1,5,1,no,0,0,0,weapon,0,0x0, GN_ILLUSIONDOPING,Illusion Doping
 5004,9,6,2,1,0x42,1:1:1:2:2:2:3:3:4:4,10,1,no,0,0x40000,0,weapon,0,0x0, RK_DRAGONBREATH_WATER,Dragon Breath - Water
 5005,0,6,4,0,0x3,3,1,1,no,0,0,0,none,0,0x0, RK_LUXANIMA,Lux Anima
-5006,1,6,2,3,0x2,3,5,1,no,0,0,3,misc,0,0x0, NC_MAGMA_ERUPTION,Magma Eruption
+5006,1,6,2,3,0x2,3,5,1,no,0,0,3,misc,0,0x4000, NC_MAGMA_ERUPTION,Magma Eruption
 5007,0,6,4,0,0x3,5:6:7:8:9,5,1,no,0,0,0,none,0,0x0, WM_FRIGG_SONG,Frigg's Song
 5008,0,6,4,0,0x3,11,5,1,no,0,0,0,none,0,0x0, SO_ELEMENTAL_SHIELD,Elemental Shield
 5009,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0, SR_FLASHCOMBO,Flash Combo
@@ -1404,7 +1404,7 @@
 5011,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, AB_OFFERTORIUM,Offertorium
 5012,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, WL_TELEKINESIS_INTENSE,Intense Telekinesis
 5013,0,6,4,0,0x3,0,5,1,no,0,0,0,none,0,0x0, LG_KINGS_GRACE,King's Grace
-5014,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, ALL_FULL_THROTTLE,Full Throttle
+5014,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x4000, ALL_FULL_THROTTLE,Full Throttle
 
 // Summoner
 5018,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_BASIC_SKILL,New Basic Skill

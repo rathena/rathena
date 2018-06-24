@@ -1,15 +1,12 @@
-/**
- * @file cli.cpp
- * Module purpose is to handle the console (cli=console line input) while the servers launch and run.
- *  This contains functions common to all servers, but then dispatches them to a specific parser on each server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "cli.hpp"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+
 #ifdef WIN32
 	#include <conio.h>
 #else
@@ -17,9 +14,8 @@
 #endif
 
 #include "cbasetypes.hpp"
-#include "showmsg.hpp"
 #include "core.hpp"
-#include "cli.hpp"
+#include "showmsg.hpp"
 
 //map confs
 const char* MAP_CONF_NAME;

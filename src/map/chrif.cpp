@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "chrif.hpp"
@@ -7,31 +7,31 @@
 #include <cstring>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
-#include "../common/ers.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
 #include "battle.hpp"
 #include "clan.hpp"
 #include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
-#include "guild.hpp"
-#include "log.hpp"
 
 static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
 

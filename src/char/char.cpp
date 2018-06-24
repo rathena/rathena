@@ -1,16 +1,17 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
 #include "char.hpp"
 
-#include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/cli.hpp"
 #include "../common/core.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
@@ -21,20 +22,19 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
-#include "../common/cli.hpp"
 
+#include "char_clif.hpp"
+#include "char_cnslif.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_elemental.hpp"
 #include "int_guild.hpp"
 #include "int_homun.hpp"
 #include "int_mail.hpp"
 #include "int_mercenary.hpp"
-#include "int_elemental.hpp"
 #include "int_party.hpp"
 #include "int_storage.hpp"
-#include "inter.hpp"
-#include "char_logif.hpp"
-#include "char_mapif.hpp"
-#include "char_cnslif.hpp"
-#include "char_clif.hpp"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor

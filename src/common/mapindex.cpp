@@ -1,13 +1,14 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "mmo.hpp"
-#include "core.hpp"
 #include "mapindex.hpp"
-#include "showmsg.hpp"
-#include "strlib.hpp"
 
 #include <stdlib.h>
+
+#include "core.hpp"
+#include "mmo.hpp"
+#include "showmsg.hpp"
+#include "strlib.hpp"
 
 DBMap *mapindex_db;
 struct _indexes {

@@ -1,46 +1,44 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mob.hpp"
 
-#include <stdlib.h>
+#include <algorithm>
 #include <map>
 #include <math.h>
-
-#include "../common/utilities.hpp"
+#include <stdlib.h>
+#include <unordered_map>
+#include <vector>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
 #include "../common/db.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
 #include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utils.hpp"
+#include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utilities.hpp"
+#include "../common/utils.hpp"
 
-#include "map.hpp"
-#include "path.hpp"
+#include "achievement.hpp"
+#include "battle.hpp"
 #include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "party.hpp"
 #include "quest.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "battle.hpp"
-#include "log.hpp"
-#include "achievement.hpp"
-
-#include <vector>
-#include <unordered_map>
-#include <algorithm>
 
 using namespace rathena;
 

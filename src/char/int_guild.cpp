@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_guild.hpp"
@@ -8,10 +8,10 @@
 #include <string.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
 #include "../common/malloc.hpp"
-#include "../common/socket.hpp"
+#include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 
@@ -126,7 +126,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	if (g->guild_id<=0 && g->guild_id != -1) return 0;
 
 #ifdef NOISY
-	ShowInfo("Save guild request ("CL_BOLD"%d"CL_RESET" - flag 0x%x).",g->guild_id, flag);
+	ShowInfo("Save guild request (" CL_BOLD "%d" CL_RESET " - flag 0x%x).",g->guild_id, flag);
 #endif
 
 	Sql_EscapeStringLen(sql_handle, esc_name, g->name, strnlen(g->name, NAME_LENGTH));

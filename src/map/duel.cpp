@@ -1,6 +1,5 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-// Duel organizing functions [LuzZza]
 
 #include "duel.hpp"
 
@@ -12,9 +11,9 @@
 #include "../common/timer.hpp"
 
 #include "atcommand.hpp"  // msg_txt
+#include "battle.hpp"
 #include "clif.hpp"
 #include "pc.hpp"
-#include "battle.hpp"
 
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
