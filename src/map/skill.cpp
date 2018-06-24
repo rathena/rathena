@@ -1,48 +1,48 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "skill.hpp"
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <math.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.hpp"
 
-#include "map.hpp"
-#include "path.hpp"
-#include "clif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
-#include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "mob.hpp"
-#include "npc.hpp"
+#include "achievement.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
-#include "party.hpp"
-#include "itemdb.hpp"
-#include "script.hpp"
-#include "intif.hpp"
-#include "log.hpp"
 #include "chrif.hpp"
-#include "guild.hpp"
+#include "clif.hpp"
 #include "date.hpp"
-#include "unit.hpp"
-#include "achievement.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "path.hpp"
+#include "pc.hpp"
 #include "pc_groups.hpp"
+#include "pet.hpp"
+#include "script.hpp"
+#include "status.hpp"
+#include "unit.hpp"
 
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
@@ -4656,6 +4656,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RK_SONICWAVE:
 	case AB_DUPLELIGHT_MELEE:
 	case RA_AIMEDBOLT:
+	case NC_BOOSTKNUCKLE:
+	case NC_PILEBUNKER:
 	case NC_AXEBOOMERANG:
 	case NC_POWERSWING:
 	case NC_MAGMA_ERUPTION:
@@ -4685,11 +4687,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case NC_BOOSTKNUCKLE:
-	case NC_PILEBUNKER:
-	case NC_COLDSLOWER:
-		if (sd)
-			pc_overheat(sd, 1);
 	case MO_TRIPLEATTACK:
 	case RK_WINDCUTTER:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
@@ -4752,7 +4749,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case NC_FLAMELAUNCHER:
-		if (sd) pc_overheat(sd,1);
 	case LG_CANNONSPEAR:
 		if(skill_id == LG_CANNONSPEAR)
 			clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
@@ -4925,6 +4921,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RA_ARROWSTORM:
 	case RA_WUGDASH:
 	case NC_VULCANARM:
+	case NC_COLDSLOWER:
 	case NC_SELFDESTRUCTION:
 	case NC_AXETORNADO:
 	case GC_ROLLINGCUTTER:
@@ -5003,18 +5000,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
+				case NC_ARMSCANNON:
 					skill_area_temp[1] = 0;
 					starget = splash_target(src);
 					break;
 				case WL_CRIMSONROCK:
 					skill_area_temp[4] = bl->x;
 					skill_area_temp[5] = bl->y;
-					break;
-				case NC_ARMSCANNON:
-					starget = splash_target(src);
-				case NC_VULCANARM:
-					if (sd)
-						pc_overheat(sd, 1);
 					break;
 			}
 
@@ -5690,9 +5682,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 			sc_start(src,bl, SC_INFRAREDSCAN, 10000, skill_lv, skill_get_time(skill_id, skill_lv));
 		} else {
+			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
 			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
-			if( sd ) pc_overheat(sd,1);
 		}
 		break;
 
@@ -7059,11 +7050,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 		break;
 
-	case NC_EMERGENCYCOOL:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		status_change_end(src,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
-		status_change_end(src,SC_OVERHEAT,INVALID_TIMER);
-		break;
 	case SR_WINDMILL:
 	case GN_CART_TORNADO:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -7239,11 +7225,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (tsce)
 		{
 			clif_skill_nodamage(src,bl,skill_id,-1,status_change_end(bl, type, INVALID_TIMER)); //Hide skill-scream animation.
-			map_freeblock_unlock();
-			return 0;
-		} else if( tsc && tsc->option&OPTION_MADOGEAR ) {
-			//Mado Gear cannot hide
-			if( sd ) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -9658,11 +9639,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
+	case NC_EMERGENCYCOOL:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		if (sd) {
+			struct skill_condition req = skill_get_requirement(sd, skill_id, skill_lv);
+			int16 limit[] = { -45, -75, -105 };
+			uint8 i;
+
+			for (i = 0; i < req.eqItem_count; i++) {
+				if (pc_search_inventory(sd, req.eqItem[i]) != -1)
+					break;
+			}
+			pc_overheat(sd, limit[i]);
+		}
+		break;
+
 	case NC_ANALYZE:
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
-		clif_skill_nodamage(src, bl, skill_id, skill_lv,
-			sc_start(src,bl,type, 30 + 12 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if( sd ) pc_overheat(sd,1);
+		sc_start(src,bl,type, 30 + 12 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 
 	case NC_MAGNETICFIELD:
@@ -9670,8 +9664,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (map_flag_vs(src->m)) // Doesn't affect the caster in non-PVP maps [exneval]
 			sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
 		map_foreachinallrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
-		if (sd)
-			pc_overheat(sd,1);
 		break;
 
 	case NC_REPAIR:
@@ -12153,7 +12145,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		skill_clear_unitgroup(src); // To remove previous skills - cannot used combined
 		if( (sg = skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0)) != NULL ) {
 			sc_start2(src,src,skill_id == NC_NEUTRALBARRIER ? SC_NEUTRALBARRIER_MASTER : SC_STEALTHFIELD_MASTER,100,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
-			if( sd ) pc_overheat(sd,1);
 		}
 		break;
 
@@ -13535,13 +13526,6 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 				status_change_start(ss, bl, type, 10000, sg->skill_lv, 0, 0, 0, sg->limit, SCSTART_NOICON);
 			break;
 
-		case UNT_CLOUD_KILL:
-			if(!sce) {
-				sc_start4(ss, bl, type, 100, sg->skill_lv, ss->id, unit->bl.id, 0, skill_get_time(sg->skill_id, sg->skill_lv));
-				status_change_start(ss, bl, SC_POISON, 10000, sg->skill_lv, ss->id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NOTICKDEF);
-			}
-			break;
-
 		case UNT_WARMER:
 			if (!sce && bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
 				sc_start2(ss, bl, type, 100, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
@@ -14183,6 +14167,12 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval);
 			break;
 
+		case UNT_CLOUD_KILL:
+			if (tsc && !tsc->data[type])
+				status_change_start(ss, bl, type, 10000, sg->skill_lv, ss->id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NOTICKDEF);
+			skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			break;
+
 		case UNT_VACUUM_EXTREME:
 			if (tsc && (tsc->data[SC_HALLUCINATIONWALK] || tsc->data[SC_HOVERING] || tsc->data[SC_VACUUM_EXTREME] ||
 				(tsc->data[SC_VACUUM_EXTREME_POSTDELAY] && tsc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == sg->group_id))) // Ignore post delay from other vacuum (this will make stack effect enabled)
@@ -14412,7 +14402,6 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 		case EL_WATER_BARRIER:
 		case EL_ZEPHYR:
 		case EL_POWER_OF_GAIA:
-		case SO_CLOUD_KILL:
 		case SO_WARMER:
 		case SO_FIRE_INSIGNIA:
 		case SO_WATER_INSIGNIA:
@@ -14941,10 +14930,9 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			return false; // in official there is no message.
 	}
 	if( pc_ismadogear(sd) ) {
-		//None Mado skills are unusable when Mado is equipped. [Jobbie]
-		//Only Mechanic exlcusive skill can be used.
-		if(inf3&INF3_DIS_MADO){
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		// Skills that are unusable when Mado is equipped. [Jobbie]
+		if(!(inf3&INF3_USABLE_MADO)){
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL_MADOGEAR_RIDE,0);
 			return false;
 		}
 	}
@@ -15538,12 +15526,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		case RETURN_TO_ELDICASTES:
-			if( pc_ismadogear(sd) ) { //Cannot be used if Mado is equipped.
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return false;
-			}
-			break;
 		case KO_JYUMONJIKIRI:
 			if (sd->weapontype1 && (sd->weapontype2 || sd->status.shield))
 				return true;
@@ -15696,6 +15678,22 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 							}else{
 								clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
 							}
+							return false;
+						} else
+							continue;
+					}
+					break;
+				case NC_ACCELERATION:
+				case NC_SELFDESTRUCTION:
+				case NC_SHAPESHIFT:
+				case NC_EMERGENCYCOOL:
+				case NC_MAGNETICFIELD:
+				case NC_NEUTRALBARRIER:
+				case NC_STEALTHFIELD:
+					if (pc_search_inventory(sd, reqeqit) == -1) {
+						count--;
+						if (!count) {
+							clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_EQUIPMENT, require.eqItem[0]<<16);
 							return false;
 						} else
 							continue;
@@ -16596,6 +16594,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 			fixcast_r = max(fixcast_r, sc->data[SC_DANCEWITHWUG]->val4);
 		if (sc->data[SC_HEAT_BARREL])
 			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val2);
+		if (sc->data[SC_FREEZING])
+			fixcast_r -= 50;
 		// Additive Fixed CastTime values
 		if (sc->data[SC_MANDRAGORA])
 			fixed += sc->data[SC_MANDRAGORA]->val1 * 500;

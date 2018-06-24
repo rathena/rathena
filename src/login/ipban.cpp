@@ -1,12 +1,5 @@
-/**
- * @file ipban.c
- * Module purpose is to read configuration for login-server and handle accounts,
- *  and also to synchronize all login interfaces: loginchrif, loginclif, logincnslif.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "ipban.hpp"
 
@@ -18,6 +11,7 @@
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+
 #include "login.hpp"
 #include "loginlog.hpp"
 

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "storage.hpp"
@@ -8,23 +8,22 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
 #include "../common/utilities.hpp"
 
-#include "../common/cbasetypes.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-
-#include "map.hpp" // struct map_session_data
+#include "battle.hpp"
 #include "chrif.hpp"
-#include "itemdb.hpp"
 #include "clif.hpp"
+#include "guild.hpp"
 #include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "map.hpp" // struct map_session_data
 #include "pc.hpp"
 #include "pc_groups.hpp"
-#include "guild.hpp"
-#include "log.hpp"
-#include "battle.hpp"
 
 using namespace rathena;
 

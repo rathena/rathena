@@ -1,39 +1,38 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "inter.hpp"
 
+#include <stdlib.h>
 #include <string.h>
-#include <stdlib.h>
-#include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
-#include <yaml-cpp/yaml.h>
 #include <string>
+#include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 #include <vector>
-#include <stdlib.h>
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
-#include "../common/strlib.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
+#include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
-#include "int_party.hpp"
-#include "int_guild.hpp"
-#include "int_storage.hpp"
-#include "int_pet.hpp"
-#include "int_homun.hpp"
-#include "int_mercenary.hpp"
-#include "int_mail.hpp"
-#include "int_auction.hpp"
-#include "int_quest.hpp"
-#include "int_elemental.hpp"
-#include "int_clan.hpp"
 #include "int_achievement.hpp"
+#include "int_auction.hpp"
+#include "int_clan.hpp"
+#include "int_elemental.hpp"
+#include "int_guild.hpp"
+#include "int_homun.hpp"
+#include "int_mail.hpp"
+#include "int_mercenary.hpp"
+#include "int_party.hpp"
+#include "int_pet.hpp"
+#include "int_quest.hpp"
+#include "int_storage.hpp"
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 #define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis

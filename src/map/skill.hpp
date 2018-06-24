@@ -1,12 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _SKILL_HPP_
 #define _SKILL_HPP_
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // MAX_SKILL, struct square
 #include "../common/db.hpp"
+#include "../common/mmo.hpp" // MAX_SKILL, struct square
 
 #include "map.hpp" // struct block_list
 
@@ -98,7 +98,7 @@ enum e_skill_inf3 {
 	INF3_EFF_RESEARCHTRAP = 0x00800, // Skill range affected by RA_RESEARCHTRAP
 	INF3_NO_EFF_HOVERING  = 0x01000, // Skill that does not affect user that has SC_HOVERING active
 	INF3_USABLE_WARG      = 0x02000, // Skill that can be use while riding warg
-	INF3_DIS_MADO         = 0x04000, // Skill that can't be used while in mado
+	INF3_USABLE_MADO      = 0x04000, // Skill that can be used while on Madogear
 	INF3_USABLE_MANHOLE   = 0x08000, // Skill that can be used to target while under SC__MANHOLE effect
 	INF3_HIT_HIDING       = 0x10000, // Skill that affects hidden targets
 	INF3_SC_GLOOMYDAY_SK  = 0x20000, // Skill that affects SC_GLOOMYDAY_SK

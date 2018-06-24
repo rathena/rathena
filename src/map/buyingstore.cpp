@@ -1,13 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "buyingstore.hpp"  // struct s_buyingstore
 
 #include <stdlib.h> // atoi
 
-#include "../common/nullpo.hpp"
 #include "../common/db.hpp"  // ARR_FIND
 #include "../common/malloc.hpp" // aMalloc, aFree
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"  // ShowWarning
 #include "../common/socket.hpp"  // RBUF*
 #include "../common/strlib.hpp"  // safestrncpy
@@ -15,11 +15,11 @@
 
 #include "atcommand.hpp"  // msg_txt
 #include "battle.hpp"  // battle_config.*
+#include "chrif.hpp"
 #include "clif.hpp"  // clif_buyingstore_*
 #include "log.hpp"  // log_pick_pc, log_zeny
-#include "pc.hpp"  // struct map_session_data
-#include "chrif.hpp"
 #include "npc.hpp"
+#include "pc.hpp"  // struct map_session_data
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader

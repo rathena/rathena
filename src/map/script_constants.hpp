@@ -1,8 +1,8 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _SCRIPT_CONSTANTS_HPP_
-	#define _SCRIPT_CONSTANTS_HPP_
+#define _SCRIPT_CONSTANTS_HPP_
 
 	#define export_constant(a) script_set_constant(#a,a,false,false)
 	#define export_constant2(a,b) script_set_constant(a,b,false,false)
@@ -1449,7 +1449,7 @@
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
 	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
-	export_constant(SC_CLOUD_KILL);
+	export_deprecated_constant(SC_CLOUD_KILL);
 	export_constant(SC_LJOSALFAR);
 	export_constant(SC_MERMAID_LONGING);
 	export_constant(SC_HAT_EFFECT);

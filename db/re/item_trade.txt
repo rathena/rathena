@@ -799,7 +799,7 @@
 6674,507,100	// GM_Coin
 6681,467,100	// XMAS_Cookie
 6682,499,100	// Bag_Of_Selling_Goods
-6684,467,100	// Proof_of_The_Heroic
+6684,403,100	// TokenOfHero
 6685,499,100	// Morocc_Certification
 6686,507,100	// Brick
 6687,507,100	// Rope

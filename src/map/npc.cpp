@@ -1,38 +1,37 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "npc.hpp"
 
+#include <errno.h>
 #include <map>
+#include <stdlib.h>
 #include <vector>
 
-#include <stdlib.h>
-#include <errno.h>
-
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.hpp"
-#include "../common/db.hpp"
 
-#include "map.hpp"
-#include "log.hpp"
+#include "battle.hpp"
+#include "chat.hpp"
 #include "clif.hpp"
 #include "date.hpp" // days of week enum
+#include "guild.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mob.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "instance.hpp"
-#include "chat.hpp"
 #include "script.hpp" // script_config
-#include "guild.hpp"
-#include "battle.hpp"
-#include "mob.hpp"
-#include "log.hpp"
 
 struct npc_data* fake_nd;
 

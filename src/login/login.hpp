@@ -1,23 +1,15 @@
-/**
- * @file login.h
- * Module purpose is to read configuration for login-server and handle accounts,
- *  and also to synchronise all login interfaces: loginchrif, loginclif, logincnslif.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
 #ifndef _LOGIN_HPP_
 #define _LOGIN_HPP_
 
 #include <memory>
 
-#include "../config/core.hpp"
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
 #include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
+#include "../config/core.hpp"
 
 #include "account.hpp"
 

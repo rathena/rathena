@@ -162,7 +162,7 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 		mes "Would you like to rent a Pushcart or";
 		mes "ride a Magic Gear?";
 		next;
-		switch(select("Rent a Pushcart:Ride a Magic Gear:Cancel")) {
+		switch(select("Rent a Pushcart:Ride a Magic Gear:Buy Emergency Magic Gear:Upgrade Cooling Device:Cancel")) {
 		case 1:
 			if (checkcart()) {
 				mes "[Magic Gear Master]";
@@ -196,6 +196,70 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 			mes "Have fun, and please come again!";
 			close;
 		case 3:
+			mes "[Magic Gear Master]";
+			mes "Emergency Magic Gear is really useful for emergency situations and it is sold at 1,000,000 Zeny.";
+			next;
+			if (select("Purchase:Cancel") == 2) {
+				mes "[Magic Gear Master]";
+				mes "I see. Please feel free to ask me";
+				mes "if you change your mind.";
+				close;
+			}
+			if (countitem(23277) > 0) {
+				mes "[Magic Gear Master]";
+				mes "I'm sorry, but you already have an Emergency Magic Gear.";
+				close;
+			}
+			if (Zeny < 1000000) {
+				mes "[Magic Gear Master]";
+				mes "I'm sorry, but you don't have enough Zeny to purchase the Emergency Magic Gear.";
+				close;
+			}
+			Zeny -= 1000000;
+			getitem 23277,1; //Mado_Box
+			mes "[Magic Gear Master]";
+			mes "There you go!";
+			close;
+		case 4:
+			mes "[Magic Gear Master]";
+			mes "Which device do you want to upgrade?";
+			next;
+			if (select("Cooling Device:High Quality Cooler") == 1) {
+				mes "[Magic Gear Master]";
+				mes "Upgrading Cooling Device to High Quality Cooler needs 1 Cooling Device and 2,000,000 Zeny.";
+				next;
+				.@itemid = 2804;
+				.@cost = 2000000;
+			} else {
+				mes "[Magic Gear Master]";
+				mes "Upgrading High Quality Cooler to Special Cooler needs 1 High Quality Cooler and 4,000,000 Zeny.";
+				next;
+				.@itemid = 2809;
+				.@cost = 4000000;
+			}
+			if (select("Upgrade:Cancel") == 2) {
+				mes "[Magic Gear Master]";
+				mes "I see. Please feel free to ask me";
+				mes "if you change your mind.";
+				close;
+			}
+			if (!countitem(.@itemid)) {
+				mes "[Magic Gear Master]";
+				mes "I'm sorry, but you don't have the " + getitemname(.@itemid) + ".";
+				close;
+			}
+			if (Zeny < .@cost) {
+				mes "[Magic Gear Master]";
+				mes "I'm sorry, but you don't have enough Zeny to upgrade the device.";
+				close;
+			}
+			Zeny -= .@cost;
+			delitem .@itemid,1;
+			getitem (.@itemid == 2804 ? 2809 : 2810),1; //High_Quality_Cooler,Special_Cooler
+			mes "[Magic Gear Master]";
+			mes "Here you are! Your very own " + getitemname(.@itemid) + ".";
+			close;
+		case 5:
 			close;
 		}
 	}

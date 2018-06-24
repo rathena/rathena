@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "instance.hpp"
@@ -7,13 +7,14 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"  // ers_destroy
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
+#include "../common/timer.hpp"
 
 #include "clan.hpp"
 #include "clif.hpp"
