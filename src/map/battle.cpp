@@ -4608,9 +4608,11 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GVG_GIANT]->val3);
 		}
 
-		if (sc->data[SC_EXEEDBREAK]) {
-			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_EXEEDBREAK]->val2);
-			RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
+		if (!skill_id) {
+			if (sc->data[SC_EXEEDBREAK]) {
+				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_EXEEDBREAK]->val2);
+				RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
+			}
 		}
 
 		if (sc->data[SC_MIRACLE])
