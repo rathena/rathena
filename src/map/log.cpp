@@ -211,12 +211,33 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%" PRIu64 "', '%d')",
-			log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound) )
-		{
-			Sql_ShowDebug(logmysql_handle);
-			return;
+		int i;
+		SqlStmt* stmt = SqlStmt_Malloc(logmysql_handle);
+		StringBuf buf;
+		StringBuf_Init(&buf);
+
+		StringBuf_Printf(&buf, "%s INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `map`, `unique_id`, `bound`", LOG_QUERY, log_config.log_pick);
+		for (i = 0; i < MAX_SLOTS; ++i)
+			StringBuf_Printf(&buf, ", `card%d`", i);
+		for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+			StringBuf_Printf(&buf, ", `option_id%d`", i);
+			StringBuf_Printf(&buf, ", `option_val%d`", i);
+			StringBuf_Printf(&buf, ", `option_parm%d`", i);
 		}
+		StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%c','%d','%d','%d','%s','%" PRIu64 "','%d'",
+			id, log_picktype2char(type), itm->nameid, amount, itm->refine, map[m].name ? map[m].name : "", itm->unique_id, itm->bound);
+
+		for (i = 0; i < MAX_SLOTS; i++)
+			StringBuf_Printf(&buf, ",'%d'", itm->card[i]);
+		for (i = 0; i < MAX_ITEM_RDM_OPT; i++)
+			StringBuf_Printf(&buf, ",'%d','%d','%d'", itm->option[i].id, itm->option[i].value, itm->option[i].param);
+		StringBuf_Printf(&buf, ")");
+
+		if (SQL_SUCCESS != SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) || SQL_SUCCESS != SqlStmt_Execute(stmt))
+			SqlStmt_ShowDebug(stmt);
+
+		SqlStmt_Free(stmt);
+		StringBuf_Destroy(&buf);
 	}
 	else
 	{
