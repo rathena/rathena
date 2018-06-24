@@ -20400,13 +20400,16 @@ BUILDIN_FUNC(instance_live_info)
 	else
 		id = script_getnum(st, 3);
 
-	if (id) {
-		im = &instance_data[id];
-		db = instance_searchtype_db(im->type);
+	if (id < 1 || id >= MAX_INSTANCE_DATA) {
+		ShowError("buildin_instance_live_info: Invalid Instance ID \"%d\" (min: 1, max: %d).\n", id, MAX_INSTANCE_DATA);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
 	}
-	
+	im = &instance_data[id];
+	db = instance_searchtype_db(im->type);
+
 	if (db == NULL) {
-		ShowError( "buildin_instance_live_info: Unknown instance ID \"%d\".\n", id );
+		ShowError("buildin_instance_live_info: Unknown instance ID \"%d\".\n", id);
 		if (type == ILI_NAME)
 			script_pushconststr(st, "");
 		else
@@ -20425,7 +20428,7 @@ BUILDIN_FUNC(instance_live_info)
 		script_pushint(st, im->owner_id);
 		break;
 	default:
-		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type );
+		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type);
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
