@@ -956,6 +956,11 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 	}
 	try {
 		entry->name = node["Name"].as<std::string>();
+
+		if (instance_searchname_db(entry->name) != nullptr) {
+			ShowWarning("instance_read_db_sub: Instance name already exists for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
+			return false;
+		}
 	} catch (...) {
 		yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
