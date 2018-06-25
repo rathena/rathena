@@ -154,6 +154,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
+            - libmariadbclient-dev
       env:
          - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
          - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
