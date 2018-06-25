@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "quest.hpp"
@@ -6,23 +6,23 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/socket.hpp"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 
-#include "itemdb.hpp"
-#include "map.hpp"
-#include "pc.hpp"
-#include "party.hpp"
-#include "chrif.hpp"
-#include "intif.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
 #include "battle.hpp"
+#include "chrif.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
 #include "log.hpp"
+#include "map.hpp"
+#include "mob.hpp"
+#include "party.hpp"
+#include "pc.hpp"
 
 static DBMap *questdb;
 static void questdb_free_sub(struct quest_db *quest, bool free);

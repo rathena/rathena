@@ -1,13 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
-#include "../config/core.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
-#include "../common/msg_conf.hpp"
 #include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../config/core.hpp"
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor

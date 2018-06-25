@@ -1,16 +1,8 @@
-/**
- * @file logincnslif.h
- * Module purpose is to handle incoming and outgoing requests with console.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
 #ifndef _LOGINCNSLIF_HPP_
 #define _LOGINCNSLIF_HPP_
-
 
 /**
  * Console Command Parser

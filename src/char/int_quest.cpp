@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_quest.hpp"
@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.hpp"
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
 #include "../common/socket.hpp"
-#include "../common/strlib.hpp"
 #include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
 #include "char.hpp"
 #include "inter.hpp"

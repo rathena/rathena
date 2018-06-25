@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "unit.hpp"
@@ -6,36 +6,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
 #include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/random.hpp"
-#include "../common/socket.hpp"
 #include "../common/ers.hpp"  // ers_destroy
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
 
 #include "achievement.hpp"
+#include "battle.hpp"
+#include "battleground.hpp"
+#include "channel.hpp"
+#include "chat.hpp"
+#include "clif.hpp"
+#include "duel.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "intif.hpp"
 #include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
 #include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "channel.hpp"
-#include "duel.hpp"
-#include "battleground.hpp"
-#include "chat.hpp"
-#include "trade.hpp"
-#include "party.hpp"
-#include "intif.hpp"
 #include "storage.hpp"
-#include "guild.hpp"
-#include "npc.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
-#include "battle.hpp"
+#include "trade.hpp"
 
 // Directions values
 // 1 0 7

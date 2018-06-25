@@ -1,12 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "itemdb.hpp"
 
 #include <stdlib.h>
 
-#include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
@@ -14,12 +14,12 @@
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
-#include "intif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "log.hpp"
 #include "mob.hpp"
+#include "pc.hpp"
+#include "status.hpp"
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB

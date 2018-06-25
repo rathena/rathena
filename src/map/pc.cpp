@@ -1,14 +1,16 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "pc.hpp"
 
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
+#include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp" //NAME_LENGTH
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
@@ -16,42 +18,40 @@
 #include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/mmo.hpp" //NAME_LENGTH
-#include "../common/ers.hpp"  // ers_destroy
 
+#include "achievement.hpp"
 #include "atcommand.hpp" // get_atcommand_level()
-#include "map.hpp"
 #include "battle.hpp" // battle_config
 #include "battleground.hpp"
+#include "buyingstore.hpp"  // struct s_buyingstore
 #include "channel.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
 #include "date.hpp" // is_day_of_*()
 #include "duel.hpp"
-#include "intif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "pet.hpp" // pet_unlocktarget()
-#include "party.hpp" // party_search()
-#include "storage.hpp"
-#include "quest.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "clif.hpp"
-#include "buyingstore.hpp"  // struct s_buyingstore
+#include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp" // party_search()
+#include "pc_groups.hpp"
+#include "pet.hpp" // pet_unlocktarget()
+#include "quest.hpp"
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // OPTION_*, struct weapon_atk
+#include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
-#include "mob.hpp"
-#include "log.hpp"
-#include "pc_groups.hpp"
-#include "achievement.hpp"
-#include "clan.hpp"
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 
@@ -1419,25 +1419,25 @@ void pc_reg_received(struct map_session_data *sd)
 
 	sd->vars_ok = true;
 
-	sd->change_level_2nd = pc_readglobalreg(sd, add_str("jobchange_level"));
-	sd->change_level_3rd = pc_readglobalreg(sd, add_str("jobchange_level_3rd"));
-	sd->die_counter = pc_readglobalreg(sd, add_str("PC_DIE_COUNTER"));
+	sd->change_level_2nd = pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR));
+	sd->change_level_3rd = pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR));
+	sd->die_counter = pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR));
 
-	sd->langtype = pc_readaccountreg(sd, add_str("#langtype"));
+	sd->langtype = pc_readaccountreg(sd, add_str(LANGTYPE_VAR));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = pc_readaccountreg(sd, add_str("#CASHPOINTS"));
-	sd->kafraPoints = pc_readaccountreg(sd, add_str("#KAFRAPOINTS"));
+	sd->cashPoints = pc_readaccountreg(sd, add_str(CASHPOINT_VAR));
+	sd->kafraPoints = pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR));
 
 	// Cooking Exp
-	sd->cook_mastery = pc_readglobalreg(sd, add_str("COOK_MASTERY"));
+	sd->cook_mastery = pc_readglobalreg(sd, add_str(COOKMASTERY_VAR));
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
-		sd->mission_mobid = pc_readglobalreg(sd, add_str("TK_MISSION_ID"));
-		sd->mission_count = pc_readglobalreg(sd, add_str("TK_MISSION_COUNT"));
+		sd->mission_mobid = pc_readglobalreg(sd, add_str(TKMISSIONID_VAR));
+		sd->mission_count = pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR));
 	}
 
 	if (battle_config.feature_banking)
@@ -1962,7 +1962,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 
 			}
 
-			pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
+			pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 		}
 
 		if (skill_point < novice_skills + (sd->change_level_2nd - 1))
@@ -1979,7 +1979,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 						- (sd->status.job_level - 1)
 						- (sd->change_level_2nd - 1)
 						- novice_skills;
-					pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
+					pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 			}
 
 			if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1))
@@ -4467,11 +4467,11 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 		return -1;
 	}
 
-	pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints-cash);
+	pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints-cash);
 	if( cash ){
 		log_cash( sd, type, LOG_CASH_TYPE_CASH, -cash );
 	}
-	pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints-points);
+	pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints-points);
 	if( points ){
 		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, -points );
 	}
@@ -4510,7 +4510,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			cash = MAX_ZENY-sd->cashPoints;
 		}
 
-		pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints+cash);
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
 		if( cash ){
 			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
 		}
@@ -4536,7 +4536,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			points = MAX_ZENY-sd->kafraPoints;
 		}
 
-		pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints+points);
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
 		if( points ){
 			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
 		}
@@ -7392,7 +7392,7 @@ int pc_resetstate(struct map_session_data* sd)
 	if( sd->mission_mobid ) { //bugreport:2200
 		sd->mission_mobid = 0;
 		sd->mission_count = 0;
-		pc_setglobalreg(sd, add_str("TK_MISSION_ID"), 0);
+		pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), 0);
 	}
 
 	status_calc_pc(sd, SCO_NONE);
@@ -7792,7 +7792,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setdead(sd);
 
-	pc_setglobalreg(sd, add_str("PC_DIE_COUNTER"), sd->die_counter+1);
+	pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
@@ -8595,12 +8595,12 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	// changing from 1st to 2nd job
 	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
 		sd->change_level_2nd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
+		pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 	}
 	// changing from 2nd to 3rd job
 	else if((b_class&JOBL_THIRD) && !(sd->class_&JOBL_THIRD)) {
 		sd->change_level_3rd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
+		pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 	}
 
 	if(sd->cloneskill_idx > 0) {
@@ -9241,21 +9241,21 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	// These should be stored elsewhere e.g. char ones in char table, the cash ones in account_data table!
 	switch( regname[0] ) {
 		default: //Char reg
-			if( !strcmp(regname,"PC_DIE_COUNTER") && sd->die_counter != val ) {
+			if( !strcmp(regname,PCDIECOUNTER_VAR) && sd->die_counter != val ) {
 				int i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
 				sd->die_counter = val;
 				if( i )
 					status_calc_pc(sd,SCO_NONE); // Lost the bonus.
-			} else if( !strcmp(regname,"COOK_MASTERY") && sd->cook_mastery != val ) {
+			} else if( !strcmp(regname,COOKMASTERY_VAR) && sd->cook_mastery != val ) {
 				val = cap_value(val, 0, 1999);
 				sd->cook_mastery = val;
 			}
 			break;
 		case '#':
-			if( !strcmp(regname,"#CASHPOINTS") && sd->cashPoints != val ) {
+			if( !strcmp(regname,CASHPOINT_VAR) && sd->cashPoints != val ) {
 				val = cap_value(val, 0, MAX_ZENY);
 				sd->cashPoints = val;
-			} else if( !strcmp(regname,"#KAFRAPOINTS") && sd->kafraPoints != val ) {
+			} else if( !strcmp(regname,KAFRAPOINT_VAR) && sd->kafraPoints != val ) {
 				val = cap_value(val, 0, MAX_ZENY);
 				sd->kafraPoints = val;
 			}

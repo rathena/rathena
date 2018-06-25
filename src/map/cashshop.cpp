@@ -1,19 +1,19 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "cashshop.hpp"
 
-#include <string.h> // memset
 #include <stdlib.h> // atoi
+#include <string.h> // memset
 
 #include "../common/cbasetypes.hpp" // uint16, uint32
 #include "../common/malloc.hpp" // CREATE, RECREATE, aFree
 #include "../common/showmsg.hpp" // ShowWarning, ShowStatus
 
-#include "pc.hpp" // s_map_session_data
-#include "pet.hpp" // pet_create_egg
 #include "clif.hpp"
 #include "log.hpp"
+#include "pc.hpp" // s_map_session_data
+#include "pet.hpp" // pet_create_egg
 
 struct cash_item_db cash_shop_items[CASHSHOP_TAB_MAX];
 #if PACKETVER_SUPPORTS_SALES

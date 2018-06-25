@@ -145,7 +145,7 @@ message( STATUS "Detecting threads library" )
 set( CMAKE_THREAD_PREFER_PTHREAD 1 )
 find_package(Threads REQUIRED)
 if( CMAKE_THREAD_LIBS_INIT )
-	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
+	message( STATUS "Adding global library: ${CMAKE_THREAD_LIBS_INIT}" )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 endif()
 message( STATUS "Detecting threads library - done" )
@@ -164,6 +164,7 @@ endif()
 #
 # math library (FreeBSD/Linux/Solaris)
 #
+if( NOT WIN32 )
 message( STATUS "Detecting math library (m)" )
 CHECK_INCLUDE_FILE( math.h HAVE_MATH_H )
 if( NOT HAVE_MATH_H )
@@ -176,6 +177,7 @@ if( FUNCTION_FLOOR_LIBRARIES )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_FLOOR_LIBRARIES} )
 endif()
 message( STATUS "Detecting math library (m) - done" )
+endif()
 
 
 #
@@ -469,10 +471,7 @@ set( DEVELOPMENT_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure.in"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-9.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-10.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-12.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-13.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena.sln"
 	)
 set( DEVELOPMENT_DIRECTORIES
 	"3rdparty"
@@ -480,8 +479,6 @@ set( DEVELOPMENT_DIRECTORIES
 	"conf/msg_conf/import-tmpl"
 	"db/import-tmpl"
 	"src"
-	"vcproj-9"
-	"vcproj-10"
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"

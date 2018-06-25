@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "trade.hpp"
@@ -9,17 +9,17 @@
 #include "../common/nullpo.hpp"
 #include "../common/socket.hpp"
 
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "chrif.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "itemdb.hpp"
+#include "log.hpp"
 #include "path.hpp"
 #include "pc.hpp"
-#include "chrif.hpp"
-#include "storage.hpp"
-#include "intif.hpp"
-#include "atcommand.hpp"
-#include "log.hpp"
 #include "pc_groups.hpp"
-#include "battle.hpp"
+#include "storage.hpp"
 
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
