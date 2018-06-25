@@ -2159,7 +2159,7 @@
 2967,RWC_2012_Ring_,Chambered RWC 2012 Ring,4,20,,200,,0,,1,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus2 bAddClass,Class_All,1; },{},{}
 2968,RWC_2012_Pendant,RWC 2012 Pendant,4,20,,200,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bMatkRate,1; },{},{}
 2969,RWC_2012_Pendant_,Chambered RWC 2012 Pendant,4,20,,200,,0,,1,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bMatkRate,1; },{},{}
-2971,Pocket_Watch,Pocket Watch,4,10,,200,,1,,1,0x800200,63,2,136,,80,1,,{ bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; },{},{}
+2971,Pocket_Watch,Pocket Watch,4,10,,200,,1,,1,0x800200,63,2,136,,80,0,,{ bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; },{},{}
 2976,Red_Lantern,Red Lantern,4,10,,200,,0,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bMaxSP,-300; skill "MG_SIGHT",1; },{},{ sc_end SC_SIGHT; }
 2977,Hurt_Mind,Hurt Mind,4,10,,100,,0,,1,0xFFFFFFFF,63,2,136,,110,0,,{ bonus bMaxSP,200; skill "DC_SCREAM",3; },{},{}
 2978,KindHeart,Kind Heart,4,10,,100,,0,,1,0xFFFFFFFF,63,2,136,,110,0,,{ bonus bMaxHP,500; bonus2 bHPRegenRate,300,10000; skill "DC_SCREAM",3; },{},{}
@@ -3999,7 +3999,7 @@
 5825,Badge_Of_Order_Grace,Badge Of Order Grace,4,0,,0,,1,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bMdef,1; bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHP,1500; },{},{}
 5826,Valkyrie_Helmet,Valkyrie Helmet,4,0,,0,,10,,0,0xFFFFFFFF,63,2,256,,0,0,225,{ bonus bStr,2; bonus bInt,2; bonus bDex,2; bonus bAgi,2; bonus bMdef,5; },{},{}
 5827,Book_File_Hat,Book File Hat,4,20,,100,,1,,0,0xFFFFFFFF,63,2,256,,1,1,423,{},{},{}
-5828,Honor_Gold_Ring,Honor Gold Ring,4,0,,50,,0,,0,0xFFFFFFFF,63,2,136,,1,1,0,{ bonus bAllStats,1; bonus bMdef,5; },{},{}
+5828,Honor_Gold_Ring,Honor Gold Ring,4,0,,50,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus bAllStats,1; bonus bMdef,5; },{},{}
 5829,Ordinary_Armor,Ordinary Armor,4,0,,0,,0,,0,0xFFFFFFFF,63,2,16,,30,1,0,{},{},{}
 5830,Woe_Sahkkat,Woe Sahkkat,4,20,,10,,0,,0,0xFFFFFFFF,63,2,256,,60,1,67,{},{},{}
 5831,Woe_Big_Sis_Ribbon,Woe Big Sis Ribbon,4,20,,10,,0,,0,0xFFFFFFFF,63,2,256,,60,1,28,{},{},{}
@@ -4013,9 +4013,9 @@
 5839,Woe_Blush,Woe Blush,4,20,,10,,0,,0,0xFFFFFFFF,63,2,512,,70,0,125,{},{},{}
 5840,Woe_Elven_Ears,Woe Elven Ears,4,20,,10,,0,,0,0xFFFFFFFF,63,2,512,,70,0,73,{},{},{}
 5841,Shaman_Hat_,Shaman Hat,4,20,,100,,1,,1,0xFFFFFFFF,63,2,256,,30,1,596,{ bonus bLuk,2; bonus3 bSubEle,Ele_Neutral,3,BF_MAGIC; bonus3 bSubEle,Ele_Water,3,BF_MAGIC; bonus3 bSubEle,Ele_Earth,3,BF_MAGIC; bonus3 bSubEle,Ele_Fire,3,BF_MAGIC; bonus3 bSubEle,Ele_Wind,3,BF_MAGIC; bonus3 bSubEle,Ele_Poison,3,BF_MAGIC; bonus3 bSubEle,Ele_Holy,3,BF_MAGIC; bonus3 bSubEle,Ele_Dark,3,BF_MAGIC; bonus3 bSubEle,Ele_Ghost,3,BF_MAGIC; bonus3 bSubEle,Ele_Undead,3,BF_MAGIC; },{},{}
-5842,Loyal_Ring1,Loyal Ring1,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,1,0,{},{},{}
-5843,Loyal_Ring2,Loyal Ring2,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,1,0,{ bonus bAllStats,2; },{},{}
-5844,Loyal_Ring3,Loyal Ring3,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,1,0,{ bonus bAllStats,3; },{},{}
+5842,Loyal_Ring1,Loyal Ring1,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{},{},{}
+5843,Loyal_Ring2,Loyal Ring2,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus bAllStats,2; },{},{}
+5844,Loyal_Ring3,Loyal Ring3,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus bAllStats,3; },{},{}
 5845,Buzzy_Ball_Board,Buzzy Ball Board,4,50,,400,,0,,0,0xFFFFFFFF,63,2,256,,1,1,641,{},{},{}
 5846,Buzzy_Ball_Gum,Buzzy Ball Gum,4,50,,100,,1,,0,0xFFFFFFFF,63,2,1,,1,0,572,{ bonus bMdef,5; },{},{}
 5847,Fools_Day_hat_,Fools Day Helmet,4,0,,0,,0,,0,0xFFFFFFFF,63,2,256,,1,0,647,{ bonus bInt,5; bonus bVit,-3; },{},{}
