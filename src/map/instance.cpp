@@ -940,7 +940,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 		if (source.find("import") != std::string::npos) // Import file read-in, free previous value and store new value
 			existing = true;
 		else { // Normal file read-in
-			ShowWarning("instance_read_db_sub: Duplicate instance %d.\n", instance_id);
+			ShowWarning("instance_read_db_sub: Duplicate instance %d, skipping.\n", instance_id);
 			return false;
 		}
 	}
@@ -957,7 +957,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 	try {
 		entry->name = node["Name"].as<std::string>();
 
-		if (instance_searchname_db(entry->name) != nullptr) {
+		if (instance_searchname_db(entry->name.c_str()) != nullptr) {
 			ShowWarning("instance_read_db_sub: Instance name already exists for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
 			return false;
 		}
@@ -1004,10 +1004,11 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 	if (!node["EnterAt"]) {
 		ShowWarning("instance_read_db_sub: Missing instance enter location for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
 		return false;
-	} else {
+	}
+	try {
 		const YAML::Node enter_list = node["EnterAt"];
-		std::string mapname = "";
-		int16 x = -1, y = -1;
+		std::string mapname;
+		int16 m, x = -1, y = -1;
 
 		mapname.clear();
 
@@ -1015,7 +1016,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 			try {
 				mapname = enter_list["Map"].as<std::string>();
 			} catch (...) {
-				yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location mapname field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+				yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 				return false;
 			}
 		}
@@ -1023,7 +1024,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 			try {
 				x = enter_list["X"].as<int16>();
 			} catch (...) {
-				yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location mapname field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+				yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location x field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 				return false;
 			}
 		}
@@ -1031,13 +1032,18 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 			try {
 				y = enter_list["Y"].as<int16>();
 			} catch (...) {
-				yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location mapname field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+				yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location y field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 				return false;
 			}
 		}
 
 		if (mapname.size() == 0) {
 			ShowWarning("instance_read_db_sub: Missing instance enter map location for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
+			return false;
+		}
+		m = map_mapname2mapid(mapname.c_str());
+		if (!m) {
+			ShowWarning("instance_read_db_sub: Invalid enter map for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
 			return false;
 		}
 		if (x == -1) {
@@ -1048,6 +1054,13 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 			ShowWarning("instance_read_db_sub: Missing instance enter y location for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
 			return false;
 		}
+
+		entry->enter.map = m;
+		entry->enter.x = x;
+		entry->enter.y = y;
+	} catch(...) {
+		yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid enter location field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
 	}
 
 	if (node["AdditionalMaps"]) {
@@ -1063,7 +1076,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 					m = map_mapname2mapid(mapname.c_str());
 
 					if (!m) {
-						ShowWarning("instance_read_db_sub: Invalid additional map for instance %d in \"%s\".\n", instance_id, source.c_str());
+						ShowWarning("instance_read_db_sub: Invalid additional map for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
 						return false;
 					}
 					entry->maplist.push_back(m);
