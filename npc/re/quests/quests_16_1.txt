@@ -390,7 +390,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		next;
 		mes "[Belle]";
 		mes "The ^4d4dffladies of the Nerius familiy have just asked to see you in the Banquet Hall^000000 .";
-		mes "" + strcharinfo(0) + "You must have made a good impression.";
+		mes "" + strcharinfo(0) + ", you must have made a good impression.";
 		next;
 		mes "[Belle]";
 		mes "When the time comes, the Court Mage will come to guide you. You may enjoy the banquet by then.";
@@ -977,7 +977,7 @@ function	script	F_banquet_main_4_spica	{
 	cutin "ep16_nihi_miseria_heine01",2;
 	mes "[Nyhill]";
 	mes "You don't have to scream like that, Skia.";
-	mes "" + strcharinfo(0) + "is here too.";
+	mes "" + strcharinfo(0) + " is here too.";
 	mes "Indeed, you won't be mistaken when you hang out with the people of the Nerius family.";
 	mes "Good decision.";
 	npctalk "Skia?", "Spica Nerius#ep16_02", bc_self;
@@ -1860,7 +1860,7 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "Due to the battle of the Valkyrie, the Imir Heart sealed in the Room of Consciousness disappeared.";
 		next;
 		mes "I was terrified that the symbol of legitimacy held by the royal family had been gone.";
-		mes "I am afraid that we wouldn't be able to see the light of Tera Gloria in the coronation.";
+		mes "I am afraid that we wouldn't be able to see the light of Terra Gloria in the coronation.";
 		next;
 		mes "The problem would occur from the next coronation.";
 		mes "The people of the kingdom will be disheartened and worried about their future if the blessing of the earth is not given to the crowning of the king.";
@@ -1868,15 +1868,15 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "I consulted Varmunt the Great Sage about this.";
 		mes "He told me he could help and installed something in the Room of Consciousness.";
 		next;
-		mes "I was surprised to see what was installed there reacting with Tera Gloria.";
-		mes "It delivered enough magical power to Tera Gloria's Star of Blessing,";
+		mes "I was surprised to see what was installed there reacting with Terra Gloria.";
+		mes "It delivered enough magical power to Terra Gloria's Star of Blessing,";
 		next;
-		mes "And Tera Gloria could give the blessing of the earth as usual.";
+		mes "And Terra Gloria could give the blessing of the earth as usual.";
 		next;
 		mes "Everything was all right.";
 		mes "Even if it was by the fake Imir Heart.";
 		next;
-		mes "Tera Gloria, our beautiful crown.";
+		mes "Terra Gloria, our beautiful crown.";
 		mes "In the blessed crown, there remained a piece of Imir Heart which has been guarding Prontera for generations.";
 		next;
 		mes "It is enough.";
@@ -1886,7 +1886,7 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "And seal it with a condition which cannot be met.";
 		next;
 		mes "If one of our descendants happen to read this record,";
-		mes "Make sure to guard Tera Gloria.";
+		mes "Make sure to guard Terra Gloria.";
 		mes "It is the last piece of Imir Heart left to us.^000000";
 		next;
 		mes "......";
@@ -1916,7 +1916,7 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "The real piece of Imir Heart to replace what has been destroyed.";
 		next;
 		mes "[Kronecker]";
-		mes "The real problem is Tera Gloria...";
+		mes "The real problem is Terra Gloria...";
 		mes "It has been one of a kind to begin with.";
 		mes "Since it was made by crafting a small piece fallen from the heart...";
 		next;
@@ -2026,8 +2026,8 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "It has already happened. We need to prepare for the future.";
 		next;
 		mes "[Kronecker]";
-		mes "However, ^4d4dffTera Gloria^000000 is gone...";
-		npctalk "Is Tera Gloria...?", "Ian Walther#ep16_lib01", bc_self;
+		mes "However, ^4d4dffTerra Gloria^000000 is gone...";
+		npctalk "Is Terra Gloria...?", "Ian Walther#ep16_lib01", bc_self;
 		npctalk "Is it gone? What happened...?", "Levuiere Wigner#ep16_li", bc_self;
 		npctalk "!!!!!", "Maximilian Roegenburg#e_prt_lib", bc_self;
 		next;
@@ -2161,7 +2161,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "You shouldn't contact with anyone other than the ones you must see.";
 		next;
 		mes "[Kronecker]";
-		mes "And about disappeared ^4d4dffTera Gloria^000000";
+		mes "And about disappeared ^4d4dffTerra Gloria^000000";
 		mes "And destroyed Star of Blessing, we need to come up with a solution.";
 		next;
 		mes "[Ian Walther]";
@@ -5806,7 +5806,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "Hellow, I am ^0000cdHelmut Roegenburg^000000.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Hello, I'm invited to this banquet." + strcharinfo(0) + "It is nice to see you.";
+		mes "Hello, I'm invited to this banquet. " + strcharinfo(0) + " It is nice to see you.";
 		next;
 		mes "[Helmut]";
 		mes "I am honored to see the hero who defeated Morocc. Please enjoy your time while you are in the Roegenburg.";
@@ -5815,7 +5815,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "If you have time, how about seeing the rest people of the Roegenburg?";
 		next;
 		mes "[Helmut]";
-		mes "Brother, it will be helpful to listen to the story of the family from^0000cdWolf Roegenburg^000000.";
+		mes "Brother, it will be helpful to listen to the story of the family from ^0000cdWolf Roegenburg^000000.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes, it is a good opportunity, of course.";
@@ -7799,7 +7799,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "I want pretty silk cloth! I heard Banquets are held in the palace and princesses were pretty dresses.";
 		next;
 		mes "[Harriet]";
-		mes "I want pretty clothes too! I want^0000cdpretty silk cloth^000000 too! I'll tell my mother to make them for me!";
+		mes "I want pretty clothes too! I want ^0000cdpretty silk cloth^000000 too! I'll tell my mother to make them for me!";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "OK, OK, how many do you want?";
@@ -7896,10 +7896,10 @@ function	script	F_kids_roegenburg_quest	{
 		mes "I think it is because of royal assembly. That is the rumor that is circulating now.";
 		next;
 		mes "[Harriet]";
-		mes "^0000cdThey say that ^000000if Helmut becomes a king, he will invade the country where his parents are killed and start a war to unify the continent^0000cd^000000.";
+		mes "^0000cdThey say that ^000000if Helmut becomes a king, he will invade the country where his parents are killed and start a war to unify the continent.";
 		next;
 		mes "[Harriet]";
-		mes "And the second son of the Roegenburg is doing business to arrange the fund for the war.^0000cd^000000^0000cd^000000";
+		mes "And the second son of the Roegenburg is doing business to arrange the fund for the war.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "You know pretty in details?";
@@ -8059,7 +8059,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "[He told Myer that Helmut had transferred heir-ship and his two brothers had gave up wars.]";
 		next;
 		mes "[Myer]";
-		mes "That is great. They are my brothers I am proud of. What is the most important and fortunate is that^0000cd Wolf has changed his mind^000000. It is very annoying to argue with him.";
+		mes "That is great. They are my brothers I am proud of. What is the most important and fortunate is that ^0000cdWolf has changed his mind^000000. It is very annoying to argue with him.";
 		next;
 		mes "[Myer]";
 		mes "Wolf has to see everything to finish. It is a good in a way, though.";
@@ -9618,7 +9618,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 
 	if (banquet_wigner_quest == 0) {
 		mes "[Levuiere]";
-		mes "Dear adventurer, welcome to the Wigner family. My name is^0000cdLevuiere Wigner^000000.";
+		mes "Dear adventurer, welcome to the Wigner family. My name is ^0000cdLevuiere Wigner^000000.";
 		next;
 		mes "[Levuiere]";
 		mes "I am honored by your visit while you are attending the banquet held for you, dear adventurer.";
@@ -13059,7 +13059,7 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		next;
 		mes "[Uptight Librarian]";
 		mes "Let me see...";
-		mes "Yes, here it is." + strcharinfo(0) + "Sir...";
+		mes "Yes, here it is. Sir " + strcharinfo(0) + "...";
 		emotion ET_SURPRISE;
 		next;
 		mes "[Uptight Librarian]";

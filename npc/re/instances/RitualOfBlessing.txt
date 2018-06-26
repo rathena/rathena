@@ -625,9 +625,9 @@ OnTimer12000:
 	if (isbegin_quest(7692) == 1) {
 		mes "[Kronecker]";
 		mes "....";
-		mes ".... ^4d4dffTera Gloria^000000 is missing...";
+		mes ".... ^4d4dffTerra Gloria^000000 is missing...";
 		next;
-		select("Tera Gloria?");
+		select("Terra Gloria?");
 		mes "[Kronecker]";
 		mes "It is the crown passed down in the palace of Rune Midgarts.";
 		mes "It means more than an ordinary crown.";
