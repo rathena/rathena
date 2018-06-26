@@ -8090,9 +8090,13 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
 		case SP_BANK_VAULT:      val = sd->bank_vault; break;
+		case SP_CASHPOINTS:      val = sd->cashPoints; break;
+		case SP_KAFRAPOINTS:     val = sd->kafraPoints; break;
 		case SP_ROULETTE_BRONZE: val = sd->roulette_point.bronze; break;
 		case SP_ROULETTE_SILVER: val = sd->roulette_point.silver; break;
 		case SP_ROULETTE_GOLD:   val = sd->roulette_point.gold; break;
+		case SP_PCDIECOUNTER:    val = sd->die_counter; break;
+		case SP_COOKMASTERY:     val = sd->cook_mastery; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
@@ -8376,6 +8380,35 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_ROULETTE_GOLD:
 		sd->roulette_point.gold = val;
 		pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
+		return true;
+	case SP_CASHPOINTS:
+		if (val < 0)
+			return false;
+		log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
+		sd->cashPoints = cap_value(val, 0, MAX_ZENY);
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints);
+		return true;
+	case SP_KAFRAPOINTS:
+		if (val < 0)
+			return false;
+		log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
+		sd->kafraPoints = cap_value(val, 0, MAX_ZENY);
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
+		return true;
+	case SP_PCDIECOUNTER:
+		if (sd->die_counter == val)
+			return false;
+		sd->die_counter = val;
+		if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
+		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
+		return true;
+	case SP_COOKMASTERY:
+		if (sd->cook_mastery == val)
+			return false;
+		val = cap_value(val, 0, 1999);
+		sd->cook_mastery = val;
+		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->die_counter);
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
@@ -9231,30 +9264,6 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
-
-	// These should be stored elsewhere e.g. char ones in char table, the cash ones in account_data table!
-	switch( regname[0] ) {
-		default: //Char reg
-			if( !strcmp(regname,PCDIECOUNTER_VAR) && sd->die_counter != val ) {
-				int i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
-				sd->die_counter = val;
-				if( i )
-					status_calc_pc(sd,SCO_NONE); // Lost the bonus.
-			} else if( !strcmp(regname,COOKMASTERY_VAR) && sd->cook_mastery != val ) {
-				val = cap_value(val, 0, 1999);
-				sd->cook_mastery = val;
-			}
-			break;
-		case '#':
-			if( !strcmp(regname,CASHPOINT_VAR) && sd->cashPoints != val ) {
-				val = cap_value(val, 0, MAX_ZENY);
-				sd->cashPoints = val;
-			} else if( !strcmp(regname,KAFRAPOINT_VAR) && sd->kafraPoints != val ) {
-				val = cap_value(val, 0, MAX_ZENY);
-				sd->kafraPoints = val;
-			}
-			break;
-	}
 	
 	if ( !reg_load && !sd->vars_ok ) {
 		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);

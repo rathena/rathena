@@ -514,6 +514,10 @@
 	export_parameter(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE);
 	export_parameter(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER);
 	export_parameter(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD);
+	export_parameter("#CASHPOINTS", SP_CASHPOINTS);
+	export_parameter("#KAFRAPOINTS", SP_KAFRAPOINTS);
+	export_parameter("PC_DIE_COUNTER", SP_PCDIECOUNTER);
+	export_parameter("COOK_MASTERY", SP_COOKMASTERY);
 
 	export_constant2("bMaxHP",SP_MAXHP);
 	export_constant2("bMaxSP",SP_MAXSP);
