@@ -11293,8 +11293,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 		}
 		status_display_add(bl,type,dval1,dval2,dval3);
-		// This is not done on start, but when someone walks into the area [Lemongrass]
-		//clif_efst_status_change_sub(bl, bl, AREA);
 	}
 
 	// Those that make you stop attacking/walking....
