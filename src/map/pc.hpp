@@ -689,10 +689,6 @@ struct map_session_data {
 	bool vars_ok;
 	bool vars_dirty;
 
-	// temporary debugging of bug #3504
-	const char* delunit_prevfile;
-	int delunit_prevline;
-
 	uint16 dmglog[DAMAGELOG_SIZE_PC]; ///target ids
 
 	int c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
