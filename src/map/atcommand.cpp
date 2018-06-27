@@ -3829,6 +3829,9 @@ ACMD_FUNC(reload) {
 	if (strstr(command, "itemdb") || strncmp(message, "itemdb", 4) == 0) {
 		itemdb_reload();
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
+	} else if (strstr(command, "cashdb") || strncmp(message, "cashdb", 4) == 0) {
+		cashdb_reload();
+		clif_displaymessage(fd, "Cash shop database has been reloaded.");
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
 		read_petdb();
@@ -10132,6 +10135,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(recallall),
 		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF2("reloaditemdb", reload),
+		ACMD_DEF2("reloadcashdb", reload),
 		ACMD_DEF2("reloadmobdb", reload),
 		ACMD_DEF2("reloadskilldb", reload),
 		ACMD_DEF2R("reloadscript", reload, ATCMD_NOSCRIPT),

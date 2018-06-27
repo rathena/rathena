@@ -1977,6 +1977,17 @@ void itemdb_reload(void) {
 }
 
 /**
+* Reload Cash DB
+*/
+void cashdb_reload(void) {
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+
+	// read new data
+	cashshop_reloaddb();
+}
+
+/**
 * Finalizing Item DB
 */
 void do_final_itemdb(void) {
