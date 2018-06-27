@@ -4469,10 +4469,12 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 
 	pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints-cash);
 	if( cash ){
+		sd->cashPoints -= cash;
 		log_cash( sd, type, LOG_CASH_TYPE_CASH, -cash );
 	}
 	pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints-points);
 	if( points ){
+		sd->kafraPoints -= points;
 		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, -points );
 	}
 
@@ -4512,6 +4514,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
 		if( cash ){
+			sd->cashPoints += cash;
 			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
 		}
 
@@ -4538,6 +4541,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
 		if( points ){
+			sd->kafraPoints += points;
 			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
 		}
 
