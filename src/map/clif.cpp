@@ -10475,8 +10475,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 #endif
 
-		if (sd->guild && battle_config.guild_notice_changemap == 1)
+		if (sd->guild && battle_config.guild_notice_changemap == 1){
 			clif_guild_notice(sd); // Displays after VIP
+			guild_notice = false; // Do not display it twice
+		}
 
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -10536,9 +10538,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			channel_mjoin(sd); //join new map
 
 		clif_pk_mode_message(sd);
-	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
+	}
+	
+	if( sd->guild && ( battle_config.guild_notice_changemap == 2 || guild_notice ) ){
 		clif_guild_notice(sd); // Displays at end
-
+	}
 
 	mail_clear(sd);
 
