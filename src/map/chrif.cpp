@@ -312,7 +312,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, ((flag&CSAVE_QUITTING) && !(flag&CSAVE_AUTOTRADE)));
 
-	if (&sd->storage && sd->storage.dirty)
+	if (sd->storage.dirty)
 		storage_storagesave(sd);
 	if (flag&CSAVE_INVENTORY)
 		intif_storage_save(sd,&sd->inventory);
@@ -322,7 +322,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	//For data sync
 	if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
-	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+	if (sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 
 	if (flag&CSAVE_QUITTING)

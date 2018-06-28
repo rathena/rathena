@@ -360,7 +360,7 @@ short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 	if (idx < 0) // Invalid skill
 		return 0;
 
-	if (!hd || !&hd->homunculus)
+	if (!hd)
 		return 0;
 
 	if (hd->homunculus.hskill[idx].id == skill_id)

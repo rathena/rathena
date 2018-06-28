@@ -43,7 +43,7 @@ const char *storage_getName(uint8 id) {
 	if (storage_db && storage_count) {
 		int i;
 		for (i = 0; i < storage_count; i++) {
-			if (&storage_db[i] && storage_db[i].id == id && storage_db[i].name && storage_db[i].name[0] != '\0')
+			if (&storage_db[i] && storage_db[i].id == id && storage_db[i].name[0])
 				return storage_db[i].name;
 		}
 	}
@@ -464,9 +464,6 @@ void storage_storagesave(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	if (!&sd->storage)
-		return;
-
 	intif_storage_save(sd, &sd->storage);
 }
 
@@ -479,8 +476,7 @@ void storage_storagesaved(struct map_session_data *sd)
 	if (!sd)
 		return;
 
-	if (&sd->storage)
-		sd->storage.dirty = false;
+	sd->storage.dirty = false;
 
 	if (sd->state.storage_flag == 1) {
 		sd->state.storage_flag = 0;
@@ -496,9 +492,6 @@ void storage_storagesaved(struct map_session_data *sd)
 void storage_storageclose(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
-
-	if (!&sd->storage)
-		return;
 
 	if (sd->storage.dirty) {
 		if (save_settings&CHARSAVE_STORAGE)
@@ -524,9 +517,6 @@ void storage_storageclose(struct map_session_data *sd)
 void storage_storage_quit(struct map_session_data* sd, int flag)
 {
 	nullpo_retv(sd);
-
-	if (!&sd->storage)
-		return;
 
 	if (save_settings&CHARSAVE_STORAGE)
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
@@ -1005,9 +995,6 @@ void storage_guild_storage_quit(struct map_session_data* sd, int flag)
 void storage_premiumStorage_open(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
-	if (!&sd->premiumStorage)
-		return;
-
 	sd->state.storage_flag = 3;
 	storage_sortitem(sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount);
 	clif_storagelist(sd, sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount, storage_getName(sd->premiumStorage.stor_id));
@@ -1039,7 +1026,7 @@ bool storage_premiumStorage_load(struct map_session_data *sd, uint8 num, uint8 m
 		return 0;
 	}
 
-	if (!&sd->premiumStorage || sd->premiumStorage.stor_id != num)
+	if (sd->premiumStorage.stor_id != num)
 		return intif_storage_request(sd, TABLE_STORAGE, num, mode);
 	else {
 		sd->premiumStorage.state.put = (mode&STOR_MODE_PUT) ? 1 : 0;
@@ -1057,9 +1044,6 @@ bool storage_premiumStorage_load(struct map_session_data *sd, uint8 num, uint8 m
 void storage_premiumStorage_save(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
-	if (!&sd->premiumStorage)
-		return;
-
 	intif_storage_save(sd, &sd->premiumStorage);
 }
 
@@ -1071,9 +1055,8 @@ void storage_premiumStorage_saved(struct map_session_data *sd) {
 	if (!sd)
 		return;
 
-	if (&sd->premiumStorage) {
-		sd->premiumStorage.dirty = 0;
-	}
+	sd->premiumStorage.dirty = 0;
+
 	if (sd->state.storage_flag == 3) {
 		sd->state.storage_flag = 0;
 		clif_storageclose(sd);
@@ -1087,9 +1070,6 @@ void storage_premiumStorage_saved(struct map_session_data *sd) {
  **/
 void storage_premiumStorage_close(struct map_session_data *sd) {
 	nullpo_retv(sd);
-
-	if (!&sd->premiumStorage)
-		return;
 
 	if (sd->premiumStorage.dirty) {
 		if (save_settings&CHARSAVE_STORAGE)
@@ -1112,9 +1092,6 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
  **/
 void storage_premiumStorage_quit(struct map_session_data *sd) {
 	nullpo_retv(sd);
-
-	if (!&sd->premiumStorage)
-		return;
 
 	if (save_settings&CHARSAVE_STORAGE)
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);

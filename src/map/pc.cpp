@@ -1695,7 +1695,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		if (!(skill_id = skill_idx2id(i)) || skill_id < DC_HUMMING || skill_id > DC_SERVICEFORYOU)
 			continue;
 
-		if( &sd->sc && sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
+		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
 			//Link Dancer skills to bard.
 			if( sd->status.sex ) {
 				if( sd->status.skill[i-8].lv < 10 )
@@ -5051,7 +5051,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume ) {
-		if( nameid != ITEMID_REINS_OF_MOUNT && &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -5399,7 +5399,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -6676,7 +6676,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	// Give EXPBOOST for quests even if src is NULL.
-	if (&sd->sc && sd->sc.data[SC_EXPBOOST]) {
+	if (sd->sc.data[SC_EXPBOOST]) {
 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 		if (battle_config.vip_bm_increase && pc_isvip(sd)) // Increase Battle Manual EXP rate for VIP
 			bonus += (sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase);
@@ -6688,7 +6688,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
-	if (&sd->sc && sd->sc.data[SC_JEXPBOOST])
+	if (sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	if (*job_exp) {
@@ -9025,7 +9025,7 @@ void pc_setfalcon(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 void pc_setriding(struct map_session_data* sd, int flag)
 {
-	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.data[SC_ALL_RIDING] )
 		return;
 
 	if( flag ){
@@ -10604,7 +10604,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 
 	// Cannot stand yet
 	// TODO: Move to SCS_NOSTAND [Cydh]
-	if (!force && &sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+	if (!force && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
 		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
@@ -12120,10 +12120,10 @@ void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
 	
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (&sd->sc && sd->sc.data[SC_BASILICA])
+		if (sd->sc.data[SC_BASILICA])
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
-	else if (!(&sd->sc) || !sd->sc.data[SC_BASILICA])
+	else if (!sd->sc.data[SC_BASILICA])
 		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
 }
 
