@@ -14216,7 +14216,7 @@ OnTouch:
 }
 
 prt_q,85,90,7	script	Giant Beast Manager#EP1	8W_SOLDIER,{
-	emotion ET_PROFUSELY_SWEAT, getnpcid(0, strnpcinfo(1));
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[" + strnpcinfo(1) + "]";
 	mes "This the village office which is the third shelter in Prontera.";
 	close;
@@ -14651,7 +14651,7 @@ prt_q,231,310,4	script	Eryus#EP161BU02	HIDDEN_WARP_NPC,{
 		close;
 	}
 	if (isbegin_quest(5465) == 1) {
-		emotion ET_THANKS, getnpcid(0, "Eryus#EP161BU02");
+		emotion ET_THANKS;
 		mes "[Eryus]";
 		mes "Oh! Thank god! Dear adventurer...";
 		next;
@@ -14659,7 +14659,7 @@ prt_q,231,310,4	script	Eryus#EP161BU02	HIDDEN_WARP_NPC,{
 		mes "[Ellie]";
 		mes "Oh, Eryus... Cough... Cough...";
 		next;
-		emotion ET_HUK, getnpcid(0, "Eryus#EP161BU02");
+		emotion ET_HUK;
 		mes "[Eryus]";
 		mes "Ellie, what is going on? Are you ill again? Where is your medicine?";
 		next;
@@ -14748,7 +14748,7 @@ prt_q,229,310,6	script	Female#EP161BU04	HIDDEN_WARP_NPC,{
 		mes "[Eryus]";
 		mes "Oh! Thank god! Dear adventurer...";
 		next;
-		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Ellie]";
 		mes "Oh, Eryus... Cough... Cough...";
 		next;
@@ -14756,14 +14756,14 @@ prt_q,229,310,6	script	Female#EP161BU04	HIDDEN_WARP_NPC,{
 		mes "[Eryus]";
 		mes "Ellie, what is going on? Are you ill again? Where is your medicine?";
 		next;
-		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Ellie]";
 		mes "Cough... Cough... I must have dropped it while running...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Where did you drop the medicine?";
 		next;
-		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Female#EP161BU04");
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Ellie]";
 		mes "Cough... Cough... I don't know. Cough, it could be there... Cough... Cough...";
 		next;
