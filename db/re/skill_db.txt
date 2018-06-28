@@ -1456,8 +1456,8 @@
 5065,1,6,4,0,0x3,3,1,1,yes,0,0x4,0,none,0,0,	WE_CHEERUP,Cheer Up
 
 // New Arch Bishop Skills
-5072,9,6,1,0x3,0,1:1:1:2:2,5,0,yes,0,0,0,magic,0,0x0,		AB_VITUPERATUM,Vituperatum
-5073,0,6,4,0x1,0,0,1,0,yes,0,0,0,none,0,0x0,		AB_CONVENIO,Convenio
+5072,9,6,1,0,0x3,1:1:1:2:2,5,0,yes,0,0,0,magic,0,0x0,		AB_VITUPERATUM,Vituperatum
+5073,0,6,4,0,0x1,0,1,0,yes,0,0,0,none,0,0x0,		AB_CONVENIO,Convenio
 
 //****
 // Homunculus S
