@@ -410,6 +410,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		getexp 300000,300000;
 		getitem 6919,10;// Honor_Token
 		banquet_main_quest = 3;
+		next;
 		mes "[Belle]";
 		mes "When the time comes, the Court Mage will come to guide you. You may enjoy the banquet by then.";
 		next;
@@ -1206,6 +1207,7 @@ function	script	F_banquet_main_4_spica	{
 	erasequest 7688;// Suspicious Movement
 	setquest 7689;// Find Nyhill
 	banquet_main_quest = 5;
+	next;
 	cutin "ep16_skia_nerius01",0;
 	mes "[Skia]";
 	mes "Nyhill must have left the Banquet Hall.";
@@ -1635,6 +1637,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Just out of curiosity.... No, I mean ardor for study. Haha...";
 		mes "...Yes? Let's take a look... Make sure to share what is in there with me-";
+		next;
 		mes "[Nillem]";
 		mes "Aren't you curious?";
 		mes "Since you are out here with the archduke, the librarian would show it to you with no doubt, you know.";
@@ -4285,6 +4288,7 @@ OnTouch:
 		mes "[Ian]";
 		mes "Argh... How dare...!";
 		mes "I shouldn't have worked with him in the first place. I lost my poor nephew for nothing.";
+		next;
 		mes "[Ian]";
 		mes "Are you enjoying the banquet?";
 		mes "I hope you enjoy the banquet since it is held for you.";
@@ -14088,6 +14092,7 @@ prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
 		break;
 	}
 	setquest .@quest_id;// Request from Chief Guard
+	next;
 	mes "[Chief Guard Spiegel]";
 	mes "Please help any villagers in trouble if you find them.";
 	close;
