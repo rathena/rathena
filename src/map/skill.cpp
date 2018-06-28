@@ -10951,7 +10951,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_CONVENIO:
 		if (sd) {
 			party_data *p = party_search(sd->status.party_id);
-			int i = 0, count = 0, m = sd->bl.m, x = sd->bl.x, y = sd->bl.y;
+			int i = 0, count = 0;
 
 			// Only usable in party
 			if (p == nullptr) {
@@ -10973,7 +10973,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					sd->bl.m != pl_sd->bl.m)
 					continue;
 				if (!(map[sd->bl.m].flag.noteleport || map[sd->bl.m].flag.pvp || map[sd->bl.m].flag.battleground || map_flag_gvg2(sd->bl.m))) {
-					pc_setpos(pl_sd, m, x, y, CLR_TELEPORT);
+					pc_setpos(pl_sd, map_id2index(sd->bl.m), sd->bl.x, sd->bl.y, CLR_TELEPORT);
 					count++;
 				}
 			}
