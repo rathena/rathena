@@ -2177,8 +2177,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		{
 			if( rnd()%1000 >= sd->autobonus[i].rate )
 				continue;
-			if( sd->autobonus[i].active != INVALID_TIMER )
-				continue;
 			if(!( ((sd->autobonus[i].atk_type)&attack_type)&BF_WEAPONMASK &&
 				  ((sd->autobonus[i].atk_type)&attack_type)&BF_RANGEMASK &&
 				  ((sd->autobonus[i].atk_type)&attack_type)&BF_SKILLMASK))
@@ -2280,8 +2278,6 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 	if( sd && sd->autobonus3[0].rate ) {
 		for( i = 0; i < ARRAYLENGTH(sd->autobonus3); i++ ) {
 			if( rnd()%1000 >= sd->autobonus3[i].rate )
-				continue;
-			if( sd->autobonus3[i].active != INVALID_TIMER )
 				continue;
 			if( sd->autobonus3[i].atk_type != skill_id )
 				continue;
@@ -2515,8 +2511,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		int i;
 		for( i = 0; i < ARRAYLENGTH(dstsd->autobonus2); i++ ) {
 			if( rnd()%1000 >= dstsd->autobonus2[i].rate )
-				continue;
-			if( dstsd->autobonus2[i].active != INVALID_TIMER )
 				continue;
 			if(!( ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_WEAPONMASK &&
 				  ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_RANGEMASK &&
