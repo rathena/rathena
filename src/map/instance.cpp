@@ -58,7 +58,7 @@ std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id)
  */
 std::shared_ptr<s_instance_db> instance_searchname_db(const char *instance_name)
 {
-	for (const auto &it : instance_db) {
+	for (auto it : instance_db) {
 		if (!strcmp(it.second->name.c_str(), instance_name))
 			return it.second;
 	}
@@ -918,6 +918,7 @@ static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const 
 bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &source)
 {
 	uint16 instance_id = 0;
+	std::string name;
 	bool existing = false;
 
 	if (!node["ID"]) {
@@ -945,26 +946,27 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 		}
 	}
 
-	if (!existing)
-		instance_db[instance_id] = std::make_shared<s_instance_db>();
-	auto &entry = instance_db[instance_id];
-	entry->id = instance_id;
-
 	if (!node["Name"]) {
 		ShowWarning("instance_read_db_sub: Missing instance name for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
 		return false;
 	}
 	try {
-		entry->name = node["Name"].as<std::string>();
+		name = node["Name"].as<std::string>();
 
-		if (instance_searchname_db(entry->name.c_str()) != nullptr) {
-			ShowWarning("instance_read_db_sub: Instance name already exists for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
+		if (instance_searchname_db(name.c_str()) != nullptr) {
+			ShowWarning("instance_read_db_sub: Instance name %s already exists for instance %d in \"%s\", skipping.\n", name.c_str(), instance_id, source.c_str());
 			return false;
 		}
 	} catch (...) {
 		yaml_invalid_warning("instance_read_db_sub: Instance definition with invalid name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
+
+	if (!existing)
+		instance_db[instance_id] = std::make_shared<s_instance_db>();
+	auto &entry = instance_db[instance_id];
+	entry->id = instance_id;
+	entry->name = name;
 
 	if (!node["LimitTime"]) {
 		ShowWarning("instance_read_db_sub: Missing instance limit time for instance %d in \"%s\", skipping.\n", instance_id, source.c_str());
@@ -989,8 +991,8 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 	}
 
 	/*
-	if (!node["Destroyable"]) // Default to false
-		entry->destroyable = false;
+	if (!node["Destroyable"]) // Default to true
+		entry->destroyable = true;
 	else {
 		try {
 			entry->destroyable = node["Destroyable"].as<bool>();
