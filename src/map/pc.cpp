@@ -8400,19 +8400,23 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
 		return true;
 	case SP_PCDIECOUNTER:
-		if (sd->die_counter == val)
+		if (val < 0)
 			return false;
+		if (sd->die_counter == val)
+			return true;
 		sd->die_counter = val;
 		if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
 		return true;
 	case SP_COOKMASTERY:
-		if (sd->cook_mastery == val)
+		if (val < 0)
 			return false;
+		if (sd->cook_mastery == val)
+			return true;
 		val = cap_value(val, 0, 1999);
 		sd->cook_mastery = val;
-		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->die_counter);
+		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
