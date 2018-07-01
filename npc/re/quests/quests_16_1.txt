@@ -5173,7 +5173,7 @@ prt_cas_q,30,78,0	script	#ep16_heine_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (banquet_main_quest < 17) {
-		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// known issue : npc not hidden, player not in range
+		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// known issue : npc is not hidden since the player is not in npc visual range
 		classchange( 4_M_3RDPRIN1, "Peter Heine#ep16_01", bc_self );
 		if (banquet_heine_quest == 0)
 			classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_01", bc_self );
@@ -5676,6 +5676,8 @@ prt_cas_q,22,80,3	script	Nyhill M. Heine#ep16_01	HIDDEN_WARP_NPC,{ end; }
 prt_cas_q,22,77,0	script	#ep16_heine_evt02	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
+	if (banquet_main_quest < 17)
+		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// custom - officially hidden from #ep16_heine_evt01. However the npc is not hidden when the player is not in npc visual range
 	if (banquet_heine_quest == 0 && banquet_main_quest == 2) {
 		mes "";
 		npctalk "You are in no place to say such a thing!", "Kronecker G. Heine#ep16", bc_self;
@@ -13418,7 +13420,7 @@ OnTouch:
 	if (banquet_main_quest == 0) {
 		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_left", bc_self;
 		sleep2 3000;
-		npctalk "If you are invited, a severnt should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_left", bc_self;
+		npctalk "If you are invited, a servant should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_left", bc_self;
 		end;
 	}
 	warp "prt_cas_q",150,8;
@@ -13434,7 +13436,7 @@ OnTouch:
 	if (banquet_main_quest == 0) {
 		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_right", bc_self;
 		sleep2 3000;
-		npctalk "If you are invited, a severnt should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_right", bc_self;
+		npctalk "If you are invited, a servant should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_right", bc_self;
 		end;
 	}
 	warp "prt_cas_q",135,119;
