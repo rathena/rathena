@@ -8495,14 +8495,14 @@ ACMD_FUNC(cash)
 	{ // @points
 		if( value > 0 ) {
 			if( (ret=pc_getcash(sd, 0, value, LOG_TYPE_COMMAND)) >= 0){
-			    sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
-			    clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+				sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
+				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
 			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
 		} else {
-			if( (ret=pc_paycash(sd, -value, -value, LOG_TYPE_COMMAND)) >= 0){
-			    sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
-			    clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
+				sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
+				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
 			else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 		}
