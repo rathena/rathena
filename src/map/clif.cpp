@@ -19416,8 +19416,7 @@ void clif_roulette_generate( struct map_session_data *sd, unsigned char result, 
 /// Request to start the roulette
 /// 0A1F (CZ_REQ_GENERATE_ROULETTE)
 void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
-	enum GENERATE_ROULETTE_ACK result = GENERATE_ROULETTE_SUCCESS;
-	short stage = sd->roulette.stage;
+	enum GENERATE_ROULETTE_ACK result;
 
 	nullpo_retv(sd);
 
@@ -19426,46 +19425,46 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// Reset reward from before
+	sd->roulette.claimPrize = false;
+	sd->roulette.prizeStage = 0;
+	sd->roulette.prizeIdx = -1;
+
 	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL)
-		stage = sd->roulette.stage = 0;
+		sd->roulette.stage = 0;
 
-	if (!stage) {
-		if (sd->roulette_point.bronze <= 0 && sd->roulette_point.silver < 10 && sd->roulette_point.gold < 10)
-			result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
-	}
-
-	if (result == GENERATE_ROULETTE_SUCCESS) {
-		if (!stage) {
+	if( !sd->roulette.stage && sd->roulette_point.bronze <= 0 && sd->roulette_point.silver < 10 && sd->roulette_point.gold < 10 ){
+		result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
+	}else{
+		if (!sd->roulette.stage) {
 			if (sd->roulette_point.bronze > 0) {
 				sd->roulette_point.bronze -= 1;
 				pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
 			} else if (sd->roulette_point.silver > 9) {
 				sd->roulette_point.silver -= 10;
-				stage = sd->roulette.stage = 2;
+				sd->roulette.stage = 2;
 				pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
 			} else if (sd->roulette_point.gold > 9) {
 				sd->roulette_point.gold -= 10;
-				stage = sd->roulette.stage = 4;
+				sd->roulette.stage = 4;
 				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
 			}
 		}
 
-		sd->roulette.prizeStage = stage;
-		sd->roulette.prizeIdx = rnd()%rd.items[stage];
+		sd->roulette.prizeStage = sd->roulette.stage;
+		sd->roulette.prizeIdx = rnd()%rd.items[sd->roulette.stage];
+		sd->roulette.claimPrize = true;
 
-		if (rd.flag[stage][sd->roulette.prizeIdx]&1) {
-			clif_roulette_generate(sd,GENERATE_ROULETTE_LOSING,stage,sd->roulette.prizeIdx,0);
-			clif_roulette_getitem(sd);
-			clif_roulette_recvitem_ack(sd, RECV_ITEM_SUCCESS);
-			return;
-		}
-		else {
-			sd->roulette.claimPrize = true;
+		if( rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1 ){
+			result = GENERATE_ROULETTE_LOSING;
+			sd->roulette.stage = 0;
+		}else{
+			result = GENERATE_ROULETTE_SUCCESS;
 			sd->roulette.stage++;
 		}
 	}
 
-	clif_roulette_generate(sd,result,stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+	clif_roulette_generate(sd,result, sd->roulette.stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
 }
 
 /// Request to claim a prize
