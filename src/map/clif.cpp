@@ -19248,19 +19248,12 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 /// Roulette System
 /// Author: Yommy
 
-/**
- * Opens Roulette window
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
-{
+/// Opens the roulette window
+/// 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
+void clif_roulette_open( struct map_session_data* sd ){
 	nullpo_retv(sd);
 
-	if (!battle_config.feature_roulette) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
-		return;
-	}
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0xa1a));
 	WFIFOW(fd,0) = 0xa1a;
@@ -19275,21 +19268,35 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
 	WFIFOSET(fd,packet_len(0xa1a));
 }
 
-/**
- * Generates information to be displayed
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
-{
-	unsigned short i, j, count = 0;
-	int len = 8 + (42 * 8);
-
+/// Request to open the roulette window
+/// 0A19 (CZ_REQ_OPEN_ROULETTE)
+void clif_parse_roulette_open( int fd, struct map_session_data* sd ){
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
 		return;
+	}
+
+	clif_roulette_open(sd);
+}
+
+/// Sends the info about the available roulette rewards to the client
+/// 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.W <amount>.W } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO)
+/// 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.L <amount>.L } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO) >= 20180516
+void clif_roulette_info( struct map_session_data* sd ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+	int len = 8; // Initialize to header size
+#if PACKETVER < 20180516
+	int size = 8;
+#else
+	int size = 12;
+#endif
+
+	for( int i = 0; i < MAX_ROULETTE_LEVEL; i++ ){
+		len += (MAX_ROULETTE_COLUMNS - i) * size;
 	}
 
 	WFIFOHEAD(fd,len);
@@ -19297,27 +19304,27 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
 	WFIFOW(fd,2) = len;
 	WFIFOL(fd,4) = 1; // serial
 
-	for(i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		for(j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
-			WFIFOW(fd,8 * count + 8) = i;
-			WFIFOW(fd,8 * count + 10) = j;
-			WFIFOW(fd,8 * count + 12) = rd.nameid[i][j];
-			WFIFOW(fd,8 * count + 14) = rd.qty[i][j];
-			count++;
+	for(int i = 0, offset = 8; i < MAX_ROULETTE_LEVEL; i++) {
+		for(int j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
+			WFIFOW(fd,offset + 0) = i;
+			WFIFOW(fd,offset + 2) = j;
+#if PACKETVER < 20180516
+			WFIFOW(fd,offset + 4) = rd.nameid[i][j];
+			WFIFOW(fd,offset + 6) = rd.qty[i][j];
+#else
+			WFIFOL(fd,offset + 4) = rd.nameid[i][j];
+			WFIFOL(fd,offset + 8) = rd.qty[i][j];
+#endif
+			offset += size;
 		}
 	}
 
 	WFIFOSET(fd,len);
-	return;
 }
 
-/**
- * Closes Roulette window
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
-{
+/// Request the roulette reward data
+/// 0A1B (CZ_REQ_ROULETTE_INFO)
+void clif_parse_roulette_info( int fd, struct map_session_data* sd ){
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
@@ -19325,27 +19332,35 @@ void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	/** What do we need this for? (other than state tracking), game client closes the window without our response. **/
-	return;
+	clif_roulette_info(sd);
 }
 
-/**
- *
- **/
-static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_ROULETTE_ITEM_REQ type) {
-#if PACKETVER >= 20141016
-	uint16 cmd = 0xa22;
-	unsigned char buf[5];
-
+/// Notification of the client that the roulette window was closed
+/// 0A1D (CZ_REQ_CLOSE_ROULETTE)
+void clif_parse_roulette_close( int fd, struct map_session_data* sd ){
 	nullpo_retv(sd);
 
-	if (packet_db[cmd].len == 0)
+	if (!battle_config.feature_roulette) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
 		return;
+	}
 
-	WBUFW(buf,0) = cmd;
-	WBUFB(buf,2) = type;
-	WBUFW(buf,3) = 0; //! TODO: Additional item
-	clif_send(buf, sizeof(buf), &sd->bl, SELF);
+	// What do we need this for? (other than state tracking), game client closes the window without our response.
+}
+
+/// Response to a item reward request
+/// 0A22 <type>.B <bonus item>.W (ZC_RECV_ROULETTE_ITEM)
+static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_ROULETTE_ITEM_REQ type) {
+#if PACKETVER >= 20141016
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xa22));
+	WFIFOW(fd,0) = 0xa22;
+	WFIFOB(fd,2) = type;
+	WFIFOW(fd,3) = 0; //! TODO: Additional item
+	WFIFOSET(fd,packet_len(0xa22));
 #endif
 }
 
@@ -19379,13 +19394,28 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	return res;
 }
 
-/**
- * Process the stage and attempt to give a prize
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
-{
+/// Update Roulette window with current stats
+/// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
+void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xa20));
+	WFIFOW(fd,0) = 0xa20;
+	WFIFOB(fd,2) = result;
+	WFIFOW(fd,3) = stage;
+	WFIFOW(fd,5) = prizeIdx;
+	WFIFOW(fd,7) = bonusItemID;
+	WFIFOL(fd,9) = sd->roulette_point.gold;
+	WFIFOL(fd,13) = sd->roulette_point.silver;
+	WFIFOL(fd,17) = sd->roulette_point.bronze;
+	WFIFOSET(fd,packet_len(0xa20));
+}
+
+/// Request to start the roulette
+/// 0A1F (CZ_REQ_GENERATE_ROULETTE)
+void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 	enum GENERATE_ROULETTE_ACK result = GENERATE_ROULETTE_SUCCESS;
 	short stage = sd->roulette.stage;
 
@@ -19424,7 +19454,7 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
 		sd->roulette.prizeIdx = rnd()%rd.items[stage];
 
 		if (rd.flag[stage][sd->roulette.prizeIdx]&1) {
-			clif_roulette_generate_ack(sd,GENERATE_ROULETTE_LOSING,stage,sd->roulette.prizeIdx,0);
+			clif_roulette_generate(sd,GENERATE_ROULETTE_LOSING,stage,sd->roulette.prizeIdx,0);
 			clif_roulette_getitem(sd);
 			clif_roulette_recvitem_ack(sd, RECV_ITEM_SUCCESS);
 			return;
@@ -19435,16 +19465,12 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
 		}
 	}
 
-	clif_roulette_generate_ack(sd,result,stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+	clif_roulette_generate(sd,result,stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
 }
 
-/**
- * Request to cash in prize
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
-{
+/// Request to claim a prize
+/// 0A21 (CZ_RECV_ROULETTE_ITEM)
+void clif_parse_roulette_item( int fd, struct map_session_data* sd ){
 	enum RECV_ROULETTE_ITEM_REQ type = RECV_ITEM_FAILED;
 	nullpo_retv(sd);
 
@@ -19455,18 +19481,18 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 
 	if (sd->roulette.claimPrize && sd->roulette.prizeIdx != -1) {
 		switch (clif_roulette_getitem(sd)) {
-			case 0:
+			case ADDITEM_SUCCESS:
 				type = RECV_ITEM_SUCCESS;
 				break;
-			case 1:
-			case 4:
-			case 5:
+			case ADDITEM_INVALID:
+			case ADDITEM_OVERITEM:
+			case ADDITEM_OVERAMOUNT:
 				type = RECV_ITEM_OVERCOUNT;
 				break;
-			case 2:
+			case ADDITEM_OVERWEIGHT:
 				type = RECV_ITEM_OVERWEIGHT;
 				break;
-			case 7:
+			case ADDITEM_STACKLIMIT:
 			default:
 				type = RECV_ITEM_FAILED;
 				break;
@@ -19474,33 +19500,6 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
 	}
 
 	clif_roulette_recvitem_ack(sd,type);
-	return;
-}
-
-/**
- * Update Roulette window with current stats
- * @param sd
- * @param result
- * @param stage
- * @param prizeIdx
- * @param bonusItemID
- */
-void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID)
-{
-	int fd = sd->fd;
-
-	nullpo_retv(sd);
-
-	WFIFOHEAD(fd,packet_len(0xa20));
-	WFIFOW(fd,0) = 0xa20;
-	WFIFOB(fd,2) = result;
-	WFIFOW(fd,3) = stage;
-	WFIFOW(fd,5) = prizeIdx;
-	WFIFOW(fd,7) = bonusItemID;
-	WFIFOL(fd,9) = sd->roulette_point.gold;
-	WFIFOL(fd,13) = sd->roulette_point.silver;
-	WFIFOL(fd,17) = sd->roulette_point.bronze;
-	WFIFOSET(fd,packet_len(0xa20));
 }
 
 /// MERGE ITEM

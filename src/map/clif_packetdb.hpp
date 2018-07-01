@@ -2199,15 +2199,15 @@
 	packet(0x09E5,18); // ZC_DELETEITEM_FROM_MCSTORE2
 	packet(0x09E6,22); // ZC_UPDATE_ITEM_FROM_BUYING_STORE2
 	// Roulette System [Yommy]
-	parseable_packet(0x0A19,2,clif_parse_RouletteOpen,0); // CZ_REQ_OPEN_ROULETTE
+	parseable_packet(0x0A19,2,clif_parse_roulette_open,0); // CZ_REQ_OPEN_ROULETTE
 	packet(0x0A1A,23); // ZC_ACK_OPEN_ROULETTE
-	parseable_packet(0x0A1B,2,clif_parse_RouletteInfo,0); // CZ_REQ_ROULETTE_INFO
+	parseable_packet(0x0A1B,2,clif_parse_roulette_info,0); // CZ_REQ_ROULETTE_INFO
 	packet(0x0A1C,-1); // ZC_ACK_ROULETTE_INFO
-	parseable_packet(0x0A1D,2,clif_parse_RouletteClose,0); // CZ_REQ_CLOSE_ROULETTE
+	parseable_packet(0x0A1D,2,clif_parse_roulette_close,0); // CZ_REQ_CLOSE_ROULETTE
 	packet(0x0A1E,3); // ZC_ACK_CLOSE_ROULETTE
-	parseable_packet(0x0A1F,2,clif_parse_RouletteGenerate,0); // CZ_REQ_GENERATE_ROULETTE
+	parseable_packet(0x0A1F,2,clif_parse_roulette_generate,0); // CZ_REQ_GENERATE_ROULETTE
 	packet(0x0A20,21); // ZC_ACK_GENERATE_ROULETTE
-	parseable_packet(0x0A21,3,clif_parse_RouletteRecvItem,2); // CZ_RECV_ROULETTE_ITEM
+	parseable_packet(0x0A21,3,clif_parse_roulette_item,2); // CZ_RECV_ROULETTE_ITEM
 	packet(0x0A22,5); // ZC_RECV_ROULETTE_ITEM
 #endif
 
