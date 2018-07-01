@@ -8388,14 +8388,16 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_CASHPOINTS:
 		if (val < 0)
 			return false;
-		log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
+		if (!sd->state.connect_new)
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
 		sd->cashPoints = cap_value(val, 0, MAX_ZENY);
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints);
 		return true;
 	case SP_KAFRAPOINTS:
 		if (val < 0)
 			return false;
-		log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
+		if (!sd->state.connect_new)
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
 		sd->kafraPoints = cap_value(val, 0, MAX_ZENY);
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
 		return true;
