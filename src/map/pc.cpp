@@ -4514,10 +4514,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 		}
 
 		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
-		if( cash ){
-			sd->cashPoints += cash;
-			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
-		}
+		sd->cashPoints += cash;
+		log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -4541,10 +4539,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 		}
 
 		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
-		if( points ){
-			sd->kafraPoints += points;
-			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
-		}
+		sd->kafraPoints += points;
+		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
 
 		if( battle_config.cashshop_show_points )
 		{
