@@ -12198,15 +12198,26 @@ BUILDIN_FUNC(addrid)
 BUILDIN_FUNC(attachrid)
 {
 	int rid = script_getnum(st,2);
+	bool force;
 
-	if (map_id2sd(rid) != NULL) {
+	if( script_hasdata(st,3) ){
+		force = script_getnum(st,3) != 0;
+	}else{
+		force = true;
+	}
+
+	struct map_session_data* sd = map_id2sd(rid);
+
+	if( sd != NULL && ( !sd->npc_id || force ) ){
 		script_detach_rid(st);
 
 		st->rid = rid;
 		script_attach_state(st);
-		script_pushint(st,1);
-	} else
-		script_pushint(st,0);
+		script_pushint(st,true);
+	}else{
+		script_pushint(st,false);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
@@ -24237,7 +24248,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(disablewaitingroomevent,"disablearena",""),	// Added by RoVeRT
 	BUILDIN_DEF(getwaitingroomstate,"i?"),
 	BUILDIN_DEF(warpwaitingpc,"sii?"),
-	BUILDIN_DEF(attachrid,"i"),
+	BUILDIN_DEF(attachrid,"i?"),
 	BUILDIN_DEF(addrid,"i?????"),
 	BUILDIN_DEF(detachrid,""),
 	BUILDIN_DEF(isloggedin,"i?"),
