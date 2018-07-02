@@ -19464,7 +19464,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		}
 	}
 
-	clif_roulette_generate(sd,result, sd->roulette.stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
 }
 
 /// Request to claim a prize
