@@ -3035,7 +3035,7 @@ REPLACE INTO `item_db` VALUES (5824,'Fools_Day_Hat','Fools Day Hat',4,20,NULL,30
 #REPLACE INTO `item_db` VALUES (5825,'Badge_Of_Order_Grace','Badge Of Order Grace',4,0,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus bMdef,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5826,'Valkyrie_Helmet','Valkyrie Helmet',4,0,NULL,0,NULL,10,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,225,'bonus bStr,2; bonus bInt,2; bonus bDex,2; bonus bAgi,2; bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5827,'Book_File_Hat','Book File Hat',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,423,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (5828,'Honor_Gold_Ring','Honor Gold Ring',4,0,NULL,50,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,1,1,0,'bonus bAllStats,1; bonus bMdef,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5828,'Honor_Gold_Ring','Honor Gold Ring',4,0,NULL,50,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,1,0,0,'bonus bAllStats,1; bonus bMdef,5;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5829,'Ordinary_Armor','Ordinary Armor',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,16,NULL,30,1,0,NULL,NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5830,'Woe_Sahkkat','Woe Sahkkat',4,20,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,60,1,67,NULL,NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5831,'Woe_Big_Sis_Ribbon','Woe Big Sis Ribbon',4,20,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,60,1,28,NULL,NULL,NULL);
@@ -3051,7 +3051,7 @@ REPLACE INTO `item_db` VALUES (5828,'Honor_Gold_Ring','Honor Gold Ring',4,0,NULL
 #REPLACE INTO `item_db` VALUES (5841,'Shaman_Hat_','Shaman_Hat',4,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,1,596,'bonus bLuk,2;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5842,'Loyal_Ring1','Loyal Ring1',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,1,1,0,NULL,NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5843,'Loyal_Ring2','Loyal Ring2',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,1,1,0,'bonus bAllStats,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5844,'Loyal_Ring3','Loyal Ring3',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,1,1,0,'bonus bAllStats,3;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5844,'Loyal_Ring3','Loyal Ring3',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,1,0,0,'bonus bAllStats,3;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5845,'Buzzy_Ball_Board','Buzzy Ball Board',4,50,NULL,400,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,641,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5846,'Buzzy_Ball_Gum','Buzzy Ball Gum',4,50,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,1,NULL,1,0,572,'bonus bMdef,5;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5847,'Fools_Day_Helmet','Fools Day Helmet',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,0,647,'bonus bInt,5; bonus bVit,-3;',NULL,NULL);

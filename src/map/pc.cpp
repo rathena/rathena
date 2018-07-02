@@ -1419,25 +1419,25 @@ void pc_reg_received(struct map_session_data *sd)
 
 	sd->vars_ok = true;
 
-	sd->change_level_2nd = pc_readglobalreg(sd, add_str("jobchange_level"));
-	sd->change_level_3rd = pc_readglobalreg(sd, add_str("jobchange_level_3rd"));
-	sd->die_counter = pc_readglobalreg(sd, add_str("PC_DIE_COUNTER"));
+	sd->change_level_2nd = pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR));
+	sd->change_level_3rd = pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR));
+	sd->die_counter = pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR));
 
-	sd->langtype = pc_readaccountreg(sd, add_str("#langtype"));
+	sd->langtype = pc_readaccountreg(sd, add_str(LANGTYPE_VAR));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = pc_readaccountreg(sd, add_str("#CASHPOINTS"));
-	sd->kafraPoints = pc_readaccountreg(sd, add_str("#KAFRAPOINTS"));
+	sd->cashPoints = pc_readaccountreg(sd, add_str(CASHPOINT_VAR));
+	sd->kafraPoints = pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR));
 
 	// Cooking Exp
-	sd->cook_mastery = pc_readglobalreg(sd, add_str("COOK_MASTERY"));
+	sd->cook_mastery = pc_readglobalreg(sd, add_str(COOKMASTERY_VAR));
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
-		sd->mission_mobid = pc_readglobalreg(sd, add_str("TK_MISSION_ID"));
-		sd->mission_count = pc_readglobalreg(sd, add_str("TK_MISSION_COUNT"));
+		sd->mission_mobid = pc_readglobalreg(sd, add_str(TKMISSIONID_VAR));
+		sd->mission_count = pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR));
 	}
 
 	if (battle_config.feature_banking)
@@ -1962,7 +1962,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 
 			}
 
-			pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
+			pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 		}
 
 		if (skill_point < novice_skills + (sd->change_level_2nd - 1))
@@ -1979,7 +1979,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 						- (sd->status.job_level - 1)
 						- (sd->change_level_2nd - 1)
 						- novice_skills;
-					pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
+					pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 			}
 
 			if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1))
@@ -2378,6 +2378,9 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
 		return;
+
+	if (autobonus->active != INVALID_TIMER)
+		delete_timer(autobonus->active, pc_endautobonus);
 
 	if( autobonus->other_script )
 	{
@@ -4467,12 +4470,15 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 		return -1;
 	}
 
-	pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints-cash);
 	if( cash ){
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints - cash);
+		sd->cashPoints -= cash;
 		log_cash( sd, type, LOG_CASH_TYPE_CASH, -cash );
 	}
-	pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints-points);
+
 	if( points ){
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints - points);
+		sd->kafraPoints -= points;
 		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, -points );
 	}
 
@@ -4510,10 +4516,9 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			cash = MAX_ZENY-sd->cashPoints;
 		}
 
-		pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints+cash);
-		if( cash ){
-			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
-		}
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
+		sd->cashPoints += cash;
+		log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -4536,10 +4541,9 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			points = MAX_ZENY-sd->kafraPoints;
 		}
 
-		pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints+points);
-		if( points ){
-			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
-		}
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
+		sd->kafraPoints += points;
+		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -7386,7 +7390,7 @@ int pc_resetstate(struct map_session_data* sd)
 	if( sd->mission_mobid ) { //bugreport:2200
 		sd->mission_mobid = 0;
 		sd->mission_count = 0;
-		pc_setglobalreg(sd, add_str("TK_MISSION_ID"), 0);
+		pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), 0);
 	}
 
 	status_calc_pc(sd, SCO_NONE);
@@ -7786,7 +7790,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setdead(sd);
 
-	pc_setglobalreg(sd, add_str("PC_DIE_COUNTER"), sd->die_counter+1);
+	pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
@@ -8090,9 +8094,13 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
 		case SP_BANK_VAULT:      val = sd->bank_vault; break;
+		case SP_CASHPOINTS:      val = sd->cashPoints; break;
+		case SP_KAFRAPOINTS:     val = sd->kafraPoints; break;
 		case SP_ROULETTE_BRONZE: val = sd->roulette_point.bronze; break;
 		case SP_ROULETTE_SILVER: val = sd->roulette_point.silver; break;
 		case SP_ROULETTE_GOLD:   val = sd->roulette_point.gold; break;
+		case SP_PCDIECOUNTER:    val = sd->die_counter; break;
+		case SP_COOKMASTERY:     val = sd->cook_mastery; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
@@ -8377,6 +8385,41 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->roulette_point.gold = val;
 		pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
 		return true;
+	case SP_CASHPOINTS:
+		if (val < 0)
+			return false;
+		if (!sd->state.connect_new)
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
+		sd->cashPoints = cap_value(val, 0, MAX_ZENY);
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints);
+		return true;
+	case SP_KAFRAPOINTS:
+		if (val < 0)
+			return false;
+		if (!sd->state.connect_new)
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
+		sd->kafraPoints = cap_value(val, 0, MAX_ZENY);
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
+		return true;
+	case SP_PCDIECOUNTER:
+		if (val < 0)
+			return false;
+		if (sd->die_counter == val)
+			return true;
+		sd->die_counter = val;
+		if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
+		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
+		return true;
+	case SP_COOKMASTERY:
+		if (val < 0)
+			return false;
+		if (sd->cook_mastery == val)
+			return true;
+		val = cap_value(val, 0, 1999);
+		sd->cook_mastery = val;
+		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
+		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
 		return false;
@@ -8589,12 +8632,12 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	// changing from 1st to 2nd job
 	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
 		sd->change_level_2nd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
+		pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 	}
 	// changing from 2nd to 3rd job
 	else if((b_class&JOBL_THIRD) && !(sd->class_&JOBL_THIRD)) {
 		sd->change_level_3rd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
+		pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 	}
 
 	if(sd->cloneskill_idx > 0) {
@@ -9231,30 +9274,6 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
-
-	// These should be stored elsewhere e.g. char ones in char table, the cash ones in account_data table!
-	switch( regname[0] ) {
-		default: //Char reg
-			if( !strcmp(regname,"PC_DIE_COUNTER") && sd->die_counter != val ) {
-				int i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
-				sd->die_counter = val;
-				if( i )
-					status_calc_pc(sd,SCO_NONE); // Lost the bonus.
-			} else if( !strcmp(regname,"COOK_MASTERY") && sd->cook_mastery != val ) {
-				val = cap_value(val, 0, 1999);
-				sd->cook_mastery = val;
-			}
-			break;
-		case '#':
-			if( !strcmp(regname,"#CASHPOINTS") && sd->cashPoints != val ) {
-				val = cap_value(val, 0, MAX_ZENY);
-				sd->cashPoints = val;
-			} else if( !strcmp(regname,"#KAFRAPOINTS") && sd->kafraPoints != val ) {
-				val = cap_value(val, 0, MAX_ZENY);
-				sd->kafraPoints = val;
-			}
-			break;
-	}
 	
 	if ( !reg_load && !sd->vars_ok ) {
 		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);
