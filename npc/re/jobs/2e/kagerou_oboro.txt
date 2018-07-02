@@ -2150,6 +2150,11 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "I can feel it.";
 		mes "I will take this weapon to give it some finishing touches.";
 		next;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
 		delequip .@part;
 		erasequest 5145;
 		completequest 5138;
@@ -2158,9 +2163,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "[Red Leopard Joe]";
 		mes "'" + strcharinfo(0) + "'";
 		mes "Passed the weapon test!!";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@ko_test_03_1 == 2 && .@ko_test_03_2 == 0 && (.@ko_test_03_3 == 2 || .@ko_test_03_4 == 2) && .@ko_test_03_5 == 0) {
 		mes "[Red Leopard Joe]";
 		mes "Oh, I almost forgot.";
@@ -2458,6 +2461,7 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		mes "This equipment is perfectly refined. Keep it for yourself!";  //custom translation
 		close;
 	}
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	if (getequippercentrefinery(.@part) < 100) {
 		mes "This is very well refined equipment. Do you want to continue? Refine skill decreases by 1 if refinement fails.";
 		next;
@@ -2486,6 +2490,11 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 	} else {							// 10>20 2%
 		if (.@rand < 3) set .@wlevel_up,1;
 	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	if (.@wlevel_up) {
 		successrefitem .@part;
 		mes "Succeeded in refining.";
