@@ -5,6 +5,7 @@
 #define _LOGIN_HPP_
 
 #include <memory>
+#include <string>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
@@ -97,6 +98,7 @@ struct Login_Config {
 	char lanconf_name[256];							/// name of lan config file
 
 	int char_per_account;							/// number of characters an account can have
+	std::string delcode_col;
 #ifdef VIP_ENABLE
 	struct {
 		unsigned int group;							/// VIP group ID

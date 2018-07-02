@@ -89,22 +89,23 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2717
 	Type: AH
-	Structure: <cmd>.W <aid>.L <email>.40B <expiration_time>.L <group_id>.B <char_slots>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <MAX_CHAR_BILLING>.B
-	index: 0,2,6,46,50,51,52,63,68,72,73,74
+	Structure: <cmd>.W <aid>.L <expiration_time>.L <group_id>.B <char_slots>.B <pincode_change>.L <isvip>.B <char_vip>.B <MAX_CHAR_BILLING>.B <email>.50S <birthdate>.11S <pincode>.5S <deletion_code>.50S
+	index: 0,2,6,10,11,12,16,17,18,19,69,80,85
 	len: 75
 	parameter:
 		- cmd: packet identification (0x2717)
 		- aid: account identification
-		- email: email of aid
 		- expiration_time: unknow @FIXME
 		- group_id: the group the aid belong too
 		- char_slots: number of slot available the account have (will be displayed on client)
-		- birthdate: birthdate of aid
-		- pincode: current pincode of aid
 		- pincode_change: new pincode of aid
 		- isvip: if this aid is currently vip or not
 		- char_vip: number of charslot that are vip (could only do creation on if you are vip)
 		- MAX_CHAR_BILLING: number of charslort that are for billing
+		- email: email of aid
+		- birthdate: birthdate of aid
+		- pincode: current pincode of aid
+		- deletion_code: code used for deleting character
 	desc:
 		- Request account data
 

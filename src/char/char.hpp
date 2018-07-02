@@ -4,6 +4,8 @@
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
+#include <string>
+
 #include "../common/core.hpp" // CORE_ST_LAST
 #include "../common/mmo.hpp"
 #include "../common/msg_conf.hpp"
@@ -20,11 +22,6 @@ enum E_CHARSERVER_ST {
 	CHARSERVER_ST_STARTING,
 	CHARSERVER_ST_SHUTDOWN,
 	CHARSERVER_ST_LAST
-};
-
-enum e_char_delete {
-	CHAR_DEL_EMAIL = 1,
-	CHAR_DEL_BIRTHDATE
 };
 
 enum e_char_delete_restriction {
@@ -133,7 +130,6 @@ struct Char_Config {
 	char unknown_char_name[NAME_LENGTH]; // Name to use when the requested name cannot be determined
 	char char_name_letters[1024]; // list of letters/symbols allowed (or not) in a character name. by [Yor]
 	int char_name_option; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
-	int char_del_option;	// Character deletion type, email = 1, birthdate = 2 (default)
 	int char_del_restriction;	// Character deletion restriction (0: none, 1: if the character is in a party, 2: if the character is in a guild, 3: if the character is in a party or a guild)
 	bool char_rename_party;	// Character renaming in a party
 	bool char_rename_guild;	// Character renaming in a guild
@@ -229,7 +225,7 @@ struct char_session_data {
 	bool auth; // whether the session is authed or not
 	uint32 account_id, login_id1, login_id2, sex;
 	int found_char[MAX_CHARS]; // ids of chars on this account
-	char email[40]; // e-mail (default: a@a.com) by [Yor]
+	char email[49+1]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int group_id; // permission
 	uint8 char_slots; // total number of characters that can be created
@@ -249,6 +245,7 @@ struct char_session_data {
 	time_t unban_time[MAX_CHARS];
 	int charblock_timer;
 	uint8 flag; // &1 - Retrieving guild bound items
+	std::string deletion_passcode;
 };
 
 

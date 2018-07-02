@@ -4,6 +4,8 @@
 #ifndef _ACCOUNT_HPP_
 #define _ACCOUNT_HPP_
 
+#include <string>
+
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
 #include "../config/core.hpp"
@@ -20,7 +22,7 @@ struct mmo_account {
 	char userid[NAME_LENGTH];
 	char pass[32+1];        // 23+1 for plaintext, 32+1 for md5-ed passwords
 	char sex;               // gender (M/F/S)
-	char email[40];         // e-mail (by default: a@a.com)
+	char email[49+1];         // e-mail (by default: a@a.com)
 	unsigned int group_id;  // player group id
 	uint8 char_slots;       // this accounts maximum character slots (maximum is limited to MAX_CHARS define in char server)
 	unsigned int state;     // packet 0x006a value + 1 (0: compte OK)
@@ -32,6 +34,7 @@ struct mmo_account {
 	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD)
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
+	std::string deletion_passcode; // Stores code for deleting character based on char_deletion_code config
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;

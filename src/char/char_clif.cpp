@@ -4,7 +4,7 @@
 #include "char_clif.hpp"
 
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #include "../common/malloc.hpp"
 #include "../common/mapindex.hpp"
@@ -535,58 +535,40 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 /**
  * Check char deletion code
  * @param sd
- * @param delcode E-mail or birthdate
- * @param flag Delete flag
+ * @param char_id Requested Char ID
+ * @param delcode Deletion code from cleint
  * @return true:Success, false:Failure
  **/
-bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
-	// E-Mail check
-	if (flag&CHAR_DEL_EMAIL && (
-			!stricmp(delcode, sd->email) || //email does not match or
-			(
-				!stricmp("a@a.com", sd->email) && //it is default email and
-				!strcmp("", delcode) //user sent an empty email
-			))) {
-			ShowInfo("" CL_RED "Char Deleted" CL_RESET " " CL_GREEN "(E-Mail)" CL_RESET ".\n");
-			return true;
+bool chclif_delchar_check(struct char_session_data *sd, uint32 char_id, std::string delcode) {
+	if (!sd->deletion_passcode.size()) {
+		ShowInfo("Character deletion failed, player's deletion code is never been set yet.\n");
+		return false;
 	}
-	// Birthdate (YYMMDD)
-	if (flag&CHAR_DEL_BIRTHDATE && (
-		!strcmp(sd->birthdate+2, delcode) || // +2 to cut off the century
-		(
-			!strcmp("",sd->birthdate) && // it is default birthdate and
-			!strcmp("",delcode) // user sent an empty birthdate
-		))) {
-		ShowInfo("" CL_RED "Char Deleted" CL_RESET " " CL_GREEN "(Birthdate)" CL_RESET ".\n");
-		return true;
+
+	if (sd->deletion_passcode != delcode) {
+		ShowInfo("Character deletion failed. Player's deletion code is invalid.\n");
+		return false;
 	}
-	return false;
+
+	ShowInfo("" CL_RED "Deleted" CL_RESET " char_id:%u.\n", char_id);
+	return true;
 }
 
 // CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
 int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
 	{
-		char birthdate[8+1];
+		char birthdate[6+1];
 		uint32 char_id;
 		char_id = RFIFOL(fd,2);
 
 		ShowInfo(CL_RED "Request Char Deletion: " CL_GREEN "%d (%d)" CL_RESET "\n", sd->account_id, char_id);
 
-		// construct "YY-MM-DD"
-		birthdate[0] = RFIFOB(fd,6);
-		birthdate[1] = RFIFOB(fd,7);
-		birthdate[2] = '-';
-		birthdate[3] = RFIFOB(fd,8);
-		birthdate[4] = RFIFOB(fd,9);
-		birthdate[5] = '-';
-		birthdate[6] = RFIFOB(fd,10);
-		birthdate[7] = RFIFOB(fd,11);
-		birthdate[8] = 0;
+		safestrncpy(birthdate, (char*)RFIFOP(fd, 6), sizeof(birthdate));
 		RFIFOSKIP(fd,12);
 
 		// Only check for birthdate
-		if (!chclif_delchar_check(sd, birthdate, CHAR_DEL_BIRTHDATE)) {
+		if (!chclif_delchar_check(sd, char_id, birthdate)) {
 			chclif_char_delete2_accept_ack(fd, char_id, 5);
 			return 1;
 		}
@@ -988,19 +970,23 @@ void chclif_refuse_delchar(int fd, uint8 errCode){
 	WFIFOSET(fd,3);
 }
 
+/**
+* CH <0068>.W <char_id>.L <email>.40S
+* CH <01FB>.W <char_id>.L <email>.50S
+*/
 int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
-	if (cmd == 0x68) FIFOSD_CHECK(46)
-	else if (cmd == 0x1fb) FIFOSD_CHECK(56)
-	else return 0;
+	int offset = (cmd == 0x1fb) ? 10 : 0;
+	size_t len = 46 + offset;
+	FIFOSD_CHECK(len)
 	{
-		char email[40];
+		char delcode[49+1];
 		uint32 cid = RFIFOL(fd,2);
 
 		ShowInfo(CL_RED "Request Char Deletion: " CL_GREEN "%u (%u)" CL_RESET "\n", sd->account_id, cid);
-		memcpy(email, RFIFOP(fd,6), 40);
-		RFIFOSKIP(fd,( cmd == 0x68) ? 46 : 56);
+		safestrncpy(delcode, (char*)RFIFOP(fd,6), 40 + offset);
+		RFIFOSKIP(fd, len);
 
-		if (!chclif_delchar_check(sd, email, charserv_config.char_config.char_del_option)) {
+		if (!chclif_delchar_check(sd, cid, delcode)) {
 			chclif_refuse_delchar(fd,0); // 00 = Incorrect Email address
 			return 1;
 		}

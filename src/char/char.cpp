@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <time.h>
 
 #include "../common/cbasetypes.hpp"
@@ -2704,11 +2704,6 @@ void char_set_defaults(){
 	charserv_config.char_config.char_per_account = 0; //Maximum chars per account (default unlimited) [Sirius]
 	charserv_config.char_config.char_del_level = 0; //From which level u can delete character [Lupus]
 	charserv_config.char_config.char_del_delay = 86400;
-#if PACKETVER >= 20100803
-	charserv_config.char_config.char_del_option = CHAR_DEL_BIRTHDATE;
-#else
-	charserv_config.char_config.char_del_option = CHAR_DEL_EMAIL;
-#endif
 	charserv_config.char_config.char_del_restriction = CHAR_DEL_RESTRICT_ALL;
 
 //	charserv_config.userid[24];
@@ -2996,8 +2991,6 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_del_level = atoi(w2);
 		} else if (strcmpi(w1, "char_del_delay") == 0) {
 			charserv_config.char_config.char_del_delay = atoi(w2);
-		} else if (strcmpi(w1, "char_del_option") == 0) {
-			charserv_config.char_config.char_del_option = atoi(w2);
 		} else if (strcmpi(w1, "char_del_restriction") == 0) {
 			charserv_config.char_config.char_del_restriction = atoi(w2);
 		} else if (strcmpi(w1, "char_rename_party") == 0) {
@@ -3080,12 +3073,6 @@ bool char_config_read(const char* cfgName, bool normal){
  * Checks for values out of range.
  */
 void char_config_adjust() {
-#if PACKETVER < 20100803
-	if (charserv_config.char_config.char_del_option&CHAR_DEL_BIRTHDATE) {
-		ShowWarning("conf/char_athena.conf:char_del_option birthdate is enabled but it requires PACKETVER 2010-08-03 or newer, defaulting to email...\n");
-		charserv_config.char_config.char_del_option &= ~CHAR_DEL_BIRTHDATE;
-	}
-#endif
 }
 
 /*

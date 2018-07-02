@@ -4,7 +4,7 @@
 #include "char_logif.hpp"
 
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
@@ -332,11 +332,11 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 
 /**
  * Receive account data from login-server
- * AH 0x2717 <aid>.L <email>.40B <expiration_time>.L <group_id>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B
+ * AH 0x2717 <aid>.L <expiration_time>.L <group_id>.B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B <email>.50B <birthdate>.11B <pincode>.5B <deletion_passcode>.50B
  **/
 int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 	int u_fd; //user fd
-	if (RFIFOREST(fd) < 75)
+	if (RFIFOREST(fd) < 135)
 		return 0;
 
 	// find the authenticated session with this account id
@@ -344,21 +344,22 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 	if( u_fd < fd_max )
 	{
 		int server_id;
-		memcpy(sd->email, RFIFOP(fd,6), 40);
-		sd->expiration_time = (time_t)RFIFOL(fd,46);
-		sd->group_id = RFIFOB(fd,50);
-		sd->char_slots = RFIFOB(fd,51);
+		sd->expiration_time = (time_t)RFIFOL(fd, 6);
+		sd->group_id = RFIFOB(fd, 10);
+		sd->char_slots = RFIFOB(fd, 11);
 		if( sd->char_slots > MAX_CHARS ) {
 			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.hpp! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
 			sd->char_slots = MAX_CHARS;/* cap to maximum */
 		} else if ( !sd->char_slots )/* no value aka 0 in sql */
 			sd->char_slots = MIN_CHARS;/* cap to minimum */
-		safestrncpy(sd->birthdate, RFIFOCP(fd,52), sizeof(sd->birthdate));
-		safestrncpy(sd->pincode, RFIFOCP(fd,63), sizeof(sd->pincode));
-		sd->pincode_change = (time_t)RFIFOL(fd,68);
-		sd->isvip = RFIFOB(fd,72);
-		sd->chars_vip = RFIFOB(fd,73);
-		sd->chars_billing = RFIFOB(fd,74);
+		sd->pincode_change = (time_t)RFIFOL(fd, 12);
+		sd->isvip = RFIFOB(fd, 16);
+		sd->chars_vip = RFIFOB(fd, 17);
+		sd->chars_billing = RFIFOB(fd, 18);
+		safestrncpy(sd->email, RFIFOCP(fd, 19), sizeof(sd->email));
+		safestrncpy(sd->birthdate, RFIFOCP(fd, 69), sizeof(sd->birthdate));
+		safestrncpy(sd->pincode, RFIFOCP(fd, 80), sizeof(sd->pincode));
+		sd->deletion_passcode = RFIFOCP(fd, 85);
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
 		// continued from char_auth_ok...
 		if( server_id == ARRAYLENGTH(map_server) || //server not online, bugreport:2359
@@ -374,7 +375,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 #endif
 		}
 	}
-	RFIFOSKIP(fd,75);
+	RFIFOSKIP(fd, 135);
 	return 1;
 }
 

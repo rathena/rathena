@@ -5,7 +5,6 @@
 #include "login.hpp"
 
 #include <stdlib.h>
-#include <string.h>
 #include <string>
 
 #include "../common/cli.hpp"
@@ -241,6 +240,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = MIN_CHARS;
+	acc.deletion_passcode = "";
 #ifdef VIP_ENABLE
 	acc.vip_time = 0;
 	acc.old_group = 0;
@@ -638,6 +638,9 @@ bool login_config_read(const char* cfgName, bool normal) {
 				login_config.char_per_account = MIN_CHARS;
 			}
 		}
+		else if (strcmpi(w1, "char_deletion_code") == 0) {
+			login_config.delcode_col = w2;
+		}
 #ifdef VIP_ENABLE
 		else if(strcmpi(w1,"vip_group")==0)
 			login_config.vip_sys.group = cap_value(atoi(w2),0,99);
@@ -700,6 +703,12 @@ void login_set_defaults() {
 	login_config.client_hash_check = 0;
 	login_config.client_hash_nodes = NULL;
 	login_config.char_per_account = MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING;
+#if PACKETVER >= 20100803
+	login_config.delcode_col = "`birthdate`";
+#else
+	login_config.delcode_col = "`email`";
+#endif
+
 #ifdef VIP_ENABLE
 	login_config.vip_sys.char_increase = MAX_CHAR_VIP;
 	login_config.vip_sys.group = 5;
@@ -866,6 +875,7 @@ int do_init(int argc, char** argv) {
 
 	do_init_logincnslif();
 
+	ShowInfo("Column used for character deletion is '" CL_WHITE "%s" CL_RESET "'\n", login_config.delcode_col.c_str());
 	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
 
