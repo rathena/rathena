@@ -62,7 +62,7 @@ te_prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178
 
 -	script	warp_TE_castle	-1,{
 OnTouch:
-	.@num = strnpcinfo(2);
+	.@num = atoi( replacestr(strnpcinfo(2), "_te", "") );
 	switch(.@num) {
 		case 1: callsub( S_Warp, "te_prtcas01",99,32 );
 		case 2: callsub( S_Warp, "te_prtcas02",43,229 );

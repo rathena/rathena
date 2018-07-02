@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mail.hpp"
@@ -9,13 +9,13 @@
 #include "../common/timer.hpp"
 
 #include "atcommand.hpp"
-#include "itemdb.hpp"
-#include "clif.hpp"
-#include "pc.hpp"
-#include "intif.hpp"
-#include "date.hpp" // date_get_dayofyear
-#include "log.hpp"
 #include "battle.hpp"
+#include "clif.hpp"
+#include "date.hpp" // date_get_dayofyear
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "pc.hpp"
 
 void mail_clear(struct map_session_data *sd)
 {

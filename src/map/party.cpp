@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "party.hpp"
@@ -6,27 +6,27 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
-#include "../common/socket.hpp" // last_tick
-#include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/utils.hpp"
+#include "../common/socket.hpp" // last_tick
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
+#include "achievement.hpp"
 #include "atcommand.hpp"	//msg_txt()
-#include "pc.hpp"
+#include "battle.hpp"
+#include "clif.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
-#include "mapreg.hpp"
-#include "trade.hpp"
-#include "clif.hpp"
-#include "battle.hpp"
-#include "mob.hpp"
 #include "log.hpp"
+#include "mapreg.hpp"
+#include "mob.hpp"
+#include "pc.hpp"
 #include "pc_groups.hpp"
-#include "achievement.hpp"
+#include "trade.hpp"
 
 static DBMap* party_db; // int party_id -> struct party_data* (releases data)
 static DBMap* party_booking_db; // uint32 char_id -> struct party_booking_ad_info* (releases data) // Party Booking [Spiria]

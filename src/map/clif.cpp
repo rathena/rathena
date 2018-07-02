@@ -1,61 +1,61 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "clif.hpp"
 
+#include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <cstdarg>
 #include <ctime>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
+#include "../common/conf.hpp"
+#include "../common/ers.hpp"
 #include "../common/grfio.hpp"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 #include "../common/utils.hpp"
-#include "../common/ers.hpp"
-#include "../common/conf.hpp"
 
-#include "map.hpp"
-#include "chrif.hpp"
-#include "pc.hpp"
-#include "pc_groups.hpp"
-#include "status.hpp"
-#include "npc.hpp"
-#include "itemdb.hpp"
-#include "chat.hpp"
-#include "trade.hpp"
-#include "storage.hpp"
-#include "script.hpp"
-#include "skill.hpp"
+#include "achievement.hpp"
 #include "atcommand.hpp"
-#include "intif.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
-#include "mob.hpp"
-#include "party.hpp"
-#include "unit.hpp"
-#include "guild.hpp"
-#include "vending.hpp"
-#include "pet.hpp"
-#include "homunculus.hpp"
-#include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "log.hpp"
-#include "clif.hpp"
-#include "mail.hpp"
-#include "quest.hpp"
 #include "cashshop.hpp"
 #include "channel.hpp"
-#include "achievement.hpp"
+#include "chat.hpp"
+#include "chrif.hpp"
 #include "clan.hpp"
+#include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "mail.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "pet.hpp"
+#include "quest.hpp"
+#include "script.hpp"
+#include "skill.hpp"
+#include "status.hpp"
+#include "storage.hpp"
+#include "trade.hpp"
+#include "unit.hpp"
+#include "vending.hpp"
 
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
@@ -9509,7 +9509,10 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 
 				safestrncpy(WBUFCP(buf,54), sd->guild->name,NAME_LENGTH);
 				safestrncpy(WBUFCP(buf,78), sd->guild->position[position].name, NAME_LENGTH);
-			}else{ //Assume no guild.
+			}else if( sd->clan ){
+				WBUFB(buf,54) = 0;
+				safestrncpy(WBUFCP(buf,78), sd->clan->name,NAME_LENGTH);
+			}else{ //Assume no guild and no clan
 				WBUFB(buf,54) = 0;
 				WBUFB(buf,78) = 0;
 			}
@@ -10472,8 +10475,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 #endif
 
-		if (sd->guild && battle_config.guild_notice_changemap == 1)
+		if (sd->guild && battle_config.guild_notice_changemap == 1){
 			clif_guild_notice(sd); // Displays after VIP
+			guild_notice = false; // Do not display it twice
+		}
 
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -10533,9 +10538,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			channel_mjoin(sd); //join new map
 
 		clif_pk_mode_message(sd);
-	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
+	}
+	
+	if( sd->guild && ( battle_config.guild_notice_changemap == 2 || guild_notice ) ){
 		clif_guild_notice(sd); // Displays at end
-
+	}
 
 	mail_clear(sd);
 

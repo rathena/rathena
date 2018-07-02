@@ -1,3 +1,6 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #ifndef _MD5CALC_HPP_
 #define _MD5CALC_HPP_
 

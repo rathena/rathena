@@ -1,40 +1,40 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "status.hpp"
 
-#include <stdlib.h>
-#include <math.h>
-#include <string>
 #include <functional>
+#include <math.h>
+#include <stdlib.h>
+#include <string>
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
-#include "../common/malloc.hpp"
-#include "../common/utils.hpp"
-#include "../common/ers.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
+#include "battleground.hpp"
+#include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
 #include "path.hpp"
 #include "pc.hpp"
-#include "pet.hpp"
-#include "battleground.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "script.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
 #include "pc_groups.hpp"
+#include "pet.hpp"
+#include "script.hpp"
 
 // Regen related flags.
 enum e_regen {
@@ -11293,7 +11293,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 		}
 		status_display_add(bl,type,dval1,dval2,dval3);
-		clif_efst_status_change_sub(bl, bl, AREA);
 	}
 
 	// Those that make you stop attacking/walking....
@@ -12126,20 +12125,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_DANCING:
 			{
-				const char* prevfile = "<unknown>";
-				int prevline = 0;
 				struct map_session_data *dsd;
 				struct status_change_entry *dsc;
-
-				if( sd ) {
-					if( sd->delunit_prevfile ) { // Initially this is NULL, when a character logs in
-						prevfile = sd->delunit_prevfile;
-						prevline = sd->delunit_prevline;
-					} else
-						prevfile = "<none>";
-					sd->delunit_prevfile = file;
-					sd->delunit_prevline = line;
-				}
 
 				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))) { // End status on partner as well
 					dsc = dsd->sc.data[SC_DANCING];
@@ -12154,12 +12141,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					struct skill_unit_group *group;
 					group = skill_id2group(sce->val2);
 					if( group == NULL ) {
-						ShowDebug("status_change_end: SC_DANCING is missing skill unit group (val1=%d, val2=%d, val3=%d, val4=%d, timer=%d, tid=%d, char_id=%d, map=%s, x=%d, y=%d, prev=%s:%d, from=%s:%d). Please report this! (#3504)\n",
+						ShowDebug("status_change_end: SC_DANCING is missing skill unit group (val1=%d, val2=%d, val3=%d, val4=%d, timer=%d, tid=%d, char_id=%d, map=%s, x=%d, y=%d). Please report this!\n",
 							sce->val1, sce->val2, sce->val3, sce->val4, sce->timer, tid,
 							sd ? sd->status.char_id : 0,
-							mapindex_id2name(map_id2index(bl->m)), bl->x, bl->y,
-							prevfile, prevline,
-							file, line);
+							mapindex_id2name(map_id2index(bl->m)), bl->x, bl->y);
 					}
 					sce->val2 = 0;
 					skill_delunitgroup(group);

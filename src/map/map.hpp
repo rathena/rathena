@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _MAP_HPP_
@@ -8,11 +8,10 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
-#include "../common/mmo.hpp"
-#include "../common/mapindex.hpp"
 #include "../common/db.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/mmo.hpp"
 #include "../common/msg_conf.hpp"
-
 #include "../config/core.hpp"
 
 struct npc_data;
@@ -434,6 +433,8 @@ enum _sp {
 	SP_ROULETTE_BRONZE = 128,
 	SP_ROULETTE_SILVER = 129,
 	SP_ROULETTE_GOLD = 130,
+	SP_CASHPOINTS, SP_KAFRAPOINTS,
+	SP_PCDIECOUNTER, SP_COOKMASTERY,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,

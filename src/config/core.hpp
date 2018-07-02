@@ -1,5 +1,6 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
 #ifndef _CONFIG_CORE_HPP_
 #define _CONFIG_CORE_HPP_
 

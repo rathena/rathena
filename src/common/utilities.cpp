@@ -1,10 +1,13 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "utilities.hpp"
 
-#include <chrono>
-#include <string>
 #include <algorithm>
+#include <chrono>
 #include <iostream>
 #include <numeric> //iota
+#include <string>
 
 struct cScopeTimer::sPimpl {
     std::chrono::steady_clock::time_point start;

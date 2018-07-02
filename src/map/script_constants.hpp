@@ -1,8 +1,8 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _SCRIPT_CONSTANTS_HPP_
-	#define _SCRIPT_CONSTANTS_HPP_
+#define _SCRIPT_CONSTANTS_HPP_
 
 	#define export_constant(a) script_set_constant(#a,a,false,false)
 	#define export_constant2(a,b) script_set_constant(a,b,false,false)
@@ -514,6 +514,10 @@
 	export_parameter(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE);
 	export_parameter(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER);
 	export_parameter(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD);
+	export_parameter(CASHPOINT_VAR, SP_CASHPOINTS);
+	export_parameter(KAFRAPOINT_VAR, SP_KAFRAPOINTS);
+	export_parameter(PCDIECOUNTER_VAR, SP_PCDIECOUNTER);
+	export_parameter(COOKMASTERY_VAR, SP_COOKMASTERY);
 
 	export_constant2("bMaxHP",SP_MAXHP);
 	export_constant2("bMaxSP",SP_MAXSP);

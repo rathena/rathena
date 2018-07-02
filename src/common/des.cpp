@@ -1,8 +1,7 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#include "cbasetypes.hpp"
-#include "des.hpp"
 
+#include "des.hpp"
 
 /// DES (Data Encryption Standard) algorithm, modified version.
 /// @see http://www.eathena.ws/board/index.php?autocom=bugtracker&showbug=5099.
