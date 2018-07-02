@@ -2083,7 +2083,6 @@ int pc_disguise(struct map_session_data *sd, int class_)
 static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short lv, short rate, short flag, unsigned short card_id)
 {
 	struct s_autospell entry;
-	uint8 i = 0;
 
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
@@ -2110,12 +2109,8 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 				return;
 			it.rate += rate;
 			it.flag = flag;
-
-			if (it.rate == 0)
-				spell.erase(spell.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.id = id;
@@ -2161,7 +2156,6 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, short rate, short arrow_rate, unsigned char flag, unsigned int duration)
 {
 	struct s_addeffect entry;
-	uint8 i = 0;
 
 	if (effect.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", MAX_PC_BONUS);
@@ -2183,12 +2177,8 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 			it.rate += rate;
 			it.arrow_rate += arrow_rate;
 			it.duration = umax(it.duration, duration);
-
-			if (it.rate == 0)
-				effect.erase(effect.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.sc = sc;
@@ -2211,7 +2201,6 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enum sc_type sc, short rate, short skill_id, unsigned char target, unsigned int duration)
 {
 	struct s_addeffectonskill entry;
-	uint8 i = 0;
 
 	if (effect.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects per character!\n", MAX_PC_BONUS);
@@ -2225,12 +2214,8 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 		if (it.sc == sc && it.skill_id == skill_id && it.target == target) {
 			it.rate += rate;
 			it.duration = umax(it.duration, duration);
-
-			if (it.rate == 0)
-				effect.erase(effect.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.sc = sc;
@@ -2254,7 +2239,6 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
 	struct s_add_drop entry;
-	uint8 i = 0;
 
 	if (!nameid && !group) {
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
@@ -2291,15 +2275,10 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 
 	for (auto &it : drop) {
 		if (it.nameid == nameid && it.group == group && it.race == race && it.class_ == class_) {
-
 			if ((rate < 0 && it.rate < 0) || (rate > 0 && it.rate > 0)) //Adjust the rate if it has same classification
 				it.rate += rate;
-
-			if (it.rate == 0)
-				drop.erase(drop.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.nameid = nameid;
@@ -2314,7 +2293,6 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
 {
 	struct s_autobonus entry;
-	uint8 i = 0;
 
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
@@ -2349,15 +2327,13 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &autobonus, bool restore)
 {
-	uint8 i = 0;
-
 	if (!sd)
 		return;
 
-	for (auto &it : autobonus) {
-		if (it.active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&it.pos) == it.pos) {
-				if (it.bonus_script) {
+	for (uint8 i = 0; i < autobonus.size(); i++) {
+		if (autobonus[i].active != INVALID_TIMER) {
+			if (restore && (sd->state.autobonus&autobonus[i].pos) == autobonus[i].pos) {
+				if (autobonus[i].bonus_script) {
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
@@ -2366,23 +2342,22 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &auto
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
 
-					if ((equip_pos_idx&it.pos) == it.pos)
-						script_run_autobonus(it.bonus_script, sd, it.pos);
+					if ((equip_pos_idx&autobonus[i].pos) == autobonus[i].pos)
+						script_run_autobonus(autobonus[i].bonus_script, sd, autobonus[i].pos);
 				}
 				continue;
 			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(it.active, pc_endautobonus);
-				it.active = INVALID_TIMER;
+				delete_timer(autobonus[i].active, pc_endautobonus);
+				autobonus[i].active = INVALID_TIMER;
 			}
 		}
 
-		if (it.bonus_script)
-			aFree(it.bonus_script);
-		if (it.other_script)
-			aFree(it.other_script);
-		autobonus.erase(autobonus.begin() + i);
-		i++;
+		if (autobonus[i].bonus_script)
+			aFree(autobonus[i].bonus_script);
+		if (autobonus[i].other_script)
+			aFree(autobonus[i].other_script);
 	}
+	autobonus.clear();
 }
 
 void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
@@ -2426,7 +2401,6 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 {
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
 	struct s_addele2 entry;
-	uint8 i = 0;
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
 		ShowError("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
@@ -2448,12 +2422,8 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 		if (it.ele == ele) {
 			it.rate += rate;
 			it.flag = flag;
-
-			if (it.rate == 0)
-				wd->addele2.erase(wd->addele2.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.ele = ele;
@@ -2466,7 +2436,6 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct s_addele2 entry;
-	uint8 i = 0;
 
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowError("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
@@ -2488,12 +2457,8 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 		if (it.ele == ele) {
 			it.rate += rate;
 			it.flag = flag;
-
-			if (it.rate == 0)
-				sd->subele2.erase(sd->subele2.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.ele = ele;
@@ -2506,17 +2471,12 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
 {
 	struct s_item_bonus entry;
-	uint8 i = 0;
 
 	for (auto &it : bonus) {
 		if (it.id == id) {
 			it.val += val;
-
-			if (it.val == 0)
-				bonus.erase(bonus.begin() + i);
 			return;
 		}
-		i++;
 	}
 
 	entry.id = id;
