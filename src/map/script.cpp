@@ -15231,13 +15231,22 @@ BUILDIN_FUNC(mapid2name)
 BUILDIN_FUNC(logmes)
 {
 	const char *str;
-	TBL_PC* sd;
-
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_FAILURE;
+	struct map_session_data* sd = map_id2sd(st->rid);
 
 	str = script_getstr(st,2);
-	log_npc(sd,str);
+	if( sd ){
+		log_npc(sd,str);
+	}else{
+		struct npc_data* nd = map_id2nd(st->oid);
+
+		if( !nd ){
+			ShowError( "buildin_logmes: Invalid usage without player or npc.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		log_npc(nd,str);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 

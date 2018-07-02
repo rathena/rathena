@@ -16,6 +16,7 @@
 #include "itemdb.hpp"
 #include "map.hpp"
 #include "mob.hpp"
+#include "npc.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
 
@@ -375,6 +376,42 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 	}
 }
 
+/// logs messages passed to script command 'logmes'
+void log_npc( struct npc_data* nd, const char* message ){
+	nullpo_retv(nd);
+
+	if( !log_config.npc )
+		return;
+
+	if( log_config.sql_logs )
+	{
+		SqlStmt* stmt;
+		stmt = SqlStmt_Malloc(logmysql_handle);
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->bl.m) )
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, nd->name, strnlen(nd->name, NAME_LENGTH))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
+		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
+		{
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
+			return;
+		}
+		SqlStmt_Free(stmt);
+	}
+	else
+	{
+		char timestring[255];
+		time_t curtime;
+		FILE* logfp;
+
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
+			return;
+		time(&curtime);
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
+		fprintf(logfp, "%s - %s: %s\n", timestring, nd->name, message);
+		fclose(logfp);
+	}
+}
 
 /// logs messages passed to script command 'logmes'
 void log_npc(struct map_session_data* sd, const char* message)
