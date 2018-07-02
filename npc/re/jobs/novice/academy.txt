@@ -7427,7 +7427,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				end;
 			}
 			mes "[Lusa]";
-			if (.@has_manual == 1) {
+			if (isequippedcnt(2941) || countitem(2941)) {
 				mes "Hey! What kind of con is this?! You already had a manual!";
 			} else {
 				getitem 2941,1;// Gunslinger_Manual
