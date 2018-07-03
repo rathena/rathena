@@ -919,31 +919,29 @@ ACMD_FUNC(guildstorage)
 {
 	nullpo_retr(-1, sd);
 
-	if (!sd->status.guild_id) {
-		clif_displaymessage(fd, msg_txt(sd,252)); // You are not in a guild.
-		return -1;
-	}
-
 	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading)
 		return -1;
 
-	if (sd->state.storage_flag == 1) {
-		clif_displaymessage(fd, msg_txt(sd,250)); // You have already opened your storage. Close it first.
-		return -1;
+	switch (storage_guild_storageopen(sd)) {
+		case GSTORAGE_OPEN:
+			clif_displaymessage(fd, msg_txt(sd, 920)); // Guild storage opened.
+			break;
+		case GSTORAGE_STORAGE_ALREADY_OPEN:
+			clif_displaymessage(fd, msg_txt(sd, 250)); // You have already opened your storage. Close it first.
+			return -1;
+		case GSTORAGE_ALREADY_OPEN:
+			clif_displaymessage(fd, msg_txt(sd, 251)); // You have already opened your guild storage. Close it first.
+			return -1;
+		case GSTORAGE_NO_GUILD:
+			clif_displaymessage(fd, msg_txt(sd, 252)); // You are not in a guild.
+			return -1;
+		case GSTORAGE_NO_STORAGE:
+			clif_displaymessage(fd, msg_txt(sd, 786)); // The guild does not have a guild storage.
+			return -1;
+		case GSTORAGE_NO_PERMISSION:
+			clif_displaymessage(fd, msg_txt(sd, 787)); // You do not have permission to use the guild storage.
+			return -1;
 	}
-
-	if (sd->state.storage_flag == 2) {
-		clif_displaymessage(fd, msg_txt(sd,251)); // You have already opened your guild storage. Close it first.
-		return -1;
-	}
-
-	if (sd->state.storage_flag == 3) {
-		clif_displaymessage(fd, msg_txt(sd,250)); // You have already opened your storage. Close it first.
-		return -1;
-	}
-
-	storage_guild_storageopen(sd);
-	clif_displaymessage(fd, msg_txt(sd,920)); // Guild storage opened.
 	return 0;
 }
 

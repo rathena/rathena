@@ -5,7 +5,7 @@
 //= Shadow equipments refining NPC.
 //===== Changelog: ===========================================
 //= 1.0 First version [Aleos]
-//= 1.1 Removed re-roll behavior and fetch materials from db 
+//= 1.1 Removed re-roll behavior and fetch materials from db
 //=     [Secret]
 //============================================================
 -	script	::ShadowBlacksmith	-1,{
@@ -35,8 +35,9 @@
 		mes "HD ores can be used for gear that is at least refine level +7 and will prevent breaking as long as you stay talking to me.";
 		close;
 	}
-	
+
 	.@part = .@indices[.@choice];
+
 	if (!getequipisequiped(.@part)) {
 		mes "[Shadow Blacksmith]";
 		mes "There's nothing here!";
@@ -70,7 +71,7 @@
 		else
 			.@mate$[2] = "^8C8C8C"+ getitemname(.@material[2]) +"^000000";
 
-		switch( select(.@mate$[0],.@mate$[1],.@mate$[2],"Cancel") ) {
+		switch( select( .@mate$[0], .@mate$[1], .@mate$[2], "Cancel" ) ) {
 		case 1:// NORMAL
 			.@choose = .@material[0];
 			break;
