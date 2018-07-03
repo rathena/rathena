@@ -3337,6 +3337,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int i, skill, refinedef = 0;
 	short index = -1;
+	struct script_state* previous_st = sd->st;
 
 	if (++calculating > 10) // Too many recursive calls!
 		return -1;
@@ -4226,6 +4227,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// If the skill is learned, the status is infinite.
 	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 && !sd->sc.data[SC_SPRITEMABLE] )
 		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, -1);
+
+	if( previous_st ){
+		script_attach_state(previous_st);
+	}
 
 	calculating = 0;
 

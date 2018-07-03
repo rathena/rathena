@@ -12160,10 +12160,9 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 			clif_msg(sd, WORK_IN_PROGRESS);
 			return;
 		}
-#else
+#endif
 		if (!sd->npc_item_flag || !(inf&INF_SELF_SKILL))
 			return;
-#endif
 	}
 
 	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&

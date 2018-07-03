@@ -1929,6 +1929,7 @@ void pop_stack(struct script_state* st, int start, int end);
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data);
 void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
+void script_attach_state(struct script_state* st);
 void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);

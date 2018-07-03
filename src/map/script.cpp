@@ -4236,8 +4236,7 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 /// Attaches script state to possibly attached character and backups it's previous script, if any.
 ///
 /// @param st Script state to attach.
-static void script_attach_state(struct script_state* st)
-{
+void script_attach_state(struct script_state* st){
 	struct map_session_data* sd;
 
 	if(st->rid && (sd = map_id2sd(st->rid))!=NULL)
