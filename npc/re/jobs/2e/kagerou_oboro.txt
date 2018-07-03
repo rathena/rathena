@@ -2091,6 +2091,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 			close;
 		} else {
 			set .@equip_id, getequipid(.@part);
+			set .@equip_refine, getequiprefinerycnt(.@part);
 			if (.@equip_id == 13074 || .@equip_id == 13312) {
 				mes "[Red Leopard Joe]";
 				mes "Is that weapon yours? Let me have a look.";
@@ -2106,7 +2107,6 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		}
 		mes "Joe took a thorough look at the seal.";
 		next;
-		set .@equip_refine, getequiprefinerycnt(.@part);
 		if (.@equip_refine < 7) {
 			mes "[Red Leopard Joe]";
 			mes "Are you that low?";
@@ -2432,6 +2432,8 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		close;
 	} else {
 		set .@equip_id, getequipid(.@part);
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 		if (.@equip_id == 13074 || .@equip_id == 13312) {
 			mes "Analyzing the weapon.";
 			next;
@@ -2452,7 +2454,6 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		mes "That weapon cannot be refined. Where did you get it?";  //custom translation
 		close;
 	}
-	set .@equip_refine, getequiprefinerycnt(.@part);
 	if (.@equip_refine >= 20) {
 		mes "Bzzzt";
 		mes "A warning beep comes from the tool.";
@@ -2461,7 +2462,6 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		mes "This equipment is perfectly refined. Keep it for yourself!";  //custom translation
 		close;
 	}
-	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	if (getequippercentrefinery(.@part) < 100) {
 		mes "This is very well refined equipment. Do you want to continue? Refine skill decreases by 1 if refinement fails.";
 		next;

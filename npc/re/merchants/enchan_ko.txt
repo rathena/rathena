@@ -151,6 +151,9 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			}
 			break;
 		}
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+		copyarray .@card[0], .@equip_card[0], 4;
 		set .@select,1;
 		break;
 	case 3:
@@ -209,6 +212,10 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			set .@equip_id,15056; //Special_Ninja_Suit_
 			break;
 		}
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+		copyarray .@card[0], .@equip_card[0], 4;
+
 		mes "[Artisan Tene]";
 		mes "You want to reset ^44B7BC" + getitemname(.@equip_id) + "^000000?";
 		next;
@@ -252,10 +259,6 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		mes "I cannot work on equipment other than those from my list.";
 		close;
 	}
-
-	set .@equip_refine, getequiprefinerycnt(.@part);
-	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
-	setarray .@card[0], .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
 
 	// Initialization
 	if (.@select == 2) {
