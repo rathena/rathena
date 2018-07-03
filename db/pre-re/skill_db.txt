@@ -1553,3 +1553,4 @@
 10013,0,0,4,0,0x3,0,1,0,yes,0,0x10,0,none,0,0x40,	GD_EMERGENCYCALL,Urgent Call
 10014,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0,0x0,	GD_DEVELOPMENT,Permanent Development
 10015,0,0,4,0,0x3,0,3,0,yes,0,0x10,0,none,0,0x40,	GD_ITEMEMERGENCYCALL,Item Emergency Call
+10016,0,0,0,0,0,0,5,0,no,0,0x10,0,none,0,0x0,	GD_GUILD_STORAGE,Guild Storage Expansion

@@ -46,6 +46,7 @@ int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len)
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
+int guild_checkskill(struct guild *g, int id);
 
 int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -524,6 +525,32 @@ struct guild * inter_guild_fromsql(int guild_id)
 		ShowInfo("Guild loaded (%d - %s)\n", guild_id, g->name);
 
 	return g;
+}
+
+/**
+ * Get the max storage size of a guild.
+ * @param guild_id: Guild ID to search
+ * @return Guild storage max size
+ */
+uint16 inter_guild_storagemax(int guild_id)
+{
+#ifdef OFFICIAL_GUILD_STORAGE
+	struct guild *g = inter_guild_fromsql(guild_id);
+	uint16 max = 0;
+
+	if (!g) {
+		ShowError("Guild %d not found!\n", guild_id);
+		return 0;
+	}
+
+	max = guild_checkskill(g, GD_GUILD_STORAGE);
+	if (max)
+		max *= 100;
+
+	return max;
+#else
+	return MAX_GUILD_STORAGE;
+#endif
 }
 
 // `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
@@ -1164,7 +1191,7 @@ int mapif_parse_CreateGuild(int fd,uint32 account_id,char *name,struct guild_mem
 	g->member[0].modified = GS_MEMBER_MODIFIED;
 
 	// Set default positions
-	g->position[0].mode=0x11;
+	g->position[0].mode = GUILD_PERM_DEFAULT;
 	strcpy(g->position[0].name,"GuildMaster");
 	strcpy(g->position[MAX_GUILDPOSITION-1].name,"Newbie");
 	g->position[0].modified = g->position[MAX_GUILDPOSITION-1].modified = GS_POSITION_MODIFIED;
