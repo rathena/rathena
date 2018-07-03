@@ -43,8 +43,11 @@
 		mes "There's nothing here!";
 		close;
 	}
+	.@equip_id = getequipid(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
 	while(1) {
+		.@equip_refine = getequiprefinerycnt(.@part);
 		mes "[Shadow Blacksmith]";
 		mes "I require " + callfunc("F_InsertComma", .@zeny_cost) + " zeny as a fee for EACH refine attempt.";
 		mes "Choose your Ore and start refining.";
@@ -63,7 +66,7 @@
 			.@mate$[1] = getitemname(.@material[1]);
 		else
 			.@mate$[1] = "^8C8C8C"+ getitemname(.@material[1]) +"^000000";
-		if (getequiprefinerycnt(.@part) > 6 && countitem(.@material[2]))
+		if (.@equip_refine > 6 && countitem(.@material[2]))
 			.@mate$[2] = getitemname(.@material[2]);
 		else
 			.@mate$[2] = "^8C8C8C"+ getitemname(.@material[2]) +"^000000";
@@ -89,7 +92,7 @@
 			mes "[Shadow Blacksmith]";
 			mes "You've cancelled refining.";
 			close;
- 		}
+		}
 		if (!countitem(.@choose)) {
 			mes "[Shadow Blacksmith]";
 			mes "You do not have enough "+ getitemname(.@choose) +".";
@@ -100,7 +103,7 @@
 			mes "You do not have enough zeny.";
 			close;
 		}
-		if (getequiprefinerycnt(.@part) > 9) {
+		if (.@equip_refine > 9) {
 			mes "[Shadow Blacksmith]";
 			mes "Shadow Equipment can be refined to the maximum of 10...";
 			close;
@@ -124,12 +127,16 @@
 				close;
 			}
 		}
-
 		mes "[Shadow Blacksmith]";
 		mes "Well then.. here goes nothing!";
 		next;
 		delitem .@choose,1;
 		Zeny -= .@zeny_cost;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
 		if (getequippercentrefinery(.@part, .@is_enriched) > rand(100)) {
 			successrefitem .@part;
 			mes "[Shadow Blacksmith]";

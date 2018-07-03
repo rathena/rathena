@@ -3604,6 +3604,7 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 // Upgrade Boss Equipment :: malaya_mvpitem
 //============================================================
 ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
+	disable_items;
 	mes "[Bayani]";
 	mes "I will upgrade your armor if you bring one that holds enormous power.";
 	next;
@@ -3782,7 +3783,9 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 		mes "[Bayani]";
 		mes "What is this! You said you wanted to upgrade " + getitemname(.@item) + " but why are you giving me this? You should be wearing " + getitemname(.@item) + ".";
 		close;
-	} else if (getequiprefinerycnt(.@part) < 9) {
+	}
+	.@equip_refine = getequiprefinerycnt(.@part);
+	if (.@equip_refine < 9) {
 		mes "[Bayani]";
 		mes "No, the sturdiness of this item has not been tested yet. It'll have to be at least +9 refined for me to say, 'Oh this is pretty sturdy armor.";
 		close;
@@ -3823,7 +3826,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	delitem 6499,20; //Ancient_Grudge
 
 	// anti-hack
-	if (callfunc("F_IsEquipIDHack", .@part, .@item))
+	if (callfunc("F_IsEquipIDHack", .@part, .@item) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
 		close;
 
 	delequip .@part;
