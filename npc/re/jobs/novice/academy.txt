@@ -12036,7 +12036,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -12069,7 +12074,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -12102,7 +12112,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
