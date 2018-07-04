@@ -6424,7 +6424,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_ODINS_POWER])
 		def -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if( sc->data[SC_ANGRIFFS_MODUS] )
-		def -= 30 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
+		def -= 10 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
 	if(sc->data[SC_STONEHARDSKIN])
 		def += sc->data[SC_STONEHARDSKIN]->val1;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -10838,7 +10838,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ANGRIFFS_MODUS:
 			val2 = 50 + 20 * val1; // atk bonus
-			val3 = 40 + 20 * val1; // Flee reduction.
+			val3 = 25 + 10 * val1; // Flee reduction.
 			val4 = tick/1000; // hp/sp reduction timer
 			tick_time = 1000;
 			break;
@@ -12044,10 +12044,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					damage = status->hp-1;
 				status_damage(NULL,bl,damage,0,0,1);
 			}
-			break;
-		case SC_PYROCLASTIC:
-			if(bl->type == BL_PC)
-				skill_break_equip(bl,bl,EQP_WEAPON,10000,BCT_SELF);
 			break;
 		case SC_RUN:
 		{

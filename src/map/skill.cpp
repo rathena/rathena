@@ -1800,16 +1800,16 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		break;
 	case MH_LAVA_SLIDE:
-		sc_start4(src,bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
+		sc_start4(src,bl, SC_BURNING, 5 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case MH_STAHL_HORN:
-		sc_start(src,bl, SC_STUN, (20 + 4 * (skill_lv-1)), skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src,bl, SC_STUN, 20 + 2 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case MH_NEEDLE_OF_PARALYZE:
-		sc_start(src,bl, SC_PARALYSIS, 40 + (5*skill_lv), skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src,bl, SC_PARALYSIS, 30 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case MH_SILVERVEIN_RUSH:
-		sc_start4(src,bl,SC_STUN,20 + (5*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
+		sc_start4(src,bl,SC_STUN,5 * skill_lv,skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
 		break;
 	case MH_MIDNIGHT_FRENZY:
 		{
