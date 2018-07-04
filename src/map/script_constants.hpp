@@ -6005,6 +6005,13 @@
 	export_constant_npc(JT_4_F_SE_SUN);
 	export_constant_npc(JT_4_M_SE_MOON);
 	export_constant_npc(JT_4_M_SE_STAR);
+	export_constant_npc(JT_4_EP17_KAYA);
+	export_constant_npc(JT_4_EP17_AS);
+	export_constant_npc(JT_4_EP17_ELYUMINA);
+	export_constant_npc(JT_4_EP17_MORNING);
+	export_constant_npc(JT_4_EP17_MIGUEL);
+	export_constant_npc(JT_4_EP17_NIHIL_K);
+	export_constant_npc(JT_4_EP17_MIGUEL_D);
 	#undef export_constant_npc
 
 	/* special effects */
