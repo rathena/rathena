@@ -1611,9 +1611,9 @@ void read_homunculus_expdb(void)
 			if (!hexptbl[j++])
 				break;
 		}
-		if (hexptbl[MAX_LEVEL]) { // Last permitted level have to be 0!
+		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
 			ShowWarning("read_homunculus_expdb: Reached max level in %s [%d]. Remaining lines were not read.\n ",filename[i],MAX_LEVEL);
-			hexptbl[MAX_LEVEL] = 0;
+			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
 		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, filename[i]);
