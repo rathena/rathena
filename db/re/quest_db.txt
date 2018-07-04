@@ -110,7 +110,7 @@
 // Find Professor Worm's Memory
 1214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1215,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
-1216,0,0,0,0,0,0,0,2364,6522,3000,0,0,0,0,0,0,"Getting back Professor Worm's memory"
+1216,0,0,0,0,0,0,0,2364,6542,3000,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1217,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1218,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1219,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
@@ -121,7 +121,7 @@
 1224,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1225,0,2367,15,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1226,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
-1227,0,0,0,0,0,0,0,2364,6522,3000,0,0,0,0,0,0,"Getting back Professor Worm's memory"
+1227,0,0,0,0,0,0,0,2364,6542,3000,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 1228,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Getting back Professor Worm's memory"
 
 // Academy 14.2
