@@ -19,7 +19,7 @@
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Fixed infinate loop. (bugreport:2393) [L0ne_W0lf]
 //= 1.7 Added 10.3 dialog and moved Arpesto to hunter skill quest. [Kisuka]
-//= 1.8 Updated slightly, removed additional emotions from Reiden. [L0ne_W0lf]
+//= 1.8 Updated slightly, removed additional emotions from Reidin. [L0ne_W0lf]
 //= 1.9 Misc. updates. [L0ne_W0lf]
 //= 1.9a Added 'npcskill' command. [Euphy]
 //= 2.0 Updated to match the official script. [Euphy]
@@ -858,6 +858,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "might! Practice Double Strafe";
 				mes "enough and you'll get used to it!";
 				next;
+				tu_archer01 = 10;
 				if(.@eagle == 0){
 					specialeffect2 EF_WIND;
 					// tu_archer01 = 10;
@@ -1148,7 +1149,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 	next;
 	emotion ET_HNG, getnpcid(0, "Arpesto");
 	mes "[Arpesto]";
-	mes "Reiden...";
+	mes "Reidin...";
 	mes "Stop messing around.";
 	mes "Hey there, kid. The real";
 	mes "master of the Icarus Guild";
