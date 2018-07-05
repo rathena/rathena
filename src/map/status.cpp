@@ -669,7 +669,7 @@ void initChangeTables(void)
 	add_sc( AB_PRAEFATIO		, SC_KYRIE		);
 	set_sc_with_vfx( AB_ORATIO	, SC_ORATIO		, EFST_ORATIO		, SCB_NONE );
 	set_sc( AB_LAUDAAGNUS		, SC_LAUDAAGNUS		, EFST_LAUDAAGNUS		, SCB_MAXHP );
-	set_sc( AB_LAUDARAMUS		, SC_LAUDARAMUS		, EFST_LAUDARAMUS		, SCB_CRI );
+	set_sc( AB_LAUDARAMUS		, SC_LAUDARAMUS		, EFST_LAUDARAMUS		, SCB_ALL );
 	set_sc( AB_RENOVATIO		, SC_RENOVATIO		, EFST_RENOVATIO		, SCB_REGEN );
 	set_sc( AB_EXPIATIO		, SC_EXPIATIO		, EFST_EXPIATIO		, SCB_NONE );
 	set_sc( AB_DUPLELIGHT		, SC_DUPLELIGHT		, EFST_DUPLELIGHT		, SCB_NONE );
@@ -4204,6 +4204,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->ignore_mdef_by_race[RC_UNDEAD] += sc->data[SC_GLASTHEIM_ATK]->val1;
 			sd->ignore_mdef_by_race[RC_DEMON] += sc->data[SC_GLASTHEIM_ATK]->val1;
 		}
+		if (sc->data[SC_LAUDARAMUS])
+			sd->bonus.crit_atk_rate += 5 * sc->data[SC_LAUDARAMUS]->val1;
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -6181,8 +6183,6 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical -= sc->data[SC__UNLUCKY]->val2;
 	if(sc->data[SC_BEYONDOFWARCRY])
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
-	if(sc->data[SC_LAUDARAMUS])
-		critical += 5 * sc->data[SC_LAUDARAMUS]->val1;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
