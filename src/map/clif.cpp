@@ -12156,13 +12156,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if (sd->npc_id) {
 #ifdef RENEWAL
-		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM) || !sd->npc_item_flag || !(inf&INF_SELF_SKILL)) {
 			clif_msg(sd, WORK_IN_PROGRESS);
 			return;
 		}
-#endif
+#else
 		if (!sd->npc_item_flag || !(inf&INF_SELF_SKILL))
 			return;
+#endif
 	}
 
 	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&
