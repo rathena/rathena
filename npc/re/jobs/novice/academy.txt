@@ -12039,7 +12039,7 @@ OnMyMobDead:
 		initnpctimer;
 	end;
 
-OnTimer5000:
+OnTimer5000:	// custom timer (there is officially no respawn delay)
 	stopnpctimer;
 	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
@@ -12077,7 +12077,7 @@ OnMyMobDead:
 		initnpctimer;
 	end;
 
-OnTimer5000:
+OnTimer5000:	// custom timer (there is officially no respawn delay)
 	stopnpctimer;
 	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
@@ -12115,7 +12115,7 @@ OnMyMobDead:
 		initnpctimer;
 	end;
 
-OnTimer5000:
+OnTimer5000:	// custom timer (there is officially no respawn delay)
 	stopnpctimer;
 	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
