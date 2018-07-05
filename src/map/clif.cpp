@@ -6054,6 +6054,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 	unsigned char i;
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+	bool spheres_sent;
 
 	nullpo_retv(bl);
 
@@ -6063,6 +6064,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 			sc_display = sd->sc_display;
 			sc_display_count = sd->sc_display_count;
+			spheres_sent = !sd->state.connect_new;
 			}
 			break;
 		case BL_NPC: {
@@ -6070,6 +6072,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 			sc_display = nd->sc_display;
 			sc_display_count = nd->sc_display_count;
+			spheres_sent = true;
 			}
 			break;
 		default:
@@ -6084,11 +6087,20 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
+
+		if( spheres_sent && type >= SC_SPHERE_1 && type <= SC_SPHERE_5 ){
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+			clif_efst_status_change(tbl, bl->id, AREA_WOS, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-		clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
 #endif
+		}else{
+#if PACKETVER > 20120418
+			clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+#else
+			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+#endif
+		}
 	}
 }
 
