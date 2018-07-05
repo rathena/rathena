@@ -19425,13 +19425,12 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// Reset reward from before
-	sd->roulette.claimPrize = false;
-	sd->roulette.prizeStage = 0;
-	sd->roulette.prizeIdx = -1;
-
-	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL)
+	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL){
 		sd->roulette.stage = 0;
+		sd->roulette.claimPrize = false;
+		sd->roulette.prizeStage = 0;
+		sd->roulette.prizeIdx = -1;
+	}
 
 	if( !sd->roulette.stage && sd->roulette_point.bronze <= 0 && sd->roulette_point.silver < 10 && sd->roulette_point.gold < 10 ){
 		result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
