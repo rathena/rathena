@@ -997,15 +997,12 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		struct skill_unit_group* group = skill_id2group(sce->val3);
 
 		if (group) {
-			uint16 skill_id = sce->val2;
-
 			d->dmg_lv = ATK_BLOCK;
-
-			if (--group->val2 <= 0)
-				skill_delunitgroup(group);
 
 			switch (sce->val2) {
 				case MG_SAFETYWALL:
+					if (--group->val2 <= 0)
+						skill_delunitgroup(group);
 #ifdef RENEWAL
 					if ((group->val3 - damage) > 0)
 						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
@@ -1014,6 +1011,8 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 #endif
 					break;
 				case MH_STEINWAND:
+					if (--group->val2 <= 0)
+						skill_delunitgroup(group);
 					if ((group->val3 - damage) > 0)
 						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 					else
