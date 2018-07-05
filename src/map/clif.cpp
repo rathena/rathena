@@ -19425,6 +19425,10 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	if( sd->roulette.tick && DIFF_TICK( sd->roulette.tick, gettick() ) > 0 ){
+		return;
+	}
+
 	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL){
 		sd->roulette.stage = 0;
 		sd->roulette.claimPrize = false;
@@ -19453,6 +19457,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		sd->roulette.prizeStage = sd->roulette.stage;
 		sd->roulette.prizeIdx = rnd()%rd.items[sd->roulette.stage];
 		sd->roulette.claimPrize = true;
+		sd->roulette.tick = gettick() + max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
 
 		if( rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1 ){
 			result = GENERATE_ROULETTE_LOSING;
@@ -19474,6 +19479,10 @@ void clif_parse_roulette_item( int fd, struct map_session_data* sd ){
 
 	if (!battle_config.feature_roulette) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
+		return;
+	}
+
+	if( sd->roulette.tick && DIFF_TICK( sd->roulette.tick, gettick() ) > 0 ){
 		return;
 	}
 

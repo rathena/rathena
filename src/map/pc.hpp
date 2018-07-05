@@ -729,6 +729,7 @@ struct map_session_data {
 		int8 prizeIdx;
 		short prizeStage;
 		bool claimPrize;
+		unsigned int tick;
 	} roulette;
 
 	unsigned short instance_id;
