@@ -73,6 +73,7 @@
 	export_constant(JOB_SUMMER);
 	export_constant(JOB_HANBOK);
 	export_constant(JOB_OKTOBERFEST);
+	export_constant(JOB_SUMMER2);
 
 	export_constant(JOB_NOVICE_HIGH);
 	export_constant(JOB_SWORDMAN_HIGH);

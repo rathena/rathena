@@ -3515,16 +3515,13 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 						vd->cloth_color = 0;
 					if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
 						vd->cloth_color = 0;
-					if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+					if (sd->sc.option&(OPTION_SUMMER|OPTION_SUMMER2) && battle_config.summer_ignorepalette)
 						vd->cloth_color = 0;
 					if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
 						vd->cloth_color = 0;
 					if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
 						vd->cloth_color = 0;
-					if (vd->body_style && (
- 						sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
- 						sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
- 						sd->sc.option&OPTION_OKTOBERFEST))
+					if (vd->body_style && sd->sc.option&OPTION_COSTUME)
  						vd->body_style = 0;
 				}
 				break;
@@ -3549,7 +3546,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 						val = 0;
 					if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
 						val = 0;
-					if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+					if (sd->sc.option&(OPTION_SUMMER|OPTION_SUMMER2) && battle_config.summer_ignorepalette)
 						val = 0;
 					if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
 						val = 0;
@@ -3587,10 +3584,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if (val && (
- 					sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
- 					sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
- 					sd->sc.option&OPTION_OKTOBERFEST))
+				if (val && sd->sc.option&OPTION_COSTUME)
  					val = 0;
  				vd->body_style = val;
 #endif
