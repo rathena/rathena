@@ -24010,6 +24010,28 @@ BUILDIN_FUNC(mail){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(open_roulette){
+#if PACKETVER < 20141022
+	ShowError( "buildin_open_roulette: This command requires PACKETVER 2014-10-22 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !battle_config.feature_roulette ){
+		ShowError( "buildin_open_roulette: Roulette system is disabled.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_roulette_open(sd);
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24662,6 +24684,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "floor", "i"),
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
+	BUILDIN_DEF(open_roulette,"?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

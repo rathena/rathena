@@ -993,12 +993,12 @@ void clif_cashshop_open( struct map_session_data* sd );
 void clif_display_pinfo(struct map_session_data *sd, int type);
 
 /// Roulette
-void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID);
-void clif_parse_RouletteOpen(int fd, struct map_session_data *sd);
-void clif_parse_RouletteInfo(int fd, struct map_session_data *sd);
-void clif_parse_RouletteClose(int fd, struct map_session_data *sd);
-void clif_parse_RouletteGenerate(int fd, struct map_session_data *sd);
-void clif_parse_RouletteRecvItem(int fd, struct map_session_data *sd);
+void clif_roulette_open(struct map_session_data* sd);
+void clif_parse_roulette_open(int fd, struct map_session_data *sd);
+void clif_parse_roulette_info(int fd, struct map_session_data *sd);
+void clif_parse_roulette_close(int fd, struct map_session_data *sd);
+void clif_parse_roulette_generate(int fd, struct map_session_data *sd);
+void clif_parse_roulette_item(int fd, struct map_session_data *sd);
 
 int clif_elementalconverter_list(struct map_session_data *sd);
 
