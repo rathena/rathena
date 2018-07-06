@@ -959,7 +959,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 	if (target->type == BL_PC)
 		sd = (struct map_session_data *)target;
 
-	if ((sc->data[SC_PNEUMA] && (d->flag&(BF_MAGIC | BF_LONG)) == BF_LONG) ||
+	if ((sc->data[SC_PNEUMA] && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG) ||
 		(sc->data[SC_BASILICA] && !status_bl_has_mode(src, MD_STATUS_IMMUNE)) ||
 		(sc->data[SC_ZEPHYR] && !(flag&BF_MAGIC && skill_id) && !(skill_get_inf(skill_id)&(INF_GROUND_SKILL | INF_SELF_SKILL))) ||
 		sc->data[SC__MANHOLE] ||
@@ -993,7 +993,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		}
 	}
 
-	if ((sce = sc->data[SC_SAFETYWALL]) && (d->flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
+	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
 		struct skill_unit_group* group = skill_id2group(sce->val3);
 
 		if (group) {
@@ -1001,8 +1001,10 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 
 			switch (sce->val2) {
 				case MG_SAFETYWALL:
-					if (--group->val2 <= 0)
+					if (--group->val2 <= 0) {
 						skill_delunitgroup(group);
+						break;
+					}
 #ifdef RENEWAL
 					if ((group->val3 - damage) > 0)
 						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
@@ -1011,8 +1013,10 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 #endif
 					break;
 				case MH_STEINWAND:
-					if (--group->val2 <= 0)
+					if (--group->val2 <= 0) {
 						skill_delunitgroup(group);
+						break;
+					}
 					if ((group->val3 - damage) > 0)
 						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 					else
@@ -1074,7 +1078,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		}
 	}
 
-	if (sc->data[SC_NEUTRALBARRIER] && ((d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG || skill_id == CR_ACIDDEMONSTRATION)) {
+	if (sc->data[SC_NEUTRALBARRIER] && ((flag&(BF_LONG|BF_MAGIC)) == BF_LONG || skill_id == CR_ACIDDEMONSTRATION)) {
 		d->dmg_lv = ATK_MISS;
 		return false;
 	}
