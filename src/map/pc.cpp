@@ -10044,8 +10044,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
 	}
 	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_L) {
-		if (sd->status.shield && battle_getcurrentskill(sd->bl) == LG_SHIELDSPELL)
-			unit_skillcastcancel(sd->bl, 0); // Cancel Shield Spell if player swaps shields.
+		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
+			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
 
 		sd->status.shield = sd->weapontype2 = 0;
 		pc_calcweapontype(sd);
