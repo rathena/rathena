@@ -949,12 +949,11 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
  * @return True: Damage inflicted, False: Missed
  **/
 bool battle_check_sc(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 damage, uint16 skill_id, uint16 skill_lv) {
-	struct map_session_data *sd = NULL;
-	struct status_change_entry *sce;
-	int flag = d->flag;
-
 	if (!sc)
 		return true;
+
+	struct map_session_data *sd = nullptr;
+	int flag = d->flag;
 
 	if (target->type == BL_PC)
 		sd = (struct map_session_data *)target;
@@ -969,6 +968,8 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		d->dmg_lv = ATK_BLOCK;
 		return false;
 	}
+
+	struct status_change_entry *sce = nullptr;
 
 	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
 		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
@@ -1047,7 +1048,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 
 	if ((sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_CARDFIX_ATK) && rnd() % 100 < sce->val2) {
 		struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
-		struct block_list *d_bl = NULL;
+		struct block_list *d_bl = nullptr;
 		int delay;
 
 		// different delay depending on skill level [celest]

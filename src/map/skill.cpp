@@ -11664,7 +11664,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	}
 
 	// Skill Unit Setting
-	case MG_SAFETYWALL:
+	case MG_SAFETYWALL: {
+		int dummy = 1;
+
+		if (map_foreachincell(skill_cell_overlap, src->m, x, y, BL_SKILL, skill_id, &dummy, src)) {
+			skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+			return 0; // Don't consume gems if cast on Land Protector
+		}
+	}
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
