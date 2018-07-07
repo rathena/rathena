@@ -6415,7 +6415,8 @@ BUILDIN_FUNC(inarray)
 
 	array_size = script_array_highest_key(st, sd, name, ref) - 1;
 
-	if (array_size < 0) {
+	if (array_size < 0)
+	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -6502,7 +6503,8 @@ BUILDIN_FUNC(countinarray)
 	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
 	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
 
-	if (array_size1 < 0 || array_size2 < 0) {
+	if (array_size1 < 0 || array_size2 < 0)
+	{
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
