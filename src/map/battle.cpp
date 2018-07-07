@@ -1824,10 +1824,6 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 				damage += skill * 10;
 			break;
 		case W_2HSWORD:
-#ifdef RENEWAL
-			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
-				damage += (skill * 3);
-#endif
 			if((skill = pc_checkskill(sd,SM_TWOHAND)) > 0)
 				damage += (skill * 4);
 			break;
