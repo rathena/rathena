@@ -3,8 +3,13 @@
 
 #include "pc.hpp"
 
+#include <map>
+#include <vector>
+
 #include <math.h>
 #include <stdlib.h>
+
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
@@ -17,6 +22,7 @@
 #include "../common/socket.hpp" // session[]
 #include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -53,7 +59,10 @@
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
 
+using namespace rathena;
+
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
+static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
 #define MAX_LEVEL_BASE_EXP 99999999 ///< Max Base EXP for player on Max Base Level
@@ -81,6 +90,19 @@ struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 struct s_job_info job_info[CLASS_COUNT];
+
+struct s_attendance_reward{
+	uint16 item_id;
+	uint16 amount;
+};
+
+struct s_attendance_period{
+	uint32 start;
+	uint32 end;
+	std::map<int,struct s_attendance_reward> rewards;
+};
+
+std::vector<struct s_attendance_period> attendance_periods;
 
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
@@ -11734,6 +11756,10 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 void pc_scdata_received(struct map_session_data *sd) {
 	pc_inventory_rentals(sd); // Needed here to remove rentals that have Status Changes after chrif_load_scdata has finished
 
+	if( pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
+		clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+	}
+
 	sd->state.pc_loaded = true;
 
 	if (sd->state.connect_new == 0 && sd->fd) { // Character already loaded map! Gotta trigger LoadEndAck manually.
@@ -12541,6 +12567,255 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
 
+struct s_attendance_period* pc_attendance_period(){
+	uint32 date = date_get(DT_YYYYMMDD);
+
+	for( struct s_attendance_period& period : attendance_periods ){
+		if( period.start <= date && period.end >= date ){
+			return &period;
+		}
+	}
+
+	return nullptr;
+}
+
+bool pc_attendance_enabled(){
+	// Check if the attendance feature is disabled
+	if( !battle_config.feature_attendance ){
+		return false;
+	}
+
+	// Check if there is a running attendance period
+	return pc_attendance_period() != nullptr;
+}
+
+static inline bool pc_attendance_rewarded_today( struct map_session_data* sd ){
+	return pc_readreg2( sd, ATTENDANCE_DATE_VAR ) >= date_get(DT_YYYYMMDD);
+}
+
+int32 pc_attendance_counter( struct map_session_data* sd ){
+	struct s_attendance_period* period = pc_attendance_period();
+
+	// No running attendance period
+	if( period == nullptr ){
+		return 0;
+	}
+
+	// Get the counter for the current period
+	int counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+
+	// Check if we have a remaining counter from a previous period
+	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){
+		// Reset the counter to zero
+		pc_setreg2( sd, ATTENDANCE_COUNT_VAR, 0 );
+
+		return 0;
+	}
+
+	return 10 * counter + ( ( pc_attendance_rewarded_today(sd) ) ? 1 : 0 );
+}
+
+void pc_attendance_claim_reward( struct map_session_data* sd ){
+	// Check if the attendance feature is disabled
+	if( !pc_attendance_enabled() ){
+		return;
+	}
+
+	// Check if the user already got his reward today
+	if( pc_attendance_rewarded_today( sd ) ){
+		return;
+	}
+
+	int32 attendance_counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+
+	attendance_counter += 1;
+
+	struct s_attendance_period* period = pc_attendance_period();
+
+	if( period == nullptr ){
+		return;
+	}
+
+	if( period->rewards.size() < attendance_counter ){
+		return;
+	}
+
+	pc_setreg2( sd, ATTENDANCE_DATE_VAR, date_get(DT_YYYYMMDD) );
+	pc_setreg2( sd, ATTENDANCE_COUNT_VAR, attendance_counter );
+
+	if( save_settings&CHARSAVE_ATTENDANCE )
+		chrif_save(sd, CSAVE_NORMAL);
+
+	struct s_attendance_reward& reward = period->rewards.at( attendance_counter - 1 );
+
+	struct mail_message msg;
+
+	memset( &msg, 0, sizeof( struct mail_message ) );
+
+	msg.dest_id = sd->status.char_id;
+	safestrncpy( msg.send_name, msg_txt( sd, 788 ), NAME_LENGTH );
+	safesnprintf( msg.title, MAIL_TITLE_LENGTH, msg_txt( sd, 789 ), attendance_counter );
+	safesnprintf( msg.body, MAIL_BODY_LENGTH, msg_txt( sd, 790 ), attendance_counter );
+
+	msg.item[0].nameid = reward.item_id;
+	msg.item[0].amount = reward.amount;
+	msg.item[0].identify = 1;
+
+	msg.status = MAIL_NEW;
+	msg.type = MAIL_INBOX_NORMAL;
+	msg.timestamp = time(NULL);
+
+	intif_Mail_send(0, &msg);
+
+	clif_attendence_response( sd, attendance_counter );
+}
+
+void pc_attendance_load( std::string path ){
+	YAML::Node root;
+
+	try{
+		root = YAML::LoadFile( path );
+	}catch( ... ){
+		ShowError( "pc_attendance_load: Failed to read attendance configuration file \"%s\".\n", path.c_str() );
+		return;
+	}
+
+	if( root["Attendance"] ){
+		YAML::Node attendance = root["Attendance"];
+
+		for( const auto &periodNode : attendance ){
+			if( !periodNode["Start"].IsDefined() ){
+				ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", periodNode.Mark().line );
+				continue;
+			}
+
+			YAML::Node startNode = periodNode["Start"];
+
+			if( !periodNode["End"].IsDefined() ){
+				ShowError( "pc_attendance_load: Missing \"End\" for period in line %d.\n", periodNode.Mark().line );
+				continue;
+			}
+
+			YAML::Node endNode = periodNode["End"];
+
+			if( !periodNode["Rewards"].IsDefined() ){
+				ShowError( "pc_attendance_load: Missing \"Rewards\" for period in line %d.\n", periodNode.Mark().line );
+				continue;
+			}
+
+			YAML::Node rewardsNode = periodNode["Rewards"];
+
+			uint32 start = startNode.as<uint32>();
+			uint32 end = endNode.as<uint32>();
+
+			// If the period is outdated already, we do not even bother parsing
+			if( end < date_get( DT_YYYYMMDD ) ){
+				continue;
+			}
+
+			// Collision detection
+			bool collision = false;
+
+			for( struct s_attendance_period& period : attendance_periods ){
+				// Check if start is inside another period
+				if( period.start <= start && start <= period.end ){
+					ShowError( "pc_attendance_load: period start %u intersects with period %u-%u.\n", start, period.start, period.end );
+					collision = true;
+					break;
+				}
+
+				// Check if end is inside another period
+				if( period.start <= end && end <= period.end ){
+					ShowError( "pc_attendance_load: period end %u intersects with period %u-%u.\n", start, period.start, period.end );
+					collision = true;
+					break;
+				}
+			}
+
+			if( collision ){
+				continue;
+			}
+
+			struct s_attendance_period period;
+
+			period.start = start;
+			period.end = end;
+
+			for( const auto& rewardNode : rewardsNode ){
+				if( !rewardNode["Day"].IsDefined() ){
+					ShowError( "pc_attendance_load: No day defined for node in line %d.\n", rewardNode.Mark().line );
+					continue;
+				}
+
+				uint32 day = rewardNode["Day"].as<uint32>();
+
+				if( !rewardNode["ItemId"].IsDefined() ){
+					ShowError( "pc_attendance_load: No reward defined for day %d.\n", day );
+					continue;
+				}
+
+				YAML::Node itemNode = rewardNode["ItemId"];
+
+				uint16 item_id = itemNode.as<uint16>();
+
+				if( item_id == 0 || !itemdb_exists( item_id ) ){
+					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day );
+					continue;
+				}
+
+				uint16 amount;
+
+				if( rewardNode["Amount"] ){
+					amount = rewardNode["Amount"].as<uint16>();
+
+					if( amount == 0 ){
+						ShowError( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day );
+						amount = 1;
+					}else if( amount > MAX_AMOUNT ){
+						ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day, MAX_AMOUNT );
+						amount = MAX_AMOUNT;
+					}
+				}else{
+					amount = 1;
+				}
+
+				struct s_attendance_reward* reward = &period.rewards[day - 1];
+
+				reward->item_id = item_id;
+				reward->amount = amount;
+			}
+
+			bool missing_day = false;
+
+			for( int day = 0; day < period.rewards.size(); day++ ){
+				if( !util::map_exists( period.rewards, day ) ){
+					ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
+					missing_day = true;
+					break;
+				}
+			}
+
+			if( missing_day ){
+				continue;
+			}
+
+			attendance_periods.push_back( period );
+		}
+	}
+}
+
+void pc_read_attendance(){
+	char path[1024];
+
+	sprintf( path, "%s/%sattendance.yml", db_path, DBPATH );
+
+	pc_attendance_load( path );
+
+	sprintf( path, "%s/%s/attendance.yml", db_path, DBIMPORT );
+
+	pc_attendance_load( path );
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
@@ -12552,6 +12827,8 @@ void do_final_pc(void) {
 	ers_destroy(pc_itemgrouphealrate_ers);
 	ers_destroy(num_reg_ers);
 	ers_destroy(str_reg_ers);
+
+	attendance_periods.clear();
 }
 
 void do_init_pc(void) {
@@ -12560,6 +12837,7 @@ void do_init_pc(void) {
 
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
+	pc_read_attendance();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");

@@ -3135,6 +3135,7 @@ DT_DAYOFMONTH - Day of the current month
 DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
 DT_YEAR - Year
 DT_DAYOFYEAR - Day of the year
+DT_YYYYMMDD - current date in the form YYYYMMDD
 
 It will only return numbers. If another type is supplied -1 will be returned.
 

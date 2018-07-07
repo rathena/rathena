@@ -46,6 +46,8 @@ enum sc_type : int16;
 #define JOBCHANGE3RD_VAR "jobchange_level_3rd"
 #define TKMISSIONID_VAR "TK_MISSION_ID"
 #define TKMISSIONCOUNT_VAR "TK_MISSION_COUNT"
+#define ATTENDANCE_DATE_VAR "#AttendanceDate"
+#define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 85 since Expanded Super Baby needs it.
@@ -1336,5 +1338,9 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
+
+bool pc_attendance_enabled();
+int32 pc_attendance_counter( struct map_session_data* sd );
+void pc_attendance_claim_reward( struct map_session_data* sd );
 
 #endif /* _PC_HPP_ */
