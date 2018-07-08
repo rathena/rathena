@@ -9951,7 +9951,7 @@ void clif_msg_color( struct map_session_data *sd, uint16 msg_id, uint32 color ){
 	WFIFOHEAD(fd, packet_len(0x9cd));
 	WFIFOW(fd, 0) = 0x9cd;
 	WFIFOW(fd, 2) = msg_id;
-	WFIFOW(fd, 4) = util::invert_rgb_color(color);
+	WFIFOL(fd, 4) = color;
 
 	WFIFOSET(fd, packet_len(0x9cd));
 }
@@ -20333,7 +20333,7 @@ void clif_parse_open_ui( int fd, struct map_session_data* sd ){
 			if( pc_attendance_enabled() ){
 				clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
-				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, COLOR_RED );
+				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
 			}
 			break;
 	}

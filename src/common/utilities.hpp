@@ -35,10 +35,6 @@ namespace rathena {
 				return nullptr;
 			}
 		}
-
-		inline uint32 invert_rgb_color( uint32 color ){
-			return ( ( color & 0xFF ) << 16) | ( color & 0xFF00 ) | ( ( color & 0xFF0000 ) >> 16 );
-		}
 	}
 }
 
