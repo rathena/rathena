@@ -4661,17 +4661,9 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 		case MF_NIGHTENABLED:		map[m].flag.nightenabled = status; break;
 		case MF_NOBASEEXP:
 			map[m].flag.nobaseexp = status;
-			if (status && map_getmapflag(m, MF_BEXP)) {
-				map_setmapflag(m, MF_BEXP, false);
-				ShowWarning("map_setmapflag: Unable to set BEXP and No Base EXP flags for the same map! Removing BEXP flag from %s.\n", map[m].name);
-			}
 			break;
 		case MF_NOJOBEXP:
 			map[m].flag.nojobexp = status;
-			if (status && map_getmapflag(m, MF_JEXP)) {
-				map_setmapflag(m, MF_JEXP, false);
-				ShowWarning("map_setmapflag: Unable to set JEXP and No Job EXP flags for the same map! Removing JEXP flag from %s.\n", map[m].name);
-			}
 			break;
 		case MF_NOMOBLOOT:			map[m].flag.nomobloot = status; break;
 		case MF_NOMVPLOOT:			map[m].flag.nomvploot = status; break;
