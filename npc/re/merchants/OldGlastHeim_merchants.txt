@@ -89,9 +89,11 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 	}
 	mes "[Hugin's Buttler]";
 	mes "The boots have been upgraded as you want.";
-	delequip EQI_SHOES;
-	delitem 6607,5;// Temporal_Crystal
-	getitem .@equip_type[.@s],1;
+	if (getequipid(EQI_SHOES) == 2499) {
+		delequip EQI_SHOES;
+		delitem 6607,5;// Temporal_Crystal
+		getitem .@equip_type[.@s],1;
+	}
 	close;
 }
 
@@ -164,16 +166,20 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	case 22111:	// Modified_DEX_Boots
 	case 22112:	// Modified_LUK_Boots
 		.@equip_name$ = getequipname(EQI_SHOES);
-		.@card2 = getequipcardid(EQI_SHOES,2);
-		.@card3 = getequipcardid(EQI_SHOES,3);
+		setarray .@card[0],
+			getequipcardid(EQI_SHOES,0),
+			getequipcardid(EQI_SHOES,1),
+			getequipcardid(EQI_SHOES,2),
+			getequipcardid(EQI_SHOES,3);
+		copyarray .@equip_card[0], .@card[0], 4;	// for final check
 		.@equip_refine = getequiprefinerycnt(EQI_SHOES);
 
-		if (.@card2 > 0) {
+		if (.@card[2] > 0) {
 			mes "[Hugin's Magic master]";
 			mes "These boots have already passed the enchanting limit. We can't enchant them any more.";
 			close;
 		}
-		if (.@card3 == 0) {// 4th slot 1st try enchanting
+		if (.@card[3] == 0) {// 4th slot 1st try enchanting
 			.@cost = .@enchant_cost[0];
 			mes "[Hugin's Magic Master]";
 			mes "Want to enchant ^0000FF" + .@equip_name$ + "^000000?";
@@ -185,12 +191,12 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 				mes "Ok, come back when you are ready.";
 				close;
 			}
-			.@card3 = .@enchant_1[.@s];
+			.@card[3] = .@enchant_1[.@s];
 			.@string$ = "enchant number ^6300001^000000.";
 		}
 		else {
 			for ( .@enchant_num = 1; .@enchant_num < 5; .@enchant_num++ ) {
-				for ( .@enchant_type = 0; .@enchant_type < 6 && .@card3 != getd( ".@enchant_" + .@enchant_num + "[" + .@enchant_type + "]" ); .@enchant_type++ )
+				for ( .@enchant_type = 0; .@enchant_type < 6 && .@card[3] != getd( ".@enchant_" + .@enchant_num + "[" + .@enchant_type + "]" ); .@enchant_type++ )
 					continue;
 				if (.@enchant_type < 6)
 					break;
@@ -204,13 +210,13 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 
 			mes "[Hugin's Magic Master]";
 			if (.@enchant_num == 4) {
-				.@card2 = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power, Runaway_Magic, Speed_Of_Light, Muscle_Fool, Hawkeye, Lucky_Day
+				.@card[2] = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power, Runaway_Magic, Speed_Of_Light, Muscle_Fool, Hawkeye, Lucky_Day
 				.@string$ = "^990000Bonus effect ^000000 upgrade.";
 				mes "4th slot is already upgraded to the final option. Would you like a random bonus effect for the 3rd slot? You need ^0000ff" + .@cost + "^000000 Coagulated Spell items.";
 			}
 			else {
 				.@number = .@enchant_num + 1;
-				.@card3 = getd( ".@enchant_" + (.@enchant_num+1) + "[" + .@enchant_type + "]" );
+				.@card[3] = getd( ".@enchant_" + (.@enchant_num+1) + "[" + .@enchant_type + "]" );
 				.@string$ = "enchant number ^630000" + .@number + "^000000.";
 				mes "Enchanting ^0000FF" + .@equip_name$ + "^000000's 4th slot as ^0000FF" + .@number + "^000000 level effect. Requires ^0000FF" + .@cost + "^000000 Coagulated Spell items.";
 			}
@@ -228,10 +234,15 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		}
 		specialeffect2 EF_REPAIRWEAPON;
 		delitem 6608,.@cost;// Coagulated_Spell
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@equip_refine))
+			close;
+
 		delequip EQI_SHOES;
 		mes "[Hugin's Magic Master]";
 		mes "Trying for " + .@string$;
-		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card2,.@card3;
+		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card[2],.@card[3];
 		close;
 	default:
 		mes "[Hugin's Magic Master]";
@@ -288,6 +299,7 @@ glast_01,210,270,0	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 	}
 
 S_Slot:
+	.@equip_id = getequipid(EQI_SHOES);
 	mes "[Hugin's Craftsman]";
 	mes "And ^FF0000all enchant or refine rates will be lost if you fail this.^000000";
 	mes "Still want to risk it?";
@@ -312,16 +324,18 @@ S_Slot:
 		close;
 	}
 	delitem 6607,5;// Temporal_Crystal
-	delequip EQI_SHOES;
-	if (rand(1,100) < 50) {
+	if (getequipid(EQI_SHOES) == .@equip_id) {
+		delequip EQI_SHOES;
+		if (rand(1,100) < 50) {
+			mes "[Hugin's Craftsman]";
+			mes "Arrggg, we failed. Better luck next time.";
+			specialeffect2 EF_PHARMACY_FAIL;
+			close;
+		}
 		mes "[Hugin's Craftsman]";
-		mes "Arrggg, we failed. Better luck next time.";
-		specialeffect2 EF_PHARMACY_FAIL;
-		close;
+		mes "Successful! Here you go.";
+		specialeffect2 EF_MAXPOWER;
+		getitem getarg(0),1;
 	}
-	mes "[Hugin's Craftsman]";
-	mes "Successful! Here you go.";
-	specialeffect2 EF_MAXPOWER;
-	getitem getarg(0),1;
 	close;
 }

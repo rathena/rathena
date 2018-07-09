@@ -236,7 +236,7 @@ yuno,157,205,4	script	Juno Artisan#juno	54,{
 		close;
 	case 4:
 		mes "[Artisan]";
-		mes "Although Juno is known as a city of Sages, I hope you understand that ordinary people live and propser here as well. Please enjoy the unique atmosphere that Juno has to offer.";
+		mes "Although Juno is known as a city of Sages, I hope you understand that ordinary people live and prosper here as well. Please enjoy the unique atmosphere that Juno has to offer.";
 		close;
 	}
 }

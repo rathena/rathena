@@ -1,40 +1,40 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
 #include "char.hpp"
 
-#include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/mapindex.h"
-#include "../common/mmo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../common/cli.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/cli.hpp"
+#include "../common/core.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/mmo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
+#include "char_clif.hpp"
+#include "char_cnslif.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_elemental.hpp"
 #include "int_guild.hpp"
 #include "int_homun.hpp"
 #include "int_mail.hpp"
 #include "int_mercenary.hpp"
-#include "int_elemental.hpp"
 #include "int_party.hpp"
 #include "int_storage.hpp"
-#include "inter.hpp"
-#include "char_logif.hpp"
-#include "char_mapif.hpp"
-#include "char_cnslif.hpp"
-#include "char_clif.hpp"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor
@@ -738,7 +738,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i,j, offset = 0;
+	int i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
 
@@ -748,24 +748,28 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 			tablename = schema_config.inventory_db;
 			selectoption = "char_id";
 			storage = p->u.items_inventory;
+			max2 = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
 			printname = "Cart";
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			storage = p->u.items_cart;
+			max2 = MAX_CART;
 			break;
 		case TABLE_STORAGE:
 			printname = "Storage";
 			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			storage = p->u.items_storage;
+			max2 = inter_premiumStorage_getMax(p->stor_id);
 			break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
 			selectoption = "guild_id";
 			storage = p->u.items_guild;
+			max2 = inter_guild_storagemax(id);
 			break;
 		default:
 			ShowError("Invalid table name!\n");
@@ -776,7 +780,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	p->id = id;
 	p->type = tableswitch;
 	p->stor_id = stor_id;
-	p->max_amount = inter_premiumStorage_getMax(p->stor_id);
+	p->max_amount = max2;
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if (stmt == NULL) {
@@ -1456,7 +1460,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if (start_job != JOB_NOVICE && start_job != JOB_SUMMONER)
+	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) && 
+		!(start_job == JOB_SUMMONER && (charserv_config.allowed_job_flag&2)))
 		return -2; // Invalid job
 
 	// Check for Doram based information.
@@ -2064,10 +2069,14 @@ int char_loadName(uint32 char_id, char* name){
 		safestrncpy(name, data, NAME_LENGTH);
 		return 1;
 	}
+#if PACKETVER < 20180221
 	else
 	{
 		safestrncpy(name, charserv_config.char_config.unknown_char_name, NAME_LENGTH);
 	}
+#else
+	name[0] = '\0';
+#endif
 	return 0;
 }
 
@@ -2449,7 +2458,7 @@ bool char_checkdb(void){
 	}
 	//checking homunculus_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize`,`autofeed` "
 		" FROM `%s` LIMIT 1;", schema_config.homunculus_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2732,7 +2741,7 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
-	// See const.h to change the default values
+	// See const.hpp to change the default values
 	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
@@ -2775,6 +2784,12 @@ void char_set_defaults(){
 	charserv_config.clan_remove_inactive_days = 14;
 	charserv_config.mail_return_days = 14;
 	charserv_config.mail_delete_days = 14;
+
+#if defined(RENEWAL) && PACKETVER >= 20151001
+	charserv_config.allowed_job_flag = 3;
+#else
+	charserv_config.allowed_job_flag = 1;
+#endif
 }
 
 /**
@@ -3053,6 +3068,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_delete_days") == 0) {
 			charserv_config.mail_delete_days = atoi(w2);
+		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
+			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}

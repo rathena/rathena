@@ -1,12 +1,5 @@
-/**
- * @file login.c
- * Module purpose is to read configuration for login-server and handle accounts,
- *  and also to synchronize all login interfaces: loginchrif, loginclif, logincnslif.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
 #include "login.hpp"
@@ -15,26 +8,27 @@
 #include <string.h>
 #include <string>
 
-#include "../common/core.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/md5calc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h" //ip2str
-#include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../common/msg_conf.h"
-#include "../common/cli.h"
-#include "../common/utils.h"
-#include "../common/mmo.h"
-#include "../config/core.h"
+#include "../common/cli.hpp"
+#include "../common/core.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/md5calc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp" //ip2str
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
+#include "../config/core.hpp"
+
 #include "account.hpp"
 #include "ipban.hpp"
-#include "loginlog.hpp"
-#include "loginclif.hpp"
 #include "loginchrif.hpp"
+#include "loginclif.hpp"
 #include "logincnslif.hpp"
+#include "loginlog.hpp"
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf

@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _ITEMDB_HPP_
 #define _ITEMDB_HPP_
 
-#include "../common/db.h"
-#include "../common/mmo.h" // ITEM_NAME_LENGTH
+#include "../common/db.hpp"
+#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
@@ -731,6 +731,7 @@ enum e_random_item_group {
 	IG_CHRISTMAS_BOX,
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
+	IG_PRIZEOFHERO,
 };
 
 /// Enum for bound/sell restricted selling

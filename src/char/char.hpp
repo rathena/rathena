@@ -1,13 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
-#include "../config/core.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/msg_conf.h"
-#include "../common/mmo.h"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../config/core.hpp"
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
@@ -185,6 +185,8 @@ struct CharServ_Config {
 	int clan_remove_inactive_days;
 	int mail_return_days;
 	int mail_delete_days;
+
+	int allowed_job_flag;
 };
 extern struct CharServ_Config charserv_config;
 

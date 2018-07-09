@@ -1,18 +1,18 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mapreg.hpp"
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/ers.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/sql.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "map.hpp" // mmysql_handle
 #include "script.hpp"

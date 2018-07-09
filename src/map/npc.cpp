@@ -1,35 +1,37 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "npc.hpp"
 
-#include <stdlib.h>
 #include <errno.h>
+#include <map>
+#include <stdlib.h>
+#include <vector>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
-#include "../common/db.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "map.hpp"
-#include "log.hpp"
+#include "battle.hpp"
+#include "chat.hpp"
 #include "clif.hpp"
 #include "date.hpp" // days of week enum
+#include "guild.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mob.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "instance.hpp"
-#include "chat.hpp"
 #include "script.hpp" // script_config
-#include "guild.hpp"
-#include "battle.hpp"
-#include "mob.hpp"
-#include "log.hpp"
 
 struct npc_data* fake_nd;
 
@@ -108,12 +110,13 @@ static DBMap *npc_path_db;
 static struct view_data npc_viewdb[MAX_NPC_CLASS];
 static struct view_data npc_viewdb2[MAX_NPC_CLASS2_END-MAX_NPC_CLASS2_START];
 
-static struct script_event_s
-{	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
-	struct event_data *event[UCHAR_MAX];
-	const char *event_name[EVENT_NAME_LENGTH];
-	uint8 event_count;
-} script_event[NPCE_MAX];
+struct script_event_s{
+	struct event_data *event;
+	const char *event_name;
+};
+
+// Holds pointers to the commonly executed scripts for speedup. [Skotlex]
+std::map<enum npce_event, std::vector<struct script_event_s>> script_event;
 
 struct view_data* npc_get_viewdata(int class_)
 {	//Returns the viewdata for normal npc classes.
@@ -263,7 +266,7 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 /**
- * For the Secure NPC Timeout option (check config/Secure.h) [RR]
+ * For the Secure NPC Timeout option (check src/config/secure.hpp) [RR]
  **/
 #ifdef SECURE_NPCTIMEOUT
 /**
@@ -2351,8 +2354,8 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	}
 
 	if( (dnd=npc_name2id(nd->exname)) != NULL ) {// duplicate unique name, generate new one
-		char this_mapname[32];
-		char other_mapname[32];
+		char this_mapname[MAP_NAME_LENGTH_EXT];
+		char other_mapname[MAP_NAME_LENGTH_EXT];
 		int i = 0;
 
 		do {
@@ -3770,7 +3773,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	short m,x,y,xs = -1, ys = -1;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
-	int ai; // mob_ai
+	int ai = AI_NONE; // mob_ai
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
@@ -3937,7 +3940,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	enum e_mapflag mapflag;
 
 	// w1=<mapname>
-	if (sscanf(w1, "%31[^,]", mapname) != 1) {
+	if (sscanf(w1, "%15[^,]", mapname) != 1) {
 		ShowError("npc_parse_mapflag: Invalid mapflag definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
@@ -4229,10 +4232,10 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
-			char mapname[MAP_NAME_LENGTH*2]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
+			char mapname[MAP_NAME_LENGTH_EXT];
 			int count2;
 
-			count2 = sscanf(w1,"%23[^,],%6hd,%6hd[^,]",mapname,&x,&y);
+			count2 = sscanf(w1,"%15[^,],%6hd,%6hd[^,]",mapname,&x,&y);
 			
 			if ( count2 < 1 ) {
 				ShowError("npc_parsesrcfile: Invalid script definition in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
@@ -4313,18 +4316,21 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 	return 1;
 }
 
-int npc_script_event(struct map_session_data* sd, enum npce_event type)
-{
-	int i;
+int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	if (type == NPCE_MAX)
 		return 0;
 	if (!sd) {
 		ShowError("npc_script_event: NULL sd. Event Type %d\n", type);
 		return 0;
 	}
-	for (i = 0; i<script_event[type].event_count; i++)
-		npc_event_sub(sd,script_event[type].event[i],script_event[type].event_name[i]);
-	return i;
+
+	std::vector<struct script_event_s>& vector = script_event[type];
+
+	for( struct script_event_s& evt : vector ){
+		npc_event_sub( sd, evt.event, evt.event_name );
+	}
+
+	return vector.size();
 }
 
 const char *npc_get_script_event_name(int npce_index)
@@ -4358,6 +4364,8 @@ void npc_read_event_script(void)
 {
 	int i;
 
+	script_event.clear();
+
 	for (i = 0; i < NPCE_MAX; i++)
 	{
 		DBIterator* iter;
@@ -4367,25 +4375,19 @@ void npc_read_event_script(void)
 
 		safesnprintf(name,EVENT_NAME_LENGTH,"::%s", npc_get_script_event_name(i));
 
-		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);
 		for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 		{
 			const char* p = key.str;
 			struct event_data* ed = (struct event_data*)db_data2ptr(data);
-			unsigned char count = script_event[i].event_count;
 
-			if( count >= ARRAYLENGTH(script_event[i].event) )
-			{
-				ShowWarning("npc_read_event_script: too many occurences of event '%s'!\n", npc_get_script_event_name(i));
-				break;
-			}
+			if( (p=strchr(p,':')) && strcmpi(name,p)==0 ){
+				struct script_event_s evt;
 
-			if( (p=strchr(p,':')) && p && strcmpi(name,p)==0 )
-			{
-				script_event[i].event[count] = ed;
-				script_event[i].event_name[count] = key.str;
-				script_event[i].event_count++;
+				evt.event = ed;
+				evt.event_name = key.str;
+
+				script_event[static_cast<enum npce_event>(i)].push_back(evt);
 			}
 		}
 		dbi_destroy(iter);
@@ -4394,7 +4396,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%d '%s' events.\n", script_event[i].event_count, npc_get_script_event_name(i));
+			ShowInfo("%d '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
 	}
 }
 
@@ -4551,6 +4553,7 @@ void do_clear_npc(void) {
  *------------------------------------------*/
 void do_final_npc(void) {
 	npc_clear_pathlist();
+	script_event.clear();
 	ev_db->destroy(ev_db, NULL);
 	npcname_db->destroy(npcname_db, NULL);
 	npc_path_db->destroy(npc_path_db, NULL);
@@ -4638,7 +4641,6 @@ void do_init_npc(void){
 		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	// set up the events cache
-	memset(script_event, 0, sizeof(script_event));
 	npc_read_event_script();
 
 #if PACKETVER >= 20131223

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _MAP_HPP_
@@ -6,26 +6,13 @@
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/mmo.h"
-#include "../common/mapindex.h"
-#include "../common/db.h"
-#include "../common/msg_conf.h"
-
-#include "../config/core.h"
-
-extern "C" {
-	//Options read in cli (c-linkage for now)
-	extern const char*INTER_CONF_NAME;
-	extern const char*LOG_CONF_NAME;
-	extern const char*MAP_CONF_NAME;
-	extern const char*BATTLE_CONF_FILENAME;
-	extern const char*ATCOMMAND_CONF_FILENAME;
-	extern const char*SCRIPT_CONF_NAME;
-	extern const char*MSG_CONF_NAME_EN;
-	extern const char*GRF_PATH_FILENAME;
-}
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/db.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../config/core.hpp"
 
 struct npc_data;
 struct item_data;
@@ -102,6 +89,7 @@ enum e_mapid {
 	MAPID_GANGSI,
 	MAPID_OKTOBERFEST,
 	MAPID_SUMMONER,
+	MAPID_SUMMER2,
 //2-1 Jobs
 	MAPID_SUPER_NOVICE = JOBL_2_1|MAPID_NOVICE,
 	MAPID_KNIGHT,
@@ -184,6 +172,7 @@ enum e_mapid {
 	MAPID_ARCH_BISHOP,
 	MAPID_MECHANIC,
 	MAPID_GUILLOTINE_CROSS,
+	MAPID_STAR_EMPEROR,
 //3-2 Jobs
 	MAPID_ROYAL_GUARD = JOBL_THIRD|MAPID_CRUSADER,
 	MAPID_SORCERER,
@@ -191,6 +180,7 @@ enum e_mapid {
 	MAPID_SURA,
 	MAPID_GENETIC,
 	MAPID_SHADOW_CHASER,
+	MAPID_SOUL_REAPER,
 //Trans 3-1 Jobs
 	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|MAPID_LORD_KNIGHT,
 	MAPID_WARLOCK_T,
@@ -213,6 +203,7 @@ enum e_mapid {
 	MAPID_BABY_BISHOP,
 	MAPID_BABY_MECHANIC,
 	MAPID_BABY_CROSS,
+	MAPID_BABY_STAR_EMPEROR,
 //Baby 3-2 Jobs
 	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
@@ -220,6 +211,7 @@ enum e_mapid {
 	MAPID_BABY_SURA,
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_CHASER,
+	MAPID_BABY_SOUL_REAPER,
 };
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
@@ -325,6 +317,8 @@ enum e_race2 : uint8{
 	RC2_MANUK,
 	RC2_SPLENDIDE,
 	RC2_SCARABA,
+	RC2_OGH_ATK_DEF,
+	RC2_OGH_HIDDEN,
 	RC2_MAX
 };
 
@@ -440,6 +434,8 @@ enum _sp {
 	SP_ROULETTE_BRONZE = 128,
 	SP_ROULETTE_SILVER = 129,
 	SP_ROULETTE_GOLD = 130,
+	SP_CASHPOINTS, SP_KAFRAPOINTS,
+	SP_PCDIECOUNTER, SP_COOKMASTERY,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -495,7 +491,7 @@ enum _sp {
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
-	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, //2088-2091
+	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY //2088-2092
 };
 
 enum _look {
@@ -1012,7 +1008,7 @@ void map_flags_init(void);
 
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);
-void map_iwall_remove(const char *wall_name);
+bool map_iwall_remove(const char *wall_name);
 
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int16 m); // [Wizputer]
@@ -1064,25 +1060,7 @@ typedef struct elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
-
-#ifdef BETA_THREAD_TEST
-
-extern char default_codepage[32];
-extern int map_server_port;
-extern char map_server_ip[32];
-extern char map_server_id[32];
-extern char map_server_pw[32];
-extern char map_server_db[32];
-
-extern char log_db_ip[32];
-extern int log_db_port;
-extern char log_db_id[32];
-extern char log_db_pw[32];
-extern char log_db_db[32];
-
-#endif
-
-#include "../common/sql.h"
+#include "../common/sql.hpp"
 
 extern int db_use_sqldbs;
 

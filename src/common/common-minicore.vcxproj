@@ -19,43 +19,39 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cbasetypes.h" />
-    <ClInclude Include="cli.h" />
-    <ClInclude Include="conf.h" />
-    <ClInclude Include="core.h" />
-    <ClInclude Include="des.h" />
-    <ClInclude Include="grfio.h" />
-    <ClInclude Include="malloc.h" />
-    <ClInclude Include="mapindex.h" />
-    <ClInclude Include="md5calc.h" />
-    <ClInclude Include="mmo.h" />
-    <ClInclude Include="msg_conf.h" />
-    <ClInclude Include="nullpo.h" />
-    <ClInclude Include="raconf.h" />
-    <ClInclude Include="random.h" />
-    <ClInclude Include="showmsg.h" />
-    <ClInclude Include="strlib.h" />
-    <ClInclude Include="utils.h" />
+    <ClInclude Include="cbasetypes.hpp" />
+    <ClInclude Include="cli.hpp" />
+    <ClInclude Include="conf.hpp" />
+    <ClInclude Include="core.hpp" />
+    <ClInclude Include="des.hpp" />
+    <ClInclude Include="grfio.hpp" />
+    <ClInclude Include="malloc.hpp" />
+    <ClInclude Include="mapindex.hpp" />
+    <ClInclude Include="md5calc.hpp" />
+    <ClInclude Include="mmo.hpp" />
+    <ClInclude Include="msg_conf.hpp" />
+    <ClInclude Include="nullpo.hpp" />
+    <ClInclude Include="random.hpp" />
+    <ClInclude Include="showmsg.hpp" />
+    <ClInclude Include="strlib.hpp" />
+    <ClInclude Include="utils.hpp" />
     <ClInclude Include="winapi.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cli.c" />
-    <ClCompile Include="conf.c" />
-    <ClCompile Include="core.cpp">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="des.c" />
-    <ClCompile Include="grfio.c" />
-    <ClCompile Include="malloc.c" />
-    <ClCompile Include="mapindex.c" />
-    <ClCompile Include="md5calc.c" />
-    <ClCompile Include="msg_conf.c" />
-    <ClCompile Include="nullpo.c" />
-    <ClCompile Include="raconf.c" />
-    <ClCompile Include="random.c" />
-    <ClCompile Include="showmsg.c" />
-    <ClCompile Include="strlib.c" />
-    <ClCompile Include="utils.c" />
+    <ClCompile Include="cli.cpp" />
+    <ClCompile Include="conf.cpp" />
+    <ClCompile Include="core.cpp" />
+    <ClCompile Include="des.cpp" />
+    <ClCompile Include="grfio.cpp" />
+    <ClCompile Include="malloc.cpp" />
+    <ClCompile Include="mapindex.cpp" />
+    <ClCompile Include="md5calc.cpp" />
+    <ClCompile Include="msg_conf.cpp" />
+    <ClCompile Include="nullpo.cpp" />
+    <ClCompile Include="random.cpp" />
+    <ClCompile Include="showmsg.cpp" />
+    <ClCompile Include="strlib.cpp" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="winapi.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -130,8 +126,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;MINICORE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,8 +142,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;MINICORE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -164,8 +160,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;MINICORE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,8 +180,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>$(DefineConstants);WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;MINICORE;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\libconfig\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

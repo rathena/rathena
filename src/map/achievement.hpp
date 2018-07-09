@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _ACHIEVEMENT_HPP_
@@ -10,8 +10,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/mmo.h"
-#include "../common/db.h"
+#include "../common/mmo.hpp"
+#include "../common/db.hpp"
 
 struct map_session_data;
 struct block_list;

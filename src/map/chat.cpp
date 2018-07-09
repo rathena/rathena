@@ -1,25 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "chat.hpp"
 
 #include <cstring>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
 
-#include "map.hpp"
+#include "achievement.hpp"
 #include "atcommand.hpp" // msg_txt()
 #include "battle.hpp" // struct battle_config
 #include "clif.hpp"
+#include "map.hpp"
 #include "npc.hpp" // npc_event_do()
 #include "pc.hpp"
 #include "pc_groups.hpp"
-#include "achievement.hpp"
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "unit.hpp"
@@ -6,36 +6,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/db.hpp"
+#include "../common/ers.hpp"  // ers_destroy
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
 
 #include "achievement.hpp"
+#include "battle.hpp"
+#include "battleground.hpp"
+#include "channel.hpp"
+#include "chat.hpp"
+#include "clif.hpp"
+#include "duel.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "intif.hpp"
 #include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
 #include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "channel.hpp"
-#include "duel.hpp"
-#include "battleground.hpp"
-#include "chat.hpp"
-#include "trade.hpp"
-#include "party.hpp"
-#include "intif.hpp"
 #include "storage.hpp"
-#include "guild.hpp"
-#include "npc.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
-#include "battle.hpp"
+#include "trade.hpp"
 
 // Directions values
 // 1 0 7
@@ -828,7 +828,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if (type == SC_RUN)
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 1, 0, 0, 0, 0);
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
@@ -836,7 +836,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
 		clif_fixpos(bl);
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
@@ -1158,7 +1158,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				// Basilica caster can't be knocked-back by normal monsters.
-				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
+				if( !(flag&0x4) && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
 					return UB_TARGET_BASILICA;
 				// Target has special_state.no_knockback (equip)
 				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )

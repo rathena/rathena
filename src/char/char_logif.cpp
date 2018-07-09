@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/showmsg.h"
-#include "../common/sql.h"
-#include "../common/utils.h"
-#include "../common/strlib.h"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "inter.hpp"
-#include "int_guild.hpp"
 #include "char.hpp"
 #include "char_clif.hpp"
 #include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_guild.hpp"
 
 //early declaration
 void chlogif_on_ready(void);
@@ -349,7 +349,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		sd->group_id = RFIFOB(fd,50);
 		sd->char_slots = RFIFOB(fd,51);
 		if( sd->char_slots > MAX_CHARS ) {
-			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.h! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
+			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.hpp! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
 			sd->char_slots = MAX_CHARS;/* cap to maximum */
 		} else if ( !sd->char_slots )/* no value aka 0 in sql */
 			sd->char_slots = MIN_CHARS;/* cap to minimum */

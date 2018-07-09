@@ -1,44 +1,46 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mob.hpp"
 
-#include <stdlib.h>
+#include <algorithm>
 #include <map>
 #include <math.h>
+#include <stdlib.h>
+#include <unordered_map>
+#include <vector>
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/db.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/ers.h"
-#include "../common/random.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/socket.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utilities.hpp"
+#include "../common/utils.hpp"
 
-#include "map.hpp"
-#include "path.hpp"
+#include "achievement.hpp"
+#include "battle.hpp"
 #include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "npc.hpp"
+#include "party.hpp"
+#include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "party.hpp"
 #include "quest.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "battle.hpp"
-#include "log.hpp"
-#include "achievement.hpp"
 
-#include <vector>
-#include <unordered_map>
-#include <algorithm>
+using namespace rathena;
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
@@ -76,11 +78,7 @@
 //Dynamic mob database
 std::map<uint16, struct mob_db> mob_db_data;
 struct mob_db *mob_db( int mob_id ){
-	if( mob_db_data.find( mob_id ) != mob_db_data.end() ){
-		return &mob_db_data.at(mob_id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( mob_db_data, (uint16)mob_id );
 }
 
 // holds Monster Spawn informations
@@ -89,11 +87,7 @@ std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 //Dynamic mob chat database
 std::map<short,struct mob_chat> mob_chat_db;
 struct mob_chat *mob_chat(short id) {
-	if( mob_chat_db.find(id) != mob_chat_db.end() ){
-		return &mob_chat_db.at(id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( mob_chat_db, id );
 }
 
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
@@ -2738,7 +2732,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate_bonus += sd->dropaddrace[md->status.race] + sd->dropaddrace[RC_ALL];
 
 				// Increase drop rate if user has SC_ITEMBOOST
-				if (&sd->sc && sd->sc.data[SC_ITEMBOOST])
+				if (sd->sc.data[SC_ITEMBOOST])
 					drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
 
 				drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
@@ -2980,11 +2974,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				{
 					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
-					pc_setglobalreg(sd, add_str("TK_MISSION_ID"), temp);
+					pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), temp);
 					sd->mission_count = 0;
 					clif_mission_info(sd, temp, 0);
 				}
-				pc_setglobalreg(sd, add_str("TK_MISSION_COUNT"), sd->mission_count);
+				pc_setglobalreg(sd, add_str(TKMISSIONCOUNT_VAR), sd->mission_count);
 			}
 
 			if (sd->status.party_id)

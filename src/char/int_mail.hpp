@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _INT_MAIL_HPP_
 #define _INT_MAIL_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct mail_message;
 
