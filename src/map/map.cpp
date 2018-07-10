@@ -3475,21 +3475,15 @@ void map_flags_init(void)
 
 	for( i = 0; i < map_num; i++ )
 	{
-		// mapflags
-		map[i].flag.clear();
-
 		// additional mapflag data
-
 		map[i].zone = 0; // restricted mapflag zone
 		map_setmapflag(i, MF_NOCOMMAND, false); // nocommand mapflag level
 		map[i].flag[MF_BEXP] = 100; // per map base exp multiplicator
 		map[i].flag[MF_JEXP] = 100; // per map job exp multiplicator
-		map[i].drop_list.clear(); // pvp nightmare drop list
 
 		// skill damage
 #ifdef ADJUST_SKILL_DAMAGE
 		memset(&map[i].damage_adjust, 0, sizeof(map[i].damage_adjust));
-		map[i].skill_damage.clear();
 #endif
 
 		// adjustments
@@ -4771,6 +4765,8 @@ void do_final(void)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 		map_free_questinfo(i);
+		map[i].flag.clear();
+		map[i].drop_list.clear();
 #ifdef ADJUST_SKILL_DAMAGE
 		map[i].skill_damage.clear();
 #endif

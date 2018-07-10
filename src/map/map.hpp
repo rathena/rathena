@@ -515,7 +515,7 @@ enum _look {
 	LOOK_BODY2
 };
 
-enum e_mapflag {
+enum e_mapflag : int16 {
 	MF_INVALID = -1,
 	MF_MIN = 0,
 	MF_NOMEMO = 0,
