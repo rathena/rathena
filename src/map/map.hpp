@@ -4,7 +4,10 @@
 #ifndef _MAP_HPP_
 #define _MAP_HPP_
 
+#include <algorithm>
+#include <map>
 #include <stdarg.h>
+#include <vector>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
@@ -585,7 +588,7 @@ enum e_mapflag {
 };
 
 /// Enum of damage types
-enum e_skill_damage_type {
+enum e_skill_damage_type : uint8 {
 	SKILLDMG_PC,
 	SKILLDMG_MOB,
 	SKILLDMG_BOSS,
@@ -593,6 +596,7 @@ enum e_skill_damage_type {
 	SKILLDMG_MAX
 };
 
+/// Union for mapflag values
 union u_mapflag_args {
 	struct point nosave;
 
@@ -606,6 +610,13 @@ union u_mapflag_args {
 	} skill_damage;
 
 	int flag_val;
+};
+
+/// Struct for MF_PVP_NIGHTMAREDROP
+struct s_drop_list {
+	int drop_id;
+	int drop_type;
+	int drop_per;
 };
 
 // used by map_setcell()
@@ -683,11 +694,9 @@ struct iwall_data {
 struct s_skill_damage {
 	unsigned int map; ///< Maps (used for skill_damage_db.txt)
 	uint16 skill_id; ///< Skill ID (used for mapflag)
-	// Additional rates
-	int rate[SKILLDMG_MAX];
 	uint16 caster; ///< Caster type
+	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
 };
-extern struct eri *map_skill_damage_ers;
 #endif
 
 struct questinfo_req {
@@ -722,94 +731,20 @@ struct map_data {
 	int users;
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
-	struct map_flag {
-		unsigned town : 1; // [Suggestion to protect Mail System]
-		unsigned autotrade : 1;
-		unsigned allowks : 1; // [Kill Steal Protection]
-		unsigned nomemo : 1;
-		unsigned noteleport : 1;
-		unsigned noreturn : 1;
-		unsigned monster_noteleport : 1;
-		unsigned nosave : 1;
-		unsigned nobranch : 1;
-		unsigned noexppenalty : 1;
-		unsigned pvp : 1;
-		unsigned pvp_noparty : 1;
-		unsigned pvp_noguild : 1;
-		unsigned pvp_nightmaredrop :1;
-		unsigned pvp_nocalcrank : 1;
-		unsigned gvg_castle : 1;
-		unsigned gvg : 1; // Now it identifies gvg versus maps that are active 24/7
-		unsigned gvg_dungeon : 1; // Celest
-		unsigned gvg_noparty : 1;
-		unsigned battleground : 2; // [BattleGround System]
-		unsigned nozenypenalty : 1;
-		unsigned notrade : 1;
-		unsigned noskill : 1;
-		unsigned nowarp : 1;
-		unsigned nowarpto : 1;
-		unsigned noicewall : 1; // [Valaris]
-		unsigned snow : 1; // [Valaris]
-		unsigned clouds : 1;
-		unsigned clouds2 : 1; // [Valaris]
-		unsigned fog : 1; // [Valaris]
-		unsigned fireworks : 1;
-		unsigned sakura : 1; // [Valaris]
-		unsigned leaves : 1; // [Valaris]
-		unsigned nogo : 1; // [Valaris]
-		unsigned nobaseexp : 1; // [Lorky] added by Lupus
-		unsigned nojobexp : 1; // [Lorky]
-		unsigned nomobloot : 1; // [Lorky]
-		unsigned nomvploot : 1; // [Lorky]
-		unsigned nightenabled :1; //For night display. [Skotlex]
-		unsigned restricted : 1; // [Komurka]
-		unsigned nodrop : 1;
-		unsigned novending : 1;
-		unsigned loadevent : 1;
-		unsigned nochat :1;
-		unsigned partylock :1;
-		unsigned guildlock :1;
-		unsigned reset :1; // [Daegaladh]
-		unsigned chmautojoin : 1; //prevent to auto join map channel
-		unsigned nousecart : 1;	//prevent open up cart @FIXME client side only atm
-		unsigned noitemconsumption : 1; //prevent item usage
-		unsigned nosunmoonstarmiracle : 1; //allow SG miracle to happen ?
-		unsigned nomineeffect : 1; //allow /mineeffect
-		unsigned nolockon : 1;
-		unsigned notomb : 1;
-		unsigned nocostume : 1; // Disable costume sprites [Cydh]
-		unsigned gvg_te : 1; // GVG WOE:TE. This was added as purpose to change 'gvg' for GVG TE, so item_noequp, skill_nocast exlude GVG TE maps from 'gvg' (flag &4)
-		unsigned gvg_te_castle : 1; // GVG WOE:TE Castle
-		unsigned hidemobhpbar : 1;
-#ifdef ADJUST_SKILL_DAMAGE
-		unsigned skill_damage : 1;
-#endif
-	} flag;
-	struct point save;
-	struct npc_data *npc[MAX_NPC_PER_MAP];
-	struct {
-		int drop_id;
-		int drop_type;
-		int drop_per;
-	} drop_list[MAX_DROP_PER_MAP];
 
+	std::map<e_mapflag, int> flag;
+	struct point save;
+	std::vector<s_drop_list> drop_list;
+	uint32 zone; // zone number (for item/skill restrictions)
+#ifdef ADJUST_SKILL_DAMAGE
+	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
+	std::vector<s_skill_damage> skill_damage; // Used for single skill damage adjustment
+#endif
+
+	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
-	uint32 zone;	// zone number (for item/skill restrictions)
-	int nocommand; //Blocks @/# commands for non-gms. [Skotlex]
-	struct {
-		int jexp;	// map experience multiplicator
-		int bexp;	// map experience multiplicator
-#ifdef ADJUST_SKILL_DAMAGE
-		struct s_skill_damage damage;
-#endif
-	} adjust;
-#ifdef ADJUST_SKILL_DAMAGE
-	struct {
-		struct s_skill_damage **entries;
-		uint8 count;
-	} skill_damage;
-#endif
+
 	// Instance Variables
 	unsigned short instance_id;
 	int instance_src_map;
@@ -1017,7 +952,6 @@ void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
 #ifdef ADJUST_SKILL_DAMAGE
-void map_skill_damage_free(struct map_data *m);
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
 #endif
 

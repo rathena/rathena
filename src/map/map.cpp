@@ -18,6 +18,7 @@
 #include "../common/socket.hpp" // WFIFO*()
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -48,6 +49,8 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+
+using namespace rathena;
 
 char default_codepage[32] = "";
 
@@ -130,10 +133,6 @@ bool agit_flag = false;
 bool agit2_flag = false;
 bool agit3_flag = false;
 int night_flag = 0; // 0=day, 1=night [Yor]
-
-#ifdef ADJUST_SKILL_DAMAGE
-struct eri *map_skill_damage_ers = NULL;
-#endif
 
 struct charid_request {
 	struct charid_request* next;
@@ -3477,20 +3476,20 @@ void map_flags_init(void)
 	for( i = 0; i < map_num; i++ )
 	{
 		// mapflags
-		memset(&map[i].flag, 0, sizeof(map[i].flag));
+		map[i].flag.clear();
 
 		// additional mapflag data
-		map[i].zone        = 0;  // restricted mapflag zone
-		map[i].nocommand   = 0;  // nocommand mapflag level
-		map[i].adjust.bexp = 100;  // per map base exp multiplicator
-		map[i].adjust.jexp = 100;  // per map job exp multiplicator
-		memset(map[i].drop_list, 0, sizeof(map[i].drop_list));  // pvp nightmare drop list
+
+		map[i].zone = 0; // restricted mapflag zone
+		map_setmapflag(i, MF_NOCOMMAND, false); // nocommand mapflag level
+		map[i].flag[MF_BEXP] = 100; // per map base exp multiplicator
+		map[i].flag[MF_JEXP] = 100; // per map job exp multiplicator
+		map[i].drop_list.clear(); // pvp nightmare drop list
 
 		// skill damage
 #ifdef ADJUST_SKILL_DAMAGE
-		memset(&map[i].adjust.damage, 0, sizeof(map[i].adjust.damage));
-		if (map[i].skill_damage.count)
-			map_skill_damage_free(&map[i]);
+		memset(&map[i].damage_adjust, 0, sizeof(map[i].damage_adjust));
+		map[i].skill_damage.clear();
 #endif
 
 		// adjustments
@@ -4301,58 +4300,36 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 
 #ifdef ADJUST_SKILL_DAMAGE
 /**
- * Free all skill damage entries for a map
- * @param m Map data
- **/
-void map_skill_damage_free(struct map_data *m) {
-	uint8 i;
-
-	for (i = 0; i < m->skill_damage.count; i++) {
-		ers_free(map_skill_damage_ers, m->skill_damage.entries[i]);
-		m->skill_damage.entries[i] = NULL;
-	}
-
-	aFree(m->skill_damage.entries);
-	m->skill_damage.entries = NULL;
-	m->skill_damage.count = 0;
-}
-
-/**
  * Add new skill damage adjustment entry for a map
- * @param m Map data
- * @param skill_id Skill
- * @param pc Rate to PC
- * @param mobs Rate to Monster
- * @param boss Rate to Boss-monster
- * @param other Rate to Other target
- * @param caster Caster type
- **/
+ * @param m: Map data
+ * @param skill_id: Skill ID
+ * @param pc: Rate to PC
+ * @param mobs: Rate to Monster
+ * @param boss: Rate to Boss-monster
+ * @param other: Rate to Other target
+ * @param caster: Caster type
+ */
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	struct s_skill_damage *entry;
-	int i, j;
-
-	if (m->skill_damage.count >= UINT8_MAX)
+	if (m->skill_damage.size() > UINT16_MAX)
 		return;
 
-	for (i = 0; i < m->skill_damage.count; i++) {
-		if (m->skill_damage.entries[i]->skill_id == skill_id) {
-			for( j = 0; j < SKILLDMG_MAX; j++ ){
-				m->skill_damage.entries[i]->rate[j] = rate[j];
+	for (int i = 0; i < m->skill_damage.size(); i++) {
+		if (m->skill_damage[i].skill_id == skill_id) {
+			for (int j = 0; j < SKILLDMG_MAX; j++) {
+				m->skill_damage[i].rate[j] = rate[j];
 			}
-			m->skill_damage.entries[i]->caster = caster;
+			m->skill_damage[i].caster = caster;
 			return;
 		}
 	}
 
-	entry = ers_alloc(map_skill_damage_ers, struct s_skill_damage);
-	entry->skill_id = skill_id;
-	for( j = 0; j < SKILLDMG_MAX; j++ ){
-		entry->rate[j] = rate[j];
-	}
-	entry->caster = caster;
+	struct s_skill_damage entry;
 
-	RECREATE(m->skill_damage.entries, struct s_skill_damage *, m->skill_damage.count+1);
-	m->skill_damage.entries[m->skill_damage.count++] = entry;
+	entry.skill_id = skill_id;
+	for (int i = 0; i < SKILLDMG_MAX; i++)
+		entry.rate[i] = rate[i];
+	entry.caster = caster;
+	m->skill_damage.push_back(entry);
 }
 #endif
 
@@ -4439,70 +4416,12 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		return -1;
 	}
 
+	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
+		ShowWarning("map_getmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
+		return -1;
+	}
+
 	switch(mapflag) {
-		case MF_NOMEMO:				return map[m].flag.nomemo;
-		case MF_NOTELEPORT:			return map[m].flag.noteleport;
-		case MF_NOSAVE:				return map[m].flag.nosave;
-		case MF_NOBRANCH:			return map[m].flag.nobranch;
-		case MF_NOPENALTY:			return map[m].flag.noexppenalty && map[m].flag.nozenypenalty;
-		case MF_NOZENYPENALTY:		return map[m].flag.nozenypenalty;
-		case MF_NOEXPPENALTY:		return map[m].flag.noexppenalty;
-		case MF_PVP:				return map[m].flag.pvp;
-		case MF_PVP_NOPARTY:		return map[m].flag.pvp_noparty;
-		case MF_PVP_NOGUILD:		return map[m].flag.pvp_noguild;
-		case MF_GVG:				return map[m].flag.gvg;
-		case MF_GVG_NOPARTY:		return map[m].flag.gvg_noparty;
-		case MF_NOTRADE:			return map[m].flag.notrade;
-		case MF_NOSKILL:			return map[m].flag.noskill;
-		case MF_NOWARP:				return map[m].flag.nowarp;
-		case MF_PARTYLOCK:			return map[m].flag.partylock;
-		case MF_NOICEWALL:			return map[m].flag.noicewall;
-		case MF_SNOW:				return map[m].flag.snow;
-		case MF_FOG:				return map[m].flag.fog;
-		case MF_SAKURA:				return map[m].flag.sakura;
-		case MF_LEAVES:				return map[m].flag.leaves;
-		case MF_NOGO:				return map[m].flag.nogo;
-		case MF_CLOUDS:				return map[m].flag.clouds;
-		case MF_CLOUDS2:			return map[m].flag.clouds2;
-		case MF_FIREWORKS:			return map[m].flag.fireworks;
-		case MF_GVG_CASTLE:			return map[m].flag.gvg_castle;
-		case MF_GVG_DUNGEON:		return map[m].flag.gvg_dungeon;
-		case MF_NIGHTENABLED:		return map[m].flag.nightenabled;
-		case MF_NOBASEEXP:			return map[m].flag.nobaseexp;
-		case MF_NOJOBEXP:			return map[m].flag.nojobexp;
-		case MF_NOMOBLOOT:			return map[m].flag.nomobloot;
-		case MF_NOMVPLOOT:			return map[m].flag.nomvploot;
-		case MF_NOLOOT:				return map[m].flag.nomobloot && map[m].flag.nomvploot;
-		case MF_NORETURN:			return map[m].flag.noreturn;
-		case MF_NOWARPTO:			return map[m].flag.nowarpto;
-		case MF_PVP_NIGHTMAREDROP:	return map[m].flag.pvp_nightmaredrop;
-		case MF_RESTRICTED:			return map[m].flag.restricted;
-		case MF_NOCOMMAND:			return map[m].nocommand;
-		case MF_NODROP:				return map[m].flag.nodrop;
-		case MF_JEXP:				return map[m].adjust.jexp;
-		case MF_BEXP:				return map[m].adjust.bexp;
-		case MF_NOVENDING:			return map[m].flag.novending;
-		case MF_LOADEVENT:			return map[m].flag.loadevent;
-		case MF_NOCHAT:				return map[m].flag.nochat;
-		case MF_GUILDLOCK:			return map[m].flag.guildlock;
-		case MF_TOWN:				return map[m].flag.town;
-		case MF_AUTOTRADE:			return map[m].flag.autotrade;
-		case MF_ALLOWKS:			return map[m].flag.allowks;
-		case MF_MONSTER_NOTELEPORT:	return map[m].flag.monster_noteleport;
-		case MF_PVP_NOCALCRANK:		return map[m].flag.pvp_nocalcrank;
-		case MF_BATTLEGROUND:		return map[m].flag.battleground;
-		case MF_RESET:				return map[m].flag.reset;
-		case MF_NOMAPCHANNELAUTOJOIN:	return map[m].flag.chmautojoin;
-		case MF_NOUSECART:			return map[m].flag.nousecart;
-		case MF_NOITEMCONSUMPTION:	return map[m].flag.noitemconsumption;
-		case MF_NOSUNMOONSTARMIRACLE:	return map[m].flag.nosunmoonstarmiracle;
-		case MF_NOMINEEFFECT:		return map[m].flag.nomineeffect;
-		case MF_NOLOCKON:			return map[m].flag.nolockon;
-		case MF_NOTOMB:				return map[m].flag.notomb;
-		case MF_NOCOSTUME:			return map[m].flag.nocostume;
-		case MF_GVG_TE_CASTLE:		return map[m].flag.gvg_te_castle;
-		case MF_GVG_TE:				return map[m].flag.gvg_te;
-		case MF_HIDEMOBHPBAR:		return map[m].flag.hidemobhpbar;
 		case MF_SKILL_DAMAGE:
 #ifdef ADJUST_SKILL_DAMAGE
 			nullpo_retr(-1, args);
@@ -4512,19 +4431,20 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				case SKILLDMG_MOB:
 				case SKILLDMG_BOSS:
 				case SKILLDMG_OTHER:
-					return map[m].adjust.damage.rate[args->flag_val];
+					return map[m].damage_adjust.rate[args->flag_val];
 				default:
-					return map[m].flag.skill_damage;
+					return util::map_get(map[m].flag, mapflag, 0);
 			}
 #else
 			return 0;
 #endif
+		case MF_NOLOOT:
+			return util::map_get(map[m].flag, MF_NOMOBLOOT, 0) && util::map_get(map[m].flag, MF_NOMVPLOOT, 0);
+		case MF_NOPENALTY:
+			return util::map_get(map[m].flag, MF_NOEXPPENALTY, 0) && util::map_get(map[m].flag, MF_NOZENYPENALTY, 0);
 		default:
-			ShowWarning("map_getmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
-			break;
+			return util::map_get(map[m].flag, mapflag, 0);
 	}
-
-	return -1;
 }
 
 /**
@@ -4542,11 +4462,13 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 		return -1;
 	}
 
+	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
+		ShowWarning("map_setmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
+		return -1;
+	}
+
 	switch(mapflag) {
-		case MF_NOMEMO:				map[m].flag.nomemo = status; break;
-		case MF_NOTELEPORT:			map[m].flag.noteleport = status; break;
 		case MF_NOSAVE:
-			map[m].flag.nosave = status;
 			if (status) {
 				nullpo_retr(-1, args);
 
@@ -4554,13 +4476,9 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 				map[m].save.x = args->nosave.x;
 				map[m].save.y = args->nosave.y;
 			}
+			map[m].flag[mapflag] = status;
 			break;
-		case MF_NOBRANCH:			map[m].flag.nobranch = status; break;
-		case MF_NOPENALTY:			map[m].flag.noexppenalty = status; map[m].flag.nozenypenalty = status; break;
-		case MF_NOZENYPENALTY:		map[m].flag.nozenypenalty = status; break;
-		case MF_NOEXPPENALTY:		map[m].flag.noexppenalty = status; break;
 		case MF_PVP:
-			map[m].flag.pvp = status;
 			if (!status)
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 			else {
@@ -4591,16 +4509,10 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", map[m].name);
 				}
 			}
+			map[m].flag[mapflag] = status;
 			break;
-		case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = status; break;
-		case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = status; break;
 		case MF_GVG:
 		case MF_GVG_TE:
-			if (mapflag == MF_GVG)
-				map[m].flag.gvg = status;
-			else
-				map[m].flag.gvg_te = status;
-
 			if (!status)
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 			else {
@@ -4614,28 +4526,10 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", map[m].name);
 				}
 			}
+			map[m].flag[mapflag] = status;
 			break;
-		case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = status; break;
-		case MF_NOTRADE:			map[m].flag.notrade = status; break;
-		case MF_NOSKILL:			map[m].flag.noskill = status; break;
-		case MF_NOWARP:				map[m].flag.nowarp = status; break;
-		case MF_PARTYLOCK:			map[m].flag.partylock = status; break;
-		case MF_NOICEWALL:			map[m].flag.noicewall = status; break;
-		case MF_SNOW:				map[m].flag.snow = status; break;
-		case MF_FOG:				map[m].flag.fog = status; break;
-		case MF_SAKURA:				map[m].flag.sakura = status; break;
-		case MF_LEAVES:				map[m].flag.leaves = status; break;
-		case MF_NOGO:				map[m].flag.nogo = status; break;
-		case MF_CLOUDS:				map[m].flag.clouds = status; break;
-		case MF_CLOUDS2:			map[m].flag.clouds2 = status; break;
-		case MF_FIREWORKS:			map[m].flag.fireworks = status; break;
 		case MF_GVG_CASTLE:
 		case MF_GVG_TE_CASTLE:
-			if (mapflag == MF_GVG_CASTLE)
-				map[m].flag.gvg_castle = status;
-			else
-				map[m].flag.gvg_te_castle = status;
-
 			if (status) {
 				if (mapflag == MF_GVG_CASTLE && map_getmapflag(m, MF_GVG_TE_CASTLE)) {
 					map_setmapflag(m, MF_GVG_TE_CASTLE, false);
@@ -4650,100 +4544,85 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 					ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), map[m].name);
 				}
 			}
+			map[m].flag[mapflag] = status;
 			break;
 		case MF_GVG_DUNGEON:
-			map[m].flag.gvg_dungeon = status;
 			if (status && map_getmapflag(m, MF_PVP)) {
 				map_setmapflag(m, MF_PVP, false);
 				ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", map[m].name);
 			}
+			map[m].flag[mapflag] = status;
 			break;
-		case MF_NIGHTENABLED:		map[m].flag.nightenabled = status; break;
 		case MF_NOBASEEXP:
-			map[m].flag.nobaseexp = status;
-			break;
 		case MF_NOJOBEXP:
-			map[m].flag.nojobexp = status;
-			break;
-		case MF_NOMOBLOOT:			map[m].flag.nomobloot = status; break;
-		case MF_NOMVPLOOT:			map[m].flag.nomvploot = status; break;
-		case MF_NOLOOT:				map[m].flag.nomobloot = status; map[m].flag.nomvploot = status; break;
-		case MF_NORETURN:			map[m].flag.noreturn = status; break;
-		case MF_NOWARPTO:			map[m].flag.nowarpto = status; break;
-		case MF_PVP_NIGHTMAREDROP:
-			map[m].flag.pvp_nightmaredrop = status;
 			if (status) {
-				int i;
-
+				if (mapflag == MF_NOBASEEXP && map_getmapflag(m, MF_BEXP) != 100) {
+					map_setmapflag(m, MF_BEXP, false);
+					ShowWarning("map_setmapflag: Unable to set BEXP and No Base EXP flags for the same map! Removing BEXP flag from %s.\n", map[m].name);
+				}
+				if (mapflag == MF_NOJOBEXP && map_getmapflag(m, MF_JEXP) != 100) {
+					map_setmapflag(m, MF_JEXP, false);
+					ShowWarning("map_setmapflag: Unable to set JEXP and No Job EXP flags for the same map! Removing JEXP flag from %s.\n", map[m].name);
+				}
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_PVP_NIGHTMAREDROP:
+			if (status) {
 				nullpo_retr(-1, args);
 
-				ARR_FIND(0, MAX_DROP_PER_MAP, i, map[m].drop_list[i].drop_id == 0);
-				if (i == MAX_DROP_PER_MAP) {
+				if (map[m].drop_list.size() == MAX_DROP_PER_MAP) {
 					ShowWarning("map_setmapflag: Reached the maximum number of drop list items for mapflag pvp_nightmaredrop on %s. Skipping.\n", map[m].name);
 					break;
 				}
-				map[m].drop_list[i].drop_id = args->nightmaredrop.drop_id;
-				map[m].drop_list[i].drop_type = args->nightmaredrop.drop_type;
-				map[m].drop_list[i].drop_per = args->nightmaredrop.drop_per;
+
+				struct s_drop_list entry;
+
+				entry.drop_id = args->nightmaredrop.drop_id;
+				entry.drop_type = args->nightmaredrop.drop_type;
+				entry.drop_per = args->nightmaredrop.drop_per;
+				map[m].drop_list.push_back(entry);
 			}
+			map[m].flag[mapflag] = status;
 			break;
 		case MF_RESTRICTED:
 			nullpo_retr(-1, args);
 
-			if (!status) {
+			map[m].flag[mapflag] = status;
+			if (!status)
 				map[m].zone ^= 1 << (args->flag_val + 1);
-				if (!map[m].zone)
-					map[m].flag.restricted = 0;
-			} else {
+			else
 				map[m].zone |= 1 << (args->flag_val + 1);
-				map[m].flag.restricted = 1;
-			}
 			break;
 		case MF_NOCOMMAND:
-			nullpo_retr(-1, args);
-
-			map[m].nocommand = (status ? ((args->flag_val <= 0) ? 100 : args->flag_val) : 0);
-			break;
-		case MF_NODROP:				map[m].flag.nodrop = status; break;
-		case MF_JEXP:
-			nullpo_retr(-1, args);
-
 			if (status) {
-				map[m].adjust.jexp = args->flag_val;
-				if (map_getmapflag(m, MF_NOJOBEXP)) {
+				nullpo_retr(-1, args);
+
+				map[m].flag[mapflag] = ((args->flag_val <= 0) ? 100 : args->flag_val);
+			} else
+				map[m].flag[mapflag] = false;
+			break;
+		case MF_JEXP:
+		case MF_BEXP:
+			if (status) {
+				nullpo_retr(-1, args);
+
+				if (mapflag == MF_JEXP && map_getmapflag(m, MF_NOJOBEXP)) {
 					map_setmapflag(m, MF_NOJOBEXP, false);
 					ShowWarning("map_setmapflag: Unable to set No Job EXP and JEXP flags for the same map! Removing No Job EXP flag from %s.\n", map[m].name);
 				}
-			} else
-				map[m].adjust.jexp = 0;
-			break;
-		case MF_BEXP:
-			nullpo_retr(-1, args);
-
-			if (status) {
-				map[m].adjust.bexp = args->flag_val;
-				if (map_getmapflag(m, MF_NOBASEEXP)) {
+				if (mapflag == MF_BEXP && map_getmapflag(m, MF_NOBASEEXP)) {
 					map_setmapflag(m, MF_NOBASEEXP, false);
 					ShowWarning("map_setmapflag: Unable to set No Base EXP and BEXP flags for the same map! Removing No Base EXP flag from %s.\n", map[m].name);
 				}
+				map[m].flag[mapflag] = args->flag_val;
 			} else
-				map[m].adjust.bexp = 0;
+				map[m].flag[mapflag] = false;
 			break;
-			break;
-		case MF_NOVENDING:			map[m].flag.novending = status; break;
-		case MF_LOADEVENT:			map[m].flag.loadevent = status; break;
-		case MF_NOCHAT:				map[m].flag.nochat = status; break;
-		case MF_GUILDLOCK:			map[m].flag.guildlock = status; break;
-		case MF_TOWN:				map[m].flag.town = status; break;
-		case MF_AUTOTRADE:			map[m].flag.autotrade = status; break;
-		case MF_ALLOWKS:			map[m].flag.allowks = status; break;
-		case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport = status; break;
-		case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank = status; break;
 		case MF_BATTLEGROUND:
-			nullpo_retr(-1, args);
-
-			map[m].flag.battleground = (status ? ((args->flag_val <= 0 || args->flag_val > 2) ? 1 : args->flag_val) : 0);
 			if (status) {
+				nullpo_retr(-1, args);
+
 				if (map_getmapflag(m, MF_PVP)) {
 					map_setmapflag(m, MF_PVP, false);
 					ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", map[m].name);
@@ -4760,50 +4639,48 @@ int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_map
 					map_setmapflag(m, MF_GVG_CASTLE, false);
 					ShowWarning("map_setmapflag: Unable to set GvG Castle and Battleground flags for the same map! Removing GvG Castle flag from %s.\n", map[m].name);
 				}
-			}
+				map[m].flag[mapflag] = ((args->flag_val <= 0 || args->flag_val > 2) ? 1 : args->flag_val);
+			} else
+				map[m].flag[mapflag] = false;
 			break;
-		case MF_RESET:				map[m].flag.reset = status; break;
-		case MF_NOMAPCHANNELAUTOJOIN:	map[m].flag.chmautojoin = status ; break;
-		case MF_NOUSECART:			map[m].flag.nousecart = status ; break;
-		case MF_NOITEMCONSUMPTION:	map[m].flag.noitemconsumption = status ; break;
-		case MF_NOSUNMOONSTARMIRACLE:	map[m].flag.nosunmoonstarmiracle = status ; break;
-		case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = status ; break;
-		case MF_NOLOCKON:			map[m].flag.nolockon = status ; break;
-		case MF_NOTOMB:				map[m].flag.notomb = status; break;
-		case MF_NOCOSTUME:			map[m].flag.nocostume = status; break;
-		case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = status; break;
+		case MF_NOLOOT:
+			map[m].flag[MF_NOMOBLOOT] = status;
+			map[m].flag[MF_NOMVPLOOT] = status;
+			break;
+		case MF_NOPENALTY:
+			map[m].flag[MF_NOEXPPENALTY] = status;
+			map[m].flag[MF_NOZENYPENALTY] = status;
+			break;
 #ifdef ADJUST_SKILL_DAMAGE
 		case MF_SKILL_DAMAGE:
 			if (!status) {
-				map[m].flag.skill_damage = 0;
-				memset(&map[m].adjust.damage, 0, sizeof(map[m].adjust.damage));
-				if (map[m].skill_damage.count)
-					map_skill_damage_free(&map[m]);
+				memset(&map[m].damage_adjust, 0, sizeof(map[m].damage_adjust));
+				map[m].skill_damage.clear();
 			} else {
 				nullpo_retr(-1, args);
 
-				if( !args->skill_damage.caster ){
-					ShowError( "map_setmapflag: Skill damage adjustment without casting type for map %s.\n", map[m].name );
+				if (!args->skill_damage.caster) {
+					ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", map[m].name);
 					return -1;
 				}
 
-				for( int i = 0; i < SKILLDMG_MAX; i++ ){
-					map[m].adjust.damage.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
+				for (int i = 0; i < SKILLDMG_MAX; i++) {
+					map[m].damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 
-					if( !map[m].flag.skill_damage && map[m].adjust.damage.rate[i] ){
-						map[m].adjust.damage.caster = args->skill_damage.caster;
-						map[m].flag.skill_damage = 1;
+					if (map[m].flag.find(mapflag) != map[m].flag.end() && map[m].damage_adjust.rate[i]) {
+						map[m].damage_adjust.caster = args->skill_damage.caster;
 					}
 				}
 			}
+			map[m].flag[mapflag] = status;
 			break;
 #endif
 		default:
-			ShowWarning("map_setmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
-			return -1;
+			map[m].flag[mapflag] = status;
+			break;
 	}
 
-	return 0;
+	return 1;
 }
 
 /**
@@ -4895,8 +4772,7 @@ void do_final(void)
 		}
 		map_free_questinfo(i);
 #ifdef ADJUST_SKILL_DAMAGE
-		if (map[i].skill_damage.count)
-			map_skill_damage_free(&map[i]);
+		map[i].skill_damage.clear();
 #endif
 	}
 
@@ -4912,10 +4788,6 @@ void do_final(void)
 	charid_db->destroy(charid_db, NULL);
 	iwall_db->destroy(iwall_db, NULL);
 	regen_db->destroy(regen_db, NULL);
-
-#ifdef ADJUST_SKILL_DAMAGE
-	ers_destroy(map_skill_damage_ers);
-#endif
 
 	map_sql_close();
 
@@ -5167,10 +5039,6 @@ int do_init(int argc, char *argv[])
 	charid_db = uidb_alloc(DB_OPT_BASE);
 	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
-
-#ifdef ADJUST_SKILL_DAMAGE
-	map_skill_damage_ers = ers_new(sizeof(struct s_skill_damage), "map.cpp:map_skill_damage_ers", ERS_OPT_NONE);
-#endif
 
 	map_sql_init();
 	if (log_config.sql_logs)

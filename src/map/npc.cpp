@@ -4080,12 +4080,12 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				memset(&args, 0, sizeof(args));
 
 				if (sscanf(w4, "%30[^,],%23[^,],%11d,%11d,%11d,%11d[^\n]", skill_name, caster_constant, &args.skill_damage.rate[SKILLDMG_PC], &args.skill_damage.rate[SKILLDMG_MOB], &args.skill_damage.rate[SKILLDMG_BOSS], &args.skill_damage.rate[SKILLDMG_OTHER]) >= 3) {
-					if( ISDIGIT(caster_constant[0]) ){
+					if (ISDIGIT(caster_constant[0]))
 						args.skill_damage.caster = atoi(caster_constant);
-					}else{
+					else {
 						int val;
 
-						if( !script_get_constant(caster_constant, &val ) ){
+						if (!script_get_constant(caster_constant, &val)) {
 							ShowError( "npc_parse_mapflag: Unknown constant '%s'. Skipping (file '%s', line '%d').\n", caster_constant, filepath, strline(buffer, start - buffer) );
 							break;
 						}
@@ -4093,13 +4093,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = val;
 					}
 					
-					if( !args.skill_damage.caster ){
+					if (!args.skill_damage.caster)
 						args.skill_damage.caster = BL_ALL;
-					}
 
-					for( int i = 0; i < SKILLDMG_MAX; i++ ){
+					for (int i = 0; i < SKILLDMG_MAX; i++)
 						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, INT_MAX);
-					}
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);

@@ -10531,7 +10531,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if (!sd->state.connect_new &&
 			!sd->vip.disableshowrate &&
 			sd->state.pmap != sd->bl.m &&
-			map[sd->state.pmap].adjust.bexp != map[sd->bl.m].adjust.bexp
+			map_getmapflag(sd->state.pmap, MF_BEXP) != map_getmapflag(sd->bl.m, MF_BEXP)
 			)
 		{
 			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
@@ -18774,7 +18774,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		 * Set for EXP
 		 */
 		//0:PCRoom
-		details_bexp[0] = map[sd->bl.m].adjust.bexp;
+		details_bexp[0] = map_getmapflag(sd->bl.m, MF_BEXP);
 		if (details_bexp[0] == 100 || !details_bexp[0])
 			details_bexp[0] = 0;
 		else {

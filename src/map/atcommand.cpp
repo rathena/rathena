@@ -4058,24 +4058,23 @@ ACMD_FUNC(mapinfo) {
 	if (map_getmapflag(m_id, MF_SKILL_DAMAGE)) {
 		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
 		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
-			,map[m_id].adjust.damage.rate[SKILLDMG_PC]
-			,map[m_id].adjust.damage.rate[SKILLDMG_MOB]
-			,map[m_id].adjust.damage.rate[SKILLDMG_BOSS]
-			,map[m_id].adjust.damage.rate[SKILLDMG_OTHER]
-			,map[m_id].adjust.damage.caster);
+			,map[m_id].damage_adjust.rate[SKILLDMG_PC]
+			,map[m_id].damage_adjust.rate[SKILLDMG_MOB]
+			,map[m_id].damage_adjust.rate[SKILLDMG_BOSS]
+			,map[m_id].damage_adjust.rate[SKILLDMG_OTHER]
+			,map[m_id].damage_adjust.caster);
 		clif_displaymessage(fd, atcmd_output);
-		if (map[m_id].skill_damage.count) {
-			uint8 j;
+		if (map[m_id].skill_damage.size()) {
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (j = 0; j < map[m_id].skill_damage.count; j++) {
+			for (int j = 0; j < map[m_id].skill_damage.size(); j++) {
 				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
 					,j+1
-					,skill_get_name(map[m_id].skill_damage.entries[j]->skill_id)
-					,map[m_id].skill_damage.entries[j]->rate[SKILLDMG_PC]
-					,map[m_id].skill_damage.entries[j]->rate[SKILLDMG_MOB]
-					,map[m_id].skill_damage.entries[j]->rate[SKILLDMG_BOSS]
-					,map[m_id].skill_damage.entries[j]->rate[SKILLDMG_OTHER]
-					,map[m_id].skill_damage.entries[j]->caster);
+					,skill_get_name(map[m_id].skill_damage[j].skill_id)
+					,map[m_id].skill_damage[j].rate[SKILLDMG_PC]
+					,map[m_id].skill_damage[j].rate[SKILLDMG_MOB]
+					,map[m_id].skill_damage[j].rate[SKILLDMG_BOSS]
+					,map[m_id].skill_damage[j].rate[SKILLDMG_OTHER]
+					,map[m_id].skill_damage[j].caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
 		}
@@ -10461,7 +10460,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	// type value 0|2 = script|console invoked: bypass restrictions
 	if ( type == 1 || type == 3) {
 		//Commands are disabled on maps flagged as 'nocommand'
-		if ( map_getmapflag(sd->bl.m, MF_NOCOMMAND) && pc_get_group_level(sd) < map[sd->bl.m].nocommand ) {
+		if ( pc_get_group_level(sd) < map_getmapflag(sd->bl.m, MF_NOCOMMAND) ) {
 			clif_displaymessage(fd, msg_txt(sd,143)); // Commands are disabled on this map.
 			return false;
 		}

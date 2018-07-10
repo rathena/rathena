@@ -321,7 +321,7 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 
 Notes:
  - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.hpp' for this mapflag to take effect.
- - Each map can contain up to 5 adjustments (MAX_MAP_SKILL_MODIFIER in 'src/map/map.h').
+ - Each map can contain up to UINT16_MAX adjustments.
 
 ---------------------------------------
 
