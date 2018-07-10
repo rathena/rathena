@@ -115,7 +115,7 @@ lighthalzen,321,218,4	script	Ohno Tohiro#1	4_M_RASWORD,{
 			mes "There are many adventurers like you these days!";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "I entered this crevice for the first time and guess what? It led to the place where there are so many monsters swarming around.";
+			mes "I entered this crevice for the first time and guess what? It led to a place where there are so many monsters swarming around.";
 			next;
 			mes "[Ohno Tohiro]";
 			mes "I gave a heads up to one adventurer I know. Then, he showed a high interest in it!";
@@ -129,7 +129,7 @@ lighthalzen,321,218,4	script	Ohno Tohiro#1	4_M_RASWORD,{
 			mes "However, he was holding several items. At first glance, they looked so powerful that even I felt scared.";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "After that, many adventurers entered this dangerous place through this crevice after hearing the rumor. I hardly found any adventurers coming out of this crevice again. Since then, this place has been called the tombof honor.";
+			mes "After that, many adventurers entered this dangerous place through this crevice after hearing the rumor. I hardly found any adventurers coming out of this crevice again. Since then, this place has been called the tomb of honor.";
 			mes "I earned some money thanks to them, though.";
 			next;
 			mes "[Ohno Tohiro]";
@@ -204,7 +204,7 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 	mes "I can take you there if you want. You will need ^0000cd20 Sentimental Fragment and 150K Zeny^000000.";
 	next;
 	mes "[Lunar]";
-	mes "Or you can just see sentiment safely without the interruption of the dead. That will cost you ^0000cd30 Sentimental Fragment and 2000K Zeny^000000.";
+	mes "Or you can just see sentiment safely without the interruption of the dead. That will cost you ^0000cd30 Sentimental Fragment and 2M Zeny^000000.";
 	next;
 	mes "[Lunar]";
 	mes "Where do you want to go?";
@@ -238,11 +238,11 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 		mes "This machine will recover your HP if you use it. It helped me survive. I have no idea why it's in that kind of place though...";
 		next;
 		mes "[Lunar]";
-		mes "I turned off the machine so no one can use it, but I'll let you use as my special treat.";
+		mes "I turned off the machine so no one can use it, but I'll let you use it as my special treat.";
 		next;
 		mes "[Lunar]";
 		mes "Please be careful and use the machine if you need to!!";
-		delitem 22687,20;// // Sentimental Fragment
+		delitem 22687,20;// Sentimental Fragment
 		Zeny = Zeny - 150000;
 		if (isbegin_quest(14683) > 0)
 			erasequest 14683;
@@ -259,7 +259,7 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 			mes "Let me see.";
 			next;
 			mes "[Lunar]";
-			mes "It's not enough. ^0000cd30 Sentimental Fragment and 2000K Zeny^000000 are needed. I can't take you for free.";
+			mes "It's not enough. ^0000cd30 Sentimental Fragment and 2M Zeny^000000 are needed. I can't take you for free.";
 			close;
 		}
 		mes "[Lunar]";
@@ -286,10 +286,10 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 		mes "There's a rumor.. that people who went there never came back...";
 		next;
 		mes "[Lunar]";
-		mes "I was so scared but.. it became clear that it's a popluar place for adventurers to visit.";
+		mes "I was so scared but.. it became clear that it's a popular place for adventurers to visit.";
 		next;
 		mes "[Lunar]";
-		mes "The place I arrive at is ^0000cdnear Strange Sentiment^000000.";
+		mes "The place I arrived at was ^0000cdnear Strange Sentiment^000000.";
 		next;
 		mes "[Lunar]";
 		mes "I ran away since so many dead men tried to kill me.";
@@ -304,7 +304,7 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 		mes "I will take you there if you give me the money and items.";
 		next;
 		mes "[Lunar]";
-		mes "You might go easier without his help";
+		mes "You might go easier without his help.";
 		close;
 	case 4:
 		mes "[Lunar]";
@@ -356,13 +356,13 @@ lighthalzen,319,213,4	script	Veteran Adventurer#JCv2	4_M_MELODY,2,2,{
 	if (.@s == -1) {
 		emotion ET_QUESTION;
 		mes "[Veteran Adventurer]";
-		mes "You look free, don't you? Well, my business is slack these days too...";
+		mes "You look like you have free time, don't you? Well, my business is slow these days too...";
 		next;
 		mes "[Veteran Adventurer]";
 		mes "One day, the guild master entered in my guild all of a sudden...";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "'^1F294DI'll make all guild for all members to put on the Cloak of the Fallen Soldier!!^000000'.";
+		mes "'^1F294DI'll make all members in all guilds wear the Cloak of the Fallen Soldier!!^000000'.";
 		next;
 		mes "[Veteran Adventurer]";
 		mes "As you know, this equipment requires a large amount of material, so all guild members had no choice but to be stuck in the dungeon and forced to work.";
@@ -371,7 +371,7 @@ lighthalzen,319,213,4	script	Veteran Adventurer#JCv2	4_M_MELODY,2,2,{
 		mes "You never know what luck you eventually may have. I flung myself into this digging work with determination and found so many rare pieces.";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "Ms. sub-guild master sent me to exchange = things with others as a pile kept forming.";
+		mes "Ms. Sub-guild master sent me to exchange things with others as a pile kept forming.";
 		next;
 		mes "[Veteran Adventurer]";
 		mes "Of course, the amount of exchange was decided by the guild master emphasizing";
@@ -379,7 +379,7 @@ lighthalzen,319,213,4	script	Veteran Adventurer#JCv2	4_M_MELODY,2,2,{
 		next;
 		emotion ET_HNG;
 		mes "[Veteran Adventurer]";
-		mes "Ms. sub-guild master tried to throw dirt into the guild master's eyes, we really had a hard time stopping her.";
+		mes "Ms. Sub-guild master tried to throw dirt into the guild master's eyes. We really had a hard time stopping her.";
 		next;
 		mes "[Veteran Adventurer]";
 		mes "I guess we can take care of it quickly if he adjusts it to a low amount. (sigh)... That's what happened.";
@@ -469,7 +469,7 @@ lighthalzen,312,296,4	script	Bully#JCv2	4_M_LGTPOOR,{
 		23016, 6820,666;	// Energy Fragment -> Cursed Fragment
 	.@index = .@s * 3;
 	mes "[Bully]";
-	mes "Are you sure you'll exchange ^330066" + .@exchange[.@index+2] + " " + getitemname(.@exchange[.@index+1]) + "^000000 with ^CC33331 " + getitemname(.@exchange[.@index]) + "^000000?";
+	mes "Are you sure you want to exchange ^330066" + .@exchange[.@index+2] + " " + getitemname(.@exchange[.@index+1]) + "^000000 with ^CC33331 " + getitemname(.@exchange[.@index]) + "^000000?";
 	next;
 	if (select( "Exchange.", "Do not exchange." ) == 2) {
 		emotion ET_HNG;
@@ -734,7 +734,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 		mes "Cursed... Fragments..." + .@requirement + " are... needed... I wonder... whether... you can afford... them?... kk... kk...";
 		mes "^FF0000*In enchantment, " + .@requirement + " Cursed Fragment(s) is(are) required.*^000000";
 		next;
-		if (select( "Pay money.", "Do not pay money." ) == 2) {
+		if (select( "Pay fee.", "Do not pay fee." ) == 2) {
 			mes "[Wandering Mind]";
 			mes "K...kk... It seems... you're not... ready to accept... such a huge power... yet...";
 			close;
@@ -830,7 +830,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			.@card[1] += .@level_dt;
 			if (.@card[1] < 29061 || .@card[1] > 29120) {
 				mes "[Wandering Mind]";
-				mes "Something wrong happened.";
+				mes "Something bad happened.";
 				close;
 			}
 			if (.@enchant_level < 1 || .@enchant_level > 10) {
@@ -843,7 +843,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			break;
 		default:
 			mes "[Wandering Mind]";
-			mes "Something wrong happened.";
+			mes "Something bad happened.";
 			close;
 		}
 		delequip EQI_HEAD_TOP;
@@ -901,7 +901,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 		mes "^FF0000*You need 10 Sentimental Fragments to reset it.";
 		mes "All enchantments applied to the helmet, except for the smelting level of equipment and 1 slot card, will be reset.*^000000";
 		next;
-		if (select( "Ignore him.", "Pay money." ) == 1) {
+		if (select( "Ignore him.", "Pay fee." ) == 1) {
 			npctalk "Forever...", "", bc_self;
 			mes "[Wandering Mind]";
 			mes "I'll... wait for... you... If you need me to... I'll wait for you... forever... kkk...";
@@ -965,7 +965,7 @@ lhz_dun_n,143,269,4	script	Victimized Soul's Mind#1	4_M_DEATH2,{
 	disable_items;
 	.@r = rand(5);
 	if (.@r == 0)
-		npctalk "You... are the ones... who turned... me... into monster...", "", bc_self;
+		npctalk "You... are the ones... who turned... me... into a monster...", "", bc_self;
 	else if (.@r == 1)
 		npctalk "Please save me... I'll... do whatever... you order...", "", bc_self;
 	else if (.@r == 2)
@@ -1008,7 +1008,7 @@ lhz_dun_n,143,269,4	script	Victimized Soul's Mind#1	4_M_DEATH2,{
 	mes "If you... bring... one... I'll restore... it... to energy... pieces...";
 	while(true) {
 		next;
-		if (select( "Hand over the weapon.", "End the conversation" ) == 2) {
+		if (select( "Hand over the weapon.", "End the conversation." ) == 2) {
 			mes "[Victimized Soul's Mind]";
 			mes "...You... will... find me... again...";
 			close;
@@ -1194,7 +1194,7 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 		getitemname(18983),	// Old_Protect_Of_Crown
 		getitemname(20749);	// Cloak of the Fallen Soldier[1]
 	while(true) {
-		if (select( "Hand over the soul.", "End the conversation" ) == 2) {
+		if (select( "Hand over the soul.", "End the conversation." ) == 2) {
 			mes "[Sorrowful Soul's Mind]";
 			mes "...I wish... you... can come back... to me again...";
 			close;
@@ -1411,7 +1411,7 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				mes "^006400Complete evasion +1 per 3 refinement level increase.^000000";
 				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
 				mes "^006400Increases Cluster Bomb damage by 15% per 2 refinement level increase.^000000";
-				mes "^006400Increases Worg Strike damage by 10% per 2 refinement level increase.^000000";
+				mes "^006400Increases Warg Strike damage by 10% per 2 refinement level increase.^000000";
 				mes "^006400Type: Helmet Defense: 10^000000";
 				mes "^006400Location: Top Weight: 10^000000";
 				mes "^006400SLOT: 1^000000";
@@ -1619,7 +1619,7 @@ OnTouch:
 	end;
 OnTimer1000:
 	.@npc_name$ = strnpcinfo(0);
-	if (.@npc_name$ == "#Alphoccio_Basil_A1")			npctalk "It was my mistake to think that this will be just travelling...", "#lhz_dun_talk_A23";
+	if (.@npc_name$ == "#Alphoccio_Basil_A1")			npctalk "It was my mistake to think that this will be just traveling...", "#lhz_dun_talk_A23";
 	else if (.@npc_name$ == "#Alphoccio_Basil_A2")		npctalk "I thought we could make songs and travel around the world forever...", "#lhz_dun_talk_A24";
 	else if (.@npc_name$ == "#Catherine Cheiron_A1")	npctalk "It's a very strange trick...", "#lhz_dun_talk_A5";
 	else if (.@npc_name$ == "#Flamel_Emule_A1")			npctalk "I've never felt so helpless before...", "#lhz_dun_talk_A15";
