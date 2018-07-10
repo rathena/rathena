@@ -20,7 +20,6 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
-#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -57,8 +56,6 @@
 #include "trade.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
-
-using namespace rathena;
 
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
