@@ -1673,6 +1673,8 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_
 			mapif_guild_info(-1,g);
 		mapif_guild_skillupack(guild_id,skill_id,account_id);
 		g->save_flag |= (GS_LEVEL|GS_SKILL); // Change guild & guild_skill
+		if (skill_id == GD_GUILD_STORAGE)
+			inter_guild_tosql(g, g->save_flag); // Force save for GD_GUILD_STORAGE
 	}
 	return 0;
 }
