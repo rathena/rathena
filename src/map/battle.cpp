@@ -6337,11 +6337,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				mdef <<= 1; // only eMDEF is doubled
 #endif
 			if (tsc && tsc->data[SC_EXPIATIO]) {
-				short i = 5 * tsc->data[SC_EXPIATIO]->val1; // 5% per level
+				i = 5 * tsc->data[SC_EXPIATIO]->val1; // 5% per level
 
-				i = min(i, 100); //cap it to 100 for 0 mdef min
-				mdef = (mdef * (100 - i)) / 100;
-				//mdef2 = (mdef2 * (100 - i)) / 100;
+				i = min(i, 100); //cap it to 100 for 5 mdef min
+				mdef -= mdef * i / 100;
+				//mdef2 -= mdef2 * i / 100;
 			}
 
 			if(sd) {
