@@ -6553,7 +6553,7 @@
 12330,Recall_FemaleGM,Summon Female GameMaster Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ mercenary_create 2001,1800000; },{},{}
 12331,Ginseng,Ginseng,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 6,0; },{},{}
 12332,Fruit_Juice,Fruit Juice,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,6; },{},{}
-12333,Ansila,Ancilla,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,15; autobonus "{ bonus bHealPower,30; bSPrecovRate,15; }",100,60000; },{},{}
+12333,Ansila,Ancilla,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,15; sc_start SC_ANCILLA,60000,1; },{},{}
 12334,Cherish_Box,Treasure Edition Helm Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Cherish_Box,1); },{},{}
 12335,Yummy_Skewered_Dish,Grilled Delicious Skewer,0,1000,,350,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 60,60; },{},{}
 12336,Baked_Mushroom,Grilled Mushroom,0,500,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 30,30; },{},{}

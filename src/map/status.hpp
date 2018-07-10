@@ -852,6 +852,8 @@ enum sc_type : int16 {
 	SC_GLASTHEIM_ITEMDEF,
 	SC_GLASTHEIM_HPSP,
 
+	SC_ANCILLA,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

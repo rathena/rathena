@@ -1167,6 +1167,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GLASTHEIM_ITEMDEF] = EFST_GLASTHEIM_ITEMDEF;
 	StatusIconChangeTable[SC_GLASTHEIM_HPSP] = EFST_GLASTHEIM_HPSP;
 
+	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -4502,8 +4504,12 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		if( (skill=pc_checkskill(sd,WM_LESSON)) > 0 )
 			val += 3 + 3 * skill;
 
-		if (sc && sc->count && sc->data[SC_SHRIMPBLESSING])
-			val += 150 / 100;
+		if (sc && sc->count) {
+			if (sc->data[SC_SHRIMPBLESSING])
+				val += 150 / 100;
+			if (sc->data[SC_ANCILLA])
+				val += sc->data[SC_ANCILLA]->val2 / 100;
+		}
 
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
 
@@ -11142,6 +11148,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_GLASTHEIM_HPSP:
 			val1 = 10000; // HP bonus
 			val2 = 1000; // SP bonus
+			break;
+		case SC_ANCILLA:
+			val1 = 15; // Heal Power rate bonus
+			val2 = 30; // SP Recovery rate bonus
 			break;
 
 		default:

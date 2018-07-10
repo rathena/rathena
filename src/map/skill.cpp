@@ -528,6 +528,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp_bonus += tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1;
 			if (tsc->data[SC_GLASTHEIM_HEAL])
 				hp_bonus += sc->data[SC_GLASTHEIM_HEAL]->val2;
+			if (tsc->data[SC_ANCILLA])
+				hp_bonus += sc->data[SC_ANCILLA]->val1;
 		}
 	}
 
