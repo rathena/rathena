@@ -11756,7 +11756,7 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 void pc_scdata_received(struct map_session_data *sd) {
 	pc_inventory_rentals(sd); // Needed here to remove rentals that have Status Changes after chrif_load_scdata has finished
 
-	if( pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
+	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
 		clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 	}
 
@@ -12616,6 +12616,11 @@ int32 pc_attendance_counter( struct map_session_data* sd ){
 }
 
 void pc_attendance_claim_reward( struct map_session_data* sd ){
+	// If the user's group does not have the permission
+	if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
+		return;
+	}
+
 	// Check if the attendance feature is disabled
 	if( !pc_attendance_enabled() ){
 		return;

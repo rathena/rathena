@@ -20330,7 +20330,9 @@ void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 
 void clif_parse_open_ui( int fd, struct map_session_data* sd ){
 	switch( RFIFOB(fd,2) ){
 		case IN_UI_ATTENDANCE:
-			if( pc_attendance_enabled() ){
+			if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
+				clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 791 ), false, SELF ); // You are not allowed to use the attendance system.
+			}else if( pc_attendance_enabled() ){
 				clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
 				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
