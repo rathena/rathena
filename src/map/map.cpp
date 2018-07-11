@@ -122,8 +122,7 @@ static int bl_list_count = 0;
 	#define MAP_MAX_MSG 1550
 #endif
 
-struct map_data map[MAX_MAP_PER_SERVER];
-int map_num = 0;
+std::vector<map_data> map;
 int map_port=0;
 
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
@@ -311,9 +310,9 @@ int map_addblock(struct block_list* bl)
 	m = bl->m;
 	x = bl->x;
 	y = bl->y;
-	if( m < 0 || m >= map_num )
+	if( m < 0 || m >= map.size() )
 	{
-		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
+		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map.size());
 		return 1;
 	}
 	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
@@ -707,7 +706,7 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	int blockcount = bl_list_count, i;
 	va_list ap_copy;
 
-	if (m < 0 || m >= map_num)
+	if (m < 0 || m >= map.size())
 		return 0;
 
 	if (x1 < x0)
@@ -2543,7 +2542,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 {
 	nullpo_ret(nd);
 
-	if( m < 0 || m >= map_num )
+	if( m < 0 || m >= map.size() )
 		return false;
 
 	if( map[m].npc_num == MAX_NPC_PER_MAP )
@@ -2564,7 +2563,6 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 int map_addinstancemap(const char *name, unsigned short instance_id)
 {
 	int src_m = map_mapname2mapid(name);
-	int dst_m = -1, i;
 	char iname[MAP_NAME_LENGTH];
 	size_t num_cell, size;
 
@@ -2577,24 +2575,15 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 		return -2;
 	}
 
-	for(i = instance_start; i < MAX_MAP_PER_SERVER; i++) {
-		if(!map[i].name[0])
-			break;
-	}
-	if(i < map_num) // Destination map value overwrites another
-		dst_m = i;
-	else if(i < MAX_MAP_PER_SERVER) // Destination map value increments to new map
-		dst_m = map_num++;
-	else {
-		// Out of bounds
-		ShowError("map_addinstancemap failed. map_num(%d) > map_max(%d)\n",map_num, MAX_MAP_PER_SERVER);
+	if(map.size() >= MAX_MAP_PER_SERVER) { // Out of bounds
+		ShowError("map_addinstancemap: Failed to add map. Map size (%d) > max maps (%d)\n", map.size(), MAX_MAP_PER_SERVER);
 		return -3;
 	}
 
 	// Copy the map
-	memcpy(&map[dst_m], &map[src_m], sizeof(struct map_data));
-
-	strcpy(iname,name);
+	int dst_m = map.size();
+	map.push_back(map[src_m]);
+	strcpy(iname, name);
 
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
@@ -3116,7 +3105,7 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 {
 	int j;
 
-	if( m < 0 || m >= map_num || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	if( m < 0 || m >= map.size() || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
 		return;
 
 	j = x + y*map[m].xs;
@@ -3144,7 +3133,7 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat)
 	int j;
 	struct mapcell cell;
 
-	if( m < 0 || m >= map_num || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	if( m < 0 || m >= map.size() || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
 		return;
 
 	j = x + y*map[m].xs;
@@ -3425,27 +3414,27 @@ int map_addmap(char* mapname)
 {
 	if( strcmpi(mapname,"clear")==0 )
 	{
-		map_num = 0;
-		instance_start = 0;
+		map.clear();
 		return 0;
 	}
 
-	if( map_num >= MAX_MAP_PER_SERVER - 1 )
+	if( map.size() >= MAX_MAP_PER_SERVER )
 	{
 		ShowError("Could not add map '" CL_WHITE "%s" CL_RESET "', the limit of maps has been reached.\n",mapname);
 		return 1;
 	}
 
-	mapindex_getmapname(mapname, map[map_num].name);
-	map_num++;
+	struct map_data entry = {};
+
+	mapindex_getmapname(mapname, entry.name);
+	map.push_back(entry);
 	return 0;
 }
 
 static void map_delmapid(int id)
 {
 	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
-	memmove(map+id, map+id+1, sizeof(map[0])*(map_num-id-1));
-	map_num--;
+	map.erase(map.begin() + id);
 }
 
 int map_delmap(char* mapname)
@@ -3454,12 +3443,12 @@ int map_delmap(char* mapname)
 	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
-		map_num = 0;
+		map.clear();
 		return 0;
 	}
 
 	mapindex_getmapname(mapname, map_name);
-	for(i = 0; i < map_num; i++) {
+	for(i = 0; i < map.size(); i++) {
 		if (strcmp(map[i].name, map_name) == 0) {
 			map_delmapid(i);
 			return 1;
@@ -3473,7 +3462,7 @@ void map_flags_init(void)
 {
 	int i;
 
-	for( i = 0; i < map_num; i++ )
+	for( i = 0; i < map.size(); i++ )
 	{
 		// additional mapflag data
 		map[i].zone = 0; // restricted mapflag zone
@@ -3629,14 +3618,14 @@ int map_readallmaps (void)
 		}
 	}
 
-	for(i = 0; i < map_num; i++) {
+	for(i = 0; i < map.size(); i++) {
 		size_t size;
 		bool success = false;
 		unsigned short idx = 0;
 
 		if( enable_grf ){
 			// show progress
-			ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, map[i].name);
+			ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map.size(), map[i].name);
 
 			// try to load the map
 			success = map_readgat(&map[i]) != 0;
@@ -3702,8 +3691,7 @@ int map_readallmaps (void)
 	}
 
 	// finished map loading
-	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
-	instance_start = map_num; // Next Map Index will be instances
+	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed);
@@ -4707,14 +4695,14 @@ void do_final(void)
 	do_clear_npc();
 
 	// remove all objects on maps
-	for (i = 0; i < map_num; i++) {
-		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i+1, map_num, map[i].name);
+	for (i = 0; i < map.size(); i++) {
+		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i+1, map.size(), map[i].name);
 		if (map[i].m >= 0) {
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
 			channel_delete(map[i].channel,false);
 		}
 	}
-	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
+	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map.size());
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
@@ -4754,7 +4742,7 @@ void do_final(void)
 
 	map_db->destroy(map_db, map_db_final);
 
-	for (i=0; i<map_num; i++) {
+	for (i=0; i<map.size(); i++) {
 		if(map[i].cell) aFree(map[i].cell);
 		if(map[i].block) aFree(map[i].block);
 		if(map[i].block_mob) aFree(map[i].block_mob);

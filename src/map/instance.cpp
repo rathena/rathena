@@ -25,8 +25,6 @@
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
-int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
-
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
 

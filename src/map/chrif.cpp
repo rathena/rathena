@@ -400,9 +400,9 @@ int chrif_sendmap(int fd) {
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + instance_start * 4);
+	WFIFOHEAD(fd, 4 + map.size() * 4);
 	WFIFOW(fd,0) = 0x2afa;
-	for(i = 0; i < instance_start; i++)
+	for(i = 0; i < map.size(); i++)
 		WFIFOW(fd,4+i*4) = map[i].index;
 	WFIFOW(fd,2) = 4 + i * 4;
 	WFIFOSET(fd,WFIFOW(fd,2));

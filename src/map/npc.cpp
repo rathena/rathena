@@ -4451,7 +4451,7 @@ int npc_reload(void) {
 	if(battle_config.dynamic_mobs)
 	{// dynamic check by [random]
 		int16 m;
-		for (m = 0; m < map_num; m++) {
+		for (m = 0; m < map.size(); m++) {
 			int16 i;
 			for (i = 0; i < MAX_MOB_LIST_PER_MAP; i++) {
 				if (map[m].moblist[i] != NULL) {
@@ -4592,7 +4592,7 @@ static void npc_debug_warps_sub(struct npc_data* nd)
 static void npc_debug_warps(void)
 {
 	int16 m, i;
-	for (m = 0; m < map_num; m++)
+	for (m = 0; m < map.size(); m++)
 		for (i = 0; i < map[m].npc_num; i++)
 			npc_debug_warps_sub(map[m].npc[i]);
 }

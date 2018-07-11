@@ -775,8 +775,7 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
 void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 
-extern struct map_data map[];
-extern int map_num;
+extern std::vector<map_data> map;
 
 extern int autosave_interval;
 extern int minsave_interval;
