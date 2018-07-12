@@ -350,36 +350,36 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		close;
 	case 2:
 		if (isbegin_quest(7682) != 2) {// Socializing Starts from an Eye Contact
-			setarray .@family$[0],
-				"Heine", 2,
-				"Nerius", 1,
-				"Richard", 2,
-				"Walther", 3,
-				"Wigner", 2,
-				"Roegenburg", 2,
-				"Geoborg", 2;
-			.@size = getarraysize( .@family$ );
-			for ( .@i = 0; .@i < .@size; .@i += 2 ) {
-				if (getd( "banquet_" + strtolower(.@family$[.@i]) + "_quest" ) < atoi(.@family$[.@i+1]))	// check family quests variables
-					.@string$ = .@string$ + ( .@string$ != "" ? ", " : "" ) + .@family$[.@i];
-			}
+			if (banquet_heine_quest < 2) .@string$ = "Heine";
+			if (banquet_nerius_quest < 1) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Nerius";
+			if (banquet_richard_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Richard";
+			if (banquet_walther_quest < 3) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Walther";
+			if (banquet_wigner_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Wigner";
+			if (banquet_roegenburg_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Roegenburg";
+			if (banquet_geoborg_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Geoborg";
 
-			mes "[Belle]";
-			mes "The news of your arrival must have reached each family by now.";
-			mes "They must be waiting. Pay a visit and exchange greetings.";
-			next;
-			mes "[Belle]";
-			mes "You have not visited the";
-			mes .@string$;
-			mes "family yet.";
-			next;
-			mes "[Belle]";
-			mes "They are the most blue-blooded people, not used to be kept waiting.";
-			next;
-			mes "[Belle]";
-			mes "In order to keep a smooth relationship with them, you may to there quickly.";
-			mes "Then, good bye.";
-			close;
+			if (.@string$ == "") {	// it shouldn't happen
+				completequest 7682;// Socializing Starts from an Eye Contact
+				setquest 7685;// What Is the Next Thing on the Schedule ?
+			}
+			else {
+				mes "[Belle]";
+				mes "The news of your arrival must have reached each family by now.";
+				mes "They must be waiting. Pay a visit and exchange greetings.";
+				next;
+				mes "[Belle]";
+				mes "You have not visited the";
+				mes .@string$;
+				mes "family yet.";
+				next;
+				mes "[Belle]";
+				mes "They are the most blue-blooded people, not used to be kept waiting.";
+				next;
+				mes "[Belle]";
+				mes "In order to keep a smooth relationship with them, you may to there quickly.";
+				mes "Then, good bye.";
+				close;
+			}
 		}
 		mes "[Belle]";
 		mes "Oh, you are back.";
@@ -4028,11 +4028,11 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
 		next;
 		setquest 7684;// Visit the Nerius
 		completequest 7684;// Visit the Nerius
+		banquet_nerius_quest = 1;
 		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
-		banquet_nerius_quest = 1;
 		cutin "ep16_spica_nerius01",1;
 		mes "[Spica]";
 		mes "We must get prepared for the Banquet now. We need some time to dress up.";
@@ -5527,11 +5527,11 @@ prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
 			mes "Don't be overly curious of our family matter.";
 			mes "Phew... I guess I will see you again later.";
 			completequest 7683;
+			banquet_heine_quest = 2;
 			if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
 				completequest 7682;// Socializing Starts from an Eye Contact
 				setquest 7685;// What Is the Next Thing on the Schedule ?
 			}
-			banquet_heine_quest = 2;
 			next;
 			cutin "ep16_kronecker_granz_heine",2;
 			mes "[Friedrich]";
