@@ -2226,7 +2226,7 @@ static void add_buildin_func(void)
  * @param value: Script constant
  * @return Constant name as char array or NULL otherwise
  */
-const char* script_get_constant_str( char* prefix, int64 value ){
+const char* script_get_constant_str( const char* prefix, int64 value ){
 	int i = 0;
 	const char* name;
 

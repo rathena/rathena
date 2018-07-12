@@ -4366,7 +4366,7 @@ enum e_mapflag map_getmapflag_by_name(char* name)
  */
 bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
 	const char* constant;
-	char* prefix = "mf_";
+	const char* prefix = "mf_";
 	int i, len = strlen(prefix);
 
 	// Look it up
