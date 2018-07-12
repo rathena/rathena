@@ -869,8 +869,7 @@ void clif_clearunit_area(struct block_list* bl, clr_type type)
 /// Used to make monsters with player-sprites disappear after dying
 /// like normal monsters, because the client does not remove those
 /// automatically.
-static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(clif_clearunit_delayed_sub){
 	struct block_list *bl = (struct block_list *)data;
 	clif_clearunit_area(bl, (clr_type) id);
 	ers_free(delay_clearunit_ers,bl);
@@ -1807,8 +1806,7 @@ void clif_move(struct unit_data *ud)
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
  *------------------------------------------*/
-static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(clif_delayquit){
 	struct map_session_data *sd = NULL;
 
 	//Remove player from map server

@@ -12723,8 +12723,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
  * @param data: Information passed through the timer call
  * @return 1: Success 0: Fail
  */
-int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(status_change_timer){
 	enum sc_type type = (sc_type)data;
 	struct block_list *bl;
 	struct map_session_data *sd;
@@ -14289,8 +14288,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
  * @param data: data pushed through timer function
  * @return 0
  */
-static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(status_natural_heal_timer){
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
 	map_foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;

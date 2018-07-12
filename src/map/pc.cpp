@@ -167,8 +167,7 @@ int pc_get_group_level(struct map_session_data *sd) {
 	return sd->group_level;
 }
 
-static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
 	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
@@ -204,8 +203,7 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 	}
 }
 
-static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_spiritball_timer){
 	struct map_session_data *sd;
 	int i;
 
@@ -509,8 +507,7 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
  * @param data: Data
  * @return false - failure, true - success
  */
-int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_inventory_rental_end){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( sd == NULL )
@@ -2400,8 +2397,7 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	status_calc_pc(sd,SCO_FORCE);
 }
 
-int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
 	struct s_autobonus *autobonus = (struct s_autobonus *)data;
 
@@ -6476,8 +6472,7 @@ const char* job_name(int class_)
  * target is define in sd->followtarget (bl.id)
  * used by pc_follow
  *----------------------------------------------------*/
-int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_follow_timer){
 	struct map_session_data *sd;
 	struct block_list *tbl;
 
@@ -7628,8 +7623,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 }
 
-static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_respawn_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	if( sd != NULL )
 	{
@@ -7670,8 +7664,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		sd->canlog_tick = gettick();
 }
 
-int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_close_npc_timer){
 	TBL_PC *sd = map_id2sd(id);
 	if(sd) pc_close_npc(sd,data);
 	return 0;
@@ -9458,8 +9451,7 @@ int pc_readreg2(struct map_session_data *sd, const char *reg) {
 /*==========================================
  * Exec eventtimer for player sd (retrieved from map_session (id))
  *------------------------------------------*/
-static int pc_eventtimer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_eventtimer){
 	struct map_session_data *sd=map_id2sd(id);
 	char *p = (char *)data;
 	int i;
@@ -10294,8 +10286,7 @@ int pc_calc_pvprank(struct map_session_data *sd)
 /*==========================================
  * Calculate next sd ranking calculation from config
  *------------------------------------------*/
-int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_calc_pvprank_timer){
 	struct map_session_data *sd;
 
 	sd=map_id2sd(id);
@@ -10525,8 +10516,7 @@ void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
 /*==========================================
  * Save 1 player data at autosave interval
  *------------------------------------------*/
-static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_autosave){
 	int interval;
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
@@ -10580,8 +10570,7 @@ static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
  * timer to do the day [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_day_timer){
 	char tmp_soutput[1024];
 
 	if (data == 0 && battle_config.day_duration <= 0)	// if we want a day
@@ -10601,8 +10590,7 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
  * timer to do the night [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_night_timer){
 	char tmp_soutput[1024];
 
 	if (data == 0 && battle_config.night_duration <= 0)	// if we want a night
@@ -10709,8 +10697,7 @@ bool pc_should_log_commands(struct map_session_data *sd)
  * Spirit Charm expiration timer.
  * @see TimerFunc
  */
-static int pc_spiritcharm_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_spiritcharm_timer){
 	struct map_session_data *sd;
 	int i;
 
@@ -11770,7 +11757,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 	}
 }
 
-int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_expiration_timer){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( !sd ) return 0;
@@ -11785,7 +11772,7 @@ int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	return 0;
 }
 
-int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_autotrade_timer){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if (!sd)
@@ -11808,7 +11795,7 @@ int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
 
 /* this timer exists only when a character with a expire timer > 24h is online */
 /* it loops thru online players once an hour to check whether a new < 24h is available */
-int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_global_expiration_timer){
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
@@ -12072,7 +12059,7 @@ static void inline pc_bonus_script_check_final(struct map_session_data *sd) {
 * @param data
 * @author [Cydh]
 **/
-int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_bonus_script_timer){
 	struct map_session_data *sd;
 	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
 

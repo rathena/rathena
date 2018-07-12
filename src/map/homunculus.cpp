@@ -864,8 +864,7 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 /**
 * Timer to reduce hunger level
 */
-static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(hom_hungry){
 	struct map_session_data *sd;
 	struct homun_data *hd;
 

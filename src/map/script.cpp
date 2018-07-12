@@ -4117,8 +4117,7 @@ void script_stop_scriptinstances(struct script_code *code) {
 /*==========================================
  * Timer function for sleep
  *------------------------------------------*/
-int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(run_script_timer){
 	struct script_state *st = (struct script_state *)data;
 	struct linkdb_node *node = (struct linkdb_node *)sleep_db;
 

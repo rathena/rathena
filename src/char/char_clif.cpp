@@ -1101,8 +1101,7 @@ int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
 }
 
 
-int charblock_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(charblock_timer){
 	struct char_session_data* sd=NULL;
 	int i=0;
 	ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == id);
