@@ -1996,7 +1996,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 /*==========================================
  * Updates the weight status
  *------------------------------------------
- * 1: overweight 50%
+ * 1: overweight 50% for pre-renewal and 70% for renewal
  * 2: overweight 90%
  * It's assumed that SC_WEIGHT50 and SC_WEIGHT90 are only started/stopped here.
  */
@@ -2008,7 +2008,11 @@ void pc_updateweightstatus(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	old_overweight = (sd->sc.data[SC_WEIGHT90]) ? 2 : (sd->sc.data[SC_WEIGHT50]) ? 1 : 0;
+#ifdef RENEWAL
+	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is70overweight(sd)) ? 1 : 0;
+#else
 	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is50overweight(sd)) ? 1 : 0;
+#endif
 
 	if( old_overweight == new_overweight )
 		return; // no change
