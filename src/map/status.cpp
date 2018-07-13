@@ -8546,7 +8546,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_FREEZING:
 	case SC_CRYSTALIZE:
-		if ((type == SC_FREEZING && sc->data[SC_BURNING]) || sc->data[SC_WARMER])
+		if (sc->data[SC_WARMER])
 			return 0; // Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
 		break;
 	case SC_SLEEP:
@@ -8589,9 +8589,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if(sc->data[SC_SATURDAYNIGHTFEVER])
 			return 0;
 		break;
-	case SC_BURNING:
-		if (sc->data[SC_FREEZING])
-			return 0;
 	// Fall through
 	case SC_WHITEIMPRISON:
 		if (sc->opt1)
