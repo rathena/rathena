@@ -8563,6 +8563,7 @@ static const struct _battle_data {
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
+	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },
 
 #include "../custom/battle_config_init.inc"
 };
