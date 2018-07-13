@@ -659,6 +659,7 @@ struct Battle_Config
 	int feature_homunculus_autofeed_rate;
 	int summoner_trait;
 	int homunculus_autofeed_always;
+	int homunculus_exp_gain;
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;

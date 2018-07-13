@@ -2648,8 +2648,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					flag = 0;
 				}
 			}
-			if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
+#ifdef RENEWAL
+			if (base_exp && tmpsd[i]->hd) //tmpsd[i]->hd is null if it has no homunc.
+				hom_gainexp(tmpsd[i]->hd, base_exp * battle_config.homunculus_exp_gain / 100); // Homunculus only receive 10% of EXP
+#else
+			if (base_exp && md->dmglog[i].flag == MDLF_HOMUN)
 				hom_gainexp(tmpsd[i]->hd, base_exp);
+#endif
 			if(flag) {
 				if(base_exp || job_exp) {
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
