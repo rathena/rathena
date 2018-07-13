@@ -25,6 +25,7 @@
 //= 2.0 Updated to match the official script. [Euphy]
 //=     Added Pre-Renewal support.
 //= 3.0 Clean-up. [Capuche]
+//= 3.1 Location changed in ep16.1 of Minister NPC. [Capuche]
 //============================================================
 
 // Bard Jet
@@ -1827,7 +1828,7 @@ prontera,144,301,5	script	Mage#tu	2_F_MAGICMASTER,{
 
 // Minister
 //============================================================
-prt_castle,76,165,6	script	Minister#tu	1_M_JOBTESTER,{
+-	script	Minister#tu_	-1,{
 	mes "[Minister]";
 	mes "The royal family";
 	mes "is extremely busy";
@@ -1887,7 +1888,8 @@ prt_castle,76,165,6	script	Minister#tu	1_M_JOBTESTER,{
 
 // Range NPC
 //============================================================
-prt_castle,94,150,4	script	#sound_tu	HIDDEN_WARP_NPC,6,6,{
+-	script	#sound_tu_	-1,{
+	end;
 OnTouch_:
 	if(tu_archer02 == 6) {
 		mes "[Minister]";

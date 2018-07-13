@@ -24,11 +24,11 @@
 //= 2.5 Updated Schwaltzvalt warps and added Arunafeltz. [L0ne_W0lf]
 //= 2.6 Fixed warp position between Juno and Schwaltzvalt Realm. [Gepard]
 //= 2.7 Updated WoE:FE warps. [Masao]
+//= 2.8 Prontera castle map changed in ep16.1 [Capuche]
 //============================================================
 
 //Prontera Castle Map
 prt_gld,159,298,0	warp	prtg01_NorthField	1,1,prt_fild01,199,30
-prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178
 prt_gld,129,65,0	warp	prtg-1_prtg-1-01	1,1,prtg_cas01,99,32
 prt_gld,240,124,0	warp	prtg-2_prtg-2	1,1,prtg_cas02,43,229
 prt_gld,153,141,0	warp	prtg-3_prtg-3	1,1,prtg_cas03,168,12
