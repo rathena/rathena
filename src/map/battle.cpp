@@ -6336,8 +6336,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if(tsc && tsc->data[SC_ASSUMPTIO])
 				mdef <<= 1; // only eMDEF is doubled
 #endif
-			if (tsc && tsc->data[SC_EXPIATIO]) {
-				i = 5 * tsc->data[SC_EXPIATIO]->val1; // 5% per level
+			if (sc && sc->data[SC_EXPIATIO]) {
+				i = 5 * sc->data[SC_EXPIATIO]->val1; // 5% per level
 
 				i = min(i, 100); //cap it to 100 for 5 mdef min
 				mdef -= mdef * i / 100;
