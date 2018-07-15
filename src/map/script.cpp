@@ -6415,6 +6415,12 @@ BUILDIN_FUNC(inarray)
 
 	array_size = script_array_highest_key(st, sd, name, ref) - 1;
 
+	if (array_size < 0)
+	{
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	if (array_size > SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_inarray: The array is too large.\n");
@@ -6496,6 +6502,12 @@ BUILDIN_FUNC(countinarray)
 
 	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
 	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
+
+	if (array_size1 < 0 || array_size2 < 0)
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	if (array_size1 > SCRIPT_MAX_ARRAYSIZE || array_size2 > SCRIPT_MAX_ARRAYSIZE)
 	{
@@ -12198,15 +12210,26 @@ BUILDIN_FUNC(addrid)
 BUILDIN_FUNC(attachrid)
 {
 	int rid = script_getnum(st,2);
+	bool force;
 
-	if (map_id2sd(rid) != NULL) {
+	if( script_hasdata(st,3) ){
+		force = script_getnum(st,3) != 0;
+	}else{
+		force = true;
+	}
+
+	struct map_session_data* sd = map_id2sd(rid);
+
+	if( sd != NULL && ( !sd->npc_id || force ) ){
 		script_detach_rid(st);
 
 		st->rid = rid;
 		script_attach_state(st);
-		script_pushint(st,1);
-	} else
-		script_pushint(st,0);
+		script_pushint(st,true);
+	}else{
+		script_pushint(st,false);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
@@ -15220,13 +15243,22 @@ BUILDIN_FUNC(mapid2name)
 BUILDIN_FUNC(logmes)
 {
 	const char *str;
-	TBL_PC* sd;
-
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_FAILURE;
+	struct map_session_data* sd = map_id2sd(st->rid);
 
 	str = script_getstr(st,2);
-	log_npc(sd,str);
+	if( sd ){
+		log_npc(sd,str);
+	}else{
+		struct npc_data* nd = map_id2nd(st->oid);
+
+		if( !nd ){
+			ShowError( "buildin_logmes: Invalid usage without player or npc.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		log_npc(nd,str);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23990,6 +24022,28 @@ BUILDIN_FUNC(mail){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(open_roulette){
+#if PACKETVER < 20141022
+	ShowError( "buildin_open_roulette: This command requires PACKETVER 2014-10-22 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !battle_config.feature_roulette ){
+		ShowError( "buildin_open_roulette: Roulette system is disabled.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_roulette_open(sd);
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24237,7 +24291,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(disablewaitingroomevent,"disablearena",""),	// Added by RoVeRT
 	BUILDIN_DEF(getwaitingroomstate,"i?"),
 	BUILDIN_DEF(warpwaitingpc,"sii?"),
-	BUILDIN_DEF(attachrid,"i"),
+	BUILDIN_DEF(attachrid,"i?"),
 	BUILDIN_DEF(addrid,"i?????"),
 	BUILDIN_DEF(detachrid,""),
 	BUILDIN_DEF(isloggedin,"i?"),
@@ -24642,6 +24696,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "floor", "i"),
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
+	BUILDIN_DEF(open_roulette,"?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

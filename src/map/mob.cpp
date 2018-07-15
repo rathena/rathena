@@ -2732,7 +2732,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate_bonus += sd->dropaddrace[md->status.race] + sd->dropaddrace[RC_ALL];
 
 				// Increase drop rate if user has SC_ITEMBOOST
-				if (&sd->sc && sd->sc.data[SC_ITEMBOOST])
+				if (sd->sc.data[SC_ITEMBOOST])
 					drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
 
 				drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);

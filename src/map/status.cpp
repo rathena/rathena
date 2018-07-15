@@ -1277,6 +1277,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_MTF_ASPD] |= SCB_ASPD|SCB_HIT;
 	StatusChangeFlagTable[SC_MTF_MATK] |= SCB_MATK;
 	StatusChangeFlagTable[SC_MTF_MLEATKED] |= SCB_ALL;
+	StatusChangeFlagTable[SC_MTF_CRIDAMAGE] |= SCB_ALL;
 	StatusChangeFlagTable[SC_QUEST_BUFF1] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF2] |= SCB_BATK|SCB_MATK;
 	StatusChangeFlagTable[SC_QUEST_BUFF3] |= SCB_BATK|SCB_MATK;
@@ -4964,6 +4965,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if( bl->type&BL_PC && !(sd && sd->state.permanent_speed) && status->speed < battle_config.max_walk_speed )
 			status->speed = battle_config.max_walk_speed;
 
+		if( bl->type&BL_PET && ((TBL_PET*)bl)->master)
+			status->speed = status_get_speed(&((TBL_PET*)bl)->master->bl);
 		if( bl->type&BL_HOM && battle_config.hom_setting&HOMSET_COPY_SPEED && ((TBL_HOM*)bl)->master)
 			status->speed = status_get_speed(&((TBL_HOM*)bl)->master->bl);
 		if( bl->type&BL_MER && ((TBL_MER*)bl)->master)
@@ -7771,17 +7774,14 @@ void status_set_viewdata(struct block_list *bl, int class_)
 						sd->vd.cloth_color = 0;
 					if(sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
 						sd->vd.cloth_color = 0;
-					if(sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+					if(sd->sc.option&(OPTION_SUMMER|OPTION_SUMMER2) && battle_config.summer_ignorepalette)
 						sd->vd.cloth_color = 0;
 					if(sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
 						sd->vd.cloth_color = 0;
 					if(sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
 						sd->vd.cloth_color = 0;
 				}
-				if ( sd->vd.body_style && (
- 					sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
- 					sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
- 					sd->sc.option&OPTION_OKTOBERFEST))
+				if ( sd->vd.body_style && sd->sc.option&OPTION_COSTUME)
  					sd->vd.body_style = 0;
 			} else if (vd)
 				memcpy(&sd->vd, vd, sizeof(struct view_data));
@@ -8576,7 +8576,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 	case SC_ALL_RIDING:
-		if( !sd || !&sd->sc || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUGRIDER|OPTION_MADOGEAR) )
+		if( !sd || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUGRIDER|OPTION_MADOGEAR) )
 			return 0;
 		if( sc->data[type] )
 		{	// Already mounted, just dismount.
@@ -8916,6 +8916,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
 			case SC_BANDING_DEFENCE:
+			case SC__ENERVATION:
+			case SC__GROOMY:
+			case SC__IGNORANCE:
+			case SC__LAZINESS:
+			case SC__UNLUCKY:
+			case SC__WEAKNESS:
 			case SC_BITE:
 			case SC_ELECTRICSHOCKER:
 			case SC_MAGNETICFIELD:
@@ -11293,7 +11299,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 		}
 		status_display_add(bl,type,dval1,dval2,dval3);
-		clif_efst_status_change_sub(bl, bl, AREA);
 	}
 
 	// Those that make you stop attacking/walking....
@@ -11537,7 +11542,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			opt_flag |= 0x4;
 			break;
 		case SC_SUMMER:
-		case SC_DRESSUP:
 			sc->option |= OPTION_SUMMER;
 			opt_flag |= 0x4;
 			break;
@@ -11547,6 +11551,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_OKTOBERFEST:
 			sc->option |= OPTION_OKTOBERFEST;
+			opt_flag |= 0x4;
+			break;
+		case SC_DRESSUP:
+			sc->option |= OPTION_SUMMER2;
 			opt_flag |= 0x4;
 			break;
 		case SC_ORCISH:
@@ -12533,7 +12541,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		opt_flag |= 0x4;
 		break;
 	case SC_SUMMER:
-	case SC_DRESSUP:
 		sc->option &= ~OPTION_SUMMER;
 		opt_flag |= 0x4;
 		break;
@@ -12543,6 +12550,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		break;
 	case SC_OKTOBERFEST:
 		sc->option &= ~OPTION_OKTOBERFEST;
+		opt_flag |= 0x4;
+		break;
+	case SC_DRESSUP:
+		sc->option &= ~OPTION_SUMMER2;
 		opt_flag |= 0x4;
 		break;
 	case SC_ORCISH:
