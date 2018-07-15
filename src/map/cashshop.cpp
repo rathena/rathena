@@ -235,7 +235,7 @@ static void sale_read_db_sql( void ){
 	ShowStatus( "Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, sales_table );
 }
 
-static int sale_end_timer( int tid, unsigned int tick, int id, intptr_t data ){
+static TIMER_FUNC(sale_end_timer){
 	struct sale_item_data* sale_item = (struct sale_item_data*)data;
 
 	// Remove the timer so the sale end is not sent out again
@@ -249,7 +249,7 @@ static int sale_end_timer( int tid, unsigned int tick, int id, intptr_t data ){
 	return 1;
 }
 
-static int sale_start_timer( int tid, unsigned int tick, int id, intptr_t data ){
+static TIMER_FUNC(sale_start_timer){
 	struct sale_item_data* sale_item = (struct sale_item_data*)data;
 
 	clif_sale_start( sale_item, NULL, ALL_CLIENT );

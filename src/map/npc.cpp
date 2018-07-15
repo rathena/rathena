@@ -272,7 +272,7 @@ struct npc_data* npc_name2id(const char* name)
 /**
  * Timer to check for idle time and timeout the dialog if necessary
  **/
-int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(npc_rr_secure_timeout_timer){
 	struct map_session_data* sd = NULL;
 	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
 	int cur_tick = gettick(); //ensure we are on last tick
@@ -477,8 +477,7 @@ int npc_event_doall_id(const char* name, int rid)
  * Clock event execution
  * OnMinute/OnClock/OnHour/OnDay/OnDDHHMM
  *------------------------------------------*/
-int npc_event_do_clock(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(npc_event_do_clock){
 	static struct tm ev_tm_b; // tracks previous execution time
 	time_t timer;
 	struct tm* t;
@@ -580,8 +579,7 @@ struct timer_event_data {
 /*==========================================
  * triger 'OnTimerXXXX' events
  *------------------------------------------*/
-int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(npc_timerevent){
 	int old_rid, old_timer;
 	unsigned int old_tick;
 	struct npc_data* nd=(struct npc_data *)map_id2bl(id);

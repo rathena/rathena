@@ -5,6 +5,7 @@
 #define _STATUS_HPP_
 
 #include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 enum e_race2 : uint8;
 struct block_list;
@@ -3366,7 +3367,7 @@ int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type
 int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag);
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
-int status_change_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(status_change_timer);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);

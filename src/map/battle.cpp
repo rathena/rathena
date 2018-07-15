@@ -299,8 +299,7 @@ struct delay_damage {
 	bool isspdamage;
 };
 
-int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(battle_delay_damage_sub){
 	struct delay_damage *dat = (struct delay_damage *)data;
 
 	if ( dat ) {
