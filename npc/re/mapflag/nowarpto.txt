@@ -129,6 +129,8 @@ que_swat	mapflag	nowarpto
 1@sthd	mapflag	nowarpto
 1@slw	mapflag	nowarpto
 1@swat	mapflag	nowarpto
+prt_q	mapflag	nowarpto
+prt_prison	mapflag	nowarpto
 
 // Rockridge
 har_in01	mapflag	nowarpto
