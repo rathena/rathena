@@ -60,8 +60,8 @@ struct s_guild_skill_tree {
 	}need[MAX_GUILD_SKILL_REQUIRE];
 } guild_skill_tree[MAX_GUILDSKILL];
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data);
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(guild_payexp_timer);
+static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
 struct npc_data **guild_flags;

@@ -28,7 +28,7 @@
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
 
-static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(hom_hungry);
 static uint16 homunculus_count;
 static unsigned int hexptbl[MAX_LEVEL];
 

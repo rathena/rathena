@@ -45,7 +45,7 @@ int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type);
 int chlogif_parse(int fd);
 
 int chlogif_isconnected();
-int chlogif_check_connect_logserver(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(chlogif_check_connect_logserver);
 void do_init_chlogif(void);
 void chlogif_reset(void);
 void chlogif_check_shutdown(void);
