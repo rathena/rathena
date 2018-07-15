@@ -7952,20 +7952,20 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	if( map_getmapflag( sd->bl.m, MF_PVP_NIGHTMAREDROP ) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
-		int j;
-		for(j=0;j<MAX_DROP_PER_MAP;j++){
+		for(int j=0;j<MAX_DROP_PER_MAP;j++){
 			int id = map[sd->bl.m].drop_list[j].drop_id;
-			int type = map[sd->bl.m].drop_list[j].drop_type;
 			int per = map[sd->bl.m].drop_list[j].drop_per;
+			enum e_nightmare_drop_type type = map[sd->bl.m].drop_list[j].drop_type;
+
 			if(id == 0)
 				continue;
 			if(id == -1){
 				int eq_num=0,eq_n[MAX_INVENTORY];
 				memset(eq_n,0,sizeof(eq_n));
 				for(i=0;i<MAX_INVENTORY;i++) {
-					if( (type == 1 && !sd->inventory.u.items_inventory[i].equip)
-						|| (type == 2 && sd->inventory.u.items_inventory[i].equip)
-						||  type == 3)
+					if( (type&NMDT_INVENTORY && !sd->inventory.u.items_inventory[i].equip)
+						|| (type&NMDT_EQUIP && sd->inventory.u.items_inventory[i].equip)
+						||  type&NMDT_ALL)
 					{
 						int l;
 						ARR_FIND( 0, MAX_INVENTORY, l, eq_n[l] <= 0 );
@@ -7988,9 +7988,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(sd->inventory.u.items_inventory[i].nameid == id
 						&& rnd()%10000 < per
-						&& ((type == 1 && !sd->inventory.u.items_inventory[i].equip)
-							|| (type == 2 && sd->inventory.u.items_inventory[i].equip)
-							|| type == 3) ){
+						&& ((type&NMDT_INVENTORY && !sd->inventory.u.items_inventory[i].equip)
+							|| (type&NMDT_EQUIP && sd->inventory.u.items_inventory[i].equip)
+							|| type&NMDT_ALL) ){
 						if(sd->inventory.u.items_inventory[i].equip)
 							pc_unequipitem(sd,i,3);
 						pc_dropitem(sd,i,1);

@@ -3460,15 +3460,17 @@ int map_delmap(char* mapname)
 /// Initializes map flags and adjusts them depending on configuration.
 void map_flags_init(void)
 {
-	int i;
-
-	for( i = 0; i < map.size(); i++ )
+	for( int i = 0; i < map.size(); i++ )
 	{
+		union u_mapflag_args args = {};
+
+		args.flag_val = 100;
+
 		// additional mapflag data
 		map[i].zone = 0; // restricted mapflag zone
 		map_setmapflag(i, MF_NOCOMMAND, false); // nocommand mapflag level
-		map[i].flag[MF_BEXP] = 100; // per map base exp multiplicator
-		map[i].flag[MF_JEXP] = 100; // per map job exp multiplicator
+		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// skill damage
 #ifdef ADJUST_SKILL_DAMAGE
@@ -4393,7 +4395,7 @@ bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
  */
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
 {
-	if (m < 0) {
+	if (m < 0 || m >= map.size()) {
 		ShowWarning("map_getmapflag: Invalid map ID %d.\n", m);
 		return -1;
 	}
@@ -4404,6 +4406,10 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 	}
 
 	switch(mapflag) {
+		case MF_NOLOOT:
+			return util::map_get(map[m].flag, MF_NOMOBLOOT, 0) && util::map_get(map[m].flag, MF_NOMVPLOOT, 0);
+		case MF_NOPENALTY:
+			return util::map_get(map[m].flag, MF_NOEXPPENALTY, 0) && util::map_get(map[m].flag, MF_NOZENYPENALTY, 0);
 		case MF_SKILL_DAMAGE:
 #ifdef ADJUST_SKILL_DAMAGE
 			nullpo_retr(-1, args);
@@ -4420,10 +4426,6 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 #else
 			return 0;
 #endif
-		case MF_NOLOOT:
-			return util::map_get(map[m].flag, MF_NOMOBLOOT, 0) && util::map_get(map[m].flag, MF_NOMVPLOOT, 0);
-		case MF_NOPENALTY:
-			return util::map_get(map[m].flag, MF_NOEXPPENALTY, 0) && util::map_get(map[m].flag, MF_NOZENYPENALTY, 0);
 		default:
 			return util::map_get(map[m].flag, mapflag, 0);
 	}
@@ -4439,7 +4441,7 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
  */
 int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
 {
-	if (m < 0) {
+	if (m < 0 || m >= map.size()) {
 		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
 		return -1;
 	}

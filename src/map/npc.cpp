@@ -3997,11 +3997,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					break;
 				}
 				if (!strcmpi(drop_arg2, "inventory"))
-					args.nightmaredrop.drop_type = 1;
+					args.nightmaredrop.drop_type = NMDT_INVENTORY;
 				else if (!strcmpi(drop_arg2, "equip"))
-					args.nightmaredrop.drop_type = 2;
+					args.nightmaredrop.drop_type = NMDT_EQUIP;
 				else if (!strcmpi(drop_arg2, "all"))
-					args.nightmaredrop.drop_type = 3;
+					args.nightmaredrop.drop_type = NMDT_ALL;
 
 				if (args.nightmaredrop.drop_id != 0)
 					map_setmapflag_sub(m, MF_PVP_NIGHTMAREDROP, true, &args);

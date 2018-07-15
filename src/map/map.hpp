@@ -596,27 +596,38 @@ enum e_skill_damage_type : uint8 {
 	SKILLDMG_MAX
 };
 
-/// Union for mapflag values
-union u_mapflag_args {
-	struct point nosave;
+#ifdef ADJUST_SKILL_DAMAGE
+/// Struct for MF_SKILLDAMAGE
+struct s_skill_damage {
+	unsigned int map; ///< Maps (used for skill_damage_db.txt)
+	uint16 skill_id; ///< Skill ID (used for mapflag)
+	uint16 caster; ///< Caster type
+	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
+};
+#endif
 
-	struct {
-		int drop_id, drop_type, drop_per;
-	} nightmaredrop;
-
-	struct {
-		int rate[SKILLDMG_MAX];
-		uint16 caster;
-	} skill_damage;
-
-	int flag_val;
+/// Enum for item drop type for MF_PVP_NIGHTMAREDROP
+enum e_nightmare_drop_type : uint8 {
+	NMDT_INVENTORY = 0x1,
+	NMDT_EQUIP = 0x2,
+	NMDT_ALL = (NMDT_INVENTORY|NMDT_EQUIP)
 };
 
 /// Struct for MF_PVP_NIGHTMAREDROP
 struct s_drop_list {
 	int drop_id;
-	int drop_type;
 	int drop_per;
+	enum e_nightmare_drop_type drop_type;
+};
+
+/// Union for mapflag values
+union u_mapflag_args {
+	struct point nosave;
+	struct s_drop_list nightmaredrop;
+#ifdef ADJUST_SKILL_DAMAGE
+	struct s_skill_damage skill_damage;
+#endif
+	int flag_val;
 };
 
 // used by map_setcell()
@@ -688,16 +699,6 @@ struct iwall_data {
 	int8 dir;
 	bool shootable;
 };
-
-#ifdef ADJUST_SKILL_DAMAGE
-/// Struct of skill damage adjustment
-struct s_skill_damage {
-	unsigned int map; ///< Maps (used for skill_damage_db.txt)
-	uint16 skill_id; ///< Skill ID (used for mapflag)
-	uint16 caster; ///< Caster type
-	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
-};
-#endif
 
 struct questinfo_req {
 	unsigned int quest_id;
