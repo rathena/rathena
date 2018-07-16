@@ -127,7 +127,7 @@ int map_port=0;
 
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int minsave_interval = 100;
-unsigned char save_settings = CHARSAVE_ALL;
+int16 save_settings = CHARSAVE_ALL;
 bool agit_flag = false;
 bool agit2_flag = false;
 bool agit3_flag = false;
@@ -250,8 +250,7 @@ int map_freeblock_unlock (void)
 
 // Timer function to check if there some remaining lock and remove them if so.
 // Called each 1s
-int map_freeblock_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_freeblock_timer){
 	if (block_free_lock > 0) {
 		ShowError("map_freeblock_timer: block_free_lock(%d) is invalid.\n", block_free_lock);
 		block_free_lock = 1;
@@ -1504,8 +1503,7 @@ int map_get_new_object_id(void)
  * Timered function to clear the floor (remove remaining item)
  * Called each flooritem_lifetime ms
  *------------------------------------------*/
-int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_clearflooritem_timer){
 	struct flooritem_data* fitem = (struct flooritem_data*)idb_get(id_db, id);
 
 	if (fitem == NULL || fitem->bl.type != BL_ITEM || (fitem->cleartimer != tid)) {
@@ -2769,8 +2767,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_removemobs_timer){
 	int count;
 	const int16 m = id;
 

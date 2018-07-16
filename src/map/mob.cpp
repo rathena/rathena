@@ -126,7 +126,7 @@ static DBMap *mob_summon_db; /// Random Summon DB. struct s_randomsummon_group -
 /*==========================================
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/
-static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(mob_spawn_guardian_sub);
 int mob_skill_id2skill_idx(int mob_id,uint16 skill_id);
 
 /*========================================== [Playtester]
@@ -199,7 +199,7 @@ int mvptomb_setdelayspawn(struct npc_data *nd) {
  * @param id: Block list ID
  * @param data: Used for add_timer_func_list
  */
-int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(mvptomb_delayspawn){
 	struct npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
 
 	if (nd) {
@@ -768,8 +768,8 @@ int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0
 /*==========================================
  * Set a Guardian's guild data [Skotlex]
  *------------------------------------------*/
-static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data)
-{	//Needed because the guild_data may not be available at guardian spawn time.
+static TIMER_FUNC(mob_spawn_guardian_sub){
+	//Needed because the guild_data may not be available at guardian spawn time.
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md;
 	struct guild* g;
@@ -1024,8 +1024,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 /*==========================================
  * mob spawn with delay (timer function)
  *------------------------------------------*/
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(mob_delayspawn){
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
 
@@ -2064,8 +2063,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 /*==========================================
  * Negligent processing for mob outside PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(mob_ai_lazy){
 	map_foreachmob(mob_ai_sub_lazy,tick);
 	return 0;
 }
@@ -2073,8 +2071,7 @@ static int mob_ai_lazy(int tid, unsigned int tick, int id, intptr_t data)
 /*==========================================
  * Serious processing for mob in PC field of view   (interval timer function)
  *------------------------------------------*/
-static int mob_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(mob_ai_hard){
 
 	if (battle_config.mob_ai&0x20)
 		map_foreachmob(mob_ai_sub_lazy,tick);
@@ -2141,8 +2138,7 @@ static struct item_drop* mob_setlootitem(struct s_mob_lootitem *item, unsigned s
 /*==========================================
  * item drop with delay (timer function)
  *------------------------------------------*/
-static int mob_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(mob_delay_item_drop){
 	struct item_drop_list *list;
 	struct item_drop *ditem;
 
@@ -2206,8 +2202,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	dlist->item = ditem;
 }
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(mob_timer_delete){
 	struct block_list* bl = map_id2bl(id);
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
 
@@ -2253,8 +2248,7 @@ int mob_deleteslave(struct mob_data *md)
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
-int mob_respawn(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(mob_respawn){
 	struct block_list *bl = map_id2bl(id);
 
 	if(!bl) return 0;

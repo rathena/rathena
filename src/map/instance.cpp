@@ -92,8 +92,7 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 /*==========================================
  * Deletes an instance timer (Destroys instance)
  *------------------------------------------*/
-static int instance_delete_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(instance_delete_timer){
 	instance_destroy(id);
 
 	return 0;
@@ -102,8 +101,7 @@ static int instance_delete_timer(int tid, unsigned int tick, int id, intptr_t da
 /*==========================================
  * Create subscription timer
  *------------------------------------------*/
-static int instance_subscription_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(instance_subscription_timer){
 	int i, ret;
 	unsigned short instance_id = instance_wait.id[0];
 	struct map_session_data *sd = NULL;

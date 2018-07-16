@@ -2143,6 +2143,7 @@
 	parseable_packet(0x096E,-1,clif_parse_merge_item_req,2,4); // CZ_REQ_MERGE_ITEM
 	ack_packet(ZC_ACK_MERGE_ITEM,0x096F,7,2,4,6,7); // ZC_ACK_MERGE_ITEM
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
+	packet(0x9CD,8); // ZC_MSG_COLOR
 #endif
 
 // 2013-08-21bRagexe
@@ -2381,9 +2382,9 @@
 
 // 2018-03-07bRagexeRE
 #if PACKETVER >= 20180307
-	parseable_packet(0x0A68,3,clif_parse_dull,0);
+	parseable_packet(0x0A68,3,clif_parse_open_ui,2);
 	packet(0x0AE2,7);
-	parseable_packet(0x0AEF,2,clif_parse_dull,0);
+	parseable_packet(0x0AEF,2,clif_parse_attendance_request,0);
 	packet(0x0AF0,10);
 #endif
 

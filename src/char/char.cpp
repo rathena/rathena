@@ -67,7 +67,7 @@ struct s_subnet {
 } subnet[16];
 int subnet_count = 0;
 
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(char_chardb_waiting_disconnect);
 
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
@@ -2175,8 +2175,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
 //replies/disconnect the player we tried to kick. [Skotlex]
 //------------------------------------------------
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(char_chardb_waiting_disconnect){
 	struct online_char_data* character;
 	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
@@ -2202,12 +2201,12 @@ int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+TIMER_FUNC(char_online_data_cleanup){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
-int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(char_clan_member_cleanup){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;

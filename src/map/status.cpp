@@ -4965,6 +4965,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if( bl->type&BL_PC && !(sd && sd->state.permanent_speed) && status->speed < battle_config.max_walk_speed )
 			status->speed = battle_config.max_walk_speed;
 
+		if( bl->type&BL_PET && ((TBL_PET*)bl)->master)
+			status->speed = status_get_speed(&((TBL_PET*)bl)->master->bl);
 		if( bl->type&BL_HOM && battle_config.hom_setting&HOMSET_COPY_SPEED && ((TBL_HOM*)bl)->master)
 			status->speed = status_get_speed(&((TBL_HOM*)bl)->master->bl);
 		if( bl->type&BL_MER && ((TBL_MER*)bl)->master)
@@ -8544,7 +8546,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_FREEZING:
 	case SC_CRYSTALIZE:
-		if ((type == SC_FREEZING && sc->data[SC_BURNING]) || sc->data[SC_WARMER])
+		if (sc->data[SC_WARMER])
 			return 0; // Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
 		break;
 	case SC_SLEEP:
@@ -8587,9 +8589,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if(sc->data[SC_SATURDAYNIGHTFEVER])
 			return 0;
 		break;
-	case SC_BURNING:
-		if (sc->data[SC_FREEZING])
-			return 0;
 	// Fall through
 	case SC_WHITEIMPRISON:
 		if (sc->opt1)
@@ -12721,8 +12720,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
  * @param data: Information passed through the timer call
  * @return 1: Success 0: Fail
  */
-int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(status_change_timer){
 	enum sc_type type = (sc_type)data;
 	struct block_list *bl;
 	struct map_session_data *sd;
@@ -14287,8 +14285,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
  * @param data: data pushed through timer function
  * @return 0
  */
-static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(status_natural_heal_timer){
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
 	map_foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;

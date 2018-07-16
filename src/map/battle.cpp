@@ -299,8 +299,7 @@ struct delay_damage {
 	bool isspdamage;
 };
 
-int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(battle_delay_damage_sub){
 	struct delay_damage *dat = (struct delay_damage *)data;
 
 	if ( dat ) {
@@ -6300,8 +6299,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			 * RE MDEF Reduction
 			 * Damage = Magic Attack * (1000+eMDEF)/(1000+eMDEF) - sMDEF
 			 */
-			if (mdef < -99)
-				mdef = -99; // Avoid divide by 0
+			if (mdef < 0)
+				mdef = 0; // Negative eMDEF is treated as 0 on official
 
 			ad.damage = ad.damage * (1000 + mdef) / (1000 + mdef * 10) - mdef2;
 #else
@@ -8514,6 +8513,7 @@ static const struct _battle_data {
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
+	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8648,6 +8648,13 @@ void battle_adjust_conf()
 	if( battle_config.feature_homunculus_autofeed ){
 		ShowWarning("conf/battle/feature.conf homunculus autofeeding is enabled but it requires PACKETVER 2017-09-20 or newer, disabling...\n");
 		battle_config.feature_homunculus_autofeed = 0;
+	}
+#endif
+
+#if PACKETVER < 20180307
+	if( battle_config.feature_attendance ){
+		ShowWarning("conf/battle/feature.conf attendance system is enabled but it requires PACKETVER 2018-03-07 or newer, disabling...\n");
+		battle_config.feature_attendance = 0;
 	}
 #endif
 

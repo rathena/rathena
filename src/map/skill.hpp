@@ -7,6 +7,7 @@
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // MAX_SKILL, struct square
+#include "../common/timer.hpp"
 
 #include "map.hpp" // struct block_list
 
@@ -440,8 +441,8 @@ uint16 skill_idx2id(uint16 idx);
 uint16 SKILL_MAX_DB(void);
 
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
-int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);
-int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(skill_castend_id);
+TIMER_FUNC(skill_castend_pos);
 int skill_castend_map( struct map_session_data *sd,uint16 skill_id, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
@@ -523,7 +524,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,uint16 skill_id,uint
 int skill_blockpc_start(struct map_session_data*, int, int);
 int skill_blockpc_get(struct map_session_data *sd, int skillid);
 int skill_blockpc_clear(struct map_session_data *sd);
-int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(skill_blockpc_end);
 int skill_blockhomun_start (struct homun_data*,uint16 skill_id,int);
 int skill_blockmerc_start (struct mercenary_data*,uint16 skill_id,int);
 

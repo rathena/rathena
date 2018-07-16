@@ -48,8 +48,7 @@ int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
 int guild_checkskill(struct guild *g, int id);
 
-int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(guild_save_timer){
 	static int last_id = 0; //To know in which guild we were.
 	int state = 0; //0: Have not reached last guild. 1: Reached last guild, ready for save. 2: Some guild saved, don't do further saving.
 	DBIterator *iter = db_iterator(guild_db_);
@@ -1673,6 +1672,8 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_
 			mapif_guild_info(-1,g);
 		mapif_guild_skillupack(guild_id,skill_id,account_id);
 		g->save_flag |= (GS_LEVEL|GS_SKILL); // Change guild & guild_skill
+		if (skill_id == GD_GUILD_STORAGE)
+			inter_guild_tosql(g, g->save_flag); // Force save for GD_GUILD_STORAGE
 	}
 	return 0;
 }
