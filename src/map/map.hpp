@@ -958,7 +958,7 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
 enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
-int map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
+bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
 #define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
 #define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
 

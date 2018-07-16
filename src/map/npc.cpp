@@ -3961,9 +3961,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			break;
 		case MF_NOSAVE: {
 			char savemap[MAP_NAME_LENGTH_EXT];
-			union u_mapflag_args args;
-
-			memset(&args, 0, sizeof(args));
+			union u_mapflag_args args = {};
 
 			if (state && !strcmpi(w4, "SavePoint")) {
 				args.nosave.map = 0;
@@ -3983,9 +3981,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		case MF_PVP_NIGHTMAREDROP: {
 			char drop_arg1[16], drop_arg2[16];
-			union u_mapflag_args args;
-
-			memset(&args, 0, sizeof(args));
+			union u_mapflag_args args = {};
 
 			if (sscanf(w4, "%15[^,],%15[^,],%11d", drop_arg1, drop_arg2, &args.nightmaredrop.drop_per) == 3) {
 
@@ -4012,9 +4008,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		case MF_BATTLEGROUND:
 			if (state) {
-				union u_mapflag_args args;
-
-				memset(&args, 0, sizeof(args));
+				union u_mapflag_args args = {};
 
 				if (sscanf(w4, "%11d", &args.flag_val) < 1)
 					args.flag_val = 1; // Default value
@@ -4026,9 +4020,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		case MF_NOCOMMAND:
 			if (state) {
-				union u_mapflag_args args;
-
-				memset(&args, 0, sizeof(args));
+				union u_mapflag_args args = {};
 
 				if (sscanf(w4, "%11d", &args.flag_val) < 1)
 					args.flag_val = 100; // No level specified, block everyone.
@@ -4040,9 +4032,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		case MF_RESTRICTED:
 			if (state) {
-				union u_mapflag_args args;
-
-				memset(&args, 0, sizeof(args));
+				union u_mapflag_args args = {};
 
 				if (sscanf(w4, "%11d", &args.flag_val) == 1)
 					map_setmapflag_sub(m, MF_RESTRICTED, true, &args);
@@ -4054,9 +4044,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		case MF_JEXP:
 		case MF_BEXP: {
-				union u_mapflag_args args;
-
-				memset(&args, 0, sizeof(args));
+				union u_mapflag_args args = {};
 
 				if (sscanf(w4, "%11d", &args.flag_val) < 1)
 					args.flag_val = 0;
@@ -4075,9 +4063,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			if (!state)
 				map_setmapflag(m, MF_SKILL_DAMAGE, false);
 			else {
-				union u_mapflag_args args;
-
-				memset(&args, 0, sizeof(args));
+				union u_mapflag_args args = {};
 
 				if (sscanf(w4, "%30[^,],%23[^,],%11d,%11d,%11d,%11d[^\n]", skill_name, caster_constant, &args.skill_damage.rate[SKILLDMG_PC], &args.skill_damage.rate[SKILLDMG_MOB], &args.skill_damage.rate[SKILLDMG_BOSS], &args.skill_damage.rate[SKILLDMG_OTHER]) >= 3) {
 					if (ISDIGIT(caster_constant[0]))
@@ -4110,7 +4096,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				}
 			}
 #else
-			ShowWarning("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (core.h). Skipping this mapflag..\n");
+			ShowWarning("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (src/config/core.hpp). Skipping this mapflag..\n");
 #endif
 			break;
 		}
