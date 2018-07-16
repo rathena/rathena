@@ -73,6 +73,7 @@
 	export_constant(JOB_SUMMER);
 	export_constant(JOB_HANBOK);
 	export_constant(JOB_OKTOBERFEST);
+	export_constant(JOB_SUMMER2);
 
 	export_constant(JOB_NOVICE_HIGH);
 	export_constant(JOB_SWORDMAN_HIGH);
@@ -6005,6 +6006,13 @@
 	export_constant_npc(JT_4_F_SE_SUN);
 	export_constant_npc(JT_4_M_SE_MOON);
 	export_constant_npc(JT_4_M_SE_STAR);
+	export_constant_npc(JT_4_EP17_KAYA);
+	export_constant_npc(JT_4_EP17_AS);
+	export_constant_npc(JT_4_EP17_ELYUMINA);
+	export_constant_npc(JT_4_EP17_MORNING);
+	export_constant_npc(JT_4_EP17_MIGUEL);
+	export_constant_npc(JT_4_EP17_NIHIL_K);
+	export_constant_npc(JT_4_EP17_MIGUEL_D);
 	#undef export_constant_npc
 
 	/* special effects */
@@ -7227,6 +7235,14 @@
 	export_constant(MD_DETECTOR);
 	export_constant(MD_STATUS_IMMUNE);
 	export_constant(MD_SKILL_IMMUNE);
+
+	/* guild storage flags */
+	export_constant(GSTORAGE_OPEN);
+	export_constant(GSTORAGE_STORAGE_ALREADY_OPEN);
+	export_constant(GSTORAGE_ALREADY_OPEN);
+	export_constant(GSTORAGE_NO_GUILD);
+	export_constant(GSTORAGE_NO_STORAGE);
+	export_constant(GSTORAGE_NO_PERMISSION);
 
 	#undef export_constant
 	#undef export_constant2

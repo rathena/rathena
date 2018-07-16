@@ -7427,7 +7427,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				end;
 			}
 			mes "[Lusa]";
-			if (.@has_manual == 1) {
+			if (isequippedcnt(2941) || countitem(2941)) {
 				mes "Hey! What kind of con is this?! You already had a manual!";
 			} else {
 				getitem 2941,1;// Gunslinger_Manual
@@ -8227,9 +8227,8 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 		mes "[Sharp Snake's Fang]";
 		mes "Yesssssss? I wass sssent by the academy.";
 		close;
-	} else if (nov_3_guns > 7) {
-		disable_items;
 	}
+	disable_items;
 	mes "[Sharp Snake's Fang]";
 	mes "I am ^A2563ESharp Snake's Fang^000000 from the Gunslinger Guild. What do you need?";
 	next;
@@ -8239,9 +8238,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 		next;
 		mes "[Sharp Snake's Fang]";
 		mes "You don't need to worry, he said you're doing great!";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	mes "[Sharp Snake's Fang]";
 	mes "Do you wish to exchange your guild issued weapon?";
@@ -8249,125 +8246,66 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 	mes "[Sharp Snake's Fang]";
 	mes "Let's first check your gun's condition.";
 	next;
-	if (getequipname(EQI_HAND_R) == "") {
+	.@gun = getequipid(EQI_HAND_R);
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	if (.@gun == -1) {
 		mes "[Sharp Snake's Fang]";
 		mes "If you want to proceed, you need to have your weapon equipped.";
-		close2;
-		enable_items;
-		end;
-	} else {
-		.@gun = getequipid(EQI_HAND_R);
+		close;
 	}
 	mes "[Sharp Snake's Fang]";
 	mes "Let's see...";
 	next;
+	mes "[Sharp Snake's Fang]";
 	if (.@gun == 13116) {// Novice_Revolver
 		.@gun_code$ = "RV";
 		.@now_gun$ = "Revolver";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Revolver?";
-		next;
 	} else if (.@gun == 13180) {// Novice_Rifle
 		.@gun_code$ = "RF";
 		.@now_gun$ = "Rifle";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Rifle?";
-		next;
 	} else if (.@gun == 13181) {// Novice_Shotgun
 		.@gun_code$ = "SG";
 		.@now_gun$ = "Shotgun";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Shotgun?";
-		next;
 	} else if (.@gun == 13182) {// Novice_Gatling
 		.@gun_code$ = "GT";
 		.@now_gun$ = "Gatling";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Gatling Gun?";
-		next;
 	} else if (.@gun == 13183) {// Novice_Grenade_Launcher
 		.@gun_code$ = "GL";
 		.@now_gun$ = "Grenade Launcher";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Grenade Launcher?";
-		next;
 	} else {
-		mes "[Sharp Snake's Fang]";
 		mes "The gun you are using is was not provided by the guild.";
 		close;
 	}
+	next;
 	mes "[Sharp Snake's Fang]";
 	mes "The gun looks to be in good condition.";
 	next;
 	mes "[Sharp Snake's Fang]";
 	mes "Please select the novice weapon you wish to exchange for your "+.@now_gun$+"!";
 	next;
-	switch(select("Exchange for Revolver", "Exchange for Rifle", "Exchange for Shotgun", "Exchange for Gatling Gun", "Exchange for Grenade Launcher", "Cancel")) {
-	case 1:
-		if (.@gun == 13116) {
+	setarray .@selection_item_id[0], 13116, 13180, 13181, 13182, 13183;
+	.@s = select("Exchange for Revolver", "Exchange for Rifle", "Exchange for Shotgun", "Exchange for Gatling Gun", "Exchange for Grenade Launcher", "Cancel") - 1;
+	if (.@s != 5) {
+		if (.@gun == .@selection_item_id[.@s]) {
 			mes "[Sharp Snake's Fang]";
 			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13116,1;// Novice_Revolver
+			close;
 		}
-		break;
-	case 2:
-		if (.@gun == 13180) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13180,1;// Novice_Rifle
-		}
-		break;
-	case 3:
-		if (.@gun == 13181) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13181,1;// Novice_Shotgun
-		}
-		break;
-	case 4:
-		if (.@gun == 13182) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13182,1;// Novice_Gatling
-		}
-		break;
-	case 5:
-		if (.@gun == 13183) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13183,1;// Novice_Grenade_Launcher
-		}
-		break;
-	case 6:
-		break;
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@gun) || callfunc("F_IsEquipCardHack", EQI_HAND_R, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine))
+			close;
+
+		delequip EQI_HAND_R;
+		getitem .@selection_item_id[.@s],1;
 	}
 	mes "[Sharp Snake's Fang]";
-	mes "Gun control management number ^FF0000"+.@gun_code$+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+"^000000.";
+	mes "Gun control management number ^FF0000"+.@gun_code$+""+rand(9)+""+rand(9)+""+rand(9)+""+rand(9)+""+rand(9)+""+rand(9)+"^000000.";
 	next;
 	mes "[Sharp Snake's Fang]";
 	mes "Are there any issues?";
@@ -8375,9 +8313,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 	select("No issues.");
 	mes "[Sharp Snake's Fang]";
 	mes "Cherish your gun!";
-	close2;
-	enable_items;
-	end;
+	close;
 }
 
 iz_ac02_a,162,86,4	duplicate(Guild Staff#ac)	Guild Staff#ac_a	4W_M_02
@@ -12036,7 +11972,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:	// custom timer (there is officially no respawn delay)
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -12069,7 +12010,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:	// custom timer (there is officially no respawn delay)
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -12102,7 +12048,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:	// custom timer (there is officially no respawn delay)
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -12887,9 +12838,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "[Refining Machine Wagjak]";
 		mes "^ff0000- Error number 000"+.@part+" -^000000";
 		mes "Item is not equipped.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	mes "[Refining Machine Wagjak]";
 	mes "Searching for the equipment information - completed.";
@@ -12898,9 +12847,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 4444 -^000000";
 		mes "This item cannot be refined.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed 
 		// mes "[Refining Machine Wagjak]";
@@ -12910,13 +12857,15 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		// enable_items;
 		// end;
 	// }
-	if (getequiprefinerycnt(.@part) >= 10) {
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	if (.@refinerycnt >= 10) {
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 1010 -^000000";
 		mes "At the current version, you can do refining up to level 10.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	if (isbegin_quest(5153) == 1) {
 		if (getequipweaponlv(.@part) == 1) {
@@ -12928,9 +12877,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 			if (select("Refine.", "Don't Refine.") == 2) {
 				mes "[Refining Machine Wagjak]";
 				mes "Cancel the refining.";
-				close2;
-				enable_items;
-				end;
+				close;
 			}
 			if (getequippercentrefinery(.@part) < 100) {
 				mes "[Refining Machine Wagjak]";
@@ -12941,19 +12888,18 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 				if (select("Refine.", "Don't Refine.") == 2) {
 					mes "[Refining Machine Wagjak]";
 					mes "Refining has been cancelled as per the user's request.";
-					close2;
-					enable_items;
-					end;
+					close;
 				}
 			}
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt))
+				close;
 			if (getequippercentrefinery(.@part) <= rand(100)) {
 				failedrefitem .@part;
 				mes "[Refining Machine Wagjak]";
 				mes "Result : Fail";
 				mes "refining failed. The equipment was destroyed.";
-				close2;
-				enable_items;
-				end;
+				close;
 			} else {
 				successrefitem .@part;
 				mes "[Refining Machine Wagjak]";
@@ -12963,15 +12909,11 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 				next;
 				mes "[Refining Machine Wagjak]";
 				mes "Service usage coupon was used.";
-				close2;
-				enable_items;
-				end;
+				close;
 			}
 		}
 	}
 
-	.@refineitemid = getequipid(.@part); // save id of the item
-	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	.@price = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_MATERIAL_ID);
 
@@ -12988,9 +12930,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	if (select("Refine.", "Don't Refine.") == 2) {
 		mes "[Refining Machine Wagjak]";
 		mes "Refining has been cancelled as per the user's request.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	if (getequippercentrefinery(.@part) < 100) {
 		mes "[Refining Machine Wagjak]";
@@ -13001,9 +12941,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		if (select("Refine.", "Don't Refine.") == 2) {
 			mes "[Refining Machine Wagjak]";
 			mes "Refining has been cancelled as per the user's request.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
 	}
 	if (countitem(.@material) > 0 && Zeny >= .@price) {
@@ -13011,8 +12949,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		Zeny -= .@price;
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
-		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 			mes "[Refining Machine Wagjak]";
 			emotion ET_FRET;
 			mes "Wait a second...";
@@ -13024,9 +12961,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 8282 -^000000";
 		mes "You are short of refining price.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	if (getequippercentrefinery(.@part) <= rand(100)) {
 		failedrefitem .@part;
@@ -13039,9 +12974,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "Result : Success";
 		mes "Congratulations!! You succeeded in refining.";
 	}
-	close2;
-	enable_items;
-	end;
+	close;
 }
 
 izlude,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz	2_MONEMUS
@@ -14043,9 +13976,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		next;
 		mes "[Almond J]";
 		mes "If you have anything to do with the enchant association, please consult with Mounds inside.";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@in_tutorial == 4) {
 		.@part = EQI_ARMOR;
 		mes "[Almond J]";
@@ -14075,25 +14006,21 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		if (select("Hidden enchant start!!", "Wait for a while.") == 2) {
 			mes "[Almond J]";
 			mes "Heh? Eh? Hik?! Come here quick.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
 		if (!getequipisequiped(.@part)) {
 			mes "[Almond J]";
 			mes "Please come back after you have equipped the Cotton Shirt.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
-		if (getequipid(EQI_ARMOR) == 2302) {
-			.@refineCount = getequiprefinerycnt(EQI_ARMOR);
+		.@equip_id = getequipid(.@part);
+		if (.@equip_id == 2302) {
+			.@refineCount = getequiprefinerycnt(.@part);
+			setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 		} else {
 			mes "[Almond J]";
 			mes "Hing, it is not a normal Cotton Shirt.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
 		mes "[Almond J]";
 		mes "Now!! Start the first hidden enchant!! Start!!!!!";
@@ -14101,8 +14028,12 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		specialeffect2 EF_REPAIRWEAPON;
 		progressbar "ffff00", 2;
 		completequest 5159;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refineCount))
+			close;
+
 		delequip .@part;
-		setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1);
 		getitem2 2302,1,1,.@refineCount,0,.@equip_card[0],.@equip_card[1],4800,4795;// Cotton_Shirt_ ; SP50 ; HP100
 		mes "[Almond J]";
 		mes "Zzazanzn!! Completed!!";
@@ -14115,9 +14046,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		mes "It's fun. I want to do it again. Hey, another trial Ok? Aaaaa!!! I want to do the hidden enchant again.";
 		next;
 		mes "Gradually you are getting into your own world. You better go back to Mounds.";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@in_tutorial == 5) {
 		mes "[Almond J]";
 		mes "How about it? Don't you think the hidden enchant is great? Any chance to do another hidden enchant?";
@@ -14126,9 +14055,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		mes "It's fun. I want to do it again. Hey, another trial Ok? Aaaaa!!! I want to do the hidden enchant again.";
 		next;
 		mes "Gradually you are getting into your own world. You better go back to Mounds.";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@in_tutorial == 6) {
 		mes "[Almond J]";
 		mes "Heh heh... how are you? I am doing a ^142CEBservice of free hidden enchant for the beginner's weapon to advertise the enchant association.^000000.";
@@ -14136,9 +14063,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	} else {
 		mes "[Almond J]";
 		mes "Something strange must've happened. If this continues, please contact customer service.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	mes "[Almond J]";
 	mes "As you are still a beginner, you don't have a very, very, very functional jewelry, but soon you will have.";
@@ -14159,16 +14084,12 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		mes "[Almond J]";
 		mes "^FD4F02For Novices-";
 		mes "Cutter, Mace, Rod, Axe, Etc.";
-		close2;
-		enable_items;
-		end;
+		close;
 	case 3:
 		mes "[Almond J]";
 		mes "Ye?!?!?!?!?!";
 		mes "Where are you going? You should do the hidden enchant before going.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 
 	.@part = EQI_HAND_R;
@@ -14176,13 +14097,11 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	if (!getequipisequiped(.@part)) {
 		mes "[Almond J]";
 		mes "Hehehe... hidden enchant makes me excited. But you should come back with your weapon armed.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	.@equip = getequipid(.@part);
 	.@equip_refine = getequiprefinerycnt(.@part);
-	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1);
+	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
 	mes "[Almond J]";
 	switch(.@equip) {
@@ -14191,9 +14110,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		next;
 		mes "[Almond J]";
 		mes "But this weapon might be strange to add a hidden enchant? Sorry.";
-		close2;
-		enable_items;
-		end;
+		close;
 	case 1381: // N_Battle_Axe
 	case 1545: // N_Mace
 	case 1639: // N_Rod
@@ -14206,14 +14123,12 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	case 13182: // Novice_Gatling
 	case 13183: // Novice_Grenade_Launcher
 	case 13415: // N_Falchion
-		mes "It is!! The ^142ceb"+ getequipname(EQI_HAND_R) +"^000000.";
+		mes "It is!! The ^142ceb"+ getequipname(.@part) +"^000000.";
 		next;
 		break;
 	default:
 		mes "Ehee.. It is not a Novice Weapon. Leaving this expensive weapon to us and if broken... I'm not taking that chance.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	setarray .@enchantments[1],4700,4701,4702,4730,4731,4732,4740,4741,4742,4710,4711,4712,4720,4721,4722,4750,4751,4752,4760,4766,4764,4786,4791,4795,4800,4811,4832,4818,4815;
 	.@enchant1 = rand(1,35);
@@ -14234,14 +14149,17 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	next;
 	specialeffect2 EF_REPAIRWEAPON;
 	progressbar "ffff00", 3;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	delequip .@part;
 	getitem2 .@equip,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@enchant1,.@enchant2;
 	mes "[Almond J]";
 	mes "Zzazanzn!! Completed!!";
 	mes "As I'm too excited, I can't check the options. Please check it yourself.";
-	close2;
-	enable_items;
-	end;
+	close;
 }
 
 izlude_a,108,139,7	duplicate(Enchanter Almond J#iz)	Enchanter Almond J#iz_a	4_CAT_SAILOR3

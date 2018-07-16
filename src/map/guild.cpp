@@ -60,8 +60,8 @@ struct s_guild_skill_tree {
 	}need[MAX_GUILD_SKILL_REQUIRE];
 } guild_skill_tree[MAX_GUILDSKILL];
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data);
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(guild_payexp_timer);
+static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
 struct npc_data **guild_flags;
@@ -309,7 +309,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(guild_payexp_timer){
 	guild_expcache_db->clear(guild_expcache_db,guild_payexp_timer_sub);
 	return 0;
 }
@@ -341,7 +341,7 @@ int guild_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
 }
 
 //Code from party_send_xy_timer [Skotlex]
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(guild_send_xy_timer){
 	guild_db->foreach(guild_db,guild_send_xy_timer_sub,tick);
 	return 0;
 }
@@ -540,7 +540,7 @@ int guild_recv_info(struct guild *sg) {
 		if( sd==NULL )
 			continue;
 		sd->guild = g;
-		if(channel_config.ally_tmpl.name && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
+		if(channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
 		}
 
@@ -594,7 +594,7 @@ int guild_invite(struct map_session_data *sd, struct map_session_data *tsd) {
 	if(tsd==NULL || g==NULL)
 		return 0;
 
-	if( (i=guild_getposition(sd))<0 || !(g->position[i].mode&0x0001) )
+	if( (i=guild_getposition(sd))<0 || !(g->position[i].mode&GUILD_PERM_INVITE) )
 		return 0; //Invite permission.
 
 	if(!battle_config.invite_request_check) {
@@ -709,7 +709,7 @@ void guild_member_joined(struct map_session_data *sd) {
 
 		if (g->instance_id != 0)
 			instance_reqinfo(sd, g->instance_id);
-		if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
+		if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
 		}
 	}
@@ -806,7 +806,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 	if(sd->status.guild_id!=guild_id)
 		return 0;
 
-	if( (ps=guild_getposition(sd))<0 || !(g->position[ps].mode&0x0010) )
+	if( (ps=guild_getposition(sd))<0 || !(g->position[ps].mode&GUILD_PERM_EXPEL) )
 		return 0;	//Expulsion permission
 
 	//Can't leave inside guild castles.
@@ -1092,14 +1092,11 @@ int guild_memberposition_changed(struct guild *g,int idx,int pos) {
 /*====================================================
  * Change guild title or member
  *---------------------------------------------------*/
-int guild_change_position(int guild_id,int idx,
-	int mode,int exp_mode,const char *name) {
+int guild_change_position(int guild_id,int idx, int mode, int exp_mode, const char *name) {
 	struct guild_position p;
 
 	exp_mode = cap_value(exp_mode, 0, battle_config.guild_exp_limit);
-	//Mode 0x01 <- Invite
-	//Mode 0x10 <- Expel.
-	p.mode=mode&0x11;
+	p.mode = mode&GUILD_PERM_ALL;
 	p.exp_mode=exp_mode;
 	safestrncpy(p.name,name,NAME_LENGTH);
 	return intif_guild_position(guild_id,idx,&p);
@@ -1676,7 +1673,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 					clif_guild_allianceinfo(sd_mem);
 
 					// join ally channel
-					if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
+					if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 						channel_gjoin(sd_mem,2);
 					}
 				}
@@ -1761,7 +1758,7 @@ int guild_broken(int guild_id,int flag) {
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
 	storage_guild_delete(guild_id);
-	if( channel_config.ally_tmpl.name != NULL ) {
+	if( channel_config.ally_tmpl.name[0] ) {
 		channel_delete(g->channel,false);
 	}
 	idb_remove(guild_db,guild_id);

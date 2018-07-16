@@ -78,6 +78,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:
@@ -150,7 +151,7 @@ prontera,184,177,6	script	Refine Master	851,{
 
 		// anti-hack
 		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
-			callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+			callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
 			mes "[Refine Master]";
 			emotion ET_FRET;
 			mes "Wait a second...";

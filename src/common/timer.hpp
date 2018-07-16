@@ -20,9 +20,10 @@ enum {
 	TIMER_REMOVE_HEAP = 0x10,
 };
 
-// Struct declaration
+#define TIMER_FUNC(x) int x ( int tid, unsigned int tick, int id, intptr_t data )
 
-typedef int (*TimerFunc)(int tid, unsigned int tick, int id, intptr_t data);
+// Struct declaration
+typedef TIMER_FUNC((*TimerFunc));
 
 struct TimerData {
 	unsigned int tick;

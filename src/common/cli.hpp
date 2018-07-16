@@ -5,6 +5,7 @@
 #define	_CLI_HPP_
 
 #include "cbasetypes.hpp"
+#include "timer.hpp"
 
 #define MAX_CONSOLE_IN 200 //max is map...
 #define MIN_CONSOLE_IN 4 //min is help
@@ -30,7 +31,7 @@ bool cli_hasevent();
 void display_versionscreen(bool do_exit);
 bool opt_has_next_value(const char* option, int i, int argc);
 int cli_get_options(int argc, char ** argv);
-int parse_console_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(parse_console_timer);
 extern int parse_console(const char* buf); //particular for each serv
 
 #endif /* _CLI_HPP_ */

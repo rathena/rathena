@@ -167,8 +167,7 @@ int pc_get_group_level(struct map_session_data *sd) {
 	return sd->group_level;
 }
 
-static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
 	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
@@ -204,8 +203,7 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 	}
 }
 
-static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_spiritball_timer){
 	struct map_session_data *sd;
 	int i;
 
@@ -509,8 +507,7 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
  * @param data: Data
  * @return false - failure, true - success
  */
-int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_inventory_rental_end){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( sd == NULL )
@@ -1695,7 +1692,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		if (!(skill_id = skill_idx2id(i)) || skill_id < DC_HUMMING || skill_id > DC_SERVICEFORYOU)
 			continue;
 
-		if( &sd->sc && sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
+		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
 			//Link Dancer skills to bard.
 			if( sd->status.sex ) {
 				if( sd->status.skill[i-8].lv < 10 )
@@ -2400,8 +2397,7 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	status_calc_pc(sd,SCO_FORCE);
 }
 
-int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
 	struct s_autobonus *autobonus = (struct s_autobonus *)data;
 
@@ -5055,7 +5051,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume ) {
-		if( nameid != ITEMID_REINS_OF_MOUNT && &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -5403,7 +5399,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -5922,6 +5918,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_HANBOK:                return MAPID_HANBOK;
 		case JOB_GANGSI:                return MAPID_GANGSI;
 		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
+		case JOB_SUMMER2:               return MAPID_SUMMER2;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -6080,6 +6077,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_HANBOK:                return JOB_HANBOK;
 		case MAPID_GANGSI:                return JOB_GANGSI;
 		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
+		case MAPID_SUMMER2:               return JOB_SUMMER2;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -6255,6 +6253,7 @@ const char* job_name(int class_)
 		return msg_txt(NULL,570 - JOB_WEDDING+class_);
 
 	case JOB_SUMMER:
+	case JOB_SUMMER2:
 		return msg_txt(NULL,621);
 
 	case JOB_HANBOK:
@@ -6473,8 +6472,7 @@ const char* job_name(int class_)
  * target is define in sd->followtarget (bl.id)
  * used by pc_follow
  *----------------------------------------------------*/
-int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_follow_timer){
 	struct map_session_data *sd;
 	struct block_list *tbl;
 
@@ -6680,7 +6678,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	// Give EXPBOOST for quests even if src is NULL.
-	if (&sd->sc && sd->sc.data[SC_EXPBOOST]) {
+	if (sd->sc.data[SC_EXPBOOST]) {
 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 		if (battle_config.vip_bm_increase && pc_isvip(sd)) // Increase Battle Manual EXP rate for VIP
 			bonus += (sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase);
@@ -6692,7 +6690,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
-	if (&sd->sc && sd->sc.data[SC_JEXPBOOST])
+	if (sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	if (*job_exp) {
@@ -7625,8 +7623,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 }
 
-static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_respawn_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	if( sd != NULL )
 	{
@@ -7667,8 +7664,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		sd->canlog_tick = gettick();
 }
 
-int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_close_npc_timer){
 	TBL_PC *sd = map_id2sd(id);
 	if(sd) pc_close_npc(sd,data);
 	return 0;
@@ -9068,7 +9064,7 @@ void pc_setfalcon(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 void pc_setriding(struct map_session_data* sd, int flag)
 {
-	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.data[SC_ALL_RIDING] )
 		return;
 
 	if( flag ){
@@ -9455,8 +9451,7 @@ int pc_readreg2(struct map_session_data *sd, const char *reg) {
 /*==========================================
  * Exec eventtimer for player sd (retrieved from map_session (id))
  *------------------------------------------*/
-static int pc_eventtimer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_eventtimer){
 	struct map_session_data *sd=map_id2sd(id);
 	char *p = (char *)data;
 	int i;
@@ -10044,6 +10039,9 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
 	}
 	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_L) {
+		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
+			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
+
 		sd->status.shield = sd->weapontype2 = 0;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
@@ -10288,8 +10286,7 @@ int pc_calc_pvprank(struct map_session_data *sd)
 /*==========================================
  * Calculate next sd ranking calculation from config
  *------------------------------------------*/
-int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_calc_pvprank_timer){
 	struct map_session_data *sd;
 
 	sd=map_id2sd(id);
@@ -10519,8 +10516,7 @@ void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
 /*==========================================
  * Save 1 player data at autosave interval
  *------------------------------------------*/
-static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_autosave){
 	int interval;
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
@@ -10574,8 +10570,7 @@ static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
  * timer to do the day [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_day_timer){
 	char tmp_soutput[1024];
 
 	if (data == 0 && battle_config.day_duration <= 0)	// if we want a day
@@ -10595,8 +10590,7 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
  * timer to do the night [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_night_timer){
 	char tmp_soutput[1024];
 
 	if (data == 0 && battle_config.night_duration <= 0)	// if we want a night
@@ -10623,7 +10617,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 
 	// Cannot stand yet
 	// TODO: Move to SCS_NOSTAND [Cydh]
-	if (!force && &sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+	if (!force && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
 		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
@@ -10703,8 +10697,7 @@ bool pc_should_log_commands(struct map_session_data *sd)
  * Spirit Charm expiration timer.
  * @see TimerFunc
  */
-static int pc_spiritcharm_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_spiritcharm_timer){
 	struct map_session_data *sd;
 	int i;
 
@@ -11477,7 +11470,7 @@ void pc_readdb(void) {
 		uint16 j;
 		if (!pcdb_checkid(i))
 			continue;
-		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK || i == JOB_OKTOBERFEST)
+		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK || i == JOB_OKTOBERFEST || i == JOB_SUMMER2)
 			continue; //Classes that do not need exp tables.
 		idx = pc_class2idx(i);
 		if (!job_info[idx].max_level[0])
@@ -11764,7 +11757,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 	}
 }
 
-int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_expiration_timer){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( !sd ) return 0;
@@ -11779,7 +11772,7 @@ int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	return 0;
 }
 
-int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_autotrade_timer){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if (!sd)
@@ -11802,7 +11795,7 @@ int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
 
 /* this timer exists only when a character with a expire timer > 24h is online */
 /* it loops thru online players once an hour to check whether a new < 24h is available */
-int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_global_expiration_timer){
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
@@ -12066,7 +12059,7 @@ static void inline pc_bonus_script_check_final(struct map_session_data *sd) {
 * @param data
 * @author [Cydh]
 **/
-int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_bonus_script_timer){
 	struct map_session_data *sd;
 	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
 
@@ -12139,10 +12132,10 @@ void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
 	
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (&sd->sc && sd->sc.data[SC_BASILICA])
+		if (sd->sc.data[SC_BASILICA])
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
-	else if (!(&sd->sc) || !sd->sc.data[SC_BASILICA])
+	else if (!sd->sc.data[SC_BASILICA])
 		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
 }
 

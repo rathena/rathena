@@ -264,20 +264,20 @@ Instances:
 #      Map: "1@mcd"
 #      X: 127
 #      Y: 282
-#  - ID: 31
-#    Name: "Ritual of Blessing"
-#    LimitTime: 3600
-#    EnterAt:
-#      Map: "2@mir"
-#      X: 101
-#      Y: 12
-#  - ID: 32
-#    Name: "Room of Consciousness"
-#    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@mir"
-#      X: 101
-#      Y: 10
+  - ID: 31
+    Name: "Ritual of Blessing"
+    LimitTime: 3600
+    EnterAt:
+      Map: "2@mir"
+      X: 101
+      Y: 12
+  - ID: 32
+    Name: "Room of Consciousness"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@mir"
+      X: 101
+      Y: 10
 #  - ID: 33
 #    Name: "Sky Fortress Invasion"
 #    LimitTime: 3600

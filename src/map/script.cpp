@@ -4131,8 +4131,7 @@ void script_stop_scriptinstances(struct script_code *code) {
 /*==========================================
  * Timer function for sleep
  *------------------------------------------*/
-int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(run_script_timer){
 	struct script_state *st = (struct script_state *)data;
 	struct linkdb_node *node = (struct linkdb_node *)sleep_db;
 
@@ -6429,6 +6428,12 @@ BUILDIN_FUNC(inarray)
 
 	array_size = script_array_highest_key(st, sd, name, ref) - 1;
 
+	if (array_size < 0)
+	{
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	if (array_size > SCRIPT_MAX_ARRAYSIZE)
 	{
 		ShowError("buildin_inarray: The array is too large.\n");
@@ -6510,6 +6515,12 @@ BUILDIN_FUNC(countinarray)
 
 	array_size1 = script_array_highest_key(st, sd, name1, ref1) - 1;
 	array_size2 = script_array_highest_key(st, sd, name2, ref2) - 1;
+
+	if (array_size1 < 0 || array_size2 < 0)
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	if (array_size1 > SCRIPT_MAX_ARRAYSIZE || array_size2 > SCRIPT_MAX_ARRAYSIZE)
 	{
@@ -24027,6 +24038,28 @@ BUILDIN_FUNC(mail){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(open_roulette){
+#if PACKETVER < 20141022
+	ShowError( "buildin_open_roulette: This command requires PACKETVER 2014-10-22 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !battle_config.feature_roulette ){
+		ShowError( "buildin_open_roulette: Roulette system is disabled.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_roulette_open(sd);
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24679,6 +24712,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(round, "floor", "i"),
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
+	BUILDIN_DEF(open_roulette,"?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

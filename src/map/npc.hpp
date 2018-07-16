@@ -4,6 +4,8 @@
 #ifndef _NPC_HPP_
 #define _NPC_HPP_
 
+#include "../common/timer.hpp"
+
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
@@ -1096,6 +1098,13 @@ enum e_job_types
 	JT_4_F_SE_SUN,
 	JT_4_M_SE_MOON,
 	JT_4_M_SE_STAR,
+	JT_4_EP17_KAYA,
+	JT_4_EP17_AS,
+	JT_4_EP17_ELYUMINA,
+	JT_4_EP17_MORNING,
+	JT_4_EP17_MIGUEL,
+	JT_4_EP17_NIHIL_K,
+	JT_4_EP17_MIGUEL_D,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1206,7 +1215,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
+	TIMER_FUNC(npc_rr_secure_timeout_timer);
 #endif
 
 // @commands (script-based)

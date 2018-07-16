@@ -319,6 +319,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 L_Socket:
 	set .@select, @mal_enchant_select;
 	set .@equip_id, @mal_equip_id;
+	set .@equip_refine, getequiprefinerycnt(EQI_HAND_R);
 	set .@equip_name$, getitemname(.@equip_id)+((getitemslots(.@equip_id))?"["+getitemslots(.@equip_id)+"]":"");
 	setarray .@equip_card[0], getequipcardid(EQI_HAND_R,0),getequipcardid(EQI_HAND_R,1),getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
 	set @mal_equip_id,0;
@@ -575,7 +576,7 @@ L_Socket:
 		}
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) ||
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine) || 
 		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
@@ -604,7 +605,6 @@ L_Socket:
 		mes "[Mayomayo]";
 		mes "I have enchanted ^990000slot "+.@socket+"^000000 of this equipment.";
 		delitem .@coin[.@coin_select],.@total[.@coin_select];
-		set .@equip_refine, getequiprefinerycnt(EQI_HAND_R);
 		delequip EQI_HAND_R;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
@@ -641,11 +641,10 @@ L_Socket:
 		delitem 6417,1; //Silvervine
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) ||
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine) || 
 		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
-		set .@equip_refine, getequiprefinerycnt(EQI_HAND_R);
 		delequip EQI_HAND_R;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]

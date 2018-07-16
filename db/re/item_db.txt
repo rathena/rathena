@@ -4917,8 +4917,8 @@
 6936,Cold_Core,Cold Core,3,10,,10,,,,,,,,,,,,,{},{},{}
 6937,Silicone_Shell,Silicone Shell,3,10,,10,,,,,,,,,,,,,{},{},{}
 6938,Hedgehog_Picks,Hedgehog Picks,3,10,,10,,,,,,,,,,,,,{},{},{}
-6939,Old_Belt,Old Belt,3,10,,10,,,,,,,,,,,,,{},{},{}
-6940,Moving_Dark_Matter,Moving Dark Matter,3,10,,10,,,,,,,,,,,,,{},{},{}
+6939,Old_Belt,Worn-Out Belt,3,10,,10,,,,,,,,,,,,,{},{},{}
+6940,Moving_Dark_Matter,Moving Black Material,3,10,,10,,,,,,,,,,,,,{},{},{}
 6941,Fragments_Valkyrie_Power,Fragments Valkyrie Power,3,10,,10,,,,,,,,,,,,,{},{},{}
 6942,Will_Master,Will Master,3,10,,10,,,,,,,,,,,,,{},{},{}
 6943,ATKStone_Top,Attack Stone(Upper),6,10,,100,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,1; },{},{}
@@ -11208,7 +11208,7 @@
 22895,Limited_2015_Status_Initialization_Volume,(Limited)2015 Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
 22896,Limited_Old_Status_Initialization_Volume,(Limited)Old Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
-22901,Question_Old_Blue_Box,Question Old Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*No info yet*/ },{},{}
+22901,Question_Old_Blue_Box,Mysterious Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Mysterious_box"); },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
