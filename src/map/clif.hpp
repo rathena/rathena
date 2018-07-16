@@ -1075,4 +1075,6 @@ void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
+void clif_weight_limit( struct map_session_data* sd );
+
 #endif /* _CLIF_HPP_ */

@@ -20287,6 +20287,25 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 #endif
 }
 
+/// Send out the percentage of weight that causes it to be displayed in red.
+/// 0ADE <percentage>.L
+void clif_weight_limit( struct map_session_data* sd ){
+#if PACKETVER >= 20171025
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xADE));
+	WFIFOW(fd, 0) = 0xADE;
+#ifdef RENEWAL
+	WFIFOL(fd, 2) = battle_config.natural_heal_weight_rate_renewal;
+#else
+	WFIFOL(fd, 2) = battle_config.natural_heal_weight_rate;
+#endif
+	WFIFOSET(fd, packet_len(0xADE));
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

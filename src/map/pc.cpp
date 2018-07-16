@@ -11741,6 +11741,8 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 void pc_scdata_received(struct map_session_data *sd) {
 	pc_inventory_rentals(sd); // Needed here to remove rentals that have Status Changes after chrif_load_scdata has finished
 
+	clif_weight_limit( sd );
+
 	sd->state.pc_loaded = true;
 
 	if (sd->state.connect_new == 0 && sd->fd) { // Character already loaded map! Gotta trigger LoadEndAck manually.
