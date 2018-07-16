@@ -644,6 +644,7 @@ struct Battle_Config
 	int feature_homunculus_autofeed;
 	int summoner_trait;
 	int homunculus_autofeed_always;
+	int feature_attendance;
 
 #include "../custom/battle_config_struct.inc"
 };

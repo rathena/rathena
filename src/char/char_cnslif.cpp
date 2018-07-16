@@ -41,7 +41,7 @@ void display_helpscreen(bool do_exit)
  * @param data: unused
  * @return 0
  */
-int cnslif_console_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(cnslif_console_timer){
 	char buf[MAX_CONSOLE_IN]; //max cmd atm is 63+63+63+3+3
 
 	memset(buf,0,MAX_CONSOLE_IN); //clear out buf

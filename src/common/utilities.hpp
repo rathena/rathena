@@ -8,6 +8,8 @@
 #include <string>
 #include <map>
 
+#include "cbasetypes.hpp"
+
 // Class used to perform time measurement
 class cScopeTimer {
 	struct sPimpl; //this is to avoid long compilation time
@@ -20,6 +22,10 @@ int levenshtein( const std::string &s1, const std::string &s2 );
 
 namespace rathena {
 	namespace util {
+		template <typename K, typename V> bool map_exists( std::map<K,V>& map, K key ){
+			return map.find( key ) != map.end();
+		}
+
 		template <typename K, typename V> V* map_find( std::map<K,V>& map, K key ){
 			auto it = map.find( key );
 

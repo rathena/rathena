@@ -92,6 +92,10 @@ moro_cav	mapflag	nowarpto
 1@eom	mapflag	nowarpto
 1@jtb	mapflag	nowarpto
 
+// Nightmare Biolab
+lhz_dun_n	mapflag	nowarpto
+lhz_d_n2	mapflag	nowarpto
+
 // Episode 15 - Phantasmagorica
 1@lab	mapflag	nowarpto
 1@uns	mapflag	nowarpto
@@ -120,7 +124,10 @@ prt_cas_q	mapflag	nowarpto
 prt_pri00	mapflag	nowarpto
 prt_lib	mapflag	nowarpto
 prt_lib_q	mapflag	nowarpto
+prt_q	mapflag	nowarpto
+prt_prison	mapflag	nowarpto
 rebel_in	mapflag	nowarpto
+slabw01	mapflag	nowarpto
 que_swat	mapflag	nowarpto
 1@mir	mapflag	nowarpto
 2@mir	mapflag	nowarpto
@@ -132,11 +139,15 @@ que_swat	mapflag	nowarpto
 
 // Rockridge
 har_in01	mapflag	nowarpto
+rockmi1	mapflag	nowarpto
 rockmi2	mapflag	nowarpto
 
 // Lasagna
 lasa_in01	mapflag	nowarpto
 conch_in	mapflag	nowarpto
+lasa_dun01	mapflag	nowarpto
+lasa_dun02	mapflag	nowarpto
+lasa_dun03	mapflag	nowarpto
 lasa_dun_q	mapflag	nowarpto
 
 // Chicken Mode Nightmare Glastheim
@@ -146,11 +157,24 @@ lasa_dun_q	mapflag	nowarpto
 // Chicken Mode Horror Toy Factory
 1@xm_d2	mapflag	nowarpto
 
+// Illusion Payon (Moonlight)
+pay_d03_i	mapflag	nowarpto
+
+// Illusion Geffen (Vampire)
+gef_d01_i	mapflag	nowarpto
+
+// Illusion Ice (Frozen)
+ice_d03_i	mapflag	nowarpto
+
 // Suspicious shipwreck
 1@tre	mapflag	nowarpto
 
 // Poring Town
 1@begi	mapflag	nowarpto
+
+// Illusion Turtle island (Archery)
+tur_d03_i	mapflag	nowarpto
+tur_d04_i	mapflag	nowarpto
 
 // Volcanic island Korodo
 1@crd	mapflag	nowarpto
@@ -158,5 +182,15 @@ lasa_dun_q	mapflag	nowarpto
 // Noodles Festival July
 1@drdo	mapflag	nowarpto
 
+// Illusion Teddy Bear Nasarian Empire
+ein_d02_i	mapflag	nowarpto
+
+// Illusion Ruande
+com_d02_i	mapflag	nowarpto
+
 // Soul Reaper Job Change
 1@soul	mapflag	nowarpto
+
+// Star Emperor Job Change
+star_frst	mapflag	nowarpto
+star_in	mapflag	nowarpto

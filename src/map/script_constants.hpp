@@ -4451,6 +4451,7 @@
 	export_constant(DT_MONTH);
 	export_constant(DT_YEAR);
 	export_constant(DT_DAYOFYEAR);
+	export_constant(DT_YYYYMMDD);
 
 	/* instance info */
 	export_constant(IIT_ID);
@@ -4940,7 +4941,7 @@
 	export_constant(IG_COSTAMA_EGG29);
 	export_constant(IG_INK_BALL);
 	export_constant(IG_SOMETHING_CANDY_HOLDER);
-	export_constant(IG_MYSTERIOUS_EGG);
+	export_constant(IG_SHINING_EGG);
 	export_constant(IG_AGUST_LUCKY_SCROLL);
 	export_constant(IG_ELEMENT);
 	export_constant(IG_POISON);

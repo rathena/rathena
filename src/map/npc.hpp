@@ -4,6 +4,8 @@
 #ifndef _NPC_HPP_
 #define _NPC_HPP_
 
+#include "../common/timer.hpp"
+
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
@@ -1213,7 +1215,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
+	TIMER_FUNC(npc_rr_secure_timeout_timer);
 #endif
 
 // @commands (script-based)

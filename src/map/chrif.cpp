@@ -33,7 +33,7 @@
 #include "script.hpp" // script_config
 #include "storage.hpp"
 
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(check_connect_char_server);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -799,7 +799,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(auth_db_cleanup){
 	chrif_check(0);
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
@@ -1849,7 +1849,7 @@ int chrif_parse(int fd) {
 }
 
 // unused
-int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(send_usercount_tochar){
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,4);
@@ -1896,7 +1896,7 @@ int send_users_tochar(void) {
  * timerFunction
   * Chk the connection to char server, (if it down)
  *------------------------------------------*/
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(check_connect_char_server){
 	static int displayed = 0;
 	if ( char_fd <= 0 || session[char_fd] == NULL ) {
 		if ( !displayed ) {

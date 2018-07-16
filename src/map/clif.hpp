@@ -510,6 +510,7 @@ enum clif_messages : uint16_t {
 	SKILL_NEED_REVOLVER = 0x9fd,
 	SKILL_NEED_HOLY_BULLET = 0x9fe,
 	SKILL_NEED_GRENADE = 0xa01,
+	MSG_ATTENDANCE_DISABLED = 0xd92,
 };
 
 enum e_personalinfo : uint8_t {
@@ -1074,6 +1075,18 @@ void clif_SelectCart(struct map_session_data *sd);
 void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
+
+/// Attendance System
+enum in_ui_type : int8 {
+	IN_UI_ATTENDANCE = 5
+};
+
+enum out_ui_type : int8 {
+	OUT_UI_ATTENDANCE = 7
+};
+
+void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );
+void clif_attendence_response( struct map_session_data *sd, int32 data );
 
 void clif_weight_limit( struct map_session_data* sd );
 

@@ -1,0 +1,11 @@
+//===== rAthena Script ======================================= 
+//= God Item Quest - Megingjard Seal
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quest for breaking the seal of Megingjard.
+//===== Changelogs: ==========================================
+//= 1.0 Renewal script update for ep16.1 [Capuche]
+//============================================================
+
+prt_castle,44,151,0	duplicate(Rebarev Doug_)	Rebarev Doug	1_M_KNIGHTMASTER
+prt_castle,48,164,0	duplicate(Crusader#God_)	Crusader#God	4_M_JOB_KNIGHT2
