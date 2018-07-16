@@ -4443,18 +4443,18 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 {
 	if (m < 0 || m >= map.size()) {
 		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
-		return 0;
+		return false;
 	}
 
 	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
 		ShowWarning("map_setmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
-		return 0;
+		return false;
 	}
 
 	switch(mapflag) {
 		case MF_NOSAVE:
 			if (status) {
-				nullpo_retr(0, args);
+				nullpo_retr(false, args);
 
 				map[m].save.map = args->nosave.map;
 				map[m].save.x = args->nosave.x;
@@ -4553,7 +4553,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			break;
 		case MF_PVP_NIGHTMAREDROP:
 			if (status) {
-				nullpo_retr(0, args);
+				nullpo_retr(false, args);
 
 				if (map[m].drop_list.size() == MAX_DROP_PER_MAP) {
 					ShowWarning("map_setmapflag: Reached the maximum number of drop list items for mapflag pvp_nightmaredrop on %s. Skipping.\n", map[m].name);
@@ -4570,7 +4570,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			map[m].flag[mapflag] = status;
 			break;
 		case MF_RESTRICTED:
-			nullpo_retr(0, args);
+			nullpo_retr(false, args);
 
 			map[m].flag[mapflag] = status;
 			if (!status)
@@ -4580,7 +4580,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			break;
 		case MF_NOCOMMAND:
 			if (status) {
-				nullpo_retr(0, args);
+				nullpo_retr(false, args);
 
 				map[m].flag[mapflag] = ((args->flag_val <= 0) ? 100 : args->flag_val);
 			} else
@@ -4589,7 +4589,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_JEXP:
 		case MF_BEXP:
 			if (status) {
-				nullpo_retr(0, args);
+				nullpo_retr(false, args);
 
 				if (mapflag == MF_JEXP && map_getmapflag(m, MF_NOJOBEXP)) {
 					map_setmapflag(m, MF_NOJOBEXP, false);
@@ -4605,7 +4605,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			break;
 		case MF_BATTLEGROUND:
 			if (status) {
-				nullpo_retr(0, args);
+				nullpo_retr(false, args);
 
 				if (map_getmapflag(m, MF_PVP)) {
 					map_setmapflag(m, MF_PVP, false);
@@ -4641,11 +4641,11 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				memset(&map[m].damage_adjust, 0, sizeof(map[m].damage_adjust));
 				map[m].skill_damage.clear();
 			} else {
-				nullpo_retr(0, args);
+				nullpo_retr(false, args);
 
 				if (!args->skill_damage.caster) {
 					ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", map[m].name);
-					return 0;
+					return false;
 				}
 
 				for (int i = 0; i < SKILLDMG_MAX; i++) {
@@ -4663,7 +4663,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			break;
 	}
 
-	return 1;
+	return true;
 }
 
 /**
