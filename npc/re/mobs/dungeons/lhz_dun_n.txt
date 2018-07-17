@@ -5,64 +5,67 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. Boss and slaves spawn are assumptions
 //		based on lhz_dun.txt monsters spawn. [Capuche]
+//= 1.1 Changed MvP spawn based on the amount of
+//		monsters killed. [Capuche]
 //============================================================
 
-lhz_dun_n,0,0	monster	Eremes Guille	3208,20,5000
-lhz_dun_n,0,0	monster	Magaleta Sorin	3209,10,5000
-lhz_dun_n,0,0	monster	Catherine Cheiron	3210,15,5000
-lhz_dun_n,0,0	monster	Shecil Damon	3211,20,5000
-lhz_dun_n,0,0	monster	Harword Alt-Eisen	3212,10,5000
-lhz_dun_n,0,0	monster	Seyren Windsor	3213,10,5000
+lhz_dun_n,0,0	monster	Eremes Guille	3208,20,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Magaleta Sorin	3209,10,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Catherine Cheiron	3210,15,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Shecil Damon	3211,20,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Harword Alt-Eisen	3212,10,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Seyren Windsor	3213,10,5000,0,"lhz_dun_n::OnMyMobDead"
 
-lhz_dun_n,0,0	monster	Randel Lawrence	3226,10,5000
-lhz_dun_n,0,0	monster	Flamel Emule	3227,10,5000
-lhz_dun_n,0,0	monster	Celia Alde	3228,15,5000
-lhz_dun_n,0,0	monster	Chen Liu	3229,15,5000
-lhz_dun_n,0,0	monster	Gertie Wie	3230,15,5000
-lhz_dun_n,0,0	monster	Alphoccio Basil	3231,10,5000
-lhz_dun_n,0,0	monster	Trentini	3232,10,5000
+lhz_dun_n,0,0	monster	Randel Lawrence	3226,10,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Flamel Emule	3227,10,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Celia Alde	3228,15,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Chen Liu	3229,15,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Gertie Wie	3230,15,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Alphoccio Basil	3231,10,5000,0,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Trentini	3232,10,5000,0,"lhz_dun_n::OnMyMobDead"
 
-lhz_dun_n,0,0	monster	Paladin Randel	3233,1,3300000,3000000
-lhz_dun_n,0,0	monster	Creator Flamel	3234,1,3300000,3000000
-lhz_dun_n,0,0	monster	Sorcerer Celia	3235,1,3300000,3000000
-lhz_dun_n,0,0	monster	Sura Chen	3236,1,3300000,3000000
-lhz_dun_n,0,0	monster	Stalker Gertie	3237,1,3300000,3000000
-lhz_dun_n,0,0	monster	Minstrel Alphoccio	3238,1,3300000,3000000
-lhz_dun_n,0,0	monster	Gypsy Trentini	3239,1,3300000,3000000
+// unknown delay and inaccurate spawn number
+lhz_dun_n,0,0	monster	Paladin Randel	3233,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Creator Flamel	3234,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Sorcerer Celia	3235,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Sura Chen	3236,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Stalker Gertie	3237,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Minstrel Alphoccio	3238,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+lhz_dun_n,0,0	monster	Gypsy Trentini	3239,1,3300000,3000000,"lhz_dun_n::OnMyMobDead"
+//
 
 lhz_dun_n,0,0,0	script	lhz_dun_n	-1,{
 	end;
-OnTimer6000000: // delay1 = 6000000 ms (100 min)
-	stopnpctimer;
-	sleep rand(0,30)*60000; // 0 to 30 minutes
-OnInit:
-	// Select Coordinates to summon a random MVP on
-	switch(rand(1,6)) {
-		case 1:  .@x = 140;  .@y = 232;  break;
-		case 2:  .@x = 75;   .@y = 138;  break;
-		case 3:  .@x = 140;  .@y = 87;   break;
-		case 4:  .@x = 205;  .@y = 140;  break;
-		case 5:  .@x = 123;  .@y = 137;  break;
-		case 6:  .@x = 175;  .@y = 137;  break;
+OnMyMobDead:
+	if ($@lhz_dun_n_mob_num < 200) {	// unknown amount
+		$@lhz_dun_n_mob_num++;
+		if ($@lhz_dun_n_mob_num == 200) {
+			switch(rand(1,6)) {	// unknown coordinates
+				case 1:  .@x = 140;  .@y = 232;  break;
+				case 2:  .@x = 75;   .@y = 138;  break;
+				case 3:  .@x = 140;  .@y = 87;   break;
+				case 4:  .@x = 205;  .@y = 140;  break;
+				case 5:  .@x = 123;  .@y = 137;  break;
+				case 6:  .@x = 175;  .@y = 137;  break;
+			}
+			setarray .@mob_list[0], 3220,3221,3222,3223,3224,3225, 3240,3241,3242,3243,3244,3245,3246;
+			monster "lhz_dun_n",.@x,.@y,"--en--",.@mob_list[ rand(13) ],1, "lhz_dun_n::OnMyMVPDead";
+		}
 	}
-	setarray .@mob_list[0], 3220,3221,3222,3223,3224,3225, 3240,3241,3242,3243,3244,3245,3246;
-	monster "lhz_dun_n",.@x,.@y,"--en--",.@mob_list[ rand(13) ],1, "lhz_dun_n::OnMyMVPDead";
-
-	// Select Coordinates to summon a random 99 on
-	switch(rand(1,6)) {
-		case 1:  .@x = 183;  .@y = 97;   break;
-		case 2:  .@x = 97;   .@y = 96;   break;
-		case 3:  .@x = 47;   .@y = 139;  break;
-		case 4:  .@x = 231;  .@y = 140;  break;
-		case 5:  .@x = 139;  .@y = 211;  break;
-		case 6:  .@x = 139;  .@y = 259;  break;
-	}
-	monster "lhz_dun_n",.@x,.@y,"--en--",rand(3233,3239),1, "lhz_dun_n::OnMy99Dead";
 	end;
-
 OnMyMVPDead:
-	killmonster "lhz_dun_n", "lhz_dun_n::OnMy99Dead";
+	killmonster "lhz_dun_n", "lhz_dun_n::OnMyMVPDead";
+	$@lhz_dun_n_delay = 0;
 	initnpctimer;
-OnMy99Dead:
+	end;
+OnTimer60000:
+	$@lhz_dun_n_delay++;
+	if ($@lhz_dun_n_delay < 100) // unknown delay (currently 100 mins)
+		initnpctimer;
+	else {
+		stopnpctimer;
+		$@lhz_dun_n_mob_num = 0;
+		$@lhz_dun_n_delay = 0;
+	}
 	end;
 }
