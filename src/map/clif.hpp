@@ -1088,4 +1088,6 @@ enum out_ui_type : int8 {
 void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );
 void clif_attendence_response( struct map_session_data *sd, int32 data );
 
+void clif_weight_limit( struct map_session_data* sd );
+
 #endif /* _CLIF_HPP_ */
