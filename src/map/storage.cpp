@@ -603,7 +603,12 @@ char storage_guild_storageopen(struct map_session_data* sd)
 		return GSTORAGE_ALREADY_OPEN;
 	}
 
-	if((gstor = guild2storage2(sd->status.guild_id)) == nullptr || (gstor && gstor->max_amount < guild_checkskill(sd->guild, GD_GUILD_STORAGE) * 100)) {
+	if((gstor = guild2storage2(sd->status.guild_id)) == nullptr
+#ifdef OFFICIAL_GUILD_STORAGE
+		|| (gstor && gstor->max_amount < guild_checkskill(sd->guild, GD_GUILD_STORAGE) * 100)
+#endif
+		)
+	{
 		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);
 		return GSTORAGE_OPEN;
 	}
