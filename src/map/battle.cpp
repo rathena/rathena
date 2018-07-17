@@ -3927,6 +3927,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 10 * skill_lv;
 			break;
 		case RA_ARROWSTORM:
+		case NPC_ARROWSTORM:
 			skillratio += 900 + 80 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
