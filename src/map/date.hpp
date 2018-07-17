@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _DATE_HPP_
@@ -41,6 +41,7 @@ enum e_date_type{
 	DT_MONTH,
 	DT_YEAR,
 	DT_DAYOFYEAR,
+	DT_YYYYMMDD,
 	DT_MAX
 };
 

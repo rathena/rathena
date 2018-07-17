@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _COMMON_SQL_HPP_
 #define _COMMON_SQL_HPP_
 
-#include "cbasetypes.hpp"
 #include <stdarg.h>// va_list
+
+#include "cbasetypes.hpp"
 
 // Return codes
 #define SQL_ERROR -1

@@ -1,23 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
+#include "sql.hpp"
+
+#ifdef WIN32
+#include "winapi.hpp"
+#endif
+
+#include <mysql.h>
+#include <stdlib.h>// strtoul
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "timer.hpp"
-#include "sql.hpp"
-
-#ifdef WIN32
-#include "winapi.hpp"
-#endif
-#include <mysql.h>
-#include <mysql_version.h>
-#include <stdlib.h>// strtoul
 
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.
-#if MYSQL_VERSION_ID >= 80000
+// See https://bugs.mysql.com/?id=87337
+#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 80001 && MYSQL_VERSION_ID != 80002
 #define my_bool bool
 #endif
 
@@ -203,8 +205,7 @@ int Sql_Ping(Sql* self)
 /// Wrapper function for Sql_Ping.
 ///
 /// @private
-static int Sql_P_KeepaliveTimer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(Sql_P_KeepaliveTimer){
 	Sql* self = (Sql*)data;
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	Sql_Ping(self);

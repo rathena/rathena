@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "chrif.hpp"
@@ -7,33 +7,33 @@
 #include <cstring>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/ers.hpp"
 #include "../common/malloc.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
-#include "../common/ers.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
 #include "battle.hpp"
 #include "clan.hpp"
 #include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
-#include "guild.hpp"
-#include "log.hpp"
 
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(check_connect_char_server);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -312,7 +312,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, ((flag&CSAVE_QUITTING) && !(flag&CSAVE_AUTOTRADE)));
 
-	if (&sd->storage && sd->storage.dirty)
+	if (sd->storage.dirty)
 		storage_storagesave(sd);
 	if (flag&CSAVE_INVENTORY)
 		intif_storage_save(sd,&sd->inventory);
@@ -322,7 +322,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	//For data sync
 	if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
-	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+	if (sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 
 	if (flag&CSAVE_QUITTING)
@@ -799,7 +799,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(auth_db_cleanup){
 	chrif_check(0);
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
@@ -1849,7 +1849,7 @@ int chrif_parse(int fd) {
 }
 
 // unused
-int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(send_usercount_tochar){
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,4);
@@ -1896,7 +1896,7 @@ int send_users_tochar(void) {
  * timerFunction
   * Chk the connection to char server, (if it down)
  *------------------------------------------*/
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(check_connect_char_server){
 	static int displayed = 0;
 	if ( char_fd <= 0 || session[char_fd] == NULL ) {
 		if ( !displayed ) {

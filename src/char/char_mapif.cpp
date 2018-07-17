@@ -1,26 +1,20 @@
-/**
- * @file char_mapif.c
- * Module purpose is to handle incoming and outgoing requests with map-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "char_mapif.hpp"
 
 #include <stdlib.h>
 #include <string.h> //memcpy
 
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 
-#include "inter.hpp"
 #include "char.hpp"
 #include "char_logif.hpp"
+#include "inter.hpp"
 
 /**
  * Packet send to all map-servers, attach to ourself

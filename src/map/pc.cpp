@@ -1,59 +1,68 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "pc.hpp"
 
-#include <stdlib.h>
+#include <map>
+#include <vector>
+
 #include <math.h>
+#include <stdlib.h>
+
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
+#include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp" //NAME_LENGTH
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp" // session[]
 #include "../common/strlib.hpp" // safestrncpy()
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
-#include "../common/mmo.hpp" //NAME_LENGTH
-#include "../common/ers.hpp"  // ers_destroy
 
+#include "achievement.hpp"
 #include "atcommand.hpp" // get_atcommand_level()
-#include "map.hpp"
 #include "battle.hpp" // battle_config
 #include "battleground.hpp"
+#include "buyingstore.hpp"  // struct s_buyingstore
 #include "channel.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"
+#include "clan.hpp"
+#include "clif.hpp"
 #include "date.hpp" // is_day_of_*()
 #include "duel.hpp"
-#include "intif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "pet.hpp" // pet_unlocktarget()
-#include "party.hpp" // party_search()
-#include "storage.hpp"
-#include "quest.hpp"
-#include "npc.hpp"
-#include "guild.hpp"
-#include "clif.hpp"
-#include "buyingstore.hpp"  // struct s_buyingstore
+#include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp" // party_search()
+#include "pc_groups.hpp"
+#include "pet.hpp" // pet_unlocktarget()
+#include "quest.hpp"
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // OPTION_*, struct weapon_atk
+#include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
-#include "mob.hpp"
-#include "log.hpp"
-#include "pc_groups.hpp"
-#include "achievement.hpp"
-#include "clan.hpp"
+
+using namespace rathena;
 
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
+static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
 #define MAX_LEVEL_BASE_EXP 99999999 ///< Max Base EXP for player on Max Base Level
@@ -81,6 +90,19 @@ struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 struct s_job_info job_info[CLASS_COUNT];
+
+struct s_attendance_reward{
+	uint16 item_id;
+	uint16 amount;
+};
+
+struct s_attendance_period{
+	uint32 start;
+	uint32 end;
+	std::map<int,struct s_attendance_reward> rewards;
+};
+
+std::vector<struct s_attendance_period> attendance_periods;
 
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
@@ -167,8 +189,7 @@ int pc_get_group_level(struct map_session_data *sd) {
 	return sd->group_level;
 }
 
-static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
 	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
@@ -204,8 +225,7 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 	}
 }
 
-static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_spiritball_timer){
 	struct map_session_data *sd;
 	int i;
 
@@ -509,8 +529,7 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
  * @param data: Data
  * @return false - failure, true - success
  */
-int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_inventory_rental_end){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( sd == NULL )
@@ -1419,25 +1438,25 @@ void pc_reg_received(struct map_session_data *sd)
 
 	sd->vars_ok = true;
 
-	sd->change_level_2nd = pc_readglobalreg(sd, add_str("jobchange_level"));
-	sd->change_level_3rd = pc_readglobalreg(sd, add_str("jobchange_level_3rd"));
-	sd->die_counter = pc_readglobalreg(sd, add_str("PC_DIE_COUNTER"));
+	sd->change_level_2nd = pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR));
+	sd->change_level_3rd = pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR));
+	sd->die_counter = pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR));
 
-	sd->langtype = pc_readaccountreg(sd, add_str("#langtype"));
+	sd->langtype = pc_readaccountreg(sd, add_str(LANGTYPE_VAR));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = pc_readaccountreg(sd, add_str("#CASHPOINTS"));
-	sd->kafraPoints = pc_readaccountreg(sd, add_str("#KAFRAPOINTS"));
+	sd->cashPoints = pc_readaccountreg(sd, add_str(CASHPOINT_VAR));
+	sd->kafraPoints = pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR));
 
 	// Cooking Exp
-	sd->cook_mastery = pc_readglobalreg(sd, add_str("COOK_MASTERY"));
+	sd->cook_mastery = pc_readglobalreg(sd, add_str(COOKMASTERY_VAR));
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
-		sd->mission_mobid = pc_readglobalreg(sd, add_str("TK_MISSION_ID"));
-		sd->mission_count = pc_readglobalreg(sd, add_str("TK_MISSION_COUNT"));
+		sd->mission_mobid = pc_readglobalreg(sd, add_str(TKMISSIONID_VAR));
+		sd->mission_count = pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR));
 	}
 
 	if (battle_config.feature_banking)
@@ -1695,7 +1714,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		if (!(skill_id = skill_idx2id(i)) || skill_id < DC_HUMMING || skill_id > DC_SERVICEFORYOU)
 			continue;
 
-		if( &sd->sc && sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
+		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
 			//Link Dancer skills to bard.
 			if( sd->status.sex ) {
 				if( sd->status.skill[i-8].lv < 10 )
@@ -1962,7 +1981,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 
 			}
 
-			pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
+			pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 		}
 
 		if (skill_point < novice_skills + (sd->change_level_2nd - 1))
@@ -1979,7 +1998,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 						- (sd->status.job_level - 1)
 						- (sd->change_level_2nd - 1)
 						- novice_skills;
-					pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
+					pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 			}
 
 			if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1))
@@ -2379,6 +2398,9 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	if (!sd || !autobonus)
 		return;
 
+	if (autobonus->active != INVALID_TIMER)
+		delete_timer(autobonus->active, pc_endautobonus);
+
 	if( autobonus->other_script )
 	{
 		int j;
@@ -2397,8 +2419,7 @@ void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
 	status_calc_pc(sd,SCO_FORCE);
 }
 
-int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
 	struct s_autobonus *autobonus = (struct s_autobonus *)data;
 
@@ -4467,12 +4488,15 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 		return -1;
 	}
 
-	pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints-cash);
 	if( cash ){
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints - cash);
+		sd->cashPoints -= cash;
 		log_cash( sd, type, LOG_CASH_TYPE_CASH, -cash );
 	}
-	pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints-points);
+
 	if( points ){
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints - points);
+		sd->kafraPoints -= points;
 		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, -points );
 	}
 
@@ -4510,10 +4534,9 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			cash = MAX_ZENY-sd->cashPoints;
 		}
 
-		pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints+cash);
-		if( cash ){
-			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
-		}
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints+cash);
+		sd->cashPoints += cash;
+		log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -4536,10 +4559,9 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			points = MAX_ZENY-sd->kafraPoints;
 		}
 
-		pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints+points);
-		if( points ){
-			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
-		}
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints+points);
+		sd->kafraPoints += points;
+		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -5051,7 +5073,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume ) {
-		if( nameid != ITEMID_REINS_OF_MOUNT && &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -5399,7 +5421,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -5918,6 +5940,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_HANBOK:                return MAPID_HANBOK;
 		case JOB_GANGSI:                return MAPID_GANGSI;
 		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
+		case JOB_SUMMER2:               return MAPID_SUMMER2;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -6076,6 +6099,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_HANBOK:                return JOB_HANBOK;
 		case MAPID_GANGSI:                return JOB_GANGSI;
 		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
+		case MAPID_SUMMER2:               return JOB_SUMMER2;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -6251,6 +6275,7 @@ const char* job_name(int class_)
 		return msg_txt(NULL,570 - JOB_WEDDING+class_);
 
 	case JOB_SUMMER:
+	case JOB_SUMMER2:
 		return msg_txt(NULL,621);
 
 	case JOB_HANBOK:
@@ -6469,8 +6494,7 @@ const char* job_name(int class_)
  * target is define in sd->followtarget (bl.id)
  * used by pc_follow
  *----------------------------------------------------*/
-int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_follow_timer){
 	struct map_session_data *sd;
 	struct block_list *tbl;
 
@@ -6676,7 +6700,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	// Give EXPBOOST for quests even if src is NULL.
-	if (&sd->sc && sd->sc.data[SC_EXPBOOST]) {
+	if (sd->sc.data[SC_EXPBOOST]) {
 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 		if (battle_config.vip_bm_increase && pc_isvip(sd)) // Increase Battle Manual EXP rate for VIP
 			bonus += (sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase);
@@ -6688,7 +6712,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
-	if (&sd->sc && sd->sc.data[SC_JEXPBOOST])
+	if (sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	if (*job_exp) {
@@ -7386,7 +7410,7 @@ int pc_resetstate(struct map_session_data* sd)
 	if( sd->mission_mobid ) { //bugreport:2200
 		sd->mission_mobid = 0;
 		sd->mission_count = 0;
-		pc_setglobalreg(sd, add_str("TK_MISSION_ID"), 0);
+		pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), 0);
 	}
 
 	status_calc_pc(sd, SCO_NONE);
@@ -7621,8 +7645,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 }
 
-static int pc_respawn_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_respawn_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	if( sd != NULL )
 	{
@@ -7663,8 +7686,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		sd->canlog_tick = gettick();
 }
 
-int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_close_npc_timer){
 	TBL_PC *sd = map_id2sd(id);
 	if(sd) pc_close_npc(sd,data);
 	return 0;
@@ -7786,7 +7808,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setdead(sd);
 
-	pc_setglobalreg(sd, add_str("PC_DIE_COUNTER"), sd->die_counter+1);
+	pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
@@ -8090,9 +8112,13 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
 		case SP_BANK_VAULT:      val = sd->bank_vault; break;
+		case SP_CASHPOINTS:      val = sd->cashPoints; break;
+		case SP_KAFRAPOINTS:     val = sd->kafraPoints; break;
 		case SP_ROULETTE_BRONZE: val = sd->roulette_point.bronze; break;
 		case SP_ROULETTE_SILVER: val = sd->roulette_point.silver; break;
 		case SP_ROULETTE_GOLD:   val = sd->roulette_point.gold; break;
+		case SP_PCDIECOUNTER:    val = sd->die_counter; break;
+		case SP_COOKMASTERY:     val = sd->cook_mastery; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
@@ -8377,6 +8403,41 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->roulette_point.gold = val;
 		pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
 		return true;
+	case SP_CASHPOINTS:
+		if (val < 0)
+			return false;
+		if (!sd->state.connect_new)
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_CASH, -(sd->cashPoints - cap_value(val, 0, MAX_ZENY)));
+		sd->cashPoints = cap_value(val, 0, MAX_ZENY);
+		pc_setaccountreg(sd, add_str(CASHPOINT_VAR), sd->cashPoints);
+		return true;
+	case SP_KAFRAPOINTS:
+		if (val < 0)
+			return false;
+		if (!sd->state.connect_new)
+			log_cash(sd, LOG_TYPE_SCRIPT, LOG_CASH_TYPE_KAFRA, -(sd->kafraPoints - cap_value(val, 0, MAX_ZENY)));
+		sd->kafraPoints = cap_value(val, 0, MAX_ZENY);
+		pc_setaccountreg(sd, add_str(KAFRAPOINT_VAR), sd->kafraPoints);
+		return true;
+	case SP_PCDIECOUNTER:
+		if (val < 0)
+			return false;
+		if (sd->die_counter == val)
+			return true;
+		sd->die_counter = val;
+		if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
+		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
+		return true;
+	case SP_COOKMASTERY:
+		if (val < 0)
+			return false;
+		if (sd->cook_mastery == val)
+			return true;
+		val = cap_value(val, 0, 1999);
+		sd->cook_mastery = val;
+		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
+		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
 		return false;
@@ -8589,12 +8650,12 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	// changing from 1st to 2nd job
 	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
 		sd->change_level_2nd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
+		pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 	}
 	// changing from 2nd to 3rd job
 	else if((b_class&JOBL_THIRD) && !(sd->class_&JOBL_THIRD)) {
 		sd->change_level_3rd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
+		pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 	}
 
 	if(sd->cloneskill_idx > 0) {
@@ -9025,7 +9086,7 @@ void pc_setfalcon(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 void pc_setriding(struct map_session_data* sd, int flag)
 {
-	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.data[SC_ALL_RIDING] )
 		return;
 
 	if( flag ){
@@ -9231,30 +9292,6 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
-
-	// These should be stored elsewhere e.g. char ones in char table, the cash ones in account_data table!
-	switch( regname[0] ) {
-		default: //Char reg
-			if( !strcmp(regname,"PC_DIE_COUNTER") && sd->die_counter != val ) {
-				int i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
-				sd->die_counter = val;
-				if( i )
-					status_calc_pc(sd,SCO_NONE); // Lost the bonus.
-			} else if( !strcmp(regname,"COOK_MASTERY") && sd->cook_mastery != val ) {
-				val = cap_value(val, 0, 1999);
-				sd->cook_mastery = val;
-			}
-			break;
-		case '#':
-			if( !strcmp(regname,"#CASHPOINTS") && sd->cashPoints != val ) {
-				val = cap_value(val, 0, MAX_ZENY);
-				sd->cashPoints = val;
-			} else if( !strcmp(regname,"#KAFRAPOINTS") && sd->kafraPoints != val ) {
-				val = cap_value(val, 0, MAX_ZENY);
-				sd->kafraPoints = val;
-			}
-			break;
-	}
 	
 	if ( !reg_load && !sd->vars_ok ) {
 		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);
@@ -9436,8 +9473,7 @@ int pc_readreg2(struct map_session_data *sd, const char *reg) {
 /*==========================================
  * Exec eventtimer for player sd (retrieved from map_session (id))
  *------------------------------------------*/
-static int pc_eventtimer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_eventtimer){
 	struct map_session_data *sd=map_id2sd(id);
 	char *p = (char *)data;
 	int i;
@@ -10025,6 +10061,9 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
 	}
 	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_L) {
+		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
+			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
+
 		sd->status.shield = sd->weapontype2 = 0;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
@@ -10269,8 +10308,7 @@ int pc_calc_pvprank(struct map_session_data *sd)
 /*==========================================
  * Calculate next sd ranking calculation from config
  *------------------------------------------*/
-int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pc_calc_pvprank_timer){
 	struct map_session_data *sd;
 
 	sd=map_id2sd(id);
@@ -10500,8 +10538,7 @@ void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
 /*==========================================
  * Save 1 player data at autosave interval
  *------------------------------------------*/
-static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_autosave){
 	int interval;
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
@@ -10555,8 +10592,7 @@ static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
  * timer to do the day [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_day_timer){
 	char tmp_soutput[1024];
 
 	if (data == 0 && battle_config.day_duration <= 0)	// if we want a day
@@ -10576,8 +10612,7 @@ int map_day_timer(int tid, unsigned int tick, int id, intptr_t data)
  * timer to do the night [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
  *------------------------------------------------*/
-int map_night_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(map_night_timer){
 	char tmp_soutput[1024];
 
 	if (data == 0 && battle_config.night_duration <= 0)	// if we want a night
@@ -10604,7 +10639,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 
 	// Cannot stand yet
 	// TODO: Move to SCS_NOSTAND [Cydh]
-	if (!force && &sd->sc && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+	if (!force && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
 		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
@@ -10684,8 +10719,7 @@ bool pc_should_log_commands(struct map_session_data *sd)
  * Spirit Charm expiration timer.
  * @see TimerFunc
  */
-static int pc_spiritcharm_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pc_spiritcharm_timer){
 	struct map_session_data *sd;
 	int i;
 
@@ -11458,7 +11492,7 @@ void pc_readdb(void) {
 		uint16 j;
 		if (!pcdb_checkid(i))
 			continue;
-		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK || i == JOB_OKTOBERFEST)
+		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK || i == JOB_OKTOBERFEST || i == JOB_SUMMER2)
 			continue; //Classes that do not need exp tables.
 		idx = pc_class2idx(i);
 		if (!job_info[idx].max_level[0])
@@ -11712,6 +11746,10 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 void pc_scdata_received(struct map_session_data *sd) {
 	pc_inventory_rentals(sd); // Needed here to remove rentals that have Status Changes after chrif_load_scdata has finished
 
+	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
+		clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+	}
+
 	sd->state.pc_loaded = true;
 
 	if (sd->state.connect_new == 0 && sd->fd) { // Character already loaded map! Gotta trigger LoadEndAck manually.
@@ -11745,7 +11783,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 	}
 }
 
-int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_expiration_timer){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( !sd ) return 0;
@@ -11760,7 +11798,7 @@ int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	return 0;
 }
 
-int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_autotrade_timer){
 	struct map_session_data *sd = map_id2sd(id);
 
 	if (!sd)
@@ -11783,7 +11821,7 @@ int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data) {
 
 /* this timer exists only when a character with a expire timer > 24h is online */
 /* it loops thru online players once an hour to check whether a new < 24h is available */
-int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_global_expiration_timer){
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
@@ -12047,7 +12085,7 @@ static void inline pc_bonus_script_check_final(struct map_session_data *sd) {
 * @param data
 * @author [Cydh]
 **/
-int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(pc_bonus_script_timer){
 	struct map_session_data *sd;
 	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
 
@@ -12120,10 +12158,10 @@ void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
 	
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (&sd->sc && sd->sc.data[SC_BASILICA])
+		if (sd->sc.data[SC_BASILICA])
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
-	else if (!(&sd->sc) || !sd->sc.data[SC_BASILICA])
+	else if (!sd->sc.data[SC_BASILICA])
 		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
 }
 
@@ -12519,6 +12557,260 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
 
+struct s_attendance_period* pc_attendance_period(){
+	uint32 date = date_get(DT_YYYYMMDD);
+
+	for( struct s_attendance_period& period : attendance_periods ){
+		if( period.start <= date && period.end >= date ){
+			return &period;
+		}
+	}
+
+	return nullptr;
+}
+
+bool pc_attendance_enabled(){
+	// Check if the attendance feature is disabled
+	if( !battle_config.feature_attendance ){
+		return false;
+	}
+
+	// Check if there is a running attendance period
+	return pc_attendance_period() != nullptr;
+}
+
+static inline bool pc_attendance_rewarded_today( struct map_session_data* sd ){
+	return pc_readreg2( sd, ATTENDANCE_DATE_VAR ) >= date_get(DT_YYYYMMDD);
+}
+
+int32 pc_attendance_counter( struct map_session_data* sd ){
+	struct s_attendance_period* period = pc_attendance_period();
+
+	// No running attendance period
+	if( period == nullptr ){
+		return 0;
+	}
+
+	// Get the counter for the current period
+	int counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+
+	// Check if we have a remaining counter from a previous period
+	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){
+		// Reset the counter to zero
+		pc_setreg2( sd, ATTENDANCE_COUNT_VAR, 0 );
+
+		return 0;
+	}
+
+	return 10 * counter + ( ( pc_attendance_rewarded_today(sd) ) ? 1 : 0 );
+}
+
+void pc_attendance_claim_reward( struct map_session_data* sd ){
+	// If the user's group does not have the permission
+	if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
+		return;
+	}
+
+	// Check if the attendance feature is disabled
+	if( !pc_attendance_enabled() ){
+		return;
+	}
+
+	// Check if the user already got his reward today
+	if( pc_attendance_rewarded_today( sd ) ){
+		return;
+	}
+
+	int32 attendance_counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+
+	attendance_counter += 1;
+
+	struct s_attendance_period* period = pc_attendance_period();
+
+	if( period == nullptr ){
+		return;
+	}
+
+	if( period->rewards.size() < attendance_counter ){
+		return;
+	}
+
+	pc_setreg2( sd, ATTENDANCE_DATE_VAR, date_get(DT_YYYYMMDD) );
+	pc_setreg2( sd, ATTENDANCE_COUNT_VAR, attendance_counter );
+
+	if( save_settings&CHARSAVE_ATTENDANCE )
+		chrif_save(sd, CSAVE_NORMAL);
+
+	struct s_attendance_reward& reward = period->rewards.at( attendance_counter - 1 );
+
+	struct mail_message msg;
+
+	memset( &msg, 0, sizeof( struct mail_message ) );
+
+	msg.dest_id = sd->status.char_id;
+	safestrncpy( msg.send_name, msg_txt( sd, 788 ), NAME_LENGTH );
+	safesnprintf( msg.title, MAIL_TITLE_LENGTH, msg_txt( sd, 789 ), attendance_counter );
+	safesnprintf( msg.body, MAIL_BODY_LENGTH, msg_txt( sd, 790 ), attendance_counter );
+
+	msg.item[0].nameid = reward.item_id;
+	msg.item[0].amount = reward.amount;
+	msg.item[0].identify = 1;
+
+	msg.status = MAIL_NEW;
+	msg.type = MAIL_INBOX_NORMAL;
+	msg.timestamp = time(NULL);
+
+	intif_Mail_send(0, &msg);
+
+	clif_attendence_response( sd, attendance_counter );
+}
+
+void pc_attendance_load( std::string path ){
+	YAML::Node root;
+
+	try{
+		root = YAML::LoadFile( path );
+	}catch( ... ){
+		ShowError( "pc_attendance_load: Failed to read attendance configuration file \"%s\".\n", path.c_str() );
+		return;
+	}
+
+	if( root["Attendance"] ){
+		YAML::Node attendance = root["Attendance"];
+
+		for( const auto &periodNode : attendance ){
+			if( !periodNode["Start"].IsDefined() ){
+				ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", periodNode.Mark().line );
+				continue;
+			}
+
+			YAML::Node startNode = periodNode["Start"];
+
+			if( !periodNode["End"].IsDefined() ){
+				ShowError( "pc_attendance_load: Missing \"End\" for period in line %d.\n", periodNode.Mark().line );
+				continue;
+			}
+
+			YAML::Node endNode = periodNode["End"];
+
+			if( !periodNode["Rewards"].IsDefined() ){
+				ShowError( "pc_attendance_load: Missing \"Rewards\" for period in line %d.\n", periodNode.Mark().line );
+				continue;
+			}
+
+			YAML::Node rewardsNode = periodNode["Rewards"];
+
+			uint32 start = startNode.as<uint32>();
+			uint32 end = endNode.as<uint32>();
+
+			// If the period is outdated already, we do not even bother parsing
+			if( end < date_get( DT_YYYYMMDD ) ){
+				continue;
+			}
+
+			// Collision detection
+			bool collision = false;
+
+			for( struct s_attendance_period& period : attendance_periods ){
+				// Check if start is inside another period
+				if( period.start <= start && start <= period.end ){
+					ShowError( "pc_attendance_load: period start %u intersects with period %u-%u.\n", start, period.start, period.end );
+					collision = true;
+					break;
+				}
+
+				// Check if end is inside another period
+				if( period.start <= end && end <= period.end ){
+					ShowError( "pc_attendance_load: period end %u intersects with period %u-%u.\n", start, period.start, period.end );
+					collision = true;
+					break;
+				}
+			}
+
+			if( collision ){
+				continue;
+			}
+
+			struct s_attendance_period period;
+
+			period.start = start;
+			period.end = end;
+
+			for( const auto& rewardNode : rewardsNode ){
+				if( !rewardNode["Day"].IsDefined() ){
+					ShowError( "pc_attendance_load: No day defined for node in line %d.\n", rewardNode.Mark().line );
+					continue;
+				}
+
+				uint32 day = rewardNode["Day"].as<uint32>();
+
+				if( !rewardNode["ItemId"].IsDefined() ){
+					ShowError( "pc_attendance_load: No reward defined for day %d.\n", day );
+					continue;
+				}
+
+				YAML::Node itemNode = rewardNode["ItemId"];
+
+				uint16 item_id = itemNode.as<uint16>();
+
+				if( item_id == 0 || !itemdb_exists( item_id ) ){
+					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day );
+					continue;
+				}
+
+				uint16 amount;
+
+				if( rewardNode["Amount"] ){
+					amount = rewardNode["Amount"].as<uint16>();
+
+					if( amount == 0 ){
+						ShowError( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day );
+						amount = 1;
+					}else if( amount > MAX_AMOUNT ){
+						ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day, MAX_AMOUNT );
+						amount = MAX_AMOUNT;
+					}
+				}else{
+					amount = 1;
+				}
+
+				struct s_attendance_reward* reward = &period.rewards[day - 1];
+
+				reward->item_id = item_id;
+				reward->amount = amount;
+			}
+
+			bool missing_day = false;
+
+			for( int day = 0; day < period.rewards.size(); day++ ){
+				if( !util::map_exists( period.rewards, day ) ){
+					ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
+					missing_day = true;
+					break;
+				}
+			}
+
+			if( missing_day ){
+				continue;
+			}
+
+			attendance_periods.push_back( period );
+		}
+	}
+}
+
+void pc_read_attendance(){
+	char path[1024];
+
+	sprintf( path, "%s/%sattendance.yml", db_path, DBPATH );
+
+	pc_attendance_load( path );
+
+	sprintf( path, "%s/%s/attendance.yml", db_path, DBIMPORT );
+
+	pc_attendance_load( path );
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
@@ -12530,6 +12822,8 @@ void do_final_pc(void) {
 	ers_destroy(pc_itemgrouphealrate_ers);
 	ers_destroy(num_reg_ers);
 	ers_destroy(str_reg_ers);
+
+	attendance_periods.clear();
 }
 
 void do_init_pc(void) {
@@ -12538,6 +12832,7 @@ void do_init_pc(void) {
 
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
+	pc_read_attendance();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");

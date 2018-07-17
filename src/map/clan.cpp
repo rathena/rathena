@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "clan.hpp"
@@ -6,17 +6,17 @@
 #include <string.h> //memset
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 
 #include "clif.hpp"
 #include "intif.hpp"
+#include "log.hpp"
 #include "pc.hpp"
 #include "script.hpp"
 #include "status.hpp"
-#include "log.hpp"
 
 static DBMap* clan_db; // int clan_id -> struct clan*
 

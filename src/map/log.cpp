@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "log.hpp"
@@ -6,18 +6,19 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/sql.hpp" // SQL_INNODB
-#include "../common/strlib.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/sql.hpp" // SQL_INNODB
+#include "../common/strlib.hpp"
 
-#include "map.hpp"
 #include "battle.hpp"
-#include "itemdb.hpp"
 #include "homunculus.hpp"
+#include "itemdb.hpp"
+#include "map.hpp"
 #include "mob.hpp"
-#include "pet.hpp"
+#include "npc.hpp"
 #include "pc.hpp"
+#include "pet.hpp"
 
 static char log_timestamp_format[20];
 
@@ -211,12 +212,33 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`, `bound`) VALUES (NOW(), '%d', '%c', '%hu', '%d', '%d', '%hu', '%hu', '%hu', '%hu', '%s', '%" PRIu64 "', '%d')",
-			log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound) )
-		{
-			Sql_ShowDebug(logmysql_handle);
-			return;
+		int i;
+		SqlStmt* stmt = SqlStmt_Malloc(logmysql_handle);
+		StringBuf buf;
+		StringBuf_Init(&buf);
+
+		StringBuf_Printf(&buf, "%s INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `map`, `unique_id`, `bound`", LOG_QUERY, log_config.log_pick);
+		for (i = 0; i < MAX_SLOTS; ++i)
+			StringBuf_Printf(&buf, ", `card%d`", i);
+		for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+			StringBuf_Printf(&buf, ", `option_id%d`", i);
+			StringBuf_Printf(&buf, ", `option_val%d`", i);
+			StringBuf_Printf(&buf, ", `option_parm%d`", i);
 		}
+		StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%c','%d','%d','%d','%s','%" PRIu64 "','%d'",
+			id, log_picktype2char(type), itm->nameid, amount, itm->refine, map[m].name[0] ? map[m].name : "", itm->unique_id, itm->bound);
+
+		for (i = 0; i < MAX_SLOTS; i++)
+			StringBuf_Printf(&buf, ",'%d'", itm->card[i]);
+		for (i = 0; i < MAX_ITEM_RDM_OPT; i++)
+			StringBuf_Printf(&buf, ",'%d','%d','%d'", itm->option[i].id, itm->option[i].value, itm->option[i].param);
+		StringBuf_Printf(&buf, ")");
+
+		if (SQL_SUCCESS != SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) || SQL_SUCCESS != SqlStmt_Execute(stmt))
+			SqlStmt_ShowDebug(stmt);
+
+		SqlStmt_Free(stmt);
+		StringBuf_Destroy(&buf);
 	}
 	else
 	{
@@ -228,7 +250,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%" PRIu64 "',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
+		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%" PRIu64 "',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name[0]?map[m].name:"", itm->unique_id, itm->bound);
 		fclose(logfp);
 	}
 }
@@ -354,6 +376,42 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 	}
 }
 
+/// logs messages passed to script command 'logmes'
+void log_npc( struct npc_data* nd, const char* message ){
+	nullpo_retv(nd);
+
+	if( !log_config.npc )
+		return;
+
+	if( log_config.sql_logs )
+	{
+		SqlStmt* stmt;
+		stmt = SqlStmt_Malloc(logmysql_handle);
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->bl.m) )
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, nd->name, strnlen(nd->name, NAME_LENGTH))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
+		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
+		{
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
+			return;
+		}
+		SqlStmt_Free(stmt);
+	}
+	else
+	{
+		char timestring[255];
+		time_t curtime;
+		FILE* logfp;
+
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
+			return;
+		time(&curtime);
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
+		fprintf(logfp, "%s - %s: %s\n", timestring, nd->name, message);
+		fclose(logfp);
+	}
+}
 
 /// logs messages passed to script command 'logmes'
 void log_npc(struct map_session_data* sd, const char* message)

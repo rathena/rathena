@@ -1,32 +1,31 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mercenary.hpp"
 
-#include <stdlib.h>
 #include <map>
 #include <math.h>
-
-#include "../common/utilities.hpp"
+#include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
-#include "../common/timer.hpp"
-#include "../common/nullpo.hpp"
 #include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
-#include "log.hpp"
 #include "clif.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
-#include "pc.hpp"
-#include "party.hpp"
-#include "trade.hpp"
+#include "log.hpp"
 #include "npc.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "trade.hpp"
 
 using namespace rathena;
 
@@ -275,7 +274,7 @@ void mercenary_save(struct mercenary_data *md) {
 /**
 * Ends contract of Mercenary
 **/
-static int merc_contract_end(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(merc_contract_end){
 	struct map_session_data *sd;
 	struct mercenary_data *md;
 

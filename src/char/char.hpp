@@ -1,13 +1,14 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
-#include "../config/core.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
-#include "../common/msg_conf.hpp"
 #include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
@@ -277,7 +278,7 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id);
 void char_set_char_offline(uint32 char_id, uint32 account_id);
 void char_set_all_offline(int id);
 void char_disconnect_player(uint32 account_id);
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(char_chardb_waiting_disconnect);
 
 int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
 int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);

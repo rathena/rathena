@@ -1,5 +1,6 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
 #ifndef _CONFIG_PACKETS_HPP_
 #define _CONFIG_PACKETS_HPP_
 
@@ -40,6 +41,12 @@
 	#if defined(PACKET_OBFUSCATION)
 		#error You enabled packet obfuscation for a version which is too old. Minimum supported client is 2011-08-17.
 	#endif
+#endif
+
+/// Comment to disable the official Guild Storage skill.
+/// When enabled, this will set the guild storage size to the level of the skill * 100.
+#if PACKETVER >= 20131223
+	#define OFFICIAL_GUILD_STORAGE
 #endif
 
 #ifndef DUMP_UNKNOWN_PACKET

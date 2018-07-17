@@ -1,21 +1,15 @@
-/**
- * @file loginchrif.c
- * Module purpose is to handle incoming and outgoing requests with char-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "loginchrif.hpp"
 
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/timer.hpp" //difftick
-#include "../common/strlib.hpp" //safeprint
 #include "../common/showmsg.hpp" //show notice
 #include "../common/socket.hpp" //wfifo session
+#include "../common/strlib.hpp" //safeprint
+#include "../common/timer.hpp" //difftick
 
 #include "account.hpp"
 #include "login.hpp"
@@ -55,7 +49,7 @@ int logchrif_sendallwos(int sfd, uint8* buf, size_t len) {
  * @param data: unused
  * @return 0
  */
-int logchrif_sync_ip_addresses(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(logchrif_sync_ip_addresses){
 	uint8 buf[2];
 	ShowInfo("IP Sync in progress...\n");
 	WBUFW(buf,0) = 0x2735;

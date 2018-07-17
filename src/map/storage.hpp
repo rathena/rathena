@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _STORAGE_HPP_
@@ -18,6 +18,16 @@ enum e_storage_add {
 	STORAGE_ADD_NOROOM,
 	STORAGE_ADD_NOACCESS,
 	STORAGE_ADD_INVALID,
+};
+
+/// Guild storage flags
+enum e_guild_storage_flags : uint8 {
+	GSTORAGE_OPEN = 0,
+	GSTORAGE_STORAGE_ALREADY_OPEN,
+	GSTORAGE_ALREADY_OPEN,
+	GSTORAGE_NO_GUILD,
+	GSTORAGE_NO_STORAGE,
+	GSTORAGE_NO_PERMISSION
 };
 
 const char *storage_getName(uint8 id);

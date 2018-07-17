@@ -1,12 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "itemdb.hpp"
 
 #include <stdlib.h>
 
-#include "../common/nullpo.hpp"
 #include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
@@ -14,12 +14,12 @@
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
-#include "intif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "log.hpp"
 #include "mob.hpp"
+#include "pc.hpp"
+#include "status.hpp"
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -1120,7 +1120,7 @@ bool itemdb_parse_roulette_db(void)
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
 				continue;
 			}
-			if (amount < 1) {
+			if (amount < 1 || amount > MAX_AMOUNT){
 				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
 				continue;
 			}

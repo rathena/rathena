@@ -1,10 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _STATUS_HPP_
 #define _STATUS_HPP_
 
 #include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 enum e_race2 : uint8;
 struct block_list;
@@ -2964,13 +2965,14 @@ enum e_option {
 	OPTION_DRAGON5		= 0x04000000,
 	OPTION_HANBOK		= 0x08000000,
 	OPTION_OKTOBERFEST	= 0x10000000,
+	OPTION_SUMMER2		= 0x20000000,
 
 	// compound constant for older carts
 	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
 
 	// compound constants
 	OPTION_DRAGON	= OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
-	OPTION_COSTUME	= OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST,
+	OPTION_COSTUME	= OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST|OPTION_SUMMER2,
 };
 
 ///Defines for the manner system [Skotlex]
@@ -3365,7 +3367,7 @@ int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type
 int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag);
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
-int status_change_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(status_change_timer);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "instance.hpp"
@@ -6,14 +6,14 @@
 #include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"  // ers_destroy
+#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/strlib.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/ers.hpp"  // ers_destroy
+#include "../common/timer.hpp"
 
 #include "clan.hpp"
 #include "clif.hpp"
@@ -94,8 +94,7 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 /*==========================================
  * Deletes an instance timer (Destroys instance)
  *------------------------------------------*/
-static int instance_delete_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(instance_delete_timer){
 	instance_destroy(id);
 
 	return 0;
@@ -104,8 +103,7 @@ static int instance_delete_timer(int tid, unsigned int tick, int id, intptr_t da
 /*==========================================
  * Create subscription timer
  *------------------------------------------*/
-static int instance_subscription_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(instance_subscription_timer){
 	int i, ret;
 	unsigned short instance_id = instance_wait.id[0];
 	struct map_session_data *sd = NULL;

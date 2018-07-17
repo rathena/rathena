@@ -1,10 +1,8 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef	_SOCKET_HPP_
 #define _SOCKET_HPP_
-
-#include "cbasetypes.hpp"
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -14,8 +12,9 @@
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 #endif
-
 #include <time.h>
+
+#include "cbasetypes.hpp"
 
 #define FIFOSIZE_SERVERLINK 256*1024
 

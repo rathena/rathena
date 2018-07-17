@@ -1,15 +1,20 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "malloc.hpp"
-#include "core.hpp"
-#include "showmsg.hpp"
 
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#define FREED_POINTER 0xdeadbeafL
+#include "core.hpp"
+#include "showmsg.hpp"
+
+#if defined(__64BIT__)
+	#define FREED_POINTER 0xdeadbeafL
+#else
+	#define FREED_POINTER 0x7eadbeafL
+#endif
 
 ////////////// Memory Libraries //////////////////
 

@@ -1,18 +1,18 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_auction.hpp"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "../common/mmo.hpp"
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
-#include "../common/strlib.hpp"
 #include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 
 #include "char.hpp"
@@ -23,7 +23,7 @@
 static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
 
 void auction_delete(struct auction_data *auction);
-int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(auction_end_timer);
 
 int auction_count(uint32 char_id, bool buy)
 {
@@ -151,8 +151,7 @@ void mapif_Auction_message(uint32 char_id, unsigned char result)
 	chmapif_sendall(buf,7);
 }
 
-int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(auction_end_timer){
 	struct auction_data *auction;
 	if( (auction = (struct auction_data *)idb_get(auction_db_, id)) != NULL )
 	{

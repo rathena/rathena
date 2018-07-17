@@ -1,14 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.hpp"
-#include "showmsg.hpp"
-#include "socket.hpp"
 #include "utils.hpp"
 
+#include <math.h> // floor()
 #include <stdlib.h>
 #include <string.h>
-#include <math.h> // floor()
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -21,6 +18,9 @@
 	#include <sys/stat.h>
 #endif
 
+#include "cbasetypes.hpp"
+#include "showmsg.hpp"
+#include "socket.hpp"
 
 /// Dumps given buffer into file pointed to by a handle.
 void WriteDump(FILE* fp, const void* buffer, size_t length)
@@ -240,7 +240,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 		sprintf(tmppath,"%s%c%s",path, PATHSEP, entry->d_name);
 
 		// check if the pattern matchs.
-		if (entry->d_name && strstr(entry->d_name, pattern)) {
+		if (entry->d_name[0] && strstr(entry->d_name, pattern)) {
 			func( tmppath );
 		}
 		// check if it is a directory.

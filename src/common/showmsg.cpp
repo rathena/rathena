@@ -1,13 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.hpp"
-#include "strlib.hpp" // StringBuf
 #include "showmsg.hpp"
-#include "core.hpp" //[Ind] - For SERVER_TYPE
 
-#include <time.h>
 #include <stdlib.h> // atexit
+#include <time.h>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -38,6 +35,10 @@
 		#endif
 	#endif
 #endif
+
+#include "cbasetypes.hpp"
+#include "core.hpp" //[Ind] - For SERVER_TYPE
+#include "strlib.hpp" // StringBuf
 
 ///////////////////////////////////////////////////////////////////////////////
 /// behavioral parameter.

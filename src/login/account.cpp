@@ -1,17 +1,11 @@
-/**
- * @file account.c
- * Module purpose is to save, load, and update changes into the account table or file.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "account.hpp"
 
+#include <algorithm> //min / max
 #include <stdlib.h>
 #include <string.h>
-#include <algorithm> //min / max
 
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"

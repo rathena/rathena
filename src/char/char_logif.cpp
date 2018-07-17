@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 #include "../common/sql.hpp"
-#include "../common/utils.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "inter.hpp"
-#include "int_guild.hpp"
 #include "char.hpp"
 #include "char_clif.hpp"
 #include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_guild.hpp"
 
 //early declaration
 void chlogif_on_ready(void);
@@ -105,7 +105,7 @@ int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
  * @param data : data transmited for delayed function
  * @return 
  */
-int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
 		DBMap*  online_char_db = char_get_onlinedb();
 		// send account list to login server
@@ -134,8 +134,7 @@ void chlogif_send_usercount(int users){
 }
 
 
-int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(chlogif_broadcast_user_count){
 	uint8 buf[6];
 	int users = char_count_users();
 
@@ -761,7 +760,7 @@ int chlogif_parse(int fd) {
 	return 0;
 }
 
-int chlogif_check_connect_logserver(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(chlogif_check_connect_logserver){
 	if (login_fd > 0 && session[login_fd] != NULL)
 		return 0;
 
