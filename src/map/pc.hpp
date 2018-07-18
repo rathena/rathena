@@ -8,6 +8,7 @@
 
 #include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.hpp"// StringBuf
+#include "../common/timer.hpp"
 
 #include "buyingstore.hpp" // struct s_buyingstore
 #include "clif.hpp" //e_wip_block
@@ -33,10 +34,21 @@ enum sc_type : int16;
 #define MAX_DEVOTION 5 /// Max Devotion slots
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
 
+#define LANGTYPE_VAR "#langtype"
+#define CASHPOINT_VAR "#CASHPOINTS"
+#define KAFRAPOINT_VAR "#KAFRAPOINTS"
 #define BANK_VAULT_VAR "#BANKVAULT"
 #define ROULETTE_BRONZE_VAR "RouletteBronze"
 #define ROULETTE_SILVER_VAR "RouletteSilver"
 #define ROULETTE_GOLD_VAR "RouletteGold"
+#define COOKMASTERY_VAR "COOK_MASTERY"
+#define PCDIECOUNTER_VAR "PC_DIE_COUNTER"
+#define JOBCHANGE2ND_VAR "jobchange_level"
+#define JOBCHANGE3RD_VAR "jobchange_level_3rd"
+#define TKMISSIONID_VAR "TK_MISSION_ID"
+#define TKMISSIONCOUNT_VAR "TK_MISSION_COUNT"
+#define ATTENDANCE_DATE_VAR "#AttendanceDate"
+#define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 85 since Expanded Super Baby needs it.
@@ -670,10 +682,6 @@ struct map_session_data {
 	bool vars_ok;
 	bool vars_dirty;
 
-	// temporary debugging of bug #3504
-	const char* delunit_prevfile;
-	int delunit_prevline;
-
 	uint16 dmglog[DAMAGELOG_SIZE_PC]; ///target ids
 
 	int c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
@@ -711,6 +719,7 @@ struct map_session_data {
 		int8 prizeIdx;
 		short prizeStage;
 		bool claimPrize;
+		unsigned int tick;
 	} roulette;
 
 	unsigned short instance_id;
@@ -886,8 +895,9 @@ extern struct s_job_info job_info[CLASS_COUNT];
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE && !((sd)->sc.data && (sd)->sc.data[SC__FEINTBOMB]) )
-#define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
-#define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
+#define pc_is50overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate )
+#define pc_is70overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate_renewal )
+#define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block progress) {
 	return sd == NULL || (sd->state.workinprogress&progress) == progress;
@@ -990,7 +1000,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 void pc_authfail(struct map_session_data *sd);
 void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
-int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(pc_close_npc_timer);
 
 void pc_setequipindex(struct map_session_data *sd);
 uint8 pc_isequip(struct map_session_data *sd,int n);
@@ -1005,8 +1015,8 @@ bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min,
 
 void pc_scdata_received(struct map_session_data *sd);
 void pc_check_expiration(struct map_session_data *sd);
-int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
-int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(pc_expiration_timer);
+TIMER_FUNC(pc_global_expiration_timer);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);
@@ -1062,7 +1072,7 @@ void pc_updateweightstatus(struct map_session_data *sd);
 
 bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short atk_type, const char *o_script, unsigned int pos, bool onskill);
 void pc_exeautobonus(struct map_session_data* sd,struct s_autobonus *bonus);
-int pc_endautobonus(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore);
 
 void pc_bonus(struct map_session_data *sd, int type, int val);
@@ -1174,7 +1184,7 @@ void pc_cleareventtimer(struct map_session_data *sd);
 void pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick);
 
 int pc_calc_pvprank(struct map_session_data *sd);
-int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(pc_calc_pvprank_timer);
 
 int pc_ismarried(struct map_session_data *sd);
 bool pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd);
@@ -1250,8 +1260,8 @@ enum e_additem_result {
 // timer for night.day
 extern int day_timer_tid;
 extern int night_timer_tid;
-int map_day_timer(int tid, unsigned int tick, int id, intptr_t data); // by [yor]
-int map_night_timer(int tid, unsigned int tick, int id, intptr_t data); // by [yor]
+TIMER_FUNC(map_day_timer); // by [yor]
+TIMER_FUNC(map_night_timer); // by [yor]
 
 // Rental System
 void pc_inventory_rentals(struct map_session_data *sd);
@@ -1289,7 +1299,7 @@ void pc_crimson_marker_clear(struct map_session_data *sd);
 
 void pc_show_version(struct map_session_data *sd);
 
-int pc_bonus_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(pc_bonus_script_timer);
 void pc_bonus_script(struct map_session_data *sd);
 struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
@@ -1303,7 +1313,7 @@ bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short inde
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
-int pc_autotrade_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(pc_autotrade_timer);
 
 void pc_validate_skill(struct map_session_data *sd);
 
@@ -1315,5 +1325,9 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
+
+bool pc_attendance_enabled();
+int32 pc_attendance_counter( struct map_session_data* sd );
+void pc_attendance_claim_reward( struct map_session_data* sd );
 
 #endif /* _PC_HPP_ */

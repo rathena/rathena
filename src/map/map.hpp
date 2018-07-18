@@ -12,6 +12,7 @@
 #include "../common/mapindex.hpp"
 #include "../common/mmo.hpp"
 #include "../common/msg_conf.hpp"
+#include "../common/timer.hpp"
 #include "../config/core.hpp"
 
 struct npc_data;
@@ -89,6 +90,7 @@ enum e_mapid {
 	MAPID_GANGSI,
 	MAPID_OKTOBERFEST,
 	MAPID_SUMMONER,
+	MAPID_SUMMER2,
 //2-1 Jobs
 	MAPID_SUPER_NOVICE = JOBL_2_1|MAPID_NOVICE,
 	MAPID_KNIGHT,
@@ -433,6 +435,8 @@ enum _sp {
 	SP_ROULETTE_BRONZE = 128,
 	SP_ROULETTE_SILVER = 129,
 	SP_ROULETTE_GOLD = 130,
+	SP_CASHPOINTS, SP_KAFRAPOINTS,
+	SP_PCDIECOUNTER, SP_COOKMASTERY,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -749,7 +753,7 @@ extern int map_num;
 
 extern int autosave_interval;
 extern int minsave_interval;
-extern unsigned char save_settings;
+extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
 
@@ -776,16 +780,17 @@ extern struct s_map_default map_default;
 
 /// Type of 'save_settings'
 enum save_settings_type {
-	CHARSAVE_NONE = 0,
-	CHARSAVE_TRADE   = 0x01, /// After trading
-	CHARSAVE_VENDING = 0x02, /// After vending (open/transaction)
-	CHARSAVE_STORAGE = 0x04, /// After closing storage/guild storage.
-	CHARSAVE_PET     = 0x08, /// After hatching/returning to egg a pet.
-	CHARSAVE_MAIL    = 0x10, /// After successfully sending a mail with attachment
-	CHARSAVE_AUCTION = 0x20, /// After successfully submitting an item for auction
-	CHARSAVE_QUEST   = 0x40, /// After successfully get/delete/complete a quest
-	CHARSAVE_BANK    = 0x80, /// After every bank transaction (deposit/withdraw)
-	CHARSAVE_ALL     = 0xFF,
+	CHARSAVE_NONE		= 0x000, /// Never
+	CHARSAVE_TRADE		= 0x001, /// After trading
+	CHARSAVE_VENDING	= 0x002, /// After vending (open/transaction)
+	CHARSAVE_STORAGE	= 0x004, /// After closing storage/guild storage.
+	CHARSAVE_PET		= 0x008, /// After hatching/returning to egg a pet.
+	CHARSAVE_MAIL		= 0x010, /// After successfully sending a mail with attachment
+	CHARSAVE_AUCTION	= 0x020, /// After successfully submitting an item for auction
+	CHARSAVE_QUEST		= 0x040, /// After successfully get/delete/complete a quest
+	CHARSAVE_BANK		= 0x080, /// After every bank transaction (deposit/withdraw)
+	CHARSAVE_ATTENDANCE	= 0x100, /// After every attendence reward
+	CHARSAVE_ALL		= 0xFFF, /// Always
 };
 
 // users
@@ -827,8 +832,8 @@ int map_quit(struct map_session_data *);
 bool map_addnpc(int16 m,struct npc_data *);
 
 // map item
-int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
-int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(map_clearflooritem_timer);
+TIMER_FUNC(map_removemobs_timer);
 void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
 

@@ -869,8 +869,7 @@ void clif_clearunit_area(struct block_list* bl, clr_type type)
 /// Used to make monsters with player-sprites disappear after dying
 /// like normal monsters, because the client does not remove those
 /// automatically.
-static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(clif_clearunit_delayed_sub){
 	struct block_list *bl = (struct block_list *)data;
 	clif_clearunit_area(bl, (clr_type) id);
 	ers_free(delay_clearunit_ers,bl);
@@ -1807,8 +1806,7 @@ void clif_move(struct unit_data *ud)
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
  *------------------------------------------*/
-static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(clif_delayquit){
 	struct map_session_data *sd = NULL;
 
 	//Remove player from map server
@@ -3515,16 +3513,13 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 						vd->cloth_color = 0;
 					if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
 						vd->cloth_color = 0;
-					if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+					if (sd->sc.option&(OPTION_SUMMER|OPTION_SUMMER2) && battle_config.summer_ignorepalette)
 						vd->cloth_color = 0;
 					if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
 						vd->cloth_color = 0;
 					if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
 						vd->cloth_color = 0;
-					if (vd->body_style && (
- 						sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
- 						sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
- 						sd->sc.option&OPTION_OKTOBERFEST))
+					if (vd->body_style && sd->sc.option&OPTION_COSTUME)
  						vd->body_style = 0;
 				}
 				break;
@@ -3549,7 +3544,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 						val = 0;
 					if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
 						val = 0;
-					if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+					if (sd->sc.option&(OPTION_SUMMER|OPTION_SUMMER2) && battle_config.summer_ignorepalette)
 						val = 0;
 					if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
 						val = 0;
@@ -3587,10 +3582,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if (val && (
- 					sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
- 					sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
- 					sd->sc.option&OPTION_OKTOBERFEST))
+				if (val && sd->sc.option&OPTION_COSTUME)
  					val = 0;
  				vd->body_style = val;
 #endif
@@ -6054,6 +6046,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 	unsigned char i;
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+	bool spheres_sent;
 
 	nullpo_retv(bl);
 
@@ -6063,6 +6056,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 			sc_display = sd->sc_display;
 			sc_display_count = sd->sc_display_count;
+			spheres_sent = !sd->state.connect_new;
 			}
 			break;
 		case BL_NPC: {
@@ -6070,6 +6064,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 			sc_display = nd->sc_display;
 			sc_display_count = nd->sc_display_count;
+			spheres_sent = true;
 			}
 			break;
 		default:
@@ -6084,11 +6079,20 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
+
+		if( spheres_sent && type >= SC_SPHERE_1 && type <= SC_SPHERE_5 ){
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+			clif_efst_status_change(tbl, bl->id, AREA_WOS, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-		clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
 #endif
+		}else{
+#if PACKETVER > 20120418
+			clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+#else
+			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+#endif
+		}
 	}
 }
 
@@ -9509,7 +9513,10 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 
 				safestrncpy(WBUFCP(buf,54), sd->guild->name,NAME_LENGTH);
 				safestrncpy(WBUFCP(buf,78), sd->guild->position[position].name, NAME_LENGTH);
-			}else{ //Assume no guild.
+			}else if( sd->clan ){
+				WBUFB(buf,54) = 0;
+				safestrncpy(WBUFCP(buf,78), sd->clan->name,NAME_LENGTH);
+			}else{ //Assume no guild and no clan
 				WBUFB(buf,54) = 0;
 				WBUFB(buf,78) = 0;
 			}
@@ -9921,6 +9928,21 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 	WFIFOW(fd,2) = skill_id;
 	WFIFOL(fd,4) = msg_id;
 	WFIFOSET(fd, packet_len(0x7e6));
+}
+
+/// Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
+/// 09cd <msg id>.W <color>.L
+void clif_msg_color( struct map_session_data *sd, uint16 msg_id, uint32 color ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x9cd));
+	WFIFOW(fd, 0) = 0x9cd;
+	WFIFOW(fd, 2) = msg_id;
+	WFIFOL(fd, 4) = color;
+
+	WFIFOSET(fd, packet_len(0x9cd));
 }
 
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
@@ -10472,8 +10494,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 #endif
 
-		if (sd->guild && battle_config.guild_notice_changemap == 1)
+		if (sd->guild && battle_config.guild_notice_changemap == 1){
 			clif_guild_notice(sd); // Displays after VIP
+			guild_notice = false; // Do not display it twice
+		}
 
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -10529,13 +10553,15 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 
 		// Instances do not need their own channels
-		if( channel_config.map_tmpl.name != NULL && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
+		if( channel_config.map_tmpl.name[0] && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
 
 		clif_pk_mode_message(sd);
-	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
+	}
+	
+	if( sd->guild && ( battle_config.guild_notice_changemap == 2 || guild_notice ) ){
 		clif_guild_notice(sd); // Displays at end
-
+	}
 
 	mail_clear(sd);
 
@@ -19241,19 +19267,12 @@ void DumpUnknown(int fd,TBL_PC *sd,int cmd,int packet_len)
 /// Roulette System
 /// Author: Yommy
 
-/**
- * Opens Roulette window
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
-{
+/// Opens the roulette window
+/// 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
+void clif_roulette_open( struct map_session_data* sd ){
 	nullpo_retv(sd);
 
-	if (!battle_config.feature_roulette) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
-		return;
-	}
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0xa1a));
 	WFIFOW(fd,0) = 0xa1a;
@@ -19268,21 +19287,35 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd)
 	WFIFOSET(fd,packet_len(0xa1a));
 }
 
-/**
- * Generates information to be displayed
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
-{
-	unsigned short i, j, count = 0;
-	int len = 8 + (42 * 8);
-
+/// Request to open the roulette window
+/// 0A19 (CZ_REQ_OPEN_ROULETTE)
+void clif_parse_roulette_open( int fd, struct map_session_data* sd ){
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
 		return;
+	}
+
+	clif_roulette_open(sd);
+}
+
+/// Sends the info about the available roulette rewards to the client
+/// 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.W <amount>.W } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO)
+/// 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.L <amount>.L } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO) >= 20180516
+void clif_roulette_info( struct map_session_data* sd ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+	int len = 8; // Initialize to header size
+#if PACKETVER < 20180516
+	int size = 8;
+#else
+	int size = 12;
+#endif
+
+	for( int i = 0; i < MAX_ROULETTE_LEVEL; i++ ){
+		len += (MAX_ROULETTE_COLUMNS - i) * size;
 	}
 
 	WFIFOHEAD(fd,len);
@@ -19290,27 +19323,27 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
 	WFIFOW(fd,2) = len;
 	WFIFOL(fd,4) = 1; // serial
 
-	for(i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		for(j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
-			WFIFOW(fd,8 * count + 8) = i;
-			WFIFOW(fd,8 * count + 10) = j;
-			WFIFOW(fd,8 * count + 12) = rd.nameid[i][j];
-			WFIFOW(fd,8 * count + 14) = rd.qty[i][j];
-			count++;
+	for(int i = 0, offset = 8; i < MAX_ROULETTE_LEVEL; i++) {
+		for(int j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
+			WFIFOW(fd,offset + 0) = i;
+			WFIFOW(fd,offset + 2) = j;
+#if PACKETVER < 20180516
+			WFIFOW(fd,offset + 4) = rd.nameid[i][j];
+			WFIFOW(fd,offset + 6) = rd.qty[i][j];
+#else
+			WFIFOL(fd,offset + 4) = rd.nameid[i][j];
+			WFIFOL(fd,offset + 8) = rd.qty[i][j];
+#endif
+			offset += size;
 		}
 	}
 
 	WFIFOSET(fd,len);
-	return;
 }
 
-/**
- * Closes Roulette window
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
-{
+/// Request the roulette reward data
+/// 0A1B (CZ_REQ_ROULETTE_INFO)
+void clif_parse_roulette_info( int fd, struct map_session_data* sd ){
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_roulette) {
@@ -19318,27 +19351,35 @@ void clif_parse_RouletteClose(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	/** What do we need this for? (other than state tracking), game client closes the window without our response. **/
-	return;
+	clif_roulette_info(sd);
 }
 
-/**
- *
- **/
-static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_ROULETTE_ITEM_REQ type) {
-#if PACKETVER >= 20141016
-	uint16 cmd = 0xa22;
-	unsigned char buf[5];
-
+/// Notification of the client that the roulette window was closed
+/// 0A1D (CZ_REQ_CLOSE_ROULETTE)
+void clif_parse_roulette_close( int fd, struct map_session_data* sd ){
 	nullpo_retv(sd);
 
-	if (packet_db[cmd].len == 0)
+	if (!battle_config.feature_roulette) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
 		return;
+	}
 
-	WBUFW(buf,0) = cmd;
-	WBUFB(buf,2) = type;
-	WBUFW(buf,3) = 0; //! TODO: Additional item
-	clif_send(buf, sizeof(buf), &sd->bl, SELF);
+	// What do we need this for? (other than state tracking), game client closes the window without our response.
+}
+
+/// Response to a item reward request
+/// 0A22 <type>.B <bonus item>.W (ZC_RECV_ROULETTE_ITEM)
+static void clif_roulette_recvitem_ack(struct map_session_data *sd, enum RECV_ROULETTE_ITEM_REQ type) {
+#if PACKETVER >= 20141016
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xa22));
+	WFIFOW(fd,0) = 0xa22;
+	WFIFOB(fd,2) = type;
+	WFIFOW(fd,3) = 0; //! TODO: Additional item
+	WFIFOSET(fd,packet_len(0xa22));
 #endif
 }
 
@@ -19372,117 +19413,12 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 	return res;
 }
 
-/**
- * Process the stage and attempt to give a prize
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd)
-{
-	enum GENERATE_ROULETTE_ACK result = GENERATE_ROULETTE_SUCCESS;
-	short stage = sd->roulette.stage;
-
+/// Update Roulette window with current stats
+/// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
+void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID ){
 	nullpo_retv(sd);
 
-	if (!battle_config.feature_roulette) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
-		return;
-	}
-
-	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL)
-		stage = sd->roulette.stage = 0;
-
-	if (!stage) {
-		if (sd->roulette_point.bronze <= 0 && sd->roulette_point.silver < 10 && sd->roulette_point.gold < 10)
-			result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
-	}
-
-	if (result == GENERATE_ROULETTE_SUCCESS) {
-		if (!stage) {
-			if (sd->roulette_point.bronze > 0) {
-				sd->roulette_point.bronze -= 1;
-				pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
-			} else if (sd->roulette_point.silver > 9) {
-				sd->roulette_point.silver -= 10;
-				stage = sd->roulette.stage = 2;
-				pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
-			} else if (sd->roulette_point.gold > 9) {
-				sd->roulette_point.gold -= 10;
-				stage = sd->roulette.stage = 4;
-				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
-			}
-		}
-
-		sd->roulette.prizeStage = stage;
-		sd->roulette.prizeIdx = rnd()%rd.items[stage];
-
-		if (rd.flag[stage][sd->roulette.prizeIdx]&1) {
-			clif_roulette_generate_ack(sd,GENERATE_ROULETTE_LOSING,stage,sd->roulette.prizeIdx,0);
-			clif_roulette_getitem(sd);
-			clif_roulette_recvitem_ack(sd, RECV_ITEM_SUCCESS);
-			return;
-		}
-		else {
-			sd->roulette.claimPrize = true;
-			sd->roulette.stage++;
-		}
-	}
-
-	clif_roulette_generate_ack(sd,result,stage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
-}
-
-/**
- * Request to cash in prize
- * @param fd
- * @param sd
- */
-void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
-{
-	enum RECV_ROULETTE_ITEM_REQ type = RECV_ITEM_FAILED;
-	nullpo_retv(sd);
-
-	if (!battle_config.feature_roulette) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
-		return;
-	}
-
-	if (sd->roulette.claimPrize && sd->roulette.prizeIdx != -1) {
-		switch (clif_roulette_getitem(sd)) {
-			case 0:
-				type = RECV_ITEM_SUCCESS;
-				break;
-			case 1:
-			case 4:
-			case 5:
-				type = RECV_ITEM_OVERCOUNT;
-				break;
-			case 2:
-				type = RECV_ITEM_OVERWEIGHT;
-				break;
-			case 7:
-			default:
-				type = RECV_ITEM_FAILED;
-				break;
-		}
-	}
-
-	clif_roulette_recvitem_ack(sd,type);
-	return;
-}
-
-/**
- * Update Roulette window with current stats
- * @param sd
- * @param result
- * @param stage
- * @param prizeIdx
- * @param bonusItemID
- */
-void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID)
-{
 	int fd = sd->fd;
-
-	nullpo_retv(sd);
 
 	WFIFOHEAD(fd,packet_len(0xa20));
 	WFIFOW(fd,0) = 0xa20;
@@ -19494,6 +19430,102 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
 	WFIFOL(fd,13) = sd->roulette_point.silver;
 	WFIFOL(fd,17) = sd->roulette_point.bronze;
 	WFIFOSET(fd,packet_len(0xa20));
+}
+
+/// Request to start the roulette
+/// 0A1F (CZ_REQ_GENERATE_ROULETTE)
+void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
+	enum GENERATE_ROULETTE_ACK result;
+
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
+		return;
+	}
+
+	if( sd->roulette.tick && DIFF_TICK( sd->roulette.tick, gettick() ) > 0 ){
+		return;
+	}
+
+	if (sd->roulette.stage >= MAX_ROULETTE_LEVEL){
+		sd->roulette.stage = 0;
+		sd->roulette.claimPrize = false;
+		sd->roulette.prizeStage = 0;
+		sd->roulette.prizeIdx = -1;
+	}
+
+	if( !sd->roulette.stage && sd->roulette_point.bronze <= 0 && sd->roulette_point.silver < 10 && sd->roulette_point.gold < 10 ){
+		result = GENERATE_ROULETTE_NO_ENOUGH_POINT;
+	}else{
+		if (!sd->roulette.stage) {
+			if (sd->roulette_point.bronze > 0) {
+				sd->roulette_point.bronze -= 1;
+				pc_setreg2(sd, ROULETTE_BRONZE_VAR, sd->roulette_point.bronze);
+			} else if (sd->roulette_point.silver > 9) {
+				sd->roulette_point.silver -= 10;
+				sd->roulette.stage = 2;
+				pc_setreg2(sd, ROULETTE_SILVER_VAR, sd->roulette_point.silver);
+			} else if (sd->roulette_point.gold > 9) {
+				sd->roulette_point.gold -= 10;
+				sd->roulette.stage = 4;
+				pc_setreg2(sd, ROULETTE_GOLD_VAR, sd->roulette_point.gold);
+			}
+		}
+
+		sd->roulette.prizeStage = sd->roulette.stage;
+		sd->roulette.prizeIdx = rnd()%rd.items[sd->roulette.stage];
+		sd->roulette.claimPrize = true;
+		sd->roulette.tick = gettick() + max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
+
+		if( rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1 ){
+			result = GENERATE_ROULETTE_LOSING;
+			sd->roulette.stage = 0;
+		}else{
+			result = GENERATE_ROULETTE_SUCCESS;
+			sd->roulette.stage++;
+		}
+	}
+
+	clif_roulette_generate(sd,result,sd->roulette.prizeStage,(sd->roulette.prizeIdx == -1 ? 0 : sd->roulette.prizeIdx),0);
+}
+
+/// Request to claim a prize
+/// 0A21 (CZ_RECV_ROULETTE_ITEM)
+void clif_parse_roulette_item( int fd, struct map_session_data* sd ){
+	enum RECV_ROULETTE_ITEM_REQ type = RECV_ITEM_FAILED;
+	nullpo_retv(sd);
+
+	if (!battle_config.feature_roulette) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1497),false,SELF); //Roulette is disabled
+		return;
+	}
+
+	if( sd->roulette.tick && DIFF_TICK( sd->roulette.tick, gettick() ) > 0 ){
+		return;
+	}
+
+	if (sd->roulette.claimPrize && sd->roulette.prizeIdx != -1) {
+		switch (clif_roulette_getitem(sd)) {
+			case ADDITEM_SUCCESS:
+				type = RECV_ITEM_SUCCESS;
+				break;
+			case ADDITEM_INVALID:
+			case ADDITEM_OVERITEM:
+			case ADDITEM_OVERAMOUNT:
+				type = RECV_ITEM_OVERCOUNT;
+				break;
+			case ADDITEM_OVERWEIGHT:
+				type = RECV_ITEM_OVERWEIGHT;
+				break;
+			case ADDITEM_STACKLIMIT:
+			default:
+				type = RECV_ITEM_FAILED;
+				break;
+		}
+	}
+
+	clif_roulette_recvitem_ack(sd,type);
 }
 
 /// MERGE ITEM
@@ -20265,6 +20297,75 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 	safesnprintf( command, sizeof(command), "%cchangedress", atcommand_symbol );
 	
 	is_atcommand( fd, sd, command, 1 );
+#endif
+}
+
+/// Opens an UI window of the given type and initializes it with the given data
+/// 0AE2 <type>.B <data>.L
+void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xae2));
+	WFIFOW(fd,0) = 0xae2;
+	WFIFOB(fd,2) = ui_type;
+	WFIFOL(fd,3) = data;
+	WFIFOSET(fd,packet_len(0xae2));
+}
+
+/// Request to open an UI window of the given type
+/// 0A68 <type>.B
+void clif_parse_open_ui( int fd, struct map_session_data* sd ){
+	switch( RFIFOB(fd,2) ){
+		case IN_UI_ATTENDANCE:
+			if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
+				clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 791 ), false, SELF ); // You are not allowed to use the attendance system.
+			}else if( pc_attendance_enabled() ){
+				clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+			}else{
+				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
+			}
+			break;
+	}
+}
+
+/// Response for attedance request
+/// 0AF0 <unknown>.L <data>.L
+void clif_attendence_response( struct map_session_data *sd, int32 data ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xAF0));
+	WFIFOW(fd,0) = 0xAF0;
+	WFIFOL(fd,2) = 0;
+	WFIFOL(fd,6) = data;
+	WFIFOSET(fd,packet_len(0xAF0));
+}
+
+/// Request from the client to retrieve today's attendance reward
+/// 0AEF
+void clif_parse_attendance_request( int fd, struct map_session_data* sd ){
+	pc_attendance_claim_reward(sd);
+}
+
+/// Send out the percentage of weight that causes it to be displayed in red.
+/// 0ADE <percentage>.L
+void clif_weight_limit( struct map_session_data* sd ){
+#if PACKETVER >= 20171025
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xADE));
+	WFIFOW(fd, 0) = 0xADE;
+#ifdef RENEWAL
+	WFIFOL(fd, 2) = battle_config.natural_heal_weight_rate_renewal;
+#else
+	WFIFOL(fd, 2) = battle_config.natural_heal_weight_rate;
+#endif
+	WFIFOSET(fd, packet_len(0xADE));
 #endif
 }
 

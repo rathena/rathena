@@ -67,7 +67,7 @@ struct s_subnet {
 } subnet[16];
 int subnet_count = 0;
 
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(char_chardb_waiting_disconnect);
 
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
@@ -738,7 +738,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i,j, offset = 0;
+	int i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
 
@@ -748,24 +748,28 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 			tablename = schema_config.inventory_db;
 			selectoption = "char_id";
 			storage = p->u.items_inventory;
+			max2 = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
 			printname = "Cart";
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			storage = p->u.items_cart;
+			max2 = MAX_CART;
 			break;
 		case TABLE_STORAGE:
 			printname = "Storage";
 			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			storage = p->u.items_storage;
+			max2 = inter_premiumStorage_getMax(p->stor_id);
 			break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
 			selectoption = "guild_id";
 			storage = p->u.items_guild;
+			max2 = inter_guild_storagemax(id);
 			break;
 		default:
 			ShowError("Invalid table name!\n");
@@ -776,7 +780,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	p->id = id;
 	p->type = tableswitch;
 	p->stor_id = stor_id;
-	p->max_amount = inter_premiumStorage_getMax(p->stor_id);
+	p->max_amount = max2;
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if (stmt == NULL) {
@@ -2171,8 +2175,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
 //replies/disconnect the player we tried to kick. [Skotlex]
 //------------------------------------------------
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(char_chardb_waiting_disconnect){
 	struct online_char_data* character;
 	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
@@ -2198,12 +2201,12 @@ int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+TIMER_FUNC(char_online_data_cleanup){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
-int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(char_clan_member_cleanup){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;

@@ -919,31 +919,29 @@ ACMD_FUNC(guildstorage)
 {
 	nullpo_retr(-1, sd);
 
-	if (!sd->status.guild_id) {
-		clif_displaymessage(fd, msg_txt(sd,252)); // You are not in a guild.
-		return -1;
-	}
-
 	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading)
 		return -1;
 
-	if (sd->state.storage_flag == 1) {
-		clif_displaymessage(fd, msg_txt(sd,250)); // You have already opened your storage. Close it first.
-		return -1;
+	switch (storage_guild_storageopen(sd)) {
+		case GSTORAGE_OPEN:
+			clif_displaymessage(fd, msg_txt(sd, 920)); // Guild storage opened.
+			break;
+		case GSTORAGE_STORAGE_ALREADY_OPEN:
+			clif_displaymessage(fd, msg_txt(sd, 250)); // You have already opened your storage. Close it first.
+			return -1;
+		case GSTORAGE_ALREADY_OPEN:
+			clif_displaymessage(fd, msg_txt(sd, 251)); // You have already opened your guild storage. Close it first.
+			return -1;
+		case GSTORAGE_NO_GUILD:
+			clif_displaymessage(fd, msg_txt(sd, 252)); // You are not in a guild.
+			return -1;
+		case GSTORAGE_NO_STORAGE:
+			clif_displaymessage(fd, msg_txt(sd, 786)); // The guild does not have a guild storage.
+			return -1;
+		case GSTORAGE_NO_PERMISSION:
+			clif_displaymessage(fd, msg_txt(sd, 787)); // You do not have permission to use the guild storage.
+			return -1;
 	}
-
-	if (sd->state.storage_flag == 2) {
-		clif_displaymessage(fd, msg_txt(sd,251)); // You have already opened your guild storage. Close it first.
-		return -1;
-	}
-
-	if (sd->state.storage_flag == 3) {
-		clif_displaymessage(fd, msg_txt(sd,250)); // You have already opened your storage. Close it first.
-		return -1;
-	}
-
-	storage_guild_storageopen(sd);
-	clif_displaymessage(fd, msg_txt(sd,920)); // Guild storage opened.
 	return 0;
 }
 
@@ -1066,7 +1064,7 @@ ACMD_FUNC(jobchange)
 	if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER || job == JOB_HANBOK || job == JOB_OKTOBERFEST
 		|| job == JOB_LORD_KNIGHT2 || job == JOB_PALADIN2 || job == JOB_BABY_KNIGHT2 || job == JOB_BABY_CRUSADER2 || job == JOB_STAR_GLADIATOR2
 		|| (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE2 && job <= JOB_BABY_MECHANIC2) || job == JOB_BABY_STAR_GLADIATOR2
-		|| job == JOB_STAR_EMPEROR2 || job == JOB_BABY_STAR_EMPEROR2)
+		|| job == JOB_STAR_EMPEROR2 || job == JOB_BABY_STAR_EMPEROR2 || job == JOB_SUMMER2)
 	{ // Deny direct transformation into dummy jobs
 		clif_displaymessage(fd, msg_txt(sd,923)); //"You can not change to this job by command."
 		return 0;
@@ -3992,7 +3990,7 @@ ACMD_FUNC(mapinfo) {
 	char direction[12];
 	int i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	unsigned short m_index;
-	char mapname[24];
+	char mapname[MAP_NAME_LENGTH];
 
 	nullpo_retr(-1, sd);
 
@@ -4000,7 +3998,7 @@ ACMD_FUNC(mapinfo) {
 	memset(mapname, '\0', sizeof(mapname));
 	memset(direction, '\0', sizeof(direction));
 
-	sscanf(message, "%11d %23[^\n]", &list, mapname);
+	sscanf(message, "%11d %11[^\n]", &list, mapname);
 
 	if (list < 0 || list > 3) {
 		clif_displaymessage(fd, msg_txt(sd,1038)); // Please enter at least one valid list number (usage: @mapinfo <0-3> <map>).
@@ -7359,7 +7357,7 @@ ACMD_FUNC(showmobs)
 		return 0;
 	}
 
-	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname)
+	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname[0])
 		strcpy(mob_name,mob_db(mob_id)->jname);    // --ja--
 		//strcpy(mob_name,mob_db(mob_id)->name);    // --en--
 
@@ -8495,14 +8493,14 @@ ACMD_FUNC(cash)
 	{ // @points
 		if( value > 0 ) {
 			if( (ret=pc_getcash(sd, 0, value, LOG_TYPE_COMMAND)) >= 0){
-			    sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
-			    clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+				sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
+				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
 			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
 		} else {
-			if( (ret=pc_paycash(sd, -value, -value, LOG_TYPE_COMMAND)) >= 0){
-			    sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
-			    clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
+				sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
+				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
 			else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 		}
@@ -9145,13 +9143,12 @@ ACMD_FUNC(charcommands) {
 /* for new mounts */
 ACMD_FUNC(mount2) {
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
-	if (!&sd->sc || !(sd->sc.data[SC_ALL_RIDING])) {
+	if (!sd->sc.data[SC_ALL_RIDING]) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
 		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
-		if (&sd->sc)
-			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 	}
 	return 0;
 }
@@ -9602,7 +9599,7 @@ ACMD_FUNC(langtype)
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
-			pc_setaccountreg(sd, add_str("#langtype"), lang); //For login/char
+			pc_setaccountreg(sd, add_str(LANGTYPE_VAR), lang); //For login/char
 			sd->langtype = lang;
 			sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
 			clif_displaymessage(fd,output);

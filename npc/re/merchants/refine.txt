@@ -86,12 +86,13 @@ function	script	refinenew	{
 		mes "refine this item at all...";
 		close;
 	}
-	if (getequiprefinerycnt(.@part) < 10) {
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	if (.@refinerycnt < 10) {
 		mes "["+ .@npc_name$ +"]";
 		mes "I said I don't work with items that are lower than Level 10.";
 		close;
 	}
-	if (getequiprefinerycnt(.@part) >= 20) { //custom check
+	if (.@refinerycnt >= 20) { //custom check
 		mes "["+ .@npc_name$ +"]";
 		mes "I can't refine this";
 		mes "any more. This is as";
@@ -99,12 +100,12 @@ function	script	refinenew	{
 		close;
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
-	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_MATERIAL_ID);
 	.@safe = 10;
 
-	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4)) {
+	if (getequipweaponlv(.@part) >= 1 && getequipweaponlv(.@part) <= 4) {
 		.@article$ = "a";
 		.@type$ = "weapon";
 	} else {
@@ -118,7 +119,7 @@ function	script	refinenew	{
 	mes "I will need 1 ^003366" + getitemname(.@material) + "^000000 and " + callfunc("F_InsertComma",.@price) + " zeny.";
 	mes "Are you sure you want to continue?";
 	next;
-	if(select("Yes:No") == 2){
+	if (select("Yes:No") == 2) {
 		mes "["+ .@npc_name$ +"]";
 		mes "Hm... if you mind... never mind...";
 		close;
@@ -155,7 +156,7 @@ function	script	refinenew	{
 		delitem .@material,1;
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
 		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 			mes "["+ .@npc_name$ +"]";
 			emotion ET_FRET;
@@ -209,7 +210,7 @@ function	script	refinenew	{
 		}
 	}
 // New +11 and above Refining Functions ========================
-	if (getequiprefinerycnt(.@part) < .@safe) {
+	if (.@refinerycnt < .@safe) {
 		mes "["+ .@npc_name$ +"]";
 		mes "I can refine this to the safe limit or a desired number of times. It's your choice.";
 		next;
@@ -218,14 +219,14 @@ function	script	refinenew	{
 		.@menu2 = 2;
 	switch(.@menu2){
 	case 1: 
-		.@refinecnt = .@safe - getequiprefinerycnt(.@part);
+		.@refinecnt = .@safe - .@refinerycnt;
 		break;
 	case 2:
 		mes "["+ .@npc_name$ +"]";
 		mes "How many times would you like me to refine your item?";
 		next;
 		input .@refinecnt;
-		.@refinecheck = .@refinecnt + getequiprefinerycnt(.@part);
+		.@refinecheck = .@refinecnt + .@refinerycnt;
 		if (.@refinecnt < 1 || .@refinecheck > 20) {
 			mes "["+ .@npc_name$ +"]";
 			mes "I can't refine this item that many times.";
@@ -271,6 +272,11 @@ function	script	refinenew	{
 			mes "Look here... you don't have any items on...";
 			close;
 		}
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
+		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt))
+			close;
+
 		if (getequipid(.@part) != .@refineitemid || (.@menu2 == 1 && getequippercentrefinery(.@part) < 100)) {
 			mes "["+ .@npc_name$ +"]";
 			mes "Clang... No, but did you imagine I could be so stupid?!";
@@ -316,6 +322,7 @@ function	script	refinenew	{
 			mes "I will do a better job next time! Don't worry!";
 			close;
 		}
+		.@refinerycnt = getequiprefinerycnt(.@part);
 	}
 	emotion ET_BEST;
 	mes "["+ .@npc_name$ +"]";
@@ -433,14 +440,15 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		mes "This can't be refined!!";
 		close;
 	}
-	if (getequiprefinerycnt(.@part) >= 10) {
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	if (.@refinerycnt >= 10) {
 		mes "[Clink]";
 		mes "Perfect refining. Did I do this for you?";
 		close;
 	}
 	
 	.@refineitemid = getequipid(.@part); // save id of the item
-	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 	
@@ -506,7 +514,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 	Zeny = Zeny-.@price;
 
 	// anti-hack
-	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
 		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 		mes "[Clink]";
 		emotion ET_FRET;

@@ -10,7 +10,11 @@
 #include "core.hpp"
 #include "showmsg.hpp"
 
-#define FREED_POINTER 0xdeadbeafL
+#if defined(__64BIT__)
+	#define FREED_POINTER 0xdeadbeafL
+#else
+	#define FREED_POINTER 0x7eadbeafL
+#endif
 
 ////////////// Memory Libraries //////////////////
 
