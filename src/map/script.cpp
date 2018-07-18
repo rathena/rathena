@@ -2227,10 +2227,9 @@ static void add_buildin_func(void)
  * @return Constant name as char array or NULL otherwise
  */
 const char* script_get_constant_str( const char* prefix, int64 value ){
-	int i = 0;
 	const char* name;
 
-	for( i = 0; i < str_data_size; i++ ){
+	for(int i = 0; i < str_data_size; i++ ){
 		// Check if it is a constant
 		if( str_data[i].type != C_INT ){
 			continue;
@@ -12224,7 +12223,7 @@ BUILDIN_FUNC(setmapflagnosave)
 	int16 m,x,y;
 	unsigned short mapindex;
 	const char *str,*str2;
-	union u_mapflag_args args;
+	union u_mapflag_args args = {};
 
 	str=script_getstr(st,2);
 	str2=script_getstr(st,3);
@@ -12237,8 +12236,6 @@ BUILDIN_FUNC(setmapflagnosave)
 		ShowWarning("buildin_setmapflagnosave: Invalid map name %s.\n", str);
 		return SCRIPT_CMD_FAILURE;
 	}
-
-	memset(&args, 0, sizeof(args));
 
 	args.nosave.map = mapindex;
 	args.nosave.x = x;
@@ -12253,7 +12250,7 @@ BUILDIN_FUNC(getmapflag)
 	int16 m;
 	int mf;
 	const char *str;
-	union u_mapflag_args args;
+	union u_mapflag_args args = {};
 
 	str=script_getstr(st,2);
 
@@ -12270,8 +12267,6 @@ BUILDIN_FUNC(getmapflag)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	memset(&args, 0, sizeof(args));
-
 #ifdef ADJUST_SKILL_DAMAGE
 	FETCH(4, args.flag_val);
 #endif
@@ -12286,7 +12281,7 @@ BUILDIN_FUNC(setmapflag)
 	int16 m;
 	int mf;
 	const char *str;
-	union u_mapflag_args args;
+	union u_mapflag_args args = {};
 
 	str = script_getstr(st,2);
 
@@ -12308,8 +12303,6 @@ BUILDIN_FUNC(setmapflag)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	memset(&args, 0, sizeof(args));
-
 	FETCH(4, args.flag_val);
 
 	map_setmapflag_sub(m, static_cast<e_mapflag>(mf), true, &args);
@@ -12322,7 +12315,7 @@ BUILDIN_FUNC(removemapflag)
 	int16 m;
 	int mf;
 	const char *str;
-	union u_mapflag_args args;
+	union u_mapflag_args args = {};
 
 	str = script_getstr(st, 2);
 
@@ -12338,8 +12331,6 @@ BUILDIN_FUNC(removemapflag)
 		ShowError( "buildin_removemapflag: Unsupported mapflag '%d'.\n", mf );
 		return SCRIPT_CMD_FAILURE;
 	}
-
-	memset(&args, 0, sizeof(args));
 
 	FETCH(4, args.flag_val);
 

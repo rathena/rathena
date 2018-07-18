@@ -4304,7 +4304,7 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
 		}
 	}
 
-	struct s_skill_damage entry;
+	struct s_skill_damage entry = {};
 
 	entry.skill_id = skill_id;
 	for (int i = 0; i < SKILLDMG_MAX; i++)

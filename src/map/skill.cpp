@@ -21459,7 +21459,6 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
 	uint16 id = 0;
-	int i, offset;
 
 	trim(split[0]);
 	if (ISDIGIT(split[0][0]))
@@ -21473,7 +21472,7 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	skill_db[id]->damage.caster |= atoi(split[1]);
 	skill_db[id]->damage.map |= atoi(split[2]);
 
-	for( offset = 3, i = 0; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
+	for(int offset = 3, int i = 0; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
 		skill_db[id]->damage.rate[i] = cap_value(atoi(split[offset]), -100, INT_MAX);
 	}
 

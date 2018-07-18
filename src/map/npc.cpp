@@ -3933,7 +3933,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int16 m;
-	char mapname[32];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	bool state = true;
 	enum e_mapflag mapflag;
 
