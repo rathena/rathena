@@ -3178,34 +3178,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			pc_delinvincibletimer(sd);
 
-			sd->autospell.clear();
-			sd->autospell2.clear();
-			sd->autospell3.clear();
-			sd->addeff.clear();
-			sd->addeff_atked.clear();
-			sd->addeff_onskill.clear();
-			sd->skillatk.clear();
-			sd->skillusesprate.clear();
-			sd->skillusesp.clear();
-			sd->skillheal.clear();
-			sd->skillheal2.clear();
-			sd->skillblown.clear();
-			sd->skillcastrate.clear();
-			sd->skillfixcastrate.clear();
-			sd->subskill.clear();
-			sd->skillcooldown.clear();
-			sd->skillfixcast.clear();
-			sd->skillvarcast.clear();
-			sd->add_def.clear();
-			sd->add_mdef.clear();
-			sd->add_mdmg.clear();
-			sd->reseff.clear();
-			sd->itemgrouphealrate.clear();
-			sd->add_drop.clear();
-			sd->itemhealrate.clear();
-			sd->subele2.clear();
-			sd->skilldelay.clear();
-
 			pc_delautobonus(sd, sd->autobonus, false);
 			pc_delautobonus(sd, sd->autobonus2, false);
 			pc_delautobonus(sd, sd->autobonus3, false);
