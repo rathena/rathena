@@ -452,6 +452,7 @@
 	export_constant(MF_GVG_TE);
 	export_constant(MF_HIDEMOBHPBAR);
 	export_constant(MF_NOLOOT);
+	export_constant(MF_NOEXP);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
