@@ -4407,6 +4407,8 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 			return util::map_get(map[m].flag, MF_NOMOBLOOT, 0) && util::map_get(map[m].flag, MF_NOMVPLOOT, 0);
 		case MF_NOPENALTY:
 			return util::map_get(map[m].flag, MF_NOEXPPENALTY, 0) && util::map_get(map[m].flag, MF_NOZENYPENALTY, 0);
+		case MF_NOEXP:
+			return util::map_get(map[m].flag, MF_NOBASEEXP, 0) && util::map_get(map[m].flag, MF_NOJOBEXP, 0);
 		case MF_SKILL_DAMAGE:
 #ifdef ADJUST_SKILL_DAMAGE
 			nullpo_retr(-1, args);
@@ -4631,6 +4633,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_NOPENALTY:
 			map[m].flag[MF_NOEXPPENALTY] = status;
 			map[m].flag[MF_NOZENYPENALTY] = status;
+			break;
+		case MF_NOEXP:
+			map[m].flag[MF_NOBASEEXP] = status;
+			map[m].flag[MF_NOJOBEXP] = status;
 			break;
 #ifdef ADJUST_SKILL_DAMAGE
 		case MF_SKILL_DAMAGE:

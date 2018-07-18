@@ -585,6 +585,7 @@ enum e_mapflag : int16 {
 	MF_GVG_TE,
 	MF_HIDEMOBHPBAR,
 	MF_NOLOOT,
+	MF_NOEXP,
 	MF_MAX
 };
 
