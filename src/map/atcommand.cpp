@@ -4054,15 +4054,17 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	/* Skill damage adjustment info [Cydh] */
-#ifdef ADJUST_SKILL_DAMAGE
-	if (map_getmapflag(m_id, MF_SKILL_DAMAGE)) {
+	union u_mapflag_args args = {};
+
+	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
+	if (map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)) {
 		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
 		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
-			,map[m_id].damage_adjust.rate[SKILLDMG_PC]
-			,map[m_id].damage_adjust.rate[SKILLDMG_MOB]
-			,map[m_id].damage_adjust.rate[SKILLDMG_BOSS]
-			,map[m_id].damage_adjust.rate[SKILLDMG_OTHER]
-			,map[m_id].damage_adjust.caster);
+			,(args.flag_val = SKILLDMG_PC && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
+			,(args.flag_val = SKILLDMG_MOB && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
+			,(args.flag_val = SKILLDMG_BOSS && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
+			,(args.flag_val = SKILLDMG_OTHER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
+			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
 		clif_displaymessage(fd, atcmd_output);
 		if (map[m_id].skill_damage.size()) {
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
@@ -4079,7 +4081,6 @@ ACMD_FUNC(mapinfo) {
 			}
 		}
 	}
-#endif
 
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
 	if (map_getmapflag(m_id, MF_PVP))
@@ -8147,7 +8148,7 @@ ACMD_FUNC(fakename)
 ACMD_FUNC(mapflag) {
 	char flag_name[CHAT_SIZE_MAX];
 	short flag = 0, i, j;
-	StringBuf buf;
+	std::string buf;
 
 	nullpo_retr(-1, sd);
 
@@ -8175,9 +8176,16 @@ ACMD_FUNC(mapflag) {
 		enum e_mapflag mapflag = map_getmapflag_by_name(flag_name);
 
 		if( mapflag != MF_INVALID ){
-			map_setmapflag(sd->bl.m, static_cast<e_mapflag>(mapflag), flag != 0);
-			sprintf(atcmd_output,"[ @mapflag ] %s flag has been set to %s value = %hd",flag_name,flag?"On":"Off",flag);
-			clif_displaymessage(sd->fd,atcmd_output);
+			std::vector<e_mapflag> disabled_mf = { MF_NOSAVE, MF_PVP_NIGHTMAREDROP, MF_RESTRICTED, MF_NOCOMMAND, MF_BEXP, MF_JEXP, MF_BATTLEGROUND, MF_SKILL_DAMAGE };
+
+			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
+				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
+				clif_displaymessage(sd->fd,atcmd_output);
+			} else {
+				map_setmapflag(sd->bl.m, static_cast<e_mapflag>(mapflag), flag != 0);
+				sprintf(atcmd_output,"[ @mapflag ] %s flag has been set to %s value = %hd",flag_name,flag?"On":"Off",flag);
+				clif_displaymessage(sd->fd,atcmd_output);
+			}
 			return 0;
 		}else{
 			clif_displaymessage(sd->fd, msg_txt(sd, 1314)); // Invalid flag name or flag.
@@ -8188,25 +8196,22 @@ ACMD_FUNC(mapflag) {
 
 	clif_displaymessage(sd->fd,msg_txt(sd,1315)); // Available Flags:
 	clif_displaymessage(sd->fd,"----------------------------------");
-	StringBuf_Init(&buf);
 	for( i = MF_MIN, j = 0; i < MF_MAX; i++ ){
 		if( map_getmapflag_name( static_cast<e_mapflag>(i), flag_name ) ){
-			StringBuf_AppendStr( &buf, flag_name );
+			buf.append(flag_name);
 
-			if( (i + 1) < MF_MAX ){
-				StringBuf_AppendStr( &buf, ", " );
-			}
+			if( (i + 1) < MF_MAX )
+				buf.append(", ");
 
 			j++;
 		}
 
 		if( i > MF_MIN && ( j == 6 || ( i + 1 ) == MF_MAX ) ){
-			clif_displaymessage(sd->fd, StringBuf_Value(&buf) );
-			StringBuf_Clear(&buf);
+			clif_displaymessage(sd->fd, buf.c_str() );
+			buf.clear();
 			j = 0;
 		}
 	}
-	StringBuf_Destroy(&buf);
 	clif_displaymessage(sd->fd, msg_txt(sd, 1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
 
 	return 0;

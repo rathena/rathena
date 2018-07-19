@@ -12267,9 +12267,7 @@ BUILDIN_FUNC(getmapflag)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-#ifdef ADJUST_SKILL_DAMAGE
 	FETCH(4, args.flag_val);
-#endif
 
 	script_pushint(st, map_getmapflag_sub(m, static_cast<e_mapflag>(mf), &args));
 

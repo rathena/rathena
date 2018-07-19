@@ -21455,7 +21455,6 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 	return true;
 }
 
-#ifdef ADJUST_SKILL_DAMAGE
 /**
  * Reads skill damage adjustment
  * @author [Lilith]
@@ -21472,17 +21471,16 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 
 	id = skill_db_isset(id, __FUNCTION__);
 
-	memset(&skill_db[id]->damage,0,sizeof(struct s_skill_damage));
+	skill_db[id]->damage = {};
 	skill_db[id]->damage.caster |= atoi(split[1]);
 	skill_db[id]->damage.map |= atoi(split[2]);
 
-	for(int offset = 3, int i = 0; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
+	for(int offset = 3, i = 0; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
 		skill_db[id]->damage.rate[i] = cap_value(atoi(split[offset]), -100, INT_MAX);
 	}
 
 	return true;
 }
-#endif
 
 /**
  * Init dummy skill db also init Skill DB allocation
@@ -21590,9 +21588,8 @@ static void skill_readdb(void)
 		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, -1, skill_parse_row_nonearnpcrangedb, i > 0);
-#ifdef ADJUST_SKILL_DAMAGE
 		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  3+SKILLDMG_MAX, -1, skill_parse_row_skilldamage, i > 0);
-#endif
+
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}

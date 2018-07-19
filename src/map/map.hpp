@@ -595,18 +595,17 @@ enum e_skill_damage_type : uint8 {
 	SKILLDMG_MOB,
 	SKILLDMG_BOSS,
 	SKILLDMG_OTHER,
+	SKILLDMG_CASTER, ///< Only used on getter for caster value
 	SKILLDMG_MAX
 };
 
-#ifdef ADJUST_SKILL_DAMAGE
-/// Struct for MF_SKILLDAMAGE
+/// Struct for MF_SKILL_DAMAGE
 struct s_skill_damage {
 	unsigned int map; ///< Maps (used for skill_damage_db.txt)
 	uint16 skill_id; ///< Skill ID (used for mapflag)
 	uint16 caster; ///< Caster type
 	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
 };
-#endif
 
 /// Enum for item drop type for MF_PVP_NIGHTMAREDROP
 enum e_nightmare_drop_type : uint8 {
@@ -626,9 +625,7 @@ struct s_drop_list {
 union u_mapflag_args {
 	struct point nosave;
 	struct s_drop_list nightmaredrop;
-#ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage skill_damage;
-#endif
 	int flag_val;
 };
 
@@ -739,10 +736,8 @@ struct map_data {
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
-#ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::vector<s_skill_damage> skill_damage; // Used for single skill damage adjustment
-#endif
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -954,9 +949,7 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-#ifdef ADJUST_SKILL_DAMAGE
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
-#endif
 
 enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
