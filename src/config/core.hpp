@@ -44,7 +44,7 @@
 //#define SHOW_SERVER_STATS
 
 /// Uncomment to enable skills damage adjustments
-/// By enabling this, db/skill_damage.txt and the skill_damage mapflag will adjust the
+/// By enabling this, db/skill_damage_db.txt and the skill_damage mapflag will adjust the
 /// damage rate of specified skills.
 //#define ADJUST_SKILL_DAMAGE
 

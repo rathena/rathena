@@ -791,7 +791,7 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 			return -3;
 		}
 
-		if ( map[sd->bl.m].flag.partylock ) {
+		if ( map_getmapflag(sd->bl.m, MF_PARTYLOCK) ) {
 			clif_displaymessage(sd->fd, msg_txt(sd,287));
 			return 0;
 		}

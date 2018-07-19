@@ -1942,6 +1942,7 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
+const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
 void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);

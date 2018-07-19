@@ -18,6 +18,7 @@
 #include "../common/socket.hpp" // WFIFO*()
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -48,6 +49,8 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+
+using namespace rathena;
 
 char default_codepage[32] = "";
 
@@ -119,8 +122,7 @@ static int bl_list_count = 0;
 	#define MAP_MAX_MSG 1550
 #endif
 
-struct map_data map[MAX_MAP_PER_SERVER];
-int map_num = 0;
+std::vector<map_data> map;
 int map_port=0;
 
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
@@ -130,10 +132,6 @@ bool agit_flag = false;
 bool agit2_flag = false;
 bool agit3_flag = false;
 int night_flag = 0; // 0=day, 1=night [Yor]
-
-#ifdef ADJUST_SKILL_DAMAGE
-struct eri *map_skill_damage_ers = NULL;
-#endif
 
 struct charid_request {
 	struct charid_request* next;
@@ -311,9 +309,9 @@ int map_addblock(struct block_list* bl)
 	m = bl->m;
 	x = bl->x;
 	y = bl->y;
-	if( m < 0 || m >= map_num )
+	if( m < 0 || m >= map.size() )
 	{
-		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
+		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map.size());
 		return 1;
 	}
 	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
@@ -707,7 +705,7 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	int blockcount = bl_list_count, i;
 	va_list ap_copy;
 
-	if (m < 0 || m >= map_num)
+	if (m < 0 || m >= map.size())
 		return 0;
 
 	if (x1 < x0)
@@ -2542,7 +2540,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 {
 	nullpo_ret(nd);
 
-	if( m < 0 || m >= map_num )
+	if( m < 0 || m >= map.size() )
 		return false;
 
 	if( map[m].npc_num == MAX_NPC_PER_MAP )
@@ -2563,7 +2561,6 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 int map_addinstancemap(const char *name, unsigned short instance_id)
 {
 	int src_m = map_mapname2mapid(name);
-	int dst_m = -1, i;
 	char iname[MAP_NAME_LENGTH];
 	size_t num_cell, size;
 
@@ -2576,24 +2573,15 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 		return -2;
 	}
 
-	for(i = instance_start; i < MAX_MAP_PER_SERVER; i++) {
-		if(!map[i].name[0])
-			break;
-	}
-	if(i < map_num) // Destination map value overwrites another
-		dst_m = i;
-	else if(i < MAX_MAP_PER_SERVER) // Destination map value increments to new map
-		dst_m = map_num++;
-	else {
-		// Out of bounds
-		ShowError("map_addinstancemap failed. map_num(%d) > map_max(%d)\n",map_num, MAX_MAP_PER_SERVER);
+	if(map.size() >= MAX_MAP_PER_SERVER) { // Out of bounds
+		ShowError("map_addinstancemap: Failed to add map. Map size (%d) > max maps (%d)\n", map.size(), MAX_MAP_PER_SERVER);
 		return -3;
 	}
 
 	// Copy the map
-	memcpy(&map[dst_m], &map[src_m], sizeof(struct map_data));
-
-	strcpy(iname,name);
+	int dst_m = map.size();
+	map.push_back(map[src_m]);
+	strcpy(iname, name);
 
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
@@ -3114,7 +3102,7 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 {
 	int j;
 
-	if( m < 0 || m >= map_num || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	if( m < 0 || m >= map.size() || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
 		return;
 
 	j = x + y*map[m].xs;
@@ -3142,7 +3130,7 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat)
 	int j;
 	struct mapcell cell;
 
-	if( m < 0 || m >= map_num || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	if( m < 0 || m >= map.size() || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
 		return;
 
 	j = x + y*map[m].xs;
@@ -3423,27 +3411,27 @@ int map_addmap(char* mapname)
 {
 	if( strcmpi(mapname,"clear")==0 )
 	{
-		map_num = 0;
-		instance_start = 0;
+		map.clear();
 		return 0;
 	}
 
-	if( map_num >= MAX_MAP_PER_SERVER - 1 )
+	if( map.size() >= MAX_MAP_PER_SERVER )
 	{
 		ShowError("Could not add map '" CL_WHITE "%s" CL_RESET "', the limit of maps has been reached.\n",mapname);
 		return 1;
 	}
 
-	mapindex_getmapname(mapname, map[map_num].name);
-	map_num++;
+	struct map_data entry = {};
+
+	mapindex_getmapname(mapname, entry.name);
+	map.push_back(entry);
 	return 0;
 }
 
 static void map_delmapid(int id)
 {
 	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
-	memmove(map+id, map+id+1, sizeof(map[0])*(map_num-id-1));
-	map_num--;
+	map.erase(map.begin() + id);
 }
 
 int map_delmap(char* mapname)
@@ -3452,12 +3440,12 @@ int map_delmap(char* mapname)
 	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
-		map_num = 0;
+		map.clear();
 		return 0;
 	}
 
 	mapindex_getmapname(mapname, map_name);
-	for(i = 0; i < map_num; i++) {
+	for(i = 0; i < map.size(); i++) {
 		if (strcmp(map[i].name, map_name) == 0) {
 			map_delmapid(i);
 			return 1;
@@ -3469,30 +3457,26 @@ int map_delmap(char* mapname)
 /// Initializes map flags and adjusts them depending on configuration.
 void map_flags_init(void)
 {
-	int i;
-
-	for( i = 0; i < map_num; i++ )
+	for( int i = 0; i < map.size(); i++ )
 	{
-		// mapflags
-		memset(&map[i].flag, 0, sizeof(map[i].flag));
+		union u_mapflag_args args = {};
+
+		args.flag_val = 100;
 
 		// additional mapflag data
-		map[i].zone        = 0;  // restricted mapflag zone
-		map[i].nocommand   = 0;  // nocommand mapflag level
-		map[i].adjust.bexp = 100;  // per map base exp multiplicator
-		map[i].adjust.jexp = 100;  // per map job exp multiplicator
-		memset(map[i].drop_list, 0, sizeof(map[i].drop_list));  // pvp nightmare drop list
+		map[i].zone = 0; // restricted mapflag zone
+		map_setmapflag(i, MF_NOCOMMAND, false); // nocommand mapflag level
+		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// skill damage
 #ifdef ADJUST_SKILL_DAMAGE
-		memset(&map[i].adjust.damage, 0, sizeof(map[i].adjust.damage));
-		if (map[i].skill_damage.count)
-			map_skill_damage_free(&map[i]);
+		memset(&map[i].damage_adjust, 0, sizeof(map[i].damage_adjust));
 #endif
 
 		// adjustments
 		if( battle_config.pk_mode )
-			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+			map_setmapflag(i, MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
 
 		map_free_questinfo(i);
 	}
@@ -3633,14 +3617,14 @@ int map_readallmaps (void)
 		}
 	}
 
-	for(i = 0; i < map_num; i++) {
+	for(i = 0; i < map.size(); i++) {
 		size_t size;
 		bool success = false;
 		unsigned short idx = 0;
 
 		if( enable_grf ){
 			// show progress
-			ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, map[i].name);
+			ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map.size(), map[i].name);
 
 			// try to load the map
 			success = map_readgat(&map[i]) != 0;
@@ -3706,8 +3690,7 @@ int map_readallmaps (void)
 	}
 
 	// finished map loading
-	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
-	instance_start = map_num; // Next Map Index will be instances
+	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed);
@@ -4298,62 +4281,393 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 
 #ifdef ADJUST_SKILL_DAMAGE
 /**
- * Free all skill damage entries for a map
- * @param m Map data
- **/
-void map_skill_damage_free(struct map_data *m) {
-	uint8 i;
-
-	for (i = 0; i < m->skill_damage.count; i++) {
-		ers_free(map_skill_damage_ers, m->skill_damage.entries[i]);
-		m->skill_damage.entries[i] = NULL;
-	}
-
-	aFree(m->skill_damage.entries);
-	m->skill_damage.entries = NULL;
-	m->skill_damage.count = 0;
-}
-
-/**
  * Add new skill damage adjustment entry for a map
- * @param m Map data
- * @param skill_id Skill
- * @param pc Rate to PC
- * @param mobs Rate to Monster
- * @param boss Rate to Boss-monster
- * @param other Rate to Other target
- * @param caster Caster type
- **/
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster) {
-	struct s_skill_damage *entry;
-	int i = 0;
-
-	if (m->skill_damage.count >= UINT8_MAX)
+ * @param m: Map data
+ * @param skill_id: Skill ID
+ * @param pc: Rate to PC
+ * @param mobs: Rate to Monster
+ * @param boss: Rate to Boss-monster
+ * @param other: Rate to Other target
+ * @param caster: Caster type
+ */
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
+	if (m->skill_damage.size() > UINT16_MAX)
 		return;
 
-	for (i = 0; i < m->skill_damage.count; i++) {
-		if (m->skill_damage.entries[i]->skill_id == skill_id) {
-			m->skill_damage.entries[i]->pc = pc;
-			m->skill_damage.entries[i]->mob = mob;
-			m->skill_damage.entries[i]->boss = boss;
-			m->skill_damage.entries[i]->other = other;
-			m->skill_damage.entries[i]->caster = caster;
+	for (int i = 0; i < m->skill_damage.size(); i++) {
+		if (m->skill_damage[i].skill_id == skill_id) {
+			for (int j = 0; j < SKILLDMG_MAX; j++) {
+				m->skill_damage[i].rate[j] = rate[j];
+			}
+			m->skill_damage[i].caster = caster;
 			return;
 		}
 	}
 
-	entry = ers_alloc(map_skill_damage_ers, struct s_skill_damage);
-	entry->skill_id = skill_id;
-	entry->pc = pc;
-	entry->mob = mob;
-	entry->boss = boss;
-	entry->other = other;
-	entry->caster = caster;
+	struct s_skill_damage entry = {};
 
-	RECREATE(m->skill_damage.entries, struct s_skill_damage *, m->skill_damage.count+1);
-	m->skill_damage.entries[m->skill_damage.count++] = entry;
+	entry.skill_id = skill_id;
+	for (int i = 0; i < SKILLDMG_MAX; i++)
+		entry.rate[i] = rate[i];
+	entry.caster = caster;
+	m->skill_damage.push_back(entry);
 }
 #endif
+
+/**
+ * PvP timer handling
+ * @param bl: Player block object
+ * @param ap: func* with va_list values
+ * @return 0
+ */
+static int map_mapflag_pvp_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data *sd = map_id2sd(bl->id);
+
+	nullpo_retr(0, sd);
+
+	if (sd->pvp_timer == INVALID_TIMER) {
+		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
+		sd->pvp_rank = 0;
+		sd->pvp_lastusers = 0;
+		sd->pvp_point = 5;
+		sd->pvp_won = 0;
+		sd->pvp_lost = 0;
+	}
+
+	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	return 0;
+}
+
+/**
+ * Return the mapflag enum from the given name.
+ * @param name: Mapflag name
+ * @return Mapflag enum value
+ */
+enum e_mapflag map_getmapflag_by_name(char* name)
+{
+	char flag_constant[255];
+	int mapflag;
+
+	safesnprintf(flag_constant, sizeof(flag_constant), "mf_%s", name);
+
+	if (!script_get_constant(flag_constant, &mapflag))
+		return MF_INVALID;
+	else
+		return (enum e_mapflag)mapflag;
+}
+
+/**
+ * Return the mapflag name from the given enum.
+ * @param mapflag: Mapflag enum
+ * @param output: Stores the mapflag name
+ * @return True on success otherwise false
+ */
+bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
+	const char* constant;
+	const char* prefix = "mf_";
+	int i, len = strlen(prefix);
+
+	// Look it up
+	constant = script_get_constant_str( prefix, mapflag );
+
+	// Should never happen
+	if (constant == NULL)
+		return false;
+
+	// Begin copy after the prefix
+	for(i = len; constant[i]; i++)
+		output[i-len] = (char)tolower(constant[i]); // Force lowercase
+	output[i - len] = 0; // Terminate it
+
+	return true;
+}
+
+/**
+ * Get a mapflag value
+ * @param m: Map ID
+ * @param mapflag: Mapflag ID
+ * @param args: Arguments for special flags
+ * @return Mapflag value on success or -1 on failure
+ */
+int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
+{
+	if (m < 0 || m >= map.size()) {
+		ShowWarning("map_getmapflag: Invalid map ID %d.\n", m);
+		return -1;
+	}
+
+	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
+		ShowWarning("map_getmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
+		return -1;
+	}
+
+	switch(mapflag) {
+		case MF_NOLOOT:
+			return util::map_get(map[m].flag, MF_NOMOBLOOT, 0) && util::map_get(map[m].flag, MF_NOMVPLOOT, 0);
+		case MF_NOPENALTY:
+			return util::map_get(map[m].flag, MF_NOEXPPENALTY, 0) && util::map_get(map[m].flag, MF_NOZENYPENALTY, 0);
+		case MF_NOEXP:
+			return util::map_get(map[m].flag, MF_NOBASEEXP, 0) && util::map_get(map[m].flag, MF_NOJOBEXP, 0);
+		case MF_SKILL_DAMAGE:
+#ifdef ADJUST_SKILL_DAMAGE
+			nullpo_retr(-1, args);
+
+			switch (args->flag_val) {
+				case SKILLDMG_PC:
+				case SKILLDMG_MOB:
+				case SKILLDMG_BOSS:
+				case SKILLDMG_OTHER:
+					return map[m].damage_adjust.rate[args->flag_val];
+				default:
+					return util::map_get(map[m].flag, mapflag, 0);
+			}
+#else
+			return 0;
+#endif
+		default:
+			return util::map_get(map[m].flag, mapflag, 0);
+	}
+}
+
+/**
+ * Set a mapflag
+ * @param m: Map ID
+ * @param mapflag: Mapflag ID
+ * @param status: true - Set mapflag, false - Remove mapflag
+ * @param args: Arguments for special flags
+ * @return True on success or false on failure
+ */
+bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
+{
+	if (m < 0 || m >= map.size()) {
+		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
+		return false;
+	}
+
+	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
+		ShowWarning("map_setmapflag: Invalid mapflag %d on map %s.\n", mapflag, map[m].name);
+		return false;
+	}
+
+	switch(mapflag) {
+		case MF_NOSAVE:
+			if (status) {
+				nullpo_retr(false, args);
+
+				map[m].save.map = args->nosave.map;
+				map[m].save.x = args->nosave.x;
+				map[m].save.y = args->nosave.y;
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_PVP:
+			if (!status)
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+			else {
+				if (!battle_config.pk_mode)
+					map_foreachinmap(map_mapflag_pvp_sub, m, BL_PC);
+				if (map_getmapflag(m, MF_GVG)) {
+					map_setmapflag(m, MF_GVG, false);
+					ShowWarning("map_setmapflag: Unable to set GvG and PvP flags for the same map! Removing GvG flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG_TE)) {
+					map_setmapflag(m, MF_GVG_TE, false);
+					ShowWarning("map_setmapflag: Unable to set GvG TE and PvP flags for the same map! Removing GvG TE flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG_DUNGEON)) {
+					map_setmapflag(m, MF_GVG_DUNGEON, false);
+					ShowWarning("map_setmapflag: Unable to set GvG Dungeon and PvP flags for the same map! Removing GvG Dungeon flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG_CASTLE)) {
+					map_setmapflag(m, MF_GVG_CASTLE, false);
+					ShowWarning("map_setmapflag: Unable to set GvG Castle and PvP flags for the same map! Removing GvG Castle flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG_TE_CASTLE)) {
+					map_setmapflag(m, MF_GVG_TE_CASTLE, false);
+					ShowWarning("map_setmapflag: Unable to set GvG TE Castle and PvP flags for the same map! Removing GvG TE Castle flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_BATTLEGROUND)) {
+					map_setmapflag(m, MF_BATTLEGROUND, false);
+					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", map[m].name);
+				}
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_GVG:
+		case MF_GVG_TE:
+			if (!status)
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+			else {
+				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+				if (map_getmapflag(m, MF_PVP)) {
+					map_setmapflag(m, MF_PVP, false);
+					ShowWarning("map_setmapflag: Unable to set PvP and GvG flags for the same map! Removing PvP flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_BATTLEGROUND)) {
+					map_setmapflag(m, MF_BATTLEGROUND, false);
+					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", map[m].name);
+				}
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_GVG_CASTLE:
+		case MF_GVG_TE_CASTLE:
+			if (status) {
+				if (mapflag == MF_GVG_CASTLE && map_getmapflag(m, MF_GVG_TE_CASTLE)) {
+					map_setmapflag(m, MF_GVG_TE_CASTLE, false);
+					ShowWarning("map_setmapflag: Unable to set GvG TE Castle and GvG Castle flags for the same map! Removing GvG TE Castle flag from %s.\n", map[m].name);
+				}
+				if (mapflag == MF_GVG_TE_CASTLE && map_getmapflag(m, MF_GVG_CASTLE)) {
+					map_setmapflag(m, MF_GVG_CASTLE, false);
+					ShowWarning("map_setmapflag: Unable to set GvG Castle and GvG TE Castle flags for the same map! Removing GvG Castle flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_PVP)) {
+					map_setmapflag(m, MF_PVP, false);
+					ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), map[m].name);
+				}
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_GVG_DUNGEON:
+			if (status && map_getmapflag(m, MF_PVP)) {
+				map_setmapflag(m, MF_PVP, false);
+				ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", map[m].name);
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_NOBASEEXP:
+		case MF_NOJOBEXP:
+			if (status) {
+				if (mapflag == MF_NOBASEEXP && map_getmapflag(m, MF_BEXP) != 100) {
+					map_setmapflag(m, MF_BEXP, false);
+					ShowWarning("map_setmapflag: Unable to set BEXP and No Base EXP flags for the same map! Removing BEXP flag from %s.\n", map[m].name);
+				}
+				if (mapflag == MF_NOJOBEXP && map_getmapflag(m, MF_JEXP) != 100) {
+					map_setmapflag(m, MF_JEXP, false);
+					ShowWarning("map_setmapflag: Unable to set JEXP and No Job EXP flags for the same map! Removing JEXP flag from %s.\n", map[m].name);
+				}
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_PVP_NIGHTMAREDROP:
+			if (status) {
+				nullpo_retr(false, args);
+
+				if (map[m].drop_list.size() == MAX_DROP_PER_MAP) {
+					ShowWarning("map_setmapflag: Reached the maximum number of drop list items for mapflag pvp_nightmaredrop on %s. Skipping.\n", map[m].name);
+					break;
+				}
+
+				struct s_drop_list entry;
+
+				entry.drop_id = args->nightmaredrop.drop_id;
+				entry.drop_type = args->nightmaredrop.drop_type;
+				entry.drop_per = args->nightmaredrop.drop_per;
+				map[m].drop_list.push_back(entry);
+			}
+			map[m].flag[mapflag] = status;
+			break;
+		case MF_RESTRICTED:
+			nullpo_retr(false, args);
+
+			map[m].flag[mapflag] = status;
+			if (!status)
+				map[m].zone ^= 1 << (args->flag_val + 1);
+			else
+				map[m].zone |= 1 << (args->flag_val + 1);
+			break;
+		case MF_NOCOMMAND:
+			if (status) {
+				nullpo_retr(false, args);
+
+				map[m].flag[mapflag] = ((args->flag_val <= 0) ? 100 : args->flag_val);
+			} else
+				map[m].flag[mapflag] = false;
+			break;
+		case MF_JEXP:
+		case MF_BEXP:
+			if (status) {
+				nullpo_retr(false, args);
+
+				if (mapflag == MF_JEXP && map_getmapflag(m, MF_NOJOBEXP)) {
+					map_setmapflag(m, MF_NOJOBEXP, false);
+					ShowWarning("map_setmapflag: Unable to set No Job EXP and JEXP flags for the same map! Removing No Job EXP flag from %s.\n", map[m].name);
+				}
+				if (mapflag == MF_BEXP && map_getmapflag(m, MF_NOBASEEXP)) {
+					map_setmapflag(m, MF_NOBASEEXP, false);
+					ShowWarning("map_setmapflag: Unable to set No Base EXP and BEXP flags for the same map! Removing No Base EXP flag from %s.\n", map[m].name);
+				}
+				map[m].flag[mapflag] = args->flag_val;
+			} else
+				map[m].flag[mapflag] = false;
+			break;
+		case MF_BATTLEGROUND:
+			if (status) {
+				nullpo_retr(false, args);
+
+				if (map_getmapflag(m, MF_PVP)) {
+					map_setmapflag(m, MF_PVP, false);
+					ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG)) {
+					map_setmapflag(m, MF_GVG, false);
+					ShowWarning("map_setmapflag: Unable to set GvG and Battleground flags for the same map! Removing GvG flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG_DUNGEON)) {
+					map_setmapflag(m, MF_GVG_DUNGEON, false);
+					ShowWarning("map_setmapflag: Unable to set GvG Dungeon and Battleground flags for the same map! Removing GvG Dungeon flag from %s.\n", map[m].name);
+				}
+				if (map_getmapflag(m, MF_GVG_CASTLE)) {
+					map_setmapflag(m, MF_GVG_CASTLE, false);
+					ShowWarning("map_setmapflag: Unable to set GvG Castle and Battleground flags for the same map! Removing GvG Castle flag from %s.\n", map[m].name);
+				}
+				map[m].flag[mapflag] = ((args->flag_val <= 0 || args->flag_val > 2) ? 1 : args->flag_val);
+			} else
+				map[m].flag[mapflag] = false;
+			break;
+		case MF_NOLOOT:
+			map[m].flag[MF_NOMOBLOOT] = status;
+			map[m].flag[MF_NOMVPLOOT] = status;
+			break;
+		case MF_NOPENALTY:
+			map[m].flag[MF_NOEXPPENALTY] = status;
+			map[m].flag[MF_NOZENYPENALTY] = status;
+			break;
+		case MF_NOEXP:
+			map[m].flag[MF_NOBASEEXP] = status;
+			map[m].flag[MF_NOJOBEXP] = status;
+			break;
+#ifdef ADJUST_SKILL_DAMAGE
+		case MF_SKILL_DAMAGE:
+			if (!status) {
+				memset(&map[m].damage_adjust, 0, sizeof(map[m].damage_adjust));
+				map[m].skill_damage.clear();
+			} else {
+				nullpo_retr(false, args);
+
+				if (!args->skill_damage.caster) {
+					ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", map[m].name);
+					return false;
+				}
+
+				for (int i = 0; i < SKILLDMG_MAX; i++) {
+					map[m].damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
+
+					if (map[m].flag.find(mapflag) != map[m].flag.end() && map[m].damage_adjust.rate[i])
+						map[m].damage_adjust.caster = args->skill_damage.caster;
+				}
+			}
+			map[m].flag[mapflag] = status;
+			break;
+#endif
+		default:
+			map[m].flag[mapflag] = status;
+			break;
+	}
+
+	return true;
+}
 
 /**
  * @see DBApply
@@ -4385,14 +4699,14 @@ void do_final(void)
 	do_clear_npc();
 
 	// remove all objects on maps
-	for (i = 0; i < map_num; i++) {
-		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i+1, map_num, map[i].name);
+	for (i = 0; i < map.size(); i++) {
+		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i+1, map.size(), map[i].name);
 		if (map[i].m >= 0) {
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
 			channel_delete(map[i].channel,false);
 		}
 	}
-	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
+	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map.size());
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
@@ -4432,7 +4746,7 @@ void do_final(void)
 
 	map_db->destroy(map_db, map_db_final);
 
-	for (i=0; i<map_num; i++) {
+	for (i=0; i<map.size(); i++) {
 		if(map[i].cell) aFree(map[i].cell);
 		if(map[i].block) aFree(map[i].block);
 		if(map[i].block_mob) aFree(map[i].block_mob);
@@ -4443,9 +4757,10 @@ void do_final(void)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 		map_free_questinfo(i);
+		map[i].flag.clear();
+		map[i].drop_list.clear();
 #ifdef ADJUST_SKILL_DAMAGE
-		if (map[i].skill_damage.count)
-			map_skill_damage_free(&map[i]);
+		map[i].skill_damage.clear();
 #endif
 	}
 
@@ -4461,10 +4776,6 @@ void do_final(void)
 	charid_db->destroy(charid_db, NULL);
 	iwall_db->destroy(iwall_db, NULL);
 	regen_db->destroy(regen_db, NULL);
-
-#ifdef ADJUST_SKILL_DAMAGE
-	ers_destroy(map_skill_damage_ers);
-#endif
 
 	map_sql_close();
 
@@ -4716,10 +5027,6 @@ int do_init(int argc, char *argv[])
 	charid_db = uidb_alloc(DB_OPT_BASE);
 	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
-
-#ifdef ADJUST_SKILL_DAMAGE
-	map_skill_damage_ers = ers_new(sizeof(struct s_skill_damage), "map.cpp:map_skill_damage_ers", ERS_OPT_NONE);
-#endif
 
 	map_sql_init();
 	if (log_config.sql_logs)

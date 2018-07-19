@@ -712,7 +712,7 @@ void pc_makesavestatus(struct map_session_data *sd) {
 		sd->status.last_point.y = sd->bl.y;
 	}
 
-	if(map[sd->bl.m].flag.nosave) {
+	if(map_getmapflag(sd->bl.m, MF_NOSAVE)) {
 		struct map_data *m=&map[sd->bl.m];
 		if(m->save.map)
 			memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
@@ -1570,7 +1570,7 @@ void pc_reg_received(struct map_session_data *sd)
 		// decrement the number of pvp players on the map
 		map[sd->bl.m].users_pvp--;
 
-		if( map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.pvp_nocalcrank && sd->pvp_timer != INVALID_TIMER ){
+		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
 			// unregister the player for ranking
 			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
 			sd->pvp_timer = INVALID_TIMER;
@@ -4764,7 +4764,7 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 		)
 		return false;
 
-	if( map[sd->bl.m].flag.nodrop )
+	if( map_getmapflag(sd->bl.m, MF_NODROP) )
 	{
 		clif_displaymessage (sd->fd, msg_txt(sd,271));
 		return false; //Can't drop items in nodrop mapflag maps.
@@ -4882,7 +4882,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false;
 	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
 		return true;
-	if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
+	if(map_getmapflag(sd->bl.m, MF_NOITEMCONSUMPTION)) //consumable but mapflag prevent it
 		return false;
 	//Prevent mass item usage. [Skotlex]
 	if( DIFF_TICK(sd->canuseitem_tick,gettick()) > 0 ||
@@ -4900,14 +4900,14 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false; // You cannot use this item while storage is open.
 	}
 
-	if (item->flag.dead_branch && (map[sd->bl.m].flag.nobranch || map_flag_gvg2(sd->bl.m)))
+	if (item->flag.dead_branch && (map_getmapflag(sd->bl.m, MF_NOBRANCH) || map_flag_gvg2(sd->bl.m)))
 		return false;
 
 	switch( nameid ) {
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
 		case ITEMID_N_FLY_WING:
-			if( map[sd->bl.m].flag.noteleport || map_flag_gvg2(sd->bl.m) ) {
+			if( map_getmapflag(sd->bl.m, MF_NOTELEPORT) || map_flag_gvg2(sd->bl.m) ) {
 				clif_skill_teleportmessage(sd,0);
 				return false;
 			}
@@ -4948,7 +4948,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( map[sd->bl.m].flag.noreturn && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
+			if( map_getmapflag(sd->bl.m, MF_NORETURN) && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
 				return false;
 			break;
 		case ITEMID_MERCENARY_RED_POTION:
@@ -4967,7 +4967,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 
 		case ITEMID_NEURALIZER:
-			if( !map[sd->bl.m].flag.reset )
+			if( !map_getmapflag(sd->bl.m, MF_RESET) )
 				return false;
 			break;
 	}
@@ -5375,7 +5375,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	md_status= status_get_status_data(bl);
 
 	if (md->master_id || status_has_mode(md_status, MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE ||
-		map[bl->m].flag.nomobloot || // check noloot map flag [Lorky]
+		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
   	) { //Can't steal from
@@ -5555,7 +5555,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
 		// make sure vending is allowed here
-		if (sd->state.vending && map[m].flag.novending) {
+		if (sd->state.vending && map_getmapflag(m, MF_NOVENDING)) {
 			clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 			vending_closevending(sd);
 		}
@@ -5638,7 +5638,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->bl.x = sd->ud.to_x = x;
 	sd->bl.y = sd->ud.to_y = y;
 
-	if( sd->status.guild_id > 0 && map[m].flag.gvg_castle )
+	if( sd->status.guild_id > 0 && map_getmapflag(m, MF_GVG_CASTLE) )
 	{	// Increased guild castle regen [Valaris]
 		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);
 		if(gc && gc->guild_id == sd->status.guild_id)
@@ -5704,7 +5704,7 @@ char pc_randomwarp(struct map_session_data *sd, clr_type type)
 
 	m=sd->bl.m;
 
-	if (map[sd->bl.m].flag.noteleport) //Teleport forbidden
+	if (map_getmapflag(sd->bl.m, MF_NOTELEPORT)) //Teleport forbidden
 		return 3;
 
 	do {
@@ -5729,7 +5729,7 @@ bool pc_memo(struct map_session_data* sd, int pos)
 	nullpo_ret(sd);
 
 	// check mapflags
-	if( sd->bl.m >= 0 && (map[sd->bl.m].flag.nomemo || map[sd->bl.m].flag.nowarpto) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
+	if( sd->bl.m >= 0 && (map_getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
 		clif_skill_teleportmessage(sd, 1); // "Saved point cannot be memorized."
 		return false;
 	}
@@ -6769,7 +6769,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 
 	if (!(exp_flag&2)) {
 
-		if (!battle_config.pvp_exp && map[sd->bl.m].flag.pvp)  // [MouseJstr]
+		if (!battle_config.pvp_exp && map_getmapflag(sd->bl.m, MF_PVP))  // [MouseJstr]
 			return; // no exp on pvp maps
 	
 		if (sd->status.guild_id>0)
@@ -7776,7 +7776,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
-		if( !map[sd->bl.m].flag.noexppenalty ) {
+		if( !map_getmapflag(sd->bl.m, MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate - pd->get_pet_db()->die);
 			if( pd->pet.intimate < 0 )
 				pd->pet.intimate = 0;
@@ -7896,7 +7896,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	if(battle_config.bone_drop==2
-		|| (battle_config.bone_drop==1 && map[sd->bl.m].flag.pvp))
+		|| (battle_config.bone_drop==1 && map_getmapflag(sd->bl.m, MF_PVP)))
 	{
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
@@ -7915,7 +7915,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
-		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg2(sd->bl.m)
+		&& !map_getmapflag(sd->bl.m, MF_NOEXPPENALTY) && !map_flag_gvg2(sd->bl.m)
 		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
 	{
 		uint32 base_penalty = 0;
@@ -7963,28 +7963,28 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if (base_penalty || job_penalty)
 			pc_lostexp(sd, base_penalty, job_penalty);
 
-		if( zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
+		if( zeny_penalty > 0 && !map_getmapflag(sd->bl.m, MF_NOZENYPENALTY)) {
 			zeny_penalty = (uint32)( sd->status.zeny * ( zeny_penalty / 10000. ) );
 			if(zeny_penalty)
 				pc_payzeny(sd, zeny_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
 		}
 	}
 
-	if(map[sd->bl.m].flag.pvp_nightmaredrop) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
-		int j;
-		for(j=0;j<MAX_DROP_PER_MAP;j++){
+	if( map_getmapflag( sd->bl.m, MF_PVP_NIGHTMAREDROP ) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
+		for(int j=0;j<MAX_DROP_PER_MAP;j++){
 			int id = map[sd->bl.m].drop_list[j].drop_id;
-			int type = map[sd->bl.m].drop_list[j].drop_type;
 			int per = map[sd->bl.m].drop_list[j].drop_per;
+			enum e_nightmare_drop_type type = map[sd->bl.m].drop_list[j].drop_type;
+
 			if(id == 0)
 				continue;
 			if(id == -1){
 				int eq_num=0,eq_n[MAX_INVENTORY];
 				memset(eq_n,0,sizeof(eq_n));
 				for(i=0;i<MAX_INVENTORY;i++) {
-					if( (type == 1 && !sd->inventory.u.items_inventory[i].equip)
-						|| (type == 2 && sd->inventory.u.items_inventory[i].equip)
-						||  type == 3)
+					if( (type&NMDT_INVENTORY && !sd->inventory.u.items_inventory[i].equip)
+						|| (type&NMDT_EQUIP && sd->inventory.u.items_inventory[i].equip)
+						||  type&NMDT_ALL)
 					{
 						int l;
 						ARR_FIND( 0, MAX_INVENTORY, l, eq_n[l] <= 0 );
@@ -8007,9 +8007,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(sd->inventory.u.items_inventory[i].nameid == id
 						&& rnd()%10000 < per
-						&& ((type == 1 && !sd->inventory.u.items_inventory[i].equip)
-							|| (type == 2 && sd->inventory.u.items_inventory[i].equip)
-							|| type == 3) ){
+						&& ((type&NMDT_INVENTORY && !sd->inventory.u.items_inventory[i].equip)
+							|| (type&NMDT_EQUIP && sd->inventory.u.items_inventory[i].equip)
+							|| type&NMDT_ALL) ){
 						if(sd->inventory.u.items_inventory[i].equip)
 							pc_unequipitem(sd,i,3);
 						pc_dropitem(sd,i,1);
@@ -8021,7 +8021,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	// pvp
 	// disable certain pvp functions on pk_mode [Valaris]
-	if( map[sd->bl.m].flag.pvp && !battle_config.pk_mode && !map[sd->bl.m].flag.pvp_nocalcrank ) {
+	if( map_getmapflag(sd->bl.m, MF_PVP) && !battle_config.pk_mode && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) ) {
 		sd->pvp_point -= 5;
 		sd->pvp_lost++;
 		if( src && src->type == BL_PC ) {
@@ -10584,7 +10584,7 @@ static TIMER_FUNC(pc_autosave){
 
 static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
 {
-	if (sd->state.night != night_flag && map[sd->bl.m].flag.nightenabled)
+	if (sd->state.night != night_flag && map_getmapflag(sd->bl.m, MF_NIGHTENABLED))
 	{	//Night/day state does not match.
 		clif_status_load(&sd->bl, EFST_SKE, night_flag); //New night effect by dynamix [Skotlex]
 		sd->state.night = night_flag;
@@ -12476,11 +12476,11 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 		return true;
 
 	if ((!map_flag_vs2(m) && job_info[idx].noenter_map.zone&1) || // Normal
-		(map[m].flag.pvp && job_info[idx].noenter_map.zone&2) || // PVP
+		(map_getmapflag(m, MF_PVP) && job_info[idx].noenter_map.zone&2) || // PVP
 		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
-		(map[m].flag.battleground && job_info[idx].noenter_map.zone&8) || // Battleground
+		(map_getmapflag(m, MF_BATTLEGROUND) && job_info[idx].noenter_map.zone&8) || // Battleground
 		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
-		(map[m].flag.restricted && job_info[idx].noenter_map.zone&(8*map[m].zone)) // Zone restriction
+		(map_getmapflag(m, MF_RESTRICTED) && job_info[idx].noenter_map.zone&(8*map[m].zone)) // Zone restriction
 		)
 		return false;
 
@@ -12525,7 +12525,7 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		sd->status.robe = id->look;
 
 	// Costumes check
-	if (!map[sd->bl.m].flag.nocostume) {
+	if (!map_getmapflag(sd->bl.m, MF_NOCOSTUME)) {
 		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
 				sd->status.head_bottom = id->look;
