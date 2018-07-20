@@ -2193,6 +2193,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 
 	union u_mapflag_args args = {};
 
+	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
 	if ((damage->map&1 && (!map_getmapflag(m, MF_PVP) && !map_flag_gvg2(m) && !map_getmapflag(m, MF_BATTLEGROUND) && !map_getmapflag_sub(m, MF_SKILL_DAMAGE, &args) && !map_getmapflag(m, MF_RESTRICTED))) ||
 		(damage->map&2 && map_getmapflag(m, MF_PVP)) ||
 		(damage->map&4 && map_flag_gvg2(m)) ||
@@ -2218,6 +2219,7 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 	struct map_data *mapd = &map[src->m];
 	union u_mapflag_args args = {};
 
+	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
 	if (!mapd || !map_getmapflag_sub(src->m, MF_SKILL_DAMAGE, &args))
 		return 0;
 
