@@ -853,6 +853,12 @@ enum sc_type : int16 {
 	SC_GLASTHEIM_ITEMDEF,
 	SC_GLASTHEIM_HPSP,
 
+	// Nightmare Biolab Buffs
+	SC_LHZ_DUN_N1,
+	SC_LHZ_DUN_N2,
+	SC_LHZ_DUN_N3,
+	SC_LHZ_DUN_N4,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

@@ -1709,7 +1709,25 @@ OnTouch:
 	npctalk "Emergency Protocol... Activated.. to.. RT..017... Cooldown... 1 hour......";
 	specialeffect2 EF_BABY;
 	setquest .@quest_id;// Mysterious Device
-	// todo sc_ buff
+	switch( .@quest_id ) {
+	case 14684:
+		// atk dmg+10%, def+10% on monsters (inaccurates, unknown values)
+		// atk+: Swordman, Thief / def+: Acolyte, Merchant
+		sc_start2 SC_LHZ_DUN_N1,1800000,10,10,10000,SCSTART_NOTICKDEF;	/// last 30 mins
+		break;
+	case 14685:
+		// atk+: Acolyte, Merchant / def+: Mage, Archer
+		sc_start2 SC_LHZ_DUN_N2,1800000,10,10,10000,SCSTART_NOTICKDEF;
+		break;
+	case 14686:
+		// atk+: Mage, Archer / def+: Swordman, Thief
+		sc_start2 SC_LHZ_DUN_N3,1800000,10,10,10000,SCSTART_NOTICKDEF;
+		break;
+	case 14687:
+		// atk+: MvPs / def+: MvPs
+		sc_start2 SC_LHZ_DUN_N4,1800000,10,10,10000,SCSTART_NOTICKDEF;
+		break;
+	}
 	end;
 
 OnInit:
