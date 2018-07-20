@@ -595,8 +595,8 @@ enum e_skill_damage_type : uint8 {
 	SKILLDMG_MOB,
 	SKILLDMG_BOSS,
 	SKILLDMG_OTHER,
+	SKILLDMG_MAX,
 	SKILLDMG_CASTER, ///< Only used on getter for caster value
-	SKILLDMG_MAX
 };
 
 /// Struct for MF_SKILL_DAMAGE
