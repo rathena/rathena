@@ -9,7 +9,6 @@ Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=
 4. Troubleshooting
 5. More Documentation
 6. How to Contribute
-7. LICENSE
 
 ## 1. What is rAthena?
 rAthena is a collaborative software development project revolving around the
@@ -73,11 +72,11 @@ Detailed installation guide can be found in [**Installation Guide on wiki**](htt
 1. Type:
     * (For CentOS)
 
-        yum install gcc g++ make mysql mysql-devel mysql-server pcre-devel zlib-devel git
+          yum install gcc g++ make mysql mysql-devel mysql-server pcre-devel zlib-devel git
 
     * (For Debian)
 
-        apt-get install git make gcc g++ libmysqlclient-dev zlib1g-dev libpcre3-dev
+          apt-get install git make gcc g++ libmysqlclient-dev zlib1g-dev libpcre3-dev
 
 2. Type:
 
@@ -119,24 +118,26 @@ Detailed installation guide can be found in [**Installation Guide on wiki**](htt
   * [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
 
 ### Optional
-If you want to have your own forked version but still get updates from the main rAthena repository
-* Fork this repository to your GitHub account
-* List the current configured remote repository for your fork:
+* If you want to have your own forked version but still get updates from the main rAthena repository
+  * Fork this repository to your GitHub account
+  * List the current configured remote repository for your fork:
 
-      git remote -v
+        git remote -v
 
-* Specify a new remote upstream repository that will be synced with your fork:
+  * Specify a new remote upstream repository that will be synced with your fork:
 
-      git remote add upstream https://github.com/rathena/rathena.git
+        git remote add upstream https://github.com/rathena/rathena.git
 
-* Verify the new upstream repository you've specified for your fork:
+  * Verify the new upstream repository you've specified for your fork:
 
-      git remote -v
+        git remote -v
 
-* You should see the main rAthena repository as well as your forked repository
-* Now, when you want to get updates from rAthena, simply do:
+  * You should see the main rAthena repository as well as your forked repository
+  * Now, when you want to get updates from rAthena, simply do:
 
-      git pull upstream master
+        git pull upstream master
+
+* Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
 ## 4. Troubleshooting
 
@@ -194,6 +195,3 @@ assistance elsewhere.
 
 ## 6. How to Contribute
 Details on how to contribute to rAthena can be found in [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/.github/CONTRIBUTING.md)!
-
-## 7. LICENSE
-Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
