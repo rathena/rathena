@@ -12304,7 +12304,7 @@ BUILDIN_FUNC(setmapflag)
 	switch(mf) {
 		case MF_SKILL_DAMAGE:
 			if (script_hasdata(st, 4) && script_hasdata(st, 5))
-				args.rate[script_getnum(st, 5)] = script_getnum(st, 4);
+				args.skill_damage.rate[script_getnum(st, 5)] = script_getnum(st, 4);
 			else {
 				ShowWarning("buildin_setmapflag: Unable to set skill_damage mapflag as flag data is missing.\n");
 				return SCRIPT_CMD_FAILURE;
