@@ -12250,7 +12250,6 @@ BUILDIN_FUNC(getmapflag)
 	int16 m;
 	int mf;
 	const char *str;
-	union u_mapflag_args args = {};
 
 	str=script_getstr(st,2);
 
@@ -12267,7 +12266,12 @@ BUILDIN_FUNC(getmapflag)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	FETCH(4, args.flag_val);
+	union u_mapflag_args args = {};
+
+	if (mf == MF_SKILL_DAMAGE && !script_hasdata(st, 4))
+		args.flag_val = SKILLDMG_MAX;
+	else
+		FETCH(4, args.flag_val);
 
 	script_pushint(st, map_getmapflag_sub(m, static_cast<e_mapflag>(mf), &args));
 
@@ -12279,7 +12283,6 @@ BUILDIN_FUNC(setmapflag)
 	int16 m;
 	int mf;
 	const char *str;
-	union u_mapflag_args args = {};
 
 	str = script_getstr(st,2);
 
@@ -12296,12 +12299,27 @@ BUILDIN_FUNC(setmapflag)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( mf == MF_SKILL_DAMAGE ){
-		ShowError( "buildin_setmapflag: Skill damage adjust is not supported. Please use setmapflagskilldmg.\n" );
-		return SCRIPT_CMD_FAILURE;
-	}
+	union u_mapflag_args args = {};
 
-	FETCH(4, args.flag_val);
+	switch(mf) {
+		case MF_SKILL_DAMAGE:
+			if (script_hasdata(st, 4) && script_hasdata(st, 5))
+				args.rate[script_getnum(st, 5)] = script_getnum(st, 4);
+			else {
+				ShowWarning("buildin_setmapflag: Unable to set skill_damage mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		case MF_NOSAVE:
+			ShowWarning("buildin_setmapflag: Use script command setmapflagnosave to adjust this mapflag.\n");
+			return SCRIPT_CMD_FAILURE;
+		case MF_PVP_NIGHTMAREDROP:
+			ShowWarning("buildin_setmapflag: Unable to set pvp_nightmaredrop mapflag from this script command.\n");
+			return SCRIPT_CMD_FAILURE;
+		default:
+			FETCH(4, args.flag_val);
+			break;
+	}
 
 	map_setmapflag_sub(m, static_cast<e_mapflag>(mf), true, &args);
 

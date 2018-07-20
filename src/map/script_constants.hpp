@@ -7269,6 +7269,14 @@
 	export_constant(BL_MER);
 	export_constant(BL_ELEM);
 
+	/* skill damage mapflag types */
+	export_constant(SKILLDMG_PC);
+	export_constant(SKILLDMG_MOB);
+	export_constant(SKILLDMG_BOSS);
+	export_constant(SKILLDMG_OTHER);
+	export_constant(SKILLDMG_MAX);
+	export_constant(SKILLDMG_CASTER);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

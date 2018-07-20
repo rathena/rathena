@@ -2191,11 +2191,13 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 	if (!(damage->caster&src->type))
 		return 0;
 
-	if ((damage->map&1 && (!map_getmapflag(m, MF_PVP) && !map_flag_gvg2(m) && !map_getmapflag(m, MF_BATTLEGROUND) && !map_getmapflag(m, MF_SKILL_DAMAGE) && !map_getmapflag(m, MF_RESTRICTED))) ||
+	union u_mapflag_args args = {};
+
+	if ((damage->map&1 && (!map_getmapflag(m, MF_PVP) && !map_flag_gvg2(m) && !map_getmapflag(m, MF_BATTLEGROUND) && !map_getmapflag_sub(m, MF_SKILL_DAMAGE, &args) && !map_getmapflag(m, MF_RESTRICTED))) ||
 		(damage->map&2 && map_getmapflag(m, MF_PVP)) ||
 		(damage->map&4 && map_flag_gvg2(m)) ||
 		(damage->map&8 && map_getmapflag(m, MF_BATTLEGROUND)) ||
-		(damage->map&16 && map_getmapflag(m, MF_SKILL_DAMAGE)) ||
+		(damage->map&16 && map_getmapflag_sub(m, MF_SKILL_DAMAGE, &args)) ||
 		(map_getmapflag(m, MF_RESTRICTED) && damage->map&(8*map[m].zone)))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
@@ -2214,8 +2216,9 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	int rate = 0;
 	struct map_data *mapd = &map[src->m];
+	union u_mapflag_args args = {};
 
-	if (!mapd || !map_getmapflag(src->m, MF_SKILL_DAMAGE))
+	if (!mapd || !map_getmapflag_sub(src->m, MF_SKILL_DAMAGE, &args))
 		return 0;
 
 	// Damage rate for all skills at this map
