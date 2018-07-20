@@ -8158,7 +8158,9 @@ ACMD_FUNC(mapflag) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
 		for( i = MF_MIN; i < MF_MAX; i++ ){
-			if( map_getmapflag_name(static_cast<e_mapflag>(i), flag_name) && map_getmapflag( sd->bl.m, static_cast<e_mapflag>(i) ) ){
+			union u_mapflag_args args = {};
+
+			if( map_getmapflag_name(static_cast<e_mapflag>(i), flag_name) && map_getmapflag_sub( sd->bl.m, static_cast<e_mapflag>(i), &args ) ){
 				clif_displaymessage(sd->fd, flag_name);
 			}
 		}
@@ -8182,7 +8184,7 @@ ACMD_FUNC(mapflag) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
 				clif_displaymessage(sd->fd,atcmd_output);
 			} else {
-				map_setmapflag(sd->bl.m, static_cast<e_mapflag>(mapflag), flag != 0);
+				map_setmapflag(sd->bl.m, mapflag, flag != 0);
 				sprintf(atcmd_output,"[ @mapflag ] %s flag has been set to %s value = %hd",flag_name,flag?"On":"Off",flag);
 				clif_displaymessage(sd->fd,atcmd_output);
 			}
