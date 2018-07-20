@@ -7001,7 +7001,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the
-behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.hpp' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo,
@@ -7014,7 +7014,7 @@ current weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clou
 mf_fireworks) and whether night will be in effect on this map (mf_nightenabled).
 
 The optional parameter <zone> is used to set the zone for 'restricted' mapflags,
-GM level bypass from 'nocommand', base/job experience for 'bexp'/'jexp', and
+GM level bypass for 'nocommand', base/job experience for 'bexp'/'jexp', and
 flag for 'battleground'.
 
 For 'skill_damage' mapflag:

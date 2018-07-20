@@ -12310,12 +12310,16 @@ BUILDIN_FUNC(setmapflag)
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;
-		case MF_NOSAVE:
-			ShowWarning("buildin_setmapflag: Use script command setmapflagnosave to adjust this mapflag.\n");
-			return SCRIPT_CMD_FAILURE;
-		case MF_PVP_NIGHTMAREDROP:
-			ShowWarning("buildin_setmapflag: Unable to set pvp_nightmaredrop mapflag from this script command.\n");
-			return SCRIPT_CMD_FAILURE;
+		case MF_NOSAVE: // Assume setting "SavePoint"
+			args.nosave.map = 0;
+			args.nosave.x = -1;
+			args.nosave.y = -1;
+			break;
+		case MF_PVP_NIGHTMAREDROP: // Assume setting standard drops
+			args.nightmaredrop.drop_id = -1;
+			args.nightmaredrop.drop_per = 300;
+			args.nightmaredrop.drop_type = NMDT_EQUIP;
+			break;
 		default:
 			FETCH(4, args.flag_val);
 			break;
