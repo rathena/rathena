@@ -1,31 +1,20 @@
-# rAthena
+<img src="branding/logo.png" align="right" height="90" />
 
-Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena) [![Build status](https://ci.appveyor.com/api/projects/status/8574b8nlwd57loda/branch/master?svg=true)](https://ci.appveyor.com/project/rAthenaAPI/rathena/branch/master)
+# rAthena
+[![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena) [![Build status](https://ci.appveyor.com/api/projects/status/8574b8nlwd57loda/branch/master?svg=true)](https://ci.appveyor.com/project/rAthenaAPI/rathena/branch/master)
+> rAthena is a collaborative software development project revolving around the creation of a robust massively multiplayer online role playing game (MMORPG) server package. Written in C, the program is very versatile and provides NPCs, warps and modifications. The project is jointly managed by a group of volunteers located around the world as well as a tremendous community providing QA and support. rAthena is a continuation of the eAthena project.
+
+[Forum](https://rathena.org/board)|[Discord](https://rathena.org/discord)|[Wiki](https://github.com/rathena/rathena/wiki)|[FluxCP](https://github.com/rathena/FluxCP)|[Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
+--------|--------|--------|--------|--------
 
 ### Table of Contents
-1. What is rAthena?
-2. Prerequisites
-3. Installation
-4. Troubleshooting
-5. More Documentation
-6. How to Contribute
+1. [Prerequisites](#1-prerequisites)
+2. [Installation](#2-installation)
+3. [Troubleshooting](#3-troubleshooting)
+4. [More Documentation](#4-more-documentation)
+5. [How to Contribute](#5-how-to-contribute)
 
-## 1. What is rAthena?
-rAthena is a collaborative software development project revolving around the
-creation of a robust massively multiplayer online role playing game (MMORPG)
-server package. Written in C, the program is very versatile and provides NPCs,
-warps and modifications. The project is jointly managed by a group of volunteers
-located around the world as well as a tremendous community providing QA and
-support. rAthena is a continuation of the eAthena project.
-
-### Links
-* [rAthena Forum](https://rathena.org/board)
-* [rAthena Discord server](https://rathena.org/discord)
-* [Wiki](https://github.com/rathena/rathena/wiki)
-* [Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
-* [FluxCP, a control panel for rAthena](https://github.com/rathena/FluxCP)
-
-## 2. Prerequisites
+## 1. Prerequisites
 Before installing rAthena there are certain tools and applications you will need.
 This differs between the varying operating systems available, so the following
 is broken down into Windows and Linux prerequisites.
@@ -48,7 +37,7 @@ Names of packages may require specific version numbers on certain distributions
   * zlib-devel
   * git
 
-## 3. Installation 
+## 2. Installation 
 This section is a very brief set of installation instructions. For more concise guides
 relevant to your Operation System, please refer to the Wiki (links at the end of this file).
 Detailed installation guide can be found in [**Installation Guide on wiki**](https://github.com/rathena/rathena/wiki/installations).
@@ -139,7 +128,7 @@ Detailed installation guide can be found in [**Installation Guide on wiki**](htt
 
 * Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
-## 4. Troubleshooting
+## 3. Troubleshooting
 
 If you're having problems with starting your server, the first thing you should
 do is check what's happening on your consoles. More often that not, all support issues
@@ -186,12 +175,12 @@ Examples:
     to accept the connection.
 
 
-## 5. More Documentation
+## 4. More Documentation
 rAthena has a large collection of help files and sample NPC scripts located in the /doc/
 directory. These include detailed explanations of NPC script commands, atcommands (@),
 group permissions, item bonuses, and packet structures, among many other topics. We
 recommend that all users take the time to look over this directory before asking for
 assistance elsewhere.
 
-## 6. How to Contribute
+## 5. How to Contribute
 Details on how to contribute to rAthena can be found in [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/.github/CONTRIBUTING.md)!
