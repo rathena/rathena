@@ -180,7 +180,7 @@ niflheim,350,258,1	script	Cursed Spirit#nif	802,{
 	next;
 	mes "[Ashe Bruce]";
 	mes "Just because I'm a cursed spirit, you adventurers think you can just dump your curses on me?!";
-	emotion e_an;
+	emotion ET_FRET;
 	next;
 	mes "[Ashe Bruce]";
 	mes "I refuse to let";
@@ -233,7 +233,7 @@ niflheim,350,258,1	script	Cursed Spirit#nif	802,{
 		mes "And the spell to lift";
 		mes "your curse has been";
 		mes "lost to the ages~!";
-		emotion e_gg;
+		emotion ET_KIK;
 		next;
 		if (select("Clover:Klaatu:Klaytos") == 2)
 			set .@spell,.@spell+1;

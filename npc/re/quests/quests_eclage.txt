@@ -183,17 +183,17 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 	if (ep14_2_oliver == 0) {
 		mes "What do you need?";
 		mes "As you can see, I'm really busy here, so unless you need something, please don't bother me.";
-		emotion e_an;
+		emotion ET_FRET;
 	} else if (ep14_2_oliver == 1) {
 		if (checkquest(11310,PLAYTIME) != 2) {
 			mes "There's still a lot of people before you. Could you please wait until your turn?";
 			mes "It won't be too long.";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		mes "Whew! I'm sorry to have kept you waiting.";
 		mes "There are just too many visitors.";
-		emotion e_wah;
+		emotion ET_KEK;
 		next;
 		mes "[Immigration Officer]";
 		mes "So if you will place your forms here...";
@@ -203,12 +203,12 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		mes "This time it's all good, right?";
 		mes "Let me through quick!";
 		cutin "bu_du1",2;
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		cutin "",255;
 		mes "[Immigration Officer]";
 		mes "I'm taking care of visitors in the order they arrived, so please wait for your turn.";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "[???]";
 		mes "What are you talking about!";
@@ -218,7 +218,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		cutin "",255;
 		mes "[Immigration Officer]";
 		mes "Well, your turn was delayed because you had to fill out your forms, so you have to wait until later.";
-		emotion e_ag;
+		emotion ET_ANGER;
 		next;
 		mes "[???]";
 		mes "What?! You just said you take care of visitors in the order they arrived!!!";
@@ -285,7 +285,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		mes "Oh wow, this is just so crazy.";
 		mes strcharinfo(0) +" Here, your documents are processed.";
 		mes "You may enter the city when you go talk to the security guard.";
-		emotion e_go;
+		emotion ET_GO;
 		next;
 		mes "[???]";
 		mes "Shuffle, shuffle";
@@ -294,7 +294,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		cutin "",255;
 		mes "[Immigration Officer]";
 		mes "And Mr. Deu Lean, please take your group and enter. It's just way too noisy.";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Du Lian]";
 		mes "Mwahah!!";
@@ -329,7 +329,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		next;
 		mes "[Mark Esha]";
 		mes "My goodness......";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		ep14_2_oliver = 2;
 		changequest 11310,11311;
 		close2;
@@ -340,7 +340,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		mes "Oh wow, this is just so crazy.";
 		mes strcharinfo(0) +" Here, your documents are processed.";
 		mes "You may enter the city when you go talk to the security guard.";
-		emotion e_go;
+		emotion ET_GO;
 	}
 	else {
 		mes "Alright, next person in line please!";
@@ -350,7 +350,7 @@ ecl_fild01,111,320,3	script	Immigration Officer#ep14	4_M_FAIRYKID4,{
 		mes "[Immigration Officer]";
 		mes "Ack...";
 		mes "I don't think it's all for the best to have so many visitors.";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	close;
 }
@@ -359,20 +359,20 @@ ecl_fild01,92,316,5	script	Tourist#ep14_2f2	4_CAT_SAILOR2,{
 	mes "[Tourist]";
 	mes "I can't believe I have to wait this long......";
 	mes "When is it going to be my turn?";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
 ecl_fild01,106,312,5	script	Tourist#ep14_2f3	4_F_RAFLE_VI,{
 	mes "[Tourist]";
 	mes "I'm actually done with my documentation, but I'm just sticking around to appreciate all of these flowers.";
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	next;
 	mes "[Tourist]";
 	mes "I'm just getting through the night with my sleeping bag!";
 	mes "It's alright as long as you can withstand the security guard's annoyance with you.";
-	emotion e_swt,0,"Security Guard#ep14_2";
-	emotion e_swt,0,"Security Guard#ep14_2_2";
+	emotion ET_SWEAT, getnpcid(0, "Security Guard#ep14_2");
+	emotion ET_SWEAT, getnpcid(0, "Security Guard#ep14_2_2");
 	close;
 }
 
@@ -380,18 +380,18 @@ ecl_fild01,108,320,7	script	Tourist#ep14_2f4	4_F_DST_CHILD,{
 	mes "[Tourist]";
 	mes "I wonder how beautiful of a city Eclage would be.";
 	mes "It just makes my heart beat thinking about it.";
-	emotion e_lv;
+	emotion ET_THROB;
 	close;
 }
 
 ecl_fild01,105,320,2	script	Tourist#ep14_2f5	4_F_FAIRYKID,{
 	mes "[Tourist]";
 	mes "No, I'm not a visitor. I'm an Eclage citizen!";
-	emotion e_an;
+	emotion ET_FRET;
 	next;
 	mes "[Tourist]";
 	mes "I can't believe I can't even enter because of all these tourists!";
-	emotion e_omg;
+	emotion ET_HUK;
 	close;
 }
 
@@ -401,7 +401,7 @@ ecl_fild01,103,319,5	script	Tourist#ep14_2f6	4_M_HUMERCHANT,{
 	next;
 	mes "[Tourist]";
 	mes "You could probably make the world's best acorn jello.";
-	emotion e_no1;
+	emotion ET_BEST;
 	close;
 }
 
@@ -414,7 +414,7 @@ ecl_fild01,110,316,3	script	Tourist#ep14_2f7	4_M_HUBOY,{
 	next;
 	mes "[Tourist]";
 	mes "Perhaps you could consider it as the weight of life?";
-	emotion e_awsm;
+	emotion ET_COOL;
 	close;
 }
 
@@ -431,7 +431,7 @@ ecl_fild01,93,318,5	script	Tourist#ep14_2f9	1_M_PAY_ELDER,{
 	mes "[Tourist]";
 	mes "Err.... No.....";
 	mes "Curry.... Curry rice.... Snorrreeeee";
-	emotion e_hlp;
+	emotion ET_HELP;
 	close;
 }
 
@@ -441,7 +441,7 @@ ecl_fild01,94,313,5	script	Tourist#ep14_2f10	4_M_PIERROT,{
 	next;
 	mes "[Tourist]";
 	mes "It's encouraging to see so many Midgard people nowadays.";
-	emotion e_com;
+	emotion ET_COMEON;
 	close;
 }
 
@@ -449,7 +449,7 @@ ecl_fild01,101,320,5	script	Tourist#ep14_2f11	4_M_RAFLE_OR,{
 	mes "[Tourist]";
 	mes "Ow.... My legs...";
 	mes "You're saying I have to wait after all this traveling through Bifrost?!";
-	emotion e_an;
+	emotion ET_FRET;
 	close;
 }
 
@@ -460,7 +460,7 @@ ecl_fild01,88,315,5	script	Tourist#ep14_2f12	4_WHITE_COW,{
 	next;
 	mes "[Tourist]";
 	mes "I want to be alone......Sniff!";
-	emotion e_otl;
+	emotion ET_OTL;
 	close;
 }
 
@@ -475,7 +475,7 @@ OnTouch:
 			mes "[Fairy Carpenter]";
 			mes "Hey!!!!!!!";
 			mes "Be careful over there!!";
-			emotion e_omg,0,"Fairy Carpenter#ep14_2";
+			emotion ET_HUK, getnpcid(0, "Fairy Carpenter#ep14_2");
 			close;
 		}
 		if (ep14_2_oliver <= 6) {
@@ -492,11 +492,11 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 			mes "Wait!!!!!";
 			mes "That's an unregistered visitor!!!!!!!";
 			mes "Security!!! Security!!!";
-			emotion e_omg;
+			emotion ET_HUK;
 		}
 		else {
 			mes "Did you talk to the security guard before coming into the city?";
-			emotion e_go;
+			emotion ET_GO;
 		}
 		close2;
 		warp "ecl_fild01",100,317;
@@ -505,7 +505,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 	if (BaseLevel < 120) {
 		mes "[Fairy Carpenter]";
 		mes "The bridge is kind of broken so please be careful.";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	else if (ep14_2_oliver == 3) {
 		mes "[Fairy Carpenter]";
@@ -523,7 +523,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 			close;
 		case 2:
 			mes "Oh, just a minute ago, there was a human being who took a misstep and broke a tree branch while falling.";
-			emotion e_an;
+			emotion ET_FRET;
 			next;
 			mes "[Fairy Carpenter]";
 			mes "Being close to the entrance and all, this really needs to be fixed soon.";
@@ -538,16 +538,16 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 			mes "Wow!!!";
 			mes "You are going to help me?!";
 			mes "So... so kind...";
-			emotion e_omg;
+			emotion ET_HUK;
 			next;
 			mes "[Fairy Carpenter]";
 			mes "I can't believe there's still this kind of kindness left in the world... Hmm, sweaty eyes...";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Fairy Carpenter]";
 			mes "Would you then bring me a new bridge to use for repair?";
 			mes "Since other people can get hurt, I'll use my magic to maintain this bridge in the meantime.";
-			emotion e_go;
+			emotion ET_GO;
 			ep14_2_oliver = 4;
 			setquest 11312;
 			close;
@@ -575,32 +575,32 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		next;
 		mes "[Fairy Carpenter]";
 		mes "and this broken bridge... from here to there it's about 19 meters and the prepieces come in 3 meters = 5 meters, and 10 meters......";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Fairy Carpenter]";
 		mes "Hmm.......";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Fairy Carpenter]";
 		mes "Hmm......";
 		mes "......";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Fairy Carpenter]";
 		mes "......Hmm.........";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "- It's probably just my imagination that smoke is coming out of his head, right? -";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		next;
 		mes "[Fairy Carpenter]";
 		mes "Oh ho!";
 		mes "What do you think?";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		mes "[Fairy Carpenter]";
 		mes "To make a bridge of 19 meters in length with the fewest number of pieces possible, how many of each 3, 5, or 10 meter length pieces would I need?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Fairy Carpenter]";
 		mes "Please write the number of pieces necessary for each length. If no pieces for that length are necessary, please write 0.";
@@ -610,13 +610,13 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 			mes "[Fairy Carpenter]";
 			mes "Hmm that's kind of....";
 			mes "Would there be a better way?";
-			emotion e_swt;
+			emotion ET_SWEAT;
 			close;
 		}
 		mes "[Fairy Carpenter]";
 		mes "Yeah, that sounds good, right?";
 		mes "Especially since there wouldn't be a need to make them so straight.";
-		emotion e_ic;
+		emotion ET_AHA;
 		next;
 		mes "[Fairy Carpenter]";
 		mes "Okay, if you talk to [Golie] who works outside the city near the tower, he will give you the new bridge pieces.";
@@ -643,8 +643,8 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		mes "[Du Lian]";
 		mes "Ah!";
 		mes "Thank goodness!";
-		emotion e_omg,1;
-		emotion e_omg;
+		emotion ET_HUK, playerattached();
+		emotion ET_HUK;
 		cutin "bu_du2",2;
 		next;
 		mes "[Du Lian]";
@@ -658,11 +658,11 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		cutin "",255;
 		mes "[Carpenter Fon]";
 		mes "...";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "...";
-		emotion e_swt,1;
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Du Lian]";
 		mes "No way!";
@@ -680,7 +680,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		mes "[Carpenter Fon]";
 		mes "Well, I'm going to let it pass this time around, but if you break the bridge again, I'm going to put you in jail!";
 		mes "You should know that I am pretty busy myself.";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Mark Esha]";
 		mes "I'm sorry.";
@@ -694,12 +694,12 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		next;
 		cutin "",255;
 		mes "- SNAP -";
-		emotion e_omg;
-		emotion e_omg,1;
+		emotion ET_HUK;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "[Carpenter Fon]";
 		mes "......";
-		emotion e_otl;
+		emotion ET_OTL;
 		next;
 		mes "[Mark Esha]";
 		mes "Oh dear....";
@@ -725,21 +725,21 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		cutin "",255;
 		mes "[Carpenter Fon]";
 		mes "......";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Carpenter Fon]";
 		mes "Sigh...";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Carpenter Fon]";
 		mes "Shoot.................................";
 		mes "....................................";
 		mes "............";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Carpenter Fon]";
 		mes "Get out of here you troublemaker!!!!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Mark Esha]";
 		mes "I am so sorry.";
@@ -750,23 +750,23 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		mes "[Carpenter Fon]";
 		mes "Don't come back!";
 		mes "Don't EVER come back!!!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Carpenter Fon]";
 		mes "Oy........";
 		mes "I thought today I might be able to see my friends after finishing up my work.....";
 		mes "Looks like a long night again.";
-		emotion e_otl;
+		emotion ET_OTL;
 		next;
 		mes "[Carpenter Fon]";
 		mes "Since it's not a big fix, I'm sure I can take care of this somehow.";
 		mes "Sigh...";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Carpenter Fon]";
 		mes strcharinfo(0) +" Well, you should get going to Eclage.";
 		mes "You just need to follow this path to the northern part of the city.";
-		emotion e_sigh;
+		emotion ET_OHNO;
 		next;
 		mes "[Carpenter Fon]";
 		mes "You'll find the main plaza as soon as you enter Eclage, and I'm sure you'll have easy time getting information from all the people there.";
@@ -782,7 +782,7 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		}
 		mes "[Carpenter Fon]";
 		mes "I really ask you this favor because I'm supposed to meet with my friends to discuss a birthday coming up, but I can't just keep them waiting.";
-		emotion e_sry;
+		emotion ET_SORRY;
 		delitem 6553,2;// Leaf_Made_Wood
 		ep14_2_oliver = 7;
 		changequest 11314,11315;
@@ -793,12 +793,12 @@ eclage,102,32,4	script	Fairy Carpenter#ep14_2	4_M_FAIRYKID2,{
 		next;
 		mes "[Carpenter Fon]";
 		mes "I really ask you this favor because I'm supposed to meet with my friends to discuss a birthday coming up, but I can't just keep them waiting.";
-		emotion e_sry;
+		emotion ET_SORRY;
 	}
 	else {
 		mes "[Carpenter Fon]";
 		mes "I wanna see my friends real soon.";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	close;
 }
@@ -891,7 +891,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "Why... why do I have so much time at hand...?";
 		mes "Am I the only one with so much free time?";
 		mes "Am I really the only one?";
-		emotion e_omg;
+		emotion ET_HUK;
 	}
 	else if (ep14_2_oliver == 7) {
 		mes "Hmm...";
@@ -909,11 +909,11 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "Um... This is sort of awkward for me...";
-		emotion e_wah,1;
+		emotion ET_KEK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "No, that's not what I mean...";
-		emotion e_swt,1;
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Glaces]";
 		mes "Hmm...";
@@ -922,26 +922,26 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "This is why I don't like to be kept waiting for long. My popularity just doesn't let me go anywhere without being noticed.";
-		emotion e_an;
-		emotion e_swt2,1;
+		emotion ET_FRET;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "No, I mean... Mr. Fon told me to let you know that he won't be able to make it because of his work...";
 		next;
 		mes "[Glaces]";
 		mes "...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Glaces]";
 		mes "Oh, I see.";
 		next;
 		mes "[Glaces]";
 		mes "Yeah, I feel like I should hide somewhere.";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Glaces]";
 		mes "Anyways, Fon can't make it?";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "Moreng's birthday is not long from now, and without being able to meet all this time, it might turn out to be a terrible party.";
@@ -949,12 +949,12 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "[Glaces]";
 		mes "Yube even flew here from Splendide for Moreng's birthday...";
 		mes "Speaking of which, where did that guy go?!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "He was the one who suggested that we should meet at his own place.";
 		mes "The least he could do is opening the door before disappearing!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "Well, I can't leave this place since others might arrive, so if you see a fairy with a yellow, tangerine-stem-like head, please tell him Glaces is looking for him.";
@@ -967,8 +967,8 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "That";
 		mes "favor!";
 		mes "I will take care of it!";
-		emotion e_omg;
-		emotion e_omg,1;
+		emotion ET_HUK;
+		emotion ET_HUK, playerattached();
 		cutin "bu_du1",2;
 		next;
 		cutin "",255;
@@ -1002,7 +1002,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "[Glaces]";
 		mes "Who are you calling a girl? You got my name wrong too!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Du Lian]";
 		mes "Heh heh, don't you worry, baby girl.";
@@ -1020,7 +1020,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "And also please tell him that if he doesn't get back right away, I will pluck off that stem.";
-		emotion e_omg;
+		emotion ET_HUK;
 	}
 	else if (ep14_2_oliver == 9) {
 		mes "Oh...";
@@ -1028,13 +1028,13 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "Hmm... I think we are apart by about 30 years...";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		next;
 		select("Then what's Glaces' age?");
 		mes "[Glaces]";
 		mes "How dare you ask a lady's age!!!";
 		mes "We aren't exactly the same age, but since Murah is also 30 years apart from Moreng, ask Murah.";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "Murah is probably at the Eclage plaza.";
@@ -1044,7 +1044,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 	else if (ep14_2_oliver == 10) {
 		mes "How dare you ask a lady's age!!!";
 		mes "We aren't exactly the same age, but since Murah is also 30 years apart from Moreng, ask Murah.";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "Murah is probably at the Eclage plaza.";
@@ -1059,7 +1059,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "A king lives in Eclage.";
 		mes "He is super good looking.";
 		mes "Hehe";
-		emotion e_shy;
+		emotion ET_SHY;
 	}
 	else if (ep14_2_oliver == 14) {
 		mes "To think of it, I should probably visit Fon and Golie as well...";
@@ -1073,7 +1073,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		}
 		mes "Whoa!";
 		mes "We would need an enormous cake to fit all these candles...";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "Hmm... Since everyone seems so busy, I'm going to give up meeting them today and just go to bake a cake big enough to fit the candles.";
@@ -1084,18 +1084,18 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "[Du Lian]";
 		mes "Baby girl!";
 		mes "I brought the guy named Yube!";
-		emotion e_omg;
-		emotion e_omg,1;
+		emotion ET_HUK;
+		emotion ET_HUK, playerattached();
 		cutin "bu_du2",2;
 		next;
 		cutin "",255;
 		mes "[Glaces]";
 		mes "...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "...";
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		next;
 		mes "[Yube]";
 		mes "What, who is this fool?";
@@ -1106,7 +1106,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "[Glaces]";
 		mes "Do you mind not treating my friend like a piece of luggage?";
 		mes "And it's too late anyways!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Du Lian]";
 		mes "What?!";
@@ -1121,7 +1121,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Two?";
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		next;
 		mes "[Du Lian]";
 		mes "What do you mean?";
@@ -1131,7 +1131,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Huh?!";
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		next;
 		mes "[Du Lian]";
 		mes "Sure, he's kind of cute too, but we have our cutest Maggi to beat them all!!!";
@@ -1147,7 +1147,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[???]";
 		mes "Can you see me?";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		cutin "bu_oliver3",0;
 		next;
 		mes "[Du Lian]";
@@ -1170,7 +1170,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "[Glaces]";
 		mes "Maybe it's because he doesn't have much presence to begin with.";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Alp Ocart]";
 		mes "...";
@@ -1231,7 +1231,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		cutin "",255;
 		mes "[Glaces]";
 		mes "Who are those guys?They even took Yube with them!";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "[Glaces]";
 		mes "Well, I'm sure Yube will take care of himself.";
@@ -1240,7 +1240,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 	}
 	else if (ep14_2_oliver == 16) {
 		mes "Who are those guys? They even took Yube with them?!";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "[Glaces]";
 		mes "Well... I'm sure Yube will take care of himself.";
@@ -1249,13 +1249,13 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 	}
 	else if (ep14_2_oliver < 22) {
 		mes "I wonder what's better, cream or chocolate...";
-		emotion e_shy;
+		emotion ET_SHY;
 		next;
 		mes "- She seems really busy making the cake. Let's not bother her. -";
 	}
 	else if (ep14_2_oliver == 22) {
 		mes "I wonder what's better, cream or chocolate?";
-		emotion e_shy;
+		emotion ET_SHY;
 		next;
 		mes "[Glaces]";
 		mes "Oh you're back.";
@@ -1263,13 +1263,13 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Glaces]";
 		mes "Huh!!!";
 		mes "The legend of the great bird?!";
 		mes "It's been close to a hundred years since I've known Moreng, and he's never talked about it before!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Glaces]";
 		mes "If he really seems like he might leave soon, we should grab him before he leaves and at least throw him a farewell party.";
@@ -1278,7 +1278,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "So sudden...";
 		mes "I'm going to try to talk with Moreng, so would you ask Yube for me?";
 		mes "He went inside to look for something, so I'm sure he's still inside.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		ep14_2_oliver = 23;
 		changequest 11330,11331;
 	}
@@ -1289,7 +1289,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		mes "So sudden...";
 		mes "I'm going to try to talk with Moreng, so would you ask Yube for me?";
 		mes "He went inside to look for something, so I'm sure he's still inside.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 	}
 	else {
 		mes "It's going to feel really empty if Moreng leaves for Midgard.";
@@ -1297,7 +1297,7 @@ eclage,283,275,4	script	Glaces#ep14_2	4_F_FAIRYKID3,{
 		next;
 		mes "[Glaces]";
 		mes "Well, I should first decide on what present to get him!";
-		emotion e_no1;
+		emotion ET_BEST;
 	}
 	close2;
 	cutin "",255;
@@ -1319,7 +1319,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 		mes "[Yube]";
 		mes "Whoa!";
 		mes "Who are you?!";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "war_y1",2;
 		next;
 		if (Class == Job_Warlock || Class == Job_Warlock_T) {
@@ -1327,7 +1327,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 			mes "Whoa! Who's this? It's";
 			mes strcharinfo(0) +"?";
 			mes "You seem more like a Warlock now!";
-			emotion e_heh;
+			emotion ET_SMILE;
 			cutin "war_y4",2;
 			next;
 			mes "[Yube]";
@@ -1339,7 +1339,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 		mes "[Yube]";
 		mes "I told her I'll be looking for materials to make candles with, but as expected, she wasn't listening.";
 		mes "She always loses her mind looking at herself through a mirror.";
-		emotion e_sigh;
+		emotion ET_OHNO;
 		cutin "war_y3",2;
 		next;
 		mes "[Yube]";
@@ -1366,7 +1366,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 			mes "Oh!";
 			mes "You gathered enough already?";
 			mes "I also made enough wicks just in time!";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			cutin "war_y4",2;
 			delitem 6561,128;// Dustball
 			ep14_2_oliver = 15;
@@ -1385,7 +1385,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 			mes "And also...";
 			mes "To return the favor, I'll let you use my house!";
 			mes "You can stay over whenever you want as long as you are in Eclage.";
-			emotion e_no1;
+			emotion ET_BEST;
 			next;
 			mes "[Yube]";
 			mes "I work at Splendide for the most part anyways, so I don't come to Eclage very often.";
@@ -1423,21 +1423,21 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 	else if (ep14_2_oliver == 13) {
 		mes "Huh?!";
 		mes "So no one knows how old Moreng is?";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "war_y3",2;
 		next;
 		mes "[Yube]";
 		mes "Hmm, at least to summarize what everyone has said...";
 		mes "He's younger than me; 30 years age gap wtih both Glaces and Murah but Glaces and Murah are not the same age,";
 		mes "Shul's age is to add Moreng's age to my age of 100 years before; Shul is 2 years older than Glaces; the average age of me and Shul is Tato and Tato's age is 146, right?";
-		emotion e_dots;
-		emotion e_dots,1;
+		emotion ET_THINK;
+		emotion ET_THINK, playerattached();
 		cutin "war_y2",2;
 		next;
 		mes "[Yube]";
 		mes "...";
 		mes "Then how old is he?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		cutin "war_y3",2;
 		next;
 		input .@inputnum;
@@ -1452,13 +1452,13 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 			mes "That's right!";
 			mes "Now I remember!!!";
 			mes "I think that's what it was!";
-			emotion e_ic;
+			emotion ET_AHA;
 			cutin "war_y4",2;
 			next;
 			mes "[Yube]";
 			mes "Hmm that means I still have to make more than a hundred candles...";
 			mes "Oy......";
-			emotion e_wah;
+			emotion ET_KEK;
 			cutin "war_y3",2;
 			next;
 			mes "[Yube]";
@@ -1481,7 +1481,7 @@ eclage,191,200,4	script	Yube#ep14_2	4_M_FAIRYKID5,{
 		else {
 			mes "Wha.. You lost the candles?";
 			mes "I still have some wicks left, so if you bring me the clump of dust again, I'll remake them for ya.";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			cutin "war_y3",2;
 			next;
 			cutin "",255;
@@ -1559,7 +1559,7 @@ ecl_in01,73,51,4	script	Murah#ep14_2	4_M_FAIRYKID,{
 	}
 	else
 		mes "Hmm... What amazing present should I give?";
-	emotion e_flash;
+	emotion ET_SPARK;
 	close;
 }
 
@@ -1570,7 +1570,7 @@ eclage,265,166,4	script	Shul#ep14_2	4_M_FAIRYKID2,{
 		mes "Hmm...";
 		mes "It's been awhile since I kept track of everyone's age.";
 		mes "I just remember that Glaces was two years younger than me.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		next;
 		mes "[Shul]";
 		mes "Come to think of it, not too long ago, Tato said that his age was the same as the average between my age and Yube's age.";
@@ -1598,12 +1598,12 @@ eclage,137,169,4	script	Tato#ep14_2	4_F_FAIRYKID4,{
 		next;
 		mes "[Tato]";
 		mes "But why is it that they don't know their own age either?!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		select("What's Tato's age?");
 		mes "[Tato]";
 		mes "I am 146 years old.";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		mes "- Although the exact information regarding Moreng's age is still unknown, let's return to Yube first.";
 		ep14_2_oliver = 13;
@@ -1630,7 +1630,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "[Moreng]";
 		mes "Yai actually signifies an egg.";
 		mes "And to Laphines, Yai could even signify what is beyond a home...";
-		emotion e_shy;
+		emotion ET_SHY;
 	}
 	else if (ep14_2_oliver == 16) {
 		mes "Eclage is a really nice place to live";
@@ -1638,7 +1638,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		next;
 		mes "[Moreng]";
 		mes "If there were a beautiful Yai of my own, it would truly be a paradise!";
-		emotion e_shy;
+		emotion ET_SHY;
 		next;
 		mes "[Oliver]";
 		mes "Oh, so you call those round houses a Yai.";
@@ -1651,12 +1651,12 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		next;
 		mes "[Moreng]";
 		mes "While I spent time and effort as much as putting my life into it, my Yai is nothing more than a fake.";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Moreng]";
 		mes "It's called an egg and looks like an egg, but it's really not an egg!";
 		mes "It's just something else that just looks like an egg!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Moreng]";
 		mes "Hey, wait a minute!";
@@ -1685,7 +1685,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		cutin "",255;
 		mes "[Moreng]";
 		mes "......";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Moreng]";
 		mes "When I first heard of that legend, I was so excited that I couldn't sleep for days.";
@@ -1693,7 +1693,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "[Moreng]";
 		mes "But as time went by, and as I aged more, I gradually forgot about it.";
 		mes "Isn't that how all childhood dreams are like?";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Moreng]";
 		mes "But not too long ago when I went to the plaza, I met my old neighbor who told me about a traveler from Midgard holding an incredibly enormous feather...";
@@ -1701,7 +1701,7 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "[Moreng]";
 		mes "Ever since I heard about it, I can't seem to put my mind on anything else.";
 		mes "Could that legend possibly be true?";
-		emotion e_sigh;
+		emotion ET_OHNO;
 		next;
 		mes "[Moreng]";
 		mes "Truthfully, when I heard that story, I went searching all over the town but couldn't find anyone with a huge feather.";
@@ -1709,19 +1709,19 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "[Moreng]";
 		mes "Do you think that old man's story is real? Or do you think it's a lie?";
 		mes "I used to think of it as a forgotten legend, but now I am even afraid to find out whether it is real or fake. ";
-		emotion e_wah;
+		emotion ET_KEK;
 		next;
 		mes "[Du Lian]";
 		mes "If you are a real man, don't be so meek!";
 		mes "Face it head on! And if you must, you can crash and burn afterwards!";
-		emotion e_omg;
-		emotion e_omg,1;
+		emotion ET_HUK;
+		emotion ET_HUK, playerattached();
 		cutin "bu_du2",2;
 		next;
 		cutin "",255;
 		mes "[Moreng]";
 		mes "Don't crash and burn anything...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Du Lian]";
 		mes "For something like that-!";
@@ -1770,8 +1770,8 @@ eclage,266,216,4	script	Moreng#ep14_2	4_M_FAIRYKID3,{
 		mes "I feel like I can't just stay here anymore.";
 		mes "I have to quickly pack my bags and leave for Midgard!";
 		if (ep14_2_oliver == 22) {
-			emotion e_omg;
-			emotion e_omg,1;
+			emotion ET_HUK;
+			emotion ET_HUK, playerattached();
 		}
 		next;
 		mes "- Moreng seems like he's really about to leave soon. I should let Glaces know. -";
@@ -1803,15 +1803,15 @@ ecl_in01,60,71,4	script	Old Man#ep14_2	4_M_FAIRYKID2,{
 		mes "[Old Man]";
 		mes "Nowadays, things are way more convenient with de-regulation and all.";
 		mes "And with the warps and flying to all these places, where's all the romance in adventures anymore?";
-		emotion e_pif;
+		emotion ET_HNG;
 		next;
 		mes "[Old Man]";
 		mes "Young people nowadays probably don't even know how frog eggs taste like.";
-		emotion e_pif;
+		emotion ET_HNG;
 		next;
 		mes "[Old Man]";
 		mes "It seems like yesterday when I saved enough Jellopies to buy a Tsurugi, but even that Tsurugi is deserted somewhere in the storage.";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Old Man]";
 		mes "Time really is merciless... If I had known this then, I would have...";
@@ -1853,11 +1853,11 @@ ecl_in01,60,71,4	script	Old Man#ep14_2	4_M_FAIRYKID2,{
 		next;
 		mes "[Du Lian]";
 		mes "But old man, would you happen to know anything about a legend regarding the great bird in Midgard? ";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		cutin "bu_du1",2;
 		next;
 		cutin "",255;
-		emotion e_shy,1;
+		emotion ET_SHY, playerattached();
 		next;
 		mes "[Old Man]";
 		mes "Oh!";
@@ -1865,7 +1865,7 @@ ecl_in01,60,71,4	script	Old Man#ep14_2	4_M_FAIRYKID2,{
 		next;
 		mes "[Old Man]";
 		mes "For that, there's probably no one who knows it better than I in Eclage.";
-		emotion e_flash;
+		emotion ET_SPARK;
 		next;
 		mes "[Old Man]";
 		mes "Well, it wasn't too long after Light Standard arrived in Midgard.";
@@ -1893,7 +1893,7 @@ ecl_in01,60,71,4	script	Old Man#ep14_2	4_M_FAIRYKID2,{
 		cutin "",255;
 		mes "[Old Man]";
 		mes "Huh? But I haven't even begun to talk about a monster he met in Midgard who can break any kind of metal!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Du Lian]";
 		mes "We will hear about it later~";
@@ -1924,14 +1924,14 @@ ecl_in01,60,71,4	script	Old Man#ep14_2	4_M_FAIRYKID2,{
 		mes "Old Man#ep14_2";
 		mes "Nowadays, things are much more convenient with de-regulation and all.";
 		mes "And with the warps and flying to all these places, where's all the romance in adventures anymore?";
-		emotion e_pif;
+		emotion ET_HNG;
 		next;
 		mes "[Old Man]";
 		mes "Young people nowadays probably don't even know how frog eggs taste like.";
 		next;
 		mes "[Old Man]";
 		mes "It seems like yesterday when I saved enough Jellopies to buy a Tsurugi, but even that Tsurugi is deserted somewhere in storage.";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	close2;
 	cutin "",255;
@@ -1947,7 +1947,7 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "[Traveler]";
 		mes "Oh, you came to ask me about the feather, too?";
 		mes "It's just a plain old decoration, but everyone really likes to bother me about it.";
-		emotion e_flash;
+		emotion ET_SPARK;
 		next;
 		mes "[Traveler]";
 		mes "If you are thinking about selling it, you should just give up.";
@@ -1970,11 +1970,11 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "[Traveler]";
 		mes "But I am not one to give up so easily.";
 		mes "If I think about it, it was a very long fight.";
-		emotion e_shy;
+		emotion ET_SHY;
 		next;
 		mes "[Du Lian]";
 		mes "That's weird. The old man earlier said that he saw it in Midgard.";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "bu_du1",2;
 		next;
 		cutin "",255;
@@ -1982,7 +1982,7 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "Eck!";
 		mes "No... No way.";
 		mes "I definitely saw it at Midgard.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Traveler]";
 		mes "I didn't want to show you this, but this scar is the proof.";
@@ -1992,7 +1992,7 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "Hmm...";
 		mes "For a fight not too long ago, the scar seems very old.";
 		mes "From how the scar looks, it doesn't even seem like it's been treated by magic...";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "bu_mark4",0;
 		next;
 		cutin "",255;
@@ -2000,23 +2000,23 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "Eeck!!!!";
 		mes "If... If I really think about, it might be awhile back actually.";
 		mes "I can't remember too well having so many memoirs and souvenirs.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Oliver]";
 		mes "But how did you travel to other places when you can't even enter Eclage?";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "bu_oliver2",0;
 		next;
 		mes "[Maggi Steen]";
 		mes "If it came near here somewhere, there's no way others haven't seen it...";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "bu_maggi1",2;
 		next;
 		cutin "",255;
 		mes "[Traveler]";
 		mes "Keeeek!!!!";
 		mes "Yes!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Traveler]";
 		mes "Actually, this isn't my first time here, but I had the opportunity to go to other places during when deregulation was at its peak awhile back.";
@@ -2024,12 +2024,12 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "[Alp Ocart]";
 		mes "Hmm... But this feather...";
 		mes "If I look at it very closely, the shaft is too thick for its size";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "bu_alp3",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "And doesn't the end of it seem really jagged?";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "bu_alp4",2;
 		next;
 		cutin "",255;
@@ -2038,11 +2038,11 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "Wait! Let me see!!!!";
 		mes "Oh my, that's really true!";
 		mes "How dare that cat sell me a fake?!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Du Lian]";
 		mes "Oh.... You bought it, didn't you?";
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		cutin "bu_du2",2;
 		next;
 		mes "[Oliver]";
@@ -2057,7 +2057,7 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "[Traveler]";
 		mes "Hu....";
 		mes "You have no idea how expensive this was!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Traveler]";
 		mes "Hey you guys, you can get into Eclage, right?";
@@ -2072,7 +2072,7 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "At least hold him until I can get into Eclage!";
 		mes "I ask you!";
 		mes "Please!";
-		emotion e_sob;
+		emotion ET_CRY;
 		ep14_2_oliver = 20;
 		changequest 11327,11328;
 	}
@@ -2089,13 +2089,13 @@ ecl_fild01,97,315,4	script	Traveler#ep14_2	4_M_JOB_HUNTER,{
 		mes "At least hold him until I can get into Eclage!";
 		mes "I ask you!";
 		mes "Please!";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	else if (ep14_2_oliver > 20) {
 		mes "Oh dear, my money...";
 		mes "I can't believe it was a fake...";
 		mes "Oy oy....";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	else {
 		mes "Who are you?";
@@ -2128,7 +2128,7 @@ ecl_in01,70,88,4	script	Sack Merchant#ep14_2	4_M_MERCAT1,{
 		mes "[Sack Merchant]";
 		mes "That's not trueow~!";
 		mes "I'm seriouseow~!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Sack Merchant]";
 		mes "That's definitely a precious item from Midgardeow.";
@@ -2141,7 +2141,7 @@ ecl_in01,70,88,4	script	Sack Merchant#ep14_2	4_M_MERCAT1,{
 		mes "[Sack Merchant]";
 		mes "Meoweoweow!!!";
 		mes "I...I can't believe you noticedeow...Pretty sharpeow...";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Sack Merchant]";
 		mes "Actually...";
@@ -2219,13 +2219,13 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 	if (ep14_2_oliver < 15) {
 		mes "How did you get in here?";
 		mes "Uninvited guests are not very welcome, you know?";
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "war_y2",2;
 	}
 	else if (ep14_2_oliver == 23) {
 		mes "Hmm, the legend of a great bird?";
 		mes "I think there was one, but since I don't believe in myths, I didn't pay much attention.";
-		emotion e_dum;
+		emotion ET_HUM;
 		cutin "war_y3",2;
 		next;
 		mes "[Yube]";
@@ -2234,7 +2234,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "[Yube]";
 		mes "I guess if you look at Glaces' Yai...";
 		mes "When I first saw the crack, I was reminded of Glace's Yai.";
-		emotion e_spin;
+		emotion ET_CONFUSE;
 		cutin "war_y2",2;
 		next;
 		mes "[Yube]";
@@ -2248,7 +2248,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "[Yube]";
 		mes "It's always exciting to place seeds in a box...";
 		mes "One mistake can lead to immense consequences.";
-		emotion e_flash;
+		emotion ET_SPARK;
 		cutin "war_y2",2;
 		next;
 		mes "[Yube]";
@@ -2260,7 +2260,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "Whew...";
 		mes "Done...";
 		mes "The ones I took last time couldn't be used because of a mistake, and I was scolded so much for that...";
-		emotion e_sob;
+		emotion ET_CRY;
 		cutin "war_y3",2;
 		next;
 		mes "[Yube]";
@@ -2269,7 +2269,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		next;
 		mes "[Yube]";
 		mes "Maybe it's an underlying statement that I would be eliminated if it's not sent right away...";
-		emotion e_dots;
+		emotion ET_THINK;
 		cutin "war_y2",2;
 		if (ep14_2_oliver == 24) {
 			ep14_2_oliver = 25;
@@ -2282,7 +2282,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		next;
 		mes "[Yube]";
 		mes "I will be on my way so I'll catch you later~";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		mes "[Maggi Steen]";
 		mes "Be safe now~";
@@ -2360,14 +2360,14 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "[Oliver]";
 		mes "Hmm...";
 		mes "I'm hungry.";
-		emotion e_rice,0,"Oliver#ep14_2";
+		emotion ET_HUNGRY, getnpcid(0, "Oliver#ep14_2");
 		cutin "bu_oliver3",0;
 		next;
 		mes "[Oliver]";
 		mes "Acorns!";
 		mes "I saw many acorns just outside the city!";
 		mes "I want them!";
-		emotion e_slur,0,"Oliver#ep14_2";
+		emotion ET_SEXY, getnpcid(0, "Oliver#ep14_2");
 		cutin "bu_oliver4",0;
 		next;
 		mes "[Du Lian]";
@@ -2383,7 +2383,7 @@ ecl_in04,182,224,4	script	Yube#ep14_2in	4_M_FAIRYKID5,{
 		mes "[Oliver]";
 		mes "Hey hey hey!";
 		mes "I told you not to pull on my cheeks!!";
-		emotion e_an,0,"Oliver#ep14_2";
+		emotion ET_FRET, getnpcid(0, "Oliver#ep14_2");
 		cutin "bu_oliver7",0;
 		next;
 		mes "[Mark Esha]";
@@ -2411,7 +2411,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 		if (!countitem(6558)) {// Pile_Of_Acorn
 			mes "Acorns~~!!!";
 			mes "I thought you said you'll bring a whole bunch of acorns~~";
-			emotion e_sob;
+			emotion ET_CRY;
 			cutin "bu_oliver7",0;
 			next;
 			mes "[Du Lian]";
@@ -2422,7 +2422,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 		else {
 			mes "Whoa, what a delicious looking acorn!";
 			mes "Thanks!";
-			emotion e_slur;
+			emotion ET_SEXY;
 			cutin "bu_oliver4",0;
 			next;
 			mes "[Oliver]";
@@ -2436,7 +2436,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 			mes "[Oliver]";
 			mes "Yay!! What a feast!!";
 			mes "I'm full now.";
-			emotion e_kis;
+			emotion ET_CHUP;
 			mes "Ugh...";
 			cutin "bu_oliver81",0;
 			next;
@@ -2449,7 +2449,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 			mes "Yawn...";
 			mes "I'm full...";
 			mes "I'm sleepy...";
-			emotion e_yawn;
+			emotion ET_SLEEPY;
 			cutin "bu_oliver82",0;
 			next;
 			mes "[Du Lian]";
@@ -2471,7 +2471,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 			next;
 			mes "[Oliver]";
 			mes "...";
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			cutin "bu_oliver86",0;
 			next;
 			mes "[Oliver]";
@@ -2484,7 +2484,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 			next;
 			mes "[Du Lian]";
 			mes "AHHHHHHHH!!!!!!!!!!";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			cutin "bu_du5",2;
 			delitem 6558,1;// Pile_Of_Acorn
 			ep14_2_oliver = 28;
@@ -2496,7 +2496,7 @@ ecl_in04,179,226,4	script	Oliver#ep14_2	4_M_OLIVER,{
 	else {
 		mes "Yawnnn... so sleepy...";
 		mes "I'm going to take a nap, so wake me up when we're leaving... Don't leave without me now~";
-		emotion e_yawn;
+		emotion ET_SLEEPY;
 		cutin "bu_oliver6",0;
 		close2;
 	}
@@ -2515,7 +2515,7 @@ ecl_in01,44,53,4	script	Delivery Man#ep14_2	4_M_DOGTRAVELER,{
 		next;
 		mes "[Delivery Man]";
 		mes "I don't know why people can't just make small amounts of pickled Poring for themselves instead of mailing them...";
-		emotion e_sob;
+		emotion ET_CRY;
 		ep14_2_oliver = 26;
 		changequest 11333,11334;
 	}
@@ -2527,7 +2527,7 @@ ecl_in01,44,53,4	script	Delivery Man#ep14_2	4_M_DOGTRAVELER,{
 		mes "Wait a minute...";
 		mes "Is it actually better to deliver it later...";
 		mes "I remember seeing so many boxes of pickled Poring in the storage waiting to be delivered...";
-		emotion e_sob;
+		emotion ET_CRY;
 	}
 	close;
 }
@@ -2545,7 +2545,7 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		mes "[Du Lian]";
 		mes "Hmm... Where did he go...?";
 		mes "Could he be... a ghost?!";
-		emotion e_omg,0,"Du Lian#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Du Lian#ep14_2in2");
 		cutin "bu_du5",2;
 		next;
 		mes "[Maggi Steen]";
@@ -2554,36 +2554,36 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		next;
 		mes "[Maggi Steen]";
 		mes "Wait! Here's the hood that Oliver was wearing...";
-		emotion e_omg,0,"Maggi Steen#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Maggi Steen#ep14_2in2");
 		cutin "bu_maggi4",2;
 		next;
 		mes "[Maggi Steen]";
 		mes "And... doesn't it feel like this room is different from before?";
-		emotion e_swt2,0,"Mark Esha#ep14_2in2";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Mark Esha#ep14_2in2");
 		cutin "bu_mark4",0;
 		next;
 		mes "[Du Lian]";
 		mes "Hey stop that!!";
 		mes "It's scaring me!!!";
-		emotion e_omg,0,"Du Lian#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Du Lian#ep14_2in2");
 		cutin "bu_du5",2;
 		next;
 		mes "[Maggi Steen]";
 		mes "Arrrrr~~";
-		emotion e_sob,0,"Maggi Steen#ep14_2in2";
+		emotion ET_CRY, getnpcid(0, "Maggi Steen#ep14_2in2");
 		cutin "bu_maggi4",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "Oh!!! I just remembered...";
 		mes "Oliver...";
-		emotion e_flash,0,"Alp Ocart#ep14_2in2";
+		emotion ET_SPARK, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp2",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "...";
 		mes "Oliver Hilpert...";
 		mes ".........is also known as the dreaming novelist...";
-		emotion e_dots,0,"Alp Ocart#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp3",2;
 		next;
 		mes "[Alp Ocart]";
@@ -2594,23 +2594,23 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		mes "[Du Lian]";
 		mes "Hey...";
 		mes "Did you just take that book out from your bag?";
-		emotion e_dots,0,"Du Lian#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Du Lian#ep14_2in2");
 		cutin "bu_du5",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "Yeah, that's because I'm a fan...";
-		emotion e_shy,0,"Alp Ocart#ep14_2in2";
+		emotion ET_SHY, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp4",2;
 		next;
 		mes "[Du Lian]";
 		mes "Why didn't you remember the book when you are such a fan..?";
 		mes "Not only that, do people usually carry books with them when they're fans?? Especially hardcover books?";
-		emotion e_omg,0,"Du Lian#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Du Lian#ep14_2in2");
 		cutin "bu_du5",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "......";
-		emotion e_shy,0,"Alp Ocart#ep14_2in2";
+		emotion ET_SHY, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp4",2;
 		next;
 		mes "[Du Lian]";
@@ -2620,32 +2620,32 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		mes "[Mark Esha]";
 		mes "More importantly... The title of this book...";
 		mes "is [The City of Fairies]?";
-		emotion e_omg,0,"Mark Esha#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Mark Esha#ep14_2in2");
 		cutin "bu_mark4",0;
 		next;
 		mes "[Mark Esha]";
 		mes "And...";
 		mes "It's been many years since this book was published...";
-		emotion e_omg,0,"Mark Esha#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Mark Esha#ep14_2in2");
 		next;
 		mes "[Du Lian]";
 		mes "...This is getting kind of scary...?";
-		emotion e_omg,0,"Du Lian#ep14_2in2";
+		emotion ET_HUK, getnpcid(0, "Du Lian#ep14_2in2");
 		cutin "bu_du1",2;
 		next;
 		mes "[Mark Esha]";
 		mes "......";
-		emotion e_dots,0,"Mark Esha#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Mark Esha#ep14_2in2");
 		cutin "bu_mark4",0;
 		next;
 		mes "[Maggi Steen]";
 		mes "......";
-		emotion e_dots,0,"Maggi Steen#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Maggi Steen#ep14_2in2");
 		cutin "bu_maggi4",2;
 		next;
 		mes "[Alp Ocart]";
 		mes "......";
-		emotion e_dots,0,"Alp Ocart#ep14_2in2";
+		emotion ET_THINK, getnpcid(0, "Alp Ocart#ep14_2in2");
 		cutin "bu_alp2",2;
 		ep14_2_oliver = 30;
 		getitem 19543,1;//Oliver_Wolf_Hood
@@ -2660,61 +2660,61 @@ ecl_in04,226,231,4	script	Du Lian#ep14_2in2	4_M_REDMAN,{
 		case 0:
 			mes "[Du Lian]";
 			mes "But this is Volume 1. Does that mean there's more?";
-			emotion e_dots;
+			emotion ET_THINK;
 			cutin "bu_du1",2;
 			next;
 			mes "[Alp Ocart]";
 			mes "It has a total of 3 volumes.";
-			emotion e_no1,0,"Alp Ocart#ep14_2in2";
+			emotion ET_BEST, getnpcid(0, "Alp Ocart#ep14_2in2");
 			cutin "bu_alp1",2;
 			next;
 			mes "[Du Lian]";
 			mes "Wow, how many are you carrying with you...";
 			mes "Why are you bringing all of them around...";
-			emotion e_omg;
+			emotion ET_HUK;
 			cutin "bu_du5",2;
 			break;
 		case 1:
 			mes "[Mark Esha]";
 			mes "Everybody calm down!!!";
 			mes "This has to be some kind of a dream!";
-			emotion e_omg;
-			emotion e_omg,0,"Du Lian#ep14_2in2";
+			emotion ET_HUK;
+			emotion ET_HUK, getnpcid(0, "Du Lian#ep14_2in2");
 			cutin "bu_mark2",0;
 			next;
 			mes "[Du Lian]";
 			mes "Why are you hitting me, calling it a dream and all!";
 			mes "It hurts!";
-			emotion e_swt2,0,"Du Lian#ep14_2in2";
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Du Lian#ep14_2in2");
 			cutin "bu_du4",2;
 			next;
 			mes "[Mark Esha]";
 			mes "Ahhhh maybe it really isn't a dream after all!!!";
-			emotion e_omg;
-			emotion e_an,0,"Du Lian#ep14_2in2";
+			emotion ET_HUK;
+			emotion ET_FRET, getnpcid(0, "Du Lian#ep14_2in2");
 			cutin "bu_mark3",0;
 			break;
 		case 2:
 			mes "[Maggi Steen]";
 			mes "...A...A...Aaaaahhhhhhhhh!!!!!";
-			emotion e_sob;
+			emotion ET_CRY;
 			cutin "bu_maggi4",2;
 			next;
 			mes "[Du Lian]";
 			mes "Don't cry, Maggi~";
-			emotion e_swt2,0,"Du Lian#ep14_2in2";
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Du Lian#ep14_2in2");
 			cutin "bu_du4",2;
 			break;
 		case 3:
 			mes "[Alp Ocart]";
 			mes "I wonder...";
 			mes "Why didn't I remember this...?";
-			emotion e_omg;
+			emotion ET_HUK;
 			cutin "bu_alp5",2;
 			next;
 			mes "[Alp Ocart]";
 			mes "I... I should have.. I should have gotten his autograph!!!";
-			emotion e_omg;
+			emotion ET_HUK;
 		}
 	}
 	close2;
@@ -2760,7 +2760,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 			mes "[Wuhari]";
 			mes "Wow! The name sure sounds like it has defeated many in the mountains, seas, and skies! It's amazing!";
 			next;
-			emotion e_shy,1;
+			emotion ET_SHY, playerattached();
 			mes "["+ strcharinfo(0) +"]";
 			mes "It's not much.";
 			mes "I am not really all that great.";
@@ -2773,13 +2773,13 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 				mes "[Wuhari]";
 				mes "Really? Oh well...";
 				next;
-				emotion e_sob;
+				emotion ET_CRY;
 				mes "[Wuhari]";
 				mes "Sorry to bother you.";
 				close;
 			}
 			mes "[Wuhari]";
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "Really?";
 			mes "Thank you so much!";
 			next;
@@ -2842,7 +2842,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 			mes "["+ strcharinfo(0) +"]";
 			mes "I just couldn't pass by without doing something about it.";
 			next;
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Wuhari]";
 			mes "Does that mean you would meet up with my brother?";
 			mes "Thank you so much!!!";
@@ -2858,7 +2858,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 		mes "[Wuhari]";
 		mes "So you might have to be a bit patient with him. Please give this ^0000cdletter^000000 to him.";
 		next;
-		emotion e_go;
+		emotion ET_GO;
 		mes "[Wuhari]";
 		mes "Well, you must have a long way to go, so please be on your way.";
 		ep14_2_big = 2;
@@ -2931,7 +2931,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 			mes "[Wuhari]";
 			mes "Thanks to that, many gave us lots of good things to eat, heh heh.";
 			next;
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "["+ strcharinfo(0) +"]";
 			mes "......";
 			next;
@@ -3096,7 +3096,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 			mes "[Wuhari]";
 			mes "But I guess it's still too much.";
 			mes "It must be too much...";
-			emotion e_sob;
+			emotion ET_CRY;
 			ep14_2_big = 16;
 			erasequest 14131;
 			close;
@@ -3534,7 +3534,7 @@ ecl_in02,149,117,4	script	Wuhuru#eclbig	4_M_FAIRYFREAK,{
 
 eclage,200,272,4	script	Masione#eclbig	4_F_FAIRYKID2,{
 	WeightBigQuest;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Masione]";
 	mes "Whoa! Hey!";
 	if (ep14_2_big != 9) {
@@ -3794,7 +3794,7 @@ eclage,126,151,4	script	Pompe#eclbig	4_M_FAIRYKID3,{
 	mes "["+ strcharinfo(0) +"]";
 	mes "That's not it. I was just curious about the Laphine you saw in the field.";
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Pompe]";
 	mes "Oy! That Laphine?";
 	next;
@@ -3868,7 +3868,7 @@ ecl_fild01,70,285,4	script	Giranni#eclbig	4_F_FAIRY2,{
 		mes "You really seem like you have an impressive aura.";
 		next;
 		select("Do you know the way?");
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Giranni]";
 		mes "I'm sorry? Do I know the way...?";
 		mes "No, no, I'm not someone like that.";
@@ -4080,7 +4080,7 @@ ecl_in01,54,91,2	script	Dandy#eclbig	4_M_FAIRYKID2,{
 	mes "[Dandy]";
 	mes "A Laphine can freely change in between different clothes, but not any Laphine looks this great!";
 	next;
-	emotion e_pif,0,"Lafiki#eclbig";
+	emotion ET_HNG, getnpcid(0, "Lafiki#eclbig");
 	mes "[Lafiki]";
 	mes "What nonsensical nonsense are you saying? No matter who looks at it, this region's best looker is me!";
 	close;
@@ -4090,12 +4090,12 @@ ecl_in01,53,92,4	script	Lafiki#eclbig	4_M_FAIRYKID3,{
 	mes "[Lafiki]";
 	mes "My fashion sense today is excellent as usual. Heh-";
 	next;
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	mes "[Lafiki]";
 	mes "Hello~ My beautiful body~";
 	mes "Every strand of hair is so beautiful!";
 	next;
-	emotion e_gg,0,"Dandy#eclbig";
+	emotion ET_KIK, getnpcid(0, "Dandy#eclbig");
 	mes "[Dandy]";
 	mes "Yes, it's definitely your garbage fashion sense that wreaks of trash as usual.";
 	close;
@@ -4109,7 +4109,7 @@ eclage,101,130,5	script	Wutapoa#eclbig	4_F_FAIRY,{
 	mes "[Wutapoa]";
 	mes "I'm going to make it the most decorative, beautiful Yai in Eclage!";
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Wutapoa]";
 	mes "Yay, woohoo!!!";
 	close;
@@ -4132,7 +4132,7 @@ eclage,106,61,4	script	Markoza#eclbig	4_M_FAIRYKID3,{
 	mes "[Markoza]";
 	mes "But would foreigners leave me be when I am this adorable?";
 	next;
-	emotion e_pif;
+	emotion ET_HNG;
 	mes "[Markoza]";
 	mes "Man, wherever I go, my cuteness just complicates everything...";
 	close;
@@ -4142,7 +4142,7 @@ ecl_in02,168,41,2	script	Pambo#eclbig	4_F_FAIRYKID3,{
 	mes "[Pambo]";
 	mes "Do you like things that twinkle?";
 	next;
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	mes "[Pambo]";
 	mes "I love them so much!";
 	next;
@@ -4160,7 +4160,7 @@ ecl_in02,168,41,2	script	Pambo#eclbig	4_F_FAIRYKID3,{
 	mes "Heh heh heh~ Huhuhe~ Hoho~";
 	mes "Kehehe~ Halala~ Fufu~";
 	next;
-	emotion e_sob;
+	emotion ET_CRY;
 	mes "[Pambo]";
 	mes "But there's nothing twinkling here...";
 	close;
@@ -4173,7 +4173,7 @@ ecl_fild01,134,109,4	script	Warao#eclbig	4_M_FAIRYKID5,{
 	mes "[Warao]";
 	mes "Come to think of it, I wonder how this foreigner will taste?";
 	next;
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Warao]";
 	mes "Hey hey, you know I'm kidding, right?";
 	close;
@@ -4186,7 +4186,7 @@ ecl_in01,38,37,4	script	A kneeling boy#eclbig	4_F_FAIRYKID6,{
 	mes "[A kneeling boy]";
 	mes "At first, it was because it was comfortable. Now it's because I can't stretch my legs out anymore.";
 	next;
-	emotion e_sob;
+	emotion ET_CRY;
 	mes "[A kneeling boy]";
 	mes "I try to stretch them out, and my legs are all asleep!!";
 	mes "Does that mean I have to fly around with my legs flexed like this?";
@@ -4198,27 +4198,27 @@ ecl_fild01,183,190,4	script	Catering#eclbig	4_M_FAIRYSOLDIER,{
 	mes "Wahahaha! How do you do!";
 	mes "It's perfect weather for a picnic, no?";
 	next;
-	emotion e_wah;
+	emotion ET_KEK;
 	mes "[Catering]";
 	mes "You say it's hard to pack for a picnic?";
 	next;
-	emotion e_no1;
+	emotion ET_BEST;
 	mes "[Catering]";
 	mes "Don't you worry!";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Catering]";
 	mes "This is a specialty combining acorns with 7 different kinds and 7 different levels of flavor collected by squirrels of Eclage!";
 	next;
-	emotion e_cash;
+	emotion ET_MONEY;
 	mes "[Catering]";
 	mes "This specialty to-go box is only 2,999 coins!!!";
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Catering]";
 	mes "Such a remarkable price!";
 	next;
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Catering]";
 	mes "If you order now, we also give you a disposable fork that feels like new even with a hundred uses!";
 	close;
@@ -4229,7 +4229,7 @@ ecl_in01,41,103,1	script	A blushing girl#eclbig	4_F_FAIRYKID4,{
 	mes "Do you see this balcony up top?";
 	mes "Mayor Jun appears there everytime there is an important occasion!";
 	next;
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	mes "[A blushing girl]";
 	mes "He's so handome!! Ahhh~";
 	close;
@@ -4243,29 +4243,29 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 	mes "[Choir conductor]";
 	mes "Hello foreigner, we'll give you a taste of our harmony~";
 	next;
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Choir]";
 	mes "Aaa~";
 	next;
-	emotion e_ho,0,"Choir member#eclbig01";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig01");
 	mes "[Choir]";
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion e_ho,0,"Choir member#eclbig02";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig02");
 	mes "[Choir]";
 	mes "Aaa~~~";
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion e_ho,0,"Choir member#eclbig03";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig03");
 	mes "[Choir]";
 	mes "Aaa~~~~";
 	mes "Aaa~~~";
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion e_ho,0,"Choir member#eclbig04";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig04");
 	mes "[Choir]";
 	mes "Aaa~~~~~";
 	mes "Aaa~~~~";
@@ -4273,7 +4273,7 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion e_ho,0,"Choir member#eclbig05";
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig05");
 	mes "[Choir]";
 	mes "Aaa~~~~~~";
 	mes "Aaa~~~~~";
@@ -4282,12 +4282,12 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 	mes "Aaa~~";
 	mes "Aaa~";
 	next;
-	emotion e_ho;
-	emotion e_ho,0,"Choir member#eclbig01";
-	emotion e_ho,0,"Choir member#eclbig02";
-	emotion e_ho,0,"Choir member#eclbig03";
-	emotion e_ho,0,"Choir member#eclbig04";
-	emotion e_ho,0,"Choir member#eclbig05";
+	emotion ET_DELIGHT;
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig01");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig02");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig03");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig04");
+	emotion ET_DELIGHT, getnpcid(0, "Choir member#eclbig05");
 	mes "[Choir]";
 	mes "Uhhurukukuruhuuhhurukukuruhuuh";
 	mes "Try to feel this~ The melody that flows~";
@@ -4300,7 +4300,7 @@ ecl_in01,52,102,4	script	Choir Conductor#eclbig	4_M_FAIRYKID,{
 ecl_in01,51,103,4	script	Choir member#eclbig01	4_M_FAIRYKID,{
 	mes "[Choir member]";
 	mes "Aaa~";
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	close;
 }
 ecl_in01,53,103,4	duplicate(Choir member#eclbig01)	Choir member#eclbig02	4_M_FAIRYKID
@@ -7087,7 +7087,7 @@ ecl_in02,160,36,4	script	Eirinn#nk	4_F_FAIRYKID6,{
 			mes "[Eirinn]";
 			mes "Something serious? Like, something untreatable??";
 			mes "Am I going to be like the leading actress who plays a tragic role in a soap opera?";
-			emotion e_what;
+			emotion ET_QUESTION;
 		}
 		else if (isbegin_quest(4257) == 1) {
 			if (checkquest(4258) == 2) {
@@ -7480,7 +7480,7 @@ ecl_in01,26,88,5	script	Cecilia#nk	4_F_FAIRYKID5,{
 		mes "No matter how many times I check some items are missing...";
 		mes "Is it because of the wanderers randomly showing up in town nowadays?";
 		next;
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Cecilia]";
 		mes "Hey~ hey~ listen!";
 		mes "Hey you, what are you doing over there?";
@@ -7494,7 +7494,7 @@ ecl_in01,26,88,5	script	Cecilia#nk	4_F_FAIRYKID5,{
 		mes "[Cecilia]";
 		mes "For that reason you, who knows that our supplies are missing and who happens to be an outsider as well.";
 		mes "Must be a thief!";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		mes "[Cecilia]";
 		mes "You have the right to have an attorney present and... no, never mind.";
@@ -10672,7 +10672,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	HIDDEN_NPC,{
 			next;
 			cutin "EP14_etran1",1;
 			mes "[Etran]";
-			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200제니!!";
+			mes "Welcome welcomeow~! We are cat merchants, always serving guests as our kingeow~! Special sale! One piece of meat for 200 Zeny!!";
 			next;
 			cutin "EP14_robert1",1;
 			mes "[Robert]";
@@ -10938,11 +10938,11 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 	mes "[Fili]";
 	if (BaseLevel < 100) {
 		mes "Looking at this beautiful field, the song sings itself~";
-		emotion e_ho;
+		emotion ET_DELIGHT;
 	}
 	else if (ep14_2_nines > 2) {
 		mes "It's always so beautiful with flowers blooming everywhere.";
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		next;
 		switch( select("Start a conversation:Laphine that loves the earth:Asking after adventurers") ) {
 			mes "[Fili]";
@@ -10970,7 +10970,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					mes "There are four in the work group. Don't forget to tell everyone.";
 				else {
 					mes "Thanks. Can you hear the earth singing? The sound of flowers and trees dancing in the wind. You'll hear it someday.";
-					emotion e_lv;
+					emotion ET_THROB;
 					changequest 13050,13059;
 					getexp 300000,300000;
 					getitem 6081,1;// Splendide_Coin
@@ -11004,7 +11004,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 			}
 			else if (checkquest(13060,PLAYTIME) == 0) {
 				mes "Should I say it's a relief that they're all alive...? Well...at least it's good that they're still alive.";
-				emotion e_dots;
+				emotion ET_THINK;
 			}
 			else if (isbegin_quest(13055) == 1) {
 				if (isbegin_quest(13056) == 1 || isbegin_quest(13057) == 1 || isbegin_quest(13058) == 1) {
@@ -11015,7 +11015,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 				}
 				else {
 					mes "I'm glad they're all safe and sound. I'll be relieved if they finish their business quickly and go back...Thanks anyway!";
-					emotion e_sigh;
+					emotion ET_OHNO;
 					changequest 13055,13060;
 					getexp 300000,300000;
 					getitem 6081,1;// Splendide_Coin
@@ -11054,7 +11054,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 			select("......");
 			mes "[Fili]";
 			mes "Hmm...I can't just ignore them though...";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			select("The adventurer on the third floor is starving!");
 			mes "[Fili]";
@@ -11080,7 +11080,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 			next;
 			mes "[Fili]";
 			mes "But you know, travelers...they want to go even more if it's dangerous.";
-			emotion e_sigh;
+			emotion ET_OHNO;
 			next;
 			mes "[Fili]";
 			mes "^FF0000three adventurers^000000went into the tower recently. I'm not sure if they're still alive...";
@@ -11197,7 +11197,7 @@ ecl_fild01,222,290,5	script	Singing Laphine#1	4_F_FAIRYKID,{
 		if (ep14_2_nines > 2) {
 			if (checkquest(13059,PLAYTIME) == 0) {
 				mes "Whew, did I sing too much? I'm so thirsty. A glass of rice wine sounds great, hah~";
-				emotion e_spin;
+				emotion ET_CONFUSE;
 				close;
 			}
 		}
@@ -11206,11 +11206,11 @@ ecl_fild01,222,290,5	script	Singing Laphine#1	4_F_FAIRYKID,{
 				mes "Did the great Fili send you? Man, he's got skills for sure! I shall start singing then!?";
 			else {
 				mes "I suppose you came to tell me to start working? Don't worry, my voice will touch the earth~";
-				emotion e_ho;
+				emotion ET_DELIGHT;
 			}
 			next;
 			mes "As soon as the Laphine started singing, it began to warm my heart.";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			erasequest 13051;
 		}
 		else if (isbegin_quest(13050) == 1)
@@ -11263,7 +11263,7 @@ ecl_fild01,163,196,5	script	Dancing Laphine#1	4_F_FAIRYKID3,{
 			mes "I would love to see the great Fili next time...";
 		else if (isbegin_quest(13050) == 1 && isbegin_quest(13053) == 1) {
 			mes "Ah, it's you again! You're so insensitive. Anyway, you're here to tell me to start working, right? I see, I see. You can go now.";
-			emotion e_pif;
+			emotion ET_HNG;
 			erasequest 13053;
 		}
 		else if (isbegin_quest(13050) == 1)
@@ -11309,16 +11309,16 @@ ecl_fild01,237,181,5	script	Cute Laphine#1	4_M_FAIRYKID5,{
 			mes "It takes a cute person like me to bring joy to the earth...Too bad that you'll never be able to do so!";
 		else if (isbegin_quest(13050) == 1 && isbegin_quest(13054) == 1) {
 			mes "You're new, right? Tell him I'll start the work.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			erasequest 13054;
 		}
 		else if (isbegin_quest(13050) == 1) {
 			mes "You might think smiling to the earth always is nothing, but it's not that easy actually. I mean, it's hard to be cute like me in the first place~";
-			emotion e_heh;
+			emotion ET_SMILE;
 		}
 		else {
 			mes "I hope someday the flowers, trees, grasses, and little creatures on this earth will smile with joy.";
-			emotion e_heh;
+			emotion ET_SMILE;
 		}
 	}
 	else if (ep14_2_nines == 1) {
@@ -11355,7 +11355,7 @@ ecl_fild01,237,181,5	script	Cute Laphine#1	4_M_FAIRYKID5,{
 			mes "Anyway, you should find some work for the earth as well. Tell Fili that I'll start working.";
 			next;
 			mes "As soon as he finished talking, he put on a bright smile.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			erasequest 13054;
 		}
 		else
@@ -11506,14 +11506,14 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 		if (.@playtime_13062 == 0 && .@playtime_13064 == 0 && .@playtime_13066 == 0) {
 			cutin "nines02",2;
 			mes "No need to worry about me! ^FF0000I'll definitely go home this time!^000000 Thanks for everything! I'll take you out for a nice meal next time!";
-			emotion e_thx;
+			emotion ET_THANKS;
 			if (isbegin_quest(13058))
 				erasequest 13058;
 		}
 		else if (.@playtime_13062 == 2 || .@playtime_13064 == 2 || .@playtime_13066 == 2) {
 			cutin "nines01",2;
 			mes "Ah...What a relief...I'm so glad you're here. I was about to leave this tower alone! But I think I'm lost.";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			if (.@playtime_13062 == 2) {
 				next;
 				cutin "nines04",2;
@@ -11555,7 +11555,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				else {
 					cutin "nines04",2;
 					mes "I'm starving to death though... Could you please help me, my friend?";
-					emotion e_wah;
+					emotion ET_KEK;
 				}
 				if (isbegin_quest(13058))
 					erasequest 13058;
@@ -11569,11 +11569,11 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					if (countitem(517) > 9 && countitem(6558) > 9) {
 						cutin "nines02",2;
 						mes "Ah, how long has it been since the last time I saw food! Yummm! Thank goodness it's meat! I think it's a little tough...and not warm enough...but still, it's meat!!";
-						emotion e_thx;
+						emotion ET_THANKS;
 						next;
 						mes "[New Oz]";
 						mes "Thank you so much!! Yum yum. You're such a good friend! Munch munch.";
-						emotion e_no1;
+						emotion ET_BEST;
 						next;
 						mes "[New Oz]";
 						mes "I should get a hustle on and find a way out now! I feel like I can get out of here this time!";
@@ -11621,14 +11621,14 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 						select("Why don't you just eat whatever I get you!");
 						mes "[New Oz]";
 						mes "As long as I'm getting something to eat, I was just hoping for a good one. I'm sorry, but do me a favor please. I couldn't forget the taste of the meat.";
-						emotion e_slur;
+						emotion ET_SEXY;
 						if (.@playtime_13062 == 2)
 							erasequest 13062;
 						setquest 13061;
 						break;
 					case 2:
 						mes "Okay...I see. I'll try to find another way then. If you meet that muscular Laphine on your way out, tell him I won't be able to see him again...";
-						emotion e_wah;
+						emotion ET_KEK;
 					}
 				}
 				break;
@@ -11640,7 +11640,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				else if (checkquest(13063,HUNTING) == 2) {
 					cutin "nines02",2;
 					mes "Hey, you really are a good adventurer! I'm actually starting to like you even more.";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					mes "[New Oz]";
 					mes "I'll take care of the rest. I can't just keep bothering you, right? Hahaha.";
@@ -11650,7 +11650,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				}
 				else if (checkquest(13063,HUNTING) == 1) {
 					mes "These guys are not really visible and they're so annoying. Ah...I asked you to clean up, but it's not because I'm lazy or anything. Hahaha...";
-					emotion e_no;
+					emotion ET_STARE_ABOUT;
 				}
 				else {
 					cutin "nines03",2;
@@ -11662,14 +11662,14 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					cutin "nines04",2;
 					mes "[New Oz]";
 					mes "Of course I can do it on my own~ But if I do it alone, then I'll end up using too much of my energy, and then I'll get hungry again...";
-					emotion e_dots;
+					emotion ET_THINK;
 					next;
 					switch( select("So you want me to help you brushing off the dust?:Do it yourself then!") ) {
 						mes "[New Oz]";
 					case 1:
 						cutin "nines02",2;
 						mes "How did you know? I think we're really clicking! If I have a chance, I'll let you join my guild later.";
-						emotion e_ok;
+						emotion ET_OK;
 						next;
 						mes "[New Oz]";
 						mes "Fight off some Cherenes then. You don't have to eliminate that many because I'll start fighting soon, too! Haha.";
@@ -11698,7 +11698,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 						next;
 						mes "[New Oz]";
 						mes "I'll make sure to give my friends all the souvenirs you collected for me, and I'll tell them about you, too!";
-						emotion e_thx;
+						emotion ET_THANKS;
 						delitem 6560,20;// Leaf_Bookmark
 						changequest 13065,13066;
 						getexp 300000,300000;
@@ -11715,7 +11715,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					next;
 					mes "[New Oz]";
 					mes "Would you mind helping me with that? What are friends for! Hahaha! Thanks!!";
-					emotion e_otl;
+					emotion ET_OTL;
 					erasequest 13065;
 				}
 				else {
@@ -11806,7 +11806,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			next;
 			mes "[New Oz]";
 			mes "If you look at the books scattered all over the tower, there are bookmarks inside. I think it'll be a great gift for my friends even though it has someone else's memories.";
-			emotion e_flash;
+			emotion ET_SPARK;
 			next;
 			mes "[New Oz]";
 			mes "^FF0000A good melody^000000 just came across my mind, and I think I should start writing a song now. You should collect souvenirs for me in the meantime.";
@@ -11827,7 +11827,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			next;
 			mes "[New Oz]";
 			mes "I should bring some souvenirs to make them feel better. Is there anything I could use?";
-			emotion e_what;
+			emotion ET_QUESTION;
 			next;
 			switch( select("Jellopy:Lucky Egg:Loots from local monsters") ) {
 			case 1:
@@ -11838,7 +11838,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					cutin "nines04",2;
 					mes "[New Oz]";
 					mes "Hey... but it's not something we can get around here.";
-					emotion e_swt2;
+					emotion ET_PROFUSELY_SWEAT;
 					next;
 					select("Loots from local monsters");
 				}
@@ -11846,7 +11846,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			case 2:
 				mes "[New Oz]";
 				mes "Hmm? What's that for? I guess new items came out while I was travelling.";
-				emotion e_what;
+				emotion ET_QUESTION;
 				next;
 				mes "[New Oz]";
 				mes "I can't get them unless I know what they are. Is there anything else?";
@@ -11862,7 +11862,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			cutin "nines01",2;
 			mes "[New Oz]";
 			mes "Loots from local monsters...hmm, that sounds interesting!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[New Oz]";
 			mes "I'm sure they haven't made it here yet. So it's something new for them, too! Right?";
@@ -11892,7 +11892,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 			select("I don't see anything.");
 			mes "[New Oz]";
 			mes "No, you have to see them carefully. Those Dustballs over there are covering my eyes, and when I can't see clearly, I get sleepy and hungry...";
-			emotion e_wah;
+			emotion ET_KEK;
 			next;
 			select("I think it's just your imagination!");
 			cutin "nines03",2;
@@ -12322,7 +12322,7 @@ ecl_tdun04,26,39,1	script	Professor Worm#worm	4_M_PROFESSORWORM,{
 		mes "Wait, there are no more spaces on the wall!";
 		mes "Who doodled so much on the walls?";
 		mes "Is it you, monster?";
-		emotion e_swt,1;
+		emotion ET_SWEAT, playerattached();
 		next;
 		mes "[Professor Worm]";
 		mes "I guess I would have to write a diary then...";
@@ -12650,7 +12650,7 @@ ecl_tdun03,21,69,5	script	Diary Frog No.3#worm	4_FROG,{
 	case 3:
 		mes "I used to have more, but unfortunately, the fuel I need to live is the recordings themselves, so part of it got digested away.";
 		mes "It's the way I work so I can't do much about it.";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		close;
 	}
 }
@@ -13036,7 +13036,7 @@ ecl_in01,32,52,5	script	Traveler Fome#tl01	4_F_DOGTRAVELER,3,3,{
 			mes "Moreover, the biggest reason why Eclage is so crowded recently is...!!!";
 			next;
 			select("It is...?!");
-			emotion e_loud;
+			emotion ET_BLABLA;
 			mes "[Fome]";
 			mes "A new Mayor Jun was born!";
 			next;
@@ -13139,9 +13139,9 @@ ecl_in01,32,52,5	script	Traveler Fome#tl01	4_F_DOGTRAVELER,3,3,{
 OnTouch:
 	if (ep14_2_mylord == 0 && BaseLevel > 98) {
 		mes "A group of travelers of Alpheim are having a conversation.";
-		emotion e_loud;
-		emotion e_loud,0,"Traveler Litrip#tl02";
-		emotion e_loud,0,"Traveler Chiba#tl03";
+		emotion ET_BLABLA;
+		emotion ET_BLABLA, getnpcid(0, "Traveler Litrip#tl02");
+		emotion ET_BLABLA, getnpcid(0, "Traveler Chiba#tl03");
 		next;
 		switch( select("Avoid them.:Join the group.") ) {
 		case 1:
@@ -15464,7 +15464,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	4_M_FAIRYSOLDIER2,{
 			case 0:
 				mes "[Leo]";
 				mes "Hi, how are you?";
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				next;
 				mes "[Leo]";
 				mes "How are you, really!";
@@ -15535,7 +15535,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	4_M_FAIRYSOLDIER2,{
 					mes "I'll be counting on you!";
 					close;
 				}
-				emotion e_flash;
+				emotion ET_SPARK;
 				mes "Ohhhhh look at that!!!";
 				mes "Sweet pickled fruits and honey jam that is even sweeter!!!";
 				mes "You saved my life.";
@@ -15791,7 +15791,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	4_M_FAIRYSOLDIER2,{
 	close;
 S_Setquest7423:
 	select("You don't like the king?");
-	emotion e_dots;
+	emotion ET_THINK;
 	mes "[Leo]";
 	mes "No, it's not that I don't like him. I'm rather concerned...or having trouble trusting him...something like that.";
 	mes "Since he didn't do anything wrong, I don't have any reason to hate him, but..";
@@ -15817,7 +15817,7 @@ ecl_fild01,205,86,3	script	Eclage Messenger Roy#tl	4_M_FAIRYSOLDIER2,{
 			mes "It's hard.";
 			mes "It really is hard.";
 			mes "The more I think about it, I feel like Shenime has a nasty temper.";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Roy]";
 			mes "You, who appeared in this time of crisis.";

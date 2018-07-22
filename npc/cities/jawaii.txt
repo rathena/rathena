@@ -180,7 +180,7 @@ jawaii,240,146,5	script	Jawaii Resident#desc1	724,{
 jawaii,168,247,5	script	Jawaii Resident#desc2	724,{
 	mes "[Waja Waja]";
 	mes "Ah, you must be a tourist.";
-	mes "If you're lost, just head West. Accomodations for newlyweds";
+	mes "If you're lost, just head West. Accommodations for newlyweds";
 	mes "are located in the western part of Jawaii. The lodging here is";
 	mes "pretty amazing.";
 	next;
@@ -260,7 +260,7 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 	mes "[Alowa]";
 	mes "^666666*Sniff*^000000";
 	mes "B-but I promise th-that this room is the nicest and cl-cleanest room! P-Please! C-come back!";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -276,7 +276,7 @@ jawaii,108,199,5	script	Employee#antroom	74,{
 	mes "young couples in this room.";
 	next;
 	mes "[Pine Oran]";
-	mes "All the rooms may have the same basic structure, but each of them has their own unqiue interior to suit the tastes of different people.";
+	mes "All the rooms may have the same basic structure, but each of them has their own unique interior to suit the tastes of different people.";
 	next;
 	mes "[Pine Oran]";
 	mes "If you would like to lodge here, it is required to pay a 1,000 zeny fee for each person before entering. Since you're here to make fond memories of your honeymoon,";
@@ -457,10 +457,10 @@ jawaii_in,25,94,0	script	Employee#jaw1	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -487,10 +487,10 @@ jawaii_in,25,96,0	script	Employee#jaw2	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -531,10 +531,10 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -570,10 +570,10 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -603,10 +603,10 @@ jawaii_in,30,94,4	script	Employee#jaw5	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -628,10 +628,10 @@ jawaii_in,30,96,4	script	Employee#jaw6	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -662,10 +662,10 @@ jawaii_in,30,98,4	script	Employee#jaw7	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -686,10 +686,10 @@ jawaii_in,30,100,4	script	Employee#jaw8	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -727,7 +727,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 		mes "[Waitress]";
 		mes "Hello,";
 		mes "how can I help you?";
-		emotion e_kis;
+		emotion ET_CHUP;
 		next;
 		switch(select("Give me food.:Bring me drink.:Where's the bar?")) {
 		case 1:
@@ -789,7 +789,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			close;
 		}
 	}
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Waitress]";
 	mes "Hey, hey...!";
 	mes "I have no idea";
@@ -1073,7 +1073,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			mes "of this.";
 			next;
 			mes "^3355FFYou receive a crooked glass";
-			mes "filled with purple fluid. Although it smells pleasnt, you have a strange feeling of disgust as you draw it closer to your face.";
+			mes "filled with purple fluid. Although it smells pleasant, you have a strange feeling of disgust as you draw it closer to your face.";
 			next;
 			mes "[Bartender]";
 			mes "If you don't want to drink it, tell me now. But it might be good to try it once, just to experience it.";
@@ -1243,14 +1243,14 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		next;
 		mes "[Bachewcca]";
 		mes "...!";
-		emotion e_no1,0,"Customer#Bachewcca";
+		emotion ET_BEST, getnpcid(0, "Customer#Bachewcca");
 		next;
 		mes "[SoloHan]";
 		mes "It's doesn't really matter whether you're married";
 		mes "or not, right buddy? Right?!";
 		mes "Come on! Drink with me!!";
 		next;
-		mes "^3355FFSuddenly he treated me as a close friend. It's a little embarassing, but it's not a bad idea to accept";
+		mes "^3355FFSuddenly he treated me as a close friend. It's a little embarrassing, but it's not a bad idea to accept";
 		mes "a free drink...^000000";
 		next;
 		mes "^3355FF* Gulp Gulp Gulp *^000000";
@@ -1393,7 +1393,7 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	mes "..............";
 	mes "^666666*Gulp....gulp...*^000000";
 	mes "Grrrrr!! That hit the spot!";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 

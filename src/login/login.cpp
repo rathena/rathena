@@ -1,38 +1,34 @@
-/**
- * @file login.c
- * Module purpose is to read configuration for login-server and handle accounts,
- *  and also to synchronize all login interfaces: loginchrif, loginclif, logincnslif.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
-
-#include "../common/core.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/md5calc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h" //ip2str
-#include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../common/msg_conf.h"
-#include "../common/cli.h"
-#include "../common/utils.h"
-#include "../common/mmo.h"
-#include "../config/core.h"
-#include "account.h"
-#include "ipban.h"
-#include "login.h"
-#include "loginlog.h"
-#include "loginclif.h"
-#include "loginchrif.h"
-#include "logincnslif.h"
+#include "login.hpp"
 
 #include <stdlib.h>
+#include <string.h>
+#include <string>
+
+#include "../common/cli.hpp"
+#include "../common/core.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/md5calc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp" //ip2str
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
+#include "../config/core.hpp"
+
+#include "account.hpp"
+#include "ipban.hpp"
+#include "loginchrif.hpp"
+#include "loginclif.hpp"
+#include "logincnslif.hpp"
+#include "loginlog.hpp"
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
@@ -131,7 +127,7 @@ void login_remove_online_user(uint32 account_id) {
  * @param data: unused
  * @return :0
  */
-int login_waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(login_waiting_disconnect_timer){
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
 	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id ){
 		p->waiting_disconnect = INVALID_TIMER;
@@ -188,7 +184,7 @@ static int login_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap) {
  * @param data: unused
  * @return : 0
  */
-static int login_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(login_online_data_cleanup){
 	online_db->foreach(online_db, login_online_data_cleanup_sub);
 	return 0;
 }

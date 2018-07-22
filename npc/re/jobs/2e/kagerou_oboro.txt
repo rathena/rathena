@@ -1054,7 +1054,7 @@ function	script	F_KO_Survival_dice	{
 	}
 	set job_kagero_lp, job_kagero_lp - getarg(1,1);
 	set .@dice, rand(1,6);
-	emotion 57 + .@dice,1;
+	emotion ET_OTL + .@dice, playerattached();
 	mes "The dice came out as " + .@dice + ".";
 	if (getarg(2,0))
 		return .@dice;
@@ -1081,25 +1081,25 @@ function	script	F_KO_Survival_dice2	{
 	mes "< Used " + getarg(1,2) + " LP >";
 	next;
 	set @job_ko_dice1, rand(1,6);
-	emotion 57 + @job_ko_dice1,1;
+	emotion ET_OTL + @job_ko_dice1, playerattached();
 	mes "First dice result is " + @job_ko_dice1 + ". Do you want to roll the second dice?";
 	next;
 	select("Roll the second dice.");
 	set @job_ko_dice2, rand(1,6);
-	emotion 57 + @job_ko_dice2,1;
+	emotion ET_OTL + @job_ko_dice2, playerattached();
 	return;
 }
 
 //Return: 1:win, 0:draw, -1:lose
 function	script	F_KO_Survival_rps	{
 	setarray .@rps$[1], "Scissors", "Rock", "Paper";
-	setarray .@emote[1], e_scissors, e_rock, e_paper;  //might be iRO custom(?)
+	setarray .@emote[1], ET_SCISSOR, ET_ROCK, ET_WRAP;  //might be iRO custom(?)
 
 	mes "Rock! Paper! Scissors!";
 	next;
 	set .@pc, select("Give scissors.:Give rock.:Give paper.");
 	set .@npc, rand(1,3);
-	emotion .@emote[.@pc],1;
+	emotion .@emote[.@pc], playerattached();
 	emotion .@emote[.@npc];
 	mes "=Game Results=";
 	mes "Machine: " + .@rps$[.@npc] + ".";
@@ -2091,6 +2091,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 			close;
 		} else {
 			set .@equip_id, getequipid(.@part);
+			set .@equip_refine, getequiprefinerycnt(.@part);
 			if (.@equip_id == 13074 || .@equip_id == 13312) {
 				mes "[Red Leopard Joe]";
 				mes "Is that weapon yours? Let me have a look.";
@@ -2106,7 +2107,6 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		}
 		mes "Joe took a thorough look at the seal.";
 		next;
-		set .@equip_refine, getequiprefinerycnt(.@part);
 		if (.@equip_refine < 7) {
 			mes "[Red Leopard Joe]";
 			mes "Are you that low?";
@@ -2150,6 +2150,11 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "I can feel it.";
 		mes "I will take this weapon to give it some finishing touches.";
 		next;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
 		delequip .@part;
 		erasequest 5145;
 		completequest 5138;
@@ -2158,9 +2163,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "[Red Leopard Joe]";
 		mes "'" + strcharinfo(0) + "'";
 		mes "Passed the weapon test!!";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@ko_test_03_1 == 2 && .@ko_test_03_2 == 0 && (.@ko_test_03_3 == 2 || .@ko_test_03_4 == 2) && .@ko_test_03_5 == 0) {
 		mes "[Red Leopard Joe]";
 		mes "Oh, I almost forgot.";
@@ -2429,6 +2432,8 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		close;
 	} else {
 		set .@equip_id, getequipid(.@part);
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 		if (.@equip_id == 13074 || .@equip_id == 13312) {
 			mes "Analyzing the weapon.";
 			next;
@@ -2449,7 +2454,6 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		mes "That weapon cannot be refined. Where did you get it?";  //custom translation
 		close;
 	}
-	set .@equip_refine, getequiprefinerycnt(.@part);
 	if (.@equip_refine >= 20) {
 		mes "Bzzzt";
 		mes "A warning beep comes from the tool.";
@@ -2486,6 +2490,11 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 	} else {							// 10>20 2%
 		if (.@rand < 3) set .@wlevel_up,1;
 	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	if (.@wlevel_up) {
 		successrefitem .@part;
 		mes "Succeeded in refining.";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20151030
+//= 20171207
 //===== Description: =========================================
 //= List of all Status Changes and theirs val1, val2, val3, and
 //= val4 usage in source. Providing easier guide to use
@@ -14,7 +14,7 @@
 //=   some SCs with iteration check maybe will fail to give
 //=   iteration check if flag SCSTART_LOADED is given.
 //===== Format: =========================================
-//= <SC_Name>	(<Default_SI>)
+//= <SC_Name>	(<Default_EFST>)
 //= 	desc: <any description or info related this status>
 //= 	val1: <usage for>
 //= 	val2: <usage for>
@@ -64,7 +64,7 @@ SC_BLIND	()
 	desc: HIT -25%; FLEE -25%; Black out the outter part of the screen
 	val1:
 
-SC_BLEEDING	(SI_BLEEDING)
+SC_BLEEDING	(EFST_BLOODING)
 	desc: HP Regeneration is disabled; SP Regeneration is disabled; Lose HP overtime
 	val1: Skill Level
 	val2: Caster's object ID (for mob_log_damage)
@@ -78,179 +78,179 @@ SC_DPOISON	()
 	val3: 
 	val4: Remaining tick
 
-SC_PROVOKE	(SI_PROVOKE)
+SC_PROVOKE	(EFST_PROVOKE)
 	desc: Decrease DEF by (5+(5*Skill Lv))%; Increase ATK by (2+(3*Skill lv))%
 	val1:
 
-SC_ENDURE	(SI_ENDURE)
+SC_ENDURE	(EFST_ENDURE)
 	desc: Increase MDEF by (Skill Lv); Doesn't get flinched when attacked
 	val1:
 
-SC_TWOHANDQUICKEN	(SI_TWOHANDQUICKEN)
+SC_TWOHANDQUICKEN	(EFST_TWOHANDQUICKEN)
 	desc: ASPD +30%
 	val1:
 
-SC_CONCENTRATE	(SI_CONCENTRATE)
+SC_CONCENTRATE	(EFST_CONCENTRATION)
 	desc: Increase AGI by (2+Skill Lv)%; Increase DEX by (2+Skill Lv)%; Reveal hidden enemies in 3x3 area around caster
 	val1:
 
-SC_HIDING	(SI_HIDING)
+SC_HIDING	(EFST_HIDING)
 	desc: Set OPTION_HIDE
 	val1:
 
-SC_CLOAKING	(SI_CLOAKING)
+SC_CLOAKING	(EFST_CLOAKING)
 	desc: Set OPTION_CLOAK
 	val1:
 
-SC_ENCPOISON	(SI_ENCPOISON)
+SC_ENCPOISON	(EFST_ENCHANTPOISON)
 	desc: Change weapon element to ELE_POISON; Poisoning chance is (2.5+0.5%)
 	val1:
 
-SC_POISONREACT	(SI_POISONREACT)
+SC_POISONREACT	(EFST_POISONREACT)
 	desc: Increase ATK by (100+30*Skill Lv))%; Counter physical attack with Envenoms skill
 	val1:
 
-SC_QUAGMIRE	(SI_QUAGMIRE)
+SC_QUAGMIRE	(EFST_QUAGMIRE)
 	desc: Removes Increase AGI, Twhohand Quicken, Wind Walk, Adrenaline Rush, Attention Concentrate, Cart Boost, True Sight, Magnetic Field & Onehand Quicken skill effect; Movement Speed -50; Decrease AGI & DEX by (10*Skill Lv) but can't below 75% for players and 50% for mobs
 	val1:
 
-SC_ANGELUS	(SI_ANGELUS)
+SC_ANGELUS	(EFST_ANGELUS)
 	desc: Increase DEF by (5*Skill Lv)%
 	val1:
 
-SC_BLESSING	(SI_BLESSING)
+SC_BLESSING	(EFST_BLESSING)
 	desc: Increase STR, DEX & INT by (Skill Lv); Removes Stone and Curse status. If used on mobs will reduce their DEX and INT by 50%
 	val1:
 
-SC_SIGNUMCRUCIS	(SI_SIGNUMCRUCIS)
+SC_SIGNUMCRUCIS	(EFST_CRUCIS)
 	desc: Decrease DEF of Undead and Demon mobs by (10+(4*Skill Lv))% on screen
 	val1:
 
-SC_INCREASEAGI	(SI_INCREASEAGI)
+SC_INCREASEAGI	(EFST_INC_AGI)
 	desc: Increase AGI and walkspeed, AL_INCAGI effect
 	val1: (hardcoded)
 
-SC_DECREASEAGI	(SI_DECREASEAGI)
+SC_DECREASEAGI	(EFST_DEC_AGI)
 	desc: Decrease AGI and walkspeed, AL_DECAGI effect
 	val1: (hardcoded)
 
-SC_SLOWPOISON	(SI_SLOWPOISON)
+SC_SLOWPOISON	(EFST_SLOWPOISON)
 	desc: Stop the HP reduction of SC_POISON
 	val1:
 
-SC_IMPOSITIO	(SI_IMPOSITIO)
+SC_IMPOSITIO	(EFST_IMPOSITIO)
 	desc: Increase ATK by (5*Skill Lv)
 	val1:
 
-SC_SUFFRAGIUM	(SI_SUFFRAGIUM)
+SC_SUFFRAGIUM	(EFST_SUFFRAGIUM)
 	desc: Cast time decreased by (15*Skill Lv)%
 	val1:
 
-SC_ASPERSIO	(SI_ASPERSIO)
+SC_ASPERSIO	(EFST_ASPERSIO)
 	desc: Change weapon element to ELE_HOLY
 	val1:
 
-SC_BENEDICTIO	(SI_BENEDICTIO)
+SC_BENEDICTIO	(EFST_BENEDICTIO)
 	desc: Change armor element to ELE_HOLY
 	val1:
 
-SC_KYRIE	(SI_KYRIE)
+SC_KYRIE	(EFST_KYRIE)
 	desc: Remove SC_ASSUMPTIO skill effect; Block damage with a total of (MaxHP*(Skill Lv*2+10)/100) or ((Skill Lv/2)+5) times
 	val1:
 
-SC_MAGNIFICAT	(SI_MAGNIFICAT)
+SC_MAGNIFICAT	(EFST_MAGNIFICAT)
 	desc: SP Regeneration speed x2
 	val1:
 
-SC_GLORIA	(SI_GLORIA)
+SC_GLORIA	(EFST_GLORIA)
 	desc: LUK +30
 	val1:
 
-SC_AETERNA	(SI_AETERNA)
+SC_AETERNA	(EFST_LEXAETERNA)
 	desc: Damaged received x2
 	val1:
 
-SC_ADRENALINE	(SI_ADRENALINE)
+SC_ADRENALINE	(EFST_ADRENALINE)
 	desc: ASPD of Axe & Mace weapons x2
 	val1:
 
-SC_WEAPONPERFECTION	(SI_WEAPONPERFECTION)
+SC_WEAPONPERFECTION	(EFST_WEAPONPERFECT)
 	desc: Ignore damage reduction to any monster size
 	val1:
 
-SC_OVERTHRUST	(SI_OVERTHRUST)
+SC_OVERTHRUST	(EFST_OVERTHRUST)
 	desc: Increase ATK by (5*Skill Lv)%; Add a 0.1% of breaking the equipped weapon [except Axes, Maces & Unbreakable weapons]
 	val1:
 
-SC_MAXIMIZEPOWER	(SI_MAXIMIZEPOWER)
+SC_MAXIMIZEPOWER	(EFST_MAXIMIZE)
 	desc: SP Regeneration is disabled; Damage dealt is always the max damage
 	val1:
 
-SC_TRICKDEAD	(SI_TRICKDEAD)
+SC_TRICKDEAD	(EFST_TRICKDEAD)
 	desc: HP & SP Regeneration is disabled; Remove SC_DANCING
 	val1:
 
-SC_LOUD	(SI_LOUD)
+SC_LOUD	(EFST_SHOUT)
 	desc: STR +4
 	val1:
 
-SC_ENERGYCOAT	(SI_ENERGYCOAT)
+SC_ENERGYCOAT	(EFST_ENERGYCOAT)
 	desc: Reduce damage received according to current MaxSP %
 	val1:
 
-SC_BROKENARMOR	(SI_BROKENARMOR)
-	desc: Shows SI_BROKENARMOR status if the armor is broken
+SC_BROKENARMOR	(EFST_BROKENARMOR)
+	desc: Shows EFST_BROKENARMOR status icon if the armor is broken
 	val1:
 
-SC_BROKENWEAPON	(SC_BROKENWEAPON)
-	desc: Shows SC_BROKENWEAPON status if the armor is broken
+SC_BROKENWEAPON	(EFST_BROKENWEAPON)
+	desc: Shows EFST_BROKENWEAPON status icon if the armor is broken
 	val1:
 
-SC_HALLUCINATION	(SI_HALLUCINATION)
+SC_HALLUCINATION	(EFST_ILLUSION)
 	desc: The screen goes wavy and you see crazy numbers for all damage that is processed around you, but they are all fake. Even other players see those numbers at you.
 	val1:
 
-SC_WEIGHT50	(SI_WEIGHT50)
-	desc: Shows SI_WEIGHT50 status icon if Weight >= 50%
+SC_WEIGHT50	(EFST_WEIGHTOVER50)
+	desc: Shows EFST_WEIGHTOVER50 status icon if Weight >= 50%
 	val1:
 
-SC_WEIGHT90	(SI_WEIGHT90)
-	desc: Shows SI_WEIGHT90 status icon if Weight >= 90%
+SC_WEIGHT90	(EFST_WEIGHTOVER90)
+	desc: Shows EFST_WEIGHTOVER90 status icon if Weight >= 90%
 	val1:
 
-SC_ASPDPOTION0	(SI_ASPDPOTION0)
+SC_ASPDPOTION0	(EFST_ATTHASTE_POTION1)
 	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION1, SC_ASPDPOTION2, SC_ASPDPOTION3
 	val1: +ASPD (Renewal)
 	val2: +% ASPD (Pre-Renewal)
 
-SC_ASPDPOTION1	(SI_ASPDPOTION1)
+SC_ASPDPOTION1	(EFST_ATTHASTE_POTION2)
 	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION0, SC_ASPDPOTION2, SC_ASPDPOTION3
 	val1: +ASPD (Renewal)
 	val2: +% ASPD (Pre-Renewal)
 
-SC_ASPDPOTION2	(SI_ASPDPOTION2)
+SC_ASPDPOTION2	(EFST_ATTHASTE_POTION3)
 	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION0, SC_ASPDPOTION1, SC_ASPDPOTION3
 	val1: +ASPD (Renewal)
 	val2: +% ASPD (Pre-Renewal)
 
-SC_ASPDPOTION3	(SI_ASPDPOTION3)
+SC_ASPDPOTION3	(EFST_ATTHASTE_INFINITY)
 	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION0, SC_ASPDPOTION1, SC_ASPDPOTION2
 	val1: + ASPD (Renewal)
 	val2: +% ASPD (Pre-Renewal)
 
-SC_SPEEDUP0	(SI_MOVHASTE_HORSE)
+SC_SPEEDUP0	(EFST_MOVHASTE_HORSE)
 	desc: Increase/change walkspeed rate. This effect won't be stacked with bonus bSpeedRate
 	val1: +% Walkspeed
 
-SC_SPEEDUP1	(SI_SPEEDPOTION1)
+SC_SPEEDUP1	(EFST_MOVHASTE_POTION)
 	desc: Increase/change walkspeed rate. This effect won't be stacked with bonus bSpeedRate
 	val1: +% Walkspeed
 
-SC_ATKPOTION	(SI_PLUSATTACKPOWER)
+SC_ATKPOTION	(EFST_PLUSATTACKPOWER)
 	desc: Increase Atk
 	val1: +Atk
 
-SC_MATKPOTION	(SI_PLUSMAGICPOWER)
+SC_MATKPOTION	(EFST_PLUSMAGICPOWER)
 	desc: Increase MAtk
 	val1: +MAtk
 
@@ -262,7 +262,7 @@ SC_SLOWDOWN	()
 	desc: Reduce walkspeed rate
 	val1: -% Walkspeed
 
-SC_ANKLE	(SI_ANKLESNARE)
+SC_ANKLE	(EFST_ANKLESNARE)
 	desc: Set DEF to (AGI*50); Can't move
 	val1:
 
@@ -270,63 +270,63 @@ SC_KEEPING	()
 	desc: Set DEF to 90
 	val1:
 
-SC_BARRIER	(SI_BARRIER)
+SC_BARRIER	(EFST_BARRIER)
 	desc: Set DEF to 100
 	val1:
 
-SC_STRIPWEAPON	(SI_STRIPWEAPON)
+SC_STRIPWEAPON	(EFST_NOEQUIPWEAPON)
 	desc: Unequip weapon; On mob ATK -25%
 	val1:
 
-SC_STRIPSHIELD	(SI_STRIPSHIELD)
+SC_STRIPSHIELD	(EFST_NOEQUIPSHIELD)
 	desc: Unequip shield; On mob DEF -15%
 	val1:
 
-SC_STRIPARMOR	(SI_STRIPARMOR)
+SC_STRIPARMOR	(EFST_NOEQUIPARMOR)
 	desc: Unequip armor; On mob VIT -40%
 	val1:
 
-SC_STRIPHELM	(SI_STRIPHELM)
+SC_STRIPHELM	(EFST_NOEQUIPHELM)
 	desc: Unequip helm; On mob INT -40%
 	val1:
 
-SC_CP_WEAPON	(SI_CP_WEAPON)
+SC_CP_WEAPON	(EFST_PROTECTWEAPON)
 	desc: Protects equipped weapon from damage and strip skill
 	val1:
 
-SC_CP_SHIELD	(SI_CP_SHIELD)
+SC_CP_SHIELD	(EFST_PROTECTSHIELD)
 	desc: Protects equipped shield from damage and strip skill
 	val1:
 
-SC_CP_ARMOR	(SI_CP_ARMOR)
+SC_CP_ARMOR	(EFST_PROTECTARMOR)
 	desc: Protects equipped armor from damage and strip skill
 	val1:
 
-SC_CP_HELM	(SI_CP_HELM)
+SC_CP_HELM	(EFST_PROTECTHELM)
 	desc: Protects equipped helm from damage and strip skill
 	val1:
 
-SC_AUTOGUARD	(SI_AUTOGUARD)
+SC_AUTOGUARD	(EFST_AUTOGUARD)
 	desc: Blocks short and long range physical attacks at a certain chance, and stops the caster for 0.3 seconds if it's activated
 	val1:
 
-SC_REFLECTSHIELD	(SI_REFLECTSHIELD)
+SC_REFLECTSHIELD	(EFST_REFLECTSHIELD)
 	desc: Reflects (10+(3*Skill Lv))% of short ranged physical attack back to the attacker
 	val1:
 
-SC_SPLASHER	(SI_SPLASHER)
+SC_SPLASHER	(EFST_SPLASHER)
 	desc: This skill will only work once the target's HP is 1/3 or less of its Max HP. When struck by this skill, the target will explode and damage other enemies in it's vicinity
 	val1:
 
-SC_PROVIDENCE	(SI_PROVIDENCE)
+SC_PROVIDENCE	(EFST_PROVIDENCE)
 	desc: Increase party members' resistance to RC_Demon and Ele_Holy monsters
 	val1:
 
-SC_DEFENDER	(SI_DEFENDER)
+SC_DEFENDER	(EFST_DEFENDER)
 	desc: Decrease (5+(15*Skill Lv))% damage taken from long range attack; Decrease (25+(5*Skill Lv)) ASPD
 	val1:
 
-SC_MAGICROD	(SI_MAGICROD)
+SC_MAGICROD	(EFST_MAGICROD)
 	desc: Gain (Skill Lv*20)% of SP consumed by the skill used from enemy; Damage received becomes 0; Drain 20% of enemy's Max SP
 	val1:
 
@@ -334,7 +334,7 @@ SC_SPELLBREAKER	()
 	desc: Gain SP used by enemy to cast the spell, and interrupt the magic cast. At lv 5, gain 1% from enemy max hp.
 	val1:
 
-SC_AUTOSPELL	(SI_AUTOSPELL)
+SC_AUTOSPELL	(EFST_AUTOSPELL)
 	desc: Auto cast several learned magic spells by using 2/3 of SP cost of the skill, but only when attacking with physical attacks.
 	val1:
 
@@ -342,15 +342,15 @@ SC_SIGHTTRASHER	()
 	desc: (not exist)
 	val1:
 
-SC_AUTOBERSERK	(SI_AUTOBERSERK)
+SC_AUTOBERSERK	(EFST_AUTOBERSERK)
 	desc: If HP<25%, set SC_PROVOKE lv 10 on self
 	val1:
 
-SC_SPEARQUICKEN	(SI_SPEARQUICKEN)
+SC_SPEARQUICKEN	(EFST_SPEARQUICKEN)
 	desc: When using spear, +ASPD (20+(1*Skill Lv))%, +CRIT (3+(10*Skill Lv)), +FLEE (2*Skill Lv)
 	val1:
 
-SC_AUTOCOUNTER	(SI_AUTOCOUNTER)
+SC_AUTOCOUNTER	(EFST_AUTOCOUNTER)
 	desc: Hitrate +20%; If attacked by close range, automatically retaliate with crit*2
 	val1:
 
@@ -366,11 +366,11 @@ SC_RUWACH	()
 	desc: Reveal hidden target and deal little damages if enemy is under SC_HIDING/SC_CLOAKING/SC_CAMOUFLAGE/SC_CLOAKINGEXCEED; Set OPTION_RUWACH
 	val1:
 
-SC_EXTREMITYFIST	(SI_EXTREMITYFIST)
+SC_EXTREMITYFIST	(EFST_EXTREMITYFIST)
 	desc: Stop SP Regeneration by setting RGN_SP
 	val1:
 
-SC_EXPLOSIONSPIRITS	(SI_EXPLOSIONSPIRITS)
+SC_EXPLOSIONSPIRITS	(EFST_EXPLOSIONSPIRITS)
 	desc: Stop SP Regeneration by setting RGN_SP; +Crit
 	val1:
 
@@ -382,35 +382,35 @@ SC_BLADESTOP_WAIT	()
 	desc:
 	val1:
 
-SC_BLADESTOP	(SI_BLADESTOP)
+SC_BLADESTOP	(EFST_BLADESTOP)
 	desc: Stops player and target; Set OPT3_BLADESTOP
 	val1:
 
-SC_FIREWEAPON	(SI_FIREWEAPON)
+SC_FIREWEAPON	(EFST_PROPERTYFIRE)
 	desc: Change weapon element to Fire element
 	val1:
 
-SC_WATERWEAPON	(SI_WATERWEAPON)
+SC_WATERWEAPON	(EFST_PROPERTYWATER)
 	desc: Change weapon element to Water element
 	val1:
 
-SC_WINDWEAPON	(SI_WINDWEAPON)
+SC_WINDWEAPON	(EFST_PROPERTYWIND)
 	desc: Change weapon element to Wind element
 	val1:
 
-SC_EARTHWEAPON	(SI_EARTHWEAPON)
+SC_EARTHWEAPON	(EFST_PROPERTYGROUND)
 	desc: Change weapon element to Earth element
 	val1:
 
-SC_VOLCANO	(SI_LANDENDOW)
+SC_VOLCANO	(EFST_GROUNDMAGIC)
 	desc: +watk of ELE_FIRE user
 	val1:
 
-SC_DELUGE	(SI_LANDENDOW)
+SC_DELUGE	(EFST_GROUNDMAGIC)
 	desc: +Max HP of ELE_WATER user
 	val1:
 
-SC_VIOLENTGALE	(SI_LANDENDOW)
+SC_VIOLENTGALE	(EFST_GROUNDMAGIC)
 	desc: +FLEE of ELE_WIND user
 	val1:
 
@@ -433,33 +433,33 @@ SC_NOCHAT	()
 	desc: Can't chat, pick item, drop item
 	val1:
 
-SC_BABY	(SI_BABY)
+SC_BABY	(EFST_PROTECTEXP)
 	desc:
 	val1:
 
-SC_AURABLADE	(SI_AURABLADE)
+SC_AURABLADE	(EFST_AURABLADE)
 	desc: Set OPT3_AURABLADE; Add damage by (20*Skill Lv) which ignore caster's accuracy rate/target's DEF
 	val1:
 
-SC_PARRYING	(SI_PARRYING)
+SC_PARRYING	(EFST_PARRYING)
 	desc: Block using a 2H-Sword with chance (20+(3*Skill Lv))%
 	val1:
 
-SC_CONCENTRATION	(SI_CONCENTRATION)
+SC_CONCENTRATION	(EFST_LKCONCENTRATION)
 	desc: Lv 1 Endurace effect; +WATK; +HIT; -DEF
 	val1:
 	val2: 5*val1;		// Batk/Watk Increase
 	val3: 10*val1;	// Hit Increase
 	val4: 5*val1;		// Def reduction
 
-SC_TENSIONRELAX	(SI_TENSIONRELAX)
+SC_TENSIONRELAX	(EFST_TENSIONRELAX)
 	desc: Increase HP regeneration rate while sitting
 	val1:
 	val2: 12;		// SP cost
 	val3: tick/val4;
 	val4: 10000;	// Decrease at 10secs intervals.
 
-SC_BERSERK	(SI_BERSERK)
+SC_BERSERK	(EFST_BERSERK)
 	desc: Stop HP+SP Regen; Can't use skill; Can't chat; -FLEE; +Max HP; +Movement Speed; +ATK; Set OPT3_BERSERK; -5%HP per 10 second; Set DEF+MDEF to 0
 	val1:
 	val2: HP Penalty (5% of Max HP)
@@ -470,11 +470,11 @@ SC_FURY	()
 	desc:
 	val1:
 
-SC_GOSPEL	(SI_GOSPEL)
+SC_GOSPEL	(EFST_GOSPEL)
 	desc: Can't move; Gives a random status to party member and also enemy.
 	val1:
 
-SC_ASSUMPTIO	(RE: SI_ASSUMPTIO2. Pre-RE: SI_ASSUMPTIO)
+SC_ASSUMPTIO	(RE: EFST_ASSUMPTIO2. Pre-RE: EFST_ASSUMPTIO)
 	desc: HP_ASSUMPTIO's effect
 	val1: Level (unused)
 
@@ -486,50 +486,50 @@ SC_GUILDAURA	()
 	desc:
 	val1:
 
-SC_MAGICPOWER	(SI_MAGICPOWER)
+SC_MAGICPOWER	(EFST_MAGICPOWER)
 	desc: +MATK by (Skill Lv*5)% for the next magic skill that is cast
 	val1:
 
-SC_EDP	(SI_EDP)
+SC_EDP	(EFST_EDP)
 	desc: +WATK by (100+(Skill Lv*80))
 	val1: Skill Lv
 	val2: Chance to Poison enemy (val1+2)%
 	val3: Damage increased by (50*(val1+1))
 
-SC_TRUESIGHT	(SI_TRUESIGHT)
+SC_TRUESIGHT	(EFST_TRUESIGHT)
 	desc: All stat +5; Damage +(2*Skill Lv)%; Crit +(Skill Lv); Hit +(3*Skill Lv)%
 	val1: Skill Lv
 	val2: Crit
 	val3: Hit
 
-SC_WINDWALK	(SI_WINDWALK)
+SC_WINDWALK	(EFST_WINDWALK)
 	desc: +Flee; +Movement speed
 	val1: Skill Lv
 	val2: Flee
 
-SC_MELTDOWN	(SI_MELTDOWN)
+SC_MELTDOWN	(EFST_MELTDOWN)
 	desc: Breaks target's weapon and armor at a certain chance
 	val1: Skill Lv
 	val2: Chance to break weapon (100*Skill Lv)
 	val3: Change to break armor (70*Skill Lv)
 
-SC_CARTBOOST	(SI_CARTBOOST)
+SC_CARTBOOST	(EFST_CARTBOOST)
 	desc:
 	val1:
 
-SC_CHASEWALK	(SI_CHASEWALK)
+SC_CHASEWALK	(EFST_CHASEWALK)
 	desc:
 	val1:
 
-SC_REJECTSWORD	(SI_REJECTSWORD)
+SC_REJECTSWORD	(EFST_SWORDREJECT)
 	desc:
 	val1:
 
-SC_MARIONETTE	(SI_MARIONETTE)
+SC_MARIONETTE	(EFST_MARIONETTE_MASTER)
 	desc:
 	val1:
 
-SC_MARIONETTE2	(SI_MARIONETTE2)
+SC_MARIONETTE2	(EFST_MARIONETTE)
 	desc:
 	val1:
 
@@ -541,23 +541,23 @@ SC_JOINTBEAT	()
 	desc:
 	val1:
 
-SC_MINDBREAKER	(SI_MINDBREAKER)
+SC_MINDBREAKER	(EFST_MINDBREAKER)
 	desc:
 	val1:
 
-SC_MEMORIZE	(SI_MEMORIZE)
+SC_MEMORIZE	(EFST_MEMORIZE)
 	desc:
 	val1:
 
-SC_FOGWALL	(SI_FOGWALL)
+SC_FOGWALL	(EFST_FOGWALL)
 	desc:
 	val1:
 
-SC_SPIDERWEB	(SI_SPIDERWEB)
+SC_SPIDERWEB	(EFST_SPIDERWEB)
 	desc:
 	val1:
 
-SC_DEVOTION	(SI_DEVOTION)
+SC_DEVOTION	(EFST_DEVOTION)
 	desc:
 	val1:
 
@@ -681,7 +681,7 @@ SC_DANCING	()
 	desc:
 	val1:
 
-SC_ELEMENTALCHANGE	(SI_ARMOR_PROPERTY)
+SC_ELEMENTALCHANGE	(EFST_ARMOR_PROPERTY)
 	desc: Change armor element
 	val1: Element level
 	val2: Element (see doc/item_bonus.txt)
@@ -710,7 +710,7 @@ SC_INTOABYSS	()
 	desc:
 	val1:
 
-SC_SIEGFRIED	(SI_SIEGFRIED)
+SC_SIEGFRIED	(EFST_SIEGFRIED)
 	desc: Status change for BD_SIEGFRIED
 	val1: BD_SIEGFRIED Skill level
 	val2: Increase val2% damage reduction from non-Nuetral elemental attack
@@ -839,47 +839,47 @@ SC_INCDEFRATE	()
 	desc: Increase Defense
 	val1: +% Def
 
-SC_STRFOOD	(SI_STRFOOD)
+SC_STRFOOD	(EFST_FOOD_STR)
 	desc: Increase STR (cannot be stacked with SC_FOOD_STR_CASH, ignored if value is lower)
 	val1: +STR
 
-SC_AGIFOOD	(SI_AGIFOOD)
+SC_AGIFOOD	(EFST_FOOD_AGI)
 	desc: Increase AGI (cannot be stacked with SC_FOOD_AGI_CASH, ignored if value is lower)
 	val1: +AGI
 
-SC_VITFOOD	(SI_VITFOOD)
+SC_VITFOOD	(EFST_FOOD_VIT)
 	desc: Increase VIT (cannot be stacked with SC_FOOD_VIT_CASH, ignored if value is lower)
 	val1: +VIT
 
-SC_INTFOOD	(SI_FOODINT)
+SC_INTFOOD	(EFST_FOOD_INT)
 	desc: Increase INT (cannot be stacked with SC_FOOD_INT_CASH, ignored if value is lower)
 	val1: +INT
 
-SC_DEXFOOD	(SI_DEXFOOD)
+SC_DEXFOOD	(EFST_FOOD_DEX)
 	desc: Increase DEX (cannot be stacked with SC_FOOD_DEX_CASH, ignored if value is lower)
 	val1: +DEX
 
-SC_LUKFOOD	(SI_LUKFOOD)
+SC_LUKFOOD	(EFST_FOOD_LUK)
 	desc: Increase LUK (cannot be stacked with SC_FOOD_LUK_CASH, ignored if value is lower)
 	val1: +LUK
 
-SC_HITFOOD	(SI_HITFOOD)
+SC_HITFOOD	(EFST_FOOD_BASICHIT)
 	desc: Increase HIT (food-type effect)
 	val1: +Hit
 
-SC_FLEEFOOD	(SI_FLEEFOOD)
+SC_FLEEFOOD	(EFST_FOOD_BASICAVOIDANCE)
 	desc: Increase FLEE (food-type effect)
 	val1: +Flee
 
-SC_BATKFOOD	(SI_BATKFOOD)
+SC_BATKFOOD	()
 	desc: Increase Base Attack (food-type effect)
 	val1: +BaseAttack
 
-SC_WATKFOOD	(SI_WATKFOOD)
+SC_WATKFOOD	()
 	desc: Increase Weapon Attack (food-type effect)
 	val1: +WeaponAttack
 
-SC_MATKFOOD	(SI_MATKFOOD)
+SC_MATKFOOD	()
 	desc: Increase Magic Attack (food-type effect)
 	val1: +MagicAttack
 
@@ -939,21 +939,28 @@ SC_MIRACLE	()
 	desc:
 	val1:
 
-SC_MADNESSCANCEL	()
-	desc:
+SC_MADNESSCANCEL	(EFST_GS_MADNESSCANCEL)
+	desc: Increases some statuses (Base ATK, ASPD)
 	val1:
 
-SC_ADJUSTMENT	()
-	desc:
+SC_ADJUSTMENT	(EFST_GS_ADJUSTMENT)
+	desc: Increases some statuses (Hit, Flee)
 	val1:
 
-SC_INCREASING	(SI_ACCURACY)
-	desc: Increase some statuses (hit, dex, agi), GS_INCREASING effect
-	val1: (hardocded)
-
-SC_GATLINGFEVER	()
-	desc:
+SC_INCREASING	(EFST_GS_ACCURACY)
+	desc: Increase some statuses (Hit, Dex, Agi), GS_INCREASING effect
 	val1:
+
+SC_MAGICALBULLET	(EFST_GS_MAGICAL_BULLET)
+	desc: Increases damage based on source's MATK and is reduced by target's MDEF
+	val1:
+
+SC_GATLINGFEVER	(EFST_GS_GATLINGFEVER)
+	desc: Increases some statuses (Base ATK, Flee, Movement Speed, ASPD)
+	val1: SkillLv
+	val2: ASPD increase (20 * val1)
+	val3: Base ATK (20 + 10 * val1) [pre-renewal]
+	val4: Flee decrease (5 * val1)
 
 SC_TATAMIGAESHI	()
 	desc:
@@ -1020,7 +1027,7 @@ SC_INCASPDRATE	()
 	desc: Increase ASPD
 	val1: +% ASPD
 
-SC_INCFLEE2	(SI_PLUSAVOIDVALUE)
+SC_INCFLEE2	(EFST_PLUSAVOIDVALUE)
 	desc: Increase perfect flee
 	val1: + Flee2
 
@@ -1056,23 +1063,26 @@ SC_SUMMER	()
 	desc:
 	val1:
 
-SC_EXPBOOST	(SI_EXPBOOST)
+SC_EXPBOOST	(EFST_CASH_PLUSEXP)
 	desc: Increase EXP rate
 	val1: +% EXP
 
-SC_ITEMBOOST	(SI_ITEMBOOST)
+SC_ITEMBOOST	(EFST_CASH_RECEIVEITEM)
 	desc: Increase Drop rate
 	val1: +% Drop
 
-SC_BOSSMAPINFO	(SI_BOSSMAPINFO)
-	desc:
-	val1:
+SC_BOSSMAPINFO	(EFST_CASH_BOSS_ALARM)
+	desc: Used to display Boss location on minimap
+	val1: Boss game ID
+	val2: Used to keep timer message from spamming chat window
+	val3:
+	val4: Remaining tick
 
-SC_LIFEINSURANCE	(SI_LIFEINSURANCE)
+SC_LIFEINSURANCE	(EFST_CASH_DEATHPENALTY)
 	desc: Remove death pleanlties
 	val1:
 
-SC_INCCRI	(SI_INCCRI)
+SC_INCCRI	(EFST_FOOD_CRITICALSUCCESSVALUE)
 	desc: Increase critical value
 	val1: + Critical (100% = 1000)
 
@@ -1088,7 +1098,7 @@ SC_FASTCAST	()	/* NOT AVAILABLE YET */
 	desc:
 	val1:
 
-SC_MDEF_RATE	(SI_MDEF_RATE)
+SC_MDEF_RATE	(EFST_PROTECT_MDEF)
 	desc: Increase MDef by %
 	val1: +% Mdef
 
@@ -1096,7 +1106,7 @@ SC_HPREGEN	()	/* NOT AVAILABLE YET */
 	desc:
 	val1:
 
-SC_INCHEALRATE	(SI_INCHEALRATE)
+SC_INCHEALRATE	(EFST_HEALPLUS)
 	desc: Increase Heal power
 	val1: +% Heal
 
@@ -1119,11 +1129,11 @@ SC_ARMOR_RESIST	()
 	val3: Fire resistance
 	val4: Wind resistance
 
-SC_SPCOST_RATE	(SI_ATKER_BLOOD)
+SC_SPCOST_RATE	(EFST_ATKER_BLOOD)
 	desc: Reduce SP cost
 	val1: +% Rate
 
-SC_COMMONSC_RESIST	(SI_TARGET_BLOOD)
+SC_COMMONSC_RESIST	(EFST_TARGET_BLOOD)
 	desc: Increase resistance of status changes, only againts SC_STONE, SC_FREEZE, SC_STUN, SC_SLEEP, SC_POISON, SC_CURSE, SC_SILENCE, SC_CONFUSION, SC_BLIND, SC_BLEEDING, and SC_DPOISON
 	val1: +% Resistance
 
@@ -1131,7 +1141,7 @@ SC_SEVENWIND	()
 	desc:
 	val1:
 
-SC_DEF_RATE	(SI_DEF_RATE)
+SC_DEF_RATE	(EFST_PROTECT_DEF)
 	desc: Increase Def by %
 	val1: +% Def
 
@@ -1192,12 +1202,12 @@ SC_ITEMSCRIPT	()
 	val1: Item ID
 	val2: Status Icon
 
-SC_S_LIFEPOTION	(SI_S_LIFEPOTION)
+SC_S_LIFEPOTION	(EFST_S_LIFEPOTION)
 	desc: Increase HP each interval
 	val1: if < 0 will be percentage. If > 0 is fixed HP heal value
 	val2: Interval per seconds
 
-SC_L_LIFEPOTION	(SI_L_LIFEPOTION)
+SC_L_LIFEPOTION	(EFST_L_LIFEPOTION)
 	desc: Increase HP each interval
 	val1: if < 0 will be percentage. If > 0 is fixed HP heal value
 	val2: Interval per seconds
@@ -1222,57 +1232,57 @@ SC_INVINCIBLEOFF	()
 	desc:
 	val1:
 
-SC_MANU_ATK	(SI_MANU_ATK)
+SC_MANU_ATK	(EFST_MANU_ATK)
 	desc: Increase Weapon Damage rate to Manuk monsters
 	val1: +% Damage
 	val2: (hardcoded to 1 mark as Manuk group bonus)
 
-SC_MANU_DEF	(SI_MANU_DEF)
+SC_MANU_DEF	(EFST_MANU_DEF)
 	desc: Increase Defense rate against Manuk monsters
 	val1: +% Defense
 	val2: (hardcoded to 1 mark as Manuk group bonus)
 
-SC_SPL_ATK	(SI_SPL_ATK)
+SC_SPL_ATK	(EFST_SPL_ATK)
 	desc: Increase Weapon Damage rate to Splendide Monster
 	val1: +% Damage
 	val2: (hardcoded to 1 mark as Splendide group bonus)
 
-SC_SPL_DEF	(SI_SPL_DEF)
+SC_SPL_DEF	(EFST_SPL_DEF)
 	desc: Increase Defense rate against Splendide Monster
 	val1: +% Defense
 	val2: (hardcoded to 1 mark as Splendide group bonus)
 
-SC_MANU_MATK	(SI_MANU_MATK)
+SC_MANU_MATK	(EFST_MANU_MATK)
 	desc: Increase Magic Damage rate to Manuk monsters
 	val1: +% Magic damage
 	val2: (hardcoded to 1 mark as Manuk group bonus)
 
-SC_SPL_MATK	(SI_SPL_MATK)
+SC_SPL_MATK	(EFST_SPL_MATK)
 	desc: Increase Magic Damage to Splendide Monster
 	val1: +% Damage
 	val2: (hardcoded to 1 mark as Splendide group bonus)
 
-SC_FOOD_STR_CASH	(SI_FOOD_STR_CASH)
+SC_FOOD_STR_CASH	(EFST_FOOD_STR_CASH)
 	desc: Increase STR (cannot be stacked with SC_STRFOOD, ignored if value is lower)
 	val1: +STR
 
-SC_FOOD_AGI_CASH	(SI_FOOD_AGI_CASH)
+SC_FOOD_AGI_CASH	(EFST_FOOD_AGI_CASH)
 	desc: Increase AGI (cannot be stacked with SC_AGIFOOD, ignored if value is lower)
 	val1: +AGI
 
-SC_FOOD_VIT_CASH	(SI_FOOD_VIT_CASH)
+SC_FOOD_VIT_CASH	(EFST_FOOD_VIT_CASH)
 	desc: Increase VIT (cannot be stacked with SC_VITFOOD, ignored if value is lower)
 	val1: +VIT
 
-SC_FOOD_DEX_CASH	(SI_FOOD_DEX_CASH)
+SC_FOOD_DEX_CASH	(EFST_FOOD_DEX_CASH)
 	desc: Increase DEX (cannot be stacked with SC_DEXFOOD, ignored if value is lower)
 	val1: +DEX
 
-SC_FOOD_INT_CASH	(SI_FOOD_INT_CASH)
+SC_FOOD_INT_CASH	(EFST_FOOD_INT_CASH)
 	desc: Increase INT (cannot be stacked with SC_INTFOOD, ignored if value is lower)
 	val1: +INT
 
-SC_FOOD_LUK_CASH	(SI_FOOD_LUK_CASH)
+SC_FOOD_LUK_CASH	(EFST_FOOD_LUK_CASH)
 	desc: Increase LUK (cannot be stacked with SC_LUKFOOD, ignored if value is lower)
 	val1: +LUK
 
@@ -1280,7 +1290,7 @@ SC_FEAR	()
 	desc: Cause SC_ANKLE for 2 seconds, Hit/Flee -20%, remove blind, immune to blind
 	val1:
 
-SC_BURNING	(SI_BURNT)
+SC_BURNING	(EFST_BURNT)
 	desc: MDEF -25%; Deals fixed (1000 + 3%*MaxHP) damage every 3 seconds; Damage can not be reduced
 	val1: Skill Level
 	val2: 1000
@@ -1491,7 +1501,7 @@ SC_VENOMIMPRESS	()
 	desc:
 	val1:
 
-SC_POISONINGWEAPON	(SI_POISONINGWEAPON)
+SC_POISONINGWEAPON	(EFST_POISONINGWEAPON)
 	desc: Coat the user's equipped weapon with a new poison temporarily, which grants a chance of leaving the target infected with the current poison while physically attacking.
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2: Poison Type
@@ -1518,56 +1528,56 @@ SC_ROLLINGCUTTER	()
 	desc:
 	val1:
 
-SC_TOXIN	(SI_TOXIN)
+SC_TOXIN	(EFST_TOXIN)
 	desc: Inflict damage, which causes the affected entity to flinch every 10 seconds; This will interrupt the skill casting, even if protected against it
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2: Caster's object ID
 	val3:
 	val4: Remaining tick
 
-SC_PARALYSE	(SI_PARALYSE)
+SC_PARALYSE	(EFST_PARALYSE)
 	desc: Decrease both ASPD and Flee Rate by 10% and halve Movement Speed, which does not stack with Decrease AGI, Quagmire, Marsh Of Abyss or Freezing status
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
 	val4: Tick
 
-SC_VENOMBLEED	(SI_VENOMBLEED)
+SC_VENOMBLEED	(EFST_VENOMBLEED)
 	desc: Decrease Max HP by 15%
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
 	val4: Tick
 
-SC_MAGICMUSHROOM	(SI_MAGICMUSHROOM)
+SC_MAGICMUSHROOM	(EFST_MAGICMUSHROOM)
 	desc: Force the affected entity to use /heh emote, to randomly use skills and drain 3% of Max HP every 4 seconds
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2: Caster's object ID
 	val3:
 	val4: Remaining tick
 
-SC_DEATHHURT	(SI_DEATHHURT)
+SC_DEATHHURT	(EFST_DEATHHURT)
 	desc: Drop the healing effectiveness by 20%; This effect stacks with Critical Wounds
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
 	val4: Tick
 
-SC_PYREXIA	(SI_PYREXIA)
+SC_PYREXIA	(EFST_PYREXIA)
 	desc: Cause Blind and Hallucination statuses; If the affected entity takes damage while under the effects of this poison, it will remain in flinching motion, which will interrupt the skill casting
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
 	val4: Remaining tick
 
-SC_OBLIVIONCURSE	(SI_OBLIVIONCURSE)
+SC_OBLIVIONCURSE	(EFST_OBLIVIONCURSE)
 	desc: Force the affected entity to use /? emote, block SP Recovery and cause Oblivion status; There is a chance (100% - (Target INT * 0.8)%) of being inflicted, with a minimum of 5%
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
 	val4: Tick
 
-SC_LEECHESEND	(SI_LEECHESEND)
+SC_LEECHESEND	(EFST_LEECHESEND)
 	desc: Drain (Target VIT * (SkillLv - 3)) + (Target HP / 100) HP each second
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2: Caster's object ID
@@ -1626,9 +1636,12 @@ SC_CRYSTALIZE	()
 	desc:
 	val1:
 
-SC_STRIKING	()
+SC_STRIKING	(EFST_STRIKING)
 	desc:
-	val1:
+	val1: SO_STRIKING Skill Level
+	val2: Increased ATK
+	val3: SP Drain / Sec
+	val4: Tick Left (in sec)
 
 SC_WARMER	()
 	desc:
@@ -1650,13 +1663,17 @@ SC_SYMPHONYOFLOVER	()
 	desc:
 	val1:
 
-SC_MOONLITSERENADE	()
+SC_MOONLITSERENADE	(EFST_MOONLIT_SERENADE)
 	desc:
-	val1:
+	val1: WA_MOONLIT_SERENADE Skill Level
+	val2: WM_LESSON Level
+	val3: Increased MATK
 
-SC_RUSHWINDMILL	()
+SC_RUSHWINDMILL	(EFST_RUSH_WINDMILL)
 	desc:
-	val1:
+	val1: MI_RUSH_WINDMILL Skill Level
+	val2: WM_LESSON Level
+	val3: Increased ATK
 
 SC_ECHOSONG	()
 	desc:
@@ -1742,17 +1759,24 @@ SC_RAISINGDRAGON	()
 	desc:
 	val1:
 
-SC_GT_ENERGYGAIN	()
-	desc:
-	val1:
+SC_GT_ENERGYGAIN	(EFST_GENTLETOUCH_ENERGYGAIN)
+	desc: 
+	val1: SR_GENTLETOUCH_ENERGYGAIN Skill Level
+	val2: Sphere Gain Chance
 
-SC_GT_CHANGE	()
-	desc:
-	val1:
+SC_GT_CHANGE	(EFST_GENTLETOUCH_CHANGE)
+	desc: ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]; ASPD increase: [(Target AGI x Skill Level) / 60] %; MDEF decrease: MDEF [(200 / Caster INT) x Skill Level]; Max HP decrease: [Skill Level x 4] %
+	val1: SR_GENTLETOUCH_CHANGE Skill Level
+	val2: Increased ATK
+	val3: Increased ASPD Rate
+	val4: Decreased MDEF
 
-SC_GT_REVITALIZE	()
-	desc:
-	val1:
+SC_GT_REVITALIZE	(EFST_GENTLETOUCH_REVITALIZE)
+	desc: MaxHP: [(Skill Level * 2)]%; Natural HP recovery increase: [(Skill Level x 30) + 50] %; STAT DEF increase: [(Caster VIT / 4) x Skill Level] (The stat def is not shown in the status window and it is processed differently)
+	val1: SR_GENTLETOUCH_REVITALIZE Skill Level
+	val2: Max HP Rate bonus
+	val3: HP Regen Rage Value
+	val4: Increased DEF
 
 SC_GN_CARTBOOST	()
 	desc:
@@ -1778,80 +1802,80 @@ SC_MANDRAGORA	()
 	desc:
 	val1:
 
-SC_STOMACHACHE	(SI_STOMACHACHE)
+SC_STOMACHACHE	(EFST_STOMACHACHE)
 	desc: Reduce all stats
 	val1: -AllStats
 
-SC_MYSTERIOUS_POWDER	(SI_MYSTERIOUS_POWDER)
+SC_MYSTERIOUS_POWDER	(EFST_MYSTERIOUS_POWDER)
 	desc: Reduce Max HP rate
 	val1: ReduceValue (don't use - sign to reduce)
 
-SC_MELON_BOMB	(SI_MELON_BOMB)
+SC_MELON_BOMB	(EFST_MELON_BOMB)
 	desc: Reduce ASPD and move speed
 	val1: ReduceValue (don't use - sign to reduce)
 
-SC_BANANA_BOMB	(SI_BANANA_BOMB)
+SC_BANANA_BOMB	(EFST_BANANA_BOMB)
 	desc: Reduce LUK rate
 	val1: ReduceValue (don't use - sign to reduce)
 
-SC_BANANA_BOMB_SITDOWN	(SI_BANANA_BOMB_SITDOWN_POSTDELAY)
+SC_BANANA_BOMB_SITDOWN	(EFST_BANANA_BOMB_SITDOWN_POSTDELAY)
 	desc: Force player to sit
 	val1:
 
-SC_SAVAGE_STEAK	(SI_SAVAGE_STEAK)
+SC_SAVAGE_STEAK	(EFST_SAVAGE_STEAK)
 	desc: Increase STR
 	val1: +STR
 
-SC_COCKTAIL_WARG_BLOOD	(SI_COCKTAIL_WARG_BLOOD)
+SC_COCKTAIL_WARG_BLOOD	(EFST_COCKTAIL_WARG_BLOOD)
 	desc: Increase INT
 	val1: +INT
 
-SC_MINOR_BBQ	(SI_MINOR_BBQ)
+SC_MINOR_BBQ	(EFST_MINOR_BBQ)
 	desc: Increase VIT
 	val1: +VIT
 
-SC_SIROMA_ICE_TEA	(SI_SIROMA_ICE_TEA)
+SC_SIROMA_ICE_TEA	(EFST_SIROMA_ICE_TEA)
 	desc: Increase DEX
 	val1: +DEX
 
-SC_DROCERA_HERB_STEAMED	(SI_DROCERA_HERB_STEAMED)
+SC_DROCERA_HERB_STEAMED	(EFST_DROCERA_HERB_STEAMED)
 	desc: Increase AGI
 	val1: +AGI
 
-SC_PUTTI_TAILS_NOODLES	(SI_PUTTI_TAILS_NOODLES)
+SC_PUTTI_TAILS_NOODLES	(EFST_PUTTI_TAILS_NOODLES)
 	desc: Increase LUK
 	val1: +LUK
 
-SC_BOOST500	(SI_BOOST500)
+SC_BOOST500	(EFST_BOOST500)
 	desc: Increase ASPD rate
 	val1: +% Aspd
 
-SC_FULL_SWING_K	(SI_FULL_SWING_K)
+SC_FULL_SWING_K	(EFST_FULL_SWING_K)
 	desc: Increase Base Atk
 	val1: +BaseAtk
 
-SC_MANA_PLUS	(SI_MANA_PLUS)
+SC_MANA_PLUS	(EFST_MANA_PLUS)
 	desc: Increase MAtk
 	val1: +Matk
 
-SC_MUSTLE_M	(SI_MUSTLE_M)
+SC_MUSTLE_M	(EFST_MUSTLE_M)
 	desc: Increase Max HP rate
 	val1: +% MaxHP
 
-SC_LIFE_FORCE_F	(SI_LIFE_FORCE_F)
+SC_LIFE_FORCE_F	(EFST_LIFE_FORCE_F)
 	desc: Increase Max SP rate
 	val1: +% MaxSP
 
-SC_EXTRACT_WHITE_POTION_Z	(SI_EXTRACT_WHITE_POTION_Z)
+SC_EXTRACT_WHITE_POTION_Z	(EFST_EXTRACT_WHITE_POTION_Z)
 	desc: Increase HP regen rate
 	val1: +% HP regen
 
-SC_VITATA_500	(SI_VITATA_500)
+SC_VITATA_500	(EFST_VITATA_500)
 	desc: Increase SP Regen rate & Max SP rate
 	val1: +% SP regen
 	val2: +% MaxSP
 
-SC_EXTRACT_SALAMINE_JUICE	(SI_EXTRACT_SALAMINE_JUICE)
+SC_EXTRACT_SALAMINE_JUICE	(EFST_EXTRACT_SALAMINE_JUICE)
 	desc: Increase ASP rate
 	val1: +% ASPD
 
@@ -2235,82 +2259,82 @@ SC_STYLE_CHANGE	()
 	desc: Eleanor's mode
 	val1:
 
-SC_TINDER_BREAKER	(SI_TINDER_BREAKER_POSTDELAY)
+SC_TINDER_BREAKER	(EFST_TINDER_BREAKER_POSTDELAY)
 	desc:
 	val1:
 
-SC_TINDER_BREAKER2	(SI_TINDER_BREAKER)
+SC_TINDER_BREAKER2	(EFST_TINDER_BREAKER)
 	desc: Tinder Breaker after-effect, just like Close Confine
 	val1:
 
-SC_CBC	(SI_CBC)
+SC_CBC	(EFST_CBC)
 	desc: Drain HP & SP each iteration (default is each 1 sec)
 	val1:
 	val2:
 	val3: %SP drain
 
-SC_EQC	(SI_EQC)
+SC_EQC	(EFST_EQC)
 	desc:
 	val1:
 	val2: -% Def
 	val3: -%MaxHP
 	val4:
 
-SC_GOLDENE_FERSE	(SI_GOLDENE_FERSE)
+SC_GOLDENE_FERSE	(EFST_GOLDENE_FERSE)
 	desc:
 	val1:
 	val2: +% Flee
 	val3: +% ASPD
 	val4: % Chance to convert attack as Holy element
 
-SC_ANGRIFFS_MODUS	(SI_ANGRIFFS_MODUS)
+SC_ANGRIFFS_MODUS	(EFST_ANGRIFFS_MODUS)
 	desc: Drain 100 HP & 20 SP each iteration (default is each 1 sec)
 	val1: Level. Usage for +MaxHP rate (5 * level)
 	val2: +ATK
 	val3: -Flee
 
-SC_OVERED_BOOST	(SI_OVERED_BOOST)
+SC_OVERED_BOOST	(EFST_OVERED_BOOST)
 	desc: When status ended, reduce 50% HP for player and increase 50 the Homunculus's hunger
 	val1:
 	val2: Fixed Flee value
 	val3: Fixed ASPD value
 	val4: -% Def
 
-SC_LIGHT_OF_REGENE	(SI_LIGHT_OF_REGENE)
+SC_LIGHT_OF_REGENE	(EFST_LIGHT_OF_REGENE)
 	desc:
 	val1:
 	val2: % of HP recovery on death
 
-SC_ASH	(SI_VOLCANIC_ASH)
+SC_ASH	(EFST_VOLCANIC_ASH)
 	desc: Increase damage to Fire element enemy (ratio +150%), reduce Hit, Def, Atk & Flee.
 	val1: -% Hit
 	val2: -% Def
 	val4: -Atk & Flee
 
-SC_GRANITIC_ARMOR	(SI_GRANITIC_ARMOR)
+SC_GRANITIC_ARMOR	(EFST_GRANITIC_ARMOR)
 	desc: Reduce the inflicted damage, when status ended deals another damage to self
 	val1:
 	val2: -%Damage
 	val3: Damage taken on status end
 
-SC_MAGMA_FLOW	(SI_MAGMA_FLOW)
+SC_MAGMA_FLOW	(EFST_MAGMA_FLOW)
 	desc:
 	val1:
 	val2: Rate to cast Magma Flow (deals damage) to target while attacking
 
-SC_PYROCLASTIC	(SI_PYROCLASTIC)
+SC_PYROCLASTIC	(EFST_PYROCLASTIC)
 	desc:
 	val1:
 	val2: +ATK
 	val3: % Rate to cast Hammer Fall
 
-SC_PARALYSIS	(SI_NEEDLE_OF_PARALYZE)
+SC_PARALYSIS	(EFST_NEEDLE_OF_PARALYZE)
 	desc:
 	val1:
 	val2: -Def
 	val3: +% CastTime
 
-SC_PAIN_KILLER	(SI_PAIN_KILLER)
+SC_PAIN_KILLER	(EFST_PAIN_KILLER)
 	desc: Reduce damage for certain value, reduce ASPD rate, inflict Endure if has active SC_PARALYSIS
 	val1:
 	val2: -% ASPD
@@ -2328,27 +2352,27 @@ SC_MDEFSET	()
 	desc: Vellum Weapon bonus. Set MDef value
 	val1: MDef fixed value
 
-SC_DARKCROW	(SI_DARKCROW)
+SC_DARKCROW	(EFST_DARKCROW)
 	desc: Increase short/melee damage rate
 	val1:
 	val2: +% Damage
 
-SC_FULL_THROTTLE	(SI_FULL_THROTTLE)
+SC_FULL_THROTTLE	(EFST_FULL_THROTTLE)
 	desc: Increase walk speed, increase allstats, full HP once activated
 	val1: Level, also used as Rebound level when this sc ended
 	val2: -SP each iteration
 	val3: +% Allstats
 
-SC_REBOUND	(SI_REBOUND)
+SC_REBOUND	(EFST_REBOUND)
 	desc: Full Throttle  after-effect. Reduce walk speed
 	val1:
 
-SC_UNLIMIT	(SI_UNLIMIT)
+SC_UNLIMIT	(EFST_UNLIMIT)
 	desc: Increase attak rate & set Def/MDef to 1, 
 	val1:
 	val2: +% Attack
 
-SC_KINGS_GRACE	(SI_KINGS_GRACE)
+SC_KINGS_GRACE	(EFST_KINGS_GRACE)
 	desc: Add Max HP & heal each iteration (default 1 seconds)
 	val1:
 	val2: +HP heal
@@ -2360,15 +2384,15 @@ SC_TELEKINESIS_INTENSE	()
 	val3: +Damage ratio
 	val4: -CastTime
 
-SC_OFFERTORIUM	(SI_OFFERTORIUM)
+SC_OFFERTORIUM	(EFST_OFFERTORIUM)
 	desc:
 	val1:
 	val2: +Heal Power
 	val3: +SP Cost
 
-SC_FRIGG_SONG	(SI_FRIGG_SONG)
+SC_FRIGG_SONG	(EFST_FRIGG_SONG)
 	desc: Add Max HP & heal each iteration (default 1 seconds)
-	val1:
+	val1: Skill Level
 	val2: +% MaxHP
 	val3: +HP heal
 
@@ -2380,7 +2404,7 @@ SC_ANGEL_PROTECT	()
 	desc:
 	val1:
 
-SC_ILLUSIONDOPING	(SI_ILLUSIONDOPING)
+SC_ILLUSIONDOPING	(EFST_ILLUSIONDOPING)
 	desc:
 	val1:
 	val2: -Hit
@@ -2390,94 +2414,90 @@ SC_FLASHCOMBO	()
 	val1:
 	val2: +ATK (isn't shown in status window)
 
-SC_MOONSTAR	(SI_MOONSTAR)
+SC_MOONSTAR	(EFST_MOONSTAR)
 	desc: Visual effect
 	val1:
 
-SC_SUPER_STAR	(SI_SUPER_STAR)
+SC_SUPER_STAR	(EFST_SUPER_STAR)
 	desc: Visual effect
 	val1:
 
-SC_HEAT_BARREL	()
-	desc: (Rebellion) Reduce fixed cast time, add ASPD rate, & reduce flee
-	val1:
-	val2: -Fixed Casttime
-	val3: +% ASPD
-	val4: -Flee
+SC_HEAT_BARREL	(EFST_HEAT_BARREL)
+	desc: (Rebellion) Reduce fixed cast time, add ASPD rate, and reduce FLEE
+	val1: SkillLv
+	val2: -Fixed Casttime (5 * val1)
+	val3: +% ASPD (6 + val1 * 2)
+	val4: -FLEE (25 + val1 * 5)
 
-SC_HEAT_BARREL_AFTER	(SI_HEAT_BARREL_AFTER)
-	desc: (Rebellion) Heat Barrel after-effect, can't do anything in this effect (like Extremity Fist after-effect)
-	val1:
+SC_P_ALTER	(EFST_P_ALTER)
+	desc: Increase attack ratio and creates a barrier like Kyrie
+	val1: SkillLv
+	val2: +ATK ratio (10 * Coin Count)
+	val3: Barrier HP (Max HP * (val1 * 5) / 100)
 
-SC_P_ALTER	(SI_P_ALTER)
-	desc: Increase attack ratio & def againts Undead monster
-	val1:
-	val2: +ATK ratio
-	val3: +Def
-
-SC_E_CHAIN	(SI_E_CHAIN)
+SC_E_CHAIN	(EFST_E_CHAIN)
 	desc: (Rebellion) Has chance to trigger Chain Action for any weapon
-	val1:
-	val2: Coins used for succes rate. (5*val)
+	val1: SkillLv
+	val2: Coins used for success rate. (5 * val)
 
-SC_C_MARKER	(SI_C_MARKER)
+SC_C_MARKER	(EFST_C_MARKER)
 	desc: (Rebellion) Crimson Marker effect, also sends the target location to the caster
-	val1:
+	val1: SkillLv
 	val2:
-	val3: -Flee
+	val3: -FLEE (10)
 
-SC_ANTI_M_BLAST	(SI_ANTI_M_BLAST)
+SC_ANTI_M_BLAST	(EFST_ANTI_M_BLAST)
 	desc: (Rebellion) Anti-Material effect, reduce resistance of Neutral attack
-	val1: Level for duration look up
-	val2: Reduction ratio
+	val1: SkillLv
+	val2: Reduction ratio (10 * val1)
 
-SC_B_TRAP	(SI_B_TRAP)
-	desc: (Rebellion) Bind Trap effect, waiting for Flicker being used
-	val1:
+SC_B_TRAP	(EFST_B_TRAP)
+	desc: (Rebellion) Bind Trap effect, waiting for Flicker to be used
+	val1: SkillLv
 	val2:
-	val3: -Walk Speed (Unstackable penalty)
+	val3: -Walk Speed (Unstackable penalty) (25 * val1)
 
-SC_H_MINE	(SI_H_MINE)
-	desc: (Rebellion) Howling Mine effect, waiting for Flicker being used
+SC_H_MINE	(EFST_H_MINE)
+	desc: (Rebellion) Howling Mine effect, waiting for Flicker to be used
 	val1:
 
-SC_QD_SHOT_READY	(SI_E_QD_SHOT_READY)
+SC_QD_SHOT_READY	(EFST_E_QD_SHOT_READY)
 	desc: (Rebellion) Combo stance to cast Quick Draw Shot
 	val1:
 
-SC_MTF_ASPD	(SI_MTF_ASPD)
+SC_MTF_ASPD	(EFST_MTF_ASPD)
 	desc: Increase ASP and Hit
 	val1: +ASPD
 	val2: +Hit
 
-SC_MTF_ASPD2	(SI_MTF_ASPD2)
+SC_MTF_ASPD2	(EFST_MTF_ASPD2)
 	desc: Increase ASP and Hit
 	val1: +ASPD
 	val2: +Hit
 
-SC_MTF_RANGEATK	(SI_MTF_RANGEATK)
+SC_MTF_RANGEATK	(EFST_MTF_RANGEATK)
 	desc: Increase Long-ranged damage while attacking
 	val1: +% Damage (not be shown in status window)
 
-SC_MTF_RANGEATK2	(SI_MTF_RANGEATK2)
+SC_MTF_RANGEATK2	(EFST_MTF_RANGEATK2)
 	desc: Increase Long-ranged damage while attacking
 	val1: +% Damage (not be shown in status window)
 
-SC_MTF_MATK	(SI_MTF_MATK)
+SC_MTF_MATK	(EFST_MTF_MATK)
 	desc: Increase MATK damage while attacking
 	val1: +% MATK
 
-SC_MTF_MATK2	(SI_MTF_MATK2)
+SC_MTF_MATK2	(EFST_MTF_MATK2)
 	desc: Increase MATK damage while attacking
 	val1: + MATK
 
-SC_MTF_MLEATKED	(SI_MTF_MLEATKED)
+SC_MTF_MLEATKED	(EFST_MTF_MLEATKED)
 	desc: Has chance to cast Endure to self while attacked
 	val1: Endure Level
 	val2: Rate to cast
 	val3: Neutral element resistance
 
-SC_MTF_CRIDAMAGE	(SI_MTF_CRIDAMAGE)
+SC_MTF_CRIDAMAGE	(EFST_MTF_CRIDAMAGE)
 	desc: Bonus critical rate of monster transformation
 	val1: +% Critical
 
@@ -2485,27 +2505,27 @@ SC_OKTOBERFEST	()
 	desc: Costume
 	val1:
 
-SC_STRANGELIGHTS	(SI_STRANGELIGHTS)
+SC_STRANGELIGHTS	(EFST_STRANGELIGHTS)
 	desc:
 	val1:
 
-SC_DECORATION_OF_MUSIC	(SI_DECORATION_OF_MUSIC)
+SC_DECORATION_OF_MUSIC	(EFST_DECORATION_OF_MUSIC)
 	desc:
 	val1:
 
-SC_QUEST_BUFF1	(SI_QUEST_BUFF1)
+SC_QUEST_BUFF1	(EFST_QUEST_BUFF1)
 	desc:
 	val1: +ATK & +MATK
 
-SC_QUEST_BUFF2	(SI_QUEST_BUFF2)
+SC_QUEST_BUFF2	(EFST_QUEST_BUFF2)
 	desc:
 	val1: +ATK & +MATK
 
-SC_QUEST_BUFF3	(SI_QUEST_BUFF3)
+SC_QUEST_BUFF3	(EFST_QUEST_BUFF3)
 	desc:
 	val1: +ATK & +MATK
 
-SC_ALL_RIDING	(SI_ALL_RIDING)
+SC_ALL_RIDING	(EFST_ALL_RIDING)
 	desc:
 	val1:
 
@@ -2526,78 +2546,78 @@ SC_ELEMENTAL_SHIELD	()
 	desc: Block magic attack
 	val1:
 
-SC_CHASEWALK2	(SI_CHASEWALK2)
+SC_CHASEWALK2	(EFST_CHASEWALK2)
 	desc: 2nd effect of Chasewalk
 	val1: +STR
 
-SC_SUHIDE	(SI_SUHIDE)
+SC_SUHIDE	(EFST_SUHIDE)
 	desc: Hide caster. Can be seen by insect, demon, and boss. Cannot move or pickup items.
 	val1: Skill Lv
 
-SC_SU_STOOP	(SI_SU_STOOP)
+SC_SU_STOOP	(EFST_SU_STOOP)
 	desc: Places a temporary buff on the user that decreases all damage taken by 90%.
 	val1: Skill Lv
 
-SC_SPRITEMABLE	(SI_SPRITEMABLE)
+SC_SPRITEMABLE	(EFST_SPRITEMABLE)
 	desc: Increase 1000 HP and 100 SP.
 	val1:
 
-SC_CATNIPPOWDER	(SI_CATNIPPOWDER)
+SC_CATNIPPOWDER	(EFST_CATNIPPOWDER)
 	desc: Reduces ATK and MATK by 50% to targets in a 3x3~7x7 area. HP and SP recovery rate increase.
 	val1: Skill Lv
 	val2: WATK% / MATK%
 	val3: Movement speed reduction
 
-SC_SV_ROOTTWIST	(SI_SV_ROOTTWIST)
+SC_SV_ROOTTWIST	(EFST_SV_ROOTTWIST)
 	desc: Prevents the target from moving and receives 100 Poison damage every second. Cannot be used on Boss monsters.
 	val1: Skill Lv
 
-SC_BITESCAR	(SI_BITESCAR)
+SC_BITESCAR	(EFST_BITESCAR)
 	desc: Drains a portion of the target's Max HP each second.
 	val1: Skill Lv
 	val2: Max HP% damage
 	val4: Tick
 
-SC_ARCLOUSEDASH	(SI_ARCLOUSEDASH)
+SC_ARCLOUSEDASH	(EFST_ARCLOUSEDASH)
 	desc: Increases Agi and movement speed.
 	val1: AGI
 	val2: Movement speed increase
 	val4: Ranged ATK increase for Doram
 
-SC_TUNAPARTY	(SI_TUNAPARTY)
+SC_TUNAPARTY	(EFST_TUNAPARTY)
 	desc: Protects from damage, the amount is based on Max HP.
 	val1: Max HP% to absorb
 	val2: Double the shield life with Spirit of Sea
 
-SC_SHRIMP	(SI_SHRIMP)
+SC_SHRIMP	(EFST_SHRIMP)
 	desc: Gives all party members on screen +10% ATK and MATK.
 	val1: BATK% / MATK%
 
-SC_FRESHSHRIMP	(SI_FRESHSHRIMP)
+SC_FRESHSHRIMP	(EFST_FRESHSHRIMP)
 	desc: Recovers a small amount of HP. Each level reduces the time between each HP recovery tick.
 	val1: Skill Lv
 	val2: Heal amount
 	val4: Tick
 
-SC_HISS	(SI_HISS)
+SC_HISS	(EFST_HISS)
 	desc: Increases movement speed and perfect dodge of the user and his party.
 	val1: Skill Lv
 	val2: Perfect Dodge
 
-SC_NYANGGRASS	(SI_NYANGGRASS)
+SC_NYANGGRASS	(EFST_NYANGGRASS)
 	desc: Reduces monster's DEF and MDEF by 50%. Reduces other player's equipment DEF and MDEF to 0.
 	val1: Skill Lv
 
-SC_GROOMING	(SI_GROOMING)
+SC_GROOMING	(EFST_GROOMING)
 	desc: FLEE + 100. Cures Poison, Frozen, Stun, Sleep, Bleeding, Silence, Crystallization, Deep Sleep, Fear, and Mandragora Howling.
 	val1: Skill Lv
 	val2: FLEE
 
-SC_SHRIMPBLESSING	(SI_PROTECTIONOFSHRIMP)
+SC_SHRIMPBLESSING	(EFST_PROTECTIONOFSHRIMP)
 	desc: Increases caster's SP recovery by 150%.
 	val1: Skill Lv
 
-SC_CHATTERING	(SI_CHATTERING)
+SC_CHATTERING	(EFST_CHATTERING)
 	desc: Increases the player's ATK and MATK by 100. Increases the player's movespeed.
 	val1: Skill Lv
 	val2: ATK / MATK
@@ -2618,51 +2638,51 @@ SC_DORAM_SVSP	()
 	desc: Casts Silvervine Stem Spear when receiving Magic or Ranged damage after using Catnip Meteor for Spirit of Land.
 	val1: Value to know it's active
 
-SC_GVG_GIANT	(SI_GVG_GIANT)
+SC_GVG_GIANT	(EFST_GVG_GIANT)
 	desc: Instantly consumes HP/SP, increases Physical/Magic damage on player enemies by n%.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 	val3: Increases % Physical damage
 	val4: Increases % Magical damage
 
-SC_GVG_GOLEM	(SI_GVG_GOLEM)
+SC_GVG_GOLEM	(EFST_GVG_GOLEM)
 	desc: Instantly consumes HP/SP, decreases n% damage received from other adventurers.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 	val3: Decreases % damage received of physical attack
 	val4: Decreases % damage received of magical attack
 
-SC_GVG_STUN	(SI_GVG_STUN)
+SC_GVG_STUN	(EFST_GVG_STUN)
 	desc: Instantly consumes HP/SP, immunizes you against Stun.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_GVG_STONE	(SI_GVG_STONE)
+SC_GVG_STONE	(EFST_GVG_STONE)
 	desc: Instantly consumes HP/SP, immunizes you against Petrification.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_GVG_FREEZ	(SI_GVG_FREEZ)
+SC_GVG_FREEZ	(EFST_GVG_FREEZ)
 	desc: Instantly consumes HP/SP, immunizes you against Frost.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_GVG_SLEEP	(SI_GVG_SLEEP)
+SC_GVG_SLEEP	(EFST_GVG_SLEEP)
 	desc: Instantly consumes HP/SP, immunizes you against Sleep.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_GVG_CURSE	(SI_GVG_CURSE)
+SC_GVG_CURSE	(EFST_GVG_CURSE)
 	desc: Instantly consumes HP/SP, immunizes you against Curse.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_GVG_SILENCE	(SI_GVG_SILENCE)
+SC_GVG_SILENCE	(EFST_GVG_SILENCE)
 	desc: Instantly consumes HP/SP, immunizes you against Silence.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_GVG_BLIND	(SI_GVG_BLIND)
+SC_GVG_BLIND	(EFST_GVG_BLIND)
 	desc: Instantly consumes HP/SP, immunizes you against Blind.
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed

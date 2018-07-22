@@ -1,0 +1,65 @@
+//===== rAthena Script ======================================= 
+//= Crusader Job Quest
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Job quest for Crusader classes
+//===== Changelogs: ==========================================
+//= 1.0 Location changed in ep16.1 [Capuche]
+//============================================================
+
+// Senior Crusader: 1st Collect Items Test
+//============================================================
+prt_castle,45,169,5	duplicate(Senior Crusader_)	Senior Crusader	4_M_CRU_OLD
+
+// Suffering Man: 2nd Endurance Test
+//============================================================
+prt_castle,164,32,1	duplicate(Man in Anguish_)	Man in Anguish	4_M_JOB_KNIGHT1
+
+// Crusader: 4th Purification Test
+//============================================================
+prt_castle,35,151,5	duplicate(Patron Knight_)	Patron Knight	4_M_CRU
+
+// Actual tests
+//============================================================
+
+//----------------------------------------------------------------------------
+// Endurance Test
+//----------------------------------------------------------------------------
+job_cru,98,105,4	script	 Summoner#cr5	WARPNPC,3,3,{
+	end;
+OnTouch_:
+	set CRUS_Q,6;
+	changequest 3010,3011;
+	warp "prt_castle",164,28;
+	end;
+}
+
+//----------------------------------------------------------------------------
+// Purification Test
+//----------------------------------------------------------------------------
+job_cru,168,180,4	script	Monster Summon#cr5	WARPNPC,3,3,{
+	end;
+OnInit:
+	disablenpc "Monster Summon#cr5";
+	end;
+
+OnTouch_:
+	warp "prt_castle",35,147;
+	donpcevent "Monster Summon#cr0::OnReset";
+	donpcevent "Monster Summon#cr4::OnReset";
+	donpcevent "Monster Summon#cr0::OnEnd";
+	donpcevent "Monster Summon#cr4::OnEnd";
+	donpcevent "Monster Summon#cr5::OnEnd";
+	donpcevent "Monster Summon#cr6::OnStop";
+	donpcevent "Monster Summon#cr6::OnEnd";
+	donpcevent "Waiting Room#cr1::OnStart";
+	end;
+
+OnStart:
+	enablenpc "Monster Summon#cr5";
+	end;
+
+OnEnd:
+	disablenpc "Monster Summon#cr5";
+	end;
+}

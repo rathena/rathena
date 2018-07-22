@@ -1,11 +1,5 @@
 //===== rAthena Script ======================================= 
 //= Blessed Refiner
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiners that use Blessed ores to refine equipment.
@@ -13,8 +7,9 @@
 //= rate is identical to that for Enriched ores.
 //= - "Blacksmith Dister" only refines from +6~12.
 //= NOTE: This NPC is currently disabled on official servers.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
 //============================================================
 
 // Main NPC :: new_smelting612
@@ -73,7 +68,10 @@
 		mes "This item cannot be refined.";
 		close;
 	}
-	set .@equip_refine, getequiprefinerycnt(.@part);
+	.@equip_id = getequipid(.@part);
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+
 	if (.@equip_refine < 6 || .@equip_refine > 12) {
 		mes "[Blacksmith Dister]";
 		mes "This equipment has refined to "+.@equip_refine+". I only handle items with refine levels from +6 to +12!";
@@ -139,9 +137,14 @@
 	}
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	mes "[Blacksmith Dister]";
 	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		specialeffect EF_BLESSING;
 		successrefitem .@part;
 		next;
@@ -155,7 +158,7 @@
 	specialeffect EF_CURSEATTACK;
 	specialeffect2 EF_SUI_EXPLOSION;
 	next;
-	emotion (!rand(5))?e_ag:e_omg;
+	emotion (!rand(5))?ET_ANGER:ET_HUK;
 	mes "[Blacksmith Dister]";
 	mes "Oh my goodness!!!!";
 	next;

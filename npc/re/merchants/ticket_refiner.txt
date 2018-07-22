@@ -44,7 +44,7 @@ prontera,184,177,6	script	Refine Master	851,{
 			close;
 		}
 	}
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Refine Master]";
 	mes "Greetings!";
 	mes "I can refine an item up to the ^006400same level as your ticket^000000.";
@@ -70,12 +70,15 @@ prontera,184,177,6	script	Refine Master	851,{
 		close;
 	}
 	if (!getequipisenableref(.@part)) {
-		emotion e_otl;
+		emotion ET_OTL;
 		mes "[Refine Master]";
 		mes "Oh, I'm sorry.";
 		mes "This item is impossible to refine.";
 		close;
 	}
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:
@@ -95,7 +98,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		break;
 	}
 	if (!.@check) {
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Refine Master]";
 		mes "If you want to refine this ^006400"+.@type$+"^000000, please come along with ^006400"+.@type$+" Refine Ticket^000000.";
 		mes "See you later!";
@@ -111,7 +114,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	set .@ticket_lv, .@levels[.@select];
 	set .@ticket_id, .@tickets[.@select];
 	if (countitem(.@ticket_id) == 0) {
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Refine Master]";
 		mes getitemname(.@ticket_id)+" is not in your inventory. Did you put it in your storage?";
 		mes "Please check again.";
@@ -119,7 +122,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		close;
 	}
 	if (getequiprefinerycnt(.@part) >= .@ticket_lv) {
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Refine Master]";
 		mes "^8B4513This item is already refined as much as your deed.^000000";
 		mes "Please come along with an item refined less than your ticket.";
@@ -130,7 +133,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	mes "May I proceed?";
 	next;
 	if(select("No.:Yes.") == 1) {
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Refine Master]";
 		mes "Oh, you changed your mind.";
 		mes "Ok.";
@@ -143,9 +146,20 @@ prontera,184,177,6	script	Refine Master	851,{
 	mes "I have my own special way to refine...";
 	mes ".......ka boom!";
 	specialeffect EF_SUI_EXPLOSION;
-	if (countitem(.@ticket_id))
+	if (countitem(.@ticket_id)) {
 		delitem .@ticket_id,1;
-	else {
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+			callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
+			mes "[Refine Master]";
+			emotion ET_FRET;
+			mes "Wait a second...";
+			mes "Do you think I'm stupid?!";
+			mes "You switched the item while I wasn't looking! Get out of here!";
+			close;
+		}
+	} else {
 		next;
 		mes "Error!";
 		mes "Please report this.";
@@ -153,7 +167,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	}
 	successrefitem .@part, .@ticket_lv - getequiprefinerycnt(.@part);
 	next;
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Refine Master]";
 	mes "Alright, here it is~";
 	mes "Well, ^0000FF"+strcharinfo(0)+"^000000!";

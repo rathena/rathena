@@ -1,38 +1,38 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/mmo.h"
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "char.h"
-#include "char_logif.h"
-#include "char_mapif.h"
-#include "inter.h"
-#include "int_party.h"
-#include "int_guild.h"
-#include "int_storage.h"
-#include "int_pet.h"
-#include "int_homun.h"
-#include "int_mercenary.h"
-#include "int_mail.h"
-#include "int_auction.h"
-#include "int_quest.h"
-#include "int_elemental.h"
-#include "int_clan.h"
-#include "int_achievement.h"
+#include "inter.hpp"
 
+#include <stdlib.h>
+#include <string.h>
+#include <string>
+#include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
+#include <vector>
 #include <yaml-cpp/yaml.h>
 
-#include <string>
-#include <vector>
-#include <stdlib.h>
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
-#include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
-
+#include "char.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_achievement.hpp"
+#include "int_auction.hpp"
+#include "int_clan.hpp"
+#include "int_elemental.hpp"
+#include "int_guild.hpp"
+#include "int_homun.hpp"
+#include "int_mail.hpp"
+#include "int_mercenary.hpp"
+#include "int_party.hpp"
+#include "int_pet.hpp"
+#include "int_quest.hpp"
+#include "int_storage.hpp"
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 #define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis
@@ -65,9 +65,9 @@ int inter_recv_packet_length[] = {
 };
 
 struct WisData {
-	int id, fd, count, len;
+	int id, fd, count, len, gmlvl;
 	unsigned long tick;
-	unsigned char src[NAME_LENGTH], dst[NAME_LENGTH], msg[512];
+	char src[NAME_LENGTH], dst[NAME_LENGTH], msg[512];
 };
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
@@ -115,6 +115,7 @@ const char* job_name(int class_) {
 			return msg_txt(20 - JOB_WEDDING+class_);
 
 		case JOB_SUMMER:
+		case JOB_SUMMER2:
 			return msg_txt(71);
 
 		case JOB_HANBOK:
@@ -306,10 +307,20 @@ const char* job_name(int class_) {
 			return msg_txt(110 - JOB_BABY_NINJA+class_);
 
 		case JOB_BABY_STAR_GLADIATOR2:
-			return msg_txt(114);
+		case JOB_STAR_EMPEROR:
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_BABY_SOUL_REAPER:
+			return msg_txt(114 - JOB_BABY_STAR_GLADIATOR2 + class_);
+
+		case JOB_STAR_EMPEROR2:
+			return msg_txt(118);
+
+		case JOB_BABY_STAR_EMPEROR2:
+			return msg_txt(120);
 
 		default:
-			return msg_txt(118);
+			return msg_txt(199);
 	}
 }
 
@@ -412,7 +423,7 @@ void inter_to_fd(int fd, int u_fd, int aid, char* msg, ...) {
  * @param acc_id : id of player found
  * @param acc_name : name of player found
  */
-static void mapif_acc_info_ack(int fd, int u_fd, int acc_id, const char* acc_name){
+void mapif_acc_info_ack(int fd, int u_fd, int acc_id, const char* acc_name){
 	WFIFOHEAD(fd,10 + NAME_LENGTH);
 	WFIFOW(fd,0) = 0x3808;
 	WFIFOL(fd,2) = u_fd;
@@ -477,7 +488,7 @@ void mapif_parse_accinfo(int fd) {
 	}
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
-	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, u_group, account_id, type) != 1) {
+	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id, type) != 1) {
 		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
 	}
 	return;
@@ -488,7 +499,7 @@ void mapif_parse_accinfo(int fd) {
  */
 void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int account_id, int8 type,
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
-	const char *birthdate, const char *user_pass, const char *pincode, const char *userid)
+	const char *birthdate, const char *userid)
 {
 	
 	if (map_fd <= 0 || !session_isActive(map_fd))
@@ -506,7 +517,6 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(217), account_id);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(218), userid, group_id, state);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(219), user_pass[0] != '\0' ? user_pass : msg_txt(220), pincode[0] != '\0' ? msg_txt(220) : pincode);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(221), email, birthdate);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(222), last_ip, geoip_getcountry(str2ip(last_ip)));
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(223), logincount, lastlogin);
@@ -772,7 +782,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 /*==========================================
  * read config file
  *------------------------------------------*/
-static int inter_config_read(const char* cfgName)
+int inter_config_read(const char* cfgName)
 {
 	char line[1024];
 	FILE* fp;
@@ -821,7 +831,7 @@ static int inter_config_read(const char* cfgName)
 }
 
 // Save interlog into sql
-int inter_log(char* fmt, ...)
+int inter_log(const char* fmt, ...)
 {
 	char str[255];
 	char esc_str[sizeof(str)*2+1];// escaped str
@@ -838,7 +848,7 @@ int inter_log(char* fmt, ...)
 	return 0;
 }
 
-static void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string &file) {
+void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string &file) {
 	YAML::Emitter out;
 	out << node;
 	ShowWarning(fmt, file.c_str());
@@ -848,7 +858,7 @@ static void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string 
 /**
  * Read inter config file
  **/
-static void inter_config_readConf(void) {
+void inter_config_readConf(void) {
 	std::vector<std::string> directories = { "conf/", "conf/import/" };
 	static const std::string file_name(interserv_config.cfgFile);
 
@@ -927,7 +937,7 @@ void inter_config_finalConf(void) {
 
 }
 
-static void inter_config_defaults(void) {
+void inter_config_defaults(void) {
 	interserv_config.cfgFile = "inter_server.yml";
 }
 
@@ -1044,28 +1054,19 @@ int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short 
 int mapif_wis_message(struct WisData *wd)
 {
 	unsigned char buf[2048];
-	if (wd->len > 2047-56) wd->len = 2047-56; //Force it to fit to avoid crashes. [Skotlex]
+	int headersize = 12 + 2 * NAME_LENGTH;
+
+	if (wd->len > 2047-headersize) wd->len = 2047-headersize; //Force it to fit to avoid crashes. [Skotlex]
 
 	WBUFW(buf, 0) = 0x3801;
-	WBUFW(buf, 2) = 56 +wd->len;
+	WBUFW(buf, 2) = headersize+wd->len;
 	WBUFL(buf, 4) = wd->id;
-	memcpy(WBUFP(buf, 8), wd->src, NAME_LENGTH);
-	memcpy(WBUFP(buf,32), wd->dst, NAME_LENGTH);
-	memcpy(WBUFP(buf,56), wd->msg, wd->len);
+	WBUFL(buf, 8) = wd->gmlvl;
+	safestrncpy(WBUFCP(buf,12), wd->src, NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,12 + NAME_LENGTH), wd->dst, NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,12 + 2*NAME_LENGTH), wd->msg, wd->len);
 	wd->count = chmapif_sendall(buf,WBUFW(buf,2));
 
-	return 0;
-}
-
-// Wis sending result
-int mapif_wis_end(struct WisData *wd, int flag)
-{
-	unsigned char buf[27];
-
-	WBUFW(buf, 0)=0x3802;
-	memcpy(WBUFP(buf, 2),wd->src,24);
-	WBUFB(buf,26)=flag;
-	chmapif_send(wd->fd,buf,27);
 	return 0;
 }
 
@@ -1121,7 +1122,7 @@ int check_ttl_wisdata(void)
 			struct WisData *wd = (struct WisData*)idb_get(wis_db, wis_dellist[i]);
 			ShowWarning("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
 			// removed. not send information after a timeout. Just no answer for the player
-			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
+			//mapif_wis_reply(wd->fd, wd->src, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 			idb_remove(wis_db, wd->id);
 		}
 	} while(wis_delnum >= WISDELLIST_MAX);
@@ -1155,6 +1156,17 @@ int mapif_parse_broadcast_item(int fd) {
 	return 0;
 }
 
+// Wis sending result
+// flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
+int mapif_wis_reply( int mapserver_fd, char* target, uint8 flag ){
+	unsigned char buf[27];
+
+	WBUFW(buf, 0) = 0x3802;
+	safestrncpy(WBUFCP(buf, 2), target, NAME_LENGTH);
+	WBUFB(buf,26) = flag;
+
+	return chmapif_send(mapserver_fd, buf, 27);
+}
 
 // Wisp/page request to send
 int mapif_parse_WisRequest(int fd)
@@ -1164,19 +1176,20 @@ int mapif_parse_WisRequest(int fd)
 	char esc_name[NAME_LENGTH*2+1];// escaped name
 	char* data;
 	size_t len;
+	int headersize = 8+2*NAME_LENGTH;
 
 
 	if ( fd <= 0 ) {return 0;} // check if we have a valid fd
 
-	if (RFIFOW(fd,2)-52 >= sizeof(wd->msg)) {
+	if (RFIFOW(fd,2)-headersize >= sizeof(wd->msg)) {
 		ShowWarning("inter: Wis message size too long.\n");
 		return 0;
-	} else if (RFIFOW(fd,2)-52 <= 0) { // normaly, impossible, but who knows...
+	} else if (RFIFOW(fd,2)-headersize <= 0) { // normaly, impossible, but who knows...
 		ShowError("inter: Wis message doesn't exist.\n");
 		return 0;
 	}
 
-	safestrncpy(name, RFIFOCP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
+	safestrncpy(name, RFIFOCP(fd,8+NAME_LENGTH), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", schema_config.char_db, esc_name) )
@@ -1185,11 +1198,7 @@ int mapif_parse_WisRequest(int fd)
 	// search if character exists before to ask all map-servers
 	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
 	{
-		unsigned char buf[27];
-		WBUFW(buf, 0) = 0x3802;
-		memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
-		WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-		chmapif_send(fd, buf, 27);
+		mapif_wis_reply(fd, RFIFOCP(fd, 8), 1);
 	}
 	else
 	{// Character exists. So, ask all map-servers
@@ -1198,13 +1207,9 @@ int mapif_parse_WisRequest(int fd)
 		memset(name, 0, NAME_LENGTH);
 		memcpy(name, data, zmin(len, NAME_LENGTH));
 		// if source is destination, don't ask other servers.
-		if( strncmp(RFIFOCP(fd,4), name, NAME_LENGTH) == 0 )
+		if( strncmp(RFIFOCP(fd,8), name, NAME_LENGTH) == 0 )
 		{
-			uint8 buf[27];
-			WBUFW(buf, 0) = 0x3802;
-			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
-			WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-			chmapif_send(fd, buf, 27);
+			mapif_wis_reply(fd, RFIFOCP(fd, 8), 1);
 		}
 		else
 		{
@@ -1217,10 +1222,11 @@ int mapif_parse_WisRequest(int fd)
 
 			wd->id = ++wisid;
 			wd->fd = fd;
-			wd->len= RFIFOW(fd,2)-52;
-			memcpy(wd->src, RFIFOP(fd, 4), NAME_LENGTH);
-			memcpy(wd->dst, RFIFOP(fd,28), NAME_LENGTH);
-			memcpy(wd->msg, RFIFOP(fd,52), wd->len);
+			wd->len= RFIFOW(fd,2)-headersize;
+			wd->gmlvl = RFIFOL(fd,4);
+			safestrncpy(wd->src, RFIFOCP(fd,8), NAME_LENGTH);
+			safestrncpy(wd->dst, RFIFOCP(fd,8+NAME_LENGTH), NAME_LENGTH);
+			safestrncpy(wd->msg, RFIFOCP(fd,8+2*NAME_LENGTH), wd->len);
 			wd->tick = gettick();
 			idb_put(wis_db, wd->id, wd);
 			mapif_wis_message(wd);
@@ -1235,7 +1241,8 @@ int mapif_parse_WisRequest(int fd)
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd)
 {
-	int id, flag;
+	int id;
+	uint8 flag;
 	struct WisData *wd;
 
 	id = RFIFOL(fd,2);
@@ -1245,7 +1252,7 @@ int mapif_parse_WisReply(int fd)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
 
 	if ((--wd->count) <= 0 || flag != 1) {
-		mapif_wis_end(wd, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
+		mapif_wis_reply(wd->fd, wd->src, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 		idb_remove(wis_db, id);
 	}
 
@@ -1271,37 +1278,44 @@ int mapif_parse_Registry(int fd)
 
 	if( count ) {
 		int cursor = 14, i;
-		char key[32], sval[254];
 		bool isLoginActive = session_isActive(login_fd);
 
 		if( isLoginActive )
 			chlogif_upd_global_accreg(account_id,char_id);
 
 		for(i = 0; i < count; i++) {
-			unsigned int index;
-			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
-			cursor += RFIFOB(fd, cursor) + 1;
+			size_t lenkey = RFIFOB( fd, cursor );
+			const char* src_key= RFIFOCP(fd, cursor + 1);
+			std::string key( src_key, lenkey );
+			cursor += lenkey + 1;
 
-			index = RFIFOL(fd, cursor);
+			unsigned int  index = RFIFOL(fd, cursor);
 			cursor += 4;
 
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-					inter_savereg(account_id,char_id,key,index,RFIFOL(fd, cursor),false);
+				{
+					intptr_t lVal = RFIFOL( fd, cursor );
+					inter_savereg( account_id, char_id, key.c_str(), index, lVal, false );
 					cursor += 4;
 					break;
+				}
 				case 1:
-					inter_savereg(account_id,char_id,key,index,0,false);
+					inter_savereg(account_id,char_id,key.c_str(),index,0,false);
 					break;
 				// str
 				case 2:
-					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
-					cursor += RFIFOB(fd, cursor) + 1;
-					inter_savereg(account_id,char_id,key,index,(intptr_t)sval,true);
+				{
+					size_t len_val = RFIFOB( fd, cursor );
+					const char* src_val= RFIFOCP(fd, cursor + 1);
+					std::string sval( src_val, len_val );
+					cursor += len_val + 1;
+					inter_savereg( account_id, char_id, key.c_str(), index, (intptr_t)sval.c_str(), true );
 					break;
+				}
 				case 3:
-					inter_savereg(account_id,char_id,key,index,0,true);
+					inter_savereg(account_id,char_id,key.c_str(),index,0,true);
 					break;
 				default:
 					ShowError("mapif_parse_Registry: unknown type %d\n",RFIFOB(fd, cursor - 1));
@@ -1328,7 +1342,7 @@ int mapif_parse_RegistryRequest(int fd)
 	return 1;
 }
 
-static void mapif_namechange_ack(int fd, uint32 account_id, uint32 char_id, int type, int flag, char *name)
+void mapif_namechange_ack(int fd, uint32 account_id, uint32 char_id, int type, int flag, char *name)
 {
 	WFIFOHEAD(fd, NAME_LENGTH+13);
 	WFIFOW(fd, 0) = 0x3806;

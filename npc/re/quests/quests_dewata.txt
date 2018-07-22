@@ -135,11 +135,11 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew	541,{
 		mes "but...... this....";
 		next;
 		mes "[Sage Kasyapa]";
-		mes "Nevermind, please have a good trip.";
+		mes "Never mind, please have a good trip.";
 		close;
 	} else if (dew_legend == 4) {
 		mes "[Sage Kasyapa]";
-		mes "I've been wating for you traveler.";
+		mes "I've been waiting for you traveler.";
 		mes "Our tribe's leader has a favor";
 		mes "to ask of you.";
 		mes "Please talk to Chief ^0000FFPaiko^000000.";
@@ -166,7 +166,7 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew	541,{
 		close;
 	} else if (dew_legend == 7) {
 		mes "[Sage Kasyapa]";
-		mes "There is somehing";
+		mes "There is something";
 		mes "I wish to give to you";
 		mes "as a reward for your help.";
 		mes "Please, it would honor us if you would take it.";
@@ -261,7 +261,7 @@ dew_in01,15,49,4	script	Tribal Chief Paiko#dew	540,{
 		close;
 	} else if (dew_legend == 4) {
 		mes "[Tribal Chief Paiko]";
-		mes "I've been wating for you, traveler";
+		mes "I've been waiting for you, traveler";
 		mes "according to sage ^0000FFKasyapa^000000";
 		mes "You are willing to help us make a crown for our tribe.";
 		select("Crown-a-whatsis?");
@@ -551,7 +551,7 @@ dew_fild01,78,288,6	script	Jaty Tribe Warrior#dew	541,{
 	mes "Nevertheless we will continue keeping the warrior tradition of our tribe alive and we will preserve the pride we have earned through the sacrifice of those past warriors.";
 	next;
 	mes "[Jaty Tribe Warrior]";
-	mes "I hope that your perserverance and pride remain with you in your travels.";
+	mes "I hope that your perseverance and pride remain with you in your travels.";
 	close;
 }
 
@@ -596,7 +596,7 @@ dew_fild01,185,300,6	script	Tribe Manager#dew	541,{
 	mes "^8B4513Dewata Island^000000 has became a tourist attraction and we have lost touch with them.";
 	next;
 	mes "[Tribe Manager]";
-	mes "The tourist attraction has expanded continously but the reason it hasn't influenced us here is due to this small temple which I am managing.";
+	mes "The tourist attraction has expanded continuously but the reason it hasn't influenced us here is due to this small temple which I am managing.";
 	next;
 	mes "[Tribe Manager]";
 	mes "I couldn't let our tradition fade away like that easily.";
@@ -778,19 +778,19 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		if (rand(3)) {
 			mes "[Memo]";
 			mes "Oh god! We don't have a message from the Jaty tribe yet.";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "[Memo]";
 			mes "They have never broken a promise for 10 years, I do not know the reason. What's happening?";
 			next;
 			mes "[Memo]";
 			mes "I might spoil all the liquid if it is going on like this.";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		mes "[Memo]";
 		mes "What should I do? I still don't have any news from the Jaty tribe.";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Memo]";
 		mes "Oh no~ All the liquid is going to spoil...";
@@ -798,7 +798,7 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		select("What happened?");
 		mes "[Memo]";
 		mes "Who are you?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Memo]";
 		mes "You are an adventurer, right?";
@@ -821,9 +821,9 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		next;
 		mes "[Memo]";
 		mes "... ...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Memo]";
 		mes "Ah, right! Are you busy now?";
 		next;
@@ -831,7 +831,7 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 			mes "[Memo]";
 			mes "Hmm, I have no choice.";
 			mes "You don't care that others are in trouble. What has this world come to?";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 		mes "[Memo]";
@@ -859,7 +859,7 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		next;
 		mes "[Memo]";
 		mes "... ... ... ...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Memo]";
 		mes "You didn't find out what happened?";
@@ -918,7 +918,7 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		if (checkquest(5043,PLAYTIME) == 0) {
 			mes "[Memo]";
 			mes "... ... ...";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "- Memo is making an ark. -";
 			close;
@@ -956,7 +956,7 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		mes "[Memo]";
 		mes "In other words, it's easy to say that we'll help others but it's hard to actually do the action.";
 		next;
-		emotion e_thx;
+		emotion ET_THANKS;
 		mes "[Memo]";
 		mes "You really did a great job. I like you because you are different from today's youngins.";
 		changequest 5043,5044;
@@ -1080,18 +1080,18 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 		mes "[Lero]";
 		mes "Oh no! I have so many orders and I'm running out of ingredients.";
 		mes "Not yet? What's going on, Poby? Where did he go?";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		select("Excuse me, but are you Lero?");
 		mes "[Lero]";
 		mes "When Poby gets back here, I'm gonna give him a beating he'll never forget!";
-		emotion e_ag;
+		emotion ET_ANGER;
 		next;
 		mes "- Lero seems pretty mad at someone and ignores you -";
 		next;
 		mes "[Lero]";
 		mes "Oops. Who are you?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		select("Memo sent me here.");
 		mes "[Lero]";
@@ -1123,7 +1123,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 	} else if (dew_drink == 2) {
 		mes "[Lero]";
 		mes "Did you find Poby?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Lero]";
 		mes "... ... ...";
@@ -1135,7 +1135,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 		mes "[Lero]";
 		mes "You're back... and... Poby...";
 		mes "How is Poby?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		select("Poby.....");
 		mes "[Lero]";
@@ -1196,7 +1196,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			mes "[Lero]";
 			mes "60 pieces of nuts, exactly. I will press the oil right now.";
 			next;
-			emotion e_sry;
+			emotion ET_SORRY;
 			mes "[Lero]";
 			mes "It takes some time, so go back to Mr. Memo and tell him the situation. Also tell him that I'm sorry for the delay.";
 			delitem 6402,60; //Oil_Palm_F
@@ -1220,7 +1220,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 		mes "[Lero]";
 		mes "It is heavier than you might think, so be careful when carrying it.";
 		next;
-		emotion e_sry;
+		emotion ET_SORRY;
 		mes "[Lero]";
 		mes "Oh, tell Mr. Memo that I'm sorry for the late delivery, and explain that it wasn't my fault.";
 		changequest 5041,5042;
@@ -1232,7 +1232,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			mes "[Lero]";
 			mes "It is heavier than you might think, so be careful when carrying it.";
 			next;
-			emotion e_sry;
+			emotion ET_SORRY;
 			mes "[Lero]";
 			mes "Oh, tell Mr. Memo that I'm sorry for the late delivery, and explain that it wasn't my fault.";
 			close;
@@ -1247,24 +1247,24 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			mes "I clearly remembered giving you 30 bottles of palm tree oil, did you lose it all?";
 			next;
 			select("Sorry, it's my fault...");
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Lero]";
-			mes "This is the palm tree oil which was in short supply. Be careful pease. It was really hard to get this...";
+			mes "This is the palm tree oil which was in short supply. Be careful please. It was really hard to get this...";
 			getitem 6401,.@num; //Palm_O
 			close;
 		}
 	} else if (dew_drink == 8) {
 		mes "[Lero]";
 		mes "What did Mr. Memo say?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "["+strcharinfo(0)+"]";
-		emotion e_loud,1;
+		emotion ET_BLABLA, playerattached();
 		mes "... ... ... ...";
 		next;
 		mes "[Lero]";
 		mes "Ah... I understand...";
-		emotion e_ok;
+		emotion ET_OK;
 		close;
 	} else if (dew_drink == 10) {
 		for(set .@i,0; .@i<7; set .@i,.@i+1)
@@ -1346,7 +1346,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 	if (dew_drink == 2) {
 		mes "[Poby]";
 		mes "Ah~ backache...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		select("Are you Poby?");
 		mes "[Poby]";
@@ -1359,7 +1359,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		next;
 		mes "[Poby]";
 		mes "You here for my autograph?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		select("Lero made me come here.");
 		mes "[Poby]";
@@ -1367,14 +1367,14 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		next;
 		mes "[Poby]";
 		mes "!#@$*&%!@$&!$%!$#*&!@#$";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Poby]";
 		mes "And I've still never had a girlfriend...";
 		next;
 		mes "[Poby]";
 		mes "!#@$*&%!@$&!$%!$#*&!@#$";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Poby]";
 		mes "Ah! Sorry. Tell Mr. Lero that I will go back if I can find a way to move.";
@@ -1390,7 +1390,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		next;
 		mes "[Poby]";
 		mes "I can't move at all 'cuz of this backache...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	} else if (dew_drink == 4) {
 		if (checkquest(5039) > -1) {
@@ -1412,14 +1412,14 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		}
 		mes "[Poby]";
 		mes "Ah~ backache...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Poby]";
 		mes "Oh!! You're-- Let me guess...";
 		next;
 		mes "[Poby]";
 		mes "... ... ... ...";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Poby]";
 		mes "...you're back! You plan to catch ^0000FFPalm Oil Fruit^000000 instead of me, right?";
@@ -1436,7 +1436,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		next;
 		mes "[Poby]";
 		mes "Ok! Gather ^FF000060^0000FF ^0000FFPalm Oil Fruit^000000 and bring that amount to Mr. Lero.";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		close;
 	} else if (dew_drink == 10) {
 		mes "[Poby]";
@@ -1493,7 +1493,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 	}
 	mes "[Poby]";
 	mes "Ah~ my freakin' back is killing me.";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -1573,7 +1573,7 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 		specialeffect2 EF_BASH;
 		if (isequipped(5009)) { //Safety_Helmet
 			mes "something falls on your head, but since you're wearing a Safety Helmet you're safe and sound.";
-			emotion e_no1,1;
+			emotion ET_BEST, playerattached();
 			break;
 		} else {
 			mes "something smashes down on your head, right where that soft spot is, $#*@! that's a one in a million shot.";
@@ -1727,7 +1727,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		mes "Oh... Sorry~ Sorry. I was so happy that I finally arrived at Dewata Island.";
 		next;
 		mes "[Gatti]";
-		mes "This is not a short story. Oh! I have to introduce myself first. I am Mastersmtih Gatti, also an Adventurer.";
+		mes "This is not a short story. Oh! I have to introduce myself first. I am Mastersmith Gatti, also an Adventurer.";
 		next;
 		mes "[Gatti]";
 		mes "I found a mysterious Weapon blueprint, but I don't remember exactly when I acquired it.";
@@ -1742,7 +1742,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		mes "But?";
 		next;
 		mes "[Gatti]";
-		mes "I coudn't find the last material anywhere.";
+		mes "I couldn't find the last material anywhere.";
 		next;
 		mes "[Gatti]";
 		mes "I was about to give up, but there was some fine print on the blueprint saying that it could be found on the Dewata Island.";
@@ -1988,7 +1988,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		next;
 		specialeffect2 EF_REPAIRWEAPON;
 		next;
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Gatti]";
 		mes "I finished making the weapon. This is called Caress according to the blueprint.";
@@ -2032,7 +2032,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 				next;
 				specialeffect2 EF_REPAIRWEAPON;
 				next;
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				next;
 				mes "[Gatti]";
 				mes "Here is the Caress! Ask me any time.";
@@ -2082,7 +2082,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			mes "If you don't want that to happen, put the refined Caress elsewhere before the reinforcing.^000000";
 			next;
 			mes "[Gatti]";
-			mes "^FF0000Third!^009977 Sometimes reinfocing fails. The weapon doesn't get destroyed everytime you fail. However you should know that the weapon gets destroyed from time to time if you fail.^000000";
+			mes "^FF0000Third!^009977 Sometimes reinforcing fails. The weapon doesn't get destroyed every time you fail. However you should know that the weapon gets destroyed from time to time if you fail.^000000";
 			next;
 			if(select("Please reinforce the weapon.:Maybe next time.") == 2) {
 				mes "[Gatti]";
@@ -2207,7 +2207,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		if (.@s3 == 0 && .@s4 == 0) {
 			mes "[Gatti]";
 			mes "Oh my~~ Almost succeeded... But failed. Sorry, sorry...";
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 		getitem2 13067,1,1,0,0,0,0,.@s3,.@s4;

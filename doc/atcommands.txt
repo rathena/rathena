@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20160313
+//= 20171011
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -226,14 +226,24 @@ New warp NPC 'my_warp_sample' created.
 @effect <effect ID>
 
 Creates a visual effect on or around the character.
-A list of IDs can be found in '/db/const.txt'.
-Descriptions of the effects can be found in '/doc/effect_list.txt'.
+A list of IDs and descriptions of the effects can be found in '/doc/effect_list.txt'.
 
 ---------------------------------------
 
-@misceffect
+@misceffect <effect ID>
 
-Does some visual effect on the character (more info needed).
+Does some visual effect on the character.
+Possible effect IDs:
+	0 = base level up
+	1 = job level up
+	2 = refine failure
+	3 = refine success
+	4 = game over
+	5 = pharmacy success
+	6 = pharmacy failure
+	7 = base level up (super novice)
+	8 = job level up (super novice)
+	9 = base level up (taekwon)
 
 ---------------------------------------
 
@@ -1300,7 +1310,7 @@ Bans or unbans a player for a limited time.
 Time elements: y/a, m, d/j, h, mn, s
 
 Example:
-@ban +2d Char2
+@charban +2d Char2
 -> bans Char2's for 2 days.
 
 ---------------------------------------

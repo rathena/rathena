@@ -1,11 +1,7 @@
 
-COMMON_H = $(shell ls ../common/*.h)
+COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_AR = ../common/obj/common.a
 COMMON_INCLUDE = -I../common/
-
-MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
-MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
-MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
 LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
@@ -17,10 +13,11 @@ YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
 YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
 YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
 
-MAP_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g") $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+#MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
-MAP_H = $(shell ls ../map/*.h) \
-	$(shell ls ../config/*.h) 
+MAP_H = $(shell ls ../map/*.hpp) \
+	$(shell ls ../config/*.hpp) 
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -73,25 +70,22 @@ obj:
 
 map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
-
-obj/%.o: %.c $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
-	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+#cause this one failling otherwise
+obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+	@echo "	CXX	$< (custom rule)"
+	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
-obj/%.o: %.cpp $(MAP_H) $(COMMON_H)  $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
 	@$(MAKE) -C ../common server
-
-$(MT19937AR_OBJ):
-	@$(MAKE) -C ../../3rdparty/mt19937ar
 
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig

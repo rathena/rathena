@@ -2490,7 +2490,7 @@ tha_t01,142,78,0	script	Guide#Thanatos1	CLEAR_NPC,{
 		next;
 		mes "[Public Announcement]";
 		mes "Please don't touch it. Only those that have a contract with '^0000FFRenkenber^000000' can progress.";
-		emotion 23;
+		emotion ET_HUK;
 		close;
 	}
 	mes "Thanatos Tower is comprised of 12 floors, but only 3 floors are open to the public. If you wish to progress, you must have signed a contract with'^0000FFRenkenber^000000'.";

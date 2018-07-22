@@ -1,41 +1,189 @@
 language: cpp
-compiler:
-  - clang
-  - gcc
 dist: trusty
+sudo: false
+
+matrix:
+  include:
+# First check if all our options are good
+#   Renewal without VIP
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   Renewal with VIP
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no --enable-buildbot=yes"
+#   Pre-Renewal without VIP
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=yes --enable-buildbot=yes"
+#   Pre-Renewal with VIP
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=yes --enable-buildbot=yes"
+# After that check all different compilers and compiler versions
+# GCC
+#   Version 6
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   Version 7
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   Version 8
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+# Clang
+#   Version 3.9
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-3.9
+          packages:
+            - clang-3.9
+      env:
+        - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   Version 4
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-4.0
+          packages:
+            - clang-4.0
+      env:
+        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   Version 5
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   LLVM on OSX
+#    - os: osx
+#      osx_image: xcode9.2
+#      install:
+#        - brew update
+#        - brew install mysql
+#        - brew tap homebrew/services
+#        - brew services start mysql
+##         MySQL takes a while to start...
+#        - brew services list
+#        - launchctl list | grep mysql
+#      before_install: false
+#      env:
+#        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes --enable-lto=no"
+#      script:
+#        - ./configure $CONFIGURE_FLAGS
+##         MacOS default MySQL configuration does not like our card seller(only full group by)
+#        - ./tools/ci/npc.sh
+#        - make clean
+#        - make server
+#        - ./login-server --run-once
+#        - ./char-server --run-once
+#        - ./map-server --run-once
+# CMake
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+      script:
+         - mkdir cbuild
+         - cd cbuild
+         - cmake -G "Unix Makefiles" ..
+         - make || travis_terminate 1
+# MariaDB
+    - os: linux
+      addons:
+        mariadb: '10.0'
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+            - libmariadbclient-dev
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
 
 before_script:
   - uname -a
-  - mysql -u $DB_ROOT -e "CREATE DATABASE $DB_NAME;" || aborterror "Unable to create database."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/main.sql || aborterror "Unable to import main database."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/logs.sql || aborterror "Unable to import logs database."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/item_cash_db.sql || aborterror "Unable to import cash item table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/item_cash_db2.sql || aborterror "Unable to import cash item 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/item_db.sql || aborterror "Unable to import pre-renewal item table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/item_db2.sql || aborterror "Unable to import pre-renewal item 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/item_db_re.sql || aborterror "Unable to import renewal item table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/item_db2_re.sql || aborterror "Unable to import renewal item 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_db.sql || aborterror "Unable to import pre-renewal monster table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_db2.sql || aborterror "Unable to import pre-renewal monster 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_db_re.sql || aborterror "Unable to import renewal monster table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_db2_re.sql || aborterror "Unable to import renewal monster 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db.sql || aborterror "Unable to import pre-renewal monster skill table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db2.sql || aborterror "Unable to import pre-renewal monster skill 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db_re.sql || aborterror "Unable to import renewal monster skill table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/mob_skill_db2_re.sql || aborterror "Unable to import renewal monster skill 2 table."
-  - mysql -u $DB_ROOT $DB_NAME < sql-files/roulette_default_data.sql || aborterror "Unable to import roulette table."
-  - mysql -u $DB_ROOT -e "GRANT ALL ON *.* TO '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASS';"
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -q
-  - sudo apt-get install gcc-5 -y
-  - sudo apt-get install g++-5 -y
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 1
+  - ./tools/ci/sql.sh
 
 script:
-  - ./configure $CONFIGURE_FLAGS
-  - make clean
-  - make server
+  - ./configure $CONFIGURE_FLAGS || travis_terminate 1
+  - ./tools/ci/npc.sh
+  - make clean || travis_terminate 1
+  - make server || travis_terminate 1
+  - ./login-server --run-once
+  - ./char-server --run-once
   - ./map-server --run-once
 
 env:
@@ -45,11 +193,6 @@ env:
     - DB_NAME="ragnarok"
     - DB_USER="ragnarok"
     - DB_PASS="ragnarok"
-  matrix:
-    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
-    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no --enable-buildbot=yes"
-    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=yes --enable-buildbot=yes"
-    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=yes --enable-buildbot=yes"
 
 notifications:
   email: false

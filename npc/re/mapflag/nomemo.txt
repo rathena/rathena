@@ -68,6 +68,7 @@ gld2_gef	mapflag	nomemo
 gld2_pay	mapflag	nomemo
 gld2_prt	mapflag	nomemo
 job_ko	mapflag	nomemo
+job_gun	mapflag	nomemo
 ma_scene01	mapflag	nomemo
 ma_in01	mapflag	nomemo
 ma_dun01	mapflag	nomemo
@@ -116,21 +117,52 @@ gl_cas02_	mapflag	nomemo
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	nomemo
 2@gl_k	mapflag	nomemo
-gl_chyard_	mapflag	nomemo
-gl_cas02_	mapflag	nomemo
 
 // Wave Mode Memorial Dungeon ====
 1@def01	mapflag	nomemo
 1@def02	mapflag	nomemo
 1@def03	mapflag	nomemo
 
-// Heroes' Trails - Part 1 =======
-1@gef	mapflag	nomemo
+// Heroes' Trail - Part 1 ========
 1@face	mapflag	nomemo
 1@sara	mapflag	nomemo
-1@gef_in	mapflag	nomemo
 dali	mapflag	nomemo
 dali02	mapflag	nomemo
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	nomemo
+1@gef	mapflag	nomemo
+1@gef_in	mapflag	nomemo
+1@spa	mapflag	nomemo
+1@tnm1	mapflag	nomemo
+1@tnm2	mapflag	nomemo
+1@tnm3	mapflag	nomemo
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	nomemo
+1@air1	mapflag	nomemo
+1@air2	mapflag	nomemo
+
+// Decisive Battle - Part 1 ======
+moro_cav	mapflag	nomemo
+1@dth1	mapflag	nomemo
+1@dth2	mapflag	nomemo
+1@dth3	mapflag	nomemo
+1@rev	mapflag	nomemo
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	nomemo
+1@jtb	mapflag	nomemo
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	nomemo
+1@uns	mapflag	nomemo
+1@mcd	mapflag	nomemo
+un_myst	mapflag	nomemo
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	nomemo
+lhz_d_n2	mapflag	nomemo
 
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	nomemo
@@ -145,3 +177,87 @@ te_aldecas4	mapflag	nomemo
 te_aldecas5	mapflag	nomemo
 teg_dun01	mapflag	nomemo
 teg_dun02	mapflag	nomemo
+
+// Novice training
+int_land	mapflag	nomemo
+int_land01	mapflag	nomemo
+int_land02	mapflag	nomemo
+int_land03	mapflag	nomemo
+int_land04	mapflag	nomemo
+
+// Ep 16
+prt_cas	mapflag	nomemo
+prt_cas_q	mapflag	nomemo
+prt_pri00	mapflag	nomemo
+prt_lib	mapflag	nomemo
+prt_lib_q	mapflag	nomemo
+prt_q	mapflag	nomemo
+prt_prison	mapflag	nomemo
+rebel_in	mapflag	nomemo
+slabw01	mapflag	nomemo
+que_swat	mapflag	nomemo
+1@mir	mapflag	nomemo
+2@mir	mapflag	nomemo
+1@sthb	mapflag	nomemo
+1@sthc	mapflag	nomemo
+1@sthd	mapflag	nomemo
+1@slw	mapflag	nomemo
+1@swat	mapflag	nomemo
+
+// Rockridge
+har_in01	mapflag	nomemo
+rockmi1	mapflag	nomemo
+rockmi2	mapflag	nomemo
+
+// Lasagna
+lasa_in01	mapflag	nomemo
+conch_in	mapflag	nomemo
+lasa_dun01	mapflag	nomemo
+lasa_dun02	mapflag	nomemo
+lasa_dun03	mapflag	nomemo
+lasa_dun_q	mapflag	nomemo
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	nomemo
+2@gl_k2	mapflag	nomemo
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	nomemo
+
+// Illusion Payon (Moonlight)
+pay_d03_i	mapflag	nomemo
+
+// Illusion Geffen (Vampire)
+gef_d01_i	mapflag	nomemo
+
+// Illusion Ice (Frozen)
+ice_d03_i	mapflag	nomemo
+
+// Suspicious shipwreck
+1@tre	mapflag	nomemo
+
+// Poring Town
+1@begi	mapflag	nomemo
+
+// Illusion Turtle island (Archery)
+tur_d03_i	mapflag	nomemo
+tur_d04_i	mapflag	nomemo
+
+// Volcanic island Korodo
+1@crd	mapflag	nomemo
+
+// Noodles Festival July
+1@drdo	mapflag	nomemo
+
+// Illusion Teddy Bear Nasarian Empire
+ein_d02_i	mapflag	nomemo
+
+// Illusion Ruande
+com_d02_i	mapflag	nomemo
+
+// Soul Reaper Job Change
+1@soul	mapflag	nomemo
+
+// Star Emperor Job Change
+star_frst	mapflag	nomemo
+star_in	mapflag	nomemo

@@ -1,38 +1,40 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
+#include "char.hpp"
 
-#include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/mapindex.h"
-#include "../common/mmo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../common/cli.h"
-#include "int_guild.h"
-#include "int_homun.h"
-#include "int_mail.h"
-#include "int_mercenary.h"
-#include "int_elemental.h"
-#include "int_party.h"
-#include "int_storage.h"
-#include "inter.h"
-#include "char_logif.h"
-#include "char_mapif.h"
-#include "char_cnslif.h"
-#include "char_clif.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/cli.hpp"
+#include "../common/core.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/mmo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+
+#include "char_clif.hpp"
+#include "char_cnslif.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_elemental.hpp"
+#include "int_guild.hpp"
+#include "int_homun.hpp"
+#include "int_mail.hpp"
+#include "int_mercenary.hpp"
+#include "int_party.hpp"
+#include "int_storage.hpp"
 
 //definition of exported var declared in .h
 int login_fd=-1; //login file descriptor
@@ -65,7 +67,7 @@ struct s_subnet {
 } subnet[16];
 int subnet_count = 0;
 
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(char_chardb_waiting_disconnect);
 
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
@@ -215,7 +217,7 @@ int char_db_setoffline(DBKey key, DBData *data, va_list ap) {
 /**
  * @see DBApply
  */
-static int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
+int char_db_kickoffline(DBKey key, DBData *data, va_list ap){
 	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int server_id = va_arg(ap, int);
 
@@ -259,7 +261,7 @@ void char_set_all_offline_sql(void){
 /**
  * @see DBCreateData
  */
-static DBData char_create_charstatus(DBKey key, va_list args) {
+DBData char_create_charstatus(DBKey key, va_list args) {
 	struct mmo_charstatus *cp;
 	cp = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 	cp->char_id = key.i;
@@ -306,7 +308,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 	{	//Save status
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
 			"`base_exp`='%u', `job_exp`='%u', `zeny`='%d',"
-			"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"
+			"`max_hp`='%u',`hp`='%u',`max_sp`='%u',`sp`='%u',`status_point`='%d',`skill_point`='%d',"
 			"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
 			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',`elemental_id`='%d',"
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
@@ -736,7 +738,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i,j, offset = 0;
+	int i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
 
@@ -746,24 +748,28 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 			tablename = schema_config.inventory_db;
 			selectoption = "char_id";
 			storage = p->u.items_inventory;
+			max2 = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
 			printname = "Cart";
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			storage = p->u.items_cart;
+			max2 = MAX_CART;
 			break;
 		case TABLE_STORAGE:
 			printname = "Storage";
 			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			storage = p->u.items_storage;
+			max2 = inter_premiumStorage_getMax(p->stor_id);
 			break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
 			selectoption = "guild_id";
 			storage = p->u.items_guild;
+			max2 = inter_guild_storagemax(id);
 			break;
 		default:
 			ShowError("Invalid table name!\n");
@@ -774,7 +780,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	p->id = id;
 	p->type = tableswitch;
 	p->stor_id = stor_id;
-	p->max_amount = inter_premiumStorage_getMax(p->stor_id);
+	p->max_amount = max2;
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if (stmt == NULL) {
@@ -936,10 +942,10 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 12, SQLDT_SHORT,  &p.int_, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 13, SQLDT_SHORT,  &p.dex, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 14, SQLDT_SHORT,  &p.luk, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 15, SQLDT_INT,    &p.max_hp, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_INT,    &p.hp, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_INT,    &p.max_sp, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_INT,    &p.sp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 15, SQLDT_UINT,   &p.max_hp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_UINT,   &p.hp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_UINT,   &p.max_sp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_UINT,   &p.sp, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 19, SQLDT_UINT,   &p.status_point, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 20, SQLDT_UINT,   &p.skill_point, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 21, SQLDT_UINT,   &p.option, 0, NULL, NULL)
@@ -1049,10 +1055,10 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 13, SQLDT_SHORT,  &p->int_, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 14, SQLDT_SHORT,  &p->dex, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 15, SQLDT_SHORT,  &p->luk, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_INT,    &p->max_hp, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_INT,    &p->hp, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_INT,    &p->max_sp, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 19, SQLDT_INT,    &p->sp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_UINT,   &p->max_hp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_UINT,   &p->hp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_UINT,   &p->max_sp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 19, SQLDT_UINT,   &p->sp, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 20, SQLDT_UINT,   &p->status_point, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 21, SQLDT_UINT,   &p->skill_point, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 22, SQLDT_UINT,   &p->option, 0, NULL, NULL)
@@ -1454,7 +1460,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if (start_job != JOB_NOVICE && start_job != JOB_SUMMONER)
+	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) && 
+		!(start_job == JOB_SUMMONER && (charserv_config.allowed_job_flag&2)))
 		return -2; // Invalid job
 
 	// Check for Doram based information.
@@ -1471,21 +1478,21 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 #if PACKETVER >= 20151001
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`, `sex`) VALUES ("
-		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
+		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
 		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex) )
 #elif PACKETVER >= 20120307
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
+		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y) )
 #else
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
+		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y) )
@@ -1533,7 +1540,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	time_t delete_date;
 	char *data;
 	size_t len;
-	int i, k;
+	int i;
 
 	ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == char_id);
 
@@ -1725,10 +1732,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 		inter_guild_leave(guild_id, account_id, char_id);// Leave your guild.
 
 	// refresh character list cache
-	for(k = i; k < MAX_CHARS-1; k++){
-		sd->found_char[k] = sd->found_char[k+1];
-	}
-	sd->found_char[MAX_CHARS-1] = -1;
+	sd->found_char[i] = -1;
 
 	return CHAR_DELETE_OK;
 }
@@ -1763,9 +1767,21 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 
 	buf = WBUFP(buffer,0);
 	WBUFL(buf,0) = p->char_id;
+#if PACKETVER >= 20170830
+	WBUFQ(buf,4) = u64min((uint64)p->base_exp, INT64_MAX);
+	offset += 4;
+	buf = WBUFP(buffer, offset);
+#else
 	WBUFL(buf,4) = umin(p->base_exp, INT32_MAX);
+#endif
 	WBUFL(buf,8) = p->zeny;
+#if PACKETVER >= 20170830
+	WBUFQ(buf,12) = u64min((uint64)p->job_exp, INT64_MAX);
+	offset += 4;
+	buf = WBUFP(buffer, offset);
+#else
 	WBUFL(buf,12) = umin(p->job_exp, INT32_MAX);
+#endif
 	WBUFL(buf,16) = p->job_level;
 	WBUFL(buf,20) = 0; // probably opt1
 	WBUFL(buf,24) = 0; // probably opt2
@@ -2053,10 +2069,14 @@ int char_loadName(uint32 char_id, char* name){
 		safestrncpy(name, data, NAME_LENGTH);
 		return 1;
 	}
+#if PACKETVER < 20180221
 	else
 	{
 		safestrncpy(name, charserv_config.char_config.unknown_char_name, NAME_LENGTH);
 	}
+#else
+	name[0] = '\0';
+#endif
 	return 0;
 }
 
@@ -2155,8 +2175,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
 //replies/disconnect the player we tried to kick. [Skotlex]
 //------------------------------------------------
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(char_chardb_waiting_disconnect){
 	struct online_char_data* character;
 	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
@@ -2169,7 +2188,7 @@ int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t 
 /**
  * @see DBApply
  */
-static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
+int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct online_char_data *character= (struct online_char_data *)db_data2ptr(data);
 	if (character->fd != -1)
@@ -2182,12 +2201,12 @@ static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-static int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+TIMER_FUNC(char_online_data_cleanup){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
-static int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(char_clan_member_cleanup){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;
@@ -2438,7 +2457,7 @@ bool char_checkdb(void){
 	}
 	//checking homunculus_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`char_id`,`class`,`prev_class`,`name`,`level`,`exp`,`intimacy`,`hunger`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize` "
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`,`vaporize`,`autofeed` "
 		" FROM `%s` LIMIT 1;", schema_config.homunculus_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2721,7 +2740,7 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
-	// See const.h to change the default values
+	// See const.hpp to change the default values
 	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
@@ -2764,6 +2783,12 @@ void char_set_defaults(){
 	charserv_config.clan_remove_inactive_days = 14;
 	charserv_config.mail_return_days = 14;
 	charserv_config.mail_delete_days = 14;
+
+#if defined(RENEWAL) && PACKETVER >= 20151001
+	charserv_config.allowed_job_flag = 3;
+#else
+	charserv_config.allowed_job_flag = 1;
+#endif
 }
 
 /**
@@ -2773,7 +2798,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
-static void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
+void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -2818,7 +2843,7 @@ static void char_config_split_startpoint(char *w1_value, char *w2_value, struct 
  * @param w2_value: Value from w2
  * @param start: Start item reference
  */
-static void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
+void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
 	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
@@ -3042,6 +3067,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_delete_days") == 0) {
 			charserv_config.mail_delete_days = atoi(w2);
+		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
+			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -3055,7 +3082,7 @@ bool char_config_read(const char* cfgName, bool normal){
 /**
  * Checks for values out of range.
  */
-static void char_config_adjust() {
+void char_config_adjust() {
 #if PACKETVER < 20100803
 	if (charserv_config.char_config.char_del_option&CHAR_DEL_BIRTHDATE) {
 		ShowWarning("conf/char_athena.conf:char_del_option birthdate is enabled but it requires PACKETVER 2010-08-03 or newer, defaulting to email...\n");

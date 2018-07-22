@@ -18,11 +18,11 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	next;
 	if (select("Ignore him", "Talk with him") == 1) {
 		mes "[Weird old man]";
-		mes "You, Very bad young man!";
+		mes "You, very bad young man!";
 		close;
 	}
 	mes "["+ strcharinfo(0) +"]";
-	mes "Sir, Are you alright??";
+	mes "Sir, are you alright??";
 	next;
 	mes "[Weird old man]";
 	mes "....?? You are not like other young people. You have good manners! You know what happened to me..?";
@@ -30,16 +30,16 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	switch(rand(1,2)) {
 	case 1:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgarts. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
-		mes "those young people...so noisy.... I was standing but non of them offered me a seat..and they were just talking in loud voices which bothered everyone.";
+		mes "those young people...so noisy.... I was standing but none of them offered me a seat..and they were just talking loudly which bothered everyone.";
 		next;
 		mes "[Weird old man]";
-		mes "I could lecture them if I were 10 years younger than now..";
+		mes "I could lecture them if I were 10 years younger..";
 		next;
 		mes "[Weird old man]";
-		mes "Pffff.. Never like the time passing....";
+		mes "Pffff.. Never liked the passing of time....";
 		next;
 		mes "[Weird old man]";
 		mes "So, you... what would you do??";
@@ -50,16 +50,16 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 		break;
 	case 2:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgarts. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
-		mes "those young people...so noisy.... I was standing but non of them offered me a seat..and they were just talking in loud voices which bothered everyone.";
+		mes "those young people...so noisy.... I was standing but none of them offered me a seat..and they were just talking loudly which bothered everyone.";
 		next;
 		mes "[Weird old man]";
-		mes "I could lecture them if I were 10 years younger than now..";
+		mes "I could lecture them if I were 10 years younger..";
 		next;
 		mes "[Weird old man]";
-		mes "Pffff.. Never like the time passing....";
+		mes "Pffff.. Never liked the passing of time....";
 		next;
 		mes "[Weird old man]";
 		mes "So, you... what would you do??";
@@ -73,44 +73,44 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 		switch(rand(1,2)) {
 		case 1:
 			mes "[Weird old man]";
-			mes "Oh, and then! you know what...?";
+			mes "Oh, and then you know what...?";
 			next;
 			mes "[Weird old man]";
-			mes "Once I was walking in the town, and some boy were spitting on the street, and were bothering girls who were passing by...tut tut!";
+			mes "Once I was walking in the town and some boys were spitting on the street and were bothering girls who were passing by...tut tut!";
 			next;
 			mes "[Weird old man]";
-			mes "The world is going to the dogs.. How will it be?? It was even a day time when they were doing it..tut tut.";
+			mes "The world is going to the dogs.. How will it be?? It was even day time when they were doing it..tut tut.";
 			next;
 			switch(rand(1,2)) {
 			case 1:
 				mes "[Weird old man]";
-				mes "Oh, and then! you know what...?";
+				mes "Oh, and then you know what...?";
 				next;
 				break;
 			case 2:
 				mes "[Weird old man]";
-				mes "Oh, and then! you know what...?";
+				mes "Oh, and then you know what...?";
 				next;
 				mes "[Weird old man]";
 				mes "Lately young people are not so patient!!!!";
 				next;
 				mes "[Weird old man]";
-				mes "That often, they say they will quit.. they say they can't more. How will they live all the lift with that kind of mentality..tut tut.";
+				mes "So often they say they will quit.. they say they can't do more. How will they live life with that kind of mentality..tut tut.";
 				next;
 				mes "[Weird old man]";
-				mes "It's not easy to find a job, it is very difficult to be hired. But then they even cannot stand a week there, and leave the work already.";
+				mes "It's not easy to find a job. It is very difficult to be hired but then they even cannot stand a week there and leave the work place.";
 				next;
 				mes "[Weird old man]";
 				mes "How impatient and irresponsible!!";
 				next;
 				mes "[Weird old man]";
-				mes "Oh, and then! you know what...?";
+				mes "Oh, and then you know what...?";
 				next;
 				break;
 			}
 		case 2:
 			mes "[Weird old man]";
-			mes "Oh, and then! you know what...?";
+			mes "Oh, and then you know what...?";
 			next;
 			break;
 		}
@@ -121,17 +121,17 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	mes "Hm......You are not like common young people, you seem pretty patient too. I like that!!!";
 	next;
 	mes "[Weird old man]";
-	mes "Now I am just an old, weak man but when I was young, I was a famous merchant in the town.";
+	mes "Now I am just an weak old man but when I was young I was a famous merchant in the town.";
 	next;
 	mes "[Weird old man]";
 	mes "It's been a while since I stopped the business,";
 	mes "but a former client of mine contacted me and asked me";
 	next;
 	mes "[Weird old man]";
-	mes "If I could get him some unknown objects named 'Will of Warrior', 'Thirst for Blood', 'Chill of the Dead'.";
+	mes "If I could get him some unknown objects named 'Will of Warrior', 'Thirst for Blood', and 'Chill of the Dead'.";
 	next;
 	mes "[Weird old man]";
-	mes "I liked your politeness which is not like most of young people, so if you get me those, I will dare to give you some stuffs that I consider as my treasures.";
+	mes "I like your politeness which most young people don't have, so if you get me those, I will give you some stuff that I consider as my treasure.";
 	next;
 	while(1) {
 		switch(select("When I gather them, I will come back", "Show me the armors", "Show me the weapons")) {
@@ -160,7 +160,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 				switch(select(
 					"Show me other items.",
 					""+.@armor$[1]+"Giant Shield^000000",
-					""+.@armor$[2]+"Acient Book of Geffenia-Water^000000",
+					""+.@armor$[2]+"Ancient Book of Geffenia-Water^000000",
 					""+.@armor$[3]+"Bible of Promise(2nd Vol.)^000000",
 					""+.@armor$[4]+"Salvage Cape^000000",
 					""+.@armor$[5]+"Assassin's Handcuffs^000000",
@@ -180,7 +180,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					callsub L_Reward, 2160, 100, 50, 35; //Giant_Shield
 					break;
 				case 3:
-					mes "<<Acient Book of Geffenia-Water[1]>>";
+					mes "<<Ancient Book of Geffenia-Water[1]>>";
 					mes "INT + 1, MDEF + 2. If Original INT point is 120, MATK + 10, MHP + 800.";
 					mes "When equipping with Lacryma Stick, the casting % from Storm Gust, Frost Misty and Jack frost will discount equivalent to 4 times Refine Lv.";
 					mes "Shield / Def 30 / Weight 100 / Required Lv 100 / Socket 1 / for Warlock";
@@ -194,7 +194,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					break;
 				case 5:
 					mes "<<Salvage Cape[0]>>";
-					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool time for this skill will be 30 seconds. When equiping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
+					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool down time for this skill will be 30 seconds. When equipping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
 					mes "Garment / Def 1 / Weight 40 / Required Lv 130 / Socket 0 / for Archbishop";
 					callsub L_Reward, 2582, 300, 300, 400; //Salvage_Cape
 					break;
@@ -316,13 +316,13 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 				case 10:
 					mes "<<Aztoe Nail[0]>>";
 					mes "MATK + 80. For Physical Melee Attack, cast Freezing to the target with a certain chance. The chance is affected by Refine Lv.";
-					mes "Dagger / ATK 160 / Weight 50 / Wind Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Theif Classes";
+					mes "Dagger / ATK 160 / Weight 50 / Wind Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Thief Classes";
 					callsub L_Reward, 13069, 50, 100, 35; //Aztoe_Nail
 					break;
 				case 11:
 					mes "<<Scarletto Nail[0]>>";
 					mes "MATK + 80. For Physical Melee Attack, cast Stone curse to the target with a certain chance. The chance is affected by Refine Lv.";
-					mes "Dagger / ATK 160 / Weight 50 / Fire Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Theif Classes";
+					mes "Dagger / ATK 160 / Weight 50 / Fire Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Thief Classes";
 					callsub L_Reward, 13070, 50, 100, 35; //Scarletto_Nail
 					break;
 				case 12:
@@ -370,7 +370,7 @@ L_Reward:
 			mes "Okay..";
 			close;
 		}
-		emotion e_swt2, "Weird old man#Bio4Reward";
+		emotion ET_PROFUSELY_SWEAT;
 		progressbar "FF00FF", 2;
 		delitem 6469, .@amount[0]; //Will_Of_Warrior
 		delitem 6470, .@amount[1]; //Blood_Thirst
@@ -394,56 +394,56 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	mes "[Pudding]";
 	mes "... .... ...";
 	next;
-	switch(select("Umba umba humbaa", "What are you doing here?", "Which are the equipments found so far?", "Here you are, Sir.")) {
+	switch(select("Umba umba humbaa", "What are you doing here?", "Which are the equipments found so far?", "Here you are, sir.")) {
 	case 1:
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "Hey, excuse me, but I'm not from Umbala! You are so rude.";
 		close;
 	case 2:
 		mes "[Pudding]";
-		mes "As you can see, I'm a training Sorcerer, and my name is Pudding.";
+		mes "As you can see I'm a training Sorcerer, and my name is Pudding.";
 		next;
 		select("....?");
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Pudding]";
 		mes "... What's that face? I'm starting to feel unpleasant..";
 		next;
-		emotion e_ok;
+		emotion ET_OK;
 		mes "[Pudding]";
-		mes "Couple of days ago, while I was undergoing discipline, I felt a strange, bizzare tinge. So I followed that and it brought me here.";
+		mes "A couple of days ago while I was undergoing discipline, I felt a strange, bizarre tinge. So I followed that and it brought me here.";
 		next;
 		select("I see.");
 		mes "[Pudding]";
-		mes "OK, let me continue. I am so bothered if you disturb me while I'm talking.";
+		mes "OK, let me continue. I become bothered if you disturb me while I'm talking.";
 		next;
 		mes "[Pudding]";
-		mes "And I entered to the laboratory here in order to investigate, and oh gosh! I found those monsters which were like doppelgangers from 'Geffen Dungeon'. It was full of them.";
+		mes "And I entered to the laboratory here in order to investigate and oh gosh! I found those monsters which were like doppelgangers from 'Geffen Dungeon'. It was full of them.";
 		next;
 		mes "[Pudding]";
-		mes "From those monsters, I could find rare items like '^F2766EWill of Warrior^000000' '^952420Thirst for Blood^000000' '^88C6F7Chill of the Dead^000000' which you cannot find from any other place.";
+		mes "From those monsters, I could find rare items like '^F2766EWill of Warrior^000000', '^952420Thirst for Blood^000000', and '^88C6F7Chill of the Dead^000000' which you cannot find in any other place.";
 		next;
-		emotion e_what, "Sorcerer#Bio4Reward";
+		emotion ET_QUESTION;
 		mes "[Pudding]";
 		mes "And after many hours of research on my own, I finally figured out a way to use those items. Do you wanna know?";
 		next;
 		switch(select("Oh....pardon?!", "Of course, I really wanna know.")) {
 		case 1:
-			emotion e_omg, 1;
-			emotion e_an, "Sorcerer#Bio4Reward";
+			emotion ET_HUK, playerattached();
+			emotion ET_FRET;
 			mes "[Pudding]";
 			mes "Oh my! You fell asleep after you asked me something? Well, anyway I feel lazy to explain again so I will just continue.";
 			next;
 			break;
 		case 2:
-			emotion e_heh, "Sorcerer#Bio4Reward";
+			emotion ET_SMILE;
 			mes "[Pudding]";
 			mes "Good, I am content that you are listening to my story carefully. Then I will keep explaining.";
 			next;
 			break;
 		}
 		mes "[Pudding]";
-		mes "Those '^F2766EWill of Warrior^000000' and '^952420Thirst for Blood^000000'..... are aggresive but warm materials.";
+		mes "Those '^F2766EWill of Warrior^000000' and '^952420Thirst for Blood^000000'..... are aggressive but warm materials.";
 		next;
 		mes "[Pudding]";
 		mes "So '^F2766EWill of Warrior^000000' can dwell a special power to the 4th slot of an equipment,";
@@ -453,8 +453,8 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		next;
 		mes "[Pudding]";
 		mes "Whereas!!!";
-		mes "'^88C6F7Chill of the Dead^000000' is a cold type material.";
-		mes "which allows to return the power from '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000' so it let the equipment to be 'ZERO'.";
+		mes "'^88C6F7Chill of the Dead^000000' is a cold type material";
+		mes "which allows the return of power from '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000' so makes the equipment no longer enchanted.";
 		next;
 		mes "[Pudding]";
 		mes "What do you say? Doesn't it sound interesting? But, there's a problem...";
@@ -463,10 +463,10 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "Since those materials can only be found from the monsters in the Lab., the special power also can be dwelt into certain equipments which can be obtained from the Lab.";
 		next;
 		select("So what's the conclusion?");
-		emotion e_what, 1;
-		emotion e_an;
+		emotion ET_QUESTION, playerattached();
+		emotion ET_FRET;
 		mes "[Pudding]";
-		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that becuase that's important.";
+		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that because that's important.";
 		next;
 		mes "[Pudding]";
 		mes "If you bring me 10 '^F2766EWill of Warrior^000000' or 10 '^952420Thirst for Blood^000000', I will dwell some power to certain equipments that you can find in the Lab..";
@@ -475,7 +475,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "And if you are not satisfied with the power you got, bring me 10 '^88C6F7Chill of the Dead^000000', and I will take off that power.";
 		next;
 		mes "[Pudding]";
-		mes "WHat do you say? Having both options.....quite nice, huh?";
+		mes "What do you say? Having both options.....quite nice, huh?";
 		next;
 		mes "[Pudding]";
 		mes "If you obtain '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', and obtain also equipment which is capable to accept their power, bring them to me. I will be waiting.";
@@ -500,7 +500,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			case 2:
 				mes "< Armor List >";
 				mes "Giant Shield[1]";
-				mes "Acient Book of Geffenia-Water[1]";
+				mes "Ancient Book of Geffenia-Water[1]";
 				mes "Bible of Promise(2nd Vol.)[1]";
 				mes "Salvage Cape[0]";
 				mes "Assassin's Handcuffs[1]";
@@ -536,7 +536,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		}
 		close;
 	case 4:
-		emotion e_flash;
+		emotion ET_SPARK;
 		mes "[Pudding]";
 		mes "Ohhhhh Have you brought them?";
 		next;
@@ -592,7 +592,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	case 3:
 		if (!getequipisequiped(EQI_HAND_L)) {
 			mes "[Pudding]";
-			mes "Well.. You are not equipping anything on the left hand.";
+			mes "Well.. You have nothing equipped on the left hand.";
 			close;
 		}
 		.@part = EQI_HAND_L;
@@ -600,7 +600,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	case 4:
 		if (!getequipisequiped(EQI_HAND_R)) {
 			mes "[Pudding]";
-			mes "Well.. You are not equipping anything on the right hand.";
+			mes "Well.. You have nothing equipped on the right hand.";
 			close;
 		}
 		.@part = EQI_HAND_R;
@@ -632,7 +632,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	case 8:
 		if (!getequipisequiped(EQI_HEAD_TOP)) {
 			mes "[Pudding]";
-			mes "Hey.. Are you not wearing any Helm?";
+			mes "Hey.. Are you not wearing any helm?";
 			close;
 		}
 		.@part = EQI_HEAD_TOP;
@@ -640,6 +640,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	}
 	.@refine_count = getequiprefinerycnt(.@part);
 	.@equip_item = getequipid(.@part);
+	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@lhz_max_num = 4000;
 	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 || 
 	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 || 
@@ -659,17 +660,17 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			.@lhz_max_num = 4200;
 	} else {
 		mes "[Pudding]";
-		mes "Before! I need to check if this equipment can accept the power.";
+		mes "First! I need to check if this equipment can accept the power.";
 		next;
 		specialeffect2 EF_SPHERE;
 		progressbar "ffff00", 2;
 		specialeffect2 EF_SUI_EXPLOSION;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Pudding]";
 		mes "Hm.... This equipment cannot accept the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000'.";
 		close;
 	}
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Pudding]";
 	mes "OHHH.. This equipment could accept the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000'.";
 	next;
@@ -688,7 +689,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	else
 		.@menu_in$[3] = "Not enough ^999999'Chill of the Dead'^000000";
 	mes "[Pudding]";
-	mes "OK! Which power do you want to dwell in your equipment?";
+	mes "OK! Which power do you want to dwell into your equipment?";
 	next;
 	switch(select("I say no! I don't need that!!", .@menu_in$[1], .@menu_in$[2], .@menu_in$[3])) {
 	case 1:
@@ -698,12 +699,12 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	case 2:
 		if (countitem(6469) < 10) {
 			mes "[Pudding]";
-			mes "Not enough '^F2766EWill of Warrior^000000', You need to bring 10 '^F2766EWill of Warrior^000000'";
+			mes "Not enough '^F2766EWill of Warrior^000000'. You need to bring 10 '^F2766EWill of Warrior^000000'";
 			close;
 		}
-		else if (getequipcardid(.@part, 3) > 0) {
+		else if (.@equip_card[3] > 0) {
 			mes "[Pudding]";
-			mes "This equipment already got the power of '^F2766EWill of Warrior^000000'.";
+			mes "This equipment already has the power of '^F2766EWill of Warrior^000000'.";
 			close;
 		} else {
 			.@socket_type = 4;
@@ -712,12 +713,12 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	case 3:
 		if (countitem(6470) < 10) {
 			mes "[Pudding]";
-			mes "Not enough '^952420Thirst for Blood^000000', You need to bring 10 '^952420Thirst for Blood^000000'";
+			mes "Not enough '^952420Thirst for Blood^000000'. You need to bring 10 '^952420Thirst for Blood^000000'";
 			close;
 		}
-		else if (getequipcardid(.@part, 2) > 0) {
+		else if (.@equip_card[2] > 0) {
 			mes "[Pudding]";
-			mes "This equipment already got the power of '^952420Thirst for Blood^000000'.";
+			mes "This equipment already has the power of '^952420Thirst for Blood^000000'.";
 			close;
 		} else {
 			.@socket_type = 3;
@@ -731,13 +732,13 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			.@4thzptsodyd = 1;
 			.@3thzptsodyd = 1;
 		} else {
-			if (getequipcardid(.@part, 3) > 0) {
+			if (.@equip_card[3] > 0) {
 				.@menu_clear$[1] = "Remove the power of '^F2766EWill of Warrior^000000'";
 			} else {
 				.@menu_clear$[1] = "^999999There's no power to remove^000000";
 				.@4thzptsodyd = 1;
 			}
-			if (getequipcardid(.@part, 2) > 0) {
+			if (.@equip_card[2] > 0) {
 				.@menu_clear$[2] = "Remove the power of '^952420Thirst for Blood^000000'";
 			} else {
 				.@menu_clear$[2] = "^999999There's no power to remove^000000";
@@ -747,7 +748,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		mes "[Pudding]";
 		mes "Alright, which power do you want to remove?";
 		next;
-		.@menu = select("No, I don't wannna remove any.", .@menu_clear$[1], .@menu_clear$[2]);
+		.@menu = select("No, I don't wanna remove any.", .@menu_clear$[1], .@menu_clear$[2]);
 		switch(.@menu){
 		case 1:
 			mes "[Pudding]";
@@ -757,7 +758,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		case 3:
 			if (countitem(6471) < 10) {
 				mes "[Pudding]";
-				mes "Not enough '^88C6F7Chill of the Dead^000000', You need to bring 10 '^88C6F7Chill of the Dead^000000'";
+				mes "Not enough '^88C6F7Chill of the Dead^000000'. You need to bring 10 '^88C6F7Chill of the Dead^000000'";
 				close;
 			}
 			if ( (.@menu==3 && .@3thzptsodyd == 1) || (.@menu==2 && .@4thzptsodyd == 1) ) {
@@ -765,16 +766,19 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 				mes "This equipment didn't get any special power.";
 				close;
 			}
-			setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+			specialeffect EF_BEGINSPELL2;
+			progressbar "ffff00", 2;
+			specialeffect2 EF_FROSTWEAPON;
+			delitem 6471, 10; //Goast_Chill
+
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@part, .@equip_item) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refine_count))
+				close;
+
 			if (.@menu == 2)
 				.@equip_card[3] = 0;
 			else
 				.@equip_card[2] = 0;
-			.@equip_item = getequipid(.@part);
-			specialeffect EF_BEGINSPELL2, AREA, "Sorcerer#Bio4Reward";
-			progressbar "ffff00", 2;
-			specialeffect2 EF_FROSTWEAPON;
-			delitem 6471, 10; //Goast_Chill
 			delequip .@part;
 			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
 			mes "[Pudding]";
@@ -786,24 +790,24 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		}
 	}
 	mes "[Pudding]";
-	mes "Before I dwell the power, let me explain to you cautions.";
+	mes "Before I dwell the power, let me caution you.";
 	next;
 	mes "[Pudding]";
-	mes "While dwelling the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', the equipment would be not capable to accept that and will be destryed..";
+	mes "While I dwell the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', the equipment could be not capable of accepting it and will be destroyed as a result..";
 	next;
 	mes "[Pudding]";
 	mes "^9D2628If the equipment is destroyed, you will also lose the cards you inserted in it, and the refine Lv will be removed too.^000000";
 	next;
 	mes "[Pudding]";
-	mes "Alright. will you really wish to dwell the power into the equipment?";
+	mes "Alright. Do you really wish to dwell the power into the equipment?";
 	next;
 	if (select("Wait, I will think again.", "Sure, carry on.") == 1) {
 		mes "[Pudding]";
-		mes "OK. I will be hoping to see you again.";
+		mes "OK. I hope to see you again.";
 		close;
 	}
 	mes "[Pudding]";
-	mes "I wish you made a correct decision...";
+	mes "I hope you made the correct decision...";
 	next;
 	if (.@socket_type >= 3) {
 		switch(.@type){
@@ -956,29 +960,32 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 				else                 .@enchant = 0;
 			break;
 		}
-		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
-		.@equip_card[(.@socket_type-1)] = .@enchant;
-		.@equip_item = getequipid(.@part);
-		specialeffect EF_BEGINSPELL3, AREA, "Sorcerer#Bio4Reward";
+		specialeffect EF_BEGINSPELL3;
 		progressbar "ffff00", 2;
 		if (.@socket_type == 3)
 			delitem 6470, 10; //Blood_Thirst
 		else
 			delitem 6469, 10; //Will_Of_Warrior
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_item) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refine_count))
+			close;
+
+		.@equip_card[(.@socket_type-1)] = .@enchant;
 		delequip .@part;
 		
 		if (.@enchant == 0){
 			specialeffect2 EF_SUI_EXPLOSION;
-			emotion e_otl;
+			emotion ET_OTL;
 			mes "[Pudding]";
 			mes "...Well....the equipment could not accept the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" and it got destroyed.";
 			close;
 		} else {
 			specialeffect2 EF_FIREHIT;
 			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Pudding]";
-			mes "Fortunately the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" has been dwelt well in your equipment...";
+			mes "Fortunately, the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" has been dwelt well into your equipment...";
 			close;
 		}
 	}

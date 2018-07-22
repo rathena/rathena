@@ -28,20 +28,40 @@
 #   changes to some CPack generators
 #   CYGWIN no longer defines WIN32
 #   CMP0017: Prefer files from the CMake module directory when including from there.
+# Update to 3.1 for CMAKE_CXX_STANDARD cross support definition
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
-cmake_minimum_required( VERSION 2.8.8 )
-project( rAthena C )
+cmake_minimum_required( VERSION 3.1 )
+project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
+set(CMAKE_CXX_STANDARD 11) # C++11...
+set(CMAKE_CXX_STANDARD_REQUIRED ON) #...is required...
+#set(CMAKE_CXX_EXTENSIONS OFF) #...without compiler extensions like gnu++11
 
+#actually this might be misleading for arm...
+if( CMAKE_SIZEOF_VOID_P EQUAL 4 )
+	set(architecture x86)
+elseif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+	set(architecture x64)
+else()
+	message( FATAL_ERROR "unexpected architecture (CMAKE_SIZEOF_VOID_P is ${CMAKE_SIZEOF_VOID_P})" )
+endif()
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInstallStr})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInstallStr})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_C_CREATE_SHARED_LIBRARY)
+set(CMAKE_CXX_CREATE_SHARED_LIBRARY)
+set(CMAKE_DEBUG_POSTFIX "d")
+set(CMAKE_RELEASE_POSTFIX "r")
 
 #
 # Prevent building in the source directory by default
 #
+option( ALLOW_SAME_DIRECTORY "Allow CMake to build in the source directory." OFF )
 if( ALLOW_SAME_DIRECTORY )
 elseif( "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" )
-	option( ALLOW_SAME_DIRECTORY "Allow CMake to build in the source directory." OFF )
 	message( FATAL_ERROR
 		"Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
 		"Example: (build in subdir 'build' and install to source dir)\n"
@@ -70,6 +90,10 @@ if( MSVC )
 	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} "oldnames.lib" "ws2_32.lib" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE" )
 endif()
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_GNUCC)
+  set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -fno-strict-aliasing" )
+  #set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -O2" ); #need more test to enable this
+endif()
 
 
 #
@@ -82,6 +106,7 @@ include( CheckIncludeFile )
 include( CheckFunctionExists )
 include( FindFunctionLibrary )
 include( TestBigEndian )
+
 
 #
 # PACKETVER
@@ -105,47 +130,12 @@ if(GIT_FOUND)
 	endif()
 endif()
 
-#
-# Find svnversion
-#
-message( STATUS "Detecting svnversion" )
-find_program( SVNVERSION_EXECUTABLE svnversion )
-mark_as_advanced( SVNVERSION_EXECUTABLE )
-if( SVNVERSION_EXECUTABLE )
-	message( STATUS "Found svnversion: ${SVNVERSION_EXECUTABLE}" )
-endif()
-message( STATUS "Detecting svnversion - done" )
-#
-# Find Subversion
-#
-message( STATUS "Detecting Subversion" )
-find_package( Subversion )
-message( STATUS "Detecting Subversion - done" )
-#
-# SVNVERSION
-#
-if( SVNVERSION_EXECUTABLE )
-	message( STATUS "Getting svn version" )
-	execute_process( COMMAND ${SVNVERSION_EXECUTABLE} ${PROJECT_SOURCE_DIR}
-		OUTPUT_VARIABLE SVNVERSION
-		OUTPUT_STRIP_TRAILING_WHITESPACE )
-	if( SVNVERSION MATCHES "^Unversioned" )
-		set( SVNVERSION )
-	endif()
-	string( REGEX REPLACE "[^1234567890MSexported]" "_" SVNVERSION "${SVNVERSION}" )
-	message( STATUS "Found SVNversion: ${SVNVERSION}" )
-	message( STATUS "Getting svn version - done" )
-endif()
-if( Subversion_FOUND AND SVNVERSION )
-	message( STATUS "Getting svn branch" )
-	Subversion_WC_INFO( ${PROJECT_SOURCE_DIR} rAthena )
-	if( rAthena_WC_URL )
-		string( REGEX MATCH "[^/]+$" BRANCH ${rAthena_WC_URL} )
-		set( SVNVERSION "${BRANCH}-${SVNVERSION}" )
-		message( STATUS "Found branch: ${BRANCH}" )
-	endif()
-	message( STATUS "Getting svn branch - done" )
-endif()
+include(GetGitVersion)
+get_git_version()
+
+#include(GetSvnVersion)
+#get_svn_version(SVN_VERSION)
+#message( STATUS "SVN_VERSION: ${SVN_VERSION}" )
 
 
 #
@@ -155,15 +145,26 @@ message( STATUS "Detecting threads library" )
 set( CMAKE_THREAD_PREFER_PTHREAD 1 )
 find_package(Threads REQUIRED)
 if( CMAKE_THREAD_LIBS_INIT )
-	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
+	message( STATUS "Adding global library: ${CMAKE_THREAD_LIBS_INIT}" )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 endif()
 message( STATUS "Detecting threads library - done" )
+
+message( STATUS "Check if supporting Thread local storage (TLS)" )
+file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_TLS.c" _SOURCE )
+CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_TLS )
+if( HAVE_TLS )
+	message( STATUS "Check for TLS- yes" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_TLS" )
+else()
+	message( STATUS "Check for TLS - no" )
+endif()
 
 
 #
 # math library (FreeBSD/Linux/Solaris)
 #
+if( NOT WIN32 )
 message( STATUS "Detecting math library (m)" )
 CHECK_INCLUDE_FILE( math.h HAVE_MATH_H )
 if( NOT HAVE_MATH_H )
@@ -176,6 +177,7 @@ if( FUNCTION_FLOOR_LIBRARIES )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_FLOOR_LIBRARIES} )
 endif()
 message( STATUS "Detecting math library (m) - done" )
+endif()
 
 
 #
@@ -198,12 +200,12 @@ endif()
 #
 if( NOT MSVC )
 message( STATUS "Detecting networking library (socket/nsl/ws2_32)" )
-set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
-find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
-if( FUNCTION_BIND_LIBRARIES )
-	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
-	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
-endif()
+#set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+#find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
+#if( FUNCTION_BIND_LIBRARIES )
+#	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
+#	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
+#endif()
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
 find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
 if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
@@ -469,10 +471,7 @@ set( DEVELOPMENT_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure.in"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-9.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-10.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-12.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-13.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena.sln"
 	)
 set( DEVELOPMENT_DIRECTORIES
 	"3rdparty"
@@ -480,8 +479,6 @@ set( DEVELOPMENT_DIRECTORIES
 	"conf/msg_conf/import-tmpl"
 	"db/import-tmpl"
 	"src"
-	"vcproj-9"
-	"vcproj-10"
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"
@@ -590,11 +587,7 @@ add_subdirectory( src )
 #####################################################################
 # final checks and warnings
 #
-if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-	message( WARNING "64bit should work, but is not recommended." )
-elseif( NOT CMAKE_SIZEOF_VOID_P EQUAL 4 )
-	message( FATAL_ERROR "unexpected architecture (CMAKE_SIZEOF_VOID_P is ${CMAKE_SIZEOF_VOID_P})" )
-endif()
+
 list( LENGTH  TARGET_LIST  _LEN )
 if( _LEN EQUAL 0 )
 	message( FATAL_ERROR "no targets available" )

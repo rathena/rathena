@@ -21,5 +21,20 @@
 14,Sara's Memories,3600,300,1@sara,250,155
 15,Geffen Magic Tournament,7200,300,1@gef,119,209,1@gef_in,1@ge_st
 16,Horror Toy Factory,3600,300,1@xm_d,111,22
-17,Faceworm's Nest,3600,300,1@face,112,374
+17,Faceworm's Nest,3600,300,1@face,112,370
 18,Ghost Palace,3600,300,1@spa,42,196
+// 19,Devil's Tower,3600,300,1@tnm1,50,104,1@tnm2,1@tnm3
+20,Assault on the Airship,3600,300,1@air1,244,73,1@air2
+21,Fenrir and Sarah,3600,300,1@glast,367,304
+// 22,Wave Mode - Forest,3600,300,1@def01,50,21
+// 23,Wave Mode - Sky,3600,300,1@def02,29,35
+// 24,Nightmarish Jitterbug,3600,300,1@jtb,16,17
+25,Isle of Bios,3600,300,1@dth1,17,93,1@dth2,1@dth3
+26,Morse's Cave,3600,300,1@rev,26,181
+// 27,Temple of the Demon God,3600,300,1@eom,101,16
+28,Central Laboratory,3600,300,1@lab,120,30
+29,Last room,3600,300,1@uns,145,35
+// 30,Charleston in Distress,3600,300,1@mcd,127,282
+31,Ritual of Blessing,3600,300,2@mir,101,12
+32,Room of Consciousness,3600,300,1@mir,101,10
+// 33,Sky Fortress Invasion,3600,300,1@sthb,54,67,1@sthc,1@sthd

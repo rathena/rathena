@@ -1711,7 +1711,7 @@ ama_in02,115,177,7	script	Soldier#ama10	767,{
 	mes "[Jyuro]";
 	mes "What gate are you talking about?";
 	mes "A gate? On the top floor of the building??? Surely, you must been be mistaken.";
-	emotion e_swt;
+	emotion ET_SWEAT;
 	next;
 	if (countitem(7160) > 0) {
 		if (select("Show him the ticket:Cancel") == 1) {
@@ -1804,7 +1804,10 @@ ama_in02,200,176,4	script	Lord of Palace#ama	768,{
 			mes "may be able to cure my mother's disease. I will reward you well if you succeed...";
 			next;
 			set event_amatsu,2;
-			changequest 8131,8132;
+			if (isbegin_quest(8131) == 1)
+				changequest 8131,8132;
+			else
+				setquest 8132;
 			mes "[Ishida Yoshinaga]";
 			mes "I beg you...Please.";
 			mes "My mother is living in a house outside of the palace.";

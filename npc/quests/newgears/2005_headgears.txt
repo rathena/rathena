@@ -340,7 +340,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 										mes "Did you just--?!";
 										mes "Ugh, you're the worst";
 										mes "type of person, you know that?";
-										emotion e_omg;
+										emotion ET_HUK;
 										close;
 									case 2:
 										mes "[Morris]";
@@ -369,7 +369,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 												mes "cannot be forgiven, no";
 												mes "matter how unfounded";
 												mes "and groundless they are!";
-												emotion e_omg;
+												emotion ET_HUK;
 												close;
 										}
 								}
@@ -548,7 +548,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 					mes "^0000FF1887 Tassels^000000,";
 					mes "^0000FF1 Slotted Bucket Hat^000000";
 					mes "and ^0000FF1,887 zeny^000000. That's all!";
-					emotion e_an;
+					emotion ET_FRET;
 					next;
 					mes "[Morris]";
 					mes "Now, remember everything";
@@ -648,7 +648,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 				mes "and be able to recall";
 				mes "minute details in order";
 				mes "to crack the case.";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "[Morris]";
 				mes "Remember...";
@@ -715,7 +715,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 					mes "^0000FF1887 Tassels^000000,";
 					mes "^0000FF1 Slotted Bucket Hat^000000";
 					mes "and ^0000FF1,887 zeny^000000. Okay?";
-					emotion e_an;
+					emotion ET_FRET;
 					close;
 				}
 				mes "[Morris]";
@@ -801,7 +801,7 @@ lighthalzen,360,313,3	script	Kid#LhzHat	706,{
 			mes "for the past few days. But";
 			mes "if she doesn't eat, how does";
 			mes "she expect to get better?";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Kid]";
 			mes "So I guess what I'm";
@@ -857,7 +857,7 @@ lighthalzen,360,313,3	script	Kid#LhzHat	706,{
 					mes "asking too much from";
 					mes "you. I mean, it's true";
 					mes "that you barely know me...";
-					emotion e_sob;
+					emotion ET_CRY;
 					close;
 			}
 		case 2:
@@ -868,7 +868,7 @@ lighthalzen,360,313,3	script	Kid#LhzHat	706,{
 			mes "don't even have the";
 			mes "time to listen to some";
 			mes "little boy's problems...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 	}
 }
@@ -1129,7 +1129,7 @@ lighthalzen,182,89,0	script	Relaxed-Looking Lady	91,{
 				mes "do much of anything.";
 				mes "Just sit. Relax.";
 				set LHZBTQ,1;
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
 				mes "[Achiha]";
 				mes "I do have a hobby,";
@@ -1584,7 +1584,7 @@ gl_prison1,137,138,5	script	Zealotus#LhzHat	1200,{
 		mes "passionate ways. Now I can";
 		mes "show him the stinging love";
 		mes "of my whip! Hohohohohoho!";
-		emotion e_kis;
+		emotion ET_CHUP;
 		close;
 	}
 
@@ -1623,7 +1623,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 		mes "honestly not carrying anything";
 		mes "of value! Z-Zealotus, please!";
 		mes "Zealotus, heeeeeelp me~!";
-		emotion e_sob;
+		emotion ET_CRY;
 
 		if(!(
 			countitem(1950) || countitem(1951) || countitem(1952) || 
@@ -1686,7 +1686,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 			mes "Th-there's nothing I can";
 			mes "give you, so please don't";
 			mes "hurt me! Oh, oh p-please...!";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			switch( select( "Feed him Dark Crystal Fragment.", "Threaten him." ) )
 			{
@@ -1753,7 +1753,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 		mes "They're everywhere!";
 		mes "You guys--I can't...";
 		mes "You're torturing me!";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	else if(ZLMASKQ == 4)
@@ -1843,7 +1843,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 			mes "Zealotus is too good for me.";
 			mes "I'm not even worthy of tasting";
 			mes "the sting of her Love Whip.";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		else if(.@phen_point == 4)
@@ -1926,7 +1926,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 								mes "[Phendark]";
 								mes "GRRRRRR!";
 								mes "THAT'S ENOUGH!";
-								emotion e_ag;
+								emotion ET_ANGER;
 								next;
 								mes "[Phendark]";
 								mes "I don't care who the";
@@ -1935,7 +1935,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 								mes "that tramp a piece of my";
 								mes "mind! Grrrr! She'll be sorry!";
 								set ZLMASKQ,6;
-								emotion e_an;
+								emotion ET_FRET;
 								close;
 							case 2:
 								mes "^3131FF[" + strcharinfo(0) + "]^000000";

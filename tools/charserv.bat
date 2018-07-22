@@ -1,2 +1,2 @@
 @ECHO OFF
-CALL serv.bat char-server.exe Char-Server
+CALL serv.bat char-server.exe Char-Server %*

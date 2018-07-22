@@ -1004,29 +1004,29 @@ um_in,139,48,5	script	Phrenetan	783,{
 	}
 	if (um_wind <= 3 && (MISC_QUEST & 32768) == 0) {
 		if (um_wind) set um_wind,1;
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Phrenetan]";
 		mes "Umbaumbah wooga wooga";
 		mes "Umbaumbabah babababah!";
 		mes "Umbaum!";
 		next;
-		emotion e_oh;
+		emotion ET_O;
 		mes "[Phrenetan]";
 		mes "Umbah umbaumba umbah";
 		mes "Umbabababah wooga woo!";
 		mes "Wooga wooga umbabah umbaum!";
 		next;
-		emotion e_go;
+		emotion ET_GO;
 		close;
 	}
 	else if (um_wind == 6 || (MISC_QUEST & 32768)) {
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Phrenetan]";
 		mes "Umbabah! Umbaumbah.....";
 		mes "Umbaum Umbaum Wooga wooga!";
 		mes "Wooga umumum woombababap!!!!!";
 		next;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		close;
 	}
 	end;
@@ -1065,8 +1065,8 @@ um_in,144,45,5	script	Umpokoriohtan	789,{
 			mes "...........";
 			mes "My back--!";
 			mes "Simmer down, baby, your turn is comin' in a minute~";
-			emotion e_rock,0,"Phrenetan";
-			emotion e_swt;
+			emotion ET_ROCK, getnpcid(0, "Phrenetan");
+			emotion ET_SWEAT;
 			close;
 		}
 		else {
@@ -1094,18 +1094,18 @@ um_in,144,45,5	script	Umpokoriohtan	789,{
 			mes "Baby, why you gotta be rough?";
 			mes "Hit me gently, ya dig??";
 			mes "I don't mean to hurt you~";
-			emotion e_omg,0,"Phrenetan";
-			emotion e_wah;
+			emotion ET_HUK, getnpcid(0, "Phrenetan");
+			emotion ET_KEK;
 			close;
 		}
 	}
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Umpokoriohtan]";
 	mes "Umbaumbah...........";
 	mes "Umbahwooga woogawoo!";
 	mes "Umbah umumbabah umbawoo gaga.";
 	next;
-	emotion e_an;
+	emotion ET_FRET;
 	close;
 
 OnInit:
@@ -1130,13 +1130,13 @@ um_in,101,73,3	script	Wainatan	783,{
 	if (um_wind == 1) {
 		if (gettime(DT_HOUR) > 18) {
 			set um_wind,2;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Wainatan]";
 			mes "Umbaumbah umgagaga.";
 			mes "Umbaumbawoogawoo gababah.";
 			mes "Umbahumbabah gawoo.";
 			next;
-			emotion e_oh;
+			emotion ET_O;
 			mes "[Wainatan]";
 			mes "Wooga wooga woogagagah";
 			mes "Wogagagah woogagagah";
@@ -1174,13 +1174,13 @@ um_in,94,123,5	script	Bertztan	783,{
 	if (um_wind == 2) {
 		if (gettime(DT_HOUR) > 18) {
 			set um_wind,3;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Bertztan]";
 			mes "Umbaumbah umgagaga.";
 			mes "Umbaumbawoogawoo gababah.";
 			mes "Umbahumbabah gawoo.";
 			next;
-			emotion e_oh;
+			emotion ET_O;
 			mes "[Bertztan]";
 			mes "Wooga umbar umbar umbah!";
 			mes "Umbar woogagaga woo! Woo! Woo!";
@@ -1226,13 +1226,13 @@ umbala,145,217,3	script	Chabimatan	783,{
 	if (um_wind == 3) {
 		if (gettime(DT_HOUR) > 18) {
 			set um_wind,4;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Chabimatan]";
 			mes "Umbabah umbarbar woogawooga um";
 			mes "Umbabah umbarbar woogawooga umbah";
 			mes "Umumum! Wooga!";
 			next;
-			emotion e_oh;
+			emotion ET_O;
 			mes "[Chabimatan]";
 			mes "Umbabah~~~~~~~";
 			mes "Woogawooga umbar umbar woo!";
@@ -1275,7 +1275,7 @@ OnTouch_:
 		mes "Phrenetan beating a guy";
 		mes "mercilessly.^000000";
 		next;
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Phrenetan]";
 		mes "Umbaumbaumbaumbah!";
 		mes "Umbaumbahumbah!!";

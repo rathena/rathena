@@ -56,6 +56,7 @@
 691,4	//CASH_ASSUMPTIO
 2284,4	//SC_FATALMENACE
 2300,4	//SC_DIMENSIONDOOR
+5063,4	//WE_CALLALLFAMILY
 
 //----------------------------------------------------------------------------
 // Battlegrounds
@@ -93,6 +94,7 @@
 691,8	//CASH_ASSUMPITO
 2284,8	//SC_FATALMENACE
 2300,8	//SC_DIMENSIONDOOR
+5063,8	//WE_CALLALLFAMILY
 
 //----------------------------------------------------------------------------
 // Mixed
@@ -133,6 +135,7 @@
 // 2296,16	// SC_UNLUCKY
 // 2494,16	// GN_CHANGEMATERIAL
 // 2462,16	// SO_EL_ANALYSIS
+5063,16	//WE_CALLALLFAMILY
 
 //----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
@@ -218,3 +221,4 @@
 336,4096 // WE_CALLPARTNER
 409,4096 // WE_CALLPARENT
 410,4096 // WE_CALLBABY
+5063,4096	//WE_CALLALLFAMILY

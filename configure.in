@@ -4,9 +4,11 @@
 AC_INIT(rAthena)
 AC_REVISION($Revision$)
 AC_PREREQ([2.59])
-AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
+AC_LANG([C++])
+AC_LANG_COMPILER_REQUIRE
+AC_CONFIG_SRCDIR([src/common/cbasetypes.hpp])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
-AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile])
+AC_CONFIG_FILES([3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
 
@@ -437,11 +439,11 @@ AC_PROG_CXX
 AC_PATH_PROG(AR, ar)
 AC_LANG([C++])
 
-
 CFLAGS="$CFLAGS -pipe -ffast-math -Wall"
 CPPFLAGS="$CPPFLAGS -I../common"
 CXXFLAGS="$CXXFLAGS -std=c++11"
-
+#CXXFLAGS="$CXXFLAGS -std=gnu++11"
+CXXFLAG_CLEARS="-std=c++11"
 
 AC_C_BIGENDIAN(
 	[AC_MSG_ERROR([[bigendian is not supported... stopping]])],
@@ -907,14 +909,14 @@ AC_SUBST([WITH_PLUGINS])
 # -O2 implies -fstrict-aliasing, but the code is not safe for that
 #
 AC_MSG_CHECKING([whether $CC supports -fno-strict-aliasing])
-OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS -fno-strict-aliasing"
+OLD_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS -fno-strict-aliasing"
 AC_COMPILE_IFELSE(
 	[AC_LANG_SOURCE([int foo;])],
 	[AC_MSG_RESULT([yes])],
 	[
 		AC_MSG_RESULT([no])
-		CFLAGS="$OLD_CFLAGS"
+		CPPFLAGS="$OLD_CPPFLAGS"
 	]
 )
 
@@ -1299,9 +1301,11 @@ else
 	AC_MSG_RESULT([no])
 fi
 
+CXXFLAG_CLEARS="-std=c++11 $CPPFLAGS"
 CFLAGS="$OPT_LTO $CFLAGS" 
 CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
 AC_SUBST([CFLAGS_AR])
+AC_SUBST([CXXFLAG_CLEARS])
 
 AC_MSG_NOTICE([Configure finish])
 AC_MSG_NOTICE([CPPFLAGS= $CPPFLAGS])

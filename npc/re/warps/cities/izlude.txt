@@ -52,6 +52,65 @@ izlude_b,52,172,0	warp	iz04_b	2,2,izlude_in,74,161
 izlude_c,52,172,0	warp	iz04_c	2,2,izlude_in,74,161
 izlude_d,52,172,0	warp	iz04_d	2,2,izlude_in,74,161
 
+//= iz_int(Intro) & int_land(Secluded Island) ================
+iz_int,27,30,0	warp	#room_out	1,1,iz_int,51,30
+iz_int01,27,30,0	warp	#room_out01	1,1,iz_int01,51,30
+iz_int02,27,30,0	warp	#room_out02	1,1,iz_int02,51,30
+iz_int03,27,30,0	warp	#room_out03	1,1,iz_int03,51,30
+iz_int04,27,30,0	warp	#room_out04	1,1,iz_int04,51,30
+
+iz_int,47,30,0	warp	#room_in	1,1,iz_int,22,30
+iz_int01,47,30,0	warp	#room_in01	1,1,iz_int01,22,30
+iz_int02,47,30,0	warp	#room_in02	1,1,iz_int02,22,30
+iz_int03,47,30,0	warp	#room_in03	1,1,iz_int03,22,30
+iz_int04,47,30,0	warp	#room_in04	1,1,iz_int04,22,30
+
+iz_int,56,15,0	script	#ship_out	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@num$ = replacestr( strnpcinfo(2), "ship_out", "" );
+	.@map$ = "int_land" + .@num$;
+	savepoint .@map$,77,101;
+	warp .@map$,85,107;
+	end;
+}
+iz_int01,56,15,0	duplicate(#ship_out)	#ship_out01	WARPNPC,1,1
+iz_int02,56,15,0	duplicate(#ship_out)	#ship_out02	WARPNPC,1,1
+iz_int03,56,15,0	duplicate(#ship_out)	#ship_out03	WARPNPC,1,1
+iz_int04,56,15,0	duplicate(#ship_out)	#ship_out04	WARPNPC,1,1
+
+int_land,49,57,0	script	#intro_to_izlude	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if (isbegin_quest(21008) == 1) {
+		mes "^4d4dffOnce you leave this island there is no way back.";
+		mes "Are you sure you want to go directly to Izlude?^000000";
+		next;
+		mes "^4d4dffIf you do, the quest will be deleted from your Quest Log.^000000";
+		next;
+		if (select("Do not go to Izlude yet", "Sail to Izlude!") == 1) {
+			mes "[Sailor]";
+			mes "You want to stay here longer?";
+			mes "Good, then I'll wait until you're ready~";
+			close;
+		}
+		completequest 21008;
+	}
+	mes "[Sailor]";
+	mes "Let's head towards Izlude!";
+	close2;
+	if (isbegin_quest(21001) == 1)
+		completequest 21001;
+	.@map$ = "izlude" + replacestr( strnpcinfo(2), "intro_to_izlude", "" );
+	warp .@map$,196,209;
+	savepoint .@map$,128,142,1,1;
+	end;
+}
+int_land01,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a	WARPNPC,2,2
+int_land02,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_b	WARPNPC,2,2
+int_land03,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_c	WARPNPC,2,2
+int_land04,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_d	WARPNPC,2,2
+
 //= Izlude Academy ===========================================
 izlude,125,257,0	warp	#to_ac01	2,2,iz_ac01,99,29
 izlude,130,257,0	warp	#to_ac02	2,2,iz_ac01,99,29
@@ -61,20 +120,6 @@ iz_ac01,122,25,0	warp	#to_ac2f02	2,2,iz_ac02,104,27
 iz_ac02,94,27,0	warp	#to_ac1f01	2,2,iz_ac01,78,28
 iz_ac02,113,27,0	warp	#to_ac1f02	2,2,iz_ac01,122,28
 new_1-3,96,176,0	warp	#to_ac01-2	1,1,iz_ac01,49,73
-
-iz_int,96,73,0	script	iz_int_iz	WARPNPC,2,2,{
-	end;
-
-OnTouch:
-	savepoint "izlude",128,98,1,1;
-	warp "izlude"+strnpcinfo(2)+"", 195, 209;
-	end;
-}
-
-iz_int01,96,73,0	duplicate(iz_int_iz)	iz_int_iz#_a	WARPNPC,2,2
-iz_int02,96,73,0	duplicate(iz_int_iz)	iz_int_iz#_b	WARPNPC,2,2
-iz_int03,96,73,0	duplicate(iz_int_iz)	iz_int_iz#_c	WARPNPC,2,2
-iz_int04,96,73,0	duplicate(iz_int_iz)	iz_int_iz#_d	WARPNPC,2,2
 
 //= Izlude Academy Duplicates ================================
 izlude_a,125,257,0	warp	#to_ac01_a	2,2,iz_ac01_a,99,29

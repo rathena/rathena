@@ -1329,9 +1329,9 @@ malangdo,218,123,1	script	Namis#invest	545,4,4,{
 		mes "- lose some weight. -";
 		close;
 	}
-	emotion e_omg;
-	emotion e_an;
-	emotion e_ag;
+	emotion ET_HUK;
+	emotion ET_FRET;
+	emotion ET_ANGER;
 	mes "[Namis]";
 	mes "Purr-Purr-Purrr-Purrrr-Pur~ Meow!!";
 	mes "Wh-- What? How rude. You scared me.";
@@ -1453,7 +1453,7 @@ L_Check:
 	close;
 OnTouch:
 	if (rand(2))
-		emotion e_yawn;
+		emotion ET_SLEEPY;
 	else
 		specialeffect EF_SLEEPATTACK;
 	end;

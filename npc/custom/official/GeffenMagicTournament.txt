@@ -127,42 +127,42 @@ OnTimer1000:
 		case  88: npctalk "Hook up with both of them? Ho ho ho~!", instance_npcname("Young Lady#gef1"); break;
 		case  91:
 			npctalk "Yes! You have finally arrived, my love!", instance_npcname("Handsome Adventurer#gef");
-			emotion 23, 0, instance_npcname("Young Lady#gef1");
-			emotion 23, 0, instance_npcname("Young Lady#gef2");
-			emotion 23, 0, instance_npcname("Young Lady#gef3");
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef1"));
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef2"));
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef3"));
 			break;
 		case  95:
 			npctalk "My love...", instance_npcname("Male Adventurer#gef");
-			emotion 3, 0, instance_npcname("Male Adventurer#gef");
-			emotion 3, 0, instance_npcname("Handsome Adventurer#gef");
-			emotion 3, 0, instance_npcname("Handsome Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
 			break;
 		case  99:
 			npctalk "Maybe... There are no good guys left for us...", instance_npcname("Young Lady#gef3");
-			emotion 3, 0, instance_npcname("Handsome Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
 			break;
 		case 103:
 			npctalk "Ahem... Maybe... Just the three of us... will be together forever...", instance_npcname("Young Lady#gef2");
-			emotion 3, 0, instance_npcname("Male Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
 			break;
 		case 106:
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef3");
-			emotion 3, 0, instance_npcname("Handsome Adventurer#gef");
-			sleep2 500;
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			sleep 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef1");
-			sleep2 500;
+			sleep 500;
 			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef2");
 			'm1_timer++;
 			break;
 		case 109:
-			emotion 3, 0, instance_npcname("Male Adventurer#gef");
-			emotion 28, 0, instance_npcname("Young Lady#gef1");
-			emotion 28, 0, instance_npcname("Young Lady#gef2");
-			emotion 28, 0, instance_npcname("Young Lady#gef3");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef1"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef2"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef3"));
 			break;
-		case 111: emotion 3, 0, instance_npcname("Handsome Adventurer#gef"); break;
-		case 113: emotion 3, 0, instance_npcname("Male Adventurer#gef"); break;
-		case 115: emotion 3, 0, instance_npcname("Handsome Adventurer#gef"); break;
+		case 111: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef")); break;
+		case 113: emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef")); break;
+		case 115: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef")); break;
 		case 118:
 			hideonnpc instance_npcname("Male Adventurer#gef");
 			hideonnpc instance_npcname("Handsome Adventurer#gef");
@@ -183,12 +183,13 @@ OnTimer2500:
 	.@r = rand(0,1);
 	if (.@r != 0 ) { stopnpctimer; initnpctimer; end; }
 	stopnpctimer;
-	specialeffect .effects[rand(0,18)],AREA,instance_npcname(strnpcinfo(0));
+	specialeffect .effects[rand(getarraysize(.effects))],AREA,instance_npcname(strnpcinfo(0));
 	initnpctimer;
 	end;
 
 OnInit:
-	setarray .effects,97,255,28,256,29,257,244,92,32,195,258,22,62,234,89,30,225,116,94;
+	setarray .effects[0],EF_FIREPILLARBOMB,EF_FLAMELAUNCHER,EF_FROSTDIVER2,EF_FROSTWEAPON,EF_LIGHTBOLT,EF_LIGHTNINGLOADER,EF_MAGICROD,EF_METEORSTORM,EF_NAPALMBEAT;
+	setarray .effects[9],EF_PETRIFYATTACK,EF_SEISMICWEAPON,EF_SIGHT,EF_SIGHTRASHER,EF_SPELLBREAKER,EF_STORMGUST,EF_THUNDERSTORM,EF_VOLCANO,EF_WATERBALL,EF_YUFITELHIT;
 	hideonnpc strnpcinfo(0);
 	end;
 	
@@ -288,7 +289,7 @@ L_Shield:
 			mes "There are two types of Rings are available for exchange.";
 			next;
 L_Ring:
-				switch(select("Phyisical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
+				switch(select("Physical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
 					case 1:
 						.@item = 2963;
 						.@cost = 1350;
@@ -2289,7 +2290,7 @@ OnEnd:
 	mes "Enjoy.";
 	mes "Good luck on the next round!";
 	percentheal 100,100;
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close2;
 	hideonnpc instance_npcname("Tournament Healer#1"); // 83649
 	end;
@@ -2303,13 +2304,13 @@ end;
 OnStart:
 	initnpctimer;
 		for ( .@i = 11; .@i <= 20; .@i++ ) {
-			specialeffect .effect[rand(3)], AREA, instance_npcname("#fireworks_" +.@i);
+			specialeffect .effect[rand(getarraysize(.effect))], AREA, instance_npcname("#fireworks_" +.@i);
 		}
 	end;
 OnTimer6000:
 	initnpctimer;
 		for ( .@i = 0; .@i < 5; .@i++) {
-			specialeffect .effect[rand(3)], AREA, instance_npcname("#fireworks_" + rand(11,20));
+			specialeffect .effect[rand(getarraysize(.effect))], AREA, instance_npcname("#fireworks_" + rand(11,20));
 		}
 	end;
 
@@ -2319,23 +2320,23 @@ OnTurn:
 
 OnWin:
 	for ( .@i = 1; .@i <= 5; .@i++ ) {
-		specialeffect 90, AREA, instance_npcname("#fireworks_f" + .@i);
+		specialeffect EF_LORD, AREA, instance_npcname("#fireworks_f" + .@i);
 	}
 	sleep 3000;
 	for ( .@i = 1; .@i <= 5; .@i++ ) {
-		specialeffect 62, AREA, instance_npcname("#fireworks_f" + .@i);
+		specialeffect EF_SIGHTRASHER, AREA, instance_npcname("#fireworks_f" + .@i);
 	}
 	sleep 500;
 	for ( .@i = 1; .@i <= 5; .@i++ ){
-		specialeffect 89, AREA, instance_npcname("#fireworks_f" + .@i);
+		specialeffect EF_STORMGUST, AREA, instance_npcname("#fireworks_f" + .@i);
 	}
 	sleep 3000;
 	for ( .@i = 1; .@i <= 5; .@i++ ) {
-		specialeffect 237, AREA, instance_npcname("#fireworks_f" + .@i);
+		specialeffect EF_VIOLENTGALE, AREA, instance_npcname("#fireworks_f" + .@i);
 	}
 	end;
 OnInstanceInit:
-	setarray .effect, 30, 89, 92;
+	setarray .effect, EF_THUNDERSTORM, EF_STORMGUST, EF_METEORSTORM;
 	end;
 }
 
@@ -2524,7 +2525,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm so relieved!";
 	sleep 3000;
-	npctalk "I was able to beat a weak competitior.";
+	npctalk "I was able to beat a weak competitor.";
 	sleep 3000;
 	npctalk "Yahoo!";
 	sleep 5000;
@@ -2684,7 +2685,7 @@ OnDefeat:
 OnVictory:
 	hideoffnpc instance_npcname("Geffen Bully#n1");
 	sleep 1000;
-	npctalk "You! Hou much zeny do you have left?";
+	npctalk "You! How much zeny do you have left?";
 	sleep 3000;
 	npctalk "You messed with me once before!";
 	sleep 3000;
@@ -4098,9 +4099,9 @@ OnTimer1000:
 	
 	switch('gmt_timer_evt1) {
 		case 1:
-			specialeffect 220, AREA, instance_npcname("Geffen Gangster#1");
-			specialeffect 220, AREA, instance_npcname("Geffen Gangster#2");
-			specialeffect 220, AREA, instance_npcname("Geffen Gangster#3");
+			specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Gangster#1");
+			specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Gangster#2");
+			specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Gangster#3");
 			npctalk "Geffen Gangster : You're pretty good...!", instance_npcname("Geffen Gangster#1");
 			npctalk "Geffen Gangster : We should stop playing around...", instance_npcname("Geffen Gangster#2");
 			npctalk "Geffen Gangster : You're gonna pay the price!", instance_npcname("Geffen Gangster#3");
@@ -4112,7 +4113,7 @@ OnTimer1000:
 			break;
 		case 8: npctalk "Iris : That's enough.", instance_npcname("Iris#Gef1"); break;
 		case 11: npctalk "Iris : I won't forgive you~!", instance_npcname("Iris#Gef1"); break;
-		case 13: specialeffect 204, AREA, instance_npcname("Iris#Gef1"); break;
+		case 13: specialeffect EF_POTION1, AREA, instance_npcname("Iris#Gef1"); break;
 		case 14:
 			npctalk "Geffen Gangster : Why hello there, are you scared?", instance_npcname("Geffen Gangster#1");
 			npctalk "Geffen Gangster : You're pretty cute. Do you want to play with us too?", instance_npcname("Geffen Gangster#2");
@@ -4128,23 +4129,23 @@ OnTimer1000:
 			break;
 		case 22: mapannounce instance_mapname("1@gef"), "Stop right there! Jerks!", 0x00ebff; break;
 		case 23: hideoffnpc instance_npcname("Chaos#Gef1"); break;
-		case 25: specialeffect 218, AREA, instance_npcname("Chaos#Gef1"); break;
+		case 25: specialeffect EF_POTION_CON, AREA, instance_npcname("Chaos#Gef1"); break;
 		case 26: npctalk "Chaos : Are you clowns harassing Iris?", instance_npcname("Chaos#Gef1"); break;
 		case 30: npctalk "Chaos : I think I need to teach someone a lesson!", instance_npcname("Chaos#Gef1"); break;
 		case 31:
-			specialeffect 60, AREA, instance_npcname("Geffen Gangster#11");
-			specialeffect 60, AREA, instance_npcname("Geffen Gangster#22");
-			specialeffect 60, AREA, instance_npcname("Geffen Gangster#33");
+			specialeffect EF_LOCKON, AREA, instance_npcname("Geffen Gangster#11");
+			specialeffect EF_LOCKON, AREA, instance_npcname("Geffen Gangster#22");
+			specialeffect EF_LOCKON, AREA, instance_npcname("Geffen Gangster#33");
 			npctalk "Chaos : Come and fight me!", instance_npcname("Chaos#Gef2");
 			hideonnpc instance_npcname("Chaos#Gef1");
 			hideoffnpc instance_npcname("Chaos#Gef2");
 			break;
 		case 34:
 			npctalk "Chaos : Bash~!!!", instance_npcname("Chaos#Gef2");
-			specialeffect 1, AREA, instance_npcname("Chaos#Gef2");
-			specialeffect 16, AREA, instance_npcname("Geffen Gangster#11");
-			specialeffect 16, AREA, instance_npcname("Geffen Gangster#22");
-			specialeffect 16, AREA, instance_npcname("Geffen Gangster#33");
+			specialeffect EF_HIT2, AREA, instance_npcname("Chaos#Gef2");
+			specialeffect EF_BASH, AREA, instance_npcname("Geffen Gangster#11");
+			specialeffect EF_BASH, AREA, instance_npcname("Geffen Gangster#22");
+			specialeffect EF_BASH, AREA, instance_npcname("Geffen Gangster#33");
 			hideonnpc instance_npcname("Geffen Gangster#11");
 			hideonnpc instance_npcname("Geffen Gangster#22");
 			hideonnpc instance_npcname("Geffen Gangster#33");
@@ -4165,14 +4166,14 @@ OnTimer1000:
 			break;
 		case 42:
 			npctalk "Chaos : I'm not done yet!! Magnum Break~!", instance_npcname("Chaos#3");
-			specialeffect 17, AREA, instance_npcname("Geffen Gangster#1");
-			specialeffect 17, AREA, instance_npcname("Geffen Gangster#2");
-			specialeffect 17, AREA, instance_npcname("Geffen Gangster#3");
+			specialeffect EF_MAGNUMBREAK, AREA, instance_npcname("Geffen Gangster#1");
+			specialeffect EF_MAGNUMBREAK, AREA, instance_npcname("Geffen Gangster#2");
+			specialeffect EF_MAGNUMBREAK, AREA, instance_npcname("Geffen Gangster#3");
 			break;
 		case 43:
-			specialeffect 183, AREA, instance_npcname("Geffen Gangster#1");
-			specialeffect 183, AREA, instance_npcname("Geffen Gangster#2");
-			specialeffect 183, AREA, instance_npcname("Geffen Gangster#3");
+			specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Geffen Gangster#1");
+			specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Geffen Gangster#2");
+			specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Geffen Gangster#3");
 			hideonnpc instance_npcname("Geffen Gangster#1");
 			hideonnpc instance_npcname("Geffen Gangster#2");
 			hideonnpc instance_npcname("Geffen Gangster#3");
@@ -4314,7 +4315,7 @@ OnTimer1000:
 		case 9:
 			unittalk 'gmt_account_id, "I have to help!";
 			attachrid 'gmt_account_id;
-			specialeffect2 60;
+			specialeffect2 EF_LOCKON;
 			detachrid;
 			monster instance_mapname("1@gef"), 75, 172, "Geffen Bully", 2567, 1, instance_npcname("#Event 2 start 2") + "::OnMobKilled";
 			monster instance_mapname("1@gef"), 76, 170, "Geffen Bully", 2567, 1, instance_npcname("#Event 2 start 2") + "::OnMobKilled";
@@ -4338,9 +4339,9 @@ OnMobKilled:
 		//completequest 9286;
 		//setquest 9287;
 		sleep2 500;
-		specialeffect 220, AREA, instance_npcname("Geffen Bully#1");
-		specialeffect 220, AREA, instance_npcname("Geffen Bully#2");
-		specialeffect 220, AREA, instance_npcname("Geffen Bully#3");
+		specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Bully#1");
+		specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Bully#2");
+		specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Bully#3");
 		
 		$gmt_timer_evt2 = -1;
 		
@@ -4364,7 +4365,7 @@ OnMobKilled:
 				case 10: npctalk "Fenrir : This is really uncomfortable. I can't just sit back and watch.", instance_npcname("Fenrir#1"); break;
 				case 13:
 					npctalk "Fenrir : Stop harassing her. I won't forgive you.", instance_npcname("Fenrir#1");
-					specialeffect 204, AREA, instance_npcname("Fenrir#1");
+					specialeffect EF_POTION1, AREA, instance_npcname("Fenrir#1");
 					break;
 				case 15: npctalk "Geffen Bully : Hey~ You look rich, you must have a lot of zeny right?", instance_npcname("Geffen Bully#1"); break;
 				case 17: npctalk "Geffen Bully : What's a rich girl like you doing around here?~", instance_npcname("Geffen Bully#2"); break;
@@ -4378,22 +4379,22 @@ OnMobKilled:
 					hideoffnpc instance_npcname("Geffen Bully#33");
 					break;
 				case 23:
-					emotion e_gasp, 0, instance_npcname("Fenrir#1");
+					emotion ET_SURPRISE, getnpcid(0, instance_npcname("Fenrir#1"));
 					mapannounce instance_mapname("1@gef"), "Take your dirty hands off of me.", 0x00ebff;
 					break;
 				case 25:
 					hideoffnpc instance_npcname("Loki#1");
 					sleep2 500;
-					specialeffect 126, AREA, instance_npcname("Loki#1");
+					specialeffect EF_POISONREACT, AREA, instance_npcname("Loki#1");
 					sleep2 1500;
-					specialeffect 121, AREA, instance_npcname("Loki#1");
+					specialeffect EF_SONICBLOW, AREA, instance_npcname("Loki#1");
 					npctalk "Loki : Hmph!", instance_npcname("Loki#1");
 					sleep2 500;
-					specialeffect 124, AREA, instance_npcname("Loki#1");
-					specialeffect 122, AREA, instance_npcname("Geffen Bully#33");
-					specialeffect 143, AREA, instance_npcname("Geffen Bully#33");
+					specialeffect EF_VENOMDUST, AREA, instance_npcname("Loki#1");
+					specialeffect EF_SONICBLOWHIT, AREA, instance_npcname("Geffen Bully#33");
+					specialeffect EF_SONICBLOW2, AREA, instance_npcname("Geffen Bully#33");
 					sleep2 330;
-					specialeffect 32, AREA, instance_npcname("Geffen Bully#33");
+					specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Geffen Bully#33");
 					hideonnpc instance_npcname("Geffen Bully#33");
 					hideoffnpc instance_npcname("Geffen Bully#3");
 					break;
@@ -4404,11 +4405,11 @@ OnMobKilled:
 					sleep2 750;
 					npctalk "Loki : Take this.", instance_npcname("Loki#2");
 					sleep2 500;
-					specialeffect 271, AREA, instance_npcname("Geffen Bully#22");
-					specialeffect 122, AREA, instance_npcname("Geffen Bully#22");
-					specialeffect 143, AREA, instance_npcname("Geffen Bully#22");
+					specialeffect EF_STRIPARMOR, AREA, instance_npcname("Geffen Bully#22");
+					specialeffect EF_SONICBLOWHIT, AREA, instance_npcname("Geffen Bully#22");
+					specialeffect EF_SONICBLOW2, AREA, instance_npcname("Geffen Bully#22");
 					sleep2 330;
-					specialeffect 32, AREA, instance_npcname("Geffen Bully#22");
+					specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Geffen Bully#22");
 					hideonnpc instance_npcname("Geffen Bully#22");
 					hideoffnpc instance_npcname("Geffen Bully#2");
 					break;
@@ -4419,11 +4420,11 @@ OnMobKilled:
 					sleep2 750;
 					npctalk "Loki : Change your mind yet?", instance_npcname("Loki#3");
 					sleep2 500;
-					specialeffect 270, AREA, instance_npcname("Geffen Bully#11");
-					specialeffect 122, AREA, instance_npcname("Geffen Bully#11");
-					specialeffect 143, AREA, instance_npcname("Geffen Bully#11");
+					specialeffect EF_STRIPSHIELD, AREA, instance_npcname("Geffen Bully#11");
+					specialeffect EF_SONICBLOWHIT, AREA, instance_npcname("Geffen Bully#11");
+					specialeffect EF_SONICBLOW2, AREA, instance_npcname("Geffen Bully#11");
 					sleep2 330;
-					specialeffect 32, AREA, instance_npcname("Geffen Bully#11");
+					specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Geffen Bully#11");
 					hideonnpc instance_npcname("Geffen Bully#11");
 					hideoffnpc instance_npcname("Geffen Bully#1");
 					break;
@@ -4435,20 +4436,20 @@ OnMobKilled:
 				case 40: npctalk "Geffen Bully : Let's get away!~!!!!!", instance_npcname("Geffen Bully#3"); break;
 				case 41:
 					npctalk "Loki : You have 10 seconds.", instance_npcname("Loki#3");
-					specialeffect 121, AREA, instance_npcname("Loki#3");
+					specialeffect EF_SONICBLOW, AREA, instance_npcname("Loki#3");
 					break;
 				case 43:
-					specialeffect 136, AREA, instance_npcname("Loki#3");
+					specialeffect EF_SLOWPOISON, AREA, instance_npcname("Loki#3");
 					npctalk "Loki : 10... 9...", instance_npcname("Loki#3");
 					sleep2 500;
-					specialeffect 269, AREA, instance_npcname("Loki#3");
-					specialeffect 126, AREA, instance_npcname("Loki#3");
-					specialeffect 127, AREA, instance_npcname("Loki#3");
+					specialeffect EF_STRIPWEAPON, AREA, instance_npcname("Loki#3");
+					specialeffect EF_POISONREACT, AREA, instance_npcname("Loki#3");
+					specialeffect EF_POISONREACT2, AREA, instance_npcname("Loki#3");
 					break;
 				case 45:
-					specialeffect 125, AREA, instance_npcname("Loki#3");
+					specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("Loki#3");
 					sleep2 500;
-					emotion e_gg, 0, instance_npcname("Loki#3");
+					emotion ET_KIK, getnpcid(0, instance_npcname("Loki#3"));
 					npctalk "Loki : 3... 2...", instance_npcname("Loki#3");
 					sleep2 500;
 					npctalk "Geffen Bully : What?! You went from from 9 to 3 seconds!!", instance_npcname("Geffen Bully#1");
@@ -4456,8 +4457,8 @@ OnMobKilled:
 					npctalk "Geffen Bully : I will have my revenge~!!", instance_npcname("Geffen Bully#3");
 					break;
 				case 46:
-					specialeffect 361, AREA, instance_npcname("Loki#3");
-					specialeffect 124, AREA, instance_npcname("Loki#3");
+					specialeffect EF_SOULBREAKER, AREA, instance_npcname("Loki#3");
+					specialeffect EF_VENOMDUST, AREA, instance_npcname("Loki#3");
 					npctalk "Loki : 1...", instance_npcname("Loki#3");
 					sleep2 330;
 					hideonnpc instance_npcname("Geffen Bully#1");
@@ -4644,7 +4645,7 @@ OnTimer1000:
 	'gmt_timer_evt3++;
 	
 	switch('gmt_timer_evt3) {
-		case 1: specialeffect 20, AREA, instance_npcname("Geffen Shoplifter#1"); break;
+		case 1: specialeffect EF_PATTACK, AREA, instance_npcname("Geffen Shoplifter#1"); break;
 		case 4: npctalk "Geffen Shoplifter : Ugh, I shouldn't fight toe to toe with anyone...", instance_npcname("Geffen Shoplifter#1"); break;
 		case 7: unittalk 'gmt_account_id, "Don't want to be in a fair fight, huh thief?"; break;
 		case 10: npctalk "Geffen Shoplifter : Umm... stealing zeny is my job~ I did nothing wrong~!", instance_npcname("Geffen Shoplifter#1"); break;
