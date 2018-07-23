@@ -319,10 +319,6 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 	SKILLDMG_BOSS = against boss monster
 	SKILLDMG_OTHER = against other (homunculus, mercenary, pet, elemental)
 
-Notes:
- - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.hpp' for this mapflag to take effect.
- - Each map can contain up to UINT16_MAX adjustments.
-
 ---------------------------------------
 
 ==================

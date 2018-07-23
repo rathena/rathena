@@ -3470,9 +3470,7 @@ void map_flags_init(void)
 		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// skill damage
-#ifdef ADJUST_SKILL_DAMAGE
-		memset(&map[i].damage_adjust, 0, sizeof(map[i].damage_adjust));
-#endif
+		map[i].damage_adjust = {};
 
 		// adjustments
 		if( battle_config.pk_mode )
@@ -4279,7 +4277,6 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-#ifdef ADJUST_SKILL_DAMAGE
 /**
  * Add new skill damage adjustment entry for a map
  * @param m: Map data
@@ -4312,7 +4309,6 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
 	entry.caster = caster;
 	m->skill_damage.push_back(entry);
 }
-#endif
 
 /**
  * PvP timer handling
@@ -4410,7 +4406,6 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		case MF_NOEXP:
 			return util::map_get(map[m].flag, MF_NOBASEEXP, 0) && util::map_get(map[m].flag, MF_NOJOBEXP, 0);
 		case MF_SKILL_DAMAGE:
-#ifdef ADJUST_SKILL_DAMAGE
 			nullpo_retr(-1, args);
 
 			switch (args->flag_val) {
@@ -4419,12 +4414,11 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				case SKILLDMG_BOSS:
 				case SKILLDMG_OTHER:
 					return map[m].damage_adjust.rate[args->flag_val];
+				case SKILLDMG_CASTER:
+					return map[m].damage_adjust.caster;
 				default:
 					return util::map_get(map[m].flag, mapflag, 0);
 			}
-#else
-			return 0;
-#endif
 		default:
 			return util::map_get(map[m].flag, mapflag, 0);
 	}
@@ -4638,29 +4632,29 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			map[m].flag[MF_NOBASEEXP] = status;
 			map[m].flag[MF_NOJOBEXP] = status;
 			break;
-#ifdef ADJUST_SKILL_DAMAGE
 		case MF_SKILL_DAMAGE:
 			if (!status) {
-				memset(&map[m].damage_adjust, 0, sizeof(map[m].damage_adjust));
+				map[m].damage_adjust = {};
 				map[m].skill_damage.clear();
 			} else {
 				nullpo_retr(false, args);
 
-				if (!args->skill_damage.caster) {
-					ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", map[m].name);
-					return false;
-				}
+				if (!args->flag_val) { // Signifies if it's a single skill or global damage adjustment
+					if (!args->skill_damage.caster) {
+						ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", map[m].name);
+						return false;
+					}
 
-				for (int i = 0; i < SKILLDMG_MAX; i++) {
-					map[m].damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
+					for (int i = 0; i < SKILLDMG_MAX; i++) {
+						map[m].damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 
-					if (map[m].flag.find(mapflag) != map[m].flag.end() && map[m].damage_adjust.rate[i])
-						map[m].damage_adjust.caster = args->skill_damage.caster;
+						if (map[m].flag.find(mapflag) != map[m].flag.end() && map[m].damage_adjust.rate[i])
+							map[m].damage_adjust.caster = args->skill_damage.caster;
+					}
 				}
 			}
 			map[m].flag[mapflag] = status;
 			break;
-#endif
 		default:
 			map[m].flag[mapflag] = status;
 			break;
@@ -4757,11 +4751,7 @@ void do_final(void)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 		map_free_questinfo(i);
-		map[i].flag.clear();
-		map[i].drop_list.clear();
-#ifdef ADJUST_SKILL_DAMAGE
-		map[i].skill_damage.clear();
-#endif
+		map[i].damage_adjust = {};
 	}
 
 	mapindex_final();

@@ -225,9 +225,7 @@ struct s_skill_db {
 	uint8 unit_nonearnpc_type;	//type of NPC [Cydh]
 
 	// skill_damage_db.txt
-#ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage damage;
-#endif
 
 	// skill_copyable_db.txt
 	struct s_copyable { // [Cydh]

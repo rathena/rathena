@@ -4052,17 +4052,15 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			break;
 
 		case MF_SKILL_DAMAGE: {
-#ifdef ADJUST_SKILL_DAMAGE
 			char skill_name[SKILL_NAME_LENGTH];
 			char caster_constant[NAME_LENGTH];
+			union u_mapflag_args args = {};
 
 			memset(skill_name, 0, sizeof(skill_name));
 
 			if (!state)
-				map_setmapflag(m, MF_SKILL_DAMAGE, false);
+				map_setmapflag_sub(m, MF_SKILL_DAMAGE, false, &args);
 			else {
-				union u_mapflag_args args = {};
-
 				if (sscanf(w4, "%30[^,],%23[^,],%11d,%11d,%11d,%11d[^\n]", skill_name, caster_constant, &args.skill_damage.rate[SKILLDMG_PC], &args.skill_damage.rate[SKILLDMG_MOB], &args.skill_damage.rate[SKILLDMG_BOSS], &args.skill_damage.rate[SKILLDMG_OTHER]) >= 3) {
 					if (ISDIGIT(caster_constant[0]))
 						args.skill_damage.caster = atoi(caster_constant);
@@ -4088,14 +4086,12 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					else if (skill_name2id(skill_name) <= 0)
 						ShowWarning("npc_parse_mapflag: Invalid skill name '%s' for Skill Damage mapflag. Skipping (file '%s', line '%d').\n", skill_name, filepath, strline(buffer, start - buffer));
 					else { // Adjusted damage for specified skill
-						map_setmapflag(m, MF_SKILL_DAMAGE, true);
+						args.flag_val = 1;
+						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
 						map_skill_damage_add(&map[m], skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
 					}
 				}
 			}
-#else
-			ShowWarning("npc_parse_mapflag: skill_damage: ADJUST_SKILL_DAMAGE is inactive (src/config/core.hpp). Skipping this mapflag..\n");
-#endif
 			break;
 		}
 
