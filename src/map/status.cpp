@@ -3329,7 +3329,7 @@ bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_wei
  * @param opt: Whether it is first calc (login) or not
  * @return (-1) for too many recursive calls, (1) recursive call, (0) success
  */
-int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
+int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
@@ -3337,7 +3337,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int i, skill, refinedef = 0;
 	short index = -1;
-	struct script_state* previous_st = sd->st;
 
 	if (++calculating > 10) // Too many recursive calls!
 		return -1;
@@ -4228,13 +4227,21 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 && !sd->sc.data[SC_SPRITEMABLE] )
 		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, -1);
 
+	calculating = 0;
+
+	return 0;
+}
+
+int status_calc_pc_( struct map_session_data* sd, enum e_status_calc_opt opt ){
+	struct script_state* previous_st = sd->st;
+
+	int ret = status_calc_pc_sub( sd, opt );
+
 	if( previous_st ){
 		script_attach_state(previous_st);
 	}
 
-	calculating = 0;
-
-	return 0;
+	return ret;
 }
 
 /**
