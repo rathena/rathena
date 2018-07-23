@@ -8178,7 +8178,14 @@ ACMD_FUNC(mapflag) {
 		enum e_mapflag mapflag = map_getmapflag_by_name(flag_name);
 
 		if( mapflag != MF_INVALID ){
-			std::vector<e_mapflag> disabled_mf = { MF_NOSAVE, MF_PVP_NIGHTMAREDROP, MF_RESTRICTED, MF_NOCOMMAND, MF_BEXP, MF_JEXP, MF_BATTLEGROUND, MF_SKILL_DAMAGE };
+			std::vector<e_mapflag> disabled_mf = { MF_NOSAVE,
+												MF_PVP_NIGHTMAREDROP,
+												MF_RESTRICTED,
+												MF_NOCOMMAND,
+												MF_BEXP,
+												MF_JEXP,
+												MF_BATTLEGROUND,
+												MF_SKILL_DAMAGE };
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
