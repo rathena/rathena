@@ -7706,6 +7706,22 @@ void clif_party_hp(struct map_session_data *sd)
 	clif_send(buf,packet_len(cmd),&sd->bl,PARTY_AREA_WOS);
 }
 
+/// Notifies the party members of a character's death or revival.
+/// 0AB2 <GID>.L <dead>.B
+void clif_party_dead( struct map_session_data *sd ){
+#if PACKETVER >= 20170502
+	unsigned char buf[7];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf, 0) = 0xab2;
+	WBUFL(buf, 2) = sd->status.account_id;
+	WBUFB(buf, 6) = pc_isdead(sd);
+
+	clif_send(buf, packet_len(0xab2), &sd->bl, PARTY);
+#endif
+}
+
 /// Updates the job and level of a party member
 /// 0abd <account id>.L <job>.W <level>.W
 void clif_party_job_and_level(struct map_session_data *sd){

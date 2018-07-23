@@ -2354,6 +2354,7 @@
 #if PACKETVER >= 20170502
 	packet(0x0A43,85);
 	packet(0x0A44,-1);
+	packet(0x0AB2,7);
 	packet(0x0ABD,10);
 	parseable_packet(0x0ACE,4,clif_parse_dull,0);
 #endif
