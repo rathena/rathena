@@ -11558,14 +11558,14 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
+
+	if( pc_cant_act2(sd) || sd->npc_id || pc_hasprogress( sd, WIP_DISABLE_NPC ) ){
 #ifdef RENEWAL
-	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_NPC)) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 		return;
 	}
-#endif
-	if (pc_cant_act2(sd) || sd->npc_id)
-		return;
+
 	if( sd->state.mail_writing )
 		return;
 
@@ -12189,16 +12189,13 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if (battle_config.idletime_option&IDLE_USESKILLTOID)
 		sd->idletime = last_tick;
 
-	if (sd->npc_id) {
+	if( sd->npc_id ){
+		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag || !( inf & INF_SELF_SKILL ) ){
 #ifdef RENEWAL
-		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-			clif_msg(sd, WORK_IN_PROGRESS);
+			clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 			return;
 		}
-#else
-		if (!sd->npc_item_flag || !(inf&INF_SELF_SKILL))
-			return;
-#endif
 	}
 
 	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&
@@ -12286,12 +12283,12 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 		return;
 	}
 
+	if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
 #ifdef RENEWAL
-	if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 		return;
 	}
-#endif
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USESKILLTOPOS)

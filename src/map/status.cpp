@@ -3330,7 +3330,7 @@ bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_wei
  * @param opt: Whether it is first calc (login) or not
  * @return (-1) for too many recursive calls, (1) recursive call, (0) success
  */
-int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
+int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
@@ -4231,6 +4231,24 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	calculating = 0;
 
 	return 0;
+}
+
+/// Intermediate function since C++ does not have a try-finally syntax
+int status_calc_pc_( struct map_session_data* sd, enum e_status_calc_opt opt ){
+	// Save the old script the player was attached to
+	struct script_state* previous_st = sd->st;
+
+	// Store the return value of the original function
+	int ret = status_calc_pc_sub( sd, opt );
+
+	// If an old script is present
+	if( previous_st ){
+		// Reattach the player to it, so that the limitations of that script kick back in
+		script_attach_state( previous_st );
+	}
+
+	// Return the original return value
+	return ret;
 }
 
 /**
