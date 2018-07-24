@@ -5028,15 +5028,13 @@ int pc_useitem(struct map_session_data *sd,int n)
 			clif_progressbar_abort(sd);
 			return 0; // First item use attempt cancels the progress bar
 		}
+
+		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag ){
 #ifdef RENEWAL
-		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-			clif_msg(sd, WORK_IN_PROGRESS);
+			clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 			return 0;
 		}
-#else
-		if (!sd->npc_item_flag)
-			return 0;
-#endif
 	}
 	item = sd->inventory.u.items_inventory[n];
 	id = sd->inventory_data[n];
