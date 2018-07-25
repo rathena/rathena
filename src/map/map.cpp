@@ -2747,7 +2747,7 @@ int map_delinstancemap(int m)
 
 	mapindex_removemap( mapdata->index );
 	map_removemapdb(mapdata);
-	map.erase(map.find(m));
+	map.erase(m);
 	return 1;
 }
 
@@ -3494,12 +3494,10 @@ int map_addmap(char* mapname)
 static void map_delmapid(int id)
 {
 	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map_getmapdata(id)->name);
-	map.erase(map.find(id));
+	map.erase(id);
 }
 
-int map_delmap(char* mapname)
-{
-	int i;
+int map_delmap(char* mapname){
 	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
@@ -3508,39 +3506,38 @@ int map_delmap(char* mapname)
 	}
 
 	mapindex_getmapname(mapname, map_name);
-	for(i = 0; i < map.size(); i++) {
-		if (strcmp(map_getmapdata(i)->name, map_name) == 0) {
-			map_delmapid(i);
+	for( auto& pair : map ){
+		if (strcmp(pair.second.name, map_name) == 0) {
+			map_delmapid(pair.first);
 			return 1;
 		}
 	}
+
 	return 0;
 }
 
 /// Initializes map flags and adjusts them depending on configuration.
-void map_flags_init(void)
-{
-	for( int i = 0; i < map.size(); i++ )
-	{
-		struct map_data *mapdata = map_getmapdata(i);
+void map_flags_init(void){
+	for( auto& pair : map ){
+		struct map_data *mapdata = &pair.second;
 		union u_mapflag_args args = {};
 
 		args.flag_val = 100;
 
 		// additional mapflag data
 		mapdata->zone = 0; // restricted mapflag zone
-		map_setmapflag(i, MF_NOCOMMAND, false); // nocommand mapflag level
-		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
-		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
+		map_setmapflag(pair.first, MF_NOCOMMAND, false); // nocommand mapflag level
+		map_setmapflag_sub(pair.first, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_setmapflag_sub(pair.first, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// skill damage
 		mapdata->damage_adjust = {};
 
 		// adjustments
 		if( battle_config.pk_mode )
-			map_setmapflag(i, MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
+			map_setmapflag(pair.first, MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
 
-		map_free_questinfo(i);
+		map_free_questinfo(pair.first);
 	}
 }
 
@@ -4745,18 +4742,13 @@ static int cleanup_db_sub(DBKey key, DBData *data, va_list va)
 /*==========================================
  * map destructor
  *------------------------------------------*/
-void do_final(void)
-{
-	int i, j;
-	struct map_session_data* sd;
-	struct s_mapiterator* iter;
-
+void do_final(void){
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
 	//Ladies and babies first.
-	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	struct s_mapiterator* iter = mapit_getallusers();
+	for( struct map_session_data* sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		map_quit(sd);
 	mapit_free(iter);
 
@@ -4764,14 +4756,11 @@ void do_final(void)
 	do_clear_npc();
 
 	// remove all objects on maps
-	for (i = 0; i < map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(i);
-
-		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i+1, map.size(), mapdata->name);
-		if (mapdata) {
-			map_foreachinmap(cleanup_sub, i, BL_ALL);
-			channel_delete(mapdata->channel,false);
-		}
+	int i = 0;
+	for( auto& pair : map ){
+		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map.size(), pair.second.name);
+		map_foreachinmap(cleanup_sub, pair.first, BL_ALL);
+		channel_delete(pair.second.channel,false);
 	}
 	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map.size());
 
@@ -4813,8 +4802,8 @@ void do_final(void)
 
 	map_db->destroy(map_db, map_db_final);
 
-	for (i=0; i<map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(i);
+	for( auto& pair : map ){
+		struct map_data *mapdata = &pair.second;
 
 		if(mapdata->cell) aFree(mapdata->cell);
 		if(mapdata->block) aFree(mapdata->block);
@@ -4822,10 +4811,10 @@ void do_final(void)
 		if(battle_config.dynamic_mobs) { //Dynamic mobs flag by [random]
 			if(mapdata->mob_delete_timer != INVALID_TIMER)
 				delete_timer(mapdata->mob_delete_timer, map_removemobs_timer);
-			for (j=0; j<MAX_MOB_LIST_PER_MAP; j++)
+			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_free_questinfo(i);
+		map_free_questinfo(pair.first);
 		mapdata->damage_adjust = {};
 	}
 
