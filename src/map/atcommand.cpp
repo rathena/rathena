@@ -387,68 +387,95 @@ ACMD_FUNC(send)
  * @author Euphy
  */
 static void warp_get_suggestions(struct map_session_data* sd, const char *name) {
-	char buffer[512];
-	int i, count = 0;
-
-	if (strlen(name) < 2)
+	// Minimum length for suggestions is 2 characters
+	if( strlen( name ) < 2 ){
 		return;
+	}
+
+	std::vector<const char*> suggestions;
+
+	suggestions.reserve( MAX_SUGGESTIONS );
+
+	// check for maps that contain string
+	for( auto& pair : map ){
+		struct map_data *mapdata = &pair.second;
+
+		// Prevent suggestion of instance mapnames
+		if( mapdata->instance_id != 0 ){
+			continue;
+		}
+
+		if( strstr( mapdata->name, name ) != nullptr ){
+			suggestions.push_back( mapdata->name );
+
+			if( suggestions.size() == MAX_SUGGESTIONS ){
+				break;
+			}
+		}
+	}
+
+	// if no maps found, search by edit distance
+	if( suggestions.empty() ){
+		// Levenshtein > 4 is bad
+		const int LEVENSHTEIN_MAX = 4;
+
+		std::map<int, std::vector<const char*>> maps;
+
+		for( auto& pair : map ){
+			// Prevent suggestion of instance mapnames
+			if( pair.second.instance_id != 0 ){
+				continue;
+			}
+
+			// Calculate the levenshtein distance of the two strings
+			int distance = levenshtein( pair.second.name, name );
+
+			// Check if it is above the maximum defined distance
+			if( distance > LEVENSHTEIN_MAX ){
+				continue;
+			}
+
+			std::vector<const char*>& vector = maps[distance];
+
+			// Do not add more entries than required
+			if( vector.size() == MAX_SUGGESTIONS ){
+				continue;
+			}
+
+			vector.push_back( pair.second.name );
+		}
+
+		for( int distance = 0; distance <= LEVENSHTEIN_MAX; distance++ ){
+			std::vector<const char*>& vector = maps[distance];
+
+			for( const char* found_map : vector ){
+				suggestions.push_back( found_map );
+
+				if( suggestions.size() == MAX_SUGGESTIONS ){
+					break;
+				}
+			}
+
+			if( suggestions.size() == MAX_SUGGESTIONS ){
+				break;
+			}
+		}
+	}
+
+	// If no suggestion could be made, do not output anything at all
+	if( suggestions.empty() ){
+		return;
+	}
+
+	char buffer[CHAT_SIZE_MAX];
 
 	// build the suggestion string
 	strcpy(buffer, msg_txt(sd, 205)); // Maybe you meant:
 	strcat(buffer, "\n");
 
-	// check for maps that contain string
-	for (i = 0; i < map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(i);
-
-		if (count < MAX_SUGGESTIONS && strstr(mapdata->name, name) != NULL) {
-			strcat(buffer, mapdata->name);
-			strcat(buffer, " ");
-			if (++count >= MAX_SUGGESTIONS)
-				break;
-		}
-	}
-
-	// if no maps found, search by edit distance
-	if (!count) {
-		std::vector<std::vector<unsigned int>> distance;
-		int j;
-
-		distance.resize(map.size()); // Grow rows
-		// calculate Levenshtein distance for all maps
-		for (i = 0; i < map.size(); i++) {
-			struct map_data *mapdata = map_getmapdata(i);
-
-			distance[i].resize(2); // Grow columns
-			if (strlen(mapdata->name) < 4)  // invalid map name?
-				distance[i][0] = INT_MAX;
-			else {
-				distance[i][0] = levenshtein(mapdata->name, name);
-				distance[i][1] = i;
-			}
-		}
-
-		// selection sort elements as needed
-		count = min(MAX_SUGGESTIONS, 5);  // results past 5 aren't worth showing
-		for (i = 0; i < count; i++) {
-			int min = i;
-			for (j = i+1; j < map.size(); j++) {
-				if (distance[j][0] < distance[min][0])
-					min = j;
-			}
-
-			// print map name
-			if (distance[min][0] > 4) {  // awful results, don't bother
-				if (!i) return;
-				break;
-			}
-			strcat(buffer, map_getmapdata(distance[min][1])->name);
-			strcat(buffer, " ");
-
-			// swap elements
-			SWAP(distance[i][0], distance[min][0]);
-			SWAP(distance[i][1], distance[min][1]);
-		}
+	for( const char* suggestion : suggestions ){
+		strcat(buffer, suggestion);
+		strcat(buffer, " ");
 	}
 
 	clif_displaymessage(sd->fd, buffer);
