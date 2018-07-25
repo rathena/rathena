@@ -326,7 +326,7 @@ int map_addblock(struct block_list* bl)
 	x = bl->x;
 	y = bl->y;
 
-	if( m < 0 || m >= map.size() )
+	if( m < 0 )
 	{
 		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map.size());
 		return 1;
@@ -733,7 +733,7 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	struct map_data *mapdata;
 	va_list ap_copy;
 
-	if (m < 0 || m >= map.size())
+	if (m < 0)
 		return 0;
 
 	if (x1 < x0)
@@ -2585,7 +2585,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 {
 	nullpo_ret(nd);
 
-	if( m < 0 || m >= map.size() )
+	if( m < 0 )
 		return false;
 
 	struct map_data *mapdata = map_getmapdata(m);
@@ -2825,7 +2825,7 @@ TIMER_FUNC(map_removemobs_timer){
 	int count;
 	const int16 m = id;
 
-	if (m < 0 || m >= map.size())
+	if (m < 0)
 	{	//Incorrect map id!
 		ShowError("map_removemobs_timer error: timer %d points to invalid map %d\n",tid, m);
 		return 0;
@@ -3079,7 +3079,7 @@ static int map_cell2gat(struct mapcell cell)
  *------------------------------------------*/
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk)
 {
-	if (m < 0 || m >= map.size())
+	if (m < 0)
 		return 0;
 	else
 		return map_getcellp(map_getmapdata(m), x, y, cellchk);
@@ -3167,7 +3167,7 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 	int j;
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if( m < 0 || m >= map.size() || x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
+	if( m < 0 || x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 		return;
 
 	j = x + y*mapdata->xs;
@@ -3196,7 +3196,7 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat)
 	struct mapcell cell;
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if( m < 0 || m >= map.size() || x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
+	if( m < 0 || x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 		return;
 
 	j = x + y*mapdata->xs;
@@ -4457,7 +4457,7 @@ bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
  */
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
 {
-	if (m < 0 || m >= map.size()) {
+	if (m < 0) {
 		ShowWarning("map_getmapflag: Invalid map ID %d.\n", m);
 		return -1;
 	}
@@ -4505,7 +4505,7 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
  */
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
 {
-	if (m < 0 || m >= map.size()) {
+	if (m < 0) {
 		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
 		return false;
 	}

@@ -12481,7 +12481,7 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if (m >= map.size() || !mapdata->cell)
+	if (!mapdata->cell)
 		return false;
 
 	if (!pcdb_checkid(jobid))
