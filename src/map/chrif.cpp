@@ -341,7 +341,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
 	// If the user is on a instance map, we have to fake his current position
-	if( map[sd->bl.m].instance_id ){
+	if( map_getmapdata(sd->bl.m)->instance_id ){
 		struct mmo_charstatus status;
 
 		// Copy the whole status
@@ -395,17 +395,18 @@ int chrif_connect(int fd) {
 
 // sends maps to char-server
 int chrif_sendmap(int fd) {
-	int i;
-
+	int i = 0, size = 4 + map.size() * 4;
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + map.size() * 4);
+	WFIFOHEAD(fd, size);
 	WFIFOW(fd,0) = 0x2afa;
-	for(i = 0; i < map.size(); i++)
-		WFIFOW(fd,4+i*4) = map[i].index;
-	WFIFOW(fd,2) = 4 + i * 4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOW(fd,2) = size;
+	for( auto& pair : map ){
+		WFIFOW(fd,4+i*4) = pair.second.index;
+		i++;
+	}
+	WFIFOSET(fd,size);
 
 	return 0;
 }

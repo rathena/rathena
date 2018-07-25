@@ -700,7 +700,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		(map_flag_gvg2_no_te(m) && skill_nocast&4) ||
 		(map_getmapflag(m, MF_BATTLEGROUND) && skill_nocast&8) ||
 		(map_flag_gvg2_te(m) && skill_nocast&16) || // WOE:TE
-		(map_getmapflag(m, MF_RESTRICTED) && map[m].zone && skill_nocast&(8*map[m].zone)) ){
+		(map_getmapflag(m, MF_RESTRICTED) && map_getmapdata(m)->zone && skill_nocast&(8*map_getmapdata(m)->zone)) ){
 			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
@@ -13076,9 +13076,10 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		int unit_val1 = skill_lv;
 		int unit_val2 = 0;
 		int alive = 1;
+		struct map_data *mapdata = map_getmapdata(src->m);
 
 		// are the coordinates out of range?
-		if( ux <= 0 || uy <= 0 || ux >= map[src->m].xs || uy >= map[src->m].ys ){
+		if( ux <= 0 || uy <= 0 || ux >= mapdata->xs || uy >= mapdata->ys ){
 			continue;
 		}
 

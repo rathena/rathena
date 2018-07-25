@@ -3404,7 +3404,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 			}
 			break;
 		case SP_HP:
-			if( map[sd->bl.m].hpmeter_visible ){
+			if( map_getmapdata(sd->bl.m)->hpmeter_visible ){
 				clif_hpmeter(sd);
 			}
 			if( !battle_config.party_hp_mode && sd->status.party_id ){
@@ -10324,10 +10324,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
 	}
 
-	if( map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs )
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->bl.m);
 	if( !pc_isinvisible(sd) ) { // increment the number of pvp players on the map
-		map[sd->bl.m].users_pvp++;
+		mapdata->users_pvp++;
 	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
 
@@ -10515,9 +10517,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			guild_notice = false; // Do not display it twice
 		}
 
-		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
-			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map_getmapflag(sd->state.pmap, MF_BATTLEGROUND) || map_getmapflag(sd->bl.m, MF_BATTLEGROUND)) )
-			status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
+		if (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) {
+			if ((sd->state.pmap != 0 && map_getmapdata(sd->state.pmap) != nullptr && (map_flag_gvg(sd->state.pmap) || map_getmapflag(sd->state.pmap, MF_BATTLEGROUND))) || (mapdata != nullptr && (map_flag_gvg(sd->bl.m) || map_getmapflag(sd->bl.m, MF_BATTLEGROUND))))
+				status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
+		}
 
 		if( night_flag && map_getmapflag(sd->bl.m, MF_NIGHTENABLED) )
 		{	//Display night.
@@ -10548,7 +10551,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 
 		if( pc_has_permission(sd,PC_PERM_VIEW_HPMETER) ) {
-			map[sd->bl.m].hpmeter_visible++;
+			mapdata->hpmeter_visible++;
 			sd->state.hpmeter_visible = 1;
 		}
 
@@ -10569,7 +10572,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 
 		// Instances do not need their own channels
-		if( channel_config.map_tmpl.name[0] && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map_getmapflag(sd->bl.m,MF_NOMAPCHANNELAUTOJOIN) && !map[sd->bl.m].instance_id )
+		if( channel_config.map_tmpl.name[0] && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map_getmapflag(sd->bl.m,MF_NOMAPCHANNELAUTOJOIN) && !mapdata->instance_id )
 			channel_mjoin(sd); //join new map
 
 		clif_pk_mode_message(sd);
@@ -17299,14 +17302,15 @@ void clif_bg_updatescore(int16 m)
 {
 	struct block_list bl;
 	unsigned char buf[6];
+	struct map_data *mapdata = map_getmapdata(m);
 
 	bl.id = 0;
 	bl.type = BL_NUL;
 	bl.m = m;
 
 	WBUFW(buf,0) = 0x2de;
-	WBUFW(buf,2) = map[m].bgscore_lion;
-	WBUFW(buf,4) = map[m].bgscore_eagle;
+	WBUFW(buf,2) = mapdata->bgscore_lion;
+	WBUFW(buf,4) = mapdata->bgscore_eagle;
 	clif_send(buf,packet_len(0x2de),&bl,ALL_SAMEMAP);
 }
 
@@ -17316,10 +17320,12 @@ void clif_bg_updatescore_single(struct map_session_data *sd)
 	nullpo_retv(sd);
 	fd = sd->fd;
 
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
 	WFIFOHEAD(fd,packet_len(0x2de));
 	WFIFOW(fd,0) = 0x2de;
-	WFIFOW(fd,2) = map[sd->bl.m].bgscore_lion;
-	WFIFOW(fd,4) = map[sd->bl.m].bgscore_eagle;
+	WFIFOW(fd,2) = mapdata->bgscore_lion;
+	WFIFOW(fd,4) = mapdata->bgscore_eagle;
 	WFIFOSET(fd,packet_len(0x2de));
 }
 

@@ -113,7 +113,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map_getmapflag((m), MF_PVP) != 0, map_flag_gvg2_no_te((m)), map_getmapflag((m), MF_BATTLEGROUND) != 0, (map[(m)].zone << 3) != 0, map_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map_getmapflag((m), MF_PVP) != 0, map_flag_gvg2_no_te((m)), map_getmapflag((m), MF_BATTLEGROUND) != 0, (map_getmapdata(m)->zone << 3) != 0, map_flag_gvg2_te((m))) )
 
 /**
  * Returns the status change associated with a skill.
@@ -2801,10 +2801,11 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 
 	if(flag&4) { // Strengthen Guardians - custom value +10% / lv
 		struct guild_castle *gc;
+		struct map_data *mapdata = map_getmapdata(md->bl.m);
 
-		gc=guild_mapname2gc(map[md->bl.m].name);
+		gc=guild_mapname2gc(mapdata->name);
 		if (!gc)
-			ShowError("status_calc_mob: No castle set at map %s\n", map[md->bl.m].name);
+			ShowError("status_calc_mob: No castle set at map %s\n", mapdata->name);
 		else if(gc->castle_id < 24 || md->mob_id == MOBID_EMPERIUM) {
 #ifdef RENEWAL
 			status->max_hp += 50 * (gc->defense / 5);
@@ -14373,7 +14374,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		bool mapIsGVG = map_flag_gvg2_no_te(bl->m);
 		bool mapIsBG = map_getmapflag(bl->m, MF_BATTLEGROUND) != 0;
 		bool mapIsTE = map_flag_gvg2_te(bl->m);
-		unsigned int mapZone = map[bl->m].zone << 3;
+		unsigned int mapZone = map_getmapdata(bl->m)->zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])

@@ -4,6 +4,8 @@
 #ifndef _CHAR_HPP_
 #define _CHAR_HPP_
 
+#include <vector>
+
 #include "../common/core.hpp" // CORE_ST_LAST
 #include "../common/mmo.hpp"
 #include "../common/msg_conf.hpp"
@@ -197,7 +199,7 @@ struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
 	int users;
-	unsigned short map[MAX_MAP_PER_SERVER];
+	std::vector<uint16> map;
 };
 extern struct mmo_map_server map_server[MAX_MAP_SERVERS];
 
