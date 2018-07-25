@@ -49,6 +49,7 @@ enum e_log_pick_type : uint32
 	LOG_TYPE_ROULETTE         = 0x100000,
 	LOG_TYPE_MERGE_ITEM       = 0x200000,
 	LOG_TYPE_QUEST            = 0x400000,
+	LOG_TYPE_PRIVATE_AIRSHIP  = 0x800000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all
