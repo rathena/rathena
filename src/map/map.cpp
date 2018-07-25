@@ -3750,7 +3750,7 @@ int map_readallmaps (void)
 			map_delmapid( id );
 		}
 
-		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed);
+		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed.size());
 	}
 
 	// finished map loading
