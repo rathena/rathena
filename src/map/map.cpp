@@ -3745,9 +3745,6 @@ int map_readallmaps (void)
 		aFree(map_cache_buffer[0]);
 	}
 
-	// finished map loading
-	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
-
 	if( !maps_removed.empty() ){
 		for( auto& id : maps_removed ){
 			map_delmapid( id );
@@ -3755,6 +3752,9 @@ int map_readallmaps (void)
 
 		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed);
 	}
+
+	// finished map loading
+	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
 
 	return 0;
 }
