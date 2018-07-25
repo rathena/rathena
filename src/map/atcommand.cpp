@@ -398,9 +398,11 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 	strcat(buffer, "\n");
 
 	// check for maps that contain string
-	for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
-		if (count < MAX_SUGGESTIONS && strstr(map[i].name, name) != NULL) {
-			strcat(buffer, map[i].name);
+	for (i = 0; i < map.size(); i++) {
+		struct map_data *mapdata = map_getmapdata(i);
+
+		if (count < MAX_SUGGESTIONS && strstr(mapdata->name, name) != NULL) {
+			strcat(buffer, mapdata->name);
 			strcat(buffer, " ");
 			if (++count >= MAX_SUGGESTIONS)
 				break;
@@ -409,15 +411,19 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 
 	// if no maps found, search by edit distance
 	if (!count) {
-		unsigned int distance[MAX_MAP_PER_SERVER][2];
+		std::vector<std::vector<unsigned int>> distance;
 		int j;
 
+		distance.resize(map.size()); // Grow rows
 		// calculate Levenshtein distance for all maps
-		for (i = 0; i < MAX_MAP_PER_SERVER; i++) {
-			if (strlen(map[i].name) < 4)  // invalid map name?
+		for (i = 0; i < map.size(); i++) {
+			struct map_data *mapdata = map_getmapdata(i);
+
+			distance[i].resize(2); // Grow columns
+			if (strlen(mapdata->name) < 4)  // invalid map name?
 				distance[i][0] = INT_MAX;
 			else {
-				distance[i][0] = levenshtein(map[i].name, name);
+				distance[i][0] = levenshtein(mapdata->name, name);
 				distance[i][1] = i;
 			}
 		}
@@ -426,7 +432,7 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 		count = min(MAX_SUGGESTIONS, 5);  // results past 5 aren't worth showing
 		for (i = 0; i < count; i++) {
 			int min = i;
-			for (j = i+1; j < MAX_MAP_PER_SERVER; j++) {
+			for (j = i+1; j < map.size(); j++) {
 				if (distance[j][0] < distance[min][0])
 					min = j;
 			}
@@ -436,7 +442,7 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 				if (!i) return;
 				break;
 			}
-			strcat(buffer, map[distance[min][1]].name);
+			strcat(buffer, map_getmapdata(distance[min][1])->name);
 			strcat(buffer, " ");
 
 			// swap elements
@@ -709,12 +715,14 @@ ACMD_FUNC(who) {
 		else
 			StringBuf_Printf(&buf, msg_txt(sd,30), count); // %d players found.
 	} else {
+		struct map_data *mapdata = map_getmapdata(map_id);
+
 		if (count == 0)
-			StringBuf_Printf(&buf, msg_txt(sd,54), map[map_id].name); // No player found in map '%s'.
+			StringBuf_Printf(&buf, msg_txt(sd,54), mapdata->name); // No player found in map '%s'.
 		else if (count == 1)
-			StringBuf_Printf(&buf, msg_txt(sd,55), map[map_id].name); // 1 player found in map '%s'.
+			StringBuf_Printf(&buf, msg_txt(sd,55), mapdata->name); // 1 player found in map '%s'.
 		else
-			StringBuf_Printf(&buf, msg_txt(sd,56), count, map[map_id].name); // %d players found in map '%s'.
+			StringBuf_Printf(&buf, msg_txt(sd,56), count, mapdata->name); // %d players found in map '%s'.
 	}
 	clif_displaymessage(fd, StringBuf_Value(&buf));
 	StringBuf_Destroy(&buf);
@@ -814,7 +822,7 @@ ACMD_FUNC(save)
 {
 	nullpo_retr(-1, sd);
 
-	if( map[sd->bl.m].instance_id ) {
+	if( map_getmapdata(sd->bl.m)->instance_id ) {
 		clif_displaymessage(fd, msg_txt(sd,383)); // You cannot create a savepoint in an instance.
 		return 1;
 	}
@@ -995,7 +1003,7 @@ ACMD_FUNC(hide)
 		clif_displaymessage(fd, msg_txt(sd,10)); // Invisible: Off
 
 		// increment the number of pvp players on the map
-		map[sd->bl.m].users_pvp++;
+		map_getmapdata(sd->bl.m)->users_pvp++;
 
 		if( !battle_config.pk_mode && map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) )
 		{// register the player for ranking calculations
@@ -1009,7 +1017,7 @@ ACMD_FUNC(hide)
 		clif_displaymessage(fd, msg_txt(sd,11)); // Invisible: On
 
 		// decrement the number of pvp players on the map
-		map[sd->bl.m].users_pvp--;
+		map_getmapdata(sd->bl.m)->users_pvp--;
 
 		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER )
 		{// unregister the player for ranking
@@ -2411,7 +2419,7 @@ ACMD_FUNC(gat)
 
 	for (y = 2; y >= -2; y--) {
 		sprintf(atcmd_output, "%s (x= %d, y= %d) %02X %02X %02X %02X %02X",
-			map[sd->bl.m].name,   sd->bl.x - 2, sd->bl.y + y,
+			map_getmapdata(sd->bl.m)->name,   sd->bl.x - 2, sd->bl.y + y,
  			map_getcell(sd->bl.m, sd->bl.x - 2, sd->bl.y + y, CELL_GETTYPE),
  			map_getcell(sd->bl.m, sd->bl.x - 1, sd->bl.y + y, CELL_GETTYPE),
  			map_getcell(sd->bl.m, sd->bl.x,     sd->bl.y + y, CELL_GETTYPE),
@@ -4033,13 +4041,15 @@ ACMD_FUNC(mapinfo) {
 	}
 	mapit_free(iter);
 
-	sprintf(atcmd_output, msg_txt(sd,1040), mapname, map[m_id].users, map[m_id].npc_num, chat_num, vend_num); // Map: %s | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
+	struct map_data *mapdata = map_getmapdata(m_id);
+
+	sprintf(atcmd_output, msg_txt(sd,1040), mapname, mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1041)); // ------ Map Flags ------
 	if (map_getmapflag(m_id, MF_TOWN))
 		clif_displaymessage(fd, msg_txt(sd,1042)); // Town Map
 	if (map_getmapflag(m_id, MF_RESTRICTED)){
-		sprintf(atcmd_output, " Restricted (zone %d)",map[m_id].zone);
+		sprintf(atcmd_output, " Restricted (zone %d)",mapdata->zone);
 		clif_displaymessage(fd, atcmd_output);
 	}
 
@@ -4066,17 +4076,17 @@ ACMD_FUNC(mapinfo) {
 			,(args.flag_val = SKILLDMG_OTHER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
 			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
 		clif_displaymessage(fd, atcmd_output);
-		if (map[m_id].skill_damage.size()) {
+		if (mapdata->skill_damage.size()) {
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (int j = 0; j < map[m_id].skill_damage.size(); j++) {
+			for (int j = 0; j < mapdata->skill_damage.size(); j++) {
 				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
 					,j+1
-					,skill_get_name(map[m_id].skill_damage[j].skill_id)
-					,map[m_id].skill_damage[j].rate[SKILLDMG_PC]
-					,map[m_id].skill_damage[j].rate[SKILLDMG_MOB]
-					,map[m_id].skill_damage[j].rate[SKILLDMG_BOSS]
-					,map[m_id].skill_damage[j].rate[SKILLDMG_OTHER]
-					,map[m_id].skill_damage[j].caster);
+					,skill_get_name(mapdata->skill_damage[j].skill_id)
+					,mapdata->skill_damage[j].rate[SKILLDMG_PC]
+					,mapdata->skill_damage[j].rate[SKILLDMG_MOB]
+					,mapdata->skill_damage[j].rate[SKILLDMG_BOSS]
+					,mapdata->skill_damage[j].rate[SKILLDMG_OTHER]
+					,mapdata->skill_damage[j].caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
 		}
@@ -4132,15 +4142,15 @@ ACMD_FUNC(mapinfo) {
 	clif_displaymessage(fd, atcmd_output);
 
 	if (map_getmapflag(m_id, MF_NOSAVE)) {
-		if (!map[m_id].save.map)
+		if (!mapdata->save.map)
 			clif_displaymessage(fd, msg_txt(sd,1068)); // No Save (Return to last Save Point)
-		else if (map[m_id].save.x == -1 || map[m_id].save.y == -1 ) {
-			sprintf(atcmd_output, msg_txt(sd,1069), mapindex_id2name(map[m_id].save.map)); // No Save, Save Point: %s,Random
+		else if (mapdata->save.x == -1 || mapdata->save.y == -1 ) {
+			sprintf(atcmd_output, msg_txt(sd,1069), mapindex_id2name(mapdata->save.map)); // No Save, Save Point: %s,Random
 			clif_displaymessage(fd, atcmd_output);
 		}
 		else {
 			sprintf(atcmd_output, msg_txt(sd,1070), // No Save, Save Point: %s,%d,%d
-				mapindex_id2name(map[m_id].save.map),map[m_id].save.x,map[m_id].save.y);
+				mapindex_id2name(mapdata->save.map),mapdata->save.x,mapdata->save.y);
 			clif_displaymessage(fd, atcmd_output);
 		}
 	}
@@ -4239,9 +4249,9 @@ ACMD_FUNC(mapinfo) {
 		break;
 	case 2:
 		clif_displaymessage(fd, msg_txt(sd,482)); // ----- NPCs in Map -----
-		for (i = 0; i < map[m_id].npc_num;)
+		for (i = 0; i < mapdata->npc_num;)
 		{
-			struct npc_data *nd = map[m_id].npc[i];
+			struct npc_data *nd = mapdata->npc[i];
 			switch(nd->ud.dir) {
 			case DIR_NORTH:		strcpy(direction, msg_txt(sd,491)); break; // North
 			case DIR_NORTHWEST:	strcpy(direction, msg_txt(sd,492)); break; // North West
@@ -7861,7 +7871,7 @@ ACMD_FUNC(whereis)
 				int16 mapid = map_mapindex2mapid(spawn.mapindex);
 				if (mapid < 0)
 					continue;
-				snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[mapid].name, spawn.qty);
+				snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map_getmapdata(mapid)->name, spawn.qty);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}

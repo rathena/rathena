@@ -2199,7 +2199,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 		(damage->map&4 && map_flag_gvg2(m)) ||
 		(damage->map&8 && map_getmapflag(m, MF_BATTLEGROUND)) ||
 		(damage->map&16 && map_getmapflag_sub(m, MF_SKILL_DAMAGE, &args)) ||
-		(map_getmapflag(m, MF_RESTRICTED) && damage->map&(8*map[m].zone)))
+		(map_getmapflag(m, MF_RESTRICTED) && damage->map&(8*map_getmapdata(m)->zone)))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -2216,24 +2216,24 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
  */
 static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	int rate = 0;
-	struct map_data *mapd = &map[src->m];
+	struct map_data *mapdata = map_getmapdata(src->m);
 	union u_mapflag_args args = {};
 
 	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if (!mapd || !map_getmapflag_sub(src->m, MF_SKILL_DAMAGE, &args))
+	if (!mapdata || !map_getmapflag_sub(src->m, MF_SKILL_DAMAGE, &args))
 		return 0;
 
 	// Damage rate for all skills at this map
-	if (mapd->damage_adjust.caster&src->type)
-		rate = mapd->damage_adjust.rate[battle_skill_damage_type(target)];
+	if (mapdata->damage_adjust.caster&src->type)
+		rate = mapdata->damage_adjust.rate[battle_skill_damage_type(target)];
 
-	if (mapd->skill_damage.empty())
+	if (mapdata->skill_damage.empty())
 		return rate;
 
 	// Damage rate for specified skill at this map
-	for (int i = 0; i < mapd->skill_damage.size(); i++) {
-		if (mapd->skill_damage[i].skill_id == skill_id && mapd->skill_damage[i].caster&src->type)
-			rate += mapd->skill_damage[i].rate[battle_skill_damage_type(target)];
+	for (int i = 0; i < mapdata->skill_damage.size(); i++) {
+		if (mapdata->skill_damage[i].skill_id == skill_id && mapdata->skill_damage[i].caster&src->type)
+			rate += mapdata->skill_damage[i].rate[battle_skill_damage_type(target)];
 	}
 	return rate;
 }

@@ -4,7 +4,6 @@
 #include "pc.hpp"
 
 #include <map>
-#include <vector>
 
 #include <math.h>
 #include <stdlib.h>
@@ -713,9 +712,10 @@ void pc_makesavestatus(struct map_session_data *sd) {
 	}
 
 	if(map_getmapflag(sd->bl.m, MF_NOSAVE)) {
-		struct map_data *m=&map[sd->bl.m];
-		if(m->save.map)
-			memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
+		struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+		if(mapdata->save.map)
+			memcpy(&sd->status.last_point,&mapdata->save,sizeof(sd->status.last_point));
 		else
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
 	}
@@ -1568,7 +1568,7 @@ void pc_reg_received(struct map_session_data *sd)
 		sd->vd.class_ = JT_INVISIBLE;
 		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 		// decrement the number of pvp players on the map
-		map[sd->bl.m].users_pvp--;
+		map_getmapdata(sd->bl.m)->users_pvp--;
 
 		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
 			// unregister the player for ranking
@@ -5498,6 +5498,8 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	m = map_mapindex2mapid(mapindex);
 
+	struct map_data *mapdata = map_getmapdata(m);
+
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
@@ -5505,7 +5507,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
 
-		if(map[sd->bl.m].instance_id && !map[m].instance_id) {
+		if(map_getmapdata(sd->bl.m)->instance_id && !mapdata->instance_id) {
 			bool instance_found = false;
 			struct party_data *p = NULL;
 			struct guild *g = NULL;
@@ -5601,7 +5603,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		return SETPOS_OK;
 	}
 
-	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 	{
 		ShowError("pc_setpos: attempt to place player '%s' (%d:%d) on invalid coordinates (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex),x,y);
 		x = y = 0; // make it random
@@ -5610,11 +5612,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	if( x == 0 && y == 0 ) { // pick a random walkable cell
 		int c=0;
 		do {
-			x = rnd()%(map[m].xs-2)+1;
-			y = rnd()%(map[m].ys-2)+1;
+			x = rnd()%(mapdata->xs-2)+1;
+			y = rnd()%(mapdata->ys-2)+1;
 			c++;
 			
-			if(c > (map[m].xs * map[m].ys)*3){ //force out
+			if(c > (mapdata->xs * mapdata->ys)*3){ //force out
 				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
 				return SETPOS_OK; //preventing warp
 				//break; //allow warp anyway
@@ -5698,22 +5700,21 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 char pc_randomwarp(struct map_session_data *sd, clr_type type)
 {
 	int x,y,i=0;
-	int16 m;
 
 	nullpo_ret(sd);
-
-	m=sd->bl.m;
 
 	if (map_getmapflag(sd->bl.m, MF_NOTELEPORT)) //Teleport forbidden
 		return 3;
 
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
 	do {
-		x = rnd()%(map[m].xs-2)+1;
-		y = rnd()%(map[m].ys-2)+1;
-	} while((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
+		x = rnd()%(mapdata->xs-2)+1;
+		y = rnd()%(mapdata->ys-2)+1;
+	} while((map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->bl.m,x,y,1))) && (i++) < 1000);
 
 	if (i < 1000)
-		return pc_setpos(sd,map[sd->bl.m].index,x,y,type);
+		return pc_setpos(sd,mapdata->index,x,y,type);
 
 	return 3;
 }
@@ -5758,7 +5759,7 @@ bool pc_memo(struct map_session_data* sd, int pos)
 		pos = 0;
 	}
 
-	if( map[sd->bl.m].instance_id ) {
+	if( map_getmapdata(sd->bl.m)->instance_id ) {
 		clif_displaymessage( sd->fd, msg_txt(sd,384) ); // You cannot create a memo in an instance.
 		return false;
 	}
@@ -7974,9 +7975,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if( map_getmapflag( sd->bl.m, MF_PVP_NIGHTMAREDROP ) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
 		for(int j=0;j<MAX_DROP_PER_MAP;j++){
-			int id = map[sd->bl.m].drop_list[j].drop_id;
-			int per = map[sd->bl.m].drop_list[j].drop_per;
-			enum e_nightmare_drop_type type = map[sd->bl.m].drop_list[j].drop_type;
+			int id = map_getmapdata(sd->bl.m)->drop_list[j].drop_id;
+			int per = map_getmapdata(sd->bl.m)->drop_list[j].drop_per;
+			enum e_nightmare_drop_type type = map_getmapdata(sd->bl.m)->drop_list[j].drop_type;
 
 			if(id == 0)
 				continue;
@@ -10303,12 +10304,12 @@ static int pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
 int pc_calc_pvprank(struct map_session_data *sd)
 {
 	int old = sd->pvp_rank;
-	struct map_data *m = &map[sd->bl.m];
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 	sd->pvp_rank=1;
 	map_foreachinmap(pc_calc_pvprank_sub,sd->bl.m,BL_PC,sd);
-	if(old!=sd->pvp_rank || sd->pvp_lastusers!=m->users_pvp)
-		clif_pvpset(sd,sd->pvp_rank,sd->pvp_lastusers=m->users_pvp,0);
+	if(old!=sd->pvp_rank || sd->pvp_lastusers!=mapdata->users_pvp)
+		clif_pvpset(sd,sd->pvp_rank,sd->pvp_lastusers=mapdata->users_pvp,0);
 	return sd->pvp_rank;
 }
 /*==========================================
@@ -12376,13 +12377,16 @@ void pc_show_questinfo(struct map_session_data *sd) {
 
 	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
 		return;
-	if (!map[sd->bl.m].qi_count || !map[sd->bl.m].qi_data)
+
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if (!mapdata->qi_count || !mapdata->qi_data)
 		return;
-	if (map[sd->bl.m].qi_count != sd->qi_count)
+	if (mapdata->qi_count != sd->qi_count)
 		return; // init was not called yet
 
-	for(i = 0; i < map[sd->bl.m].qi_count; i++) {
-		qi = &map[sd->bl.m].qi_data[i];
+	for(i = 0; i < mapdata->qi_count; i++) {
+		qi = &mapdata->qi_data[i];
 
 		if (!qi)
 			continue;
@@ -12452,9 +12456,12 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 
 	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
 		return;
-	if (!map[sd->bl.m].qi_count || !map[sd->bl.m].qi_data)
+
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if (!mapdata->qi_count || !mapdata->qi_data)
 		return;
-	CREATE(sd->qi_display, bool, (sd->qi_count = map[sd->bl.m].qi_count));
+	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_count));
 #endif
 }
 
@@ -12472,7 +12479,9 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 	if (m < 0)
 		return true;
 
-	if (m >= MAX_MAP_PER_SERVER || !map[m].cell)
+	struct map_data *mapdata = map_getmapdata(m);
+
+	if (m >= map.size() || !mapdata->cell)
 		return false;
 
 	if (!pcdb_checkid(jobid))
@@ -12487,7 +12496,7 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
 		(map_getmapflag(m, MF_BATTLEGROUND) && job_info[idx].noenter_map.zone&8) || // Battleground
 		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
-		(map_getmapflag(m, MF_RESTRICTED) && job_info[idx].noenter_map.zone&(8*map[m].zone)) // Zone restriction
+		(map_getmapflag(m, MF_RESTRICTED) && job_info[idx].noenter_map.zone&(8*mapdata->zone)) // Zone restriction
 		)
 		return false;
 
