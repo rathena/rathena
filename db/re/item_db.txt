@@ -655,7 +655,7 @@
 1292,Upg_Katar,Upg Katar,5,20,,1000,80,,1,1,0x00001000,63,2,34,3,1,1,16,{ .@r = getrefine(); bonus bBaseAtk,(.@r*10); bonus bCritAtkRate,(.@r*2); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10); },{},{}
 1293,Velum_Jamadhar,Vellum Jamadhar,5,20,,1200,170,,1,0,0x00001000,63,2,34,4,95,1,16,{ bonus4 bSetDefRace,RC_Player,10000,5000,1; bonus4 bSetMDefRace,RC_Player,10000,5000,1; bonus bAspdRate,getrefine(); },{},{}
 1294,Velum_Scare,Vellum Scale,5,20,,1200,50,,1,0,0x00001000,63,2,34,4,95,1,16,{ bonus3 bSPVanishRaceRate,RC_Player,10000,10; },{},{}
-1295,Blood_Tears_,Blood Tears,5,20,,1700,120,,1,3,0x00001000,18,2,34,4,55,1,16,{},{},{}
+1295,Blood_Tears_,Blood Tears,5,20,,1700,120,,1,3,0x00001000,18,2,34,4,55,1,16,{ bonus3 bAutoSpell,"NPC_WIDEBLEEDING",(getrefine()>=9?2:1),30; },{},{}
 1296,Metal_Katar,Metal Katar,5,20,,0,75,,1,1,0x00001000,63,2,34,3,1,1,16,{ .@r = getrefine(); bonus bBaseAtk,(.@r*5); bonus bCritAtkRate,.@r; .@i = min(BaseLevel/10,12); if(.@i>2) bonus bBaseAtk,((.@i-2)*5); },{},{}
 1297,Inverse_Scale_,Inverse Scale,5,20,,1500,140,,1,2,0x00001000,18,2,34,4,55,1,16,{ bonus bAtkEle,Ele_Holy; bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30; },{},{}
 1298,Shiver_Katar,Katar Of Horror,5,60000,,2700,110,,1,2,0x00001000,63,2,34,4,105,1,16,{},{},{}
@@ -828,7 +828,7 @@
 1480,Gae_Bolg_,Gae Bolg,5,20,,2000,160,,3,2,0x00004082,63,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10; },{},{}
 1481,Zephyrus_,Zephyrus,5,20,,2000,170,,3,3,0x00004082,63,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Wind; bonus2 bAddEff,Eff_Silence,200; bonus3 bAutoSpell,"MG_THUNDERSTORM",3,100; },{},{}
 1482,BF_Lance1,Assaulter Lance,5,20,,0,160,,3,0,0x00004082,63,2,34,3,80,1,5,{ bonus bStr,2; bonus2 bAddRace,RC_DemiHuman,25; bonus2 bAddRace,RC_Player,25; bonus bIgnoreDefRace,RC_DemiHuman; bonus bIgnoreDefRace,RC_Player; bonus bUnbreakableWeapon; },{},{}
-1483,Ivory_Lance,Ivory Lance,5,20,,1000,160,,3,1,0x00004082,18,2,34,3,50,1,5,{ bonus bAgi,2; bonus bAspdRate,3; bonus2 bAddEff,Eff_Bleeding,300; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,30; skill "KN_SPEARSTAB",5; },{},{}
+1483,Ivory_Lance,Ivory Lance,5,20,,1000,160,,3,1,0x00004082,18,2,34,3,50,1,5,{ bonus bAgi,2; bonus bAspdRate,3; bonus2 bAddEff,Eff_Bleeding,300; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,30; bonus3 bAutoSpell,"NPC_WIDEBLEEDING",1,30; skill "KN_SPEARSTAB",5; },{},{}
 1484,Cardo,Cardo,5,20,,5600,150,,3,1,0x00000080,18,2,34,4,70,1,5,{ bonus bAspdRate,-10; bonus bDef,getrefine()/2; },{},{}
 1485,Battle_Fork,Battle Fork,5,20,,700,112,,3,4,0x00004082,18,2,34,2,50,1,5,{},{},{}
 1486,Krieger_Twohand_Spear1,Glorious Lance,5,20,,0,220,,3,0,0x00004082,63,2,34,4,80,1,5,{ bonus2 bAddRace,RC_DemiHuman,70; bonus2 bAddRace,RC_Player,70; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,25; bonus2 bIgnoreDefRaceRate,RC_Player,25; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player,pow(min(14,.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player,5; } if(.@r>8) { if(BaseJob==Job_Knight) bonus4 bAutoSpellOnSkill,"KN_PIERCE","NPC_CRITICALWOUND",2,200; else if(BaseJob==Job_Crusader) bonus3 bAutoSpell,"PA_PRESSURE",5,200; } },{},{}
@@ -1291,7 +1291,7 @@
 2017,Divine_Cross_,Divine Cross,5,20,,1500,120:210,,1,1,0x00008100,63,2,34,4,70,1,23,{ bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Holy; bonus bDex,4; bonus2 bSubRace,RC_Demon,15; bonus2 bSubRace,RC_Undead,15; },{},{}
 2018,Metal_Staff,Metal Staff,5,20,,0,50:70,,1,1,0x00818315,63,2,34,3,1,1,23,{ if(BaseJob==Job_Wizard) bonus bMatk,15; else if(BaseJob==Job_Sage) bonus bMatk,10; bonus bMatk,(getrefine()*5); .@i = min(BaseLevel/10,12); if(.@i>2) bonus bMatk,((.@i-2)*5); },{},{}
 2019,TE_Woe_Two_Hand_Staff,TE Woe Two Hand Staff,5,0,,0,50:130,,1,0,0x00818315,63,2,34,3,40,1,23,{ bonus2 bMagicAddRace,RC_Player,20; bonus3 bAddEff,Eff_Stun,1000,ATF_MAGIC; bonus bHPRecovRate,5; bonus bSPRecovRate,5; },{},{}
-2020,Jormungand,Jormungand,5,10,,3000,200:280,,,0,0x810200,63,2,34,4,1,0,23,{ bonus bInt,20; bonus bUnbreakableWeapon; },{},{}
+2020,Jormungand,Jormungand,5,10,,3000,200:280,,,0,0x810200,63,2,34,4,1,0,23,{ bonus bInt,20; bonus3 bAddEff,Eff_Poison,3000,ATF_MAGIC; bonus2 bAddEffWhenHit,Eff_DPoison,100; bonus bUnbreakableWeapon; },{},{}
 2021,Ganbantein,Ganbantein,5,0,,2000,100:320,,1,0,0x00000200,56,2,2,4,100,1,10,{ bonus bInt,25; bonus bDex,25; bonus3 bAddEff,Eff_Poison,1000,ATF_MAGIC; bonus3 bAutoSpell,"AB_SILENTIUM",1,100; bonus bUnbreakableWeapon; },{},{}
 2022,Staff_Of_Geffen,Staff of Geffen,5,20,,1000,100:300,,1,1,0x00000200,18,2,34,1,150,1,23,{ bonus bInt,20; },{},{}
 2023,Thanos_Rod,Thanatos Two-Handed Staff,5,10,,1400,120:250,,1,1,0x00018314,56,2,34,4,120,1,23,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bHealPower,18; bonus bMagicHPGainValue,500; bonus bMagicSPGainValue,50; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
@@ -1736,8 +1736,8 @@
 2528,Wool_Scarf,Wool Scarf,4,20,,500,,11,,1,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bMdef,4; },{},{}
 2529,Rider_Insignia,Rider Insignia,4,20,,500,,13,,0,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bAgi,2; },{},{}
 2530,Rider_Insignia_,Rider Insignia,4,20,,500,,13,,1,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bAgi,2; },{},{}
-2531,Ulfhedinn,Ulfhedinn,4,20,,700,,13,,1,0x000654E2,18,2,4,,70,1,0,{ bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",6,20; },{},{}
-2532,Mithril_Magic_Cape,Mithril Magic Cape,4,20,,400,,8,,1,0x00098B1C,18,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",6,200,BF_MAGIC,0; },{},{}
+2531,Ulfhedinn,Ulfhedinn,4,20,,700,,13,,1,0x000654E2,18,2,4,,70,1,0,{ bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",1,20; },{},{}
+2532,Mithril_Magic_Cape,Mithril Magic Cape,4,20,,400,,8,,1,0x00098B1C,18,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",1,200,BF_MAGIC,0; },{},{}
 2533,Freyja_Cape,Freyja Cape,4,0,,200,,10,,0,0xFFFFFFFE,63,2,4,,0,0,0,{ bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; },{},{}
 2534,Ruffler,Ruffler,4,20,,0,,10,,0,0xFFFFFFFF,63,2,4,,0,0,0,{ bonus2 bSubEle,Ele_Neutral,17; bonus bFlee,17; },{},{}
 2535,Cloak_Of_Survival_C,Cloak Of Survival,4,1,,0,,5,,0,0x00810204,63,2,4,,0,0,0,{ bonus bVit,10; bonus bMdef,10; },{},{}
@@ -1781,7 +1781,7 @@
 2573,Archangel_Wing,Archangel Wings,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,0,1,1,{},{},{}
 2574,Ur_Manteau,Ur's Manteau,4,20,,600,,20,,0,0x00000080,56,2,4,,100,1,0,{ bonus bMaxHPrate,2; bonus2 bSubEle,Ele_Neutral,10; },{},{}
 2575,Peuz_Manteau,Peuz's Manteau,4,20,,600,,16,,0,0x00000080,56,2,4,,100,1,0,{ bonus bFlee,10; bonus bCritical,10; },{},{}
-2576,Bravery_Bag,Adventurer's Backpack,4,0,,200,,20,,1,0xFFFFFFFF,63,2,4,,0,1,2,{ skill "BS_GREED",1; .@r = getrefine(); if(.@r>6) { if(readparam(bStr)>=90){ bonus bBaseAtk,20; } if(readparam(bInt)>=90){ bonus bMatk,30; } if(readparam(bVit)>=90){ bonus2 bSubEle,Ele_Neutral,10; } if(readparam(bAgi)>=90){ bonus bAspdRate,8; } if(readparam(bDex)>=90){ bonus bLongAtkRate,5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,10; } } if(.@r>8) { if(readparam(bStr)>=90){ bonus bBaseAtk,10; } if(readparam(bInt)>=90){ bonus bMatk,20; } if(readparam(bVit)>=90){ bonus2 bSubEle,Ele_Neutral,5; } if(readparam(bAgi)>=90){ bonus bAspd,1; } if(readparam(bDex)>=90){ bonus bLongAtkRate,5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; } } },{},{}
+2576,Bravery_Bag,Adventurer's Backpack,4,0,,200,,20,,1,0xFFFFFFFF,63,2,4,,0,1,2,{ skill "BS_GREED",1; .@r = getrefine(); .@str = readparam(bStr); if(.@str>=90){ if(.@r>=7) bonus bBaseAtk,(.@r>=9)?30:20; } .@int = readparam(bInt); if(.@int>=90){ if(.@r>=7) bonus bMatk,(.@r>=9)?50:30; } .@vit = readparam(bVit); if(.@vit>=90){ if(.@r>=7) bonus2 bSubEle,Ele_Neutral,(.@r>=9)?15:10; } .@agi = readparam(bAgi); if(.@agi>=90){ if(.@r>=7) bonus bAspdRate,8; if(.@r>=9) bonus bAspd,1; } .@dex = readparam(bDex); if(.@dex>=90){ if(.@r>=7) bonus bLongAtkRate,(.@r>=9)?10:5; } .@luk = readparam(bLuk); if(.@luk>=90){ if(.@r>=7) bonus bCritAtkRate,(.@r>=9)?15:10; } },{},{}
 2577,Sabah_Hood,Sapha Hood,4,20,,100,,13,,0,0x00001000,63,2,4,,100,1,0,{ bonus bFlee,12; bonus bCritical,getrefine(); },{},{}
 2578,Nab_Hood,Nab Hood,4,20,,100,,13,,0,0x00001000,63,2,4,,100,1,0,{ .@r = getrefine(); bonus bFlee,.@r*2; bonus bBaseAtk,.@r*2; },{},{}
 2579,Magic_Stole,Magic Stole,4,20,,700,,8,,1,0xFFFFFFFF,63,2,4,,0,1,0,{ bonus bMdef,3; bonus bUseSPrate,-5; bonus bMaxSPrate,((getrefine()>=4)?6:3); },{},{}
