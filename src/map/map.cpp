@@ -3636,9 +3636,7 @@ void map_removemapdb(struct map_data *m)
  *--------------------------------------*/
 int map_readallmaps (void)
 {
-	int i;
 	FILE* fp=NULL;
-	int maps_removed = 0;
 	// Has the uncompressed gat data of all maps, so just one allocation has to be made
 	char *map_cache_buffer[2] = {
 		NULL,
@@ -3654,7 +3652,7 @@ int map_readallmaps (void)
 			"db/import/map_cache.dat"
 		};
 
-		for( i = 0; i < 2; i++ ){
+		for( int i = 0; i < 2; i++ ){
 			ShowStatus( "Loading maps (using %s as map cache)...\n", mapcachefilepath[i] );
 
 			if( ( fp = fopen(mapcachefilepath[i], "rb") ) == NULL ){
@@ -3679,16 +3677,19 @@ int map_readallmaps (void)
 		}
 	}
 
-	for(i = 0; i < map.size(); i++) {
+	int i = 0;
+	std::vector<int16> maps_removed;
+
+	for( auto &pair : map ){
 		size_t size;
 		bool success = false;
 		unsigned short idx = 0;
-		struct map_data *mapdata = map_getmapdata(i);
+		struct map_data *mapdata = &pair.second;
+
+		// show progress
+		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i++, map.size(), mapdata->name);
 
 		if( enable_grf ){
-			// show progress
-			ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map.size(), mapdata->name);
-
 			// try to load the map
 			success = map_readgat(mapdata) != 0;
 		}else{
@@ -3706,9 +3707,7 @@ int map_readallmaps (void)
 
 		// The map was not found - remove it
 		if( !(idx = mapindex_name2id(mapdata->name)) || !success ){
-			map_delmapid(i);
-			maps_removed++;
-			i--;
+			maps_removed.push_back(pair.first);
 			continue;
 		}
 
@@ -3717,19 +3716,13 @@ int map_readallmaps (void)
 		if (uidb_get(map_db,(unsigned int)mapdata->index) != NULL)
 		{
 			ShowWarning("Map %s already loaded!" CL_CLL "\n", mapdata->name);
-			if (mapdata->cell) {
-				aFree(mapdata->cell);
-				mapdata->cell = NULL;
-			}
-			map_delmapid(i);
-			maps_removed++;
-			i--;
+			maps_removed.push_back(pair.first);
 			continue;
 		}
 
 		map_addmap2db(mapdata);
 
-		mapdata->m = i;
+		mapdata->m = pair.first;
 		memset(mapdata->moblist, 0, sizeof(mapdata->moblist));	//Initialize moblist [Skotlex]
 		mapdata->mob_delete_timer = INVALID_TIMER;	//Initialize timer [Skotlex]
 
@@ -3755,8 +3748,13 @@ int map_readallmaps (void)
 	// finished map loading
 	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
 
-	if (maps_removed)
+	if( !maps_removed.empty() ){
+		for( auto& id : maps_removed ){
+			map_delmapid( id );
+		}
+
 		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed);
+	}
 
 	return 0;
 }
