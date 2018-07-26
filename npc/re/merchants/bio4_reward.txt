@@ -640,6 +640,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	}
 	.@refine_count = getequiprefinerycnt(.@part);
 	.@equip_item = getequipid(.@part);
+	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@lhz_max_num = 4000;
 	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 || 
 	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 || 
@@ -701,7 +702,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			mes "Not enough '^F2766EWill of Warrior^000000'. You need to bring 10 '^F2766EWill of Warrior^000000'";
 			close;
 		}
-		else if (getequipcardid(.@part, 3) > 0) {
+		else if (.@equip_card[3] > 0) {
 			mes "[Pudding]";
 			mes "This equipment already has the power of '^F2766EWill of Warrior^000000'.";
 			close;
@@ -715,7 +716,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			mes "Not enough '^952420Thirst for Blood^000000'. You need to bring 10 '^952420Thirst for Blood^000000'";
 			close;
 		}
-		else if (getequipcardid(.@part, 2) > 0) {
+		else if (.@equip_card[2] > 0) {
 			mes "[Pudding]";
 			mes "This equipment already has the power of '^952420Thirst for Blood^000000'.";
 			close;
@@ -731,13 +732,13 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			.@4thzptsodyd = 1;
 			.@3thzptsodyd = 1;
 		} else {
-			if (getequipcardid(.@part, 3) > 0) {
+			if (.@equip_card[3] > 0) {
 				.@menu_clear$[1] = "Remove the power of '^F2766EWill of Warrior^000000'";
 			} else {
 				.@menu_clear$[1] = "^999999There's no power to remove^000000";
 				.@4thzptsodyd = 1;
 			}
-			if (getequipcardid(.@part, 2) > 0) {
+			if (.@equip_card[2] > 0) {
 				.@menu_clear$[2] = "Remove the power of '^952420Thirst for Blood^000000'";
 			} else {
 				.@menu_clear$[2] = "^999999There's no power to remove^000000";
@@ -765,16 +766,19 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 				mes "This equipment didn't get any special power.";
 				close;
 			}
-			setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+			specialeffect EF_BEGINSPELL2;
+			progressbar "ffff00", 2;
+			specialeffect2 EF_FROSTWEAPON;
+			delitem 6471, 10; //Goast_Chill
+
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@part, .@equip_item) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refine_count))
+				close;
+
 			if (.@menu == 2)
 				.@equip_card[3] = 0;
 			else
 				.@equip_card[2] = 0;
-			.@equip_item = getequipid(.@part);
-			specialeffect EF_BEGINSPELL2, AREA, "Sorcerer#Bio4Reward";
-			progressbar "ffff00", 2;
-			specialeffect2 EF_FROSTWEAPON;
-			delitem 6471, 10; //Goast_Chill
 			delequip .@part;
 			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
 			mes "[Pudding]";
@@ -956,15 +960,18 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 				else                 .@enchant = 0;
 			break;
 		}
-		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
-		.@equip_card[(.@socket_type-1)] = .@enchant;
-		.@equip_item = getequipid(.@part);
-		specialeffect EF_BEGINSPELL3, AREA, "Sorcerer#Bio4Reward";
+		specialeffect EF_BEGINSPELL3;
 		progressbar "ffff00", 2;
 		if (.@socket_type == 3)
 			delitem 6470, 10; //Blood_Thirst
 		else
 			delitem 6469, 10; //Will_Of_Warrior
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_item) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refine_count))
+			close;
+
+		.@equip_card[(.@socket_type-1)] = .@enchant;
 		delequip .@part;
 		
 		if (.@enchant == 0){

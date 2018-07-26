@@ -127,7 +127,7 @@ void login_remove_online_user(uint32 account_id) {
  * @param data: unused
  * @return :0
  */
-int login_waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(login_waiting_disconnect_timer){
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
 	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id ){
 		p->waiting_disconnect = INVALID_TIMER;
@@ -184,7 +184,7 @@ static int login_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap) {
  * @param data: unused
  * @return : 0
  */
-static int login_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(login_online_data_cleanup){
 	online_db->foreach(online_db, login_online_data_cleanup_sub);
 	return 0;
 }

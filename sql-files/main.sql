@@ -525,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `guild_position` (
   `guild_id` int(9) unsigned NOT NULL default '0',
   `position` tinyint(6) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
-  `mode` tinyint(11) unsigned NOT NULL default '0',
+  `mode` smallint(11) unsigned NOT NULL default '0',
   `exp_mode` tinyint(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`guild_id`,`position`)
 ) ENGINE=MyISAM;
