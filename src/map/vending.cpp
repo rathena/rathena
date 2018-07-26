@@ -1,28 +1,29 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "vending.hpp"
-#include "../common/nullpo.h"
-#include "../common/malloc.h" // aMalloc, aFree
-#include "../common/showmsg.h" // ShowInfo
-#include "../common/strlib.h"
-#include "../common/timer.h"  // DIFF_TICK
-
-#include "buyingstore.hpp"
-#include "clif.hpp"
-#include "itemdb.hpp"
-#include "atcommand.hpp"
-#include "path.hpp"
-#include "chrif.hpp"
-#include "pc.hpp"
-#include "pc_groups.hpp"
-#include "buyingstore.hpp" // struct s_autotrade_entry, struct s_autotrader
-#include "npc.hpp"
-#include "battle.hpp"
-#include "log.hpp"
-#include "achievement.hpp"
 
 #include <stdlib.h> // atoi
+
+#include "../common/malloc.hpp" // aMalloc, aFree
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp" // ShowInfo
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"  // DIFF_TICK
+
+#include "achievement.hpp"
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "buyingstore.hpp"
+#include "buyingstore.hpp" // struct s_autotrade_entry, struct s_autotrader
+#include "chrif.hpp"
+#include "clif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "npc.hpp"
+#include "path.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
 
 static uint32 vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
@@ -368,7 +369,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, '%d', '%d', '%d' );",
-		vendings_table, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == SEX_FEMALE ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ) {
+		vendings_table, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == SEX_FEMALE ? 'F' : 'M', map_getmapdata(sd->bl.m)->name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ) {
 		Sql_ShowDebug(mmysql_handle);
 	}
 

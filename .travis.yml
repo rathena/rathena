@@ -73,6 +73,17 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
+#   Version 8
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+        - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
 # Clang
 #   Version 3.9
     - os: linux
@@ -144,7 +155,20 @@ matrix:
          - mkdir cbuild
          - cd cbuild
          - cmake -G "Unix Makefiles" ..
-         - make
+         - make || travis_terminate 1
+# MariaDB
+    - os: linux
+      addons:
+        mariadb: '10.0'
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+            - libmariadbclient-dev
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+         - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable-buildbot=yes"
 
 before_install:
     - eval "${MATRIX_EVAL}"
@@ -154,10 +178,10 @@ before_script:
   - ./tools/ci/sql.sh
 
 script:
-  - ./configure $CONFIGURE_FLAGS
+  - ./configure $CONFIGURE_FLAGS || travis_terminate 1
   - ./tools/ci/npc.sh
-  - make clean
-  - make server
+  - make clean || travis_terminate 1
+  - make server || travis_terminate 1
   - ./login-server --run-once
   - ./char-server --run-once
   - ./map-server --run-once

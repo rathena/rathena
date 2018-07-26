@@ -61,7 +61,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		mes "[Wise Old Woman]";
 		mes "This item has " + .@cardcount + " cards compounded on it. To perform my magic, I will need " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
 		next;
-		if(select("Very well. Do it.:Nevermind.") == 2) {
+		if(select("Very well. Do it.:Never mind.") == 2) {
 			mes "[Wise Old Woman]";
 			mes "Very well. Return at once if you seek my services.";
 			close;

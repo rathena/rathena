@@ -1,23 +1,16 @@
-/**
- * @file login.h
- * Module purpose is to read configuration for login-server and handle accounts,
- *  and also to synchronise all login interfaces: loginchrif, loginclif, logincnslif.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
 #ifndef _LOGIN_HPP_
 #define _LOGIN_HPP_
 
 #include <memory>
 
-#include "../config/core.h"
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // NAME_LENGTH,SEX_*
-#include "../common/core.h" // CORE_ST_LAST
+#include "../common/cbasetypes.hpp"
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
+#include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 #include "account.hpp"
 
@@ -185,7 +178,7 @@ void login_remove_online_user(uint32 account_id);
  * @param data: unused
  * @return :0
  */
-int login_waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(login_waiting_disconnect_timer);
 
 /**
  * Sub function to apply on online_db.

@@ -1,23 +1,17 @@
-/**
- * @file loginlog.c
- * Module purpose is to register (log) events into a file or sql database.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams rev < 15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "loginlog.hpp"
 
 #include <stdlib.h> // exit
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/socket.h"
-#include "../common/sql.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
 // global sql settings (in ipban_sql.c)
 static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f

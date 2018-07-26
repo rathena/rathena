@@ -1,13 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _CASHSHOP_HPP_
 #define _CASHSHOP_HPP_
 
-#include "../common/cbasetypes.h" // uint16, uint32
-#include "../common/timer.h" // ShowWarning, ShowStatus
-
-#include "../config/core.h"
+#include "../common/cbasetypes.hpp" // uint16, uint32
+#include "../common/timer.hpp" // ShowWarning, ShowStatus
+#include "../config/core.hpp"
 
 struct map_session_data;
 

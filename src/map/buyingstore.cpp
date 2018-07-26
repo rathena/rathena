@@ -1,25 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "buyingstore.hpp"  // struct s_buyingstore
 
 #include <stdlib.h> // atoi
 
-#include "../common/nullpo.h"
-#include "../common/db.h"  // ARR_FIND
-#include "../common/malloc.h" // aMalloc, aFree
-#include "../common/showmsg.h"  // ShowWarning
-#include "../common/socket.h"  // RBUF*
-#include "../common/strlib.h"  // safestrncpy
-#include "../common/timer.h"  // gettick
+#include "../common/db.hpp"  // ARR_FIND
+#include "../common/malloc.hpp" // aMalloc, aFree
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"  // ShowWarning
+#include "../common/socket.hpp"  // RBUF*
+#include "../common/strlib.hpp"  // safestrncpy
+#include "../common/timer.hpp"  // gettick
 
 #include "atcommand.hpp"  // msg_txt
 #include "battle.hpp"  // battle_config.*
+#include "chrif.hpp"
 #include "clif.hpp"  // clif_buyingstore_*
 #include "log.hpp"  // log_pick_pc, log_zeny
-#include "pc.hpp"  // struct map_session_data
-#include "chrif.hpp"
 #include "npc.hpp"
+#include "pc.hpp"  // struct map_session_data
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
@@ -78,7 +78,7 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map[sd->bl.m].flag.novending )
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -146,7 +146,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return 2;
 	}
 
-	if( map[sd->bl.m].flag.novending )
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -232,7 +232,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `limit`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d, '%d', '%d', '%d' );",
-		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
+		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map_getmapdata(sd->bl.m)->name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 

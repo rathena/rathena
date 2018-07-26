@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_guild.hpp"
@@ -7,13 +7,13 @@
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -46,9 +46,9 @@ int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len)
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
+int guild_checkskill(struct guild *g, int id);
 
-int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(guild_save_timer){
 	static int last_id = 0; //To know in which guild we were.
 	int state = 0; //0: Have not reached last guild. 1: Reached last guild, ready for save. 2: Some guild saved, don't do further saving.
 	DBIterator *iter = db_iterator(guild_db_);
@@ -126,7 +126,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	if (g->guild_id<=0 && g->guild_id != -1) return 0;
 
 #ifdef NOISY
-	ShowInfo("Save guild request ("CL_BOLD"%d"CL_RESET" - flag 0x%x).",g->guild_id, flag);
+	ShowInfo("Save guild request (" CL_BOLD "%d" CL_RESET " - flag 0x%x).",g->guild_id, flag);
 #endif
 
 	Sql_EscapeStringLen(sql_handle, esc_name, g->name, strnlen(g->name, NAME_LENGTH));
@@ -524,6 +524,32 @@ struct guild * inter_guild_fromsql(int guild_id)
 		ShowInfo("Guild loaded (%d - %s)\n", guild_id, g->name);
 
 	return g;
+}
+
+/**
+ * Get the max storage size of a guild.
+ * @param guild_id: Guild ID to search
+ * @return Guild storage max size
+ */
+uint16 inter_guild_storagemax(int guild_id)
+{
+#ifdef OFFICIAL_GUILD_STORAGE
+	struct guild *g = inter_guild_fromsql(guild_id);
+	uint16 max = 0;
+
+	if (!g) {
+		ShowError("Guild %d not found!\n", guild_id);
+		return 0;
+	}
+
+	max = guild_checkskill(g, GD_GUILD_STORAGE);
+	if (max)
+		max *= 100;
+
+	return max;
+#else
+	return MAX_GUILD_STORAGE;
+#endif
 }
 
 // `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
@@ -1164,7 +1190,7 @@ int mapif_parse_CreateGuild(int fd,uint32 account_id,char *name,struct guild_mem
 	g->member[0].modified = GS_MEMBER_MODIFIED;
 
 	// Set default positions
-	g->position[0].mode=0x11;
+	g->position[0].mode = GUILD_PERM_DEFAULT;
 	strcpy(g->position[0].name,"GuildMaster");
 	strcpy(g->position[MAX_GUILDPOSITION-1].name,"Newbie");
 	g->position[0].modified = g->position[MAX_GUILDPOSITION-1].modified = GS_POSITION_MODIFIED;
@@ -1646,6 +1672,8 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_
 			mapif_guild_info(-1,g);
 		mapif_guild_skillupack(guild_id,skill_id,account_id);
 		g->save_flag |= (GS_LEVEL|GS_SKILL); // Change guild & guild_skill
+		if (skill_id == GD_GUILD_STORAGE)
+			inter_guild_tosql(g, g->save_flag); // Force save for GD_GUILD_STORAGE
 	}
 	return 0;
 }

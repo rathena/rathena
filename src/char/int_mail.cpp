@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_mail.hpp"
@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/sql.h"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -293,11 +293,11 @@ int mail_timer_sub( int limit, enum mail_inbox_type type ){
 	return 0;
 }
 
-int mail_return_timer( int tid, unsigned int tick, int id, intptr_t ptr ){
+TIMER_FUNC(mail_return_timer){
 	return mail_timer_sub( charserv_config.mail_return_days, MAIL_INBOX_NORMAL );
 }
 
-int mail_delete_timer( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(mail_delete_timer){
 	return mail_timer_sub( charserv_config.mail_delete_days, MAIL_INBOX_RETURNED );
 }
 
@@ -484,7 +484,8 @@ void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id)
 			|| SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id) )
 			Sql_ShowDebug(sql_handle);
-		else
+		// If it was not sent by the server, since we do not want to return mails to the server
+		else if( msg.send_id != 0 )
 		{
 			char temp_[MAIL_TITLE_LENGTH];
 
@@ -543,20 +544,38 @@ void mapif_parse_Mail_send(int fd)
 {
 	struct mail_message msg;
 	char esc_name[NAME_LENGTH*2+1];
+	char *data;
+	size_t len;
 
 	if(RFIFOW(fd,2) != 8 + sizeof(struct mail_message))
 		return;
 
 	memcpy(&msg, RFIFOP(fd,8), sizeof(struct mail_message));
 
+	if( msg.dest_id != 0 ){
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name` FROM `%s` WHERE `char_id` = '%u'", schema_config.char_db, msg.dest_id) ){
+			Sql_ShowDebug(sql_handle);
+			return;
+		}
+		
+		msg.dest_id = 0;
+		msg.dest_name[0] = '\0';
+
+		if( SQL_SUCCESS == Sql_NextRow(sql_handle) ){
+			Sql_GetData(sql_handle, 0, &data, NULL);
+			msg.dest_id = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, &len);
+			safestrncpy(msg.dest_name, data, NAME_LENGTH);
+		}
+
+		Sql_FreeResult(sql_handle);
+	}
+
 	// Try to find the Dest Char by Name
 	Sql_EscapeStringLen(sql_handle, esc_name, msg.dest_name, strnlen(msg.dest_name, NAME_LENGTH));
-	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
+	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) ){
 		Sql_ShowDebug(sql_handle);
-	else
-	if ( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-	{
-		char *data;
+	}else if ( SQL_SUCCESS == Sql_NextRow(sql_handle) ){
 #if PACKETVER < 20150513
 		uint32 account_id = RFIFOL(fd,4);
 

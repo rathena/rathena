@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _CLIF_PACKETDB_HPP_
@@ -1123,7 +1123,7 @@
 	packet(0x02d5,2);
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
 	packet(0x02d7,-1);
-	parseable_packet(0x02d8,10,clif_parse_EquipTick,2,6);
+	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
 	packet(0x02d9,10);
 	packet(0x02da,3);
 	parseable_packet(0x02db,-1,clif_parse_BattleChat,2,4);
@@ -2143,6 +2143,7 @@
 	parseable_packet(0x096E,-1,clif_parse_merge_item_req,2,4); // CZ_REQ_MERGE_ITEM
 	ack_packet(ZC_ACK_MERGE_ITEM,0x096F,7,2,4,6,7); // ZC_ACK_MERGE_ITEM
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
+	packet(0x9CD,8); // ZC_MSG_COLOR
 #endif
 
 // 2013-08-21bRagexe
@@ -2199,15 +2200,15 @@
 	packet(0x09E5,18); // ZC_DELETEITEM_FROM_MCSTORE2
 	packet(0x09E6,22); // ZC_UPDATE_ITEM_FROM_BUYING_STORE2
 	// Roulette System [Yommy]
-	parseable_packet(0x0A19,2,clif_parse_RouletteOpen,0); // CZ_REQ_OPEN_ROULETTE
+	parseable_packet(0x0A19,2,clif_parse_roulette_open,0); // CZ_REQ_OPEN_ROULETTE
 	packet(0x0A1A,23); // ZC_ACK_OPEN_ROULETTE
-	parseable_packet(0x0A1B,2,clif_parse_RouletteInfo,0); // CZ_REQ_ROULETTE_INFO
+	parseable_packet(0x0A1B,2,clif_parse_roulette_info,0); // CZ_REQ_ROULETTE_INFO
 	packet(0x0A1C,-1); // ZC_ACK_ROULETTE_INFO
-	parseable_packet(0x0A1D,2,clif_parse_RouletteClose,0); // CZ_REQ_CLOSE_ROULETTE
+	parseable_packet(0x0A1D,2,clif_parse_roulette_close,0); // CZ_REQ_CLOSE_ROULETTE
 	packet(0x0A1E,3); // ZC_ACK_CLOSE_ROULETTE
-	parseable_packet(0x0A1F,2,clif_parse_RouletteGenerate,0); // CZ_REQ_GENERATE_ROULETTE
+	parseable_packet(0x0A1F,2,clif_parse_roulette_generate,0); // CZ_REQ_GENERATE_ROULETTE
 	packet(0x0A20,21); // ZC_ACK_GENERATE_ROULETTE
-	parseable_packet(0x0A21,3,clif_parse_RouletteRecvItem,2); // CZ_RECV_ROULETTE_ITEM
+	parseable_packet(0x0A21,3,clif_parse_roulette_item,2); // CZ_RECV_ROULETTE_ITEM
 	packet(0x0A22,5); // ZC_RECV_ROULETTE_ITEM
 #endif
 
@@ -2222,7 +2223,6 @@
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
 	packet(0x09FE,-1); // ZC_NOTIFY_NEWENTRY11
 	packet(0x09FF,-1); // ZC_NOTIFY_STANDENTRY11
-	//packet(0x09F8,-1); // ZC_ALL_QUEST_LIST3
 #endif
 
 // 2015-02-25aRagexeRE
@@ -2282,6 +2282,12 @@
 	// Pet Evolution System
 	parseable_packet(0x09FB,-1,clif_parse_dull,0); // CZ_PET_EVOLUTION
 	packet(0x09FC,6); // ZC_PET_EVOLUTION_RESULT
+
+	// Quest UI
+	packet(0x08FE,-1); // ZC_HUNTING_QUEST_INFO
+	packet(0x09F8,-1); // ZC_ALL_QUEST_LIST3
+	packet(0x09F9,143); // ZC_ADD_QUEST_EX
+	packet(0x09FA,-1); // ZC_UPDATE_MISSION_HUNT_EX
 #endif
 
 // 2015-05-20aRagexe
@@ -2333,6 +2339,11 @@
 	packet(0x0AA5,-1);
 #endif
 
+// 2017-03-15cRagexeRE
+#if PACKETVER >= 20170315
+	packet(0xac7,156);
+#endif
+
 // 2017-04-19bRagexeRE
 #if PACKETVER >= 20170419
 	parseable_packet(0x0AC0,26,clif_parse_Mail_refreshinbox,2,10);
@@ -2343,6 +2354,7 @@
 #if PACKETVER >= 20170502
 	packet(0x0A43,85);
 	packet(0x0A44,-1);
+	packet(0x0AB2,7);
 	packet(0x0ABD,10);
 	parseable_packet(0x0ACE,4,clif_parse_dull,0);
 #endif
@@ -2351,6 +2363,43 @@
 #if PACKETVER >= 20170830
 	packet(0x0ACB,12);
 	packet(0x0ACC,18);
+#endif
+
+// 2017-10-25eRagexeRE
+#if PACKETVER >= 20171025
+	packet(0x0ADE,6);
+#endif
+
+// 2018-01-03aRagexeRE or 2018-01-03bRagexeRE
+#if PACKETVER >= 20180103
+	parseable_packet(0x0ae8,2,clif_parse_changedress,0);
+#endif
+
+// 2018-02-07bRagexeRE
+#if PACKETVER >= 20180207
+	parseable_packet(0x0AF4,11,clif_parse_UseSkillToPos,2,4,6,8,10);
+#endif
+
+// 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
+#if PACKETVER >= 20180221
+	packet(0x0206,35); // ZC_FRIENDS_STATE
+	packet(0x0af7,32);
+#endif
+
+// 2018-03-07bRagexeRE
+#if PACKETVER >= 20180307
+	parseable_packet(0x0A68,3,clif_parse_open_ui,2);
+	packet(0x0AE2,7);
+	parseable_packet(0x0AEF,2,clif_parse_attendance_request,0);
+	packet(0x0AF0,10);
+#endif
+
+// 2018-03-21aRagexeRE
+#if PACKETVER >= 20180321
+	parseable_packet(0x0A49,20,clif_parse_dull,0);
+	packet(0x0A4A,6);
+	packet(0x0A4B,22);
+	packet(0x0A4C,28);
 #endif
 
 #endif /* _CLIF_PACKETDB_HPP_ */

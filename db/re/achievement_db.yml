@@ -1729,7 +1729,7 @@ Achievements:
     Name: "Magic Insanity"
     Condition: " bInt >= 125 "
     Reward:
-      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,SI_STEAMPACK; "
+      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,EFST_STEAMPACK; "
     Score: 20
   - ID: 200025
     Group: "AG_GOAL_STATUS"
@@ -1780,8 +1780,15 @@ Achievements:
     Name: "Reborn in Valhalla!"
     Condition: " Class == JOB_NOVICE_HIGH "
     Reward:
-      ItemID: 22808
+    #  ItemID: 23575
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - ID: 200032
+    Group: "AG_GOAL_LEVEL"
+    Name: "The start of another adventure!"
+    Condition: " BaseLevel == 100 "
+    #Reward:
+    #  ItemID: 23585
     Score: 10
   - ID: 230100
     Group: "AG_TAMING"
@@ -2220,7 +2227,7 @@ Achievements:
         Count: 1
       - MobID: 1120
         Count: 1
-    Score: 15
+    Score: 20
   - ID: 230203
     Group: "AG_BATTLE"
     Name: "Exploring Poring's life (3)"
@@ -2397,11 +2404,3 @@ Achievements:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleID: 1024
     Score: 10
-  - ID: 220036
-    Group: "AG_EAT"
-    Name: "The beginning of outdoor"
-    Score: 20
-  - ID: 220037
-    Group: "AG_EAT"
-    Name: "The first step becoming a chef"
-    Score: 20

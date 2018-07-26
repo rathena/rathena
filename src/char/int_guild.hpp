@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _INT_GUILD_HPP_
 #define _INT_GUILD_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,
@@ -35,5 +35,6 @@ int inter_guild_sex_changed(int guild_id,uint32 account_id,uint32 char_id, short
 int inter_guild_charname_changed(int guild_id,uint32 account_id, uint32 char_id, char *name);
 int inter_guild_CharOnline(uint32 char_id, int guild_id);
 int inter_guild_CharOffline(uint32 char_id, int guild_id);
+uint16 inter_guild_storagemax(int guild_id);
 
 #endif /* _INT_GUILD_HPP_ */

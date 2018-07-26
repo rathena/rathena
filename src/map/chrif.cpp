@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "chrif.hpp"
@@ -6,34 +6,34 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/ers.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
 #include "battle.hpp"
 #include "clan.hpp"
 #include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
-#include "guild.hpp"
-#include "log.hpp"
 
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(check_connect_char_server);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -312,7 +312,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, ((flag&CSAVE_QUITTING) && !(flag&CSAVE_AUTOTRADE)));
 
-	if (&sd->storage && sd->storage.dirty)
+	if (sd->storage.dirty)
 		storage_storagesave(sd);
 	if (flag&CSAVE_INVENTORY)
 		intif_storage_save(sd,&sd->inventory);
@@ -322,7 +322,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	//For data sync
 	if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
-	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+	if (sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 
 	if (flag&CSAVE_QUITTING)
@@ -341,7 +341,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
 	// If the user is on a instance map, we have to fake his current position
-	if( map[sd->bl.m].instance_id ){
+	if( map_getmapdata(sd->bl.m)->instance_id ){
 		struct mmo_charstatus status;
 
 		// Copy the whole status
@@ -395,17 +395,18 @@ int chrif_connect(int fd) {
 
 // sends maps to char-server
 int chrif_sendmap(int fd) {
-	int i;
-
+	int i = 0, size = 4 + map.size() * 4;
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + instance_start * 4);
+	WFIFOHEAD(fd, size);
 	WFIFOW(fd,0) = 0x2afa;
-	for(i = 0; i < instance_start; i++)
-		WFIFOW(fd,4+i*4) = map[i].index;
-	WFIFOW(fd,2) = 4 + i * 4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOW(fd,2) = size;
+	for( auto& pair : map ){
+		WFIFOW(fd,4+i*4) = pair.second.index;
+		i++;
+	}
+	WFIFOSET(fd,size);
 
 	return 0;
 }
@@ -799,7 +800,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(auth_db_cleanup){
 	chrif_check(0);
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
@@ -1705,7 +1706,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 		}
 
 		if (i != sd->bonus_script.count && sd->bonus_script.count > MAX_PC_BONUS_SCRIPT)
-			ShowWarning("Only allowed to save %d (mmo.h::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
+			ShowWarning("Only allowed to save %d (mmo.hpp::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
 	}
 
 	WFIFOB(char_fd, 8) = i;
@@ -1746,7 +1747,7 @@ int chrif_bsdata_received(int fd) {
 			if (bs->script_str[0] == '\0' || !bs->tick)
 				continue;
 
-			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type)))
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_types)bs->icon, bs->flag, bs->type)))
 				continue;
 
 			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
@@ -1849,7 +1850,7 @@ int chrif_parse(int fd) {
 }
 
 // unused
-int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(send_usercount_tochar){
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,4);
@@ -1896,7 +1897,7 @@ int send_users_tochar(void) {
  * timerFunction
   * Chk the connection to char server, (if it down)
  *------------------------------------------*/
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(check_connect_char_server){
 	static int displayed = 0;
 	if ( char_fd <= 0 || session[char_fd] == NULL ) {
 		if ( !displayed ) {

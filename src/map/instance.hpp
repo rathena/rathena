@@ -1,12 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _INSTANCE_HPP_
 #define _INSTANCE_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // struct point
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // struct point
+#include "../common/strlib.hpp"
 
 #include "script.hpp" // struct reg_db
 
@@ -72,7 +72,6 @@ struct instance_db {
 	uint8 maplist_count; ///< Number of used maps
 };
 
-extern int instance_start;
 extern struct instance_data instance_data[MAX_INSTANCE_DATA];
 
 struct instance_db *instance_searchtype_db(unsigned short instance_id);
