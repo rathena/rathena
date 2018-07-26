@@ -225,9 +225,7 @@ struct s_skill_db {
 	uint8 unit_nonearnpc_type;	//type of NPC [Cydh]
 
 	// skill_damage_db.txt
-#ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage damage;
-#endif
 
 	// skill_copyable_db.txt
 	struct s_copyable { // [Cydh]
@@ -2212,19 +2210,6 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
-
-#ifdef ADJUST_SKILL_DAMAGE
-/// Skill Damage target
-enum e_skill_damage_caster {
-	SDC_PC   = 0x01,
-	SDC_MOB  = 0x02,
-	SDC_PET  = 0x04,
-	SDC_HOM  = 0x08,
-	SDC_MER  = 0x10,
-	SDC_ELEM = 0x20,
-	SDC_ALL  = SDC_PC|SDC_MOB|SDC_PET|SDC_HOM|SDC_MER|SDC_ELEM,
-};
-#endif
 
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"

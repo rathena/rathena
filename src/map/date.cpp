@@ -123,6 +123,8 @@ int date_get( enum e_date_type type )
 			return date_get_year();
 		case DT_DAYOFYEAR:
 			return date_get_dayofyear();
+		case DT_YYYYMMDD:
+			return date_get( DT_YEAR ) * 10000 + date_get( DT_MONTH ) * 100 + date_get(DT_DAYOFMONTH);
 		default:
 			return -1;
 	}

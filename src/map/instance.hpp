@@ -82,8 +82,6 @@ struct s_instance_db {
 extern std::unordered_map<uint16, std::shared_ptr<s_instance_data>> instances;
 extern std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
 
-extern int instance_start;
-
 std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id);
 std::shared_ptr<s_instance_db> instance_searchname_db(const char* name);
 void instance_getsd(uint16 instance_id, struct map_session_data **sd, enum send_target *target);
@@ -98,6 +96,7 @@ int16 instance_mapid(int16 m, uint16 instance_id);
 int instance_addmap(uint16 instance_id);
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
+
 void instance_readdb(void);
 void instance_db_reload(void);
 void do_reload_instance(void);

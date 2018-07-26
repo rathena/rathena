@@ -41,6 +41,7 @@ enum e_date_type{
 	DT_MONTH,
 	DT_YEAR,
 	DT_DAYOFYEAR,
+	DT_YYYYMMDD,
 	DT_MAX
 };
 

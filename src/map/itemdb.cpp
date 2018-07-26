@@ -1582,11 +1582,11 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
 	if ((!map_flag_vs2(m) && id->flag.no_equip&1) || // Normal
-		(map[m].flag.pvp && id->flag.no_equip&2) || // PVP
+		(map_getmapflag(m, MF_PVP) && id->flag.no_equip&2) || // PVP
 		(map_flag_gvg2_no_te(m) && id->flag.no_equip&4) || // GVG
-		(map[m].flag.battleground && id->flag.no_equip&8) || // Battleground
+		(map_getmapflag(m, MF_BATTLEGROUND) && id->flag.no_equip&8) || // Battleground
 		(map_flag_gvg2_te(m) && id->flag.no_equip&16) || // WOE:TE
-		(map[m].flag.restricted && id->flag.no_equip&(8*map[m].zone)) // Zone restriction
+		(map_getmapflag(m, MF_RESTRICTED) && id->flag.no_equip&(8*map_getmapdata(m)->zone)) // Zone restriction
 		)
 		return true;
 	return false;
