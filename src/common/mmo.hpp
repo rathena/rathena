@@ -32,7 +32,6 @@
 	#define MAX_HOTKEYS 38
 #endif
 
-#define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
 #define MAX_INVENTORY 100 ///Maximum items in player inventory
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
@@ -64,7 +63,7 @@
 #define MAX_GUILDPOSITION 20	///Increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
 #define MAX_GUILDEXPULSION 32 ///Max Guild expulsion
 #define MAX_GUILDALLIANCE 16 ///Max Guild alliance
-#define MAX_GUILDSKILL	15 ///Increased max guild skills because of new skills [Sara-chan]
+#define MAX_GUILDSKILL	17 ///Max Guild skills
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
@@ -370,7 +369,7 @@ struct s_storage {
 	bool lock; ///< If locked, can't use storage when item bound retrieval
 	uint32 id; ///< Account ID / Character ID / Guild ID (owner of storage)
 	enum storage_type type; ///< Type of storage (inventory, cart, storage, guild storage)
-	uint16 max_amount;
+	uint16 max_amount; ///< Maximum amount of items in storage
 	uint8 stor_id; ///< Storage ID
 	struct {
 		unsigned get : 1;
@@ -701,6 +700,20 @@ struct guild_castle {
 	int temp_guardians_max;
 };
 
+/// Guild Permissions
+enum e_guild_permission {
+	GUILD_PERM_INVITE	= 0x001,
+	GUILD_PERM_EXPEL	= 0x010,
+#if PACKETVER >= 20140205
+	GUILD_PERM_STORAGE	= 0x100,
+	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL|GUILD_PERM_STORAGE,
+#else
+	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL,
+#endif
+	GUILD_PERM_MASK		= GUILD_PERM_ALL,
+	GUILD_PERM_DEFAULT	= GUILD_PERM_ALL,
+};
+
 struct fame_list {
 	int id;
 	int fame;
@@ -742,6 +755,7 @@ enum e_guild_skill {
 	GD_EMERGENCYCALL=10013,
 	GD_DEVELOPMENT=10014,
 	GD_ITEMEMERGENCYCALL=10015,
+	GD_GUILD_STORAGE=10016,
 	GD_MAX,
 };
 
@@ -779,6 +793,7 @@ enum e_job {
 	JOB_SUMMER,
 	JOB_HANBOK,
 	JOB_OKTOBERFEST,
+	JOB_SUMMER2,
 	JOB_MAX_BASIC,
 
 	JOB_NOVICE_HIGH = 4001,

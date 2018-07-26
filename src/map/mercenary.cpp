@@ -274,7 +274,7 @@ void mercenary_save(struct mercenary_data *md) {
 /**
 * Ends contract of Mercenary
 **/
-static int merc_contract_end(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(merc_contract_end){
 	struct map_session_data *sd;
 	struct mercenary_data *md;
 

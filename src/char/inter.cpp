@@ -115,6 +115,7 @@ const char* job_name(int class_) {
 			return msg_txt(20 - JOB_WEDDING+class_);
 
 		case JOB_SUMMER:
+		case JOB_SUMMER2:
 			return msg_txt(71);
 
 		case JOB_HANBOK:

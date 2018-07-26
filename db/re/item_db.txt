@@ -4917,8 +4917,8 @@
 6936,Cold_Core,Cold Core,3,10,,10,,,,,,,,,,,,,{},{},{}
 6937,Silicone_Shell,Silicone Shell,3,10,,10,,,,,,,,,,,,,{},{},{}
 6938,Hedgehog_Picks,Hedgehog Picks,3,10,,10,,,,,,,,,,,,,{},{},{}
-6939,Old_Belt,Old Belt,3,10,,10,,,,,,,,,,,,,{},{},{}
-6940,Moving_Dark_Matter,Moving Dark Matter,3,10,,10,,,,,,,,,,,,,{},{},{}
+6939,Old_Belt,Worn-Out Belt,3,10,,10,,,,,,,,,,,,,{},{},{}
+6940,Moving_Dark_Matter,Moving Black Material,3,10,,10,,,,,,,,,,,,,{},{},{}
 6941,Fragments_Valkyrie_Power,Fragments Valkyrie Power,3,10,,10,,,,,,,,,,,,,{},{},{}
 6942,Will_Master,Will Master,3,10,,10,,,,,,,,,,,,,{},{},{}
 6943,ATKStone_Top,Attack Stone(Upper),6,10,,100,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,1; },{},{}
@@ -6827,6 +6827,7 @@
 12607,Lolli_Pop_Box,Delicious Lollipop Box,11,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12608,Splendid_Box2,Splendid Box2,11,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12609,Old_Ore_Box,Old Ore Box,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Old_Ore_Box); },{},{}
+12610,Mysterious_Egg,Mysterious Egg,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12612,Old_Coin_Pocket,Old Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Old_Coin_Pocket); },{},{}
 12613,High_Coin_Pocket,Improved Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_High_Coin_Pocket); },{},{}
 12614,Mid_Coin_Pocket,Intermediate Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Mid_Coin_Pocket); },{},{}
@@ -9277,7 +9278,7 @@
 17181,Jan_Groove_Box,Jan Groove Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 17184,3rd_Test_Pass_Box,3rd Test Pass Box,18,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6583,1; },{},{}
 17203,Free_Pass_Box,Free Pass Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-17204,Mysterious_Egg,Shining Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Mysterious_Egg); },{},{}
+17204,Shining_Egg,Shining Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Shining_Egg); },{},{}
 17207,Idn_Heart_Scroll,Idn Heart Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Idn_Heart_Scroll); },{},{}
 17209,Tw_Rainbow_Scroll,Tw Rainbow Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Tw_Rainbow_Scroll); },{},{}
 17210,Tw_Red_Scroll,Tw Red Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Tw_Red_Scroll); },{},{}
@@ -11155,6 +11156,7 @@
 22782,PC_Bang_Wooden_Box,PC Bang Wooden Box,2,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem 547,30; /*No Info*/},{},{}
 22783,PC_Bang_Golden_Box,PC Bang Golden Box,2,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem 547,1; getitem 985,10; /*No Info*/},{},{}
 22784,PC_Bang_Platinum_Box,PC Bang Platinum Box,2,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem 547,1; getitem 12017,10; getitem 678,12; /*No Info*/},{},{}
+22979,C_Battle_Gum_2,[Sale] Battle Manual and Bubble Gum,2,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22802,Safe_to_6_Equipment_Certificate,Safe to 6 Equipment Certificate,3,10,,10,,,,,,,,,,,,,{},{},{}
 22808,Special_Gift_Box,Special Gift Box,2,10,,100,,,,,,,,,,,,,{},{},{}
 22812,Sealed_Dracula_Scroll,Sealed Dracula Scroll,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",6228,6232,22813,19937,17314, 6635),1; },{},{}
@@ -11208,10 +11210,17 @@
 22895,Limited_2015_Status_Initialization_Volume,(Limited)2015 Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
 22896,Limited_Old_Status_Initialization_Volume,(Limited)Old Status Initialization Volume,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*Works like item 6320, can reset up to 3x within 1 hour*/ },{},{}
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
-22901,Question_Old_Blue_Box,Question Old Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*No info yet*/ },{},{}
+22901,Question_Old_Blue_Box,Mysterious Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Mysterious_box"); },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
+//
+23012,S_Small_Mana_Potion,[Sale] Small Mana Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+23038,S_Slim_White_Box,[Sale] Slim White Potion Box,2,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+23043,S_Seed_Of_Yggdrasil_Box,[Sale] Yggdrasil Seed Box,2,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+23046,S_Mystic_Powder,[Sale] Mystic Powder,2,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+23047,S_Blessing_Tyr,[Sale] Blessing of Tyr,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+23048,S_Resilience_Potion,[Sale] Resilience Enhancement Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //
 23123,Bullet_Case_Flare,Flare Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13228,500; },{},{}
 23124,Bullet_Case_Lighting,Lightning Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13229,500; },{},{}
@@ -11227,6 +11236,9 @@
 23196,Agust_Lucky_Scroll,Shining Blue Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Agust_Lucky_Scroll); },{},{}
 //
 23277,Mado_Box,Emergency Magic Gear,2,10000,,3000,,,,,0x00000400,56,2,,,100,,,{ setmadogear 1; },{},{}
+//
+23307,S_Shining_Def_Scroll,[Sale] Shining Defense Scroll,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+23340,S_Megaphone,[Sale] Megaphone,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //===================================================================
 // Shadow Equipments
 //===================================================================

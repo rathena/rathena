@@ -248,25 +248,25 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				mes "If you wish to enchant, you must equip Sarah's " + .@sarah_earring$ + " earring.";
 				close;
 			}
-			setarray .@card[0], getequipcardid(.@part,3), getequipcardid(.@part,2);
-			if (.@card[1] > 0) {// 2 enchants
+			setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+			if (.@card[2] > 0) {// 2 enchants
 				mes "[Chief Assistant]";
 				mes "A fully enchanted earring of Sarah cannot be enchanted any further.";
 				close;
 			}
-			if (.@card[0] < 1) {// none enchant
-				mes "[Chief Assistant]";
-				mes "Sarah's Earring is currently in a state without enchantment.";
-				.@slot = 0;
-			}
-			else {// 1 enchant
+			if (.@card[3] > 0) {// 1 enchant
 				mes "[Chief Assistant]";
 				mes "Sarah's Earring is currently in a state of enchantment in slot 4.";
-				.@slot = 1;
+				.@slot = 3;
+			}
+			else {// none enchant
+				mes "[Chief Assistant]";
+				mes "Sarah's Earring is currently in a state without enchantment.";
+				.@slot = 4;
 			}
 			next;
 			mes "[Chief Assistant]";
-			mes "Which ability do you want as an enchantment on slot " + (4-.@slot) + "?";
+			mes "Which ability do you want as an enchantment on slot " + .@slot + "?";
 			next;
 			switch( select( "CRI or Critical", "Expert archer or Bleed", "Conservation or MATK", "Delay Attack or Delay Skill" ) ) {
 			case 1:
@@ -278,7 +278,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4941,	// Critical4
 					4865;	// Fatal3
 				mes "[Chief Assistant]";
-				mes "Selected for CRI or Critical Enchantment slot " + (4-.@slot) + ".";
+				mes "Selected for CRI or Critical Enchantment slot " + .@slot + ".";
 				break;
 			case 2:
 				setarray .@bonus[0],
@@ -289,7 +289,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4944,	// Dodge3
 					4834;	// Expert_Archer3
 				mes "[Chief Assistant]";
-				mes "Selected for Expert Archer or Bleed Enchantment slot " + (4-.@slot) + ".";
+				mes "Selected for Expert Archer or Bleed Enchantment slot " + .@slot + ".";
 				break;
 			case 3:
 				setarray .@bonus[0],
@@ -300,7 +300,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4947,	// Thrift3
 					4899;	// Matk5p
 				mes "[Chief Assistant]";
-				mes "Selected for Conservation or MATK Enchantment slot " + (4-.@slot) + ".";
+				mes "Selected for Conservation or MATK Enchantment slot " + .@slot + ".";
 				break;
 			case 4:
 				setarray .@bonus[0],
@@ -311,7 +311,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4950,	// Skill_Delay3
 					4873;	// Attack_Delay_3
 				mes "[Chief Assistant]";
-				mes "Selected for Delay Attack or Delay Skill Enchantment slot " + (4-.@slot) + ".";
+				mes "Selected for Delay Attack or Delay Skill Enchantment slot " + .@slot + ".";
 				break;
 			}
 			next;
@@ -344,6 +344,11 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			specialeffect2 EF_MAGICALATTHIT;
 			specialeffect2 EF_POTION2;
 			delitem 6803,4;// Shard of Gigantes
+
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]))
+				close;
+
 			delequip .@part;
 			.@r = rand(100);
 			for ( .@i = 0; .@i < .@bonus_size && (.@bonus_chance * (.@i+1)) < .@r; .@i++ );
@@ -357,9 +362,9 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				mes "enchantment is not an easy task..";
 				close;
 			}
-			.@card[.@slot] = .@bonus[.@i];
+			.@card[.@slot-1] = .@bonus[.@i];
 			specialeffect2 EF_ANGEL2;
-			getitem2 .@sarah_item_id,1,1,0,0,0,0,.@card[1],.@card[0];
+			getitem2 .@sarah_item_id,1,1,0,0,.@card[0],.@card[1],.@card[2],.@card[3];
 			mes "[Chief Assistant]";
 			mes "Enchantment completed!";
 			close;
@@ -403,6 +408,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				.@column$ = "right";
 			}
 			.@equip_id = getequipid(.@part);
+			setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 			if (.@equip_id == -1) {
 				mes "[Chief Assistant]";
 				mes "To initialize an enchantment, the relevant column must be equipped with gear.";
@@ -432,6 +438,11 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				specialeffect2 EF_POTION2;
 				specialeffect2 EF_ANGEL2;
 				delitem 6803,1;// Shard of Gigantes
+
+				// anti-hack
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]))
+					close;
+
 				delequip .@part;
 				getitem .@sarah_item_id,1;
 				mes "[Chief Assistant]";
