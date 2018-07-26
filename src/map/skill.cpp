@@ -10963,10 +10963,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			// Do the teleport part
 			for (i = 0; i < MAX_PARTY; ++i) {
 				map_session_data *pl_sd = pl_sd = p->data[i].sd;
+
 				if (pl_sd == nullptr || pl_sd == sd || pl_sd->status.party_id != p->party.party_id || pc_isdead(pl_sd) ||
 					sd->bl.m != pl_sd->bl.m)
 					continue;
-				if (!(map[sd->bl.m].flag.noteleport || map[sd->bl.m].flag.pvp || map[sd->bl.m].flag.battleground || map_flag_gvg2(sd->bl.m))) {
+				if (!(map_getmapflag(sd->bl.m, MF_NOTELEPORT) || map_getmapflag(sd->bl.m, MF_PVP) || map_getmapflag(sd->bl.m, MF_BATTLEGROUND) || map_flag_gvg2(sd->bl.m))) {
 					pc_setpos(pl_sd, map_id2index(sd->bl.m), sd->bl.x, sd->bl.y, CLR_TELEPORT);
 					count++;
 				}
