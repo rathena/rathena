@@ -3533,8 +3533,6 @@ void map_flags_init(void){
 		// skill damage
 		mapdata->damage_adjust = {};
 
-		map_skill_duration_free(pair.first);
-
 		// adjustments
 		if( battle_config.pk_mode )
 			map_setmapflag(pair.first, MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
@@ -4377,6 +4375,23 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
 }
 
 /**
+ * Add new skill duration adjustment entry for a map
+ * @param mapd: Map data
+ * @param skill_id: Skill ID to adjust
+ * @param per: Skill duration adjustment value in percent
+ */
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	if (mapd->skill_duration.size() > UINT16_MAX)
+		return;
+
+	struct s_skill_duration entry = {};
+
+	entry.skill_id = skill_id;
+	entry.per = per;
+	mapd->skill_duration.push_back(entry);
+}
+
+/**
  * PvP timer handling
  * @param bl: Player block object
  * @param ap: func* with va_list values
@@ -4725,67 +4740,22 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			}
 			mapdata->flag[mapflag] = status;
 			break;
+		case MF_SKILL_DURATION:
+			if (!status)
+				mapdata->skill_duration.clear();
+			else {
+				nullpo_retr(false, args);
+
+				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
+			}
+			mapdata->flag[mapflag] = status;
+			break;
 		default:
 			mapdata->flag[mapflag] = status;
 			break;
 	}
 
 	return true;
-}
-
-/**
- * Add skill_duration to a map.
- * @param mapd: Pointer to specified map.
- * @param skill_id: Skill ID.
- * @param per: Skill duration adjustment value in percent.
- * @return True:Success, False:Failed
- **/
-bool map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
-
-	if (!mapd || !skill_get_index(skill_id))
-		return false;
-	else {
-		uint16 i;
-		struct s_skill_duration *entry = NULL;
-
-		for (i = 0; i < mapd->skill_duration.count; i++) {
-			if (mapd->skill_duration.entries[i] && mapd->skill_duration.entries[i]->skill_id == skill_id) { // Replace
-				mapd->skill_duration.entries[i]->per = per;
-				return true;
-			}
-		}
-
-		RECREATE(mapd->skill_duration.entries, struct s_skill_duration *, mapd->skill_duration.count + 1);
-		CREATE(mapd->skill_duration.entries[mapd->skill_duration.count], struct s_skill_duration, 1);
-		mapd->skill_duration.entries[mapd->skill_duration.count]->skill_id = skill_id;
-		mapd->skill_duration.entries[mapd->skill_duration.count]->per = per;
-		mapd->skill_duration.count++;
-	}
-
-	return true;
-}
-
-/**
- * Clear skill_duration adjustment from a map.
- * @param mapd: Pointer to specified map.
- **/
-void map_skill_duration_free(struct map_data *mapd) {
-	uint16 i;
-
-	if (!mapd)
-		return;
-
-	if (mapd->skill_duration.entries) {
-		for (i = 0; i < mapd->skill_duration.count; i++) {
-			if (mapd->skill_duration.entries[i]) {
-				aFree(mapd->skill_duration.entries[i]);
-				mapd->skill_duration.entries[i] = NULL;
-			}
-		}
-		aFree(mapd->skill_duration.entries);
-	}
-	mapd->skill_duration.entries = NULL;
-	mapd->skill_duration.count = 0;
 }
 
 /**
@@ -4871,7 +4841,6 @@ void do_final(void){
 			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_skill_duration_free(pair.first);
 		map_free_questinfo(pair.first);
 		mapdata->damage_adjust = {};
 	}

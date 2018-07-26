@@ -453,6 +453,7 @@
 	export_constant(MF_HIDEMOBHPBAR);
 	export_constant(MF_NOLOOT);
 	export_constant(MF_NOEXP);
+	export_constant(MF_SKILL_DURATION);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

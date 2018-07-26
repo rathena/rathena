@@ -7021,6 +7021,9 @@ For 'skill_damage' mapflag:
 	- Setting the flag here will adjust the global (all skills) damage on the map.
 	- <zone> is the -100 to 100000 damage adjustment value of the skills.
 	- See 'getmapflag' for the different <type> values.
+For 'skill_duration' mapflag:
+	- <zone> is the skill ID to adjust.
+	- <type> is the percentage of adjustment from 0 to 100000.
 
 ---------------------------------------
 

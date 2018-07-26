@@ -587,6 +587,7 @@ enum e_mapflag : int16 {
 	MF_HIDEMOBHPBAR,
 	MF_NOLOOT,
 	MF_NOEXP,
+	MF_SKILL_DURATION,
 	MF_MAX
 };
 
@@ -608,7 +609,7 @@ struct s_skill_damage {
 	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
 };
 
-/// Struct of skill duration adjustment
+/// Struct of MF_SKILL_DURATION
 struct s_skill_duration {
 	uint16 skill_id; ///< Skill ID
 	uint16 per; ///< Rate
@@ -633,6 +634,7 @@ union u_mapflag_args {
 	struct point nosave;
 	struct s_drop_list nightmaredrop;
 	struct s_skill_damage skill_damage;
+	struct s_skill_duration skill_duration;
 	int flag_val;
 };
 
@@ -745,10 +747,7 @@ struct map_data {
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::vector<s_skill_damage> skill_damage; // Used for single skill damage adjustment
-	struct {
-		struct s_skill_duration **entries;
-		uint16 count;
-	} skill_duration;
+	std::vector<s_skill_duration> skill_duration;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -961,6 +960,7 @@ void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
@@ -968,9 +968,6 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
 #define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
 #define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
-
-bool map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
-void map_skill_duration_free(struct map_data *mapd);
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level

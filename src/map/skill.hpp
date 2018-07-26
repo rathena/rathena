@@ -2210,7 +2210,7 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
-int skill_get_time3(uint16 skill_id, uint16 skill_lv, struct block_list *src);
+int skill_get_time3(int16 m, uint16 skill_id, uint16 skill_lv);
 
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"

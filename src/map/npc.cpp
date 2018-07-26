@@ -4102,7 +4102,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = BL_ALL;
 
 					for (int i = 0; i < SKILLDMG_MAX; i++)
-						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, INT_MAX);
+						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
@@ -4118,21 +4118,27 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			break;
 		}
 
-		case MF_SKILL_DURATION:
-			if (!state && map[m].skill_duration.count)
-				map_skill_duration_free(map_getmapdata(m));
+		case MF_SKILL_DURATION: {
+			union u_mapflag_args args = {};
+
+			if (!state)
+				map_setmapflag_sub(m, MF_SKILL_DURATION, false, &args);
 			else {
 				char skill_name[SKILL_NAME_LENGTH];
-				uint16 per = 0;
 
-				if (sscanf(w4, "%30[^,],%5hu[^\n]", skill_name, &per) == 2) {
-					uint16 skill_id = skill_name2id(skill_name);
+				if (sscanf(w4, "%30[^,],%5hu[^\n]", skill_name, &args.skill_duration.per) == 2) {
+					args.skill_duration.skill_id = skill_name2id(skill_name);
 
-					if (!skill_id || !map_skill_duration_add(map_getmapdata(m), skill_id, per))
+					if (!args.skill_duration.skill_id)
 						ShowError("npc_parse_mapflag: skill_duration: Invalid skill name '%s' for Skill Duration mapflag. Skipping (file '%s', line '%d')\n", skill_name, filepath, strline(buffer, start - buffer));
+					else {
+						args.skill_duration.per = cap_value(args.skill_duration.per, 0, 100000);
+						map_setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
+					}
 				}
 			}
 			break;
+		}
 
 		// All others do not need special treatment
 		default:

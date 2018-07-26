@@ -4095,8 +4095,8 @@ ACMD_FUNC(mapinfo) {
 
 	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
 	if (map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)) {
-		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
-		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
+		clif_displaymessage(fd,msg_txt(sd,1052)); // Skill Damage Adjustments:
+		sprintf(atcmd_output, msg_txt(sd, 1053) //  > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d
 			,(args.flag_val = SKILLDMG_PC && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
 			,(args.flag_val = SKILLDMG_MOB && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
 			,(args.flag_val = SKILLDMG_BOSS && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
@@ -4104,7 +4104,7 @@ ACMD_FUNC(mapinfo) {
 			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
 		clif_displaymessage(fd, atcmd_output);
 		if (mapdata->skill_damage.size()) {
-			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
+			clif_displaymessage(fd, msg_txt(sd, 1054)); //  > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster
 			for (int j = 0; j < mapdata->skill_damage.size(); j++) {
 				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
 					,j+1
@@ -4116,6 +4116,14 @@ ACMD_FUNC(mapinfo) {
 					,mapdata->skill_damage[j].caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
+		}
+	}
+
+	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
+		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
+		for (int j = 0; j < mapdata->skill_duration.size(); j++) {
+			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(mapdata->skill_duration[j].skill_id), mapdata->skill_duration[j].per);
+			clif_displaymessage(fd, atcmd_output);
 		}
 	}
 
@@ -8222,7 +8230,8 @@ ACMD_FUNC(mapflag) {
 												MF_BEXP,
 												MF_JEXP,
 												MF_BATTLEGROUND,
-												MF_SKILL_DAMAGE };
+												MF_SKILL_DAMAGE,
+												MF_SKILL_DURATION };
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
