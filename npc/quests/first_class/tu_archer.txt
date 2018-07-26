@@ -19,12 +19,13 @@
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Fixed infinate loop. (bugreport:2393) [L0ne_W0lf]
 //= 1.7 Added 10.3 dialog and moved Arpesto to hunter skill quest. [Kisuka]
-//= 1.8 Updated slightly, removed additional emotions from Reiden. [L0ne_W0lf]
+//= 1.8 Updated slightly, removed additional emotions from Reidin. [L0ne_W0lf]
 //= 1.9 Misc. updates. [L0ne_W0lf]
 //= 1.9a Added 'npcskill' command. [Euphy]
 //= 2.0 Updated to match the official script. [Euphy]
 //=     Added Pre-Renewal support.
 //= 3.0 Clean-up. [Capuche]
+//= 3.1 Location changed in ep16.1 of Minister NPC. [Capuche]
 //============================================================
 
 // Bard Jet
@@ -858,6 +859,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "might! Practice Double Strafe";
 				mes "enough and you'll get used to it!";
 				next;
+				tu_archer01 = 10;
 				if(.@eagle == 0){
 					specialeffect2 EF_WIND;
 					// tu_archer01 = 10;
@@ -1148,7 +1150,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 	next;
 	emotion ET_HNG, getnpcid(0, "Arpesto");
 	mes "[Arpesto]";
-	mes "Reiden...";
+	mes "Reidin...";
 	mes "Stop messing around.";
 	mes "Hey there, kid. The real";
 	mes "master of the Icarus Guild";
@@ -1826,7 +1828,7 @@ prontera,144,301,5	script	Mage#tu	2_F_MAGICMASTER,{
 
 // Minister
 //============================================================
-prt_castle,76,165,6	script	Minister#tu	1_M_JOBTESTER,{
+-	script	Minister#tu_	-1,{
 	mes "[Minister]";
 	mes "The royal family";
 	mes "is extremely busy";
@@ -1886,7 +1888,8 @@ prt_castle,76,165,6	script	Minister#tu	1_M_JOBTESTER,{
 
 // Range NPC
 //============================================================
-prt_castle,94,150,4	script	#sound_tu	HIDDEN_WARP_NPC,6,6,{
+-	script	#sound_tu_	-1,{
+	end;
 OnTouch_:
 	if(tu_archer02 == 6) {
 		mes "[Minister]";

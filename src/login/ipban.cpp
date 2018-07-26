@@ -30,7 +30,7 @@ static int cleanup_timer_id = INVALID_TIMER;
 static bool ipban_inited = false;
 
 //early declaration
-int ipban_cleanup(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(ipban_cleanup);
 
 /**
  * Check if ip is in the active bans list.
@@ -96,7 +96,7 @@ void ipban_log(uint32 ip) {
  * @param data: unused
  * @return 0
  */
-int ipban_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(ipban_cleanup){
 	if( !login_config.ipban )
 		return 0;// ipban disabled
 
