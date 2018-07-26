@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "../common/mmo.hpp" // struct item
+#include "../common/timer.hpp"
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
@@ -314,7 +315,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md, unsigned int tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mob_delayspawn);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage);
@@ -331,7 +332,7 @@ void mob_clear_spawninfo();
 void do_init_mob(void);
 void do_final_mob(bool is_reload);
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);
@@ -359,7 +360,7 @@ bool mob_has_spawn(uint16 mob_id);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
-int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 

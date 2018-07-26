@@ -25,8 +25,6 @@
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
-int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
-
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
 
@@ -94,8 +92,7 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 /*==========================================
  * Deletes an instance timer (Destroys instance)
  *------------------------------------------*/
-static int instance_delete_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(instance_delete_timer){
 	instance_destroy(id);
 
 	return 0;
@@ -104,8 +101,7 @@ static int instance_delete_timer(int tid, unsigned int tick, int id, intptr_t da
 /*==========================================
  * Create subscription timer
  *------------------------------------------*/
-static int instance_subscription_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(instance_subscription_timer){
 	int i, ret;
 	unsigned short instance_id = instance_wait.id[0];
 	struct map_session_data *sd = NULL;
@@ -347,12 +343,18 @@ void instance_addnpc(struct instance_data *im)
 	int i;
 
 	// First add the NPCs
-	for(i = 0; i < im->cnt_map; i++)
-		map_foreachinallarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, map[im->map[i]->src_m].xs, map[im->map[i]->src_m].ys, BL_NPC, im->map[i]->m);
+	for (i = 0; i < im->cnt_map; i++) {
+		struct map_data *mapdata = map_getmapdata(im->map[i]->src_m);
+
+		map_foreachinallarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
+	}
 
 	// Now run their OnInstanceInit
-	for(i = 0; i < im->cnt_map; i++)
-		map_foreachinallarea(instance_npcinit, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
+	for (i = 0; i < im->cnt_map; i++) {
+		struct map_data *mapdata = map_getmapdata(im->map[i]->m);
+
+		map_foreachinallarea(instance_npcinit, im->map[i]->m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
+	}
 
 }
 
@@ -657,7 +659,9 @@ int instance_destroy(unsigned short instance_id)
 
 		// Run OnInstanceDestroy on all NPCs in the instance
 		for(i = 0; i < im->cnt_map; i++){
-			map_foreachinallarea(instance_npcdestroy, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
+			struct map_data *mapdata = map_getmapdata(im->map[i]->m);
+
+			map_foreachinallarea(instance_npcdestroy, im->map[i]->m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
 		}
 
 		for(i = 0; i < im->cnt_map; i++) {
@@ -879,7 +883,7 @@ int instance_delusers(unsigned short instance_id)
 
 	// If no one is in the instance, start the idle timer
 	for(i = 0; i < im->cnt_map && im->map[i]->m; i++)
-		users += max(map[im->map[i]->m].users,0);
+		users += max(map_getmapdata(im->map[i]->m)->users,0);
 
 	// We check the actual map.users before being updated, hence the 1
 	// The instance should be empty if users are now <= 1
@@ -1082,39 +1086,41 @@ void do_reload_instance(void)
 
 	// Reset player to instance beginning
 	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-		if(sd && map[sd->bl.m].instance_id) {
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
+		struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+		if(sd && mapdata->instance_id) {
 			struct party_data *pd = NULL;
 			struct guild *gd = NULL;
 			struct clan *cd = NULL;
 			unsigned short instance_id;
 
-			im = &instance_data[map[sd->bl.m].instance_id];
+			im = &instance_data[mapdata->instance_id];
 			switch (im->mode) {
 				case IM_NONE:
 					continue;
 				case IM_CHAR:
-					if (sd->instance_id != map[sd->bl.m].instance_id) // Someone who is not instance owner is on instance map
+					if (sd->instance_id != mapdata->instance_id) // Someone who is not instance owner is on instance map
 						continue;
 					instance_id = sd->instance_id;
 					break;
 				case IM_PARTY:
-					if ((!(pd = party_search(sd->status.party_id)) || pd->instance_id != map[sd->bl.m].instance_id)) // Someone not in party is on instance map
+					if ((!(pd = party_search(sd->status.party_id)) || pd->instance_id != mapdata->instance_id)) // Someone not in party is on instance map
 						continue;
 					instance_id = pd->instance_id;
 					break;
 				case IM_GUILD:
-					if (!(gd = guild_search(sd->status.guild_id)) || gd->instance_id != map[sd->bl.m].instance_id) // Someone not in guild is on instance map
+					if (!(gd = guild_search(sd->status.guild_id)) || gd->instance_id != mapdata->instance_id) // Someone not in guild is on instance map
 						continue;
 					instance_id = gd->instance_id;
 					break;
 				case IM_CLAN:
-					if (!(cd = clan_search(sd->status.clan_id)) || cd->instance_id != map[sd->bl.m].instance_id) // Someone not in clan is on instance map
+					if (!(cd = clan_search(sd->status.clan_id)) || cd->instance_id != mapdata->instance_id) // Someone not in clan is on instance map
 						continue;
 					instance_id = cd->instance_id;
 					break;
 				default:
-					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? StringBuf_Value(db->name) : "Unknown", map[sd->bl.m].instance_id, (unsigned short)im->mode);
+					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? StringBuf_Value(db->name) : "Unknown", mapdata->instance_id, (unsigned short)im->mode);
 					continue;
 			}
 			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name), -1, -1)) { // All good
@@ -1123,6 +1129,7 @@ void do_reload_instance(void)
 			} else // Something went wrong
 				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n",sd->status.char_id,StringBuf_Value(db->name));
 		}
+	}
 	mapit_free(iter);
 }
 

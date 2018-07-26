@@ -3135,6 +3135,7 @@ DT_DAYOFMONTH - Day of the current month
 DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
 DT_YEAR - Year
 DT_DAYOFYEAR - Day of the year
+DT_YYYYMMDD - current date in the form YYYYMMDD
 
 It will only return numbers. If another type is supplied -1 will be returned.
 
@@ -5416,12 +5417,15 @@ This will open the Auction window on the client connected to the invoking charac
 
 This function works the same as 'openstorage' but will open a guild storage
 window instead for the guild storage of the guild the invoking character belongs
-to. This is a function because it returns a value - 0 if the guild storage was
-opened successfully and 1 if it wasn't. (Notice, it's a ZERO upon success.)
-Since guild storage is only accessible to one character at one time, it may fail
-if another character is accessing the guild storage at the same time.
+to.
 
-This will also fail and return 2 if the character does not belong to any guild.
+Return values:
+ GSTORAGE_OPEN - Successfully opened.
+ GSTORAGE_STORAGE_ALREADY_OPEN - Player storage is already open.
+ GSTORAGE_ALREADY_OPEN - Guild storage is already open.
+ GSTORAGE_NO_GUILD - Player is not in a guild.
+ GSTORAGE_NO_STORAGE - Guild hasn't invested in the Guild Storage Expansion skill (only if OFFICIAL_GUILD_STORAGE is enabled).
+ GSTORAGE_NO_PERMISSION - Player doesn't have permission to use the guild storage.
 
 ---------------------------------------
 
@@ -6997,7 +7001,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the
-behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.hpp' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo,
@@ -7009,15 +7013,14 @@ skills or open up trade deals (mf_notrade, mf_novending, mf_noskill, mf_noicewal
 current weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds,
 mf_fireworks) and whether night will be in effect on this map (mf_nightenabled).
 
-The optional parameter 'zone' is used to set the zone for restricted mapflags.
+The optional parameter <zone> is used to set the zone for 'restricted' mapflags,
+GM level bypass for 'nocommand', base/job experience for 'bexp'/'jexp', and
+flag for 'battleground'.
 
-For the 'skill_damage' mapflag, 'zone' functions as 'value' (-100 to 100000) and
-'type' can be:
- 1: damage against players
- 2: damage against mobs
- 3: damage against bosses
- 4: damage against other
- 5: caster type
+For 'skill_damage' mapflag:
+	- Setting the flag here will adjust the global (all skills) damage on the map.
+	- <zone> is the -100 to 100000 damage adjustment value of the skills.
+	- See 'getmapflag' for the different <type> values.
 
 ---------------------------------------
 
@@ -7036,12 +7039,12 @@ This command checks the status of a given mapflag and returns the mapflag's stat
 0 means OFF, and 1 means ON. See 'setmapflag' for a list of mapflags.
 
 The optional parameter 'type' is used in the 'skill_damage' mapflag:
- 0: if mapflag is set (default)
- 1: damage against players
- 2: damage against mobs
- 3: damage against bosses
- 4: damage against other
- 5: caster type
+ SKILLDMG_MAX: if mapflag is set (default)
+ SKILLDMG_PC: damage against players
+ SKILLDMG_MOB: damage against mobs
+ SKILLDMG_BOSS: damage against bosses
+ SKILLDMG_OTHER: damage against other
+ SKILLDMG_CASTER: caster type
 
 ---------------------------------------
 
@@ -8658,6 +8661,13 @@ same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
 *readbook <book id>,<page>;
 
 This command will open a book item at the specified page.
+
+---------------------------------------
+
+*open_roulette( {char_id} )
+
+Opens the roulette window for the currently attached character or the character
+with the given character id.
 
 ---------------------------------------
 

@@ -690,8 +690,8 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	if(!sd)
 		return 0;
 
-	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map[m].instance_id )
-		mapindex = map[map[m].instance_src_map].index;
+	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map_getmapdata(m)->instance_id )
+		mapindex = map_getmapdata(map_getmapdata(m)->instance_src_map)->index;
 	else
 		mapindex = sd->mapindex;
 
