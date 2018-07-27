@@ -497,7 +497,7 @@ int instance_addmap(uint16 instance_id) {
 	if (instance_id == 0)
 		return 0;
 
-	auto &idata = instance_search(instance_id);
+	auto idata = instance_search(instance_id);
 
 	// If the instance isn't idle, we can't do anything
 	if (idata->state != INSTANCE_IDLE)
