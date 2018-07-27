@@ -19588,6 +19588,12 @@ BUILDIN_FUNC(instance_create)
 	enum instance_mode mode = IM_PARTY;
 	int owner_id = 0;
 
+	if (!instance_searchname_db(script_getstr(st, 2)))
+	{
+		ShowError("buildin_instance_create: Invalid instance name %s\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (script_hasdata(st, 3)) {
 		mode = static_cast<instance_mode>(script_getnum(st, 3));
 
