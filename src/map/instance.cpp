@@ -30,6 +30,16 @@ std::unordered_map<uint16, std::shared_ptr<s_instance_data>> instances;
 std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
 
 /**
+ * Searches for an active instance
+ * @param instance_id: ID to lookup
+ * @return shared_ptr of instances on success or nullptr on failure
+ */
+std::shared_ptr<s_instance_data> instance_search(uint16 instance_id)
+{
+	return instances[instance_id];
+}
+
+/**
  * Searches an instance by ID in the database
  * @param instance_id: ID to lookup
  * @return True if instance exists or false if it doesn't
@@ -42,9 +52,9 @@ bool instance_exists(uint16 instance_id)
 /**
  * Searches for an instance ID in the database
  * @param instance_id: Instance to search for
- * @return shared_ptr of instance
+ * @return shared_ptr of instance on success or nullptr on failure
  */
-std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id)
+std::shared_ptr<s_instance_db> instance_search_db(uint16 instance_id)
 {
 	return instance_db[instance_id];
 }
@@ -54,9 +64,9 @@ std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id)
  * @param instance_name: Instance to search for
  * @return shared_ptr of instance
  */
-std::shared_ptr<s_instance_db> instance_searchname_db(const char *instance_name)
+std::shared_ptr<s_instance_db> instance_search_db_name(const char *instance_name)
 {
-	for (auto it : instance_db) {
+	for (const auto &it : instance_db) {
 		if (!strcmp(it.second->name.c_str(), instance_name))
 			return it.second;
 	}
@@ -71,7 +81,7 @@ std::shared_ptr<s_instance_db> instance_searchname_db(const char *instance_name)
  * @param target: Target display type
  */
 void instance_getsd(uint16 instance_id, struct map_session_data **sd, enum send_target *target) {
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -123,7 +133,9 @@ static TIMER_FUNC(instance_subscription_timer){
 
 	// Check that maps have been added
 	ret = instance_addmap(instance_id);
-	auto &idata = instances[instance_id];
+
+	auto idata = instance_search(instance_id);
+
 	mode = idata->mode;
 
 	switch(mode) {
@@ -156,7 +168,7 @@ static TIMER_FUNC(instance_subscription_timer){
 			clif_instance_changewait(instance_id, i + 1);
 	}
 
-	if (instance_wait.id.size())
+	if (!instance_wait.id.empty())
 		instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 	else
 		instance_wait.timer = INVALID_TIMER;
@@ -179,7 +191,7 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, uint16 inst
 	if(idata->keep_timer != INVALID_TIMER)
 		return false;
 
-	auto db = instance_searchtype_db(idata->id);
+	auto db = instance_search_db(idata->id);
 
 	if(db == nullptr)
 		return false;
@@ -229,7 +241,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, uint16 inst
 	if(idata->idle_timer != INVALID_TIMER)
 		return false;
 
-	auto db = instance_searchtype_db(idata->id);
+	auto db = instance_search_db(idata->id);
 
 	if (db == nullptr)
 		return false;
@@ -242,19 +254,19 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, uint16 inst
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(idata->owner_id) != NULL && instance_searchtype_db(idata->id) != NULL) // Notify player of added instance timer
+			if (map_charid2sd(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify player of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_PARTY:
-			if (party_search(idata->owner_id) != NULL && instance_searchtype_db(idata->id) != NULL) // Notify party of added instance timer
+			if (party_search(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify party of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_GUILD:
-			if (guild_search(idata->owner_id) != NULL && instance_searchtype_db(idata->id) != NULL) // Notify guild of added instance timer
+			if (guild_search(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify guild of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_CLAN:
-			if (clan_search(idata->owner_id) != NULL && instance_searchtype_db(idata->id) != NULL) // Notify clan of added instance timer
+			if (clan_search(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify clan of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		default:
@@ -358,20 +370,18 @@ static int instance_addnpc_sub(struct block_list *bl, va_list ap)
  */
 void instance_addnpc(std::shared_ptr<s_instance_data> idata)
 {
-	int i;
-
 	// First add the NPCs
-	for(i = 0; i < idata->map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(idata->map[i].m);
+	for (const auto &it : idata->map) {
+		struct map_data *mapdata = map_getmapdata(it.m);
 
-		map_foreachinallarea(instance_addnpc_sub, idata->map[i].src_m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, idata->map[i].m);
+		map_foreachinallarea(instance_addnpc_sub, it.src_m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, it.m);
 	}
 
 	// Now run their OnInstanceInit
-	for(i = 0; i < idata->map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(idata->map[i].m);
+	for (const auto &it : idata->map) {
+		struct map_data *mapdata = map_getmapdata(it.m);
 
-		map_foreachinallarea(instance_npcinit, idata->map[i].m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, idata->map[i].m);
+		map_foreachinallarea(instance_npcinit, it.m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, it.m);
   }
 }
 
@@ -383,7 +393,7 @@ void instance_addnpc(std::shared_ptr<s_instance_data> idata)
  * @return -4 = no free instances | -3 = already exists | -2 = character/party/guild not found | -1 = invalid type | On success return instance_id
  */
 uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
-	auto db = instance_searchname_db(name);
+	auto db = instance_search_db_name(name);
 	struct map_session_data *sd = NULL;
 	struct party_data *pd = NULL;
 	struct guild *gd = NULL;
@@ -438,9 +448,10 @@ uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode
 	if (instances.size() > MAX_INSTANCE_DATA)
 		return -4;
 
-	instance_id = (uint16)instances.size() + 1;
+	instance_id = static_cast<uint16>(instances.size()) + 1;
 	instances[instance_id] = std::make_shared<s_instance_data>();
-	auto &entry = instances[instance_id];
+
+	auto entry = instance_search(instance_id);
 
 	entry->id = db->id;
 	entry->state = INSTANCE_IDLE;
@@ -483,19 +494,16 @@ uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode
  * @return 0 on failure or map count on success
  */
 int instance_addmap(uint16 instance_id) {
-	struct s_instance_map entry;
-	int16 m;
-
 	if (instance_id == 0)
 		return 0;
 
-	auto &idata = instances[instance_id];
+	auto &idata = instance_search(instance_id);
 
 	// If the instance isn't idle, we can't do anything
 	if (idata->state != INSTANCE_IDLE)
 		return 0;
 
-	auto db = instance_searchtype_db(idata->id);
+	auto db = instance_search_db(idata->id);
 
 	if (db == nullptr)
 		return 0;
@@ -505,24 +513,28 @@ int instance_addmap(uint16 instance_id) {
 	idata->idle_limit = (unsigned int)time(NULL) + db->timeout;
 	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
+	int16 m;
+
 	// Add initial map
 	if ((m = map_addinstancemap(db->enter.map, instance_id)) < 0) {
 		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%hu).\n", db->name.c_str(), instance_id);
 		return 0;
 	}
 
+	struct s_instance_map entry = {};
+
 	entry.m = m;
 	entry.src_m = db->enter.map;
 	idata->map.push_back(entry);
 
 	// Add extra maps (if any)
-	for (int i = 0; i < db->maplist.size(); i++) {
-		if ((m = map_addinstancemap(db->maplist[i], instance_id)) < 0) { // An error occured adding a map
+	for (const auto &it : db->maplist) {
+		if ((m = map_addinstancemap(it, instance_id)) < 0) { // An error occured adding a map
 			ShowError("instance_addmap: No maps added to instance '%s' (%hu).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
 			entry.m = m;
-			entry.src_m = db->maplist[i];
+			entry.src_m = it;
 			idata->map.push_back(entry);
 		}
 	}
@@ -571,24 +583,25 @@ int16 instance_mapid(int16 m, uint16 instance_id)
 		return -1;
 	}
 
-	iname = map_mapid2mapname(m);
-
 	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return -1;
 
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
 	if(idata->state != INSTANCE_BUSY)
 		return -1;
 
-	for (uint16 i = 0; i < idata->map.size(); i++) {
-		if (idata->map[i].src_m == m) {
+	iname = map_mapid2mapname(m);
+
+	for (const auto &it : idata->map) {
+		if (it.src_m == m) {
 			char alt_name[MAP_NAME_LENGTH];
 
 			if ((strchr(iname, '@') == NULL) && strlen(iname) > 8) {
 				memmove((void*)iname, iname + (strlen(iname) - 9), strlen(iname));
 				snprintf(alt_name, sizeof(alt_name), "%hu#%s", instance_id, iname);
-			} else
+			}
+			else
 				snprintf(alt_name, sizeof(alt_name), "%.3hu%s", instance_id, iname);
 			return map_mapname2mapid(alt_name);
 		}
@@ -604,21 +617,21 @@ int16 instance_mapid(int16 m, uint16 instance_id)
  */
 bool instance_destroy(uint16 instance_id)
 {
+	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
+		return false;
+
+	auto idata = instance_search(instance_id);
+
+	if (idata->state == INSTANCE_FREE)
+		return false;
+
 	struct map_session_data *sd = NULL;
 	struct party_data *pd = NULL;
 	struct guild *gd = NULL;
 	struct clan *cd = NULL;
-	int i, type = 0;
+	int type = 0;
 	unsigned int now = (unsigned int)time(NULL);
 	enum e_instance_mode mode;
-
-	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
-		return false;
-
-	auto &idata = instances[instance_id];
-
-	if(idata->state == INSTANCE_FREE)
-		return false;
 
 	mode = idata->mode;
 	switch(mode) {
@@ -639,19 +652,17 @@ bool instance_destroy(uint16 instance_id)
 	}
 
 	if(idata->state == INSTANCE_IDLE) {
-		for(i = 0; i < instance_wait.id.size(); i++) {
-			if(instance_wait.id[i] == instance_id) {
+		for (const auto &it : instance_wait.id) {
+			if(it == instance_id) {
 				instance_wait.id.pop_front();
 
-				for (i = 0; i < instance_wait.id.size(); i++) {
-					auto &tmp = instances[instance_wait.id[i]];
-
-					if (tmp->state == INSTANCE_IDLE)
+				for (uint16 i = 0; i < instance_wait.id.size(); i++) {
+					if (instance_search(instance_wait.id[i])->state == INSTANCE_IDLE)
 						if ((mode == IM_CHAR && sd) || (mode == IM_PARTY && pd) || (mode == IM_GUILD && gd) || (mode == IM_CLAN && cd))
 							clif_instance_changewait(instance_id, i + 1);
 				}
 
-				if (instance_wait.id.size())
+				if (!instance_wait.id.empty())
 					instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 				else
 					instance_wait.timer = INVALID_TIMER;
@@ -668,11 +679,11 @@ bool instance_destroy(uint16 instance_id)
 			type = 3;
 
 		// Run OnInstanceDestroy on all NPCs in the instance
-		for(i = 0; i < idata->map.size(); i++) {
-			struct map_data *mapdata = map_getmapdata(idata->map[i].m);
+		for (const auto &it : idata->map) {
+			struct map_data *mapdata = map_getmapdata(it.m);
 
-			map_foreachinallarea(instance_npcdestroy, idata->map[i].m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, idata->map[i].m);
-			map_delinstancemap(idata->map[i].m);
+			map_foreachinallarea(instance_npcdestroy, it.m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, it.m);
+			map_delinstancemap(it.m);
     }
 	}
 
@@ -727,22 +738,21 @@ bool instance_destroy(uint16 instance_id)
  */
 enum e_instance_enter instance_enter(struct map_session_data *sd, uint16 instance_id, const char *name, short x, short y)
 {
-	struct party_data *pd = NULL;
-	struct guild *gd = NULL;
-	struct clan *cd = NULL;
-	enum e_instance_mode mode;
-	int16 m;
-
 	nullpo_retr(IE_OTHER, sd);
 	
-	auto db = instance_searchname_db(name);
+	auto db = instance_search_db_name(name);
 
 	if (db == nullptr) {
 		ShowError("instance_enter: Unknown instance \"%s\".\n", name);
 		return IE_OTHER;
 	}
 
-	auto &idata = instances[instance_id];
+	struct party_data *pd = NULL;
+	struct guild *gd = NULL;
+	struct clan *cd = NULL;
+	enum e_instance_mode mode;
+	int16 m;
+	auto idata = instance_search(instance_id);
 
 	// If one of the two coordinates was not given or is below zero, we use the entry point from the database
 	if( x < 0 || y < 0 ){
@@ -831,9 +841,9 @@ bool instance_reqinfo(struct map_session_data *sd, uint16 instance_id)
 	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return false;
 
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
-	if(instance_searchtype_db(idata->id) == nullptr)
+	if(instance_search_db(idata->id) == nullptr)
 		return false;
 
 	// Say it's created if instance is not busy
@@ -860,7 +870,7 @@ bool instance_addusers(uint16 instance_id)
 	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return false;
 
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
 	if(idata->state != INSTANCE_BUSY)
 		return false;
@@ -886,14 +896,14 @@ bool instance_delusers(uint16 instance_id)
 	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return false;
 
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
 	if(idata->state != INSTANCE_BUSY)
 		return false;
 
 	// If no one is in the instance, start the idle timer
-	for(int i = 0; i < idata->map.size() && idata->map[i].m; i++)
-		users += max(map_getmapdata(idata->map[i].m)->users,0);
+	for (const auto &it : idata->map)
+		users += max(map_getmapdata(it.m)->users,0);
 
 	// We check the actual map.users before being updated, hence the 1
 	// The instance should be empty if users are now <= 1
@@ -955,7 +965,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 	try {
 		name = node["Name"].as<std::string>();
 
-		if (instance_searchname_db(name.c_str()) != nullptr) {
+		if (instance_search_db_name(name.c_str()) != nullptr) {
 			ShowWarning("instance_read_db_sub: Instance name %s already exists for instance %d in \"%s\", skipping.\n", name.c_str(), instance_id, source.c_str());
 			return false;
 		}
@@ -966,7 +976,7 @@ bool instance_read_db_sub(const YAML::Node &node, int n, const std::string &sour
 
 	if (!existing)
 		instance_db[instance_id] = std::make_shared<s_instance_db>();
-	auto &entry = instance_db[instance_id];
+	auto entry = instance_search_db(instance_id);
 	entry->id = instance_id;
 	entry->name = name;
 
@@ -1143,17 +1153,17 @@ void do_reload_instance(void)
 	struct s_mapiterator* iter;
 	struct map_session_data *sd;
 
-	for (uint16 i = 1; i < instances.size(); i++) {
-		auto &idata = instances[i];
+	for (const auto &it : instances) {
+		auto idata = instance_search(it.first);
 
-		if (!idata->map.size())
+		if (idata->map.empty())
 			continue;
 		else {
 			// First we load the NPCs again
 			instance_addnpc(idata);
 
 			// Create new keep timer
-			auto &db = instance_db[i];
+			auto db = instance_search_db(idata->id);
 
 			if (db != nullptr)
 				idata->keep_limit = (unsigned int)time(NULL) + db->limit;
@@ -1171,8 +1181,8 @@ void do_reload_instance(void)
 			struct clan *cd = NULL;
 			uint16 instance_id;
 
-			auto &idata = instances[map[sd->bl.m].instance_id];
-			auto &db = instance_db[idata->id];
+			auto idata = instance_search(map[sd->bl.m].instance_id);
+			auto db = instance_search_db(idata->id);
 
 			switch (idata->mode) {
 			case IM_NONE:
@@ -1226,7 +1236,6 @@ void do_init_instance(void) {
  * Finalizes the instances and instance database
  */
 void do_final_instance(void) {
-	for (uint16 i = 1; i < instances.size(); i++)
-		instance_destroy(i);
-	instance_db.clear();
+	for (const auto &it : instances)
+		instance_destroy(it.first);
 }

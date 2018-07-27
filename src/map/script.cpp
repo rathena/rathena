@@ -2720,7 +2720,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 					unsigned short instance_id = script_instancegetid(st);
 
 					if (instance_id) {
-						auto &idata = instances[instance_id];
+						auto idata = instance_search(instance_id);
 
 						data->u.str = (char*)i64db_get(idata->regs.vars, reference_getuid(data));
 					} else {
@@ -2781,7 +2781,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 						unsigned short instance_id = script_instancegetid(st);
 
 						if (instance_id) {
-							auto &idata = instances[instance_id];
+							auto idata = instance_search(instance_id);
 
 							data->u.num = (int)i64db_iget(idata->regs.vars, reference_getuid(data));
 						} else {
@@ -3000,7 +3000,7 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 				unsigned short instance_id = script_instancegetid(st);
 
 				if (instance_id) {
-					auto &idata = instances[instance_id];
+					auto idata = instance_search(instance_id);
 
 					src = &idata->regs;
 				}
@@ -3122,7 +3122,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					unsigned short instance_id = script_instancegetid(st);
 
 					if (instance_id) {
-						auto &idata = instances[instance_id];
+						auto idata = instance_search(instance_id);
 
 						if (str[0]) {
 							i64db_put(idata->regs.vars, num, aStrdup(str));
@@ -3188,7 +3188,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					unsigned short instance_id = script_instancegetid(st);
 
 					if (instance_id) {
-						auto &idata = instances[instance_id];
+						auto idata = instance_search(instance_id);
 
 						if (val != 0) {
 							i64db_iput(idata->regs.vars, num, val);
@@ -19785,7 +19785,9 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	sd = (TBL_PC *)bl;
-	auto &idata = instances[instance_id];
+
+	auto idata = instance_search(instance_id);
+
 	owner_id = idata->owner_id;
 
 	switch(idata->mode) {
@@ -19830,10 +19832,10 @@ BUILDIN_FUNC(instance_warpall)
 	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
-	for(uint16 i = 0; i < idata->map.size(); i++)
-		map_foreachinmap(buildin_instance_warpall_sub, idata->map[i].m, BL_PC, map_id2index(m), x, y, instance_id);
+	for(const auto &it : idata->map)
+		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19857,15 +19859,15 @@ BUILDIN_FUNC(instance_announce) {
 	if (instance_id == 0)
 		instance_id = script_instancegetid(st);
 
-	auto &idata = instances[instance_id];
+	auto idata = instance_search(instance_id);
 
 	if (!instance_id && idata != nullptr) {
 		ShowError("buildin_instance_announce: Intance is not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for (uint16 i = 0; i < idata->map.size(); i++)
-		map_foreachinmap(buildin_announce_sub, idata->map[i].m, BL_PC, mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
+	for (const auto &it : idata->map)
+		map_foreachinmap(buildin_announce_sub, it.m, BL_PC, mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20065,7 +20067,7 @@ BUILDIN_FUNC(instance_info)
 	const char* name = script_getstr(st, 2);
 	int type = script_getnum(st, 3);
 	int index = 0;
-	auto db = instance_searchname_db(name);
+	auto db = instance_search_db_name(name);
 
 	if (db == nullptr) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );

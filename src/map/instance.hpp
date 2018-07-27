@@ -18,7 +18,7 @@
 enum send_target : uint8;
 struct block_list;
 
-#define MAX_INSTANCE_DATA 300 // Maximum amount of instancese; instance creation is primarily decided by MAX_MAP_PER_SERVER
+#define MAX_INSTANCE_DATA 300 // Maximum amount of instances
 
 #define INSTANCE_NAME_LENGTH (60+1)
 
@@ -82,8 +82,9 @@ struct s_instance_db {
 extern std::unordered_map<uint16, std::shared_ptr<s_instance_data>> instances;
 extern std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
 
-std::shared_ptr<s_instance_db> instance_searchtype_db(uint16 instance_id);
-std::shared_ptr<s_instance_db> instance_searchname_db(const char* name);
+std::shared_ptr<s_instance_data> instance_search(uint16 instance_id);
+std::shared_ptr<s_instance_db> instance_search_db(uint16 instance_id);
+std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
 void instance_getsd(uint16 instance_id, struct map_session_data **sd, enum send_target *target);
 
 uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode);

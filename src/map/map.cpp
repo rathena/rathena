@@ -2616,7 +2616,7 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 	iname = map_mapid2mapname(src_m);
 	if(strlen(iname) > 20) {
 		// against buffer overflow
-		ShowError("map_addisntancemap: can't add long map name \"%s\"\n", iname);
+		ShowError("map_addinstancemap: can't add long map name \"%s\"\n", iname);
 		return -2;
 	}
 
@@ -2870,7 +2870,7 @@ const char* map_mapid2mapname(int m)
 		struct map_data *mapdata = map_getmapdata(m);
 
 	if (mapdata->instance_id) { // Instance map check
-		auto &idata = instances[map[m].instance_id];
+		auto idata = instance_search(map[m].instance_id);
 
 		if (idata == nullptr) // This shouldn't happen but if it does give them the map we intended to give
 			return mapdata->name;
