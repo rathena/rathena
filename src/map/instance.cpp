@@ -362,14 +362,14 @@ void instance_addnpc(std::shared_ptr<s_instance_data> idata)
 
 	// First add the NPCs
 	for(i = 0; i < idata->map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(im->map[i]->m);
+		struct map_data *mapdata = map_getmapdata(idata->map[i].m);
 
 		map_foreachinallarea(instance_addnpc_sub, idata->map[i].src_m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, idata->map[i].m);
 	}
 
 	// Now run their OnInstanceInit
 	for(i = 0; i < idata->map.size(); i++) {
-		struct map_data *mapdata = map_getmapdata(im->map[i]->m);
+		struct map_data *mapdata = map_getmapdata(idata->map[i].m);
 
 		map_foreachinallarea(instance_npcinit, idata->map[i].m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, idata->map[i].m);
   }
@@ -669,7 +669,7 @@ bool instance_destroy(uint16 instance_id)
 
 		// Run OnInstanceDestroy on all NPCs in the instance
 		for(i = 0; i < idata->map.size(); i++) {
-			struct map_data *mapdata = map_getmapdata(im->map[i]->m);
+			struct map_data *mapdata = map_getmapdata(idata->map[i].m);
 
 			map_foreachinallarea(instance_npcdestroy, idata->map[i].m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, idata->map[i].m);
 			map_delinstancemap(idata->map[i].m);
