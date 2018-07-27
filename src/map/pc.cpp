@@ -2383,7 +2383,7 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &auto
 	autobonus.clear();
 }
 
-void pc_exeautobonus(struct map_session_data *sd,struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
 		return;
@@ -8348,8 +8348,6 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 	int bonus, tmp, penalty = 0;
 
 	if (hp) {
-		int i;
-
 		bonus = 100 + (sd->battle_status.vit << 1) + pc_checkskill(sd, SM_RECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag == 2) {
@@ -8362,9 +8360,9 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 		//Item Group bonuses
 		bonus += pc_get_itemgroup_bonus(sd, itemid);
 		//Individual item bonuses.
-		for(i = 0; i < sd->itemhealrate.size(); i++) {
-			if (sd->itemhealrate[i].id == itemid) {
-				bonus += sd->itemhealrate[i].val;
+		for(const auto &it : sd->itemhealrate) {
+			if (it.id == itemid) {
+				bonus += it.val;
 				break;
 			}
 		}
@@ -12087,20 +12085,21 @@ short pc_maxaspd(struct map_session_data *sd) {
 * @return Heal rate
 **/
 short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid) {
+	if (sd->itemgrouphealrate.empty())
+		return 0;
+
 	short bonus = 0;
 
-	if (sd->itemgrouphealrate.empty())
-		return bonus;
-	for (uint8 i = 0; i < sd->itemgrouphealrate.size(); i++) {
-		uint16 group_id = sd->itemgrouphealrate[i].id, j;
+	for (const auto &it : sd->itemgrouphealrate) {
+		uint16 group_id = it.id, i;
 		struct s_item_group_db *group = NULL;
 
 		if (!group_id || !(group = itemdb_group_exists(group_id)))
 			continue;
 		
-		for (j = 0; j < group->random[0].data_qty; j++) {
-			if (group->random[0].data[j].nameid == nameid) {
-				bonus += sd->itemgrouphealrate[i].val;
+		for (i = 0; i < group->random[0].data_qty; i++) {
+			if (group->random[0].data[i].nameid == nameid) {
+				bonus += it.val;
 				break;
 			}
 		}
@@ -12115,15 +12114,14 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid)
 * @return Heal rate
 **/
 short pc_get_itemgroup_bonus_group(struct map_session_data* sd, uint16 group_id) {
-	short bonus = 0;
-
 	if (sd->itemgrouphealrate.empty())
-		return bonus;
-	for (uint8 i = 0; i < sd->itemgrouphealrate.size(); i++) {
-		if (sd->itemgrouphealrate[i].id == group_id)
-			return sd->itemgrouphealrate[i].val;
+		return 0;
+
+	for (const auto &it : sd->itemgrouphealrate) {
+		if (it.id == group_id)
+			return it.val;
 	}
-	return bonus;
+	return 0;
 }
 
 /**

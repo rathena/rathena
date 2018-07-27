@@ -8211,7 +8211,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 
 		// Item resistance (only applies to rate%)
 		if (sd) {
-			for (auto &it : sd->reseff) {
+			for (const auto &it : sd->reseff) {
 				if (it.id == type)
 					rate -= rate * it.val / 10000;
 			}

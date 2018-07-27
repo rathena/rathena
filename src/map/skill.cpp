@@ -1102,39 +1102,39 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != ASC_BREAKER ) {
 			// Trigger status effects
 			enum sc_type type;
-			uint8 i;
-			unsigned int time = 0;
-			for( i = 0; i < sd->addeff.size(); i++ ) {
-				rate = sd->addeff[i].rate;
+			unsigned int time;
+
+			for (const auto &it : sd->addeff) {
+				rate = it.rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
-					rate += sd->addeff[i].arrow_rate;
+					rate += it.arrow_rate;
 				if( !rate )
 					continue;
 
-				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC) ) {
+				if ((it.flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC)) {
 					// Trigger has attack type consideration.
-					if( (sd->addeff[i].flag&ATF_WEAPON && attack_type&BF_WEAPON) ||
-						(sd->addeff[i].flag&ATF_MAGIC && attack_type&BF_MAGIC) ||
-						(sd->addeff[i].flag&ATF_MISC && attack_type&BF_MISC) )
+					if ((it.flag&ATF_WEAPON && attack_type&BF_WEAPON) ||
+						(it.flag&ATF_MAGIC && attack_type&BF_MAGIC) ||
+						(it.flag&ATF_MISC && attack_type&BF_MISC))
 						;
 					else
 						continue;
 				}
 
-				if( (sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT) ) {
+				if ((it.flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {
 					// Trigger has range consideration.
-					if((sd->addeff[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
-						(sd->addeff[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
+					if ((it.flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+						(it.flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 						continue; //Range Failed.
 				}
 
-				type = sd->addeff[i].sc;
-				time = sd->addeff[i].duration;
+				type = it.sc;
+				time = it.duration;
 
-				if (sd->addeff[i].flag&ATF_TARGET)
+				if (it.flag&ATF_TARGET)
 					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 
-				if (sd->addeff[i].flag&ATF_SELF)
+				if (it.flag&ATF_SELF)
 					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 			}
 		}
@@ -1142,18 +1142,18 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if( skill_id ) {
 			// Trigger status effects on skills
 			enum sc_type type;
-			uint8 i;
-			unsigned int time = 0;
-			for( i = 0; i < sd->addeff_onskill.size(); i++ ) {
-				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
-					continue;
-				type = sd->addeff_onskill[i].sc;
-				time = sd->addeff_onskill[i].duration;
+			unsigned int time;
 
-				if( sd->addeff_onskill[i].target&ATF_TARGET )
-					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
-				if( sd->addeff_onskill[i].target&ATF_SELF )
-					status_change_start(src,src,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+			for (const auto &it : sd->addeff_onskill) {
+				if (skill_id != it.skill_id || !it.rate)
+					continue;
+				type = it.sc;
+				time = it.duration;
+
+				if (it.target&ATF_TARGET)
+					status_change_start(src,bl,type,it.rate,7,0,0,0,time,SCSTART_NONE);
+				if (it.target&ATF_SELF)
+					status_change_start(src,src,type,it.rate,7,0,0,0,time,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2080,16 +2080,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
-		int i, autospl_skill_lv, type;
+		int autospl_skill_lv, type;
 
-		for (i = 0; i < sd->autospell.size(); i++) {
-
-			if(!( ((sd->autospell[i].flag)&attack_type)&BF_WEAPONMASK &&
-				  ((sd->autospell[i].flag)&attack_type)&BF_RANGEMASK &&
-				  ((sd->autospell[i].flag)&attack_type)&BF_SKILLMASK))
+		for (const auto &it : sd->autospell) {
+			if (!(((it.flag)&attack_type)&BF_WEAPONMASK &&
+				  ((it.flag)&attack_type)&BF_RANGEMASK &&
+				  ((it.flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
-			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
+			skill = (it.id > 0) ? it.id : -it.id;
 
 			sd->state.autocast = 1;
 			if ( skill_isNotOk(skill, sd) ) {
@@ -2098,15 +2097,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			}
 			sd->state.autocast = 0;
 
-			autospl_skill_lv = sd->autospell[i].lv?sd->autospell[i].lv:1;
+			autospl_skill_lv = it.lv?it.lv:1;
 			if (autospl_skill_lv < 0) autospl_skill_lv = 1+rnd()%(-autospl_skill_lv);
 
-			rate = (!sd->state.arrow_atk) ? sd->autospell[i].rate : sd->autospell[i].rate / 2;
+			rate = (!sd->state.arrow_atk) ? it.rate : it.rate / 2;
 
 			if (rnd()%1000 >= rate)
 				continue;
 
-			tbl = (sd->autospell[i].id < 0) ? src : bl;
+			tbl = (it.id < 0) ? src : bl;
 
 			if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
 				int maxcount = 0;
@@ -2172,15 +2171,14 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	//Autobonus when attacking
 	if( sd && !sd->autobonus.empty() )
 	{
-		for(uint8 i = 0; i < sd->autobonus.size(); i++ )
-		{
-			if( rnd()%1000 >= sd->autobonus[i].rate )
+		for(auto &it : sd->autobonus) {
+			if (rnd()%1000 >= it.rate)
 				continue;
-			if(!( ((sd->autobonus[i].atk_type)&attack_type)&BF_WEAPONMASK &&
-				  ((sd->autobonus[i].atk_type)&attack_type)&BF_RANGEMASK &&
-				  ((sd->autobonus[i].atk_type)&attack_type)&BF_SKILLMASK))
+			if (!(((it.atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((it.atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((it.atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			pc_exeautobonus(sd,&sd->autobonus[i]);
+			pc_exeautobonus(sd, &it);
 		}
 	}
 
@@ -2198,21 +2196,21 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 }
 
 int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint16 skill_id, unsigned int tick) {
-	uint8 i;
 	struct block_list *tbl;
 
 	if( sd == NULL || !skill_id )
 		return 0;
 
-	for( i = 0; i < sd->autospell3.size(); i++ ) {
+	for (auto &it : sd->autospell3) {
 		int skill, skill_lv, type;
-		if( sd->autospell3[i].flag != skill_id )
+
+		if (it.flag != skill_id)
 			continue;
 
-		if( sd->autospell3[i].lock )
+		if (it.lock)
 			continue;  // autospell already being executed
 
-		skill = sd->autospell3[i].id;
+		skill = it.id;
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
 		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) ) {
@@ -2224,10 +2222,10 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 
 		if( skill >= 0 && bl == NULL )
 			continue; // No target
-		if( rnd()%1000 >= sd->autospell3[i].rate )
+		if( rnd()%1000 >= it.rate )
 			continue;
 
-		skill_lv = sd->autospell3[i].lv ? sd->autospell3[i].lv : 1;
+		skill_lv = it.lv ? it.lv : 1;
 		if( skill < 0 ) {
 			tbl = &sd->bl;
 			skill *= -1;
@@ -2263,24 +2261,24 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 			continue;
 
 		sd->state.autocast = 1;
-		sd->autospell3[i].lock = true;
+		it.lock = true;
 		skill_consume_requirement(sd,skill,skill_lv,1);
 		switch( type ) {
 			case CAST_GROUND:   skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skill_lv, tick, 0); break;
 			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skill_lv, tick, 0); break;
 			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skill_lv, tick, 0); break;
 		}
-		sd->autospell3[i].lock = false;
+		it.lock = false;
 		sd->state.autocast = 0;
 	}
 
 	if( sd && !sd->autobonus3.empty() ) {
-		for( i = 0; i < sd->autobonus3.size(); i++ ) {
-			if( rnd()%1000 >= sd->autobonus3[i].rate )
+		for (auto &it : sd->autobonus3) {
+			if (rnd()%1000 >= it.rate)
 				continue;
-			if( sd->autobonus3[i].atk_type != skill_id )
+			if (it.atk_type != skill_id)
 				continue;
-			pc_exeautobonus(sd,&sd->autobonus3[i]);
+			pc_exeautobonus(sd, &it);
 		}
 	}
 
@@ -2311,28 +2309,27 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	if(dstsd && attack_type&BF_WEAPON) {	//Counter effects.
 		enum sc_type type;
-		uint8 i;
-		unsigned int time = 0;
+		unsigned int time;
 
-		for (i = 0; i < dstsd->addeff_atked.size(); i++) {
-			rate = dstsd->addeff_atked[i].rate;
+		for (const auto &it : dstsd->addeff_atked) {
+			rate = it.rate;
 			if (attack_type&BF_LONG)
-				rate += dstsd->addeff_atked[i].arrow_rate;
+				rate += it.arrow_rate;
 			if (!rate)
 				continue;
 
-			if ((dstsd->addeff_atked[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {	//Trigger has range consideration.
-				if((dstsd->addeff_atked[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
-					(dstsd->addeff_atked[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
+			if ((it.flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {	//Trigger has range consideration.
+				if((it.flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+					(it.flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
-			type = dstsd->addeff_atked[i].sc;
-			time = dstsd->addeff_atked[i].duration;
+			type = it.sc;
+			time = it.duration;
 
-			if (dstsd->addeff_atked[i].flag&ATF_TARGET && src != bl)
+			if (it.flag&ATF_TARGET && src != bl)
 				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
 
-			if (dstsd->addeff_atked[i].flag&ATF_SELF && !status_isdead(bl))
+			if (it.flag&ATF_SELF && !status_isdead(bl))
 				status_change_start(src,bl,type,rate,7,0,0,0,time,SCSTART_NONE);
 		}
 	}
@@ -2420,20 +2417,19 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
-		int i, autospl_skill_id, autospl_skill_lv, autospl_rate, type;
+		int autospl_skill_id, autospl_skill_lv, autospl_rate, type;
 
-		for (i = 0; i < dstsd->autospell2.size(); i++) {
-
-			if(!( ((dstsd->autospell2[i].flag)&attack_type)&BF_WEAPONMASK &&
-				  ((dstsd->autospell2[i].flag)&attack_type)&BF_RANGEMASK &&
-				  ((dstsd->autospell2[i].flag)&attack_type)&BF_SKILLMASK))
+		for (const auto &it : dstsd->autospell2) {
+			if (!(((it.flag)&attack_type)&BF_WEAPONMASK &&
+				  ((it.flag)&attack_type)&BF_RANGEMASK &&
+				  ((it.flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
-			autospl_skill_id = (dstsd->autospell2[i].id > 0) ? dstsd->autospell2[i].id : -dstsd->autospell2[i].id;
-			autospl_skill_lv = dstsd->autospell2[i].lv?dstsd->autospell2[i].lv:1;
+			autospl_skill_id = (it.id > 0) ? it.id : -it.id;
+			autospl_skill_lv = it.lv ? it.lv : 1;
 			if (autospl_skill_lv < 0) autospl_skill_lv = 1+rnd()%(-autospl_skill_lv);
 
-			autospl_rate = dstsd->autospell2[i].rate;
+			autospl_rate = it.rate;
 			//Physical range attacks only trigger autospells half of the time
 			if ((attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG))
 				 autospl_rate>>=1;
@@ -2448,7 +2444,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (rnd()%1000 >= autospl_rate)
 				continue;
 
-			tbl = (dstsd->autospell2[i].id < 0) ? bl : src;
+			tbl = (it.id < 0) ? bl : src;
 			if( (type = skill_get_casttype(autospl_skill_id)) == CAST_GROUND ) {
 				int maxcount = 0;
 				if( !(BL_PC&battle_config.skill_reiteration) &&
@@ -2507,14 +2503,14 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	//Autobonus when attacked
 	if( dstsd && !status_isdead(bl) && !dstsd->autobonus2.empty() && !(skill_id && skill_get_nk(skill_id)&NK_NO_DAMAGE) ) {
-		for( uint8 i = 0; i < dstsd->autobonus2.size(); i++ ) {
-			if( rnd()%1000 >= dstsd->autobonus2[i].rate )
+		for (auto &it : dstsd->autobonus2) {
+			if (rnd()%1000 >= it.rate)
 				continue;
-			if(!( ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_WEAPONMASK &&
-				  ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_RANGEMASK &&
-				  ((dstsd->autobonus2[i].atk_type)&attack_type)&BF_SKILLMASK))
+			if (!(((it.atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((it.atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((it.atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			pc_exeautobonus(dstsd,&dstsd->autobonus2[i]);
+			pc_exeautobonus(dstsd, &it);
 		}
 	}
 
@@ -16405,14 +16401,12 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 
 		// Calculate cast time reduced by item/card bonuses
 		if (sd) {
-			int i;
-
 			if (!(flag&4) && sd->castrate != 100)
 				reduce_cast_rate += 100 - sd->castrate;
 			// Skill-specific reductions work regardless of flag
-			for(i = 0; i < sd->skillcastrate.size(); i++) {
-				if (sd->skillcastrate[i].id == skill_id) {
-					time += time * sd->skillcastrate[i].val / 100;
+			for (const auto &it : sd->skillcastrate) {
+				if (it.id == skill_id) {
+					time += time * it.val / 100;
 					break;
 				}
 			}
@@ -16507,7 +16501,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd = BL_CAST(BL_PC,bl);
 	int fixed = skill_get_fixed_cast(skill_id, skill_lv), fixcast_r = 0, varcast_r = 0, reduce_cast_rate = 0;
-	uint8 i = 0, flag = skill_get_castnodex(skill_id);
+	uint8 flag = skill_get_castnodex(skill_id);
 
 	nullpo_ret(bl);
 
@@ -16534,27 +16528,27 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 			time += sd->bonus.add_varcast; // bonus bVariableCast
 		if (sd->bonus.add_fixcast != 0)
 			fixed += sd->bonus.add_fixcast; // bonus bFixedCast
-		for (i = 0; i < sd->skillfixcast.size(); i++) {
-			if (sd->skillfixcast[i].id == skill_id) { // bonus2 bSkillFixedCast
-				fixed += sd->skillfixcast[i].val;
+		for (const auto &it : sd->skillfixcast) {
+			if (it.id == skill_id) { // bonus2 bSkillFixedCast
+				fixed += it.val;
 				break;
 			}
 		}
-		for (i = 0; i < sd->skillvarcast.size(); i++) {
-			if (sd->skillvarcast[i].id == skill_id) { // bonus2 bSkillVariableCast
-				time += sd->skillvarcast[i].val;
+		for (const auto &it : sd->skillvarcast) {
+			if (it.id == skill_id) { // bonus2 bSkillVariableCast
+				time += it.val;
 				break;
 			}
 		}
-		for (i = 0; i < sd->skillcastrate.size(); i++) {
-			if (sd->skillcastrate[i].id == skill_id) { // bonus2 bVariableCastrate
-				reduce_cast_rate += sd->skillcastrate[i].val;
+		for (const auto &it : sd->skillcastrate) {
+			if (it.id == skill_id) { // bonus2 bVariableCastrate
+				reduce_cast_rate += it.val;
 				break;
 			}
 		}
-		for (i = 0; i < sd->skillfixcastrate.size(); i++) {
-			if (sd->skillfixcastrate[i].id == skill_id) { // bonus2 bFixedCastrate
-				fixcast_r = max(fixcast_r, sd->skillfixcastrate[i].val);
+		for (const auto &it : sd->skillfixcastrate) {
+			if (it.id == skill_id) { // bonus2 bFixedCastrate
+				fixcast_r = max(fixcast_r, it.val);
 				break;
 			}
 		}
