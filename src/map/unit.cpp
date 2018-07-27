@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "unit.hpp"
@@ -6,36 +6,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/socket.h"
-#include "../common/ers.h"  // ers_destroy
+#include "../common/db.hpp"
+#include "../common/ers.hpp"  // ers_destroy
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/timer.hpp"
 
 #include "achievement.hpp"
+#include "battle.hpp"
+#include "battleground.hpp"
+#include "channel.hpp"
+#include "chat.hpp"
+#include "clif.hpp"
+#include "duel.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "intif.hpp"
 #include "map.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "party.hpp"
 #include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
-#include "channel.hpp"
-#include "duel.hpp"
-#include "battleground.hpp"
-#include "chat.hpp"
-#include "trade.hpp"
-#include "party.hpp"
-#include "intif.hpp"
 #include "storage.hpp"
-#include "guild.hpp"
-#include "npc.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
-#include "battle.hpp"
+#include "trade.hpp"
 
 // Directions values
 // 1 0 7
@@ -46,8 +46,8 @@ const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will mov
 const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
 //early declaration
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
-static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(unit_attack_timer);
+static TIMER_FUNC(unit_walktoxy_timer);
 int unit_unattackable(struct block_list *bl);
 
 /**
@@ -178,8 +178,7 @@ int* unit_get_masterteleport_timer(struct block_list *bl)
  * @param data: Data transferred from timer call
  * @return 0
  */
-int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_teleport_timer){
 	struct block_list *bl = map_id2bl(id);
 	int *mast_tid = unit_get_masterteleport_timer(bl);
 
@@ -252,8 +251,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
  * @param data: Not used
  * @return 1: Success 0: Fail (No valid bl)
  */
-int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_step_timer){
 	struct block_list *bl;
 	struct unit_data *ud;
 	int target_id;
@@ -320,8 +318,7 @@ int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param data: Data used in timer calls
  * @return 0 or unit_walktoxy_sub() or unit_walktoxy()
  */
-static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(unit_walktoxy_timer){
 	int i;
 	int x,y,dx,dy;
 	unsigned char icewall_walk_block;
@@ -416,11 +413,35 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0]){
-			npc_event_do_id(ud->walk_done_event,bl->id);
-			ud->walk_done_event[0] = 0;
+			char walk_done_event[EVENT_NAME_LENGTH];
+
+			// Copying is required in case someone uses unitwalkto inside the event code
+			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
+
+			ud->state.walk_script = true;
+
+			// Execute the event
+			npc_event_do_id(walk_done_event,bl->id);
+
+			ud->state.walk_script = false;
+
+			// Check if the unit was killed
+			if( status_isdead(bl) ){
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+				if( md && !md->spawn ){
+					unit_free(bl, CLR_OUTSIGHT);
+				}
+
+				return 0;
+			}
+
+			// Check if another event was set
+			if( !strcmp(ud->walk_done_event,walk_done_event) ){
+				// If not remove it
+				ud->walk_done_event[0] = 0;
+			}
 		}
-		if (ud->state.walk_script)
-			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
@@ -560,8 +581,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
  * @param data: Data used in timer calls
  * @return 1: Success 0: Fail (No valid bl)
  */
-int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_delay_walktoxy_timer){
 	struct block_list *bl = map_id2bl(id);
 
 	if (!bl || bl->prev == NULL)
@@ -580,8 +600,7 @@ int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param data: Data used in timer calls (target bl)
  * @return 1: Success 0: Fail (No valid bl or target)
  */
-int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_delay_walktobl_timer){
 	struct block_list *bl = map_id2bl(id), *tbl = map_id2bl(data);
 
 	if(!bl || bl->prev == NULL || tbl == NULL)
@@ -705,8 +724,7 @@ static inline void set_mobstate(struct block_list* bl, int flag)
  * @param data: Data passed through timer function (target)
  * @return 0
  */
-static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(unit_walktobl_sub){
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):NULL;
 
@@ -804,7 +822,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if (type == SC_RUN)
-		clif_status_change(bl, SI_BUMP, 1, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 1, 0, 0, 0, 0);
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
@@ -812,7 +830,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
-		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
+		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
 		clif_fixpos(bl);
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
@@ -1120,7 +1138,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
-		&& (map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)
+		&& (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
 		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
 
@@ -1134,7 +1152,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				// Basilica caster can't be knocked-back by normal monsters.
-				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
+				if( !(flag&0x4) && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
 					return UB_TARGET_BASILICA;
 				// Target has special_state.no_knockback (equip)
 				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
@@ -1186,14 +1204,14 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 
 	switch (bl->type) {
 		case BL_MOB:
-			if (map[bl->m].flag.monster_noteleport && ((TBL_MOB*)bl)->master_id == 0)
+			if (map_getmapflag(bl->m, MF_MONSTER_NOTELEPORT) && ((TBL_MOB*)bl)->master_id == 0)
 				return 1;
 
-			if (m != bl->m && map[m].flag.nobranch && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
+			if (m != bl->m && map_getmapflag(m, MF_NOBRANCH) && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
 				return 1;
 			break;
 		case BL_PC:
-			if (map[bl->m].flag.noteleport)
+			if (map_getmapflag(bl->m, MF_NOTELEPORT))
 				return 1;
 			break;
 	}
@@ -1402,8 +1420,7 @@ int unit_can_move(struct block_list *bl) {
  * @param data: Data passed through timer function (unit_data)
  * @return 0
  */
-int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_resume_running){
 	struct unit_data *ud = (struct unit_data *)data;
 	TBL_PC *sd = map_id2sd(id);
 
@@ -1695,6 +1712,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		switch( skill_id ) {
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
+			case NPC_DEATHSUMMON:
 			case AL_TELEPORT:
 				if( ((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai )
 					return 0;
@@ -2650,8 +2668,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
  * @param data: Data passed from timer call
  * @return 0
  */
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(unit_attack_timer){
 	struct block_list *bl;
 
 	bl = map_id2bl(id);
@@ -2689,7 +2706,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND)))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 

@@ -20,7 +20,7 @@
 manuk,304,195,5	script	Soldier#ep13pa829	454,{
 	if (isequipped(2782) == 1) {
 		mes "[Food Provider]";
-		mes "The Manuk family subsists mostly on refining Gray Hollows that were burried a long time ago deep down under the ground.";
+		mes "The Manuk family subsists mostly on refining Gray Hollows that were buried a long time ago deep down under the ground.";
 		close;
 	}
 	else {
@@ -324,7 +324,7 @@ man_in01,393,134,3	script	Worker#ep13bsg2	454,{
 man_in01,377,143,5	script	Worker#ep13bsg3	454,{
 	if (isequipped(2782) == 1) {
 		mes "[Worker]";
-		mes "Hmm... It's working just fine... No probems at all...";
+		mes "Hmm... It's working just fine... No problems at all...";
 		close;
 	}
 	else {

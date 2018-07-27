@@ -219,7 +219,7 @@ prontera,78,150,3	script	Dairenne#pront	90,{
 	next;
 	if (select("Talk:Cancel") == 1) {
 		mes "[Towngirl Dairenne]";
-		mes "I wonder if you are interested in parties or dresses. Hehehe. These days, the hot topic is definitely the colorful, extravagent, magnificent dresses you can wear.";
+		mes "I wonder if you are interested in parties or dresses. Hehehe. These days, the hot topic is definitely the colorful, extravagant, magnificent dresses you can wear.";
 		next;
 		mes "[Towngirl Dairenne]";
 		mes "To get such dazzling colors, I heard you have to use a dye that you can only get in Morroc. But I also heard that the price is beyond imagination.";
@@ -308,10 +308,10 @@ prt_in,180,20,2	script	Bartender#pront	61,{
 	mes "I can't keep my business busy without my special menu 'Crunch Crunch Sour' and 'Savory Yum Yum'...*Sigh*";
 	while(1) {
 		next;
-		switch(select("'Cunch Crunch Sour'?:'Savory Yum Yum'?:Cancel.")) {
+		switch(select("'Crunch Crunch Sour'?:'Savory Yum Yum'?:Cancel.")) {
 		case 1:
 			mes "[Bartender]";
-			mes "The basic ingredients of my Crunch Crunch Sour are the ants roadming inside the Ant Hell in the desert.";
+			mes "The basic ingredients of my Crunch Crunch Sour are the ants roaming inside the Ant Hell in the desert.";
 			mes "Rumor has it that the numbers of the ants have been greatly increased and they have become more violent, so that no one wants to get in the place.";
 			next;
 			mes "[Bartender]";
@@ -361,7 +361,7 @@ prt_in,173,24,2	script	Shevild#pront	85,{
 			mes "Yes. Few days ago, I have entered a mysterious maze following a group of hunters at the north of Prontera.";
 			next;
 			mes "[Shevild]";
-			mes "They said that they could get lots and lots of rare items from the maze even if the maze was filled with awfully strong mosters.";
+			mes "They said that they could get lots and lots of rare items from the maze even if the maze was filled with awfully strong monsters.";
 			mes "So we went there but as soon as we entered, we were just stuck inside the maze, you know.";
 			next;
 			mes "[Shevild]";
@@ -380,7 +380,7 @@ prt_in,173,24,2	script	Shevild#pront	85,{
 
 		case 2:
 			mes "[Shevild]";
-			mes "When you go outside of Prontrea heading to north east, you will arrive at the peaceful ruins. I have been there a while ago, to deliver something to a priest.";
+			mes "When you go outside of Prontera heading to north east, you will arrive at the peaceful ruins. I have been there a while ago, to deliver something to a priest.";
 			mes "I had to pass a forest on the way to the ruins, and the forest was filled with monkeys and raccoons.";
 			next;
 			mes "[Shevild]";

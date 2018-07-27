@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _MERCENARY_HPP_
 #define _MERCENARY_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
@@ -13,9 +13,19 @@
 #define MAX_MER_DISTANCE 15
 
 enum e_MercGuildType {
+	NONE_MERC_GUILD = -1,
 	ARCH_MERC_GUILD,
 	SPEAR_MERC_GUILD,
 	SWORD_MERC_GUILD,
+};
+
+enum MERID {
+	MERID_MER_ARCHER01 = 6017,
+	MERID_MER_ARCHER10 = 6026,
+	MERID_MER_LANCER01,
+	MERID_MER_LANCER10 = 6036,
+	MERID_MER_SWORDMAN01,
+	MERID_MER_SWORDMAN10 = 6046
 };
 
 struct s_mercenary_db {
@@ -29,8 +39,6 @@ struct s_mercenary_db {
 		unsigned short id, lv;
 	} skill[MAX_MERCSKILL];
 };
-
-extern struct s_mercenary_db mercenary_db[MAX_MERCENARY_CLASS];
 
 struct mercenary_data {
 	struct block_list bl;
@@ -51,10 +59,10 @@ struct mercenary_data {
 	unsigned devotion_flag : 1;
 };
 
-bool mercenary_class(int class_);
-struct view_data * mercenary_get_viewdata(int class_);
+struct s_mercenary_db *mercenary_db(uint16 class_);
+struct view_data * mercenary_get_viewdata(uint16 class_);
 
-bool mercenary_create(struct map_session_data *sd, int class_, unsigned int lifetime);
+bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
 bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
 void mercenary_save(struct mercenary_data *md);
 
@@ -65,7 +73,7 @@ int mercenary_delete(struct mercenary_data *md, int reply);
 void mercenary_contract_stop(struct mercenary_data *md);
 
 int mercenary_get_lifetime(struct mercenary_data *md);
-int mercenary_get_guild(struct mercenary_data *md);
+enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md);
 int mercenary_get_faith(struct mercenary_data *md);
 void mercenary_set_faith(struct mercenary_data *md, int value);
 int mercenary_get_calls(struct mercenary_data *md);

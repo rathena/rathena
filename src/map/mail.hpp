@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _MAIL_HPP_
 #define _MAIL_HPP_
 
-#include "../common/mmo.h"
+#include "../common/mmo.hpp"
 
 enum mail_attach_result {
 	MAIL_ATTACH_SUCCESS = 0,

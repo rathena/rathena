@@ -130,24 +130,23 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2720:
 	Type: HA
-	Structure: <cmd>.W <map_fd>.L <u_fd>.L <u_aid>.L <u_group>.L <account_id>.L
-	index: 0,2,6,10,14,18
-	len: 22
+	Structure: <cmd>.W <map_fd>.L <u_fd>.L <u_aid>.L <account_id>.L
+	index: 0,2,6,10,14
+	len: 18
 	parameter:
 		- cmd : packet identification (0x2720)
 		- map_fd :
 		- u_fd :
 		- u_aid :
-		- u_group :
 		- account_id :
 	desc:
 		- 
 
 0x2721:
 	Type: AH
-	Structure: <cmd>.W <map_fd>.L <u_fd>.L <u_aid>.L <account_id>.L <status>.B <password>.33B <email>.40B <last_ip>.16B <last_login>.24B <group_id>.L <logincount>.L <state>.L <password>.33B <birthdate>.11B <pincode>.?B <userid>.?B
-	index: 0,2,6,10,18,19,52,92,108,132,136,140,144,155,155+PINCODE_LENGTH
-	len: 155 + PINCODE_LENGTH + NAME_LENGTH
+	Structure: <cmd>.W <map_fd>.L <u_fd>.L <u_aid>.L <account_id>.L <status>.B <password>.33B <email>.40B <last_ip>.16B <last_login>.24B <group_id>.L <logincount>.L <state>.L <birthdate>.11B <userid>.?B
+	index: 0,2,6,10,18,19,52,92,108,132,136,140,144,122+NAME_LENGTH
+	len: 122 + NAME_LENGTH
 	parameter:
 		- cmd : packet identification (0x2721)
 		- map_fd
@@ -162,9 +161,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- group_id
 		- logincount
 		- state
-		- password
 		- birthdate
-		- pincode
 		- userid
 	desc:
 		-

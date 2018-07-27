@@ -1,19 +1,19 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "cashshop.hpp"
 
-#include <string.h> // memset
 #include <stdlib.h> // atoi
+#include <string.h> // memset
 
-#include "../common/cbasetypes.h" // uint16, uint32
-#include "../common/malloc.h" // CREATE, RECREATE, aFree
-#include "../common/showmsg.h" // ShowWarning, ShowStatus
+#include "../common/cbasetypes.hpp" // uint16, uint32
+#include "../common/malloc.hpp" // CREATE, RECREATE, aFree
+#include "../common/showmsg.hpp" // ShowWarning, ShowStatus
 
-#include "pc.hpp" // s_map_session_data
-#include "pet.hpp" // pet_create_egg
 #include "clif.hpp"
 #include "log.hpp"
+#include "pc.hpp" // s_map_session_data
+#include "pet.hpp" // pet_create_egg
 
 struct cash_item_db cash_shop_items[CASHSHOP_TAB_MAX];
 #if PACKETVER_SUPPORTS_SALES
@@ -235,7 +235,7 @@ static void sale_read_db_sql( void ){
 	ShowStatus( "Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, sales_table );
 }
 
-static int sale_end_timer( int tid, unsigned int tick, int id, intptr_t data ){
+static TIMER_FUNC(sale_end_timer){
 	struct sale_item_data* sale_item = (struct sale_item_data*)data;
 
 	// Remove the timer so the sale end is not sent out again
@@ -249,7 +249,7 @@ static int sale_end_timer( int tid, unsigned int tick, int id, intptr_t data ){
 	return 1;
 }
 
-static int sale_start_timer( int tid, unsigned int tick, int id, intptr_t data ){
+static TIMER_FUNC(sale_start_timer){
 	struct sale_item_data* sale_item = (struct sale_item_data*)data;
 
 	clif_sale_start( sale_item, NULL, ALL_CLIENT );

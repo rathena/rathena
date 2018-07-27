@@ -1,21 +1,21 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "achievement.hpp"
 
 #include <array>
+#include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <setjmp.h>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
 #include "chrif.hpp"
@@ -23,10 +23,10 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "npc.hpp"
 #include "pc.hpp"
 #include "script.hpp"
 #include "status.hpp"
-#include "npc.hpp"
 
 static jmp_buf     av_error_jump;
 static char*       av_error_msg;
@@ -292,11 +292,6 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 	clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 	sd->achievement_data.save = true; // Flag to save with the autosave interval
 
-	if (sd->achievement_data.sendlist) {
-		clif_achievement_list_all(sd);
-		sd->achievement_data.sendlist = false;
-	}
-
 	return true;
 }
 
@@ -329,15 +324,16 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id, tim
 
 	// Only update in the cache, db was updated already
 	sd->achievement_data.achievements[i].rewarded = rewarded;
+	sd->achievement_data.save = true;
 
 	run_script(adb->rewards.script, 0, sd->bl.id, fake_nd->bl.id);
 	if (adb->rewards.title_id) {
 		sd->titles.push_back(adb->rewards.title_id);
-		sd->achievement_data.sendlist = true;
+		clif_achievement_list_all(sd);
+	}else{
+		clif_achievement_reward_ack(sd->fd, 1, achievement_id);
+		clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 	}
-
-	clif_achievement_reward_ack(sd->fd, 1, achievement_id);
-	clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 }
 
 /**

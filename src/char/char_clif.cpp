@@ -6,20 +6,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/socket.h"
-#include "../common/sql.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/mapindex.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/timer.h"
-#include "inter.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/mmo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
+
 #include "char.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
+#include "inter.hpp"
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
@@ -675,7 +676,7 @@ int chclif_parse_maplogin(int fd){
 			map_server[i].ip = ntohl(RFIFOL(fd,54));
 			map_server[i].port = ntohs(RFIFOW(fd,58));
 			map_server[i].users = 0;
-			memset(map_server[i].map, 0, sizeof(map_server[i].map));
+			map_server[i].map = {};
 			session[fd]->func_parse = chmapif_parse;
 			session[fd]->flag.server = 1;
 			realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
@@ -768,6 +769,29 @@ int chclif_parse_req_charlist(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+//Send player to map
+void chclif_send_map_data( int fd, struct mmo_charstatus *cd, uint32 ipl, int map_server_index ){
+#if PACKETVER >= 20170315
+	int cmd = 0xAC5;
+	int size = 156;
+#else
+	int cmd = 0x71;
+	int size = 28;
+#endif
+
+	WFIFOHEAD(fd,size);
+	WFIFOW(fd,0) = cmd;
+	WFIFOL(fd,2) = cd->char_id;
+	mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
+	uint32 subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
+	WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip);
+	WFIFOW(fd,26) = ntows(htons(map_server[map_server_index].port)); // [!] LE byte order here [!]
+#if PACKETVER >= 20170315
+	memset(WFIFOP(fd, 28), 0, 128); // Unknown
+#endif
+	WFIFOSET(fd,size);
+}
+
 int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	FIFOSD_CHECK(3);
 	{
@@ -775,7 +799,6 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		struct mmo_charstatus *cd;
 		char* data;
 		uint32 char_id;
-		uint32 subnet_map_ip;
 		struct auth_node* node;
 		int i, map_fd;
 		DBMap *auth_db = char_get_authdb();
@@ -885,15 +908,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 			return 1;
 		}
 
-		//Send player to map
-		WFIFOHEAD(fd,28);
-		WFIFOW(fd,0) = 0x71;
-		WFIFOL(fd,2) = cd->char_id;
-		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
-		subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
-		WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[i].ip);
-		WFIFOW(fd,26) = ntows(htons(map_server[i].port)); // [!] LE byte order here [!]
-		WFIFOSET(fd,28);
+		chclif_send_map_data( fd, cd, ipl, i );
 
 		// create temporary auth entry
 		CREATE(node, struct auth_node, 1);
@@ -1086,8 +1101,7 @@ int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
 }
 
 
-int charblock_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(charblock_timer){
 	struct char_session_data* sd=NULL;
 	int i=0;
 	ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == id);
