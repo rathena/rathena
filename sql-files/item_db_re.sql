@@ -11555,6 +11555,8 @@ REPLACE INTO `item_db_re` VALUES (25150,'Hugging_Alice_Pilow','Hugging Alice Pil
 REPLACE INTO `item_db_re` VALUES (25223,'Para_Team_Coin','Eden Group Coin',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (25238,'New_Normal_Lubricant','New Normal Lubricant',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (25239,'New_Advanced_Lubricant','New Advanced Lubricant',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#
+REPLACE INTO `item_db_re` VALUES (25464,'World_Moving_Rights','World Moving Rights',3,20,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #===================================================================
 # New Staves
 #===================================================================
