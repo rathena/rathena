@@ -20468,8 +20468,8 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 
 	// The UI only offers these two buttons(items) for now
 	uint16 item_ids[] = {
-		6909,
-		25464
+		ITEMID_ACTINIDIA_CAT_FRUIT,
+		ITEMID_WORLD_MOVING_RIGHTS
 	};
 
 	uint16 item_id = RFIFOW( fd, 2 + MAP_NAME_LENGTH_EXT );
