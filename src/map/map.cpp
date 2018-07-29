@@ -87,6 +87,7 @@ char vendings_table[32] = "vendings";
 char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
 char roulette_table[32] = "db_roulette";
+char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -4054,6 +4055,8 @@ int inter_config_read(const char *cfgName)
 			strcpy(market_table, w2);
 		else if (strcmpi(w1, "sales_table") == 0)
 			strcpy(sales_table, w2);
+		else if (strcmpi(w1, "guild_storage_log") == 0)
+			strcpy(guild_storage_log_table, w2);
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)

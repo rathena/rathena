@@ -2402,4 +2402,6 @@
 	packet(0x0A4C,28);
 #endif
 
+	packet(0x09DA,-1);
+
 #endif /* _CLIF_PACKETDB_HPP_ */
