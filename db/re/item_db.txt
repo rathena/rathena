@@ -11523,6 +11523,8 @@
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 25238,New_Normal_Lubricant,New Normal Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25239,New_Advanced_Lubricant,New Advanced Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
+//
+25464,World_Moving_Rights,World Moving Rights,3,20,,0,,,,,,,,,,,,,{},{},{}
 //===================================================================
 // New Staves
 //===================================================================

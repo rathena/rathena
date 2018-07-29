@@ -20388,6 +20388,121 @@ void clif_weight_limit( struct map_session_data* sd ){
 #endif
 }
 
+enum e_private_airship_response : uint32{
+	PRIVATEAIRSHIP_OK,
+	PRIVATEAIRSHIP_RETRY,
+	PRIVATEAIRSHIP_ITEM_NOT_ENOUGH,
+	PRIVATEAIRSHIP_DESTINATION_MAP_INVALID,
+	PRIVATEAIRSHIP_SOURCE_MAP_INVALID,
+	PRIVATEAIRSHIP_ITEM_UNAVAILABLE
+};
+
+/// Send out the response to a private airship request
+/// 0A4A <response>.L
+void clif_private_airship_response( struct map_session_data* sd, enum e_private_airship_response response ){
+#if PACKETVER >= 20180321
+	nullpo_retv( sd );
+
+	int fd = sd->fd;
+
+	WFIFOHEAD( fd, packet_len( 0xA4A ) );
+	WFIFOW( fd, 0 ) = 0xA4A;
+	WFIFOL( fd, 2 ) = response;
+	WFIFOSET( fd, packet_len( 0xA4A ) );
+#endif
+}
+
+/// Parses a request for a private airship
+/// 0A49 <mapname>.16B <itemid>.W
+void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20180321
+	// Check if the feature is enabled
+	if( !battle_config.feature_privateairship ){
+		clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 792 ), false, SELF ); // The private airship system is disabled.
+		return;
+	}
+
+	// Check if the player is allowed to warp from the source map
+	if( !map_getmapflag( sd->bl.m, MF_PRIVATEAIRSHIP_SOURCE ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_SOURCE_MAP_INVALID );
+		return;
+	}
+
+	char mapname[MAP_NAME_LENGTH_EXT];
+
+	safestrncpy( mapname, RFIFOCP( fd, 2 ), MAP_NAME_LENGTH_EXT );
+
+	int16 mapindex = mapindex_name2id( mapname );
+
+	// Check if we know the mapname
+	if( mapindex < 0 ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_DESTINATION_MAP_INVALID );
+		return;
+	}
+
+	int16 mapid = map_mapindex2mapid( mapindex );
+
+	// Check if the map is available on this server
+	if( mapid < 0 ){
+		// TODO: add multi map-server support, cant validate the mapflags of the other server
+		return;
+	}
+
+	// Check if the player tried to warp to the map he is on
+	if( sd->bl.m == mapid ){
+		// This is blocked by the client, but just to be sure
+		return;
+	}
+
+	// This can only be a hack, so we prevent it
+	if( map_getmapdata( mapid )->instance_id ){
+		// Ignore requests to warp directly into a running instance
+		return;
+	}
+
+	// Check if the player is allowed to warp to the target map
+	if( !map_getmapflag( mapid, MF_PRIVATEAIRSHIP_DESTINATION ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_DESTINATION_MAP_INVALID );
+		return;
+	}
+
+	// The UI only offers these two buttons(items) for now
+	uint16 item_ids[] = {
+		ITEMID_ACTINIDIA_CAT_FRUIT,
+		ITEMID_WORLD_MOVING_RIGHTS
+	};
+
+	uint16 item_id = RFIFOW( fd, 2 + MAP_NAME_LENGTH_EXT );
+
+	int i;
+
+	ARR_FIND( 0, ARRAYLENGTH( item_ids ), i, item_ids[i] == item_id );
+
+	// Check if the item sent by the client is known to us
+	if( i == ARRAYLENGTH( item_ids ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_ITEM_UNAVAILABLE );
+		return;
+	}
+	
+	int idx = pc_search_inventory( sd, item_id );
+
+	// Check if the player has the item at all
+	if( idx < 0 ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_ITEM_NOT_ENOUGH );
+		return;
+	}
+
+	// Delete the chosen item
+	if( pc_delitem( sd, idx, 1, 0, 0, LOG_TYPE_PRIVATE_AIRSHIP ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_RETRY );
+		return;
+	}
+
+	// Warp the player to a random spot on the destination map
+	pc_setpos( sd, mapindex, 0, 0, CLR_TELEPORT );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

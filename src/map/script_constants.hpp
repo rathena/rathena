@@ -453,6 +453,8 @@
 	export_constant(MF_HIDEMOBHPBAR);
 	export_constant(MF_NOLOOT);
 	export_constant(MF_NOEXP);
+	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
+	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
