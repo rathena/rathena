@@ -1644,7 +1644,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	}
 	speed=status_get_speed(&md->bl);
 	for(i=c=0;i<md->ud.walkpath.path_len;i++){	// The next walk start time is calculated.
-		if(md->ud.walkpath.path[i]&1)
+		if( direction_diagonal( md->ud.walkpath.path[i] ) )
 			c+=speed*MOVE_DIAGONAL_COST/MOVE_COST;
 		else
 			c+=speed;
