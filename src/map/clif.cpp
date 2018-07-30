@@ -20507,6 +20507,7 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 /// 09DA <size>.W <result>.W <count>.W { <id>.L <item id>.W <amount>.L <action>.B <refine>.L <unique id>.Q <identify>.B <item type>.W
 ///      { <card item id>.W }*4 <name>.24B <time>.24B <attribute>.B }*count (ZC_ACK_GUILDSTORAGE_LOG)
 void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result ){
+#if PACKETVER >= 20140205
 	nullpo_retv( sd );
 
 	int fd = sd->fd;
@@ -20546,6 +20547,7 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 	}
 
 	WFIFOSET(fd, size);
+#endif
 }
 
 /*==========================================

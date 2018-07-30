@@ -9972,6 +9972,10 @@ BUILDIN_FUNC(guildopenstorage)
 }
 
 BUILDIN_FUNC(guildopenstorage_log){
+#if PACKETVER < 20140205
+	ShowError( "buildin_guildopenstorage_log: This command requires PACKETVER 2014-02-05 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
 	struct map_session_data* sd;
 
 	if( !script_charid2sd( 2, sd ) ){
@@ -9981,6 +9985,7 @@ BUILDIN_FUNC(guildopenstorage_log){
 	script_pushint( st, storage_guild_log_read( sd ) );
 
 	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 BUILDIN_FUNC(guild_has_permission){
