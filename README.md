@@ -5,15 +5,16 @@ Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=
 
 Table of Contents
 ---------
-1. What is rAthena?
-2. Prerequisites
-3. Installation
-4. Troubleshooting
-5. Helpful Links
-6. More Documentation
-7. How to Contribute
+* [What is rAthena?](#what-is-rathena)  
 
-1. What is rAthena?
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Troubleshooting](#troubleshooting)
+* [Helpful Links](#helpful-links)
+* [More Documentation](#more-documentation)
+* [How to Contribute](#how-to-contribute)
+
+What is rAthena?
 ---------
 rAthena is a collaborative software development project revolving around the
 creation of a robust massively multiplayer online role playing game (MMORPG)
@@ -22,7 +23,7 @@ warps and modifications. The project is jointly managed by a group of volunteers
 located around the world as well as a tremendous community providing QA and
 support. rAthena is a continuation of the eAthena project.
 
-2. Prerequisites
+Prerequisites
 ---------
 Before installing rAthena there are certain tools and applications you will need.
 This differs between the varying operating systems available, so the following
@@ -46,7 +47,7 @@ is broken down into Windows and Linux prerequisites.
 	* zlib-devel
 	* git
 
-3. Installation 
+Installation 
 ---------
 This section is a very brief set of installation instructions. For more concise guides
 relevant to your Operation System, please refer to the Wiki (links at the end of this file).
@@ -120,7 +121,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 
 	* Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
-4. Troubleshooting
+Troubleshooting
 ---------
 If you're having problems with starting your server, the first thing you should
 do is check what's happening on your consoles. More often that not, all support issues
@@ -168,7 +169,7 @@ Examples:
 
 
 
-5. Helpful Links
+Helpful Links
 ---------
 * rAthena Forums
 	* https://rathena.org/
@@ -192,7 +193,7 @@ Examples:
 	https://rathena.org/board/topic/86913-pull-request-qa/
 
 
-6. More Documentation
+More Documentation
 ---------
 rAthena has a large collection of help files and sample NPC scripts located in the /doc/
 directory. These include detailed explanations of NPC script commands, atcommands (@),
@@ -200,6 +201,6 @@ group permissions, item bonuses, and packet structures, among many other topics.
 recommend that all users take the time to look over this directory before asking for
 assistance elsewhere.
 
-7. How to Contribute
+How to Contribute
 ---------
 Details on how to contribute to rAthena can be found in [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/.github/CONTRIBUTING.md)!
