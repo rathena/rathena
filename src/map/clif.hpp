@@ -38,6 +38,7 @@ struct sale_item_data;
 struct mail_message;
 struct achievement;
 struct guild_log_entry;
+enum e_guild_storage_log : uint16;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
