@@ -1781,7 +1781,7 @@
 2573,Archangel_Wing,Archangel Wings,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,0,1,1,{},{},{}
 2574,Ur_Manteau,Ur's Manteau,4,20,,600,,20,,0,0x00000080,56,2,4,,100,1,0,{ bonus bMaxHPrate,2; bonus2 bSubEle,Ele_Neutral,10; },{},{}
 2575,Peuz_Manteau,Peuz's Manteau,4,20,,600,,16,,0,0x00000080,56,2,4,,100,1,0,{ bonus bFlee,10; bonus bCritical,10; },{},{}
-2576,Bravery_Bag,Adventurer's Backpack,4,0,,200,,20,,1,0xFFFFFFFF,63,2,4,,0,1,2,{ skill "BS_GREED",1; .@r = getrefine(); .@str = readparam(bStr); if(.@str>=90){ if(.@r>=7) bonus bBaseAtk,(.@r>=9)?30:20; } .@int = readparam(bInt); if(.@int>=90){ if(.@r>=7) bonus bMatk,(.@r>=9)?50:30; } .@vit = readparam(bVit); if(.@vit>=90){ if(.@r>=7) bonus2 bSubEle,Ele_Neutral,(.@r>=9)?15:10; } .@agi = readparam(bAgi); if(.@agi>=90){ if(.@r>=7) bonus bAspdRate,8; if(.@r>=9) bonus bAspd,1; } .@dex = readparam(bDex); if(.@dex>=90){ if(.@r>=7) bonus bLongAtkRate,(.@r>=9)?10:5; } .@luk = readparam(bLuk); if(.@luk>=90){ if(.@r>=7) bonus bCritAtkRate,(.@r>=9)?15:10; } },{},{}
+2576,Bravery_Bag,Adventurer's Backpack,4,0,,200,,20,,1,0xFFFFFFFF,63,2,4,,0,1,2,{ skill "BS_GREED",1; .@r = getrefine(); if(.@r>=7) { if(readparam(bStr)>=90) { bonus bBaseAtk,(.@r>=9)?30:20; } if(readparam(bInt)>=90) { bonus bMatk,(.@r>=9)?50:30; } if(readparam(bVit)>=90) { bonus2 bSubEle,Ele_Neutral,(.@r>=9)?10:5; } if(readparam(bAgi)>=90) { bonus bAspdRate,8; if(.@r>=9) { bonus bAspd,1; } } if(readparam(bDex)>=90) { bonus bLongAtkRate,(.@r>=9)?10:5; } if(readparam(bLuk)>=90) { bonus bCritAtkRate,(.@r>=9)?15:10; } } },{},{}
 2577,Sabah_Hood,Sapha Hood,4,20,,100,,13,,0,0x00001000,63,2,4,,100,1,0,{ bonus bFlee,12; bonus bCritical,getrefine(); },{},{}
 2578,Nab_Hood,Nab Hood,4,20,,100,,13,,0,0x00001000,63,2,4,,100,1,0,{ .@r = getrefine(); bonus bFlee,.@r*2; bonus bBaseAtk,.@r*2; },{},{}
 2579,Magic_Stole,Magic Stole,4,20,,700,,8,,1,0xFFFFFFFF,63,2,4,,0,1,0,{ bonus bMdef,3; bonus bUseSPrate,-5; bonus bMaxSPrate,((getrefine()>=4)?6:3); },{},{}
@@ -2118,7 +2118,7 @@
 2911,Bangungot_Tattoo,Bangungot Agimat Tattoo,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus bHealPower,4; bonus bHealPower2,7; },{},{}
 2912,Xylitol_2011,Xylitol 2011,4,20,,300,,0,,1,0xFFFFFFFF,63,2,136,,0,0,0,{},{},{}
 2913,Thief_Handcuff,Thief Handcuff,4,20,,1400,,0,,1,0xFFFFFFFF,63,2,136,,10,0,0,{ bonus bBaseAtk,5; },{},{}
-2914,Wizard_Left_Eye,Wizard Left Eye,4,20,,100,,1,,1,0x00CFDF80,63,2,136,,0,0,0,{ bonus bInt,4; bonus bMdef,3; bonus bCastrate,3; },{},{}
+2914,Wizard_Left_Eye,Wizard Left Eye,4,20,,100,,1,,1,0x00CFDF80,63,2,136,,0,0,0,{ bonus bInt,4; bonus bMdef,3; bonus bVariableCastrate,3; },{},{}
 2915,Ettlang_Keepsake,Ettlang Keepsake,4,20,,50,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bMdef,10; },{},{}
 2916,Fairy_Wing,Fairy Wing,4,0,,10,,0,,0,0xFFFFFFFF,63,2,136,,90,0,0,{ skill "ECLAGE_RECALL",1; },{},{}
 2917,Str_Glove,Str Glove,4,75000,,100,,0,,0,0xFFFFFFFF,63,2,136,,100,0,0,{ bonus bMaxHP,100; bonus bMaxSP,20; bonus bBaseAtk,(readparam(bStr)/10); if(readparam(bStr)>=110) bonus2 bAddClass,Class_All,1; },{},{}
