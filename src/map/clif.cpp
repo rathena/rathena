@@ -20466,24 +20466,14 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// The UI only offers these two buttons(items) for now
-	uint16 item_ids[] = {
-		ITEMID_ACTINIDIA_CAT_FRUIT,
-		ITEMID_WORLD_MOVING_RIGHTS
-	};
-
 	uint16 item_id = RFIFOW( fd, 2 + MAP_NAME_LENGTH_EXT );
 
-	int i;
-
-	ARR_FIND( 0, ARRAYLENGTH( item_ids ), i, item_ids[i] == item_id );
-
 	// Check if the item sent by the client is known to us
-	if( i == ARRAYLENGTH( item_ids ) ){
+	if( !itemdb_group_item_exists(IG_PRIVATE_AIRSHIP, item_id) ){
 		clif_private_airship_response( sd, PRIVATEAIRSHIP_ITEM_UNAVAILABLE );
 		return;
 	}
-	
+
 	int idx = pc_search_inventory( sd, item_id );
 
 	// Check if the player has the item at all
