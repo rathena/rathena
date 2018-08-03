@@ -5,8 +5,8 @@
 #define _MAP_HPP_
 
 #include <algorithm>
-#include <map>
 #include <stdarg.h>
+#include <unordered_map>
 #include <vector>
 
 #include "../common/cbasetypes.hpp"
@@ -230,22 +230,6 @@ enum e_mapid {
 #define CHAT_SIZE_MAX (255 + 1)
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
-
-/// Specifies maps where players may hit each other
-#define map_flag_vs(m) (map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG_DUNGEON) ||map_getmapflag(m, MF_GVG) || ((agit_flag || agit2_flag) && map_getmapflag(m, MF_GVG_CASTLE)) || map_getmapflag(m, MF_GVG_TE) || (agit3_flag && map_getmapflag(m, MF_GVG_TE_CASTLE)) || map_getmapflag(m, MF_BATTLEGROUND))
-/// Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
-#define map_flag_vs2(m) (map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG_DUNGEON) || map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_CASTLE) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_TE_CASTLE) || map_getmapflag(m, MF_BATTLEGROUND))
-/// Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map_getmapflag(m, MF_GVG) || ((agit_flag || agit2_flag) && map_getmapflag(m, MF_GVG_CASTLE)) || map_getmapflag(m, MF_GVG_TE) || (agit3_flag && map_getmapflag(m, MF_GVG_TE_CASTLE)))
-/// Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
-#define map_flag_gvg2(m) (map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_CASTLE) || map_getmapflag(m, MF_GVG_TE_CASTLE))
-/// No Kill Steal Protection
-#define map_flag_ks(m) (map_getmapflag(m, MF_TOWN) || map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_BATTLEGROUND))
-
-/// WOE:TE Maps (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_te(m) (map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_TE_CASTLE))
-/// Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_no_te(m) (map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_CASTLE))
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
@@ -735,7 +719,7 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::map<e_mapflag, int> flag;
+	std::unordered_map<e_mapflag, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -776,7 +760,7 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
 void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 
-extern std::map<int16, map_data> map;
+extern std::unordered_map<int16, map_data> map;
 
 extern int autosave_interval;
 extern int minsave_interval;
@@ -789,6 +773,14 @@ extern bool agit_flag;
 extern bool agit2_flag;
 extern bool agit3_flag;
 #define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
+
+extern inline bool map_flag_vs(int16 m);
+extern inline bool map_flag_vs2(int16 m);
+extern inline bool map_flag_gvg(int16 m);
+extern inline bool map_flag_gvg2(int16 m);
+extern inline bool map_flag_ks(int16 m);
+extern inline bool map_flag_gvg2_te(int16 m);
+extern inline bool map_flag_gvg2_no_te(int16 m);
 
 extern char motd_txt[];
 extern char help_txt[];

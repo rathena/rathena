@@ -7973,9 +7973,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if( map_getmapflag( sd->bl.m, MF_PVP_NIGHTMAREDROP ) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
 		for(int j=0;j<MAX_DROP_PER_MAP;j++){
-			int id = map_getmapdata(sd->bl.m)->drop_list[j].drop_id;
-			int per = map_getmapdata(sd->bl.m)->drop_list[j].drop_per;
-			enum e_nightmare_drop_type type = map_getmapdata(sd->bl.m)->drop_list[j].drop_type;
+			struct map_data *mapdata = map_getmapdata(sd->bl.m);
+			int id = mapdata->drop_list[j].drop_id;
+			int per = mapdata->drop_list[j].drop_per;
+			enum e_nightmare_drop_type type = mapdata->drop_list[j].drop_type;
 
 			if(id == 0)
 				continue;

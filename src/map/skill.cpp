@@ -693,6 +693,8 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
 		return false;
 
+	struct map_data *mapdata = map_getmapdata(m);
+
 	skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
 	if( (!map_flag_vs2(m) && skill_nocast&1) ||
@@ -700,7 +702,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		(map_flag_gvg2_no_te(m) && skill_nocast&4) ||
 		(map_getmapflag(m, MF_BATTLEGROUND) && skill_nocast&8) ||
 		(map_flag_gvg2_te(m) && skill_nocast&16) || // WOE:TE
-		(map_getmapflag(m, MF_RESTRICTED) && map_getmapdata(m)->zone && skill_nocast&(8*map_getmapdata(m)->zone)) ){
+		(map_getmapflag(m, MF_RESTRICTED) && mapdata->zone && skill_nocast&(8*mapdata->zone)) ){
 			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}

@@ -490,18 +490,16 @@ static void script_reportsrc(struct script_state *st)
 	if( bl == NULL )
 		return;
 
-	struct map_data *mapdata = map_getmapdata(bl->m);
-
 	switch( bl->type ) {
 		case BL_NPC:
 			if( bl->m >= 0 )
-				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, mapdata->name, bl->x, bl->y);
+				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map_mapid2mapname(bl->m), bl->x, bl->y);
 			else
 				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
 			break;
 		default:
 			if( bl->m >= 0 )
-				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), mapdata->name, bl->x, bl->y);
+				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), map_mapid2mapname(bl->m), bl->x, bl->y);
 			else
 				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(bl));
 			break;
@@ -8439,7 +8437,7 @@ BUILDIN_FUNC(strcharinfo)
 			}
 			break;
 		case 3:
-			script_pushconststr(st,map_getmapdata(sd->bl.m)->name);
+			script_pushconststr(st,map_mapid2mapname(sd->bl.m));
 			break;
 		default:
 			ShowWarning("buildin_strcharinfo: unknown parameter.\n");
@@ -8493,7 +8491,7 @@ BUILDIN_FUNC(strnpcinfo)
 			break;
 		case 4: // map name
 			if (nd->bl.m >= 0)
-				name = aStrdup(map_getmapdata(nd->bl.m)->name);
+				name = aStrdup(map_mapid2mapname(nd->bl.m));
 			break;
 	}
 
@@ -14933,7 +14931,7 @@ BUILDIN_FUNC(getmapxy)
 
 	x= bl->x;
 	y= bl->y;
-	safestrncpy(mapname, map_getmapdata(bl->m)->name, MAP_NAME_LENGTH);
+	safestrncpy(mapname, map_mapid2mapname(bl->m), MAP_NAME_LENGTH);
 
 	//Set MapName$
 	num=st->stack->stack_data[st->start+2].u.num;
@@ -19737,7 +19735,7 @@ BUILDIN_FUNC(instance_mapname)
 	if(!instance_id || (m = instance_mapname2mapid(str,instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
-		script_pushconststr(st, map_getmapdata(m)->name);
+		script_pushconststr(st, map_mapid2mapname(m));
 
 	return SCRIPT_CMD_SUCCESS;
 }

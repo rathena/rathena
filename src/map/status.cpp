@@ -113,7 +113,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map_getmapflag((m), MF_PVP) != 0, map_flag_gvg2_no_te((m)), map_getmapflag((m), MF_BATTLEGROUND) != 0, (map_getmapdata(m)->zone << 3) != 0, map_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map_getmapflag((m), MF_PVP) != 0, map_flag_gvg2_no_te((m)), map_getmapflag((m), MF_BATTLEGROUND) != 0, (map[m].zone << 3) != 0, map_flag_gvg2_te((m))) )
 
 /**
  * Returns the status change associated with a skill.

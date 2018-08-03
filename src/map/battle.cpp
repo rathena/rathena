@@ -7767,7 +7767,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			struct mob_data *md = BL_CAST(BL_MOB, t_bl);
 
-			if( !map_flag_gvg(m) && md->guardian_data && md->guardian_data->guild_id )
+			if( md->guardian_data && md->guardian_data->guild_id && !map_flag_gvg(m) )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
 			break;
 		}
@@ -7826,7 +7826,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						return 0; // You can't target anything out of your duel
 				}
 			}
-			if( map_flag_gvg(m) && !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM )
+			if( !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM && map_flag_gvg(m) )
 				return 0; //If you don't belong to a guild, can't target emperium.
 			if( t_bl->type != BL_PC )
 				state |= BCT_ENEMY; //Natural enemy.
@@ -7835,7 +7835,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			struct mob_data *md = BL_CAST(BL_MOB, s_bl);
-			if( !map_flag_gvg(m) && md->guardian_data && md->guardian_data->guild_id )
+			if( md->guardian_data && md->guardian_data->guild_id && !map_flag_gvg(m) )
 				return 0; // Disable guardians/emperium owned by Guilds on non-woe times.
 
 			if( !md->special_state.ai )
