@@ -2141,9 +2141,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		}
 
-		if (flag == 1 && sc->data[SC_CURSEDCIRCLE_TARGET] && skill_id == MO_ABSORBSPIRITS && battle_check_target(src, target, BCT_ENEMY) <= 0) // Absorb Spirits fails to go through on allies
-			return false;
-
 		if (skill_id != RK_REFRESH && skill_id != SU_GROOMING && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
