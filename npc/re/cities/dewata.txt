@@ -674,13 +674,13 @@ OnTouch:
 	next;
 	mes "[Sweet Wife]";
 	mes "Really? I'm that beautiful? I love you, honey~";
-	emotion ET_CHUPCHUP, getnpcid(0, "Sweet Married Couple#dew2");
+	emotion ET_CHUPCHUP, getnpcid(0, "Sweet Married Couple#2");
 	next;
 	mes "[Sweet Married Couple]";
 	mes "Hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
 	mes "Hohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohoho";
 	emotion ET_SMILE;
-	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#dew2");
+	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#2");
 	next;
 	mes "Come on now, I'm growing tired of this. Let's go.";
 	close;
