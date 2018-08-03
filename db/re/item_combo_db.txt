@@ -218,7 +218,7 @@
 2527:5467:13030,{ bonus2 bAddRace,RC_Dragon,25; }
 2527:13001,{ bonus2 bAddRace,RC_Dragon,5; }
 2527:13030,{ bonus2 bAddRace,RC_Dragon,5; }
-2584:5579,{ .@r = getequiprefinerycnt(EQI_GARMENT); .@bonus = max(getskilllv("TF_DOUBLE"),5); if(.@r>=5) { skill "TF_DOUBLE",1; bonus bDoubleRate,25; } else if(.@r>=7) { skill "TF_DOUBLE",.@bonus; bonus bDoubleRate,.@bonus*5; } }
+2584:5579,{ .@r = getequiprefinerycnt(EQI_GARMENT); if(.@r>=5) { skill "TF_DOUBLE",1; bonus bDoubleRate,25; } else if(.@r>=7) { .@bonus = max(getskilllv("TF_DOUBLE"),5); skill "TF_DOUBLE",.@bonus; bonus bDoubleRate,.@bonus*5; } }
 2597:28342,{ bonus bCritAtkRate,5; bonus bCritical,10; .@r = getequiprefinerycnt(EQI_GARMENT); if (.@r > 7) bonus bCritAtkRate,4; else if (.@r > 5) bonus bCritAtkRate,3; }
 //2598:Ramor Shield,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSubRace,RC_Undead,.@r; bonus2 bSubRace,RC_DemiHuman,.@r; }
 2607:2677,{ bonus2 bSkillAtk,"AL_HEAL",50; bonus2 bSkillAtk,"PR_MAGNUS",30; bonus bSPrecovRate,9; }

@@ -828,7 +828,7 @@
 1480,Gae_Bolg_,Gae Bolg,5,20,,2000,160,,3,2,0x00004082,63,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10; },{},{}
 1481,Zephyrus_,Zephyrus,5,20,,2000,170,,3,3,0x00004082,63,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Wind; bonus2 bAddEff,Eff_Silence,200; bonus3 bAutoSpell,"MG_THUNDERSTORM",3,100; },{},{}
 1482,BF_Lance1,Assaulter Lance,5,20,,0,160,,3,0,0x00004082,63,2,34,3,80,1,5,{ bonus bStr,2; bonus2 bAddRace,RC_DemiHuman,25; bonus2 bAddRace,RC_Player,25; bonus bIgnoreDefRace,RC_DemiHuman; bonus bIgnoreDefRace,RC_Player; bonus bUnbreakableWeapon; },{},{}
-1483,Ivory_Lance,Ivory Lance,5,20,,1000,160,,3,1,0x00004082,18,2,34,3,50,1,5,{ bonus bAgi,2; bonus bAspdRate,3; bonus2 bAddEff,Eff_Bleeding,300; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,30; bonus3 bAutoSpell,"NPC_WIDEBLEEDING",1,30; skill "KN_SPEARSTAB",5; },{},{}
+1483,Ivory_Lance,Ivory Lance,5,20,,1000,160,,3,1,0x00004082,18,2,34,3,50,1,5,{ bonus bAgi,2; bonus bAspdRate,3; bonus2 bAddEff,Eff_Bleeding,300; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,30; skill "KN_SPEARSTAB",5; },{},{}
 1484,Cardo,Cardo,5,20,,5600,150,,3,1,0x00000080,18,2,34,4,70,1,5,{ bonus bAspdRate,-10; bonus bDef,getrefine()/2; },{},{}
 1485,Battle_Fork,Battle Fork,5,20,,700,112,,3,4,0x00004082,18,2,34,2,50,1,5,{},{},{}
 1486,Krieger_Twohand_Spear1,Glorious Lance,5,20,,0,220,,3,0,0x00004082,63,2,34,4,80,1,5,{ bonus2 bAddRace,RC_DemiHuman,70; bonus2 bAddRace,RC_Player,70; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,25; bonus2 bIgnoreDefRaceRate,RC_Player,25; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player,pow(min(14,.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player,5; } if(.@r>8) { if(BaseJob==Job_Knight) bonus4 bAutoSpellOnSkill,"KN_PIERCE","NPC_CRITICALWOUND",2,200; else if(BaseJob==Job_Crusader) bonus3 bAutoSpell,"PA_PRESSURE",5,200; } },{},{}
@@ -1325,7 +1325,7 @@
 2119,Improved_Arm_Guard,Advanced Arm Guard,4,40000,,150,,45,,0,0x02000000,63,2,32,,50,1,1,{ bonus bMdef,5; },{},{}
 2120,Improved_Arm_Guard_,Advanced Arm Guard,4,40000,,150,,45,,1,0x02000000,63,2,32,,50,1,1,{ bonus bMdef,5; },{},{}
 2121,Memorize_Book_,Memory Book,4,20,,1000,,25,,1,0x00810204,63,2,32,,0,1,5,{ bonus bInt,1; bonus bMdef,2; },{},{}
-2122,Platinum_Shield,Platinum Shield,4,20,,1200,,95,,0,0xFFFFFFFE,18,2,32,,68,1,4,{ bonus bMdef,5; bonus2 bSubSize,Size_Medium,15; bonus2 bSubSize,Size_Large,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",2,150,BF_MAGIC,0; },{},{}
+2122,Platinum_Shield,Platinum Shield,4,20,,1200,,95,,0,0xFFFFFFFE,18,2,32,,68,1,4,{ bonus bMdef,5; bonus2 bSubSize,Size_Medium,15; bonus2 bSubSize,Size_Large,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",7,150,BF_MAGIC,0; },{},{}
 2123,Orleans_Server,Orleans's Server,4,20,,1000,,75,,1,0xFFFFFFFE,18,2,32,,55,1,4,{ bonus bMdef,2; bonus bMagicDamageReturn,5; },{},{}
 2124,Thorny_Buckler,Thorny Buckler,4,20,,1000,,85,,1,0xFFFFFFFE,18,2,32,,55,1,2,{ bonus bMdef,2; },{},{}
 2125,Strong_Shield,Strong Shield,4,20,,2500,,90,,1,0xFFFFFFFE,18,2,32,,75,1,4,{ bonus bNoKnockback; bonus2 bSubEle,Ele_Neutral,-20; bonus2 bSubEle,Ele_Fire,-20; bonus2 bSubEle,Ele_Water,-20; bonus2 bSubEle,Ele_Wind,-20; bonus2 bSubEle,Ele_Earth,-20; bonus2 bSubEle,Ele_Dark,-20; bonus2 bSubEle,Ele_Holy,-20; bonus2 bSubEle,Ele_Ghost,-20; },{},{}
@@ -1736,8 +1736,8 @@
 2528,Wool_Scarf,Wool Scarf,4,20,,500,,11,,1,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bMdef,4; },{},{}
 2529,Rider_Insignia,Rider Insignia,4,20,,500,,13,,0,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bAgi,2; },{},{}
 2530,Rider_Insignia_,Rider Insignia,4,20,,500,,13,,1,0xFFFFFFFE,18,2,4,,55,1,0,{ bonus bAgi,2; },{},{}
-2531,Ulfhedinn,Ulfhedinn,4,20,,700,,13,,1,0x000654E2,18,2,4,,70,1,0,{ bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",1,20; },{},{}
-2532,Mithril_Magic_Cape,Mithril Magic Cape,4,20,,400,,8,,1,0x00098B1C,18,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",1,200,BF_MAGIC,0; },{},{}
+2531,Ulfhedinn,Ulfhedinn,4,20,,700,,13,,1,0x000654E2,18,2,4,,70,1,0,{ bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",6,20; },{},{}
+2532,Mithril_Magic_Cape,Mithril Magic Cape,4,20,,400,,8,,1,0x00098B1C,18,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",6,200,BF_MAGIC,0; },{},{}
 2533,Freyja_Cape,Freyja Cape,4,0,,200,,10,,0,0xFFFFFFFE,63,2,4,,0,0,0,{ bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15; },{},{}
 2534,Ruffler,Ruffler,4,20,,0,,10,,0,0xFFFFFFFF,63,2,4,,0,0,0,{ bonus2 bSubEle,Ele_Neutral,17; bonus bFlee,17; },{},{}
 2535,Cloak_Of_Survival_C,Cloak Of Survival,4,1,,0,,5,,0,0x00810204,63,2,4,,0,0,0,{ bonus bVit,10; bonus bMdef,10; },{},{}
