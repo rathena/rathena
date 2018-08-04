@@ -701,7 +701,7 @@ OnTouch:
 	next;
 	mes "[Sweet Husband]";
 	mes "No matter how pretty the flower is, you are always more beautiful~";
-	emotion ET_CHUP, getnpcid(0, "Sweet Married Couple#dew1");
+	emotion ET_CHUP, getnpcid(0, "Sweet Married Couple#1");
 	next;
 	mes "[Sweet Wife]";
 	mes "Really? I'm that pretty? I love you, sweetie~";
@@ -710,7 +710,7 @@ OnTouch:
 	mes "[Sweet Married Couple]";
 	mes "Hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
 	mes "Hohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohoho";
-	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#dew1");
+	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#1");
 	emotion ET_SMILE;
 	next;
 	mes "Come on now, this bores me. Let's move on.";
