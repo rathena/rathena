@@ -6,18 +6,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/showmsg.h"
-#include "../common/sql.h"
-#include "../common/utils.h"
-#include "../common/strlib.h"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "inter.hpp"
-#include "int_guild.hpp"
 #include "char.hpp"
 #include "char_clif.hpp"
 #include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_guild.hpp"
 
 //early declaration
 void chlogif_on_ready(void);
@@ -105,7 +105,7 @@ int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
  * @param data : data transmited for delayed function
  * @return 
  */
-int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
 		DBMap*  online_char_db = char_get_onlinedb();
 		// send account list to login server
@@ -134,8 +134,7 @@ void chlogif_send_usercount(int users){
 }
 
 
-int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(chlogif_broadcast_user_count){
 	uint8 buf[6];
 	int users = char_count_users();
 
@@ -349,7 +348,7 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		sd->group_id = RFIFOB(fd,50);
 		sd->char_slots = RFIFOB(fd,51);
 		if( sd->char_slots > MAX_CHARS ) {
-			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.h! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
+			ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.hpp! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
 			sd->char_slots = MAX_CHARS;/* cap to maximum */
 		} else if ( !sd->char_slots )/* no value aka 0 in sql */
 			sd->char_slots = MIN_CHARS;/* cap to minimum */
@@ -662,18 +661,17 @@ int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
 * HA 0x2720
 * Request account info to login-server
 */
-int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int u_group, int account_id, int8 type) {
+int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type) {
 	loginif_check(-1);
 	//ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
-	WFIFOHEAD(login_fd,23);
+	WFIFOHEAD(login_fd,19);
 	WFIFOW(login_fd,0) = 0x2720;
 	WFIFOL(login_fd,2) = fd;
 	WFIFOL(login_fd,6) = u_fd;
 	WFIFOL(login_fd,10) = u_aid;
-	WFIFOL(login_fd,14) = u_group;
-	WFIFOL(login_fd,18) = account_id;
-	WFIFOB(login_fd,22) = type;
-	WFIFOSET(login_fd,23);
+	WFIFOL(login_fd,14) = account_id;
+	WFIFOB(login_fd,18) = type;
+	WFIFOSET(login_fd,19);
 	return 1;
 }
 
@@ -686,16 +684,16 @@ int chlogif_parse_AccInfoAck(int fd) {
 		return 0;
 	else {
 		int8 type = RFIFOB(fd, 18);
-		if (type == 0 || RFIFOREST(fd) < 155+PINCODE_LENGTH+NAME_LENGTH) {
-			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+		if (type == 0 || RFIFOREST(fd) < 122+NAME_LENGTH) {
+			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL);
 			RFIFOSKIP(fd,19);
 			return 1;
 		}
 		type>>=1;
 		mapif_accinfo_ack(true, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), type, RFIFOL(fd,19), RFIFOL(fd,23), RFIFOL(fd,27),
 			RFIFOCP(fd,31), RFIFOCP(fd,71), RFIFOCP(fd,87), RFIFOCP(fd,111),
-			RFIFOCP(fd,122), RFIFOCP(fd,155), RFIFOCP(fd,155+PINCODE_LENGTH));
-		RFIFOSKIP(fd,155+PINCODE_LENGTH+NAME_LENGTH);
+			RFIFOCP(fd,122));
+		RFIFOSKIP(fd,122+NAME_LENGTH);
 	}
 	return 1;
 }
@@ -762,7 +760,7 @@ int chlogif_parse(int fd) {
 	return 0;
 }
 
-int chlogif_check_connect_logserver(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(chlogif_check_connect_logserver){
 	if (login_fd > 0 && session[login_fd] != NULL)
 		return 0;
 

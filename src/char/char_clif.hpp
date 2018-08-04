@@ -4,8 +4,8 @@
 #ifndef _CHAR_CLIF_HPP_
 #define _CHAR_CLIF_HPP_
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h" //time_t
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp" //time_t
 
 struct char_session_data;
 enum pincode_state : uint8;

@@ -1,24 +1,24 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "battleground.hpp"
 
-#include "../common/cbasetypes.h"
-#include "../common/timer.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "battle.hpp"
 #include "clif.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "mercenary.hpp"
+#include "mob.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "mercenary.hpp"
-#include "guild.hpp"
-#include "mob.hpp"
 
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id
@@ -261,8 +261,7 @@ int bg_send_xy_timer_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-int bg_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(bg_send_xy_timer){
 	bg_team_db->foreach(bg_team_db, bg_send_xy_timer_sub, tick);
 
 	return 0;

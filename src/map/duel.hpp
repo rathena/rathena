@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 #pragma once
 #ifndef _DUEL_HPP_
 #define _DUEL_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct duel {
 	int members_count;

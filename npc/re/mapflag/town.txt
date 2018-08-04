@@ -24,3 +24,4 @@ izlude_d	mapflag	town
 malangdo	mapflag	town
 malaya	mapflag	town
 mora	mapflag	town
+lasagna	mapflag	town

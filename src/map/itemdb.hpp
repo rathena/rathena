@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _ITEMDB_HPP_
 #define _ITEMDB_HPP_
 
-#include "../common/db.h"
-#include "../common/mmo.h" // ITEM_NAME_LENGTH
+#include "../common/db.hpp"
+#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
@@ -80,6 +80,7 @@ enum item_itemid
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_STRANGE_EMBRYO				= 6415,
+	ITEMID_ACTINIDIA_CAT_FRUIT			= 6909,
 	ITEMID_STONE						= 7049,
 	ITEMID_FIRE_BOTTLE					= 7135,
 	ITEMID_ACID_BOTTLE					= 7136,
@@ -120,6 +121,7 @@ enum item_itemid
 	ITEMID_WOB_RACHEL					= 14584,
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
+	ITEMID_WORLD_MOVING_RIGHTS			= 25464,
 };
 
 ///Rune Knight
@@ -714,7 +716,7 @@ enum e_random_item_group {
 	IG_COSTAMA_EGG29,
 	IG_INK_BALL,
 	IG_SOMETHING_CANDY_HOLDER,
-	IG_MYSTERIOUS_EGG,
+	IG_SHINING_EGG,
 	IG_AGUST_LUCKY_SCROLL,
 	IG_ELEMENT,
 	IG_POISON,
@@ -731,6 +733,7 @@ enum e_random_item_group {
 	IG_CHRISTMAS_BOX,
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
+	IG_PRIZEOFHERO,
 };
 
 /// Enum for bound/sell restricted selling

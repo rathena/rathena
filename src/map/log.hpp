@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _LOG_HPP_
 #define _LOG_HPP_
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 struct block_list;
 struct map_session_data;
@@ -49,6 +49,7 @@ enum e_log_pick_type : uint32
 	LOG_TYPE_ROULETTE         = 0x100000,
 	LOG_TYPE_MERGE_ITEM       = 0x200000,
 	LOG_TYPE_QUEST            = 0x400000,
+	LOG_TYPE_PRIVATE_AIRSHIP  = 0x800000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all
@@ -72,6 +73,7 @@ void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, 
 void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm);
 void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount);
 void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount );
+void log_npc( struct npc_data* nd, const char* message );
 void log_npc(struct map_session_data* sd, const char *message);
 void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
 void log_atcommand(struct map_session_data* sd, const char* message);
@@ -96,12 +98,5 @@ extern struct Log_Config
 	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64], log_cash[64];
 	char log_feeding[64];
 } log_config;
-
-#ifdef BETA_THREAD_TEST
-	struct {
-		char** entry;
-		int count;
-	} logThreadData;
-#endif
 
 #endif /* _LOG_HPP_ */
