@@ -8437,7 +8437,7 @@ BUILDIN_FUNC(strcharinfo)
 			}
 			break;
 		case 3:
-			script_pushconststr(st,map_mapid2mapname(sd->bl.m));
+			script_pushconststr(st,map_getmapdata(sd->bl.m)->name);
 			break;
 		default:
 			ShowWarning("buildin_strcharinfo: unknown parameter.\n");
@@ -8491,7 +8491,7 @@ BUILDIN_FUNC(strnpcinfo)
 			break;
 		case 4: // map name
 			if (nd->bl.m >= 0)
-				name = aStrdup(map_mapid2mapname(nd->bl.m));
+				name = aStrdup(map_getmapdata(nd->bl.m)->name);
 			break;
 	}
 
@@ -14931,7 +14931,7 @@ BUILDIN_FUNC(getmapxy)
 
 	x= bl->x;
 	y= bl->y;
-	safestrncpy(mapname, map_mapid2mapname(bl->m), MAP_NAME_LENGTH);
+	safestrncpy(mapname, map_getmapdata(bl->m)->name, MAP_NAME_LENGTH);
 
 	//Set MapName$
 	num=st->stack->stack_data[st->start+2].u.num;
@@ -19735,7 +19735,7 @@ BUILDIN_FUNC(instance_mapname)
 	if(!instance_id || (m = instance_mapname2mapid(str,instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
-		script_pushconststr(st, map_mapid2mapname(m));
+		script_pushconststr(st, map_getmapdata(m)->name);
 
 	return SCRIPT_CMD_SUCCESS;
 }

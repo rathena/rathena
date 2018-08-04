@@ -68,12 +68,10 @@ namespace rathena {
 		template <typename K, typename V> V* umap_find(std::unordered_map<K, V>& map, K key) {
 			auto it = map.find(key);
 
-			if (it != map.end()) {
+			if (it != map.end())
 				return &it->second;
-			}
-			else {
+			else
 				return nullptr;
-			}
 		}
 
 		/**

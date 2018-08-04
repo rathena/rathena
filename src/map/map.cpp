@@ -2619,13 +2619,13 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	}
 
 	// Copy the map
-	int16 dst_m = static_cast<int16>(map.size());
-	struct map_data *src_map = map_getmapdata(src_m);
+	int16 dst_m = ++instance_start;
+	struct map_data *src_map = &map[src_m];
 
 	map.insert({ dst_m, *src_map });
 
 	// Retrieve new map data
-	struct map_data *dst_map = map_getmapdata(dst_m);
+	struct map_data *dst_map = &map[dst_m];
 
 	strcpy(iname, name);
 
@@ -4564,7 +4564,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
-					ShowWarning("map_setmapflag: Unable to set PvP and GvG flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+					if (!battle_config.pk_mode)
+						ShowWarning("map_setmapflag: Unable to set PvP and GvG flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 				}
 				if (mapdata->flag[MF_BATTLEGROUND]) {
 					mapdata->flag[MF_BATTLEGROUND] = false;
@@ -4586,7 +4587,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				}
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
-					ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
+					if (!battle_config.pk_mode)
+						ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
 				}
 			}
 			mapdata->flag[mapflag] = status;
@@ -4594,7 +4596,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_GVG_DUNGEON:
 			if (status && mapdata->flag[MF_PVP]) {
 				mapdata->flag[MF_PVP] = false;
-				ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+				if (!battle_config.pk_mode)
+					ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 			}
 			mapdata->flag[mapflag] = status;
 			break;

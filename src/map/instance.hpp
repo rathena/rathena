@@ -13,6 +13,8 @@
 enum send_target : uint8;
 struct block_list;
 
+extern int16 instance_start;
+
 #define MAX_INSTANCE_DATA		300	// Essentially how many instances we can create, but instance creation is primarily decided by MAX_MAP_PER_SERVER
 #define MAX_MAP_PER_INSTANCE	255	// Max number of maps per instance (Enter map is counted as one) - Supports up to 255 maps
 

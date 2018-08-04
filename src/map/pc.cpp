@@ -12491,11 +12491,11 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 		return true;
 
 	if ((!map_flag_vs2(m) && job_info[idx].noenter_map.zone&1) || // Normal
-		(map_getmapflag(m, MF_PVP) && job_info[idx].noenter_map.zone&2) || // PVP
+		(mapdata->flag[MF_PVP] && job_info[idx].noenter_map.zone&2) || // PVP
 		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
-		(map_getmapflag(m, MF_BATTLEGROUND) && job_info[idx].noenter_map.zone&8) || // Battleground
+		(mapdata->flag[MF_BATTLEGROUND] && job_info[idx].noenter_map.zone&8) || // Battleground
 		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
-		(map_getmapflag(m, MF_RESTRICTED) && job_info[idx].noenter_map.zone&(8*mapdata->zone)) // Zone restriction
+		(mapdata->flag[MF_RESTRICTED] && job_info[idx].noenter_map.zone&(8*mapdata->zone)) // Zone restriction
 		)
 		return false;
 
