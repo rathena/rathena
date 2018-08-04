@@ -719,7 +719,7 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::unordered_map<e_mapflag, int, std::hash<e_mapflag>> flag;
+	std::unordered_map<int16, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
