@@ -568,9 +568,10 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	do {
 		struct status_change_entry *sce;
 		struct map_session_data *pl_sd; // Owner
+		struct map_data *mapdata = map_getmapdata(md->bl.m);
 		char output[128];
 		
-		if( map_getmapflag(md->bl.m, MF_ALLOWKS) || map_flag_ks(md->bl.m) )
+		if( mapdata->flag[MF_ALLOWKS] || mapdata_flag_ks(mapdata) )
 			return false; // Ignores GVG, PVP and AllowKS map flags
 
 		if( md->db->mexp || md->master_id )

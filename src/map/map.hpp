@@ -776,14 +776,12 @@ extern bool agit3_flag;
 
 /**
  * Specifies maps where players may hit each other
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool map_flag_vs(int16 m) {
-	if (m < 0)
+inline bool mapdata_flag_vs(struct map_data *mapdata) {
+	if (mapdata == nullptr)
 		return false;
-
-	struct map_data *mapdata = &map[m];
 
 	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
 		return true;
@@ -793,14 +791,12 @@ inline bool map_flag_vs(int16 m) {
 
 /**
  * Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool map_flag_vs2(int16 m) {
-	if (m < 0)
+inline bool mapdata_flag_vs2(struct map_data *mapdata) {
+	if (mapdata == nullptr)
 		return false;
-
-	struct map_data *mapdata = &map[m];
 
 	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND])
 		return true;
@@ -810,14 +806,12 @@ inline bool map_flag_vs2(int16 m) {
 
 /**
  * Specifies maps that have special GvG/WoE restrictions
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool map_flag_gvg(int16 m) {
-	if (m < 0)
+inline bool mapdata_flag_gvg(struct map_data *mapdata) {
+	if (mapdata == nullptr)
 		return false;
-
-	struct map_data *mapdata = &map[m];
 
 	if (mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
 		return true;
@@ -827,14 +821,12 @@ inline bool map_flag_gvg(int16 m) {
 
 /**
  * Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool map_flag_gvg2(int16 m) {
-	if (m < 0)
+inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
+	if (mapdata == nullptr)
 		return false;
-
-	struct map_data *mapdata = &map[m];
 
 	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE])
 		return true;
@@ -844,14 +836,12 @@ inline bool map_flag_gvg2(int16 m) {
 
 /**
  * No Kill Steal Protection
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool map_flag_ks(int16 m) {
-	if (m < 0)
+inline bool mapdata_flag_ks(struct map_data *mapdata) {
+	if (mapdata == nullptr)
 		return false;
-
-	struct map_data *mapdata = &map[m];
 
 	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND])
 		return true;
@@ -861,15 +851,13 @@ inline bool map_flag_ks(int16 m) {
 
 /**
  * WOE:TE Maps (regardless of agit_flag status)
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  * @author Cydh
  */
-inline bool map_flag_gvg2_te(int16 m) {
-	if (m < 0)
+inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
+	if (mapdata == nullptr)
 		return false;
-
-	struct map_data *mapdata = &map[m];
 
 	if (mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE])
 		return true;
@@ -879,20 +867,82 @@ inline bool map_flag_gvg2_te(int16 m) {
 
 /**
  * Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status)
- * @param m: Map ID
+ * @param mapdata: Map Data
  * @return True on success or false otherwise
  * @author Cydh
  */
+inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE])
+		return true;
+
+	return false;
+}
+
+/// Backwards compatibility
+inline bool map_flag_vs(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_vs(mapdata);
+}
+
+inline bool map_flag_vs2(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_vs2(mapdata);
+}
+
+inline bool map_flag_gvg(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg(mapdata);
+}
+
+inline bool map_flag_gvg2(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2(mapdata);
+}
+
+inline bool map_flag_ks(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_ks(mapdata);
+}
+
+inline bool map_flag_gvg2_te(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2_te(mapdata);
+}
+
 inline bool map_flag_gvg2_no_te(int16 m) {
 	if (m < 0)
 		return false;
 
 	struct map_data *mapdata = &map[m];
 
-	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE])
-		return true;
-
-	return false;
+	return mapdata_flag_gvg2_no_te(mapdata);
 }
 
 extern char motd_txt[];

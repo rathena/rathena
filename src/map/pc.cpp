@@ -12490,12 +12490,12 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 	if (!job_info[idx].noenter_map.zone || group_lv > job_info[idx].noenter_map.group_lv)
 		return true;
 
-	if ((!map_flag_vs2(m) && job_info[idx].noenter_map.zone&1) || // Normal
-		(mapdata->flag[MF_PVP] && job_info[idx].noenter_map.zone&2) || // PVP
-		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
-		(mapdata->flag[MF_BATTLEGROUND] && job_info[idx].noenter_map.zone&8) || // Battleground
-		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
-		(mapdata->flag[MF_RESTRICTED] && job_info[idx].noenter_map.zone&(8*mapdata->zone)) // Zone restriction
+	if ((job_info[idx].noenter_map.zone&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(job_info[idx].noenter_map.zone&2 && mapdata->flag[MF_PVP]) || // PVP
+		(job_info[idx].noenter_map.zone&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(job_info[idx].noenter_map.zone&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(job_info[idx].noenter_map.zone&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(job_info[idx].noenter_map.zone&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return false;
 
