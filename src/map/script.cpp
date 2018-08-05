@@ -11033,6 +11033,34 @@ BUILDIN_FUNC(getmapusers)
 	script_pushint(st,map_getmapdata(m)->users);
 	return SCRIPT_CMD_SUCCESS;
 }
+
+/*==========================================
+* getmapuserslist("mapname")
+* set '$@mapuserslist' global temporary array contaned the account ids of the players in the map
+*------------------------------------------*/
+BUILDIN_FUNC(getmapuserslist)
+{
+	struct block_list *bl;
+	struct map_data *mapdata;
+	int bsize, i, j = 0;
+	const char* m = script_getstr(st, 2);
+
+	if (map_mapname2mapid(m)< 0) {
+		ShowWarning("buildin_getmapuserslist: Unknown map '%s'.\n", m);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	mapdata = map_getmapdata(map_mapname2mapid(m));
+	bsize = mapdata->bxs * mapdata->bys;
+
+	for (i = 0; i < bsize; i++)
+		for (bl = mapdata->block[i]; bl != NULL; bl = bl->next)
+			if (bl->type == BL_PC)
+				mapreg_setreg(reference_uid(add_str("$@mapuserslist"), j++), bl->id);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  *------------------------------------------*/
 static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
@@ -24019,6 +24047,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getusers,"i"),
 	BUILDIN_DEF(getmapguildusers,"si"),
 	BUILDIN_DEF(getmapusers,"s"),
+	BUILDIN_DEF(getmapuserslist, "s"),
 	BUILDIN_DEF(getareausers,"siiii"),
 	BUILDIN_DEF(getareadropitem,"siiiiv"),
 	BUILDIN_DEF(enablenpc,"s"),

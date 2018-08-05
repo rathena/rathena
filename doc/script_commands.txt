@@ -3189,6 +3189,26 @@ This is used officially in PVP scripts to check whether a room is filled to capa
 
 ---------------------------------------
 
+*getmapuserslist("<map name>")
+
+This function will build '$@mapuserslist' global temporary array contained the accound id
+of users currently located on the specified map.
+
+Example:
+
+	// using the command on prontera map
+	getmapuserslist("prontera");
+
+	// It's a good idea to copy the global temporary variables
+	copyarray .@playersID[0], $@mapuserslist[0], getarraysize($@mapuserslist);
+
+	// list the players name in prontera
+	for (.@i = 0; .@i < getarraysize(.@playersID); .@i++)
+		mes (.@i +1) + ". ^0000FF" + rid2name(.@playersID[.@i]) + "^000000";
+	end;
+
+---------------------------------------
+
 *getareausers("<map name>",<x1>,<y1>,<x2>,<y2>)
 
 This function will return the count of connected characters which are located
