@@ -11036,7 +11036,7 @@ BUILDIN_FUNC(getmapusers)
 
 /*==========================================
 * getmapuserslist("mapname")
-* set '.@mapuserslist' array contaned the account ids of the players in the map
+* set '.@mapuserslist' array contained the account id of players in the map
 *------------------------------------------*/
 BUILDIN_FUNC(getmapuserslist)
 {
