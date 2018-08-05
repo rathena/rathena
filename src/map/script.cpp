@@ -11036,7 +11036,7 @@ BUILDIN_FUNC(getmapusers)
 
 /*==========================================
 * getmapuserslist("mapname")
-* set '$@mapuserslist' global temporary array contaned the account ids of the players in the map
+* set '.@mapuserslist' array contaned the account ids of the players in the map
 *------------------------------------------*/
 BUILDIN_FUNC(getmapuserslist)
 {
@@ -11056,7 +11056,7 @@ BUILDIN_FUNC(getmapuserslist)
 	for (i = 0; i < bsize; i++)
 		for (bl = mapdata->block[i]; bl != NULL; bl = bl->next)
 			if (bl->type == BL_PC)
-				mapreg_setreg(reference_uid(add_str("$@mapuserslist"), j++), bl->id);
+				setd_sub(st, NULL, ".@mapuserslist", j++, (void *)__64BPRTSIZE(bl->id), NULL);
 
 	return SCRIPT_CMD_SUCCESS;
 }
