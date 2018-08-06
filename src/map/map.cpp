@@ -3212,6 +3212,11 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat)
  *------------------------------------------*/
 static DBMap* iwall_db;
 
+bool map_iwall_exist(const char* wall_name)
+{
+	return strdb_exists(iwall_db, wall_name);
+}
+
 void map_iwall_nextxy(int16 x, int16 y, int8 dir, int pos, int16 *x1, int16 *y1)
 {
 	if( dir == 0 || dir == 4 )
