@@ -1215,7 +1215,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	TIMER_FUNC(npc_rr_secure_timeout_timer);
+	TIMER_FUNC(npc_secure_timeout_timer);
 #endif
 
 // @commands (script-based)

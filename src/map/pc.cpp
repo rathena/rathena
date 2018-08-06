@@ -7723,8 +7723,11 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 #ifdef SECURE_NPCTIMEOUT
 		sd->npc_idle_timer = INVALID_TIMER;
 #endif
-		clif_scriptclose(sd,sd->npc_id);
-		clif_scriptclear(sd,sd->npc_id); // [Ind/Hercules]
+		if (sd->st && sd->st->state == CLOSE) {
+			clif_scriptclose(sd, sd->npc_id);
+			clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
+			sd->st->state = END; // Force to end now
+		}
 		if(sd->st && sd->st->state == END ) {// free attached scripts that are waiting
 			script_free_state(sd->st);
 			sd->st = NULL;
