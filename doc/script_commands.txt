@@ -3166,42 +3166,68 @@ expires by the given <time_tick>:
 
 ---------------------------------------
 
-*getusers(<type>)
+*getunits(<type>{,<array_variable>})
+*getmapunits(<type>,<"map name">{,<array_variable>})
+*getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>})
 
-This function will return a number of users on a map or the whole server. What
-it returns is specified by Type.
+'getunits' function will return the number of objects of the type passed currently whole server.
 
-Type can be one of the following values, which control what will be returned:
+'getmapunits' function will return the number of objects of the type passed currently located on the specified
+map, This is used officially in PVP scripts to check whether a room is filled to capacity.
 
-    0 - Count of all characters on the map of the invoking character.
-    1 - Count of all characters in the entire server.
-    8 - Count of all characters on the map of the NPC the script is
-        running in.
+'getareaunits' function will return the number of objects of the type passed currently located
+within the specified area - an x1/y1-x2/y2 square on the specified map, This is useful for maps
+that are split into many buildings, such as all the "*_in" maps, due to all the shops and houses.
 
----------------------------------------
+Type is the type of object to search for:
 
-*getmapusers("<map name>"{,<type>})
+	UNITTYPE_PC   - Character object
+	UNITTYPE_NPC  - NPC object
+	UNITTYPE_MOB  - Monster object
+	UNITTYPE_PET  - Pet object
+	UNITTYPE_HOM  - Homunculus object
+	UNITTYPE_MER  - Mercenary object
+	UNITTYPE_ELEM - Elemental object
 
-This function will return the number of users currently located on the specified
-map.
+if array_variable is set
+	int array_variable will return GID List
+	string array_variable will return names List
 
-Type 1 would build .@getmapusers array that contained the accound id
-of users currently located on the specified map.
+Example 1:
+	// getting the players count and building a string array of the names.
+	.@num = getunits(UNITTYPE_PC,.@array$[0]);
 
-This is used officially in PVP scripts to check whether a room is filled to capacity.
+	mes "the number of Users Connected to the server is " + .@num + " .";
+	mes "list of Players names :";
+	freeloop(1);	// for if the list was to big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
 
----------------------------------------
+Example 2:
+	// getting the npc count in Prontera and building a string array of the names.
+	.@num = getmapunits(UNITTYPE_NPC,"prontera",.@array$[0]);
 
-*getareausers("<map name>",<x1>,<y1>,<x2>,<y2>{,<type>})
+	mes "the number of NPCs in Prontera is " + .@num + " .";
+	mes "list of NPCs name :";
+	freeloop(1);	// for if the list was to big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
 
-This function will return the count of connected characters which are located
-within the specified area - an x1/y1-x2/y2 square on the specified map.
+Example 3:
+	// getting the monster count in Prontera with specific coordinates and building a int array of the GIDs.
+	.@num = getareaunits(UNITTYPE_MOB,"prontera",154,186,159,182,.@array[0]);
 
-Type 1 would build .@getareausers array that contained the accound id
-of users currently located on the specified area.
-
-This is useful for maps that are split into many buildings, such as all the
-"*_in" maps, due to all the shops and houses.
+	mes "the number of Monsters in Prontera in that Coordinates is " + .@num + " .";
+	mes "list of Monsters GID :";
+	freeloop(1);	// for if the list was to big.
+	for(.@i=0;.@i<getarraysize(.@array);.@i++)
+		mes (.@i + 1) + " " + .@array[.@i];
+	freeloop(0);
+	end;
 
 ---------------------------------------
 \\
