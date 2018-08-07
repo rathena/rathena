@@ -5,6 +5,7 @@
 #define _CHAR_LOGIF_HPP_
 
 #include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
 
 struct char_session_data;
 
@@ -13,8 +14,8 @@ void chlogif_pincode_notifyLoginPinError( uint32 account_id );
 void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin );
 void chlogif_pincode_start(int fd, struct char_session_data* sd);
 #endif
-int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data);
-int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(chlogif_send_acc_tologin);
+TIMER_FUNC(chlogif_broadcast_user_count);
 void chlogif_send_usercount(int users);
 void chlogif_upd_global_accreg(uint32 account_id, uint32 char_id);
 void chlogif_prepsend_global_accreg(void);
@@ -44,7 +45,7 @@ int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type);
 int chlogif_parse(int fd);
 
 int chlogif_isconnected();
-int chlogif_check_connect_logserver(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(chlogif_check_connect_logserver);
 void do_init_chlogif(void);
 void chlogif_reset(void);
 void chlogif_check_shutdown(void);

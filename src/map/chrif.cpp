@@ -33,7 +33,7 @@
 #include "script.hpp" // script_config
 #include "storage.hpp"
 
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(check_connect_char_server);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -341,7 +341,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
 	// If the user is on a instance map, we have to fake his current position
-	if( map[sd->bl.m].instance_id ){
+	if( map_getmapdata(sd->bl.m)->instance_id ){
 		struct mmo_charstatus status;
 
 		// Copy the whole status
@@ -395,17 +395,18 @@ int chrif_connect(int fd) {
 
 // sends maps to char-server
 int chrif_sendmap(int fd) {
-	int i;
-
+	int i = 0, size = 4 + map.size() * 4;
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + instance_start * 4);
+	WFIFOHEAD(fd, size);
 	WFIFOW(fd,0) = 0x2afa;
-	for(i = 0; i < instance_start; i++)
-		WFIFOW(fd,4+i*4) = map[i].index;
-	WFIFOW(fd,2) = 4 + i * 4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOW(fd,2) = size;
+	for( auto& pair : map ){
+		WFIFOW(fd,4+i*4) = pair.second.index;
+		i++;
+	}
+	WFIFOSET(fd,size);
 
 	return 0;
 }
@@ -799,7 +800,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(auth_db_cleanup){
 	chrif_check(0);
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
@@ -1849,7 +1850,7 @@ int chrif_parse(int fd) {
 }
 
 // unused
-int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(send_usercount_tochar){
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,4);
@@ -1896,7 +1897,7 @@ int send_users_tochar(void) {
  * timerFunction
   * Chk the connection to char server, (if it down)
  *------------------------------------------*/
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(check_connect_char_server){
 	static int displayed = 0;
 	if ( char_fd <= 0 || session[char_fd] == NULL ) {
 		if ( !displayed ) {

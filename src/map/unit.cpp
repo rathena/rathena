@@ -46,8 +46,8 @@ const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will mov
 const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
 //early declaration
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
-static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(unit_attack_timer);
+static TIMER_FUNC(unit_walktoxy_timer);
 int unit_unattackable(struct block_list *bl);
 
 /**
@@ -101,13 +101,12 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if (ud->target_to && ud->chaserange>1) {
 		// Generally speaking, the walk path is already to an adjacent tile
 		// so we only need to shorten the path if the range is greater than 1.
-		uint8 dir;
 		// Trim the last part of the path to account for range,
 		// but always move at least one cell when requested to move.
 		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
 			ud->walkpath.path_len--;
-			dir = ud->walkpath.path[ud->walkpath.path_len];
-			if(dir&1)
+			enum directions dir = ud->walkpath.path[ud->walkpath.path_len];
+			if( direction_diagonal( dir ) )
 				i -= MOVE_COST*20; //When chasing, units will target a diamond-shaped area in range [Playtester]
 			else
 				i -= MOVE_COST;
@@ -126,7 +125,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
-	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
+	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
 		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
@@ -178,8 +177,7 @@ int* unit_get_masterteleport_timer(struct block_list *bl)
  * @param data: Data transferred from timer call
  * @return 0
  */
-int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_teleport_timer){
 	struct block_list *bl = map_id2bl(id);
 	int *mast_tid = unit_get_masterteleport_timer(bl);
 
@@ -252,8 +250,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl)
  * @param data: Not used
  * @return 1: Success 0: Fail (No valid bl)
  */
-int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_step_timer){
 	struct block_list *bl;
 	struct unit_data *ud;
 	int target_id;
@@ -320,12 +317,10 @@ int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param data: Data used in timer calls
  * @return 0 or unit_walktoxy_sub() or unit_walktoxy()
  */
-static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(unit_walktoxy_timer){
 	int i;
 	int x,y,dx,dy;
 	unsigned char icewall_walk_block;
-	uint8 dir;
 	struct block_list *bl;
 	struct unit_data *ud;
 	TBL_PC *sd=NULL;
@@ -359,17 +354,17 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	if(ud->walkpath.path[ud->walkpath.path_pos]>=8)
+	if(ud->walkpath.path[ud->walkpath.path_pos]>=DIR_MAX)
 		return 1;
 
 	x = bl->x;
 	y = bl->y;
 
-	dir = ud->walkpath.path[ud->walkpath.path_pos];
+	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
 	ud->dir = dir;
 
-	dx = dirx[(int)dir];
-	dy = diry[(int)dir];
+	dx = dirx[dir];
+	dy = diry[dir];
 
 	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
 	if(md && status_has_mode(&md->status,MD_STATUS_IMMUNE))
@@ -498,8 +493,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			ud->steptimer = INVALID_TIMER;
 		}
 		//Delay stepactions by half a step (so they are executed at full step)
-		if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-			i = status_get_speed(bl)*14/20;
+		if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
+			i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST/2;
 		else
 			i = status_get_speed(bl)/2;
 		ud->steptimer = add_timer(tick+i, unit_step_timer, bl->id, 0);
@@ -518,8 +513,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if(ud->walkpath.path_pos >= ud->walkpath.path_len)
 		i = -1;
-	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-		i = status_get_speed(bl)*14/10;
+	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
+		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
 
@@ -584,8 +579,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
  * @param data: Data used in timer calls
  * @return 1: Success 0: Fail (No valid bl)
  */
-int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_delay_walktoxy_timer){
 	struct block_list *bl = map_id2bl(id);
 
 	if (!bl || bl->prev == NULL)
@@ -604,8 +598,7 @@ int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param data: Data used in timer calls (target bl)
  * @return 1: Success 0: Fail (No valid bl or target)
  */
-int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_delay_walktobl_timer){
 	struct block_list *bl = map_id2bl(id), *tbl = map_id2bl(data);
 
 	if(!bl || bl->prev == NULL || tbl == NULL)
@@ -729,8 +722,7 @@ static inline void set_mobstate(struct block_list* bl, int flag)
  * @param data: Data passed through timer function (target)
  * @return 0
  */
-static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(unit_walktobl_sub){
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):NULL;
 
@@ -1144,7 +1136,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
-		&& (map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)
+		&& (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
 		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
 
@@ -1210,14 +1202,14 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 
 	switch (bl->type) {
 		case BL_MOB:
-			if (map[bl->m].flag.monster_noteleport && ((TBL_MOB*)bl)->master_id == 0)
+			if (map_getmapflag(bl->m, MF_MONSTER_NOTELEPORT) && ((TBL_MOB*)bl)->master_id == 0)
 				return 1;
 
-			if (m != bl->m && map[m].flag.nobranch && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
+			if (m != bl->m && map_getmapflag(m, MF_NOBRANCH) && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
 				return 1;
 			break;
 		case BL_PC:
-			if (map[bl->m].flag.noteleport)
+			if (map_getmapflag(bl->m, MF_NOTELEPORT))
 				return 1;
 			break;
 	}
@@ -1426,8 +1418,7 @@ int unit_can_move(struct block_list *bl) {
  * @param data: Data passed through timer function (unit_data)
  * @return 0
  */
-int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(unit_resume_running){
 	struct unit_data *ud = (struct unit_data *)data;
 	TBL_PC *sd = map_id2sd(id);
 
@@ -2675,8 +2666,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
  * @param data: Data passed from timer call
  * @return 0
  */
-static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(unit_attack_timer){
 	struct block_list *bl;
 
 	bl = map_id2bl(id);
@@ -2714,7 +2704,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND)))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 

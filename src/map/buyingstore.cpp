@@ -78,7 +78,7 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map[sd->bl.m].flag.novending )
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -146,7 +146,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return 2;
 	}
 
-	if( map[sd->bl.m].flag.novending )
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -232,7 +232,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `limit`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d, '%d', '%d', '%d' );",
-		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map[sd->bl.m].name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
+		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map_getmapdata(sd->bl.m)->name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 

@@ -72,7 +72,6 @@ struct instance_db {
 	uint8 maplist_count; ///< Number of used maps
 };
 
-extern int instance_start;
 extern struct instance_data instance_data[MAX_INSTANCE_DATA];
 
 struct instance_db *instance_searchtype_db(unsigned short instance_id);

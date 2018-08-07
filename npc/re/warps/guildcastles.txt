@@ -61,7 +61,8 @@ te_alde_gld,225,188,0	warp	to_luina	1,1,alde_gld,228,185
 // te_prt_gld
 /*
 te_prt_gld,159,298,0	warp	prtg01_NorthField	1,1,prt_fild01,199,30
-te_prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178
+// te_prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178
+te_prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_cas,82,171
 */
 
 -	script	warp_TE_castle	-1,{

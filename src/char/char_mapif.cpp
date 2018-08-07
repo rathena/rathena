@@ -239,29 +239,27 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_getmapname(int fd, int id){
-	int i = 0, j = 0;
+	int i = 0;
 	unsigned char *mapbuf;
 
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 
 	//Retain what map-index that map-serv contains
-	memset(map_server[id].map, 0, sizeof(map_server[id].map));
-	for(i = 4; i < RFIFOW(fd,2); i += 4) {
-		map_server[id].map[j] = RFIFOW(fd,i);
-		j++;
-	}
+	map_server[id].map = {};
+	for(i = 4; i < RFIFOW(fd,2); i += 4)
+		map_server[id].map.push_back(RFIFOW(fd, i));
 
 	mapbuf = RFIFOP(fd,4);
 	RFIFOSKIP(fd,RFIFOW(fd,2));
 
 	ShowStatus("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
-				id, j, CONVIP(map_server[id].ip), map_server[id].port);
+				id, map_server[id].map.size(), CONVIP(map_server[id].ip), map_server[id].port);
 	ShowStatus("Map-server %d loading complete.\n", id);
 
 	chmapif_send_misc(fd);
 	chmapif_send_fame_list(fd); //Send fame list.
-	chmapif_send_maps(fd, id, j, mapbuf);
+	chmapif_send_maps(fd, id, map_server[id].map.size(), mapbuf);
 
 	return 1;
 }
@@ -1515,7 +1513,7 @@ void do_init_chmapif(void){
  * @param id: id of map-serv (should be >0, FIXME)
  */
 void chmapif_server_reset(int id){
-	int i,j;
+	int j = 0;
 	unsigned char buf[16384];
 	int fd = map_server[id].fd;
 	DBMap* online_char_db = char_get_onlinedb();
@@ -1524,8 +1522,7 @@ void chmapif_server_reset(int id){
 	WBUFW(buf,0) = 0x2b20;
 	WBUFL(buf,4) = htonl(map_server[id].ip);
 	WBUFW(buf,8) = htons(map_server[id].port);
-	j = 0;
-	for(i = 0; i < MAX_MAP_PER_SERVER; i++)
+	for(uint16 i = 0; i < map_server[id].map.size(); i++)
 		if (map_server[id].map[i])
 			WBUFW(buf,10+(j++)*4) = map_server[id].map[i];
 	if (j > 0) {

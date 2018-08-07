@@ -869,8 +869,7 @@ void clif_clearunit_area(struct block_list* bl, clr_type type)
 /// Used to make monsters with player-sprites disappear after dying
 /// like normal monsters, because the client does not remove those
 /// automatically.
-static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(clif_clearunit_delayed_sub){
 	struct block_list *bl = (struct block_list *)data;
 	clif_clearunit_area(bl, (clr_type) id);
 	ers_free(delay_clearunit_ers,bl);
@@ -1121,7 +1120,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1264,7 +1263,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
 	} else {
@@ -1362,30 +1361,30 @@ static void clif_weather_check(struct map_session_data *sd)
 	int16 m = sd->bl.m;
 	int fd = sd->fd;
 
-	if (map[m].flag.snow
-		|| map[m].flag.clouds
-		|| map[m].flag.fog
-		|| map[m].flag.fireworks
-		|| map[m].flag.sakura
-		|| map[m].flag.leaves
-		|| map[m].flag.clouds2)
+	if (map_getmapflag(m, MF_SNOW)
+		|| map_getmapflag(m, MF_CLOUDS)
+		|| map_getmapflag(m, MF_FOG)
+		|| map_getmapflag(m, MF_FIREWORKS)
+		|| map_getmapflag(m, MF_SAKURA)
+		|| map_getmapflag(m, MF_LEAVES)
+		|| map_getmapflag(m, MF_CLOUDS2))
 	{
-		if (map[m].flag.snow)
+		if (map_getmapflag(m, MF_SNOW))
 			clif_specialeffect_single(&sd->bl, EF_SNOW, fd);
-		if (map[m].flag.clouds)
+		if (map_getmapflag(m, MF_CLOUDS))
 			clif_specialeffect_single(&sd->bl, EF_CLOUD3, fd);
-		if (map[m].flag.clouds2)
+		if (map_getmapflag(m, MF_CLOUDS2))
 			clif_specialeffect_single(&sd->bl, EF_CLOUD5, fd);
-		if (map[m].flag.fog)
+		if (map_getmapflag(m, MF_FOG))
 			clif_specialeffect_single(&sd->bl, EF_CLOUD4, fd);
-		if (map[m].flag.fireworks) {
+		if (map_getmapflag(m, MF_FIREWORKS)) {
 			clif_specialeffect_single(&sd->bl, EF_POKJUK, fd);
 			clif_specialeffect_single(&sd->bl, EF_THROWITEM2, fd);
 			clif_specialeffect_single(&sd->bl, EF_POKJUK_SOUND, fd);
 		}
-		if (map[m].flag.sakura)
+		if (map_getmapflag(m, MF_SAKURA))
 			clif_specialeffect_single(&sd->bl, EF_SAKURA, fd);
-		if (map[m].flag.leaves)
+		if (map_getmapflag(m, MF_LEAVES))
 			clif_specialeffect_single(&sd->bl, EF_MAPLE, fd);
 	}
 }
@@ -1446,7 +1445,7 @@ int clif_spawn(struct block_list *bl)
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(bl,EF_BABYBODY2,AREA);
-			if( sd->bg_id && map[sd->bl.m].flag.battleground )
+			if( sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_area(sd);
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 				clif_spiritcharm(sd);
@@ -1807,8 +1806,7 @@ void clif_move(struct unit_data *ud)
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
  *------------------------------------------*/
-static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(clif_delayquit){
 	struct map_session_data *sd = NULL;
 
 	//Remove player from map server
@@ -3406,7 +3404,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 			}
 			break;
 		case SP_HP:
-			if( map[sd->bl.m].hpmeter_visible ){
+			if( map_getmapdata(sd->bl.m)->hpmeter_visible ){
 				clif_hpmeter(sd);
 			}
 			if( !battle_config.party_hp_mode && sd->status.party_id ){
@@ -4644,7 +4642,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if(tsd->state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
-			if( tsd->bg_id && map[tsd->bl.m].flag.battleground )
+			if( tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
@@ -4677,7 +4675,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 #if PACKETVER >= 20120404
-			if (battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar) {
+			if (battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR)) {
 				int i;
 				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 					if( md->dmglog[i].id == sd->status.char_id )
@@ -6345,17 +6343,17 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 	WBUFW(buf,2)=property;
 
 #if PACKETVER >= 20121010
-	WBUFL(buf,4) = ((map[bl->m].flag.pvp?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
-		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
-		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
-		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
-		((map[bl->m].flag.nolockon || map_flag_vs(bl->m)?1:0)<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
-		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
-		((map[bl->m].flag.partylock?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
-		((map[bl->m].flag.battleground?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
-		((map[bl->m].flag.nocostume?1:0)<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
-		((map[bl->m].flag.nousecart?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
-		((map[bl->m].flag.nosumstarmiracle?0:1)<<10); // SUNMOONSTAR_MIRACLE - Unknown - (Guessing it blocks Star Gladiator's Miracle from activating)
+	WBUFL(buf,4) = ((map_getmapflag(bl->m, MF_PVP)?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+		((map_getmapflag(bl->m, MF_BATTLEGROUND) || map_flag_gvg2(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
+		((map_getmapflag(bl->m, MF_BATTLEGROUND) || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
+		((map_getmapflag(bl->m, MF_NOMINEEFFECT) || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
+		((map_getmapflag(bl->m, MF_NOLOCKON) || map_flag_vs(bl->m)?1:0)<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
+		((map_getmapflag(bl->m, MF_PVP)?1:0)<<5)| // COUNT_PK - Show the PvP counter
+		((map_getmapflag(bl->m, MF_PARTYLOCK)?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
+		((map_getmapflag(bl->m, MF_BATTLEGROUND)?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
+		((map_getmapflag(bl->m, MF_NOCOSTUME)?1:0)<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
+		((map_getmapflag(bl->m, MF_NOUSECART)?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
+		((map_getmapflag(bl->m, MF_NOSUNMOONSTARMIRACLE)?0:1)<<10); // SUNMOONSTAR_MIRACLE - Blocks Star Gladiator's Miracle from activating
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
 #endif
 	
@@ -7706,6 +7704,22 @@ void clif_party_hp(struct map_session_data *sd)
 	WBUFL(buf,10) = sd->battle_status.max_hp;
 #endif
 	clif_send(buf,packet_len(cmd),&sd->bl,PARTY_AREA_WOS);
+}
+
+/// Notifies the party members of a character's death or revival.
+/// 0AB2 <GID>.L <dead>.B
+void clif_party_dead( struct map_session_data *sd ){
+#if PACKETVER >= 20170502
+	unsigned char buf[7];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf, 0) = 0xab2;
+	WBUFL(buf, 2) = sd->status.account_id;
+	WBUFB(buf, 6) = pc_isdead(sd);
+
+	clif_send(buf, packet_len(0xab2), &sd->bl, PARTY);
+#endif
 }
 
 /// Updates the job and level of a party member
@@ -9932,6 +9946,21 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 	WFIFOSET(fd, packet_len(0x7e6));
 }
 
+/// Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
+/// 09cd <msg id>.W <color>.L
+void clif_msg_color( struct map_session_data *sd, uint16 msg_id, uint32 color ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x9cd));
+	WFIFOW(fd, 0) = 0x9cd;
+	WFIFOW(fd, 2) = msg_id;
+	WFIFOL(fd, 4) = color;
+
+	WFIFOSET(fd, packet_len(0x9cd));
+}
+
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
 /// Returns true if the packet was parsed successfully.
 /// Formats: false - <packet id>.w <packet len>.w (<name> : <message>).?B 00
@@ -10075,7 +10104,7 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 inline void clif_pk_mode_message(struct map_session_data * sd)
 {
 	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
-		sd && map[sd->bl.m].flag.pvp) {
+		sd && map_getmapflag(sd->bl.m, MF_PVP)) {
 		if( (int)sd->status.base_level < battle_config.pk_min_level ) {
 			char output[CHAT_SIZE_MAX];
 			// 1504: You've entered a PK Zone (safe until level %d).
@@ -10295,10 +10324,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
 	}
 
-	if( map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs )
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->bl.m);
 	if( !pc_isinvisible(sd) ) { // increment the number of pvp players on the map
-		map[sd->bl.m].users_pvp++;
+		mapdata->users_pvp++;
 	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
 
@@ -10318,9 +10349,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->bg_id ) clif_bg_hp(sd); // BattleGround System
 
-	if(map[sd->bl.m].flag.pvp && !pc_isinvisible(sd)) {
+	if(map_getmapflag(sd->bl.m, MF_PVP) && !pc_isinvisible(sd)) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
-			if (!map[sd->bl.m].flag.pvp_nocalcrank)
+			if (!map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK))
 				sd->pvp_timer = add_timer(gettick()+200, pc_calc_pvprank_timer, sd->bl.id, 0);
 			sd->pvp_rank = 0;
 			sd->pvp_lastusers = 0;
@@ -10331,7 +10362,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	} else if(sd->duel_group) // set flag, if it's a duel [LuzZza]
 		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
-	else if (map[sd->bl.m].flag.gvg_dungeon)
+	else if (map_getmapflag(sd->bl.m, MF_GVG_DUNGEON))
 		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF); //TODO: Figure out the real packet to send here.
 	else if( map_flag_gvg(sd->bl.m) )
 		clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
@@ -10430,7 +10461,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if(hom_is_active(sd->hd))
 			hom_init_timers(sd->hd);
 
-		if (night_flag && map[sd->bl.m].flag.nightenabled) {
+		if (night_flag && map_getmapflag(sd->bl.m, MF_NIGHTENABLED)) {
 			sd->state.night = 1;
 			clif_status_load(&sd->bl, EFST_SKE, 1);
 		}
@@ -10486,11 +10517,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			guild_notice = false; // Do not display it twice
 		}
 
-		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
-			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
-			status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
+		if (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) {
+			if ((sd->state.pmap != 0 && map_getmapdata(sd->state.pmap) != nullptr && (map_flag_gvg(sd->state.pmap) || map_getmapflag(sd->state.pmap, MF_BATTLEGROUND))) || (mapdata != nullptr && (map_flag_gvg(sd->bl.m) || map_getmapflag(sd->bl.m, MF_BATTLEGROUND))))
+				status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
+		}
 
-		if( night_flag && map[sd->bl.m].flag.nightenabled )
+		if( night_flag && map_getmapflag(sd->bl.m, MF_NIGHTENABLED) )
 		{	//Display night.
 			if( !sd->state.night )
 			{
@@ -10504,14 +10536,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			clif_status_load(&sd->bl, EFST_SKE, 0);
 		}
 
-		if( map[sd->bl.m].flag.battleground )
+		if( map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
 		{
 			clif_map_type(sd, MAPTYPE_BATTLEFIELD); // Battleground Mode
-			if( map[sd->bl.m].flag.battleground == 2 )
+			if( map_getmapflag(sd->bl.m, MF_BATTLEGROUND) == 2 )
 				clif_bg_updatescore_single(sd);
 		}
 
-		if( map[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) )
+		if( map_getmapflag(sd->bl.m, MF_ALLOWKS) && !map_flag_ks(sd->bl.m) )
 		{
 			char output[128];
 			sprintf(output, "[ Kill Steal Protection Disable. KS is allowed in this map ]");
@@ -10519,7 +10551,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		}
 
 		if( pc_has_permission(sd,PC_PERM_VIEW_HPMETER) ) {
-			map[sd->bl.m].hpmeter_visible++;
+			mapdata->hpmeter_visible++;
 			sd->state.hpmeter_visible = 1;
 		}
 
@@ -10531,7 +10563,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if (!sd->state.connect_new &&
 			!sd->vip.disableshowrate &&
 			sd->state.pmap != sd->bl.m &&
-			map[sd->state.pmap].adjust.bexp != map[sd->bl.m].adjust.bexp
+			map_getmapflag(sd->state.pmap, MF_BEXP) != map_getmapflag(sd->bl.m, MF_BEXP)
 			)
 		{
 			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
@@ -10540,7 +10572,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 
 		// Instances do not need their own channels
-		if( channel_config.map_tmpl.name[0] && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
+		if( channel_config.map_tmpl.name[0] && (channel_config.map_tmpl.opt&CHAN_OPT_AUTOJOIN) && !map_getmapflag(sd->bl.m,MF_NOMAPCHANNELAUTOJOIN) && !mapdata->instance_id )
 			channel_mjoin(sd); //join new map
 
 		clif_pk_mode_message(sd);
@@ -10566,7 +10598,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	// Don't trigger NPC event or opening vending/buyingstore will be failed
-	if(!sd->state.autotrade && map[sd->bl.m].flag.loadevent) // Lance
+	if(!sd->state.autotrade && map_getmapflag(sd->bl.m, MF_LOADEVENT)) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);
 
 	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd))
@@ -11529,14 +11561,14 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
+
+	if( pc_cant_act2(sd) || sd->npc_id || pc_hasprogress( sd, WIP_DISABLE_NPC ) ){
 #ifdef RENEWAL
-	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_NPC)) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 		return;
 	}
-#endif
-	if (pc_cant_act2(sd) || sd->npc_id)
-		return;
+
 	if( sd->state.mail_writing )
 		return;
 
@@ -12160,16 +12192,13 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if (battle_config.idletime_option&IDLE_USESKILLTOID)
 		sd->idletime = last_tick;
 
-	if (sd->npc_id) {
+	if( sd->npc_id ){
+		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag || !( inf & INF_SELF_SKILL ) ){
 #ifdef RENEWAL
-		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-			clif_msg(sd, WORK_IN_PROGRESS);
+			clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 			return;
 		}
-#else
-		if (!sd->npc_item_flag || !(inf&INF_SELF_SKILL))
-			return;
-#endif
 	}
 
 	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&
@@ -12257,12 +12286,12 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 		return;
 	}
 
+	if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
 #ifdef RENEWAL
-	if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg( sd, WORK_IN_PROGRESS );
+#endif
 		return;
 	}
-#endif
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USESKILLTOPOS)
@@ -12895,7 +12924,7 @@ void clif_parse_CreateParty(int fd, struct map_session_data *sd){
 	char* name = RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 	name[NAME_LENGTH-1] = '\0';
 
-	if( map[sd->bl.m].flag.partylock ) {// Party locked.
+	if( map_getmapflag(sd->bl.m, MF_PARTYLOCK) ) {// Party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -12915,7 +12944,7 @@ void clif_parse_CreateParty2(int fd, struct map_session_data *sd){
 	int item2 = RFIFOB(fd,info->pos[2]);
 	name[NAME_LENGTH-1] = '\0';
 
-	if( map[sd->bl.m].flag.partylock ) {// Party locked.
+	if( map_getmapflag(sd->bl.m, MF_PARTYLOCK) ) {// Party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -12934,7 +12963,7 @@ void clif_parse_PartyInvite(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *t_sd;
 
-	if(map[sd->bl.m].flag.partylock) {// Party locked.
+	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -12955,7 +12984,7 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd){
 	char *name = RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 	name[NAME_LENGTH-1] = '\0';
 
-	if(map[sd->bl.m].flag.partylock) {// Party locked.
+	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -12996,7 +13025,7 @@ void clif_parse_ReplyPartyInvite2(int fd,struct map_session_data *sd)
 /// 0100
 void clif_parse_LeaveParty(int fd, struct map_session_data *sd)
 {
-	if(map[sd->bl.m].flag.partylock) {// Party locked.
+	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -13009,7 +13038,7 @@ void clif_parse_LeaveParty(int fd, struct map_session_data *sd)
 void clif_parse_RemovePartyMember(int fd, struct map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	if(map[sd->bl.m].flag.partylock) {// Party locked.
+	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -13324,7 +13353,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 
 	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM )
 		return;
-	if( map[sd->bl.m].flag.novending ) {
+	if( map_getmapflag(sd->bl.m, MF_NOVENDING) ) {
 		clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return;
 	}
@@ -13347,7 +13376,7 @@ void clif_parse_CreateGuild(int fd,struct map_session_data *sd){
 	char* name = RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[1]);
 	name[NAME_LENGTH-1] = '\0';
 
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
+	if(map_getmapflag(sd->bl.m, MF_GUILDLOCK)) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
 	}
@@ -13573,7 +13602,7 @@ int clif_sub_guild_invite(int fd, struct map_session_data *sd, struct map_sessio
 	if (t_sd == NULL) // not online or does not exist
 		return 1;
 
-	if (map[sd->bl.m].flag.guildlock) {//Guild locked.
+	if (map_getmapflag(sd->bl.m, MF_GUILDLOCK)) {//Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return 1;
 	}
@@ -13631,7 +13660,7 @@ void clif_parse_GuildReplyInvite(int fd,struct map_session_data *sd){
 /// 0159 <guild id>.L <account id>.L <char id>.L <reason>.40B
 void clif_parse_GuildLeave(int fd,struct map_session_data *sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
+	if(map_getmapflag(sd->bl.m, MF_GUILDLOCK)) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
 	}
@@ -13651,7 +13680,7 @@ void clif_parse_GuildLeave(int fd,struct map_session_data *sd){
 /// 015b <guild id>.L <account id>.L <char id>.L <reason>.40B
 void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	if( map[sd->bl.m].flag.guildlock || sd->bg_id )
+	if( map_getmapflag(sd->bl.m, MF_GUILDLOCK) || sd->bg_id )
 	{ // Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
@@ -13688,7 +13717,7 @@ void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd)
 	if(!sd->state.gmaster_flag)
 		return;
 
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
+	if(map_getmapflag(sd->bl.m, MF_GUILDLOCK)) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
 	}
@@ -13730,7 +13759,7 @@ void clif_parse_GuildDelAlliance(int fd, struct map_session_data *sd){
 	if(!sd->state.gmaster_flag)
 		return;
 
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
+	if(map_getmapflag(sd->bl.m, MF_GUILDLOCK)) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
 	}
@@ -13749,7 +13778,7 @@ void clif_parse_GuildOpposition(int fd, struct map_session_data *sd)
 	if(!sd->state.gmaster_flag)
 		return;
 
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
+	if(map_getmapflag(sd->bl.m, MF_GUILDLOCK)) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
 	}
@@ -13773,7 +13802,7 @@ void clif_parse_GuildOpposition(int fd, struct map_session_data *sd)
 ///     field name and size is same as the one in CH_DELETE_CHAR.
 void clif_parse_GuildBreak(int fd, struct map_session_data *sd)
 {
-	if( map[sd->bl.m].flag.guildlock ) { //Guild locked.
+	if( map_getmapflag(sd->bl.m, MF_GUILDLOCK) ) { //Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
 		return;
 	}
@@ -17273,14 +17302,15 @@ void clif_bg_updatescore(int16 m)
 {
 	struct block_list bl;
 	unsigned char buf[6];
+	struct map_data *mapdata = map_getmapdata(m);
 
 	bl.id = 0;
 	bl.type = BL_NUL;
 	bl.m = m;
 
 	WBUFW(buf,0) = 0x2de;
-	WBUFW(buf,2) = map[m].bgscore_lion;
-	WBUFW(buf,4) = map[m].bgscore_eagle;
+	WBUFW(buf,2) = mapdata->bgscore_lion;
+	WBUFW(buf,4) = mapdata->bgscore_eagle;
 	clif_send(buf,packet_len(0x2de),&bl,ALL_SAMEMAP);
 }
 
@@ -17290,10 +17320,12 @@ void clif_bg_updatescore_single(struct map_session_data *sd)
 	nullpo_retv(sd);
 	fd = sd->fd;
 
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
 	WFIFOHEAD(fd,packet_len(0x2de));
 	WFIFOW(fd,0) = 0x2de;
-	WFIFOW(fd,2) = map[sd->bl.m].bgscore_lion;
-	WFIFOW(fd,4) = map[sd->bl.m].bgscore_eagle;
+	WFIFOW(fd,2) = mapdata->bgscore_lion;
+	WFIFOW(fd,4) = mapdata->bgscore_eagle;
 	WFIFOSET(fd,packet_len(0x2de));
 }
 
@@ -18774,7 +18806,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		 * Set for EXP
 		 */
 		//0:PCRoom
-		details_bexp[0] = map[sd->bl.m].adjust.bexp;
+		details_bexp[0] = map_getmapflag(sd->bl.m, MF_BEXP);
 		if (details_bexp[0] == 100 || !details_bexp[0])
 			details_bexp[0] = 0;
 		else {
@@ -20284,6 +20316,180 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 	safesnprintf( command, sizeof(command), "%cchangedress", atcommand_symbol );
 	
 	is_atcommand( fd, sd, command, 1 );
+#endif
+}
+
+/// Opens an UI window of the given type and initializes it with the given data
+/// 0AE2 <type>.B <data>.L
+void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xae2));
+	WFIFOW(fd,0) = 0xae2;
+	WFIFOB(fd,2) = ui_type;
+	WFIFOL(fd,3) = data;
+	WFIFOSET(fd,packet_len(0xae2));
+}
+
+/// Request to open an UI window of the given type
+/// 0A68 <type>.B
+void clif_parse_open_ui( int fd, struct map_session_data* sd ){
+	switch( RFIFOB(fd,2) ){
+		case IN_UI_ATTENDANCE:
+			if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
+				clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 791 ), false, SELF ); // You are not allowed to use the attendance system.
+			}else if( pc_attendance_enabled() ){
+				clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+			}else{
+				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
+			}
+			break;
+	}
+}
+
+/// Response for attedance request
+/// 0AF0 <unknown>.L <data>.L
+void clif_attendence_response( struct map_session_data *sd, int32 data ){
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xAF0));
+	WFIFOW(fd,0) = 0xAF0;
+	WFIFOL(fd,2) = 0;
+	WFIFOL(fd,6) = data;
+	WFIFOSET(fd,packet_len(0xAF0));
+}
+
+/// Request from the client to retrieve today's attendance reward
+/// 0AEF
+void clif_parse_attendance_request( int fd, struct map_session_data* sd ){
+	pc_attendance_claim_reward(sd);
+}
+
+/// Send out the percentage of weight that causes it to be displayed in red.
+/// 0ADE <percentage>.L
+void clif_weight_limit( struct map_session_data* sd ){
+#if PACKETVER >= 20171025
+	nullpo_retv(sd);
+
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xADE));
+	WFIFOW(fd, 0) = 0xADE;
+#ifdef RENEWAL
+	WFIFOL(fd, 2) = battle_config.natural_heal_weight_rate_renewal;
+#else
+	WFIFOL(fd, 2) = battle_config.natural_heal_weight_rate;
+#endif
+	WFIFOSET(fd, packet_len(0xADE));
+#endif
+}
+
+enum e_private_airship_response : uint32{
+	PRIVATEAIRSHIP_OK,
+	PRIVATEAIRSHIP_RETRY,
+	PRIVATEAIRSHIP_ITEM_NOT_ENOUGH,
+	PRIVATEAIRSHIP_DESTINATION_MAP_INVALID,
+	PRIVATEAIRSHIP_SOURCE_MAP_INVALID,
+	PRIVATEAIRSHIP_ITEM_UNAVAILABLE
+};
+
+/// Send out the response to a private airship request
+/// 0A4A <response>.L
+void clif_private_airship_response( struct map_session_data* sd, enum e_private_airship_response response ){
+#if PACKETVER >= 20180321
+	nullpo_retv( sd );
+
+	int fd = sd->fd;
+
+	WFIFOHEAD( fd, packet_len( 0xA4A ) );
+	WFIFOW( fd, 0 ) = 0xA4A;
+	WFIFOL( fd, 2 ) = response;
+	WFIFOSET( fd, packet_len( 0xA4A ) );
+#endif
+}
+
+/// Parses a request for a private airship
+/// 0A49 <mapname>.16B <itemid>.W
+void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20180321
+	// Check if the feature is enabled
+	if( !battle_config.feature_privateairship ){
+		clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 792 ), false, SELF ); // The private airship system is disabled.
+		return;
+	}
+
+	// Check if the player is allowed to warp from the source map
+	if( !map_getmapflag( sd->bl.m, MF_PRIVATEAIRSHIP_SOURCE ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_SOURCE_MAP_INVALID );
+		return;
+	}
+
+	char mapname[MAP_NAME_LENGTH_EXT];
+
+	safestrncpy( mapname, RFIFOCP( fd, 2 ), MAP_NAME_LENGTH_EXT );
+
+	int16 mapindex = mapindex_name2id( mapname );
+
+	// Check if we know the mapname
+	if( mapindex < 0 ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_DESTINATION_MAP_INVALID );
+		return;
+	}
+
+	int16 mapid = map_mapindex2mapid( mapindex );
+
+	// Check if the map is available on this server
+	if( mapid < 0 ){
+		// TODO: add multi map-server support, cant validate the mapflags of the other server
+		return;
+	}
+
+	// Check if the player tried to warp to the map he is on
+	if( sd->bl.m == mapid ){
+		// This is blocked by the client, but just to be sure
+		return;
+	}
+
+	// This can only be a hack, so we prevent it
+	if( map_getmapdata( mapid )->instance_id ){
+		// Ignore requests to warp directly into a running instance
+		return;
+	}
+
+	// Check if the player is allowed to warp to the target map
+	if( !map_getmapflag( mapid, MF_PRIVATEAIRSHIP_DESTINATION ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_DESTINATION_MAP_INVALID );
+		return;
+	}
+
+	uint16 item_id = RFIFOW( fd, 2 + MAP_NAME_LENGTH_EXT );
+
+	// Check if the item sent by the client is known to us
+	if( !itemdb_group_item_exists(IG_PRIVATE_AIRSHIP, item_id) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_ITEM_UNAVAILABLE );
+		return;
+	}
+
+	int idx = pc_search_inventory( sd, item_id );
+
+	// Check if the player has the item at all
+	if( idx < 0 ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_ITEM_NOT_ENOUGH );
+		return;
+	}
+
+	// Delete the chosen item
+	if( pc_delitem( sd, idx, 1, 0, 0, LOG_TYPE_PRIVATE_AIRSHIP ) ){
+		clif_private_airship_response( sd, PRIVATEAIRSHIP_RETRY );
+		return;
+	}
+
+	// Warp the player to a random spot on the destination map
+	pc_setpos( sd, mapindex, 0, 0, CLR_TELEPORT );
 #endif
 }
 

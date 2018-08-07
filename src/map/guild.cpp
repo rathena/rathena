@@ -60,8 +60,8 @@ struct s_guild_skill_tree {
 	}need[MAX_GUILD_SKILL_REQUIRE];
 } guild_skill_tree[MAX_GUILDSKILL];
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data);
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(guild_payexp_timer);
+static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
 struct npc_data **guild_flags;
@@ -309,7 +309,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(guild_payexp_timer){
 	guild_expcache_db->clear(guild_expcache_db,guild_payexp_timer_sub);
 	return 0;
 }
@@ -341,7 +341,7 @@ int guild_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
 }
 
 //Code from party_send_xy_timer [Skotlex]
-static int guild_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(guild_send_xy_timer){
 	guild_db->foreach(guild_db,guild_send_xy_timer_sub,tick);
 	return 0;
 }
@@ -879,11 +879,11 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		sd->guild_emblem_id = 0;
 
 		if (g->instance_id) {
-			int16 m = sd->bl.m;
+			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if (map[m].instance_id) { // User was on the instance map
-				if (map[m].save.map)
-					pc_setpos(sd, map[m].save.map, map[m].save.x, map[m].save.y, CLR_TELEPORT);
+			if (mapdata->instance_id) { // User was on the instance map
+				if (mapdata->save.map)
+					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
 				else
 					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 			}

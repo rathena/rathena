@@ -261,6 +261,7 @@ struct Battle_Config
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;
 	int natural_heal_weight_rate;
+	int natural_heal_weight_rate_renewal;
 	int arrow_decrement;
 	int max_aspd;
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
@@ -643,6 +644,8 @@ struct Battle_Config
 	int feature_homunculus_autofeed;
 	int summoner_trait;
 	int homunculus_autofeed_always;
+	int feature_attendance;
+	int feature_privateairship;
 
 #include "../custom/battle_config_struct.inc"
 };

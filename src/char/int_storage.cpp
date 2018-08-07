@@ -16,6 +16,7 @@
 
 #include "char.hpp"
 #include "inter.hpp"
+#include "int_guild.hpp"
 
 /**
  * Check if storage ID is valid
@@ -135,7 +136,7 @@ bool storage_fromsql(uint32 account_id, struct s_storage* p)
 bool guild_storage_tosql(int guild_id, struct s_storage* p)
 {
 	//ShowInfo("Guild Storage has been saved (GID: %d)\n", guild_id);
-	return char_memitemdata_to_sql(p->u.items_guild, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE, p->stor_id);
+	return char_memitemdata_to_sql(p->u.items_guild, inter_guild_storagemax(guild_id), guild_id, TABLE_GUILD_STORAGE, p->stor_id);
 }
 
 /**
@@ -146,7 +147,7 @@ bool guild_storage_tosql(int guild_id, struct s_storage* p)
  */
 bool guild_storage_fromsql(int guild_id, struct s_storage* p)
 {
-	return char_memitemdata_from_sql( p, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE, p->stor_id );
+	return char_memitemdata_from_sql( p, inter_guild_storagemax(guild_id), guild_id, TABLE_GUILD_STORAGE, p->stor_id );
 }
 
 void inter_storage_checkDB(void) {
