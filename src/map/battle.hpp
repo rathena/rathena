@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _BATTLE_HPP_
-#define _BATTLE_HPP_
+#ifndef BATTLE_HPP
+#define BATTLE_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
@@ -666,4 +666,4 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
  **/
 int battle_damage_area( struct block_list *bl, va_list ap);
 
-#endif /* _BATTLE_HPP_ */
+#endif /* BATTLE_HPP */

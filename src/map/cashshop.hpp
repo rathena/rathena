@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CASHSHOP_HPP_
-#define _CASHSHOP_HPP_
+#ifndef CASHSHOP_HPP
+#define CASHSHOP_HPP
 
 #include "../common/cbasetypes.hpp" // uint16, uint32
 #include "../common/timer.hpp" // ShowWarning, ShowStatus
@@ -95,4 +95,4 @@ bool sale_remove_item(uint16 nameid);
 void sale_notify_login( struct map_session_data* sd );
 #endif
 
-#endif /* _CASHSHOP_HPP_ */
+#endif /* CASHSHOP_HPP */

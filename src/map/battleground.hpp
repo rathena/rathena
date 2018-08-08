@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _BATTLEGROUND_HPP_
-#define _BATTLEGROUND_HPP_
+#ifndef BATTLEGROUND_HPP
+#define BATTLEGROUND_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp" // struct party
@@ -42,4 +42,4 @@ int bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
 int bg_member_respawn(struct map_session_data *sd);
 int bg_send_message(struct map_session_data *sd, const char *mes, int len);
 
-#endif /* _BATTLEGROUND_HPP_ */
+#endif /* BATTLEGROUND_HPP */

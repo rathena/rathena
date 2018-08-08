@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_GUILD_HPP_
-#define _INT_GUILD_HPP_
+#ifndef INT_GUILD_HPP
+#define INT_GUILD_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -37,4 +37,4 @@ int inter_guild_CharOnline(uint32 char_id, int guild_id);
 int inter_guild_CharOffline(uint32 char_id, int guild_id);
 uint16 inter_guild_storagemax(int guild_id);
 
-#endif /* _INT_GUILD_HPP_ */
+#endif /* INT_GUILD_HPP */

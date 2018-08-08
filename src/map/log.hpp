@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOG_HPP_
-#define _LOG_HPP_
+#ifndef LOG_HPP
+#define LOG_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -99,4 +99,4 @@ extern struct Log_Config
 	char log_feeding[64];
 } log_config;
 
-#endif /* _LOG_HPP_ */
+#endif /* LOG_HPP */

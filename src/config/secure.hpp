@@ -1,8 +1,8 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+	// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CONFIG_SECURE_HPP_
-#define _CONFIG_SECURE_HPP_
+#ifndef CONFIG_SECURE_HPP
+#define CONFIG_SECURE_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -47,4 +47,4 @@
  **/
 #define SECURE_NPCTIMEOUT_INTERVAL 1
 
-#endif // _CONFIG_SECURE_HPP_
+#endif /* CONFIG_SECURE_HPP */

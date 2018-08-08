@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _NPC_HPP_
-#define _NPC_HPP_
+#ifndef NPC_HPP
+#define NPC_HPP
 
 #include "../common/timer.hpp"
 
@@ -1223,4 +1223,4 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 
 bool npc_unloadfile( const char* path );
 
-#endif /* _NPC_HPP_ */
+#endif /* NPC_HPP */

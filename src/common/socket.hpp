@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_SOCKET_HPP_
-#define _SOCKET_HPP_
+#ifndef	SOCKET_HPP
+#define SOCKET_HPP
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -181,4 +181,4 @@ void send_shortlist_add_fd(int fd);
 void send_shortlist_do_sends();
 #endif
 
-#endif /* _SOCKET_HPP_ */
+#endif /* SOCKET_HPP */

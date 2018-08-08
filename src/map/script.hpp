@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SCRIPT_HPP_
-#define _SCRIPT_HPP_
+#ifndef SCRIPT_HPP
+#define SCRIPT_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -1983,4 +1983,4 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
-#endif /* _SCRIPT_HPP_ */
+#endif /* SCRIPT_HPP */

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UNIT_HPP_
-#define _UNIT_HPP_
+#ifndef UNIT_HPP
+#define UNIT_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp"
@@ -170,4 +170,4 @@ int unit_changetarget(struct block_list *bl,va_list ap);
 void do_init_unit(void);
 void do_final_unit(void);
 
-#endif /* _UNIT_HPP_ */
+#endif /* UNIT_HPP */

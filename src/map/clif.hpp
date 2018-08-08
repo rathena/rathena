@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_HPP_
-#define _CLIF_HPP_
+#ifndef CLIF_HPP
+#define CLIF_HPP
 
 #include <stdarg.h>
 
@@ -1091,4 +1091,4 @@ void clif_attendence_response( struct map_session_data *sd, int32 data );
 
 void clif_weight_limit( struct map_session_data* sd );
 
-#endif /* _CLIF_HPP_ */
+#endif /* CLIF_HPP */

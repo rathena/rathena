@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SCRIPT_CONSTANTS_HPP_
-#define _SCRIPT_CONSTANTS_HPP_
+#ifndef SCRIPT_CONSTANTS_HPP
+#define SCRIPT_CONSTANTS_HPP
 
 	#define export_constant(a) script_set_constant(#a,a,false,false)
 	#define export_constant2(a,b) script_set_constant(a,b,false,false)
@@ -7287,4 +7287,4 @@
 	#undef export_deprecated_constant
 	#undef export_deprecated_constant2
 
-#endif /* _SCRIPT_CONSTANTS_HPP_ */
+#endif /* SCRIPT_CONSTANTS_HPP */
