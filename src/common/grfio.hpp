@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	GRFIO_HPP
-#define	GRFIO_HPP
+#ifndef GRFIO_HPP
+#define GRFIO_HPP
 
 void grfio_init(const char* fname);
 void grfio_final(void);

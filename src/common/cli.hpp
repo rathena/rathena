@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #ifndef CLI_HPP
-#define	CLI_HPP
+#define CLI_HPP
 
 #include "cbasetypes.hpp"
 #include "timer.hpp"

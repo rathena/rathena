@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	TRADE_HPP
-#define	TRADE_HPP
+#ifndef TRADE_HPP
+#define TRADE_HPP
 
 struct map_session_data;
 

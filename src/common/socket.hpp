@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	SOCKET_HPP
+#ifndef SOCKET_HPP
 #define SOCKET_HPP
 
 #ifdef WIN32

@@ -57,4 +57,4 @@ void chmapif_server_reset(int id);
 void chmapif_on_disconnect(int id);
 void do_final_chmapif(void);
 
-#endif	/* CHAR_MAPIF_HPP */
+#endif /* CHAR_MAPIF_HPP */

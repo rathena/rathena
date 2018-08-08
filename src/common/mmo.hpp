@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	MMO_HPP
-#define	MMO_HPP
+#ifndef MMO_HPP
+#define MMO_HPP
 
 #include <time.h>
 

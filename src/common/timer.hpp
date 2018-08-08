@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	TIMER_HPP
-#define	TIMER_HPP
+#ifndef TIMER_HPP
+#define TIMER_HPP
 
 #include <time.h>
 

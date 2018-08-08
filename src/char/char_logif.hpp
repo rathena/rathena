@@ -55,4 +55,4 @@ void do_final_chlogif(void);
 
 #define loginif_check(a) { if(!chlogif_isconnected()) return a; }
 
-#endif	/* CHAR_LOGIF_HPP */
+#endif /* CHAR_LOGIF_HPP */

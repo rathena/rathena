@@ -53,4 +53,4 @@ void chclif_block_character( int fd, struct char_session_data* sd);
 
 int chclif_parse(int fd);
 
-#endif	/* CHAR_CLIF_HPP */
+#endif /* CHAR_CLIF_HPP */
