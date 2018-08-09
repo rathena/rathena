@@ -1,3 +1,9 @@
+//===== rAthena Script =======================================
+//= Rock Ridge npcs
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
 // enchant npc
 har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 	disable_items;

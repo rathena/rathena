@@ -1016,6 +1016,8 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 	if (rock_main_quest < 8)
 		end;
 	if (rock_main_quest == 8) {
+		.@player_name$ = strcharinfo(0);
+
 		mes "";// todo fix me
 		npctalk "You sneaky bastards, how dare you show up again? Go to hell!", "", bc_self;
 		sleep2 2000;
@@ -1025,7 +1027,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		mes "I told you I can take care of him.";
 		mes "You didn't have to come down here to talk to him.";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : But the negotiation isn't over.", bc_self;
+		unittalk getcharid(3), "" + .@player_name$ + " : But the negotiation isn't over.", bc_self;
 		mes "[Ivoka Skudi]";
 		mes "What negotiation?";
 		mes "Even his second-in-command has given up on him.";
@@ -1065,21 +1067,21 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		mes "Do I have no chance to get out of here?";
 		mes "Am I going to die here?";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Actually, you have.", bc_self;
-		mes "[" + strcharinfo(0) + "]";
+		unittalk getcharid(3), "" + .@player_name$ + " : Actually, you have.", bc_self;
+		mes "[" + .@player_name$ + "]";
 		mes "Alert wants us to pay him for the ores.";
 		mes "But we don't have to pay him if you tell us where they are.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Besides, we also want the mine back. We're not at all comfortable making a deal with him.";
 		mes "Johnny, if you help us, we could get the ores back without spending money.";
 		npctalk "You're right, Mr. Future Mayor. You're genius!", "Ivoka Skudi#har02", bc_self;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "And if you help us, we'll take care of Albert for you. He gets in our way to get the mine back, anyway.";
 		mes "What do you say?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Just so you know, this offer won't be on the table too long.";
 		mes "I hope you'll make the right decision.";
 		next;
@@ -1780,6 +1782,8 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 
 rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 	disable_items;
+	.@account_id = getcharid(3);
+	.@player_name$ = strcharinfo(0);
 	if (rock_main_quest == 13) {
 		mes "[Albert Ford]";
 		mes "Who the hell are you?";
@@ -1792,26 +1796,26 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		next;
 		switch( select( "You're right. I'm not here to negotiate.", "I'm here to tell you that Johnny is about to betray you." ) ) {
 		case 1:
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I'm telling you the truth.";
 			mes "I came to tell you what HQ has decided.";
 			mes "We've saved a lot of ores, enough not to miss the tiny amount you've stolen from us.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "We have no use for them, and you're stuck with them.";
 			next;
 			npctalk "What about the Boss?", "", bc_self;
-			unittalk getcharid(3), "" + strcharinfo(0) + " : You mean Johnny James?", bc_self;
-			mes "[" + strcharinfo(0) + "]";
+			unittalk .@account_id, "" + .@player_name$ + " : You mean Johnny James?", bc_self;
+			mes "[" + .@player_name$ + "]";
 			mes "We have no use for him, either.";
 			mes "But the Sheriff has always wanted him.";
 			mes "Soon he'll be tried in a court of law.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Besides Johnny has given up.";
 			mes "He thinks you've betrayed him since? You know? You ran without him.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "He even offered us to tell us where the ores are in exchange for his freedom.";
 			mes "But of course, we don't need his information.";
 			mes "I want you to know how cowardly your boss is.";
@@ -1822,49 +1826,49 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 			mes "The Boss has betrayed us?";
 			mes "Why would he do that?";
 			mes "Stop lying!";
-			unittalk getcharid(3), "" + strcharinfo(0) + " : Why do you think I'm lying?", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Why do you think I'm lying?", bc_self;
 			next;
 			mes "[Albert Ford]";
 			mes "I know Costello is still your mayor because I checked!";
 			mes "You lied in the last meeting that you'd be the new mayor!";
-			unittalk getcharid(3), "" + strcharinfo(0) + " : Ah, that.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : Ah, that.", bc_self;
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Well, I'm still from HQ.";
 			mes "I'm in charge of this case.";
 			mes "When I solve this case, I'll replace Costello as mayor.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Costello wants to leave.";
 			mes "He's here only because HQ is keeping him here.";
 			mes "Don't compare me to him.";
 			next;
 			npctalk "What do you mean, the Boss is about to betray us?", "", bc_self;
-			unittalk getcharid(3), "" + strcharinfo(0) + " : You mean Johnny James?", bc_self;
-			mes "[" + strcharinfo(0) + "]";
+			unittalk .@account_id, "" + .@player_name$ + " : You mean Johnny James?", bc_self;
+			mes "[" + .@player_name$ + "]";
 			mes "HQ has decided";
 			mes "that we've got enough ores without the ones you've stolen.";
 			mes "So...";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "We have no use for him, either.";
 			mes "But the Sheriff has always wanted him.";
 			mes "Soon he'll be tried in a court of law.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Besides Johnny has given up.";
 			mes "He thinks you've betrayed him since? You know? You ran without him.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "He even offered us to tell us where the ores are in exchange for his freedom.";
 			mes "Because he's made this offer official, we can't ignore it.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I want you to know how cowardly your boss is.";
 			break;
 		}
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "If we want the ores back, then we can always talk to Johnny";
 		mes "instead of dealing with you.";
 		next;
@@ -1883,7 +1887,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "...!";
 		mes "Did he tell you?";
 		mes "Did he really betray us?";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : How many times do I have to tell you?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : How many times do I have to tell you?", bc_self;
 		next;
 		mes "[Albert Ford]";
 		mes "We've been thinking about ways to rescue him,";
@@ -1897,36 +1901,36 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "You said you don't need them!";
 		next;
 		select("No, but they're necessary for punishing Johnny.");
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "I mean,";
 		mes "the company wants to milk the mine for everything it's worth,";
 		mes "and Johnny knows that. He's trying to use the ores as his get-out-of-jail-free card.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "But Sheriff Warp doesn't want that.";
 		mes "He wants Johnny to be hanged for all the world to see.";
 		mes "He doesn't want to let go of a criminal in exchange for a pile of ores.";
 		next;
 		select("Show him the ore.");
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "I've brought this in case you don't believe me.";
 		mes "Beautiful, isn't it?";
 		mes "We've discovered a new vein. Its location is secret.";
 		next;
 		npctalk "No... This means we've been staying here for nothing.", "", bc_self;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "You could have this dead pit for all we care.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Alright, let me rephrase that.";
 		mes "You could give up on Johnny and lead your gang yourself.";
 		mes "Once that coward Costello leaves for the mainland, I'll be the new mayor.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "If you're the leader of your gang, I'm willing to do business with you.";
 		mes "Think about your future.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "You want to share profits from this mine with us.";
 		mes "Johnny betrayed you first.";
 		mes "What is there to think about?";
@@ -1939,7 +1943,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "[Albert Ford]";
 		mes "I need time.";
 		sleep2 2000;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : We don't have time. Johnny will buy his way out of jail.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : We don't have time. Johnny will buy his way out of jail.", bc_self;
 		mes "...Alright, we're not going to worry about that traitor anymore.";
 		next;
 		mes "[Albert Ford]";
@@ -1952,7 +1956,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		select("Sorry, but can I have a lock of your mane?");
 		mes "[Albert Ford]";
 		mes "Why? What are you scheming?";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Sheriff Warp wants it as proof of our negotiation.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Sheriff Warp wants it as proof of our negotiation.", bc_self;
 		next;
 		mes "[Albert Ford]";
 		mes "That jerk of a sheriff,";
@@ -1988,7 +1992,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 	if (rock_main_quest == 20 && checkquest(7807,HUNTING) == 2) {
 		if (countitem(25278) < 5 || countitem(25283) < 5) {
 			mes "(I don't have enough Brown Mufflers and Bandit's Scarves to threaten Albert Ford with.)";
-			unittalk getcharid(3), "" + strcharinfo(0) + " : I was just passing by. I'll come back later.", bc_self;
+			unittalk .@account_id, "" + .@player_name$ + " : I was just passing by. I'll come back later.", bc_self;
 			next;
 			mes "[Albert Ford]";
 			mes "What? What is it?";
@@ -2013,23 +2017,23 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "Is Johnny free?";
 		next;
 		select("Huh? No.");
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Why would you think that?";
 		mes "He told us where the ores were, yes, but we haven't held up our end of the bargain yet.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "He gave up the location because he thought you were dead.";
 		mes "If he gets out and realizes you're still alive, you'll be in trouble, won't you?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Don't worry. Johnny can't evade the law.";
 		mes "Sheriff Warp is determined to hang him.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Oh, and I don't think I'll become the next mayor.";
 		mes "I came to tell you this.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "If I told you about sharing profits from the mine, I don't remember.";
 		mes "I probably said it as I went along with the conversation.";
 		next;
@@ -2046,7 +2050,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "[Albert Ford]";
 		mes "We'll attack your village and raze it to the ground!";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Are you sure about that?", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Are you sure about that?", bc_self;
 		mes "[Albert Ford]";
 		mes "What are you trying to do this time?";
 		next;
@@ -2076,12 +2080,12 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 			mes "What did you do to my men?";
 			next;
 			select("Your threat is not going to work.");
-			unittalk getcharid(3), "" + strcharinfo(0) + " : You guys have become pretty famous among adventurers.", bc_self;
-			mes "[" + strcharinfo(0) + "]";
+			unittalk .@account_id, "" + .@player_name$ + " : You guys have become pretty famous among adventurers.", bc_self;
+			mes "[" + .@player_name$ + "]";
 			mes "Come to the village if you want.";
 			mes "You'll be dead before you set foot in Rock Ridge.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Albert, you're no use for us anymore, but I'll leave you alone. For now.";
 			mes "Good luck living to a ripe old age.";
 			next;
@@ -2110,6 +2114,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 		close;
 	}
 	if (isbegin_quest(16078) != 2) {// first time
+		.@player_name$ = strcharinfo(0);
 		switch( checkquest(16078,HUNTING) ) {
 		case -1:
 			mes "[Little Lecter]";
@@ -2131,24 +2136,24 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 			mes "Err? Why not? I thought you went to the Rock Ridge Market today.";
 			mes "Gramps said you'd bring agave-flavored juice. I've been waiting all day. Wah!";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "(Boy, it's loud here. Is something going on?)";
 			next;
 			mes "[Mrs. Cacturon]";
 			mes "Because Lecter... Stop crying. Smart Cactus children don't cry so easily!";
 			next;
 			if (select( "Hello. Is there a problem?", "Ignore it." ) == 2) {
-				mes "[" + strcharinfo(0) + "]";
+				mes "[" + .@player_name$ + "]";
 				mes "(I'd better not get involved. I'm tired of taking care of other people's mess.)";
 				close;
 			}
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Excuse me, is something wrong?";
 			next;
 			mes "[Mrs. Cacturon]";
 			mes "We're just dealing with a little family problem here. Who are you? I can tell you're not from around here.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I'm an adventurer. I was wondering if you needed help.";
 			next;
 			mes "[Mrs. Cacturon]";
@@ -2165,7 +2170,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 			mes "[Mrs. Cacturon]";
 			mes "I fought tooth and nail to protect my groceries. I managed to save most of my stuff except the agave drink mix that my son loves.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Agave drink mix?";
 			emotion ET_QUESTION, playerattached();
 			next;
@@ -2184,14 +2189,14 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 			mes "The ^0000CDagave drink mix^000000 comes in a set of 7 packs. I lost the whole set, and I doubt you could find the whole set intact. I'll be happy if you could find just ^0000CD5 packs^000000.";
 			next;
 			if (select( "Sure, I can do that.", "I'd love to help, but..." ) == 2) {
-				mes "[" + strcharinfo(0) + "]";
+				mes "[" + .@player_name$ + "]";
 				mes "I'm sorry. I'd love to help, but I've got enough on my plate.";
 				next;
 				mes "[Mrs. Cacturon]";
 				mes "I understand. Everyone has enough on their plate lately.";
 				close;
 			}
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Sure, I can do that. You want me to ^0000CDfind 5 Agave Juice Mixes and hunt 30 Coyotes^000000, right?";
 			next;
 			mes "[Mrs. Cacturon]";
@@ -2225,7 +2230,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 			mes "[Mrs. Cacturon]";
 			mes "Lecter, you should thank the adventurer first.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I think he's too busy stirring the juice to hear you. It's okay. I didn't do this to get thanked. He really must love it.";
 			next;
 			mes "[Little Lecter]";
@@ -2236,7 +2241,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 			mes "Sigh...";
 			emotion ET_SCRATCH;
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "He's happy. Why are you sighing?";
 			next;
 			mes "[Mrs. Cacturon]";
@@ -2416,24 +2421,25 @@ rockrdg1,89,216,3	script	Suspicious Sand Mound#r9	4_ENERGY_RED,{ F_cacturon( 160
 
 rockrdg1,146,164,1	script	Wasteland Cactuten#rrem	4_ENERGY_RED,{
 	if (isbegin_quest(16078) == 1 && isbegin_quest(16083) == 0 && countitem(25246) < 5) {
+		.@player_name$ = strcharinfo(0);
 		mes "[Wasteland Cactuten]";
 		mes "Why, haven't you seen a Cactus in this wasteland before? I'm busy. Go on your way.";
 		next;
 		select("Ask if he's seen a juice mix package.");
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Have you seen some juice mix packages around here?";
 		next;
 		mes "[Wasteland Cactuten]";
 		mes "Juice mix package? If you're talking about the package I found stuck in between rocks, then yes, I have.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "It's Mrs. Cacturon's. Let me bring it back to her.";
 		next;
 		mes "[Wasteland Cactuten]";
 		mes "No. Why would I give you something Cacturon has lost?";
 		next;
 		if (select( "Threaten him.", "Persuade him." ) == 1) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I'm here on her behalf. If you keep being stubborn,";
 			mes "then I'll have to use force.";
 			next;
@@ -2444,16 +2450,16 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rrem	4_ENERGY_RED,{
 			mes "- I've got the juice mix package, but I feel bad that I threatened him to get them. -";
 		}
 		else {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I've been looking for some juice mix packages because I know someone has lost them.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "And this one of them, and it doesn't belong to you.";
 			next;
 			mes "[Wasteland Cactuten]";
 			mes "You're right. It doesn't belong to me.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Then why don't you let me bring it back to its owner? Mrs. Cacturon's child is upset because he can't have his favorite juice. I only want him to be happy.";
 			next;
 			mes "[Wasteland Cactuten]";
@@ -2462,7 +2468,7 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rrem	4_ENERGY_RED,{
 			mes "[Wasteland Cactuten]";
 			mes "Okay, I'll give it to you. But if I find out you lied to me, I'll see that you pay for betraying a Cactus's trust.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "I swear I'm not lying.";
 			next;
 			mes "- I've got the juice mix package. -";
@@ -2472,13 +2478,13 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rrem	4_ENERGY_RED,{
 		erasequest 16083;// Discovered Wasteland Cactuten
 		if (countitem(25246) > 4) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
 			mes "This should be enough. I'd better return to the village and report to her.";
 		}
 		if (checkquest(16078,HUNTING) < 2) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Oh, right? I also need to hunt 30 Coyotes.";
 		}
 		close;
@@ -2490,12 +2496,13 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rrem	4_ENERGY_RED,{
 
 rockrdg1,195,183,3	script	Curious Coyote#rremef03	4_ENERGY_RED,{
 	if (isbegin_quest(16078) == 1 && isbegin_quest(16085) == 0 && countitem(25246) < 5) {
+		.@player_name$ = strcharinfo(0);
 		mes "- A coyote has something in its mouth and it's shaking its head, playing with the thing. It could be Mrs. Cacturon's juice mix package. -";
 		next;
 		mes "- Maybe I should yell and scare it away. What should I yell? -";
 		input .@string$;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "*Clear throat* " + .@string$ + "!";
 		next;
 		mes "[Curious Coyote]";
@@ -2507,13 +2514,13 @@ rockrdg1,195,183,3	script	Curious Coyote#rremef03	4_ENERGY_RED,{
 		completequest 16085;// Discovered Coyote
 		if (countitem(25246) > 4) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
 			mes "This should be enough. I'd better return to the village and report to her.";
 		}
 		if (checkquest(16078,HUNTING) < 2) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Oh, right? I also need to hunt 30 Coyotes.";
 		}
 		close;
@@ -2524,20 +2531,21 @@ rockrdg1,195,183,3	script	Curious Coyote#rrem05	3739,{ end; }
 
 rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,{
 	if (isbegin_quest(16078) == 1 && isbegin_quest(16087) == 0 && countitem(25246) < 5) {
+		.@player_name$ = strcharinfo(0);
 		mes "[Cactus Girl]";
 		mes "Stranger...";
 		mes "Don't come near me, or else.";
 		emotion ET_ANGER;
 		next;
 		select("Have you seen some juice mix packages?");
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Have you seen some juice mix packages around here?";
 		next;
 		mes "[Cactus Girl]";
 		mes "Juice mix package?";
 		mes "...Are you looking for this? I've found it buried in the sand.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "That's it. Mrs. Cacturon has lost it. Let me bring it back to her.";
 		next;
 		mes "[Cactus Girl]";
@@ -2545,7 +2553,7 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,{
 		mes "...I see.";
 		mes "You said Mrs. Cacturon has lost it. Who are you?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "I'm an adventurer, and I'm here on her behalf.";
 		mes "If you don't believe me, then you can go to the village and talk to her.";
 		next;
@@ -2554,14 +2562,14 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,{
 		mes "Here, take it.";
 		emotion ET_HNG;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Are you just going to give it to me?";
 		next;
 		mes "[Cactus Girl]";
 		mes "You said Mrs. Cacturon sent you, and I trust her. Why, do you want me to give you a hard time?";
 		emotion ET_QUESTION;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "No. Thank you for giving it to me.";
 		next;
 		mes "- I've received the juice mix package from the Cactus girl. -";
@@ -2570,13 +2578,13 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,{
 		completequest 16087;// Discovered Cactus Girl
 		if (countitem(25246) > 4) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
 			mes "This should be enough. I'd better return to the village and report to her.";
 		}
 		if (checkquest(16078,HUNTING) < 2) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Oh, right? I also need to hunt 30 Coyotes.";
 		}
 		close;
@@ -2590,12 +2598,13 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,{
 
 rockrdg1,266,219,3	script	Absorbed Coyote#rrem06	3739,{
 	if (isbegin_quest(16078) == 1 && isbegin_quest(16088) == 0 && countitem(25246) < 5) {
+		.@player_name$ = strcharinfo(0);
 		mes "- A coyote is so absorbed in playing with something in its mouth that it doesn't know I'm near. Maybe it has Mr. Cacturon's juice mix package. -";
 		next;
 		mes "- Maybe I should yell and scare it away. What should I yell? -";
 		input .@string$;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "*Inhale deeply* " + .@string$ + "!";
 		next;
 		mes "[Absorbed Coyote]";
@@ -2607,13 +2616,13 @@ rockrdg1,266,219,3	script	Absorbed Coyote#rrem06	3739,{
 		completequest 16088;// Discovered Coyote
 		if (countitem(25246) > 4) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
 			mes "This should be enough. I'd better return to the village and report to her.";
 		}
 		if (checkquest(16078,HUNTING) < 2) {
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "Oh, right? I also need to hunt 30 Coyotes.";
 		}
 		close;
@@ -2655,6 +2664,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
 	}
 	switch( checkquest(9461,PLAYTIME) ) {
 	case -1:
+		.@player_name$ = strcharinfo(0);
 		if (isbegin_quest(9460) == 0) {// first time
 			mes "You're one of those strangers from a far land.";
 			mes "I'm Crouched Horse,";
@@ -2670,7 +2680,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
 			mes "could you also help my village?";
 			mes "It's not difficult.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "- What can I do for you?";
 			next;
 			mes "[Crouched Horse]";
@@ -2700,7 +2710,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
 			mes "take more things";
 			mes "than what you need.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "- Because we're greedy,";
 			mes "- and I'm ashamed of it.";
 			next;
@@ -2712,7 +2722,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
 			mes "nothing left";
 			mes "for us.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "- What do you need?";
 			mes "- How can I help?";
 			next;
@@ -2760,7 +2770,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
 			mes "and the Buffalo Bandits.";
 			close;
 		}
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "- Yes, I did.";
 		next;
 		mes "[Crouched Horse]";
@@ -3904,6 +3914,9 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 	}
 	switch( checkquest(14672,HUNTING) ) {
 	case -1:
+		.@account_id = getcharid(3);
+		.@player_name$ = strcharinfo(0);
+
 		mes "";// todo fix me
 		donpcevent "NPC Traces of Fire#srdg01::OnEffect";
 		sleep2 1500;
@@ -3925,7 +3938,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Midnight]";
 		mes "*Glance*";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Why are you playing with fire in the middle of nowhere? You're suspicious.";
 		next;
 		mes "[Midnight]";
@@ -3986,7 +3999,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "Hey, kiddo. How'd you like to join us in business?";
 		next;
 		if (select( "What business?", "No, thanks." ) == 2) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@player_name$ + "]";
 			mes "You look dangerous. I don't want to do anything dangerous.";
 			next;
 			mes "[Demon]";
@@ -3999,7 +4012,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 			mes "Why are you so paranoid? It's okay, kiddo. Just go. But come back if you change your mind!";
 			close;
 		}
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "What business?";
 		next;
 		mes "[Demon]";
@@ -4039,13 +4052,13 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Demon]";
 		mes "So, anyway, the Buffalo Bandits realized how lucrative the mine was and took up residence in there.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "I've heard that.";
 		next;
 		mes "[Demon]";
 		mes "You have? From where?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "At the sheriff's office.";
 		next;
 		emotion ET_BIGTHROB;
@@ -4074,12 +4087,12 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		next;
 		mes "[Demon]";
 		mes "Why not? I loved that story. You want to hear it, don't you?";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Sure.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Sure.", bc_self;
 		next;
 		mes "[Demon]";
 		mes "I'm really good with my hands, and I like fireworks. What do you think would be the best job for someone like me?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Firecracker maker?";
 		npctalk "He's cute.", "Midnight#srdg01", bc_self;
 		next;
@@ -4111,7 +4124,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		emotion ET_FRET;
 		mes "[Demon]";
 		mes "No, I couldn't have stood my ground. You weren't there. Anyway, those buffaloes used my bombs to blow up the ore train and take over the mine. Guess what happened to me afterward.";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : I can't.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : I can't.", bc_self;
 		next;
 		mes "[Demon]";
 		mes "The sheriff traced the bombs back to me and dragged me with him.";
@@ -4121,7 +4134,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		next;
 		mes "[Demon]";
 		mes "And guess who I met there: this guy. He was caught in the explosion that blew up the train, and those heartless buffaloes left him to die.";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Holy crap.", bc_self;
+		unittalk .@account_id, "" + .@player_name$ + " : Holy crap.", bc_self;
 		emotion ET_OK;
 		npctalk "Holy crap, yeah.", "", bc_self;
 		next;
@@ -4139,7 +4152,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		emotion ET_KIK;
 		npctalk "That's how much he likes me.", "", bc_self;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Did you get your revenge after you were released?";
 		next;
 		mes "[Demon]";
@@ -4158,7 +4171,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Demon]";
 		mes "Are you sure you want to help? Because I don't like forcing people, or sending them in harm's way. If you really want to help, then you can get some bomb materials for me.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Why, so you could rob the mine?";
 		next;
 		mes "[Demon]";
@@ -4171,7 +4184,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Demon]";
 		mes "I want to throw a ^0000cdfirework party inside the mine^000000 and ^0000cdscare away the bandits^000000.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "But, Mr. Midnight, they used to be your...";
 		npctalk "My what?", "Midnight#srdg01", bc_self;
 		next;
@@ -4202,7 +4215,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Demon]";
 		mes "I need 10 Deadly Poison Powders and.. let me see.. 1 Explosive Powder.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Deadly poisonous powder? Are you going to kill them? You said you just want to scare them away.";
 		next;
 		mes "[Demon]";
@@ -4221,7 +4234,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Demon]";
 		mes "The buffaloes would get out of the mine when the fireworks starts, but those clumps of gas could trigger chain reaction and blow up the entire mine. Hunt 15 of them for now. Can you do it?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@player_name$ + "]";
 		mes "Sure.";
 		next;
 		mes "[Demon]";
@@ -4230,7 +4243,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		mes "[Demon]";
 		mes "Now, here's the lowdown: get ^0000cd10 Deadly Poison Powders and 1 Explosive Powder^000000, and ^0000cdhunt 15 Gasters^000000. Got it?";
 		next;
-		emotion ET_GOODBOY, playerattached();
+		emotion ET_GOODBOY, .@account_id;
 		mes "[Demon]";
 		mes "We'll be counting on you, kiddo! I'll repay you generously when you come back. I was able to nab a few things while in jail at the sheriff's office. Now, off you go!";
 		setquest 14672;// Preparing for the Firework Festival
