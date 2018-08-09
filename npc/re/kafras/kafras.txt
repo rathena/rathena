@@ -25,6 +25,7 @@
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
 //= 1.4 Added Izlude duplicates. [Euphy]
 //= 1.5 Added Glastheim Kafra [Ridley8819]
+//= 1.6 Added Rock Ridge Kafra. [Capuche]
 //============================================================ 
 
 // Brasilis
@@ -93,4 +94,12 @@ job3_rune01,92,62,3	script	Kafra Employee::kaf_rune	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSet";
 	callfunc "F_Kafra",0,9,2,80,700;
+}
+
+// Rockridge
+//============================================================
+harboro1,291,207,5	script	Kafra Employee::rockridg	4_F_KAFRA1,{
+	cutin "kafra_01.bmp",2;
+	callfunc "F_Kafra",0,8,2,500,0;
+	savepoint "harboro1",291,207,1,1;	// fix me: unknown savepoint xy
 }
