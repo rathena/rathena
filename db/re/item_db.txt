@@ -7414,11 +7414,11 @@
 13225,Poison_Sphere_,Poison Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; },{},{}
 13226,Blind_Sphere_,Blind Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; },{},{}
 13227,Freezing_Sphere_,Freezing Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
-13228,Flare_Bullet,Flare Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
-13229,Lightning_Bullet,Lightning Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
-13230,Ice_Bullet,Ice Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Water; },{},{}
-13231,Poison_Bullet,Poison Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Poison; },{},{}
-13232,Blind_Bullet,Blind Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Dark; },{},{}
+13228,Flare_Bullet,Flare Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
+13229,Lightning_Bullet,Lightning Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
+13230,Ice_Bullet,Ice Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Water; },{},{}
+13231,Poison_Bullet,Poison Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Poison; },{},{}
+13232,Blind_Bullet,Blind Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Dark; },{},{}
 //===================================================================
 // Shurikens & Kunais
 //===================================================================
@@ -8739,6 +8739,11 @@
 15163,Fictitious_Robe,Fictitious Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ skill "SA_SPELLBREAKER",1; .@i = BaseLevel; bonus bMatkRate,(.@i>=140)?(14):((.@i>=120)?(9):(5)); },{},{}
 15164,Consultative_Robe,Consultative Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ bonus bVit,5; skill "PA_SACRIFICE",1; bonus2 bSubEle,Ele_Dark,getrefine()*3; bonus2 bSubEle,Ele_Fire,getrefine()*3; },{},{}
 15174,Surfer_Swimsuit,Surfer Swimsuit,4,20,,100,,1,,1,0xFFFFFFFF,63,2,16,,40,1,,{ bonus bMaxHPrate,(getrefine()/3)+5; bonus bMaxSPrate,(getrefine()/3)+5; },{},{}
+15176,Vigilante_Suit,Vigilante Suit,4,0,,500,,50,,0,0x00020000,56,2,16,,100,1,0,{ /* fix me */ },{},{}
+15177,Elemental_Robe,Elemental Robe,4,0,,500,,40,,0,0x00000200,56,2,16,,100,1,0,{ /* fix me */ },{},{}
+15178,Golden_Ninja_Suit,Golden Ninja Suit,4,0,,500,,50,,0,0x20000000,63,2,16,,100,1,0,{ /* fix me */ },{},{}
+15179,Mine_Worker's_Vest,Mine Worker's Vest,4,0,,1500,,80,,0,0x00000400,56,2,16,,100,1,0,{ /* fix me */ },{},{}
+15180,Hippie_Clothes,Hippie Clothes,4,0,,50,,50,,0,0x00080000,56,2,16,,100,1,0,{ /* fix me */ },{},{}
 15181,Para_Team_Uniform100,Awakened Eden Group Uniform I,4,20,,0,,80,,0,0xFFFFFFFF,63,2,16,,100,,,{ bonus bAllStats,1; bonus bMaxHP,700; bonus bMaxSP,100; bonus bMdef,7; },{},{}
 15182,Para_Team_Uniform115,Awakened Eden Group Uniform II,4,20,,0,,85,,0,0xFFFFFFFF,63,2,16,,115,,,{ bonus bAllStats,1; bonus bMaxHP,1100; bonus bMaxSP,120; bonus bMdef,11; },{},{}
 15183,Para_Team_Uniform130,Awakened Eden Group Uniform III,4,20,,0,,90,,0,0xFFFFFFFF,63,2,16,,130,,,{ bonus bAllStats,2; bonus bMaxHP,1100; bonus bMaxSP,120; bonus bMdef,11; },{},{}
@@ -10891,6 +10896,9 @@
 20798,GrimReaper_Protection,Costume Grim Reaper Protection,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1450,{},{},{}
 20815,SeraphimRobe,Seraphim Robe,4,0,,300,,18,,1,0xFFFFFFFF,63,2,4,,1,1,,{ bonus bMaxHPrate,10; bonus2 bMagicAtkEle,Ele_Neutral,5; .@r = getrefine(); if (.@r > 6) { bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Holy,20; bonus bMatkRate,10; } if (.@r > 8) { bonus2 bSubEle,Ele_Dark,10; bonus2 bSubEle,Ele_Holy,10; bonus bVariableCastrate,-5; } if (getskilllv("CR_TRUST") > 0) { bonus2 bSubEle,Ele_Holy,.@r*3; } },{},{}
 20819,Oxygen_Bottle,Oxygen Bottle,4,0,,500,,0,,1,0xFFFFFFFF,63,2,4,,40,1,0,{ bonus bFlee,12+getrefine(); bonus bHit,getrefine(); },{},{}
+20820,Elemental_Cape,Elemental Cape,4,0,,500,,12,,0,0x00000200,56,2,4,,100,1,0,{ /* fix me */ },{},{}
+20821,Golden_Scarf,Golden Scarf,4,0,,500,,12,,0,0x20000000,63,2,4,,100,1,0,{ /* fix me */ },{},{}
+20822,Mine_Worker's_Backpack,Mine Worker's Backpack,4,0,,600,,16,,0,0x00000400,56,2,4,,100,1,0,{ /* fix me */ },{},{}
 20823,Para_Team_Manteau100,Awakened Eden Group Manteau I,4,0,,0,,20,,0,0xFFFFFFFF,63,2,4,,100,1,0,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,12; .@r = getrefine(); if(.@r >= 7){ bonus bMaxHP,500; bonus bFlee2,2; if(.@r >= 9){ bonus bMaxHP,500; bonus2 bSubEle,Ele_All,10; bonus2 bSubEle,Ele_Neutral,-10; } } },{},{}
 20824,Para_Team_Manteau130,Awakened Eden Group Manteau II,4,0,,0,,25,,0,0xFFFFFFFF,63,2,4,,130,1,0,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,12; bonus bMaxHP,500; bonus bFlee2,2; .@r = getrefine(); if(.@r >= 7){ bonus bMaxHP,500; bonus2 bSubEle,Ele_All,10; bonus2 bSubEle,Ele_Neutral,-10; if(.@r >= 9){ bonus2 bSubEle,Ele_Neutral,5; } } },{},{}
 20825,Para_Team_Manteau160,Awakened Eden Group Manteau III,4,0,,0,,30,,0,0xFFFFFFFF,63,2,4,,160,1,0,{ bonus2 bSubEle,Ele_All,10; bonus bFlee,12; bonus bMaxHP,1000; bonus bFlee2,2; .@r = getrefine(); if(.@r >= 7){ bonus2 bSubEle,Ele_Neutral,5; if(.@r >= 9){ skill "BS_GREED",1; } } },{},{}
@@ -11523,6 +11531,22 @@
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 25238,New_Normal_Lubricant,New Normal Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25239,New_Advanced_Lubricant,New Advanced Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
+25246,Juice_Mix_Package,Juice Mix Package,3,0,,0,,,,,,,,,,,,,{},{},{}
+25247,Purple_Ore,Purple Ore,3,0,,0,,,,,,,,,,,,,{},{},{}
+25248,Purple_Ore_Crate,Purple Ore Crate,3,0,,0,,,,,,,,,,,,,{},{},{}
+25249,Buffalo_Bandit_Mane,Buffalo Bandit Mane,3,0,,0,,,,,,,,,,,,,{},{},{}
+25250,Rock_Ridge_Coin,Rock Ridge Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+25260,Fragment_of_Purple_Ore,Fragment of Purple Ore,3,0,,0,,,,,,,,,,,,,{},{},{}
+25276,Clean_Bone,Clean Bone,3,248,,10,,,,,,,,,,,,,{},{},{}
+25277,Deadly_Poison_Powder,Deadly Poison Powder,3,0,,10,,,,,,,,,,,,,{},{},{}
+25278,Bandits_Scarf,Bandit's Scarf,3,330,,10,,,,,,,,,,,,,{},{},{}
+25279,Crude_Ammo,Crude Ammo,3,300,,10,,,,,,,,,,,,,{},{},{}
+25280,Broken_Shotgun,Broken Shotgun,3,0,,10,,,,,,,,,,,,,{},{},{}
+25281,Crude_Scimitar,Crude Scimitar,3,0,,10,,,,,,,,,,,,,{},{},{}
+25282,Worn_Revolver,Worn Revolver,3,0,,10,,,,,,,,,,,,,{},{},{}
+25283,Brown_Muffler,Brown Muffler,3,420,,10,,,,,,,,,,,,,{},{},{}
+25284,Swamp_Bug_Shell,Swamp Bug Shell,3,0,,10,,,,,,,,,,,,,{},{},{}
+25285,Brown_Rat_Tail,Brown Rat Tail,3,0,,10,,,,,,,,,,,,,{},{},{}
 //
 25464,World_Moving_Rights,World Moving Rights,3,20,,0,,,,,,,,,,,,,{},{},{}
 //===================================================================
@@ -11568,6 +11592,17 @@
 27167,Faceworm_Larva_Card,Faceworm Larva Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,15; bonus2 bMagicAddSize,Size_All,getrefine()*3; },{},{}
 27168,Irene_High_Elder_Card,Irene High Elder Card,6,20,,10,,,,,,,,4,,,,,{ bonus bHit,10 + 5 * (getrefine()/3); },{},{}
 27169,Payon_Soldier_Card,Payon Soldier Card,6,20,,10,,,,,,,,2,,,,,{ .@atk = 5; .@r = getrefine(); if(getiteminfo(getequipid(EQI_HAND_R),11) == W_SPEAR && .@r >= 10){ .@atk += 20; if(.@r >= 14){ .@atk += 20; } } bonus bAtk,.@atk; bonus bMatk,.@atk; },{},{}
+27170,Shotgun_Buffalo_Bandit_Card,Shotgun Buffalo Bandit Card,6,20,,10,,,,,,,,128,,,,,{ /* fix me */ },{},{}
+27171,Revolver_Buffalo_Bandit_Card,Revolver Buffalo Bandit Card,6,20,,10,,,,,,,,8,,,,,{ /* fix me */ },{},{}
+27172,Scimitar_Buffalo_Bandit_Card,Scimitar Buffalo Bandit Card,6,20,,10,,,,,,,,2,,,,,{ /* fix me */ },{},{}
+27173,Elite_Shotgun_Buffalo_Bandit_Card,Elite Shotgun Buffalo Bandit Card,6,20,,10,,,,,,,,2,,,,,{ /* fix me */ },{},{}
+27174,Elite_Revolver_Buffalo_Bandit_Card,Elite Revolver Buffalo Bandit Card,6,20,,10,,,,,,,,2,,,,,{ /* fix me */ },{},{}
+27175,Elite_Scimitar_Buffalo_Bandit_Card,Elite Scimitar Buffalo Bandit Card,6,20,,10,,,,,,,,2,,,,,{ /* fix me */ },{},{}
+27176,Brown_Rat_Card,Brown Rat Card,6,20,,10,,,,,,,,4,,,,,{ /* fix me */ },{},{}
+27177,Marsh_Arclouse_Card,Marsh Arclouse Card,6,20,,10,,,,,,,,4,,,,,{ /* fix me */ },{},{}
+27178,Gaster_Card,Gaster Card,6,20,,10,,,,,,,,32,,,,,{ /* fix me */ },{},{}
+27179,Coyote_Card,Coyote Card,6,20,,10,,,,,,,,64,,,,,{ /* fix me */ },{},{}
+27180,Mechaspider_Card,Mechaspider Card,6,20,,10,,,,,,,,128,,,,,{ /* fix me */ },{},{}
 27181,Airship_Raid_Card,Airship Raid Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus bLongAtkRate,1 + .@r/2; bonus bCritical,.@r/2; },{},{}
 27182,Captain_Felock_Card,Captain Felock Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,30; .@r = getrefine(); bonus2 bSkillAtk,"RL_AM_BLAST",.@r >= 10 ? 60 : 30; bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",.@r >= 10 ? 60 : 30; },{},{}
 27183,Gigantes_Card,Gigantes Card,6,20,,10,,,,,,,,128,,,,,{ bonus bAtk,20; if(readparam(bStr) >= 120) { bonus bAtk,20; bonus bAspdRate,-3; } },{},{}
@@ -11669,6 +11704,8 @@
 28422,Shiny_Branch_Talisman,Shiny Branch Talisman,4,0,,100,,1,,1,0x80000000,63,2,136,,100,,,{ bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-50; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",(readparam(bInt)/2)+(20 * getskilllv("SU_SV_STEMSPEAR")); /* Need to confirm damage formula */ },{},{}
 28423,Fresh_Tuna_Talisman,Fresh Tuna Talisman,4,0,,100,,1,,1,0x80000000,63,2,136,,100,,,{ bonus2 bSkillCooldown,"SU_TUNAPARTY",-5000; bonus3 bAutoSpellWhenHit,"SU_TUNAPARTY",max(1,getskilllv("SU_TUNAPARTY")),10; },{},{}
 28424,Chubby_Worm_Talisman,Chubby Worm Talisman,4,0,,100,,1,,1,0x80000000,63,2,136,,100,,,{ bonus2 bVariableCastrate,"SU_PICKYPECK",-50; bonus2 bSkillAtk,"SU_PICKYPECK",(readparam(bDex)/2)+(20 * getskilllv("SU_PICKYPECK")); /* Need to confirm damage formula */ },{},{}
+28441,Vigilante_Badge,Vigilante Badge,4,0,,200,,0,,1,0x00020000,56,2,136,,100,0,0,{ /* fix me */ },{},{}
+28442,Hippie_Feather,Hippie Feather,4,0,,200,,0,,1,0x00080000,56,2,136,,100,0,0,{ /* fix me */ },{},{}
 28443,Para_Team_Str_Ring100,Awakened Eden Group Ring of Strength I,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,100,,,{ bonus2 bAddClass,Class_All,2; },{},{}
 28444,Para_Team_Str_Necklace100,Awakened Eden Group Necklace of Strength I,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,100,,,{ bonus bStr,1; },{},{}
 28445,Para_Team_Str_Ring115,Awakened Eden Group Ring of Strength II,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,115,,,{ bonus2 bAddClass,Class_All,3; },{},{}
