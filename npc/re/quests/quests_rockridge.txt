@@ -1739,3 +1739,1835 @@ OnMyMobDead:
 	end;
 }
 
+
+rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
+	if (rock_main_quest == 13) {
+		mes "This must be the signaling rock Johnny James told me about.";
+		next;
+		if (select( "Knock, knock-knock-knock, knock.", "Knock, knock, knock." ) == 2) {
+			mes "I feel as if I should help them make a snowman.";
+			mes "Nothing happened.";
+			close;
+		}
+		npctalk "Boss? Is that you, Boss?", "Albert Ford#rockrdg2", bc_self;
+		classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+		close;
+	}
+	if (rock_main_quest == 14) {
+		if (countitem(25249) < 1) {
+			mes "I knocked on the signaling rock, and Albert Ford came out running.";
+			npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
+			classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+			close;
+		}
+		mes "I don't have to use this right now.";
+		close;
+	}
+	if (rock_main_quest == 20) {
+		if (checkquest(7807,HUNTING) < 2) {
+			mes "I'd better get rid of Buffalo Bandits, enough to scare Albert Ford.";
+			close;
+		}
+		mes "I knocked on the signaling rock, and Albert Ford came out running.";
+		npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
+		classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+		close;
+	}
+	mes "This rock creates a deep, echoing sound when struck.";
+	mes "The miners use it to signal the others inside the mine.";
+	close;
+}
+
+rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
+	disable_items;
+	if (rock_main_quest == 13) {
+		mes "[Albert Ford]";
+		mes "Who the hell are you?";
+		mes "How did you know the password only the Boss and I know?";
+		next;
+		select("I came to negotiate with you.");
+		mes "[Albert Ford]";
+		mes "You got to be joking.";
+		mes "The negotiation was off the table the moment you took the Boss by surprise.";
+		next;
+		switch( select( "You're right. I'm not here to negotiate.", "I'm here to tell you that Johnny is about to betray you." ) ) {
+		case 1:
+			mes "[" + strcharinfo(0) + "]";
+			mes "I'm telling you the truth.";
+			mes "I came to tell you what HQ has decided.";
+			mes "We've saved a lot of ores, enough not to miss the tiny amount you've stolen from us.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "We have no use for them, and you're stuck with them.";
+			next;
+			npctalk "What about the Boss?", "", bc_self;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : You mean Johnny James?", bc_self;
+			mes "[" + strcharinfo(0) + "]";
+			mes "We have no use for him, either.";
+			mes "But the Sheriff has always wanted him.";
+			mes "Soon he'll be tried in a court of law.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Besides Johnny has given up.";
+			mes "He thinks you've betrayed him since? You know? You ran without him.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "He even offered us to tell us where the ores are in exchange for his freedom.";
+			mes "But of course, we don't need his information.";
+			mes "I want you to know how cowardly your boss is.";
+			break;
+		case 2:
+			mes "[Albert Ford]";
+			mes "What are you talking about?";
+			mes "The Boss has betrayed us?";
+			mes "Why would he do that?";
+			mes "Stop lying!";
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Why do you think I'm lying?", bc_self;
+			next;
+			mes "[Albert Ford]";
+			mes "I know Costello is still your mayor because I checked!";
+			mes "You lied in the last meeting that you'd be the new mayor!";
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Ah, that.", bc_self;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Well, I'm still from HQ.";
+			mes "I'm in charge of this case.";
+			mes "When I solve this case, I'll replace Costello as mayor.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Costello wants to leave.";
+			mes "He's here only because HQ is keeping him here.";
+			mes "Don't compare me to him.";
+			next;
+			npctalk "What do you mean, the Boss is about to betray us?", "", bc_self;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : You mean Johnny James?", bc_self;
+			mes "[" + strcharinfo(0) + "]";
+			mes "HQ has decided";
+			mes "that we've got enough ores without the ones you've stolen.";
+			mes "So...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "We have no use for him, either.";
+			mes "But the Sheriff has always wanted him.";
+			mes "Soon he'll be tried in a court of law.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Besides Johnny has given up.";
+			mes "He thinks you've betrayed him since? You know? You ran without him.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "He even offered us to tell us where the ores are in exchange for his freedom.";
+			mes "Because he's made this offer official, we can't ignore it.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I want you to know how cowardly your boss is.";
+			break;
+		}
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If we want the ores back, then we can always talk to Johnny";
+		mes "instead of dealing with you.";
+		next;
+		npctalk "I ran", "", bc_self;
+		mes "[Albert Ford]";
+		mes "to call for help.";
+		mes "We could always invade your village and bring the Boss back with us!";
+		mes "I can't believe the Boss thinks so little of me...";
+		next;
+		mes "[Albert Ford]";
+		mes "But then again, you could be lying to me.";
+		mes "You're not trying to drive a wedge between me and my boss, are you?";
+		next;
+		select("Who do you think told me how to signal you?");
+		mes "[Albert Ford]";
+		mes "...!";
+		mes "Did he tell you?";
+		mes "Did he really betray us?";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : How many times do I have to tell you?", bc_self;
+		next;
+		mes "[Albert Ford]";
+		mes "We've been thinking about ways to rescue him,";
+		mes "while he made friends with our enemies. We don't need a selfish traitor like him.";
+		next;
+		mes "[Albert Ford]";
+		mes "You came all the way here to tell me this. Why?";
+		next;
+		select("Tell us where the ores are.");
+		mes "[Albert Ford]";
+		mes "You said you don't need them!";
+		next;
+		select("No, but they're necessary for punishing Johnny.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "I mean,";
+		mes "the company wants to milk the mine for everything it's worth,";
+		mes "and Johnny knows that. He's trying to use the ores as his get-out-of-jail-free card.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But Sheriff Warp doesn't want that.";
+		mes "He wants Johnny to be hanged for all the world to see.";
+		mes "He doesn't want to let go of a criminal in exchange for a pile of ores.";
+		next;
+		select("Show him the ore.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "I've brought this in case you don't believe me.";
+		mes "Beautiful, isn't it?";
+		mes "We've discovered a new vein. Its location is secret.";
+		next;
+		npctalk "No... This means we've been staying here for nothing.", "", bc_self;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You could have this dead pit for all we care.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Alright, let me rephrase that.";
+		mes "You could give up on Johnny and lead your gang yourself.";
+		mes "Once that coward Costello leaves for the mainland, I'll be the new mayor.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If you're the leader of your gang, I'm willing to do business with you.";
+		mes "Think about your future.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You want to share profits from this mine with us.";
+		mes "Johnny betrayed you first.";
+		mes "What is there to think about?";
+		npctalk "I need to talk to the others...", "", bc_self;
+		next;
+		mes "[Albert Ford]";
+		mes "If he really betrayed us, then we want to punish him on our own.";
+		mes "And the others need to know the truth.";
+		next;
+		mes "[Albert Ford]";
+		mes "I need time.";
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : We don't have time. Johnny will buy his way out of jail.", bc_self;
+		mes "...Alright, we're not going to worry about that traitor anymore.";
+		next;
+		mes "[Albert Ford]";
+		mes "But I'm not going to tell you the location of the ores until we get rid of him.";
+		mes "Those goddamn ores are the reason why we're in this mess.";
+		next;
+		mes "[Albert Ford]";
+		mes "Now scram.";
+		next;
+		select("Sorry, but can I have a lock of your mane?");
+		mes "[Albert Ford]";
+		mes "Why? What are you scheming?";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Sheriff Warp wants it as proof of our negotiation.", bc_self;
+		next;
+		mes "[Albert Ford]";
+		mes "That jerk of a sheriff,";
+		mes "he can't even trust his own people, can he?";
+		mes "Hmpf.";
+		mes "There.";
+		mes "Now, get!";
+		next;
+		mes "[Albert Ford]";
+		mes "Next time we meet, we'll meet at Johnny's funeral, got it?";
+		getitem 25249,1;// Buffalo_Bandit_Mane
+		erasequest 7802;// Hear Me Out 2
+		setquest 7803;// Happy for Broken Trust
+		rock_main_quest = 14;
+		close;
+	}
+	if (rock_main_quest == 14 && countitem(25249) < 1) {
+		mes "[Albert Ford]";
+		mes "What is it this time?";
+		mes "Did something happen to the traitor?";
+		next;
+		select("Can I have another lock of your mane?");
+		mes "[Albert Ford]";
+		mes "Did you lose the one I gave you?";
+		mes "This doesn't make me more sure of my decision to trust you.";
+		mes "We don't have time to argue.";
+		next;
+		mes "[Albert Ford]";
+		mes "Here, take it.";
+		getitem 25249,1;// Buffalo_Bandit_Mane
+		close;
+	}
+	if (rock_main_quest == 20 && checkquest(7807,HUNTING) == 2) {
+		if (countitem(25278) < 5 || countitem(25283) < 5) {
+			mes "(I don't have enough Brown Mufflers and Bandit's Scarves to threaten Albert Ford with.)";
+			unittalk getcharid(3), "" + strcharinfo(0) + " : I was just passing by. I'll come back later.", bc_self;
+			next;
+			mes "[Albert Ford]";
+			mes "What? What is it?";
+			mes "Don't call me unless you have something to tell me!";
+			close2;
+			classchange( HIDDEN_WARP_NPC, "", bc_self );
+			end;
+		}
+		mes "[Albert Ford]";
+		mes "What is it this time?";
+		mes "I'm busy.";
+		next;
+		select("Did something happen inside the mine?");
+		mes "[Albert Ford]";
+		mes "Yes. Some guys I sent on a patrol duty didn't come back, and some of our ores?";
+		npctalk "...Wait.", "", bc_self;
+		next;
+		mes "[Albert Ford]";
+		mes "That box!";
+		mes "You're the thief!";
+		mes "What happened to our negotiation?";
+		mes "Is Johnny free?";
+		next;
+		select("Huh? No.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why would you think that?";
+		mes "He told us where the ores were, yes, but we haven't held up our end of the bargain yet.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "He gave up the location because he thought you were dead.";
+		mes "If he gets out and realizes you're still alive, you'll be in trouble, won't you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Don't worry. Johnny can't evade the law.";
+		mes "Sheriff Warp is determined to hang him.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, and I don't think I'll become the next mayor.";
+		mes "I came to tell you this.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "If I told you about sharing profits from the mine, I don't remember.";
+		mes "I probably said it as I went along with the conversation.";
+		next;
+		npctalk "All this time you've been playing with us!", "", bc_self;
+		mes "[Albert Ford]";
+		mes "What the hell have you done to us?";
+		mes "Do you think we'll forgive you, after hearing all this?";
+		next;
+		mes "[Albert Ford]";
+		mes "What? Hang the Boss?";
+		mes "We'll hang you? All of you!";
+		mes "You sly bastards!";
+		next;
+		mes "[Albert Ford]";
+		mes "We'll attack your village and raze it to the ground!";
+		next;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Are you sure about that?", bc_self;
+		mes "[Albert Ford]";
+		mes "What are you trying to do this time?";
+		next;
+		specialeffect EF_HIT2;
+		sleep2 2000;
+
+		if (countitem(25278) >= 5 && countitem(25283) >= 5) {
+			delitem 25283,5;// Brown_Muffler
+			delitem 25278,5;// Bandit's_Scarf
+			setarray .@datas[0],
+				25283, 296, 311,
+				25278, 297, 311,
+				25283, 298, 308,
+				25278, 299, 308,
+				25283, 293, 308,
+				25278, 294, 308,
+				25283, 294, 306,
+				25278, 295, 306,
+				25283, 291, 308,
+				25278, 292, 308;
+			for ( .@i = 0; .@i < 30; .@i += 3 )
+				makeitem .@datas[.@i],1, "rockrdg2", .@datas[.@i+1], .@datas[.@i+2];
+
+			npctalk "What are you doing? What the hell is this?!", "", bc_self;
+			mes "[Albert Ford]";
+			mes "Wait! ...You!";
+			mes "What did you do to my men?";
+			next;
+			select("Your threat is not going to work.");
+			unittalk getcharid(3), "" + strcharinfo(0) + " : You guys have become pretty famous among adventurers.", bc_self;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Come to the village if you want.";
+			mes "You'll be dead before you set foot in Rock Ridge.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Albert, you're no use for us anymore, but I'll leave you alone. For now.";
+			mes "Good luck living to a ripe old age.";
+			next;
+			specialeffect EF_SCREEN_QUAKE;
+			npctalk "You slimy bastards! I won't forgive you!", "", bc_self;
+			mes "[Albert Ford]";
+			mes "Hmpf, we may have lost this battle with you,";
+			mes "but we're not going to give the mine back to you, even if it's no use for us!";
+			mes "We'll have the last laugh!";
+			erasequest 7807;// Ace up Our Sleeve
+			setquest 7808;// Case Solved
+			rock_main_quest = 21;
+			close2;
+			classchange( HIDDEN_WARP_NPC, "", bc_self );
+		}
+		end;
+	}
+}
+
+
+// Cacturon quest
+rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
+	if (rock_main_quest < 22) {
+		mes "[Mrs. Cacturon]";
+		mes "I'm pretty sure I haven't seen you around. What brings you to this village?";
+		close;
+	}
+	if (isbegin_quest(16078) != 2) {// first time
+		switch( checkquest(16078,HUNTING) ) {
+		case -1:
+			mes "[Little Lecter]";
+			mes "Yay, Mom's home! Mom, did you buy the juice? My agave-flavored juice!";
+			emotion ET_DELIGHT, getnpcid(0, "Little Lecter#rrrem02");
+			next;
+			mes "[Little Lecter]";
+			mes "Err? Mom, did you fall and hurt yourself? Why're your clothes so dirty?";
+			emotion ET_QUESTION, getnpcid(0, "Little Lecter#rrrem02");
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Yes, I'm home. Mm, Lecter, I have something to tell you.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "...I'm sorry, Lecter, but I don't have any agave-flavored juice today.";
+			emotion ET_THINK;
+			next;
+			mes "[Little Lecter]";
+			mes "Err? Why not? I thought you went to the Rock Ridge Market today.";
+			mes "Gramps said you'd bring agave-flavored juice. I've been waiting all day. Wah!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "(Boy, it's loud here. Is something going on?)";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Because Lecter... Stop crying. Smart Cactus children don't cry so easily!";
+			next;
+			if (select( "Hello. Is there a problem?", "Ignore it." ) == 2) {
+				mes "[" + strcharinfo(0) + "]";
+				mes "(I'd better not get involved. I'm tired of taking care of other people's mess.)";
+				close;
+			}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Excuse me, is something wrong?";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "We're just dealing with a little family problem here. Who are you? I can tell you're not from around here.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I'm an adventurer. I was wondering if you needed help.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "An adventurer? All the way here in Rock Ridge?";
+			mes "...Well, then could you hear me out? I'd like to ask you a favor.";
+			next;
+			mes "[Little Lecter]";
+			mes "Wah! My agave-flavored juice! Wah!";
+			emotion ET_CRY, getnpcid(0, "Little Lecter#rrrem02");
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "I was on my way back from the Rock Ridge Market today when I got attacked by some coyotes.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "I fought tooth and nail to protect my groceries. I managed to save most of my stuff except the agave drink mix that my son loves.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Agave drink mix?";
+			emotion ET_QUESTION, playerattached();
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "It's agave-flavored drink powder.";
+			mes "It's easy to use and tastes similar to real agave juice. Young Cacti love this drink.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "It's too sweet for me, though. Well, that's not important.";
+			mes "Strange adventurer, would you be so kind as to find the agave drink mix I lost in the wasteland?";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "While you're at it, maybe you could cull ^0000CDcoyotes^000000, too. Hunt ^0000CD30^000000 of them for me.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "The ^0000CDagave drink mix^000000 comes in a set of 7 packs. I lost the whole set, and I doubt you could find the whole set intact. I'll be happy if you could find just ^0000CD5 packs^000000.";
+			next;
+			if (select( "Sure, I can do that.", "I'd love to help, but..." ) == 2) {
+				mes "[" + strcharinfo(0) + "]";
+				mes "I'm sorry. I'd love to help, but I've got enough on my plate.";
+				next;
+				mes "[Mrs. Cacturon]";
+				mes "I understand. Everyone has enough on their plate lately.";
+				close;
+			}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Sure, I can do that. You want me to ^0000CDfind 5 Agave Juice Mixes and hunt 30 Coyotes^000000, right?";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Yes. Thank you.";
+			mes "I doubt you could find all 7 packs. At least a couple of them must be torn and spilled by now.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Just bring ^0000CD5 Agave Juice Mixes^000000. That'll be enough to make my son happy.";
+			mes "^FF0000They could be buried in the ground, picked up by someone, or found by coyotes.^000000";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Look around while you hut, will you? Thank you.";
+			setquest 16078;// Peace of the Family
+			close;
+		case 0:
+		case 1:
+			mes "[Mrs. Cacturon]";
+			mes "Strange Adventurer. I've asked you to hunt ^0000CD30 Coyotes^000000. How are you doing with it?";
+			mes "Thank you for doing this for me. And finding ^0000CD5 juice mixes^000000. Things would've been a lot more difficult if it weren't for you. Thank you.";
+			close;
+		case 2:
+			if (countitem(25246) < 5) {
+				mes "[Mrs. Cacturon]";
+				mes "Thank you for hunting coyotes for me. By the way, haven't you seen some ^0000CDjuice mix packages^000000 around them?";
+				mes "There have to be some juice mixes still left in there. I'll appreciate if you can just find 5.";
+				close;
+			}
+			mes "[Little Lecter]";
+			mes "Is this agave-flavored juice? Did you find this agave-flavored juice for me? Yippee! Lecter wants to drink it now!";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Lecter, you should thank the adventurer first.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I think he's too busy stirring the juice to hear you. It's okay. I didn't do this to get thanked. He really must love it.";
+			next;
+			mes "[Little Lecter]";
+			mes "Yes, I love it! A lot! Heh heh! Thank you!";
+			emotion ET_SMILE, getnpcid(0, "Little Lecter#rrrem02");
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Sigh...";
+			emotion ET_SCRATCH;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "He's happy. Why are you sighing?";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Watching him so happy to drink that fake juice reminds me of the real agave juice I used to drink when I was young.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "It wasn't factory-made powder. Real agave juice took so much time and effort to make that we only drank it on special occasions.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "On those days, my whole family would gather around and make agave juice together. We'd also grill steaks wrapped in agave leaves, and sometimes relatives from far away would also visit us to play music and dance together all night.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "I had so much fun as a child, but my child never got to experience any of that. Nowadays, everyone's just too busy to gather or stay up all night, singing and dancing.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "But we Cacti want to preserve our traditions as best we can, to teach them to our children.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Ah, I've talked too much. I'm sorry I took up your time, Adventurer.";
+			mes "Thank you. Please take this. It's not much, but I hope you'll like it.";
+			emotion ET_PROFUSELY_SWEAT;
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "And if you're not busy, could you come back and hunt some more coyotes? There've been more coyotes lately than before. They're part of nature, just like we are, but they're threatening our safety.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "I may not be able to give my son real agave juice, but I at least want to be able to go buy things he wants.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "I'll appreciate if you can help me every day, starting from today.";
+			mes "I'll really appreciate if you can help for a little longer. You inspire me to try harder to make a better life for my son.";
+			emotion ET_SMILE;
+			delitem 25246,5;// Juice_Mix_Package
+			completequest 16078;// Peace of the Family
+			setquest 16079;// Back for More Coyotes Tomorrow
+			getitem 25250,2;// Rock_Ridge_Coin
+			getexp 55560,52710;
+			close;
+		}
+	}
+	switch( checkquest(16079,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Mrs. Cacturon]";
+		mes "You need to stop what you're doing and look at it sometimes, or you'll miss important details.";
+		next;
+		mes "[Mrs. Cacturon]";
+		mes "As always, I'm grateful for your help, but you need to come back in the morning. Thanks.";
+		close;
+	case 2:
+		erasequest 16079;// Back for More Coyotes Tomorrow
+		break;
+	}
+	switch( checkquest(16080,HUNTING) ) {
+	case -1:
+		mes "Strange Adventurer, thank you for coming back.";
+		mes "You came to hunt coyotes for me, right?";
+		next;
+		if (select( "Yes.", "No, I came to talk." ) == 2) {
+			mes "[Mrs. Cacturon]";
+			mes "You're not as busy as usual, huh?";
+			mes "I'm not too busy myself either, thanks to you.";
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "Having something to do is a blessing.";
+			mes "We wake up in the morning, work to repay nature's gifts, and go to bed at night.";
+			emotion ET_DELIGHT;
+			next;
+			mes "[Mrs. Cacturon]";
+			mes "But of course, you need time to rest, like now. Working all day and not resting makes one's life dull.";
+			close;
+		}
+		mes "[Mrs. Cacturon]";
+		mes "As always, please hunt ^0000CD30 Coyotes^000000 for me.";
+		mes "Every night, they show up in groups, yipping as if to say we'd never be able to get rid of all of them.";
+		next;
+		mes "[Mrs. Cacturon]";
+		mes "But I believe one small change a day can eventually make a huge difference.";
+		mes "And you're making it possible. Thank you.";
+		setquest 16080;// Hunting Coyotes Again
+		close;
+	case 0:
+	case 1:
+		mes "[Mrs. Cacturon]";
+		mes "I asked you to hunt 30 Coyotes. How many did you hunt?";
+		mes "If you're tired, get some rest first. I don't want to burden you with my request.";
+		close;
+	case 2:
+		mes "[Mrs. Cacturon]";
+		mes "You came back from hunting. I'm not burdening you with this, am I?";
+		mes "Please keep hunting coyotes as often as you can. They'll be just as troublesome to you as they are to us if you plan to visit this place frequently.";
+		next;
+		mes "[Mrs. Cacturon]";
+		mes "This is the best I can do. I hope you'll like it. I'd like to thank you for your help on behalf of my family.";
+		erasequest 16080;// Hunting Coyotes Again
+		setquest 16079;// Back for More Coyotes Tomorrow
+		getitem 25250,2;// Rock Ridge Coin
+		getexp 55560,52710;
+		close;
+	}
+	end;
+
+// fix me : questinfo when main quest completed only, playtime 2 or hunting 2
+}
+
+rockrdg1,339,134,3	script	Little Lecter#rrrem02	10222,{
+	if (isbegin_quest(16078) > 0) {
+		mes "[Little Lecter]";
+		mes "I love agave-flavored juice. I want to drink it every day.";
+		next;
+		mes "[Little Lecter]";
+		mes "Agave juice? Do you mean my favorite agave-flavored juice?";
+		close;
+	}
+	mes "[Little Lecter]";
+	mes "Mom said she'd bring me agave-flavored juice. My agave-flavored juice...";
+	close;
+}
+
+function	script	F_cacturon	{
+	if (checkweight(501,1) == 0) {
+		mes "- A tattered fabric pouch is half buried in the mound of sand, but I'm carrying too much to examine it. I'd better lighten my bag first. -";
+		close;
+	}
+	.@quest_id = getarg(0);
+	if (isbegin_quest(16078) == 1 && isbegin_quest(.@quest_id) == 0 && countitem(25246) < 5) {
+		mes "- A tattered fabric pouch is half buried in the mound of sand. It could be Mrs. Cacturon's juice mix package. -";
+		next;
+		if (getarg(1) == true) {
+			mes "- I moved close and picked up the pouch. It has the juice mix brand logo on it. Fortunately, it's not torn. -";
+			next;
+			mes "- I shook the sand off the pouch and put it in my bag. -";
+			getitem 25246,1;// Juice Mix Package
+			setquest .@quest_id;// Discovered Suspicious Sand Pile
+			completequest .@quest_id;// Discovered Suspicious Sand Pile
+			if (countitem(25246) > 4) {
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
+				mes "This should be enough. I'd better return to the village and report to her.";
+			}
+			if (checkquest(16078,HUNTING) < 2) {
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Oh, right? I also need to hunt 30 Coyotes.";
+			}
+		}
+		else {
+			mes "- I picked up the pouch. Sweet-smelling powder started pouring out through the tears at the bottom. -";
+			next;
+			mes "- It's not usable. I'll just have to leave it and look for another one. -";
+			setquest .@quest_id;// Discovered Suspicious Sand Pile
+			completequest .@quest_id;// Discovered Suspicious Sand Pile
+		}
+		if (getstrlen(strnpcinfo(2)) < 3)
+			.@string$ = "_bis";
+		classchange( HIDDEN_WARP_NPC, "Suspicious Sand Mound#" + strnpcinfo(2) + .@string$, bc_self );
+		close;
+	}
+	mes "- Someone must have piled this mound of sand. -";
+	close;
+}
+
+rockrdg1,182,124,3	script	Suspicious Sand Mound#r1	4_ENERGY_RED,{ F_cacturon( 16082,true ); }
+rockrdg1,149,103,3	script	Suspicious Sand Mound#r4	4_ENERGY_RED,{ F_cacturon( 16089,true ); }
+rockrdg1,122,243,3	script	Suspicious Sand Mound#r6	4_ENERGY_RED,{ F_cacturon( 16091,true ); }
+rockrdg1,77,259,3	script	Suspicious Sand Mound#r10	4_ENERGY_RED,{ F_cacturon( 16095,true ); }
+
+rockrdg1,286,247,3	script	Suspicious Sand Mound#r2	4_ENERGY_RED,{ F_cacturon( 16084,false ); }
+rockrdg1,202,246,3	script	Suspicious Sand Mound#r3	4_ENERGY_RED,{ F_cacturon( 16086,false ); }
+rockrdg1,96,141,3	script	Suspicious Sand Mound#r5	4_ENERGY_RED,{ F_cacturon( 16090,false ); }
+rockrdg1,330,240,3	script	Suspicious Sand Mound#r7	4_ENERGY_RED,{ F_cacturon( 16092,false ); }
+rockrdg1,242,287,3	script	Suspicious Sand Mound#r8	4_ENERGY_RED,{ F_cacturon( 16093,false ); }
+rockrdg1,89,216,3	script	Suspicious Sand Mound#r9	4_ENERGY_RED,{ F_cacturon( 16094,false ); }
+
+rockrdg1,146,164,1	script	Wasteland Cactuten#rrem	4_ENERGY_RED,{
+	if (isbegin_quest(16078) == 1 && isbegin_quest(16083) == 0 && countitem(25246) < 5) {
+		mes "[Wasteland Cactuten]";
+		mes "Why, haven't you seen a Cactus in this wasteland before? I'm busy. Go on your way.";
+		next;
+		select("Ask if he's seen a juice mix package.");
+		mes "[" + strcharinfo(0) + "]";
+		mes "Have you seen some juice mix packages around here?";
+		next;
+		mes "[Wasteland Cactuten]";
+		mes "Juice mix package? If you're talking about the package I found stuck in between rocks, then yes, I have.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It's Mrs. Cacturon's. Let me bring it back to her.";
+		next;
+		mes "[Wasteland Cactuten]";
+		mes "No. Why would I give you something Cacturon has lost?";
+		next;
+		if (select( "Threaten him.", "Persuade him." ) == 1) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I'm here on her behalf. If you keep being stubborn,";
+			mes "then I'll have to use force.";
+			next;
+			mes "[Wasteland Cactuten]";
+			mes "Blood will have blood, and I don't want that. You can have the package, stranger.";
+			mes "But Cacturon should be ashamed of herself for trusting thugs like you.";
+			next;
+			mes "- I've got the juice mix package, but I feel bad that I threatened him to get them. -";
+		}
+		else {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I've been looking for some juice mix packages because I know someone has lost them.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "And this one of them, and it doesn't belong to you.";
+			next;
+			mes "[Wasteland Cactuten]";
+			mes "You're right. It doesn't belong to me.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Then why don't you let me bring it back to its owner? Mrs. Cacturon's child is upset because he can't have his favorite juice. I only want him to be happy.";
+			next;
+			mes "[Wasteland Cactuten]";
+			mes "Mm... Your logic isn't completely flawless, but at least it proves that you know Cacturon and Lecter.";
+			next;
+			mes "[Wasteland Cactuten]";
+			mes "Okay, I'll give it to you. But if I find out you lied to me, I'll see that you pay for betraying a Cactus's trust.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I swear I'm not lying.";
+			next;
+			mes "- I've got the juice mix package. -";
+		}
+		getitem 25246,1;// Juice Mix Package
+		setquest 16083;// Discovered Wasteland Cactuten
+		erasequest 16083;// Discovered Wasteland Cactuten
+		if (countitem(25246) > 4) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
+			mes "This should be enough. I'd better return to the village and report to her.";
+		}
+		if (checkquest(16078,HUNTING) < 2) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, right? I also need to hunt 30 Coyotes.";
+		}
+		close;
+	}
+	mes "[Wasteland Cactuten]";
+	mes "Why, haven't you seen a Cactus in this wasteland before? I'm busy. Go on your way.";
+	close;
+}
+
+rockrdg1,195,183,3	script	Curious Coyote#rremef03	4_ENERGY_RED,{
+	if (isbegin_quest(16078) == 1 && isbegin_quest(16085) == 0 && countitem(25246) < 5) {
+		mes "- A coyote has something in its mouth and it's shaking its head, playing with the thing. It could be Mrs. Cacturon's juice mix package. -";
+		next;
+		mes "- Maybe I should yell and scare it away. What should I yell? -";
+		input .@string$;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "*Clear throat* " + .@string$ + "!";
+		next;
+		mes "[Curious Coyote]";
+		mes "YIP!";
+		next;
+		mes "- Startled, the coyote scuttled backward. I moved close to check what it dropped. It's a juice mix package! -";
+		getitem 25246,1;// Juice_Mix_Package
+		setquest 16085;// Discovered Coyote
+		completequest 16085;// Discovered Coyote
+		if (countitem(25246) > 4) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
+			mes "This should be enough. I'd better return to the village and report to her.";
+		}
+		if (checkquest(16078,HUNTING) < 2) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, right? I also need to hunt 30 Coyotes.";
+		}
+		close;
+	}
+}
+
+rockrdg1,195,183,3	script	Curious Coyote#rrem05	3739,{ end; }
+
+rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,{
+	if (isbegin_quest(16078) == 1 && isbegin_quest(16087) == 0 && countitem(25246) < 5) {
+		mes "[Cactus Girl]";
+		mes "Stranger...";
+		mes "Don't come near me, or else.";
+		emotion ET_ANGER;
+		next;
+		select("Have you seen some juice mix packages?");
+		mes "[" + strcharinfo(0) + "]";
+		mes "Have you seen some juice mix packages around here?";
+		next;
+		mes "[Cactus Girl]";
+		mes "Juice mix package?";
+		mes "...Are you looking for this? I've found it buried in the sand.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That's it. Mrs. Cacturon has lost it. Let me bring it back to her.";
+		next;
+		mes "[Cactus Girl]";
+		mes "...";
+		mes "...I see.";
+		mes "You said Mrs. Cacturon has lost it. Who are you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I'm an adventurer, and I'm here on her behalf.";
+		mes "If you don't believe me, then you can go to the village and talk to her.";
+		next;
+		mes "[Cactus Girl]";
+		mes "*Snort* Do you think I'm stupid? If you're a thief, you wouldn't be here by the time I come back from the village.";
+		mes "Here, take it.";
+		emotion ET_HNG;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Are you just going to give it to me?";
+		next;
+		mes "[Cactus Girl]";
+		mes "You said Mrs. Cacturon sent you, and I trust her. Why, do you want me to give you a hard time?";
+		emotion ET_QUESTION;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No. Thank you for giving it to me.";
+		next;
+		mes "- I've received the juice mix package from the Cactus girl. -";
+		getitem 25246,1;// Juice_Mix_Package
+		setquest 16087;// Discovered Cactus Girl
+		completequest 16087;// Discovered Cactus Girl
+		if (countitem(25246) > 4) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
+			mes "This should be enough. I'd better return to the village and report to her.";
+		}
+		if (checkquest(16078,HUNTING) < 2) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, right? I also need to hunt 30 Coyotes.";
+		}
+		close;
+	}
+	mes "[Cactus Girl]";
+	mes "Stranger...";
+	mes "Don't come near me, or else.";
+	emotion ET_ANGER;
+	close;
+}
+
+rockrdg1,266,219,3	script	Absorbed Coyote#rrem06	3739,{
+	if (isbegin_quest(16078) == 1 && isbegin_quest(16088) == 0 && countitem(25246) < 5) {
+		mes "- A coyote is so absorbed in playing with something in its mouth that it doesn't know I'm near. Maybe it has Mr. Cacturon's juice mix package. -";
+		next;
+		mes "- Maybe I should yell and scare it away. What should I yell? -";
+		input .@string$;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "*Inhale deeply* " + .@string$ + "!";
+		next;
+		mes "[Absorbed Coyote]";
+		mes "YIP!";
+		next;
+		mes "- Startled, the coyote scuttled backward. I moved close to check what it dropped. It's a juice mix package! -";
+		getitem 25246,1;// Juice_Mix_Package
+		setquest 16088;// Discovered Coyote
+		completequest 16088;// Discovered Coyote
+		if (countitem(25246) > 4) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Even Mrs. Cacturon doesn't think she could get all seven packages back.";
+			mes "This should be enough. I'd better return to the village and report to her.";
+		}
+		if (checkquest(16078,HUNTING) < 2) {
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Oh, right? I also need to hunt 30 Coyotes.";
+		}
+		close;
+	}
+}
+
+rockrdg1,182,124,3	duplicate(Suspicious Sand Mound#r1)	Suspicious Sand Mound#r1_bis	4_SOIL
+rockrdg1,286,247,3	duplicate(Suspicious Sand Mound#r2)	Suspicious Sand Mound#r2_bis	4_SOIL
+rockrdg1,202,246,3	duplicate(Suspicious Sand Mound#r3)	Suspicious Sand Mound#r3_bis	4_SOIL
+rockrdg1,149,103,3	duplicate(Suspicious Sand Mound#r4)	Suspicious Sand Mound#r4_bis	4_SOIL
+rockrdg1,96,141,3	duplicate(Suspicious Sand Mound#r5)	Suspicious Sand Mound#r5_bis	4_SOIL
+rockrdg1,122,243,3	duplicate(Suspicious Sand Mound#r6)	Suspicious Sand Mound#r6_bis	4_SOIL
+rockrdg1,330,240,3	duplicate(Suspicious Sand Mound#r7)	Suspicious Sand Mound#r7_bis	4_SOIL
+rockrdg1,242,287,3	duplicate(Suspicious Sand Mound#r8)	Suspicious Sand Mound#r8_bis	4_SOIL
+rockrdg1,89,216,3	duplicate(Suspicious Sand Mound#r9)	Suspicious Sand Mound#r9_bis	4_SOIL
+rockrdg1,77,259,3	duplicate(Suspicious Sand Mound#r10)	Suspicious Sand Mound#r10_bis	4_SOIL
+
+
+// Collecting Ore Fragments
+rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
+	mes "[Crouched Horse]";
+	mes "Hello.";
+	mes "May the sun and earth";
+	mes "bless you.";
+	next;
+	mes "[Crouched Horse]";
+	if (rock_main_quest < 22) {
+		mes "You're one of those strangers from a far land.";
+		mes "I'm Crouched Horse,";
+		mes "a brave warrior of the Cacti.";
+		next;
+		mes "[Crouched Horse]";
+		mes "Not everything in your village";
+		mes "has settled.";
+		mes "There's a time for everything.";
+		mes "Go back and";
+		mes "help your village get settled first.";
+		close;
+	}
+	switch( checkquest(9461,PLAYTIME) ) {
+	case -1:
+		if (isbegin_quest(9460) == 0) {// first time
+			mes "You're one of those strangers from a far land.";
+			mes "I'm Crouched Horse,";
+			mes "a brave warrior of the Cacti.";
+			next;
+			mes "[Crouched Horse]";
+			mes "You've resolved";
+			mes "one of the greatest challenges your village faced.";
+			mes "I applaud you for your bravery and wisdom.";
+			next;
+			mes "[Crouched Horse]";
+			mes "If you're not busy,";
+			mes "could you also help my village?";
+			mes "It's not difficult.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "- What can I do for you?";
+			next;
+			mes "[Crouched Horse]";
+			mes "This place";
+			mes "has been";
+			mes "our home";
+			mes "for many,";
+			mes "many generations.";
+			next;
+			mes "[Crouched Horse]";
+			mes "And for a long time,";
+			mes "we lived in harmony with nature.";
+			mes "Then a few years ago";
+			mes "you came from a far land.";
+			mes "Your way of life";
+			mes "was different from ours.";
+			next;
+			mes "[Crouched Horse]";
+			mes "We repay Nature";
+			mes "for her gifts,";
+			mes "and we don't take";
+			mes "more than we need.";
+			next;
+			mes "[Crouched Horse]";
+			mes "But you do.";
+			mes "You liked to";
+			mes "take more things";
+			mes "than what you need.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "- Because we're greedy,";
+			mes "- and I'm ashamed of it.";
+			next;
+			mes "[Crouched Horse]";
+			mes "I'm not trying to blame you.";
+			mes "It's just that";
+			mes "you take so much";
+			mes "that there's";
+			mes "nothing left";
+			mes "for us.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "- What do you need?";
+			mes "- How can I help?";
+			next;
+			mes "[Crouched Horse]";
+			mes "If you find purple ore fragments";
+			mes "while exploring this land,";
+			mes "I'd like you to";
+			mes "bring them to me.";
+			next;
+			mes "[Crouched Horse]";
+			mes "Since you opened the mine,";
+			mes "we've been having a hard time";
+			mes "finding the ores.";
+			mes "Say, can you do that?";
+			next;
+			if (select( "Mm, not now.", "Sure thing. I'll be right back." ) == 2) {
+				mes "[Crouched Horse]";
+				mes "Oh, I see.";
+				mes "Hm... I understand.";
+				mes "You can come back when you're not busy.";
+				close;
+			}
+			mes "[Crouched Horse]";
+			mes "Oh, thank you!";
+			mes "You can find";
+			mes "purple ore fragments";
+			mes "while hunting in this area.";
+			mes "Just bring me 10. That's all I need.";
+			next;
+			mes "[Crouched Horse]";
+			mes "Thank you.";
+			mes "May the sun and earth bless you!";
+			setquest 9460;// Collecting Ore Fragments
+			close;
+		}
+		mes "Ah, you're back.";
+		mes "Did you find the ore fragments I asked?";
+		next;
+		if (countitem(25260) < 10) {
+			mes "[Crouched Horse]";
+			mes "Hm, you don't have";
+			mes "all of them.";
+			mes "You can find them";
+			mes "from coyotes";
+			mes "and the Buffalo Bandits.";
+			close;
+		}
+		mes "[" + strcharinfo(0) + "]";
+		mes "- Yes, I did.";
+		next;
+		mes "[Crouched Horse]";
+		mes "I don't feel good about";
+		mes "having to sacrifice";
+		mes "others";
+		mes "for my own sake.";
+		mes "Thank you for doing this for me.";
+		next;
+		mes "[Crouched Horse]";
+		mes "Please take this small token of my appreciation.";
+		mes "I've received it from your village,";
+		mes "and I don't need it.";
+		next;
+		mes "[Crouched Horse]";
+		mes "Hm, you've brought";
+		mes "more than";
+		mes "I asked.";
+		mes "I know you mean well,";
+		mes "but I don't need so many.";
+		delitem 25260, countitem(25260);// Fragment_of_Purple_Ore
+		erasequest 9460;// Collecting Ore Fragments
+		setquest 9461;// Enough Ores
+		getexp 25000,20000;
+		getitem 25250,1;// Rock_Ridge_Coin
+		next;
+		mes "[Crouched Horse]";
+		mes "Next time,";
+		mes "please just bring";
+		mes "as many as I ask.";
+		mes "But thanks.";
+		close;
+	case 0:
+	case 1:
+		mes "For now,";
+		mes "I don't need more ores.";
+		mes "But I will";
+		mes "when the sun comes up tomorrow.";
+		close;
+	case 2:
+		mes "Ah, it's you.";
+		mes "I'm running out of";
+		mes "the ores.";
+		mes "Say, could you";
+		mes "help me again?";
+		next;
+		if (select( "Not this time.", "Sure thing. It'd be my pleasure." ) == 1) {
+			mes "[Crouched Horse]";
+			mes "Oh, I see.";
+			mes "Hm... I understand.";
+			mes "Feel free to come back if you change your mind.";
+			close;
+		}
+		mes "[Crouched Horse]";
+		mes "Oh, thank you!";
+		mes "You're as reliable as I thought.";
+		erasequest 9461;// Enough Ores
+		setquest 9460;// Collecting Ore Fragments
+		close;
+	}
+}
+
+// Collect / hunt quests
+harboro1,231,254,3	script	Exotic Merchant	1_M_MERCHANT,{
+	switch( checkquest(12411,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Exotic Merchant]";
+		mes "Oh, I close today. Come back tomorrow.";
+		close;
+	case 2:
+		erasequest 12411;// Come Back Tomorrow
+		break;
+	}
+	if (isbegin_quest(12410) == 0) {
+		mes "[Exotic Merchant]";
+		mes "Nice to meet you.";
+		mes "I'm Abraham Iven Hudin. I'm originally from different country.";
+		next;
+		mes "[Exotic Merchant]";
+		mes "So you have things that I might have interest in on buying?";
+		next;
+		if (select( "What kinds of things?", "I'm not selling anything!" ) == 2) {
+			mes "[Exotic Merchant]";
+			mes "Whoa, whoa! Adventurer is violent. I not do business with barbarians.";
+			close;
+		}
+		mes "[Exotic Merchant]";
+		mes "I travels the world and bought valuable things. This time I collecting specialty products of this new continent.";
+		next;
+		select("(I can barely understand his English.)");
+		mes "[Exotic Merchant]";
+		mes "Mm? What have you said?";
+		next;
+		if (select( "Nothing. Go on.", "I said I can't understand what you're saying." ) == 2) {
+			mes "[Exotic Merchant]";
+			mes "Adventurer have a cold heart!";
+			close;
+		}
+		mes "[Exotic Merchant]";
+		mes "Anyway, I looking for things that can only find in this place. If you found them, gimme them.";
+		next;
+		mes "[Exotic Merchant]";
+		mes "I'll pay you good. You welcomes all the time.";
+		setquest 12410;
+		completequest 12410;
+		close;
+	}
+	mes "[Exotic Merchant]";
+	mes "What have you brought my today?";
+	next;
+	setarray .@item_id[0],
+		25276,	// Clean Bones
+		25277,	// Not enough Deadly Poison Powders
+		25279,	// Crude Gunpowders
+		25278,	// Bandit's Scarves
+		25283,	// Brown Mufflers
+		25280,	// Broken Shotguns
+		25282,	// Worn Revolvers
+		25281,	// Crude Scimitars
+		25284,	// Swamp Bug Shells
+		25285;	// Brown Rat Tails"
+	.@size = getarraysize(.@item_id);
+	for ( .@i = 0; .@i < .@size; .@i++ ) {
+		if (countitem(.@item_id[.@i]) < 5)
+			.@menu$ += "^777777Not enough " + getitemname(.@item_id[.@i]) + "^000000";
+		else
+			.@menu$ += "" + .@item_id[.@i];
+	}
+
+	.@s = select( "Cancel:" + .@menu$ ) - 2;
+	if (.@s == -1) {
+		mes "[Exotic Merchant]";
+		mes "Mm, do you want your things back?";
+		close;
+	}
+	if (countitem(.@item_id[.@s]) < 5) {
+		mes "[Exotic Merchant]";
+		mes "Mm? Where are they? The things you said will give me.";
+		close;
+	}
+	delitem .@item_id[.@s],5;
+	getitem 25250,2;// Rock Ridge Coin
+	getexp 20000,18000;
+	setquest 12411;// Come Back Tomorrow
+	mes "[Exotic Merchant]";
+	mes "It good business. These I didn't see anywhere else. I like them very much!";
+	close;
+}
+
+harboro1,357,163,3	script	Food Distributer	4_COOK,{
+	if (BaseLevel < 100) {
+		mes "[Food Distributer]";
+		mes "What? I don't have enough food for you!";
+		close;
+	}
+	if (isbegin_quest(12381) == 0) {// first time
+		mes "[Food Distributer]";
+		mes "Hey, don't you see the line over there? I don't care who you are? go stand in line if you want to eat.";
+		next;
+		if (select( "I'm not here to eat.", "I'll stand in line." ) == 2) {
+			mes "[Food Distributer]";
+			mes "*Snort* You'd better.";
+			close;
+		}
+		mes "[Food Distributer]";
+		mes "You're not here to eat. Err, is that...? Ah, my apologies.";
+		next;
+		mes "[Food Distributer]";
+		mes "Wait, then why are you bothering me? Can't you see I'm upset because of the missing shipment?";
+		next;
+		if (select( "What missing shipment?", "That's your business." ) == 2) {
+			mes "[Food Distributer]";
+			mes "Grr, you're a jerk. I don't have time for this. Get out of here!";
+			close;
+		}
+		mes "[Food Distributer]";
+		mes "Look at that. Those people have been waiting for their food for hours. How can I tell them that I don't have enough ingredients to cook for them?";
+		next;
+		mes "[Food Distributer]";
+		mes "The food ingredients that were supposed to come from Midgard didn't arrive, and I can't keep these people waiting.";
+		next;
+		if (select( "Why don't you procure some ingredients from the outside?", "I'm sorry to hear that. Good luck." ) == 2) {
+			mes "[Food Distributer]";
+			mes "Grr, you're a jerk. I don't have time for this. Get out of here!";
+			close;
+		}
+		mes "[Food Distributer]";
+		mes "I thought about it. I was desperate enough to try anything.";
+		next;
+		mes "[Food Distributer]";
+		mes "But there are only sand and rocks out there, and nothing edible. I can't believe I thought I could run a kitchen in a place like this.";
+		next;
+		mes "[Hungry Laborer]";
+		mes "^990000Wait, did you just say you have no ingredients? You ran out of them?^000000";
+		npctalk "Hungry Laborer: Wait, did you just say you have no ingredients? You ran out of food?", "Hungry Laborer#12";
+		next;
+		mes "[Food Distributer]";
+		mes "^990000No, I didn't say that! It's just taking a little longer to cook today. Stop panicking!^000000";
+		npctalk "Food Distributer: No, I didn't say that! It's just taking a little longer to cook today. Stop panicking!";
+		next;
+		if (select( "I can help.", "Good luck." ) == 2) {
+			mes "[Food Distributer]";
+			mes "Grr, you're a jerk. I don't have time for this. Get out of here!";
+			close;
+		}
+		mes "[Food Distributer]";
+		mes "You can help. How?";
+		next;
+		select( "You need food ingredients, don't you?", "That depends on you." );
+		mes "[Food Distributer]";
+		mes "Alright, then let's do this. I'll jot down everything I need. Can you bring them from Midgard?";
+		next;
+		select( "Sure thing.", "It'd be a waste of my time if I say no now." );
+		mes "[Food Distributer]";
+		mes "Good! We've made a deal. I need some time to take inventory. Talk to me again later.";
+		setquest 12381;// New Continent's Food Supplier
+		completequest 12381;
+		close;
+	}
+	switch( checkquest(12382,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Food Distributer]";
+		mes "This should be enough for the day today.";
+		close;
+	case 2:
+		erasequest 12382;
+		break;
+	}
+	for ( .@quest_id = 12383; .@quest_id <= 12388 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
+		continue;
+	switch(.@quest_id) {// S_Food : give infos / completed
+	case 12383: callsub( S_Food, .@quest_id, 516,160 );	// Sweet Potatoes
+	case 12384: callsub( S_Food, .@quest_id, 517,50 );	// Meats
+	case 12385: callsub( S_Food, .@quest_id, 515,160 );	// Carrots
+	case 12386: callsub( S_Food, .@quest_id, 513,160 );	// Bananas
+	case 12387: callsub( S_Food, .@quest_id, 535,160 );	// Pumpkins
+	case 12388: callsub( S_Food, .@quest_id, 581,60 );	// Mushrooms
+	default:
+		break;
+	}
+	mes "[Food Distributer]";
+	mes "Aww, here's the list of ingredients I need. Bring them quickly, will you?";
+	next;
+	if (select( "Sure thing.", "Sorry, I'm busy." ) == 2) {
+		mes "[Food Distributer]";
+		mes "Oh, come on. Help me out here. People are starving.";
+		close;
+	}
+	switch( rand(12383,12388) ) {
+	case 12383:
+		setquest 12383;// Sweet Potato Delivery
+		mes "[Food Distributer]";
+		mes "Sweet potato croquettes are on the menu today, and I can't make them because I didn't get the regular shipment from the mainland.";
+		next;
+		mes "[Food Distributer]";
+		mes "Bring me 160 <ITEM>Sweet Potatoes<INFO>516</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	case 12384:
+		setquest 12384;// Meat Delivery
+		mes "[Food Distributer]";
+		mes "There are so many mouths to feed, and yet I've got no meat? This is disaster!";
+		next;
+		mes "[Food Distributer]";
+		mes "What? I could always feed them veggies, you say? Sure, but all they want is meat.";
+		next;
+		mes "[Food Distributer]";
+		mes "Bring me 50 <ITEM>Meats<INFO>517</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	case 12385:
+		setquest 12385;// Carrot Delivery
+		mes "[Food Distributer]";
+		mes "Have you seen the carrots growing in the garden in the back?";
+		next;
+		mes "[Food Distributer]";
+		mes "They're as thin as fingers, and once I almost put my fingers into a stew instead of them.";
+		next;
+		mes "[Food Distributer]";
+		mes "Bring me 160 <ITEM>Carrots<INFO>515</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	case 12386:
+		setquest 12386;// Banana Delivery
+		mes "[Food Distributer]";
+		mes "I shouldn't have put that banana bread on the menu. Who knew they wouldn't arrive in time?";
+		next;
+		mes "[Food Distributer]";
+		mes "Bring me 160 <ITEM>Bananas<INFO>513</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	case 12387:
+		setquest 12387;// Pumpkin Delivery
+		mes "[Food Distributer]";
+		mes "I have to cook a pumpkin stew, but I don't have pumpkins. This is the equivalent of making toast without bread.";
+		next;
+		mes "[Food Distributer]";
+		mes "Bring me 160 <ITEM>Pumpkins<INFO>535</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	case 12388:
+		setquest 12388;// Mushroom Delivery
+		mes "[Food Distributer]";
+		mes "The only thing I can cook with the ingredients I have is mushroom soup, but I don't have the main ingredient: mushrooms.";
+		next;
+		mes "[Food Distributer]";
+		mes "Bring me 60 <ITEM>Mushrooms<INFO>581</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	}
+	end;
+
+S_Food:
+	.@item_id = getarg(1);
+	.@amount = getarg(2);
+	if (countitem(.@item_id) < .@amount) {
+		mes "[Food Distributer]";
+		mes "Bring me " + .@amount + " <ITEM>" + getitemname(.@item_id) + "<INFO>" + .@item_id + "</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		close;
+	}
+	delitem .@item_id, .@amount;
+	getitem 25250,1;// Rock Ridge Coin
+	getexp 16000,12800;
+	erasequest getarg(0);
+	setquest 12382;// Distributing Food
+	mes "[Food Distributer]";
+	mes "Whew, thank you. This should be enough for the day today.";
+	close;
+}
+
+harboro1,352,196,5	script	Hungry Laborer#2	4W_M_02,{ end; }
+harboro1,352,193,5	duplicate(Hungry Laborer#2)	Hungry Laborer#3	4_M_EINMAN
+harboro1,352,190,5	duplicate(Hungry Laborer#2)	Hungry Laborer#4	4W_SAILOR
+harboro1,352,184,5	duplicate(Hungry Laborer#2)	Hungry Laborer#6	4W_M_03
+harboro1,352,181,5	duplicate(Hungry Laborer#2)	Hungry Laborer#7	4_F_EINOLD
+harboro1,352,175,5	duplicate(Hungry Laborer#2)	Hungry Laborer#9	4W_M_03
+harboro1,352,172,5	duplicate(Hungry Laborer#2)	Hungry Laborer#10	4W_M_02
+harboro1,353,166,5	duplicate(Hungry Laborer#2)	Hungry Laborer#12	4W_M_03
+
+harboro1,354,149,7	script	Enthusiastic Job Seeker#1	4_M_JOB_KNIGHT1,{ end; }
+harboro1,345,149,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#2	4_M_JOB_KNIGHT2
+harboro1,350,149,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#3	4_M_MONK
+harboro1,348,148,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#4	4_M_MONK
+harboro1,346,157,6	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#5	4_M_JOB_HUNTER
+harboro1,349,157,6	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#6	4_M_JOB_KNIGHT2
+harboro1,353,156,6	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#7	4_M_SAGE_C
+harboro1,347,155,6	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#8	4_M_JOB_KNIGHT1
+harboro1,351,154,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#9	4_M_JOB_WIZARD
+harboro1,354,153,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#10	4_M_JOB_HUNTER
+harboro1,347,151,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#11	4_M_JOB_HUNTER
+harboro1,352,150,7	duplicate(Enthusiastic Job Seeker#1)	Enthusiastic Job Seeker#12	4_M_JOB_WIZARD
+
+harboro1,352,154,0	script	#r_q1	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	.@r = rand(5);
+	if (.@r == 0) npctalk "Enthusiastic Job Seeker: Why wouldn't you accept me? I'm strong enough to hunt coyotes out there!", "Enthusiastic Job Seeker#2";
+	else if (.@r == 1) npctalk "Enthusiastic Job Seeker: Join a Buffalo Bandit/Coyote subjugation party. Those who can finish them in 5 minutes are welcome.", "Enthusiastic Job Seeker#3";
+	else if (.@r == 2) npctalk "Hey, you're in my space. Move away, will you?", "Enthusiastic Job Seeker#4";
+	else if (.@r == 3) npctalk "Enthusiastic Job Seeker: I'm ready to work right away. Why don't you hire me?", "Enthusiastic Job Seeker#5";
+	else npctalk "Enthusiastic Job Seeker: Did you just get here, fresh off the boat? Stop pacing around?you're getting on my nerves.", "Enthusiastic Job Seeker#11";
+	end;
+}
+
+harboro1,357,155,3	script	Steel Vigilante#1	4_M_MASKMAN,{
+	if (BaseLevel < 100) {
+		mes "[Steel Vigilante]";
+		mes "Sorry, but we need someone stronger than you.";
+		close;
+	}
+	if (isbegin_quest(12389) == 0) {// first time
+		mes "[Steel Vigilante]";
+		mes "Hey, buddy. You look pretty strong. You're here to work, right?";
+		next;
+		select("No. I'm just a tourist.");
+		mes "[Steel Vigilante]";
+		mes "Come on, don't be so heartless. I'm trying to strike up a conversation here. I've got a proposition that you might be interested. What do you say?";
+		next;
+		if (select( "Alright, let me hear it.", "No, thanks." ) == 2) {
+			mes "[Steel Vigilante]";
+			mes "Oh, you don't. *Smacks his lips* How disappointing!";
+			close;
+		}
+		mes "[Steel Vigilante]";
+		mes "Ah, so you're not as snobbish as I thought.";
+		next;
+		mes "[Steel Vigilante]";
+		mes "For Rock Ridge to become a transport hub, the monsters that live around it have got to go, but we can't find the right people for the job.";
+		next;
+		select("What about all these people?");
+		mes "[Steel Vigilante]";
+		mes "*Snort* These? Yeah, we thought they were good enough until we realized how strong the monsters out there were.";
+		next;
+		mes "[Steel Vigilante]";
+		mes "None of these guys would come back alive, let alone earn their keep. And then we'd have to go out there to collect their remains, which is doubly bad for us.";
+		next;
+		mes "[Steel Vigilante]";
+		mes "Then I saw you, and you stood out like a wolf among sheep. That is, you've passed! Congratulations!";
+		next;
+		select("I never said I wanted to work with you.");
+		mes "[Steel Vigilante]";
+		mes "Ah, come on, don't be like that. Help this poor man out here.";
+		next;
+		if (select( "Okay.", "Let me think." ) == 2) {
+			mes "[Steel Vigilante]";
+			mes "Okay, okay, I understand if you're busy. But I'm offering you benefits both of us.";
+			next;
+		}
+		mes "[Steel Vigilante]";
+		mes "How about I show you the list of things you could do for us? If you're interested, come back later. I promise I'll pay you generously.";
+		setquest 12389;// Guardian of Rock Ridge
+		completequest 12389;// Guardian of Rock Ridge
+		close;
+	}
+	switch( checkquest(12390,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Steel Vigilante]";
+		mes "The worst is over. I'll need your help again. Save your energy until then, alright?";
+		close;
+	case 2:
+		erasequest 12390;
+		break;
+	}
+	for ( .@quest_id = 12391; .@quest_id <= 12396 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
+		continue;
+	if (.@quest_id > 12396) {
+		.@quest_id = rand(12391,12396);
+		setquest .@quest_id;
+	}
+	else {
+		mes "[Steel Vigilante]";
+		mes "Did you forget what you have to do? Then, I'll tell you again.";
+		next;
+	}
+	if (checkquest(.@quest_id,HUNTING) < 2) {
+		switch(.@quest_id) {
+		case 12391:// Buffaloes with Rifles
+			mes "[Steel Vigilante]";
+			mes "The biggest threat in the fields around here is the Buffalo Bandits. They're smart and ruthless, and they won't listen to reason.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "And they've been invading this village every so often, as if to test how long we could last.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "We want to set an example and keep them in check. Get rid of ^0000ff15 Buffalo Bandits with rifles^000000.";
+			break;
+		case 12392:// Punishing the Red Masks
+			mes "[Steel Vigilante]";
+			mes "The biggest threat in the fields around here is the Buffalo Bandits. They're smart and ruthless, and they won't listen to reason.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "And they've been invading this village every so often, as if to test how long we could last.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "We want to set an example and keep them in check. Get rid of ^0000ff15 Buffalo Bandits wearing red masks^000000.";
+			break;
+		case 12393:// Eye Patch Desperadoes
+			mes "[Steel Vigilante]";
+			mes "The biggest threat in the fields around here is the Buffalo Bandits. They're smart and ruthless, and they won't listen to reason.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "And they've been invading this village every so often, as if to test how long we could last.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "We want to set an example and keep them in check. Get rid of ^0000ff15 Buffalo Bandits wearing an eye patch^000000.";
+			break;
+		case 12394:// Exterminate Gray Four-legged Beasts
+			mes "[Steel Vigilante]";
+			mes "Did you forget what you have to do? Then, I'll tell you again.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "The Cacti and the members of this village are on good terms, and recently more coyotes have been seen along the road that leads to their village.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "Coyotes aren't aggressive, but they still keep the Cacti from coming in and out of their village freely.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "Please hunt ^0000ff20 Coyotes^000000 and help our friends.";
+			break;
+		case 12395:// Exterminate Swamp Arclouzes
+			mes "[Steel Vigilante]";
+			mes "The workers who were sent down to the basement of the village went missing one after another, so we investigated. We believe they were killed by monsters.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "Swamp Arclouzes are fast, carnivorous insects living down there, and their number has been increasing at such an alarming rate that workers now refuse to go in there to work.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "If you have business down there, please exterminate 10 ^0000ffSwamp Arclouzes^000000.";
+			break;
+		case 12396:// Exterminate Brown Rats
+			mes "[Steel Vigilante]";
+			mes "The bodies of the workers who went missing in the basement have been found. They were mangled so badly that even their families had a hard time recognizing them.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "I think they were killed by brown rats that thrive in the basement. Rumor has it they even attack living people, and if it holds true, that's serious.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "If you have business in the basement, please exterminate 10 ^0000ffBrown Rats^000000.";
+			break;
+		}
+		close2;
+		.@r = rand(5);
+		if (.@r == 0) npctalk "Enthusiastic Job Seeker: You can't show favoritism!", "Enthusiastic Job Seeker#2";
+		else if (.@r == 1) npctalk "Enthusiastic Job Seeker: Hunting coyotes? Please let me join you.", "Enthusiastic Job Seeker#3";
+		else if (.@r == 2) npctalk "Enthusiastic Job Seeker: Hey, what about us?!", "Enthusiastic Job Seeker#9";
+		else if (.@r == 3) npctalk "Enthusiastic Job Seeker: This is unfair!", "Enthusiastic Job Seeker#8";
+		else npctalk "Enthusiastic Job Seeker: I want to work, too!", "Enthusiastic Job Seeker#11";
+		end;
+	}
+	getexp 8640,0;	// fix me: seem to be (base exp = count * mob base exp, job exp = count * mob job exp)
+	getitem 25250,2;// Rock Ridge Coin
+	erasequest .@quest_id;
+	setquest 12390;// Relieved for Now
+	mes "[Steel Vigilante]";
+	mes "You're amazing? I didn't know you could really do this! Thanks!";
+	close;
+}
+
+harboro1,357,152,3	script	Steel Vigilante#2	4_M_ACROSS,{
+	if (BaseLevel < 140) {
+		mes "[Steel Vigilante]";
+		mes "Hah hah, thank you for your interest, but we're not desperate enough to need help from little kids like you.";
+		next;
+		mes "^0000ffYou must be Level 140 or above to receive this quest.^000000";
+		close;
+	}
+	switch( checkquest(12398,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Steel Vigilante]";
+		mes "You're good. I'd love to work with you again.";
+		close;
+	case 2:
+		erasequest 12398;
+		break;
+	}
+	for ( .@quest_id = 12399; .@quest_id <= 12402 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
+		continue;
+	if (.@quest_id > 12402) {
+		mes "[Steel Vigilante]";
+		mes "You're pretty strong. Can you handle something tough?";
+		next;
+		if (select( "Sure, why not?", "Let me think." ) == 2) {
+			mes "[Steel Vigilante]";
+			mes "Alright, take your time.";
+			close;
+		}
+		.@quest_id = rand(12399,12402);
+		setquest .@quest_id;
+	}
+	else {
+		mes "[Steel Vigilante]";
+		mes "Did you forget what you have to do? Then, I'll tell you again.";
+		next;
+	}
+	if (checkquest(.@quest_id,HUNTING) < 2) {
+		switch(.@quest_id) {
+		case 12399:// Hunt Heinous Criminals
+			mes "[Steel Vigilante]";
+			mes "Elite Buffalo Bandits are leaders among the Buffalo Bandits, and this is about them.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "You've dealt with the buffaloes with rifles before, haven't you? Then you must have seen those with ^0000ffglowing blue eyes^000000.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "They're the middle-ranking officers of rifle buffaloes. I want you to get rid of 10 ^0000ffrifle Buffalo Bandits with glowing blue eyes^000000.";
+			close2;
+			npctalk "Enthusiastic Job Seeker: Hunting rifle buffaloes? Please let me join you.";
+			end;
+		case 12400:// Hunt Heinous Criminals
+			mes "[Steel Vigilante]";
+			mes "Elite Buffalo Bandits are leaders among the Buffalo Bandits, and this is about them.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "You've dealt with the masked buffaloes before, haven't you? Then you must have seen those wearing ^0000ffgreen masks^000000.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "They're the middle-ranking officers of masked buffaloes. I want you to get rid of 10 ^0000ffBuffalo Bandits wearing green masks^000000.";
+			close2;
+			npctalk "Enthusiastic Job Seeker: Hunting masked buffaloes? Please let me join you.", "Enthusiastic Job Seeker#3";
+			end;
+		case 12401:// Hunt Heinous Criminals
+			mes "[Steel Vigilante]";
+			mes "Elite Buffalo Bandits are leaders among the Buffalo Bandits, and this is about them.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "You've dealt with the buffaloes with an eye patch before, haven't you? Then you must have seen those wearing ^0000ffpale green vests^000000.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "They're the middle-ranking officers of sword buffaloes. I want you to get rid of 10 ^0000ffBuffalo Bandits wearing an eye patch and a pale green vest^000000.";
+			close2;
+			npctalk "Enthusiastic Job Seeker: Hunting eye patch buffaloes? Please let me join you.";
+			end;
+		case 12402:// Eliminate Dangerous Gas
+			mes "[Steel Vigilante]";
+			mes "Some miners have reported to us about gas-like monsters that spread a neurotoxin.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "They're purple monsters named Gasters. They don't attack unless they're provoked, but they still pose a threat.";
+			next;
+			mes "[Steel Vigilante]";
+			mes "Please hunt 10 ^0000ffGasters^000000 in the mine outside the village.";
+			close2;
+			npctalk "Enthusiastic Job Seeker: Hunting Gasters? Please let me join you.", "Enthusiastic Job Seeker#3";
+			end;
+		}
+	}
+	getexp 50800,47160;// fix me: seem to be (base exp = count * mob base exp, job exp = count * mob job exp)
+	getitem 25250,3;// Rock Ridge Coin
+	erasequest .@quest_id;
+	setquest 12398;// You're Good
+	mes "[Steel Vigilante]";
+	mes "You're good. I'd love to work with you again.";
+	close;
+}
+
+harboro1,347,133,2	script	Scared Artificer#1	4_M_LGTPOOR,{ end; }
+harboro1,344,133,2	duplicate(Scared Artificer#1)	Scared Artificer#2	4_M_03
+harboro1,340,137,3	duplicate(Scared Artificer#1)	Scared Artificer#3	4_M_DWARF
+harboro1,338,132,2	duplicate(Scared Artificer#1)	Scared Artificer#4	4_M_EINMAN2
+harboro1,343,137,3	duplicate(Scared Artificer#1)	Scared Artificer#5	4_M_ORIENT01
+harboro1,342,135,2	duplicate(Scared Artificer#1)	Scared Artificer#6	4_M_LGTPOOR
+harboro1,344,142,3	duplicate(Scared Artificer#1)	Scared Artificer#7	4_M_SEAMAN
+harboro1,341,131,2	duplicate(Scared Artificer#1)	Scared Artificer#8	4_M_DWARF
+harboro1,338,141,3	duplicate(Scared Artificer#1)	Scared Artificer#9	4_M_EINMAN
+harboro1,347,137,3	duplicate(Scared Artificer#1)	Scared Artificer#10	4_M_ORIENT01
+harboro1,341,141,3	duplicate(Scared Artificer#1)	Scared Artificer#11	4_M_DWARF
+harboro1,338,136,3	duplicate(Scared Artificer#1)	Scared Artificer#12	4_M_LGTPOOR
+
+harboro1,341,136,0	script	#r_q2	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	.@r = rand(6);
+	if (.@r == 0) npctalk "Scared Artificer: The place down here isn't safe to be.", "Scared Artificer#2";
+	else if (.@r == 1) npctalk "Scared Artificer: Unless they promise me worker's compensation, I'm out!", "Scared Artificer#4";
+	else if (.@r == 2) npctalk "Scared Artificer: I've never seen bugs so big before. I can't work here anymore.", "Scared Artificer#6";
+	else if (.@r == 3) npctalk "Scared Artificer: A swarm of bugs crawled up and over my colleagues on the ground to get at me, and I was too scared to do anything. Why didn't anyone tell me about them?", "Scared Artificer#8";
+	else if (.@r == 4) npctalk "Scared Artificer: If you want us to work for you, then make the workplace safe first!", "Scared Artificer#10";
+	else npctalk "Scared Artificer: You haven't been down there, have you? You're lucky.", "Scared Artificer#12";
+	end;
+}
+
+harboro1,334,135,6	script	Desalination Facility M	4_M_YURI,{
+	if (BaseLevel < 100) {
+		mes "[Desalination Facility Manager]";
+		mes "What are you doing here? You're not good enough to earn your keep. Out!";
+		close;
+	}
+	if (isbegin_quest(12403) == 0) {// first time
+		mes "[Desalination Facility Manager]";
+		mes "My office is filled with thieves. Everyone expects to be paid? Without doing their job!";
+		next;
+		select("...?");
+		mes "[Desalination Facility Manager]";
+		mes "And you. How much were you going to ask me for? Just so you know, we don't allow payroll advances.";
+		next;
+		if (select( "I'm just a passersby.", "I want 100 million Zeny in advance." ) == 2) {
+			mes "[Desalination Facility Manager]";
+			mes "...";
+			next;
+			mes "[Desalination Facility Manager]";
+			mes "You're out of your mind.";
+			close;
+		}
+		mes "[Desalination Facility Manager]";
+		mes "Mm? But you look too strong to be a simple passersby.";
+		next;
+		select("Well, I don't have any business here. I should go.");
+		mes "[Desalination Facility Manager]";
+		mes "WAIT!";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Wait. Yes.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Hey, Jamie! How many more workers did you say we need in the culvert?";
+		npctalk "Job Agency Owner: Hey, Jamie! How many more workers did you say we need in the culvert?";
+		next;
+		mes "[Jamie]";
+		mes "^000077Since 2 more disappeared yesterday, 15. No one wants to go down there.^000000";
+		npctalk "Jamie: Since two more disappeared yesterday, 15. No one wants to go down there.", "Jamie";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Hear that? Our office is severely understaffed.";
+		next;
+		if (select( "But what about all these people who are eager to work?", "Not my business." ) == 2) {
+			mes "[Desalination Facility Manager]";
+			mes "Hey, come on! I'm not finished!";
+			close;
+		}
+		mes "[Desalination Facility Manager]";
+		mes "They're eager, all right, but none of them is strong enough to be useful.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "We need a lot of people at a construction site. It's... a little bit dangerous down there, but you look like you know how to deal with danger.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Say, how'd you like to work for me? I'll pay you generously.";
+		next;
+		if (select( "Tell me what this job entails.", "Let me think." ) == 2) {
+			mes "[Desalination Facility Manager]";
+			mes "You don't have to think?this benefits both of us!";
+			next;
+			mes "[Desalination Facility Manager]";
+			mes "Let me tell you a little bit about this village. It's built above the remains of a city that sank into the sea.";
+			next;
+			mes "[Desalination Facility Manager]";
+			mes "We can't completely fill up the basement because it's where our desalination system is.";
+		}
+		else {
+			mes "[Desalination Facility Manager]";
+			mes "Let me tell you a little bit about this village. It's built above the remains of a city that sank into the sea.";
+			next;
+			mes "[Desalination Facility Manager]";
+			mes "We can't completely fill up the basement because it's where our desalination system is.";
+		}
+		next;
+		select("Can't you get water elsewhere?");
+		mes "[Desalination Facility Manager]";
+		mes "This area is a desert. Desalinating is cheaper than importing water.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Anyway, the desalination system itself is in good order, but the cobweb of pipes that forms the system is prone to erosion and breakage. They need constant maintenance.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Then some time ago, monsters started showing up in the basement, and now our workers are too scared to work. That's the situation we're in right now.";
+		next;
+		select("What happens if I say no?");
+		mes "[Desalination Facility Manager]";
+		mes "This village will run out of drinking water. Someone has to do this. Believe it or not, I'm doing doing this entirely for profit.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Say, is that good enough motivation for you? If you still don't want to help us, I won't force you.";
+		next;
+		mes "[Jamie]";
+		mes "^000077Mr. Chairman, I've just got a call from the basement. Five more workers have been attacked by monsters.^000000";
+		npctalk "Jamie: Mr. Chairman, I've just got a call from the basement. Five more workers have been attacked by monsters.", "Jamie";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Uh-oh, I'd better go take care of that situation. Come back if you change your mind.";
+		setquest 12403;// Laborers of Rock Ridge
+		completequest 12403;
+		close;
+	}
+	switch( checkquest(12404,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Desalination Facility Manager]";
+		mes "Aren't you tired? The pipes don't need cleaning at this moment. Why don't you go take care of whatever else you have to do?";
+		close;
+	case 2:
+		erasequest 12404;
+		break;
+	}
+	if (isbegin_quest(12405) == 0) {
+		mes "[Desalination Facility Manager]";
+		mes "Does this mean you're willing to go downstairs?";
+		next;
+		if (select( "Yes.", "Let me think." ) == 2) {
+			mes "[Desalination Facility Manager]";
+			mes "Alright, take your time.";
+			close;
+		}
+		mes "[Desalination Facility Manager]";
+		mes "Good. Let me tell you what to do. Take a look at the door at the bottom of the water storage to the left side of me. It's connected to the basement.";
+		next;
+		select("Do you mean the door that looks like a portal?");
+		mes "[Desalination Facility Manager]";
+		mes "Yes. Usually it's closed, and only those who have business in the basement can use it,";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "You know, people who help the Vigilantes, clean the sewer, and maintain the desalination pipes, like you.";
+		next;
+		mes "[Desalination Facility Manager]";
+		mes "Your job is to find four different types of pipes and fasten their bolts to prevent leakage.";
+		npctalk "Scared Artificer: Hey, your life is more important than money.", "Scared Artificer#1";
+		next;
+		if (rand(2) == 0)
+			npctalk "Scared Artificer: You'd better think this over. It's dangerous down there.", "Scared Artificer#3";
+		else
+			npctalk "Scared Artificer: The place down there is beyond saving! It's not too late to stop now!", "Scared Artificer#7";
+		mes "[Desalination Facility Manager]";
+		mes "The pipes that need maintenance are colored differently for easy recognition. When you're ready, enter the door on the left side.";
+		setquest 12405;// Maintain the Red Pipe
+		setquest 12406;// Maintain the Blue Pipe
+		setquest 12407;// Maintain the Yellow Pipe
+		setquest 12408;// Maintain the White Pipe
+		close;
+	}
+	if (isbegin_quest(12409) == 0) {
+		mes "[Desalination Facility Manager]";
+		mes "You haven't finished cleaning the pipes. We'll run out of water soon. Could you hurry up?";
+		close;
+	}
+	getexp 35000,27000;
+	getitem 25250,2;// Rock Ridge Coin
+	for ( .@quest_id = 12405; .@quest_id <= 12409; .@quest_id++ )
+		erasequest .@quest_id;
+	setquest 12404;// Are You Not Tired?
+	mes "[Desalination Facility Manager]";
+	mes "Good job. The villagers can enjoy clean water for the rest of the day, and it's all because of you.";
+	close;
+}
