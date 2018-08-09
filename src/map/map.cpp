@@ -122,7 +122,8 @@ static int bl_list_count = 0;
 	#define MAP_MAX_MSG 1550
 #endif
 
-std::unordered_map<int16, map_data> map;
+struct map_data map[MAX_MAP_PER_SERVER];
+int map_num = 0;
 
 int map_port=0;
 
@@ -188,7 +189,10 @@ int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing m
  */
 struct map_data *map_getmapdata(int16 mapid)
 {
-	return util::umap_find(map, mapid);
+	if (mapid < 0 || mapid >= MAX_MAP_PER_SERVER)
+		return nullptr;
+
+	return &map[mapid];
 }
 
 /*==========================================
@@ -327,7 +331,7 @@ int map_addblock(struct block_list* bl)
 
 	if( m < 0 )
 	{
-		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map.size());
+		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
 		return 1;
 	}
 
@@ -2618,14 +2622,29 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 		return -2;
 	}
 
-	// Copy the map
-	int16 dst_m = ++instance_start;
-	struct map_data *src_map = &map[src_m];
+	int16 dst_m = -1, i;
 
-	map.insert({ dst_m, *src_map });
+	for (i = instance_start; i < MAX_MAP_PER_SERVER; i++) {
+		if (!map[i].name[0])
+			break;
+	}
+	if (i < map_num) // Destination map value overwrites another
+		dst_m = i;
+	else if (i < MAX_MAP_PER_SERVER) // Destination map value increments to new map
+		dst_m = map_num++;
+	else {
+		// Out of bounds
+		ShowError("map_addinstancemap failed. map_num(%d) > map_max(%d)\n", map_num, MAX_MAP_PER_SERVER);
+		return -3;
+	}
+
+	struct map_data *src_map = map_getmapdata(src_m);
+
+	// Copy the map
+	memcpy(&map[dst_m], src_map, sizeof(struct map_data));
 
 	// Retrieve new map data
-	struct map_data *dst_map = &map[dst_m];
+	struct map_data *dst_map = map_getmapdata(dst_m);
 
 	strcpy(iname, name);
 
@@ -2745,7 +2764,6 @@ int map_delinstancemap(int m)
 
 	mapindex_removemap( mapdata->index );
 	map_removemapdb(mapdata);
-	map.erase(m);
 	return 1;
 }
 
@@ -3266,10 +3284,8 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable
 
 	iwall->size = i;
 
-	struct map_data *mapdata = map_getmapdata(m);
-
 	strdb_put(iwall_db, iwall->wall_name, iwall);
-	mapdata->iwall_num++;
+	map_getmapdata(m)->iwall_num++;
 
 	return true;
 }
@@ -3279,9 +3295,8 @@ void map_iwall_get(struct map_session_data *sd) {
 	DBIterator* iter;
 	int16 x1, y1;
 	int i;
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if( mapdata->iwall_num < 1 )
+	if( map_getmapdata(sd->bl.m)->iwall_num < 1 )
 		return;
 
 	iter = db_iterator(iwall_db);
@@ -3478,35 +3493,40 @@ int map_addmap(char* mapname)
 {
 	if( strcmpi(mapname,"clear")==0 )
 	{
-		map.clear();
+		map_num = 0;
+		instance_start = 0;
 		return 0;
 	}
 
-	struct map_data entry = {};
+	if (map_num >= MAX_MAP_PER_SERVER - 1) {
+		ShowError("Could not add map '" CL_WHITE "%s" CL_RESET "', the limit of maps has been reached.\n", mapname);
+		return 1;
+	}
 
-	mapindex_getmapname(mapname, entry.name);
-	map.insert({ static_cast<int16>(map.size()), entry });
+	mapindex_getmapname(mapname, map[map_num].name);
+	map_num++;
 	return 0;
 }
 
 static void map_delmapid(int id)
 {
-	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map_getmapdata(id)->name);
-	map.erase(id);
+	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
+	memmove(map + id, map + id + 1, sizeof(map[0])*(map_num - id - 1));
+	map_num--;
 }
 
 int map_delmap(char* mapname){
 	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
-		map.clear();
+		map_num = 0;
 		return 0;
 	}
 
 	mapindex_getmapname(mapname, map_name);
-	for( auto& pair : map ){
-		if (strcmp(pair.second.name, map_name) == 0) {
-			map_delmapid(pair.first);
+	for (int i = 0; i < map_num; i++) {
+		if (strcmp(map[i].name, map_name) == 0) {
+			map_delmapid(i);
 			return 1;
 		}
 	}
@@ -3516,8 +3536,8 @@ int map_delmap(char* mapname){
 
 /// Initializes map flags and adjusts them depending on configuration.
 void map_flags_init(void){
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = &map[i];
 		union u_mapflag_args args = {};
 
 		args.flag_val = 100;
@@ -3525,8 +3545,8 @@ void map_flags_init(void){
 		// additional mapflag data
 		mapdata->zone = 0; // restricted mapflag zone
 		mapdata->flag[MF_NOCOMMAND] = false; // nocommand mapflag level
-		map_setmapflag_sub(pair.first, MF_BEXP, true, &args); // per map base exp multiplicator
-		map_setmapflag_sub(pair.first, MF_JEXP, true, &args); // per map job exp multiplicator
+		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// skill damage
 		mapdata->damage_adjust = {};
@@ -3535,7 +3555,7 @@ void map_flags_init(void){
 		if( battle_config.pk_mode && !mapdata->flag[MF_PVP] )
 			mapdata->flag[MF_PVP] = true; // make all maps pvp for pk_mode [Valaris]
 
-		map_free_questinfo(pair.first);
+		map_free_questinfo(i);
 	}
 }
 
@@ -3672,17 +3692,16 @@ int map_readallmaps (void)
 		}
 	}
 
-	int i = 0;
 	std::vector<int16> maps_removed;
 
-	for( auto &pair : map ){
+	for (int i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
 		unsigned short idx = 0;
-		struct map_data *mapdata = &pair.second;
+		struct map_data *mapdata = &map[i];
 
 		// show progress
-		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i++, map.size(), mapdata->name);
+		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
 
 		if( enable_grf ){
 			// try to load the map
@@ -3702,7 +3721,7 @@ int map_readallmaps (void)
 
 		// The map was not found - remove it
 		if( !(idx = mapindex_name2id(mapdata->name)) || !success ){
-			maps_removed.push_back(pair.first);
+			maps_removed.push_back(i);
 			continue;
 		}
 
@@ -3711,13 +3730,13 @@ int map_readallmaps (void)
 		if (uidb_get(map_db,(unsigned int)mapdata->index) != NULL)
 		{
 			ShowWarning("Map %s already loaded!" CL_CLL "\n", mapdata->name);
-			maps_removed.push_back(pair.first);
+			maps_removed.push_back(i);
 			continue;
 		}
 
 		map_addmap2db(mapdata);
 
-		mapdata->m = pair.first;
+		mapdata->m = i;
 		memset(mapdata->moblist, 0, sizeof(mapdata->moblist));	//Initialize moblist [Skotlex]
 		mapdata->mob_delete_timer = INVALID_TIMER;	//Initialize timer [Skotlex]
 
@@ -3749,7 +3768,7 @@ int map_readallmaps (void)
 	}
 
 	// finished map loading
-	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
+	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
 
 	return 0;
 }
@@ -4759,13 +4778,14 @@ void do_final(void){
 	do_clear_npc();
 
 	// remove all objects on maps
-	int i = 0;
-	for( auto& pair : map ){
-		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map.size(), pair.second.name);
-		map_foreachinmap(cleanup_sub, pair.first, BL_ALL);
-		channel_delete(pair.second.channel,false);
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
+
+		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map_num, mapdata->name);
+		map_foreachinmap(cleanup_sub, i, BL_ALL);
+		channel_delete(mapdata->channel,false);
 	}
-	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map.size());
+	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
@@ -4805,8 +4825,8 @@ void do_final(void){
 
 	map_db->destroy(map_db, map_db_final);
 
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
 
 		if(mapdata->cell) aFree(mapdata->cell);
 		if(mapdata->block) aFree(mapdata->block);
@@ -4817,7 +4837,7 @@ void do_final(void){
 			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_free_questinfo(pair.first);
+		map_free_questinfo(i);
 		mapdata->damage_adjust = {};
 	}
 

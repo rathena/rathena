@@ -14331,9 +14331,9 @@ int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
 /**
  * Check if status is disabled on a map
  * @param type: Status Change data
- * @param mapIsVS: If the map is a mapdata_flag_vs type
+ * @param mapIsVS: If the map is a map_flag_vs type
  * @param mapisPVP: If the map is a PvP type
- * @param mapIsGVG: If the map is a mapdata_flag_gvg type
+ * @param mapIsGVG: If the map is a map_flag_gvg type
  * @param mapIsBG: If the map is a Battleground type
  * @param mapZone: Map Zone type
  * @param mapIsTE: If the map us WOE TE

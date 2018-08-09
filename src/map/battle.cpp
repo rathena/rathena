@@ -5060,7 +5060,7 @@ struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src
 					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 				}
 		}
-		
+
 		struct map_data *mapdata = map_getmapdata(target->m);
 
 		if(!wd.damage2) {
@@ -7928,7 +7928,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			)
 				state &= ~BCT_ENEMY;
 		}
-    }//end mapdata_flag_vs chk rivality
+	}//end map_flag_vs chk rivality
 	else
 	{ //Non pvp/gvg, check party/guild settings.
 		if( flag&BCT_PARTY || state&BCT_ENEMY )

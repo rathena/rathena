@@ -1139,7 +1139,7 @@ void do_init_instance(void) {
 	InstanceDB = uidb_alloc(DB_OPT_BASE);
 	InstanceNameDB = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),0);
 
-	instance_start = static_cast<int16>(map.size());
+	instance_start = map_num;
 	instance_readdb();
 	memset(instance_data, 0, sizeof(instance_data));
 	memset(&instance_wait, 0, sizeof(instance_wait));

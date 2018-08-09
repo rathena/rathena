@@ -760,7 +760,8 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
 void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 
-extern std::unordered_map<int16, map_data> map;
+extern struct map_data map[];
+extern int map_num;
 
 extern int autosave_interval;
 extern int minsave_interval;
