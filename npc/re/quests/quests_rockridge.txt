@@ -3571,3 +3571,1612 @@ harboro1,334,135,6	script	Desalination Facility M	4_M_YURI,{
 	mes "Good job. The villagers can enjoy clean water for the rest of the day, and it's all because of you.";
 	close;
 }
+
+harboro1,333,138,6	script	Jamie	4_F_KAFRA9,{
+	mes "[Jamie]";
+	mes "Could you stop hitting on me? I'm the Chairman's personal secretary.";
+	close;
+}
+
+harboro1,332,144,6	script	Underground Passage#1	PORTAL,{
+	if (BaseLevel < 100) {
+		mes "^0000ffWarning: This place is not for the weak or faint-hearted.^000000";
+		close;
+	}
+	mes "^0000ffDo you want to move to the underground village?^000000";
+	next;
+	if (select( "Move.", "Do it later." ) == 2) {
+		mes "You have decided not to use the underground passage.";
+		close;
+	}
+	warp "harboro2",329,187;
+	end;
+}
+
+harboro2,333,187,6	script	Underground Passage#2	PORTAL,{
+	mes "^0000ffDo you want to go above ground?^000000";
+	next;
+	if (select( "Move.", "Do it later." ) == 2) {
+		mes "You have decided not to use the menu.";// ?
+		close;
+	}
+	warp "harboro1",336,144;
+	end;
+}
+
+harboro2,52,261,3	script	Red Pipe#1	4_ENERGY_RED,{
+	.@npc_name$ = strnpcinfo(1);
+	if (.@npc_name$ == "Red Pipe")			.@quest_id = 12405;
+	else if (.@npc_name$ == "Blue Pipe")	.@quest_id = 12406;
+	else if (.@npc_name$ == "Yellow Pipe")	.@quest_id = 12407;
+	else if (.@npc_name$ == "White Pipe")	.@quest_id = 12408;
+
+	if (isbegin_quest(.@quest_id) == 1) {
+		specialeffect EF_REPAIRWEAPON;
+		progressbar "ffff00",3;
+		if (rand(100) < 50) {
+			specialeffect EF_PATTACK;
+			end;
+		}
+		specialeffect EF_STEAL;
+		completequest .@quest_id;
+		if (isbegin_quest(12405) == 2 && isbegin_quest(12406) == 2 && isbegin_quest(12407) == 2 && isbegin_quest(12408) == 2)
+			setquest 12409;// Pipes Maintained
+		disablenpc strnpcinfo(0);
+		initnpctimer;
+	}
+	end;
+OnTimer30000:
+	enablenpc strnpcinfo(0);
+	stopnpctimer;
+	end;
+}
+harboro2,54,216,3	duplicate(Red Pipe#1)	Blue Pipe#2	4_ENERGY_BLUE
+harboro2,59,243,3	duplicate(Red Pipe#1)	Yellow Pipe#3	4_ENERGY_YELLOW
+harboro2,71,200,3	duplicate(Red Pipe#1)	White Pipe#4	4_ENERGY_WHITE
+harboro2,73,102,3	duplicate(Red Pipe#1)	Red Pipe#5	4_ENERGY_RED
+harboro2,74,173,3	duplicate(Red Pipe#1)	Blue Pipe#6	4_ENERGY_BLUE
+harboro2,86,160,3	duplicate(Red Pipe#1)	Yellow Pipe#7	4_ENERGY_YELLOW
+harboro2,89,213,3	duplicate(Red Pipe#1)	White Pipe#8	4_ENERGY_WHITE
+harboro2,89,223,3	duplicate(Red Pipe#1)	Red Pipe#9	4_ENERGY_RED
+harboro2,89,234,3	duplicate(Red Pipe#1)	Blue Pipe#10	4_ENERGY_BLUE
+harboro2,92,124,3	duplicate(Red Pipe#1)	Yellow Pipe#11	4_ENERGY_YELLOW
+harboro2,94,106,3	duplicate(Red Pipe#1)	White Pipe#12	4_ENERGY_WHITE
+harboro2,97,209,3	duplicate(Red Pipe#1)	Red Pipe#13	4_ENERGY_RED
+harboro2,106,233,3	duplicate(Red Pipe#1)	Blue Pipe#14	4_ENERGY_BLUE
+harboro2,108,112,3	duplicate(Red Pipe#1)	Yellow Pipe#15	4_ENERGY_YELLOW
+harboro2,117,197,3	duplicate(Red Pipe#1)	White Pipe#16	4_ENERGY_WHITE
+harboro2,120,116,3	duplicate(Red Pipe#1)	Red Pipe#17	4_ENERGY_RED
+harboro2,121,157,3	duplicate(Red Pipe#1)	Blue Pipe#18	4_ENERGY_BLUE
+harboro2,140,115,3	duplicate(Red Pipe#1)	Yellow Pipe#19	4_ENERGY_YELLOW
+harboro2,146,95,3	duplicate(Red Pipe#1)	White Pipe#20	4_ENERGY_WHITE
+harboro2,148,128,3	duplicate(Red Pipe#1)	Red Pipe#21	4_ENERGY_RED
+harboro2,151,123,3	duplicate(Red Pipe#1)	Blue Pipe#22	4_ENERGY_BLUE
+harboro2,158,151,3	duplicate(Red Pipe#1)	Yellow Pipe#23	4_ENERGY_YELLOW
+harboro2,161,163,3	duplicate(Red Pipe#1)	White Pipe#24	4_ENERGY_WHITE
+harboro2,169,125,3	duplicate(Red Pipe#1)	Red Pipe#25	4_ENERGY_RED
+harboro2,170,224,3	duplicate(Red Pipe#1)	Blue Pipe#26	4_ENERGY_BLUE
+harboro2,177,134,3	duplicate(Red Pipe#1)	Yellow Pipe#27	4_ENERGY_YELLOW
+harboro2,180,114,3	duplicate(Red Pipe#1)	White Pipe#28	4_ENERGY_WHITE
+harboro2,181,155,3	duplicate(Red Pipe#1)	Red Pipe#29	4_ENERGY_RED
+harboro2,187,113,3	duplicate(Red Pipe#1)	Blue Pipe#30	4_ENERGY_BLUE
+harboro2,207,121,3	duplicate(Red Pipe#1)	Yellow Pipe#31	4_ENERGY_YELLOW
+harboro2,211,49,3	duplicate(Red Pipe#1)	White Pipe#32	4_ENERGY_WHITE
+harboro2,221,234,3	duplicate(Red Pipe#1)	Red Pipe#33	4_ENERGY_RED
+harboro2,224,199,3	duplicate(Red Pipe#1)	Blue Pipe#34	4_ENERGY_BLUE
+harboro2,226,69,3	duplicate(Red Pipe#1)	Yellow Pipe#35	4_ENERGY_YELLOW
+harboro2,230,102,3	duplicate(Red Pipe#1)	White Pipe#36	4_ENERGY_WHITE
+harboro2,240,83,3	duplicate(Red Pipe#1)	Red Pipe#37	4_ENERGY_RED
+harboro2,244,161,3	duplicate(Red Pipe#1)	Blue Pipe#38	4_ENERGY_BLUE
+harboro2,266,129,3	duplicate(Red Pipe#1)	Yellow Pipe#39	4_ENERGY_YELLOW
+harboro2,291,44,3	duplicate(Red Pipe#1)	White Pipe#40	4_ENERGY_WHITE
+
+
+// Pipe Cleaning
+harboro1,138,157,5	script	Donovan	4_M_EINMAN2,{
+	mes "[Donovan]";
+	mes "Hello.";
+	next;
+	mes "[Donovan]";
+	if (rock_main_quest < 22) {
+		mes "You're one of the adventurers from the mainland, right?";
+		mes "My name is Donovan,";
+		mes "sewer system manager.";
+		next;
+		mes "[Donovan]";
+		mes "There are so many problems";
+		mes "the Buffalo Bandits, the mine, just to name a couple?";
+		mes "that no one else cares about their own sewer system right now.";
+		mes "The Buffalo Bandits";
+		mes "need to be taken care of first.";
+		close;
+	}
+	switch( checkquest(9459,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "The pipes are";
+		mes "clear of sea anemones at this moment.";
+		mes "Why don't you";
+		mes "come back later?";
+		close;
+	case 2:
+		mes "Ah, welcome back!";
+		mes "I've been thinking";
+		mes "it's time to";
+		mes "get rid of sea anemones again.";
+		next;
+		if (select( "I can do that.", "Sorry, I'm busy." ) == 2) {
+			mes "[Donovan]";
+			mes "Oh, I see.";
+			mes "I understand.";
+			mes "But come back if you change your mind.";
+			close;
+		}
+		mes "[Donovan]";
+		mes "You know how to enter the basement, right?";
+		mes "Thank you for your help.";
+		erasequest 9459;// Too Early for Pipe Cleaning
+		setquest 9458;// Pipe Cleaning
+		close;
+	}
+	switch( checkquest(9458,HUNTING) ) {
+	case -1:
+		mes "Oh, so you're";
+		mes "the adventurer who took care of the Buffalo Bandits!";
+		mes "Nice to meet you!";
+		next;
+		mes "[Donovan]";
+		mes "So, you're strong enough to";
+		mes "take care of the bandits.";
+		mes "Would you be so kind";
+		mes "as to help me with something?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "- Alright, what can I do for you?";
+		next;
+		mes "[Donovan]";
+		mes "Oh, where are my manners?";
+		mes "My name is Donovan,";
+		mes "sewer system manager.";
+		mes "I manage the underground water pump";
+		mes "and sewage system.";
+		next;
+		mes "[Donovan]";
+		mes "Groundwater keeps welling up";
+		mes "from the basement of the village,";
+		mes "and it has to be pumped out into the sea";
+		mes "to prevent flooding.";
+		next;
+		mes "[Donovan]";
+		mes "My job is to make sure";
+		mes "the pumps and sewage system are";
+		mes "in working order";
+		mes "at all times,";
+		next;
+		mes "[Donovan]";
+		mes "and it's not a job for just one man.";
+		mes "There are so many things to do";
+		mes "that I need help.";
+		mes "The work itself isn't complicated.";
+		mes "Could you help me?";
+		next;
+		if (select( "Sure.", "Sorry, I'm busy." ) == 2) {
+			mes "[Donovan]";
+			mes "Oh, I see.";
+			mes "I understand.";
+			mes "But come back if you change your mind.";
+			close;
+		}
+		mes "[Donovan]";
+		mes "Wow, thank you!";
+		mes "All you have to do is";
+		mes "go down to the basement";
+		mes "and get rid of sea anemones";
+		mes "on the pipes and water pump.";
+		next;
+		mes "[Donovan]";
+		mes "You can go down to the basement";
+		mes "by talking to";
+		mes "Joe, who's a bit east of here.";
+		mes "He'll let you";
+		mes "go down to the basement.";
+		next;
+		mes "[Donovan]";
+		mes "We call him Quiet Joe.";
+		mes "Thank you for your help.";
+		setquest 9458;// Pipe Cleaning
+		close;
+	case 0:
+	case 1:
+		mes "Go east,";
+		mes "and you'll see Joe.";
+		mes "He'll let you";
+		mes "go down to the basement";
+		mes "if you tell him I sent you.";
+		close;
+	case 2:
+		mes "Ah, Adventurer, welcome back.";
+		mes "How was it, getting rid of sea anemones?";
+		mes "It wasn't too difficult, was it?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "- No, it wasn't.";
+		mes "- It was boring, though.";
+		next;
+		mes "[Donovan]";
+		mes "Hah hah, it's a boring job, sure.";
+		mes "But it must not be boring to those sea anemones";
+		mes "because they spring up every day,";
+		mes "no matter how hard I try";
+		mes "to keep them in check.";
+		next;
+		mes "[Donovan]";
+		mes "Getting rid of them";
+		mes "takes up a lot of my time.";
+		mes "Thank you for your help.";
+		mes "I could always use help getting rid of sea anemones.";
+		mes "Please come again.";
+		erasequest 9458;// Pipe Cleaning
+		setquest 9459;// Too Early for Pipe Cleaning
+		getexp 25000,20000;
+		getitem 25250,1;// Rock Ridge Coin
+		close;
+	}
+}
+
+// Midnight quest
+harboro2,167,82,3	script	Midnight#srdg01	10231,{
+	if (rock_main_quest < 22) {
+		mes "[Midnight]";
+		mes "What are you looking at? Scram before I put holes in your face! Git!";
+		close;
+	}
+	if (isbegin_quest(14672) == 1 || isbegin_quest(14673) == 1) {// Demon quest started
+		mes "[Midnight]";
+		mes "I should go. He's just being stubborn.";
+		next;
+		mes "[Midnight]";
+		mes "Frankly, I don't understand why he would want to do this, but I don't want to stop him.";
+		next;
+		mes "[Midnight]";
+		mes "Thank you for helping us.";
+		close;
+	}
+	mes "[Midnight]";
+	mes "...";
+	next;
+	mes "[Midnight]";
+	mes "Demon, some strange kid is just hanging out around us. Do you know him?";
+	next;
+	mes "[Demon]";
+	mes "Who? Where? I don't see him. Send him to me.";
+	close;
+}
+
+harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
+	if (checkweight(1001,1) == 0) {
+		mes "[Demon]";
+		mes "You're carrying so much stuff, I'm worried you might break your shoulder. Why don't you go lighten your bag first?";
+		close;
+	}
+	if (rock_main_quest < 22) {
+		mes "[Demon]";
+		mes "You have no idea how dangerous this place is, do you? Get out of here while you can.";
+		close;
+	}
+	switch( checkquest(14673,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Demon]";
+		mes "You came back quickly. Ah, I miss being young.";
+		next;
+		mes "[Demon]";
+		mes "But look, I still have left some of the materials you brought me yesterday. I can't use all these.";
+		next;
+		mes "[Demon]";
+		mes "Why don't you go home and come back next morning?";
+		close;
+	case 2:
+		mes "[Demon]";
+		mes "Hey, kiddo! It's very nice to see you again. The bomb I made with the materials you brought is in the aging process. Did you know wine and bombs get better the older they are?";
+		sleep2 1500;
+		npctalk "You said old bombs are bad bombs.", "Midnight#srdg01", bc_self;
+		sleep2 350;
+		npctalk "That was just a figure of speech.", "", bc_self;
+		sleep2 200;
+		next;
+		mes "[Demon]";
+		mes "Now, could you bring some more materials today? We're a long way from having all the bombs we need.";
+		next;
+		mes "[Demon]";
+		mes "As usual, get ^0000cd10 Deadly Poison Powders and 1 Explosive Powder^000000, and ^0000cdhunt 15 Gasters^000000. Got it?";
+		next;
+		emotion ET_THROB;
+		mes "[Demon]";
+		mes "We'll be counting on you, kiddo!";
+		erasequest 14673;// Time to Make Bombs
+		setquest 14672;// Preparing for the Firework Festival
+		close;
+	}
+	switch( checkquest(14672,HUNTING) ) {
+	case -1:
+		mes "";// todo fix me
+		donpcevent "NPC Traces of Fire#srdg01::OnEffect";
+		sleep2 1500;
+		mes "[Demon]";
+		mes "Alright, this should do. You know what I need, right? Are you sure you could sneak in? Maybe I should go.";
+		next;
+		emotion ET_ANGER, getnpcid(0, "Midnight#srdg01");
+		mes "[Midnight]";
+		mes "I'll go while everyone's in bed.";
+		next;
+		mes "[Demon]";
+		mes "But the noise could wake them up. There'll be guards, too.";
+		next;
+		mes "[Midnight]";
+		mes "I'll be alright. We all look alike? They won't know I'm not one of them.";
+		emotion ET_HUK;
+		npctalk "What? I thought you guys would be able to tell each other apart.", "", bc_self;
+		select("Mister, what are you doing here?");
+		mes "[Midnight]";
+		mes "*Glance*";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why are you playing with fire in the middle of nowhere? You're suspicious.";
+		next;
+		mes "[Midnight]";
+		mes "...";
+		next;
+		mes "[Demon]";
+		mes "Hey, a kid is asking you a question. He looks so curious that I'm worried he might die if you don't tell him.";
+		next;
+		mes "[Midnight]";
+		mes "...";
+		next;
+		emotion ET_HNG;
+		mes "[Demon]";
+		mes "Little kids like him are full of curiosity. You'd better tell him before he starts crying.";
+		npctalk "Tsk, tsk. You're big and shy. How cute!", "", bc_self;
+		next;
+		mes "[Midnight]";
+		mes "Yo tell him.";
+		next;
+		emotion ET_HNG;
+		mes "[Demon]";
+		mes "No. Why should I? He asked you. Plus, kids usually give me heartburn.";
+		next;
+		emotion ET_BIGTHROB;
+		mes "[Demon]";
+		mes "I had my favorite bean dish for breakfast today. I can't lose it. I want it to become part of me.";
+		next;
+		mes "[Midnight]";
+		mes "Some of it has to come out of you eventually. Poor beans. They'd be angry to be eaten by jerks like you.";
+		emotion ET_HNG;
+		npctalk "Hey, that's not nice. I didn't save you, just so you could call me a jerk.", "", bc_self;
+		sleep2 1200;
+		npctalk "I'm sorry. I'm sorry. Happy now?", "Midnight#srdg01", bc_self;
+		sleep2 1500;
+		npctalk "You'd better be nicer than that. I'm a sensitive guy.", "", bc_self;
+		sleep2 1500;
+		npctalk "Be nicer, got it.", "Midnight#srdg01", bc_self;
+		sleep2 200;
+		next;
+		emotion ET_SURPRISE;
+		mes "[Demon]";
+		mes "Oh, right! Why don't we ask this kid?";
+		next;
+		mes "[Midnight]";
+		mes "What? But we can't trust him? We've just met him!";
+		next;
+		emotion ET_OK;
+		mes "[Demon]";
+		mes "Yes, we can. People are supposed to trust each other. You didn't know that, did you? Now that he's here, he's one of us now. And I told you, everyone's born good.";
+		npctalk "Yeah, right.", "Midnight#srdg01", bc_self;
+		next;
+		mes "[Demon]";
+		mes "Plus, doesn't he look like he's used to rough things? He has a runner's body and keen eyes that miss nothing. I like kids like him.";
+		sleep2 1000;
+		npctalk "He reminds me of myself when I was five. I think we could trust him.", "", bc_self;
+		next;
+		mes "[Demon]";
+		mes "Hey, kiddo. How'd you like to join us in business?";
+		next;
+		if (select( "What business?", "No, thanks." ) == 2) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "You look dangerous. I don't want to do anything dangerous.";
+			next;
+			mes "[Demon]";
+			mes "You don't? Alright, then I won't force you. Take care now. This place is dangerous. You'd better get out of here.";
+			next;
+			mes "[Midnight]";
+			mes "Are you sure we can let him go? He's seen us.";
+			next;
+			mes "[Demon]";
+			mes "Why are you so paranoid? It's okay, kiddo. Just go. But come back if you change your mind!";
+			close;
+		}
+		mes "[" + strcharinfo(0) + "]";
+		mes "What business?";
+		next;
+		mes "[Demon]";
+		mes "We've got a great plan.";
+		npctalk "It's not great, but a plan, all right.", "Midnight#srdg01", bc_self;
+		sleep2 500;
+		npctalk "Why are you doing this to me?", "", bc_self;
+		sleep2 500;
+		next;
+		emotion ET_STARE;
+		mes "[Demon]";
+		mes "Unless you're going to explain it yourself, just shut up and let me do it!";
+		next;
+		mes "[Midnight]";
+		mes "...";
+		next;
+		mes "[Demon]";
+		mes "That's more like it. Anyway, we're going to rob the ^0000cdmine^000000.";
+		next;
+		select("Rob the mine?");
+		mes "[Midnight]";
+		mes "You didn't have to tell him that. You could've just asked him to get the things for us.";
+		next;
+		mes "[Demon]";
+		mes "We can't make him do things for us without explanation. He has the right to know what he's getting himself into.";
+		npctalk "I can't believe you're so heartless.", "", bc_self;
+		next;
+		mes "[Midnight]";
+		mes "You want to take advantage of a stranger.";
+		next;
+		mes "[Demon]";
+		mes "No. I'm asking you to be in on our great plan. Anyway, you know the mine east of here? It used to belong to Gold Moon?";
+		sleep2 800;
+		npctalk "You're going to go back that far? It's going to take all night.", "Midnight#srdg01", bc_self;
+		sleep2 200;
+		next;
+		mes "[Demon]";
+		mes "So, anyway, the Buffalo Bandits realized how lucrative the mine was and took up residence in there.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I've heard that.";
+		next;
+		mes "[Demon]";
+		mes "You have? From where?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "At the sheriff's office.";
+		next;
+		emotion ET_BIGTHROB;
+		mes "[Demon]";
+		mes "Hey, did you just get released? So are we! In fact, we've met there. I've met most of my best friends while we were in the system.";
+		next;
+		mes "[Midnight]";
+		mes "I miss the smell of the stone floor. And the coolness.";
+		next;
+		mes "[Demon]";
+		mes "I liked the food, too. I hated beans until I went to jail. All the beans I've eaten aren't half as good as those I ate in there.";
+		sleep2 200;
+		npctalk "You could always go back, you know.", "Midnight#srdg01", bc_self;
+		sleep2 1500;
+		npctalk "I do. You could come with me.", "", bc_self;
+		sleep2 1500;
+		npctalk "...", "Midnight#srdg01", bc_self;
+		sleep2 1000;
+		next;
+		select("Why did you go to jail?");
+		mes "[Demon]";
+		mes "Oh, that.";
+		next;
+		mes "[Midnight]";
+		mes "Are you going to tell him that too?";
+		next;
+		mes "[Demon]";
+		mes "Why not? I loved that story. You want to hear it, don't you?";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Sure.", bc_self;
+		next;
+		mes "[Demon]";
+		mes "I'm really good with my hands, and I like fireworks. What do you think would be the best job for someone like me?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Firecracker maker?";
+		npctalk "He's cute.", "Midnight#srdg01", bc_self;
+		next;
+		mes "[Demon]";
+		mes "Close, but I make something stronger: ^0000cdbombs^000000. And mines are just about the best thing that could happen to people like me.";
+		next;
+		mes "[Demon]";
+		mes "People working at the mines always need bombs. I came here, hoping I could make some money while doing what I love.";
+		next;
+		mes "[Midnight]";
+		mes "But it didn't work out.";
+		next;
+		emotion ET_HNG;
+		mes "[Demon]";
+		mes "And it's because of you! One night, some guys came to me and said they heard I was a bomb specialist. They demanded I donate bombs to them.";
+		next;
+		mes "[Demon]";
+		mes "One look at them, and I knew they were the infamous ^0000cdBuffalo Bandits^000000. It was obvious why they wanted my bombs.";
+		next;
+		mes "[Midnight]";
+		mes "And you still gave them to them.";
+		next;
+		mes "[Demon]";
+		mes "What else could I do? A bunch of scary-looking buffaloes who were at least a head taller than me, mind you? Demanded I give them my bombs.";
+		next;
+		mes "[Midnight]";
+		mes "You could've stood?";
+		next;
+		emotion ET_FRET;
+		mes "[Demon]";
+		mes "No, I couldn't have stood my ground. You weren't there. Anyway, those buffaloes used my bombs to blow up the ore train and take over the mine. Guess what happened to me afterward.";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : I can't.", bc_self;
+		next;
+		mes "[Demon]";
+		mes "The sheriff traced the bombs back to me and dragged me with him.";
+		next;
+		mes "[Midnight]";
+		mes "And you got thrown in jail.";
+		next;
+		mes "[Demon]";
+		mes "And guess who I met there: this guy. He was caught in the explosion that blew up the train, and those heartless buffaloes left him to die.";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Holy crap.", bc_self;
+		emotion ET_OK;
+		npctalk "Holy crap, yeah.", "", bc_self;
+		next;
+		mes "[Demon]";
+		mes "And the sheriffs were no better than them. They just left him bleeding all over the cell. What could I do? I couldn't let anyone die if I could help it, so I treated him.";
+		next;
+		mes "[Demon]";
+		mes "He's been following me around since then.";
+		next;
+		mes "[Midnight]";
+		mes "Who? Me?";
+		next;
+		mes "[Demon]";
+		mes "Yes. Or why did you save me when I came to the mine to get even with the buffaloes? They kicked you out because of me.";
+		emotion ET_KIK;
+		npctalk "That's how much he likes me.", "", bc_self;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Did you get your revenge after you were released?";
+		next;
+		mes "[Demon]";
+		mes "I don't want to talk about it. I made so many stupid mistakes, which wasn't like me at all. That's why we were hiding out in this dark, dank place.";
+		npctalk "That was totally like you.", "Midnight#srdg01", bc_self;
+		sleep2 2000;
+		emotion ET_OK;
+		npctalk "Yeah, yeah. I love you, too.", "", bc_self;
+		sleep2 1500;
+		npctalk "One day, I'm just going to pull out all of your teeth.", "Midnight#srdg01", bc_self;
+		sleep2 1500;
+		emotion ET_KIK;
+		npctalk "Hear that? That's his way of saying he loves me.", "", bc_self;
+		next;
+		select("So, what can I do to help?");
+		mes "[Demon]";
+		mes "Are you sure you want to help? Because I don't like forcing people, or sending them in harm's way. If you really want to help, then you can get some bomb materials for me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why, so you could rob the mine?";
+		next;
+		mes "[Demon]";
+		mes "No. Technically speaking, we'd ^0000cdreclaim the mine^000000. Have you seen what's going in the village? Since those buffaloes took over the mine, most of the people lost their jobs.";
+		next;
+		mes "[Demon]";
+		mes "Without a job, they can't make money, and without money, they can't feed themselves. This is terrible.";
+		next;
+		emotion ET_SPARK;
+		mes "[Demon]";
+		mes "I want to throw a ^0000cdfirework party inside the mine^000000 and ^0000cdscare away the bandits^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But, Mr. Midnight, they used to be your...";
+		npctalk "My what?", "Midnight#srdg01", bc_self;
+		next;
+		mes "[Demon]";
+		mes "Don't worry about him. He cut ties with them a long time ago. He has no love for those buffaloes who abandoned him. Am I right?";
+		next;
+		mes "[Midnight]";
+		mes "...";
+		next;
+		emotion ET_HUK;
+		mes "[Demon]";
+		mes "Well, I'll be dipped in buttermilk.";
+		next;
+		mes "[Midnight]";
+		mes "No, I'm not worried about them, but I am worried about us. If this goes wrong?";
+		next;
+		mes "[Demon]";
+		mes "The sheriffs will throw us in jail if the bandits don't kill us. But it's okay. I like the beans there.";
+		npctalk "You really like beans, don't you?", "Midnight#srdg01", bc_self;
+		next;
+		mes "[Demon]";
+		mes "If this goes well, we can get out of this cesspit and I can work at the mine again. So can you.";
+		npctalk "We have to try this to know if it works. We can worry about everything else later. Plus, we're not ready to do anything.", "", bc_self;
+		next;
+		mes "[Demon]";
+		mes "Anyway, kiddo, are you sure you can help us? There are monsters inside the mine that looks like cotton balls. Hunt them, and they'll leave behind deadly poisonous powder and explosive powder.";
+		next;
+		mes "[Demon]";
+		mes "I need 10 Deadly Poison Powders and.. let me see.. 1 Explosive Powder.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Deadly poisonous powder? Are you going to kill them? You said you just want to scare them away.";
+		next;
+		mes "[Demon]";
+		mes "It's deadly only to humans and Dorams. To those Tauruses, it only causes allergic reactions, like itching and sneezing.";
+		npctalk "This is why things need to be named carefully.", "", bc_self;
+		next;
+		mes "[Midnight]";
+		mes "I can go.";
+		next;
+		mes "[Demon]";
+		mes "No. You're going to get caught and ruin our plan before it even begins.";
+		next;
+		mes "[Demon]";
+		mes "Ah kiddo, speaking of which, could you cull some Gasters? That'll help us set up bombs later.";
+		next;
+		mes "[Demon]";
+		mes "The buffaloes would get out of the mine when the fireworks starts, but those clumps of gas could trigger chain reaction and blow up the entire mine. Hunt 15 of them for now. Can you do it?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Sure.";
+		next;
+		mes "[Demon]";
+		mes "I asked yes or no. Oh well, I'll take that as a yes.";
+		next;
+		mes "[Demon]";
+		mes "Now, here's the lowdown: get ^0000cd10 Deadly Poison Powders and 1 Explosive Powder^000000, and ^0000cdhunt 15 Gasters^000000. Got it?";
+		next;
+		emotion ET_GOODBOY, playerattached();
+		mes "[Demon]";
+		mes "We'll be counting on you, kiddo! I'll repay you generously when you come back. I was able to nab a few things while in jail at the sheriff's office. Now, off you go!";
+		setquest 14672;// Preparing for the Firework Festival
+		close;
+	case 0:
+	case 1:
+		mes "[Demon]";
+		mes "Let's see... Mm, kiddo, you forgot to hunt all the Gasters. We can't have Gasters around while we work.";
+		next;
+		mes "[Demon]";
+		mes "Hunt just 15 Gasters. There's no rush. You can take your time. Just come back before the end of the day today. I want to see you again.";
+		close;
+	case 2:
+		if (countitem(25277) < 10) {
+			mes "[Demon]";
+			mes "Let's see... Mm, you didn't bring 10 Deadly Poison Powders. That's the least amount I need to make a bomb.";
+			next;
+			mes "[Demon]";
+			mes "Kiddo, you can do this, right? Get 10 Deadly Poison Powders and 1 Explosive Powder from Gasters.";
+			close;
+		}
+		if (countitem(6213) < 1) {
+			mes "[Demon]";
+			mes "Let's see... Mm, you didn't bring 1 Explosive Powder. That's the least amount I need to make a bomb.";
+			next;
+			mes "[Demon]";
+			mes "Kiddo, you can do this, right? Get 1 Explosive Powder from Gasters.";
+			close;
+		}
+		mes "[Demon]";
+		mes "Let's see... Ooh, kiddo, you got everything done! You hunted Gasters and brought what I asked.";
+		npctalk "What should I do? I think I'm in love with this kid.", "", bc_self;
+		next;
+		mes "[Demon]";
+		mes "This is enough to keep me awake all night.";
+		npctalk "Midnight, you'd better catch some z's while I work.", "", bc_self;
+		sleep2 1000;
+		npctalk "Let me help. It'll be quicker.", "Midnight#srdg01", bc_self;
+		sleep2 1500;
+		npctalk "...Wow. You really like me, don't you?", "", bc_self;
+		next;
+		mes "[Demon]";
+		mes "Hey kiddo, do you mind helping me again tomorrow? I need more than one bomb to throw a firework party.";
+		next;
+		mes "[Demon]";
+		mes "Go rest today and come back tomorrow in the morning. See ya!";
+		delitem 25277, countitem(25277);// Deadly Poison Powder
+		delitem 6213, countitem(6213);// Explosive Powder
+		erasequest 14672;// Preparing for the Firework Festival
+		setquest 14673;// Time to Make Bombs
+		getitem 25250,3;// Rock Ridge Coin
+		getexp 76200,70740;
+		close;
+	}
+	end;
+
+// fix me : questinfo when playtime 2
+}
+
+harboro2,166,80,5	script	Traces of Fire#srdg01	4_TRACE,{
+	end;
+OnEffect:
+	specialeffect EF_SPR_SOULE;
+	initnpctimer;
+	end;
+OnTimer200:
+	specialeffect EF_MAGMA_FLOW;
+	end;
+OnTimer900:
+	specialeffect EF_SPR_LIGHTPRINT;
+	end;
+OnTimer10900:
+	specialeffect EF_M03;
+	end;
+OnTimer11700:
+	specialeffect EF_FIREHIT2;
+	end;
+OnTimer18700:
+	specialeffect EF_FIREHIT2;
+	end;
+OnTimer24700:
+	specialeffect EF_M03;
+	end;
+OnTimer30700:
+	specialeffect EF_EL_HEATER;
+	stopnpctimer;
+	end;
+}
+
+harboro2,165,77,5	script	Tool#srdg01	4_ROPEPILE,{ end; }
+harboro2,164,78,5	duplicate(Tool#srdg01)	Tool#srdg02	4_BRICKPILE
+harboro2,166,78,5	duplicate(Tool#srdg01)	Tool#srdg03	4_WOODPILE
+
+
+// Gas! Gas!
+rockrdg2,295,328,5	script	Frail Ghast#rockdaily	10231,{
+	if (rock_main_quest < 22) {
+		mes "[Frail Ghast]";
+		mes "Aww, just one look at them,";
+		mes "and all I want to do is sneeze...";
+		next;
+		mes "[Frail Ghast]";
+		mes "What are you looking at? Were you eavesdropping on me?";
+		mes "Get your butt outta here! Git!";
+		close;
+	}
+	switch( checkquest(1299,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Frail Ghast]";
+		mes "Oh, you want to help me again.";
+		mes "Thanks, but I only have to patrol once a day. Why don't you come back tomorrow after 4:00 a.m.?";
+		close;
+	case 2:
+		mes "[Frail Ghast]";
+		mes "Ah, stranger! You came to help again, right?";
+		next;
+		if (select( "Help.", "Decline." ) == 2) {
+			mes "[Frail Ghast]";
+			mes "Why not? Are you too busy today?";
+			close;
+		}
+		mes "[Frail Ghast]";
+		mes "Don't worry about your payment; I've got it covered. Just go get the job done.";
+		erasequest 1299;// Patrol Once a Day
+		setquest 1298;// Gas! Gas!
+		close;
+	}
+	switch( checkquest(1298,HUNTING) ) {
+	case -1:
+		mes "[Frail Ghast]";
+		mes "*Groan* What do I do?";
+		mes "Maybe I should take a giant fan with me.";
+		mes "No. No, then everyone will find out.";
+		mes "Who's there?!";
+		emotion ET_SURPRISE, playerattached();
+		next;
+		mes "[Frail Ghast]";
+		mes "Mm? I'm pretty sure I haven't seen you around.";
+		mes "You're not one of the vigilantes.";
+		next;
+		mes "[Frail Ghast]";
+		mes "Wait, you're the stranger";
+		mes "who's been interfering with us!";
+		next;
+		mes "[Frail Ghast]";
+		mes "...Oh, that's right! Hey stranger,";
+		mes "have you seen the monsters";
+		mes "called Gasters inside the mine?";
+		next;
+		select("Yes.","Gasters?");
+		mes "[Frail Ghast]";
+		mes "Yes, those clumps of gas. They make me sneeze something fierce,";
+		mes "and turn into a weeping, drooling, sniffling mess. *Shudder*";
+		next;
+		mes "[Frail Ghast]";
+		mes "Now, I've been assigned to go on patrol inside the mine, and I can't do it because of them.";
+		mes "But we Taurases take pride in our physical superiority. How can I tell the others that I can't do my job because I'm allergic to some gas?";
+		next;
+		mes "[Frail Ghast]";
+		mes "So I'm thinking";
+		mes "maybe you could help me.";
+		next;
+		mes "[Frail Ghast]";
+		mes "Hunt ^FF000020 Gasters^000000 before I get in there.";
+		mes "I'll repay you. Please?";
+		next;
+		if (select( "Help.", "Decline." ) == 2) {
+			mes "[Frail Ghast]";
+			mes "Come on, I said I'd repay you.";
+			mes "Bah! Alright, then I won't force you.";
+			mes "But you'd better not tell anyone about this. Got it?";
+			close;
+		}
+		mes "[Frail Ghast]";
+		mes "Really? Thanks! I'll be counting on you!";
+		next;
+		mes "[Frail Ghast]";
+		mes "Oh, and make sure no one knows about this.";
+		mes "That'll be bad for both of us.";
+		setquest 1298;// Gas! Gas!
+		close;
+	case 0:
+	case 1:
+		mes "[Frail Ghast]";
+		mes "How many Gasters did you hunt?";
+		mes "I'm ready to go on patrol. Let me know when you're done.";
+		mes "I'll be counting on you, stranger.";
+		close;
+	case 2:
+		mes "[Frail Ghast]";
+		mes "Did you catch them all? I'd better finish my rounds before more of them spring up.";
+		mes "Thanks! Here, take this.";
+		erasequest 1298;// Gas! Gas!
+		setquest 1299;// Patrol Once a Day
+		getitem 25250,3;// Rock_Ridge_Coin
+		getexp 101600,94320;
+		next;
+		mes "[Frail Ghast]";
+		mes "If you're not busy, come by tomorrow and help me again. I'll repay you.";
+		mes "This works for both of us, don't you agree?";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo 1298, QTYPE_QUEST, 1;
+	// fix me: questinfo 9457
+	// on hunting == -1
+	// on hunting == 2
+	// on playtime == 2
+	end;
+}
+
+// fix me: incomplete, missing quest 1323 (same text)
+harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
+	if (BaseLevel < 100) {
+		mes "[Mrs. McPhy]";
+		mes "Hello. Are you new to this place? You should be ^FF0000at least Level 100^000000 to stay here comfortably?";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Wait, what is my husband feeding that dog? Honey! That was our dinner!";
+		next;
+		mes "[Mr. McPhy]";
+		mes "S-sweetheart, you shouldn't be outside when it's so windy. Let's go in.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Grr, I can't believe you! You're getting only half your dinner tonight!";
+		close;
+	}
+
+	switch( checkquest(1329,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Mrs. McPhy]";
+		mes "He's an angel when he's in sleep, but... sigh... I already have a headache, just thinking about what he might do when he wakes up ^FF0000after 4:00 a.m.^000000";
+		close;
+	case 2:
+		mes "[Mrs. McPhy]";
+		mes "Adventurer, thank you for coming back. We've checked all the holes Spotty dug inside the village, but we couldn't find what we were looking for. He must have taken it to the wasteland.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "As I told you before, we've got something for you this time: ^0000CD1 Rock Ridge Coin^000000. Say, could you help us?";
+		next;
+		if (select( "Help.", "Decline." ) == 2) {
+			mes "[Mrs. McPhy]";
+			mes "We have no one else to turn to. Please come back if you change your mind.";
+			close;
+		}
+		if (rand(2) == 0) {
+			mes "[Mrs. McPhy]";
+			mes "Today Spotty took a spoon. Could you look for it? It may be easily replaceable, but I can't keep buying things every time Spotty takes something.";
+			next;
+			mes "[Mrs. McPhy]";
+			mes "Go outside the village and talk to my husband. He'll tell you where it might be.";
+			erasequest 1329;// Spotty in the Dreamland
+			setquest 1325;// Spotty, No!
+			setquest 1330;// Spotty's Holes
+			close;
+		}
+		mes "[Mrs. McPhy]";
+		mes "Today Spotty took a hat. Could you look for it? It may be easily replaceable, but I can't keep buying things every time Spotty takes something.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Go outside the village and talk to my husband. He'll tell you where it might be.";
+		erasequest 1329;// Spotty in the Dreamland
+		setquest 1326;// Spotty, No!
+		setquest 1330;// Spotty's Holes
+		close;
+	}
+
+	if (isbegin_quest(1330) == 0) {// First time doing the quest
+		if (isbegin_quest(1321) == 1) {// debug: player can't finish the quest on official
+			setquest 1330;
+			end;
+		}
+		mes "[Mrs. McPhy]";
+		mes "How many times do I have to tell you to keep your dog away from our things? Do you really want me to send it away on a ship?";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Why? What did he do this time?";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "I can't live like this anymore! Guess what Spotty stole this time? My ring!";
+		next;
+		if (select( "Check what's going on.", "Quit." ) == 2) {
+			mes "[Mrs. McPhy]";
+			mes "HONEY! Are you even listening to me?!";
+			close;
+		}
+		mes "[Mrs. McPhy]";
+		mes "My mom gave me that ring before I left for this foreign land. I was keeping it for a rainy day, and that mongrel stole it from me!";
+		next;
+		mes "[Mr. McPhy]";
+		mes "You mean the gold ring you love? Uh-oh, Spotty is in big trouble.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "I tried to be understanding when it took our shoes and laundry and buried them in the ground, but no, not my ring!";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Sweetheart, please calm down. Is it possible you left it where he could reach it?";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Are you kidding me? I never take it off except when I do the dishes or laundry,";
+		mes "and even then I keep it in my pocket. I dropped it just this once, and that mongrel got ahold of it!";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "It's been two months since you quit your job, and instead of helping around the house, you've been spoiling that dog. You're responsible for its misbehavior!";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "I saw it run to the wasteland. Go find my ring. You'd better not come back home without it!";
+		next;
+		mes "[Mr. McPhy]";
+		mes "What? I'm a miner, not a fighter? I can't go out there! You know I couldn't stay out there long enough to find my hat when it flew away in that direction.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "I don't know, and I don't care!";
+		next;
+		if (select( "Join the conversation.", "Pass." ) == 2) {
+			mes "- That's none of my business. I'm just going to pass. -";
+			close;
+		}
+		mes "[Mr. McPhy]";
+		mes "Wah! Geez, who are you?";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Ah, you're the adventurer who just arrived in these parts. Hah hah, don't be so surprised. I know because";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "you sit by the dock all day, playing with the dog. Of course, I know everyone who comes and goes.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "*Clenches his teeth* Sweetheart, let's not start it right now.";
+		mes "Anyway, what can we do for you?";
+		next;
+		if (select( "Say you want to help them find the ring.", "Say hello." ) == 2) {
+			mes "[Mr. McPhy]";
+			mes "Why, hello to you, too.";
+			mes "You're silly.";
+			close;
+		}
+		mes "[Mrs. McPhy]";
+		mes "Huh? You want to help us. Thank you, but no, thanks. We can't pay you.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "And I know for a fact that no one offers help for free anymore.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Wait, honey. You should think again. You and I are too afraid of the Buffalo Bandits to go out to the wasteland.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "We have no one else to turn to, and I can't think of a better way than this. Let's take a chance on this adventurer.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "You're right, but... Sigh...";
+		emotion ET_THINK;
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Mm, Adventurer, let me take back what I just said. Please help us.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Spotty digs holes and buries things in them every day. If you find holes in the wasteland, please look inside them.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "My husband and I will look around the village, just in case. If you find something, please come back here.";
+		setquest 1321;// Spotty and Her Ring
+		next;
+		mes "[Mr. McPhy]";
+		mes "I picked up Spotty in the wasteland. Maybe that's why he loves spending time there so much. But he never ventures so far out that he can't make it home before it's mealtime. At least, not yet.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Go out to the wasteland, and you'll see the marks that I've left on your map. You don't have to search any places beyond them.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Honey, you should at least follow the adventurer to the gates, so you could tell him where to look.";
+		setquest 1330;// Spotty's Holes
+		next;
+		mes "[Mr. McPhy]";
+		mes "S-should I? Uh, mm... Okay.";
+		close;
+	}
+	if (isbegin_quest(1321) == 1 || isbegin_quest(1325) == 1 || isbegin_quest(1326) == 1) {
+		mes "[Mrs. McPhy]";
+		mes "Spotty would be a perfect dog if he doesn't take things out of the house. Sigh...";
+		close;
+	}
+	if (isbegin_quest(1322) == 1) {// First time doing the quest
+		mes "[Mrs. McPhy]";
+		mes "Adventurer, we've found the ring!";
+		mes "After all the time we spent searching the village, we've found it inside his house.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "By the way, what's that shining thing in your hand?";
+		next;
+		select("Show what's in your hand.");
+		mes "[Mrs. McPhy]";
+		mes "This is a Rock Ridge Coin. You can use it like money inside the village. I wasn't comfortable letting you help us for free. I'm glad you can at least have this.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "That Rock Ridge Coin is yours. Thank you for helping us.";
+		erasequest 1322;// Found Something
+		erasequest 1330;// Spotty's Holes
+		getitem 25250,1;// Rock Ridge Coin
+		setquest 1329;// Spotty in the Dreamland
+		next;
+		mes "[Mrs. McPhy]";
+		mes "And, mm... Do you mind helping us again tomorrow? Spotty keeps taking things from the house to the wasteland, and we need them back.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Spotty tired itself out and fell asleep. Could you come back tomorrow after 4:00 a.m.? We'll have something to give you next time.";
+		close;
+	}
+	if (isbegin_quest(1328) == 1) {
+		mes "[Mrs. McPhy]";
+		mes "You've found it! Thank you so much. We've been trying to correct Spotty's behavior, and it's difficult.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Here's the Rock Ridge Coin we promised. Thank you for searching the wasteland for us.";
+		erasequest 1330;// Spotty's Holes
+		erasequest 1328;// Found Missing Items
+		setquest 1329;// Spotty in the Dreamland
+		getitem 25250,1;// Rock Ridge Coin
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Could you come back again? If you're not busy, you're welcome anytime after 4:00 a.m each day.";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo 1321, QTYPE_QUEST, 1;
+	setquestinfo_level 1321,100,175;
+	questinfo 1329, QTYPE_QUEST, 1;
+	setquestinfo_req 1329,1322,1;
+	// questinfo if playtime == 2
+	end;
+}
+
+rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
+	if (isbegin_quest(1321) == 1) {
+		mes "[Mr. McPhy]";
+		mes "My wife said Spotty went out the back door and ran straight past the barbed-wire fence.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "But he couldn't have gone too far because he came back to me pretty quickly. Why don't you walk along the fence and look for holes with white hair floating around them?";
+		close;
+	}
+	if (isbegin_quest(1325) == 1 || isbegin_quest(1326) == 1) {
+		mes "[Mr. McPhy]";
+		mes "My wife sent me here to give you directions, but I have no idea where he might have been.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Oh, right! Spotty has been shedding a lot lately. Maybe you should look for holes with white hair floating around them.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "And he doesn't seem to venture out too far. It's probably because he's still young. I've marked three possible locations in the middle of your map. You don't have to look further than those locations.";
+		close;
+	}
+	if (isbegin_quest(1322) == 1 || isbegin_quest(1328) == 1) {
+		mes "[Mr. McPhy]";
+		mes "Did you find something? Then let's go back!";
+		close;
+	}
+	if (isbegin_quest(1329) == 1) {
+		mes "[Mr. McPhy]";
+		mes "Ah, Adventurer. Shhh! Please keep your voice down: the Buffalo Bandits might hear us.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "I've been coming here whenever I can, to catch Spotty before he takes more things out to the wasteland.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "My wife says she'd throw him out, but she doesn't mean it. She never raises her hand no matter how angry she is with him either, and she always remembers to feed him vitamins and get him vaccinated.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "She didn't say anything when I quit my job because I was too scared of the Buffalo Bandits. She's a good woman.";
+		close;
+	}
+	mes "[Mr. McPhy]";
+	mes "*Gasp* Buffalo Bandits!";
+	close2;
+	classchange( HIDDEN_WARP_NPC, "", bc_self );
+	end;
+
+// OnInit:
+// 	questinfo 1321, QTYPE_QUEST, 1;// fix me: quest ID
+// 	end;
+}
+
+rockrdg1,43,145,3	script	Hole#rkq1321	4_CRACK,{
+	if (isbegin_quest(1321) == 1) {
+		mes "- There's a hole in the ground.";
+		mes "It has something shining inside it,";
+		next;
+		mes "But it's not a gold ring.";
+		mes "I should take it with me for now. -";
+		erasequest 1321;// Spotty and Her Ring
+		setquest 1322;// Found Something
+		close;
+	}
+	mes "- There's a hole in the ground.";
+	mes "It only has a stone sticking out of the ground inside it. -";
+	close;
+}
+
+rockrdg1,170,233,3	script	Hole#rkdqgd1	4_CRACK,{
+	if (isbegin_quest(1321) == 0) {
+		mes "- There's a hole in the ground.";
+		mes "It has a little bit of white hair scattered inside it. -";
+		close;
+	}
+	mes "- There's a hole in the ground.";
+	mes "It's empty. -";
+	next;
+	mes "- I don't have to search farther than this. -";
+	close;
+
+OnInit:
+	// questinfo , QTYPE_QUEST, 1;// fix me: 1321 required ?
+	end;
+}
+
+rockrdg1,183,143,3	script	Hole#rkdqgd2	4_CRACK,{
+	if (isbegin_quest(1321) == 0) {
+		mes "- There's a hole in the ground.";
+		mes "It has a little bit of white hair scattered inside it. -";
+		close;
+	}
+	mes "- There's a hole in the ground.";
+	mes "It's empty. -";
+	next;
+	mes "- I don't have to search farther than this. -";
+	close;
+
+OnInit:
+	// questinfo , QTYPE_QUEST, 1;// fix me: 1321 required ?
+	end;
+}
+
+rockrdg1,215,72,3	script	Hole#rkdqgd3	4_CRACK,{
+	if (isbegin_quest(1321) == 0) {
+		mes "- There's a hole in the ground.";
+		mes "It has a little bit of white hair scattered inside it. -";
+		close;
+	}
+	mes "- There's a hole in the ground.";
+	mes "It only has wet soil inside it. -";
+	next;
+	mes "- I don't have to search farther than this. -";
+	close;
+
+OnInit:
+	// questinfo , QTYPE_QUEST, 1;// fix me: 1321 required ?
+	end;
+}
+
+rockrdg1,58,195,3	script	Hole#rkq1324	4_CRACK,{
+	mes "- There's a hole in the ground.";
+	mes "It has a tumbleweed rolling around inside it. -";
+	close;
+}
+rockrdg1,109,60,3	script	Hole#rkq1326	4_CRACK,{
+	if (isbegin_quest(1326) == 1) {
+		mes "- There's a hole in the ground.";
+		mes "It has something inside it. -";
+		next;
+		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
+		erasequest 1326;// Spotty, No!
+		setquest 1328;// Found Missing Items
+		close;
+	}
+	mes "- There's a hole in the ground.";
+	mes "It has a little bit of white hair scattered inside it. -";
+	close;
+}
+rockrdg1,71,149,3	script	Hole#rkq1325	4_CRACK,{
+	if (isbegin_quest(1325) == 1) {
+		mes "- There's a hole in the ground.";
+		mes "It has something inside it. -";
+		next;
+		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
+		erasequest 1325;// Spotty, No!
+		setquest 1328;// Found Missing Items
+		close;
+	}
+	mes "- There's a hole in the ground.";
+	mes "A small insect is scuttling around inside it. -";
+	close;
+}
+
+rockrdg1,100,230,3	script	Hole#rkq1323	4_CRACK,{
+	if (isbegin_quest(1323) == 1) {
+		mes "- There's a hole in the ground.";
+		mes "It has something inside it. -";
+		next;
+		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
+		erasequest 1323;// Spotty, No!
+		setquest 1328;// Found Missing Items
+		close;
+	}
+}
+
+rockrdg1,100,230,3	script	Unknown #50572	4_CRACK,{
+	mes "- There's a hole in the ground.";
+	mes "It has a little bit of white hair scattered inside it. -";
+	close;
+}
+
+// Mr. McPhy quests
+harboro1,345,61,3	script	Spotty#rockdaily	4_DOG01,{
+	mes "- He looks more like a coyote than a dog. -";
+	next;
+	mes "- He's shedding a lot of hair. He must be leaving white hair all over the place wherever he goes. -";
+	close;
+}
+
+harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
+	switch( isbegin_quest(1330) ) {
+	case 0:// First time
+		mes "[Mr. McPhy]";
+		mes "Spotty, do you want a treat? Hmm?";
+		close;
+	case 1:
+		if (isbegin_quest(1321) == 1) {
+			mes "[Mr. McPhy]";
+			mes "My wife and I decided to check the village separately, but I'm not sure if we'd be done before you're back.";
+			close;
+		}
+		mes "[Mr. McPhy]";
+		mes "Oh, poor Spotty. You're itching from losing so much hair. Do you want your daddy to brush you?";
+		close;
+	case 2:
+		break;
+	}
+	switch( checkquest(1332,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Mr. McPhy]";
+		mes "Let me see what time it is... It's not past ^FF00004:00 a.m.^000000 yet. Could you come back later?";
+		close;
+	case 2:
+		mes "[Mr. McPhy]";
+		mes "Adventurer, I've been waiting for you! You came to avenge Spotty on the Buffalo Bandits, right?";
+		next;
+		mes "[Mr. McPhy]";
+		mes "As usual, please hunt ^FF00003 bandits of each kind: yellow, black, and white mane^000000.";
+		mes "I'll be counting on you!";
+		erasequest 1332;// Blood for Blood
+		setquest 1331;// Avenging Spotty
+		close;
+	}
+	switch( checkquest(1331,HUNTING) ) {
+	case -1:
+		mes "[Mr. McPhy]";
+		mes "Adventurer, thank you for checking that dangerous area for my wife's gold ring.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "I believe the universe has brought you to us as an act of Providence. Do you mind if I ask you one more favor?";
+		next;
+		if (select( "Listen to what he has to say.", "Decline." ) == 2) {
+			mes "[Mr. McPhy]";
+			mes "I can really repay you this time. Please let me know if you change your mind.";
+			close;
+		}
+		mes "[Mr. McPhy]";
+		mes "We keep a rifle in the house for self-defense purposes, and the other day I noticed Spotty trembled like a leaf when he saw it.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "I'm glad I was too scared to have it loaded. Spotty wouldn't have come back home if he smelled gunpowder.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "I think someone fired a gun near Spotty, but it didn't happen inside the village. We would've heard if it did.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "I think it happened in the wasteland and that one of the Buffalo Bandits fired at our dog. Could you avenge Spotty on my behalf?";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Since you brought back my wife's gold ring, I've been taking odd jobs to supplement our income. We can afford to repay you now.";
+		next;
+		if (select( "Help him.", "Decline." ) == 2) {
+			mes "[Mr. McPhy]";
+			mes "You're not afraid of the bandits, are you?";
+			mes "Okay, I understand if you can't help us.";
+			close;
+		}
+		mes "[Mr. McPhy]";
+		mes "Since there's no way of knowing exactly who scared Spotty, I'd like you to hunt 3 bandits of each kind: yellow, black, and white mane.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "I'll be waiting.";
+		setquest 1331;// Avenging Spotty
+		close;
+	case 0:
+	case 1:
+		mes "[Mr. McPhy]";
+		mes "Those evil bandits, how could they shoot their guns near puppies?";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Ah, Adventurer. Did you hunt ^FF00003 bandits of each kind: yellow, black, and white mane^000000?";
+		close;
+	case 2:
+		mes "[Mr. McPhy]";
+		mes "Did you take care of all the darned Buffalo Bandits?";
+		next;
+		mes "[Mr. McPhy]";
+		mes "But there are so many of them that this wouldn't even leave a dent on them. I want to take it further.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "We should do this just once a day. They would know something is amiss if we get rid of too many of them at once. Please come back tomorrow after 4:00 a.m.";
+		next;
+		mes "[Mr. McPhy]";
+		mes "Oh, right? Here's your payment I promised. Thank you.";
+		erasequest 1331;// Avenging Spotty
+		setquest 1332;// Blood for Blood
+		getitem 25250,2;// Rock Ridge Coin
+		getexp 14499,13863;
+		close;
+	}
+	end;
+
+// OnInit:
+	// fix me: questinfo 1331, QTYPE_QUEST, 1;
+	// playtime == 2
+	// display when hunting completed
+	// end;
+}
+
+// Misc NPCs
+rockrdg1,330,104,3	script	Curt Snake#rockc05	10218,{
+	mes "[Curt Snake]";
+	mes "Coyotes have been attacking our villages often lately, so we've asked some adventurers to cull them.";
+	next;
+	mes "[Curt Snake]";
+	mes "It worries me that our children thinks hunting is just for fun.";
+	mes "We start to teach our young how to hunt early on,";
+	next;
+	mes "[Curt Snake]";
+	mes "and I understand they want to become as strong as those adventurers.";
+	mes "But we Cacti don't hunt for pleasure. Teaching that to our children is challenging while adventurers are around them constantly.";
+	close;
+}
+
+rockrdg1,299,82,3	script	Tagliatelle#rockc07	4_DR_M_02,{
+	mes "[Tagliatelle]";
+	mes "I love traveling. I had fun traveling in Pa-sta, and I'm determined to spend the rest of my life traveling in Rune Midgarts and other cities and villages that I can reach from the kingdom.";
+	next;
+	mes "[Tagliatelle]";
+	mes "I like being in new places and talking to the residents. I can learn many things from the way they live.";
+	next;
+	npctalk "*Gasp* Taneska, I told you not to beat it!", "", bc_self;
+	mes "[Taneska]";
+	mes "I love these new musical instruments!";
+	close;
+}
+
+rockrdg1,297,84,7	script	Taneska#rockc08	4_CAT_MERMASTER,{
+	mes "[Taneska]";
+	mes "This instrument itself is a work of art.";
+	mes "Check out the exquisite finish around the drum skin, and the well-balanced, full-bodied sound from the barrel.";
+	next;
+	emotion ET_THROB;
+	mes "[Taneska]";
+	mes "Ah, I want to beat this drum! I'd love to hear its sound!";
+	next;
+	mes "[Tagliatelle]";
+	mes "*Gasp* Taneska, please don't touch it! You were warned once already!";
+	close;
+}
+
+rockrdg1,285,96,3	script	Glaring Eagle#rockc01	10219,{
+	mes "[Glaring Eagle]";
+	mes "The strangers lost the battle with the sea and relinquished their homes. I thought they'd leave, but they're as resilient as weeds; they built another village on top of their old homes.";
+	next;
+	mes "[Litis]";
+	mes "Mother Nature allows weeds to grow. She's allowing them to stay here.";
+	next;
+	npctalk "I'm too old now.", "", bc_self;
+	mes "[Glaring Eagle]";
+	mes "I know, Litis. I'm just being a stubborn old mule.";
+	mes "But still I can't help but think that everything's happening too fast.";
+	close;
+}
+
+rockrdg1,328,112,5	script	Karintas#rockc04	10226,{
+	mes "[Karintas]";
+	mes "My mom is better at hunting coyotes than any adventurer. I can hunt them, too!";
+	next;
+	mes "[Curt Snake]";
+	mes "Karintas, has your mom ever hunted them for pleasure?";
+	next;
+	mes "[Karintas]";
+	mes "Mm, no. She hunts them only when we need their fur and meat.";
+	next;
+	mes "[Curt Snake]";
+	mes "Hurting nature should never be a game. These adventurers only hunt enough coyotes to keep us safe from them.";
+	next;
+	mes "[Curt Snake]";
+	mes "If you get old enough to understand that, your mother will teach you how to hunt.";
+	close;
+}
+
+rockrdg1,331,111,3	script	Juanitas#rockc02	10222,5,5,{
+	end;
+OnTouch:
+	npctalk "I'm Captain Adventurer! I'm going to hunt a hundred coyotes!", "Karintas#rockc04", bc_self;
+	npctalk "Then I'm going to hunt a hundred-hundred-hundred coyotes!", "", bc_self;
+	npctalk "I'm a coyote-hunting adventurer!", "Swift Scorpion#rockc03", bc_self;
+	npctalk "You rascals, I told you not to play adventurer!", "Mrs. Cacturon#rrrem01", bc_self;
+	end;
+}
+rockrdg1,327,109,5	script	Swift Scorpion#rockc03	10226,{ end; }
+
+
+rockrdg1,287,95,3	script	Litis#rockc10	10227,{
+	mes "[Litis]";
+	mes "I understand what Mr. Glaring Eagle means and why he's so worried.";
+	next;
+	mes "[Litis]";
+	mes "But the river today is not the same river it was yesterday. Things keep changing, and it's natural.";
+	close;
+}
+
+rockrdg1,297,111,3	script	Roytanen#rockc10	4_F_RANGER,{
+	mes "[Roytanen]";
+	mes "*Gasp* I'm back in the Cactus village. Aww, I'm lost? again.";
+	next;
+	emotion ET_CRY;
+	mes "[Roytanen]";
+	mes "The Kiwawa Desert is vast and full of nothing but dirt and rocks. It's easy to get lost in it.";
+	next;
+	mes "[Roytanen]";
+	mes "Gosh, I'm really not up to yet another excursion... I hope I could get a glass of cool water before I leave.";
+	close;
+}
+
+
+harboro1,91,211,3	script	#rockno01	HIDDEN_NPC,5,5,{
+	mes "[Central Road Sign]";
+	mes "Follow this road east to get to the inn, the sheriff's office, shops, and the plaza.";
+	next;
+	mes "[Central Road Sign]";
+	mes "This road also goes outside the village, to the Kiwawa Desert.";
+	close;
+
+OnTouch:
+	npctalk "Central Road", "", bc_self;
+	end;
+}
+
+harboro1,299,211,3	script	#rockno02	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	npctalk "Rock Ridge Plaza", "", bc_self;
+	end;
+}
+
+harboro1,260,211,3	script	#rockno03	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	npctalk "Sheriff's Office", "", bc_self;
+	end;
+}
+
+harboro1,215,212,3	script	#rockno04	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	npctalk "West: The Inn, East: The Sheriff's Office", "", bc_self;
+	end;
+}
+
+harboro1,134,211,3	script	#rockno05	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	npctalk "East: The Inn", "", bc_self;
+	end;
+}
+
+harboro1,310,201,3	script	#rockno06	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	npctalk "Tool Shop, Weapon/Armor Shop", "", bc_self;
+	end;
+}
+
+harboro1,60,215,5	script	Karam Pucci#harboro1	4_M_SEAMAN,{
+	mes "[Karam Pucci]";
+	mes "Do you want to go back to Alberta?";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Karam Pucci]";
+		mes "No problem. I don't mind staying here for a little longer.";
+		mes "In fact, my company would like that too.";
+		close;
+	}
+	mes "[Karam Pucci]";
+	mes "Then let's go!";
+	close2;
+	warp "alberta",172,131;
+	end;
+}
+
+harboro1,321,237,5	script	Rubina Adler#rockn07	4_F_SITDOWN,{
+	emotion ET_DELIGHT;
+	mes "[Rubina Adler]";
+	mes "Mm, mm! Agave juice is the best thing I've tasted in Rock Ridge.";
+	next;
+	mes "[Rubina Adler]";
+	mes "I've heard it's a traditional drink of the Cacti. When I drink it, it feels as if it washes away all the dust clogging up my throat.";
+	next;
+	mes "[Rubina Adler]";
+	mes "Err, wait. It's not real agave juice. It says agave-flavored juice.";
+	next;
+	emotion ET_SWEAT;
+	mes "[Rubina Adler]";
+	mes "Ack, does it even have agave in it?";
+	close;
+}
+
+harboro1,75,211,1	script	Zebedee#rockwn13	4_KID01,5,5,{
+	mes "[Zebedee]";
+	mes "Welcome to Rock Ridge!";
+	mes "I hope you'll find your opportunity in this land of dreams.";
+	close;
+
+OnTouch:
+	specialeffect EF_SPHERE;
+	emotion ET_BIGTHROB;
+	npctalk "Welcome to Rock Ridge!", "", bc_self;
+	end;
+}
+
+harboro1,75,219,3	script	Irene#rockwn14	4W_KID,5,5,{
+	mes "[Irene]";
+	mes "Welcome to Rock Ridge, adventurer!";
+	mes "I hope you'll enjoy exploring this wonderful place.";
+	close;
+
+OnTouch:
+	specialeffect EF_SPHERE;
+	emotion ET_BIGTHROB;
+	npctalk "Welcome, adventurer!", "", bc_self;
+	end;
+}
+
