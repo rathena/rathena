@@ -5180,3 +5180,1356 @@ OnTouch:
 	end;
 }
 
+
+harboro1,79,224,5	script	Miles Wiesner#rockwn12	4_M_SITDOWN,{
+	mes "[Miles Wiesner]";
+	mes "I'm waiting for my sister. She's supposed to be on the next ship.";
+	mes "I came here first and invited her over here.";
+	next;
+	mes "[Miles Wiesner]";
+	mes "She was worried sick when I decided to leave for this continent a year ago.";
+	mes "She'll be happy to see me doing well.";
+	next;
+	mes "[Miles Wiesner]";
+	mes "The land of opportunity, that's Rock Ridge.";
+	close;
+}
+
+harboro1,82,221,3	script	Cheerful Leaf#rockwn16	10226,{
+	mes "[Cheerful Leaf]";
+	mes "My gramps is the best Cactus I know!";
+	mes "Sometimes he says things that I can't understand, but it's okay.";
+	next;
+	emotion ET_DELIGHT;
+	mes "[Cheerful Leaf]";
+	mes "I hope I can understand him better when I grow as tall as he.";
+	mes "I want to grow up quickly, so I could ask him to tell me the things he told me again.";
+	close;
+
+OnTouch:
+	emotion ET_SMILE;
+	end;
+}
+
+harboro1,83,221,3	script	Mahua Kaya#rockwn15	10225,{
+	mes "[Mahua Kaya]";
+	mes "Some Cacti don't like the pioneers, but, Leaf, remember they're also children of Mother Nature.";
+	next;
+	mes "[Cheerful Leaf]";
+	mes "Children? Are they as cute as Leaf?";
+	next;
+	mes "[Mahua Kaya]";
+	mes "Of course. Everyone?even this old man?is a child in the eyes of Mother Nature.";
+	next;
+	emotion ET_SMILE;
+	mes "[Cheerful Leaf]";
+	mes "Hah hah hah! That doesn't make sense. You're tall and have a mustache. Babies don't have mustaches.";
+	next;
+	mes "[Mahua Kaya]";
+	mes "I'm saying you should be nice to them like you are to your friends.";
+	mes "Do you understand me, Leaf?";
+	next;
+	mes "[Cheerful Leaf]";
+	mes "Yes. Leaf is a good Cactus and he loves his gramps.";
+	close;
+}
+
+harboro1,86,218,3	script	Welch#rockwn01	4_M_ARCHER,5,5,{
+	mes "[Welch]";
+	mes "Have you just arrived? So have I, two days ago. The wind sounds different here. I love it!";
+	next;
+	mes "[Welch]";
+	mes "All the buildings smell like fresh paint, and I hear the sound of hammering everywhere I go?this village is alive!";
+	next;
+	emotion ET_SMILE;
+	mes "[Welch]";
+	mes "Just standing here makes me so happy that I can't stop laughing. Hah hah hah!";
+	close;
+
+OnTouch:
+	emotion ET_DELIGHT;
+	end;
+}
+
+harboro1,88,217,3	script	Edith Richie#rockwn02	4_F_KID2,{
+	emotion ET_PROFUSELY_SWEAT;
+	mes "[Edith Richie]";
+	mes "My dad works at the train station.";
+	mes "It's east?mm, wait. West is the left hand side, and...";
+	next;
+	mes "[Edith Richie]";
+	mes "Just look at your map and go straight up. You'll be at the train station.";
+	mes "My father is so strong, he can carry many boxes at once!";
+	close;
+}
+
+harboro1,86,210,4	script	Carmen O'Neil#rockwn06	8_F,{
+	mes "[Carmen O'Neil]";
+	mes "*Hiccups* I can drink beer all day long!";
+	next;
+	mes "[Leland Wenkins]";
+	mes "Let's make money and?hee hee!?eat something delicious!";
+	next;
+	npctalk "Geez, they're drinking again.", "Mortimer#rockwn07", bc_self;
+	mes "[Drunk Doram]";
+	mes "I want more chicken, nya! And chicken is really easy on my stomach.";
+	close;
+}
+
+harboro1,85,208,7	script	Leland Wenkins#rockwn03	4_M_TWTEAMAN,5,5,{
+	mes "[Leland Wenkins]";
+	mes "Cheers for our great village! Cheers!";
+	next;
+	mes "[Carmen O'Neil]";
+	mes "For the pioneering spirit! Cheers!";
+	next;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : They're drunk.", bc_self;
+	mes "[Drunk Doram]";
+	mes "*Hiccups* Cheers! Nya-nya!";
+	close;
+
+OnTouch_:
+	if (.talk == 0) {
+		.talk = 1;
+		npctalk "For Rock Ridge!";
+		sleep 3000;
+		npctalk "Cheers!", "Carmen O'Neil#rockwn06";
+		npctalk "Cheers, nya!", "Drunk Doram#rockwn11";
+		sleep 9000;
+		npctalk "Mwah hah hah! Beer is the best!";
+		sleep 1000;
+		npctalk "I especially like drinking it in the daytime!", "Carmen O'Neil#rockwn06";
+		sleep 1000;
+		npctalk "Chicken! *Hiccups* You got to eat chicken with it!", "Drunk Doram#rockwn11";
+		sleep 9000;
+		npctalk "Who are we?";
+		sleep 1000;
+		npctalk "We're the pioneers of Rock Ridge!", "Carmen O'Neil#rockwn06";
+		sleep 1000;
+		npctalk "We're brave! We're gallant!", "Drunk Doram#rockwn11";
+		sleep 3000;
+		npctalk "We're the pioneers of Rock Ridge!";
+		npctalk "We're the pioneers of Rock Ridge!", "Carmen O'Neil#rockwn06";
+		npctalk "Nya, nya, nya! Teehee, nya!", "Drunk Doram#rockwn11";
+		.talk = 0;
+	}
+	end;
+}
+
+harboro1,87,207,1	script	Drunk Doram#rockwn11	4_CAT_SAILOR5,{
+	mes "[Leland Wenkins]";
+	mes "We are the great pioneers of Rock Ridge! Hey, ho!";
+	next;
+	mes "[Carmen O'Neil]";
+	mes "We dig mines, build houses! No seawater or sandstorms can stop us!";
+	next;
+	npctalk "He's so loud.", "Edith Richie#rockwn02", bc_self;
+	mes "[Drunk Doram]";
+	mes "Nya! Nya-nya! Nya hah hah! Nya-nya!";
+	close;
+}
+
+
+harboro1,80,204,7	script	Elsie#rockwn05	4W_KID,5,5,{
+	mes "[Elsie]";
+	mes "Whoa, so pretty!";
+	next;
+	emotion ET_QUESTION;
+	mes "[Elsie]";
+	mes "It's five million Zeny. How much money is that?";
+	next;
+	mes "[Mortimer]";
+	mes "Ah, that price is for adventurers only.";
+	mes "Pretty little ladies like you can have it at two hundred Zeny.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "I'm pretty and little, too.";
+	next;
+	emotion ET_SWEAT;
+	mes "[Mortimer]";
+	mes "...You're either delusional";
+	mes "or shameless.";
+	next;
+	emotion ET_FRET, playerattached();
+	mes "[" + strcharinfo(0) + "]";
+	mes "You're shameless!";
+	close;
+
+OnTouch:
+	emotion ET_SURPRISE;
+	end;
+}
+
+harboro1,81,205,1	script	Mortimer#rockwn07	4_M_ROGUE,5,5,{
+	mes "[Mortimer]";
+	mes "Souvenirs! I've got souvenirs!";
+	mes "Get souvenirs for your family, friends, teachers, and significant other!";
+	next;
+	mes "[Mortimer]";
+	mes "Ah, adventurer. Would you like to buy some souvenirs?";
+	next;
+	npctalk "They're so cheap, you're getting them almost for free. I'm actually losing money doing this!", "", bc_self;
+	mes "[Mortimer]";
+	mes "I'll give you a special discount. This feather accessory here is just two million Zeny. This handkerchief here is?oh, wow!?just five million!";
+	next;
+	emotion ET_HUK, playerattached();
+	mes "[" + strcharinfo(0) + "]";
+	mes "How exorbitant!";
+	close;
+
+OnTouch:
+	npctalk "Souvenirs! I've got souvenirs!", "", bc_self;
+	end;
+}
+
+harboro1,73,206,5	script	Walter Greenwald#rockwn	4_M_BARD,{
+	mes "[Walter Greenwald]";
+	mes "I assume you came all the way here from the mainland for a reason.";
+	mes "When you're done with it and not sure what else to do, well...";
+	next;
+	mes "[Walter Greenwald]";
+	mes "I recommend you follow the central road to the eastern gate of the village and move a little bit farther south.";
+	mes "It's in the 3 o'clock direction when you open the map.";
+	next;
+	mes "[Walter Greenwald]";
+	mes "There, you can meet people who offer jobs and meals.";
+	mes "And, of course, they're surrounded by others who want the jobs and meals.";
+	close;
+}
+
+harboro1,84,200,5	script	Delbert Lake#rockwn04	4_M_EINMINER,{
+	mes "[Delbert Lake]";
+	mes "I'm not going back home until I become a millionaire!";
+	mes "I was so excited to come here that I got aboard the ship in full mining gear!";
+	next;
+	mes "[Delbert Lake]";
+	mes "There's a nice-looking rock! Alley-oop!";
+	mes "Come out, gold, silver, diamonds! You can't hide from Delbert!";
+	next;
+	emotion ET_FRET, getnpcid(0, "Constance#rockwn18");
+	mes "[Constance]";
+	mes "Hey, are you crazy?!";
+	mes "That's not a mineral vein?it's a decorative rock! Get that pickax away from it, now!";
+	close;
+}
+
+harboro1,85,195,1	script	Constance#rockwn18	4_F_EINWOMAN,5,5,{
+	mes "[Constance]";
+	mes "Ah, are you an adventurer? Please, help me stop that madman!";
+	next;
+	mes "[Constance]";
+	mes "He got off a ship from the mainland in that heavy mining gear, and then one look at that rock, he turned into a pickax-swinging maniac.";
+	next;
+	emotion ET_ANGER;
+	mes "[Constance]";
+	mes "It's not a mineral vein but a decorative rock that we villagers moved together. I told him that, but he doesn't care!";
+	mes "He's in full mining gear, but he can't tell a normal rock from a mineral vein. How stupid is that?";
+	close;
+
+OnTouch:
+	npctalk "Mwa hah hah, I'm going to mine everything!", "Delbert Lake#rockwn04", bc_self;
+	npctalk "Hey, stop swinging that pickax!", "", bc_self;
+	end;
+}
+
+harboro1,93,201,1	script	Roland Burts#rockwn17	4_M_ILYA,{
+	mes "[Roland Burts]";
+	mes "Our village is protected by its own group of vigilantes.";
+	mes "They keep guard over it under Sheriff Warp's command.";
+	next;
+	emotion ET_KEK;
+	mes "[Roland Burts]";
+	mes "Our biggest threat is undoubtedly the Buffalo Bandits, but we also have problems with some wild animals.";
+	mes "And under the village, there's?*Shudder* let's not go there.";
+	close;
+}
+
+harboro1,98,211,3	script	Loretta#rockwn08	4_F_ACOLYTE,5,5,{
+	emotion ET_THROB;
+	mes "[Loretta]";
+	mes "Welcome to the city of freedom, Rock Ridge. Odin is with you wherever you go!";
+	mes "Come to us if you want to hear the god's words.";
+	next;
+	mes "[Loretta]";
+	mes "We don't need a chapel. Odin doesn't come to buildings?he comes to our hearts.";
+	mes "Let's pray to him and show him our gratitude.";
+	next;
+	emotion ET_KEK, getnpcid(0, "Dolores#rockwn09");
+	npctalk "I wish I could have a glass of cool lemonade somewhere under a nice shade.", "Dolores#rockwn09", bc_self;
+	mes "[Dolores]";
+	mes "Sister Loretta, my legs hurt. *Whine*";
+	mes "He may not come to buildings, but I want to go sit in one.";
+	next;
+	mes "[Dolores]";
+	mes "Ah, that's it, Brother Maurice!";
+	next;
+	mes "[Loretta]";
+	mes "...Sigh. When the last ship of the day enters the dock, I'll buy you lemonade, limeade, whatever you want.";
+	mes "So for now, act like the god's servant that you are.";
+	next;
+	emotion ET_BIGTHROB, getnpcid(0, "Dolores#rockwn09");
+	emotion ET_BIGTHROB, getnpcid(0, "Maurice#rockwn10");
+	npctalk "We believe in him!", "Dolores#rockwn09", bc_self;
+	npctalk "We believe in him!", "Maurice#rockwn10", bc_self;
+	mes "[Maurice]";
+	mes "Lemonade?I mean, the god is with you!";
+	close;
+
+OnTouch:
+	npctalk "Odin", "", bc_self;;
+	npctalk "Is", "Dolores#rockwn09", bc_self;
+	npctalk "With you.", "Maurice#rockwn10", bc_self;
+	end;
+}
+
+harboro1,100,211,3	script	Dolores#rockwn09	1_F_PRIEST,{
+	mes "[Dolores]";
+	mes "I agree that our heart is our chapel.";
+	mes "But a god can come to cozy bedrooms and a nice-smelling kitchen. We don't have to stand all day in windy ports.";
+	next;
+	mes "[Loretta]";
+	mes "If someone else hears you, they'd think you weren't fed or allowed to sleep for days";
+	mes "when, in fact, you wake up later than the rest of us, every day.";
+	next;
+	emotion ET_PROFUSELY_SWEAT;
+	mes "[Dolores]";
+	mes "Wh-what can I do? The god visits me in my dreams.";
+	mes "I'm not trying to wake up late!";
+	close;
+}
+
+harboro1,101,210,3	script	Maurice#rockwn10	1_M_PASTOR,{
+	mes "[Maurice]";
+	mes "As I get older, it's getting more difficult to stand outside all day, spreading his words.";
+	mes "But I'm as resolved to complete my mission as I was the first day I arrived here.";
+	next;
+	emotion ET_DELIGHT;
+	mes "[Maurice]";
+	mes "I'm not going to let my physical exhaustion get in the way.";
+	mes "I'll use every ounce of energy in me to spread his teachings to the people of this new land!";
+	close;
+}
+
+harboro1,94,237,3	script	Cordell#rockn01	4_M_MAYOR,{
+	mes "[Cordell]";
+	mes "I feel happy just by looking at the train station. It's the symbol of our village, you know.";
+	next;
+	mes "[Cordell]";
+	mes "The mine was pretty far from the village, so transporting ores was a big problem in the beginning.";
+	next;
+	mes "[Cordell]";
+	mes "The actual development of Rock Ridge began after the train system was finally introduced.";
+	mes "Okay, that also aggravated the problem with the Buffalo Bandits, but there's always a dark side to everything.";
+	next;
+	emotion ET_BIGTHROB;
+	mes "[Cordell]";
+	mes "But we the people of Rock Ridge are not here to give in?we're here to conquer!";
+	close;
+}
+
+harboro1,74,259,3	script	Eloise McCurdy#rockn14	4_F_GUNSLINGER,{
+	mes "[Eloise McCurdy]";
+	mes "I pride myself in protecting cargo here.";
+	mes "My job is to protect it against rain, wind, and?of course?thieves.";
+	next;
+	emotion ET_CRY;
+	mes "[Eloise McCurdy]";
+	mes "Recently though... Hmpf, my pride has been crushed by those damnable Buffalo Bandits.";
+	close;
+}
+
+harboro1,130,237,3	script	Loading Dock Foreman#ro	4_M_05,{
+	mes "[Loading Dock Foreman]";
+	mes "The train brings ores from the mine, and brings supplies for the miners from this dock.";
+	next;
+	mes "[Loading Dock Foreman]";
+	mes "That's why this place is always busy. A delay here causes a delay everywhere else in Rock Ridge.";
+	next;
+	npctalk "I'd be motivated to work harder if you raise my salary.", "Jader#rockn11", bc_self;
+	npctalk "Hah, hah, hah! Father's power!", "Rosco Richie#rockn12", bc_self;
+	npctalk "How did I end up here?", "Portnias#rockn13", bc_self;
+	mes "[Loading Dock Foreman]";
+	mes "Stop whining like wimps. Be proud to be part of the team and work harder!";
+	close;
+}
+
+harboro1,126,236,7	script	Jader#rockn11	4_M_SITDOWN,{
+	mes "[Jader]";
+	mes "Ah, I can't move. I'm aching all over.";
+	mes "It doesn't matter whether or not the train comes often. We're always busy.";
+	next;
+	mes "[Loading Dock Foreman]";
+	mes "Hmpf, you're not working hard enough. Tsk, tsk.";
+	mes "You should be happy you have a job while many others don't!";
+	next;
+	emotion ET_OHNO;
+	npctalk "I'm tired, and it's not just physical fatigue. *Mumble Mumble*", "", bc_self;
+	mes "[Jader]";
+	mes "*Gasp* H-how long have you been standing there? O-of course, I'm happy to have a job!";
+	mes "I-I love working at this loading dock. It's the best job I've ever had!";
+	close;
+}
+
+harboro1,128,233,7	script	Rosco Richie#rockn12	4_M_NOV_HUNT,{
+	mes "[Rosco Richie]";
+	mes "Now that there are more people in the village, there are fewer jobs available. I'm glad I have a job that pays enough to feed my family.";
+	next;
+	npctalk "Edith! Daddy is working hard for you!", "", bc_self;
+	mes "[Rosco Richie]";
+	mes "Hah, hah! I can do this for my daughter!";
+	close;
+}
+
+harboro1,130,232,7	script	Portnias#rockn13	4_CAT_SAILOR2,{
+	mes "[Portnias]";
+	mes "I came here because I heard I could become rich quickly, nya.";
+	mes "I got on a ship to Rock Ridge as soon as I got off the ship from Pa-sta.";
+	next;
+	mes "[Portnias]";
+	mes "Now, I don't care about money anymore. I just want to rest. Nya...";
+	mes "I've been moving cargo every day since I came here, and my back is killing me. *Mewl*";
+	next;
+	emotion ET_OTL;
+	mes "[Portnias]";
+	mes "At this rate, I'd spend all the Zeny I've earned on paying hospital bills. *Mewl*";
+	close;
+}
+
+harboro1,144,262,7	script	Scrap Metal Collector#s1	4_M_CAVE1,{
+	mes "[Scrap Metal Collector]";
+	mes "I want to go home. We're never going to make a lot of money here.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "No. We just have to stay strong until this is over. There'll be an opportunity for us afterward.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "But this is too much to handle. I don't think I can do this anymore.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "Come on, let's be patient for a little longer.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "Sigh... I miss my mom.";
+	close;
+}
+
+harboro1,146,264,3	script	Scrap Metal Collector#s2	4_M_HUBOY,{
+	mes "[Scrap Metal Collector]";
+	mes "Why isn't there any metal here? Some must have dropped when the train was attacked.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "If there was, someone else has to have found it by now.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "Sigh, then there's nothing here we could sell. Where should we go now?";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "Maybe we should go back to the mainland.";
+	next;
+	mes "[Scrap Metal Collector]";
+	mes "What? No! I don't want to be a liar?we told our family we'd be back with loads of money.";
+	close;
+}
+
+harboro1,182,241,5	script	Stray Dog#srdg02	4_DOG01,{
+	emotion ET_SEXY;
+	npctalk "I hope they'd leave some food for me.", "", bc_self;
+	end;
+}
+
+harboro1,183,241,5	script	Stray Dog#srdg01	4_DOG01,{
+	emotion ET_SEXY;
+	npctalk "I'd love to have a piece of that meat.", "", bc_self;
+	end;
+}
+
+harboro1,187,236,3	script	Customer#srdg01	4_TOWER_04,{
+	mes "[Customer]";
+	mes "There aren't many people in this restaurant.";
+	next;
+	emotion ET_FRET, getnpcid(0, "Customer#srdg02");
+	mes "[Customer]";
+	mes "Who would want to eat such terrible food?";
+	next;
+	mes "[Customer]";
+	mes "Oh, do you know where the best eatery in this place is?";
+	next;
+	emotion ET_QUESTION, getnpcid(0, "Customer#srdg02");
+	mes "[Customer]";
+	mes "Where?";
+	next;
+	mes "[Customer]";
+	mes "The sheriff's office. Those in the underground jail are fed three times a day, and the food is so great that some people actually commit a misdemeanor for it.";
+	next;
+	mes "[Customer]";
+	mes "Does that make sense to you? I don't believe there's prison food worth committing a crime for.";
+	close;
+}
+
+harboro1,182,236,5	script	Customer#srdg02	4_TOWER_02,{
+	mes "[Customer]";
+	mes "Why are they staring at us?";
+	next;
+	mes "[Customer]";
+	mes "They're begging.";
+	next;
+	emotion ET_SPARK, getnpcid(0, "Stray Dog#srdg01");
+	emotion ET_SPARK, getnpcid(0, "Stray Dog#srdg02");
+	mes "[Customer]";
+	mes "Ugh, their staring eyes are making me feel too uncomfortable to eat.";
+	close;
+}
+
+harboro1,231,251,4	script	Merchant's Chest	4_TREASURE_BOX,{
+	npctalk "Exotic Merchant: Hudin's treasure chest! Don't touch it. Thank you!", "Exotic Merchant";
+	end;
+}
+
+harboro1,229,256,7	script	Charlotte	4_DST_CAMEL,{
+	npctalk "*Shriek*";
+	sleep 1000;
+	npctalk "Exotic Merchant: What's wrong, Charlotte?", "Exotic Merchant";
+	end;
+}
+
+harboro1,192,262,7	script	Wealthy Merchant's Came#1	4_DST_CAMEL,{ end; }
+harboro1,197,262,7	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#2	4_DST_CAMEL
+harboro1,210,262,7	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#7	4_DST_CAMEL
+harboro1,216,262,7	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#8	4_DST_CAMEL
+harboro1,223,261,1	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#9	4_DST_CAMEL
+harboro1,225,257,6	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#10	4_DST_CAMEL
+harboro1,227,263,1	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#11	4_DST_CAMEL
+harboro1,229,258,6	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#12	4_DST_CAMEL
+harboro1,234,259,3	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#13	4_DST_CAMEL
+harboro1,236,252,6	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#14	4_DST_CAMEL
+harboro1,237,256,3	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#15	4_DST_CAMEL
+harboro1,238,258,3	duplicate(Wealthy Merchant's Came#1)	Wealthy Merchant's Came#16	4_DST_CAMEL
+
+harboro1,226,255,3	script	Wealthy Merchant's Came#3	4_DST_CAMEL,{
+	mes "[Camel]";
+	mes "Ga-a-ah.";
+	close;
+}
+
+harboro1,227,260,3	script	Wealthy Merchant's Came#4	4_DST_CAMEL,{
+	mes "[Camel]";
+	mes "*Snort*";
+	close;
+}
+
+harboro1,232,258,6	script	Wealthy Merchant's Came#5	4_DST_CAMEL,{
+	mes "[Camel]";
+	mes "Why do you keep poking at me?";
+	next;
+	mes "[Camel]";
+	mes "...Oops.";
+	mes "Forget you heard me.";
+	next;
+	mes "[Camel]";
+	mes "Ga-a-a-ah.";
+	close;
+}
+
+harboro1,235,255,6	script	Wealthy Merchant's Came#6	4_DST_CAMEL,{
+	mes "[Camel]";
+	mes "*Snort*";
+	close;
+}
+
+harboro1,210,219,5	script	Priest#srdg01	4_M_MINISTER,{
+	npctalk "Are you anguished or sad? Let me help you.", "", bc_self;
+	sleep 1500;
+	npctalk "Every one of us is born to be loved.", "", bc_self;
+	end;
+}
+
+harboro1,229,212,7	script	Herman Farland#rockn19	4_M_TWTEAMAN,{
+	mes "[Herman Farland]";
+	mes "Ah, yes, this is the sheriff's office. Do you have to wait in line, you ask?";
+	next;
+	mes "[Herman Farland]";
+	mes "Mm, you're an adventurer, right? Then just move past that door and go straight ahead.";
+	next;
+	mes "[Herman Farland]";
+	mes "You're here to help the Sheriff, right? We're here to ask him for help, so I understand you have to see him before the rest of us.";
+	next;
+	npctalk "I understand. Aww, my legs!", "", bc_self;
+	mes "[Herman Farland]";
+	mes "Never mind me. I completely understand. Aww, I've been standing on my feet for so long, I can barely move my legs!";
+	close;
+}
+
+harboro1,231,212,7	script	Edel Peppina#rockn16	4_F_CAPEGIRL,{
+	mes "[Edel Peppina]";
+	mes "The sheriff's office is understaffed. I've been waiting in line all day, and the line is as long as it was when I first arrived. I've been hearing strange noises from my basement, and I really need someone to come and check them.";
+	next;
+	mes "[Edel Peppina]";
+	mes "Our sheriff doesn't have legal authority, but still his office is the only place that we could turn to for this kind of thing.";
+	next;
+	mes "[Edel Peppina]";
+	mes "I hope things in the village will settle soon, starting with this line.";
+	close;
+}
+
+harboro1,233,215,3	script	Wilfred Sagan#rockn15	4_M_SITDOWN,{
+	mes "[Wilfred Sagan]";
+	mes "The sheriff has been so busy dealing with the Buffalo Bandits that he doesn't have time for anything else. I've been here waiting for him for hours.";
+	close;
+}
+
+harboro1,168,216,3	script	Hilliard#rockn09	4_TOWER_12,{
+	mes "[Hilliard]";
+	mes "Many people in the village are jobless, and all available jobs are given to adventurers.";
+	next;
+	npctalk "This is why it's important to be in the right place at the right time.", "", bc_self;
+	mes "[Hilliard]";
+	mes "The only thing that thrives because of this influx of adventurers is the inn.";
+	mes "Maybe I should've opened an inn myself.";
+	close;
+}
+
+harboro1,156,215,5	script	Innkeeper#rockridge	1_ETC_01,{
+	mes "[Innkeeper]";
+	mes "Welcome to the Lazy Owl's Inn.";
+	next;
+	mes "[Innkeeper]";
+	mes "Looking for a place to stay? You came to the right place!";
+	mes "Would you like a room? It's 5,000 Zeny.";
+	next;
+	switch( select( "Save.", "Get a room at 5,000 Zeny.", "Quit." ) ) {
+	case 1:
+		mes "[Innkeeper]";
+		mes "Saved. Please come again.";
+		savepoint "harboro1",156,211,2,2;
+		close;
+	case 2:
+		if (Zeny < 5000) {
+			mes "[Innkeeper]";
+			mes "I'm sorry, but it's 5,000 Zeny to get a room.";
+			mes "If you don't have enough money, then I can't let you stay.";
+			close;
+		}
+		mes "[Innkeeper]";
+		mes "Enjoy your stay at the Lazy Owl's.";
+		close2;
+		Zeny = Zeny - 5000;
+		warp "harboro1",157,210;
+		end;
+	case 3:
+		mes "[Innkeeper]";
+		mes "Please come again.";
+		close;
+	}
+}
+
+harboro1,228,170,3	script	Wanderer Doram#rkrgtwn	4_DR_STELO,{
+	mes "[Wanderer Doram]";
+	mes "Boohoo! Where the hell is the sheriff's office? My money! Moneeeyyy!";
+	next;
+	mes "[Wanderer Doram]";
+	mes "Everyone said Rock Ridge is the land of opportunity?why didn't anyone tell me about the scary Buffalo Bandits?";
+	next;
+	mes "[Wanderer Doram]";
+	mes "*Hiccups* They robbed me clean. I don't even have enough money left to have a glass of Kahluna Milk.";
+	emotion ET_CRY;
+	close;
+
+OnTouch:
+	npctalk "Wanderer Doram: Which way is east for the gods' sake?!", "", bc_self;
+	end;
+}
+
+harboro1,130,158,3	script	Akuha#rockn19	10222,5,5,{
+	mes "[Akuha]";
+	mes "Grandpa said we shouldn't follow strangers, or they'd pluck all our thorns. What if he was telling me the truth?";
+	next;
+	emotion ET_CRY;
+	mes "[Akuha]";
+	mes "Boohoo! Grandma! Boohoo!";
+	next;
+	mes "[Nahari]";
+	mes "Don't worry. Your thorns are so sharp, no one would dare touch them.";
+	mes "Do I still have the flower on my head?";
+	next;
+	mes "[Akuha]";
+	mes "*Sniffle* Yes, it's as pretty as the last time I checked.";
+	next;
+	mes "[Nahari]";
+	mes "Then we're all right. Let's just keep moving, and we'll meet Grandma soon.";
+	mes "Let's check over there.";
+	next;
+	emotion ET_KEK;
+	mes "[Akuha]";
+	mes "I can't lose all my thorns and have a smooth face. I'll be so ashamed that I'd want to bury myself in the ground.";
+	close;
+
+OnTouch:
+	npctalk "Grandma... Grandma... Boohoo!", "", bc_self;
+	end;
+}
+
+harboro1,132,157,3	script	Nahari#rockn19	10226,{
+	mes "[Nahari]";
+	mes "This place is amazing. Look at these big wooden houses.";
+	mes "There are trees growing on the sea, and they all look alike.";
+	next;
+	mes "[Akuha]";
+	mes "*Whine* Nahari, Grandma is not going to be happy with us.";
+	mes "Let's go back before she gets worried.";
+	next;
+	mes "[Nahari]";
+	mes "But we don't even know where we are.";
+	mes "Let's look around for a little longer. Look, there are a lot of strangers over there!";
+	next;
+	emotion ET_CRY, getnpcid(0, "Akuha#rockn19");
+	mes "[Akuha]";
+	mes "What if we can't go back home?";
+	close;
+}
+
+harboro1,99,127,7	script	Kid#srdg01	4_KID01,{
+	npctalk "Hey, did you guys fight?", "", bc_self;
+	end;
+}
+
+harboro1,96,130,3	script	Thunder#srdg01	4_DONKEY,{ end; }
+harboro1,104,130,5	duplicate(Thunder#srdg01)	Lightning#srdg01	4_DONKEY
+harboro1,102,133,7	duplicate(Thunder#srdg01)	Speed Racer 2#srdg01	4_DONKEY
+harboro1,104,132,5	duplicate(Thunder#srdg01)	Speed Racer 1#srdg01	4_DONKEY
+
+
+harboro1,174,125,3	script	Villager#srdg01	1_M_INNKEEPER,{
+	npctalk "It's pretty windy today. I'd better keep all the doors and windows closed.", "", bc_self;
+	end;
+}
+
+harboro1,184,123,5	script	Traveler#srdg02_1	4_M_SIT_NOVICE,{
+	mes "[Traveler]";
+	mes "Maybe we should explore beyond the mine, and go deep as far as we can.";
+	next;
+	mes "[Traveler]";
+	mes "What if it's too dangerous? I said we should take a detour and go someplace else.";
+	next;
+	mes "[Traveler]";
+	mes "Or we could become the pathfinders of an unknown world!";
+	next;
+	mes "[Traveler]";
+	mes "No. The east side is overrun with the Buffalo Bandits. We should wait until the situation with them is resolved.";
+	next;
+	mes "[Traveler]";
+	mes "Those darn Buffalo Bandits!";
+	close;
+}
+
+harboro1,188,123,3	script	Traveler#srdg02_2	4_M_SITDOWN,{
+	mes "[Traveler]";
+	mes "I've decided! I'm going to join the Vigilantes!";
+	next;
+	mes "[Traveler]";
+	mes "Are you sure they'll let you in?";
+	next;
+	mes "[Traveler]";
+	mes "I don't know, but I'm tired of twiddling my thumbs. This can't be the end of our journey!";
+	close;
+}
+
+harboro1,211,115,5	script	Worker#srdg01	1_M_SIGNMONK2,{
+	mes "[Worker]";
+	mes "We haven't worked for days. Can you believe that?";
+	next;
+	mes "[Worker]";
+	mes "We can't work, and yet we're not allowed to leave. How unfair is that?";
+	next;
+	mes "[Worker]";
+	mes "If this doesn't get solved by tomorrow, then I'm leaving!";
+	close;
+}
+
+harboro1,213,117,3	script	Worker#srdg02	1_M_JOBGUIDER,{
+	mes "[Worker]";
+	mes "It seems we wouldn't be working today, just like yesterday and the day before.";
+	next;
+	mes "[Worker]";
+	mes "I'd hate to go back home empty-handed again.";
+	next;
+	mes "[Worker]";
+	mes "Maybe I should deal with the Buffalo Bandits myself.";
+	close;
+}
+
+harboro1,211,113,7	script	Foreman#srdg01	4_F_EDEN_OFFICER,{
+	mes "[Worker]";
+	mes "When can we start working again?";
+	next;
+	mes "[Worker]";
+	mes "How long do we have to wait around?";
+	next;
+	mes "[Foreman]";
+	mes "Ah, guys, please calm down.";
+	next;
+	mes "[Worker]";
+	mes "You calm down. We're losing money every hour just by sitting around.";
+	next;
+	mes "[Foreman]";
+	mes "We can't do anything until we get our supplies.";
+	next;
+	mes "[Worker]";
+	mes "And when would that be?";
+	next;
+	mes "[Foreman]";
+	mes "There's nothing we could do. The Buffalo Bandits stole our last shipment, and it won't be the last time they do it.";
+	next;
+	mes "[Worker]";
+	mes "I don't care. If I can't work tomorrow, then I'll walk out of here!";
+	close;
+}
+
+harboro1,214,115,3	script	Worker#srdg03	1_M_HOF,{
+	mes "[Worker]";
+	mes "Does the sheriff even care about this situation?";
+	next;
+	mes "[Worker]";
+	mes "He'd better.";
+	next;
+	mes "[Worker]";
+	mes "Maybe I should join the Vigilantes.";
+	next;
+	mes "[Worker]";
+	mes "Forget it. I tried, and got flat out rejected.";
+	next;
+	mes "[Worker]";
+	mes "Sigh... How long do we have to wait?";
+	close;
+}
+
+harboro1,290,104,5	script	Eznia#rockn04	4_DR_M_02,{
+	mes "[Eznia]";
+	mes "Did you know most buildings on the first level of Rock Ridge have a gigantic signboard in front of them?";
+	next;
+	mes "[Eznia]";
+	mes "It's an interesting phenomenon. I think the signboards are supposed to make the buildings look like they have two stories, at least on the front.";
+	next;
+	mes "[Eznia]";
+	mes "Actually, they used to be two stories before the basement was created. The owners must miss having two stories.";
+	close;
+}
+harboro1,273,259,4	script	Alain Morlein#dy	4_M_YURI,{
+	emotion ET_FRET;
+	mes "[Alain Morlein]";
+	mes "Hey, why can't you give me a loan?";
+	next;
+	emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Bank Clerk#dy");
+	emotion ET_SORRY, getnpcid(0, "Bank Clerk#dy");
+	mes "[Bank Clerk]";
+	mes "We're sorry, but we do not offer services to individual customers.";
+	next;
+	mes "[Alain Morlein]";
+	mes "Are you kidding me? I used your services yesterday. Look, don't you remember me?";
+	next;
+	mes "[Bank Clerk]";
+	mes "Let me see your ID. As you know, a lot of people here look alike.";
+	next;
+	mes "[Bank Clerk]";
+	mes "I'm responsible for all transaction errors caused by misidentification. Please, you have to understand me.";
+	next;
+	emotion ET_THINK;
+	mes "[Alain Morlein]";
+	mes "*Snort*";
+	next;
+	emotion ET_THANKS, getnpcid(0, "Bank Clerk#dy");
+	mes "[Bank Clerk]";
+	mes "Thank you for your understanding. Have a good day.";
+	close;
+}
+
+harboro1,270,252,6	script	Bank Clerk#dy	4_M_MANAGER,{
+	emotion ET_BIGTHROB;
+	mes "[Bank Clerk]";
+	mes "Hello.";
+	mes "Welcome to GC Bank's Rock Ridge branch. How may I assist you today?";
+	next;
+	switch( select( "Check my bank account.", "Buy an investment product.", "What's GC Bank?", "I'm just stopping by." ) ) {
+	case 1:
+		mes "[Bank Clerk]";
+		mes "" + strcharinfo(0) + ", right?";
+		next;
+		mes "[Bank Clerk]";
+		mes "You don't have an account with us, but you do have an account under the name of" + strcharinfo(0) + ". Is there anything else I can do for you today?";
+		close;
+	case 2:
+		emotion ET_SORRY;
+		mes "[Bank Clerk]";
+		mes "We're sorry,";
+		mes "but our investment products are only for businesses.";
+		close;
+	case 3:
+		mes "[Bank Clerk]";
+		mes "Do you mean this bank?";
+		mes "Not many people know about it because it doesn't have many branches yet.";
+		next;
+		mes "[Bank Clerk]";
+		mes "And its main customers are companies and other businesses.";
+		next;
+		mes "[Bank Clerk]";
+		mes "Of course, we serve individual customers as well, but companies are what keep most banks in business.";
+		next;
+		mes "[Bank Clerk]";
+		mes "This is just a rumor, but the founder of GC Bank named his bank after what he loved the most: gold coins.";
+		next;
+		emotion ET_COOL;
+		mes "[Bank Clerk]";
+		mes "Can't you see the big beautiful gold coin on the roof of this building?";
+		close;
+	case 4:
+		mes "[Bank Clerk]";
+		mes "Hah hah, I see.";
+		mes "We're in a desert and I can't go into the building, but I hope you'll enjoy your stay.";
+		close;
+	}
+}
+
+harboro1,241,200,5	script	Gunslinger Posh#rockn05	4_M_HUMERCHANT,{
+	mes "[Gunslinger Posh]";
+	mes "Are you looking for a good weapon? You know guns are the main weapons of this area, right?";
+	next;
+	npctalk "Some people, after selling guns for a while, started to think that they were also good at using one. I'm not one of them. I've always been good at it.", "", bc_self;
+	mes "[Gunslinger Posh]";
+	mes "Ah, the shop is closed. Sanders, the owner, went out to the desert, swinging a gun, to hunt the Buffalo Bandits himself. Then he fell and hurt his back.";
+	next;
+	mes "[Gunslinger Posh]";
+	mes "Don't worry. You can still buy a gun. Sanders Jr. has rented a corner of the tool shop, so he could sell a few guns there.";
+	next;
+	npctalk "You can get to the tool shop by following this road east.", "", bc_self;
+	mes "[Gunslinger Posh]";
+	mes "He doesn't carry as wide a selection of products as his father, but he has an assortment of well-chosen models.";
+	close;
+}
+
+harboro1,274,214,5	script	White Twig#rockn19	10228,5,5,{
+	mes "[White Twig]";
+	mes "Akuha! Nahari! Where have they gone?";
+	next;
+	mes "[White Twig]";
+	mes "Have you seen a couple of Cactus children, a boy and a girl?";
+	mes "I've brought them here to show them around the strangers' village, and I lost them in a crowd.";
+	next;
+	mes "[White Twig]";
+	mes "What should I do? Akuha! Nahari!";
+	mes "If you see them, please tell them their grandma is looking for them.";
+	close;
+
+OnTouch:
+	npctalk "Akuha! Nahari! Oh gosh, where are they?", "", bc_self;
+	end;
+}
+
+harboro1,356,211,5	script	Guide#rockridge01	4_F_ANYA,{
+	mes "[Sheriff Assistant]";
+	mes "Welcome to Rock Ridge, the hot, dry desert in the West where adventure is waiting!";
+	mes "I'm the sheriff's assistant, and I'm here to guide visitors. Is there a place you want to go?";
+	next;
+	mes "[Sheriff Assistant]";
+	mes "Tell me where you want to go, and I'll show you where it is.";
+	mes "Also, you can use ^B9062FNavigation^000000 mode by ^B9062Fclicking the name of the place^000000 I showed to you.";
+	while(true) {
+		next;
+		.@s = select( "[Kafra Employee]", "[Inn]", "[Weapon/Armor Shop]", "[Tool Shop]", "[Sheriff's Office]", "Clear mini-map.", "Cancel." );
+		switch(.@s) {
+		case 1:
+			mes "[Sheriff Assistant]";
+			mes "The ^006400Kafra Employee^000000, got it. Please click the ^0000FFBox icon^000000 on your mini-map.";
+			viewpoint 1,291,207,1,0xFFFF33;
+			break;
+		case 2:
+			mes "[Sheriff Assistant]";
+			mes "I've marked the location of the <NAVI>Inn<INFO>harboro1,156,215,0,000,0</INFO></NAVI> on your mini-map.";
+			mes "Click the name to activate Navigation mode.";
+			viewpoint 1,156,215,2,0xAAFF00;
+			break;
+		case 3:
+			mes "[Sheriff Assistant]";
+			mes "I've marked the location of the <NAVI>Weapon/Armor Shop<INFO>harboro1,312,193,0,000,0</INFO></NAVI> on your mini-map.";
+			mes "Click the name to activate Navigation mode.";
+			viewpoint 1,312,193,3,0x008080;
+			break;
+		case 4:
+			mes "[Sheriff Assistant]";
+			mes "I've marked the location of the <NAVI>Tool Shop<INFO>harboro1,312,193,0,000,0</INFO></NAVI> on your mini-map.";
+			mes "Click the name to activate Navigation mode.";
+			viewpoint 1,312,193,4,0xFF1493;
+			break;
+		case 5:
+			mes "[Sheriff Assistant]";
+			mes "I've marked the location of the <NAVI>Sheriff's Office<INFO>harboro1,241,218,0,000,0</INFO></NAVI> on your mini-map.";
+			mes "Click the name to activate Navigation mode.";
+			viewpoint 1,241,218,5,0xFFCCFF;
+			break;
+		case 6:
+			mes "[Sheriff Assistant]";
+			mes "Let me remove all the marks on your mini-map.";
+			viewpoint 2,291,207,1,0xFFFF33;
+			viewpoint 2,156,215,2,0xAAFF00;
+			viewpoint 2,312,193,3,0x008080;
+			viewpoint 2,312,193,4,0xFF1493;
+			viewpoint 2,241,218,5,0xFFCCFF;
+			break;
+		case 7:
+			mes "[Sheriff Assistant]";
+			mes "Enjoy your stay in Rock Ridge!";
+			close;
+		}
+		if (.@s == 7)
+			mes "Did you need anything else?";
+		else
+			mes "Is there anywhere else you want to check?";
+	}
+}
+
+harboro1,278,195,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
+	mes "[Carola Firth]";
+	mes "Did you hear that? The basement is haunted!";
+	next;
+	mes "[Carola Firth]";
+	mes "Word is that some worker couldn't get out in time before the basement was buried.";
+	mes "This place has so many people coming in and out of it, it's hard to keep track of every one of them.";
+	next;
+	npctalk "Boo!", "Lucas Richie#rockn08", bc_self;
+	mes "[Carola Firth]";
+	mes "Some workers went down to the basement for repair work and heard strange rustling noises.";
+	mes "When they found the source of noise?kyaaaahhh!";
+	next;
+	npctalk "Carola, you do things that scare most men, and yet you're scared of something that doesn't even exist.", "Lucas Richie#rockn08", bc_self;
+	npctalk "That's why I'm scared: I don't want to be haunted by the spirit of everyone I've wronged.", "", bc_self;
+	mes "[Carola Firth]";
+	mes "Lucas! Do you want me to kill you? Stop doing that!";
+	mes "Aww, I'm too scared to talk about this anymore.";
+	close;
+}
+
+harboro1,280,195,3	script	Lucas Richie#rockn08	4_M_ROGUE,{
+	mes "[Lucas Richie]";
+	mes "The basement is haunted. You don't really believe that, do you?";
+	mes "I think there are treasures down there.";
+	next;
+	mes "[Lucas Richie]";
+	mes "And whoever spread that stupid rumor, he did it to keep others from finding out about the treasures.";
+	next;
+	npctalk "Whatever. I'm still not going in there!", "Carola Firth#rockn17", bc_self;
+	npctalk "*Chuckle* Who knew Carola of all people would be so scared of ghosts?", "", bc_self;
+	mes "[Lucas Richie]";
+	mes "Hm, I meant that as a joke, but maybe she really is scared.";
+	mes "What do you say, Carola? How'd you like to go down there with me?";
+	mes "Ah, adventurer. Let's keep this just between you and me, okay?";
+	close;
+}
+
+-	shop	bread_rockridge	-1,580:150
+
+harboro1,314,211,4	script	Bakery Owner#dy	4_COOK,3,3,{
+	npctalk "Welcome!", "", bc_self;
+	callshop "bread_rockridge",2;
+	end;
+
+OnTouch:
+	.@r = rand(4);
+	if (.@r == 0) 
+		npctalk "I sell bread, and nothing else.", "", bc_self;
+	else if (.@r == 1)
+		npctalk "I've got bread that's so delicious, it's to die for.", "", bc_self;
+	else if (.@r == 2)
+		npctalk "Tool Shop, Weapon/Armor Shop", "", bc_self;
+	else
+		npctalk "Bread! Buy bread freshly out of the oven!", "", bc_self;
+	end;
+}
+
+harboro1,282,201,3	script	Rock Ridge Tiger#srdg01	4_CAT_REST,{
+	emotion ET_SLEEPY;
+	end;
+}
+
+harboro1,302,175,7	script	Sammy#srdg01	4_DOG01,{
+	emotion ET_THROB;
+	npctalk "Woof, woof! Woof, woof!";
+	end;
+}
+
+harboro1,312,173,8	script	Bounty Hunter#rockn18	8_F_GIRL,{
+	mes "[Bounty Hunter]";
+	mes "What am I looking at? Ah, those buffaloes. There's a large sum of money offered for their heads.";
+	next;
+	mes "[Bounty Hunter]";
+	mes "The Vigilantes and the Sheriff have had enough with them, now that they started robbing the train.";
+	next;
+	mes "[Bounty Hunter]";
+	mes "But thanks to them, I've got a lucrative job.";
+	close;
+}
+
+harboro1,301,175,7	script	Shepherd#srdg01	4_F_JOB_BLACKSMITH,{
+	emotion ET_CRY;
+	mes "[Shepherd]";
+	mes "I'm sorry, guys. I should've never taken you here...";
+	next;
+	mes "[Shepherd]";
+	mes "I didn't know there was no grass here.";
+	next;
+	mes "[Shepherd]";
+	mes "Just hang in there. I'm growing some grass for you out there. If it grows well, you wouldn't have to be hungry anymore.";
+	close;
+}
+
+harboro1,303,179,3	script	Malnourished Sheep#srdg	4_LAM,{ end; }
+harboro1,299,179,7	duplicate(Malnourished Sheep#srdg)	Frail Sheep#srdg01	4_LAM
+harboro1,305,178,5	duplicate(Malnourished Sheep#srdg)	Coarse-haired Sheep#srd	4_LAM
+harboro1,297,178,5	duplicate(Malnourished Sheep#srdg)	Dozing Sheep#srdg01	4_LAM
+
+harboro1,311,53,5	script	Joyce Leslie#rockn06	4_F_01,{
+	mes "[Joyce Leslie]";
+	mes "The houses closer to the beach have always been prone to sinking, long before the first level was buried.";
+	mes "This house sank little by little, until the ground couldn't hold its weight anymore.";
+	next;
+	mes "[Joyce Leslie]";
+	mes "What happened to its residents, you ask? You're an adventurer?why do you care?";
+	next;
+	emotion ET_OHNO;
+	mes "[Joyce Leslie]";
+	mes "I'm sorry, I didn't mean to get angry with you.";
+	mes "It's just that... things haven't been good.";
+	next;
+	mes "[Joyce Leslie]";
+	mes "But at least I have work to do and food to eat, thanks to some people.";
+	mes "Where do I get work and food? Head up to the eastern gate. You'll see the along the way.";
+	close;
+}
+
+harboro1,324,124,7	script	Joe	4_MAL_CAPTAIN,{
+	if (BaseLevel < 100) {
+		mes "[Joe]";
+		mes "...";
+		next;
+		mes "[Joe]";
+		mes "You're too weak";
+		mes "to enter the basement.";
+		mes "Please leave.";
+		close;
+	}
+	mes "[Joe]";
+	mes "...";
+	next;
+	mes "[Joe]";
+	mes "Are you going to go in?";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Donovan]";
+		mes "...";
+		close;
+	}
+	mes "[Joe]";
+	mes "You'd better get out of there";
+	mes "as soon as you're done.";
+	close2;
+	warp "harboro2",281,104;
+	end;
+}
+
+harboro1,352,199,5	script	Hungry Laborer#1	4W_M_03,5,5,{
+	end;
+OnTouch:
+	npctalk "Hungry Laborer: Aww, I'm starving. Why isn't the line getting any shorter?";
+	end;
+}
+
+harboro1,352,187,5	script	Curious Person#5	4_M_LGTPOOR,5,5,{
+	end;
+OnTouch:
+	npctalk "Curious Person: What's this line for? Are you waiting to get event prizes?";
+	end;
+}
+
+harboro1,352,178,5	script	Hungry Laborer#8	4W_SAILOR,5,5,{
+	end;
+OnTouch:
+	npctalk "Hungry Laborer: This is ridiculous. I've been waiting in line for 3 hours to eat.";
+	end;
+}
+
+harboro1,352,169,5	script	Hungry Laborer#11	4_M_EINMAN,5,5,{
+	end;
+OnTouch:
+	npctalk "Hungry Laborer: Soon it'll be my turn!";
+	end;
+}
+
+harboro1,355,164,5	script	Hungry Laborer#13	4W_SAILOR,5,5,{
+	end;
+OnTouch:
+	npctalk "Hungry Laborer: Hey, don't you see the line here? Get to the end of the line!";
+	end;
+}
+
+harboro2,67,191,5	script	Smell Maniac#srdg01	4_M_ALCHE_B,{
+	mes "[Smell Maniac]";
+	mes "*Sniff Sniff* Doesn't this place smell good to you? I love its salty, dank, musty smell! I could live here for the rest of my life!";
+	next;
+	mes "[Smell Maniac]";
+	mes "...If only there weren't so many bugs. I'm just going to bottle the smell and take it with me.";
+	close;
+}
+harboro2,57,239,3	script	Unemployed Man#srdg01	4_M_03,{
+	mes "[Unemployed Man]";
+	mes "See those sea anemones? They keep clogging up the sewer pipes, so we get rid of them on a regular basis. I like sitting here and watching them move. And when I do, time goes by so quickly.";
+	next;
+	mes "[Unemployed Man]";
+	mes "At least during that time I could forget my reality, about the mine, not having jobs, you know, that sort of thing.";
+	next;
+	mes "[Unemployed Man]";
+	mes "I'm here because I have nowhere else to go, but I'll go back up once those who took up residence in the mine are gone.";
+	close;
+}
+
+harboro2,118,264,5	script	Old Woman#srdg01	4_F_LGTGRAND,{
+	mes "[Old Woman]";
+	mes "This place hasn't changed at all.";
+	next;
+	mes "[Old Man]";
+	mes "Remember when we first came here?";
+	next;
+	mes "[Old Woman]";
+	mes "I do.";
+	next;
+	mes "[Old Man]";
+	mes "We built this house from scratch, on our own?from the foundation stones to the roofing.";
+	next;
+	mes "[Old Woman]";
+	mes "Aww, it's getting chilly. Let's go back up.";
+	next;
+	mes "[Old Man]";
+	mes "My lovely Clementine... I proposed to her here.";
+	next;
+	mes "[Old Woman]";
+	mes "I'm here.";
+	next;
+	mes "[Old Man]";
+	mes "My Clementine is not so old!";
+	next;
+	mes "[Old Woman]";
+	mes "Grr, you senile coot!";
+	close;
+}
+
+harboro2,120,265,3	script	Old Man#srdg01	4_M_DST_GRAND,{
+	mes "[Old Man]";
+	mes "Mm? Who's there? Is it you, Charlie?";
+	next;
+	mes "[Old Woman]";
+	mes "Charlie can't come here. He lives across the sea.";
+	next;
+	mes "[Old Man]";
+	mes "Does he? By the way, this place has changed a lot.";
+	next;
+	mes "[Old Woman]";
+	mes "No, it hasn't. It's just the same as when we left it.";
+	next;
+	mes "[Old Man]";
+	mes "Is it? I come here when I miss the old days, but it's too dark. By the way, why has it become so wet?";
+	next;
+	mes "[Old Woman]";
+	mes "It was flooded. That's why it had to be filled up and we had to move up. Have you gone senile? You were the one who insisted this place was too low to build houses on.";
+	next;
+	mes "[Old Man]";
+	mes "Was I?";
+	close;
+}
+
+harboro2,125,196,3	script	Mom's Kid#srdg01	4_F_CHILD,{
+	mes "[Kid]";
+	mes "Mommy, when can we live above ground again?";
+	next;
+	mes "[Mom]";
+	mes "Soon. When Daddy can go work at the mine again. When Mommy and Daddy make enough money to buy back the house.";
+	next;
+	mes "[Kid]";
+	mes "I want to go home...";
+	close;
+}
+
+harboro2,123,195,5	script	Kid's Mom#srdg01	1_M_INNKEEPER,{
+	mes "[Mom]";
+	mes "I haven't been able to feed my child well. I can't remember the last time he had a decent meal.";
+	next;
+	mes "[Kid]";
+	mes "Mommy, I'm okay.";
+	next;
+	mes "[Mom]";
+	mes "Let's wait for Daddy. He'll be back with food.";
+	close;
+}
+
+harboro2,142,155,7	script	Buffalo Bandit#srdg01	4_M_COWRAIDERS1,{
+	mes "[Buffalo Bandit]";
+	mes "What, haven't you seen a Buffalo Bandit before?";
+	next;
+	mes "[Buffalo Bandit]";
+	mes "Don't give me that dirty look. We're not doing anything bad right now, now are we?";
+	next;
+	mes "[Buffalo Bandit]";
+	mes "You're on our turf. Don't cause trouble, and stay away from here.";
+	next;
+	mes "[Buffalo Bandit]";
+	mes "I'll let you come and go, if you promise me not to tell anyone above the ground about us. Promise?";
+	close;
+}
+
+harboro2,144,156,1	script	Buffalo Bandit#srdg02	4_M_COWRAIDERS3,{
+	mes "[Buffalo Bandit]";
+	mes "Aside from the main gate, there are are a few more entrances that only we know, and we guard one of them.";
+	next;
+	mes "[Buffalo Bandit]";
+	mes "Why are you telling me this?";
+	next;
+	mes "[Buffalo Bandit]";
+	mes "So you'd be scared and want to stay away.";
+	close;
+}
+
+harboro2,258,117,3	script	Dispatched Nun#srdg02	1_F_PRIEST,{
+	mes "[Dispatched Nun]";
+	mes "Can you believe some people actually live here? People above ground don't care about them. Officially, this place is vacant, even though it's not.";
+	next;
+	mes "[Dispatched Nun]";
+	mes "They don't want to know or care. You have to be in a pretty bad situation to end up here.";
+	close;
+}
+
+rockrdg1,310,48,3	script	Erekter#rockc06	10222,{
+	mes "[Erekter]";
+	mes "Erekter wants to become the best netter in the village when he grows up.";
+	next;
+	npctalk "Oh, wait.", "", bc_self;
+	emotion ET_THINK;
+	mes "[Erekter]";
+	mes "The best netter in the village is Mrs. Soft Feather.";
+	next;
+	emotion ET_DELIGHT;
+	mes "[Erekter]";
+	mes "Mm... Then I'll become the second-best netter in the village!";
+	close;
+}
+
+rockrdg1,308,49,5	script	Soft Feather#rockc09	10228,{
+	mes "[Soft Feather]";
+	mes "Ho ho ho, there's not a single fishing net in the village that hasn't been handled by me.";
+	mes "There are others who make good nets, but I'm the one who gives the nets their finishing touch.";
+	next;
+	mes "[Erekter]";
+	mes "I want to learn from you too! I want to become as good at netting as you!";
+	next;
+	mes "[Soft Feather]";
+	mes "Your hands are too soft right now. Go out and play. I'll teach you when your hands become tougher.";
+	next;
+	npctalk "Yay! I'm going to go tell my friends!", "Erekter#rockc06", bc_self;
+	mes "[Soft Feather]";
+	mes "Yes, I'll teach you how to net. For now, let me teach you how to make pretty knots with grass blades.";
+	close;
+}
