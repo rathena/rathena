@@ -3603,7 +3603,11 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 20 * skill_lv;
 			break;
 		case AM_ACIDTERROR:
+#ifdef RENEWAL
+			skillratio += 200 + 80 * skill_lv;
+#else
 			skillratio += 40 * skill_lv;
+#endif
 			break;
 		case MO_FINGEROFFENSIVE:
 			skillratio += 50 * skill_lv;
