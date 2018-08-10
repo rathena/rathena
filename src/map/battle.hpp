@@ -645,6 +645,7 @@ struct Battle_Config
 	int summoner_trait;
 	int homunculus_autofeed_always;
 	int feature_attendance;
+	int feature_privateairship;
 
 #include "../custom/battle_config_struct.inc"
 };

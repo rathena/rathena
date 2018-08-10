@@ -122,7 +122,8 @@ static int bl_list_count = 0;
 	#define MAP_MAX_MSG 1550
 #endif
 
-std::map<int16, map_data> map;
+struct map_data map[MAX_MAP_PER_SERVER];
+int map_num = 0;
 
 int map_port=0;
 
@@ -188,7 +189,10 @@ int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing m
  */
 struct map_data *map_getmapdata(int16 mapid)
 {
-	return util::map_find(map, mapid);
+	if (mapid < 0 || mapid >= MAX_MAP_PER_SERVER)
+		return nullptr;
+
+	return &map[mapid];
 }
 
 /*==========================================
@@ -313,7 +317,6 @@ int map_addblock(struct block_list* bl)
 {
 	int16 m, x, y;
 	int pos;
-	struct map_data *mapdata;
 
 	nullpo_ret(bl);
 
@@ -328,11 +331,11 @@ int map_addblock(struct block_list* bl)
 
 	if( m < 0 )
 	{
-		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map.size());
+		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
 		return 1;
 	}
 
-	mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
 
 	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 	{
@@ -581,9 +584,7 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,
 	int16 bx,by;
 	struct block_list *bl;
 	struct skill_unit *unit;
-	struct map_data *mapdata;
-
-	mapdata = map_getmapdata(target->m);
+	struct map_data *mapdata = map_getmapdata(target->m);
 
 	if (x < 0 || y < 0 || (x >= mapdata->xs) || (y >= mapdata->ys))
 		return NULL;
@@ -615,14 +616,14 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
 	int x0, x1, y0, y1;
-	struct map_data *mapdata;
 	va_list ap_copy;
 
 	m = center->m;
 	if( m < 0 )
 		return 0;
 
-	mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
+
 	x0 = i16max(center->x - range, 0);
 	y0 = i16max(center->y - range, 0);
 	x1 = i16min(center->x + range, mapdata->xs - 1);
@@ -730,7 +731,6 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	int returnCount = 0;	//total sum of returned values of func()
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
-	struct map_data *mapdata;
 	va_list ap_copy;
 
 	if (m < 0)
@@ -741,7 +741,8 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	if (y1 < y0)
 		SWAP(y0, y1);
 
-	mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
+
 	x0 = i16max(x0, 0);
 	y0 = i16max(y0, 0);
 	x1 = i16min(x1, mapdata->xs - 1);
@@ -900,7 +901,6 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
-	struct map_data *mapdata;
 	va_list ap;
 
 	if ( m < 0 )
@@ -911,7 +911,8 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 	if ( y1 < y0 )
 		SWAP(y0, y1);
 
-	mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
+
 	x0 = i16max(x0, 0);
 	y0 = i16max(y0, 0);
 	x1 = i16min(x1, mapdata->xs - 1);
@@ -962,14 +963,15 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
 	int16 x0, x1, y0, y1;
-	struct map_data *mapdata;
 	va_list ap;
 
 	if ( !range ) return 0;
 	if ( !dx && !dy ) return 0; //No movement.
 
 	m = center->m;
-	mapdata = map_getmapdata(m);
+
+	struct map_data *mapdata = map_getmapdata(m);
+
 	x0 = center->x - range;
 	x1 = center->x + range;
 	y0 = center->y - range;
@@ -1168,7 +1170,6 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 	int magnitude2, len_limit; //The square of the magnitude
 	int k, xi, yi, xu, yu;
 	int mx0 = x0, mx1 = x1, my0 = y0, my1 = y1;
-	struct map_data *mapdata;
 	va_list ap;
 
 	//Avoid needless calculations by not getting the sqrt right away.
@@ -1210,7 +1211,8 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 	if ( my0 > my1 )
 		SWAP(my0, my1);
 
-	mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
+
 	mx0 = max(mx0, 0);
 	my0 = max(my0, 0);
 	mx1 = min(mx1, mapdata->xs - 1);
@@ -1329,7 +1331,6 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 	uint8 dir = map_calc_dir_xy(x0, y0, x1, y1, 6);
 	short dx = dirx[dir];
 	short dy = diry[dir];
-	struct map_data *mapdata;
 	va_list ap;
 
 	if (m < 0)
@@ -1350,7 +1351,8 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 		length++;
 	}
 
-	mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
+
 	//Get area that needs to be checked
 	mx0 = x0 + dx*(offset / ((dir % 2) + 1));
 	my0 = y0 + dy*(offset / ((dir % 2) + 1));
@@ -2620,11 +2622,26 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 		return -2;
 	}
 
-	// Copy the map
-	int16 dst_m = static_cast<int16>(map.size());
+	int16 dst_m = -1, i;
+
+	for (i = instance_start; i < MAX_MAP_PER_SERVER; i++) {
+		if (!map[i].name[0])
+			break;
+	}
+	if (i < map_num) // Destination map value overwrites another
+		dst_m = i;
+	else if (i < MAX_MAP_PER_SERVER) // Destination map value increments to new map
+		dst_m = map_num++;
+	else {
+		// Out of bounds
+		ShowError("map_addinstancemap failed. map_num(%d) > map_max(%d)\n", map_num, MAX_MAP_PER_SERVER);
+		return -3;
+	}
+
 	struct map_data *src_map = map_getmapdata(src_m);
 
-	map.insert({ dst_m, *src_map });
+	// Copy the map
+	memcpy(&map[dst_m], src_map, sizeof(struct map_data));
 
 	// Retrieve new map data
 	struct map_data *dst_map = map_getmapdata(dst_m);
@@ -2745,7 +2762,6 @@ int map_delinstancemap(int m)
 
 	mapindex_removemap( mapdata->index );
 	map_removemapdb(mapdata);
-	map.erase(m);
 	return 1;
 }
 
@@ -3264,10 +3280,8 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable
 
 	iwall->size = i;
 
-	struct map_data *mapdata = map_getmapdata(m);
-
 	strdb_put(iwall_db, iwall->wall_name, iwall);
-	mapdata->iwall_num++;
+	map_getmapdata(m)->iwall_num++;
 
 	return true;
 }
@@ -3277,9 +3291,8 @@ void map_iwall_get(struct map_session_data *sd) {
 	DBIterator* iter;
 	int16 x1, y1;
 	int i;
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if( mapdata->iwall_num < 1 )
+	if( map_getmapdata(sd->bl.m)->iwall_num < 1 )
 		return;
 
 	iter = db_iterator(iwall_db);
@@ -3476,35 +3489,41 @@ int map_addmap(char* mapname)
 {
 	if( strcmpi(mapname,"clear")==0 )
 	{
-		map.clear();
+		map_num = 0;
+		instance_start = 0;
 		return 0;
 	}
 
-	struct map_data entry = {};
+	if (map_num >= MAX_MAP_PER_SERVER - 1) {
+		ShowError("Could not add map '" CL_WHITE "%s" CL_RESET "', the limit of maps has been reached.\n", mapname);
+		return 1;
+	}
 
-	mapindex_getmapname(mapname, entry.name);
-	map.insert({ static_cast<int16>(map.size()), entry });
+	mapindex_getmapname(mapname, map[map_num].name);
+	map_num++;
 	return 0;
 }
 
 static void map_delmapid(int id)
 {
-	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map_getmapdata(id)->name);
-	map.erase(id);
+	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
+	for (int i = id; i < map_num - 1; i++)
+		map[i] = map[i + 1];
+	map_num--;
 }
 
 int map_delmap(char* mapname){
 	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
-		map.clear();
+		map_num = 0;
 		return 0;
 	}
 
 	mapindex_getmapname(mapname, map_name);
-	for( auto& pair : map ){
-		if (strcmp(pair.second.name, map_name) == 0) {
-			map_delmapid(pair.first);
+	for (int i = 0; i < map_num; i++) {
+		if (strcmp(map[i].name, map_name) == 0) {
+			map_delmapid(i);
 			return 1;
 		}
 	}
@@ -3514,26 +3533,26 @@ int map_delmap(char* mapname){
 
 /// Initializes map flags and adjusts them depending on configuration.
 void map_flags_init(void){
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = &map[i];
 		union u_mapflag_args args = {};
 
 		args.flag_val = 100;
 
 		// additional mapflag data
 		mapdata->zone = 0; // restricted mapflag zone
-		map_setmapflag(pair.first, MF_NOCOMMAND, false); // nocommand mapflag level
-		map_setmapflag_sub(pair.first, MF_BEXP, true, &args); // per map base exp multiplicator
-		map_setmapflag_sub(pair.first, MF_JEXP, true, &args); // per map job exp multiplicator
+		mapdata->flag[MF_NOCOMMAND] = false; // nocommand mapflag level
+		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// skill damage
 		mapdata->damage_adjust = {};
 
 		// adjustments
-		if( battle_config.pk_mode )
-			map_setmapflag(pair.first, MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
+		if( battle_config.pk_mode && !mapdata->flag[MF_PVP] )
+			mapdata->flag[MF_PVP] = true; // make all maps pvp for pk_mode [Valaris]
 
-		map_free_questinfo(pair.first);
+		map_free_questinfo(i);
 	}
 }
 
@@ -3670,17 +3689,16 @@ int map_readallmaps (void)
 		}
 	}
 
-	int i = 0;
-	std::vector<int16> maps_removed;
+	int maps_removed = 0;
 
-	for( auto &pair : map ){
+	for (int i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
 		unsigned short idx = 0;
-		struct map_data *mapdata = &pair.second;
+		struct map_data *mapdata = &map[i];
 
 		// show progress
-		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i++, map.size(), mapdata->name);
+		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
 
 		if( enable_grf ){
 			// try to load the map
@@ -3699,23 +3717,30 @@ int map_readallmaps (void)
 		}
 
 		// The map was not found - remove it
-		if( !(idx = mapindex_name2id(mapdata->name)) || !success ){
-			maps_removed.push_back(pair.first);
+		if (!(idx = mapindex_name2id(mapdata->name)) || !success) {
+			map_delmapid(i);
+			maps_removed++;
+			i--;
 			continue;
 		}
 
 		mapdata->index = idx;
 
-		if (uidb_get(map_db,(unsigned int)mapdata->index) != NULL)
-		{
+		if (uidb_get(map_db,(unsigned int)mapdata->index) != NULL) {
 			ShowWarning("Map %s already loaded!" CL_CLL "\n", mapdata->name);
-			maps_removed.push_back(pair.first);
+			if (mapdata->cell) {
+				aFree(mapdata->cell);
+				mapdata->cell = NULL;
+			}
+			map_delmapid(i);
+			maps_removed++;
+			i--;
 			continue;
 		}
 
 		map_addmap2db(mapdata);
 
-		mapdata->m = pair.first;
+		mapdata->m = i;
 		memset(mapdata->moblist, 0, sizeof(mapdata->moblist));	//Initialize moblist [Skotlex]
 		mapdata->mob_delete_timer = INVALID_TIMER;	//Initialize timer [Skotlex]
 
@@ -3738,16 +3763,11 @@ int map_readallmaps (void)
 		aFree(map_cache_buffer[0]);
 	}
 
-	if( !maps_removed.empty() ){
-		for( auto& id : maps_removed ){
-			map_delmapid( id );
-		}
-
-		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed.size());
-	}
+	if (maps_removed)
+		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n", maps_removed);
 
 	// finished map loading
-	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map.size());
+	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
 
 	return 0;
 }
@@ -4453,7 +4473,7 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		return -1;
 	}
 
-	struct map_data *mapdata = map_getmapdata(m);
+	struct map_data *mapdata = &map[m];
 
 	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
 		ShowWarning("map_getmapflag: Invalid mapflag %d on map %s.\n", mapflag, mapdata->name);
@@ -4461,12 +4481,14 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 	}
 
 	switch(mapflag) {
+		case MF_RESTRICTED:
+			return mapdata->zone;
 		case MF_NOLOOT:
-			return util::map_get(mapdata->flag, MF_NOMOBLOOT, 0) && util::map_get(mapdata->flag, MF_NOMVPLOOT, 0);
+			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMOBLOOT), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMVPLOOT), 0);
 		case MF_NOPENALTY:
-			return util::map_get(mapdata->flag, MF_NOEXPPENALTY, 0) && util::map_get(mapdata->flag, MF_NOZENYPENALTY, 0);
+			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOEXPPENALTY), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOZENYPENALTY), 0);
 		case MF_NOEXP:
-			return util::map_get(mapdata->flag, MF_NOBASEEXP, 0) && util::map_get(mapdata->flag, MF_NOJOBEXP, 0);
+			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOBASEEXP), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOJOBEXP), 0);
 		case MF_SKILL_DAMAGE:
 			nullpo_retr(-1, args);
 
@@ -4479,10 +4501,10 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				case SKILLDMG_CASTER:
 					return mapdata->damage_adjust.caster;
 				default:
-					return util::map_get(mapdata->flag, mapflag, 0);
+					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 			}
 		default:
-			return util::map_get(mapdata->flag, mapflag, 0);
+			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 	}
 }
 
@@ -4501,7 +4523,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		return false;
 	}
 
-	struct map_data *mapdata = map_getmapdata(m);
+	struct map_data *mapdata = &map[m];
 
 	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
 		ShowWarning("map_setmapflag: Invalid mapflag %d on map %s.\n", mapflag, mapdata->name);
@@ -4525,28 +4547,28 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			else {
 				if (!battle_config.pk_mode)
 					map_foreachinmap(map_mapflag_pvp_sub, m, BL_PC);
-				if (map_getmapflag(m, MF_GVG)) {
-					map_setmapflag(m, MF_GVG, false);
+				if (mapdata->flag[MF_GVG]) {
+					mapdata->flag[MF_GVG] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG and PvP flags for the same map! Removing GvG flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG_TE)) {
-					map_setmapflag(m, MF_GVG_TE, false);
+				if (mapdata->flag[MF_GVG_TE]) {
+					mapdata->flag[MF_GVG_TE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG TE and PvP flags for the same map! Removing GvG TE flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG_DUNGEON)) {
-					map_setmapflag(m, MF_GVG_DUNGEON, false);
+				if (mapdata->flag[MF_GVG_DUNGEON]) {
+					mapdata->flag[MF_GVG_DUNGEON] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Dungeon and PvP flags for the same map! Removing GvG Dungeon flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG_CASTLE)) {
-					map_setmapflag(m, MF_GVG_CASTLE, false);
+				if (mapdata->flag[MF_GVG_CASTLE]) {
+					mapdata->flag[MF_GVG_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Castle and PvP flags for the same map! Removing GvG Castle flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG_TE_CASTLE)) {
-					map_setmapflag(m, MF_GVG_TE_CASTLE, false);
+				if (mapdata->flag[MF_GVG_TE_CASTLE]) {
+					mapdata->flag[MF_GVG_TE_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG TE Castle and PvP flags for the same map! Removing GvG TE Castle flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_BATTLEGROUND)) {
-					map_setmapflag(m, MF_BATTLEGROUND, false);
+				if (mapdata->flag[MF_BATTLEGROUND]) {
+					mapdata->flag[MF_BATTLEGROUND] = false;
 					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
 			}
@@ -4558,12 +4580,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 			else {
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-				if (map_getmapflag(m, MF_PVP)) {
-					map_setmapflag(m, MF_PVP, false);
-					ShowWarning("map_setmapflag: Unable to set PvP and GvG flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+				if (mapdata->flag[MF_PVP]) {
+					mapdata->flag[MF_PVP] = false;
+					if (!battle_config.pk_mode)
+						ShowWarning("map_setmapflag: Unable to set PvP and GvG flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_BATTLEGROUND)) {
-					map_setmapflag(m, MF_BATTLEGROUND, false);
+				if (mapdata->flag[MF_BATTLEGROUND]) {
+					mapdata->flag[MF_BATTLEGROUND] = false;
 					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
 			}
@@ -4572,37 +4595,39 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_GVG_CASTLE:
 		case MF_GVG_TE_CASTLE:
 			if (status) {
-				if (mapflag == MF_GVG_CASTLE && map_getmapflag(m, MF_GVG_TE_CASTLE)) {
-					map_setmapflag(m, MF_GVG_TE_CASTLE, false);
+				if (mapflag == MF_GVG_CASTLE && mapdata->flag[MF_GVG_TE_CASTLE]) {
+					mapdata->flag[MF_GVG_TE_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG TE Castle and GvG Castle flags for the same map! Removing GvG TE Castle flag from %s.\n", mapdata->name);
 				}
-				if (mapflag == MF_GVG_TE_CASTLE && map_getmapflag(m, MF_GVG_CASTLE)) {
-					map_setmapflag(m, MF_GVG_CASTLE, false);
+				if (mapflag == MF_GVG_TE_CASTLE && mapdata->flag[MF_GVG_CASTLE]) {
+					mapdata->flag[MF_GVG_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Castle and GvG TE Castle flags for the same map! Removing GvG Castle flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_PVP)) {
-					map_setmapflag(m, MF_PVP, false);
-					ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
+				if (mapdata->flag[MF_PVP]) {
+					mapdata->flag[MF_PVP] = false;
+					if (!battle_config.pk_mode)
+						ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
 				}
 			}
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG_DUNGEON:
-			if (status && map_getmapflag(m, MF_PVP)) {
-				map_setmapflag(m, MF_PVP, false);
-				ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+			if (status && mapdata->flag[MF_PVP]) {
+				mapdata->flag[MF_PVP] = false;
+				if (!battle_config.pk_mode)
+					ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 			}
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_NOBASEEXP:
 		case MF_NOJOBEXP:
 			if (status) {
-				if (mapflag == MF_NOBASEEXP && map_getmapflag(m, MF_BEXP) != 100) {
-					map_setmapflag(m, MF_BEXP, false);
+				if (mapflag == MF_NOBASEEXP && mapdata->flag[MF_BEXP] != 100) {
+					mapdata->flag[MF_BEXP] = false;
 					ShowWarning("map_setmapflag: Unable to set BEXP and No Base EXP flags for the same map! Removing BEXP flag from %s.\n", mapdata->name);
 				}
-				if (mapflag == MF_NOJOBEXP && map_getmapflag(m, MF_JEXP) != 100) {
-					map_setmapflag(m, MF_JEXP, false);
+				if (mapflag == MF_NOJOBEXP && mapdata->flag[MF_JEXP] != 100) {
+					mapdata->flag[MF_JEXP] = false;
 					ShowWarning("map_setmapflag: Unable to set JEXP and No Job EXP flags for the same map! Removing JEXP flag from %s.\n", mapdata->name);
 				}
 			}
@@ -4648,12 +4673,12 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			if (status) {
 				nullpo_retr(false, args);
 
-				if (mapflag == MF_JEXP && map_getmapflag(m, MF_NOJOBEXP)) {
-					map_setmapflag(m, MF_NOJOBEXP, false);
+				if (mapflag == MF_JEXP && mapdata->flag[MF_NOJOBEXP]) {
+					mapdata->flag[MF_NOJOBEXP] = false;
 					ShowWarning("map_setmapflag: Unable to set No Job EXP and JEXP flags for the same map! Removing No Job EXP flag from %s.\n", mapdata->name);
 				}
-				if (mapflag == MF_BEXP && map_getmapflag(m, MF_NOBASEEXP)) {
-					map_setmapflag(m, MF_NOBASEEXP, false);
+				if (mapflag == MF_BEXP && mapdata->flag[MF_NOBASEEXP]) {
+					mapdata->flag[MF_NOBASEEXP] = false;
 					ShowWarning("map_setmapflag: Unable to set No Base EXP and BEXP flags for the same map! Removing No Base EXP flag from %s.\n", mapdata->name);
 				}
 				mapdata->flag[mapflag] = args->flag_val;
@@ -4664,20 +4689,20 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			if (status) {
 				nullpo_retr(false, args);
 
-				if (map_getmapflag(m, MF_PVP)) {
-					map_setmapflag(m, MF_PVP, false);
+				if (mapdata->flag[MF_PVP]) {
+					mapdata->flag[MF_PVP] = false;
 					ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG)) {
-					map_setmapflag(m, MF_GVG, false);
+				if (mapdata->flag[MF_GVG]) {
+					mapdata->flag[MF_GVG] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG and Battleground flags for the same map! Removing GvG flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG_DUNGEON)) {
-					map_setmapflag(m, MF_GVG_DUNGEON, false);
+				if (mapdata->flag[MF_GVG_DUNGEON]) {
+					mapdata->flag[MF_GVG_DUNGEON] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Dungeon and Battleground flags for the same map! Removing GvG Dungeon flag from %s.\n", mapdata->name);
 				}
-				if (map_getmapflag(m, MF_GVG_CASTLE)) {
-					map_setmapflag(m, MF_GVG_CASTLE, false);
+				if (mapdata->flag[MF_GVG_CASTLE]) {
+					mapdata->flag[MF_GVG_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Castle and Battleground flags for the same map! Removing GvG Castle flag from %s.\n", mapdata->name);
 				}
 				mapdata->flag[mapflag] = ((args->flag_val <= 0 || args->flag_val > 2) ? 1 : args->flag_val);
@@ -4752,13 +4777,14 @@ void do_final(void){
 	do_clear_npc();
 
 	// remove all objects on maps
-	int i = 0;
-	for( auto& pair : map ){
-		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map.size(), pair.second.name);
-		map_foreachinmap(cleanup_sub, pair.first, BL_ALL);
-		channel_delete(pair.second.channel,false);
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
+
+		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map_num, mapdata->name);
+		map_foreachinmap(cleanup_sub, i, BL_ALL);
+		channel_delete(mapdata->channel,false);
 	}
-	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map.size());
+	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
@@ -4798,8 +4824,8 @@ void do_final(void){
 
 	map_db->destroy(map_db, map_db_final);
 
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
 
 		if(mapdata->cell) aFree(mapdata->cell);
 		if(mapdata->block) aFree(mapdata->block);
@@ -4810,7 +4836,7 @@ void do_final(void){
 			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_free_questinfo(pair.first);
+		map_free_questinfo(i);
 		mapdata->damage_adjust = {};
 	}
 

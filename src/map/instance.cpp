@@ -26,6 +26,8 @@
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
+int16 instance_start = 0;
+
 std::unordered_map<uint16, std::shared_ptr<s_instance_data>> instances;
 std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
 
@@ -1225,6 +1227,7 @@ void do_reload_instance(void)
  * Initializes the instance database
  */
 void do_init_instance(void) {
+	instance_start = map_num;
 	instance_readdb();
 	instance_wait.timer = -1;
 

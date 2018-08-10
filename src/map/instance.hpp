@@ -18,6 +18,8 @@
 enum send_target : uint8;
 struct block_list;
 
+extern int16 instance_start;
+
 #define MAX_INSTANCE_DATA 300 // Maximum amount of instances
 
 #define INSTANCE_NAME_LENGTH (60+1)

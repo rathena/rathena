@@ -1424,10 +1424,9 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 		case NPCTYPE_ITEMSHOP:
 			{
 				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
-				struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
 				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
-					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, mapdata->name, nd->bl.x, nd->bl.y);
+					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 				if (cost[0] < (price - points)) {
@@ -1440,7 +1439,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 				if (pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC)) {
-					ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, mapdata->name, nd->bl.x, nd->bl.y);
+					ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 			}
@@ -1680,7 +1679,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 	{
 		ShowWarning("npc_cashshop_buy: Item '%s' (%hu) price overflow attempt!\n", item->name, nameid);
 		ShowDebug("(NPC:'%s' (%s,%d,%d), player:'%s' (%d/%d), value:%d, amount:%d)\n",
-					nd->exname, map_getmapdata(nd->bl.m)->name, nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
+					nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
 		return ERROR_TYPE_ITEM_ID;
 	}
 
@@ -3298,7 +3297,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 			imap = map_mapname2mapid(map_getmapdata(dm)->name);
 
 		if( imap == -1 ) {
-			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map_getmapdata(dm)->name, snd->exname);
+			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map_mapid2mapname(dm), snd->exname);
 			return 1;
 		}
 
@@ -4060,7 +4059,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				if (sscanf(w4, "%11d", &args.flag_val) == 1)
 					map_setmapflag_sub(m, MF_RESTRICTED, true, &args);
 				else // Could not be read, no value defined; don't remove as other restrictions may be set on the map
-					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map_getmapdata(m)->name, filepath, strline(buffer,start-buffer));
+					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map_mapid2mapname(m), filepath, strline(buffer,start-buffer));
 			} else
 				map_setmapflag(m, MF_RESTRICTED, false);
 			break;
@@ -4458,9 +4457,9 @@ int npc_reload(void) {
 
 	// dynamic check by [random]
 	if( battle_config.dynamic_mobs ){
-		for( auto& pair : map ){
+		for (int i = 0; i < map_num; i++) {
 			for( int16 i = 0; i < MAX_MOB_LIST_PER_MAP; i++ ){
-				struct map_data *mapdata = &pair.second;
+				struct map_data *mapdata = map_getmapdata(i);
 
 				if (mapdata->moblist[i] != NULL) {
 					aFree(mapdata->moblist[i]);
@@ -4603,9 +4602,11 @@ static void npc_debug_warps_sub(struct npc_data* nd)
 }
 
 static void npc_debug_warps(void){
-	for( auto& pair : map ){
-		for( int i = 0; i < pair.second.npc_num; i++ ){
-			npc_debug_warps_sub( pair.second.npc[i] );
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
+
+		for( int i = 0; i < mapdata->npc_num; i++ ){
+			npc_debug_warps_sub(mapdata->npc[i]);
 		}
 	}
 }

@@ -2396,7 +2396,7 @@
 
 // 2018-03-21aRagexeRE
 #if PACKETVER >= 20180321
-	parseable_packet(0x0A49,20,clif_parse_dull,0);
+	parseable_packet(0x0A49,20,clif_parse_private_airship_request,0);
 	packet(0x0A4A,6);
 	packet(0x0A4B,22);
 	packet(0x0A4C,28);
