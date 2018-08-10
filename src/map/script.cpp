@@ -11094,9 +11094,9 @@ BUILDIN_FUNC(getareausers)
 }
 
 /*==========================================
- * getunits(<type>{,<array>})
- * getmapunits(<type>,<"map name">{,<array>})
- * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array>})
+ * getunits(<type>{,<array_variable>})
+ * getmapunits(<type>,<"map name">{,<array_variable>})
+ * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>})
  *
  * type :
  *	UNITTYPE_PC
@@ -11107,25 +11107,25 @@ BUILDIN_FUNC(getareausers)
  *	UNITTYPE_MER
  *	UNITTYPE_ELEM
  *
- * if array is given
- *	if array was int it will return GID List
- *	if array was string it will return names List
+ * if array_variable is set
+ *	int array_variable will return GID List
+ *	string array_variable will return names List
  *
  *	return the count of the type given
  *------------------------------------------*/
 BUILDIN_FUNC(getunits)
 {
-	struct block_list* bl = NULL;
+	struct block_list *bl = NULL;
 	struct s_mapiterator *iter = NULL;
-	char *command = (char *)script_getfuncname(st);
-	int type = script_getnum(st, 2);
-	const char *str;
-	int16 m{}, x0{}, y0{}, x1{}, y1{};
-	TBL_PC* sd = NULL;
+	struct map_session_data *sd = NULL;
 	struct script_data* data = NULL;
-	const char* name;
-	int32 idx, id;
+	char *command = (char *)script_getfuncname(st);
+	const char *str;
+	const char *name;
+	int type = script_getnum(st, 2);
 	int size = 0;
+	int32 idx, id;
+	int16 m{}, x0{}, y0{}, x1{}, y1{};
 
 	switch (type)
 	{
