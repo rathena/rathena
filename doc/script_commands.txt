@@ -3204,6 +3204,70 @@ This is useful for maps that are split into many buildings, such as all the
 "*_in" maps, due to all the shops and houses.
 
 ---------------------------------------
+
+*getunits(<type>{,<array_variable>})
+*getmapunits(<type>,<"map name">{,<array_variable>})
+*getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>})
+
+'getunits' function will return the number of objects of the type passed currently whole server.
+
+'getmapunits' function will return the number of objects of the type passed currently located
+on the specified map.
+
+'getareaunits' function will return the number of objects of the type passed currently located
+within the specified area - an x1/y1-x2/y2 square on the specified map.
+
+Type is the type of object to search for:
+
+	UNITTYPE_PC   - Character object
+	UNITTYPE_NPC  - NPC object
+	UNITTYPE_MOB  - Monster object
+	UNITTYPE_PET  - Pet object
+	UNITTYPE_HOM  - Homunculus object
+	UNITTYPE_MER  - Mercenary object
+	UNITTYPE_ELEM - Elemental object
+
+if array_variable is set
+	int array_variable will return GID List
+	string array_variable will return names List
+
+Example 1:
+	// getting the players count and building a string array of the names.
+	.@num = getunits(UNITTYPE_PC,.@array$[0]);
+
+	mes "the number of Users Connected to the server is " + .@num + " .";
+	mes "list of Players names :";
+	freeloop(1);	// for if the list was to big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 2:
+	// getting the npc count in Prontera and building a string array of the names.
+	.@num = getmapunits(UNITTYPE_NPC,"prontera",.@array$[0]);
+
+	mes "the number of NPCs in Prontera is " + .@num + " .";
+	mes "list of NPCs name :";
+	freeloop(1);	// for if the list was to big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 3:
+	// getting the monster count in Prontera with specific coordinates and building a int array of the GIDs.
+	.@num = getareaunits(UNITTYPE_MOB,"prontera",154,186,159,182,.@array[0]);
+
+	mes "the number of Monsters in Prontera in that Coordinates is " + .@num + " .";
+	mes "list of Monsters GID :";
+	freeloop(1);	// for if the list was to big.
+	for(.@i=0;.@i<getarraysize(.@array);.@i++)
+		mes (.@i + 1) + " " + .@array[.@i];
+	freeloop(0);
+	end;
+
+---------------------------------------
 \\
 2,2.- Guild-related commands
 \\
