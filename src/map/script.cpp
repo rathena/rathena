@@ -10949,6 +10949,46 @@ BUILDIN_FUNC(areaannounce)
 }
 
 /*==========================================
+ *------------------------------------------*/
+BUILDIN_FUNC(getusers)
+{
+	int flag, val = 0;
+	struct map_session_data* sd;
+	struct block_list* bl = NULL;
+
+	flag = script_getnum(st,2);
+
+	switch(flag&0x07)
+	{
+		case 0:
+			if(flag&0x8)
+			{// npc
+				bl = map_id2bl(st->oid);
+			}
+			else if(script_rid2sd(sd))
+			{// pc
+				bl = &sd->bl;
+			}
+
+			if(bl)
+			{
+				val = map_getmapdata(bl->m)->users;
+			}
+			break;
+		case 1:
+			val = map_getusers();
+			break;
+		default:
+			ShowWarning("buildin_getusers: Unknown type %d.\n", flag);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st,val);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * getmapguildusers("mapname",guild ID) Returns the number guild members present on a map [Reddozen]
  *------------------------------------------*/
 BUILDIN_FUNC(getmapguildusers)
@@ -10980,9 +11020,83 @@ BUILDIN_FUNC(getmapguildusers)
 }
 
 /*==========================================
- * getunits(<type>{,<array_variable>})
- * getmapunits(<type>,<"map name">{,<array_variable>})
- * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>})
+ *------------------------------------------*/
+BUILDIN_FUNC(getmapusers)
+{
+	const char *str;
+	int16 m;
+	str=script_getstr(st,2);
+	if( (m=map_mapname2mapid(str))< 0){
+		script_pushint(st,-1);
+		ShowWarning("buildin_getmapusers: Unknown map '%s'.\n", str);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (script_getnum(st, 3) == 1)
+	{
+		struct map_data *mapdata = map_getmapdata(m);
+		struct s_mapiterator *iter = mapit_getallusers();
+		TBL_PC *sd;
+		int j = 0;
+
+		for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))
+			if (sd->bl.m == m)
+				setd_sub(st, NULL, ".@getmapusers", j++, (void *)__64BPRTSIZE(sd->bl.id), NULL);
+
+		mapit_free(iter);
+	}
+
+	script_pushint(st,map_getmapdata(m)->users);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ *------------------------------------------*/
+static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
+{
+	int *users=va_arg(ap,int *);
+	(*users)++;
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(getareausers)
+{
+	const char *str;
+	int16 m,x0,y0,x1,y1,users=0; //doubt we can have more then 32k users on
+	str=script_getstr(st,2);
+	x0=script_getnum(st,3);
+	y0=script_getnum(st,4);
+	x1=script_getnum(st,5);
+	y1=script_getnum(st,6);
+	if( (m=map_mapname2mapid(str))< 0){
+		script_pushint(st,-1);
+		ShowWarning("buildin_getareausers: Unknown map '%s'.\n", str);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	map_foreachinallarea(buildin_getareausers_sub,
+		m,x0,y0,x1,y1,BL_PC,&users);
+
+	if (script_getnum(st, 7) == 1)
+	{
+		struct s_mapiterator *iter = mapit_getallusers();
+		TBL_PC *sd;
+		int j = 0;
+
+		for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))
+			if (sd->bl.m == m && (sd->bl.x >= x0 && sd->bl.y <= y0) && (sd->bl.x <= x1 && sd->bl.y >= y1))
+				setd_sub(st, NULL, ".@getareausers", j++, (void *)__64BPRTSIZE(sd->bl.id), NULL);
+
+		mapit_free(iter);
+	}
+
+	script_pushint(st,users);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * getunits(<type>{,<array>})
+ * getmapunits(<type>,<"map name">{,<array>})
+ * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array>})
  *
  * type :
  *	UNITTYPE_PC
@@ -10993,25 +11107,25 @@ BUILDIN_FUNC(getmapguildusers)
  *	UNITTYPE_MER
  *	UNITTYPE_ELEM
  *
- * if array_variable is set
- *	int array_variable will return GID List
- *	string array_variable will return names List
+ * if array is given
+ *	if array was int it will return GID List
+ *	if array was string it will return names List
  *
  *	return the count of the type given
  *------------------------------------------*/
 BUILDIN_FUNC(getunits)
 {
-	struct block_list *bl = NULL;
+	struct block_list* bl = NULL;
 	struct s_mapiterator *iter = NULL;
-	struct map_session_data *sd = NULL;
-	struct script_data* data = NULL;
 	char *command = (char *)script_getfuncname(st);
-	const char *str;
-	const char *name;
 	int type = script_getnum(st, 2);
-	int size = 0;
-	int32 idx, id;
+	const char *str;
 	int16 m{}, x0{}, y0{}, x1{}, y1{};
+	TBL_PC* sd = NULL;
+	struct script_data* data = NULL;
+	const char* name;
+	int32 idx, id;
+	int size = 0;
 
 	switch (type)
 	{
@@ -24046,10 +24160,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(announce,"si?????"),
 	BUILDIN_DEF(mapannounce,"ssi?????"),
 	BUILDIN_DEF(areaannounce,"siiiisi?????"),
+	BUILDIN_DEF(getusers,"i"),
+	BUILDIN_DEF(getmapguildusers,"si"),
+	BUILDIN_DEF(getmapusers,"s?"),
+	BUILDIN_DEF(getareausers,"siiii?"),
 	BUILDIN_DEF(getunits, "i?"),
 	BUILDIN_DEF2(getunits, "getmapunits", "is?"),
 	BUILDIN_DEF2(getunits, "getareaunits", "isiiii?"),
-	BUILDIN_DEF(getmapguildusers,"si"),
 	BUILDIN_DEF(getareadropitem,"siiiiv"),
 	BUILDIN_DEF(enablenpc,"s"),
 	BUILDIN_DEF(disablenpc,"s"),
