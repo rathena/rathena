@@ -3511,7 +3511,8 @@ int map_addmap(char* mapname)
 static void map_delmapid(int id)
 {
 	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
-	memmove(map + id, map + id + 1, sizeof(map[0])*(map_num - id - 1));
+	for (int i = id; i < map_num - 1; i++)
+		map[i] = map[i + 1];
 	map_num--;
 }
 

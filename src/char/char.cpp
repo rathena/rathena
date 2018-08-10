@@ -2093,7 +2093,7 @@ int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
-			for (int j = 0; j < map_server[i].map.size(); j++)
+			for (int j = 0; map_server[i].map[j]; j++)
 				if (map_server[i].map[j] == map)
 					return i;
 		}
