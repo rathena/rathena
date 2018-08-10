@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UTILILITIES_HPP_
-#define _UTILILITIES_HPP_
+#ifndef UTILILITIES_HPP
+#define UTILILITIES_HPP
 
 #include <memory>
 #include <string>
@@ -92,4 +92,4 @@ namespace rathena {
 	}
 }
 
-#endif /* _UTILILITIES_HPP_ */
+#endif /* UTILILITIES_HPP */

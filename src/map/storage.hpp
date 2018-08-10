@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _STORAGE_HPP_
-#define _STORAGE_HPP_
+#ifndef STORAGE_HPP
+#define STORAGE_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -73,4 +73,4 @@ void storage_premiumStorage_quit(struct map_session_data *sd);
 
 int compare_item(struct item *a, struct item *b);
 
-#endif /* _STORAGE_HPP_ */
+#endif /* STORAGE_HPP */

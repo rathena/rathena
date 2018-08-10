@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAP_HPP_
-#define _MAP_HPP_
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include <algorithm>
 #include <stdarg.h>
@@ -1172,4 +1172,4 @@ extern char roulette_table[32];
 
 void do_shutdown(void);
 
-#endif /* _MAP_HPP_ */
+#endif /* MAP_HPP */

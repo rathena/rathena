@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_MMO_HPP_
-#define	_MMO_HPP_
+#ifndef MMO_HPP
+#define MMO_HPP
 
 #include <time.h>
 
@@ -1049,4 +1049,4 @@ struct clan{
 	#define MAX_CARTS 5
 #endif
 
-#endif /* _MMO_HPP_ */
+#endif /* MMO_HPP */
