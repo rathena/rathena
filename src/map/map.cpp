@@ -3693,7 +3693,7 @@ int map_readallmaps (void)
 		}
 	}
 
-	std::vector<int16> maps_removed;
+	int maps_removed = 0;
 
 	for (int i = 0; i < map_num; i++) {
 		size_t size;
@@ -3721,17 +3721,24 @@ int map_readallmaps (void)
 		}
 
 		// The map was not found - remove it
-		if( !(idx = mapindex_name2id(mapdata->name)) || !success ){
-			maps_removed.push_back(i);
+		if (!(idx = mapindex_name2id(mapdata->name)) || !success) {
+			map_delmapid(i);
+			maps_removed++;
+			i--;
 			continue;
 		}
 
 		mapdata->index = idx;
 
-		if (uidb_get(map_db,(unsigned int)mapdata->index) != NULL)
-		{
+		if (uidb_get(map_db,(unsigned int)mapdata->index) != NULL) {
 			ShowWarning("Map %s already loaded!" CL_CLL "\n", mapdata->name);
-			maps_removed.push_back(i);
+			if (mapdata->cell) {
+				aFree(mapdata->cell);
+				mapdata->cell = NULL;
+			}
+			map_delmapid(i);
+			maps_removed++;
+			i--;
 			continue;
 		}
 
@@ -3760,13 +3767,8 @@ int map_readallmaps (void)
 		aFree(map_cache_buffer[0]);
 	}
 
-	if( !maps_removed.empty() ){
-		for( auto& id : maps_removed ){
-			map_delmapid( id );
-		}
-
-		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n",maps_removed.size());
-	}
+	if (maps_removed)
+		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n", maps_removed);
 
 	// finished map loading
 	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
