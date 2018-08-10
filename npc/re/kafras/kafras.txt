@@ -98,8 +98,10 @@ job3_rune01,92,62,3	script	Kafra Employee::kaf_rune	114,{
 
 // Rockridge
 //============================================================
-harboro1,291,207,5	script	Kafra Employee::rockridg	4_F_KAFRA1,{
-	cutin "kafra_01.bmp",2;
+harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
 	callfunc "F_Kafra",0,8,2,500,0;
-	savepoint "harboro1",291,207,1,1;	// fix me: unknown savepoint xy
+	savepoint "harboro1",286,189,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Rockridge";
 }

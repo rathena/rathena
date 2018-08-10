@@ -1736,7 +1736,7 @@ rockmi2,97,120,5	script	Broken Elevator#rrevt10	4_ENERGY_WHITE,{
 	end;
 
 OnMyMobDead:
-	if (mobcount( "rockrdg2", "Broken Elevator#rrevt10::OnMyMobDead" ) < 0)
+	if (mobcount( "rockmi2", "Broken Elevator#rrevt10::OnMyMobDead" ) < 0)
 		hideoffnpc "Broken Elevator#rrevt10";
 	end;
 }
@@ -5751,7 +5751,7 @@ harboro1,235,255,6	script	Wealthy Merchant's Came#6	4_DST_CAMEL,{
 
 harboro1,210,219,5	script	Priest#srdg01	4_M_MINISTER,{
 	npctalk "Are you anguished or sad? Let me help you.", "", bc_self;
-	sleep 1500;
+	sleep2 1500;
 	npctalk "Every one of us is born to be loved.", "", bc_self;
 	end;
 }
@@ -6197,6 +6197,8 @@ harboro1,356,211,5	script	Guide#rockridge01	4_F_ANYA,{
 			mes "Is there anywhere else you want to check?";
 	}
 }
+
+harboro1,80,211,3	duplicate(Guide#rockridge01)	Guide#rockridge02	4_F_ANYA
 
 harboro1,278,195,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
 	mes "[Carola Firth]";
