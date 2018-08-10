@@ -11028,28 +11028,11 @@ BUILDIN_FUNC(getmapusers)
 	str=script_getstr(st,2);
 	if( (m=map_mapname2mapid(str))< 0){
 		script_pushint(st,-1);
-		ShowWarning("buildin_getmapusers: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_SUCCESS;
 	}
-
-	if (script_getnum(st, 3) == 1)
-	{
-		struct map_data *mapdata = map_getmapdata(m);
-		struct s_mapiterator *iter = mapit_getallusers();
-		TBL_PC *sd;
-		int j = 0;
-
-		for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))
-			if (sd->bl.m == m)
-				setd_sub(st, NULL, ".@getmapusers", j++, (void *)__64BPRTSIZE(sd->bl.id), NULL);
-
-		mapit_free(iter);
-	}
-
 	script_pushint(st,map_getmapdata(m)->users);
 	return SCRIPT_CMD_SUCCESS;
 }
-
 /*==========================================
  *------------------------------------------*/
 static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
@@ -11070,25 +11053,10 @@ BUILDIN_FUNC(getareausers)
 	y1=script_getnum(st,6);
 	if( (m=map_mapname2mapid(str))< 0){
 		script_pushint(st,-1);
-		ShowWarning("buildin_getareausers: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_SUCCESS;
 	}
 	map_foreachinallarea(buildin_getareausers_sub,
 		m,x0,y0,x1,y1,BL_PC,&users);
-
-	if (script_getnum(st, 7) == 1)
-	{
-		struct s_mapiterator *iter = mapit_getallusers();
-		TBL_PC *sd;
-		int j = 0;
-
-		for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))
-			if (sd->bl.m == m && (sd->bl.x >= x0 && sd->bl.y <= y0) && (sd->bl.x <= x1 && sd->bl.y >= y1))
-				setd_sub(st, NULL, ".@getareausers", j++, (void *)__64BPRTSIZE(sd->bl.id), NULL);
-
-		mapit_free(iter);
-	}
-
 	script_pushint(st,users);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -24162,8 +24130,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(areaannounce,"siiiisi?????"),
 	BUILDIN_DEF(getusers,"i"),
 	BUILDIN_DEF(getmapguildusers,"si"),
-	BUILDIN_DEF(getmapusers,"s?"),
-	BUILDIN_DEF(getareausers,"siiii?"),
+	BUILDIN_DEF(getmapusers,"s"),
+	BUILDIN_DEF(getareausers,"siiii"),
 	BUILDIN_DEF(getunits, "i?"),
 	BUILDIN_DEF2(getunits, "getmapunits", "is?"),
 	BUILDIN_DEF2(getunits, "getareaunits", "isiiii?"),
