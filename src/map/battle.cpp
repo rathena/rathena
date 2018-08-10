@@ -2191,15 +2191,14 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 	if (!(damage->caster&src->type))
 		return 0;
 
-	union u_mapflag_args args = {};
+	struct map_data *mapdata = map_getmapdata(m);
 
-	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if ((damage->map&1 && (!map_getmapflag(m, MF_PVP) && !map_flag_gvg2(m) && !map_getmapflag(m, MF_BATTLEGROUND) && !map_getmapflag_sub(m, MF_SKILL_DAMAGE, &args) && !map_getmapflag(m, MF_RESTRICTED))) ||
-		(damage->map&2 && map_getmapflag(m, MF_PVP)) ||
-		(damage->map&4 && map_flag_gvg2(m)) ||
-		(damage->map&8 && map_getmapflag(m, MF_BATTLEGROUND)) ||
-		(damage->map&16 && map_getmapflag_sub(m, MF_SKILL_DAMAGE, &args)) ||
-		(map_getmapflag(m, MF_RESTRICTED) && damage->map&(8*map_getmapdata(m)->zone)))
+	if ((damage->map&1 && (!mapdata->flag[MF_PVP] && !mapdata_flag_gvg2(mapdata) && !mapdata->flag[MF_BATTLEGROUND] && !mapdata->flag[MF_SKILL_DAMAGE] && !mapdata->flag[MF_RESTRICTED])) ||
+		(damage->map&2 && mapdata->flag[MF_PVP]) ||
+		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
+		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
+		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
+		(damage->map&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -4930,7 +4929,7 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 	}
 
 	if( attack_hits && class_ == MOBID_EMPERIUM ) {
-		if(target && map_flag_gvg2(target->m) && !battle_can_hit_gvg_target(src,target,skill_id,(skill_id)?BF_SKILL:0)) {
+		if(target && !battle_can_hit_gvg_target(src,target,skill_id,(skill_id)?BF_SKILL:0) && map_flag_gvg2(target->m)) {
 			wd.damage = wd.damage2 = 0;
 			return wd;
 		}
@@ -5061,26 +5060,29 @@ struct Damage battle_calc_attack_gvg_bg(struct Damage wd, struct block_list *src
 					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 				}
 		}
+
+		struct map_data *mapdata = map_getmapdata(target->m);
+
 		if(!wd.damage2) {
 			wd.damage = battle_calc_damage(src,target,&wd,wd.damage,skill_id,skill_lv);
-			if( map_flag_gvg2(target->m) )
+			if( mapdata_flag_gvg2(mapdata) )
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,skill_id,wd.flag);
-			else if( map_getmapflag(target->m, MF_BATTLEGROUND) )
+			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd.damage=battle_calc_bg_damage(src,target,wd.damage,skill_id,wd.flag);
 		}
 		else if(!wd.damage) {
 			wd.damage2 = battle_calc_damage(src,target,&wd,wd.damage2,skill_id,skill_lv);
-			if( map_flag_gvg2(target->m) )
+			if( mapdata_flag_gvg2(mapdata) )
 				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,skill_id,wd.flag);
-			else if( map_getmapflag(target->m, MF_BATTLEGROUND) )
+			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd.damage2 = battle_calc_bg_damage(src,target,wd.damage2,skill_id,wd.flag);
 		}
 		else {
 			int64 d1 = wd.damage + wd.damage2,d2 = wd.damage2;
 			wd.damage = battle_calc_damage(src,target,&wd,d1,skill_id,skill_lv);
-			if( map_flag_gvg2(target->m) )
+			if( mapdata_flag_gvg2(mapdata) )
 				wd.damage = battle_calc_gvg_damage(src,target,wd.damage,skill_id,wd.flag);
-			else if( map_getmapflag(target->m, MF_BATTLEGROUND) )
+			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd.damage = battle_calc_bg_damage(src,target,wd.damage,skill_id,wd.flag);
 			wd.damage2 = (int64)d2*100/d1 * wd.damage/100;
 			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2 = 1;
@@ -6385,10 +6387,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	}
 #endif
 
+	struct map_data *mapdata = map_getmapdata(target->m);
+
 	ad.damage = battle_calc_damage(src,target,&ad,ad.damage,skill_id,skill_lv);
-	if (map_flag_gvg2(target->m))
+	if (mapdata_flag_gvg2(mapdata))
 		ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
-	else if (map_getmapflag(target->m, MF_BATTLEGROUND))
+	else if (mapdata->flag[MF_BATTLEGROUND])
 		ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
 
 	// Skill damage adjustment
@@ -6777,10 +6781,12 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 	}
 
+	struct map_data *mapdata = map_getmapdata(target->m);
+
 	md.damage = battle_calc_damage(src,target,&md,md.damage,skill_id,skill_lv);
-	if(map_flag_gvg2(target->m))
+	if(mapdata_flag_gvg2(mapdata))
 		md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
-	else if(map_getmapflag(target->m, MF_BATTLEGROUND))
+	else if(mapdata->flag[MF_BATTLEGROUND])
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
 
 	// Skill damage adjustment
@@ -7651,6 +7657,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 	}
 
+	struct map_data *mapdata = map_getmapdata(m);
+
 	switch( target->type ) { // Checks on actual target
 		case BL_PC: {
 				struct status_change* sc = status_get_sc(src);
@@ -7697,7 +7705,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						case NC_AXETORNADO:
 						case SR_SKYNETBLOW:
 							// Can only hit traps in PVP/GVG maps
-							if (!map_getmapflag(m, MF_PVP) && !map_getmapflag(m, MF_GVG))
+							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
 								return 0;
 							break;
 					}
@@ -7714,7 +7722,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case NC_AXETORNADO:
 					case SR_SKYNETBLOW:
 						// Can only hit icewall in PVP/GVG maps
-						if (!map_getmapflag(m, MF_PVP) && !map_getmapflag(m, MF_GVG))
+						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
 							return 0;
 						break;
 					case HT_CLAYMORETRAP:
@@ -7767,7 +7775,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			struct mob_data *md = BL_CAST(BL_MOB, t_bl);
 
-			if( !map_flag_gvg(m) && md->guardian_data && md->guardian_data->guild_id )
+			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
 			break;
 		}
@@ -7818,7 +7826,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					state |= BCT_ENEMY; // Can kill anything
 					strip_enemy = 0;
 				}
-				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && map_getmapflag(m, MF_PVP)) || (!battle_config.duel_allow_gvg && map_flag_gvg(m))) )
+				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && mapdata->flag[MF_PVP]) || (!battle_config.duel_allow_gvg && mapdata_flag_gvg(mapdata))) )
 				{
 					if( t_bl->type == BL_PC && (sd->duel_group == ((TBL_PC*)t_bl)->duel_group) )
 						return (BCT_ENEMY&flag)?1:-1; // Duel targets can ONLY be your enemy, nothing else.
@@ -7826,7 +7834,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						return 0; // You can't target anything out of your duel
 				}
 			}
-			if( map_flag_gvg(m) && !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM )
+			if( !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM && mapdata_flag_gvg(mapdata) )
 				return 0; //If you don't belong to a guild, can't target emperium.
 			if( t_bl->type != BL_PC )
 				state |= BCT_ENEMY; //Natural enemy.
@@ -7835,7 +7843,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			struct mob_data *md = BL_CAST(BL_MOB, s_bl);
-			if( !map_flag_gvg(m) && md->guardian_data && md->guardian_data->guild_id )
+			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperium owned by Guilds on non-woe times.
 
 			if( !md->special_state.ai )
@@ -7880,10 +7888,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		return (flag&state)?1:-1;
 	}
 
-	if( map_flag_vs(m) )
+	if( mapdata_flag_vs(mapdata) )
 	{ //Check rivalry settings.
 		int sbg_id = 0, tbg_id = 0;
-		if( map_getmapflag(m, MF_BATTLEGROUND) )
+		if(mapdata->flag[MF_BATTLEGROUND] )
 		{
 			sbg_id = bg_team_get_id(s_bl);
 			tbg_id = bg_team_get_id(t_bl);
@@ -7891,7 +7899,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		if( flag&(BCT_PARTY|BCT_ENEMY) )
 		{
 			int s_party = status_get_party_id(s_bl);
-			if( s_party && s_party == status_get_party_id(t_bl) && !(map_getmapflag(m, MF_PVP) && map_getmapflag(m, MF_PVP_NOPARTY)) && !(map_flag_gvg(m) && map_getmapflag(m, MF_GVG_NOPARTY)) && (!map_getmapflag(m, MF_BATTLEGROUND) || sbg_id == tbg_id) )
+			if( s_party && s_party == status_get_party_id(t_bl) && !(mapdata->flag[MF_PVP] && mapdata->flag[MF_PVP_NOPARTY]) && !(mapdata_flag_gvg(mapdata) && mapdata->flag[MF_GVG_NOPARTY]) && (!mapdata->flag[MF_BATTLEGROUND] || sbg_id == tbg_id) )
 				state |= BCT_PARTY;
 			else
 				state |= BCT_ENEMY;
@@ -7900,15 +7908,15 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			int s_guild = status_get_guild_id(s_bl);
 			int t_guild = status_get_guild_id(t_bl);
-			if( !(map_getmapflag(m, MF_PVP) && map_getmapflag(m, MF_PVP_NOGUILD)) && s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))) && (!map_getmapflag(m, MF_BATTLEGROUND) || sbg_id == tbg_id) )
+			if( !(mapdata->flag[MF_PVP] && mapdata->flag[MF_PVP_NOGUILD]) && s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))) && (!mapdata->flag[MF_BATTLEGROUND] || sbg_id == tbg_id) )
 				state |= BCT_GUILD;
 			else
 				state |= BCT_ENEMY;
 		}
-		if( state&BCT_ENEMY && map_getmapflag(m, MF_BATTLEGROUND) && sbg_id && sbg_id == tbg_id )
+		if( state&BCT_ENEMY && mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
 			state &= ~BCT_ENEMY;
 
-		if( state&BCT_ENEMY && battle_config.pk_mode && !map_flag_gvg(m) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
 		{ // Prevent novice engagement on pk_mode (feature by Valaris)
 			TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
 			if (
@@ -7920,7 +7928,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			)
 				state &= ~BCT_ENEMY;
 		}
-    }//end map_flag_vs chk rivality
+	}//end map_flag_vs chk rivality
 	else
 	{ //Non pvp/gvg, check party/guild settings.
 		if( flag&BCT_PARTY || state&BCT_ENEMY )
