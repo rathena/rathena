@@ -266,13 +266,14 @@ struct npc_data* npc_name2id(const char* name)
 	return (struct npc_data *) strdb_get(npcname_db, name);
 }
 /**
- * For the Secure NPC Timeout option (check src/config/secure.hpp) [RR]
+ * For the Secure NPC Timeout option (check src/config/secure.hpp)
+ * @author RR
  **/
 #ifdef SECURE_NPCTIMEOUT
 /**
  * Timer to check for idle time and timeout the dialog if necessary
  **/
-TIMER_FUNC(npc_rr_secure_timeout_timer){
+TIMER_FUNC(npc_secure_timeout_timer){
 	struct map_session_data* sd = NULL;
 	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
 	int cur_tick = gettick(); //ensure we are on last tick
@@ -298,7 +299,7 @@ TIMER_FUNC(npc_rr_secure_timeout_timer){
 	} else if(sd->st && (sd->st->state == END || sd->st->state == CLOSE)){
 		sd->npc_idle_timer = INVALID_TIMER; //stop timer the script is already ending
 	} else { //Create a new instance of ourselves to continue
-		sd->npc_idle_timer = add_timer(cur_tick + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
+		sd->npc_idle_timer = add_timer(cur_tick + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_secure_timeout_timer,sd->bl.id,0);
 	}
 	return 0;
 }
