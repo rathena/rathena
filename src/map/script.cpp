@@ -6398,13 +6398,13 @@ BUILDIN_FUNC(inarray)
 		for (i = 0; i <= array_size; ++i)
 		{
 			temp = (char*)get_val2(st, reference_uid(id, i), ref);
-			script_removetop(st, -1, 0);
 			if (!strcmp(temp, value))
 			{
+				script_removetop(st, -1, 0);
 				script_pushint(st, i);
 				return SCRIPT_CMD_SUCCESS;
 			}
-			
+			script_removetop(st, -1, 0);
 		}
 	}
 	else
