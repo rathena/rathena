@@ -11093,7 +11093,7 @@ BUILDIN_FUNC(getunits)
 	int type = script_getnum(st, 2);
 	int size = 0;
 	int32 idx, id;
-	int16 m{}, x0{}, y0{}, x1{}, y1{};
+	int16 m = 0, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
 	switch (type)
 	{
