@@ -8660,6 +8660,12 @@ same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
 
 ---------------------------------------
 
+*checkwall "<name>";
+
+This command will return true if the wall with the given name exists, false otherwise.
+
+---------------------------------------
+
 *readbook <book id>,<page>;
 
 This command will open a book item at the specified page.

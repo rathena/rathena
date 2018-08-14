@@ -13327,6 +13327,14 @@ BUILDIN_FUNC(delwall)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(checkwall)
+{
+	const char *wall_name = script_getstr(st, 2);
+
+	script_pushint(st, map_iwall_exist(wall_name));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Retrieves various information about the specified guardian.
 ///
 /// guardianinfo("<map_name>", <index>, <type>) -> <value>
@@ -24267,6 +24275,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfreecell,"srr?????"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
+	BUILDIN_DEF(checkwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
 	BUILDIN_DEF(mercenary_create,"ii"),
 	BUILDIN_DEF(mercenary_heal,"ii"),
