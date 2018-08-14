@@ -3910,3 +3910,5 @@
 28495,403,100	// Sheriffs_Left_Badge
 28496,403,100	// Sheriffs_Right_Badge
 28703,467,100	// Infinity_Dagger
+31140,403,100	// C_Cowboy_Hat_
+31141,403,100	// C_Rose_Corsage_

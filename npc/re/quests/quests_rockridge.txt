@@ -620,7 +620,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		mes "Mwa hah hah!";
 		next;
 		mes "[Wyatt Warp]";
-		mes "Oh, right?I almost forgot that ^4d4dffShawn McCurdy^000000 wants to talk to you about the mine.";
+		mes "Oh, right! I almost forgot that ^4d4dffShawn McCurdy^000000 wants to talk to you about the mine.";
 		mes "You can find him on the way out. Why don't you talk to him?";
 		next;
 		mes "[Wyatt Warp]";
@@ -749,7 +749,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		close;
 	}
 	if (rock_main_quest == 21) {
-		if (countitem(25248) < 1) {
+		if (countitem(25248) < 1) {// note: player can't finish the quest without the item
 			mes "[Wyatt Warp]";
 			mes "Shawn said you'd bring the ore box. Where is it?";
 			mes "If you left it somewhere because it's heavy, please go bring it.";
@@ -1215,22 +1215,24 @@ har_in01,88,22,6	script	Ivoka Skudi#har02	HIDDEN_WARP_NPC,{
 }
 
 // Fild 1
-rockrdg1,160,306,3	script	Johnny James#revt04	10213,{ end; }
-rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	10214
-rockrdg1,156,302,7	duplicate(Johnny James#revt04)	Ivoka Skudi#revt02	10212
-rockrdg1,156,306,5	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt01	10212
-rockrdg1,161,302,1	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt02	10212
-rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	10212
+rockrdg1,160,306,3	script	Johnny James#revt04	HIDDEN_WARP_NPC,{ end; }
+rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	HIDDEN_WARP_NPC
+rockrdg1,156,302,7	duplicate(Johnny James#revt04)	Ivoka Skudi#revt02	HIDDEN_WARP_NPC
+rockrdg1,156,306,5	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt01	HIDDEN_WARP_NPC
+rockrdg1,161,302,1	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt02	HIDDEN_WARP_NPC
+rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	HIDDEN_WARP_NPC
 
 rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	if (rock_main_quest == 5) {
 		mes "";// todo fix me
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think this is the place, but maybe I came too early.", bc_self;
 		sleep2 3000;
+		classchange( 10213, "Johnny James#revt04", bc_self );
 		emotion ET_QUESTION, getnpcid(0, "Johnny James#revt04");
 		sleep2 200;
 		npctalk "Who's this? You're not the one I was expecting.", "Johnny James#revt04", bc_self;
 		sleep2 1000;
+		classchange( 10214, "Albert Ford#revt08", bc_self );
 		npctalk "Hey Boss, I told you not to go without me.", "Albert Ford#revt08", bc_self;
 		sleep2 2000;
 		npctalk "Mm? I don't remember if Costello looks like that.", "Albert Ford#revt08", bc_self;
@@ -1269,11 +1271,11 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 500;
 		specialeffect EF_SCREEN_QUAKE,AREA,"Johnny James#revt04";
 		sleep2 200;
+		classchange( 10212, "Ivoka Skudi#revt02", bc_self );
 		npctalk "Freeze!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 800;
 		specialeffect EF_NPC_STOP,AREA,"Johnny James#revt04";
 		sleep2 200;
-		classchange( 10212, "Ivoka Skudi#revt02", bc_self );
 		classchange( 10212, "Cactus Gunslinger#revt01", bc_self );
 		classchange( 10212, "Cactus Gunslinger#revt02", bc_self );
 		classchange( 10212, "Cactus Gunslinger#revt03", bc_self );
@@ -1293,12 +1295,13 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		npctalk "*Chuckle*", "Wyatt Warp#revt03", bc_self;
 		npctalk "Everything went just as we planned!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 2000;
-		npctalk "You goddamn Cacti! You were disguised as the plants!";
+		npctalk "You goddamn Cacti! You were disguised as the plants!", "Johnny James#revt04", bc_self;
 		sleep2 3000;
 		npctalk "Albert, stop looking and do something!", "Johnny James#revt04", bc_self;
 		sleep2 2000;
 		npctalk "I-I'll go bring the rest of our gang!", "Albert Ford#revt08", bc_self;
 		sleep2 1000;
+		classchange( HIDDEN_WARP_NPC, "Albert Ford#revt08", bc_self );
 		npctalk "WHAT?", "Johnny James#revt04", bc_self;
 		sleep2 1000;
 		npctalk "ALBERT!", "Johnny James#revt04", bc_self;
@@ -1310,7 +1313,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		npctalk "Ivoka and our Cacti friends, you did a good job! You can take him away now.", "Wyatt Warp#revt03", bc_self;
 		sleep2 1000;
 		npctalk "Let's go!", "Cactus Gunslinger#revt01", bc_self;
-		npctalk "We've got you now!";
+		npctalk "We've got you now!", "Cactus Gunslinger#revt03", bc_self;
 		npctalk "Stop resisting!", "Cactus Gunslinger#revt02", bc_self;
 		sleep2 1000;
 		npctalk "Hmpf, don't you want your ores back?!", "Johnny James#revt04", bc_self;
@@ -1322,11 +1325,13 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		npctalk "Shut up before I put a ring through your nose!", "Cactus Gunslinger#revt02", bc_self;
 		sleep2 1000;
 		npctalk "Guys, let's go!", "Ivoka Skudi#revt02", bc_self;
-		sleep2 4000;
+		sleep2 2000;
 		classchange( HIDDEN_WARP_NPC, "Ivoka Skudi#revt02", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt01", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt02", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt03", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Johnny James#revt04", bc_self );
+		sleep2 2000;
 		npctalk "Let's go back, shall we?", "Wyatt Warp#revt03", bc_self;
 		erasequest 7795;
 		setquest 7796;// Unexpected Arrest
@@ -1693,6 +1698,7 @@ rockmi2,10,86,5	script	Shawn McCurdy#rockmi2	10215,{
 		warp "rockrdg2",348,214;
 		end;
 	}
+	warp "rockrdg2",348,214;	// debug
 	end;
 
 OnInit:
@@ -1736,7 +1742,7 @@ rockmi2,97,120,5	script	Broken Elevator#rrevt10	4_ENERGY_WHITE,{
 	end;
 
 OnMyMobDead:
-	if (mobcount( "rockmi2", "Broken Elevator#rrevt10::OnMyMobDead" ) < 0)
+	if (mobcount( "rockmi2", "Broken Elevator#rrevt10::OnMyMobDead" ) < 1)
 		hideoffnpc "Broken Elevator#rrevt10";
 	end;
 }
@@ -1971,7 +1977,9 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		erasequest 7802;// Hear Me Out 2
 		setquest 7803;// Happy for Broken Trust
 		rock_main_quest = 14;
-		close;
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
 	}
 	if (rock_main_quest == 14 && countitem(25249) < 1) {
 		mes "[Albert Ford]";
@@ -1987,7 +1995,9 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "[Albert Ford]";
 		mes "Here, take it.";
 		getitem 25249,1;// Buffalo_Bandit_Mane
-		close;
+		close2;
+		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		end;
 	}
 	if (rock_main_quest == 20 && checkquest(7807,HUNTING) == 2) {
 		if (countitem(25278) < 5 || countitem(25283) < 5) {
@@ -2738,7 +2748,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	10217,{
 			mes "finding the ores.";
 			mes "Say, can you do that?";
 			next;
-			if (select( "Mm, not now.", "Sure thing. I'll be right back." ) == 2) {
+			if (select( "Mm, not now.", "Sure thing. I'll be right back." ) == 1) {
 				mes "[Crouched Horse]";
 				mes "Oh, I see.";
 				mes "Hm... I understand.";
@@ -2886,7 +2896,7 @@ harboro1,231,254,3	script	Exotic Merchant	1_M_MERCHANT,{
 	next;
 	setarray .@item_id[0],
 		25276,	// Clean Bones
-		25277,	// Not enough Deadly Poison Powders
+		25277,	// Deadly Poison Powders
 		25279,	// Crude Gunpowders
 		25278,	// Bandit's Scarves
 		25283,	// Brown Mufflers
@@ -2897,10 +2907,11 @@ harboro1,231,254,3	script	Exotic Merchant	1_M_MERCHANT,{
 		25285;	// Brown Rat Tails"
 	.@size = getarraysize(.@item_id);
 	for ( .@i = 0; .@i < .@size; .@i++ ) {
+		.@item_name$ = getitemname(.@item_id[.@i]);
 		if (countitem(.@item_id[.@i]) < 5)
-			.@menu$ += "^777777Not enough " + getitemname(.@item_id[.@i]) + "^000000";
+			.@menu$ += "^777777Not enough " + .@item_name$ + "^000000:";
 		else
-			.@menu$ += "" + .@item_id[.@i];
+			.@menu$ += "" + .@item_name$ + ":";
 	}
 
 	.@s = select( "Cancel:" + .@menu$ ) - 2;
@@ -3131,7 +3142,7 @@ OnTouch:
 	else if (.@r == 1) npctalk "Enthusiastic Job Seeker: Join a Buffalo Bandit/Coyote subjugation party. Those who can finish them in 5 minutes are welcome.", "Enthusiastic Job Seeker#3";
 	else if (.@r == 2) npctalk "Hey, you're in my space. Move away, will you?", "Enthusiastic Job Seeker#4";
 	else if (.@r == 3) npctalk "Enthusiastic Job Seeker: I'm ready to work right away. Why don't you hire me?", "Enthusiastic Job Seeker#5";
-	else npctalk "Enthusiastic Job Seeker: Did you just get here, fresh off the boat? Stop pacing around?you're getting on my nerves.", "Enthusiastic Job Seeker#11";
+	else npctalk "Enthusiastic Job Seeker: Did you just get here, fresh off the boat? Stop pacing around! You're getting on my nerves.", "Enthusiastic Job Seeker#11";
 	end;
 }
 
@@ -3477,7 +3488,7 @@ harboro1,334,135,6	script	Desalination Facility M	4_M_YURI,{
 		next;
 		if (select( "Tell me what this job entails.", "Let me think." ) == 2) {
 			mes "[Desalination Facility Manager]";
-			mes "You don't have to think?this benefits both of us!";
+			mes "You don't have to think! This benefits both of us!";
 			next;
 			mes "[Desalination Facility Manager]";
 			mes "Let me tell you a little bit about this village. It's built above the remains of a city that sank into the sea.";
@@ -3918,7 +3929,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		.@player_name$ = strcharinfo(0);
 
 		mes "";// todo fix me
-		donpcevent "NPC Traces of Fire#srdg01::OnEffect";
+		donpcevent "Traces of Fire#srdg01::OnEffect";
 		sleep2 1500;
 		mes "[Demon]";
 		mes "Alright, this should do. You know what I need, right? Are you sure you could sneak in? Maybe I should go.";
@@ -4498,28 +4509,24 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 			close;
 		}
 		if (rand(2) == 0) {
-			mes "[Mrs. McPhy]";
-			mes "Today Spotty took a spoon. Could you look for it? It may be easily replaceable, but I can't keep buying things every time Spotty takes something.";
-			next;
-			mes "[Mrs. McPhy]";
-			mes "Go outside the village and talk to my husband. He'll tell you where it might be.";
-			erasequest 1329;// Spotty in the Dreamland
-			setquest 1325;// Spotty, No!
-			setquest 1330;// Spotty's Holes
-			close;
+			.@quest_id = 1325;
+			.@string$ = "spoon";
+		}
+		else {
+			.@quest_id = 1326;
+			.@string$ = "hat";
 		}
 		mes "[Mrs. McPhy]";
-		mes "Today Spotty took a hat. Could you look for it? It may be easily replaceable, but I can't keep buying things every time Spotty takes something.";
+		mes "Today Spotty took a " + .@string$ + ". Could you look for it? It may be easily replaceable, but I can't keep buying things every time Spotty takes something.";
 		next;
 		mes "[Mrs. McPhy]";
 		mes "Go outside the village and talk to my husband. He'll tell you where it might be.";
 		erasequest 1329;// Spotty in the Dreamland
-		setquest 1326;// Spotty, No!
-		setquest 1330;// Spotty's Holes
+		setquest .@quest_id;// Spotty, No!
 		close;
 	}
 
-	if (isbegin_quest(1330) == 0) {// First time doing the quest
+	if (isbegin_quest(1330) == 0) {
 		if (isbegin_quest(1321) == 1) {// debug: player can't finish the quest on official
 			setquest 1330;
 			end;
@@ -4649,7 +4656,7 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "[Mrs. McPhy]";
 		mes "That Rock Ridge Coin is yours. Thank you for helping us.";
 		erasequest 1322;// Found Something
-		erasequest 1330;// Spotty's Holes
+		completequest 1330;// Spotty's Holes
 		getitem 25250,1;// Rock Ridge Coin
 		setquest 1329;// Spotty in the Dreamland
 		next;
@@ -4666,7 +4673,6 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		next;
 		mes "[Mrs. McPhy]";
 		mes "Here's the Rock Ridge Coin we promised. Thank you for searching the wasteland for us.";
-		erasequest 1330;// Spotty's Holes
 		erasequest 1328;// Found Missing Items
 		setquest 1329;// Spotty in the Dreamland
 		getitem 25250,1;// Rock Ridge Coin
@@ -4808,6 +4814,7 @@ rockrdg1,58,195,3	script	Hole#rkq1324	4_CRACK,{
 	mes "It has a tumbleweed rolling around inside it. -";
 	close;
 }
+
 rockrdg1,109,60,3	script	Hole#rkq1326	4_CRACK,{
 	if (isbegin_quest(1326) == 1) {
 		mes "- There's a hole in the ground.";
@@ -4822,6 +4829,7 @@ rockrdg1,109,60,3	script	Hole#rkq1326	4_CRACK,{
 	mes "It has a little bit of white hair scattered inside it. -";
 	close;
 }
+
 rockrdg1,71,149,3	script	Hole#rkq1325	4_CRACK,{
 	if (isbegin_quest(1325) == 1) {
 		mes "- There's a hole in the ground.";
@@ -5232,7 +5240,7 @@ harboro1,83,221,3	script	Mahua Kaya#rockwn15	10225,{
 	mes "Children? Are they as cute as Leaf?";
 	next;
 	mes "[Mahua Kaya]";
-	mes "Of course. Everyone?even this old man?is a child in the eyes of Mother Nature.";
+	mes "Of course. Everyone even this old man is a child in the eyes of Mother Nature.";
 	next;
 	emotion ET_SMILE;
 	mes "[Cheerful Leaf]";
@@ -5252,7 +5260,7 @@ harboro1,86,218,3	script	Welch#rockwn01	4_M_ARCHER,5,5,{
 	mes "Have you just arrived? So have I, two days ago. The wind sounds different here. I love it!";
 	next;
 	mes "[Welch]";
-	mes "All the buildings smell like fresh paint, and I hear the sound of hammering everywhere I go?this village is alive!";
+	mes "All the buildings smell like fresh paint, and I hear the sound of hammering everywhere I go. This village is alive!";
 	next;
 	emotion ET_SMILE;
 	mes "[Welch]";
@@ -5268,7 +5276,7 @@ harboro1,88,217,3	script	Edith Richie#rockwn02	4_F_KID2,{
 	emotion ET_PROFUSELY_SWEAT;
 	mes "[Edith Richie]";
 	mes "My dad works at the train station.";
-	mes "It's east?mm, wait. West is the left hand side, and...";
+	mes "It's east? mm, wait. West is the left hand side, and...";
 	next;
 	mes "[Edith Richie]";
 	mes "Just look at your map and go straight up. You'll be at the train station.";
@@ -5281,7 +5289,7 @@ harboro1,86,210,4	script	Carmen O'Neil#rockwn06	8_F,{
 	mes "*Hiccups* I can drink beer all day long!";
 	next;
 	mes "[Leland Wenkins]";
-	mes "Let's make money and?hee hee!?eat something delicious!";
+	mes "Let's make money and - hee hee! - eat something delicious!";
 	next;
 	npctalk "Geez, they're drinking again.", "Mortimer#rockwn07", bc_self;
 	mes "[Drunk Doram]";
@@ -5383,7 +5391,7 @@ harboro1,81,205,1	script	Mortimer#rockwn07	4_M_ROGUE,5,5,{
 	next;
 	npctalk "They're so cheap, you're getting them almost for free. I'm actually losing money doing this!", "", bc_self;
 	mes "[Mortimer]";
-	mes "I'll give you a special discount. This feather accessory here is just two million Zeny. This handkerchief here is?oh, wow!?just five million!";
+	mes "I'll give you a special discount. This feather accessory here is just two million Zeny. This handkerchief here is - oh, wow! - just five million!";
 	next;
 	emotion ET_HUK, playerattached();
 	mes "[" + strcharinfo(0) + "]";
@@ -5422,7 +5430,7 @@ harboro1,84,200,5	script	Delbert Lake#rockwn04	4_M_EINMINER,{
 	emotion ET_FRET, getnpcid(0, "Constance#rockwn18");
 	mes "[Constance]";
 	mes "Hey, are you crazy?!";
-	mes "That's not a mineral vein?it's a decorative rock! Get that pickax away from it, now!";
+	mes "That's not a mineral vein, it's a decorative rock! Get that pickax away from it, now!";
 	close;
 }
 
@@ -5464,7 +5472,7 @@ harboro1,98,211,3	script	Loretta#rockwn08	4_F_ACOLYTE,5,5,{
 	mes "Come to us if you want to hear the god's words.";
 	next;
 	mes "[Loretta]";
-	mes "We don't need a chapel. Odin doesn't come to buildings?he comes to our hearts.";
+	mes "We don't need a chapel. Odin doesn't come to buildings, he comes to our hearts.";
 	mes "Let's pray to him and show him our gratitude.";
 	next;
 	emotion ET_KEK, getnpcid(0, "Dolores#rockwn09");
@@ -5485,7 +5493,7 @@ harboro1,98,211,3	script	Loretta#rockwn08	4_F_ACOLYTE,5,5,{
 	npctalk "We believe in him!", "Dolores#rockwn09", bc_self;
 	npctalk "We believe in him!", "Maurice#rockwn10", bc_self;
 	mes "[Maurice]";
-	mes "Lemonade?I mean, the god is with you!";
+	mes "Lemonade! I mean, the god is with you!";
 	close;
 
 OnTouch:
@@ -5536,14 +5544,14 @@ harboro1,94,237,3	script	Cordell#rockn01	4_M_MAYOR,{
 	next;
 	emotion ET_BIGTHROB;
 	mes "[Cordell]";
-	mes "But we the people of Rock Ridge are not here to give in?we're here to conquer!";
+	mes "But we the people of Rock Ridge are not here to give in, we're here to conquer!";
 	close;
 }
 
 harboro1,74,259,3	script	Eloise McCurdy#rockn14	4_F_GUNSLINGER,{
 	mes "[Eloise McCurdy]";
 	mes "I pride myself in protecting cargo here.";
-	mes "My job is to protect it against rain, wind, and?of course?thieves.";
+	mes "My job is to protect it against rain, wind, and of course thieves.";
 	next;
 	emotion ET_CRY;
 	mes "[Eloise McCurdy]";
@@ -5640,7 +5648,7 @@ harboro1,146,264,3	script	Scrap Metal Collector#s2	4_M_HUBOY,{
 	mes "Maybe we should go back to the mainland.";
 	next;
 	mes "[Scrap Metal Collector]";
-	mes "What? No! I don't want to be a liar?we told our family we'd be back with loads of money.";
+	mes "What? No! I don't want to be a liar! We told our family we'd be back with loads of money.";
 	close;
 }
 
@@ -5840,7 +5848,7 @@ harboro1,228,170,3	script	Wanderer Doram#rkrgtwn	4_DR_STELO,{
 	mes "Boohoo! Where the hell is the sheriff's office? My money! Moneeeyyy!";
 	next;
 	mes "[Wanderer Doram]";
-	mes "Everyone said Rock Ridge is the land of opportunity?why didn't anyone tell me about the scary Buffalo Bandits?";
+	mes "Everyone said Rock Ridge is the land of opportunity! Why didn't anyone tell me about the scary Buffalo Bandits?";
 	next;
 	mes "[Wanderer Doram]";
 	mes "*Hiccups* They robbed me clean. I don't even have enough money left to have a glass of Kahluna Milk.";
@@ -6136,70 +6144,6 @@ OnTouch:
 	end;
 }
 
-harboro1,356,211,5	script	Guide#rockridge01	4_F_ANYA,{
-	mes "[Sheriff Assistant]";
-	mes "Welcome to Rock Ridge, the hot, dry desert in the West where adventure is waiting!";
-	mes "I'm the sheriff's assistant, and I'm here to guide visitors. Is there a place you want to go?";
-	next;
-	mes "[Sheriff Assistant]";
-	mes "Tell me where you want to go, and I'll show you where it is.";
-	mes "Also, you can use ^B9062FNavigation^000000 mode by ^B9062Fclicking the name of the place^000000 I showed to you.";
-	while(true) {
-		next;
-		.@s = select( "[Kafra Employee]", "[Inn]", "[Weapon/Armor Shop]", "[Tool Shop]", "[Sheriff's Office]", "Clear mini-map.", "Cancel." );
-		switch(.@s) {
-		case 1:
-			mes "[Sheriff Assistant]";
-			mes "The ^006400Kafra Employee^000000, got it. Please click the ^0000FFBox icon^000000 on your mini-map.";
-			viewpoint 1,291,207,1,0xFFFF33;
-			break;
-		case 2:
-			mes "[Sheriff Assistant]";
-			mes "I've marked the location of the <NAVI>Inn<INFO>harboro1,156,215,0,000,0</INFO></NAVI> on your mini-map.";
-			mes "Click the name to activate Navigation mode.";
-			viewpoint 1,156,215,2,0xAAFF00;
-			break;
-		case 3:
-			mes "[Sheriff Assistant]";
-			mes "I've marked the location of the <NAVI>Weapon/Armor Shop<INFO>harboro1,312,193,0,000,0</INFO></NAVI> on your mini-map.";
-			mes "Click the name to activate Navigation mode.";
-			viewpoint 1,312,193,3,0x008080;
-			break;
-		case 4:
-			mes "[Sheriff Assistant]";
-			mes "I've marked the location of the <NAVI>Tool Shop<INFO>harboro1,312,193,0,000,0</INFO></NAVI> on your mini-map.";
-			mes "Click the name to activate Navigation mode.";
-			viewpoint 1,312,193,4,0xFF1493;
-			break;
-		case 5:
-			mes "[Sheriff Assistant]";
-			mes "I've marked the location of the <NAVI>Sheriff's Office<INFO>harboro1,241,218,0,000,0</INFO></NAVI> on your mini-map.";
-			mes "Click the name to activate Navigation mode.";
-			viewpoint 1,241,218,5,0xFFCCFF;
-			break;
-		case 6:
-			mes "[Sheriff Assistant]";
-			mes "Let me remove all the marks on your mini-map.";
-			viewpoint 2,291,207,1,0xFFFF33;
-			viewpoint 2,156,215,2,0xAAFF00;
-			viewpoint 2,312,193,3,0x008080;
-			viewpoint 2,312,193,4,0xFF1493;
-			viewpoint 2,241,218,5,0xFFCCFF;
-			break;
-		case 7:
-			mes "[Sheriff Assistant]";
-			mes "Enjoy your stay in Rock Ridge!";
-			close;
-		}
-		if (.@s == 7)
-			mes "Did you need anything else?";
-		else
-			mes "Is there anywhere else you want to check?";
-	}
-}
-
-harboro1,80,211,3	duplicate(Guide#rockridge01)	Guide#rockridge02	4_F_ANYA
-
 harboro1,278,195,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
 	mes "[Carola Firth]";
 	mes "Did you hear that? The basement is haunted!";
@@ -6211,7 +6155,7 @@ harboro1,278,195,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
 	npctalk "Boo!", "Lucas Richie#rockn08", bc_self;
 	mes "[Carola Firth]";
 	mes "Some workers went down to the basement for repair work and heard strange rustling noises.";
-	mes "When they found the source of noise?kyaaaahhh!";
+	mes "When they found the source of noise? kyaaaahhh!";
 	next;
 	npctalk "Carola, you do things that scare most men, and yet you're scared of something that doesn't even exist.", "Lucas Richie#rockn08", bc_self;
 	npctalk "That's why I'm scared: I don't want to be haunted by the spirit of everyone I've wronged.", "", bc_self;
@@ -6305,7 +6249,7 @@ harboro1,311,53,5	script	Joyce Leslie#rockn06	4_F_01,{
 	mes "This house sank little by little, until the ground couldn't hold its weight anymore.";
 	next;
 	mes "[Joyce Leslie]";
-	mes "What happened to its residents, you ask? You're an adventurer?why do you care?";
+	mes "What happened to its residents, you ask? You're an adventurer, why do you care?";
 	next;
 	emotion ET_OHNO;
 	mes "[Joyce Leslie]";
@@ -6414,7 +6358,7 @@ harboro2,118,264,5	script	Old Woman#srdg01	4_F_LGTGRAND,{
 	mes "I do.";
 	next;
 	mes "[Old Man]";
-	mes "We built this house from scratch, on our own?from the foundation stones to the roofing.";
+	mes "We built this house from scratch, on our own from the foundation stones to the roofing.";
 	next;
 	mes "[Old Woman]";
 	mes "Aww, it's getting chilly. Let's go back up.";
