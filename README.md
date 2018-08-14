@@ -38,95 +38,12 @@ Names of packages may require specific version numbers on certain distributions
   * git
 
 ## 2. Installation 
-This section is a very brief set of installation instructions. For more concise guides
-relevant to your Operation System, please refer to the Wiki (links at the end of this file).
-Detailed installation guide can be found in [**Installation Guide on wiki**](https://github.com/rathena/rathena/wiki/installations).
-
-### Windows Installation
-1. Install prerequisites
-2. Create a folder to download rAthena into (e.g. C:\rAthena)
-3. By using command line to clone rAthena rather than [download](https://github.com/rathena/rathena/archive/master.zip) it
-
-        git clone https://github.com/rathena/rathena.git
-
-    Or for minimum clone can use this command
-
-        git clone https://github.com/rathena/rathena.git --branch master --single-branch
-
-4. Open MySQL Workbench and create an instance to connect to your MySQL Server
-5. Create a database (rathena), a user (rathena), give permissions (GRANT SELECT, INSERT, UPDATE, DELETE) and then login using the new user
-6. Use MySQL Workbench to run the .sql files in /sql-files/ on the new rathena database
-
-### Linux Installation
-1. Type:
-    * (For CentOS)
-
-          yum install gcc g++ make mysql mysql-devel mysql-server pcre-devel zlib-devel git
-
-    * (For Debian)
-
-          apt-get install git make gcc g++ libmysqlclient-dev zlib1g-dev libpcre3-dev
-
-2. Type:
-
-        mysql_secure_installation
-
-3. Start your MySQL server
-4. Setup a MySQL user:
-
-        CREATE USER 'rathena'@'localhost' IDENTIFIED BY 'password';
-
-5. Assign permissions:
-
-        GRANT SELECT,INSERT,UPDATE,DELETE ON `rathena\_rag`.* TO 'rathena'@'localhost';
-
-6. Clone a GIT repository:
-
-        git clone https://github.com/rathena/rathena.git ~/rathena
-
-7. Insert SQL files:
-
-        mysql --user=root -p rathena_rag < trunk/sql-files/main.sql (and others)
-
-8. Configure and compile:
-
-        ./configure && make clean && make server
-
-9. Configure and compile (for Centos 64 bit with Maria DB):
-
-        ./configure --enable-64bit --with-MYSQL_LIBS=/usr/lib64/libmysqlclient.so && make clean && make server
-
-10. When you're ready, start the servers:
-
-        ./athena-start start
 
 ### Full Installation Instructions
   * [Windows](https://github.com/rathena/rathena/wiki/Install-on-Windows)
   * [CentOS](https://github.com/rathena/rathena/wiki/Install-on-Centos)
   * [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
   * [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
-
-### Optional
-* If you want to have your own forked version but still get updates from the main rAthena repository
-  * Fork this repository to your GitHub account
-  * List the current configured remote repository for your fork:
-
-        git remote -v
-
-  * Specify a new remote upstream repository that will be synced with your fork:
-
-        git remote add upstream https://github.com/rathena/rathena.git
-
-  * Verify the new upstream repository you've specified for your fork:
-
-        git remote -v
-
-  * You should see the main rAthena repository as well as your forked repository
-  * Now, when you want to get updates from rAthena, simply do:
-
-        git pull upstream master
-
-* Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
 ## 3. Troubleshooting
 
