@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <string>
-#include <vector>
-
 #ifndef _WIN32
 #include <unistd.h>
 #endif
+#include <vector>
 
 #include "../common/core.hpp"
 #include "../common/grfio.hpp"
