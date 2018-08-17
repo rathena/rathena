@@ -196,7 +196,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 			setarray .@xy[0],116,72;
 			break;
 		case 2:
-			setarray .@mapname$[0],"Morroc Ruins","moc_ruins";
+			setarray .@mapname$[0],"Morocc Ruins.","moc_ruins";
 			setarray .@xy[0],152,48;
 			break;
 		case 3:
