@@ -4013,7 +4013,12 @@
 	export_constant(QTYPE_EVENT);
 	export_constant(QTYPE_EVENT2);
 	export_constant(QTYPE_WARG);
+	export_constant(QTYPE_CLICKME);
+	export_constant(QTYPE_DAILYQUEST);
 	export_constant(QTYPE_WARG2);
+	export_constant(QTYPE_EVENT3);
+	export_constant(QTYPE_JOBQUEST);
+	export_constant(QTYPE_JUMPING_PORING);
 	export_constant(QTYPE_NONE);
 
 	/* font weight types */

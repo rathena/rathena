@@ -19002,8 +19002,17 @@ BUILDIN_FUNC(questinfo)
 		case QTYPE_JOB2:
 		case QTYPE_EVENT:
 		case QTYPE_EVENT2:
+		// Warg icons were replaced in this client
+#if PACKETVER < 20170315
 		case QTYPE_WARG:
 		case QTYPE_WARG2:
+#else
+		case QTYPE_CLICKME:
+		case QTYPE_DAILYQUEST:
+		case QTYPE_EVENT3:
+		case QTYPE_JOBQUEST:
+		case QTYPE_JUMPING_PORING:
+#endif
 			// Leave everything as it is
 			break;
 		case QTYPE_NONE:
