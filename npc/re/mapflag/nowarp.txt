@@ -30,3 +30,14 @@ un_bk_q	mapflag	nowarp
 un_myst	mapflag	nowarp
 
 job_gun	mapflag	nowarp
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	nowarp
+lhz_d_n2	mapflag	nowarp
+
+// Ep 16
+que_swat	mapflag	nowarp
+
+// Rockridge
+un_myst	mapflag	nowarp
+rockmi2	mapflag	nowarp

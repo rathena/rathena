@@ -1360,6 +1360,10 @@ izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
 	end;
 }
 malangdo,218,81,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#dom	4_M_MERCAT1
+izlude_a,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doia	4_M_MERCAT1
+izlude_b,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doib	4_M_MERCAT1
+izlude_c,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doic	4_M_MERCAT1
+izlude_d,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doid	4_M_MERCAT1
 
 izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 	if (Class == Job_Summoner) {
@@ -2407,7 +2411,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	close;
 }
 
-lasagna,140,245,3	script	The sensitive-minded el	4_CAT_SAILOR3,{
+lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	if (checkweight(1001,1) == 0) {
 		mes "- Hold on a second here!! -";
 		mes "- You have too many items. -";

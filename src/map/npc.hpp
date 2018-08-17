@@ -1,8 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _NPC_HPP_
-#define _NPC_HPP_
+#ifndef NPC_HPP
+#define NPC_HPP
+
+#include "../common/timer.hpp"
 
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
@@ -1082,8 +1084,8 @@ enum e_job_types
 	JT_4_M_SNOWMAN_R,
 	JT_4_M_SNOWMAN_G,
 	JT_WARPEFFECTNPC,
-
-	JT_4_F_DANGDANG = 10286,
+	JT_4_HEN,
+	JT_4_F_DANGDANG,
 	JT_4_M_DANGDANG,
 	JT_4_F_DANGDANG1,
 	JT_4_LEAFCAT,
@@ -1092,6 +1094,17 @@ enum e_job_types
 	JT_4_TEDDY_BEAR_W,
 	JT_4_TEDDY_BEAR_B,
 	JT_4_TEDDY_BEAR_B_L,
+	JT_4_M_SOULREAPER,
+	JT_4_F_SE_SUN,
+	JT_4_M_SE_MOON,
+	JT_4_M_SE_STAR,
+	JT_4_EP17_KAYA,
+	JT_4_EP17_AS,
+	JT_4_EP17_ELYUMINA,
+	JT_4_EP17_MORNING,
+	JT_4_EP17_MIGUEL,
+	JT_4_EP17_NIHIL_K,
+	JT_4_EP17_MIGUEL_D,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1202,7 +1215,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
+	TIMER_FUNC(npc_secure_timeout_timer);
 #endif
 
 // @commands (script-based)
@@ -1210,4 +1223,4 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 
 bool npc_unloadfile( const char* path );
 
-#endif /* _NPC_HPP_ */
+#endif /* NPC_HPP */

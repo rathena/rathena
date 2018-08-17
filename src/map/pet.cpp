@@ -1,42 +1,40 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "pet.hpp"
 
 #include <map>
-
 #include <stdlib.h>
 
-#include "../common/db.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
-#include "../common/ers.h"
+#include "../common/db.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utilities.hpp"
+#include "../common/utils.hpp"
 
-#include "pc.hpp"
-#include "intif.hpp"
-#include "chrif.hpp"
-#include "npc.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
-#include "battle.hpp"
-#include "log.hpp"
 #include "achievement.hpp"
+#include "battle.hpp"
+#include "chrif.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "log.hpp"
+#include "mob.hpp"
+#include "npc.hpp"
+#include "pc.hpp"
+
+using namespace rathena;
 
 #define MIN_PETTHINKTIME 100
 
 //Dynamic pet database
 std::map<uint16, struct s_pet_db> pet_db_data;
 struct s_pet_db *pet_db( uint16 pet_id ){
-	if( pet_db_data.find(pet_id) != pet_db_data.end() ){
-		return &pet_db_data.at(pet_id);
-	}else{
-		return nullptr;
-	}
+	return util::map_find( pet_db_data, pet_id );
 }
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
@@ -248,8 +246,7 @@ int pet_sc_check(struct map_session_data *sd, int type)
  * @param id : ID of pet owner
  * @return 0
  */
-static int pet_hungry(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pet_hungry){
 	struct map_session_data *sd;
 	struct pet_data *pd;
 	s_pet_db *pet_db_ptr;
@@ -1079,7 +1076,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 		}
 
 		for(i = c = 0; i < pd->ud.walkpath.path_len; i++) {
-			if(pd->ud.walkpath.path[i]&1)
+			if( direction_diagonal( pd->ud.walkpath.path[i] ) )
 				c += pd->status.speed*MOVE_DIAGONAL_COST/MOVE_COST;
 			else
 				c += pd->status.speed;
@@ -1248,8 +1245,7 @@ static int pet_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
  * @param data : data to pass to pet_ai_sub_foreachclient
  * @return 0
  */
-static int pet_ai_hard(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pet_ai_hard){
 	map_foreachpc(pet_ai_sub_foreachclient,tick);
 
 	return 0;
@@ -1297,8 +1293,7 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
  * @param data : items that were looted
  * @return 0
  */
-static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(pet_delay_item_drop){
 	struct item_drop_list *list;
 	struct item_drop *ditem;
 
@@ -1389,8 +1384,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
  * @param id : ID of pet owner
  * @author [Valaris], rewritten by [Skotlex]
  */
-int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pet_skill_bonus_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	struct pet_data *pd;
 	int bonus;
@@ -1438,8 +1432,7 @@ int pet_skill_bonus_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @return 0
  * @author [Valaris], rewritten by [Skotlex]
  */
-int pet_recovery_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pet_recovery_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	struct pet_data *pd;
 
@@ -1471,8 +1464,7 @@ int pet_recovery_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param tick : next time to regenerate
  * @param id : ID of pet owner
  */
-int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pet_heal_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	struct status_data *status;
 	struct pet_data *pd;
@@ -1515,8 +1507,7 @@ int pet_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
  * @param data : (unused)
  * @author [Skotlex]
  */
-int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(pet_skill_support_timer){
 	struct map_session_data *sd = map_id2sd(id);
 	struct pet_data *pd;
 	struct status_data *status;

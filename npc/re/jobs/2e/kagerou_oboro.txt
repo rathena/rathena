@@ -2091,6 +2091,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 			close;
 		} else {
 			set .@equip_id, getequipid(.@part);
+			set .@equip_refine, getequiprefinerycnt(.@part);
 			if (.@equip_id == 13074 || .@equip_id == 13312) {
 				mes "[Red Leopard Joe]";
 				mes "Is that weapon yours? Let me have a look.";
@@ -2106,7 +2107,6 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		}
 		mes "Joe took a thorough look at the seal.";
 		next;
-		set .@equip_refine, getequiprefinerycnt(.@part);
 		if (.@equip_refine < 7) {
 			mes "[Red Leopard Joe]";
 			mes "Are you that low?";
@@ -2150,6 +2150,11 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "I can feel it.";
 		mes "I will take this weapon to give it some finishing touches.";
 		next;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
 		delequip .@part;
 		erasequest 5145;
 		completequest 5138;
@@ -2158,9 +2163,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "[Red Leopard Joe]";
 		mes "'" + strcharinfo(0) + "'";
 		mes "Passed the weapon test!!";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@ko_test_03_1 == 2 && .@ko_test_03_2 == 0 && (.@ko_test_03_3 == 2 || .@ko_test_03_4 == 2) && .@ko_test_03_5 == 0) {
 		mes "[Red Leopard Joe]";
 		mes "Oh, I almost forgot.";
@@ -2429,6 +2432,8 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		close;
 	} else {
 		set .@equip_id, getequipid(.@part);
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 		if (.@equip_id == 13074 || .@equip_id == 13312) {
 			mes "Analyzing the weapon.";
 			next;
@@ -2449,7 +2454,6 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		mes "That weapon cannot be refined. Where did you get it?";  //custom translation
 		close;
 	}
-	set .@equip_refine, getequiprefinerycnt(.@part);
 	if (.@equip_refine >= 20) {
 		mes "Bzzzt";
 		mes "A warning beep comes from the tool.";
@@ -2486,6 +2490,11 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 	} else {							// 10>20 2%
 		if (.@rand < 3) set .@wlevel_up,1;
 	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	if (.@wlevel_up) {
 		successrefitem .@part;
 		mes "Succeeded in refining.";

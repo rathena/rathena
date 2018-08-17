@@ -508,6 +508,14 @@
 5823,467,100	// Love_Arrow
 5855,499,100	// Fishing_Rod
 5864,475,100	// Shadow_Booster
+5900,467,100	// Divine Guard Hat
+5901,467,100	// Focus Beret
+5902,467,100	// Harvester Hat
+5903,467,100	// Deadman Bandana
+5904,467,100	// Inconspicuous Hat
+5905,467,100	// Lyrica Hat
+5906,467,100	// Oni Horns
+5907,467,100	// Sea Captain Hat
 6000,475,100	// Dark_Ashes
 6005,467,100	// New_Year_Rice_Cake
 6006,499,100	// Rice_Cake_Delivery_Box
@@ -791,7 +799,7 @@
 6674,507,100	// GM_Coin
 6681,467,100	// XMAS_Cookie
 6682,499,100	// Bag_Of_Selling_Goods
-6684,467,100	// Proof_of_The_Heroic
+6684,403,100	// TokenOfHero
 6685,499,100	// Morocc_Certification
 6686,507,100	// Brick
 6687,507,100	// Rope
@@ -1432,7 +1440,7 @@
 12596,475,100	// Magic_Candy
 12600,507,100	// Treasure_Box_Scroll
 12607,507,100	// Lolli_Pop_Box
-//12610,475,100	//
+12610,475,100	// Mysterious_Egg
 12622,507,100	// Boarding_Halter
 12625,475,100	// Sapa_Feat_Cert_Pack
 12633,475,100	// Malang_Cat_Can
@@ -3862,6 +3870,15 @@
 //22950,475,100	//
 //22951,475,100	//
 //22952,475,100	//
+22979,475,100	// C_Battle_Gum_2
+23012,475,100	// S_Small_Mana_Potion
+23038,475,100	// S_Slim_White_Box
+23043,475,100	// S_Seed_Of_Yggdrasil_Box
+23046,475,100	// S_Mystic_Powder
+23047,475,100	// S_Blessing_Tyr
+23048,475,100	// S_Resilience_Potion
+23307,475,100	// S_Shining_Def_Scroll
+23340,475,100	// S_Megaphone
 23177,475,100	// Kafra_Card_
 23196,475,100	// Shining_Blue_Lucky_Egg
 25043,499,100	// Thorny_Vine_Flute

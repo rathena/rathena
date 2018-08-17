@@ -3491,7 +3491,7 @@ malangdo,125,147,3	script	Patrol Leader#ml	545,{
 	close;
 }
 
-malangdo,129,146,3	script	Crime Prevention Staff	545,{
+malangdo,129,146,3	script	Crime Prevention Staff#ml	545,{
 	if (malang_bad_guys > 11) {
 		mes "[Crime Prevention Staff]";
 		mes "A work to do means happy things!";

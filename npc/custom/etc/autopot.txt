@@ -80,7 +80,7 @@ L_Start:
 	@autopot_delay = .@delay;
 	@autopot_eff   = .@effect;
 	@autopot_none  = 0;
-	bonus_script "{ callfunc \"start_autopot\"; }",86400,8,0,SI_INCHEALRATE;
+	bonus_script "{ callfunc \"start_autopot\"; }",86400,8,0,EFST_HEALPLUS;
 
 	message strcharinfo(0), "Auto-Potion started.";
 	callsub L_Info;

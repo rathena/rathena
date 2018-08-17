@@ -276,3 +276,14 @@ yuno_fild07,113,339,0	duplicate(ach_treasure#core)	#yuno_ach7::120058	HIDDEN_WAR
 yuno_fild08,179,209,0	duplicate(ach_treasure#core)	#yuno_ach8::120059	HIDDEN_WARP_NPC,5,5
 yuno_fild09,166,228,0	duplicate(ach_treasure#core)	#yuno_ach9::120060	HIDDEN_WARP_NPC,5,5
 yuno_fild11,141,357,0	duplicate(ach_treasure#core)	#yuno_ach10::120061	HIDDEN_WARP_NPC,5,5
+
+// If the feature is turned off these NPCs are useless
+-	script	AchievementInit	-1,{
+	end;
+
+OnInit:
+	if( !getbattleflag( "feature.achievement" ) ){
+		unloadnpc "ach_treasure#core";
+	}
+	end;
+}

@@ -1,13 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHRIF_HPP_
-#define _CHRIF_HPP_
+#ifndef CHRIF_HPP
+#define CHRIF_HPP
 
 #include <time.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h" // enum chrif_req_op
+#include "../common/cbasetypes.hpp"
+#include "../common/socket.hpp" // enum chrif_req_op
 
 //fwd declaration
 struct map_session_data;
@@ -92,4 +92,4 @@ void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 
-#endif /* _CHRIF_HPP_ */
+#endif /* CHRIF_HPP */

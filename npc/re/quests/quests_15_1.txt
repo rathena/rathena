@@ -471,7 +471,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 			cutin "Arquien_n_atnad04.bmp",2;
 			mes "[Nile]";
 			mes "What.. was.. the name. Ah.. I don't know.";
-			mes "It is commonly being referred to as the 'Fantasmagorica' plan.";
+			mes "It is commonly being referred to as the 'Phantasmagorika' plan.";
 			mes "Rekenber of Lighthalzen is the sponser of the excavation recruitment and support.";
 			next;
 			select("So?");
@@ -494,7 +494,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 			}
 			cutin "Arquien_n_atnad01.bmp",2;
 			mes "[Nile]";
-			mes "Sure. We also wanted to participate in the Fantasmagorica.";
+			mes "Sure. We also wanted to participate in the Phantasmagorika.";
 		}
 		else {
 			cutin "Arquien_n_atnad02.bmp",2;
@@ -510,7 +510,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 			cutin "Arquien_n_atnad01.bmp",2;
 			mes "[Nile]";
 			mes "Should I continue talking?";
-			mes "We also wanted to participate in the Fantasmagorica.";
+			mes "We also wanted to participate in the Phantasmagorika.";
 		}
 		mes "Of course under the name of Paradise Squad.";
 		next;
@@ -535,7 +535,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		mes "Not a bad proposition. Honestly it's a good opportunity.";
 		mes "We introduce people and get paid, you work and get paid.";
 		next;
-		select("Wanting to participate in Fantasmagorica?");
+		select("Wanting to participate in Phantasmagorika?");
 		mes "[Nile]";
 		mes "It can be summarized as such.";
 		mes "Basically you're participating in the site excavation work but";
@@ -547,7 +547,7 @@ moc_para01,133,170,4	script	Commander Arquien#e152a1	4_F_EDEN_MASTER,{
 		next;
 		mes "[Nile]";
 		mes "I want one thing.";
-		mes "There are several excavation teams and organizations currently participating in the Fantasmagorica excavation.";
+		mes "There are several excavation teams and organizations currently participating in the Phantasmagorika excavation.";
 		mes "I would like you to work in an excavation team Rahim introduces.";
 		next;
 		cutin "Arquien_n_atnad02.bmp",2;
@@ -1496,6 +1496,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			close3;
 		}
 	}
+	close3;
 }
 
 // Note : 2 players can use the npc at the same time
@@ -3343,7 +3344,7 @@ verus02,60,30,1	script	Strewn paper#e152a01	4_ENERGY_BLUE,{
 		close;
 	}
 	progressbar "00ff00",3;
-	hideonnpc strnpcinfo(0);
+	disablenpc strnpcinfo(0);
 	getitem 6757,1;// The_Memory_Recorder
 	if (VER_MAIN == 19) {
 		mes "You find a object never seen before as you go through the clutter of documents and office supplies.";
@@ -3360,7 +3361,8 @@ verus02,60,30,1	script	Strewn paper#e152a01	4_ENERGY_BLUE,{
 	close;
 
 OnTimer60000:
-	hideoffnpc strnpcinfo(0);
+	stopnpctimer;
+	enablenpc strnpcinfo(0);
 	end;
 }
 verus02,178,32,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a02	4_ENERGY_BLUE
@@ -3427,7 +3429,7 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 		close;
 	}
 	if (VER_MAIN == 27 || isbegin_quest(7652) > 0) {// Collect Memory Records of Laboratories
-		if (countitem(6824) < 5) {
+		if (countitem(6824) > 4) {
 			mes "Enough Memory Records are collected.";
 			mes "No need to keep on crawling and searching.";
 			close;
@@ -3440,13 +3442,18 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 		if (select( "Check below.", "Quit." ) == 1) {
 			progressbar "00ff00",3;
 			mes "Found a Memory Record under the desk.";
-			hideonnpc strnpcinfo(0);
 			getitem 6824,1;// Experimental_Dong_Memory_Record
+			initnpctimer;
+			disablenpc strnpcinfo(0);
 		}
 		close;
 	}
 	mes "Nothing special is found.";
 	close;
+OnTimer30000:
+	stopnpctimer;
+	enablenpc strnpcinfo(0);
+	end;
 }
 un_bunker,87,167,3	duplicate(Box#e152p00)	Under desk#e152p01	4_ENERGY_BLUE
 un_bunker,316,243,3	duplicate(Box#e152p00)	Under desk#e152p02	4_ENERGY_BLUE
@@ -3852,10 +3859,12 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 		mes "- You are carrying too many items to continue. -";
 		close;
 	}
-	.@playtime_5318 = checkquest(5318,PLAYTIME);
-	.@quest_5309 = isbegin_quest(5309);
+	.@playtime_5318 = checkquest(5318,PLAYTIME);	// Come Back Tomorrow
+	.@quest_5309 = isbegin_quest(5309);				// Police Chief's Request
 	mes "[Police Chief Kesler]";
 	if (VER_MAIN < 5 || .@playtime_5318 == 2) {
+		if (.@playtime_5318 == 2)
+			erasequest 5318;
 		emotion ET_DELIGHT;
 		mes "Nice to meet you. I'm Kesler, chief of the Phantasmagorika Police.";
 	}
@@ -3863,8 +3872,6 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 		emotion ET_PROFUSELY_SWEAT;
 		mes "Welcome to the Phantasmagorika Police.";
 	}
-	if (.@playtime_5318 == 2)
-		erasequest 5318;
 	next;
 	if (countitem(6753) > 0)// Token_Of_Destruction
 		.@string$ = "I brought Doom Tokens.";
@@ -3935,7 +3942,7 @@ verus04,133,212,4	script	Police Chief Kesler#EP15_1	2_M_SWORDMASTER,{
 			}
 			if (.@quest_5309 == 2)
 				erasequest 5309;
-			setquest 5309;
+			setquest 5309;// Police Chief's Request
 			mes "[Police Chief Kesler]";
 			mes "Thank you.";
 			close;
@@ -4161,10 +4168,8 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 				next;
 				if (select( "Help.", "Maybe next time." ) == 2) {
 					emotion ET_OHNO;
-					if (isbegin_quest(5305) == 0) {
-						setquest 5305;// Police Officer Salgran
-						completequest 5305;// Police Officer Salgran
-					}
+					setquest 5305;// Police Officer Salgran
+					completequest 5305;// Police Officer Salgran
 					setquest 5310;// Salgran's Problem
 					mes "[Police Officer Salgran]";
 					mes "You must be busy. All right, then tell the Chief that everything's good in my sector.";
@@ -4188,10 +4193,8 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 				if (select( "OK", "Maybe next time." ) == 2) {
 					// inaccurate
 					emotion ET_OHNO;
-					if (isbegin_quest(5305) == 0) {
-						setquest 5305;// Police Officer Salgran
-						completequest 5305;// Police Officer Salgran
-					}
+					setquest 5305;// Police Officer Salgran
+					completequest 5305;// Police Officer Salgran
 					setquest 5310;// Salgran's Problem
 					mes "[Police Officer Salgran]";
 					mes "You must be busy. All right, then tell the Chief that everything's good in my sector.";
@@ -4270,7 +4273,6 @@ verus03,36,113,4	script	Police Officer Salgran#EP15	2_M_THIEFMASTER,{
 	close;
 }
 
-
 verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You are carrying too many items to continue. -";
@@ -4324,10 +4326,8 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				mes "Ah, Chief Kesler sent you. If I didn't know him, I'd have thought he was too busy to come see me. I bet I'm busier than him, though.";
 				next;
 				if (select( "I can help.", "Sorry I can't be of help." ) == 2) {
-					if (isbegin_quest(5306) == 0) {
-						setquest 5306;
-						completequest 5306;
-					}
+					setquest 5306;
+					completequest 5306;
 					setquest 5311;// Gerev's Problem
 					mes "[Police Officer Gerev]";
 					mes "You're willing to help the Chief, but not me. Why not because I'm not a chief?";
@@ -4355,10 +4355,8 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				next;
 				if (select( "Sure thing.", "Maybe next time." ) == 2) {
 					emotion ET_FRET;
-					if (isbegin_quest(5306) == 0) {
-						setquest 5306;
-						completequest 5306;
-					}
+					setquest 5306;
+					completequest 5306;
 					setquest 5311;
 					mes "[Police Officer Gerev]";
 					mes "*Snort* I knew it. Just go tell Chief Kesler everything's quiet in my sector.";
@@ -4424,13 +4422,15 @@ verus03,116,36,6	script	Police Officer Gerev#EP15_1D	4_M_ALCHE_A,{
 				mes "[Police Officer Gerev]";
 				mes "I must be stressed out again. I feel my stomach tightening...";
 				close;
-			case 3:// can redo
+			case 3:
 				erasequest 5315;// Gerev's Request
 				trap_doom_prayers = 0;
 				if (isbegin_quest(5306) == 0) {
 					setquest 5306;
 					completequest 5306;
 				}
+				// note: officially 'setquest 5311;' is commented
+				setquest 5311;
 				close;
 			case 4:
 				emotion ET_OTL;
@@ -4491,10 +4491,8 @@ verus03,81,241,6	script	Police Officer Seiden#EP15_1	4_M_ORIENT02,{
 				next;
 				if (select( "Sure.", "Not now." ) == 2) {
 					emotion ET_SCRATCH;
-					if (isbegin_quest(5307) == 0) {
-						setquest 5307;
-						completequest 5307;
-					}
+					setquest 5307;
+					completequest 5307;
 					setquest 5312;// Seiden's Problem
 					mes "[Police Officer Seiden]";
 					mes "I don't understand. My friend swore this never failed on people, hm... Oh well, tell Chief Kesler everything's good on my end.";
@@ -4515,10 +4513,8 @@ verus03,81,241,6	script	Police Officer Seiden#EP15_1	4_M_ORIENT02,{
 				next;
 				if (select( "I'll be back.", "Maybe next time." ) == 2) {
 					emotion ET_SCRATCH;
-					if (isbegin_quest(5307) == 0) {
-						setquest 5307;
-						completequest 5307;
-					}
+					setquest 5307;
+					completequest 5307;
 					setquest 5312;// Seiden's Problem
 					mes "[Police Officer Seiden]";
 					mes "I don't understand. My friend swore this never failed on people, hm... Oh well, tell Chief Kesler everything's good on my end.";
@@ -4747,10 +4743,8 @@ verus04,202,258,4	script	Police Officer Piffs#EP15_1	4_M_SAGE_C,{
 				mes "I'm running short on some supplies, but I can't leave my post unattended. Can you help me?";
 				next;
 				if (select("Sure thing.", "Not now.") == 2) {
-					if (isbegin_quest(5308) == 0) {
-						setquest 5308;// Police Officer Piffs
-						completequest 5308;
-					}
+					setquest 5308;// Police Officer Piffs
+					completequest 5308;
 					setquest 5313;// Piffs's Problem
 					mes "[Police Officer Piffs]";
 					mes "I understand. If you change your mind, though, come back to me.";
@@ -4864,10 +4858,9 @@ verus04,187,219,4	script	Thicket#EP15_1D_01	4_CREEPER,{
 			mes "You've decided to forget about it.";
 			close;
 		}
-		if (rand(2)) {
-			progressbar "00ff00",2;
+		progressbar "00ff00",2;
+		if (rand(2))
 			mes "No herbs were found in the thicket.";
-		}
 		else {
 			getitem 6754,1;// Collected_Medicinal_Herbs
 			mes "Gathered the herb.";
@@ -5355,7 +5348,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 			case 1:
 				mes "[Krotzel]";
 				mes "They all have a professional mindset so if they haven't finished working just see if they are safe.";
-				if (isbegin_quest(13198) > 0)
+				if (isbegin_quest(13199) > 0)
 					erasequest 13199;// Krotzel's Request - Complete
 				setquest 13195;// Monthly Brigan
 				setquest 13196;// Monthly Brigan
@@ -6446,7 +6439,7 @@ lhz_in01,275,251,3	script	Luke Lapez#ep152i01	4_M_EDEN_GUARDER,{
 	cutin "",255;
 	npctalk "So much for the damn escort...", "Luke Lapez#ep152i01";
 	sleep 400;
-	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152");
+	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152i");
 	sleep 200;
 	emotion ET_THINK, getnpcid(0, "Luke Lapez#ep152i01");
 	end;
@@ -6542,7 +6535,7 @@ lhz_in01,270,257,4	script	Rekenber Chairman#e152i	4_M_REKENBER,{
 		mes "The time, that accident or whatever you call it.";
 		mes "When I found a seemingly artificial obstacle during the juperos excavation..";
 		mes "Ian suddenly disappeared.";
-		emotion ET_SURPRISE, getnpcid(0, "Commander Arquien#ep152");
+		emotion ET_SURPRISE, getnpcid(0, "Commander Arquien#ep152i");
 		next;
 		cutin "verus_ian01.bmp",2;
 		mes "[Ian Atnad]";

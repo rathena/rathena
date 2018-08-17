@@ -28,6 +28,7 @@
 //= 3.3a Added Izlude RE coordinates. [Euphy]
 //= 3.4 Added GM management function and NPC. [Euphy]
 //= 3.5 Updated turn-in requirements for Tripatriate Union's Feud. [Euphy]
+//= 3.6 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
 // Onward to the New World :: ep13_gogo
@@ -87,7 +88,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 	end;
 }
 
-prt_castle,121,51,3	script	Alliance Manager#prt	752,{
+-	script	Alliance Manager#prt_	-1,{
 	if (ep13_ryu == 13) {
 		mes "[Alliance Manager]";
 		mes "If we'd had the initiative over Schwartzvald, we could take advantage over them! But we lost the opportunity.";
@@ -173,7 +174,7 @@ prt_castle,121,51,3	script	Alliance Manager#prt	752,{
 	close;
 }
 
-prt_castle,117,51,5	script	Member of Alliance#prt	754,{
+-	script	Member of Alliance#prt_	-1,{
 	if ((ep13_ryu == 12) || (ep13_ryu == 13)) {
 		mes "[Member of Alliance]";
 		mes "If we have absolute power, we wouldn't have to get along with Schwartzvald and Arunafeltz.";
@@ -195,7 +196,7 @@ prt_castle,117,51,5	script	Member of Alliance#prt	754,{
 	close;
 }
 
-prt_castle,83,67,5	script	Recruiter for the Brave	109,{
+-	script	Recruiter for the Brave_	-1,{
 	if (ep13_ryu == 12) {
 		mes "[Recruiter]";
 		mes "Why have you come again?";
@@ -10134,7 +10135,7 @@ man_fild03,202,251,3	duplicate(Expedition Scout#1)	Expedition Scout#2	707
 spl_fild02,295,368,3	duplicate(Expedition Scout#1)	Expedition Scout#3	707
 spl_fild03,172,71,3	duplicate(Expedition Scout#1)	Expedition Scout#4	707
 
-prt_castle,88,165,3	script	Laur	57,{
+-	script	Laur_	-1,{
 	mes "[Laur]";
 	if (ep13_1_edq == 9 || ep13_1_edq == 111 || ep13_1_edq == 121 || ep13_1_edq == 113 || ep13_1_edq == 123) {
 		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";

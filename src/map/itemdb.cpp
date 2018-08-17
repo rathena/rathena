@@ -1,25 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "itemdb.hpp"
 
 #include <stdlib.h>
 
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
-#include "intif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "log.hpp"
 #include "mob.hpp"
+#include "pc.hpp"
+#include "status.hpp"
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -633,6 +633,11 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		}
 	}
 
+	if( columns < 3 ){
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
+	}
+
 	// Checking sub group
 	prob = atoi(str[2]);
 
@@ -1115,7 +1120,7 @@ bool itemdb_parse_roulette_db(void)
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
 				continue;
 			}
-			if (amount < 1) {
+			if (amount < 1 || amount > MAX_AMOUNT){
 				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
 				continue;
 			}
@@ -1484,7 +1489,7 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[21] = p + 1;
+			str[21] = p;
 			p = &str[21][strlen(str[21]) - 2];
 
 			if ( *p != '}' ) {
@@ -1494,8 +1499,10 @@ static int itemdb_readdb(void){
 				for( v = 0; v < strlen(str[21]); v++ ) {
 					if( str[21][v] == '{' )
 						lcurly++;
-					else if ( str[21][v] == '}' )
+					else if (str[21][v] == '}') {
 						rcurly++;
+						p = &str[21][v];
+					}
 				}
 
 				if( lcurly != rcurly ) {
@@ -1503,7 +1510,8 @@ static int itemdb_readdb(void){
 					continue;
 				}
 			}
-			*p = '\0';
+			str[21] = str[21] + 1;  //skip the first left curly
+			*p = '\0';              //null the last right curly
 
 			if (!itemdb_parse_dbrow(str, path, lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
@@ -1573,12 +1581,15 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	if ((!map_flag_vs2(m) && id->flag.no_equip&1) || // Normal
-		(map[m].flag.pvp && id->flag.no_equip&2) || // PVP
-		(map_flag_gvg2_no_te(m) && id->flag.no_equip&4) || // GVG
-		(map[m].flag.battleground && id->flag.no_equip&8) || // Battleground
-		(map_flag_gvg2_te(m) && id->flag.no_equip&16) || // WOE:TE
-		(map[m].flag.restricted && id->flag.no_equip&(8*map[m].zone)) // Zone restriction
+	
+	struct map_data *mapdata = map_getmapdata(m);
+
+	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;

@@ -1,21 +1,21 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "achievement.hpp"
 
 #include <array>
+#include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <setjmp.h>
 #include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
 #include "chrif.hpp"
@@ -23,10 +23,10 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "npc.hpp"
 #include "pc.hpp"
 #include "script.hpp"
 #include "status.hpp"
-#include "npc.hpp"
 
 static jmp_buf     av_error_jump;
 static char*       av_error_msg;
