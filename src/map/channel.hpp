@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHANNEL_HPP_
-#define	_CHANNEL_HPP_
+#ifndef CHANNEL_HPP
+#define CHANNEL_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
@@ -128,4 +128,4 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 void do_init_channel(void);
 void do_final_channel(void);
 
-#endif	/* _CHANNEL_HPP_ */
+#endif /* CHANNEL_HPP */

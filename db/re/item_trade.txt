@@ -3848,6 +3848,7 @@
 22873,475,100	// Sealed_Beelzebub_Scroll_II
 22874,475,100	// Sealed_Beelzebub_Card_Album
 22875,475,100	// Sealed_Beelzebub_Card
+23280,499,100	// N_Fly_Wing_
 22881,499,100	// Rope_Gallows
 22883,475,100	// September_Gift_Box
 22884,475,100	// October_Gift_Box

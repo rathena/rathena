@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CONFIG_CORE_HPP_
-#define _CONFIG_CORE_HPP_
+#ifndef CONFIG_CORE_HPP
+#define CONFIG_CORE_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -83,4 +83,4 @@
 
 #include "../custom/defines_post.hpp"
 
-#endif // _CONFIG_CORE_HPP_
+#endif /* CONFIG_CORE_HPP */

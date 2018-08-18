@@ -7104,7 +7104,7 @@ REPLACE INTO `item_db_re` VALUES (12845,'WOB_Amatsu','Amatsu_Butterfly_Wing',2,0
 REPLACE INTO `item_db_re` VALUES (12846,'Unripe_Apple2','Little Unripe Apple',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'pet 2398;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12847,'Old_Equipment_Box','Old Equipment Box',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12848,'Falcon_Flute','Falcon Flute',11,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12849,'Combination_Kit','Combination Kit',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'cooking 30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12849,'Combination_Kit','Combination Kit',2,40,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'cooking 30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12850,'Heaven_Scroll','Heaven Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Heaven_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12851,'Vocation_Scroll','Vocation Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Vocation_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12852,'Wisdom_Scroll','Wisdom Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Wisdom_Scroll);',NULL,NULL);
@@ -11268,6 +11268,8 @@ REPLACE INTO `item_db_re` VALUES (23194,'Sienna_Execrate_Scroll_1_5','Level 5 Si
 REPLACE INTO `item_db_re` VALUES (23196,'Agust_Lucky_Scroll','Shining Blue Lucky Egg',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,'getgroupitem(IG_Agust_Lucky_Scroll);',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (23277,'Mado_Box','Emergency Magic Gear',2,10000,NULL,3000,NULL,NULL,NULL,NULL,0x00000400,56,2,NULL,NULL,'100',NULL,NULL,'setmadogear 1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (23280,'N_Fly_Wing_','Novice Fly Wing',11,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'1:98',NULL,NULL,'itemskill "AL_TELEPORT",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (23288,'Compressed_Wing_Of_Fly','Compressed Fly Wing',11,1000,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "AL_TELEPORT",1;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (23307,'S_Shining_Def_Scroll','[Sale] Shining Defense Scroll',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (23340,'S_Megaphone','[Sale] Megaphone',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MOB_HPP_
-#define _MOB_HPP_
+#ifndef MOB_HPP
+#define MOB_HPP
 
 #include <vector>
 
@@ -368,4 +368,4 @@ void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 
-#endif /* _MOB_HPP_ */
+#endif /* MOB_HPP */

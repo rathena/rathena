@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _STRLIB_HPP_
-#define _STRLIB_HPP_
+#ifndef STRLIB_HPP
+#define STRLIB_HPP
 
 #include <stdarg.h>
 
@@ -159,4 +159,4 @@ void StringBuf_Clear(StringBuf* self);
 void StringBuf_Destroy(StringBuf* self);
 void StringBuf_Free(StringBuf* self);
 
-#endif /* _STRLIB_HPP_ */
+#endif /* STRLIB_HPP */
