@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHRIF_HPP_
-#define _CHRIF_HPP_
+#ifndef CHRIF_HPP
+#define CHRIF_HPP
 
 #include <time.h>
 
@@ -92,4 +92,4 @@ void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 
-#endif /* _CHRIF_HPP_ */
+#endif /* CHRIF_HPP */

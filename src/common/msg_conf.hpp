@@ -39,4 +39,3 @@ const char* msg_langtype2langstr(int langtype);
 int msg_checklangtype(int lang, bool display);
 
 #endif	/* MSG_CONF_HPP */
-

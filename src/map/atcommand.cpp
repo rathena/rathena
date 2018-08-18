@@ -397,8 +397,8 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 	suggestions.reserve( MAX_SUGGESTIONS );
 
 	// check for maps that contain string
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
 
 		// Prevent suggestion of instance mapnames
 		if( mapdata->instance_id != 0 ){
@@ -419,16 +419,18 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 		// Levenshtein > 4 is bad
 		const int LEVENSHTEIN_MAX = 4;
 
-		std::map<int, std::vector<const char*>> maps;
+		std::unordered_map<int, std::vector<const char*>> maps;
 
-		for( auto& pair : map ){
+		for (int i = 0; i < map_num; i++) {
+			struct map_data *mapdata = map_getmapdata(i);
+
 			// Prevent suggestion of instance mapnames
-			if( pair.second.instance_id != 0 ){
+			if(mapdata->instance_id != 0 ){
 				continue;
 			}
 
 			// Calculate the levenshtein distance of the two strings
-			int distance = levenshtein( pair.second.name, name );
+			int distance = levenshtein(mapdata->name, name);
 
 			// Check if it is above the maximum defined distance
 			if( distance > LEVENSHTEIN_MAX ){
@@ -442,7 +444,7 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 				continue;
 			}
 
-			vector.push_back( pair.second.name );
+			vector.push_back(mapdata->name);
 		}
 
 		for( int distance = 0; distance <= LEVENSHTEIN_MAX; distance++ ){
