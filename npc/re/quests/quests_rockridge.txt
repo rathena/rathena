@@ -6186,7 +6186,7 @@ harboro1,280,195,3	script	Lucas Richie#rockn08	4_M_ROGUE,{
 
 harboro1,314,211,4	script	Bakery Owner#dy	4_COOK,3,3,{
 	npctalk "Welcome!", "", bc_self;
-	callshop "bread_rockridge",2;
+	callshop "bread_rockridge",1;
 	end;
 
 OnTouch:
