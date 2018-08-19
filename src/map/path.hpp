@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PATH_HPP_
-#define _PATH_HPP_
+#ifndef PATH_HPP
+#define PATH_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -74,4 +74,4 @@ bool direction_diagonal( enum directions direction );
 void do_init_path();
 void do_final_path();
 
-#endif /* _PATH_HPP_ */
+#endif /* PATH_HPP */

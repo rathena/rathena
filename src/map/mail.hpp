@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAIL_HPP_
-#define _MAIL_HPP_
+#ifndef MAIL_HPP
+#define MAIL_HPP
 
 #include "../common/mmo.hpp"
 
@@ -33,4 +33,4 @@ bool mail_invalid_operation(struct map_session_data *sd);
 void mail_send(struct map_session_data *sd, const char *dest_name, const char *title, const char *body_msg, int body_len);
 void mail_refresh_remaining_amount( struct map_session_data* sd );
 
-#endif /* _MAIL_HPP_ */
+#endif /* MAIL_HPP */

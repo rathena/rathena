@@ -113,7 +113,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map_getmapflag((m), MF_PVP) != 0, map_flag_gvg2_no_te((m)), map_getmapflag((m), MF_BATTLEGROUND) != 0, (map_getmapdata(m)->zone << 3) != 0, map_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 /**
  * Returns the status change associated with a skill.
@@ -784,9 +784,9 @@ void initChangeTables(void)
 	set_sc( SO_VACUUM_EXTREME	, SC_VACUUM_EXTREME	, EFST_VACUUM_EXTREME	, SCB_NONE );
 	set_sc( SO_ARRULLO		, SC_DEEPSLEEP		, EFST_HANDICAPSTATE_DEEP_SLEEP, SCB_NONE );
 	set_sc( SO_FIRE_INSIGNIA	, SC_FIRE_INSIGNIA	, EFST_FIRE_INSIGNIA	, SCB_MATK|SCB_WATK|SCB_ATK_ELE|SCB_REGEN );
-	set_sc( SO_WATER_INSIGNIA	, SC_WATER_INSIGNIA	, EFST_WATER_INSIGNIA	, SCB_WATK|SCB_ATK_ELE|SCB_REGEN );
-	set_sc( SO_WIND_INSIGNIA	, SC_WIND_INSIGNIA	, EFST_WIND_INSIGNIA	, SCB_WATK|SCB_ASPD|SCB_ATK_ELE|SCB_REGEN );
-	set_sc( SO_EARTH_INSIGNIA	, SC_EARTH_INSIGNIA	, EFST_EARTH_INSIGNIA	, SCB_MDEF|SCB_DEF|SCB_MAXHP|SCB_MAXSP|SCB_WATK|SCB_ATK_ELE|SCB_REGEN );
+	set_sc( SO_WATER_INSIGNIA	, SC_WATER_INSIGNIA	, EFST_WATER_INSIGNIA	, SCB_MATK|SCB_WATK|SCB_ATK_ELE|SCB_REGEN );
+	set_sc( SO_WIND_INSIGNIA	, SC_WIND_INSIGNIA	, EFST_WIND_INSIGNIA	, SCB_MATK|SCB_WATK|SCB_ASPD|SCB_ATK_ELE|SCB_REGEN );
+	set_sc( SO_EARTH_INSIGNIA	, SC_EARTH_INSIGNIA	, EFST_EARTH_INSIGNIA	, SCB_MDEF|SCB_DEF|SCB_MAXHP|SCB_MAXSP|SCB_MATK|SCB_WATK|SCB_ATK_ELE|SCB_REGEN );
 
 	/* Genetic */
 	set_sc( GN_CARTBOOST			, SC_GN_CARTBOOST	, EFST_GN_CARTBOOST			, SCB_SPEED );
@@ -6279,9 +6279,11 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 static signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
 {
 	if( bl->type == BL_PC ) {
-		if( map_flag_gvg(bl->m) )
+		struct map_data *mapdata = map_getmapdata(bl->m);
+
+		if( mapdata_flag_gvg(mapdata) )
 			flee -= flee * battle_config.gvg_flee_penalty/100;
-		else if( map_getmapflag(bl->m, MF_BATTLEGROUND) )
+		else if( mapdata->flag[MF_BATTLEGROUND] )
 			flee -= flee * battle_config.bg_flee_penalty/100;
 	}
 
@@ -8442,7 +8444,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( bl->type != BL_NPC && status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
-	if (status_change_isDisabledOnMap(type, bl->m))
+	if (status_change_isDisabledOnMap(type, map_getmapdata(bl->m)))
 		return 0;
 
 	// Uncomment to prevent status adding hp to gvg mob (like bloodylust=hp*3 etc...
@@ -14365,13 +14367,14 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 	nullpo_retv(bl);
 
 	if (sc && sc->count) {
+		struct map_data *mapdata = map_getmapdata(bl->m);
 		unsigned short i;
-		bool mapIsVS = map_flag_vs2(bl->m);
-		bool mapIsPVP = map_getmapflag(bl->m, MF_PVP) != 0;
-		bool mapIsGVG = map_flag_gvg2_no_te(bl->m);
-		bool mapIsBG = map_getmapflag(bl->m, MF_BATTLEGROUND) != 0;
-		bool mapIsTE = map_flag_gvg2_te(bl->m);
-		unsigned int mapZone = map_getmapdata(bl->m)->zone << 3;
+		bool mapIsVS = mapdata_flag_vs2(mapdata);
+		bool mapIsPVP = mapdata->flag[MF_PVP] != 0;
+		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
+		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
+		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
+		unsigned int mapZone = mapdata->zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])

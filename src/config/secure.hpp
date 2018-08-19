@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CONFIG_SECURE_HPP_
-#define _CONFIG_SECURE_HPP_
+#ifndef CONFIG_SECURE_HPP
+#define CONFIG_SECURE_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -22,20 +22,20 @@
 #define SECURE_NPCTIMEOUT
 
 /**
-+ * Number of seconds after an 'input' field is displayed before invoking an idle timeout.
-+ * Default: 180
+ * Number of seconds after an 'input' field is displayed before invoking an idle timeout.
+ * Default: 180
  **/
 #define NPC_SECURE_TIMEOUT_INPUT 180
 
 /**
-+ * Number of seconds after a 'menu' is displayed before invoking an idle timeout.
-+ * Default: 60
+ * Number of seconds after a 'menu' is displayed before invoking an idle timeout.
+ * Default: 60
  **/
 #define NPC_SECURE_TIMEOUT_MENU 60
 
 /**
-+ * Number of seconds after a 'next' button is displayed before invoking an idle timeout.
-+ * Default: 60
+ * Number of seconds after a 'next' button is displayed before invoking an idle timeout.
+ * Default: 60
  **/
 #define NPC_SECURE_TIMEOUT_NEXT 60
 
@@ -47,4 +47,4 @@
  **/
 #define SECURE_NPCTIMEOUT_INTERVAL 1
 
-#endif // _CONFIG_SECURE_HPP_
+#endif /* CONFIG_SECURE_HPP */

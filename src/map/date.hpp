@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _DATE_HPP_
-#define _DATE_HPP_
+#ifndef DATE_HPP
+#define DATE_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -61,4 +61,4 @@ bool is_day_of_sun(void);
 bool is_day_of_moon(void);
 bool is_day_of_star(void);
 
-#endif /* _DATE_HPP_ */
+#endif /* DATE_HPP */
