@@ -4491,11 +4491,11 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		case MF_RESTRICTED:
 			return mapdata->zone;
 		case MF_NOLOOT:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMOBLOOT), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMVPLOOT), 0);
+			return util::umap_get(mapdata->flag, (int16)MF_NOMOBLOOT, 0) && util::umap_get(mapdata->flag, (int16)MF_NOMVPLOOT, 0);
 		case MF_NOPENALTY:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOEXPPENALTY), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOZENYPENALTY), 0);
+			return util::umap_get(mapdata->flag, (int16)MF_NOEXPPENALTY, 0) && util::umap_get(mapdata->flag, (int16)MF_NOZENYPENALTY, 0);
 		case MF_NOEXP:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOBASEEXP), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOJOBEXP), 0);
+			return util::umap_get(mapdata->flag, (int16)MF_NOBASEEXP, 0) && util::umap_get(mapdata->flag, (int16)MF_NOJOBEXP, 0);
 		case MF_SKILL_DAMAGE:
 			nullpo_retr(-1, args);
 
@@ -4508,10 +4508,10 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				case SKILLDMG_CASTER:
 					return mapdata->damage_adjust.caster;
 				default:
-					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+					return util::umap_get(mapdata->flag, (int16)mapflag, 0);
 			}
 		default:
-			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			return util::umap_get(mapdata->flag, (int16)mapflag, 0);
 	}
 }
 
