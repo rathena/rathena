@@ -3873,7 +3873,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 100 * (skill_lv - 1);
 			break;
 		case AB_DUPLELIGHT_MELEE:
-			skillratio += skillratio * 50 / 100;
+			skillratio += 50 + 15 * skill_lv;
 			break;
 		case RA_ARROWSTORM:
 			skillratio += 900 + 80 * skill_lv;
@@ -6000,7 +6000,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AB_DUPLELIGHT_MAGIC:
-						skillratio <<= 1;
+						skillratio += 300 + 40 * skill_lv;
 						break;
 					case WL_SOULEXPANSION:
 						skillratio += -100 + (skill_lv + 4) * 100 + status_get_int(src);
