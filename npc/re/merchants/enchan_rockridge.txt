@@ -101,7 +101,12 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 				mes "This has been enchanted to the maximum limit. Maybe you should reset it.";
 				close;
 			}
-			.@enchant_slot = ( .@card[3] == 0 ? 3 : (.@card[2] == 0 ? 2 : 1) );
+			if (.@card[3] == 0)
+				.@enchant_slot = 3;
+			else if (.@card[2] == 0)
+				.@enchant_slot = 2;
+			else
+				.@enchant_slot = 1;
 			if (.@refine >= 9) {
 				setarray .@enchant_list[0],
 					4701,	// Strength2
@@ -141,8 +146,8 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 					4892,	// Mdef5
 					4893,	// Def15
 					29026,	// Def20
-					4926,	// Critical_Lv1
-					4940,	// Cricital3
+					4926,	// Critical1
+					4940,	// Critical3
 					4860,	// Evasion3
 					4762,	// Evasion6
 					4832,	// Expert_Archer1
@@ -159,27 +164,32 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 				mes "This has been enchanted to the maximum limit. Maybe you should reset it.";
 				close;
 			}
-			.@enchant_slot = (.@card[3] == 0 ? 3 : 2);
+			if (.@card[3] == 0)
+				.@enchant_slot = 3;
+			else
+				.@enchant_slot = 2;
 			setarray .@enchant_list[0],
 				4700,	// Strength1
 				4701,	// Strength2
+				4730,	// Agility1
+				4731,	// Agility2
+				4740,	// Vitality1
+				4741,	// Vitality2
 				4710,	// Inteligence1
 				4711,	// Inteligence2
 				4720,	// Dexterity1
 				4721,	// Dexterity2
-				4730,	// Agility1
-				4731,	// Agility2
-				4926,	// Critical_Lv1
-				4940,	// Cricital3
+				4750,	// Luck1
+				4751,	// Luck2
 				4795,	// HP100
 				4796,	// HP200
 				4800,	// SP50
 				4801,	// SP100
 				4832,	// Expert_Archer1
-				4863,	// Fatal1
 				4815,	// Spell1
-				4869,	// Attack_Delay_1
 				4811,	// Fighting_Spirit1
+				4869,	// Attack_Delay_1
+				4863,	// Fatal1
 				4807;	// Atk_Speed1
 			break;
 		default:
