@@ -3032,6 +3032,14 @@ Returns true if the item in <equipment slot> is tradable.
 Returns false otherwise.
 
 ---------------------------------------
+
+*identifyall({<type>{,<account_id>}});
+
+Returns the count of unidentified items in the player inventory.
+If <type> is true the command will identify all the unidentified items as well (default).
+If <type> is false the command only returns the count of unidentified items.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //

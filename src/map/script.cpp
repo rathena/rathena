@@ -23823,6 +23823,43 @@ BUILDIN_FUNC(open_roulette){
 #endif
 }
 
+/*==========================================
+ * identifyall({<type>{,<account_id>}})
+ * <type>:
+ *	true: identify the items and returns the count of unidentified items (default)
+ *	false: returns the count of unidentified items only
+ *------------------------------------------*/
+BUILDIN_FUNC(identifyall) {
+	TBL_PC *sd;
+	int unidentified_count = 0;
+	bool identify_item = true;
+
+	if (script_hasdata(st, 2))
+		identify_item = script_getnum(st, 2) != 0;
+
+	if( !script_hasdata(st, 3) )
+		script_rid2sd(sd);
+	else
+		sd = map_id2sd( script_getnum(st, 3) );
+
+	if (sd == NULL) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	for (int i = 0; i < MAX_INVENTORY; i++) {
+		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
+			if (identify_item == true) {
+				sd->inventory.u.items_inventory[i].identify = 1;
+				clif_item_identified(sd,i,0);
+			}
+			unidentified_count++;
+		}
+	}
+	script_pushint(st, unidentified_count);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24477,6 +24514,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
 	BUILDIN_DEF(open_roulette,"?"),
+	BUILDIN_DEF(identifyall,"??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
