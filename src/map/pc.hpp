@@ -587,7 +587,7 @@ struct map_session_data {
 	size_t duel_group; // duel vars [LuzZza]
 	size_t duel_invite;
 
-	int killerrid, killedrid;
+	int killerrid, killedrid, killedgid;
 
 	int cashPoints, kafraPoints;
 	int rental_timer;

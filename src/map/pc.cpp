@@ -8116,6 +8116,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_FAME:            val = sd->status.fame; break;
 		case SP_KILLERRID:       val = sd->killerrid; break;
 		case SP_KILLEDRID:       val = sd->killedrid; break;
+		case SP_KILLEDGID:       val = sd->killedgid; break;
 		case SP_SITTING:         val = pc_issit(sd)?1:0; break;
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
@@ -8382,6 +8383,9 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		return true;
 	case SP_KILLEDRID:
 		sd->killedrid = val;
+		return true;
+	case SP_KILLEDGID:
+		sd->killedgid = val;
 		return true;
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
