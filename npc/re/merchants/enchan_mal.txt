@@ -158,8 +158,8 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			// case 13460: callsub L_Socket,?,2;	// Sealed_Magic_Sword
 			// case 13461: callsub L_Socket,?,2;	// Sealed_Evil_Sword
 			// case 13462: callsub L_Socket,?,2;	// Sealed_Maximum_Sword
-			case 13412: callsub L_Socket,1,2;	// Twin_Edge_B
-			case 13413: callsub L_Socket,1,2;	// Twin_Edge_R
+			case 13412: callsub L_Socket,1,3;	// Twin_Edge_B
+			case 13413: callsub L_Socket,1,3;	// Twin_Edge_R
 		}
 		break;
 	case 3:	// 2-H Swords
