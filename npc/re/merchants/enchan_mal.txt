@@ -142,6 +142,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			case 1133: callsub L_Socket,1,2;	// Fire_Brand
 			case 1134: callsub L_Socket,1,2;	// Scissores_Sword
 			case 1135: callsub L_Socket,1,2;	// Cutlas
+			case 13400: callsub L_Socket,1,2;	// Cutlas_
 			case 1136: callsub L_Socket,1,2;	// Solar_Sword
 			case 1138: callsub L_Socket,1,2;	// Mysteltainn_
 			case 1139: callsub L_Socket,1,2;	// Tale_Fing_
@@ -201,6 +202,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			case 1470: callsub L_Socket,1,2;	// Brionac
 			case 1471: callsub L_Socket,1,2;	// Hell_Fire
 			case 1474: callsub L_Socket,1,2;	// Gae_Bolg
+			case 1476: callsub L_Socket,1,2;	// Crescent_Scythe_
 			case 1477: callsub L_Socket,1,2;	// Spectral_Spear
 			case 1478: callsub L_Socket,1,2;	// Ahlspiess
 			case 1479: callsub L_Socket,1,2;	// Spectral_Spear_
@@ -218,11 +220,11 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			case 1654: callsub L_Socket,1,2;	// Mental_Stick
 			case 1636: callsub L_Socket,2,2;	// Thorn_Staff
 			case 1637: callsub L_Socket,2,2;	// Eraser
-			case 1473: callsub L_Socket,1,2;	// Wizardy_Staff
 		}
 		break;
 	case 23:	// New 2-H Staves
 		switch(@mal_equip_id) {
+			case 1473: callsub L_Socket,1,2;	// Wizardy_Staff
 			case 2004: callsub L_Socket,1,2;	// Kronos
 			case 2005: callsub L_Socket,1,2;	// Dea_Staff
 			case 2001: callsub L_Socket,2,2;	// Divine_Cross
