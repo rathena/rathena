@@ -1987,4 +1987,6 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
+int script_identifyall(struct map_session_data *sd, bool identify_item);
+
 #endif /* SCRIPT_HPP */
