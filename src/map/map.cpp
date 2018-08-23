@@ -295,7 +295,7 @@ static void map_addblcell(struct block_list *bl)
 
 	if( bl->m<0 || bl->x<0 || bl->x>=mapdata->xs || bl->y<0 || bl->y>=mapdata->ys || !(bl->type&BL_CHAR) )
 		return;
-	mapdata->cell[bl->x+bl->y*mapdata->cell_bl++;
+	mapdata->cell[bl->x+bl->y*mapdata->xs].cell_bl++;
 	return;
 }
 
@@ -305,7 +305,7 @@ static void map_delblcell(struct block_list *bl)
 
 	if( bl->m <0 || bl->x<0 || bl->x>=mapdata->xs || bl->y<0 || bl->y>=mapdata->ys || !(bl->type&BL_CHAR) )
 		return;
-	mapdata->cell[bl->x+bl->y*mapdata->cell_bl--;
+	mapdata->cell[bl->x+bl->y*mapdata->xs].cell_bl--;
 }
 #endif
 
