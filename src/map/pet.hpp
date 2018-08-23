@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PET_HPP_
-#define _PET_HPP_
+#ifndef PET_HPP
+#define PET_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
@@ -164,4 +164,4 @@ void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
 
-#endif /* _PET_HPP_ */
+#endif /* PET_HPP */

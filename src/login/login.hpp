@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOGIN_HPP_
-#define _LOGIN_HPP_
+#ifndef LOGIN_HPP
+#define LOGIN_HPP
 
 #include <memory>
 
@@ -228,5 +228,4 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
 
-
-#endif /* _LOGIN_HPP_ */
+#endif /* LOGIN_HPP */

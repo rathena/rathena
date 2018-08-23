@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_PARTY_HPP_
-#define _INT_PARTY_HPP_
+#ifndef INT_PARTY_HPP
+#define INT_PARTY_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -26,4 +26,4 @@ int inter_party_charname_changed(int party_id, uint32 char_id, char *name);
 int inter_party_CharOnline(uint32 char_id, int party_id);
 int inter_party_CharOffline(uint32 char_id, int party_id);
 
-#endif /* _INT_PARTY_HPP_ */
+#endif /* INT_PARTY_HPP */

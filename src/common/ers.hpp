@@ -37,8 +37,8 @@
  * @author Flavio @ Amazon Project                                           *
  * @encoding US-ASCII                                                        *
 \*****************************************************************************/
-#ifndef _ERS_HPP_
-#define _ERS_HPP_
+#ifndef ERS_HPP
+#define ERS_HPP
 
 #include "cbasetypes.hpp"
 
@@ -177,4 +177,4 @@ void ers_report(void);
 void ers_final(void);
 #endif /* DISABLE_ERS / not DISABLE_ERS */
 
-#endif /* _ERS_HPP_ */
+#endif /* ERS_HPP */

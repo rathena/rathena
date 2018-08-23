@@ -504,7 +504,7 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 	if(channel_chk(chname, NULL, 1))
 		return NULL;
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = sd ? map_getmapdata(sd->bl.m) : NULL;
 
 	if(sd && strcmpi(chname + 1,channel_config.map_tmpl.name) == 0){
 		if(flag&1 && !mapdata->channel)
