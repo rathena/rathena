@@ -943,8 +943,9 @@ This special label triggers when a player kills another player. The variable
 
 OnNPCKillEvent:
 
-This special label triggers when a player kills a monster without label. The variable
-'killedrid' is set to the Class (mob ID) of the monster killed.
+This special label triggers when a player kills a monster without label.
+The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
+The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
 
 OnPCLoadMapEvent:
 
@@ -6052,8 +6053,9 @@ The only very special thing about this command is an event label, which is an
 optional parameter. This label is written like '<NPC object name>::<label name>'
 and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player
-attached at this execution will be the RID of the killing character. The variable
-'killedrid' is set to the Class (mob ID) of the monster killed.
+attached at this execution will be the RID of the killing character.
+The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
+The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
 
 <size> can be:
 	Size_Small	(0)		(default)
