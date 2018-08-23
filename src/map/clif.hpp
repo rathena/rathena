@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_HPP_
-#define _CLIF_HPP_
+#ifndef CLIF_HPP
+#define CLIF_HPP
 
 #include <vector>
 
@@ -1097,4 +1097,4 @@ void clif_weight_limit( struct map_session_data* sd );
 
 void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
 
-#endif /* _CLIF_HPP_ */
+#endif /* CLIF_HPP */

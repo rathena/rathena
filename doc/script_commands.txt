@@ -943,8 +943,9 @@ This special label triggers when a player kills another player. The variable
 
 OnNPCKillEvent:
 
-This special label triggers when a player kills a monster without label. The variable
-'killedrid' is set to the Class (mob ID) of the monster killed.
+This special label triggers when a player kills a monster without label.
+The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
+The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
 
 OnPCLoadMapEvent:
 
@@ -6078,8 +6079,9 @@ The only very special thing about this command is an event label, which is an
 optional parameter. This label is written like '<NPC object name>::<label name>'
 and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player
-attached at this execution will be the RID of the killing character. The variable
-'killedrid' is set to the Class (mob ID) of the monster killed.
+attached at this execution will be the RID of the killing character.
+The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
+The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
 
 <size> can be:
 	Size_Small	(0)		(default)
@@ -7063,6 +7065,8 @@ The optional parameter 'zone' is used to remove the zone from restricted mapflag
 
 This command checks the status of a given mapflag and returns the mapflag's state.
 0 means OFF, and 1 means ON. See 'setmapflag' for a list of mapflags.
+
+For MF_RESTRICTED, the zone value of the map is returned.
 
 The optional parameter 'type' is used in the 'skill_damage' mapflag:
  SKILLDMG_MAX: if mapflag is set (default)
@@ -8684,6 +8688,12 @@ same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
 
 ---------------------------------------
 
+*checkwall "<name>";
+
+This command will return true if the wall with the given name exists, false otherwise.
+
+---------------------------------------
+
 *readbook <book id>,<page>;
 
 This command will open a book item at the specified page.
@@ -8911,8 +8921,13 @@ No Icon			: QTYPE_NONE
 ? Job Icon		: QTYPE_JOB2
 ! Event Icon	: QTYPE_EVENT
 ? Event Icon	: QTYPE_EVENT2
-Warg			: QTYPE_WARG
-Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
+Warg			: QTYPE_WARG (Only for packetver < 20170315)
+Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410 and < 20170315)
+Click Me		: QTYPE_CLICKME (Only for packetver >= 20170315)
+Daily Quest		: QTYPE_DAILYQUEST (Only for packetver >= 20170315)
+! Event Icon	: QTYPE_EVENT3 (Only for packetver >= 20170315)
+Job Quest		: QTYPE_JOBQUEST (Only for packetver >= 20170315)
+Jumping Poring	: QTYPE_JUMPING_PORING (Only for packetver >= 20170315)
 
 Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:

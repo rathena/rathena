@@ -7723,8 +7723,11 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 #ifdef SECURE_NPCTIMEOUT
 		sd->npc_idle_timer = INVALID_TIMER;
 #endif
-		clif_scriptclose(sd,sd->npc_id);
-		clif_scriptclear(sd,sd->npc_id); // [Ind/Hercules]
+		if (sd->st && sd->st->state == CLOSE) {
+			clif_scriptclose(sd, sd->npc_id);
+			clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
+			sd->st->state = END; // Force to end now
+		}
 		if(sd->st && sd->st->state == END ) {// free attached scripts that are waiting
 			script_free_state(sd->st);
 			sd->st = NULL;
@@ -7973,9 +7976,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if( map_getmapflag( sd->bl.m, MF_PVP_NIGHTMAREDROP ) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
 		for(int j=0;j<MAX_DROP_PER_MAP;j++){
-			int id = map_getmapdata(sd->bl.m)->drop_list[j].drop_id;
-			int per = map_getmapdata(sd->bl.m)->drop_list[j].drop_per;
-			enum e_nightmare_drop_type type = map_getmapdata(sd->bl.m)->drop_list[j].drop_type;
+			struct map_data *mapdata = map_getmapdata(sd->bl.m);
+			int id = mapdata->drop_list[j].drop_id;
+			int per = mapdata->drop_list[j].drop_per;
+			enum e_nightmare_drop_type type = mapdata->drop_list[j].drop_type;
 
 			if(id == 0)
 				continue;
@@ -8112,6 +8116,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_FAME:            val = sd->status.fame; break;
 		case SP_KILLERRID:       val = sd->killerrid; break;
 		case SP_KILLEDRID:       val = sd->killedrid; break;
+		case SP_KILLEDGID:       val = sd->killedgid; break;
 		case SP_SITTING:         val = pc_issit(sd)?1:0; break;
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
@@ -8378,6 +8383,9 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		return true;
 	case SP_KILLEDRID:
 		sd->killedrid = val;
+		return true;
+	case SP_KILLEDGID:
+		sd->killedgid = val;
 		return true;
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
@@ -12489,12 +12497,12 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 	if (!job_info[idx].noenter_map.zone || group_lv > job_info[idx].noenter_map.group_lv)
 		return true;
 
-	if ((!map_flag_vs2(m) && job_info[idx].noenter_map.zone&1) || // Normal
-		(map_getmapflag(m, MF_PVP) && job_info[idx].noenter_map.zone&2) || // PVP
-		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
-		(map_getmapflag(m, MF_BATTLEGROUND) && job_info[idx].noenter_map.zone&8) || // Battleground
-		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
-		(map_getmapflag(m, MF_RESTRICTED) && job_info[idx].noenter_map.zone&(8*mapdata->zone)) // Zone restriction
+	if ((job_info[idx].noenter_map.zone&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(job_info[idx].noenter_map.zone&2 && mapdata->flag[MF_PVP]) || // PVP
+		(job_info[idx].noenter_map.zone&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(job_info[idx].noenter_map.zone&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(job_info[idx].noenter_map.zone&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(job_info[idx].noenter_map.zone&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return false;
 

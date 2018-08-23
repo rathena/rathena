@@ -101,13 +101,12 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if (ud->target_to && ud->chaserange>1) {
 		// Generally speaking, the walk path is already to an adjacent tile
 		// so we only need to shorten the path if the range is greater than 1.
-		uint8 dir;
 		// Trim the last part of the path to account for range,
 		// but always move at least one cell when requested to move.
 		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
 			ud->walkpath.path_len--;
-			dir = ud->walkpath.path[ud->walkpath.path_len];
-			if(dir&1)
+			enum directions dir = ud->walkpath.path[ud->walkpath.path_len];
+			if( direction_diagonal( dir ) )
 				i -= MOVE_COST*20; //When chasing, units will target a diamond-shaped area in range [Playtester]
 			else
 				i -= MOVE_COST;
@@ -126,7 +125,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
-	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
+	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
 		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
@@ -322,7 +321,6 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	int i;
 	int x,y,dx,dy;
 	unsigned char icewall_walk_block;
-	uint8 dir;
 	struct block_list *bl;
 	struct unit_data *ud;
 	TBL_PC *sd=NULL;
@@ -356,17 +354,17 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	if(ud->walkpath.path[ud->walkpath.path_pos]>=8)
+	if(ud->walkpath.path[ud->walkpath.path_pos]>=DIR_MAX)
 		return 1;
 
 	x = bl->x;
 	y = bl->y;
 
-	dir = ud->walkpath.path[ud->walkpath.path_pos];
+	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
 	ud->dir = dir;
 
-	dx = dirx[(int)dir];
-	dy = diry[(int)dir];
+	dx = dirx[dir];
+	dy = diry[dir];
 
 	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
 	if(md && status_has_mode(&md->status,MD_STATUS_IMMUNE))
@@ -495,8 +493,8 @@ static TIMER_FUNC(unit_walktoxy_timer){
 			ud->steptimer = INVALID_TIMER;
 		}
 		//Delay stepactions by half a step (so they are executed at full step)
-		if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-			i = status_get_speed(bl)*14/20;
+		if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
+			i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST/2;
 		else
 			i = status_get_speed(bl)/2;
 		ud->steptimer = add_timer(tick+i, unit_step_timer, bl->id, 0);
@@ -515,8 +513,8 @@ static TIMER_FUNC(unit_walktoxy_timer){
 
 	if(ud->walkpath.path_pos >= ud->walkpath.path_len)
 		i = -1;
-	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-		i = status_get_speed(bl)*14/10;
+	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
+		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
 

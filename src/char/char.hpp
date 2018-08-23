@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_HPP_
-#define _CHAR_HPP_
+#ifndef CHAR_HPP
+#define CHAR_HPP
 
 #include <vector>
 
@@ -330,4 +330,4 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
-#endif /* _CHAR_HPP_ */
+#endif /* CHAR_HPP */
