@@ -10,7 +10,7 @@ rockmi1,0,0	monster	Gaster	3740,18
 rockmi1,0,0	monster	Elite Buffalo Bandit	3747,3
 rockmi1,0,0	monster	Elite Buffalo Bandit	3748,8
 rockmi1,0,0	monster	Elite Buffalo Bandit	3749,6
-rockmi1,0,0	monster	Spider Chariot	3741,1
+rockmi1,0,0	boss_monster	Spider Chariot	3741,1,7200000,600000,1
 
 // Rock Ridge Mine
 rockmi2,100,36,20,20	monster	Purple Ore	3742,31
