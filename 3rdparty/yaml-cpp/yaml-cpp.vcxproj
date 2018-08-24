@@ -22,6 +22,7 @@
     <ProjectGuid>{61D6A599-6BED-4154-A9FC-40553BD972E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>yamlcpp</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
