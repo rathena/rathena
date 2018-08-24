@@ -7142,7 +7142,7 @@ ACMD_FUNC(identifyall)
 {
 	int i;
 	nullpo_retr(-1, sd);
-	script_identifyall(sd, true);
+	pc_identifyall(sd, true);
 	return 0;
 }
 

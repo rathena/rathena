@@ -23823,23 +23823,6 @@ BUILDIN_FUNC(open_roulette){
 #endif
 }
 
-int script_identifyall(struct map_session_data *sd, bool identify_item)
-{
-	int unidentified_count = 0;
-
-	for (int i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
-			if (identify_item == true) {
-				sd->inventory.u.items_inventory[i].identify = 1;
-				clif_item_identified(sd,i,0);
-			}
-			unidentified_count++;
-		}
-	}
-
-	return unidentified_count;
-}
-
 /*==========================================
  * identifyall({<type>{,<account_id>}})
  * <type>:
@@ -23862,7 +23845,7 @@ BUILDIN_FUNC(identifyall) {
 		script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	script_pushint(st, script_identifyall(sd, identify_item));
+	script_pushint(st, pc_identifyall(sd, identify_item));
 
 	return SCRIPT_CMD_SUCCESS;
 }

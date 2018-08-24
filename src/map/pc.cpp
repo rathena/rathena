@@ -4288,6 +4288,29 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	return 0;
 }
 
+/*==========================================
+ *	Returns the count of unidentified items.
+ *  <identify_item>:
+ *	true: identify the items and returns the count of unidentified items (default)
+ *	false: returns the count of unidentified items only
+ *------------------------------------------*/
+int pc_identifyall(struct map_session_data *sd, bool identify_item)
+{
+	int unidentified_count = 0;
+
+	for (int i = 0; i < MAX_INVENTORY; i++) {
+		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
+			if (identify_item == true) {
+				sd->inventory.u.items_inventory[i].identify = 1;
+				clif_item_identified(sd,i,0);
+			}
+			unidentified_count++;
+		}
+	}
+
+	return unidentified_count;
+}
+
 //
 // Items
 //
