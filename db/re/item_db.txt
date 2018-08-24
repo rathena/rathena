@@ -822,9 +822,9 @@
 1474,Gae_Bolg,Gae Bolg,5,20,,2000,160,,3,0,0x00004082,63,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10; },{},{}
 1475,Horseback_Lance,Equestrian's Spear,5,20,,3700,200,,4,0,0x00004082,63,2,34,4,75,1,5,{},{},{}
 1476,Crescent_Scythe_,Crescent Scythe,5,20,,2500,180,,3,1,0x00004082,63,2,34,4,48,1,5,{ bonus bCritical,30; bonus bHit,10; },{},{}
-1477,Spectral_Spear,Spectral Spear,5,20,,2000,170,,3,0,0x00004082,63,2,34,4,75,1,5,{ bonus2 bAddEle,Ele_Dark,20; bonus2 bAddRace,RC_Demon,20; bonus2 bAddRace,RC_Undead,20; bonus2 bSubEle,Ele_Dark,10; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; bonus2 bAddEff2,Eff_Confusion,1000; bonus bHPGainValue,50; },{},{}
+1477,Spectral_Spear,Spectral Spear,5,20,,2000,170,,3,0,0x00004082,63,2,34,4,75,1,5,{ bonus2 bAddEle,Ele_Dark,20; bonus2 bAddRace,RC_Demon,20; bonus2 bAddRace,RC_Undead,20; bonus2 bSubEle,Ele_Dark,10; bonus2 bSubEle,Ele_Undead,10; bonus2 bSubRace,RC_Demon,10; bonus2 bAddEff2,Eff_Confusion,1000; bonus bHPGainValue,50; },{},{}
 1478,Ahlspiess,Ahlspiess,5,20,,1000,120,,3,0,0x00004080,63,2,34,4,65,1,5,{ bonus bIgnoreDefClass,Class_Normal; bonus bIgnoreDefClass,Class_Boss; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddRace,RC_Player,10; bonus3 bAutoSpell,"KN_PIERCE",5,30; },{},{}
-1479,Spectral_Spear_,Spectral Spear,5,20,,2000,170,,3,1,0x00004082,63,2,34,4,75,1,5,{ bonus2 bAddEle,Ele_Dark,20; bonus2 bAddRace,RC_Demon,20; bonus2 bAddRace,RC_Undead,20; bonus2 bSubEle,Ele_Dark,10; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; bonus2 bAddEff2,Eff_Confusion,1000; bonus bHPGainValue,50; },{},{}
+1479,Spectral_Spear_,Spectral Spear,5,20,,2000,170,,3,1,0x00004082,63,2,34,4,75,1,5,{ bonus2 bAddEle,Ele_Dark,20; bonus2 bAddRace,RC_Demon,20; bonus2 bAddRace,RC_Undead,20; bonus2 bSubEle,Ele_Dark,10; bonus2 bSubEle,Ele_Undead,10; bonus2 bSubRace,RC_Demon,10; bonus2 bAddEff2,Eff_Confusion,1000; bonus bHPGainValue,50; },{},{}
 1480,Gae_Bolg_,Gae Bolg,5,20,,2000,160,,3,2,0x00004082,63,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10; },{},{}
 1481,Zephyrus_,Zephyrus,5,20,,2000,170,,3,3,0x00004082,63,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Wind; bonus2 bAddEff,Eff_Silence,200; bonus3 bAutoSpell,"MG_THUNDERSTORM",3,100; },{},{}
 1482,BF_Lance1,Assaulter Lance,5,20,,0,160,,3,0,0x00004082,63,2,34,3,80,1,5,{ bonus bStr,2; bonus2 bAddRace,RC_DemiHuman,25; bonus2 bAddRace,RC_Player,25; bonus bIgnoreDefRace,RC_DemiHuman; bonus bIgnoreDefRace,RC_Player; bonus bUnbreakableWeapon; },{},{}
@@ -8746,6 +8746,7 @@
 15185,Para_Team_Uniform160,Awakened Eden Group Uniform V,4,20,,0,,100,,0,0xFFFFFFFF,63,2,16,,160,,,{ bonus bAllStats,2; bonus bMaxHP,1500; bonus bMaxSP,150; bonus bMdef,15; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; },{},{}
 15186,Kafra_Uniform,Kafra Uniform,4,20,,500,,40,,1,0xFFFFFFFF,63,2,16,,1,1,,{ bonus2 bExpAddClass,Class_All,5; bonus2 bDropAddClass,Class_All,5; .@r = getrefine(); bonus bMaxHP,100*.@r; bonus bMaxSP,20*.@r; bonus bMaxHPrate,(3*(.@r>=7)+5*(.@r>=9)); bonus bMaxSPrate,(3*(.@r>=7)+5*(.@r>=9)); if(.@r>=12){ bonus bHPrecovRate,100; bonus bSPrecovRate,100; } },{},{}
 15189,Einherjar_Armor,Einherjar Armor,4,20,,800,,60,,1,0xFFFFFFFF,63,2,16,,90,1,,{ bonus bMdef,5; bonus bBaseAtk,10; .@r = getrefine(); if(.@r>=7){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } if(.@r>=8){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } if(.@r>=9){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } },{},{}
+15195,Illusion_Puente_Robe,Illusion Puente Robe,4,20,,400,,52,,1,0xFFFFFFFF,63,2,16,,99,1,0,{ bonus bFixedCastrate,3; .@r = getrefine(); bonus bHealPower2,(5+.@r); bonus bAddItemHealRate,(5+.@r); },{},{}
 //===================================================================
 // More Maces
 //===================================================================
@@ -8794,6 +8795,7 @@
 16043,Meteor_Strike,Meteor Strike,5,0,,20000,1,,1,2,0x00000001,63,2,2,4,110,1,8,{ bonus bBaseAtk,10*getskilllv("BS_WEAPONRESEARCH"); bonus bBaseAtk,30*getskilllv("MO_IRONHAND"); .@s = getskilllv("AM_AXEMASTERY"); bonus bBaseAtk,7*.@s; bonus bHit,5*.@s; bonus bBaseAtk,10*getrefine(); if (getskilllv("MC_PUSHCART") > 9) skill "MC_CARTREVOLUTION",1; if (getskilllv("SM_SWORD") > 0) skill "KN_BOWLINGBASH",1; .@str = readparam(bStr); if (.@str > 119) bonus bUseSPrate,-30; else if (.@str > 107) bonus bUseSPrate,-20; },{},{}
 16048,Unity_Mace,Unity Mace,5,20,,400,76,,1,1,0x0004C5B3,63,2,2,3,1,1,8,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
 16051,Valkyrie_Hammer,Valkyrie Hammer,5,0,,100,50,,1,4,0x0004C3B3,63,2,2,1,70,1,8,{ if ((eaclass()&EAJ_BASEMASK) == EAJ_NOVICE) { bonus bUseSPrate,-5; .@r = getrefine(); bonus bVit,.@r; bonus bMaxHP,200; bonus bFlee2,1; bonus bAspdRate,1; bonus bVariableCast,.@r/2; } else if ((eaclass()&EAJ_BASEMASK) == EAJ_SWORDMAN) { bonus bVit,getrefine(); bonus bMaxHP,500; bonus bMaxSP,100; } else if ((eaclass()&EAJL_2) == EAJ_PRIEST) { bonus bBaseAtk,50; bonus bMatk,100; bonus bAspdRate,getrefine(); } else if ((eaclass()&EAJL_2) == EAJ_MONK) { bonus bMaxSP,200; bonus bUseSPrate,-5; bonus bFlee2,getrefine(); } else if ((eaclass()&EAJ_BASEMASK) == EAJ_MERCHANT) { bonus bBaseAtk,100; bonus bHit,10; bonus bVariableCast,getrefine()/2; } },{},{}
+16063,Illusion_Long_Mace,Illusion Long Mace,5,20,,800,185,,1,2,0x00008110,63,2,2,4,99,1,8,{ bonus bLongAtkDef,(10+3*(getrefine()/2)); },{},{}
 //===================================================================
 // More Rental Boxes
 //===================================================================
@@ -9995,6 +9997,9 @@
 19180,Anubis_Helm_,Anubis Helm,4,20,,0,,8,,1,0xFFFFFFFF,63,2,768,,65,0,485,{ bonus bMdef,5; bonus2 bSubClass,Class_Boss,10; bonus bHealpower2,10; bonus bAddItemHealRate,10; },{},{}
 19181,New_Wave_Sunglasses_,New Wave Sunglasses,4,20,,100,,1,,1,0xFFFFFFFF,63,2,512,,30,0,856,{ bonus bDelayRate,-5; },{},{}
 //
+19209,Illusion_Nurse_Cap,Illusion Nurse Cap,4,20,,200,,1,,1,0x00008110,63,2,256,,99,1,64,{ .@r = getrefine(); bonus bInt,(1+(.@r/2)); bonus bHealPower,(3*(.@r/2)); },{},{}
+19210,Illusion_Apple_of_Archer,Illusion Apple of Archer,4,20,,200,,1,,1,0xFFFFFFFE,63,2,256,,99,1,72,{ bonus bDex,(3+(getrefine()/2)); },{},{}
+//
 19246,Royal_Guard_Necklace,Royal Guard Necklace,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,80,0,1629,{ bonus bAspd,1; },{},{}
 19306,Gambler_Card,Heart Card in Mouth,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,80,0,1679,{ bonus bCritAtkRate,5; },{},{}
 //===================================================================
@@ -10896,6 +10901,7 @@
 20825,Para_Team_Manteau160,Awakened Eden Group Manteau III,4,0,,0,,30,,0,0xFFFFFFFF,63,2,4,,160,1,0,{ bonus2 bSubEle,Ele_All,10; bonus bFlee,12; bonus bMaxHP,1000; bonus bFlee2,2; .@r = getrefine(); if(.@r >= 7){ bonus2 bSubEle,Ele_Neutral,5; if(.@r >= 9){ skill "BS_GREED",1; } } },{},{}
 20826,Angel_Feather,Angel Feather,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,18,{},{},{}
 20830,Wings_of_Seraph,Wings of Seraph,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,8,{},{},{}
+20838,Illusion_Muffler,Illusion Muffler,4,20,,400,,8,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(100+(100*.@r)); bonus bMaxSP,(10+(5*.@r)); },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -10985,6 +10991,7 @@
 22124,Para_Team_Boots130,Awakened Eden Group Boots III,4,0,,0,,27,,0,0xFFFFFFFF,63,2,64,,130,1,,{ bonus bAllStats,2; bonus bHPrecovRate,36; bonus bSPrecovRate,18; },{},{}
 22125,Para_Team_Boots145,Awakened Eden Group Boots IV,4,0,,0,,30,,0,0xFFFFFFFF,63,2,64,,145,1,,{ bonus bAllStats,2; bonus bHPrecovRate,40; bonus bSPrecovRate,20; },{},{}
 22126,Para_Team_Boots160,Awakened Eden Group Boots V,4,0,,0,,30,,0,0xFFFFFFFF,63,2,64,,160,1,,{ bonus bAllStats,2; bonus bHPrecovRate,40; bonus bSPrecovRate,20; bonus bUseSPrate,-5; },{},{}
+22133,Illusion_Shoes,Illusion Shoes,4,20,,400,,10,,1,0xFFFFFFFE,63,2,64,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(100+(100*.@r)); bonus bMaxSP,(10+(5*.@r)); },{},{}
 //===================================================================
 // New Usable items
 //===================================================================
@@ -11234,6 +11241,8 @@
 23193,Crimson_Rock_Scroll_1_5,Level 5 Crimson Rock,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_CRIMSONROCK",5; },{},{}
 23194,Sienna_Execrate_Scroll_1_5,Level 5 Sienna Execrate,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_SIENNAEXECRATE",5,true; },{},{}
 23196,Agust_Lucky_Scroll,Shining Blue Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Agust_Lucky_Scroll); },{},{}
+//
+23228,Hazy_Mooncake,Hazy Mooncake,0,768,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* unknown */ },{},{}
 //
 23277,Mado_Box,Emergency Magic Gear,2,10000,,3000,,,,,0x00000400,56,2,,,100,,,{ setmadogear 1; },{},{}
 23280,N_Fly_Wing_,Novice Fly Wing,11,10,,0,,,,,0xFFFFFFFF,63,2,,,1:98,,,{ itemskill "AL_TELEPORT",1; },{},{}
@@ -11525,13 +11534,23 @@
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 25238,New_Normal_Lubricant,New Normal Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25239,New_Advanced_Lubricant,New Advanced Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
+25256,Hazy_Dream_Fragment,Hazy Dream Fragment,3,0,,10,,,,,,,,,,,,,{},{},{}
+25257,Bloody_Love_Letter,Bloody Love Letter,3,780,,10,,,,,,,,,,,,,{},{},{}
+25258,Broken_Arrow,Broken Arrow,3,550,,10,,,,,,,,,,,,,{},{},{}
+25271,Illusion_Stone,Illusion Stone,3,10,,0,,,,,,,,,,,,,{},{},{}
+25272,Illusion_Gemstone,Illusion Gemstone,3,0,,10,,,,,,,,,,,,,{},{},{}
 //
 25464,World_Moving_Rights,World Moving Rights,3,20,,0,,,,,,,,,,,,,{},{},{}
+//===================================================================
+// New Spears
+//===================================================================
+26007,Illusion_Spectral_Spear,Illusion Spectral Spear,5,20,,2000,240,,3,1,0x00004082,63,2,34,4,99,1,5,{ .@r = getrefine(); .@val = 3*(.@r/2); bonus2 bAddEle,Ele_Dark,(20+.@val); bonus2 bAddRace,RC_Demon,(20+.@val); bonus2 bAddRace,RC_Undead,(20+.@val); bonus2 bSubRace,RC_Demon,(10+.@val); bonus2 bSubEle,Ele_Undead,(10+.@val); bonus2 bSubEle,Ele_Dark,(10+.@val); bonus bHPGainValue,50; bonus bSPGainValue,(.@r/2); bonus2 bAddEff2,Eff_Confusion,1000; },{},{}
 //===================================================================
 // New Staves
 //===================================================================
 26100,Paradise_Foxtail_Staff_II,Eden Group Foxtail Staff II,5,20,,0,135:165,,1,0,0x80000000,7,2,2,2,40,0,10,{ bonus bDex,4; bonus bInt,4; bonus bLongAtkRate,6; },{},{}
 26101,Paradise_Foxtail_Staff_III,Eden Group Foxtail Staff III,5,20,,0,150:195,,1,0,0x80000000,7,2,2,3,60,0,10,{ bonus bDex,5; bonus bInt,5; bonus bLongAtkRate,7; },{},{}
+26109,Illusion_Staff_of_Bordeaux,Illusion Staff of Bordeaux,5,20,,500,60:180,,1,2,0x00010200,62,2,2,4,99,1,10,{ bonus bInt,3; bonus bDex,2; .@val = getrefine()/3; if (getskilllv("SA_DRAGONOLOGY") == 5) { bonus bMatkRate,(5+.@val); bonus bUseSPrate,(-15-(5*.@val)); } },{},{}
 26110,CandyCaneRod,Candy Cane Rod,5,20,,500,10:140,,1,2,0x00818315,63,2,2,4,99,1,10,{ bonus bInt,2; bonus bFlee,2*getrefine(); if(getrefine()>= 10) { bonus bFlee2,10; } },{},{}
 //===================================================================
 // More Cards
@@ -11551,6 +11570,14 @@
 27028,Fire_Frilldora_Card,Fire Frilldora Card,6,20,,10,,,,,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); bonus2 bMagicAddEle,Ele_Earth,3+((.@r>=7)*5)+((.@r>=9)*7); },{},{}
 27029,Fire_Golem_Card,Fire Golem Card,6,20,,10,,,,,0xFFFFFFFF,63,2,32,,,,,{ bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5; },{},{}
 27030,Fulbuk_Card,Fulbuk Card,6,20,,10,,,,,0xFFFFFFFF,63,2,769,,,,,{ bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC; },{},{}
+27081,Angry_Moonlight_Flower_Card,Angry Moonlight Flower Card,6,20,,10,,,,,,,,16,,,,,{ skill "PA_PRESSURE",4; },{},{}
+27082,Angry_Nine_Tail_Card,Angry Nine Tail Card,6,20,,10,,,,,,,,16,,,,,{ .@val = 5; bonus bCritAtkRate,10; if (getrefine() >= 10) { .@val += 10; } bonus bCritical,.@val; },{},{}
+27083,Resentful_Bongun_Card,Resentful Bongun Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,20; bonus bMatk,20; },{},{}
+27084,Resentful_Sohee_Card,Resentful Sohee Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMatk,10; if (getrefine() >= 10) { bonus bMatkRate,2; } },{},{}
+27085,Resentful_Munak_Card,Resentful Munak Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus bMatk,15; },{},{}
+27086,Resentful_Soldier_Card,Resentful Soldier Card,6,20,,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(EQI_COMPOUND_ON),11) == W_BOW) { bonus3 bAutoSpell,"TF_DOUBLE",5,30; if (getrefine() >= 10) { bonus2 bWeaponDamageRate,W_BOW,20; } } },{},{}
+27087,Truthful_Wizard_Card,Truthful Wizard Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatk,25; autobonus "{ bonus bNoCastCancel; }",5,5000,BF_MAGIC,"{ showscript \"This is the truth!\"; }"; },{},{}
+27088,Fury_Hero_Card,Fury Hero Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bAddClass,Class_All,2; bonus5 bAutoSpell,"SM_ENDURE",1,5,BF_SHORT,0; },{},{}
 27120,Iara_Card,Iara Card,6,20,,10,,,,,,,,136,,,,,{ skill "PR_STRECOVERY",1; },{},{}
 27121,Piranha_Card,Piranha Card,6,20,,10,,,,,,,,64,,,,,{ .@val = 10; if (getrefine() >= 9) { .@val += 5; } bonus2 bAddRace,RC_Fish,.@val; bonus2 bMagicAddRace,RC_Fish,.@val; },{},{}
 27122,Curupira_Card,Curupira Card,6,20,,10,,,,,,,,2,,,,,{ .@val = 3; .@r = getrefine(); if (.@r>=7) { .@val += 5; } if (.@r>=9) { .@val += 7; } bonus2 bMagicAddEle,Ele_Water,.@val; },{},{}
@@ -11729,6 +11756,7 @@
 28703,Infinity_Dagger,Infinity Dagger,5,10,,500,125:100,,1,1,0x028F5EEF,56,2,2,4,100,1,1,{},{},{}
 28705,Crimson_Dagger,Crimson Dagger,5,20,,550,55,,1,2,0x028F5EEF,63,2,2,3,70,1,1,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225); },{},{}
 28706,Dagger_of_Vicious_Mind,Dagger of Vicious Mind,5,20,,1050,105:50,,1,1,0x028F5EEF,63,2,2,4,160,1,1,{ bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2; },{},{}
+28725,Illusion_Moonlight_Dagger,Illusion Moonlight Dagger,5,20,,700,150,,1,1,0x028F5EEE,63,2,2,4,99,1,1,{ bonus bMaxSPrate,10; .@val = 3; if (getrefine() >= 10) { .@val += 4; } bonus bSPDrainValue,.@val; },{},{}
 //===================================================================
 // More shields
 //===================================================================
