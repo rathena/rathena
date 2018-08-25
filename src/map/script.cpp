@@ -11062,31 +11062,15 @@ BUILDIN_FUNC(getareausers)
 }
 
 /*==========================================
- * getunits(<type>{,<array_variable>})
- * getmapunits(<type>,<"map name">{,<array_variable>})
- * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>})
- *
- * type :
- *	UNITTYPE_PC
- *	UNITTYPE_NPC
- *	UNITTYPE_MOB
- *	UNITTYPE_PET
- *	UNITTYPE_HOM
- *	UNITTYPE_MER
- *	UNITTYPE_ELEM
- *
- * if array_variable is set
- *	int array_variable will return GID List
- *	string array_variable will return names List
- *
- *	return the count of the type given
+ * getunits(<type>{,<array_variable>[<first value>]})
+ * getmapunits(<type>,<"map name">{,<array_variable>[<first value>]})
+ * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>[<first value>]})
  *------------------------------------------*/
 BUILDIN_FUNC(getunits)
 {
 	struct block_list *bl = NULL;
-	struct s_mapiterator *iter = NULL;
 	struct map_session_data *sd = NULL;
-	struct script_data* data = NULL;
+	struct script_data *data = NULL;
 	char *command = (char *)script_getfuncname(st);
 	const char *str;
 	const char *name;
@@ -11094,26 +11078,12 @@ BUILDIN_FUNC(getunits)
 	int size = 0;
 	int32 idx, id;
 	int16 m = 0, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
-
-	switch (type)
-	{
-		case UNITTYPE_PC: iter = mapit_geteachpc(); break;
-		case UNITTYPE_NPC: iter = mapit_geteachnpc(); break;
-		case UNITTYPE_PET: iter = mapit_geteachpet(); break;
-		case UNITTYPE_MOB: iter = mapit_geteachmob(); break;
-		case UNITTYPE_HOM: iter = mapit_geteachhom(); break;
-		case UNITTYPE_MER: iter = mapit_geteachmer(); break;
-		case UNITTYPE_ELEM: iter = mapit_geteachelem(); break;
-		default:
-			ShowWarning("buildin_%s: Unknown type '%i'.\n", command, type);
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-	}
+	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 
 	if (!strcmp(command, "getmapunits"))
 	{
 		str = script_getstr(st, 3);
-		if ((m = map_mapname2mapid(str))< 0) {
+		if ((m = map_mapname2mapid(str)) < 0) {
 			script_pushint(st, -1);
 			st->state = END;
 			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
@@ -11125,7 +11095,7 @@ BUILDIN_FUNC(getunits)
 	else if (!strcmp(command, "getareaunits"))
 	{
 		str = script_getstr(st, 3);
-		if ((m = map_mapname2mapid(str))< 0) {
+		if ((m = map_mapname2mapid(str)) < 0) {
 			script_pushint(st, -1);
 			st->state = END;
 			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
@@ -11160,12 +11130,14 @@ BUILDIN_FUNC(getunits)
 	}
 
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
+	{
 		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y <= y0) && (bl->x <= x1 && bl->y >= y1)))
 		{
 			if (data)
 				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
 			size++;
 		}
+	}
 
 	mapit_free(iter);
 
