@@ -2089,6 +2089,14 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SCRESIST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCMHPRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCMSPRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCALLSTATUS, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCDEFRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCATKRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCHIT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCFLEE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_HEAT_BARREL, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_E_CHAIN, INVALID_TIMER);
