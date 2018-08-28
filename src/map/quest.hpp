@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _QUEST_HPP_
-#define _QUEST_HPP_
+#ifndef QUEST_HPP
+#define QUEST_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/strlib.hpp"
 
 #include "map.hpp"
 
@@ -63,4 +63,4 @@ void do_init_quest(void);
 void do_final_quest(void);
 void do_reload_quest(void);
 
-#endif
+#endif /* QUEST_HPP */

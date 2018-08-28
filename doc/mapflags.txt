@@ -196,6 +196,8 @@ Disables usage of monster-spawning items on a map:
  - Poring Box (ID 12109)
  - Red Pouch (ID 12024)
 
+Items listed above can be modified under db/(pre-)re/item_flag.txt
+
 Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
 also prevent mobs from being warped onto the map (except slave mobs).
 
@@ -207,7 +209,7 @@ Disables skill WZ_ICEWALL on a map.
 
 ---------------------------------------
 
-*nosumstarmiracle
+*nosunmoonstarmiracle
 
 Disables Star Gladiator's "Solar, Lunar, and Stellar Miracle" from occurring on a map.
 
@@ -295,7 +297,7 @@ Notes:
 
 ---------------------------------------
 
-*skill_damage	{<skill_name>,<caster>,<damage1>,{<damage2>,{<damage3>,{<damage4>}}}}
+*skill_damage	{<skill_name>,<caster>,<SKILLDMG_PC>,{<SKILLDMG_MOB>,{<SKILLDMG_BOSS>,{<SKILLDMG_OTHER>}}}}
 
 Enables skill damage adjustment on a map. All adjustments in 'db/skill_damage_db.txt'
 for 'Map' type 16 will be applied.
@@ -305,21 +307,17 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 	Name of the skill in 'db/(pre-)re/skill_db.txt' (ex. SM_BASH).
 	To adjust all skill damage, write "all" (without quotes).
  - caster: the groups for which the adjustment takes effect. (bitmask)
-	 1 = Player
-	 2 = Monster
-	 4 = Pet
-	 8 = Homunculus
-	16 = Mercenary
-	32 = Elemental
+	BL_PC = Player
+	BL_MOB = Monster
+	BL_PET = Pet
+	BL_HOM = Homunculus
+	BL_MER = Mercenary
+	BL_ELEM = Elemental
  - damage: percent adjustment rate (between -100 and 100000).
-	1 = against player
-	2 = against normal monster
-	3 = against boss monster
-	4 = against other (homunculus, mercenary, pet, elemental)
-
-Notes:
- - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.h' for this mapflag to take effect.
- - Each map can contain up to 5 adjustments (MAX_MAP_SKILL_MODIFIER in 'src/map/map.h').
+	SKILLDMG_PC = against player
+	SKILLDMG_MOB = against normal monster
+	SKILLDMG_BOSS = against boss monster
+	SKILLDMG_OTHER = against other (homunculus, mercenary, pet, elemental)
 
 ---------------------------------------
 
@@ -366,7 +364,8 @@ Allows usage of item Neuralizer (ID 12213).
 *bexp	<rate>
 *jexp	<rate>
 
-Changes the base and job experience rates on a map.
+Changes the base and job experience rates on a map. Supports negative values to reduce EXP
+rates as well.
 <rate> is given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
 'base_exp_rate' and 'job_exp_rate' in '/conf/battle/exp.conf'.
 

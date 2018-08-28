@@ -1,0 +1,132 @@
+//===== rAthena Script =======================================
+//= un_myst warps
+//===== Description: =========================================
+//= Warp Points for episodes 15.1 & 15.2
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// A
+un_myst,124,189,0	script	#un_myst_entrance	WARPNPC,1,1,{
+	end;
+OnTouch:
+	warp "un_myst",171,197;
+	@weird_piece = 1;
+	end;
+}
+un_myst,171,183,0	warp2	#un_myst_A_1	1,1,un_myst,259,200
+
+un_myst,258,208,0	script	#un_myst_A_2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",329,205;
+	else if (.@r < 5)
+		warp "un_myst",291,203;
+	else
+		warp "un_myst",259,200;
+	end;
+}
+un_myst,295,208,0	script	#un_myst_A_3	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",329,205;
+	else if (.@r < 5)
+		warp "un_myst",291,203;
+	else
+		warp "un_myst",259,200;
+	end;
+}
+
+// B
+un_myst,393,139,0	script	#un_myst_B_1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",176,137;
+	else if (.@r < 5)
+		warp "un_myst",138,138;
+	else
+		warp "un_myst",86,136;
+	end;
+}
+un_myst,104,136,0	script	#un_myst_B_2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",176,137;
+	else if (.@r < 5)
+		warp "un_myst",138,138;
+	else
+		warp "un_myst",86,136;
+	end;
+}
+un_myst,138,140,0	script	#un_myst_B_3	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",176,137;
+	else if (.@r < 5)
+		warp "un_myst",138,138;
+	else
+		warp "un_myst",86,136;
+	end;
+}
+
+// C
+un_myst,75,91,0	script	#un_myst_C_1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",217,84;
+	else if (.@r < 5)
+		warp "un_myst",160,89;
+	else
+		warp "un_myst",107,88;
+	end;
+}
+un_myst,169,89,0	script	#un_myst_C_2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",217,84;
+	else if (.@r < 5)
+		warp "un_myst",160,89;
+	else
+		warp "un_myst",107,88;
+	end;
+}
+un_myst,121,82,0	script	#un_myst_C_3	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",217,84;
+	else if (.@r < 5)
+		warp "un_myst",160,89;
+	else
+		warp "un_myst",107,88;
+	end;
+}
+un_myst,219,88,0	script	#un_myst_C_4	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(9);
+	if (.@r == 0)
+		warp "un_myst",217,84;
+	else if (.@r < 5)
+		warp "un_myst",160,89;
+	else
+		warp "un_myst",107,88;
+	end;
+}
+
+un_myst,108,38,0	warp2	#un_myst_tamarin	1,1,un_myst,209,33

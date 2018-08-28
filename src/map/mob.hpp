@@ -1,20 +1,18 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MOB_HPP_
-#define _MOB_HPP_
+#ifndef MOB_HPP
+#define MOB_HPP
 
-#include "../common/mmo.h" // struct item
+#include <vector>
+
+#include "../common/mmo.hpp" // struct item
+#include "../common/timer.hpp"
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
 struct guardian_data;
-
-// Change this to increase the table size in your mob_db to accomodate a larger mob database.
-// Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
-// Notice that the last 1000 entries are used for player clones, so always set this to desired value +1000
-#define MAX_MOB_DB 5000
 
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
@@ -37,10 +35,6 @@ struct guardian_data;
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
 
-// These define the range of available IDs for clones. [Valaris]
-#define MOB_CLONE_START (MAX_MOB_DB-999)
-#define MOB_CLONE_END MAX_MOB_DB
-
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
 #define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
 
@@ -51,6 +45,11 @@ struct guardian_data;
 enum MOBID {
 	MOBID_PORING			= 1002,
 	MOBID_RED_PLANT			= 1078,
+	MOBID_BLUE_PLANT,
+	MOBID_GREEN_PLANT,
+	MOBID_YELLOW_PLANT,
+	MOBID_WHITE_PLANT,
+	MOBID_SHINING_PLANT,
 	MOBID_BLACK_MUSHROOM	= 1084,
 	MOBID_MARINE_SPHERE		= 1142,
 	MOBID_EMPERIUM			= 1288,
@@ -162,7 +161,6 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
-	struct spawn_info spawn[10];
 };
 
 struct mob_data {
@@ -290,9 +288,8 @@ struct item_drop_list {
 };
 
 struct mob_db *mob_db(int mob_id);
-struct mob_db *mobdb_exists(uint16 mob_id);
-int mobdb_searchname(const char *str);
-int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
+uint16 mobdb_searchname(const char * const str);
+int mobdb_searchname_array(const char *str, uint16 * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
@@ -318,7 +315,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md, unsigned int tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mob_delayspawn);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage);
@@ -335,7 +332,7 @@ void mob_clear_spawninfo();
 void do_init_mob(void);
 void do_final_mob(bool is_reload);
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);
@@ -355,11 +352,15 @@ int mob_is_clone(int mob_id);
 int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration);
 int mob_clone_delete(struct mob_data *md);
 
+void mob_reload_itemmob_data(void);
 void mob_reload(void);
+void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
+const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
+bool mob_has_spawn(uint16 mob_id);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
-int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
@@ -367,4 +368,4 @@ void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 
-#endif /* _MOB_HPP_ */
+#endif /* MOB_HPP */

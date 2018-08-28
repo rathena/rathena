@@ -1,10 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UNIT_HPP_
-#define _UNIT_HPP_
+#ifndef UNIT_HPP
+#define UNIT_HPP
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
 
 #include "path.hpp" // struct walkpath_data
 #include "skill.hpp" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
@@ -109,8 +110,8 @@ int unit_walktobl(struct block_list *bl, struct block_list *target, int range, u
 void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_session_data *sd, enum sc_type type);
 bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type type);
 int unit_calc_pos(struct block_list *bl, int tx, int ty);
-int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data);
-int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(unit_delay_walktoxy_timer);
+TIMER_FUNC(unit_delay_walktobl_timer);
 
 // Causes the target object to stop moving.
 int unit_stop_walking(struct block_list *bl,int type);
@@ -133,6 +134,7 @@ bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
 bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
 
 // Unit attack functions
+int unit_stopattack(struct block_list *bl, va_list ap);
 void unit_stop_attack(struct block_list *bl);
 int unit_attack(struct block_list *src,int target_id,int continuous);
 int unit_cancel_combo(struct block_list *bl);
@@ -144,7 +146,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel);
 
 // Step timer used for delayed attack and skill use
-int unit_step_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(unit_step_timer);
 void unit_stop_stepaction(struct block_list *bl);
 
 // Cancel unit cast
@@ -169,5 +171,4 @@ int unit_changetarget(struct block_list *bl,va_list ap);
 void do_init_unit(void);
 void do_final_unit(void);
 
-
-#endif /* _UNIT_HPP_ */
+#endif /* UNIT_HPP */

@@ -1,22 +1,18 @@
 
-COMMON_H = $(shell ls ../common/*.h)
+COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_AR = ../common/obj/common.a
 COMMON_INCLUDE = -I../common/
-
-MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
-MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
-MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
 LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
 COMMON_OBJ = ../common/obj/sql.o
-COMMON_H = ../common/sql.h
+COMMON_H = ../common/sql.hpp
 
-CHAR_OBJ = $(shell ls *.c | sed -e "s/\.c/\.o/g") $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+CHAR_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 CHAR_DIR_OBJ = $(CHAR_OBJ:%=obj/%)
-CHAR_H = $(shell ls ../char/*.h)
+CHAR_H = $(shell ls ../char/*.hpp)
 
 YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
 YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)
@@ -57,7 +53,7 @@ help:
 
 char-server: obj $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(YAML_CPP_AR)
 	@echo "	LD	@OCHR@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) $(YAML_CPP_AR) @LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(LIBCONFIG_OBJ) $(YAML_CPP_AR) @LIBS@ @MYSQL_LIBS@
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
@@ -66,21 +62,14 @@ needs_mysql:
 obj:
 	@echo "	MKDIR	obj"
 	@-mkdir obj
-
-obj/%.o: %.c $(CHAR_H) $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
-	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
-obj/%.o: %.cpp $(CHAR_H) $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+obj/%.o: %.cpp $(CHAR_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
 	@$(MAKE) -C ../common server
-
-$(MT19937AR_OBJ):
-	@$(MAKE) -C ../../3rdparty/mt19937ar
 
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig

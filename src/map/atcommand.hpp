@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ATCOMMAND_HPP_
-#define _ATCOMMAND_HPP_
+#ifndef ATCOMMAND_HPP
+#define ATCOMMAND_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 struct map_session_data;
 
@@ -44,4 +44,5 @@ struct atcmd_binding_data {
 };
 extern struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
-#endif /* _ATCOMMAND_HPP_ */
+
+#endif /* ATCOMMAND_HPP */

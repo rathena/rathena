@@ -841,7 +841,7 @@ kh_school,57,139,0	script	Student#khb	893,{
 	mes "know, rumors and ghost";
 	mes "stories that make no sense?";
 	mes "C'mon, Laci, knock it off!";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	close;
 }
 
@@ -1012,7 +1012,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 					mes "Come back, you";
 					mes "d-don't...! I really";
 					mes "need some help!";
-					emotion e_sob;
+					emotion ET_CRY;
 					close2;
 					cutin "",255;
 					end;
@@ -1120,7 +1120,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 			//KHPubMasterEnd no longer needed-- deleting.
 			set KHPubMasterEnd,0;
 			set KHToastGirlEnd,0;
-			emotion e_ho;
+			emotion ET_DELIGHT;
 		}
 	}
 	else if (KielHyreQuest == 8) {

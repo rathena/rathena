@@ -55,19 +55,21 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 		close;
 	}
 
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	.@price = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 
-	// Make sure you have the neccessary items and Zeny to refine your items
+	// Make sure you have the necessary items and Zeny to refine your items
 	// Determines chance of failure and verifies that you want to continue.
-	callsub S_RefineValidate,getequipweaponlv(.@part),.@material,.@price,.@part;
+	callsub S_RefineValidate,getequipweaponlv(.@part),.@material,.@price,.@part,.@refineitemid,.@refinerycnt;
 
 	mes "[Suhnbi]";
 	mes "Clang! Clang! Clang!";
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Suhnbi]";
 		mes "There you go! It's done.";
 		mes "It's been a while since I've made such a fine "+((getequipweaponlv(.@part))?"weapon":"armor")+". You must be happy because it has become stronger!";
@@ -75,7 +77,7 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 	}
 	failedrefitem .@part;
 	next;
-	emotion (!rand(5))?e_cash:e_omg;
+	emotion (!rand(5))?ET_MONEY:ET_HUK;
 	mes "[Suhnbi]";
 	mes "Uuuuuuuuuummmmmph!!!";
 	next;
@@ -89,7 +91,9 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 S_RefineValidate:
 	.@weapon_lvl = getarg(0);
 	.@item_req = getarg(1);
-	set .@price, getarg(2);
+	.@price = getarg(2);
+	.@part = getarg(3);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
 	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
@@ -109,7 +113,7 @@ S_RefineValidate:
 	mes "Would you like to continue?";
 	next;
 	if(select("Yes:No") == 1) {
-		if (getequippercentrefinery(getarg(3)) < 100) {
+		if (getequippercentrefinery(.@part) < 100) {
 			if (.@weapon_lvl) {
 				mes "[Suhnbi]";
 				mes "Wow!!";
@@ -152,6 +156,18 @@ S_RefineValidate:
 		if (countitem(.@item_req) > 0 && Zeny > .@price) {
 			delitem .@item_req,1;
 			set Zeny, Zeny - .@price;
+
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@part, getarg(4)) ||
+				callfunc("F_IsEquipRefineHack", .@part, getarg(5)) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
+				mes "[Holink]";
+				emotion ET_FRET;
+				mes "Wait a second...";
+				mes "Do you think I'm stupid?!";
+				mes "You switched the item while I wasn't looking! Get out of here!";
+				close;
+			}
+
 			return;
 		}
 		mes "[Suhnbi]";

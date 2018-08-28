@@ -1,28 +1,28 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "quest.hpp"
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h"
-#include "../common/malloc.h"
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
 
-#include "itemdb.hpp"
-#include "map.hpp"
-#include "pc.hpp"
-#include "party.hpp"
-#include "chrif.hpp"
-#include "intif.hpp"
-#include "clif.hpp"
-#include "mob.hpp"
 #include "battle.hpp"
+#include "chrif.hpp"
+#include "clif.hpp"
+#include "intif.hpp"
+#include "itemdb.hpp"
 #include "log.hpp"
+#include "map.hpp"
+#include "mob.hpp"
+#include "party.hpp"
+#include "pc.hpp"
 
 static DBMap *questdb;
 static void questdb_free_sub(struct quest_db *quest, bool free);
@@ -514,7 +514,7 @@ void quest_read_txtdb(void)
 
 				if (!mob_id)
 					continue;
-				if (mobdb_exists(mob_id) == NULL) {
+				if (mob_db(mob_id) == NULL) {
 					ShowWarning("quest_read_txtdb: Invalid monster as objective '%d' in line %d.\n", mob_id, ln);
 					continue;
 				}
@@ -529,7 +529,7 @@ void quest_read_txtdb(void)
 
 				if (!nameid)
 					continue;
-				if (!itemdb_exists(nameid) || (mob_id && mobdb_exists(mob_id) == NULL)) {
+				if (!itemdb_exists(nameid) || (mob_id && mob_db(mob_id) == NULL)) {
 					ShowWarning("quest_read_txtdb: Invalid item reward '%d' (mob %d, optional) in line %d.\n", nameid, mob_id, ln);
 					continue;
 				}

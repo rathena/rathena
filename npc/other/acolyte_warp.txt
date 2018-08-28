@@ -29,7 +29,7 @@ prontera,98,121,4	script	Acolyte#Prtclear	90,{
 
 	mes "[Keiki]";
 	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
-	emotion e_dots,1;
+	emotion ET_THINK, playerattached();
 	next;
 	mes "[Keiki]";
 	mes "That's right! And...";
@@ -97,7 +97,7 @@ yuno,142,184,6	script	Acolyte#Junoclear	90,{
 
 	mes "[Isalei]";
 	mes "Though I have not mastered up to the level that she has, I have been able to attain Level 5.";
-	emotion e_dots,1;
+	emotion ET_THINK, playerattached();
 	next;
 	mes "[Isalei]";
 	mes "Maybe one day I can level up my skills enough so that I can use Warp portal to more saved locations.";

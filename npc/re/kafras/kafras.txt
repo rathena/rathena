@@ -25,6 +25,7 @@
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
 //= 1.4 Added Izlude duplicates. [Euphy]
 //= 1.5 Added Glastheim Kafra [Ridley8819]
+//= 1.6 Added Lutie [Lemongrass]
 //============================================================ 
 
 // Brasilis
@@ -47,11 +48,19 @@ dewata,202,184,6	script	Kafra Employee::kaf_dewata	117,{
 
 // Glastheim
 //============================================================
-glast_01,200,275,5	script	Kafra Employee::kaf_glast	115,{
+glast_01,200,275,0	script	Kafra Employee::kaf_glast	4_F_KAFRA3,{
 	cutin "kafra_03",2;
 	callfunc "F_Kafra",0,3,2,500,700;
 	savepoint "glast_01",200,272,1,1;
 	callfunc "F_KafEnd",0,1,"in Glast Heim";
+}
+
+// Lutie
+//============================================================
+xmas,148,134,6	script	Kafra Employee::kaf_xmas	4_F_KAFRA3,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,6,2,50,700;
+	callfunc "F_KafEnd",0,0,"in Lutie";
 }
 
 // Eden Group

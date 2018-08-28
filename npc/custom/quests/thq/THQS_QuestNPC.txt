@@ -50,7 +50,7 @@ N_PayZeny:
 	mes "[Guy]";
 	mes "Its sad to see someone give a quest up...";
 	mes "Shame on you.";
-	emotion e_ag;
+	emotion ET_ANGER;
 	close;
 
 N_ZenyFail:
@@ -65,16 +65,16 @@ N_NewQuest:
 	mes "[Guy]";
 	mes "Ahh welcome fellow Treasure Hunter.";
 	mes "You currently have ^FF0000"+#Treasure_Token+"^000000 treasure tokens!!!";
-	mes "Would you like me to asign you a Quest?";
+	mes "Would you like me to assign you a Quest?";
 	next;
 	menu "Yes I would like a Quest Please.",-,"Sorry Guy no time today.",N_NoTime;
 	
 	mes "[Guy]";
 	mes "Ok lets see what quest we can give you today.";
-	mes "The quest names in ^FF0000This Colour^000000 mean that they are more challanging then the rest, but have better rewards.";
+	mes "The quest names in ^FF0000This Colour^000000 mean that they are more challenging then the rest, but have better rewards.";
 	next;
 	set #THQ_DELAY,(GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR) + 1); //you can get another quest after 1 hour [Lupus]
-	emotion e_no1;
+	emotion ET_BEST;
 	if(@treasure_job==0) set @treasure_job,rand(1,10); //doesn't allow cheaters to pick any quest they want
 	if(@treasure_job==2) goto N_JobList2;
 	if(@treasure_job==3) goto N_JobList3;
@@ -90,20 +90,20 @@ N_NewQuest:
 N_NoTime:
 	mes "[Guy]";
 	mes "Alright maybe next time "+strcharinfo(0)+".";
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	close;
 
 N_Signup:
 	mes "[Guy]";
 	mes "I'm afraid you must sign up for the guild before you can go on a quest!";
-	emotion e_sry;
+	emotion ET_SORRY;
 	close;
 
 L_NoQuestsForYet:
 	mes "[Guy]";
 	mes "I'm afraid there aren't any Quests for you yet.";
 	mes "Call in "+ (#THQ_DELAY - (GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR)) )+" hours later.";
-	emotion e_sry;
+	emotion ET_SORRY;
 	close;
 
 L_QuestGiven:
@@ -122,10 +122,10 @@ N_JobList1:
 	mes "^FF0000------------^000000";
 	mes "This is an easy and low payed quest.";
 	mes " ";
-	mes "A wife came in asking us to find his husband, she seems to come in alot asking us to find him over and over again.";
+	mes "A wife came in asking us to find his husband, she seems to come in a lot asking us to find him over and over again.";
 	next;
 	mes "[Guy]";
-	mes "But he always seems to be around the same place so there isn't much looking involved,check the mountains 1 west and 1 north of prontera.";
+	mes "But he always seems to be around the same place so there isn't much looking involved,check the mountains 1 west and 1 north of Prontera.";
 	set one_qset,1;
 	goto L_QuestGiven;
 
@@ -146,19 +146,19 @@ N_HitList:
 	mes "^FF0000------------^000000";
 	mes "In this quest you get to see some action.";
 	mes " ";
-	mes "There has been a farmer that keeps having all his crops eaten by ^FF0000Thief Bugs, Porings, and Lunitics^000000 here is a lost of what I need you to do. He is waiting East of Prontera.";
+	mes "There has been a farmer that keeps having all his crops eaten by ^FF0000Thief Bugs, Porings, and Lunatics^000000 here is a lost of what I need you to do. He is waiting East of Prontera.";
 	next;
 	mes "[Guy]";
-	mes "Ok go to the east and bash those little bastards like there is no tommorow. When you are done with that list you have just discard it, but you will NOT get another one!.";
+	mes "Ok go to the east and bash those little bastards like there is no tomorrow. When you are done with that list you have just discard it, but you will NOT get another one!.";
 	set one_qset,3;
 	goto L_QuestGiven;
 
 N_SadWidow:
 	mes "^FF0000The Sad Widow^000000";
 	mes "^FF0000*************^000000";
-	mes "This is just another quest with possable well pay.";
+	mes "This is just another quest with possible well pay.";
 	mes " ";
-	mes "There is an old Widow in pontera, she recently lost her husband due to a monster attack.She has requested a Guild member to come talk to her at the Pontera Graveyard.";
+	mes "There is an old Widow in Prontera, she recently lost her husband due to a monster attack.She has requested a Guild member to come talk to her at the Prontera Graveyard.";
 	set one_qset,4;
 	goto L_QuestGiven;
 
@@ -203,7 +203,7 @@ N_WanderMan:
 	mes "^FF0000**************^000000";
 	mes "There is a woman in Payon that is in desperate for aid.";
 	mes " ";
-	mes "There is a woman in Payon named Molly please get to her as soon as possable the letter she sent here sounded like someone was killing her.";
+	mes "There is a woman in Payon named Molly please get to her as soon as possible the letter she sent here sounded like someone was killing her.";
 	set two_qset,4;
 	goto L_QuestGiven;
 
@@ -217,7 +217,7 @@ N_JobList3:
 	mes "^FF0000------------^000000";
 	mes "Have you ever been to Hell?";
 	mes " ";
-	mes "A man outside of ^FF0000Ant Hell^000000 has requested your audiance, I suggest you hurry.";
+	mes "A man outside of ^FF0000Ant Hell^000000 has requested your audience, I suggest you hurry.";
 	set three_qset,1;
 	goto L_QuestGiven;
 
@@ -234,20 +234,20 @@ N_Delivery1:
 N_ProntCulvert:
 	mes "^FF0000Prontera Culvert^000000";
 	mes "^FF0000----------------^000000";
-	mes "The bugs,They are everywere!.";
+	mes "The bugs,They are everywhere!.";
 	mes " ";
-	mes "The ^FF0000Prontera Culvert^000000 is out of control!Sign up as a volenteer to clean out some of the culvert.";
+	mes "The ^FF0000Prontera Culvert^000000 is out of control!Sign up as a volunteer to clean out some of the culvert.";
 	next;
-	mes "I know it seems like there is no stoping them but however many you kill does makes a differance. After you have signed up, inside the Culvert there will be a Knight that will give you a quest.";
+	mes "I know it seems like there is no stopping them but however many you kill does makes a difference. After you have signed up, inside the Culvert there will be a Knight that will give you a quest.";
 	set three_qset,3;
 	goto L_QuestGiven;
 
 N_CoalMine:
 	mes "^FF0000Trouble at the Coal Mine^000000";
 	mes "^FF0000************************^000000";
-	mes "The fun...err...trouble never stops in Rune Midgar.";
+	mes "The fun...err...trouble never stops in Rune Midgard.";
 	mes " ";
-	mes "Recently there was an acident at the coal mines. There was a huge chasm that released some undead Evil Druids.";
+	mes "Recently there was an accident at the coal mines. There was a huge chasm that released some undead Evil Druids.";
 	next;
 	mes "The Evil Druids started to turn all the workers into the undead. We do not know why, but we do not want to find out, contact a man named Rudolfo outside the Coal Mines.";
 	set three_qset,4;
@@ -282,7 +282,7 @@ N_Shoot:
 	mes "^FF0000----------^000000";
 	mes "A little girl is in trouble.";
 	mes " ";
-	mes "There is a little girl in trouble, her name is Dassy and she is ^FF0000east of the prontera fountan^000000.";
+	mes "There is a little girl in trouble, her name is Dassy and she is ^FF0000east of the Prontera fountain^000000.";
 	set four_qset,3;
 	goto L_QuestGiven;
 
@@ -305,7 +305,7 @@ N_JobList5:
 	mes "^FF0000-----------^000000";
 	mes "Easy for some very hard for others.";
 	mes " ";
-	mes "A man named Lithin wish's to give you a quest, you can find him north of prontera inside of ^FF0000The Hidden Temple^000000";
+	mes "A man named Lithin wishes to give you a quest, you can find him north of Prontera inside of ^FF0000The Hidden Temple^000000";
 	set five_qset,1;
 	goto L_QuestGiven;
 
@@ -314,7 +314,7 @@ N_PyrPRT1:
 	mes "^FF0000---------^000000";
 	mes "Its funny cause no one knows how these were really made.";
 	mes " ";
-	mes "Aperently the Pyramids have are beganing to be infested with undead activity,outside the pyramids a man will be waiting for you. He did no give us his name but he asked for you to hurry.";
+	mes "Apparently the Pyramids have are beginning to be infested with undead activity,outside the pyramids a man will be waiting for you. He did no give us his name but he asked for you to hurry.";
 	set five_qset,2;
 	goto L_QuestGiven;
 
@@ -331,9 +331,9 @@ N_Thinkfirst:
 N_Ghost:
 	mes "^FF0000The not so friendly ghost^000000";
 	mes "^FF0000*************************^000000";
-	mes "Well no one ever said Casper was nice behind the sceens.";
+	mes "Well no one ever said Casper was nice behind the scenes.";
 	mes " ";
-	mes "A wizard on the 3rd floor of geffen tower want's to talk to you about the anchient ruins underneath the city.";
+	mes "A wizard on the 3rd floor of Geffen tower wants to talk to you about the ancient ruins underneath the city.";
 	set five_qset,4;
 	goto L_QuestGiven;
 
@@ -342,12 +342,12 @@ N_JobList6:
 	mes "[Guy]";
 	mes "Ok you have a couple quests that can be done here.";
 	next;
-	menu "Package for thiefs",-,"Pyramid's part 2",N_PyrPRT2,"Special delivery",N_Delivery2,"^FF0000Geffenia^000000",N_Gef;
-	mes "^FF0000Package for thiefs^000000";
+	menu "Package for thieves",-,"Pyramid's part 2",N_PyrPRT2,"Special delivery",N_Delivery2,"^FF0000Geffenia^000000",N_Gef;
+	mes "^FF0000Package for thieves^000000";
 	mes "^FF0000------------------^000000";
 	mes "How ironic.";
 	mes " ";
-	mes "Deliver this Box to the Thiefs guild.";
+	mes "Deliver this Box to the Thieves guild.";
 	getitem 1083,1; //Delivery_Box__
 	set six_qset,1;
 	goto L_QuestGiven;
@@ -366,7 +366,7 @@ N_Delivery2:
 	mes "^FF0000----------------^000000";
 	mes "Well most of what we do is run packages, this is no different from other's.";
 	mes " ";
-	mes "Take this box, DO NOT OPEN IT! To a little girl in Lutie named Chirach she should be around santa.";
+	mes "Take this box, DO NOT OPEN IT! To a little girl in Lutie named Chirach she should be around Santa.";
 	getitem 1083,1; //Delivery_Box__
 	set six_qset,3;
 	goto L_QuestGiven;
@@ -374,9 +374,9 @@ N_Delivery2:
 N_Gef:
 	mes "^FF0000Geffenia^000000";
 	mes "^FF0000********^000000";
-	mes "The little children of Geffen have been haveing strange nightmares.";
+	mes "The little children of Geffen have been having strange nightmares.";
 	mes " ";
-	mes "We belive that the ruins underneath geffen are causeing this problem, talk to a Wizard named Zuuzuu inside Geffen Tower for your mission.";
+	mes "We believe that the ruins underneath Geffen are causing this problem, talk to a Wizard named Zuuzuu inside Geffen Tower for your mission.";
 	set six_qset,4;
 	goto L_QuestGiven;
 
@@ -390,7 +390,7 @@ N_JobList7:
 	mes "^FF0000-----------^000000";
 	mes "Can't say no to some good apple juice.";
 	mes " ";
-	mes "There is a little girl up in prontera Square a bit north from the fountain, go talk to her.";
+	mes "There is a little girl up in Prontera Square a bit north from the fountain, go talk to her.";
 	set seven_qset,1;
 	goto L_QuestGiven;
 
@@ -407,9 +407,9 @@ N_Delivery3:
 N_GTB:
 	mes "^FF0000Golden Thief Bug^000000";
 	mes "^FF0000****************^000000";
-	mes "The prontera Culvert has never been the same...";
+	mes "The Prontera Culvert has never been the same...";
 	mes " ";
-	mes "Well there have been reports of a Golden Thief Bug running around the bottem on the Culvert. Talk to a Knight inside the Culvert.";
+	mes "Well there have been reports of a Golden Thief Bug running around the bottom of the Culvert. Talk to a Knight inside the Culvert.";
 	set seven_qset,3;
 	goto L_QuestGiven;
 
@@ -418,7 +418,7 @@ N_EvilPirates:
 	mes "^FF0000************^000000";
 	mes "A ghost ship has washed up on shore on an island outside of Izlude.";
 	mes " ";
-	mes "A female assasin has a quest for you, she is waiting outside the Ghost Ship.There have been reports of evil undead pirates lurking around inside the ship.";
+	mes "A female assassin has a quest for you, she is waiting outside the Ghost Ship. There have been reports of evil undead pirates lurking around inside the ship.";
 	set seven_qset,4;
 	goto L_QuestGiven;
 
@@ -432,7 +432,7 @@ N_JobList8:
 	mes "^FF0000------------^000000";
 	mes "Sound gross to some good to others.";
 	mes " ";
-	mes "There is a little girl up in prontera Square a bit north from the fountain, go talk to her.";
+	mes "There is a little girl up in Prontera Square a bit north from the fountain, go talk to her.";
 	set eight_qset,1;
 	goto L_QuestGiven;
 
@@ -469,7 +469,7 @@ N_JobList9:
 	mes "[Guy]";
 	mes "Ok you have a couple quests that can be done here.";
 	next;
-	menu "Smelly Box",-,"Payon Cave",N_PayonC,"^FF0000Sohee's Everywere!^000000",N_Sohee,"^FF0000Moonlight Flower^000000",N_Moonlight;
+	menu "Smelly Box",-,"Payon Cave",N_PayonC,"^FF0000Sohee's Everywhere!^000000",N_Sohee,"^FF0000Moonlight Flower^000000",N_Moonlight;
 	mes "^FF0000Smelly Box^000000";
 	mes "^FF0000----------^000000";
 	mes "Oh god please get this out of here fast.";
@@ -480,30 +480,30 @@ N_JobList9:
 	goto L_QuestGiven;
 
 N_Sohee:
-	mes "^FF0000Sohee's Everywere!^000000";
+	mes "^FF0000Sohee's Everywhere!^000000";
 	mes "^FF0000******************^000000" ;
-	mes "Hmmm seem's a man named Jack wants to speak to you in the Archer Guild House.";
+	mes "Hmmm seems a man named Jack wants to speak to you in the Archer Guild House.";
 	mes " ";
 	mes "Well what we know about Payon is that a while ago there was a freak fire that burnt down the old school.";
 	next;
 	mes "The strange thing about what happened was that the children inside did not seem to die from the flames.";
-	mes "Speak to the little school girl somewere in Payon.";
+	mes "Speak to the little school girl somewhere in Payon.";
 	set nine_qset,2;
 	goto L_QuestGiven;
 
 N_Moonlight:
 	mes "^FF0000Moonlight Flower^000000";
 	mes "^FF0000****************^000000" ;
-	mes "Hmmm seem's a man named Jack wants to speak to you in the Archer Guild House.";
+	mes "Hmmm seems a man named Jack wants to speak to you in the Archer Guild House.";
 	mes " ";
-	mes "Well I don't know much about this, it has to do with the deepest reagions of Payon Cave, We don't know much because no one ever seems to make it back alive.";
+	mes "Well I don't know much about this, it has to do with the deepest regions of Payon Cave, We don't know much because no one ever seems to make it back alive.";
 	set nine_qset,3;
 	goto L_QuestGiven;
 
 N_PayonC:
 	mes "^FF0000Payon Cave^000000";
 	mes "^FF0000----------^000000" ;
-	mes "Hmmm seem's a man named Jack wants to speak to you in the Archer Guild House.";
+	mes "Hmmm seems a man named Jack wants to speak to you in the Archer Guild House.";
 	mes " ";
 	mes "The farther we go into the cave the stranger it gets.";
 	set nine_qset,4;
@@ -520,7 +520,7 @@ N_JobList10:
 	mes "^FF0000-------------^000000";
 	mes "Package to Morroc";
 	mes " ";
-	mes "There is nothing writen on this box but a notice to deliver it to a man Kreg.";
+	mes "There is nothing written on this box but a notice to deliver it to a man Kreg.";
 	getitem 1082,1; //Delivery_Box_
 	set ten_qset,1;
 	goto L_QuestGiven;
@@ -539,7 +539,7 @@ N_Phreeoni:
 	mes "^FF0000********^000000";
 	mes "He is big and Pink and you run and hide!";
 	mes " ";
-	mes "This guy just poped into some hole one day, He dosent look that tough but you would be supprised. Talk to a man named Caral outside of Ant Hell.";
+	mes "This guy just poped into some hole one day, He doesn't look that tough but you would be surprised. Talk to a man named Caral outside of Ant Hell.";
 	set ten_qset,3;
 	goto L_QuestGiven;
 

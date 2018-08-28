@@ -79,7 +79,7 @@ M_DONE:
 	close;
 
 L_AGAIN:
-	emotion e_thx;
+	emotion ET_THANKS;
 	mes "Yay, I found her! Thank you very much for you help!";
 	close;
 
@@ -99,7 +99,7 @@ aldebaran,153,212,1	script	Mojo	740,{
 	if(umb_lang==1) set umb_mojo,1;
 	close;
 L_NOT_GOT_QUEST:
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "I lost my teacher's book!  What am I going to do...";
 	close;
 }
@@ -115,14 +115,14 @@ amatsu,267,189,4	script	Marie	744,{
 
 	mes "[Marie]";
 	mes "What does he want from me?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	mes "[Marie]";
 	mes "Oh wait, I see... he wants his reference scroll back am I right? Well, I'm kinda still using it buuut... I'll give it back if you can gimme a poring egg and an incubator. Those things are so cute!";
 	close;
 
 L_NOT_GOT_QUEST:
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "Hi! What do you want from me?";
 	close;
 
@@ -149,14 +149,14 @@ M_DOH:
 	close;
 
 L_AGAIN:
-	emotion e_thx;
+	emotion ET_THANKS;
 	mes "Yay! I love Porings!";
 	close;
 }
 
 yuno,157,366,2	script	Wise Man Fabius	743,{
 	mes "[Fabius]";
-	if(event_umbala >= 3) set umb_lang,2; //You already learnt Umbalian language from Umbalian Chief. So this Quest is disabled
+	if(event_umbala >= 3) set umb_lang,2; //You already learned Umbalian language from Umbalian Chief. So this Quest is disabled
 	if(umb_lang<2) goto L_QUEST;
 	mes "You speak Umbalian fluently! So you will never forget the language of Umbalians!";
 	close;
@@ -165,14 +165,14 @@ L_QUEST:
 	delitem 1006,1;	//Items: Old Magic Book,
 	delitem 7118,1;	//Items: Torn Scroll,
 	delitem 7117,1;//Items: Torn Spell Book,
-	emotion e_thx;
-	mes "Ah, you've done well in retrieving my references. These artifacts holds information about ruins around the world, from the burning hell of the Magma Dungeon, to the strange eerie Hidden Forest of Yggsadril.";
+	emotion ET_THANKS;
+	mes "Ah, you've done well in retrieving my references. These artifacts holds information about ruins around the world, from the burning hell of the Magma Dungeon, to the strange eerie Hidden Forest of Yggdrasil.";
 	next;
 	mes "[Fabius]";
 	mes "But enough talk, you're just eager to get your reward aren't you?  Well it may not sound much, but my reward for you is knowledge...";
 	next;
 	mes "[Fabius]";
-	mes "Actually it is knowledge of the Umbalian people. They are connected to this world of Midgard in some special way, we just can't confirm it yet. There is a theory that they may be like the elves and protect the ancient tree of Yggsadril.";
+	mes "Actually it is knowledge of the Umbalian people. They are connected to this world of Midgard in some special way, we just can't confirm it yet. There is a theory that they may be like the elves and protect the ancient tree of Yggdrasil.";
 	next;
 	mes "[Fabius]";
 	mes "And I, a great wise man of Yuno, will teach you their language!";
@@ -192,7 +192,7 @@ L_DONE:
 	mes "Argh! My three students ran off with my references! Hey you! Can you get them back for me? I'll gladly reward you.";
 	next;
 	mes "[Fabius]";
-	mes "From what I know, they're in different seperate towns making something out of themselves.";
+	mes "From what I know, they're in different separate towns making something out of themselves.";
 	if(umb_marie==0 && umb_mason==0 && umb_mojo==0) goto L_NOT_MET;
 	if(umb_marie==1) mes "Oh... You found Marie in Amatsu.";
 	if(umb_mojo==1) mes "You saw Mojo in Aldebaran?";

@@ -1,12 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SCRIPT_HPP_
-#define _SCRIPT_HPP_
+#ifndef SCRIPT_HPP
+#define SCRIPT_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 #define NUM_WHISPER_VAR 10
 
@@ -378,7 +379,9 @@ enum petinfo_types {
 	PETINFO_HUNGRY,
 	PETINFO_RENAMED,
 	PETINFO_LEVEL,
-	PETINFO_BLOCKID
+	PETINFO_BLOCKID,
+	PETINFO_EGGID,
+	PETINFO_FOODID
 };
 
 enum questinfo_types {
@@ -389,9 +392,13 @@ enum questinfo_types {
 	QTYPE_EVENT,
 	QTYPE_EVENT2,
 	QTYPE_WARG,
-	// 7 = free
-	QTYPE_WARG2 = 8,
-	// 9 - 9998 = free
+	QTYPE_CLICKME = QTYPE_WARG,
+	QTYPE_DAILYQUEST,
+	QTYPE_WARG2,
+	QTYPE_EVENT3 = QTYPE_WARG2,
+	QTYPE_JOBQUEST,
+	QTYPE_JUMPING_PORING,
+	// 11 - 9998 = free
 	QTYPE_NONE = 9999
 };
 
@@ -470,6 +477,7 @@ enum unitdata_mobtypes {
 	UMOB_AMOTION,
 	UMOB_ADELAY,
 	UMOB_DMOTION,
+	UMOB_TARGETID,
 };
 
 enum unitdata_homuntypes {
@@ -512,6 +520,7 @@ enum unitdata_homuntypes {
 	UHOM_AMOTION,
 	UHOM_ADELAY,
 	UHOM_DMOTION,
+	UHOM_TARGETID,
 };
 
 enum unitdata_pettypes {
@@ -591,6 +600,7 @@ enum unitdata_merctypes {
 	UMER_AMOTION,
 	UMER_ADELAY,
 	UMER_DMOTION,
+	UMER_TARGETID,
 };
 
 enum unitdata_elemtypes {
@@ -632,6 +642,7 @@ enum unitdata_elemtypes {
 	UELE_AMOTION,
 	UELE_ADELAY,
 	UELE_DMOTION,
+	UELE_TARGETID,
 };
 
 enum unitdata_npctypes {
@@ -1863,6 +1874,37 @@ enum e_hat_effects {
 	HAT_EF_RETURN_TW_1ST_HAT,
 	HAT_EF_C_FLUTTERBUTTERFLY_BL,
 	HAT_EF_QSCARABA,
+	HAT_EF_FSTONE,
+	HAT_EF_MAGICCIRCLE,
+	HAT_EF_GODCLASS,
+	HAT_EF_GODCLASS2,
+	HAT_EF_LEVEL99_RED,
+	HAT_EF_LEVEL99_ULTRAMARINE,
+	HAT_EF_LEVEL99_CYAN,
+	HAT_EF_LEVEL99_LIME,
+	HAT_EF_LEVEL99_VIOLET,
+	HAT_EF_LEVEL99_LILAC,
+	HAT_EF_LEVEL99_SUN_ORANGE,
+	HAT_EF_LEVEL99_DEEP_PINK,
+	HAT_EF_LEVEL99_BLACK,
+	HAT_EF_LEVEL99_WHITE,
+	HAT_EF_LEVEL160_RED,
+	HAT_EF_LEVEL160_ULTRAMARINE,
+	HAT_EF_LEVEL160_CYAN,
+	HAT_EF_LEVEL160_LIME,
+	HAT_EF_LEVEL160_VIOLET,
+	HAT_EF_LEVEL160_LILAC,
+	HAT_EF_LEVEL160_SUN_ORANGE,
+	HAT_EF_LEVEL160_DEEP_PINK,
+	HAT_EF_LEVEL160_BLACK,
+	HAT_EF_LEVEL160_WHITE,
+	HAT_EF_FULL_BLOOMCHERRY_TREE,
+	HAT_EF_C_BLESSINGS_OF_SOUL,
+	HAT_EF_MANYSTARS,
+	HAT_EF_SUBJECT_AURA_GOLD,
+	HAT_EF_SUBJECT_AURA_WHITE,
+	HAT_EF_SUBJECT_AURA_RED,
+	HAT_EF_C_SHINING_ANGEL_WING,
 	HAT_EF_MAX
 };
 
@@ -1889,9 +1931,10 @@ int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
-int run_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
+void script_attach_state(struct script_state* st);
 void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
@@ -1904,6 +1947,7 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
+const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
 void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
@@ -1941,8 +1985,6 @@ int script_reg_destroy(DBKey key, DBData *data, va_list ap);
 void script_generic_ui_array_expand(unsigned int plus);
 unsigned int *script_array_cpy_list(struct script_array *sa);
 
-#ifdef BETA_THREAD_TEST
-void queryThread_log(char * entry, int length);
-#endif
+bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
-#endif /* _SCRIPT_HPP_ */
+#endif /* SCRIPT_HPP */

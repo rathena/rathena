@@ -185,31 +185,26 @@ lighthalzen,294,223,7	script	Guard#lhz02	868,{
 // Cube Room Quest
 //============================================================
 lighthalzen,341,224,3	script	Fishbone	868,{
-	// Retain prior position in quest.
-	if (piciburn) {
-		set lhz_sincube,piciburn;
-		set piciburn,0;
-	}
 	// Quest is finished.
 	if (MISC_QUEST&512) {
-			mes "[Fishbone]";
-			mes "Oh hey, it's you!";
-			mes "Now, listen. If you wanna";
-			mes "get into Regenschirm again,";
-			mes "you gotta enter that Sewer Pipe";
-			mes "that's like, northeast from me.";
-			mes "It's gross, but you gotta...";
-			next;
-			mes "[Fishbone]";
-			mes "Anyway, good luck in";
-			mes "whatever it is you're doing";
-			mes "here in Lighthazlen. Oh, and";
-			mes "be real careful! Something";
-			mes "shadier than me is going";
-			mes "on in this big city~";
-			close;
+		mes "[Fishbone]";
+		mes "Oh hey, it's you!";
+		mes "Now, listen. If you wanna";
+		mes "get into Regenschirm again,";
+		mes "you gotta enter that Sewer Pipe";
+		mes "that's like, northeast from me.";
+		mes "It's gross, but you gotta...";
+		next;
+		mes "[Fishbone]";
+		mes "Anyway, good luck in";
+		mes "whatever it is you're doing";
+		mes "here in Lighthazlen. Oh, and";
+		mes "be real careful! Something";
+		mes "shadier than me is going";
+		mes "on in this big city~";
+		close;
 	}
-	// Apparantly if the boss quest progress is at 6, you skip the level requirement.
+	// Apparently if the boss quest progress is at 6, you skip the level requirement.
 	if (lhz_boss == 6 || BaseLevel >= 60) {
 		if (lhz_sincube == 0) {
 			mes "[Fishbone]";
@@ -217,26 +212,26 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "Is there something";
 			mes "on my face? Quit looking";
 			mes "at me and let me do my work.";
-			set lhz_sincube,1;
+			lhz_sincube = 1;
 			close;
 		}
-		else if (lhz_sincube == 1) {
+		if (lhz_sincube == 1) {
 			mes "[Fishbone]";
 			mes "Hey. Hey you.";
 			mes "You're still looking";
 			mes "at me. Quit it. I'm busy";
 			mes "here and you're bothering me.";
-			set lhz_sincube,2;
+			lhz_sincube = 2;
 			close;
 		}
-		else if (lhz_sincube == 2) {
+		if (lhz_sincube == 2) {
 			mes "[Fishbone]";
 			mes "Seriously, you are";
 			mes "starting to really get";
 			mes "on my nerves! What could";
 			mes "you possibly want from me?!";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "Nothing really.";
 			mes "I just feel like";
 			mes "watching you work.";
@@ -249,7 +244,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "be so uptight about you looking";
 			mes "at what I'm doing, now would I?";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "Nah...";
 			mes "I just think";
 			mes "you're uptight";
@@ -270,7 +265,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "ticking me off! Why";
 			mes "don't you go away?!";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "Well, I was also";
 			mes "wondering why you're";
 			mes "working in a place that's";
@@ -292,7 +287,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "Hell, I could even get you";
 			mes "into that Laboratory...";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "W-wait!";
 			mes "Laboratory?!";
 			mes "Are you serious?";
@@ -307,7 +302,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "stubborn, kid. But I don't trust";
 			mes "or serve strangers, period.";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "But isn't there";
 			mes "anything I can do";
 			mes "so you can help me";
@@ -320,11 +315,11 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "and just trust anyone who";
 			mes "wants to know a secret";
 			mes "route. Now get outta here!";
-			set lhz_sincube,3;
+			lhz_sincube = 3;
 			close;
 		}
-		else if (lhz_sincube == 3) {
-			mes "["+strcharinfo(0)+"]";
+		if (lhz_sincube == 3) {
+			mes "[" + strcharinfo(0) + "]";
 			mes "Please...";
 			mes "Please tell me";
 			mes "how I can get inside";
@@ -336,11 +331,12 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "and stop begging, okay?";
 			mes "You're only embarassing";
 			mes "yourself! Good grief...";
-			set lhz_sincube,4;
+			lhz_sincube = 4;
 			close;
 		}
-		else if (lhz_sincube == 4) {
-			mes "["+strcharinfo(0)+"]";
+		if (lhz_sincube == 4) {
+			.@player_name$ = strcharinfo(0);
+			mes "[" + .@player_name$ + "]";
 			mes "Why won't you";
 			mes "heeeeelp meee?";
 			mes "Pleeeeeeeease~";
@@ -354,7 +350,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "final. How many times do";
 			mes "you gotta make me spell it out?";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "But there's gotta";
 			mes "be something I can";
 			mes "do so you'll help me?";
@@ -377,7 +373,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "you need. Alright, good luck";
 			mes "to you, brave adventurer.";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + .@player_name$ + "]";
 			mes "You're joking right?!";
 			mes "There's no way I can ever";
 			mes "get that much zeny! I'd...";
@@ -402,7 +398,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "It's like I'm";
 			mes "doing this for free...";
 			next;
-			if (select("Okay.:No! It's impossible!") == 1) {
+			if (select( "Okay.", "No! It's impossible!" ) == 1) {
 				mes "[Fishbone]";
 				mes "Alright, then";
 				mes "bring me back a";
@@ -410,8 +406,8 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 				mes "But you gotta have";
 				mes "exactly 20 Jellopy on";
 				mes "you, okay? Seeya pal~";
-				set lhz_sincube,5;
-				setquest 12014;
+				lhz_sincube = 5;
+				setquest 12014;// More missions
 				close;
 			}
 			mes "[Fishbone]";
@@ -423,13 +419,13 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "whatever number I said-- zeny!";
 			close;
 		}
-		else if (lhz_sincube == 5) {
+		if (lhz_sincube == 5) {
 			mes "[Fishbone]";
 			mes "So...";
 			mes "Did you bring";
 			mes "the stuff?";
 			next;
-			switch(select("I'm still working on it.:Here you go!:Um... Stuff?")) {
+			switch( select( "I'm still working on it.", "Here you go!", "Um... Stuff?" ) ) {
 			case 1:
 				mes "[Fishbone]";
 				mes "Still working on it?";
@@ -440,40 +436,40 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 				mes "It's 20 friggin' Jellopies!";
 				close;
 			case 2:
-				if (countitem(909) > 19) {
+				if (countitem(909) < 20) {
 					mes "[Fishbone]";
-					mes "Ooh. Hey, good work.";
-					mes "Okay, I can see you're";
-					mes "the reliable type. A deal";
-					mes "is a deal, so I'll tell you";
-					mes "how you can get inside";
-					mes "that Laboratory.";
-					next;
-					mes "[Fishbone]";
-					mes "Now, if you're wondering";
-					mes "why I don't got much qualm";
-					mes "against helping you, it's";
-					mes "because I used to work in";
-					mes "the Laboratory... But then";
-					mes "they laid me off unfairly.";
-					next;
-					mes "[Fishbone]";
-					mes "Anyway, anything I can";
-					mes "do to cause them trouble";
-					mes "is good in my book. Let me";
-					mes "get some stuff ready and";
-					mes "then I'll tell you what you";
-					mes "really need to know.";
-					delitem 909,20; //Jellopy
-					set lhz_sincube,6;
+					mes "Uh...";
+					mes "I said 20 Jellopies,";
+					mes "didn't I? This ain't";
+					mes "enough pal, so go out";
+					mes "and get some more!";
 					close;
 				}
 				mes "[Fishbone]";
-				mes "Uh...";
-				mes "I said 20 Jellopies,";
-				mes "didn't I? This ain't";
-				mes "enough pal, so go out";
-				mes "and get some more!";
+				mes "Ooh. Hey, good work.";
+				mes "Okay, I can see you're";
+				mes "the reliable type. A deal";
+				mes "is a deal, so I'll tell you";
+				mes "how you can get inside";
+				mes "that Laboratory.";
+				next;
+				mes "[Fishbone]";
+				mes "Now, if you're wondering";
+				mes "why I don't got much qualm";
+				mes "against helping you, it's";
+				mes "because I used to work in";
+				mes "the Laboratory... But then";
+				mes "they laid me off unfairly.";
+				next;
+				mes "[Fishbone]";
+				mes "Anyway, anything I can";
+				mes "do to cause them trouble";
+				mes "is good in my book. Let me";
+				mes "get some stuff ready and";
+				mes "then I'll tell you what you";
+				mes "really need to know.";
+				delitem 909,20;// Jellopy
+				lhz_sincube = 6;
 				close;
 			case 3:
 				mes "[Fishbone]";
@@ -485,7 +481,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 				close;
 			}
 		}
-		else if (lhz_sincube == 6) {
+		if (lhz_sincube == 6) {
 			mes "[Fishbone]";
 			if (lhz_boss == 6) {
 				mes "way to get into Regenschrim";
@@ -502,8 +498,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 				mes "can find the Lab entrance.";
 			}
 			next;
-			switch(select("Not yet.:Yes.")) {
-			case 1:
+			if (select( "Not yet.", "Yes.") == 1) {
 				mes "[Fishbone]";
 				mes "Eh...?";
 				mes "Alright, it's";
@@ -516,7 +511,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "Okay then,";
 			mes "here we go!";
 			close2;
-			set lhz_sincube,7;
+			lhz_sincube = 7;
 			switch(rand(1,3)) {
 			case 1: warp "lhz_cube",67,193; break;
 			case 2: warp "lhz_cube",66,136; break;
@@ -524,7 +519,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			}
 			end;
 		}
-		else if (lhz_sincube < 10) {
+		if (lhz_sincube < 10) {
 			mes "[Fishbone]";
 			mes "Hm, you must not have";
 			mes "accomplished whatever";
@@ -539,7 +534,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "you want me to send";
 			mes "you there again?";
 			next;
-			if (select("No.:Yes.") == 1) {
+			if (select( "No.", "Yes." ) == 1) {
 				mes "[Fishbone]";
 				mes "Geez, you must have";
 				mes "really had a hard time";
@@ -556,7 +551,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "Get ready, 'cuz";
 			mes "here we go...!";
 			close2;
-			set lhz_sincube,7;
+			lhz_sincube = 7;
 			switch(rand(1,3)) {
 			case 1: warp "lhz_cube",67,193; break;
 			case 2: warp "lhz_cube",66,136; break;
@@ -564,7 +559,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			}
 			end;
 		}
-		else if (lhz_sincube == 10) {
+		if (lhz_sincube == 10) {
 			mes "[Fishbone]";
 			mes "Hey, you came back!";
 			mes "Good, I was starting";
@@ -572,9 +567,10 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "about what happened to";
 			mes "you. So did you get what";
 			mes "you wanted over there?";
-			completequest 12014;
+			if (isbegin_quest(12014) == 1)
+				completequest 12014;// More missions
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + strcharinfo(0) + "]";
 			mes "Yeah...";
 			mes "I hope so,";
 			mes "anyway.";
@@ -602,7 +598,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 			mes "send you back there. So";
 			mes "what do you say?";
 			next;
-			if (select("Sure:No thanks~") == 1) {
+			if (select( "Sure", "No thanks~" ) == 1) {
 				mes "[Fishbone]";
 				mes "Okay then, here";
 				mes "we go! Good luck";
@@ -630,7 +626,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 		mes "just peachy, thanks~";
 		close;
 	}
-	else if (BaseLevel < 60) {
+	if (BaseLevel < 60) {
 		mes "Hey kid, get";
 		mes "outta here! Can't";
 		mes "you tell I'm dealin'";
@@ -639,7 +635,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 		mes "for baby faced guys like you!";
 		close;
 	}
-	else if (lhz_boss > 6) {
+	if (lhz_boss > 6) {
 		mes "[Fishbone]";
 		mes "Heya pal!";
 		mes "It's been a while.";
@@ -656,7 +652,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 		mes "on the ground.^000000";
 		close;
 	}
-	else if (lhz_sincube < 10) {
+	if (lhz_sincube < 10) {
 		if (lhz_secret01 < 1) {
 			mes "^3355FFThere are a bunch";
 			mes "of files scattered";
@@ -665,14 +661,14 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 			mes "sorts of information,";
 			mes "but they're all mixed up.^000000";
 			next;
-			if (select("Rummage through the files.:Cancel") == 1) {
+			if (select( "Rummage through the files.", "Cancel" ) == 1) {
 				mes "^3355FFWhile you are";
 				mes "rummaging through";
 				mes "the files, a Red Key";
 				mes "drops to the ground";
 				mes "with a clink. You decide";
 				mes "to keep this ^000000Red Key^3355FF.^000000";
-				set lhz_secret01,1;
+				lhz_secret01 = 1;
 			}
 			close;
 		}
@@ -698,7 +694,7 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 		mes "your attention for some";
 		mes "inexplicably strange reason.^000000";
 		next;
-		if (select("Look behind picture.:Cancel") == 1) {
+		if ( select("Look behind picture.", "Cancel" ) == 1) {
 			mes "^3355FFYou push and pull";
 			mes "with all your strength,";
 			mes "but the picture won't";
@@ -708,13 +704,13 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 		}
 		close;
 	}
-	else if (lhz_secret01 == 2) {
+	if (lhz_secret01 == 2) {
 		mes "^3355FFThis picture hanging";
 		mes "on the wall catches";
 		mes "your attention for some";
 		mes "inexplicably strange reason.^000000";
 		next;
-		if (select("Look behind picture.:Cancel") == 1) {
+		if (select( "Look behind picture.", "Cancel" ) == 1) {
 			mes "^3355FFYou push and pull";
 			mes "with all your strength,";
 			mes "but this picture is too";
@@ -733,18 +729,18 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 				mes "find that the following";
 				mes "numbers are written:^000000";
 				mes " ";
-				set .@number_rand,rand(1,3);
+				.@number_rand = rand(1,3);
 				if (.@number_rand == 1) {
 					mes "4 3 2 9 1 6 8 2 7";
-					set lhz_secret01,3;
+					lhz_secret01 = 3;
 				}
 				else if (.@number_rand == 2) {
 					mes "3 6 4 1 2 8 7 1 5";
-					set lhz_secret01,4;
+					lhz_secret01 = 4;
 				}
 				else {
 					mes "4 9 3 7 6 2 8 6 6";
-					set lhz_secret01,5;
+					lhz_secret01 = 5;
 				}
 				close;
 			}
@@ -757,28 +753,25 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 		}
 		close;
 	}
-	else if (lhz_secret01 < 6) {
+	if (lhz_secret01 < 6) {
 		mes "^3355FFThe following numbers";
 		mes "were written behind the";
 		mes "picture. If they were hidden,";
 		mes "these numbers must have";
 		mes "some kind of importance.^000000";
 		mes " ";
-		if (lhz_secret01 == 3) {
+		if (lhz_secret01 == 3)
 			mes "4 3 2 9 1 6 8 2 7";
-		}
-		else if (lhz_secret01 == 4) {
+		else if (lhz_secret01 == 4)
 			mes "3 6 4 1 2 8 7 1 5";
-		}
-		else if (lhz_secret01 == 5) {
+		else if (lhz_secret01 == 5)
 			mes "4 9 3 7 6 2 8 6 6";
-		}
 		close;
 	}
 	mes "^3355FFThere is a picture";
 	mes "hanging on the wall.^000000";
 	next;
-	if (select("Look beneath picture.:Cancel") == 1) {
+	if (select( "Look beneath picture.", "Cancel" ) == 1) {
 		mes "^3355FFThere are some";
 		mes "numbers behind the";
 		mes "picture, but now there is";
@@ -795,7 +788,7 @@ lhz_cube,242,201,0	script	Drawer#cube	111,{
 		mes "you can't open it.^000000";
 		close;
 	}
-	else if (lhz_secret01 == 1) {
+	if (lhz_secret01 == 1) {
 		mes "^3355FF The drawer here";
 		mes "looks interesting, but";
 		mes "it's locked. Hopefully, you";
@@ -809,7 +802,7 @@ lhz_cube,242,201,0	script	Drawer#cube	111,{
 			mes "^000000Jackknife^3355FF that you decide";
 			mes "to take. After all, it might";
 			mes "be handy sometime.^000000";
-			set lhz_secret01,2;
+			lhz_secret01 = 2;
 		}
 		else {
 			mes "^3355FFUnfortunately, you";
@@ -836,18 +829,18 @@ lhz_cube,248,179,0	script	Chest#cube	111,{
 		mes "and isn't suited for battle.^000000";
 		close;
 	}
-	else if (lhz_sincube == 7) {
+	if (lhz_sincube == 7) {
 		mes "^3355FFYou've found a chest,";
 		mes "but more importantly,";
 		mes "there is a utility Axe";
 		mes "laid on top of it.^000000";
 		next;
-		if (select("Take the utility Axe.:Cancel") == 1) {
+		if (select( "Take the utility Axe.", "Cancel" ) == 1) {
 			mes "^3355FFWithout shame or";
 			mes "an ounce of guilt, you";
 			mes "pick up the utility ^000000Axe^3355FF";
 			mes "and claim it as your own.^000000";
-			set lhz_sincube,8;
+			lhz_sincube = 8;
 		}
 		close;
 	}
@@ -859,14 +852,13 @@ lhz_cube,248,179,0	script	Chest#cube	111,{
 }
 
 lhz_cube,237,183,0	script	Barrel#cube	111,{
-	set number_line,0;
 	if (lhz_sincube < 8) {
 		mes "^3355FFYou have";
 		mes "found a shabbily";
 		mes "constructed barrel.^000000";
 		close;
 	}
-	else if (lhz_sincube == 8) {
+	if (lhz_sincube == 8) {
 		mes "^3355FFYou have";
 		mes "found a shabbily";
 		mes "constructed barrel.";
@@ -890,7 +882,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "of the metal plate on";
 			mes "top of the box you found,";
 			mes "like some kind of keypad...^000000";
-			set lhz_sincube,9;
+			lhz_sincube = 9;
 		}
 		else {
 			mes "^3355FFDoing that probably won't";
@@ -899,7 +891,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 		}
 		close;
 	}
-	else if (lhz_sincube == 9) {
+	if (lhz_sincube == 9) {
 		if (lhz_secret01 < 3) {
 			mes "^3355FFYou decide to enter";
 			mes "some numbers into the";
@@ -907,12 +899,12 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "you can only enter single";
 			mes "digit numbers at one time...^000000";
 			next;
-			for( set .@i, 0; .@i < 9; set .@i, .@i + 1 )
+			for( .@i = 0; .@i < 9; .@i++ )
 				input .@input;
 			mes "^3355FFNothing happened...^000000";
 			close;
 		}
-		else if (lhz_secret01 >= 3 && lhz_secret01 <= 5) {
+		if (lhz_secret01 <= 5) {
 			switch(lhz_secret01) {
 			case 3: setarray .@numbers[0],4,3,2,9,1,6,8,2,7; break;
 			case 4: setarray .@numbers[0],3,6,4,1,2,8,7,1,5; break;
@@ -924,16 +916,17 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 			mes "metal plate on top of the box";
 			mes "you found inside the keg.^000000";
 			next;
-			for( set .@i, 0; .@i < 9; set .@i, .@i + 1 ) {
+			for( .@i = 0; .@i < 9; .@i++ ) {
 				input .@input;
-				if (.@input == .@numbers[.@i]) set .@number_line,.@number_line+1;
+				if (.@input == .@numbers[.@i])
+					.@number_line++;
 			}
 			if (.@number_line == 9) {
 				mes "^3355FFThe metal plate slides";
 				mes "open and you find a key";
 				mes "Key inside the box. You";
 				mes "to keep this ^000000Yellow Key^3355FF.^000000";
-				set lhz_secret01,6;
+				lhz_secret01 = 6;
 			}
 			else {
 				mes "^3355FFNothing happened.";
@@ -971,7 +964,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	111,{
 		mes "insert into the keyhole.^000000";
 		close;
 	}
-	else if (lhz_secret01 == 6) {
+	if (lhz_secret01 == 6) {
 		mes "^3355FFThis is a noisily";
 		mes "operating huge machine";
 		mes "with a front panel that has";
@@ -990,7 +983,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	111,{
 			mes "^3355FFYou notice that the";
 			mes "^000000Status Light ^3355FFnext to the";
 			mes "bed has now turned off.^000000";
-			set lhz_secret01,7;
+			lhz_secret01 = 7;
 		}
 		else {
 			mes "^3355FFNothing happened.";
@@ -1020,17 +1013,17 @@ lhz_cube,244,201,0	script	Status Light#cube	111,{
 		mes "cool enough for you to touch...^000000";
 		close;
 	}
-	else if (lhz_secret01 == 7) {
+	if (lhz_secret01 == 7) {
 		mes "The Status Light";
 		mes "is now off and the";
 		mes "bulb has cooled down.";
 		next;
-		if (select("Smash the light bulb.:Cancel") == 1) {
+		if (select( "Smash the light bulb.", "Cancel" ) == 1) {
 			mes "^3355FFYou smash the";
 			mes "Status Light's bulb";
 			mes "and discover another key.";
 			mes "You obtained a ^000000Black Key^3355FF.^000000";
-			set lhz_secret01,8;
+			lhz_secret01 = 8;
 		}
 		close;
 	}
@@ -1040,12 +1033,12 @@ lhz_cube,244,201,0	script	Status Light#cube	111,{
 }
 
 lhz_cube,234,200,0	script	Desk#cube	111,{
-	if (lhz_secret02 <= 1) {
+	if (lhz_secret02 < 2) {
 		mes "^3355FFYou've found";
 		mes "a completely";
 		mes "cluttered desk.^000000";
 		next;
-		switch(select("On the desk:Under the desk:Desk drawer")) {
+		switch( select( "On the desk", "Under the desk", "Desk drawer" ) ) {
 		case 1:
 			mes "^3355FFVarious documents,";
 			mes "books and lab equipment";
@@ -1061,7 +1054,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 				mes "that you decide to keep.";
 				mes "You never know when";
 				mes "you'll need one of those.^000000";
-				set lhz_secret02,1;
+				lhz_secret02 = 1;
 			}
 			else {
 				mes "^3355FFThis is where you";
@@ -1080,7 +1073,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 			close;
 		}
 	}
-	else if (lhz_secret02 == 2) {
+	if (lhz_secret02 == 2) {
 		mes "^3355FFYou're back at the";
 		mes "messy desk which";
 		mes "is probably used by";
@@ -1088,7 +1081,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 		mes "who has someone else";
 		mes "do his desk tidying for him.^000000";
 		next;
-		switch(select("On the desk:Under the desk:Desk drawer")) {
+		switch( select( "On the desk", "Under the desk", "Desk drawer" ) ) {
 		case 1:
 			mes "^3355FFAlas, no matter how much";
 			mes "you rummage through it,";
@@ -1126,7 +1119,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 			mes "to the sum of its parts.";
 			mes "You are now the proud";
 			mes "bearer of a ^000000Long Stick^3355FF.^000000";
-			set lhz_secret02,3;
+			lhz_secret02 = 3;
 			close;
 		case 3:
 			mes "^3355FFThis desk drawer is";
@@ -1143,7 +1136,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 	mes "objects, but such is its";
 	mes "destiny as office equipment.^000000";
 	next;
-	switch(select("On the desk:Under the desk:Desk drawer")) {
+	switch( select( "On the desk", "Under the desk", "Desk drawer" ) ) {
 	case 1:
 		mes "^3355FFAlas, no matter how much";
 		mes "you rummage through it,";
@@ -1182,7 +1175,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
 		next;
-		if (select("On the bed:Under the bed") == 1) {
+		if (select( "On the bed", "Under the bed" ) == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1196,16 +1189,16 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 			mes "keep. You never know";
 			mes "when certain, seemingly";
 			mes "useless objects will save you.^000000";
-			set lhz_secret02,2;
+			lhz_secret02 = 2;
 		}
 		close;
 	}
-	else if (lhz_secret02 == 1) {
+	if (lhz_secret02 == 1) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
 		next;
-		if (select("On the bed:Under the bed") == 1) {
+		if (select( "On the bed", "Under the bed" ) == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1225,16 +1218,16 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 			mes "to the sum of its parts.";
 			mes "You are now the proud";
 			mes "bearer of a ^000000Long Stick^3355FF.^000000";
-			set lhz_secret02,3;
+			lhz_secret02 = 3;
 		}
 		close;
 	}
-	else if (lhz_secret02 == 2) {
+	if (lhz_secret02 == 2) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
 		mes "are slovenly arranged.^000000";
 		next;
-		if (select("On the bed:Under the bed") == 1) {
+		if (select( "On the bed", "Under the bed" ) == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1267,12 +1260,12 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 		}
 		close;
 	}
-	else if (lhz_secret02 == 3) {
+	if (lhz_secret02 == 3) {
 		mes "^3355FFYou find a messy";
 		mes "bed that may be more";
 		mes "than meets the eye.^000000";
 		next;
-		if (select("On the bed:Under the bed") == 1) {
+		if (select( "On the bed", "Under the bed" ) == 1) {
 			mes "^3355FFNo one's in the bed";
 			mes "and if you climbed in,";
 			mes "you'd just be alone. For";
@@ -1294,7 +1287,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 				mes "it under the bed towards you.";
 				mes "You now possess the ^000000Cube^3355FF";
 				mes "that was under the bed.^000000";
-				set lhz_secret02,4;
+				lhz_secret02 = 4;
 			}
 			else {
 				mes "^3355FFUnfortunately,";
@@ -1310,7 +1303,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 	mes "in which the sheets";
 	mes "are slovenly arranged.^000000";
 	next;
-	if (select("On the bed:Under the bed") == 1) {
+	if (select( "On the bed", "Under the bed" ) == 1) {
 		mes "^3355FFNo one's in the bed";
 		mes "and if you climbed in,";
 		mes "you'd just be alone. For";
@@ -1332,7 +1325,7 @@ lhz_cube,229,184,0	script	Goblet#cube	111,{
 			mes "It looks like you";
 			mes "missed the party.^000000";
 			next;
-			if (select("Examine the goblet.:Cancel") == 1) {
+			if (select( "Examine the goblet.", "Cancel" ) == 1) {
 				mes "^3355FFInside the goblet,";
 				mes "you find a ^000000Rusty Key^3355FF";
 				mes "which you decide to keep.";
@@ -1340,7 +1333,7 @@ lhz_cube,229,184,0	script	Goblet#cube	111,{
 				mes "rid of that rust somehow.";
 				mes "Perhaps you can dip the key";
 				mes "in some corrosive chemical?^000000";
-				set lhz_secret03,1;
+				lhz_secret03 = 1;
 			}
 			close;
 		}
@@ -1368,7 +1361,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	111,{
 		mes "chemicals on something else.^000000";
 		close;
 	}
-	else if (lhz_secret03 == 1) {
+	if (lhz_secret03 == 1) {
 		mes "^3355FFThere is a bottle";
 		mes "containing slightly";
 		mes "corrosive chemicals";
@@ -1382,7 +1375,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	111,{
 			mes "again. Now that it is clean,";
 			mes "the Rusty Key has become";
 			mes "a sparkling ^000000Green Key^3355FF.^000000";
-			set lhz_secret03,2;
+			lhz_secret03 = 2;
 		}
 		else {
 			mes "^3355FFWhatever you tried to";
@@ -1408,7 +1401,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 		mes "many drawers. Perhaps";
 		mes "something useful is inside?";
 		next;
-		if (select("Open:Cancel") == 1) {
+		if (select( "Open", "Cancel" ) == 1) {
 			input .@input$;
 			mes "^3355FFUnfortunately, the";
 			mes "cabinet has been locked.";
@@ -1417,7 +1410,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 		}
 		close;
 	}
-	else if (lhz_secret03 == 2) {
+	if (lhz_secret03 == 2) {
 		mes "^3355FFYou've found a";
 		mes "cabinet that contains";
 		mes "many drawers. Perhaps";
@@ -1430,7 +1423,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 			mes "one of the drawer keyholes.";
 			mes "You open the drawer and";
 			mes "obtain a strange ^000000Polygon^3355FF.^000000";
-			set lhz_secret03,3;
+			lhz_secret03 = 3;
 		}
 		else {
 			mes "^3355FFWhatever you tried";
@@ -1470,7 +1463,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 		mes "card to insert into the slot.^000000";
 		close;
 	}
-	else if (lhz_secret01 == 8) {
+	if (lhz_secret01 == 8) {
 		mes "^3355FFYou find a strange";
 		mes "tube that seems to";
 		mes "contain something.";
@@ -1485,14 +1478,14 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 			mes "the experiment tube to open";
 			mes "and reveal an ^000000Oval^3355FF which you";
 			mes "you choose to take with you.^000000";
-			set lhz_secret01,9;
+			lhz_secret01 = 9;
 		}
 		else {
 			mes "^3355FFNothing happened...^000000";
 		}
 		close;
 	}
-	else if (lhz_secret01 == 9) {
+	if (lhz_secret01 == 9) {
 		mes "^3355FFThis is where you";
 		mes "obtained the ^000000Oval^3355FF.";
 		mes "As you look around";
@@ -1518,17 +1511,17 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 					mes "ground splits open, revealing";
 					mes "an underground staircase.^000000";
 					next;
-					if (select("Go downstairs:Cancel") == 1) {
+					if (select( "Go downstairs", "Cancel" ) == 1) {
 						mes "^3355FFYou walk down";
 						mes "the long flight";
 						mes "of winding stairs...^000000";
 						close2;
 						//remove variables that are no longer used.
-						set lhz_sincube,0;
-						set lhz_secret01,0;
-						set lhz_secret02,0;
-						set lhz_secret03,0;
-						set MISC_QUEST,MISC_QUEST|512;
+						lhz_sincube = 0;
+						lhz_secret01 = 0;
+						lhz_secret02 = 0;
+						lhz_secret03 = 0;
+						MISC_QUEST = MISC_QUEST | 512;
 						warp "lhz_cube",177,13;
 						end;
 					}
@@ -1553,7 +1546,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 }
 
 lhz_cube,248,193,0	script	Box#cube1	111,{
-	if ((lhz_secret01 < 9) && (lhz_secret02 < 4) && (lhz_secret03 < 3)) {
+	if (lhz_secret01 < 9 && lhz_secret02 < 4 && lhz_secret03 < 3) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes.^000000";
@@ -1563,27 +1556,26 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 		mes "^3355FFNothing happened.^000000";
 		close;
 	}
-	else if ((lhz_secret01 != 10) || (lhz_secret02 != 5) || (lhz_secret03 != 4)) {
+	if (lhz_secret01 != 10 || lhz_secret02 != 5 || lhz_secret03 != 4) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes.^000000";
 		next;
-		switch(select("Oval Hole:Cube Hole:Polygon Hole")) {
+		switch( select( "Oval Hole", "Cube Hole", "Polygon Hole" ) ) {
 		case 1:
 			if (lhz_secret01 == 9) {
-				next;
 				input .@input$;
 				if (.@input$ == "Oval") {
 					mes "^3355FFYou insert the Oval";
 					mes "into the Oval shaped";
 					mes "hole where it fits perfectly.^000000";
-					set lhz_secret01,10;
+					lhz_secret01 = 10;
 					close;
 				}
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			else if (lhz_secret01 == 10) {
+			if (lhz_secret01 == 10) {
 				mes "^3355FFThe Oval shaped hole";
 				mes "already has an Oval in it.";
 				mes "Besides, it's not you have";
@@ -1595,7 +1587,6 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			close;
 		case 2:
 			if (lhz_secret02 == 4) {
-				next;
 				input .@input$;
 				if (.@input$ == "Cube") {
 					mes "^3355FFYou insert the Cube";
@@ -1603,13 +1594,13 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 					mes "and it clicks into place.";
 					mes "Your formal Kindergarten";
 					mes "training is finally justified.^000000";
-					set lhz_secret02,5;
+					lhz_secret02 = 5;
 					close;
 				}
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			else if (lhz_secret02 == 5) {
+			if (lhz_secret02 == 5) {
 				mes "^3355FFYou already placed";
 				mes "a Cube into the hole.";
 				mes "You could take it back";
@@ -1623,7 +1614,6 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			close;
 		case 3:
 			if (lhz_secret03 == 3) {
-				next;
 				input .@input$;
 				if (.@input$ == "Polygon") {
 					mes "^3355FFFortunately, the";
@@ -1633,13 +1623,13 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 					mes "nondescript Polygonal hole.";
 					mes "The Polygon fits perfectly,";
 					mes "almost as if it were destiny.^000000";
-					set lhz_secret03,4;
+					lhz_secret03 = 4;
 					close;
 				}
 				mes "^3355FFNothing happened.^000000";
 				close;
 			}
-			else if (lhz_secret03 == 4) {
+			if (lhz_secret03 == 4) {
 				mes "^3355FFThe Polygon is already";
 				mes "inserted into the hole.";
 				mes "Trust that this is as much";
@@ -1651,14 +1641,14 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			close;
 		}
 	}
-	else if (lhz_secret01 == 10 && lhz_secret02 == 5 && lhz_secret03 == 4 && lhz_sincube != 10) {
+	if (lhz_secret01 == 10 && lhz_secret02 == 5 && lhz_secret03 == 4 && lhz_sincube != 10) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes that";
 		mes "are now filled with the";
 		mes "objects you've inserted.^000000";
 		next;
-		if (select("Open the box.:Cancel") == 1) {
+		if (select( "Open the box.", "Cancel" ) == 1) {
 			mes "^3355FFYou open the box";
 			mes "and find that there's";
 			mes "a small card labeled";
@@ -1666,8 +1656,8 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			mes "You pocket this ^000000Laboratory";
 			mes "Permit^3355FF, knowing that you";
 			mes "will be needing it later.";
-			set lhz_sincube,10;
-			getitem 2657,1; //Lab_Passport
+			lhz_sincube = 10;
+			getitem 2657,1;// Lab_Passport
 		}
 		close;
 	}
@@ -1685,7 +1675,7 @@ lhz_cube,250,184,0	script	Door#cube	111,{
 	mes "^3355FFYou've come upon a";
 	mes "door that leads outside.^000000";
 	next;
-	if (select("Exit:Cancel") == 1) {
+	if (select( "Exit", "Cancel" ) == 1) {
 		warp "lighthalzen",310,302;
 		end;
 	}
@@ -1693,6 +1683,7 @@ lhz_cube,250,184,0	script	Door#cube	111,{
 }
 
 lhz_dun02,224,6,0	script	Exit1#lt	45,1,1,{
+	end;
 OnTouch_:
 	if (MISC_QUEST&512) {
 		warp "lhz_cube",231,90;
@@ -1921,7 +1912,7 @@ OnTouch_:
 		mes "I'll give you back";
 		mes "your money, just ";
 		mes "let me go! Crap!";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Alright, fine,";
@@ -3421,7 +3412,7 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "Those voices weren't";
 			mes "just in my head, were they?";
@@ -3499,7 +3490,7 @@ OnTouch_:
 			next;
 			mes "............";
 			next;
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "I'm hearing things";
 			mes "again! Where are all of";
@@ -3784,7 +3775,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	755,{
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion e_swt,"#li_Varmunt";
+			emotion ET_SWEAT;
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -3792,7 +3783,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	755,{
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion e_no1,"#li_researcher";
+			emotion ET_BEST, getnpcid(0, "#li_researcher");
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -3919,7 +3910,7 @@ lhz_que01,29,24,3	script	#li_researcher	754,{
 			mes "you've finally agreed";
 			mes "to join us. Welcome!";
 			next;
-			emotion e_swt,"#li_Varmunt";
+			emotion ET_SWEAT, getnpcid(0, "#li_Varmunt");
 			mes "[Varmunt]";
 			mes "Well, I don't know if I agree";
 			mes "with this company's policies,";
@@ -3927,7 +3918,7 @@ lhz_que01,29,24,3	script	#li_researcher	754,{
 			mes "seems to be an opportunity that";
 			mes "comes once in a lifetime, so...";
 			next;
-			emotion e_no1,"#li_researcher";
+			emotion ET_BEST;
 			mes "[??]";
 			mes "To be honest, this project";
 			mes "can only be a success with";
@@ -4853,7 +4844,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	53,{
 				mes "What are you talking about?";
 				close;
 			}
-			emotion e_gasp,"Crippled Girl#li_tre";
+			emotion ET_SURPRISE;
 			mes "[Crippled Girl]";
 			mes "Oh, that's mine!";
 			mes "I gave it to my big brother";
@@ -5520,7 +5511,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 		mes "You again?!";
 		mes "What the hell do";
 		mes "you want from me?!";
-		emotion e_ag,"Mad Scientist#li";
+		emotion ET_ANGER;
 		next;
 		switch(select("Let me speak with you.:Sorry for bothering you.")) {
 		case 1:
@@ -5531,7 +5522,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			next;
 			mes "[Wolfchev]";
 			mes "...........!";
-			emotion e_gasp,"Mad Scientist#li";
+			emotion ET_SURPRISE;
 			next;
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
@@ -5543,7 +5534,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			changequest 2089,2090;
 			close;
 		case 2:
-			emotion e_an,"Mad Scientist#li";
+			emotion ET_FRET;
 			mes "[Wolfchev]";
 			mes "''Sorry?!'' Do you";
 			mes "think ''sorry'' will";
@@ -5571,7 +5562,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 				mes "now that I would never";
 				mes "tell you why I neeeeed";
 				mes "these Beads. Bweh-heh!";
-				emotion e_gg,"Mad Scientist#li";
+				emotion ET_KIK;
 				next;
 				break;
 			}
@@ -5673,9 +5664,9 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			next;
 			mes "[Wolfchev]";
 			mes "...........!";
-			emotion e_gasp,"Mad Scientist#li";
+			emotion ET_SURPRISE;
 			next;
-			emotion e_gg,"Mad Scientist#li";
+			emotion ET_KIK;
 			mes "[Wolfchev]";
 			mes "Ah, but wait! I am collecting";
 			mes "something. Yes, bring me the";
@@ -5763,7 +5754,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 		case 1:
 			mes "[Sueii Slierre]";
 			mes ".............!";
-			emotion e_gasp,"Secretary Slierre#li";
+			emotion ET_SURPRISE;
 			next;
 			mes "[Sueii Slierre]";
 			mes "How do you know";
@@ -5828,7 +5819,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 			mes "you have any more questions.";
 			next;
 			select("About Wolfchev's Research");
-			emotion e_dots,"Secretary Slierre#li";
+			emotion ET_THINK;
 			mes "[Sueii Slierre]";
 			mes "I couldn't tell you any";
 			mes "more about Wolfchev.";
@@ -5900,7 +5891,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 						mes "[Sueii Slierre]";
 						mes "...";
 						mes "......";
-						emotion e_ic,"Secretary Slierre#li";
+						emotion ET_AHA;
 						next;
 						mes "[Sueii Slierre]";
 						mes "So... You're";
@@ -6008,7 +5999,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 			mes "[Sueii Slierre]";
 			mes "...";
 			mes "......";
-			emotion e_ic,"Secretary Slierre#li";
+			emotion ET_AHA;
 			next;
 			mes "[Sueii Slierre]";
 			mes "So... You're";
@@ -8429,7 +8420,7 @@ L_Mission:
 		mes "["+strcharinfo(0)+"]";
 		mes "Not long ago, the scientists of Regenschrim have stolen the research record and destroyed the machines that they used for research purposes.";
 		next;
-		emotion e_gasp,0;
+		emotion ET_SURPRISE;
 		mes "[Karl]";
 		mes "...!";
 		mes "Did you do that? ";

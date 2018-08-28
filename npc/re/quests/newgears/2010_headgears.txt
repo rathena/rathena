@@ -59,7 +59,7 @@ gonryun,149,189,0	script	Yotang#Flower_Of_Fairy	50,{
 		mes "You're speedy!";
 		mes "You deserve to be a master of the fanclub for the next term.";
 		next;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "Combining... ... ...";
 		next;
 		if (countitem(7165) > 99 && countitem(7166) > 99 && countitem(745) > 0 && countitem(981) > 0 && countitem(2211) > 0) {
@@ -72,7 +72,7 @@ gonryun,149,189,0	script	Yotang#Flower_Of_Fairy	50,{
 			delitem 981,1; //Violet_Dyestuffs
 			delitem 2211,1; //Bandana
 			getitem 5437,1; //Flower_Of_Fairy
-			emotion e_no1;
+			emotion ET_BEST;
 			next;
 			mes "[Yotang]";
 			mes "See you on the fan meeting!";
@@ -172,7 +172,7 @@ lhz_in02,276,281,1	script	Drunken Man#Necktie	748,{
 		mes "[Drunken Man]";
 		mes "What... you're weaker than me.";
 		mes "Go and reach the higher level!";
-		emotion e_go;
+		emotion ET_GO;
 		close;
 	}
 	mes "[Drunken Man]";
@@ -200,11 +200,11 @@ lhz_in02,276,281,1	script	Drunken Man#Necktie	748,{
 		mes "Great, wait for a moment!";
 		next;
 		mes "Combining... ch...ch... ...";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "[Drunken Man]";
 		mes "Drunk...drunk.... Zzzzz...";
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		next;
 		if (countitem(978) > 0 && countitem(7151) > 29 && countitem(1059) > 99 && countitem(7217) > 19) {
 			callsub L_CheckWeight;
@@ -243,7 +243,7 @@ lhz_in02,276,281,1	script	Drunken Man#Necktie	748,{
 	mes "[Drunken Man]";
 	mes "^FF00001 Cobaltblue Dyestuff, 30 Oil Papers, 100 Fabrics, 20 Spools^000000!";
 	mes "Hurry! I'll be futzing around with others.";
-	emotion e_go;
+	emotion ET_GO;
 	close;
 
 L_CheckWeight:
@@ -271,7 +271,7 @@ comodo,236,164,0	script	Hat Girl#Hair_Brush	69,{
 	if(select("I still prefer hairbands!:Hat is the best!") == 1) {
 		mes "[Hat Girl]";
 		mes "Wear your boring hairband for the whole lifetime!";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 	mes "[Hat Girl]";
@@ -292,7 +292,7 @@ comodo,236,164,0	script	Hat Girl#Hair_Brush	69,{
 		if(select("I think the hairband is better...:Yes, please make it!") == 1) {
 			mes "[Hat Girl]";
 			mes "Wear your boring hairband for the whole lifetime!";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 		callsub L_CheckWeight;
@@ -300,7 +300,7 @@ comodo,236,164,0	script	Hat Girl#Hair_Brush	69,{
 		mes "Okay, I'll do it right away!";
 		next;
 		mes "Ch ch ch... combining...ch ch.";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		next;
 		mes "[Hat Girl]";
 		mes "Here, it's done!";
@@ -395,7 +395,7 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 			callsub L_CheckWeight;
 			mes "[Bebete]";
 			mes "Wow, you already know all the materials, angel.";
-			emotion e_lv2;
+			emotion ET_BIGTHROB;
 			next;
 			mes "[Bebete]";
 			mes "You're lucky. I have one statue on going.";
@@ -413,7 +413,7 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 				next;
 				mes "[Bebete]";
 				mes "See you again, my angel~!";
-				emotion e_thx;
+				emotion ET_THANKS;
 				next;
 				mes "[" + strcharinfo(0) + "]";
 				mes "... ...";
@@ -425,7 +425,7 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 			mes "[Bebete]";
 			mes "Hey, I don't see";
 			mes "any materials in your bag..";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		mes "[Bebete]";
@@ -433,7 +433,7 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 		next;
 		mes "[Bebete]";
 		mes "Wow, the angel!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Bebete]";
 		mes "Are you a real angel? Have you been to heaven?";
@@ -444,11 +444,11 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "There's nothing. Everything is lie!";
-			emotion e_gg,1;
+			emotion ET_KIK, playerattached();
 			next;
 			mes "[Bebete]";
 			mes "You're a devil! a monster! an idiot!";
-			emotion e_sigh;
+			emotion ET_OHNO;
 			close;
 		}
 		mes "[" + strcharinfo(0) + "]";
@@ -584,7 +584,7 @@ gef_fild07,108,161,4	script	Roda Frog#Frog_Cap	1012,1,1,{
 			next;
 			mes "[King Froggie VII]";
 			mes "Thank you so much, " + strcharinfo(0) + ".";
-			emotion e_thx;
+			emotion ET_THANKS;
 			next;
 			mes "[King Froggie VII]";
 			mes "By the way, we have another urgent matter. So I would ask you one more help.";
@@ -629,7 +629,7 @@ gef_fild07,108,161,4	script	Roda Frog#Frog_Cap	1012,1,1,{
 			next;
 			mes "[King Froggie VII]";
 			mes "You became an example for the young frogs. Thank you again.";
-			emotion e_thx;
+			emotion ET_THANKS;
 			next;
 			mes "[King Froggie VII]";
 			mes "Therefore, I'm considering adding your outstanding exploit to our frog's history book. But I need your evidence for your work.";
@@ -782,7 +782,7 @@ gef_fild07,108,161,4	script	Roda Frog#Frog_Cap	1012,1,1,{
 	} else if (hat_2009 == 6) {
 		mes "[King Froggie VII]";
 		mes "All the frogs in the world, praise " + strcharinfo(0) + ", our eternal hero!";
-		emotion e_thx;
+		emotion ET_THANKS;
 		close2;
 		donpcevent "Roda Frog#Frog_Cap::OnDisable";
 		end;
@@ -820,13 +820,13 @@ OnTouch:
 	case 2:
 		donpcevent "Roda Frog#Frog_Cap::OnEnable";
 		if (hat_2009 > 0) {
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "It's so amazing to see";
 			mes "the frog which transforms itself.";
 			close;
 		} else {
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "Oh my.. the frog transformed into a child...";
 			close;
@@ -1078,7 +1078,7 @@ alberta,120,206,3	script	Alonie#Solo_Play_Box	787,{
 			mes "you're the best lonely being!";
 			next;
 			mes "[Alonie]";
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "Fight back your tears!";
 			mes "Huhu, Yapyap!";
 			completequest 1106;

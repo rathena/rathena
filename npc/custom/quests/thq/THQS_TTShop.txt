@@ -20,10 +20,10 @@ prt_in,159,172,0	warp	thqwrp	3,3,yuno_in01,123,155
 
 prt_in,164,174,1	script	Treasure Hunter's Shop	65,{
 	mes "[Ash]";
-	mes "Ahh, "+strcharinfo(0)+"! Welcome to the Offical Treasure Hunter's Guild Shop.";
+	mes "Ahh, "+strcharinfo(0)+"! Welcome to the Official Treasure Hunter's Guild Shop.";
 	mes "You currently have ^FF0000"+#Treasure_Token+"^000000 treasure tokens!!!";
 	next;
-	menu "How does this place work?",-,"What do you have in stock?",N_Shop,"Nevermind",N_NVM;
+	menu "How does this place work?",-,"What do you have in stock?",N_Shop,"Never mind",N_NVM;
 	mes "[Ash]";
 	mes "Well you see here you can exchange your treasure hunter tokens for zeny or rare weapons forged by our blacksmiths.";
 	mes " ";
@@ -43,11 +43,11 @@ N_Shop:
 	mes " ";
 	mes "(Note T stands for a Treasure Token.)";
 	next;
-	menu "Trade for Zeny",-,"Trade for Weapons",N_BuyWeps,"Trade for Cards",N_BuyCards,"Nevermind",N_NVM;
+	menu "Trade for Zeny",-,"Trade for Weapons",N_BuyWeps,"Trade for Cards",N_BuyCards,"Never mind",N_NVM;
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "1000z - 1T",-,"10000z - 10T",N_10T,"100000z - 100T",N_100T,"Nevermind",N_NVM;
+	menu "1000z - 1T",-,"10000z - 10T",N_10T,"100000z - 100T",N_100T,"Never mind",N_NVM;
 	if (#Treasure_Token > 0) goto N_GetZeny1k;
 	mes "You don't have enough tokens!";
 	close;
@@ -76,12 +76,12 @@ N_BuyWeps:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Axe's",-,"1 Handed Swords",N_1HandSword,"2 Handed Swords",N_2HandSword,"Book's",N_Book,"Bow's",N_Bow,"Katar's",N_Katar,"Knuckle's",N_Knuckle,"Mace's",N_Mace,"Whips",N_Whip,"Wands",N_Wand,"Nevermind",N_NVM;
+	menu "Axe's",-,"1 Handed Swords",N_1HandSword,"2 Handed Swords",N_2HandSword,"Book's",N_Book,"Bow's",N_Bow,"Katar's",N_Katar,"Knuckle's",N_Knuckle,"Mace's",N_Mace,"Whips",N_Whip,"Wands",N_Wand,"Never mind",N_NVM;
 
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Sabbath - 160T",-,"Slaughter - 160T",N_Slau,"Tomahawk - 180T",N_Toma,"Great Axe - 200T",N_GreatA,"Guillotine - 200T",N_Guill,"Nevermind",N_NVM;
+	menu "Sabbath - 160T",-,"Slaughter - 160T",N_Slau,"Tomahawk - 180T",N_Toma,"Great Axe - 200T",N_GreatA,"Guillotine - 200T",N_Guill,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 160) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-160;
@@ -122,7 +122,7 @@ N_1HandSword:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Edge - 130T",-,"Solar Sword - 150T",N_SolarS,"Caesar's Sword - 170T",N_CaesarS,"Nagan - 180T",N_Nagan,"Immaterial Sword - 200T",N_ImmatS,"Excalibur - 200T",N_Excal,"Byeollungum - 240T",N_Byeoll,"Talefing - 320T",N_Talef,"Nevermind",N_NVM;
+	menu "Edge - 130T",-,"Solar Sword - 150T",N_SolarS,"Caesar's Sword - 170T",N_CaesarS,"Nagan - 180T",N_Nagan,"Immaterial Sword - 200T",N_ImmatS,"Excalibur - 200T",N_Excal,"Byeollungum - 240T",N_Byeoll,"Talefing - 320T",N_Talef,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 130) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-130;
@@ -177,7 +177,7 @@ N_2HandSword:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Dragon Slayer - 140T",-,"Schweizersabel - 200T",N_Schwe,"Katzbalger - 300T",N_Katzb,"Muramasa - 300T",N_Murama,"Masamune - 400T",N_Masamu,"Balmung - 2000T",N_Balmu,"Nevermind",N_NVM;
+	menu "Dragon Slayer - 140T",-,"Schweizersabel - 200T",N_Schwe,"Katzbalger - 300T",N_Katzb,"Muramasa - 300T",N_Murama,"Masamune - 400T",N_Masamu,"Balmung - 2000T",N_Balmu,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 140) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-140;
@@ -220,7 +220,7 @@ N_Book:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Book of the Burning Sun - 80T",-,"Book of the Rough Seas - 80T",N_RoughSea,"Book of the Dry Winds - 80T",N_DryWinds,"Book of the Ripe Earth - 80T",N_RipeEarth,"Book of the Revelations - 80T",N_Revela,"Bible - 90T",N_Bible,"Tablet - 120T",N_Tablet,"Nevermind",N_NVM;
+	menu "Book of the Burning Sun - 80T",-,"Book of the Rough Seas - 80T",N_RoughSea,"Book of the Dry Winds - 80T",N_DryWinds,"Book of the Ripe Earth - 80T",N_RipeEarth,"Book of the Revelations - 80T",N_Revela,"Bible - 90T",N_Bible,"Tablet - 120T",N_Tablet,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 80) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-80;
@@ -268,7 +268,7 @@ N_Bow:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Rudra's Bow - 150T",-,"Roguemaster's Bow - 150T",N_Rogue,"Nevermind",N_NVM;
+	menu "Rudra's Bow - 150T",-,"Roguemaster's Bow - 150T",N_Rogue,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 150) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-150;
@@ -286,7 +286,7 @@ N_Katar:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Katar of the Blazing Rage - 70T",-,"Katar of the Cold Icicle - 70T",N_ColdIce,"Katar of the Piercing Wind - 70T",N_PiercWind,"Katar of the Dusty Thornbush - 70T",N_DustyT,"Sharpened Legbone of Ghoul - 125T",N_Legbone,"Infiltrator - 150T",N_Infiltra,"Nevermind",N_NVM;
+	menu "Katar of the Blazing Rage - 70T",-,"Katar of the Cold Icicle - 70T",N_ColdIce,"Katar of the Piercing Wind - 70T",N_PiercWind,"Katar of the Dusty Thornbush - 70T",N_DustyT,"Sharpened Legbone of Ghoul - 125T",N_Legbone,"Infiltrator - 150T",N_Infiltra,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 70) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-70;
@@ -328,7 +328,7 @@ N_Knuckle:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Kaiser Knuckle - 75T",-,"Berserk - 75T",N_Berserk,"Nevermind",N_NVM;
+	menu "Kaiser Knuckle - 75T",-,"Berserk - 75T",N_Berserk,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 75) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-75;
@@ -346,7 +346,7 @@ N_Mace:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Spike - 65T",-,"Slash - 90T",N_Slash,"Grand Cross - 100T",N_GrandC,"Quadrille - 110T",N_Quadr,"Mjolnir - 1000T",N_MJ,"Nevermind",N_NVM;
+	menu "Spike - 65T",-,"Slash - 90T",N_Slash,"Grand Cross - 100T",N_GrandC,"Quadrille - 110T",N_Quadr,"Mjolnir - 1000T",N_MJ,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 65) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-65;
@@ -382,7 +382,7 @@ N_Whip:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Rapture Rose - 50T",-,"Chemeti - 65T",N_Chemeti,"Nevermind",N_NVM;
+	menu "Rapture Rose - 50T",-,"Chemeti - 65T",N_Chemeti,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 50) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-50;
@@ -400,7 +400,7 @@ N_Wand:
 	mes "[Ash]";
 	mes "This is what we have to offer.";
 	next;
-	menu "Mighty Staff - 90T",-,"Wizardry Staff - 150T",N_Wizardry,"Bone Wand - 110T",N_BoneW,"Staff of Soul - 120T",N_SOSoul,"Nevermind",N_NVM;
+	menu "Mighty Staff - 90T",-,"Wizardry Staff - 150T",N_Wizardry,"Bone Wand - 110T",N_BoneW,"Staff of Soul - 120T",N_SOSoul,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 90) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-90;
@@ -433,7 +433,7 @@ N_BuyCards:
 	menu "Poring Card - 2T",-,"Pasana Card - 420T",N_CPasana,"Dokebi Card - 420T",N_CDok,"Swordfish Card - 420T",N_CSFish,
 		"Sandman Card - 420T",N_CSMan,"Drainliar Card - 360T",N_CDrain,"Kaho Card - 360T",N_CKaho,"Mandragora Card - 360T",N_CMand,
 		"Vadon Card - 360T",N_CVadon,"Mummy Card - 540T",N_CMummy,"Zenorc Card - 240T",N_CZeno,"Condor Card - 240T",N_CCond,
-		"Zombie Card - 210T",N_CZomb,"Nevermind",N_NVM;
+		"Zombie Card - 210T",N_CZomb,"Never mind",N_NVM;
 
 	if (#Treasure_Token < 2) goto N_NeedToken;
 	set #Treasure_Token,#Treasure_Token-2;

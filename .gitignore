@@ -46,10 +46,6 @@ Thumbs.db
 /3rdparty/libconfig/*.o
 /3rdparty/libconfig/obj
 
-# /3rdparty/mt19937ar/
-/3rdparty/mt19937ar/Makefile
-/3rdparty/mt19937ar/*.o
-
 # /3rdparty/yaml-cpp/
 /3rdparty/yaml-cpp/Makefile
 
@@ -59,6 +55,9 @@ Thumbs.db
 # /conf/
 /conf/import
 /conf/msg_conf/import
+
+# /lib
+/lib
 
 # /log/
 /log/*.log
@@ -86,10 +85,6 @@ Thumbs.db
 /src/map/obj_sql
 /src/map/pcre.h
 
-# /src/test/
-/src/test/Makefile
-/src/test/obj
-
 # /src/tool/
 /src/tool/Makefile
 /src/tool/obj_all
@@ -101,50 +96,11 @@ Thumbs.db
 /tools/*.ilk
 /tools/*.pdb
 
-# /vcproj-15/
-/vcproj-15/char-server
-/vcproj-15/login-server
-/vcproj-15/mapcache
-/vcproj-15/map-server
-/vcproj-15/*.user
-
-# /vcproj-14/
+# Visual Studio
 .vs
 *.VC.db
 *.VC.opendb
-/vcproj-14/char-server
-/vcproj-14/login-server
-/vcproj-14/mapcache
-/vcproj-14/map-server
-/vcproj-14/*.user
 
-# /vcproj-13/
-/vcproj-13/char-server
-/vcproj-13/login-server
-/vcproj-13/mapcache
-/vcproj-13/map-server
-/vcproj-13/*.user
-
-# /vcproj-12/
-/vcproj-12/char-server
-/vcproj-12/login-server
-/vcproj-12/mapcache
-/vcproj-12/map-server
-/vcproj-12/*.user
-
-# /vcproj-10/
-/vcproj-10/char-server
-/vcproj-10/login-server
-/vcproj-10/mapcache
-/vcproj-10/map-server
-/vcproj-10/*.user
-
-# /vcproj-9/
-/vcproj-9/*.user
-/vcproj-9/char-server
-/vcproj-9/login-server
-/vcproj-9/map-server
-/vcproj-9/mapcache
 /.idea/.name
 /.idea/misc.xml
 /.idea/modules.xml
@@ -152,6 +108,7 @@ Thumbs.db
 /.idea/vcs.xml
 /.idea/workspace.xml
 /build/
+/cbuild/
 
 # bat tools
 /charserv.bat

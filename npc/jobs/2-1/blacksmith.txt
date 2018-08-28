@@ -1076,7 +1076,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "Tell him I'm satisfied with the quality of the workmanship.";
 		next;
 		getitem 1073,1; //Merchant_Voucher_1
-		emotion e_lv;
+		emotion ET_THROB;
 		mes "[Wickebine]";
 		mes "Here's the receipt.";
 		mes "I think you did";
@@ -1087,7 +1087,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		end;
 	}
 	else if (BSMITH_Q == 14) {
-		emotion e_lv;
+		emotion ET_THROB;
 		cutin "Job_Black_hucke02",2;
 		mes "[Wickebine]";
 		mes "Thanks for the delivery.";
@@ -1100,11 +1100,11 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "[Wickebine]";
 		mes "...";
 		next;
-		mes "[Wickemine]";
+		mes "[Wickebine]";
 		mes "...";
 		mes "......";
 		next;
-		mes "[Wickmine]";
+		mes "[Wickebine]";
 		mes "They're late.";
 		mes "They're late,";
 		mes "they're late,";
@@ -1113,7 +1113,7 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "[Wickebine]";
 		mes "How long does it take for something to ship from Geschupenschte? Usually, the Geffen Blacksmith Guild is pretty prompt...";
 		next;
-		emotion e_lv;
+		emotion ET_THROB;
 		mes "[Wickebine]";
 		mes "Ooohh...";
 		mes "This is very";
@@ -1375,7 +1375,7 @@ hugel,168,183,1	script	Bismarc#BLS	118,{
 
 ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 	if (BSMITH_Q == 16) {
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
 		mes "Oh...so you're the one who wants to be a blacksmith?";
 		mes "Nice, heh heh.";
@@ -1563,7 +1563,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 		close;
 	}
 	else if (BSMITH_Q == 17) {
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
 		mes "Yeap, you just passed the Blacksmith job test~";
 		next;
@@ -1578,7 +1578,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 		close;
 	}
 	else {
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
 		mes "I had to deal with the heat when I was in Morroc,";
 		mes "and now I have to deal with the smog in this Einbroch!";

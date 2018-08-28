@@ -74,6 +74,9 @@
 		close;
 	}
 	
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
 	
@@ -105,12 +108,24 @@
 	}
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
+		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+		mes "[Blacksmith Mighty Hammer]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Do you think I'm stupid?!";
+		mes "You switched the item while I wasn't looking! Get out of here!";
+		close;
+	}
+
 	mes "[Blacksmith Mighty Hammer]";
 	mes "Tac! Tac! Tac!";
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Blacksmith Mighty Hammer]";
 		mes "The sound refreshes my mind everytime I hear it.";
 		mes "Here, have it. Refine succeeded flawlessly!";
@@ -118,7 +133,7 @@
 	}
 	downrefitem .@part;
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Blacksmith Mighty Hammer]";
 	mes "Oops!!";
 	next;
@@ -200,6 +215,9 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 		mes "This weapon is perfect, no need to refine it anymore~";
 		close;
 	}
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10_HD, REFINE_MATERIAL_ID);
 	switch(getequipweaponlv(.@part)) {
@@ -253,11 +271,23 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	}
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
+		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+		mes "[Basta]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Do you think I'm stupid?!";
+		mes "You switched the item while I wasn't looking! Get out of here!";
+		close;
+	}
+
 	mes "Pow! Pow! Pow! Pow!";
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Basta]";
 		mes "Great! Nicely done!!";
 		mes "I really am the best blacksmith in the whole wide world!";
@@ -265,7 +295,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	}
 	downrefitem .@part;
 	next;
-	emotion (!rand(5))?e_cash:e_omg;
+	emotion (!rand(5))?ET_MONEY:ET_HUK;
 	mes "[Basta]";
 	mes "Aaaaaaaaaaak!!!";
 	next;

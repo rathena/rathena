@@ -1,25 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "itemdb.hpp"
 
 #include <stdlib.h>
 
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
-#include "intif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "log.hpp"
 #include "mob.hpp"
+#include "pc.hpp"
+#include "status.hpp"
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -201,7 +201,7 @@ unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
 * @param group_id: The group ID of item that obtained by player
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_item_group_entry *data) {
+static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identify, struct s_item_group_entry *data) {
 	uint16 i, get_amt = 0;
 	struct item tmp;
 
@@ -211,7 +211,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
-	tmp.identify = 1;
+	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
 	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
@@ -245,7 +245,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 * @param nameid: The item that trigger this item group
 * @return val: 0:success, 1:no sd, 2:invalid item group
 */
-char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
+char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd) {
 	uint16 i = 0;
 	struct s_item_group_db *group;
 
@@ -260,7 +260,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	if (group->must_qty) {
 		for (i = 0; i < group->must_qty; i++)
 			if (&group->must[i])
-				itemdb_pc_get_itemgroup_sub(sd,&group->must[i]);
+				itemdb_pc_get_itemgroup_sub(sd, identify, &group->must[i]);
 	}
 
 	// Get the 'random' item each random group
@@ -271,7 +271,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 		rand = rnd()%group->random[i].data_qty;
 		if (!(&group->random[i].data[rand]) || !group->random[i].data[rand].nameid)
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd,&group->random[i].data[rand]);
+		itemdb_pc_get_itemgroup_sub(sd, identify, &group->random[i].data[rand]);
 	}
 
 	return 0;
@@ -631,6 +631,11 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 			ShowWarning( "itemdb_read_group: Item Group '%s' has not been cleared, because it did not exist.\n", str[0] );
 			return false;
 		}
+	}
+
+	if( columns < 3 ){
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
 	}
 
 	// Checking sub group
@@ -1115,7 +1120,7 @@ bool itemdb_parse_roulette_db(void)
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
 				continue;
 			}
-			if (amount < 1) {
+			if (amount < 1 || amount > MAX_AMOUNT){
 				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
 				continue;
 			}
@@ -1419,6 +1424,12 @@ static int itemdb_readdb(void){
 				continue;
 			memset(str, 0, sizeof(str));
 
+			p = strstr(line,"//");
+
+			if( p != nullptr ){
+				*p = '\0';
+			}
+
 			p = line;
 			while( ISSPACE(*p) )
 				++p;
@@ -1446,14 +1457,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[19] = p;
+			str[19] = p + 1;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			p[1] = '\0';
+			*p = '\0';
 			p += 2;
 
 			// OnEquip_Script
@@ -1462,14 +1473,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[20] = p;
+			str[20] = p + 1;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			p[1] = '\0';
+			*p = '\0';
 			p += 2;
 
 			// OnUnequip_Script (last column)
@@ -1479,16 +1490,19 @@ static int itemdb_readdb(void){
 				continue;
 			}
 			str[21] = p;
+			p = &str[21][strlen(str[21]) - 2];
 
-			if ( str[21][strlen(str[21])-2] != '}' ) {
+			if ( *p != '}' ) {
 				/* lets count to ensure it's not something silly e.g. a extra space at line ending */
 				int v, lcurly = 0, rcurly = 0;
 
 				for( v = 0; v < strlen(str[21]); v++ ) {
 					if( str[21][v] == '{' )
 						lcurly++;
-					else if ( str[21][v] == '}' )
+					else if (str[21][v] == '}') {
 						rcurly++;
+						p = &str[21][v];
+					}
 				}
 
 				if( lcurly != rcurly ) {
@@ -1496,8 +1510,10 @@ static int itemdb_readdb(void){
 					continue;
 				}
 			}
+			str[21] = str[21] + 1;  //skip the first left curly
+			*p = '\0';              //null the last right curly
 
-			if (!itemdb_parse_dbrow(str, path, lines, 0))
+			if (!itemdb_parse_dbrow(str, path, lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
 
 			count++;
@@ -1565,12 +1581,15 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	if ((!map_flag_vs2(m) && id->flag.no_equip&1) || // Normal
-		(map[m].flag.pvp && id->flag.no_equip&2) || // PVP
-		(map_flag_gvg2_no_te(m) && id->flag.no_equip&4) || // GVG
-		(map[m].flag.battleground && id->flag.no_equip&8) || // Battleground
-		(map_flag_gvg2_te(m) && id->flag.no_equip&16) || // WOE:TE
-		(map[m].flag.restricted && id->flag.no_equip&(8*map[m].zone)) // Zone restriction
+	
+	struct map_data *mapdata = map_getmapdata(m);
+
+	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
@@ -1914,40 +1933,6 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
- * Re-link monster drop data with item data
- * Fixes the need of a @reloadmobdb after a @reloaditemdb
- * @author Epoque
- */
-void itemdb_reload_itemmob_data(void) {
-	int i;
-
-	for( i = 0; i < MAX_MOB_DB; i++ ) {
-		struct mob_db *entry = mob_db(i);
-		int d, k;
-
-		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
-			struct item_data *id;
-			if( !entry->dropitem[d].nameid )
-				continue;
-			id = itemdb_search(entry->dropitem[d].nameid);
-
-			for (k = 0; k < MAX_SEARCH; k++) {
-				if (id->mob[k].chance <= entry->dropitem[d].p)
-					break;
-			}
-
-			if (k == MAX_SEARCH)
-				continue;
-
-			if (id->mob[k].id != i)
-				memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
-			id->mob[k].chance = entry->dropitem[d].p;
-			id->mob[k].id = i;
-		}
-	}
-}
-
-/**
 * Reload Item DB
 */
 void itemdb_reload(void) {
@@ -1969,7 +1954,7 @@ void itemdb_reload(void) {
 	if (battle_config.feature_roulette)
 		itemdb_parse_roulette_db();
 
-	itemdb_reload_itemmob_data();
+	mob_reload_itemmob_data();
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();

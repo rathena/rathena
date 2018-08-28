@@ -1,13 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _BATTLE_HPP_
-#define _BATTLE_HPP_
+#ifndef BATTLE_HPP
+#define BATTLE_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-
-#include "../config/core.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
+#include "../config/core.hpp"
 
 #include "map.hpp" //ELE_MAX
 
@@ -83,7 +82,7 @@ struct Damage {
 };
 
 //(Used in read pc.c,) attribute table (battle_attr_fix)
-extern int attr_fix_table[4][ELE_MAX][ELE_MAX];
+extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 // Damage Calculation
 
@@ -262,9 +261,12 @@ struct Battle_Config
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;
 	int natural_heal_weight_rate;
+	int natural_heal_weight_rate_renewal;
 	int arrow_decrement;
 	int max_aspd;
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
+	int max_hp_lv99;
+	int max_hp_lv150;
 	int max_hp;
 	int max_sp;
 	int max_lv, aura_lv;
@@ -316,6 +318,7 @@ struct Battle_Config
 	int vending_max_value;
 	int vending_over_max;
 	int vending_tax;
+	int vending_tax_min;
 	int show_steal_in_same_party;
 	int party_share_type;
 	int party_hp_mode;
@@ -635,6 +638,14 @@ struct Battle_Config
 	int feature_achievement;
 	int allow_bound_sell;
 	int event_refine_chance;
+	int autoloot_adjust;
+	int broadcast_hide_name;
+	int skill_drop_items_full;
+	int feature_homunculus_autofeed;
+	int summoner_trait;
+	int homunculus_autofeed_always;
+	int feature_attendance;
+	int feature_privateairship;
 
 #include "../custom/battle_config_struct.inc"
 };
@@ -655,4 +666,4 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
  **/
 int battle_damage_area( struct block_list *bl, va_list ap);
 
-#endif /* _BATTLE_HPP_ */
+#endif /* BATTLE_HPP */

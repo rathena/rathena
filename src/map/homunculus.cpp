@@ -1,34 +1,34 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "homunculus.hpp"
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/mmo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "log.hpp"
+#include "battle.hpp"
 #include "clif.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
-#include "pc.hpp"
-#include "party.hpp"
-#include "trade.hpp"
+#include "log.hpp"
 #include "npc.hpp"
-#include "battle.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "trade.hpp"
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
 
-static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(hom_hungry);
 static uint16 homunculus_count;
 static unsigned int hexptbl[MAX_LEVEL];
 
@@ -200,7 +200,7 @@ int hom_dead(struct homun_data *hd)
 	//There's no intimacy penalties on death (from Tharis)
 	struct map_session_data *sd = hd->master;
 
-	clif_emotion(&hd->bl, E_WAH);
+	clif_emotion(&hd->bl, ET_KEK);
 
 	//Delete timers when dead.
 	hom_hungry_timer_delete(hd);
@@ -209,7 +209,7 @@ int hom_dead(struct homun_data *hd)
 	if (!sd) //unit remove map will invoke unit free
 		return 3;
 
-	clif_emotion(&sd->bl, E_SOB);
+	clif_emotion(&sd->bl, ET_CRY);
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
 	return 3;
 }
@@ -360,7 +360,7 @@ short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 	if (idx < 0) // Invalid skill
 		return 0;
 
-	if (!hd || !&hd->homunculus)
+	if (!hd)
 		return 0;
 
 	if (hd->homunculus.hskill[idx].id == skill_id)
@@ -564,7 +564,7 @@ int hom_evolution(struct homun_data *hd)
 	nullpo_ret(hd);
 
 	if(!hd->homunculusDB->evo_class || hd->homunculus.class_ == hd->homunculusDB->evo_class) {
-		clif_emotion(&hd->bl, E_SWT);
+		clif_emotion(&hd->bl, ET_SWEAT);
 		return 0 ;
 	}
 	sd = hd->master;
@@ -595,7 +595,7 @@ int hom_evolution(struct homun_data *hd)
 		return 0;
 
 	clif_spawn(&hd->bl);
-	clif_emotion(&sd->bl, E_NO1);
+	clif_emotion(&sd->bl, ET_BEST);
 	clif_specialeffect(&hd->bl,EF_HO_UP,AREA);
 
 	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
@@ -626,7 +626,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	m_id    = hom_class2mapid(homun_id);
 
 	if( m_class == -1 || m_id == -1 || !(m_class&HOM_EVO) || !(m_id&HOM_S) ) {
-		clif_emotion(&hd->bl, E_SWT);
+		clif_emotion(&hd->bl, ET_SWEAT);
 		return 0;
 	}
 
@@ -646,7 +646,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 		return 0;
 
 	clif_spawn(&hd->bl);
-	clif_emotion(&sd->bl, E_NO1);
+	clif_emotion(&sd->bl, ET_BEST);
 	clif_specialeffect(&hd->bl,EF_HO_UP,AREA);
 
 	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
@@ -828,19 +828,19 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 
 	if ( hd->homunculus.hunger >= 91 ) {
 		hom_decrease_intimacy(hd, 50);
-		emotion = E_WAH;
+		emotion = ET_KEK;
 	} else if ( hd->homunculus.hunger >= 76 ) {
 		hom_decrease_intimacy(hd, 5);
-		emotion = E_SWT2;
+		emotion = ET_PROFUSELY_SWEAT;
 	} else if ( hd->homunculus.hunger >= 26 ) {
 		hom_increase_intimacy(hd, 75);
-		emotion = E_HO;
+		emotion = ET_DELIGHT;
 	} else if ( hd->homunculus.hunger >= 11 ) {
 		hom_increase_intimacy(hd, 100);
-		emotion = E_HO;
+		emotion = ET_DELIGHT;
 	} else {
 		hom_increase_intimacy(hd, 50);
-		emotion = E_HO;
+		emotion = ET_DELIGHT;
 	}
 
 	hd->homunculus.hunger += 10;	//dunno increase value for each food
@@ -856,7 +856,7 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 
 	// Too much food :/
 	if(hd->homunculus.intimacy == 0)
-		return hom_delete(sd->hd, E_OMG);
+		return hom_delete(sd->hd, ET_HUK);
 
 	return 0;
 }
@@ -864,8 +864,7 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 /**
 * Timer to reduce hunger level
 */
-static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(hom_hungry){
 	struct map_session_data *sd;
 	struct homun_data *hd;
 
@@ -885,18 +884,18 @@ static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
 
 	hd->homunculus.hunger--;
 	if(hd->homunculus.hunger <= 10) {
-		clif_emotion(&hd->bl, E_AN);
+		clif_emotion(&hd->bl, ET_FRET);
 	} else if(hd->homunculus.hunger == 25) {
-		clif_emotion(&hd->bl, E_HMM);
+		clif_emotion(&hd->bl, ET_SCRATCH);
 	} else if(hd->homunculus.hunger == 75) {
-		clif_emotion(&hd->bl, E_OK);
+		clif_emotion(&hd->bl, ET_OK);
 	}
 
 	if (hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
 		if (!hom_decrease_intimacy(hd, 100))
-			return hom_delete(hd, E_OMG);
+			return hom_delete(hd, ET_HUK);
 		clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
 	}
 
@@ -1041,7 +1040,6 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
-	status_percent_heal(&hd->bl, 100, 100);
 
 	hd->hungry_timer = INVALID_TIMER;
 	hd->masterteleport_timer = INVALID_TIMER;
@@ -1097,7 +1095,7 @@ bool hom_call(struct map_session_data *sd)
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
-		if (battle_config.slaves_inherit_speed&1)
+		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
 			status_calc_bl(&hd->bl, SCB_SPEED);
 		hom_save(hd);
 	} else
@@ -1117,6 +1115,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;
+	bool created = false;
 
 	sd = map_id2sd(account_id);
 	if(!sd)
@@ -1133,14 +1132,19 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		return 0;
 	}
 
-	if (!sd->status.hom_id) //Hom just created.
+	if (!sd->status.hom_id) { //Hom just created.
 		sd->status.hom_id = sh->hom_id;
+		created = true;
+	}
 	if (sd->hd) //uh? Overwrite the data.
 		memcpy(&sd->hd->homunculus, sh, sizeof(struct s_homunculus));
 	else
 		hom_alloc(sd, sh);
 
 	hd = sd->hd;
+	if (created)
+		status_percent_heal(&hd->bl, 100, 100);
+
 	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
 	{
 		if(map_addblock(&hd->bl))

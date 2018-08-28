@@ -208,13 +208,13 @@ OnTouch:
 		mes "[Lazy Young Man]";
 		mes "Arrgg~ I'm thirsty~~ so thirsty~~";
 		mes "Give me Palm juice... Palm Juuiice~~";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
-		emotion e_an;
+		emotion ET_FRET;
 		next;
-		emotion e_an;
+		emotion ET_FRET;
 		next;
-		emotion e_an;
+		emotion ET_FRET;
 		close;
 	}
 	end;
@@ -227,11 +227,11 @@ dewata,159,81,4	script	Tourist#dew-1	881,{
 	next;
 	mes "[Nasolo]";
 	mes "If only I had one...";
-	emotion e_sob;
+	emotion ET_CRY;
 	next;
 	mes "[Nasolo]";
 	mes "I wonder when my princess will come...";
-	emotion e_sigh;
+	emotion ET_OHNO;
 	close;
 }
 
@@ -324,12 +324,12 @@ dewata,147,107,6	script	Gourmet#dew	85,{
 	mes "[Gourmet]";
 	mes "Oh... it's like a party in my";
 	mes "mouth... and everyone's invited!";
-	emotion e_sob;
+	emotion ET_CRY;
 	next;
 	mes "[Gourmet]";
 	mes "Master~ One more please~";
-	emotion e_no1;
-	emotion e_ok,0,"Restauranteur#dew";
+	emotion ET_BEST;
+	emotion ET_OK, getnpcid(0, "Restauranteur#dew");
 	next;
 	mes "[Gourmet]";
 	mes "You must try this! The Food here is succulent~";
@@ -340,7 +340,7 @@ dewata,154,107,4	script	Sightseer#dew	86,{
 	mes "[Tourist]";
 	mes "Wow...";
 	mes "How many has he already eaten?";
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	next;
 	mes "[Tourist]";
 	mes "He must be big eater, not the gourmet...";
@@ -355,19 +355,19 @@ dewata,95,203,6	script	Travel Guide#dew	536,{
 	mes "This temple behind me is called Borobudur.";
 	mes "Borobudur temple was built in the 9th century";
 	mes "to venerate the Great Buddha, an ancient religious figure.";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
 	mes "This temple is made with 6 square platforms and 3 round platforms, and 2672 hand carved relief panels as well as 504 statue of various Buddhas.";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
 	mes "The central stupa, or shrine is located at the center of high platform, which is surrounded by 72 more statues.";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
 	mes "Even in modern times Borobudur temple is a pilgimage site for many monks worshiping the Buddha. It's also a major tourist attraction, as you can imagine.";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
 	mes "That is all I have on Borobudur temple, are there any questions?";
@@ -383,11 +383,11 @@ dewata,97,207,4	script	Tourist#dew1	803,{
 	mes "[Tourist]";
 	mes "This hombre is a real snooze...";
 	mes "Why make it longer..";
-	emotion e_spin;
+	emotion ET_CONFUSE;
 	next;
 	mes "[Tourist]";
 	mes "I need to change my travel agent...";
-	emotion e_sigh;
+	emotion ET_OHNO;
 	close;
 }
 
@@ -415,7 +415,7 @@ dewata,99,203,4	script	Tourist#dew4	755,{
 	mes "[Tourist]";
 	mes "Oh~ This is very interesting. A";
 	mes "temple that worships the Buddha...";
-	emotion e_ok;
+	emotion ET_OK;
 	next;
 	mes "[Tourist]";
 	mes "But I don't really get all the";
@@ -653,7 +653,7 @@ dewata,245,244,4	script	Lodge Employee#dew	536,2,3,{
 OnTouch:
 	mes "[Lodge employee]";
 	mes "Argg~ This is really ticking me off!";
-	emotion e_an;
+	emotion ET_FRET;
 	next;
 	mes "[Lodge employee]";
 	mes "How come more and more couples come here?";
@@ -670,17 +670,17 @@ dewata,233,263,8	script	Sweet Married Couple#1	828,2,3,{
 OnTouch:
 	mes "[Sweet Husband]";
 	mes "You are the most beautiful thing in the world baby~";
-	emotion e_kis;
+	emotion ET_CHUP;
 	next;
 	mes "[Sweet Wife]";
 	mes "Really? I'm that beautiful? I love you, honey~";
-	emotion e_kis2,0,"Sweet Married Couple#dew2";
+	emotion ET_CHUPCHUP, getnpcid(0, "Sweet Married Couple#2");
 	next;
 	mes "[Sweet Married Couple]";
 	mes "Hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
 	mes "Hohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohoho";
-	emotion e_heh;
-	emotion e_heh,0,"Sweet Married Couple#dew2";
+	emotion ET_SMILE;
+	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#2");
 	next;
 	mes "Come on now, I'm growing tired of this. Let's go.";
 	close;
@@ -690,28 +690,28 @@ dewata,234,263,8	script	Sweet Married Couple#2	727,2,3,{
 OnTouch:
 	mes "[Sweet Wife]";
 	mes "Baby~ You know what flower that is~?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	mes "[Sweet Husband]";
 	mes "Hmm? I don't know. But it's really pretty.";
 	next;
 	mes "[Sweet Wife]";
 	mes "Baby~ Who's prettier, me or the flower?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	mes "[Sweet Husband]";
 	mes "No matter how pretty the flower is, you are always more beautiful~";
-	emotion e_kis,0,"Sweet Married Couple#dew1";
+	emotion ET_CHUP, getnpcid(0, "Sweet Married Couple#1");
 	next;
 	mes "[Sweet Wife]";
 	mes "Really? I'm that pretty? I love you, sweetie~";
-	emotion e_kis2;
+	emotion ET_CHUPCHUP;
 	next;
 	mes "[Sweet Married Couple]";
 	mes "Hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
 	mes "Hohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohohoho";
-	emotion e_heh,0,"Sweet Married Couple#dew1";
-	emotion e_heh;
+	emotion ET_SMILE, getnpcid(0, "Sweet Married Couple#1");
+	emotion ET_SMILE;
 	next;
 	mes "Come on now, this bores me. Let's move on.";
 	close;
@@ -731,7 +731,7 @@ OnTouch:
 	next;
 	mes "[Reclining Tourist]";
 	mes "That's why I haven't moved in a whole week! Hahahaha~";
-	emotion e_heh;
+	emotion ET_SMILE;
 	close;
 }
 
@@ -745,7 +745,7 @@ OnTouch:
 	next;
 	mes "[Kid]";
 	mes "Who IS that man?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	mes "[Kid]";
 	mes "I don't want to be a lazybones like him when I grow up.";
@@ -782,14 +782,14 @@ OnTouch:
 	next;
 	mes "[Sarr]";
 	mes "I found Siyak!! Come out, come out!!";
-	emotion e_gg,0,"Sarr#dew";
-	emotion e_omg;
-	emotion e_gg,0,"Sipo#dew";
-	emotion e_omg,1;
+	emotion ET_KIK, getnpcid(0, "Sarr#dew");
+	emotion ET_HUK;
+	emotion ET_KIK, getnpcid(0, "Sipo#dew");
+	emotion ET_HUK, playerattached();
 	next;
 	mes "[Siyak]";
 	mes "Arrgg!! This is all your fault~!!";
-	emotion e_an;
+	emotion ET_FRET;
 	close;
 }
 
@@ -800,10 +800,10 @@ OnTouch:
 	next;
 	mes "[Sarr]";
 	mes "I found Siyak!! Come out come out!!";
-	emotion e_gg,0,"Sarr#dew";
-	emotion e_omg,0,"Siyak#dew";
-	emotion e_gg;
-	emotion e_omg,1;
+	emotion ET_KIK, getnpcid(0, "Sarr#dew");
+	emotion ET_HUK, getnpcid(0, "Siyak#dew");
+	emotion ET_KIK;
+	emotion ET_HUK, playerattached();
 	next;
 	mes "[Sipo]";
 	mes "Hehe~ Now Siyak is IT~ I'll just keep hiding in here.";
@@ -817,7 +817,7 @@ OnTouch:
 	next;
 	mes "[Majya]";
 	mes "I've been just standing here, and they haven't found me for 3 hours...";
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	next;
 	mes "[Majya]";
 	mes "What should I do? Come out? I don't want to be IT...";
@@ -828,24 +828,24 @@ dewata,278,100,4	script	Missing Child#dew	703,2,3,{
 OnTouch:
 	mes "[Ukki]";
 	mes "WaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaa~";
-	emotion e_sob;
-	emotion e_swt2;
+	emotion ET_CRY;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "Hey, kid...";
 	next;
 	mes "[Ukki]";
 	mes "WaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaaWaa~";
-	emotion e_sob;
+	emotion ET_CRY;
 	next;
 	mes "[Ukki]";
 	mes "Mama~ Papa~ Where are youuu~ Waa~";
-	emotion e_sob;
-	emotion e_swt2;
+	emotion ET_CRY;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "... ... ...";
-	emotion e_dots,1;
+	emotion ET_THINK, playerattached();
 	close;
 }
 
@@ -853,14 +853,14 @@ dewata,249,87,4	script	Mum#dew	101,2,3,{
 OnTouch:
 	mes "[Mum]";
 	mes "Ukki~ Ukki~ Where did she go?";
-	emotion e_wah;
+	emotion ET_KEK;
 	next;
 	mes "[Mum]";
 	mes "I can't take my eyes of her for a second...";
 	next;
 	mes "[Mum]";
 	mes "Ukki~";
-	emotion e_wah;
+	emotion ET_KEK;
 	close;
 }
 
@@ -868,20 +868,20 @@ dewata,251,85,6	script	Poppa#dew	97,2,3,{
 OnTouch:
 	mes "[Poppa]";
 	mes "Honey, is Ukki lost again?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	mes "[Poppa]";
 	mes "Arrgg... I can't go anywhere with her... How many times already?";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Daddy]";
 	mes "She's gotten lost in Louyang, Amatsu, Moscovia, Brasilis, Kunlun,";
 	mes "and in Ayothaya...";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Daddy]";
 	mes "What!! It's already been 7 times including this time in Dewata... 7 times!!!!!!";
-	emotion e_otl;
+	emotion ET_OTL;
 	close;
 }
 
@@ -897,7 +897,7 @@ dewata,278,281,4	script	Happily Married Grandpa	534,{
 	mes "[Happily Married Grandpa]";
 	mes "It makes me love her even more.";
 	mes "You can't imagine the wonderful flavor!";
-	emotion e_lv;
+	emotion ET_THROB;
 	close;
 }
 
@@ -906,7 +906,7 @@ dewata,280,277,4	script	Happily Married Grandma	535,{
 	mes "In my younger days,";
 	mes "there were many gentleman callers";
 	mes "who wanted to court me.";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Happily Married Grandma]";
 	mes "Yet, I met just the right guy,";
@@ -925,7 +925,7 @@ dewata,280,277,4	script	Happily Married Grandma	535,{
 	mes "I always think it was lucky";
 	mes "to be growing old with a guy";
 	mes "who loves what I cook.";
-	emotion e_lv;
+	emotion ET_THROB;
 	close;
 }
 
@@ -1077,7 +1077,7 @@ dewata,204,230,6	script	Dieting Lady#dew	537,{
 		mes "too much of a good thing is bad...";
 		mes "I should stick with my diet.";
 		mes "Sorry, I'll give it back to you.";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	case 2:
 		mes "[Dieting Lady]";
@@ -1085,7 +1085,7 @@ dewata,204,230,6	script	Dieting Lady#dew	537,{
 		mes "Since you don't want to share.";
 		mes "Anyway, I shouldn't cheat on my diet";
 		mes "even for something that looks and smells so good...";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 }
@@ -1145,7 +1145,7 @@ dewata,127,248,6	script	Wishing Kid#dew	539,{
 	mes "But, what should I do...?";
 	mes "I've forgotten how many ^FF0000nights^000000";
 	mes "I've already slept... boo hoo!";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 

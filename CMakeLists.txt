@@ -50,11 +50,12 @@ endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInstallStr})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInstallStr})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_C_CREATE_SHARED_LIBRARY)
 set(CMAKE_CXX_CREATE_SHARED_LIBRARY)
 set(CMAKE_DEBUG_POSTFIX "d")
 set(CMAKE_RELEASE_POSTFIX "r")
+
 #
 # Prevent building in the source directory by default
 #
@@ -89,6 +90,10 @@ if( MSVC )
 	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} "oldnames.lib" "ws2_32.lib" )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE" )
 endif()
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_GNUCC)
+  set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -fno-strict-aliasing" )
+  #set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -O2" ); #need more test to enable this
+endif()
 
 
 #
@@ -101,6 +106,7 @@ include( CheckIncludeFile )
 include( CheckFunctionExists )
 include( FindFunctionLibrary )
 include( TestBigEndian )
+
 
 #
 # PACKETVER
@@ -139,15 +145,26 @@ message( STATUS "Detecting threads library" )
 set( CMAKE_THREAD_PREFER_PTHREAD 1 )
 find_package(Threads REQUIRED)
 if( CMAKE_THREAD_LIBS_INIT )
-	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
+	message( STATUS "Adding global library: ${CMAKE_THREAD_LIBS_INIT}" )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
 endif()
 message( STATUS "Detecting threads library - done" )
+
+message( STATUS "Check if supporting Thread local storage (TLS)" )
+file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_TLS.c" _SOURCE )
+CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_TLS )
+if( HAVE_TLS )
+	message( STATUS "Check for TLS- yes" )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_TLS" )
+else()
+	message( STATUS "Check for TLS - no" )
+endif()
 
 
 #
 # math library (FreeBSD/Linux/Solaris)
 #
+if( NOT WIN32 )
 message( STATUS "Detecting math library (m)" )
 CHECK_INCLUDE_FILE( math.h HAVE_MATH_H )
 if( NOT HAVE_MATH_H )
@@ -160,6 +177,7 @@ if( FUNCTION_FLOOR_LIBRARIES )
 	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_FLOOR_LIBRARIES} )
 endif()
 message( STATUS "Detecting math library (m) - done" )
+endif()
 
 
 #
@@ -453,10 +471,7 @@ set( DEVELOPMENT_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure.in"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-9.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-10.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-12.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-13.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena.sln"
 	)
 set( DEVELOPMENT_DIRECTORIES
 	"3rdparty"
@@ -464,8 +479,6 @@ set( DEVELOPMENT_DIRECTORIES
 	"conf/msg_conf/import-tmpl"
 	"db/import-tmpl"
 	"src"
-	"vcproj-9"
-	"vcproj-10"
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"

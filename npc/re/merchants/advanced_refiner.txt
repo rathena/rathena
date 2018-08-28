@@ -70,33 +70,32 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		close;
 	}
 	mes "[Holink]";
-	// TODO: Price is different to Suhnbi of Payon. Intended? [Secret]
-	.@material = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	.@price = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_MATERIAL_ID);
+
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0: // Armor
-		set .@price,15000;
-		set .@type$,"armor";
+		.@type$ = "armor";
 		mes "You have chosen an armor, meow~";
 		break;
 	case 1: // Level 1 Weapon
-		set .@price,500;
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "A level 1 weapon...?";
 		break;
 	case 2: // Level 2 Weapon
-		set .@price,2000;
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "Meow, a level 2 weapon...?";
 		break;
 	case 3: // Level 3 Weapon
-		set .@price,20000;
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "Meow Meow~~ A level 3 weapon~~";
 		break;
 	case 4: // Level 4 Weapon
-		set .@price,50000;
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "Me-Meow!... A level 4 weapon...!";
 		mes "I've only seen it twice while";
 		mes "learning from Aragam... Me-Meow!!";
@@ -108,7 +107,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	if(select("Yes!!:No!!") == 2) {
 		mes "[Holink]";
 		mes "Kyack!!";
-		mes "You don't belive in refine master Holink, meow?~";
+		mes "You don't believe in refine master Holink, meow?~";
 		close;
 	}
 	if (getequippercentrefinery(.@part, true) < 100) {
@@ -148,12 +147,24 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	}
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
+		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+		mes "[Holink]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Do you think I'm stupid?!";
+		mes "You switched the item while I wasn't looking! Get out of here!";
+		close;
+	}
+
 	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		mes "[Holink]";
 		mes "Me~ Me~ Meow! Fun fun refining~";
 		next;
-		emotion e_kis;
+		emotion ET_CHUP;
 		mes "[Holink]";
 		mes "Perfect!! Perfect, meow!!";
 		mes "I am the disciple of the refining wizard Aragam~";
@@ -166,11 +177,11 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "Meo~ Meow~ Kyaaak!!";
 	next;
 	switch(rand(1,5)) {
-		case 1: emotion e_sob; break;
-		case 2: emotion e_swt2; break;
-		case 3: emotion e_wah; break;
-		case 4: emotion e_hmm; break;
-		case 5: emotion e_lv2; break;
+		case 1: emotion ET_CRY; break;
+		case 2: emotion ET_PROFUSELY_SWEAT; break;
+		case 3: emotion ET_KEK; break;
+		case 4: emotion ET_SCRATCH; break;
+		case 5: emotion ET_BIGTHROB; break;
 	}
 	mes "[Holink]";
 	mes "Meow!! Aaaaakk~~!!!!";

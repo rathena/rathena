@@ -109,13 +109,13 @@
 670,0xc7,    ,  1, 5:5:5:5:5:5:5:5:5:13,1000,all,0x008	//NPC_EVILLAND
 
 706,0xfd,     ,  2, 0,1000,enemy, 0x018	//NPC_VENOMFOG
+708,0x86,     ,  0, 9,1000,enemy, 0x018	//NPC_COMET
 
 2044,0xca,    ,  0, 2,1000,all,   0x018	//AB_EPICLESIS
 
 2032,0xe1,    ,  2, 0,1000,enemy, 0x8018	//GC_POISONSMOKE
 
 2213,0x86,    ,  0, 9,1000,enemy, 0x018	//WL_COMET
-2214,0x86,    ,  0, 5, 100,enemy, 0x080	//WL_CHAINLIGHTNING
 2216,0xcb,    , -1, 2,2000,enemy, 0x018	//WL_EARTHSTRAIN
 
 2238,0xd8,    ,  0, 1,1000,enemy, 0x8006	//RA_ELECTRICSHOCKER
@@ -148,13 +148,13 @@
 2446,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_EARTHGRAVE
 2447,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_DIAMONDDUST
 2449,0xdf,    ,  0, 3:3:4:4:5,500,enemy,  0x018	//SO_PSYCHIC_WAVE
-2450,0xe0,    ,  3, 0,  -1,enemy, 0xA010	//SO_CLOUD_KILL
+2450,0xe0,    ,  0, 3, 500,enemy, 0x8010	//SO_CLOUD_KILL
 2452,0xe4,    ,  3, 0,  -1,all,   0xA010	//SO_WARMER
 2453,0xeb,    ,  0, 1:1:2:2:3,500,enemy,0x8010	//SO_VACUUM_EXTREME
-2465,0xf1,    ,  0, 1,1000,all,   0x010	//SO_FIRE_INSIGNIA
-2466,0xf2,    ,  0, 1,1000,all,   0x010	//SO_WATER_INSIGNIA
-2467,0xf3,    ,  0, 1,1000,all,   0x010	//SO_WIND_INSIGNIA
-2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
+2465,0xf1,    ,  1, 0,  -1,all,   0x2010	//SO_FIRE_INSIGNIA
+2466,0xf2,    ,  1, 0,  -1,all,   0x2010	//SO_WATER_INSIGNIA
+2467,0xf3,    ,  1, 0,  -1,all,   0x2010	//SO_WIND_INSIGNIA
+2468,0xf4,    ,  1, 0,  -1,all,   0x2010	//SO_EARTH_INSIGNIA
 
 2479,0xe5,    ,  0, 1,1000,enemy, 0x8006	//GN_THORNS_TRAP
 2482,0xe6,0x7f, -1, 1, 300,enemy, 0x8000	//GN_WALLOFTHORN

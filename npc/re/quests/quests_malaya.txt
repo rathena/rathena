@@ -174,7 +174,7 @@ malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 		close;
 	}
 OnTouch:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	end;
 
 OnInit:
@@ -3604,6 +3604,7 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 // Upgrade Boss Equipment :: malaya_mvpitem
 //============================================================
 ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
+	disable_items;
 	mes "[Bayani]";
 	mes "I will upgrade your armor if you bring one that holds enormous power.";
 	next;
@@ -3782,7 +3783,9 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 		mes "[Bayani]";
 		mes "What is this! You said you wanted to upgrade " + getitemname(.@item) + " but why are you giving me this? You should be wearing " + getitemname(.@item) + ".";
 		close;
-	} else if (getequiprefinerycnt(.@part) < 9) {
+	}
+	.@equip_refine = getequiprefinerycnt(.@part);
+	if (.@equip_refine < 9) {
 		mes "[Bayani]";
 		mes "No, the sturdiness of this item has not been tested yet. It'll have to be at least +9 refined for me to say, 'Oh this is pretty sturdy armor.";
 		close;
@@ -3823,7 +3826,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	delitem 6499,20; //Ancient_Grudge
 
 	// anti-hack
-	if (callfunc("F_IsEquipIDHack", .@part, .@item))
+	if (callfunc("F_IsEquipIDHack", .@part, .@item) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
 		close;
 
 	delequip .@part;
@@ -3891,8 +3894,8 @@ malaya,305,281,3	script	Guard#buwaya	570,7,7,{
 	close;
 OnTouch:
 	if ((malaya_hi > 19) && (malaya_buwaya == 0)) {
-		emotion e_gasp;
-		emotion e_gasp,1;
+		emotion ET_SURPRISE;
+		emotion ET_SURPRISE, playerattached();
 	}
 	end;
 }
@@ -3901,16 +3904,16 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "- Look at you warily while whispering to each other. -";
 		close;
 	} else if (malaya_buwaya == 1) {
-		emotion e_gasp,0,"buwaya_A";
+		emotion ET_SURPRISE, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "No, I heard they got lost in the woods.";
 		mes "Who would hide such a treasure from a small village like ours?";
 		next;
-		emotion e_swt2,0,"buwaya_B";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Could it been a monster? My grandma said there is a dragon with a huge head living deep inside the woods.";
 		next;
-		emotion e_no,0,"buwaya_C";
+		emotion ET_STARE_ABOUT, getnpcid(0, "buwaya_C");
 		mes "[Port Malaya Villager]";
 		mes "No. Listen to me.";
 		next;
@@ -3918,70 +3921,70 @@ malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
 		mes "You all know ^3131FFTotoy^000000? The kid living at the ^3131FFInn^000000.";
 		mes "Well, did you know Totoy came back from the woods recently?";
 		next;
-		emotion e_omg,0,"buwaya_A";
-		emotion e_omg,0,"buwaya_B";
+		emotion ET_HUK, getnpcid(0, "buwaya_A");
+		emotion ET_HUK, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Really??? He came back alive?";
 		next;
-		emotion e_gasp,0,"buwaya_C";
+		emotion ET_SURPRISE, getnpcid(0, "buwaya_C");
 		mes "[Port Malaya Villager]";
 		mes "Yeah. But the strange part is that the troublemaker ^3131FFTotoy^000000 now quietly stays home and never comes out.";
 		next;
-		emotion e_what,0,"buwaya_B";
+		emotion ET_QUESTION, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Why?";
 		next;
-		emotion e_gasp,0,"buwaya_C";
+		emotion ET_SURPRISE, getnpcid(0, "buwaya_C");
 		mes "[Port Malaya Villager]";
 		mes "Don't you get it? Totoy must have found the treasure.";
 		next;
-		emotion e_omg,0,"buwaya_A";
-		emotion e_omg,0,"buwaya_B";
+		emotion ET_HUK, getnpcid(0, "buwaya_A");
+		emotion ET_HUK, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "What!!!! Then ^3131FFTotoy^000000 is rich now?";
 		next;
-		emotion e_no,0,"buwaya_C";
+		emotion ET_STARE_ABOUT, getnpcid(0, "buwaya_C");
 		mes "[Port Malaya Villager]";
 		mes "I don't think so.";
 		mes "I saw ^3131FFTotoy^000000 come back home, but Totoy wasn't carrying anything.";
 		mes "But then, I must have missed it because I ran back home right away.";
 		next;
-		emotion e_what,0,"buwaya_B";
+		emotion ET_QUESTION, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Then what is ^3131FFTotoy^000000 doing at home?";
 		next;
-		emotion e_dots,0,"buwaya_C";
+		emotion ET_THINK, getnpcid(0, "buwaya_C");
 		mes "[Port Malaya Villager]";
 		mes "I think Totoy is making a plan to bring the treasure back without us knowing it.";
 		mes "To have the whole treasure for himself, that greedy kid.";
 		next;
-		emotion e_what,0,"buwaya_A";
+		emotion ET_QUESTION, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "Is that true?";
 		next;
-		emotion e_lv2,0,"buwaya_B";
+		emotion ET_BIGTHROB, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "The treasure would be in better hands with me ~";
 		mes "I would clean it every day so it shined and would use it as a beautiful ornament. Ah~~~";
 		next;
-		emotion e_dots,0,"buwaya_C";
+		emotion ET_THINK, getnpcid(0, "buwaya_C");
 		mes "[Port Malaya Villager]";
 		mes "Then how about we talk to ^3131FFTotoy^000000 to spill the beans on where the treasure is?";
 		next;
-		emotion e_what,0,"buwaya_A";
+		emotion ET_QUESTION, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "Wow. That is an awesome idea. No wonder you're the leader!";
 		next;
-		emotion e_dots,0,"buwaya_A";
+		emotion ET_THINK, getnpcid(0, "buwaya_A");
 		mes "[Port Malaya Villager]";
 		mes "But will ^3131FFTotoy^000000 give up the information easily?";
 		mes "Because Totoy was sneaky enough to think of getting away with taking the whole treasure.";
 		next;
-		emotion e_sob,0,"buwaya_B";
+		emotion ET_CRY, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Then we should convince ^3131FFTotoy^000000 to tell us where the treasure is instead of looking for it ourselves.";
 		next;
-		emotion e_sob,0,"buwaya_B";
+		emotion ET_CRY, getnpcid(0, "buwaya_B");
 		mes "[Port Malaya Villager]";
 		mes "Ah~~~ it is so hard to get something pretty these days ~~~!!!!";
 		set malaya_buwaya,2;
@@ -4009,7 +4012,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		next;
 		if (select("Tap him on the shoulder.:Ignore him.") == 2)
 			close;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Totoy]";
 		mes "Wah! No! Go away! Leave me alone!";
 		next;
@@ -4060,13 +4063,13 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		}
 		close;
 	} else if (malaya_buwaya == 4) {
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Totoy]";
 		mes "I can see!! My eyes work!!!";
 		mes "Yay! I feel better now!";
 		next;
-		emotion e_dots,1;
-		emotion e_no1;
+		emotion ET_THINK, playerattached();
+		emotion ET_BEST;
 		mes "[Totoy]";
 		mes "Wow! You look better than you sounded. Ha ha.";
 		next;
@@ -4076,16 +4079,16 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "What is that about?";
 		next;
 		select("Tell him what the people are talking about.");
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Totoy]";
 		mes "WHAT?";
 		mes "Puhaha! Totoy is rich! Became rich overnight! Chief Ed!";
 		next;
-		emotion e_pif;
+		emotion ET_HNG;
 		mes "[Totoy]";
 		mes "Sorry but I went to the woods to collect bugs. Wish I saw a treasure while I was at it. Hmph!";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Totoy]";
 		mes "I did go deep in the woods because I wasn't getting anywhere with collecting bugs. But who would have thought I'd get into this mess?";
 		next;
@@ -4093,7 +4096,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 			mes "[Totoy]";
 			mes "I only wanted to show people my collection of cute bugs. Ha ha.";
 			next;
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Totoy]";
 			mes "Dropping ice or bugs down peoples clothes is just like a daily greeting, isn't it?";
 			next;
@@ -4107,7 +4110,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Totoy]";
 		mes "Ah, Ed is my cute puppy. He's very nice and cuddly. My best friend in the whole wide world.";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Totoy]";
 		mes "Ed usually barks a lot but I should have looked around when he barked and pulled on my sleeves.";
 		next;
@@ -4124,7 +4127,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Totoy]";
 		mes "The scariest part is that the monster has two heads. You won't believe it till you see it.";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Totoy]";
 		mes "Ed bit the monsters leg with all his might to let me get away. But I don't know what happened to him afterwards. Sniff~";
 		next;
@@ -4176,7 +4179,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "Poor Ed. I miss Ed. Wail!!!!";
 		close;
 	} else if (malaya_buwaya == 12) {
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Totoy]";
 		mes "Poor Ed. I miss Ed. Wail!!!!";
 		next;
@@ -4184,7 +4187,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Dog]";
 		mes "Bark bark!!";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Totoy]";
 		mes "Ed!!";
 		mes "Ed!!! You're alive!!!";
@@ -4217,7 +4220,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "Um... hey!";
 		next;
 		select("You are a " + ((Sex == SEX_MALE) ? "boy" : "girl") + ", aren't you?");
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		mes "[Totoy]";
 		mes "Huh?";
 		if (Sex == SEX_FEMALE) {
@@ -4279,7 +4282,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		close;
 	}
 OnTouch_:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -4754,7 +4757,7 @@ ma_fild02,312,259,3	script	Dog#buwaya	81,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "You didn't get killed by Buwaya. You lucky little dog. Let's go back to your owner.";
 		next;
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "[Dog]";
 		mes "Bark bark!!";
 		next;
@@ -6371,7 +6374,7 @@ OnTouch_:
 		mes "[Cowardly Worker]";
 		mes "Go up and you will";
 		mes "find the Gloomy Worker.";
-		emotion e_swt,1;
+		emotion ET_SWEAT, playerattached();
 		close;
 	}
 	end;
@@ -6467,7 +6470,7 @@ ma_scene01,175,170,5	script	Sentimental Worker#bako2	578,{
 		mes "I'm secretly guarding the trap!";
 		mes "I want to hear out loud.";
 		mes "I have a trap in front of me! Ha ha ha ha~";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		close;
 	}
 	end;
@@ -6613,7 +6616,7 @@ function	script	F_Malaya_Nurse	{
 		mes "Yes!";
 		mes "I have an idea.";
 		mes "How about we stick that one over the one we saw on the 2nd floor door?";
-		emotion e_ic;
+		emotion ET_AHA;
 		next;
 		mes "[Nurse Las]";
 		mes "Maybe it will block the bad energy it's giving out.";
@@ -6625,7 +6628,7 @@ function	script	F_Malaya_Nurse	{
 		mes "Yes!";
 		mes "I have an idea.";
 		mes "How about we stick that one over the one we saw on the 2nd floor door?";
-		emotion e_ic;
+		emotion ET_AHA;
 		cutin "malaya_nurseA01",2;
 		next;
 		mes "[Nurse Las]";
@@ -6640,7 +6643,7 @@ function	script	F_Malaya_Nurse	{
 		next;
 		mes "[Nurse Maenne]";
 		mes "I didn't think you'd do something like this.";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Nurse Maenne]";
 		mes "We were just about to enter Bangungot's room, before we were thrown out...";
@@ -6837,7 +6840,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 	if (malaya_hi < 20) {
 		mes "[Nurse]";
 		mes "People of this town are too cautious of outsiders.";
-		emotion e_ag;
+		emotion ET_ANGER;
 		cutin "malaya_nurseA01",2;
 		next;
 		mes "[Nurse]";
@@ -6874,7 +6877,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 				next;
 				mes "[Nurse]";
 				mes "I heard it was just built, but it seems so creepy....";
-				emotion e_swt;
+				emotion ET_SWEAT;
 				next;
 				mes "[Nurse]";
 				mes "I was surprised when I got here too.";
@@ -6891,7 +6894,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 				mes "[Nurse]";
 				mes "Not even a soul to welcome me, let alone a party!";
 				mes "Shocking!";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "[Nurse]";
 				mes "What's more, I made it here after being lost and now I'm facing a creepy and locked hospital!";
@@ -6909,7 +6912,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 				mes "[Nurse]";
 				mes "Not even a soul to welcome me, let alone a party!";
 				mes "Shocking!";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "[Nurse]";
 				mes "What's more, I made it here after being lost and now I'm facing a creepy and locked hospital!";
@@ -6921,7 +6924,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 				next;
 				mes "[Nurse]";
 				mes "I heard it was just built, but it seems so creepy....";
-				emotion e_swt;
+				emotion ET_SWEAT;
 				next;
 				mes "[Nurse]";
 				mes "I was surprised when I got here too.";
@@ -6934,7 +6937,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 				mes "Oh, well.";
 				mes "I'll let you be on your way.";
 				mes "Don't mind me. *Sob*";
-				emotion e_sob;
+				emotion ET_CRY;
 				cutin "malaya_nurseA03",2;
 				close2;
 				cutin "",255;
@@ -6944,7 +6947,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		case 2:
 			mes "[Nurse]";
 			mes "Oh, I see...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close2;
 			cutin "",255;
 			end;
@@ -6961,7 +6964,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		next;
 		mes "[Nurse]";
 		mes "If I knew this was going to happen, I would've worn ER night-shift shoes instead of first-day shoes... *sniff*";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		switch(select("Help.:Don't help.")) {
 		case 1:
@@ -6969,7 +6972,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 			mes "*Sob*";
 			mes "I guess this world is still worth living in.";
 			mes "You are too kind.";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Nurse Las]";
 			mes "I'm 'Las', who's supposed to work in this hospital.";
@@ -6981,7 +6984,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 			mes "[Nurse Las]";
 			mes "Before that....";
 			mes "Could you get something to wrap my feet? I can't put my shoes on because I've got blisters.";
-			emotion e_hlp;
+			emotion ET_HELP;
 			cutin "malaya_nurseA04",2;
 			next;
 			mes "[Nurse Las]";
@@ -6997,7 +7000,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 			mes "Oh, well.";
 			mes "I'll let you be on your way.";
 			mes "Don't mind me. *Sob*";
-			emotion e_sob;
+			emotion ET_CRY;
 			cutin "malaya_nurseA03",2;
 			close2;
 			cutin "",255;
@@ -7030,7 +7033,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 			mes "[Nurse Las]";
 			mes "Before that...";
 			mes "Could you get something to wrap my feet? I can't put my shoes on because I've got blisters.";
-			emotion e_hlp;
+			emotion ET_HELP;
 			cutin "malaya_nurseA03",2;
 			next;
 			mes "[Nurse Las]";
@@ -7048,7 +7051,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "[Nurse Las]";
 		mes "Oh...... the smell......";
 		mes "My new shoes will be ruined...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Nurse Las]";
 		mes "Okay!!!!!!";
@@ -7069,7 +7072,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 	} else if (malaya_bang == 4) {
 		mes "["+strcharinfo(0)+"]";
 		mes "We pushed and pulled, but it won't budge.";
-		emotion e_swt2,1;
+		emotion ET_PROFUSELY_SWEAT, playerattached();
 		next;
 		mes "[Nurse Las]";
 		mes "Strange~";
@@ -7079,7 +7082,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "[Nurse Las]";
 		mes "Hmmm!";
 		mes "I can't stand it anymore!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		mes "[Nurse Las]";
 		mes "Could you ask the townsfolk about the hospital while I contact HQ?";
@@ -7107,7 +7110,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 	} else if (malaya_bang == 6) {
 		mes "[Nurse Las]";
 		mes "What did she say?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		cutin "malaya_nurseA02",2;
 		next;
 		select("Tell her what she said.");
@@ -7143,7 +7146,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "An inn?";
 		mes "Good gracious!";
 		mes "If they'd have told me earlier I wouldn't have had to stand out here for so long!";
-		emotion e_pif;
+		emotion ET_HNG;
 		cutin "malaya_nurseA01",2;
 		next;
 		mes "[Nurse Las]";
@@ -7156,7 +7159,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		next;
 		mes "[Nurse Las]";
 		mes "I don't think I can move anymore because of my feet. Could you go to the inn for me?";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		cutin "malaya_nurseA03",2;
 		next;
 		mes "[Nurse Las]";
@@ -7173,7 +7176,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 	} else if (malaya_bang == 9) {
 		mes "[Nurse Las]";
 		mes "I don't think I can move anymore because of my feet. Could you go to the inn for me?";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		cutin "malaya_nurseA03",2;
 		next;
 		mes "[Nurse Las]";
@@ -7215,8 +7218,8 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "The door's not locked?";
 		mes "How can this be?????";
 		mes "????";
-		emotion e_what;
-		emotion e_what,1;
+		emotion ET_QUESTION;
+		emotion ET_QUESTION, playerattached();
 		cutin "malaya_nurseA04",2;
 		next;
 		mes "[Nurse Las]";
@@ -7231,8 +7234,8 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		next;
 		mes "[???]";
 		mes "*Snigger*";
-		emotion e_what,1;
-		emotion e_what;
+		emotion ET_QUESTION, playerattached();
+		emotion ET_QUESTION;
 		next;
 		mes "[???]";
 		mes "Hey "+((Sex == SEX_MALE)?"dude":"missy")+",";
@@ -7353,7 +7356,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		next;
 		mes "[Nurse Las]";
 		mes "Hey you in the bushes, I'll tell on you if you don't go home now!";
-		emotion e_omg,0,"Bushes#ma";
+		emotion ET_HUK, getnpcid(0, "Bushes#ma");
 		close2;
 		cutin "",255;
 		end;
@@ -7375,7 +7378,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "[Nurse Las]";
 		mes "Anyway, the first floor door is open, so let's go inside.";
 		mes "Everything would be meaningless if the second floor door is not opened.";
-		emotion e_sob;
+		emotion ET_CRY;
 		set malaya_bang,19;
 		changequest 11299,11300;
 		close2;
@@ -7386,7 +7389,7 @@ malaya,55,72,4	script	Nurse#ma_n1	569,{
 		mes "[Nurse Las]";
 		mes "Anyway, the first floor door is open, so let's go inside.";
 		mes "Everything would be meaningless if the second floor door is not opened.";
-		emotion e_sob;
+		emotion ET_CRY;
 		cutin "malaya_nurseA01",2;
 		close2;
 		cutin "",255;
@@ -7782,11 +7785,11 @@ malaya,53,68,4	script	Bushes#ma	844,{
 		mes "Don't come any closer!";
 		mes "Old "+((Sex == SEX_MALE)?"man":"lady")+"!";
 		mes "How'd you know I was here?";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I'm not old.";
-		emotion e_an,1;
+		emotion ET_FRET, playerattached();
 		next;
 		switch(select("About entering the hospital.:About its mom.:About ???.:Ask about the old lady.:Ask about the hospital grounds.:Quit.")) {
 		case 1:
@@ -7850,7 +7853,7 @@ malaya,53,68,4	script	Bushes#ma	844,{
 		case 6:
 			mes "[???]";
 			mes "Humph!!";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 		mes "[???]";
@@ -7866,11 +7869,11 @@ malaya,53,68,4	script	Bushes#ma	844,{
 		mes "Don't come any closer!";
 		mes "Old "+((Sex == SEX_MALE)?"man":"lady")+"!";
 		mes "How'd you know I was here?";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I'm not old.";
-		emotion e_an,1;
+		emotion ET_FRET, playerattached();
 		close;
 	} else {
 		mes "There's a trace of a young child.";
@@ -8078,19 +8081,19 @@ malaya,114,183,3	script	Bent Old Lady#ma	575,{
 		mes "[Bent Old Lady]";
 		mes "What?";
 		mes "Arghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Bent Old Lady]";
 		mes "Arghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Bent Old Lady]";
 		mes "Arghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Bent Old Lady]";
 		mes "Arghhhhhhhhhh!!!!!!!!!!!";
-		emotion e_omg;
+		emotion ET_HUK;
 		next;
 		mes "[Bent Old Lady]";
 		mes "What have you done!";
@@ -8387,11 +8390,11 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		if ($malaya_pintados_01 > 999 && $malaya_pintados_02 > 999 && $malaya_pintados_03 > 299) {
 			set $malaya_pintados_00,1;
 			donpcevent "Pintados Manager#pin::OnEnable";
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Isco]";
 			mes "Many adventurers helped find festival items that I returned to the village.";
 			next;
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Isco]";
 			mes "He he... Now we can hold the '^7A96E0Pintados Festival^000000'.";
 			close;
@@ -8402,7 +8405,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		mes "He he... The fun '^7A96E0Pintados Festival^000000' is in full swing.";
 		next;
 		if ($malaya_pintados_00 > 0 && $malaya_pintados_00 < 50) {
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Isco]";
 			mes "Today's the first day of the '^7A96E0Pintados Festival^000000'. The festival is held for 7 days, so have fun.";
 			close;
@@ -8433,18 +8436,18 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 			mes "Have you every seen ^FF8440Bakonawa^000000, the monster known to swallow the moon? They say he is really ferocious.";
 			close;
 		} else if ($malaya_pintados_00 > 245 && $malaya_pintados_00 < 295) {
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Isco]";
 			mes "I'm so sad. Many adventurers helped to hold the '^7A96E0Pintados Festival^000000' and now only one day is left.";
 			close;
 		} else {
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Isco]";
 			mes "Oh gosh! It's already the last day of the '^7A96E0Pintados Festival^000000'. Can't believe there won't be more festivities.";
 			close;
 		}
 	}
-	emotion e_spin;
+	emotion ET_CONFUSE;
 	mes "[Isco]";
 	mes "Oh no. What will we do with the festival coming to an end.";
 	next;
@@ -8454,7 +8457,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		mes "There is a traditional festival held since ancient times";
 		mes "in Baryo Mahiwaga called the '^7A96E0Pintados Festival^000000'.";
 		next;
-		emotion e_otl;
+		emotion ET_OTL;
 		mes "[Isco]";
 		mes "I don't think I'll make it to the festival this time.";
 		next;
@@ -8466,7 +8469,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		mes "But '^FF8440Bongisungisu^000000' appeared out of nowhere and took the items away from me.";
 		next;
 		select("Are you hurt?");
-		emotion e_sigh;
+		emotion ET_OHNO;
 		mes "[Isco]";
 		mes "Fortunately not.";
 		next;
@@ -8480,7 +8483,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		mes "[Isco]";
 		mes "Lesser Agimat "+$malaya_pintados_01+", Silver Cross "+$malaya_pintados_02+", Dyestuff "+$malaya_pintados_03+" so far.";
 		next;
-		emotion e_sigh;
+		emotion ET_OHNO;
 		mes "[Isco]";
 		mes "Sigh... We are still short of materials to start the '^7A96E0Pintados Festival^000000'.";
 		close;
@@ -8488,7 +8491,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 		set .@str$, (Sex == SEX_MALE)?"Bro":"Sis";
 		break;
 	}
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Isco]";
 	mes "Oh~ Really? Wow!";
 	mes "Thanks! "+strcharinfo(0)+" "+.@str$+"!!";
@@ -8605,7 +8608,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 		mes "Cannot proceed because you have too many items in your possession.";
 		close;
 	}
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "[Tattooist]";
 	mes "Why do you want a Tattoo?";
 	next;
@@ -8742,7 +8745,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 		mes "Need 10 Ancient Grudges, 1 Piece of "+.@name$+"'s Spirit, and 1 "+.@name$+" Doll to create a ^EE1D11"+.@name$+" Agimat Tattoo^000000.";
 		close;
 	}
-	emotion e_flash;
+	emotion ET_SPARK;
 	mes "[Tattooist]";
 	mes "The materials are full with holy energy. I'm sure we'll get a great Tattoo using these.";
 	next;
@@ -8761,7 +8764,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	mes "And then "+.@name$+" stared intensely at the doll as if to remember every detail of it in his head.";
 	next;
 	if(select("Aren't you going to start?:... ... ..") == 1) {
-		emotion e_an;
+		emotion ET_FRET;
 		delitem 6499,5; //Ancient_Grudge
 		mes "[Tattooist]";
 		mes "Oh no, now you ruined it.";
@@ -8770,7 +8773,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 		mes "Received back 5 Ancient Grudges, "+.@name$+" Doll, and Piece of "+.@name$+"'s Spirit.";
 		close;
 	}
-	emotion e_bzz;
+	emotion ET_STARE;
 	mes "Think he will melt the doll with his eyes?";
 	next;
 	specialeffect EF_SONICBLOWHIT;
@@ -8778,12 +8781,12 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	next;
 	mes "The "+.@name$+" Tattoo was completed almost instantly.";
 	next;
-	emotion e_an;
+	emotion ET_FRET;
 	mes "But he kept on looking at each corner of the drawing as if he didn't like some of its details.";
 	next;
 	if(select("Looks good to me.:... ... ..") == 1) {
-		emotion e_an;
-		emotion e_ag;
+		emotion ET_FRET;
+		emotion ET_ANGER;
 		delitem 6499,5; //Ancient_Grudge
 		mes "[Tattooist]";
 		mes "Ergh! I told you not to interrupt!";
@@ -8800,12 +8803,12 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	next;
 	mes "Looks like he is satisfied with the "+.@name$+" drawing.";
 	next;
-	emotion e_dum;
+	emotion ET_HUM;
 	mes "But now he is staring at the sky without doing anything else. What is he waiting for?";
 	next;
 	if(select("When will it be done?:... ... ..") == 1) {
-		emotion e_an;
-		emotion e_ag;
+		emotion ET_FRET;
+		emotion ET_ANGER;
 		delitem 6499,5; //Ancient_Grudge
 		mes "[Tattooist]";
 		mes "Ergh! I told you not to interrupt!";
@@ -8818,7 +8821,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 		mes "Received back 5 Ancient Grudges, "+.@name$+" Doll, and Piece of "+.@name$+"'s Spirit.";
 		close;
 	}
-	emotion e_dots;
+	emotion ET_THINK;
 	mes "[Tattooist]";
 	mes ".";
 	next;
@@ -8828,7 +8831,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	mes "[Tattooist]";
 	mes ". . .";
 	next;
-	emotion e_dots;
+	emotion ET_THINK;
 	mes "[Tattooist]";
 	mes ". . . .";
 	next;
@@ -8841,7 +8844,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	mes "[Tattooist]";
 	mes ". . . . . . .";
 	next;
-	emotion e_flash;
+	emotion ET_SPARK;
 	mes "The Tattooist's eyes started to shine after staring at the sky for awhile, then he broke the Piece of "+.@name$+"'s Spirit with both his hands.";
 	next;
 	specialeffect EF_DETOXICATION;
@@ -8850,8 +8853,8 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	if(select("Why did you break the pieces...:... ... ..") == 1) {
 		delitem 6499,5; //Ancient_Grudge
 		delitem .@spirit,1;
-		emotion e_an;
-		emotion e_ag;
+		emotion ET_FRET;
+		emotion ET_ANGER;
 		mes "[Tattooist]";
 		mes "Ergh! I told you not to interrupt!";
 		next;
@@ -8881,7 +8884,7 @@ ma_fild01,172,223,6	script	Tattooist#pin	574,{
 	next;
 	mes "The Tattooist is finally satisfied and is all smiles.";
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Tattooist]";
 	mes "Ha ha. It came out great.";
 	next;

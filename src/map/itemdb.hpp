@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ITEMDB_HPP_
-#define _ITEMDB_HPP_
+#ifndef ITEMDB_HPP
+#define ITEMDB_HPP
 
-#include "../common/db.h"
-#include "../common/mmo.h" // ITEM_NAME_LENGTH
+#include "../common/db.hpp"
+#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
@@ -76,6 +76,7 @@ enum item_itemid
 	ITEMID_PHRACON						= 1010,
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
+	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_STRANGE_EMBRYO				= 6415,
@@ -713,7 +714,7 @@ enum e_random_item_group {
 	IG_COSTAMA_EGG29,
 	IG_INK_BALL,
 	IG_SOMETHING_CANDY_HOLDER,
-	IG_MYSTERIOUS_EGG,
+	IG_SHINING_EGG,
 	IG_AGUST_LUCKY_SCROLL,
 	IG_ELEMENT,
 	IG_POISON,
@@ -730,6 +731,8 @@ enum e_random_item_group {
 	IG_CHRISTMAS_BOX,
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
+	IG_PRIZEOFHERO,
+	IG_PRIVATE_AIRSHIP,
 };
 
 /// Enum for bound/sell restricted selling
@@ -947,17 +950,16 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
-char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
+char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);
 
 struct s_random_opt_data *itemdb_randomopt_exists(short id);
 struct s_random_opt_group *itemdb_randomopt_group_exists(int id);
 
-void itemdb_reload_itemmob_data(void);
 void itemdb_reload(void);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);
 
-#endif /* _ITEMDB_HPP_ */
+#endif /* ITEMDB_HPP */

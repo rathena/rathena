@@ -1,12 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PARTY_HPP_
-#define _PARTY_HPP_
+#ifndef PARTY_HPP
+#define PARTY_HPP
 
 #include <stdarg.h>
 
-#include "../common/mmo.h" // struct party
+#include "../common/mmo.hpp" // struct party
 
 struct block_list;
 struct map_session_data;
@@ -99,4 +99,4 @@ void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
 bool party_booking_delete(struct map_session_data *sd);
 
-#endif /* _PARTY_HPP_ */
+#endif /* PARTY_HPP */
