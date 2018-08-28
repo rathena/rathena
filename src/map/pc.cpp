@@ -1122,6 +1122,51 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
 		return ITEM_EQUIP_ACK_FAIL;
 
+	if (item->equip&EQP_AMMO) {
+		switch (item->look) {
+			case AMMO_ARROW:
+				if (battle_config.ammo_check_weapon && sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP) {
+					clif_msg(sd, ITEM_NEED_BOW);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+			case AMMO_THROWABLE_DAGGER:
+				if (!pc_checkskill(sd, AS_VENOMKNIFE))
+					return ITEM_EQUIP_ACK_FAIL;
+				break;
+			case AMMO_BULLET:
+			case AMMO_SHELL:
+				if (battle_config.ammo_check_weapon && sd->status.weapon != W_REVOLVER && sd->status.weapon != W_RIFLE && sd->status.weapon != W_GATLING && sd->status.weapon != W_SHOTGUN
+#ifdef RENEWAL
+					&& sd->status.weapon != W_GRENADE
+#endif
+					) {
+					clif_msg(sd, ITEM_BULLET_EQUIP_FAIL);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+#ifndef RENEWAL
+			case AMMO_GRENADE:
+				if (battle_config.ammo_check_weapon && sd->status.weapon != W_GRENADE) {
+					clif_msg(sd, ITEM_BULLET_EQUIP_FAIL);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+#endif
+			case AMMO_CANNONBALL:
+				if (!pc_ismadogear(sd) && (sd->status.class_ == JOB_MECHANIC_T || sd->status.class_ == JOB_MECHANIC)) {
+					clif_msg(sd, ITEM_NEED_MADOGEAR); // Item can only be used when Mado Gear is mounted.
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				if (sd->state.active && !pc_iscarton(sd) && //Check if sc data is already loaded
+					(sd->status.class_ == JOB_GENETIC_T || sd->status.class_ == JOB_GENETIC)) {
+					clif_msg(sd, ITEM_NEED_CART); // Only available when cart is mounted.
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+		}
+	}
+
 	if (sd->sc.count) {
 		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]
 			return ITEM_EQUIP_ACK_FAIL;
@@ -9852,38 +9897,6 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	}
 
-	if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER) {
-		/** Failing condition:
-		 * 1. Always failed to equip ammo if no weapon equipped yet
-		 * 2. Grenade only can be equipped if weapon is Grenade Launcher
-		 * 3. Bullet cannot be equipped if the weapon is Grenade Launcher
-		 * (4. The rest is relying on item job/class restriction).
-		 **/
-		if (id->type == IT_AMMO) {
-			int w_idx = sd->equip_index[EQI_HAND_R];
-			enum weapon_type w_type = (w_idx != -1) ? (enum weapon_type)sd->inventory_data[w_idx]->look : W_FIST;
-			if (w_idx == -1 ||
-				(id->look == A_GRENADE && w_type != W_GRENADE) ||
-				(id->look != A_GRENADE && w_type == W_GRENADE))
-			{
-				clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
-				return false;
-			}
-		}
-		else if (id->type == IT_WEAPON && id->look >= W_REVOLVER && id->look <= W_GRENADE) {
-			int a_idx = sd->equip_index[EQI_AMMO];
-			if (a_idx != -1) {
-				enum ammo_type a_type = (enum ammo_type)sd->inventory_data[a_idx]->look;
-				if ((a_type == A_GRENADE && id->look != W_GRENADE) ||
-					(a_type != A_GRENADE && id->look == W_GRENADE))
-				{
-					clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
-					return false;
-				}
-			}
-		}
-	}
-
 	if (id->flag.bindOnEquip && !sd->inventory.u.items_inventory[n].bound) {
 		sd->inventory.u.items_inventory[n].bound = (char)battle_config.default_bind_on_equip;
 		clif_notify_bindOnEquip(sd,n);
@@ -9924,7 +9937,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	for(i=0;i<EQI_MAX;i++) {
 		if(pos & equip_bitmask[i]) {
 			if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
-				pc_unequipitem(sd,sd->equip_index[i],2);
+				pc_unequipitem(sd,sd->equip_index[i],2 | 4);
 
 			sd->equip_index[i] = n;
 		}
@@ -9966,6 +9979,34 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	}
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
+
+	if (battle_config.ammo_unequip && (pos&EQP_ARMS) && id->type == IT_WEAPON) {
+		short idx = sd->equip_index[EQI_AMMO];
+
+		if (idx >= 0) {
+			switch (sd->inventory_data[idx]->look) {
+				case AMMO_ARROW:
+					if (id->look != W_BOW && id->look != W_MUSICAL && id->look != W_WHIP)
+						pc_unequipitem(sd, idx, 2 | 4);
+					break;
+				case AMMO_BULLET:
+				case AMMO_SHELL:
+					if (id->look != W_REVOLVER && id->look != W_RIFLE && id->look != W_GATLING && id->look != W_SHOTGUN
+#ifdef RENEWAL
+						&& id->look != W_GRENADE
+#endif
+						)
+						pc_unequipitem(sd, idx, 2 | 4);
+					break;
+#ifndef RENEWAL
+				case AMMO_GRENADE:
+					if (id->look != W_GRENADE)
+						pc_unequipitem(sd, idx, 2 | 4);
+					break;
+#endif
+			}
+		}
+	}
 
 	pc_set_costume_view(sd);
 
@@ -10017,17 +10058,91 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	return true;
 }
 
+/**
+ * Recalculate player status on unequip
+ * @param sd: Player data
+ * @param n: Item inventory index
+ * @param flag: Whether to recalculate a player's status or not
+ * @return True on success or false on failure
+ */
+static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
+	int i, iflag;
+	bool status_calc = false;
+
+	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)
+		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
+
+	sd->inventory.u.items_inventory[n].equip = 0;
+	pc_checkallowskill(sd);
+	iflag = sd->npc_item_flag;
+
+	/* check for combos (MUST be before status_calc_pc) */
+	if (sd->inventory_data[n]) {
+		if (sd->inventory_data[n]->combos_count) {
+			if (pc_removecombo(sd, sd->inventory_data[n]))
+				status_calc = true;
+		}
+		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
+			; //No cards
+		else {
+			for (i = 0; i < MAX_SLOTS; i++) {
+				struct item_data *data;
+
+				if (!sd->inventory.u.items_inventory[n].card[i])
+					continue;
+				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
+					if (data->combos_count) {
+						if (pc_removecombo(sd, data))
+							status_calc = true;
+					}
+				}
+			}
+		}
+	}
+
+	if (status_calc)
+		status_calc_pc(sd, SCO_NONE);
+
+	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
+		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
+
+	//OnUnEquip script [Skotlex]
+	if (sd->inventory_data[n]) {
+		if (sd->inventory_data[n]->unequip_script)
+			run_script(sd->inventory_data[n]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
+			; //No cards
+		else {
+			for (i = 0; i < MAX_SLOTS; i++) {
+				struct item_data *data;
+				if (!sd->inventory.u.items_inventory[n].card[i])
+					continue;
+
+				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
+					if (data->unequip_script)
+						run_script(data->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+				}
+
+			}
+		}
+	}
+
+	if (flag & 1)
+		status_calc_pc(sd, SCO_FORCE);
+	sd->npc_item_flag = iflag;
+}
+
 /*==========================================
- * Called when attemting to unequip an item from player
+ * Called when attempting to unequip an item from player
  * type:
- * 0 - only unequip
- * 1 - calculate status after unequipping
- * 2 - force unequip
+ *  0 - only unequip
+ *  1 - calculate status after unequipping
+ *  2 - force unequip
+ *	4 - unequip by switching equipment
  * return: false - fail; true - success
  *------------------------------------------*/
 bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
-	int i, iflag;
-	bool status_calc = false;
+	int i, pos;
 
 	nullpo_retr(false,sd);
 
@@ -10035,7 +10150,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		clif_unequipitemack(sd,0,0,0);
 		return false;
 	}
-	if (!sd->inventory.u.items_inventory[n].equip) {
+	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
 		clif_unequipitemack(sd,n,0,0);
 		return false; //Nothing to unequip
 	}
@@ -10053,18 +10168,14 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	if (battle_config.battle_log)
-		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->inventory.u.items_inventory[n].equip);
+		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),pos);
 
-	if (!sd->inventory.u.items_inventory[n].equip) { //Nothing to unequip
-		clif_unequipitemack(sd, n, 0, 0);
-		return false;
-	}
 	for(i = 0; i < EQI_MAX; i++) {
-		if (sd->inventory.u.items_inventory[n].equip & equip_bitmask[i])
+		if (pos & equip_bitmask[i])
 			sd->equip_index[i] = -1;
 	}
 
-	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_R) {
+	if(pos & EQP_HAND_R) {
 		sd->weapontype1 = 0;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
@@ -10072,7 +10183,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		if( !battle_config.dancing_weaponswitch_fix )
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
 	}
-	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_L) {
+	if(pos & EQP_HAND_L) {
 		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
 			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
 
@@ -10081,15 +10192,36 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
 
-	if(sd->inventory.u.items_inventory[n].equip & EQP_SHOES)
+	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	clif_unequipitemack(sd,n,sd->inventory.u.items_inventory[n].equip,1);
+	clif_unequipitemack(sd,n,pos,1);
 	pc_set_costume_view(sd);
 
 	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
 	// On weapon change (right and left hand)
-	if ((sd->inventory.u.items_inventory[n].equip & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
+	if ((pos & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
+		if (battle_config.ammo_unequip && !(flag & 4)) {
+			switch (sd->inventory_data[n]->look) {
+				case W_BOW:
+				case W_MUSICAL:
+				case W_WHIP:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_GATLING:
+				case W_SHOTGUN:
+				case W_GRENADE: {
+					short idx = sd->equip_index[EQI_AMMO];
+
+					if (idx >= 0) {
+						sd->equip_index[EQI_AMMO] = -1;
+						clif_unequipitemack(sd, idx, sd->inventory.u.items_inventory[idx].equip, 1);
+						pc_unequipitem_sub(sd, idx, 0);
+					}
+				}
+				break;
+			}
+		}
 		if (!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO]) //Check for seven wind (but not level seven!)
 			skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
@@ -10097,7 +10229,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	// On armor change
-	if (sd->inventory.u.items_inventory[n].equip & EQP_ARMOR) {
+	if (pos & EQP_ARMOR) {
 		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
 			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
 		//status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER); // No longer is removed? Need confirmation
@@ -10108,65 +10240,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
-	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)
-		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
-
-	sd->inventory.u.items_inventory[n].equip = 0;
-	iflag = sd->npc_item_flag;
-
-	/* check for combos (MUST be before status_calc_pc) */
-	if ( sd->inventory_data[n] ) {
-		if( sd->inventory_data[n]->combos_count ) {
-			if( pc_removecombo(sd,sd->inventory_data[n]) )
-				status_calc = true;
-		}
-		if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
-			; //No cards
-		else {
-			for( i = 0; i < MAX_SLOTS; i++ ) {
-				struct item_data *data;
-
-				if (!sd->inventory.u.items_inventory[n].card[i])
-					continue;
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-					if( data->combos_count ) {
-						if( pc_removecombo(sd,data) )
-							status_calc = true;
-					}
-				}
-			}
-		}
-	}
-
-	if(flag&1 || status_calc) {
-		pc_checkallowskill(sd);
-		status_calc_pc(sd,SCO_NONE);
-	}
-
-	if(sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
-		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
-
-	//OnUnEquip script [Skotlex]
-	if (sd->inventory_data[n]) {
-		if (sd->inventory_data[n]->unequip_script)
-			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,fake_nd->bl.id);
-		if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
-			; //No cards
-		else {
-			for( i = 0; i < MAX_SLOTS; i++ ) {
-				struct item_data *data;
-				if (!sd->inventory.u.items_inventory[n].card[i])
-					continue;
-
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-					if( data->unequip_script )
-						run_script(data->unequip_script,0,sd->bl.id,fake_nd->bl.id);
-				}
-
-			}
-		}
-	}
-	sd->npc_item_flag = iflag;
+	pc_unequipitem_sub(sd, n, flag);
 
 	return true;
 }
