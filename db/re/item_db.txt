@@ -1301,6 +1301,7 @@
 2027,Sunflower_Kid,Sunflower Kid,5,10,,1500,150:320,,,2,0x00000200,56,2,34,4,170,1,23,{ bonus bInt,5; .@r = getrefine(); bonus bMatkRate,(.@r/2); bonus bDelayrate,(.@r*-1); bonus bUnbreakableWeapon; },{},{}
 2030,Unity_Two-Handed_Staff,Unity Two-Handed Staff,5,20,,500,95:135,,1,1,0x800200,63,2,34,3,1,1,23,{ bonus bMatk,pow(getrefine(),2)*125/100; },{},{}
 2032,Requiem_Wizardry_Staff,Requiem Wizardry Staff,5,20,,500,100:230,,1,,0xFFFFFFFF,63,2,2,4,100,1,10,{ .@r = getrefine(); .@b = 40; .@c = 5; if(.@r>=5){ .@b += (.@r-5)*15+20; .@c += .@r-5; } bonus2 bMagicAddRace2,RC2_BioLab,.@b; bonus2 bSubRace2,RC2_BioLab,.@c; bonus2 bIgnoreMdefRace2Rate,RC2_BioLab,(.@r-5)*10; },{},{}
+2039,Illusion_Wizardry_Staff,Illusion Wizardry Staff,5,0,,2400,150:250,,1,2,0x00810204,58,2,34,4,100,1,23,{ .@val = min(getrefine(),10)/2; bonus bInt,(6+.@val); bonus bDex,(2+.@val); },{},{}
 //===================================================================
 // Shields
 //===================================================================
@@ -9529,6 +9530,7 @@
 18138,Frozen_Bow_,Frozen Bow,5,20,,1400,100,,5,2,0x000A0808,63,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Freeze,1000; },{},{}
 18139,Earth_Bow_,Earth Bow,5,20,,1400,105,,5,2,0x000A0808,63,2,34,3,55,1,11,{},{},{}
 18140,Gust_Bow_,Gust Bow,5,20,,1400,95,,5,2,0x000A0808,63,2,34,3,55,1,11,{},{},{}
+18149,Illusion_Ballista,Illusion Ballista,5,0,,3500,200,,5,2,0x00080800,58,2,34,4,100,1,11,{ bonus bLongAtkRate,getrefine(); },{},{}
 //===================================================================
 // More Headgears
 //===================================================================
@@ -10902,6 +10904,7 @@
 20826,Angel_Feather,Angel Feather,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,18,{},{},{}
 20830,Wings_of_Seraph,Wings of Seraph,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,8,{},{},{}
 20838,Illusion_Muffler,Illusion Muffler,4,20,,400,,8,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(100+(100*.@r)); bonus bMaxSP,(10+(5*.@r)); },{},{}
+20840,Illusion_Ancient_Cape,Illusion Ancient Cape,4,0,,600,,18,,1,0xFFFFFFFE,63,2,4,,100,1,0,{ .@val = min(getrefine(),10)/2; bonus bAgi,(2+.@val); },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -11578,6 +11581,11 @@
 27086,Resentful_Soldier_Card,Resentful Soldier Card,6,20,,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(EQI_COMPOUND_ON),11) == W_BOW) { bonus3 bAutoSpell,"TF_DOUBLE",5,30; if (getrefine() >= 10) { bonus2 bWeaponDamageRate,W_BOW,20; } } },{},{}
 27087,Truthful_Wizard_Card,Truthful Wizard Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatk,25; autobonus "{ bonus bNoCastCancel; }",5,5000,BF_MAGIC,"{ showscript \"This is the truth!\"; }"; },{},{}
 27088,Fury_Hero_Card,Fury Hero Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bAddClass,Class_All,2; bonus5 bAutoSpell,"SM_ENDURE",1,5,BF_SHORT,0; },{},{}
+27101,Sweet_Nightmare_Card,Sweet Nightmare Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMatk,20; bonus bNoCastCancel; },{},{}
+27102,Matt_Drainliar_Card,Matt Drainliar Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bResEff,Eff_Burning,10000; },{},{}
+27103,Living_Dead_Card,Living Dead Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,20; bonus bUnbreakableWeapon; bonus bUnbreakableArmor; },{},{}
+27104,Furious_Dracula_Card,Furious Dracula Card,6,20,,10,,,,,,,,4,,,,,{ skill "PF_HPCONVERSION",1; },{},{}
+27105,Bomi_Card,Bomi Card,6,20,,10,,,,,,,,8,,,,,{ skill "HW_NAPALMVULCAN",4; },{},{}
 27120,Iara_Card,Iara Card,6,20,,10,,,,,,,,136,,,,,{ skill "PR_STRECOVERY",1; },{},{}
 27121,Piranha_Card,Piranha Card,6,20,,10,,,,,,,,64,,,,,{ .@val = 10; if (getrefine() >= 9) { .@val += 5; } bonus2 bAddRace,RC_Fish,.@val; bonus2 bMagicAddRace,RC_Fish,.@val; },{},{}
 27122,Curupira_Card,Curupira Card,6,20,,10,,,,,,,,2,,,,,{ .@val = 3; .@r = getrefine(); if (.@r>=7) { .@val += 5; } if (.@r>=9) { .@val += 7; } bonus2 bMagicAddEle,Ele_Water,.@val; },{},{}
@@ -11637,6 +11645,8 @@
 28008,Katar_of_Vicious_Mind,Katar of Vicious Mind,5,20,,1800,180,,1,1,0x00001000,63,2,34,4,160,1,16,{ bonus bAtk,pow(min(getrefine(),15),2); },{},{}
 28010,Juliette_D._Rachel,Juliette D. Rachel,5,20,,2500,300,,1,2,0x00001000,56,2,34,4,170,1,16,{ .@r = getrefine(); bonus2 bAddClass,Class_All,(.@r/2); bonus bAspdRate,.@r; bonus bUnbreakableWeapon; },{},{}
 28011,Unity_Katar,Unity Katar,5,20,,650,123,,1,1,0x00001000,63,2,34,3,1,1,16,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
+28022,Illusion_Infiltrator,Illusion Infiltrator,5,0,,1500,200,,1,2,0x00001000,58,2,34,4,100,1,16,{ bonus2 bAddRace,RC_DemiHuman,60; bonus2 bAddRace,RC_Player,60; bonus bDef,3; .@flee = 5; .@flee2 = 2; if (getrefine() >= 9) { .@flee += 5; .@flee2 += 2; bonus2 bAddClass,Class_All,5; } bonus bFlee,.@flee; bonus bFlee2,.@flee2; },{},{}
+28023,Illusion_Sharpened_Legbone_of_Ghoul,Illusion Sharpened Legbone of Ghoul,5,0,,1700,220,,1,2,0x00001000,58,2,34,3,100,1,16,{ autobonus "{ bonus bDefEle,Ele_Undead; sc_start SC_ENDURE,6000,1; }",40,6000,BF_WEAPON|BF_SHORT,"{ active_transform 1036,6000; }"; },{},{}
 //===================================================================
 // New Axes
 //===================================================================
@@ -11737,6 +11747,9 @@
 28472,Para_Team_Agi_Necklace160,Awakened Eden Group Necklace of Agility V,4,0,,0,,0,,0,0xFFFFFFFF,63,2,136,,160,,,{ bonus bDex,4; skill "AL_TELEPORT",1; },{},{}
 28483,Royal_Guardian_Ring,Royal Guardian Ring,4,0,,10,,1,,1,0xFFFFFFFF,63,2,136,,99,,,{ .@b = min(BaseLevel/25,7); bonus bMaxHPrate,.@b; bonus bMaxSPrate,.@b; },{},{}
 28499,Proof_of_Glory,Proof of Glory,4,0,,100,,0,,0,0xFFFFFFFF,63,2,136,,100,,,{ bonus bAllStats,1; bonus2 bAddRace,RC_All,2; bonus2 bMagicAddRace,RC_All,2; if(BaseLevel>=150) { bonus bAllStats,1; bonus2 bAddRace,RC_All,2; bonus2 bMagicAddRace,RC_All,2; } },{},{}
+28508,Illusion_Skull_Ring,Illusion Skull Ring,4,0,,100,,0,,1,0xFFFFFFFF,63,2,8,,100,0,0,{ bonus3 bAddEff,Eff_Curse,5000,ATF_SELF|ATF_TARGET|ATF_SHORT|ATF_WEAPON; },{},{}
+28509,Illusion_Ring,Illusion Ring,4,0,,200,,0,,1,0xFFFFFFFE,63,2,136,,100,0,0,{ bonus bStr,3; if (readparam(bStr) >= 100) { bonus bBaseAtk,30; } },{},{}
+28510,A_Vampire's_Servant,A Vampire's Servant,4,0,,100,,1,,1,0xFFFFFFFF,63,2,8,,100,0,,{ bonus2 bSPDrainRate,1000,1; },{},{}
 28551,Imperial_Glove,Imperial Glove,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,100,0,0,{ bonus2 bAddClass,Class_All,5; bonus bVariableCastrate,-10; bonus bNoCastCancel; },{},{}
 //===================================================================
 // More books
@@ -11747,6 +11760,7 @@
 28604,Crimson_Bible,Crimson Bible,5,20,,450,45,,1,2,0x00410100,63,2,2,3,70,1,15,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225); },{},{}
 28605,Book_of_Vicious_Mind,Book of Vicious Mind,5,20,,950,95,,1,1,0x00010100,63,2,2,4,160,1,15,{ bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon; },{},{}
 28606,Unity_Bible,Unity Bible,5,20,,220,42,,1,1,0x00410100,63,2,2,3,1,1,15,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
+28612,Illusion_Apocalypse,Illusion Apocalypse,5,0,,800,170,,1,2,0x00410100,63,2,2,4,100,1,15,{ .@val = 10 + 10*(min(getrefine(),10)/3); bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bSubDefEle,Ele_Holy,-30; },{},{}
 //===================================================================
 // More daggers
 //===================================================================
