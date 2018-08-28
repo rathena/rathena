@@ -56,6 +56,7 @@
 1618:2509,{ bonus bMaxHP,300; bonus bMatkRate,min(5, getequiprefinerycnt(EQI_HAND_R)-5); bonus2 bSubEle,Ele_Neutral,min(30, getequiprefinerycnt(EQI_GARMENT)*3); }
 1618:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1618:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
+1618:20847,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = min(.@weapon,10); bonus bMaxHP,1000; bonus bMatk,(-50+(20*.@weapon)); bonus bDelayrate,(3*(.@weapon/3)); bonus2 bSubEle,Ele_Neutral,(min(.@eq,10)/2); }
 1619:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
 1620:2509,{ bonus bMaxHP,300; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5; if(getequiprefinerycnt(EQI_GARMENT) > 10) { bonus2 bSubEle,Ele_Neutral,30; } else { bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3; } }
 1620:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
@@ -94,6 +95,7 @@
 1746:1773,{ bonus bLongAtkRate,50; }
 1775:18114,{ bonus bLongAtkRate,70; }
 1776:18114,{ bonus bLongAtkRate,40; }
+1846:20838,{ bonus bBaseAtk,40; .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { .@val = 20; } if ((.@eq + .@weapon) >= 18) { bonus2 bSkillCooldown,"SR_FLASHCOMBO",-1000; if ((.@eq + .@weapon) >= 22) { .@val += 15; } } if (.@val) { bonus2 bSkillAtk,"SR_TIGERCANNON",.@val; } }
 1935:2988,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",200; bonus2 bSkillUseSP,"CG_ARROWVULCAN",50; }
 1990:2989,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",200; }
 2001:2677,{ bonus bMatkRate,10; bonus bDex,2; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; }
@@ -106,6 +108,7 @@
 2012:2468:2860:15026,{ bonus2 bMagicAtkEle,Ele_Water,60; bonus2 bMagicAtkEle,Ele_Wind,-60; bonus2 bSubEle,Ele_Wind,-50; }
 2013:2469:2861:15027,{ bonus2 bMagicAtkEle,Ele_Fire,60; bonus2 bMagicAtkEle,Ele_Water,-60; bonus2 bSubEle,Ele_Water,-50; }
 2014:2470:2862:15028,{ bonus2 bMagicAtkEle,Ele_Earth,60; bonus2 bMagicAtkEle,Ele_Fire,-60; bonus2 bSubEle,Ele_Fire,-50; }
+2039:20847,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_GARMENT); bonus2 bSkillAtk,"WL_CRIMSONROCK",10; if (.@eq >= 7 && .@weapon >= 7) { bonus2 bSkillAtk,"WL_HELLINFERNO",40; } if ((.@eq + .@weapon) >= 18) { bonus2 bMagicAtkEle,Ele_Wind,10; bonus2 bMagicAtkEle,Ele_Dark,10; if ((.@eq + .@weapon) >= 22) { bonus2 bMagicAtkEle,Ele_Fire,10; } } }
 2109:2239:2717,{ bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }
 2109:2971:5135,{ bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }
 2109:2971:18874,{ bonus bHPrecovRate,15; bonus bSPrecovRate,15; bonus bMatkRate,7; }
@@ -155,6 +158,8 @@
 2337:2654,{ bonus bUseSPrate,-20; bonus bMaxHP,300; }
 2339:2522,{ bonus bAgi,5; bonus bFlee,10; }
 2339:2523,{ bonus bAgi,5; bonus bFlee,10; }
+2346:27113,{ bonus3 bAutoSpellWhenHit,"WZ_WATERBALL",5,50; }
+2347:27113,{ bonus3 bAutoSpellWhenHit,"WZ_WATERBALL",5,50; }
 2353:2417:2516,{ bonus bAgi,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }
 2353:2418:2517,{ bonus bVit,5; bonus bHPrecovRate,10; bonus bSPrecovRate,10; }
 2353:5123,{ if(readparam(bDex)>69) bonus bUseSPrate,-10; }
@@ -463,6 +468,7 @@
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
 13027:15044,{ .@r = max(getequiprefinerycnt(EQI_ARMOR),1); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,70*.@r; bonus3 bAddMonsterDropItem,970,RC_DemiHuman,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Brute,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Brute,50*.@r; }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,Size_Large,30; autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
+13337:19210,{ bonus bVariableCastrate,-15; .@eq = getequiprefinerycnt(EQI_HEAD_TOP); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { .@val = 25; } if ((.@eq + .@weapon) >= 18) { .@val += 25; if ((.@eq + .@weapon) >= 22) { bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000; } } if (.@val) { bonus2 bSkillAtk,"KO_HUUMARANKA",.@val; } }
 15041:18659,{ bonus bInt,3; bonus bStr,3; bonus bMdef,10; bonus bDefEle,Ele_Fire; bonus2 bAddEle,Ele_Earth,10; }
 15068:20710,{ bonus bAgi,5; bonus bFlee,10; }
 15088:18816:18818,{ bonus bMatk,BaseLevel/3; bonus2 bExpAddClass,Class_All,5; }
@@ -721,6 +727,8 @@
 27104:28510,{ bonus2 bHPRegenRate,30,3000; bonus2 bSPRegenRate,1,3000; }
 27104:27105,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus bMaxHP,2000; bonus bMaxSP,100; } else { bonus bMaxHP,1000; bonus bMaxSP,50; } }
 27105:28510,{ bonus bMatk,30; }
+27110:27111,{ bonus2 bSubSize,Size_Small,20; }
+27111:27112,{ bonus2 bSubSize,Size_Medium,20; }
 27147:27148,{ bonus bDelayrate,-3; }
 27163:27165,{ bonus bDelayrate,-3; bonus bVit,2; bonus bInt,2; bonus bAgi,2; bonus bDex,2; }
 27166:27167,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bMagicAddSize,Size_All,10; }

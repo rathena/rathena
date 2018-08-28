@@ -1172,6 +1172,7 @@
 1839,Crimson_Knuckles,Crimson Knuckles,5,20,,1000,100,,1,2,0x00008100,63,2,2,3,70,1,12,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon; },{},{}
 1840,Requiem_Knuckle,Requiem Knuckle,5,20,,500,150:100,,1,0,0x00008100,63,2,2,4,100,1,12,{ .@r = getrefine(); .@b = 40; if(.@r>=5){ .@b += (.@r-5)*15+20; } bonus2 bAddRace2,RC2_BioLab,.@b; },{},{}
 1841,Claw_Of_Flash_,Claw of Flash,5,60000,,400,140,,1,3,0x00008100,63,2,2,4,105,1,12,{ bonus bAspd,1; bonus bAspdRate,getrefine(); bonus2 bAddSize,Size_Medium,getrefine(); },{},{}
+1846,Illusion Combo Battle Glove,Illusion Combo Battle Glove,5,0,,500,250,,1,2,0x00008000,56,2,2,4,120,1,12,{ .@r = getrefine(); bonus2 bSkillAtk,"SR_SKYNETBLOW",(10+5*(.@r/2)); bonus2 bSkillAtk,"SR_DRAGONCOMBO",(10+5*(.@r/2)); bonus2 bSkillAtk,"SR_TIGERCANNON",(5*(.@r/3)); },{},{}
 //===================================================================
 // Instruments
 //===================================================================
@@ -7502,6 +7503,7 @@
 13327,Crimson_Huuma_Shuriken,Crimson Huuma Shuriken,5,20,,1000,100,,1,2,0x22000000,63,2,34,3,70,1,22,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225); },{},{}
 13328,Huuma_Shuriken_of_Vicious_Mind,Huuma Shuriken of Vicious Mind,5,20,,1500,150:50,,1,1,0x22000000,63,2,34,4,160,1,22,{ bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2; bonus bUnbreakableWeapon; },{},{}
 13329,Unity_Huuma_Shuriken,Unity Huuma Shuriken,5,20,,500,95,,1,1,0x22000000,63,2,34,3,1,1,22,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
+13337,Illusion_Huuma_Fluttering_Snow,Illusion Huuma Fluttering Snow,5,0,,1500,250:50,,1,2,0x02000000,63,2,34,4,120,1,22,{ .@r = getrefine(); bonus bBaseAtk,(30*(.@r/3)); bonus bLongAtkRate,(3*.@r); },{},{}
 //===================================================================
 // More 1-Handed Swords
 //===================================================================
@@ -10001,6 +10003,7 @@
 //
 19209,Illusion_Nurse_Cap,Illusion Nurse Cap,4,20,,200,,1,,1,0x00008110,63,2,256,,99,1,64,{ .@r = getrefine(); bonus bInt,(1+(.@r/2)); bonus bHealPower,(3*(.@r/2)); },{},{}
 19210,Illusion_Apple_of_Archer,Illusion Apple of Archer,4,20,,200,,1,,1,0xFFFFFFFE,63,2,256,,99,1,72,{ bonus bDex,(3+(getrefine()/2)); },{},{}
+19223,Illusion_Cap,Illusion Cap,4,0,,400,,15,,1,0x000654E3,63,2,256,,120,1,14,{ bonus2 bAddClass,Class_All,1; bonus bBaseAtk,(2*getrefine()); },{},{}
 //
 19246,Royal_Guard_Necklace,Royal Guard Necklace,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,80,0,1629,{ bonus bAspd,1; },{},{}
 19306,Gambler_Card,Heart Card in Mouth,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,80,0,1679,{ bonus bCritAtkRate,5; },{},{}
@@ -10905,6 +10908,7 @@
 20830,Wings_of_Seraph,Wings of Seraph,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,8,{},{},{}
 20838,Illusion_Muffler,Illusion Muffler,4,20,,400,,8,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(100+(100*.@r)); bonus bMaxSP,(10+(5*.@r)); },{},{}
 20840,Illusion_Ancient_Cape,Illusion Ancient Cape,4,0,,600,,18,,1,0xFFFFFFFE,63,2,4,,100,1,0,{ .@val = min(getrefine(),10)/2; bonus bAgi,(2+.@val); },{},{}
+20847,Illusion_Survivor_Manteau,Illusion Survivor Manteau,4,0,,550,,30,,1,0x00810204,63,2,4,,130,1,0,{ bonus bVit,15; },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -11586,6 +11590,10 @@
 27103,Living_Dead_Card,Living Dead Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,20; bonus bUnbreakableWeapon; bonus bUnbreakableArmor; },{},{}
 27104,Furious_Dracula_Card,Furious Dracula Card,6,20,,10,,,,,,,,4,,,,,{ skill "PF_HPCONVERSION",1; },{},{}
 27105,Bomi_Card,Bomi Card,6,20,,10,,,,,,,,8,,,,,{ skill "HW_NAPALMVULCAN",4; },{},{}
+27110,Furious_Gazeti_Card,Furious Gazeti Card,6,20,,10,,,,,,,,16,,,,,{ bonus bLongAtkDef,20; },{},{}
+27111,Furious_Snowier_Card,Furious Snowier Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,11522,50; bonus2 bAddItemHealRate,11523,50; bonus2 bAddItemHealRate,11524,50; },{},{}
+27112,Furious_Ice Titan_Card,Furious Ice Titan Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDef,(5*(1+getrefine())); },{},{}
+27113,Awaken_Ktullanux_Card,Awaken Ktullanux Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bMagicAtkEle,Ele_Water,(20+(3*getrefine())); },{},{}
 27120,Iara_Card,Iara Card,6,20,,10,,,,,,,,136,,,,,{ skill "PR_STRECOVERY",1; },{},{}
 27121,Piranha_Card,Piranha Card,6,20,,10,,,,,,,,64,,,,,{ .@val = 10; if (getrefine() >= 9) { .@val += 5; } bonus2 bAddRace,RC_Fish,.@val; bonus2 bMagicAddRace,RC_Fish,.@val; },{},{}
 27122,Curupira_Card,Curupira Card,6,20,,10,,,,,,,,2,,,,,{ .@val = 3; .@r = getrefine(); if (.@r>=7) { .@val += 5; } if (.@r>=9) { .@val += 7; } bonus2 bMagicAddEle,Ele_Water,.@val; },{},{}
@@ -11789,6 +11797,7 @@
 28915,Bunker_Shield,Bunker Shield,4,20,,3500,,90,,1,0xFFFFFFFF,63,2,32,,50,1,1,{ .@r = getrefine(); if(.@r >= 5) { .@dmg = .@r - 4; } bonus2 bAddClass,Class_All,(4+.@dmg); bonus bAspdRate,-5; },{},{}
 28916,Gaia_Shield,Gaia Shield,4,20,,2000,,150,,1,0xFFFFFFFF,63,2,32,,90,1,1,{ bonus bMdef,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bAddEle,Ele_Earth,5; bonus2 bMagicAddEle,Ele_Earth,5; .@r = getrefine(); if(.@r>=6) { bonus2 bSubEle,Ele_Earth,15; bonus2 bAddEle,Ele_Earth,10; bonus2 bMagicAddEle,Ele_Earth,10; } if(.@r>=8) { if(readparam(bStr)>=90) { bonus bBaseAtk,50; } if(readparam(bAgi)>=90) { bonus bAspdRate,5; } if(readparam(bVit)>=90) { bonus bHealPower2,10; bonus bAddItemHealRate,10; } if(readparam(bInt)>=90) { bonus bMatk,30; } if(readparam(bDex)>=90) { bonus bVariableCastrate,-5; } if(readparam(bLuk)>=90) { bonus bCritAtkRate,5; } } },{},{}
 28920,Diamond_Shield,Diamond Shield,4,20,,1000,,50,,0,0xFFFFFFFF,63,2,32,,100,1,1,{ .@r = getrefine(); if(BaseLevel>=150) { bonus bDef,100+(20*(.@r/3)); } },{},{}
+28922,Illusion_Sacred_Mission,Illusion Sacred Mission,4,0,,1600,,190,,1,0x00004000,56,2,32,,120,1,4,{ bonus bVit,3; bonus bInt,2; bonus bMdef,3; bonus bUnbreakableShield; bonus2 bSkillAtk,"LG_EARTHDRIVE",(7*getrefine()); },{},{}
 //===================================================================
 // Enchantment stones
 //===================================================================
