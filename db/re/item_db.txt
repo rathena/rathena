@@ -8795,7 +8795,7 @@
 16043,Meteor_Strike,Meteor Strike,5,0,,20000,1,,1,2,0x00000001,63,2,2,4,110,1,8,{ bonus bBaseAtk,10*getskilllv("BS_WEAPONRESEARCH"); bonus bBaseAtk,30*getskilllv("MO_IRONHAND"); .@s = getskilllv("AM_AXEMASTERY"); bonus bBaseAtk,7*.@s; bonus bHit,5*.@s; bonus bBaseAtk,10*getrefine(); if (getskilllv("MC_PUSHCART") > 9) skill "MC_CARTREVOLUTION",1; if (getskilllv("SM_SWORD") > 0) skill "KN_BOWLINGBASH",1; .@str = readparam(bStr); if (.@str > 119) bonus bUseSPrate,-30; else if (.@str > 107) bonus bUseSPrate,-20; },{},{}
 16048,Unity_Mace,Unity Mace,5,20,,400,76,,1,1,0x0004C5B3,63,2,2,3,1,1,8,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
 16051,Valkyrie_Hammer,Valkyrie Hammer,5,0,,100,50,,1,4,0x0004C3B3,63,2,2,1,70,1,8,{ if ((eaclass()&EAJ_BASEMASK) == EAJ_NOVICE) { bonus bUseSPrate,-5; .@r = getrefine(); bonus bVit,.@r; bonus bMaxHP,200; bonus bFlee2,1; bonus bAspdRate,1; bonus bVariableCast,.@r/2; } else if ((eaclass()&EAJ_BASEMASK) == EAJ_SWORDMAN) { bonus bVit,getrefine(); bonus bMaxHP,500; bonus bMaxSP,100; } else if ((eaclass()&EAJL_2) == EAJ_PRIEST) { bonus bBaseAtk,50; bonus bMatk,100; bonus bAspdRate,getrefine(); } else if ((eaclass()&EAJL_2) == EAJ_MONK) { bonus bMaxSP,200; bonus bUseSPrate,-5; bonus bFlee2,getrefine(); } else if ((eaclass()&EAJ_BASEMASK) == EAJ_MERCHANT) { bonus bBaseAtk,100; bonus bHit,10; bonus bVariableCast,getrefine()/2; } },{},{}
-16063,Illusion_Long_Mace,Illusion Long Mace,5,20,,800,185,,1,2,0x00008110,63,2,2,4,99,1,8,{ bonus bLongAtkDef,(10+3*(getrefine()/2)); },{},{}
+16063,Illusion_Long_Mace,Illusion Long Mace,5,20,,800,185,,3,2,0x00008110,63,2,2,4,99,1,8,{ bonus bLongAtkDef,(10+3*(getrefine()/2)); },{},{}
 //===================================================================
 // More Rental Boxes
 //===================================================================
@@ -11550,7 +11550,7 @@
 //===================================================================
 26100,Paradise_Foxtail_Staff_II,Eden Group Foxtail Staff II,5,20,,0,135:165,,1,0,0x80000000,7,2,2,2,40,0,10,{ bonus bDex,4; bonus bInt,4; bonus bLongAtkRate,6; },{},{}
 26101,Paradise_Foxtail_Staff_III,Eden Group Foxtail Staff III,5,20,,0,150:195,,1,0,0x80000000,7,2,2,3,60,0,10,{ bonus bDex,5; bonus bInt,5; bonus bLongAtkRate,7; },{},{}
-26109,Illusion_Staff_of_Bordeaux,Illusion Staff of Bordeaux,5,20,,500,60:180,,1,2,0x00010200,62,2,2,4,99,1,10,{ bonus bInt,3; bonus bDex,2; .@val = getrefine()/3; if (getskilllv("SA_DRAGONOLOGY") == 5) { bonus bMatkRate,(5+.@val); bonus bUseSPrate,(-15-(5*.@val)); } },{},{}
+26109,Illusion_Staff_of_Bordeaux,Illusion Staff of Bordeaux,5,20,,500,60:180,,1,2,0x00010200,58,2,2,4,99,1,10,{ bonus bInt,3; bonus bDex,2; if (getskilllv("SA_DRAGONOLOGY") == 5) { .@val = getrefine()/3; bonus bMatkRate,(5+.@val); bonus bUseSPrate,(-15-(5*.@val)); } },{},{}
 26110,CandyCaneRod,Candy Cane Rod,5,20,,500,10:140,,1,2,0x00818315,63,2,2,4,99,1,10,{ bonus bInt,2; bonus bFlee,2*getrefine(); if(getrefine()>= 10) { bonus bFlee2,10; } },{},{}
 //===================================================================
 // More Cards
