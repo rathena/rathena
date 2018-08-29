@@ -739,6 +739,8 @@
 27104:28510,{ bonus2 bHPRegenRate,30,3000; bonus2 bSPRegenRate,1,3000; }
 27104:27105,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus bMaxHP,2000; bonus bMaxSP,100; } else { bonus bMaxHP,1000; bonus bMaxSP,50; } }
 27105:28510,{ bonus bMatk,30; }
+27107:27108,{ bonus2 bSkillAtk,"WM_METALICSOUND",50; bonus2 bSkillAtk,"WM_REVERBERATION",50; }
+// 27107:27108:27109,{ autobonus "{ heal 2000,0; bonus2 bAddEle,Ele_Neutral,200; bonus2 bMagicAddEle,Ele_Neutral,200; }",20,6000,BF_WEAPON|BF_MAGIC,"{ active_transform 3073,6000; }"; /* fix me: mob 3073 not implemented */ }
 27110:27111,{ bonus2 bSubSize,Size_Small,20; }
 27111:27112,{ bonus2 bSubSize,Size_Medium,20; }
 27114:27115,{ bonus bMaxHPrate,(getequiprefinerycnt(EQI_ARMOR)/3); bonus bMaxSP,(5*(getequiprefinerycnt(EQI_HEAD_TOP)/2)); }
@@ -746,6 +748,8 @@
 27147:27148,{ bonus bDelayrate,-3; }
 27163:27165,{ bonus bDelayrate,-3; bonus bVit,2; bonus bInt,2; bonus bAgi,2; bonus bDex,2; }
 27166:27167,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bMagicAddSize,Size_All,10; }
+27196:27199,{ bonus2 bMagicAddSize,Size_Small,5; bonus2 bMagicAddRace,RC_Brute,5; }
+27197:27198,{ bonus2 bAddSize,Size_Small,5; bonus2 bAddRace,RC_Brute,5; }
 28022:28509,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bAspdRate,10; if (.@r >= 9) { bonus bCritAtkRate,10; if (.@r >= 11) { bonus2 bAddRace,RC_Brute,25; } } }
 28315:28317,{ bonus2 bAddClass,Class_All,4; bonus bMatkRate,4; }
 28316:28318,{ bonus2 bAddClass,Class_All,4; bonus bMatkRate,4; }
