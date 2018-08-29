@@ -8786,6 +8786,7 @@ REPLACE INTO `item_db_re` VALUES (15185,'Para_Team_Uniform160','Awakened Eden Gr
 REPLACE INTO `item_db_re` VALUES (15186,'Kafra_Uniform','Kafra Uniform',4,20,NULL,500,NULL,40,NULL,1,0xFFFFFFFF,63,2,16,NULL,'1',1,NULL,'bonus2 bExpAddClass,Class_All,5; bonus2 bDropAddClass,Class_All,5; .@r = getrefine(); bonus bMaxHP,100*.@r; bonus bMaxSP,20*.@r; bonus bMaxHPrate,(3*(.@r>=7)+5*(.@r>=9)); bonus bMaxSPrate,(3*(.@r>=7)+5*(.@r>=9)); if(.@r>=12){ bonus bHPrecovRate,100; bonus bSPrecovRate,100; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15189,'Einherjar_Armor','Einherjar Armor',4,20,NULL,800,NULL,60,NULL,1,0xFFFFFFFF,63,2,16,NULL,'90',1,NULL,'bonus bMdef,5; bonus bBaseAtk,10; .@r = getrefine(); if(.@r>=7){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } if(.@r>=8){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } if(.@r>=9){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15195,'Illusion_Puente_Robe','Illusion Puente Robe',4,20,NULL,400,NULL,52,NULL,1,0xFFFFFFFF,63,2,16,NULL,'99',1,0,'bonus bFixedCastrate,-3; .@r = getrefine(); bonus bHealPower2,(5+.@r); bonus bAddItemHealRate,(5+.@r);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15348,'Illusion_Goibne_Armor','Illusion Goibne Armor',4,0,NULL,3500,NULL,158,NULL,1,0xFFFFFFFE,63,2,16,NULL,'130',1,0,'bonus bMaxHPrate,10; .@r = getrefine(); if (.@r >= 9) { bonus bDef,150; } else if (.@r >= 7) { bonus bDef,50; }',NULL,NULL);
 #===================================================================
 # More Maces
 #===================================================================
@@ -9570,6 +9571,7 @@ REPLACE INTO `item_db_re` VALUES (18138,'Frozen_Bow_','Frozen Bow',5,20,NULL,140
 REPLACE INTO `item_db_re` VALUES (18139,'Earth_Bow_','Earth Bow',5,20,NULL,1400,'105',NULL,5,2,0x000A0808,63,2,34,3,'55',1,11,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18140,'Gust_Bow_','Gust Bow',5,20,NULL,1400,'95',NULL,5,2,0x000A0808,63,2,34,3,'55',1,11,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18149,'Illusion_Ballista','Illusion Ballista',5,0,NULL,3500,'200',NULL,5,2,0x00080800,58,2,34,4,'100',1,11,'bonus bLongAtkRate,getrefine();',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18174,'Illusion_Hunter_Bow','Illusion Hunter Bow',5,0,NULL,1500,'165',NULL,5,2,0x00000800,56,2,34,4,'120',1,11,'.@r = getrefine(); bonus bCritical,.@r; if (.@r >= 7) { bonus bAspdRate,10; if (.@r >= 9) { bonus bCritAtkRate,15; if (.@r >= 11) { bonus2 bAddRace,RC_Insect,30; bonus2 bAddRace,RC_Brute,30; } } }',NULL,NULL);
 #===================================================================
 # More Headgears
 #===================================================================
@@ -10046,6 +10048,7 @@ REPLACE INTO `item_db_re` VALUES (19247,'Illusion_Fancy_Flower','Illusion Fancy 
 REPLACE INTO `item_db_re` VALUES (19246,'Royal_Guard_Necklace','Royal Guard Necklace',4,20,NULL,300,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'80',0,1629,'bonus bAspd,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19306,'Gambler_Card','Heart Card in Mouth',4,20,NULL,300,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'80',0,1679,'bonus bCritAtkRate,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19344,'Illusion_Hot_blooded_Headband','Illusion Hot-blooded Headband',4,0,NULL,100,NULL,3,NULL,1,0xFFFFFFFE,63,2,256,NULL,'120',1,154,'.@r = getrefine(); bonus bStr,2; bonus bBaseAtk,(10*(.@r/2)); if (.@r >= 7) { bonus2 bAddEle,Ele_Water,10; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Neutral,10; if (.@r >= 9) { bonus2 bAddSize,Size_Small,15; bonus2 bAddSize,Size_Large,15; } }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19366,'Illusion_Goibne_Helm','Illusion Goibne Helm',4,0,NULL,1000,NULL,25,NULL,1,0xFFFFFFFE,63,2,256,NULL,'130',1,258,'.@r = getrefine(); .@vit = 3; if (.@r >= 7) { .@vit += 5; if (.@r >= 9) { bonus bDelayrate,-12; } } bonus bVit,.@vit; bonus bMdef,3;',NULL,NULL);
 #===================================================================
 # Costume System
 #===================================================================
@@ -10948,6 +10951,7 @@ REPLACE INTO `item_db_re` VALUES (20830,'Wings_of_Seraph','Wings of Seraph',4,0,
 REPLACE INTO `item_db_re` VALUES (20838,'Illusion_Muffler','Illusion Muffler',4,20,NULL,400,NULL,8,NULL,1,0xFFFFFFFE,63,2,4,NULL,'99',1,0,'.@r = getrefine(); bonus bMaxHP,(100+(100*.@r)); bonus bMaxSP,(10+(5*.@r));',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20840,'Illusion_Ancient_Cape','Illusion Ancient Cape',4,0,NULL,600,NULL,18,NULL,1,0xFFFFFFFE,63,2,4,NULL,'100',1,0,'.@val = min(getrefine(),10)/2; bonus bAgi,(2+.@val);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20847,'Illusion_Survivor_Manteau','Illusion Survivor Manteau',4,0,NULL,550,NULL,30,NULL,1,0x00810204,63,2,4,NULL,'130',1,0,'bonus bVit,15;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20923,'Illusion_Goibne_Spaulders','Illusion Goibne Spaulders',4,0,NULL,1000,NULL,47,NULL,1,0xFFFFFFFE,63,2,4,NULL,'130',1,0,'.@r = getrefine();  bonus bMdef,2; bonus bVit,1; if (.@r >= 7) { .@val = 5; if (.@r >= 9) { .@val += 10; } } if (.@val) { bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; }',NULL,NULL);
 #===================================================================
 # More 2-Handed Swords
 #===================================================================
@@ -11039,6 +11043,7 @@ REPLACE INTO `item_db_re` VALUES (22125,'Para_Team_Boots145','Awakened Eden Grou
 REPLACE INTO `item_db_re` VALUES (22126,'Para_Team_Boots160','Awakened Eden Group Boots V',4,0,NULL,0,NULL,30,NULL,0,0xFFFFFFFF,63,2,64,NULL,'160',1,NULL,'bonus bAllStats,2; bonus bHPrecovRate,40; bonus bSPrecovRate,20; bonus bUseSPrate,-5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22133,'Illusion_Shoes','Illusion Shoes',4,20,NULL,400,NULL,10,NULL,1,0xFFFFFFFE,63,2,64,NULL,'99',1,0,'.@r = getrefine(); bonus bMaxHP,(100+(100*.@r)); bonus bMaxSP,(10+(5*.@r));',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22190,'Illusion_Boots','Illusion Boots',4,0,NULL,600,NULL,16,NULL,1,0x016E5CEA,63,2,64,NULL,'100',1,0,'.@r = getrefine(); bonus bCritical,(5*(.@r/3)); bonus bAspdRate,.@r;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22192,'Illusion_Goibne\'s_Greaves','Illusion Goibne\'s Greaves',4,0,NULL,1200,NULL,42,NULL,1,0xFFFFFFFE,63,2,64,NULL,'130',1,0,'.@r = getrefine(); bonus bMaxHPrate,5; bonus bMaxSPrate,5; if (.@r >= 7) { bonus bVariableCastrate,-5; if (.@r >= 9) { bonus bLongAtkRate,10; } }',NULL,NULL);
 #===================================================================
 # New Usable items
 #===================================================================
@@ -11692,6 +11697,14 @@ REPLACE INTO `item_db_re` VALUES (27287,'Shiny_Teddy_Bear_Card','Shiny Teddy Bea
 REPLACE INTO `item_db_re` VALUES (27288,'Hardworking_Pitman_Card','Hardworking Pitman Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'.@val = 10; bonus2 bAddClass,Class_All,5; if (getrefine() >= 10) { .@val += 5; } bonus bHit,.@val;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27289,'Soul_Fragment_Card','Soul Fragment Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bMatk,5; bonus2 bMagicAddSize,Size_Medium,15;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (27290,'Haunted_Obsidian_Card','Haunted Obsidian Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'.@agi = readparam(bAgi); .@val = .@agi/10; if (.@val) { bonus bFlee,(3*.@val); bonus bAspdRate,.@val; if (.@agi >= 120) { bonus bAspd,1; } }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27291,'Ancient_Tri_Joint_Card','Ancient Tri Joint Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bBaseAtk,30; bonus bMaxHPrate,-1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27292,'Ancient_Stalactic_Golem_Card','Ancient Stalactic Golem Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'.@vit = readparam(bVit); .@val = .@vit/10; if (.@val) { bonus bAspdRate,.@val; bonus bMaxHP,(150*.@val); if (.@vit >= 120) { bonus bDelayrate,-3; } }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27293,'Ancient_Megalith_Card','Ancient Megalith Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bMatk,30; bonus bMaxSPrate,-1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27294,'Ancient Tao Gunka Card','Ancient Tao Gunka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'.@val = 30; if (getrefine() >= 10) { .@val += 20; } bonus2 bIgnoreDefClassRate,Class_Boss,.@val;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27295,'Ancient_Stone_Shooter_Card','Ancient Stone Shooter Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'.@luk = readparam(bLuk); .@aspd = .@crit = .@luk/10; if (.@luk >= 120) { .@crit += 5; } bonus bAspdRate,.@aspd; bonus bCritAtkRate,.@crit;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27296,'Ancient_Wootan_Shooter_Card','Ancient Wootan Shooter Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'.@dex = readparam(bDex); .@val = .@dex/10; if (.@val) { bonus bAspdRate,.@val; bonus2 bWeaponDamageRate,W_BOW,.@val; if (.@dex >= 120) { bonus bBaseAtk,40; } }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27297,'Ancient_Wootan_Fighter_Card','Ancient Wootan Fighter Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bCritical,5; bonus bCritAtkRate,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27298,'Ancient_Wootan_Defender_Card','Ancient Wootan Defender Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'.@val = 30; if (getrefine() >= 10) { .@val += 20; } bonus2 bSubClass,Class_Boss,.@val;',NULL,NULL);
 #===================================================================
 # New Katars
 #===================================================================
@@ -11821,6 +11834,7 @@ REPLACE INTO `item_db_re` VALUES (28604,'Crimson_Bible','Crimson Bible',5,20,NUL
 REPLACE INTO `item_db_re` VALUES (28605,'Book_of_Vicious_Mind','Book of Vicious Mind',5,20,NULL,950,'95',NULL,1,1,0x00010100,63,2,2,4,'160',1,15,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28606,'Unity_Bible','Unity Bible',5,20,NULL,220,'42',NULL,1,1,0x00410100,63,2,2,3,'1',1,15,'bonus bBaseAtk,pow(getrefine(),2)*125/100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28612,'Illusion_Apocalypse','Illusion Apocalypse',5,0,NULL,800,'170',NULL,1,2,0x00410100,63,2,2,4,'100',1,15,'.@val = 10 + 10*(min(getrefine(),10)/3); bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bSubDefEle,Ele_Holy,-30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28626,'Illusion_Tablet','Illusion Tablet',5,0,NULL,800,'170',NULL,1,2,0x00410100,63,2,2,4,'100',1,15,'.@val = 10 + 10*(min(getrefine(),10)/3); bonus2 bAddEle,Ele_Dark,.@val; bonus2 bAddEle,Ele_Undead,.@val; bonus2 bAddEle,Ele_Poison,.@val; bonus2 bAddEle,Ele_Ghost,.@val; bonus2 bSubDefEle,Ele_Dark,-30;',NULL,NULL);
 #===================================================================
 # More daggers
 #===================================================================
