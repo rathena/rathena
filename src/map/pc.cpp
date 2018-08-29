@@ -4288,12 +4288,12 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	return 0;
 }
 
-/*==========================================
- *	Returns the count of unidentified items.
- *  <identify_item>:
- *	true: identify the items and returns the count of unidentified items (default)
- *	false: returns the count of unidentified items only
- *------------------------------------------*/
+/**
+ * Returns the count of unidentified items with the option to identify too.
+ * @param sd: Player data
+ * @param identify_item: Whether or not to identify any unidentified items
+ * @return Unidentified items count
+ */
 int pc_identifyall(struct map_session_data *sd, bool identify_item)
 {
 	int unidentified_count = 0;
