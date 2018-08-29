@@ -8749,7 +8749,7 @@
 15185,Para_Team_Uniform160,Awakened Eden Group Uniform V,4,20,,0,,100,,0,0xFFFFFFFF,63,2,16,,160,,,{ bonus bAllStats,2; bonus bMaxHP,1500; bonus bMaxSP,150; bonus bMdef,15; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; },{},{}
 15186,Kafra_Uniform,Kafra Uniform,4,20,,500,,40,,1,0xFFFFFFFF,63,2,16,,1,1,,{ bonus2 bExpAddClass,Class_All,5; bonus2 bDropAddClass,Class_All,5; .@r = getrefine(); bonus bMaxHP,100*.@r; bonus bMaxSP,20*.@r; bonus bMaxHPrate,(3*(.@r>=7)+5*(.@r>=9)); bonus bMaxSPrate,(3*(.@r>=7)+5*(.@r>=9)); if(.@r>=12){ bonus bHPrecovRate,100; bonus bSPrecovRate,100; } },{},{}
 15189,Einherjar_Armor,Einherjar Armor,4,20,,800,,60,,1,0xFFFFFFFF,63,2,16,,90,1,,{ bonus bMdef,5; bonus bBaseAtk,10; .@r = getrefine(); if(.@r>=7){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } if(.@r>=8){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } if(.@r>=9){ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; } },{},{}
-15195,Illusion_Puente_Robe,Illusion Puente Robe,4,20,,400,,52,,1,0xFFFFFFFF,63,2,16,,99,1,0,{ bonus bFixedCastrate,3; .@r = getrefine(); bonus bHealPower2,(5+.@r); bonus bAddItemHealRate,(5+.@r); },{},{}
+15195,Illusion_Puente_Robe,Illusion Puente Robe,4,20,,400,,52,,1,0xFFFFFFFF,63,2,16,,99,1,0,{ bonus bFixedCastrate,-3; .@r = getrefine(); bonus bHealPower2,(5+.@r); bonus bAddItemHealRate,(5+.@r); },{},{}
 //===================================================================
 // More Maces
 //===================================================================

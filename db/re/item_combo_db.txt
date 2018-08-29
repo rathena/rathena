@@ -56,7 +56,7 @@
 1618:2509,{ bonus bMaxHP,300; bonus bMatkRate,min(5, getequiprefinerycnt(EQI_HAND_R)-5); bonus2 bSubEle,Ele_Neutral,min(30, getequiprefinerycnt(EQI_GARMENT)*3); }
 1618:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1618:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-1618:20847,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = min(.@weapon,10); bonus bMaxHP,1000; bonus bMatk,(-50+(20*.@weapon)); bonus bDelayrate,(3*(.@weapon/3)); bonus2 bSubEle,Ele_Neutral,(min(.@eq,10)/2); }
+1618:20847,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = min(.@weapon,10); bonus bMaxHP,1000; bonus bMatk,(-50+(20*.@weapon)); bonus bDelayrate,-(3*(.@weapon/3)); bonus2 bSubEle,Ele_Neutral,(min(.@eq,10)/2); }
 1619:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
 1620:2509,{ bonus bMaxHP,300; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5; if(getequiprefinerycnt(EQI_GARMENT) > 10) { bonus2 bSubEle,Ele_Neutral,30; } else { bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3; } }
 1620:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
