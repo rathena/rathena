@@ -11603,6 +11603,10 @@
 27103,Living_Dead_Card,Living Dead Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,20; bonus bUnbreakableWeapon; bonus bUnbreakableArmor; },{},{}
 27104,Furious_Dracula_Card,Furious Dracula Card,6,20,,10,,,,,,,,4,,,,,{ skill "PF_HPCONVERSION",1; },{},{}
 27105,Bomi_Card,Bomi Card,6,20,,10,,,,,,,,8,,,,,{ skill "HW_NAPALMVULCAN",4; },{},{}
+27106,Awaken_Pere_Card,Awaken Pere Card,6,20,,10,,,,,,,,16,,,,,{ if (BaseJob == Job_Bard || BaseJob == Job_Dancer) { bonus bMatk,(15*getrefine()); } },{},{}
+27107,Playing_Pere_Card,Playing Pere Card,6,20,,10,,,,,,,,8,,,,,{ bonus2 bAddEle,Ele_Neutral,20; },{},{}
+27108,Singing_Pere_Card,Singing Pere Card,6,20,,10,,,,,,,,128,,,,,{ bonus2 bMagicAddEle,Ele_Neutral,20; },{},{}
+27109,Jitterbug_Card,Jitterbug Card,6,20,,10,,,,,,,,769,,,,,{ bonus2 bSubDefEle,Ele_Neutral,10; bonus bMaxHP,500; },{},{}
 27110,Furious_Gazeti_Card,Furious Gazeti Card,6,20,,10,,,,,,,,16,,,,,{ bonus bLongAtkDef,20; },{},{}
 27111,Furious_Snowier_Card,Furious Snowier Card,6,20,,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,11522,50; bonus2 bAddItemHealRate,11523,50; bonus2 bAddItemHealRate,11524,50; },{},{}
 27112,Furious_Ice Titan_Card,Furious Ice Titan Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDef,(5*(1+getrefine())); },{},{}
@@ -11643,6 +11647,10 @@
 27182,Captain_Felock_Card,Captain Felock Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,30; .@r = getrefine(); bonus2 bSkillAtk,"RL_AM_BLAST",.@r >= 10 ? 60 : 30; bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",.@r >= 10 ? 60 : 30; },{},{}
 27183,Gigantes_Card,Gigantes Card,6,20,,10,,,,,,,,128,,,,,{ bonus bAtk,20; if(readparam(bStr) >= 120) { bonus bAtk,20; bonus bAspdRate,-3; } },{},{}
 27184,Knight_Sakray_Card,Knight Sakray Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,20; bonus2 bAddRace,RC_Demon,30; bonus2 bAddRace,RC_Undead,30; },{},{}
+27196,Nihil_M_Heine_Card,Nihil M. Heine Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAddSize,Size_Small,15; },{},{}
+27197,Agnes_Lugenburg_Card,Agnes Lugenburg Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddSize,Size_Small,15; },{},{}
+27198,Jurgen_Wigner_Card,Jurgen Wigner Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Brute,15; },{},{}
+27199,Spica_Nerius_Card,Spica Nerius Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAddRace,RC_Brute,15; },{},{}
 27249,Arhi_Card,Arhi Card,6,20,,10,,,,,,,,64,,,,,{ bonus bAtk,15; bonus bMatk,15; bonus bMaxHP,500; bonus bHit,15; bonus bFlee,15; },{},{}
 27250,Dio_Anemos_Card,Dio Anemos Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMatkRate,3; bonus2 bMagicAtkEle,Ele_Neutral,5; bonus2 bMagicAtkEle,Ele_Earth,5; },{},{}
 27251,Geffen_Gang_Member_Card,Geffen Gang Member Card,6,20,,10,,,,,,,,64,,,,,{ bonus bCritAtkRate,3; bonus bAspdRate,5; },{},{}
