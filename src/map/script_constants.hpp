@@ -6039,6 +6039,10 @@
 	export_constant_npc(JT_4_EP17_MIGUEL);
 	export_constant_npc(JT_4_EP17_NIHIL_K);
 	export_constant_npc(JT_4_EP17_MIGUEL_D);
+	export_constant_npc(JT_4_ED_SCHMIDT);
+	export_constant_npc(JT_4_ED_OSCAR);
+	export_constant_npc(JT_4_ED_ORB);
+	export_constant_npc(JT_4_ED_FENCE);
 	#undef export_constant_npc
 
 	/* special effects */
