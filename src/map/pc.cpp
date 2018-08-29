@@ -10132,15 +10132,17 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 	sd->npc_item_flag = iflag;
 }
 
-/*==========================================
- * Called when attempting to unequip an item from player
- * type:
+/**
+ * Called when attempting to unequip an item from a player
+ * @param sd: Player data
+ * @param n: Item inventory index
+ * @param flag: Type of unequip
  *  0 - only unequip
  *  1 - calculate status after unequipping
  *  2 - force unequip
- *	4 - unequip by switching equipment
- * return: false - fail; true - success
- *------------------------------------------*/
+ *  4 - unequip by switching equipment
+ * @return True on success or false on failure
+ */
 bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	int i, pos;
 
