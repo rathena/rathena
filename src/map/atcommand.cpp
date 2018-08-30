@@ -7091,12 +7091,7 @@ ACMD_FUNC(identifyall)
 {
 	int i;
 	nullpo_retr(-1, sd);
-	for(i=0; i<MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
-			sd->inventory.u.items_inventory[i].identify = 1;
-			clif_item_identified(sd,i,0);
-		}
-	}
+	pc_identifyall(sd, true);
 	return 0;
 }
 
