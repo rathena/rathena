@@ -4893,13 +4893,13 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 
 	mobid = atoi(str[0]);
 	if ((mob = mob_db(mobid)) == NULL) {
-		ShowError("mob_readdb_drop: Invalid monster with ID %s.\n", str[0]);
+		ShowError("mob_readdb_drop: Invalid monster ID %s.\n", str[0]);
 		return false;
 	}
 
 	nameid = atoi(str[1]);
 	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_drop: Invalid item id %s.\n", str[1]);
+		ShowWarning("mob_readdb_drop: Invalid item ID %s.\n", str[1]);
 		return false;
 	}
 
@@ -4923,13 +4923,13 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		}
 	}
 	else {
-		for (i = 0; i < size; i++) {
-			if (drop[i].nameid == 0)
-				break;
-		}
-		if (i == size) {
-			ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached '%d'.\n", nameid, mobid, size);
-			return true;
+		ARR_FIND(0, size, i, drop[i].nameid == nameid);
+		if (i == size) { // Item is not dropped at all (search all item slots)
+			ARR_FIND(0, size, i, drop[i].nameid == 0);
+			if (i == size) { // No empty slots
+				ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached (%d).\n", nameid, mobid, size);
+				return true;
+			}
 		}
 
 		drop[i].nameid = nameid;
