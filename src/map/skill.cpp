@@ -17567,8 +17567,13 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 						break;
 				}
 			}
-		default:
-			skill_attack(skill_get_type(sg->skill_id),ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
+		default: {
+				int split_count = 0;
+
+				if (skill_get_nk(sg->skill_id)&NK_SPLASHSPLIT)
+					split_count = map_foreachinallrange(skill_area_sub, src, skill_get_splash(sg->skill_id, sg->skill_lv), BL_CHAR, src, sg->skill_id, sg->skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+				skill_attack(skill_get_type(sg->skill_id), ss, src, bl, sg->skill_id, sg->skill_lv, tick, split_count);
+			}
 			break;
 	}
 	return 1;
