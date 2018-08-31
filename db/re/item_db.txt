@@ -11242,12 +11242,12 @@
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
 //
-23012,S_Small_Mana_Potion,[Sale] Small Mana Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9; /* unknown flag and specialeffect ; disabled when LK_BERSERK */ },{},{}
+23012,S_Small_Mana_Potion,[Sale] Small Mana Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9; /* fix me: unknown flag and specialeffect ; disabled when LK_BERSERK */ },{},{}
 23038,S_Slim_White_Box,[Sale] Slim White Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 547,200; },{},{}
 23043,S_Seed_Of_Yggdrasil_Box,[Sale] Yggdrasil Seed Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 608,30; },{},{}
-23046,S_Mystic_Powder,[Sale] Mystic Powder,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bFlee,20; bonus bLuk,10;",300,9; /* unknown flag and specialeffect */ },{},{}
+23046,S_Mystic_Powder,[Sale] Mystic Powder,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bFlee,20; bonus bLuk,10;",300,9; /* fix me: unknown flag and specialeffect */ },{},{}
 23047,S_Blessing_Tyr,[Sale] Blessing of Tyr,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
-23048,S_Resilience_Potion,[Sale] Resilience Enhancement Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bAddItemHealRate,20;",1800,9; /* unknown flag and specialeffect */ },{},{}
+23048,S_Resilience_Potion,[Sale] Resilience Enhancement Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bAddItemHealRate,20;",1800,9; /* fix me: unknown flag and specialeffect */ },{},{}
 //
 23123,Bullet_Case_Flare,Flare Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13228,500; },{},{}
 23124,Bullet_Case_Lighting,Lightning Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13229,500; },{},{}
@@ -11268,7 +11268,7 @@
 23280,N_Fly_Wing_,Novice Fly Wing,11,10,,0,,,,,0xFFFFFFFF,63,2,,,1:98,,,{ itemskill "AL_TELEPORT",1; },{},{}
 23288,Compressed_Wing_Of_Fly,Compressed Fly Wing,11,1000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
 //
-23307,S_Shining_Def_Scroll,[Sale] Shining Defense Scroll,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bDef,500; bonus bMdef,200;",600; /* unknown flag and specialeffect */ },{},{}
+23307,S_Shining_Def_Scroll,[Sale] Shining Defense Scroll,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bDef,500; bonus bMdef,200;",600; /* fix me: unknown flag and specialeffect */ },{},{}
 23340,S_Megaphone,[Sale] Megaphone,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ input .@megaphone$; announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000; },{},{}
 //===================================================================
 // Shadow Equipments
