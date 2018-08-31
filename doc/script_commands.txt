@@ -3231,7 +3231,7 @@ Example 1:
 
 	mes "the number of Users Connected to the server is " + .@num + " .";
 	mes "list of Players names :";
-	freeloop(1);	// for if the list was to big.
+	freeloop(1);	// for if the list was too big.
 	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
 		mes (.@i + 1) + " " + .@array$[.@i];
 	freeloop(0);
@@ -3243,7 +3243,7 @@ Example 2:
 
 	mes "the number of NPCs in Prontera is " + .@num + " .";
 	mes "list of NPCs name :";
-	freeloop(1);	// for if the list was to big.
+	freeloop(1);	// for if the list was too big.
 	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
 		mes (.@i + 1) + " " + .@array$[.@i];
 	freeloop(0);
@@ -3255,7 +3255,7 @@ Example 3:
 
 	mes "the number of Monsters in Prontera in that Coordinates is " + .@num + " .";
 	mes "list of Monsters GID :";
-	freeloop(1);	// for if the list was to big.
+	freeloop(1);	// for if the list was too big.
 	for(.@i=0;.@i<getarraysize(.@array);.@i++)
 		mes (.@i + 1) + " " + .@array[.@i];
 	freeloop(0);
