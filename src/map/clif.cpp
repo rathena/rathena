@@ -18821,7 +18821,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		}
 		//1:Premium
 		if (pc_isvip(sd)) {
-			details_bexp[1] = battle_config.vip_base_exp_increase;
+			details_bexp[1] = battle_config.vip_base_exp_increase * 10;
 			if (details_bexp[1] < 0)
 				details_bexp[1] = 0 - details_bexp[1];
 		}

@@ -295,7 +295,7 @@ static void map_addblcell(struct block_list *bl)
 
 	if( bl->m<0 || bl->x<0 || bl->x>=mapdata->xs || bl->y<0 || bl->y>=mapdata->ys || !(bl->type&BL_CHAR) )
 		return;
-	mapdata->cell[bl->x+bl->y*mapdata->cell_bl++;
+	mapdata->cell[bl->x+bl->y*mapdata->xs].cell_bl++;
 	return;
 }
 
@@ -305,7 +305,7 @@ static void map_delblcell(struct block_list *bl)
 
 	if( bl->m <0 || bl->x<0 || bl->x>=mapdata->xs || bl->y<0 || bl->y>=mapdata->ys || !(bl->type&BL_CHAR) )
 		return;
-	mapdata->cell[bl->x+bl->y*mapdata->cell_bl--;
+	mapdata->cell[bl->x+bl->y*mapdata->xs].cell_bl--;
 }
 #endif
 
@@ -3224,6 +3224,11 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat)
  *------------------------------------------*/
 static DBMap* iwall_db;
 
+bool map_iwall_exist(const char* wall_name)
+{
+	return strdb_exists(iwall_db, wall_name);
+}
+
 void map_iwall_nextxy(int16 x, int16 y, int8 dir, int pos, int16 *x1, int16 *y1)
 {
 	if( dir == 0 || dir == 4 )
@@ -3537,6 +3542,7 @@ void map_flags_init(void){
 		struct map_data *mapdata = &map[i];
 		union u_mapflag_args args = {};
 
+		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
 		args.flag_val = 100;
 
 		// additional mapflag data
@@ -3764,7 +3770,7 @@ int map_readallmaps (void)
 	}
 
 	if (maps_removed)
-		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n", maps_removed);
+		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'" CL_CLL ".\n", maps_removed);
 
 	// finished map loading
 	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
@@ -4391,12 +4397,12 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
 }
 
 /**
- * PvP timer handling
+ * PvP timer handling (starting)
  * @param bl: Player block object
  * @param ap: func* with va_list values
  * @return 0
  */
-static int map_mapflag_pvp_sub(struct block_list *bl, va_list ap)
+static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd = map_id2sd(bl->id);
 
@@ -4412,6 +4418,26 @@ static int map_mapflag_pvp_sub(struct block_list *bl, va_list ap)
 	}
 
 	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	return 0;
+}
+
+/**
+ * PvP timer handling (stopping)
+ * @param bl: Player block object
+ * @param ap: func* with va_list values
+ * @return 0
+ */
+static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd = map_id2sd(bl->id);
+
+	clif_pvpset(sd, 0, 0, 2);
+
+	if (sd->pvp_timer != INVALID_TIMER) {
+		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
+		sd->pvp_timer = INVALID_TIMER;
+	}
+
 	return 0;
 }
 
@@ -4468,7 +4494,7 @@ bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
  */
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
 {
-	if (m < 0) {
+	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
 		ShowWarning("map_getmapflag: Invalid map ID %d.\n", m);
 		return -1;
 	}
@@ -4518,7 +4544,7 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
  */
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
 {
-	if (m < 0) {
+	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
 		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
 		return false;
 	}
@@ -4542,11 +4568,16 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_PVP:
-			if (!status)
+			mapdata->flag[mapflag] = status; // Must come first to properly set map property
+			if (!status) {
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-			else {
-				if (!battle_config.pk_mode)
-					map_foreachinmap(map_mapflag_pvp_sub, m, BL_PC);
+				map_foreachinmap(map_mapflag_pvp_stop_sub, m, BL_PC);
+				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+			} else {
+				if (!battle_config.pk_mode) {
+					clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+					map_foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
+				}
 				if (mapdata->flag[MF_GVG]) {
 					mapdata->flag[MF_GVG] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG and PvP flags for the same map! Removing GvG flag from %s.\n", mapdata->name);
@@ -4572,13 +4603,14 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
 			}
-			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG:
 		case MF_GVG_TE:
-			if (!status)
+			mapdata->flag[mapflag] = status; // Must come first to properly set map property
+			if (!status) {
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-			else {
+				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+			} else {
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
@@ -4590,7 +4622,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
 			}
-			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG_CASTLE:
 		case MF_GVG_TE_CASTLE:

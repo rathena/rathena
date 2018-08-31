@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INSTANCE_HPP_
-#define _INSTANCE_HPP_
+#ifndef INSTANCE_HPP
+#define INSTANCE_HPP
 
 #include <deque>
 #include <memory>
@@ -106,4 +106,4 @@ void do_reload_instance(void);
 void do_init_instance(void);
 void do_final_instance(void);
 
-#endif /* _INSTANCE_HPP_ */
+#endif /* INSTANCE_HPP */

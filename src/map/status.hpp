@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _STATUS_HPP_
-#define _STATUS_HPP_
+#ifndef STATUS_HPP
+#define STATUS_HPP
 
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
@@ -852,6 +852,8 @@ enum sc_type : int16 {
 	SC_GLASTHEIM_STATE,
 	SC_GLASTHEIM_ITEMDEF,
 	SC_GLASTHEIM_HPSP,
+
+	SC_ANCILLA,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -3434,4 +3436,4 @@ int status_readdb(void);
 int do_init_status(void);
 void do_final_status(void);
 
-#endif /* _STATUS_HPP_ */
+#endif /* STATUS_HPP */

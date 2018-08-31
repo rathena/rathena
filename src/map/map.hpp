@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAP_HPP_
-#define _MAP_HPP_
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include <algorithm>
 #include <stdarg.h>
@@ -411,6 +411,7 @@ enum _sp {
 	SP_UPPER,SP_PARTNER,SP_CART,SP_FAME,SP_UNBREAKABLE,	//56-60
 	SP_CARTINFO=99,	// 99
 
+	SP_KILLEDGID=118,
 	SP_BASEJOB=119,	// 100+19 - celest
 	SP_BASECLASS=120,	//Hmm.. why 100+19? I just use the next one... [Skotlex]
 	SP_KILLERRID=121,
@@ -1098,6 +1099,7 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 int map_delmap(char* mapname);
 void map_flags_init(void);
 
+bool map_iwall_exist(const char* wall_name);
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);
 bool map_iwall_remove(const char *wall_name);
@@ -1172,4 +1174,4 @@ extern char roulette_table[32];
 
 void do_shutdown(void);
 
-#endif /* _MAP_HPP_ */
+#endif /* MAP_HPP */
