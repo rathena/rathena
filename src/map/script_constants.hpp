@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SCRIPT_CONSTANTS_HPP_
-#define _SCRIPT_CONSTANTS_HPP_
+#ifndef SCRIPT_CONSTANTS_HPP
+#define SCRIPT_CONSTANTS_HPP
 
 	#define export_constant(a) script_set_constant(#a,a,false,false)
 	#define export_constant2(a,b) script_set_constant(a,b,false,false)
@@ -453,6 +453,8 @@
 	export_constant(MF_HIDEMOBHPBAR);
 	export_constant(MF_NOLOOT);
 	export_constant(MF_NOEXP);
+	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
+	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -509,6 +511,7 @@
 	export_parameter("BaseClass",SP_BASECLASS);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
+	export_parameter("killedgid",SP_KILLEDGID);
 	export_parameter("Sitting",SP_SITTING);
 	export_parameter("CharMoves",SP_CHARMOVE);
 	export_parameter("CharRename",SP_CHARRENAME);
@@ -1510,6 +1513,7 @@
 	export_constant(SC_GLASTHEIM_STATE);
 	export_constant(SC_GLASTHEIM_ITEMDEF);
 	export_constant(SC_GLASTHEIM_HPSP);
+	export_constant(SC_ANCILLA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -4011,7 +4015,12 @@
 	export_constant(QTYPE_EVENT);
 	export_constant(QTYPE_EVENT2);
 	export_constant(QTYPE_WARG);
+	export_constant(QTYPE_CLICKME);
+	export_constant(QTYPE_DAILYQUEST);
 	export_constant(QTYPE_WARG2);
+	export_constant(QTYPE_EVENT3);
+	export_constant(QTYPE_JOBQUEST);
+	export_constant(QTYPE_JUMPING_PORING);
 	export_constant(QTYPE_NONE);
 
 	/* font weight types */
@@ -4975,6 +4984,7 @@
 	export_constant(IG_SPECIAL_CHRISTMAS_BOX);
 	export_constant(IG_SANTA_GIFT);
 	export_constant(IG_PRIZEOFHERO);
+	export_constant(IG_PRIVATE_AIRSHIP);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -6030,6 +6040,10 @@
 	export_constant_npc(JT_4_EP17_MIGUEL);
 	export_constant_npc(JT_4_EP17_NIHIL_K);
 	export_constant_npc(JT_4_EP17_MIGUEL_D);
+	export_constant_npc(JT_4_ED_SCHMIDT);
+	export_constant_npc(JT_4_ED_OSCAR);
+	export_constant_npc(JT_4_ED_ORB);
+	export_constant_npc(JT_4_ED_FENCE);
 	#undef export_constant_npc
 
 	/* special effects */
@@ -7284,4 +7298,4 @@
 	#undef export_deprecated_constant
 	#undef export_deprecated_constant2
 
-#endif /* _SCRIPT_CONSTANTS_HPP_ */
+#endif /* SCRIPT_CONSTANTS_HPP */

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SKILL_HPP_
-#define _SKILL_HPP_
+#ifndef SKILL_HPP
+#define SKILL_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -1425,7 +1425,7 @@ enum e_skill {
 	AB_ORATIO,
 	AB_LAUDAAGNUS,
 	AB_LAUDARAMUS,
-	AB_EUCHARISTICA,
+	AB_EUCHARISTICA, // Removed on kRO
 	AB_RENOVATIO,
 	AB_HIGHNESSHEAL,
 	AB_CLEARANCE,
@@ -2226,4 +2226,4 @@ void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 #define SKILL_CHK_ELEM(skill_id)  ( (skill_id) >= EL_SKILLBASE && (skill_id) < EL_SKILLBASE+MAX_ELEMENTALSKILL )
 #define SKILL_CHK_GUILD(skill_id) ( (skill_id) >= GD_SKILLBASE && (skill_id) < GD_SKILLBASE+MAX_GUILDSKILL )
 
-#endif /* _SKILL_HPP_ */
+#endif /* SKILL_HPP */

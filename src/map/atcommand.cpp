@@ -398,8 +398,8 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 	suggestions.reserve( MAX_SUGGESTIONS );
 
 	// check for maps that contain string
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
 
 		// Prevent suggestion of instance mapnames
 		if( mapdata->instance_id != 0 ){
@@ -420,16 +420,18 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 		// Levenshtein > 4 is bad
 		const int LEVENSHTEIN_MAX = 4;
 
-		std::map<int, std::vector<const char*>> maps;
+		std::unordered_map<int, std::vector<const char*>> maps;
 
-		for( auto& pair : map ){
+		for (int i = 0; i < map_num; i++) {
+			struct map_data *mapdata = map_getmapdata(i);
+
 			// Prevent suggestion of instance mapnames
-			if( pair.second.instance_id != 0 ){
+			if(mapdata->instance_id != 0 ){
 				continue;
 			}
 
 			// Calculate the levenshtein distance of the two strings
-			int distance = levenshtein( pair.second.name, name );
+			int distance = levenshtein(mapdata->name, name);
 
 			// Check if it is above the maximum defined distance
 			if( distance > LEVENSHTEIN_MAX ){
@@ -443,7 +445,7 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 				continue;
 			}
 
-			vector.push_back( pair.second.name );
+			vector.push_back(mapdata->name);
 		}
 
 		for( int distance = 0; distance <= LEVENSHTEIN_MAX; distance++ ){
@@ -1637,33 +1639,9 @@ ACMD_FUNC(help)
 	return 0;
 }
 
-// helper function, used in foreach calls to stop auto-attack timers
-// parameter: '0' - everyone, 'id' - only those attacking someone with that id
-static int atcommand_stopattack(struct block_list *bl,va_list ap)
-{
-	struct unit_data *ud = unit_bl2ud(bl);
-	int id = va_arg(ap, int);
-	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target))
-	{
-		unit_stop_attack(bl);
-		return 1;
-	}
-	return 0;
-}
 /*==========================================
  *
  *------------------------------------------*/
-static int atcommand_pvpoff_sub(struct block_list *bl,va_list ap)
-{
-	TBL_PC* sd = (TBL_PC*)bl;
-	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != INVALID_TIMER) {
-		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = INVALID_TIMER;
-	}
-	return 0;
-}
-
 ACMD_FUNC(pvpoff)
 {
 	nullpo_retr(-1, sd);
@@ -1675,11 +1653,6 @@ ACMD_FUNC(pvpoff)
 
 	map_setmapflag(sd->bl.m, MF_PVP, false);
 
-	if (!battle_config.pk_mode){
-		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
-	}
-	map_foreachinmap(atcommand_pvpoff_sub,sd->bl.m, BL_PC);
-	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,31)); // PvP: Off.
 	return 0;
 }
@@ -1687,20 +1660,6 @@ ACMD_FUNC(pvpoff)
 /*==========================================
  *
  *------------------------------------------*/
-static int atcommand_pvpon_sub(struct block_list *bl,va_list ap)
-{
-	TBL_PC* sd = (TBL_PC*)bl;
-	if (sd->pvp_timer == INVALID_TIMER) {
-		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
-		sd->pvp_rank = 0;
-		sd->pvp_lastusers = 0;
-		sd->pvp_point = 5;
-		sd->pvp_won = 0;
-		sd->pvp_lost = 0;
-	}
-	return 0;
-}
-
 ACMD_FUNC(pvpon)
 {
 	nullpo_retr(-1, sd);
@@ -1711,11 +1670,6 @@ ACMD_FUNC(pvpon)
 	}
 
 	map_setmapflag(sd->bl.m, MF_PVP, true);
-
-	if (!battle_config.pk_mode) {// display pvp circle and rank
-		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_FREEPVPZONE);
-		map_foreachinmap(atcommand_pvpon_sub,sd->bl.m, BL_PC);
-	}
 
 	clif_displaymessage(fd, msg_txt(sd,32)); // PvP: On.
 
@@ -1735,8 +1689,6 @@ ACMD_FUNC(gvgoff)
 	}
 
 	map_setmapflag(sd->bl.m, MF_GVG, false);
-	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
-	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
 	return 0;
@@ -1755,7 +1707,6 @@ ACMD_FUNC(gvgon)
 	}
 
 	map_setmapflag(sd->bl.m, MF_GVG, true);
-	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;
@@ -5396,7 +5347,7 @@ ACMD_FUNC(killable)
 		clif_displaymessage(fd, msg_txt(sd,242)); // You can now be attacked and killed by players.
 	else {
 		clif_displaymessage(fd, msg_txt(sd,288)); // You are no longer killable.
-		map_foreachinallrange(atcommand_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
+		map_foreachinallrange(unit_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
 	}
 	return 0;
 }
@@ -7144,12 +7095,7 @@ ACMD_FUNC(identifyall)
 {
 	int i;
 	nullpo_retr(-1, sd);
-	for(i=0; i<MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
-			sd->inventory.u.items_inventory[i].identify = 1;
-			clif_item_identified(sd,i,0);
-		}
-	}
+	pc_identifyall(sd, true);
 	return 0;
 }
 

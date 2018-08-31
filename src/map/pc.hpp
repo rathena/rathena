@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PC_HPP_
-#define _PC_HPP_
+#ifndef PC_HPP
+#define PC_HPP
 
 #include <vector>
 
@@ -587,7 +587,7 @@ struct map_session_data {
 	size_t duel_group; // duel vars [LuzZza]
 	size_t duel_invite;
 
-	int killerrid, killedrid;
+	int killerrid, killedrid, killedgid;
 
 	int cashPoints, kafraPoints;
 	int rental_timer;
@@ -1106,6 +1106,8 @@ bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_ad
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
+int pc_identifyall(struct map_session_data *sd, bool identify_item);
+
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv);
 int pc_steal_coin(struct map_session_data *sd,struct block_list *bl);
 
@@ -1345,4 +1347,4 @@ bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
 
-#endif /* _PC_HPP_ */
+#endif /* PC_HPP */
