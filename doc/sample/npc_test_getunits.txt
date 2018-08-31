@@ -20,6 +20,7 @@ prontera,145,177,0	script	getunits Test	857,{
 			mes getunits(BL_NPC,.@NPC$[0]) + " NPC.";
 			break;
 		case 2:
+			clear;
 			mes "input the map name.";
 			input .@input$;
 			clear;
