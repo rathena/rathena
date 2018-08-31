@@ -7269,6 +7269,7 @@
 	export_constant(BL_PET);
 	export_constant(BL_HOM);
 	export_constant(BL_MER);
+	export_constant(BL_NPC);
 	export_constant(BL_ELEM);
 
 	/* skill damage mapflag types */
