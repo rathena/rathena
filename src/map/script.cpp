@@ -12337,8 +12337,8 @@ BUILDIN_FUNC(removemapflag)
 	union u_mapflag_args args = {};
 
 	str = script_getstr(st, 2);
-
 	m = map_mapname2mapid(str);
+
 	if (m < 0) {
 		ShowWarning("buildin_removemapflag: Invalid map name %s.\n", str);
 		return SCRIPT_CMD_FAILURE;
@@ -12361,122 +12361,89 @@ BUILDIN_FUNC(removemapflag)
 BUILDIN_FUNC(pvpon)
 {
 	int16 m;
-	const char *str;
-	TBL_PC* sd = NULL;
-	struct s_mapiterator* iter;
+	const char *str = script_getstr(st,2);
 
-	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if( m < 0 || map_getmapflag(m, MF_PVP) )
-		return SCRIPT_CMD_SUCCESS; // nothing to do
+
+	if (m < 0 || map_getmapflag(m, MF_PVP))
+		return SCRIPT_CMD_FAILURE;
 
 	map_setmapflag(m, MF_PVP, true);
-	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 
-	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
-		return SCRIPT_CMD_SUCCESS;
-
-	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-	{
-		if( sd->bl.m != m || sd->pvp_timer != INVALID_TIMER )
-			continue; // not applicable
-
-		sd->pvp_timer = add_timer(gettick()+200,pc_calc_pvprank_timer,sd->bl.id,0);
-		sd->pvp_rank = 0;
-		sd->pvp_lastusers = 0;
-		sd->pvp_point = 5;
-		sd->pvp_won = 0;
-		sd->pvp_lost = 0;
-	}
-	mapit_free(iter);
 	return SCRIPT_CMD_SUCCESS;
-}
-
-static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
-{
-	TBL_PC* sd = (TBL_PC*)bl;
-	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != INVALID_TIMER) {
-		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = INVALID_TIMER;
-	}
-	return 0;
 }
 
 BUILDIN_FUNC(pvpoff)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
+
 	if(m < 0 || !map_getmapflag(m, MF_PVP))
-		return SCRIPT_CMD_SUCCESS; //fixed Lupus
+		return SCRIPT_CMD_FAILURE;
 
 	map_setmapflag(m, MF_PVP, false);
-	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 
-	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
-		return SCRIPT_CMD_SUCCESS;
-
-	map_foreachinmap(buildin_pvpoff_sub, m, BL_PC);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgon)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if(m >= 0 && !map_getmapflag(m, MF_GVG)) {
-		map_setmapflag(m, MF_GVG, true);
-		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-	}
+
+	if (m < 0 || map_getmapflag(m, MF_GVG))
+		return SCRIPT_CMD_FAILURE;
+
+	map_setmapflag(m, MF_GVG, true);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgoff)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if(m >= 0 && map_getmapflag(m, MF_GVG)) {
+
+	if (m < 0 || !map_getmapflag(m, MF_GVG))
+		return SCRIPT_CMD_FAILURE;
 		map_setmapflag(m, MF_GVG, false);
-		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgon3)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if (m >= 0 && !map_getmapflag(m, MF_GVG_TE)) {
-		map_setmapflag(m, MF_GVG_TE, true);
-		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-	}
+
+	if (m < 0 || map_getmapflag(m, MF_GVG_TE))
+		return SCRIPT_CMD_FAILURE;
+
+	map_setmapflag(m, MF_GVG_TE, true);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgoff3)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if (m >= 0 && map_getmapflag(m, MF_GVG_TE)) {
-		map_setmapflag(m, MF_GVG_TE, false);
-		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	}
+
+	if (m < 0 || !map_getmapflag(m, MF_GVG_TE))
+		return SCRIPT_CMD_FAILURE;
+
+	map_setmapflag(m, MF_GVG_TE, false);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
