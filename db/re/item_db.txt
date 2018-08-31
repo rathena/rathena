@@ -1778,7 +1778,7 @@
 2566,Half_Asprika,Half Asprika,4,20,,0,,20,,0,0xFFFFFFFF,63,2,4,,47,0,0,{ bonus bMdef,2; bonus3 bSubEle,Ele_Neutral,15,BF_SHORT; bonus3 bSubEle,Ele_Water,15,BF_SHORT; bonus3 bSubEle,Ele_Earth,15,BF_SHORT; bonus3 bSubEle,Ele_Fire,15,BF_SHORT; bonus3 bSubEle,Ele_Wind,15,BF_SHORT; bonus3 bSubEle,Ele_Poison,15,BF_SHORT; bonus3 bSubEle,Ele_Holy,15,BF_SHORT; bonus3 bSubEle,Ele_Dark,15,BF_SHORT; bonus3 bSubEle,Ele_Ghost,15,BF_SHORT; bonus3 bSubEle,Ele_Undead,15,BF_SHORT; bonus bFlee,15; skill "AL_TELEPORT",1; bonus bUnbreakableGarment; },{},{}
 2567,Academy_Manteau,Academy Manteau,4,0,,600,,3,,1,73,7,2,4,,0,1,0,{},{},{}
 2568,Muffler_Of_Roki,Loki's Muffler,4,20,,400,,10,,0,0xFFFFFFFF,63,2,4,,100,0,0,{ bonus bAgi,1; bonus2 bSkillAtk,"ASC_BREAKER",5; bonus2 bSkillAtk,"GC_CROSSIMPACT",5; },{},{}
-2569,Shawl_Of_Affection,Shawl Of Affection,4,20,,400,,12,,0,0x00000100,63,2,4,,100,1,0,{ bonus bFlee2,5; bonus5 bAutoSpellWhenHit,"AB_RENOVATIO",1,30,BF_WEAPON,0; bonus5 bAutoSpellWhenHit,"AB_RENOVATIO",1,40,BF_MAGIC,0; },{},{}
+2569,Shawl_Of_Affection,Shawl Of Affection,4,20,,400,,12,,0,0x00000100,63,2,4,,100,1,0,{ bonus bFlee2,5; autobonus2 "{ bonus2 bHPRegenRate,1000,5000; }",300,90000,BF_WEAPON; autobonus2 "{ bonus2 bHPRegenRate,1000,5000; }",400,90000,BF_MAGIC;  },{},{}
 2570,Shawl_Of_Judgement,Shawl Of Judgement,4,20,,400,,12,,0,0x00000100,63,2,4,,100,1,0,{ bonus bFlee,5; .@i = max(2,getskilllv("AB_ORATIO")); bonus5 bAutoSpellWhenHit,"AB_ORATIO",.@i,30,BF_WEAPON,0; bonus5 bAutoSpellWhenHit,"AB_ORATIO",.@i,40,BF_MAGIC,0; },{},{}
 2571,Para_Team_Manteau2,Eden Team Manteau II,4,0,,0,,18,,0,0xFFFFFFFF,63,2,4,,60,0,0,{ bonus bFlee,12; bonus2 bSubEle,Ele_Neutral,10; },{},{}
 2572,Katabart_Sholder,Katabart Sholder,4,20,,3000,,4,,1,0xFFFFFFFF,63,2,4,,70,1,0,{},{},{}
@@ -2177,7 +2177,7 @@
 2987,Snake_Pendant,Snake Pendant,4,20,,100,,3,,1,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bAgi,3; bonus bLuk,2; bonus bMdef,3; },{},{}
 2988,Winged_Ring_Of_Newoz,Oz's New Wing Ring,4,20,,100,,0,,1,0x00080000,56,1,136,,130,,,{ bonus bVariableCastrate,-25; },{},{}
 2989,Floral_Bracelet_Of_Igu,Bloody Floral Decoration Bracelet,4,20,,100,,0,,1,0x00080000,56,0,136,,130,,,{ bonus bVariableCastrate,-25; },{},{}
-2990,Pendant_Of_Harmony,Pendant of Harmony,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,130,,,{ bonus bMatkRate,6; bonus bHPrecovRate,50; bonus bSPrecovRate,50; bonus2 bSubEle,Ele_Holy,5; bonus5 bAutoSpell,"AB_RENOVATIO",1,100,BF_NORMAL,0; bonus4 bAutoSpellWhenHit,"PR_SANCTUARY",3,100,0; bonus bStr,-5; },{},{}
+2990,Pendant_Of_Harmony,Pendant of Harmony,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,130,,,{ bonus bMatkRate,6; bonus bHPrecovRate,50; bonus bSPrecovRate,50; bonus2 bSubEle,Ele_Holy,5; autobonus "{ bonus2 bHPRegenRate,1000,5000; }",100,90000,BF_NORMAL; bonus4 bAutoSpellWhenHit,"PR_SANCTUARY",3,100,0; bonus bStr,-5; },{},{}
 2991,Pendant_Of_Chaos,Pendant of Chaos,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,130,,,{ bonus2 bAddClass,Class_All,6; bonus2 bSubEle,Ele_Dark,5; bonus2 bResEff,Eff_Confusion,10000; bonus2 bAddEff,Eff_Confusion,500; bonus3 bAutoSpellWhenHit,"NPC_WIDECONFUSE",2,30; bonus bInt,-5; },{},{}
 2992,Pendant_Of_Maelstorm,Pendant of Maelstrom,4,20,,100,,0,,1,0xFFFFFFFF,63,2,136,,130,,,{ bonus2 bAddClass,Class_All,6; bonus bMatkRate,6; bonus bAllStats,1; bonus5 bAutoSpellWhenHit,"SC_MAELSTROM",1,100,BF_MAGIC,0; },{},{}
 2995,Supplement_Part_Dex,Supplement Part Dex,4,25000,,100,,0,,1,0x00000400,56,2,136,,100,0,0,{ bonus bUseSPrate,-10; bonus bDelayrate,-10; bonus bVariableCastrate,-10; bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-2000; },{},{}
@@ -6557,7 +6557,7 @@
 12330,Recall_FemaleGM,Summon Female GameMaster Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ mercenary_create 2001,1800000; },{},{}
 12331,Ginseng,Ginseng,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 6,0; },{},{}
 12332,Fruit_Juice,Fruit Juice,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,6; },{},{}
-12333,Ansila,Ancilla,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,15; },{},{}
+12333,Ansila,Ancilla,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 0,15; sc_start SC_ANCILLA,60000,1; },{},{}
 12334,Cherish_Box,Treasure Edition Helm Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Cherish_Box,1); },{},{}
 12335,Yummy_Skewered_Dish,Grilled Delicious Skewer,0,1000,,350,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 60,60; },{},{}
 12336,Baked_Mushroom,Grilled Mushroom,0,500,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 30,30; },{},{}

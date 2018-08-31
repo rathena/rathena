@@ -1513,6 +1513,7 @@
 	export_constant(SC_GLASTHEIM_STATE);
 	export_constant(SC_GLASTHEIM_ITEMDEF);
 	export_constant(SC_GLASTHEIM_HPSP);
+	export_constant(SC_ANCILLA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
