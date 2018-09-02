@@ -12,7 +12,7 @@
 //=  'OnInit' loads the middle Poring last, for some reason.
 //============================================================
 
-prontera,150,175,4	script	Duplicate Test Script	909,1,1,{
+prontera,150,175,4	script	Duplicate Test Script	909,{
 	mes "Hi.";
 	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
 	close;
