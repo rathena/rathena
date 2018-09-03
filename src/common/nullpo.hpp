@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _NULLPO_HPP_
-#define _NULLPO_HPP_
+#ifndef NULLPO_HPP
+#define NULLPO_HPP
 
 #include "cbasetypes.hpp"
 
@@ -207,4 +207,4 @@ void nullpo_info_f(const char *file, int line, const char *func,
                    const char *fmt, ...)
                    __attribute__((format(printf,4,5)));
 
-#endif /* _NULLPO_HPP_ */
+#endif /* NULLPO_HPP */

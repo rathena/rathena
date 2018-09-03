@@ -207,7 +207,8 @@ OnEnable:
 
 OnKill:
 	killmonster "bat_a02","barricade#bat_a02_a::OnMyMobDead";
-	delwall "bat_a02_c1";
+	if (checkwall("bat_a02_c1") == true)
+		delwall "bat_a02_c1";
 	end;
 
 OnMyMobDead:
@@ -229,7 +230,8 @@ OnEnable:
 
 OnKill:
 	killmonster "bat_a02","barricade#bat_a02_b::OnMyMobDead";
-	delwall "bat_a02_g1";
+	if (checkwall("bat_a02_g1") == true)
+		delwall "bat_a02_g1";
 	end;
 
 OnMyMobDead:

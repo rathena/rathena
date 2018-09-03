@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_HPP_
-#define _CLIF_HPP_
+#ifndef CLIF_HPP
+#define CLIF_HPP
 
 #include <stdarg.h>
 
@@ -758,6 +758,7 @@ void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
 void clif_party_job_and_level(struct map_session_data *sd);
+void clif_party_dead( struct map_session_data *sd );
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
@@ -1088,4 +1089,6 @@ enum out_ui_type : int8 {
 void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );
 void clif_attendence_response( struct map_session_data *sd, int32 data );
 
-#endif /* _CLIF_HPP_ */
+void clif_weight_limit( struct map_session_data* sd );
+
+#endif /* CLIF_HPP */

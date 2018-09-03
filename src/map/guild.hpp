@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _GUILD_HPP_
-#define _GUILD_HPP_
+#ifndef GUILD_HPP
+#define GUILD_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
@@ -118,4 +118,4 @@ void guild_retrieveitembound(uint32 char_id,uint32 account_id,int guild_id);
 
 void do_final_guild(void);
 
-#endif /* _GUILD_HPP_ */
+#endif /* GUILD_HPP */

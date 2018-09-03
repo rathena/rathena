@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_PACKETDB_HPP_
-#define _CLIF_PACKETDB_HPP_
+#ifndef CLIF_PACKETDB_HPP
+#define CLIF_PACKETDB_HPP
 
 	#define packet(cmd,length) packetdb_addpacket(cmd,length,NULL,0)
 	#define parseable_packet(cmd,length,func,...) packetdb_addpacket(cmd,length,func,__VA_ARGS__,0)
@@ -2354,6 +2354,7 @@
 #if PACKETVER >= 20170502
 	packet(0x0A43,85);
 	packet(0x0A44,-1);
+	packet(0x0AB2,7);
 	packet(0x0ABD,10);
 	parseable_packet(0x0ACE,4,clif_parse_dull,0);
 #endif
@@ -2362,6 +2363,11 @@
 #if PACKETVER >= 20170830
 	packet(0x0ACB,12);
 	packet(0x0ACC,18);
+#endif
+
+// 2017-10-25eRagexeRE
+#if PACKETVER >= 20171025
+	packet(0x0ADE,6);
 #endif
 
 // 2018-01-03aRagexeRE or 2018-01-03bRagexeRE
@@ -2390,10 +2396,10 @@
 
 // 2018-03-21aRagexeRE
 #if PACKETVER >= 20180321
-	parseable_packet(0x0A49,20,clif_parse_dull,0);
+	parseable_packet(0x0A49,20,clif_parse_private_airship_request,0);
 	packet(0x0A4A,6);
 	packet(0x0A4B,22);
 	packet(0x0A4C,28);
 #endif
 
-#endif /* _CLIF_PACKETDB_HPP_ */
+#endif /* CLIF_PACKETDB_HPP */

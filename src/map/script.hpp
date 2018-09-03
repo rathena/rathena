@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SCRIPT_HPP_
-#define _SCRIPT_HPP_
+#ifndef SCRIPT_HPP
+#define SCRIPT_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -392,9 +392,13 @@ enum questinfo_types {
 	QTYPE_EVENT,
 	QTYPE_EVENT2,
 	QTYPE_WARG,
-	// 7 = free
-	QTYPE_WARG2 = 8,
-	// 9 - 9998 = free
+	QTYPE_CLICKME = QTYPE_WARG,
+	QTYPE_DAILYQUEST,
+	QTYPE_WARG2,
+	QTYPE_EVENT3 = QTYPE_WARG2,
+	QTYPE_JOBQUEST,
+	QTYPE_JUMPING_PORING,
+	// 11 - 9998 = free
 	QTYPE_NONE = 9999
 };
 
@@ -1930,6 +1934,7 @@ void pop_stack(struct script_state* st, int start, int end);
 TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
+void script_attach_state(struct script_state* st);
 void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
@@ -1942,6 +1947,7 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
+const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
 void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
@@ -1981,4 +1987,4 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
-#endif /* _SCRIPT_HPP_ */
+#endif /* SCRIPT_HPP */

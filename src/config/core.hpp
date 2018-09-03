@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CONFIG_CORE_HPP_
-#define _CONFIG_CORE_HPP_
+#ifndef CONFIG_CORE_HPP
+#define CONFIG_CORE_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -42,11 +42,6 @@
 
 /// Uncomment to enable real-time server stats (in and out data and ram usage).
 //#define SHOW_SERVER_STATS
-
-/// Uncomment to enable skills damage adjustments
-/// By enabling this, db/skill_damage.txt and the skill_damage mapflag will adjust the
-/// damage rate of specified skills.
-//#define ADJUST_SKILL_DAMAGE
 
 /// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
 #define HP_SP_TABLES
@@ -88,4 +83,4 @@
 
 #include "../custom/defines_post.hpp"
 
-#endif // _CONFIG_CORE_HPP_
+#endif /* CONFIG_CORE_HPP */
