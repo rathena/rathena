@@ -7089,7 +7089,6 @@ ACMD_FUNC(identify)
 *-----------------------------------------------*/
 ACMD_FUNC(identifyall)
 {
-	int i;
 	nullpo_retr(-1, sd);
 	pc_identifyall(sd, true);
 	return 0;
