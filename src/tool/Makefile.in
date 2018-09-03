@@ -1,14 +1,14 @@
 
 COMMON_OBJ = minicore.o malloc.o showmsg.o strlib.o utils.o des.o grfio.o
 COMMON_DIR_OBJ = $(COMMON_OBJ:%=../common/obj/%)
-COMMON_H = $(shell ls ../common/*.h)
+COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_INCLUDE = -I../common/
 
 LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
-OTHER_H = ../config/renewal.h
+OTHER_H = ../config/renewal.hpp
 
 MAPCACHE_OBJ = obj_all/mapcache.o
 
@@ -21,7 +21,7 @@ all: mapcache
 
 mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_OBJ)
 	@echo "	LD	$@"
-	@@CC@ @LDFLAGS@ -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) @LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) @LIBS@
 
 clean:
 	@echo "	CLEAN	tool"
@@ -39,9 +39,9 @@ help:
 obj_all:
 	-mkdir obj_all
 
-obj_all/%.o: %.c $(COMMON_H) $(OTHER_H) $(LIBCONFIG_H)
-	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_all/%.o: %.cpp $(COMMON_H) $(OTHER_H) $(LIBCONFIG_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 $(COMMON_DIR_OBJ):

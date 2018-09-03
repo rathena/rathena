@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Moved Izlude NPC to pre-re/re paths. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.1 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
 izlude,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz	100
@@ -18,3 +19,8 @@ izlude_a,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_a	100
 izlude_b,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_b	100
 izlude_c,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_c	100
 izlude_d,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_d	100
+
+prt_cas,19,98,7	duplicate(Alliance Manager#prt_)	Alliance Manager#prt	4_M_CRU_OLD
+prt_cas,23,104,5	duplicate(Member of Alliance#prt_)	Member of Alliance#prt	4_M_SAGE_A
+prt_cas,207,165,5	duplicate(Recruiter for the Brave_)	Recruiter for the Brave	4_M_MANAGER
+prt_cas,108,265,5	duplicate(Laur_)	Laur	1_M_LIBRARYMASTER

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_mail.hpp"
@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/sql.h"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -293,11 +293,11 @@ int mail_timer_sub( int limit, enum mail_inbox_type type ){
 	return 0;
 }
 
-int mail_return_timer( int tid, unsigned int tick, int id, intptr_t ptr ){
+TIMER_FUNC(mail_return_timer){
 	return mail_timer_sub( charserv_config.mail_return_days, MAIL_INBOX_NORMAL );
 }
 
-int mail_delete_timer( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(mail_delete_timer){
 	return mail_timer_sub( charserv_config.mail_delete_days, MAIL_INBOX_RETURNED );
 }
 

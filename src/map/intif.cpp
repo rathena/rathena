@@ -1,36 +1,36 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "intif.hpp"
 
 #include <stdlib.h>
 
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
+#include "achievement.hpp"
 #include "battle.hpp"
 #include "chrif.hpp"
 #include "clan.hpp"
-#include "guild.hpp"
 #include "clif.hpp"
-#include "pc.hpp"
-#include "storage.hpp"
-#include "party.hpp"
-#include "pet.hpp"
-#include "mercenary.hpp"
-#include "homunculus.hpp"
 #include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "log.hpp"
 #include "mail.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
 #include "quest.hpp"
 #include "status.hpp"
-#include "achievement.hpp"
-#include "log.hpp"
+#include "storage.hpp"
 
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {
@@ -690,9 +690,14 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	if(!sd)
 		return 0;
 
-	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map[m].instance_id )
-		mapindex = map[map[m].instance_src_map].index;
-	else
+	if ((m = map_mapindex2mapid(sd->mapindex)) >= 0) {
+		struct map_data *mapdata = map_getmapdata(m);
+
+		if (mapdata->instance_id)
+			mapindex = map_getmapdata(mapdata->instance_src_map)->index;
+		else
+			mapindex = sd->mapindex;
+	} else
 		mapindex = sd->mapindex;
 
 	WFIFOHEAD(inter_fd,19);

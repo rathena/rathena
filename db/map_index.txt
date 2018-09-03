@@ -1,13 +1,13 @@
 //======================================================================================
 // Map Index
 //======================================================================================
-//Contains the list of maps with their respective IDs for inter-server use.
-//IDs must never change, therefore any new maps need to be added at the end,
-//and old ones must not be removed, but may be replaced.
-//Format:
-//mapname<tab>index <- specifies index for this map
-//mapname <- map will use index of previous map +1
-//Note that map index 0 is special and reserved for "error" status. 
+// Contains the list of maps with their respective IDs for inter-server use.
+// IDs must never change, therefore any new maps need to be added at the end,
+// and old ones must not be removed, but may be replaced.
+// Format:
+// mapname<tab>index <- specifies index for this map
+// mapname <- map will use index of previous map +1
+// Note that map index 0 is special and reserved for "error" status. 
 
 alb_ship 1
 alb2trea
@@ -942,6 +942,7 @@ job_gun
 1@air2
 1@glast
 lhz_dun_n
+lhz_d_n2
 1@gl_kh
 2@gl_kh
 1@lab
@@ -1008,66 +1009,45 @@ ice_d03_i
 tur_d03_i
 tur_d04_i
 1@crd
-
-// Only add maps under this line if they are not standard maps!
-
+ordeal_a00
+ordeal_a02
+pprontera
+niflxmas
+sch_lab
+nakhyang
+lasa_sea
+1@drdo
+x_lhz
+x_prt
+x_ra
+prt_evt_in
+vis_h01
+vis_h02
+vis_h03
+vis_h04
+ein_d02_i
+com_d02_i
+1@soul
+star_frst
+star_in
+2009rwc_01
+2009rwc_02
+2009rwc_03
+2009rwc_04
+2009rwc_05
+2009rwc_06
+2009rwc_07
+2009rwc_08
+2009rwc_f01
+2012rwc_01
+2012rwc_02
+2012rwc_03
+2012rwc_04
+2012rwc_05
+2012rwc_06
+2012rwc_07
+2012rwc_08
 
 //======================================================================================
 // - Other/Extra maps -
 //======================================================================================
-//rwc01	1000
-//rwc02
-//rwc03
-//2009rwc_f01
-//2009rwc_01
-//2009rwc_02
-//2009rwc_03
-//2009rwc_04
-//2008rwc_04
-//prontera_x
-//alberta_x
-//aldebaran_x
-//geffen_x
-//izlude_x
-//prt_church_x
-//prontera_s
-//pay_arche_s
-//xmas_old
-//ordeal_a00
-//ordeal_a02
-//fay_vilg00
-//fay_vilg01
-//gef_vilg00
-//gef_vilg01
-//moc_dugn01
-//moc_dugn02
-//moc_fild01
-//moc_fild02
-//moc_fild03
-//moc_fild04
-//moc_intr00
-//moc_intr01
-//moc_intr02
-//moc_intr04
-//moc_vilg00
-//moc_vilg01
-//moc_vilg02
-//probemap
-//probemap02
-//prt_cstl01
-//prt_dugn00
-//prt_dugn01
-//prt_fild00
-//prt_fild01
-//prt_fild03
-//prt_fild04
-//prt_fild05
-//prt_intr01
-//prt_intr01_a
-//prt_intr02
-//prt_vilg00
-//prt_vilg01
-//prt_vilg02
-//tank_test
-//tank_test2
-//test

@@ -1,12 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SKILL_HPP_
-#define _SKILL_HPP_
+#ifndef SKILL_HPP
+#define SKILL_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // MAX_SKILL, struct square
-#include "../common/db.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/mmo.hpp" // MAX_SKILL, struct square
+#include "../common/timer.hpp"
 
 #include "map.hpp" // struct block_list
 
@@ -98,7 +99,7 @@ enum e_skill_inf3 {
 	INF3_EFF_RESEARCHTRAP = 0x00800, // Skill range affected by RA_RESEARCHTRAP
 	INF3_NO_EFF_HOVERING  = 0x01000, // Skill that does not affect user that has SC_HOVERING active
 	INF3_USABLE_WARG      = 0x02000, // Skill that can be use while riding warg
-	INF3_DIS_MADO         = 0x04000, // Skill that can't be used while in mado
+	INF3_USABLE_MADO      = 0x04000, // Skill that can be used while on Madogear
 	INF3_USABLE_MANHOLE   = 0x08000, // Skill that can be used to target while under SC__MANHOLE effect
 	INF3_HIT_HIDING       = 0x10000, // Skill that affects hidden targets
 	INF3_SC_GLOOMYDAY_SK  = 0x20000, // Skill that affects SC_GLOOMYDAY_SK
@@ -224,9 +225,7 @@ struct s_skill_db {
 	uint8 unit_nonearnpc_type;	//type of NPC [Cydh]
 
 	// skill_damage_db.txt
-#ifdef ADJUST_SKILL_DAMAGE
 	struct s_skill_damage damage;
-#endif
 
 	// skill_copyable_db.txt
 	struct s_copyable { // [Cydh]
@@ -440,8 +439,8 @@ uint16 skill_idx2id(uint16 idx);
 uint16 SKILL_MAX_DB(void);
 
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
-int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data);
-int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(skill_castend_id);
+TIMER_FUNC(skill_castend_pos);
 int skill_castend_map( struct map_session_data *sd,uint16 skill_id, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
@@ -523,7 +522,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,uint16 skill_id,uint
 int skill_blockpc_start(struct map_session_data*, int, int);
 int skill_blockpc_get(struct map_session_data *sd, int skillid);
 int skill_blockpc_clear(struct map_session_data *sd);
-int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(skill_blockpc_end);
 int skill_blockhomun_start (struct homun_data*,uint16 skill_id,int);
 int skill_blockmerc_start (struct mercenary_data*,uint16 skill_id,int);
 
@@ -1349,6 +1348,12 @@ enum e_skill {
 	NPC_LEASH,
 	NPC_WIDELEASH,
 	NPC_WIDECRITICALWOUND,
+	NPC_EARTHQUAKE_K,
+	NPC_ALL_STAT_DOWN,
+	NPC_GRADUAL_GRAVITY,
+	NPC_DAMAGE_HEAL,
+	NPC_IMMUNE_PROPERTY,
+	NPC_MOVE_COORDINATE,
 
 	KN_CHARGEATK = 1001,
 	CR_SHRINK,
@@ -1420,7 +1425,7 @@ enum e_skill {
 	AB_ORATIO,
 	AB_LAUDAAGNUS,
 	AB_LAUDARAMUS,
-	AB_EUCHARISTICA,
+	AB_EUCHARISTICA, // Removed on kRO
 	AB_RENOVATIO,
 	AB_HIGHNESSHEAL,
 	AB_CLEARANCE,
@@ -1679,7 +1684,7 @@ enum e_skill {
 	ALL_BUYING_STORE,
 	ALL_GUARDIAN_RECALL,
 	ALL_ODINS_POWER,
-	BEER_BOTTLE_CAP,
+	ALL_BEER_BOTTLE_CAP,
 	NPC_ASSASSINCROSS,
 	NPC_DISSONANCE,
 	NPC_UGLYDANCE,
@@ -1714,7 +1719,46 @@ enum e_skill {
 	RL_HAMMER_OF_GOD,
 	RL_R_TRIP_PLUSATK,
 	RL_B_FLICKER_ATK,
-	RL_GLITTERING_GREED_ATK,
+//	RL_GLITTERING_GREED_ATK,
+	SJ_LIGHTOFMOON,
+	SJ_LUNARSTANCE,
+	SJ_FULLMOONKICK,
+	SJ_LIGHTOFSTAR,
+	SJ_STARSTANCE,
+	SJ_NEWMOONKICK,
+	SJ_FLASHKICK,
+	SJ_STAREMPEROR,
+	SJ_NOVAEXPLOSING,
+	SJ_UNIVERSESTANCE,
+	SJ_FALLINGSTAR,
+	SJ_GRAVITYCONTROL,
+	SJ_BOOKOFDIMENSION,
+	SJ_BOOKOFCREATINGSTAR,
+	SJ_DOCUMENT,
+	SJ_PURIFY,
+	SJ_LIGHTOFSUN,
+	SJ_SUNSTANCE,
+	SJ_SOLARBURST,
+	SJ_PROMINENCEKICK,
+	SJ_FALLINGSTAR_ATK,
+	SJ_FALLINGSTAR_ATK2,
+	SP_SOULGOLEM,
+	SP_SOULSHADOW,
+	SP_SOULFALCON,
+	SP_SOULFAIRY,
+	SP_CURSEEXPLOSION,
+	SP_SOULCURSE,
+	SP_SPA,
+	SP_SHA,
+	SP_SWHOO,
+	SP_SOULUNITY,
+	SP_SOULDIVISION,
+	SP_SOULREAPER,
+	SP_SOULREVOLVE,
+	SP_SOULCOLLECT,
+	SP_SOULEXPLOSION,
+	SP_SOULENERGY,
+	SP_KAUTE,
 
 	KO_YAMIKUMO = 3001,
 	KO_RIGHT,
@@ -1810,6 +1854,9 @@ enum e_skill {
 	WE_CALLALLFAMILY = 5063,
 	WE_ONEFOREVER,
 	WE_CHEERUP,
+
+	AB_VITUPERATUM = 5072,
+	AB_CONVENIO,
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
@@ -2164,19 +2211,6 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 
-#ifdef ADJUST_SKILL_DAMAGE
-/// Skill Damage target
-enum e_skill_damage_caster {
-	SDC_PC   = 0x01,
-	SDC_MOB  = 0x02,
-	SDC_PET  = 0x04,
-	SDC_HOM  = 0x08,
-	SDC_MER  = 0x10,
-	SDC_ELEM = 0x20,
-	SDC_ALL  = SDC_PC|SDC_MOB|SDC_PET|SDC_HOM|SDC_MER|SDC_ELEM,
-};
-#endif
-
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"
 /// Variable name of copied skill level by Plagiarism
@@ -2192,4 +2226,4 @@ enum e_skill_damage_caster {
 #define SKILL_CHK_ELEM(skill_id)  ( (skill_id) >= EL_SKILLBASE && (skill_id) < EL_SKILLBASE+MAX_ELEMENTALSKILL )
 #define SKILL_CHK_GUILD(skill_id) ( (skill_id) >= GD_SKILLBASE && (skill_id) < GD_SKILLBASE+MAX_GUILDSKILL )
 
-#endif /* _SKILL_HPP_ */
+#endif /* SKILL_HPP */
