@@ -3876,7 +3876,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 100 * (skill_lv - 1);
 			break;
 		case AB_DUPLELIGHT_MELEE:
-			skillratio += 10 * skill_lv;
+			skillratio += 50 + 15 * skill_lv;
 			break;
 		case RA_ARROWSTORM:
 			skillratio += 900 + 80 * skill_lv;
@@ -5836,9 +5836,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
 				break;
-			case AB_RENOVATIO:
-				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
-				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -6000,14 +5997,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 					case AB_JUDEX:
 						skillratio += 200 + 20 * skill_lv;
+						if (skill_lv == 5)
+							skillratio += 170;
 						RE_LVL_DMOD(100);
 						break;
 					case AB_ADORAMUS:
-						skillratio += 400 + 100 * skill_lv;
+						skillratio += 230 + 70 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AB_DUPLELIGHT_MAGIC:
-						skillratio += 100 + 20 * skill_lv;
+						skillratio += 300 + 40 * skill_lv;
 						break;
 					case WL_SOULEXPANSION:
 						skillratio += -100 + (skill_lv + 4) * 100 + status_get_int(src);
@@ -6285,6 +6284,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if(tsc && tsc->data[SC_ASSUMPTIO])
 				mdef <<= 1; // only eMDEF is doubled
 #endif
+			if (sc && sc->data[SC_EXPIATIO]) {
+				i = 5 * sc->data[SC_EXPIATIO]->val1; // 5% per level
+
+				i = min(i, 100); //cap it to 100 for 5 mdef min
+				mdef -= mdef * i / 100;
+				//mdef2 -= mdef2 * i / 100;
+			}
+
 			if(sd) {
 				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
 				i += sd->ignore_mdef_by_class[tstatus->class_] + sd->ignore_mdef_by_class[CLASS_ALL];

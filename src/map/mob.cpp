@@ -2994,16 +2994,19 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( md->npc_event[0] && !md->state.npc_killmonster ) {
 			if( sd && battle_config.mob_npc_event_type ) {
+				pc_setparam(sd, SP_KILLEDGID, md->bl.id);
 				pc_setparam(sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(sd, SP_KILLERRID, sd->bl.id);
 				npc_event(sd,md->npc_event,0);
 			} else if( mvp_sd ) {
+				pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
 				pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(mvp_sd, SP_KILLERRID, sd?sd->bl.id:0);
 				npc_event(mvp_sd,md->npc_event,0);
 			} else
 				npc_event_do(md->npc_event);
 		} else if( mvp_sd && !md->state.npc_killmonster ) {
+			pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
 			pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 		}
@@ -4890,13 +4893,13 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 
 	mobid = atoi(str[0]);
 	if ((mob = mob_db(mobid)) == NULL) {
-		ShowError("mob_readdb_drop: Invalid monster with ID %s.\n", str[0]);
+		ShowError("mob_readdb_drop: Invalid monster ID %s.\n", str[0]);
 		return false;
 	}
 
 	nameid = atoi(str[1]);
 	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_drop: Invalid item id %s.\n", str[1]);
+		ShowWarning("mob_readdb_drop: Invalid item ID %s.\n", str[1]);
 		return false;
 	}
 
@@ -4920,13 +4923,13 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		}
 	}
 	else {
-		for (i = 0; i < size; i++) {
-			if (drop[i].nameid == 0)
-				break;
-		}
-		if (i == size) {
-			ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached '%d'.\n", nameid, mobid, size);
-			return true;
+		ARR_FIND(0, size, i, drop[i].nameid == nameid);
+		if (i == size) { // Item is not dropped at all (search all item slots)
+			ARR_FIND(0, size, i, drop[i].nameid == 0);
+			if (i == size) { // No empty slots
+				ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached (%d).\n", nameid, mobid, size);
+				return true;
+			}
 		}
 
 		drop[i].nameid = nameid;

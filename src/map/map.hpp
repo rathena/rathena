@@ -411,6 +411,7 @@ enum _sp {
 	SP_UPPER,SP_PARTNER,SP_CART,SP_FAME,SP_UNBREAKABLE,	//56-60
 	SP_CARTINFO=99,	// 99
 
+	SP_KILLEDGID=118,
 	SP_BASEJOB=119,	// 100+19 - celest
 	SP_BASECLASS=120,	//Hmm.. why 100+19? I just use the next one... [Skotlex]
 	SP_KILLERRID=121,

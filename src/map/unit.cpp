@@ -2141,6 +2141,26 @@ int unit_set_target(struct unit_data* ud, int target_id)
 }
 
 /**
+ * Helper function used in foreach calls to stop auto-attack timers
+ * @param bl: Block object
+ * @param ap: func* with va_list values
+ *   Parameter: '0' - everyone, 'id' - only those attacking someone with that id
+ * @return 1 on success or 0 otherwise
+ */
+int unit_stopattack(struct block_list *bl, va_list ap)
+{
+	struct unit_data *ud = unit_bl2ud(bl);
+	int id = va_arg(ap, int);
+
+	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target)) {
+		unit_stop_attack(bl);
+		return 1;
+	}
+
+	return 0;
+}
+
+/**
  * Stop a unit's attacks
  * @param bl: Object to stop
  */
