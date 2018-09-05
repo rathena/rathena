@@ -1,0 +1,10 @@
+diff a/src/map/map.cpp b/src/map/map.cpp	(rejected hunks)
+@@ -119,7 +119,7 @@ static struct block_list *bl_list[BL_LIST_MAX];
+ static int bl_list_count = 0;
+ 
+ #ifndef MAP_MAX_MSG
+-	#define MAP_MAX_MSG 1550
++	#define MAP_MAX_MSG 1600
+ #endif
+ 
+ std::map<int16, map_data> map;
