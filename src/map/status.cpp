@@ -2491,7 +2491,7 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd
 	float str = sd->base_status.str;
 	int weapon_atk_bonus = 0;
 
-	if (wa.range > 3 && !pc_checkskill(sd, SU_SOULATTACK))
+	if ((wa.range > 3 || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP) && !pc_checkskill(sd, SU_SOULATTACK))
 		str = sd->base_status.dex;
 	if (sd->bonus.weapon_atk_rate)
 		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
