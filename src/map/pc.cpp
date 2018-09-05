@@ -3251,7 +3251,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	switch(type){
 	case SP_ADDELE: // bonus2 bAddEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_ADDELE);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addele[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addele[type2]+=val;
@@ -3260,7 +3260,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADDRACE: // bonus2 bAddRace,r,x;
 		PC_BONUS_CHK_RACE(type2,SP_ADDRACE);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addrace[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addrace[type2]+=val;
@@ -3269,7 +3269,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADDCLASS: // bonus2 bAddClass,c,x;
 		PC_BONUS_CHK_CLASS(type2,SP_ADDCLASS);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addclass[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addclass[type2]+=val;
@@ -3278,7 +3278,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADDSIZE: // bonus2 bAddSize,s,x;
 		PC_BONUS_CHK_SIZE(type2,SP_ADDSIZE);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addsize[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addsize[type2]+=val;
