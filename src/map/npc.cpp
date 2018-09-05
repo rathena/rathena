@@ -4457,12 +4457,12 @@ int npc_reload(void) {
 	// dynamic check by [random]
 	if( battle_config.dynamic_mobs ){
 		for (int i = 0; i < map_num; i++) {
-			for( int16 i = 0; i < MAX_MOB_LIST_PER_MAP; i++ ){
+			for( int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++ ){
 				struct map_data *mapdata = map_getmapdata(i);
 
-				if (mapdata->moblist[i] != NULL) {
-					aFree(mapdata->moblist[i]);
-					mapdata->moblist[i] = NULL;
+				if (mapdata->moblist[j] != NULL) {
+					aFree(mapdata->moblist[j]);
+					mapdata->moblist[j] = NULL;
 				}
 				if( mapdata->mob_delete_timer != INVALID_TIMER )
 				{ // Mobs were removed anyway,so delete the timer [Inkfish]
