@@ -1,0 +1,9 @@
+diff a/src/map/clif.hpp b/src/map/clif.hpp	(rejected hunks)
+@@ -1091,4 +1091,7 @@ void clif_attendence_response( struct map_session_data *sd, int32 data );
+ 
+ void clif_weight_limit( struct map_session_data* sd );
+ 
++/// Extended Vending [Lilith]
++int clif_vend(struct map_session_data *sd, int skill_lv);
++
+ #endif /* _CLIF_HPP_ */

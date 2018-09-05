@@ -1,0 +1,12 @@
+diff a/src/map/itemdb.hpp b/src/map/itemdb.hpp	(rejected hunks)
+@@ -962,4 +970,10 @@ void itemdb_reload(void);
+ void do_final_itemdb(void);
+ void do_init_itemdb(void);
+ 
++/**
++* Extended Vending system [Lilith]
++**/
++#define ITEMID_ZENY battle_config.item_zeny
++#define ITEMID_CASH battle_config.item_cash
++
+ #endif /* _ITEMDB_HPP_ */
