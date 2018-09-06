@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Last Updated: ========================================
-//= 20140208
+//= 20180906
 //===== Description: ========================================= 
 //= An example of an NPC with live dialogue.
 //= Note: This relies on Global_Functions.txt to run.
