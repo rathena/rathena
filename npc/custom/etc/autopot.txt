@@ -94,6 +94,8 @@ OnCommand:
 		if(.@command$[1] == "off"){
 			message strcharinfo(0), "Auto-Potion " + strtoupper(.@command$[0]) + " disabled.";
 			setd "@autopot_" + .@command$[0] + "_Active",false;
+			if(!@autopot_hp_Active || !@autopot_sp_Active)
+				deltimer strnpcinfo(3) + "::OnStart";
 			end;
 		}
 		if(.@command$[1] == "list"){
