@@ -263,6 +263,8 @@ struct Battle_Config
 	int natural_heal_weight_rate;
 	int natural_heal_weight_rate_renewal;
 	int arrow_decrement;
+	int ammo_unequip;
+	int ammo_check_weapon;
 	int max_aspd;
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
 	int max_hp_lv99;

@@ -457,6 +457,9 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 
 	ShowInfo("[Instance] Created: %s (%hu).\n", name, i);
 
+	// Start the instance timer on instance creation
+	instance_startkeeptimer(&instance_data[i], i);
+
 	return i;
 }
 
