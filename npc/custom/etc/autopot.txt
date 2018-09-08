@@ -14,7 +14,7 @@
 //============================================================
 -	script	#autopot	-1,{
 OnInit:
-	bindatcmd("autopot",strnpcinfo(0)+"::OnCommand");
+	bindatcmd("autopot",strnpcinfo(0)+"::OnCommand",0,99);
 	.MinDelay = 100;	//Minimum Delay Alowed (Default and Recomanded: 100)[lower values will increase server strain]
 	setarray .blackList[0],0;	//Array of Black Listed Item's IDs
 end;
@@ -41,12 +41,10 @@ L_Info:
 
 L_Start:
 	deltimer strnpcinfo(3) + "::OnStart";
-	.@type$  = getarg(0);
-	.@potion = getarg(1);
-	if(getarg(2))
-		setd "@autopot_" + .@type$ + "_Min",getarg(2);
-	if(getarg(3))
-		@autopot_delay = getarg(3);
+	.@type$  = getarg(0,0);
+	.@potion = getarg(1,0);
+	setd "@autopot_" + .@type$ + "_Min",getarg(2,0);
+	@autopot_delay = getarg(3,0);
 
 	if (getd("@autopot_" + .@type$ + "_Min")   < 1  || getd("@autopot_" + .@type$ + "_Min") > 100)  setd "@autopot_" + .@type$ + "_Min",90;
 	if (@autopot_delay < 50 || @autopot_delay > 1000) @autopot_delay = .MinDelay;
@@ -114,7 +112,6 @@ OnCommand:
 				.@select = select(.@menu$ + "   ^777777Cancel^000000") - 1;
 				if (.@select != .@count)
 					callsub L_Start,.@command$[0],.@items[.@select];
-				callsub L_Info;
 				close2;
 			}else{
 				message strcharinfo(0), "There are no healing items in your inventory.";
@@ -126,7 +123,6 @@ OnCommand:
 		.@delay = atoi(.@atcmd_parameters$[3]);
 		if(getitemname(.@potion) != "null"){
 			callsub L_Start,.@command$[0],.@potion,.@percent,.@delay;
-			callsub L_Info;
 			end;
 		}
 		message strcharinfo(0), "Auto-Potion : something went wrong!";
