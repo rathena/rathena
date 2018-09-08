@@ -15,7 +15,7 @@
 -	script	#autopot	-1,{
 OnInit:
 	bindatcmd("autopot",strnpcinfo(0)+"::OnCommand");
-	.MinDelay = 250;	//Minimum Delay Alowed (Default and Recomanded: 250)[lower values will increase server strain]
+	.MinDelay = 100;	//Minimum Delay Alowed (Default and Recomanded: 100)[lower values will increase server strain]
 	setarray .blackList[0],0;	//Array of Black Listed Item's IDs
 end;
 
@@ -49,7 +49,7 @@ L_Start:
 		@autopot_delay = getarg(3);
 
 	if (getd("@autopot_" + .@type$ + "_Min")   < 1  || getd("@autopot_" + .@type$ + "_Min") > 100)  setd "@autopot_" + .@type$ + "_Min",90;
-	if (@autopot_delay < 100 || @autopot_delay > 1000) @autopot_delay = .MinDelay;
+	if (@autopot_delay < 50 || @autopot_delay > 1000) @autopot_delay = .MinDelay;
 	if (getiteminfo(.@potion,2) != IT_HEALING) {
 		dispbottom getitemname(.@potion) + " is not a healing item.";
 		end;
@@ -62,6 +62,7 @@ L_Start:
 		message strcharinfo(0), "Your base level is too low to use '" + getitemname(.@potion) + "'.";
 		end;
 	}
+	setd "@autopot_" + .@type$ + "_ID",.@potion;
 	setd "@autopot_" + .@type$ + "_Active",true;
 	addtimer .@delay,strnpcinfo(3) + "::OnStart";
 	message strcharinfo(0), "Auto-Potion " + strtoupper(.@type$) + " enabled.";
@@ -113,6 +114,7 @@ OnCommand:
 				.@select = select(.@menu$ + "   ^777777Cancel^000000") - 1;
 				if (.@select != .@count)
 					callsub L_Start,.@command$[0],.@items[.@select];
+				callsub L_Info;
 				close2;
 			}else{
 				message strcharinfo(0), "There are no healing items in your inventory.";
@@ -124,6 +126,7 @@ OnCommand:
 		.@delay = atoi(.@atcmd_parameters$[3]);
 		if(getitemname(.@potion) != "null"){
 			callsub L_Start,.@command$[0],.@potion,.@percent,.@delay;
+			callsub L_Info;
 			end;
 		}
 		message strcharinfo(0), "Auto-Potion : something went wrong!";
@@ -163,18 +166,20 @@ OnStart:
 	    !getstatus(SC__MANHOLE) || !getstatus(SC_KAGEHUMI) || !getstatus(SC_HEAT_BARREL_AFTER) ||
 		!getstatus(SC_STONE) || !getstatus(SC_FREEZE) || !getstatus(SC_STUN) || !getstatus(SC_SLEEP))
 		{
-		if(@autopot_hp_Active && Hp && Hp * 100 / MaxHp < @autopot_hp_Min) {
-			if (countitem(@autopot_hp_ID)) {
-				delitem @autopot_hp_ID,1;
-				consumeitem @autopot_hp_ID;
-				specialeffect2 207;
+		if(Hp){
+			if(@autopot_hp_Active && Hp * 100 / MaxHp < @autopot_hp_Min) {
+				if (countitem(@autopot_hp_ID)) {
+					delitem @autopot_hp_ID,1;
+					consumeitem @autopot_hp_ID;
+					specialeffect2 207;
+				}
 			}
-		}
-		if(@autopot_sp_Active && Sp && Sp * 100 / MaxSp < @autopot_sp_Min) {
-			if (countitem(@autopot_sp_ID)) {
-				delitem @autopot_sp_ID,1;
-				consumeitem @autopot_sp_ID;
-				specialeffect2 208;
+			if(@autopot_sp_Active && Sp * 100 / MaxSp < @autopot_sp_Min) {
+				if (countitem(@autopot_sp_ID)) {
+					delitem @autopot_sp_ID,1;
+					consumeitem @autopot_sp_ID;
+					specialeffect2 208;
+				}
 			}
 		}
 	}
