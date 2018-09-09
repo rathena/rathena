@@ -20323,6 +20323,7 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 #endif
 }
 
+<<<<<<< HEAD
 /// Opens an UI window of the given type and initializes it with the given data
 /// 0AE2 <type>.B <data>.L
 void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
@@ -20497,6 +20498,7 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 #endif
 }
 
+=======
 /**
  * Opens the refine UI on the designated client.
  * 0aa0
@@ -20836,6 +20838,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 #undef REFINEUI_MAT_CNT
 
+>>>>>>> origin/feature/refineui
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

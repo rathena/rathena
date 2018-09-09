@@ -23768,37 +23768,20 @@ BUILDIN_FUNC(mail){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(refineui){
-#if PACKETVER < 20161012
-	ShowError( "buildin_refineui: This command requires packet version 2016-10-12 or newer.\n" );
-	return SCRIPT_CMD_FAILURE;
-#else
-	struct map_session_data* sd;
-
-	if( !script_charid2sd(2,sd) ){
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if( !battle_config.feature_refineui ){
-		ShowError( "buildin_refineui: This command is disabled via configuration.\n" );
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if( !sd->state.refineui_open ){
-		clif_refineui_open(sd);
-	}
-
-	return SCRIPT_CMD_SUCCESS;
-#endif
-}
-
+<<<<<<< HEAD
 BUILDIN_FUNC(open_roulette){
 #if PACKETVER < 20141022
 	ShowError( "buildin_open_roulette: This command requires PACKETVER 2014-10-22 or newer.\n" );
+=======
+BUILDIN_FUNC(refineui){
+#if PACKETVER < 20161012
+	ShowError( "buildin_refineui: This command requires packet version 2016-10-12 or newer.\n" );
+>>>>>>> origin/feature/refineui
 	return SCRIPT_CMD_FAILURE;
 #else
 	struct map_session_data* sd;
 
+<<<<<<< HEAD
 	if( !battle_config.feature_roulette ){
 		ShowError( "buildin_open_roulette: Roulette system is disabled.\n" );
 		return SCRIPT_CMD_FAILURE;
@@ -23839,6 +23822,23 @@ BUILDIN_FUNC(identifyall) {
 	script_pushint(st, pc_identifyall(sd, identify_item));
 
 	return SCRIPT_CMD_SUCCESS;
+=======
+	if( !script_charid2sd(2,sd) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !battle_config.feature_refineui ){
+		ShowError( "buildin_refineui: This command is disabled via configuration.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !sd->state.refineui_open ){
+		clif_refineui_open(sd);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+>>>>>>> origin/feature/refineui
 }
 
 #include "../custom/script.inc"

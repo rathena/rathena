@@ -50,14 +50,22 @@ enum refine_cost_type {
 	REFINE_COST_MAX
 };
 
+// Refine information type
+enum refine_info_type {
+	REFINE_MATERIAL_ID = 0,
+	REFINE_ZENY_COST,
+	REFINE_BREAKABLE
+};
+
 struct refine_cost {
 	unsigned short nameid;
 	int zeny;
+	bool breakable;
 };
 
 /// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
-int status_get_refine_cost(int weapon_lv, int type, bool what);
+int status_get_refine_cost(int weapon_lv, int type, enum refine_info_type what);
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {

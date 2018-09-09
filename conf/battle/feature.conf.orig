@@ -71,13 +71,7 @@ feature.achievement: on
 // Requires: 2017-09-20bRagexeRE or later
 feature.homunculus_autofeed: off
 
-// Refine UI (Note 3)
-// Requires: 2016-10-12aRagexeRE or later
-// 0 = Disabled
-// 1 = Enabled
-// 2 = Enabled in existing official scripts (old dialogs were removed and replaced by the UI)
-feature.refineui: 3
-
+<<<<<<< HEAD
 // Attendance System (Note 1)
 // Requires: 2018-03-07bRagexeRE or later
 feature.attendance: off
@@ -85,3 +79,11 @@ feature.attendance: off
 // Private Airship System (Note 1)
 // Requires: 2018-03-21aRagexeRE or later
 feature.privateairship: off
+=======
+// Refine UI (Note 3)
+// Requires: 2016-10-12aRagexeRE or later
+// 0 = Disabled
+// 1 = Enabled
+// 2 = Enabled in existing official scripts (old dialogs were removed and replaced by the UI)
+feature.refineui: 0
+>>>>>>> origin/feature/refineui

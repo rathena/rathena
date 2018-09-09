@@ -5056,8 +5056,9 @@
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
-	script_set_constant("REFINE_MATERIAL_ID", 0, false, false);
-	script_set_constant("REFINE_ZENY_COST", 1, false, false);
+	export_constant(REFINE_MATERIAL_ID);
+	export_constant(REFINE_ZENY_COST);
+	export_constant(REFINE_BREAKABLE);
 
 	/* NPC view ids */
 	// Special macro to strip the prefix 'JT_'

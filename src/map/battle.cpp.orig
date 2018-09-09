@@ -8525,9 +8525,12 @@ static const struct _battle_data {
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
-	{ "feature.refineui",                   &battle_config.feature_refineui,                0,      0,      3,              },
+<<<<<<< HEAD
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
+=======
+	{ "feature.refineui",                   &battle_config.feature_refineui,                0,      0,      3,              },
+>>>>>>> origin/feature/refineui
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8665,19 +8668,7 @@ void battle_adjust_conf()
 	}
 #endif
 
-#if PACKETVER < 20161012
-	if (battle_config.feature_refineui) {
-		ShowWarning("conf/battle/feature.conf refine UI is enabled but it requires PACKETVER 2016-10-12 or newer, disabling...\n");
-		battle_config.feature_refineui = 0;
-	}
-#else
-	// Check if Refine UI is only enabled in scripts
-	if( battle_config.feature_refineui == 2 ){
-		ShowWarning("conf/battle/feature.conf refine UI is enabled in scripts but disabled in general, enabling...\n");
-		battle_config.feature_refineui = 3;
-	}
-#endif
-	
+<<<<<<< HEAD
 #if PACKETVER < 20180307
 	if( battle_config.feature_attendance ){
 		ShowWarning("conf/battle/feature.conf attendance system is enabled but it requires PACKETVER 2018-03-07 or newer, disabling...\n");
@@ -8689,6 +8680,18 @@ void battle_adjust_conf()
 	if( battle_config.feature_privateairship ){
 		ShowWarning("conf/battle/feature.conf private airship system is enabled but it requires PACKETVER 2018-03-21 or newer, disabling...\n");
 		battle_config.feature_privateairship = 0;
+=======
+#if PACKETVER < 20161012
+	if (battle_config.feature_refineui) {
+		ShowWarning("conf/battle/feature.conf refine UI is enabled but it requires PACKETVER 2016-10-12 or newer, disabling...\n");
+		battle_config.feature_refineui = 0;
+	}
+#else
+	// Check if Refine UI is only enabled in scripts
+	if( battle_config.feature_refineui == 2 ){
+		ShowWarning("conf/battle/feature.conf refine UI is enabled in scripts but disabled in general, enabling...\n");
+		battle_config.feature_refineui = 3;
+>>>>>>> origin/feature/refineui
 	}
 #endif
 
