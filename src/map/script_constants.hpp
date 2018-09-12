@@ -755,6 +755,7 @@
 	export_constant(EQI_SHADOW_SHOES);
 	export_constant(EQI_SHADOW_ACC_R);
 	export_constant(EQI_SHADOW_ACC_L);
+	export_constant(EQI_MAX);
 
 	/* equip positions */
 	export_constant(EQP_ACC_L);
