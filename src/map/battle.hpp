@@ -643,6 +643,7 @@ struct Battle_Config
 	int autoloot_adjust;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
+	int switch_remove_edp;
 	int feature_homunculus_autofeed;
 	int summoner_trait;
 	int homunculus_autofeed_always;

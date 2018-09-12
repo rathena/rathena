@@ -10207,6 +10207,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if( !battle_config.dancing_weaponswitch_fix )
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
+		if (battle_config.switch_remove_edp)
+			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
 	}
 	if(pos & EQP_HAND_L) {
 		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
