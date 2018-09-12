@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20180906
+//= 20170702
 //===== Description: ========================================= 
 //= Demonstrates the 'getequipid' command.
 //============================================================
 
 prontera,161,181,6	script	getequipid sample	105,{
-	for (.@i = EQI_ACC_L; .@i < EQI_SHADOW_ACC_L; .@i++)
+	for (.@i = EQI_ACC_L; .@i < EQI_MAX; .@i++)
 		mes "getequipid(" + .@i + ") : " + getequipid(.@i);
 	close;
 }
