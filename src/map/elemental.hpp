@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ELEMENTAL_HPP_
-#define _ELEMENTAL_HPP_
+#ifndef ELEMENTAL_HPP
+#define ELEMENTAL_HPP
 
 #include "../common/mmo.hpp"
 
@@ -113,4 +113,4 @@ void reload_elemental_skilldb(void);
 void do_init_elemental(void);
 void do_final_elemental(void);
 
-#endif /* _ELEMENTAL_HPP_ */
+#endif /* ELEMENTAL_HPP */

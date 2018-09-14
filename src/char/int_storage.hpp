@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_STORAGE_HPP_
-#define _INT_STORAGE_HPP_
+#ifndef INT_STORAGE_HPP
+#define INT_STORAGE_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -20,4 +20,4 @@ bool inter_storage_parse_frommap(int fd);
 
 bool guild_storage_tosql(int guild_id, struct s_storage *p);
 
-#endif /* _INT_STORAGE_HPP_ */
+#endif /* INT_STORAGE_HPP */

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ITEMDB_HPP_
-#define _ITEMDB_HPP_
+#ifndef ITEMDB_HPP
+#define ITEMDB_HPP
 
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
@@ -732,6 +732,7 @@ enum e_random_item_group {
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
 	IG_PRIZEOFHERO,
+	IG_PRIVATE_AIRSHIP,
 };
 
 /// Enum for bound/sell restricted selling
@@ -961,4 +962,4 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 void do_init_itemdb(void);
 
-#endif /* _ITEMDB_HPP_ */
+#endif /* ITEMDB_HPP */

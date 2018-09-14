@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _NPC_HPP_
-#define _NPC_HPP_
+#ifndef NPC_HPP
+#define NPC_HPP
 
 #include "../common/timer.hpp"
 
@@ -1105,6 +1105,10 @@ enum e_job_types
 	JT_4_EP17_MIGUEL,
 	JT_4_EP17_NIHIL_K,
 	JT_4_EP17_MIGUEL_D,
+	JT_4_ED_SCHMIDT,
+	JT_4_ED_OSCAR,
+	JT_4_ED_ORB,
+	JT_4_ED_FENCE,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1215,7 +1219,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	TIMER_FUNC(npc_rr_secure_timeout_timer);
+	TIMER_FUNC(npc_secure_timeout_timer);
 #endif
 
 // @commands (script-based)
@@ -1223,4 +1227,4 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 
 bool npc_unloadfile( const char* path );
 
-#endif /* _NPC_HPP_ */
+#endif /* NPC_HPP */

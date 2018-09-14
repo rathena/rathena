@@ -28,6 +28,8 @@
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
 
+int16 instance_start = 0;
+
 static DBMap *InstanceDB; /// Instance DB: struct instance_db, key: id
 static DBMap *InstanceNameDB; /// instance id, key: name
 
@@ -454,6 +456,9 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 	instance_subscription_timer(0,0,0,0);
 
 	ShowInfo("[Instance] Created: %s (%hu).\n", name, i);
+
+	// Start the instance timer on instance creation
+	instance_startkeeptimer(&instance_data[i], i);
 
 	return i;
 }
@@ -1137,6 +1142,7 @@ void do_init_instance(void) {
 	InstanceDB = uidb_alloc(DB_OPT_BASE);
 	InstanceNameDB = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),0);
 
+	instance_start = map_num;
 	instance_readdb();
 	memset(instance_data, 0, sizeof(instance_data));
 	memset(&instance_wait, 0, sizeof(instance_wait));
