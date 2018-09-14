@@ -157,10 +157,10 @@ OnCommand:
 end;
 
 OnStart:
-	if (!getstatus(SC_BERSERK) || !getstatus(SC_SATURDAYNIGHTFEVER) || !getstatus(SC_GRAVITATION) ||
-	    !getstatus(SC_TRICKDEAD) || !getstatus(SC_HIDING) || !getstatus(SC__SHADOWFORM) || !getstatus(SC__INVISIBILITY) ||
-	    !getstatus(SC__MANHOLE) || !getstatus(SC_KAGEHUMI) || !getstatus(SC_HEAT_BARREL_AFTER) ||
-		!getstatus(SC_STONE) || !getstatus(SC_FREEZE) || !getstatus(SC_STUN) || !getstatus(SC_SLEEP))
+	if (!getstatus(SC_BERSERK) && !getstatus(SC_SATURDAYNIGHTFEVER) && !getstatus(SC_GRAVITATION) &&
+	    !getstatus(SC_TRICKDEAD) && !getstatus(SC_HIDING) && !getstatus(SC__SHADOWFORM) && !getstatus(SC__INVISIBILITY) &&
+	    !getstatus(SC__MANHOLE) && !getstatus(SC_KAGEHUMI) && !getstatus(SC_HEAT_BARREL_AFTER) &&
+		!getstatus(SC_STONE) && !getstatus(SC_FREEZE) && !getstatus(SC_STUN) && !getstatus(SC_SLEEP))
 		{
 		if(Hp){
 			if(@autopot_hp_Active && Hp * 100 / MaxHp < @autopot_hp_Min) {
