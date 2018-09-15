@@ -20856,7 +20856,7 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 }
 
 /**
- * Get skill duration after adjustments by skill_duration mapflag.
+ * Get skill duration after adjustments by skill_duration mapflag
  * @param src: Source map location
  * @param skill_id: Skill ID
  * @param skill_lv: Skill level
@@ -20872,8 +20872,8 @@ int skill_get_time3(int16 m, uint16 skill_id, uint16 skill_lv) {
 
 	if (!mapdata->skill_duration.empty()) {
 		for (const auto &it : mapdata->skill_duration) {
-			if (it.skill_id == skill_id)
-				return time * it.per / 100;
+			if (it.first == skill_id)
+				return time * it.second / 100;
 		}
 	}
 	return time;

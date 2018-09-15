@@ -734,7 +734,7 @@ struct map_data {
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::vector<s_skill_damage> skill_damage; // Used for single skill damage adjustment
-	std::vector<s_skill_duration> skill_duration;
+	std::unordered_map<uint16, int> skill_duration;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]

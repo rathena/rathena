@@ -4072,8 +4072,8 @@ ACMD_FUNC(mapinfo) {
 
 	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
 		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
-		for (int j = 0; j < mapdata->skill_duration.size(); j++) {
-			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(mapdata->skill_duration[j].skill_id), mapdata->skill_duration[j].per);
+		for (const auto &it : mapdata->skill_duration) {
+			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
 			clif_displaymessage(fd, atcmd_output);
 		}
 	}

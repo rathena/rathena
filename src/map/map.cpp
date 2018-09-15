@@ -4407,14 +4407,13 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param per: Skill duration adjustment value in percent
  */
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
-	if (mapd->skill_duration.size() > UINT16_MAX)
+	if (mapd->skill_duration.size() >= UINT16_MAX)
 		return;
 
-	struct s_skill_duration entry = {};
-
-	entry.skill_id = skill_id;
-	entry.per = per;
-	mapd->skill_duration.push_back(entry);
+	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
+		mapd->skill_duration[skill_id] += per;
+	else // Update previous entry
+		mapd->skill_duration.insert({ skill_id, per });
 }
 
 /**
