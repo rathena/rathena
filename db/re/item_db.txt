@@ -11467,12 +11467,12 @@
 24177,S_M_Vibration_Weapon,Magic Formless Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus2 bIgnoreMdefRaceRate,RC_Formless,5+(getrefine()/2); },{},{}
 24178,S_M_Holy_Water_Weapon,Magic Holy Water Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus2 bIgnoreMdefRaceRate,RC_Undead,5+(getrefine()/2); },{},{}
 24179,S_M_Scissors_Weapon,Magic Caesars Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus2 bIgnoreMdefRaceRate,RC_Plant,5+(getrefine()/2); },{},{}
-24180,S_Bearers_Armor,Bearer's Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus bMdef,1+(getrefine()/2); },{},{}
-24181,S_Bearers_Shoes,Bearer's Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ bonus bMaxSP,50+(5*(getrefine()/2)); },{},{}
-24182,S_Bearers_Shield,Bearer's Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus bDef,5+(getrefine()/2); },{},{}
-24183,S_Bearers_Weapon,Bearer's Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus bMaxHP,100+(10*(getrefine()/2)); },{},{}
-24184,S_Bearers_Earring,Bearer's Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ bonus bMatk,5+(getrefine()/2); },{},{}
-24185,S_Bearers_Pendent,Bearer's Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ bonus bBaseAtk,5+(getrefine()/2); },{},{}
+24180,S_Bearers_Armor,Bearer's Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus bMdef,1+(getrefine()/2); },{},{ sc_end SC_ENDURE; }
+24181,S_Bearers_Shoes,Bearer's Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ bonus bMaxSP,50+(5*(getrefine()/2)); },{},{ sc_end SC_ENDURE; }
+24182,S_Bearers_Shield,Bearer's Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus bDef,5+(getrefine()/2); },{},{ sc_end SC_ENDURE; }
+24183,S_Bearers_Weapon,Bearer's Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus bMaxHP,100+(10*(getrefine()/2)); },{},{ sc_end SC_ENDURE; }
+24184,S_Bearers_Earring,Bearer's Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ bonus bMatk,5+(getrefine()/2); },{},{ sc_end SC_ENDURE; }
+24185,S_Bearers_Pendent,Bearer's Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ bonus bBaseAtk,5+(getrefine()/2); },{},{ sc_end SC_ENDURE; }
 24186,S_Basis_Armor,Basis Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Neutral,1+(.@r/2); bonus2 bMagicAddEle,Ele_Neutral,1+(.@r/2); },{},{}
 24187,S_Hallowed_Armor,Hallowed Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Dark,1+(.@r/2); bonus2 bMagicAddEle,Ele_Dark,1+(.@r/2); },{},{}
 24188,S_Saharic_Armor,Underneith Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Water,1+(.@r/2); bonus2 bMagicAddEle,Ele_Water,1+(.@r/2); },{},{}
