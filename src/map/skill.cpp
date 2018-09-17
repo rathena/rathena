@@ -2654,7 +2654,7 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 			int min_rate = 50 + 20 * skill_lv;
 
 			rate = min_rate + 2 * (sstatus->dex - tstatus->dex);
-			rate = min(min_rate, rate);
+			rate = max(min_rate, rate);
 			break;
 		}
 		case GS_DISARM:
@@ -2672,6 +2672,8 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 		case SC_STRIPACCESSARY:
 			rate = 12 + 2 * skill_lv;
 			break;
+		default:
+			return false;
 	}
 
 	if (rnd()%100 >= rate)
