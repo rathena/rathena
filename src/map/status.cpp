@@ -9392,7 +9392,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 1;
 				break;
 			case SC_ENDURE:
-				if(sce->val4 && !val4)
+				if(sce->val4)
 					return 1; // Don't let you override infinite endure.
 				if(sce->val1 > val1)
 					return 1;
