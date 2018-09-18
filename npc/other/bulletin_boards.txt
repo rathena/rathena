@@ -1,6 +1,6 @@
 //===== rAthena Script =======================================
 //= Bulletin Boards
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Bulletin Boards for beginners.
 //===== Changelogs: ==========================================
 //= 1.0 Added Alberta, Prontera, Izlude, Payon, Byalan Island,
@@ -41,11 +41,11 @@ alberta,111,59,5	script	Bulletin Board#1	837,{
 	next;
 	mes "[Alberta: The Port City]";
 	mes "From Alberta, ^1F3A11Payon^000000 is located to the Northwest. You can board passenger ships at the dock to travel to ^5E5C69Izlude^000000.";
-	mes "Enjoy your travels."; 
+	mes "Enjoy your travels.";
 	close;
 }
 
-geffen,124,65,5	script	Bulletin Board#2	837,{
+geffen,124,65,3	script	Bulletin Board#2	837,{
 	mes "[Geffen: The City of Magic]";
 	mes "Welcome to Geffen, the City of Magic. Geffen is well known for its various legends related to magic.";
 	next;
@@ -94,12 +94,12 @@ payon,178,108,5	script	Bulletin Board#06	837,{
 	next;
 	mes "[Payon: The Mountain City]";
 	mes "From Payon, ^123972Alberta^000000 is located to the Southeast, and ^866C4BMorroc^000000 is to the West. ^5E5C69Izlude^000000 and ^6D6FE0Prontera^000000 are North of Payon.";
-	mes "Enjoy your travels."; 
+	mes "Enjoy your travels.";
 	close;
 }
 
 pay_arche,79,31,5	script	Bulletin Board#07	837,{
-	mes "[Archer Village]"; 
+	mes "[Archer Village]";
 	mes "Welcome to the Payon Archer Village where Novices can change their jobs to Archer.";
 	next;
 	mes "[Archer Village]";

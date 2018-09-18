@@ -24,6 +24,9 @@ te_prtcas01,73,6,4	duplicate(simple_info_TE)	Gaebolg#8	GUILD_FLAG
 te_prtcas01,55,46,4	duplicate(simple_info_TE)	Gaebolg#9	GUILD_FLAG
 te_prtcas01,45,46,4	duplicate(simple_info_TE)	Gaebolg#10	GUILD_FLAG
 
+prontera,164,169,3	duplicate(simple_info_TE)	Gloria[Gaebolg] - WoE:TE#11	722
+
+
 // Infos flags + warp guildmaster inside
 //============================================================
 te_prt_gld,131,60,6	script	Gaebolg#11	GUILD_FLAG,{

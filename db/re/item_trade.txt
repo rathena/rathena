@@ -1790,7 +1790,7 @@
 13579,475,100	// Vit_Dish_Box50
 13580,475,100	// Insurance_Package30
 13581,475,100	// Insurance_Package50
-13582,475,100	// Convex_Mirror_Box5
+// 13582,475,100	// Convex_Mirror_Box5
 13583,475,100	// Convex_Mirror_Box30
 13584,475,100	// Blessing10_Box30
 13585,475,100	// Blessing10_Box50
@@ -1815,7 +1815,7 @@
 13604,475,100	// Str_Dish_Box30
 13605,475,100	// Str_Dish_Box50
 13606,475,100	// Bubble_Gum_Box1
-13607,475,100	// Bubble_Gum_Box5
+// 13607,475,100	// Bubble_Gum_Box5
 13608,475,100	// Megaphone_Box1
 13609,475,100	// Megaphone_Box5
 13610,475,100	// Enriched_Elunium_Box5
@@ -2196,7 +2196,7 @@
 13986,475,100	// Bulging_Head_Box_1m
 13987,475,100	// Ori_Stone_5_Box
 13988,475,100	// Ori_Stone_50_Box
-13989,475,100	// Acidbomb_10_Box
+// 13989,475,100	// Acidbomb_10_Box
 13990,475,100	// Job_Manual50_Box
 13991,475,100	// Tiger_Mask_Box
 13992,475,100	// Cat_Hat_Box
@@ -2212,7 +2212,7 @@
 14002,475,100	// Adv_Siege_Supply_Box
 14003,475,100	// Elite_Siege_Supply_Box
 14004,475,100	// Poison_Bottle_10_Box
-14005,475,100	// Poison_Bottle_5_Box
+// 14005,475,100	// Poison_Bottle_5_Box
 14006,475,100	// F_Drooping_W_Kitty_Box
 14007,475,100	// F_Rabbit_Ear_Hat_Box
 14008,475,100	// F_L_Orc_Hero_Helm_Box
@@ -2439,7 +2439,7 @@
 14229,475,100	// Sakura_Scroll
 14230,475,100	// Note_Headphones_Box
 14231,475,100	// Novice_Breastplate_Boxes
-14232,475,100	// Yggdrasilberry_Box_
+// 14232,475,100	// Yggdrasilberry_Box_
 14233,475,100	// Dead_Tree_Branch_Box1
 14234,475,100	// Dead_Tree_Branch_Box2
 14235,475,100	// Field_Manual_Box_2
@@ -3193,7 +3193,7 @@
 16683,475,100	// B_Halter_Box_30Days
 //16689,475,100	//
 //16690,475,100	//
-16740,475,100	// Protection_Seagod_Box
+// 16740,475,100	// Protection_Seagod_Box
 16741,475,100	// Hairtail_Box1
 16742,475,100	// Hairtail_Box2
 16743,475,100	// Spearfish_Box1

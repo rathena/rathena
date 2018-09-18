@@ -15,7 +15,7 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,153,193,6	script	Job Master	123,{
+prontera,159,192,4	script	Job Master	10085,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -24,11 +24,11 @@ function	Require_Level	{
 		.@blvl = getarg(0) - BaseLevel;
 		.@jlvl = getarg(1) - JobLevel;
 		mes "Level requirement:";
-		mes ((getarg(0)>1)? 
+		mes ((getarg(0)>1)?
 			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
 			getarg(1)+"^000000 (^00bb00Job^000000)";
 		mes "You need " +
-			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " + 
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " +
 				((.@jlvl > 0) ? "and " : "") : "") +
 			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 more job levels " : "") +
 			"to continue.";
@@ -136,11 +136,11 @@ function	Job_Options	{
 	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
-		
+
 	// From here on the jobmaster checks the current class
 	// and fills the the array `.@job_opt` with possible
 	// job options for the player.
-	
+
 	if( .@rebirth_possible ) {
 		// Rebirth option (displayed on the top of the menu)
 		Require_Level(.Req_Rebirth[0], .Req_Rebirth[1]);
@@ -151,8 +151,8 @@ function	Job_Options	{
 		Require_Level(.Req_Third[0], .Req_Third[1]);
 		Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
 	}
-	 
-	if (.SecondExpanded && 
+
+	if (.SecondExpanded &&
 	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
@@ -162,8 +162,8 @@ function	Job_Options	{
 			Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
 		}
 	}
-	
-	if (.SecondExpanded && 
+
+	if (.SecondExpanded &&
 		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		// is (Baby) Ninja
 		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
 		// (Baby) Ninja to (Baby) Kagerou / Oboro
@@ -175,7 +175,7 @@ function	Job_Options	{
 			Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
 		}
 	}
-	
+
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
 	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
 		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
@@ -195,7 +195,7 @@ function	Job_Options	{
 					Job_Options(.@job_opt,
 						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
 				else
-					Job_Options(.@job_opt, 
+					Job_Options(.@job_opt,
 						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
 						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
 				break;
@@ -240,7 +240,7 @@ function	Job_Options	{
 			}
 		}
 	}
-	
+
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
 	function Job_Menu;
@@ -335,8 +335,8 @@ function	Confirm_Change	{
 	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
 	if( .@class == Job_Novice_High)
 		.@job_option$ = " ~ ^0055FFRebirth^000000";
-	
-	if (select(.@job_option$+": ~ ^777777" + 
+
+	if (select(.@job_option$+": ~ ^777777" +
 			((.@back) ?"Go back" : "Cancel") + "^000000") == 1) {
 		Job_Change(.@class);
 	}
@@ -452,7 +452,7 @@ function	Get_Job_Equip	{
 OnInit:
 	// Initialisation, do not edit these
 	.NPCName$ = "[Job Master]";
-	
+
 	// Settings
 	.ThirdClass = true;			// Enable third classes?
 	.RebirthClass = true;			// Enable rebirth classes?
@@ -475,7 +475,7 @@ OnInit:
 	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
 	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
 	.SNovice = 45;						// Minimum base level to turn into Super Novice
-	
+
 	// Setting adjustments by PACKETVER
 	if( PACKETVER < 20161207 ) {
 		if( .BabyExpanded )

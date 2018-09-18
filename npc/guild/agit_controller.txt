@@ -33,41 +33,65 @@
 -	script	Agit_Event	-1,{
 	end;
 
-OnClock2100:	//start time for Tuesday and Thursday
-OnClock2300:	//end time for Tuesday and Thursday
-OnClock1600:	//start time for Saturday
-OnClock1800:	//end time for Saturday
+OnWed2130: // start
+OnWed2230: // end
+// OnClock2100:	//start time for Tuesday and Thursday
+// OnClock2300:	//end time for Tuesday and Thursday
+// OnClock1600:	//start time for Saturday
+// OnClock1800:	//end time for Saturday
 
 OnAgitInit:
-	// starting time checks
-	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
-	   (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
-	   (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) {
+	// ----------------- WoE Start Time
+	if(	gettime(DT_DAYOFWEEK)==WEDNESDAY && ( (gettime(DT_HOUR)*100)+gettime(DT_MINUTE) >= 2130 ) &&	( (gettime(DT_HOUR)*100)+gettime(DT_MINUTE) < 2230 ) ){
 		if (!agitcheck()) {
 			AgitStart;
+			Announce "WoE:First Edition has Started!",bc_all|bc_woe;
 			callsub S_DisplayOwners;
 		}
 		end;
 	}
 
-	// end time checks
-	if ((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23) ||
-	    (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23) ||
-	    (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) { 
+	// ----------------- WoE End Time
+	if(	gettime(DT_DAYOFWEEK)==WEDNESDAY && ( (gettime(DT_HOUR)*100)+gettime(DT_MINUTE) == 2230 )){
 		if (agitcheck()) {
 			AgitEnd;
+			Announce "WoE:First Edition has ended!",bc_all|bc_woe;
 			callsub S_DisplayOwners;
 		}
 		end;
 	}
+
+	// ----------------------------------------------------------------- old code
+	// if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
+	//    (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
+	//    (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) {
+	// 	if (!agitcheck()) {
+	// 		AgitStart;
+	// 		callsub S_DisplayOwners;
+	// 	}
+	// 	end;
+	// }
+
+	// end time checks
+	// if ((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23) ||
+	//     (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23) ||
+	//     (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) {
+	// 	if (agitcheck()) {
+	// 		AgitEnd;
+	// 		callsub S_DisplayOwners;
+	// 	}
+	// 	end;
+	// }
+	// ----------------------------------------------------------------- old code
 	end;
 
 S_DisplayOwners:
-	setarray .@maps$[0],"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05";
-	setarray .@maps$[5],"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05";
-	setarray .@maps$[10],"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05";
-	setarray .@maps$[15],"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05";
-	for( set .@i, 0; .@i <= 19; set .@i, .@i+1 ) {
+	setarray .@maps$[0],"aldeg_cas01";
+	//setarray .@maps$[0],"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05";
+	//setarray .@maps$[5],"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05";
+	//setarray .@maps$[10],"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05";
+	//setarray .@maps$[15],"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05";
+	for( set .@i, 0; .@i < getarraysize(.@maps$); set .@i, .@i+1 ) {
 		if (GetCastleData(.@maps$[.@i],1)) {
 			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle has been conquered by the [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] guild.",bc_all|bc_woe;
 		}

@@ -27,7 +27,7 @@ get_status(){
 }
 
 #checking if already started, launch and mark in log
-start_serv(){ 
+start_serv(){
 	get_status $1
 	if [ $2 ]; then #is logging on ?
 		LOGFILE="$LOG_DIR/$1.launch.log"
@@ -66,7 +66,7 @@ watch_serv(){
 			LOGFILE="$LOG_DIR/$i.launch.log"
 			LOGRUN="$LOG_DIR/$i.log"
 			FIFO=$i"_fifo"
-	
+
 			get_status $i
 			#echo "Echo id of $i is ${PSRUN}"
 			if [ -z ${PSRUN} ]; then
@@ -74,12 +74,12 @@ watch_serv(){
 				#echo "fifo=$FIFO"
 				echo "server '$i' is down"
 				echo "server '$i' is down" >> ${LOGFILE}
-				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" 
+				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`"
 				echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
 				if [ -e $FIFO ]; then rm $FIFO; fi
 				mkfifo "$FIFO"; tee "$LOGRUN" < "$FIFO" & "./$i" > "$FIFO" 2>&1 & PID=$!
 				echo "$PID" > .$i.pid
-				if [ $2 ] && [ $2 -lt $count ]; then break; fi   
+				if [ $2 ] && [ $2 -lt $count ]; then break; fi
 			fi
 		done
 		sleep $1
@@ -95,7 +95,7 @@ restart(){
 		while true; do
 			get_status ${i}
 			if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting for the process to end"; sleep 2;
-			else 
+			else
 				if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
 				break
 			fi
@@ -134,14 +134,14 @@ case $1 in
 		done
 		watch_serv $Restart_count $Restart_sleep
 		echo "Watching rAthena now."
-	;;	
+	;;
 	'stop')
 		for i in ${M_SRV} ${C_SRV} ${L_SRV}
 		do
 			PIDFILE=.${i}.pid
 			if [ -e ./${PIDFILE} ]; then
 				kill $(cat ${PIDFILE})
-				
+
 				while true; do
 					get_status ${i}
 					if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting for the process to end"; sleep 2;
@@ -149,7 +149,7 @@ case $1 in
 						break
 					fi
 				done
-				
+
 				rm ${PIDFILE}
 			fi
 		done

@@ -181,7 +181,7 @@ OnGuildBreak:
 S_Message:
 	.@map$ = strnpcinfo(4);
 	.@guild_id = getcastledata(.@map$,1);
-	
+
 	if (.@guild_id)
 		announce "The [" + getcastlename(.@map$) + "] castle is occupied by the [" + getguildname(.@guild_id) + "] guild.",bc_all,"0xFF0000",FW_NORMAL,10;
 	else

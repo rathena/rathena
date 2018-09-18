@@ -1,0 +1,374 @@
+function	script	F_KafGStor	{
+
+
+    set .@n$,"[^0000FFGuild Storage Manager^000000]";
+    set @GID,getcharid(2);
+
+    if (@GID == 0) {
+        mes .@n$;
+        mes "Sorry, but you're not in a Guild.";
+        mes "I can not do anything for you.";
+		close2;
+		end;
+	}
+	// Unable to access Guild Storage (Busy)
+	if (getarg(0) == 1) {
+		if (guildopenstorage() == 1) {
+			mes getarg(3);
+			mes "I'm sorry but another guild member is using the guild storage";
+			mes "right now.  Please wait until that person is finished.";
+			close2;
+			end;
+		}
+		guildopenstorage();
+		close;
+	}
+}
+//== Prontera ==============================================
+prontera,148,195,4	script	Guild Storage Manager::kaf_prontera6 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Prontera";
+}
+//== Payon =================================================
+payon,180,106,4	script	Guild Storage Manager::kaf_payon4 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Payon";
+}
+//== Geffen ================================================
+geffen,128,68,3	script	Guild Storage Manager::kaf_geffen3 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Geffen";
+}
+//== Aldebaran =============================================
+aldebaran,146,122,4	script	Guild Storage Manager::kaf_aldebaran2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Al De Baran";
+}
+//== Morroc ================================================
+morocc,168,107,4	script	Guild Storage Manager::kaf_morocc3 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Morroc";
+}
+//== Umbala ================================================
+umbala,95,163,4	script	Guild Storage Manager::kaf_umbala2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Umbala";
+}
+//== Comodo ================================================
+comodo,205,151,4	script	Guild Storage Manager::kaf_comodo3 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the town of Comodo";
+}
+//== Izlude ================================================
+izlude,133,149,4	script	Guild Storage Manager::kaf_izlude2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Izlude";
+}
+//== Alberta ===============================================
+alberta,114,65,0	script	Guild Storage Manager::kaf_alberta3 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Alberta";
+}
+//== Lutie, Snow Village ===================================
+xmas,155,140,3	script	Guild Storage Manager::kaf_xmas2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation~";
+	mes "The Kafra Services are";
+	mes "always here to support you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Lutie, Snow Village";
+}
+//== Niflheim ==============================================
+niflheim,200,184,3	script	Guild Storage Manager::kaf_niflheim2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the...";
+	mes "...Kafra Corporation.";
+	mes "...I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",1,1,"in the city of Niflheim";
+}
+//== Juno ==================================================
+yuno,172,189,4	script	Guild Storage Manager::kaf_yuno4 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Juno";
+}
+//== Hugel ==================================================
+hugel,91,158,4	script	Guild Storage Manager::kaf_hugel2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Hugel";
+}
+//== Lighthalzen ===========================================
+lighthalzen,150,102,4	script	Guild Storage Manager::kaf_lighthalzen3 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Lighthalzen";
+}
+//== Einbroch ==============================================
+einbroch,238,203,5	script	Guild Storage Manager::kaf_einbroch3 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Einbroch";
+}
+//== Einbech ===============================================
+einbech,182,124,5	script	Guild Storage Manager::kaf_einbech2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the town of Einbech";
+}
+//== Rachel ================================================
+rachel,123,145,4	script	Guild Storage Manager::kaf_rachel2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Rachel";
+}
+//== Veins ================================================
+veins,205,130,4	script	Guild Storage Manager::kaf_veins2 	415,{
+	callfunc "F_KafSet";
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Veins";
+}
+//== Louyang ===============================================
+louyang,210,111,5	script	Guild Storage Manager::kaf_louyang2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Louyang";
+}
+//== Brasilis ===============================================
+brasilis,204,227,4	script	Guild Storage Manager::kaf_brasilis2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
+}
+//== Amatsu ================================================
+amatsu,100,156,4	script	Guild Storage Manager::kaf_amatsu3 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Amatsu";
+}
+//== Kunlun ================================================
+gonryun,164,127,4	script	Guild Storage Manager::kaf_gonryun2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Kunlun";
+}
+//== Moscovia ==============================================
+moscovia,211,200,3	script	Guild Storage Manager::kaf_mosk2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,3,"in the city of Moscovia";
+}
+//== Ayothaya ==============================================
+ayothaya,203,173,5	script	Guild Storage Manager::kaf_ayothaya2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the city of Ayotaya";
+}
+//== Dewata ================================================
+dewata,196,193,6	script	Guild Storage Manager::kaf_dewata2 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"on Dewata Island";
+}
+//== Port Malaya ===========================================
+malaya,238,206,4	script	Guild Storage Manager::kaf_malaya3 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in Port Malaya";
+}
+//== Harboro ===========================================
+harboro1,288,212,4	script	Guild Storage Manager::kaf_harboro12 	415,{
+	mes "[^0000FFGuild Storage Manager^000000]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I only offer Guild Storage!";
+	next;
+	callfunc "F_ClearGarbage"; // Clear outdated, unused variables
+	callfunc "F_KafGStor",1,0,0,"[^0000FFGuild Storage Manager^000000]";
+	callfunc "F_KafEnd",0,1,"in the town of Harboro";
+}
+

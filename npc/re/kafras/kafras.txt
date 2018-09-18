@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kafras (Cities/Dungeons/Fields)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Joseph
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Argument settings for callfunc "F_Kafra":
 //=  arg(0): 0 - Default Kafra message
 //=          1 - Niflhiem Kafra message
 //=          2 - Guild Kafra message
-//=  arg(1): 1 - Disable teleport menu 
+//=  arg(1): 1 - Disable teleport menu
 //=  arg(2): 1 - Disable info menu
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ================================= 
-//= 0.x Previous Authors: 
+//===== Additional Comments: =================================
+//= 0.x Previous Authors:
 //=     - L0ne_W0lf, Daegaladh
 //= 1.0 Merged and cleaned up Kafras. [Euphy]
 //= 1.1 Added Dewata Kafra. [Lemongrass]
@@ -26,14 +26,14 @@
 //= 1.4 Added Izlude duplicates. [Euphy]
 //= 1.5 Added Glastheim Kafra [Ridley8819]
 //= 1.6 Added Lutie [Lemongrass]
-//============================================================ 
+//============================================================
 
 // Brasilis
 //============================================================
 brasilis,197,221,4	script	Kafra Employee::kaf_bra	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",0,3,0,80,700;
-	savepoint "brasilis",195,259,1,1;
+	savepoint "brasilis",195,214,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
 }
 
@@ -42,7 +42,7 @@ brasilis,197,221,4	script	Kafra Employee::kaf_bra	117,{
 dewata,202,184,6	script	Kafra Employee::kaf_dewata	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",0,10,1,40,700;
-	savepoint "dewata",206,174,1,1;
+	savepoint "dewata",196,181,1,1;
 	callfunc "F_KafEnd",0,1,"on Dewata Island";
 }
 
@@ -60,6 +60,7 @@ glast_01,200,275,0	script	Kafra Employee::kaf_glast	4_F_KAFRA3,{
 xmas,148,134,6	script	Kafra Employee::kaf_xmas	4_F_KAFRA3,{
 	cutin "kafra_03",2;
 	callfunc "F_Kafra",0,6,2,50,700;
+	savepoint "xmas",145,132,1,1;
 	callfunc "F_KafEnd",0,0,"in Lutie";
 }
 
@@ -86,13 +87,13 @@ izlude_d,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_d	117
 //============================================================
 malaya,71,79,4	script	Kafra Employee::kaf_malaya1	581,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",44,56,1,1;
+	savepoint "malaya",237,197,1,1;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }
 
 malaya,234,204,4	script	Kafra Employee::kaf_malaya2	581,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",281,212,1,1;
+	savepoint "malaya",237,197,1,1;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }
 

@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Eden Group Quests - Common NPCs
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Eden Group Headquarter NPC's.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Removed showevent use, and use of duplicates.
 //=     Commented out warps that should not be active.
@@ -249,7 +249,7 @@ geffen_in,160,104,5	duplicate(eto)	Eden Teleport Officer#8	729
 moc_prydb1,53,126,3	duplicate(eto)	Eden Teleport Officer#9	729
 alberta_in,75,39,3	duplicate(eto)	Eden Teleport Officer#10	729
 payon_in02,58,58,1	duplicate(eto)	Eden Teleport Officer#11	729
-payon,177,111,3	duplicate(eto)	Eden Teleport Officer#12	729
+payon,162,231,3	duplicate(eto)	Eden Teleport Officer#12	729
 que_ng,33,73,3	duplicate(eto)	Eden Teleport Officer#13	729
 que_ng,144,161,5	duplicate(eto)	Eden Teleport Officer#14	729
 yuno,144,189,5	duplicate(eto)	Eden Teleport Officer#15	729
@@ -262,11 +262,11 @@ lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
 amatsu,100,145,5	duplicate(eto)	Eden Teleport Officer#22	729
 ayothaya,221,191,3	duplicate(eto)	Eden Teleport Officer#23	729
 louyang,224,107,3	duplicate(eto)	Eden Teleport Officer#24	729
-gonryun,162,122,5	duplicate(eto)	Eden Teleport Officer#25	729
+gonryun,154,127,5	duplicate(eto)	Eden Teleport Officer#25	729
 moscovia,209,197,5	duplicate(eto)	Eden Teleport Officer#26	729
 brasilis,191,224,3	duplicate(eto)	Eden Teleport Officer#27	729
 dewata,192,193,5	duplicate(eto)	Eden Teleport Officer#28	729
-morocc,161,97,5	duplicate(eto)	Eden Teleport Officer#29	729
+morocc,149,105,5	duplicate(eto)	Eden Teleport Officer#29	729
 izlude,131,148,4	duplicate(eto)	Eden Teleport Officer#30	729
 izlude_a,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_a	729
 izlude_b,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_b	729

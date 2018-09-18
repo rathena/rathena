@@ -1,23 +1,23 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Malangdo Culvert
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Euphy
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Clean the culverts and defeat the Coelacanth.
 //= Daily and weekly quests are available.
 //= Contains a normal mode and hard mode.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //=     Letters "n" and "h" in NPC names indicate difficulty.
 //= 1.0a There is no minimum party size on official servers.
 //= 1.0b Fixed incorrect use of 'close'. [Joseph]
 //= 1.1 Instance system rewrite. [Euphy]
-//============================================================ 
+//============================================================
 
 // Quest NPCs :: mal_yong
 //============================================================
@@ -377,7 +377,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 		set in_canal_n,1;
 		close;
 	}
-	if (countitem(6436) == 0) {
+	if (countitem(6436) == 0 && !(VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))) {
 		mes "[Missing, the Cleaner]";
 		mes "You don't look like you have Seagod Protection. I can't open door at the moment!";
 		close;

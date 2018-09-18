@@ -918,7 +918,7 @@ bool pc_isequipped(struct map_session_data *sd, unsigned short nameid)
 			continue;
 		if( pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index) )
 			continue;
-		if( !sd->inventory_data[index] ) 
+		if( !sd->inventory_data[index] )
 			continue;
 		if( sd->inventory_data[index]->nameid == nameid )
 			return true;
@@ -1044,7 +1044,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 	return false; // Job Change Fail
 }
- 
+
 /*==========================================
  * Check if player can use/equip selected item. Used by pc_isUseitem and pc_isequip
    Returns:
@@ -1405,7 +1405,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->status.cashshop_sent = false;
 
 	sd->last_addeditem_index = -1;
-	
+
 	sd->bonus_script.head = NULL;
 	sd->bonus_script.count = 0;
 
@@ -3923,7 +3923,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		else if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
-		} 
+		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
@@ -4014,7 +4014,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if (sd->state.lr_flag != 2)
 			pc_bonus_subele(sd, (unsigned char)type2, type3, val);
 		break;
-		
+
 	case SP_SP_VANISH_RACE_RATE: // bonus3 bSPVanishRaceRate,r,x,n;
 		PC_BONUS_CHK_RACE(type2,SP_SP_VANISH_RACE_RATE);
 		if(sd->state.lr_flag != 2) {
@@ -4174,7 +4174,7 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell_onskill(sd->autospell3, ARRAYLENGTH(sd->autospell3), type2, (val&1?-type3:type3), (val&2?-type4:type4), type5, current_equip_card_id);
 		break;
- 
+
 	case SP_ADDEFF_ONSKILL: // bonus5 bAddEffOnSkill,sk,eff,n,y,t;
 		PC_BONUS_CHK_SC(type3,SP_ADDEFF_ONSKILL);
 		if( sd->state.lr_flag != 2 )
@@ -5072,7 +5072,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
 	))
 		return false;
-	
+
 	if (sd->sc.count && (
 		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
@@ -5088,7 +5088,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_KINGS_GRACE] ||
 		sd->sc.data[SC_SUHIDE]))
 		return false;
-	
+
 	if (!pc_isItemClass(sd,item))
 		return false;
 
@@ -5681,7 +5681,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			x = rnd()%(mapdata->xs-2)+1;
 			y = rnd()%(mapdata->ys-2)+1;
 			c++;
-			
+
 			if(c > (mapdata->xs * mapdata->ys)*3){ //force out
 				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
 				return SETPOS_OK; //preventing warp
@@ -5745,14 +5745,14 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	}
 
 	pc_cell_basilica(sd);
-	
+
 	//check if we gonna be rewarped [lighta]
 	if(npc_check_areanpc(1,m,x,y,0)){
 		sd->count_rewarp++;
 	}
-	else 
+	else
 		sd->count_rewarp = 0;
-	
+
 	return SETPOS_OK;
 }
 
@@ -5855,7 +5855,7 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	uint8 i;
 	uint16 idx = skill_get_index(skill_id);
 	int cooldown = 0, cooldownlen = ARRAYLENGTH(sd->skillcooldown);
-	
+
 	if (!idx) return 0;
 	if (skill_db[idx]->cooldown[skill_lv - 1])
 		cooldown = skill_db[idx]->cooldown[skill_lv - 1];
@@ -6838,7 +6838,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 
 		if (!battle_config.pvp_exp && map_getmapflag(sd->bl.m, MF_PVP))  // [MouseJstr]
 			return; // no exp on pvp maps
-	
+
 		if (sd->status.guild_id>0)
 			base_exp -= guild_payexp(sd,base_exp);
 	}
@@ -8016,7 +8016,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				base_penalty = u32min(sd->status.base_exp, base_penalty);
 			}
 		}
-		else 
+		else
 			base_penalty = 0;
 
 		if ((battle_config.death_penalty_maxlv&2 || !pc_is_maxjoblv(sd)) && job_penalty > 0) {
@@ -8457,7 +8457,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
 		return true;
-	case SP_CHARRENAME:	
+	case SP_CHARRENAME:
 		sd->status.rename = val;
 		return true;
 	case SP_CHARFONT:
@@ -8564,9 +8564,9 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 		bonus = 100 + (sd->battle_status.vit << 1) + pc_checkskill(sd, SM_RECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag == 2) {
-			bonus += 50;
+			bonus += 150;
 			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
-				bonus += 100; // Receive an additional +100% effect from ranked potions to HP only
+				bonus += 200; // Receive an additional +100% effect from ranked potions to HP only
 		}
 		//All item bonuses.
 		bonus += sd->bonus.itemhealrate2;
@@ -8891,7 +8891,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	achievement_update_objective(sd, AG_JOB_CHANGE, 2, sd->status.base_level, job);
 	if( sd->status.party_id ){
 		struct party_data* p;
-		
+
 		if( ( p = party_search( sd->status.party_id ) ) != NULL ){
 			ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == sd->status.char_id);
 
@@ -9372,7 +9372,7 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
-	
+
 	if ( !reg_load && !sd->vars_ok ) {
 		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);
 		return 0;
@@ -9699,11 +9699,11 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 			combo_idx[j].nameid=-1;
 			memset(combo_idx[j].card,-1,MAX_SLOTS);
 		}
-			
+
 		for( j = 0; j < nb_itemCombo; j++ ) {
 			uint16 id = data->combos[i]->nameid[j], k;
 			bool found = false;
-			
+
 			for( k = 0; k < EQI_MAX; k++ ) {
 				short index = sd->equip_index[k];
 				if( index < 0 )
@@ -9712,7 +9712,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					continue;
 				if (!sd->inventory_data[index] )
 					continue;
-				
+
 				if ( itemdb_type(id) != IT_CARD ) {
 					if ( sd->inventory_data[index]->nameid != id )
 						continue;
@@ -9735,7 +9735,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 					if ( itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]) )
 						continue;
 					for (z = 0; z < MAX_SLOTS; z++) {
-						bool do_continue=false;			
+						bool do_continue=false;
 						if (sd->inventory.u.items_inventory[index].card[z] != id)
 							continue;
 						if(j>0){
@@ -11393,7 +11393,7 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 		use_endlvl = endlvl;
 		if (use_endlvl > job_info[idx].max_level[0])
 			use_endlvl = job_info[idx].max_level[0];
-		
+
 		if(type == 0) {	//hp type
 			uint16 j;
 			for(j = 0; j < use_endlvl; j++) {
@@ -11452,7 +11452,7 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
 	job_info[idx].max_param.int_ = int_;
 	job_info[idx].max_param.dex = dex;
 	job_info[idx].max_param.luk = luk;
-	
+
 	return true;
 }
 
@@ -11485,7 +11485,7 @@ static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 	int i=1;
 	char line[24000]; //FIXME this seem too big
 	FILE *fp;
-	
+
 	sprintf(line, "%s/statpoint.txt", basedir);
 	fp=fopen(line,"r");
 	if(fp == NULL){
@@ -11529,7 +11529,7 @@ void pc_readdb(void) {
 		"/" DBIMPORT,
 		//add other path here
 	};
-		
+
 	//reset
 	memset(job_info,0,sizeof(job_info)); // job_info table
 
@@ -11601,7 +11601,7 @@ void pc_readdb(void) {
 	for (; s <= MAX_LEVEL; s++)
 		statp[s] = statp[s-1] + pc_gets_status_point(s-1);
 	battle_config.use_statpoint_table = k; //restore setting
-	
+
 	//Checking if all class have their data
 	for (i = 0; i < JOB_MAX; i++) {
 		int idx;
@@ -11615,7 +11615,7 @@ void pc_readdb(void) {
 			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(i), i);
 		if (!job_info[idx].max_level[1])
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(i), i);
-		
+
 		//Init and checking the empty value of Base HP/SP [Cydh]
 		for (j = 0; j < (job_info[idx].max_level[0] ? job_info[idx].max_level[0] : MAX_LEVEL); j++) {
 			if (job_info[idx].base_hp[j] == 0)
@@ -11954,7 +11954,7 @@ TIMER_FUNC(pc_global_expiration_timer){
   return 0;
 }
 
-void pc_expire_check(struct map_session_data *sd) {  
+void pc_expire_check(struct map_session_data *sd) {
 	/* ongoing timer */
 	if( sd->expiration_tid != INVALID_TIMER )
 		return;
@@ -12003,7 +12003,7 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 **/
 enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int money) {
 	unsigned int limit_check = money + sd->status.zeny;
-	
+
 	if( money <= 0 ) {
 		return BWA_UNKNOWN_ERROR;
 	} else if ( money > sd->bank_vault ) {
@@ -12013,10 +12013,10 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1495),false,SELF); //You can't withdraw that much money
 		return BWA_UNKNOWN_ERROR;
 	}
-	
+
 	if( pc_getzeny(sd,money, LOG_TYPE_BANK, NULL) )
 		return BWA_NO_MONEY;
-	
+
 	sd->bank_vault -= money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
@@ -12116,7 +12116,7 @@ struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, co
 
 	if (!sd)
 		return NULL;
-	
+
 	if (!(script = parse_script(script_str, "bonus_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 		ShowError("pc_bonus_script_add: Failed to parse script '%s' (CID:%d).\n", script_str, sd->status.char_id);
 		return NULL;
@@ -12274,7 +12274,7 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
  */
 void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
-	
+
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
 		if (sd->sc.data[SC_BASILICA])
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
@@ -12309,7 +12309,7 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 
 	return (class_&MAPID_BASEMASK) == MAPID_SUMMONER ? battle_config.max_summoner_parameter :
 		((class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_parameter :
-		((class_&JOBL_THIRD) ? ((class_&JOBL_UPPER) ? battle_config.max_third_trans_parameter : ((class_&JOBL_BABY) ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter)) : 
+		((class_&JOBL_THIRD) ? ((class_&JOBL_UPPER) ? battle_config.max_third_trans_parameter : ((class_&JOBL_BABY) ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter)) :
 		((class_&JOBL_BABY) ? battle_config.max_baby_parameter :
 		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
 }
@@ -12344,7 +12344,7 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, unsigned short nameid)
 		struct s_item_group_db *group = NULL;
 		if (!group_id || !(group = itemdb_group_exists(group_id)))
 			continue;
-		
+
 		for (j = 0; j < group->random[0].data_qty; j++) {
 			if (group->random[0].data[j].nameid == nameid) {
 				bonus += sd->itemgrouphealrate[i]->rate;
