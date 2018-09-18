@@ -3507,6 +3507,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		} else
 			regen->flag &= ~sce->val4; // Remove regen as specified by val4
 	}
+	if (sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 1)
+		regen->hp += cap_value(regen->hp * 50 / 100, 1, SHRT_MAX);
 	if(sc->data[SC_GT_REVITALIZE]) {
 		regen->hp += cap_value(regen->hp * sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
 		regen->state.walk = 1;
@@ -5420,8 +5422,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 
 	if(sc->data[SC_SUN_COMFORT])
 		def2 += sc->data[SC_SUN_COMFORT]->val2;
-	if( sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 1 )
-		def2 += (5 + sc->data[SC_BANDING]->val1) * sc->data[SC_BANDING]->val2;
 #ifdef RENEWAL
 	if (sc->data[SC_SKA])
 		def2 += 80;
@@ -8921,6 +8921,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = ((val1 * 15) + (10 * (sd?pc_checkskill(sd,CR_DEFENDER):skill_get_max(CR_DEFENDER)))) * status_get_lv(bl) / 100; // Defence added
 			break;
 		case SC_BANDING:
+			val2 = (sd ? skill_banding_count(sd) : 1);
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_MAGNETICFIELD:
@@ -11176,7 +11177,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_BANDING:
 		if( status_charge(bl, 0, 7 - sce->val1) ) {
-			if( sd ) pc_banding(sd, sce->val1);
+			sce->val2 = (sd ? skill_banding_count(sd) : 1);
 			sc_timer_next(5000 + tick);
 			return 0;
 		}

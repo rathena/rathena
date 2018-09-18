@@ -2302,8 +2302,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		{
 			struct status_change *sc = status_get_sc(src);
 			if( sc && sc->data[SC_FORCEOFVANGUARD] && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 6 ) {
-				char i;
-				for( i = 0; i < sc->data[SC_FORCEOFVANGUARD]->val3; i++ )
+				for(int i = 0; i < sc->data[SC_FORCEOFVANGUARD]->val3; i++ )
 					pc_addspiritball(sd, skill_get_time(LG_FORCEOFVANGUARD,1),sc->data[SC_FORCEOFVANGUARD]->val3);
 			}
 		}
@@ -12043,10 +12042,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case LG_BANDING:
 		if( sc && sc->data[SC_BANDING] )
 			status_change_end(src,SC_BANDING,INVALID_TIMER);
-		else if( (sg = skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0)) != NULL ) {
+		else if( (sg = skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0)) != NULL )
 			sc_start4(src,src,SC_BANDING,100,skill_lv,0,0,sg->group_id,skill_get_time(skill_id,skill_lv));
-			if( sd ) pc_banding(sd,skill_lv);
-		}
 		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		break;
 
@@ -17127,6 +17124,33 @@ int skill_detonator(struct block_list *bl, va_list ap)
 			break;
 	}
 	return 0;
+}
+
+/**
+ * Calculate Royal Guard's Banding bonus
+ * @param sd: Player data
+ * @return Number of Royal Guard
+ */
+int skill_banding_count(struct map_session_data *sd)
+{
+ 	nullpo_ret(sd);
+
+	int range = skill_get_splash(LG_BANDING, 1);
+	uint8 count = party_foreachsamemap(party_sub_count_banding, sd, range, 0);
+	unsigned int group_hp = party_foreachsamemap(party_sub_count_banding, sd, range, 1);
+
+ 	// HP is set to the average HP of the Banding group
+	if (count > 1)
+		status_set_hp(&sd->bl, group_hp / count, 0);
+
+ 	// Royal Guard count check for Banding
+	if (sd && sd->status.party_id) {
+		if (count > MAX_PARTY)
+			return MAX_PARTY;
+		else if (count > 1)
+			return count; // Effect bonus from additional Royal Guards if not above the max
+	}
+ 	return 0;
 }
 
 /**

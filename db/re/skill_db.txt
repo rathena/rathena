@@ -1121,7 +1121,7 @@
 2316,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_EXEEDBREAK,Exceed Break
 2317,2,6,2,-1,0x2,0,5,1,yes,0,0,0,weapon,0,0x0,	LG_OVERBRAND,Over Brand
 2318,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	LG_PRESTIGE,Prestige
-2319,0,6,4,0,0x3,3,5,1,no,0,0,0,weapon,0,0x0,	LG_BANDING,Banding //CHECK Splash isnt needed right? Banding has its own UNIT ID.
+2319,0,6,4,0,0x3,3,5,1,no,0,0,0,weapon,0,0x0,	LG_BANDING,Banding
 2320,0,6,4,-1,0x2,3,5,1,yes,0,0,0,weapon,0,0x1000,	LG_MOONSLASHER,Moon Slasher
 2321,1,8,2,6,0x2,5,5,-7,yes,0,0,0,weapon,0,0x0,	LG_RAYOFGENESIS,Ray of Genesis
 2322,0,6,16,0,0x3,1,5,1,yes,0,0,0,none,0,0x0,	LG_PIETY,Piety
