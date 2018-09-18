@@ -1828,7 +1828,7 @@ enum si_type : short {
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_types : short{
+enum efst_type : short{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -3141,7 +3141,7 @@ enum e_status_change_flag {
 	SCF_PERMANENT			= 0x00000004,
 	SCF_NO_CLEARBUFF		= 0x00000008,
 	SCF_NO_REM_ONDEAD		= 0x00000010,
-	SCF_REM_ONMADOGEAR		= 0x00000020,
+	SCF_REM_ON_MADOGEAR		= 0x00000020,
 	SCF_NO_DISPELL			= 0x00000040,
 	SCF_NO_CLEARANCE		= 0x00000080,
 	SCF_NO_BANISHING_BUSTER = 0x00000100,
@@ -3482,11 +3482,11 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status);
 
 // Status changes accessors for StatusChange database
-enum si_type status_sc_get_icon(enum sc_type sc);
+enum efst_type status_sc_get_icon(enum sc_type sc);
 uint32 status_sc_get_calc_flag(enum sc_type sc);
 uint32 status_sc_get_flag(enum sc_type sc);
 uint16 status_sc_get_skill(enum sc_type sc_type);
-uint16 status_si_get_bl_type(enum si_type si);
+uint16 status_efst_get_bl_type(enum efst_type efst);
 
 void status_readdb(void);
 void status_reloaddb(void);

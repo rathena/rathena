@@ -8959,7 +8959,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 			if (&sd->sc) {
 				unsigned short i = 0;
 				for (i = 0; i < SC_MAX; i++) {
-					if (sd->sc.data[i] && (status_sc_get_flag((sc_type)i)&SCF_REM_ONMADOGEAR))
+					if (sd->sc.data[i] && (status_sc_get_flag((sc_type)i)&SCF_REM_ON_MADOGEAR))
 						status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
 				}
 			}

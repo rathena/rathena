@@ -9,14 +9,14 @@
 StatusID
 
 Status Change ID.
-See src/map/script_constants.h for SC_ constants.
+See src/map/script_constants.hpp for SC_ constants.
 
 ---------------------------------------
 
 Icon
 
 Status Icon or client effect that will be displayed client-side.
-Default to SI_BLANK, see src/map/script_constants.h for SI_ constants.
+Default to EFST_BLANK, see src/map/script_constants.hpp for EFST_ constants.
 
 ---------------------------------------
 
@@ -209,12 +209,12 @@ Various status flags for specifc usage.
 
 	SCF_NO_CLEARBUFF        = Cannot be removed by status_change_clear_buffs().
 	SCF_NO_REM_ONDEAD       = Cannot be removed when dead. 'status_change_clear(block_list,0)'
-	SCF_NO_REM_ONMADOGEAR   = Cannot be removed while activating/deactivating Madogear.
 	SCF_NO_DISPELL          = Cannot be removed by Dispell (SA_DISPELL).
 	SCF_NO_CLEARANCE        = Cannot be removed by Clearance (AB_CLEARANCE).
 	SCF_NO_BANISHING_BUSTER = Cannot be removed by Banishing Buster (RL_BANISHING_BUSTER).
 	SCF_NO_SAVE             = Won't be saved when player logs out. 'map_quit()'
 
+	SCF_REM_ON_MADOGEAR     = Removed while activating/deactivating Madogear.
 	SCF_REM_ON_DAMAGED      = Removed when receiving damage.
 	SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) in status_change_clear_buffs().
 	SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) in status_change_clear_buffs().

@@ -68,7 +68,7 @@ short current_equip_opt_index; /// Contains random option index of an equipped i
 struct s_status_change_db {
 	//StringBuf *name;		    ///< SC name (Debug Only)
 	enum sc_type type;		    ///< SC_
-	enum si_type icon;		    ///< SI_
+	enum efst_type icon;	    ///< EFST_
 	uint32 state;			    ///< SCS_
 	uint32 calc_flag;		    ///< SCB_ flags
 	uint8 opt1;				    ///< OPT1_
@@ -94,15 +94,17 @@ struct s_status_change_db {
 static DBMap *StatusChangeDB; /// StatusChange Database: s_status_change_db -> type
 
 /// Determine who will receive a clif_status_change packet for effects that require one to display correctly
-static uint16 StatusRelevantBLTypes[SI_MAX];
+static uint16 StatusRelevantBLTypes[EFST_MAX];
 
-/** Validates if type is in SC ranges
+/**
+ * Validates if type is in SC ranges
  * @param type SC type
  * @return True if type is in range, false otherwise
  **/
 #define CHK_SC(type) ( ((type) > SC_NONE && (type) < SC_MAX) )
 
-/** Check if SC has entry in StatusChangeDB
+/**
+ * Check if SC has entry in StatusChangeDB
  * @param type SC Type
  * @return Entry of sc data in StatusChangeDB
  **/
@@ -181,9 +183,9 @@ static bool status_change_isDisabledOnMap_(s_status_change_db *scdb, bool mapIsV
 /**
  * Get icon id of SC
  * @param type: SC type
- * @return si: Icon ID
+ * @return EFST ID
  **/
-enum si_type status_sc_get_icon(enum sc_type type) { CHK_SC2(type, icon, SI_BLANK); }
+enum efst_type status_sc_get_icon(enum sc_type type) { CHK_SC2(type, icon, EFST_BLANK); }
 
 /**
  * Get state flags of SC (SCS value)
@@ -294,13 +296,13 @@ enum sc_type *status_sc_get_fail_list(enum sc_type type, uint8 *count) {
 
 /**
  * Get BL type to display proper effect
- * @param si: SI type
+ * @param efst: EFST type
  * @return BL types
  **/
-uint16 status_si_get_bl_type(enum si_type si) {
-	if (si <= SI_BLANK || si >= SI_MAX)
+uint16 status_efst_get_bl_type(enum efst_type efst) {
+	if (efst <= EFST_BLANK || efst >= EFST_MAX)
 		return BL_PC;
-	return StatusRelevantBLTypes[si];
+	return StatusRelevantBLTypes[efst];
 }
 
 /**
@@ -9468,7 +9470,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 30; // SP Recovery rate bonus
 			break;
 		//default:
-		//	if( calc_flag == SCB_NONE && scdb->skill_id <= 0 && scdb->icon == SI_BLANK ) {
+		//	if( calc_flag == SCB_NONE && scdb->skill_id <= 0 && scdb->icon == EFST_BLANK ) {
 		//		// Status change with no calc, no icon, and no skill associated...?
 		//		ShowError("status_change_start: Unknown SC %d\n", type);
 		//		return 0;
@@ -9830,8 +9832,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				clif_crimson_marker(sd, bl, false);
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
-			if (sd && val2 != SI_BLANK)
-				clif_status_change(bl, (enum si_type)val2, 1, tick, 0, 0, 0);
+			if (sd && val2 != EFST_BLANK)
+				clif_status_change(bl, (enum efst_type)val2, 1, tick, 0, 0, 0);
 			break;
 		case SC_GVG_GIANT:
 		case SC_GVG_GOLEM:
@@ -12282,7 +12284,7 @@ static void status_sc_freedb_sub(struct s_status_change_db *scdb) {
 	//	StringBuf_Free(sc->name);
 
 	memset(scdb, 0, sizeof(struct s_status_change_db));
-	scdb->icon = SI_BLANK;
+	scdb->icon = EFST_BLANK;
 }
 
 /**
@@ -12347,7 +12349,7 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 					status_sc_freedb_sub(scdb);
 
 				scdb->type = (sc_type)sc_id;
-				scdb->icon = SI_BLANK;
+				scdb->icon = EFST_BLANK;
 				scdb->fail = NULL;
 				scdb->end = NULL;
 				scdb->script = NULL;
@@ -12357,11 +12359,11 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 
 				// Icon
 				if (config_setting_lookup_string(sc, "Icon", &icon) && icon && icon[0] != '\0') {
-					int icon_id = SI_BLANK;
-					if (!script_get_constant(icon, &icon_id) || icon_id <= SI_BLANK || icon_id >= SI_MAX)
+					int icon_id = EFST_BLANK;
+					if (!script_get_constant(icon, &icon_id) || icon_id <= EFST_BLANK || icon_id >= EFST_MAX)
 						ShowWarning("status_sc_readconf_sub: Invalid Icon '%s' for SC '%s' (%d) in file '%s'. Ignoring...\n", icon, sc_name, sc_id, filename);
 					else
-						scdb->icon = (enum si_type)icon_id;
+						scdb->icon = (enum efst_type)icon_id;
 				}
 
 				// Skill lookup
@@ -12473,7 +12475,7 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 
 				StatusRelevantBLTypes[scdb->icon] = BL_PC;
 				// Set BL_SCEFFECT for this status icon
-				if (scdb->flag&SCF_BLEFFECT && scdb->icon != SI_BLANK)
+				if (scdb->flag&SCF_BLEFFECT && scdb->icon != EFST_BLANK)
 					StatusRelevantBLTypes[scdb->icon] |= BL_SCEFFECT;
 			}
 		}
@@ -12571,7 +12573,7 @@ void status_readdb(void) {
 	if (!battle_config.display_hallucination) { // Disable Hallucination.
 		struct s_status_change_db *sc = status_sc_exists(SC_HALLUCINATION);
 		if (sc)
-			sc->icon = SI_BLANK;
+			sc->icon = EFST_BLANK;
 	}
 }
 
