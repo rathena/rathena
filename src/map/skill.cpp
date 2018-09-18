@@ -15114,6 +15114,16 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
+		case ASC_EDP:
+#ifdef RENEWAL
+			if (sd->weapontype1 == W_FIST && battle_config.switch_remove_edp&2) {
+#else
+			if (sd->weapontype1 == W_FIST && battle_config.switch_remove_edp&1) {
+#endif
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
+				return false;
+			}
+			break;
 		case TK_READYCOUNTER:
 		case TK_READYDOWN:
 		case TK_READYSTORM:
