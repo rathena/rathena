@@ -731,6 +731,12 @@
 	export_constant2("bRegenPercentHP", SP_REGEN_PERCENT_HP);
 	export_constant2("bRegenPercentSP", SP_REGEN_PERCENT_SP);
 	export_constant2("bSkillDelay",SP_SKILL_DELAY);
+	export_constant2("bStr2", SP_STR2);
+	export_constant2("bAgi2", SP_AGI2);
+	export_constant2("bVit2", SP_VIT2);
+	export_constant2("bInt2", SP_INT2);
+	export_constant2("bDex2", SP_DEX2);
+	export_constant2("bLuk2", SP_LUK2);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);

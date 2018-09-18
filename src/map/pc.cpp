@@ -8295,6 +8295,12 @@ int pc_readparam(struct map_session_data* sd,int type)
 #else
 			val = sd->castrate; break;
 #endif
+		case SP_STR2:            val = sd->param_bonus[SP_STR-SP_STR]; break;
+		case SP_AGI2:            val = sd->param_bonus[SP_AGI-SP_STR]; break;
+		case SP_VIT2:            val = sd->param_bonus[SP_VIT-SP_STR]; break;
+		case SP_INT2:            val = sd->param_bonus[SP_INT-SP_STR]; break;
+		case SP_DEX2:            val = sd->param_bonus[SP_DEX-SP_STR]; break;
+		case SP_LUK2:            val = sd->param_bonus[SP_LUK-SP_STR]; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
 			return -1;
