@@ -292,9 +292,11 @@ enum sc_type *status_sc_get_fail_list(enum sc_type type, uint8 *count) {
 	return sc->fail;
 }
 
-/** Get BL type to display proper effect
-* @param si: SI type
-* @return BL types */
+/**
+ * Get BL type to display proper effect
+ * @param si: SI type
+ * @return BL types
+ **/
 uint16 status_si_get_bl_type(enum si_type si) {
 	if (si <= SI_BLANK || si >= SI_MAX)
 		return BL_PC;
@@ -302,11 +304,11 @@ uint16 status_si_get_bl_type(enum si_type si) {
 }
 
 /**
-* Returns the FIRST skill (in order of definition in initChangeTables) to use a given status change.
-* Utilized for various duration lookups. Use with caution!
-* @param sc The status to look up
-* @return A skill associated with the status
-**/
+ * Returns the FIRST skill (in order of definition in initChangeTables) to use a given status change.
+ * Utilized for various duration lookups. Use with caution!
+ * @param sc The status to look up
+ * @return A skill associated with the status
+ **/
 uint16 status_sc_get_skill(enum sc_type sc_type) {
 	if (sc_type <= SC_NONE || sc_type >= SC_MAX) {
 		ShowError("status_sc_get_skill: Unsupported status change id %d\n", sc_type);
@@ -12453,7 +12455,7 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 
 				// End return
 				if (config_setting_lookup_bool(sc, "EndReturn", &end_return))
-					scdb->end_return = end_return;
+					scdb->end_return = end_return > 0;
 
 				// Disabled on Map Zone
 				if (config_setting_lookup_string(sc, "DisabledOn", &disabledon) && disabledon && disabledon[0] != '\0')
@@ -12556,8 +12558,8 @@ void status_readdb(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		status_sc_readconf(dbsubpath2,i);
-		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
+		status_sc_readconf(dbsubpath2, i > 0);
+		status_readdb_attrfix(dbsubpath2, i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i > 0);
 
 		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
